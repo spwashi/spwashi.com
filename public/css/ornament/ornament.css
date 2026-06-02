@@ -116,7 +116,13 @@
   .spw-ornament-kicker,
   .spw-ornament-meter,
   .spw-ornament-braid,
-  .spw-ornament-ladder
+  .spw-ornament-ladder,
+  .spw-svg-figure .spw-ornament-rail,
+  .spw-svg-figure .spw-ornament-ribbon,
+  .spw-svg-figure .spw-ornament-kicker,
+  .spw-svg-figure .spw-ornament-meter,
+  .spw-svg-figure .spw-ornament-cluster,
+  .spw-svg-figure .spw-ornament-field
 ) {
   /* Debug / inspection */
   --spw-debug-layer-owner: "ornament";
@@ -126,6 +132,8 @@
   --ornament-local-accent: var(--ornament-accent);
   --ornament-local-line: var(--ornament-line);
   --ornament-local-surface: var(--ornament-surface);
+  --ornament-svg-accent: var(--spw-svg-brand-accent, var(--ornament-accent));
+  --ornament-svg-field: var(--spw-svg-brand-field, var(--ornament-surface));
 
   /* Field-driven ornament intensity (new canonical tokens) */
   --ornament-field-intensity: var(--ornament-field-intensity, var(--spw-field-intensity, 0));
@@ -504,6 +512,28 @@
   gap: var(--ornament-gap-1);
 }
 
+.spw-svg-figure .spw-ornament-rail,
+.spw-svg-figure .spw-ornament-ribbon,
+.spw-svg-figure .spw-ornament-kicker,
+.spw-svg-figure .spw-ornament-meter {
+  --ornament-local-accent: var(--ornament-svg-accent);
+  --ornament-local-line: color-mix(in srgb, var(--ornament-svg-accent) 22%, transparent);
+  --ornament-local-surface: color-mix(in srgb, var(--ornament-svg-field) 88%, transparent);
+}
+
+.spw-svg-figure .spw-ornament-cluster,
+.spw-svg-figure .spw-ornament-field {
+  --ornament-local-accent: var(--ornament-svg-accent);
+  --ornament-local-line: color-mix(in srgb, var(--ornament-svg-accent) 18%, transparent);
+  --ornament-local-surface: color-mix(in srgb, var(--ornament-svg-field) 92%, transparent);
+}
+
+.spw-svg-figure .spw-ornament-rail,
+.spw-svg-figure .spw-ornament-ribbon,
+.spw-svg-figure .spw-ornament-kicker {
+  font-size: 0.7rem;
+}
+
 /* ==========================================================================
    8. Decorative meters
    --------------------------------------------------------------------------
@@ -665,6 +695,52 @@
 
 .spw-ornament-field[data-spw-child-active="true"] > .spw-ornament-cluster {
   box-shadow: var(--ornament-glow);
+}
+
+:where(
+  .frame-card,
+  .frame-panel,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .plan-card,
+  .compare-card,
+  .ref-card
+) :where(.spw-ornament-kicker, .spw-ornament-ribbon, .spw-ornament-meter) {
+  opacity: var(--component-card-detail-opacity, 0.86);
+  transform: translateY(calc(var(--component-card-detail-shift, 0) * 1px));
+}
+
+:where(
+  .frame-card,
+  .frame-panel,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .plan-card,
+  .compare-card,
+  .ref-card
+):is(:hover, :focus-within, [data-spw-card-state="expanded"], [data-spw-gesture="charging"]) :where(.spw-ornament-kicker, .spw-ornament-ribbon, .spw-ornament-meter) {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (pointer: coarse) {
+  :where(
+    .frame-card,
+    .frame-panel,
+    .media-card,
+    .media-focus-card,
+    .software-card,
+    .operator-card,
+    .plan-card,
+    .compare-card,
+    .ref-card
+  ) :where(.spw-ornament-kicker, .spw-ornament-ribbon, .spw-ornament-meter) {
+    letter-spacing: 0.05em;
+  }
 }
 
 /* ==========================================================================

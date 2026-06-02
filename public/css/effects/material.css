@@ -6,6 +6,13 @@
  * - Provide depth, context, and low-cost material tuning for cards, panels,
  * chips, scenes, and text hosts.
  * - Support present interaction systems and modern oklab/oklch color mixing.
+ *
+ * Tunable material surface: the combination of data-spw-base-metamaterial (glass/matte
+ * from site-settings/prepaint), data-spw-physics-reason, semanticDensity, and these
+ * rules lets the entire visual substrate (ink strength, blur, lift, contrast) be
+ * dialed live. Valuable for principal engineers collaborating with niche storytellers
+ * on complex productions: "set matte + rich density + locked physics-reason for the
+ * technical evidence layer; glass + playful for the emotional beat."
  * ========================================================================== */
 
 /* ==========================================================================
@@ -22,17 +29,6 @@
   --material-duration-deliberate: var(--duration-deliberate, 360ms);
 
   --material-prime-color:   var(--active-op-color, #008080);
-  --material-line:          var(--spw-surface-line-rest, var(--line, rgba(14, 18, 20, 0.14)));
-  --material-line-strong:   var(--spw-surface-line-active, var(--line-strong, rgba(0, 128, 128, 0.34)));
-  --material-ink:           var(--ink, #161c1d);
-  --material-ink-soft:      var(--ink-soft, rgba(14, 18, 20, 0.68));
-
-  --material-surface:        var(--spw-surface-fill-rest, var(--surface, rgba(255, 255, 255, 0.62)));
-  --material-surface-strong: var(--spw-surface-fill-strong, var(--surface-strong, rgba(255, 255, 255, 0.78)));
-  --material-surface-soft:   var(--spw-surface-fill-soft, var(--surface-soft, rgba(255, 255, 255, 0.44)));
-
-  --material-shadow-rest:    var(--spw-surface-shadow-rest, var(--shadow-base, 0 4px 12px rgba(0, 0, 0, 0.06)));
-  --material-shadow-lift:    var(--spw-surface-shadow-raised, var(--shadow-active, 0 8px 28px rgba(0, 0, 0, 0.10)));
   --material-highlight-inset: inset 0 1px 0 rgba(255, 255, 255, 0.52);
 
   --material-depth-opacity-1: 0.88;
@@ -63,7 +59,8 @@
   .operator-card,
   .frame-panel,
   .mode-panel,
-  [data-spw-component-kind]
+  [data-spw-component-kind],
+  .design-promo-specimen
 ) {
   /* Debug / inspection */
   --spw-debug-layer-owner: "effects";
@@ -138,8 +135,39 @@
    ========================================================================== */
 
 :where([data-spw-metamaterial="matte"]) {
-  --material-local-background: color-mix(in oklab, var(--material-surface) 97%, var(--material-prime-color) 3%);
-  --material-local-border-color: color-mix(in oklab, var(--material-line) 88%, transparent);
+  --material-local-background:
+    linear-gradient(
+      180deg,
+      var(--material-surface-matte-strong),
+      color-mix(in oklab, var(--material-surface-matte) 96%, var(--material-prime-color) 4%)
+    );
+  --material-local-border-color: color-mix(in oklab, var(--material-line) 92%, var(--material-prime-color) 8%);
+  --material-local-shadow: 0 1px 0 color-mix(in oklab, var(--material-ink-matte) 8%, transparent);
+  /* Matte as the clear contrast safeguard: use strong ink for primary text by default.
+     This fulfills the surface_material_contract for dense reading, forms, inspection. */
+  color: var(--material-ink-matte-strong, var(--ink-on-matte-strong, var(--material-ink-matte)));
+}
+
+:where([data-spw-metamaterial="matte"]) :where(p, li, dd, figcaption, .frame-note, .spec-kicker) {
+  color: var(--material-ink-matte-soft);
+}
+
+:where([data-spw-metamaterial="contrast"]) {
+  --material-local-background:
+    linear-gradient(
+      180deg,
+      var(--material-surface-contrast),
+      color-mix(in oklab, var(--material-surface-matte-strong) 96%, var(--material-prime-color) 4%)
+    );
+  --material-local-border-color: color-mix(in oklab, var(--material-prime-color) 24%, var(--material-line));
+  --material-local-shadow:
+    0 10px 24px color-mix(in oklab, var(--material-ink-contrast) 8%, transparent),
+    inset 0 0 0 1px color-mix(in oklab, var(--material-ink-contrast) 6%, transparent);
+  color: var(--material-ink-contrast);
+}
+
+:where([data-spw-metamaterial="contrast"]) :where(p, li, dd, figcaption, .frame-note, .spec-kicker) {
+  color: color-mix(in oklab, var(--material-ink-contrast) 82%, var(--material-prime-color) 18%);
 }
 
 :where([data-spw-metamaterial="paper"]) {
@@ -183,6 +211,43 @@
   --material-local-shadow:
     var(--material-shadow-rest),
     var(--material-highlight-inset);
+}
+
+/* Site utility and satchel (floating chrome) participate in material definition/tunability.
+   When they carry data-spw-metamaterial (synced from global base or local), their surfaces use the
+   current glass/matte/contrast treatment. This audits consistency: utilities/satchel now mind the
+   same material contract as frames, specimens, notices. Tap/hold/drag on them are attentional gestures
+   that should feel the material physics (e.g. no blur on matte, strong ink for legibility). */
+:where(.spw-shell-utility-row, .spw-state-inspector__launch, .spw-state-inspector__panel)[data-spw-metamaterial="matte"] {
+  background: var(--material-surface-matte);
+  color: var(--material-ink-matte-strong);
+  backdrop-filter: none;
+}
+:where(.spw-shell-utility-row, .spw-state-inspector__launch, .spw-state-inspector__panel)[data-spw-metamaterial="glass"] {
+  background: var(--material-surface);
+  color: var(--material-ink);
+}
+@supports (backdrop-filter: blur(1px)) {
+  :where(html:not([data-spw-filters="off"])) :where(
+    .spw-shell-utility-row[data-spw-metamaterial="glass"],
+    .spw-state-inspector__panel[data-spw-metamaterial="glass"]
+  ) {
+    backdrop-filter: blur(var(--material-blur-soft));
+    -webkit-backdrop-filter: blur(var(--material-blur-soft));
+  }
+}
+
+/* Global page treatment via baseMetamaterial (for "matte clear contrast" option site-wide).
+   Local data-spw-metamaterial on elements wins (cascade + specificity).
+   This makes matte a reliable clear-contrast page posture when chosen in settings
+   without forcing every child to carry the attr. Used by design hub experiments and
+   any route that wants the safeguard for its primary reading surfaces. */
+:where(body[data-spw-base-metamaterial="matte"]) :where(.site-frame, .frame-card, .frame-panel, .mode-panel, [data-spw-component-kind]) {
+  /* Inherit the matte projection; explicit metamaterial on a child can still override. */
+}
+:where(body[data-spw-base-metamaterial="matte"][data-spw-high-contrast="on"]) :where(.site-frame, .frame-card, .frame-panel, .mode-panel, [data-spw-component-kind]) {
+  /* When matte + high-contrast, force the strongest clear ink for the treatment. */
+  color: var(--material-ink-matte-strong);
 }
 
 /* ==========================================================================

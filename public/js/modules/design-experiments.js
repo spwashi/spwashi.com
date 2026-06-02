@@ -7,6 +7,9 @@ import {
 import {
   getSiteSettings,
   saveSiteSettings,
+  setBaseMetamaterial,
+  setClearContrastMatte,
+  setHighContrast,
   validatePartialSettings
 } from '/public/js/kernel/site-settings.js';
 
@@ -26,6 +29,12 @@ const RULE_READOUT_SELECTOR = '[data-design-rule-readout]';
 const RULE_CODE_SELECTOR = '[data-design-rule-code]';
 const RULE_STATUS_SELECTOR = '[data-design-rule-status]';
 const RULE_MAP_SELECTOR = '[data-design-rule-map]';
+const MATERIAL_BENCH_SELECTOR = '[data-design-material-bench]';
+const MATERIAL_CONTROL_SELECTOR = '[data-design-material-set]';
+const MATERIAL_SPECIMEN_SELECTOR = '[data-design-material-specimen]';
+const MATERIAL_READOUT_SELECTOR = '[data-design-material-readout]';
+const PROMO_SPECIMEN_SELECTOR = '[data-design-promo-specimen]';
+const MATERIAL_MODES = Object.freeze(['glass', 'matte', 'contrast']);
 
 const RULE_DATASET_KEYS = Object.freeze({
   boxModel: 'designBoxModel',
@@ -124,6 +133,12 @@ function getRuleBenches(root) {
   if (!(root instanceof HTMLElement)) return [];
   if (root.matches(RULE_BENCH_SELECTOR)) return [root];
   return Array.from(root.querySelectorAll(RULE_BENCH_SELECTOR));
+}
+
+function getMaterialBenches(root) {
+  if (!(root instanceof HTMLElement)) return [];
+  if (root.matches(MATERIAL_BENCH_SELECTOR)) return [root];
+  return Array.from(root.querySelectorAll(MATERIAL_BENCH_SELECTOR));
 }
 
 function getControlValue(control) {
@@ -343,9 +358,124 @@ function bindRuleBench(bench) {
   };
 }
 
+function normalizeMaterialMode(value = 'matte') {
+  return MATERIAL_MODES.includes(value) ? value : 'matte';
+}
+
+function getMaterialMode(bench) {
+  return normalizeMaterialMode(bench?.dataset?.designMaterialMode);
+}
+
+function syncMaterialBench(bench) {
+  if (!(bench instanceof HTMLElement)) return;
+  const mode = getMaterialMode(bench);
+  bench.dataset.designMaterialMode = mode;
+  markInstrumented(bench, 'design-experiments', {
+    tags: ['material-bench', mode],
+    state: 'synced',
+  });
+
+  bench.querySelectorAll(MATERIAL_CONTROL_SELECTOR).forEach((control) => {
+    if (!(control instanceof HTMLElement)) return;
+    const controlMode = normalizeMaterialMode(control.getAttribute('data-design-material-set'));
+    const active = controlMode === mode;
+    control.setAttribute('aria-pressed', active ? 'true' : 'false');
+  });
+
+  bench.querySelectorAll(MATERIAL_SPECIMEN_SELECTOR).forEach((specimen) => {
+    if (!(specimen instanceof HTMLElement)) return;
+    const material = normalizeMaterialMode(specimen.getAttribute('data-spw-metamaterial'));
+    specimen.dataset.designMaterialActive = material === mode ? 'true' : 'false';
+  });
+
+  // Live update promo/demo notice specimens so style experimentation on the hub
+  // shows how floating chrome (daily promos, discovery notices) render under the
+  // chosen material. Ties the material bench directly to feature surfaces for
+  // better discoverability and page surface area.
+  bench.querySelectorAll(PROMO_SPECIMEN_SELECTOR).forEach((specimen) => {
+    if (!(specimen instanceof HTMLElement)) return;
+    specimen.setAttribute('data-spw-metamaterial', mode);
+    // Also reflect on any inner notice-like elements if present
+    specimen.querySelectorAll('.spw-discovery-notice, [data-spw-promo-theme]').forEach((inner) => {
+      if (inner instanceof HTMLElement) inner.setAttribute('data-spw-metamaterial', mode);
+    });
+  });
+
+  bench.querySelectorAll(MATERIAL_READOUT_SELECTOR).forEach((node) => {
+    if (!(node instanceof HTMLElement)) return;
+    const key = node.getAttribute('data-design-material-readout');
+    if (key === 'mode') node.textContent = mode;
+  });
+}
+
+function bindMaterialBench(bench) {
+  if (!(bench instanceof HTMLElement)) return () => {};
+
+  syncMaterialBench(bench);
+
+  const controls = Array.from(bench.querySelectorAll(MATERIAL_CONTROL_SELECTOR));
+  const handleClick = (event) => {
+    const control = event.currentTarget;
+    if (!control || typeof control.getAttribute !== 'function') return;
+    const mode = normalizeMaterialMode(control.getAttribute('data-design-material-set'));
+    bench.dataset.designMaterialMode = mode;
+    syncMaterialBench(bench);
+    syncTokenValues(bench);
+    logger.debug('material bench updated', { mode }, 'gesture');
+  };
+
+  controls.forEach((control) => control.addEventListener('click', handleClick));
+
+  return () => {
+    controls.forEach((control) => control.removeEventListener('click', handleClick));
+  };
+}
+
+function bindMaterialDelegation(scope) {
+  if (!(scope instanceof HTMLElement)) return () => {};
+
+  const handleClick = (event) => {
+    const control = event.target?.closest?.(MATERIAL_CONTROL_SELECTOR);
+    if (!control || !scope.contains(control)) return;
+    const bench = control.closest(MATERIAL_BENCH_SELECTOR);
+    if (!(bench instanceof HTMLElement)) return;
+    const mode = normalizeMaterialMode(control.getAttribute('data-design-material-set'));
+    bench.dataset.designMaterialMode = mode;
+    syncMaterialBench(bench);
+    syncTokenValues(scope);
+    logger.debug('material bench updated', { mode }, 'gesture');
+  };
+
+  scope.addEventListener('click', handleClick);
+  return () => scope.removeEventListener('click', handleClick);
+}
+
+function bindDesignConsoleFallback(scope) {
+  if (!(scope instanceof HTMLElement)) return () => {};
+
+  const install = () => {
+    if (window.spwDesignExperiments) return;
+    const fallbackConsole = Object.freeze(createDesignExperimentsConsole([scope]));
+    window.spwDesignExperiments = fallbackConsole;
+    globalThis.spwDesignExperiments = fallbackConsole;
+  };
+
+  install();
+  window.setTimeout(install, 0);
+  window.setTimeout(install, 250);
+  return () => {};
+}
+
 function createDesignExperimentsConsole(roots) {
   const getBenches = () => roots.flatMap((scope) => getRuleBenches(scope));
+  const getMaterialBenchList = () => roots.flatMap((scope) => getMaterialBenches(scope));
   return Object.freeze({
+    inspectMaterialBench(index = 0) {
+      return snapshotInstrumentationTarget(getMaterialBenchList()[index], {
+        includeText: true,
+        tokens: ['--surface-matte', '--surface-matte-strong', '--surface-contrast', '--ink-on-matte', '--ink-on-matte-strong', '--text-on-matte'],
+      });
+    },
     inspectRuleBench(index = 0) {
       return snapshotInstrumentationTarget(getBenches()[index], {
         includeText: true,
@@ -364,6 +494,73 @@ function createDesignExperimentsConsole(roots) {
       });
       syncRuleBench(bench);
       return getRuleState(bench);
+    },
+    setMaterialBench(mode = 'matte', index = 0) {
+      const bench = getMaterialBenchList()[index];
+      if (!(bench instanceof HTMLElement)) return null;
+      bench.dataset.designMaterialMode = normalizeMaterialMode(mode);
+      syncMaterialBench(bench);
+      return getMaterialMode(bench);
+    },
+    /* New for style experimentation architecture: drive global matte clear contrast
+       (uses canonical site-settings so it persists + emits + affects page treatment).
+       Now delegates to explicit setter (single save + full kernel contract). */
+    applyClearMatteContrast() {
+      const root = document.documentElement;
+      // Immediate local dataset for bench specimens + live promo preview (before/parallel to apply).
+      // The setter will re-apply the authoritative datasets via applySiteSettings.
+      root.dataset.spwBaseMetamaterial = 'matte';
+      if (root.dataset.spwHighContrast !== 'on') root.dataset.spwHighContrast = 'on';
+      try {
+        if (typeof setClearContrastMatte === 'function') {
+          setClearContrastMatte(true);
+        } else if (typeof setBaseMetamaterial === 'function' && typeof setHighContrast === 'function') {
+          setBaseMetamaterial('matte');
+          setHighContrast('on');
+        } else if (typeof saveSiteSettings === 'function') {
+          saveSiteSettings({ baseMetamaterial: 'matte', highContrast: 'on' });
+        }
+      } catch {}
+      // Refresh local benches to match
+      getMaterialBenchList().forEach((b) => { b.dataset.designMaterialMode = 'matte'; syncMaterialBench(b); });
+      return { baseMetamaterial: 'matte', highContrast: 'on' };
+    },
+    inspectSemanticTokens(focus = ['--surface-matte', '--ink-on-matte', '--ink-on-matte-strong', '--text-on-matte', '--material-ink-matte-strong']) {
+      const styles = getComputedStyle(document.documentElement);
+      return Object.fromEntries(focus.map((t) => [t, styles.getPropertyValue(t).trim() || 'unset']));
+    },
+    getCurrentContrastState() {
+      const s = document.documentElement.dataset;
+      return {
+        baseMetamaterial: s.spwBaseMetamaterial || s.baseMetamaterial,
+        highContrast: s.spwHighContrast,
+        colorMode: s.spwColorMode,
+        themePack: s.spwThemePack,
+      };
+    },
+    /* Immediate appearance tuning abstractions for design page (live, non-persisted preview for playful exp).
+       Sets data attrs + CSS vars directly on root for instant feedback on color, contrast, motif (incl. new minimal),
+       font scale (normalization preview), layout. Useful for testing material properties, contrast audit, minimalist motifs
+       without full settings roundtrip. Composes with existing material bench, bundles, query. */
+    setImmediateAppearance({ accent, contrastBoost, motif, fontScale, layout } = {}) {
+      const root = document.documentElement;
+      if (accent) root.style.setProperty('--active-op-color', accent); // dynamic JS style ok for preview
+      if (contrastBoost != null) root.style.setProperty('--pigment-context-boost', String(contrastBoost));
+      if (motif) root.dataset.spwComponentMotif = motif; // e.g. 'minimal' for playful material exp
+      if (fontScale) root.dataset.spwFontSizeScale = String(fontScale);
+      if (layout) root.dataset.spwLayout = layout;
+      // Re-sync any benches
+      try { window.spwDesignExperiments?.refresh?.(); } catch {}
+      return { accent, contrastBoost, motif, fontScale, layout };
+    },
+    resetImmediateAppearance() {
+      const root = document.documentElement;
+      root.style.removeProperty('--active-op-color');
+      root.style.removeProperty('--pigment-context-boost');
+      // keep data from settings, but clear preview overrides if set
+      delete root.dataset.spwComponentMotif; // will fall to flavor
+      // font/layout leave to settings or explicit
+      try { window.spwDesignExperiments?.refresh?.(); } catch {}
     },
   });
 }
@@ -436,6 +633,7 @@ function syncRoot(root, settings = getSiteSettings()) {
     syncVariableControls(lab);
   });
   getRuleBenches(root).forEach(syncRuleBench);
+  getMaterialBenches(root).forEach(syncMaterialBench);
 }
 
 function applyBundle(button, root) {
@@ -450,6 +648,7 @@ function applyBundle(button, root) {
     return null;
   }
 
+  // Bundle paths already go through canonical saveSiteSettings (validate + normalize + apply + bus).
   const saved = saveSiteSettings(bundle);
   const label = button.getAttribute('data-design-bundle-label') || button.textContent?.trim() || 'bundle';
 
@@ -515,10 +714,38 @@ export function initDesignExperiments(root = document) {
   ));
   const variableCleanups = roots.flatMap((scope) => getVariableLabs(scope).map((lab) => bindVariableLab(lab, scope)));
   const ruleCleanups = roots.flatMap((scope) => getRuleBenches(scope).map(bindRuleBench));
+  const materialCleanups = roots.flatMap((scope) => getMaterialBenches(scope).map(bindMaterialBench));
+  const materialDelegationCleanups = roots.map(bindMaterialDelegation);
+  const consoleFallbackCleanups = roots.map(bindDesignConsoleFallback);
   const existingConsole = window.spwDesignExperiments || {};
-  window.spwDesignExperiments = Object.freeze({
+  const designConsole = Object.freeze({
     ...existingConsole,
     ...createDesignExperimentsConsole(roots),
+  });
+  window.spwDesignExperiments = designConsole;
+  globalThis.spwDesignExperiments = designConsole;
+
+  // Bind immediate appearance tuners (data-design-immediate on chips in design hub for live color/contrast/motif/font/layout preview).
+  // Parses ; separated like bundles, calls setImmediate or reset. Enables playful exp w/ material, font norm, layout UX, contrast test.
+  roots.forEach((scope) => {
+    scope.querySelectorAll?.('[data-design-immediate]').forEach((btn) => {
+      if (!(btn instanceof HTMLElement)) return;
+      btn.addEventListener('click', (e) => {
+        if (btn instanceof HTMLAnchorElement) e.preventDefault();
+        const val = btn.getAttribute('data-design-immediate') || '';
+        if (val === 'reset' || val === '') {
+          designConsole.resetImmediateAppearance?.();
+        } else {
+          const params = {};
+          val.split(';').forEach(pair => {
+            const [k,v] = pair.split(':').map(s=>s.trim());
+            if (k && v) params[k] = isNaN(v) ? v : Number(v);
+            else if (k) params[k] = true;
+          });
+          designConsole.setImmediateAppearance?.(params);
+        }
+      });
+    });
   });
 
   const syncAll = (settings = getSiteSettings()) => {
@@ -532,13 +759,6 @@ export function initDesignExperiments(root = document) {
   });
 
   return {
-    cleanup() {
-      cleanups.forEach((cleanup) => cleanup());
-      variableCleanups.forEach((cleanup) => cleanup());
-      ruleCleanups.forEach((cleanup) => cleanup());
-      if (window.spwDesignExperiments) delete window.spwDesignExperiments;
-      off?.();
-    },
     refresh() {
       syncAll();
     }

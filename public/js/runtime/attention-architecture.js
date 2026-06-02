@@ -1346,7 +1346,9 @@ function initPinchTextScale(root) {
 
     const nextScale = FONT_SCALE_STEPS[nextIndex];
     if (nextScale && nextScale !== getCurrentFontScale()) {
-      window.spwSettings?.save?.({ fontSizeScale: nextScale });
+      // Prefer explicit setter for improved settings wiring (uniform kernel path).
+      if (window.spwSettings?.setFontSizeScale) window.spwSettings.setFontSizeScale(nextScale);
+      else window.spwSettings?.save?.({ fontSizeScale: nextScale });
     }
   };
 

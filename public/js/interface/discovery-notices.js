@@ -6,6 +6,7 @@ import {
   getWeekIndex,
 } from '../typed/feed-utils.js';
 import { annotateFloatingChromeElement } from '../kernel/dom-contracts.js';
+import { bus } from '../kernel/bus.js';
 
 const FEED_URL = '/public/data/promo-wonder-cycle.json';
 const STORAGE_KEY = 'spw-discovery-notice-dismissals';
@@ -230,6 +231,19 @@ function createNoticeElement(notice) {
   if (notice.cadenceMotion) article.setAttribute('data-spw-cadence-motion', notice.cadenceMotion);
   if (notice.rewardKind) article.setAttribute('data-spw-reward-kind', notice.rewardKind);
   if (notice.productionSeed) article.setAttribute('data-spw-production-seed', notice.productionSeed);
+
+  // Propagate global material / clear-contrast choice to the notice so it can
+  // use matte surfaces + strong ink when the user has selected the "clear
+  // contrast" posture (or high-contrast + matte). This makes the daily promo /
+  // discovery notices respect the theming contract and the matte option for
+  // legible floating chrome.
+  const baseMat = document.documentElement.dataset.spwBaseMetamaterial;
+  if (baseMat && ['glass', 'matte', 'contrast', 'paper'].includes(baseMat)) {
+    article.setAttribute('data-spw-metamaterial', baseMat);
+  } else if (document.documentElement.dataset.spwHighContrast === 'on') {
+    // High contrast implies clear reading surfaces; prefer matte for notices.
+    article.setAttribute('data-spw-metamaterial', 'matte');
+  }
 
   const label = document.createElement('p');
   label.className = 'spw-discovery-notice__label';
@@ -644,5 +658,39 @@ export async function initSpwDiscoveryNotices(ctx = {}) {
   };
 
   ctx.addCleanup?.(cleanup);
+
+  // Reactive adoption of global material / matte-clear-contrast choice.
+  // When the design hub bench "apply matte clear globally" (or settings) updates
+  // the root dataset, open discovery notices / promos (like the collab modal in
+  // the reference screenshot) immediately switch to the clear matte surface + strong
+  // ink for legible text. Complements creation-time propagation.
+  const adoptGlobalMaterial = () => {
+    const base = document.documentElement.dataset.spwBaseMetamaterial;
+    const notices = document.querySelectorAll(`[${NOTICE_ATTR}]`);
+    notices.forEach((n) => {
+      if (base && ['glass', 'matte', 'contrast', 'paper'].includes(base)) {
+        n.setAttribute('data-spw-metamaterial', base);
+      } else if (document.documentElement.dataset.spwHighContrast === 'on') {
+        n.setAttribute('data-spw-metamaterial', 'matte');
+      }
+    });
+  };
+  bus?.on?.('settings:changed', adoptGlobalMaterial);
+  document.addEventListener('spw:settings-change', adoptGlobalMaterial, { passive: true });
+
+  const mo = new MutationObserver((muts) => {
+    for (const m of muts) {
+      if (m.type === 'attributes' && (m.attributeName === 'data-spw-base-metamaterial' || m.attributeName === 'data-spw-high-contrast')) {
+        adoptGlobalMaterial();
+        break;
+      }
+    }
+  });
+  mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-spw-base-metamaterial', 'data-spw-high-contrast'] });
+
+  ctx.addCleanup?.(() => {
+    mo.disconnect();
+  });
+
   return cleanup;
 }

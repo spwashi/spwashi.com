@@ -15,11 +15,17 @@
   --design-surface-ink: rgba(14, 18, 20, 0.94);
   --design-surface-ink-soft: rgba(14, 18, 20, 0.74);
   --design-surface-ink-mid: rgba(14, 18, 20, 0.58);
+  /* New clear-contrast matte utilities for design hub (semantic + theming depth) */
+  --design-surface-ink-on-matte: var(--ink-on-matte-strong, rgba(14, 18, 20, 0.98));
+  --design-surface-ink-on-matte-soft: var(--ink-on-matte-soft, rgba(14, 18, 20, 0.78));
   --design-surface-line: color-mix(in srgb, var(--design-surface-accent) 30%, rgba(14, 18, 20, 0.12));
   --design-surface-line-strong: color-mix(in srgb, var(--design-surface-accent-strong) 48%, rgba(14, 18, 20, 0.16));
   --design-surface-base: rgba(255, 255, 255, 0.76);
   --design-surface-base-strong: rgba(255, 255, 255, 0.9);
   --design-surface-base-soft: rgba(255, 255, 255, 0.58);
+  --design-surface-matte: var(--surface-matte, rgba(247, 244, 238, 0.96));
+  --design-surface-matte-strong: var(--surface-matte-strong, rgba(252, 249, 243, 0.98));
+  --design-surface-contrast: var(--surface-contrast, rgba(255, 253, 248, 0.99));
   --design-surface-panel: rgba(255, 255, 255, 0.84);
   --design-surface-panel-strong: rgba(255, 255, 255, 0.92);
   --design-surface-link: color-mix(in srgb, var(--design-surface-accent-strong) 84%, var(--design-surface-ink) 16%);
@@ -66,6 +72,9 @@
   --surface: var(--design-surface-base);
   --surface-strong: var(--design-surface-base-strong);
   --surface-soft: var(--design-surface-base-soft);
+  --surface-matte: var(--design-surface-matte);
+  --surface-matte-strong: var(--design-surface-matte-strong);
+  --surface-contrast: var(--design-surface-contrast);
   --surface-panel: var(--design-surface-panel);
   --surface-panel-strong: var(--design-surface-panel-strong);
   --grammar-surface: var(--design-surface-paper);
@@ -78,6 +87,45 @@
   --spw-shell-chrome-line: var(--design-surface-shell-line);
 
   color: var(--design-surface-ink);
+}
+
+html[data-spw-color-mode="dark"] :where(body[data-spw-page-seed="page_design_design_hub"]) {
+  --design-surface-ink: var(--ink-strong, rgba(246, 250, 248, 0.97));
+  --design-surface-ink-soft: var(--ink-soft, rgba(220, 230, 226, 0.84));
+  --design-surface-ink-mid: var(--ink-mid, rgba(202, 214, 210, 0.68));
+  /* Dark clear-contrast matte utilities */
+  --design-surface-ink-on-matte: var(--ink-on-matte-strong, rgba(255, 255, 255, 0.98));
+  --design-surface-ink-on-matte-soft: var(--ink-on-matte-soft, rgba(220, 230, 226, 0.84));
+  --design-surface-line: color-mix(in srgb, var(--active-op-color, #60d2d2) 24%, var(--line, rgba(246, 250, 248, 0.18)));
+  --design-surface-line-strong: color-mix(in srgb, var(--active-op-color, #60d2d2) 44%, var(--line, rgba(246, 250, 248, 0.22)));
+  --design-surface-base: var(--surface, rgba(18, 24, 28, 0.78));
+  --design-surface-base-strong: var(--surface-strong, rgba(25, 32, 37, 0.92));
+  --design-surface-base-soft: var(--surface-soft, rgba(18, 24, 28, 0.58));
+  --design-surface-matte: var(--surface-matte, rgba(28, 36, 42, 0.96));
+  --design-surface-matte-strong: var(--surface-matte-strong, rgba(34, 43, 50, 0.98));
+  --design-surface-contrast: var(--surface-contrast, rgba(38, 48, 56, 0.98));
+  --design-surface-panel: var(--surface-panel, rgba(24, 31, 36, 0.9));
+  --design-surface-panel-strong: var(--surface-panel-strong, rgba(30, 38, 44, 0.95));
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-spw-color-mode="auto"] :where(body[data-spw-page-seed="page_design_design_hub"]) {
+    --design-surface-ink: var(--ink-strong, rgba(246, 250, 248, 0.97));
+    --design-surface-ink-soft: var(--ink-soft, rgba(220, 230, 226, 0.84));
+    --design-surface-ink-mid: var(--ink-mid, rgba(202, 214, 210, 0.68));
+    --design-surface-ink-on-matte: var(--ink-on-matte-strong, rgba(255, 255, 255, 0.98));
+    --design-surface-ink-on-matte-soft: var(--ink-on-matte-soft, rgba(220, 230, 226, 0.84));
+    --design-surface-line: color-mix(in srgb, var(--active-op-color, #60d2d2) 24%, var(--line, rgba(246, 250, 248, 0.18)));
+    --design-surface-line-strong: color-mix(in srgb, var(--active-op-color, #60d2d2) 44%, var(--line, rgba(246, 250, 248, 0.22)));
+    --design-surface-base: var(--surface, rgba(18, 24, 28, 0.78));
+    --design-surface-base-strong: var(--surface-strong, rgba(25, 32, 37, 0.92));
+    --design-surface-base-soft: var(--surface-soft, rgba(18, 24, 28, 0.58));
+    --design-surface-matte: var(--surface-matte, rgba(28, 36, 42, 0.96));
+    --design-surface-matte-strong: var(--surface-matte-strong, rgba(34, 43, 50, 0.98));
+    --design-surface-contrast: var(--surface-contrast, rgba(38, 48, 56, 0.98));
+    --design-surface-panel: var(--surface-panel, rgba(24, 31, 36, 0.9));
+    --design-surface-panel-strong: var(--surface-panel-strong, rgba(30, 38, 44, 0.95));
+  }
 }
 
 /* Reference / screenshot-friendly tightening for sync-specimen cards on palettes and similar surfaces.
@@ -352,6 +400,124 @@
 
 :where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-qa-card .palette-probe-actions) {
   margin-top: 0.2rem;
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-qa-card--material) {
+  grid-column: 1 / -1;
+  border: 1px solid color-mix(in srgb, var(--design-surface-accent-strong) 34%, var(--design-surface-line) 66%);
+  background:
+    radial-gradient(circle at 95% 0%, color-mix(in srgb, var(--design-surface-accent) 12%, transparent), transparent 36%),
+    linear-gradient(180deg, var(--design-surface-panel-strong), color-mix(in srgb, var(--design-surface-panel) 96%, transparent));
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-material-bench) {
+  display: grid;
+  gap: 0.75rem;
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-material-controls) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-material-controls .operator-chip[aria-pressed="true"]) {
+  border-color: color-mix(in srgb, var(--design-surface-accent-strong) 70%, var(--design-surface-line) 30%);
+  background: color-mix(in srgb, var(--design-surface-accent) 16%, var(--design-surface-matte-strong));
+  color: var(--design-surface-ink);
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-material-stage) {
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-material-specimen) {
+  display: grid;
+  gap: 0.45rem;
+  min-width: 0;
+  padding: 0.85rem 0.9rem;
+  border-radius: var(--shape-surface, 10px);
+  opacity: 0.78;
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    border-color 160ms ease;
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-material-specimen[data-design-material-active="true"]) {
+  opacity: 1;
+  transform: translateY(-2px);
+  box-shadow:
+    0 12px 28px color-mix(in srgb, var(--design-surface-ink) 10%, transparent),
+    0 0 0 2px color-mix(in srgb, var(--design-surface-accent-strong) 28%, transparent);
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-material-specimen code) {
+  font-size: 0.72rem;
+  overflow-wrap: anywhere;
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-material-readout) {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0;
+  color: var(--design-surface-ink-soft);
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-material-readout div) {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.4rem;
+  padding: 0.45rem 0.55rem;
+  border: 1px solid color-mix(in srgb, var(--design-surface-line) 84%, transparent);
+  border-radius: var(--shape-component, 6px);
+  background: color-mix(in srgb, var(--design-surface-matte-strong) 92%, transparent);
+}
+
+/* Promo specimen inside material bench: scaled notice preview for live style
+   experimentation. Uses material tokens (via data-spw-metamaterial on the specimen)
+   so toggling glass/matte/contrast updates its surface + text contrast live.
+   This increases interactive page surface area on the design hub and makes the
+   daily promo / discovery notice feature discoverable as a tunable surface. */
+:where(body[data-spw-page-seed="page_design_design_hub"]) .design-promo-specimen {
+  padding: 0.5rem 0.6rem;
+  font-size: 0.72em;
+  line-height: 1.28;
+  gap: 0.2rem;
+  border-radius: var(--shape-component);
+  /* material.css baseline + [data-spw-metamaterial] rules supply bg/color/border */
+}
+:where(body[data-spw-page-seed="page_design_design_hub"]) .design-promo-specimen .spw-discovery-notice__label {
+  font-size: 0.85em;
+  letter-spacing: 0.1em;
+  color: var(--design-surface-ink-mid, var(--ink-mid));
+  margin: 0;
+}
+:where(body[data-spw-page-seed="page_design_design_hub"]) .design-promo-specimen .spw-discovery-notice__title {
+  font-size: 1em;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--design-surface-ink, var(--ink-on-matte));
+  margin: 0;
+}
+:where(body[data-spw-page-seed="page_design_design_hub"]) .design-promo-specimen .spw-discovery-notice__summary,
+:where(body[data-spw-page-seed="page_design_design_hub"]) .design-promo-specimen .spw-discovery-notice__offer {
+  font-size: 0.95em;
+  color: var(--design-surface-ink-soft, var(--ink-on-matte-soft));
+  margin: 0;
+}
+:where(body[data-spw-page-seed="page_design_design_hub"]) .design-promo-specimen .spw-discovery-notice__handles {
+  gap: 0.15rem;
+}
+:where(body[data-spw-page-seed="page_design_design_hub"]) .design-promo-specimen .spec-pill {
+  font-size: 0.82em;
+  padding: 0.02rem 0.3rem;
+  min-height: 1rem;
+  border-radius: 3px;
 }
 
 :where(body[data-spw-page-family="design"]) :where(.spw-interaction-contract) {

@@ -7,6 +7,10 @@
  * canonical application. This file only seeds the document element with the
  * last saved visual state before the main stylesheet loads, reducing flash
  * and layout churn on refresh.
+ *
+ * Extended to cover pedagogicalFlavor + componentMotif (critical for early
+ * pigment/motif token application in tokens/core.css) and spwRuntimeStage
+ * for observable load timing / CSS progressive hooks.
  */
 
 (() => {
@@ -103,10 +107,20 @@
   const operatorSaturation = pick(settings.operatorSaturation, OPERATOR_SATURATION, 'normal');
   const reduceMotion = pick(settings.reduceMotion, BINARY, 'off');
   const highContrast = pick(settings.highContrast, BINARY, 'off');
+  const baseMetamaterial = pick(settings.baseMetamaterial, new Set(['paper', 'glass', 'matte', 'field']), 'glass');
   const grainIntensity = pick(settings.grainIntensity, GRAIN_INTENSITY, 'subtle');
+  const physicsReason = (settings.physicsReason || '').toString().trim().slice(0, 40); // flexible short reason for nav/physics gamification
   const fontSizeScale = toNumber(settings.fontSizeScale, 100);
   const fontScale = FONT_SIZE_PRESET_MULTIPLIER[fontSize] || 1;
   const climate = DEVELOPMENTAL_METADATA[developmentalClimate] || DEVELOPMENTAL_METADATA.orient;
+
+  // Critical visual for early CSS (motif-driven pigment, tokens in core.css).
+  // Duplicated tiny logic from shared.js so prepaint stays zero-dep and runs before any other module.
+  const pedagogicalFlavor = pick(settings.pedagogicalFlavor, new Set(['culinary', 'garden', 'studio', 'runtime']), 'runtime');
+  let componentMotif = 'lab';
+  const f = String(pedagogicalFlavor).toLowerCase();
+  if (f === 'culinary' || f === 'garden') componentMotif = 'curriculum';
+  else if (f === 'studio') componentMotif = 'artifact';
 
   html.dataset.spwColorMode = colorMode;
   html.dataset.spwThemePack = themePack;
@@ -128,9 +142,15 @@
   html.dataset.spwOperatorSaturation = operatorSaturation;
   html.dataset.spwReduceMotion = reduceMotion;
   html.dataset.spwHighContrast = highContrast;
+  html.dataset.spwBaseMetamaterial = baseMetamaterial;
   html.dataset.spwGrainIntensity = grainIntensity;
+  if (physicsReason) html.dataset.spwPhysicsReason = physicsReason;
   html.dataset.spwFontSizeScale = String(fontSizeScale);
+  html.dataset.spwPedagogicalFlavor = pedagogicalFlavor;
+  html.dataset.spwComponentMotif = componentMotif;
+  html.dataset.spwActiveMotif = componentMotif;
   html.dataset.spwSettingsPreflight = 'ready';
+  html.dataset.spwRuntimeStage = 'preflight';
 
   html.style.colorScheme = colorMode === 'auto' ? 'light dark' : colorMode;
   html.style.setProperty('--font-size-scale', `${fontSizeScale}%`);
@@ -138,4 +158,8 @@
   html.style.setProperty('--site-line-height', LINE_SPACING_VALUE[lineSpacing] || LINE_SPACING_VALUE.normal);
   html.style.setProperty('--site-mono-font', MONOSPACE_FONT_VALUE[monospaceVariant] || MONOSPACE_FONT_VALUE.jetbrains);
   html.style.setProperty('--site-header-opacity', HEADER_OPACITY_VALUE[headerOpacity] || HEADER_OPACITY_VALUE.normal);
+
+  if (typeof performance !== 'undefined' && performance.mark) {
+    performance.mark('spw:preflight-complete');
+  }
 })();

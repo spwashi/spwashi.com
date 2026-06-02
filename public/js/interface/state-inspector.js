@@ -166,6 +166,36 @@ function snapshotStateDimensions() {
       html: pickDataset(root.dataset),
       body: pickDataset(body?.dataset || {}),
     },
+    appearance: (window.spwSettings && typeof window.spwSettings.get === 'function')
+      ? (() => {
+          const s = window.spwSettings.get();
+          // Reasonable default visual/appearance slice for satchel observability + templating convenience.
+          return {
+            colorMode: s.colorMode,
+            themePack: s.themePack,
+            baseMetamaterial: s.baseMetamaterial,
+            highContrast: s.highContrast,
+            fontSizeScale: s.fontSizeScale,
+            physicsReason: s.physicsReason, // flexible interaction physics for gamified nav research + locality observability
+            fontSize: s.fontSize,
+            semanticDensity: s.semanticDensity,
+            operatorSaturation: s.operatorSaturation,
+            grainIntensity: s.grainIntensity,
+            // etc; full settings available via get but this is the "shell utility" relevant subset
+          };
+        })()
+      : null,
+    // Cognitive and attentional physics models (minds attention-field, wonder-vocabulary, cognitive-navigation, material tunability).
+    // Satchel and utilities must surface these so drag/tap/hold interactions are part of the field, not outside it.
+    cognitive: {
+      attention: root.dataset.spwAttention || '',
+      wonderState: root.dataset.spwWonderState || root.dataset.spwWonderMemory || '',
+      fieldResonance: root.dataset.spwFieldResonance || '',
+      physicsReason: root.dataset.spwPhysicsReason || (window.spwSettings?.get?.()?.physicsReason || ''),
+      semanticDensity: root.dataset.spwSemanticDensity || (window.spwSettings?.get?.()?.semanticDensity || ''),
+      metamaterial: root.dataset.spwBaseMetamaterial || root.dataset.spwMetamaterial || 'glass',
+      locality: root.dataset.spwLocality || '',
+    },
   };
 }
 
@@ -245,6 +275,21 @@ function createInspector() {
     stylingAxis: 'state-inspector',
   });
 
+  // Mind material definition and tunability: satchel as floating chrome must carry the current
+  // global/local material (glass/matte from baseMetamaterial or explicit) so its surfaces, ink,
+  // depth use the correct tokens/rules (see material.css, surface_material_contract).
+  // This keeps utility/satchel consistent with attentional/cognitive physics + material across
+  // pages, regions, specimens. Tap/hold opens inspect; drag is attentional repositioning in the field.
+  const syncSatchelMaterial = (r, l, p) => {
+    const base = document.documentElement.dataset.spwBaseMetamaterial || document.documentElement.dataset.spwMetamaterial || 'glass';
+    if (r) r.dataset.spwMetamaterial = base;
+    if (p) p.dataset.spwMetamaterial = base;
+    if (l) l.dataset.spwMetamaterial = base;
+    // Also propagate to any inner chrome if present
+    r?.querySelectorAll?.('[data-spw-floating-chrome]').forEach(el => { el.dataset.spwMetamaterial = base; });
+  };
+  syncSatchelMaterial(root, launch, panel);
+
   launch.type = 'button';
   launch.className = 'spw-state-inspector__launch';
   launch.setAttribute('aria-expanded', 'false');
@@ -264,7 +309,7 @@ function createInspector() {
   title.textContent = 'State satchel';
 
   summary.className = 'spw-state-inspector__summary';
-  summary.textContent = 'Inspect and nudge temporary page state. Changes are learnable, announced, and visible as data-spw-* attributes.';
+  summary.textContent = 'Inspect and nudge temporary page state. Changes are learnable, announced, and visible as data-spw-* attributes. Minds cognitive/attentional physics (attention field, wonder, resonance) and material tunability (glass/matte via baseMetamaterial); tap/hold/drag are gestures within the model.';
 
   actions.className = 'spw-state-inspector__actions';
   TOGGLES.forEach((config) => actions.append(createToggleButton(config)));
@@ -409,6 +454,11 @@ function bindSatchelDrag(root) {
     launch.dataset.spwDragState = 'dragging';
     launch.dataset.spwDragging = 'true'; // keep legacy for now
     root.dataset.spwDragState = 'dragging'; // explicit state on container for broader styling
+    // Mind attentional physics during drag (tap/hold/drag are gestures in the field model; drag here is
+    // repositioning the satchel "mass" within the attention field). Use data attrs so CSS/inspect
+    // (wonder, ornament) can respond; this makes satchel a first-class participant in cognitive physics.
+    launch.dataset.spwGesture = 'drag';
+    launch.dataset.spwAttention = 'sustained';
     startX = e.clientX;
     startY = e.clientY;
 
@@ -448,6 +498,9 @@ function bindSatchelDrag(root) {
     delete launch.dataset.spwDragging;
     launch.dataset.spwDragState = 'idle';
     delete root.dataset.spwDragState;
+    // Clear attentional/gesture markers on release (field model decay; satchel no longer "charged" by the drag gesture).
+    delete launch.dataset.spwGesture;
+    delete launch.dataset.spwAttention;
 
     // Save final position
     const rect = launch.getBoundingClientRect();
@@ -514,9 +567,22 @@ export function initStateInspector() {
     reason: 'inspector-mounted',
   });
 
+  // Re-mind material + cognitive models on changes (settings, bus, attr mutations) so satchel
+  // chrome and its internal snapshot stay aligned with global tunability and attentional field.
+  // This makes the satchel itself a participant in the physics models (drag moves attention mass,
+  // open/inspect reads the current material/attention/wonder state).
+  const l = root.querySelector('.spw-state-inspector__launch');
+  const p = root.querySelector('#' + PANEL_ID);
+  const reapply = () => syncSatchelMaterial(root, l, p);
+  document.addEventListener('spw:settings:changed', reapply, { passive: true });
+  bus?.on?.('settings:changed', reapply);
+  const mo = new MutationObserver(reapply);
+  mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-spw-base-metamaterial','data-spw-metamaterial','data-spw-attention','data-spw-wonder-state','data-spw-physics-reason','data-spw-high-contrast'] });
+
   return () => {
     cleanupBindings();
     cleanupDrag?.();
+    mo.disconnect();
     root.remove();
     writeRuntimeDatasetValues(document.documentElement, {
       spwStateInspector: null,

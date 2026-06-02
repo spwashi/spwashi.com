@@ -49,6 +49,17 @@ const THEME_PACK_OPTIONS = Object.freeze([
   'glass-console'
 ]);
 
+// Icon pack consideration (theming + icon packs plan started per while-working note).
+// Lightweight semantic extension for different icon/visual treatments (text operators vs symbol vs regional/project motifs).
+// Integrates with existing SVG tunability (project-motif), operator-chip, spec-pill, and design/ specimens.
+// Stubbed here so the settings system, dataset writes, and design catalog can recognize 'iconPack' immediately.
+// No UI or heavy logic yet; just the semantic + defaults for forward compatibility and instrumentation.
+const ICON_PACK_OPTIONS = Object.freeze([
+  'text',      // current: sigils + text operators (default)
+  'symbol',    // more glyph / icon-forward
+  'regional'   // local / project-specific motifs (ties to regional screenshot value + project dev notes)
+]);
+
 const FONT_SIZE_PRESET_MULTIPLIER = Object.freeze({
   small: 0.93,
   normal: 1,
@@ -254,6 +265,48 @@ const STROKE_PROFILE = Object.freeze({
   })
 });
 
+const SVG_SCALE_PROFILE = Object.freeze({
+  compact: Object.freeze({
+    surfaceMax: '38rem',
+    scaleFactor: 0.9,
+    labelScale: 0.96,
+    gapScale: 0.92
+  }),
+  balanced: Object.freeze({
+    surfaceMax: '52rem',
+    scaleFactor: 1,
+    labelScale: 1,
+    gapScale: 1
+  }),
+  expansive: Object.freeze({
+    surfaceMax: '68rem',
+    scaleFactor: 1.12,
+    labelScale: 1.06,
+    gapScale: 1.12
+  })
+});
+
+const SVG_STORY_PROFILE = Object.freeze({
+  quiet: Object.freeze({
+    narrativeIntensity: 0.72,
+    railIntensity: 0.82,
+    pointerLift: 0.82,
+    captionOpacity: 0.92
+  }),
+  guided: Object.freeze({
+    narrativeIntensity: 1,
+    railIntensity: 1,
+    pointerLift: 1,
+    captionOpacity: 1
+  }),
+  immersive: Object.freeze({
+    narrativeIntensity: 1.18,
+    railIntensity: 1.12,
+    pointerLift: 1.14,
+    captionOpacity: 1.06
+  })
+});
+
 const AUTHOR_WORKFLOW_TOKEN_VALUE = Object.freeze({
   draft: Object.freeze({
     annotationStrength: 0.26,
@@ -387,9 +440,10 @@ const DEFAULT_SITE_SETTINGS = Object.freeze({
   colorMode: 'auto',
   colorTuner: 'balanced',
   themePack: 'neutral-paper',
+  iconPack: 'text',  // new consideration stub
   pedagogicalFlavor: 'culinary',
   paletteResonance: DEFAULT_PALETTE_RESONANCE,
-  baseMetamaterial: 'glass',
+  baseMetamaterial: 'glass',  // 'matte' acts as the clear-contrast opaque safeguard (see material.css + surface_material_contract)
   baseAffordance: 'read',
   componentDensity: 'soft',
   operatorSaturation: 'normal',
@@ -397,6 +451,8 @@ const DEFAULT_SITE_SETTINGS = Object.freeze({
   animationIntensity: 'normal',
   contourProfile: 'balanced',
   strokeProfile: 'structural',
+  svgScaleProfile: 'balanced',
+  svgStoryProfile: 'guided',
   fieldResonance: 'field',
   spacingTuner: 'balanced',
   layoutTuner: 'reading',
@@ -453,7 +509,16 @@ const DEFAULT_SITE_SETTINGS = Object.freeze({
   processAttention: 'breath',
   overflowMode: 'contained',
 
+  /* Shell navigation chrome configuration (adaptive vs modal overlay etc). */
+  shellMenuPresentation: 'adaptive',
+
   grainIntensity: 'subtle',
+
+  /* Flexible 'reason' about interaction physics / navigability (fun, updatable descriptor for gamified feel,
+     component response, menu spring, wonder gamification, pattern locks). Can be set via bench/query/design
+     to explore business (precise, high-density) vs experiential (playful, calm) postures. Written as
+     data-spw-physics-reason for granular CSS/selector relationship to the abstraction. */
+  physicsReason: '',
 
   busDiagnostics: 'off',
   busMirrorToConsole: 'off',
@@ -472,6 +537,7 @@ const SETTING_OPTIONS = Object.freeze({
   colorMode: new Set(['auto', 'light', 'dark']),
   colorTuner: new Set(['soft', 'balanced', 'guarded']),
   themePack: new Set(THEME_PACK_OPTIONS),
+  iconPack: new Set(ICON_PACK_OPTIONS),
   pedagogicalFlavor: new Set(['culinary', 'garden', 'studio', 'runtime']),
   paletteResonance: new Set(PALETTE_RESONANCE_OPTIONS),
   baseMetamaterial: new Set(['paper', 'glass', 'matte', 'field']),
@@ -482,6 +548,8 @@ const SETTING_OPTIONS = Object.freeze({
   animationIntensity: new Set(['reduced', 'normal', 'enhanced']),
   contourProfile: new Set(['tight', 'balanced', 'soft']),
   strokeProfile: new Set(['hairline', 'structural', 'bold']),
+  svgScaleProfile: new Set(['compact', 'balanced', 'expansive']),
+  svgStoryProfile: new Set(['quiet', 'guided', 'immersive']),
   fieldResonance: new Set(['local', 'field', 'choral']),
   spacingTuner: new Set(['compact', 'balanced', 'roomy']),
   layoutTuner: new Set(['reading', 'wide', 'atlas']),
@@ -532,7 +600,14 @@ const SETTING_OPTIONS = Object.freeze({
 
   busDiagnostics: new Set(['off', 'basic', 'verbose']),
   busMirrorToConsole: new Set(['off', 'on']),
-  busHistorySize: new Set(['100', '250', '500'])
+  busHistorySize: new Set(['100', '250', '500']),
+
+  shellMenuPresentation: new Set(['adaptive', 'modal', 'drawer']),
+
+  // Flexible descriptor (not a strict enum): supports research/exploration of "reason" for gamified
+  // navigability, component locality physics, semantic density effects on feel. Any short token ok;
+  // validate is intentionally permissive for 'physicsReason'.
+  physicsReason: new Set(['', 'calm', 'playful', 'precise', 'expressive', 'springy', 'locked', 'puppet', 'screenshot', 'adaptive-shell', 'clear-contrast-safeguard', 'memory-gamified'])
 });
 
 const PRESETS = Object.freeze({
@@ -549,6 +624,8 @@ const PRESETS = Object.freeze({
     animationIntensity: 'normal',
     contourProfile: 'balanced',
     strokeProfile: 'structural',
+    svgScaleProfile: 'balanced',
+    svgStoryProfile: 'guided',
     fieldResonance: 'local',
     spacingTuner: 'balanced',
     interactionTuner: 'calm',
@@ -587,6 +664,8 @@ const PRESETS = Object.freeze({
     animationIntensity: 'enhanced',
     contourProfile: 'soft',
     strokeProfile: 'structural',
+    svgScaleProfile: 'expansive',
+    svgStoryProfile: 'immersive',
     fieldResonance: 'choral',
     spacingTuner: 'balanced',
     interactionTuner: 'expressive',
@@ -619,6 +698,8 @@ const PRESETS = Object.freeze({
     semanticDensity: 'rich',
     contourProfile: 'tight',
     strokeProfile: 'bold',
+    svgScaleProfile: 'compact',
+    svgStoryProfile: 'quiet',
     fieldResonance: 'field',
     spacingTuner: 'compact',
     interactionTuner: 'responsive',
@@ -653,6 +734,8 @@ const PRESETS = Object.freeze({
     animationThrottling: 'heavy',
     contourProfile: 'balanced',
     strokeProfile: 'bold',
+    svgScaleProfile: 'compact',
+    svgStoryProfile: 'quiet',
     fieldResonance: 'local',
     spacingTuner: 'roomy',
     interactionTuner: 'calm',
@@ -701,6 +784,8 @@ const SETTING_VALUE_LABELS = Object.freeze({
   animationIntensity: Object.freeze({reduced: 'Reduced', normal: 'Normal', enhanced: 'Enhanced'}),
   contourProfile: Object.freeze({tight: 'Tight', balanced: 'Balanced', soft: 'Soft'}),
   strokeProfile: Object.freeze({hairline: 'Hairline', structural: 'Structural', bold: 'Bold'}),
+  svgScaleProfile: Object.freeze({compact: 'Compact', balanced: 'Balanced', expansive: 'Expansive'}),
+  svgStoryProfile: Object.freeze({quiet: 'Quiet', guided: 'Guided', immersive: 'Immersive'}),
   fieldResonance: Object.freeze({local: 'Local', field: 'Field', choral: 'Choral'}),
   spacingTuner: Object.freeze({compact: 'Compact', balanced: 'Balanced', roomy: 'Roomy'}),
   layoutTuner: Object.freeze({reading: 'Reading', wide: 'Wide', atlas: 'Atlas'}),
@@ -754,7 +839,8 @@ const SETTING_VALUE_LABELS = Object.freeze({
   grainIntensity: Object.freeze({none: 'None', subtle: 'Subtle', moderate: 'Moderate', rich: 'Rich'}),
   busDiagnostics: Object.freeze({off: 'Off', basic: 'Basic', verbose: 'Verbose'}),
   busMirrorToConsole: Object.freeze({off: 'Off', on: 'On'}),
-  busHistorySize: Object.freeze({100: '100 events', 250: '250 events', 500: '500 events'})
+  busHistorySize: Object.freeze({100: '100 events', 250: '250 events', 500: '500 events'}),
+  physicsReason: Object.freeze({ '': '— (use interactionTuner + density)', calm: 'Calm', playful: 'Playful (gamified nav)', precise: 'Precise (business tools)', expressive: 'Expressive', springy: 'Springy', locked: 'Locked (pattern)', puppet: 'Puppet (lab)', screenshot: 'Screenshot-ready', 'adaptive-shell': 'Adaptive shell', 'clear-contrast-safeguard': 'Clear contrast', 'memory-gamified': 'Memory gamified' })
 });
 
 const PRESET_LABELS = Object.freeze({
@@ -1025,21 +1111,24 @@ const storage = {
     try {
       const raw = localStorage.getItem(SITE_SETTINGS_KEY);
       return raw ? JSON.parse(raw) : {};
-    } catch {
+    } catch (e) {
+      if (isLocalDev()) console.debug('[site-settings] storage read failed (impossible in some envs)', e);
       return {};
     }
   },
   set(settings) {
     try {
       localStorage.setItem(SITE_SETTINGS_KEY, JSON.stringify(settings));
-    } catch {
+    } catch (e) {
+      if (isLocalDev()) console.debug('[site-settings] storage write failed (impossible in some envs)', e);
       /* non-fatal */
     }
   },
   clear() {
     try {
       localStorage.removeItem(SITE_SETTINGS_KEY);
-    } catch {
+    } catch (e) {
+      if (isLocalDev()) console.debug('[site-settings] storage clear failed (impossible in some envs)', e);
       /* non-fatal */
     }
   }
@@ -1402,6 +1491,8 @@ const deriveArchitecturalModifiers = (settings) => {
   const wonderProfile = getWonderMemoryProfile(settings);
   const contourProfile = CONTOUR_PROFILE[settings.contourProfile] || CONTOUR_PROFILE.balanced;
   const strokeProfile = STROKE_PROFILE[settings.strokeProfile] || STROKE_PROFILE.structural;
+  const svgScaleProfile = SVG_SCALE_PROFILE[settings.svgScaleProfile] || SVG_SCALE_PROFILE.balanced;
+  const svgStoryProfile = SVG_STORY_PROFILE[settings.svgStoryProfile] || SVG_STORY_PROFILE.guided;
   const fieldResonance = FIELD_RESONANCE_PROFILE[settings.fieldResonance] || FIELD_RESONANCE_PROFILE.field;
   const colorTuner = COLOR_TUNER_PROFILE[settings.colorTuner] || COLOR_TUNER_PROFILE.balanced;
   const spacingTuner = SPACING_TUNER_PROFILE[settings.spacingTuner] || SPACING_TUNER_PROFILE.balanced;
@@ -1500,7 +1591,14 @@ const deriveArchitecturalModifiers = (settings) => {
       svgStrokeScale: strokeProfile.svgStrokeScale,
       svgFlowDash: strokeProfile.svgFlowDash,
       svgFlowGap: strokeProfile.svgFlowGap,
-      svgLabelSpacing: strokeProfile.svgLabelSpacing
+      svgLabelSpacing: `${(parseFloat(strokeProfile.svgLabelSpacing) * svgScaleProfile.labelScale).toFixed(2)}em`,
+      svgScaleFactor: svgScaleProfile.scaleFactor,
+      svgSurfaceMax: svgScaleProfile.surfaceMax,
+      svgGapScale: svgScaleProfile.gapScale,
+      svgNarrativeIntensity: svgStoryProfile.narrativeIntensity,
+      svgRailIntensity: svgStoryProfile.railIntensity,
+      svgPointerLift: svgStoryProfile.pointerLift,
+      svgCaptionOpacity: svgStoryProfile.captionOpacity
     }),
     field: Object.freeze({
       radius: fieldResonance.attentionFieldRadius,
@@ -1515,6 +1613,107 @@ const deriveArchitecturalModifiers = (settings) => {
       reach: clampNumber(wonderProfile.reach * fieldResonance.wonderReachScale, 0, 2)
     })
   });
+};
+
+/**
+ * Data builder for runtime dataset entries.
+ * Extracted for composition, testability, and to keep apply() as a clear pipeline
+ * (normalize -> modifiers -> build datasets -> build styles -> side effects -> bus).
+ * Supports the "tunable material surface" and cognitive abstractions (physics-reason,
+ * locality, density as first-class inspectable state for storytellers/engineers).
+ */
+const buildDatasetEntries = (normalized, modifiers, deviations, climate) => {
+  const deviationNames = deviations.map((entry) => entry.name);
+  const entries = {
+    authorMode: modifiers.author.mode,
+    spwAuthorMode: modifiers.author.mode,
+    spwAuthorIntent: modifiers.author.intent,
+    spwNavigator: normalized.navigatorDisplay,
+    spwConsole: normalized.consoleDisplay,
+    spwViewportActivation: normalized.viewportActivation,
+    spwReduceMotion: normalized.reduceMotion,
+    spwHighContrast: normalized.highContrast,
+    spwFontSize: normalized.fontSize,
+    spwColorMode: normalized.colorMode,
+    spwColorTuner: normalized.colorTuner,
+    spwThemePack: normalized.themePack,
+    spwIconPack: normalized.iconPack,
+    spwPedagogicalFlavor: normalized.pedagogicalFlavor,
+    spwPaletteResonance: normalized.paletteResonance,
+    spwBaseMetamaterial: normalized.baseMetamaterial,
+    spwBaseAffordance: normalized.baseAffordance,
+    spwComponentDensity: normalized.componentDensity,
+    spwOperatorSaturation: normalized.operatorSaturation,
+    spwNumericityEmphasis: normalized.numericityEmphasis,
+    spwAnimationIntensity: normalized.animationIntensity,
+    spwContourProfile: normalized.contourProfile,
+    spwStrokeProfile: normalized.strokeProfile,
+    spwSvgScaleProfile: normalized.svgScaleProfile,
+    spwSvgStoryProfile: normalized.svgStoryProfile,
+    spwFieldResonance: normalized.fieldResonance,
+    spwSpacingTuner: normalized.spacingTuner,
+    spwLayoutTuner: normalized.layoutTuner,
+    spwInteractionTuner: normalized.interactionTuner,
+    spwComponentLifecycle: normalized.componentLifecycle,
+    spwDebugMode: normalized.debugMode,
+    spwShowFrameMetadata: normalized.showFrameMetadata,
+    spwVerboseLogging: normalized.verboseLogging,
+    spwFontSizeScale: normalized.fontSizeScale,
+    spwLineSpacing: normalized.lineSpacing,
+    spwMonospaceVariant: normalized.monospaceVariant,
+    spwTypeset: normalized.typesettingMode,
+    spwReadingGrooveMode: normalized.readingGrooveMode,
+    spwScrollCadence: normalized.scrollCadence,
+    spwPinchTextScale: normalized.pinchTextScale,
+    spwShowFooter: normalized.showFooter,
+    spwHeaderOpacity: normalized.headerOpacity,
+    spwShowSpecPills: normalized.showSpecPills,
+    spwAnimationThrottling: normalized.animationThrottling,
+    spwImageLazyLoading: normalized.imageLazyLoading,
+    spwEnhancementLevel: normalized.enhancementLevel,
+    spwSemanticDensity: normalized.semanticDensity,
+    spwOperatorPresentation: normalized.operatorPresentation,
+    spwInfospaceComplexity: normalized.infospaceComplexity,
+    spwCognitiveHandles: normalized.cognitiveHandles,
+    spwDimensionalBreadcrumbs: normalized.dimensionalBreadcrumbs,
+    spwFractalNesting: normalized.fractalNesting,
+    spwMetacognitiveStance: normalized.metacognitiveStance,
+    spwProcessAttention: normalized.processAttention,
+    spwOverflowMode: normalized.overflowMode,
+    spwImplementationMutations: normalized.implementationMutations,
+    spwShowSemanticMetadata: normalized.showSemanticMetadata,
+    spwOperatorHighlighting: normalized.operatorHighlighting,
+    spwRelationalVisualization: normalized.relationalVisualization,
+    spwWonderMemory: normalized.wonderMemory,
+    spwNarrativeMode: normalized.narrativeMode,
+    spwDevelopmentalIndicators: normalized.developmentalIndicators,
+    spwDepthIndicators: normalized.depthIndicators,
+    spwDevelopmentalClimate: normalized.currentDevelopmentalClimate,
+    spwDevelopmentalLabel: climate.label,
+    spwDevelopmentalAuthorLabel: climate.authorLabel,
+    spwLearningMode: climate.learningMode,
+    spwSpiritPhase: normalized.currentDevelopmentalClimate,
+    spwDevelopmentalClimateAutoCycle: normalized.developmentalClimateAutoCycle,
+    spwGrainIntensity: normalized.grainIntensity,
+    spwBusDiagnostics: normalized.busDiagnostics,
+    spwBusMirrorToConsole: normalized.busMirrorToConsole,
+    spwBusHistorySize: normalized.busHistorySize,
+    spwShellMenuPresentation: normalized.shellMenuPresentation,
+    spwPhysicsReason: normalized.physicsReason || null,
+    spwDeviationCount: String(deviations.length),
+    spwDeviations: deviationNames.join(' ') || null,
+    spwDeviationState: deviations.length > 0 ? 'deviated' : 'default'
+  };
+
+  // Semantic currents (emergent clusters...) – kept here as part of the dataset builder.
+  const currentSignature = [
+    normalized.semanticDensity,
+    normalized.interactionTuner || 'balanced',
+    document.documentElement?.dataset?.spwLoadPosture || 'normal'
+  ].filter(Boolean).join('+');
+  entries.spwSemanticCurrent = currentSignature || null;
+
+  return entries;
 };
 
 class SiteSettingsManager {
@@ -1541,95 +1740,8 @@ class SiteSettingsManager {
     const deviations = listDeviations(normalized);
     const deviationNames = deviations.map((entry) => entry.name);
 
-    const datasetEntries = {
-      authorMode: modifiers.author.mode,
-      spwAuthorMode: modifiers.author.mode,
-      spwAuthorIntent: modifiers.author.intent,
-      spwNavigator: normalized.navigatorDisplay,
-      spwConsole: normalized.consoleDisplay,
-      spwViewportActivation: normalized.viewportActivation,
-      spwReduceMotion: normalized.reduceMotion,
-      spwHighContrast: normalized.highContrast,
-      spwFontSize: normalized.fontSize,
-      spwColorMode: normalized.colorMode,
-      spwColorTuner: normalized.colorTuner,
-      spwThemePack: normalized.themePack,
-      spwPedagogicalFlavor: normalized.pedagogicalFlavor,
-      spwPaletteResonance: normalized.paletteResonance,
-      spwBaseMetamaterial: normalized.baseMetamaterial,
-      spwBaseAffordance: normalized.baseAffordance,
-      spwComponentDensity: normalized.componentDensity,
-      spwOperatorSaturation: normalized.operatorSaturation,
-      spwNumericityEmphasis: normalized.numericityEmphasis,
-      spwAnimationIntensity: normalized.animationIntensity,
-      spwContourProfile: normalized.contourProfile,
-      spwStrokeProfile: normalized.strokeProfile,
-      spwFieldResonance: normalized.fieldResonance,
-      spwSpacingTuner: normalized.spacingTuner,
-      spwLayoutTuner: normalized.layoutTuner,
-      spwInteractionTuner: normalized.interactionTuner,
-      spwComponentLifecycle: normalized.componentLifecycle,
-      spwDebugMode: normalized.debugMode,
-      spwShowFrameMetadata: normalized.showFrameMetadata,
-      spwVerboseLogging: normalized.verboseLogging,
-      spwFontSizeScale: normalized.fontSizeScale,
-      spwLineSpacing: normalized.lineSpacing,
-      spwMonospaceVariant: normalized.monospaceVariant,
-      spwTypeset: normalized.typesettingMode,
-      spwReadingGrooveMode: normalized.readingGrooveMode,
-      spwScrollCadence: normalized.scrollCadence,
-      spwPinchTextScale: normalized.pinchTextScale,
-      spwShowFooter: normalized.showFooter,
-      spwHeaderOpacity: normalized.headerOpacity,
-      spwShowSpecPills: normalized.showSpecPills,
-      spwAnimationThrottling: normalized.animationThrottling,
-      spwImageLazyLoading: normalized.imageLazyLoading,
-      spwEnhancementLevel: normalized.enhancementLevel,
-      spwSemanticDensity: normalized.semanticDensity,
-      spwOperatorPresentation: normalized.operatorPresentation,
-      spwInfospaceComplexity: normalized.infospaceComplexity,
-      spwCognitiveHandles: normalized.cognitiveHandles,
-      spwDimensionalBreadcrumbs: normalized.dimensionalBreadcrumbs,
-      spwFractalNesting: normalized.fractalNesting,
-
-      /* Metacognitive and mindful profile state — first-class Spw semantics for noticing one's own stance */
-      spwMetacognitiveStance: normalized.metacognitiveStance,
-      spwProcessAttention: normalized.processAttention,
-      spwOverflowMode: normalized.overflowMode,
-      spwImplementationMutations: normalized.implementationMutations,
-      spwShowSemanticMetadata: normalized.showSemanticMetadata,
-      spwOperatorHighlighting: normalized.operatorHighlighting,
-      spwRelationalVisualization: normalized.relationalVisualization,
-      spwWonderMemory: normalized.wonderMemory,
-      spwNarrativeMode: normalized.narrativeMode,
-      spwDevelopmentalIndicators: normalized.developmentalIndicators,
-      spwDepthIndicators: normalized.depthIndicators,
-      spwDevelopmentalClimate: normalized.currentDevelopmentalClimate,
-      spwDevelopmentalLabel: climate.label,
-      spwDevelopmentalAuthorLabel: climate.authorLabel,
-      spwLearningMode: climate.learningMode,
-      spwSpiritPhase: normalized.currentDevelopmentalClimate,
-      spwDevelopmentalClimateAutoCycle: normalized.developmentalClimateAutoCycle,
-      spwGrainIntensity: normalized.grainIntensity,
-      spwBusDiagnostics: normalized.busDiagnostics,
-      spwBusMirrorToConsole: normalized.busMirrorToConsole,
-      spwBusHistorySize: normalized.busHistorySize,
-      spwDeviationCount: String(deviations.length),
-      spwDeviations: deviationNames.join(' ') || null,
-      spwDeviationState: deviations.length > 0 ? 'deviated' : 'default'
-    };
-
-    // Semantic currents (emergent clusters across Spw semantics + data attrs).
-    // This is the seed for runtime modification as a responsive storytelling mechanic.
-    // Pages (especially settings + design) can react to the current "signature"
-    // (density + wonder + posture + load + gesture + variant clusters) with
-    // narrative or extra affordance responses — the "currents" the surface feels.
-    const currentSignature = [
-      normalized.semanticDensity,
-      normalized.interactionTuner || 'balanced',
-      document.documentElement?.dataset?.spwLoadPosture || 'normal'
-    ].filter(Boolean).join('+');
-    datasetEntries.spwSemanticCurrent = currentSignature || null;
+    // Use extracted data builder (better composition + pipeline clarity in apply()).
+    const datasetEntries = buildDatasetEntries(normalized, modifiers, deviations, climate);
 
     setDatasetEntries(this.root, datasetEntries);
     if (this.body) setDatasetEntries(this.body, datasetEntries);
@@ -1685,6 +1797,13 @@ class SiteSettingsManager {
       '--spw-svg-flow-dash': modifiers.stroke.svgFlowDash,
       '--spw-svg-flow-gap': modifiers.stroke.svgFlowGap,
       '--spw-svg-label-spacing': modifiers.stroke.svgLabelSpacing,
+      '--spw-svg-scale-factor': modifiers.stroke.svgScaleFactor,
+      '--spw-svg-surface-max': modifiers.stroke.svgSurfaceMax,
+      '--spw-svg-gap-scale': modifiers.stroke.svgGapScale,
+      '--spw-svg-narrative-intensity': modifiers.stroke.svgNarrativeIntensity,
+      '--spw-svg-rail-intensity': modifiers.stroke.svgRailIntensity,
+      '--spw-svg-pointer-lift': modifiers.stroke.svgPointerLift,
+      '--spw-svg-caption-opacity': modifiers.stroke.svgCaptionOpacity,
       '--attention-field-radius': modifiers.field.radius,
       '--attention-field-decay': modifiers.field.decay,
       '--attention-echo-duration': modifiers.field.echoDuration,
@@ -1824,7 +1943,11 @@ const applySiteSettings = (settings) => {
       bus.emit('spell:primed', spellPayload);
       bus.emit('cauldron:offer', { type: 'settings-state', payload: spellPayload });
     }
-  } catch (_) { /* progressive; bus may not be wired in all early paths */ }
+  } catch (e) {
+    if (isLocalDev()) {
+      console.debug('[site-settings] progressive bus emit skipped (early/edge state)', e);
+    }
+  }
 
   // Expressive layout trope instrumentation (vision: deliberate shifts as design language).
   // When author workflow or developmental climate (core "magic manuscript" layers) change,
@@ -1874,7 +1997,14 @@ const applySiteSettings = (settings) => {
         });
       }
     }
-  } catch (_) { /* never break settings application */ }
+  } catch (e) {
+    if (isLocalDev()) {
+      // Audit "impossible" or edge state during full apply (e.g. motif + new material combos,
+      // early DOM, or experimental shell utilities). Surfaces for local debugging convenience
+      // without spamming prod or deployed noise.
+      console.debug('[site-settings] non-fatal during apply (audited impossible/edge state)', e);
+    }
+  }
 
   return applied;
 };
@@ -1884,6 +2014,10 @@ const shouldUseViewportActivation = () => manager.shouldUseViewportActivation();
 const emitSettingsChange = (settings) => bus.emit('settings:changed', settings);
 const getSettingValue = (name, settings = getSiteSettings()) => (isKnownSetting(name) ? normalizeSiteSettings(settings)[name] : undefined);
 const getSiteSettingDeviations = (settings) => listDeviations(settings ?? getSiteSettings());
+
+const isLocalDev = () =>
+  (typeof location !== 'undefined' && (location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.hostname.endsWith('.local')))
+  || (typeof document !== 'undefined' && document.documentElement?.dataset?.spwDebugMode === 'on');
 
 const describeDeviation = ({name, default: defaultValue, current}) => ({
   name,
@@ -1897,6 +2031,50 @@ const describeDeviation = ({name, default: defaultValue, current}) => ({
 const resetSingleSetting = (name) => {
   if (!isKnownSetting(name)) return null;
   return saveSiteSettings({[name]: DEFAULT_SITE_SETTINGS[name]});
+};
+
+/**
+ * Explicit named setters for common shell / bench / utility controls.
+ * All delegate to canonical saveSiteSettings (which does: sanitize/validate,
+ * normalize+merge, persist, apply (datasets+styles+side effects), deviations,
+ * and bus 'settings:changed' + related emits).
+ * This centralizes wiring so matte/clear-contrast, font, etc. from shell
+ * buttons, design bench, pinch, etc. all flow through the same contract.
+ * High-contrast value is normalized to canonical 'on'/'off' strings.
+ */
+const setBaseMetamaterial = (value) => {
+  const v = String(value || '').trim();
+  if (!SETTING_OPTIONS.baseMetamaterial?.has(v)) {
+    if (isLocalDev()) console.debug('[site-settings] invalid baseMetamaterial attempted', v);
+    return null;
+  }
+  return saveSiteSettings({ baseMetamaterial: v });
+};
+
+const setHighContrast = (value) => {
+  let v = value;
+  if (v === true || v === 'true' || v === 1 || v === '1') v = 'on';
+  else if (v === false || v === 'false' || v === 0 || v === '0') v = 'off';
+  v = String(v || '').trim().toLowerCase();
+  if (v !== 'on' && v !== 'off') v = 'off';
+  if (!SETTING_OPTIONS.highContrast?.has(v)) v = 'off';
+  return saveSiteSettings({ highContrast: v });
+};
+
+const setFontSizeScale = (scale) => {
+  const s = String(scale || '').trim();
+  if (!SETTING_OPTIONS.fontSizeScale?.has(s)) {
+    if (isLocalDev()) console.debug('[site-settings] invalid fontSizeScale attempted', s);
+    return null;
+  }
+  return saveSiteSettings({ fontSizeScale: s });
+};
+
+/** Convenience for the paired "clear matte contrast" intent (shell utility + design global apply). */
+const setClearContrastMatte = (active = true) => {
+  const base = active ? 'matte' : 'glass';
+  const hc = active ? 'on' : 'off';
+  return saveSiteSettings({ baseMetamaterial: base, highContrast: hc });
 };
 
 const collectSettingsFromScope = (root) => {
@@ -1974,6 +2152,32 @@ const parseSettingTrigger = (value = '') => {
   return {name: normalizedName, value: normalizedOption};
 };
 
+/** Supports compound "baseMetamaterial:matte;highContrast:on" (or & , separators)
+ *  used by design bench global-apply buttons and future clustered controls.
+ *  Returns array (possibly length 1) so callers can batch-save through kernel.
+ */
+const parseSettingTriggers = (value = '') => {
+  const raw = String(value || '').trim();
+  if (!raw) return [];
+  // Split on ; & or | for compound intent (human-friendly in data attrs)
+  const segments = raw.split(/[;&|]+/).map((s) => s.trim()).filter(Boolean);
+  const out = [];
+  for (const seg of segments) {
+    if (!seg) continue;
+    const single = parseSettingTrigger(seg);
+    if (single) {
+      out.push(single);
+      continue;
+    }
+    // fallback split inside segment
+    const [n = '', o = ''] = seg.split(':');
+    const nn = n.trim();
+    const oo = o.trim();
+    if (nn && oo) out.push({ name: nn, value: oo });
+  }
+  return out;
+};
+
 const STANDALONE_SETTINGS_HINT = 'Choose a mode to update this preference. The active option stays highlighted.';
 
 const primeSettingTriggerControl = primeButtonLikeControl;
@@ -2035,28 +2239,49 @@ const resolveStandaloneStatusNode = (node) => {
 const applySettingTrigger = (trigger, options = {}) => {
   const {statusNode = null, onSaved = null} = options;
 
-  if (!trigger || !isKnownSetting(trigger.name)) {
+  // Support single trigger object, string (possibly compound), or array from parseSettingTriggers.
+  let triggers = [];
+  if (Array.isArray(trigger)) {
+    triggers = trigger;
+  } else if (trigger && typeof trigger === 'object' && trigger.name) {
+    triggers = [trigger];
+  } else if (typeof trigger === 'string' || trigger instanceof String) {
+    triggers = parseSettingTriggers(trigger);
+  }
+
+  if (!triggers.length) {
     writeSettingsStatus(statusNode, 'Unknown setting control.', 'info');
     return null;
   }
 
-  const validation = validateSetting(trigger.name, trigger.value);
-  if (!validation.valid) {
-    writeSettingsStatus(statusNode, `Invalid ${humanizeSettingName(trigger.name)} option.`, 'info');
+  // Build sanitized partial from all (compound) triggers; validate each.
+  const partial = {};
+  for (const t of triggers) {
+    if (!t || !isKnownSetting(t.name)) continue;
+    const validation = validateSetting(t.name, t.value);
+    if (validation.valid) partial[t.name] = t.value;
+  }
+
+  if (Object.keys(partial).length === 0) {
+    writeSettingsStatus(statusNode, 'Invalid setting option(s).', 'info');
     return null;
   }
 
   const current = getSiteSettings();
-  if (current[trigger.name] === trigger.value) {
-    writeSettingsStatus(statusNode, `${describeSettingValue(trigger.name, trigger.value)} is already active.`, 'info');
+  const allMatch = Object.entries(partial).every(([k, v]) => current[k] === v);
+  if (allMatch) {
+    const label = Object.keys(partial).map((k) => describeSettingValue(k, partial[k])).join(' + ');
+    writeSettingsStatus(statusNode, `${label} already active.`, 'info');
     syncSettingsUx(document, current);
     return current;
   }
 
-  const saved = saveSiteSettings({[trigger.name]: trigger.value});
+  const saved = saveSiteSettings(partial);
   syncSettingsUx(document, saved);
-  writeSettingsStatus(statusNode, `${humanizeSettingName(trigger.name)} → ${describeSettingValue(trigger.name, trigger.value)}.`, 'success');
-  onSaved?.(saved, trigger);
+  const summary = describeSettingsPatch(partial) || Object.keys(partial).join(', ');
+  writeSettingsStatus(statusNode, `${summary}.`, 'success');
+  // For onSaved, pass the first trigger or the batch for legacy consumers.
+  onSaved?.(saved, triggers[0] || triggers);
   return saved;
 };
 
@@ -2080,10 +2305,13 @@ const syncSettingTriggers = (root = document, settings = getSiteSettings()) => {
   const normalized = normalizeSiteSettings(settings);
 
   root.querySelectorAll?.('[data-site-setting-set]').forEach((node) => {
-    const trigger = parseSettingTrigger(node.getAttribute('data-site-setting-set'));
-    if (!trigger || !isKnownSetting(trigger.name)) return;
+    const attr = node.getAttribute('data-site-setting-set') || '';
+    const triggers = parseSettingTriggers(attr);
+    if (!triggers.length) return;
     primeSettingTriggerControl(node);
-    setSettingTriggerState(node, normalized[trigger.name] === trigger.value);
+    // For compound triggers (e.g. base+high), mark active only when every pair matches current.
+    const isActive = triggers.every((t) => isKnownSetting(t.name) && normalized[t.name] === t.value);
+    setSettingTriggerState(node, isActive);
   });
 };
 
@@ -2310,6 +2538,9 @@ const bindSettingsScope = (root, options = {}) => {
     activateSettingTriggerFromKeyboard(event, control);
   };
 
+  // Note: compound triggers (data-site-setting-set="a:1;b:2") are handled inside
+  // applySettingTrigger via parseSettingTriggers; no change needed at bind site.
+
   const handleSubmit = (event) => {
     event.preventDefault();
     saveScope();
@@ -2343,10 +2574,10 @@ const bindSettingsScope = (root, options = {}) => {
   const triggerHandlers = [];
   root.querySelectorAll('[data-site-setting-set]').forEach((control) => {
     const handler = (event) => {
-      const trigger = parseSettingTrigger(control.getAttribute('data-site-setting-set'));
-      if (!trigger) return;
+      const triggers = parseSettingTriggers(control.getAttribute('data-site-setting-set') || '');
+      if (!triggers.length) return;
       if (control instanceof HTMLAnchorElement) event.preventDefault();
-      const saved = applySettingTrigger(trigger, {statusNode, onSaved});
+      const saved = applySettingTrigger(triggers, {statusNode, onSaved});
       if (saved) syncFromStore(saved);
     };
     control.addEventListener('click', handler);
@@ -2422,10 +2653,10 @@ const bindStandaloneSettingTriggers = (root = document, options = {}) => {
       return;
     }
 
-    const trigger = parseSettingTrigger(control.getAttribute('data-site-setting-set'));
-    if (!trigger) return;
+    const triggers = parseSettingTriggers(control.getAttribute('data-site-setting-set') || '');
+    if (!triggers.length) return;
 
-    applySettingTrigger(trigger, {
+    applySettingTrigger(triggers, {
       statusNode: resolveStandaloneStatusNode(control),
       onSaved
     });
@@ -2966,8 +3197,13 @@ if (typeof window !== 'undefined') {
     bindDeviationControls,
     listDeviations: getSiteSettingDeviations,
     describeDeviation,
-  presets: PRESETS,
-  presetLabels: PRESET_LABELS,
+    // Explicit setters for shell utilities, design bench, and consumers (delegate to save).
+    setBaseMetamaterial,
+    setHighContrast,
+    setFontSizeScale,
+    setClearContrastMatte,
+    presets: PRESETS,
+    presetLabels: PRESET_LABELS,
   presetDescriptions: PRESET_DESCRIPTIONS,
   queryRecipes: SETTINGS_QUERY_RECIPES,
   buildSettingsQueryHref,
@@ -3021,6 +3257,10 @@ export {
   resetSiteSettings,
   sanitizePartialSettings,
   saveSiteSettings,
+  setBaseMetamaterial,
+  setClearContrastMatte,
+  setFontSizeScale,
+  setHighContrast,
   shouldUseViewportActivation,
   syncDeviationReadouts,
   syncPresetControls,

@@ -47,15 +47,15 @@
     --spw-svg-pointer-x-ratio: 0.5;
     --spw-svg-pointer-y-ratio: 0.5;
     --spw-svg-pointer-intensity: 0;
-    --spw-svg-pointer-lift: 0.42;
     --spw-svg-motion-rate: 4s;
     --spw-svg-node-fill-mix: 10%;
+    --spw-svg-device-pointer-lift: var(--spw-svg-pointer-lift, 0.42);
     --spw-svg-brand-accent: var(--active-op-color, #008080);
     --spw-svg-brand-field: var(--surface, #ffffff);
     --spw-svg-surface-border: var(--spw-shell-line, rgba(14, 18, 20, 0.14));
     --spw-svg-surface-shadow: var(--component-shadow, 0 1px 3px rgba(0,0,0,0.05));
     display: grid;
-    gap: var(--spw-svg-space, var(--space-sm, 0.6rem));
+    gap: calc(var(--spw-svg-space, var(--space-sm, 0.6rem)) * var(--spw-svg-gap-scale, 1));
     margin: 0;
     container-type: inline-size;
     position: relative;
@@ -65,7 +65,7 @@
 [data-spw-features~="svg-surfaces"] .spw-svg-surface {
     display: block;
     width: 100%;
-    max-width: var(--measure-panel, 52rem);
+    max-width: calc(var(--measure-panel, 52rem) * var(--spw-svg-scale-factor, 1));
     height: auto;
     border: 1px solid var(--spw-svg-surface-border);
     border-radius: var(--shape-surface, 10px);
@@ -79,9 +79,9 @@
     box-shadow: var(--spw-svg-surface-shadow);
     color: var(--ink, #161c1d);
     transform:
-        translate3d(0, calc(var(--spw-svg-pointer-intensity, 0) * var(--spw-svg-pointer-lift, 0) * -0.18rem), 0)
-        rotateX(calc((0.5 - var(--spw-svg-pointer-y-ratio, 0.5)) * var(--spw-svg-pointer-intensity, 0) * 1.2deg))
-        rotateY(calc((var(--spw-svg-pointer-x-ratio, 0.5) - 0.5) * var(--spw-svg-pointer-intensity, 0) * 1.2deg));
+        translate3d(0, calc(var(--spw-svg-pointer-intensity, 0) * var(--spw-svg-device-pointer-lift, var(--spw-svg-pointer-lift, 0)) * -0.18rem), 0)
+        rotateX(calc((0.5 - var(--spw-svg-pointer-y-ratio, 0.5)) * var(--spw-svg-pointer-intensity, 0) * var(--spw-svg-device-pointer-lift, var(--spw-svg-pointer-lift, 0)) * 1.2deg))
+        rotateY(calc((var(--spw-svg-pointer-x-ratio, 0.5) - 0.5) * var(--spw-svg-pointer-intensity, 0) * var(--spw-svg-device-pointer-lift, var(--spw-svg-pointer-lift, 0)) * 1.2deg));
     transform-origin: center;
     transition:
         border-color var(--duration-fast, 120ms) var(--ease-mechanical, ease),
@@ -147,6 +147,17 @@
     opacity: 0.58;
 }
 
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-device="coarse"],
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-device="hoverless"] {
+    --spw-svg-device-pointer-lift: 0.12;
+    gap: max(0.8rem, var(--spw-svg-space, 0.6rem));
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-device="coarse"] .spw-svg-surface,
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-device="hoverless"] .spw-svg-surface {
+    transform: none;
+}
+
 [data-spw-features~="svg-surfaces"] .spw-svg-flow--animated {
     /* Using generic animation token fallback if --duration-slow is missing */
     animation: svg-flow-dash var(--spw-svg-motion-rate, 4s) linear infinite;
@@ -204,18 +215,27 @@
         0 10px 28px color-mix(in srgb, var(--spw-svg-brand-accent, var(--active-op-color, #008080)) 10%, transparent);
 }
 
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-device="coarse"][data-spw-svg-pointer="field"][data-spw-svg-pointer-state="active"] .spw-svg-surface,
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-device="hoverless"][data-spw-svg-pointer="field"][data-spw-svg-pointer-state="active"] .spw-svg-surface {
+    box-shadow:
+        var(--spw-svg-surface-shadow),
+        0 8px 20px color-mix(in srgb, var(--spw-svg-brand-accent, var(--active-op-color, #008080)) 8%, transparent);
+}
+
 /* ─── Typography & Labels ───────────────────────────────────────────────── */
 
 [data-spw-features~="svg-surfaces"] .spw-svg-label {
     font-size: var(--text-size-sm, 0.92rem);
     font-weight: 700;
     letter-spacing: var(--spw-svg-label-spacing, 0.04em);
+    opacity: var(--spw-svg-caption-opacity, 1);
 }
 
 [data-spw-features~="svg-surfaces"] .spw-svg-note {
     fill: var(--ink-soft, rgba(14, 18, 20, 0.68));
     font-size: var(--text-size-xs, 0.72rem);
     letter-spacing: calc(var(--spw-svg-label-spacing, 0.04em) * 0.75);
+    opacity: var(--spw-svg-narrative-intensity, 1);
     transition:
         fill var(--duration-fast, 120ms) var(--ease-mechanical, ease),
         opacity var(--duration-fast, 120ms) var(--ease-mechanical, ease);
@@ -233,6 +253,7 @@
     fill: var(--ink-soft, rgba(14, 18, 20, 0.68));
     font-size: calc(var(--text-size-xs, 0.68rem) * 0.95);
     letter-spacing: calc(var(--spw-svg-label-spacing, 0.04em) * 0.5);
+    opacity: var(--spw-svg-rail-intensity, 1);
 }
 
 /* ─── Rail companion ────────────────────────────────────────────────────── */
@@ -409,6 +430,10 @@
         font-size: 0.58rem;
     }
 
+    [data-spw-features~="svg-surfaces"] .spw-svg-figure {
+        --spw-svg-device-pointer-lift: 0.08;
+    }
+
     /* Smaller operator diagrams on mobile: hide intent labels */
     [data-spw-features~="svg-surfaces"] .spw-svg-flow-diagram .op-intent-label {
         display: none;
@@ -422,5 +447,9 @@
 
     [data-spw-features~="svg-surfaces"] .spw-svg-surface {
         transform: none;
+    }
+
+    [data-spw-features~="svg-surfaces"] .spw-svg-figure {
+        --spw-svg-device-pointer-lift: 0;
     }
 }

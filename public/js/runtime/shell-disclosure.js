@@ -108,6 +108,8 @@ const UTILITY_LABELS = Object.freeze({
     'font-down': 'Smaller',
     'path-toggle': 'Path',
     'font-up': 'Larger',
+    'clear-matte': 'Clear',
+    'open-satchel': 'Satchel',
     settings: 'Style',
   }),
   regular: Object.freeze({
@@ -116,6 +118,8 @@ const UTILITY_LABELS = Object.freeze({
     'font-down': 'Smaller text',
     'path-toggle': 'Reading path',
     'font-up': 'Larger text',
+    'clear-matte': 'Clear contrast',
+    'open-satchel': 'State satchel',
     settings: 'Appearance',
   }),
 });
@@ -489,6 +493,20 @@ function getCurrentColorMode() {
   return COLOR_MODE_STEPS.includes(String(current)) ? String(current) : 'auto';
 }
 
+function getCurrentBaseMaterial() {
+  const current = window.spwSettings?.get?.()?.baseMetamaterial
+    || document.documentElement.dataset.spwBaseMetamaterial
+    || 'glass';
+  return ['paper', 'glass', 'matte', 'field'].includes(String(current)) ? String(current) : 'glass';
+}
+
+function getCurrentHighContrast() {
+  const current = window.spwSettings?.get?.()?.highContrast
+    || document.documentElement.dataset.spwHighContrast
+    || 'off';
+  return current === 'on' ? 'on' : 'off';
+}
+
 function getNextFontScale(direction = 1) {
   const current = getCurrentFontScale();
   const index = Math.max(0, FONT_SCALE_STEPS.indexOf(current));
@@ -504,14 +522,81 @@ function ensureUtilityRow(header) {
   row.className = 'spw-shell-utility-row';
   row.setAttribute('role', 'group');
   row.setAttribute('aria-label', 'Quick reading and display controls');
-  row.innerHTML = `
-    <button type="button" class="spw-shell-utility-button" data-spw-shell-action="color-light" aria-label="Use light mode" title="Use light mode">L</button>
-    <button type="button" class="spw-shell-utility-button" data-spw-shell-action="color-dark" aria-label="Use dark mode" title="Use dark mode">D</button>
-    <button type="button" class="spw-shell-utility-button" data-spw-shell-action="font-down" aria-label="Decrease font size" title="Decrease font size">A-</button>
-    <button type="button" class="spw-shell-utility-button" data-spw-shell-action="path-toggle" aria-label="Toggle cognitive path" title="Toggle cognitive path">PATH</button>
-    <button type="button" class="spw-shell-utility-button" data-spw-shell-action="font-up" aria-label="Increase font size" title="Increase font size">A+</button>
-    <a class="spw-shell-utility-button" data-spw-shell-action="settings" href="/settings/#appearance-settings" aria-label="Open appearance and typography settings" title="Open appearance and typography settings">Aa</a>
-  `;
+  // Granular architecture exposure for vocabulary, component locality (settings/menus), and flexible physics reason.
+  // These attrs + clusters let CSS, catalog, and interns relate the shell controls directly to data structures
+  // (baseMetamaterial, highContrast, fontScale, interaction state) without taking the visuals for granted.
+  // Cognitive: clusters are mostly pairs (sigil+arg as "line") or small groups (cognitive planes); "down" in vertical layout is gravitational page flow.
+  // Tunable material surface for storytellers: physics-reason here affects shell "feel" (navigability) across productions.
+  row.setAttribute('data-spw-locality', 'high');
+  row.setAttribute('data-spw-feature', 'shell-utility-controls');
+  row.setAttribute('data-spw-module-evaluates', 'semantic-density interaction physics-reason');
+  row.setAttribute('data-spw-physics-reason', 'adaptive-shell'); // flexible; can be overridden by query/design bench / settings for gamified nav feel
+  // Initial material for the utility surface itself (syncUtilityRow will keep in sync with global base + local overrides).
+  // This ensures the row participates in material audit (local data-spw-metamaterial on chrome for glass/matte treatment).
+  const initMat = getCurrentBaseMaterial();
+  row.dataset.spwMetamaterial = initMat;
+
+  // Use templating for the utility controls UI (minds value of templating for easy modification of
+  // default visual abstractions/behavior for shell settings, and customization of site appearance wiring).
+  // If a <template id="spw-shell-utility-template"> exists in the document, its content is used
+  // (allows pages to provide custom sigils, clusters, metaphors, or even different controls while
+  // keeping the data-action and structure for JS wiring).
+  // Falls back to built-in default with sigil/argument distinction + clusters.
+  let template = document.getElementById('spw-shell-utility-template');
+  if (!(template instanceof HTMLTemplateElement)) {
+    template = document.createElement('template');
+    template.id = 'spw-shell-utility-template';
+    template.innerHTML = `
+      <div class="spw-utility-cluster" data-spw-utility-cluster="color-mode" role="group" aria-label="Color mode" data-spw-locality="medium" data-spw-component-locality="shell-color" data-spw-physics-reason="lighting-tuner">
+        <button type="button" class="spw-shell-utility-button" data-spw-shell-action="color-light" data-site-setting-set="colorMode:light" aria-label="Use light mode" title="Use light mode">
+          <span class="spw-utility-sigil" aria-hidden="true">☀</span>
+          <span class="spw-utility-argument"></span>
+        </button>
+        <button type="button" class="spw-shell-utility-button" data-spw-shell-action="color-dark" data-site-setting-set="colorMode:dark" aria-label="Use dark mode" title="Use dark mode">
+          <span class="spw-utility-sigil" aria-hidden="true">☾</span>
+          <span class="spw-utility-argument"></span>
+        </button>
+      </div>
+      <div class="spw-utility-cluster" data-spw-utility-cluster="material-contrast" role="group" aria-label="Material contrast" data-spw-locality="medium" data-spw-component-locality="settings-material" data-spw-physics-reason="clear-contrast-safeguard" data-spw-module-evaluates="semantic-density">
+        <button type="button" class="spw-shell-utility-button" data-spw-shell-action="clear-matte" aria-label="Use matte for clear contrast reading" title="Use matte surfaces for clear high-contrast text">
+          <span class="spw-utility-sigil" aria-hidden="true">■</span>
+          <span class="spw-utility-argument"></span>
+        </button>
+      </div>
+      <div class="spw-utility-cluster" data-spw-utility-cluster="typography-scale" role="group" aria-label="Typography scale" data-spw-locality="medium" data-spw-component-locality="text-density" data-spw-physics-reason="readability-tuner">
+        <button type="button" class="spw-shell-utility-button" data-spw-shell-action="font-down" aria-label="Decrease font size" title="Decrease font size">
+          <span class="spw-utility-sigil" aria-hidden="true">−A</span>
+          <span class="spw-utility-argument"></span>
+        </button>
+        <button type="button" class="spw-shell-utility-button" data-spw-shell-action="font-up" aria-label="Increase font size" title="Increase font size">
+          <span class="spw-utility-sigil" aria-hidden="true">+A</span>
+          <span class="spw-utility-argument"></span>
+        </button>
+      </div>
+      <div class="spw-utility-cluster" data-spw-utility-cluster="cognitive-path" role="group" aria-label="Cognitive path">
+        <button type="button" class="spw-shell-utility-button" data-spw-shell-action="path-toggle" aria-label="Toggle cognitive path" title="Toggle cognitive path">
+          <span class="spw-utility-sigil" aria-hidden="true">⟐</span>
+          <span class="spw-utility-argument"></span>
+        </button>
+      </div>
+      <div class="spw-utility-cluster" data-spw-utility-cluster="appearance" role="group" aria-label="Appearance settings">
+        <a class="spw-shell-utility-button" data-spw-shell-action="settings" href="/settings/#appearance-settings" aria-label="Open appearance and typography settings" title="Open appearance and typography settings">
+          <span class="spw-utility-sigil" aria-hidden="true">Aa</span>
+          <span class="spw-utility-argument"></span>
+        </a>
+      </div>
+      <div class="spw-utility-cluster" data-spw-utility-cluster="state-observability" role="group" aria-label="State satchel and observability" data-spw-locality="high" data-spw-component-locality="pattern-lock-satchel" data-spw-physics-reason="memory-gamified" data-spw-module-evaluates="semantic-density">
+        <button type="button" class="spw-shell-utility-button" data-spw-shell-action="open-satchel" aria-label="Open state satchel" title="Open state satchel for saving and inspecting current appearance/runtime state">
+          <span class="spw-utility-sigil" aria-hidden="true">⧉</span>
+          <span class="spw-utility-argument"></span>
+        </button>
+      </div>
+    `;
+    // Append to head for global availability (or body); allows other code / pages to clone/modify the default template.
+    (document.head || document.body || document.documentElement).appendChild(template);
+  }
+
+  row.appendChild(template.content.cloneNode(true));
 
   const trace = header.querySelector('.spw-header-trace');
   header.insertBefore(row, trace || header.querySelector('nav') || null);
@@ -523,6 +608,8 @@ function syncUtilityRow(row) {
 
   const current = getCurrentFontScale();
   const currentColorMode = getCurrentColorMode();
+  const currentBase = getCurrentBaseMaterial();
+  const currentHigh = getCurrentHighContrast();
   const min = FONT_SCALE_STEPS[0];
   const max = FONT_SCALE_STEPS[FONT_SCALE_STEPS.length - 1];
   const pathToggle = document.querySelector('.spw-spell-path-toggle');
@@ -532,11 +619,28 @@ function syncUtilityRow(row) {
 
   row.dataset.spwFontScale = current;
   row.dataset.spwColorMode = currentColorMode;
+  row.dataset.spwBaseMaterial = currentBase;
+  row.dataset.spwHighContrast = currentHigh;
   row.dataset.spwPathAvailable = pathToggle ? 'true' : 'false';
   row.dataset.spwUtilityMode = compact ? 'compact' : 'regular';
+  row.dataset.spwSatchelAvailable = document.querySelector('.spw-state-inspector__launch') ? 'true' : 'false';
+
+  // Mind cognitive/attentional physics models + material tunability (per attention-field, wonder, material contracts).
+  // Utilities are part of the attentional field and tunable material surface; they must reflect and propagate
+  // current state (attention, wonder, field resonance, physics-reason, density, base material) for inspectability
+  // and consistent "feel". Tap for action, hold (via titles/gestures) for deeper inspection of the model.
+  const root = document.documentElement;
+  row.dataset.spwAttention = root.dataset.spwAttention || '';
+  row.dataset.spwWonderState = root.dataset.spwWonderState || root.dataset.spwWonderMemory || '';
+  row.dataset.spwFieldResonance = root.dataset.spwFieldResonance || '';
+  row.dataset.spwPhysicsReason = root.dataset.spwPhysicsReason || '';
+  row.dataset.spwSemanticDensity = root.dataset.spwSemanticDensity || '';
+  row.dataset.spwMetamaterial = currentBase; // local material on the utility surface itself for chrome rules
+  row.dataset.spwModuleEvaluates = (row.dataset.spwModuleEvaluates || '') + ' cognitive attentional material'; // append for audit
 
   row.querySelectorAll('[data-spw-shell-action="color-light"]').forEach((button) => {
-    button.textContent = labels['color-light'];
+    const arg = button.querySelector('.spw-utility-argument');
+    if (arg) arg.textContent = labels['color-light'];
     button.setAttribute('aria-pressed', currentColorMode === 'light' ? 'true' : 'false');
     button.title = currentColorMode === 'light'
       ? 'Light mode active'
@@ -544,7 +648,8 @@ function syncUtilityRow(row) {
   });
 
   row.querySelectorAll('[data-spw-shell-action="color-dark"]').forEach((button) => {
-    button.textContent = labels['color-dark'];
+    const arg = button.querySelector('.spw-utility-argument');
+    if (arg) arg.textContent = labels['color-dark'];
     button.setAttribute('aria-pressed', currentColorMode === 'dark' ? 'true' : 'false');
     button.title = currentColorMode === 'dark'
       ? 'Dark mode active'
@@ -552,21 +657,24 @@ function syncUtilityRow(row) {
   });
 
   row.querySelectorAll('[data-spw-shell-action="font-down"]').forEach((button) => {
-    button.textContent = labels['font-down'];
+    const arg = button.querySelector('.spw-utility-argument');
+    if (arg) arg.textContent = labels['font-down'];
     button.toggleAttribute('disabled', current === min);
     button.setAttribute('aria-disabled', current === min ? 'true' : 'false');
     button.title = current === min ? 'Already at the smallest readable size' : 'Make text smaller';
   });
 
   row.querySelectorAll('[data-spw-shell-action="font-up"]').forEach((button) => {
-    button.textContent = labels['font-up'];
+    const arg = button.querySelector('.spw-utility-argument');
+    if (arg) arg.textContent = labels['font-up'];
     button.toggleAttribute('disabled', current === max);
     button.setAttribute('aria-disabled', current === max ? 'true' : 'false');
     button.title = current === max ? 'Already at the largest readable size' : 'Make text larger';
   });
 
   row.querySelectorAll('[data-spw-shell-action="path-toggle"]').forEach((button) => {
-    button.textContent = labels['path-toggle'];
+    const arg = button.querySelector('.spw-utility-argument');
+    if (arg) arg.textContent = labels['path-toggle'];
     button.toggleAttribute('disabled', false);
     button.setAttribute('aria-disabled', 'false');
     button.title = pathToggle
@@ -575,10 +683,30 @@ function syncUtilityRow(row) {
   });
 
   row.querySelectorAll('[data-spw-shell-action="settings"]').forEach((button) => {
-    button.textContent = labels.settings;
+    const arg = button.querySelector('.spw-utility-argument');
+    if (arg) arg.textContent = labels.settings;
     button.title = compact
       ? 'Open appearance settings'
       : 'Open appearance and typography settings';
+  });
+
+  const isClearMatte = currentBase === 'matte' || currentHigh === 'on';
+  row.querySelectorAll('[data-spw-shell-action="clear-matte"]').forEach((button) => {
+    const arg = button.querySelector('.spw-utility-argument');
+    if (arg) arg.textContent = labels['clear-matte'];
+    button.setAttribute('aria-pressed', isClearMatte ? 'true' : 'false');
+    button.title = isClearMatte
+      ? 'Matte clear contrast active (dense text, forms, inspection)'
+      : compact ? 'Switch to matte clear contrast' : 'Switch to matte surfaces for clear high-contrast reading';
+  });
+
+  row.querySelectorAll('[data-spw-shell-action="open-satchel"]').forEach((button) => {
+    const arg = button.querySelector('.spw-utility-argument');
+    if (arg) arg.textContent = labels['open-satchel'];
+    // Satchel minds the full models: tap opens, drag repositions (attentional locomotion in field),
+    // hold/inspect reveals cognitive/attentional/physics/material state (wonder, attention, density, metamaterial).
+    // Position and snapshot respect current field bias and material for consistent tunability.
+    button.title = 'Open state satchel (drag to reposition in attention field; inspects cognitive/attentional physics, material tunability, wonder memory)';
   });
 }
 
@@ -1035,6 +1163,12 @@ export function initSpwShellDisclosure(options = {}) {
 
     if (action === 'settings') return;
 
+    if (action === 'color-light' || action === 'color-dark') {
+      // Delegated to central data-site-setting-set wiring (see bindStandaloneSettingTriggers + applySettingTrigger).
+      // The settings:changed event (and our listener) will cause syncUtilityRow to update pressed states etc.
+      return;
+    }
+
     event.preventDefault();
     event.stopPropagation();
 
@@ -1044,19 +1178,63 @@ export function initSpwShellDisclosure(options = {}) {
       return;
     }
 
-    if (action === 'color-light' || action === 'color-dark') {
-      const nextMode = action === 'color-light' ? 'light' : 'dark';
-      if (nextMode === getCurrentColorMode()) return;
-      window.spwSettings?.save?.({ colorMode: nextMode });
+    if (action === 'font-down' || action === 'font-up') {
+      const nextScale = getNextFontScale(action === 'font-up' ? 1 : -1);
+      if (!nextScale || nextScale === getCurrentFontScale()) return;
+      // Delegate to canonical kernel setter (saveSiteSettings path: validate, normalize,
+      // storage, apply datasets/styles, deviations, bus 'settings:changed').
+      if (window.spwSettings?.setFontSizeScale) {
+        window.spwSettings.setFontSizeScale(nextScale);
+      } else {
+        window.spwSettings?.save?.({ fontSizeScale: nextScale });
+      }
       syncUtilityRow(utilityRow);
       return;
     }
 
-    if (action === 'font-down' || action === 'font-up') {
-      const nextScale = getNextFontScale(action === 'font-up' ? 1 : -1);
-      if (!nextScale || nextScale === getCurrentFontScale()) return;
-      window.spwSettings?.save?.({ fontSizeScale: nextScale });
+    if (action === 'clear-matte') {
+      const isCurrentlyClear = getCurrentBaseMaterial() === 'matte' || getCurrentHighContrast() === 'on';
+      // Use explicit paired setter when available (single save for the material+contrast
+      // intent); falls back to direct save. All paths hit the same kernel contract.
+      if (isCurrentlyClear) {
+        if (window.spwSettings?.setClearContrastMatte) {
+          window.spwSettings.setClearContrastMatte(false);
+        } else if (window.spwSettings?.setBaseMetamaterial && window.spwSettings?.setHighContrast) {
+          window.spwSettings.setBaseMetamaterial('glass');
+          window.spwSettings.setHighContrast('off');
+        } else {
+          window.spwSettings?.save?.({ baseMetamaterial: 'glass', highContrast: 'off' });
+        }
+      } else {
+        if (window.spwSettings?.setClearContrastMatte) {
+          window.spwSettings.setClearContrastMatte(true);
+        } else if (window.spwSettings?.setBaseMetamaterial && window.spwSettings?.setHighContrast) {
+          window.spwSettings.setBaseMetamaterial('matte');
+          window.spwSettings.setHighContrast('on');
+        } else {
+          window.spwSettings?.save?.({ baseMetamaterial: 'matte', highContrast: 'on' });
+        }
+      }
       syncUtilityRow(utilityRow);
+    }
+
+    if (action === 'open-satchel') {
+      // Shell utility (with appearance controls like clear-matte, color, font) interacts with
+      // state satchel for observability of modified site appearance and system states.
+      // Uses the launch button as the runtime entrypoint; provides default behavior for
+      // capturing current shell/appearance state into the satchel.
+      const launch = document.querySelector('.spw-state-inspector__launch');
+      if (launch instanceof HTMLElement) {
+        launch.click();
+      } else {
+        const root = document.querySelector('[data-spw-state-inspector-root]');
+        if (root instanceof HTMLElement) {
+          const isOpen = root.dataset.spwStateInspector === 'open';
+          root.dataset.spwStateInspector = isOpen ? 'closed' : 'open';
+          const panel = root.querySelector('#spw-state-inspector-panel');
+          if (panel instanceof HTMLElement) panel.hidden = isOpen;
+        }
+      }
     }
   };
 
@@ -1130,7 +1308,9 @@ export function initSpwShellDisclosure(options = {}) {
   window.addEventListener('orientationchange', handleResize);
   window.addEventListener('load', handleLoad, { once: true });
   window.addEventListener('hashchange', handleHashChange);
-  document.addEventListener('spw:settings-changed', handleSettingsChanged);
+  // Listen to both canonical (from bus dispatch) and legacy for robust settings wiring.
+  document.addEventListener('spw:settings:changed', handleSettingsChanged);
+  document.addEventListener('spw:settings-change', handleSettingsChanged);
   document.addEventListener('spw:frame-change', handleSettingsChanged);
   navObserver.observe(navList, {
     childList: true,
@@ -1165,7 +1345,8 @@ export function initSpwShellDisclosure(options = {}) {
       window.removeEventListener('orientationchange', handleResize);
       window.removeEventListener('load', handleLoad);
       window.removeEventListener('hashchange', handleHashChange);
-      document.removeEventListener('spw:settings-changed', handleSettingsChanged);
+      document.removeEventListener('spw:settings:changed', handleSettingsChanged);
+      document.removeEventListener('spw:settings-change', handleSettingsChanged);
       document.removeEventListener('spw:frame-change', handleSettingsChanged);
       navObserver.disconnect();
       clearSettleTimer(state);

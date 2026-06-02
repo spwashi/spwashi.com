@@ -148,6 +148,9 @@
   /* Debug / inspection */
   --spw-debug-layer-owner: "components";
   --spw-debug-layer-color: #9933cc;
+  --component-card-detail-opacity: 0.86;
+  --component-card-detail-shift: 0;
+  --component-card-detail-weight: 0;
 
   /* Box */
   min-width: 0;
@@ -237,6 +240,100 @@
   .spw-region-shell
 )[data-spw-region-flow="clip"] {
   overflow: clip;
+}
+
+:where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .ref-card,
+  .settings-state-card,
+  .settings-nav-card,
+  .settings-structure-card,
+  .settings-map-card,
+  .pwa-status-card
+) {
+  --component-card-detail-opacity: 0.86;
+  --component-card-detail-shift: 0;
+  --component-card-detail-weight: 0;
+  transition:
+    box-shadow var(--component-transition-deliberate),
+    border-color var(--component-transition-base),
+    transform var(--component-transition-fast),
+    background-color var(--component-transition-base),
+    color var(--component-transition-base);
+}
+
+:where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .ref-card,
+  .settings-state-card,
+  .settings-nav-card,
+  .settings-structure-card,
+  .settings-map-card,
+  .pwa-status-card
+):is(:hover, :focus-within, [data-spw-gesture="armed"], [data-spw-card-state="active"], [data-spw-card-state="expanded"]) {
+  --component-card-detail-opacity: 1;
+  --component-card-detail-shift: -1;
+  --component-card-detail-weight: 1;
+  z-index: var(--component-layer-raised);
+}
+
+:where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .ref-card,
+  .settings-state-card,
+  .settings-nav-card,
+  .settings-structure-card,
+  .settings-map-card,
+  .pwa-status-card
+):is(:focus-within, [data-spw-gesture="charging"], [data-spw-card-state="expanded"]) {
+  transform: translateY(-1px);
+  box-shadow: var(--component-shadow-active);
+}
+
+@media (pointer: coarse) {
+  :where(
+    .frame-card,
+    .media-card,
+    .media-focus-card,
+    .software-card,
+    .operator-card,
+    .frame-panel,
+    .mode-panel,
+    .plan-card,
+    .compare-card,
+    .ref-card,
+    .settings-state-card,
+    .settings-nav-card,
+    .settings-structure-card,
+    .settings-map-card,
+    .pwa-status-card
+  ) {
+    --component-card-detail-opacity: 0.9;
+  }
 }
 
 :where([data-spw-region-flow="stack"], .spw-region-stack) {
@@ -600,6 +697,60 @@ header.frame-heading > :is(h1, h2, h3) {
   border: 1px solid color-mix(in srgb, var(--spw-box-model-accent) 24%, transparent);
   border-radius: var(--shape-element, 4px);
   background: color-mix(in srgb, var(--component-surface-strong) 92%, transparent);
+}
+
+/* Granular architecture selectors for vocabulary development, component locality (esp. settings/menus/pattern locks),
+   and flexible physics-reason affecting gamified navigability. These make the data structures that drive visuals
+   (semanticDensity, locality, interaction physics reason) directly addressable in CSS and inspectable by interns/designers
+   without taking the "magic" for granted. Business vs experiential: high-locality + rich-density for tool compellingness;
+   medium/low + calm-reason for relationship reading.
+   Gravitational "down": vertical block flow + translateY "lift" act against page gravity (reading scroll direction).
+   Cognitive lines/planes: 2-element groups (lines for binary) and 3-element clusters (planes) as in utility clusters.
+   Tunable material: these + material tokens let the surface be dialed for narrative productions.
+   See .spw#page_architecture_vocabulary + #cognitive_gravity_planes + #tunable_material_narrative_surface. */
+:root[data-spw-locality="high"] { --spw-architecture-salience: 0.9; }
+:root[data-spw-locality="medium"] { --spw-architecture-salience: 0.6; }
+[data-spw-component-locality="settings-material"],
+[data-spw-component-locality="settings-contrast"],
+[data-spw-component-locality="pattern-lock-satchel"] {
+  /* locality-specific hooks for controls that manage state/physics; designers can extend */
+}
+:root[data-spw-physics-reason="playful"],
+:root[data-spw-physics-reason="springy"] {
+  --spw-motion-scale: calc(var(--spw-motion-scale, 1) * 1.08);
+  --attention-echo-duration: 620ms; /* more gamified "bounce" */
+}
+:root[data-spw-physics-reason="precise"],
+:root[data-spw-physics-reason="locked"] {
+  --spw-motion-scale: calc(var(--spw-motion-scale, 1) * 0.92);
+  --attention-echo-duration: 320ms;
+}
+:root[data-spw-physics-reason="calm"] {
+  --spw-motion-scale: calc(var(--spw-motion-scale, 1) * 0.82);
+}
+
+/* Color/contrast audit across components: ensure material tunability and semantic contrast tokens
+   (from tokens/core: --text-on-matte*, --material-ink-matte-strong, --ink-on-*) propagate to component
+   foundations (cards, frames, controls) for better legibility on glass/matte/contrast, dark, high-contrast.
+   Components previously mixed raw --ink-soft / color-mix which could fail contrast on certain surfaces.
+   Prefer aliases; local component-* fall back. This supports minimalist motifs (low ornament, focus on material ink/surface)
+   and immediate design tuning previews. See surface_material_contract, page_architecture_vocabulary. */
+:where([data-spw-metamaterial="matte"]) {
+  --component-ink: var(--material-ink-matte-strong, var(--ink-on-matte-strong));
+  --component-surface: var(--material-surface-matte, var(--surface-matte));
+}
+:where([data-spw-metamaterial="glass"]) {
+  --component-ink: var(--material-ink, var(--ink));
+  --component-surface: var(--material-surface, var(--surface));
+}
+:where([data-spw-metamaterial="contrast"]) {
+  --component-ink: var(--material-ink-contrast, var(--ink-on-contrast));
+  --component-surface: var(--material-surface-contrast, var(--surface-contrast));
+}
+:where([data-spw-high-contrast="on"]) {
+  /* boost for a11y in components */
+  --component-ink: var(--ink-strong);
+}
   color: color-mix(in srgb, var(--ink-soft, rgba(14, 18, 20, 0.68)) 82%, var(--spw-box-model-accent) 18%);
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: var(--text-size-2xs, 0.72rem);

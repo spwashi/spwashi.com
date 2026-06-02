@@ -486,6 +486,9 @@
   --surface-soft: rgba(255, 255, 255, 0.58);
   --surface-code: rgba(18, 23, 27, 0.96);
   --surface-matte: rgba(247, 244, 238, 0.93);
+  --surface-matte-strong: rgba(252, 249, 243, 0.98);
+  --surface-contrast: rgba(255, 253, 248, 0.98);
+  --surface-contrast-soft: rgba(247, 242, 232, 0.96);
   --surface-panel: rgba(255, 255, 255, 0.82);
   --surface-panel-strong: rgba(255, 255, 255, 0.92);
   --surface-glass: rgba(255, 255, 255, 0.22);
@@ -499,6 +502,52 @@
   --ink-faint: rgba(var(--charcoal-rgb), 0.42);
   --ink-speculative: rgba(var(--charcoal-rgb), 0.24);
   --ink-disabled: rgba(var(--charcoal-rgb), 0.24);
+  --ink-on-matte: rgba(var(--charcoal-rgb), 0.96);
+  --ink-on-matte-soft: rgba(var(--charcoal-rgb), 0.78);
+  --ink-on-matte-strong: rgba(var(--charcoal-rgb), 0.98);
+  --ink-on-contrast: rgba(var(--charcoal-rgb), 0.98);
+  --ink-on-contrast-soft: rgba(var(--charcoal-rgb), 0.86);
+
+  /* Semantic surface text contrast families (improved utility)
+     - Prefer these over raw --ink when the surface material is known.
+     - Matte variants are the "clear opaque contrast safeguard" for dense text,
+       mobile cards, forms, inspection readouts, and high-legibility needs.
+     - Clear/strong variants ensure excellent contrast on matte under theme packs,
+       dark mode, and high-contrast; fall back gracefully.
+     - Routes and material.css should alias to these rather than redeclaring
+       parallel --*-ink families where possible. */
+  --text-on-matte: var(--ink-on-matte);
+  --text-on-matte-soft: var(--ink-on-matte-soft);
+  --text-on-matte-strong: var(--ink-on-matte-strong);
+  --text-on-contrast: var(--ink-on-contrast);
+  --text-on-contrast-soft: var(--ink-on-contrast-soft);
+
+  /* Material surface aliases (redistributed to tokens for earlier cascade value + broad availability).
+     These provide a stable "tunable material surface" API: component authors and effects can use
+     --material-ink / --material-surface / --material-text-on-* without depending on effects layer order.
+     Supports the site's role as a live-tunable narrative material for cross-disciplinary work
+     (engineers + storytellers dialing glass vs matte "feel", density, physics-reason for production tone).
+     Matte variants = clear opaque contrast safeguard (dense text, forms, inspection).
+     See surface_material_contract, page_architecture_vocabulary, and baseMetamaterial/physicsReason runtime. */
+  --material-ink: var(--ink, #161c1d);
+  --material-ink-soft: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  --material-ink-strong: var(--ink-strong, #0e1214);
+  --material-ink-matte: var(--ink-on-matte, var(--ink, #161c1d));
+  --material-ink-matte-soft: var(--ink-on-matte-soft, var(--ink-soft, rgba(14, 18, 20, 0.74)));
+  --material-ink-matte-strong: var(--ink-on-matte-strong, var(--ink-strong, #0e1214));
+  --material-ink-contrast: var(--ink-on-contrast, var(--ink-strong, #0e1214));
+  --material-surface: var(--surface, rgba(255, 255, 255, 0.62));
+  --material-surface-strong: var(--surface-strong, rgba(255, 255, 255, 0.78));
+  --material-surface-soft: var(--surface-soft, rgba(255, 255, 255, 0.44));
+  --material-surface-matte: var(--surface-matte, rgba(247, 244, 238, 0.94));
+  --material-surface-matte-strong: var(--surface-matte-strong, rgba(252, 249, 243, 0.98));
+  --material-surface-contrast: var(--surface-contrast, rgba(255, 253, 248, 0.98));
+  --material-text-on-matte: var(--text-on-matte, var(--ink-on-matte));
+  --material-text-on-matte-strong: var(--text-on-matte-strong, var(--ink-on-matte-strong));
+  --material-line: var(--line, rgba(14, 18, 20, 0.14));
+  --material-line-strong: var(--line-strong, rgba(0, 128, 128, 0.34));
+  --material-shadow-rest: var(--shadow-base, 0 4px 12px rgba(0, 0, 0, 0.06));
+  --material-shadow-lift: var(--shadow-active, 0 8px 28px rgba(0, 0, 0, 0.10));
 
   /* Lines */
   --line-hair: 0.5px;
@@ -636,12 +685,42 @@
   --spw-surface-fill-strong: var(--surface-strong);
   --spw-surface-fill-soft: var(--surface-soft);
   --spw-surface-fill-matte: var(--surface-matte);
+  --spw-surface-fill-matte-strong: var(--surface-matte-strong);
+  --spw-surface-fill-contrast: var(--surface-contrast);
+  --spw-surface-fill-contrast-soft: var(--surface-contrast-soft);
+  --spw-surface-ink-matte: var(--ink-on-matte);
+  --spw-surface-ink-matte-soft: var(--ink-on-matte-soft);
+  --spw-surface-ink-matte-strong: var(--ink-on-matte-strong);
+  --spw-surface-ink-contrast: var(--ink-on-contrast);
+  --spw-surface-ink-contrast-soft: var(--ink-on-contrast-soft);
   --spw-surface-line-rest: var(--line);
   --spw-surface-line-active: var(--line-strong);
   --spw-surface-shadow-rest: var(--shadow-base);
   --spw-surface-shadow-raised: var(--shadow-active);
   --spw-surface-shadow-floating: var(--floating-shadow);
 }
+
+/* ==========================================================================
+   Preflight + runtime load timing contract (page load architecture)
+   --------------------------------------------------------------------------
+   public/js/runtime/prepaint-state.js (inlined via template into <head> before
+   the stylesheet <link>) writes critical data-* and style props synchronously
+   on script parse. This guarantees first paint sees stable:
+     colorMode, themePack, componentDensity, semanticDensity, enhancementLevel,
+     pedagogicalFlavor + componentMotif (for pigment-context-boost + motif rules),
+     font metrics, grain, headerOpacity, etc.
+   data-spwSettingsPreflight="ready" and data-spwRuntimeStage="preflight" are
+   observable hooks.
+   Full applySiteSettings (kernel/site-settings, mounted early in bootSite after
+   DOMContentLoaded but before interactive state) normalizes, adds events/bus,
+   more datasets, and re-asserts (no visual change for preflight attrs).
+   CSS rules in tokens/ that depend on these must live in the tokens layer (as they
+   do) so they participate in initial cascade before shell/components.
+   This improves event timing (no late motif/flavor flip after paint) and makes
+   the load stages queryable for architecture, audit, and progressive CSS.
+   See also: site.js bootSite (early apply + marks), runtime-helpers (policy),
+   and performance marks (spw:preflight-complete, spw:settings-early-apply-complete).
+*/
 
 
 /* ==========================================================================
@@ -651,6 +730,13 @@
 :root {
   --duration-instant: 50ms;
   --duration-snap: 90ms;
+
+  /* Modular interaction patterns (touch/drag/snap) tunable via component motifs for mood.
+     Base behavior (pointer capture, snap, drag feedback) is in JS (brace-gestures, svg-tunability, image-metaphysics).
+     CSS/ornament provides the visual "mood" personality: crisp vs soft, etc.
+     Usage: <div data-spw-interaction="touch-drag-snap" data-spw-component-motif="lab">...</div>
+     Inline labels inside can be color swatches or discrete text via data-spw-label-style. */
+  --interaction-drag-feedback: 0.03; /* multiplier for visual lift during drag */
   --duration-fast: 140ms;
   --duration-base: 220ms;
   --duration-deliberate: 360ms;
@@ -779,6 +865,14 @@
     --pigment-context-boost: 0.95;
     --active-op-color: var(--pigment-brass-warm);
   }
+  /* Minimalist motif for playful experimentation with material properties (glass/matte depth, ink strength, no ornament).
+     Use on design hub or any surface: data-spw-component-motif="minimal" + enhancement-level=minimal + density=minimal
+     for pure tunable material play without visual noise. Ties to prior material contract and physics-reason for storytellers/engineers.
+     Low boost keeps focus on surface/contrast tokens. */
+  html[data-spw-component-motif="minimal"] {
+    --pigment-context-boost: 0.7;
+    --active-op-color: var(--ink-mid, rgba(var(--charcoal-rgb), 0.68));
+  }
   --active-op-border: color-mix(in srgb, var(--active-op-color) 34%, transparent);
   --active-op-bg-soft: color-mix(in srgb, var(--active-op-color) 7%, transparent);
 
@@ -868,6 +962,13 @@
      attention within a semantic context (e.g., active states, key
      calls to action, or highlighted content). */
   --semantic-accent-emphasis: var(--op-action-color, color-mix(in srgb, var(--semantic-accent) 85%, var(--ink-strong)));
+
+  /* Surface-aware semantic accents (utility for clear contrast on matte)
+     These allow accents that remain legible on the "clear opaque" matte
+     surfaces without local re-mixing. Material and route layers can fall
+     back to these. */
+  --semantic-accent-on-matte: color-mix(in srgb, var(--semantic-accent) 92%, var(--ink-on-matte) 8%);
+  --semantic-accent-on-matte-strong: color-mix(in srgb, var(--semantic-accent) 82%, var(--ink-on-matte-strong) 18%);
 
   --op-normalize-color: hsl(95 28% 34%);
   --op-normalize-border: hsla(95, 28%, 34%, 0.2);
@@ -1294,6 +1395,9 @@ html[data-spw-color-mode="dark"] {
   --surface-soft: rgba(18, 24, 28, 0.58);
   --surface-code: rgba(10, 14, 17, 0.98);
   --surface-matte: rgba(24, 30, 35, 0.96);
+  --surface-matte-strong: rgba(31, 38, 44, 0.98);
+  --surface-contrast: rgba(34, 42, 48, 0.98);
+  --surface-contrast-soft: rgba(26, 33, 39, 0.97);
   --surface-panel: rgba(24, 31, 36, 0.9);
   --surface-panel-strong: rgba(30, 38, 44, 0.95);
   --surface-glass: rgba(255, 255, 255, 0.08);
@@ -1306,6 +1410,18 @@ html[data-spw-color-mode="dark"] {
   --ink-faint: rgba(202, 214, 210, 0.52);
   --ink-speculative: rgba(190, 202, 198, 0.18);
   --ink-disabled: rgba(190, 202, 198, 0.24);
+  --ink-on-matte: rgba(246, 250, 248, 0.97);
+  --ink-on-matte-soft: rgba(220, 230, 226, 0.84);
+  --ink-on-matte-strong: rgba(255, 255, 255, 0.98);
+  --ink-on-contrast: rgba(255, 255, 255, 0.98);
+  --ink-on-contrast-soft: rgba(240, 246, 245, 0.9);
+
+  /* Dark matte clear contrast text (semantic utility) */
+  --text-on-matte: var(--ink-on-matte);
+  --text-on-matte-soft: var(--ink-on-matte-soft);
+  --text-on-matte-strong: var(--ink-on-matte-strong);
+  --text-on-contrast: var(--ink-on-contrast);
+  --text-on-contrast-soft: var(--ink-on-contrast-soft);
 
   --line: rgba(228, 235, 232, 0.14);
   --line-strong: rgba(96, 210, 210, 0.34);
@@ -1333,6 +1449,9 @@ html[data-spw-theme-pack="neutral-paper"] {
   --paper-warm: hsl(40 30% 94%);
   --surface: rgba(255, 253, 249, 0.78);
   --surface-strong: rgba(255, 254, 251, 0.92);
+  --surface-matte: rgba(249, 244, 235, 0.96);
+  --surface-matte-strong: rgba(255, 251, 244, 0.98);
+  --surface-contrast: rgba(255, 254, 250, 0.99);
   --surface-panel: rgba(253, 250, 245, 0.86);
   --surface-panel-strong: rgba(255, 252, 248, 0.96);
   --teal: hsl(184 60% 29%);
@@ -1352,6 +1471,8 @@ html[data-spw-theme-pack="ritual-vellum"] {
   --surface-panel: rgba(250, 241, 227, 0.86);
   --surface-panel-strong: rgba(253, 246, 235, 0.95);
   --surface-matte: rgba(250, 244, 230, 0.94);
+  --surface-matte-strong: rgba(255, 249, 238, 0.98);
+  --surface-contrast: rgba(255, 250, 242, 0.99);
   --paper: hsl(38 46% 94%);
   --paper-warm: hsl(32 54% 90%);
   --teal: hsl(176 40% 28%);
@@ -1371,6 +1492,9 @@ html[data-spw-theme-pack="oxide-ledger"] {
   --paper-warm: hsl(38 20% 91%);
   --surface: rgba(244, 251, 248, 0.8);
   --surface-strong: rgba(249, 254, 251, 0.93);
+  --surface-matte: rgba(238, 248, 244, 0.96);
+  --surface-matte-strong: rgba(247, 253, 250, 0.98);
+  --surface-contrast: rgba(251, 255, 253, 0.99);
   --surface-panel: rgba(239, 248, 244, 0.88);
   --surface-panel-strong: rgba(246, 252, 249, 0.96);
   --teal: hsl(172 58% 26%);
@@ -1389,6 +1513,9 @@ html[data-spw-theme-pack="electric-studio"] {
   --paper-warm: hsl(222 36% 94%);
   --surface: rgba(247, 251, 255, 0.76);
   --surface-strong: rgba(251, 253, 255, 0.92);
+  --surface-matte: rgba(238, 246, 255, 0.96);
+  --surface-matte-strong: rgba(247, 252, 255, 0.98);
+  --surface-contrast: rgba(252, 254, 255, 0.99);
   --surface-panel: rgba(241, 248, 255, 0.86);
   --surface-panel-strong: rgba(247, 251, 255, 0.95);
   --teal: hsl(186 78% 30%);
@@ -1409,6 +1536,9 @@ html[data-spw-theme-pack="copper-brace"] {
   --paper-warm: hsl(26 50% 91%);
   --surface: rgba(253, 246, 238, 0.78);
   --surface-strong: rgba(255, 249, 242, 0.92);
+  --surface-matte: rgba(250, 238, 225, 0.96);
+  --surface-matte-strong: rgba(255, 247, 238, 0.98);
+  --surface-contrast: rgba(255, 250, 244, 0.99);
   --surface-panel: rgba(249, 239, 228, 0.87);
   --surface-panel-strong: rgba(253, 244, 234, 0.95);
   --teal: hsl(178 44% 27%);
@@ -1428,6 +1558,9 @@ html[data-spw-theme-pack="glass-console"] {
   --paper-warm: hsl(198 20% 93%);
   --surface: rgba(255, 255, 255, 0.72);
   --surface-strong: rgba(255, 255, 255, 0.88);
+  --surface-matte: rgba(239, 247, 252, 0.96);
+  --surface-matte-strong: rgba(248, 252, 255, 0.98);
+  --surface-contrast: rgba(252, 254, 255, 0.99);
   --surface-panel: rgba(255, 255, 255, 0.78);
   --surface-panel-strong: rgba(255, 255, 255, 0.92);
   --surface-glass: rgba(255, 255, 255, 0.24);
@@ -1450,6 +1583,9 @@ html[data-spw-color-mode="dark"][data-spw-theme-pack="neutral-paper"] {
   --paper-warm: hsl(28 14% 16%);
   --surface: rgba(28, 24, 20, 0.78);
   --surface-strong: rgba(36, 31, 26, 0.92);
+  --surface-matte: rgba(41, 35, 29, 0.96);
+  --surface-matte-strong: rgba(48, 41, 34, 0.98);
+  --surface-contrast: rgba(54, 46, 38, 0.98);
   --surface-panel: rgba(33, 28, 24, 0.9);
   --surface-panel-strong: rgba(40, 34, 29, 0.95);
   --surface-glass: rgba(255, 245, 232, 0.06);
@@ -1470,6 +1606,9 @@ html[data-spw-color-mode="dark"][data-spw-theme-pack="glass-console"] {
   --paper-warm: hsl(206 12% 16%);
   --surface: rgba(18, 24, 28, 0.78);
   --surface-strong: rgba(25, 32, 37, 0.92);
+  --surface-matte: rgba(28, 36, 42, 0.96);
+  --surface-matte-strong: rgba(34, 43, 50, 0.98);
+  --surface-contrast: rgba(38, 48, 56, 0.98);
   --surface-panel: rgba(24, 31, 36, 0.9);
   --surface-panel-strong: rgba(30, 38, 44, 0.95);
   --surface-glass: rgba(255, 255, 255, 0.08);
@@ -1490,6 +1629,9 @@ html[data-spw-color-mode="dark"][data-spw-theme-pack="ritual-vellum"] {
   --paper-warm: hsl(16 20% 17%);
   --surface: rgba(36, 26, 22, 0.78);
   --surface-strong: rgba(44, 32, 26, 0.92);
+  --surface-matte: rgba(48, 36, 30, 0.96);
+  --surface-matte-strong: rgba(56, 42, 34, 0.98);
+  --surface-contrast: rgba(64, 48, 38, 0.98);
   --surface-panel: rgba(41, 30, 24, 0.9);
   --surface-panel-strong: rgba(48, 35, 28, 0.95);
   --surface-glass: rgba(255, 244, 232, 0.06);
@@ -1511,6 +1653,9 @@ html[data-spw-color-mode="dark"][data-spw-theme-pack="oxide-ledger"] {
   --paper-warm: hsl(34 14% 15%);
   --surface: rgba(18, 31, 28, 0.78);
   --surface-strong: rgba(24, 39, 35, 0.92);
+  --surface-matte: rgba(27, 44, 39, 0.96);
+  --surface-matte-strong: rgba(33, 51, 46, 0.98);
+  --surface-contrast: rgba(38, 59, 53, 0.98);
   --surface-panel: rgba(23, 36, 33, 0.9);
   --surface-panel-strong: rgba(29, 43, 39, 0.95);
   --surface-glass: rgba(229, 255, 248, 0.06);
@@ -1531,6 +1676,9 @@ html[data-spw-color-mode="dark"][data-spw-theme-pack="electric-studio"] {
   --paper-warm: hsl(234 16% 16%);
   --surface: rgba(18, 25, 38, 0.8);
   --surface-strong: rgba(25, 33, 48, 0.93);
+  --surface-matte: rgba(27, 36, 52, 0.96);
+  --surface-matte-strong: rgba(34, 44, 61, 0.98);
+  --surface-contrast: rgba(39, 51, 72, 0.98);
   --surface-panel: rgba(24, 32, 46, 0.9);
   --surface-panel-strong: rgba(30, 39, 54, 0.96);
   --surface-glass: rgba(233, 246, 255, 0.07);
@@ -1553,6 +1701,9 @@ html[data-spw-color-mode="dark"][data-spw-theme-pack="copper-brace"] {
   --paper-warm: hsl(18 22% 16%);
   --surface: rgba(36, 24, 19, 0.79);
   --surface-strong: rgba(44, 30, 24, 0.93);
+  --surface-matte: rgba(49, 34, 27, 0.96);
+  --surface-matte-strong: rgba(58, 40, 31, 0.98);
+  --surface-contrast: rgba(66, 46, 36, 0.98);
   --surface-panel: rgba(41, 28, 22, 0.9);
   --surface-panel-strong: rgba(48, 34, 27, 0.96);
   --surface-glass: rgba(255, 240, 230, 0.06);
@@ -1707,22 +1858,38 @@ html[data-spw-color-mode="dark"][data-spw-theme-pack="copper-brace"] {
    and learnable: change one data attr (or flavor preset) and the entire
    operator/measure/accent system rebalances gracefully.
    ========================================================================== */
-html[data-spw-color-mode="dark"][data-spw-component-motif="curriculum"],
-html[data-spw-color-mode="auto"][data-spw-color-mode="dark"][data-spw-component-motif="curriculum"] {
+html[data-spw-color-mode="dark"][data-spw-component-motif="curriculum"] {
   --pigment-context-boost: 1.12;
   /* Lifted electric teal keeps curriculum "mind" (care, memory, boundary) emphasis
      distinct and vibrant on dark ritual/electric/copper packs. */
   --active-op-color: hsl(186 68% 58%);
 }
-html[data-spw-color-mode="dark"][data-spw-component-motif="lab"],
-html[data-spw-color-mode="auto"][data-spw-color-mode="dark"][data-spw-component-motif="lab"] {
+
+html[data-spw-color-mode="dark"][data-spw-component-motif="lab"] {
   --pigment-context-boost: 1.06;
   --active-op-color: hsl(214 62% 62%); /* lifted lapis for technical clarity in dark */
 }
-html[data-spw-color-mode="dark"][data-spw-component-motif="artifact"],
-html[data-spw-color-mode="auto"][data-spw-color-mode="dark"][data-spw-component-motif="artifact"] {
+
+html[data-spw-color-mode="dark"][data-spw-component-motif="artifact"] {
   --pigment-context-boost: 0.98;
   --active-op-color: hsl(40 52% 58%); /* lifted brass for reflective artifact weight */
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-spw-color-mode="auto"][data-spw-component-motif="curriculum"] {
+    --pigment-context-boost: 1.12;
+    --active-op-color: hsl(186 68% 58%);
+  }
+
+  html[data-spw-color-mode="auto"][data-spw-component-motif="lab"] {
+    --pigment-context-boost: 1.06;
+    --active-op-color: hsl(214 62% 62%);
+  }
+
+  html[data-spw-color-mode="auto"][data-spw-component-motif="artifact"] {
+    --pigment-context-boost: 0.98;
+    --active-op-color: hsl(40 52% 58%);
+  }
 }
 
 /* Semantic density */
@@ -1782,6 +1949,8 @@ html[data-spw-high-contrast="on"] {
   --ink-strong: rgba(var(--charcoal-rgb), 1);
   --ink: rgba(var(--charcoal-rgb), 0.98);
   --ink-soft: rgba(var(--charcoal-rgb), 0.9);
+  --ink-on-matte: rgba(var(--charcoal-rgb), 1);
+  --ink-on-matte-strong: rgba(var(--charcoal-rgb), 1);
   --line: rgba(var(--charcoal-rgb), 0.28);
   --line-strong: color-mix(in srgb, var(--active-op-color) 58%, black);
   --focus-ring: 0 0 0 4px color-mix(in srgb, var(--active-op-color) 32%, transparent);
@@ -1792,6 +1961,8 @@ html[data-spw-color-mode="dark"][data-spw-high-contrast="on"] {
   --ink-strong: rgba(255, 255, 255, 0.98);
   --ink: rgba(246, 248, 248, 0.96);
   --ink-soft: rgba(230, 238, 236, 0.88);
+  --ink-on-matte: rgba(255, 255, 255, 0.98);
+  --ink-on-matte-strong: rgba(255, 255, 255, 0.99);
   --line: rgba(246, 248, 248, 0.26);
   --line-strong: color-mix(in srgb, var(--active-op-color) 62%, white);
 }

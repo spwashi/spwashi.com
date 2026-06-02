@@ -1218,6 +1218,23 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
   justify-self: stretch;
 }
 
+/* Conceptual clustering for shell utility controls.
+   Clusters group related actions (e.g. color-mode, typography-scale, material-contrast).
+   Provides semantic structure for styling, a11y (role=group), and future configurable interaction metaphors
+   (data attr can drive different hover, gesture, or visual treatments per cluster type). */
+.spw-utility-cluster {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.08rem;
+}
+.spw-shell-utility-row > .spw-utility-cluster {
+  /* larger separation between clusters than inside */
+  margin-inline-end: 0.2rem;
+}
+.spw-shell-utility-row > .spw-utility-cluster:last-child {
+  margin-inline-end: 0;
+}
+
 :where(.site-header[data-spw-menu-mode="inline"] .spw-nav-toggle, body > header[data-spw-menu-mode="inline"] .spw-nav-toggle) {
   opacity: 0.72;
 }
@@ -1266,6 +1283,32 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
   color: var(--ink, rgba(14, 18, 20, 0.92));
 }
 
+/* Semantic distinction for sigils (icons/Spw operators) vs arguments (labels/text).
+   - Sigil stays fixed (localization convenience: not translated).
+   - Argument carries localizable/human text (styling: can be sized, weighted independently).
+   - Allows targeting sigil for operator-like colors, reduced opacity, etc.
+   - In compact utility mode, hide argument to keep icon/metaphor prominent (space + visual clarity). */
+.spw-shell-utility-button .spw-utility-sigil {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.9em;
+  margin-inline-end: 0.15em;
+  opacity: 0.85;
+  color: var(--spw-shell-chrome-accent-local);
+}
+.spw-shell-utility-button .spw-utility-argument {
+  font-weight: 500;
+}
+.spw-utility-sigil + .spw-utility-argument {
+  margin-inline-start: 0.1em;
+}
+:where(.site-header[data-spw-menu-mode="toggle"], body > header[data-spw-menu-mode="toggle"]) .spw-shell-utility-row[data-spw-utility-mode="compact"] .spw-utility-argument,
+.spw-shell-utility-row[data-spw-utility-mode="compact"] .spw-utility-argument {
+  display: none;
+}
+
 .spw-shell-utility-button:is(:hover, :focus-visible) {
   border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 24%, transparent);
   background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.86)) 92%, var(--spw-shell-chrome-accent-local) 8%);
@@ -1282,6 +1325,53 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
 .spw-shell-utility-button[aria-disabled="true"] {
   opacity: 0.46;
   pointer-events: none;
+}
+
+/* Theming depth + clear contrast for shell utilities.
+   Buttons now respect dark mode, high-contrast, and the matte clear-contrast
+   option (baseMetamaterial=matte) for excellent text legibility on header chrome.
+   Uses the semantic matte ink tokens introduced for surface text contrast. */
+html[data-spw-color-mode="dark"] .spw-shell-utility-button {
+  background: color-mix(in oklab, var(--surface-strong, rgba(25, 32, 37, 0.92)) 94%, var(--spw-shell-chrome-accent-local) 6%);
+  border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 22%, var(--line, rgba(246, 248, 248, 0.18)) 78%);
+  color: color-mix(in oklab, var(--ink, rgba(228, 235, 232, 0.92)) 90%, var(--spw-shell-chrome-accent-local) 10%);
+}
+
+html[data-spw-color-mode="dark"] .spw-shell-utility-button[aria-pressed="true"] {
+  background: color-mix(in oklab, var(--surface-strong, rgba(25, 32, 37, 0.92)) 88%, var(--spw-shell-chrome-accent-local) 12%);
+  color: var(--ink, rgba(236, 241, 238, 0.96));
+  border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 36%, transparent);
+}
+
+/* Matte clear contrast treatment for utility buttons (when user selects the
+   matte option for clear reading surfaces in the shell). Stronger ink, more
+   opaque matte bg, no subtle glass wash — for max legibility of quick controls. */
+html[data-spw-base-metamaterial="matte"] .spw-shell-utility-button,
+html[data-spw-high-contrast="on"] .spw-shell-utility-button {
+  background: var(--surface-matte, rgba(247, 244, 238, 0.96));
+  border-color: var(--line-matte, color-mix(in srgb, var(--spw-shell-chrome-accent-local) 18%, var(--line, rgba(14, 18, 20, 0.14)) 82%));
+  color: var(--ink-on-matte-strong, rgba(14, 18, 20, 0.98));
+  box-shadow: none;
+}
+
+html[data-spw-color-mode="dark"][data-spw-base-metamaterial="matte"] .spw-shell-utility-button,
+html[data-spw-color-mode="dark"][data-spw-high-contrast="on"] .spw-shell-utility-button {
+  background: var(--surface-matte, rgba(24, 30, 35, 0.96));
+  color: var(--ink-on-matte-strong, rgba(255, 255, 255, 0.98));
+  border-color: color-mix(in srgb, var(--spw-shell-chrome-accent-local) 28%, var(--line, rgba(246, 248, 248, 0.2)) 72%);
+}
+
+html[data-spw-base-metamaterial="matte"] .spw-shell-utility-button[aria-pressed="true"],
+html[data-spw-high-contrast="on"] .spw-shell-utility-button[aria-pressed="true"] {
+  background: color-mix(in oklab, var(--surface-matte-strong, rgba(252, 249, 243, 0.98)) 92%, var(--spw-shell-chrome-accent-local) 8%);
+  color: var(--ink-on-matte, rgba(14, 18, 20, 0.96));
+  border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 40%, transparent);
+}
+
+/* Special affordance for the clear-matte action button itself when active. */
+.spw-shell-utility-button[data-spw-shell-action="clear-matte"][aria-pressed="true"] {
+  border-color: color-mix(in oklab, var(--op-action-color, var(--teal)) 32%, transparent);
+  background: color-mix(in oklab, var(--surface-matte-strong, rgba(252, 249, 243, 0.98)) 90%, var(--op-action-color, var(--teal)) 10%);
 }
 
 .spw-route-menu[data-spw-flow="pretext"] {
@@ -2386,6 +2476,65 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   color: var(--ink-soft, rgba(14, 18, 20, 0.72));
 }
 
+/* Dark mode theming depth + surface text contrast for discovery notices / promos.
+   The hard-coded glass wash is toned down; text uses stronger inks.
+   When the global matte clear-contrast option (or high-contrast) is active,
+   notices become opaque matte surfaces with --ink-on-matte-strong for legibility. */
+html[data-spw-color-mode="dark"] .spw-discovery-notice {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 62%),
+    color-mix(in srgb, var(--surface-strong, rgba(25, 32, 37, 0.92)) 97%, transparent);
+  color: var(--ink, rgba(228, 235, 232, 0.92));
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28);
+}
+html[data-spw-color-mode="dark"] .spw-discovery-notice--modal {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.07), transparent 55%),
+    color-mix(in srgb, var(--surface-strong, rgba(25, 32, 37, 0.95)) 98%, transparent);
+  box-shadow: 0 24px 54px rgba(0, 0, 0, 0.36);
+  border-color: color-mix(in srgb, var(--op-action-color, var(--teal-dark, #006b6b)) 28%, var(--line, rgba(246, 248, 248, 0.18)) 72%);
+}
+
+html[data-spw-color-mode="dark"] .spw-discovery-notice__label,
+html[data-spw-color-mode="dark"] .spw-discovery-notice__dismiss {
+  color: var(--ink-soft, rgba(202, 214, 210, 0.78));
+}
+html[data-spw-color-mode="dark"] .spw-discovery-notice--modal .spw-discovery-notice__summary,
+html[data-spw-color-mode="dark"] .spw-discovery-notice__offer,
+html[data-spw-color-mode="dark"] .spw-discovery-notice__meta-value {
+  color: var(--ink, rgba(236, 241, 238, 0.95));
+}
+
+/* Matte clear contrast treatment for notices (when user chooses the matte option
+   for clear reading, or high-contrast is on). Removes blur, uses strong ink. */
+.spw-discovery-notice[data-spw-metamaterial="matte"],
+html[data-spw-base-metamaterial="matte"] .spw-discovery-notice,
+html[data-spw-high-contrast="on"] .spw-discovery-notice {
+  background: var(--surface-matte, rgba(247, 244, 238, 0.96));
+  color: var(--ink-on-matte-strong, var(--ink-on-matte));
+  border-color: var(--line-matte, var(--line));
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+}
+html[data-spw-color-mode="dark"] .spw-discovery-notice[data-spw-metamaterial="matte"],
+html[data-spw-color-mode="dark"][data-spw-base-metamaterial="matte"] .spw-discovery-notice,
+html[data-spw-color-mode="dark"][data-spw-high-contrast="on"] .spw-discovery-notice {
+  background: var(--surface-matte, rgba(24, 30, 35, 0.96));
+  color: var(--ink-on-matte-strong, rgba(255, 255, 255, 0.98));
+}
+.spw-discovery-notice[data-spw-metamaterial="matte"] .spw-discovery-notice__label,
+.spw-discovery-notice[data-spw-metamaterial="matte"] .spw-discovery-notice__dismiss,
+html[data-spw-base-metamaterial="matte"] .spw-discovery-notice .spw-discovery-notice__label {
+  color: var(--ink-on-matte-soft, var(--ink-soft));
+}
+.spw-discovery-notice[data-spw-metamaterial="matte"] .spw-discovery-notice__title,
+.spw-discovery-notice[data-spw-metamaterial="matte"] .spw-discovery-notice__summary,
+.spw-discovery-notice[data-spw-metamaterial="matte"] .spw-discovery-notice__offer,
+.spw-discovery-notice[data-spw-metamaterial="matte"] .spw-discovery-notice__meta-value {
+  color: var(--ink-on-matte-strong, var(--ink));
+}
+
 .spw-discovery-notice__cta:is(:hover, :focus-visible),
 .spw-discovery-notice__dismiss:is(:hover, :focus-visible) {
   outline: none;
@@ -2885,13 +3034,16 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
     touch-action: pan-y;
   }
 
+  .spw-utility-cluster {
+    flex: 1 1 calc(25% - 0.28rem);
+  }
+
   .spw-shell-utility-button {
-    flex: 1 1 calc(33.333% - 0.28rem);
-    min-inline-size: 4.9rem;
-    min-height: 2rem;
-    padding: 0.32rem 0.6rem;
-    font-size: 0.72rem;
-    letter-spacing: 0.03em;
+    min-inline-size: 3.8rem;
+    min-height: 1.92rem;
+    padding: 0.28rem 0.5rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.02em;
   }
 }
 
@@ -2927,13 +3079,16 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
     touch-action: pan-y;
   }
 
+  .spw-utility-cluster {
+    flex: 1 1 calc(25% - 0.28rem);
+  }
+
   .spw-shell-utility-button {
-    flex: 1 1 calc(33.333% - 0.28rem);
-    min-inline-size: 4.9rem;
-    min-height: 2rem;
-    padding: 0.32rem 0.6rem;
-    font-size: 0.72rem;
-    letter-spacing: 0.03em;
+    min-inline-size: 3.8rem;
+    min-height: 1.92rem;
+    padding: 0.28rem 0.5rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.02em;
   }
 }
 
@@ -3481,11 +3636,15 @@ html[data-spw-page-section-direction="back"] .spw-section-handle-shell {
     gap: 0.18rem;
   }
 
+  .spw-utility-cluster {
+    flex: 1 1 calc(25% - 0.18rem);
+  }
+
   .spw-shell-utility-button {
-    min-height: 1.74rem;
-    padding: 0.16rem 0.34rem;
-    font-size: 0.62rem;
-    letter-spacing: 0.03em;
+    min-height: 1.68rem;
+    padding: 0.12rem 0.28rem;
+    font-size: 0.58rem;
+    letter-spacing: 0.02em;
   }
 
   .spw-section-handle,

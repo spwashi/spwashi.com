@@ -255,7 +255,10 @@
 
 ^"surface_material_contract"{
   definition: "Shared surface depth is a contract between tokens, material, grain, and ornament rather than a route-local paint choice."
-  css_contract: "Use --spw-surface-* aliases for fill, line, and shadow; use --spw-local-layer-* aliases for substrate, content, and overlay placement inside a surface."
+  css_contract: "Use --spw-surface-* aliases for fill, line, ink, and shadow; use --spw-local-layer-* aliases for substrate, content, and overlay placement inside a surface."
+  material_options: "glass carries atmospheric depth; matte is the clear opaque contrast safeguard for dense text, mobile cards, forms, and inspection readouts; contrast is the highest-clarity proof/comparison surface. Global baseMetamaterial='matte' (written as data-spw-base-metamaterial) now projects page-level clear contrast treatment (body-level inheritance in material.css) while local data-spw-metamaterial overrides remain authoritative."
+  token_contract: "core.css owns --surface-matte*, --surface-contrast*, --ink-on-matte*, --ink-on-matte-strong, --ink-on-contrast*, --text-on-matte*, --spw-surface-ink-matte* and semantic-accent-on-matte variants. material.css strengthens matte text (using -strong for clear contrast) and supports body[data-spw-base-metamaterial='matte'] + high-contrast synergy. design-surface and other routes alias for parity."
+  design_bench: "/design/#material-contrast-bench exposes the options (now with global apply via settings, larger specimen surface area for prose/operators/code/forms contrast QA) through data-design-material-bench and public/js/modules/design-experiments.js (richer console: applyClearMatteContrast, inspectSemanticTokens); /design/experiments/css/#css-token-register and design catalog expose live token values. baseMetamaterial in settings + prepaint enables early paint of matte clear posture. Settings wiring improved: explicit setters (setBaseMetamaterial/setHighContrast/setClearContrastMatte/setFontSizeScale) on spwSettings + compound data-site-setting-set support in kernel for shell utilities (clear-matte cluster) and bench global-apply; all paths validate/normalize/persist/apply/bus/deviations uniformly."
   layer_rule: "Tokens name the stack, material chooses the surface state, grain adds tactile substrate, and ornament may intensify the result without replacing the structural role."
   host_rule: "A grain or material host may lift ordinary flow children above pseudo-element substrate layers, but opted-in overlay children keep their own geometry and stacking contract."
   examples: ["frame-card with grain substrate and lifted flow content", "media card with automated fade overlay", "settings panel with material depth and quiet grain"]
@@ -537,6 +540,47 @@ frame #learning-game-loop
   concept metacognition note_taking prompt_development genre_development
   note "Configurable gamification should mean a learning loop, not scorekeeping: notice, name, fold, note, and return. Collection marks a useful awareness handle. Reset paths help the reader compare the authored baseline to their tuned browser state."
 
+frame #page_architecture_vocabulary
+  role convention
+  surface design + settings + runtime + .spw
+  concept page_architecture data_structures abstractions vocabulary intern_research semantic_density component_locality interaction_physics
+  data-spw-locality = "high (site shell, global settings, primary frames) | medium (route sections, clusters, component groups) | local (leaf controls, single specimens)"
+  data-spw-physics = "or data-spw-physics-reason: flexible descriptor (e.g. 'calm', 'puppet', 'playful-spring', 'precise-lock', 'expressive-wonder') that can be updated via query, bench control, or settings to modulate gamified navigability, menu pressure, attention echo, collection reward feel, and component response curves."
+  data-spw-density | data-spw-semantic-density = "minimal (business-calm relationship reading, low cognitive load for experiential use) | normal | rich (inspection tools, high information density compelling for expert/business contexts, semantic metadata visible)"
+  data-spw-module-evaluates~="semantic-density" | data-spw-active-layers = "existing markers that let CSS/inspect surfaces name the driving abstraction (density, enhancement, feature, visuals) so visitors see what they might take for granted."
+  html_contract = "Structural containers (body, main, site-frames, settings fieldsets, utility clusters, menu toggles, satchel/pin hosts) declare locality + physics-reason + module-evaluates so selectors and catalog can relate visuals directly to the data structures (settings state, menu topology, pattern locks via pins, wonder field, interaction tuner)."
+  vocabulary_rule = "The design hub, density subpage, tuning widgets, and catalog act as the 'research instrument' for interns: tap/hold reveals the driving attrs + reason; copy explains business-compelling (dense registers, high resonance for tools) vs relationship (roomy, low salience for calm reading, presence). Designer can learn runtime affordances by inspecting the .spw contracts + live data attrs without reading every JS module."
+  selector_granularity = "Use [data-spw-locality='settings'] , [data-spw-physics-reason] , [data-spw-utility-cluster] + semanticDensity-derived states for component-local rules. Avoid over-specific one-off classes; prefer the declared architecture attrs."
+  gamified_navigability = "A 'physics reason' string (or value from interactionTuner + wonderMemory) can be described and swapped to change springiness of menus, reward strength of collection, echo of attention, 'game feel' of spell paths and pattern locks across the site. Exposed in design query-disposition and bench for live experimentation."
+  note "Extends existing data-spw-locality (already on many frames), data-spw-physics (cinematic), data-spw-density, data-spw-module-evaluates, and semantic clusters. Makes page architecture legible as data structures rather than magic visuals. Supports delegation: a designer edits HTML attrs + .spw docs while runtime (site-settings, shell, attention) owns the application. Practical semantic density from Drupalcon reflection: treat 'rich' as compelling for business/inspection software contexts, 'minimal' as the relationship/experience posture."
+
+
+
+frame #tunable_material_narrative_surface
+  role metaphor + contract
+  surface material.css + tokens/core.css + site-settings + design + storytellers
+  concept tunable material glass matte physics-reason density narrative cross-disciplinary
+  note "The site is a tunable material surface: baseMetamaterial (glass atmosphere vs matte clear-contrast safeguard), physicsReason (playful/calm/precise/springy/locked), semanticDensity, fieldResonance, and contour produce the 'felt' substrate (ink strength, blur, lift, salience, motion). For principal engineers collaborating with niche storytellers on complex productions, this is the shared instrument: 'tune to matte + rich + locked-reason for the evidence/inspection act; glass + calm + low-density for the emotional relationship beat.' Runtime (prepaint + apply + data attrs) + CSS aliases make it live and inspectable (catalog, satchel, design bench). Aligns with cognitive load: dense material for technical layers, lighter for experiential flow."
+
+frame #cognitive_gravity_planes
+  role observation + vocabulary
+  surface foundation.css + layout + shell clusters + frame anatomy + brace physics
+  concept gravitational down cognitive line plane 2s 3s clusters slots
+  note "'Down' is gravitational down: the block/scroll direction of reading flow (vertical column in foundation, page 'pull' in attention/scroll datasets). Components grouped in twos (sigil + argument in utility buttons/clusters as cognitive 'line' or binary choice) or threes (triads in some control groups, or logical header/meta/body planes in frames) represent cognitive units – a line (pair for relation), a plane (triad for structure). See utility clusters (data-spw-utility-cluster), component anatomy slots (header->...->footer), brace objective/subjective. This vocabulary helps creative principals reason about layout as 'gravitational narrative planes' rather than arbitrary divs. Data attrs + CSS (flex column, translateY 'lift' against gravity) + .spw make it first-class for cross-disciplinary exploration."
+
+  examples: "utility row: 2-button clusters = lines for quick binary physics tuning; frame with topline + body + actions = plane; vertical scroll as gravity acting on 'mass' of dense vs roomy material."
+
+frame #utility_satchel_physics_material_contract
+  role convention
+  surface shell-disclosure + state-inspector + attention-architecture + material + experiential
+  concept site-utility satchel cognitive attentional physics material tunability tap-hold-drag
+  data-spw-utility-cluster = "groups controls; now carry locality + component-locality + physics-reason + attention/wonder/field + metamaterial so they participate in the models rather than float above them."
+  data-spw-metamaterial | data-spw-base-metamaterial = "local vs global material; utility row and satchel elements must sync and declare the current to apply correct ink/surface/blur (audit: global base + local override on chrome/satchel for consistency across pages)."
+  tap_hold_drag = "tap = direct action (color, clear-matte, open); hold = inspect deeper (anatomy, current physics/attention state, material rationale); drag (on satchel) = reposition within attention field (locomotion, sets sustained attention/gesture during, decays on release)."
+  contract = "Utilities and satchel must: 1. read/write cognitive/attentional attrs (spwAttention, spwWonderState, spwFieldResonance, spwPhysicsReason, spwSemanticDensity); 2. sync and declare data-spw-metamaterial from base; 3. use existing gesture patterns (experiential anchors, titles describing tap/hold/drag in field terms); 4. react to settings:changed + root attr mutations + bus for live tunability. This makes chrome part of the material surface and attentional physics, not external."
+  audit_note = "Material defs audited: design specimens use explicit local data-spw-metamaterial (glass/matte/contrast/paper/field); settings controls baseMetamaterial; shell/satchel now propagate local; global via body[data-spw-base-metamaterial] + prepaint. Inconsistencies (e.g. main pages rely on global, floating chrome previously didn't always declare) fixed surgically by setting attrs on utility row and satchel elements/panel/launch."
+  note "Extends #page_architecture_vocabulary, #tunable_material_narrative_surface, #cognitive_gravity_planes, attention-field operational semantics. Site utilities and satchel are now first-class in the models for consistent experience and inspectability by designers/engineers/storytellers."
+
 frame #culinary-component-physics
   role metaphor
   surface design/components
@@ -615,9 +659,9 @@ frame #compact-tuning-widget
   definition: "The site's JavaScript is organized into stable architectural layers so that refactors, audits, and new features have predictable homes and ownership rules. Actual implementation files (e.g. public/js/modules/math-diagrams.js for labs, public/js/kernel/shared.js for operators) should carry comments referencing this contract and the operator-site-projection where relevant."
 
 ^"palette_theme_composability_contract"{
-  definition: "Artistically selected palettes, theme packs, lighting (color-mode), developmental climate ('mind context'), and component motifs (curriculum for care/memory/boundary, lab for technical depth, artifact for reflection) compose via data-spw-* attributes + central PEDAGOGICAL_FLAVOR_TO_COMPONENT_MOTIF map (in shared.js) into readable, balanced, tunable visual+felt species. Tokens use --pigment-context-boost, motif-specific active-op overrides (with explicit dark+auto variants for lighting balance), and climate accents. JS writes attrs early + emits 'spw:palette-state' + settings:changed for full instrumentability."
+  definition: "Artistically selected palettes, theme packs, lighting (color-mode), developmental climate ('mind context'), component motifs (curriculum for care/memory/boundary, lab for technical depth, artifact for reflection), and surface material (glass/matte/contrast) compose via data-spw-* attributes + central PEDAGOGICAL_FLAVOR_TO_COMPONENT_MOTIF map (in shared.js) into readable, balanced, tunable visual+felt species. Tokens use --pigment-context-boost, motif-specific active-op overrides (with explicit dark+auto media variants for lighting balance), matte/contrast ink aliases, and climate accents. JS writes attrs early + emits 'spw:palette-state' + settings:changed for full instrumentability."
   html_contract: "Combine data-spw-color-mode + data-spw-theme-pack + data-spw-palette-resonance + data-spw-component-motif (or pedagogicalFlavor) + data-spw-developmental-climate on html/body or container. Tuning widgets and recipes make full artistic selection one gesture. data-spw-active-motif snapshot aids inspection."
-  css_tokens: "core.css: pigment-* modulation + motif rules (light + dark variants after theme packs) + operator colors that automatically inherit boosted active-op. See also --mind-context alignment via climate + motif."
+  css_tokens: "core.css: pigment-* modulation + motif rules (light + dark variants after theme packs) + matte/contrast surface aliases + operator colors that automatically inherit boosted active-op. See also --mind-context alignment via climate + motif."
   js_timing: "Central map in shared.js (normalizeComponentMotif) for learnable single source. In site-settings applySiteSettings: synchronous write before/early paint from localStorage, dataset.spwActiveMotif + componentMotif, bus.emit('spw:palette-state', {flavor, motif, themePack, colorMode}) for reactive ornament/measure/attention without full cycle. Future: spw:value-updated from setMeasuredValue for % measures in context."
   combinatoric_enhancement: "Attribute combinations form evolutionary semantic trees/species for enhancement without new code per pack. Examples below + in component-box-model and operational-semantics. New theme pack or motif automatically participates in all existing operator + measure-kind + frame + accent trees."
   examples: [
@@ -782,3 +826,11 @@ claim #daily-kernel-ergonomics-001 {
   falsification = "A cross-discipline patch mixes CSS, HTML, JS, copy, and metaphor broadly without declaring region, brand physics, intensity, or validation."
   status = "active"
 }
+
+frame #minimalist_material_motif
+  role extension
+  surface tokens/core + design + experiments
+  concept minimalist motif playful material exp contrast audit font layout
+  data-spw-component-motif = "minimal (low pigment-boost, neutral active-op; strips to core --surface-*/--ink-on-*/--material-* for pure glass/matte/contrast play, no ornament distraction)"
+  usage = "Set on body or design surface + enhancement-level=minimal, semanticDensity=minimal, physics-reason=precise for testing material properties, contrast in components, font norm, layout sel. Immediate via design hub 'minimal motif' chip (sets data + calls setImmediateAppearance for live preview)."
+  note "Supports color/contrast audit (components now prefer semantic aliases via foundation rules when motif/material present); playful exp with material (tunable without visual noise); design abstractions for immediate tuning; font/layout UX preview. Composes with existing motifs (curriculum/lab/artifact via pedagogicalFlavor map). CSS in tokens catches html[data-spw-component-motif=\"minimal\"]. Documented for designer delegation + catalog inspectability."

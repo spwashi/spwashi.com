@@ -59,6 +59,7 @@ const CONTRAST_STATES = new Set(['soft', 'balanced', 'strong']);
 const SEMANTIC_MODES = new Set(['diagram', 'icon', 'illustration', 'map', 'project-motif']);
 const RESPONSIVE_MODES = new Set(['fluid', 'fixed', 'contain', 'project']);
 const INTERACTIVE_MODES = new Set(['hover', 'tap', 'prime', 'note']);
+const DEVICE_MODES = new Set(['fine', 'coarse', 'hoverless']);
 const NUMERIC_TUNINGS = Object.freeze({
   strokeScale: '--spw-svg-stroke-scale',
   flowDash: '--spw-svg-flow-dash',
@@ -84,6 +85,7 @@ const SVG_STYLE_PROPERTIES = Object.freeze([
   '--spw-svg-motion-rate',
   '--spw-svg-node-fill-mix',
   '--spw-svg-space',
+  '--spw-svg-device-pointer-lift',
   '--spw-svg-stroke-scale',
   '--spw-svg-flow-dash',
   '--spw-svg-flow-gap',
@@ -98,6 +100,7 @@ const SVG_DATASET_KEYS = Object.freeze([
   'spwSvgPointerState',
   'spwSvgPointerX',
   'spwSvgPointerY',
+  'spwSvgDevice',
 ]);
 
 export const SPW_SVG_PALETTES = Object.freeze({
@@ -144,6 +147,7 @@ export const SPW_SVG_TUNABILITY_CONTRACT = Object.freeze({
     semantic: 'data-spw-svg-semantic',
     responsive: 'data-spw-svg-responsive',
     interactive: 'data-spw-svg-interactive',
+    device: 'data-spw-svg-device',
   }),
   queryParameters: Object.freeze({
     stroke: 'spw-svg-stroke=<number>',
@@ -230,6 +234,7 @@ export function applySvgTunability(target, options = {}) {
   const semantic = normalizeToken(options.semantic || '');
   const responsive = normalizeToken(options.responsive || '');
   const interactive = normalizeToken(options.interactive || '');
+  const device = normalizeToken(options.device || '');
 
   resetSvgTunability(host);
 
@@ -258,6 +263,7 @@ export function applySvgTunability(target, options = {}) {
     spwSvgSemantic: SEMANTIC_MODES.has(semantic) ? semantic : '',
     spwSvgResponsive: RESPONSIVE_MODES.has(responsive) ? responsive : '',
     spwSvgInteractive: INTERACTIVE_MODES.has(interactive) ? interactive : '',
+    spwSvgDevice: DEVICE_MODES.has(device) ? device : '',
   });
 
   if (pointer === 'none') {
@@ -280,6 +286,7 @@ export function applySvgTunability(target, options = {}) {
     svgSemantic: semantic,
     svgResponsive: responsive,
     svgInteractive: interactive,
+    svgDevice: device,
   }, { source: 'spw-svg-tunability' });
 
   const reflowReason = normalizeToken(options.reflowReason || '');
@@ -357,6 +364,9 @@ export function parseSvgTunabilitySearch(search = globalThis.location?.search ||
 
   const interactive = normalizeToken(params.get('spw-svg-interactive') || '');
   if (INTERACTIVE_MODES.has(interactive)) tuning.interactive = interactive;
+
+  const device = normalizeToken(params.get('spw-svg-device') || '');
+  if (DEVICE_MODES.has(device)) tuning.device = device;
 
   const reflowReason = normalizeToken(params.get('spw-reflow') || '');
   if (reflowReason) tuning.reflowReason = reflowReason;
@@ -444,6 +454,13 @@ const clearPointerHost = (host) => {
   });
 };
 
+const getDeviceMode = () => {
+  if (typeof window === 'undefined' || !window.matchMedia) return 'fine';
+  if (window.matchMedia('(hover: none)').matches) return 'hoverless';
+  if (window.matchMedia('(pointer: coarse)').matches) return 'coarse';
+  return 'fine';
+};
+
 function initPointerHost(host) {
   const pointerMode = normalizeToken(host.dataset.spwSvgPointer || '');
   if (!POINTER_MODES.has(pointerMode) || host.dataset.spwSvgPointerManaged === 'true') return;
@@ -451,6 +468,7 @@ function initPointerHost(host) {
   writeDatasetValues(host, {
     spwSvgPointerManaged: 'true',
     spwSvgPointerState: host.dataset.spwSvgPointerState || 'rest',
+    spwSvgDevice: host.dataset.spwSvgDevice || getDeviceMode(),
   });
   markInstrumented(host, 'spw-svg-tunability', { tags: ['svg-pointer', pointerMode] });
 

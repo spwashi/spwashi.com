@@ -864,6 +864,23 @@
                         </fieldset>
 
                         <fieldset class="settings-fieldset">
+                            <legend>Icon pack (considering)</legend>
+                            <p class="settings-option-hint" style="margin-bottom:0.3rem;">Lightweight visual treatment for operators, sigils and motifs. See theming plan.</p>
+                            <label class="settings-option">
+                                <input checked name="iconPack" type="radio" value="text" />
+                                <span class="settings-option-copy"><strong>Text</strong> <span>Current sigils + text operators (default).</span></span>
+                            </label>
+                            <label class="settings-option">
+                                <input name="iconPack" type="radio" value="symbol" />
+                                <span class="settings-option-copy"><strong>Symbol</strong> <span>More glyph/icon forward.</span></span>
+                            </label>
+                            <label class="settings-option">
+                                <input name="iconPack" type="radio" value="regional" />
+                                <span class="settings-option-copy"><strong>Regional</strong> <span>Local/project-specific motifs (ties to regional screenshots + project notes).</span></span>
+                            </label>
+                        </fieldset>
+
+                        <fieldset class="settings-fieldset">
                             <legend>Dimensional resonance</legend>
                             <label class="settings-option">
                                 <input checked name="paletteResonance" type="radio" value="route" />
@@ -1006,7 +1023,7 @@
                     </p>
 
                     <div class="settings-grid">
-                        <fieldset class="settings-fieldset">
+                        <fieldset class="settings-fieldset" data-spw-locality="high" data-spw-component-locality="settings-material" data-spw-physics-reason="clear-contrast-safeguard" data-spw-module-evaluates="semantic-density base-metamaterial">
                             <legend>Base metamaterial</legend>
                             <label class="settings-option">
                                 <input name="baseMetamaterial" type="radio" value="paper" />
@@ -1026,7 +1043,7 @@
                                 <input name="baseMetamaterial" type="radio" value="matte" />
                                 <span class="settings-option-copy">
                     <strong>Matte</strong>
-                    <span>Flat and recessive.</span>
+                    <span>Clear opaque contrast safeguard for dense text, forms, inspection, and mobile reading. Recommended when high legibility matters more than atmosphere.</span>
                   </span>
                             </label>
                             <label class="settings-option">
@@ -1037,6 +1054,10 @@
                   </span>
                             </label>
                         </fieldset>
+
+                        <p class="frame-note">
+                          Compare live in the <a href="/design/#material-contrast-bench" data-spw-interaction="tap-hold">design hub material bench</a> (global apply supported).
+                        </p>
 
                         <fieldset class="settings-fieldset">
                             <legend>Base affordance</legend>
@@ -1072,6 +1093,7 @@
 
                         <fieldset class="settings-fieldset">
                             <legend>Component density</legend>
+                            <!-- Small vocabulary/research affordance for interns + designers: names the abstraction driving spacing/salience so it is not taken for granted. "Rich" often compelling for business/inspection tools (high info density); "minimal" useful for experiential calm/relationship reading. See design/density/ and .spw page_architecture_vocabulary. -->
                             <label class="settings-option">
                                 <input name="componentDensity" type="radio" value="dense" />
                                 <span class="settings-option-copy">
@@ -1312,6 +1334,7 @@
                                     <span class="settings-option-copy"><strong>120%</strong></span>
                                 </label>
                             </div>
+                            <p class="frame-note">Normalization: scale × preset multiplier (small=0.93, normal=1, large=1.12) sets --site-root-font-size. Live preview via design hub immediate tuners.</p>
                         </fieldset>
 
                         <fieldset class="settings-fieldset">
@@ -1461,7 +1484,7 @@
                             </label>
                         </fieldset>
 
-                        <fieldset class="settings-fieldset">
+                        <fieldset class="settings-fieldset" data-spw-locality="high" data-spw-component-locality="settings-contrast" data-spw-physics-reason="high-legibility" data-spw-module-evaluates="semantic-density high-contrast">
                             <legend>High contrast</legend>
                             <label class="settings-option">
                                 <input checked name="highContrast" type="radio" value="off" />
@@ -1696,6 +1719,22 @@
                             <label class="settings-option">
                                 <input name="operatorHighlighting" type="radio" value="on" />
                                 <span class="settings-option-copy"><strong>On</strong></span>
+                            </label>
+                        </fieldset>
+
+                        <fieldset class="settings-fieldset">
+                            <legend>Shell menu presentation</legend>
+                            <label class="settings-option">
+                                <input checked name="shellMenuPresentation" type="radio" value="adaptive" />
+                                <span class="settings-option-copy"><strong>Adaptive</strong><span>Inline when roomy, modal when the header needs to condense.</span></span>
+                            </label>
+                            <label class="settings-option">
+                                <input name="shellMenuPresentation" type="radio" value="modal" />
+                                <span class="settings-option-copy"><strong>Modal</strong><span>Use a dimmed overlay and fixed menu shell so the header does not push content around.</span></span>
+                            </label>
+                            <label class="settings-option">
+                                <input name="shellMenuPresentation" type="radio" value="drawer" />
+                                <span class="settings-option-copy"><strong>Drawer</strong><span>Keep the menu as a pulled-out field for wider screens and inspection-heavy sessions.</span></span>
                             </label>
                         </fieldset>
 
@@ -2076,6 +2115,11 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
                 <article class="settings-state-card">
                     <span class="settings-state-label">theme pack</span>
                     <strong data-settings-state="themePack">neutral paper</strong>
+                </article>
+
+                <article class="settings-state-card">
+                    <span class="settings-state-label">icon pack</span>
+                    <strong data-settings-state="iconPack">text</strong>
                 </article>
 
                 <article class="settings-state-card">
@@ -2521,8 +2565,11 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
                     <p class="eyebrow">Configuration links</p>
                     <h3 class="spw-settings-cluster__title">Share a mood-reading setup without explaining every control.</h3>
                     <p class="spw-settings-cluster__copy">These links use query parameters for quick QA and teaching. They are not separate themes; they are named ways to inspect spacing, contrast, module behavior, and local region frames.</p>
+                    <p class="frame-note" style="margin-top:0.4rem;">
+                        This workbench itself is a living demonstration of the modern web platform: all state lives in localStorage, the surface is built with custom elements and progressive enhancement, theming and density use CSS custom properties + layers + :has(), interactions rely on pointer events and IntersectionObserver, and the entire system remains inspectable without any framework. Customize the shortcuts below to build your own teaching or project-specific lenses.
+                    </p>
                 </header>
-                <div class="spw-settings-cluster__actions" role="group" aria-label="Configuration links">
+                <div class="spw-settings-cluster__actions" id="config-shortcuts" role="group" aria-label="Configuration links">
                     <a class="operator-chip" href="?view=readable&amp;meaning=readable&amp;interaction=calm&amp;lighting=balanced">Readable</a>
                     <a class="operator-chip" href="?view=inspect&amp;meaning=inspect&amp;module-audit=on&amp;module-visuals=on&amp;layout=wide&amp;lighting=guarded">Inspect layout</a>
                     <a class="operator-chip" href="?view=inspect&amp;meaning=inspect&amp;debug=css,layout&amp;diagnostics=verbose&amp;layout=atlas&amp;lighting=guarded">QA atlas</a>
@@ -2530,6 +2577,10 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
                     <a class="operator-chip" href="?semanticDensity=rich&amp;cognitiveHandles=on&amp;showSemanticMetadata=on&amp;interaction=responsive&amp;fieldResonance=field">Region menu</a>
                     <a class="operator-chip" href="?semanticDensity=rich&amp;cognitiveHandles=on&amp;showSemanticMetadata=on&amp;interaction=expressive&amp;fieldResonance=choral&amp;operatorHighlighting=on">Ornament valve</a>
                 </div>
+                <button type="button" class="operator-chip" id="customize-shortcuts" data-spw-feature="custom-shortcuts">customize shortcuts</button>
+                <span class="spw-settings-cluster__note" style="font-size:0.68rem; opacity:0.8; display:block; margin-top:0.2rem;">
+                  Menu chrome: <code>data-spw-shell-menu-presentation</code> or <code>?shellMenuPresentation=modal</code> (adaptive | modal | drawer). Modal uses layer dimmer + overlay nav (no content push). Experimental; see shell-disclosure + chrome.css.
+                </span>
                 <div class="spw-settings-cluster__readout" aria-label="Active tuner readout">
                     <span class="spec-pill">color <span data-settings-state="colorTuner">balanced</span></span>
                     <span class="spec-pill">layout <span data-settings-state="layoutTuner">reading</span></span>
@@ -2550,6 +2601,92 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
                     </p>
                 </div>
             </aside>
+
+            <script>
+            // Progressive customization for the configuration shortcuts (the quick style/tuner links).
+            // Allows users to customize the "Readable / Inspect layout / Culinary lens" etc. shortcuts
+            // that directly control light/dark (lighting), smaller/larger (layout, density), path (stroke semantics), style (flavor, palette).
+            // Persists in localStorage as simple JSON array of {label, href}.
+            // Surgical: static HTML remains the default; JS only enhances if localStorage present or edit requested.
+            (function initCustomShortcuts() {
+                const container = document.getElementById('config-shortcuts');
+                const editBtn = document.getElementById('customize-shortcuts');
+                if (!container || !editBtn) return;
+
+                const STORAGE_KEY = 'spw-custom-config-shortcuts';
+
+                function loadCustom() {
+                    try {
+                        const raw = localStorage.getItem(STORAGE_KEY);
+                        if (raw) return JSON.parse(raw);
+                    } catch (e) {}
+                    return null;
+                }
+
+                function saveCustom(list) {
+                    try {
+                        localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+                    } catch (e) {}
+                }
+
+                function render(list) {
+                    container.innerHTML = '';
+                    list.forEach(item => {
+                        const a = document.createElement('a');
+                        a.className = 'operator-chip';
+                        a.href = item.href;
+                        a.textContent = item.label;
+                        container.appendChild(a);
+                    });
+                }
+
+                function getDefaultList() {
+                    // Mirror the original static list so reset is easy.
+                    return [
+                        {label: 'Readable', href: '?view=readable&meaning=readable&interaction=calm&lighting=balanced'},
+                        {label: 'Inspect layout', href: '?view=inspect&meaning=inspect&module-audit=on&module-visuals=on&layout=wide&lighting=guarded'},
+                        {label: 'QA atlas', href: '?view=inspect&meaning=inspect&debug=css,layout&diagnostics=verbose&layout=atlas&lighting=guarded'},
+                        {label: 'Culinary lens', href: '?view=readable&meaning=rich&flavor=culinary&palette=craft'},
+                        {label: 'Region menu', href: '?semanticDensity=rich&cognitiveHandles=on&showSemanticMetadata=on&interaction=responsive&fieldResonance=field'},
+                        {label: 'Ornament valve', href: '?semanticDensity=rich&cognitiveHandles=on&showSemanticMetadata=on&interaction=expressive&fieldResonance=choral&operatorHighlighting=on'}
+                    ];
+                }
+
+                let currentList = loadCustom() || getDefaultList();
+                render(currentList);
+
+                editBtn.addEventListener('click', () => {
+                    const lines = currentList.map(i => `${i.label} | ${i.href}`).join('\n');
+                    const input = prompt(
+                        'Edit your custom shortcuts (one per line: "Label | ?query=..."). Leave empty to reset to defaults.',
+                        lines
+                    );
+                    if (input === null) return; // cancel
+                    if (input.trim() === '') {
+                        localStorage.removeItem(STORAGE_KEY);
+                        currentList = getDefaultList();
+                    } else {
+                        const newList = [];
+                        input.trim().split('\n').forEach(line => {
+                            const parts = line.split('|').map(s => s.trim());
+                            if (parts.length >= 2 && parts[0] && parts[1]) {
+                                newList.push({label: parts[0], href: parts[1]});
+                            }
+                        });
+                        if (newList.length) {
+                            currentList = newList;
+                            saveCustom(currentList);
+                        }
+                    }
+                    render(currentList);
+                });
+
+                // Optional: allow double-click on the container to quickly edit (poweruser discoverability)
+                container.addEventListener('dblclick', () => {
+                    editBtn.click();
+                });
+            })();
+            </script>
 
             <div class="settings-structures-grid" data-spw-box-model="data-structure-atlas" data-spw-composition-flow="grid">
                 <article class="settings-structure-card" data-spw-box-model="structure-card">

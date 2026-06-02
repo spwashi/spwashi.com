@@ -16,6 +16,22 @@
   /* Component accent now inherits semantic accent family via foundation bridge for consistent theming */
 }
 
+:where(
+  .frame-card,
+  .frame-panel,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .plan-card,
+  .ref-card,
+  .compare-card
+) {
+  --card-secondary-opacity: var(--component-card-detail-opacity, 0.86);
+  --card-secondary-shift: calc(var(--component-card-detail-shift, 0) * 1px);
+  --card-secondary-weight: var(--component-card-detail-weight, 0);
+}
+
 :where(a.frame-card, .frame-card > a:first-child) {
   /* Layout */
   display: grid;
@@ -271,6 +287,26 @@
   margin-block-end: var(--space-3xs, 0.125rem);
 }
 
+:where(
+  .frame-card,
+  .frame-panel,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .plan-card,
+  .ref-card,
+  .compare-card
+) :where(.card-sub-links, .ref-links, .plan-links) {
+  opacity: var(--card-secondary-opacity);
+  transform: translateY(var(--card-secondary-shift));
+  transition:
+    opacity var(--component-transition-base),
+    transform var(--component-transition-base),
+    max-height var(--component-transition-deliberate),
+    margin-top var(--component-transition-base);
+}
+
 :where(.card-sub-links, .ref-links, .plan-links) {
   display: flex;
   flex-wrap: wrap;
@@ -295,6 +331,57 @@
 
 :where(:is(.card-sub-links, .ref-links) a, a.ref-link):is(:hover, :focus-visible) {
   color: var(--component-accent);
+}
+
+:where(
+  .frame-card,
+  .frame-panel,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .plan-card,
+  .ref-card,
+  .compare-card
+):is(:hover, :focus-within, [data-spw-card-state="expanded"], [data-spw-gesture="charging"]) :where(.card-sub-links, .ref-links, .plan-links) {
+  --card-secondary-opacity: 1;
+  --card-secondary-shift: 0;
+  margin-top: auto;
+}
+
+:where(
+  .frame-card,
+  .frame-panel,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .plan-card,
+  .ref-card,
+  .compare-card
+)[data-spw-card-state="compact"] :where(.card-sub-links, .ref-links, .plan-links) {
+  --card-secondary-opacity: 0.76;
+}
+
+@media (pointer: coarse) {
+  :where(
+    .frame-card,
+    .frame-panel,
+    .media-card,
+    .media-focus-card,
+    .software-card,
+    .operator-card,
+    .plan-card,
+    .ref-card,
+    .compare-card
+  ) :where(.card-sub-links, .ref-links, .plan-links) {
+    gap: var(--component-gap-tight, 0.45rem);
+  }
+
+  :where(:is(.card-sub-links, .ref-links) a, a.ref-link) {
+    min-height: max(2.3rem, var(--touch-target-min, 2.75rem));
+    align-items: center;
+  }
 }
 
 .spw-playable-hook {

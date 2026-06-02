@@ -45,7 +45,7 @@
     ></spw-site-header>
 
     <main data-spw-kind="surface" data-spw-role="reference" data-spw-context="analysis" data-spw-seed="page_design_design_hub__main_surface" data-spw-wonder="projection orientation locality" id="main-content" tabindex="-1" aria-labelledby="design-hub-title">
-        <article>
+        <article data-design-experiments-root data-spw-feature="design-hub-experiments">
             <section class="site-frame site-hero" id="design-hub" aria-labelledby="design-hub-title" aria-describedby="design-hub-description" data-spw-role="orientation" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="projection orientation locality" data-spw-affordance="orient" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="framing" data-spw-promptability="visible" data-spw-collectability="some" data-spw-seed="page_design_design_hub__design_hub" data-spw-context-relevance="design hub team communication culinary instruction rendering context tests cards coordination onboarding" data-spw-related-routes="/now/|/cards/|/membership/|/coordination/|/research/|/recipes/|/about/website/|/design/website/|/design/interaction-design/|/design/accessibility/|/topics/software/pretext/|/topics/software/renderers/|/topics/architecture/|/settings/">
                 <div class="frame-topline">
                     <a class="frame-sigil" href="#design-hub">#&gt;design_hub</a>
@@ -581,6 +581,29 @@
                             <button class="operator-chip" type="button" data-site-setting-set="colorMode:dark">Dark</button>
                             <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:sitewide">Immersive</button>
                         </div>
+                        <!-- Flexible physics-reason control: updatable descriptor for interaction physics / gamified navigability.
+                             Lets visitors (interns, designers) name and swap the "reason" (playful vs precise vs springy) that can
+                             affect menu/component feel, collection, attention, without hardcoding. Ties directly to data-spw-physics-reason
+                             + locality for granular architecture inspection. See .spw page_architecture_vocabulary. -->
+                        <div class="palette-probe-actions" aria-label="Flexible interaction physics reason (gamified navigability)">
+                            <span class="spec-pill" aria-hidden="true">physics reason</span>
+                            <button class="operator-chip" type="button" data-site-setting-set="physicsReason:playful">playful (gamified)</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="physicsReason:precise">precise (tools)</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="physicsReason:calm">calm (relationship)</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="physicsReason:springy">springy</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="physicsReason:">clear</button>
+                        </div>
+                        <!-- Immediate appearance tuning abstractions (design page only, for instant preview/experimentation).
+                             Calls spwDesignExperiments.setImmediateAppearance for live color/contrast/motif/font/layout without persist.
+                             Enables playful material exp (minimal motif strips to core surface/ink tokens), font norm preview,
+                             layout UX test. Ties to color audit (contrastBoost), material tunability. Use reset to clear. -->
+                        <div class="palette-probe-actions" aria-label="Immediate live appearance tuning (preview only)">
+                            <span class="spec-pill" aria-hidden="true">immediate</span>
+                            <button class="operator-chip" type="button" data-design-immediate="accent:#008080;contrastBoost:1.2;motif:lab">lab accent high</button>
+                            <button class="operator-chip" type="button" data-design-immediate="motif:minimal;contrastBoost:0.6">minimal motif (pure material)</button>
+                            <button class="operator-chip" type="button" data-design-immediate="fontScale:120;layout:atlas">large atlas (font+layout UX)</button>
+                            <button class="operator-chip" type="button" data-design-immediate="reset">reset preview</button>
+                        </div>
                     </section>
 
                     <article class="frame-panel design-qa-card design-qa-card--reset">
@@ -594,6 +617,92 @@
                         </div>
                         <p class="design-qa-copy">After resetting, compare the route against the render and component labs.</p>
                     </article>
+
+                    <section class="frame-panel design-qa-card design-qa-card--material" id="material-contrast-bench" data-design-material-bench data-design-material-mode="matte" data-spw-kind="panel" data-spw-role="material-lab" data-spw-feature="material-contrast-bench" aria-labelledby="material-contrast-bench-title">
+                        <div class="design-material-bench">
+                            <header>
+                                <p class="frame-note">Material contrast</p>
+                                <h3 id="material-contrast-bench-title">Compare glass, matte, and contrast surfaces before promoting a color decision.</h3>
+                                <p class="design-qa-copy">Matte should read as the clear, opaque option. Glass can stay atmospheric, but text-first panels (and floating promos) need a surface that survives dark mode, screenshots, and dense copy. The stage now includes a live promo notice preview that updates with the bench.</p>
+                            </header>
+                            <div class="design-material-controls" role="group" aria-label="Material contrast mode">
+                                <button class="operator-chip" type="button" data-design-material-set="glass">glass</button>
+                                <button class="operator-chip" type="button" data-design-material-set="matte">matte</button>
+                                <button class="operator-chip" type="button" data-design-material-set="contrast">contrast</button>
+                            </div>
+                            <div class="design-material-global design-experiment-actions">
+                                <!-- Global apply uses settings scope on ancestor; exercises the new matte clear contrast page treatment -->
+                                <button class="operator-chip" type="button" data-site-setting-set="baseMetamaterial:matte;highContrast:on" aria-label="Apply matte as global clear contrast page treatment">apply matte clear globally</button>
+                                <button class="operator-chip" type="button" data-site-settings-reset>reset to authored</button>
+                                <a class="operator-chip" href="/settings/#interface-physics">open full settings</a>
+                            </div>
+                            <div class="design-material-stage" aria-label="Material specimen comparison">
+                                <article class="design-material-specimen" data-design-material-specimen data-spw-metamaterial="glass">
+                                    <p class="frame-note">atmosphere</p>
+                                    <h4>Glass carries field depth.</h4>
+                                    <p>Use it when the background relationship matters more than hard-edged reading comfort.</p>
+                                    <code>data-spw-metamaterial="glass"</code>
+                                </article>
+                                <article class="design-material-specimen" data-design-material-specimen data-spw-metamaterial="matte">
+                                    <p class="frame-note">clear read</p>
+                                    <h4>Matte is the default contrast safeguard.</h4>
+                                    <p>Use it for dense explanatory text, mobile cards, forms, and inspection readouts.</p>
+                                    <code>data-spw-metamaterial="matte"</code>
+                                </article>
+                                <article class="design-material-specimen" data-design-material-specimen data-spw-metamaterial="contrast">
+                                    <p class="frame-note">highest clarity</p>
+                                    <h4>Contrast is for proof and comparison.</h4>
+                                    <p>Use it when a component must stay unmistakably readable across theme packs.</p>
+                                    <code>data-spw-metamaterial="contrast"</code>
+                                </article>
+                                <!-- Expanded surface area specimens for real contrast QA (operators, code, form-like, longer prose) under current global state -->
+                                <article class="design-material-specimen" data-design-material-specimen data-spw-metamaterial="matte">
+                                    <p class="frame-note">operators on matte</p>
+                                    <p><a class="operator-chip" data-spw-operator="frame" href="#">#&gt;frame</a> <a class="operator-chip" data-spw-operator="probe" href="#">? probe</a></p>
+                                    <code>matte + operators</code>
+                                </article>
+                                <article class="design-material-specimen" data-design-material-specimen data-spw-metamaterial="matte">
+                                    <p class="frame-note">dense + code</p>
+                                    <p>Matte must survive <code>data-spw-metamaterial</code> and <code>--ink-on-matte-strong</code> in dark packs.</p>
+                                    <small>Small text on clear surface.</small>
+                                </article>
+                                <!-- Promo / discovery notice specimen for style experimentation on design hub.
+                                     Toggles with the bench to show how collab/contact promos render under glass/matte/contrast.
+                                     Improves surface area, feature discoverability (daily promo is now a live style test), and
+                                     demonstrates matte as the clear contrast option for important floating chrome. -->
+                                <article class="design-material-specimen design-promo-specimen" data-design-material-specimen data-design-promo-specimen data-spw-metamaterial="matte" data-spw-promo-theme="glass" aria-label="Promo notice preview under current material">
+                                    <p class="spw-discovery-notice__label">DAILY PROMO</p>
+                                    <p class="spw-discovery-notice__title">Make collaboration easy to imagine</p>
+                                    <div class="spw-discovery-notice__handles">
+                                        <span class="spec-pill spw-discovery-notice__handle">collaboration</span>
+                                        <span class="spec-pill spw-discovery-notice__handle">contact</span>
+                                        <span class="spec-pill spw-discovery-notice__handle">modal</span>
+                                        <span class="spec-pill spw-discovery-notice__handle">invite</span>
+                                    </div>
+                                    <p class="spw-discovery-notice__summary">Keep the call to action low friction: a card, a button, a short route, or a clear email path to follow.</p>
+                                    <p class="spw-discovery-notice__offer">A direct opening for collaboration without heavy ceremony</p>
+                                </article>
+                            </div>
+                            <dl class="design-material-readout" aria-label="Current material bench state">
+                                <div>
+                                    <dt>bench mode</dt>
+                                    <dd><code data-design-material-readout="mode">matte</code></dd>
+                                </div>
+                                <div>
+                                    <dt>matte token</dt>
+                                    <dd><code data-design-token-value="--surface-matte">surface-matte</code></dd>
+                                </div>
+                                <div>
+                                    <dt>contrast token</dt>
+                                    <dd><code data-design-token-value="--surface-contrast">surface-contrast</code></dd>
+                                </div>
+                                <div>
+                                    <dt>matte clear ink</dt>
+                                    <dd><code data-design-token-value="--ink-on-matte-strong">ink-on-matte-strong</code></dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </section>
                 </div>
 
                 <section class="frame-panel" id="lab-behavior" aria-labelledby="lab-behavior-title" data-spw-kind="panel" data-spw-role="lab-behavior" data-spw-wonder="browser console query theming">
