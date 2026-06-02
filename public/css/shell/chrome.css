@@ -1212,6 +1212,28 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
   white-space: nowrap;
 }
 
+/* Improve utility menu layout in the header toolbar (as seen in reference views with icon squares for color/material/font/appearance/satchel etc).
+   Make icon-only buttons (compact or in the top bar with "read / inspect" + MENU) uniform squares with centered icons, good tap size, subtle polish for learnability (clear affordance, consistent rhythm with other header controls).
+   The clusters provide grouping; small gaps inside, larger between for parsing.
+   This addresses cramped or inconsistent alignment of the * C ■ -A +A  ◇ Aa  ⌘  style icons. */
+:where(.site-header .spw-shell-utility-row, body > header .spw-shell-utility-row) .spw-shell-utility-button {
+  width: 2.1rem;
+  height: 2.1rem;
+  min-width: 2.1rem;
+  min-height: 2.1rem;
+  padding: 0;
+  border-radius: 7px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05rem;
+  line-height: 1;
+}
+:where(.site-header .spw-shell-utility-row, body > header .spw-shell-utility-row) .spw-shell-utility-button .spw-utility-sigil {
+  margin: 0;
+  font-size: 1.1em;
+}
+
 :where(.site-header[data-spw-menu-mode="toggle"], body > header[data-spw-menu-mode="toggle"]) .spw-shell-utility-row {
   display: flex;
   grid-area: tools;
@@ -2926,6 +2948,46 @@ html[data-spw-base-metamaterial="matte"] .spw-discovery-notice .spw-discovery-no
   opacity: 0.45;
   pointer-events: none;
   filter: saturate(0.6);
+}
+
+/* Improve footer cauldron layout and action buttons for better visual ergonomics and learnability.
+   Actions in a responsive flex wrap (2-col on narrow like screenshot, more on wide).
+   Soft, cohesive pill styling to match the "Memory Garden" presentation in reference views (light bg, subtle borders, consistent with operator-chip but tuned for cauldron context).
+   Buttons have good tap targets, left-aligned operator+label for scannability, hover feedback.
+   The row uses gap for breathing room; on wider viewports they can breathe more or wrap cleanly.
+   Ties to learnability (clear actions with operators), configurable (the actions themselves are the "verbs" for feedback level of engagement with the garden).
+*/
+.site-footer__cauldron-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-top: 0.35rem;
+}
+.site-footer__cauldron-actions .operator-chip {
+  flex: 1 1 calc(50% - 0.125rem);
+  min-height: 2.1rem;
+  padding: 0.28rem 0.55rem;
+  font-size: 0.78rem;
+  justify-content: flex-start;
+  background: color-mix(in srgb, var(--surface-strong, #f8f5f0) 96%, var(--component-accent, var(--active-op-color, #2a6b6b)) 4%);
+  border: 1px solid color-mix(in srgb, var(--line, rgba(0,0,0,0.1)) 40%, transparent);
+  color: color-mix(in srgb, var(--ink, #222) 85%, var(--component-accent, #2a6b6b) 15%);
+  border-radius: 10px;
+  box-shadow: none;
+  transition: transform 80ms, background 80ms, border-color 80ms, color 80ms;
+}
+.site-footer__cauldron-actions .operator-chip:hover,
+.site-footer__cauldron-actions .operator-chip:focus-visible {
+  background: color-mix(in srgb, var(--surface-strong, #f8f5f0) 90%, var(--component-accent, #2a6b6b) 10%);
+  border-color: color-mix(in srgb, var(--component-accent, #2a6b6b) 25%, transparent);
+  color: var(--ink, #111);
+  transform: translateY(-1px);
+}
+@media (min-width: 640px) {
+  .site-footer__cauldron-actions .operator-chip {
+    flex: 0 1 auto;
+    min-width: 7.5rem;
+  }
 }
 
 /* Lifecycle phases for memory gardening (additive, respects existing layers) */

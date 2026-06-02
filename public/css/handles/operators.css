@@ -87,18 +87,49 @@ header,
 .spw-console-collapsed-bar {
   display: none;
   grid-template-columns: minmax(0, 1fr) auto;
-  align-items: baseline;
-  gap: 0.4rem;
-  padding: var(--chrome-pad, 0.35rem);
-  /* Collapsed ergonomics resonate satchel launch: baseline, compact for utility-like, visible token as 'sigil' for quick feedback/learnability. */
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.32rem 0.6rem;
+  /* Collapsed ergonomics resonate satchel launch: baseline/center, compact pill content for utility-like quick feedback/learnability.
+     The token is the "sigil/prompt", chevron is the expand affordance (tap target). */
+}
+
+.spw-console.is-collapsed .spw-console-collapsed-bar .spw-console-action-token,
+.spw-console.is-collapsed .spw-console-collapsed-bar .frame-sigil {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  font-size: 0.78rem;
+}
+
+.spw-console.is-collapsed .spw-console-expand-btn {
+  min-width: 1.6rem;
+  min-height: 1.6rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: color-mix(in srgb, currentColor 12%, transparent);
+  font-size: 0.7em;
+  line-height: 1;
+  opacity: 0.85;
 }
 
 .spw-console.is-collapsed {
-  inline-size: min(17rem, calc(100vw - 1.5rem));
+  inline-size: min(18rem, calc(100vw - 1.2rem));
+  min-block-size: 2.35rem; /* match satchel launch height for resonance */
+  border-radius: 999px; /* full pill like satchel launch */
+  box-shadow: 0 8px 32px color-mix(in srgb, var(--shadow-color, #111) 22%, transparent);
+  /* Ephemeral chrome resonance + ergonomics: pill shape, height, shadow match satchel launch for family feel;
+     layout of the bar inside is compact prompt + action chevron, baseline aligned, good tap target for expand.
+     Position lifted slightly so it doesn't bury footer nav text; uses floating safe inset. */
+  bottom: max(0.6rem, env(safe-area-inset-bottom));
 }
 
 .spw-console.is-collapsed .spw-console-collapsed-bar {
   display: grid;
+  align-items: center;
+  padding: 0.35rem 0.65rem;
+  gap: 0.5rem;
 }
 
 .spw-console.is-collapsed .spw-console-body {
