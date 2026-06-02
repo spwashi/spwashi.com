@@ -73,6 +73,30 @@
   max-inline-size: calc(100vw - 2rem);
 }
 
+/* Improved ephemeral chrome architecture: shared ergonomics/layout tokens for resonance between state satchel, visible console, toasts, handles.
+   - Common padding, font-scale, material application (glass/matte via data-spw-metamaterial on chrome elements).
+   - Ergonomics: consistent min targets, baseline text, gap for actions (like utility clusters).
+   - Layout: use grid/flex patterns that echo satchel (launch/panel) and console (bar/body) for predictable positioning/collapse.
+   - Configurable feedback/learnability: opacity/scale can respond to data-spw-enhancement-level or feedback (subtle vs rich).
+   - Snap/fluid already supported; architecture keeps feature files (console.js, state-inspector) focused on content, chrome.css on containment + resonance.
+   See also shell/chrome for utility menu integration, cards for cauldron footer.
+*/
+:where([data-spw-floating-chrome="true"]) {
+  --chrome-pad: 0.45rem;
+  --chrome-font: 0.82rem;
+  --chrome-gap: 0.35rem;
+  font-size: var(--chrome-font);
+  padding: var(--chrome-pad);
+}
+:where([data-spw-floating-chrome="true"][data-spw-enhancement-level="minimal"]) {
+  --chrome-pad: 0.32rem;
+  --chrome-font: 0.76rem;
+  opacity: 0.9;
+}
+:where([data-spw-floating-chrome="true"][data-spw-metamaterial]) {
+  /* resonance: material from global or local for glass/matte clear contrast on ephemeral too */
+}
+
 @media (max-width: 720px) {
   :where([data-spw-floating-chrome="true"][data-spw-chrome-role="state-inspector"]) {
     /* Reserve the mobile section-handle rail so floating tools do not stack on one tap target. */

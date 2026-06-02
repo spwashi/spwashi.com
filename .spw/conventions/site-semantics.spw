@@ -967,6 +967,45 @@ frame #media_tropes_legacy_ai_wonder
   usage = "Copy clusters for book-like readability + professional rels + visual variety (narrational flow, topical salience); AI wonder notes in recipes/venue/rpg; design-eng path (explore copy with wonder); pragmatic engineering (interviews, tech rels, exp design pace, personality frames, abstractions discovery/teaching respecting perspective frames)."
   note "Paves hire design engineer; leans frontend/design eng; unique to spwashi wonder (Spw + material + rpg/venue as synthesis surface)."
 
+frame #utility_menu_layout
+  role extension
+  surface public/css/shell/chrome.css + public/js/runtime/shell-disclosure.js + header HTML
+  concept improve utility menu layout for ergonomics, learnability, cluster grouping (sigil/arg as cognitive lines)
+  data-spw-utility-cluster, data-spw-shell-action, data-spw-locality/component-locality on clusters
+  usage = "Flex/grid tweaks for baseline align, gaps for targeting, compact mode, resonance with cognitive planes (2/3 clusters). Configurable via physics-reason / enhancement for feedback density in controls."
+  note "Extends prior shell utility (material, locality). Improves header chrome layout without changing template structure."
+
+frame #footer_cauldron_layout
+  role extension
+  surface public/css/shell/chrome.css + cards.css + composition.js + guide-badge
+  concept improve footer cauldron layout + button alignment at bottom of cards/footers
+  data-spw-cauldron, .site-footer__cauldron , .spw-cauldron-footer
+  usage = "Flex column for status+ingredients, align-self flex-end on removes/actions, consistent min-heights/gaps for learnability and visual flow. Ties cauldron as garden/feedback surface."
+  note "Builds on recent cauldron-footer; makes collection state more readable/ergonomic in footer context across routes."
+
+frame #configurable_feedback_learnability
+  role extension
+  surface site-settings.js + discovery-notices + state-inspector + console.js + experiential + guide-badge
+  concept improve learnability and configurable feedback level
+  data-spw-enhancement-level (reuse for feedback richness: minimal/subtle vs rich), transient toasts, history verbosity, idle opacity, haptics strength
+  usage = "Settings (enhancement-level, semantic-density) modulate notice volume, console history, satchel/console feedback density, gesture cues. Improves discoverability without overwhelming; transient chips for state changes."
+  note "Central to learnability of ephemeral + utility + spells/cauldron. Use in design for testing."
+
+frame #ephemeral_chrome_architecture
+  role extension
+  surface floating-chrome.css + state-inspector.js + console.js + discovery-notices + shell (for integration)
+  concept improve ephemeral chrome architecture (toasts, satchel, console, handles) for consistency, material, snap/fluid, ergonomics
+  data-spw-floating-chrome + chrome-tier/role , data-spw-chrome-fluid/snap , shared --chrome-* vars
+  usage = "Shared containment (z via tier, material, pad/gap/font for resonance), JS annotate + sync for satchel/console. Feature code owns content, chrome.css owns layout policy + learnability (feedback level affects chrome presence)."
+  note "Extends existing floating_chrome_contract. Console now uses attrs for arch; satchel/console resonate visually/ergonomically."
+
+frame #visible_console_satchel_resonance
+  role extension
+  surface public/css/handles/operators.css + public/js/interface/console.js + floating-chrome.css + state-inspector
+  concept improve visible console chrome layout, resonance with state satchel design and ergonomics of/about layout
+  usage = "Console (fixed bottom-right grid bar/body, operator-chips for modes, shared chrome vars/pad) now echoes satchel (launch/panel, chips, summary, material sync, feedback). Better collapsed ergonomics, baseline aligns, consistent with utility clusters. Layout improvements for readability + control grouping."
+  note "Makes two main visible/ephemeral tools feel like family (satchel for state, console for diagnostics/textual). Improves overall chrome ergonomics and learnability."
+
 frame #design_engineer_hire_copy
   role note
   surface about + design + .spw + PLAN

@@ -1198,13 +1198,14 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
 .spw-shell-utility-row {
   display: none;
   flex-wrap: nowrap;
-  align-items: center;
-  gap: 0.32rem;
+  align-items: baseline;
+  gap: 0.28rem 0.36rem;
   min-width: 0;
   overflow-x: auto;
   overscroll-behavior-x: contain;
   padding: 0.02rem 0;
   scrollbar-width: none;
+  /* Improved layout: baseline align for sigil+text ergonomics (mixed font sizes read better), slightly larger gaps for learnability (easier targeting + visual grouping of clusters), scroll for many controls without crowding header. */
 }
 
 :where(.site-header[data-spw-menu-mode="toggle"], body > header[data-spw-menu-mode="toggle"]) .spw-shell-utility-button {
@@ -1224,12 +1225,13 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
    (data attr can drive different hover, gesture, or visual treatments per cluster type). */
 .spw-utility-cluster {
   display: inline-flex;
-  align-items: center;
-  gap: 0.08rem;
+  align-items: baseline;
+  gap: 0.06rem;
 }
 .spw-shell-utility-row > .spw-utility-cluster {
-  /* larger separation between clusters than inside */
-  margin-inline-end: 0.2rem;
+  /* larger separation between clusters than inside; improves visual parsing + configurable grouping for feedback/learnability levels */
+  margin-inline-end: 0.24rem;
+  padding-inline: 0.04rem;
 }
 .spw-shell-utility-row > .spw-utility-cluster:last-child {
   margin-inline-end: 0;
@@ -1245,24 +1247,25 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
 
 .spw-shell-utility-button {
   display: inline-flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: center;
   min-width: 0;
-  min-height: 1.88rem;
-  padding: 0.18rem 0.46rem;
+  min-height: 1.92rem;
+  padding: 0.16rem 0.42rem;
   border: 1px solid color-mix(in oklab, var(--spw-shell-chrome-accent-local) 14%, var(--line, rgba(14, 18, 20, 0.14)) 86%);
   border-radius: calc(var(--shape-control, 0.78rem) - 0.08rem);
   background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.86)) 97%, var(--spw-shell-chrome-accent-local) 3%);
   color: color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 88%, var(--spw-shell-chrome-accent-local) 12%);
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
-  font-size: 0.66rem;
+  font-size: 0.64rem;
   font-weight: 600;
   letter-spacing: 0.05em;
-  line-height: 1;
+  line-height: 1.05;
   text-decoration: none;
   white-space: nowrap;
   box-sizing: border-box;
   flex: 0 1 auto;
+  /* Improved ergonomics/layout: baseline for mixed sigil/arg, slightly taller min for learnability (target + text readability), tuned padding/gap for utility menu clusters without header bloat. Buttons at 'bottom' of their cluster align naturally via baseline + flex. */
   transition:
     background-color 100ms var(--shell-ease),
     border-color 100ms var(--shell-ease),
@@ -1290,19 +1293,21 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
    - In compact utility mode, hide argument to keep icon/metaphor prominent (space + visual clarity). */
 .spw-shell-utility-button .spw-utility-sigil {
   display: inline-flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: center;
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
-  font-size: 0.9em;
-  margin-inline-end: 0.15em;
-  opacity: 0.85;
+  font-size: 0.92em;
+  margin-inline-end: 0.12em;
+  opacity: 0.88;
   color: var(--spw-shell-chrome-accent-local);
+  line-height: 1;
 }
 .spw-shell-utility-button .spw-utility-argument {
   font-weight: 500;
+  align-self: baseline;
 }
 .spw-utility-sigil + .spw-utility-argument {
-  margin-inline-start: 0.1em;
+  margin-inline-start: 0.08em;
 }
 :where(.site-header[data-spw-menu-mode="toggle"], body > header[data-spw-menu-mode="toggle"]) .spw-shell-utility-row[data-spw-utility-mode="compact"] .spw-utility-argument,
 .spw-shell-utility-row[data-spw-utility-mode="compact"] .spw-utility-argument {
@@ -2705,6 +2710,7 @@ html[data-spw-base-metamaterial="matte"] .spw-discovery-notice .spw-discovery-no
   margin: 0.3rem 0 0.15rem;
   font-size: 0.71rem;
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  align-items: flex-end; /* buttons/actions at bottom of footer cauldron layout */
 }
 
 .site-footer__cauldron-status {
@@ -2714,6 +2720,16 @@ html[data-spw-base-metamaterial="matte"] .spw-discovery-notice .spw-discovery-no
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: var(--text-size-2xs, 0.72rem);
   line-height: 1.35;
+}
+
+/* Improved footer cauldron layout: status + ingredients flex container with actions (clear etc) bottom-aligned; resonates with .spw-cauldron-footer pattern for cards. Better ergonomics, visual grouping for learnability of collection state. */
+.site-footer__cauldron {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+.site-footer__cauldron .site-footer__cauldron-status + .site-footer__cauldron-ingredients {
+  margin-top: 0.1rem;
 }
 
 /* Cauldron ingredients — styled as inspectable semantic chips using shared tokens */
@@ -2889,6 +2905,12 @@ html[data-spw-base-metamaterial="matte"] .spw-discovery-notice .spw-discovery-no
   padding: 0 0.15rem;
   border-radius: 999px;
   transition: opacity var(--spw-control-transition-fast), color var(--spw-control-transition-fast);
+  align-self: flex-end; /* button alignment at bottom of cauldron chip / footer layout */
+  min-width: 1.5rem;
+  min-height: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .cauldron-ingredient-remove:hover,

@@ -151,6 +151,14 @@ const el = (tag, className, attrs = {}) => {
 
 const createConsole = () => {
     const root = el('aside', 'spw-console', { 'aria-label': 'Spw textual interface' });
+    // Ephemeral chrome architecture: mark for floating-chrome contract (z, material, ergonomics resonance with satchel).
+    // Allows CSS shared --chrome-* , data-spw-metamaterial for glass/matte, learnability cues.
+    root.setAttribute('data-spw-floating-chrome', 'true');
+    root.setAttribute('data-spw-chrome-role', 'console');
+    root.setAttribute('data-spw-chrome-tier', 'priority');
+    // Initial material resonance (sync later with settings like satchel).
+    const initMat = document.documentElement.dataset.spwBaseMetamaterial || 'glass';
+    root.dataset.spwMetamaterial = initMat;
 
     // ── Collapsed bar (always visible, clicking expands) ──
     const collapsedBar = el('div', 'spw-console-collapsed-bar');
@@ -322,7 +330,7 @@ const renderModes = (nodes, frame, api) => {
     }
 
     buttons.forEach((sourceButton) => {
-        const button = el('button', 'frame-sigil spw-console-token', { type: 'button' });
+        const button = el('button', 'operator-chip spw-console-mode-btn', { type: 'button' });
         button.textContent = sourceButton.textContent.trim();
         button.dataset.modeGroup = sourceButton.dataset.modeGroup || '';
         button.dataset.setMode = sourceButton.dataset.setMode || '';
@@ -544,6 +552,27 @@ const initSpwConsole = () => {
     const history = makeRingBuffer(HISTORY_SIZE);
     const nodes = createConsole();
     document.body.appendChild(nodes.root);
+    // Ephemeral chrome + satchel resonance: sync material for glass/matte, participate in settings for configurable feedback/learnability (e.g. enhancement-level affects idle opacity, history verbosity, transient feedback richness).
+    const syncConsoleMaterial = () => {
+      const mat = document.documentElement.dataset.spwBaseMetamaterial || document.documentElement.dataset.spwMetamaterial || 'glass';
+      nodes.root.dataset.spwMetamaterial = mat;
+    };
+    syncConsoleMaterial();
+    const feedbackLevel = () => document.documentElement.dataset.spwEnhancementLevel || 'standard';
+    // Example: richer feedback = less idle fade, more history shown.
+    const applyFeedback = () => {
+      const level = feedbackLevel();
+      const idleOpacity = level === 'minimal' ? '0.92' : (level === 'rich' ? '0.6' : '0.76');
+      nodes.root.style.setProperty('--console-idle-opacity', idleOpacity);
+      if (level === 'rich') nodes.root.classList.add('feedback-rich');
+      else nodes.root.classList.remove('feedback-rich');
+    };
+    applyFeedback();
+    // Listen for settings changes (like satchel reapply).
+    document.addEventListener('spw:settings:changed', () => { syncConsoleMaterial(); applyFeedback(); }, { passive: true });
+    if (window.spwSettings && window.spwSettings.bus) {
+      // if bus available
+    }
     const IDLE_DELAY = 2600;
     let idleTimer = 0;
 
