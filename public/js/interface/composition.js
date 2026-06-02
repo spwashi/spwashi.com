@@ -251,6 +251,23 @@ function handleIngredientInspect(e) {
   const ingEl = e.target.closest('.cauldron-ingredient');
   if (!ingEl || e.target.closest('.cauldron-ingredient-remove')) return;
 
+  // Category hook: if clicked a wonder/operator meta inside ingredient, highlight all page items of that category (in addition to the main expression jump).
+  const metaWonder = e.target.closest('[data-spw-wonder]');
+  const metaOp = e.target.closest('[data-spw-operator]');
+  if (metaWonder || metaOp) {
+    const cat = (metaWonder ? metaWonder.getAttribute('data-spw-wonder') : null) || (metaOp ? metaOp.getAttribute('data-spw-operator') : null);
+    if (cat) {
+      document.querySelectorAll(`[data-spw-wonder="${CSS.escape(cat)}"], [data-spw-operator="${CSS.escape(cat)}"]`).forEach(n => {
+        n.classList.add('is-cauldron-jump-target', 'cauldron-highlight');
+        n.dataset.spwCauldronCategory = cat;
+        setTimeout(() => {
+          n.classList.remove('is-cauldron-jump-target', 'cauldron-highlight');
+          delete n.dataset.spwCauldronCategory;
+        }, 1800);
+      });
+    }
+  }
+
   // Lightweight inspectability: surface the full semantic expression + origin for reflection
   // In a fuller system this could open a richer inspector or highlight related operators on page.
   const expr = ingEl.dataset.spwSemanticExpression || ingEl.querySelector('[data-spw-expression]')?.textContent;
@@ -267,11 +284,60 @@ function handleIngredientInspect(e) {
       if (ingEl) delete ingEl.dataset.spwIngredientInspect;
     }, 1400);
 
+    // Cauldron hook: jump to + highlight the source/interactable item(s) on page for this ingredient.
+    // Supports direct expression match or text/concept fuzzy for living terms, braces, operators (interactables).
+    // Categories: if meta wonder/operator present on ingredient, highlight matching category items too.
+    const targets = findPageTargetsForCauldronIngredient(ingEl, expr);
+    if (targets.length) {
+      const first = targets[0];
+      first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      first.classList.add('is-cauldron-jump-target', 'cauldron-highlight');
+      const cat = ingEl.querySelector('[data-spw-wonder]')?.getAttribute('data-spw-wonder') ||
+                  ingEl.querySelector('[data-spw-operator]')?.getAttribute('data-spw-operator');
+      if (cat) first.dataset.spwCauldronCategory = cat;
+      setTimeout(() => {
+        first.classList.remove('is-cauldron-jump-target', 'cauldron-highlight');
+        if (cat) delete first.dataset.spwCauldronCategory;
+      }, 2400);
+    }
+
     // Helpful for learning without being noisy
     if (typeof console !== 'undefined') {
       console.info('[Cauldron] Inspected ingredient:', expr, origin ? `(origin: ${origin})` : '');
     }
   }
+}
+
+/** Cauldron hook helper: locate interactable page items (living terms, charged braces, operators, etc.)
+ *  that match the ingredient's expression or category (wonder/operator) for jump+highlight.
+ *  Returns array of elements; caller does scroll + temp class + data-spw-cauldron-category for styling.
+ */
+function findPageTargetsForCauldronIngredient(ingEl, expr) {
+  if (!expr && !ingEl) return [];
+  const results = new Set();
+  const escaped = expr ? CSS.escape(expr) : '';
+  // Direct matches via data attrs that cauldron/render uses
+  if (expr) {
+    document.querySelectorAll(`[data-spw-semantic-expression="${escaped}"], [data-spw-expression="${escaped}"]`).forEach(n => results.add(n));
+  }
+  // Living terms / interactables by concept or text content (common for primed/holdable items)
+  const interactables = document.querySelectorAll('.spw-living-term, [data-spw-living-term], [data-spw-form="brace"], [data-spw-operator]');
+  interactables.forEach(n => {
+    const concept = (n.dataset.spwConcept || n.getAttribute('data-spw-living-term') || n.textContent || '').toLowerCase();
+    if (expr && concept.includes(expr.toLowerCase())) results.add(n);
+  });
+  // Category support: if ingredient has wonder or operator meta, find all matching on page (for "or categories")
+  const wonderMeta = ingEl ? ingEl.querySelector('[data-spw-wonder]') : null;
+  const opMeta = ingEl ? ingEl.querySelector('[data-spw-operator]') : null;
+  if (wonderMeta) {
+    const w = wonderMeta.getAttribute('data-spw-wonder');
+    if (w) document.querySelectorAll(`[data-spw-wonder="${CSS.escape(w)}"]`).forEach(n => results.add(n));
+  }
+  if (opMeta) {
+    const o = opMeta.getAttribute('data-spw-operator');
+    if (o) document.querySelectorAll(`[data-spw-operator="${CSS.escape(o)}"]`).forEach(n => results.add(n));
+  }
+  return Array.from(results);
 }
 
 function announceCauldronStatus(message) {

@@ -804,6 +804,33 @@ header.frame-heading > :is(h1, h2, h3) {
   --component-route-accent: var(--op-action-color, var(--component-accent));
 }
 
+/* Broad support for cauldron hook highlights + visual mode candidates outside specific cards.
+   Jump targets and categories get focus ring + wash using tokens for cascade.
+   Spell/cauldron candidates get differential presence based on visibility mode (wired from settings). */
+.is-cauldron-jump-target,
+[data-spw-cauldron-category] {
+  box-shadow: 0 0 0 2px var(--cauldron-highlight, color-mix(in srgb, var(--active-op-color, var(--teal)) 18%, transparent)), var(--component-shadow, none);
+}
+html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-ingredient-primed],
+html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-spell-candidate],
+html[data-spw-cauldron-candidate-visibility="prominent"] .spw-living-term[aria-pressed="true"] {
+  background: var(--spell-candidate-wash, color-mix(in srgb, var(--active-op-color, var(--teal)) 10%, transparent));
+  outline: 1px dashed color-mix(in srgb, var(--active-op-color, var(--teal)) 35%, transparent);
+}
+/* Root token application for visibility modes (cascade from tokens/core) */
+html[data-spw-cauldron-candidate-visibility="prominent"] {
+  --cauldron-candidate-wash: color-mix(in srgb, var(--active-op-color, var(--teal)) 20%, transparent);
+  --spell-candidate-wash: color-mix(in srgb, var(--active-op-color, var(--teal)) 14%, transparent);
+  --cauldron-highlight: color-mix(in srgb, var(--active-op-color, var(--teal)) 28%, transparent);
+  --region-jump-target: color-mix(in srgb, var(--active-op-color, var(--teal)) 24%, transparent);
+}
+html[data-spw-cauldron-candidate-visibility="subtle"] {
+  --cauldron-candidate-wash: transparent;
+  --spell-candidate-wash: transparent;
+  --cauldron-highlight: transparent;
+  --region-jump-target: transparent;
+}
+
 :where([data-spw-component-genome~="interactivity-inspectable"]) {
   --component-route-accent: var(--op-probe-color, var(--component-accent));
 }

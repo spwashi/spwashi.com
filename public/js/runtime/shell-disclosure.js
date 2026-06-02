@@ -109,6 +109,7 @@ const UTILITY_LABELS = Object.freeze({
     'path-toggle': 'Path',
     'font-up': 'Larger',
     'clear-matte': 'Clear',
+    'toggle-cauldron-visibility': 'Vis',
     'open-satchel': 'Satchel',
     settings: 'Style',
   }),
@@ -119,6 +120,7 @@ const UTILITY_LABELS = Object.freeze({
     'path-toggle': 'Reading path',
     'font-up': 'Larger text',
     'clear-matte': 'Clear contrast',
+    'toggle-cauldron-visibility': 'Cauldron vis',
     'open-satchel': 'State satchel',
     settings: 'Appearance',
   }),
@@ -585,6 +587,12 @@ function ensureUtilityRow(header) {
           <span class="spw-utility-argument"></span>
         </a>
       </div>
+      <div class="spw-utility-cluster" data-spw-utility-cluster="cauldron-visibility" role="group" aria-label="Cauldron and spell candidate visibility" data-spw-locality="medium" data-spw-component-locality="cauldron-visual" data-spw-physics-reason="feedback-tuner" data-spw-module-evaluates="cauldron spell visibility">
+        <button type="button" class="spw-shell-utility-button" data-spw-shell-action="toggle-cauldron-visibility" aria-label="Cycle cauldron and spell candidate visual mode (subtle / balanced / prominent)" title="Cycle visibility mode for cauldron ingredients and primed spell candidates">
+          <span class="spw-utility-sigil" aria-hidden="true">◐</span>
+          <span class="spw-utility-argument"></span>
+        </button>
+      </div>
       <div class="spw-utility-cluster" data-spw-utility-cluster="state-observability" role="group" aria-label="State satchel and observability" data-spw-locality="high" data-spw-component-locality="pattern-lock-satchel" data-spw-physics-reason="memory-gamified" data-spw-module-evaluates="semantic-density">
         <button type="button" class="spw-shell-utility-button" data-spw-shell-action="open-satchel" aria-label="Open state satchel" title="Open state satchel for saving and inspecting current appearance/runtime state">
           <span class="spw-utility-sigil" aria-hidden="true">⧉</span>
@@ -698,6 +706,15 @@ function syncUtilityRow(row) {
     button.title = isClearMatte
       ? 'Matte clear contrast active (dense text, forms, inspection)'
       : compact ? 'Switch to matte clear contrast' : 'Switch to matte surfaces for clear high-contrast reading';
+  });
+
+  const vis = (window.spwSettings?.get?.()?.cauldronCandidateVisibility) || 'balanced';
+  row.querySelectorAll('[data-spw-shell-action="toggle-cauldron-visibility"]').forEach((button) => {
+    const arg = button.querySelector('.spw-utility-argument');
+    if (arg) arg.textContent = labels['toggle-cauldron-visibility'] || (compact ? vis : `vis:${vis}`);
+    button.setAttribute('aria-pressed', vis !== 'subtle' ? 'true' : 'false');
+    button.title = `Cauldron/spell visibility: ${vis} (click to cycle subtle/balanced/prominent)`;
+    button.dataset.spwCauldronVisibility = vis;
   });
 
   row.querySelectorAll('[data-spw-shell-action="open-satchel"]').forEach((button) => {
@@ -1216,6 +1233,20 @@ export function initSpwShellDisclosure(options = {}) {
         }
       }
       syncUtilityRow(utilityRow);
+    }
+
+    if (action === 'toggle-cauldron-visibility') {
+      const curr = (window.spwSettings?.get?.()?.cauldronCandidateVisibility) || 'balanced';
+      const order = ['subtle', 'balanced', 'prominent'];
+      const idx = order.indexOf(curr);
+      const next = order[(idx + 1) % order.length];
+      if (window.spwSettings?.saveSiteSettings) {
+        window.spwSettings.saveSiteSettings({ cauldronCandidateVisibility: next });
+      } else {
+        window.spwSettings?.save?.({ cauldronCandidateVisibility: next });
+      }
+      syncUtilityRow(utilityRow);
+      return;
     }
 
     if (action === 'open-satchel') {

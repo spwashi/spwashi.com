@@ -227,6 +227,31 @@
   inherits: true;
   initial-value: 0.4;
 }
+
+/* Cauldron / spell candidate differential visibility tokens (for visual mode toggle).
+   Driven by data-spw-cauldron-candidate-visibility on root (subtle|balanced|prominent).
+   Allows CSS to make cauldron ingredients vs. primed spell candidates (living terms, charged braces, etc.)
+   stand out differently without hard-coded colors. Cascade safe in tokens layer. */
+@property --cauldron-candidate-wash {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+@property --spell-candidate-wash {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+@property --cauldron-highlight {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+@property --region-jump-target {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
 @property --spw-runtime-layer-count {
   syntax: "<integer>";
   inherits: true;

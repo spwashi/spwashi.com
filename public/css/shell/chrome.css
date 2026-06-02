@@ -3006,6 +3006,52 @@ html[data-spw-base-metamaterial="matte"] .spw-discovery-notice .spw-discovery-no
   border-color: color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 18%, var(--line, rgba(14,18,20,0.14)) 82%);
 }
 
+/* Visual mode toggle + settings wiring for differential cauldron / spell candidate visibility.
+   Uses data-spw-cauldron-candidate-visibility (subtle|balanced|prominent) from site-settings.
+   Prominent: stronger wash/highlight on ingredients and primed/candidate items for learnability when "visual" mode.
+   Subtle: muted for clean reading. Balanced default. Improves token logic (reuses --cauldron-candidate-wash etc from tokens).
+   Cascade: tokens first, then these rules in shell (after material in effects). */
+html[data-spw-cauldron-candidate-visibility="prominent"] {
+  --cauldron-candidate-wash: color-mix(in srgb, var(--active-op-color, var(--teal)) 20%, transparent);
+  --spell-candidate-wash: color-mix(in srgb, var(--active-op-color, var(--teal)) 14%, transparent);
+  --cauldron-highlight: color-mix(in srgb, var(--active-op-color, var(--teal)) 28%, transparent);
+  --region-jump-target: color-mix(in srgb, var(--active-op-color, var(--teal)) 24%, transparent);
+}
+html[data-spw-cauldron-candidate-visibility="prominent"] .cauldron-ingredient,
+[data-spw-cauldron-candidate-visibility="prominent"] .cauldron-ingredient {
+  --cauldron-chip-bg: color-mix(in oklab, var(--surface-strong, #fff) 80%, var(--component-accent, var(--active-op-color, var(--teal))) 20%);
+  --cauldron-chip-border: color-mix(in oklab, var(--component-accent, var(--active-op-color, var(--teal))) 35%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 25%, transparent);
+}
+html[data-spw-cauldron-candidate-visibility="balanced"] {
+  --cauldron-candidate-wash: color-mix(in srgb, var(--active-op-color, var(--teal)) 10%, transparent);
+  --spell-candidate-wash: color-mix(in srgb, var(--active-op-color, var(--teal)) 7%, transparent);
+}
+html[data-spw-cauldron-candidate-visibility="subtle"] {
+  --cauldron-candidate-wash: transparent;
+  --spell-candidate-wash: transparent;
+  --cauldron-highlight: transparent;
+}
+html[data-spw-cauldron-candidate-visibility="subtle"] .cauldron-ingredient,
+[data-spw-cauldron-candidate-visibility="subtle"] .cauldron-ingredient {
+  --cauldron-chip-bg: color-mix(in oklab, var(--surface-strong, #fff) 98%, var(--component-accent, var(--active-op-color, var(--teal))) 2%);
+  --cauldron-chip-border: color-mix(in oklab, var(--component-accent, var(--active-op-color, var(--teal))) 8%, transparent);
+  opacity: 0.82;
+}
+/* Spell candidates (primed living terms, charged interactables) differentially visible in prominent mode */
+html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-ingredient-primed],
+html[data-spw-cauldron-candidate-visibility="prominent"] .spw-living-term[data-spw-gesture],
+html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-primed] {
+  --spell-candidate-wash: color-mix(in srgb, var(--active-op-color, var(--teal)) 12%, transparent);
+  background: var(--spell-candidate-wash);
+  outline: 1px dashed color-mix(in srgb, var(--active-op-color, var(--teal)) 40%, transparent);
+  outline-offset: 1px;
+}
+html[data-spw-cauldron-candidate-visibility="subtle"] [data-spw-ingredient-primed],
+html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-gesture] {
+  opacity: 0.7;
+}
+
 /* Subtle gardening affordance on prune/plant/nourish when the garden has material */
 .site-footer__cauldron [data-spw-cauldron-action="prune"],
 .site-footer__cauldron [data-spw-cauldron-action="nourish"],

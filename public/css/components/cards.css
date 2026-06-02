@@ -209,6 +209,35 @@
   border-color: color-mix(in srgb, var(--active-op-color, #008080) 28%, transparent);
 }
 
+/* Card/region layout + variant selection enhancements for cauldron hook + visual modes.
+   Jump targets (from cauldron ingredient click) get temporary highlight.
+   Regions or cards can carry data-spw-region="cauldron-target" or data-spw-component-variant="cauldron-candidate"
+   for persistent differential styling when visibility=prominent.
+   Improves token cascade (uses --cauldron-highlight, --region-jump-target from tokens) + layout (breathing, focus ring). */
+.is-cauldron-jump-target,
+[data-spw-cauldron-category],
+[data-spw-component-variant="cauldron-candidate"],
+[data-spw-region="cauldron-target"] {
+  --cauldron-highlight: color-mix(in srgb, var(--active-op-color, var(--teal)) 18%, transparent);
+  box-shadow: 0 0 0 2px var(--cauldron-highlight), var(--component-shadow);
+  transition: box-shadow 120ms var(--component-transition-fast);
+}
+.cauldron-highlight,
+.is-cauldron-jump-target {
+  animation: cauldron-jump-pulse 1.8s ease-out 1;
+}
+@keyframes cauldron-jump-pulse {
+  0% { box-shadow: 0 0 0 0 var(--cauldron-highlight); }
+  70% { box-shadow: 0 0 0 4px color-mix(in srgb, var(--cauldron-highlight) 40%, transparent); }
+  100% { box-shadow: 0 0 0 2px var(--cauldron-highlight); }
+}
+/* When visibility prominent, candidates get stronger presence in cards/regions too */
+html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-component-variant="cauldron-candidate"],
+html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauldron-target"] {
+  --region-jump-target: color-mix(in srgb, var(--active-op-color, var(--teal)) 22%, transparent);
+  border-color: var(--region-jump-target);
+}
+
 :where(.frame-card, .frame-card > a:first-child) > :is(
   p,
   .frame-note,

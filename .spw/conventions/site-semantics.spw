@@ -1034,4 +1034,27 @@ frame #rpg_character_worldbuild_prep
   usage = "l'n'd'r as seed (speech-bubble expertise, clay); add semantic + venue restaurant scenes in world/character; tie recipes (compelling recipes/service) + rpg as prototype for entertainment venue; catalog + .spw surface for iterative development."
   note "Extends prior RPG work; supports character design, world arcs, physical/digital synthesis."
 
+frame #cauldron_hook_jump_highlight
+  role extension
+  surface public/js/interface/composition.js + cards.css + foundation.css + footer cauldron
+  concept cauldron hook to jump to and highlight an item on the page that can be interacted with, or by categories (wonder, operator)
+  data-spw-cauldron-ingredient + data-spw-semantic-expression, findPageTargetsForCauldronIngredient (expression + category match on living-term/brace/operator), .is-cauldron-jump-target + data-spw-cauldron-category
+  usage = "Click ingredient (or meta) to scroll+temp highlight matching interactable on page. Categories (e.g. wonder meta) allow batch highlight of related items. Supports learnability of where forces came from."
+  note "Enhances existing re-gather/inspect; makes cauldron a bidirectional hook into page content. Uses token --cauldron-highlight."
+
+frame #visual_mode_cauldron_spell_visibility
+  role extension
+  surface site-settings.js (cauldronCandidateVisibility + dataset), shell-disclosure (toggle cluster + sync), chrome/foundation/cards (differential CSS using data-spw-cauldron-candidate-visibility + --cauldron-candidate-wash / --spell-candidate-wash)
+  concept visual mode toggle and settings wiring to make cauldron and spell candidates differentially visible (subtle/balanced/prominent)
+  data-spw-cauldron-candidate-visibility, enhancementLevel synergy, [data-spw-ingredient-primed], .cauldron-ingredient, living-term candidates
+  usage = "Utility toggle or settings cycles visibility. Prominent makes candidates/ingredients pop (wash, outline, shadow) for discovery; subtle quiets for reading. Wired through save/apply/bus like other settings."
+  note "Improves configurable feedback/learnability. Reuses enhancement cascade. New tokens in core for --cauldron-candidate-wash etc."
+
+frame #cauldron_spell_token_cascade_card_region_enhance
+  role extension
+  surface tokens/core.css (new @property --cauldron-candidate-wash etc + --region-jump-target), cards/foundation/chrome (rules + variant=cauldron-candidate, region=cauldron-target, jump highlight anim)
+  concept improvements to relevant token logic and cascade; card or region layout or variant selection enhancements
+  usage = "Tokens early in cascade (core). Visibility + highlight compose with material, gesture, card-state. Cards/regions gain cauldron-target variant for layout (focus ring, shadow) when hooked or prominent."
+  note "Respects layer order. Enhances prior cauldron layout + gesture state work."
+
 # Also update wonder-vocabulary for AI/pragmatic/liminal/venue if space, but site-semantics dispatch covers.
