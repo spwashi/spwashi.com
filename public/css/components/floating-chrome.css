@@ -84,3 +84,44 @@
     max-inline-size: none;
   }
 }
+
+/* ==========================================================================
+   RPG Wednesday / physics / page regions: snap options, fluid semantics, scroll/swipe
+   competition handling for floating chrome (state satchel, toasts, etc.).
+   data-spw-snap, data-spw-chrome-fluid, data-spw-gesture (already used in drag) enable
+   options for snapping (corners, edges), fluid (springy vs precise), and awareness that
+   drag/swipe may compete with page scroll (pointer handling in JS already marks sustained).
+   Small transient toasts get tighter max-size and safe stacking.
+   ========================================================================== */
+
+:where([data-spw-floating-chrome="true"][data-spw-snap]) {
+  transition:
+    left var(--component-transition-deliberate),
+    top var(--component-transition-deliberate),
+    inset var(--component-transition-deliberate);
+}
+
+:where([data-spw-floating-chrome="true"][data-spw-snap="corners"]) {
+  /* Snap affordance hint; JS or user can drive to nearest corner via data or buttons. */
+}
+:where([data-spw-floating-chrome="true"][data-spw-snap="edges"]) {
+  /* Edge magnetic feel for fluid region navigation. */
+}
+
+:where([data-spw-floating-chrome="true"][data-spw-chrome-fluid="springy"],
+       [data-spw-physics-reason*="spring"]) {
+  transition-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+:where([data-spw-floating-chrome="true"][data-spw-chrome-fluid="precise"],
+       [data-spw-physics-reason*="precise"]) {
+  transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+/* Transient/disappearing toasts in stack: smaller footprint, auto-fade via cards.css
+   animation class or attr; keeps competition with scroll low (pointer-events none during fade). */
+:where([data-spw-floating-chrome="true"][data-spw-chrome-tier="toast"] .spw-toast--transient,
+       [data-spw-floating-chrome="true"][data-spw-chrome-tier="toast"] [data-spw-toast="transient"]) {
+  max-inline-size: 18rem;
+  font-size: 0.82rem;
+  padding: 0.25rem 0.55rem;
+}

@@ -834,3 +834,98 @@ frame #minimalist_material_motif
   data-spw-component-motif = "minimal (low pigment-boost, neutral active-op; strips to core --surface-*/--ink-on-*/--material-* for pure glass/matte/contrast play, no ornament distraction)"
   usage = "Set on body or design surface + enhancement-level=minimal, semanticDensity=minimal, physics-reason=precise for testing material properties, contrast in components, font norm, layout sel. Immediate via design hub 'minimal motif' chip (sets data + calls setImmediateAppearance for live preview)."
   note "Supports color/contrast audit (components now prefer semantic aliases via foundation rules when motif/material present); playful exp with material (tunable without visual noise); design abstractions for immediate tuning; font/layout UX preview. Composes with existing motifs (curriculum/lab/artifact via pedagogicalFlavor map). CSS in tokens catches html[data-spw-component-motif=\"minimal\"]. Documented for designer delegation + catalog inspectability."
+
+frame #rpg_wednesday_linguistic_metaphysics_driver
+  role driver
+  surface rpg-wednesday/* + design + cards + chrome + badges + .spw
+  concept l'n'd'r Bjrknptpf clay golem speech-bubble metaphysical expertise
+  character = "'l'n'd'r Bjrknptpf (jumble of consonants like bar-patron affirmation); clay/golem; main magic speech bubble metaphysical expertise"
+  magic = "explore cognitive metaphysics of linguistics; relate to materials the same way as paint or art materials; branch to real physics; inclusive dynamics so accuracy or fantasy players can chime with descriptions they like"
+  usage = "RPG Wednesday recurring quality driver + PWA/cultural curiosity engine: visitors wonder about progressive web apps and remain curious about developing relationships with cultural development, community, art, software, math, physics, writing, production, gardening, storytelling, etc. Enhances topical navigability, stub thoroughness, state traversability."
+  note "Speech bubbles map to operators (frame #>, probe ?, etc) as metaphysical speech acts + higher-order markup. Cards/surfaces/tokens become paintable linguistic material (spacing=brush stroke, charge=layer deposit, metamaterial=ground, minimal motif=pure pigment). Real physics via charge/discharge generalizable, variability/steps, snap/fluid, gravitational down + cognitive lines/planes. Design hub + satchel + catalog + new data states make the site itself the tunable research instrument for these metaphysics."
+
+frame #card_spacing_explicit_states
+  role extension
+  surface public/css/components/cards.css + foundation.css
+  concept explicit spacing interactive descriptively-absent truly-null
+  data-spw-spacing = "interactive (generous for touch/combinatoric/skim), descriptively-absent (tight but labels present for dense stub/path), null (truly collapsed for overlay/null-state), explicit (space itself described)"
+  usage = "On .frame-card .frame-panel etc. Makes spacing visible and tunable when it would otherwise be implicit. Supports machinability tests, component ecology, prefix/postfix breathing room, hub vs path density."
+  note "Extends card rhythm/gap tokens + data-spw-card-state. Used in design nook demos + rpg character artifact card. Catalog already listed data-spw-spacing; now first-class visual contract for linguistics/materials research."
+
+frame #charge_discharge_generalized
+  role extension
+  surface cards.css + foundation.css + experiential.js + guide-badge.js + rpg state
+  concept generalizable charge/discharge steps variability state-traversability
+  data-spw-charge = "0 (discharged/null), 1, 2 (lift), 3/full/artifact (swell/charged); also charge-key, charge-label, charge-direction, charge-state, charged"
+  data-spw-card-state = "compact, expanded, skim, select, activate (plus gesture armed/charging/sustained)"
+  data-spw-machinability = "high (loose/playful/combinatoric), low (deliberate/precise/weighty); or via data-spw-state-contract"
+  usage = "Steps through component states with different ease/variability (modulated by data-spw-physics-reason or data-spw-variability). Accuracy players count quanta; fantasy feel speech-bubble swell or golem mass. Generalizes to badges, toasts, chrome, cauldron phases."
+  note "Builds on existing catalogued charge attrs + brace-gestures. Encourages combinatoric behavior selection + development of component relationships as artifacts. State traversability via transient toasts/chips on step/collect."
+
+frame #regional_hub_path_semantics
+  role extension
+  surface HTML bodies/mains (design, rpg-*, topics) + cards.css + foundation
+  concept regional semantics clarifying hub pages from pages along paths
+  data-spw-region = "hub | path"
+  data-spw-region-role = "hub | path-node | design-hub | rpg-hub | nook | ..."
+  data-spw-region-flow = "already catalogued"
+  usage = "Mark design + rpg main as hub (exploratory, combinatoric, collect invitations); character/sessions/leaf topics as path (grounded, stateful, traversable, deeper notes). Visual/structural distinction in cards + salience helps develop page-architecture vocabulary."
+  note "Extends existing data-spw-region* family + page-role/context. Improves topical navigability + stub thoroughness (hubs surface options, paths deepen)."
+
+frame #nook_embedded_components
+  role extension
+  surface cards.css (new .spw-nook) + design + rpg pages
+  concept nook region shaded embedded component for side-by-side buttons/controls
+  data-spw-region-role = "nook"
+  data-spw-locality = "*nook*"
+  data-spw-component-locality = "*nook*"
+  usage = "Shaded flex container for inline settings toggles, mode switches, charge controls, badge actions, demo buttons. Feels like controls belonging to the local surface (paint mixing station) not page-primary chrome. Side-by-side in RPG nook on design for l'n'd'r experiments."
+  note "Supports integrating settings toggles inline, badge tunability, perspective/mode switches, small actions in context. Composes with utility clusters (sigil/arg as cognitive line)."
+
+frame #disappearing_toast_chip_semantics
+  role extension
+  surface cards.css + floating-chrome.css + guide-badge.js + discovery-notices.js + state-inspector
+  concept small disappearing toasts/chips for state traversability feedback
+  data-spw-toast = "transient"
+  class = "spw-toast--transient | spw-disappear-chip"
+  data-spw-badge-type = "transient"
+  usage = "Auto-fade (CSS animation or timeout remove) pings for charge step, collect to cauldron, snap, mode change, inline toggle result, speech-bubble note. Presentation 'toast' in floating tier; transient variant for low-competition feedback (scroll/swipe safe via pointer-events none late in fade)."
+  note "Extends existing toast-stack, learning toasts, promo presentation contract. Used in badge collect for unique copy + RPG affirmation pings. Encourages state traversability without persistent UI noise."
+
+frame #spw_symmetry_prefix_postfix_concept_labels
+  role extension
+  surface shell/chrome (sigil/argument spans), cards.css (new .spw-prefix/.spw-postfix + concept-label), operators, grammar
+  concept prefix/postfix consideration + concept labels for Spw symmetry + higher-order markup
+  usage = "Sigil (prefix, speech act) semantically + visually distinct from argument (postfix, concept label/meaning). data-spw-concept-label, .spw-prefix, .spw-postfix. Encourages exploration of behavior semantics, layouts, component relationships as artifacts to get a feel for Spw symmetry."
+  note "Already present in utility row (spw-utility-sigil + spw-utility-argument); extended to cards for linguistic metaphysics play (l'n'd'r speech bubbles). Higher-order markup: the labeled operator is the bubble."
+
+frame #cauldron_collect_notes
+  role extension
+  surface guide-badge + rpg + design + .spw (existing cauldron* attrs)
+  concept reasons to collect various notes for the cauldron; artifact relationships
+  data-spw-cauldron = "notes | ..."
+  data-spw-cauldron-operators, data-spw-cauldron-phase, data-spw-cauldron-count, data-spw-cauldron-action, data-spw-artifact
+  usage = "Badges, character cards, design specimens carry collect-to-cauldron affordance. Notes become artifacts with unique copy, mode, charge, perspective. Encourages perspective/mode switches and gathering for later composition (RPG library, sessions, design experiments)."
+  note "Builds on existing cauldron catalog entries + guide-badge contract + experiential gestures. RPG driver gives recurring reason to make collection feel like speech-bubble capture of linguistic/material insight."
+
+frame #component_state_machinability_ecology
+  role extension
+  surface foundation + cards + state-inspector + design + rpg
+  concept component state, machinability, combinatoric behavior selection, layouts, artifact relationships, component ecology
+  data-spw-card-state, data-spw-stateful, data-spw-state-contract, data-spw-machinability, data-spw-artifact, data-spw-selection, data-spw-perspective, data-spw-mode (via card-state or badge-mode)
+  usage = "Visitors explore via design nook cycles, satchel snapshots (now captures charge/region/artifact too), rpg character cards. Develops vocabulary for business (high-density inspection) vs experiential (calm relationship) + how features compel in different contexts. Supports page-specific nav enhancements, text interaction semantic (concept labels), reasons to use layouts."
+  note "Ties prior page_architecture_vocabulary + tunable_material. Design hub as instrument + RPG as quality driver make ecology playable and inspectable (catalog + .spw)."
+
+frame #page_specific_nav_enhancements
+  role note
+  surface rpg pages + design + topics + attention-architecture + shell
+  concept page-specific enhancements for navigability, topical navigability, stub thoroughness
+  usage = "Hubs (design, rpg main) get exploratory nooks + collect; paths (character) get grounded artifact cards + deeper charge/cauldron. Regional attrs + operator nav + section-handle + guide-badge improve stub-to-hub flow and state traversability."
+  note "RPG Wednesday as quality product reason: the surfaces reward curiosity across domains while staying hand-authored progressive enhancement."
+
+frame #inline_settings_toggles_state_traversability
+  role note
+  surface design (nook) + settings + shell + kernel/site-settings
+  concept integrating settings toggles inline, disappearing toasts/chips, state traversability
+  usage = "data-site-setting-set chips live inside .spw-nook (shaded embedded) alongside demo actions. Results surface as transient toasts/chips + data attr mutations (charge, spacing, motif) visible in satchel + catalog. Traversable: step, collect, snap, toggle, observe decay."
+  note "Extends prior settings wiring + immediate abstractions. Keeps kernel as single source; inline just triggers."

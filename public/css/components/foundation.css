@@ -729,6 +729,32 @@ header.frame-heading > :is(h1, h2, h3) {
   --spw-motion-scale: calc(var(--spw-motion-scale, 1) * 0.82);
 }
 
+/* RPG Wednesday driver extensions (speech bubble metaphysics, card spacing explicit, charge/discharge
+   generalizable with steps/variability, component state + machinability, regional hub/path, nook,
+   disappearing toasts, prefix/postfix symmetry, cauldron notes, component ecology, state traversability).
+   Extend the architecture vocabulary + cognitive gravity + tunable material contracts.
+   data-spw-spacing, data-spw-charge-*, data-spw-card-state, data-spw-machinability, data-spw-region*,
+   data-spw-artifact, data-spw-cauldron* etc. now modulate component foundations for consistent
+   "materials as paint" play (spacing=brush, charge=layer, metamaterial=ground) + real physics
+   (charge quanta, variability damping via reason, snap/fluid via chrome + gesture).
+   Inclusive: accuracy players use precise charge counts + low-machinability; fantasy describe
+   "speech bubble swell" or "golem mass". See cards.css for card-specific + .spw frames. */
+:root[data-spw-spacing="interactive"] { --spw-component-pad: 0.92rem; }
+:root[data-spw-spacing="descriptively-absent"] { --spw-component-pad: 0.42rem; }
+:root[data-spw-spacing="null"] { --spw-component-pad: 0.1rem; }
+
+[data-spw-charge="2"] { --spw-architecture-salience: calc(var(--spw-architecture-salience, 0.6) * 1.1); }
+[data-spw-charge="3"], [data-spw-charge="full"], [data-spw-charge="artifact"] {
+  --spw-architecture-salience: calc(var(--spw-architecture-salience, 0.6) * 1.22);
+}
+[data-spw-machinability="high"] { --spw-motion-scale: calc(var(--spw-motion-scale, 1) * 1.06); }
+[data-spw-machinability="low"] { --spw-motion-scale: calc(var(--spw-motion-scale, 1) * 0.9); }
+
+[data-spw-region="hub"] { --spw-architecture-salience: calc(var(--spw-architecture-salience, 0.6) * 0.95); }
+[data-spw-region="path"], [data-spw-region-role="path-node"] {
+  --spw-architecture-salience: calc(var(--spw-architecture-salience, 0.6) * 1.05);
+}
+
 /* Color/contrast audit across components: ensure material tunability and semantic contrast tokens
    (from tokens/core: --text-on-matte*, --material-ink-matte-strong, --ink-on-*) propagate to component
    foundations (cards, frames, controls) for better legibility on glass/matte/contrast, dark, high-contrast.

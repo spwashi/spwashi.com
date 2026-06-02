@@ -748,6 +748,40 @@ export function initDesignExperiments(root = document) {
     });
   });
 
+  // Bind RPG Wednesday demo actions in the component ecology nook (design hub only).
+  // Surgical: cycles spacing/charge on specimens to demonstrate explicit states, charge steps, traversability.
+  // Ties to l'n'd'r speech-bubble / materials-as-paint / physics driver without new runtime surface.
+  roots.forEach((scope) => {
+    scope.querySelectorAll?.('[data-rpg-demo-action]').forEach((btn) => {
+      if (!(btn instanceof HTMLElement)) return;
+      btn.addEventListener('click', () => {
+        const action = btn.getAttribute('data-rpg-demo-action');
+        if (action === 'cycle-spacing') {
+          const specs = scope.querySelectorAll('.design-material-specimen, [data-design-material-specimen]');
+          specs.forEach((s, i) => {
+            const v = i % 3 === 0 ? 'interactive' : (i % 3 === 1 ? 'descriptively-absent' : 'null');
+            s.setAttribute('data-spw-spacing', v);
+          });
+        } else if (action === 'step-charge') {
+          const specs = scope.querySelectorAll('.design-material-specimen, [data-design-material-specimen], .frame-card');
+          specs.forEach((s, i) => {
+            const v = String((i % 4) + 1);
+            s.setAttribute('data-spw-charge', v);
+            if (v === '3') s.setAttribute('data-spw-card-state', 'activate');
+          });
+        } else if (action === 'toast-ping') {
+          const chip = document.createElement('span');
+          chip.className = 'spw-disappear-chip operator-chip';
+          chip.textContent = 'speech bubble noted';
+          chip.dataset.spwToast = 'transient';
+          Object.assign(chip.style, { position: 'fixed', left: '40%', top: '28%', zIndex: '2200' });
+          document.body.appendChild(chip);
+          setTimeout(() => { if (chip && chip.parentNode) chip.parentNode.removeChild(chip); }, 2400);
+        }
+      });
+    });
+  });
+
   const syncAll = (settings = getSiteSettings()) => {
     roots.forEach((scope) => syncRoot(scope, settings));
   };

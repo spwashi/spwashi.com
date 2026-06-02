@@ -1516,3 +1516,181 @@ html[data-spw-font-size-scale="120"] [data-spw-vocab]) {
   line-height: 1.46;
   max-inline-size: 60ch;
 }
+
+/* ==========================================================================
+   RPG Wednesday driver (l'n'd'r Bjrknptpf, clay/golem, "speech bubble metaphysical expertise")
+   Explicit spacing when interactive / descriptively absent / truly null.
+   Component state, machinability, generalizable charge/discharge + steps/variability.
+   Regional (hub vs path), nook embedded side-by-side, disappearing transient toasts/chips.
+   Artifact relationships, combinatoric play, Spw symmetry (prefix sigil vs postfix arg/concept label),
+   modes (selection/activation/skimming), state traversability, text/layout ecology.
+   Reuses catalogued families: data-spw-spacing, data-spw-charge*, data-spw-card-state,
+   data-spw-region*, data-spw-artifact, data-spw-machinability/state-contract, data-spw-perspective,
+   data-spw-gesture, data-spw-selection, data-spw-cauldron* for collecting notes to cauldron.
+   Ties to linguistic metaphysics (operators as speech acts / bubbles, higher-order markup),
+   materials-as-paint (tunable card surfaces, spacing as brush, charge as layer, metamaterial as ground),
+   real physics (charge cycles, snap inertia, variability damping via physics-reason; inclusive for
+   accuracy/fantasy players to describe dynamics). RPG Wednesday as recurring quality + PWA/cultural
+   curiosity driver (wonder about community, art, software, math, physics, writing, production,
+   storytelling, gardening).
+   ========================================================================== */
+
+:where(.frame-card, .frame-panel, .topic-reference-card, .spw-principle-card, .operator-card, .plan-card) {
+  /* Base card rhythm tokens already provide defaults; spacing attrs make "absent vs present"
+     intent explicit for research, inclusive dynamics, and component ecology experiments. */
+}
+
+/* Explicit spacing states for cards/panels. Supports "make spacing explicit when interactive
+   or descriptively absent or truly null". Values align with catalogued data-spw-spacing. */
+:where([data-spw-spacing="interactive"]) {
+  --card-internal-gap: clamp(0.65rem, 1.4vw, 1.05rem);
+  --card-rhythm: clamp(0.72rem, 1.5vw, 1.1rem);
+  padding: var(--spw-component-pad, 0.85rem);
+  /* Generous for touch, combinatoric selection, skimming modes, badge tunability play. */
+}
+:where([data-spw-spacing="descriptively-absent"]) {
+  --card-internal-gap: 0.18rem;
+  --card-rhythm: 0.22rem;
+  /* Tight but labels/meaning remain; for dense registers or when description is "absent" yet
+     the slot is semantically present (stub thoroughness, path nodes). */
+}
+:where([data-spw-spacing="null"]) {
+  --card-internal-gap: 0;
+  --card-rhythm: 0;
+  padding-block: 0;
+  gap: 0;
+  /* Truly null/collapsed space. For overlay, null states, or testing machinability of absence.
+     Use with data-spw-charge="0" or data-spw-card-state="compact" for full traversability. */
+}
+:where([data-spw-spacing="explicit"]) {
+  --card-internal-gap: clamp(0.55rem, 1.1vw, 0.9rem);
+  /* When the space itself is the described/interactive thing (e.g. layout experiments, prefix/postfix
+     distinction visible as breathing room between sigil and concept label). */
+}
+
+/* Charge / discharge generalizable + steps for state traversability and ease of variability.
+   Different "ease" via physics-reason or data-spw-variability on ancestor; steps 0-3+ let
+   accuracy players count precise quanta while fantasy players feel the "speech bubble" swell. */
+:where(.frame-card, .frame-panel, .operator-card)[data-spw-charge="0"],
+:where(.frame-card, .frame-panel, .operator-card)[data-spw-charge=""] {
+  /* discharged / null / resting */
+  opacity: 0.92;
+  filter: saturate(0.85);
+}
+:where(.frame-card, .frame-panel, .operator-card)[data-spw-charge="1"] {
+  border-color: color-mix(in srgb, var(--active-op-color, var(--component-accent)) 22%, transparent);
+}
+:where(.frame-card, .frame-panel, .operator-card)[data-spw-charge="2"] {
+  transform: translateY(-0.5px);
+  box-shadow: var(--component-shadow-active);
+}
+:where(.frame-card, .frame-panel, .operator-card)[data-spw-charge="3"],
+:where(.frame-card, .frame-panel, .operator-card)[data-spw-charge="full"],
+:where(.frame-card, .frame-panel, .operator-card)[data-spw-charge="artifact"] {
+  /* charged / active / artifact relationship state (component as "artifact" in cauldron sense) */
+  border-color: color-mix(in srgb, var(--active-op-color, var(--component-accent)) 48%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--component-accent)) 25%, transparent);
+}
+
+/* Machinability / component state: how easily the card yields to tuning, selection, activation.
+   High = loose, playful, combinatoric; low = deliberate, precise physics. */
+:where(.frame-card, .frame-panel, .operator-card)[data-spw-machinability="high"],
+:where(.frame-card, .frame-panel, .operator-card)[data-spw-state-contract*="machin"] {
+  cursor: pointer;
+  transition-duration: var(--component-transition-fast);
+}
+:where(.frame-card, .frame-panel, .operator-card)[data-spw-machinability="low"] {
+  transition-duration: var(--component-transition-deliberate);
+  /* slower, weightier for "real physics" or fantasy mass feel */
+}
+:where(.frame-card, .frame-panel)[data-spw-card-state="skim"] {
+  --card-secondary-opacity: 0.6;
+  filter: saturate(0.7);
+}
+:where(.frame-card, .frame-panel)[data-spw-card-state="select"],
+:where(.frame-card, .frame-panel)[data-spw-selection="active"] {
+  outline: 1px dashed color-mix(in srgb, var(--active-op-color, var(--component-accent)) 40%, transparent);
+  outline-offset: 2px;
+}
+:where(.frame-card, .frame-panel)[data-spw-card-state="activate"] {
+  box-shadow: var(--component-shadow-active);
+  border-color: color-mix(in srgb, var(--active-op-color, var(--component-accent)) 55%, transparent);
+}
+
+/* Regional semantics to clarify hub pages from pages along paths.
+   data-spw-region / data-spw-region-role / data-spw-region-flow already exist in catalog;
+   these rules give visual distinction so visitors develop page-architecture vocabulary. */
+:where([data-spw-region="hub"] .frame-card,
+       [data-spw-region-role="hub"] .frame-card,
+       [data-spw-page-role*="hub"] .frame-card) {
+  /* Hubs: more exploratory, combinatoric, layout sampling, collect-to-cauldron invitations. */
+}
+:where([data-spw-region="path"],
+       [data-spw-region-role="path-node"],
+       [data-spw-region-role="path"]) {
+  /* Path nodes: grounded, stateful, traversable charge/cauldron, deeper notes. */
+}
+
+/* Nook region: side-by-side buttons shaded to feel like an embedded component.
+   Use data-spw-region-role="nook" or data-spw-locality="nook" + component-locality for
+   settings toggles, mode switches, charge controls, badge actions. Embedded feel. */
+:where(.spw-nook,
+       [data-spw-region-role="nook"],
+       [data-spw-locality*="nook"],
+       [data-spw-component-locality*="nook"]) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--component-gap-tight, 0.4rem);
+  align-items: center;
+  padding: 0.32rem 0.48rem;
+  border-radius: var(--component-radius, 8px);
+  background: color-mix(in srgb, var(--matte-surface, var(--surface-strong, #f8f5f0)) 94%, transparent);
+  border: 1px solid color-mix(in srgb, var(--line, rgba(0,0,0,0.1)) 38%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--ink) 5%, transparent);
+  /* Shaded embedded: not page primary actions, but controls of the local surface (like paint mixing nook). */
+}
+:where(.spw-nook > button,
+       .spw-nook > .operator-chip,
+       [data-spw-region-role="nook"] > button,
+       [data-spw-region-role="nook"] > .operator-chip) {
+  font-size: 0.76rem;
+  padding: 0.12rem 0.42rem;
+  min-height: 1.7rem;
+}
+
+/* Small disappearing toasts / chips for state traversability feedback.
+   (charge step, collect to cauldron, snap, mode change, inline toggle result).
+   Composes with existing floating-chrome [data-spw-chrome-tier="toast"] + discovery learning toasts.
+   Transient auto-fade; useful for RPG "speech bubble" affirmations or physics event pings. */
+:where(.spw-toast--transient,
+       [data-spw-toast="transient"],
+       .spw-disappear-chip,
+       [data-spw-badge-type="transient"]) {
+  animation: spw-toast-disappear 2200ms 380ms forwards;
+  pointer-events: none;
+}
+@keyframes spw-toast-disappear {
+  0% { opacity: 1; transform: translateY(0); }
+  65% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-3px); }
+}
+
+/* Text interaction semantic enhancement + component ecology + prefix/postfix for Spw symmetry.
+   Encourages exploration of behavior semantics, layouts, higher-order markup (speech bubble as
+   labeled operator: prefix sigil "speech act" + postfix concept label "meaning").
+   data-spw-concept-label or .spw-prefix / .spw-postfix can be used on operator-like children. */
+:where(.frame-card .spw-concept-label,
+       .frame-card [data-spw-concept-label],
+       .frame-card .spw-postfix) {
+  font-size: 0.72em;
+  opacity: 0.68;
+  letter-spacing: 0.015em;
+}
+:where(.frame-card .spw-prefix,
+       .frame-card [data-spw-prefix]) {
+  font-weight: 700;
+  margin-inline-end: 0.2em;
+  opacity: 0.85;
+}
+/* When prefix/postfix distinction is part of the card (linguistic metaphysics play), give
+   explicit breathing via spacing="explicit" or default rhythm so symmetry is felt. */

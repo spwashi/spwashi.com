@@ -59,11 +59,14 @@ const COLLECTION_INTENTIONS = Object.freeze([
   'refer',
   'support',
 ]);
+const BADGE_MODES = Object.freeze(['skim', 'select', 'activate', 'collect']);
+/* RPG Wednesday / speech-bubble tunability: modes for selection (skim for overview), activation (commit),
+   skimming (light pass). Unique copy behavior for "l'n'd'r notes" or linguistic artifacts. */
 const logger = createSpwLogger('guide-badge', {
   role: 'interface',
   metaphor: 'collection-gesture',
-  owns: 'guide handle browse, inspect, collect, release',
-  writes: 'data-spw-interaction-context, data-spw-collected, spw-badge-collection',
+  owns: 'guide handle browse, inspect, collect, release, badge-modes, unique-copy',
+  writes: 'data-spw-interaction-context, data-spw-collected, spw-badge-collection, data-spw-badge-mode',
 });
 
 const store = {
@@ -178,13 +181,17 @@ function collect(element, intention = COLLECTION_INTENTIONS[0]) {
   const entries = store.read();
   const existing = entries.findIndex((entry) => entry.id === id);
   const existingEntry = existing >= 0 ? entries[existing] : null;
+  const mode = element.dataset.spwBadgeMode || element.dataset.spwGuideBadge || 'collect';
+  const uniqueCopyText = buildUniqueCopyText(element, mode, intention);
   const record = {
     id,
     operator: element.dataset.spwOperator || null,
     role: element.dataset.spwRole || null,
     label: (element.textContent || '').trim().slice(0, 80),
     collectedAt: Number(existingEntry?.collectedAt || Date.now()),
-    intention
+    intention,
+    mode,
+    uniqueCopy: uniqueCopyText
   };
 
   if (existing >= 0) {
@@ -195,11 +202,46 @@ function collect(element, intention = COLLECTION_INTENTIONS[0]) {
 
   store.write(entries);
   markCollected(element, INITIAL_COLLECTION_STRENGTH, intention);
-  markInstrumented(element, 'guide-badge', { tags: ['collected', intention] });
+  element.dataset.spwBadgeMode = mode; /* surface for CSS + state traversability */
+  markInstrumented(element, 'guide-badge', { tags: ['collected', intention, mode] });
   bus.emit?.('guide-badge:collected', record);
   logger.info('guide badge collected', record, SPW_LOG_RELATIONSHIPS.GESTURE);
   renderCollectionStatus(document);
+
+  /* Small disappearing toast/chip for state traversability feedback (RPG "speech bubble" ping).
+     Uses transient class from cards + chrome contracts; composes with discovery toasts. */
+  emitTransientBadgeToast(element, `noted · ${intention}${mode !== 'collect' ? ` (${mode})` : ''}`);
+
   return record;
+}
+
+function buildUniqueCopyText(element, mode, intention) {
+  const label = (element.textContent || '').trim().slice(0, 64);
+  const op = element.dataset.spwOperator || '';
+  const ts = new Date().toISOString().slice(11, 16);
+  /* Unique per collect for cauldron notes / linguistic artifacts (l'n'd'r speech bubble style). */
+  return `${op ? op + ' ' : ''}${label} [${mode}|${intention}] @${ts}`;
+}
+
+function emitTransientBadgeToast(anchor, message) {
+  /* Create a tiny disappearing chip near the badge or in a toast-friendly region.
+     Progressive: if no container, just a transient that fades via CSS. */
+  try {
+    const chip = document.createElement('span');
+    chip.className = 'spw-disappear-chip operator-chip';
+    chip.setAttribute('role', 'status');
+    chip.textContent = message;
+    chip.dataset.spwToast = 'transient';
+    chip.style.position = 'fixed';
+    chip.style.zIndex = 'var(--z-toast, 2200)';
+    const rect = (anchor && anchor.getBoundingClientRect) ? anchor.getBoundingClientRect() : { right: 20, bottom: 60 };
+    chip.style.left = `${Math.min(rect.right + 6, window.innerWidth - 120)}px`;
+    chip.style.top = `${Math.max(8, rect.bottom - 8)}px`;
+    document.body.appendChild(chip);
+    setTimeout(() => {
+      if (chip && chip.parentNode) chip.parentNode.removeChild(chip);
+    }, 2600);
+  } catch {}
 }
 
 function release(element) {
@@ -317,6 +359,7 @@ function attachCollectible(element) {
 
     const ctx = element.dataset.spwInteractionContext;
     const currentIntention = getCurrentIntention(element);
+    const mode = element.dataset.spwBadgeMode || element.dataset.spwGuideBadge || 'collect';
 
     if (currentIntention) {
       event.preventDefault();
@@ -333,6 +376,10 @@ function attachCollectible(element) {
     if (ctx !== 'inspecting') {
       event.preventDefault();
       setContext(element, 'inspecting');
+      /* skimming/selection modes: stay lighter, no full collect unless activated */
+      if (mode === 'skim' || mode === 'select') {
+        element.dataset.spwSelection = mode === 'skim' ? 'ambient' : 'active';
+      }
       return;
     }
 
@@ -340,6 +387,11 @@ function attachCollectible(element) {
     setContext(element, 'collecting');
     collect(element, defaultIntentionForElement(element));
     setContext(element, 'inspecting');
+    if (mode === 'activate') {
+      /* activation mode: immediately mark as charged artifact for traversability */
+      element.dataset.spwCharge = '3';
+      element.dataset.spwCardState = 'activate';
+    }
   };
 
   const onKeydown = (event) => {
