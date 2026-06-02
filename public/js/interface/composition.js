@@ -295,9 +295,12 @@ function handleIngredientInspect(e) {
       const cat = ingEl.querySelector('[data-spw-wonder]')?.getAttribute('data-spw-wonder') ||
                   ingEl.querySelector('[data-spw-operator]')?.getAttribute('data-spw-operator');
       if (cat) first.dataset.spwCauldronCategory = cat;
+      // Attentional refinement: mark for subvocal rehearsal resonance (ties to attention-architecture handle + probe)
+      first.dataset.spwAttention = 'rehearsal';
       setTimeout(() => {
         first.classList.remove('is-cauldron-jump-target', 'cauldron-highlight');
         if (cat) delete first.dataset.spwCauldronCategory;
+        if (first.dataset.spwAttention === 'rehearsal') delete first.dataset.spwAttention;
       }, 2400);
     }
 

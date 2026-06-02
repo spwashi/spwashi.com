@@ -70,6 +70,8 @@ const SCROLL_CADENCE_ATTR = 'data-spw-scroll-cadence';
 const PINCH_TEXT_SCALE_ATTR = 'data-spw-pinch-text-scale';
 const PINCH_ACTIVE_ATTR = 'data-spw-pinch-scaling';
 const PAGE_SECTION_EVENT = 'spw:section-locomotion-state';
+const SUBVOCAL_REHEARSAL_ATTR = 'data-spw-subvocal-rehearsal';
+const CAULDRON_RESONANCE_ATTR = 'data-spw-cauldron-resonance';
 const AUTO_HANDLE_MIN_SECTIONS = 4;
 const HANDLE_VISIBILITY_SCROLL = 240;
 const HANDLE_TRAVEL_SETTLE_MS = 340;
@@ -100,7 +102,7 @@ const logger = createSpwLogger('attention-architecture', {
   role: 'runtime',
   metaphor: 'attention-field',
   owns: 'section locomotion, operator resonance probe',
-  writes: 'data-spw-page-section-*, data-spw-section-state, data-spw-resonance-probe',
+  writes: 'data-spw-page-section-*, data-spw-section-state, data-spw-resonance-probe, data-spw-subvocal-rehearsal, data-spw-cauldron-resonance',
 });
 
 export const ATTENTION_ARCHITECTURE_CONTRACT = Object.freeze({
@@ -136,6 +138,8 @@ export const ATTENTION_ARCHITECTURE_CONTRACT = Object.freeze({
     scrollCadence: SCROLL_CADENCE_ATTR,
     pinchTextScale: PINCH_TEXT_SCALE_ATTR,
     pinchScaling: PINCH_ACTIVE_ATTR,
+    subvocalRehearsal: SUBVOCAL_REHEARSAL_ATTR,
+    cauldronResonance: CAULDRON_RESONANCE_ATTR,
   }),
   thresholds: Object.freeze({
     autoHandleMinSections: AUTO_HANDLE_MIN_SECTIONS,
@@ -649,6 +653,27 @@ function updateSectionHandleState({
 
   // Enhance floating chrome UX with vocabulary context (for resonance + priming)
   syncSectionVocabularyHint(sections, state.activeIndex, handle, shell);
+
+  // Subvocalization + attentional architecture refinements, resonance with spells and cauldron:
+  // Mark handle (and shell) when active section is jump target / has cauldron category / contains primed candidates
+  // (wired from composition.js hook on ingredient inspect + visibility modes + card discharge).
+  // Gives the section handle a "rehearsal" cue so locomotion feels like subvocal inner-speech (speech bubble metaphysics).
+  // Resonance probe already echoes operators; this extends the field to cauldron/spell bidirectional gestures.
+  // Enhancement-level (from settings) modulates how rich the transient cues feel (see floating-chrome + notices).
+  const hasCauldronResonance = !!(activeSection && (
+    activeSection.classList.contains('is-cauldron-jump-target') ||
+    activeSection.hasAttribute('data-spw-cauldron-category') ||
+    activeSection.querySelector('[data-spw-ingredient-primed], [data-spw-spell-candidate], [data-spw-component-variant="cauldron-candidate"]')
+  ));
+  if (hasCauldronResonance) {
+    handle.setAttribute(SUBVOCAL_REHEARSAL_ATTR, 'cauldron');
+    handle.setAttribute(CAULDRON_RESONANCE_ATTR, 'active');
+    if (shell) shell.setAttribute(CAULDRON_RESONANCE_ATTR, 'active');
+  } else {
+    if (handle.hasAttribute(SUBVOCAL_REHEARSAL_ATTR)) handle.removeAttribute(SUBVOCAL_REHEARSAL_ATTR);
+    if (handle.hasAttribute(CAULDRON_RESONANCE_ATTR)) handle.removeAttribute(CAULDRON_RESONANCE_ATTR);
+    if (shell && shell.hasAttribute(CAULDRON_RESONANCE_ATTR)) shell.removeAttribute(CAULDRON_RESONANCE_ATTR);
+  }
 
   if (state.phase === 'traveling' && state.travelTargetId && info.id === state.travelTargetId) {
     window.clearTimeout(state.travelTimer);
@@ -1380,6 +1405,23 @@ export function initSpwAttentionArchitecture(ctx) {
   try { cleanups.push(initResonanceProbe(root)); } catch (_) {}
   try { cleanups.push(initReadingGroove(root)); } catch (_) {}
   try { cleanups.push(initPinchTextScale(root)); } catch (_) {}
+
+  // Refinement wiring: cauldron/spell inspect events nudge the section handle for subvocal resonance feel.
+  // When hook in composition.js highlights a target, the live DOM attrs make next updateSectionHandleState
+  // mark the handle (see hasCauldronResonance check). This listener adds a transient cue even mid-gesture.
+  try {
+    const bus = (typeof window !== 'undefined') && (window.__SPW_SITE__?.bus || window.bus);
+    if (bus && typeof bus.on === 'function') {
+      const nudge = () => {
+        root.querySelectorAll('.spw-section-handle, .spw-section-handle-shell').forEach((h) => {
+          h.setAttribute(CAULDRON_RESONANCE_ATTR, 'inspect');
+          setTimeout(() => { if (h && h.hasAttribute(CAULDRON_RESONANCE_ATTR)) h.removeAttribute(CAULDRON_RESONANCE_ATTR); }, 1400);
+        });
+      };
+      bus.on('cauldron:ingredient-inspected', nudge);
+      // Note: full off on cleanup omitted for progressive minimal surface; lifetime matches page.
+    }
+  } catch (_) {}
 
   return () => {
     for (const cleanup of cleanups) {

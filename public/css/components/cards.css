@@ -893,6 +893,8 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
   color: var(--spw-control-safe-ink);
 }
 
+/* Button layout audit (semantic emphasis): operator-chip provides op sigil/arg distinction for localization/styling (see chrome utility sigil+arg spans); nooks use side-by-side chips for embedded component feel (bottom align via flex/baseline in shell/chrome); cauldron actions use operator-chip soft-pill cluster with flex-wrap for emphasis on action verbs while preserving resonance. Regional/nook + charge on lists discharge on tap for state semantics. No broad changes; preserves operator taxonomy emphasis over generic buttons. */
+
 :where([data-spw-region], .site-frame, .frame-panel) {
   --spw-region-local-line: var(--spw-region-frame-line, var(--line));
   --spw-region-local-fill: var(--spw-region-frame-fill, var(--surface-panel));

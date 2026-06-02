@@ -1057,4 +1057,19 @@ frame #cauldron_spell_token_cascade_card_region_enhance
   usage = "Tokens early in cascade (core). Visibility + highlight compose with material, gesture, card-state. Cards/regions gain cauldron-target variant for layout (focus ring, shadow) when hooked or prominent."
   note "Respects layer order. Enhances prior cauldron layout + gesture state work."
 
+frame #subvocal_attentional_resonance_refinements
+  role extension
+  surface public/js/runtime/attention-architecture.js (SUBVOCAL_REHEARSAL_ATTR, CAULDRON_RESONANCE_ATTR, hasCauldronResonance check in updateSectionHandleState + bus nudge on cauldron:ingredient-inspected), public/js/interface/composition.js (set data-spw-attention=rehearsal on jump targets + cleanup), spells/composition ties
+  concept subvocalization (inner-speech rehearsal, speech-bubble metaphysics as anticipatory linguistic act) + attentional architecture refinements (section handle locomotion, resonance probe operator echo) now explicitly resonate with spells and cauldron (priming, jump+highlight hook, gesture/discharge on lists/sections, visibility modes, bidirectional discovery)
+  data-spw-subvocal-rehearsal, data-spw-cauldron-resonance, data-spw-attention=rehearsal on targets, integration with enhancement-level for cue richness, data-spw-cauldron-candidate-visibility
+  usage = "When cauldron hook jumps or visibility makes candidates prominent, the section handle and active regions mark rehearsal state so locomotion and focus feel like 'speaking back' the collected operators. RPG l'n'd'r driver + spw topic copy surface this as learnable metaphysics. Supports venue service (speech-bubble orders as readable acts)."
+  note "Extends ui_resonance_contract + prior cauldron frames. New attrs are inspectable; CSS can target for ornament if needed but keep in handles/effects layers. Cross-refs attention-architecture contract, composition hook, cards jump-target rules."
+
+frame #component_image_diversity_semantic_emphasis
+  role extension
+  surface route HTML (added data-spw-component-variant="prompt|reference|cauldron-candidate|primary", data-spw-region="hub|path|cluster|nook" on frames/cards/nooks in design/topics/rpg/character/recipes), cards.css (audit comment on button layout + operator-chip emphasis, sigil/arg, nook clustering, bottom align), image alts + srcset variety (lndr-garden etc for visual flow/salience per book-like + venue arcs)
+  concept update copy to make better use of features (cauldron hook/visibility/charge/regional/badge/nook/toast/material/physics/enhancement/density/venue/RPG/AI wonder/book flow); markup for component + image diversity; button layout audit for semantic emphasis (operator sigils over generic, clustering in nooks/utility/cauldron actions); attentional + subvocal refinements resonance with spells/cauldron
+  usage = "Surgical patches per AGENTS: route HTML for copy/attrs, shared CSS for comments/audit, JS progressive for ties. Preserves structure. New families wired to .spw for editor inspectability and delegation (interns/designers can read attrs + frames to learn without deep dive)."
+  note "Ties RPG Wednesday quality driver, venue aspiration, design-eng hire path (copy with wonder), semantic density for magic+perf, unique wonder connections audit. No new deps; validation + catalog + plan hygiene follow."
+
 # Also update wonder-vocabulary for AI/pragmatic/liminal/venue if space, but site-semantics dispatch covers.
