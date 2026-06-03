@@ -711,6 +711,7 @@ function syncUtilityRow(row) {
   });
 
   const vis = (window.spwSettings?.get?.()?.cauldronCandidateVisibility) || 'balanced';
+  row.dataset.spwCauldronVisibility = vis;
   row.querySelectorAll('[data-spw-shell-action="toggle-cauldron-visibility"]').forEach((button) => {
     const arg = button.querySelector('.spw-utility-argument');
     if (arg) arg.textContent = labels['toggle-cauldron-visibility'] || (compact ? vis : `vis:${vis}`);
@@ -857,7 +858,6 @@ function applyMenuState(header, nav, navList, toggle, state, open, source = 'sys
   nav.hidden = state.mode === MODES.TOGGLE ? !open : false;
   toggle.hidden = false;
   toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-  toggle.setAttribute('aria-hidden', 'false');
   toggle.setAttribute('aria-pressed', open ? 'true' : 'false');
 
   writeMenuDatasets(header, snapshot, 'header');
@@ -975,13 +975,18 @@ export function initSpwShellDisclosure(options = {}) {
   };
 
   let lastToggleActivation = 0;
+  const shouldIgnoreDuplicateActivation = () => {
+    const now = performance.now();
+    if (now - lastToggleActivation < 90) return true;
+    lastToggleActivation = now;
+    return false;
+  };
+
   const handleToggle = (event) => {
     event.preventDefault();
     event.stopPropagation();
 
-    const now = performance.now();
-    if (now - lastToggleActivation < 90) return;
-    lastToggleActivation = now;
+    if (shouldIgnoreDuplicateActivation()) return;
 
     const activeToggle = event.target?.closest?.('.spw-nav-toggle');
     if (activeToggle instanceof HTMLButtonElement && activeToggle !== toggle) {
@@ -1027,12 +1032,22 @@ export function initSpwShellDisclosure(options = {}) {
 
   const handleTogglePointerUp = (event) => {
     if (event.button && event.button !== 0) return;
-    handleToggle(event);
+    writeRuntimeDatasetValues(toggle, {
+      spwMenuPhase: PHASES.CONTACT,
+      spwMenuSource: 'pointer',
+      spwRuntimeMutator: 'shell-disclosure',
+      spwRuntimeMutationReason: 'menu-contact',
+      spwRuntimeStylingAxis: 'menu',
+    }, {
+      source: 'shell-disclosure',
+      reason: 'menu-contact',
+    });
   };
 
   const handleDelegatedToggleClick = (event) => {
     const activeToggle = event.target?.closest?.('.spw-nav-toggle');
     if (!(activeToggle instanceof HTMLButtonElement)) return;
+    if (activeToggle === toggle) return;
     handleToggle(event);
   };
 

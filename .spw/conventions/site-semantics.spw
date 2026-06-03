@@ -1101,6 +1101,13 @@ frame #perspective_posture_salience_feedback
   usage = "Settings buttons apply posture bundles and emit a short credits cue linking back to settings. The root dataset lets CSS differentiate concept salience without route-specific JS. Query aliases (?posture=composer, ?operational-visibility=on) make state shareable and crawler-legible."
   note "Addresses feedback communication capacity, learning postures, state-management links, discovery surfaces, familiarity based on adopted perspective, and differentiating concept salience by selected posture."
 
+frame #shell_instrument_navigation_rail
+  role contract
+  surface public/js/runtime/shell-disclosure.js (click-only canonical menu activation, pointer contact as state, utility row data-spw-role=state-rail + rail[utility]{read.tune.inspect}, row state datasets), public/css/shell/chrome.css (compact tune rail, snap-aligned clusters, active group feedback, toggle nav scroll containment, tighter route cards, footer route index columns), index/home route CSS (lens row alignment)
+  concept shell chrome should feel like a navigable machine or instrument: stable rails, selected-state marks, compact grouped controls, clear route projection, smooth contact feedback, and footer as an archival route index rather than a second noisy header.
+  usage = "Click toggles menu; pointer events describe contact only. Utility rail shows a quiet tune label, grouped controls, active state underline, and scroll snap. Toggle nav has its own scroll lane and compact route cards. Footer links scan as columns."
+  note "Responds to utility row attractiveness, smoother interactions as navigability, clear feedback, and the preference for a machine/instrument feel."
+
 frame #factshift_dimensional_imagination_bridge
   role prime
   surface play/rpg-wednesday/index.html (#story-trope-forge), design/palettes/index.html (#concept-cluster-feedback + #dimension-rail-feedback), .spw/site semantics
