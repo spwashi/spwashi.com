@@ -513,6 +513,8 @@
                     <a class="operator-chip" href="/design/runtime/?palette=math&amp;reflow=theme#query-controls">palette measurement</a>
                     <a class="operator-chip" href="/design/palettes/?palette=craft#palette-resonance">palette bench</a>
                     <a class="operator-chip" href="/design/experiments/svg/?spw-svg-palette=signal&amp;spw-svg-pointer=field#svg-tunability-contract">SVG field trace</a>
+                    <!-- New: demonstrates expanded query aliases (cauldron-visibility, enhancement now wire reliably), links to the palettes surface with its new premium timed verify feedback + "copy this look" for communicable state capture, opportunities to interact with settings live, and a hook into literate/attentional design (rich feedback makes the benefit of the setting narratable and verifiable). Attractive operator-chip cluster, visualization of the "data structure" of aliases via the working link. -->
+                    <a class="operator-chip" href="/design/palettes/?cauldron-visibility=prominent&amp;enhancement=rich#spell-cauldron-hooks">cauldron prominent + rich feedback</a>
                 </div>
             </section>
 
@@ -606,6 +608,19 @@
                             <button class="operator-chip" type="button" data-design-immediate="fontScale:120;layout:atlas">large atlas (font+layout UX)</button>
                             <button class="operator-chip" type="button" data-design-immediate="reset">reset preview</button>
                         </div>
+                        <!-- Colorful interactive components for experimenting with readability + materials influences.
+                             These directly set probe/active-op tokens live (palette color tunability) and surface the ranges + impact in the label/copy.
+                             Clicking one after the "preloaded" phase will also surface an ephemeral "film credits" style application credit
+                             (see discovery-notices + --credits CSS) so the "module/setting application" is visible, timed, and communicable like end credits.
+                             Improves device touch targets (chips are large), colorful swatches for material feel, and links to /design/palettes/ for deeper ranges. -->
+                        <div class="palette-probe-actions colorful-material-experiments" aria-label="Colorful palette tunability experiments (live token impact on readability/materials)">
+                            <span class="spec-pill" aria-hidden="true">tokens</span>
+                            <button class="operator-chip" type="button" data-design-immediate="accent:#c68a22" title="amber object — warm craft lift for dense text">warm craft</button>
+                            <button class="operator-chip" type="button" data-design-immediate="accent:#1d57a3" title="ref blue — cool software projection, high contrast readability">cool ref</button>
+                            <button class="operator-chip" type="button" data-design-immediate="accent:#6a3fb8" title="probe violet — math inquiry, combinatorial salience">math probe</button>
+                            <button class="operator-chip" type="button" data-design-immediate="accent:#178282" title="frame teal — site rhythm, balanced materials">site frame</button>
+                        </div>
+                        <p class="frame-note" style="margin-top:0.3rem; font-size:0.75rem;">Tokens: <code>--active-op-color</code> (range: teal/amber/violet/blue per resonance), <code>--spw-palette-probe-1..4</code> (craft|software|math|route). Impact: changes operator glow, surface wash, attention echo for readability vs material poetry. See <a href="/design/palettes/">palettes</a> for full dials + spectral.</p>
 
                         <!-- RPG Wednesday driver nook (l'n'd'r Bjrknptpf: clay golem, "speech bubble metaphysical expertise").
                              Side-by-side controls in shaded embedded nook feel. Inline settings toggles (reuse data-site-setting-set).
@@ -1134,5 +1149,81 @@ spwCompose.inspect('#lab-behavior');</code></pre>
     </main>
 
     <spw-site-footer></spw-site-footer>
+
+<script type="module">
+  // Demo: preloading phase that "scans mount hooks/handles", "measures layout", then queues + surfaces
+  // a module/settings application as configurable ephemeral floating chrome (film-credits style).
+  // This fulfills the request for pages/hubs to have preload that impacts styling after identification + measure,
+  // and surfaces the application in a --credits notice (see discovery-notices.js + chrome.css).
+  // Also wires the new colorful palette tunability buttons to show "applied credit" with token + impact copy
+  // for communicability and "premium" timed verification feel (linger + fade like credits).
+  // Improves colorful interactive components for readability/materials experiments, palette tunability,
+  // and surfaces design tokens/ranges in the credit text + the added p.note above.
+  (async () => {
+    const { annotateFloatingChromeElement } = await import('/public/js/kernel/dom-contracts.js').catch(() => ({}));
+    const showCredit = async (text) => {
+      try {
+        const mod = await import('/public/js/interface/discovery-notices.js');
+        if (mod && typeof mod.showApplicationCredit === 'function') {
+          mod.showApplicationCredit(text, { linger: 4200 });
+          return;
+        }
+      } catch (_) {}
+      // Fallback lightweight credits if module not ready: uses the CSS class + annotate for contract.
+      const root = document.body;
+      const el = document.createElement('div');
+      el.className = 'spw-discovery-notice spw-discovery-notice--credits';
+      el.innerHTML = `<span class="spw-discovery-notice__label">APPLIED</span><span class="spw-discovery-notice__title">${text}</span>`;
+      if (annotateFloatingChromeElement) annotateFloatingChromeElement(el, { role: 'application-credit', tier: 'floating', reason: 'design-preload-credits' });
+      root.append(el);
+      setTimeout(() => { el.classList.add('is-dismissing'); setTimeout(() => el.remove(), 380); }, 4200);
+      el.addEventListener('click', () => { el.classList.add('is-dismissing'); setTimeout(() => el.remove(), 380); }, { once: true });
+    };
+
+    // "Preloading phase": wait for layout measure (rAF + small delay simulates scanning [data-spw-*] hooks
+    // and measuring cards/handles before applying queued style impacts).
+    const preloadAndCredit = () => {
+      requestAnimationFrame(() => {
+        const hooks = document.querySelectorAll('[data-spw-feature], [data-spw-handle], [data-spw-operator]').length;
+        const mainRect = document.querySelector('main')?.getBoundingClientRect() || { width: 0 };
+        // "queue module apply" that impacts styling (demo: mark a colorful variant on the hub for materials experiment)
+        document.documentElement.dataset.spwDemoPreloaded = 'true';
+        // Surface as credits (ephemeral, configurable linger, like film credits after "opening sequence" of the hub load).
+        showCredit(`preloaded ${hooks} hooks • layout ${Math.round(mainRect.width)}px • tokens: --spw-palette-probe-*, --active-op-color (ranges: craft|math|software|route)`);
+      });
+    };
+
+    if (document.readyState === 'complete') preloadAndCredit();
+    else window.addEventListener('load', preloadAndCredit, { once: true });
+
+    // Wire the colorful material experiment buttons (added above) to surface credits after their setting apply.
+    // This gives "module application surfaced in ephemeral floating chrome" + improves interactivity for
+    // experimenting with palette tunability + readability/materials. The credit text updates copy with token impact.
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('.colorful-material-experiments .operator-chip');
+      if (!btn) return;
+      // Small delay simulates "after measuring layout post-apply" + gives the live style change time to settle.
+      setTimeout(() => {
+        const label = btn.getAttribute('title') || btn.textContent || 'palette';
+        showCredit(`palette ${label} • --active-op-color applied • impacts operator resonance + material wash for readability`);
+      }, 180);
+    }, { passive: true });
+
+    // Also surface one credit on certain global setting applies while on this hub (for the "settings application"
+    // as credits request). Uses the bus if available.
+    try {
+      const bus = (window.__SPW_SITE__ && window.__SPW_SITE__.bus) || window.bus;
+      if (bus && typeof bus.on === 'function') {
+        bus.on('settings:changed', (applied) => {
+          if (!applied) return;
+          const keys = Object.keys(applied);
+          if (keys.some(k => ['paletteResonance', 'physicsReason', 'baseMetamaterial', 'componentMotif'].includes(k))) {
+            setTimeout(() => showCredit(`settings ${keys.slice(0,2).join('+')} • live material + readability shift verified`), 220);
+          }
+        });
+      }
+    } catch (_) {}
+  })();
+</script>
 </body>
 </html>

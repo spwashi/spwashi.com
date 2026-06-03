@@ -511,13 +511,29 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-page-seed="page_design_des
   margin: 0;
 }
 :where(body[data-spw-page-seed="page_design_design_hub"]) .design-promo-specimen .spw-discovery-notice__handles {
-  gap: 0.15rem;
+  gap: 0.22rem;
+  align-items: center;
 }
-:where(body[data-spw-page-seed="page_design_design_hub"]) .design-promo-specimen .spec-pill {
-  font-size: 0.82em;
-  padding: 0.02rem 0.3rem;
-  min-height: 1rem;
-  border-radius: 3px;
+:where(body[data-spw-page-seed="page_design_design_hub"]) .design-promo-specimen .spw-discovery-notice__handle {
+  display: inline-flex;
+  align-items: center;
+  inline-size: auto;
+  block-size: auto;
+  min-inline-size: 0;
+  min-block-size: 0;
+  min-height: 0;
+  min-block-size: 1.15rem;
+  padding: 0.08rem 0.34rem;
+  border-radius: var(--shape-element, 4px);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 88%, var(--active-op-color, var(--teal)) 12%);
+  color: color-mix(in srgb, var(--ink-strong, #14181c) 88%, var(--active-op-color, var(--teal)) 12%);
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.68rem;
+  font-weight: 650;
+  line-height: 1.1;
+  letter-spacing: 0.025em;
+  text-transform: none;
+  box-shadow: inset 0 1px 0 color-mix(in srgb, white 28%, transparent);
 }
 
 :where(body[data-spw-page-family="design"]) :where(.spw-interaction-contract) {
@@ -639,6 +655,162 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-page-seed="page_design_des
    (violet-ink / teal-mineral / brass-warm etc. + low-friction resonance toggles)
    is captured in mobile/portrait crops or shared screenshots. Uses the existing
    semantic pigment token names as the primary readable labels. */
+
+/* Data-driven spectral swatches for the granular families demo on /design/palettes/.
+   Removes per-swatch inline background + margin + figcaption styles for cleaner
+   component identity, better reflow/alignment in the grid, and consistent style
+   application. Supports the review of alignment, combinatorial clustering, and
+   visual poetry for screenshots/prompts. The data attr also makes them inspectable
+   as material seeds (ties to component utility, page arch as material basis). */
+:where(body[data-spw-page-seed="page_design_palettes"]) .spectral-grid .spectral-swatch {
+  background: var(--spectral-swatch-bg, var(--surface));
+  margin: 0;
+}
+:where(body[data-spw-page-seed="page_design_palettes"]) .spectral-grid .spectral-swatch[data-spw-pigment-token="--pigment-teal-mineral"] { --spectral-swatch-bg: var(--pigment-teal-mineral); }
+:where(body[data-spw-page-seed="page_design_palettes"]) .spectral-grid .spectral-swatch[data-spw-pigment-token="--pigment-teal-electric"] { --spectral-swatch-bg: var(--pigment-teal-electric); }
+:where(body[data-spw-page-seed="page_design_palettes"]) .spectral-grid .spectral-swatch[data-spw-pigment-token="--pigment-amber-resin"] { --spectral-swatch-bg: var(--pigment-amber-resin); }
+:where(body[data-spw-page-seed="page_design_palettes"]) .spectral-grid .spectral-swatch[data-spw-pigment-token="--pigment-copper-oxide"] { --spectral-swatch-bg: var(--pigment-copper-oxide); }
+:where(body[data-spw-page-seed="page_design_palettes"]) .spectral-grid .spectral-swatch[data-spw-pigment-token="--pigment-violet-ink"] { --spectral-swatch-bg: var(--pigment-violet-ink); }
+:where(body[data-spw-page-seed="page_design_palettes"]) .spectral-grid .spectral-swatch[data-spw-pigment-token="--pigment-rose-dust"] { --spectral-swatch-bg: var(--pigment-rose-dust); }
+:where(body[data-spw-page-seed="page_design_palettes"]) .spectral-grid .spectral-swatch[data-spw-pigment-token="--pigment-clay-red"] { --spectral-swatch-bg: var(--pigment-clay-red); }
+:where(body[data-spw-page-seed="page_design_palettes"]) .spectral-grid .spectral-swatch[data-spw-pigment-token="--pigment-brass-warm"] { --spectral-swatch-bg: var(--pigment-brass-warm); }
+:where(body[data-spw-page-seed="page_design_palettes"]) .spectral-grid .spectral-swatch[data-spw-pigment-token="--pigment-paper-cream"] {
+  --spectral-swatch-bg: var(--pigment-paper-cream);
+  color: #333;
+  text-shadow: none;
+}
+:where(body[data-spw-page-seed="page_design_palettes"]) .spectral-grid .spectral-swatch[data-spw-pigment-token="--pigment-charcoal-fiber"] { --spectral-swatch-bg: var(--pigment-charcoal-fiber); }
+:where(body[data-spw-page-seed="page_design_palettes"]) .spectral-grid .spectral-swatch[data-spw-pigment-token="--pigment-moss-soft"] { --spectral-swatch-bg: var(--pigment-moss-soft); }
+:where(body[data-spw-page-seed="page_design_palettes"]) .spectral-grid .spectral-swatch[data-spw-pigment-token="--pigment-lapis-soft"] { --spectral-swatch-bg: var(--pigment-lapis-soft); }
+
+:where(body[data-spw-page-seed="page_design_palettes"]) .spectral-grid .spectral-swatch figcaption {
+  font-size: 0.7rem;
+  opacity: 0.85;
+  line-height: 1.1;
+}
+:where(body[data-spw-page-seed="page_design_palettes"]) .spectral-grid .spectral-swatch[data-spw-pigment-token="--pigment-paper-cream"] figcaption {
+  color: #333;
+}
+
+/* Projection registry grid + image-study specimens on palettes.
+   Stable alignment, no overflow on caption meta, consistent space usage,
+   better reflow at narrow widths. Supports "material basis", "physical dimension",
+   "AR/VR segue" review criteria with visual poetry for screenshots. */
+:where(body[data-spw-page-seed="page_design_palettes"]) .palette-projection-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr));
+}
+:where(body[data-spw-page-seed="page_design_palettes"]) .palette-projection-grid .image-study {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+}
+:where(body[data-spw-page-seed="page_design_palettes"]) .palette-projection-grid .image-study img {
+  width: 100%;
+  height: auto;
+  min-height: 200px;
+  background: var(--surface-soft);
+}
+:where(body[data-spw-page-seed="page_design_palettes"]) .palette-projection-grid .image-study .study-summary {
+  width: 100%;
+  min-width: 0;
+  padding: 1.2rem;
+}
+:where(body[data-spw-page-seed="page_design_palettes"]) .palette-projection-grid .image-study .study-summary p {
+  margin-top: 0.5rem;
+}
+
+/* Palettes page component refinements for alignment, overflow, reflow, space, semantic hierarchy,
+   handles/labels, combinatoric clustering, and visual poetry per review brief.
+   - theme-handle-test clusters now classed for consistent baseline alignment of mode buttons vs dials.
+   - operator-cluster-demo and seed-composer-form replace inline grids/flex for stable layout when resonance or inputs change.
+   - Adds data-driven locality/component-locality for inspectability (handles for clarification).
+   - Improves scannability of the live operator cluster (combinatoric salience/flow) and form inputs. */
+:where(body[data-spw-page-seed="page_design_palettes"]) .theme-handle-test {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+:where(body[data-spw-page-seed="page_design_palettes"]) .theme-handle-test--modes,
+:where(body[data-spw-page-seed="page_design_palettes"]) .theme-handle-test--dials {
+  margin-top: 0.4rem;
+}
+:where(body[data-spw-page-seed="page_design_palettes"]) .theme-pack-chooser {
+  margin-top: 0.85rem;
+}
+:where(body[data-spw-page-seed="page_design_palettes"]) .operator-cluster-demo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+}
+:where(body[data-spw-page-seed="page_design_palettes"]) .seed-composer-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.6rem;
+  margin: 0.8rem 0;
+}
+:where(body[data-spw-page-seed="page_design_palettes"]) .seed-composer-form label,
+:where(body[data-spw-page-seed="page_design_palettes"]) .seed-composer-form input,
+:where(body[data-spw-page-seed="page_design_palettes"]) .seed-composer-form select {
+  font-size: 0.85rem;
+}
+:where(body[data-spw-page-seed="page_design_palettes"]) .seed-composer-form input,
+:where(body[data-spw-page-seed="page_design_palettes"]) .seed-composer-form select {
+  width: 100%;
+  margin-top: 0.2rem;
+  font-family: var(--font-family-mono);
+  padding: 0.3rem 0.4rem;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--surface);
+  color: var(--ink);
+}
+:where(body[data-spw-page-seed="page_design_palettes"]) .seed-output {
+  display: none;
+  margin-top: 0.6rem;
+  padding: 0.6rem;
+  background: var(--surface-code, #0f1418);
+  color: #c9d1d9;
+  font-size: 0.78rem;
+  border-radius: 6px;
+  white-space: pre-wrap;
+  overflow: auto;
+}
+
+/* Premium timed verify cue for settings application (query wiring + feedback pass).
+   The 260ms window (with crafted transition) is deliberate: it gives the visitor time to
+   register the styling benefit ("the resonance just shifted the operator glow because I chose
+   craft-led") and communicates the value of the change without noise or jank. Scoped to
+   palettes hero cards and status for now; the data attr + class can be reused site-wide for
+   communicable, premium-feel verification of material/UX changes. */
+:where(body[data-spw-page-seed="page_design_palettes"]) [data-settings-state],
+:where(body[data-spw-page-seed="page_design_palettes"]) .frame-panel[data-spw-component-identity] {
+  transition:
+    box-shadow 260ms var(--ease-mechanical, ease),
+    border-color 260ms var(--ease-mechanical, ease),
+    color 180ms ease;
+}
+:where(body[data-spw-page-seed="page_design_palettes"]) [data-spw-setting-just-verified="true"] {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--spw-palette-probe-1, var(--active-op-color, #008080)) 32%, transparent),
+    var(--card-highlight),
+    var(--card-shadow);
+  border-color: color-mix(in srgb, var(--spw-palette-probe-1, var(--active-op-color, #008080)) 22%, var(--line));
+}
+
+/* Spacing + status for the "copy this look as query" affordance (query discoverability + communicability).
+   The status appears with the verify timing to confirm the capture without cluttering the dial area. */
+:where(body[data-spw-page-seed="page_design_palettes"]) [data-spw-copy-current-query] {
+  margin-top: 0.4rem;
+}
+:where(body[data-spw-page-seed="page_design_palettes"]) .spw-query-copy-status {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.75rem;
+  opacity: 0.82;
+}
 @media (max-width: 560px) {
   :where(body[data-spw-page-seed="page_design_palettes"]) :where(.spectral-grid) {
     grid-template-columns: repeat(auto-fit, minmax(94px, 1fr));

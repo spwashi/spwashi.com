@@ -2262,14 +2262,18 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
 /* Discovery notices stay fixed, readable, and easy to dismiss. */
 .spw-discovery-notice-stack {
   position: fixed;
-  inset-block-end: max(1rem, env(safe-area-inset-bottom));
-  inset-inline-end: max(1rem, env(safe-area-inset-right));
+  /* Safer bottom/right offsets to avoid sitting under the collapsed console ( ~2.35rem + safe-area )
+     and other bottom-right chrome. Mirrors the "film credits" / ephemeral chrome spirit: the notices
+     should feel deliberately placed, not fighting for space. */
+  inset-block-end: calc( max(1.15rem, env(safe-area-inset-bottom)) + 2.65rem );
+  inset-inline-end: max(1.1rem, env(safe-area-inset-right));
   display: grid;
   gap: 0.65rem;
   width: min(24rem, calc(100vw - 2rem));
   max-inline-size: calc(100vw - 2rem);
   box-sizing: border-box;
   pointer-events: none;
+  z-index: 1100; /* above most page, below modal */
 }
 
 .spw-discovery-notice-modal {
@@ -2281,10 +2285,13 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   gap: 0.8rem;
   padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
   pointer-events: none;
+  z-index: 1200; /* above console (~1000) and stack toasts */
 }
 
 .spw-discovery-notice-modal > .spw-discovery-notice {
-  width: min(36rem, calc(100vw - 2rem));
+  width: min(34rem, calc(100vw - 2.2rem));
+  max-height: min(72vh, 24rem); /* too tall for role — keep focal brief compact; content inside constrained */
+  overflow: hidden; /* internal content stays readable without making the chrome itself giant */
 }
 
 .spw-discovery-notice {
@@ -2311,13 +2318,16 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
 }
 
 .spw-discovery-notice--modal {
-  gap: 0.7rem;
-  padding: 1.1rem 1.1rem 1rem;
-  border-color: color-mix(in srgb, var(--op-action-color, var(--teal-dark, #006b6b)) 18%, var(--line, rgba(14, 18, 20, 0.14)) 82%);
+  gap: 0.6rem; /* tighter for role as quick brief, better internal spacing without feeling cramped */
+  padding: 0.95rem 1rem 0.9rem;
+  border-color: color-mix(in srgb, var(--op-action-color, var(--teal-dark, #006b6b)) 22%, var(--line, rgba(14, 18, 20, 0.14)) 78%);
+  /* Stronger modal material: higher surface mix + more gradient weight so it competes less with page content.
+     Still glass by default for atmosphere, but opaque enough for its focal role. When global matte or high-contrast
+     is active the data-spw-metamaterial rule below wins for clear-contrast "credits-like" readability. */
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.3), transparent 58%),
-    color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.95)) 98%, transparent);
-  box-shadow: 0 24px 54px rgba(0, 0, 0, 0.14);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.48), transparent 48%),
+    color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.985)) 99%, transparent);
+  box-shadow: 0 22px 48px rgba(0, 0, 0, 0.16);
 }
 
 .spw-discovery-notice--popup {
@@ -2515,11 +2525,12 @@ html[data-spw-color-mode="dark"] .spw-discovery-notice {
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28);
 }
 html[data-spw-color-mode="dark"] .spw-discovery-notice--modal {
+  /* Stronger for dark glass too — the image showed translucency letting dense text bleed through the promo. */
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.07), transparent 55%),
-    color-mix(in srgb, var(--surface-strong, rgba(25, 32, 37, 0.95)) 98%, transparent);
-  box-shadow: 0 24px 54px rgba(0, 0, 0, 0.36);
-  border-color: color-mix(in srgb, var(--op-action-color, var(--teal-dark, #006b6b)) 28%, var(--line, rgba(246, 248, 248, 0.18)) 72%);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.11), transparent 46%),
+    color-mix(in srgb, var(--surface-strong, rgba(25, 32, 37, 0.97)) 99%, transparent);
+  box-shadow: 0 22px 48px rgba(0, 0, 0, 0.42);
+  border-color: color-mix(in srgb, var(--op-action-color, var(--teal-dark, #006b6b)) 32%, var(--line, rgba(246, 248, 248, 0.18)) 68%);
 }
 
 html[data-spw-color-mode="dark"] .spw-discovery-notice__label,
@@ -2530,6 +2541,80 @@ html[data-spw-color-mode="dark"] .spw-discovery-notice--modal .spw-discovery-not
 html[data-spw-color-mode="dark"] .spw-discovery-notice__offer,
 html[data-spw-color-mode="dark"] .spw-discovery-notice__meta-value {
   color: var(--ink, rgba(236, 241, 238, 0.95));
+}
+
+/* "Film credits" style ephemeral chrome for module / settings application.
+   After a "preloading phase" (scan mount hooks/handles, measure layout via rAF/ResizeObserver),
+   queued modules or settings that impact style/layout can surface here as a configurable,
+   timed, low-attention roll (like end credits after opening sequence). Configurable via
+   presentation=credits, linger via data attr or enhancement-level, position variants.
+   Improves communicability of "what just applied and why it matters" with visual poetry
+   and touch-friendly targets. */
+.spw-discovery-notice--credits {
+  --credits-linger: 3800ms;
+  position: fixed;
+  inset-block-end: calc( max(0.9rem, env(safe-area-inset-bottom)) + 2.4rem );
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+  width: min(28rem, calc(100vw - 2.5rem));
+  max-inline-size: calc(100vw - 2.5rem);
+  padding: 0.55rem 0.8rem;
+  font-size: var(--text-size-2xs, 0.72rem);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  letter-spacing: 0.03em;
+  background: color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.94)) 94%, transparent);
+  border: 1px solid color-mix(in srgb, var(--line, rgba(14,18,20,0.14)) 70%, transparent);
+  border-radius: 999px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+  color: var(--ink-soft, rgba(14,18,20,0.72));
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  pointer-events: auto;
+  opacity: 0.96;
+  transition: opacity 420ms ease, transform 420ms var(--shell-settle-ease);
+  z-index: 1050;
+}
+.spw-discovery-notice--credits.is-dismissing {
+  opacity: 0;
+  transform: translateX(-50%) translateY(0.25rem);
+}
+.spw-discovery-notice--credits .spw-discovery-notice__label {
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+}
+.spw-discovery-notice--credits .spw-discovery-notice__title {
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+.spw-discovery-notice--credits .spw-discovery-notice__summary {
+  font-size: 0.68rem;
+  line-height: 1.25;
+}
+.spw-discovery-notice--credits .spw-discovery-notice__actions {
+  gap: 0.25rem;
+}
+.spw-discovery-notice--credits .spw-discovery-notice__cta,
+.spw-discovery-notice--credits .spw-discovery-notice__dismiss {
+  min-height: 1.65rem;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.68rem;
+  border-radius: 999px;
+}
+
+/* Matte high-contrast variant for credits (clear, premium, readable on any material) */
+.spw-discovery-notice--credits[data-spw-metamaterial="matte"],
+html[data-spw-base-metamaterial="matte"] .spw-discovery-notice--credits,
+html[data-spw-high-contrast="on"] .spw-discovery-notice--credits {
+  background: var(--surface-matte, rgba(247,244,238,0.97));
+  color: var(--ink-on-matte-strong, var(--ink));
+  border-color: var(--line-matte, var(--line));
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.spw-discovery-notice--credits[data-spw-metamaterial="matte"] .spw-discovery-notice__label,
+html[data-spw-base-metamaterial="matte"] .spw-discovery-notice--credits .spw-discovery-notice__label {
+  color: var(--ink-on-matte-soft, var(--ink-soft));
 }
 
 /* Matte clear contrast treatment for notices (when user chooses the matte option
@@ -2576,7 +2661,8 @@ html[data-spw-base-metamaterial="matte"] .spw-discovery-notice .spw-discovery-no
 @media (max-width: 720px) {
   .spw-discovery-notice-stack {
     inset-inline: max(0.75rem, env(safe-area-inset-left)) max(0.75rem, env(safe-area-inset-right));
-    inset-block-end: calc(max(0.75rem, env(safe-area-inset-bottom)) + 4.9rem);
+    /* Keep extra for console + touch affordance on mobile; the +2.65rem desktop logic scaled for small screens. */
+    inset-block-end: calc( max(0.9rem, env(safe-area-inset-bottom)) + 3.1rem );
     width: auto;
     max-inline-size: none;
   }

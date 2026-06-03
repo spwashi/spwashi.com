@@ -203,6 +203,42 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   min-width: 0;
 }
 
+:where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .plan-card,
+  .compare-card,
+  .spec-column,
+  .ref-card,
+  .frame-panel,
+  .mode-panel,
+  .site-frame
+) :is(code, kbd, samp) {
+  max-inline-size: 100%;
+  overflow-wrap: anywhere;
+}
+
+:where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .plan-card,
+  .compare-card,
+  .spec-column,
+  .ref-card,
+  .frame-panel,
+  .mode-panel,
+  .site-frame
+) :is(pre, .frame-code-enrichment, .demo-code-output) {
+  max-inline-size: 100%;
+  min-inline-size: 0;
+}
+
 /* Responsive comparison bases: tables stay semantic on desktop and become readable
    stacked cards on narrow screens when cells provide data-spw-label. */
 :where([data-spw-table="responsive-comparison"]) {

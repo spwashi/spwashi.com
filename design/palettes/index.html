@@ -36,6 +36,10 @@
     <link rel="stylesheet" href="/public/css/style.css">
     
     <style>
+        /* Page-local structural base for the Spectral Workshop demo (combinatoric pigment swatches).
+           Kept minimal; most alignment, reflow, and variant rules live in routes/design-surface.css
+           so they participate in the cascade and are easier to audit against the review criteria
+           (alignment/overflow, space, combinatorial clustering for scannability). */
         .spectral-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -57,13 +61,6 @@
             text-align: center;
             aspect-ratio: 1;
             box-shadow: var(--shadow-sm);
-        }
-        
-        .theme-handle-test {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-top: 1rem;
         }
     </style>
 </head>
@@ -117,16 +114,16 @@
                 </p>
 
                 <div class="frame-grid frame-grid--2up">
-                    <article class="frame-panel" data-spw-context="reading">
+                    <article class="frame-panel" data-spw-context="reading" data-spw-component-identity="global-context-tuner" data-spw-compositional-esteem="page-material-basis">
                         <h3>Testing Global Contexts</h3>
                         <p>Change the light level and theme family using the root settings controls. The components below respond instantly via <code>data-site-setting-set</code>.</p>
                         
-                        <div class="theme-handle-test" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                            <button class="operator-chip" type="button" data-site-setting-set="colorMode:light">Light Mode</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="colorMode:dark">Dark Mode</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="colorMode:auto">Adaptive Mode</button>
+                        <div class="theme-handle-test theme-handle-test--modes" data-spw-locality="global-controls" data-spw-component-locality="palette-modes">
+                            <button class="operator-chip" type="button" data-site-setting-set="colorMode:light" data-spw-operator="action">Light Mode</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="colorMode:dark" data-spw-operator="action">Dark Mode</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="colorMode:auto" data-spw-operator="action">Adaptive Mode</button>
                         </div>
-                        <div class="theme-pack-chooser" role="group" aria-label="Palette lab theme pack variants" style="margin-top: 0.85rem;">
+                        <div class="theme-pack-chooser" role="group" aria-label="Palette lab theme pack variants" data-spw-locality="theme-packs">
                             <button class="theme-pack-swatch" type="button" data-site-setting-set="themePack:neutral-paper" data-theme-pack-preview="neutral-paper">
                                 <span class="theme-pack-swatch__header">
                                     <span class="theme-pack-swatch__label">Neutral paper</span>
@@ -191,17 +188,19 @@
                         <p class="frame-note" style="margin-top: 1rem;">Auto mode uses <code>prefers-color-scheme</code> to match your system preference.</p>
                     </article>
                     
-                    <article class="frame-panel" data-spw-context="analysis">
+                    <article class="frame-panel" data-spw-context="analysis" data-spw-component-identity="resonance-dial" data-spw-compositional-esteem="combinatoric-probe-cluster">
                         <h3>Palette Resonance Dials</h3>
                         <p>The <code>data-spw-palette-resonance</code> attribute biases the active accent tokens (like <code>--active-op-color</code>).</p>
-                        <div class="theme-handle-test" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:route">Context-led</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:craft">Craft-led</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:software">Software-led</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:math">Math-led</button>
+                        <div class="theme-handle-test theme-handle-test--dials" data-spw-locality="resonance-dials" data-spw-component-locality="palette-resonance">
+                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:route" data-spw-operator="select">Context-led</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:craft" data-spw-operator="select">Craft-led</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:software" data-spw-operator="select">Software-led</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:math" data-spw-operator="select">Math-led</button>
                         </div>
                         <p class="frame-note" style="margin-top: 1rem;">Current theme pack: <strong data-settings-state="themePack">neutral paper</strong>.</p>
                         <p class="frame-note" style="margin-top: 1rem;">This affects how operators glow and how the "resonance" probe identifies conceptual links.</p>
+                        <button type="button" class="operator-chip" data-spw-copy-current-query data-spw-operator="action">copy this look as query</button>
+                        <span class="frame-note spw-query-copy-status" data-spw-query-copy-status aria-live="polite"></span>
                     </article>
                 </div>
             </section>
@@ -214,7 +213,7 @@
                 <p class="frame-note">
                     Theme packs already carry field, surface, signal, marker, and depth. Read them like modes: each
                     pack changes how a component invites, settles, reveals, warns, or resonates while the HTML keeps
-                    the structure stable.
+                    the structure stable. Each pack entry here distinguishes the component's own identity (its assignment and role) from the esteem it earns only in composition (how it behaves and attends when clustered). New seeds start as inspiration, tested for unique content value before they reduce redundancy or earn promotion — the same discipline that keeps a spatial experience from becoming a sea of undifferentiated glows.
                 </p>
 
                 <div class="panel-grid">
@@ -591,7 +590,7 @@
                 </header>
 
                 <p class="frame-note">
-                    This is the live instrument. The four resonance modes are not abstract labels — they are distinct visual personalities that re-color operators, probe bars, accent fields, and canvas tints across the entire surface. Click any button below (or in the hero above). The whole page, including the chips and swatches inside this workshop, will shift.
+                    This is the live instrument. The four resonance modes are not abstract labels — they are distinct visual personalities that re-color operators, probe bars, accent fields, and canvas tints across the entire surface. Click any button below (or in the hero above). The whole page, including the chips and swatches inside this workshop, will shift. Changing resonance is a combinatoric act: salience, clustering, timing, locality, and flow all update together. This is design as mathematics for experiences as a physical dimension — the same moves (with their material semantics) become the basis for dense interactive semantics in spatial or augmented reality, where a "context-led" probe cluster might drive a room's lighting grammar or a gesture's attentional echo. The page itself is the tunable material; the hooks are exploration instruments for learning science and integrated design.
                 </p>
 
                 <div class="vibe-widget-grid vibe-widget-grid--compact" style="margin-top: var(--space-md);">
@@ -634,7 +633,7 @@
                     <article class="frame-panel" data-spw-kind="card" data-spw-role="demonstration" data-spw-context="analysis" data-spw-attention="try">
                         <h3 style="margin-top:0;">Operator cluster (live)</h3>
                         <p class="frame-note">These chips inherit the current resonance personality. Their borders, text, and focus rings shift with the mode.</p>
-                        <div style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.6rem;">
+                        <div class="operator-cluster-demo" data-spw-semantic-cluster="combinatoric-operators" data-spw-locality="live-resonance">
                             <a class="operator-chip" href="#" data-spw-operator="frame" aria-label="Example frame operator under current palette resonance">#&gt;frame</a>
                             <a class="operator-chip" href="#" data-spw-operator="object" aria-label="Example object operator under current palette resonance">^object</a>
                             <a class="operator-chip" href="#" data-spw-operator="probe" aria-label="Example probe operator under current palette resonance">?probe</a>
@@ -650,10 +649,10 @@
                     </article>
                 </div>
 
-                <article class="frame-panel" data-spw-kind="card" data-spw-role="composer" data-spw-feature="seed-composer" style="margin-top: var(--space-md);">
+                <article class="frame-panel" data-spw-kind="card" data-spw-role="composer" data-spw-feature="seed-composer" data-spw-box-model="seed-generator" data-spw-composition-flow="stack" style="margin-top: var(--space-md);">
                     <h3>Compose a palette seed</h3>
                     <p class="frame-note">This is the approved pattern for introducing new palette thinking. Name a role, pick a behavior, declare an owner, then test on one surface before promoting tokens.</p>
-                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:0.6rem; margin: 0.8rem 0;">
+                    <div class="seed-composer-form" data-spw-feature="seed-composer" data-spw-interaction-contract="input generate">
                         <label style="display:block; font-size:0.8rem; color:var(--ink-soft);">Role / assignment
                             <input type="text" value="woven-signal-stack" style="width:100%; margin-top:0.2rem; font-family:var(--font-family-mono); font-size:0.85rem; padding:0.3rem 0.4rem; border:1px solid var(--line); border-radius:4px; background:var(--surface); color:var(--ink);" id="seed-role">
                         </label>
@@ -670,8 +669,8 @@
                             <input type="text" value="/design/" style="width:100%; margin-top:0.2rem; font-family:var(--font-family-mono); font-size:0.85rem; padding:0.3rem 0.4rem; border:1px solid var(--line); border-radius:4px; background:var(--surface); color:var(--ink);" id="seed-owner">
                         </label>
                     </div>
-                    <button type="button" class="operator-chip" onclick="const r=document.getElementById('seed-role').value||'new-seed';const b=document.getElementById('seed-behavior').value;const o=document.getElementById('seed-owner').value||'/design/';const out=document.getElementById('seed-output'); out.textContent=`data-spw-assignment=\"${r}\" data-spw-behavior=\"${b}\" data-spw-reference-seed=\"${r}\" data-spw-owner=\"${o}\"`; out.style.display='block';" data-spw-operator="action">Generate seed markup</button>
-                    <pre id="seed-output" style="display:none; margin-top:0.6rem; padding:0.6rem; background:var(--surface-code, #0f1418); color:#c9d1d9; font-size:0.78rem; border-radius:6px; white-space:pre-wrap; overflow:auto;" aria-live="polite"></pre>
+                    <button type="button" class="operator-chip" data-spw-generate-seed-markup data-spw-operator="action">Generate seed markup</button>
+                    <pre id="seed-output" class="seed-output" aria-live="polite"></pre>
                     <p class="frame-note" style="margin-top:0.4rem;">Copy the attributes onto a frame-panel or image-study. Then test the result on the owner route before proposing a shared token.</p>
                 </article>
 
@@ -689,49 +688,49 @@
                 </header>
                 <p class="frame-note">These are pure pigment tokens from <code>tokens/core.css</code>. They provide stability for textural backgrounds, SVG charts, and specific art direction where theme-agnostic identity is required. (The workshop above demonstrates how resonance modes re-interpret the same underlying hues.)</p>
                 
-                <div class="spectral-grid">
-                    <figure class="spectral-swatch" data-spw-pigment-token="--pigment-teal-mineral" style="background: var(--pigment-teal-mineral); margin:0;"><figcaption style="font-size:0.7rem; opacity:0.85;">teal-mineral</figcaption></figure>
-                    <figure class="spectral-swatch" data-spw-pigment-token="--pigment-teal-electric" style="background: var(--pigment-teal-electric); margin:0;"><figcaption style="font-size:0.7rem; opacity:0.85;">teal-electric</figcaption></figure>
-                    <figure class="spectral-swatch" data-spw-pigment-token="--pigment-amber-resin" style="background: var(--pigment-amber-resin); margin:0;"><figcaption style="font-size:0.7rem; opacity:0.85;">amber-resin</figcaption></figure>
-                    <figure class="spectral-swatch" data-spw-pigment-token="--pigment-copper-oxide" style="background: var(--pigment-copper-oxide); margin:0;"><figcaption style="font-size:0.7rem; opacity:0.85;">copper-oxide</figcaption></figure>
-                    <figure class="spectral-swatch" data-spw-pigment-token="--pigment-violet-ink" style="background: var(--pigment-violet-ink); margin:0;"><figcaption style="font-size:0.7rem; opacity:0.85;">violet-ink</figcaption></figure>
-                    <figure class="spectral-swatch" data-spw-pigment-token="--pigment-rose-dust" style="background: var(--pigment-rose-dust); margin:0;"><figcaption style="font-size:0.7rem; opacity:0.85;">rose-dust</figcaption></figure>
-                    <figure class="spectral-swatch" data-spw-pigment-token="--pigment-clay-red" style="background: var(--pigment-clay-red); margin:0;"><figcaption style="font-size:0.7rem; opacity:0.85;">clay-red</figcaption></figure>
-                    <figure class="spectral-swatch" data-spw-pigment-token="--pigment-brass-warm" style="background: var(--pigment-brass-warm); margin:0;"><figcaption style="font-size:0.7rem; opacity:0.85;">brass-warm</figcaption></figure>
-                    <figure class="spectral-swatch" data-spw-pigment-token="--pigment-paper-cream" style="background: var(--pigment-paper-cream); color: #333; text-shadow: none; margin:0;"><figcaption style="font-size:0.7rem; opacity:0.85; color:#333;">paper-cream</figcaption></figure>
-                    <figure class="spectral-swatch" data-spw-pigment-token="--pigment-charcoal-fiber" style="background: var(--pigment-charcoal-fiber); margin:0;"><figcaption style="font-size:0.7rem; opacity:0.85;">charcoal-fiber</figcaption></figure>
-                    <figure class="spectral-swatch" data-spw-pigment-token="--pigment-moss-soft" style="background: var(--pigment-moss-soft); margin:0;"><figcaption style="font-size:0.7rem; opacity:0.85;">moss-soft</figcaption></figure>
-                    <figure class="spectral-swatch" data-spw-pigment-token="--pigment-lapis-soft" style="background: var(--pigment-lapis-soft); margin:0;"><figcaption style="font-size:0.7rem; opacity:0.85;">lapis-soft</figcaption></figure>
+                <div class="spectral-grid" data-spw-feature="spectral-families" data-spw-semantic-cluster="combinatoric-pigments">
+                    <figure class="spectral-swatch" data-spw-pigment-token="--pigment-teal-mineral" data-spw-component-identity="pure-pigment" data-spw-compositional-esteem="textural-anchor"><figcaption>teal-mineral</figcaption></figure>
+                    <figure class="spectral-swatch" data-spw-pigment-token="--pigment-teal-electric" data-spw-component-identity="pure-pigment" data-spw-compositional-esteem="signal-edge"><figcaption>teal-electric</figcaption></figure>
+                    <figure class="spectral-swatch" data-spw-pigment-token="--pigment-amber-resin" data-spw-component-identity="pure-pigment" data-spw-compositional-esteem="warm-lift"><figcaption>amber-resin</figcaption></figure>
+                    <figure class="spectral-swatch" data-spw-pigment-token="--pigment-copper-oxide" data-spw-component-identity="pure-pigment" data-spw-compositional-esteem="binding-warmth"><figcaption>copper-oxide</figcaption></figure>
+                    <figure class="spectral-swatch" data-spw-pigment-token="--pigment-violet-ink" data-spw-component-identity="pure-pigment" data-spw-compositional-esteem="inquiry-depth"><figcaption>violet-ink</figcaption></figure>
+                    <figure class="spectral-swatch" data-spw-pigment-token="--pigment-rose-dust" data-spw-component-identity="pure-pigment" data-spw-compositional-esteem="soft-accent"><figcaption>rose-dust</figcaption></figure>
+                    <figure class="spectral-swatch" data-spw-pigment-token="--pigment-clay-red" data-spw-component-identity="pure-pigment" data-spw-compositional-esteem="material-ground"><figcaption>clay-red</figcaption></figure>
+                    <figure class="spectral-swatch" data-spw-pigment-token="--pigment-brass-warm" data-spw-component-identity="pure-pigment" data-spw-compositional-esteem="crafted-hue"><figcaption>brass-warm</figcaption></figure>
+                    <figure class="spectral-swatch" data-spw-pigment-token="--pigment-paper-cream" data-spw-component-identity="pure-pigment" data-spw-compositional-esteem="reading-field"><figcaption>paper-cream</figcaption></figure>
+                    <figure class="spectral-swatch" data-spw-pigment-token="--pigment-charcoal-fiber" data-spw-component-identity="pure-pigment" data-spw-compositional-esteem="structure-depth"><figcaption>charcoal-fiber</figcaption></figure>
+                    <figure class="spectral-swatch" data-spw-pigment-token="--pigment-moss-soft" data-spw-component-identity="pure-pigment" data-spw-compositional-esteem="ecology-calm"><figcaption>moss-soft</figcaption></figure>
+                    <figure class="spectral-swatch" data-spw-pigment-token="--pigment-lapis-soft" data-spw-component-identity="pure-pigment" data-spw-compositional-esteem="spatial-probe"><figcaption>lapis-soft</figcaption></figure>
                 </div>
                 <p class="frame-note" style="margin-top:0.4rem;"><a href="/design/catalog/#tokens">See all tokens in the design catalog</a> (regenerate after any token promotion).</p>
             </section>
 
-            <section class="site-frame" id="palette-projection" data-spw-role="projection" data-spw-kind="frame" data-spw-context="ritual">
+            <section class="site-frame" id="palette-projection" data-spw-role="projection" data-spw-kind="frame" data-spw-context="ritual" data-spw-semantic-cluster="material-projection-combinatoric" data-spw-wonder="locality flow mathematics">
                 <header class="frame-heading">
                     <a class="frame-sigil" href="#palette-projection">^"palette_projection"</a>
                     <h2>Palette Projection Registry</h2>
                 </header>
-                <p class="frame-note">When an image is surface-promoted, we extract a spectral signature and project it onto the surrounding frame. This ensures that the structural bounds of the site feel connected to the content being displayed.</p>
-                             <div class="panel-grid" style="grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr));">
-                    <figure class="image-study" data-spw-accent="resonance" data-spw-accent-palette="cool" data-spw-accent-colors="#144a59, #cfa16d, #365b8c, #d4d1c3" style="display: flex; flex-direction: column; width: 100%; min-width: 0;">
-                        <img src="/public/images/routes/site-design-resonance-hero.webp" alt="A readable surface study displaying cool and metallic shades." width="1600" height="960" style="width: 100%; height: auto; min-height: 200px; background: var(--surface-soft);">
-                        <figcaption class="study-summary" style="width: 100%; min-width: 0; padding: 1.2rem;">
+                <p class="frame-note">When an image is surface-promoted, we extract a spectral signature and project it onto the surrounding frame. This ensures that the structural bounds of the site feel connected to the content being displayed. These same seeds and resonance dials are the material basis for modernization: page architecture as tunable substance, not decoration. The combinatoric play of salience, clustering, timing, locality, and flow here is the mathematics of experience as a physical dimension — the same handles become lighting probes, surface response curves, gesture affordances, and attentional flow fields in augmented or virtual reality. Unique material semantics (a pigment as "spatial probe" or "binding warmth") give component utility a clear segue from screen to spatial computing without redundancy; each seed stays distinct in identity while earning compositional esteem only when it earns its place in a scene.</p>
+                             <div class="panel-grid palette-projection-grid" data-spw-feature="palette-projection-specimens" data-spw-box-model="projection-specimen-grid" data-spw-composition-flow="grid">
+                    <figure class="image-study" data-spw-accent="resonance" data-spw-accent-palette="cool" data-spw-accent-colors="#144a59, #cfa16d, #365b8c, #d4d1c3" data-spw-component-identity="image-anchor" data-spw-compositional-esteem="cool-probe">
+                        <img src="/public/images/routes/site-design-resonance-hero.webp" alt="A readable surface study displaying cool and metallic shades — spectral signature projected as material for spatial or AR lighting cues." width="1600" height="960">
+                        <figcaption class="study-summary">
                             <div class="meta-cluster">
                                 <span class="spec-pill">cool resonance</span>
                                 <code>#144a59, #cfa16d, #365b8c, #d4d1c3</code>
                             </div>
-                            <p style="margin-top: 0.5rem;">Extraction biases background glares and SVG stroke rendering through <code>--active-op-color</code>.</p>
+                            <p>Extraction biases background glares and SVG stroke rendering through <code>--active-op-color</code>. In spatial contexts the same tokens drive probe lights and surface shaders.</p>
                         </figcaption>
                     </figure>
 
-                    <figure class="image-study" data-spw-accent="resonance" data-spw-accent-palette="warm" data-spw-accent-colors="#C05C3B, #EAD7B6, #4C3C3B" style="display: flex; flex-direction: column; width: 100%; min-width: 0;">
-                        <img src="/public/images/routes/site-architecture-home-portal.webp" alt="Warmly lit architectural study." width="1600" height="960" style="width: 100%; height: auto; min-height: 200px; background: var(--surface-soft);">
-                        <figcaption class="study-summary" style="width: 100%; min-width: 0; padding: 1.2rem;">
+                    <figure class="image-study" data-spw-accent="resonance" data-spw-accent-palette="warm" data-spw-accent-colors="#C05C3B, #EAD7B6, #4C3C3B" data-spw-component-identity="image-anchor" data-spw-compositional-esteem="warm-ground">
+                        <img src="/public/images/routes/site-architecture-home-portal.webp" alt="Warmly lit architectural study — palette as physical dimension cue for timing, locality, and embodied attention in VR or mixed reality." width="1600" height="960">
+                        <figcaption class="study-summary">
                             <div class="meta-cluster">
                                 <span class="spec-pill">warm anchor</span>
                                 <code>#C05C3B, #EAD7B6, #4C3C3B</code>
                             </div>
-                            <p style="margin-top: 0.5rem;">Extraction shifts <code>--surface</code> bias toward sun-bleached cream, grounding the image in the paper material.</p>
+                            <p>Extraction shifts <code>--surface</code> bias toward sun-bleached cream, grounding the image in the paper material. The same grounding becomes floor, table, or horizon hue in a physical experience.</p>
                         </figcaption>
                     </figure>
                 </div>
@@ -742,5 +741,97 @@
     </main>
 
 <spw-site-footer></spw-site-footer>
+<script type="module">
+    const seedMarkupButton = document.querySelector('[data-spw-generate-seed-markup]');
+    seedMarkupButton?.addEventListener('click', () => {
+        const role = document.getElementById('seed-role')?.value || 'new-seed';
+        const behavior = document.getElementById('seed-behavior')?.value || 'resonate';
+        const owner = document.getElementById('seed-owner')?.value || '/design/';
+        const output = document.getElementById('seed-output');
+
+        if (!output) return;
+
+        output.textContent = `data-spw-assignment="${role}" data-spw-behavior="${behavior}" data-spw-reference-seed="${role}" data-spw-owner="${owner}"`;
+        output.style.display = 'block';
+    });
+
+    // Query string discoverability + premium visual feedback on settings application.
+    // "copy this look as query" gives communicable, timed confirmation of the current aesthetic state
+    // (theme + resonance + related) so visitors can verify the benefit, share the exact material "recipe",
+    // and return to it. Timing of the copy feedback (via handleCopyButton) + a transient verify cue on
+    // the status line offers the "premium" feel: deliberate, confirmatory, not noisy — the interaction
+    // itself communicates why the setting matters (you see the operators/probes change, then you can
+    // capture and replay the exact visual personality).
+    const copyQueryBtn = document.querySelector('[data-spw-copy-current-query]');
+    const copyStatus = document.querySelector('[data-spw-query-copy-status]');
+
+    if (copyQueryBtn) {
+      copyQueryBtn.addEventListener('click', async () => {
+        try {
+          const { buildQueryString } = await import('/public/js/kernel/site-settings.js');
+          // Pull current visual tuners for a minimal, communicable "this look" query.
+          // Uses the live data attrs written by the kernel (no private internals).
+          const root = document.documentElement;
+          const body = document.body;
+          const params = {
+            themePack: (body?.dataset?.spwThemePack || root?.dataset?.spwThemePack || 'neutral-paper'),
+            paletteResonance: (body?.dataset?.spwPaletteResonance || root?.dataset?.spwPaletteResonance || 'route'),
+            colorMode: (body?.dataset?.spwColorMode || root?.dataset?.spwColorMode || 'auto'),
+          };
+          // Only include layout if explicitly set (keeps queries short and focused on aesthetics).
+          const layout = body?.dataset?.spwLayout || root?.dataset?.spwLayout;
+          if (layout && layout !== 'reading') params.layout = layout;
+
+          const query = buildQueryString(params);
+          const url = `${location.pathname}${query}${location.hash || ''}`;
+
+          const { handleCopyButton } = await import('/public/js/kernel/copy.js');
+          await handleCopyButton({
+            text: url,
+            button: copyQueryBtn,
+            labelCopied: '✓ look captured',
+            labelFailed: '! copy failed',
+            labelDefault: copyQueryBtn.textContent || 'copy this look as query',
+          });
+
+          if (copyStatus) {
+            copyStatus.textContent = 'query ready to share — the exact resonance + pack will re-apply on load';
+            setTimeout(() => { if (copyStatus) copyStatus.textContent = ''; }, 2200);
+          }
+        } catch (e) {
+          if (copyStatus) copyStatus.textContent = 'copy unavailable';
+        }
+      });
+    }
+
+    // Premium timed verify feedback on settings application (for communicability + "premium feel").
+    // When a visual setting (theme, palette resonance, color mode, material) applies, give the
+    // status/readout elements a short, deliberate settle cue (timing ~260ms) so the visitor
+    // registers the benefit ("the operators just got warmer/cooler because craft-led") rather than
+    // a silent instant swap. This minds UX, favors communicability of the styling value, and turns
+    // the act of changing a dial into a verifiable, almost physical confirmation.
+    try {
+      const bus = (window.__SPW_SITE__ && window.__SPW_SITE__.bus) || window.bus;
+      if (bus && typeof bus.on === 'function') {
+        bus.on('settings:changed', (applied = {}) => {
+          const keys = Object.keys(applied || {});
+          const visualKeys = ['themePack', 'paletteResonance', 'colorMode', 'baseMetamaterial', 'highContrast'];
+          const touchedVisual = keys.some(k => visualKeys.includes(k));
+          if (!touchedVisual) return;
+
+          // Target the status lines and the two hero cards for the cue (scoped to this page).
+          const targets = document.querySelectorAll('[data-settings-state], .frame-panel[data-spw-component-identity]');
+          targets.forEach((el) => {
+            el.setAttribute('data-spw-setting-just-verified', 'true');
+            // The timing (260ms) is the feature: long enough to feel the "premium" verification,
+            // short enough to stay responsive. CSS provides the crafted transition.
+            setTimeout(() => {
+              if (el) el.removeAttribute('data-spw-setting-just-verified');
+            }, 260);
+          });
+        });
+      }
+    } catch (_) {}
+</script>
 </body>
 </html>

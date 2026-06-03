@@ -442,6 +442,12 @@ main :where(article > ul, article > ol, section > ul, section > ol) {
   min-width: 0;
 }
 
+.meta-cluster > :is(code, kbd, samp) {
+  flex: 1 1 12rem;
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+
 /* ==========================================================================
    4. Generic surface defaults for common page content
    --------------------------------------------------------------------------

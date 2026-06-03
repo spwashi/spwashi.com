@@ -697,6 +697,15 @@ header.frame-heading > :is(h1, h2, h3) {
   border: 1px solid color-mix(in srgb, var(--spw-box-model-accent) 24%, transparent);
   border-radius: var(--shape-element, 4px);
   background: color-mix(in srgb, var(--component-surface-strong) 92%, transparent);
+  color: color-mix(in srgb, var(--ink-soft, rgba(14, 18, 20, 0.68)) 82%, var(--spw-box-model-accent) 18%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-2xs, 0.72rem);
+  line-height: 1.2;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  pointer-events: none;
+  opacity: 0.78;
+  z-index: var(--component-layer-overlay);
 }
 
 /* Granular architecture selectors for vocabulary development, component locality (esp. settings/menus/pattern locks),
@@ -776,16 +785,6 @@ header.frame-heading > :is(h1, h2, h3) {
 :where([data-spw-high-contrast="on"]) {
   /* boost for a11y in components */
   --component-ink: var(--ink-strong);
-}
-  color: color-mix(in srgb, var(--ink-soft, rgba(14, 18, 20, 0.68)) 82%, var(--spw-box-model-accent) 18%);
-  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
-  font-size: var(--text-size-2xs, 0.72rem);
-  line-height: 1.2;
-  letter-spacing: 0.04em;
-  text-transform: lowercase;
-  pointer-events: none;
-  opacity: 0.78;
-  z-index: var(--component-layer-overlay);
 }
 
 :where([data-spw-module][data-spw-context-match="active"]) {

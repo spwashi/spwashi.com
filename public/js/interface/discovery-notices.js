@@ -17,7 +17,7 @@ const MODULE_ATTR = 'data-spw-discovery-notice-module';
 const NOTICE_HIDE_DELAY_MS = 180;
 const DISMISSALS_CHANGED_EVENT = 'spw:discovery-dismissals-changed';
 const DISCOVERY_REWARD_EVENT = 'spw:discovery-reward';
-const PRESENTATIONS = new Set(['toast', 'popup', 'modal']);
+const PRESENTATIONS = new Set(['toast', 'popup', 'modal', 'credits']);
 const FEATURE_LEARNING_STORAGE_KEY = 'spw-feature-learning-toasts';
 const FEATURE_LEARNING_LIMIT = 3;
 
@@ -360,6 +360,61 @@ function ensureModalRoot() {
   return root;
 }
 
+function ensureCreditsRoot() {
+  let root = document.querySelector('[data-spw-discovery-credits]');
+  if (root) return root;
+  root = document.createElement('section');
+  root.className = 'spw-discovery-credits-layer';
+  root.setAttribute('data-spw-discovery-credits', '');
+  root.setAttribute('aria-label', 'Applied modules and settings (ephemeral credits)');
+  annotateFloatingChromeElement(root, {
+    role: 'application-credits',
+    tier: 'floating',
+    mutator: 'discovery-notices',
+    reason: 'module-settings-credits',
+    stylingAxis: 'notice-chrome',
+  });
+  root.setAttribute(MODULE_ATTR, 'ready');
+  const host = document.body || document.documentElement;
+  host.append(root);
+  return root;
+}
+
+/** Show a configurable ephemeral "film credits" style floating chrome for module or settings application.
+ *  Like end credits after an opening sequence: appears after "preloading" (scan + measure), lists what was applied,
+ *  impacts perception of the change (communicates benefit), auto or gesture dismisses. Uses the shared annotate
+ *  and floating chrome contract. Can be triggered from settings:changed or page preload phases that queue after
+ *  identifying [data-spw-*] hooks and measuring layout rects.
+ */
+export function showApplicationCredit(summary = 'Module applied', options = {}) {
+  const linger = Number.isFinite(options.linger) ? options.linger : 3800;
+  const root = ensureCreditsRoot();
+  const el = document.createElement('div');
+  el.className = 'spw-discovery-notice spw-discovery-notice--credits';
+  if (options.theme) el.setAttribute('data-spw-metamaterial', options.theme);
+  el.innerHTML = `
+    <span class="spw-discovery-notice__label" aria-hidden="true">APPLIED</span>
+    <span class="spw-discovery-notice__title">${cleanText(summary)}</span>
+  `;
+  annotateFloatingChromeElement(el, {
+    role: 'application-credit',
+    tier: 'floating',
+    mutator: 'discovery-notices',
+    reason: options.reason || 'module-settings-credits',
+    stylingAxis: 'notice-chrome',
+  });
+  root.append(el);
+  const remove = () => {
+    el.classList.add('is-dismissing');
+    setTimeout(() => el.remove(), 420);
+  };
+  el.addEventListener('click', remove, { once: true });
+  const t = setTimeout(remove, linger);
+  // Allow external cancel
+  el._spwCreditTimer = t;
+  return el;
+}
+
 function clearRemoveEscapeListenerIfIdle() {
   if (document.querySelector(`[${STACK_ATTR}]`) || document.querySelector(`[${MODAL_ATTR}]`)) return;
   removeEscapeListener();
@@ -442,10 +497,14 @@ export function buildVisibleNotices(feed, date = new Date(), dismissals = readDi
 function mountNotices(visible, stack, dismissals) {
   const cleanup = [];
   const modalRoot = ensureModalRoot();
+  const creditsRoot = ensureCreditsRoot();
 
   visible.forEach((notice) => {
     const { article, dismiss } = createNoticeElement(notice);
-    const root = notice.presentation === 'modal' ? modalRoot : stack;
+    let root;
+    if (notice.presentation === 'modal') root = modalRoot;
+    else if (notice.presentation === 'credits') root = creditsRoot;
+    else root = stack;
     root.append(article);
 
     dismiss.addEventListener('click', () => dismissNotice({ ...notice, article }, root, dismissals));

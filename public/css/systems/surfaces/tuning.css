@@ -297,6 +297,7 @@
 :where(.theme-pack-swatch__palettes) {
   display: grid;
   gap: 0.28rem;
+  align-content: end; /* stable alignment of the two mini bars even when header text wraps */
 }
 
 :where(.theme-pack-swatch__palette) {

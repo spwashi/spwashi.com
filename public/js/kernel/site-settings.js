@@ -1093,7 +1093,24 @@ const QUERY_SETTING_ALIASES = Object.freeze({
   flavor: 'pedagogicalFlavor',
   lifecycle: 'componentLifecycle',
   narrative: 'narrativeMode',
-  'narrative-mode': 'narrativeMode'
+  'narrative-mode': 'narrativeMode',
+  // Expanded for discoverability + wiring consistency across design/palettes/settings links and direct ? visits.
+  // These are the common "tuner" and material levers surfaced in the design hub, palettes, and runtime labs.
+  physics: 'physicsReason',
+  'physics-reason': 'physicsReason',
+  palette: 'paletteResonance',
+  'palette-resonance': 'paletteResonance',
+  material: 'baseMetamaterial',
+  'base-metamaterial': 'baseMetamaterial',
+  'high-contrast': 'highContrast',
+  density: 'semanticDensity',
+  'semantic-density': 'semanticDensity',
+  enhancement: 'enhancementLevel',
+  'enhancement-level': 'enhancementLevel',
+  'cauldron-visibility': 'cauldronCandidateVisibility',
+  'cauldron-candidate-visibility': 'cauldronCandidateVisibility',
+  motif: 'componentMotif',
+  'component-motif': 'componentMotif'
 });
 
 const parseSettingsFromSearch = (search = window.location.search) => {
@@ -3273,5 +3290,9 @@ export {
   syncUxRecipeControls,
   validatePartialSettings,
   validateSetting,
-  writeSettingsToScope
+  writeSettingsToScope,
+  // Exposed for discoverability surfaces (palettes "copy this look", design labs, shareable states):
+  // lets pages build a minimal communicable query from current visual tuners without duplicating logic.
+  buildQueryString,
+  parseSettingsFromSearch
 };
