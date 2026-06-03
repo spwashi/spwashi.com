@@ -123,7 +123,115 @@
 }
 
 /* ==========================================================================
-   5. Enriched Code Surfaces
+   5. Perspective Posture Salience
+   ========================================================================== */
+
+:where(
+    [data-spw-concept],
+    [data-spw-semantic-expression],
+    [data-spw-promptability],
+    [data-spw-collectability],
+    [data-spw-related-routes],
+    [data-spw-role],
+    [data-spw-operator]
+) {
+    --spw-perspective-salience: 0;
+    --spw-perspective-salience-color: var(--active-op-color, #008080);
+}
+
+html[data-spw-metacognitive-stance="witness"] :where(
+    [data-spw-role="orientation"],
+    [data-spw-role="reference"],
+    [data-spw-context="reading"],
+    [data-spw-grounding]
+) {
+    --spw-perspective-salience: 0.22;
+    --spw-perspective-salience-color: var(--op-frame-color, var(--active-op-color, #008080));
+}
+
+html[data-spw-metacognitive-stance="composer"] :where(
+    [data-spw-role="action"],
+    [data-spw-role="practice"],
+    [data-spw-promptability="visible"],
+    [data-spw-collectability="high"],
+    [data-spw-semantic-expression]
+) {
+    --spw-perspective-salience: 0.38;
+    --spw-perspective-salience-color: var(--op-action-color, var(--active-op-color, #005959));
+}
+
+html[data-spw-metacognitive-stance="explorer"] :where(
+    [data-spw-role="routing"],
+    [data-spw-related-routes],
+    [data-spw-promptability="ambient"],
+    [data-spw-wonder],
+    .spw-route-bridge
+) {
+    --spw-perspective-salience: 0.34;
+    --spw-perspective-salience-color: var(--op-probe-color, var(--active-op-color, #4a2180));
+}
+
+html[data-spw-metacognitive-stance="integrator"] :where(
+    [data-spw-role="reference"],
+    [data-spw-role="translation"],
+    [data-spw-role="sync"],
+    [data-spw-semantic-cluster],
+    .spw-route-bridge
+) {
+    --spw-perspective-salience: 0.34;
+    --spw-perspective-salience-color: var(--op-ref-color, var(--active-op-color, #286bb7));
+}
+
+html[data-spw-metacognitive-stance="overflow"] :where(
+    [data-spw-concept],
+    [data-spw-semantic-expression],
+    [data-spw-feature],
+    [data-spw-vocabulary-term],
+    [data-spw-collectability]
+) {
+    --spw-perspective-salience: 0.46;
+    --spw-perspective-salience-color: var(--op-stream-color, var(--active-op-color, #208259));
+}
+
+html[data-spw-operational-visibility="on"] :where(
+    [data-spw-semantic-expression],
+    [data-spw-concept],
+    [data-spw-operator],
+    [data-spw-measure-kind],
+    [data-spw-ingredient-primed]
+) {
+    --spw-perspective-salience: max(var(--spw-perspective-salience), 0.44);
+}
+
+html[data-spw-developmental-indicators="on"] :where(
+    [data-spw-concept],
+    [data-spw-semantic-expression],
+    [data-spw-promptability],
+    [data-spw-collectability],
+    [data-spw-related-routes],
+    [data-spw-role],
+    [data-spw-operator]
+):where(:not(.spw-discovery-notice)) {
+    box-shadow:
+        var(--spw-local-shadow, none),
+        0 0 0 calc(1px * var(--spw-perspective-salience, 0))
+        color-mix(in srgb, var(--spw-perspective-salience-color) 42%, transparent);
+}
+
+html[data-spw-developmental-indicators="on"] :where(
+    [data-spw-concept],
+    [data-spw-semantic-expression],
+    [data-spw-promptability],
+    [data-spw-collectability],
+    [data-spw-related-routes],
+    [data-spw-role],
+    [data-spw-operator]
+):where(:hover, :focus-within, :focus-visible) {
+    --spw-perspective-salience: max(var(--spw-perspective-salience), 0.7);
+}
+
+/* ==========================================================================
+   6. Enriched Code Surfaces
    ========================================================================== */
 
 :where(.frame-code-enrichment) {

@@ -6,7 +6,6 @@ import {
   getWeekIndex,
 } from '../typed/feed-utils.js';
 import { annotateFloatingChromeElement } from '../kernel/dom-contracts.js';
-import { bus } from '../kernel/bus.js';
 
 const FEED_URL = '/public/data/promo-wonder-cycle.json';
 const STORAGE_KEY = 'spw-discovery-notice-dismissals';
@@ -20,9 +19,22 @@ const DISCOVERY_REWARD_EVENT = 'spw:discovery-reward';
 const PRESENTATIONS = new Set(['toast', 'popup', 'modal', 'credits']);
 const FEATURE_LEARNING_STORAGE_KEY = 'spw-feature-learning-toasts';
 const FEATURE_LEARNING_LIMIT = 3;
+const RUNTIME_REWARD_LINGER_MS = 4600;
+const CREDITS_REWARD_LINGER_MS = 5600;
+const MAX_RUNTIME_REWARD_NOTICES = 2;
 
 const loadFeed = createJsonFeedLoader(FEED_URL, null);
 let removeEscapeListener = () => {};
+const runtimeRewardNotices = new Map();
+
+async function getSharedBus() {
+  try {
+    const mod = await import('/public/js/kernel/bus.js');
+    return mod?.bus || mod?.default || null;
+  } catch {
+    return null;
+  }
+}
 
 export function slugify(value = '') {
   return cleanText(value)
@@ -76,6 +88,37 @@ export function normalizeHref(href = '') {
   } catch {
     return value.split(/[?#]/)[0].replace(/\/+$/, '/') || '/';
   }
+}
+
+export function getRuntimeRewardPolicy(raw = {}, options = {}) {
+  const source = raw?.detail || raw || {};
+  const presentation = normalizePresentation(source.presentation || options.presentation || 'toast');
+  const cadence = cleanText(options.cadence || source.cadence || 'reward') || 'reward';
+  const lingerValue = Number(options.autoDismissMs ?? source.autoDismissMs ?? source.linger);
+  const autoDismissMs = Number.isFinite(lingerValue)
+    ? Math.max(800, lingerValue)
+    : (presentation === 'credits' ? CREDITS_REWARD_LINGER_MS : RUNTIME_REWARD_LINGER_MS);
+  const maxVisibleValue = Number(options.maxVisible ?? source.maxVisible);
+  const maxVisible = Number.isFinite(maxVisibleValue)
+    ? Math.max(1, maxVisibleValue)
+    : MAX_RUNTIME_REWARD_NOTICES;
+  const rewardKey = cleanText(
+    source.rewardKey
+    || [
+      cadence,
+      source.rewardKind || source.source || presentation,
+      source.title || '',
+      source.href || '',
+    ].join(':')
+  );
+
+  return {
+    presentation,
+    cadence,
+    autoDismissMs,
+    maxVisible,
+    rewardKey,
+  };
 }
 
 export function buildDismissKey(scope, notice, scheduleKey, index) {
@@ -305,6 +348,12 @@ function createNoticeElement(notice) {
     article.setAttribute('aria-label', `${notice.label} notice`);
   }
 
+  if (isCredits && notice.href) {
+    article.setAttribute('tabindex', '0');
+    article.setAttribute('data-spw-notice-click-target', 'href');
+    article.setAttribute('aria-label', `${notice.label} notice. ${notice.cta || 'Open related documentation'}`);
+  }
+
   const body = [label, title, summary];
   if (offerEl) body.push(offerEl);
   if (notice.handles.length) body.push(createHandleStrip(notice.handles));
@@ -393,10 +442,14 @@ export function showApplicationCredit(summary = 'Module applied', options = {}) 
   const el = document.createElement('div');
   el.className = 'spw-discovery-notice spw-discovery-notice--credits';
   if (options.theme) el.setAttribute('data-spw-metamaterial', options.theme);
-  el.innerHTML = `
-    <span class="spw-discovery-notice__label" aria-hidden="true">APPLIED</span>
-    <span class="spw-discovery-notice__title">${cleanText(summary)}</span>
-  `;
+  const label = document.createElement('span');
+  label.className = 'spw-discovery-notice__label';
+  label.setAttribute('aria-hidden', 'true');
+  label.textContent = 'APPLIED';
+  const title = document.createElement('span');
+  title.className = 'spw-discovery-notice__title';
+  title.textContent = cleanText(summary);
+  el.append(label, title);
   annotateFloatingChromeElement(el, {
     role: 'application-credit',
     tier: 'floating',
@@ -546,17 +599,33 @@ function removeNotice(article, root) {
   }, NOTICE_HIDE_DELAY_MS);
 }
 
+function enforceRuntimeRewardLimit(root, maxVisible) {
+  if (!root || !Number.isFinite(maxVisible)) return;
+  const rewardNotices = [...root.querySelectorAll(`[${NOTICE_ATTR}][data-spw-runtime-reward="true"]`)];
+  const overflow = rewardNotices.length - maxVisible;
+  if (overflow <= 0) return;
+
+  rewardNotices.slice(0, overflow).forEach((article) => {
+    if (article instanceof HTMLElement) {
+      const key = article.dataset.spwRewardKey;
+      if (key) runtimeRewardNotices.delete(key);
+      removeNotice(article, root);
+    }
+  });
+}
+
 export function showSpwDiscoveryNotice(raw = {}, options = {}) {
   if (!document.body || document.body.dataset.spwDiscoveryNotices === 'off') return null;
 
   const source = raw?.detail || raw || {};
+  const rewardPolicy = getRuntimeRewardPolicy(source, options);
   const now = Date.now();
   const notice = normalizeNotice(
     {
       ...source,
-      presentation: normalizePresentation(source.presentation || options.presentation || 'toast'),
+      presentation: rewardPolicy.presentation,
     },
-    cleanText(options.cadence || source.cadence || 'reward') || 'reward',
+    rewardPolicy.cadence,
     cleanText(options.scheduleKey || source.scheduleKey || `runtime-${now}`) || `runtime-${now}`,
     Number.isFinite(options.index) ? options.index : 0,
     cleanText(options.locale || source.locale || document.documentElement.lang || 'en') || 'en',
@@ -564,21 +633,78 @@ export function showSpwDiscoveryNotice(raw = {}, options = {}) {
 
   if (!notice) return null;
 
+  if (rewardPolicy.rewardKey && runtimeRewardNotices.has(rewardPolicy.rewardKey)) {
+    runtimeRewardNotices.get(rewardPolicy.rewardKey)?.cleanup?.();
+    runtimeRewardNotices.delete(rewardPolicy.rewardKey);
+  }
+
   const stack = (notice.presentation === 'modal' || notice.presentation === 'credits') ? null : ensureStackRoot();
   const modalRoot = notice.presentation === 'modal' ? ensureModalRoot() : null;
   const creditsRoot = notice.presentation === 'credits' ? ensureCreditsRoot() : null;
   const root = modalRoot || creditsRoot || stack;
   const { article, dismiss } = createNoticeElement(notice);
+  article.dataset.spwRuntimeReward = 'true';
+  if (rewardPolicy.rewardKey) article.dataset.spwRewardKey = rewardPolicy.rewardKey;
 
   root.append(article);
 
-  const cleanup = () => removeNotice(article, root);
+  let cleanupTimer = null;
+  let cleaned = false;
+  const clearAutoDismiss = () => {
+    if (cleanupTimer) {
+      window.clearTimeout(cleanupTimer);
+      cleanupTimer = null;
+    }
+  };
+  const scheduleAutoDismiss = () => {
+    if (notice.presentation === 'modal' || rewardPolicy.autoDismissMs <= 0 || cleaned) return;
+    clearAutoDismiss();
+    cleanupTimer = window.setTimeout(cleanup, rewardPolicy.autoDismissMs);
+  };
+  const cleanup = () => {
+    if (cleaned) return;
+    cleaned = true;
+    clearAutoDismiss();
+    if (rewardPolicy.rewardKey) runtimeRewardNotices.delete(rewardPolicy.rewardKey);
+    removeNotice(article, root);
+  };
   dismiss.addEventListener('click', cleanup, { once: true });
   article.querySelector('.spw-discovery-notice__cta')?.addEventListener('click', cleanup, { once: true });
 
+  if (notice.presentation === 'credits' && notice.href) {
+    const openNoticeHref = () => {
+      window.location.href = notice.href;
+      cleanup();
+    };
+    article.addEventListener('click', (event) => {
+      if (event.target instanceof Element && event.target.closest('a, button')) return;
+      openNoticeHref();
+    });
+    article.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      if (event.target !== article) return;
+      event.preventDefault();
+      openNoticeHref();
+    });
+  }
+
+  article.addEventListener('pointerenter', clearAutoDismiss, { passive: true });
+  article.addEventListener('pointerleave', scheduleAutoDismiss, { passive: true });
+  article.addEventListener('focusin', clearAutoDismiss);
+  article.addEventListener('focusout', () => {
+    window.requestAnimationFrame(() => {
+      if (!article.matches(':focus-within')) scheduleAutoDismiss();
+    });
+  });
+
   if (notice.presentation === 'modal') {
     article.focus({ preventScroll: true });
+  } else {
+    scheduleAutoDismiss();
   }
+
+  enforceRuntimeRewardLimit(root, rewardPolicy.maxVisible);
+  if (rewardPolicy.rewardKey) runtimeRewardNotices.set(rewardPolicy.rewardKey, { article, cleanup });
 
   document.dispatchEvent(new CustomEvent('spw:discovery-notice-shown', {
     detail: {
@@ -599,10 +725,8 @@ export function showSpwDiscoveryNotice(raw = {}, options = {}) {
 }
 
 function handleDiscoveryReward(event) {
-  showSpwDiscoveryNotice(event.detail || {}, {
-    cadence: event.detail?.cadence || 'reward',
-    presentation: event.detail?.presentation || 'toast',
-  });
+  const policy = getRuntimeRewardPolicy(event.detail || {});
+  showSpwDiscoveryNotice(event.detail || {}, policy);
 }
 
 function readFeatureLearningState() {
@@ -677,10 +801,12 @@ export async function initSpwDiscoveryNotices(ctx = {}) {
   if (document.body?.dataset?.spwDiscoveryNotices === 'off') return () => {};
   document.addEventListener(DISCOVERY_REWARD_EVENT, handleDiscoveryReward);
   document.addEventListener('spw:module-mounted', handleFeatureLearningToast);
+  let cleanupBus = () => {};
 
   const cleanupEventApi = () => {
     document.removeEventListener(DISCOVERY_REWARD_EVENT, handleDiscoveryReward);
     document.removeEventListener('spw:module-mounted', handleFeatureLearningToast);
+    cleanupBus();
   };
 
   if (document.querySelector('[data-promo-wonder-cycle]')) {
@@ -736,7 +862,8 @@ export async function initSpwDiscoveryNotices(ctx = {}) {
       }
     });
   };
-  bus?.on?.('settings:changed', adoptGlobalMaterial);
+  const sharedBus = await getSharedBus();
+  cleanupBus = sharedBus?.on?.('settings:changed', adoptGlobalMaterial) || (() => {});
   document.addEventListener('spw:settings-change', adoptGlobalMaterial, { passive: true });
 
   const mo = new MutationObserver((muts) => {

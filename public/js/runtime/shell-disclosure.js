@@ -531,6 +531,8 @@ function ensureUtilityRow(header) {
   // Tunable material surface for storytellers: physics-reason here affects shell "feel" (navigability) across productions.
   row.setAttribute('data-spw-locality', 'high');
   row.setAttribute('data-spw-feature', 'shell-utility-controls');
+  row.setAttribute('data-spw-role', 'state-rail');
+  row.setAttribute('data-spw-semantic-expression', 'rail[utility]{read.tune.inspect}');
   row.setAttribute('data-spw-module-evaluates', 'semantic-density interaction physics-reason');
   row.setAttribute('data-spw-physics-reason', 'adaptive-shell'); // flexible; can be overridden by query/design bench / settings for gamified nav feel
   // Initial material for the utility surface itself (syncUtilityRow will keep in sync with global base + local overrides).

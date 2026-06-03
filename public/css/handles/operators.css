@@ -41,15 +41,17 @@ header,
   --spw-console-ink-muted: rgba(243, 239, 230, 0.72);
   --spw-console-token-bg: rgba(8, 18, 20, 0.74);
   --spw-console-token-line: rgba(126, 210, 204, 0.42);
+  --spw-console-offset-block: max(0.9rem, env(safe-area-inset-bottom));
+  --spw-console-offset-inline: max(0.9rem, env(safe-area-inset-left));
   --handle-ink: var(--spw-console-ink);
   --handle-bg: var(--spw-console-token-bg);
   --handle-line: var(--spw-console-token-line);
   /* Resonance with state satchel: use floating chrome vars for shared ephemeral ergonomics (pad, gap, material), fixed inset consistent with satchel bottom-right, grid for layout predictability. Improves visible console chrome + overall ephemeral arch. */
   position: fixed;
-  inset: auto clamp(0.75rem, 2vw, 1.25rem) clamp(0.75rem, 2vw, 1.25rem) auto;
+  inset: auto auto var(--spw-console-offset-block) var(--spw-console-offset-inline);
   display: grid;
-  inline-size: min(34rem, calc(100vw - 1.5rem));
-  max-block-size: min(34rem, calc(100dvh - 1.5rem));
+  inline-size: min(31rem, calc(100vw - 1.8rem));
+  max-block-size: min(29rem, calc(100dvh - 4.25rem));
   overflow: hidden;
   border: 1px solid color-mix(in srgb, var(--op-probe-color, #4a2180) 32%, transparent);
   border-radius: var(--shape-component, 0.42rem);
@@ -72,7 +74,7 @@ header,
 
 .spw-console.spw-console {
   position: fixed;
-  inset: auto clamp(0.75rem, 2vw, 1.25rem) clamp(0.75rem, 2vw, 1.25rem) auto;
+  inset: auto auto var(--spw-console-offset-block) var(--spw-console-offset-inline);
 }
 
 .spw-console.is-idle:not(:hover):not(:focus-within) {
@@ -122,6 +124,8 @@ header,
   /* Ephemeral chrome resonance + ergonomics: pill shape, height, shadow match satchel launch for family feel;
      layout of the bar inside is compact prompt + action chevron, baseline aligned, good tap target for expand.
      Position lifted slightly so it doesn't bury footer nav text; uses floating safe inset. */
+  inset-inline-start: auto;
+  inset-inline-end: max(0.75rem, env(safe-area-inset-right));
   bottom: max(0.6rem, env(safe-area-inset-bottom));
 }
 
@@ -142,6 +146,7 @@ header,
   min-block-size: 0;
   max-block-size: inherit;
   overflow: auto;
+  overscroll-behavior: contain;
   padding: var(--chrome-pad, 0.45rem);
   /* Layout resonance with satchel panel: grid for sections (header, diagnostics, history like actions/toggles), better learnability spacing. */
 }
@@ -170,6 +175,15 @@ header,
 .spw-console-diagnostics-line {
   padding-block: 0.1rem;
   border-block: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+}
+
+.spw-console-mode-buttons,
+.spw-console-spells {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem;
+  min-inline-size: 0;
 }
 
 .spw-console-diagnostics-copy,
@@ -213,6 +227,38 @@ header,
 
 .spw-console-history-meta {
   grid-column: 2;
+}
+
+@media (max-width: 720px) {
+  .spw-console:not(.is-collapsed) {
+    inset-inline: max(0.7rem, env(safe-area-inset-left)) max(0.7rem, env(safe-area-inset-right));
+    inset-block-end: max(0.7rem, env(safe-area-inset-bottom));
+    inline-size: auto;
+    max-block-size: min(24rem, calc(100dvh - 4.6rem));
+  }
+
+  .spw-console-line:not(.spw-console-header-line),
+  .spw-console-history-item {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .spw-console-history-meta {
+    grid-column: 1;
+  }
+
+  .spw-console .frame-sigil,
+  .spw-console-history-token,
+  .spw-console-token,
+  .spw-console-action-token,
+  .spw-console-diagnostics-token {
+    white-space: normal;
+  }
+}
+
+@media (max-height: 620px) {
+  .spw-console:not(.is-collapsed) {
+    max-block-size: calc(100dvh - 1.4rem);
+  }
 }
 
 .spw-console-expand-btn,

@@ -381,7 +381,10 @@ function findPageTargetsForCauldronIngredient(ingEl, expr) {
 function announceCauldronStatus(message) {
   if (!message) return;
   document.querySelectorAll('[data-cauldron-status]').forEach((node) => {
-    node.textContent = message;
+    const target = node.matches('[data-cauldron-status-text]')
+      ? node
+      : node.querySelector?.('[data-cauldron-status-text]') || node;
+    target.textContent = message;
   });
 }
 

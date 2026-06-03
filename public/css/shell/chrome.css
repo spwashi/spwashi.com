@@ -1198,40 +1198,52 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
 .spw-shell-utility-row {
   display: none;
   flex-wrap: nowrap;
-  align-items: baseline;
-  gap: 0.28rem 0.36rem;
+  align-items: center;
+  gap: 0.16rem;
   min-width: 0;
+  inline-size: 100%;
+  max-inline-size: 100%;
+  min-block-size: 1.92rem;
   overflow-x: auto;
+  overflow-y: hidden;
   overscroll-behavior-x: contain;
-  padding: 0.02rem 0;
+  padding: 0.16rem 0.22rem;
+  border: 1px solid color-mix(in oklab, var(--spw-shell-chrome-accent-local) 10%, var(--line, rgba(14, 18, 20, 0.12)) 90%);
+  border-radius: 999px;
+  background:
+    linear-gradient(90deg,
+      color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.86)) 96%, var(--spw-shell-chrome-accent-local) 4%),
+      color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.86)) 99%, var(--spw-shell-chrome-accent-local) 1%));
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, white 54%, transparent),
+    0 1px 3px rgba(14, 18, 20, 0.045);
   scrollbar-width: none;
-  /* Improved layout: baseline align for sigil+text ergonomics (mixed font sizes read better), slightly larger gaps for learnability (easier targeting + visual grouping of clusters), scroll for many controls without crowding header. */
+  box-sizing: border-box;
+  contain: layout paint;
+  /* Utility chrome lives in its own scroll lane so condensed menus cannot visually collide with route copy. */
 }
 
 :where(.site-header[data-spw-menu-mode="toggle"], body > header[data-spw-menu-mode="toggle"]) .spw-shell-utility-button {
   white-space: nowrap;
 }
 
-/* Improve utility menu layout in the header toolbar (as seen in reference views with icon squares for color/material/font/appearance/satchel etc).
-   Make icon-only buttons (compact or in the top bar with "read / inspect" + MENU) uniform squares with centered icons, good tap size, subtle polish for learnability (clear affordance, consistent rhythm with other header controls).
-   The clusters provide grouping; small gaps inside, larger between for parsing.
-   This addresses cramped or inconsistent alignment of the * C ■ -A +A  ◇ Aa  ⌘  style icons. */
+/* Compact shell utility rail: grouped controls, quiet inactive state, clear active state. */
 :where(.site-header .spw-shell-utility-row, body > header .spw-shell-utility-row) .spw-shell-utility-button {
-  width: 2.1rem;
-  height: 2.1rem;
-  min-width: 2.1rem;
-  min-height: 2.1rem;
+  width: 1.58rem;
+  height: 1.58rem;
+  min-width: 1.58rem;
+  min-height: 1.58rem;
   padding: 0;
-  border-radius: 7px;
+  border-radius: 999px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.05rem;
+  font-size: 0.78rem;
   line-height: 1;
 }
 :where(.site-header .spw-shell-utility-row, body > header .spw-shell-utility-row) .spw-shell-utility-button .spw-utility-sigil {
   margin: 0;
-  font-size: 1.1em;
+  font-size: 1em;
 }
 
 :where(.site-header[data-spw-menu-mode="toggle"], body > header[data-spw-menu-mode="toggle"]) .spw-shell-utility-row {
@@ -1239,6 +1251,7 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
   grid-area: tools;
   grid-column: 1 / -1;
   justify-self: stretch;
+  align-self: stretch;
 }
 
 /* Conceptual clustering for shell utility controls.
@@ -1247,13 +1260,17 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
    (data attr can drive different hover, gesture, or visual treatments per cluster type). */
 .spw-utility-cluster {
   display: inline-flex;
-  align-items: baseline;
-  gap: 0.06rem;
+  align-items: center;
+  gap: 0.04rem;
+  min-block-size: 1.58rem;
+  flex: 0 0 auto;
+  padding: 0.08rem;
+  border: 1px solid color-mix(in oklab, var(--spw-shell-chrome-accent-local) 8%, transparent);
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.86)) 72%, transparent);
 }
 .spw-shell-utility-row > .spw-utility-cluster {
-  /* larger separation between clusters than inside; improves visual parsing + configurable grouping for feedback/learnability levels */
-  margin-inline-end: 0.24rem;
-  padding-inline: 0.04rem;
+  margin-inline-end: 0.08rem;
 }
 .spw-shell-utility-row > .spw-utility-cluster:last-child {
   margin-inline-end: 0;
@@ -1269,25 +1286,25 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
 
 .spw-shell-utility-button {
   display: inline-flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: center;
   min-width: 0;
-  min-height: 1.92rem;
-  padding: 0.16rem 0.42rem;
-  border: 1px solid color-mix(in oklab, var(--spw-shell-chrome-accent-local) 14%, var(--line, rgba(14, 18, 20, 0.14)) 86%);
-  border-radius: calc(var(--shape-control, 0.78rem) - 0.08rem);
-  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.86)) 97%, var(--spw-shell-chrome-accent-local) 3%);
-  color: color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 88%, var(--spw-shell-chrome-accent-local) 12%);
+  min-height: 1.58rem;
+  padding: 0.12rem 0.34rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  color: color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 68%, var(--spw-shell-chrome-accent-local) 32%);
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
-  font-size: 0.64rem;
+  font-size: 0.6rem;
   font-weight: 600;
-  letter-spacing: 0.05em;
+  letter-spacing: 0;
   line-height: 1.05;
   text-decoration: none;
   white-space: nowrap;
   box-sizing: border-box;
   flex: 0 1 auto;
-  /* Improved ergonomics/layout: baseline for mixed sigil/arg, slightly taller min for learnability (target + text readability), tuned padding/gap for utility menu clusters without header bloat. Buttons at 'bottom' of their cluster align naturally via baseline + flex. */
+  position: relative;
   transition:
     background-color 100ms var(--shell-ease),
     border-color 100ms var(--shell-ease),
@@ -1298,14 +1315,17 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
 }
 
 .spw-shell-utility-button[data-spw-shell-action^="color-"] {
-  min-width: 1.92rem;
-  padding-inline: 0.42rem;
+  min-width: 1.58rem;
+  padding-inline: 0.28rem;
 }
 
 .spw-shell-utility-button[aria-pressed="true"] {
-  border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 30%, transparent);
-  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.86)) 90%, var(--spw-shell-chrome-accent-local) 10%);
+  border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 22%, transparent);
+  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.86)) 86%, var(--spw-shell-chrome-accent-local) 14%);
   color: var(--ink, rgba(14, 18, 20, 0.92));
+  box-shadow:
+    inset 0 -2px 0 color-mix(in oklab, var(--spw-shell-chrome-accent-local) 48%, transparent),
+    0 1px 2px rgba(14, 18, 20, 0.04);
 }
 
 /* Semantic distinction for sigils (icons/Spw operators) vs arguments (labels/text).
@@ -1315,13 +1335,13 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
    - In compact utility mode, hide argument to keep icon/metaphor prominent (space + visual clarity). */
 .spw-shell-utility-button .spw-utility-sigil {
   display: inline-flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: center;
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: 0.92em;
   margin-inline-end: 0.12em;
-  opacity: 0.88;
-  color: var(--spw-shell-chrome-accent-local);
+  opacity: 0.82;
+  color: currentColor;
   line-height: 1;
 }
 .spw-shell-utility-button .spw-utility-argument {
@@ -1336,11 +1356,19 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
   display: none;
 }
 
+.spw-shell-utility-row[data-spw-utility-mode="compact"] {
+  gap: 0.18rem;
+}
+
+.spw-shell-utility-row[data-spw-utility-mode="compact"] > .spw-utility-cluster {
+  margin-inline-end: 0.08rem;
+}
+
 .spw-shell-utility-button:is(:hover, :focus-visible) {
-  border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 24%, transparent);
-  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.86)) 92%, var(--spw-shell-chrome-accent-local) 8%);
+  border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 18%, transparent);
+  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.86)) 90%, var(--spw-shell-chrome-accent-local) 10%);
   color: var(--ink, rgba(14, 18, 20, 0.92));
-  box-shadow: 0 0 0 1px color-mix(in oklab, var(--spw-shell-chrome-accent-local) 10%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--spw-shell-chrome-accent-local) 8%, transparent);
   outline: none;
 }
 
@@ -1393,6 +1421,41 @@ html[data-spw-high-contrast="on"] .spw-shell-utility-button[aria-pressed="true"]
   background: color-mix(in oklab, var(--surface-matte-strong, rgba(252, 249, 243, 0.98)) 92%, var(--spw-shell-chrome-accent-local) 8%);
   color: var(--ink-on-matte, rgba(14, 18, 20, 0.96));
   border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 40%, transparent);
+}
+
+.spw-shell-utility-row .spw-shell-utility-button {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.spw-shell-utility-row .spw-shell-utility-button[aria-pressed="true"] {
+  border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 22%, transparent);
+  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.86)) 86%, var(--spw-shell-chrome-accent-local) 14%);
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  box-shadow:
+    inset 0 -2px 0 color-mix(in oklab, var(--spw-shell-chrome-accent-local) 48%, transparent),
+    0 1px 2px rgba(14, 18, 20, 0.04);
+}
+
+html[data-spw-color-mode="dark"] .spw-shell-utility-row {
+  background:
+    linear-gradient(90deg,
+      color-mix(in oklab, var(--surface-strong, rgba(25, 32, 37, 0.92)) 90%, var(--spw-shell-chrome-accent-local) 10%),
+      color-mix(in oklab, var(--surface-strong, rgba(25, 32, 37, 0.92)) 96%, var(--spw-shell-chrome-accent-local) 4%));
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, white 10%, transparent),
+    0 1px 3px rgba(0, 0, 0, 0.18);
+}
+
+html[data-spw-color-mode="dark"] .spw-shell-utility-row .spw-utility-cluster {
+  background: color-mix(in oklab, var(--surface-strong, rgba(25, 32, 37, 0.92)) 68%, transparent);
+}
+
+html[data-spw-color-mode="dark"] .spw-shell-utility-row .spw-shell-utility-button[aria-pressed="true"] {
+  background: color-mix(in oklab, var(--surface-strong, rgba(25, 32, 37, 0.92)) 82%, var(--spw-shell-chrome-accent-local) 18%);
+  color: var(--ink, rgba(236, 241, 238, 0.96));
+  border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 34%, transparent);
 }
 
 /* Special affordance for the clear-matte action button itself when active. */
@@ -2574,6 +2637,12 @@ html[data-spw-color-mode="dark"] .spw-discovery-notice__meta-value {
   transition: opacity 420ms ease, transform 420ms var(--shell-settle-ease);
   z-index: 1050;
 }
+.spw-discovery-notice--credits[data-spw-notice-click-target="href"] {
+  cursor: pointer;
+}
+.spw-discovery-notice--credits[data-spw-notice-click-target="href"]:is(:hover, :focus-visible) {
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 28%, var(--line, rgba(14,18,20,0.14)) 72%);
+}
 .spw-discovery-notice--credits.is-dismissing {
   opacity: 0;
   transform: translateX(-50%) translateY(0.25rem);
@@ -2828,15 +2897,18 @@ html[data-spw-base-metamaterial="matte"] .spw-discovery-notice .spw-discovery-no
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: var(--text-size-2xs, 0.72rem);
   line-height: 1.35;
+  overflow-wrap: anywhere;
 }
 
 /* Compact instruction link for footer cauldron discoverability (links to palettes hooks section with contract/demo/learnability text).
    Small, inline, doesn't disrupt the status reflection of state. */
 .site-footer__cauldron-status .cauldron-instruction-link {
-  font-size: 0.7em;
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.78em;
   opacity: 0.75;
   text-decoration: underline;
-  margin-left: 0.3em;
+  margin-inline-start: 0.35em;
   white-space: nowrap;
 }
 .site-footer__cauldron-status .cauldron-instruction-link:hover,
@@ -3779,6 +3851,22 @@ html[data-spw-page-section-direction="back"] .spw-section-handle-shell {
 @media (max-width: 720px) {
   :where(.site-header[data-spw-menu-mode="toggle"], body > header[data-spw-menu-mode="toggle"]) {
     --shell-nav-min-height: 2.5rem;
+  }
+
+  :where(.site-header[data-spw-menu-mode="toggle"] .spw-shell-utility-row,
+         body > header[data-spw-menu-mode="toggle"] .spw-shell-utility-row) {
+    min-block-size: 1.82rem;
+    padding-block: 0.12rem;
+    padding-inline: 0.16rem;
+  }
+
+  :where(.site-header[data-spw-menu-mode="toggle"] .spw-shell-utility-button,
+         body > header[data-spw-menu-mode="toggle"] .spw-shell-utility-button) {
+    width: 1.42rem;
+    height: 1.42rem;
+    min-width: 1.42rem;
+    min-height: 1.42rem;
+    font-size: 0.72rem;
   }
 
   :where(.site-header[data-spw-menu-mode="toggle"] ul, body > header[data-spw-menu-mode="toggle"] ul) {

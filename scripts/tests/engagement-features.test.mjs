@@ -6,6 +6,7 @@ import {
   buildDismissKey,
   buildVisibleNotices,
   getDateKeys,
+  getRuntimeRewardPolicy,
   normalizeNotice,
   selectScheduleItems,
   slugify,
@@ -195,6 +196,29 @@ test('discovery notices accept image reward popup presentation', () => {
   assert.equal(normalized.cadenceMotion, 'compare.orbit');
   assert.equal(normalized.rewardKind, 'math-prompt');
   assert.equal(normalized.productionSeed, 'symmetry-motion-card');
+});
+
+test('runtime reward policy keeps credits transient and deduplicated', () => {
+  const policy = getRuntimeRewardPolicy({
+    cadence: 'reward',
+    presentation: 'credits',
+    rewardKind: 'spell-cauldron-literacy',
+    title: 'Spell cast',
+    href: '/design/palettes/#spell-cauldron-hooks',
+  });
+  const custom = getRuntimeRewardPolicy({
+    presentation: 'toast',
+    linger: 250,
+    rewardKey: 'custom-key',
+  });
+
+  assert.equal(policy.presentation, 'credits');
+  assert.equal(policy.cadence, 'reward');
+  assert.equal(policy.autoDismissMs, 5600);
+  assert.equal(policy.maxVisible, 2);
+  assert.equal(policy.rewardKey, 'reward:spell-cauldron-literacy:Spell cast:/design/palettes/#spell-cauldron-hooks');
+  assert.equal(custom.autoDismissMs, 800);
+  assert.equal(custom.rewardKey, 'custom-key');
 });
 
 test('promo wonder selection remains data driven', () => {

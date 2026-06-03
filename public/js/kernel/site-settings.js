@@ -498,16 +498,12 @@ const DEFAULT_SITE_SETTINGS = Object.freeze({
   metacognitiveStance: 'witness',
   processAttention: 'breath',
   overflowMode: 'contained',
+  operationalVisibility: 'off',
 
   authorMode: 'draft',
   currentDevelopmentalClimate: 'orient',
   developmentalClimateAutoCycle: 'off',
   narrativeMode: 'off', // Inline prose token lens for narrative surfaces.
-
-  /* Metacognitive and mindful profiles — encourage readers to notice their own stance */
-  metacognitiveStance: 'witness',
-  processAttention: 'breath',
-  overflowMode: 'contained',
 
   /* Shell navigation chrome configuration (adaptive vs modal overlay etc). */
   shellMenuPresentation: 'adaptive',
@@ -591,6 +587,10 @@ const SETTING_OPTIONS = Object.freeze({
   wonderMemory: new Set(['off', 'nearby', 'sitewide']),
   developmentalIndicators: new Set(['off', 'on']),
   depthIndicators: new Set(['off', 'on']),
+  metacognitiveStance: new Set(['witness', 'composer', 'explorer', 'integrator', 'overflow']),
+  processAttention: new Set(['breath', 'scan', 'trace', 'compose']),
+  overflowMode: new Set(['contained', 'expanded', 'generous']),
+  operationalVisibility: new Set(['off', 'on']),
 
   authorMode: new Set(AUTHOR_WORKFLOW_MODES),
   currentDevelopmentalClimate: new Set(Object.keys(DEVELOPMENTAL_CLIMATES)),
@@ -824,6 +824,21 @@ const SETTING_VALUE_LABELS = Object.freeze({
   wonderMemory: Object.freeze({off: 'Focused', nearby: 'Connected', sitewide: 'Immersive'}),
   developmentalIndicators: Object.freeze({off: 'Off', on: 'On'}),
   depthIndicators: Object.freeze({off: 'Off', on: 'On'}),
+  metacognitiveStance: Object.freeze({
+    witness: 'Witness',
+    composer: 'Composer',
+    explorer: 'Explorer',
+    integrator: 'Integrator',
+    overflow: 'Overflow'
+  }),
+  processAttention: Object.freeze({
+    breath: 'Breath',
+    scan: 'Scan',
+    trace: 'Trace',
+    compose: 'Compose'
+  }),
+  overflowMode: Object.freeze({contained: 'Contained', expanded: 'Expanded', generous: 'Generous'}),
+  operationalVisibility: Object.freeze({off: 'Implicit', on: 'Explicit'}),
   authorMode: Object.freeze({
     draft: 'Draft',
     revise: 'Revise',
@@ -1109,6 +1124,11 @@ const QUERY_SETTING_ALIASES = Object.freeze({
   'enhancement-level': 'enhancementLevel',
   'cauldron-visibility': 'cauldronCandidateVisibility',
   'cauldron-candidate-visibility': 'cauldronCandidateVisibility',
+  stance: 'metacognitiveStance',
+  posture: 'metacognitiveStance',
+  'metacognitive-stance': 'metacognitiveStance',
+  'operational-visibility': 'operationalVisibility',
+  'ops-visibility': 'operationalVisibility',
   motif: 'componentMotif',
   'component-motif': 'componentMotif'
 });
@@ -1701,6 +1721,7 @@ const buildDatasetEntries = (normalized, modifiers, deviations, climate) => {
     spwMetacognitiveStance: normalized.metacognitiveStance,
     spwProcessAttention: normalized.processAttention,
     spwOverflowMode: normalized.overflowMode,
+    spwOperationalVisibility: normalized.operationalVisibility,
     spwImplementationMutations: normalized.implementationMutations,
     spwShowSemanticMetadata: normalized.showSemanticMetadata,
     spwOperatorHighlighting: normalized.operatorHighlighting,
@@ -2240,6 +2261,45 @@ const writeSettingsStatus = (statusNode, message = '', type = 'info') => {
   if (!statusNode.hasAttribute('aria-live')) statusNode.setAttribute('aria-live', type === 'error' ? 'assertive' : 'polite');
 };
 
+const emitSettingsFeedbackCredit = (partial = {}, saved = getSiteSettings(), source = 'settings') => {
+  if (typeof document === 'undefined' || !document.dispatchEvent) return;
+  const changedKeys = Object.keys(partial).filter((key) => isKnownSetting(key));
+  if (!changedKeys.length) return;
+
+  const posture = describeSettingValue('metacognitiveStance', saved.metacognitiveStance || 'witness');
+  const climate = describeSettingValue('currentDevelopmentalClimate', saved.currentDevelopmentalClimate || 'orient');
+  const changed = changedKeys
+    .slice(0, 4)
+    .map((key) => `${humanizeSettingName(key)}: ${describeSettingValue(key, partial[key])}`)
+    .join(' · ');
+  const salience = saved.metacognitiveStance === 'composer'
+    ? 'Cards, route edges, and artifact/action handles are more salient.'
+    : saved.metacognitiveStance === 'explorer'
+      ? 'Topic neighbors, prompts, and discovery surfaces are more salient.'
+      : saved.metacognitiveStance === 'integrator'
+        ? 'References, relation bridges, and synthesis handles are more salient.'
+        : saved.metacognitiveStance === 'overflow'
+          ? 'Dense semantic handles and generous traces are allowed to surface.'
+          : 'Core reading anchors and local state cues stay quiet.';
+
+  document.dispatchEvent(new CustomEvent('spw:discovery-reward', {
+    detail: {
+      label: 'Settings',
+      title: `${posture} posture · ${climate} climate`,
+      summary: `${changed}. ${salience}`,
+      href: '/settings/#climate-settings',
+      cta: 'Tune posture',
+      why: 'Settings feedback turns a hidden state change into a short, inspectable learning cue. The selected posture changes which concepts receive visual salience.',
+      presentation: 'credits',
+      cadence: 'settings',
+      rewardKind: 'settings-feedback-literacy',
+      rewardKey: `settings:${source}:${changedKeys.sort().join('+')}:${saved.metacognitiveStance}:${saved.currentDevelopmentalClimate}`,
+      maxVisible: 1,
+      autoDismissMs: 5200,
+    },
+  }));
+};
+
 const resolveStandaloneStatusNode = (node) => {
   if (!(node instanceof HTMLElement)) return null;
   const containers = [
@@ -2301,6 +2361,7 @@ const applySettingTrigger = (trigger, options = {}) => {
   syncSettingsUx(document, saved);
   const summary = describeSettingsPatch(partial) || Object.keys(partial).join(', ');
   writeSettingsStatus(statusNode, `${summary}.`, 'success');
+  emitSettingsFeedbackCredit(partial, saved, 'setting-trigger');
   // For onSaved, pass the first trigger or the batch for legacy consumers.
   onSaved?.(saved, triggers[0] || triggers);
   return saved;
@@ -2318,6 +2379,7 @@ const applyUxRecipe = (recipeName, options = {}) => {
   const saved = recipeName === 'default' ? resetSiteSettings() : saveSiteSettings(recipe.settings);
   syncSettingsUx(document, saved);
   writeSettingsStatus(statusNode, `${recipe.label}.`, 'success');
+  emitSettingsFeedbackCredit(recipe.settings || {}, saved, `recipe-${recipeName}`);
   onSaved?.(saved, recipeName);
   return saved;
 };
@@ -2583,6 +2645,7 @@ const bindSettingsScope = (root, options = {}) => {
         const description = manager.describePreset(presetName);
         const label = PRESET_LABELS[presetName] || presetName;
         setStatus(`Applied ${label} · ${description?.climate || 'climate'}.`, 'success');
+        emitSettingsFeedbackCredit(PRESETS[presetName] || {}, saved, `preset-${presetName}`);
         button.classList.add('is-applied');
         setTimeout(() => button.classList.remove('is-applied'), 1200);
         onPresetApplied?.(saved, presetName);

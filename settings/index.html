@@ -267,26 +267,27 @@
                     </div>
                 </article>
 
-                <!-- New Spw metacognitive profiles — encourage noticing your own stance while reading/wondering -->
-                <article class="vibe-widget" data-site-settings-panel data-spw-box-model="control-card">
+                <article class="vibe-widget" data-site-settings-panel data-spw-box-model="control-card" data-spw-role="practice" data-spw-promptability="visible" data-spw-semantic-expression="posture[settings]{select.salience}">
                     <div class="vibe-widget-header">
-                        <p class="vibe-widget-kicker">Metacognition</p>
-                        <h3 class="vibe-widget-title">Notice your current stance</h3>
+                        <p class="vibe-widget-kicker">Perspective posture</p>
+                        <h3 class="vibe-widget-title">Choose what should become salient</h3>
                     </div>
                     <p class="vibe-widget-copy">
-                        These profiles help you observe how you are approaching the material right now — witness, composer, explorer, integrator, or generous overflow. They are instruments for developing metacognitive skill.
+                        These profiles change how the site teaches itself. Witness keeps anchors quiet, Composer emphasizes artifacts and actions, Explorer raises routes and prompts, Integrator favors relations, and Overflow exposes dense semantic traces. Turn developmental indicators on with a posture when you want to see the state change on the page.
                     </p>
                     <div aria-label="Metacognitive stances" class="vibe-widget-actions" role="group">
-                        <button class="operator-chip" data-site-setting-set="metacognitiveStance:witness" type="button">Witness</button>
-                        <button class="operator-chip" data-site-setting-set="metacognitiveStance:composer" type="button">Composer</button>
-                        <button class="operator-chip" data-site-setting-set="metacognitiveStance:explorer" type="button">Explorer</button>
-                        <button class="operator-chip" data-site-setting-set="metacognitiveStance:integrator" type="button">Integrator</button>
-                        <button class="operator-chip" data-site-setting-set="metacognitiveStance:overflow" type="button">Overflow</button>
+                        <button class="operator-chip" data-site-setting-set="metacognitiveStance:witness;developmentalIndicators:on;operationalVisibility:off" type="button">Witness</button>
+                        <button class="operator-chip" data-site-setting-set="metacognitiveStance:composer;developmentalIndicators:on;operationalVisibility:on;processAttention:compose" type="button">Composer</button>
+                        <button class="operator-chip" data-site-setting-set="metacognitiveStance:explorer;developmentalIndicators:on;wonderMemory:sitewide;processAttention:scan" type="button">Explorer</button>
+                        <button class="operator-chip" data-site-setting-set="metacognitiveStance:integrator;developmentalIndicators:on;relationalVisualization:on;processAttention:trace" type="button">Integrator</button>
+                        <button class="operator-chip" data-site-setting-set="metacognitiveStance:overflow;developmentalIndicators:on;semanticDensity:rich;operationalVisibility:on;overflowMode:generous" type="button">Overflow</button>
                     </div>
                     <div class="vibe-widget-meta">
                         <span class="spec-pill" data-spw-vocabulary-term data-spw-operator="meta">Current stance:
                             <span class="vibe-widget-state" data-settings-state="metacognitiveStance">witness</span>
                         </span>
+                        <a class="operator-chip" href="#climate-settings" data-spw-operator="ref">~state links</a>
+                        <a class="operator-chip" href="/play/rpg-wednesday/#story-trope-forge" data-spw-operator="probe">?story posture</a>
                     </div>
                 </article>
 
