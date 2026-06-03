@@ -80,6 +80,12 @@ function handleCauldronUIActions(e) {
     showOutput(html);
     // Functional result available for agents/spells: result.functional
     e.preventDefault();
+
+    // Learnability/reward credit (credits architecture) for mix/cast action.
+    rewardSpellCauldronAction('mix-cast', {
+      title: 'Mixed → emergent spell',
+      summary: 'Ingredients combined. The cauldron phase turns collection (state) into a castable, replayable form. Reward for using the emergence mechanic.',
+    });
   }
 
   if (clearBtn) {
@@ -91,6 +97,11 @@ function handleCauldronUIActions(e) {
   if (pruneBtn) {
     pruneStale();
     hideOutput();
+    // Learnability/reward for pruning (state hygiene as positive gardening act).
+    rewardSpellCauldronAction('prune', {
+      title: 'Pruned stale',
+      summary: 'Old ingredients removed. Healthy cauldron state is curated; reward for reflective tending.',
+    });
     e.preventDefault();
   }
 
@@ -98,6 +109,11 @@ function handleCauldronUIActions(e) {
     // Nourish the most recent ingredient as a simple "tend" gesture
     const ingredients = getCauldron();
     if (ingredients.length) nourishIngredient(ingredients.length - 1);
+    // Learnability: nourishing is "tend" reward for active state management.
+    rewardSpellCauldronAction('nourish', {
+      title: 'Nourished / tended',
+      summary: 'Recent ingredient reinforced. Cauldron state rewards ongoing attention (not just one-time collect).',
+    });
     e.preventDefault();
   }
 
@@ -130,6 +146,12 @@ function handleCauldronUIActions(e) {
       });
       // Optionally clear after planting to keep the garden cycle clean
       // clearCauldron();
+
+      // Learnability/reward credit (credits architecture) for plant. Enhances state UX by surfacing the committed state (with gesture) as ephemeral "credits".
+      rewardSpellCauldronAction('plant', {
+        title: 'Planted as durable spell',
+        summary: 'Gathering committed to trail/checkpoint. The cauldron state (ingredients + gesture history + primed) becomes replayable navigation. Reward for the collect → compose → persist loop.',
+      });
     }
     e.preventDefault();
   }
@@ -179,6 +201,10 @@ function handleCauldronUIActions(e) {
         setTimeout(() => footerCauldron.classList.remove('is-recently-tended'), 1400);
       }
       announceCauldronStatus(`Re-gathered: ${last.label || last.expression}. The garden still holds the attention that created it.`);
+      rewardSpellCauldronAction('re-gather', {
+        title: 'Re-gathered from spell',
+        summary: 'Spell trail fed back into cauldron. State is bidirectional: cast produces replayable attention that can be re-collected.',
+      });
     } else {
       // If nothing in cauldron yet but we have a trace, at least surface the footer as the place consequences live
       const footerCauldron = document.querySelector('.site-footer__cauldron, [data-spw-cauldron]');
@@ -302,6 +328,15 @@ function handleIngredientInspect(e) {
         if (cat) delete first.dataset.spwCauldronCategory;
         if (first.dataset.spwAttention === 'rehearsal') delete first.dataset.spwAttention;
       }, 2400);
+
+      // Learnability/reward using credits architecture (similar to module application credits / film-credits).
+      // The jump + highlight + category makes the cauldron's state (collected forces + origins + gestures) traversable and "rehearsable".
+      // Reward text teaches the bidirectional contract while surfacing live state (count/phase/primed).
+      rewardSpellCauldronAction('hook-jump', {
+        title: 'Cauldron hook: follow the trail',
+        summary: 'Collected ingredient jumped back to its living source on page (with temp highlight + category echo). This is the "state UX" half of spell/cauldron: the garden remembers the attention that fed it.',
+        why: 'First-class reward for using the hook improves learnability of prime → collect → re-engage cycle. Ties to attentional rehearsal and subvocal operators.',
+      });
     }
 
     // Helpful for learning without being noisy
@@ -348,6 +383,38 @@ function announceCauldronStatus(message) {
   document.querySelectorAll('[data-cauldron-status]').forEach((node) => {
     node.textContent = message;
   });
+}
+
+/** Learnability / reward improvement using the ephemeral credits architecture (similar to application credits and film-credits roll).
+ *  On meaningful spell/cauldron interactions (hook jump, mix, plant, tend/remove, re-gather), surface a transient
+ *  "credits" style notice that teaches the concept (bidirectional hook, emergence via mix, gardening, state as phase/gesture/primed)
+ *  while showing current state summary. This makes the cauldron/spell UX more rewarding and learnable without
+ *  always-visible clutter. Respects the same floating chrome contract (material, timeout, touch, responsiveness).
+ *  Triggered after the action + any jump/highlight so the "state change + verification" feels like post-action credits.
+ */
+function rewardSpellCauldronAction(actionType, extra = {}) {
+  try {
+    const ingredients = typeof getCauldron === 'function' ? getCauldron() : [];
+    const count = ingredients.length;
+    const phase = typeof computeCauldronPhase === 'function' ? computeCauldronPhase(ingredients) : 'unknown';
+    const hasPrimed = ingredients.some(i => i.primedBy);
+    const summaryBase = `Cauldron: ${count} ingredients • phase ${phase}${hasPrimed ? ' • some primed' : ''}.`;
+    const detail = {
+      label: 'Spell / Cauldron',
+      title: extra.title || `${actionType} • state update`,
+      summary: `${summaryBase} ${extra.summary || 'This interaction teaches gathering → emergence → replay.'}`,
+      href: '/design/palettes/#spell-cauldron-hooks',
+      cta: 'Practice hooks & demos',
+      why: extra.why || 'Rewards engagement with the memory garden; the ephemeral credit makes the abstract contract (prime, mix, follow-trail, plant) concrete and narratable.',
+      presentation: 'credits',
+      rewardKind: 'spell-cauldron-literacy',
+      cadence: 'reward',
+      ...extra,
+    };
+    document.dispatchEvent(new CustomEvent('spw:discovery-reward', { detail }));
+  } catch (_) {
+    // non-fatal; learnability reward is additive
+  }
 }
 
 /* ==========================================================================

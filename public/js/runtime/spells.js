@@ -660,6 +660,21 @@ function registerSpellActions() {
       const snippet = buildSpellModel().snippet;
       bus.emit('spell:cast', { snippet, path: window.location.pathname });
 
+      // Learnability/reward via credits (similar architecture): casting surfaces the composed state as ephemeral credit.
+      // Teaches that spells are replayable extractions of attention/ingredients from cauldron state.
+      document.dispatchEvent(new CustomEvent('spw:discovery-reward', {
+        detail: {
+          label: 'Spell',
+          title: 'Spell cast',
+          summary: 'Current grounded attention composed into replayable snippet. Cauldron state (gather) → spell (cast) is the emergence cycle; the credit rewards using it.',
+          href: '/design/palettes/#spell-cauldron-hooks',
+          cta: 'See cauldron/spell hooks',
+          presentation: 'credits',
+          rewardKind: 'spell-cauldron-literacy',
+          cadence: 'reward',
+        },
+      }));
+
       if (navigator.clipboard?.writeText) {
         navigator.clipboard.writeText(snippet).then(() => {
           if (button instanceof HTMLElement) button.textContent = '! cast (copied)';

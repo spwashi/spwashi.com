@@ -215,7 +215,8 @@ function createMetaList(notice) {
 
 function createNoticeElement(notice) {
   const isModal = notice.presentation === 'modal';
-  const article = document.createElement(isModal ? 'article' : 'aside');
+  const isCredits = notice.presentation === 'credits';
+  const article = document.createElement(isModal || isCredits ? 'article' : 'aside');
   article.className = `spw-discovery-notice spw-discovery-notice--${notice.presentation}`;
   article.setAttribute(NOTICE_ATTR, notice.dismissKey);
   article.setAttribute('data-spw-cadence', notice.cadence);
@@ -563,9 +564,10 @@ export function showSpwDiscoveryNotice(raw = {}, options = {}) {
 
   if (!notice) return null;
 
-  const stack = notice.presentation === 'modal' ? null : ensureStackRoot();
+  const stack = (notice.presentation === 'modal' || notice.presentation === 'credits') ? null : ensureStackRoot();
   const modalRoot = notice.presentation === 'modal' ? ensureModalRoot() : null;
-  const root = modalRoot || stack;
+  const creditsRoot = notice.presentation === 'credits' ? ensureCreditsRoot() : null;
+  const root = modalRoot || creditsRoot || stack;
   const { article, dismiss } = createNoticeElement(notice);
 
   root.append(article);
@@ -750,6 +752,11 @@ export async function initSpwDiscoveryNotices(ctx = {}) {
   ctx.addCleanup?.(() => {
     mo.disconnect();
   });
+
+  // Expose for pages / other modules to surface learnability/reward or module credits using the same ephemeral architecture.
+  if (typeof window !== 'undefined') {
+    window.spwShowApplicationCredit = showApplicationCredit;
+  }
 
   return cleanup;
 }

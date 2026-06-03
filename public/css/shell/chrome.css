@@ -2830,6 +2830,20 @@ html[data-spw-base-metamaterial="matte"] .spw-discovery-notice .spw-discovery-no
   line-height: 1.35;
 }
 
+/* Compact instruction link for footer cauldron discoverability (links to palettes hooks section with contract/demo/learnability text).
+   Small, inline, doesn't disrupt the status reflection of state. */
+.site-footer__cauldron-status .cauldron-instruction-link {
+  font-size: 0.7em;
+  opacity: 0.75;
+  text-decoration: underline;
+  margin-left: 0.3em;
+  white-space: nowrap;
+}
+.site-footer__cauldron-status .cauldron-instruction-link:hover,
+.site-footer__cauldron-status .cauldron-instruction-link:focus {
+  opacity: 1;
+}
+
 /* Improved footer cauldron layout: status + ingredients flex container with actions (clear etc) bottom-aligned; resonates with .spw-cauldron-footer pattern for cards. Better ergonomics, visual grouping for learnability of collection state. */
 .site-footer__cauldron {
   display: flex;
@@ -2838,6 +2852,19 @@ html[data-spw-base-metamaterial="matte"] .spw-discovery-notice .spw-discovery-no
 }
 .site-footer__cauldron .site-footer__cauldron-status + .site-footer__cauldron-ingredients {
   margin-top: 0.1rem;
+}
+
+/* Visual state reflection on footer cauldron (data-spw-cauldron-phase from computeCauldronPhase + sync).
+   Improves state UX discoverability: resonant/mature states get subtle "charged" accent/emphasis so the garden feels alive and tended.
+   Compact, uses existing tokens, no new heavy rules. */
+.site-footer__cauldron[data-spw-cauldron-phase="resonant"] {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 18%, transparent), var(--card-shadow);
+}
+.site-footer__cauldron[data-spw-cauldron-phase="mature"] {
+  border-color: color-mix(in srgb, var(--op-action-color, var(--teal-dark)) 24%, var(--line));
+}
+.site-footer__cauldron[data-spw-cauldron-phase="empty"] {
+  opacity: 0.85;
 }
 
 /* Cauldron ingredients — styled as inspectable semantic chips using shared tokens */
@@ -2867,6 +2894,14 @@ html[data-spw-base-metamaterial="matte"] .spw-discovery-notice .spw-discovery-no
   cursor: grab;
   touch-action: manipulation;
   position: relative;
+}
+
+/* Primed / state reflection on individual cauldron ingredients (data-spw-ingredient-primed from gesture).
+   Enhances state UX visibility in footer: primed ones "glow" with the action color to reflect the charged origin.
+   Improves discoverability of the primed containment concept without extra elements. */
+.cauldron-ingredient[data-spw-ingredient-primed] {
+  --cauldron-chip-border: color-mix(in srgb, var(--active-op-color, var(--teal)) 32%, var(--line));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 14%, transparent);
 }
 
 /* Make cauldron ingredients feel like true "ingredients" — clear prime/gather affordance */
