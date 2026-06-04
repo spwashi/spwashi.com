@@ -1229,3 +1229,17 @@
   background: color-mix(in srgb, #f4efe5 84%, var(--rpg-accent, #5d9367) 16%);
   color: #121816;
 }
+
+/* RPG syntax-list labels sit inside operator-enabled pages, so later
+   operator/effect projections flatten them back into inline handles.
+   This final ornament pass restores their local "step chip" hierarchy
+   without changing the shared syntax-token contract elsewhere. */
+:where(body[data-spw-surface="rpg-wednesday"] .syntax-list .syntax-token) {
+  justify-self: start;
+  padding-block: 0.12rem;
+  padding-inline: 0.36rem;
+  border-radius: 999px;
+  background-color: color-mix(in srgb, var(--rpg-accent, var(--active-op-color, #4bcedd)) 13%, transparent);
+  color: color-mix(in srgb, var(--rpg-accent, var(--active-op-color, #4bcedd)) 72%, var(--ink, #eae4dc) 28%);
+  text-decoration-color: color-mix(in srgb, var(--rpg-accent, var(--active-op-color, #4bcedd)) 44%, transparent);
+}

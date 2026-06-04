@@ -481,6 +481,8 @@ function createRouteMenu(hostHeader, navList) {
   summary.id = 'spw-route-menu-trigger';
   summary.setAttribute('aria-label', 'Open nearby routes');
   summary.setAttribute('aria-expanded', 'false');
+  summary.dataset.spwMeaning = 'open-nearby-routes';
+  summary.dataset.spwGestureContract = 'tap opens related-route popover; Escape closes';
 
   const label = document.createElement('span');
   label.className = 'spw-route-menu-label';
@@ -597,7 +599,7 @@ function updateRouteMenu() {
     ? `${discoveryRoutes.length} nearby ${discoveryRoutes.length === 1 ? 'path' : 'paths'}`
     : `${discoveryRoutes.length} additional ${discoveryRoutes.length === 1 ? 'route' : 'routes'}`;
 
-  label.textContent = compact ? 'nearby routes' : 'routes';
+  label.textContent = 'Nearby';
   count.textContent = `+${discoveryRoutes.length}`;
   details.dataset.spwRouteMenuCount = String(discoveryRoutes.length);
   details.dataset.spwRouteMenuLabel = routeCountLabel;
@@ -609,7 +611,7 @@ function updateRouteMenu() {
   header.dataset.spwRouteDiscoveryCount = String(discoveryRoutes.length);
   header.dataset.spwRouteDiscoveryLayout = compact ? 'expanded' : 'compact';
   header.dataset.spwRouteDiscoveryScope = scope;
-  details.querySelector(':scope > summary')?.setAttribute('aria-label', `Open ${routeCountLabel}`);
+  details.querySelector(':scope > summary')?.setAttribute('aria-label', `Open nearby routes: ${routeCountLabel}`);
 
   panel.replaceChildren(
     ...discoveryRoutes.map((route) => {

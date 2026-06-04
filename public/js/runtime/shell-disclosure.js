@@ -748,25 +748,22 @@ function syncScrollState(header, state, nextScrollY = getScrollY()) {
 }
 
 function describeToggleState(snapshot) {
-  if (snapshot.state === 'open') return `${snapshot.topology} open`;
-  if (snapshot.topology === TOPOLOGIES.SCREEN_FIELD) return 'screen routes';
-  if (snapshot.pressure === PRESSURES.CALM) return 'survey routes';
-  if (snapshot.pressure === PRESSURES.TIGHT) return 'tight routes';
-  if (snapshot.pressure === PRESSURES.COMPRESSED) return 'condensed routes';
-  return 'drawer routes';
+  if (snapshot.mode === MODES.INLINE) return 'visible';
+  if (snapshot.state === 'open') return 'open';
+  if (snapshot.mode === MODES.TOGGLE) return 'tap to open';
+  return 'ready';
 }
 
 function describeToggleMeta(snapshot) {
-  if (snapshot.state === 'open') {
-    return snapshot.topology === TOPOLOGIES.SCREEN_FIELD ? 'Esc · route · outside' : 'Esc settles';
-  }
-  if (snapshot.overflowRouteCount > 0) return `+${snapshot.overflowRouteCount} more`;
   return `${snapshot.totalRouteCount} routes`;
 }
 
 function buildToggleAria(snapshot) {
-  const openness = snapshot.state === 'open' ? 'Collapse' : 'Open';
-  return `${openness} navigation menu. ${snapshot.totalRouteCount} routes available. ${snapshot.topology}. ${snapshot.returnHint}.`;
+  if (snapshot.mode === MODES.INLINE) {
+    return `Routes are visible. ${snapshot.totalRouteCount} routes available.`;
+  }
+  const openness = snapshot.state === 'open' ? 'Close' : 'Open';
+  return `${openness} routes. ${snapshot.totalRouteCount} routes available.`;
 }
 
 function getFocusableMenuElements(header, nav, toggle) {
@@ -797,7 +794,7 @@ function syncToggleCopy(toggle, snapshot) {
   const metaNode = toggle.querySelector('.spw-nav-toggle-meta');
 
   if (labelNode) {
-    labelNode.textContent = snapshot.mode === MODES.TOGGLE ? 'menu' : 'routes';
+    labelNode.textContent = 'Routes';
   }
 
   if (stateNode) {
@@ -809,7 +806,11 @@ function syncToggleCopy(toggle, snapshot) {
   }
 
   toggle.setAttribute('aria-label', buildToggleAria(snapshot));
-  toggle.title = `${snapshot.intent} · ${snapshot.returnHint}`;
+  toggle.title = snapshot.mode === MODES.INLINE
+    ? 'Routes are visible'
+    : snapshot.state === 'open'
+      ? 'Close routes'
+      : 'Open routes';
 }
 
 function emitMenuState(snapshot) {
@@ -931,8 +932,8 @@ export function initSpwShellDisclosure(options = {}) {
     toggle.innerHTML = `
       <span class="spw-nav-toggle-glyph" aria-hidden="true"></span>
       <span class="spw-nav-toggle-copy">
-        <span class="spw-nav-toggle-label">menu</span>
-        <span class="spw-nav-toggle-state">survey routes</span>
+        <span class="spw-nav-toggle-label">Routes</span>
+        <span class="spw-nav-toggle-state">tap to open</span>
       </span>
       <span class="spw-nav-toggle-meta" aria-hidden="true">routes</span>
     `;
