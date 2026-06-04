@@ -362,6 +362,69 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
   color: var(--component-accent);
 }
 
+:where(.frame-card[data-spw-evidence]) {
+  border-color: color-mix(in srgb, var(--op-action-color, var(--component-accent)) 24%, var(--line, transparent));
+}
+
+:where(.frame-card[data-spw-evidence]) :where(.spw-evidence-protocol) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.38rem;
+  margin-block-start: auto;
+  padding-block-start: 0.45rem;
+}
+
+:where(.spw-evidence-protocol__chip) {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.55rem;
+  max-inline-size: 100%;
+  padding: 0.16rem 0.48rem;
+  border: 1px solid color-mix(in srgb, var(--op-action-color, var(--component-accent)) 26%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--component-surface-soft, #fff) 88%, var(--op-action-color, var(--component-accent)) 8%);
+  color: color-mix(in srgb, var(--ink, #111) 82%, var(--op-action-color, var(--component-accent)) 18%);
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+:where(.spw-evidence-brief-btn) {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.7rem;
+  max-inline-size: 100%;
+  padding: 0.2rem 0.56rem;
+  border: 1px solid color-mix(in srgb, var(--op-frame-color, var(--component-accent)) 34%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--component-surface-strong, #fff) 84%, var(--op-frame-color, var(--component-accent)) 10%);
+  color: var(--ink, #111);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.76rem;
+  font-weight: 800;
+  line-height: 1.15;
+  text-decoration: none;
+  transition:
+    transform var(--component-transition-fast, 140ms ease),
+    border-color var(--component-transition-fast, 140ms ease),
+    box-shadow var(--component-transition-fast, 140ms ease);
+}
+
+:where(.spw-evidence-brief-btn):is(:hover, :focus-visible) {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--op-frame-color, var(--component-accent)) 58%, transparent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--op-frame-color, var(--component-accent)) 16%, transparent);
+}
+
+:where(.frame-card[data-spw-card-state="copied"]) :where(.spw-evidence-brief-btn) {
+  border-color: color-mix(in srgb, var(--op-topic-color, var(--component-accent)) 54%, transparent);
+  background: color-mix(in srgb, var(--component-surface-strong, #fff) 80%, var(--op-topic-color, var(--component-accent)) 14%);
+}
+
 :where(
   .frame-card,
   .frame-panel,

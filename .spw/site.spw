@@ -45,6 +45,8 @@
 @model_guided_refinement: ~"./conventions/model-guided-refinement.spw"
 @semantic_capacity: ~"./conventions/semantic-capacity.spw"
 @daily_kernel: ~"./conventions/daily-kernel.spw"
+@professional_skill_worldbuilding: ~"../.agents/plans/professional-skill-development-worldbuilding/PLAN.md"
+@professional_skill_worldbuilding_cache: ~"../.agents/plans/professional-skill-development-worldbuilding/wip.spw"
 @slices: .{
   math_practice_labs: ~"./slices/math-practice-labs/index.spw"
 }[reg=facet]
@@ -109,6 +111,7 @@ translations: .{
  model_guided_refinement = #[@model_guided_refinement, @site_semantics, @product_lines][reg=set]
  semantic_capacity = #[@semantic_capacity, @model_guided_refinement, @planning_ecology][reg=set]
  daily_kernel = #[@daily_kernel, @semantic_capacity, @attention_field, @product_lines][reg=set]
+ professional_skill_worldbuilding = #[@professional_skill_worldbuilding, @professional_skill_worldbuilding_cache, @product_lines][reg=set]
  approach_and_narrative = #[@approach_topography, @product_lines, @wonder_vocabulary][reg=set]
  public_routes = #[@surfaces, @surface_registry][reg=set]
 }[reg=facet]
@@ -154,6 +157,8 @@ dispatch: .{
  model_guided_refinement = @model_guided_refinement
  semantic_capacity = @semantic_capacity
  daily_kernel = @daily_kernel
+ professional_skill_worldbuilding = @professional_skill_worldbuilding
+ professional_skill_worldbuilding_cache = @professional_skill_worldbuilding_cache
  selection = @selection
  naming = @naming
  submodule = @submodule

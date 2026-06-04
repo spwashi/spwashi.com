@@ -214,11 +214,125 @@ const copyText = async (text) => {
     }
 };
 
+const humanizeEvidenceToken = (value = '') => String(value || '')
+    .replace(/[-_]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+const readEvidenceCardTitle = (card) => {
+    const title = card.querySelector('strong')?.textContent?.trim();
+    if (title) return title;
+    const sigil = card.querySelector('.frame-card-sigil')?.textContent?.trim();
+    return sigil || card.dataset.spwCard || 'Evidence card';
+};
+
+const buildEvidenceBrief = (card) => {
+    const title = readEvidenceCardTitle(card);
+    const lines = [
+        `Quest/card: ${title}`,
+        `Skill: ${humanizeEvidenceToken(card.dataset.spwSkill) || 'not specified'}`,
+        `Discipline: ${humanizeEvidenceToken(card.dataset.spwDiscipline) || 'not specified'}`,
+        `Pressure: ${humanizeEvidenceToken(card.dataset.spwPressure) || 'not specified'}`,
+        `Output: ${humanizeEvidenceToken(card.dataset.spwOutput) || 'not specified'}`,
+        `Timebox: ${humanizeEvidenceToken(card.dataset.spwTimebox) || 'not specified'}`,
+        `Evidence: ${humanizeEvidenceToken(card.dataset.spwEvidence) || 'not specified'}`,
+    ];
+
+    const next = card.dataset.spwNext;
+    if (next) {
+        lines.push(`Next: ${next}`);
+    }
+
+    return lines.join('\n');
+};
+
+const createEvidenceChip = (value, fallback) => createElement('span', {
+    className: 'spw-evidence-protocol__chip',
+    text: humanizeEvidenceToken(value) || fallback,
+});
+
+const initEvidenceProtocolCards = () => {
+    const cards = Array.from(document.querySelectorAll('.frame-card[data-spw-evidence]'))
+        .filter((card) => card instanceof HTMLElement && card.dataset.spwEvidenceHydrated !== 'true');
+
+    if (!cards.length) return null;
+
+    const cleanup = [];
+
+    cards.forEach((card) => {
+        card.dataset.spwEvidenceHydrated = 'true';
+        card.dataset.spwStateContract = card.dataset.spwStateContract || 'evidence-brief';
+
+        const button = createElement('button', {
+            type: 'button',
+            className: 'spw-evidence-brief-btn',
+            text: 'copy evidence brief',
+            'aria-label': `Copy evidence brief for ${readEvidenceCardTitle(card)}`,
+        });
+
+        const row = createElement('div', {
+            className: 'spw-evidence-protocol',
+            'data-spw-slot': 'actions',
+            'data-spw-feature': 'evidence-brief',
+        }, [
+            createEvidenceChip(card.dataset.spwSkill, 'skill'),
+            createEvidenceChip(card.dataset.spwTimebox, 'timebox'),
+            createEvidenceChip(card.dataset.spwOutput, 'output'),
+            button,
+        ]);
+
+        const handleCopy = async () => {
+            const previousState = card.dataset.spwCardState || '';
+            try {
+                await copyText(buildEvidenceBrief(card));
+                card.dataset.spwCardState = 'copied';
+                button.textContent = 'copied';
+                emitSpwAction('@evidence_brief.copy', `copied evidence brief for ${readEvidenceCardTitle(card)}`);
+                window.setTimeout(() => {
+                    if (previousState) {
+                        card.dataset.spwCardState = previousState;
+                    } else {
+                        delete card.dataset.spwCardState;
+                    }
+                    button.textContent = 'copy evidence brief';
+                }, 1400);
+            } catch (_) {
+                card.dataset.spwCardState = 'error';
+                button.textContent = 'copy failed';
+                window.setTimeout(() => {
+                    if (previousState) {
+                        card.dataset.spwCardState = previousState;
+                    } else {
+                        delete card.dataset.spwCardState;
+                    }
+                    button.textContent = 'copy evidence brief';
+                }, 1600);
+            }
+        };
+
+        button.addEventListener('click', handleCopy);
+        card.appendChild(row);
+
+        cleanup.push(() => {
+            button.removeEventListener('click', handleCopy);
+            row.remove();
+            delete card.dataset.spwEvidenceHydrated;
+        });
+    });
+
+    return {
+        destroy: () => cleanup.forEach((fn) => fn()),
+    };
+};
+
 export const initRpgWednesday = () => {
     if (!RPG_ROUTE_RE.test(window.location.pathname)) return null;
     ensureRpgModeWidget();
 
     const controllers = [];
+    const evidenceCards = initEvidenceProtocolCards();
+    if (evidenceCards) controllers.push(evidenceCards);
+
     const characterSection = document.querySelector('[data-rpg-character-lab]');
     if (characterSection instanceof HTMLElement && characterSection.dataset.rpgHydrated !== 'true') {
         const characterLab = initRpgCharacterLab(characterSection);

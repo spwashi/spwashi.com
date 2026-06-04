@@ -1,0 +1,105 @@
+# Professional Skill Development and Worldbuilding
+#
+# Plan-local semantic cache for the higher-level Skill OS thesis.
+# This file records the architecture before route HTML, CSS, or JS changes.
+
+#>professional_skill_development_worldbuilding
+#:plan #!semantic-capacity #!skill-os #!worldbuilding
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@home: ~"../../../index.html"
+@tools: ~"../../../tools/index.html"
+@character_sheet: ~"../../../tools/character-sheet/index.html"
+@rpg_wednesday: ~"../../../play/rpg-wednesday/index.html"
+@town_library: ~"../../../play/rpg-wednesday/library/index.html"
+@cards: ~"../../../cards/index.html"
+
+^"insight"{
+  id = "skill-os-thesis"
+  operation = "cache"
+  fixity = "stable"
+  source = "chat"
+  claim = "The site is converging on a professional development simulator disguised as a worldbuilding platform."
+  evidence = #[
+    @character_sheet,
+    @rpg_wednesday,
+    @town_library,
+    @cards
+  ][reg=set]
+  pattern_consideration = #[
+    "Do not make public copy say Skill OS unless the route also gives a concrete first action.",
+    "Do not flatten roleplay into productivity; preserve fantasy as the simulation medium.",
+    "Treat evidence as small artifacts a person can actually produce."
+  ][reg=set]
+  expansion_prime = "Use character, budget, play, log, artifact, and next quest as the cross-route loop."
+  validation = "rg for character-sheet, budgeting, rpg-wednesday, proof cards, evidence, artifact, and quest copy before route edits."
+  do_not_promote_until = "At least two route families use the loop without losing their local voice."
+}
+
+^"core_loop"{
+  operation = "prime"
+  fixity = "stable"
+  loop = ?< choose_character, define_pressure, fund_sprint, simulate_practice, log_evidence, publish_artifact, choose_next_quest >[reg=stream]
+  public_translation = "convert imagination into operational capacity"
+  route_projection = .{
+    character_sheet = "identity model and role pressure"
+    budgeting = "sprint funding and constraint model"
+    rpg_wednesday = "weekly simulation runtime"
+    town_library = "knowledge, quest, and evidence registry"
+    cards = "artifact, receipt, and portfolio signal"
+  }[reg=facet]
+}
+
+^"card_protocol_candidate"{
+  operation = "prime"
+  fixity = "tending"
+  claim = "Cards can become curriculum objects, quest definitions, and portfolio prompts when their practiced skill, constraint, output, and evidence are inspectable."
+  fields = #[
+    "data-spw-skill",
+    "data-spw-discipline",
+    "data-spw-pressure",
+    "data-spw-output",
+    "data-spw-timebox",
+    "data-spw-evidence",
+    "data-spw-next"
+  ][reg=set]
+  first_candidate_surface = @town_library
+  first_candidate_cards = #[
+    "@east_ramp_works",
+    "@sealed_thing",
+    "@draw_the_strike",
+    "^grounding_rod",
+    "^cask",
+    "^avalanche_evan"
+  ][reg=set]
+  validation = "Before adding fields, confirm each existing card already names its skill/output/evidence in visible copy."
+  landed_surface = @town_library
+  runtime_projection = ~"../../../public/js/modules/rpg-wednesday.js"
+  css_projection = ~"../../../public/css/components/cards.css"
+  do_not_promote_until = "The fields survive one additional Tools or Cards pass without becoming decorative metadata."
+}
+
+^"evidence_engine"{
+  operation = "prime"
+  fixity = "tending"
+  loop = ?< build, fund, play, log, publish, reuse >[reg=stream]
+  concepts = .{
+    log = "records what happened"
+    artifact = "captures output"
+    receipt = "proves work occurred"
+    signal = "turns work into portfolio value"
+    reflection = "converts activity into learning"
+    next_quest = "keeps the loop alive"
+  }[reg=facet]
+  small_outputs = #[
+    "screenshot",
+    "route map",
+    "one-page diagram",
+    "object card",
+    "session note",
+    "prompt packet",
+    "budget goal",
+    "proof card"
+  ][reg=set]
+}

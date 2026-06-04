@@ -73,6 +73,14 @@ product_lines: .{
   audience_primary = shared
   current_state = `Route exists; needs consistent session card shape and collectible policy.`
  }[reg=facet]
+ skill_os = .{
+  pitch = `A professional development simulator disguised as a worldbuilding platform: character sheets, budgeting, RPG Wednesday, Town Library quests, and proof cards form one loop for turning imagination into operational capacity.`
+  feature_shape = `Cross-route loop: choose/build character -> define pressure -> fund sprint -> simulate/practice -> log evidence -> publish/reuse artifact -> choose next quest.`
+  collectible_unit = `A quest card, proof card, session receipt, budgeted sprint, or portfolio artifact that records a practiced skill under constraint.`
+  audience_primary = shared
+  audience_bridge = `engineers read the protocol; artists read the character/world substrate; librarians read the evidence registry and recall path`
+  current_state = `First implementation slice landed in Town Library guide/quest cards: experimental evidence protocol fields plus copyable evidence briefs in the RPG Wednesday module. Next candidate is Tools or Cards so the protocol proves it is not route-local ornament.`
+ }[reg=facet]
 }[reg=facet]
 
 stub_strategy: .{

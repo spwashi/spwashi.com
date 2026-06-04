@@ -1399,6 +1399,16 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
   display: none;
 }
 
+:where(.site-header[data-spw-menu-mode="toggle"], body > header[data-spw-menu-mode="toggle"]) .spw-shell-utility-row .spw-utility-argument {
+  display: none;
+}
+
+@media (min-width: 76rem) {
+  :where(.site-header[data-spw-menu-mode="toggle"], body > header[data-spw-menu-mode="toggle"]) .spw-shell-utility-row:not([data-spw-utility-mode="compact"]) .spw-utility-argument {
+    display: inline;
+  }
+}
+
 .spw-shell-utility-row[data-spw-utility-mode="compact"] {
   gap: 0.18rem;
 }

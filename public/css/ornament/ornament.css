@@ -1214,3 +1214,18 @@
   min-width: 2.4rem;
   height: 0.26rem;
 }
+
+/* RPG Mode is injected after route content and uses ordinary spec pills.
+   Keep those pills readable when global ornament color-mode rules make
+   surface and text tokens converge. */
+:where(body[data-spw-surface="rpg-wednesday"] .rpg-mode-widget .spec-pill) {
+  border-color: color-mix(in srgb, var(--rpg-accent, #5d9367) 34%, rgba(18, 24, 28, 0.16));
+  background: color-mix(in srgb, #f4efe5 88%, var(--rpg-accent, #5d9367) 12%);
+  color: #18211f;
+}
+
+:where(html[data-spw-color-mode="dark"] body[data-spw-surface="rpg-wednesday"] .rpg-mode-widget .spec-pill) {
+  border-color: color-mix(in srgb, var(--rpg-accent, #5d9367) 42%, rgba(244, 239, 229, 0.24));
+  background: color-mix(in srgb, #f4efe5 84%, var(--rpg-accent, #5d9367) 16%);
+  color: #121816;
+}
