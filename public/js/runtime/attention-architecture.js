@@ -9,9 +9,10 @@
  *      markup still renders a stable "return to top" affordance.
  *
  *   2. Resonance probe pinning — when an operator chip receives keyboard
- *      focus or sustained hover, write [data-spw-resonance-probe] to <html>
- *      so same-operator elements across the page hold a soft echo. The CSS
- *      contract lives in wonder.css.
+ *      focus or sustained hover, write [data-spw-resonance-probe] to <html>.
+ *      Explicit [data-spw-resonance-key] wins over operator fallback so local
+ *      components can define tighter resonance without changing visible copy.
+ *      The CSS contract lives in wonder.css.
  *
  * Both features degrade cleanly. Mount is idempotent: the mount function
  * returns a cleanup fn that the site.js lifecycle can call to refresh.
@@ -43,6 +44,8 @@ const OPERATOR_SECTION_SELECTOR = [
   'main > article > [data-spw-svg-host]',
 ].join(', ');
 const PROBE_ATTR = 'data-spw-resonance-probe';
+const RESONANCE_KEY_ATTR = 'data-spw-resonance-key';
+const PROBE_TARGET_SELECTOR = '[data-spw-resonance-key], [data-spw-operator]';
 const HANDLE_STATE_ATTR = 'data-spw-handle-state';
 const HANDLE_LABEL_ATTR = 'data-spw-section-handle-label';
 const HANDLE_OP_ATTR = 'data-spw-section-handle-op';
@@ -140,6 +143,7 @@ export const ATTENTION_ARCHITECTURE_CONTRACT = Object.freeze({
     pinchScaling: PINCH_ACTIVE_ATTR,
     subvocalRehearsal: SUBVOCAL_REHEARSAL_ATTR,
     cauldronResonance: CAULDRON_RESONANCE_ATTR,
+    resonanceKey: RESONANCE_KEY_ATTR,
   }),
   thresholds: Object.freeze({
     autoHandleMinSections: AUTO_HANDLE_MIN_SECTIONS,
@@ -1065,14 +1069,22 @@ function initResonanceProbe(root) {
   let hoverTimer = 0;
   const HOVER_DELAY = 260;
 
+  function readResonanceKey(target) {
+    return (
+      target?.getAttribute?.(RESONANCE_KEY_ATTR)
+      || target?.getAttribute?.('data-spw-operator')
+      || ''
+    );
+  }
+
   function apply() {
-    const op = probeFocus || probeHover;
-    const nextLogKey = op || 'cleared';
+    const key = probeFocus || probeHover;
+    const nextLogKey = key || 'cleared';
     const shouldLog = nextLogKey !== lastProbeLogKey;
     lastProbeLogKey = nextLogKey;
-    if (op) {
-      html.setAttribute(PROBE_ATTR, op);
-      if (shouldLog) logger.debug('resonance probe set', { operator: op }, SPW_LOG_RELATIONSHIPS.GESTURE);
+    if (key) {
+      html.setAttribute(PROBE_ATTR, key);
+      if (shouldLog) logger.debug('resonance probe set', { resonanceKey: key }, SPW_LOG_RELATIONSHIPS.GESTURE);
     } else {
       html.removeAttribute(PROBE_ATTR);
       if (shouldLog) logger.debug('resonance probe cleared', {}, SPW_LOG_RELATIONSHIPS.GESTURE);
@@ -1080,14 +1092,14 @@ function initResonanceProbe(root) {
   }
 
   function onFocusIn(event) {
-    const target = event.target.closest?.('[data-spw-operator]');
+    const target = event.target.closest?.(PROBE_TARGET_SELECTOR);
     if (!target) return;
-    probeFocus = target.getAttribute('data-spw-operator');
+    probeFocus = readResonanceKey(target);
     apply();
   }
 
   function onFocusOut(event) {
-    const next = event.relatedTarget?.closest?.('[data-spw-operator]');
+    const next = event.relatedTarget?.closest?.(PROBE_TARGET_SELECTOR);
     if (!next) {
       probeFocus = null;
       apply();
@@ -1095,18 +1107,18 @@ function initResonanceProbe(root) {
   }
 
   function onMouseEnter(event) {
-    const target = event.target.closest?.('[data-spw-operator]');
+    const target = event.target.closest?.(PROBE_TARGET_SELECTOR);
     if (!target) return;
     if (target.contains(event.relatedTarget)) return;
     clearTimeout(hoverTimer);
     hoverTimer = window.setTimeout(() => {
-      probeHover = target.getAttribute('data-spw-operator');
+      probeHover = readResonanceKey(target);
       apply();
     }, HOVER_DELAY);
   }
 
   function onMouseLeave(event) {
-    const target = event.target.closest?.('[data-spw-operator]');
+    const target = event.target.closest?.(PROBE_TARGET_SELECTOR);
     if (!target) return;
     if (target.contains(event.relatedTarget)) return;
     clearTimeout(hoverTimer);

@@ -331,7 +331,7 @@ function buildMenuContent(target, semantic, frame) {
     handles.className = 'spw-region-menu__handles';
     [
       ['salience', 'Salience', '--spw-salience'],
-      ['charge', 'Charge', '--charge'],
+      ['attention', 'Attention', '--charge'],
     ].forEach(([id, label, variable]) => {
       const row = document.createElement('div');
       row.className = 'spw-region-menu__handle-row';
@@ -383,24 +383,53 @@ function buildMenuContent(target, semantic, frame) {
     fragment.appendChild(list);
   }
 
-  const actions = [
-    ['focus', 'Focus matches', () => focusMatches(target, semantic)],
-    ['next', 'Next variant', () => moveMatch(1)],
-    ['prev', 'Previous variant', () => moveMatch(-1)],
-    ['capture', 'Capture spell', () => captureSpell(target, semantic)],
-    ['charge', 'Charge region', () => toggleRegionCharge(target)],
-    ['copy', 'Copy Spw seed', () => copySeed(target, semantic, frame)],
-    ['clear', 'Clear focus', () => clearRegionFocus()],
+  const actionGroups = [
+    [
+      'inspect',
+      [
+        ['focus', 'Show matches', () => focusMatches(target, semantic)],
+        ['next', 'Next variant', () => moveMatch(1)],
+        ['prev', 'Previous variant', () => moveMatch(-1)],
+      ],
+    ],
+    [
+      'collect',
+      [
+        ['capture', 'Save spell', () => captureSpell(target, semantic)],
+        ['copy', 'Copy seed', () => copySeed(target, semantic, frame)],
+      ],
+    ],
+    [
+      'mark',
+      [
+        ['mark', 'Mark region', () => toggleRegionMark(target)],
+      ],
+    ],
+    [
+      'reset',
+      [
+        ['clear', 'Clear focus', () => clearRegionFocus()],
+      ],
+    ],
   ];
 
-  actions.forEach(([action, label, handler]) => {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.setAttribute('role', 'menuitem');
-    button.dataset.spwRegionAction = action;
-    button.textContent = label;
-    button.addEventListener('click', handler);
-    fragment.appendChild(button);
+  actionGroups.forEach(([lane, actions]) => {
+    const group = document.createElement('div');
+    group.className = 'spw-region-menu__action-group';
+    group.dataset.spwInteractionLane = lane;
+
+    actions.forEach(([action, label, handler]) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.setAttribute('role', 'menuitem');
+      button.dataset.spwRegionAction = action;
+      button.dataset.spwInteractionLane = lane;
+      button.textContent = label;
+      button.addEventListener('click', handler);
+      group.appendChild(button);
+    });
+
+    fragment.appendChild(group);
   });
 
   return fragment;
@@ -584,12 +613,12 @@ function moveMatch(direction) {
   next.focus?.({ preventScroll: true });
 }
 
-function toggleRegionCharge(target) {
+function toggleRegionMark(target) {
   const frame = target.closest('.site-frame, [data-spw-kind], [data-spw-role]');
   if (!(frame instanceof HTMLElement)) return;
-  const next = frame.dataset.spwRegionCharge === 'active' ? null : 'active';
-  writeDatasetValue(frame, 'spwRegionCharge', next);
-  bus.emit?.('region-menu:charged', {
+  const next = frame.dataset.spwRegionMark === 'active' ? null : 'active';
+  writeDatasetValue(frame, 'spwRegionMark', next);
+  bus.emit?.('region-menu:marked', {
     frame,
     active: next === 'active',
   });
@@ -603,7 +632,7 @@ async function copySeed(target, semantic, frame) {
     writeDatasetValue(target, 'spwCopied', 'true');
     setTimeout(() => writeDatasetValue(target, 'spwCopied', null), 900);
   } catch {
-    window.prompt?.('Copy Spw seed', seed);
+    window.prompt?.('Copy seed', seed);
   }
 }
 

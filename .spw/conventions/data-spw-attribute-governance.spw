@@ -1,0 +1,38 @@
+# Data Spw Attribute Governance
+#
+# Operation: contract.
+# Purpose: keep authored semantic attributes distinct from runtime inference,
+# transient attention, and persistent memory.
+
+#>data_spw_attribute_governance
+#:conventions #!attributes #!interaction-state #!runtime
+
+claim: "data-spw-* attributes are an authoring and runtime language. Authored values must remain legible, inferred values must identify themselves, and interaction state must name whether it is transient, selected, marked, grounded, or collected."
+
+states: .{
+  charge = `Transient passive attention. Hover, focus, or nearby preview may arm, preview, charge, and settle it. Charge does not mean saved, chosen, grounded, or collected.`
+  prime = `Current working selected meaning. Prime belongs to the module or region doing the current work and should be cleared or replaced when the working focus changes.`
+  mark = `Deliberate local region emphasis. Mark is reviewable UI state and should use data-spw-region-mark for region-menu marking.`
+  ground = `Deliberate persistent memory. Grounding means the user or runtime intentionally retained the concept in the page/path registry.`
+  collected = `Deliberate retained artifact or sigil. Collection implies memory beyond the hover/focus moment.`
+  visited = `Encountered through persistent grounding or restoration, not a hover side effect.`
+}[reg=facet]
+
+inference: .{
+  suffix = `Runtime-inferred semantic values use a Resolved dataset key, projected in HTML as data-spw-*-resolved.`
+  base_rule = `Do not overwrite an authored base data-spw-* attribute with an inferred value. A runtime may backfill the base key only when it is absent and existing CSS or JS still reads that base key.`
+  preferred_key = `When resonance or matching needs a stable handle, prefer an explicit data-spw-resonance-key over scraping copy.`
+}[reg=facet]
+
+region_menu: .{
+  lanes = #[`inspect`, `collect`, `mark`, `reset`][reg=set]
+  labels = #[`Show matches`, `Save spell`, `Copy seed`, `Mark region`][reg=set]
+  state = `Explicit region marking writes data-spw-region-mark. The word charge is reserved for passive attention physics.`
+}[reg=facet]
+
+validation: #[
+  `Hover/focus writes only transient charge state and must settle it on leave, blur, cancel, or reset.`,
+  `Click, keyboard, saved spell, and explicit collection paths own persistent ground/collect state.`,
+  `Component semantic inference writes data-spw-*-resolved and preserves authored base attributes.`,
+  `Local region state should be readable through lane attributes before global ornament effects are added.`
+][reg=set]

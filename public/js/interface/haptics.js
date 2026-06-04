@@ -7,12 +7,17 @@
  * - Persist both grounded registry and semantic coupling metadata.
  * - Support future HTML-first semantics through explicit data attributes.
  *
- * Grounding model
- * - grounded     : settled / encountered / baseline-adjacent
- * - ungrounded   : available for inquiry
- * - charged      : passive hover/focus energy
+ * Interaction model
+ * - charge       : transient passive attention from hover/focus.
+ * - prime        : current working selected meaning, owned by focused modules.
+ * - grounded     : deliberate persistent memory.
+ * - collected    : deliberate retained artifact or sigil.
  *
  * Canonical bus events emitted
+ * - charge:armed
+ * - charge:preview
+ * - charge:charged
+ * - charge:settled
  * - spell:probe
  * - spell:grounded
  * - spell:ungrounded
@@ -247,7 +252,7 @@ function toggleGroundedState(el, overrides = {}) {
 export function groundElement(el, overrides = {}) {
   const detail = buildSemanticDetail(el, overrides);
 
-  setPassiveCharge(el, false, detail.source || 'ground');
+  settleCharge(el, detail.source || 'ground');
 
   setGroundedFlags(el, true);
   el.dataset.spwSuccession = 'latched';
@@ -319,38 +324,92 @@ function clearGroundedState(el) {
    Passive charge
    ========================================================================== */
 
-function setPassiveCharge(el, active, source = 'pointer') {
+function emitChargePhase(el, phase, source = 'pointer') {
+  const detail = buildSemanticDetail(el, { source, passive: true });
+
+  bus.emit(
+    `charge:${phase}`,
+    detail,
+    { target: el, element: el }
+  );
+
+  return detail;
+}
+
+export function armCharge(el, source = 'pointer') {
+  if (!el || isGrounded(el)) return;
+  if (el.dataset.spwPassiveCharge === 'true') return;
+
+  el.dataset.spwChargePending = 'true';
+  el.dataset.spwCharge = 'arming';
+  el.dataset.spwChargeSource = source;
+
+  emitChargePhase(el, 'armed', source);
+}
+
+export function previewCharge(el, source = 'pointer') {
+  if (!el || isGrounded(el)) return;
+  if (el.dataset.spwPassiveCharge === 'true' && el.dataset.spwCharge === 'preview') return;
+
+  delete el.dataset.spwChargePending;
+  el.dataset.spwPassiveCharge = 'true';
+  el.dataset.spwCharge = 'preview';
+  el.dataset.spwChargeSource = source;
+
+  const detail = emitChargePhase(el, 'preview', source);
+
+  bus.emit(
+    'brace:charged',
+    detail,
+    { target: el, element: el }
+  );
+
+  bus.emit(
+    'spell:probe',
+    detail,
+    { target: el, element: el }
+  );
+}
+
+export function chargeElement(el, source = 'manual') {
   if (!el || isGrounded(el)) return;
 
-  if (active) {
-    if (el.dataset.spwPassiveCharge === 'true') return;
-    el.dataset.spwPassiveCharge = 'true';
-    el.dataset.spwCharge = 'preview';
-    el.dataset.spwChargeSource = source;
+  delete el.dataset.spwChargePending;
+  el.dataset.spwPassiveCharge = 'true';
+  el.dataset.spwCharge = 'charged';
+  el.dataset.spwChargeSource = source;
 
-    const detail = buildSemanticDetail(el, { source, passive: true });
+  const detail = emitChargePhase(el, 'charged', source);
 
-    bus.emit(
-      'brace:charged',
-      detail,
-      { target: el, element: el }
-    );
+  bus.emit(
+    'brace:charged',
+    detail,
+    { target: el, element: el }
+  );
+}
 
-    bus.emit(
-      'spell:probe',
-      detail,
-      { target: el, element: el }
-    );
+export function settleCharge(el, source = 'pointer') {
+  if (!el) return;
 
-    return;
-  }
+  const wasActiveCharge =
+    el.dataset.spwPassiveCharge === 'true'
+    || el.dataset.spwCharge === 'preview'
+    || el.dataset.spwCharge === 'charged';
+  const hadCharge =
+    wasActiveCharge
+    || Boolean(el.dataset.spwCharge)
+    || el.dataset.spwChargePending === 'true';
 
-  if (el.dataset.spwPassiveCharge !== 'true') return;
   delete el.dataset.spwPassiveCharge;
   delete el.dataset.spwCharge;
   delete el.dataset.spwChargeSource;
+  delete el.dataset.spwChargePending;
 
-  const detail = buildSemanticDetail(el, { source, passive: true });
+  if (!hadCharge) return;
+
+  const detail = emitChargePhase(el, 'settled', source);
+
+  if (!wasActiveCharge) return;
 
   bus.emit(
     'brace:discharged',
@@ -359,17 +418,25 @@ function setPassiveCharge(el, active, source = 'pointer') {
   );
 }
 
+function setPassiveCharge(el, active, source = 'pointer') {
+  if (!el || isGrounded(el)) return;
+
+  if (active) {
+    previewCharge(el, source);
+    return;
+  }
+
+  settleCharge(el, source);
+}
+
 function schedulePassiveCharge(el, source = 'pointer') {
   if (!el || isGrounded(el) || el.dataset.spwPassiveCharge === 'true') return;
   cancelPassiveCharge(el);
-  el.dataset.spwChargePending = 'true';
-  el.dataset.spwCharge = 'arming';
-  el.dataset.spwChargeSource = source;
+  armCharge(el, source);
 
   const timer = window.setTimeout(() => {
     passiveChargeTimers.delete(el);
-    delete el.dataset.spwChargePending;
-    setPassiveCharge(el, true, source);
+    previewCharge(el, source);
   }, PASSIVE_CHARGE_DELAY_MS);
 
   passiveChargeTimers.set(el, timer);
@@ -380,10 +447,10 @@ function cancelPassiveCharge(el) {
   if (timer) window.clearTimeout(timer);
   passiveChargeTimers.delete(el);
   if (el) {
-    delete el.dataset.spwChargePending;
     if (el.dataset.spwPassiveCharge !== 'true') {
-      delete el.dataset.spwCharge;
-      delete el.dataset.spwChargeSource;
+      settleCharge(el, 'cancel');
+    } else {
+      delete el.dataset.spwChargePending;
     }
   }
 }
@@ -539,6 +606,10 @@ export function resetHaptics() {
   localStorage.removeItem(STORAGE_KEY);
   localStorage.removeItem(COUPLING_KEY());
   localStorage.removeItem(GLOBAL_COUPLING_KEY);
+
+  document
+    .querySelectorAll('[data-spw-passive-charge], [data-spw-charge], [data-spw-charge-pending]')
+    .forEach((el) => settleCharge(el, 'reset'));
 
   document.querySelectorAll('[data-spw-grounded="true"]').forEach((el) => {
     clearGroundedState(el);

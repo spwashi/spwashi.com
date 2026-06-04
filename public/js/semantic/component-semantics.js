@@ -14,6 +14,8 @@
  * - No global mutation/resize observers here.
  * - Root-scoped operation only.
  * - Metadata should help other systems decide what to do, not force visible UI.
+ * - Authored data-spw-* values are source material; inferred values are written
+ *   to data-spw-*-resolved and only backfilled into base attributes when absent.
  *
  * Public API
  * - initSpwComponentSemantics(options)
@@ -564,11 +566,17 @@ function inferStance(el, importance, interactivity) {
 }
 
 function setIfMissing(el, key, value) {
+  writeDatasetValueIfMissing(el, toResolvedDatasetKey(key), value);
   writeDatasetValueIfMissing(el, key, value);
 }
 
 function setOrReplace(el, key, value) {
-  writeDatasetValue(el, key, value);
+  writeDatasetValue(el, toResolvedDatasetKey(key), value);
+  writeDatasetValueIfMissing(el, key, value);
+}
+
+function toResolvedDatasetKey(key = '') {
+  return key.endsWith('Resolved') ? key : `${key}Resolved`;
 }
 
 function inferFunctionalContract(el, snapshotBase = {}) {
