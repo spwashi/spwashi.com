@@ -1,0 +1,29 @@
+#>semantic_insight_cache
+#:cache #!semantics #!handoff
+#:layer #!pragmatics
+
+^"insight"{
+  id = "site-voice-flow-jazz-and-process-states"
+  operation = "cache"
+  fixity = "tending"
+  source = "chat"
+  claim = "Public site copy should read like a sequence with motifs and transitions rather than a list of claims, and it should explicitly name cauldron, spell, midprocess, and screenshot states when those states help the reader understand how the work moves."
+  evidence = #[
+    `index.html`
+    `about/index.html`
+    `services/index.html`
+    `contact/index.html`
+    `now/index.html`
+    `membership/index.html`
+    `coordination/index.html`
+    `cards/index.html`
+  ][reg=set]
+  pattern_consideration = #[
+    `pages that use long prose lists to describe offerings or process`,
+    `routes that can benefit from a visible "state in motion" explanation`,
+    `screenshot-native surfaces that should foreground midprocess value`
+  ][reg=set]
+  expansion_prime = "If this direction keeps proving useful, add a shared copy motif or route-note convention for process-state phrasing and screenshot prompts."
+  validation = "manual reread, diff check, and route-by-route tone pass."
+  do_not_promote_until = "This pattern has been reused on multiple routes without making the voice feel repetitive or over-literal."
+}

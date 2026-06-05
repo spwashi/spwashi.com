@@ -1,0 +1,27 @@
+#>semantic_insight_cache
+#:model_guided_refinement
+
+^"operator_curriculum_physics_alignment"{
+  operation: "align"
+  fixity: "tending"
+  public_goal: "represent every public Spw operator while keeping the atlas aligned with workbench physics and a latent learner path"
+  source_surfaces: [
+    "public/js/kernel/shared.js",
+    ".spw/_workbench/packages/spw-cli/src/ls/constants.ts",
+    ".spw/_workbench/packages/spw-lsp/src/server-index.ts",
+    "topics/software/spw/index.html",
+    "topics/software/spw/operators/*/index.html"
+  ]
+  claim: "The public operator atlas should behave as a curriculum, not only a glossary. Resonance, ground, relation, possibility, inquiry, perspective, materialization, composition, constraint, measure, substrate, surface, concept, scene, mode, and direction are partial moves in a compositional physics."
+  composition_calculus: {
+    input: "the material currently held by a page, prompt, screenshot, note, or spell"
+    operator: "the bounded move that changes attention or structure"
+    residue: "the obligation, boundary term, or context that survives the move"
+    projection: "the visible next state after the move"
+  }
+  editor_guidance: [
+    "When adding an operator page, name the public token, runtime/workbench physics, interaction contract, and learner role.",
+    "Prefer internal anchors such as current anchor, return path, route bridge, and practice bed over explicit changelog language.",
+    "Treat screenshots and prompts as scenes that can carry partial state, not just illustrations after the fact."
+  ]
+}
