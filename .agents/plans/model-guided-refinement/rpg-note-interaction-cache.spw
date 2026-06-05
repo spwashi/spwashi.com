@@ -1,0 +1,37 @@
+#>semantic_insight_cache
+#:model_guided_refinement
+
+^"rpg_note_interaction_integration"{
+  operation: "contract"
+  fixity: "tending"
+  public_goal: "make RPG Wednesday notes act like an interaction loop that carries private play memory toward public route memory without flattening the table"
+  source_surfaces: [
+    "play/rpg-wednesday/index.html",
+    "play/rpg-wednesday/cast/index.html",
+    "play/rpg-wednesday/world/index.html",
+    "play/rpg-wednesday/sessions/index.html",
+    "play/rpg-wednesday/arcs/index.html",
+    "public/js/modules/rpg-wednesday.js",
+    "public/css/systems/surfaces/rpg.css"
+  ]
+  claim: "The local gameplay kit should distinguish scratch, promotion, and publication. Scratch notes stay private. Promotion buttons move useful residue into character beat, canon candidate, or recap seed lanes. Public pages receive only memory that recurs, changes play, or helps another learner re-enter the campaign."
+  interaction_rule: {
+    scratch: "private, fast, unjudged table residue"
+    character_beat: "a change in desire, refusal, obligation, self-image, trust, timing, or repeated behavior"
+    canon_candidate: "a stable mechanism, constraint, place rule, tool relation, or social consequence that may belong to world memory"
+    recap_seed: "a compact return path for the next reader, player, or collaborator"
+    publication_test: "repeat, consequence, evidence, and route fit"
+  }
+  layout_rule: {
+    notes_panel: "wide enough to hold promotion actions and sticky on large screens"
+    brief_panel: "adjacent to note lanes so learners see what becomes shareable"
+    asset_atlas: "full-width reference bed rather than a rival to the note-to-brief loop"
+    narrow_screen: "collapse all panels to one column and remove sticky note behavior"
+  }
+  editor_guidance: [
+    "Do not treat every private scratch note as lore.",
+    "When adding new RPG pages, name the route-specific promotion test near the local kit.",
+    "When adding runtime controls, prefer moving notes between existing lanes over inventing another storage bucket.",
+    "Generated briefs may summarize character beats, canon candidates, and recap seeds, but should not expose private scratch notes by default."
+  ]
+}

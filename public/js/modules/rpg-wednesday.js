@@ -560,6 +560,24 @@ export const initRpgWednesday = () => {
         state.seeds = seedsInput.value;
     };
 
+    const appendScratchToLane = (targetInput, label) => {
+        const scratch = notesInput.value.trim();
+        if (!scratch) {
+            setTransientStatus('scratch notes are empty');
+            notesInput.focus();
+            return;
+        }
+
+        targetInput.value = [targetInput.value.trim(), scratch]
+            .filter(Boolean)
+            .join('\n\n');
+        notesInput.value = '';
+        syncTextState();
+        save(`promoted scratch notes to ${label}`);
+        setTransientStatus(`moved scratch notes to ${label}`);
+        targetInput.focus();
+    };
+
     const assetAtlas = createAssetAtlasController({
         getState: () => state,
         save
@@ -851,6 +869,29 @@ export const initRpgWednesday = () => {
             className: 'frame-note',
             text: 'Scratch notes stay private. Character beats and canon candidates are the lanes most likely to move into cast, world, or session memory.'
         }),
+        createElement('div', {
+            className: 'rpg-gameplay-actions rpg-gameplay-actions--promote',
+            'aria-label': 'Promote scratch notes'
+        }, [
+            createElement('button', {
+                className: 'operator-chip',
+                type: 'button',
+                text: '~ to beat',
+                onclick: () => appendScratchToLane(characterBeatInput, 'character beat')
+            }),
+            createElement('button', {
+                className: 'operator-chip',
+                type: 'button',
+                text: '^ to canon',
+                onclick: () => appendScratchToLane(canonCandidatesInput, 'canon candidates')
+            }),
+            createElement('button', {
+                className: 'operator-chip',
+                type: 'button',
+                text: '@ to recap',
+                onclick: () => appendScratchToLane(seedsInput, 'recap seeds')
+            })
+        ]),
         createElement('div', { className: 'rpg-gameplay-notes-stack' }, [
             notesField,
             characterBeatField,
