@@ -73,20 +73,22 @@
 }
 
 .spw-state-inspector__launch {
-  min-block-size: 2.35rem;
-  padding: 0.42rem 0.72rem;
+  min-block-size: 2.2rem;
+  padding: 0.38rem 0.68rem;
   border: 1px solid color-mix(in srgb, var(--state-inspector-accent) 24%, transparent);
-  border-radius: 999px;
+  border-radius: var(--shape-control, 0.78rem);
   background:
     radial-gradient(circle at 12% 20%, color-mix(in srgb, var(--state-inspector-accent) 18%, transparent), transparent 32%),
     color-mix(in srgb, var(--surface-strong, #fff) 94%, var(--state-inspector-accent) 6%);
-  box-shadow: var(--floating-shadow, 0 8px 32px rgba(0, 0, 0, 0.12));
+  box-shadow:
+    0 0.7rem 1.8rem color-mix(in srgb, var(--shadow-color, #111111) 18%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 16%, transparent);
   color: color-mix(in srgb, var(--ink, #111) 78%, var(--state-inspector-accent) 22%);
   cursor: pointer;
   font: inherit;
-  font-size: 0.76rem;
+  font-size: 0.74rem;
   font-weight: 800;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
   touch-action: none; /* helps with drag vs scroll */
   user-select: none;
 }
@@ -116,7 +118,7 @@
   overflow: auto;
   padding: 0.85rem;
   border: 1px solid color-mix(in srgb, var(--state-inspector-accent) 22%, var(--line, rgba(14, 18, 20, 0.14)) 78%);
-  border-radius: var(--shape-floating, 16px);
+  border-radius: var(--shape-control, 0.78rem);
   background: color-mix(in srgb, var(--surface-strong, #fff) 94%, var(--state-inspector-accent) 6%);
   box-shadow: var(--floating-shadow, 0 8px 32px rgba(0, 0, 0, 0.12));
 }

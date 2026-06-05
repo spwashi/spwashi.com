@@ -551,52 +551,52 @@ function ensureUtilityRow(header) {
     template = document.createElement('template');
     template.id = 'spw-shell-utility-template';
     template.innerHTML = `
-      <div class="spw-utility-cluster" data-spw-utility-cluster="color-mode" role="group" aria-label="Color mode" data-spw-locality="medium" data-spw-component-locality="shell-color" data-spw-physics-reason="lighting-tuner">
-        <button type="button" class="spw-shell-utility-button" data-spw-shell-action="color-light" data-site-setting-set="colorMode:light" aria-label="Use light mode" title="Use light mode">
+      <div class="spw-utility-cluster" data-spw-utility-cluster="color-mode" data-spw-utility-size="pair" role="group" aria-label="Color mode" data-spw-locality="medium" data-spw-component-locality="shell-color" data-spw-physics-reason="lighting-tuner">
+        <button type="button" class="spw-shell-utility-button" data-spw-shell-action="color-light" data-spw-utility-size="icon" data-site-setting-set="colorMode:light" aria-label="Use light mode" title="Use light mode">
           <span class="spw-utility-sigil" aria-hidden="true">☀</span>
           <span class="spw-utility-argument"></span>
         </button>
-        <button type="button" class="spw-shell-utility-button" data-spw-shell-action="color-dark" data-site-setting-set="colorMode:dark" aria-label="Use dark mode" title="Use dark mode">
+        <button type="button" class="spw-shell-utility-button" data-spw-shell-action="color-dark" data-spw-utility-size="icon" data-site-setting-set="colorMode:dark" aria-label="Use dark mode" title="Use dark mode">
           <span class="spw-utility-sigil" aria-hidden="true">☾</span>
           <span class="spw-utility-argument"></span>
         </button>
       </div>
-      <div class="spw-utility-cluster" data-spw-utility-cluster="material-contrast" role="group" aria-label="Material contrast" data-spw-locality="medium" data-spw-component-locality="settings-material" data-spw-physics-reason="clear-contrast-safeguard" data-spw-module-evaluates="semantic-density">
-        <button type="button" class="spw-shell-utility-button" data-spw-shell-action="clear-matte" aria-label="Use matte for clear contrast reading" title="Use matte surfaces for clear high-contrast text">
+      <div class="spw-utility-cluster" data-spw-utility-cluster="material-contrast" data-spw-utility-size="single" role="group" aria-label="Material contrast" data-spw-locality="medium" data-spw-component-locality="settings-material" data-spw-physics-reason="clear-contrast-safeguard" data-spw-module-evaluates="semantic-density">
+        <button type="button" class="spw-shell-utility-button" data-spw-shell-action="clear-matte" data-spw-utility-size="icon" aria-label="Use matte for clear contrast reading" title="Use matte surfaces for clear high-contrast text">
           <span class="spw-utility-sigil" aria-hidden="true">■</span>
           <span class="spw-utility-argument"></span>
         </button>
       </div>
-      <div class="spw-utility-cluster" data-spw-utility-cluster="typography-scale" role="group" aria-label="Typography scale" data-spw-locality="medium" data-spw-component-locality="text-density" data-spw-physics-reason="readability-tuner">
-        <button type="button" class="spw-shell-utility-button" data-spw-shell-action="font-down" aria-label="Decrease font size" title="Decrease font size">
+      <div class="spw-utility-cluster" data-spw-utility-cluster="typography-scale" data-spw-utility-size="pair" role="group" aria-label="Typography scale" data-spw-locality="medium" data-spw-component-locality="text-density" data-spw-physics-reason="readability-tuner">
+        <button type="button" class="spw-shell-utility-button" data-spw-shell-action="font-down" data-spw-utility-size="text" aria-label="Decrease font size" title="Decrease font size">
           <span class="spw-utility-sigil" aria-hidden="true">−A</span>
           <span class="spw-utility-argument"></span>
         </button>
-        <button type="button" class="spw-shell-utility-button" data-spw-shell-action="font-up" aria-label="Increase font size" title="Increase font size">
+        <button type="button" class="spw-shell-utility-button" data-spw-shell-action="font-up" data-spw-utility-size="text" aria-label="Increase font size" title="Increase font size">
           <span class="spw-utility-sigil" aria-hidden="true">+A</span>
           <span class="spw-utility-argument"></span>
         </button>
       </div>
-      <div class="spw-utility-cluster" data-spw-utility-cluster="cognitive-path" role="group" aria-label="Cognitive path">
-        <button type="button" class="spw-shell-utility-button" data-spw-shell-action="path-toggle" aria-label="Toggle cognitive path" title="Toggle cognitive path">
+      <div class="spw-utility-cluster" data-spw-utility-cluster="cognitive-path" data-spw-utility-size="single" role="group" aria-label="Cognitive path">
+        <button type="button" class="spw-shell-utility-button" data-spw-shell-action="path-toggle" data-spw-utility-size="icon" aria-label="Toggle cognitive path" title="Toggle cognitive path">
           <span class="spw-utility-sigil" aria-hidden="true">⟐</span>
           <span class="spw-utility-argument"></span>
         </button>
       </div>
-      <div class="spw-utility-cluster" data-spw-utility-cluster="appearance" role="group" aria-label="Appearance settings">
-        <a class="spw-shell-utility-button" data-spw-shell-action="settings" href="/settings/#appearance-settings" aria-label="Open appearance and typography settings" title="Open appearance and typography settings">
+      <div class="spw-utility-cluster" data-spw-utility-cluster="appearance" data-spw-utility-size="single" role="group" aria-label="Appearance settings">
+        <a class="spw-shell-utility-button" data-spw-shell-action="settings" data-spw-utility-size="text" href="/settings/#appearance-settings" aria-label="Open appearance and typography settings" title="Open appearance and typography settings">
           <span class="spw-utility-sigil" aria-hidden="true">Aa</span>
           <span class="spw-utility-argument"></span>
         </a>
       </div>
-      <div class="spw-utility-cluster" data-spw-utility-cluster="cauldron-visibility" role="group" aria-label="Cauldron and spell candidate visibility" data-spw-locality="medium" data-spw-component-locality="cauldron-visual" data-spw-physics-reason="feedback-tuner" data-spw-module-evaluates="cauldron spell visibility">
-        <button type="button" class="spw-shell-utility-button" data-spw-shell-action="toggle-cauldron-visibility" aria-label="Cycle cauldron and spell candidate visual mode (subtle / balanced / prominent)" title="Cycle visibility mode for cauldron ingredients and primed spell candidates">
+      <div class="spw-utility-cluster" data-spw-utility-cluster="cauldron-visibility" data-spw-utility-size="single" role="group" aria-label="Cauldron and spell candidate visibility" data-spw-locality="medium" data-spw-component-locality="cauldron-visual" data-spw-physics-reason="feedback-tuner" data-spw-module-evaluates="cauldron spell visibility">
+        <button type="button" class="spw-shell-utility-button" data-spw-shell-action="toggle-cauldron-visibility" data-spw-utility-size="icon" aria-label="Cycle cauldron and spell candidate visual mode (subtle / balanced / prominent)" title="Cycle visibility mode for cauldron ingredients and primed spell candidates">
           <span class="spw-utility-sigil" aria-hidden="true">◐</span>
           <span class="spw-utility-argument"></span>
         </button>
       </div>
-      <div class="spw-utility-cluster" data-spw-utility-cluster="state-observability" role="group" aria-label="State satchel and observability" data-spw-locality="high" data-spw-component-locality="pattern-lock-satchel" data-spw-physics-reason="memory-gamified" data-spw-module-evaluates="semantic-density">
-        <button type="button" class="spw-shell-utility-button" data-spw-shell-action="open-satchel" aria-label="Open state satchel" title="Open state satchel for saving and inspecting current appearance/runtime state">
+      <div class="spw-utility-cluster" data-spw-utility-cluster="state-observability" data-spw-utility-size="single" role="group" aria-label="State satchel and observability" data-spw-locality="high" data-spw-component-locality="pattern-lock-satchel" data-spw-physics-reason="memory-gamified" data-spw-module-evaluates="semantic-density">
+        <button type="button" class="spw-shell-utility-button" data-spw-shell-action="open-satchel" data-spw-utility-size="icon" aria-label="Open state satchel" title="Open state satchel for saving and inspecting current appearance/runtime state">
           <span class="spw-utility-sigil" aria-hidden="true">⧉</span>
           <span class="spw-utility-argument"></span>
         </button>

@@ -10,6 +10,7 @@
 :where([data-spw-floating-chrome="true"]) {
   --spw-floating-tier-z: var(--z-floating, var(--layer-floating, 100));
   --spw-floating-safe-inset: max(1rem, env(safe-area-inset-bottom));
+  --spw-floating-menu-clearance: 0px;
   box-sizing: border-box;
 }
 
@@ -56,7 +57,7 @@
 
 :where([data-spw-floating-chrome="true"][data-spw-chrome-role="state-inspector"]) {
   position: fixed;
-  inset: auto max(0.8rem, env(safe-area-inset-right)) max(0.8rem, env(safe-area-inset-bottom)) auto;
+  inset: auto max(0.8rem, env(safe-area-inset-right)) calc(max(0.8rem, env(safe-area-inset-bottom)) + var(--spw-floating-menu-clearance, 0px)) auto;
   display: grid;
   justify-items: end;
   gap: 0.45rem;
@@ -100,7 +101,12 @@
 @media (max-width: 720px) {
   :where([data-spw-floating-chrome="true"][data-spw-chrome-role="state-inspector"]) {
     /* Reserve the mobile section-handle rail so floating tools do not stack on one tap target. */
-    inset-block-end: calc(max(0.8rem, env(safe-area-inset-bottom)) + var(--touch-target-compact, 2.15rem) + 1rem);
+    inset-block-end: calc(max(0.8rem, env(safe-area-inset-bottom)) + var(--touch-target-compact, 2.15rem) + 1rem + var(--spw-floating-menu-clearance, 0px));
+  }
+
+  :where(html:has(.site-header[data-spw-menu-mode="toggle"][data-spw-menu="open"]),
+         html:has(body > header[data-spw-menu-mode="toggle"][data-spw-menu="open"])) {
+    --spw-floating-menu-clearance: 4.25rem;
   }
 
   :where([data-spw-floating-chrome="true"][data-spw-chrome-role$="toast-stack"]) {

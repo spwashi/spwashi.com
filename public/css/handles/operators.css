@@ -43,12 +43,13 @@ header,
   --spw-console-token-line: rgba(126, 210, 204, 0.42);
   --spw-console-offset-block: max(0.9rem, env(safe-area-inset-bottom));
   --spw-console-offset-inline: max(0.9rem, env(safe-area-inset-left));
+  --spw-floating-menu-clearance: 0px;
   --handle-ink: var(--spw-console-ink);
   --handle-bg: var(--spw-console-token-bg);
   --handle-line: var(--spw-console-token-line);
   /* Resonance with state satchel: use floating chrome vars for shared ephemeral ergonomics (pad, gap, material), fixed inset consistent with satchel bottom-right, grid for layout predictability. Improves visible console chrome + overall ephemeral arch. */
   position: fixed;
-  inset: auto auto var(--spw-console-offset-block) var(--spw-console-offset-inline);
+  inset: auto auto calc(var(--spw-console-offset-block) + var(--spw-floating-menu-clearance, 0px)) var(--spw-console-offset-inline);
   display: grid;
   inline-size: min(31rem, calc(100vw - 1.8rem));
   max-block-size: min(29rem, calc(100dvh - 4.25rem));
@@ -74,7 +75,7 @@ header,
 
 .spw-console.spw-console {
   position: fixed;
-  inset: auto auto var(--spw-console-offset-block) var(--spw-console-offset-inline);
+  inset: auto auto calc(var(--spw-console-offset-block) + var(--spw-floating-menu-clearance, 0px)) var(--spw-console-offset-inline);
 }
 
 .spw-console.is-idle:not(:hover):not(:focus-within) {
@@ -126,7 +127,7 @@ header,
      Position lifted slightly so it doesn't bury footer nav text; uses floating safe inset. */
   inset-inline-start: auto;
   inset-inline-end: max(0.75rem, env(safe-area-inset-right));
-  bottom: max(0.6rem, env(safe-area-inset-bottom));
+  bottom: calc(max(0.6rem, env(safe-area-inset-bottom)) + var(--spw-floating-menu-clearance, 0px));
 }
 
 .spw-console.is-collapsed .spw-console-collapsed-bar {
@@ -230,9 +231,19 @@ header,
 }
 
 @media (max-width: 720px) {
+  :where(html:has(.site-header[data-spw-menu-mode="toggle"][data-spw-menu="open"]),
+         html:has(body > header[data-spw-menu-mode="toggle"][data-spw-menu="open"])) .spw-console {
+    --spw-floating-menu-clearance: 4.25rem;
+  }
+
+  :where(html:has(.site-header[data-spw-menu-mode="toggle"][data-spw-menu="open"]),
+         html:has(body > header[data-spw-menu-mode="toggle"][data-spw-menu="open"])) .spw-console.is-collapsed {
+    opacity: 0.82;
+  }
+
   .spw-console:not(.is-collapsed) {
     inset-inline: max(0.7rem, env(safe-area-inset-left)) max(0.7rem, env(safe-area-inset-right));
-    inset-block-end: max(0.7rem, env(safe-area-inset-bottom));
+    inset-block-end: calc(max(0.7rem, env(safe-area-inset-bottom)) + var(--spw-floating-menu-clearance, 0px));
     inline-size: auto;
     max-block-size: min(24rem, calc(100dvh - 4.6rem));
   }

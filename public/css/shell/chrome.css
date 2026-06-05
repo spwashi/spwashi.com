@@ -986,6 +986,20 @@
 :where(.site-header nav a, body > header nav a) {
   --spw-shell-link-trace-scale: 0.24;
   --spw-shell-link-trace-opacity: 0;
+  --spw-shell-link-trace-weight: 1.5px;
+  --spw-shell-link-hover-trace-opacity: 0.74;
+  --spw-shell-link-hover-trace-weight: 2px;
+  --spw-shell-link-hover-surface-mix: 96%;
+  --spw-shell-link-hover-bg-mix: 4%;
+  --spw-shell-link-hover-border-mix: 12%;
+  --spw-shell-link-current-trace-opacity: 0.88;
+  --spw-shell-link-current-surface-mix: 94%;
+  --spw-shell-link-current-bg-mix: 6%;
+  --spw-shell-link-current-border-mix: 18%;
+  --spw-shell-link-grounded-trace-opacity: 0.58;
+  --spw-shell-link-grounded-surface-mix: 96%;
+  --spw-shell-link-grounded-bg-mix: 4%;
+  --spw-shell-link-grounded-border-mix: 12%;
   --spw-shell-guided-accent:
     color-mix(in oklab, var(--spw-shell-chrome-accent-local) 56%, var(--ink, rgba(14, 18, 20, 0.92)) 44%);
   display: inline-flex;
@@ -1016,11 +1030,38 @@
     transform var(--spw-motion-settle, var(--shell-duration-fast) var(--shell-settle-ease));
 }
 
+:where(html[data-spw-interaction-tuner="responsive"]) :where(.site-header nav a, body > header nav a) {
+  --spw-shell-link-hover-trace-opacity: 0.82;
+  --spw-shell-link-hover-surface-mix: 94%;
+  --spw-shell-link-hover-bg-mix: 6%;
+  --spw-shell-link-hover-border-mix: 16%;
+  --spw-shell-link-current-surface-mix: 92%;
+  --spw-shell-link-current-bg-mix: 8%;
+  --spw-shell-link-grounded-surface-mix: 95%;
+  --spw-shell-link-grounded-bg-mix: 5%;
+}
+
+:where(html[data-spw-interaction-tuner="expressive"]) :where(.site-header nav a, body > header nav a) {
+  --spw-shell-link-hover-trace-opacity: 0.92;
+  --spw-shell-link-hover-trace-weight: 2.5px;
+  --spw-shell-link-hover-surface-mix: 92%;
+  --spw-shell-link-hover-bg-mix: 8%;
+  --spw-shell-link-hover-border-mix: 20%;
+  --spw-shell-link-current-trace-opacity: 1;
+  --spw-shell-link-current-surface-mix: 90%;
+  --spw-shell-link-current-bg-mix: 10%;
+  --spw-shell-link-current-border-mix: 24%;
+  --spw-shell-link-grounded-trace-opacity: 0.72;
+  --spw-shell-link-grounded-surface-mix: 93%;
+  --spw-shell-link-grounded-bg-mix: 7%;
+  --spw-shell-link-grounded-border-mix: 18%;
+}
+
 :where(.site-header nav a, body > header nav a)::after {
   content: "";
   position: absolute;
   inset: auto 0.62rem 0.32rem;
-  height: 1.5px;
+  height: var(--spw-shell-link-trace-weight, 1.5px);
   border-radius: 999px;
   background: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 70%, transparent);
   opacity: var(--spw-shell-link-trace-opacity, 0);
@@ -1039,59 +1080,38 @@
 
 :where(.site-header nav a, body > header nav a):is(:hover, :focus-visible) {
   --spw-shell-link-trace-scale: 1;
-  --spw-shell-link-trace-opacity: 0.9;
-  background-image:
-    radial-gradient(circle, color-mix(in oklab, var(--spw-shell-chrome-accent-local) 68%, transparent) 0 0.2rem, transparent 0.22rem),
-    linear-gradient(180deg, rgba(255,255,255,0.12), transparent 60%);
-  background-position: 0.82rem 50%, 0 0;
-  background-size: 0.42rem 0.42rem, auto;
-  background-repeat: no-repeat, no-repeat;
-  background-color: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 91%, var(--spw-shell-chrome-accent-local) 9%);
+  --spw-shell-link-trace-opacity: var(--spw-shell-link-hover-trace-opacity, 0.74);
+  --spw-shell-link-trace-weight: var(--spw-shell-link-hover-trace-weight, 2px);
+  background-color: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) var(--spw-shell-link-hover-surface-mix, 96%), var(--spw-shell-chrome-accent-local) var(--spw-shell-link-hover-bg-mix, 4%));
   color: var(--ink, rgba(14, 18, 20, 0.92));
-  border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 16%, transparent);
-  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--spw-shell-chrome-accent-local) 12%, transparent);
+  border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) var(--spw-shell-link-hover-border-mix, 12%), transparent);
+  box-shadow: none;
   outline: none;
 }
 
 :where(.site-header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible),
 body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible)) {
-  box-shadow:
-    inset 0 0 0 1px color-mix(in oklab, var(--spw-shell-chrome-accent-local) 16%, transparent),
-    0 8px 22px color-mix(in oklab, var(--spw-shell-chrome-accent-local) 9%, transparent);
+  box-shadow: none;
 }
 
 :where(.site-header nav a[aria-current="page"], body > header nav a[aria-current="page"]) {
   --spw-shell-link-trace-scale: 1;
-  --spw-shell-link-trace-opacity: 1;
-  background-image:
-    radial-gradient(circle, color-mix(in oklab, var(--spw-shell-chrome-accent-local) 78%, transparent) 0 0.2rem, transparent 0.22rem),
-    linear-gradient(180deg, rgba(255,255,255,0.12), transparent 60%);
-  background-position: 0.82rem 50%, 0 0;
-  background-size: 0.42rem 0.42rem, auto;
-  background-repeat: no-repeat, no-repeat;
-  background-color: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 86%, var(--spw-shell-chrome-accent-local) 14%);
+  --spw-shell-link-trace-opacity: var(--spw-shell-link-current-trace-opacity, 0.88);
+  --spw-shell-link-trace-weight: 2px;
+  background-color: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) var(--spw-shell-link-current-surface-mix, 94%), var(--spw-shell-chrome-accent-local) var(--spw-shell-link-current-bg-mix, 6%));
   color: var(--ink, rgba(14, 18, 20, 0.92));
-  border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 26%, transparent);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.32),
-    inset 0 0 0 1px color-mix(in oklab, var(--spw-shell-chrome-accent-local) 16%, transparent);
+  border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) var(--spw-shell-link-current-border-mix, 18%), transparent);
+  box-shadow: none;
 }
 
 :where(.site-header nav a[data-spw-grounded="true"], body > header nav a[data-spw-grounded="true"]) {
   --spw-shell-link-trace-scale: 0.82;
-  --spw-shell-link-trace-opacity: 0.76;
-  background-image:
-    radial-gradient(circle, color-mix(in oklab, var(--spw-shell-chrome-accent-local) 72%, transparent) 0 0.2rem, transparent 0.22rem),
-    linear-gradient(180deg, rgba(255,255,255,0.12), transparent 60%);
-  background-position: 0.82rem 50%, 0 0;
-  background-size: 0.42rem 0.42rem, auto;
-  background-repeat: no-repeat, no-repeat;
-  background-color: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 90%, var(--spw-shell-chrome-accent-local) 10%);
+  --spw-shell-link-trace-opacity: var(--spw-shell-link-grounded-trace-opacity, 0.58);
+  --spw-shell-link-trace-weight: 1.5px;
+  background-color: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) var(--spw-shell-link-grounded-surface-mix, 96%), var(--spw-shell-chrome-accent-local) var(--spw-shell-link-grounded-bg-mix, 4%));
   color: var(--spw-shell-guided-accent);
-  border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 18%, transparent);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.28),
-    inset 0 0 0 1px color-mix(in oklab, var(--spw-shell-chrome-accent-local) 10%, transparent);
+  border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) var(--spw-shell-link-grounded-border-mix, 12%), transparent);
+  box-shadow: none;
   text-decoration: none;
 }
 
@@ -1206,19 +1226,19 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
   display: none;
   flex-wrap: nowrap;
   align-items: center;
-  gap: 0.16rem;
+  gap: 0.22rem;
   min-width: 0;
   inline-size: 100%;
   max-inline-size: 100%;
-  min-block-size: 1.92rem;
+  min-block-size: 2rem;
   overflow-x: auto;
   overflow-y: hidden;
   overscroll-behavior-x: contain;
   scroll-snap-type: x proximity;
   scroll-padding-inline: 0.22rem;
-  padding: 0.16rem 0.22rem;
+  padding: 0.2rem 0.28rem;
   border: 1px solid color-mix(in oklab, var(--spw-shell-chrome-accent-local) 10%, var(--line, rgba(14, 18, 20, 0.12)) 90%);
-  border-radius: 999px;
+  border-radius: var(--shape-control, 0.78rem);
   background:
     linear-gradient(90deg,
       color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.86)) 96%, var(--spw-shell-chrome-accent-local) 4%),
@@ -1244,17 +1264,17 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
 }
 
 .spw-shell-utility-row::before {
-  content: "tune " attr(data-spw-color-mode);
+  content: "quick tune";
   display: inline-flex;
   align-items: center;
   align-self: center;
   flex: 0 0 auto;
-  min-block-size: 1.2rem;
-  padding-inline: 0.38rem;
+  min-block-size: 1.35rem;
+  padding-inline: 0.34rem 0.46rem;
   border-inline-end: 1px solid color-mix(in oklab, var(--spw-shell-chrome-accent-local) 16%, transparent);
   color: color-mix(in oklab, var(--ink-soft, rgba(14, 18, 20, 0.68)) 84%, var(--spw-shell-chrome-accent-local) 16%);
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
-  font-size: 0.58rem;
+  font-size: 0.56rem;
   font-weight: 760;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -1267,17 +1287,27 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
 
 /* Compact shell utility rail: grouped controls, quiet inactive state, clear active state. */
 :where(.site-header .spw-shell-utility-row, body > header .spw-shell-utility-row) .spw-shell-utility-button {
-  width: 1.58rem;
-  height: 1.58rem;
-  min-width: 1.58rem;
-  min-height: 1.58rem;
+  width: auto;
+  height: 1.62rem;
+  min-width: 1.62rem;
+  min-height: 1.62rem;
   padding: 0;
-  border-radius: 999px;
+  border-radius: calc(var(--shape-control, 0.78rem) - 0.3rem);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   font-size: 0.78rem;
   line-height: 1;
+}
+
+:where(.site-header .spw-shell-utility-row, body > header .spw-shell-utility-row) .spw-shell-utility-button[data-spw-utility-size="text"] {
+  min-inline-size: 2.3rem;
+  padding-inline: 0.42rem;
+  font-size: 0.66rem;
+}
+
+:where(.site-header .spw-shell-utility-row, body > header .spw-shell-utility-row) .spw-shell-utility-button[data-spw-shell-action="settings"] {
+  min-inline-size: 2.8rem;
 }
 :where(.site-header .spw-shell-utility-row, body > header .spw-shell-utility-row) .spw-shell-utility-button .spw-utility-sigil {
   margin: 0;
@@ -1299,12 +1329,12 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
 .spw-utility-cluster {
   display: inline-flex;
   align-items: center;
-  gap: 0.04rem;
-  min-block-size: 1.58rem;
+  gap: 0.06rem;
+  min-block-size: 1.76rem;
   flex: 0 0 auto;
-  padding: 0.08rem;
+  padding: 0.06rem;
   border: 1px solid color-mix(in oklab, var(--spw-shell-chrome-accent-local) 8%, transparent);
-  border-radius: 999px;
+  border-radius: calc(var(--shape-control, 0.78rem) - 0.12rem);
   background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.86)) 72%, transparent);
   scroll-snap-align: start;
 }
@@ -1340,7 +1370,7 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
   min-height: 1.58rem;
   padding: 0.12rem 0.34rem;
   border: 1px solid transparent;
-  border-radius: 999px;
+  border-radius: calc(var(--shape-control, 0.78rem) - 0.3rem);
   background: transparent;
   color: color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 68%, var(--spw-shell-chrome-accent-local) 32%);
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
@@ -1363,7 +1393,7 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
 }
 
 .spw-shell-utility-button[data-spw-shell-action^="color-"] {
-  min-width: 1.58rem;
+  min-width: 1.62rem;
   padding-inline: 0.28rem;
 }
 
@@ -1800,10 +1830,11 @@ html[data-spw-color-mode="dark"] .spw-shell-utility-row .spw-shell-utility-butto
   max-width: none;
   z-index: calc(var(--z-header, 1000) + 4);
   border-color: color-mix(in oklab, var(--spw-shell-chrome-line-local) 86%, transparent);
+  border-radius: var(--shape-control, 0.78rem);
   background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 98%, var(--spw-shell-mobile-accent) 2%);
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.34),
-    0 18px 44px rgba(0,0,0,0.16);
+    0 14px 34px rgba(0,0,0,0.14);
   backdrop-filter: blur(12px) saturate(1.03);
   -webkit-backdrop-filter: blur(12px) saturate(1.03);
 }
@@ -1827,11 +1858,11 @@ html[data-spw-color-mode="dark"] .spw-shell-utility-row .spw-shell-utility-butto
 
 :where(.site-header[data-spw-menu-mode="toggle"] ul, body > header[data-spw-menu-mode="toggle"] ul) {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 6.75rem), 1fr));
-  gap: 0.34rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.5rem), 1fr));
+  gap: 0.28rem;
   width: 100%;
   max-width: none;
-  padding-inline: clamp(0.42rem, 2vw, 0.72rem);
+  padding: 0.36rem;
 }
 
 :where(.site-header[data-spw-menu-mode="toggle"] nav a, body > header[data-spw-menu-mode="toggle"] nav a) {
@@ -1839,13 +1870,13 @@ html[data-spw-color-mode="dark"] .spw-shell-utility-row .spw-shell-utility-butto
   box-sizing: border-box;
   justify-content: flex-start;
   min-height: 2.28rem;
-  padding: 0.34rem 0.52rem;
+  padding: 0.34rem 0.58rem;
   border: 1px solid var(--spw-shell-mobile-card-border);
-  border-radius: var(--shell-panel-radius);
+  border-radius: calc(var(--shape-control, 0.78rem) - 0.16rem);
   background: var(--spw-shell-mobile-card-bg);
   color: var(--spw-shell-mobile-card-ink);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.3),
+    inset 0 1px 0 rgba(255,255,255,0.22),
     0 0 0 0 transparent;
 }
 
@@ -4049,37 +4080,36 @@ html[data-spw-page-section-direction="back"] .spw-section-handle-shell {
 
   :where(.site-header[data-spw-menu-mode="toggle"] .spw-shell-utility-row,
          body > header[data-spw-menu-mode="toggle"] .spw-shell-utility-row) {
-    min-block-size: 1.82rem;
-    padding-block: 0.12rem;
-    padding-inline: 0.16rem;
+    min-block-size: 2rem;
+    padding-block: 0.18rem;
+    padding-inline: 0.22rem;
   }
 
   :where(.site-header[data-spw-menu-mode="toggle"] .spw-shell-utility-button,
          body > header[data-spw-menu-mode="toggle"] .spw-shell-utility-button) {
-    width: 1.42rem;
-    height: 1.42rem;
-    min-width: 1.42rem;
-    min-height: 1.42rem;
-    font-size: 0.72rem;
+    height: 1.62rem;
+    min-width: 1.62rem;
+    min-height: 1.62rem;
+    font-size: 0.74rem;
   }
 
   :where(.site-header[data-spw-menu-mode="toggle"] ul, body > header[data-spw-menu-mode="toggle"] ul) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.34rem;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.26rem;
   }
 
   :where(.site-header[data-spw-menu-mode="toggle"] nav a, body > header[data-spw-menu-mode="toggle"] nav a) {
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: center;
     width: 100%;
     box-sizing: border-box;
-    min-height: 2.66rem;
-    padding: 0.48rem 0.64rem;
+    min-height: 2.36rem;
+    padding: 0.38rem 0.64rem;
     text-align: left;
-    line-height: 1.16;
-    white-space: normal;
-    overflow-wrap: anywhere;
-    text-wrap: pretty;
+    line-height: 1.12;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   :where(.site-header[data-spw-menu-mode="toggle"] nav a, body > header[data-spw-menu-mode="toggle"] nav a)[data-spw-nav-tokenized="true"]:not(.operator-chip) {
@@ -4107,23 +4137,23 @@ html[data-spw-page-section-direction="back"] .spw-section-handle-shell {
   }
 
   :where(.site-header[data-spw-menu-topology="screen-field"] ul, body > header[data-spw-menu-topology="screen-field"] ul) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.32rem;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.26rem;
   }
 
   :where(.site-header[data-spw-menu-topology="screen-field"] nav a, body > header[data-spw-menu-topology="screen-field"] nav a) {
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: center;
     width: 100%;
     box-sizing: border-box;
-    min-height: 2.48rem;
-    padding: 0.44rem 0.58rem;
+    min-height: 2.34rem;
+    padding: 0.38rem 0.64rem;
     text-align: left;
     font-size: min(var(--shell-nav-font-size), 0.82rem);
-    line-height: 1.16;
-    white-space: normal;
-    overflow-wrap: anywhere;
-    text-wrap: pretty;
+    line-height: 1.12;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   :where(.site-header[data-spw-menu-topology="screen-field"] nav a, body > header[data-spw-menu-topology="screen-field"] nav a)[data-spw-nav-tokenized="true"]:not(.operator-chip) {
@@ -4217,6 +4247,15 @@ html[data-spw-page-section-direction="back"] .spw-section-handle-shell {
 
   .spw-section-handle-progress {
     font-size: 0.58rem;
+  }
+}
+
+@media (min-width: 520px) and (max-width: 720px) {
+  :where(.site-header[data-spw-menu-mode="toggle"] ul,
+         body > header[data-spw-menu-mode="toggle"] ul,
+         .site-header[data-spw-menu-topology="screen-field"] ul,
+         body > header[data-spw-menu-topology="screen-field"] ul) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
