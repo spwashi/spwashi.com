@@ -207,16 +207,16 @@ const OPERATOR_DEFINITIONS = Object.freeze([
   },
   {
     pattern: /^\$/,
-    type: 'meta',
-    label: 'metacognitive reflection',
+    type: 'substrate',
+    label: 'substrate',
     prefix: '$',
-    intent: 'reflect',
-    interaction: 'inspect the medium, trace, or register itself',
-    family: 'reflective',
-    speech: 'aside',
+    intent: 'support',
+    interaction: 'reveal the support layer: money, time, storage, memory, attention, infrastructure, or material pressure',
+    family: 'resource-output',
+    speech: 'substrate',
     reversibility: 'reversible',
-    pronunciation: 'reflect',
-    mnemonic: 'Check the map.'
+    pronunciation: 'substrate',
+    mnemonic: 'Name what carries the charge.'
   },
   {
     pattern: /^%/,
@@ -326,14 +326,23 @@ const OPERATOR_TYPE_ALIASES = Object.freeze({
   probe: 'wonder',
   stream: 'value',
   merge: 'subject',
+  confluence: 'subject',
   pragma: 'action',
   topic: 'concept',
   surface: 'concept-edge',
   address: 'frame',
   select: 'mode',
   integrate: 'integration',
+  ascension: 'integration',
+  publish: 'integration',
   situate: 'perspective',
-  act: 'action'
+  act: 'action',
+  meta: 'substrate',
+  resource: 'substrate',
+  support: 'substrate',
+  configuration: 'binding',
+  config: 'binding',
+  measure: 'normalize'
 });
 
 const OPERATOR_PREFIXES = Object.freeze(
@@ -1078,11 +1087,17 @@ const detectOperator = (text = '') => {
   return null;
 };
 
-const getOperatorDefinition = (type = '') => (
-  OPERATOR_BY_TYPE[normalizeToken(type)]
-  || OPERATOR_BY_TYPE[OPERATOR_TYPE_ALIASES[normalizeToken(type)]]
-  || null
-);
+const getOperatorDefinition = (type = '') => {
+  const raw = normalizeText(type);
+  const normalized = normalizeToken(raw);
+
+  return (
+    OPERATOR_BY_PREFIX[raw]
+    || OPERATOR_BY_TYPE[normalized]
+    || OPERATOR_BY_TYPE[OPERATOR_TYPE_ALIASES[normalized]]
+    || null
+  );
+};
 
 const detectOperatorFromElement = (element) => {
   if (!isElement(element)) return null;

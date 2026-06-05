@@ -1,0 +1,236 @@
+# Operator Alignment
+#
+# Compact site-side registry for choosing sigils as transformation handles.
+# This file governs public copy, HTML chip authoring, runtime resolution, and
+# future prompt/evidence extraction without replacing workbench canon.
+
+#>operator_alignment
+#:convention #!operators #!runtime #!prompt_mining
+#:layer #!pragmatics
+
+^"north_star"{
+  claim: "Spw sigils are transformation handles, not decoration."
+  public_rule: "A sigil should be present only when it clarifies the transformation."
+  runtime_rule: "Runtime may resolve operator metadata into inspection attributes, labels, hovercards, prompt handles, or validation hints, but it must not silently rewrite authored copy or author-owned data-spw-operator values."
+  stability_rule: "Preserve token stability, parseability, and traceability. Do not overload a sigil casually because it looks good."
+}
+
+^"public_gloss"{
+  "?": "asks"
+  "~": "explores"
+  "@": "enters perspective"
+  "&": "combines"
+  "*": "runs"
+  "^": "publishes"
+  "!": "applies"
+  "=": "configures"
+  "%": "measures"
+  "#": "anchors"
+  ".": "grounds"
+  "$": "reveals substrate"
+}
+
+^"operator_registry"{
+  wonder: .{
+    sigil: "?"
+    canonical: "wonder"
+    site_label: "probe"
+    plain_verb: "ask or inspect"
+    good_uses: ["inspect", "learn", "ask", "explain", "open a reversible inquiry"]
+    bad_uses: ["generic help link that reveals nothing", "state-changing action disguised as a question"]
+    family: "inquiry"
+    phase: "open"
+  }[reg=facet]
+
+  potential: .{
+    sigil: "~"
+    canonical: "potential"
+    site_label: "potential"
+    plain_verb: "explore or defer"
+    good_uses: ["explore", "remix", "tune", "mine", "hold a possible path"]
+    bad_uses: ["stable anchor", "final proof", "generic destination"]
+    family: "potential_config"
+    phase: "latent"
+  }[reg=facet]
+
+  perspective: .{
+    sigil: "@"
+    canonical: "perspective"
+    site_label: "perspective"
+    plain_verb: "enter viewpoint"
+    good_uses: ["choose a session", "enter a role", "view from a character", "switch observation context"]
+    bad_uses: ["play/run", "generic service link", "publish action"]
+    family: "location_scope"
+    phase: "situated"
+  }[reg=facet]
+
+  confluence: .{
+    sigil: "&"
+    canonical: "subject"
+    site_label: "confluence"
+    plain_verb: "combine streams"
+    good_uses: ["combine", "compare", "synthesize", "pool resources"]
+    bad_uses: ["list separator", "decorative ampersand"]
+    family: "relation"
+    phase: "braided"
+  }[reg=facet]
+
+  value: .{
+    sigil: "*"
+    canonical: "value"
+    site_label: "concrete run"
+    plain_verb: "run or materialize"
+    good_uses: ["play", "run", "try", "materialize", "resolve into usable value"]
+    bad_uses: ["abstract possibility", "unresolved prompt", "mere category"]
+    family: "action_resolution"
+    phase: "resolved"
+  }[reg=facet]
+
+  ascension: .{
+    sigil: "^"
+    canonical: "integration"
+    site_label: "publish"
+    plain_verb: "publish proof"
+    good_uses: ["publish", "export", "promote", "proof", "lift into inspectable artifact"]
+    bad_uses: ["generic quick start", "private draft with no proof surface"]
+    family: "resource_output"
+    phase: "integrated"
+  }[reg=facet]
+
+  action: .{
+    sigil: "!"
+    canonical: "action"
+    site_label: "action"
+    plain_verb: "apply"
+    good_uses: ["apply", "reset", "commit", "execute", "trigger observable consequence"]
+    bad_uses: ["passive route link", "explanatory reference"]
+    family: "action_resolution"
+    phase: "committed"
+  }[reg=facet]
+
+  configuration: .{
+    sigil: "="
+    canonical: "binding"
+    site_label: "configuration"
+    plain_verb: "configure"
+    good_uses: ["set mode", "bind constraint", "choose configuration", "pin value"]
+    bad_uses: ["static label", "unbounded theme adjective"]
+    family: "potential_config"
+    phase: "bounded"
+  }[reg=facet]
+
+  measure: .{
+    sigil: "%"
+    canonical: "normalize"
+    site_label: "measure"
+    plain_verb: "measure"
+    good_uses: ["estimate", "compare", "quantify", "normalize", "name subjective/objective/hybrid scale"]
+    bad_uses: ["visual percent decoration", "metric with no source or unit"]
+    family: "inquiry"
+    phase: "measured"
+  }[reg=facet]
+
+  vibration: .{
+    sigil: "#"
+    canonical: "vibration"
+    site_label: "anchor"
+    plain_verb: "anchor"
+    good_uses: ["route fragment", "category", "tag", "named frame", "section address"]
+    bad_uses: ["generic emphasis", "hash without recoverable target"]
+    family: "location_scope"
+    phase: "anchored"
+  }[reg=facet]
+
+  ground: .{
+    sigil: "."
+    canonical: "ground"
+    site_label: "ground"
+    plain_verb: "ground"
+    good_uses: ["local state", "intrinsic structure", "ledger", "stored record", "default lens"]
+    bad_uses: ["decorative dot", "external route with no local baseline"]
+    family: "location_scope"
+    phase: "grounded"
+  }[reg=facet]
+
+  substrate: .{
+    sigil: "$"
+    canonical: "substrate"
+    site_label: "substrate"
+    plain_verb: "reveal substrate"
+    metaphor: "the layer that carries cost, memory, support, material pressure, or charge"
+    good_uses: ["budgeting", "capacity", "storage", "browser memory", "attention", "maintenance", "infrastructure", "support layer"]
+    bad_uses: ["generic paid thing", "generic valuable thing", "price marker without a resource layer"]
+    family: "resource_output"
+    phase: "base_hidden"
+    persistence: "durable or inspectable"
+    correction: "$ is not money. Money is one substrate alongside time, storage, memory, attention, infrastructure, and material surface."
+  }[reg=facet]
+}
+
+^"threshold_sequence"{
+  claim: "Liminality is a phase transition, not a single operator."
+  operator_sequence: "~ ? % = $ ! * ^ #/."
+  public_copy: "A feature begins as ~potential. It becomes real when you can ?inspect it, %estimate it, $support it, =scope it, !build it, *use it, and ^show proof."
+  state_attribute: "data-spw-threshold-state='latent|probing|measured|bounded|supported|acting|resolved|integrated|anchored|grounded'"
+  sequence_attribute: "data-spw-operator-sequence='~ ? % = $ ! * ^'"
+  applies_to: ["software economics", "RPG quest progression", "prompt mining", "image publishing", "character-sheet to budget to proof-card flows"]
+}
+
+^"composition_families"{
+  probe = ["?$ inspect substrate", "?% ask for measurement", "?@ ask from a perspective", "?. inspect local structure", "?# inspect category or anchor"]
+  substrate = ["$% measure resource/capacity", "$= bind resource constraint", "$! spend or activate support", "$^ publish resource model", "$& pool resources"]
+  output = ["^# publish anchored artifact", "^% publish measurement", "^$ publish substrate/capacity map", "^& publish synthesis"]
+  threshold = ["~% possible thing becomes measurable", "%= measurement becomes constraint", "=$ constraint reveals substrate requirement", "$! substrate enables action", "!^ action emits proof"]
+  governance: "Treat these as composition families, not a full algebra. Use them to improve route copy, chip metadata, prompt handles, and evidence briefs."
+}
+
+^"component_anatomy"{
+  operator_chip: .{
+    required_authoring: "visible sigil + verb + target"
+    recommended_attributes: "data-spw-operator, data-spw-action, data-spw-target"
+    example: "<a class='operator-chip' href='/tools/midjourney/#prompt-mining-loop' data-spw-operator='~' data-spw-action='mine' data-spw-target='prompt-handles'>~ mine prompt handles</a>"
+  }[reg=facet]
+
+  capacity_card: .{
+    purpose: "Make economics and substrates inspectable without reducing $ to money."
+    recommended_attributes: "data-spw-operator='$', data-spw-role='capacity', data-spw-substrate='time money attention infrastructure'"
+    slot_rule: "Use data-spw-slot='meta|header|body|actions|footer' when the card is meant to be mined or inspected."
+  }[reg=facet]
+
+  threshold_card: .{
+    purpose: "Represent a transition across operators."
+    recommended_attributes: "data-spw-threshold, data-spw-operator-sequence"
+    example_sequence: "~ % = $ ! ^"
+  }[reg=facet]
+}
+
+^"runtime_resolver_contract"{
+  should: [
+    "detect operator chips",
+    "normalize sigil metadata",
+    "add resolved inspection attributes",
+    "expose accessible labels",
+    "power sparse hover/inspect cards",
+    "validate likely misuse in development",
+    "help prompt mining and evidence export understand intent"
+  ]
+  should_not: [
+    "silently rewrite authored copy",
+    "make symbols perform unrelated actions",
+    "force every link to have an operator",
+    "create global state for every sigil hover",
+    "change basic gestures unpredictably"
+  ]
+  additive_attributes: ["data-spw-operator-resolved", "data-spw-operator-family", "data-spw-operator-phase", "data-spw-operator-public-label", "data-spw-transformation"]
+}
+
+^"compact_guide"{
+  text: "Spw sigils are transformation handles. ? asks. ~ holds possibility. @ chooses perspective. # anchors. . grounds. $ reveals substrate. % measures. = binds constraints. & combines streams. ! acts. * resolves into value. ^ carries proof upward. Use them when a link or component changes how the visitor thinks, acts, measures, funds, publishes, or remembers."
+}
+
+^"dispatch"{
+  @operator_semantics: ~"./operator-semantics.spw"
+  @operator_site_projection: ~"./operator-site-projection.spw"
+  @measurement_contract: ~"./measurement-contract.spw"
+  @promptable_image_library_pass: ~"../../.agents/plans/promptable-image-library-pass/PLAN.md"
+}

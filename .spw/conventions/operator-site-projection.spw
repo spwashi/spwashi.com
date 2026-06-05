@@ -71,12 +71,25 @@
     canonical_type: `integration`
     site_aliases: #[`integration`, `object`][reg=set]
     family: `relational`
-    site_role: `artifact / card / specimen / tended concept`
+    site_role: `artifact / card / specimen / proof / published concept`
     html_selector: `[data-spw-operator="integration"], [data-spw-operator="object"]`
     css_projection: `object color (amber) + textured codex slip + card glass shadows`
     runtime_events: #[`spw:action`, `spw:tending-note-added`][reg=set]
     validation: `contains structured slots (header->body->footer) and carries a stable seed ID`
     failure_mode: `empty wrapper containing un-slotted unstructured content`
+  }[reg=facet]
+
+  substrate: .{
+    sigil: `$`
+    canonical_type: `substrate`
+    site_aliases: #[`substrate`, `meta`, `resource`, `support`][reg=set]
+    family: `resource-output`
+    site_role: `resource layer / memory surface / support capacity / material base`
+    html_selector: `[data-spw-operator="substrate"], [data-spw-operator="meta"], [data-spw-operator="resource"], [data-spw-operator="support"]`
+    css_projection: `substrate line or grounded support edge; never a loud money-only badge`
+    runtime_events: #[`spw:semantic-snapshot`, `spw:runtime-refresh`][reg=set]
+    validation: `names the support layer being revealed: time, money, memory, storage, attention, maintenance, infrastructure, or material surface`
+    failure_mode: `generic price/value marker with no inspectable resource, memory, support, or material layer`
   }[reg=facet]
 
   measure: .{

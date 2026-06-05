@@ -74,8 +74,11 @@ const applyOperatorMetadata = (element, op) => {
     element.dataset.spwOperatorIntent = op.intent;
     element.dataset.spwOperatorInteraction = op.interaction;
     element.dataset.spwOperatorFamily = op.family;
+    element.dataset.spwOperatorResolved = op.type;
+    element.dataset.spwOperatorPublicLabel = op.label;
     element.dataset.spwOperatorSpeech = op.speech;
     element.dataset.spwOperatorReversibility = op.reversibility;
+    element.dataset.spwTransformation = `${op.intent}/${op.speech}`;
 
     applySigilParts(element, op);
 

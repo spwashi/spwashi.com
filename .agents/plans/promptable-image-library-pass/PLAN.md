@@ -30,6 +30,7 @@
 - Image-generator language should stay generator-agnostic at the systems level while naming current public generators in dated copy where that context is useful.
 - Use `$` as substrate, not only money: canvas, memory address, browser storage, table session, recipe base, material surface, infrastructure, attention, and support layer can all receive and mutate charge.
 - CTAs should be distinct by transformation: `~ mine prompt handles`, `^ publish RPG images`, `^ keep proof`, `@ choose a session`, `$ inspect substrate`.
+- Align prompt-mining handles with `.spw/conventions/operator-alignment.spw` so extracted prompt dimensions preserve operator meaning: `~` for latent variants, `$` for substrate, `!` for transformation, `^` for proof or publishable artifact.
 
 ### First visible patch
 - Home hero now names prompt mining and substrate charge as a reason to read.

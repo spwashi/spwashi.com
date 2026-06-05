@@ -40,6 +40,7 @@
 @plan_maintenance: ~"../.agents/skills/spw-plan-maintenance/SKILL.md"
 @planning_ecology: ~"./conventions/planning-ecology.spw"
 @operator_site_projection: ~"./conventions/operator-site-projection.spw"
+@operator_alignment: ~"./conventions/operator-alignment.spw"
 @operational_semantics: ~"./conventions/operational-semantics.spw"
 @measurement_contract: ~"./conventions/measurement-contract.spw"
 @model_guided_refinement: ~"./conventions/model-guided-refinement.spw"
@@ -155,6 +156,7 @@ dispatch: .{
  plan_maintenance = @plan_maintenance
  planning_ecology = @planning_ecology
  operator_site_projection = @operator_site_projection
+ operator_alignment = @operator_alignment
  model_guided_refinement = @model_guided_refinement
  semantic_capacity = @semantic_capacity
  daily_kernel = @daily_kernel

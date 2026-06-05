@@ -20,6 +20,7 @@
 @copy_localization: ~"./copy-localization.spw"
 @living_medium_copy: ~"./living-medium-copy.spw"
 @operator_semantics: ~"./operator-semantics.spw"
+@operator_alignment: ~"./operator-alignment.spw"
 @annotation_layer: ~"./annotation-layer.spw"
 @query_disposition: ~"./query-disposition.spw"
 @planning_ecology: ~"./planning-ecology.spw"
@@ -48,6 +49,7 @@ dispatch: .{
  localization = @copy_localization
  living_medium_copy = @living_medium_copy
  operators = @operator_semantics
+ operator_alignment = @operator_alignment
  operator_site_projection = @operator_site_projection
  operational_semantics = @operational_semantics
  measurement = @measurement_contract
