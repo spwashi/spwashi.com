@@ -55,6 +55,17 @@ const GROUND_SELECTORS = [
   '[data-spw-groundable="true"]'
 ].join(', ');
 
+const CAULDRON_CANDIDATE_SELECTORS = [
+  '[data-spw-cauldron-candidate="true"]',
+  '[data-spw-living-term]',
+  '.spw-living-term',
+  '[data-spw-gesture-contract*="prime"]',
+  '[data-spw-concept]',
+  '[data-spw-topic]',
+  '[data-spw-image-key]',
+  '[data-spw-semantic-expression]'
+].join(', ');
+
 const CHARGE_SELECTORS = [
   GROUND_SELECTORS,
   '.frame-card',
@@ -75,7 +86,10 @@ let initialized = false;
 let restoreObserver = null;
 let unsubscribeBus = [];
 const passiveChargeTimers = new WeakMap();
+const holdPrimeTimers = new WeakMap();
+const suppressClickTargets = new WeakSet();
 const PASSIVE_CHARGE_DELAY_MS = 220;
+const HOLD_PRIME_DELAY_MS = 520;
 
 function readJsonStorage(key, fallback) {
   try {
@@ -93,6 +107,12 @@ function writeJsonStorage(key, value) {
 function setGroundedFlags(el, grounded) {
   el.dataset.spwGrounded = grounded ? 'true' : 'false';
   if (!grounded) delete el.dataset.spwVisited;
+}
+
+function setPrimeState(el, state = '') {
+  if (!el) return;
+  if (state) el.dataset.spwPrimeState = state;
+  else delete el.dataset.spwPrimeState;
 }
 
 function setGroundedMetadata(el, substrate = '', wonder = '') {
@@ -135,12 +155,17 @@ export function initSpwHaptics() {
   initialized = true;
 
   restoreGroundedState(document);
+  annotateCauldronCandidates(document);
   syncSigilCollectionState();
   initRestoreObserver();
 
   document.addEventListener('click', onGroundToggleClick, true);
   document.addEventListener('keydown', onGroundToggleKeydown, true);
 
+  document.addEventListener('pointerdown', onPrimePointerDown, true);
+  document.addEventListener('pointerup', onPrimePointerEnd, true);
+  document.addEventListener('pointercancel', onPrimePointerEnd, true);
+  document.addEventListener('pointermove', onPrimePointerMove, true);
   document.addEventListener('pointerover', onChargeEnter, true);
   document.addEventListener('pointerout', onChargeLeave, true);
   document.addEventListener('focusin', onChargeFocusIn, true);
@@ -157,6 +182,10 @@ export function initSpwHaptics() {
     document.removeEventListener('click', onGroundToggleClick, true);
     document.removeEventListener('keydown', onGroundToggleKeydown, true);
 
+    document.removeEventListener('pointerdown', onPrimePointerDown, true);
+    document.removeEventListener('pointerup', onPrimePointerEnd, true);
+    document.removeEventListener('pointercancel', onPrimePointerEnd, true);
+    document.removeEventListener('pointermove', onPrimePointerMove, true);
     document.removeEventListener('pointerover', onChargeEnter, true);
     document.removeEventListener('pointerout', onChargeLeave, true);
     document.removeEventListener('focusin', onChargeFocusIn, true);
@@ -177,10 +206,89 @@ export function initSpwHaptics() {
 function onGroundToggleClick(event) {
   const target = getInteractiveTarget(event.target, GROUND_SELECTORS);
   if (!target) return;
+  if (suppressClickTargets.has(target)) {
+    suppressClickTargets.delete(target);
+    event.preventDefault();
+    event.stopPropagation();
+    return;
+  }
   if (shouldIgnoreGroundToggle(target, event)) return;
 
   animateSettle(target, 'spw-pop-snap');
   toggleGroundedState(target, { source: 'click' });
+}
+
+function onPrimePointerDown(event) {
+  if (event.button != null && event.button !== 0) return;
+  const target = getInteractiveTarget(event.target, CAULDRON_CANDIDATE_SELECTORS);
+  if (!target || shouldIgnorePrimeCandidate(target, event)) return;
+
+  target.dataset.spwCauldronCandidate = 'true';
+  setPrimeState(target, 'candidate');
+
+  const timer = window.setTimeout(() => {
+    holdPrimeTimers.delete(target);
+    collectPrimeCandidate(target, event);
+  }, HOLD_PRIME_DELAY_MS);
+
+  holdPrimeTimers.set(target, {
+    timer,
+    pointerId: event.pointerId,
+    x: event.clientX,
+    y: event.clientY,
+  });
+}
+
+function onPrimePointerMove(event) {
+  const target = getInteractiveTarget(event.target, CAULDRON_CANDIDATE_SELECTORS);
+  if (!target) return;
+  const record = holdPrimeTimers.get(target);
+  if (!record || record.pointerId !== event.pointerId) return;
+  const distance = Math.hypot(event.clientX - record.x, event.clientY - record.y);
+  if (distance > 12) cancelHoldPrime(target);
+}
+
+function onPrimePointerEnd(event) {
+  const target = getInteractiveTarget(event.target, CAULDRON_CANDIDATE_SELECTORS);
+  if (!target) return;
+  cancelHoldPrime(target);
+}
+
+function cancelHoldPrime(target) {
+  const record = holdPrimeTimers.get(target);
+  if (record) window.clearTimeout(record.timer);
+  holdPrimeTimers.delete(target);
+  if (!isGrounded(target) && target.dataset.spwPrimeState === 'candidate') {
+    setPrimeState(target, '');
+  }
+}
+
+function shouldIgnorePrimeCandidate(target, event) {
+  if (!(target instanceof Element)) return true;
+  if (target.closest('[data-spw-groundable="false"], input, textarea, select, button[data-spw-cauldron-action]')) return true;
+  if (event?.pointerType === 'mouse' && target.closest('a[href]')) return true;
+  return false;
+}
+
+function collectPrimeCandidate(target, event) {
+  const detail = buildSemanticDetail(target, { source: 'hold-prime' });
+  setPrimeState(target, 'primed');
+  target.dataset.spwCauldronCandidate = 'true';
+  target.dataset.spwIngredientState = 'active';
+  suppressClickTargets.add(target);
+  window.setTimeout(() => suppressClickTargets.delete(target), 800);
+
+  bus.emit('spell:capture', {
+    ...detail,
+    origin: detail.context || document.body?.dataset?.spwSurface || 'page',
+    originLabel: detail.context || document.body?.dataset?.spwSurface || 'page',
+    primedBy: 'hold-prime',
+    chargeContext: detail.substrate || detail.context || '',
+    gestureHistory: `notice->prime->gather:${detail.key.split(':').pop()}`,
+    sourceElement: detail.key,
+  }, { target, element: target, originalEvent: event });
+
+  bus.emit('prime:collected', detail, { target, element: target });
 }
 
 function onGroundToggleKeydown(event) {
@@ -258,6 +366,7 @@ export function groundElement(el, overrides = {}) {
   el.dataset.spwSuccession = 'latched';
   el.dataset.spwVisited = 'true';
   setGroundedMetadata(el, detail.substrate || '', detail.wonder || '');
+  setPrimeState(el, 'collected');
   el.dataset.spwCollected = 'true';
   el.style.setProperty('--spw-collection-strength', '1');
 
@@ -295,6 +404,7 @@ export function ungroundElement(el, overrides = {}) {
 
   setGroundedFlags(el, false);
   clearGroundedMetadata(el);
+  setPrimeState(el, '');
 
   removeFromRegistry(detail.key);
   removeCoupling(detail.key);
@@ -355,6 +465,7 @@ export function previewCharge(el, source = 'pointer') {
   el.dataset.spwPassiveCharge = 'true';
   el.dataset.spwCharge = 'preview';
   el.dataset.spwChargeSource = source;
+  setPrimeState(el, 'candidate');
 
   const detail = emitChargePhase(el, 'preview', source);
 
@@ -378,6 +489,7 @@ export function chargeElement(el, source = 'manual') {
   el.dataset.spwPassiveCharge = 'true';
   el.dataset.spwCharge = 'charged';
   el.dataset.spwChargeSource = source;
+  setPrimeState(el, 'primed');
 
   const detail = emitChargePhase(el, 'charged', source);
 
@@ -404,6 +516,7 @@ export function settleCharge(el, source = 'pointer') {
   delete el.dataset.spwCharge;
   delete el.dataset.spwChargeSource;
   delete el.dataset.spwChargePending;
+  if (!isGrounded(el)) setPrimeState(el, '');
 
   if (!hadCharge) return;
 
@@ -540,11 +653,28 @@ function initRestoreObserver() {
       mutation.addedNodes.forEach((node) => {
         if (!(node instanceof Element)) return;
         restoreGroundedState(node);
+        annotateCauldronCandidates(node);
       });
     });
   });
 
   restoreObserver.observe(document.body, { childList: true, subtree: true });
+}
+
+function annotateCauldronCandidates(root = document) {
+  const nodes = new Set();
+  if (root instanceof Element && root.matches(CAULDRON_CANDIDATE_SELECTORS)) {
+    nodes.add(root);
+  }
+  root.querySelectorAll?.(CAULDRON_CANDIDATE_SELECTORS).forEach((node) => nodes.add(node));
+
+  nodes.forEach((node) => {
+    if (!(node instanceof HTMLElement)) return;
+    if (node.closest('[data-spw-groundable="false"]')) return;
+    node.dataset.spwCauldronCandidate = node.dataset.spwCauldronCandidate || 'true';
+    node.dataset.spwGestureContract = node.dataset.spwGestureContract || 'tap:inspect hold:prime-to-cauldron';
+    if (!node.title) node.title = 'tap to inspect; hold to gather as a cauldron ingredient';
+  });
 }
 
 /* ==========================================================================

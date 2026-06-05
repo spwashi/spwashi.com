@@ -45,6 +45,7 @@
 @measurement_contract: ~"./conventions/measurement-contract.spw"
 @model_guided_refinement: ~"./conventions/model-guided-refinement.spw"
 @semantic_capacity: ~"./conventions/semantic-capacity.spw"
+@discovery_powerups: ~"./conventions/discovery-powerups.spw"
 @daily_kernel: ~"./conventions/daily-kernel.spw"
 @data_spw_attribute_governance: ~"./conventions/data-spw-attribute-governance.spw"
 @professional_skill_worldbuilding: ~"../.agents/plans/professional-skill-development-worldbuilding/PLAN.md"
@@ -112,6 +113,7 @@ translations: .{
  composition_box_model = #[@composition_box_model, @query_disposition, @site_semantics][reg=set]
  model_guided_refinement = #[@model_guided_refinement, @site_semantics, @product_lines][reg=set]
  semantic_capacity = #[@semantic_capacity, @model_guided_refinement, @planning_ecology][reg=set]
+ discovery_powerups = #[@discovery_powerups, @semantic_capacity, @query_disposition][reg=set]
  daily_kernel = #[@daily_kernel, @semantic_capacity, @attention_field, @product_lines][reg=set]
  professional_skill_worldbuilding = #[@professional_skill_worldbuilding, @professional_skill_worldbuilding_cache, @product_lines][reg=set]
  approach_and_narrative = #[@approach_topography, @product_lines, @wonder_vocabulary][reg=set]
@@ -159,6 +161,7 @@ dispatch: .{
  operator_alignment = @operator_alignment
  model_guided_refinement = @model_guided_refinement
  semantic_capacity = @semantic_capacity
+ discovery_powerups = @discovery_powerups
  daily_kernel = @daily_kernel
  professional_skill_worldbuilding = @professional_skill_worldbuilding
  professional_skill_worldbuilding_cache = @professional_skill_worldbuilding_cache

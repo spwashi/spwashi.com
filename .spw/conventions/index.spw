@@ -29,6 +29,7 @@
 @measurement_contract: ~"./measurement-contract.spw"
 @model_guided_refinement: ~"./model-guided-refinement.spw"
 @semantic_capacity: ~"./semantic-capacity.spw"
+@discovery_powerups: ~"./discovery-powerups.spw"
 @daily_kernel: ~"./daily-kernel.spw"
 @data_spw_attribute_governance: ~"./data-spw-attribute-governance.spw"
 @attention_field: ~"./attention-field.spw"  # now carries aligned operational_semantics for cognitive+computational use
@@ -59,6 +60,7 @@ dispatch: .{
  cognition = @cognitive_navigation
  model_guided_refinement = @model_guided_refinement
  semantic_capacity = @semantic_capacity
+ discovery_powerups = @discovery_powerups
  daily_kernel = @daily_kernel
  data_spw_attribute_governance = @data_spw_attribute_governance
  containers = @electromagnetic_containers

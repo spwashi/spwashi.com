@@ -816,6 +816,33 @@ html[data-spw-cauldron-candidate-visibility="prominent"] .spw-living-term[aria-p
   background: var(--spell-candidate-wash, color-mix(in srgb, var(--active-op-color, var(--teal)) 10%, transparent));
   outline: 1px dashed color-mix(in srgb, var(--active-op-color, var(--teal)) 35%, transparent);
 }
+
+[data-spw-prime-state="candidate"] {
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+  text-decoration-thickness: 0.08em;
+  text-decoration-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 42%, transparent);
+  text-underline-offset: 0.18em;
+}
+
+:is(.spw-living-term, [data-spw-living-term], [data-spw-gesture-contract*="prime"])[data-spw-cauldron-candidate="true"]:not([data-spw-prime-state]):not(.cauldron-ingredient):not([data-spw-groundable="false"]) {
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+  text-decoration-thickness: 0.06em;
+  text-decoration-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 24%, transparent);
+  text-underline-offset: 0.16em;
+}
+
+[data-spw-prime-state="primed"] {
+  outline: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal)) 30%, transparent);
+  outline-offset: 2px;
+  background: color-mix(in srgb, var(--active-op-color, var(--teal)) 7%, transparent);
+}
+
+[data-spw-prime-state="collected"] {
+  box-shadow: inset 0 -0.16rem 0 color-mix(in srgb, var(--active-op-color, var(--teal)) 18%, transparent);
+}
+
 /* Root token application for visibility modes (cascade from tokens/core) */
 html[data-spw-cauldron-candidate-visibility="prominent"] {
   --cauldron-candidate-wash: color-mix(in srgb, var(--active-op-color, var(--teal)) 20%, transparent);

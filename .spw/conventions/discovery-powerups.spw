@@ -1,0 +1,65 @@
+# Discovery Powerups
+#
+# Semantic-capacity prime for vocabulary, route regions, and rediscovery arcs.
+
+#>discovery_powerups
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!public_semantics
+
+claim: `Discovery improves when terms, regions, and route sequences become usable material rather than decorative labels.`
+
+focus: .{
+ slice = `discovery-powerups`
+ route = `/topics/search/`
+ public_goal = `increase awareness, engagement, rediscovery, and path integrity through curiosity and applied search`
+ primary_element = `wood`
+ secondary_element = `metal`
+}[reg=facet]
+
+contract: .{
+ term_powerup = `A vocabulary handle that unlocks a nearby question, ingredient, prompt, or route.`
+ regional_powerup = `A place-like affordance such as studio, library, garden, theater, workshop, or lab that changes how discovery should be read.`
+ arc_seed = `A small ordered path of terms and routes that can be reconstructed, remixed, or returned to.`
+ conduit_event = `A named route from curiosity to artifact: screenshot, prompt packet, proof card, RPG Wednesday image drop, or teaching sprint.`
+ semantic_spell = `A portable recipe that binds anchors, term clusters, component kinds, settings states, data attributes, and return paths into reusable material.`
+}[reg=facet]
+
+spell_dimensions: .{
+ anchor = `route fragment, stable heading, or visible return point`
+ cluster = `terms that travel together and create a promptable unit`
+ component = `site-frame, frame-panel, operator-chip, card, console, cauldron, or other reusable surface kind`
+ settings = `semantic density, enhancement level, visibility, climate, color mode, or behavior management state`
+ attribute = `data-spw-role, data-spw-feature, data-spw-semantic-expression, data-spw-context, or related inspectable state`
+ event = `production moment such as RPG Wednesday image drop, proof card, service packet, or teaching sprint`
+}[reg=facet]
+
+learning_science_alignment: #[
+ `retrieval practice: route handles should be reconstructable after leaving the page`,
+ `query formulation: failed searches should suggest better terms and nearby routes`,
+ `interleaving: recommendations should cross software, art, play, pedagogy, and production`,
+ `elaboration: a term should explain what it can do, not only what it means`,
+ `desirable difficulty: mystery is useful only when the next action stays legible`
+][reg=set]
+
+search_alignment: #[
+ `support exploratory search before exact-match search`,
+ `make facets visible as route regions and vocabulary clusters`,
+ `let a visitor gather a term before they know its full definition`,
+ `let a visitor compose a spell from anchors, clusters, components, settings, and attributes`,
+ `treat rediscovery as a success state, not a failure to remember`
+][reg=set]
+
+route_hooks: .{
+ search = ~"../../topics/search/index.html"
+ pedagogy = ~"../../topics/pedagogy/index.html"
+ topics = ~"../../topics/index.html"
+ home = ~"../../index.html"
+ plan = ~"../../.agents/plans/discovery-powerups/PLAN.md"
+}[reg=facet]
+
+validation: #[
+ `New discovery terms should be cauldron-primeable where they appear as learning material.`,
+ `New regions should link to at least one public route or future route owner.`,
+ `Conduit events should name an output and a return path.`
+][reg=set]

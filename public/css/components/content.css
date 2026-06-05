@@ -192,6 +192,37 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
     margin: calc(var(--component-pad) * -0.75);
     margin-bottom: 0.35rem;
   }
+
+  :where(#entry-loops .frame-card--illustrated .frame-card-media) {
+    position: relative;
+    max-block-size: 8rem;
+    overflow: hidden;
+    border-bottom: 1px solid color-mix(in srgb, var(--line, rgba(14,18,20,0.14)) 72%, transparent);
+    background:
+      linear-gradient(135deg, color-mix(in srgb, var(--active-op-color, var(--teal)) 8%, transparent), transparent 62%),
+      color-mix(in srgb, var(--surface-strong, #fff) 92%, transparent);
+  }
+
+  :where(#entry-loops .frame-card--illustrated .frame-card-media)::before {
+    content: "route card";
+    position: absolute;
+    inset: 0.55rem auto auto 0.6rem;
+    z-index: 1;
+    padding: 0.12rem 0.36rem;
+    border: 1px solid color-mix(in srgb, var(--line, rgba(14,18,20,0.14)) 72%, transparent);
+    border-radius: var(--shape-control, 0.78rem);
+    background: color-mix(in srgb, var(--surface-strong, #fff) 86%, transparent);
+    color: var(--ink-muted, rgba(14,18,20,0.58));
+    font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+    font-size: 0.64rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  :where(#entry-loops .frame-card--illustrated .frame-card-media img) {
+    block-size: 8rem;
+    object-fit: cover;
+  }
 }
 
 :where(.frame-grid > li, .contact-grid > li, .compare-sets > li, .spec-grid > li, .directory-grid > li, .ref-grid > li) {

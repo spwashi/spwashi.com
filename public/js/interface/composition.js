@@ -542,15 +542,70 @@ function computeIngredientPhase(ing) {
 }
 
 function computeCauldronPhase(ingredients = []) {
-  if (!ingredients.length) return 'empty';
-  const hasRecent = ingredients.some(i => {
-    const days = (Date.now() - Number(i.capturedAt || 0)) / (1000 * 60 * 60 * 24);
-    return days < 3;
-  });
   const count = ingredients.length;
-  if (hasRecent && count >= 2) return 'resonant';
-  if (count >= 4) return 'mature';
-  return 'gathering';
+  if (count === 0) return 'empty';
+  if (count === 1) return 'primed';
+  if (count === 2) return 'mixing';
+  return 'spell-ready';
+}
+
+function getCauldronStatusCopy(count, phase) {
+  const available = countPrimeableSources();
+  const availabilityCopy = available ? `${available} prime sources are visible on this page.` : 'No prime sources are visible in this viewport yet.';
+  if (phase === 'empty') {
+    return `Hold a living term or brace to gather it. ${availabilityCopy}`;
+  }
+  if (phase === 'primed') {
+    return '1 force gathered. Add another ingredient to compose a spell, or nourish this one for later.';
+  }
+  if (phase === 'mixing') {
+    return '2 forces gathered. A spell draft is available; mix to inspect the combination before planting.';
+  }
+  return `${count} forces gathered. Spell draft available: refine, cast, plant, or turn it into a vision seed.`;
+}
+
+function countPrimeableSources() {
+  return document.querySelectorAll([
+    '[data-spw-cauldron-candidate="true"]',
+    '[data-spw-living-term]',
+    '.spw-living-term',
+    '[data-spw-gesture-contract*="prime"]',
+    '[data-spw-concept]',
+    '[data-spw-topic]',
+    '[data-spw-image-key]',
+    '[data-spw-semantic-expression]'
+  ].join(', ')).length;
+}
+
+function syncIngredientAvailability() {
+  const count = countPrimeableSources();
+  document.documentElement.dataset.spwIngredientAvailability = count > 0 ? 'available' : 'scarce';
+  document.documentElement.dataset.spwIngredientSourceCount = String(count);
+  document.querySelectorAll('[data-cauldron-availability]').forEach((node) => {
+    node.textContent = count > 0 ? ` ${count} possible ingredients nearby.` : ' Move through the page to find primeable handles.';
+  });
+}
+
+function syncSpellPreview(ingredients, phase) {
+  const count = ingredients.length;
+  const ready = count >= 2;
+  const operators = [...new Set(ingredients.map(i => i.operator).filter(Boolean))];
+  const operatorSequence = operators.length ? operators.join(' ') : '~ $ ! ^';
+
+  document.querySelectorAll('[data-spw-spell-candidate]').forEach((preview) => {
+    preview.hidden = !ready;
+    preview.dataset.spwSpellState = ready ? 'draft' : 'empty';
+    preview.dataset.spwIngredientCount = String(count);
+    preview.dataset.spwOperatorSequence = operatorSequence;
+    const meta = preview.querySelector('[data-spw-slot="meta"]');
+    const body = preview.querySelector('[data-spw-slot="body"]');
+    if (meta) meta.textContent = `spell draft · ${count} ingredients · ${phase}`;
+    if (body) {
+      body.textContent = operators.length
+        ? `${operatorSequence} → spell draft`
+        : '~ prompt → $ substrate → ! transform → ^ proof';
+    }
+  });
 }
 
 function pruneStale(days = GARDEN_PRUNE_DAYS) {
@@ -591,6 +646,8 @@ function syncCauldronState() {
 
   // Lifecycle phase for CSS, mirrors, and runtime awareness (the core of the enhancement)
   const phase = computeCauldronPhase(ingredients);
+  syncIngredientAvailability();
+  root.dataset.spwCauldronState = phase;
   root.dataset.spwCauldronPhase = phase;
   syncCauldronHosts(ingredients, phase);
 
@@ -608,6 +665,9 @@ function syncCauldronState() {
   const clearBtn = document.querySelector('[data-spw-cauldron-action="clear"]');
   if (mixBtn) mixBtn.disabled = count < 2;
   if (clearBtn) clearBtn.disabled = count === 0;
+  document.querySelectorAll('[data-cauldron-status-text]').forEach((node) => {
+    node.textContent = getCauldronStatusCopy(count, phase);
+  });
   document.querySelectorAll('[data-cauldron-count]').forEach((node) => {
     node.textContent = String(count);
   });
@@ -615,11 +675,15 @@ function syncCauldronState() {
     const operators = root.dataset.spwCauldronOperators;
     node.textContent = operators ? `· forces: ${operators}` : '';
   });
-  document.querySelectorAll('[data-spw-cauldron-action="prune"], [data-spw-cauldron-action="nourish"], [data-spw-cauldron-action="plant"]')
-    .forEach((button) => { button.disabled = count === 0; });
+  document.querySelectorAll('[data-spw-cauldron-action="prune"], [data-spw-cauldron-action="nourish"], [data-spw-cauldron-action="plant"], [data-spw-cauldron-action="vision"]')
+    .forEach((button) => {
+      const action = button.dataset.spwCauldronAction;
+      button.disabled = action === 'plant' || action === 'vision' ? count < 2 : count === 0;
+    });
 
   renderIngredientsList(ingredients);
   renderCauldronMirrors(ingredients, phase);
+  syncSpellPreview(ingredients, phase);
 }
 
 function syncCauldronHosts(ingredients, phase) {
@@ -627,7 +691,9 @@ function syncCauldronHosts(ingredients, phase) {
   const operators = [...new Set(ingredients.map(i => i.operator).filter(Boolean))].join(' ');
   document.querySelectorAll('[data-spw-cauldron]').forEach((host) => {
     host.dataset.spwCauldronPhase = phase;
+    host.dataset.spwCauldronState = phase;
     host.dataset.spwCauldronCount = String(count);
+    host.dataset.spwIngredientCount = String(count);
     if (operators) {
       host.dataset.spwCauldronOperators = operators;
     } else {
@@ -776,8 +842,11 @@ function renderIngredientsList(ingredients) {
     return `
       <span class="cauldron-ingredient"
             data-spw-cauldron-ingredient
+            data-spw-ingredient-state="collected"
             data-spw-semantic-expression="${escapeHtml(ing.expression)}"
             data-spw-ingredient-phase="${phase}"
+            data-spw-source-route="${escapeHtml(ing.origin || ing.context || '')}"
+            data-spw-source-element="${escapeHtml(ing.sourceElement || ing.expression)}"
             ${ing.origin ? `data-spw-origin="${escapeHtml(ing.origin)}"` : ''}
             ${ing.primedBy ? `data-spw-ingredient-primed="${escapeHtml(ing.primedBy)}"` : ''}
             tabindex="0"

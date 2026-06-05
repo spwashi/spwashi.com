@@ -2051,10 +2051,10 @@ const ENHANCEMENT_DEFS = [
     id: 'haptics',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
-    selector: '[data-spw-groundable=\"true\"], .operator-chip, .syntax-token, .frame-sigil',
+    selector: '[data-spw-groundable=\"true\"], [data-spw-living-term], [data-spw-concept], [data-spw-cauldron-candidate], .spw-living-term, .operator-chip, .syntax-token, .frame-sigil',
     rootMode: 'single',
     describes: 'grounding[collection|resonance] spell[grounded|checkpoint]',
-    updates: ['data-spw-grounded', 'data-spw-collected', 'data-spw-collection-strength', 'data-spw-grounded-wonder'],
+    updates: ['data-spw-grounded', 'data-spw-collected', 'data-spw-prime-state', 'data-spw-collection-strength', 'data-spw-grounded-wonder'],
     load: () => import('./interface/haptics.js'),
     mount: (mod) => {
       const fn = mod?.initSpwHaptics;
