@@ -497,6 +497,9 @@ const DEFAULT_SITE_SETTINGS = Object.freeze({
   /* New Spw semantics for metacognition and mindful overflow (2026+ direction) */
   metacognitiveStance: 'witness',
   processAttention: 'breath',
+  attentionSelfRelation: 'breath',
+  attentionLocalRelation: 'immediate-field',
+  attentionGlobalRelation: 'horizon-systems',
   overflowMode: 'contained',
   operationalVisibility: 'off',
 
@@ -589,6 +592,9 @@ const SETTING_OPTIONS = Object.freeze({
   depthIndicators: new Set(['off', 'on']),
   metacognitiveStance: new Set(['witness', 'composer', 'explorer', 'integrator', 'overflow']),
   processAttention: new Set(['breath', 'scan', 'trace', 'compose']),
+  attentionSelfRelation: new Set(['breath', 'inner-weather', 'dimensional-scan']),
+  attentionLocalRelation: new Set(['immediate-field', 'witness', 'reciprocity-proof']),
+  attentionGlobalRelation: new Set(['horizon-systems', 'cultural-fermentation', 'stewardship']),
   overflowMode: new Set(['contained', 'expanded', 'generous']),
   operationalVisibility: new Set(['off', 'on']),
 
@@ -752,6 +758,42 @@ const PRESETS = Object.freeze({
     busMirrorToConsole: 'off',
     busHistorySize: '100',
     typesettingMode: 'default'
+  }),
+  'contemplative-hearth': Object.freeze({
+    authorMode: 'draft',
+    currentDevelopmentalClimate: 'anchor',
+    metacognitiveStance: 'witness',
+    processAttention: 'breath',
+    attentionSelfRelation: 'breath',
+    attentionLocalRelation: 'witness',
+    attentionGlobalRelation: 'stewardship',
+    themePack: 'neutral-paper',
+    colorTuner: 'balanced',
+    pedagogicalFlavor: 'culinary',
+    baseMetamaterial: 'paper',
+    componentDensity: 'soft',
+    operatorSaturation: 'muted',
+    animationIntensity: 'reduced',
+    fieldResonance: 'local',
+    spacingTuner: 'roomy',
+    interactionTuner: 'calm',
+    grainIntensity: 'none',
+    semanticDensity: 'minimal',
+    enhancementLevel: 'minimal',
+    infospaceComplexity: 'simple',
+    relationalVisualization: 'on',
+    wonderMemory: 'nearby',
+    showSemanticMetadata: 'off',
+    showSpecPills: 'off',
+    developmentalIndicators: 'on',
+    depthIndicators: 'off',
+    developmentalClimateAutoCycle: 'off',
+    reduceMotion: 'off',
+    highContrast: 'off',
+    busDiagnostics: 'off',
+    busMirrorToConsole: 'off',
+    busHistorySize: '100',
+    typesettingMode: 'editorial'
   })
 });
 
@@ -837,6 +879,21 @@ const SETTING_VALUE_LABELS = Object.freeze({
     trace: 'Trace',
     compose: 'Compose'
   }),
+  attentionSelfRelation: Object.freeze({
+    breath: 'Breath',
+    'inner-weather': 'Inner weather',
+    'dimensional-scan': 'Dimensional scan'
+  }),
+  attentionLocalRelation: Object.freeze({
+    'immediate-field': 'Immediate field',
+    witness: 'Witness',
+    'reciprocity-proof': 'Reciprocity / proof'
+  }),
+  attentionGlobalRelation: Object.freeze({
+    'horizon-systems': 'Horizon systems',
+    'cultural-fermentation': 'Cultural inheritance / fermentation',
+    stewardship: 'Stewardship'
+  }),
   overflowMode: Object.freeze({contained: 'Contained', expanded: 'Expanded', generous: 'Generous'}),
   operationalVisibility: Object.freeze({off: 'Implicit', on: 'Explicit'}),
   authorMode: Object.freeze({
@@ -865,14 +922,16 @@ const PRESET_LABELS = Object.freeze({
   hearth: 'Hearth',
   loom: 'Loom',
   workshop: 'Workshop',
-  access: 'Access'
+  access: 'Access',
+  'contemplative-hearth': 'Contemplative Hearth'
 });
 
 const PRESET_DESCRIPTIONS = Object.freeze({
   hearth: 'Calm baseline for ordinary reading.',
   loom: 'Expressive semantic surface with richer visual feedback.',
   workshop: 'Inspection-forward setup for implementation and debugging.',
-  access: 'Larger, calmer, higher-guidance setup for reduced friction.'
+  access: 'Larger, calmer, higher-guidance setup for reduced friction.',
+  'contemplative-hearth': 'Quiet relational baseline for attention-led media work.'
 });
 
 const UX_RECIPES = Object.freeze({
@@ -1127,6 +1186,13 @@ const QUERY_SETTING_ALIASES = Object.freeze({
   stance: 'metacognitiveStance',
   posture: 'metacognitiveStance',
   'metacognitive-stance': 'metacognitiveStance',
+  self: 'attentionSelfRelation',
+  'self-relation': 'attentionSelfRelation',
+  local: 'attentionLocalRelation',
+  'local-relation': 'attentionLocalRelation',
+  global: 'attentionGlobalRelation',
+  horizon: 'attentionGlobalRelation',
+  'global-relation': 'attentionGlobalRelation',
   'operational-visibility': 'operationalVisibility',
   'ops-visibility': 'operationalVisibility',
   motif: 'componentMotif',
@@ -1720,6 +1786,9 @@ const buildDatasetEntries = (normalized, modifiers, deviations, climate) => {
     spwFractalNesting: normalized.fractalNesting,
     spwMetacognitiveStance: normalized.metacognitiveStance,
     spwProcessAttention: normalized.processAttention,
+    spwAttentionSelfRelation: normalized.attentionSelfRelation,
+    spwAttentionLocalRelation: normalized.attentionLocalRelation,
+    spwAttentionGlobalRelation: normalized.attentionGlobalRelation,
     spwOverflowMode: normalized.overflowMode,
     spwOperationalVisibility: normalized.operationalVisibility,
     spwImplementationMutations: normalized.implementationMutations,

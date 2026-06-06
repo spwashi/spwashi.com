@@ -1,0 +1,32 @@
+# Relational Attention Media
+
+#>relational_attention_media
+#:convention #!attention #!media #!local_first
+#:operation #!contract
+
+definition: .{
+  attention = `A relational dimension that can be tuned across self, local context, and global horizon.`
+  meditation = `A practical priming step: stabilize the relation before generating or revising an artifact.`
+  media_cauldron = `A local surface that turns the current relation triad into copyable media seeds.`
+}[reg=facet]
+
+settings_contract: .{
+  self = `attentionSelfRelation -> breath | inner-weather | dimensional-scan`
+  local = `attentionLocalRelation -> immediate-field | witness | reciprocity-proof`
+  global = `attentionGlobalRelation -> horizon-systems | cultural-fermentation | stewardship`
+  dataset = `html/body data-spw-attention-self-relation, data-spw-attention-local-relation, data-spw-attention-global-relation`
+}[reg=facet]
+
+artifact_contract: #[
+  `A seed should name medium, relational focus, attention prime, source ingredient, prompt pack, and attention notes.`,
+  `The seed should produce immediately usable material without depending on a remote model call.`,
+  `The tone should stay concrete, inspectable, playful, technically literate, and local-first.`,
+][reg=set]
+
+routes: .{
+  home = ~"../../index.html"
+  settings = ~"../../settings/index.html"
+  play = ~"../../play/index.html"
+  partial = ~"../../_partials/media-cauldron.html"
+  runtime = ~"../../public/js/modules/media-cauldron.js"
+}[reg=facet]

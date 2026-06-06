@@ -129,6 +129,7 @@
                 <a class="operator-chip" href="#reader-builder-modes">viewing modes</a>
                 <a class="operator-chip" href="#author-workflow-settings">workflow</a>
                 <a class="operator-chip" href="#climate-settings">climate</a>
+                <a class="operator-chip" href="#attention-posture-settings">attention posture</a>
                 <a class="operator-chip" href="#runtime-preferences">preferences</a>
                 <a class="operator-chip" href="#applied-state">runtime state</a>
                 <a class="operator-chip" href="#settings-notes">notes + resets</a>
@@ -205,6 +206,10 @@
                         <button class="settings-preset-btn" data-preset="access" type="button" data-spw-ingredient-type="accessibility-base">
                             <strong>Access</strong>
                             <span>High contrast, reduced motion, larger type, looser spacing, and stronger guidance cues.</span>
+                        </button>
+                        <button class="settings-preset-btn" data-preset="contemplative-hearth" type="button" data-spw-ingredient-type="relational-attention">
+                            <strong>Contemplative Hearth</strong>
+                            <span>Quiet reading, breath-led self relation, witness-local context, and stewardship as the wider horizon.</span>
                         </button>
                     </div>
                     <span aria-live="polite" class="settings-status vibe-widget-status" data-site-settings-status role="status"></span>
@@ -442,6 +447,15 @@
                         <span class="spec-pill">memory:
                 <span class="vibe-widget-state" data-settings-state="wonderMemory">nearby</span>
               </span>
+                        <span class="spec-pill">self:
+                <span class="vibe-widget-state" data-settings-state="attentionSelfRelation">breath</span>
+              </span>
+                        <span class="spec-pill">local:
+                <span class="vibe-widget-state" data-settings-state="attentionLocalRelation">immediate field</span>
+              </span>
+                        <span class="spec-pill">global:
+                <span class="vibe-widget-state" data-settings-state="attentionGlobalRelation">horizon systems</span>
+              </span>
                     </div>
                 </article>
 
@@ -506,6 +520,12 @@
                     <span class="settings-shortcut-kicker">Attention posture</span>
                     <strong>Developmental Climate</strong>
                     <span>Find, hold, connect, test, or offer the work.</span>
+                </a>
+
+                <a class="settings-shortcut-card" href="#attention-posture-settings">
+                    <span class="settings-shortcut-kicker">Relational dimensions</span>
+                    <strong>Attention Posture</strong>
+                    <span>Self relation, local field, and global horizon for media seeds.</span>
                 </a>
 
                 <a class="settings-shortcut-card" href="#appearance-settings">
@@ -791,6 +811,74 @@
                   </span>
                             </label>
                             <p class="settings-option-hint">This is a progressive layer — the contracts (see <a class="operator-chip" href="/curriculum/" data-spw-operator="frame">#&gt;curriculum</a> and the operator atlas) work either way.</p>
+                        </fieldset>
+                    </div>
+                </details>
+
+                <details class="settings-category" data-spw-box-model="settings-fold" id="attention-posture-settings" open>
+                    <summary class="settings-category-header">Attention Posture</summary>
+                    <p class="frame-note">
+                        Attention posture answers: what relation is being stabilized? These dimensions make meditation practical
+                        without making the site clinical: self relation, local context, and global horizon become settings that
+                        media surfaces can read, copy, and reuse.
+                    </p>
+
+                    <div class="settings-grid">
+                        <fieldset class="settings-fieldset" data-spw-feature="attention-self-relation">
+                            <legend>Self-relation</legend>
+                            <label class="settings-option" for="attention-self-relation">
+                                <span class="settings-option-copy">
+                                    <strong>Inner operator</strong>
+                                    <span>Choose how the work first returns to the body or interior field.</span>
+                                </span>
+                            </label>
+                            <select id="attention-self-relation" name="attentionSelfRelation">
+                                <option value="breath">Breath</option>
+                                <option value="inner-weather">Inner weather</option>
+                                <option value="dimensional-scan">Dimensional scan</option>
+                            </select>
+                        </fieldset>
+
+                        <fieldset class="settings-fieldset" data-spw-feature="attention-local-relation">
+                            <legend>Local-relation</legend>
+                            <label class="settings-option" for="attention-local-relation">
+                                <span class="settings-option-copy">
+                                    <strong>Immediate field</strong>
+                                    <span>Choose how the work reads the nearby room, witness, or proof surface.</span>
+                                </span>
+                            </label>
+                            <select id="attention-local-relation" name="attentionLocalRelation">
+                                <option value="immediate-field">Immediate field</option>
+                                <option value="witness">Witness</option>
+                                <option value="reciprocity-proof">Reciprocity / proof</option>
+                            </select>
+                        </fieldset>
+
+                        <fieldset class="settings-fieldset" data-spw-feature="attention-global-relation">
+                            <legend>Global-relation</legend>
+                            <label class="settings-option" for="attention-global-relation">
+                                <span class="settings-option-copy">
+                                    <strong>Horizon operator</strong>
+                                    <span>Choose the wider system the artifact should remember while staying local-first.</span>
+                                </span>
+                            </label>
+                            <select id="attention-global-relation" name="attentionGlobalRelation">
+                                <option value="horizon-systems">Horizon systems</option>
+                                <option value="cultural-fermentation">Cultural inheritance / fermentation</option>
+                                <option value="stewardship">Stewardship</option>
+                            </select>
+                        </fieldset>
+
+                        <fieldset class="settings-fieldset">
+                            <legend>Quick posture</legend>
+                            <p class="settings-option-hint">
+                                Contemplative Hearth keeps the surface quiet while making relation explicit enough for prompt,
+                                storyboard, lyric, curriculum, and visual work.
+                            </p>
+                            <div class="vibe-widget-actions" role="group" aria-label="Attention posture presets">
+                                <button class="operator-chip" data-preset="contemplative-hearth" type="button">Contemplative Hearth</button>
+                                <a class="operator-chip" href="/play/#media-cauldron" data-spw-operator="ref">~media cauldron</a>
+                            </div>
                         </fieldset>
                     </div>
                 </details>

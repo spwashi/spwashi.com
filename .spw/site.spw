@@ -48,6 +48,9 @@
 @discovery_powerups: ~"./conventions/discovery-powerups.spw"
 @daily_kernel: ~"./conventions/daily-kernel.spw"
 @data_spw_attribute_governance: ~"./conventions/data-spw-attribute-governance.spw"
+@relational_attention_media: ~"./conventions/relational-attention-media.spw"
+@relational_attention_media_plan: ~"../.agents/plans/relational-attention-media/PLAN.md"
+@relational_attention_media_cache: ~"../.agents/plans/relational-attention-media/wip.spw"
 @professional_skill_worldbuilding: ~"../.agents/plans/professional-skill-development-worldbuilding/PLAN.md"
 @professional_skill_worldbuilding_cache: ~"../.agents/plans/professional-skill-development-worldbuilding/wip.spw"
 @slices: .{
@@ -116,6 +119,7 @@ translations: .{
  discovery_powerups = #[@discovery_powerups, @semantic_capacity, @query_disposition][reg=set]
  daily_kernel = #[@daily_kernel, @semantic_capacity, @attention_field, @product_lines][reg=set]
  professional_skill_worldbuilding = #[@professional_skill_worldbuilding, @professional_skill_worldbuilding_cache, @product_lines][reg=set]
+ relational_attention_media = #[@relational_attention_media, @relational_attention_media_plan, @relational_attention_media_cache, @attention_field, @product_lines][reg=set]
  approach_and_narrative = #[@approach_topography, @product_lines, @wonder_vocabulary][reg=set]
  public_routes = #[@surfaces, @surface_registry][reg=set]
 }[reg=facet]
@@ -163,6 +167,7 @@ dispatch: .{
  semantic_capacity = @semantic_capacity
  discovery_powerups = @discovery_powerups
  daily_kernel = @daily_kernel
+ relational_attention_media = @relational_attention_media
  professional_skill_worldbuilding = @professional_skill_worldbuilding
  professional_skill_worldbuilding_cache = @professional_skill_worldbuilding_cache
  selection = @selection

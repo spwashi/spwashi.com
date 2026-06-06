@@ -1,0 +1,93 @@
+<section
+    class="site-frame"
+    id="media-cauldron"
+    data-media-cauldron
+    data-spw-kind="frame"
+    data-spw-role="production"
+    data-spw-context="media"
+    data-spw-feature="media-cauldron"
+    data-spw-form="brace"
+    data-spw-box-model="production-instrument"
+    data-spw-composition-flow="stack"
+    data-spw-semantic-expression="media[cauldron]{attention.prime.generate}"
+    data-spw-promptability="visible"
+>
+    <header class="frame-heading">
+        <a class="frame-sigil" href="#media-cauldron" data-spw-operator="frame">#&gt;media_cauldron</a>
+        <h2>Media Cauldron</h2>
+    </header>
+
+    <p class="frame-note">
+        A local-first seed generator for turning attention into media. Prime self, local field, and horizon;
+        choose a medium; then copy a structured prompt pack for prose, lyric, visual, storyboard, audio, or curriculum work.
+    </p>
+
+    <div class="settings-grid" data-spw-box-model="settings-instrument" data-spw-composition-flow="grid">
+        <fieldset class="settings-fieldset">
+            <legend>Attention prime</legend>
+            <label class="settings-option" for="media-attention-prime">
+                <span class="settings-option-copy">
+                    <strong>Self -> local -> global</strong>
+                    <span>Optional short note before the seed is generated.</span>
+                </span>
+            </label>
+            <textarea id="media-attention-prime" name="attentionPrime" rows="4">one breath, one room detail, one horizon pressure</textarea>
+        </fieldset>
+
+        <fieldset class="settings-fieldset">
+            <legend>Media route</legend>
+            <label class="settings-option" for="media-genre">
+                <span class="settings-option-copy">
+                    <strong>Genre / medium</strong>
+                    <span>Pick the artifact family this seed should serve.</span>
+                </span>
+            </label>
+            <select id="media-genre" name="mediaGenre">
+                <option value="prose">Prose vignette</option>
+                <option value="lyric">Lyric / song sketch</option>
+                <option value="visual">Visual lattice</option>
+                <option value="storyboard">Storyboard</option>
+                <option value="curriculum">Curriculum fragment</option>
+                <option value="audio">Audio texture</option>
+            </select>
+
+            <label class="settings-option" for="media-relational-focus">
+                <span class="settings-option-copy">
+                    <strong>Relational focus</strong>
+                    <span>Choose the relation that should lead the artifact.</span>
+                </span>
+            </label>
+            <select id="media-relational-focus" name="relationalFocus">
+                <option value="triad">Full relation triad</option>
+                <option value="self">Self relation</option>
+                <option value="local">Local context</option>
+                <option value="global">Global horizon</option>
+            </select>
+        </fieldset>
+
+        <fieldset class="settings-fieldset">
+            <legend>Source ingredient</legend>
+            <label class="settings-option" for="media-source-ingredient">
+                <span class="settings-option-copy">
+                    <strong>Material to cook</strong>
+                    <span>A phrase, route, object, character, proof claim, memory, or visual detail.</span>
+                </span>
+            </label>
+            <textarea id="media-source-ingredient" name="sourceIngredient" rows="4">a route handle, table memory, visual motif, or claim that should become portable</textarea>
+        </fieldset>
+    </div>
+
+    <div class="vibe-widget" data-site-settings-panel data-spw-box-model="readout-card">
+        <div class="vibe-widget-header">
+            <p class="vibe-widget-kicker">Copyable output</p>
+            <h3 class="vibe-widget-title">Structured media seed</h3>
+        </div>
+        <textarea data-media-cauldron-output rows="16" aria-label="Generated media seed"></textarea>
+        <div class="vibe-widget-actions" role="group" aria-label="Media cauldron actions">
+            <button class="operator-chip" data-media-cauldron-action="generate" type="button">@ generate seed</button>
+            <button class="operator-chip" data-media-cauldron-action="copy" type="button">~ copy seed</button>
+            <a class="operator-chip" href="/settings/#attention-posture-settings" data-spw-operator="ref">= tune posture</a>
+        </div>
+        <p class="vibe-widget-status" data-media-cauldron-status role="status" aria-live="polite"></p>
+    </div>
+</section>

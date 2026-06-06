@@ -23,6 +23,7 @@ Use these when a task is broad, cross-disciplinary, or likely to create reusable
 - `daily-kernel-development/PLAN.md` — run one-session kernels for engineers, animators, illustrators, designers, musicians, artists, and collaborators without broad rewrites.
 - `spw-surface-normalization/PLAN.md` — keep `.spw` surfaces navigable, dimensional, and reviewable as semantic capacity grows.
 - `modular-experience-slices/PLAN.md` — use slice contracts when ownership spans HTML, CSS, JS, `.spw`, validation, and practice beds.
+- `relational-attention-media/PLAN.md` — attention as self/local/global relation plus local media-seed production across genres.
 - `agent-optimization/PLAN.md` — use when the work changes the agent/editor operating environment itself.
 
 Small semantic discoveries do not always need a new plan. Use `.agents/plans/model-guided-refinement/templates/semantic-insight-cache.spw` for a single cache/audit/prime entry when implementation should wait.

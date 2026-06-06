@@ -1582,6 +1582,21 @@ const FEATURE_DEFS = [
     },
   },
   {
+    id: 'media-cauldron',
+    layer: MODULE_LAYERS.FEATURE,
+    when: MOUNT_WHEN.VISIBLE,
+    selector: '[data-media-cauldron]',
+    rootMode: 'each',
+    describes: 'media-cauldron[prime.select.generate] attention[self+local+global] artifact[prompt-pack]',
+    updates: ['data-media-cauldron-state', 'data-media-cauldron-output', 'data-spw-attention-self-relation', 'data-spw-attention-local-relation', 'data-spw-attention-global-relation'],
+    load: () => import('./modules/media-cauldron.js'),
+    mount: (mod, ctx, root) => {
+      const fn = mod?.initMediaCauldron;
+      if (!isFn(fn)) return;
+      return fn(root, ctx);
+    },
+  },
+  {
     id: 'brace-pivots',
     layer: MODULE_LAYERS.FEATURE,
     when: MOUNT_WHEN.IMMEDIATE,

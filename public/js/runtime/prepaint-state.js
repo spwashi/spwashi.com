@@ -38,6 +38,9 @@
   const OPERATOR_SATURATION = new Set(['muted', 'normal', 'vibrant']);
   const BINARY = new Set(['off', 'on']);
   const GRAIN_INTENSITY = new Set(['none', 'subtle', 'moderate', 'rich']);
+  const ATTENTION_SELF_RELATION = new Set(['breath', 'inner-weather', 'dimensional-scan']);
+  const ATTENTION_LOCAL_RELATION = new Set(['immediate-field', 'witness', 'reciprocity-proof']);
+  const ATTENTION_GLOBAL_RELATION = new Set(['horizon-systems', 'cultural-fermentation', 'stewardship']);
 
   const FONT_SIZE_PRESET_MULTIPLIER = Object.freeze({
     small: 0.93,
@@ -109,6 +112,9 @@
   const highContrast = pick(settings.highContrast, BINARY, 'off');
   const baseMetamaterial = pick(settings.baseMetamaterial, new Set(['paper', 'glass', 'matte', 'field']), 'glass');
   const grainIntensity = pick(settings.grainIntensity, GRAIN_INTENSITY, 'subtle');
+  const attentionSelfRelation = pick(settings.attentionSelfRelation, ATTENTION_SELF_RELATION, 'breath');
+  const attentionLocalRelation = pick(settings.attentionLocalRelation, ATTENTION_LOCAL_RELATION, 'immediate-field');
+  const attentionGlobalRelation = pick(settings.attentionGlobalRelation, ATTENTION_GLOBAL_RELATION, 'horizon-systems');
   const physicsReason = (settings.physicsReason || '').toString().trim().slice(0, 40); // flexible short reason for nav/physics gamification
   const fontSizeScale = toNumber(settings.fontSizeScale, 100);
   const fontScale = FONT_SIZE_PRESET_MULTIPLIER[fontSize] || 1;
@@ -144,6 +150,9 @@
   html.dataset.spwHighContrast = highContrast;
   html.dataset.spwBaseMetamaterial = baseMetamaterial;
   html.dataset.spwGrainIntensity = grainIntensity;
+  html.dataset.spwAttentionSelfRelation = attentionSelfRelation;
+  html.dataset.spwAttentionLocalRelation = attentionLocalRelation;
+  html.dataset.spwAttentionGlobalRelation = attentionGlobalRelation;
   if (physicsReason) html.dataset.spwPhysicsReason = physicsReason;
   html.dataset.spwFontSizeScale = String(fontSizeScale);
   html.dataset.spwPedagogicalFlavor = pedagogicalFlavor;

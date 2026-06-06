@@ -1,0 +1,19 @@
+# Relational Attention Media Cache
+
+#>relational_attention_media
+#:operation #!contract
+#:fixity #!contract_naming
+#:scope #!site
+
+focus_dimensions: #[
+  `self relation: breath, inner weather, dimensional scan`,
+  `local relation: immediate field, witness, reciprocity / proof`,
+  `global relation: horizon systems, cultural inheritance / fermentation, stewardship`,
+][reg=set]
+
+contract: .{
+  public_goal = `Attention and meditation become relational infrastructure, not decorative wellness copy.`
+  runtime_shape = `Settings persist attentionSelfRelation, attentionLocalRelation, and attentionGlobalRelation into root data attributes.`
+  media_shape = `Media Cauldron reads the relation triad and produces copyable seeds for prose, lyric, visual lattice, storyboard, audio texture, and curriculum fragment work.`
+  constraint = `Local-first, inspectable, no external generation dependency.`
+}[reg=facet]

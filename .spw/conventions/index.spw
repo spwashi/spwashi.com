@@ -32,6 +32,7 @@
 @discovery_powerups: ~"./discovery-powerups.spw"
 @daily_kernel: ~"./daily-kernel.spw"
 @data_spw_attribute_governance: ~"./data-spw-attribute-governance.spw"
+@relational_attention_media: ~"./relational-attention-media.spw"
 @attention_field: ~"./attention-field.spw"  # now carries aligned operational_semantics for cognitive+computational use
 @wonder_vocabulary: ~"./wonder-vocabulary.spw"
 @semantic_braces: ~"./semantic-braces.spw"
@@ -62,6 +63,7 @@ dispatch: .{
  semantic_capacity = @semantic_capacity
  discovery_powerups = @discovery_powerups
  daily_kernel = @daily_kernel
+ relational_attention_media = @relational_attention_media
  data_spw_attribute_governance = @data_spw_attribute_governance
  containers = @electromagnetic_containers
  versioning = @precipitates_projections
