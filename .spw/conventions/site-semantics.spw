@@ -1108,6 +1108,15 @@ frame #shell_instrument_navigation_rail
   usage = "Click toggles menu; pointer events describe contact only. Utility rail shows a quiet tune label, grouped controls, active state underline, and scroll snap. Toggle nav has its own scroll lane and compact route cards. Footer links scan as columns."
   note "Responds to utility row attractiveness, smoother interactions as navigability, clear feedback, and the preference for a machine/instrument feel."
 
+frame #header_action_disclosure_contract
+  role contract
+  surface scripts/template.mjs + public/js/runtime/shell-disclosure.js + public/css/shell/chrome.css + .agents/plans/navigation-header-disclosure/PLAN.md
+  concept reduce header overload by separating primary routing, primary creative action, posture state, and secondary tuning controls.
+  data-spw-feature = "shell-primary-actions | shell-tune-disclosure"
+  data-spw-shell-action = "open-media-cauldron | tune-attention-posture | secondary display actions"
+  usage = "The generated header emits a Cauldron action and an attention posture pill beside Routes. Shell runtime syncs the pill from attentionSelfRelation/attentionLocalRelation/attentionGlobalRelation and wraps the utility controls in a Tune details disclosure on constrained layouts."
+  note "Routes owns destination choice. Cauldron owns creative media entry. Attention owns state visibility and tuning. Tune owns display/readability/inspection controls. This preserves semantic density while making mobile and tablet chrome less crowded."
+
 frame #factshift_dimensional_imagination_bridge
   role prime
   surface play/rpg-wednesday/index.html (#story-trope-forge), design/palettes/index.html (#concept-cluster-feedback + #dimension-rail-feedback), .spw/site semantics

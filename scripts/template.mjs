@@ -553,6 +553,13 @@ function renderSiteHeader(vars) {
     + `${navItems}\n`
     + '        </ul>\n'
     + '    </nav>\n\n'
+    + '    <div class="spw-header-actions" data-spw-feature="shell-primary-actions" data-spw-semantic-expression="shell[actions]{attention.cauldron.tune}">\n'
+    + '        <a class="spw-header-action spw-header-action--cauldron" href="/play/#media-cauldron" data-spw-operator="action" data-spw-shell-action="open-media-cauldron" aria-label="Open the Media Cauldron">Cauldron</a>\n'
+    + '        <a class="spw-attention-posture-pill" href="/settings/#attention-posture-settings" data-spw-shell-action="tune-attention-posture" data-spw-attention-posture="self-local-global" aria-label="Tune attention posture">\n'
+    + '            <span class="spw-attention-posture-pill__kicker">Attention</span>\n'
+    + '            <span class="spw-attention-posture-pill__value" data-spw-attention-posture-label>self / local / global</span>\n'
+    + '        </a>\n'
+    + '    </div>\n\n'
     + '    <span aria-hidden="true" class="header-op-indicator" data-header-op-slot>\n'
     + `        <span class="header-op-indicator__token">${htmlEscape(indicator)}</span>\n`
     + '    </span>\n'

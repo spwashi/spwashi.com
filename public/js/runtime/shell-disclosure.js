@@ -101,6 +101,17 @@ const MENU_DATASET_KEYS = Object.freeze([
 
 const FONT_SCALE_STEPS = Object.freeze(['70', '80', '90', '100', '110', '120']);
 const COLOR_MODE_STEPS = Object.freeze(['auto', 'dark', 'light']);
+const ATTENTION_RELATION_LABELS = Object.freeze({
+  breath: 'breath',
+  'inner-weather': 'weather',
+  'dimensional-scan': 'scan',
+  'immediate-field': 'field',
+  witness: 'witness',
+  'reciprocity-proof': 'proof',
+  'horizon-systems': 'horizon',
+  'cultural-fermentation': 'culture',
+  stewardship: 'steward',
+});
 const UTILITY_LABELS = Object.freeze({
   compact: Object.freeze({
     'color-light': 'Light',
@@ -509,6 +520,31 @@ function getCurrentHighContrast() {
   return current === 'on' ? 'on' : 'off';
 }
 
+function getAttentionRelationLabel(value, fallback) {
+  const normalized = String(value || fallback || '').trim();
+  if (!normalized) return '';
+  return ATTENTION_RELATION_LABELS[normalized] || normalized.replace(/-/g, ' ');
+}
+
+function getCurrentAttentionPosture() {
+  const settings = window.spwSettings?.get?.() || {};
+  const root = document.documentElement.dataset || {};
+  const self = settings.attentionSelfRelation || root.spwAttentionSelfRelation || 'breath';
+  const local = settings.attentionLocalRelation || root.spwAttentionLocalRelation || 'immediate-field';
+  const global = settings.attentionGlobalRelation || root.spwAttentionGlobalRelation || 'horizon-systems';
+
+  return {
+    self,
+    local,
+    global,
+    label: [
+      getAttentionRelationLabel(self, 'breath'),
+      getAttentionRelationLabel(local, 'immediate-field'),
+      getAttentionRelationLabel(global, 'horizon-systems'),
+    ].filter(Boolean).join(' / '),
+  };
+}
+
 function getNextFontScale(direction = 1) {
   const current = getCurrentFontScale();
   const index = Math.max(0, FONT_SCALE_STEPS.indexOf(current));
@@ -516,9 +552,54 @@ function getNextFontScale(direction = 1) {
   return FONT_SCALE_STEPS[nextIndex];
 }
 
+function syncHeaderActions(header) {
+  if (!(header instanceof HTMLElement)) return;
+  const posture = getCurrentAttentionPosture();
+  const pill = header.querySelector('.spw-attention-posture-pill');
+  const label = pill?.querySelector('[data-spw-attention-posture-label]');
+
+  if (pill instanceof HTMLElement) {
+    pill.dataset.spwAttentionPosture = `${posture.self} ${posture.local} ${posture.global}`;
+    pill.dataset.spwAttentionSelfRelation = posture.self;
+    pill.dataset.spwAttentionLocalRelation = posture.local;
+    pill.dataset.spwAttentionGlobalRelation = posture.global;
+    pill.title = `Attention posture: ${posture.label}. Open settings to tune.`;
+  }
+
+  if (label) {
+    label.textContent = posture.label || 'self / local / global';
+  }
+}
+
+function setToolsDisclosureOpen(disclosure, open) {
+  if (!(disclosure instanceof HTMLDetailsElement)) return;
+  disclosure.open = !!open;
+  const summary = disclosure.querySelector('.spw-shell-tools-summary');
+  if (summary instanceof HTMLElement) {
+    summary.setAttribute('aria-expanded', disclosure.open ? 'true' : 'false');
+  }
+}
+
 function ensureUtilityRow(header) {
   let row = header.querySelector('.spw-shell-utility-row');
   if (row instanceof HTMLElement) return row;
+
+  let disclosure = header.querySelector('.spw-shell-tools-disclosure');
+  if (!(disclosure instanceof HTMLDetailsElement)) {
+    disclosure = document.createElement('details');
+    disclosure.className = 'spw-shell-tools-disclosure';
+    disclosure.dataset.spwFeature = 'shell-tune-disclosure';
+    disclosure.dataset.spwSemanticExpression = 'shell[tune]{display.read.inspect}';
+
+    const summary = document.createElement('summary');
+    summary.className = 'spw-shell-tools-summary';
+    summary.setAttribute('aria-expanded', 'false');
+    summary.innerHTML = `
+      <span class="spw-shell-tools-summary__glyph" aria-hidden="true">Aa</span>
+      <span class="spw-shell-tools-summary__label">Tune</span>
+    `;
+    disclosure.appendChild(summary);
+  }
 
   row = document.createElement('div');
   row.className = 'spw-shell-utility-row';
@@ -607,9 +688,12 @@ function ensureUtilityRow(header) {
   }
 
   row.appendChild(template.content.cloneNode(true));
+  disclosure.appendChild(row);
 
   const trace = header.querySelector('.spw-header-trace');
-  header.insertBefore(row, trace || header.querySelector('nav') || null);
+  if (!disclosure.isConnected) {
+    header.insertBefore(disclosure, trace || header.querySelector('nav') || null);
+  }
   return row;
 }
 
@@ -646,7 +730,13 @@ function syncUtilityRow(row) {
   row.dataset.spwPhysicsReason = root.dataset.spwPhysicsReason || '';
   row.dataset.spwSemanticDensity = root.dataset.spwSemanticDensity || '';
   row.dataset.spwMetamaterial = currentBase; // local material on the utility surface itself for chrome rules
-  row.dataset.spwModuleEvaluates = (row.dataset.spwModuleEvaluates || '') + ' cognitive attentional material'; // append for audit
+  row.dataset.spwModuleEvaluates = Array.from(new Set([
+    ...(row.dataset.spwModuleEvaluates || '').split(/\s+/).filter(Boolean),
+    'cognitive',
+    'attentional',
+    'material',
+  ])).join(' ');
+  syncHeaderActions(row.closest('.site-header, body > header'));
 
   row.querySelectorAll('[data-spw-shell-action="color-light"]').forEach((button) => {
     const arg = button.querySelector('.spw-utility-argument');
@@ -947,6 +1037,8 @@ export function initSpwShellDisclosure(options = {}) {
   }
 
   const utilityRow = ensureUtilityRow(header);
+  const utilityDisclosure = utilityRow.closest('.spw-shell-tools-disclosure');
+  const utilitySummary = utilityDisclosure?.querySelector('.spw-shell-tools-summary');
 
   const state = createState(config);
   syncDeviceContext(state);
@@ -1287,6 +1379,27 @@ export function initSpwShellDisclosure(options = {}) {
     }
   };
 
+  const handleToolsSummaryClick = (event) => {
+    if (!(utilityDisclosure instanceof HTMLDetailsElement)) return;
+    const summary = event.target?.closest?.('.spw-shell-tools-summary');
+    if (!(summary instanceof HTMLElement) || !utilityDisclosure.contains(summary)) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    setToolsDisclosureOpen(utilityDisclosure, !utilityDisclosure.open);
+    syncShellOffset(header);
+  };
+
+  const handleToolsSummaryKeydown = (event) => {
+    if (!(utilityDisclosure instanceof HTMLDetailsElement)) return;
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    setToolsDisclosureOpen(utilityDisclosure, !utilityDisclosure.open);
+    syncShellOffset(header);
+  };
+
   const handleMenuIntent = (event) => {
     const detail = event.detail || {};
     const source = detail.source || 'intent';
@@ -1348,6 +1461,8 @@ export function initSpwShellDisclosure(options = {}) {
   header.addEventListener('focusout', handleFocusOut);
   nav.addEventListener('click', handleNavClick);
   utilityRow.addEventListener('click', handleUtilityClick);
+  utilitySummary?.addEventListener('click', handleToolsSummaryClick, true);
+  utilitySummary?.addEventListener('keydown', handleToolsSummaryKeydown, true);
   document.addEventListener('click', handleDocumentClick);
   document.addEventListener('keydown', handleDocumentKeydown);
   document.addEventListener(EVENT_NAMES.INTENT, handleMenuIntent);
@@ -1385,6 +1500,8 @@ export function initSpwShellDisclosure(options = {}) {
       header.removeEventListener('focusout', handleFocusOut);
       nav.removeEventListener('click', handleNavClick);
       utilityRow.removeEventListener('click', handleUtilityClick);
+      utilitySummary?.removeEventListener('click', handleToolsSummaryClick, true);
+      utilitySummary?.removeEventListener('keydown', handleToolsSummaryKeydown, true);
       document.removeEventListener('click', handleDocumentClick);
       document.removeEventListener('keydown', handleDocumentKeydown);
       document.removeEventListener(EVENT_NAMES.INTENT, handleMenuIntent);
