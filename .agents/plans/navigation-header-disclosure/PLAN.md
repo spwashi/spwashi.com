@@ -17,13 +17,13 @@ The public contract is stable enough to document because it spans the generated 
 
 - `Routes` opens route navigation.
 - `Cauldron` jumps to `/play/#media-cauldron`.
-- `Attention posture` reflects and links to the self/local/global posture settings.
+- `Attention posture` previews the self/local/global posture, then offers an explicit settings link.
 - `Display` contains secondary text size, color, contrast, layout, and inspection controls.
 
 ## Implementation
 
-- `scripts/template.mjs` emits `.spw-header-actions` for Cauldron and the attention posture pill.
-- `public/js/runtime/shell-disclosure.js` syncs the posture label from canonical settings/root datasets, keeps the posture link accessible, and wraps the utility row in a `details` disclosure.
+- `scripts/template.mjs` emits `.spw-header-actions` for Cauldron and the attention posture preview button.
+- `public/js/runtime/shell-disclosure.js` syncs the posture label from canonical settings/root datasets, creates the posture preview panel, and wraps the utility row in a `details` disclosure.
 - `public/css/shell/chrome.css` gives brand, routes, actions, toggle, and display controls stable grid areas across inline, compressed, and toggle modes.
 
 ## Validation

@@ -557,18 +557,89 @@ function syncHeaderActions(header) {
   const posture = getCurrentAttentionPosture();
   const pill = header.querySelector('.spw-attention-posture-pill');
   const label = pill?.querySelector('[data-spw-attention-posture-label]');
+  const panel = header.querySelector('.spw-attention-posture-panel');
 
   if (pill instanceof HTMLElement) {
     pill.dataset.spwAttentionPosture = `${posture.self} ${posture.local} ${posture.global}`;
     pill.dataset.spwAttentionSelfRelation = posture.self;
     pill.dataset.spwAttentionLocalRelation = posture.local;
     pill.dataset.spwAttentionGlobalRelation = posture.global;
-    pill.setAttribute('aria-label', `Open attention posture settings. Current posture: ${posture.label}.`);
-    pill.title = `Attention posture: ${posture.label}. This also informs Media Cauldron seeds.`;
+    pill.setAttribute('aria-label', `Preview attention posture. Current posture: ${posture.label}.`);
+    pill.title = `Preview attention posture: ${posture.label}.`;
   }
 
   if (label) {
     label.textContent = posture.label || 'self / local / global';
+  }
+
+  syncAttentionPosturePanel(panel, posture);
+}
+
+function syncAttentionPosturePanel(panel, posture = getCurrentAttentionPosture()) {
+  if (!(panel instanceof HTMLElement)) return;
+
+  const self = panel.querySelector('[data-spw-attention-panel-self]');
+  const local = panel.querySelector('[data-spw-attention-panel-local]');
+  const global = panel.querySelector('[data-spw-attention-panel-global]');
+  const summary = panel.querySelector('[data-spw-attention-panel-summary]');
+
+  if (self) self.textContent = getAttentionRelationLabel(posture.self, 'breath');
+  if (local) local.textContent = getAttentionRelationLabel(posture.local, 'immediate-field');
+  if (global) global.textContent = getAttentionRelationLabel(posture.global, 'horizon-systems');
+  if (summary) {
+    summary.textContent = `${posture.label}. Media Cauldron reads this posture when shaping seed prompts.`;
+  }
+}
+
+function ensureAttentionPosturePanel(header, pill) {
+  if (!(header instanceof HTMLElement) || !(pill instanceof HTMLElement)) return null;
+  let panel = header.querySelector('.spw-attention-posture-panel');
+  if (panel instanceof HTMLElement) return panel;
+
+  const panelId = 'spw-attention-posture-panel';
+  panel = document.createElement('div');
+  panel.id = panelId;
+  panel.className = 'spw-attention-posture-panel';
+  panel.hidden = true;
+  panel.setAttribute('role', 'dialog');
+  panel.setAttribute('aria-label', 'Attention posture preview');
+  panel.dataset.spwFeature = 'attention-posture-preview';
+  panel.innerHTML = `
+    <div class="spw-attention-posture-panel__topline">
+      <strong>Attention posture</strong>
+    </div>
+    <p class="spw-attention-posture-panel__summary" data-spw-attention-panel-summary></p>
+    <dl class="spw-attention-posture-panel__values">
+      <div><dt>Self</dt><dd data-spw-attention-panel-self></dd></div>
+      <div><dt>Local</dt><dd data-spw-attention-panel-local></dd></div>
+      <div><dt>Global</dt><dd data-spw-attention-panel-global></dd></div>
+    </dl>
+    <a class="spw-attention-posture-panel__action" href="/settings/#attention-posture-settings">Open settings</a>
+    <button type="button" class="spw-attention-posture-panel__close" data-spw-attention-panel-close aria-label="Close attention posture preview">Close</button>
+  `;
+
+  pill.setAttribute('aria-haspopup', 'dialog');
+  pill.setAttribute('aria-expanded', 'false');
+  pill.setAttribute('aria-controls', panelId);
+  pill.insertAdjacentElement('afterend', panel);
+  syncAttentionPosturePanel(panel);
+  return panel;
+}
+
+function setAttentionPosturePanelOpen(header, open, { focusPill = false } = {}) {
+  if (!(header instanceof HTMLElement)) return;
+  const pill = header.querySelector('.spw-attention-posture-pill');
+  const panel = header.querySelector('.spw-attention-posture-panel');
+  if (!(pill instanceof HTMLElement) || !(panel instanceof HTMLElement)) return;
+
+  const nextOpen = !!open;
+  panel.hidden = !nextOpen;
+  pill.setAttribute('aria-expanded', nextOpen ? 'true' : 'false');
+  header.dataset.spwAttentionPosturePanel = nextOpen ? 'open' : 'closed';
+  syncAttentionPosturePanel(panel);
+
+  if (!nextOpen && focusPill) {
+    pill.focus();
   }
 }
 
@@ -1042,6 +1113,8 @@ export function initSpwShellDisclosure(options = {}) {
   const utilityRow = ensureUtilityRow(header);
   const utilityDisclosure = utilityRow.closest('.spw-shell-tools-disclosure');
   const utilitySummary = utilityDisclosure?.querySelector('.spw-shell-tools-summary');
+  const attentionPill = header.querySelector('.spw-attention-posture-pill');
+  const attentionPanel = ensureAttentionPosturePanel(header, attentionPill);
 
   const state = createState(config);
   syncDeviceContext(state);
@@ -1147,6 +1220,37 @@ export function initSpwShellDisclosure(options = {}) {
     handleToggle(event);
   };
 
+  const handleAttentionPillClick = (event) => {
+    const activePill = event.target?.closest?.('.spw-attention-posture-pill');
+    if (!(activePill instanceof HTMLElement) || activePill !== attentionPill) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    const isOpen = activePill.getAttribute('aria-expanded') === 'true';
+    setAttentionPosturePanelOpen(header, !isOpen);
+  };
+
+  const handleAttentionPillKeydown = (event) => {
+    if (event.key !== 'ArrowDown') return;
+    const activePill = event.target?.closest?.('.spw-attention-posture-pill');
+    if (!(activePill instanceof HTMLElement) || activePill !== attentionPill) return;
+
+    event.preventDefault();
+    setAttentionPosturePanelOpen(header, true);
+    window.requestAnimationFrame(() => {
+      attentionPanel?.querySelector('a[href]')?.focus();
+    });
+  };
+
+  const handleAttentionPanelClick = (event) => {
+    const close = event.target?.closest?.('[data-spw-attention-panel-close]');
+    if (!(close instanceof HTMLElement) || !attentionPanel?.contains(close)) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    setAttentionPosturePanelOpen(header, false, { focusPill: true });
+  };
+
   const handlePointerEnter = (event) => {
     if (event.pointerType && event.pointerType !== 'mouse' && event.pointerType !== 'pen') return;
     state.pointerInsideHeader = true;
@@ -1202,6 +1306,10 @@ export function initSpwShellDisclosure(options = {}) {
   };
 
   const handleDocumentClick = (event) => {
+    if (attentionPanel && !attentionPanel.hidden && !header.contains(event.target)) {
+      setAttentionPosturePanelOpen(header, false);
+    }
+
     if (state.mode !== MODES.TOGGLE) return;
     if (!state.userIntentOpen) return;
     if (header.contains(event.target)) return;
@@ -1209,6 +1317,12 @@ export function initSpwShellDisclosure(options = {}) {
   };
 
   const handleDocumentKeydown = (event) => {
+    if (event.key === 'Escape' && attentionPanel && !attentionPanel.hidden) {
+      event.preventDefault();
+      setAttentionPosturePanelOpen(header, false, { focusPill: true });
+      return;
+    }
+
     if (event.key === 'Tab' && state.mode === MODES.TOGGLE && state.userIntentOpen) {
       const focusables = getFocusableMenuElements(header, nav, toggle);
       if (focusables.length > 1) {
@@ -1460,6 +1574,9 @@ export function initSpwShellDisclosure(options = {}) {
   header.addEventListener('pointermove', handlePointerMove);
   header.addEventListener('pointerleave', handlePointerLeave);
   header.addEventListener('click', handleDelegatedToggleClick);
+  attentionPill?.addEventListener('click', handleAttentionPillClick);
+  attentionPill?.addEventListener('keydown', handleAttentionPillKeydown);
+  attentionPanel?.addEventListener('click', handleAttentionPanelClick);
   header.addEventListener('focusin', handleFocusIn);
   header.addEventListener('focusout', handleFocusOut);
   nav.addEventListener('click', handleNavClick);
@@ -1499,6 +1616,9 @@ export function initSpwShellDisclosure(options = {}) {
       header.removeEventListener('pointermove', handlePointerMove);
       header.removeEventListener('pointerleave', handlePointerLeave);
       header.removeEventListener('click', handleDelegatedToggleClick);
+      attentionPill?.removeEventListener('click', handleAttentionPillClick);
+      attentionPill?.removeEventListener('keydown', handleAttentionPillKeydown);
+      attentionPanel?.removeEventListener('click', handleAttentionPanelClick);
       header.removeEventListener('focusin', handleFocusIn);
       header.removeEventListener('focusout', handleFocusOut);
       nav.removeEventListener('click', handleNavClick);
