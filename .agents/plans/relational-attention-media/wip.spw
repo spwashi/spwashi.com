@@ -15,5 +15,7 @@ contract: .{
   public_goal = `Attention and meditation become relational infrastructure, not decorative wellness copy.`
   runtime_shape = `Settings persist attentionSelfRelation, attentionLocalRelation, and attentionGlobalRelation into root data attributes.`
   media_shape = `Media Cauldron reads the relation triad and produces copyable seeds for prose, lyric, visual lattice, storyboard, audio texture, and curriculum fragment work.`
+  canon_shape = `Generated media seeds can be copied as a proof card, Town Atlas note, or markdown artifact so source ingredients can become public canon candidates without extra translation.`
+  discovery_shape = `Homepage Living Concepts uses native details/summary cards to surface core ideas and direct links before a visitor has to learn the whole route lattice.`
   constraint = `Local-first, inspectable, no external generation dependency.`
 }[reg=facet]

@@ -8,6 +8,8 @@ definition: .{
   attention = `A relational dimension that can be tuned across self, local context, and global horizon.`
   meditation = `A practical priming step: stabilize the relation before generating or revising an artifact.`
   media_cauldron = `A local surface that turns the current relation triad into copyable media seeds.`
+  canon_increment = `A generated seed formatted as a proof card, Town Atlas note, or markdown artifact so world material can be reviewed and carried forward.`
+  living_concepts = `A compact native-disclosure atlas that links core site ideas to the route where each idea is used.`
 }[reg=facet]
 
 settings_contract: .{
@@ -19,6 +21,9 @@ settings_contract: .{
 
 artifact_contract: #[
   `A seed should name medium, relational focus, attention prime, source ingredient, prompt pack, and attention notes.`,
+  `A seed should visibly name the relation triad that shaped it.`,
+  `World-building mode should bias output toward lore, faction, character, or atlas use without changing the local-first contract.`,
+  `Canon export actions should preserve source ingredient, attention posture, next action, and an explicit draft/private boundary.`,
   `The seed should produce immediately usable material without depending on a remote model call.`,
   `The tone should stay concrete, inspectable, playful, technically literate, and local-first.`,
 ][reg=set]

@@ -677,3 +677,91 @@
 :where(#choose-your-entrance .spw-card-reason) {
   margin-top: 0.15rem;
 }
+
+:where(#living-concepts .living-concepts-grid) {
+  --spw-grid-min-base: 16rem;
+  align-items: stretch;
+}
+
+:where(#living-concepts .living-concept-card) {
+  --component-shadow: var(--home-shadow-quiet);
+  --component-shadow-active: var(--home-shadow-active);
+  position: relative;
+  min-height: 0;
+  padding: 0;
+  overflow: clip;
+  border: 1px solid color-mix(in oklab, var(--home-accent-primary) 18%, var(--line, transparent));
+  border-radius: var(--shape-card, 0.75rem);
+  background:
+      radial-gradient(
+          circle at 12% 0%,
+          color-mix(in oklab, var(--home-accent-primary) 10%, transparent),
+          transparent 42%
+      ),
+      linear-gradient(
+          155deg,
+          color-mix(in oklab, var(--home-surface-bg-strong) 92%, var(--home-accent-primary) 4%),
+          color-mix(in oklab, var(--home-surface-bg) 94%, var(--home-accent-ember) 3%)
+      );
+  box-shadow: var(--component-shadow);
+}
+
+:where(#living-concepts .living-concept-card > summary) {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.35rem;
+  min-height: 5.75rem;
+  padding: 0.9rem 1rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+#living-concepts .living-concept-card > summary::-webkit-details-marker {
+  display: none;
+}
+
+:where(#living-concepts .living-concept-card > summary::after) {
+  content: "+";
+  position: absolute;
+  top: 0.82rem;
+  right: 0.9rem;
+  color: color-mix(in srgb, var(--home-accent-primary) 72%, var(--ink, #1b1f23) 28%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-weight: 800;
+}
+
+:where(#living-concepts .living-concept-card[open] > summary::after) {
+  content: "-";
+}
+
+:where(#living-concepts .living-concept-card__name) {
+  max-inline-size: calc(100% - 1.6rem);
+  color: var(--ink, #1b1f23);
+  font-size: 1rem;
+  font-weight: 780;
+  line-height: 1.2;
+}
+
+:where(#living-concepts .living-concept-card__short) {
+  color: color-mix(in srgb, var(--ink-soft, rgba(27, 31, 35, 0.68)) 82%, var(--home-accent-primary) 18%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.74rem;
+  line-height: 1.35;
+}
+
+:where(#living-concepts .living-concept-card__body) {
+  display: grid;
+  gap: 0.7rem;
+  padding: 0 1rem 1rem;
+}
+
+:where(#living-concepts .living-concept-card__body p) {
+  margin: 0;
+}
+
+:where(#living-concepts .living-concept-card .frame-operators) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}

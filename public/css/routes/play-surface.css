@@ -296,6 +296,30 @@
     0 0.3rem 0.8rem rgba(0, 0, 0, var(--play-rhythm-shadow-strength));
 }
 
+:where(body[data-spw-surface="play"] [data-media-cauldron] .vibe-widget-actions) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs, 0.55rem);
+  align-items: center;
+}
+
+:where(body[data-spw-surface="play"] [data-media-cauldron] .vibe-widget-actions .operator-chip) {
+  flex: 0 1 auto;
+}
+
+:where(body[data-spw-surface="play"] [data-media-cauldron] .media-cauldron-posture) {
+  margin: 0.55rem 0 0;
+  color: color-mix(in srgb, var(--ink-soft) 86%, var(--play-accent) 14%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.82rem;
+}
+
+:where(body[data-spw-surface="play"] [data-media-cauldron] .media-cauldron-related) {
+  margin-top: 0.8rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid color-mix(in srgb, var(--play-accent) 16%, var(--line));
+}
+
 /* ==========================================================================
    10. Toast / install / utility affordances
    ========================================================================== */
