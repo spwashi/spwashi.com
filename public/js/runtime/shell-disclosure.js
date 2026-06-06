@@ -103,14 +103,14 @@ const FONT_SCALE_STEPS = Object.freeze(['70', '80', '90', '100', '110', '120']);
 const COLOR_MODE_STEPS = Object.freeze(['auto', 'dark', 'light']);
 const ATTENTION_RELATION_LABELS = Object.freeze({
   breath: 'breath',
-  'inner-weather': 'weather',
-  'dimensional-scan': 'scan',
-  'immediate-field': 'field',
+  'inner-weather': 'inner weather',
+  'dimensional-scan': 'dimensional scan',
+  'immediate-field': 'immediate field',
   witness: 'witness',
-  'reciprocity-proof': 'proof',
-  'horizon-systems': 'horizon',
-  'cultural-fermentation': 'culture',
-  stewardship: 'steward',
+  'reciprocity-proof': 'reciprocity / proof',
+  'horizon-systems': 'horizon systems',
+  'cultural-fermentation': 'cultural fermentation',
+  stewardship: 'stewardship',
 });
 const UTILITY_LABELS = Object.freeze({
   compact: Object.freeze({
@@ -563,7 +563,8 @@ function syncHeaderActions(header) {
     pill.dataset.spwAttentionSelfRelation = posture.self;
     pill.dataset.spwAttentionLocalRelation = posture.local;
     pill.dataset.spwAttentionGlobalRelation = posture.global;
-    pill.title = `Attention posture: ${posture.label}. Open settings to tune.`;
+    pill.setAttribute('aria-label', `Open attention posture settings. Current posture: ${posture.label}.`);
+    pill.title = `Attention posture: ${posture.label}. This also informs Media Cauldron seeds.`;
   }
 
   if (label) {
@@ -594,9 +595,11 @@ function ensureUtilityRow(header) {
     const summary = document.createElement('summary');
     summary.className = 'spw-shell-tools-summary';
     summary.setAttribute('aria-expanded', 'false');
+    summary.setAttribute('aria-label', 'Open display controls for text size, color, contrast, layout, and inspection');
+    summary.title = 'Display controls: text size, color, contrast, layout, and inspection';
     summary.innerHTML = `
       <span class="spw-shell-tools-summary__glyph" aria-hidden="true">Aa</span>
-      <span class="spw-shell-tools-summary__label">Tune</span>
+      <span class="spw-shell-tools-summary__label">Display</span>
     `;
     disclosure.appendChild(summary);
   }
