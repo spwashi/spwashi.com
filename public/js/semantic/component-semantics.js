@@ -817,12 +817,18 @@ function applySemanticSnapshot(el, snapshot, options = {}) {
 
 function collectSemanticTargets(root, selector = DEFAULT_SELECTOR) {
   const targets = new Set();
+  // Route/root hosts own page-level state; component semantics must not backfill them.
+  const shouldSkip = (el) => (
+    el === document.documentElement
+    || el === document.body
+  );
 
-  if (root instanceof Element && root.matches(selector)) {
+  if (root instanceof Element && root.matches(selector) && !shouldSkip(root)) {
     targets.add(root);
   }
 
   root.querySelectorAll?.(selector).forEach((el) => {
+    if (shouldSkip(el)) return;
     targets.add(el);
   });
 
