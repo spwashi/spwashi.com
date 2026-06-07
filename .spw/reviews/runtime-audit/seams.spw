@@ -84,8 +84,18 @@ implicit_contracts: .{
 where_the_seams_are_good: #[
  `component-semantics.js -> semantic-chrome.js is a relatively honest seam because the latter explicitly imports the former's snapshot function.`,
  `site.js module records and normalized mount handles give the runtime a strong cleanup shape when modules actually return cleanup handles.`,
- `page-metadata.js keeping ARIA normalization close to page semantics is a sound seam between public HTML and runtime enhancement.`
+ `page-metadata.js keeping ARIA normalization close to page semantics is a sound seam between public HTML and runtime enhancement.`,
+ `scripts/ts/runtime-contracts.mts now makes module IDs, dynamic import targets, generated typed output sources, and root-level JS entrypoint boundaries visible in npm run check.`
 ][reg=set]
+
+contract_check_2026_06: .{
+ operation = `contract`
+ fixity = `stable`
+ claim = `Runtime architecture boundaries are now validated as part of the site check loop rather than existing only as README convention.`
+ evidence = #[`scripts/ts/runtime-contracts.mts`, `scripts/ts/check-site.mts`, `package.json#check:runtime`, `public/js/README.md`][reg=set]
+ validation = `npm run check:runtime && npm run check`
+ next_question = `Which warning-only semantic fields should become required after current modules gain describes, updates, and evaluates metadata?`
+}[reg=facet]
 
 where_the_seams_are_soft: #[
  `Role inference exists in both site.js and page-metadata.js with nearly the same heuristics but no shared helper.`,

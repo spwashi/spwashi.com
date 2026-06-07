@@ -33,4 +33,6 @@ Current semantic rails:
 See `.agents/plans/agent-optimization/PLAN.md` for the current track improving these surfaces themselves (the primary home for ongoing skill, planning, and `.spw` dispatch improvements).
 See `.agents/plans/agentic-dev-contracts/PLAN.md` for the executable validation contracts (manifest + `npm run check`).
 
+Default validation for routine site work is `npm run check:local`; reserve `npm run check` / `npm run audit` for dependency-sensitive work because npm audit may hit the network.
+
 Use `spw-plan-maintenance` after landing changes that affect multiple plans or the agent layer.

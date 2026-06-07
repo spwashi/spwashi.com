@@ -8,22 +8,26 @@ import {
   writeRouteRuntimeManifest,
 } from './site-contracts/index.mjs';
 import { collectCssContractReport } from './css-contracts.mjs';
+import { collectRuntimeContractReport } from './runtime-contracts.mjs';
 
 export async function main(): Promise<void> {
   const manifest = await writeRouteRuntimeManifest();
   const manifestIssues = collectManifestIssues(manifest);
   const syntaxReport = await runSyntaxChecks();
   const cssReport = await collectCssContractReport();
+  const runtimeReport = await collectRuntimeContractReport();
   const gitDiffResult = runGitDiffCheck();
 
   console.log(`[check] manifest=${ROUTE_MANIFEST_OUTPUT}`);
   console.log(`[check] routes=${manifest.routeCount} svgRoutes=${manifest.maps.svgRoutes.length} specRoutes=${manifest.maps.specRoutes.length}`);
   console.log(`[check] syntax targets=${syntaxReport.targets.length}`);
   console.log(`[check] css files=${cssReport.cssFiles.length} imports=${cssReport.imports.length} routeStylesheets=${cssReport.linkedStylesheets.length} sources=${cssReport.sourceFiles.length}`);
+  console.log(`[check] runtime modules=${runtimeReport.modules.length} rootEntrypoints=${runtimeReport.rootEntrypoints.length} typedOutputs=${runtimeReport.typedOutputs.length}`);
 
   const warnings = [
     ...manifestIssues.warnings.map((warning) => `[manifest] ${warning}`),
     ...cssReport.warnings.map((warning) => `[css] ${warning}`),
+    ...runtimeReport.warnings.map((warning) => `[runtime] ${warning}`),
   ];
 
   if (warnings.length) {
@@ -66,6 +70,16 @@ export async function main(): Promise<void> {
     }
     if (cssReport.errors.length > 12) {
       console.log(`  ... ${cssReport.errors.length - 12} more css errors`);
+    }
+  }
+
+  if (runtimeReport.errors.length) {
+    failures.push(`[runtime] ${runtimeReport.errors.length} contract error(s)`);
+    for (const error of runtimeReport.errors.slice(0, 12)) {
+      console.log(`  runtime: ${error}`);
+    }
+    if (runtimeReport.errors.length > 12) {
+      console.log(`  ... ${runtimeReport.errors.length - 12} more runtime errors`);
     }
   }
 

@@ -7,11 +7,14 @@ Reduce the size and cognitive load of `public/js/site.js` by extracting the page
 - Extract page lifecycle helpers from `public/js/site.js` into a focused runtime module.
 - Keep the shared page-state vocabulary, timing behavior, and dataset writes centralized.
 - Update documentation that currently says the page-state contract lives only in `site.js`.
+- Add runtime architecture checks that make module definitions, generated typed outputs, and root-level entrypoint boundaries fail visibly when they drift.
 
 ## Likely File Set
 - `public/js/runtime/page-state.js`
 - `public/js/site.js`
 - `public/js/README.md`
+- `scripts/ts/runtime-contracts.mts`
+- `scripts/ts/check-site.mts`
 - `.spw/reviews/runtime-audit/lifecycles.spw`
 
 ## Constraints
@@ -22,8 +25,14 @@ Reduce the size and cognitive load of `public/js/site.js` by extracting the page
 ## Validation
 - `node --check public/js/site.js`
 - `node --check public/js/runtime/page-state.js`
+- `npm run check:runtime`
 - `git diff --check`
 - `npm run check`
+
+## 2026-06 Contract Check Pass
+- Added `scripts/ts/runtime-contracts.mts` as a hard guard for runtime module shape and folder boundaries.
+- Wired the checker into `scripts/ts/check-site.mts` and exposed it through `npm run check:runtime`.
+- Kept semantic metadata gaps as warnings so current modules remain inspectable without forcing a broad rewrite.
 
 ## Out of Scope
 - Renaming unrelated runtime modules.

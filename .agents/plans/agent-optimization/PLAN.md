@@ -29,6 +29,7 @@ The site should remain hand-authored and human-primary. Agent optimization is an
 - No first-class entry in the `.spw` ontology for the planning ecology, skills layer, or "agent contracts" as a reusable semantic family (despite heavy use and public exposure).
 - `archive/README.md` is stale (references only 3 of the 4 canonical tracks).
 - The public `/about/plans/` page is a significant hand-maintenance tax; plan cards and status are not derived from the filesystem or a machine-readable index.
+- Network-call DX needed clarification more than new tooling: `check:local` and the dependency-surface audit rule already existed, but future agents needed clearer instruction to prefer local validation and local repo evidence before `npm audit`, dependency installs, or web lookups.
 
 **Recent improvement (operator-site-projection):**
 - New convention `.spw/conventions/operator-site-projection.spw` turns operators from symbolic labels into practical codebase handles.
@@ -118,6 +119,7 @@ The site should remain hand-authored and human-primary. Agent optimization is an
   .spw: new frames #cauldron_hook_jump_highlight, #visual_mode_cauldron_spell_visibility, #cauldron_spell_token_cascade_card_region_enhance.
   PLAN hygiene note appended. Ties prior (cauldron from composition/RPG, enhancementLevel, floating/visibility, utility, cards gesture/state, tokens material, re-gather scroll).
   Validation: check passed.
+- **Offline-first agent validation clarification (2026-06)**: The repo already had the core mechanism (`npm run check:local`) and the dependency-surface rule for `npm audit`. This pass made the intended usage explicit in `AGENTS.md`, the shared site workflow, and the skills README: use local repo evidence first; use `check:local` for ordinary non-dependency patches; reserve `npm run check`, `npm run audit`, package installs, and external web searches for dependency-sensitive work, explicitly current external facts, or cases where local context cannot answer. No new script was added because the tooling was already present; the improvement is discoverability and future-agent decision quality.
 - Limited agent memory/state beyond the route manifest (one SVG memo, poll history).
 - Cross-surface citations exist in spots but are not systematic (plans cite plans; .spw cites some plans; public page cites GitHub; skills are isolated).
 - No routine cadence or lightweight automation for plan hygiene, archive sweeps, or syncing editor surfaces.

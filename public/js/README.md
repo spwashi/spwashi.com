@@ -177,4 +177,9 @@ Import implementation modules from the folder that owns the behavior. Keep
 `/public/js/site.js` stable for route shells, and avoid adding new root-level
 compatibility wrappers unless a file truly needs a migration shim.
 
+`npm run check:runtime` enforces the hard part of that rule: runtime module IDs
+must be unique, dynamic imports must resolve inside `public/js/`, generated
+`typed/` modules must have `public/ts/` sources, and only `site.js` plus
+`compose.js` may live as root-level JavaScript entrypoints.
+
 Documentation route: `/design/composition/`.
