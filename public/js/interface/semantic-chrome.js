@@ -427,14 +427,25 @@ function buildSemanticSummary(snapshot, tokenText) {
   return parts.join(' ');
 }
 
+function createPopoverDismissButton(label = 'Close') {
+  const dismiss = document.createElement('button');
+  dismiss.type = 'button';
+  dismiss.className = 'spw-popover-dismiss';
+  dismiss.setAttribute('aria-label', label);
+  dismiss.textContent = '×';
+  return dismiss;
+}
+
 function createSemanticPopover(token, host) {
   const snapshot = snapshotComponentSemantics(host);
   const popover = document.createElement('div');
   const heading = document.createElement('div');
+  const headingBody = document.createElement('div');
   const tokenLabel = document.createElement('span');
   const hostLabel = document.createElement('span');
   const summary = document.createElement('p');
   const grid = document.createElement('div');
+  const hint = document.createElement('p');
   const tokenText = normalizeText(token.textContent || '').toLowerCase();
 
   popover.className = SEMANTIC_POPOVER_CLASS;
@@ -452,6 +463,7 @@ function createSemanticPopover(token, host) {
   popover.id = `spw-semantic-popover-${Math.random().toString(36).slice(2, 10)}`;
 
   heading.className = 'spw-semantic-popover-header';
+  headingBody.className = 'spw-semantic-popover-heading';
   tokenLabel.className = 'spw-semantic-popover-token';
   tokenLabel.textContent = tokenText || humanizeToken(snapshot.kind);
   hostLabel.className = 'spw-semantic-popover-host';
@@ -459,6 +471,9 @@ function createSemanticPopover(token, host) {
 
   summary.className = 'spw-semantic-popover-summary';
   summary.textContent = buildSemanticSummary(snapshot, tokenText);
+
+  hint.className = 'spw-semantic-popover-hint';
+  hint.textContent = 'Esc to close · hold tag to latch';
 
   grid.className = 'spw-semantic-popover-grid';
   buildSemanticRows(snapshot, host).forEach(([label, value]) => {
@@ -476,23 +491,30 @@ function createSemanticPopover(token, host) {
     grid.append(row);
   });
 
-  heading.append(tokenLabel, hostLabel);
-  popover.append(heading, summary, grid);
-  return popover;
+  const dismiss = createPopoverDismissButton('Close semantic note');
+  headingBody.append(tokenLabel, hostLabel);
+  heading.append(headingBody, dismiss);
+  popover.append(heading, summary, grid, hint);
+  return { popover, dismiss };
 }
 
 function positionSemanticPopover(popover, token) {
   const rect = token.getBoundingClientRect();
   const popRect = popover.getBoundingClientRect();
-  let top = rect.bottom + 10;
+  const edge = 10;
+  const menuClearance = Number.parseFloat(
+    getComputedStyle(document.documentElement).getPropertyValue('--spw-floating-menu-clearance')
+  ) || 0;
+  const bottomLimit = window.innerHeight - edge - menuClearance;
+  let top = rect.bottom + edge;
   let left = rect.left + rect.width / 2 - popRect.width / 2;
 
-  left = Math.max(8, Math.min(left, window.innerWidth - popRect.width - 8));
-  if (top + popRect.height > window.innerHeight - 8) {
-    top = rect.top - popRect.height - 10;
+  left = Math.max(edge, Math.min(left, window.innerWidth - popRect.width - edge));
+  if (top + popRect.height > bottomLimit) {
+    top = Math.max(edge, rect.top - popRect.height - edge);
   }
 
-  popover.style.top = `${top + window.scrollY}px`;
+  popover.style.top = `${top}px`;
   popover.style.left = `${left}px`;
 }
 
@@ -550,9 +572,15 @@ function initSemanticTokenInteractions() {
 
     dismissPopover();
 
-    popover = createSemanticPopover(token, host);
+    const created = createSemanticPopover(token, host);
+    popover = created.popover;
     document.body.append(popover);
     positionSemanticPopover(popover, token);
+    created.dismiss.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      dismissPopover();
+    });
 
     activeToken = token;
     setSemanticTokenState(token, {

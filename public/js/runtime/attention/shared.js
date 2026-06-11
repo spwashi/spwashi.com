@@ -6,15 +6,27 @@ import {
 export const FONT_SCALE_STEPS = Object.freeze(['70', '80', '90', '100', '110', '120']);
 export const HANDLE_SELECTOR = '.spw-section-handle';
 export const HANDLE_SHELL_CLASS = 'spw-section-handle-shell';
+export const NESTED_HOOK_SECTION_SELECTOR = [
+  'main [data-spw-kind="hook"]',
+  'main [data-spw-component-kind="hook"]',
+  'main article [data-spw-kind="hook"]',
+  'main article [data-spw-component-kind="hook"]',
+].join(', ');
+
 export const OPERATOR_SECTION_SELECTOR = [
   'main > section[id]',
   'main > section[data-spw-kind]',
   'main > aside[id]',
+  'main > aside[data-spw-kind]',
+  'main > article[id]',
+  'main > article[data-spw-kind]',
   'main > article > section[id]',
   'main > article > section[data-spw-kind]',
   'main > article > aside[id]',
+  'main > article > aside[data-spw-kind]',
   'main > [data-spw-svg-host]',
   'main > article > [data-spw-svg-host]',
+  NESTED_HOOK_SECTION_SELECTOR,
 ].join(', ');
 export const PROBE_ATTR = 'data-spw-resonance-probe';
 export const RESONANCE_KEY_ATTR = 'data-spw-resonance-key';
@@ -28,6 +40,7 @@ export const HANDLE_ENHANCED_ATTR = 'data-spw-handle-enhanced';
 export const HANDLE_SHELL_STATE_ATTR = 'data-spw-handle-shell-state';
 export const SECTION_STATE_ATTR = 'data-spw-section-state';
 export const SECTION_INDEX_ATTR = 'data-spw-section-index';
+export const SECTION_TIER_ATTR = 'data-spw-section-tier';
 export const PAGE_SECTION_CURRENT_ATTR = 'data-spw-page-section-current';
 export const PAGE_SECTION_INDEX_ATTR = 'data-spw-page-section-index';
 export const PAGE_SECTION_COUNT_ATTR = 'data-spw-page-section-count';
@@ -76,6 +89,7 @@ export const ATTENTION_ARCHITECTURE_CONTRACT = Object.freeze({
   selectors: Object.freeze({
     handle: HANDLE_SELECTOR,
     operatorSections: OPERATOR_SECTION_SELECTOR,
+    nestedHookSections: NESTED_HOOK_SECTION_SELECTOR,
   }),
   attributes: Object.freeze({
     probe: PROBE_ATTR,
@@ -88,6 +102,7 @@ export const ATTENTION_ARCHITECTURE_CONTRACT = Object.freeze({
     handleShellState: HANDLE_SHELL_STATE_ATTR,
     sectionState: SECTION_STATE_ATTR,
     sectionIndex: SECTION_INDEX_ATTR,
+    sectionTier: SECTION_TIER_ATTR,
     pageSectionCurrent: PAGE_SECTION_CURRENT_ATTR,
     pageSectionIndex: PAGE_SECTION_INDEX_ATTR,
     pageSectionCount: PAGE_SECTION_COUNT_ATTR,

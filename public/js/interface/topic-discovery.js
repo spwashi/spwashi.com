@@ -160,7 +160,9 @@ function showPopover(el) {
         reason: 'topic-context',
         stylingAxis: 'topic-popover',
     });
-    popoverEl.setAttribute('role', 'tooltip');
+    popoverEl.setAttribute('role', 'dialog');
+    popoverEl.setAttribute('aria-modal', 'false');
+    popoverEl.setAttribute('aria-label', `Topic context for ${text}`);
 
     const sections = occurrences
         .map(o => o.section)
@@ -171,6 +173,7 @@ function showPopover(el) {
     let html = `<div class="spw-topic-popover-header">
         <span class="spw-topic-popover-sigil">&lt;${text}&gt;</span>
         <span class="spw-topic-popover-count">${occurrences.length} occurrence${occurrences.length !== 1 ? 's' : ''}</span>
+        <button type="button" class="spw-popover-dismiss" aria-label="Close topic context">×</button>
     </div>`;
 
     if (uniqueSections.length > 1) {
@@ -190,25 +193,36 @@ function showPopover(el) {
         html += `</div>`;
     }
 
+    html += `<p class="spw-topic-popover-hint">Esc to close · long-press topic to open</p>`;
+
     popoverEl.innerHTML = html;
     document.body.appendChild(popoverEl);
 
-    // Position near the element
+    const edge = 10;
     const rect = el.getBoundingClientRect();
     const popRect = popoverEl.getBoundingClientRect();
-    let top = rect.bottom + 8;
+    const menuClearance = Number.parseFloat(
+        getComputedStyle(document.documentElement).getPropertyValue('--spw-floating-menu-clearance')
+    ) || 0;
+    const bottomLimit = window.innerHeight - edge - menuClearance;
+    let top = rect.bottom + edge;
     let left = rect.left + rect.width / 2 - popRect.width / 2;
 
-    // Keep in viewport
-    left = Math.max(8, Math.min(left, window.innerWidth - popRect.width - 8));
-    if (top + popRect.height > window.innerHeight - 8) {
-        top = rect.top - popRect.height - 8;
+    left = Math.max(edge, Math.min(left, window.innerWidth - popRect.width - edge));
+    if (top + popRect.height > bottomLimit) {
+        top = Math.max(edge, rect.top - popRect.height - edge);
     }
 
-    popoverEl.style.top = `${top + window.scrollY}px`;
+    popoverEl.style.top = `${top}px`;
     popoverEl.style.left = `${left}px`;
 
     requestAnimationFrame(() => popoverEl?.classList.add('is-visible'));
+
+    popoverEl.querySelector('.spw-popover-dismiss')?.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        dismissPopover();
+    });
 
     // Links inside popover navigate and dismiss
     popoverEl.querySelectorAll('.spw-topic-popover-link').forEach(link => {

@@ -666,7 +666,7 @@
 }
 
 :where(#choose-your-entrance .frame-grid--dense) {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
 }
 
 :where(#choose-your-entrance .frame-panel) {

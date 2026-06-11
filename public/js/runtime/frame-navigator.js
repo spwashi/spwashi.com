@@ -164,6 +164,7 @@ class SpwFrameNavigator {
             stylingAxis: 'navigator-chrome',
         });
         this.root.setAttribute('aria-label', 'Surface map');
+        this.root.dataset.spwNavState = 'closed';
 
         // Strip + trigger
         const strip = document.createElement('div');
@@ -559,6 +560,7 @@ class SpwFrameNavigator {
         if (isNavigatorHidden()) return;
         this.panel.hidden = false;
         this.root.classList.add('is-open');
+        this.root.dataset.spwNavState = 'open';
         this.triggerBtn.setAttribute('aria-expanded', 'true');
         this.searchInput.value = '';
         this.filterText = '';
@@ -571,6 +573,7 @@ class SpwFrameNavigator {
         const wasOpen = !this.panel.hidden;
         this.panel.hidden = true;
         this.root.classList.remove('is-open');
+        this.root.dataset.spwNavState = 'closed';
         this.triggerBtn.setAttribute('aria-expanded', 'false');
         if (options.restoreFocus) this.triggerBtn.focus();
         if (wasOpen) emitSpwAction('!map.close', 'surface map');

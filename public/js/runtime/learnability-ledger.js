@@ -1,4 +1,8 @@
-import { writeDatasetValues } from '/public/js/kernel/dom-contracts.js';
+import {
+  COMPONENT_KIND_MIRROR_SELECTOR,
+  syncComponentKindMirrors,
+  writeDatasetValues,
+} from '/public/js/kernel/dom-contracts.js';
 import {
   describeSettingValue,
   getSiteSettings,
@@ -35,10 +39,22 @@ const PROCESS_CUES = Object.freeze({
   compose: 'Combine gathered material into inspectable emergent forms.',
 });
 
-const LAYOUT_HOST_SELECTOR = '.site-frame, .frame-card, .vibe-widget, [data-spw-feature]';
+const LAYOUT_HOST_SELECTOR = [
+  '.site-frame',
+  '.frame-card',
+  '.frame-panel',
+  '.mode-panel',
+  '.vibe-widget',
+  '[data-spw-feature]',
+  '[data-spw-kind="frame"]',
+  '[data-spw-kind="card"]',
+  '[data-spw-kind="panel"]',
+  '[data-spw-kind="hook"]',
+  COMPONENT_KIND_MIRROR_SELECTOR,
+].join(', ');
 const FEATURE_SELECTOR = '[data-spw-feature]';
 const GESTURE_SELECTOR = '[data-spw-gesture-contract], [data-spw-interaction-contract]';
-const SLOT_HOST_SELECTOR = '.site-frame, .frame-card, .vibe-widget';
+const SLOT_HOST_SELECTOR = '.site-frame, .frame-card, .frame-panel, .mode-panel, .vibe-widget, [data-spw-kind="frame"], [data-spw-kind="card"]';
 
 let pulseTimer = 0;
 
@@ -159,6 +175,7 @@ export function syncLearnabilityLedger(root = document) {
 }
 
 export function initLearnabilityLedger(ctx = null) {
+  const unregisterMirror = registerDomSyncTask('component-kind-mirror', () => syncComponentKindMirrors(), ctx);
   const unregister = registerDomSyncTask('learnability-ledger', () => syncLearnabilityLedger(), ctx);
 
   const onSettingsPulse = () => pulseLearnabilityResonance('settings');
@@ -174,6 +191,7 @@ export function initLearnabilityLedger(ctx = null) {
   }
 
   const cleanup = () => {
+    unregisterMirror();
     unregister();
     document.removeEventListener('spw:settings:changed', onSettingsPulse);
     document.removeEventListener('spw:settings-change', onSettingsPulse);

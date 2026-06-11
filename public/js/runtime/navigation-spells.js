@@ -2,6 +2,9 @@ import { detectOperator } from '/public/js/kernel/shared.js';
 
 const TOKEN_SELECTOR = [
   '.header-sigil[href]',
+  'body > header nav a[href]',
+  '.site-header nav a[href]',
+  '.site-footer__nav a[href]',
   '.page-index a[href]',
   '.section-atlas a[href]',
   '.card-sub-links a[href]',
@@ -11,16 +14,23 @@ const TOKEN_SELECTOR = [
 const TOP_ROUTE_TOKENS = Object.freeze({
   '/': '#>home',
   '/about/': '.about',
+  '/design/': '#>design',
+  '/now/': '@now',
   '/topics/': '<topics>',
+  '/topics/software/': '<software>',
+  '/topics/craft/': '<craft>',
   '/services/': '@services',
   '/tools/': '^tools',
   '/play/': '~play',
   '/blog/': '*blog',
+  '/contact/': '@contact',
+  '/privacy/': '.privacy',
   '/settings/': '=settings',
 });
 
 const GROUP_BY_SCOPE = Object.freeze({
   shell: 'routes',
+  footer: 'routes',
   section: 'sections',
   card: 'branches',
   operator: 'operators',
@@ -29,6 +39,7 @@ const GROUP_BY_SCOPE = Object.freeze({
 
 const WONDER_BY_SCOPE = Object.freeze({
   shell: 'orientation',
+  footer: 'orientation',
   section: 'memory',
   card: 'resonance',
   operator: 'projection',
@@ -65,6 +76,7 @@ function getVisibleLabel(link) {
 function getScope(link) {
   if (link.matches('.header-sigil')) return 'shell';
   if (link.closest('body > header nav, .site-header nav')) return 'shell';
+  if (link.closest('.site-footer__nav')) return 'footer';
   if (link.closest('.page-index')) return 'section';
   if (link.closest('.section-atlas')) return 'atlas';
   if (link.closest('.card-sub-links')) return 'card';
@@ -115,7 +127,7 @@ function resolveBaseToken(link, url, scope, label) {
   }
 
   const normalizedPath = normalizePathname(url.pathname);
-  if (scope === 'shell' && TOP_ROUTE_TOKENS[normalizedPath]) {
+  if ((scope === 'shell' || scope === 'footer') && TOP_ROUTE_TOKENS[normalizedPath]) {
     return TOP_ROUTE_TOKENS[normalizedPath];
   }
 
@@ -150,6 +162,7 @@ function resolveOperatorType(baseToken = '', scope = 'section') {
 
   switch (scope) {
     case 'shell':
+    case 'footer':
       return 'ref';
     case 'section':
     case 'card':
@@ -265,11 +278,11 @@ function applyNavigationSpellRecord(link, record) {
   const currentPath = normalizePathname(window.location.pathname);
   const linkPath = normalizePathname(new URL(link.href, window.location.href).pathname);
 
-  // aria-current only for settle (same-page return) when we are actually on it, and author hasn't set one.
-  if (record.destination === 'settle' && linkPath === currentPath) {
-    if (!link.hasAttribute('aria-current') && record.scope === 'shell') {
-      link.setAttribute('aria-current', 'page');
-    }
+  const isCurrentPage = linkPath === currentPath && !url.hash;
+  if (isCurrentPage && !link.hasAttribute('aria-current')) {
+    link.setAttribute('aria-current', 'page');
+  } else if (!isCurrentPage && link.getAttribute('aria-current') === 'page') {
+    link.removeAttribute('aria-current');
   }
 
   // Operator-prefixed visible text is often opaque to AT. Provide descriptive aria-label when helpful.

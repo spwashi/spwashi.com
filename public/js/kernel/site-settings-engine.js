@@ -674,6 +674,7 @@ const buildDatasetEntries = (normalized, modifiers, deviations, climate) => {
     spwAuthorMode: modifiers.author.mode,
     spwAuthorIntent: modifiers.author.intent,
     spwNavigator: normalized.navigatorDisplay,
+    spwSpellPath: normalized.spellPathDisplay,
     spwConsole: normalized.consoleDisplay,
     spwViewportActivation: normalized.viewportActivation,
     spwReduceMotion: normalized.reduceMotion,

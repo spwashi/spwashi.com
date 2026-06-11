@@ -40,6 +40,38 @@ let previewTimer = null;
 let previewTarget = null;
 let holdState = null;
 let coarseTapState = null;
+let menuOpenGraceUntil = 0;
+
+export function isRegionMenuOpen() {
+  return document.documentElement.dataset.spwRegionMenu === 'open';
+}
+
+export function openRegionMenuForElement(element, options = {}) {
+  if (!(element instanceof Element)) return false;
+
+  const target = resolveTarget(element)
+    || (element.matches(TARGET_SELECTOR) ? element : null);
+  if (!target) return false;
+
+  if (options.source) {
+    const graceMs = Number.isFinite(options.graceMs) ? options.graceMs : 900;
+    menuOpenGraceUntil = Date.now() + graceMs;
+  }
+
+  openMenu(target);
+  return true;
+}
+
+export function closeRegionMenu() {
+  if (!isRegionMenuOpen()) return false;
+  closeMenu();
+  return true;
+}
+
+export function toggleRegionMenuForElement(element) {
+  if (isRegionMenuOpen()) return closeRegionMenu();
+  return openRegionMenuForElement(element);
+}
 
 export function initSpwRegionMenu(root = document) {
   const doc = root?.nodeType === Node.DOCUMENT_NODE ? root : document;
@@ -187,6 +219,7 @@ function onKeyDown(event) {
 function onViewportChange() {
   clearHoldState();
   clearCoarseTapState();
+  if (Date.now() < menuOpenGraceUntil) return;
   if (document.documentElement.dataset.spwRegionMenu === 'open') {
     closeMenu({ restoreFocus: false });
   }
@@ -689,6 +722,8 @@ function collectRegionMatches(root, family) {
 
 function closeMenu(options = {}) {
   const { restoreFocus = true } = options;
+  const wasOpen = document.documentElement.dataset.spwRegionMenu === 'open';
+  const previousTarget = activeTarget;
   const menu = document.getElementById(MENU_ID);
   if (menu) {
     writeDatasetValue(menu, 'spwState', 'closed');
@@ -706,6 +741,12 @@ function closeMenu(options = {}) {
     activeTarget?.focus?.({ preventScroll: true });
   }
   activeTarget = null;
+
+  if (wasOpen) {
+    bus.emit?.('region-menu:closed', {
+      target: previousTarget,
+    });
+  }
 }
 
 function moveMenuFocus(menu, direction) {

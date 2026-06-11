@@ -181,6 +181,149 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   --spw-grid-gap-active: var(--spw-grid-gap-compact);
 }
 
+/* Composition flow: wire authored layout intent without duplicating grid class lists. */
+:where([data-spw-composition-flow="grid"]:not(
+  .frame-grid,
+  .plans-grid,
+  .contact-grid,
+  .gallery-overlays,
+  .compare-sets,
+  .spec-grid,
+  .directory-grid,
+  .ref-grid,
+  .settings-state-grid,
+  .settings-navigator-grid,
+  .settings-structures-grid,
+  .settings-quickstart-grid,
+  .vibe-widget-grid,
+  .pwa-status-grid,
+  .spw-amount-grid,
+  .spw-character-card-grid,
+  .spw-wisdom-deck,
+  .spw-reason-strip,
+  .spw-role-hooks,
+  .spw-route-bridge__links,
+  .spw-resonance-lab,
+  .spw-learning-game,
+  .spw-semantic-emphasis-map
+)) {
+  display: grid;
+  gap: var(--spw-grid-gap-active, var(--component-gap));
+  align-items: stretch;
+  min-width: 0;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--spw-grid-min-active, 15rem)), 1fr));
+}
+
+:where([data-spw-composition-flow="stack"]:not(
+  .spw-narration,
+  .spw-route-bridge,
+  .spw-settings-cluster,
+  .settings-form
+)) {
+  display: grid;
+  gap: var(--component-gap-tight, 0.45rem);
+  align-content: start;
+  min-width: 0;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+:where([data-spw-composition-flow="inline-wrap"]:not(.spw-copy-motif-strip)) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spw-list-charge-gap, 0.38rem);
+  min-width: 0;
+}
+
+/* Opportunistic packing: auto-fill keeps spare tracks; dense back-fills span gaps. */
+:where(
+  .frame-grid[data-spw-pack~="fill"],
+  [data-spw-composition-flow="grid"][data-spw-pack~="fill"]
+) {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--spw-grid-min-active, 15rem)), 1fr));
+}
+
+:where(
+  .frame-grid[data-spw-pack~="dense"],
+  [data-spw-composition-flow="grid"][data-spw-pack~="dense"]
+) {
+  grid-auto-flow: row dense;
+}
+
+:where(
+  .frame-grid > [data-spw-pack-span],
+  [data-spw-composition-flow="grid"] > [data-spw-pack-span]
+) {
+  min-width: 0;
+}
+
+:where(
+  .frame-grid > [data-spw-pack-span="2"],
+  [data-spw-composition-flow="grid"] > [data-spw-pack-span="2"]
+) {
+  grid-column: span 2;
+}
+
+:where(
+  .frame-grid > [data-spw-pack-span="full"],
+  [data-spw-composition-flow="grid"] > [data-spw-pack-span="full"]
+) {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 48rem) {
+  :where(
+    .frame-grid > [data-spw-pack-span="2"],
+    [data-spw-composition-flow="grid"] > [data-spw-pack-span="2"]
+  ) {
+    grid-column: span 1;
+  }
+}
+
+/* Box-model grid profiles: content-specific minimums and gaps. */
+:where([data-spw-box-model="entry-card-grid"]) {
+  --spw-grid-min-base: 17.25rem;
+  --spw-grid-min-mid: 16.5rem;
+  --spw-grid-min-narrow: 15rem;
+  --spw-grid-min-compact: 13.25rem;
+  --spw-grid-gap-base: 0.78rem;
+}
+
+:where([data-spw-box-model="role-hook-grid"]) {
+  --spw-role-hook-min: 14.25rem;
+}
+
+:where(.spw-role-hooks[data-spw-box-model="role-hook-grid"]) {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--spw-role-hook-min)), 1fr));
+}
+
+:where(.spw-role-hooks[data-spw-pack~="fill"]) {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--spw-role-hook-min, 14.25rem)), 1fr));
+}
+
+:where([data-spw-box-model="route-choice-field"]) {
+  --spw-route-choice-min: 12.75rem;
+}
+
+:where(.spw-route-bridge__links[data-spw-box-model="route-choice-field"]) {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--spw-route-choice-min)), 1fr));
+}
+
+:where([data-spw-box-model="concept-details-grid"]) {
+  --spw-grid-min-base: 15.75rem;
+  --spw-grid-min-mid: 15rem;
+  --spw-grid-min-narrow: 14rem;
+  --spw-grid-min-compact: 12.75rem;
+}
+
+:where([data-spw-box-model="wisdom-deck"]) {
+  --spw-wisdom-deck-min: 13.25rem;
+}
+
+:where(.spw-wisdom-deck[data-spw-box-model="wisdom-deck"]) {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--spw-wisdom-deck-min)), 1fr));
+}
+
 /* Tighter mobile behavior for dense illustrated card grids (e.g. "Three good first loops") */
 @media (max-width: 640px) {
   :where(.frame-grid--dense) {

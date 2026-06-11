@@ -30,6 +30,7 @@
  */
 
 import { bus } from '/public/js/kernel/bus.js';
+import { COMPONENT_KIND_MIRROR_SELECTOR } from '/public/js/kernel/dom-contracts.js';
 import { detectOperator, getOperatorDefinition } from '/public/js/kernel/shared.js';
 
 const STORAGE_KEY = 'spw-grounded-registry';
@@ -68,13 +69,16 @@ const CAULDRON_CANDIDATE_SELECTORS = [
 
 const CHARGE_SELECTORS = [
   GROUND_SELECTORS,
+  '.site-frame',
   '.frame-card',
   '.frame-panel',
+  '.mode-panel',
+  '.plan-card',
   '.software-card',
   '.operator-card',
   '.media-card',
   '.media-focus-card',
-  '[data-spw-component-kind]',
+  COMPONENT_KIND_MIRROR_SELECTOR,
   '.domain-visual',
   '[data-spw-operator]',
   '[data-spw-cluster]',

@@ -998,6 +998,8 @@
 :where(
   [data-spw-component-kind="frame"] > .spw-component-meta > .spw-component-tag,
   [data-spw-component-kind="frame"] > .spw-semantic-seam > .spw-component-meta > .spw-component-tag,
+  [data-spw-kind="frame"] > .spw-component-meta > .spw-component-tag,
+  [data-spw-kind="frame"] > .spw-semantic-seam > .spw-component-meta > .spw-component-tag,
   .frame-topline > .spw-component-meta > .spw-component-tag,
   .frame-heading > .spw-component-meta > .spw-component-tag
 ) {
@@ -1008,7 +1010,9 @@
 
 :where(
   [data-spw-component-kind="card"] > .spw-component-meta > .spw-component-tag,
-  [data-spw-component-kind="card"] > .spw-semantic-seam > .spw-component-meta > .spw-component-tag
+  [data-spw-component-kind="card"] > .spw-semantic-seam > .spw-component-meta > .spw-component-tag,
+  [data-spw-kind="card"] > .spw-component-meta > .spw-component-tag,
+  [data-spw-kind="card"] > .spw-semantic-seam > .spw-component-meta > .spw-component-tag
 ) {
   color: hsl(210 70% 34%);
   border-color: hsla(210, 70%, 34%, 0.16);
@@ -1019,7 +1023,11 @@
   [data-spw-component-kind="panel"] > .spw-component-meta > .spw-component-tag,
   [data-spw-component-kind="panel"] > .spw-semantic-seam > .spw-component-meta > .spw-component-tag,
   [data-spw-component-kind="surface"] > .spw-component-meta > .spw-component-tag,
-  [data-spw-component-kind="surface"] > .spw-semantic-seam > .spw-component-meta > .spw-component-tag
+  [data-spw-component-kind="surface"] > .spw-semantic-seam > .spw-component-meta > .spw-component-tag,
+  [data-spw-kind="panel"] > .spw-component-meta > .spw-component-tag,
+  [data-spw-kind="panel"] > .spw-semantic-seam > .spw-component-meta > .spw-component-tag,
+  [data-spw-kind="surface"] > .spw-component-meta > .spw-component-tag,
+  [data-spw-kind="surface"] > .spw-semantic-seam > .spw-component-meta > .spw-component-tag
 ) {
   color: hsl(36 80% 32%);
   border-color: hsla(36, 80%, 32%, 0.16);
@@ -1028,7 +1036,9 @@
 
 :where(
   [data-spw-component-kind="lens"] > .spw-component-meta > .spw-component-tag,
-  [data-spw-component-kind="lens"] > .spw-semantic-seam > .spw-component-meta > .spw-component-tag
+  [data-spw-component-kind="lens"] > .spw-semantic-seam > .spw-component-meta > .spw-component-tag,
+  [data-spw-kind="lens"] > .spw-component-meta > .spw-component-tag,
+  [data-spw-kind="lens"] > .spw-semantic-seam > .spw-component-meta > .spw-component-tag
 ) {
   color: hsl(268 55% 38%);
   border-color: hsla(268, 55%, 38%, 0.16);
@@ -1037,7 +1047,9 @@
 
 :where(
   [data-spw-component-kind="metric"] > .spw-component-meta > .spw-component-tag,
-  [data-spw-component-kind="metric"] > .spw-semantic-seam > .spw-component-meta > .spw-component-tag
+  [data-spw-component-kind="metric"] > .spw-semantic-seam > .spw-component-meta > .spw-component-tag,
+  [data-spw-kind="metric"] > .spw-component-meta > .spw-component-tag,
+  [data-spw-kind="metric"] > .spw-semantic-seam > .spw-component-meta > .spw-component-tag
 ) {
   color: hsl(180 100% 22%);
   border-color: rgba(0, 100, 100, 0.18);
@@ -1655,34 +1667,111 @@
 }
 
 :where(.spw-topic-popover, .spw-semantic-popover) {
-  position: absolute;
-  max-width: 28rem;
-  padding: 0.65rem 0.85rem;
-  pointer-events: auto;
+  position: fixed;
+  inset: auto;
+  max-width: min(28rem, calc(100vw - 1.25rem));
+  padding: 0.72rem 0.88rem 0.68rem;
+  pointer-events: none;
+  visibility: hidden;
   opacity: 0;
-  transform: translateY(4px);
-  border: 1px solid var(--grammar-line);
+  transform: translateY(6px) scale(0.985);
+  border: 1px solid color-mix(in srgb, var(--grammar-line, rgba(14, 18, 20, 0.14)) 72%, var(--active-op-color, var(--teal, #008080)) 28%);
   border-radius: var(--grammar-radius);
-  background: var(--floating-bg, rgba(255, 255, 255, 0.94));
-  box-shadow: var(--floating-shadow, 0 12px 30px rgba(0, 0, 0, 0.16));
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.34), transparent 52%),
+    var(--floating-bg, color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.97)) 96%, transparent));
+  box-shadow:
+    var(--floating-shadow, 0 14px 34px rgba(0, 0, 0, 0.16)),
+    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 10%, transparent);
   color: var(--grammar-ink);
   font-family: var(--grammar-mono-font);
   font-size: 0.82rem;
   transition:
     opacity var(--grammar-duration-fast) var(--grammar-ease-mechanical),
-    transform var(--grammar-duration-fast) var(--grammar-ease-settle);
+    transform var(--grammar-duration-fast) var(--grammar-ease-settle),
+    visibility var(--grammar-duration-fast) var(--grammar-ease-mechanical);
 }
 
 :where(.spw-topic-popover.is-visible, .spw-semantic-popover.is-visible) {
+  pointer-events: auto;
+  visibility: visible;
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
+}
+
+:where(.spw-popover-dismiss) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-inline-start: auto;
+  min-width: 1.65rem;
+  min-height: 1.65rem;
+  padding: 0;
+  border: 1px solid color-mix(in srgb, var(--grammar-line, rgba(14, 18, 20, 0.14)) 78%, transparent);
+  border-radius: var(--grammar-radius-sm);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 92%, transparent);
+  color: var(--grammar-ink-soft);
+  font: inherit;
+  font-size: 0.92rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+:where(.spw-popover-dismiss:is(:hover, :focus-visible)) {
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 34%, transparent);
+  color: var(--grammar-ink);
+  outline: none;
+}
+
+:where(.spw-topic-popover-header, .spw-semantic-popover-header) {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+}
+
+:where(.spw-topic-popover-hint, .spw-semantic-popover-hint) {
+  margin: 0.45rem 0 0;
+  padding-top: 0.42rem;
+  border-top: 1px solid color-mix(in srgb, var(--grammar-line, rgba(14, 18, 20, 0.14)) 72%, transparent);
+  color: var(--grammar-ink-soft);
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+}
+
+:where(.spw-component-tag, .spw-guide-chip)[data-spw-charge="arming"] {
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 42%, transparent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 12%, transparent);
+}
+
+:where(.spw-component-tag, .spw-guide-chip)[data-spw-hold-state="open"],
+:where(.spw-component-tag, .spw-guide-chip)[aria-expanded="true"] {
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 54%, transparent);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 88%, var(--active-op-color, var(--teal, #008080)) 12%);
+}
+
+:where(.spw-component-tag, .spw-guide-chip)[data-spw-hold-state="latched"] {
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 22%, transparent),
+    0 0 0.55rem color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 16%, transparent);
+}
+
+html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popover) {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 48%),
+    color-mix(in srgb, var(--surface-strong, rgba(25, 32, 37, 0.96)) 98%, transparent);
+  box-shadow:
+    0 16px 36px rgba(0, 0, 0, 0.38),
+    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 18%, transparent);
 }
 
 :where(.spw-topic-popover-header) {
-  display: flex;
   align-items: baseline;
-  gap: 0.65rem;
   margin-bottom: 0.4rem;
+}
+
+:where(.spw-topic-popover-header .spw-popover-dismiss) {
+  align-self: flex-start;
+  margin-block-start: -0.08rem;
 }
 
 :where(.spw-topic-popover-sigil) {
@@ -1729,10 +1818,20 @@
   font-size: 0.75rem;
 }
 
-:where(.spw-semantic-popover-header) {
+:where(.spw-semantic-popover-heading) {
   display: grid;
   gap: 0.18rem;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+:where(.spw-semantic-popover-header) {
   margin-bottom: 0.5rem;
+}
+
+:where(.spw-semantic-popover-header .spw-popover-dismiss) {
+  align-self: flex-start;
+  margin-block-start: -0.08rem;
 }
 
 :where(.spw-semantic-popover-token) {

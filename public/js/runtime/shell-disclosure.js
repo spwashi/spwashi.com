@@ -1309,10 +1309,16 @@ function syncScrollState(header, state, nextScrollY = getScrollY()) {
   writeScrollDatasets(header, state);
 }
 
+function isCoarsePointerMode() {
+  return document.documentElement.dataset.spwPointerMode === 'coarse'
+    || window.matchMedia?.('(pointer: coarse)')?.matches === true;
+}
+
 function describeToggleState(snapshot) {
+  const coarse = isCoarsePointerMode();
   if (snapshot.mode === MODES.INLINE) return 'visible';
-  if (snapshot.state === 'open') return 'open';
-  if (snapshot.mode === MODES.TOGGLE) return 'tap to open';
+  if (snapshot.state === 'open') return coarse ? 'tap to close' : 'click to close';
+  if (snapshot.mode === MODES.TOGGLE) return coarse ? 'tap to open' : 'click to open';
   return 'ready';
 }
 
@@ -1348,6 +1354,16 @@ function focusFirstMenuTarget(nav) {
     return true;
   }
   return false;
+}
+
+function focusCurrentMenuTarget(nav) {
+  const current = nav.querySelector('a[aria-current="page"]');
+  const target = current instanceof HTMLElement ? current : nav.querySelector(FOCUSABLE_SELECTOR);
+  if (!(target instanceof HTMLElement)) return false;
+
+  target.focus();
+  target.scrollIntoView?.({ block: 'nearest', inline: 'nearest', behavior: 'auto' });
+  return true;
 }
 
 function syncToggleCopy(toggle, snapshot) {
@@ -1421,6 +1437,12 @@ function applyMenuState(header, nav, navList, toggle, state, open, source = 'sys
   nav.hidden = state.mode === MODES.TOGGLE ? !open : false;
   toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
   toggle.setAttribute('aria-pressed', open ? 'true' : 'false');
+
+  if (open && state.mode === MODES.TOGGLE) {
+    window.requestAnimationFrame(() => {
+      focusCurrentMenuTarget(nav);
+    });
+  }
 
   writeMenuDatasets(header, snapshot, 'header');
   syncShellChromeLayout(header, snapshot);
@@ -1581,7 +1603,7 @@ export function initSpwShellDisclosure(options = {}) {
       }
       if (!state.userIntentOpen) openToggleMenu('toggle-key');
       window.requestAnimationFrame(() => {
-        focusFirstMenuTarget(nav);
+        focusCurrentMenuTarget(nav);
       });
       return;
     }

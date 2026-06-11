@@ -27,6 +27,12 @@ export const CORE_COMPONENT_SELECTORS = Object.freeze([
   '.spec-column',
   '.mode-panel',
   '.ref-card',
+  '.settings-state-card',
+  '.settings-nav-card',
+  '.settings-structure-card',
+  '.settings-map-card',
+  '.pwa-status-card',
+  '.payment-card',
 ]);
 
 export const SURFACE_COMPONENT_SELECTORS = Object.freeze([
@@ -53,6 +59,30 @@ export const SEMANTIC_ATTRIBUTE_SELECTORS = Object.freeze([
   '[data-spw-inspect]',
 ]);
 
+export const COMPONENT_KIND_VALUES = Object.freeze([
+  'frame',
+  'panel',
+  'card',
+  'surface',
+  'hook',
+  'lens',
+  'metric',
+]);
+
+export const COMPONENT_KIND_SHELL_EXCLUSION = ':not(body):not(main)';
+
+export const COMPONENT_KIND_MIRROR_SELECTOR = [
+  `[data-spw-component-kind]${COMPONENT_KIND_SHELL_EXCLUSION}`,
+  `[data-spw-kind]${COMPONENT_KIND_SHELL_EXCLUSION}`,
+].join(', ');
+
+export const HOOK_REGION_SELECTOR = [
+  'main [data-spw-kind="hook"]',
+  'main [data-spw-component-kind="hook"]',
+  'main article [data-spw-kind="hook"]',
+  'main article [data-spw-component-kind="hook"]',
+].join(', ');
+
 export const REGION_SELECTORS = Object.freeze([
   '.site-frame',
   '[data-spw-kind="frame"]',
@@ -60,6 +90,15 @@ export const REGION_SELECTORS = Object.freeze([
   '[data-spw-kind="card"]',
   '[data-spw-kind="surface"]',
   '[data-spw-kind="hook"]',
+  '[data-spw-kind="lens"]',
+  '[data-spw-kind="metric"]',
+  '[data-spw-component-kind="frame"]',
+  '[data-spw-component-kind="panel"]',
+  '[data-spw-component-kind="card"]',
+  '[data-spw-component-kind="surface"]',
+  '[data-spw-component-kind="hook"]',
+  '[data-spw-component-kind="lens"]',
+  '[data-spw-component-kind="metric"]',
   '[data-spw-role]',
   '[data-spw-slot]',
 ]);
@@ -396,6 +435,30 @@ export function writeDatasetValueIfMissing(el, key, value, options = {}) {
   return writeDatasetValue(el, key, value, { ...options, missingOnly: true });
 }
 
+export function syncComponentKindMirror(el, options = {}) {
+  if (!el?.dataset) return false;
+
+  const { missingOnly = true } = options;
+  const kind = normalizeTopographyToken(el.dataset.spwKind || el.dataset.spwComponentKind || '');
+  if (!kind) return false;
+
+  const writer = missingOnly ? writeDatasetValueIfMissing : writeDatasetValue;
+  let changed = false;
+  changed = writer(el, 'spwKind', kind) || changed;
+  changed = writer(el, 'spwComponentKind', kind) || changed;
+  return changed;
+}
+
+export function syncComponentKindMirrors(root = document, options = {}) {
+  if (!root?.querySelectorAll) return 0;
+
+  let changed = 0;
+  root.querySelectorAll(COMPONENT_KIND_MIRROR_SELECTOR).forEach((el) => {
+    if (syncComponentKindMirror(el, options)) changed += 1;
+  });
+  return changed;
+}
+
 export function writeDatasetValues(el, entries = {}, options = {}) {
   if (!el?.dataset || !entries || typeof entries !== 'object') return false;
 
@@ -548,7 +611,10 @@ export function inferTopographyKind(el, fallback = 'component') {
   if (matchesAny(el, SURFACE_COMPONENT_SELECTORS)) return 'surface';
   if (hasClass(el, 'site-frame')) return 'frame';
   if (hasClass(el, 'frame-panel') || hasClass(el, 'intent-cluster')) return 'panel';
-  if (hasClass(el, 'mode-panel')) return 'lens';
+  if (hasClass(el, 'mode-panel') || el.matches?.('[data-spw-kind="lens"], [data-spw-component-kind="lens"]')) return 'lens';
+  if (el.matches?.('[data-spw-kind="hook"], [data-spw-component-kind="hook"]')) return 'hook';
+  if (el.matches?.('[data-spw-kind="surface"], [data-spw-component-kind="surface"]')) return 'surface';
+  if (el.matches?.('[data-spw-kind="metric"], [data-spw-component-kind="metric"]')) return 'metric';
   if (
     hasClass(el, 'frame-card')
     || hasClass(el, 'media-card')

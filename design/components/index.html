@@ -50,6 +50,14 @@
 
     <a class="skip-link" href="#main-content">Skip to content</a>
 
+    <a class="spw-section-handle"
+       href="#main-content"
+       data-spw-handle-state="hidden"
+       aria-label="Jump to top of current section">
+        <span class="spw-section-handle__op" aria-hidden="true">#&gt;</span>
+        <span class="spw-section-handle__label">section</span>
+    </a>
+
     <spw-site-header
         current="Design"
         current_href="/design/"
@@ -60,14 +68,38 @@
     <main data-spw-kind="surface" data-spw-role="reference" id="main-content" tabindex="-1">
         <article>
             <section class="site-frame site-hero" id="structural-vocabulary" data-spw-role="orientation" data-spw-kind="frame" data-spw-promptability="visible">
-                <div class="frame-topline">
+                <header class="frame-topline" data-spw-slot="header">
                     <a class="frame-sigil" href="/design/">#>design</a>
-                    <div class="spec-strip">
+                    <div class="spec-strip" data-spw-slot="meta">
                         <span class="spec-pill">structural vocabulary</span>
                         <span class="spec-pill">live specimens</span>
                         <span class="spec-pill">direct wiring</span>
                     </div>
-                </div>
+                </header>
+
+                <div class="frame-body" data-spw-slot="body">
+                <section
+                        id="components-glossary-hook"
+                    data-spw-kind="hook"
+                    data-spw-role="call"
+                    data-spw-hook-variant="wonder"
+                    data-spw-operator="probe"
+                    data-spw-wonder="projection orientation locality"
+                    data-spw-liminality="entry"
+                    data-spw-consequence="framing"
+                    data-spw-gesture-contract="tap:prime hold:inspect"
+                    class="hook-call"
+                    aria-label="A component is a small machine for arranging attention"
+                >
+                    <p class="hook-lede spw-playable-hook">A component is a small machine for arranging attention.</p>
+                    <p class="hook-sub">
+                        <span data-spw-perspective="objective">Objective terminal:</span> named slots, kinds, and layout contracts that stay inspectable in HTML.
+                        <span data-spw-perspective="subjective">Subjective terminal:</span> specimens you can touch, compare, and carry back into a real route.
+                    </p>
+                    <p class="hook-invitation">
+                        Tune density above, then open the <a class="operator-chip" href="#hook-region-anatomy" data-spw-operator="probe">?hook anatomy</a> frame when nested entry peaks need a clearer contract.
+                    </p>
+                </section>
 
                 <p class="spec-kicker">Component Options / Vocabulary</p>
                 <h1>Component Glossary</h1>
@@ -75,7 +107,6 @@
                 <p class="site-lede">
                     This is the page to bumble through when a route feels almost right but the structure is still fuzzy. Every specimen below is here to be touched, compared, re-staged, and wired back into a real page.
                 </p>
-                <p class="spw-playable-hook">A component is a small machine for arranging attention.</p>
 
                 <p class="frame-note">
                     Change a setting, inspect the slot order, then carry the result back to <a href="/design/">the design hub</a>,
@@ -259,6 +290,7 @@
                 <nav class="frame-operators" aria-label="Component sections">
                     <a class="operator-chip" href="#structural-vocabulary">#&gt;blocks</a>
                     <a class="operator-chip" href="#frame-internals">#&gt;frame internals</a>
+                    <a class="operator-chip" href="#hook-region-anatomy">?hook anatomy</a>
                     <a class="operator-chip" href="#chips-strips">#&gt;chips &amp; strips</a>
                     <a class="operator-chip" href="#metamaterial-states">#&gt;material states</a>
                     <a class="operator-chip" href="#inline-annotations">#&gt;inline notes</a>
@@ -319,6 +351,7 @@
                         <p>This card makes collaboration legible when a route needs a small, specific contribution.</p>
                         <p>It helps a designer or builder name the exact surface they want to improve before starting a conversation.</p>
                     </details>
+                </div>
                 </div>
 
                 <div class="frame-grid frame-grid--2up">
@@ -537,6 +570,71 @@
                         <p>Some components should read like a person discovering what belongs on the page. That gives dialogue and characterization room to accumulate instead of making every surface sound like neutral documentation.</p>
                     </article>
 
+                </div>
+            </section>
+
+            <section class="site-frame" id="hook-region-anatomy" data-spw-role="anatomy" data-spw-kind="frame" data-spw-context="analysis" data-spw-feature="hook-region-anatomy">
+                <header class="frame-heading">
+                    <a class="frame-sigil" href="#hook-region-anatomy">?"hook_region"</a>
+                    <h2>Hook Region Anatomy</h2>
+                </header>
+                <p class="frame-note">
+                    A hook is a nested entry peak inside a frame body — more volatile than the stable hero, more interactive than a playable line alone. It participates in page locomotion even when it lives inside <code>.frame-body</code>.
+                </p>
+
+                <div class="frame-body" data-spw-slot="body">
+                    <section
+                        data-spw-kind="hook"
+                        data-spw-role="call"
+                        data-spw-hook-variant="wonder"
+                        data-spw-operator="probe"
+                        data-spw-wonder="orientation locality consequence"
+                        data-spw-liminality="entry"
+                        data-spw-consequence="framing"
+                        data-spw-gesture-contract="tap:prime hold:inspect"
+                        class="hook-call"
+                        aria-label="Live hook specimen for component vocabulary and nested locomotion"
+                    >
+                        <p class="hook-lede spw-playable-hook">
+                            A hook is a small machine for <span class="spw-living-term" data-spw-living-term data-spw-concept="attention-threshold" tabindex="0">threshold attention</span>: it names the invitation, carries the operator, and hands off to deeper prose.
+                        </p>
+                        <p class="hook-sub">
+                            <span data-spw-perspective="objective">Objective terminal:</span> declare <code>data-spw-kind="hook"</code> plus role, variant, operator, and gesture contract.
+                            <span data-spw-perspective="subjective">Subjective terminal:</span> the reader should feel invited to relate, prime, and move — not only read past the top of the page.
+                        </p>
+                        <p class="hook-invitation">
+                            Nested hooks surface in the section handle as <code>data-spw-section-tier="hook"</code>. Compare with the live hook on <a href="/about/">about</a> and the design hub.
+                        </p>
+                    </section>
+
+                    <div class="frame-grid frame-grid--dense">
+                        <article class="frame-panel">
+                            <p class="frame-note">authored contract</p>
+                            <h3>Kind + role</h3>
+                            <p>Use <code>data-spw-kind="hook"</code> with <code>data-spw-role="call|invocation|gate"</code>. Runtime mirrors to <code>data-spw-component-kind</code> so CSS and JS can share one vocabulary.</p>
+                            <div class="code-block-wrapper">
+<pre><code>&lt;section data-spw-kind="hook"
+  data-spw-role="call"
+  data-spw-hook-variant="wonder"
+  data-spw-operator="probe"
+  data-spw-gesture-contract="tap:prime hold:inspect"
+  aria-label="..."&gt;</code></pre>
+                            </div>
+                        </article>
+
+                        <article class="frame-panel">
+                            <p class="frame-note">placement</p>
+                            <h3>Nested inside frame-body</h3>
+                            <p>Place the hook as the first interactive threshold inside <code>.frame-body</code> or directly under <code>.frame-topline</code> when the frame has no body wrapper. Avoid treating dismissable floating chrome as hook content.</p>
+                        </article>
+
+                        <article class="frame-panel">
+                            <p class="frame-note">locomotion</p>
+                            <h3>Section handle participation</h3>
+                            <p>Nested hooks are collected by <code>HOOK_REGION_SELECTOR</code> and receive tiered locomotion state. Prev/next labels use the hook's <code>aria-label</code> or inner heading when present.</p>
+                            <p><a class="operator-chip" href="/design/runtime/?debug=layout#debug-presets">inspect locomotion</a></p>
+                        </article>
+                    </div>
                 </div>
             </section>
 
@@ -1014,6 +1112,19 @@
   data-spw-context="signal"
   data-spw-affordance="tune"&gt;</code></pre>
                         </div>
+                    </article>
+
+                    <article class="frame-panel" data-spw-kind="panel" data-spw-role="schema" data-spw-context="analysis">
+                        <h3>Example 4: Kind mirror contract</h3>
+                        <p>Author with <code>data-spw-kind</code> when possible. Runtime backfills <code>data-spw-component-kind</code> through <code>syncComponentKindMirrors()</code> so route markers, metamaterial, haptics, and semantic tag colors stay aligned before and after hydration.</p>
+                        <div class="code-block-wrapper">
+<pre><code>&lt;article class="frame-card"
+  data-spw-kind="card"
+  data-spw-role="artifact"&gt;
+  &lt;!-- resolves to matching data-spw-component-kind --&gt;
+&lt;/article&gt;</code></pre>
+                        </div>
+                        <p class="frame-note">Page shells (<code>body</code>, <code>main</code>) are excluded from kind-mirror selectors so route markers do not attach to the whole page.</p>
                     </article>
                 </div>
             </section>

@@ -398,6 +398,7 @@ const DEVELOPMENTAL_CLIMATES = Object.freeze({
 
 const DEFAULT_SITE_SETTINGS = Object.freeze({
   navigatorDisplay: 'quiet',
+  spellPathDisplay: 'auto',
   consoleDisplay: 'hidden',
   viewportActivation: 'off',
 
@@ -494,6 +495,7 @@ const DEFAULT_SITE_SETTINGS = Object.freeze({
 
 const SETTING_OPTIONS = Object.freeze({
   navigatorDisplay: new Set(['quiet', 'full', 'hidden']),
+  spellPathDisplay: new Set(['collapsed', 'auto', 'expanded']),
   consoleDisplay: new Set(['collapsed', 'expanded', 'hidden']),
   viewportActivation: new Set(['off', 'on']),
 
@@ -655,6 +657,7 @@ const PRESETS = Object.freeze({
     enhancementLevel: 'rich',
     infospaceComplexity: 'adaptive',
     dimensionalBreadcrumbs: 'on',
+    spellPathDisplay: 'expanded',
     developmentalClimateAutoCycle: 'on',
     navigatorDisplay: 'full',
     consoleDisplay: 'collapsed',
@@ -667,6 +670,7 @@ const PRESETS = Object.freeze({
     authorMode: 'revise',
     currentDevelopmentalClimate: 'anchor',
     navigatorDisplay: 'full',
+    spellPathDisplay: 'expanded',
     consoleDisplay: 'expanded',
     themePack: 'glass-console',
     colorTuner: 'guarded',
@@ -767,6 +771,7 @@ const PRESETS = Object.freeze({
 
 const SETTING_VALUE_LABELS = Object.freeze({
   navigatorDisplay: Object.freeze({quiet: 'Quiet', full: 'Full', hidden: 'Hidden'}),
+  spellPathDisplay: Object.freeze({collapsed: 'Collapsed', auto: 'Auto', expanded: 'Expanded'}),
   consoleDisplay: Object.freeze({collapsed: 'Collapsed', expanded: 'Expanded', hidden: 'Hidden'}),
   viewportActivation: Object.freeze({off: 'Off', on: 'On'}),
   reduceMotion: Object.freeze({off: 'Motion allowed', on: 'Reduced motion'}),
@@ -1108,6 +1113,7 @@ const UX_RECIPES = Object.freeze({
     label: 'Focus the current page',
     settings: Object.freeze({
       navigatorDisplay: 'quiet',
+      spellPathDisplay: 'collapsed',
       consoleDisplay: 'hidden',
       showFooter: 'off',
       showSpecPills: 'off',

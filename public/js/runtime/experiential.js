@@ -14,6 +14,7 @@
  */
 
 import { getActiveRecentPathMemory } from '/public/js/interface/accent-palette.js';
+import { bus } from '/public/js/kernel/bus.js';
 import { describeFeatureClusterElement } from '/public/js/kernel/dom-contracts.js';
 import {
   clearPins,
@@ -21,6 +22,11 @@ import {
   readPins,
 } from '/public/js/runtime/pin-registry.js';
 import { describeCognitiveState } from '/public/js/runtime/cognitive-state.js';
+import {
+  closeRegionMenu,
+  isRegionMenuOpen,
+  openRegionMenuForElement,
+} from '/public/js/runtime/region-menu.js';
 
 const ROOMY_WIDTH_PX = 704;
 const MEMO_TIMEOUT_MS = 2600;
@@ -46,6 +52,50 @@ function getInteractionHint() {
 
 function isTouchPrimary() {
   return window.matchMedia?.('(pointer: coarse)').matches || 'ontouchstart' in window;
+}
+
+function prefersReducedMotion() {
+  return window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches === true;
+}
+
+function syncSpellPathHash(sectionId = '') {
+  const id = String(sectionId || '').replace(/^#/, '').trim();
+  if (!id) return false;
+
+  const hash = `#${id}`;
+  const nextUrl = `${window.location.pathname}${window.location.search}${hash}`;
+  const currentUrl = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+  if (currentUrl === nextUrl) return false;
+
+  history.replaceState(null, '', nextUrl);
+  window.dispatchEvent(new HashChangeEvent('hashchange'));
+  return true;
+}
+
+function navigateSpellPathTarget(sectionId, { source = 'breadcrumb' } = {}) {
+  const section = document.getElementById(String(sectionId || '').replace(/^#/, ''));
+  if (!(section instanceof HTMLElement)) return false;
+
+  syncSpellPathHash(section.id);
+  section.scrollIntoView({
+    block: 'start',
+    behavior: prefersReducedMotion() ? 'auto' : 'smooth',
+  });
+
+  if (!section.hasAttribute('tabindex')) {
+    section.setAttribute('tabindex', '-1');
+  }
+  section.focus({ preventScroll: true });
+
+  document.dispatchEvent(new CustomEvent(HEADER_TRACE_CHANGE_EVENT, {
+    detail: {
+      source,
+      target: section.id,
+      action: 'focus-target',
+    },
+  }));
+
+  return true;
 }
 
 const GESTURE_SVGS = Object.freeze({
@@ -180,6 +230,7 @@ const runtime = {
   lastMemoTimeout: null,
   shellSnapshot: null,
   pathExpanded: null,
+  pathExpandedManual: false,
   pathCompact: null,
   lastTraceSignature: '',
 };
@@ -238,6 +289,7 @@ function initSpellBreadcrumbs() {
 
   if (pathBar.dataset.spwBreadcrumbBound !== 'true') {
     pathBar.addEventListener('click', onBreadcrumbAction);
+    pathBar.addEventListener('keydown', onBreadcrumbKeydown);
     pathBar.dataset.spwBreadcrumbBound = 'true';
   }
 
@@ -260,18 +312,37 @@ function initSpellBreadcrumbs() {
     syncExperientialSurface();
   };
 
-  window.addEventListener('popstate', update);
-  window.addEventListener('hashchange', update);
+  const resetPathPreference = () => {
+    runtime.pathExpandedManual = false;
+    runtime.pathExpanded = resolveSpellPathExpandedDefault();
+  };
+
+  window.addEventListener('popstate', () => {
+    resetPathPreference();
+    update();
+  });
+  window.addEventListener('hashchange', () => {
+    resetPathPreference();
+    update();
+  });
   window.addEventListener('resize', update);
   document.addEventListener('spw:memory:recent-path', update);
   document.addEventListener('spw:page-attention-state', update);
   document.addEventListener('spw:page-transition-state', update);
-  document.addEventListener('spw:settings:changed', update);
+  document.addEventListener('spw:settings:changed', () => {
+    if (!runtime.pathExpandedManual) {
+      runtime.pathExpanded = resolveSpellPathExpandedDefault();
+    }
+    update();
+  });
   document.addEventListener('spw:frame-change', update);
   document.addEventListener('spw:mode-change', update);
   document.addEventListener('brace:committed', update);
   document.addEventListener('brace:swapped', update);
   document.addEventListener(SHELL_MENU_STATE_EVENT, update);
+  bus.on('region-menu:opened', update);
+  bus.on('region-menu:closed', update);
+  bus.on('region-menu:marked', update);
 
   renderBreadcrumbSpell();
 }
@@ -842,6 +913,18 @@ function renderBreadcrumbSpell() {
     }));
   }
 
+  if (activeFrame && activeFrameSigil) {
+    const regionMenuOpen = isRegionMenuOpen();
+    items.push(renderBreadcrumbButton({
+      kind: 'region',
+      action: 'inspect-region',
+      token: '?',
+      label: regionMenuOpen ? 'region open' : 'inspect region',
+      current: regionMenuOpen,
+      pressed: regionMenuOpen,
+    }));
+  }
+
   const cognitiveState = describeCognitiveState({
     signalCount: items.length + (activeFrameSigil ? 1 : 0) + (activeMode ? 1 : 0),
     recentPath: getActiveRecentPathMemory(),
@@ -871,6 +954,7 @@ function renderBreadcrumbSpell() {
     activeMode,
   });
   const compact = runtime.pathCompact === true;
+  const pathState = runtime.pathExpanded ? 'open' : 'closed';
   const guide = describeBreadcrumbGuide({
     surface,
     pageRole,
@@ -880,8 +964,8 @@ function renderBreadcrumbSpell() {
     activeMode,
     relatedRoutes,
     compact,
+    pathState,
   });
-  const pathState = runtime.pathExpanded ? 'open' : 'closed';
 
   pathBar.dataset.spwBreadcrumbSurface = surface;
   pathBar.dataset.spwBreadcrumbDepth = String(items.length);
@@ -905,7 +989,22 @@ function renderBreadcrumbSpell() {
   pathBar.dataset.spwBreadcrumbRelatedCount = String(relatedRoutes.length);
   pathBar.dataset.spwBreadcrumbPageRole = pageRole || 'none';
   pathBar.dataset.spwBreadcrumbPageResponsibility = pageResponsibility || 'none';
+  pathBar.dataset.spwBreadcrumbRegionMenu = isRegionMenuOpen() ? 'open' : 'closed';
+  if (document.documentElement.dataset.spwDimensionalBreadcrumbs === 'on') {
+    pathBar.setAttribute('data-dimensional-breadcrumb', 'spell-path');
+  } else {
+    pathBar.removeAttribute('data-dimensional-breadcrumb');
+  }
 
+  syncSpellPathSurfaceDatasets({
+    pathState,
+    compact,
+    depth: items.length,
+    cognitiveState,
+    surface,
+  });
+
+  const trailId = 'spw-spell-trail';
   pathBar.innerHTML = `
     <div class="spw-spell-path__header">
       <button
@@ -913,14 +1012,22 @@ function renderBreadcrumbSpell() {
         type="button"
         data-spw-breadcrumb-action="toggle-path"
         aria-expanded="${pathState === 'open' ? 'true' : 'false'}"
+        aria-controls="${trailId}"
         aria-label="${escapeAttribute(`${pathState === 'open' ? 'Collapse' : 'Expand'} spell path. ${compactSummary}. ${cognitiveState.gradient}.${narrationMode !== 'readable' ? ` ${narrationMode} meaning mode.` : ''}`)}">
         <span class="spw-spell-path__title">spell path</span>
         <span class="spw-spell-path__summary">${escapeHtml(compactSummary)}</span>
       </button>
       ${compact ? '' : renderShellControl(shellSnapshot)}
+      ${renderRouteSorterChip({ pathname: url.pathname, pageResponsibility, compact })}
     </div>
+    ${renderSpellPathInteractionHint({
+      compact,
+      pageResponsibility,
+      pathState,
+      activeFrameSigil,
+    })}
     ${guide ? `<p class="spw-spell-path__guide">${guide}</p>` : ''}
-    <ol class="spw-spell-trail" aria-label="Current cognitive breadcrumb">
+    <ol class="spw-spell-trail" id="${trailId}" aria-label="Current cognitive breadcrumb">
       ${items.join('')}
     </ol>
     ${compact || !relatedRoutes.length ? '' : renderBreadcrumbNearbyRoutes(relatedRoutes)}
@@ -941,6 +1048,11 @@ function renderBreadcrumbSpell() {
     shellSnapshot.phase,
     shellSnapshot.pressure,
   ].join('|');
+
+  if (pathState === 'open') {
+    pathBar.querySelector('.spw-spell-crumb[data-spw-current="true"]')
+      ?.scrollIntoView?.({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
+  }
 
   if (runtime.lastTraceSignature === traceSignature) return;
   runtime.lastTraceSignature = traceSignature;
@@ -965,19 +1077,127 @@ function renderBreadcrumbLink({ kind, href, token, label, current = false }) {
   `;
 }
 
-function renderBreadcrumbButton({ kind, action, token, label, current = false, selector = '' }) {
+function renderBreadcrumbButton({
+  kind,
+  action,
+  token,
+  label,
+  current = false,
+  selector = '',
+  pressed = false,
+}) {
   return `
     <li class="spw-spell-crumb" data-spw-crumb-kind="${escapeAttribute(kind)}" ${current ? 'data-spw-current="true"' : ''}>
       <button
         class="spw-spell-button"
         type="button"
         data-spw-breadcrumb-action="${escapeAttribute(action)}"
+        aria-pressed="${pressed ? 'true' : 'false'}"
         ${selector ? `data-spw-breadcrumb-selector="${escapeAttribute(selector)}"` : ''}>
         <span class="spw-spell-token">${escapeHtml(token)}</span>
         <span class="spw-spell-label">${escapeHtml(label)}</span>
       </button>
     </li>
   `;
+}
+
+function renderRouteSorterChip({
+  pathname = '',
+  pageResponsibility = '',
+  compact = false,
+} = {}) {
+  if (pathname !== '/' || pageResponsibility !== 'route sorter') return '';
+
+  const touchCue = compact && isTouchPrimary()
+    ? 'Tap to jump to entrance roles.'
+    : 'Jump to entrance roles.';
+
+  return `
+    <a
+      class="spw-spell-sorter-chip"
+      href="#choose-your-entrance"
+      data-spw-breadcrumb-action="focus-sorter"
+      title="${escapeAttribute(touchCue)}"
+      aria-label="Jump to route sorter — pick your entrance">
+      <span class="spw-spell-sorter-chip__token">@</span>
+      <span class="spw-spell-sorter-chip__label">
+        <span class="spw-spell-sorter-chip__label-full">route sorter</span>
+        <span class="spw-spell-sorter-chip__label-short" aria-hidden="true">sorter</span>
+      </span>
+    </a>
+  `;
+}
+
+function renderSpellPathInteractionHint({
+  compact = false,
+  pageResponsibility = '',
+  pathState = 'closed',
+  activeFrameSigil = null,
+} = {}) {
+  const hint = describeSpellPathInteractionHint({
+    compact,
+    pageResponsibility,
+    pathState,
+    activeFrameSigil,
+  });
+  if (!hint) return '';
+
+  return `<p class="spw-spell-path__hint" aria-live="polite">${escapeHtml(hint)}</p>`;
+}
+
+function describeSpellPathInteractionHint({
+  compact = false,
+  pageResponsibility = '',
+  pathState = 'closed',
+  activeFrameSigil = null,
+} = {}) {
+  const touch = isTouchPrimary();
+
+  if (compact && touch) {
+    if (pageResponsibility === 'route sorter' && pathState === 'closed') {
+      return 'Tap @ sorter to pick an entrance, then expand spell path for the trail.';
+    }
+    if (activeFrameSigil) {
+      return 'Tap ? inspect region to open the brace menu on this frame.';
+    }
+    if (pathState === 'closed') {
+      return 'Tap spell path to expand the trail. Double-tap a sigil to inspect.';
+    }
+    return 'Swipe the trail sideways. Long-press a handle to inspect.';
+  }
+
+  if (!compact && touch) {
+    if (pageResponsibility === 'route sorter') {
+      return 'Tap @ route sorter for entrances; use ? inspect region once a frame is active.';
+    }
+    if (activeFrameSigil) {
+      return 'Tap ? inspect region, or long-press a semantic handle in the frame.';
+    }
+  }
+
+  if (!touch && pageResponsibility === 'route sorter' && pathState === 'closed') {
+    return 'Click @ route sorter to jump to entrances, or expand spell path for nearby routes.';
+  }
+
+  if (!touch && activeFrameSigil) {
+    return 'Click ? inspect region, or Alt+click a sigil to open the brace menu.';
+  }
+
+  return '';
+}
+
+function resolveActiveFrameElement() {
+  return document.querySelector('.site-frame[data-state~="active"]')
+    || (window.location.hash ? document.querySelector(window.location.hash) : null);
+}
+
+function resolveRegionInspectTarget() {
+  const frame = resolveActiveFrameElement();
+  if (!(frame instanceof HTMLElement)) return null;
+
+  return frame.querySelector(
+    '.frame-sigil, [data-spw-feature], [data-spw-semantic-expression], [data-spw-kind="hook"]'
+  ) || frame;
 }
 
 function renderShellControl(shellSnapshot) {
@@ -1063,16 +1283,64 @@ function describeBreadcrumbRoute(pathname = '') {
   };
 }
 
+function resolveSpellPathExpandedDefault() {
+  const mode = document.documentElement.dataset.spwSpellPath || 'auto';
+  if (mode === 'expanded') return true;
+  if (mode === 'collapsed') return false;
+
+  const routeParts = window.location.pathname.split('/').filter(Boolean);
+  const hasHash = Boolean(window.location.hash);
+  const hasActiveFrame = Boolean(
+    document.querySelector('.site-frame[data-state~="active"]')
+    || (hasHash && document.querySelector(window.location.hash))
+  );
+  const relatedCount = Number.parseInt(
+    document.querySelector('.spw-spell-path')?.dataset.spwBreadcrumbRelatedCount || '0',
+    10
+  ) || collectRelatedBreadcrumbRoutes(window.location.pathname).length;
+
+  return routeParts.length >= 2 || hasActiveFrame || relatedCount > 0;
+}
+
 function syncBreadcrumbViewportPreference() {
   const compact = window.matchMedia('(max-width: 720px)').matches;
 
   if (runtime.pathExpanded == null) {
     runtime.pathCompact = compact;
-    runtime.pathExpanded = false;
+    runtime.pathExpanded = resolveSpellPathExpandedDefault();
     return;
   }
 
   runtime.pathCompact = compact;
+}
+
+function syncSpellPathSurfaceDatasets({
+  pathState,
+  compact,
+  depth,
+  cognitiveState,
+  surface,
+}) {
+  const entries = {
+    spwSpellPathState: pathState,
+    spwSpellPathViewport: compact ? 'compact' : 'roomy',
+    spwSpellPathDepth: String(depth),
+    spwPageRegionAffinity: cognitiveState?.gradient || '',
+    spwPageRegionFamiliarity: cognitiveState?.familiarity || '',
+    spwPageRegionLiminality: cognitiveState?.liminality || '',
+    spwPageRegionSurface: surface || '',
+  };
+
+  [document.documentElement, document.body].forEach((node) => {
+    Object.entries(entries).forEach(([key, value]) => {
+      const attr = key.replace(/[A-Z]/g, (char) => `-${char.toLowerCase()}`);
+      if (value) {
+        node.setAttribute(`data-${attr}`, value);
+      } else {
+        node.removeAttribute(`data-${attr}`);
+      }
+    });
+  });
 }
 
 function describeBreadcrumbSummary({ surface, routeParts, pageResponsibility, pagePrimaryAction, activeFrameSigil, activeMode }) {
@@ -1093,7 +1361,17 @@ function describeBreadcrumbSummary({ surface, routeParts, pageResponsibility, pa
   return [routeLabel, responsibilityLabel || actionLabel].filter(Boolean).join(' · ') || routeLabel;
 }
 
-function describeBreadcrumbGuide({ surface, pageRole, pageResponsibility, pagePrimaryAction, activeFrameSigil, activeMode, relatedRoutes, compact }) {
+function describeBreadcrumbGuide({
+  surface,
+  pageRole,
+  pageResponsibility,
+  pagePrimaryAction,
+  activeFrameSigil,
+  activeMode,
+  relatedRoutes,
+  compact,
+  pathState = 'closed',
+}) {
   const lead = pageResponsibility
     ? `This page is a ${humanizePathPart(pageResponsibility)}.`
     : `This page is part of ${humanizePathPart(surface)}.`;
@@ -1113,6 +1391,16 @@ function describeBreadcrumbGuide({ surface, pageRole, pageResponsibility, pagePr
   }
   if (!compact && relatedRoutes.length) {
     details.push(`nearby ${relatedRoutes.length}`);
+  }
+
+  const interactionHint = describeSpellPathInteractionHint({
+    compact,
+    pageResponsibility,
+    pathState,
+    activeFrameSigil,
+  });
+  if (interactionHint) {
+    details.push(interactionHint);
   }
 
   return [
@@ -1179,6 +1467,14 @@ function readShellSnapshot() {
   };
 }
 
+function onBreadcrumbKeydown(event) {
+  if (event.key !== 'Escape') return;
+  if (!runtime.pathExpanded) return;
+  event.preventDefault();
+  runtime.pathExpanded = false;
+  renderBreadcrumbSpell();
+}
+
 function onBreadcrumbAction(event) {
   const control = event.target instanceof Element
     ? event.target.closest('[data-spw-breadcrumb-action]')
@@ -1189,6 +1485,7 @@ function onBreadcrumbAction(event) {
   switch (control.dataset.spwBreadcrumbAction) {
     case 'toggle-path':
       runtime.pathExpanded = !runtime.pathExpanded;
+      runtime.pathExpandedManual = true;
       renderBreadcrumbSpell();
       break;
     case 'focus-mode': {
@@ -1219,6 +1516,23 @@ function onBreadcrumbAction(event) {
         },
       }));
       break;
+    case 'inspect-region': {
+      const target = resolveRegionInspectTarget();
+      if (!target) return;
+      if (isRegionMenuOpen()) {
+        closeRegionMenu();
+      } else {
+        openRegionMenuForElement(target, { source: 'breadcrumb' });
+      }
+      renderBreadcrumbSpell();
+      break;
+    }
+    case 'focus-sorter': {
+      event.preventDefault();
+      navigateSpellPathTarget('choose-your-entrance', { source: 'breadcrumb' });
+      renderBreadcrumbSpell();
+      break;
+    }
     default:
       break;
   }

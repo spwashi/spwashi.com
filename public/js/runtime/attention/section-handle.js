@@ -25,6 +25,7 @@ import {
   PAGE_SECTION_PHASE_ATTR,
   SECTION_INDEX_ATTR,
   SECTION_STATE_ATTR,
+  SECTION_TIER_ATTR,
   SPW_LOG_RELATIONSHIPS,
   SUBVOCAL_REHEARSAL_ATTR,
   clearAttributes,
@@ -150,12 +151,38 @@ function getSectionToken(section) {
     return sigilText.slice(0, 18);
   }
 
+  const hookKind = section.dataset.spwKind === 'hook' || section.dataset.spwComponentKind === 'hook';
+  const operatorName = section.getAttribute('data-spw-operator') || '';
+  if (hookKind && operatorName) {
+    const prefix = operatorName === 'probe' ? '?'
+      : operatorName === 'frame' ? '#>'
+      : operatorName === 'action' ? '@'
+      : operatorName === 'ref' ? '~'
+      : operatorName === 'object' ? '^'
+      : '';
+    return `${prefix}${operatorName}`.slice(0, 18);
+  }
+
   const operator =
-    section.getAttribute('data-spw-operator')
+    operatorName
     || section.getAttribute('data-spw-role')
     || section.getAttribute('data-spw-kind')
     || '';
   return operator ? operator.slice(0, 14) : '#>';
+}
+
+function getSectionTier(section) {
+  if (!(section instanceof HTMLElement)) return 'nested';
+  if (section.matches('main > section, main > article, main > aside, main > [data-spw-svg-host]')) {
+    return 'primary';
+  }
+  if (section.matches('main > article > section, main > article > aside, main > article > [data-spw-svg-host]')) {
+    return 'article';
+  }
+  if (section.matches('[data-spw-kind="hook"], [data-spw-component-kind="hook"]')) {
+    return 'hook';
+  }
+  return 'nested';
 }
 
 function ensureSectionId(section, index) {
@@ -187,11 +214,9 @@ function ensureSectionId(section, index) {
   return id;
 }
 
-function describeSection(section, index = 0) {
-  if (!section) return null;
-  const id = ensureSectionId(section, index);
+function getSectionLabel(section, index = 0) {
+  if (!section) return '';
   const svgHostId = section.getAttribute('data-spw-svg-host');
-  const token = getSectionToken(section);
   const heading = getSectionHeading(section);
   const svgLabel = svgHostId
     ? section.querySelector(':scope > svg > title')?.textContent
@@ -202,10 +227,19 @@ function describeSection(section, index = 0) {
     (heading && heading.textContent) ||
     section.getAttribute('aria-label') ||
     section.getAttribute('data-spw-label') ||
-    id ||
+    ensureSectionId(section, index) ||
     '';
-  const label = labelSource.trim().replace(/\s+/g, ' ').slice(0, 80);
-  return { id, token, label };
+  return labelSource.trim().replace(/\s+/g, ' ').slice(0, 80);
+}
+
+function describeSection(section, index = 0, sections = []) {
+  if (!section) return null;
+  const id = ensureSectionId(section, index);
+  const token = getSectionToken(section);
+  const label = getSectionLabel(section, index);
+  const prevLabel = index > 0 ? getSectionLabel(sections[index - 1], index - 1) : '';
+  const nextLabel = index < sections.length - 1 ? getSectionLabel(sections[index + 1], index + 1) : '';
+  return { id, token, label, prevLabel, nextLabel };
 }
 
 function collectSections() {
@@ -400,6 +434,7 @@ function syncSectionHandleSections(sections, activeIndex) {
   sections.forEach((section, index) => {
     writeAttributes(section, {
       [SECTION_STATE_ATTR]: getSectionLifecycleState(index, activeIndex),
+      [SECTION_TIER_ATTR]: getSectionTier(section),
     });
   });
 }
@@ -440,7 +475,7 @@ function updateSectionHandleState({
 }) {
   state.activeIndex = resolveActiveIndex(sections);
   const activeSection = sections[state.activeIndex];
-  const info = describeSection(activeSection, state.activeIndex);
+  const info = describeSection(activeSection, state.activeIndex, sections);
   if (!info) return;
 
   const snapshot = buildSectionSnapshot(
@@ -462,6 +497,8 @@ function updateSectionHandleState({
       currentLabel: refs.currentLabel,
       progressNode: refs.progressNode,
       currentLink: refs.currentLink,
+      prevButton: refs.prevButton,
+      nextButton: refs.nextButton,
     },
     info,
     state.activeIndex,
@@ -768,7 +805,7 @@ function createSectionHandleController({
     handle.hidden = false;
     clearAttributes(handle, [HANDLE_ENHANCED_ATTR, HANDLE_PHASE_ATTR, HANDLE_AVAILABILITY_ATTR]);
     sections.forEach((section) => {
-      clearAttributes(section, [SECTION_STATE_ATTR, SECTION_INDEX_ATTR]);
+      clearAttributes(section, [SECTION_STATE_ATTR, SECTION_INDEX_ATTR, SECTION_TIER_ATTR]);
     });
     [document.documentElement, document.body].forEach((node) => {
       clearAttributes(node, [

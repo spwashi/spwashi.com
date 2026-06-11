@@ -157,6 +157,72 @@
 /* Light upgrade for .frame-panel used in card-like roles on landing pages.
    Gives them better wrapping, rhythm, and hover behavior without requiring a full class change.
    This is especially useful on design, blog, about, math, and play hubs. */
+/* Content-specific card variants: authored intent + runtime tone feedback. */
+:where([data-spw-content-variant]) {
+  --spw-content-variant-accent: var(--active-op-color, var(--component-accent));
+  --spw-content-variant-pad: var(--component-pad, 0.85rem);
+  --spw-content-variant-gap: var(--card-internal-gap, 0.45rem);
+}
+
+:where(.frame-panel[data-spw-content-variant="entry"], .frame-card[data-spw-content-variant="entry"]) {
+  --spw-content-variant-accent: var(--op-frame-color, var(--component-accent));
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  align-content: start;
+  min-height: 100%;
+  gap: var(--spw-content-variant-gap);
+  padding: var(--spw-content-variant-pad);
+}
+
+:where([data-spw-content-variant="entry"]) :where(h3, h4) {
+  max-inline-size: 30ch;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+:where([data-spw-content-variant="entry"]) :where(.spw-card-reason, .card-sub-links, .frame-operators) {
+  margin-block-start: auto;
+}
+
+:where([data-spw-content-variant="compact"]) {
+  --spw-content-variant-pad: 0.72rem;
+  --spw-content-variant-gap: 0.34rem;
+  padding: var(--spw-content-variant-pad);
+  gap: var(--spw-content-variant-gap);
+}
+
+:where([data-spw-content-variant="rich"]) {
+  --spw-content-variant-pad: clamp(0.9rem, 1.6vw, 1.05rem);
+  --spw-content-variant-gap: 0.52rem;
+  padding: var(--spw-content-variant-pad);
+  gap: var(--spw-content-variant-gap);
+}
+
+:where([data-spw-content-variant="rich"]) :where(p, .frame-note) {
+  max-inline-size: 48ch;
+}
+
+:where(.frame-panel[data-spw-content-tone="dense"],
+       .frame-panel[data-spw-content-tone="operator-heavy"],
+       .frame-card[data-spw-content-tone="dense"],
+       .frame-card[data-spw-content-tone="operator-heavy"]) {
+  --spw-content-variant-gap: 0.36rem;
+  --spw-content-variant-pad: calc(var(--component-pad, 0.85rem) * 0.9);
+  padding: var(--spw-content-variant-pad);
+  gap: var(--spw-content-variant-gap);
+}
+
+:where(.frame-panel[data-spw-content-tone="text-long"],
+       .frame-card[data-spw-content-tone="text-long"]) {
+  --spw-content-variant-gap: 0.5rem;
+}
+
+:where(.frame-panel[data-spw-content-tone="light"],
+       .frame-card[data-spw-content-tone="light"]) {
+  --spw-content-variant-pad: calc(var(--component-pad, 0.85rem) * 1.06);
+  padding: var(--spw-content-variant-pad);
+}
+
 :where(.frame-panel[data-spw-kind="card"], .frame-panel[data-spw-role="reference"][data-spw-category-family]) {
   background:
     linear-gradient(

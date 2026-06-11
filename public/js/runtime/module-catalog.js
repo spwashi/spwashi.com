@@ -732,7 +732,7 @@ export const ENHANCEMENT_DEFS = [
     id: 'navigation-spells',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
-    selector: 'header nav a[href], .page-index a[href], .card-sub-links a[href], .frame-operators a[href]',
+    selector: 'header nav a[href], .site-header nav a[href], body > header nav a[href], .site-footer__nav a[href], .page-index a[href], .card-sub-links a[href], .frame-operators a[href]',
     rootMode: 'single',
     describes: 'navigation[spell|grounding] route[replay]',
     updates: ['data-spw-spell-path', 'data-spw-grounded-in'],

@@ -295,10 +295,19 @@ function inferRole(el, kind) {
   if (/status|current|applied state/.test(haystack)) return 'status';
   if (/probe|lab|observatory|question/.test(haystack)) return 'probe';
 
+  if (kind === 'hook') {
+    const hookRole = normalizeToken(el.dataset.spwRole || '');
+    if (hookRole === 'call' || hookRole === 'invocation') return 'orientation';
+    if (hookRole === 'gate') return 'routing';
+    return 'probe';
+  }
+
   if (kind === 'frame') return 'orientation';
   if (kind === 'panel') return 'reference';
   if (kind === 'card') return 'artifact';
   if (kind === 'lens') return 'control';
+  if (kind === 'surface') return 'surface';
+  if (kind === 'metric') return 'telemetry';
 
   return 'reference';
 }
@@ -315,6 +324,10 @@ function inferForm(el, kind) {
   if (kind === 'nav') return 'route-list';
   if (kind === 'frame') return 'brace';
   if (kind === 'card') return 'tile';
+  if (kind === 'hook') return 'brace';
+  if (kind === 'lens') return 'lens';
+  if (kind === 'surface') return 'surface';
+  if (kind === 'metric') return 'metric';
   return 'block';
 }
 
@@ -359,6 +372,7 @@ function inferImportance(el, kind, role) {
   if (el.dataset.spwImportance) return normalizeToken(el.dataset.spwImportance);
 
   if (el.classList.contains('site-hero')) return 'primary';
+  if (kind === 'hook') return 'high';
   if (kind === 'main') return 'primary';
   if (role === 'control' || role === 'routing') return 'high';
   if (role === 'schema' || role === 'registry') return 'high';

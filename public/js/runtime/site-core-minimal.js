@@ -168,17 +168,40 @@ function resolveHashTargetFrame() {
   return target.closest(FRAME_SELECTOR) || null;
 }
 
-function bindHashLandingState(ctx) {
-  function applyHashState() {
-    const frame = resolveHashTargetFrame();
-    if (!frame) return;
-    frame.dataset.state = 'active';
-    frame.dataset.spwActive = 'true';
-    frame.dataset.spwAttention = 'focused';
-    ctx.bus.emit('spw:hash-target', { frame, id: frame.id || null });
+function activateHashTargetFrame(ctx) {
+  const frame = resolveHashTargetFrame();
+  const frames = safeQueryAll(FRAME_SELECTOR);
+
+  for (const candidate of frames) {
+    const isActive = candidate === frame;
+    if (isActive) {
+      candidate.dataset.state = 'active';
+      candidate.dataset.spwActive = 'true';
+      candidate.dataset.spwAttention = 'focused';
+      candidate.dataset.spwStateAccent = 'active';
+    } else {
+      delete candidate.dataset.state;
+      candidate.dataset.spwActive = 'false';
+      candidate.dataset.spwAttention = 'ambient';
+      delete candidate.dataset.spwStateAccent;
+    }
   }
 
-  const handle = window.setTimeout(applyHashState, 0);
+  if (!frame) return null;
+
+  ctx.bus.emit('spw:hash-target', { frame, id: frame.id || null });
+  ctx.bus.emit('spw:frame-change', {
+    id: frame.id || null,
+    frame,
+    route: ctx.route,
+    source: 'hash',
+  });
+
+  return frame;
+}
+
+function bindHashLandingState(ctx) {
+  const handle = window.setTimeout(() => activateHashTargetFrame(ctx), 0);
   ctx.addTimer(handle);
 
   return () => window.clearTimeout(handle);
@@ -186,12 +209,7 @@ function bindHashLandingState(ctx) {
 
 function bindHashChangeRefresh(ctx) {
   const handler = () => {
-    const frame = resolveHashTargetFrame();
-    if (!frame) return;
-    frame.dataset.state = 'active';
-    frame.dataset.spwActive = 'true';
-    frame.dataset.spwAttention = 'focused';
-    ctx.bus.emit('spw:hash-target', { frame, id: frame.id || null });
+    activateHashTargetFrame(ctx);
   };
 
   window.addEventListener('hashchange', handler);

@@ -163,12 +163,13 @@
 }
 
 :where(
-  [data-spw-component-kind],
-  [data-spw-kind],
+  [data-spw-component-kind]:not(body):not(main),
+  [data-spw-kind]:not(body):not(main),
   .site-frame,
   .frame-card,
   .media-card,
   .media-focus-card,
+  .topic-reference-card,
   .software-card,
   .operator-card,
   .frame-panel,
@@ -183,7 +184,8 @@
   .settings-map-card,
   .settings-preset-btn,
   .vibe-widget,
-  .pwa-status-card
+  .pwa-status-card,
+  .payment-card
 ) {
   container-type: inline-size;
 }
