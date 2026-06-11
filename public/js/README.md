@@ -179,7 +179,11 @@ compatibility wrappers unless a file truly needs a migration shim.
 
 `npm run check:runtime` enforces the hard part of that rule: runtime module IDs
 must be unique, dynamic imports must resolve inside `public/js/`, generated
-`typed/` modules must have `public/ts/` sources, and only `site.js` plus
-`compose.js` may live as root-level JavaScript entrypoints.
+`typed/` modules must have `public/ts/` sources, only `site.js` plus
+`compose.js` may live as root-level JavaScript entrypoints, and top-level
+implementation folders must stay in the recognized ownership set:
+`kernel/`, `runtime/`, `interface/`, `semantic/`, `modules/`, `media/`, and
+`typed/`. Adding a new top-level family should be a contract change, not an
+incidental file placement.
 
 Documentation route: `/design/composition/`.

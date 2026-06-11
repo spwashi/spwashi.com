@@ -1,4 +1,8 @@
 import {
+  createCardSigil,
+  createFrameHeading,
+} from '../js/kernel/dom-contracts.js';
+import {
   cleanText,
   clampIndex,
   createJsonFeedLoader,
@@ -261,6 +265,10 @@ function fallbackOperator(kind: PromoWonderKind): string {
   return kind === 'promo' ? '@' : '?';
 }
 
+function cardOperatorType(kind: PromoWonderKind): string {
+  return kind === 'promo' ? 'action' : 'probe';
+}
+
 function getPresentation(item: PromoWonderCard): PromoPresentation {
   return cleanText(item.presentation || item.promotion?.presentation || 'toast') as PromoPresentation;
 }
@@ -304,8 +312,11 @@ function renderCard(
   label.textContent = cleanText(item.label || fallbackLabel(kind));
 
   const titleRow = el('div', 'promo-wonder-cycle__title-row');
-  const operator = el('span', 'frame-card-sigil promo-wonder-cycle__operator', { 'aria-hidden': 'true' });
-  operator.textContent = cleanText(item.operator || fallbackOperator(kind));
+  const operator = createCardSigil(cleanText(item.operator || fallbackOperator(kind)), {
+    className: 'frame-card-sigil promo-wonder-cycle__operator',
+    operator: cardOperatorType(kind),
+    ariaHidden: true,
+  });
   const heading = el('h3');
   heading.textContent = cleanText(item.title || fallbackTitle(kind));
   titleRow.append(operator, heading);
@@ -357,12 +368,13 @@ function renderFeed(host: Element, feed: PromoWonderFeed, date = new Date()): vo
     'aria-labelledby': 'promo-wonder-cycle-title',
   });
 
-  const top = el('div', 'frame-heading');
-  const sigil = el('a', 'frame-sigil', { href: '#promo-wonder-cycle' });
-  sigil.textContent = '#>promo_wonder_cycle';
-  const heading = el('h2', '', { id: 'promo-wonder-cycle-title' });
-  heading.textContent = 'A reason to wonder today';
-  top.append(sigil, heading);
+  const top = createFrameHeading({
+    href: '#promo-wonder-cycle',
+    sigilText: '#>promo_wonder_cycle',
+    title: 'A reason to wonder today',
+    operator: 'frame',
+    headingId: 'promo-wonder-cycle-title',
+  });
 
   const intro = el('p', 'inline-note promo-wonder-cycle__intro');
   intro.textContent = 'One card stays promotional and one stays curious. Both can change by day or week, and both have accessible links if JavaScript is unavailable.';

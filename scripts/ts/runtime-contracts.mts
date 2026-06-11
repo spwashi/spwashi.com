@@ -22,6 +22,15 @@ const VALID_LAYERS = new Set(['core', 'feature', 'region', 'enhancement']);
 const VALID_MOUNT_TIMINGS = new Set(['immediate', 'visible', 'idle', 'interaction', 'region']);
 const VALID_ROOT_MODES = new Set(['single', 'each']);
 const ALLOWED_ROOT_JS_FILES = new Set(['compose.js', 'site.js']);
+const ALLOWED_JS_OWNER_DIRECTORIES = new Set([
+  'interface',
+  'kernel',
+  'media',
+  'modules',
+  'runtime',
+  'semantic',
+  'typed',
+]);
 
 type RuntimeFamily = (typeof RUNTIME_FAMILIES)[number];
 
@@ -46,6 +55,7 @@ type RuntimeContractReport = {
   errors: string[];
   modules: RuntimeContractModule[];
   recommendations: string[];
+  ownerDirectories: string[];
   rootEntrypoints: string[];
   typedOutputs: string[];
   warnings: string[];
@@ -111,6 +121,14 @@ async function collectRootJsEntrypoints(): Promise<string[]> {
     .sort();
 }
 
+async function collectTopLevelJsDirectories(): Promise<string[]> {
+  const entries = await fs.readdir(PUBLIC_JS_DIR, { withFileTypes: true });
+  return entries
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name)
+    .sort();
+}
+
 async function collectTypedOutputs(): Promise<string[]> {
   const typedDir = path.join(PUBLIC_JS_DIR, 'typed');
   if (!(await pathExists(typedDir))) return [];
@@ -123,6 +141,12 @@ async function collectTypedOutputs(): Promise<string[]> {
 
 function importPathToAbsolute(importPath: string): string {
   return path.resolve(path.dirname(SITE_RUNTIME_PATH), importPath);
+}
+
+function getImportOwnerDirectory(importPath: string): string | null {
+  if (!importPath.startsWith('./')) return null;
+  const normalized = importPath.slice(2).split(/[\\/]/).filter(Boolean);
+  return normalized[0] || null;
 }
 
 function validateModule(
@@ -166,6 +190,11 @@ function validateModule(
   if (module.importPath) {
     if (!module.importPath.startsWith('./') || module.importPath.includes('..')) {
       errors.push(`${label} import path must stay inside public/js with a ./ relative path.`);
+    }
+
+    const ownerDirectory = getImportOwnerDirectory(module.importPath);
+    if (!ownerDirectory || !ALLOWED_JS_OWNER_DIRECTORIES.has(ownerDirectory)) {
+      errors.push(`${label} imports ${module.importPath}; site runtime modules must load from an owned public/js directory (${[...ALLOWED_JS_OWNER_DIRECTORIES].join(', ')}).`);
     }
 
     const absoluteImport = importPathToAbsolute(module.importPath);
@@ -236,6 +265,13 @@ export async function collectRuntimeContractReport(): Promise<RuntimeContractRep
     }
   }
 
+  const ownerDirectories = await collectTopLevelJsDirectories();
+  for (const directory of ownerDirectories) {
+    if (!ALLOWED_JS_OWNER_DIRECTORIES.has(directory)) {
+      errors.push(`public/js/${directory}/ is not a recognized JS ownership directory; update the runtime contract before adding a new top-level module family.`);
+    }
+  }
+
   const typedOutputs = await collectTypedOutputs();
   for (const output of typedOutputs) {
     const basename = path.basename(output, '.js');
@@ -248,6 +284,7 @@ export async function collectRuntimeContractReport(): Promise<RuntimeContractRep
   return {
     errors,
     modules,
+    ownerDirectories,
     recommendations,
     rootEntrypoints,
     typedOutputs,
@@ -258,7 +295,7 @@ export async function collectRuntimeContractReport(): Promise<RuntimeContractRep
 export async function main(): Promise<void> {
   const report = await collectRuntimeContractReport();
 
-  console.log(`[runtime] modules=${report.modules.length} rootEntrypoints=${report.rootEntrypoints.length} typedOutputs=${report.typedOutputs.length}`);
+  console.log(`[runtime] modules=${report.modules.length} ownerDirs=${report.ownerDirectories.length} rootEntrypoints=${report.rootEntrypoints.length} typedOutputs=${report.typedOutputs.length}`);
 
   if (report.warnings.length) {
     console.log(`[runtime] warnings=${report.warnings.length}`);

@@ -164,6 +164,15 @@
     falsification = "A card invites creative people generally but offers no route proof, no extension path, and no clear next action."
     status = "active"
   }
+  claim #css-js-ownership-contract-001 {
+    layer = "validation"
+    hypothesis = "CSS and JS architecture stays navigable when top-level folders are treated as explicit owner contracts and validation rejects layer/folder drift before broad refactors begin."
+    spec_ref = "public/css/README.md + public/js/README.md + .spw/conventions/css-instruction.spw#import_manifest"
+    impl_ref = "scripts/ts/css-contracts.mts + scripts/ts/runtime-contracts.mts"
+    probe_ref = "Run npm run check:css and npm run check:runtime; confirm CSS imports match their folder layer and JS implementation files stay under recognized owner directories."
+    falsification = "A future patch adds root-level CSS, imports a layer file through the wrong cascade layer, or creates a new public/js top-level family without updating the runtime contract."
+    status = "active"
+  }
 }
 
 ^"dispatch"{

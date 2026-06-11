@@ -407,7 +407,7 @@
   min-width: 0;
 }
 
-:where([data-spw-slot="header"], .frame-topline, header.frame-heading) {
+:where([data-spw-slot="header"], .frame-topline, .frame-heading) {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -429,8 +429,10 @@
   border-bottom-color: color-mix(in srgb, var(--component-accent) 32%, transparent);
 }
 
-header.frame-heading > :is(h1, h2, h3) {
+:where(.frame-heading > :is(h1, h2, h3)) {
   margin: 0;
+  min-width: 0;
+  flex: 1 1 12rem;
 }
 
 :where([data-spw-slot="meta"], [data-spw-slot="actions"], .spec-strip, .button-group, .frame-operators) {

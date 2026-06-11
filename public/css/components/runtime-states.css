@@ -355,7 +355,7 @@
    ========================================================================== */
 
 @container (max-width: 36rem) {
-  :where([data-spw-slot="header"], .frame-topline, header.frame-heading) {
+  :where([data-spw-slot="header"], .frame-topline, .frame-heading) {
     gap: var(--spw-slot-gap-tight, 0.34rem 0.46rem);
   }
 

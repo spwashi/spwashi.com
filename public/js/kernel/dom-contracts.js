@@ -9,6 +9,8 @@
  * --------------------------------------------------------------------------
  */
 
+import { detectOperator } from '/public/js/kernel/shared.js';
+
 export const CORE_COMPONENT_SELECTORS = Object.freeze([
   '.site-frame',
   '.frame-panel',
@@ -447,6 +449,77 @@ export function buildAxisGenome(axisEntries = [], listEntries = []) {
   });
 
   return [...tokens].join(' ');
+}
+
+export function createFrameSigil({
+  href = '',
+  sigilText = '',
+  operator = '',
+  asLink = null
+} = {}) {
+  const detected = detectOperator(sigilText);
+  const opType = operator || detected?.type || '';
+  const shouldLink = asLink ?? Boolean(href);
+  const tag = shouldLink ? 'a' : 'span';
+  const el = document.createElement(tag);
+  el.className = 'frame-sigil';
+
+  if (shouldLink) {
+    el.href = href || '#';
+  }
+
+  el.textContent = sigilText;
+
+  if (opType) {
+    writeDatasetValue(el, 'spwOperator', opType);
+  }
+
+  return el;
+}
+
+export function createFrameHeading({
+  href = '',
+  sigilText = '',
+  title = '',
+  headingLevel = 2,
+  operator = '',
+  headingId = ''
+} = {}) {
+  const header = document.createElement('header');
+  header.className = 'frame-heading';
+  const heading = document.createElement(`h${Math.min(6, Math.max(1, headingLevel))}`);
+  heading.textContent = title;
+  if (headingId) heading.id = headingId;
+
+  header.append(
+    createFrameSigil({ href, sigilText, operator }),
+    heading
+  );
+  return header;
+}
+
+export function createCardSigil(sigilText = '', {
+  operator = '',
+  className = 'frame-card-sigil',
+  ariaHidden = false
+} = {}) {
+  const detected = detectOperator(sigilText);
+  const opType = operator || detected?.type || '';
+  const el = document.createElement('span');
+  el.className = className.includes('frame-card-sigil')
+    ? className
+    : `frame-card-sigil ${className}`.trim();
+  el.textContent = sigilText;
+
+  if (opType) {
+    writeDatasetValue(el, 'spwOperator', opType);
+  }
+
+  if (ariaHidden) {
+    el.setAttribute('aria-hidden', 'true');
+  }
+
+  return el;
 }
 
 export function inferTopographyKind(el, fallback = 'component') {

@@ -343,6 +343,7 @@
 
   /* -- Spatial Anchors -- */
   --header-height: 4rem;
+  --shell-header-height: var(--header-height);
   --page-width: 72rem;
   --page-width-reading: 56rem;
   --page-width-wide: 84rem;

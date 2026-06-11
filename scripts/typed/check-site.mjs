@@ -13,7 +13,7 @@ export async function main() {
     console.log(`[check] routes=${manifest.routeCount} svgRoutes=${manifest.maps.svgRoutes.length} specRoutes=${manifest.maps.specRoutes.length}`);
     console.log(`[check] syntax targets=${syntaxReport.targets.length}`);
     console.log(`[check] css files=${cssReport.cssFiles.length} imports=${cssReport.imports.length} routeStylesheets=${cssReport.linkedStylesheets.length} sources=${cssReport.sourceFiles.length}`);
-    console.log(`[check] runtime modules=${runtimeReport.modules.length} rootEntrypoints=${runtimeReport.rootEntrypoints.length} typedOutputs=${runtimeReport.typedOutputs.length}`);
+    console.log(`[check] runtime modules=${runtimeReport.modules.length} ownerDirs=${runtimeReport.ownerDirectories.length} rootEntrypoints=${runtimeReport.rootEntrypoints.length} typedOutputs=${runtimeReport.typedOutputs.length}`);
     const warnings = [
         ...manifestIssues.warnings.map((warning) => `[manifest] ${warning}`),
         ...cssReport.warnings.map((warning) => `[css] ${warning}`),

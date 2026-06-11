@@ -1,3 +1,11 @@
+import {
+    createCardSigil,
+    createFrameHeading,
+    createFrameSigil
+} from '/public/js/kernel/dom-contracts.js';
+
+export { createCardSigil, createFrameHeading, createFrameSigil };
+
 const appendChild = (parent, child) => {
     if (!child) return;
     if (typeof child === 'string') {
@@ -22,6 +30,16 @@ export const createElement = (tag, props = {}, children = []) => {
         }
         if (key === 'html') {
             element.innerHTML = value;
+            return;
+        }
+        if (key === 'dataset' && value && typeof value === 'object') {
+            Object.entries(value).forEach(([datasetKey, datasetValue]) => {
+                if (datasetValue == null) {
+                    delete element.dataset[datasetKey];
+                    return;
+                }
+                element.dataset[datasetKey] = String(datasetValue);
+            });
             return;
         }
         if (key in element) {

@@ -47,8 +47,8 @@
   --page-section-gap: clamp(2rem, 4vw, 3.25rem);
   --page-section-gap-tight: clamp(1.3rem, 2.8vw, 2rem);
 
-  /* Header */
-  --shell-header-height: 3.25rem;
+  /* Header — alias core token so scroll chrome stays aligned sitewide */
+  --shell-header-height: var(--header-height, 4rem);
   --shell-header-min-height: 0;
   --shell-header-pad-inline: clamp(0.85rem, 2vw, 1.2rem);
   --shell-header-pad-block: 0.28rem;

@@ -1,15 +1,18 @@
 import { deleteImage, getImageDataUrl, storeImage } from '/public/js/media/image-store.js';
 import {
     buildCharacterImageKey,
+    consumeLanguageHookFlash,
     createCharacterStorage,
     makeId,
     makeTimestamp,
     normalizeCharacter,
     previewText
 } from '/public/js/modules/rpg-wednesday-state.js';
+import { RPG_CURATOR_ROUTES, RPG_WORKBENCH_COPY, notifyRpgStateChange, workbenchLegendHtml } from '/public/js/modules/rpg-wednesday-contract.js';
 import {
     createElement,
     createField,
+    createFrameHeading,
     createLineField,
     createShortcutToken
 } from '/public/js/modules/rpg-wednesday-dom.js';
@@ -261,9 +264,16 @@ export const initRpgCharacterLab = (section) => {
         board
     ]);
 
+    const syncWorkbenchAttributes = () => {
+        section.dataset.spwCharacterLabDensity = density;
+        section.dataset.spwCharacterDeckCount = String(deck.length);
+        document.documentElement.dataset.spwCharacterLabDensity = density;
+    };
+
     const syncDensity = () => {
         composer.dataset.rpgCharacterDensity = density;
         densityButton.textContent = density === 'lean' ? '~ full fields' : '~ lean fields';
+        syncWorkbenchAttributes();
     };
 
     const syncStatus = (message) => {
@@ -321,6 +331,8 @@ export const initRpgCharacterLab = (section) => {
         summaryCharacters.textContent = String(deck.length);
         summaryPortraits.textContent = String(deck.filter((item) => item.imageKey || item.imageUrl).length);
         summaryHooks.textContent = String(deck.filter((item) => item.hook && item.hook.trim()).length);
+        syncWorkbenchAttributes();
+        notifyRpgStateChange('character-lab');
     };
 
     const render = async () => {
@@ -488,23 +500,36 @@ export const initRpgCharacterLab = (section) => {
     });
 
     section.dataset.rpgHydrated = 'true';
-    section.className = 'site-frame rpg-character-lab';
+    section.dataset.spwFeature = 'character-lab';
+    section.className = 'site-frame rpg-character-lab rpg-workbench rpg-workbench--character';
     section.replaceChildren(
-        createElement('div', { className: 'frame-heading' }, [
-            createElement('a', {
-                className: 'frame-sigil',
-                href: '#character-development',
-                text: '@character_development'
-            }),
-            createElement('h2', { text: 'Character Development' })
-        ]),
+        createFrameHeading({
+            href: '#character-development',
+            sigilText: '@character_development',
+            title: 'Character Development',
+            operator: 'action'
+        }),
         createElement('p', {
             className: 'inline-note',
-            text: 'Build one person at a time. Start with a name and portrait, then add the development vectors and literacies that help the player recognize themselves as a specific individual. Topic links elsewhere on the page are there to name the kind of thinking the character wants next.'
+            text: RPG_WORKBENCH_COPY.characterIntro
+        }),
+        createElement('p', {
+            className: 'rpg-workbench__legend',
+            html: workbenchLegendHtml('Bench rule', RPG_WORKBENCH_COPY.characterBenchRule)
         }),
         createElement('div', { className: 'rpg-character-lab__layout' }, [
             composer,
             boardPanel
+        ]),
+        createElement('nav', {
+            className: 'frame-operators rpg-character-lab__routes',
+            'aria-label': 'Character development routes'
+        }, [
+            createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.curator, text: '~ state curator' }),
+            createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.language, text: '~ language evolution' }),
+            createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.kit, text: '@ local kit' }),
+            createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.cast, text: '~ cast register' }),
+            createElement('a', { className: 'operator-chip', href: '/tools/character-sheet/', text: '^ translation sheet' })
         ]),
         status
     );
@@ -513,7 +538,19 @@ export const initRpgCharacterLab = (section) => {
     persistDeck();
     void render();
 
+    const pendingHook = consumeLanguageHookFlash();
+    if (pendingHook) {
+        hookInput.value = [hookInput.value.trim(), pendingHook].filter(Boolean).join('\n\n');
+        syncStatus('Language brief routed into hook');
+        hookInput.focus();
+    }
+
     return {
-        focusComposer: () => nameInput.focus()
+        focusComposer: () => nameInput.focus(),
+        destroy: () => {
+            delete section.dataset.spwCharacterLabDensity;
+            delete section.dataset.spwCharacterDeckCount;
+            delete document.documentElement.dataset.spwCharacterLabDensity;
+        }
     };
 };

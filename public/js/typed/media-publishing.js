@@ -1,3 +1,4 @@
+import { createCardSigil } from '../js/kernel/dom-contracts.js';
 import { DAY_KEYS, cleanText, createJsonFeedLoader, el, } from './feed-utils.js';
 const MEDIA_FOCUS_URL = '/public/data/media-focus.json';
 const SOURCE_LOCALE = 'en';
@@ -20,8 +21,10 @@ function renderItemCard(item = {}, options = {}, locale = SOURCE_LOCALE) {
         lang: item.locale || locale,
     });
     const topline = el('span', 'media-card-topline');
-    const operator = el('span', 'frame-card-sigil media-card-operator');
-    operator.textContent = cleanText(item.operator || '>');
+    const operator = createCardSigil(cleanText(item.operator || '>'), {
+        className: 'frame-card-sigil media-card-operator',
+        operator: 'stream',
+    });
     topline.append(operator);
     if (item.tag) {
         const tag = el('span', 'media-card-tag');
@@ -54,8 +57,10 @@ function renderFocus(host, item, options = {}, locale = SOURCE_LOCALE) {
     const label = el('p', 'spec-kicker');
     label.textContent = cleanText(item.label || (options.daily ? 'Daily focus' : 'Weekly focus'));
     const titleRow = el('div', 'media-focus-title');
-    const operator = el('span', 'frame-card-sigil media-focus-operator');
-    operator.textContent = cleanText(item.operator || '>');
+    const operator = createCardSigil(cleanText(item.operator || '>'), {
+        className: 'frame-card-sigil media-focus-operator',
+        operator: 'stream',
+    });
     const heading = el('h3');
     heading.textContent = cleanText(item.title || 'Current focus');
     titleRow.append(operator, heading);

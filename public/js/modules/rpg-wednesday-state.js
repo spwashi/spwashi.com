@@ -2,6 +2,23 @@ import { deleteImage, getImageDataUrl, storeImage } from '/public/js/media/image
 
 export const STORAGE_KEY = 'spwashi:rpg-wednesday:v1';
 export const CHARACTER_STORAGE_KEY = 'spwashi:rpg-wednesday:characters:v1';
+export const LANGUAGE_EVOLUTION_STORAGE_KEY = 'spwashi:rpg-wednesday:language-evolution:v1';
+export const LANGUAGE_HOOK_FLASH_KEY = 'spwashi:rpg-wednesday:language-hook-flash:v1';
+export const WORLD_SLOT_STORAGE_KEY = 'spwashi:rpg-wednesday:world-slots:v1';
+
+export const GAMEPLAY_LANE_FIELDS = [
+    'characterBeat',
+    'canonCandidates',
+    'seeds',
+    'nameFabric'
+];
+
+export const WORLD_SLOT_KIND_OPTIONS = [
+    { value: 'place', label: 'Place' },
+    { value: 'faction', label: 'Faction' },
+    { value: 'rule', label: 'Rule' },
+    { value: 'analog', label: 'Analog' }
+];
 export const RPG_ROUTE_RE = /^(?:\/rpg\/?$|\/play\/rpg-wednesday(?:\/|$))/;
 export const DASH_VALUE = 'not set';
 export const CLOCK_SEGMENT_OPTIONS = [2, 4, 6, 8, 10, 12];
@@ -55,6 +72,7 @@ export const DEFAULT_STATE = {
     characterBeat: '',
     canonCandidates: '',
     seeds: '',
+    nameFabric: '',
     updatedAt: ''
 };
 
@@ -145,6 +163,7 @@ export const normalizeState = (value) => {
         characterBeat: typeof input.characterBeat === 'string' ? input.characterBeat : '',
         canonCandidates: typeof input.canonCandidates === 'string' ? input.canonCandidates : '',
         seeds: typeof input.seeds === 'string' ? input.seeds : '',
+        nameFabric: typeof input.nameFabric === 'string' ? input.nameFabric : '',
         updatedAt: typeof input.updatedAt === 'string' ? input.updatedAt : ''
     };
 
@@ -402,6 +421,202 @@ export const buildSessionBrief = (state) => {
         lines.push('', 'Session recap seeds:', state.seeds.trim());
     }
 
+    if (cleanLine(state.nameFabric)) {
+        lines.push('', 'Name fabric / language drift:', state.nameFabric.trim());
+    }
+
     lines.push('', 'Private scratch notes are not included in this brief.');
     return lines.join('\n');
+};
+
+const WORLD_SLOT_KIND_VALUES = new Set(WORLD_SLOT_KIND_OPTIONS.map((option) => option.value));
+
+const DEFAULT_WORLD_SLOT = {
+    id: '',
+    title: '',
+    kind: 'place',
+    mechanism: '',
+    scale: '',
+    notes: '',
+    updatedAt: ''
+};
+
+export const normalizeWorldSlot = (slot) => ({
+    ...DEFAULT_WORLD_SLOT,
+    id: typeof slot.id === 'string' ? slot.id : makeId(),
+    title: typeof slot.title === 'string' ? slot.title : '',
+    kind: WORLD_SLOT_KIND_VALUES.has(slot.kind) ? slot.kind : 'place',
+    mechanism: typeof slot.mechanism === 'string' ? slot.mechanism : '',
+    scale: typeof slot.scale === 'string' ? slot.scale : '',
+    notes: typeof slot.notes === 'string' ? slot.notes : '',
+    updatedAt: typeof slot.updatedAt === 'string' ? slot.updatedAt : ''
+});
+
+export const normalizeWorldSlotDeck = (value) => (
+    Array.isArray(value)
+        ? value.filter((item) => item && typeof item === 'object').map(normalizeWorldSlot)
+        : []
+);
+
+export const createWorldSlotStorage = () => {
+    const unavailable = {
+        available: false,
+        read: () => [],
+        write: () => false,
+        clear: () => false
+    };
+
+    try {
+        const testKey = `${WORLD_SLOT_STORAGE_KEY}:test`;
+        localStorage.setItem(testKey, '1');
+        localStorage.removeItem(testKey);
+    } catch {
+        return unavailable;
+    }
+
+    return {
+        available: true,
+        read: () => normalizeWorldSlotDeck(safeJsonParse(localStorage.getItem(WORLD_SLOT_STORAGE_KEY))),
+        write: (deck) => {
+            localStorage.setItem(WORLD_SLOT_STORAGE_KEY, JSON.stringify(deck));
+            return true;
+        },
+        clear: () => {
+            localStorage.removeItem(WORLD_SLOT_STORAGE_KEY);
+            return true;
+        }
+    };
+};
+
+const DEFAULT_LANGUAGE_EVOLUTION = {
+    posture: 'storytelling',
+    stage: 'resonance',
+    seed: '',
+    gloss: '',
+    tableMove: '',
+    audience: '',
+    updatedAt: ''
+};
+
+const LANGUAGE_POSTURES = new Set(['linguistics', 'storytelling', 'communication']);
+const LANGUAGE_STAGES = new Set(['scratch', 'resonance', 'grammar', 'canon', 'publication']);
+
+export const buildLanguagePromotionPacket = (languageState) => {
+    const parts = [
+        previewText(languageState.seed, ''),
+        languageState.gloss?.trim() ? `gloss: ${languageState.gloss.trim()}` : '',
+        languageState.tableMove?.trim() ? `move: ${languageState.tableMove.trim()}` : '',
+        `stage: ${languageState.stage}`,
+        `posture: ${languageState.posture}`
+    ].filter(Boolean);
+
+    return parts.join(' · ');
+};
+
+export const flashLanguageHook = (packet) => {
+    const trimmed = cleanLine(packet || '');
+    if (!trimmed) return false;
+
+    try {
+        sessionStorage.setItem(LANGUAGE_HOOK_FLASH_KEY, JSON.stringify({
+            packet: trimmed,
+            at: makeTimestamp()
+        }));
+        return true;
+    } catch {
+        return false;
+    }
+};
+
+export const consumeLanguageHookFlash = () => {
+    try {
+        const raw = sessionStorage.getItem(LANGUAGE_HOOK_FLASH_KEY);
+        if (!raw) return null;
+        sessionStorage.removeItem(LANGUAGE_HOOK_FLASH_KEY);
+        const parsed = safeJsonParse(raw);
+        return typeof parsed?.packet === 'string' && parsed.packet.trim()
+            ? parsed.packet.trim()
+            : null;
+    } catch {
+        return null;
+    }
+};
+
+export const readLanguageEvolutionState = () => {
+    try {
+        const testKey = `${LANGUAGE_EVOLUTION_STORAGE_KEY}:test`;
+        localStorage.setItem(testKey, '1');
+        localStorage.removeItem(testKey);
+    } catch {
+        return { ...DEFAULT_LANGUAGE_EVOLUTION };
+    }
+
+    const input = safeJsonParse(localStorage.getItem(LANGUAGE_EVOLUTION_STORAGE_KEY)) || {};
+    return {
+        ...DEFAULT_LANGUAGE_EVOLUTION,
+        posture: LANGUAGE_POSTURES.has(input.posture) ? input.posture : DEFAULT_LANGUAGE_EVOLUTION.posture,
+        stage: LANGUAGE_STAGES.has(input.stage) ? input.stage : DEFAULT_LANGUAGE_EVOLUTION.stage,
+        seed: typeof input.seed === 'string' ? input.seed : '',
+        gloss: typeof input.gloss === 'string' ? input.gloss : '',
+        tableMove: typeof input.tableMove === 'string' ? input.tableMove : '',
+        audience: typeof input.audience === 'string' ? input.audience : '',
+        updatedAt: typeof input.updatedAt === 'string' ? input.updatedAt : ''
+    };
+};
+
+export const createLanguageEvolutionStorage = () => {
+    try {
+        const testKey = `${LANGUAGE_EVOLUTION_STORAGE_KEY}:test`;
+        localStorage.setItem(testKey, '1');
+        localStorage.removeItem(testKey);
+    } catch {
+        return {
+            available: false,
+            read: () => ({ ...DEFAULT_LANGUAGE_EVOLUTION }),
+            write: () => false
+        };
+    }
+
+    return {
+        available: true,
+        read: readLanguageEvolutionState,
+        write: (state) => {
+            const next = {
+                ...DEFAULT_LANGUAGE_EVOLUTION,
+                posture: LANGUAGE_POSTURES.has(state.posture) ? state.posture : DEFAULT_LANGUAGE_EVOLUTION.posture,
+                stage: LANGUAGE_STAGES.has(state.stage) ? state.stage : DEFAULT_LANGUAGE_EVOLUTION.stage,
+                seed: typeof state.seed === 'string' ? state.seed : '',
+                gloss: typeof state.gloss === 'string' ? state.gloss : '',
+                tableMove: typeof state.tableMove === 'string' ? state.tableMove : '',
+                audience: typeof state.audience === 'string' ? state.audience : '',
+                updatedAt: typeof state.updatedAt === 'string' ? state.updatedAt : makeTimestamp()
+            };
+            localStorage.setItem(LANGUAGE_EVOLUTION_STORAGE_KEY, JSON.stringify(next));
+            return true;
+        }
+    };
+};
+
+export const promoteLanguageBriefToLane = (field, languageState = readLanguageEvolutionState()) => {
+    const packet = buildLanguagePromotionPacket(languageState);
+    if (!packet) return { ok: false, reason: 'empty' };
+    return appendGameplayLane(field, packet);
+};
+
+export const appendGameplayLane = (field, text) => {
+    if (!GAMEPLAY_LANE_FIELDS.includes(field)) {
+        return { ok: false, reason: 'invalid-field' };
+    }
+
+    const trimmed = cleanLine(text || '');
+    if (!trimmed) return { ok: false, reason: 'empty' };
+
+    const storage = createStorage();
+    if (!storage.available) return { ok: false, reason: 'storage-unavailable' };
+
+    const state = storage.read();
+    state[field] = [state[field].trim(), trimmed].filter(Boolean).join('\n\n');
+    state.updatedAt = makeTimestamp();
+    storage.write(state);
+    return { ok: true, field, state };
 };

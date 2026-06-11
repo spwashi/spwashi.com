@@ -16,6 +16,7 @@ import {
     splitTagList
 } from '/public/js/modules/rpg-wednesday-state.js';
 import {
+    createCardSigil,
     createElement,
     createField,
     createLineField,
@@ -396,7 +397,7 @@ export const createAssetAtlasController = ({ getState, save }) => {
             'data-rpg-asset-image-state': imageSrc ? 'present' : 'empty'
         });
         const meta = createElement('div', { className: 'rpg-asset-card__meta' }, [
-            createElement('span', { className: 'frame-card-sigil', text: asset.kind }),
+            createCardSigil(asset.kind),
             createElement('span', { className: 'spec-pill', text: cleanLine(asset.namespace || '') || DEFAULT_ASSET_NAMESPACE }),
             createElement('span', { className: 'spec-pill', text: cleanLine(asset.timeline || '') || DEFAULT_ASSET_TIMELINE })
         ]);
@@ -455,7 +456,7 @@ export const createAssetAtlasController = ({ getState, save }) => {
                     decoding: 'async'
                 })
                 : createElement('div', { className: 'rpg-asset-card__placeholder' }, [
-                    createElement('span', { className: 'frame-card-sigil', text: asset.kind }),
+                    createCardSigil(asset.kind),
                     createElement('strong', { text: previewText(asset.title, 'asset card', 48) }),
                     createElement('span', { text: previewText(asset.context, 'attach art later or keep this as a text-first demo seed', 80) })
                 ])
@@ -584,7 +585,7 @@ export const createAssetAtlasController = ({ getState, save }) => {
             }, [
                 createElement('div', { className: 'rpg-asset-timeline__heading' }, [
                     createElement('h4', { text: timeline }),
-                    createElement('span', { className: 'frame-card-sigil', text: `${assets.length} card${assets.length === 1 ? '' : 's'}` })
+                    createCardSigil(`${assets.length} card${assets.length === 1 ? '' : 's'}`)
                 ]),
                 createElement('div', { className: 'rpg-asset-timeline__cards' }, cards)
             ]);

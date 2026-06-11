@@ -1,3 +1,4 @@
+import { createCardSigil } from '../js/kernel/dom-contracts.js';
 import {
   DAY_KEYS,
   cleanText,
@@ -75,8 +76,10 @@ function renderItemCard(item: MediaItem = {}, options: CardOptions = {}, locale:
   });
 
   const topline = el('span', 'media-card-topline');
-  const operator = el('span', 'frame-card-sigil media-card-operator');
-  operator.textContent = cleanText(item.operator || '>');
+  const operator = createCardSigil(cleanText(item.operator || '>'), {
+    className: 'frame-card-sigil media-card-operator',
+    operator: 'stream',
+  });
   topline.append(operator);
 
   if (item.tag) {
@@ -122,8 +125,10 @@ function renderFocus(
   label.textContent = cleanText(item.label || (options.daily ? 'Daily focus' : 'Weekly focus'));
 
   const titleRow = el('div', 'media-focus-title');
-  const operator = el('span', 'frame-card-sigil media-focus-operator');
-  operator.textContent = cleanText(item.operator || '>');
+  const operator = createCardSigil(cleanText(item.operator || '>'), {
+    className: 'frame-card-sigil media-focus-operator',
+    operator: 'stream',
+  });
   const heading = el('h3');
   heading.textContent = cleanText(item.title || 'Current focus');
   titleRow.append(operator, heading);

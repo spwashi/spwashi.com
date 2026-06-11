@@ -62,6 +62,7 @@
   entrypoint: "public/css/style.css is the ordered manifest."
   layer_rule: "Do not change the @layer declaration order casually; add imports inside the existing owner layer."
   import_rule: "The import order should read like instruction: reset -> tokens -> shell -> typography -> grammar -> components -> systems -> routes -> handles -> effects -> ornament."
+  executable_contract: "scripts/ts/css-contracts.mts checks that a public/css/<layer>/ file is imported with the matching cascade layer and that root-level CSS remains limited to style.css and compose.css."
 }
 
 ^"source_direction"{

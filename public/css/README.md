@@ -20,6 +20,11 @@ Implementation files live in folders that match the cascade layers:
 
 When changing shared visual behavior, edit the layered implementation file first. Keep `style.css` as the ordered import registry.
 
+`npm run check:css` enforces that `style.css` imports each implementation file
+through the layer implied by its top-level folder. Root-level CSS is limited to
+the two entrypoints, `style.css` and `compose.css`; add new implementation files
+inside the layer folder that owns the behavior.
+
 ## Readability Conventions
 
 For new CSS and for rule blocks already touched in a patch, cluster declarations in this order:

@@ -1,7 +1,16 @@
 import { emitSpwAction } from '/public/js/kernel/shared.js';
 import { createAssetAtlasController } from '/public/js/modules/rpg-wednesday-asset-atlas.js';
 import { initRpgCharacterLab } from '/public/js/modules/rpg-wednesday-character-lab.js';
-import { createElement, createField, createShortcutToken } from '/public/js/modules/rpg-wednesday-dom.js';
+import { RPG_WORKBENCH_COPY, notifyRpgStateChange, workbenchLegendHtml } from '/public/js/modules/rpg-wednesday-contract.js';
+import { ensureRpgCuratorWidget } from '/public/js/modules/rpg-wednesday-curate.js';
+import { initRpgLanguageEvolution } from '/public/js/modules/rpg-wednesday-language-evolution.js';
+import { initRpgWorldLab } from '/public/js/modules/rpg-wednesday-world-lab.js';
+import {
+    createElement,
+    createField,
+    createFrameHeading,
+    createShortcutToken
+} from '/public/js/modules/rpg-wednesday-dom.js';
 import {
     RPG_SHORTCUT_ACTIONS,
     RPG_SHORTCUT_SECTIONS,
@@ -145,14 +154,12 @@ const ensureRpgModeWidget = () => {
         'data-spw-affordance': 'navigate',
         'data-spw-seed': 'page_play_play_rpg_wednesday__rpg_mode_widget'
     }, [
-        createElement('div', { className: 'frame-heading' }, [
-            createElement('a', {
-                className: 'frame-sigil',
-                href: '/rpg/',
-                text: '#"rpg_mode"'
-            }),
-            createElement('h2', { text: descriptor.title })
-        ]),
+        createFrameHeading({
+            href: '/rpg/',
+            sigilText: '#>rpg_mode',
+            title: descriptor.title,
+            operator: 'frame'
+        }),
         createElement('div', { className: 'spec-strip' }, [
             createElement('span', { className: 'spec-pill', text: descriptor.pill }),
             createElement('span', { className: 'spec-pill', text: 'character updates' }),
@@ -330,6 +337,8 @@ export const initRpgWednesday = () => {
     ensureRpgModeWidget();
 
     const controllers = [];
+    const curator = ensureRpgCuratorWidget();
+    if (curator) controllers.push(curator);
     const evidenceCards = initEvidenceProtocolCards();
     if (evidenceCards) controllers.push(evidenceCards);
 
@@ -337,6 +346,18 @@ export const initRpgWednesday = () => {
     if (characterSection instanceof HTMLElement && characterSection.dataset.rpgHydrated !== 'true') {
         const characterLab = initRpgCharacterLab(characterSection);
         if (characterLab) controllers.push(characterLab);
+    }
+
+    const languageSection = document.querySelector('[data-rpg-language-evolution]');
+    if (languageSection instanceof HTMLElement && languageSection.dataset.rpgHydrated !== 'true') {
+        const languageEvolution = initRpgLanguageEvolution(languageSection);
+        if (languageEvolution) controllers.push(languageEvolution);
+    }
+
+    const worldSection = document.querySelector('[data-rpg-world-lab]');
+    if (worldSection instanceof HTMLElement && worldSection.dataset.rpgHydrated !== 'true') {
+        const worldLab = initRpgWorldLab(worldSection);
+        if (worldLab) controllers.push(worldLab);
     }
 
     const section = document.querySelector('[data-rpg-gameplay-kit]');
@@ -353,7 +374,7 @@ export const initRpgWednesday = () => {
     const storage = createStorage();
     let state = storage.read();
 
-    section.className = 'site-frame rpg-gameplay-kit';
+    section.className = 'site-frame rpg-gameplay-kit rpg-workbench rpg-workbench--kit';
     section.id = 'local-gameplay-kit';
     section.dataset.rpgGameplayKit = 'true';
     section.dataset.rpgHydrated = 'true';
@@ -361,20 +382,23 @@ export const initRpgWednesday = () => {
     section.dataset.spwMeaning = 'private gameplay state';
     section.replaceChildren();
 
-    const heading = createElement('div', { className: 'frame-heading' }, [
-        createElement('a', {
-            className: 'frame-sigil',
-            href: '#local-gameplay-kit',
-            text: '@local_gameplay_kit'
-        }),
-        createElement('h2', { text: 'Local Gameplay Kit' })
-    ]);
+    const heading = createFrameHeading({
+        href: '#local-gameplay-kit',
+        sigilText: '@local_gameplay_kit',
+        title: 'Local Gameplay Kit',
+        operator: 'action'
+    });
 
     const privacy = createElement('p', {
         className: 'inline-note',
         text: storage.available
-            ? 'Private table state for this browser. It persists with localStorage, is not published, and never syncs unless you export it.'
-            : 'Local storage is unavailable in this browser context. You can still type here, but state will not persist after the page closes.'
+            ? RPG_WORKBENCH_COPY.kitIntro
+            : RPG_WORKBENCH_COPY.storageUnavailable
+    });
+
+    const kitLegend = createElement('p', {
+        className: 'rpg-workbench__legend',
+        html: workbenchLegendHtml('Kit rule', RPG_WORKBENCH_COPY.kitBenchRule)
     });
 
     const jumpbar = createElement('nav', {
@@ -386,7 +410,11 @@ export const initRpgWednesday = () => {
         createElement('a', { className: 'operator-chip', href: '#rpg-kit-clocks', text: '@ clocks' }),
         createElement('a', { className: 'operator-chip', href: '#rpg-kit-assets', text: '@ assets' }),
         createElement('a', { className: 'operator-chip', href: '#rpg-kit-notes', text: '~ notes' }),
-        createElement('a', { className: 'operator-chip', href: '#rpg-kit-brief', text: '~ brief' })
+        createElement('a', { className: 'operator-chip', href: '#rpg-kit-brief', text: '~ brief' }),
+        createElement('a', { className: 'operator-chip', href: '#rpgw-state-curator', text: '~ curator' }),
+        createElement('a', { className: 'operator-chip', href: '/play/rpg-wednesday/#language-evolution', text: '~ language' }),
+        createElement('a', { className: 'operator-chip', href: '/play/rpg-wednesday/character/#character-development', text: '@ character' }),
+        createElement('a', { className: 'operator-chip', href: '/play/rpg-wednesday/world/#world-slots', text: '^ world' })
     ]);
 
     const shortcutGroups = createElement('div', {
@@ -455,6 +483,13 @@ export const initRpgWednesday = () => {
         value: state.seeds,
         rows: 5,
         placeholder: 'Moments worth turning into a public recap later'
+    });
+    const { field: nameFabricField, input: nameFabricInput } = createField({
+        id: 'rpg-name-fabric',
+        label: 'Name fabric / language drift',
+        value: state.nameFabric,
+        rows: 4,
+        placeholder: 'Acronym pressure, title mutations, boon/bane drift, or wording that starts acting like a world rule'
     });
 
     const initiativeList = createElement('div', {
@@ -548,6 +583,7 @@ export const initRpgWednesday = () => {
         syncSavedStatus();
         refreshDerivedSurfaces();
         emitSpwAction('@local_gameplay.save', description);
+        notifyRpgStateChange('gameplay-kit');
     };
 
     const syncTextState = () => {
@@ -558,6 +594,7 @@ export const initRpgWednesday = () => {
         state.characterBeat = characterBeatInput.value;
         state.canonCandidates = canonCandidatesInput.value;
         state.seeds = seedsInput.value;
+        state.nameFabric = nameFabricInput.value;
     };
 
     const appendScratchToLane = (targetInput, label) => {
@@ -793,7 +830,7 @@ export const initRpgWednesday = () => {
     };
 
     const debouncedTextSave = debounce(() => save('updated local gameplay text'), 400);
-    [sceneInput, objectiveInput, partyInput, notesInput, characterBeatInput, canonCandidatesInput, seedsInput].forEach((input) => {
+    [sceneInput, objectiveInput, partyInput, notesInput, characterBeatInput, canonCandidatesInput, seedsInput, nameFabricInput].forEach((input) => {
         input.addEventListener('input', () => {
             syncTextState();
             debouncedTextSave();
@@ -890,13 +927,20 @@ export const initRpgWednesday = () => {
                 type: 'button',
                 text: '@ to recap',
                 onclick: () => appendScratchToLane(seedsInput, 'recap seeds')
+            }),
+            createElement('button', {
+                className: 'operator-chip',
+                type: 'button',
+                text: '~ to fabric',
+                onclick: () => appendScratchToLane(nameFabricInput, 'name fabric')
             })
         ]),
         createElement('div', { className: 'rpg-gameplay-notes-stack' }, [
             notesField,
             characterBeatField,
             canonCandidatesField,
-            seedsField
+            seedsField,
+            nameFabricField
         ])
     ]);
 
@@ -939,10 +983,22 @@ export const initRpgWednesday = () => {
         createElement('h3', { text: 'Table Brief' }),
         createElement('p', {
             className: 'frame-note',
-            text: 'A copyable play-state summary for session recaps or player handoffs. Character beats and canon candidates are included; private scratch notes stay out.'
+            text: 'A copyable play-state summary for session recaps or player handoffs. Character beats, canon candidates, and name fabric are included; private scratch notes stay out.'
         }),
         briefOutput,
-        createElement('div', { className: 'rpg-gameplay-actions' }, [copyBriefButton])
+        createElement('div', { className: 'rpg-gameplay-actions' }, [
+            copyBriefButton,
+            createElement('a', {
+                className: 'operator-chip',
+                href: '#rpgw-state-curator',
+                text: '~ open curator'
+            }),
+            createElement('a', {
+                className: 'operator-chip',
+                href: '/play/rpg-wednesday/#rpgw-promotion-ladder',
+                text: '? promotion ladder'
+            })
+        ])
     ]);
 
     const exportButton = createElement('button', {
@@ -995,6 +1051,7 @@ export const initRpgWednesday = () => {
         characterBeatInput.value = state.characterBeat;
         canonCandidatesInput.value = state.canonCandidates;
         seedsInput.value = state.seeds;
+        nameFabricInput.value = state.nameFabric;
         save('imported local gameplay state');
         renderInitiative();
         renderClocks();
@@ -1018,6 +1075,7 @@ export const initRpgWednesday = () => {
         characterBeatInput.value = '';
         canonCandidatesInput.value = '';
         seedsInput.value = '';
+        nameFabricInput.value = '';
         renderInitiative();
         renderClocks();
         assetAtlas.resetComposer();
@@ -1036,6 +1094,7 @@ export const initRpgWednesday = () => {
     section.append(
         heading,
         privacy,
+        kitLegend,
         jumpbar,
         shortcutGroups,
         dashboard,

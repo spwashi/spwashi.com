@@ -171,6 +171,7 @@
 }
 
 :where(
+  .site-frame > .frame-heading + p,
   .site-frame > header.frame-heading + p,
   .site-frame > h1 + p,
   .site-frame > h2 + p,

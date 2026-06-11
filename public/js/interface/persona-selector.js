@@ -1,4 +1,5 @@
 import { bus } from '/public/js/kernel/bus.js';
+import { createFrameSigil } from '/public/js/kernel/dom-contracts.js';
 
 let isBuilt = false;
 const chipButtons = {};
@@ -32,10 +33,11 @@ function buildSelector(mount) {
     frame.dataset.spwOperator = 'action';
     frame.dataset.spwForm = 'brace';
 
-    const sigil = document.createElement('span');
-    sigil.className = 'frame-sigil';
-    sigil.dataset.spwOperator = 'action';
-    sigil.textContent = '@personas';
+    const sigil = createFrameSigil({
+        sigilText: '@personas',
+        operator: 'action',
+        asLink: false
+    });
 
     const chipsContainer = document.createElement('div');
     chipsContainer.className = 'persona-chips';

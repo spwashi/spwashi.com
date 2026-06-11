@@ -13,6 +13,23 @@ const CSS_DIR = path.join(ROOT_DIR, 'public/css');
 const STYLE_SOURCE_DIR = path.join(ROOT_DIR, 'src/styles');
 const STYLE_MANIFEST = path.join(CSS_DIR, 'style.css');
 const EXPECTED_LAYER_ORDER = 'reset, tokens, shell, typography, grammar, components, systems, routes, handles, effects, ornament';
+const ALLOWED_ROOT_CSS_FILES = new Set([
+    'compose.css',
+    'style.css',
+]);
+const EXPECTED_LAYER_BY_CSS_DIR = new Map([
+    ['reset', 'reset'],
+    ['tokens', 'tokens'],
+    ['shell', 'shell'],
+    ['typography', 'typography'],
+    ['grammar', 'grammar'],
+    ['components', 'components'],
+    ['systems', 'systems'],
+    ['routes', 'routes'],
+    ['handles', 'handles'],
+    ['effects', 'effects'],
+    ['ornament', 'ornament'],
+]);
 const INTENTIONAL_STANDALONE_CSS = new Set([
     '/public/css/compose.css',
 ]);
@@ -21,6 +38,16 @@ function relativeRepoPath(absolutePath) {
 }
 function rootRelativeCssPath(absolutePath) {
     return `/${relativeRepoPath(absolutePath)}`;
+}
+function getCssTopLevelDir(rootRelativePath) {
+    const parts = rootRelativePath.replace(/^\/+/, '').split('/');
+    if (parts[0] !== 'public' || parts[1] !== 'css')
+        return null;
+    return parts[2]?.endsWith('.css') ? null : parts[2] || null;
+}
+function expectedLayerForCssPath(rootRelativePath) {
+    const topLevelDir = getCssTopLevelDir(rootRelativePath);
+    return topLevelDir ? EXPECTED_LAYER_BY_CSS_DIR.get(topLevelDir) || null : null;
 }
 async function walk(directoryPath, predicate, results = []) {
     const entries = await fs.readdir(directoryPath, { withFileTypes: true });
@@ -126,6 +153,13 @@ export async function collectCssContractReport() {
     for (const item of imports) {
         if (!item.layer)
             errors.push(`${item.file} is imported without an explicit cascade layer.`);
+        const expectedLayer = expectedLayerForCssPath(item.file);
+        if (!expectedLayer) {
+            errors.push(`${item.file} is imported from an unknown public/css ownership directory.`);
+        }
+        else if (item.layer && item.layer !== expectedLayer) {
+            errors.push(`${item.file} lives under public/css/${getCssTopLevelDir(item.file)}/ and must be imported in layer(${expectedLayer}), not layer(${item.layer}).`);
+        }
         try {
             await fs.access(path.join(ROOT_DIR, item.file.replace(/^\/+/, '')));
         }
@@ -150,8 +184,15 @@ export async function collectCssContractReport() {
         const relativePath = relativeRepoPath(absolutePath);
         const rootPath = rootRelativeCssPath(absolutePath);
         const filename = path.basename(absolutePath);
+        const topLevelDir = getCssTopLevelDir(rootPath);
         const source = await fs.readFile(absolutePath, 'utf8');
         const compatibilityWrapper = isCompatibilityWrapper(source, filename);
+        if (!topLevelDir && !ALLOWED_ROOT_CSS_FILES.has(filename)) {
+            errors.push(`${relativePath} is a root-level CSS file; keep root CSS limited to style.css and compose.css.`);
+        }
+        else if (topLevelDir && !EXPECTED_LAYER_BY_CSS_DIR.has(topLevelDir)) {
+            errors.push(`${relativePath} lives in unknown CSS ownership directory public/css/${topLevelDir}/.`);
+        }
         if (!compatibilityWrapper && !hasInstructionHeader(source, filename)) {
             errors.push(`${relativePath} needs an instructional header naming its file and scope.`);
         }
