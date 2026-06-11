@@ -156,9 +156,17 @@
 }
 
 @media (max-width: 720px) {
-  :where([data-spw-floating-chrome="true"][data-spw-chrome-role="state-inspector"]) {
+  :where([data-spw-floating-chrome="true"][data-spw-chrome-role="state-inspector"]:not([data-spw-state-inspector="open"]):not([data-spw-satchel-anchor="chrome-rail"])) {
     /* Reserve the mobile section-handle rail so floating tools do not stack on one tap target. */
     inset-block-end: calc(max(0.8rem, env(safe-area-inset-bottom)) + var(--touch-target-compact, 2.15rem) + 1rem + var(--spw-floating-menu-clearance, 0px));
+  }
+
+  :where([data-spw-floating-chrome="true"][data-spw-chrome-role="state-inspector"][data-spw-state-inspector="open"],
+         [data-spw-floating-chrome="true"][data-spw-chrome-role="state-inspector"][data-spw-satchel-anchor="chrome-rail"]) {
+    inset: auto;
+    inline-size: auto;
+    max-inline-size: none;
+    justify-items: stretch;
   }
 
   :where(html:has(.site-header[data-spw-menu-mode="toggle"][data-spw-menu="open"]),

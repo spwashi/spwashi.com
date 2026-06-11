@@ -66,9 +66,25 @@
   --spw-bottom-chrome-clearance: max(var(--spw-bottom-chrome-clearance, 0px), 3.35rem);
 }
 
+:root:has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) {
+  --spw-bottom-chrome-clearance: max(var(--spw-bottom-chrome-clearance, 0px), 11.5rem);
+}
+
 @media (max-width: 720px) {
+  :root:has([data-spw-state-inspector-root]) {
+    --spw-bottom-chrome-clearance: max(var(--spw-bottom-chrome-clearance, 0px), 4.1rem);
+  }
+
+  :root:has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) {
+    --spw-bottom-chrome-clearance: max(var(--spw-bottom-chrome-clearance, 0px), 13.5rem);
+  }
+
   :root:has(.spw-section-handle, [data-spw-chrome-role="section-handle"]) {
     --spw-bottom-chrome-clearance: max(var(--spw-bottom-chrome-clearance, 0px), 3.85rem);
+  }
+
+  :root:has(.spw-section-handle, [data-spw-chrome-role="section-handle"]):has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) {
+    --spw-bottom-chrome-clearance: max(var(--spw-bottom-chrome-clearance, 0px), 14.25rem);
   }
 }
 
@@ -3215,8 +3231,8 @@ html[data-spw-base-metamaterial="matte"] .spw-discovery-notice .spw-discovery-no
     font-size: 0.62rem;
   }
 
-  :where(.site-header[data-spw-shell-layout="toggle-field"] .spw-header-actions,
-         body > header[data-spw-shell-layout="toggle-field"] .spw-header-actions) {
+  .site-header[data-spw-shell-layout="toggle-field"] .spw-header-actions,
+  body > header[data-spw-shell-layout="toggle-field"] .spw-header-actions {
     display: none;
   }
 
@@ -3341,6 +3357,12 @@ html[data-spw-base-metamaterial="matte"] .spw-discovery-notice .spw-discovery-no
     overflow-y: auto;
     overscroll-behavior: contain;
     scrollbar-width: thin;
+  }
+
+  .site-header[data-spw-menu-mode="toggle"][data-spw-menu="closed"] .spw-header-trace:has(.spw-spell-path),
+  body > header[data-spw-menu-mode="toggle"][data-spw-menu="closed"] .spw-header-trace:has(.spw-spell-path) {
+    max-block-size: 3.2rem;
+    overflow: hidden;
   }
 
   :where(.site-header, body > header) .spw-spell-path {

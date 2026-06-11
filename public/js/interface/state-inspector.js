@@ -119,6 +119,41 @@ function shouldSnapSatchelOnRelease() {
   return window.matchMedia('(max-width: 720px), (pointer: coarse)').matches;
 }
 
+function isMobileSatchelViewport() {
+  return window.matchMedia('(max-width: 720px), (pointer: coarse)').matches;
+}
+
+function clearSatchelInlinePosition(root) {
+  if (!(root instanceof HTMLElement)) return;
+  root.style.position = '';
+  root.style.left = '';
+  root.style.top = '';
+  root.style.right = '';
+  root.style.bottom = '';
+  root.style.transform = '';
+  root.style.inlineSize = '';
+  root.style.maxBlockSize = '';
+}
+
+function anchorSatchelToChromeRail(root, { open = false } = {}) {
+  if (!isMobileSatchelViewport()) return;
+
+  const launch = root.querySelector('.spw-state-inspector__launch');
+  if (!(launch instanceof HTMLElement)) return;
+
+  if (open) {
+    clearSatchelInlinePosition(root);
+    root.dataset.spwSatchelAnchor = 'chrome-rail';
+    root.dataset.spwSatchelSnap = 'bottom-rail';
+    return;
+  }
+
+  delete root.dataset.spwSatchelAnchor;
+  const rect = launch.getBoundingClientRect();
+  const snapped = snapSatchelPosition(launch, rect.left, rect.top);
+  applyPositionToLaunch(launch, snapped.left, snapped.top, false);
+}
+
 function snapSatchelPosition(launch, left, top) {
   if (!shouldSnapSatchelOnRelease()) {
     return { left, top };
@@ -150,12 +185,17 @@ function snapSatchelPosition(launch, left, top) {
     0
   );
 
-  const candidates = [
-    { left: margin, top: margin + shellOffset, edge: 'top-left' },
-    { left: vw - w - margin, top: margin + shellOffset, edge: 'top-right' },
-    { left: margin, top: vh - h - margin - bottomReserve, edge: 'bottom-left' },
-    { left: vw - w - margin, top: vh - h - margin - bottomReserve, edge: 'bottom-right' },
-  ];
+  const candidates = shouldSnapSatchelOnRelease()
+    ? [
+      { left: margin, top: vh - h - margin - bottomReserve, edge: 'bottom-left' },
+      { left: vw - w - margin, top: vh - h - margin - bottomReserve, edge: 'bottom-right' },
+    ]
+    : [
+      { left: margin, top: margin + shellOffset, edge: 'top-left' },
+      { left: vw - w - margin, top: margin + shellOffset, edge: 'top-right' },
+      { left: margin, top: vh - h - margin - bottomReserve, edge: 'bottom-left' },
+      { left: vw - w - margin, top: vh - h - margin - bottomReserve, edge: 'bottom-right' },
+    ];
 
   const centerX = left + w / 2;
   const centerY = top + h / 2;
@@ -178,27 +218,30 @@ function snapSatchelPosition(launch, left, top) {
 }
 
 function sanitizeRestoredPosition(left, top, width, height, viewportWidth, viewportHeight) {
-  if (!window.matchMedia('(max-width: 720px)').matches) {
+  if (!isMobileSatchelViewport()) {
     return { left, top };
   }
-  const main = document.querySelector('main');
-  if (!(main instanceof HTMLElement)) {
-    return { left, top };
-  }
-  const mainRect = main.getBoundingClientRect();
-  const overlapsMain =
-    left + width > mainRect.left + 12
-    && left < mainRect.right - 12
-    && top + height > mainRect.top + 48
-    && top < mainRect.bottom - 72;
-  if (!overlapsMain) {
-    return { left, top };
-  }
+
   const margin = 12;
   const bottomReserve = getFloatingChromeBottomReserve();
+  const bottomRailTop = viewportHeight - height - margin - bottomReserve;
+  const main = document.querySelector('main');
+  const mainRect = main instanceof HTMLElement ? main.getBoundingClientRect() : null;
+  const overlapsMain = mainRect
+    ? left + width > mainRect.left + 12
+      && left < mainRect.right - 12
+      && top + height > mainRect.top + 48
+      && top < mainRect.bottom - 72
+    : false;
+  const sitsAboveBottomRail = top < bottomRailTop - height;
+
+  if (!overlapsMain && !sitsAboveBottomRail) {
+    return { left, top };
+  }
+
   return {
     left: viewportWidth - width - margin,
-    top: viewportHeight - height - margin - bottomReserve,
+    top: bottomRailTop,
   };
 }
 
@@ -206,6 +249,10 @@ function applyPositionToLaunch(launch, left, top, fallback = false) {
   if (!launch) return;
   const root = launch.closest?.(`[${ROOT_ATTR}]`);
   if (!(root instanceof HTMLElement)) return;
+
+  if (root.dataset.spwSatchelAnchor === 'chrome-rail' || root.dataset.spwStateInspector === 'open') {
+    if (isMobileSatchelViewport()) return;
+  }
 
   const viewport = window.visualViewport;
   const vw = Math.max(1, Math.min(
@@ -265,14 +312,10 @@ function resetLaunchToDefault(launch) {
   if (!launch) return;
   const root = launch.closest?.(`[${ROOT_ATTR}]`);
   if (root instanceof HTMLElement) {
-    root.style.position = '';
-    root.style.left = '';
-    root.style.top = '';
-    root.style.right = '';
-    root.style.bottom = '';
-    root.style.transform = '';
+    clearSatchelInlinePosition(root);
     delete root.dataset.spwSatchelPositioned;
     delete root.dataset.spwSatchelSnap;
+    delete root.dataset.spwSatchelAnchor;
   }
   launch.style.position = '';
   launch.style.left = '';
@@ -510,8 +553,17 @@ function setOpen(root, open) {
   panel.hidden = !open;
   updateStatus(root, open ? 'State satchel opened.' : 'State satchel closed.');
   if (open) {
+    anchorSatchelToChromeRail(root, { open: true });
     syncControls(root);
     panel.focus({ preventScroll: true });
+    return;
+  }
+
+  delete root.dataset.spwSatchelAnchor;
+  if (isMobileSatchelViewport()) {
+    requestAnimationFrame(() => {
+      anchorSatchelToChromeRail(root, { open: false });
+    });
   }
 }
 
@@ -568,6 +620,11 @@ function bindInspector(root) {
     if (event.target.closest('[data-spw-state-inspector-reset-position]')) {
       const launchBtn = root.querySelector('.spw-state-inspector__launch');
       resetLaunchToDefault(launchBtn);
+      if (root.dataset.spwStateInspector === 'open') {
+        anchorSatchelToChromeRail(root, { open: true });
+      } else {
+        requestAnimationFrame(() => anchorSatchelToChromeRail(root, { open: false }));
+      }
       updateStatus(root, 'Satchel position reset.');
       return;
     }
@@ -725,10 +782,19 @@ export function initStateInspector() {
   const cleanupBindings = bindInspector(root);
   const cleanupDrag = bindSatchelDrag(root);
   const clampSatchelPosition = () => {
+    if (root.dataset.spwStateInspector === 'open') {
+      anchorSatchelToChromeRail(root, { open: true });
+      return;
+    }
     const launchButton = root.querySelector('.spw-state-inspector__launch');
     if (!(launchButton instanceof HTMLElement)) return;
     const rect = launchButton.getBoundingClientRect();
-    applyPositionToLaunch(launchButton, rect.left, rect.top, root.dataset.spwSatchelPositioned === 'user');
+    applyPositionToLaunch(
+      launchButton,
+      rect.left,
+      rect.top,
+      root.dataset.spwSatchelPositioned === 'user'
+    );
   };
   window.addEventListener('resize', clampSatchelPosition, { passive: true });
   window.visualViewport?.addEventListener?.('resize', clampSatchelPosition, { passive: true });
