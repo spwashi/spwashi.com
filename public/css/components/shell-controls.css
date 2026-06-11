@@ -1,0 +1,486 @@
+/* ==========================================================================
+   components/shell-controls.css
+   --------------------------------------------------------------------------
+   Shell header tune dial, utility clusters, and quick-display control grammar.
+   Placement and grid ownership stay in shell/chrome.css.
+   ========================================================================== */
+
+.spw-shell-tools-disclosure {
+  position: relative;
+  display: none;
+  min-width: 0;
+  max-inline-size: 100%;
+  border: 1px solid color-mix(in oklab, var(--spw-shell-chrome-accent-local) 10%, var(--line, rgba(14,18,20,0.14)) 90%);
+  border-radius: var(--shape-control, 0.78rem);
+  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 94%, var(--spw-shell-chrome-accent-local) 6%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.28),
+    0 1px 4px rgba(14, 18, 20, 0.035);
+  overflow: visible;
+}
+
+.spw-shell-tools-summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.34rem;
+  min-block-size: max(2rem, var(--spw-control-min-height, 2.15rem));
+  padding: 0.24rem 0.58rem 0.24rem 0.42rem;
+  color: color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 78%, var(--spw-shell-chrome-accent-local) 22%);
+  cursor: pointer;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-label, 0.76rem);
+  font-weight: 680;
+  letter-spacing: 0.06em;
+  list-style: none;
+  text-transform: uppercase;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+.spw-shell-tools-summary__knob {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  inline-size: 1.42rem;
+  block-size: 1.42rem;
+  border: 1px solid color-mix(in oklab, var(--spw-shell-chrome-accent-local) 22%, var(--line, rgba(14,18,20,0.14)) 78%);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 34% 28%, rgba(255,255,255,0.42), transparent 58%),
+    conic-gradient(
+      from 210deg,
+      color-mix(in oklab, var(--spw-shell-chrome-accent-local) 18%, transparent),
+      color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.86)) 88%, var(--spw-shell-chrome-accent-local) 12%) 42%,
+      color-mix(in oklab, var(--spw-shell-chrome-accent-local) 24%, transparent)
+    );
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.42),
+    0 1px 3px rgba(14, 18, 20, 0.05);
+  transition:
+    transform 180ms var(--shell-settle-ease),
+    border-color 140ms var(--shell-ease),
+    box-shadow 160ms var(--shell-settle-ease);
+}
+
+.spw-shell-tools-summary__knob-glyph {
+  font-size: 0.58rem;
+  font-weight: 760;
+  letter-spacing: 0;
+  line-height: 1;
+  color: color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 72%, var(--spw-shell-chrome-accent-local) 28%);
+}
+
+.spw-shell-tools-disclosure:is(:hover, :focus-within) .spw-shell-tools-summary__knob,
+.spw-shell-tools-disclosure[open] .spw-shell-tools-summary__knob {
+  transform: rotate(18deg);
+  border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 34%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.48),
+    0 0 0 1px color-mix(in oklab, var(--spw-shell-chrome-accent-local) 10%, transparent),
+    0 2px 6px rgba(14, 18, 20, 0.06);
+}
+
+.spw-shell-tools-disclosure[open] .spw-shell-tools-summary__knob {
+  transform: rotate(132deg);
+}
+
+.spw-shell-tools-summary::-webkit-details-marker {
+  display: none;
+}
+
+.spw-shell-tools-summary::after {
+  content: "";
+  inline-size: 0.46rem;
+  block-size: 0.46rem;
+  border-inline-end: 1.5px solid currentColor;
+  border-block-end: 1.5px solid currentColor;
+  opacity: 0.72;
+  transform: translateY(-0.1rem) rotate(45deg);
+  transition: transform 140ms var(--shell-ease);
+}
+
+.spw-shell-tools-disclosure[open] > .spw-shell-tools-summary::after {
+  transform: translateY(0.08rem) rotate(225deg);
+}
+
+.spw-shell-tools-disclosure:is(:hover, :focus-within),
+.spw-shell-tools-disclosure[open] {
+  border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 20%, transparent);
+  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 90%, var(--spw-shell-chrome-accent-local) 10%);
+}
+
+.spw-shell-utility-row {
+  display: none;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0.22rem;
+  min-width: 0;
+  inline-size: 100%;
+  max-inline-size: 100%;
+  min-block-size: 2rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: 0.22rem;
+  padding: 0.2rem 0.28rem;
+  border: 1px solid color-mix(in oklab, var(--spw-shell-chrome-accent-local) 10%, var(--line, rgba(14, 18, 20, 0.12)) 90%);
+  border-radius: var(--shape-control, 0.78rem);
+  background:
+    linear-gradient(90deg,
+      color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.86)) 96%, var(--spw-shell-chrome-accent-local) 4%),
+      color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.86)) 99%, var(--spw-shell-chrome-accent-local) 1%));
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, white 54%, transparent),
+    0 1px 3px rgba(14, 18, 20, 0.045);
+  opacity: 0.86;
+  scrollbar-width: none;
+  box-sizing: border-box;
+  contain: layout paint;
+  transition:
+    opacity 140ms var(--shell-ease),
+    border-color 160ms var(--shell-ease),
+    background-color 180ms var(--shell-ease),
+    box-shadow 180ms var(--shell-settle-ease);
+  /* Utility chrome lives in its own scroll lane so condensed menus cannot visually collide with route copy. */
+}
+
+.spw-shell-tools-disclosure[open] > .spw-shell-utility-row {
+  display: flex;
+}
+
+.spw-shell-utility-row:is(:hover, :focus-within) {
+  opacity: 1;
+  border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 18%, var(--line, rgba(14, 18, 20, 0.12)) 82%);
+}
+
+.spw-shell-utility-row::before {
+  content: "display";
+  display: inline-flex;
+  align-items: center;
+  align-self: center;
+  flex: 0 0 auto;
+  min-block-size: 1.35rem;
+  padding-inline: 0.34rem 0.46rem;
+  border-inline-end: 1px solid color-mix(in oklab, var(--spw-shell-chrome-accent-local) 16%, transparent);
+  color: color-mix(in oklab, var(--ink-soft, rgba(14, 18, 20, 0.68)) 84%, var(--spw-shell-chrome-accent-local) 16%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.56rem;
+  font-weight: 760;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  scroll-snap-align: start;
+}
+
+:where(.site-header[data-spw-menu-mode="toggle"], body > header[data-spw-menu-mode="toggle"]) .spw-shell-utility-button {
+  white-space: nowrap;
+}
+
+/* Compact shell utility rail: grouped controls, quiet inactive state, clear active state. */
+:where(.site-header .spw-shell-utility-row, body > header .spw-shell-utility-row) .spw-shell-utility-button {
+  width: auto;
+  height: 1.62rem;
+  min-width: 1.62rem;
+  min-height: 1.62rem;
+  padding: 0;
+  border-radius: calc(var(--shape-control, 0.78rem) - 0.3rem);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  line-height: 1;
+}
+
+:where(.site-header .spw-shell-utility-row, body > header .spw-shell-utility-row) .spw-shell-utility-button[data-spw-utility-size="text"] {
+  min-inline-size: 2.3rem;
+  padding-inline: 0.42rem;
+  font-size: 0.66rem;
+}
+
+:where(.site-header .spw-shell-utility-row, body > header .spw-shell-utility-row) .spw-shell-utility-button[data-spw-shell-action="settings"] {
+  min-inline-size: 2.8rem;
+}
+:where(.site-header .spw-shell-utility-row, body > header .spw-shell-utility-row) .spw-shell-utility-button .spw-utility-sigil {
+  margin: 0;
+  font-size: 1em;
+}
+
+/* Conceptual clustering for shell utility controls.
+   Clusters group related actions (e.g. color-mode, typography-scale, material-contrast).
+   Provides semantic structure for styling, a11y (role=group), and future configurable interaction metaphors
+   (data attr can drive different hover, gesture, or visual treatments per cluster type). */
+.spw-utility-cluster {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.06rem;
+  min-block-size: 1.76rem;
+  flex: 0 0 auto;
+  padding: 0.08rem;
+  border: 1px solid color-mix(in oklab, var(--spw-shell-chrome-accent-local) 10%, transparent);
+  border-radius: calc(var(--shape-control, 0.78rem) - 0.08rem);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.16), transparent 58%),
+    color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.86)) 78%, transparent);
+  box-shadow:
+    inset 0 1px 2px rgba(14, 18, 20, 0.04),
+    inset 0 -1px 0 rgba(255,255,255,0.28);
+  scroll-snap-align: start;
+}
+
+.spw-utility-cluster[data-spw-utility-cluster="color-mode"] {
+  border-radius: 999px;
+  padding: 0.1rem;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.2), transparent 62%),
+    color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.86)) 84%, var(--spw-shell-chrome-accent-local) 16%);
+}
+
+.spw-utility-cluster[data-spw-utility-cluster="typography-scale"] {
+  gap: 0.12rem;
+  padding-inline: 0.14rem;
+}
+
+.spw-utility-cluster[data-spw-utility-cluster="typography-scale"]::before,
+.spw-utility-cluster[data-spw-utility-cluster="typography-scale"]::after {
+  content: "";
+  flex: 0 0 auto;
+  inline-size: 0.18rem;
+  block-size: 0.18rem;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 28%, transparent);
+  opacity: 0.5;
+}
+
+.spw-shell-utility-row[data-spw-color-mode="dark"] [data-spw-utility-cluster="color-mode"],
+.spw-shell-utility-row[data-spw-base-material="matte"] [data-spw-utility-cluster="material-contrast"],
+.spw-shell-utility-row[data-spw-high-contrast="on"] [data-spw-utility-cluster="material-contrast"],
+.spw-shell-utility-row:not([data-spw-font-scale="1"]) [data-spw-utility-cluster="typography-scale"],
+.spw-shell-utility-row[data-spw-cauldron-visibility="prominent"] [data-spw-utility-cluster="cauldron-visibility"] {
+  border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 18%, transparent);
+  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.86)) 82%, var(--spw-shell-chrome-accent-local) 8%);
+}
+.spw-shell-utility-row > .spw-utility-cluster {
+  margin-inline-end: 0.08rem;
+}
+.spw-shell-utility-row > .spw-utility-cluster:last-child {
+  margin-inline-end: 0;
+}
+
+.spw-shell-utility-row::-webkit-scrollbar {
+  display: none;
+}
+
+.spw-shell-utility-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 1.58rem;
+  padding: 0.12rem 0.34rem;
+  border: 1px solid transparent;
+  border-radius: calc(var(--shape-control, 0.78rem) - 0.3rem);
+  background: transparent;
+  color: color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 68%, var(--spw-shell-chrome-accent-local) 32%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.05;
+  text-decoration: none;
+  white-space: nowrap;
+  box-sizing: border-box;
+  flex: 0 1 auto;
+  position: relative;
+  transition:
+    background-color 100ms var(--shell-ease),
+    border-color 100ms var(--shell-ease),
+    color 100ms var(--shell-ease),
+    opacity 100ms var(--shell-ease),
+    transform 100ms var(--shell-ease),
+    box-shadow 140ms var(--shell-settle-ease);
+}
+
+.spw-shell-utility-button[data-spw-shell-action^="color-"] {
+  min-width: 1.62rem;
+  padding-inline: 0.28rem;
+  border-radius: 999px;
+}
+
+.spw-utility-cluster[data-spw-utility-cluster="color-mode"] .spw-shell-utility-button[aria-pressed="true"] {
+  border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 30%, transparent);
+  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.86)) 82%, var(--spw-shell-chrome-accent-local) 18%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.42),
+    inset 0 -2px 0 color-mix(in oklab, var(--spw-shell-chrome-accent-local) 52%, transparent);
+}
+
+.spw-utility-cluster[data-spw-utility-cluster="typography-scale"] .spw-shell-utility-button[data-spw-shell-action="font-down"],
+.spw-utility-cluster[data-spw-utility-cluster="typography-scale"] .spw-shell-utility-button[data-spw-shell-action="font-up"] {
+  border-radius: 999px;
+  min-inline-size: 1.72rem;
+}
+
+.spw-shell-utility-button[aria-pressed="true"] {
+  border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 22%, transparent);
+  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.86)) 86%, var(--spw-shell-chrome-accent-local) 14%);
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  box-shadow:
+    inset 0 -2px 0 color-mix(in oklab, var(--spw-shell-chrome-accent-local) 48%, transparent),
+    0 1px 2px rgba(14, 18, 20, 0.04);
+}
+
+/* Semantic distinction for sigils (icons/Spw operators) vs arguments (labels/text).
+   - Sigil stays fixed (localization convenience: not translated).
+   - Argument carries localizable/human text (styling: can be sized, weighted independently).
+   - Allows targeting sigil for operator-like colors, reduced opacity, etc.
+   - In compact utility mode, hide argument to keep icon/metaphor prominent (space + visual clarity). */
+.spw-shell-utility-button .spw-utility-sigil {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.92em;
+  margin-inline-end: 0.12em;
+  opacity: 0.82;
+  color: currentColor;
+  line-height: 1;
+}
+.spw-shell-utility-button .spw-utility-argument {
+  font-weight: 500;
+  align-self: baseline;
+}
+.spw-utility-sigil + .spw-utility-argument {
+  margin-inline-start: 0.08em;
+}
+:where(.site-header[data-spw-menu-mode="toggle"], body > header[data-spw-menu-mode="toggle"]) .spw-shell-utility-row[data-spw-utility-mode="compact"] .spw-utility-argument,
+.spw-shell-utility-row[data-spw-utility-mode="compact"] .spw-utility-argument {
+  display: none;
+}
+
+:where(.site-header[data-spw-menu-mode="toggle"], body > header[data-spw-menu-mode="toggle"]) .spw-shell-utility-row .spw-utility-argument {
+  display: none;
+}
+
+@media (min-width: 76rem) {
+  :where(.site-header[data-spw-menu-mode="toggle"], body > header[data-spw-menu-mode="toggle"]) .spw-shell-utility-row:not([data-spw-utility-mode="compact"]) .spw-utility-argument {
+    display: inline;
+  }
+}
+
+.spw-shell-utility-row[data-spw-utility-mode="compact"] {
+  gap: 0.18rem;
+}
+
+.spw-shell-utility-row[data-spw-utility-mode="compact"] > .spw-utility-cluster {
+  margin-inline-end: 0.08rem;
+}
+
+.spw-shell-utility-button:is(:hover, :focus-visible) {
+  border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 18%, transparent);
+  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.86)) 90%, var(--spw-shell-chrome-accent-local) 10%);
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--spw-shell-chrome-accent-local) 8%, transparent);
+  outline: none;
+}
+
+.spw-shell-utility-button:active {
+  transform: translateY(1px);
+}
+
+.spw-shell-utility-button[disabled],
+.spw-shell-utility-button[aria-disabled="true"] {
+  opacity: 0.46;
+  pointer-events: none;
+}
+
+/* Theming depth + clear contrast for shell utilities.
+   Buttons now respect dark mode, high-contrast, and the matte clear-contrast
+   option (baseMetamaterial=matte) for excellent text legibility on header chrome.
+   Uses the semantic matte ink tokens introduced for surface text contrast. */
+html[data-spw-color-mode="dark"] .spw-shell-utility-button {
+  background: color-mix(in oklab, var(--surface-strong, rgba(25, 32, 37, 0.92)) 94%, var(--spw-shell-chrome-accent-local) 6%);
+  border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 22%, var(--line, rgba(246, 248, 248, 0.18)) 78%);
+  color: color-mix(in oklab, var(--ink, rgba(228, 235, 232, 0.92)) 90%, var(--spw-shell-chrome-accent-local) 10%);
+}
+
+html[data-spw-color-mode="dark"] .spw-shell-utility-button[aria-pressed="true"] {
+  background: color-mix(in oklab, var(--surface-strong, rgba(25, 32, 37, 0.92)) 88%, var(--spw-shell-chrome-accent-local) 12%);
+  color: var(--ink, rgba(236, 241, 238, 0.96));
+  border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 36%, transparent);
+}
+
+/* Matte clear contrast treatment for utility buttons (when user selects the
+   matte option for clear reading surfaces in the shell). Stronger ink, more
+   opaque matte bg, no subtle glass wash — for max legibility of quick controls. */
+html[data-spw-base-metamaterial="matte"] .spw-shell-utility-button,
+html[data-spw-high-contrast="on"] .spw-shell-utility-button {
+  background: var(--surface-matte, rgba(247, 244, 238, 0.96));
+  border-color: var(--line-matte, color-mix(in srgb, var(--spw-shell-chrome-accent-local) 18%, var(--line, rgba(14, 18, 20, 0.14)) 82%));
+  color: var(--ink-on-matte-strong, rgba(14, 18, 20, 0.98));
+  box-shadow: none;
+}
+
+html[data-spw-color-mode="dark"][data-spw-base-metamaterial="matte"] .spw-shell-utility-button,
+html[data-spw-color-mode="dark"][data-spw-high-contrast="on"] .spw-shell-utility-button {
+  background: var(--surface-matte, rgba(24, 30, 35, 0.96));
+  color: var(--ink-on-matte-strong, rgba(255, 255, 255, 0.98));
+  border-color: color-mix(in srgb, var(--spw-shell-chrome-accent-local) 28%, var(--line, rgba(246, 248, 248, 0.2)) 72%);
+}
+
+html[data-spw-base-metamaterial="matte"] .spw-shell-utility-button[aria-pressed="true"],
+html[data-spw-high-contrast="on"] .spw-shell-utility-button[aria-pressed="true"] {
+  background: color-mix(in oklab, var(--surface-matte-strong, rgba(252, 249, 243, 0.98)) 92%, var(--spw-shell-chrome-accent-local) 8%);
+  color: var(--ink-on-matte, rgba(14, 18, 20, 0.96));
+  border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 40%, transparent);
+}
+
+.spw-shell-utility-row .spw-shell-utility-button {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.spw-shell-utility-row .spw-shell-utility-button[aria-pressed="true"] {
+  border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 22%, transparent);
+  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.86)) 86%, var(--spw-shell-chrome-accent-local) 14%);
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  box-shadow:
+    inset 0 -2px 0 color-mix(in oklab, var(--spw-shell-chrome-accent-local) 48%, transparent),
+    0 1px 2px rgba(14, 18, 20, 0.04);
+}
+
+.spw-shell-utility-row .spw-shell-utility-button[aria-pressed="true"]::after {
+  content: "";
+  position: absolute;
+  inset-block-end: 0.2rem;
+  inset-inline: 0.42rem;
+  block-size: 2px;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 72%, var(--ink, currentColor) 28%);
+}
+
+html[data-spw-color-mode="dark"] .spw-shell-utility-row {
+  background:
+    linear-gradient(90deg,
+      color-mix(in oklab, var(--surface-strong, rgba(25, 32, 37, 0.92)) 90%, var(--spw-shell-chrome-accent-local) 10%),
+      color-mix(in oklab, var(--surface-strong, rgba(25, 32, 37, 0.92)) 96%, var(--spw-shell-chrome-accent-local) 4%));
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, white 10%, transparent),
+    0 1px 3px rgba(0, 0, 0, 0.18);
+}
+
+html[data-spw-color-mode="dark"] .spw-shell-utility-row .spw-utility-cluster {
+  background: color-mix(in oklab, var(--surface-strong, rgba(25, 32, 37, 0.92)) 68%, transparent);
+}
+
+html[data-spw-color-mode="dark"] .spw-shell-utility-row .spw-shell-utility-button[aria-pressed="true"] {
+  background: color-mix(in oklab, var(--surface-strong, rgba(25, 32, 37, 0.92)) 82%, var(--spw-shell-chrome-accent-local) 18%);
+  color: var(--ink, rgba(236, 241, 238, 0.96));
+  border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 34%, transparent);
+}
+
+/* Special affordance for the clear-matte action button itself when active. */
+.spw-shell-utility-button[data-spw-shell-action="clear-matte"][aria-pressed="true"] {
+  border-color: color-mix(in oklab, var(--op-action-color, var(--teal)) 32%, transparent);
+  background: color-mix(in oklab, var(--surface-matte-strong, rgba(252, 249, 243, 0.98)) 90%, var(--op-action-color, var(--teal)) 10%);
+}

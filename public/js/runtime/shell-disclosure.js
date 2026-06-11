@@ -68,6 +68,24 @@ const SCROLL_DIRECTIONS = Object.freeze({
   STILL: 'still',
 });
 
+const SHELL_LAYOUTS = Object.freeze({
+  INLINE_RIBBON: 'inline-ribbon',
+  INLINE_TABLET: 'inline-tablet',
+  INLINE_STACKED: 'inline-stacked',
+  TOGGLE_FIELD: 'toggle-field',
+});
+
+const SHELL_END_SLOTS = Object.freeze({
+  INDICATOR: 'indicator',
+  TOGGLE: 'toggle',
+});
+
+const SHELL_TUNE_SURFACES = Object.freeze({
+  KNOB: 'knob',
+  NESTED: 'nested',
+  STRIP: 'strip',
+});
+
 const DEFAULTS = Object.freeze({
   narrowBreakpointPx: 720,
   midBreakpointPx: 980,
@@ -247,6 +265,68 @@ function resolveMenuMode(header, nav, navList, state) {
   if (ratio > state.config.compressedRatio) return MODES.TOGGLE;
 
   return MODES.INLINE;
+}
+
+function resolveShellLayout(snapshot) {
+  if (snapshot.mode === MODES.TOGGLE) return SHELL_LAYOUTS.TOGGLE_FIELD;
+  if (snapshot.viewportTier === 'mid') return SHELL_LAYOUTS.INLINE_TABLET;
+  if (snapshot.pressure === PRESSURES.COMPRESSED || snapshot.pressure === PRESSURES.CROWDED) {
+    return SHELL_LAYOUTS.INLINE_STACKED;
+  }
+  return SHELL_LAYOUTS.INLINE_RIBBON;
+}
+
+function resolveShellEndSlot(snapshot) {
+  if (snapshot.mode === MODES.TOGGLE) return SHELL_END_SLOTS.TOGGLE;
+  if (snapshot.viewportTier === 'wide' || snapshot.viewportTier === 'regular') {
+    if (snapshot.pressure === PRESSURES.CALM || snapshot.pressure === PRESSURES.TIGHT) {
+      return SHELL_END_SLOTS.INDICATOR;
+    }
+  }
+  return SHELL_END_SLOTS.TOGGLE;
+}
+
+function resolveShellTuneSurface(snapshot) {
+  if (snapshot.mode === MODES.TOGGLE) return SHELL_TUNE_SURFACES.STRIP;
+  if (snapshot.pressure === PRESSURES.COMPRESSED || snapshot.pressure === PRESSURES.CROWDED) {
+    return SHELL_TUNE_SURFACES.NESTED;
+  }
+  return SHELL_TUNE_SURFACES.KNOB;
+}
+
+function syncShellChromeLayout(header, snapshot) {
+  if (!(header instanceof HTMLElement) || !snapshot) return;
+
+  const disclosure = header.querySelector('.spw-shell-tools-disclosure');
+  const toolsOpen = disclosure instanceof HTMLDetailsElement && disclosure.open;
+  const layout = resolveShellLayout(snapshot);
+  const endSlot = resolveShellEndSlot(snapshot);
+  const tuneSurface = resolveShellTuneSurface(snapshot);
+
+  writeDatasetValues(header, {
+    spwShellLayout: layout,
+    spwShellEndSlot: endSlot,
+    spwShellTuneSurface: tuneSurface,
+    spwShellTools: toolsOpen ? 'open' : 'closed',
+  });
+
+  const indicator = header.querySelector('.header-op-indicator');
+  const toggle = header.querySelector('.spw-nav-toggle');
+
+  if (indicator instanceof HTMLElement) {
+    indicator.hidden = endSlot !== SHELL_END_SLOTS.INDICATOR;
+  }
+
+  if (toggle instanceof HTMLButtonElement) {
+    toggle.hidden = endSlot !== SHELL_END_SLOTS.TOGGLE;
+    if (!toggle.hidden) {
+      toggle.setAttribute('aria-controls', header.querySelector('nav')?.id || 'spw-shell-nav');
+    }
+  }
+
+  if (disclosure instanceof HTMLDetailsElement) {
+    disclosure.dataset.spwShellTuneSurface = tuneSurface;
+  }
 }
 
 function resolveMenuPressure({ mode, ratio, navFit, tier, pointer }) {
@@ -669,7 +749,9 @@ function ensureUtilityRow(header) {
     summary.setAttribute('aria-label', 'Open display controls for text size, color, contrast, layout, and inspection');
     summary.title = 'Display controls: text size, color, contrast, layout, and inspection';
     summary.innerHTML = `
-      <span class="spw-shell-tools-summary__glyph" aria-hidden="true">Aa</span>
+      <span class="spw-shell-tools-summary__knob" aria-hidden="true">
+        <span class="spw-shell-tools-summary__knob-glyph">Aa</span>
+      </span>
       <span class="spw-shell-tools-summary__label">Display</span>
     `;
     disclosure.appendChild(summary);
@@ -765,8 +847,14 @@ function ensureUtilityRow(header) {
   disclosure.appendChild(row);
 
   const trace = header.querySelector('.spw-header-trace');
+  const actions = header.querySelector('.spw-header-actions');
+  const indicator = header.querySelector('.header-op-indicator');
   if (!disclosure.isConnected) {
-    header.insertBefore(disclosure, trace || header.querySelector('nav') || null);
+    if (actions instanceof HTMLElement) {
+      actions.insertAdjacentElement('afterend', disclosure);
+    } else {
+      header.insertBefore(disclosure, indicator || trace || header.querySelector('nav') || null);
+    }
   }
   return row;
 }
@@ -1021,11 +1109,11 @@ function applyMenuState(header, nav, navList, toggle, state, open, source = 'sys
   syncShellOffset(header);
 
   nav.hidden = state.mode === MODES.TOGGLE ? !open : false;
-  toggle.hidden = false;
   toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
   toggle.setAttribute('aria-pressed', open ? 'true' : 'false');
 
   writeMenuDatasets(header, snapshot, 'header');
+  syncShellChromeLayout(header, snapshot);
   writeMenuDatasets(nav, snapshot, 'nav');
   writeMenuDatasets(toggle, snapshot, 'toggle');
   syncToggleCopy(toggle, snapshot);
@@ -1505,6 +1593,7 @@ export function initSpwShellDisclosure(options = {}) {
     event.stopPropagation();
     setToolsDisclosureOpen(utilityDisclosure, !utilityDisclosure.open);
     syncShellOffset(header);
+    if (state.snapshot) syncShellChromeLayout(header, state.snapshot);
   };
 
   const handleToolsSummaryKeydown = (event) => {
@@ -1515,6 +1604,7 @@ export function initSpwShellDisclosure(options = {}) {
     event.stopPropagation();
     setToolsDisclosureOpen(utilityDisclosure, !utilityDisclosure.open);
     syncShellOffset(header);
+    if (state.snapshot) syncShellChromeLayout(header, state.snapshot);
   };
 
   const handleMenuIntent = (event) => {
