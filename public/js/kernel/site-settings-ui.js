@@ -932,9 +932,8 @@ const bindPersistenceControls = (root = document) => {
   };
 };
 
-const initPwaStatusDisplay = () => {
+const initPwaStatusDisplay = (settingsManager = manager) => {
   if (settingsManager._pwaInitialized) return;
-  settingsManager._pwaInitialized = true;
 
   const installEl = document.querySelector('[data-pwa-install-status]');
   const swEl = document.querySelector('[data-pwa-sw-status]');
@@ -942,6 +941,7 @@ const initPwaStatusDisplay = () => {
   const connectionEl = document.querySelector('[data-pwa-connection-status]');
 
   if (!installEl) return;
+  settingsManager._pwaInitialized = true;
 
   const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
   installEl.textContent = isStandalone ? 'Installed' : 'Browser tab';
@@ -1035,7 +1035,7 @@ export const initSiteSettingsBindings = (settingsManager = manager) => {
   const deviationControls = bindDeviationControls(document);
   const persistenceControls = bindPersistenceControls(document);
 
-  initPwaStatusDisplay();
+  initPwaStatusDisplay(settingsManager);
 
   return {
     cleanup() {
@@ -1045,6 +1045,7 @@ export const initSiteSettingsBindings = (settingsManager = manager) => {
       deviationControls.cleanup();
       persistenceControls.cleanup();
       settingsManager._initialized = false;
+      settingsManager._pwaInitialized = false;
     },
     refresh() {
       bindings.forEach((binding) => binding.refresh());
@@ -1052,7 +1053,7 @@ export const initSiteSettingsBindings = (settingsManager = manager) => {
       readouts.refresh();
       deviationControls.refresh();
       persistenceControls.refresh();
-      initPwaStatusDisplay();
+      initPwaStatusDisplay(settingsManager);
     }
   };
 };

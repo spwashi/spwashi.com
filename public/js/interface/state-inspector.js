@@ -52,6 +52,22 @@ function getToggleState(config) {
   return config.inverted ? value !== config.off : value === config.on;
 }
 
+function syncSatchelMaterial(root, launch, panel) {
+  const base = document.documentElement.dataset.spwBaseMetamaterial
+    || document.documentElement.dataset.spwMetamaterial
+    || 'glass';
+
+  if (root) root.dataset.spwMetamaterial = base;
+  if (panel) panel.dataset.spwMetamaterial = base;
+  if (launch) launch.dataset.spwMetamaterial = base;
+
+  root
+    ?.querySelectorAll?.('[data-spw-floating-chrome]')
+    .forEach((element) => {
+      element.dataset.spwMetamaterial = base;
+    });
+}
+
 // --- Lightweight satchel position persistence + drag support ---
 
 function loadSavedPosition() {
@@ -429,19 +445,6 @@ function createInspector() {
   root.dataset.spwSnap = 'corners';
   root.dataset.spwChromeFluid = 'springy';
 
-  // Mind material definition and tunability: satchel as floating chrome must carry the current
-  // global/local material (glass/matte from baseMetamaterial or explicit) so its surfaces, ink,
-  // depth use the correct tokens/rules (see material.css, surface_material_contract).
-  // This keeps utility/satchel consistent with attentional/cognitive physics + material across
-  // pages, regions, specimens. Tap/hold opens inspect; drag is attentional repositioning in the field.
-  const syncSatchelMaterial = (r, l, p) => {
-    const base = document.documentElement.dataset.spwBaseMetamaterial || document.documentElement.dataset.spwMetamaterial || 'glass';
-    if (r) r.dataset.spwMetamaterial = base;
-    if (p) p.dataset.spwMetamaterial = base;
-    if (l) l.dataset.spwMetamaterial = base;
-    // Also propagate to any inner chrome if present
-    r?.querySelectorAll?.('[data-spw-floating-chrome]').forEach(el => { el.dataset.spwMetamaterial = base; });
-  };
   syncSatchelMaterial(root, launch, panel);
 
   launch.type = 'button';

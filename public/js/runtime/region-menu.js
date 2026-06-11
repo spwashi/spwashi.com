@@ -11,6 +11,7 @@ const TARGET_SELECTOR = [
   '.spw-delimiter',
   '.frame-sigil',
   '.frame-card-sigil',
+  '.frame-panel-sigil',
   '.operator-chip',
   '[data-spw-feature]',
   '[data-spw-semantic-expression]',
@@ -846,7 +847,7 @@ function shouldArmHoldOpen(target, event) {
   if (event.altKey || event.metaKey || event.ctrlKey || event.shiftKey) return false;
   if (isNavigable(target)) return false;
   return target.matches(
-    '.spw-delimiter, .frame-sigil, .frame-card-sigil, [data-spw-feature], [data-spw-semantic-expression], [data-spw-concept], [data-spw-grounding], [data-spw-assignment], [data-spw-reference-seed], [data-spw-vocab], [data-spw-topic]'
+    '.spw-delimiter, .frame-sigil, .frame-card-sigil, .frame-panel-sigil, [data-spw-feature], [data-spw-semantic-expression], [data-spw-concept], [data-spw-grounding], [data-spw-assignment], [data-spw-reference-seed], [data-spw-vocab], [data-spw-topic]'
   );
 }
 

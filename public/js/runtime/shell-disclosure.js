@@ -1546,9 +1546,10 @@ export function initSpwShellDisclosure(options = {}) {
 
   const state = createState(config);
   syncDeviceContext(state);
+  state.mode = resolveMenuMode(header, nav, navList, state);
   writeDatasetValues(header, {
-    spwMenu: 'closed',
-    spwMenuMode: MODES.INLINE,
+    spwMenu: state.mode === MODES.TOGGLE ? 'closed' : 'open',
+    spwMenuMode: state.mode,
     spwMenuPhase: PHASES.RESTING,
     spwMenuSource: 'init',
   });
