@@ -208,7 +208,8 @@ export const ensureRpgCuratorWidget = () => {
         }),
         createElement('p', {
             className: 'rpg-workbench__legend',
-            html: workbenchLegendHtml('Bench rule', RPG_WORKBENCH_COPY.curatorBenchRule)
+            html: workbenchLegendHtml('Bench rule', RPG_WORKBENCH_COPY.curatorBenchRule),
+            trusted: true
         }),
         bodyHost,
         status

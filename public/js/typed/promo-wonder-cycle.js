@@ -1,5 +1,6 @@
-import { createCardSigil, createFrameHeading, } from '../js/kernel/dom-contracts.js';
+import { createCardSigil, createFrameHeading, } from '../kernel/dom-contracts.js';
 import { cleanText, clampIndex, createJsonFeedLoader, el, getWeekIndex, } from './feed-utils.js';
+import { validatePromoWonderFeed } from './json-feeds.js';
 const FEED_URL = '/public/data/promo-wonder-cycle.json';
 const SOURCE_LOCALE = 'en';
 const DEFAULT_FEED = Object.freeze({
@@ -158,7 +159,10 @@ const DEFAULT_FEED = Object.freeze({
         },
     ],
 });
-const loadFeed = createJsonFeedLoader(FEED_URL, DEFAULT_FEED);
+const loadFeed = createJsonFeedLoader(FEED_URL, DEFAULT_FEED, {
+    label: 'promo-wonder-cycle',
+    validate: (value) => validatePromoWonderFeed(value).ok,
+});
 export function feedLocale(feed) {
     return cleanText(feed.sourceLocale || SOURCE_LOCALE) || SOURCE_LOCALE;
 }

@@ -6,41 +6,12 @@ import {
   el,
   type DayKey,
 } from './feed-utils.js';
-
-type LocaleCode = string;
-
-type MediaItem = {
-  copyUnit?: string;
-  cta?: string;
-  href?: string;
-  label?: string;
-  locale?: LocaleCode;
-  operator?: string;
-  summary?: string;
-  tag?: string;
-  title?: string;
-  why?: string;
-};
-
-type LocalizationMeta = {
-  copyUnit?: string;
-  notes?: string;
-  prepared?: boolean;
-};
-
-type MediaPublishingConfig = {
-  daily?: Partial<Record<DayKey, MediaItem>>;
-  localization?: LocalizationMeta;
-  sourceLocale?: LocaleCode;
-  weekly?: MediaItem;
-  [key: string]:
-    | LocaleCode
-    | MediaItem[]
-    | MediaItem
-    | Partial<Record<DayKey, MediaItem>>
-    | LocalizationMeta
-    | undefined;
-};
+import type {
+  LocaleCode,
+  MediaItem,
+  MediaPublishingConfig,
+} from './json-feeds.js';
+import { validateMediaPublishingConfig } from './json-feeds.js';
 
 type CardOptions = {
   featured?: boolean;
@@ -53,7 +24,10 @@ type FocusOptions = {
 
 const MEDIA_FOCUS_URL = '/public/data/media-focus.json';
 const SOURCE_LOCALE = 'en';
-const loadMediaConfig = createJsonFeedLoader<MediaPublishingConfig | null>(MEDIA_FOCUS_URL, null);
+const loadMediaConfig = createJsonFeedLoader<MediaPublishingConfig | null>(MEDIA_FOCUS_URL, null, {
+  label: 'media-focus',
+  validate: (value): value is MediaPublishingConfig => validateMediaPublishingConfig(value).ok,
+});
 
 function feedLocale(config: MediaPublishingConfig): LocaleCode {
   return cleanText(config.sourceLocale || SOURCE_LOCALE) || SOURCE_LOCALE;
@@ -184,3 +158,5 @@ export async function initMediaPublishing(): Promise<void> {
     renderCollection(host, Array.isArray(collection) ? collection : [], locale);
   });
 }
+
+export { feedLocale };

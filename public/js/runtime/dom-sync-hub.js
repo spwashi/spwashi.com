@@ -6,6 +6,8 @@
  * --------------------------------------------------------------------------
  */
 
+import { guardCall } from '/public/js/kernel/dom-render.js';
+
 const TASK_ORDER = Object.freeze([
   'tuning-discovery',
   'gesture-anatomy',
@@ -34,11 +36,7 @@ function runTaskBatch(ids) {
   const ordered = TASK_ORDER.filter((id) => ids.has(id));
   const trailing = [...ids].filter((id) => !TASK_ORDER.includes(id));
   for (const id of [...ordered, ...trailing]) {
-    try {
-      tasks.get(id)?.();
-    } catch (error) {
-      console.warn(`[dom-sync-hub] task failed: ${id}`, error);
-    }
+    guardCall(tasks.get(id), `dom-sync-hub:${id}`, { fallback: undefined })();
   }
 }
 

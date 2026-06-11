@@ -37,6 +37,30 @@ export const SPW_COMPOSITION_CONTRACT = Object.freeze({
 });
 
 export {
+  HYDRATION_STATES,
+  SKELETON_ROLES,
+  SPW_DOM_RENDER_CONTRACT,
+  cleanText,
+  clearChildren,
+  createElement,
+  createJsonFeedLoader,
+  createSkeleton,
+  el,
+  escapeAttr,
+  escapeHtml,
+  fragment,
+  guardCall,
+  hydrateHost,
+  interpolateTemplate,
+  normalizeError,
+  replaceChildren,
+  reportRenderError,
+  runSafe,
+  setHydrationState,
+  setTrustedHtml,
+} from './kernel/dom-render.js';
+
+export {
   CORE_COMPONENT_SELECTORS,
   SURFACE_COMPONENT_SELECTORS,
   RELATION_COMPONENT_SELECTORS,

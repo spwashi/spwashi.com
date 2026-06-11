@@ -426,7 +426,8 @@ export const initRpgLanguageEvolution = (section) => {
         }),
         createElement('p', {
             className: 'rpg-workbench__legend',
-            html: workbenchLegendHtml('Posture', RPG_WORKBENCH_COPY.languageBenchRule)
+            html: workbenchLegendHtml('Posture', RPG_WORKBENCH_COPY.languageBenchRule),
+            trusted: true
         }),
         createElement('div', { className: 'rpg-workbench__control-deck' }, [
             postureSwitch,

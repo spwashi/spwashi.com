@@ -1,6 +1,7 @@
 import process from 'node:process';
 import { ROUTE_MANIFEST_OUTPUT, collectManifestIssues, runGitDiffCheck, runSyntaxChecks, writeRouteRuntimeManifest, } from './site-contracts/index.mjs';
 import { collectCssContractReport } from './css-contracts.mjs';
+import { collectJsonContractReport } from './json-contracts.mjs';
 import { collectRuntimeContractReport } from './runtime-contracts.mjs';
 export async function main() {
     const manifest = await writeRouteRuntimeManifest();
@@ -8,12 +9,14 @@ export async function main() {
     const syntaxReport = await runSyntaxChecks();
     const cssReport = await collectCssContractReport();
     const runtimeReport = await collectRuntimeContractReport();
+    const jsonReport = await collectJsonContractReport();
     const gitDiffResult = runGitDiffCheck();
     console.log(`[check] manifest=${ROUTE_MANIFEST_OUTPUT}`);
     console.log(`[check] routes=${manifest.routeCount} svgRoutes=${manifest.maps.svgRoutes.length} specRoutes=${manifest.maps.specRoutes.length}`);
     console.log(`[check] syntax targets=${syntaxReport.targets.length}`);
     console.log(`[check] css files=${cssReport.cssFiles.length} imports=${cssReport.imports.length} routeStylesheets=${cssReport.linkedStylesheets.length} sources=${cssReport.sourceFiles.length}`);
     console.log(`[check] runtime modules=${runtimeReport.modules.length} ownerDirs=${runtimeReport.ownerDirectories.length} rootEntrypoints=${runtimeReport.rootEntrypoints.length} typedOutputs=${runtimeReport.typedOutputs.length}`);
+    console.log(`[check] json feeds=${jsonReport.checked} jsonErrors=${jsonReport.errors.length}`);
     const warnings = [
         ...manifestIssues.warnings.map((warning) => `[manifest] ${warning}`),
         ...cssReport.warnings.map((warning) => `[css] ${warning}`),
@@ -65,6 +68,15 @@ export async function main() {
         }
         if (runtimeReport.errors.length > 12) {
             console.log(`  ... ${runtimeReport.errors.length - 12} more runtime errors`);
+        }
+    }
+    if (jsonReport.errors.length) {
+        failures.push(`[json] ${jsonReport.errors.length} contract error(s)`);
+        for (const error of jsonReport.errors.slice(0, 12)) {
+            console.log(`  json: ${error}`);
+        }
+        if (jsonReport.errors.length > 12) {
+            console.log(`  ... ${jsonReport.errors.length - 12} more json errors`);
         }
     }
     if (gitDiffResult.status !== 0) {

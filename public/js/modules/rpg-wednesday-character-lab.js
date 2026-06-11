@@ -515,7 +515,8 @@ export const initRpgCharacterLab = (section) => {
         }),
         createElement('p', {
             className: 'rpg-workbench__legend',
-            html: workbenchLegendHtml('Bench rule', RPG_WORKBENCH_COPY.characterBenchRule)
+            html: workbenchLegendHtml('Bench rule', RPG_WORKBENCH_COPY.characterBenchRule),
+            trusted: true
         }),
         createElement('div', { className: 'rpg-character-lab__layout' }, [
             composer,

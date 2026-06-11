@@ -1,8 +1,12 @@
-import { createCardSigil } from '../js/kernel/dom-contracts.js';
+import { createCardSigil } from '../kernel/dom-contracts.js';
 import { DAY_KEYS, cleanText, createJsonFeedLoader, el, } from './feed-utils.js';
+import { validateMediaPublishingConfig } from './json-feeds.js';
 const MEDIA_FOCUS_URL = '/public/data/media-focus.json';
 const SOURCE_LOCALE = 'en';
-const loadMediaConfig = createJsonFeedLoader(MEDIA_FOCUS_URL, null);
+const loadMediaConfig = createJsonFeedLoader(MEDIA_FOCUS_URL, null, {
+    label: 'media-focus',
+    validate: (value) => validateMediaPublishingConfig(value).ok,
+});
 function feedLocale(config) {
     return cleanText(config.sourceLocale || SOURCE_LOCALE) || SOURCE_LOCALE;
 }
@@ -107,3 +111,4 @@ export async function initMediaPublishing() {
         renderCollection(host, Array.isArray(collection) ? collection : [], locale);
     });
 }
+export { feedLocale };

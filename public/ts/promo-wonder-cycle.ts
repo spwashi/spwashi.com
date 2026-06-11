@@ -9,73 +9,18 @@ import {
   el,
   getWeekIndex,
 } from './feed-utils.js';
+import type {
+  LocaleCode,
+  PromoPresentation,
+  PromoWonderCard,
+  PromoWonderFeed,
+  PromoWonderPair,
+  PromotionKind,
+} from './json-feeds.js';
+import { validatePromoWonderFeed } from './json-feeds.js';
 
 type PromoWonderKind = 'promo' | 'wonder';
 type TemporalCadence = 'daily' | 'weekly';
-type LocaleCode = string;
-type PromoPresentation = 'toast' | 'modal' | 'inline';
-type PromotionKind = 'event' | 'deal' | 'discount' | 'service' | 'support' | 'release';
-
-type PromotionDetails = {
-  kind?: PromotionKind;
-  audience?: string;
-  offer?: string;
-  proof?: string;
-  objection?: string;
-  urgency?: string;
-  tone?: string;
-  theme?: string;
-  handles?: string[];
-  ctaStyle?: string;
-  presentation?: PromoPresentation;
-};
-
-type PromotionPlaybookEntry = {
-  goal?: string;
-  psychology?: string;
-  structure?: string;
-  presentation?: PromoPresentation;
-  ctaPattern?: string;
-  proof?: string;
-  riskReversal?: string;
-};
-
-type PromotionPlaybook = {
-  purpose?: string;
-  note?: string;
-  kinds?: Record<'event' | 'deal' | 'discount' | 'service', PromotionPlaybookEntry>;
-};
-
-type PromoWonderCard = {
-  copyUnit?: string;
-  label?: string;
-  locale?: LocaleCode;
-  operator?: string;
-  title?: string;
-  summary?: string;
-  href?: string;
-  cta?: string;
-  why?: string;
-  presentation?: PromoPresentation;
-  promotion?: PromotionDetails;
-};
-
-type PromoWonderPair = {
-  promo: PromoWonderCard;
-  wonder: PromoWonderCard;
-};
-
-type PromoWonderFeed = {
-  sourceLocale?: LocaleCode;
-  localization?: {
-    copyUnit?: string;
-    notes?: string;
-    prepared?: boolean;
-  };
-  promotionPlaybook?: PromotionPlaybook;
-  daily?: PromoWonderPair[];
-  weekly?: PromoWonderPair[];
-};
 
 const FEED_URL = '/public/data/promo-wonder-cycle.json';
 const SOURCE_LOCALE = 'en';
@@ -237,7 +182,10 @@ const DEFAULT_FEED = Object.freeze({
   ],
 }) satisfies Required<PromoWonderFeed>;
 
-const loadFeed = createJsonFeedLoader<PromoWonderFeed>(FEED_URL, DEFAULT_FEED);
+const loadFeed = createJsonFeedLoader<PromoWonderFeed>(FEED_URL, DEFAULT_FEED, {
+  label: 'promo-wonder-cycle',
+  validate: (value): value is PromoWonderFeed => validatePromoWonderFeed(value).ok,
+});
 
 export function feedLocale(feed: PromoWonderFeed): LocaleCode {
   return cleanText(feed.sourceLocale || SOURCE_LOCALE) || SOURCE_LOCALE;

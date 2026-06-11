@@ -3,55 +3,9 @@ import {
     createFrameHeading,
     createFrameSigil
 } from '/public/js/kernel/dom-contracts.js';
+import { createElement, el } from '/public/js/kernel/dom-render.js';
 
-export { createCardSigil, createFrameHeading, createFrameSigil };
-
-const appendChild = (parent, child) => {
-    if (!child) return;
-    if (typeof child === 'string') {
-        parent.appendChild(document.createTextNode(child));
-        return;
-    }
-    parent.appendChild(child);
-};
-
-export const createElement = (tag, props = {}, children = []) => {
-    const element = document.createElement(tag);
-
-    Object.entries(props).forEach(([key, value]) => {
-        if (value === null || value === undefined) return;
-        if (key === 'className') {
-            element.className = value;
-            return;
-        }
-        if (key === 'text') {
-            element.textContent = value;
-            return;
-        }
-        if (key === 'html') {
-            element.innerHTML = value;
-            return;
-        }
-        if (key === 'dataset' && value && typeof value === 'object') {
-            Object.entries(value).forEach(([datasetKey, datasetValue]) => {
-                if (datasetValue == null) {
-                    delete element.dataset[datasetKey];
-                    return;
-                }
-                element.dataset[datasetKey] = String(datasetValue);
-            });
-            return;
-        }
-        if (key in element) {
-            element[key] = value;
-            return;
-        }
-        element.setAttribute(key, value);
-    });
-
-    children.forEach((child) => appendChild(element, child));
-    return element;
-};
+export { createCardSigil, createFrameHeading, createFrameSigil, createElement, el };
 
 export const createField = ({ id, label, value, rows = 2, placeholder }) => {
     const input = createElement('textarea', {

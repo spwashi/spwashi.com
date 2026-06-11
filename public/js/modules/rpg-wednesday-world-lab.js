@@ -336,7 +336,8 @@ export const initRpgWorldLab = (section) => {
         }),
         createElement('p', {
             className: 'rpg-workbench__legend',
-            html: workbenchLegendHtml('Slot kind', RPG_WORKBENCH_COPY.worldBenchRule)
+            html: workbenchLegendHtml('Slot kind', RPG_WORKBENCH_COPY.worldBenchRule),
+            trusted: true
         }),
         createElement('div', { className: 'rpg-world-lab__layout' }, [
             createElement('div', { className: 'rpg-world-lab__composer' }, [

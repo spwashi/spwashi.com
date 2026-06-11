@@ -398,7 +398,8 @@ export const initRpgWednesday = () => {
 
     const kitLegend = createElement('p', {
         className: 'rpg-workbench__legend',
-        html: workbenchLegendHtml('Kit rule', RPG_WORKBENCH_COPY.kitBenchRule)
+        html: workbenchLegendHtml('Kit rule', RPG_WORKBENCH_COPY.kitBenchRule),
+        trusted: true
     });
 
     const jumpbar = createElement('nav', {
