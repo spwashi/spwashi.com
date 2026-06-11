@@ -3694,3 +3694,30 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
   margin-block-start: 0.2rem;
   font-size: 0.64rem;
 }
+
+@media (max-width: 720px) {
+  :is(.site-header, body > header)[data-spw-menu-mode="toggle"]
+    .spw-spell-path[data-spw-breadcrumb-viewport="compact"]
+    .spw-spell-path__header {
+    flex-wrap: nowrap;
+  }
+
+  :is(.site-header, body > header)[data-spw-menu-mode="toggle"]
+    .spw-spell-path[data-spw-breadcrumb-viewport="compact"][data-spw-breadcrumb-state="closed"] {
+    gap: 0;
+    padding-block: 0;
+  }
+
+  :is(.site-header, body > header)[data-spw-menu-mode="toggle"]
+    .spw-spell-path[data-spw-breadcrumb-viewport="compact"][data-spw-breadcrumb-state="closed"]
+    :is(.spw-spell-sorter-chip, .spw-spell-path__hint, .spw-spell-path__garden-trace) {
+    display: none;
+  }
+
+  :is(.site-header, body > header)[data-spw-menu-mode="toggle"][data-spw-menu="open"]
+    .spw-spell-path,
+  :is(.site-header, body > header)[data-spw-menu-mode="toggle"][data-spw-menu="open"]
+    .spw-header-trace {
+    display: none;
+  }
+}

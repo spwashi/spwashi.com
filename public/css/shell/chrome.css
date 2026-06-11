@@ -2015,8 +2015,12 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
   -webkit-backdrop-filter: blur(12px) saturate(1.03);
 }
 
-:where(.site-header[data-spw-menu-mode="toggle"][data-spw-menu="open"], body > header[data-spw-menu-mode="toggle"][data-spw-menu="open"]) .spw-header-trace {
+:where(.site-header[data-spw-menu-mode="toggle"][data-spw-menu="open"],
+       body > header[data-spw-menu-mode="toggle"][data-spw-menu="open"]) .spw-header-trace {
   display: none;
+  min-block-size: 0;
+  max-block-size: 0;
+  overflow: hidden;
 }
 
 :where(.site-header[data-spw-menu-mode="toggle"][data-spw-menu="closed"], body > header[data-spw-menu-mode="toggle"][data-spw-menu="closed"]) .spw-header-trace:has(.spw-spell-path) {
@@ -3359,10 +3363,19 @@ html[data-spw-base-metamaterial="matte"] .spw-discovery-notice .spw-discovery-no
     scrollbar-width: thin;
   }
 
-  .site-header[data-spw-menu-mode="toggle"][data-spw-menu="closed"] .spw-header-trace:has(.spw-spell-path),
-  body > header[data-spw-menu-mode="toggle"][data-spw-menu="closed"] .spw-header-trace:has(.spw-spell-path) {
+  .site-header[data-spw-menu-mode="toggle"][data-spw-menu="closed"] .spw-header-trace:has(.spw-spell-path[data-spw-breadcrumb-state="closed"]),
+  body > header[data-spw-menu-mode="toggle"][data-spw-menu="closed"] .spw-header-trace:has(.spw-spell-path[data-spw-breadcrumb-state="closed"]) {
     max-block-size: 3.2rem;
     overflow: hidden;
+  }
+
+  :where(.site-header[data-spw-menu-mode="toggle"][data-spw-menu="open"],
+         body > header[data-spw-menu-mode="toggle"][data-spw-menu="open"]) .spw-header-trace {
+    display: none;
+    min-block-size: 0;
+    max-block-size: 0;
+    overflow: hidden;
+    padding-block: 0;
   }
 
   :where(.site-header, body > header) .spw-spell-path {
