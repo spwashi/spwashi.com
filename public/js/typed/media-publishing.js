@@ -1,4 +1,4 @@
-import { createCardSigil } from '/public/js/kernel/dom-contracts.js';
+import { createCardSigil } from './kernel-dom-contracts.js';
 import { DAY_KEYS, cleanText, createJsonFeedLoader, el, } from './feed-utils.js';
 import { validateMediaPublishingConfig } from './json-feeds.js';
 const MEDIA_FOCUS_URL = '/public/data/media-focus.json';

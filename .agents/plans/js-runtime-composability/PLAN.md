@@ -34,6 +34,12 @@ Reduce the size and cognitive load of `public/js/site.js` by extracting the page
 - Wired the checker into `scripts/ts/check-site.mts` and exposed it through `npm run check:runtime`.
 - Kept semantic metadata gaps as warnings so current modules remain inspectable without forcing a broad rewrite.
 
+## 2026-06 Learnability/Typed Runtime Architecture Fix
+- Split learnability ledger root state from writable footer text targets: `data-spw-learnability-cue` remains root/runtime state, while footer copy uses `data-spw-learnability-cue-target`.
+- Scoped learnability text writes under `document.body` so document-level state attributes cannot be selected as content targets.
+- Added a small typed runtime bridge for DOM contract helpers so generated TypeScript modules can import a stable local file instead of depending on watch-mode post-emit import rewrites.
+- Follow-up guard worth adding: runtime contracts should fail when a module writes `textContent` to a selector that can match `html`, `head`, or `body`.
+
 ## Out of Scope
 - Renaming unrelated runtime modules.
 - Changing route-specific behavior beyond the page-state contract.

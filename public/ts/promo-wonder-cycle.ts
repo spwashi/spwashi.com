@@ -1,7 +1,7 @@
 import {
   createCardSigil,
   createFrameHeading,
-} from '../js/kernel/dom-contracts.js';
+} from './kernel-dom-contracts.js';
 import {
   cleanText,
   clampIndex,

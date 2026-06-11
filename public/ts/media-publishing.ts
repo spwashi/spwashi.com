@@ -1,4 +1,4 @@
-import { createCardSigil } from '../js/kernel/dom-contracts.js';
+import { createCardSigil } from './kernel-dom-contracts.js';
 import {
   DAY_KEYS,
   cleanText,

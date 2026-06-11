@@ -1,4 +1,4 @@
-import { createCardSigil, createFrameHeading, } from '/public/js/kernel/dom-contracts.js';
+import { createCardSigil, createFrameHeading, } from './kernel-dom-contracts.js';
 import { cleanText, clampIndex, createJsonFeedLoader, el, getWeekIndex, } from './feed-utils.js';
 import { validatePromoWonderFeed } from './json-feeds.js';
 const FEED_URL = '/public/data/promo-wonder-cycle.json';

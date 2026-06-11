@@ -10,6 +10,7 @@ export const LEARNABILITY_LEDGER_CONTRACT = Object.freeze({
   attributes: Object.freeze({
     posture: 'data-spw-learnability-posture',
     cue: 'data-spw-learnability-cue',
+    cueTarget: 'data-spw-learnability-cue-target',
     resonance: 'data-spw-learnability-resonance',
     layoutContract: 'data-spw-layout-contract',
     featureTier: 'data-spw-learnability-tier',
@@ -79,19 +80,22 @@ function annotateFeatureClusters(root = document) {
 }
 
 function syncFooterPosture(settings) {
+  const scope = document.body;
+  if (!scope) return;
+
   const stance = settings.metacognitiveStance || 'witness';
   const process = settings.processAttention || 'breath';
   const stanceLabel = describeStance(stance);
   const cue = METACOGNITIVE_CUES[stance] || METACOGNITIVE_CUES.witness;
   const processCue = PROCESS_CUES[process] || '';
 
-  document.querySelectorAll('[data-spw-learnability-stance-label]').forEach((node) => {
+  scope.querySelectorAll('[data-spw-learnability-stance-label]').forEach((node) => {
     node.textContent = stanceLabel;
   });
-  document.querySelectorAll('[data-spw-learnability-cue]').forEach((node) => {
+  scope.querySelectorAll('[data-spw-learnability-cue-target], [data-spw-learnability-cue]').forEach((node) => {
     node.textContent = processCue ? `${cue} ${processCue}` : cue;
   });
-  document.querySelectorAll('[data-spw-learnability-posture]').forEach((node) => {
+  scope.querySelectorAll('[data-spw-learnability-posture]').forEach((node) => {
     node.dataset.spwLearnabilityPosture = stance;
     node.dataset.spwProcessAttention = process;
   });

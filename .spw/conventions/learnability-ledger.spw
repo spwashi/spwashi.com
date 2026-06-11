@@ -13,7 +13,13 @@ contract: .{
   css: "public/css/systems/surfaces/learnability-ledger.css",
   companions: "gesture-anatomy, tuning-discovery, dom-sync-hub, enrichment.css perspective salience, attention-architecture",
   root_attrs: "data-spw-learnability-posture, data-spw-learnability-process, data-spw-learnability-cue, data-spw-learnability-ledger, data-spw-layout-contract, data-spw-learnability-tier",
+  text_targets: "data-spw-learnability-stance-label, data-spw-learnability-cue-target",
   event: "spw:learnability-ledger-updated",
+}
+
+attribute_ownership: .{
+  rule: "Root attrs describe runtime state; text targets receive writable copy. A selector that writes text must be scoped below body and must not match html.",
+  failure_mode: "Do not reuse data-spw-learnability-cue as both html state and footer text target; setting textContent on html destroys the document.",
 }
 
 layout_contract: .{
@@ -31,4 +37,4 @@ metacognitive_accounting: .{
   overflow: "rich visibility for concepts, features, vocabulary",
 }
 
-validation: ?< hold living term → ledger resonance prime; switch stance in settings → footer posture + cue update; enable developmental indicators → implicit hosts outlined >
+validation: ?< hold living term → ledger resonance prime; switch stance in settings → footer posture + cue target update; enable developmental indicators → implicit hosts outlined; verify html keeps head/body after ledger sync >
