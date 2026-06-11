@@ -272,11 +272,22 @@
   }
 }
 
+:where([data-spw-selection]) {
+  transition:
+    background-color var(--component-transition-base),
+    border-color var(--component-transition-base),
+    box-shadow var(--component-transition-base),
+    opacity var(--component-transition-fast),
+    transform var(--component-transition-fast);
+}
+
 :where([data-spw-selection="focused"]) {
+  background-color: color-mix(in srgb, var(--component-accent) 3%, transparent);
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--component-accent) 16%, transparent);
 }
 
 :where([data-spw-selection="active"]) {
+  background-color: color-mix(in srgb, var(--component-accent) 4%, transparent);
   border-color: color-mix(in srgb, var(--component-accent) 34%, transparent);
 }
 

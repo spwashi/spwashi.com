@@ -80,32 +80,65 @@ function clearSavedPosition() {
 
 function applyPositionToLaunch(launch, left, top, fallback = false) {
   if (!launch) return;
-  const vw = window.innerWidth;
-  const vh = window.innerHeight;
+  const root = launch.closest?.(`[${ROOT_ATTR}]`);
+  if (!(root instanceof HTMLElement)) return;
+
+  const viewport = window.visualViewport;
+  const vw = Math.max(1, Math.min(
+    viewport?.width || Number.POSITIVE_INFINITY,
+    window.innerWidth || Number.POSITIVE_INFINITY,
+    document.documentElement?.clientWidth || Number.POSITIVE_INFINITY
+  ));
+  const vh = Math.max(1, Math.min(
+    viewport?.height || Number.POSITIVE_INFINITY,
+    window.innerHeight || Number.POSITIVE_INFINITY,
+    document.documentElement?.clientHeight || Number.POSITIVE_INFINITY
+  ));
   const rect = launch.getBoundingClientRect();
+  const rootRect = root.getBoundingClientRect();
   const w = rect.width || 120;
   const h = rect.height || 36;
+  const rootW = Math.min(rootRect.width || 400, Math.max(1, vw - 16));
 
   // Clamp to viewport with small margin
   const margin = 8;
   const clampedLeft = Math.max(margin, Math.min(left, vw - w - margin));
   const clampedTop = Math.max(margin, Math.min(top, vh - h - margin));
+  const rootLeft = Math.max(margin, Math.min(clampedLeft + w - rootW, vw - rootW - margin));
 
-  launch.style.position = 'fixed';
-  launch.style.left = `${clampedLeft}px`;
-  launch.style.top = `${clampedTop}px`;
-  launch.style.right = 'auto';
-  launch.style.bottom = 'auto';
-  launch.style.transform = 'none';
+  root.style.position = 'fixed';
+  root.style.left = `${rootLeft}px`;
+  root.style.top = `${clampedTop}px`;
+  root.style.right = 'auto';
+  root.style.bottom = 'auto';
+  root.style.transform = 'none';
+
+  launch.style.position = '';
+  launch.style.left = '';
+  launch.style.top = '';
+  launch.style.right = '';
+  launch.style.bottom = '';
+  launch.style.transform = '';
 
   if (fallback) {
     // Mark that we're using a user-dragged or restored position
+    root.dataset.spwSatchelPositioned = 'user';
     launch.dataset.spwSatchelPositioned = 'user';
   }
 }
 
 function resetLaunchToDefault(launch) {
   if (!launch) return;
+  const root = launch.closest?.(`[${ROOT_ATTR}]`);
+  if (root instanceof HTMLElement) {
+    root.style.position = '';
+    root.style.left = '';
+    root.style.top = '';
+    root.style.right = '';
+    root.style.bottom = '';
+    root.style.transform = '';
+    delete root.dataset.spwSatchelPositioned;
+  }
   launch.style.position = '';
   launch.style.left = '';
   launch.style.top = '';
@@ -558,6 +591,14 @@ export function initStateInspector() {
 
   const cleanupBindings = bindInspector(root);
   const cleanupDrag = bindSatchelDrag(root);
+  const clampSatchelPosition = () => {
+    const launchButton = root.querySelector('.spw-state-inspector__launch');
+    if (!(launchButton instanceof HTMLElement)) return;
+    const rect = launchButton.getBoundingClientRect();
+    applyPositionToLaunch(launchButton, rect.left, rect.top, root.dataset.spwSatchelPositioned === 'user');
+  };
+  window.addEventListener('resize', clampSatchelPosition, { passive: true });
+  window.visualViewport?.addEventListener?.('resize', clampSatchelPosition, { passive: true });
   syncControls(root);
   writeRuntimeDatasetValues(document.documentElement, {
     spwStateInspector: 'available',
@@ -582,6 +623,8 @@ export function initStateInspector() {
   return () => {
     cleanupBindings();
     cleanupDrag?.();
+    window.removeEventListener('resize', clampSatchelPosition);
+    window.visualViewport?.removeEventListener?.('resize', clampSatchelPosition);
     mo.disconnect();
     root.remove();
     writeRuntimeDatasetValues(document.documentElement, {

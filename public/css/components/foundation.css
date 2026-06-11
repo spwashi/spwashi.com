@@ -83,6 +83,8 @@
   --component-transition-base: var(--spw-control-transition-base, var(--spw-motion-settle, var(--duration-base, 180ms) var(--ease-mechanical, ease)));
   --component-transition-deliberate: var(--spw-motion-expressive, var(--duration-deliberate, 260ms) var(--ease-mechanical, ease));
   --component-transition-arrival: var(--spw-component-settle-transition, var(--component-transition-fast));
+  --component-micro-lift: var(--spw-micro-lift-distance, 1px);
+  --component-micro-press-scale: var(--spw-micro-press-scale, 0.998);
 
   /* Pretext */
   --pretext-line-gap: 0.18rem;
@@ -312,7 +314,7 @@
   .settings-map-card,
   .pwa-status-card
 ):is(:focus-within, [data-spw-gesture="charging"], [data-spw-card-state="expanded"]) {
-  transform: translateY(-1px);
+  transform: translateY(calc(var(--component-micro-lift, 1px) * -1));
   box-shadow: var(--component-shadow-active);
 }
 

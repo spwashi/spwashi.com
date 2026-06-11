@@ -234,7 +234,7 @@ function setLinkDataset(link, entries = {}) {
   });
 }
 
-function applyNavigationSpellRecord(link, record) {
+function applyNavigationSpellRecord(link, record, url) {
   setLinkDataset(link, {
     spwNavTokenized: 'true',
     spwGroundable: record.groundable,
@@ -276,9 +276,10 @@ function applyNavigationSpellRecord(link, record) {
 
   /* ARIA hygiene (gesture-aria-hygiene/FIX.md) — idempotent via data-spw-nav-tokenized guard in caller. */
   const currentPath = normalizePathname(window.location.pathname);
-  const linkPath = normalizePathname(new URL(link.href, window.location.href).pathname);
+  const linkUrl = url instanceof URL ? url : new URL(link.href, window.location.href);
+  const linkPath = normalizePathname(linkUrl.pathname);
 
-  const isCurrentPage = linkPath === currentPath && !url.hash;
+  const isCurrentPage = linkPath === currentPath && !linkUrl.hash;
   if (isCurrentPage && !link.hasAttribute('aria-current')) {
     link.setAttribute('aria-current', 'page');
   } else if (!isCurrentPage && link.getAttribute('aria-current') === 'page') {
@@ -337,7 +338,7 @@ function annotateLink(link) {
   if (url.origin !== window.location.origin) return;
 
   const record = buildNavigationSpellRecord(link, url);
-  applyNavigationSpellRecord(link, record);
+  applyNavigationSpellRecord(link, record, url);
 }
 
 function applyTokens(root = document) {

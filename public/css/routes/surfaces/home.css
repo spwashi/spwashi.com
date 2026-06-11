@@ -270,6 +270,11 @@
   max-inline-size: none;
 }
 
+:where(#home-frame .hook-call) {
+  min-width: 0;
+  max-inline-size: min(100%, var(--home-measure-wide));
+}
+
 :where(#home-frame .home-brand-plate) {
   justify-self: center;
   align-self: start;
@@ -343,6 +348,11 @@
     #home-frame .spw-copy-motif-strip
   ) {
     grid-column: 1;
+  }
+
+  :where(#home-frame .hook-call) {
+    grid-column: 1;
+    justify-self: start;
   }
 
   :where(#home-frame .home-brand-plate) {

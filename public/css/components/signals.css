@@ -129,7 +129,15 @@
   .mode-panel,
   .plan-card,
   .compare-card,
-  .spec-column
+  .spec-column,
+  .ref-card,
+  .settings-state-card,
+  .settings-nav-card,
+  .settings-structure-card,
+  .settings-map-card,
+  .settings-preset-btn,
+  .vibe-widget,
+  .pwa-status-card
 ) {
   --component-transition-arrival: var(--spw-component-arrival-transition, 140ms var(--ease-settle));
 }
@@ -144,10 +152,18 @@
   .mode-panel,
   .plan-card,
   .compare-card,
-  .spec-column
+  .spec-column,
+  .ref-card,
+  .settings-state-card,
+  .settings-nav-card,
+  .settings-structure-card,
+  .settings-map-card,
+  .settings-preset-btn,
+  .vibe-widget,
+  .pwa-status-card
 ):not(:hover):not(:focus-within) {
-  --component-arrival-offset: 2px;
-  --component-arrival-opacity: 0.96;
+  --component-arrival-offset: var(--spw-settle-offset-start, 2px);
+  --component-arrival-opacity: var(--spw-settle-opacity-start, 0.96);
 }
 
 :where(html[data-spw-page-arrival-step="2"]) :where(
@@ -160,10 +176,42 @@
   .mode-panel,
   .plan-card,
   .compare-card,
-  .spec-column
+  .spec-column,
+  .ref-card,
+  .settings-state-card,
+  .settings-nav-card,
+  .settings-structure-card,
+  .settings-map-card,
+  .settings-preset-btn,
+  .vibe-widget,
+  .pwa-status-card
 ):not(:hover):not(:focus-within) {
-  --component-arrival-offset: 1px;
-  --component-arrival-opacity: 0.985;
+  --component-arrival-offset: var(--spw-settle-offset-mid, 1px);
+  --component-arrival-opacity: var(--spw-settle-opacity-mid, 0.985);
+}
+
+:where(html[data-spw-page-arrival-step="3"]) :where(
+  .frame-card,
+  .media-card,
+  .media-focus-card,
+  .software-card,
+  .operator-card,
+  .frame-panel,
+  .mode-panel,
+  .plan-card,
+  .compare-card,
+  .spec-column,
+  .ref-card,
+  .settings-state-card,
+  .settings-nav-card,
+  .settings-structure-card,
+  .settings-map-card,
+  .settings-preset-btn,
+  .vibe-widget,
+  .pwa-status-card
+):not(:hover):not(:focus-within) {
+  --component-arrival-offset: var(--spw-settle-offset-end, 0.25px);
+  --component-arrival-opacity: var(--spw-settle-opacity-end, 0.995);
 }
 
 :where(
@@ -179,7 +227,15 @@
   .mode-panel,
   .plan-card,
   .compare-card,
-  .spec-column
+  .spec-column,
+  .ref-card,
+  .settings-state-card,
+  .settings-nav-card,
+  .settings-structure-card,
+  .settings-map-card,
+  .settings-preset-btn,
+  .vibe-widget,
+  .pwa-status-card
 ):not(:hover):not(:focus-within) {
   --component-arrival-offset: 0px;
   --component-arrival-opacity: 0.98;

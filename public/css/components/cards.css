@@ -264,7 +264,7 @@
   .frame-card, .frame-panel, .math-lens-card, .topic-reference-card,
   .spw-principle-card, .gratitude-card, .returner-card
 )[data-spw-gesture="charging"] {
-  transform: translateY(-1px);
+  transform: translateY(calc(var(--component-micro-lift, 1px) * -1));
   box-shadow: var(--component-shadow-active);
 }
 
@@ -481,7 +481,7 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
 }
 
 :where(.spw-evidence-brief-btn):is(:hover, :focus-visible) {
-  transform: translateY(-1px);
+  transform: translateY(calc(var(--component-micro-lift, 1px) * -1));
   border-color: color-mix(in srgb, var(--op-frame-color, var(--component-accent)) 58%, transparent);
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--op-frame-color, var(--component-accent)) 16%, transparent);
 }

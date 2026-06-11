@@ -785,6 +785,16 @@
   --touch-emit: 360ms;
   --touch-recover: 520ms;
 
+  /* Shared settling field: small offsets/opacities that page-state and components can spend together. */
+  --spw-micro-lift-distance: 1px;
+  --spw-micro-press-scale: 0.998;
+  --spw-settle-offset-start: 2px;
+  --spw-settle-offset-mid: 1px;
+  --spw-settle-offset-end: 0.25px;
+  --spw-settle-opacity-start: 0.96;
+  --spw-settle-opacity-mid: 0.985;
+  --spw-settle-opacity-end: 0.995;
+
   --crescendo-structural: 0ms;
   --crescendo-compositional: 32ms;
   --crescendo-component: 64ms;
@@ -2013,6 +2023,14 @@ html[data-spw-reduce-motion="on"] {
   --spw-region-profile-refresh-duration: 1ms;
   --spw-component-arrival-transition: 1ms linear;
   --spw-component-settle-transition: 1ms linear;
+  --spw-micro-lift-distance: 0px;
+  --spw-micro-press-scale: 1;
+  --spw-settle-offset-start: 0px;
+  --spw-settle-offset-mid: 0px;
+  --spw-settle-offset-end: 0px;
+  --spw-settle-opacity-start: 1;
+  --spw-settle-opacity-mid: 1;
+  --spw-settle-opacity-end: 1;
 }
 
 /* Mobile rhythm */

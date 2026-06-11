@@ -125,7 +125,7 @@
 }
 
 :where(body[data-spw-features~="shell-trace"] .site-header, body[data-spw-features~="shell-trace"] > header),
-:where(.site-header:has(.spw-header-trace .spw-spell-path), body > header:has(.spw-header-trace .spw-spell-path)) {
+:where(.site-header:has(.spw-spell-path), body > header:has(.spw-spell-path)) {
   --spw-shell-grid-areas:
     "sigil nav actions tune toggle"
     "trace trace trace trace trace";
@@ -292,6 +292,18 @@
   max-inline-size: min(38vw, 26rem);
 }
 
+:where(.site-header:has(.spw-spell-path),
+       body > header:has(.spw-spell-path)) .spw-header-actions {
+  min-inline-size: min(14rem, 32vw);
+  overflow: clip;
+}
+
+.site-header:has(.spw-spell-path) .spw-header-actions,
+body > header:has(.spw-spell-path) .spw-header-actions {
+  min-inline-size: min(14rem, 32vw);
+  overflow: clip;
+}
+
 .spw-header-action,
 .spw-attention-posture-pill {
   appearance: none;
@@ -345,6 +357,22 @@
   text-transform: uppercase;
 }
 
+:where(.site-header:has(.spw-spell-path),
+       body > header:has(.spw-spell-path)) .spw-header-action--cauldron {
+  flex: 0 1 5.4rem;
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.site-header:has(.spw-spell-path) .spw-header-action--cauldron,
+body > header:has(.spw-spell-path) .spw-header-action--cauldron {
+  flex: 0 1 5.4rem;
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .spw-attention-posture-pill {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -354,6 +382,24 @@
   max-inline-size: 14.5rem;
   padding: 0.32rem 0.62rem;
   text-align: left;
+}
+
+:where(.site-header:has(.spw-spell-path),
+       body > header:has(.spw-spell-path)) .spw-attention-posture-pill {
+  flex: 1 1 8.5rem;
+  min-inline-size: 0;
+  inline-size: auto;
+  max-inline-size: 12.4rem;
+  overflow: hidden;
+}
+
+.site-header:has(.spw-spell-path) .spw-attention-posture-pill,
+body > header:has(.spw-spell-path) .spw-attention-posture-pill {
+  flex: 1 1 8.5rem;
+  min-inline-size: 0;
+  inline-size: auto;
+  max-inline-size: 12.4rem;
+  overflow: hidden;
 }
 
 .spw-attention-posture-pill__kicker,
@@ -1543,6 +1589,24 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
   align-items: start;
 }
 
+@media (min-width: 981px) {
+  :where(.site-header[data-spw-shell-layout="inline-stacked"], body > header[data-spw-shell-layout="inline-stacked"]) {
+    --spw-shell-grid-columns: minmax(0, 1fr) minmax(14rem, 19rem) 0 max-content;
+  }
+
+  :where(.site-header[data-spw-shell-layout="inline-stacked"] .spw-header-actions,
+         body > header[data-spw-shell-layout="inline-stacked"] .spw-header-actions) {
+    inline-size: 100%;
+    max-inline-size: min(32vw, 19rem);
+  }
+
+  .site-header[data-spw-shell-layout="inline-stacked"] .spw-header-actions,
+  body > header[data-spw-shell-layout="inline-stacked"] .spw-header-actions {
+    inline-size: 100%;
+    max-inline-size: min(32vw, 19rem);
+  }
+}
+
 :where(.site-header[data-spw-shell-layout="toggle-field"], body > header[data-spw-shell-layout="toggle-field"]) {
   --spw-shell-grid-columns: minmax(0, 1fr) auto auto;
   --spw-shell-grid-areas:
@@ -1556,6 +1620,18 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
   --spw-shell-grid-areas:
     "sigil nav actions tune toggle"
     "trace trace trace trace trace";
+}
+
+@media (min-width: 981px) {
+  .site-header:has(.spw-spell-path),
+  body > header:has(.spw-spell-path) {
+    --spw-shell-grid-columns: max-content minmax(0, 1fr) minmax(14rem, 19rem) 0 max-content;
+  }
+
+  :where(body[data-spw-features~="shell-trace"] .site-header[data-spw-shell-layout="inline-ribbon"]:has(.spw-spell-path),
+         body[data-spw-features~="shell-trace"] > header[data-spw-shell-layout="inline-ribbon"]:has(.spw-spell-path)) {
+    --spw-shell-grid-columns: max-content minmax(0, 1fr) minmax(14rem, 19rem) 0 max-content;
+  }
 }
 
 :where(body[data-spw-features~="shell-trace"] .site-header[data-spw-shell-layout="inline-tablet"],

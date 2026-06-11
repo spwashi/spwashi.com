@@ -81,6 +81,7 @@ Focus on **semantic naming** and **shared surface consistency** rather than new 
 - [x] Settings control: Added a dedicated "Runtime load" vibe widget in settings/index.html with direct links for timing postures + call-to-action for the discovery API. Makes customization feel native.
 - [x] CSS microinteraction refinement + rule extraction: Scoped operator hover feedback (lift/shadow) by load posture/timing in operators.css. This ties the load customization directly to microinteraction "feel" (calmer in quiet/defer loads). Also a model for using the new attrs to avoid future over-generalized selectors.
 - [x] All validation commands passed after new patches.
+- [x] Page-settling field pass (2026-06-11): Added shared micro-lift/press and arrival offset/opacity tokens, projected page-arrival step 3, extended settling to settings/runtime widgets, and aligned hydration/selection states with the same motion vocabulary.
 - [ ] Manual cross-device visual rhythm + container + gesture review (recommended next).
 - [ ] .spw / contract updates if deeper gaps found (minimal so far — no new families introduced; existing slot contract and brace vars already provide good hooks).
 
@@ -159,3 +160,17 @@ This phase turns the reference surfaces into places where the system's own seman
 These changes make braced cards, gesture-responsive content, and overall card anatomy feel more rhythmically consistent with the central token + slot contracts.
 
 This pass makes the design system more self-consistent without visual or behavioral change for visitors. The component containers now more reliably compose from the central vertical rhythm and layout motif contracts.
+
+## Settling Field Patch - 2026-06-11
+
+Public goal: improve alignment and flow through page settling, with better microinteractions and clearer intermediate/emergent state.
+
+Scope stayed shared and CSS-first:
+- `tokens/core.css`: added tiny shared values for micro-lift, press scale, and three arrival settling offsets/opacities, including reduced-motion flattening.
+- `components/signals.css`: made page-arrival step 3 visible and extended arrival physics to settings/runtime cards, preset buttons, vibe widgets, ref cards, and PWA status cards.
+- `components/foundation.css`, `surfaces.css`, and `cards.css`: moved repeated `-1px` lift/press affordances onto the shared microinteraction tokens.
+- `components/controls.css`: aligned JSON hydration loading/ready/error states with the settling tokens and added a reduced-motion guard.
+- `components/runtime-states.css`: gave selection/focus/active states consistent state transitions and non-motion background cues.
+- `.spw/conventions/site-semantics.spw`: added `#settling-field-contract` so future patches can search for the page-state -> token -> component projection.
+
+Validation target: `git diff --check`, `npm run check:local`, and visual smoke on a card-heavy route plus settings/runtime surfaces.

@@ -2,6 +2,12 @@
  * Frozen settings profiles, presets, and query recipes.
  */
 
+import {
+  DEFAULT_PALETTE_RESONANCE,
+  PALETTE_RESONANCE_OPTIONS,
+} from '/public/js/interface/palette-resonance.js';
+import { AUTHOR_WORKFLOW_MODES } from '/public/js/kernel/shared.js';
+
 const SITE_SETTINGS_KEY = 'spw-site-settings';
 const CAULDRON_STORAGE_KEY = 'spw-cauldron';
 const DISCOVERY_DISMISSALS_STORAGE_KEY = 'spw-discovery-notice-dismissals';

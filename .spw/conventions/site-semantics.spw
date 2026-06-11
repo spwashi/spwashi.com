@@ -599,6 +599,12 @@ frame #component-lifecycle-tropes
   concept lifecycle component_genomics page_state cauldron spell memory_gardening
   note "Components should be explainable as authored, addressed, loaded, mounted, ready, and resonant. Page templates can eventually emit these states as durable attributes so copy, CSS, and scripts describe the same lifecycle instead of competing for attention. Cauldron and spell surfaces extend the model with explicit phases (gathering | resonant | mature | decayed) and gardening actions so semantic memory itself becomes a tended, inspectable rhythm rather than an opaque list."
 
+frame #settling-field-contract
+  role convention
+  surface tokens/core.css + components/signals.css + components/surfaces.css + components/controls.css + components/runtime-states.css + page-state.js
+  concept page_state settling microinteraction intermediate_state emergent_state
+  note "Page settling is the shared projection of page-state.js arrival/presence/transition attributes into component CSS. Tokens own tiny lift, press, offset, and opacity values; components spend them on existing cards, panels, controls, hydration, and selection states. Intermediate states should be readable from existing data-spw-* attributes and should emerge from composed page/gesture/selection signals rather than route-local timers or new one-off state names."
+
 frame #numericity-as-cauldron-ingredient
   role extension
   surface about + software + cauldron + spells
