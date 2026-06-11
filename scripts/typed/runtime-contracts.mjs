@@ -9,7 +9,7 @@ const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, '..', '..');
 const PUBLIC_JS_DIR = path.join(ROOT_DIR, 'public/js');
 const PUBLIC_TS_DIR = path.join(ROOT_DIR, 'public/ts');
-const SITE_RUNTIME_PATH = path.join(PUBLIC_JS_DIR, 'site.js');
+const MODULE_CATALOG_PATH = path.join(PUBLIC_JS_DIR, 'runtime/module-catalog.js');
 const RUNTIME_FAMILIES = ['CORE_DEFS', 'FEATURE_DEFS', 'REGION_DEFS', 'ENHANCEMENT_DEFS'];
 const VALID_LAYERS = new Set(['core', 'feature', 'region', 'enhancement']);
 const VALID_MOUNT_TIMINGS = new Set(['immediate', 'visible', 'idle', 'interaction', 'region']);
@@ -173,13 +173,15 @@ async function collectKernelTypedShimIssues() {
     return { errors, shims };
 }
 function importPathToAbsolute(importPath) {
-    return path.resolve(path.dirname(SITE_RUNTIME_PATH), importPath);
+    return path.resolve(path.dirname(MODULE_CATALOG_PATH), importPath);
 }
 function getImportOwnerDirectory(importPath) {
-    if (!importPath.startsWith('./'))
+    if (!importPath.startsWith('./') && !importPath.startsWith('../'))
         return null;
-    const normalized = importPath.slice(2).split(/[\\/]/).filter(Boolean);
-    return normalized[0] || null;
+    const absoluteImport = importPathToAbsolute(importPath);
+    const relative = toPosixPath(path.relative(PUBLIC_JS_DIR, absoluteImport));
+    const [ownerDirectory] = relative.split('/').filter(Boolean);
+    return ownerDirectory || null;
 }
 function validateModule(module, errors, warnings, recommendations) {
     const label = normalizeModuleLabel(module);
@@ -208,8 +210,9 @@ function validateModule(module, errors, warnings, recommendations) {
         errors.push(`${label} is missing a mount() contract.`);
     }
     if (module.importPath) {
-        if (!module.importPath.startsWith('./') || module.importPath.includes('..')) {
-            errors.push(`${label} import path must stay inside public/js with a ./ relative path.`);
+        if ((!module.importPath.startsWith('./') && !module.importPath.startsWith('../'))
+            || module.importPath.startsWith('/')) {
+            errors.push(`${label} import path must stay inside public/js with a relative path.`);
         }
         const ownerDirectory = getImportOwnerDirectory(module.importPath);
         if (!ownerDirectory || !ALLOWED_JS_OWNER_DIRECTORIES.has(ownerDirectory)) {
@@ -237,12 +240,12 @@ export async function collectRuntimeContractReport() {
     const errors = [];
     const recommendations = [];
     const warnings = [];
-    const siteRuntime = await fs.readFile(SITE_RUNTIME_PATH, 'utf8');
+    const moduleCatalog = await fs.readFile(MODULE_CATALOG_PATH, 'utf8');
     const modules = [];
     for (const family of RUNTIME_FAMILIES) {
-        const arrayLiteral = extractRuntimeArrayLiteral(siteRuntime, family);
+        const arrayLiteral = extractRuntimeArrayLiteral(moduleCatalog, family);
         if (!arrayLiteral) {
-            errors.push(`public/js/site.js is missing ${family}.`);
+            errors.push(`public/js/runtime/module-catalog.js is missing ${family}.`);
             continue;
         }
         extractObjectLiterals(arrayLiteral).forEach((objectLiteral, index) => {

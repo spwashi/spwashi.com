@@ -1,10 +1,15 @@
 import {
   REGION_HOST_SELECTOR,
   REGION_SELECTOR as PAGE_METADATA_REGION_SELECTOR,
-  inferTopographyKind,
   writeDatasetValue,
   writeDatasetValueIfMissing,
 } from '/public/js/kernel/dom-contracts.js';
+import {
+  collectRegions,
+  inferRegionContext,
+  inferRegionKind,
+  inferRegionRole,
+} from '/public/js/semantic/role-inference.js';
 
 const SITE_NAME = 'Spwashi';
 const DEFAULT_OG_IMAGE = 'https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg';
@@ -1119,53 +1124,6 @@ function inferLocality(kind, el) {
   if (kind === 'card') return 'medium';
   if (safeQuery('a[href], button', el)) return 'medium';
   return 'low';
-}
-
-function collectRegions(root = document) {
-  const regions = safeQueryAll(PAGE_METADATA_REGION_SELECTOR, root).filter((el) => el instanceof HTMLElement);
-  const seen = new Set();
-  const ordered = [];
-
-  for (const el of regions) {
-    if (seen.has(el)) continue;
-    seen.add(el);
-    ordered.push(el);
-  }
-
-  return ordered;
-}
-
-function inferRegionKind(el) {
-  return inferTopographyKind(el, 'component');
-}
-
-function inferRegionRole(el) {
-  if (el.dataset.spwRole) return el.dataset.spwRole;
-
-  const text = (
-    el.id
-    || el.getAttribute('aria-label')
-    || el.querySelector('h1,h2,h3,h4,strong')?.textContent
-    || ''
-  ).toLowerCase();
-
-  if (el.matches('nav')) return 'routing';
-  if (text.includes('index') || text.includes('routes') || text.includes('navigation')) return 'routing';
-  if (text.includes('plan') || text.includes('schema') || text.includes('structure')) return 'schema';
-  if (text.includes('reference') || text.includes('register')) return 'reference';
-  if (text.includes('settings')) return 'control';
-  if (text.includes('hero') || text.includes('about') || text.includes('contact')) return 'orientation';
-
-  return el.classList.contains('site-hero') ? 'orientation' : 'reference';
-}
-
-function inferRegionContext(el, body = document.body) {
-  return (
-    el.dataset.spwContext ||
-    el.closest('[data-spw-context]')?.dataset?.spwContext ||
-    body?.dataset?.spwContext ||
-    'reading'
-  );
 }
 
 function findRegionHeading(el) {
