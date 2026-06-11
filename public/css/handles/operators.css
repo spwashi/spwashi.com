@@ -2690,6 +2690,52 @@ body:has([data-spw-gesture="sustained"][data-spw-form="brace"]) [data-spw-cauldr
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 0.65rem, #000 calc(100% - 0.65rem), transparent);
 }
 
+.spw-spell-path[data-spw-breadcrumb-viewport="compact"] .spw-spell-trail {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  overflow-x: visible;
+  overflow-y: visible;
+  overscroll-behavior: auto;
+  scroll-snap-type: none;
+  mask-image: none;
+  -webkit-mask-image: none;
+  touch-action: pan-y;
+  gap: 0.28rem 0.32rem;
+  padding: 0.12rem 0.04rem 0.16rem;
+}
+
+.spw-spell-path[data-spw-breadcrumb-viewport="compact"] .spw-spell-crumb {
+  flex: 0 1 auto;
+  max-inline-size: 100%;
+  scroll-snap-align: none;
+}
+
+.spw-spell-path[data-spw-breadcrumb-viewport="compact"] .spw-spell-crumb:not(:last-child)::after {
+  margin-inline-start: 0.1rem;
+}
+
+.spw-spell-path[data-spw-breadcrumb-viewport="compact"] .spw-spell-path__header {
+  flex-wrap: wrap;
+  row-gap: 0.22rem;
+}
+
+.spw-spell-path[data-spw-breadcrumb-viewport="compact"] .spw-spell-path-toggle {
+  flex: 1 1 min(100%, 14rem);
+}
+
+.spw-spell-path[data-spw-breadcrumb-viewport="compact"] .spw-spell-sorter-chip {
+  margin-inline-start: 0;
+}
+
+.spw-spell-path[data-spw-breadcrumb-viewport="compact"] .spw-spell-sorter-chip__label {
+  display: none;
+}
+
+.spw-spell-path[data-spw-breadcrumb-viewport="compact"] .spw-spell-sorter-chip__label-short {
+  display: inline;
+}
+
 .spw-spell-path__guide {
   display: flex;
   flex-wrap: wrap;

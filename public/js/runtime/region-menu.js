@@ -90,6 +90,8 @@ export function initSpwRegionMenu(root = document) {
   body.addEventListener('keydown', onKeyDown, true);
   window.addEventListener('scroll', onViewportChange, { passive: true });
   window.addEventListener('resize', onViewportChange);
+  window.visualViewport?.addEventListener?.('resize', onViewportChange);
+  window.visualViewport?.addEventListener?.('scroll', onViewportChange, { passive: true });
 }
 
 function onClick(event) {
@@ -219,6 +221,15 @@ function onKeyDown(event) {
 function onViewportChange() {
   clearHoldState();
   clearCoarseTapState();
+
+  if (document.documentElement.dataset.spwRegionMenu === 'open') {
+    const menu = document.getElementById(MENU_ID);
+    if (menu instanceof HTMLElement && activeTarget instanceof HTMLElement) {
+      positionMenu(menu, activeTarget);
+      return;
+    }
+  }
+
   if (Date.now() < menuOpenGraceUntil) return;
   if (document.documentElement.dataset.spwRegionMenu === 'open') {
     closeMenu({ restoreFocus: false });
@@ -587,19 +598,62 @@ function buildContract(target, semantic, frame) {
   return fields.filter(([, value]) => normalizeText(value));
 }
 
+function readRootPxVar(value, fallbackPx = 0) {
+  const trimmed = String(value || '').trim();
+  if (!trimmed) return fallbackPx;
+  const rootSize = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+  if (trimmed.endsWith('rem')) return parseFloat(trimmed) * rootSize;
+  if (trimmed.endsWith('px')) return parseFloat(trimmed);
+  const numeric = Number.parseFloat(trimmed);
+  return Number.isFinite(numeric) ? numeric : fallbackPx;
+}
+
+function getRegionMenuBottomReserve() {
+  const style = getComputedStyle(document.documentElement);
+  const clearance = readRootPxVar(style.getPropertyValue('--spw-bottom-chrome-clearance'), 0);
+  const handle = readRootPxVar(style.getPropertyValue('--touch-target-compact'), 34.4);
+  const handleOffset = readRootPxVar(style.getPropertyValue('--attention-handle-offset'), 16);
+  return Math.max(clearance, handle + handleOffset + 12);
+}
+
+function isCompactRegionViewport() {
+  return window.matchMedia('(max-width: 720px), (pointer: coarse)').matches;
+}
+
 function positionMenu(menu, target) {
+  if (!(menu instanceof HTMLElement)) return;
+
+  if (isCompactRegionViewport()) {
+    menu.dataset.spwRegionMenuPlacement = 'sheet';
+    menu.style.left = '';
+    menu.style.right = '';
+    menu.style.top = '';
+    menu.style.bottom = '';
+    menu.style.width = '';
+    menu.style.maxWidth = '';
+    return;
+  }
+
+  delete menu.dataset.spwRegionMenuPlacement;
   const rect = target.getBoundingClientRect();
-  const maxWidth = Math.min(304, window.innerWidth - 24);
-  const estimatedHeight = Math.min(416, window.innerHeight - 24);
-  const left = clamp(rect.left, 12, Math.max(12, window.innerWidth - maxWidth - 12));
+  const viewport = window.visualViewport;
+  const viewportWidth = Math.max(1, viewport?.width || window.innerWidth || 1);
+  const viewportHeight = Math.max(1, viewport?.height || window.innerHeight || 1);
+  const maxWidth = Math.min(304, viewportWidth - 24);
+  const estimatedHeight = Math.min(416, viewportHeight - 24);
+  const left = clamp(rect.left, 12, Math.max(12, viewportWidth - maxWidth - 12));
   const preferredTop = rect.bottom + 8;
   const fallbackTop = rect.top - estimatedHeight - 8;
-  const top = preferredTop + estimatedHeight <= window.innerHeight - 12
+  const top = preferredTop + estimatedHeight <= viewportHeight - 12
     ? preferredTop
     : Math.max(12, fallbackTop);
 
   menu.style.left = `${left}px`;
   menu.style.top = `${top}px`;
+  menu.style.right = 'auto';
+  menu.style.bottom = 'auto';
+  menu.style.width = '';
+  menu.style.maxWidth = '';
 }
 
 function focusMatches(target, semantic) {
@@ -639,11 +693,17 @@ function moveMatch(direction) {
     writeDatasetValue(node, 'spwInspectSemanticMatch', node === next ? null : 'true');
   });
 
-  next.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'smooth' });
+  const scrollBehavior = isCompactRegionViewport() ? 'auto' : 'smooth';
+  next.scrollIntoView({ block: 'center', inline: 'nearest', behavior: scrollBehavior });
   if (!next.hasAttribute('tabindex')) {
     next.setAttribute('tabindex', '-1');
   }
   next.focus?.({ preventScroll: true });
+
+  const menu = document.getElementById(MENU_ID);
+  if (menu instanceof HTMLElement) {
+    positionMenu(menu, next);
+  }
 }
 
 function toggleRegionMark(target) {

@@ -99,6 +99,68 @@ function getFloatingChromeBottomReserve() {
   return Math.max(clearance, handle + handleOffset + 12);
 }
 
+function shouldSnapSatchelOnRelease() {
+  return window.matchMedia('(max-width: 720px), (pointer: coarse)').matches;
+}
+
+function snapSatchelPosition(launch, left, top) {
+  if (!shouldSnapSatchelOnRelease()) {
+    return { left, top };
+  }
+
+  const root = launch.closest?.(`[${ROOT_ATTR}]`);
+  if (!(root instanceof HTMLElement)) {
+    return { left, top };
+  }
+
+  const viewport = window.visualViewport;
+  const vw = Math.max(1, Math.min(
+    viewport?.width || Number.POSITIVE_INFINITY,
+    window.innerWidth || Number.POSITIVE_INFINITY,
+    document.documentElement?.clientWidth || Number.POSITIVE_INFINITY
+  ));
+  const vh = Math.max(1, Math.min(
+    viewport?.height || Number.POSITIVE_INFINITY,
+    window.innerHeight || Number.POSITIVE_INFINITY,
+    document.documentElement?.clientHeight || Number.POSITIVE_INFINITY
+  ));
+  const rect = launch.getBoundingClientRect();
+  const w = rect.width || 120;
+  const h = rect.height || 36;
+  const margin = 12;
+  const bottomReserve = getFloatingChromeBottomReserve();
+  const shellOffset = readRootRemPx(
+    getComputedStyle(document.documentElement).getPropertyValue('--spw-shell-menu-offset'),
+    0
+  );
+
+  const candidates = [
+    { left: margin, top: margin + shellOffset, edge: 'top-left' },
+    { left: vw - w - margin, top: margin + shellOffset, edge: 'top-right' },
+    { left: margin, top: vh - h - margin - bottomReserve, edge: 'bottom-left' },
+    { left: vw - w - margin, top: vh - h - margin - bottomReserve, edge: 'bottom-right' },
+  ];
+
+  const centerX = left + w / 2;
+  const centerY = top + h / 2;
+  let nearest = candidates[3];
+  let nearestDistance = Number.POSITIVE_INFINITY;
+
+  candidates.forEach((candidate) => {
+    const distance = Math.hypot(
+      centerX - (candidate.left + w / 2),
+      centerY - (candidate.top + h / 2)
+    );
+    if (distance < nearestDistance) {
+      nearestDistance = distance;
+      nearest = candidate;
+    }
+  });
+
+  root.dataset.spwSatchelSnap = nearest.edge;
+  return { left: nearest.left, top: nearest.top };
+}
+
 function sanitizeRestoredPosition(left, top, width, height, viewportWidth, viewportHeight) {
   if (!window.matchMedia('(max-width: 720px)').matches) {
     return { left, top };
@@ -194,6 +256,7 @@ function resetLaunchToDefault(launch) {
     root.style.bottom = '';
     root.style.transform = '';
     delete root.dataset.spwSatchelPositioned;
+    delete root.dataset.spwSatchelSnap;
   }
   launch.style.position = '';
   launch.style.left = '';
@@ -363,6 +426,8 @@ function createInspector() {
     reason: 'state-inspection-controls',
     stylingAxis: 'state-inspector',
   });
+  root.dataset.spwSnap = 'corners';
+  root.dataset.spwChromeFluid = 'springy';
 
   // Mind material definition and tunability: satchel as floating chrome must carry the current
   // global/local material (glass/matte from baseMetamaterial or explicit) so its surfaces, ink,
@@ -591,9 +656,13 @@ function bindSatchelDrag(root) {
     delete launch.dataset.spwGesture;
     delete launch.dataset.spwAttention;
 
-    // Save final position
     const rect = launch.getBoundingClientRect();
-    savePosition(rect.left, rect.top);
+    const snapped = snapSatchelPosition(launch, rect.left, rect.top);
+    if (snapped.left !== rect.left || snapped.top !== rect.top) {
+      applyPositionToLaunch(launch, snapped.left, snapped.top, true);
+    }
+    const settled = launch.getBoundingClientRect();
+    savePosition(settled.left, settled.top);
 
     try {
       launch.releasePointerCapture?.(e.pointerId);
@@ -641,6 +710,11 @@ export function initStateInspector() {
     // does not cause the fixed element to jump due to inset recalculation.
     requestAnimationFrame(() => {
       const r = launch.getBoundingClientRect();
+      if (shouldSnapSatchelOnRelease()) {
+        const snapped = snapSatchelPosition(launch, r.left, r.top);
+        applyPositionToLaunch(launch, snapped.left, snapped.top, false);
+        return;
+      }
       applyPositionToLaunch(launch, r.left, r.top, false);
     });
   }

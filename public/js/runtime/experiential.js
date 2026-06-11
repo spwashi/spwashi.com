@@ -1049,9 +1049,9 @@ function renderBreadcrumbSpell() {
     shellSnapshot.pressure,
   ].join('|');
 
-  if (pathState === 'open') {
+  if (pathState === 'open' && !compact) {
     pathBar.querySelector('.spw-spell-crumb[data-spw-current="true"]')
-      ?.scrollIntoView?.({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
+      ?.scrollIntoView?.({ block: 'nearest', inline: 'nearest', behavior: 'auto' });
   }
 
   if (runtime.lastTraceSignature === traceSignature) return;
@@ -1298,6 +1298,11 @@ function resolveSpellPathExpandedDefault() {
     document.querySelector('.spw-spell-path')?.dataset.spwBreadcrumbRelatedCount || '0',
     10
   ) || collectRelatedBreadcrumbRoutes(window.location.pathname).length;
+
+  const compact = window.matchMedia('(max-width: 720px)').matches;
+  if (compact) {
+    return hasActiveFrame || routeParts.length >= 3 || relatedCount > 2;
+  }
 
   return routeParts.length >= 2 || hasActiveFrame || relatedCount > 0;
 }

@@ -1080,6 +1080,8 @@ function ensureUtilityRow(header) {
 function syncUtilityRow(row) {
   if (!(row instanceof HTMLElement)) return;
 
+  const preservedScrollLeft = row.scrollLeft;
+
   const current = getCurrentFontScale();
   const currentColorMode = getCurrentColorMode();
   const currentBase = getCurrentBaseMaterial();
@@ -1155,10 +1157,12 @@ function syncUtilityRow(row) {
   row.querySelectorAll('[data-spw-shell-action="path-toggle"]').forEach((button) => {
     const arg = button.querySelector('.spw-utility-argument');
     if (arg) arg.textContent = labels['path-toggle'];
-    button.toggleAttribute('disabled', false);
-    button.setAttribute('aria-disabled', 'false');
+    const pathExpanded = pathToggle?.getAttribute('aria-expanded') === 'true';
+    button.toggleAttribute('disabled', !pathToggle);
+    button.setAttribute('aria-disabled', pathToggle ? 'false' : 'true');
+    button.setAttribute('aria-pressed', pathExpanded ? 'true' : 'false');
     button.title = pathToggle
-      ? 'Toggle the reading path'
+      ? (pathExpanded ? 'Collapse the reading path' : 'Expand the reading path')
       : 'Open the reading path when the header trace finishes mounting';
   });
 
@@ -1210,6 +1214,10 @@ function syncUtilityRow(row) {
 
   syncThemeUtility(row);
   syncTuningLexiconStrip(row);
+
+  if (preservedScrollLeft > 0) {
+    row.scrollLeft = preservedScrollLeft;
+  }
 }
 
 function syncThemeUtility(row) {
