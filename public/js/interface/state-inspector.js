@@ -78,6 +78,52 @@ function clearSavedPosition() {
   } catch {}
 }
 
+function readRootRemPx(value, fallbackRem = 0) {
+  const trimmed = String(value || '').trim();
+  if (!trimmed) return fallbackRem * 16;
+  const rootSize = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+  if (trimmed.endsWith('rem')) return parseFloat(trimmed) * rootSize;
+  if (trimmed.endsWith('px')) return parseFloat(trimmed);
+  const numeric = Number.parseFloat(trimmed);
+  return Number.isFinite(numeric) ? numeric : fallbackRem * rootSize;
+}
+
+function getFloatingChromeBottomReserve() {
+  const style = getComputedStyle(document.documentElement);
+  const clearance = readRootRemPx(style.getPropertyValue('--spw-bottom-chrome-clearance'), 0);
+  if (!window.matchMedia('(max-width: 720px)').matches) {
+    return clearance;
+  }
+  const handle = readRootRemPx(style.getPropertyValue('--touch-target-compact'), 2.15);
+  const handleOffset = readRootRemPx(style.getPropertyValue('--attention-handle-offset'), 1);
+  return Math.max(clearance, handle + handleOffset + 12);
+}
+
+function sanitizeRestoredPosition(left, top, width, height, viewportWidth, viewportHeight) {
+  if (!window.matchMedia('(max-width: 720px)').matches) {
+    return { left, top };
+  }
+  const main = document.querySelector('main');
+  if (!(main instanceof HTMLElement)) {
+    return { left, top };
+  }
+  const mainRect = main.getBoundingClientRect();
+  const overlapsMain =
+    left + width > mainRect.left + 12
+    && left < mainRect.right - 12
+    && top + height > mainRect.top + 48
+    && top < mainRect.bottom - 72;
+  if (!overlapsMain) {
+    return { left, top };
+  }
+  const margin = 12;
+  const bottomReserve = getFloatingChromeBottomReserve();
+  return {
+    left: viewportWidth - width - margin,
+    top: viewportHeight - height - margin - bottomReserve,
+  };
+}
+
 function applyPositionToLaunch(launch, left, top, fallback = false) {
   if (!launch) return;
   const root = launch.closest?.(`[${ROOT_ATTR}]`);
@@ -100,10 +146,20 @@ function applyPositionToLaunch(launch, left, top, fallback = false) {
   const h = rect.height || 36;
   const rootW = Math.min(rootRect.width || 400, Math.max(1, vw - 16));
 
-  // Clamp to viewport with small margin
   const margin = 8;
-  const clampedLeft = Math.max(margin, Math.min(left, vw - w - margin));
-  const clampedTop = Math.max(margin, Math.min(top, vh - h - margin));
+  const bottomReserve = getFloatingChromeBottomReserve();
+  let nextLeft = left;
+  let nextTop = top;
+  if (fallback) {
+    const sanitized = sanitizeRestoredPosition(left, top, w, h, vw, vh);
+    if (sanitized.left !== left || sanitized.top !== top) {
+      savePosition(sanitized.left, sanitized.top);
+    }
+    nextLeft = sanitized.left;
+    nextTop = sanitized.top;
+  }
+  const clampedLeft = Math.max(margin, Math.min(nextLeft, vw - w - margin));
+  const clampedTop = Math.max(margin, Math.min(nextTop, vh - h - margin - bottomReserve));
   const rootLeft = Math.max(margin, Math.min(clampedLeft + w - rootW, vw - rootW - margin));
 
   root.style.position = 'fixed';

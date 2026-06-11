@@ -54,8 +54,22 @@
   --spw-bottom-chrome-clearance: 0px;
 }
 
+:root:has(.spw-console) {
+  --spw-bottom-chrome-clearance: max(var(--spw-bottom-chrome-clearance, 0px), 3.1rem);
+}
+
 :root:has(.spw-console:not(.is-collapsed)) {
   --spw-bottom-chrome-clearance: 5.5rem;
+}
+
+:root:has([data-spw-state-inspector-root]) {
+  --spw-bottom-chrome-clearance: max(var(--spw-bottom-chrome-clearance, 0px), 3.35rem);
+}
+
+@media (max-width: 720px) {
+  :root:has(.spw-section-handle, [data-spw-chrome-role="section-handle"]) {
+    --spw-bottom-chrome-clearance: max(var(--spw-bottom-chrome-clearance, 0px), 3.85rem);
+  }
 }
 
 /* Chrome owns the persistent page frame. */

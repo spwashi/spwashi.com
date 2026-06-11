@@ -113,7 +113,11 @@
   --spw-main-gap: var(--surface-gap);
   --spw-main-padding-inline: var(--page-gutter-inline);
   --spw-main-padding-block-start: clamp(1.2rem, 3vw, 2.2rem);
-  --spw-main-padding-block-end: calc(clamp(2.8rem, 5.5vw, 4.2rem) + env(safe-area-inset-bottom));
+  --spw-main-padding-block-end: calc(
+    clamp(2.8rem, 5.5vw, 4.2rem)
+    + env(safe-area-inset-bottom)
+    + var(--spw-bottom-chrome-clearance, 0px)
+  );
 
   /* Rails / walls */
   --shell-wall-width: 2px;

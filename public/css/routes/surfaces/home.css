@@ -214,6 +214,22 @@
   margin-left: 0;
 }
 
+@media (max-width: 32rem) {
+  :where(#home-frame .frame-topline) {
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas:
+      "brace identity"
+      "meta meta"
+      "modes modes"
+      "preview preview"
+      "inspect inspect";
+  }
+
+  :where(#home-frame .frame-topline > .spw-component-meta) {
+    justify-self: start;
+  }
+}
+
 :where(#home-frame .page-kicker) {
   margin: 0;
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
@@ -495,20 +511,28 @@
   box-shadow: inset 0 1px 0 color-mix(in oklab, white 10%, transparent);
 }
 
-:where(#home-frame .mode-switch)::before {
-  content: "choose what \2192";
+/* Specificity must beat .mode-switch[aria-label]::before in operators.css (:where() is zero-specificity). */
+#home-frame .mode-switch[aria-label]::before {
+  content: "choose lens \2192";
   display: inline-flex;
   align-items: center;
   min-block-size: 2rem;
   margin-inline-end: 0;
   padding-inline: 0.42rem 0.58rem;
+  border: 0;
+  border-radius: 0;
   color: color-mix(in oklab, var(--ink-soft, currentColor) 78%, var(--home-accent-primary) 22%);
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: 0.68rem;
   font-weight: 800;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
+  line-height: 1.2;
   text-transform: uppercase;
-  white-space: nowrap;
+  text-overflow: clip;
+  max-inline-size: none;
+  overflow: visible;
+  white-space: normal;
+  text-wrap: balance;
 }
 
 :where(#home-frame .mode-switch > .frame-sigil) {
@@ -519,14 +543,32 @@
   min-block-size: 2rem;
 }
 
-@media (max-width: 48rem) {
+@media (max-width: 56rem) {
   :where(#home-frame .mode-switch) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(7.25rem, 1fr));
+    gap: 0.38rem;
   }
 
-  :where(#home-frame .mode-switch)::before {
+  #home-frame .mode-switch[aria-label]::before {
     grid-column: 1 / -1;
     justify-content: flex-start;
+    min-block-size: 1.75rem;
+    padding-block: 0.12rem;
+  }
+
+  :where(#home-frame .mode-switch > .frame-sigil) {
+    min-block-size: 2.15rem;
+    padding-inline: 0.42rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 24rem) {
+  #home-frame .mode-switch[aria-label]::before {
+    content: "lens \2192";
+    letter-spacing: 0.08em;
   }
 }
 
