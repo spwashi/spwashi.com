@@ -120,6 +120,20 @@
   --spw-site-rhythm-tempo: min(var(--spw-site-rhythm-tempo, 1), 0.88);
 }
 
+:where(html[data-spw-page-arrival="settled"]) :where(.site-frame[data-state~="active"]) {
+  --site-frame-seam-color: color-mix(in srgb, var(--component-accent) 28%, transparent);
+}
+
+:where(html[data-spw-page-arrival="settled"]) :where(
+  .operator-chip,
+  .frame-sigil,
+  .mode-switch .frame-sigil,
+  .spw-nav-toggle,
+  .spw-spell-path-toggle
+) {
+  transition-timing-function: var(--ease-chassis, cubic-bezier(0.22, 0, 0, 1));
+}
+
 :where(
   html[data-spw-page-arrival]:not([data-spw-page-arrival="settled"]),
   html[data-spw-page-transition-phase]:not([data-spw-page-transition-phase="settled"]),

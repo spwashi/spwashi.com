@@ -102,6 +102,10 @@
   will-change: left, top;
 }
 
+.spw-state-inspector__launch:active:not([data-spw-drag-state="dragging"]) {
+  transform: translateY(var(--spw-control-press-depth, 1px)) scale(var(--spw-micro-press-scale, 0.998));
+}
+
 .spw-state-inspector__launch[data-spw-drag-state="dragging"] {
   opacity: 0.95;
 }

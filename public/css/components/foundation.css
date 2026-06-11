@@ -423,10 +423,14 @@
 :where(.frame-topline) {
   align-items: center;
   min-height: var(--component-header-min-height);
-  margin-bottom: -0.08rem;
-  padding-bottom: 0.34rem;
+  margin-bottom: 0;
+  padding-bottom: 0.28rem;
+  gap: clamp(0.42rem, 1.2vw, 0.62rem);
   border-bottom: 1px solid color-mix(in srgb, var(--component-accent) 16%, transparent);
-  transition: border-color var(--component-transition-base);
+  box-shadow: inset 0 -1px 0 color-mix(in srgb, var(--component-accent) 6%, transparent);
+  transition:
+    border-color var(--component-transition-base),
+    box-shadow var(--spw-component-settle-transition, 220ms var(--ease-settle, ease));
 }
 
 :where(.site-frame[data-state~="active"] .frame-topline) {
