@@ -460,9 +460,19 @@ html[data-spw-dimensional-breadcrumbs="on"] .spw-spell-path .spw-spell-meaning {
   /* Ephemeral chrome resonance + ergonomics: pill shape, height, shadow match satchel launch for family feel;
      layout of the bar inside is compact prompt + action chevron, baseline aligned, good tap target for expand.
      Position lifted slightly so it doesn't bury footer nav text; uses floating safe inset. */
-  inset-inline-start: auto;
-  inset-inline-end: max(0.75rem, env(safe-area-inset-right));
+  inset-inline-start: max(0.75rem, env(safe-area-inset-left));
+  inset-inline-end: auto;
   bottom: calc(max(0.6rem, env(safe-area-inset-bottom)) + var(--spw-floating-menu-clearance, 0px));
+}
+
+:root:has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) {
+  --spw-console-satchel-clearance: 0px;
+}
+
+@media (min-width: 721px) {
+  :root:has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) .spw-console.is-collapsed {
+    bottom: calc(max(0.6rem, env(safe-area-inset-bottom)) + var(--spw-floating-menu-clearance, 0px));
+  }
 }
 
 .spw-console.is-collapsed .spw-console-collapsed-bar {

@@ -136,15 +136,19 @@ function clearSatchelInlinePosition(root) {
 }
 
 function anchorSatchelToChromeRail(root, { open = false } = {}) {
-  if (!isMobileSatchelViewport()) return;
-
   const launch = root.querySelector('.spw-state-inspector__launch');
   if (!(launch instanceof HTMLElement)) return;
 
   if (open) {
     clearSatchelInlinePosition(root);
     root.dataset.spwSatchelAnchor = 'chrome-rail';
-    root.dataset.spwSatchelSnap = 'bottom-rail';
+    root.dataset.spwSatchelSnap = isMobileSatchelViewport() ? 'bottom-rail' : 'bottom-right-rail';
+    return;
+  }
+
+  if (!isMobileSatchelViewport()) {
+    delete root.dataset.spwSatchelAnchor;
+    delete root.dataset.spwSatchelSnap;
     return;
   }
 
@@ -218,10 +222,6 @@ function snapSatchelPosition(launch, left, top) {
 }
 
 function sanitizeRestoredPosition(left, top, width, height, viewportWidth, viewportHeight) {
-  if (!isMobileSatchelViewport()) {
-    return { left, top };
-  }
-
   const margin = 12;
   const bottomReserve = getFloatingChromeBottomReserve();
   const bottomRailTop = viewportHeight - height - margin - bottomReserve;
@@ -233,7 +233,7 @@ function sanitizeRestoredPosition(left, top, width, height, viewportWidth, viewp
       && top + height > mainRect.top + 48
       && top < mainRect.bottom - 72
     : false;
-  const sitsAboveBottomRail = top < bottomRailTop - height;
+  const sitsAboveBottomRail = isMobileSatchelViewport() && top < bottomRailTop - height;
 
   if (!overlapsMain && !sitsAboveBottomRail) {
     return { left, top };

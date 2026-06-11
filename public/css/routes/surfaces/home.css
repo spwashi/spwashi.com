@@ -321,6 +321,28 @@ html[data-spw-color-mode="dark"] body[data-spw-surface="home"] {
 :where(#home-frame .hook-call) {
   min-width: 0;
   max-inline-size: min(100%, var(--home-measure-wide));
+  display: grid;
+  gap: 0.55rem;
+}
+
+:where(#home-frame .hook-call .hook-sub),
+:where(#home-frame .hook-call .hook-invitation) {
+  margin: 0;
+  max-inline-size: var(--home-measure-wide);
+  color: color-mix(in srgb, var(--ink-soft, rgba(27, 31, 35, 0.68)) 86%, var(--home-accent-primary) 14%);
+  font-size: 0.86rem;
+  line-height: 1.48;
+  text-wrap: pretty;
+}
+
+:where(#home-frame .hook-call [data-spw-perspective="objective"]),
+:where(#home-frame .hook-call [data-spw-perspective="subjective"]) {
+  color: color-mix(in srgb, var(--home-accent-primary) 68%, var(--ink-soft, rgba(27, 31, 35, 0.68)) 32%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.74rem;
+  font-weight: 760;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 :where(#home-frame .home-brand-plate) {
@@ -566,6 +588,19 @@ html[data-spw-color-mode="dark"] body[data-spw-surface="home"] {
     background: color-mix(in oklab, var(--home-surface-bg-strong) 80%, var(--home-accent-blue) 20%);
     box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--home-accent-blue) 24%, transparent);
     color: var(--ink-strong, var(--ink));
+  }
+
+  html[data-spw-color-mode="auto"] #home-frame .hook-call .hook-sub,
+  html[data-spw-color-mode="auto"] #home-frame .hook-call .hook-invitation,
+  html[data-spw-color-mode="dark"] #home-frame .hook-call .hook-sub,
+  html[data-spw-color-mode="dark"] #home-frame .hook-call .hook-invitation {
+    color: color-mix(in srgb, var(--ink) 90%, var(--home-accent-primary) 10%);
+  }
+
+  html[data-spw-color-mode="auto"] #home-frame .hook-call .spw-living-term:is(:hover, :focus-visible),
+  html[data-spw-color-mode="dark"] #home-frame .hook-call .spw-living-term:is(:hover, :focus-visible) {
+    background: color-mix(in srgb, var(--home-accent-primary) 14%, transparent);
+    border-bottom-color: color-mix(in srgb, var(--home-accent-primary) 72%, transparent);
   }
 }
 
