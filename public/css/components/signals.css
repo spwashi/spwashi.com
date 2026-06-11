@@ -116,9 +116,14 @@
    9. Arrival / presence states
    ========================================================================== */
 
+:where(html[data-spw-page-settling="true"]) {
+  --spw-site-rhythm-tempo: min(var(--spw-site-rhythm-tempo, 1), 0.88);
+}
+
 :where(
   html[data-spw-page-arrival]:not([data-spw-page-arrival="settled"]),
-  html[data-spw-page-transition-phase]:not([data-spw-page-transition-phase="settled"])
+  html[data-spw-page-transition-phase]:not([data-spw-page-transition-phase="settled"]),
+  html[data-spw-page-settling="true"]
 ) :where(
   .frame-card,
   .media-card,
@@ -140,6 +145,69 @@
   .pwa-status-card
 ) {
   --component-transition-arrival: var(--spw-component-arrival-transition, 140ms var(--ease-settle));
+}
+
+:where(
+  html[data-spw-page-arrival]:not([data-spw-page-arrival="settled"]),
+  html[data-spw-page-settling="true"]
+) :where(main > .site-frame, main > article > .site-frame) {
+  transition:
+    opacity var(--component-transition-arrival),
+    transform var(--component-transition-arrival);
+}
+
+:where(html[data-spw-page-arrival-step="1"]) :where(main > .site-frame, main > article > .site-frame):not(:target):not(:focus-within) {
+  --frame-arrival-offset: var(--spw-settle-offset-start, 2px);
+  --frame-arrival-opacity: var(--spw-settle-opacity-start, 0.96);
+}
+
+:where(html[data-spw-page-arrival-step="2"]) :where(main > .site-frame, main > article > .site-frame):not(:target):not(:focus-within) {
+  --frame-arrival-offset: var(--spw-settle-offset-mid, 1px);
+  --frame-arrival-opacity: var(--spw-settle-opacity-mid, 0.985);
+}
+
+:where(html[data-spw-page-arrival-step="3"]) :where(main > .site-frame, main > article > .site-frame):not(:target):not(:focus-within) {
+  --frame-arrival-offset: var(--spw-settle-offset-end, 0.25px);
+  --frame-arrival-opacity: var(--spw-settle-opacity-end, 0.995);
+}
+
+:where(html[data-spw-page-settling="true"]) main > :where(.site-frame, article > .site-frame):nth-child(1) {
+  transition-delay: 0ms;
+}
+
+:where(html[data-spw-page-settling="true"]) main > :where(.site-frame, article > .site-frame):nth-child(2) {
+  transition-delay: var(--spw-settle-stagger-step, 18ms);
+}
+
+:where(html[data-spw-page-settling="true"]) main > :where(.site-frame, article > .site-frame):nth-child(3) {
+  transition-delay: calc(var(--spw-settle-stagger-step, 18ms) * 2);
+}
+
+:where(html[data-spw-page-settling="true"]) main > :where(.site-frame, article > .site-frame):nth-child(4) {
+  transition-delay: calc(var(--spw-settle-stagger-step, 18ms) * 3);
+}
+
+:where(html[data-spw-page-settling="true"]) main > :where(.site-frame, article > .site-frame):nth-child(5) {
+  transition-delay: calc(var(--spw-settle-stagger-step, 18ms) * 4);
+}
+
+:where(html[data-spw-page-settling="true"]) main > :where(.site-frame, article > .site-frame):nth-child(6) {
+  transition-delay: calc(var(--spw-settle-stagger-step, 18ms) * 5);
+}
+
+:where([data-spw-box-settle-phase="step-1"], [data-spw-box-settle-phase="entering"]) {
+  --component-arrival-offset: var(--spw-settle-offset-start, 2px);
+  --component-arrival-opacity: var(--spw-settle-opacity-start, 0.96);
+}
+
+:where([data-spw-box-settle-phase="step-2"], [data-spw-box-settle-phase="returning"], [data-spw-box-settle-phase="restored"]) {
+  --component-arrival-offset: var(--spw-settle-offset-mid, 1px);
+  --component-arrival-opacity: var(--spw-settle-opacity-mid, 0.985);
+}
+
+:where([data-spw-box-settle-phase="step-3"]) {
+  --component-arrival-offset: var(--spw-settle-offset-end, 0.25px);
+  --component-arrival-opacity: var(--spw-settle-opacity-end, 0.995);
 }
 
 :where(html[data-spw-page-arrival-step="1"]) :where(

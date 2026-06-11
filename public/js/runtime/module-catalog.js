@@ -538,7 +538,7 @@ export const ENHANCEMENT_DEFS = [
     selector: '[data-spw-box-model], [data-spw-composition-flow], [data-site-settings-panel], body[data-spw-surface="settings"] .settings-fieldset',
     rootMode: 'single',
     describes: 'box-model[presence|measure|story] composition[flow]',
-    updates: ['data-spw-box-model', 'data-spw-box-presence', 'data-spw-box-measure', 'data-spw-box-story', 'data-spw-composition-flow'],
+    updates: ['data-spw-box-model', 'data-spw-box-presence', 'data-spw-box-measure', 'data-spw-box-story', 'data-spw-composition-flow', 'data-spw-box-settle-phase', 'data-spw-size-context', 'data-spw-content-tone'],
     evaluates: 'layout semantics spacing-semantics state storytelling',
     load: () => import('./composition-box-model.js'),
     mount: (mod, ctx) => {

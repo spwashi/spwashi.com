@@ -603,7 +603,7 @@ frame #settling-field-contract
   role convention
   surface tokens/core.css + components/signals.css + components/surfaces.css + components/controls.css + components/runtime-states.css + page-state.js
   concept page_state settling microinteraction intermediate_state emergent_state
-  note "Page settling is the shared projection of page-state.js arrival/presence/transition attributes into component CSS. Tokens own tiny lift, press, offset, and opacity values; components spend them on existing cards, panels, controls, hydration, and selection states. Intermediate states should be readable from existing data-spw-* attributes and should emerge from composed page/gesture/selection signals rather than route-local timers or new one-off state names."
+  note "Page settling is the shared projection of page-state.js arrival/presence/transition attributes into component CSS. Tokens own tiny lift, press, offset, and opacity values; components spend them on existing cards, panels, controls, hydration, and selection states. html[data-spw-page-settling] and html[data-spw-layout-settle-phase] name the page-level intermediate window; composition-box-model.js mirrors that into data-spw-box-settle-phase after measure/presence refresh. Intermediate states should be readable from existing data-spw-* attributes and should emerge from composed page/gesture/selection signals rather than route-local timers or new one-off state names."
 
 frame #numericity-as-cauldron-ingredient
   role extension

@@ -794,6 +794,8 @@
   --spw-settle-opacity-start: 0.96;
   --spw-settle-opacity-mid: 0.985;
   --spw-settle-opacity-end: 0.995;
+  --spw-settle-stagger-step: 18ms;
+  --spw-layout-measure-settle: 220ms var(--ease-settle);
 
   --crescendo-structural: 0ms;
   --crescendo-compositional: 32ms;

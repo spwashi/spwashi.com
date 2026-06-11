@@ -171,9 +171,11 @@
 }
 
 :where(main > section.site-frame[data-spw-section-state], main > article > section.site-frame[data-spw-section-state]) {
-  transition: box-shadow var(--component-transition-deliberate),
-  border-color var(--component-transition-deliberate),
-  transform var(--component-transition-deliberate);
+  transition:
+    box-shadow var(--spw-layout-measure-settle, var(--component-transition-deliberate)),
+    border-color var(--spw-component-settle-transition, var(--component-transition-deliberate)),
+    transform var(--spw-component-settle-transition, var(--component-transition-deliberate)),
+    opacity var(--component-transition-arrival);
 }
 
 :where(main > section.site-frame[data-spw-section-state="active"], main > article > section.site-frame[data-spw-section-state="active"]) {
@@ -274,11 +276,11 @@
 
 :where([data-spw-selection]) {
   transition:
-    background-color var(--component-transition-base),
-    border-color var(--component-transition-base),
-    box-shadow var(--component-transition-base),
-    opacity var(--component-transition-fast),
-    transform var(--component-transition-fast);
+    background-color var(--spw-component-settle-transition, var(--component-transition-base)),
+    border-color var(--spw-component-settle-transition, var(--component-transition-base)),
+    box-shadow var(--spw-component-settle-transition, var(--component-transition-base)),
+    opacity var(--component-transition-arrival),
+    transform var(--component-transition-arrival);
 }
 
 :where([data-spw-selection="focused"]) {

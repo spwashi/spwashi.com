@@ -47,8 +47,8 @@ export const SPW_PAGE_STATE_CONTRACT = Object.freeze({
 
 const PAGE_ARRIVAL_STEP_SEQUENCE = Object.freeze([
   { step: '1', token: '--spw-page-arrival-step-1-delay', fallback: 0 },
-  { step: '2', token: '--spw-page-arrival-step-2-delay', fallback: 96 },
-  { step: '3', token: '--spw-page-arrival-step-3-delay', fallback: 212 },
+  { step: '2', token: '--spw-page-arrival-step-2-delay', fallback: 64 },
+  { step: '3', token: '--spw-page-arrival-step-3-delay', fallback: 148 },
 ]);
 
 const FLOATING_CHROME_SELECTOR = '.skip-link, .spw-section-handle, .spw-section-handle-shell';
@@ -123,6 +123,18 @@ export const setPageAttentionState = (ctx, detail = {}) => {
   writeDatasetValue(html, 'spwPageArrivalStep', transition.step);
   writeDatasetValue(html, 'spwPageTransition', transition.transition);
   writeDatasetValue(html, 'spwPageTransitionPhase', transition.phase);
+  writeDatasetValue(html, 'spwPageSettling',
+    transition.presence === PAGE_PRESENCE.FOREGROUND
+      && transition.arrival !== PAGE_ARRIVAL.SETTLED
+      ? 'true'
+      : null
+  );
+  writeDatasetValue(html, 'spwLayoutSettlePhase',
+    transition.presence === PAGE_PRESENCE.FOREGROUND
+      && transition.arrival !== PAGE_ARRIVAL.SETTLED
+      ? (transition.step !== '0' ? transition.step : transition.arrival)
+      : null
+  );
   writeDatasetValue(html, 'spwAttentionContext',
     transition.presence === PAGE_PRESENCE.BACKGROUND
       ? 'background'
@@ -196,7 +208,7 @@ export const schedulePageArrival = (ctx, arrival = PAGE_ARRIVAL.ENTERING, reason
   const settleDelayToken = arrival === PAGE_ARRIVAL.RETURNING
     ? '--spw-page-return-duration'
     : '--spw-page-arrival-duration';
-  const settleDelayFallback = arrival === PAGE_ARRIVAL.RETURNING ? 280 : 420;
+  const settleDelayFallback = arrival === PAGE_ARRIVAL.RETURNING ? 180 : 280;
 
   addManagedTimeout(ctx, () => {
     setPageAttentionState(ctx, {
@@ -308,6 +320,8 @@ export function clearPageState(root = document.documentElement, body = document.
     delete root.dataset.spwPageArrivalStep;
     delete root.dataset.spwPageTransition;
     delete root.dataset.spwPageTransitionPhase;
+    delete root.dataset.spwPageSettling;
+    delete root.dataset.spwLayoutSettlePhase;
     delete root.dataset.spwAttentionContext;
     delete root.dataset.spwHarmonyField;
     delete root.dataset.spwTempoField;

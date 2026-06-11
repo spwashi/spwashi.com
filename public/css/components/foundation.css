@@ -314,7 +314,7 @@
   .settings-map-card,
   .pwa-status-card
 ):is(:focus-within, [data-spw-gesture="charging"], [data-spw-card-state="expanded"]) {
-  transform: translateY(calc(var(--component-micro-lift, 1px) * -1));
+  --component-surface-lift: var(--component-micro-lift, 1px);
   box-shadow: var(--component-shadow-active);
 }
 

@@ -11,6 +11,7 @@ import {
   writeDatasetValue,
   writeDatasetValues,
 } from '/public/js/kernel/dom-contracts.js';
+import { PAGE_ATTENTION_EVENT } from './page-state.js';
 
 const DEFAULT_SELECTOR = [
   '[data-spw-box-model]',
@@ -66,6 +67,17 @@ const CONTENT_TONES = Object.freeze({
   OPERATOR_HEAVY: 'operator-heavy',
   MEDIA_DOMINANT: 'media-dominant',
   TEXT_LONG: 'text-long',
+});
+
+const SETTLE_PHASES = Object.freeze({
+  SETTLED: 'settled',
+  BACKGROUND: 'background',
+  STEP_1: 'step-1',
+  STEP_2: 'step-2',
+  STEP_3: 'step-3',
+  ENTERING: 'entering',
+  RETURNING: 'returning',
+  RESTORED: 'restored',
 });
 
 const normalizeToken = (value = '') => String(value)
@@ -173,6 +185,27 @@ function resolveSizeContext(el, box, role) {
   return SIZE_CONTEXTS.WIDE_PANEL;
 }
 
+function resolveSettlePhase(el, root = document.documentElement) {
+  const explicit = el.dataset.spwBoxSettlePhase || el.dataset.spwSettlePhase || '';
+  if (explicit) return normalizeToken(explicit);
+
+  const html = root?.dataset || {};
+  if (html.spwPagePresence === 'background') return SETTLE_PHASES.BACKGROUND;
+  if (html.spwPageArrival === 'settled' || html.spwPageSettling !== 'true') {
+    return SETTLE_PHASES.SETTLED;
+  }
+
+  const step = String(html.spwPageArrivalStep || '0');
+  if (step === '1') return SETTLE_PHASES.STEP_1;
+  if (step === '2') return SETTLE_PHASES.STEP_2;
+  if (step === '3') return SETTLE_PHASES.STEP_3;
+
+  const arrival = html.spwPageArrival || 'entering';
+  if (arrival === 'returning') return SETTLE_PHASES.RETURNING;
+  if (arrival === 'restored') return SETTLE_PHASES.RESTORED;
+  return SETTLE_PHASES.ENTERING;
+}
+
 function resolveContentTone(el, box) {
   const explicit = el.dataset.spwContentTone || el.dataset.spwContentDensity || '';
   if (explicit) return normalizeToken(explicit);
@@ -218,6 +251,7 @@ export function snapshotCompositionBox(target, options = {}) {
   const measure = resolveMeasure(box);
   const sizeContext = resolveSizeContext(el, box, role);
   const contentTone = resolveContentTone(el, box);
+  const settlePhase = resolveSettlePhase(el, options.root || document.documentElement);
 
   return {
     selector: el.id ? `#${el.id}` : el.dataset.spwFeature ? `[data-spw-feature="${el.dataset.spwFeature}"]` : el.tagName.toLowerCase(),
@@ -226,6 +260,7 @@ export function snapshotCompositionBox(target, options = {}) {
     measure,
     sizeContext,
     contentTone,
+    settlePhase,
     flow: box.flow,
     box,
     story: describeBox(el, box, role, presence),
@@ -254,6 +289,7 @@ export function annotateCompositionBox(target, options = {}) {
     spwBoxOverflow: snapshot.box.overflowX || snapshot.box.overflowY ? 'true' : 'false',
     spwSizeContext: snapshot.sizeContext,
     spwContentTone: snapshot.contentTone,
+    spwBoxSettlePhase: snapshot.settlePhase,
   }, { missingOnly: options.missingOnly === true });
 
   if (options.story !== false) {
@@ -277,19 +313,52 @@ export function snapshotCompositionBoxes(root = document, options = {}) {
     .filter(Boolean);
 }
 
+const scheduleCompositionRefresh = (refresh, delay = 48) => {
+  let timerId = 0;
+  return () => {
+    window.clearTimeout(timerId);
+    timerId = window.setTimeout(() => {
+      timerId = 0;
+      refresh();
+    }, delay);
+  };
+};
+
 export function initSpwCompositionBoxModel(ctx = {}) {
   const root = ctx.root || document;
-  const snapshots = annotateCompositionBoxes(root, {
-    selector: ctx.selector || DEFAULT_SELECTOR,
-  });
+  const selector = ctx.selector || DEFAULT_SELECTOR;
+  const snapshots = annotateCompositionBoxes(root, { selector });
 
-  const refresh = () => annotateCompositionBoxes(root, {
-    selector: ctx.selector || DEFAULT_SELECTOR,
-  });
+  const refresh = () => annotateCompositionBoxes(root, { selector });
+  const queueRefresh = scheduleCompositionRefresh(refresh, 48);
+
+  const handleAttentionChange = () => queueRefresh();
+  const handleResize = () => queueRefresh();
+
+  document.addEventListener(PAGE_ATTENTION_EVENT, handleAttentionChange);
+  window.addEventListener('resize', handleResize, { passive: true });
+  window.visualViewport?.addEventListener?.('resize', handleResize, { passive: true });
+
+  const resizeObserver = typeof ResizeObserver === 'function'
+    ? new ResizeObserver(() => queueRefresh())
+    : null;
+  if (resizeObserver && root instanceof Element) {
+    resizeObserver.observe(root);
+  } else if (resizeObserver && root === document) {
+    resizeObserver.observe(document.documentElement);
+  }
+
+  const cleanup = () => {
+    document.removeEventListener(PAGE_ATTENTION_EVENT, handleAttentionChange);
+    window.removeEventListener('resize', handleResize);
+    window.visualViewport?.removeEventListener?.('resize', handleResize);
+    resizeObserver?.disconnect();
+  };
 
   return {
     refresh,
-    snapshot: () => snapshotCompositionBoxes(root, { selector: ctx.selector || DEFAULT_SELECTOR }),
+    cleanup,
+    snapshot: () => snapshotCompositionBoxes(root, { selector }),
     initialCount: snapshots.length,
   };
 }
@@ -306,7 +375,9 @@ export const SPW_COMPOSITION_BOX_MODEL_CONTRACT = Object.freeze({
     // Phase 1 context feedback (size + content tone for more context-sensitive variants)
     'data-spw-size-context',
     'data-spw-content-tone',
+    'data-spw-box-settle-phase',
   ]),
+  settlePhases: SETTLE_PHASES,
   roles: Object.freeze(['stage', 'fold', 'control-group', 'control-card', 'feature', 'choice-field', 'component']),
   presence: PRESENCE_STATES,
   sizeContexts: SIZE_CONTEXTS,
