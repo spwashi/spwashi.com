@@ -825,6 +825,10 @@ html[data-spw-cauldron-candidate-visibility="prominent"] .spw-living-term[aria-p
   text-decoration-thickness: 0.08em;
   text-decoration-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 42%, transparent);
   text-underline-offset: 0.18em;
+  transition:
+    text-decoration-color var(--spw-control-transition-fast, 120ms ease),
+    background-color var(--spw-control-transition-fast, 120ms ease),
+    outline-color var(--spw-control-transition-fast, 120ms ease);
 }
 
 :is(.spw-living-term, [data-spw-living-term], [data-spw-gesture-contract*="prime"])[data-spw-cauldron-candidate="true"]:not([data-spw-prime-state]):not(.cauldron-ingredient):not([data-spw-groundable="false"]) {
@@ -839,10 +843,59 @@ html[data-spw-cauldron-candidate-visibility="prominent"] .spw-living-term[aria-p
   outline: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal)) 30%, transparent);
   outline-offset: 2px;
   background: color-mix(in srgb, var(--active-op-color, var(--teal)) 7%, transparent);
+  animation: spw-prime-arm 320ms ease-out 1;
 }
 
 [data-spw-prime-state="collected"] {
   box-shadow: inset 0 -0.16rem 0 color-mix(in srgb, var(--active-op-color, var(--teal)) 18%, transparent);
+  animation: spw-prime-collect 420ms ease-out 1;
+}
+
+:is(
+  .spw-living-term,
+  [data-spw-living-term],
+  [data-spw-cauldron-candidate="true"]
+)[data-spw-gesture="charging"][data-spw-prime-state="candidate"] {
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 22%, transparent),
+    0 0 0 3px color-mix(in srgb, var(--active-op-color, var(--teal)) 10%, transparent);
+}
+
+:is(
+  .spw-living-term,
+  [data-spw-living-term],
+  [data-spw-cauldron-candidate="true"]
+)[data-spw-gesture="armed"][data-spw-prime-state="candidate"] {
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 34%, transparent),
+    0 0 0 4px color-mix(in srgb, var(--active-op-color, var(--teal)) 14%, transparent);
+}
+
+@keyframes spw-prime-arm {
+  from {
+    outline-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 12%, transparent);
+    background: color-mix(in srgb, var(--active-op-color, var(--teal)) 2%, transparent);
+  }
+  to {
+    outline-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 30%, transparent);
+    background: color-mix(in srgb, var(--active-op-color, var(--teal)) 7%, transparent);
+  }
+}
+
+@keyframes spw-prime-collect {
+  0% {
+    box-shadow: inset 0 -0.28rem 0 color-mix(in srgb, var(--active-op-color, var(--teal)) 34%, transparent);
+  }
+  100% {
+    box-shadow: inset 0 -0.16rem 0 color-mix(in srgb, var(--active-op-color, var(--teal)) 18%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-spw-prime-state="primed"],
+  [data-spw-prime-state="collected"] {
+    animation: none;
+  }
 }
 
 /* Root token application for visibility modes (cascade from tokens/core) */

@@ -53,9 +53,22 @@ const getPaletteResonanceSwatches = (value = DEFAULT_PALETTE_RESONANCE) => (
   [...(PALETTE_RESONANCE_SWATCHES[normalizePaletteResonance(value)] || PALETTE_RESONANCE_SWATCHES.route)]
 );
 
+/** Depth probes derived from the primary resonance swatch (shadow + highlight). */
+const getPaletteDepthSwatches = (value = DEFAULT_PALETTE_RESONANCE) => {
+  const base = getPaletteResonanceSwatches(value);
+  const primary = base[0] || 'var(--active-op-color, #008080)';
+  const accent = base[3] || base[1] || primary;
+  return Object.freeze([
+    `color-mix(in srgb, ${primary} 58%, #101418 42%)`,
+    `color-mix(in srgb, ${primary} 24%, #ffffff 76%)`,
+    `color-mix(in srgb, ${accent} 18%, transparent)`,
+  ]);
+};
+
 export {
   DEFAULT_PALETTE_RESONANCE,
   PALETTE_RESONANCE_OPTIONS,
+  getPaletteDepthSwatches,
   getPaletteResonanceSwatches,
   getPaletteResonanceTokens,
   normalizePaletteResonance

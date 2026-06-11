@@ -210,7 +210,8 @@ html[data-spw-developmental-indicators="on"] :where(
     [data-spw-collectability],
     [data-spw-related-routes],
     [data-spw-role],
-    [data-spw-operator]
+    [data-spw-operator],
+    [data-spw-feature]
 ):where(:not(.spw-discovery-notice)) {
     box-shadow:
         var(--spw-local-shadow, none),
@@ -225,7 +226,8 @@ html[data-spw-developmental-indicators="on"] :where(
     [data-spw-collectability],
     [data-spw-related-routes],
     [data-spw-role],
-    [data-spw-operator]
+    [data-spw-operator],
+    [data-spw-feature]
 ):where(:hover, :focus-within, :focus-visible) {
     --spw-perspective-salience: max(var(--spw-perspective-salience), 0.7);
 }

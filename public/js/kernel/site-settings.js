@@ -26,6 +26,7 @@ import { markLayoutTrope } from '/public/js/kernel/instrumentation.js';
 import {
   DEFAULT_PALETTE_RESONANCE,
   PALETTE_RESONANCE_OPTIONS,
+  getPaletteDepthSwatches,
   getPaletteResonanceSwatches
 } from '/public/js/interface/palette-resonance.js';
 import { shouldDisableServiceWorkerInDevelopment } from '/public/js/kernel/runtime-environment.js';
@@ -147,6 +148,7 @@ const SPACING_TUNER_PROFILE = Object.freeze({
 
 const LAYOUT_TUNER_PROFILE = Object.freeze({
   reading: Object.freeze({measure: '72ch', frameMax: 'var(--page-width-reading, 68rem)', columnMin: '16rem'}),
+  newspaper: Object.freeze({measure: '54ch', frameMax: 'var(--page-width-wide, 84rem)', columnMin: '11.25rem'}),
   wide: Object.freeze({measure: '82ch', frameMax: 'var(--page-width-wide, 82rem)', columnMin: '18rem'}),
   atlas: Object.freeze({measure: '92ch', frameMax: 'var(--page-width-atlas, 96rem)', columnMin: '20rem'})
 });
@@ -551,7 +553,7 @@ const SETTING_OPTIONS = Object.freeze({
   svgStoryProfile: new Set(['quiet', 'guided', 'immersive']),
   fieldResonance: new Set(['local', 'field', 'choral']),
   spacingTuner: new Set(['compact', 'balanced', 'roomy']),
-  layoutTuner: new Set(['reading', 'wide', 'atlas']),
+  layoutTuner: new Set(['reading', 'newspaper', 'wide', 'atlas']),
   interactionTuner: new Set(['calm', 'responsive', 'expressive']),
   componentLifecycle: new Set(['draft', 'stable', 'active', 'archived']),
 
@@ -832,7 +834,7 @@ const SETTING_VALUE_LABELS = Object.freeze({
   svgStoryProfile: Object.freeze({quiet: 'Quiet', guided: 'Guided', immersive: 'Immersive'}),
   fieldResonance: Object.freeze({local: 'Local', field: 'Field', choral: 'Choral'}),
   spacingTuner: Object.freeze({compact: 'Compact', balanced: 'Balanced', roomy: 'Roomy'}),
-  layoutTuner: Object.freeze({reading: 'Reading', wide: 'Wide', atlas: 'Atlas'}),
+  layoutTuner: Object.freeze({reading: 'Reading', newspaper: 'Newspaper', wide: 'Wide', atlas: 'Atlas'}),
   interactionTuner: Object.freeze({calm: 'Calm', responsive: 'Responsive', expressive: 'Expressive'}),
   componentLifecycle: Object.freeze({draft: 'Draft', stable: 'Stable', active: 'Active', archived: 'Archived'}),
   narrativeMode: Object.freeze({off: 'Off', on: 'On'}),
@@ -917,6 +919,104 @@ const SETTING_VALUE_LABELS = Object.freeze({
   busHistorySize: Object.freeze({100: '100 events', 250: '250 events', 500: '500 events'}),
   physicsReason: Object.freeze({ '': '— (use interactionTuner + density)', calm: 'Calm', playful: 'Playful (gamified nav)', precise: 'Precise (business tools)', expressive: 'Expressive', springy: 'Springy', locked: 'Locked (pattern)', puppet: 'Puppet (lab)', screenshot: 'Screenshot-ready', 'adaptive-shell': 'Adaptive shell', 'clear-contrast-safeguard': 'Clear contrast', 'memory-gamified': 'Memory gamified' })
 });
+
+/** Poetic tuning dimensions: what can be tuned and how presentation relates to content. */
+const TUNING_LEXICON = Object.freeze({
+  atmosphere: Object.freeze({
+    key: 'themePack',
+    label: 'Atmosphere',
+    sigil: '☼',
+    metaphor: 'Vellum weather and material family',
+    relation: 'presentation',
+    contentLink: 'Copy stays; atmosphere changes how the page feels to read.',
+    settingsAnchor: '#appearance-settings',
+  }),
+  lighting: Object.freeze({
+    key: 'colorMode',
+    label: 'Lighting',
+    sigil: '◐',
+    metaphor: 'Daylight, lamplight, adaptive sky',
+    relation: 'presentation',
+    contentLink: 'Meaning holds; light shifts legibility and mood.',
+    settingsAnchor: '#appearance-settings',
+  }),
+  resonance: Object.freeze({
+    key: 'paletteResonance',
+    label: 'Resonance',
+    sigil: '◎',
+    metaphor: 'Which discipline colors the field',
+    relation: 'bridge',
+    contentLink: 'Topic copy remains; accent bias follows craft, software, math, or route context.',
+    settingsAnchor: '#appearance-settings',
+  }),
+  memory: Object.freeze({
+    key: 'wonderMemory',
+    label: 'Memory',
+    sigil: '∿',
+    metaphor: 'How wonder carries between pages',
+    relation: 'continuity',
+    contentLink: 'Local story stays; ornament echo can stay nearby or spread sitewide.',
+    settingsAnchor: '#semantic-settings',
+  }),
+  vocabulary: Object.freeze({
+    key: 'semanticDensity',
+    label: 'Vocabulary',
+    sigil: '◇',
+    metaphor: 'How loudly concepts answer back',
+    relation: 'content',
+    contentLink: 'Same routes; richer density reveals handles, prompts, and relation cues.',
+    settingsAnchor: '#semantic-settings',
+  }),
+  material: Object.freeze({
+    key: 'baseMetamaterial',
+    label: 'Material',
+    sigil: '▣',
+    metaphor: 'Paper, glass, matte, or field surface',
+    relation: 'presentation',
+    contentLink: 'Structure unchanged; surface physics changes depth and contrast.',
+    settingsAnchor: '#appearance-settings',
+  }),
+  posture: Object.freeze({
+    key: 'currentDevelopmentalClimate',
+    label: 'Climate',
+    sigil: '☁',
+    metaphor: 'Attention posture for the session',
+    relation: 'attention',
+    contentLink: 'Content stable; climate shifts how firmly the site invites, holds, or offers.',
+    settingsAnchor: '#climate-settings',
+  }),
+  task: Object.freeze({
+    key: 'authorMode',
+    label: 'Workflow',
+    sigil: '✎',
+    metaphor: 'What the writer is doing now',
+    relation: 'authoring',
+    contentLink: 'Public shape unchanged; workflow tunes annotation and revision affordances.',
+    settingsAnchor: '#author-workflow-settings',
+  }),
+  grain: Object.freeze({
+    key: 'grainIntensity',
+    label: 'Grain',
+    sigil: '⁘',
+    metaphor: 'Texture on the metaphysical page',
+    relation: 'presentation',
+    contentLink: 'Words stay; grain adds or removes tactile weather on the surface.',
+    settingsAnchor: '#appearance-settings',
+  }),
+  interaction: Object.freeze({
+    key: 'interactionTuner',
+    label: 'Touch',
+    sigil: '↯',
+    metaphor: 'How responsive the material feels',
+    relation: 'interaction',
+    contentLink: 'Routes unchanged; touch physics changes echo, lift, and spell readiness.',
+    settingsAnchor: '#runtime-preferences',
+  }),
+});
+
+const TUNING_LEXICON_BY_SETTING = Object.freeze(
+  Object.fromEntries(Object.entries(TUNING_LEXICON).map(([id, entry]) => [entry.key, { id, ...entry }]))
+);
 
 const PRESET_LABELS = Object.freeze({
   hearth: 'Hearth',
@@ -1541,6 +1641,7 @@ const getUxRecipe = (name) => UX_RECIPES[name] || null;
 
 const applyPaletteResonanceSwatches = (root, settings) => {
   const swatches = getPaletteResonanceSwatches(settings.paletteResonance);
+  const depth = getPaletteDepthSwatches(settings.paletteResonance);
 
   for (let index = 0; index < 4; index += 1) {
     const value = swatches[index];
@@ -1548,6 +1649,13 @@ const applyPaletteResonanceSwatches = (root, settings) => {
     if (value) root.style.setProperty(name, value);
     else root.style.removeProperty(name);
   }
+
+  const depthNames = ['--spw-palette-depth-shadow', '--spw-palette-depth-highlight', '--spw-palette-depth-glow'];
+  depthNames.forEach((name, index) => {
+    const value = depth[index];
+    if (value) root.style.setProperty(name, value);
+    else root.style.removeProperty(name);
+  });
 };
 
 const applyImageLoadingPreference = (settings, root = document) => {
@@ -1728,6 +1836,13 @@ const deriveArchitecturalModifiers = (settings) => {
  * Supports the "tunable material surface" and cognitive abstractions (physics-reason,
  * locality, density as first-class inspectable state for storytellers/engineers).
  */
+const resolveTuningDiscoverability = (settings = {}) => {
+  if (settings.cognitiveHandles === 'on') return 'revealed';
+  if (settings.semanticDensity === 'rich') return 'revealed';
+  if (settings.semanticDensity === 'normal') return 'ambient';
+  return 'quiet';
+};
+
 const buildDatasetEntries = (normalized, modifiers, deviations, climate) => {
   const deviationNames = deviations.map((entry) => entry.name);
   const entries = {
@@ -1813,7 +1928,8 @@ const buildDatasetEntries = (normalized, modifiers, deviations, climate) => {
     spwPhysicsReason: normalized.physicsReason || null,
     spwDeviationCount: String(deviations.length),
     spwDeviations: deviationNames.join(' ') || null,
-    spwDeviationState: deviations.length > 0 ? 'deviated' : 'default'
+    spwDeviationState: deviations.length > 0 ? 'deviated' : 'default',
+    spwTuningDiscoverability: resolveTuningDiscoverability(normalized)
   };
 
   // Semantic currents (emergent clusters...) – kept here as part of the dataset builder.
@@ -3383,7 +3499,10 @@ export {
   SETTINGS_QUERY_RECIPES,
   SETTING_OPTIONS,
   SITE_SETTINGS_KEY,
+  TUNING_LEXICON,
+  TUNING_LEXICON_BY_SETTING,
   UX_RECIPES,
+  resolveTuningDiscoverability,
   buildSettingsQueryHref,
   buildSettingsQuerySearch,
   applySiteSettings,
@@ -3395,6 +3514,7 @@ export {
   bindStandaloneSettingTriggers,
   collectSettingsFromScope,
   describeDeviation,
+  describeSettingValue,
   emitSettingsChange,
   findActivePreset,
   getAuthorWorkflowDefinition,

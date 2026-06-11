@@ -1,0 +1,34 @@
+# learnability-ledger
+#>learnability_ledger
+# Metacognitive accounting layer: posture, process attention, gesture/feature
+# discoverability, and layout-contract alignment across the static runtime.
+
+operation: align
+
+claim: `Spw philosophy is not only copy — it is inspectable posture. The visitor's metacognitive stance (witness|composer|explorer|integrator|overflow) and process attention (breath|scan|trace|compose) should modulate which features resonate without hiding authored content.`
+
+contract: .{
+  module: "public/js/runtime/learnability-ledger.js",
+  hub: "public/js/runtime/dom-sync-hub.js",
+  css: "public/css/systems/surfaces/learnability-ledger.css",
+  companions: "gesture-anatomy, tuning-discovery, dom-sync-hub, enrichment.css perspective salience, attention-architecture",
+  root_attrs: "data-spw-learnability-posture, data-spw-learnability-process, data-spw-learnability-cue, data-spw-learnability-ledger, data-spw-layout-contract, data-spw-learnability-tier",
+  event: "spw:learnability-ledger-updated",
+}
+
+layout_contract: .{
+  slotted: "host carries data-spw-slot children (header/meta/body/actions anatomy)",
+  feature_gestural: "data-spw-feature + gesture or interaction contract",
+  feature_only: "named cluster without slot or gesture surface",
+  implicit: "frame-like host without explicit contract — flagged when developmental indicators are on",
+}
+
+metacognitive_accounting: .{
+  witness: "orientation, grounding, reading context salience",
+  composer: "action surfaces, gather/compose loops, semantic expressions",
+  explorer: "routing, wonders, route bridges, probe salience",
+  integrator: "references, sync clusters, slotted layout emphasis",
+  overflow: "rich visibility for concepts, features, vocabulary",
+}
+
+validation: ?< hold living term → ledger resonance prime; switch stance in settings → footer posture + cue update; enable developmental indicators → implicit hosts outlined >

@@ -981,6 +981,11 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
   border-style: dashed;
 }
 
+:where([data-spw-component-lifecycle="stable"], html[data-spw-component-lifecycle="stable"] [data-spw-component-variant]) {
+  border-style: solid;
+  opacity: 1;
+}
+
 :where([data-spw-component-lifecycle="active"], html[data-spw-component-lifecycle="active"] [data-spw-component-variant]) {
   box-shadow:
     inset 0.22rem 0 0 color-mix(in srgb, var(--spw-variant-accent, var(--active-op-color)) 42%, transparent),

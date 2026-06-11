@@ -120,6 +120,87 @@
                 </p>
             </div>
 
+            <aside
+                class="spw-tuning-vocabulary"
+                aria-label="Tuning vocabulary"
+                data-spw-feature="tuning-vocabulary"
+                data-spw-semantic-expression="settings[tune]{vocabulary.presentation-content}"
+            >
+                <p class="vibe-widget-kicker">Tuning vocabulary</p>
+                <p class="frame-note">
+                    The site is metaphysical material: content stays, presentation shifts. Each dimension below names what you can tune and how it relates to what you read.
+                </p>
+                <div class="spw-tuning-vocabulary__grid">
+                    <article class="spw-tuning-vocabulary-card">
+                        <div class="spw-tuning-vocabulary-card__topline">
+                            <span class="spw-tuning-vocabulary-card__sigil" aria-hidden="true">◐</span>
+                            <strong>Lighting</strong>
+                        </div>
+                        <span class="spw-tuning-vocabulary-card__relation">presentation</span>
+                        <p>Adaptive, light, or dark — meaning holds; legibility and mood shift.</p>
+                    </article>
+                    <article class="spw-tuning-vocabulary-card">
+                        <div class="spw-tuning-vocabulary-card__topline">
+                            <span class="spw-tuning-vocabulary-card__sigil" aria-hidden="true">☼</span>
+                            <strong>Atmosphere</strong>
+                        </div>
+                        <span class="spw-tuning-vocabulary-card__relation">presentation</span>
+                        <p>Theme packs are vellum weather: paper, oxide, studio, ritual, copper, glass.</p>
+                    </article>
+                    <article class="spw-tuning-vocabulary-card">
+                        <div class="spw-tuning-vocabulary-card__topline">
+                            <span class="spw-tuning-vocabulary-card__sigil" aria-hidden="true">◎</span>
+                            <strong>Resonance</strong>
+                        </div>
+                        <span class="spw-tuning-vocabulary-card__relation">bridge</span>
+                        <p>Route, craft, software, or math bias — copy stays; accent physics leans toward a discipline.</p>
+                    </article>
+                    <article class="spw-tuning-vocabulary-card">
+                        <div class="spw-tuning-vocabulary-card__topline">
+                            <span class="spw-tuning-vocabulary-card__sigil" aria-hidden="true">∿</span>
+                            <strong>Memory</strong>
+                        </div>
+                        <span class="spw-tuning-vocabulary-card__relation">continuity</span>
+                        <p>Wonder carry: focused, connected, or immersive ornament echo between pages.</p>
+                    </article>
+                    <article class="spw-tuning-vocabulary-card">
+                        <div class="spw-tuning-vocabulary-card__topline">
+                            <span class="spw-tuning-vocabulary-card__sigil" aria-hidden="true">◇</span>
+                            <strong>Vocabulary</strong>
+                        </div>
+                        <span class="spw-tuning-vocabulary-card__relation">content</span>
+                        <p>Semantic density — how loudly handles, prompts, and relation cues answer back.</p>
+                    </article>
+                    <article class="spw-tuning-vocabulary-card">
+                        <div class="spw-tuning-vocabulary-card__topline">
+                            <span class="spw-tuning-vocabulary-card__sigil" aria-hidden="true">☁</span>
+                            <strong>Climate</strong>
+                        </div>
+                        <span class="spw-tuning-vocabulary-card__relation">attention</span>
+                        <p>Developmental posture: kindle, anchor, weave, rehearse, or offer the work.</p>
+                    </article>
+                    <article class="spw-tuning-vocabulary-card">
+                        <div class="spw-tuning-vocabulary-card__topline">
+                            <span class="spw-tuning-vocabulary-card__sigil" aria-hidden="true">⌁</span>
+                            <strong>Anatomy</strong>
+                        </div>
+                        <span class="spw-tuning-vocabulary-card__relation">structure</span>
+                        <p>Slot rails (header, meta, body, figure, actions) and gesture contracts — how components invite tap, hold, and inspect.</p>
+                    </article>
+                    <article class="spw-tuning-vocabulary-card">
+                        <div class="spw-tuning-vocabulary-card__topline">
+                            <span class="spw-tuning-vocabulary-card__sigil" aria-hidden="true">◫</span>
+                            <strong>Depth</strong>
+                        </div>
+                        <span class="spw-tuning-vocabulary-card__relation">material</span>
+                        <p>Shadow, wash, glow, and field layers — palette probes feel like layered vellum, not flat chips.</p>
+                    </article>
+                </div>
+                <p class="settings-start-note">
+                    Open <strong>Weather</strong> in the header for theme chips, resonance swatches, and depth guard cycles — or use <strong>Reveal tuners</strong> to find embedded dials on any route. Set vocabulary to <em>Field</em> or <em>Rich</em> for ambient slot labels and gesture hints; turn on cognitive handles for full anatomy rails. See <a href="/design/slots/">slot anatomy</a> and <a href="/design/palettes/">palette depth</a>.
+                </p>
+            </aside>
+
             <nav
                 aria-label="Settings sections"
                 class="settings-hero-actions"
@@ -182,11 +263,11 @@
 
             <div class="vibe-widget-grid settings-quickstart-grid" data-spw-box-model="choice-field" data-spw-composition-flow="grid" data-spw-feature="settings-quickstart">
                 <article class="vibe-widget vibe-widget--feature" data-site-settings-panel data-spw-box-model="control-card">
-                    <div class="vibe-widget-header">
+                    <div class="vibe-widget-header" data-spw-slot="header">
                         <p class="vibe-widget-kicker">Quick presets</p>
                         <h3 class="vibe-widget-title">Choose a whole-site starting point</h3>
                     </div>
-                    <p class="vibe-widget-copy" data-spw-interaction="tap">
+                    <p class="vibe-widget-copy" data-spw-slot="body" data-spw-interaction="tap">
                         Presets apply coherent baselines so uncurious visitors get an immediate, useful surface while active learners and playful wanderers have clear starting points to explore or tune. You can still refine every setting afterward. Tap or click a preset to feel the difference instantly across desktop, tablet, or phone.
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="vertical-align:-2px;opacity:.6;margin-left:.3em;" aria-hidden="true"><path d="M12 2v20M2 12h20"/></svg>
                     </p>
@@ -1291,6 +1372,10 @@
                             <label class="settings-option">
                                 <input checked name="layoutTuner" type="radio" value="reading" />
                                 <span class="settings-option-copy"><strong>Reading</strong><span>Use a restrained measure for prose and documentation.</span></span>
+                            </label>
+                            <label class="settings-option">
+                                <input name="layoutTuner" type="radio" value="newspaper" />
+                                <span class="settings-option-copy"><strong>Newspaper</strong><span>Dense multi-column desktop rhythm with tighter type and card grids.</span></span>
                             </label>
                             <label class="settings-option">
                                 <input name="layoutTuner" type="radio" value="wide" />

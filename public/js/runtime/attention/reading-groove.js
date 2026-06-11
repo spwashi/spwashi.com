@@ -1,0 +1,173 @@
+import {
+  READING_BEAT_CURRENT_ATTR,
+  READING_BEAT_FOCUS_ATTR,
+  READING_BEAT_INDEX_ATTR,
+  READING_BEAT_ROLE_ATTR,
+  READING_BEAT_STATE_ATTR,
+  READING_GROOVE_ATTR,
+  READING_GROOVE_COUNT_ATTR,
+  READING_GROOVE_MIN_BEATS,
+  READING_GROOVE_MODE_ATTR,
+  READING_GROOVE_SELECTOR,
+  clearAttributes,
+  getRootPreference,
+  writeAttributes,
+} from './shared.js';
+
+function collectReadingBeats(root) {
+  return Array.from(root.querySelectorAll(READING_GROOVE_SELECTOR)).filter((node) => {
+    if (!(node instanceof HTMLElement)) return false;
+    if (!node.closest('main')) return false;
+    if (node.hidden || node.getAttribute('aria-hidden') === 'true') return false;
+    const text = node.textContent?.trim() || '';
+    if (text.length < 24) return false;
+    return true;
+  });
+}
+
+function describeReadingBeatRole(node) {
+  if (!(node instanceof HTMLElement)) return 'body';
+  if (node.matches('h2, h3')) return 'heading';
+  if (node.matches('blockquote, figcaption')) return 'aside';
+  if (node.matches('.inline-note, .frame-note')) return 'note';
+  if (node.matches('li')) return 'list';
+  return 'body';
+}
+
+function writeReadingGrooveState(beats, leadIndex) {
+  beats.forEach((beat, index) => {
+    const distance = Math.abs(index - leadIndex);
+    let state = 'rest';
+    if (index === leadIndex) state = 'lead';
+    else if (distance <= 2) state = 'near';
+
+    writeAttributes(beat, {
+      [READING_BEAT_STATE_ATTR]: state,
+      [READING_BEAT_CURRENT_ATTR]: index === leadIndex ? 'true' : 'false',
+      [READING_BEAT_FOCUS_ATTR]: distance <= 1 ? 'tight' : distance === 2 ? 'wide' : 'ambient',
+    });
+  });
+}
+
+function isReadingGrooveEnabled() {
+  return getRootPreference('spwReadingGrooveMode', 'on') !== 'off';
+}
+
+export function initReadingGroove(root) {
+  const beats = collectReadingBeats(root);
+  if (beats.length < READING_GROOVE_MIN_BEATS) return () => {};
+
+  const syncReadingGroovePreference = () => {
+    [document.documentElement, document.body].forEach((node) => {
+      writeAttributes(node, {
+        [READING_GROOVE_ATTR]: isReadingGrooveEnabled() ? 'on' : 'off',
+        [READING_GROOVE_COUNT_ATTR]: beats.length,
+      });
+    });
+  };
+
+  syncReadingGroovePreference();
+
+  beats.forEach((beat, index) => {
+    writeAttributes(beat, {
+      [READING_BEAT_INDEX_ATTR]: index + 1,
+      [READING_BEAT_ROLE_ATTR]: describeReadingBeatRole(beat),
+    });
+  });
+
+  const state = {
+    leadIndex: 0,
+    raf: 0,
+    visible: new Set(),
+  };
+
+  const resolveLeadIndex = () => {
+    const anchorY = Math.min(Math.max(window.innerHeight * 0.38, 120), 320);
+    const candidates = state.visible.size ? Array.from(state.visible) : beats;
+    let bestIndex = state.leadIndex;
+    let bestDistance = Number.POSITIVE_INFINITY;
+
+    candidates.forEach((beat) => {
+      const rect = beat.getBoundingClientRect();
+      const center = rect.top + (rect.height * 0.45);
+      const distance = Math.abs(center - anchorY);
+      if (distance < bestDistance) {
+        bestDistance = distance;
+        bestIndex = beats.indexOf(beat);
+      }
+    });
+
+    return Math.max(0, bestIndex);
+  };
+
+  const update = () => {
+    state.raf = 0;
+    const nextLeadIndex = resolveLeadIndex();
+    if (nextLeadIndex === state.leadIndex && beats[state.leadIndex]?.hasAttribute(READING_BEAT_STATE_ATTR)) return;
+    state.leadIndex = nextLeadIndex;
+    writeReadingGrooveState(beats, state.leadIndex);
+  };
+
+  const scheduleUpdate = () => {
+    if (state.raf) return;
+    state.raf = window.requestAnimationFrame(update);
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      const target = entry.target;
+      if (!(target instanceof HTMLElement)) return;
+      if (entry.isIntersecting && entry.intersectionRatio > 0.08) {
+        state.visible.add(target);
+      } else {
+        state.visible.delete(target);
+      }
+    });
+    scheduleUpdate();
+  }, {
+    root: null,
+    rootMargin: '-12% 0px -42% 0px',
+    threshold: [0, 0.08, 0.2, 0.4, 0.66, 1],
+  });
+
+  beats.forEach((beat) => observer.observe(beat));
+  update();
+
+  const onResize = () => scheduleUpdate();
+  const preferenceObserver = new MutationObserver(() => {
+    syncReadingGroovePreference();
+  });
+
+  window.addEventListener('resize', onResize, { passive: true });
+  window.addEventListener('orientationchange', onResize);
+  preferenceObserver.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: [READING_GROOVE_MODE_ATTR],
+  });
+
+  return () => {
+    observer.disconnect();
+    preferenceObserver.disconnect();
+    window.removeEventListener('resize', onResize);
+    window.removeEventListener('orientationchange', onResize);
+    if (state.raf) {
+      window.cancelAnimationFrame(state.raf);
+      state.raf = 0;
+    }
+    beats.forEach((beat) => {
+      clearAttributes(beat, [
+        READING_BEAT_STATE_ATTR,
+        READING_BEAT_INDEX_ATTR,
+        READING_BEAT_ROLE_ATTR,
+        READING_BEAT_CURRENT_ATTR,
+        READING_BEAT_FOCUS_ATTR,
+      ]);
+    });
+    [document.documentElement, document.body].forEach((node) => {
+      clearAttributes(node, [
+        READING_GROOVE_ATTR,
+        READING_GROOVE_COUNT_ATTR,
+      ]);
+    });
+  };
+}

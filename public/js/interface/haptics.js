@@ -115,6 +115,12 @@ function setPrimeState(el, state = '') {
   else delete el.dataset.spwPrimeState;
 }
 
+function setGestureState(el, state = '') {
+  if (!el) return;
+  if (state) el.dataset.spwGesture = state;
+  else delete el.dataset.spwGesture;
+}
+
 function setGroundedMetadata(el, substrate = '', wonder = '') {
   if (substrate) el.dataset.spwGroundedIn = substrate;
   else delete el.dataset.spwGroundedIn;
@@ -225,6 +231,12 @@ function onPrimePointerDown(event) {
 
   target.dataset.spwCauldronCandidate = 'true';
   setPrimeState(target, 'candidate');
+  setGestureState(target, 'charging');
+
+  const armedTimer = window.setTimeout(() => {
+    if (!holdPrimeTimers.has(target)) return;
+    setGestureState(target, 'armed');
+  }, Math.round(HOLD_PRIME_DELAY_MS * 0.55));
 
   const timer = window.setTimeout(() => {
     holdPrimeTimers.delete(target);
@@ -233,6 +245,7 @@ function onPrimePointerDown(event) {
 
   holdPrimeTimers.set(target, {
     timer,
+    armedTimer,
     pointerId: event.pointerId,
     x: event.clientX,
     y: event.clientY,
@@ -256,8 +269,12 @@ function onPrimePointerEnd(event) {
 
 function cancelHoldPrime(target) {
   const record = holdPrimeTimers.get(target);
-  if (record) window.clearTimeout(record.timer);
+  if (record) {
+    window.clearTimeout(record.timer);
+    if (record.armedTimer) window.clearTimeout(record.armedTimer);
+  }
   holdPrimeTimers.delete(target);
+  setGestureState(target, '');
   if (!isGrounded(target) && target.dataset.spwPrimeState === 'candidate') {
     setPrimeState(target, '');
   }
@@ -273,10 +290,12 @@ function shouldIgnorePrimeCandidate(target, event) {
 function collectPrimeCandidate(target, event) {
   const detail = buildSemanticDetail(target, { source: 'hold-prime' });
   setPrimeState(target, 'primed');
+  setGestureState(target, 'committed');
   target.dataset.spwCauldronCandidate = 'true';
   target.dataset.spwIngredientState = 'active';
   suppressClickTargets.add(target);
   window.setTimeout(() => suppressClickTargets.delete(target), 800);
+  animateSettle(target, 'spw-pop-snap');
 
   bus.emit('spell:capture', {
     ...detail,
@@ -286,7 +305,12 @@ function collectPrimeCandidate(target, event) {
     chargeContext: detail.substrate || detail.context || '',
     gestureHistory: `notice->prime->gather:${detail.key.split(':').pop()}`,
     sourceElement: detail.key,
+    element: target,
   }, { target, element: target, originalEvent: event });
+
+  setPrimeState(target, 'collected');
+  target.dataset.spwCauldronCollected = 'true';
+  window.setTimeout(() => setGestureState(target, ''), 420);
 
   bus.emit('prime:collected', detail, { target, element: target });
 }

@@ -1,0 +1,153 @@
+/* ==========================================================================
+   surfaces/reading-layout.css
+   --------------------------------------------------------------------------
+   Reading posture and vertical flow — newspaper-dense desktop columns,
+   diverse mobile section rhythm, and attention-architecture coupling.
+   Driven by html[data-spw-layout-tuner] and html[data-spw-layout-flow].
+   ========================================================================== */
+
+/* Newspaper posture tokens (desktop-first) */
+html[data-spw-layout-tuner="newspaper"] {
+  --site-line-height: 1.52;
+  --site-line-height-tight: 1.28;
+  --measure-reading: var(--spw-layout-measure, 54ch);
+  --spw-flow-space: 0.72rem;
+  --page-stack-gap: clamp(0.75rem, 1.4vw, 1rem);
+  --page-section-gap: clamp(0.85rem, 1.5vw, 1.2rem);
+  --surface-gap: clamp(0.62rem, 1.1vw, 0.82rem);
+  --text-rhythm-drag: 0.34;
+  --text-flow-variable: 1.08;
+  --spw-grid-min-base: 11.25rem;
+  --spw-grid-min-mid: 10.75rem;
+  --spw-grid-gap-base: 0.56rem;
+  --spw-grid-gap-mid: 0.52rem;
+  --semantic-metadata-font-size: 0.52rem;
+}
+
+html[data-spw-layout-tuner="newspaper"] main > article {
+  gap: var(--page-section-gap);
+}
+
+html[data-spw-layout-tuner="newspaper"] :where(p, li, .frame-note, .frame-copy) {
+  font-size: clamp(0.94rem, 0.9rem + 0.08vw, 1.02rem);
+  line-height: var(--site-line-height, 1.52);
+  hyphens: auto;
+}
+
+html[data-spw-layout-tuner="newspaper"] :where(h2) {
+  font-size: clamp(1.18rem, 1.05rem + 0.35vw, 1.42rem);
+  margin-block-end: 0.35rem;
+}
+
+html[data-spw-layout-tuner="newspaper"] :where(h3) {
+  font-size: clamp(1.02rem, 0.96rem + 0.2vw, 1.16rem);
+}
+
+@media (min-width: 64rem) {
+  html[data-spw-layout-tuner="newspaper"] :where(.frame-body, .frame-copy, [data-spw-slot="body"]) {
+    column-count: 2;
+    column-gap: clamp(1rem, 2vw, 1.45rem);
+    column-rule: 1px solid color-mix(in srgb, var(--paper-rule, rgba(14, 18, 20, 0.12)) 88%, transparent);
+    column-fill: balance;
+  }
+
+  html[data-spw-layout-tuner="newspaper"] :where(.frame-body, .frame-copy) > :is(h2, h3, figure, .frame-grid, .site-frame, pre, blockquote) {
+    break-inside: avoid;
+    column-span: all;
+  }
+
+  html[data-spw-layout-tuner="newspaper"] :where(.frame-grid--dense, .frame-grid[data-spw-density="dense"]) {
+    grid-template-columns: repeat(auto-fill, minmax(var(--spw-layout-column-min, 11.25rem), 1fr));
+    gap: 0.52rem;
+  }
+
+  html[data-spw-layout-tuner="newspaper"] :where(.frame-card, .site-frame) {
+    --component-pad: 0.68rem;
+    --component-gap-tight: 0.34rem;
+  }
+}
+
+/* Mobile vertical ribbon — alternating section rhythm */
+html[data-spw-layout-flow="vertical-ribbon"] main > article {
+  gap: clamp(0.9rem, 3.2vw, 1.35rem);
+}
+
+@media (max-width: 48rem) {
+  html[data-spw-layout-flow="vertical-ribbon"] main > article > :where(.site-frame, section.site-frame) {
+    --spw-mobile-rhythm: stack;
+  }
+
+  html[data-spw-layout-flow="vertical-ribbon"] main > article > :where(.site-frame, section.site-frame):nth-child(3n + 1) {
+    --spw-mobile-rhythm: full-bleed;
+    margin-inline: calc(var(--page-gutter-inline, 1rem) * -0.42);
+    border-radius: 0;
+    border-inline: none;
+  }
+
+  html[data-spw-layout-flow="vertical-ribbon"] main > article > :where(.site-frame, section.site-frame):nth-child(3n + 2) {
+    --spw-mobile-rhythm: inset;
+  }
+
+  html[data-spw-layout-flow="vertical-ribbon"] main > article > :where(.site-frame, section.site-frame):nth-child(3n) {
+    --spw-mobile-rhythm: ribbon;
+    padding-block: 0.35rem;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  html[data-spw-layout-flow="vertical-ribbon"] main > article > :where(.site-frame, section.site-frame):nth-child(3n)::before {
+    opacity: 0.28;
+  }
+
+  html[data-spw-layout-flow="vertical-ribbon"] :where(.frame-grid, .frame-grid--dense) {
+    grid-template-columns: 1fr;
+    gap: 0.78rem;
+  }
+
+  html[data-spw-layout-flow="vertical-ribbon"] :where(.frame-card--illustrated .frame-card-media) {
+    max-block-size: 10.5rem;
+  }
+}
+
+/* Attention architecture: active section emphasis */
+html[data-spw-page-section-phase="settled"] :where(
+  .site-frame[data-spw-section-state="active"],
+  section[data-spw-section-state="active"]
+) {
+  border-color: color-mix(in srgb, var(--active-op-color) 22%, var(--line, transparent));
+}
+
+html[data-spw-page-section-phase="traveling"] :where(
+  .site-frame[data-spw-section-state="active"],
+  section[data-spw-section-state="active"]
+) {
+  box-shadow:
+    inset 3px 0 0 color-mix(in srgb, var(--active-op-color) 42%, transparent),
+    var(--card-shadow, none);
+  transition: box-shadow 280ms var(--ease-settle, ease);
+}
+
+html[data-spw-reading-groove="on"][data-spw-layout-flow="vertical-ribbon"] :where(
+  [data-spw-reading-beat-role="heading"][data-spw-reading-beat="lead"]
+) {
+  letter-spacing: -0.018em;
+  padding-block-start: 0.12rem;
+}
+
+/* Section handle alignment with vertical flow */
+@media (max-width: 48rem) {
+  html[data-spw-layout-flow="vertical-ribbon"] :where(.spw-section-handle-shell) {
+    inset-inline: max(0.45rem, env(safe-area-inset-left)) max(0.45rem, env(safe-area-inset-right));
+    max-inline-size: calc(100vw - 0.9rem - env(safe-area-inset-left) - env(safe-area-inset-right));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-spw-page-section-phase="traveling"] :where(
+    .site-frame[data-spw-section-state="active"],
+    section[data-spw-section-state="active"]
+  ) {
+    transition: none;
+  }
+}

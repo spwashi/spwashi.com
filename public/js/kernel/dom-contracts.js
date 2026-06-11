@@ -141,6 +141,13 @@ export const FEATURE_CLUSTER_CONTRACT = Object.freeze({
     'Use [data-spw-feature] for the outermost named cluster that should stay visible to CSS, audit hooks, and region-menu inspection.',
 });
 
+export const LAYOUT_CONTRACT_VALUES = Object.freeze([
+  'slotted',
+  'feature-gestural',
+  'feature-only',
+  'implicit',
+]);
+
 const RUNTIME_AUDIT_LIMIT = 240;
 const runtimeMutationLog = [];
 

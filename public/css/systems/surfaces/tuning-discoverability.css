@@ -1,0 +1,220 @@
+/* ==========================================================================
+   surfaces/tuning-discoverability.css
+   --------------------------------------------------------------------------
+   Marginalia and discoverability for embedded tuning surfaces — the site as
+   a magic book whose presentation can be explored without rewriting content.
+   ========================================================================== */
+
+:where(html[data-spw-tuning-discoverability="ambient"], html[data-spw-tuning-discoverability="revealed"]) {
+  --tuning-marginalia-opacity: 0.42;
+  --tuning-edge-strength: 0.14;
+  --tuning-pulse-color: var(--active-op-color, #008080);
+}
+
+:where(html[data-spw-tuning-discoverability="revealed"]) {
+  --tuning-marginalia-opacity: 0.88;
+  --tuning-edge-strength: 0.28;
+}
+
+/* Ambient vellum edge on outermost tunable scopes */
+:where(html[data-spw-tuning-discoverability="ambient"], html[data-spw-tuning-discoverability="revealed"])
+  :where(
+    [data-spw-tuning-surface="true"][data-site-settings-scope],
+    [data-spw-tuning-surface="true"][data-spw-affordance="tune"]
+  ) {
+  position: relative;
+  border-inline-start: 2px solid color-mix(
+    in srgb,
+    var(--tuning-pulse-color) calc(var(--tuning-edge-strength) * 100%),
+    transparent
+  );
+  background-image:
+    linear-gradient(
+      118deg,
+      color-mix(in srgb, var(--tuning-pulse-color) 5%, transparent),
+      transparent 42%
+    );
+  transition:
+    border-color 220ms var(--ease-mechanical, ease),
+    background-image 260ms var(--ease-mechanical, ease);
+}
+
+:where(html[data-spw-tuning-discoverability="revealed"])
+  :where(
+    [data-spw-tuning-surface="true"][data-site-settings-scope],
+    [data-spw-tuning-surface="true"][data-spw-affordance="tune"],
+    [data-spw-tuning-surface="true"][data-site-settings-panel],
+    [data-spw-tuning-surface="true"].vibe-widget
+  ) {
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--tuning-pulse-color) 12%, transparent),
+    inset 3.2rem 0 0 -3rem color-mix(in srgb, var(--tuning-pulse-color) 6%, transparent);
+}
+
+:where(html[data-spw-tuning-discoverability="ambient"], html[data-spw-tuning-discoverability="revealed"])
+  :where([data-spw-tuning-surface="true"]:is(:hover, :focus-within)) {
+  border-inline-start-color: color-mix(in srgb, var(--tuning-pulse-color) 38%, transparent);
+}
+
+/* Corner marginalia sigils (revealed mode) */
+:where(.spw-tuning-marginalia) {
+  position: absolute;
+  inset-block-start: 0.42rem;
+  inset-inline-end: 0.5rem;
+  z-index: 2;
+  display: inline-flex;
+  gap: 0.22rem;
+  align-items: center;
+  padding: 0.12rem 0.34rem;
+  border-radius: 999px;
+  border: 1px dashed color-mix(in srgb, var(--tuning-pulse-color) 28%, transparent);
+  background: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.92)) 88%, var(--tuning-pulse-color) 12%);
+  color: color-mix(in srgb, var(--tuning-pulse-color) 72%, var(--ink) 28%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  opacity: var(--tuning-marginalia-opacity, 0.5);
+  pointer-events: none;
+  text-transform: uppercase;
+}
+
+:where([data-spw-tuning-pulse="true"]) {
+  animation: spw-tuning-pulse 1.1s var(--ease-mechanical, ease);
+}
+
+@keyframes spw-tuning-pulse {
+  0%, 100% {
+    box-shadow: inset 0 0 0 0 transparent;
+  }
+  38% {
+    box-shadow:
+      inset 0 0 0 1px color-mix(in srgb, var(--tuning-pulse-color) 34%, transparent),
+      0 0 0 6px color-mix(in srgb, var(--tuning-pulse-color) 12%, transparent);
+  }
+}
+
+/* Shell lexicon strip — reading weather vocabulary in the header menu */
+:where(.spw-tuning-lexicon-strip) {
+  display: grid;
+  gap: 0.38rem;
+  inline-size: 100%;
+  padding: 0.48rem 0.55rem 0.55rem;
+  border-block-start: 1px solid color-mix(in srgb, var(--spw-shell-chrome-accent-local, var(--active-op-color)) 14%, transparent);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 92%, var(--active-op-color) 8%), transparent 72%);
+}
+
+:where(.spw-shell-tools-disclosure:not([open]) .spw-tuning-lexicon-strip) {
+  display: none;
+}
+
+:where(.spw-tuning-lexicon-strip__kicker) {
+  margin: 0;
+  color: var(--ink-soft);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+:where(.spw-tuning-lexicon-strip__chips) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.34rem;
+}
+
+:where(.spw-tuning-lexicon-chip) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+  min-block-size: 1.45rem;
+  padding: 0.14rem 0.42rem;
+  border: 1px solid color-mix(in srgb, var(--active-op-color) 18%, var(--line));
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-strong) 90%, var(--active-op-color) 10%);
+  color: var(--ink);
+  font-size: 0.62rem;
+  line-height: 1.1;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+:where(.spw-tuning-lexicon-chip__sigil) {
+  opacity: 0.78;
+}
+
+:where(.spw-tuning-lexicon-strip__meta) {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.62rem;
+  line-height: 1.35;
+}
+
+:where(.spw-tuning-lexicon-strip__actions) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.34rem;
+  align-items: center;
+}
+
+:where(.spw-tuning-lexicon-strip__actions .spw-shell-utility-button) {
+  min-block-size: 1.5rem;
+  padding-inline: 0.5rem;
+  font-size: 0.58rem;
+}
+
+/* Settings route vocabulary atlas */
+:where(body[data-spw-surface="settings"] .spw-tuning-vocabulary) {
+  display: grid;
+  gap: 0.65rem;
+  margin-block: 0.85rem 0.2rem;
+}
+
+:where(body[data-spw-surface="settings"] .spw-tuning-vocabulary__grid) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  gap: 0.55rem;
+}
+
+:where(body[data-spw-surface="settings"] .spw-tuning-vocabulary-card) {
+  display: grid;
+  gap: 0.28rem;
+  padding: 0.72rem 0.82rem;
+  border: 1px solid color-mix(in srgb, var(--active-op-color) 14%, var(--line));
+  border-radius: calc(var(--shape-surface, 10px) - 2px);
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--active-op-color) 6%, var(--surface-strong)), transparent 58%),
+    var(--surface-strong);
+}
+
+:where(body[data-spw-surface="settings"] .spw-tuning-vocabulary-card__topline) {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+}
+
+:where(body[data-spw-surface="settings"] .spw-tuning-vocabulary-card__sigil) {
+  font-size: 0.82rem;
+  opacity: 0.82;
+}
+
+:where(body[data-spw-surface="settings"] .spw-tuning-vocabulary-card strong) {
+  font-size: 0.92rem;
+}
+
+:where(body[data-spw-surface="settings"] .spw-tuning-vocabulary-card p) {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+:where(body[data-spw-surface="settings"] .spw-tuning-vocabulary-card__relation) {
+  color: color-mix(in srgb, var(--active-op-color) 58%, var(--ink-soft) 42%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}

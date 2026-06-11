@@ -3280,15 +3280,25 @@ html[data-spw-base-metamaterial="matte"] .spw-discovery-notice .spw-discovery-no
   color: var(--ink, rgba(14, 18, 20, 0.92));
   font-size: var(--text-size-xs, 0.82rem);
   overflow-wrap: anywhere;
+  letter-spacing: 0.01em;
+  transition: color var(--spw-control-transition-fast, 120ms ease);
+}
+
+.site-footer__spell-preview[data-spw-spell-state="draft"] .site-footer__spell-preview-meta {
+  color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 58%, var(--component-accent, var(--active-op-color, var(--teal))) 42%);
+}
+
+.site-footer__cauldron[data-spw-cauldron-state="spell-ready"] .site-footer__spell-preview {
+  border-color: color-mix(in srgb, var(--op-action-color, var(--teal-dark)) 28%, transparent);
 }
 
 /* Visual state reflection on footer cauldron (data-spw-cauldron-phase from computeCauldronPhase + sync).
    Improves state UX discoverability: resonant/mature states get subtle "charged" accent/emphasis so the garden feels alive and tended.
    Compact, uses existing tokens, no new heavy rules. */
-.site-footer__cauldron[data-spw-cauldron-phase="resonant"] {
+.site-footer__cauldron[data-spw-cauldron-garden-phase="resonant"] {
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 18%, transparent), var(--card-shadow);
 }
-.site-footer__cauldron[data-spw-cauldron-phase="mature"] {
+.site-footer__cauldron[data-spw-cauldron-garden-phase="mature"] {
   border-color: color-mix(in srgb, var(--op-action-color, var(--teal-dark)) 24%, var(--line));
 }
 .site-footer__cauldron[data-spw-cauldron-phase="empty"] {
@@ -3550,12 +3560,18 @@ html[data-spw-base-metamaterial="matte"] .spw-discovery-notice .spw-discovery-no
   border-color: color-mix(in srgb, var(--line, rgba(0,0,0,0.1)) 42%, transparent);
   color: color-mix(in srgb, var(--ink-soft, #555) 68%, transparent);
 }
-.site-footer__cauldron-actions .operator-chip:hover,
-.site-footer__cauldron-actions .operator-chip:focus-visible {
+.site-footer__cauldron-actions .operator-chip:hover:not(:disabled),
+.site-footer__cauldron-actions .operator-chip:focus-visible:not(:disabled) {
   background: color-mix(in srgb, var(--surface-strong, #f8f5f0) 90%, var(--component-accent, #2a6b6b) 10%);
   border-color: color-mix(in srgb, var(--component-accent, #2a6b6b) 25%, transparent);
   color: var(--ink, #111);
   transform: translateY(-1px);
+}
+
+.site-footer__cauldron[data-spw-cauldron-state="primed"] .operator-chip[data-spw-action-tier="primary"]:not(:disabled),
+.site-footer__cauldron[data-spw-cauldron-discoverability="compose-next"] .operator-chip[data-spw-cauldron-action="mix"]:not(:disabled) {
+  border-color: color-mix(in srgb, var(--component-accent, #2a6b6b) 38%, transparent);
+  color: color-mix(in srgb, var(--ink, #111) 78%, var(--component-accent, #2a6b6b) 22%);
 }
 @media (min-width: 640px) {
   .site-footer__cauldron-actions .operator-chip {
@@ -3575,8 +3591,8 @@ html[data-spw-base-metamaterial="matte"] .spw-discovery-notice .spw-discovery-no
   filter: grayscale(0.6) saturate(0.4);
 }
 
-.site-footer__cauldron[data-spw-cauldron-phase="mature"],
-.site-footer__cauldron[data-spw-cauldron-phase="resonant"] {
+.site-footer__cauldron[data-spw-cauldron-garden-phase="mature"],
+.site-footer__cauldron[data-spw-cauldron-garden-phase="resonant"] {
   border-color: color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 18%, var(--line, rgba(14,18,20,0.14)) 82%);
 }
 
@@ -3632,9 +3648,10 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
 .site-footer__cauldron [data-spw-cauldron-action="plant"] {
   transition: opacity 120ms ease, filter 120ms ease;
 }
-.site-footer__cauldron[data-spw-cauldron-phase="gathering"] [data-spw-cauldron-action="prune"],
-.site-footer__cauldron[data-spw-cauldron-phase="resonant"] [data-spw-cauldron-action="prune"] {
-  opacity: 0.9;
+.site-footer__cauldron[data-spw-cauldron-garden-phase="mature"] [data-spw-cauldron-action="prune"],
+.site-footer__cauldron[data-spw-cauldron-garden-phase="decayed"] [data-spw-cauldron-action="prune"] {
+  opacity: 1;
+  border-color: color-mix(in srgb, var(--op-action-color, var(--teal-dark)) 34%, transparent);
 }
 
 [data-spw-cauldron-mirror] {

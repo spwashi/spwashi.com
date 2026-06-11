@@ -1,0 +1,205 @@
+/* ==========================================================================
+   components/gesture-anatomy.css
+   --------------------------------------------------------------------------
+   Slot anatomy rails and gesture-contract learnability — how components
+   invite tap, hold, and inspect without rewriting content.
+   ========================================================================== */
+
+:where(html[data-spw-cognitive-handles="on"], html[data-spw-tuning-discoverability="revealed"]) {
+  --gesture-anatomy-opacity: 0.72;
+  --gesture-anatomy-size: 0.58rem;
+}
+
+:where(html[data-spw-tuning-discoverability="ambient"]) {
+  --gesture-anatomy-opacity: 0.38;
+  --gesture-anatomy-size: 0.54rem;
+}
+
+/* Slot role labels on framed components */
+:where(
+  html[data-spw-cognitive-handles="on"],
+  html[data-spw-tuning-discoverability="ambient"],
+  html[data-spw-tuning-discoverability="revealed"]
+) :where(
+  .site-frame [data-spw-slot],
+  .frame-card [data-spw-slot],
+  .vibe-widget [data-spw-slot]
+) {
+  position: relative;
+}
+
+:where(
+  html[data-spw-cognitive-handles="on"],
+  html[data-spw-tuning-discoverability="revealed"]
+) :where(
+  .site-frame [data-spw-slot]:not([data-spw-slot=""]),
+  .frame-card [data-spw-slot]:not([data-spw-slot=""])
+) {
+  outline: 1px dashed color-mix(in srgb, var(--active-op-color) 14%, transparent);
+  outline-offset: 3px;
+}
+
+:where(
+  html[data-spw-cognitive-handles="on"],
+  html[data-spw-tuning-discoverability="ambient"],
+  html[data-spw-tuning-discoverability="revealed"]
+) :where([data-spw-slot-label])::before {
+  content: attr(data-spw-slot-label);
+  position: absolute;
+  inset-block-start: -0.55rem;
+  inset-inline-start: 0;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.08rem 0.34rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--active-op-color) 20%, transparent);
+  background: color-mix(in srgb, var(--surface-strong) 90%, var(--active-op-color) 10%);
+  color: color-mix(in srgb, var(--active-op-color) 62%, var(--ink-soft) 38%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--gesture-anatomy-size, 0.56rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  opacity: var(--gesture-anatomy-opacity, 0.5);
+  pointer-events: none;
+  text-transform: uppercase;
+}
+
+/* Vertical anatomy stack rail on multi-slot frames */
+:where(
+  html[data-spw-cognitive-handles="on"],
+  html[data-spw-tuning-discoverability="revealed"]
+) :where(.site-frame[data-spw-anatomy-stack="true"]) {
+  border-inline-start: 3px solid color-mix(
+    in srgb,
+    var(--active-op-color) 16%,
+    transparent
+  );
+  padding-inline-start: 0.35rem;
+}
+
+:where(.spw-anatomy-stack-rail) {
+  display: none;
+  flex-direction: column;
+  gap: 0.22rem;
+  margin-block: 0.2rem 0.45rem;
+  padding: 0.38rem 0.48rem;
+  border: 1px dashed color-mix(in srgb, var(--active-op-color) 16%, transparent);
+  border-radius: calc(var(--shape-component, 6px) - 1px);
+  background: color-mix(in srgb, var(--surface-strong) 94%, var(--active-op-color) 6%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.58rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+:where(
+  html[data-spw-cognitive-handles="on"],
+  html[data-spw-tuning-discoverability="revealed"]
+) :where(.spw-anatomy-stack-rail) {
+  display: flex;
+}
+
+:where(html[data-spw-tuning-discoverability="ambient"]) :where(.spw-anatomy-stack-rail) {
+  display: flex;
+  opacity: 0.62;
+  border-style: dotted;
+}
+
+:where(.spw-anatomy-stack-rail__item) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32rem;
+  color: var(--ink-soft);
+}
+
+:where(.spw-anatomy-stack-rail__item[data-spw-slot-active="true"]) {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+:where(.spw-anatomy-stack-rail__sigil) {
+  opacity: 0.72;
+}
+
+/* Gesture contract hints */
+:where([data-spw-gesture-hint]) {
+  position: relative;
+}
+
+:where(
+  html[data-spw-cognitive-handles="on"],
+  html[data-spw-tuning-discoverability="ambient"],
+  html[data-spw-tuning-discoverability="revealed"]
+) :where([data-spw-gesture-hint]:is(:hover, :focus-visible, [data-spw-gesture="charging"], [data-spw-gesture="armed"], [data-spw-gesture="sustained"]))::after {
+  content: attr(data-spw-gesture-hint);
+  position: absolute;
+  z-index: 4;
+  inset-block-end: calc(100% + 0.28rem);
+  inset-inline-start: 50%;
+  translate: -50% 0;
+  display: inline-flex;
+  max-inline-size: 14rem;
+  padding: 0.16rem 0.42rem;
+  border: 1px solid color-mix(in srgb, var(--active-op-color) 24%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-strong) 92%, var(--active-op-color) 8%);
+  box-shadow: 0 4px 14px rgba(14, 18, 20, 0.08);
+  color: var(--ink);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.58rem;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  opacity: 0.96;
+  pointer-events: none;
+  text-align: center;
+  white-space: nowrap;
+}
+
+:where(.spw-living-term[data-spw-gesture-hint])::after {
+  content: attr(data-spw-gesture-hint);
+  right: auto;
+  left: 0;
+  top: calc(100% + 0.12rem);
+  translate: none;
+  font-size: 0.54rem;
+  opacity: 0;
+  transition: opacity 140ms var(--ease-mechanical, ease);
+}
+
+:where(
+  .spw-living-term[data-spw-gesture-hint]:is(:hover, :focus-visible, [data-spw-gesture="charging"], [data-spw-gesture="armed"])
+)::after {
+  opacity: 0.88;
+  color: color-mix(in srgb, var(--active-op-color) 70%, var(--ink) 30%);
+}
+
+/* Gesture state anatomy on interactive cards */
+:where(
+  [data-spw-gesture="charging"],
+  [data-spw-gesture="armed"],
+  [data-spw-gesture="sustained"]
+) {
+  --gesture-anatomy-ring: color-mix(in srgb, var(--active-op-color) 28%, transparent);
+}
+
+:where([data-spw-gesture="charging"]) {
+  box-shadow:
+    inset 0 0 0 1px var(--gesture-anatomy-ring, transparent),
+    0 0 0 3px color-mix(in srgb, var(--active-op-color) 10%, transparent);
+}
+
+:where([data-spw-gesture="armed"]) {
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--active-op-color) 34%, transparent),
+    0 0 0 4px color-mix(in srgb, var(--active-op-color) 14%, transparent);
+}
+
+:where([data-spw-gesture="sustained"]) {
+  background-image: linear-gradient(
+    118deg,
+    color-mix(in srgb, var(--active-op-color) 7%, transparent),
+    transparent 46%
+  );
+}

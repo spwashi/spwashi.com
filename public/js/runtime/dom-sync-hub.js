@@ -1,0 +1,129 @@
+/**
+ * dom-sync-hub.js
+ * --------------------------------------------------------------------------
+ * Debounced DOM projection hub — one MutationObserver + settings coalescing
+ * for tuning-discovery, gesture-anatomy, and learnability-ledger.
+ * --------------------------------------------------------------------------
+ */
+
+const TASK_ORDER = Object.freeze([
+  'tuning-discovery',
+  'gesture-anatomy',
+  'learnability-ledger',
+]);
+
+const ATTRIBUTE_FILTER = Object.freeze([
+  'data-spw-feature',
+  'data-spw-gesture-contract',
+  'data-spw-interaction-contract',
+  'data-spw-slot',
+  'data-site-settings-scope',
+  'data-spw-affordance',
+  'data-site-settings-panel',
+]);
+
+const tasks = new Map();
+let observer = null;
+let rafId = 0;
+let pendingTasks = null;
+let settingsBound = false;
+let settingsCleanup = null;
+let attachedCtx = null;
+
+function runTaskBatch(ids) {
+  const ordered = TASK_ORDER.filter((id) => ids.has(id));
+  const trailing = [...ids].filter((id) => !TASK_ORDER.includes(id));
+  for (const id of [...ordered, ...trailing]) {
+    try {
+      tasks.get(id)?.();
+    } catch (error) {
+      console.warn(`[dom-sync-hub] task failed: ${id}`, error);
+    }
+  }
+}
+
+function flushScheduledTasks() {
+  rafId = 0;
+  const batch = pendingTasks;
+  pendingTasks = null;
+  if (batch && batch.size) {
+    runTaskBatch(batch);
+    return;
+  }
+  runTaskBatch(new Set(tasks.keys()));
+}
+
+export function scheduleDomSync(scope = 'all') {
+  if (scope === 'all') {
+    pendingTasks = null;
+  } else if (pendingTasks instanceof Set) {
+    pendingTasks.add(scope);
+  } else {
+    pendingTasks = new Set([scope]);
+  }
+
+  if (rafId) return;
+  rafId = window.requestAnimationFrame(flushScheduledTasks);
+}
+
+function ensureObserver(ctx = attachedCtx) {
+  if (observer) return observer;
+  observer = new MutationObserver(() => scheduleDomSync('all'));
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true,
+    attributes: true,
+    attributeFilter: [...ATTRIBUTE_FILTER],
+  });
+  ctx?.addObserver?.(observer);
+  attachedCtx = ctx || attachedCtx;
+  return observer;
+}
+
+function bindSettingsRefresh() {
+  if (settingsBound) return;
+  settingsBound = true;
+  const onSettings = () => scheduleDomSync('all');
+  document.addEventListener('spw:settings:changed', onSettings);
+  document.addEventListener('spw:settings-change', onSettings);
+  settingsCleanup = () => {
+    document.removeEventListener('spw:settings:changed', onSettings);
+    document.removeEventListener('spw:settings-change', onSettings);
+    settingsBound = false;
+    settingsCleanup = null;
+  };
+}
+
+export function registerDomSyncTask(id, run, ctx = null) {
+  if (!id || typeof run !== 'function') return () => {};
+  tasks.set(id, run);
+  bindSettingsRefresh();
+  ensureObserver(ctx);
+  run();
+  return () => {
+    tasks.delete(id);
+    if (!tasks.size) {
+      observer?.disconnect();
+      observer = null;
+      settingsCleanup?.();
+      if (rafId) {
+        window.cancelAnimationFrame(rafId);
+        rafId = 0;
+      }
+      pendingTasks = null;
+    }
+  };
+}
+
+export function destroyDomSyncHub() {
+  observer?.disconnect();
+  observer = null;
+  tasks.clear();
+  settingsCleanup?.();
+  if (rafId) {
+    window.cancelAnimationFrame(rafId);
+    rafId = 0;
+  }
+  pendingTasks = null;
+  attachedCtx = null;
+}

@@ -5,6 +5,16 @@ import {
   writeDatasetValue,
   writeRuntimeDatasetValues,
 } from '/public/js/kernel/dom-contracts.js';
+import { PALETTE_RESONANCE_OPTIONS } from '/public/js/interface/palette-resonance.js';
+import {
+  TUNING_LEXICON,
+  describeSettingValue,
+  getSiteSettings,
+} from '/public/js/kernel/site-settings.js';
+import {
+  revealTuningSurfaces,
+  TUNING_SURFACES_EVENT,
+} from '/public/js/runtime/tuning-discovery.js';
 
 const EVENT_NAMES = Object.freeze({
   INTENT: 'spw:shell-menu-intent',
@@ -140,7 +150,11 @@ const UTILITY_LABELS = Object.freeze({
     'clear-matte': 'Clear',
     'toggle-cauldron-visibility': 'Vis',
     'open-satchel': 'Satchel',
-    settings: 'Style',
+    settings: 'Atlas',
+    'reveal-tuners': 'Tuners',
+    'cycle-resonance': 'Bias',
+    'cycle-color-tuner': 'Guard',
+    'cycle-theme-pack': 'Pack',
   }),
   regular: Object.freeze({
     'color-light': 'Light mode',
@@ -151,9 +165,42 @@ const UTILITY_LABELS = Object.freeze({
     'clear-matte': 'Clear contrast',
     'toggle-cauldron-visibility': 'Cauldron vis',
     'open-satchel': 'State satchel',
-    settings: 'Appearance',
+    settings: 'Settings atlas',
+    'reveal-tuners': 'Reveal tuners',
+    'cycle-resonance': 'Cycle resonance',
+    'cycle-color-tuner': 'Cycle color guard',
+    'cycle-theme-pack': 'Cycle theme pack',
   }),
 });
+
+const TUNING_LEXICON_SHELL_ORDER = Object.freeze([
+  'lighting',
+  'atmosphere',
+  'resonance',
+  'memory',
+  'vocabulary',
+  'posture',
+]);
+
+const THEME_PACK_CYCLE = Object.freeze([
+  'neutral-paper',
+  'oxide-ledger',
+  'electric-studio',
+  'ritual-vellum',
+  'copper-brace',
+  'glass-console',
+]);
+
+const COLOR_TUNER_CYCLE = Object.freeze(['soft', 'balanced', 'guarded']);
+
+function cycleSettingValue(key, options, settings = getSiteSettings()) {
+  const current = settings[key];
+  const index = Math.max(0, options.indexOf(current));
+  const next = options[(index + 1) % options.length];
+  if (window.spwSettings?.save) window.spwSettings.save({ [key]: next });
+  else if (window.spwSettings?.set) window.spwSettings.set({ [key]: next });
+  return next;
+}
 const FOCUSABLE_SELECTOR = [
   'a[href]',
   'button:not([disabled])',
@@ -732,11 +779,142 @@ function setToolsDisclosureOpen(disclosure, open) {
   }
 }
 
+function upgradeUtilityRow(row) {
+  if (!(row instanceof HTMLElement)) return;
+
+  if (!row.querySelector('[data-spw-shell-action="reveal-tuners"]')) {
+    const cluster = document.createElement('div');
+    cluster.className = 'spw-utility-cluster';
+    cluster.dataset.spwUtilityCluster = 'tuning-discovery';
+    cluster.dataset.spwUtilitySize = 'single';
+    cluster.setAttribute('role', 'group');
+    cluster.setAttribute('aria-label', 'Reveal embedded tuners on this page');
+    cluster.dataset.spwLocality = 'high';
+    cluster.dataset.spwComponentLocality = 'tuning-surfaces';
+    cluster.dataset.spwPhysicsReason = 'memory-gamified';
+    cluster.dataset.spwModuleEvaluates = 'semantic-density tuning-surfaces';
+    cluster.innerHTML = `
+      <button type="button" class="spw-shell-utility-button" data-spw-shell-action="reveal-tuners" data-spw-utility-size="text" aria-label="Reveal embedded tuning surfaces on this page" title="Reveal or jump to tuning surfaces embedded in this page">
+        <span class="spw-utility-sigil" aria-hidden="true">◇</span>
+        <span class="spw-utility-argument"></span>
+      </button>
+    `;
+    row.append(cluster);
+  }
+
+  if (!row.querySelector('[data-spw-shell-theme-utility]')) {
+    const themeCluster = document.createElement('div');
+    themeCluster.className = 'spw-utility-cluster';
+    themeCluster.dataset.spwUtilityCluster = 'theme-packs';
+    themeCluster.dataset.spwUtilitySize = 'pair';
+    themeCluster.setAttribute('role', 'group');
+    themeCluster.setAttribute('aria-label', 'Theme pack quick picks');
+    themeCluster.innerHTML = `
+      <div class="spw-shell-theme-utility" data-spw-shell-theme-utility role="group" aria-label="Theme pack swatches"></div>
+      <button type="button" class="spw-shell-utility-button" data-spw-shell-action="cycle-theme-pack" data-spw-utility-size="icon" aria-label="Cycle theme pack" title="Cycle theme pack">
+        <span class="spw-utility-sigil" aria-hidden="true">☼</span>
+        <span class="spw-utility-argument"></span>
+      </button>
+    `;
+    const colorCluster = row.querySelector('[data-spw-utility-cluster="color-mode"]');
+    if (colorCluster) colorCluster.insertAdjacentElement('afterend', themeCluster);
+    else row.prepend(themeCluster);
+  }
+
+  if (!row.querySelector('[data-spw-shell-action="cycle-resonance"]')) {
+    const resonanceCluster = document.createElement('div');
+    resonanceCluster.className = 'spw-utility-cluster';
+    resonanceCluster.dataset.spwUtilityCluster = 'palette-resonance';
+    resonanceCluster.dataset.spwUtilitySize = 'pair';
+    resonanceCluster.setAttribute('role', 'group');
+    resonanceCluster.setAttribute('aria-label', 'Palette resonance bias');
+    resonanceCluster.innerHTML = `
+      <div class="spw-shell-resonance-utility" data-spw-shell-resonance-utility aria-hidden="true">
+        <span class="palette-probe-chip palette-probe-chip--shell"></span>
+        <span class="palette-probe-chip palette-probe-chip--shell"></span>
+        <span class="palette-probe-chip palette-probe-chip--shell"></span>
+        <span class="palette-probe-chip palette-probe-chip--shell"></span>
+      </div>
+      <button type="button" class="spw-shell-utility-button" data-spw-shell-action="cycle-resonance" data-spw-utility-size="text" aria-label="Cycle palette resonance bias" title="Cycle palette resonance bias">
+        <span class="spw-utility-sigil" aria-hidden="true">◎</span>
+        <span class="spw-utility-argument"></span>
+      </button>
+    `;
+    row.querySelector('[data-spw-utility-cluster="theme-packs"]')?.insertAdjacentElement('afterend', resonanceCluster)
+      || row.append(resonanceCluster);
+  } else if (!row.querySelector('[data-spw-shell-resonance-utility]')) {
+    const resonanceCluster = row.querySelector('[data-spw-utility-cluster="palette-resonance"]');
+    const cycleButton = row.querySelector('[data-spw-shell-action="cycle-resonance"]');
+    if (resonanceCluster instanceof HTMLElement && cycleButton instanceof HTMLElement) {
+      resonanceCluster.dataset.spwUtilitySize = 'pair';
+      const utility = document.createElement('div');
+      utility.className = 'spw-shell-resonance-utility';
+      utility.dataset.spwShellResonanceUtility = '';
+      utility.setAttribute('aria-hidden', 'true');
+      utility.innerHTML = `
+        <span class="palette-probe-chip palette-probe-chip--shell"></span>
+        <span class="palette-probe-chip palette-probe-chip--shell"></span>
+        <span class="palette-probe-chip palette-probe-chip--shell"></span>
+        <span class="palette-probe-chip palette-probe-chip--shell"></span>
+      `;
+      cycleButton.insertAdjacentElement('beforebegin', utility);
+    }
+  }
+
+  if (!row.querySelector('[data-spw-shell-action="cycle-color-tuner"]')) {
+    const tunerCluster = document.createElement('div');
+    tunerCluster.className = 'spw-utility-cluster';
+    tunerCluster.dataset.spwUtilityCluster = 'color-tuner';
+    tunerCluster.dataset.spwUtilitySize = 'single';
+    tunerCluster.setAttribute('role', 'group');
+    tunerCluster.setAttribute('aria-label', 'Color depth guard');
+    tunerCluster.innerHTML = `
+      <button type="button" class="spw-shell-utility-button" data-spw-shell-action="cycle-color-tuner" data-spw-utility-size="text" aria-label="Cycle color depth guard" title="Cycle color depth guard (soft, balanced, guarded)">
+        <span class="spw-utility-sigil" aria-hidden="true">◐</span>
+        <span class="spw-utility-argument"></span>
+      </button>
+    `;
+    row.querySelector('[data-spw-utility-cluster="palette-resonance"]')?.insertAdjacentElement('afterend', tunerCluster)
+      || row.append(tunerCluster);
+  }
+
+  if (!row.querySelector('[data-spw-tuning-lexicon]')) {
+    const strip = document.createElement('div');
+    strip.className = 'spw-tuning-lexicon-strip';
+    strip.dataset.spwTuningLexicon = '';
+    strip.innerHTML = `
+      <p class="spw-tuning-lexicon-strip__kicker">Reading weather</p>
+      <div class="spw-tuning-lexicon-strip__chips" data-spw-tuning-lexicon-chips></div>
+      <p class="spw-tuning-lexicon-strip__meta" data-spw-tuning-lexicon-meta></p>
+      <div class="spw-tuning-lexicon-strip__actions">
+        <button type="button" class="spw-shell-utility-button" data-spw-shell-action="reveal-tuners" data-spw-utility-size="text">Reveal on page</button>
+        <a class="spw-shell-utility-button" data-spw-shell-action="settings" data-spw-utility-size="text" href="/settings/#runtime-preferences">Full observatory</a>
+      </div>
+    `;
+    row.append(strip);
+  }
+}
+
 function ensureUtilityRow(header) {
   let row = header.querySelector('.spw-shell-utility-row');
-  if (row instanceof HTMLElement) return row;
+  if (row instanceof HTMLElement) {
+    upgradeUtilityRow(row);
+    return row;
+  }
 
   let disclosure = header.querySelector('.spw-shell-tools-disclosure');
+  if (disclosure instanceof HTMLDetailsElement) {
+    const summary = disclosure.querySelector('.spw-shell-tools-summary');
+    const label = summary?.querySelector('.spw-shell-tools-summary__label');
+    const glyph = summary?.querySelector('.spw-shell-tools-summary__knob-glyph');
+    if (summary instanceof HTMLElement) {
+      summary.setAttribute('aria-label', 'Open reading weather controls for lighting, material, resonance, and page-local tuners');
+      summary.title = 'Reading weather: lighting, material, resonance, and embedded tuners on this page';
+    }
+    if (label) label.textContent = 'Weather';
+    if (glyph) glyph.textContent = '◎';
+  }
+
   if (!(disclosure instanceof HTMLDetailsElement)) {
     disclosure = document.createElement('details');
     disclosure.className = 'spw-shell-tools-disclosure';
@@ -746,13 +924,13 @@ function ensureUtilityRow(header) {
     const summary = document.createElement('summary');
     summary.className = 'spw-shell-tools-summary';
     summary.setAttribute('aria-expanded', 'false');
-    summary.setAttribute('aria-label', 'Open display controls for text size, color, contrast, layout, and inspection');
-    summary.title = 'Display controls: text size, color, contrast, layout, and inspection';
+    summary.setAttribute('aria-label', 'Open reading weather controls for lighting, material, resonance, and page-local tuners');
+    summary.title = 'Reading weather: lighting, material, resonance, and embedded tuners on this page';
     summary.innerHTML = `
       <span class="spw-shell-tools-summary__knob" aria-hidden="true">
-        <span class="spw-shell-tools-summary__knob-glyph">Aa</span>
+        <span class="spw-shell-tools-summary__knob-glyph">◎</span>
       </span>
-      <span class="spw-shell-tools-summary__label">Display</span>
+      <span class="spw-shell-tools-summary__label">Weather</span>
     `;
     disclosure.appendChild(summary);
   }
@@ -760,7 +938,7 @@ function ensureUtilityRow(header) {
   row = document.createElement('div');
   row.className = 'spw-shell-utility-row';
   row.setAttribute('role', 'group');
-  row.setAttribute('aria-label', 'Quick reading and display controls');
+  row.setAttribute('aria-label', 'Reading weather and quick tuning controls');
   // Granular architecture exposure for vocabulary, component locality (settings/menus), and flexible physics reason.
   // These attrs + clusters let CSS, catalog, and interns relate the shell controls directly to data structures
   // (baseMetamaterial, highContrast, fontScale, interaction state) without taking the visuals for granted.
@@ -795,6 +973,31 @@ function ensureUtilityRow(header) {
         </button>
         <button type="button" class="spw-shell-utility-button" data-spw-shell-action="color-dark" data-spw-utility-size="icon" data-site-setting-set="colorMode:dark" aria-label="Use dark mode" title="Use dark mode">
           <span class="spw-utility-sigil" aria-hidden="true">☾</span>
+          <span class="spw-utility-argument"></span>
+        </button>
+      </div>
+      <div class="spw-utility-cluster" data-spw-utility-cluster="theme-packs" data-spw-utility-size="pair" role="group" aria-label="Theme pack quick picks" data-spw-locality="medium" data-spw-component-locality="shell-theme" data-spw-physics-reason="lighting-tuner">
+        <div class="spw-shell-theme-utility" data-spw-shell-theme-utility role="group" aria-label="Theme pack swatches"></div>
+        <button type="button" class="spw-shell-utility-button" data-spw-shell-action="cycle-theme-pack" data-spw-utility-size="icon" aria-label="Cycle theme pack" title="Cycle theme pack">
+          <span class="spw-utility-sigil" aria-hidden="true">☼</span>
+          <span class="spw-utility-argument"></span>
+        </button>
+      </div>
+      <div class="spw-utility-cluster" data-spw-utility-cluster="palette-resonance" data-spw-utility-size="pair" role="group" aria-label="Palette resonance bias" data-spw-locality="medium" data-spw-component-locality="shell-resonance" data-spw-physics-reason="feedback-tuner">
+        <div class="spw-shell-resonance-utility" data-spw-shell-resonance-utility aria-hidden="true">
+          <span class="palette-probe-chip palette-probe-chip--shell"></span>
+          <span class="palette-probe-chip palette-probe-chip--shell"></span>
+          <span class="palette-probe-chip palette-probe-chip--shell"></span>
+          <span class="palette-probe-chip palette-probe-chip--shell"></span>
+        </div>
+        <button type="button" class="spw-shell-utility-button" data-spw-shell-action="cycle-resonance" data-spw-utility-size="text" aria-label="Cycle palette resonance bias" title="Cycle palette resonance bias">
+          <span class="spw-utility-sigil" aria-hidden="true">◎</span>
+          <span class="spw-utility-argument"></span>
+        </button>
+      </div>
+      <div class="spw-utility-cluster" data-spw-utility-cluster="color-tuner" data-spw-utility-size="single" role="group" aria-label="Color depth guard" data-spw-locality="medium" data-spw-component-locality="shell-color-tuner" data-spw-physics-reason="clear-contrast-safeguard">
+        <button type="button" class="spw-shell-utility-button" data-spw-shell-action="cycle-color-tuner" data-spw-utility-size="text" aria-label="Cycle color depth guard" title="Cycle color depth guard (soft, balanced, guarded)">
+          <span class="spw-utility-sigil" aria-hidden="true">◐</span>
           <span class="spw-utility-argument"></span>
         </button>
       </div>
@@ -837,6 +1040,21 @@ function ensureUtilityRow(header) {
           <span class="spw-utility-sigil" aria-hidden="true">⧉</span>
           <span class="spw-utility-argument"></span>
         </button>
+      </div>
+      <div class="spw-utility-cluster" data-spw-utility-cluster="tuning-discovery" data-spw-utility-size="single" role="group" aria-label="Reveal embedded tuners on this page" data-spw-locality="high" data-spw-component-locality="tuning-surfaces" data-spw-physics-reason="memory-gamified" data-spw-module-evaluates="semantic-density tuning-surfaces">
+        <button type="button" class="spw-shell-utility-button" data-spw-shell-action="reveal-tuners" data-spw-utility-size="text" aria-label="Reveal embedded tuning surfaces on this page" title="Reveal or jump to tuning surfaces embedded in this page">
+          <span class="spw-utility-sigil" aria-hidden="true">◇</span>
+          <span class="spw-utility-argument"></span>
+        </button>
+      </div>
+      <div class="spw-tuning-lexicon-strip" data-spw-tuning-lexicon>
+        <p class="spw-tuning-lexicon-strip__kicker">Reading weather</p>
+        <div class="spw-tuning-lexicon-strip__chips" data-spw-tuning-lexicon-chips></div>
+        <p class="spw-tuning-lexicon-strip__meta" data-spw-tuning-lexicon-meta></p>
+        <div class="spw-tuning-lexicon-strip__actions">
+          <button type="button" class="spw-shell-utility-button" data-spw-shell-action="reveal-tuners" data-spw-utility-size="text">Reveal on page</button>
+          <a class="spw-shell-utility-button" data-spw-shell-action="settings" data-spw-utility-size="text" href="/settings/#runtime-preferences">Full observatory</a>
+        </div>
       </div>
     `;
     // Append to head for global availability (or body); allows other code / pages to clone/modify the default template.
@@ -980,6 +1198,98 @@ function syncUtilityRow(row) {
     // Position and snapshot respect current field bias and material for consistent tunability.
     button.title = 'Open state satchel (drag to reposition in attention field; inspects cognitive/attentional physics, material tunability, wonder memory)';
   });
+
+  row.querySelectorAll('[data-spw-shell-action="reveal-tuners"]').forEach((button) => {
+    const arg = button.querySelector('.spw-utility-argument');
+    if (arg) arg.textContent = labels['reveal-tuners'];
+    const count = Number(document.documentElement.dataset.spwTuningSurfaceCount || 0);
+    button.title = count
+      ? `Reveal or jump to ${count} tuning surface${count === 1 ? '' : 's'} on this page`
+      : 'Enable tuning discoverability and jump to embedded controls';
+  });
+
+  syncThemeUtility(row);
+  syncTuningLexiconStrip(row);
+}
+
+function syncThemeUtility(row) {
+  if (!(row instanceof HTMLElement)) return;
+
+  const settings = getSiteSettings();
+  const compact = document.documentElement.dataset.spwViewportTier === 'compact'
+    || document.documentElement.dataset.spwPointerMode === 'coarse';
+  const labels = compact ? UTILITY_LABELS.compact : UTILITY_LABELS.regular;
+  const utility = row.querySelector('[data-spw-shell-theme-utility]');
+  if (utility instanceof HTMLElement) {
+    const currentIndex = Math.max(0, THEME_PACK_CYCLE.indexOf(settings.themePack));
+    const picks = [
+      THEME_PACK_CYCLE[(currentIndex + THEME_PACK_CYCLE.length - 1) % THEME_PACK_CYCLE.length],
+      THEME_PACK_CYCLE[currentIndex],
+      THEME_PACK_CYCLE[(currentIndex + 1) % THEME_PACK_CYCLE.length],
+    ];
+
+    utility.replaceChildren();
+    picks.forEach((pack) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'theme-pack-chip-btn';
+      button.dataset.siteSettingSet = `themePack:${pack}`;
+      button.dataset.themePackPreview = pack;
+      button.setAttribute('aria-label', `Choose ${describeSettingValue('themePack', pack)} theme`);
+      button.title = describeSettingValue('themePack', pack);
+      if (pack === settings.themePack) button.dataset.siteSettingActive = 'true';
+      utility.append(button);
+    });
+  }
+
+  row.querySelectorAll('[data-spw-shell-action="cycle-resonance"]').forEach((button) => {
+    const arg = button.querySelector('.spw-utility-argument');
+    if (arg) arg.textContent = describeSettingValue('paletteResonance', settings.paletteResonance);
+    button.title = `Resonance: ${describeSettingValue('paletteResonance', settings.paletteResonance)} (click to cycle)`;
+  });
+
+  row.querySelectorAll('[data-spw-shell-action="cycle-color-tuner"]').forEach((button) => {
+    const arg = button.querySelector('.spw-utility-argument');
+    if (arg) arg.textContent = describeSettingValue('colorTuner', settings.colorTuner);
+    button.title = `Color depth: ${describeSettingValue('colorTuner', settings.colorTuner)} (click to cycle)`;
+  });
+
+  row.querySelectorAll('[data-spw-shell-action="cycle-theme-pack"]').forEach((button) => {
+    const arg = button.querySelector('.spw-utility-argument');
+    if (arg) arg.textContent = compact ? labels['cycle-theme-pack'] : describeSettingValue('themePack', settings.themePack);
+    button.title = `Theme pack: ${describeSettingValue('themePack', settings.themePack)} (click to cycle)`;
+  });
+}
+
+function syncTuningLexiconStrip(row) {
+  if (!(row instanceof HTMLElement)) return;
+
+  const strip = row.querySelector('[data-spw-tuning-lexicon]');
+  const chipsHost = row.querySelector('[data-spw-tuning-lexicon-chips]');
+  const meta = row.querySelector('[data-spw-tuning-lexicon-meta]');
+  if (!(strip instanceof HTMLElement) || !(chipsHost instanceof HTMLElement)) return;
+
+  const settings = getSiteSettings();
+  chipsHost.replaceChildren();
+
+  TUNING_LEXICON_SHELL_ORDER.forEach((id) => {
+    const entry = TUNING_LEXICON[id];
+    if (!entry) return;
+    const value = settings[entry.key];
+    const chip = document.createElement('a');
+    chip.className = 'spw-tuning-lexicon-chip';
+    chip.href = `/settings/${entry.settingsAnchor || ''}`;
+    chip.title = `${entry.contentLink} (${entry.relation})`;
+    chip.innerHTML = `<span class="spw-tuning-lexicon-chip__sigil" aria-hidden="true">${entry.sigil}</span><span>${entry.label}: ${describeSettingValue(entry.key, value)}</span>`;
+    chipsHost.append(chip);
+  });
+
+  const count = Number(document.documentElement.dataset.spwTuningSurfaceCount || 0);
+  if (meta instanceof HTMLElement) {
+    meta.textContent = count
+      ? `${count} embedded tuning surface${count === 1 ? '' : 's'} on this page. Presentation shifts; content stays legible.`
+      : 'No embedded tuners here yet. Weather controls still shape how every route reads.';
+  }
 }
 
 function syncScrollState(header, state, nextScrollY = getScrollY()) {
@@ -1495,6 +1805,30 @@ export function initSpwShellDisclosure(options = {}) {
 
     if (action === 'settings') return;
 
+    if (action === 'reveal-tuners') {
+      revealTuningSurfaces();
+      syncUtilityRow(utilityRow);
+      return;
+    }
+
+    if (action === 'cycle-resonance') {
+      cycleSettingValue('paletteResonance', [...PALETTE_RESONANCE_OPTIONS]);
+      syncUtilityRow(utilityRow);
+      return;
+    }
+
+    if (action === 'cycle-theme-pack') {
+      cycleSettingValue('themePack', [...THEME_PACK_CYCLE]);
+      syncUtilityRow(utilityRow);
+      return;
+    }
+
+    if (action === 'cycle-color-tuner') {
+      cycleSettingValue('colorTuner', [...COLOR_TUNER_CYCLE]);
+      syncUtilityRow(utilityRow);
+      return;
+    }
+
     if (action === 'color-light' || action === 'color-dark') {
       // Delegated to central data-site-setting-set wiring (see bindStandaloneSettingTriggers + applySettingTrigger).
       // The settings:changed event (and our listener) will cause syncUtilityRow to update pressed states etc.
@@ -1686,6 +2020,8 @@ export function initSpwShellDisclosure(options = {}) {
   document.addEventListener('spw:settings:changed', handleSettingsChanged);
   document.addEventListener('spw:settings-change', handleSettingsChanged);
   document.addEventListener('spw:frame-change', handleSettingsChanged);
+  const handleTuningSurfacesUpdated = () => syncUtilityRow(utilityRow);
+  document.addEventListener(TUNING_SURFACES_EVENT, handleTuningSurfacesUpdated);
   navObserver.observe(navList, {
     childList: true,
     subtree: true,
@@ -1726,6 +2062,7 @@ export function initSpwShellDisclosure(options = {}) {
       window.removeEventListener('hashchange', handleHashChange);
       document.removeEventListener('spw:settings:changed', handleSettingsChanged);
       document.removeEventListener('spw:settings-change', handleSettingsChanged);
+      document.removeEventListener(TUNING_SURFACES_EVENT, handleTuningSurfacesUpdated);
       document.removeEventListener('spw:frame-change', handleSettingsChanged);
       navObserver.disconnect();
       clearSettleTimer(state);

@@ -28,38 +28,76 @@
  */
 
 import { bus } from '/public/js/kernel/bus.js';
-
-const CAULDRON_KEY = 'spw-cauldron';
-const MAX_INGREDIENTS = 6;
+import {
+  CAULDRON_CONTRACT,
+  GARDEN_PRUNE_DAYS,
+  MAX_INGREDIENTS,
+  computeCauldronPhase,
+  computeIngredientPhase,
+  countPrimeableSources,
+  getCauldronStatusCopy,
+} from './cauldron/contract.js';
+import {
+  bindCauldronPanelToggle,
+  setupCauldronChrome,
+  syncCauldronPanelCollapse,
+  syncCauldronPhaseRail,
+  syncFloatingChip,
+} from './cauldron/chrome.js';
+import { deriveNumericityQuantifiers, isNumericalConcept, parseNumericalValue } from './cauldron/helpers.js';
+import { escapeHtml, getCauldron, inferOperator, normalizeIngredient } from './cauldron/storage.js';
+import { cauldronTrace, recordGestureTrace, recordPlantedTrail } from './cauldron/trace.js';
+import {
+  clearMixOutputState,
+  detectIngredientArrival,
+  pulseCauldronFeedback,
+  pulseNewIngredient,
+  setLastMixSignature,
+  shouldHideStaleMixOutput,
+  syncCollectedSourceMarks,
+  syncDiscoverabilityCues,
+  syncGardenHealth,
+  syncOperatorResonance,
+} from './cauldron/resonance.js';
+import { canUndo, clearUndoStack, popUndoSnapshot, pushUndoSnapshot } from './cauldron/undo.js';
 
 let initialized = false;
-
-/* Temporal consequence trackers for live garden state mirrors (home inspector + design surfaces).
-   These let the consequence of a hold on a living-term or mode pill remain visible after the gesture ends,
-   directly supporting "effects easy to trace" and "states easy to traverse". */
-let lastGestureTrace = '';
-let lastPlantedTrailSignature = '';
+let cleanupHandle = null;
+let spellPreviewWasReady = false;
 
 /**
  * Initialize the cauldron system.
  * Listens for captures (from region menus, gestures, etc.) and wires footer UI.
  */
 export function initCauldron() {
-  if (initialized) return;
+  if (initialized) return cleanupHandle;
   initialized = true;
 
-  // Legacy event name preserved for compatibility with region-menu and haptics flows.
-  bus.on('spell:capture', onCapture);
+  const unsubCapture = bus.on('spell:capture', onCapture);
 
   document.body.addEventListener('click', handleCauldronUIActions, true);
-
-  // Support for future richer ingredient list UI
   document.body.addEventListener('click', handleIngredientRemoval, true);
-
-  // Basic inspectability: clicking an ingredient (not the remove) surfaces it for reflection
   document.body.addEventListener('click', handleIngredientInspect, true);
 
+  setupCauldronChrome();
+  bindCauldronPanelToggle();
+  document.addEventListener('spw:settings:changed', syncCauldronState, { passive: true });
+  document.addEventListener('spw:settings-change', syncCauldronState, { passive: true });
+
   syncCauldronState();
+
+  cleanupHandle = () => {
+    unsubCapture();
+    document.body.removeEventListener('click', handleCauldronUIActions, true);
+    document.body.removeEventListener('click', handleIngredientRemoval, true);
+    document.body.removeEventListener('click', handleIngredientInspect, true);
+    document.removeEventListener('spw:settings:changed', syncCauldronState);
+    document.removeEventListener('spw:settings-change', syncCauldronState);
+    initialized = false;
+    cleanupHandle = null;
+  };
+
+  return cleanupHandle;
 }
 
 /* ==========================================================================
@@ -73,11 +111,15 @@ function handleCauldronUIActions(e) {
   const pruneBtn = e.target.closest('[data-spw-cauldron-action="prune"]');
   const nourishBtn = e.target.closest('[data-spw-cauldron-action="nourish"]');
   const plantBtn = e.target.closest('[data-spw-cauldron-action="plant"]');
+  const undoBtn = e.target.closest('[data-spw-cauldron-action="undo"]');
 
   if (mixBtn) {
+    const ingredients = getCauldron();
+    const mixSignature = ingredients.map((item) => `${item.expression}|${item.capturedAt || 0}`).join('~');
     const result = mixIngredients();
     const html = typeof result === 'string' ? result : result.html || result;
-    showOutput(html);
+    showOutput(html, mixSignature);
+    flashCauldronAction(mixBtn, 'cast');
     // Functional result available for agents/spells: result.functional
     e.preventDefault();
 
@@ -91,12 +133,22 @@ function handleCauldronUIActions(e) {
   if (clearBtn) {
     clearCauldron();
     hideOutput();
+    flashCauldronAction(clearBtn, 'clear');
+    e.preventDefault();
+  }
+
+  if (undoBtn) {
+    undoCauldron();
+    hideOutput();
+    flashCauldronAction(undoBtn, 'undo');
     e.preventDefault();
   }
 
   if (pruneBtn) {
     pruneStale();
     hideOutput();
+    flashCauldronAction(pruneBtn, 'prune');
+    pulseCauldronFeedback('prune');
     // Learnability/reward for pruning (state hygiene as positive gardening act).
     rewardSpellCauldronAction('prune', {
       title: 'Pruned stale',
@@ -109,6 +161,8 @@ function handleCauldronUIActions(e) {
     // Nourish the most recent ingredient as a simple "tend" gesture
     const ingredients = getCauldron();
     if (ingredients.length) nourishIngredient(ingredients.length - 1);
+    flashCauldronAction(nourishBtn, 'nourish');
+    pulseCauldronFeedback('nourish');
     // Learnability: nourishing is "tend" reward for active state management.
     rewardSpellCauldronAction('nourish', {
       title: 'Nourished / tended',
@@ -121,13 +175,15 @@ function handleCauldronUIActions(e) {
     // Memory gardening: "plant" the current gathering as a durable spell/checkpoint
     const ingredients = getCauldron();
     if (ingredients.length >= 1) {
+      flashCauldronAction(plantBtn, 'plant');
+      pulseCauldronFeedback('plant');
       const expr = ingredients.map(i => i.expression).join(' + ');
       const gestureSummary = ingredients
         .map(i => i.primedBy || i.chargeContext)
         .filter(Boolean)
         .join('·');
       const trailSig = gestureSummary ? `garden{${expr}}·${gestureSummary}` : `garden{${expr}}`;
-      lastPlantedTrailSignature = trailSig.length > 52 ? trailSig.slice(0, 49) + '…' : trailSig;
+      recordPlantedTrail(trailSig.length > 52 ? trailSig.slice(0, 49) + '…' : trailSig);
 
       bus.emit('spell:capture', {
         expression: `cast[garden]{${expr}}`,
@@ -424,158 +480,30 @@ function rewardSpellCauldronAction(actionType, extra = {}) {
    Output Display
    ========================================================================== */
 
-function showOutput(htmlContent) {
+function showOutput(htmlContent, signature = '') {
   const output = document.querySelector('[data-cauldron-output]');
   const textBox = document.querySelector('[data-cauldron-text]');
   if (output && textBox) {
-    // The HTML from mixIngredients now contains explicit sections:
-    // "Combination Record" (raw Spw forces) and "Crystallization" (one limited use).
-    // This markup itself is part of the learning design.
     textBox.innerHTML = htmlContent;
     output.hidden = false;
+    output.dataset.spwCauldronOutputState = 'fresh';
+    setLastMixSignature(signature);
+    pulseCauldronFeedback('mix');
   }
 }
 
 function hideOutput() {
   const output = document.querySelector('[data-cauldron-output]');
-  if (output) output.hidden = true;
+  if (output) {
+    output.hidden = true;
+    delete output.dataset.spwCauldronOutputState;
+  }
+  clearMixOutputState();
 }
 
 /* ==========================================================================
    Core State Management (richer ingredient model)
    ========================================================================== */
-
-function getCauldron() {
-  try {
-    const raw = JSON.parse(localStorage.getItem(CAULDRON_KEY) || '[]');
-    // Normalize older simple {expression, label} items
-    return raw.map(normalizeIngredient).filter(Boolean);
-  } catch {
-    return [];
-  }
-}
-
-function normalizeIngredient(item) {
-  if (!item) return null;
-  if (typeof item === 'string') {
-    return { expression: item, label: item, capturedAt: Date.now() };
-  }
-  const normalized = {
-    expression: item.expression || item.label || '',
-    label: item.label || item.expression || '',
-    operator: item.operator || inferOperator(item.expression),
-    wonder: item.wonder || '',
-    capturedAt: item.capturedAt || Date.now(),
-    ...item, // preserve any extra rich data
-  };
-
-  // Numericity integration (proper architecture extension, not ad-hoc surface):
-  // Numbers/rhythmic allocations. The baker's dozen (13-modulo) specifics are an easter egg layer — functional in quantifier derivation but not announced in primary surfaces.
-  // become typed ingredients with derived quantifiers for selection/discovery paths.
-  // This makes categories of numbers first-class for cauldron → spell → navigation flows
-  // and keeps them "in mind" via existing mirrors (ideal for video narration/editing).
-  if (isNumericalConcept(normalized.expression)) {
-    normalized.type = 'numerical';
-    const parsed = parseNumericalValue(normalized.expression);
-    if (parsed) {
-      normalized.value = parsed.value;
-      normalized.unit = parsed.unit;
-      normalized.quantifiers = deriveNumericityQuantifiers([normalized]);
-    }
-  }
-
-  return normalized;
-}
-
-function isNumericalConcept(expr = '') {
-  const s = String(expr).toLowerCase();
-  return /\b(13|200|10k|10000|day|step|video|trace|mod|per|across|dimensional|epoch|chunk)\b/.test(s);
-}
-
-function parseNumericalValue(expr = '') {
-  const match = String(expr).match(/(\d+)(k?)\s*[- ]?(day|step|video|trace|chunk|epoch)?/i);
-  if (!match) return null;
-  let val = parseInt(match[1], 10);
-  if (match[2] === 'k') val *= 1000;
-  return { value: val, unit: match[3] || 'count' };
-}
-
-function deriveNumericityQuantifiers(ingredients = []) {
-  const nums = ingredients.filter(i => i.type === 'numerical' && typeof i.value === 'number');
-  if (!nums.length) return [];
-
-  const suggestions = new Set();
-  nums.forEach(n => {
-    const v = n.value;
-    const u = n.unit || 'unit';
-    suggestions.add(`mod-${v}`);
-    suggestions.add(`per-${v}-${u}`);
-    suggestions.add(`across-${v}-trace`);
-    // The 13-modulo "baker's dozen" derivation is the easter-egg heart of the numericity system.
-    // It powers real quantifiers for users who engage, but is not surfaced in main prose or default UI.
-    if (v % 13 === 0 || v === 13) suggestions.add('mod-13-allocation');
-    suggestions.add(`dimensional-${Math.min(3, Math.floor(v / 50) || 1)}`);
-  });
-  return Array.from(suggestions);
-}
-
-function inferOperator(expression = '') {
-  const match = String(expression).match(/^(#>|\\^|\\?|~|@|<|>)/);
-  return match ? match[1] : '';
-}
-
-/* ==========================================================================
-   Lifecycle + Memory Gardening Primitives
-   (smallest additive layer for phase awareness and tending)
-   ========================================================================== */
-
-const GARDEN_PRUNE_DAYS = 30; // default threshold for "stale" in the memory garden
-
-function computeIngredientPhase(ing) {
-  if (!ing || !ing.capturedAt) return 'gathering';
-  const ageMs = Date.now() - Number(ing.capturedAt);
-  const days = ageMs / (1000 * 60 * 60 * 24);
-  if (days > GARDEN_PRUNE_DAYS * 1.5) return 'decayed';
-  if (days > GARDEN_PRUNE_DAYS) return 'mature';
-  if (ing.wonder || ing.operator) return 'resonant';
-  return 'gathering';
-}
-
-function computeCauldronPhase(ingredients = []) {
-  const count = ingredients.length;
-  if (count === 0) return 'empty';
-  if (count === 1) return 'primed';
-  if (count === 2) return 'mixing';
-  return 'spell-ready';
-}
-
-function getCauldronStatusCopy(count, phase) {
-  const available = countPrimeableSources();
-  const availabilityCopy = available ? `${available} prime sources are visible on this page.` : 'No prime sources are visible in this viewport yet.';
-  if (phase === 'empty') {
-    return `Hold a living term or brace to gather it. ${availabilityCopy}`;
-  }
-  if (phase === 'primed') {
-    return '1 force gathered. Add another ingredient to compose a spell, or nourish this one for later.';
-  }
-  if (phase === 'mixing') {
-    return '2 forces gathered. A spell draft is available; mix to inspect the combination before planting.';
-  }
-  return `${count} forces gathered. Spell draft available: refine, cast, plant, or turn it into a vision seed.`;
-}
-
-function countPrimeableSources() {
-  return document.querySelectorAll([
-    '[data-spw-cauldron-candidate="true"]',
-    '[data-spw-living-term]',
-    '.spw-living-term',
-    '[data-spw-gesture-contract*="prime"]',
-    '[data-spw-concept]',
-    '[data-spw-topic]',
-    '[data-spw-image-key]',
-    '[data-spw-semantic-expression]'
-  ].join(', ')).length;
-}
 
 function syncIngredientAvailability() {
   const count = countPrimeableSources();
@@ -586,9 +514,21 @@ function syncIngredientAvailability() {
   });
 }
 
+function flashCauldronAction(button, state = 'active') {
+  if (!(button instanceof HTMLElement)) return;
+  button.dataset.spwCauldronActionState = state;
+  window.setTimeout(() => {
+    if (button.dataset.spwCauldronActionState === state) {
+      delete button.dataset.spwCauldronActionState;
+    }
+  }, 240);
+}
+
 function syncSpellPreview(ingredients, phase) {
   const count = ingredients.length;
   const ready = count >= 2;
+  const becameReady = ready && !spellPreviewWasReady;
+  spellPreviewWasReady = ready;
   const operators = [...new Set(ingredients.map(i => i.operator).filter(Boolean))];
   const operatorSequence = operators.length ? operators.join(' ') : '~ $ ! ^';
 
@@ -604,6 +544,12 @@ function syncSpellPreview(ingredients, phase) {
       body.textContent = operators.length
         ? `${operatorSequence} → spell draft`
         : '~ prompt → $ substrate → ! transform → ^ proof';
+    }
+    if (becameReady) {
+      preview.dataset.spwSpellReveal = 'true';
+      window.setTimeout(() => {
+        if (preview.dataset.spwSpellReveal === 'true') delete preview.dataset.spwSpellReveal;
+      }, 480);
     }
   });
 }
@@ -627,9 +573,17 @@ function nourishIngredient(index) {
   bus.emit('cauldron:gardened', { action: 'nourish', index });
 }
 
-function saveCauldron(cauldron) {
+function saveCauldron(cauldron, options = {}) {
+  const { recordUndo = true } = options;
   const trimmed = cauldron.slice(-MAX_INGREDIENTS);
-  localStorage.setItem(CAULDRON_KEY, JSON.stringify(trimmed));
+  const serialized = JSON.stringify(trimmed);
+  const existing = localStorage.getItem(CAULDRON_CONTRACT.storageKey);
+
+  if (recordUndo && existing !== serialized) {
+    pushUndoSnapshot(getCauldron());
+  }
+
+  localStorage.setItem(CAULDRON_CONTRACT.storageKey, serialized);
   syncCauldronState();
   bus.emit('cauldron:updated', {
     count: trimmed.length,
@@ -637,16 +591,36 @@ function saveCauldron(cauldron) {
   });
 }
 
+function undoCauldron() {
+  const previous = popUndoSnapshot();
+  if (!previous) {
+    announceCauldronStatus('Nothing to undo in the memory garden yet.');
+    return false;
+  }
+
+  saveCauldron(previous, { recordUndo: false });
+  announceCauldronStatus(`Restored previous gathering (${previous.length} ingredient${previous.length === 1 ? '' : 's'}).`);
+  bus.emit('cauldron:gardened', { action: 'undo', remaining: previous.length });
+  return true;
+}
+
 function syncCauldronState() {
   const ingredients = getCauldron();
   const count = ingredients.length;
 
+  if (shouldHideStaleMixOutput(ingredients)) {
+    hideOutput();
+  }
+
   const root = document.documentElement;
   root.dataset.spwCauldronCount = String(count);
 
-  // Lifecycle phase for CSS, mirrors, and runtime awareness (the core of the enhancement)
   const phase = computeCauldronPhase(ingredients);
+  const availableSources = countPrimeableSources();
   syncIngredientAvailability();
+  syncCollectedSourceMarks(ingredients);
+  syncOperatorResonance(ingredients);
+  syncDiscoverabilityCues(count, phase, availableSources);
   root.dataset.spwCauldronState = phase;
   root.dataset.spwCauldronPhase = phase;
   syncCauldronHosts(ingredients, phase);
@@ -678,18 +652,30 @@ function syncCauldronState() {
   document.querySelectorAll('[data-spw-cauldron-action="prune"], [data-spw-cauldron-action="nourish"], [data-spw-cauldron-action="plant"], [data-spw-cauldron-action="vision"]')
     .forEach((button) => {
       const action = button.dataset.spwCauldronAction;
-      button.disabled = action === 'plant' || action === 'vision' ? count < 2 : count === 0;
+      if (action === 'plant' || action === 'vision') {
+        button.disabled = count < 1;
+      } else {
+        button.disabled = count === 0;
+      }
     });
+  document.querySelectorAll('[data-spw-cauldron-action="undo"]').forEach((button) => {
+    button.disabled = !canUndo();
+  });
 
   renderIngredientsList(ingredients);
   renderCauldronMirrors(ingredients, phase);
   syncSpellPreview(ingredients, phase);
+  syncCauldronPhaseRail(phase);
+  syncCauldronPanelCollapse(count);
+  syncFloatingChip();
 }
 
 function syncCauldronHosts(ingredients, phase) {
   const count = ingredients.length;
   const operators = [...new Set(ingredients.map(i => i.operator).filter(Boolean))].join(' ');
-  document.querySelectorAll('[data-spw-cauldron]').forEach((host) => {
+  const hosts = document.querySelectorAll('[data-spw-cauldron]');
+  syncGardenHealth(hosts, ingredients);
+  hosts.forEach((host) => {
     host.dataset.spwCauldronPhase = phase;
     host.dataset.spwCauldronState = phase;
     host.dataset.spwCauldronCount = String(count);
@@ -712,13 +698,13 @@ function renderCauldronMirrors(ingredients, phase) {
     if (ing.gestureHistory) traceParts.push(ing.gestureHistory);
     else if (ing.primedBy) traceParts.push(ing.primedBy);
   });
-  const compactTrace = traceParts.length ? traceParts.join(' · ') : (lastGestureTrace || '');
+  const compactTrace = traceParts.length ? traceParts.join(' · ') : (cauldronTrace.lastGesture || '');
 
   // Last gesture for the "what just happened" immediate signal
   const lastIng = ingredients[ingredients.length - 1];
   const lastGesture = lastIng
-    ? (lastIng.gestureHistory || lastIng.primedBy || lastIng.chargeContext || lastGestureTrace || 'direct attention')
-    : (lastGestureTrace || '—');
+    ? (lastIng.gestureHistory || lastIng.primedBy || lastIng.chargeContext || cauldronTrace.lastGesture || 'direct attention')
+    : (cauldronTrace.lastGesture || '—');
 
   document.querySelectorAll('[data-spw-cauldron-mirror]').forEach((mirror) => {
     mirror.dataset.spwCauldronPhase = phase;
@@ -752,8 +738,8 @@ function renderCauldronMirrors(ingredients, phase) {
       if (compactTrace) traceEl.dataset.spwGestureTrace = compactTrace;
     }
     if (trailEl) {
-      trailEl.textContent = lastPlantedTrailSignature ? `trail: ${lastPlantedTrailSignature}` : '';
-      if (lastPlantedTrailSignature) trailEl.dataset.spwSpellTrail = lastPlantedTrailSignature;
+      trailEl.textContent = cauldronTrace.lastPlantedTrail ? `trail: ${cauldronTrace.lastPlantedTrail}` : '';
+      if (cauldronTrace.lastPlantedTrail) trailEl.dataset.spwSpellTrail = cauldronTrace.lastPlantedTrail;
     }
 
     // Show re-gather affordance only when there is actually something whose consequence can be traversed
@@ -782,12 +768,14 @@ function renderIngredientsList(ingredients) {
 
   if (!ingredients.length) {
     container.innerHTML = '';
+    delete container.dataset.lastSignature;
     return;
   }
 
-  // Small tightening: only re-render when the signature changes (avoids unnecessary DOM churn on frequent syncs)
   const signature = ingredients.map(i => `${i.expression}|${i.capturedAt || 0}`).join('~');
-  if (container.dataset.lastSignature === signature) return;
+  const previousSignature = container.dataset.lastSignature || '';
+  if (previousSignature === signature) return;
+  const arrival = detectIngredientArrival(ingredients, previousSignature);
   container.dataset.lastSignature = signature;
 
   const html = ingredients.map((ing, idx) => {
@@ -861,10 +849,10 @@ function renderIngredientsList(ingredients) {
   }).join('');
 
   container.innerHTML = html;
-}
 
-function escapeHtml(str) {
-  return String(str).replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
+  if (arrival?.expression) {
+    pulseNewIngredient(container, arrival.expression);
+  }
 }
 
 /* ==========================================================================
@@ -900,6 +888,7 @@ function onCapture(event) {
     // Deeper composition: preserve gesture history when a spell/capture feeds the cauldron
     // (supports re-hydration and prompt enrichment).
     gestureHistory: detail.gestureHistory || detail.gestureChain || null,
+    sourceElement: detail.sourceElement || detail.key || null,
   };
 
   // Numericity: if this capture is a number concept (from living-term on rhythm text etc.),
@@ -914,10 +903,7 @@ function onCapture(event) {
     }
   }
 
-  // Record for live temporal consequence mirrors (the hold on a living-term now has visible afterlife)
-  if (ingredient.gestureHistory || ingredient.primedBy) {
-    lastGestureTrace = ingredient.gestureHistory || ingredient.primedBy || ingredient.chargeContext || '';
-  }
+  recordGestureTrace(ingredient);
 
   const existingIndex = ingredients.findIndex(item => item.expression === expression);
   if (existingIndex >= 0) {
@@ -938,6 +924,7 @@ function onCapture(event) {
       item: ingredients[existingIndex],
       index: existingIndex,
     });
+    pulseCauldronFeedback('refresh', { expression });
     return;
   }
 
@@ -947,6 +934,7 @@ function onCapture(event) {
     ? `Primed ingredient gathered from ${ingredient.originLabel || 'charged brace'}: ${ingredient.label}.`
     : `Ingredient gathered: ${ingredient.label}.`;
   announceCauldronStatus(message);
+  pulseCauldronFeedback('gather', { expression });
 }
 
 export function addIngredient(ingredient) {
@@ -1057,7 +1045,7 @@ export function mixIngredients() {
     .filter(Boolean)
     .join(' · ');
   if (gardenProvenance) {
-    const trailSig = lastPlantedTrailSignature || `garden-mix{${expressions.join(' + ')}}`;
+    const trailSig = cauldronTrace.lastPlantedTrail || `garden-mix{${expressions.join(' + ')}}`;
     crystallizationHtml += `
       <div class="cauldron-garden-provenance spell-provenance" data-spw-garden-provenance data-spw-spell-trail="${escapeHtml(trailSig)}">
         <span class="spell-provenance__label">garden trace</span>
@@ -1075,8 +1063,13 @@ export function mixIngredients() {
   return { html: combinationHtml + crystallizationHtml, functional: functionalMix };
 }
 
+export function refreshCauldronState() {
+  syncCauldronState();
+}
+
 export function clearCauldron() {
   saveCauldron([]);
+  clearUndoStack();
   bus.emit('cauldron:cleared', { count: 0 });
 }
 
@@ -1084,7 +1077,14 @@ export function clearCauldron() {
 export const initCompositionSpell = initCauldron;
 
 /* Public helpers for runtime mirrors, design labs, and inline instrumentation */
-export { computeCauldronPhase, computeIngredientPhase, pruneStale, nourishIngredient, getCauldron as getCauldronIngredients };
+export {
+  CAULDRON_CONTRACT,
+  computeCauldronPhase,
+  computeIngredientPhase,
+  pruneStale,
+  nourishIngredient,
+  getCauldron as getCauldronIngredients,
+};
 
 /**
  * Capture current observation beat/artifact as a cauldron ingredient (Phase 3 QA integration).

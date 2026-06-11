@@ -155,7 +155,7 @@
 }
 
 .spw-shell-utility-row::before {
-  content: "display";
+  content: "weather";
   display: inline-flex;
   align-items: center;
   align-self: center;

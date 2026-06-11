@@ -400,6 +400,11 @@ function applyDeviceContext() {
   writeDatasetValue(HTML, 'spwPointerMode', pointer);
   writeDatasetValue(HTML, 'spwHoverMode', hover);
   writeDatasetValue(HTML, 'spwDeviceContext', `${tier}-${pointer}`);
+  writeDatasetValue(
+    HTML,
+    'spwLayoutFlow',
+    tier === 'compact' || tier === 'narrow' ? 'vertical-ribbon' : 'column'
+  );
 }
 
 function collectExistingNavPaths(navList) {

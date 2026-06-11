@@ -1671,10 +1671,13 @@ const FEATURE_DEFS = [
     evaluates: 'semantics composition learning attention-field emergence',
     load: () => import('./interface/composition.js'),
     mount: (mod) => {
-      // Prefer the clearer cauldron name; fall back to legacy alias
       const fn = mod?.initCauldron || mod?.initCompositionSpell;
       if (!isFn(fn)) return;
-      return fn();
+      const cleanup = fn();
+      return {
+        cleanup: isFn(cleanup) ? cleanup : null,
+        refresh: mod?.refreshCauldronState,
+      };
     },
   },
   {
@@ -1728,6 +1731,50 @@ const ENHANCEMENT_DEFS = [
     load: () => import('./runtime/layout-shift-audit.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initSpwLayoutShiftAudit;
+      if (!isFn(fn)) return;
+      return fn(ctx);
+    },
+  },
+  {
+    id: 'tuning-discovery',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    describes: 'embedded tuning surfaces marginalia + html[data-spw-tuning-discoverability]',
+    updates: ['data-spw-tuning-surface', 'data-spw-tuning-surface-count', 'data-spw-tuning-discoverability'],
+    load: () => import('./runtime/tuning-discovery.js'),
+    mount: (mod, ctx) => {
+      const fn = mod?.initTuningDiscovery;
+      if (!isFn(fn)) return;
+      return fn(ctx);
+    },
+  },
+  {
+    id: 'gesture-anatomy',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    describes: 'slot anatomy rails + data-spw-gesture-hint from gesture contracts',
+    updates: ['data-spw-gesture-hint', 'data-spw-slot-label', 'data-spw-gesture-anatomy'],
+    load: () => import('./runtime/gesture-anatomy.js'),
+    mount: (mod, ctx) => {
+      const fn = mod?.initGestureAnatomy;
+      if (!isFn(fn)) return;
+      return fn(ctx);
+    },
+  },
+  {
+    id: 'learnability-ledger',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    describes: 'metacognitive posture accounting, layout-contract audit, feature learnability resonance',
+    updates: [
+      'data-spw-learnability-ledger',
+      'data-spw-learnability-posture',
+      'data-spw-layout-contract',
+      'data-spw-learnability-tier',
+    ],
+    load: () => import('./runtime/learnability-ledger.js'),
+    mount: (mod, ctx) => {
+      const fn = mod?.initLearnabilityLedger;
       if (!isFn(fn)) return;
       return fn(ctx);
     },

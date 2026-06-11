@@ -14,44 +14,78 @@
                     Next action:
                     <span data-spw-page-primary-action-label>Choose a route</span>
                 </p>
+                <p class="site-footer__page-architecture-meta" data-spw-learnability-posture>
+                    Posture:
+                    <strong data-spw-learnability-stance-label>Witness</strong> ·
+                    <span data-spw-learnability-cue>Notice orientation and grounding before acting.</span>
+                </p>
             </div>
             <div
+                id="memory-garden-cauldron"
                 class="site-footer__cauldron"
                 data-spw-feature="cauldron"
                 data-spw-cauldron
+                data-spw-cauldron-panel="open"
                 data-spw-interaction-contract="tap inspect hold prime drag project double-click inspect-prime keyboard commit"
                 data-spw-interaction-tap="inspect semantic relation without storing it"
                 data-spw-interaction-hold="prime the held brace as a cauldron ingredient"
                 data-spw-interaction-drag="project charge visually without capturing"
                 data-spw-interaction-double-click="inspect and prime semantic brace value immediately"
                 data-spw-interaction-keyboard="Enter or Space commits the focused semantic brace">
-                <p class="site-footer__cauldron-kicker">Memory Garden Cauldron</p>
-                <p class="site-footer__cauldron-copy">
-                    <span data-cauldron-count>0</span> gathered forces resting here<span class="site-footer__cauldron-force-note" data-spw-cauldron-operators></span>.
-                </p>
-                <p class="site-footer__cauldron-status" role="status" aria-live="polite">
-                    <span data-cauldron-status data-cauldron-status-text>Hold a living term or brace to gather it. The cauldron keeps ingredients; spells are composed outputs.</span>
-                    <span class="site-footer__cauldron-availability" data-cauldron-availability></span>
-                    <a href="/design/palettes/#spell-cauldron-hooks" class="cauldron-instruction-link" aria-label="Learn spell/cauldron hooks and interaction contract (compact)">hooks &amp; learnability</a>
-                </p>
-
-                <!-- Populated by composition.js for inspectability and individual removal -->
-                <div class="site-footer__cauldron-ingredients" data-cauldron-ingredients aria-live="polite"></div>
-                <article class="site-footer__spell-preview" data-spw-spell-candidate data-spw-spell-state="empty" data-spw-operator-sequence="~ $ ! ^" hidden>
-                    <p class="site-footer__spell-preview-meta" data-spw-slot="meta">spell draft</p>
-                    <p class="site-footer__spell-preview-path" data-spw-slot="body">~ prompt → $ substrate → ! transform → ^ proof</p>
-                </article>
-
-                <div class="site-footer__cauldron-actions">
-                    <button class="operator-chip" type="button" data-spw-cauldron-action="mix" data-spw-action-tier="primary" data-spw-groundable="false">@ mix / cast</button>
-                    <button class="operator-chip" type="button" data-spw-cauldron-action="nourish" data-spw-action-tier="growth" data-spw-groundable="false">~ nourish</button>
-                    <button class="operator-chip" type="button" data-spw-cauldron-action="vision" data-spw-action-tier="growth" data-spw-groundable="false" data-spw-intent="daily-to-prompt">~ vision seed</button>
-                    <button class="operator-chip" type="button" data-spw-cauldron-action="plant" data-spw-action-tier="output" data-spw-groundable="false">^ plant</button>
-                    <button class="operator-chip" type="button" data-spw-cauldron-action="prune" data-spw-action-tier="cleanup" data-spw-groundable="false">! prune</button>
-                    <button class="operator-chip" type="button" data-spw-cauldron-action="clear" data-spw-action-tier="cleanup" data-spw-groundable="false">! clear</button>
+                <div class="site-footer__cauldron-header">
+                    <p class="site-footer__cauldron-kicker">Memory Garden Cauldron</p>
+                    <button
+                        class="site-footer__cauldron-panel-toggle"
+                        type="button"
+                        data-spw-cauldron-panel-toggle
+                        aria-expanded="true"
+                        aria-controls="memory-garden-cauldron-body">
+                        panel
+                    </button>
                 </div>
-                <div class="site-footer__cauldron-output" data-cauldron-output hidden>
-                    <div class="site-footer__cauldron-text" data-cauldron-text></div>
+                <ol class="site-footer__cauldron-phase-rail" data-spw-cauldron-phase-rail aria-label="Cauldron phase">
+                    <li class="site-footer__cauldron-phase-step" data-spw-phase-step="empty">
+                        <p class="site-footer__cauldron-phase-label">gather</p>
+                    </li>
+                    <li class="site-footer__cauldron-phase-step" data-spw-phase-step="primed">
+                        <p class="site-footer__cauldron-phase-label">prime</p>
+                    </li>
+                    <li class="site-footer__cauldron-phase-step" data-spw-phase-step="mixing">
+                        <p class="site-footer__cauldron-phase-label">compose</p>
+                    </li>
+                    <li class="site-footer__cauldron-phase-step" data-spw-phase-step="spell-ready">
+                        <p class="site-footer__cauldron-phase-label">cast</p>
+                    </li>
+                </ol>
+                <div class="site-footer__cauldron-body" id="memory-garden-cauldron-body">
+                    <p class="site-footer__cauldron-copy">
+                        <span data-cauldron-count>0</span> gathered forces resting here<span class="site-footer__cauldron-force-note" data-spw-cauldron-operators></span>.
+                    </p>
+                    <p class="site-footer__cauldron-status" role="status" aria-live="polite">
+                        <span data-cauldron-status data-cauldron-status-text>Hold a living term or brace to gather it. The cauldron keeps ingredients; spells are composed outputs.</span>
+                        <span class="site-footer__cauldron-availability" data-cauldron-availability></span>
+                        <a href="/design/palettes/#spell-cauldron-hooks" class="cauldron-instruction-link" aria-label="Learn spell/cauldron hooks and interaction contract (compact)">hooks &amp; learnability</a>
+                    </p>
+
+                    <!-- Populated by composition.js for inspectability and individual removal -->
+                    <div class="site-footer__cauldron-ingredients" data-cauldron-ingredients aria-live="polite"></div>
+                    <article class="site-footer__spell-preview" data-spw-spell-candidate data-spw-spell-state="empty" data-spw-operator-sequence="~ $ ! ^" hidden>
+                        <p class="site-footer__spell-preview-meta" data-spw-slot="meta">spell draft</p>
+                        <p class="site-footer__spell-preview-path" data-spw-slot="body">~ prompt → $ substrate → ! transform → ^ proof</p>
+                    </article>
+
+                    <div class="site-footer__cauldron-actions">
+                        <button class="operator-chip" type="button" data-spw-cauldron-action="mix" data-spw-action-tier="primary" data-spw-groundable="false">@ mix / cast</button>
+                        <button class="operator-chip" type="button" data-spw-cauldron-action="nourish" data-spw-action-tier="growth" data-spw-groundable="false">~ nourish</button>
+                        <button class="operator-chip" type="button" data-spw-cauldron-action="vision" data-spw-action-tier="growth" data-spw-groundable="false" data-spw-intent="daily-to-prompt">~ vision seed</button>
+                        <button class="operator-chip" type="button" data-spw-cauldron-action="plant" data-spw-action-tier="output" data-spw-groundable="false">^ plant</button>
+                        <button class="operator-chip" type="button" data-spw-cauldron-action="undo" data-spw-action-tier="cleanup" data-spw-groundable="false" disabled>! undo</button>
+                        <button class="operator-chip" type="button" data-spw-cauldron-action="prune" data-spw-action-tier="cleanup" data-spw-groundable="false">! prune</button>
+                        <button class="operator-chip" type="button" data-spw-cauldron-action="clear" data-spw-action-tier="cleanup" data-spw-groundable="false">! clear</button>
+                    </div>
+                    <div class="site-footer__cauldron-output" data-cauldron-output hidden>
+                        <div class="site-footer__cauldron-text" data-cauldron-text></div>
+                    </div>
                 </div>
             </div>
             <div class="site-footer__settings" data-site-settings-scope data-spw-feature="footer-settings">
