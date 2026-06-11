@@ -65,6 +65,39 @@ export function createModuleLoader(config = {}) {
     throw new Error('[module-loader] createModuleLoader requires site scheduling and refresh hooks.');
   }
 
+  let mountBatchDepth = 0;
+  let tokenFlushScheduled = false;
+
+  function beginMountBatch() {
+    mountBatchDepth += 1;
+    if (mountBatchDepth === 1) {
+      writeDatasetValue(html, 'spwRuntimeMountBatch', 'active');
+    }
+  }
+
+  function endMountBatch(ctx) {
+    if (mountBatchDepth <= 0) return;
+    mountBatchDepth -= 1;
+    if (mountBatchDepth === 0) {
+      writeDatasetValue(html, 'spwRuntimeMountBatch', null);
+      flushRuntimeTokenUpdate(ctx);
+    }
+  }
+
+  function flushRuntimeTokenUpdate(ctx) {
+    tokenFlushScheduled = false;
+    if (!ctx) return;
+    updateRuntimeStateTokens(ctx);
+  }
+
+  function scheduleRuntimeTokenUpdate(ctx) {
+    if (!ctx) return;
+    if (mountBatchDepth > 0) return;
+    if (tokenFlushScheduled) return;
+    tokenFlushScheduled = true;
+    queueMicrotask(() => flushRuntimeTokenUpdate(ctx));
+  }
+
 function normalizeModuleTimingStage(stage = 'scheduled') {
   return MODULE_TIMING_STAGES.includes(stage) ? stage : 'scheduled';
 }
@@ -497,7 +530,7 @@ function updateRuntimeStateTokens(ctx) {
 }
 
 function syncActiveModuleLayers(ctx) {
-  updateRuntimeStateTokens(ctx);
+  scheduleRuntimeTokenUpdate(ctx);
 }
 
 function syncRuntimeModuleSummary(ctx, record) {
@@ -527,30 +560,6 @@ function syncRuntimeModuleSummary(ctx, record) {
     ? timingSnapshot.latest.lifecycle.map((entry) => entry.stage).join(' > ')
     : null);
 
-  // Expose active layers for CSS timing, transitions, and attentional models
-  const activeLayers = new Set();
-  let hasEnhancement = false;
-  let hasFeature = false;
-
-  for (const r of records) {
-    if (r.status === 'mounted' || r.status === 'loading') {
-      activeLayers.add(r.layer);
-      if (r.layer === moduleLayers.ENHANCEMENT) hasEnhancement = true;
-      if (r.layer === moduleLayers.FEATURE) hasFeature = true;
-    }
-  }
-
-  const layersValue = [...activeLayers].sort().join(' ') || 'core';
-  writeDatasetValue(html, 'spwActiveLayers', layersValue);
-
-  // Dynamically drive the runtime influence tokens for CSS consumers
-  const enhancementIntensity = hasEnhancement ? 0.92 : 0.35;
-  const featureIntensity = hasFeature ? 0.78 : 0.25;
-  const layerCount = activeLayers.size || 1;
-
-  html.style.setProperty('--spw-runtime-enhancement-intensity', enhancementIntensity.toFixed(2));
-  html.style.setProperty('--spw-runtime-feature-intensity', featureIntensity.toFixed(2));
-  html.style.setProperty('--spw-runtime-layer-count', String(layerCount));
   if (body) {
     writeDatasetValue(body, 'spwRuntimeLastModule', record.baseId || record.id);
     writeDatasetValue(body, 'spwRuntimeLastModuleStatus', record.status);
@@ -973,10 +982,31 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
 }
 
 async function mountImmediateLayer(defs, ctx) {
-  for (const def of defs) {
-    if (!shouldScheduleDefinition(def, ctx, mountWhen.IMMEDIATE)) continue;
-    await mountDefinition(def, ctx, null, 0);
+  const eligible = defs.filter((def) => shouldScheduleDefinition(def, ctx, mountWhen.IMMEDIATE));
+  if (!eligible.length) return;
+
+  performance.mark('spw:immediate-layer-batch-start');
+  beginMountBatch();
+  try {
+    const settingsDef = eligible.find((def) => def.id === 'site-settings');
+    const parallelDefs = eligible.filter((def) => def.id !== 'site-settings');
+
+    if (settingsDef) {
+      await mountDefinition(settingsDef, ctx, null, 0);
+    }
+    if (parallelDefs.length) {
+      await Promise.all(parallelDefs.map((def) => mountDefinition(def, ctx, null, 0)));
+    }
+  } finally {
+    endMountBatch(ctx);
   }
+
+  performance.mark('spw:immediate-layer-batch-end');
+  performance.measure(
+    'spw:immediate-layer-parallel',
+    'spw:immediate-layer-batch-start',
+    'spw:immediate-layer-batch-end',
+  );
 }
 
 async function mountVisibleFeatures(defs, ctx) {
@@ -1029,16 +1059,20 @@ async function mountInteractionFeatures(defs, ctx) {
   if (!interactionDefs.length) return;
 
   const activate = once(async () => {
-    for (const def of interactionDefs) {
-      const roots = getRoots(def);
-      if (!roots.length || def.rootMode === 'single') {
-        await mountDefinition(def, ctx, null, 0);
-        continue;
-      }
-      for (const [index, root] of roots.entries()) {
-        annotateModuleTrigger(root, def, ctx, mountWhen.INTERACTION, 'triggered');
-        await mountDefinition(def, ctx, root, index);
-      }
+    beginMountBatch();
+    try {
+      await Promise.all(interactionDefs.map(async (def) => {
+        const roots = getRoots(def);
+        if (!roots.length || def.rootMode === 'single') {
+          return mountDefinition(def, ctx, null, 0);
+        }
+        return Promise.all(roots.map((root, index) => {
+          annotateModuleTrigger(root, def, ctx, mountWhen.INTERACTION, 'triggered');
+          return mountDefinition(def, ctx, root, index);
+        }));
+      }));
+    } finally {
+      endMountBatch(ctx);
     }
   });
 
@@ -1109,18 +1143,20 @@ function queueIdleEnhancements(defs, ctx) {
       });
     }
 
-    for (const def of idleDefs) {
-      const roots = getRoots(def);
-
-      if (!roots.length || def.rootMode === 'single') {
-        await mountDefinition(def, ctx, null, 0);
-        continue;
-      }
-
-      for (const [index, root] of roots.entries()) {
-        annotateModuleTrigger(root, def, ctx, mountWhen.IDLE, 'triggered');
-        await mountDefinition(def, ctx, root, index);
-      }
+    beginMountBatch();
+    try {
+      await Promise.all(idleDefs.map(async (def) => {
+        const roots = getRoots(def);
+        if (!roots.length || def.rootMode === 'single') {
+          return mountDefinition(def, ctx, null, 0);
+        }
+        return Promise.all(roots.map((root, index) => {
+          annotateModuleTrigger(root, def, ctx, mountWhen.IDLE, 'triggered');
+          return mountDefinition(def, ctx, root, index);
+        }));
+      }));
+    } finally {
+      endMountBatch(ctx);
     }
 
     setPageState(pageStates.ENHANCED);
@@ -1158,8 +1194,8 @@ function refreshRuntime(ctx) {
 }
 
   function wireRuntimeTokens(ctx) {
-    ctx.bus.on('spw:module-mounted', () => updateRuntimeStateTokens(ctx));
-    ctx.bus.on('spw:module-failed', () => updateRuntimeStateTokens(ctx));
+    ctx.bus.on('spw:module-mounted', () => scheduleRuntimeTokenUpdate(ctx));
+    ctx.bus.on('spw:module-failed', () => scheduleRuntimeTokenUpdate(ctx));
     updateRuntimeStateTokens(ctx);
   }
 

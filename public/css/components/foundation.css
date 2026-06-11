@@ -591,15 +591,17 @@
   --spw-perspective-weight: 0.62;
 }
 
-/* Map active runtime layers into computational/attentional tokens for CSS consumers */
-:root[data-spw-active-layers] {
+/* Map active runtime layers into computational/attentional tokens for CSS consumers.
+   Inline style tokens from module-loader win during settled mounts; these are the
+   authored fallback cascade when data-spw-active-layers is present without inline overrides. */
+:root[data-spw-active-layers]:not([data-spw-runtime-mount-batch="active"]) {
   --spw-runtime-layer-count: 2;
 }
-:root[data-spw-active-layers~="enhancement"] {
+:root[data-spw-active-layers~="enhancement"]:not([data-spw-runtime-mount-batch="active"]) {
   --spw-runtime-enhancement-intensity: 0.85;
   --spw-runtime-layer-count: 3;
 }
-:root[data-spw-active-layers~="feature"] {
+:root[data-spw-active-layers~="feature"]:not([data-spw-runtime-mount-batch="active"]) {
   --spw-runtime-feature-intensity: 0.7;
   --spw-runtime-layer-count: calc(var(--spw-runtime-layer-count, 2) + 1);
 }

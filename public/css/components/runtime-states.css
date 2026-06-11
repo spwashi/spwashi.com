@@ -286,6 +286,21 @@
   0 0 0 4px color-mix(in srgb, var(--component-accent) 7%, transparent);
 }
 
+/* Coalesce parallel module mounts: hold cascade tokens steady until the batch settles. */
+:where(html[data-spw-runtime-mount-batch="active"]) {
+  --spw-runtime-enhancement-intensity: 0.32;
+  --spw-runtime-feature-intensity: 0.22;
+  --spw-site-rhythm-tempo: 0.72;
+}
+
+:where(html:not([data-spw-runtime-mount-batch="active"])) {
+  transition:
+    --spw-runtime-enhancement-intensity var(--duration-base, 200ms) ease,
+    --spw-runtime-feature-intensity var(--duration-base, 200ms) ease,
+    --spw-site-rhythm-tempo var(--duration-base, 200ms) ease,
+    --spw-site-rhythm-density var(--duration-base, 200ms) ease;
+}
+
 :where(html[data-spw-connection-posture="offline"], html[data-spw-prefetch-mode="deferred"]) {
   --spw-runtime-enhancement-intensity: min(var(--spw-runtime-enhancement-intensity, 0.5), 0.48);
   --spw-site-rhythm-tempo: min(var(--spw-site-rhythm-tempo, 1), 0.82);
