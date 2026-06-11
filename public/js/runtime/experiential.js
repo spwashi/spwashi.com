@@ -1301,7 +1301,7 @@ function resolveSpellPathExpandedDefault() {
 
   const compact = window.matchMedia('(max-width: 720px)').matches;
   if (compact) {
-    return hasActiveFrame || routeParts.length >= 3 || relatedCount > 2;
+    return hasHash || hasActiveFrame || routeParts.length >= 3;
   }
 
   return routeParts.length >= 2 || hasActiveFrame || relatedCount > 0;
