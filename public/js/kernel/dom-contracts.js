@@ -100,6 +100,17 @@ export const SEMANTIC_CHROME_SELECTOR = SEMANTIC_CHROME_SELECTORS.join(', ');
 export const FRAME_SELECTOR = '.site-frame, [data-spw-kind="frame"]';
 export const REGION_HOST_SELECTOR = '.site-frame, .frame-panel, .frame-card, [data-spw-kind], [data-spw-role]';
 
+export const ANNOTATION_LAYER_REGION_SELECTORS = Object.freeze([
+  'main [data-spw-kind]',
+  'main [data-spw-role]',
+  'main [data-spw-context]',
+  'main [data-spw-feature]',
+  'main section[id]',
+  'main article[id]',
+]);
+
+export const ANNOTATION_LAYER_REGION_SELECTOR = ANNOTATION_LAYER_REGION_SELECTORS.join(', ');
+
 export const SITE_TOPOGRAPHY = Object.freeze({
   route: 'body[data-spw-surface]',
   shell: 'body > header, .site-header',

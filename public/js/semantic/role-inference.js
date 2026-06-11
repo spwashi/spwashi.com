@@ -4,6 +4,7 @@
  */
 
 import {
+  ANNOTATION_LAYER_REGION_SELECTOR,
   REGION_SELECTOR,
   inferTopographyKind,
 } from '../kernel/dom-contracts.js';
@@ -20,10 +21,15 @@ export const SPW_ROLE_INFERENCE_CONTRACT = Object.freeze({
   ]),
   portableUse:
     'Import this module when multiple runtime layers need the same region role vocabulary.',
+  regionSelectors: Object.freeze({
+    default: 'REGION_SELECTOR from dom-contracts',
+    annotation: 'ANNOTATION_LAYER_REGION_SELECTOR for main-scoped annotation targets',
+  }),
 });
 
-export function collectRegions(root = document) {
-  const regions = safeQueryAll(REGION_SELECTOR, root).filter((el) => el instanceof HTMLElement);
+export function collectRegions(root = document, options = {}) {
+  const selector = options.selector || REGION_SELECTOR;
+  const regions = safeQueryAll(selector, root).filter((el) => el instanceof HTMLElement);
   const seen = new Set();
   const ordered = [];
 
@@ -34,6 +40,10 @@ export function collectRegions(root = document) {
   }
 
   return ordered;
+}
+
+export function collectAnnotationRegions(root = document) {
+  return collectRegions(root, { selector: ANNOTATION_LAYER_REGION_SELECTOR });
 }
 
 export function inferRegionKind(el) {

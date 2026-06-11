@@ -27,6 +27,13 @@ Remove the `spw-` prefix from the JavaScript source tree, keep the runtime namin
 - `git diff --check`
 - `npm run check`
 
+## 2026-06 Taxonomy Alignment Pass
+- Confirmed `public/js/` no longer uses `spw-*.js` source filenames; taxonomy work is now semantic ownership and shared vocabulary, not prefix removal.
+- Canonical region selectors now live in `kernel/dom-contracts.js`, including `ANNOTATION_LAYER_REGION_SELECTOR` for main-scoped annotation targets.
+- `semantic/role-inference.js` is the shared authority for `collectRegions()`, optional selector overrides, and `collectAnnotationRegions()`.
+- Settings taxonomy split: `site-settings-profiles.js` (data), `site-settings-engine.js` (apply/store), `site-settings-ui.js` (bindings), `site-settings.js` (public entry).
+- `public/js/README.md` documents the updated reading order and folder roles.
+
 ## Out of Scope
 - Runtime behavior changes unrelated to path and taxonomy cleanup.
 - New features or semantic state additions.

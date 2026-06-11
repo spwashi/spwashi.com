@@ -6,10 +6,14 @@
 #:layer #!pragmatics
 
 @runtime: ~"../../../public/js/site.js"
-@settings: ~"../../../public/js/site-settings.js"
-@contextual_ui: ~"../../../public/js/contextual-ui.js"
-@semantic_chrome: ~"../../../public/js/semantic-chrome.js"
-@component_semantics: ~"../../../public/js/component-semantics.js"
+@module_catalog: ~"../../../public/js/runtime/module-catalog.js"
+@module_loader: ~"../../../public/js/runtime/module-loader.js"
+@role_inference: ~"../../../public/js/semantic/role-inference.js"
+@settings: ~"../../../public/js/kernel/site-settings.js"
+@settings_engine: ~"../../../public/js/kernel/site-settings-engine.js"
+@contextual_ui: ~"../../../public/js/interface/contextual-ui.js"
+@semantic_chrome: ~"../../../public/js/interface/semantic-chrome.js"
+@component_semantics: ~"../../../public/js/semantic/component-semantics.js"
 @design_whimsy: ~"../../conventions/design-whimsy.spw"
 
 thesis: .{
@@ -30,15 +34,22 @@ declared_region_lifecycle: .{
  note = `These are used both for site-managed regions and module-root state during mountDefinition().`
 }[reg=facet]
 
+mount_orchestration: .{
+ catalog = @module_catalog
+ loader = @module_loader
+ note = `Module definitions live in module-catalog.js; mount scheduling, parallel immediate batches, and runtime token cascade coalescing live in module-loader.js.`
+ parallel_immediate = `site-settings mounts first, then remaining immediate modules batch in parallel with spw:immediate-layer-parallel instrumentation.`
+}[reg=facet]
+
 actual_boot_sequence: ?<
  whenDocumentReady(),
  normalizeDocumentMetadata(),
  createRuntimeContext(),
  `set page state -> booting`,
  primeRegions(),
- `mount immediate core defs`,
- `mount immediate feature defs`,
- `mount immediate enhancement defs`,
+ `mount immediate core defs (site-settings first, then parallel batch)`,
+ `mount immediate feature defs (parallel batch)`,
+ `mount immediate enhancement defs (parallel batch)`,
  `set page state -> interactive`,
  `mount visible features`,
  `mount interaction features`,
@@ -75,9 +86,9 @@ lifecycle_risks: .{
   files = #[@runtime][reg=set]
  }[reg=facet]
  partial_cleanup = .{
-  issue = `Some modules return proper cleanup handles, but the settings pathway currently does not preserve its binding cleanup through applySiteSettings().`
+  issue = `Settings UI bindings are lazy-loaded and no longer run on every applySiteSettings() call, but repeat init still depends on manager._initialized and destroyRuntime() does not reset that flag.`
   effect = `destroyRuntime() is architecturally stronger than some module implementations.`
-  files = #[@runtime, @settings][reg=set]
+  files = #[@runtime, @settings, @settings_engine][reg=set]
  }[reg=facet]
  reinit_gap = .{
   issue = `spw-contextual-ui guards against repeat init with a dataset flag but does not clear that flag in cleanup.`
@@ -141,6 +152,9 @@ brand_arrival: .{
 inspection_paths: .{
  first_read = #[
   @runtime,
+  @module_catalog,
+  @module_loader,
+  @role_inference,
   @settings,
   @contextual_ui
  ][reg=set]

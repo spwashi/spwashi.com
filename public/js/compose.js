@@ -213,3 +213,50 @@ export {
   initSpwSvgTunability,
   parseSvgTunabilitySearch,
 } from './media/svg-tunability.js';
+
+export {
+  MODULE_LAYERS,
+  MOUNT_WHEN,
+  filterEnhancementDefs,
+} from './runtime/module-catalog.js';
+
+export {
+  MODULE_TIMING_STAGES,
+  SPW_MODULE_LOADER_CONTRACT,
+  createModuleLoader,
+} from './runtime/module-loader.js';
+
+export {
+  GESTURE_SPELL_SEEDS,
+  GESTURE_VOCABULARY,
+  SPW_GESTURE_CONTRACT,
+  collectRelatedRouteSamples,
+  describeComponentSample,
+  describeCurrentPageSample,
+  describeGestureContract,
+  describeGestureTarget,
+  snapshotFeatureClusters,
+  snapshotGestureTargets,
+} from './runtime/gesture-contract.js';
+
+export {
+  REGION_STATES,
+  SPW_REGION_PROFILER_CONTRACT,
+  primeRegions,
+  refreshRegionProfiles,
+  setRegionState,
+} from './runtime/region-profiler.js';
+
+export {
+  SPW_ROLE_INFERENCE_CONTRACT,
+  collectAnnotationRegions,
+  collectRegions,
+  inferRegionContext,
+  inferRegionKind,
+  inferRegionRole,
+} from './semantic/role-inference.js';
+
+export {
+  ANNOTATION_LAYER_REGION_SELECTOR,
+  ANNOTATION_LAYER_REGION_SELECTORS,
+} from './kernel/dom-contracts.js';

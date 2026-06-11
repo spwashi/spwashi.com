@@ -1,11 +1,13 @@
 # JavaScript Tree
 
-`site.js` is the public runtime entrypoint. Everything else should be readable as a
-module tree, not a pile of ad hoc helpers.
+`site.js` is the public runtime entrypoint — a thin bootstrap shell that wires
+`module-catalog.js`, `module-loader.js`, page state, and inspection surfaces.
+Everything else should be readable as a module tree, not a pile of ad hoc helpers.
 
 `compose.js` is the portable composition entrypoint. It exports reusable DOM
-contracts, runtime helpers, palette utilities, attention contracts, and
-interaction loop records without mounting the full site runtime.
+contracts, runtime helpers, staged-loader contracts, gesture/region vocabulary,
+palette utilities, attention contracts, and interaction loop records without
+mounting the full site runtime.
 
 It also exports `SPW_COMPOSITION_CONTRACT`, a small documentation object for the
 browser-field / script-spell / stylesheet-disposition model.
@@ -19,21 +21,25 @@ For console-oriented work, it exports `createSpwLogger`,
 
 If you are trying to learn the runtime, read in this order:
 
-1. `public/js/site.js` for the bootstrap lifecycle and module loading policy.
-2. `public/js/kernel/dom-contracts.js` for shared selector and dataset helpers.
-3. `public/js/kernel/shared.js` for the canonical operator registry and shared semantics.
-4. `public/js/runtime/page-state.js` for the page lifecycle and attention contract.
-5. `public/js/runtime/page-hooks.js` for page-unique hooks and generalizable handles.
-6. `public/js/runtime/` for mounted processes, lifecycles, and page-state producers.
-7. `public/js/interface/` for visible affordances and user-facing controls.
-8. `public/js/semantic/` for projection, inference, and semantic helpers.
-9. `public/js/modules/` for route-specific feature bundles.
+1. `public/js/site.js` for boot orchestration and `__SPW_SITE__` surfaces.
+2. `public/js/runtime/module-catalog.js` for staged module definitions by layer.
+3. `public/js/runtime/module-loader.js` for mount scheduling, batching, and token cascades.
+4. `public/js/kernel/dom-contracts.js` for shared selector and dataset helpers.
+5. `public/js/semantic/role-inference.js` for canonical region collection and role inference.
+6. `public/js/kernel/shared.js` for the canonical operator registry and shared semantics.
+7. `public/js/kernel/site-settings.js` (+ `site-settings-engine.js`, `site-settings-profiles.js`, lazy `site-settings-ui.js`) for root settings state.
+8. `public/js/runtime/page-state.js` for the page lifecycle and attention contract.
+9. `public/js/runtime/page-hooks.js` for page-unique hooks and generalizable handles.
+10. `public/js/runtime/` for mounted processes, lifecycles, and page-state producers.
+11. `public/js/interface/` for visible affordances and user-facing controls.
+12. `public/js/semantic/` for projection, inference, and semantic helpers.
+13. `public/js/modules/` for route-specific feature bundles.
 
 ## Folder Roles
 
-- `kernel/`: durable primitives, settings, shared contracts, and runtime bridges.
-- `semantic/`: operator grammar, projection machinery, semantic inference, narrative token lenses, and pretext helpers.
-- `runtime/`: active processes, route grounding, page-state, frame-state, spells, inspectors, gates, and lifecycle loops.
+- `kernel/`: durable primitives, settings (profiles/engine/ui split), shared contracts, and runtime bridges.
+- `semantic/`: operator grammar, projection machinery, region role inference, narrative token lenses, and pretext helpers.
+- `runtime/`: module catalog/loader, active processes, route grounding, page-state, frame-state, spells, inspectors, gates, and lifecycle loops.
 - `runtime/page-hooks.js`: page-unique hooks, named handles, and console-facing page play helpers.
 - `interface/`: visible affordances, guide behavior, haptics, local controls, and chrome response.
 - `modules/`: page or feature bundles such as blog, services, RPG Wednesday, tools, profile, and care.
@@ -45,10 +51,17 @@ If you are trying to learn the runtime, read in this order:
 These are the best candidates when you want to reuse a file on another site:
 
 - `compose.js` for a single import surface over the portable runtime helpers.
+- `runtime/module-catalog.js` + `runtime/module-loader.js` for staged mount
+  contracts without inlining bootstrap policy in a host page.
+- `runtime/gesture-contract.js` + `runtime/region-profiler.js` for gesture and
+  region harmony vocabulary shared with `site.js`.
+- `semantic/role-inference.js` for `collectRegions()`, `collectAnnotationRegions()`,
+  and shared role/kind/context inference.
 - `runtime/runtime-helpers.js` for shared timing, parsing, mount, and registry
   helpers that can be reused without booting `site.js`.
 - `SPW_RUNTIME_HELPERS_CONTRACT` for a compact summary of the helper layer's
   timing and mount vocabulary.
+- `SPW_MODULE_LOADER_CONTRACT` + `MODULE_TIMING_STAGES` for mount lifecycle stages.
 - `kernel/dom-contracts.js` for selector, dataset, and style helpers.
 - `runtime/interaction-loop.js` for small interaction-state records and refresh events.
 - `runtime/page-state.js` for page state, attention timing, and visibility hooks.

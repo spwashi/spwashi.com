@@ -3,17 +3,10 @@ import {
   createSpwLogger,
   markInstrumented,
 } from '/public/js/kernel/instrumentation.js';
+import { collectAnnotationRegions } from '/public/js/semantic/role-inference.js';
 
 const ROOT = document.documentElement;
 const HANDLE_SELECTOR = '[data-spw-annotation-handle], [data-spw-header-annotation]';
-const REGION_SELECTOR = [
-  'main [data-spw-kind]',
-  'main [data-spw-role]',
-  'main [data-spw-context]',
-  'main [data-spw-feature]',
-  'main section[id]',
-  'main article[id]',
-].join(', ');
 
 /* Cognitive container awareness: when annotating, also mark the nearest rich
    container (.site-frame, .frame-card, etc.) so memory + annotation create
@@ -117,14 +110,6 @@ function collectHandles(root = document) {
     if (handle instanceof HTMLElement && annotationForHandle(handle)) handles.add(handle);
   });
   return [...handles];
-}
-
-function collectRegions(root = document) {
-  const regions = new Set();
-  root.querySelectorAll?.(REGION_SELECTOR).forEach((region) => {
-    if (region instanceof HTMLElement && region.closest('main')) regions.add(region);
-  });
-  return [...regions];
 }
 
 function scoreRegion(region, annotation, activeSectionId = '') {
@@ -246,7 +231,7 @@ export function initSpwAnnotationLayer(ctx = {}) {
   const handles = collectHandles(root);
   if (!handles.length) return { cleanup() {}, refresh() {} };
 
-  let regions = collectRegions(root);
+  let regions = collectAnnotationRegions(root);
   let activeHandle = null;
   let activeSectionId = ROOT.dataset.spwPageSectionCurrent || '';
   let currentSnapshot = null;
@@ -417,7 +402,7 @@ export function initSpwAnnotationLayer(ctx = {}) {
       }
     },
     refresh() {
-      regions = collectRegions(root);
+      regions = collectAnnotationRegions(root);
       if (activeHandle) apply(activeHandle, currentSnapshot?.state || 'preview', 'refresh');
     },
   };

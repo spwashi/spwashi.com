@@ -40,6 +40,13 @@ Reduce the size and cognitive load of `public/js/site.js` by extracting the page
 - Added a small typed runtime bridge for DOM contract helpers so generated TypeScript modules can import a stable local file instead of depending on watch-mode post-emit import rewrites.
 - Follow-up guard worth adding: runtime contracts should fail when a module writes `textContent` to a selector that can match `html`, `head`, or `body`.
 
+## 2026-06 Module Loader And Compose Surface Pass
+- Extracted `runtime/module-catalog.js`, `runtime/module-loader.js`, `runtime/gesture-contract.js`, `runtime/region-profiler.js`, and `semantic/role-inference.js` from the `site.js` shell.
+- Split `kernel/site-settings` into profiles, engine, and lazy UI bindings while keeping `kernel/site-settings.js` as the stable import path.
+- Wired portable exports through `compose.js` for catalog layers, loader contract, gesture/region profiler, and role inference.
+- Consolidated annotation-layer region collection onto `collectAnnotationRegions()` with `ANNOTATION_LAYER_REGION_SELECTOR` in `dom-contracts.js`.
+- Updated `public/js/README.md` reading order and `.spw/reviews/runtime-audit/lifecycles.spw` paths to match the current folder taxonomy.
+
 ## Out of Scope
 - Renaming unrelated runtime modules.
 - Changing route-specific behavior beyond the page-state contract.
