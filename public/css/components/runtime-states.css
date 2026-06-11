@@ -392,9 +392,29 @@
     gap: var(--spw-slot-gap-tight, 0.34rem 0.46rem);
   }
 
+  :where(.frame-topline > .spw-component-meta, .frame-heading > .spw-component-meta) {
+    width: 100%;
+    margin-inline-start: 0;
+    justify-content: flex-start;
+  }
+
   :where(.frame-topline > .mode-switch, [data-spw-slot="actions"] > .mode-switch) {
     width: 100%;
     justify-content: flex-start;
+  }
+
+  :where(.mode-switch[aria-label]) {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(7.25rem, 1fr));
+  }
+
+  :where(.mode-switch[aria-label])::before {
+    grid-column: 1 / -1;
+    max-inline-size: none;
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+    text-wrap: balance;
   }
 
   :where(.site-hero--split-figure) > [data-spw-slot="body"] {

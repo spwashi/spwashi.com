@@ -790,7 +790,23 @@
   ) {
     width: 100%;
     margin-left: 0;
+    margin-inline-start: 0;
     justify-content: flex-start;
+  }
+
+  :where(.mode-switch[aria-label]) {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(7.25rem, 1fr));
+    gap: calc(var(--spw-control-gap, 0.24rem) + 0.14rem);
+  }
+
+  :where(.mode-switch[aria-label])::before {
+    grid-column: 1 / -1;
+    max-inline-size: none;
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+    text-wrap: balance;
   }
 
   :where(
@@ -799,6 +815,18 @@
   ) {
     flex: 1 1 min(100%, 8rem);
     justify-content: center;
+    min-inline-size: 0;
+  }
+}
+
+@container (max-width: 32rem) {
+  :where(.frame-topline, .frame-heading) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  :where(.frame-topline > .frame-sigil, .frame-heading > .frame-sigil, .frame-topline > .spw-delimiter) {
+    align-self: flex-start;
   }
 }
 

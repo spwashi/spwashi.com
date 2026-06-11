@@ -544,13 +544,7 @@
 }
 
 @media (max-width: 56rem) {
-  :where(#home-frame .mode-switch) {
-    grid-template-columns: repeat(2, minmax(7.25rem, 1fr));
-    gap: 0.38rem;
-  }
-
   #home-frame .mode-switch[aria-label]::before {
-    grid-column: 1 / -1;
     justify-content: flex-start;
     min-block-size: 1.75rem;
     padding-block: 0.12rem;
@@ -558,10 +552,7 @@
 
   :where(#home-frame .mode-switch > .frame-sigil) {
     min-block-size: 2.15rem;
-    padding-inline: 0.42rem;
-    font-size: 0.68rem;
     letter-spacing: 0.03em;
-    white-space: nowrap;
   }
 }
 

@@ -1900,7 +1900,7 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
 .mode-switch[aria-label]::before {
   content: attr(aria-label);
   flex: 0 0 auto;
-  max-inline-size: 18ch;
+  max-inline-size: min(100%, 22ch);
   overflow: hidden;
   padding: 0.14rem 0.42rem;
   border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal)) 14%, transparent);
@@ -1910,10 +1910,42 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   font-size: 0.62rem;
   font-weight: 750;
   letter-spacing: 0.08em;
-  line-height: 1.1;
+  line-height: 1.2;
   text-overflow: ellipsis;
   text-transform: uppercase;
+  text-wrap: balance;
   white-space: nowrap;
+}
+
+/* Narrow viewports: unwrap the lens label and give pills a stable 2×2 grid. */
+@media (max-width: 56rem) {
+  .mode-switch[aria-label] {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(7.25rem, 1fr));
+    align-items: stretch;
+    width: 100%;
+    gap: calc(var(--spw-control-gap, 0.24rem) + 0.14rem);
+  }
+
+  .mode-switch[aria-label]::before {
+    grid-column: 1 / -1;
+    flex: none;
+    width: 100%;
+    max-inline-size: none;
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+    text-wrap: balance;
+  }
+
+  .mode-switch .frame-sigil {
+    flex: 1 1 auto;
+    inline-size: auto;
+    width: auto;
+    min-inline-size: 0;
+    font-size: calc(var(--text-size-chip, 0.84rem) - 0.05rem);
+    padding-inline: calc(var(--spw-control-padding-inline, 0.72rem) - 0.2rem);
+  }
 }
 
 /* Shared mode-switch state lives here; routes should specialize with the
@@ -3294,10 +3326,38 @@ html[data-spw-cognitive-handles="off"] :where(
     display: none !important;
   }
 
+  :where(.frame-topline, .frame-heading) {
+    align-items: stretch;
+    gap: calc(var(--spw-slot-gap-tight, 0.45rem) + 0.04rem);
+  }
+
+  :where(
+    .frame-topline > .spw-component-meta,
+    .frame-heading > .spw-component-meta,
+    .frame-topline > .spec-strip,
+    .frame-topline > .frame-operators
+  ) {
+    width: 100%;
+    margin-left: 0;
+    margin-inline-start: 0;
+    justify-content: flex-start;
+  }
+
   :where(.frame-topline > .spw-component-meta > :nth-child(n + 2),
          .frame-heading > .spw-component-meta > :nth-child(n + 2),
          .spw-semantic-seam > .spw-component-meta > :nth-child(n + 2)) {
     display: none;
+  }
+}
+
+@media (max-width: 32rem) {
+  :where(.frame-topline, .frame-heading) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  :where(.frame-topline > .frame-sigil, .frame-heading > .frame-sigil, .frame-topline > .spw-delimiter) {
+    align-self: flex-start;
   }
 }
 
