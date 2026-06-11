@@ -28,6 +28,7 @@
  */
 
 import { bus } from '/public/js/kernel/bus.js';
+import { guardCall } from '/public/js/kernel/dom-render.js';
 import {
   CAULDRON_CONTRACT,
   GARDEN_PRUNE_DAYS,
@@ -1063,9 +1064,7 @@ export function mixIngredients() {
   return { html: combinationHtml + crystallizationHtml, functional: functionalMix };
 }
 
-export function refreshCauldronState() {
-  syncCauldronState();
-}
+export const refreshCauldronState = guardCall(syncCauldronState, 'cauldron:refresh');
 
 export function clearCauldron() {
   saveCauldron([]);

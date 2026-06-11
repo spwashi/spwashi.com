@@ -1,4 +1,5 @@
 import { annotateFloatingChromeElement } from '/public/js/kernel/dom-contracts.js';
+import { appendToDocument } from '/public/js/kernel/dom-render.js';
 import {
   AUTO_HANDLE_MIN_SECTIONS,
   CAULDRON_RESONANCE_ATTR,
@@ -255,7 +256,7 @@ function ensureHandle(root, sections) {
   if (header?.after) {
     header.after(handle);
   } else {
-    document.body.append(handle);
+    appendToDocument(handle);
   }
 
   return { handle, generated: true };

@@ -49,6 +49,8 @@ export {
   escapeAttr,
   escapeHtml,
   fragment,
+  appendToDocument,
+  getDocumentAppendHost,
   guardCall,
   hydrateHost,
   interpolateTemplate,

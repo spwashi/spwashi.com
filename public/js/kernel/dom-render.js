@@ -74,6 +74,35 @@ export function guardCall(fn, source = 'guard-call', options = {}) {
   };
 }
 
+export function getDocumentAppendHost() {
+  return document.body || document.documentElement || null;
+}
+
+export function appendToDocument(node, options = {}) {
+  if (!(node instanceof Node)) return false;
+
+  const host = getDocumentAppendHost();
+  if (host) {
+    host.append(node);
+    return true;
+  }
+
+  if (options.defer !== false && document.readyState === 'loading') {
+    document.addEventListener(
+      'DOMContentLoaded',
+      () => appendToDocument(node, { ...options, defer: false }),
+      { once: true },
+    );
+    return false;
+  }
+
+  reportRenderError('appendToDocument', new Error('document host unavailable'), {
+    host: node instanceof Element ? node : null,
+    silent: options.silent,
+  });
+  return false;
+}
+
 export function cleanText(value = '') {
   return String(value).replace(/\s+/g, ' ').trim();
 }

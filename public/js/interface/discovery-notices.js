@@ -5,7 +5,7 @@ import {
   createJsonFeedLoader,
   getWeekIndex,
 } from '../typed/feed-utils.js';
-import { annotateFloatingChromeElement } from '../kernel/dom-contracts.js';
+import { annotateFloatingChromeElement } from '/public/js/kernel/dom-contracts.js';
 
 const FEED_URL = '/public/data/promo-wonder-cycle.json';
 const STORAGE_KEY = 'spw-discovery-notice-dismissals';

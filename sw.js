@@ -8,7 +8,7 @@
  * - Prefer network for HTML, prefer cache for versioned/static assets.
  */
 
-const CACHE_SCHEMA_VERSION = 'v2';
+const CACHE_SCHEMA_VERSION = 'v3';
 const CACHE_NAMESPACE = `spw-${CACHE_SCHEMA_VERSION}`;
 
 const CACHE = {
@@ -22,6 +22,7 @@ const LEGACY_CACHE_PREFIXES = [
   'spw-pages',
   'spw-assets',
   'spw-v',
+  'spw-v2',
 ];
 
 const OFFLINE_URL = '/offline/';
@@ -95,7 +96,9 @@ const CORE_ASSETS = [
 
   '/public/js/site.js',
   '/public/js/kernel/dom-contracts.js',
+  '/public/js/kernel/dom-render.js',
   '/public/js/kernel/page-metadata.js',
+  '/public/js/typed/json-feeds.js',
   '/public/js/typed/media-publishing.js',
   '/public/js/typed/promo-wonder-cycle.js',
   '/public/js/typed/feed-utils.js',

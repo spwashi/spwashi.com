@@ -1,3 +1,5 @@
+import { annotateFloatingChromeElement } from '/public/js/kernel/dom-contracts.js';
+import { appendToDocument, guardCall } from '/public/js/kernel/dom-render.js';
 import { computeCauldronPhase } from './contract.js';
 import { isPhaseComplete } from './resonance.js';
 import { getCauldron } from './storage.js';
@@ -8,18 +10,13 @@ const PHASE_RAIL_SELECTOR = '[data-spw-cauldron-phase-rail]';
 const COLLAPSE_QUERY = '(max-width: 720px)';
 
 let chipScrollBound = false;
+let pendingChip = null;
 
-function ensureFloatingChip() {
-  let chip = document.querySelector(CHIP_SELECTOR);
-  if (chip instanceof HTMLElement) return chip;
-
-  chip = document.createElement('a');
+function createFloatingChip() {
+  const chip = document.createElement('a');
   chip.className = 'spw-cauldron-chip';
   chip.href = '#memory-garden-cauldron';
   chip.id = 'spw-cauldron-chip';
-  chip.dataset.spwFloatingChrome = 'true';
-  chip.dataset.spwChromeTier = 'floating';
-  chip.dataset.spwChromeRole = 'cauldron-chip';
   chip.setAttribute('aria-label', 'Jump to memory garden cauldron');
   chip.hidden = true;
   chip.innerHTML = `
@@ -27,6 +24,13 @@ function ensureFloatingChip() {
     <span class="spw-cauldron-chip__count" data-spw-cauldron-chip-count>0</span>
     <span class="spw-cauldron-chip__phase" data-spw-cauldron-chip-phase>gather</span>
   `;
+  annotateFloatingChromeElement(chip, {
+    role: 'cauldron-chip',
+    tier: 'floating',
+    mutator: 'cauldron-chrome',
+    reason: 'floating-cauldron-chip',
+    stylingAxis: 'page-locomotion',
+  });
   chip.addEventListener('click', (event) => {
     event.preventDefault();
     const host = document.querySelector(PANEL_QUERY);
@@ -37,12 +41,27 @@ function ensureFloatingChip() {
       window.setTimeout(() => host.classList.remove('is-cauldron-focused'), 1400);
     }
   });
-  document.body.append(chip);
+  return chip;
+}
+
+function ensureFloatingChip() {
+  const existing = document.querySelector(CHIP_SELECTOR);
+  if (existing instanceof HTMLElement) return existing;
+
+  const chip = pendingChip instanceof HTMLElement ? pendingChip : createFloatingChip();
+  pendingChip = chip;
+
+  if (!chip.isConnected) {
+    appendToDocument(chip);
+  }
+
   return chip;
 }
 
 function syncFloatingChip() {
   const chip = ensureFloatingChip();
+  if (!(chip instanceof HTMLElement)) return;
+
   const ingredients = getCauldron();
   const count = ingredients.length;
   const phase = computeCauldronPhase(ingredients);
@@ -65,13 +84,15 @@ function syncFloatingChip() {
   chip.hidden = !(count > 0 && scrolled && !footerVisible);
 }
 
+const safeSyncFloatingChip = guardCall(syncFloatingChip, 'cauldron:floating-chip');
+
 export function setupCauldronChrome() {
   if (!chipScrollBound) {
     chipScrollBound = true;
-    window.addEventListener('scroll', syncFloatingChip, { passive: true });
-    window.addEventListener('resize', syncFloatingChip, { passive: true });
+    window.addEventListener('scroll', safeSyncFloatingChip, { passive: true });
+    window.addEventListener('resize', safeSyncFloatingChip, { passive: true });
   }
-  syncFloatingChip();
+  safeSyncFloatingChip();
 }
 
 export function syncCauldronPhaseRail(phase) {
@@ -123,4 +144,4 @@ export function bindCauldronPanelToggle() {
   });
 }
 
-export { syncFloatingChip };
+export { safeSyncFloatingChip as syncFloatingChip };

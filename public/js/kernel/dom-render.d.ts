@@ -29,6 +29,12 @@ export function guardCall<T>(
   options?: { fallback?: T; host?: Element | null; silent?: boolean },
 ): (...args: never[]) => T | undefined;
 
+export function getDocumentAppendHost(): HTMLElement | null;
+export function appendToDocument(
+  node: Node,
+  options?: { defer?: boolean; silent?: boolean },
+): boolean;
+
 export function cleanText(value?: unknown): string;
 export function escapeHtml(value?: unknown): string;
 export function escapeAttr(value?: unknown): string;

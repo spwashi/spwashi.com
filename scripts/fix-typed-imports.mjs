@@ -4,7 +4,8 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const TYPED_DIR = path.resolve(__dirname, '..', 'public/js/typed');
-const IMPORT_RE = /(['"])\.\.\/js\/kernel\//g;
+const KERNEL_IMPORT_RE = /(['"])\.\.\/(?:js\/)?kernel\//g;
+const KERNEL_REPLACEMENT = "$1/public/js/kernel/";
 
 async function main() {
   let entries;
@@ -19,7 +20,7 @@ async function main() {
     if (!entry.endsWith('.js')) continue;
     const filePath = path.join(TYPED_DIR, entry);
     const source = await fs.readFile(filePath, 'utf8');
-    const output = source.replace(IMPORT_RE, '$1../kernel/');
+    const output = source.replace(KERNEL_IMPORT_RE, KERNEL_REPLACEMENT);
     if (output !== source) {
       await fs.writeFile(filePath, output, 'utf8');
     }
