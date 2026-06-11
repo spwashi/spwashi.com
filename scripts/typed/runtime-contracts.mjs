@@ -24,6 +24,15 @@ const ALLOWED_JS_OWNER_DIRECTORIES = new Set([
     'semantic',
     'typed',
 ]);
+const ALLOWED_TYPED_IMPORT_DIRECTORIES = new Set(['kernel', 'typed']);
+const ALLOWED_TYPED_IMPORT_ROOT_FILES = new Set(['site.js']);
+const KERNEL_TYPED_SHIMS = new Map([
+    ['bus', 'kernel/bus.js'],
+    ['feed-utils', 'kernel/feed-utils.js'],
+    ['runtime-environment', 'kernel/runtime-environment.js'],
+]);
+const TYPED_IMPORT_RE = /(?:import|export)\s+(?:[^'";]*?\s+from\s+)?['"]([^'"]*typed\/[^'"]+)['"]/g;
+const TYPED_SHIM_RE = /export\s+\*\s+from\s+['"]([^'"]+)['"]/;
 function relativeRepoPath(absolutePath) {
     return toPosixPath(path.relative(ROOT_DIR, absolutePath));
 }
@@ -94,6 +103,74 @@ async function collectTypedOutputs() {
         .filter((entry) => entry.isFile() && entry.name.endsWith('.js'))
         .map((entry) => `public/js/typed/${entry.name}`)
         .sort();
+}
+async function collectJsFilesUnder(directory, prefix = '') {
+    const entries = await fs.readdir(directory, { withFileTypes: true });
+    const files = [];
+    for (const entry of entries) {
+        const relativePath = prefix ? `${prefix}/${entry.name}` : entry.name;
+        const absolutePath = path.join(directory, entry.name);
+        if (entry.isDirectory()) {
+            files.push(...await collectJsFilesUnder(absolutePath, relativePath));
+            continue;
+        }
+        if (entry.isFile() && entry.name.endsWith('.js')) {
+            files.push(relativePath);
+        }
+    }
+    return files.sort();
+}
+function canImportTypedModule(relativeFilePath) {
+    if (ALLOWED_TYPED_IMPORT_ROOT_FILES.has(relativeFilePath)) {
+        return true;
+    }
+    const [ownerDirectory] = relativeFilePath.split('/');
+    return Boolean(ownerDirectory && ALLOWED_TYPED_IMPORT_DIRECTORIES.has(ownerDirectory));
+}
+async function collectTypedImportViolations() {
+    const errors = [];
+    const files = await collectJsFilesUnder(PUBLIC_JS_DIR);
+    for (const relativeFilePath of files) {
+        if (relativeFilePath.startsWith('typed/'))
+            continue;
+        const absolutePath = path.join(PUBLIC_JS_DIR, relativeFilePath);
+        const source = await fs.readFile(absolutePath, 'utf8');
+        const matches = [...source.matchAll(TYPED_IMPORT_RE)];
+        if (!matches.length)
+            continue;
+        if (!canImportTypedModule(relativeFilePath)) {
+            const importTargets = [...new Set(matches.map((match) => match[1]))].join(', ');
+            errors.push(`${relativeRepoPath(absolutePath)} imports generated typed output (${importTargets}); route through kernel/ shims or site.js dynamic imports.`);
+        }
+    }
+    return errors;
+}
+async function collectKernelTypedShimIssues() {
+    const errors = [];
+    const shims = [];
+    for (const [basename, shimPath] of KERNEL_TYPED_SHIMS) {
+        const absoluteShimPath = path.join(PUBLIC_JS_DIR, shimPath);
+        shims.push(shimPath);
+        if (!(await pathExists(absoluteShimPath))) {
+            errors.push(`missing kernel typed shim public/js/${shimPath} for public/ts/${basename}.ts.`);
+            continue;
+        }
+        const source = await fs.readFile(absoluteShimPath, 'utf8');
+        const exportMatch = source.match(TYPED_SHIM_RE);
+        if (!exportMatch) {
+            errors.push(`public/js/${shimPath} must re-export from ../typed/${basename}.js.`);
+            continue;
+        }
+        const exportTarget = exportMatch[1].replace(/\\/g, '/');
+        const expectedTarget = `../typed/${basename}.js`;
+        if (exportTarget !== expectedTarget) {
+            errors.push(`public/js/${shimPath} must re-export from ${expectedTarget}, not ${exportTarget}.`);
+        }
+        if (exportTarget.startsWith('/public/js/typed/')) {
+            errors.push(`public/js/${shimPath} must use a relative typed re-export (${expectedTarget}), not an absolute path.`);
+        }
+    }
+    return { errors, shims };
 }
 function importPathToAbsolute(importPath) {
     return path.resolve(path.dirname(SITE_RUNTIME_PATH), importPath);
@@ -213,19 +290,25 @@ export async function collectRuntimeContractReport() {
             errors.push(`${output} has no matching public/ts/${basename}.ts source.`);
         }
     }
+    const typedImportViolations = await collectTypedImportViolations();
+    errors.push(...typedImportViolations);
+    const kernelTypedShimReport = await collectKernelTypedShimIssues();
+    errors.push(...kernelTypedShimReport.errors);
     return {
         errors,
+        kernelTypedShims: kernelTypedShimReport.shims,
         modules,
         ownerDirectories,
         recommendations,
         rootEntrypoints,
+        typedImportViolations,
         typedOutputs,
         warnings,
     };
 }
 export async function main() {
     const report = await collectRuntimeContractReport();
-    console.log(`[runtime] modules=${report.modules.length} ownerDirs=${report.ownerDirectories.length} rootEntrypoints=${report.rootEntrypoints.length} typedOutputs=${report.typedOutputs.length}`);
+    console.log(`[runtime] modules=${report.modules.length} ownerDirs=${report.ownerDirectories.length} rootEntrypoints=${report.rootEntrypoints.length} typedOutputs=${report.typedOutputs.length} kernelShims=${report.kernelTypedShims.length}`);
     if (report.warnings.length) {
         console.log(`[runtime] warnings=${report.warnings.length}`);
         for (const warning of report.warnings.slice(0, 12)) {

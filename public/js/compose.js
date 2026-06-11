@@ -192,6 +192,7 @@ export {
   SPW_QUERY_CONTRACT,
   SPW_QUERY_PRESETS,
   SPW_REFLOW_REASONS,
+  announceSpwConsoleSurface,
   applySpwQueryDisposition,
   createSpwQueryContract,
   createSpwLogger,
@@ -199,6 +200,7 @@ export {
   markInstrumented,
   markReflowReason,
   parseSpwQueryDisposition,
+  readConsoleLogBuffer,
   snapshotInstrumentationTarget,
   writeTuningAttributes,
 } from './kernel/instrumentation.js';

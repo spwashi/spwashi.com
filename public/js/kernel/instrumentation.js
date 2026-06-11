@@ -837,6 +837,194 @@ export function createSpwLogger(namespace = DEFAULT_NAMESPACE, options = {}) {
   });
 }
 
+const CONSOLE_HELP_TOPICS = Object.freeze({
+  modules: Object.freeze({
+    title: 'Runtime modules',
+    lines: Object.freeze([
+      '__SPW_SITE__.listModules()',
+      '__SPW_SITE__.snapshotModules()',
+      '__SPW_SITE__.auditModules()',
+      'spwCompose.controls.modules.mount("topic-discovery")',
+      'spwCompose.controls.modules.discovery()',
+      '?spw-module-audit=on',
+      '?spw-module-only=topic-discovery',
+    ]),
+  }),
+  logs: Object.freeze({
+    title: 'Log tuning',
+    lines: Object.freeze([
+      '?log=layout-shift,site-runtime&log-level=debug',
+      '?log=*&log-level=info',
+      'spwCompose.logs()',
+      'spwCompose.logs("layout-shift")',
+      'document.documentElement.dataset.spwLog = "on"',
+      'document.documentElement.dataset.spwLogLevel = "debug"',
+    ]),
+  }),
+  inspect: Object.freeze({
+    title: 'Inspection',
+    lines: Object.freeze([
+      'spwCompose.snapshot()',
+      'spwCompose.inspect("[data-spw-feature]")',
+      'spwCompose.controls.composition.snapshot()',
+      'spwCompose.controls.pageState.snapshot()',
+      'spwCompose.controls.pageHooks.list()',
+      'spwCompose.mark(document.querySelector("main"))',
+    ]),
+  }),
+});
+
+export function readConsoleLogBuffer(limit) {
+  try {
+    const buffer = globalThis.__spwLogs || [];
+    const size = Number.isFinite(limit) ? Math.max(1, limit) : buffer.length;
+    return buffer.slice(-size).map((record) => ({ ...record }));
+  } catch {
+    return [];
+  }
+}
+
+function filterConsoleLogs(records, filter) {
+  if (!filter) return records;
+  const token = normalizeToken(String(filter));
+  return records.filter((record) => (
+    record.namespace?.includes(token)
+    || record.message?.includes(token)
+    || record.relation?.includes(token)
+    || record.level === token
+  ));
+}
+
+function shouldAnnounceConsoleSurface(globalObject = globalThis) {
+  const root = globalObject.document?.documentElement;
+  const hostname = String(globalObject.location?.hostname || '').toLowerCase();
+  const isLocal = ['localhost', '127.0.0.1', '0.0.0.0', '::1', '[::1]'].includes(hostname)
+    || hostname.endsWith('.localhost');
+  const debugOn = root?.dataset?.spwDebugMode === 'on';
+  const logTokens = readLogTokens();
+  const params = new URLSearchParams(String(globalObject.location?.search || '').replace(/^\?/, ''));
+  const hasDebugQuery = ['debug', 'spw-debug', 'log', 'spw-log', 'diagnostics', 'spw-diagnostics', 'qa', 'spw-qa']
+    .some((key) => params.get(key));
+
+  return isLocal || debugOn || logTokens.length > 0 || hasDebugQuery;
+}
+
+function buildConsoleHelp(globalObject, { controls = {}, debugPresets = {} } = {}) {
+  const siteApi = globalObject.__SPW_SITE__ || {};
+  const overview = Object.freeze({
+    title: 'Spw browser console',
+    entrypoints: Object.freeze({
+      spwCompose: 'window.spwCompose',
+      site: 'window.__SPW_SITE__',
+      textualConsole: 'window.spwConsole',
+      logBuffer: 'window.spwCompose.logs()',
+    }),
+    quickStart: Object.freeze([
+      'spwCompose.help()',
+      'spwCompose.snapshot()',
+      '__SPW_SITE__.listModules()',
+      'spwCompose.controls.pageState.snapshot()',
+    ]),
+    topics: Object.freeze(['modules', 'logs', 'inspect', 'query']),
+    site: Object.freeze({
+      listModules: typeof siteApi.listModules === 'function',
+      snapshotModules: typeof siteApi.snapshotModules === 'function',
+      discoverRuntimeLoad: typeof siteApi.discoverRuntimeLoad === 'function',
+    }),
+    controls: Object.freeze(Object.keys(controls).sort()),
+    debugPresets,
+    contract: SPW_INSTRUMENTATION_CONTRACT,
+  });
+
+  const topics = {
+    ...CONSOLE_HELP_TOPICS,
+    query: Object.freeze({
+      title: 'Query presets',
+      lines: Object.freeze(
+        Object.entries(debugPresets).map(([name, href]) => `${name}: ${href}`),
+      ),
+    }),
+  };
+
+  return Object.freeze({ overview, topics });
+}
+
+function printConsoleHelp(writer, help, topic) {
+  if (!writer || typeof writer.groupCollapsed !== 'function') return help;
+
+  const normalizedTopic = normalizeToken(topic || '');
+  const printLines = (title, lines = []) => {
+    if (!lines.length) return;
+    writer.groupCollapsed(title);
+    lines.forEach((line) => writer.log(line));
+    writer.groupEnd();
+  };
+
+  if (!normalizedTopic || normalizedTopic === 'overview') {
+    writer.groupCollapsed('%cSpw console help', 'font-weight:700;color:#0f766e');
+    writer.log('Entrypoints:', help.overview.entrypoints);
+    printLines('Quick start', help.overview.quickStart);
+    printLines('Topics', help.overview.topics.map((name) => `spwCompose.help("${name}")`));
+    if (help.overview.controls.length) {
+      printLines('Controls namespaces', help.overview.controls.map((name) => `spwCompose.controls.${name}`));
+    }
+    writer.groupEnd();
+    return help;
+  }
+
+  const section = help.topics[normalizedTopic];
+  if (!section) {
+    writer.warn(`[spw-compose] unknown help topic "${topic}". Try spwCompose.help() for topics.`);
+    return help;
+  }
+
+  printLines(section.title, section.lines);
+  return help;
+}
+
+function buildConsoleSnapshot(globalObject, controls = {}) {
+  const html = globalObject.document?.documentElement;
+  const body = globalObject.document?.body;
+  const siteApi = globalObject.__SPW_SITE__ || {};
+
+  return Object.freeze({
+    route: globalObject.location?.pathname || '/',
+    surface: body?.dataset?.spwSurface || null,
+    pageState: controls.pageState?.snapshot?.() || null,
+    modules: controls.modules?.records?.() || siteApi.snapshotModules?.() || null,
+    modulePolicy: controls.modules?.policy?.() || null,
+    bus: siteApi.bus?.getDiagnostics?.() || siteApi.bus?.recent?.(4) || null,
+    runtimePosture: html?.dataset?.spwRuntimePosture || null,
+    debugMode: html?.dataset?.spwDebugMode || null,
+    logNamespaces: html?.dataset?.spwLog || null,
+    logLevel: html?.dataset?.spwLogLevel || null,
+    textualConsole: globalObject.spwConsole?.getDiagnostics?.() || null,
+    recentLogs: readConsoleLogBuffer(8),
+  });
+}
+
+export function announceSpwConsoleSurface(globalObject = globalThis, api, options = {}) {
+  if (!shouldAnnounceConsoleSurface(globalObject)) return false;
+
+  const writer = globalObject.console;
+  const route = globalObject.location?.pathname || '/';
+  if (!writer?.groupCollapsed) return false;
+
+  writer.groupCollapsed(
+    `%cSpw%c console ready on ${route}`,
+    'font-weight:700;color:#0f766e',
+    'font-weight:400;color:inherit',
+  );
+  writer.log('Type %cspwCompose.help()%c for commands.', 'font-family:monospace', '');
+  writer.log('Quick: %cspwCompose.snapshot()%c · %c__SPW_SITE__.listModules()%c',
+    'font-family:monospace', '',
+    'font-family:monospace', '');
+  if (options.timings) writer.log('Boot timing:', options.timings);
+  if (typeof api?.help === 'function') writer.log('Topics: spwCompose.help("modules" | "logs" | "inspect" | "query")');
+  writer.groupEnd();
+  return true;
+}
+
 export function installSpwCompositionConsole(globalObject = globalThis, options = {}) {
   const logger = createSpwLogger(options.namespace || 'spw-compose', options);
   const apiName = options.name || 'spwCompose';
@@ -856,6 +1044,7 @@ export function installSpwCompositionConsole(globalObject = globalThis, options 
     calm: queryPresets.calm.href,
     puppet: queryPresets.puppet.href,
   });
+  const helpContext = { controls, debugPresets };
 
   const api = Object.freeze({
     ...existing,
@@ -871,6 +1060,13 @@ export function installSpwCompositionConsole(globalObject = globalThis, options 
     reflow: (target, reason, details = {}) => markReflowReason(target, reason, { ...details, source: options.namespace || 'spw-compose' }),
     layoutTrope: (target, trope, details = {}) => markLayoutTrope(target, trope, { ...details, source: options.namespace || 'spw-compose' }),
     tune: (target, entries = {}) => writeTuningAttributes(target, entries, { source: options.namespace || 'spw-compose' }),
+    help: (topic, helpOptions = {}) => {
+      const help = buildConsoleHelp(globalObject, helpContext);
+      if (helpOptions.silent) return help;
+      return printConsoleHelp(globalObject.console, help, topic);
+    },
+    logs: (filter, limit) => filterConsoleLogs(readConsoleLogBuffer(limit), filter),
+    snapshot: () => buildConsoleSnapshot(globalObject, controls),
 
     // Phase 3 agent/QA surface (gated behind ?debug=qa|agent or ?qa=screenshot-qa)
     beats: {
@@ -883,7 +1079,7 @@ export function installSpwCompositionConsole(globalObject = globalThis, options 
       getActive: () => import('/public/js/runtime/observation-beats.js').then(m => m.getActiveBeats()),
     },
     qa: {
-      enterScreenshotMode: () => applySpwQueryDisposition(document.documentElement, { search: '?qa=screenshot-qa' }),
+      enterScreenshotMode: () => applySpwQueryDisposition(globalObject.document?.documentElement, { search: '?qa=screenshot-qa' }),
       capture: (extra) => import('/public/js/runtime/observation-beats.js').then(m => m.captureCurrentBeatArtifact(extra)),
     },
   });

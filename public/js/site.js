@@ -14,9 +14,11 @@ import {
   writeStyleValue,
 } from './kernel/dom-contracts.js';
 import {
+  announceSpwConsoleSurface,
   applySpwQueryDisposition,
   createSpwLogger,
   installSpwCompositionConsole,
+  readConsoleLogBuffer,
   SPW_LOG_RELATIONSHIPS,
 } from './kernel/instrumentation.js';
 import { bus as sharedBus } from './kernel/bus.js';
@@ -3521,6 +3523,10 @@ async function bootSite() {
   performance.measure('spw:boot-to-ready', 'spw:boot-start', 'spw:site-ready');
   runtimeLogger.info('site ready (post region)', { route: runtimeCtx.route }, SPW_LOG_RELATIONSHIPS.LIFECYCLE);
 
+  announceSpwConsoleSurface(window, composeApi, {
+    timings: runtimeCtx.compose?.controls?.modules?.timings?.() || null,
+  });
+
   return runtimeCtx;
 }
 
@@ -3531,6 +3537,12 @@ async function bootSite() {
 window.__SPW_SITE__ = {
   bootSite,
   destroyRuntime,
+  get bus() {
+    return runtimeCtx?.bus || sharedBus;
+  },
+  help: (topic, options = {}) => window.spwCompose?.help?.(topic, options),
+  logs: (filter, limit) => window.spwCompose?.logs?.(filter, limit) || readConsoleLogBuffer(limit),
+  snapshot: () => window.spwCompose?.snapshot?.() || null,
   auditModules: () => [...(runtimeCtx?.moduleAudit || [])],
   listModules: () => listModuleDefinitions(runtimeCtx),
   mountModule: (id, options = {}) => mountModuleById(id, runtimeCtx, options),

@@ -4,7 +4,7 @@ import {
   cleanText,
   createJsonFeedLoader,
   getWeekIndex,
-} from '../typed/feed-utils.js';
+} from '/public/js/kernel/feed-utils.js';
 import { annotateFloatingChromeElement } from '/public/js/kernel/dom-contracts.js';
 
 const FEED_URL = '/public/data/promo-wonder-cycle.json';

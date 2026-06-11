@@ -1,1 +1,1 @@
-export * from '/public/js/typed/runtime-environment.js';
+export * from '../typed/runtime-environment.js';

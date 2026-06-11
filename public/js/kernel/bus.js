@@ -1,2 +1,2 @@
-export * from '/public/js/typed/bus.js';
-export { default } from '/public/js/typed/bus.js';
+export * from '../typed/bus.js';
+export { default } from '../typed/bus.js';

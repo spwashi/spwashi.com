@@ -1,4 +1,4 @@
-import { cleanText } from '../typed/feed-utils.js';
+import { cleanText } from '/public/js/kernel/feed-utils.js';
 
 const FIGURE_SELECTOR = '[data-spw-image-reward], [data-spw-image-discovery]';
 const STORAGE_KEY = 'spw-image-discovery-rewards';
