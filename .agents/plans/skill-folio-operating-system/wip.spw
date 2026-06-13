@@ -1,0 +1,28 @@
+#>skill_folio_operating_system
+#:plan #!semantic-capacity #!skill-os #!folios
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@folios: ~"../../../design/folios/index.html"
+@design: ~"../../../design/index.html"
+@cards: ~"../../../cards/index.html"
+@footer: ~"../../../_partials/site-footer.html"
+
+^"insight"{
+  id = "skill-folio-os"
+  operation = "align"
+  fixity = "stable"
+  source = "chat"
+  claim = "The laminated folio archive connects visual practice and software practice into a durable training surface."
+  evidence = #[
+    @folios,
+    @design,
+    @cards,
+    @footer
+  ][reg=set]
+  pattern_consideration = #[
+    "Folio route uses shared mode-switch lenses and design-surface CSS.",
+    "Discoverability flows through design hub, cards bridge, footer map, and breadcrumb registry.",
+    "Spell pocket and navigation trail stay compact until the reader expands them."
+  ][reg=set]
+}

@@ -847,3 +847,75 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-page-seed="page_design_des
     gap: 0.58rem;
   }
 }
+
+/* Folio archive — laminated artifact register under the design family */
+:where(body[data-spw-page-seed="page_design_folios"]) {
+  --active-op-color: color-mix(in srgb, var(--op-object-color, #c58b2a) 58%, var(--teal, #008080) 42%);
+}
+
+:where(body[data-spw-page-seed="page_design_folios"]) .spw-page-state-strip {
+  margin-block: 0.65rem 0.35rem;
+}
+
+:where(body[data-spw-page-seed="page_design_folios"]) .spw-chrome-help {
+  margin-block: 0.45rem 0.2rem;
+  max-inline-size: 42rem;
+}
+
+:where(body[data-spw-page-seed="page_design_folios"]) .spw-chrome-help > summary {
+  cursor: pointer;
+  color: color-mix(in srgb, var(--ink-soft) 78%, var(--active-op-color) 22%);
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+}
+
+:where(body[data-spw-page-seed="page_design_folios"]) .folio-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+:where(body[data-spw-page-seed="page_design_folios"]) .folio-lens-switcher {
+  --active-op-color: color-mix(in srgb, var(--op-object-color, #c58b2a) 70%, var(--teal, #008080) 30%);
+  margin-block: 0.15rem 0.35rem;
+}
+
+:where(body[data-spw-page-seed="page_design_folios"]) .folio-card__readings {
+  margin: 0;
+  padding: 0.55rem 0.62rem;
+  border: 1px solid color-mix(in srgb, var(--line) 88%, transparent);
+  border-radius: var(--shape-small, 0.55rem);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 92%, var(--active-op-color) 8%);
+}
+
+:where(body[data-spw-page-seed="page_design_folios"]) .folio-card__readings > div {
+  margin: 0;
+}
+
+:where(body[data-spw-page-seed="page_design_folios"]) .folio-card__readings dt {
+  margin: 0 0 0.18rem;
+  color: color-mix(in srgb, var(--active-op-color) 72%, var(--ink));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+:where(body[data-spw-page-seed="page_design_folios"]) .folio-card__readings dd {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+:where(body[data-spw-page-seed="page_design_folios"]) #seed-studies .frame-grid {
+  gap: 1rem;
+}
+
+@media (max-width: 720px) {
+  :where(body[data-spw-page-seed="page_design_folios"]) .folio-lens-switcher .frame-sigil {
+    flex: 1 1 calc(50% - 0.35rem);
+    min-width: 0;
+  }
+}
