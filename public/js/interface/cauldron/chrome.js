@@ -17,7 +17,7 @@ function createFloatingChip() {
   chip.className = 'spw-cauldron-chip';
   chip.href = '#memory-garden-cauldron';
   chip.id = 'spw-cauldron-chip';
-  chip.setAttribute('aria-label', 'Jump to memory garden cauldron');
+  chip.setAttribute('aria-label', 'Open spell pocket');
   chip.hidden = true;
   chip.innerHTML = `
     <span class="spw-cauldron-chip__sigil" aria-hidden="true">◎</span>
@@ -37,6 +37,8 @@ function createFloatingChip() {
     host?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     if (host instanceof HTMLElement) {
       host.dataset.spwCauldronPanel = 'open';
+      host.dataset.spwCauldronPanelUser = 'open';
+      syncPanelToggleLabels(host);
       host.classList.add('is-cauldron-focused');
       window.setTimeout(() => host.classList.remove('is-cauldron-focused'), 1400);
     }
@@ -112,20 +114,17 @@ function syncPanelToggleLabels(host) {
   const open = host.dataset.spwCauldronPanel !== 'compact';
   toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
   toggle.textContent = open ? 'hide' : 'show';
-  toggle.title = open ? 'Collapse cauldron panel' : 'Expand cauldron panel';
+  toggle.title = open ? 'Hide spell pocket' : 'Show spell pocket';
 }
 
 export function syncCauldronPanelCollapse(count) {
-  const compact = window.matchMedia(COLLAPSE_QUERY).matches;
   document.querySelectorAll(PANEL_QUERY).forEach((host) => {
     if (!(host instanceof HTMLElement)) return;
-    if (!compact) {
+    if (count > 0) {
       host.dataset.spwCauldronPanel = 'open';
-      syncPanelToggleLabels(host);
-      return;
+    } else if (host.dataset.spwCauldronPanelUser !== 'open') {
+      host.dataset.spwCauldronPanel = 'compact';
     }
-    if (count > 0) host.dataset.spwCauldronPanel = 'open';
-    else if (!host.dataset.spwCauldronPanel) host.dataset.spwCauldronPanel = 'compact';
     syncPanelToggleLabels(host);
   });
 }
@@ -139,6 +138,7 @@ export function bindCauldronPanelToggle() {
       if (!(host instanceof HTMLElement)) return;
       const next = host.dataset.spwCauldronPanel === 'open' ? 'compact' : 'open';
       host.dataset.spwCauldronPanel = next;
+      host.dataset.spwCauldronPanelUser = next === 'open' ? 'open' : '';
       syncPanelToggleLabels(host);
     });
   });

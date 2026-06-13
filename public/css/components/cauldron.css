@@ -71,12 +71,21 @@
   color: var(--ink, rgba(14, 18, 20, 0.92));
 }
 
-.site-footer__cauldron[data-spw-cauldron-panel="compact"] .site-footer__cauldron-body {
+.site-footer__cauldron[data-spw-cauldron-panel="compact"] .site-footer__cauldron-body,
+.site-footer__cauldron[data-spw-cauldron-panel="compact"] .site-footer__cauldron-phase-rail {
   display: none;
 }
 
 .site-footer__cauldron[data-spw-cauldron-panel="compact"] .site-footer__cauldron-header {
   margin-bottom: 0;
+}
+
+.site-footer__cauldron[data-spw-cauldron-panel="compact"] .site-footer__cauldron-kicker::after {
+  content: " · hold terms to stash handles";
+  color: var(--ink-muted, rgba(14, 18, 20, 0.58));
+  font-weight: 500;
+  letter-spacing: normal;
+  text-transform: none;
 }
 
 .site-footer__cauldron.is-cauldron-focused,

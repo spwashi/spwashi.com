@@ -132,9 +132,9 @@ function renderGardenTraceOnSpellPath() {
 
   return `
     <div class="spw-spell-path__garden-trace spell-provenance" data-spw-garden-on-path aria-live="polite">
-      <span class="spell-provenance__label">garden in path</span>
+      <span class="spell-provenance__label">pocket</span>
       <span class="spell-provenance__trace">${escapeHtml(display)}</span>
-      <button type="button" class="garden-action spell-action" data-spw-spell-action="re-gather" data-spw-spell-trail="${escapeHtml(trailSig)}">re-gather</button>
+      <button type="button" class="garden-action spell-action" data-spw-spell-action="re-gather" data-spw-spell-trail="${escapeHtml(trailSig)}">bring back</button>
     </div>
   `;
 }
@@ -143,13 +143,18 @@ const BREADCRUMB_ROUTE_REGISTRY = Object.freeze({
   '/': { label: 'Home', note: 'Start or re-enter the site.' },
   '/about/': { label: 'About', note: 'Read the method and the kernel.' },
   '/blog/': { label: 'Blog', note: 'Working threads and process notes.' },
+  '/cards/': { label: 'Cards', note: 'Turn a study into a local proof record.' },
   '/contact/': { label: 'Contact', note: 'Send a structured inquiry.' },
+  '/curriculum/': { label: 'Curriculum', note: 'Follow learning paths and practice loops.' },
+  '/design/': { label: 'Design', note: 'Open the hub for palettes, components, and labs.' },
+  '/design/folios/': { label: 'Folios', note: 'Study laminated art artifacts and visual systems.' },
   '/play/': { label: 'Play', note: 'RPG Wednesday and experiments.' },
   '/recipes/': { label: 'Recipes', note: 'Culinary practice and technique.' },
   '/services/': { label: 'Services', note: 'Compare a collaboration path.' },
   '/settings/': { label: 'Settings', note: 'Tune the surface and inspect runtime.' },
   '/tools/': { label: 'Tools', note: 'Inspect reusable helpers.' },
   '/topics/': { label: 'Topics', note: 'Browse the atlas.' },
+  '/topics/craft/': { label: 'Craft', note: 'Author-facing ramps into HTML, CSS, and SVG.' },
 });
 
 function normalizePathname(pathname = '') {
@@ -283,7 +288,7 @@ function initSpellBreadcrumbs() {
   if (!pathBar) {
     pathBar = document.createElement('nav');
     pathBar.className = 'spw-spell-path';
-    pathBar.setAttribute('aria-label', 'Cognitive breadcrumb and shell trace');
+    pathBar.setAttribute('aria-label', 'Navigation trail');
     traceHost.appendChild(pathBar);
   }
 
@@ -356,7 +361,7 @@ function initSampleDock() {
   if (!dock) {
     dock = document.createElement('details');
     dock.className = 'spw-spell-dock spw-sample-dock';
-    dock.open = true;
+    dock.open = false;
     dock.setAttribute('aria-label', 'Sample explorer');
     traceHost.appendChild(dock);
   }
@@ -1005,6 +1010,7 @@ function renderBreadcrumbSpell() {
   });
 
   const trailId = 'spw-spell-trail';
+  const showTrail = pathState === 'open';
   pathBar.innerHTML = `
     <div class="spw-spell-path__header">
       <button
@@ -1013,8 +1019,8 @@ function renderBreadcrumbSpell() {
         data-spw-breadcrumb-action="toggle-path"
         aria-expanded="${pathState === 'open' ? 'true' : 'false'}"
         aria-controls="${trailId}"
-        aria-label="${escapeAttribute(`${pathState === 'open' ? 'Collapse' : 'Expand'} spell path. ${compactSummary}. ${cognitiveState.gradient}.${narrationMode !== 'readable' ? ` ${narrationMode} meaning mode.` : ''}`)}">
-        <span class="spw-spell-path__title">spell path</span>
+        aria-label="${escapeAttribute(`${pathState === 'open' ? 'Collapse' : 'Expand'} navigation trail. ${compactSummary}.`)}">
+        <span class="spw-spell-path__title">trail</span>
         <span class="spw-spell-path__summary">${escapeHtml(compactSummary)}</span>
       </button>
       ${compact ? '' : renderShellControl(shellSnapshot)}
@@ -1026,17 +1032,17 @@ function renderBreadcrumbSpell() {
       pathState,
       activeFrameSigil,
     })}
-    ${guide ? `<p class="spw-spell-path__guide">${guide}</p>` : ''}
-    <ol class="spw-spell-trail" id="${trailId}" aria-label="Current cognitive breadcrumb">
+    ${showTrail && guide ? `<p class="spw-spell-path__guide">${guide}</p>` : ''}
+    ${showTrail ? `<ol class="spw-spell-trail" id="${trailId}" aria-label="Current navigation trail">
       ${items.join('')}
-    </ol>
-    ${compact || !relatedRoutes.length ? '' : renderBreadcrumbNearbyRoutes(relatedRoutes)}
-    <p class="spw-spell-meaning">${escapeHtml(meaning)}</p>
-    <!-- Live garden trace on the spell path itself (ambitious one-pass enhancement).
-         When the cauldron holds recent gesture provenance (from living-term holds etc.), the spell path
-         now surfaces it directly so the breadcrumb trail and the garden memory are visibly linked.
-         Re-gather button makes the originating attention traversable from the path. -->
-    ${renderGardenTraceOnSpellPath()}
+    </ol>` : ''}
+    ${showTrail && !compact && relatedRoutes.length ? renderBreadcrumbNearbyRoutes(relatedRoutes) : ''}
+    ${showTrail ? `
+    <details class="spw-spell-path__inspect">
+      <summary>Inspect trail</summary>
+      <p class="spw-spell-meaning">${escapeHtml(meaning)}</p>
+    </details>` : ''}
+    ${showTrail ? renderGardenTraceOnSpellPath() : ''}
   `;
 
   const traceSignature = [
@@ -1048,11 +1054,6 @@ function renderBreadcrumbSpell() {
     shellSnapshot.phase,
     shellSnapshot.pressure,
   ].join('|');
-
-  if (pathState === 'open' && !compact) {
-    pathBar.querySelector('.spw-spell-crumb[data-spw-current="true"]')
-      ?.scrollIntoView?.({ block: 'nearest', inline: 'nearest', behavior: 'auto' });
-  }
 
   if (runtime.lastTraceSignature === traceSignature) return;
   runtime.lastTraceSignature = traceSignature;
@@ -1118,11 +1119,11 @@ function renderRouteSorterChip({
       href="#choose-your-entrance"
       data-spw-breadcrumb-action="focus-sorter"
       title="${escapeAttribute(touchCue)}"
-      aria-label="Jump to route sorter — pick your entrance">
+      aria-label="Pick an entrance">
       <span class="spw-spell-sorter-chip__token">@</span>
       <span class="spw-spell-sorter-chip__label">
-        <span class="spw-spell-sorter-chip__label-full">route sorter</span>
-        <span class="spw-spell-sorter-chip__label-short" aria-hidden="true">sorter</span>
+        <span class="spw-spell-sorter-chip__label-full">pick entrance</span>
+        <span class="spw-spell-sorter-chip__label-short" aria-hidden="true">entrance</span>
       </span>
     </a>
   `;
@@ -1153,37 +1154,23 @@ function describeSpellPathInteractionHint({
 } = {}) {
   const touch = isTouchPrimary();
 
-  if (compact && touch) {
-    if (pageResponsibility === 'route sorter' && pathState === 'closed') {
-      return 'Tap @ sorter to pick an entrance, then expand spell path for the trail.';
-    }
-    if (activeFrameSigil) {
-      return 'Tap ? inspect region to open the brace menu on this frame.';
-    }
-    if (pathState === 'closed') {
-      return 'Tap spell path to expand the trail. Double-tap a sigil to inspect.';
-    }
-    return 'Swipe the trail sideways. Long-press a handle to inspect.';
+  if (pathState === 'open') return '';
+
+  if (pageResponsibility === 'route sorter') {
+    return touch
+      ? 'Tap @ for entrances, or expand the trail for nearby doors.'
+      : 'Use @ for entrances, or expand the trail for nearby routes.';
   }
 
-  if (!compact && touch) {
-    if (pageResponsibility === 'route sorter') {
-      return 'Tap @ route sorter for entrances; use ? inspect region once a frame is active.';
-    }
-    if (activeFrameSigil) {
-      return 'Tap ? inspect region, or long-press a semantic handle in the frame.';
-    }
+  if (activeFrameSigil) {
+    return touch
+      ? 'Expand the trail, or tap ? to inspect this frame.'
+      : 'Expand the trail, or use ? to inspect this frame.';
   }
 
-  if (!touch && pageResponsibility === 'route sorter' && pathState === 'closed') {
-    return 'Click @ route sorter to jump to entrances, or expand spell path for nearby routes.';
-  }
-
-  if (!touch && activeFrameSigil) {
-    return 'Click ? inspect region, or Alt+click a sigil to open the brace menu.';
-  }
-
-  return '';
+  return touch
+    ? 'Expand for your trail and nearby routes.'
+    : 'Expand for your trail and nearby routes.';
 }
 
 function resolveActiveFrameElement() {
@@ -1223,7 +1210,7 @@ function renderBreadcrumbNearbyRoutes(routes) {
 
   return `
     <div class="spw-spell-neighborhood" aria-label="Nearby routes">
-      <span class="spw-spell-neighborhood__label">nearby</span>
+      <span class="spw-spell-neighborhood__label">next stops</span>
       <ul class="spw-spell-neighborhood__list">
         ${routes.slice(0, MAX_BREADCRUMB_NEIGHBORS).map((route) => `
           <li class="spw-spell-neighborhood__item">
@@ -1283,6 +1270,18 @@ function describeBreadcrumbRoute(pathname = '') {
   };
 }
 
+function isHomeLensFrameHashTarget() {
+  const hash = window.location.hash.replace(/^#/, '').trim();
+  if (!hash) return false;
+
+  const target = document.getElementById(hash);
+  if (!(target instanceof HTMLElement)) return false;
+
+  // Shallow home section anchors (climate tuning, entry loops, etc.) should not
+  // auto-expand the navigation trail — only the hero lens frame should.
+  return target.id === 'home-frame' || Boolean(target.querySelector('.mode-switch'));
+}
+
 function resolveSpellPathExpandedDefault() {
   const mode = document.documentElement.dataset.spwSpellPath || 'auto';
   if (mode === 'expanded') return true;
@@ -1290,21 +1289,22 @@ function resolveSpellPathExpandedDefault() {
 
   const routeParts = window.location.pathname.split('/').filter(Boolean);
   const hasHash = Boolean(window.location.hash);
-  const hasActiveFrame = Boolean(
-    document.querySelector('.site-frame[data-state~="active"]')
-    || (hasHash && document.querySelector(window.location.hash))
-  );
-  const relatedCount = Number.parseInt(
-    document.querySelector('.spw-spell-path')?.dataset.spwBreadcrumbRelatedCount || '0',
-    10
-  ) || collectRelatedBreadcrumbRoutes(window.location.pathname).length;
+  const hasActiveLensFrame = Boolean(document.querySelector('.site-frame[data-state~="active"]'));
+  const hasHashFrame = Boolean(hasHash && document.querySelector(window.location.hash));
+  const isHome = window.location.pathname === '/' || window.location.pathname === '';
+
+  if (isHome) {
+    return hasActiveLensFrame || isHomeLensFrameHashTarget();
+  }
+
+  const hasActiveFrame = hasActiveLensFrame || hasHashFrame;
 
   const compact = window.matchMedia('(max-width: 720px)').matches;
   if (compact) {
     return hasHash || hasActiveFrame || routeParts.length >= 3;
   }
 
-  return routeParts.length >= 2 || hasActiveFrame || relatedCount > 0;
+  return routeParts.length >= 3 || hasActiveFrame;
 }
 
 function syncBreadcrumbViewportPreference() {
@@ -1367,52 +1367,23 @@ function describeBreadcrumbSummary({ surface, routeParts, pageResponsibility, pa
 }
 
 function describeBreadcrumbGuide({
-  surface,
-  pageRole,
   pageResponsibility,
   pagePrimaryAction,
-  activeFrameSigil,
-  activeMode,
   relatedRoutes,
   compact,
-  pathState = 'closed',
 }) {
-  const lead = pageResponsibility
-    ? `This page is a ${humanizePathPart(pageResponsibility)}.`
-    : `This page is part of ${humanizePathPart(surface)}.`;
-  const action = pagePrimaryAction
-    ? `Use it to ${humanizePathPart(pagePrimaryAction)}.`
-    : `Use it to read, inspect, or move deeper.`;
-  const details = [];
-
-  if (pageRole) {
-    details.push(`role ${humanizePathPart(pageRole)}`);
-  }
-  if (activeFrameSigil) {
-    details.push(`frame ${stripWhitespace(activeFrameSigil)}`);
-  }
-  if (activeMode) {
-    details.push(`mode ${humanizePathPart(activeMode)}`);
-  }
-  if (!compact && relatedRoutes.length) {
-    details.push(`nearby ${relatedRoutes.length}`);
+  let lead = 'Follow the trail to move without losing context.';
+  if (pageResponsibility === 'route sorter') {
+    lead = 'Choose a doorway — reading stays in front while you orient.';
+  } else if (pagePrimaryAction) {
+    lead = `${humanizePathPart(pagePrimaryAction)} when you are ready.`;
   }
 
-  const interactionHint = describeSpellPathInteractionHint({
-    compact,
-    pageResponsibility,
-    pathState,
-    activeFrameSigil,
-  });
-  if (interactionHint) {
-    details.push(interactionHint);
-  }
+  const nearby = !compact && relatedRoutes.length
+    ? ` ${relatedRoutes.length} nearby route${relatedRoutes.length === 1 ? '' : 's'} below.`
+    : '';
 
-  return [
-    `<span class="spw-spell-path__guide-lead">${escapeHtml(lead)}</span>`,
-    `<span class="spw-spell-path__guide-action">${escapeHtml(action)}</span>`,
-    details.length ? `<span class="spw-spell-path__guide-details">${escapeHtml(details.join(' · '))}</span>` : '',
-  ].filter(Boolean).join(' ');
+  return `<span class="spw-spell-path__guide-lead">${escapeHtml(`${lead}${nearby}`)}</span>`;
 }
 
 function describeBreadcrumbMeaning({ surface, pageRole, pageResponsibility, pagePrimaryAction, activeFrameSigil, activeMode, shellSnapshot, cognitiveState, narrationMode }) {

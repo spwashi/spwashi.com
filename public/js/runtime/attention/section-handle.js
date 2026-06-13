@@ -549,6 +549,12 @@ function updateSectionHandleState({
   }
 }
 
+function resolvePageBottomScrollTarget(sections) {
+  const footer = document.querySelector('.site-footer, body > footer');
+  if (footer instanceof HTMLElement) return footer;
+  return sections[sections.length - 1] || null;
+}
+
 function travelSectionHandleToIndex({
   sections,
   state,
@@ -557,9 +563,11 @@ function travelSectionHandleToIndex({
   updateActiveState,
   nextIndex,
   source,
+  scrollBlock = 'start',
+  targetOverride = null,
 }) {
   const targetIndex = Math.max(0, Math.min(nextIndex, sections.length - 1));
-  const target = sections[targetIndex];
+  const target = targetOverride || sections[targetIndex];
   if (!target) return;
 
   state.phase = 'traveling';
@@ -573,7 +581,7 @@ function travelSectionHandleToIndex({
   }, HANDLE_TRAVEL_SETTLE_MS);
   target.scrollIntoView({
     behavior: getScrollBehavior(),
-    block: 'start',
+    block: scrollBlock,
     inline: 'nearest',
   });
 
@@ -695,6 +703,8 @@ function createSectionHandleController({
           updateActiveState,
           nextIndex: sections.length - 1,
           source: 'bottom',
+          scrollBlock: 'end',
+          targetOverride: resolvePageBottomScrollTarget(sections),
         });
         break;
       default:

@@ -148,6 +148,11 @@
 html {
   min-height: 100%;
   scroll-padding-top: calc(var(--shell-header-height) + 1rem);
+  scroll-padding-bottom: calc(
+    env(safe-area-inset-bottom)
+    + var(--spw-bottom-chrome-clearance, 0px)
+    + 0.75rem
+  );
 }
 
 body {

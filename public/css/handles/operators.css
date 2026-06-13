@@ -2498,12 +2498,12 @@ body:has([data-spw-gesture="sustained"][data-spw-form="brace"]) [data-spw-cauldr
 }
 
 .spw-spell-path[data-spw-breadcrumb-state="open"] {
-  padding: 0.22rem 0.28rem 0.28rem;
-  border: 1px solid color-mix(in srgb, var(--teal, #008080) 14%, var(--line, rgba(14, 18, 20, 0.14)) 86%);
+  padding: 0.18rem 0.24rem 0.22rem;
+  border: 1px solid color-mix(in srgb, var(--teal, #008080) 10%, var(--line, rgba(14, 18, 20, 0.14)) 90%);
   border-radius: var(--shape-control, 0.78rem);
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.2), transparent 58%),
-    color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.9)) 94%, var(--teal, #008080) 6%);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.14), transparent 52%),
+    color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.9)) 96%, var(--teal, #008080) 4%);
 }
 
 :where(.site-header, body > header) .spw-spell-path {
@@ -2695,6 +2695,11 @@ body:has([data-spw-gesture="sustained"][data-spw-form="brace"]) [data-spw-cauldr
   color: var(--ink-soft, rgba(14, 18, 20, 0.64));
   font-size: 0.62rem;
   line-height: 1.35;
+}
+
+.spw-spell-path[data-spw-breadcrumb-state="closed"] .spw-spell-path__hint {
+  display: block;
+  padding-inline: 0.12rem 0;
 }
 
 .spw-spell-button,
@@ -2948,8 +2953,89 @@ body:has([data-spw-gesture="sustained"][data-spw-form="brace"]) [data-spw-cauldr
 }
 
 .spw-spell-path[data-spw-breadcrumb-state="closed"] .spw-spell-trail,
-.spw-spell-path[data-spw-breadcrumb-state="closed"] .spw-spell-meaning {
+.spw-spell-path[data-spw-breadcrumb-state="closed"] .spw-spell-meaning,
+.spw-spell-path[data-spw-breadcrumb-state="closed"] .spw-spell-path__guide,
+.spw-spell-path[data-spw-breadcrumb-state="closed"] .spw-spell-neighborhood,
+.spw-spell-path[data-spw-breadcrumb-state="closed"] .spw-spell-path__inspect,
+.spw-spell-path[data-spw-breadcrumb-state="closed"] .spw-spell-path__garden-trace {
   display: none;
+}
+
+.spw-spell-path[data-spw-breadcrumb-state="open"] .spw-spell-path__hint {
+  display: none;
+}
+
+.spw-spell-path__inspect {
+  margin: 0.08rem 0 0;
+  color: var(--ink-soft);
+  font-size: 0.64rem;
+  line-height: 1.4;
+}
+
+.spw-spell-path__inspect > summary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.55rem;
+  padding: 0.08rem 0.2rem;
+  color: color-mix(in srgb, var(--ink-soft) 82%, var(--teal, #008080) 18%);
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.spw-spell-path__inspect > summary::-webkit-details-marker {
+  display: none;
+}
+
+.spw-spell-path__inspect > summary::before {
+  content: "›";
+  margin-inline-end: 0.28rem;
+  color: color-mix(in srgb, var(--teal, #008080) 58%, var(--ink-soft));
+}
+
+.spw-spell-path__inspect[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+.spw-spell-path__inspect .spw-spell-meaning {
+  margin: 0.2rem 0 0;
+  padding: 0.34rem 0.42rem;
+  border: 1px dashed color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 88%, transparent);
+  border-radius: var(--shape-small, 0.55rem);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 90%, transparent);
+}
+
+.spw-spell-neighborhood__note {
+  display: none;
+}
+
+.spw-spell-path__garden-trace {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.28rem 0.38rem;
+  margin: 0.12rem 0 0;
+  padding: 0.2rem 0.46rem;
+  border: 1px solid color-mix(in srgb, var(--teal, #008080) 14%, var(--line, rgba(14, 18, 20, 0.14)) 86%);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-strong, #fff) 92%, var(--teal, #008080) 8%);
+  font-size: 0.64rem;
+}
+
+.spell-provenance__label {
+  color: color-mix(in srgb, var(--teal, #008080) 68%, var(--ink-soft));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.spw-spell-path__guide-lead {
+  color: color-mix(in srgb, var(--ink-soft) 78%, var(--ink, rgba(14, 18, 20, 0.92)) 22%);
+  font-size: 0.66rem;
+  line-height: 1.38;
 }
 
 @keyframes spw-breadcrumb-shell-project {
@@ -3052,11 +3138,6 @@ body:has([data-spw-gesture="sustained"][data-spw-form="brace"]) [data-spw-cauldr
   .spw-spell-path__guide,
   .spw-spell-neighborhood {
     display: none;
-  }
-
-  .spw-spell-path__hint {
-    display: block;
-    padding-inline: 0.12rem 0;
   }
 
   .spw-spell-sorter-chip__label-full {
