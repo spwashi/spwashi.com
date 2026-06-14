@@ -1934,6 +1934,22 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   white-space: nowrap;
 }
 
+body[data-spw-surface="home"] #home-frame .mode-switch[aria-label]::before {
+  content: "lens \2192";
+  max-inline-size: max-content;
+  overflow: visible;
+  padding: 0.14rem 0.42rem 0.14rem 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  color: color-mix(in srgb, var(--ink-soft, rgba(14, 18, 20, 0.72)) 78%, var(--active-op-color, var(--teal)) 22%);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-overflow: clip;
+  white-space: nowrap;
+}
+
 /* Narrow viewports: unwrap the lens label and give pills a stable 2×2 grid. */
 @media (max-width: 56rem) {
   .mode-switch[aria-label] {
