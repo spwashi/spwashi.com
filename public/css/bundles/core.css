@@ -19034,6 +19034,110 @@ html[data-spw-debug-mode="on"] :where(
 }
 }
 
+/* /public/css/components/charge-cycle.css */
+@layer components {
+/* ==========================================================================
+   charge-cycle.css
+   --------------------------------------------------------------------------
+   Field-level charge/discharge projection when explore posture reveals anatomy.
+   ========================================================================== */
+
+:root {
+  --spw-charge-field: 0;
+}
+
+/* Ambient field wash — stronger in workshop, subtle in field */
+:where(html[data-spw-explore-posture="field"], html[data-spw-explore-posture="workshop"]) {
+  background-image:
+    radial-gradient(
+      ellipse 120% 80% at 50% -10%,
+      color-mix(in srgb, var(--op-probe-color, #4a2180) calc(var(--spw-charge-field, 0) * 14%), transparent),
+      transparent 58%
+    ),
+    radial-gradient(
+      ellipse 90% 60% at 88% 100%,
+      color-mix(in srgb, var(--active-op-color, #008080) calc(var(--spw-charge-field, 0) * 10%), transparent),
+      transparent 62%
+    );
+  background-attachment: fixed;
+}
+
+:where(html[data-spw-tuning-discoverability="revealed"]) {
+  background-image:
+    radial-gradient(
+      ellipse 120% 80% at 50% -10%,
+      color-mix(in srgb, var(--op-probe-color, #4a2180) calc(var(--spw-charge-field, 0) * 18%), transparent),
+      transparent 58%
+    ),
+    radial-gradient(
+      ellipse 90% 60% at 88% 100%,
+      color-mix(in srgb, var(--active-op-color, #008080) calc(var(--spw-charge-field, 0) * 12%), transparent),
+      transparent 62%
+    );
+  background-attachment: fixed;
+}
+
+/* Live consequence on frames during charge/discharge */
+:where(
+  html[data-spw-explore-posture="field"],
+  html[data-spw-explore-posture="workshop"],
+  html[data-spw-tuning-discoverability="ambient"],
+  html[data-spw-tuning-discoverability="revealed"]
+) :where(.site-frame[data-spw-charge-phase="preview"], .site-frame[data-spw-charge-phase="charged"]) {
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--active-op-color, #008080) 16%, transparent),
+    0 0 0 calc(1px + (var(--spw-charge-field, 0) * 2px))
+    color-mix(in srgb, var(--op-probe-color, #4a2180) calc(var(--spw-charge-field, 0) * 28%), transparent);
+}
+
+:where(
+  html[data-spw-explore-posture="field"],
+  html[data-spw-explore-posture="workshop"],
+  html[data-spw-tuning-discoverability="revealed"]
+) :where(.site-frame[data-spw-discharge-kind]) {
+  animation: spw-discharge-echo 1.1s ease-out both;
+}
+
+@keyframes spw-discharge-echo {
+  0% {
+    box-shadow:
+      0 0 0 0 color-mix(in srgb, var(--active-op-color, #008080) 42%, transparent),
+      inset 3px 0 0 color-mix(in srgb, var(--active-op-color, #008080) 55%, transparent);
+  }
+  100% {
+    box-shadow:
+      0 0 0 12px transparent,
+      inset 3px 0 0 color-mix(in srgb, var(--active-op-color, #008080) 18%, transparent);
+  }
+}
+
+/* Discharge kind accent on frame edge */
+:where(.site-frame[data-spw-discharge-kind="release"]) {
+  --spw-discharge-color: var(--op-probe-color, #4a2180);
+}
+
+:where(.site-frame[data-spw-discharge-kind="transfer"]) {
+  --spw-discharge-color: var(--op-ref-color, #355f77);
+}
+
+:where(.site-frame[data-spw-discharge-kind="ground"]) {
+  --spw-discharge-color: var(--op-frame-color, #008080);
+}
+
+:where(.site-frame[data-spw-discharge-kind="project"]) {
+  --spw-discharge-color: var(--op-object-color, #a67c00);
+}
+
+:where(.site-frame[data-spw-discharge-kind]) {
+  border-color: color-mix(in srgb, var(--spw-discharge-color, var(--active-op-color)) 24%, var(--line, rgba(14, 18, 20, 0.14)) 76%);
+}
+
+/* Embedded workshop charge readout */
+:where(.spw-embedded-workshop [data-charge-field-readout]) {
+  font-variant-numeric: tabular-nums;
+}
+}
+
 /* /public/css/systems/substrate-ecology.css */
 @layer systems {
 /* ==========================================================================

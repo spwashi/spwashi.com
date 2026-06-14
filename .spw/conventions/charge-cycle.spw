@@ -1,0 +1,128 @@
+# Charge Cycle
+#
+# Public contract for charging, holding, transferring, and discharging
+# semantic tendency across braces, operators, fields, and registers.
+
+#>charge_cycle
+#:convention #!runtime #!wonder #!operators
+#:layer #!pragmatics
+
+@site_semantics: ~"./site-semantics.spw#metaphysics_model"
+@operator_alignment: ~"./operator-alignment.spw"
+@attention_field: ~"./attention-field.spw"
+@wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
+@haptics_runtime: ~"../../public/js/interface/haptics.js"
+@charge_field_runtime: ~"../../public/js/runtime/charge-field.js"
+
+^"thesis"{
+  claim: "Spw interaction has logical consequence when charge can be stored, inspected, transferred, or discharged with a named outcome."
+  public_rule: "Every significant charge must be reversible, bounded, and traceable to an operator or brace host."
+  learning_rule: "Wonder deepens when the visitor can predict what will charge, what will hold, and what kind of discharge will follow."
+  falsify: "If removing charge state does not change inspectability, resonance, or consequence, the effect was decoration."
+}
+
+^"phase_machine"{
+  phases: #[`neutral`, `arming`, `preview`, `charged`, `discharging`, `quiet`, `grounded`, `transferring`][reg=set]
+  transitions: .{
+    neutral_to_arming = "dwell, focus, or pointer entry on a charge-bearing handle"
+    arming_to_preview = "sustained attention without commitment (~260ms passive path)"
+    preview_to_charged = "explicit commit: click, hold-release prime, manual charge"
+    charged_to_discharging = "settle, escape, navigation away, or brace discharge"
+    discharging_to_quiet = "decay timer + field bleed (~2.8s default)"
+    charged_to_grounded = "spell:grounded — charge sedimented into registry"
+    charged_to_transferring = "spell:capture — charge moved into cauldron ingredient"
+  }[reg=facet]
+  html_contract: .{
+    element = #[`data-spw-charge`, `data-spw-charge-pending`, `data-spw-charge-source`, `data-spw-charge-phase`][reg=set]
+    document = #[`data-spw-charge-field`, `data-spw-charge-intensity`, `data-spw-last-discharge`, `data-spw-charge-carrier`][reg=set]
+    frame = #[`data-spw-discharge-kind`, `data-spw-consequence-live`][reg=set]
+  }[reg=facet]
+  css_token = "--spw-charge-field (0..1 field intensity on html)"
+}
+
+^"discharge_kinds"{
+  release: .{
+    metaphor = "capacitor spark — inquiry opens, echo fades"
+    operators = #[`wonder`, `probe`, `action`][reg=set]
+    consequence = "inspect surface, resonance echo, or committed move becomes visible then decays"
+    learn = "The visitor learns that asking or acting leaves a brief field trace they can name."
+  }[reg=facet]
+  transfer: .{
+    metaphor = "induction — charge moves to another register without loss of meaning"
+    operators = #[`potential`, `ref`, `perspective`, `subject`, `substrate`][reg=set]
+    consequence = "route resume, mode shift, capacity map, or cauldron ingredient"
+    learn = "The visitor learns that exploration can hand off to another surface without starting from zero."
+  }[reg=facet]
+  ground: .{
+    metaphor = "brace settles — tension returns to baseline, memory may remain"
+    operators = #[`frame`, `vibration`, `binding`, `ground`][reg=set]
+    consequence = "scroll/focus anchor, pinned constraint, grounded registry entry"
+    learn = "The visitor learns what the page treats as stable address or pinned value."
+  }[reg=facet]
+  project: .{
+    metaphor = "field projection — stored tendency becomes outward artifact or runnable value"
+    operators = #[`integration`, `object`, `value`][reg=set]
+    consequence = "proof card, expanded panel, lab output, playable route"
+    learn = "The visitor learns which surfaces materialize proof versus merely name it."
+  }[reg=facet]
+}
+
+^"physical_metaphor_families"{
+  electrical: .{
+    terms = #[`charge`, `capacity`, `threshold`, `discharge`, `field intensity`, `carrier`][reg=set]
+    site_form = "passive hover arming, preview glow, charged priming, discharge echo"
+    css_home = "charge-cycle.css, operators.css charge states, --charge / --spw-charge-field"
+  }[reg=facet]
+  mechanical: .{
+    terms = #[`brace tension`, `settle`, `pivot`, `latch`, `succession`][reg=set]
+    site_form = "semantic braces store tendency; discharge releases brace wash"
+    css_home = "grammar/syntax.css delimiters, effects/grain-texture.css gesture grain"
+  }[reg=facet]
+  field: .{
+    terms = #[`diffusion`, `bias`, `receptor`, `decay`, `echo radius`][reg=set]
+    site_form = "attention-field model + wonder memory + resonance probe"
+    css_home = "effects/wonder.css, ornament/ornament.css"
+  }[reg=facet]
+  hydraulic: .{
+    terms = #[`substrate pressure`, `capacity`, `support layer`, `bleed`][reg=set]
+    site_form = "$ operator reveals what carries cost, memory, attention, or maintenance"
+    css_home = "substrate edges in cards/foundation, services pricing/support frames"
+  }[reg=facet]
+}
+
+^"operator_charge_consequence"{
+  rule: "Operator choice should predict discharge kind when the visitor commits or releases attention."
+  mapping: .{
+    "? / wonder" = "release — inspect, ask, open reversible inquiry"
+    "~ / potential" = "transfer — hold path, tune, defer without collapse"
+    "#> / frame" = "ground — anchor section, address house"
+    "^ / object" = "project — publish proof, lift artifact"
+    "! / action" = "release — apply, commit observable move"
+    "* / value" = "project — run, materialize concrete outcome"
+    "$ / substrate" = "transfer — reveal support layer, capacity, pressure"
+    "= / binding" = "ground — pin configuration, bound constraint"
+    "@ / perspective" = "transfer — enter viewpoint, switch lens"
+    "& / subject" = "transfer — combine streams, braid comparison"
+  }[reg=facet]
+}
+
+^"wonder_and_learning"{
+  arming: "What is this handle preparing to become if I stay?"
+  preview: "What neighboring phrases or operators answer the same charge key?"
+  charged: "What would commit look like — ground, transfer, or project?"
+  discharge: "What named outcome just happened, and can I cause it again?"
+  field_readout: "Embedded workshops and shell weather expose field/intensity/discharge so reading posture can stay quiet while workshop posture reveals anatomy."
+}
+
+^"validation"{
+  probe: "Hover a frame sigil → html[data-spw-charge-field] moves arming→preview; leave → discharging→quiet."
+  probe_ground: "Ground an operator chip → discharge:ground on html + frame data-spw-consequence-live."
+  probe_transfer: "Hold-prime into cauldron → discharge:transfer while ingredient state is active."
+  catalog: "design/catalog lists charge-cycle attributes; charge-field module appears in runtime manifest."
+}
+
+^"dispatch"{
+  @explore_anatomy: ~"../../.agents/plans/explore-anatomy/PLAN.md"
+  @attention_field: ~"./attention-field.spw"
+  @operator_alignment: ~"./operator-alignment.spw"
+}

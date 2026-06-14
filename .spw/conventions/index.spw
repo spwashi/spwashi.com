@@ -34,6 +34,7 @@
 @data_spw_attribute_governance: ~"./data-spw-attribute-governance.spw"
 @relational_attention_media: ~"./relational-attention-media.spw"
 @attention_field: ~"./attention-field.spw"  # now carries aligned operational_semantics for cognitive+computational use
+@charge_cycle: ~"./charge-cycle.spw"
 @wonder_vocabulary: ~"./wonder-vocabulary.spw"
 @semantic_braces: ~"./semantic-braces.spw"
 @slices: ~"../slices/index.spw"  # when a slices index is created; for now individual slices are pulled via site.spw

@@ -429,6 +429,26 @@ export const ENHANCEMENT_DEFS = [
     },
   },
   {
+    id: 'charge-field',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    describes: 'charge/discharge field state on html + frame consequence-live projection',
+    updates: [
+      'data-spw-charge-field',
+      'data-spw-charge-intensity',
+      'data-spw-last-discharge',
+      'data-spw-charge-carrier',
+      'data-spw-consequence-live',
+      'data-spw-discharge-kind',
+    ],
+    load: () => import('./charge-field.js'),
+    mount: (mod, ctx) => {
+      const fn = mod?.initChargeField;
+      if (!isFn(fn)) return;
+      return fn(ctx);
+    },
+  },
+  {
     id: 'gesture-anatomy',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,

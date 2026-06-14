@@ -228,9 +228,16 @@
   text: "Spw sigils are transformation handles. ? asks. ~ holds possibility. @ chooses perspective. # anchors. . grounds. $ reveals substrate. % measures. = binds constraints. & combines streams. ! acts. * resolves into value. ^ carries proof upward. Use them when a link or component changes how the visitor thinks, acts, measures, funds, publishes, or remembers."
 }
 
+^"charge_consequence"{
+  rule: "Operator choice should predict discharge kind when attention commits or releases."
+  @charge_cycle: ~"./charge-cycle.spw"
+  summary: "? and ! tend to release; ~ @ & $ tend to transfer; #> and = tend to ground; ^ and * tend to project."
+}
+
 ^"dispatch"{
   @operator_semantics: ~"./operator-semantics.spw"
   @operator_site_projection: ~"./operator-site-projection.spw"
+  @charge_cycle: ~"./charge-cycle.spw"
   @measurement_contract: ~"./measurement-contract.spw"
   @promptable_image_library_pass: ~"../../.agents/plans/promptable-image-library-pass/PLAN.md"
 }

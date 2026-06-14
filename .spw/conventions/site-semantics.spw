@@ -370,6 +370,7 @@
   discharge: "A visible or semantic release of stored charge into a projection, action, or reflected register state."
   conservation: "Charge may decay, transfer, or bias a projection, but it should not silently mutate unrelated surfaces."
   falsify: "If the same visual effect can be removed without changing interaction, inspectability, or projection choice, it is not metaphysics in the model; it is decoration."
+  @charge_cycle: ~"./charge-cycle.spw"
 }
 
 ^"brace_charge_and_bias"{
