@@ -41,6 +41,10 @@
     var(--component-shadow, none);
 }
 
+:where(html[data-spw-module-visuals="on"]:not([data-spw-debug-mode="on"])) :where(#home-frame[data-spw-module-trigger]) > :where(.frame-topline, .frame-heading)::after {
+  content: none;
+}
+
 :where(html[data-spw-module-visuals="on"], html[data-spw-debug-mode="on"]) :where([data-spw-module-trigger]) > :where(.frame-topline, .frame-heading)::after {
   content: "mount trigger";
   display: inline-flex;

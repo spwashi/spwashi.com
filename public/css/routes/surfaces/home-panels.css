@@ -410,6 +410,17 @@
   }
 }
 
+@media (min-width: 48rem) and (max-width: 71.99rem) {
+  :where(#home-frame .home-brand-plate) {
+    inline-size: min(100%, 14.5rem);
+    padding: 0.58rem;
+  }
+
+  :where(#home-frame .home-hero-grid) {
+    row-gap: clamp(0.85rem, 1.6vw, 1.2rem);
+  }
+}
+
 @media (max-width: 760px) {
   :where(#home-frame.site-hero),
   :where(#operator-field),

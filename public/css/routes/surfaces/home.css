@@ -195,10 +195,10 @@ html[data-spw-color-mode="dark"] body[data-spw-surface="home"] {
       "preview preview preview"
       "inspect inspect inspect";
   align-items: center;
-  gap: 0.46rem 0.5rem;
+  gap: 0.38rem 0.46rem;
   min-width: 0;
-  padding: 0.42rem 0 0.62rem;
-  border-bottom: 1px solid var(--home-accent-line);
+  padding: 0.3rem 0 0.48rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--home-accent-line) 72%, transparent);
 }
 
 :where(#home-frame .frame-topline > .spw-delimiter) {
@@ -313,6 +313,29 @@ html[data-spw-color-mode="dark"] body[data-spw-surface="home"] {
   text-wrap: pretty;
 }
 
+:where(#home-frame .home-hero-skim) {
+  display: none;
+  max-inline-size: var(--home-measure);
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--ink-soft, rgba(27, 31, 35, 0.68)) 88%, var(--home-accent-primary) 12%);
+}
+
+:where(html[data-spw-semantic-density="rich"] #home-frame .home-hero-skim) {
+  display: block;
+}
+
+:where(#home-frame .home-hero-copy > .frame-note:not(.home-hero-note, .home-hero-skim)) {
+  max-inline-size: var(--home-measure);
+  font-size: 0.9rem;
+  line-height: 1.54;
+  color: color-mix(in srgb, var(--ink-soft, rgba(27, 31, 35, 0.68)) 92%, transparent);
+}
+
+:where(html:not([data-spw-semantic-density="rich"]) #home-frame .home-hero-copy > .frame-note:not(.home-hero-note, .home-hero-skim):nth-of-type(n + 2)) {
+  display: none;
+}
+
 :where(#home-frame .home-hero-grid) {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -329,11 +352,80 @@ html[data-spw-color-mode="dark"] body[data-spw-surface="home"] {
   max-inline-size: none;
 }
 
+/* Identity leads; hook and skim layers follow once the headline lands. */
+:where(#home-frame .page-kicker) {
+  order: 1;
+}
+
+:where(#home-frame h1) {
+  order: 2;
+}
+
+:where(#home-frame .home-tagline) {
+  order: 3;
+}
+
+:where(#home-frame .page-lede) {
+  order: 4;
+}
+
+:where(#home-frame .home-hero-note) {
+  order: 5;
+}
+
+:where(#home-frame .hook-call) {
+  order: 6;
+}
+
+:where(#home-frame .home-hero-skim) {
+  order: 7;
+}
+
+:where(#home-frame .home-hero-copy > .frame-note:not(.home-hero-note, .home-hero-skim)) {
+  order: 8;
+}
+
+:where(#home-frame .spw-copy-motif-strip) {
+  order: 9;
+}
+
+:where(#home-frame .spw-reason-strip) {
+  order: 10;
+}
+
+:where(#home-frame .spw-narration) {
+  order: 11;
+}
+
 :where(#home-frame .hook-call) {
   min-width: 0;
   max-inline-size: min(100%, var(--home-measure-wide));
   display: grid;
-  gap: 0.55rem;
+  gap: 0.42rem;
+  margin-block-start: 0.15rem;
+}
+
+:where(#home-frame .hook-call .spw-playable-hook) {
+  margin-block: 0;
+  padding: 0.52rem 0.68rem;
+  border-inline-start-width: 0.18rem;
+  font-size: clamp(0.92rem, 0.88rem + 0.2vw, 1.02rem);
+  font-weight: 620;
+  line-height: 1.44;
+  background: color-mix(in srgb, var(--home-surface-bg-strong) 92%, var(--home-accent-primary) 8%);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--home-accent-primary) 10%, transparent);
+}
+
+:where(#home-frame .hook-call .hook-sub),
+:where(#home-frame .hook-call .hook-invitation) {
+  display: none;
+}
+
+:where(html[data-spw-semantic-density="rich"] #home-frame .hook-call .hook-sub),
+:where(html[data-spw-semantic-density="rich"] #home-frame .hook-call .hook-invitation),
+:where(#home-frame .hook-call:is(:focus-within, :hover) .hook-sub),
+:where(#home-frame .hook-call:is(:focus-within, :hover) .hook-invitation) {
+  display: block;
 }
 
 :where(#home-frame .hook-call .hook-sub),
@@ -361,24 +453,25 @@ html[data-spw-color-mode="dark"] body[data-spw-surface="home"] {
   align-self: start;
   display: grid;
   place-items: center;
-  inline-size: min(100%, 17.5rem);
+  inline-size: min(100%, 16.5rem);
   margin: 0;
-  padding: 0.82rem;
-  border: var(--home-surface-border);
+  padding: 0.68rem;
+  border: 1px solid color-mix(in srgb, var(--home-accent-line) 78%, transparent);
   border-radius: var(--home-radius-md);
   background:
       radial-gradient(
           circle at 80% 12%,
-          color-mix(in oklab, var(--home-accent-ember) 16%, transparent),
+          color-mix(in oklab, var(--home-accent-ember) 10%, transparent),
           transparent 48%
       ),
       linear-gradient(
           180deg,
-          color-mix(in srgb, #fff 20%, transparent),
+          color-mix(in srgb, #fff 14%, transparent),
           transparent 62%
       ),
-      var(--home-surface-bg-muted);
-  box-shadow: var(--home-shadow-quiet);
+      color-mix(in srgb, var(--home-surface-bg-muted) 94%, transparent);
+  box-shadow: 0 6px 18px color-mix(in oklab, var(--bg, #111) 28%, transparent);
+  z-index: 1;
 }
 
 :where(#home-frame .home-brand-plate img) {
@@ -564,7 +657,7 @@ html[data-spw-color-mode="dark"] body[data-spw-surface="home"] {
   align-items: stretch;
   width: 100%;
   max-inline-size: none;
-  padding: 0.26rem;
+  padding: 0.2rem;
   border: 1px solid color-mix(in oklab, var(--home-accent-primary) 18%, transparent);
   border-radius: var(--home-radius-sm);
   background:
@@ -669,17 +762,17 @@ html[data-spw-color-mode="dark"] body[data-spw-surface="home"] {
 
 :where(#home-frame .home-lens-preview) {
   min-width: 0;
-  padding: 0.44rem 0.58rem;
-  border: 1px solid color-mix(in srgb, var(--home-accent-primary) 16%, transparent);
+  padding: 0.34rem 0.46rem;
+  border: 1px solid color-mix(in srgb, var(--home-accent-primary) 10%, transparent);
   border-radius: var(--home-radius-sm);
-  background: color-mix(in srgb, var(--home-surface-bg-strong) 84%, transparent);
+  background: color-mix(in srgb, var(--home-surface-bg-strong) 72%, transparent);
 }
 
 :where(#home-frame .home-lens-preview p) {
   margin: 0;
-  color: color-mix(in srgb, var(--ink-soft, rgba(27, 31, 35, 0.68)) 88%, var(--home-accent-primary) 12%);
-  font-size: 0.82rem;
-  line-height: 1.42;
+  color: color-mix(in srgb, var(--ink-soft, rgba(27, 31, 35, 0.68)) 92%, var(--home-accent-primary) 8%);
+  font-size: 0.78rem;
+  line-height: 1.38;
   text-wrap: pretty;
 }
 
@@ -689,10 +782,10 @@ html[data-spw-color-mode="dark"] body[data-spw-surface="home"] {
   --brace-corner-height: 0.82rem;
   position: relative;
   min-width: 0;
-  padding: 0.34rem 0.48rem;
-  border: 1px solid color-mix(in srgb, var(--home-accent-primary) 14%, transparent);
+  padding: 0.24rem 0.4rem;
+  border: 1px solid color-mix(in srgb, var(--home-accent-primary) 10%, transparent);
   border-radius: var(--home-radius-sm);
-  background: color-mix(in srgb, var(--home-surface-bg-strong) 78%, transparent);
+  background: color-mix(in srgb, var(--home-surface-bg-strong) 70%, transparent);
 }
 
 :where(#home-frame .home-copy-inspector > summary) {
@@ -742,8 +835,58 @@ html[data-spw-color-mode="dark"] body[data-spw-surface="home"] {
   display: flex;
   flex-wrap: wrap;
   justify-content: end;
-  gap: 0.32rem;
+  gap: 0.28rem;
   min-width: max-content;
+  opacity: 0.82;
+}
+
+:where(#home-frame .frame-topline .spw-component-tag) {
+  min-height: 1.55rem;
+  padding: 0.1rem 0.42rem;
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+}
+
+@media (min-width: 48rem) {
+  :where(#home-frame .frame-topline) {
+    grid-template-areas:
+        "brace identity meta"
+        "modes modes modes"
+        "preview inspect inspect";
+    gap: 0.32rem 0.42rem;
+    padding-block-end: 0.38rem;
+  }
+
+  :where(#home-frame .home-lens-preview) {
+    display: none;
+    padding-block: 0.28rem;
+    border-style: dashed;
+    background: color-mix(in srgb, var(--home-surface-bg-strong) 64%, transparent);
+  }
+
+  :where(#home-frame .mode-switch:is(:hover, :focus-within) + .home-lens-preview) {
+    display: block;
+  }
+
+  :where(#home-frame .home-copy-inspector:not([open]) > summary) {
+    font-size: 0.72rem;
+  }
+
+  :where(#home-frame .home-copy-inspector[open]) {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+}
+
+@media (min-width: 72rem) {
+  html:has(body[data-spw-surface="home"]) :where(.spw-state-inspector[data-spw-state-inspector="open"]) {
+    inline-size: min(19rem, calc(100vw - 2.4rem));
+    max-block-size: min(32dvh, calc(100dvh - 7rem));
+  }
+
+  :where(#home-frame .home-brand-plate) {
+    margin-block-start: 0.35rem;
+  }
 }
 
 :where(body[data-spw-surface="home"] .mode-switch .frame-sigil[aria-pressed="true"]) {
