@@ -152,6 +152,7 @@ const UTILITY_LABELS = Object.freeze({
     'open-satchel': 'Satchel',
     settings: 'Atlas',
     'reveal-tuners': 'Tuners',
+    'cycle-explore-posture': 'Explore',
     'cycle-resonance': 'Bias',
     'cycle-color-tuner': 'Guard',
     'cycle-theme-pack': 'Pack',
@@ -167,6 +168,7 @@ const UTILITY_LABELS = Object.freeze({
     'open-satchel': 'State satchel',
     settings: 'Settings atlas',
     'reveal-tuners': 'Reveal tuners',
+    'cycle-explore-posture': 'Cycle explore posture',
     'cycle-resonance': 'Cycle resonance',
     'cycle-color-tuner': 'Cycle color guard',
     'cycle-theme-pack': 'Cycle theme pack',
@@ -178,9 +180,12 @@ const TUNING_LEXICON_SHELL_ORDER = Object.freeze([
   'atmosphere',
   'resonance',
   'memory',
+  'explore',
   'vocabulary',
   'posture',
 ]);
+
+const EXPLORE_POSTURE_CYCLE = Object.freeze(['reading', 'field', 'workshop']);
 
 const THEME_PACK_CYCLE = Object.freeze([
   'neutral-paper',
@@ -786,20 +791,41 @@ function upgradeUtilityRow(row) {
     const cluster = document.createElement('div');
     cluster.className = 'spw-utility-cluster';
     cluster.dataset.spwUtilityCluster = 'tuning-discovery';
-    cluster.dataset.spwUtilitySize = 'single';
+    cluster.dataset.spwUtilitySize = 'pair';
     cluster.setAttribute('role', 'group');
     cluster.setAttribute('aria-label', 'Reveal embedded tuners on this page');
     cluster.dataset.spwLocality = 'high';
     cluster.dataset.spwComponentLocality = 'tuning-surfaces';
     cluster.dataset.spwPhysicsReason = 'memory-gamified';
-    cluster.dataset.spwModuleEvaluates = 'semantic-density tuning-surfaces';
+    cluster.dataset.spwModuleEvaluates = 'explore-posture tuning-surfaces';
     cluster.innerHTML = `
       <button type="button" class="spw-shell-utility-button" data-spw-shell-action="reveal-tuners" data-spw-utility-size="text" aria-label="Reveal embedded tuning surfaces on this page" title="Reveal or jump to tuning surfaces embedded in this page">
         <span class="spw-utility-sigil" aria-hidden="true">◇</span>
         <span class="spw-utility-argument"></span>
       </button>
+      <button type="button" class="spw-shell-utility-button" data-spw-shell-action="cycle-explore-posture" data-spw-utility-size="text" aria-label="Cycle explore posture" title="Cycle explore posture (reading, field, workshop)">
+        <span class="spw-utility-sigil" aria-hidden="true">⌁</span>
+        <span class="spw-utility-argument"></span>
+      </button>
     `;
     row.append(cluster);
+  } else if (!row.querySelector('[data-spw-shell-action="cycle-explore-posture"]')) {
+    const cluster = row.querySelector('[data-spw-utility-cluster="tuning-discovery"]');
+    if (cluster instanceof HTMLElement) {
+      cluster.dataset.spwUtilitySize = 'pair';
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'spw-shell-utility-button';
+      button.dataset.spwShellAction = 'cycle-explore-posture';
+      button.dataset.spwUtilitySize = 'text';
+      button.setAttribute('aria-label', 'Cycle explore posture');
+      button.title = 'Cycle explore posture (reading, field, workshop)';
+      button.innerHTML = `
+        <span class="spw-utility-sigil" aria-hidden="true">⌁</span>
+        <span class="spw-utility-argument"></span>
+      `;
+      cluster.append(button);
+    }
   }
 
   if (!row.querySelector('[data-spw-shell-theme-utility]')) {
@@ -1041,9 +1067,13 @@ function ensureUtilityRow(header) {
           <span class="spw-utility-argument"></span>
         </button>
       </div>
-      <div class="spw-utility-cluster" data-spw-utility-cluster="tuning-discovery" data-spw-utility-size="single" role="group" aria-label="Reveal embedded tuners on this page" data-spw-locality="high" data-spw-component-locality="tuning-surfaces" data-spw-physics-reason="memory-gamified" data-spw-module-evaluates="semantic-density tuning-surfaces">
+      <div class="spw-utility-cluster" data-spw-utility-cluster="tuning-discovery" data-spw-utility-size="pair" role="group" aria-label="Reveal embedded tuners on this page" data-spw-locality="high" data-spw-component-locality="tuning-surfaces" data-spw-physics-reason="memory-gamified" data-spw-module-evaluates="explore-posture tuning-surfaces">
         <button type="button" class="spw-shell-utility-button" data-spw-shell-action="reveal-tuners" data-spw-utility-size="text" aria-label="Reveal embedded tuning surfaces on this page" title="Reveal or jump to tuning surfaces embedded in this page">
           <span class="spw-utility-sigil" aria-hidden="true">◇</span>
+          <span class="spw-utility-argument"></span>
+        </button>
+        <button type="button" class="spw-shell-utility-button" data-spw-shell-action="cycle-explore-posture" data-spw-utility-size="text" aria-label="Cycle explore posture" title="Cycle explore posture (reading, field, workshop)">
+          <span class="spw-utility-sigil" aria-hidden="true">⌁</span>
           <span class="spw-utility-argument"></span>
         </button>
       </div>
@@ -1092,6 +1122,7 @@ function syncUtilityRow(row) {
   const compact = document.documentElement.dataset.spwViewportTier === 'compact'
     || document.documentElement.dataset.spwPointerMode === 'coarse';
   const labels = compact ? UTILITY_LABELS.compact : UTILITY_LABELS.regular;
+  const settings = getSiteSettings();
 
   row.dataset.spwFontScale = current;
   row.dataset.spwColorMode = currentColorMode;
@@ -1210,6 +1241,12 @@ function syncUtilityRow(row) {
     button.title = count
       ? `Reveal or jump to ${count} tuning surface${count === 1 ? '' : 's'} on this page`
       : 'Enable tuning discoverability and jump to embedded controls';
+  });
+
+  row.querySelectorAll('[data-spw-shell-action="cycle-explore-posture"]').forEach((button) => {
+    const arg = button.querySelector('.spw-utility-argument');
+    if (arg) arg.textContent = describeSettingValue('explorePosture', settings.explorePosture);
+    button.title = `Explore posture: ${describeSettingValue('explorePosture', settings.explorePosture)} (click to cycle)`;
   });
 
   syncThemeUtility(row);
@@ -1838,6 +1875,12 @@ export function initSpwShellDisclosure(options = {}) {
 
     if (action === 'reveal-tuners') {
       revealTuningSurfaces();
+      syncUtilityRow(utilityRow);
+      return;
+    }
+
+    if (action === 'cycle-explore-posture') {
+      cycleSettingValue('explorePosture', [...EXPLORE_POSTURE_CYCLE]);
       syncUtilityRow(utilityRow);
       return;
     }

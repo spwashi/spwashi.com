@@ -1,0 +1,95 @@
+/* ==========================================================================
+   page-region-rail.css
+   --------------------------------------------------------------------------
+   Auto-built region index for long editorial routes (desktop explore aid).
+   ========================================================================== */
+
+:where(.spw-page-region-rail) {
+  display: none;
+}
+
+@media (min-width: 68rem) {
+  :where(html[data-spw-page-region-rail="on"]) :where(.spw-page-region-rail) {
+    position: fixed;
+    inset-block: calc(var(--header-height, 4rem) + 1rem) max(1rem, env(safe-area-inset-bottom));
+    inset-inline-end: max(0.65rem, env(safe-area-inset-right));
+    z-index: calc(var(--z-priority, 2000) + 6);
+    display: grid;
+    align-content: start;
+    gap: 0.42rem;
+    inline-size: min(11.5rem, calc(100vw - 1.2rem));
+    max-block-size: calc(100vh - var(--header-height, 4rem) - 2rem);
+    overflow: auto;
+    padding: 0.55rem 0.5rem 0.65rem;
+    border: 1px solid color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 82%, transparent);
+    border-radius: var(--shape-component, 6px);
+    background: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.94)) 92%, var(--active-op-color, #008080) 8%);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
+    pointer-events: auto;
+  }
+
+  :where(.spw-page-region-rail__kicker) {
+    margin: 0;
+    color: var(--ink-soft);
+    font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+    font-size: 0.54rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  :where(.spw-page-region-rail__list) {
+    display: grid;
+    gap: 0.22rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  :where(.spw-page-region-rail__link) {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.32rem;
+    align-items: baseline;
+    padding: 0.22rem 0.34rem;
+    border-radius: calc(var(--shape-element, 4px) + 1px);
+    color: var(--ink-soft);
+    font-size: 0.68rem;
+    line-height: 1.25;
+    text-decoration: none;
+    transition:
+      background-color 160ms ease,
+      color 160ms ease;
+  }
+
+  :where(.spw-page-region-rail__link:is(:hover, :focus-visible)) {
+    background: color-mix(in srgb, var(--active-op-color, #008080) 8%, transparent);
+    color: var(--ink);
+    outline: none;
+  }
+
+  :where(.spw-page-region-rail__link[data-spw-region-active="true"]) {
+    background: color-mix(in srgb, var(--active-op-color, #008080) 12%, transparent);
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  :where(.spw-page-region-rail__link[data-spw-affordance="tune"]) {
+    border-inline-start: 2px solid color-mix(in srgb, var(--op-action-color, #006b6b) 44%, transparent);
+  }
+
+  :where(.spw-page-region-rail__sigil) {
+    font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+    font-size: 0.58rem;
+    opacity: 0.78;
+  }
+
+  :where(.spw-page-region-rail__label) {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+}
+
+:where(html[data-spw-tuning-discoverability="quiet"]) :where(.spw-page-region-rail) {
+  opacity: 0.72;
+}

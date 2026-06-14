@@ -12,6 +12,7 @@ const EVENT_NAME = 'spw:tuning-surfaces-updated';
 const TUNABLE_SCOPE_SELECTOR = [
   '[data-site-settings-scope]',
   '[data-spw-affordance="tune"]',
+  '[data-spw-feature="embedded-workshop"]',
   '[data-site-settings-panel]',
   '.vibe-widget[data-spw-role="control"]',
 ].join(', ');
@@ -159,8 +160,7 @@ export function revealTuningSurfaces({ persist = true } = {}) {
 
   if (mode === 'quiet' && persist && window.spwSettings?.save) {
     window.spwSettings.save({
-      semanticDensity: 'normal',
-      cognitiveHandles: 'on',
+      explorePosture: 'field',
     });
     return 'enabled';
   }

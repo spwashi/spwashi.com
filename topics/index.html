@@ -128,7 +128,7 @@
     <section class="site-frame site-hero site-hero--split-figure" id="topics-register" aria-labelledby="topics-title" aria-describedby="topics-description" data-spw-image-hero="true" data-spw-role="orientation" data-spw-meaning="topic register" data-spw-kind="frame" data-spw-context="routing" data-spw-wonder="orientation comparison projection" data-spw-affordance="orient" data-spw-liminality="entry" data-spw-category-family="portal" data-spw-locality="high" data-spw-consequence="framing" data-spw-promptability="latent" data-spw-collectability="some" data-spw-seed="page_topics_topics__topics_register" data-spw-context-relevance="atlas topics software craft math search rediscovery research funding cards membership services onboarding" data-spw-related-routes="/|/now/|/cards/|/membership/|/research/|/coordination/|/services/|/about/|/about/plans/|/about/website/|/topics/software/|/topics/craft/|/topics/knowledge-bases/|/topics/architecture/|/topics/pedagogy/|/topics/search/|/topics/site-design/|/topics/math/|/play/|/blog/|/settings/">
         <header class="frame-topline" data-spw-slot="header">
             <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
-            <a class="frame-sigil" href="#topics-register" data-spw-operator="address">#&gt;topics_register</a>
+            <a class="frame-sigil" href="#topics-register" data-spw-operator="frame" data-spw-sigil="#&gt;topics_register">#&gt;topics_register</a>
             <div class="spec-strip">
                 <span class="spec-pill">software</span>
                 <span class="spec-pill">craft</span>
@@ -241,10 +241,79 @@
         </footer>
     </section>
 
+    <section
+        class="site-frame spw-embedded-workshop"
+        id="topics-tuning"
+        aria-labelledby="topics-tuning-title"
+        data-site-settings-scope
+        data-spw-feature="embedded-workshop"
+        data-spw-kind="frame"
+        data-spw-role="climate-tuning"
+        data-spw-context="settings"
+        data-spw-affordance="tune"
+        data-spw-form="brace"
+        data-spw-seed="page_topics_topics__tuning"
+    >
+        <header class="frame-heading" data-spw-slot="header">
+            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
+            <a class="frame-sigil" href="#topics-tuning" data-spw-operator="potential" data-spw-sigil="~topics_tuning">~topics_tuning</a>
+            <h2 id="topics-tuning-title">Tune this atlas</h2>
+            <div class="spw-component-meta" data-spw-slot="meta">
+                <span class="spw-component-tag" data-spw-role="control" data-spw-stance="entry">tuning</span>
+            </div>
+        </header>
+
+        <div class="frame-body" data-spw-slot="body">
+            <p class="frame-note" data-spw-copy-depth="normal">Settings stay in this browser. Adjust route bias and reading weather without leaving the atlas.</p>
+
+            <div class="vibe-widget-grid vibe-widget-grid--compact">
+                <article class="vibe-widget" data-spw-kind="card" data-spw-role="control">
+                    <div class="vibe-widget-header">
+                        <p class="vibe-widget-kicker">Current state</p>
+                        <h3 class="vibe-widget-title">Read the active environment</h3>
+                    </div>
+                    <div class="vibe-widget-meta" data-spw-role="schema">
+                        <span class="spec-pill">mode: <span data-settings-state="colorMode">auto</span></span>
+                        <span class="spec-pill">palette: <span data-settings-state="paletteResonance">route</span></span>
+                        <span class="spec-pill">explore: <span data-settings-state="explorePosture">reading</span></span>
+                    </div>
+                </article>
+
+                <article class="vibe-widget" data-spw-kind="card" data-spw-role="control">
+                    <div class="vibe-widget-header">
+                        <p class="vibe-widget-kicker">Resonance dimension</p>
+                        <h3 class="vibe-widget-title">Choose a reading bias</h3>
+                    </div>
+                    <div class="vibe-widget-actions tuning-strip" role="group" aria-label="Topics palette resonance" data-spw-slot="actions">
+                        <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:route" data-spw-operator="select">Context-led</button>
+                        <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:craft" data-spw-operator="select">Craft-led</button>
+                        <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:math" data-spw-operator="select">Math-led</button>
+                    </div>
+                </article>
+
+                <article class="vibe-widget" data-spw-kind="card" data-spw-role="control">
+                    <div class="vibe-widget-header">
+                        <p class="vibe-widget-kicker">Atlas layout</p>
+                        <h3 class="vibe-widget-title">Widen or narrow the register</h3>
+                    </div>
+                    <div class="vibe-widget-actions" role="group" aria-label="Topics layout tuner" data-spw-slot="actions">
+                        <button class="operator-chip" type="button" data-site-setting-set="layoutTuner:reading" data-spw-operator="select">Reading</button>
+                        <button class="operator-chip" type="button" data-site-setting-set="layoutTuner:wide" data-spw-operator="select">Wide</button>
+                        <button class="operator-chip" type="button" data-site-setting-set="layoutTuner:atlas" data-spw-operator="select">Atlas</button>
+                    </div>
+                </article>
+            </div>
+        </div>
+
+        <footer class="frame-actions" data-spw-slot="actions">
+            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">}</span>
+        </footer>
+    </section>
+
     <section class="site-frame" id="learning-postures" aria-labelledby="learning-postures-title" data-spw-role="routing" data-spw-kind="frame" data-spw-context="education" data-spw-wonder="orientation comparison projection" data-spw-affordance="navigate" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="entry" data-spw-promptability="visible" data-spw-collectability="medium" data-spw-feature="learning-postures">
         <header class="frame-heading" data-spw-slot="header">
             <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
-            <a class="frame-sigil" href="#learning-postures" data-spw-operator="integrate">^"learning_postures"{</a>
+            <a class="frame-sigil" href="#learning-postures" data-spw-operator="frame" data-spw-sigil="#&gt;learning_postures">#&gt;learning_postures</a>
             <h2 id="learning-postures-title">Choose a learning posture, not only a topic.</h2>
             <div class="spw-component-meta" data-spw-slot="meta">
                 <span class="spw-component-tag" data-spw-role="education" data-spw-stance="entry">postures</span>
@@ -356,7 +425,7 @@
     <section class="site-frame" id="returning-atlas" aria-labelledby="returning-atlas-title" data-spw-role="re-entry" data-spw-kind="frame" data-spw-context="routing" data-spw-wonder="change comparison projection" data-spw-affordance="revisit" data-spw-liminality="threshold" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="entry" data-spw-promptability="visible" data-spw-collectability="medium" data-spw-feature="returning-atlas">
         <header class="frame-heading" data-spw-slot="header">
             <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
-            <a class="frame-sigil" href="#returning-atlas" data-spw-operator="potential">~"returning_atlas"</a>
+            <a class="frame-sigil" href="#returning-atlas" data-spw-operator="potential" data-spw-sigil="~returning_atlas">~returning_atlas</a>
             <h2 id="returning-atlas-title">Return by drift, not by taxonomy.</h2>
             <div class="spw-component-meta" data-spw-slot="meta">
                 <span class="spw-component-tag" data-spw-role="routing" data-spw-stance="threshold">re-entry</span>
@@ -408,7 +477,7 @@
     <section class="site-frame" id="skill-gratitude" aria-labelledby="skill-gratitude-title" data-spw-role="gratitude" data-spw-kind="frame" data-spw-context="learning" data-spw-wonder="gratitude comparison projection" data-spw-affordance="reward" data-spw-liminality="settled" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="visible" data-spw-collectability="medium" data-spw-feature="skill-gratitude">
         <header class="frame-heading" data-spw-slot="header">
             <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
-            <a class="frame-sigil" href="#skill-gratitude" data-spw-operator="value">* "skill_gratitude"</a>
+            <a class="frame-sigil" href="#skill-gratitude" data-spw-operator="value" data-spw-sigil="*skill_gratitude">*skill_gratitude</a>
             <h2 id="skill-gratitude-title">Wonder through a skill, earn a handle.</h2>
             <div class="spw-component-meta" data-spw-slot="meta">
                 <span class="spw-component-tag" data-spw-role="gratitude" data-spw-stance="settled">reward</span>
@@ -462,7 +531,7 @@
     <section class="site-frame" id="topic-cards" aria-labelledby="topic-cards-title" data-spw-role="directory" data-spw-kind="frame" data-spw-context="routing" data-spw-wonder="orientation comparison projection" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics__topic_cards" data-spw-context-relevance="atlas software craft site design math architecture pedagogy play writing" data-spw-related-routes="/|/about/|/about/plans/|/about/website/|/topics/software/|/topics/craft/|/topics/architecture/|/topics/pedagogy/|/topics/site-design/|/topics/math/|/play/|/blog/|/settings/">
         <header class="frame-heading" data-spw-slot="header">
             <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
-            <a class="frame-sigil" href="#topic-cards" data-spw-operator="integrate">^"topic_cards"{</a>
+            <a class="frame-sigil" href="#topic-cards" data-spw-operator="frame" data-spw-sigil="#&gt;topic_cards">#&gt;topic_cards</a>
             <h2 id="topic-cards-title">Topic Cards</h2>
             <div class="spw-component-meta" data-spw-slot="meta">
                 <span class="spw-component-tag" data-spw-role="directory" data-spw-stance="entry">cards</span>
@@ -681,7 +750,7 @@
     <section class="site-frame" id="visual-studies" aria-labelledby="visual-studies-title" data-spw-role="reference" data-spw-kind="frame" data-spw-context="routing" data-spw-wonder="orientation comparison projection" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics__visual_studies" data-spw-context-relevance="atlas software craft site design math architecture pedagogy play writing" data-spw-related-routes="/|/about/|/about/plans/|/about/website/|/topics/software/|/topics/craft/|/topics/architecture/|/topics/pedagogy/|/topics/site-design/|/topics/math/|/play/|/blog/|/settings/">
         <header class="frame-heading" data-spw-slot="header">
             <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
-            <a class="frame-sigil" href="#visual-studies" data-spw-operator="potential">~"visual_studies"</a>
+            <a class="frame-sigil" href="#visual-studies" data-spw-operator="potential" data-spw-sigil="~visual_studies">~visual_studies</a>
             <h2 id="visual-studies-title">Visual Studies</h2>
             <div class="spw-component-meta" data-spw-slot="meta">
                 <span class="spw-component-tag" data-spw-role="analysis" data-spw-stance="entry">studies</span>
@@ -727,7 +796,7 @@
     <section class="site-frame" id="cross-linked-surfaces" aria-labelledby="cross-linked-title" data-spw-role="routing" data-spw-kind="frame" data-spw-context="routing" data-spw-wonder="orientation comparison projection" data-spw-affordance="navigate" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="entry" data-spw-promptability="ambient" data-spw-collectability="index" data-spw-seed="page_topics_topics__cross_linked_surfaces" data-spw-context-relevance="atlas software craft search site design math architecture pedagogy play writing" data-spw-related-routes="/|/about/|/about/plans/|/about/website/|/topics/software/|/topics/craft/|/topics/architecture/|/topics/pedagogy/|/topics/search/|/topics/site-design/|/topics/math/|/play/|/blog/|/settings/">
         <header class="frame-heading" data-spw-slot="header">
             <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
-            <a class="frame-sigil" href="#cross-linked-surfaces" data-spw-operator="integrate">&amp;["cross-linked_surfaces"]</a>
+            <a class="frame-sigil" href="#cross-linked-surfaces" data-spw-operator="subject" data-spw-sigil="&amp;cross_linked_surfaces">&amp;cross_linked_surfaces</a>
             <h2 id="cross-linked-title">Cross-linked surfaces</h2>
             <div class="spw-component-meta" data-spw-slot="meta">
                 <span class="spw-component-tag" data-spw-role="routing" data-spw-stance="entry">lattice</span>

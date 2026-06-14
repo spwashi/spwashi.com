@@ -416,6 +416,19 @@ export const ENHANCEMENT_DEFS = [
     },
   },
   {
+    id: 'page-region-rail',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    describes: 'desktop region index from main semantics + html[data-spw-page-region-rail]',
+    updates: ['data-spw-page-region-rail', 'data-spw-region-active'],
+    load: () => import('./page-region-rail.js'),
+    mount: (mod, ctx) => {
+      const fn = mod?.initPageRegionRail;
+      if (!isFn(fn)) return;
+      return fn(ctx);
+    },
+  },
+  {
     id: 'gesture-anatomy',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,

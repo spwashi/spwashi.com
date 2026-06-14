@@ -5087,7 +5087,7 @@ body > header:has(.spw-spell-path) .spw-attention-posture-pill {
   border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 14%, transparent);
 }
 
-:where(.site-header nav a, body > header nav a)[data-spw-nav-destination="settle"][aria-current="page"]) {
+:where(.site-header nav a, body > header nav a)[data-spw-nav-destination="settle"][aria-current="page"] {
   --spw-shell-link-current-border-mix: 22%;
 }
 
@@ -13307,12 +13307,15 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
   gap: var(--component-gap-tight);
 
   /* Box */
+  inline-size: 100%;
+  max-inline-size: 100%;
   min-width: 0;
 
   /* Typography */
   color: inherit;
   font-weight: inherit;
   text-decoration: none;
+  overflow-wrap: anywhere;
 }
 
 :where(.frame-card, .frame-card > a:first-child) {
@@ -15587,6 +15590,7 @@ html[data-spw-font-size-scale="120"] [data-spw-vocab]) {
   grid-template-columns: 1fr;
   align-items: start;
   align-content: start;
+  container-type: normal;
 }
 
 :where(.site-hero--split-figure) > [data-spw-slot="body"] {
@@ -15897,12 +15901,13 @@ html[data-spw-font-size-scale="120"] [data-spw-vocab]) {
   .settings-structures-grid,
   .settings-quickstart-grid,
   .vibe-widget-grid,
+  .spw-principle-grid,
   .pwa-status-grid
 ) {
-  --spw-grid-min-base: 15rem;
-  --spw-grid-min-mid: 14.5rem;
-  --spw-grid-min-narrow: 13.5rem;
-  --spw-grid-min-compact: 12rem;
+  --spw-grid-min-base: 18rem;
+  --spw-grid-min-mid: 16.5rem;
+  --spw-grid-min-narrow: 14.5rem;
+  --spw-grid-min-compact: 12.5rem;
   --spw-grid-gap-base: var(--component-gap);
   --spw-grid-gap-mid: 0.84rem;
   --spw-grid-gap-narrow: 0.74rem;
@@ -15929,6 +15934,7 @@ html[data-spw-font-size-scale="120"] [data-spw-vocab]) {
   .settings-structures-grid,
   .settings-quickstart-grid,
   .vibe-widget-grid,
+  .spw-principle-grid,
   .pwa-status-grid
 ) {
   grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--spw-grid-min-active)), 1fr));
@@ -15947,9 +15953,9 @@ html[data-spw-font-size-scale="120"] [data-spw-vocab]) {
 
 :where(.frame-grid--dense, .ref-grid--dense),
 :where(.frame-grid, .plans-grid, .contact-grid, .gallery-overlays, .compare-sets, .spec-grid, .directory-grid, .ref-grid)[data-spw-density="dense"] {
-  --spw-grid-min-base: 13.75rem;
-  --spw-grid-min-mid: 13.2rem;
-  --spw-grid-min-narrow: 12.4rem;
+  --spw-grid-min-base: 17.5rem;
+  --spw-grid-min-mid: 15.75rem;
+  --spw-grid-min-narrow: 13.25rem;
   --spw-grid-min-compact: 11.5rem;
   --spw-grid-gap-base: 0.72rem;
   --spw-grid-gap-mid: 0.68rem;
@@ -15997,19 +16003,24 @@ html[data-spw-font-size-scale="120"] [data-spw-vocab]) {
   }
 }
 
-html[data-spw-viewport-tier="mid"] :where(.frame-grid, .plans-grid, .contact-grid, .gallery-overlays, .compare-sets, .spec-grid, .directory-grid, .ref-grid) {
+html[data-spw-viewport-tier="mid"] :where(.frame-grid, .plans-grid, .contact-grid, .gallery-overlays, .compare-sets, .spec-grid, .directory-grid, .ref-grid, .spw-principle-grid) {
   --spw-grid-min-active: var(--spw-grid-min-mid);
   --spw-grid-gap-active: var(--spw-grid-gap-mid);
 }
 
-html[data-spw-viewport-tier="narrow"] :where(.frame-grid, .plans-grid, .contact-grid, .gallery-overlays, .compare-sets, .spec-grid, .directory-grid, .ref-grid) {
+html[data-spw-viewport-tier="narrow"] :where(.frame-grid, .plans-grid, .contact-grid, .gallery-overlays, .compare-sets, .spec-grid, .directory-grid, .ref-grid, .spw-principle-grid) {
   --spw-grid-min-active: var(--spw-grid-min-narrow);
   --spw-grid-gap-active: var(--spw-grid-gap-narrow);
 }
 
-html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact-grid, .gallery-overlays, .compare-sets, .spec-grid, .directory-grid, .ref-grid) {
+html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact-grid, .gallery-overlays, .compare-sets, .spec-grid, .directory-grid, .ref-grid, .spw-principle-grid) {
   --spw-grid-min-active: var(--spw-grid-min-compact);
   --spw-grid-gap-active: var(--spw-grid-gap-compact);
+}
+
+:where(.frame-actions > :is(.frame-grid, .spec-grid, .directory-grid, .ref-grid, .spw-principle-grid)) {
+  flex: 1 1 100%;
+  width: 100%;
 }
 
 /* Composition flow: wire authored layout intent without duplicating grid class lists. */
@@ -16027,6 +16038,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   .settings-structures-grid,
   .settings-quickstart-grid,
   .vibe-widget-grid,
+  .spw-principle-grid,
   .pwa-status-grid,
   .spw-amount-grid,
   .spw-character-card-grid,
@@ -18908,6 +18920,120 @@ html[data-spw-debug-mode="on"] :where(
 }
 }
 
+/* /public/css/components/embedded-workshop.css */
+@layer components {
+/* ==========================================================================
+   embedded-workshop.css
+   --------------------------------------------------------------------------
+   Compact route-embedded tuning frames (exported from home climate-tuning).
+   ========================================================================== */
+
+:where(.spw-embedded-workshop.site-frame) {
+  margin-block: var(--flow-section-gap, clamp(1.4rem, 3vw, 2.6rem));
+  border-color: color-mix(in srgb, var(--active-op-color, #008080) 18%, var(--line, rgba(14, 18, 20, 0.14)) 82%);
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--active-op-color, #008080) 5%, transparent), transparent 52%),
+    var(--surface-strong, rgba(255, 255, 255, 0.94));
+}
+
+:where(.spw-embedded-workshop .vibe-widget-grid--compact) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: 0.65rem;
+}
+
+:where(.spw-embedded-workshop .vibe-widget) {
+  min-width: 0;
+}
+
+:where(.spw-embedded-workshop .vibe-widget-meta) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.34rem;
+}
+
+:where(.spw-embedded-workshop .frame-note) {
+  max-inline-size: 62ch;
+}
+
+@media (max-width: 720px) {
+  :where(.spw-embedded-workshop .vibe-widget-actions) {
+    gap: 0.34rem;
+  }
+
+  :where(.spw-embedded-workshop .operator-chip) {
+    font-size: 0.72rem;
+  }
+}
+}
+
+/* /public/css/components/frame-controls.css */
+@layer components {
+/* ==========================================================================
+   frame-controls.css
+   --------------------------------------------------------------------------
+   Distinguish lens (content filter) from form (structural grammar) controls.
+   ========================================================================== */
+
+/* Lens axis — mode-switch filters panels without changing frame grammar */
+:where(.frame-topline .mode-switch, .frame-heading .mode-switch) {
+  --spw-control-axis: lens;
+  --spw-control-axis-color: var(--op-probe-color, #4a2180);
+  padding: 0.14rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--spw-control-axis-color) 22%, var(--line, rgba(14, 18, 20, 0.14)) 78%);
+  background: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.92)) 90%, var(--spw-control-axis-color) 10%);
+}
+
+:where(html[data-spw-tuning-discoverability="ambient"], html[data-spw-tuning-discoverability="revealed"])
+  :where(.frame-topline .mode-switch, .frame-heading .mode-switch)[aria-label]::before {
+  content: "lens";
+  display: block;
+  margin-block-end: 0.12rem;
+  color: color-mix(in srgb, var(--spw-control-axis-color) 62%, var(--ink-soft) 38%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.52rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+/* Form axis — brace/block/angle grammar swaps on the frame container */
+:where(.site-frame[data-spw-form-options], .frame-card[data-spw-form-options]) {
+  --spw-control-axis: form;
+  --spw-control-axis-color: var(--op-object-color, #a67c00);
+}
+
+:where(
+  html[data-spw-tuning-discoverability="ambient"],
+  html[data-spw-tuning-discoverability="revealed"]
+) :where(.site-frame[data-spw-form-options] > :is(.frame-topline, .frame-heading, header)) {
+  box-shadow: inset 3px 0 0 color-mix(in srgb, var(--spw-control-axis-color) 42%, transparent);
+}
+
+:where(
+  html[data-spw-tuning-discoverability="ambient"],
+  html[data-spw-tuning-discoverability="revealed"]
+) :where(.site-frame[data-spw-form-options] > :is(.frame-topline, .frame-heading, header))::after {
+  content: "form";
+  display: inline-flex;
+  align-items: center;
+  margin-inline-start: auto;
+  padding: 0.1rem 0.38rem;
+  border-radius: 999px;
+  border: 1px dashed color-mix(in srgb, var(--spw-control-axis-color) 28%, transparent);
+  color: color-mix(in srgb, var(--spw-control-axis-color) 68%, var(--ink-soft) 32%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.52rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+}
+
 /* /public/css/systems/substrate-ecology.css */
 @layer systems {
 /* ==========================================================================
@@ -19831,6 +19957,8 @@ html[data-spw-debug-mode="on"] :where(
   position: relative;
   display: grid;
   gap: 0.72rem;
+  min-inline-size: 0;
+  max-inline-size: 100%;
   min-height: 100%;
   padding: 0.95rem 1rem 1rem;
   border: 1px solid color-mix(in srgb, var(--spw-palette-probe-1, var(--active-op-color, #008080)) 18%, var(--spw-shell-line));
@@ -19864,6 +19992,8 @@ html[data-spw-debug-mode="on"] :where(
 }
 
 :where(.vibe-widget > *) {
+  min-inline-size: 0;
+  max-inline-size: 100%;
   position: relative;
   z-index: 1;
 }
@@ -19898,11 +20028,27 @@ html[data-spw-debug-mode="on"] :where(
   max-inline-size: 70ch;
 }
 
+:where(
+  .vibe-widget-kicker,
+  .vibe-widget-title,
+  .vibe-widget-copy,
+  .palette-probe-kicker,
+  .palette-probe-title,
+  .palette-probe-copy
+) {
+  overflow-wrap: anywhere;
+}
+
 :where(:is(.vibe-widget, .palette-probe, .wonder-memory)-actions, .palette-probe-paths) {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
   align-items: stretch;
+}
+
+:where(:is(.vibe-widget, .palette-probe, .wonder-memory)-actions > *, .vibe-widget-meta > *, .palette-probe-paths > *) {
+  max-inline-size: 100%;
+  min-inline-size: 0;
 }
 
 :where(:is(.vibe-widget, .wonder-memory, .palette-probe)-actions :is(.operator-chip, .spec-pill)[data-site-setting-active="true"],
@@ -22755,12 +22901,26 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
   opacity: 0.92;
 }
 
-/* Rich route choices carry operator metadata, but their contents are card
-   anatomy rather than inline handles. Preserve the component grid contract. */
-:where(.spw-route-bridge__links a[data-spw-operator]) {
+/* Rich route choices and card-body links carry operator metadata, but their
+   contents are card anatomy rather than inline handles. Preserve the component
+   grid contract instead of letting the handle primitive compress them. */
+:where(.spw-route-bridge__links a[data-spw-operator], a.frame-card[data-spw-operator], .frame-card > a:first-child[data-spw-operator]) {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   align-items: start;
+  align-content: start;
   justify-content: stretch;
+  justify-items: start;
+  gap: var(--card-rhythm, var(--component-gap-tight, 0.65rem));
+  inline-size: 100%;
+  max-inline-size: 100%;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  color: inherit;
+  overflow-wrap: anywhere;
   text-align: start;
   white-space: normal;
 }
@@ -25859,6 +26019,105 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
     transition: none !important;
     transform: none !important;
   }
+}
+}
+
+/* /public/css/handles/page-region-rail.css */
+@layer handles {
+/* ==========================================================================
+   page-region-rail.css
+   --------------------------------------------------------------------------
+   Auto-built region index for long editorial routes (desktop explore aid).
+   ========================================================================== */
+
+:where(.spw-page-region-rail) {
+  display: none;
+}
+
+@media (min-width: 68rem) {
+  :where(html[data-spw-page-region-rail="on"]) :where(.spw-page-region-rail) {
+    position: fixed;
+    inset-block: calc(var(--header-height, 4rem) + 1rem) max(1rem, env(safe-area-inset-bottom));
+    inset-inline-end: max(0.65rem, env(safe-area-inset-right));
+    z-index: calc(var(--z-priority, 2000) + 6);
+    display: grid;
+    align-content: start;
+    gap: 0.42rem;
+    inline-size: min(11.5rem, calc(100vw - 1.2rem));
+    max-block-size: calc(100vh - var(--header-height, 4rem) - 2rem);
+    overflow: auto;
+    padding: 0.55rem 0.5rem 0.65rem;
+    border: 1px solid color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 82%, transparent);
+    border-radius: var(--shape-component, 6px);
+    background: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.94)) 92%, var(--active-op-color, #008080) 8%);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
+    pointer-events: auto;
+  }
+
+  :where(.spw-page-region-rail__kicker) {
+    margin: 0;
+    color: var(--ink-soft);
+    font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+    font-size: 0.54rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  :where(.spw-page-region-rail__list) {
+    display: grid;
+    gap: 0.22rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  :where(.spw-page-region-rail__link) {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.32rem;
+    align-items: baseline;
+    padding: 0.22rem 0.34rem;
+    border-radius: calc(var(--shape-element, 4px) + 1px);
+    color: var(--ink-soft);
+    font-size: 0.68rem;
+    line-height: 1.25;
+    text-decoration: none;
+    transition:
+      background-color 160ms ease,
+      color 160ms ease;
+  }
+
+  :where(.spw-page-region-rail__link:is(:hover, :focus-visible)) {
+    background: color-mix(in srgb, var(--active-op-color, #008080) 8%, transparent);
+    color: var(--ink);
+    outline: none;
+  }
+
+  :where(.spw-page-region-rail__link[data-spw-region-active="true"]) {
+    background: color-mix(in srgb, var(--active-op-color, #008080) 12%, transparent);
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  :where(.spw-page-region-rail__link[data-spw-affordance="tune"]) {
+    border-inline-start: 2px solid color-mix(in srgb, var(--op-action-color, #006b6b) 44%, transparent);
+  }
+
+  :where(.spw-page-region-rail__sigil) {
+    font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+    font-size: 0.58rem;
+    opacity: 0.78;
+  }
+
+  :where(.spw-page-region-rail__label) {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+}
+
+:where(html[data-spw-tuning-discoverability="quiet"]) :where(.spw-page-region-rail) {
+  opacity: 0.72;
 }
 }
 
@@ -32369,8 +32628,6 @@ html[data-spw-narrative-mode="on"] :where([data-spw-narrative-copy])::selection 
     animation-iteration-count: 1;
   }
 }
-
-/*# sourceMappingURL=debug.css.map */
 }
 
 /* /public/css/ornament/whimsy.css */
@@ -32733,53 +32990,62 @@ html[data-spw-narrative-mode="on"] :where([data-spw-narrative-copy])::selection 
    Implements Attentional Cueing and Relational Resonance.
    ========================================================================== */
 
-filter: grayscale(0.4) contrast(0.9);
-      transition:
-        opacity var(--duration-deliberate) var(--ease-settle),
-        filter var(--duration-deliberate) var(--ease-settle);
-      pointer-events: none; /* Soft lockout to encourage focus */
+/* 1. Attentional Cueing (Environmental Dimming) */
+:where(main:has(.site-frame[data-spw-attention="focused"])) .site-frame[data-spw-attention="dimmed"] {
+  opacity: 0.45;
+  filter: grayscale(0.4) contrast(0.9);
+  transition:
+    opacity var(--duration-deliberate) var(--ease-settle),
+    filter var(--duration-deliberate) var(--ease-settle);
+  pointer-events: none; /* Soft lockout to encourage focus */
+}
 
-      &:hover {
-        opacity: 0.72;
-        filter: grayscale(0.2) contrast(0.95);
-        pointer-events: auto;
-      }
-    }
+:where(main:has(.site-frame[data-spw-attention="focused"])) .site-frame[data-spw-attention="dimmed"]:hover {
+  opacity: 0.72;
+  filter: grayscale(0.2) contrast(0.95);
+  pointer-events: auto;
+}
+
+/* 2. Arrival Pulse (Genetic Animation) */
+:where(.site-frame[data-state~="arrival"]) {
+  animation: spw-arrival-flare 420ms var(--ease-reveal) both;
+}
+
+@keyframes spw-arrival-flare {
+  0% {
+    box-shadow: 0 0 0 0px var(--active-op-color);
+    transform: scale(1);
   }
 
-  /* 2. Arrival Pulse (Genetic Animation) */
-  :where(.site-frame[data-state~="arrival"]) {
-    animation: spw-arrival-flare 420ms var(--ease-reveal) both;
+  40% {
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--active-op-color) 20%, transparent);
+    transform: scale(1.002);
   }
 
-  @keyframes spw-arrival-flare {
-    0% {
-      box-shadow: 0 0 0 0px var(--active-op-color);
-      transform: scale(1);
-    }
-    40% {
-      box-shadow: 0 0 0 4px color-mix(in srgb, var(--active-op-color) 20%, transparent);
-      transform: scale(1.002);
-    }
-    100% {
-      box-shadow: 0 0 0 0px transparent;
-      transform: scale(1);
-    }
+  100% {
+    box-shadow: 0 0 0 0px transparent;
+    transform: scale(1);
   }
+}
 
-  /* 3. Relational Resonance (Cross-Component Glow) */
-  :where(.site-frame[data-state~="active"]:has([data-state~="resolved"])) {
-    --active-op-color: var(--teal);
-    border-color: color-mix(in srgb, var(--active-op-color) 42%, transparent);
-    box-shadow: var(--glow-soft);
-  }
+/* 3. Relational Resonance (Cross-Component Glow) */
+:where(.site-frame[data-state~="active"]:has([data-state~="resolved"])) {
+  --active-op-color: var(--teal);
+  border-color: color-mix(in srgb, var(--active-op-color) 42%, transparent);
+  box-shadow: var(--glow-soft);
+}
 
-  /* 4. Global State Proxies */
-  :where(html[data-state~="preview"]) {
-    & .budget-tier-card { opacity: 1 !important; }
-    & .bhm-node-label { opacity: 1 !important; }
-    & .svc-cta { hidden: false !important; display: flex !important; }
-  }
+/* 4. Global State Proxies */
+:where(html[data-state~="preview"]) .budget-tier-card {
+  opacity: 1 !important;
+}
+
+:where(html[data-state~="preview"]) .bhm-node-label {
+  opacity: 1 !important;
+}
+
+:where(html[data-state~="preview"]) .svc-cta {
+  display: flex !important;
 }
 }
 

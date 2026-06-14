@@ -104,6 +104,8 @@ const QUERY_SETTING_ALIASES = Object.freeze({
   'high-contrast': 'highContrast',
   density: 'semanticDensity',
   'semantic-density': 'semanticDensity',
+  explore: 'explorePosture',
+  'explore-posture': 'explorePosture',
   enhancement: 'enhancementLevel',
   'enhancement-level': 'enhancementLevel',
   'cauldron-visibility': 'cauldronCandidateVisibility',
@@ -663,6 +665,9 @@ const deriveArchitecturalModifiers = (settings) => {
  */
 const resolveTuningDiscoverability = (settings = {}) => {
   if (settings.cognitiveHandles === 'on') return 'revealed';
+  if (settings.explorePosture === 'workshop') return 'revealed';
+  if (settings.explorePosture === 'field') return 'ambient';
+  if (settings.explorePosture === 'reading') return 'quiet';
   if (settings.semanticDensity === 'rich') return 'revealed';
   if (settings.semanticDensity === 'normal') return 'ambient';
   return 'quiet';
@@ -723,6 +728,7 @@ const buildDatasetEntries = (normalized, modifiers, deviations, climate) => {
     spwOperatorPresentation: normalized.operatorPresentation,
     spwInfospaceComplexity: normalized.infospaceComplexity,
     spwCognitiveHandles: normalized.cognitiveHandles,
+    spwExplorePosture: normalized.explorePosture,
     spwDimensionalBreadcrumbs: normalized.dimensionalBreadcrumbs,
     spwFractalNesting: normalized.fractalNesting,
     spwMetacognitiveStance: normalized.metacognitiveStance,
@@ -1174,9 +1180,12 @@ export {
   describeSettingValue,
   formatStorageTimestamp,
   getLatestTimestamp,
+  getPresetSettings,
+  getUxRecipe,
   findActivePreset,
   presetIsSubsetOfSettings,
   presetMatchesSettings,
+  describeSettingsPatch,
   normalizeSiteSettings,
   resetSingleSetting,
   sanitizePartialSettings,

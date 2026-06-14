@@ -1,0 +1,43 @@
+/* ==========================================================================
+   embedded-workshop.css
+   --------------------------------------------------------------------------
+   Compact route-embedded tuning frames (exported from home climate-tuning).
+   ========================================================================== */
+
+:where(.spw-embedded-workshop.site-frame) {
+  margin-block: var(--flow-section-gap, clamp(1.4rem, 3vw, 2.6rem));
+  border-color: color-mix(in srgb, var(--active-op-color, #008080) 18%, var(--line, rgba(14, 18, 20, 0.14)) 82%);
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--active-op-color, #008080) 5%, transparent), transparent 52%),
+    var(--surface-strong, rgba(255, 255, 255, 0.94));
+}
+
+:where(.spw-embedded-workshop .vibe-widget-grid--compact) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: 0.65rem;
+}
+
+:where(.spw-embedded-workshop .vibe-widget) {
+  min-width: 0;
+}
+
+:where(.spw-embedded-workshop .vibe-widget-meta) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.34rem;
+}
+
+:where(.spw-embedded-workshop .frame-note) {
+  max-inline-size: 62ch;
+}
+
+@media (max-width: 720px) {
+  :where(.spw-embedded-workshop .vibe-widget-actions) {
+    gap: 0.34rem;
+  }
+
+  :where(.spw-embedded-workshop .operator-chip) {
+    font-size: 0.72rem;
+  }
+}

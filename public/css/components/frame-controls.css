@@ -1,0 +1,63 @@
+/* ==========================================================================
+   frame-controls.css
+   --------------------------------------------------------------------------
+   Distinguish lens (content filter) from form (structural grammar) controls.
+   ========================================================================== */
+
+/* Lens axis — mode-switch filters panels without changing frame grammar */
+:where(.frame-topline .mode-switch, .frame-heading .mode-switch) {
+  --spw-control-axis: lens;
+  --spw-control-axis-color: var(--op-probe-color, #4a2180);
+  padding: 0.14rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--spw-control-axis-color) 22%, var(--line, rgba(14, 18, 20, 0.14)) 78%);
+  background: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.92)) 90%, var(--spw-control-axis-color) 10%);
+}
+
+:where(html[data-spw-tuning-discoverability="ambient"], html[data-spw-tuning-discoverability="revealed"])
+  :where(.frame-topline .mode-switch, .frame-heading .mode-switch)[aria-label]::before {
+  content: "lens";
+  display: block;
+  margin-block-end: 0.12rem;
+  color: color-mix(in srgb, var(--spw-control-axis-color) 62%, var(--ink-soft) 38%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.52rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+/* Form axis — brace/block/angle grammar swaps on the frame container */
+:where(.site-frame[data-spw-form-options], .frame-card[data-spw-form-options]) {
+  --spw-control-axis: form;
+  --spw-control-axis-color: var(--op-object-color, #a67c00);
+}
+
+:where(
+  html[data-spw-tuning-discoverability="ambient"],
+  html[data-spw-tuning-discoverability="revealed"]
+) :where(.site-frame[data-spw-form-options] > :is(.frame-topline, .frame-heading, header)) {
+  box-shadow: inset 3px 0 0 color-mix(in srgb, var(--spw-control-axis-color) 42%, transparent);
+}
+
+:where(
+  html[data-spw-tuning-discoverability="ambient"],
+  html[data-spw-tuning-discoverability="revealed"]
+) :where(.site-frame[data-spw-form-options] > :is(.frame-topline, .frame-heading, header))::after {
+  content: "form";
+  display: inline-flex;
+  align-items: center;
+  margin-inline-start: auto;
+  padding: 0.1rem 0.38rem;
+  border-radius: 999px;
+  border: 1px dashed color-mix(in srgb, var(--spw-control-axis-color) 28%, transparent);
+  color: color-mix(in srgb, var(--spw-control-axis-color) 68%, var(--ink-soft) 32%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.52rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+}

@@ -33,6 +33,8 @@
 @import url('/public/css/components/gesture-anatomy.css') layer(components);
 @import url('/public/css/components/floating-chrome.css') layer(components);
 @import url('/public/css/components/runtime-states.css') layer(components);
+@import url('/public/css/components/embedded-workshop.css') layer(components);
+@import url('/public/css/components/frame-controls.css') layer(components);
 
 @import url('/public/css/systems/substrate-ecology.css') layer(systems);
 @import url('/public/css/systems/surfaces/base.css') layer(systems);
@@ -50,6 +52,7 @@
 @import url('/public/css/handles/operators.css') layer(handles);
 @import url('/public/css/handles/phase-controls.css') layer(handles);
 @import url('/public/css/handles/logo.css') layer(handles);
+@import url('/public/css/handles/page-region-rail.css') layer(handles);
 
 /* Effects project semantic state; they must stay additive. */
 @import url('/public/css/effects/material.css') layer(effects);
