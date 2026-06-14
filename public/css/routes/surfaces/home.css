@@ -909,6 +909,78 @@ html[data-spw-color-mode="dark"] body[data-spw-surface="home"] {
   }
 }
 
+
+/* ==========================================================================
+   3b. Reading-quiet inspect overlays (home, non-debug)
+   --------------------------------------------------------------------------
+   Keep shell trace, slot anatomy, and module-visual scaffolding off the public
+   kernel hero unless debug mode or cognitive handles are explicitly on.
+   ========================================================================== */
+
+html:not([data-spw-debug-mode="on"]) body[data-spw-surface="home"] :where(
+  #home-frame [data-spw-slot-label]::before,
+  #home-frame .spw-anatomy-stack-rail
+) {
+  display: none;
+  content: none;
+}
+
+html:not([data-spw-debug-mode="on"]) body[data-spw-surface="home"] #home-frame[data-spw-anatomy-stack="true"] {
+  border-inline-start: 0;
+  padding-inline-start: 0;
+}
+
+html:not([data-spw-debug-mode="on"]) body[data-spw-surface="home"] #home-frame :where(
+  [data-spw-box-model],
+  [data-spw-box-presence="overfull"]
+) {
+  --spw-box-model-rail-opacity: 0;
+  --spw-box-model-rail-width: 0;
+  box-shadow: none;
+  outline: none;
+}
+
+html:not([data-spw-debug-mode="on"]) body[data-spw-surface="home"] #home-frame [data-spw-box-story]::after {
+  display: none;
+  content: none;
+}
+
+html:not([data-spw-debug-mode="on"]) body[data-spw-surface="home"] :where(
+  .spw-header-trace:has(.spw-spell-path[data-spw-breadcrumb-state="closed"])
+) {
+  min-block-size: 0;
+  opacity: 0.82;
+}
+
+html:not([data-spw-debug-mode="on"]) body[data-spw-surface="home"] :where(
+  .spw-spell-path[data-spw-breadcrumb-state="closed"] .spw-spell-path__header
+) {
+  padding-block: 0.04rem;
+}
+
+html:not([data-spw-debug-mode="on"]) body[data-spw-surface="home"] :where(
+  .spw-spell-path[data-spw-breadcrumb-state="closed"] .spw-spell-path__summary,
+  .spw-spell-path[data-spw-breadcrumb-state="closed"] .spw-spell-sorter-chip
+) {
+  font-size: 0.58rem;
+  opacity: 0.78;
+}
+
+html:not([data-spw-debug-mode="on"]) body[data-spw-surface="home"] :where(
+  .spw-spell-path[data-spw-breadcrumb-state="closed"] .spw-spell-path__hint
+) {
+  display: none;
+}
+
+html[data-spw-debug-mode="on"] body[data-spw-surface="home"] #home-frame :where(
+  [data-spw-slot="header"],
+  [data-spw-slot="body"],
+  [data-spw-slot="figure"],
+  [data-spw-slot="meta"]
+) {
+  scroll-margin-top: calc(var(--header-height, 4rem) + 0.5rem);
+}
+
 :where(body[data-spw-surface="home"] .mode-switch .frame-sigil[aria-pressed="true"]) {
   border-color: color-mix(in srgb, var(--home-accent-primary) 40%, transparent);
   background: color-mix(in srgb, var(--home-accent-primary) 12%, var(--home-surface-bg-strong));

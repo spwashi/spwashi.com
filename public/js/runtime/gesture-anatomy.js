@@ -42,10 +42,15 @@ const SLOT_HOST_SELECTOR = '.site-frame, .frame-card, .vibe-widget';
 
 function shouldAnnotate() {
   const settings = getSiteSettings();
+  const debugOn = document.documentElement.dataset.spwDebugMode === 'on';
+  const onHome = document.body?.dataset.spwSurface === 'home';
+  if (onHome && !debugOn && settings.cognitiveHandles !== 'on') return false;
+
   const mode = document.documentElement.dataset.spwTuningDiscoverability
     || resolveTuningDiscoverability(settings);
   const stance = settings.metacognitiveStance || 'witness';
   if (settings.cognitiveHandles === 'on') return true;
+  if (debugOn) return true;
   if (mode !== 'quiet') return true;
   if (stance === 'composer' || stance === 'overflow') return true;
   if (stance === 'integrator' && settings.developmentalIndicators === 'on') return true;

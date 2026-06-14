@@ -1294,7 +1294,11 @@ function resolveSpellPathExpandedDefault() {
   const isHome = window.location.pathname === '/' || window.location.pathname === '';
 
   if (isHome) {
-    return hasActiveLensFrame || isHomeLensFrameHashTarget();
+    const debugOn = document.documentElement.dataset.spwDebugMode === 'on';
+    if (debugOn) {
+      return hasActiveLensFrame || isHomeLensFrameHashTarget();
+    }
+    return runtime.pathExpandedManual || isHomeLensFrameHashTarget();
   }
 
   const hasActiveFrame = hasActiveLensFrame || hasHashFrame;
