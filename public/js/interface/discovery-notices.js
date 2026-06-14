@@ -6,6 +6,7 @@ import {
   getWeekIndex,
 } from '/public/js/kernel/feed-utils.js';
 import { annotateFloatingChromeElement } from '/public/js/kernel/dom-contracts.js';
+import { isReadingQuietChrome } from '/public/js/runtime/runtime-helpers.js';
 
 const FEED_URL = '/public/data/promo-wonder-cycle.json';
 const STORAGE_KEY = 'spw-discovery-notice-dismissals';
@@ -154,6 +155,23 @@ function getPromotionDetails(source = {}) {
 function normalizePresentation(value = 'toast') {
   const presentation = cleanText(value || 'toast').toLowerCase();
   return PRESENTATIONS.has(presentation) ? presentation : 'toast';
+}
+
+function readReadingQuietChrome() {
+  try {
+    if (typeof document === 'undefined') return false;
+    return isReadingQuietChrome();
+  } catch {
+    return false;
+  }
+}
+
+export function resolveNoticePresentation(presentation, options = {}) {
+  const normalized = normalizePresentation(presentation);
+  if (normalized !== 'modal') return normalized;
+  if (options.forceModal === true) return normalized;
+  const readingQuiet = options.readingQuiet ?? readReadingQuietChrome();
+  return readingQuiet ? 'toast' : normalized;
 }
 
 export function selectScheduleItems(feed, date = new Date()) {
@@ -513,7 +531,7 @@ export function normalizeNotice(raw, cadence, scheduleKey, index, locale) {
     href,
     cta: cleanText(source.cta || 'Open'),
     why: cleanText(source.why || promotion.proof || ''),
-    presentation: promotion.presentation,
+    presentation: resolveNoticePresentation(promotion.presentation),
     kind: promotion.kind,
     audience: promotion.audience,
     offer: promotion.offer,

@@ -8,6 +8,7 @@ import {
   getDateKeys,
   getRuntimeRewardPolicy,
   normalizeNotice,
+  resolveNoticePresentation,
   selectScheduleItems,
   slugify,
   shouldSuppressNotice,
@@ -168,6 +169,56 @@ test('discovery notices suppress duplicate visible routes', () => {
   assert.equal(visible.length, 1);
   assert.equal(visible[0].href, '/now/');
   assert.equal(sameRoute.visible.length, 0);
+});
+
+test('discovery notices downgrade modal promos on reading-quiet chrome', () => {
+  assert.equal(resolveNoticePresentation('modal', { readingQuiet: true }), 'toast');
+  assert.equal(resolveNoticePresentation('modal', { readingQuiet: false }), 'modal');
+  assert.equal(resolveNoticePresentation('modal', { forceModal: true, readingQuiet: true }), 'modal');
+  assert.equal(resolveNoticePresentation('popup', { readingQuiet: true }), 'popup');
+
+  const normalized = normalizeNotice(
+    {
+      title: 'Open the culinary route into play',
+      summary: 'Recipes now carry cuisine taxonomy and software metaphors.',
+      href: '/recipes/',
+      cta: 'Open recipes',
+      presentation: 'modal',
+      promotion: { presentation: 'modal' },
+    },
+    'daily',
+    '2026-06-14',
+    0,
+    'en',
+  );
+
+  document.documentElement.dataset.spwDebugMode = 'off';
+  document.documentElement.dataset.spwCognitiveHandles = 'off';
+  document.body.dataset.spwSurface = 'topics';
+
+  assert.ok(normalized);
+  assert.equal(normalized.presentation, 'toast');
+
+  document.documentElement.dataset.spwDebugMode = 'on';
+  const debugNotice = normalizeNotice(
+    {
+      title: 'Open the culinary route into play',
+      summary: 'Recipes now carry cuisine taxonomy and software metaphors.',
+      href: '/recipes/',
+      cta: 'Open recipes',
+      presentation: 'modal',
+      promotion: { presentation: 'modal' },
+    },
+    'daily',
+    '2026-06-14',
+    0,
+    'en',
+  );
+  assert.equal(debugNotice.presentation, 'modal');
+
+  delete document.documentElement.dataset.spwDebugMode;
+  delete document.documentElement.dataset.spwCognitiveHandles;
+  delete document.body.dataset.spwSurface;
 });
 
 test('discovery notices accept image reward popup presentation', () => {
