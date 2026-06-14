@@ -5,56 +5,60 @@
    Implements Attentional Cueing and Relational Resonance.
    ========================================================================== */
 
-@layer ornament {
-  /* 1. Attentional Cueing (Environmental Dimming) */
-  :where(main:has(.site-frame[data-spw-attention="focused"])) {
-    & .site-frame[data-spw-attention="dimmed"] {
-      opacity: 0.45;
-      filter: grayscale(0.4) contrast(0.9);
-      transition: 
-        opacity var(--duration-deliberate) var(--ease-settle),
-        filter var(--duration-deliberate) var(--ease-settle);
-      pointer-events: none; /* Soft lockout to encourage focus */
+/* 1. Attentional Cueing (Environmental Dimming) */
+:where(main:has(.site-frame[data-spw-attention="focused"])) .site-frame[data-spw-attention="dimmed"] {
+  opacity: 0.45;
+  filter: grayscale(0.4) contrast(0.9);
+  transition:
+    opacity var(--duration-deliberate) var(--ease-settle),
+    filter var(--duration-deliberate) var(--ease-settle);
+  pointer-events: none; /* Soft lockout to encourage focus */
+}
 
-      &:hover {
-        opacity: 0.72;
-        filter: grayscale(0.2) contrast(0.95);
-        pointer-events: auto;
-      }
-    }
+:where(main:has(.site-frame[data-spw-attention="focused"])) .site-frame[data-spw-attention="dimmed"]:hover {
+  opacity: 0.72;
+  filter: grayscale(0.2) contrast(0.95);
+  pointer-events: auto;
+}
+
+/* 2. Arrival Pulse (Genetic Animation) */
+:where(.site-frame[data-state~="arrival"]) {
+  animation: spw-arrival-flare 420ms var(--ease-reveal) both;
+}
+
+@keyframes spw-arrival-flare {
+  0% {
+    box-shadow: 0 0 0 0px var(--active-op-color);
+    transform: scale(1);
   }
 
-  /* 2. Arrival Pulse (Genetic Animation) */
-  :where(.site-frame[data-state~="arrival"]) {
-    animation: spw-arrival-flare 420ms var(--ease-reveal) both;
+  40% {
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--active-op-color) 20%, transparent);
+    transform: scale(1.002);
   }
 
-  @keyframes spw-arrival-flare {
-    0% {
-      box-shadow: 0 0 0 0px var(--active-op-color);
-      transform: scale(1);
-    }
-    40% {
-      box-shadow: 0 0 0 4px color-mix(in srgb, var(--active-op-color) 20%, transparent);
-      transform: scale(1.002);
-    }
-    100% {
-      box-shadow: 0 0 0 0px transparent;
-      transform: scale(1);
-    }
+  100% {
+    box-shadow: 0 0 0 0px transparent;
+    transform: scale(1);
   }
+}
 
-  /* 3. Relational Resonance (Cross-Component Glow) */
-  :where(.site-frame[data-state~="active"]:has([data-state~="resolved"])) {
-    --active-op-color: var(--teal);
-    border-color: color-mix(in srgb, var(--active-op-color) 42%, transparent);
-    box-shadow: var(--glow-soft);
-  }
+/* 3. Relational Resonance (Cross-Component Glow) */
+:where(.site-frame[data-state~="active"]:has([data-state~="resolved"])) {
+  --active-op-color: var(--teal);
+  border-color: color-mix(in srgb, var(--active-op-color) 42%, transparent);
+  box-shadow: var(--glow-soft);
+}
 
-  /* 4. Global State Proxies */
-  :where(html[data-state~="preview"]) {
-    & .budget-tier-card { opacity: 1 !important; }
-    & .bhm-node-label { opacity: 1 !important; }
-    & .svc-cta { hidden: false !important; display: flex !important; }
-  }
+/* 4. Global State Proxies */
+:where(html[data-state~="preview"]) .budget-tier-card {
+  opacity: 1 !important;
+}
+
+:where(html[data-state~="preview"]) .bhm-node-label {
+  opacity: 1 !important;
+}
+
+:where(html[data-state~="preview"]) .svc-cta {
+  display: flex !important;
 }

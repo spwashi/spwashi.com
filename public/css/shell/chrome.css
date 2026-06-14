@@ -1428,7 +1428,7 @@ body > header:has(.spw-spell-path) .spw-attention-posture-pill {
   border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 14%, transparent);
 }
 
-:where(.site-header nav a, body > header nav a)[data-spw-nav-destination="settle"][aria-current="page"]) {
+:where(.site-header nav a, body > header nav a)[data-spw-nav-destination="settle"][aria-current="page"] {
   --spw-shell-link-current-border-mix: 22%;
 }
 

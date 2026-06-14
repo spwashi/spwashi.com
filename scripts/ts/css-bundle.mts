@@ -25,8 +25,12 @@ type FlattenOptions = {
   includeExternalImports?: boolean;
 };
 
+function stripSourceMapComments(source: string): string {
+  return source.replace(/\/\*#\s*sourceMappingURL=[^*]*\*\/\s*/gu, '');
+}
+
 function normalizeCssBody(source: string): string {
-  return source
+  return stripSourceMapComments(source)
     .split('\n')
     .map((line) => line.replace(/\s+$/u, ''))
     .join('\n')

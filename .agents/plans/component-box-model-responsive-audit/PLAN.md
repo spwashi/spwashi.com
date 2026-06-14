@@ -132,3 +132,42 @@ No new code changes were required in component CSS for this extended audit — t
 - (From palette pass) Consider a small design-catalog or .spw note enumerating the primary combinatoric axes if usage of motif+measure+climate trees grows.
 
 All changes are minimal, reversible, and keep the layered CSS architecture and hand-authored HTML intact. The extended audit confirms the system supports evolutionary semantic enhancement through attribute combinations rather than proliferating component variants.
+
+## Development Increment 2026-06-14 - Build-Verified Containment Contracts
+
+This increment uses a Vite failure as a forcing function, but the durable work is broader: make authored CSS, generated CSS bundles, route HTML, and Chrome layout checks agree on a small set of containment contracts.
+
+**Contract advanced: authored CSS must be bundle-safe.**
+- Source CSS files included by `scripts/css-build.mjs` should not wrap themselves in a duplicate `@layer` when the bundler owns layer projection.
+- Avoid nested CSS syntax in plain `public/css/**` files unless the build source explicitly supports it. The generated `public/css/bundles/core.css` is the proof surface; if generated CSS changes shape unexpectedly, inspect the source file that feeds that bundle before patching the bundle directly.
+- Parse repair from this pass: `public/css/ornament/relational-state.css` was flattened into plain selectors, and `public/css/shell/chrome.css` had the malformed `settle` selector corrected.
+
+**Contract advanced: route prose inside code tags must remain HTML-safe.**
+- Mathematical and comparison notation in route HTML should escape literal `<` as `&lt;`, even inside `<code>`, because Vite's HTML transform still parses the containing document.
+- Parse repair from this pass: the numerical-methods stability threshold now keeps the math readable without confusing the HTML parser.
+
+**Contract advanced: split heroes should not inherit accidental container-query feedback loops.**
+- `.site-hero--split-figure` now opts out of container-query participation with `container-type: normal` so the parent split grid and child body/figure tracks do not recursively size each other into a collapsed track.
+- Future hero variants should choose one sizing authority: route wrapper, shared frame contract, or child media ratio. Do not let all three drive the same grid at once.
+- Chrome proof from this pass: `/topics/math/numerical-methods/` moved from a collapsed split-figure hero to a stable body/figure pairing with no viewport rect overflow.
+
+**Contract advanced: semantic grid families must join the shared grid helpers before route-local repair.**
+- `.spw-principle-grid` is now part of the shared grid contract rather than a route-specific exception.
+- Grids placed inside `.frame-actions` now claim a full flex row, which protects action-footer grids from shrinking to unusable columns.
+- Shared `.frame-grid` minimums were raised so common directory/card grids prefer fewer, more readable columns on wide screens instead of over-packing four narrow cards.
+
+**Contract advanced: operator metadata does not always mean inline handle layout.**
+- `a.frame-card[data-spw-operator]` and `.frame-card > a:first-child[data-spw-operator]` now have a handles-layer exemption: they keep card anatomy while still carrying operator metadata.
+- This prevents the broad handle primitive from compressing card-body links into inline-flex pills. Future operator-bearing structural elements should be evaluated the same way: if the element is a container, preserve its component layout and style the inner handle instead.
+
+**Forward development opened by this pass:**
+- Audit one more card-heavy route (`/design/`, `/about/`, or `/play/rpg-wednesday/`) for the same distinction: inline operator handle vs structural operator-bearing component.
+- Promote any additional semantic grids into the shared helper list only when they appear on more than one route or sit inside shared frame anatomy.
+- Add a lightweight generated-output workflow note later if repeated `check-generated` failures confuse review: the command is working as designed when generated files are modified but unstaged.
+- Keep route-local CSS as the last resort for packing fixes; prefer shared card/grid/hero contracts when the bug appears across pages.
+
+**Validation state for this increment:**
+- `npm run build:vite` exits 0. Existing prepaint script and dynamic-import warnings remain non-fatal and are outside this containment increment.
+- Chrome checks on `/topics/`, `/topics/software/`, and `/topics/math/numerical-methods/` show no viewport rect overflow after the patch. Remaining topic-card scroll-width flags come from intentional media bleed inside illustrated cards.
+- `npm run check:local` reaches `[check] passed`; its final `check-generated` step exits 1 because `public/css/bundles/core.css` is a modified generated output in the unstaged working tree.
+- `git diff --check` passes.

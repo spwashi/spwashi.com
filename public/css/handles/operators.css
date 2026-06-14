@@ -1091,12 +1091,26 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
   opacity: 0.92;
 }
 
-/* Rich route choices carry operator metadata, but their contents are card
-   anatomy rather than inline handles. Preserve the component grid contract. */
-:where(.spw-route-bridge__links a[data-spw-operator]) {
+/* Rich route choices and card-body links carry operator metadata, but their
+   contents are card anatomy rather than inline handles. Preserve the component
+   grid contract instead of letting the handle primitive compress them. */
+:where(.spw-route-bridge__links a[data-spw-operator], a.frame-card[data-spw-operator], .frame-card > a:first-child[data-spw-operator]) {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   align-items: start;
+  align-content: start;
   justify-content: stretch;
+  justify-items: start;
+  gap: var(--card-rhythm, var(--component-gap-tight, 0.65rem));
+  inline-size: 100%;
+  max-inline-size: 100%;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  color: inherit;
+  overflow-wrap: anywhere;
   text-align: start;
   white-space: normal;
 }

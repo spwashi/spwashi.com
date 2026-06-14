@@ -406,6 +406,7 @@
   grid-template-columns: 1fr;
   align-items: start;
   align-content: start;
+  container-type: normal;
 }
 
 :where(.site-hero--split-figure) > [data-spw-slot="body"] {

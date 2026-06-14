@@ -982,6 +982,23 @@
     grid-template-columns: 1fr;
   }
 
+  :where(body[data-spw-surface="rpg-wednesday"] .rpg-promotion-ladder--static) {
+    flex-wrap: wrap;
+    overflow-x: visible;
+    overscroll-behavior-x: auto;
+    scroll-snap-type: none;
+  }
+
+  :where(body[data-spw-surface="rpg-wednesday"] .rpg-promotion-ladder--static .rpg-promotion-ladder__step) {
+    flex: 1 1 min(100%, 9.5rem);
+    min-inline-size: 0;
+    scroll-snap-align: none;
+  }
+
+  :where(body[data-spw-surface="rpg-wednesday"] .rpg-promotion-ladder--static .rpg-promotion-ladder__step::after) {
+    content: none;
+  }
+
 }
 
 @media (max-width: 560px) {

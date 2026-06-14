@@ -1015,7 +1015,7 @@ export const initRpgWednesday = () => {
     });
     const importLabel = createElement('label', {
         className: 'operator-chip rpg-gameplay-import-label',
-        html: '~ import'
+        text: '~ import'
     }, [importInput]);
     const clearButton = createElement('button', {
         className: 'operator-chip',

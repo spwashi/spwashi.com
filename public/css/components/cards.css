@@ -40,12 +40,15 @@
   gap: var(--component-gap-tight);
 
   /* Box */
+  inline-size: 100%;
+  max-inline-size: 100%;
   min-width: 0;
 
   /* Typography */
   color: inherit;
   font-weight: inherit;
   text-decoration: none;
+  overflow-wrap: anywhere;
 }
 
 :where(.frame-card, .frame-card > a:first-child) {

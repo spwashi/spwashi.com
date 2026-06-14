@@ -34,16 +34,21 @@ import {
   getLatestTimestamp,
   getAuthorWorkflowDefinition,
   getDevelopmentalClimateDefinition,
+  getPresetSettings,
   getSiteSettingDeviations as listDeviations,
   getSiteSettings,
+  getUxRecipe,
   humanizeSettingName,
   isKnownSetting,
   manager,
   normalizeSiteSettings,
   presetIsSubsetOfSettings,
   presetMatchesSettings,
+  describeSettingsPatch,
   resetSiteSettings,
+  resetSingleSetting,
   saveSiteSettings,
+  validatePartialSettings,
   validateSetting,
 } from './site-settings-engine.js';
 import {
@@ -1079,7 +1084,7 @@ const syncSettingsCategoryTarget = () => {
   category.dataset.settingsTargeted = 'true';
 };
 
-const initSettingsCategoryRouting = () => {
+const initSettingsCategoryRouting = (settingsManager = manager) => {
   if (settingsManager._settingsCategoryRouting) return settingsManager._settingsCategoryRouting;
 
   const handleHashChange = () => window.requestAnimationFrame(() => syncSettingsCategoryTarget());
@@ -1178,8 +1183,8 @@ const bindSettingsQueryLab = (root = document) => {
 };
 
 export const initSiteSettingsPage = () => {
-  const bindings = initSiteSettingsBindings();
-  const routing = initSettingsCategoryRouting();
+  const bindings = initSiteSettingsBindings(manager);
+  const routing = initSettingsCategoryRouting(manager);
   const queryLab = bindSettingsQueryLab();
 
   return {

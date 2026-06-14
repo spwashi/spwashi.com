@@ -1273,7 +1273,7 @@ const resolveFeatureInitializer = (module, exportName) => {
 };
 
 const loadFeature = async (specifier, exportName, options = {}) => {
-  const module = await import(specifier);
+  const module = await import(/* @vite-ignore */ specifier);
   const resolved = resolveFeatureInitializer(module, exportName);
 
   if (!resolved) return null;

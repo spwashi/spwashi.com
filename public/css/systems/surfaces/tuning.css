@@ -19,6 +19,8 @@
   position: relative;
   display: grid;
   gap: 0.72rem;
+  min-inline-size: 0;
+  max-inline-size: 100%;
   min-height: 100%;
   padding: 0.95rem 1rem 1rem;
   border: 1px solid color-mix(in srgb, var(--spw-palette-probe-1, var(--active-op-color, #008080)) 18%, var(--spw-shell-line));
@@ -52,6 +54,8 @@
 }
 
 :where(.vibe-widget > *) {
+  min-inline-size: 0;
+  max-inline-size: 100%;
   position: relative;
   z-index: 1;
 }
@@ -86,11 +90,27 @@
   max-inline-size: 70ch;
 }
 
+:where(
+  .vibe-widget-kicker,
+  .vibe-widget-title,
+  .vibe-widget-copy,
+  .palette-probe-kicker,
+  .palette-probe-title,
+  .palette-probe-copy
+) {
+  overflow-wrap: anywhere;
+}
+
 :where(:is(.vibe-widget, .palette-probe, .wonder-memory)-actions, .palette-probe-paths) {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
   align-items: stretch;
+}
+
+:where(:is(.vibe-widget, .palette-probe, .wonder-memory)-actions > *, .vibe-widget-meta > *, .palette-probe-paths > *) {
+  max-inline-size: 100%;
+  min-inline-size: 0;
 }
 
 :where(:is(.vibe-widget, .wonder-memory, .palette-probe)-actions :is(.operator-chip, .spec-pill)[data-site-setting-active="true"],
