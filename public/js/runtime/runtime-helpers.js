@@ -20,6 +20,8 @@ export const SPW_RUNTIME_HELPERS_CONTRACT = Object.freeze({
   mountWhenValues: Object.freeze([...MOUNT_WHEN_VALUES]),
   portableUse:
     'Use this module when a page shell needs to read runtime policy, normalize mount handles, or share registry helpers without importing the whole bootstrap.',
+  featureGating:
+    'Module defs may declare features (string or string[]) that must be present on body[data-spw-features] before scheduling.',
 });
 
 export function safeQuery(selector, root = document) {
@@ -96,6 +98,33 @@ export function parseFeatureList(value) {
       .map((item) => item.trim())
       .filter(Boolean)
   );
+}
+
+export function normalizeFeatureRequirements(features) {
+  if (!features) return [];
+  if (typeof features === 'string') {
+    const token = normalizeRuntimeToken(features);
+    return token ? [token] : [];
+  }
+  if (Array.isArray(features)) {
+    return features.map((item) => normalizeRuntimeToken(item)).filter(Boolean);
+  }
+  return [];
+}
+
+/**
+ * Returns true when a module has no feature gate or every required feature
+ * is present in the active page feature set (body[data-spw-features]).
+ */
+export function matchesFeatures(def, activeFeatures) {
+  const required = normalizeFeatureRequirements(def?.features);
+  if (!required.length) return true;
+
+  const active = activeFeatures instanceof Set
+    ? activeFeatures
+    : parseFeatureList(activeFeatures);
+
+  return required.every((feature) => active.has(feature));
 }
 
 export function normalizeRuntimeToken(value = '') {

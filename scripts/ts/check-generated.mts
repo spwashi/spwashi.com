@@ -2,6 +2,10 @@ import { spawnSync } from 'node:child_process';
 import process from 'node:process';
 
 import { collectCssBuildPlan } from './css-build.mjs';
+import {
+  BEHAVIOR_SCOPE_MODULE_HREF,
+  listBundleTargets,
+} from './css-manifest.mjs';
 
 type GeneratedGroup = {
   label: string;
@@ -33,9 +37,15 @@ function collectChangedFiles(args: string[]): string[] {
 }
 
 function collectCssGeneratedPaths(cssPlan: Awaited<ReturnType<typeof collectCssBuildPlan>>): string[] {
-  return [...new Set(cssPlan.flatMap((entry) => (
-    [entry.output, entry.mapOutput].filter((value): value is string => Boolean(value))
-  )))].sort();
+  const bundleOutputs = listBundleTargets().map((target) => target.href.replace(/^\/+/, ''));
+  const runtimeScopeOutput = BEHAVIOR_SCOPE_MODULE_HREF.replace(/^\/+/, '');
+  return [...new Set([
+    ...cssPlan.flatMap((entry) => (
+      [entry.output, entry.mapOutput].filter((value): value is string => Boolean(value))
+    )),
+    ...bundleOutputs,
+    runtimeScopeOutput,
+  ])].sort();
 }
 
 export async function collectGeneratedGroups(): Promise<GeneratedGroup[]> {

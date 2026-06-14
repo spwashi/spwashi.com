@@ -283,6 +283,17 @@ html[data-spw-color-mode="dark"] body[data-spw-surface="home"] {
   text-wrap: balance;
 }
 
+:where(#home-frame .home-tagline) {
+  max-inline-size: 18ch;
+  margin: 0;
+  color: color-mix(in srgb, var(--home-accent-ink) 88%, var(--ink-soft, rgba(27, 31, 35, 0.68)) 12%);
+  font-size: clamp(1.1rem, 0.95rem + 0.8vw, 1.55rem);
+  font-weight: 500;
+  line-height: 1.22;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
 :where(#home-frame .page-lede) {
   max-inline-size: var(--home-measure);
   margin: 0;
@@ -410,7 +421,7 @@ html[data-spw-color-mode="dark"] body[data-spw-surface="home"] {
   :where(
     #home-frame .page-kicker,
     #home-frame h1,
-    #home-frame .home-hero-copy > h2,
+    #home-frame .home-hero-copy > .home-tagline,
     #home-frame #home-frame-note,
     #home-frame .home-hero-note,
     #home-frame .spw-playable-hook,

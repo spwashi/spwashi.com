@@ -45,6 +45,13 @@ import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import {
+  applyScopedStylesheets,
+  parseStylesheetMode,
+  renderStylesheetLinks,
+  resolveRouteStylesheets,
+} from './typed/css-scopes.mjs';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const REPO_ROOT = path.resolve(__dirname, '..');
@@ -445,8 +452,17 @@ function renderSiteHead(vars) {
   const analyticsScript = renderAnalyticsScript(vars);
   const includePrepaint = !isOff(firstValue(vars.prepaint, vars.head_prepaint));
   const includeSiteScript = !isOff(firstValue(vars.site_script, vars.head_site_script));
+  const stylesheetMode = parseStylesheetMode(firstValue(vars.stylesheet_mode, vars.site_stylesheet_mode, 'full'));
   const stylesheetHref = firstValue(vars.stylesheet, vars.site_stylesheet, '/public/css/style.css');
   const siteScriptSrc = firstValue(vars.site_script_src, vars.site_runtime, '/public/js/site.js');
+  const scopedStylesheets = stylesheetMode === 'scoped'
+    ? resolveRouteStylesheets({
+      surface: firstValue(vars.surface, vars.spw_surface),
+      features: splitList(firstValue(vars.features, vars.spw_features)),
+      extraStyles: splitList(vars.extra_styles),
+      mode: 'scoped',
+    })
+    : null;
 
   return [
     `    <title>${htmlEscape(title)}</title>`,
@@ -467,7 +483,9 @@ function renderSiteHead(vars) {
     '    <link href="/public/images/apple-touch-icon.png" rel="apple-touch-icon" />',
     '    <link href="/manifest.webmanifest" rel="manifest" />',
     includePrepaint ? renderSettingsPreflightScript() : '',
-    `    <link href="${attrEscape(stylesheetHref)}" rel="stylesheet" />`,
+    scopedStylesheets
+      ? renderStylesheetLinks(scopedStylesheets, '    ')
+      : `    <link href="${attrEscape(stylesheetHref)}" rel="stylesheet" />`,
     extraStyles,
     '',
     analyticsScript,
@@ -749,7 +767,8 @@ function enhanceHtmlMetadata(source, warnings) {
 export async function renderTemplate(source, { sourceLabel = '<string>' } = {}) {
   const warnings = [];
   if (!shouldProcess(source)) {
-    return { output: enhanceHtmlMetadata(injectSettingsPreflight(source), warnings), vars: {}, warnings };
+    const output = enhanceHtmlMetadata(applyScopedStylesheets(injectSettingsPreflight(source)), warnings);
+    return { output, vars: {}, warnings };
   }
   const { vars, rest } = extractPageVars(source);
   const expanded = await expandIncludes(rest, vars, 0, new Set(), warnings);
@@ -759,7 +778,7 @@ export async function renderTemplate(source, { sourceLabel = '<string>' } = {}) 
   const withPreflight = isOff(firstValue(vars.prepaint, vars.head_prepaint))
     ? substituted
     : injectSettingsPreflight(substituted);
-  const output = enhanceHtmlMetadata(withPreflight, warnings);
+  const output = enhanceHtmlMetadata(applyScopedStylesheets(withPreflight), warnings);
   if (warnings.length) {
     for (const w of warnings) {
       console.warn(`[template] ${sourceLabel}: ${w}`);

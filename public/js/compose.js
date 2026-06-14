@@ -99,6 +99,8 @@ export {
   normalizeMountHandle,
   onIdle,
   once,
+  matchesFeatures,
+  normalizeFeatureRequirements,
   parseFeatureList,
   readDelimitedSet,
   readModuleTimingMap,
@@ -225,6 +227,12 @@ export {
   SPW_MODULE_LOADER_CONTRACT,
   createModuleLoader,
 } from './runtime/module-loader.js';
+
+export {
+  BEHAVIOR_SCOPE_BUNDLES,
+  BEHAVIOR_SCOPE_KEYS,
+  SPW_BEHAVIOR_SCOPES_CONTRACT,
+} from './runtime/behavior-scopes.js';
 
 export {
   GESTURE_SPELL_SEEDS,

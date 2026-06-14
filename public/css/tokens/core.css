@@ -832,6 +832,10 @@
   --spw-page-arrival-duration: 280ms;
   --spw-page-return-duration: 180ms;
   --spw-region-profile-refresh-duration: 220ms;
+  --spw-region-profile-intensity: 1;
+  --spw-layout-cascade-hold: 0;
+  --spw-layout-shift-guard: 1px;
+  --spw-region-outline-reserve: 0px;
   --spw-component-arrival-transition: 140ms var(--ease-settle);
   --spw-component-settle-transition: 220ms var(--ease-settle);
 

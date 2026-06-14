@@ -2,8 +2,10 @@ import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
+import { BEHAVIOR_SCOPE_MODULE_HREF, BEHAVIOR_SCOPES, listBehaviorScopeBundles, listBehaviorScopeKeys, } from './css-manifest.mjs';
 import { extractObjectLiterals, extractRuntimeArrayLiteral, } from './site-contracts/helpers.mjs';
 import { toPosixPath } from './shared/build-topology.mjs';
+const BEHAVIOR_SCOPE_KEYS = new Set(Object.keys(BEHAVIOR_SCOPES));
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, '..', '..');
@@ -59,12 +61,48 @@ function parseUpdates(source) {
         return [];
     return [...match[1].matchAll(/(['"`])([^'"`]+)\1/g)].map((item) => item[2]);
 }
+function parseFeatures(source) {
+    const stringMatch = source.match(/features:\s*(['"`])([^'"`]+)\1/);
+    if (stringMatch)
+        return [stringMatch[2]];
+    const arrayMatch = source.match(/features:\s*\[([\s\S]*?)\]/);
+    if (!arrayMatch)
+        return [];
+    return [...arrayMatch[1].matchAll(/(['"`])([^'"`]+)\1/g)].map((item) => item[2]);
+}
+function parseExportedStringArray(source, name) {
+    const pattern = new RegExp(`export\\s+const\\s+${name}\\s*=\\s*Object\\.freeze\\(\\s*\\[([\\s\\S]*?)\\]\\s*\\)`);
+    const match = source.match(pattern);
+    if (!match)
+        return [];
+    return [...match[1].matchAll(/(['"`])([^'"`]+)\1/g)].map((item) => item[2]);
+}
+function parseExportedStringMap(source, name) {
+    const pattern = new RegExp(`export\\s+const\\s+${name}\\s*=\\s*Object\\.freeze\\(\\s*\\{([\\s\\S]*?)\\}\\s*\\)`);
+    const match = source.match(pattern);
+    const entries = {};
+    if (!match)
+        return entries;
+    for (const item of match[1].matchAll(/(['"`])([^'"`]+)\1\s*:\s*(['"`])([^'"`]+)\3/g)) {
+        entries[item[2]] = item[4];
+    }
+    return entries;
+}
+function sameList(left, right) {
+    if (left.length !== right.length)
+        return false;
+    return left.every((item, index) => item === right[index]);
+}
+function sameMap(left, right) {
+    return JSON.stringify(Object.entries(left).sort()) === JSON.stringify(Object.entries(right).sort());
+}
 function parseRuntimeModule(objectLiteral, family, index) {
     return {
         debugOnly: /\bdebugOnly:\s*true\b/.test(objectLiteral),
         describes: parseQuotedProperty(objectLiteral, 'describes'),
         evaluates: parseQuotedProperty(objectLiteral, 'evaluates'),
         family,
+        features: parseFeatures(objectLiteral),
         id: parseQuotedProperty(objectLiteral, 'id') || '',
         importPath: objectLiteral.match(/import\(\s*['"]([^'"]+)['"]\s*\)/)?.[1] || null,
         index,
@@ -172,6 +210,26 @@ async function collectKernelTypedShimIssues() {
     }
     return { errors, shims };
 }
+async function collectBehaviorScopeModuleIssues() {
+    const errors = [];
+    const expectedKeys = listBehaviorScopeKeys();
+    const expectedBundles = listBehaviorScopeBundles();
+    const absolutePath = path.join(ROOT_DIR, BEHAVIOR_SCOPE_MODULE_HREF.replace(/^\/+/, ''));
+    if (!(await pathExists(absolutePath))) {
+        errors.push(`${BEHAVIOR_SCOPE_MODULE_HREF.replace(/^\/+/, '')} is missing; run npm run build:css to regenerate behavior scope exports.`);
+        return { errors, scopes: expectedKeys };
+    }
+    const source = await fs.readFile(absolutePath, 'utf8');
+    const actualKeys = parseExportedStringArray(source, 'BEHAVIOR_SCOPE_KEYS').sort();
+    const actualBundles = parseExportedStringMap(source, 'BEHAVIOR_SCOPE_BUNDLES');
+    if (!sameList(actualKeys, expectedKeys)) {
+        errors.push(`${BEHAVIOR_SCOPE_MODULE_HREF.replace(/^\/+/, '')} BEHAVIOR_SCOPE_KEYS is stale; expected ${expectedKeys.join(', ')}.`);
+    }
+    if (!sameMap(actualBundles, expectedBundles)) {
+        errors.push(`${BEHAVIOR_SCOPE_MODULE_HREF.replace(/^\/+/, '')} BEHAVIOR_SCOPE_BUNDLES is stale; run npm run build:css.`);
+    }
+    return { errors, scopes: actualKeys.length ? actualKeys : expectedKeys };
+}
 function importPathToAbsolute(importPath) {
     return path.resolve(path.dirname(MODULE_CATALOG_PATH), importPath);
 }
@@ -226,8 +284,16 @@ function validateModule(module, errors, warnings, recommendations) {
     else if (!/\bload:\s*async\s*\(\)\s*=>\s*\(\s*\{/.test(module.objectLiteral)) {
         warnings.push(`${label} has no static import() path; resource hints and generated manifests cannot name its file.`);
     }
-    if (module.layer !== 'core' && !module.selectorContract && !module.debugOnly) {
+    if (module.layer !== 'core' && !module.selectorContract && !module.debugOnly && !module.features.length) {
         warnings.push(`${label} is ungated by selector; confirm it is intentionally document-wide.`);
+    }
+    for (const feature of module.features) {
+        if (!BEHAVIOR_SCOPE_KEYS.has(feature)) {
+            errors.push(`${label} features "${feature}" is not a recognized CSS behavior scope (${[...BEHAVIOR_SCOPE_KEYS].join(', ')}).`);
+        }
+    }
+    if (module.features.length && module.selector?.includes('data-spw-features~=')) {
+        recommendations.push(`${label} declares features and encodes data-spw-features in selector; prefer features-only gating.`);
     }
     if (module.layer !== 'core' && !module.describes) {
         recommendations.push(`${label} is missing describes; runtime audits cannot explain its semantic role.`);
@@ -297,7 +363,10 @@ export async function collectRuntimeContractReport() {
     errors.push(...typedImportViolations);
     const kernelTypedShimReport = await collectKernelTypedShimIssues();
     errors.push(...kernelTypedShimReport.errors);
+    const behaviorScopeReport = await collectBehaviorScopeModuleIssues();
+    errors.push(...behaviorScopeReport.errors);
     return {
+        behaviorScopes: behaviorScopeReport.scopes,
         errors,
         kernelTypedShims: kernelTypedShimReport.shims,
         modules,
@@ -311,7 +380,7 @@ export async function collectRuntimeContractReport() {
 }
 export async function main() {
     const report = await collectRuntimeContractReport();
-    console.log(`[runtime] modules=${report.modules.length} ownerDirs=${report.ownerDirectories.length} rootEntrypoints=${report.rootEntrypoints.length} typedOutputs=${report.typedOutputs.length} kernelShims=${report.kernelTypedShims.length}`);
+    console.log(`[runtime] modules=${report.modules.length} ownerDirs=${report.ownerDirectories.length} rootEntrypoints=${report.rootEntrypoints.length} typedOutputs=${report.typedOutputs.length} kernelShims=${report.kernelTypedShims.length} behaviorScopes=${report.behaviorScopes.length}`);
     if (report.warnings.length) {
         console.log(`[runtime] warnings=${report.warnings.length}`);
         for (const warning of report.warnings.slice(0, 12)) {

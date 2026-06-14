@@ -670,6 +670,11 @@
   --spw-box-model-rail-opacity: 0;
   --spw-box-model-rail-width: 0;
   position: relative;
+  box-sizing: border-box;
+  min-width: 0;
+  contain: layout style;
+  outline: var(--spw-layout-shift-guard, 1px) solid transparent;
+  outline-offset: var(--spw-region-outline-reserve, 0px);
 }
 
 :where(html[data-spw-module-visuals="on"] [data-spw-box-model]) {
@@ -932,6 +937,33 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
 
 :where([data-spw-region-genome~="harmony-structured"]) {
   --component-module-rail-end: color-mix(in srgb, var(--op-object-color, var(--component-accent)) 20%, transparent);
+}
+
+/* Region profiler + deferred enrichment: reserve outline budget before harmony rails activate. */
+:where([data-spw-region-state]) {
+  contain: layout style;
+  min-width: 0;
+  outline: var(--spw-layout-shift-guard, 1px) solid transparent;
+  outline-offset: var(--spw-region-outline-reserve, 0px);
+}
+
+:where([data-spw-region-state="queued"], [data-spw-region-state="primed"]) {
+  --component-module-rail-width: 0;
+  --component-module-rail-opacity: 0;
+}
+
+:where([data-spw-region-state="hydrating"], [data-spw-region-state="interactive"]) {
+  --component-module-rail-width: 2px;
+  --component-module-rail-opacity: calc(0.22 * var(--spw-region-profile-intensity, 1));
+}
+
+:where([data-spw-region-state="enhanced"], [data-spw-region-state="settling"]) {
+  --component-module-rail-width: 3px;
+  --component-module-rail-opacity: calc(0.34 * var(--spw-region-profile-intensity, 1));
+}
+
+:where(html[data-spw-harmony-field]) {
+  --spw-region-outline-reserve: 2px;
 }
 
 

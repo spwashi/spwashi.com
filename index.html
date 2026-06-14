@@ -77,6 +77,7 @@
 </head>
 <body
     data-spw-surface="home"
+    data-spw-stylesheet-mode="scoped"
     data-spw-route-family="kernel atlas semantic-lattice portable-publishing"
     data-spw-features="small-kernel semantic-lattice modular-projections portable-seeds operators navigator console media-publishing svg-surfaces topic-discovery prompt-utils"
     data-spw-context="orientation"
@@ -90,9 +91,9 @@
     data-spw-lattice="large"
     data-spw-projection="homepage"
     data-spw-seed-package=".spw/home-atlas"
-        data-spw-materiality="paper texture svg print web"
-        data-spw-copy-motifs="revisit route proof session return"
-        data-spw-related-routes="/now/|/cards/|/membership/|/research/|/coordination/|/services/|/about/website/|/topics/search/|/topics/site-design/|/topics/software/|/topics/software/spw/|/topics/craft/|/recipes/|/play/|/play/rpg-wednesday/library/|/curriculum/|/tools/|/tools/budgeting/|/tools/character-sheet/|/tools/midjourney/|/design/experiments/svg/|/design/experiments/css/|/settings/|https://texture.website|https://spw.quest">
+    data-spw-materiality="paper texture svg print web"
+    data-spw-copy-motifs="revisit route proof session return"
+    data-spw-related-routes="/now/|/cards/|/membership/|/research/|/coordination/|/services/|/about/website/|/topics/search/|/topics/site-design/|/topics/software/|/topics/software/spw/|/topics/craft/|/recipes/|/play/|/play/rpg-wednesday/library/|/curriculum/|/tools/|/tools/budgeting/|/tools/character-sheet/|/tools/midjourney/|/design/experiments/svg/|/design/experiments/css/|/settings/|https://texture.website|https://spw.quest">
 
 <a class="skip-link" href="#main-content" data-spw-floating-chrome="true" data-spw-layout-owner="floating-chrome">Skip to content</a>
 
@@ -114,7 +115,16 @@
     nav_items="Home:/|Now:/now/|Cards:/cards/|About:/about/|Design:/design/|Membership:/membership/|Research:/research/|Services:/services/|Play:/play/|Town Library:/play/rpg-wednesday/library/|Curriculum:/curriculum/|Topics:/topics/|Settings:/settings/"
 ></spw-site-header>
 
-<main id="main-content" tabindex="-1" aria-labelledby="home-title">
+<main
+    id="main-content"
+    tabindex="-1"
+    aria-labelledby="home-title"
+    data-spw-kind="surface"
+    data-spw-role="kernel-entry"
+    data-spw-context="orientation"
+    data-spw-seed="home_main_surface"
+    data-spw-wonder="orientation locality consequence texture portability"
+>
     <section
         class="site-frame site-hero site-hero--split-figure"
         id="home-frame"
@@ -222,7 +232,7 @@
 
         <div class="home-hero-grid" data-spw-slot="body">
             <div class="home-hero-copy">
-                <section
+                <div
                     id="home-hook"
                     data-spw-kind="hook"
                     data-spw-role="invocation"
@@ -233,6 +243,7 @@
                     data-spw-consequence="framing"
                     data-spw-gesture-contract="tap:prime hold:inspect"
                     class="hook-call"
+                    role="group"
                     aria-label="A readable surface for practice, operators, and carryable public artifacts"
                 >
                     <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="surface[readable]{interact}">
@@ -245,15 +256,15 @@
                     <p class="hook-invitation">
                         Hold any living term to prime it, switch the lens above to inspect grammar or artifacts, or follow a quick-start chip when you already know the next move.
                     </p>
-                </section>
+                </div>
 
                 <p class="page-kicker" data-spw-semantic-expression="kernel[entry]{orient}">kernel entry</p>
                 <h1 id="home-title">
                     I'm Spwashi.
                 </h1>
-                <h2>
+                <p class="home-tagline">
                     I build software and make art.
-                </h2>
+                </p>
 
                 <p id="home-frame-note" class="page-lede">
                     This site turns <span class="spw-living-term" data-spw-living-term data-spw-concept="recurring-practice" tabindex="0" title="tap: inspect • hold to prime this practice as a working handle">recurring practice</span> into public <span class="spw-living-term" data-spw-living-term data-spw-concept="public-artifact" tabindex="0" title="tap: inspect • hold to prime this artifact into your attention system">artifacts</span>: folios, operator handles, proof cards, study routes, visual systems, and reusable semantic contracts that stay legible in screenshots, pitches, and live work.
@@ -415,6 +426,9 @@
         data-spw-promptability="visible"
         data-spw-collectability="medium"
         data-spw-feature="home-entrance-sorter"
+        data-spw-form="brace"
+        data-spw-box-model="frame-register"
+        data-spw-composition-flow="stack"
     >
         <header class="frame-heading" data-spw-slot="header">
             <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
@@ -429,20 +443,20 @@
             Start with the role that matches your actual pressure right now. Pick one need — not your entire identity.
         </p>
 
-        <div class="spw-role-hooks" aria-label="Home entry roles" data-spw-vocab="learning collaboration" data-spw-box-model="role-hook-grid" data-spw-composition-flow="grid" data-spw-pack="fill">
-            <div>
+        <ul class="spw-role-hooks" role="list" aria-label="Home entry roles" data-spw-vocab="learning collaboration" data-spw-box-model="role-hook-grid" data-spw-composition-flow="grid" data-spw-pack="fill">
+            <li>
                 <strong>For developers</strong>
                 <p>Use About, Software, and the Website Field Guide when you need route structure, reusable components, or something that can become a prompt later.</p>
-            </div>
-            <div>
+            </li>
+            <li>
                 <strong>For illustrators and painters</strong>
                 <p>Use Play, Town Atlas, and Recipes when you need scene pressure, objects, surfaces, and material cues that can be drawn or staged.</p>
-            </div>
-            <div>
+            </li>
+            <li>
                 <strong>For performers and RPG collaborators</strong>
                 <p>Use RPG Wednesday, Sessions, Cast, and Library when you want readable memory, dialogue pressure, and a durable place for a table to become public.</p>
-            </div>
-        </div>
+            </li>
+        </ul>
 
         <aside class="spw-resonance-lab" aria-label="Resonance practice paths" data-spw-role="probe" data-spw-box-model="resonance-lab" data-spw-composition-flow="grid">
             <div data-spw-resonance-axis="ground" data-spw-semantic-expression="resonance[ground]{stable}">
@@ -468,20 +482,20 @@
             A useful homepage is mise en place for attention: tools visible, surface clear enough to begin, next move findable without memorizing the whole pantry. Name the ingredients well and the same page becomes a story seed.
         </p>
 
-            <aside class="spw-route-bridge" data-spw-transition-surface="bridge" aria-label="Homepage route bridge" data-spw-box-model="route-bridge" data-spw-composition-flow="stack">
-                <header>
-                    <h3>Follow the next useful relation</h3>
-                    <p>This copy is written for internal transit: each link says why the next surface exists before asking for the click.</p>
-                </header>
-                <ul class="spw-route-bridge__links" data-spw-box-model="route-choice-field" data-spw-composition-flow="grid" data-spw-pack="fill dense">
-                    <li><a href="/topics/software/" data-spw-operator="route"><strong>Software</strong><span>Projection runtimes, parser contracts, engineering research, and reusable component grammar.</span></a></li>
-                    <li><a href="/topics/pedagogy/" data-spw-operator="route"><strong>Learning science</strong><span>Scaffolds, retrieval, transfer, and public artifacts as learning surfaces.</span></a></li>
-                    <li><a href="/recipes/" data-spw-operator="route"><strong>Recipes</strong><span>Soup systems, wings, sauces, ingredient clusters, vegetable relationships, timing, texture, and shared company.</span></a></li>
-                    <li><a href="/play/rpg-wednesday/" data-spw-operator="route"><strong>RPG Wednesday</strong><span>Promptable lore, session memory, trade ingredients, character pressure, and table-tested mechanics.</span></a></li>
-                </ul>
-            </aside>
+        <aside class="spw-route-bridge" data-spw-transition-surface="bridge" aria-label="Homepage route bridge" data-spw-box-model="route-bridge" data-spw-composition-flow="stack">
+            <header>
+                <h3>Follow the next useful relation</h3>
+                <p>This copy is written for internal transit: each link says why the next surface exists before asking for the click.</p>
+            </header>
+            <ul class="spw-route-bridge__links" data-spw-box-model="route-choice-field" data-spw-composition-flow="grid" data-spw-pack="fill dense">
+                <li><a href="/topics/software/" data-spw-operator="route"><strong>Software</strong><span>Projection runtimes, parser contracts, engineering research, and reusable component grammar.</span></a></li>
+                <li><a href="/topics/pedagogy/" data-spw-operator="route"><strong>Learning science</strong><span>Scaffolds, retrieval, transfer, and public artifacts as learning surfaces.</span></a></li>
+                <li><a href="/recipes/" data-spw-operator="route"><strong>Recipes</strong><span>Soup systems, wings, sauces, ingredient clusters, vegetable relationships, timing, texture, and shared company.</span></a></li>
+                <li><a href="/play/rpg-wednesday/" data-spw-operator="route"><strong>RPG Wednesday</strong><span>Promptable lore, session memory, trade ingredients, character pressure, and table-tested mechanics.</span></a></li>
+            </ul>
+        </aside>
 
-            <div class="frame-grid frame-grid--dense" data-spw-box-model="entry-card-grid" data-spw-composition-flow="grid" data-spw-pack="fill dense">
+        <div class="frame-grid frame-grid--dense" data-spw-box-model="entry-card-grid" data-spw-composition-flow="grid" data-spw-pack="fill dense">
                 <article class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-content-variant="entry" data-spw-input="commission referral direct ask" data-spw-operation="turn need into offer path" data-spw-return="services proof card contact path" data-spw-model-policy="summarize-only">
                     <h3>I have a concrete request.</h3>
                     <p>Open Services, Cards, Now, or Contact when the work needs to become an offer, a referral, a UX-flow test, or a direct ask. This path helps when the page should name the next move plainly instead of asking the reader to translate the whole atlas first.</p>
@@ -573,6 +587,8 @@
         data-spw-collectability="medium"
         data-spw-feature="living-concepts"
         data-spw-semantic-expression="concepts[atlas]{discover.use.extend}"
+        data-spw-box-model="frame-register"
+        data-spw-composition-flow="stack"
     >
         <header class="frame-heading" data-spw-slot="header">
             <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
@@ -1596,6 +1612,7 @@
         id="promo-wonder-cycle"
         aria-labelledby="promo-wonder-cycle-title"
         data-promo-wonder-cycle
+        data-spw-feature="promo-wonder-cycle"
         data-spw-kind="frame"
         data-spw-role="promo-register"
         data-spw-context="comparison"
@@ -1611,6 +1628,8 @@
         data-spw-promptability="visible"
         data-spw-collectability="medium"
         data-spw-seed="home_promo_wonder_cycle"
+        data-spw-box-model="frame-register"
+        data-spw-composition-flow="stack"
     >
         <header class="frame-heading" data-spw-slot="header">
             <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
@@ -1621,41 +1640,39 @@
             </div>
         </header>
 
-        <div class="frame-body" data-spw-slot="body">
+        <div class="frame-body" data-spw-slot="body" data-spw-hydration="ready">
             <p class="inline-note" data-spw-copy-depth="normal">
                 One card makes the work easy to start. One card gives the page a reason to change tomorrow. Both work without JavaScript.
             </p>
+
+            <!-- Time-forward defaults for crawlers / first paint: kept in sync with promo-wonder-cycle DEFAULT_FEED. -->
+            <div class="promo-wonder-cycle__static-fallback" data-spw-copy-source="static-default" data-spw-static-for="promo-wonder-cycle">
+                <article class="promo-wonder-cycle__card" data-spw-cadence="daily" data-spw-copy-unit="home.promoWonderCycle.daily.promo" data-spw-locale="en">
+                    <p class="spec-kicker promo-wonder-cycle__label">Daily promo</p>
+                    <div class="promo-wonder-cycle__title-row">
+                        <span class="frame-card-sigil promo-wonder-cycle__operator" aria-hidden="true">@</span>
+                        <h3>Help the next release land</h3>
+                    </div>
+                    <p class="promo-wonder-cycle__summary">Releases are scheduled for the 13th and 26th of each month. The A cycle closes on the 13th, and the B cycle closes on the 26th. Small support keeps the work moving and makes the next page easier to ship.</p>
+                    <p class="promo-wonder-cycle__why">A direct contribution keeps the monthly cadence steady.</p>
+                    <a class="operator-chip promo-wonder-cycle__cta" href="/services/#support">Open support</a>
+                </article>
+                <article class="promo-wonder-cycle__card promo-wonder-cycle__card--wonder" data-spw-cadence="daily" data-spw-copy-unit="home.promoWonderCycle.daily.wonder" data-spw-locale="en">
+                    <p class="spec-kicker promo-wonder-cycle__label">Daily wonder</p>
+                    <div class="promo-wonder-cycle__title-row">
+                        <span class="frame-card-sigil promo-wonder-cycle__operator" aria-hidden="true">?</span>
+                        <h3>What changes if the page has a reason to return tomorrow?</h3>
+                    </div>
+                    <p class="promo-wonder-cycle__summary">A site can feel alive when one small surface changes on a schedule. This slot is here to make that return legible.</p>
+                    <a class="operator-chip promo-wonder-cycle__cta" href="/about/website/">See the system</a>
+                </article>
+            </div>
 
             <noscript>
                 <p class="frame-note" data-spw-semantic-expression="runtime[noscript]{fallback}">
                     JavaScript is off, so this section will stay on its embedded fallback copy. The page still points to
                     a clear next step and a weekly question.
                 </p>
-                <!-- Time-forward defaults for crawlers / no-JS: the current daily cadence copy (kept in sync with
-                     promo-wonder-cycle.js DEFAULT_FEED on edits). Data attrs match the JS-rendered contract so
-                     narrative + catalog surfaces see the same copy units. Alternative text for future axiom changes
-                     can live in data-spw-copy-alt-json or sibling templates on these nodes. -->
-                <div class="promo-wonder-cycle__static-fallback" data-spw-copy-source="static-default" data-spw-static-for="promo-wonder-cycle">
-                    <article class="promo-wonder-cycle__card" data-spw-cadence="daily" data-spw-copy-unit="home.promoWonderCycle.daily.promo" data-spw-locale="en">
-                        <p class="spec-kicker promo-wonder-cycle__label">Daily promo</p>
-                        <div class="promo-wonder-cycle__title-row">
-                            <span class="frame-card-sigil promo-wonder-cycle__operator" aria-hidden="true">@</span>
-                            <h3>Help the next release land</h3>
-                        </div>
-                        <p class="promo-wonder-cycle__summary">Releases are scheduled for the 13th and 26th of each month. The A cycle closes on the 13th, and the B cycle closes on the 26th. Small support keeps the work moving and makes the next page easier to ship.</p>
-                        <p class="promo-wonder-cycle__why">A direct contribution keeps the monthly cadence steady.</p>
-                        <a class="operator-chip promo-wonder-cycle__cta" href="/services/#support">Open support</a>
-                    </article>
-                    <article class="promo-wonder-cycle__card promo-wonder-cycle__card--wonder" data-spw-cadence="daily" data-spw-copy-unit="home.promoWonderCycle.daily.wonder" data-spw-locale="en">
-                        <p class="spec-kicker promo-wonder-cycle__label">Daily wonder</p>
-                        <div class="promo-wonder-cycle__title-row">
-                            <span class="frame-card-sigil promo-wonder-cycle__operator" aria-hidden="true">?</span>
-                            <h3>What changes if the page has a reason to return tomorrow?</h3>
-                        </div>
-                        <p class="promo-wonder-cycle__summary">A site can feel alive when one small surface changes on a schedule. This slot is here to make that return legible.</p>
-                        <a class="operator-chip promo-wonder-cycle__cta" href="/about/website/">See the system</a>
-                    </article>
-                </div>
             </noscript>
         </div>
 

@@ -4,6 +4,7 @@ import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 import { renderTemplate } from '../../template.mjs';
+import { CORE_BUNDLE_HREF } from '../css-manifest.mjs';
 import { EXPECTED_SITE_SCRIPT_PREFIX, EXPECTED_STYLESHEET_PREFIX, REQUIRED_BODY_DATA_KEYS, } from './types.mjs';
 import { buildSvgSpecMaps, collectManifestIssues, collectRuntimeDefinitionsFromSource, countMatches, deriveRouteRuntime, extractBodyAttributes, extractSvgHosts, extractTitle, collectTagAttributes, normalizeInternalRoute, normalizeSpace, routePathFromFile, splitList, splitPipeList, stripQueryHash, summarizeBySurface, } from './helpers.mjs';
 import { shouldIgnoreValidationPath, toPosixPath, } from '../shared/build-topology.mjs';
@@ -86,8 +87,11 @@ async function parseRouteFile(absoluteFilePath) {
     if (missingBodyKeys.length) {
         errors.push(`Missing required body data attributes: ${missingBodyKeys.join(', ')}`);
     }
-    if (!stylesheets.some((href) => stripQueryHash(href) === EXPECTED_STYLESHEET_PREFIX)) {
-        errors.push(`Missing shared stylesheet ${EXPECTED_STYLESHEET_PREFIX}`);
+    const stylesheetMode = bodyAttributes?.['data-spw-stylesheet-mode'];
+    const hasFullStylesheet = stylesheets.some((href) => stripQueryHash(href) === EXPECTED_STYLESHEET_PREFIX);
+    const hasScopedCore = stylesheets.some((href) => stripQueryHash(href) === CORE_BUNDLE_HREF);
+    if (!hasFullStylesheet && !(stylesheetMode === 'scoped' && hasScopedCore)) {
+        errors.push(`Missing shared stylesheet ${EXPECTED_STYLESHEET_PREFIX} or scoped core bundle ${CORE_BUNDLE_HREF}`);
     }
     if (!moduleScripts.some((src) => stripQueryHash(src) === EXPECTED_SITE_SCRIPT_PREFIX)) {
         errors.push(`Missing shared runtime script ${EXPECTED_SITE_SCRIPT_PREFIX}`);

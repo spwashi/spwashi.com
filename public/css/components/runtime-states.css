@@ -409,6 +409,8 @@
   --spw-runtime-enhancement-intensity: 0.32;
   --spw-runtime-feature-intensity: 0.22;
   --spw-site-rhythm-tempo: 0.72;
+  --spw-layout-cascade-hold: 1;
+  --spw-region-profile-intensity: min(var(--spw-region-profile-intensity, 1), 0.28);
 }
 
 :where(html:not([data-spw-runtime-mount-batch="active"])) {
@@ -416,7 +418,60 @@
     --spw-runtime-enhancement-intensity var(--duration-base, 200ms) ease,
     --spw-runtime-feature-intensity var(--duration-base, 200ms) ease,
     --spw-site-rhythm-tempo var(--duration-base, 200ms) ease,
-    --spw-site-rhythm-density var(--duration-base, 200ms) ease;
+    --spw-site-rhythm-density var(--duration-base, 200ms) ease,
+    --spw-region-profile-intensity var(--spw-region-profile-refresh-duration, 220ms) var(--ease-settle, ease);
+}
+
+/* Page lifecycle cascade — region metadata enrichment is deferred until interactive. */
+:where(html[data-spw-page-state="booting"], html[data-spw-page-state="interactive"]) {
+  --spw-layout-cascade-hold: 1;
+  --spw-region-profile-intensity: 0;
+}
+
+:where(html[data-spw-page-state="hydrated"]) {
+  --spw-region-profile-intensity: 0.48;
+}
+
+:where(html[data-spw-page-state="region-enhanced"], html[data-spw-page-state="enhanced"]) {
+  --spw-region-profile-intensity: 1;
+}
+
+/* During cascade hold, limit transitions to paint-safe properties so runtime
+   dataset writes do not trigger layout-affecting interpolation. */
+:where(
+  html[data-spw-runtime-mount-batch="active"],
+  html[data-spw-page-state="booting"],
+  html[data-spw-page-state="interactive"]
+) {
+  --spw-component-settle-transition: 0ms linear;
+}
+
+:where(
+  html[data-spw-runtime-mount-batch="active"],
+  html[data-spw-page-state="booting"],
+  html[data-spw-page-state="interactive"]
+) :where(
+  .site-frame,
+  .frame-panel,
+  .frame-card,
+  [data-spw-kind]:not(body):not(main),
+  [data-spw-box-model]
+) {
+  transition-property: color, background-color, opacity, filter;
+}
+
+:where(html[data-spw-page-state="region-enhanced"], html[data-spw-page-state="enhanced"]) :where(
+  [data-spw-harmony],
+  [data-spw-region-state],
+  [data-spw-region-genome],
+  [data-spw-tempo],
+  [data-spw-density]
+) {
+  transition:
+    border-color var(--spw-region-profile-refresh-duration, 220ms) var(--ease-settle, ease),
+    box-shadow var(--spw-region-profile-refresh-duration, 220ms) var(--ease-settle, ease),
+    outline-color var(--spw-region-profile-refresh-duration, 220ms) var(--ease-settle, ease),
+    transform var(--spw-component-arrival-transition, 140ms var(--ease-settle, ease));
 }
 
 :where(html[data-spw-connection-posture="offline"], html[data-spw-prefetch-mode="deferred"]) {

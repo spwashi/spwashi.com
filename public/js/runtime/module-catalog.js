@@ -154,6 +154,7 @@ export const FEATURE_DEFS = [
     id: 'rpg-wednesday',
     layer: MODULE_LAYERS.FEATURE,
     when: MOUNT_WHEN.IMMEDIATE,
+    features: ['rpg-gameplay'],
     route: 'rpg-wednesday',
     selector: 'main',
     load: () => import('../modules/rpg-wednesday.js'),
@@ -205,7 +206,8 @@ export const FEATURE_DEFS = [
   {
     id: 'promo-wonder-cycle',
     layer: MODULE_LAYERS.FEATURE,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.VISIBLE,
+    features: ['media-publishing'],
     route: 'home',
     selector: '[data-promo-wonder-cycle]',
     load: () => import('../typed/promo-wonder-cycle.js'),
@@ -219,6 +221,7 @@ export const FEATURE_DEFS = [
     id: 'media-publishing',
     layer: MODULE_LAYERS.FEATURE,
     when: MOUNT_WHEN.VISIBLE,
+    features: ['media-publishing'],
     route: 'website',
     selector: '[data-media-focus], [data-media-collection]',
     load: () => import('../typed/media-publishing.js'),
@@ -232,6 +235,7 @@ export const FEATURE_DEFS = [
     id: 'media-cauldron',
     layer: MODULE_LAYERS.FEATURE,
     when: MOUNT_WHEN.VISIBLE,
+    features: ['console'],
     selector: '[data-media-cauldron]',
     rootMode: 'each',
     describes: 'media-cauldron[prime.select.generate] attention[self+local+global] artifact[prompt-pack]',
@@ -313,6 +317,7 @@ export const FEATURE_DEFS = [
     id: 'cauldron',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
+    features: ['console'],
     describes: 'cauldron[gather|mix|garden] force[operator] emergence[composition]',
     updates: ['data-spw-cauldron', 'data-spw-cauldron-phase', 'data-spw-cauldron-count', 'data-spw-cauldron-ingredient', 'data-spw-ingredient-phase', 'data-spw-semantic-expression'],
     evaluates: 'semantics composition learning attention-field emergence',
@@ -350,6 +355,21 @@ export const FEATURE_DEFS = [
       const fn = mod?.initBoonhonkMixers;
       if (!isFn(fn)) return;
       return fn(ctx?.root || document);
+    },
+  },
+  {
+    id: 'pretext-lab',
+    layer: MODULE_LAYERS.FEATURE,
+    when: MOUNT_WHEN.VISIBLE,
+    features: ['pretext-lab'],
+    selector: '#pretext-input, .pretext-lab-grid',
+    describes: 'pretext[layout|sandbox|projection] lab[observe|resize|inspect]',
+    updates: ['data-spw-flow', 'data-text-wrap', 'data-text-mode'],
+    load: () => import('../semantic/pretext-lab.js'),
+    mount: (mod) => {
+      const fn = mod?.initPretextLab;
+      if (!isFn(fn)) return;
+      return fn();
     },
   },
 ];
@@ -443,7 +463,8 @@ export const ENHANCEMENT_DEFS = [
   {
     id: 'svg-filters',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.VISIBLE,
+    features: ['svg-surfaces'],
     selector: '.spw-svg-figure, .image-study, [data-spw-image-surface]',
     rootMode: 'single',
     load: () => import('../media/svg-filters.js'),
@@ -456,7 +477,8 @@ export const ENHANCEMENT_DEFS = [
   {
     id: 'svg-tunability',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.VISIBLE,
+    features: ['svg-surfaces'],
     selector: '[data-spw-svg-host], .spw-svg-figure[data-spw-svg-pointer]',
     rootMode: 'single',
     load: () => import('../media/svg-tunability.js'),
@@ -482,7 +504,7 @@ export const ENHANCEMENT_DEFS = [
   {
     id: 'image-metaphysics',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.VISIBLE,
     selector: '.image-study, .spw-svg-figure, [data-spw-image-surface], .domain-visual, .spw-scaffold',
     rootMode: 'single',
     load: () => import('../media/image-metaphysics.js'),
@@ -662,7 +684,8 @@ export const ENHANCEMENT_DEFS = [
     id: 'console',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
-    selector: 'body[data-spw-features~="console"]',
+    features: ['console'],
+    selector: 'body',
     rootMode: 'single',
     describes: 'console[frame|mode|bus|layout] diagnostics[screenshot]',
     updates: ['data-spw-console-state'],

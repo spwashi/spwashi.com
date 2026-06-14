@@ -1,4 +1,5 @@
 import {
+  enrichRegionMetadata,
   normalizeDocumentMetadata,
 } from './kernel/page-metadata.js';
 import {
@@ -115,6 +116,7 @@ import { createModuleLoader } from './runtime/module-loader.js';
  * - when: "immediate" | "visible" | "idle" | "interaction" | "region"
  * - selector?: CSS selector
  * - route?: string | string[]
+ * - features?: string | string[] — body[data-spw-features] tokens required before scheduling (aligns with CSS behavior bundles)
  * - reason?: human-readable load reason for audit surfaces
  * - describes?: Spw-style semantic expression describing what the module does or the structures it affects (strongly preferred for clarity)
  * - updates?: string[] — data-spw-* attributes, selectors, or Spw expressions describing the specific elements/structures updated by this module (for meaningful descriptions, attentional models, serialization)
@@ -662,10 +664,30 @@ function destroyRuntime() {
   }
 }
 
+let regionEnrichmentPromise = null;
+
+function scheduleRegionEnrichment(pageMeta, ctx) {
+  if (!pageMeta || !ctx) return Promise.resolve();
+  if (regionEnrichmentPromise) return regionEnrichmentPromise;
+
+  regionEnrichmentPromise = new Promise((resolve) => {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        enrichRegionMetadata(pageMeta, { body: ctx.body || BODY });
+        primeRegions(ctx);
+        refreshRegionProfiles(ctx, 'region-metadata-enrichment');
+        resolve();
+      });
+    });
+  });
+
+  return regionEnrichmentPromise;
+}
+
 async function bootSite() {
   await whenDocumentReady();
   performance.mark('spw:document-ready');
-  const normalized = normalizeDocumentMetadata();
+  const normalized = normalizeDocumentMetadata({ deferRegions: true });
   SITE_SURFACE = normalized.surface || SITE_SURFACE;
 
   runtimeCtx = createRuntimeContext();
@@ -797,8 +819,6 @@ async function bootSite() {
   bindGlobalInteractions();
   annotateDeepLinkTargets(document);
 
-  primeRegions(runtimeCtx);
-
   await mountImmediateLayer(CORE_DEFS, runtimeCtx);
   await mountImmediateLayer(FEATURE_DEFS, runtimeCtx);
   await mountImmediateLayer(ENHANCEMENT_DEFS, runtimeCtx);
@@ -814,6 +834,8 @@ async function bootSite() {
   setPageState(PAGE_STATES.INTERACTIVE);
   runtimeCtx.bus.emit('spw:page-interactive', { route: runtimeCtx.route });
 
+  scheduleRegionEnrichment(normalized.pageMeta, runtimeCtx);
+
   await mountVisibleFeatures(FEATURE_DEFS, runtimeCtx);
   await mountInteractionFeatures(FEATURE_DEFS, runtimeCtx);
 
@@ -821,6 +843,7 @@ async function bootSite() {
   performance.mark('spw:page-hydrated');
   runtimeCtx.bus.emit('spw:page-hydrated', { route: runtimeCtx.route });
 
+  await scheduleRegionEnrichment(normalized.pageMeta, runtimeCtx);
   await mountRegionLayer(REGION_DEFS, runtimeCtx);
 
   setPageState(PAGE_STATES.REGION_ENHANCED);

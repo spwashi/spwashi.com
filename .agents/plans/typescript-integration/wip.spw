@@ -218,6 +218,7 @@
  >>[2026-04-19 00:44] observe — style.css already expresses a semantic layer stack, but it imports every route stylesheet. CSS compilation should preserve that layer order while splitting route ownership more honestly.
  >>[2026-04-19 00:46] observe — site.js already mounts behavior through route/selector-gated dynamic imports, so JS chunk preparation should start by manifesting those seams rather than replacing them.
  >>[2026-04-19 00:48] decide — generated asset identity and route-asset manifests should land before any serious CSS or TS compile pipeline.
+ >>[2026-06-14 01:03] implement — scoped CSS delivery now has a typed behavior-scope bridge: scripts/ts/css-manifest.mts owns BEHAVIOR_SCOPES, scripts/ts/css-bundle.mts emits public/js/runtime/behavior-scopes.js, check-generated tracks that runtime module, and runtime-contracts verifies module def.features against the same CSS behavior-scope set.
 }
 
 ^["open"]{
@@ -255,7 +256,7 @@
  ~#files_hot: "scripts/build.mjs, scripts/generate-design-catalog.mjs, scripts/site-contracts.mjs, scripts/dev-server.mjs, public/js/site.js, public/js/site-settings.js, public/js/spw-page-metadata.js, public/js/spw-shared.js, package.json"
  ~#next_commit: "1"
  ~#open_count: "12"
- ~#last_stream: "decide"
+ ~#last_stream: "implement"
  ~#taste_debt: "Do not let TypeScript adoption turn the site into a generic toolchain project. The density gain should come from sharper contracts, layered output identity, and better documentation seams, not from copying an app-stack ritual."
 }
 

@@ -6,6 +6,8 @@ import { writeDatasetValue } from '../kernel/dom-contracts.js';
 import { MODULE_LAYERS, MOUNT_WHEN } from './module-catalog.js';
 import { REGION_STATES, setRegionState } from './region-profiler.js';
 import {
+  matchesFeatures,
+  normalizeFeatureRequirements,
   normalizeMountHandle,
   normalizeRuntimeToken,
   onIdle,
@@ -28,6 +30,8 @@ export const SPW_MODULE_LOADER_CONTRACT = Object.freeze({
   timingStages: MODULE_TIMING_STAGES,
   portableUse:
     'Use createModuleLoader() when a page shell needs staged module mounting without inlining the bootstrap.',
+  featureGating:
+    'shouldScheduleDefinition() honors module def.features against ctx.features (body[data-spw-features]).',
 });
 
 export function createModuleLoader(config = {}) {
@@ -43,6 +47,7 @@ export function createModuleLoader(config = {}) {
   const timingPolicies = config.timingPolicies || SPW_RUNTIME_HELPERS_CONTRACT.timingPolicies;
 
   const matchesRoute = config.matchesRoute;
+  const resolveFeatureMatch = config.matchesFeatures || ((def, ctx) => matchesFeatures(def, ctx?.features));
   const hasSelector = config.hasSelector;
   const getRoots = config.getRoots;
   const hasDebugOrQAMode = config.hasDebugOrQAMode;
@@ -210,6 +215,7 @@ function listModuleDefinitions(ctx) {
       requestedWhen: def.when || mountWhen.IMMEDIATE,
       effectiveWhen,
       route: def.route || null,
+      features: normalizeFeatureRequirements(def.features),
       selector: def.selector || '',
       rootMode: def.rootMode || 'single',
       evaluates: inferModuleDimensions(def),
@@ -399,6 +405,7 @@ function shouldScheduleDefinition(def, ctx, expectedWhen = null) {
   const effectiveWhen = getEffectiveMountWhen(def, ctx);
   const routeMatch = matchesRoute(def);
   const selectorMatch = hasSelector(def);
+  const featureMatch = resolveFeatureMatch(def, ctx);
   const onlyMatch = !ctx.runtimePolicy.only.size || ctx.runtimePolicy.only.has(id);
   const skipMatch = ctx.runtimePolicy.skip.has(id);
   const whenMatch = expectedWhen ? effectiveWhen === expectedWhen : effectiveWhen !== 'manual';
@@ -408,12 +415,13 @@ function shouldScheduleDefinition(def, ctx, expectedWhen = null) {
   const debugActive = hasDebugOrQAMode(ctx);
   const debugMatch = !debugOnly || debugActive;
 
-  const allowed = routeMatch && selectorMatch && onlyMatch && !skipMatch && whenMatch && debugMatch;
+  const allowed = routeMatch && selectorMatch && featureMatch && onlyMatch && !skipMatch && whenMatch && debugMatch;
 
   if (!allowed && ctx.runtimePolicy.audit) {
     const reason = [
       routeMatch ? '' : 'route-mismatch',
       selectorMatch ? '' : 'selector-missing',
+      featureMatch ? '' : 'feature-mismatch',
       onlyMatch ? '' : 'outside-module-only',
       skipMatch ? 'module-skip' : '',
       whenMatch ? '' : `waiting-for-${effectiveWhen}`,

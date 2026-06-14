@@ -561,6 +561,8 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
   gap: var(--component-gap-tight);
   min-width: 0;
   margin-block: var(--component-gap) var(--component-gap-loose);
+  padding: 0;
+  list-style: none;
 }
 
 :where(.spw-copy-motif-strip) {

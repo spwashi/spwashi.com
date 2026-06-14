@@ -1298,12 +1298,21 @@ function syncPageArchitectureFooter(pageMeta, body = document.body) {
   });
 }
 
-export function normalizeDocumentMetadata() {
+export function enrichRegionMetadata(pageMeta, { body = document.body } = {}) {
+  if (!body || !pageMeta) return;
+  normalizeRegionMetadata(pageMeta, { body });
+  normalizeRegionAccessibility(pageMeta, { body });
+  syncPageArchitectureFooter(pageMeta, body);
+}
+
+export function normalizeDocumentMetadata(options = {}) {
+  const { deferRegions = false } = options;
   const body = document.body;
   if (!body) {
     return {
       pageMeta: null,
       surface: 'default',
+      regionsDeferred: deferRegions,
     };
   }
 
@@ -1320,13 +1329,15 @@ export function normalizeDocumentMetadata() {
   applyPageMetadata(pageMeta, body);
   normalizeHeadMetadata(pageMeta, { body, main });
   normalizeShellMetadata(pageMeta, { body });
-  normalizeRegionMetadata(pageMeta, { body });
-  normalizeRegionAccessibility(pageMeta, { body });
-  syncPageArchitectureFooter(pageMeta, body);
+
+  if (!deferRegions) {
+    enrichRegionMetadata(pageMeta, { body });
+  }
 
   return {
     pageMeta,
     surface: body.dataset.spwSurface || surface || 'default',
+    regionsDeferred: deferRegions,
   };
 }
 

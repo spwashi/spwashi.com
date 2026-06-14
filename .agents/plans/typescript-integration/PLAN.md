@@ -33,6 +33,10 @@ The public site should still read as hand-authored HTML/CSS/JS unless a later ex
 - CSS delivery is layered but still monolithic at the entrypoint:
   - every route points at `/public/css/style.css`
   - `style.css` imports shared layers and every route-surface stylesheet
+- Scoped CSS delivery now has a typed manifest seam:
+  - `scripts/ts/css-manifest.mts` declares core, route, and behavior scopes
+  - `scripts/ts/css-bundle.mts` emits flattened route/behavior bundles and a generated browser behavior-scope module
+  - runtime contracts validate `module def.features` against the CSS behavior-scope set
 - JS delivery already has a chunk-friendly seam:
   - `public/js/site.js` mounts most behavior through route/selector-gated dynamic imports
 - Asset identity is still coarse and manual:
@@ -140,6 +144,7 @@ The public site should still read as hand-authored HTML/CSS/JS unless a later ex
   - which CSS layers a route needs
   - which JS chunks a route may preload
   - which assets the service worker may precache or defer
+- Keep generated browser bridge modules, such as `public/js/runtime/behavior-scopes.js`, downstream of the typed CSS manifest rather than hand-maintained.
 - If whitelabeling arrives later, variants should select and override chunks by declared layer policy rather than ad hoc file forks.
 
 ### 2.75. Cache Identity And Delivery Preparation

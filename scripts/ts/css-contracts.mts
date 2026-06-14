@@ -14,6 +14,11 @@ import {
   toPosixPath,
 } from './shared/build-topology.mjs';
 import { collectCssBuildPlan } from './css-build.mjs';
+import {
+  BEHAVIOR_SCOPES,
+  listBundleTargets,
+  ROUTE_SCOPES,
+} from './css-manifest.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -22,9 +27,11 @@ const ROOT_DIR = path.resolve(__dirname, '..', '..');
 const CSS_DIR = path.join(ROOT_DIR, 'public/css');
 const STYLE_SOURCE_DIR = path.join(ROOT_DIR, 'src/styles');
 const STYLE_MANIFEST = path.join(CSS_DIR, 'style.css');
+const STYLE_CORE_MANIFEST = path.join(CSS_DIR, 'style-core.css');
 const EXPECTED_LAYER_ORDER = 'reset, tokens, shell, typography, grammar, components, systems, routes, handles, effects, ornament';
 const ALLOWED_ROOT_CSS_FILES = new Set([
   'compose.css',
+  'style-core.css',
   'style.css',
 ]);
 const EXPECTED_LAYER_BY_CSS_DIR = new Map<string, string>([
@@ -149,8 +156,13 @@ async function collectLinkedStylesheets(): Promise<string[]> {
   return [...stylesheets].sort();
 }
 
+function isGeneratedBundlePath(rootPath: string): boolean {
+  return rootPath.startsWith('/public/css/bundles/');
+}
+
 function hasInstructionHeader(source: string, filename: string): boolean {
-  if (filename === 'style.css') return source.startsWith('@layer ');
+  if (filename === 'style-core.css') return source.startsWith('@layer ');
+  if (filename === 'style.css') return source.trimStart().startsWith('/*');
   const firstChunk = source.slice(0, 900);
   return firstChunk.trimStart().startsWith('/*') && (
     firstChunk.includes(filename)
@@ -182,23 +194,38 @@ export async function collectCssContractReport(): Promise<CssContractReport> {
   const sourceFiles = await collectStyleSourceFiles();
   const buildPlan = await collectCssBuildPlan();
   const styleSource = await fs.readFile(STYLE_MANIFEST, 'utf8');
-  const imports = parseStyleImports(styleSource);
+  const coreSource = await fs.readFile(STYLE_CORE_MANIFEST, 'utf8');
+  const imports = [
+    ...parseStyleImports(styleSource),
+    ...parseStyleImports(coreSource),
+  ];
   const linkedStylesheets = await collectLinkedStylesheets();
 
-  const manifestLayerMatch = styleSource.match(/^@layer\s+([^;]+);/);
+  if (!styleSource.includes("/public/css/style-core.css")) {
+    errors.push('public/css/style.css must import /public/css/style-core.css.');
+  }
+
+  const manifestLayerMatch = coreSource.match(/^@layer\s+([^;]+);/);
   if (!manifestLayerMatch) {
-    errors.push('public/css/style.css must begin with an explicit @layer manifest.');
+    errors.push('public/css/style-core.css must begin with an explicit @layer manifest.');
   } else if (manifestLayerMatch[1].replace(/\s+/g, ' ').trim() !== EXPECTED_LAYER_ORDER) {
-    errors.push('public/css/style.css layer order drifted from the CSS instruction contract.');
+    errors.push('public/css/style-core.css layer order drifted from the CSS instruction contract.');
   }
 
   const importedFiles = new Set(imports.map((item) => item.file));
   const linkedFiles = new Set(linkedStylesheets);
   const knownReferences = new Set<string>([...importedFiles, ...linkedFiles]);
   knownReferences.add('/public/css/style.css');
+  knownReferences.add('/public/css/style-core.css');
+  for (const target of listBundleTargets()) {
+    knownReferences.add(target.href);
+  }
 
   for (const item of imports) {
-    if (!item.layer) errors.push(`${item.file} is imported without an explicit cascade layer.`);
+    if (!item.layer && item.file !== '/public/css/style-core.css') {
+      errors.push(`${item.file} is imported without an explicit cascade layer.`);
+    }
+    if (item.file === '/public/css/style-core.css') continue;
     const expectedLayer = expectedLayerForCssPath(item.file);
     if (!expectedLayer) {
       errors.push(`${item.file} is imported from an unknown public/css ownership directory.`);
@@ -208,7 +235,23 @@ export async function collectCssContractReport(): Promise<CssContractReport> {
     try {
       await fs.access(path.join(ROOT_DIR, item.file.replace(/^\/+/, '')));
     } catch {
-      errors.push(`${item.file} is imported by style.css but does not exist.`);
+      errors.push(`${item.file} is imported by the style manifest but does not exist.`);
+    }
+  }
+
+  for (const files of [...Object.values(ROUTE_SCOPES), ...Object.values(BEHAVIOR_SCOPES)]) {
+    for (const file of files) {
+      if (!importedFiles.has(file)) {
+        errors.push(`${file} is listed in the CSS scope manifest but missing from style.css/style-core.css imports.`);
+      }
+    }
+  }
+
+  for (const target of listBundleTargets()) {
+    try {
+      await fs.access(path.join(ROOT_DIR, target.href.replace(/^\/+/, '')));
+    } catch {
+      errors.push(`${target.href} is declared in the CSS scope manifest but has not been generated (run npm run build:css).`);
     }
   }
 
@@ -235,12 +278,14 @@ export async function collectCssContractReport(): Promise<CssContractReport> {
     const compatibilityWrapper = isCompatibilityWrapper(source, filename);
 
     if (!topLevelDir && !ALLOWED_ROOT_CSS_FILES.has(filename)) {
-      errors.push(`${relativePath} is a root-level CSS file; keep root CSS limited to style.css and compose.css.`);
+      errors.push(`${relativePath} is a root-level CSS file; keep root CSS limited to style.css, style-core.css, and compose.css.`);
+    } else if (topLevelDir === 'bundles') {
+      // Generated scoped bundles; validated via listBundleTargets().
     } else if (topLevelDir && !EXPECTED_LAYER_BY_CSS_DIR.has(topLevelDir)) {
       errors.push(`${relativePath} lives in unknown CSS ownership directory public/css/${topLevelDir}/.`);
     }
 
-    if (!compatibilityWrapper && !hasInstructionHeader(source, filename)) {
+    if (!compatibilityWrapper && !isGeneratedBundlePath(rootPath) && !hasInstructionHeader(source, filename)) {
       errors.push(`${relativePath} needs an instructional header naming its file and scope.`);
     }
 
@@ -248,8 +293,13 @@ export async function collectCssContractReport(): Promise<CssContractReport> {
       warnings.push(`${relativePath} uses semantic CSS hooks without an obvious top-of-file contract.`);
     }
 
-    if (!compatibilityWrapper && !knownReferences.has(rootPath) && !INTENTIONAL_STANDALONE_CSS.has(rootPath)) {
-      warnings.push(`${relativePath} is not imported by style.css or linked by rendered routes.`);
+    if (
+      !compatibilityWrapper
+      && !isGeneratedBundlePath(rootPath)
+      && !knownReferences.has(rootPath)
+      && !INTENTIONAL_STANDALONE_CSS.has(rootPath)
+    ) {
+      warnings.push(`${relativePath} is not imported by the style manifest or linked by rendered routes.`);
     }
   }
 

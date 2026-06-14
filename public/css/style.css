@@ -1,57 +1,16 @@
-@layer reset, tokens, shell, typography, grammar, components, systems, routes, handles, effects, ornament;
+/* Full-site stylesheet manifest.
+   For production routes, prefer data-spw-stylesheet-mode="scoped" with flattened bundles
+   under public/css/bundles/. style-core.css owns the shared kernel imports. */
+@import url('/public/css/style-core.css');
 
-/* JetBrains Mono — site body font.
-   Weights: 300 thin, 400 regular, 500 medium, 600 semi-bold, 700 bold.
-   Italic 400 for oblique operator typography (probe, ref, meta operators).
-   display=swap prevents FOIT while the font loads. */
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&display=swap");
-
-/* Newsreader — optical sizing variable serif for editorial typesetting and "wonder modes".
-   Weights 200..800, Optical Sizing opsz 6..72pt */
-@import url("https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap");
-
-@import url('/public/css/reset/base.css') layer(reset);
-@import url('/public/css/tokens/core.css') layer(tokens);
-
-@import url('/public/css/shell/layout.css') layer(shell);
-@import url('/public/css/shell/chrome.css') layer(shell);
-
-@import url('/public/css/typography/base.css') layer(typography);
-@import url('/public/css/typography/context.css') layer(typography);
-@import url('/public/css/typography/typesetting.css') layer(typography);
-
-@import url('/public/css/grammar/syntax.css') layer(grammar);
-
-@import url('/public/css/components/foundation.css') layer(components);
-@import url('/public/css/components/surfaces.css') layer(components);
-@import url('/public/css/components/signals.css') layer(components);
-@import url('/public/css/components/cards.css') layer(components);
-@import url('/public/css/components/frames.css') layer(components);
 @import url('/public/css/components/pretext.css') layer(components);
-@import url('/public/css/components/content.css') layer(components);
-@import url('/public/css/components/controls.css') layer(components);
-@import url('/public/css/components/shell-controls.css') layer(components);
-@import url('/public/css/components/gesture-anatomy.css') layer(components);
 @import url('/public/css/components/cauldron.css') layer(components);
-@import url('/public/css/components/runtime-states.css') layer(components);
-@import url('/public/css/components/floating-chrome.css') layer(components);
 @import url('/public/css/components/promo-wonder-cycle.css') layer(components);
 
-@import url('/public/css/systems/substrate-ecology.css') layer(systems);
-@import url('/public/css/systems/surfaces/base.css') layer(systems);
-@import url('/public/css/systems/surfaces/media.css') layer(systems);
-@import url('/public/css/systems/surfaces/topics.css') layer(systems);
-@import url('/public/css/systems/surfaces/drift.css') layer(systems);
-@import url('/public/css/systems/surfaces/tuning.css') layer(systems);
-@import url('/public/css/systems/surfaces/tuning-discoverability.css') layer(systems);
-@import url('/public/css/systems/surfaces/learnability-ledger.css') layer(systems);
-@import url('/public/css/systems/surfaces/palette-depth.css') layer(systems);
-@import url('/public/css/systems/surfaces/reading-layout.css') layer(systems);
-@import url('/public/css/systems/surfaces/philosophy.css') layer(systems);
-@import url('/public/css/systems/surfaces/rpg.css') layer(systems);
+@import url('/public/css/systems/pretext-physics.css') layer(systems);
 @import url('/public/css/systems/svg-surfaces.css') layer(systems);
 @import url('/public/css/systems/svg-personas.css') layer(systems);
-@import url('/public/css/systems/pretext-physics.css') layer(systems);
+@import url('/public/css/systems/surfaces/rpg.css') layer(systems);
 
 @import url('/public/css/routes/surfaces/home.css') layer(routes);
 @import url('/public/css/routes/surfaces/home-panels.css') layer(routes);
@@ -82,27 +41,3 @@
 @import url('/public/css/routes/rpg-wednesday-surface.css') layer(routes);
 @import url('/public/css/routes/tools-budgeting-surface.css') layer(routes);
 @import url('/public/css/routes/design-experiments.css') layer(routes);
-
-@import url('/public/css/handles/cognitive-handles.css') layer(handles);
-@import url('/public/css/handles/operators.css') layer(handles);
-@import url('/public/css/handles/phase-controls.css') layer(handles);
-@import url('/public/css/handles/logo.css') layer(handles);
-
-/* Effects project semantic state; they must stay additive. */
-@import url('/public/css/effects/material.css') layer(effects);
-@import url('/public/css/effects/enhancements.css') layer(effects);
-@import url('/public/css/effects/grain-texture.css') layer(effects);
-@import url('/public/css/effects/electromagnetic-container.css') layer(effects);
-@import url('/public/css/effects/cinematic.css') layer(effects);
-@import url('/public/css/effects/developmental-climate.css') layer(effects);
-@import url('/public/css/effects/enrichment.css') layer(effects);
-@import url('/public/css/effects/demos.css') layer(effects);
-@import url('/public/css/effects/wonder.css') layer(effects);
-@import url('/public/css/effects/metaphysical-paper.css') layer(effects);
-@import url('/public/css/effects/narrative.css') layer(effects);
-@import url('/public/css/effects/debug.css') layer(effects);
-
-@import url('/public/css/ornament/whimsy.css') layer(ornament);
-@import url('/public/css/ornament/relational-state.css') layer(ornament);
-@import url('/public/css/ornament/canvas-accents.css') layer(ornament);
-@import url('/public/css/ornament/ornament.css') layer(ornament);

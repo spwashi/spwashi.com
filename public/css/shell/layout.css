@@ -228,6 +228,21 @@ main {
   container-type: inline-size;
 }
 
+:where(main > :where(section, article, aside)) {
+  box-sizing: border-box;
+  min-width: 0;
+  max-inline-size: 100%;
+}
+
+/* Stack rhythm stays stable while region metadata arrives after first paint. */
+:where(html[data-spw-page-state="booting"], html[data-spw-page-state="interactive"]) :where(main > :where(section, article)) {
+  contain: layout style;
+}
+
+:where(html[data-spw-page-state="region-enhanced"], html[data-spw-page-state="enhanced"]) :where(main > :where(section, article)) {
+  contain: style;
+}
+
 /* Layout variants: body[data-spw-layout] / main[data-spw-layout] opt a route into
    different uses of horizontal space on wide screens. Reading is the default.
    "wide" lets key clusters breathe; "atlas" gives a rail for auxiliary content;

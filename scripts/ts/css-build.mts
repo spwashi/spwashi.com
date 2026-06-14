@@ -5,6 +5,10 @@ import process from 'node:process';
 import { pathToFileURL } from 'node:url';
 
 import {
+  buildBehaviorScopeModule,
+  buildCssBundles,
+} from './css-bundle.mjs';
+import {
   shouldIgnoreValidationPath,
   toPosixPath,
 } from './shared/build-topology.mjs';
@@ -243,10 +247,11 @@ export async function buildCssSources(options: CssBuildOptions = { check: false,
 export async function main(): Promise<void> {
   const options = parseOptions(process.argv.slice(2));
   const results = await buildCssSources(options);
+  const bundleResults = await buildCssBundles({ check: options.check });
+  const behaviorScopeResult = await buildBehaviorScopeModule({ check: options.check });
 
   if (!results.length) {
     console.log('[css-build] no src/styles/entries sources; public/css remains authoritative');
-    if (!options.watch) return;
   }
 
   const verb = options.check ? 'checked' : 'built';
@@ -257,6 +262,13 @@ export async function main(): Promise<void> {
     const mapNote = result.map ? ` (+ ${result.map})` : '';
     console.log(`  ${mode}: ${result.source} -> ${result.output}${mapNote}${suffix}`);
   }
+
+  console.log(`[css-build] ${verb} ${bundleResults.length} scoped bundle(s)`);
+  for (const bundle of bundleResults) {
+    const suffix = options.check ? '' : bundle.written ? ' updated' : ' fresh';
+    console.log(`  bundle: ${bundle.href} (${(bundle.bytes / 1024).toFixed(1)} KiB)${suffix}`);
+  }
+  console.log(`  runtime: ${behaviorScopeResult.href} (${(behaviorScopeResult.bytes / 1024).toFixed(1)} KiB)${options.check ? '' : behaviorScopeResult.written ? ' updated' : ' fresh'}`);
 
   if (!options.watch) return;
 
@@ -273,6 +285,8 @@ export async function main(): Promise<void> {
       pending = false;
       try {
         await buildCssSources({ check: false, watch: false });
+        await buildCssBundles({ check: false });
+        await buildBehaviorScopeModule({ check: false });
         console.log('[css-build] watch rebuild complete');
       } catch (error) {
         console.error(`[css-build] watch rebuild failed: ${error instanceof Error ? error.message : String(error)}`);

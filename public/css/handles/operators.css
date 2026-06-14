@@ -729,7 +729,9 @@ html[data-spw-dimensional-breadcrumbs="on"] .spw-spell-path .spw-spell-meaning {
   font-style: normal;
 }
 [data-spw-measure-kind] {
+  box-sizing: border-box;
   padding-inline: calc(var(--handle-pad-x) * 0.8);
+  border: 1px solid transparent;
   border-color: var(--measure-tint, currentColor);
 }
 

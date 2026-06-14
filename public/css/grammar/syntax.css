@@ -938,6 +938,23 @@
   --grammar-motion-budget: 0.32;
 }
 
+/* Region lifecycle harmonizes grammar tokens after deferred enrichment lands. */
+:where(.site-frame[data-spw-region-state="queued"], .site-frame[data-spw-region-state="primed"]) {
+  --grammar-motion-budget: min(var(--grammar-motion-budget, 0.26), 0.14);
+  --grammar-boundary-weight: min(var(--grammar-boundary-weight, 0.34), 0.22);
+}
+
+:where(.site-frame[data-spw-region-state="hydrating"], .site-frame[data-spw-region-state="interactive"]) {
+  --grammar-motion-budget: calc(
+    min(var(--grammar-motion-budget, 0.26), 0.32)
+    * (0.42 + (0.58 * var(--spw-region-profile-intensity, 1)))
+  );
+}
+
+:where(.site-frame[data-spw-region-state="enhanced"], .site-frame[data-spw-region-state="settling"]) {
+  --grammar-motion-budget: var(--grammar-motion-budget, var(--local-motion-budget, var(--energy-budget-motion, 0.26)));
+}
+
 /* ==========================================================================
    8. Semantic metadata tags
    ========================================================================== */
