@@ -27,6 +27,7 @@ import {
   isRegionMenuOpen,
   openRegionMenuForElement,
 } from '/public/js/runtime/region-menu.js';
+import { isReadingQuietChrome } from '/public/js/runtime/runtime-helpers.js';
 
 const ROOMY_WIDTH_PX = 704;
 const MEMO_TIMEOUT_MS = 2600;
@@ -1292,23 +1293,27 @@ function resolveSpellPathExpandedDefault() {
   const hasActiveLensFrame = Boolean(document.querySelector('.site-frame[data-state~="active"]'));
   const hasHashFrame = Boolean(hasHash && document.querySelector(window.location.hash));
   const isHome = window.location.pathname === '/' || window.location.pathname === '';
+  const deepRoute = routeParts.length >= 3;
+  const hashTarget = hasHash && hasHashFrame;
 
   if (isHome) {
-    const debugOn = document.documentElement.dataset.spwDebugMode === 'on';
-    if (debugOn) {
+    if (!isReadingQuietChrome()) {
       return hasActiveLensFrame || isHomeLensFrameHashTarget();
     }
     return runtime.pathExpandedManual || isHomeLensFrameHashTarget();
   }
 
-  const hasActiveFrame = hasActiveLensFrame || hasHashFrame;
-
-  const compact = window.matchMedia('(max-width: 720px)').matches;
-  if (compact) {
-    return hasHash || hasActiveFrame || routeParts.length >= 3;
+  if (isReadingQuietChrome()) {
+    return runtime.pathExpandedManual || hashTarget || deepRoute;
   }
 
-  return routeParts.length >= 3 || hasActiveFrame;
+  const hasActiveFrame = hasActiveLensFrame || hasHashFrame;
+  const compact = window.matchMedia('(max-width: 720px)').matches;
+  if (compact) {
+    return hasHash || hasActiveFrame || deepRoute;
+  }
+
+  return deepRoute || hasActiveFrame;
 }
 
 function syncBreadcrumbViewportPreference() {

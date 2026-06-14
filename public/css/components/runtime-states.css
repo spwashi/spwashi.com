@@ -41,7 +41,7 @@
     var(--component-shadow, none);
 }
 
-:where(html[data-spw-module-visuals="on"]:not([data-spw-debug-mode="on"])) :where(#home-frame[data-spw-module-trigger]) > :where(.frame-topline, .frame-heading)::after {
+:where(html[data-spw-module-visuals="on"]:not([data-spw-debug-mode="on"])) :where([data-spw-module-trigger]) > :where(.frame-topline, .frame-heading)::after {
   content: none;
 }
 
@@ -68,6 +68,121 @@
 
 :where(html[data-spw-module-visuals="on"], html[data-spw-debug-mode="on"]) :where([data-spw-module-trigger-status="queued"], [data-spw-module-trigger-status="waiting"]) > :where(.frame-topline, .frame-heading)::after {
   opacity: 0.72;
+}
+
+
+/* ==========================================================================
+   Reading-quiet inspect overlays (public routes, non-debug)
+   --------------------------------------------------------------------------
+   Suppress slot anatomy and passive module-visual rails on editorial surfaces.
+   Settings, website, and plans lab routes stay fully inspectable. Show mounts
+   (module-visuals) still applies box-model rails when explicitly toggled on.
+   ========================================================================== */
+
+html:not([data-spw-debug-mode="on"]):not([data-spw-cognitive-handles="on"]) body:not(
+  [data-spw-surface="settings"],
+  [data-spw-surface="website"],
+  [data-spw-surface="plans"]
+) :where(
+  .site-frame [data-spw-slot-label]::before,
+  .site-frame .spw-anatomy-stack-rail,
+  .frame-card [data-spw-slot-label]::before,
+  .frame-card .spw-anatomy-stack-rail,
+  .vibe-widget [data-spw-slot-label]::before,
+  .vibe-widget .spw-anatomy-stack-rail
+) {
+  display: none;
+  content: none;
+}
+
+html:not([data-spw-debug-mode="on"]):not([data-spw-cognitive-handles="on"]) body:not(
+  [data-spw-surface="settings"],
+  [data-spw-surface="website"],
+  [data-spw-surface="plans"]
+) :where(
+  .site-frame[data-spw-anatomy-stack="true"],
+  .frame-card[data-spw-anatomy-stack="true"]
+) {
+  border-inline-start: 0;
+  padding-inline-start: 0;
+}
+
+html:not([data-spw-debug-mode="on"]):not([data-spw-cognitive-handles="on"]):not([data-spw-module-visuals="on"]) body:not(
+  [data-spw-surface="settings"],
+  [data-spw-surface="website"],
+  [data-spw-surface="plans"]
+) :where(
+  .site-frame [data-spw-box-model],
+  .site-frame [data-spw-box-presence="overfull"],
+  .frame-card [data-spw-box-model],
+  .frame-card [data-spw-box-presence="overfull"]
+) {
+  --spw-box-model-rail-opacity: 0;
+  --spw-box-model-rail-width: 0;
+  box-shadow: none;
+  outline: none;
+}
+
+html:not([data-spw-debug-mode="on"]):not([data-spw-cognitive-handles="on"]):not([data-spw-module-visuals="on"]) body:not(
+  [data-spw-surface="settings"],
+  [data-spw-surface="website"],
+  [data-spw-surface="plans"]
+) :where(
+  .site-frame [data-spw-box-story],
+  .frame-card [data-spw-box-story]
+)::after {
+  display: none;
+  content: none;
+}
+
+html:not([data-spw-debug-mode="on"]) body:not(
+  [data-spw-surface="settings"],
+  [data-spw-surface="website"],
+  [data-spw-surface="plans"]
+) :where(
+  .spw-header-trace:has(.spw-spell-path[data-spw-breadcrumb-state="closed"])
+) {
+  min-block-size: 0;
+  opacity: 0.84;
+}
+
+html:not([data-spw-debug-mode="on"]) body:not(
+  [data-spw-surface="settings"],
+  [data-spw-surface="website"],
+  [data-spw-surface="plans"]
+) :where(
+  .spw-spell-path[data-spw-breadcrumb-state="closed"] .spw-spell-path__header
+) {
+  padding-block: 0.04rem;
+}
+
+html:not([data-spw-debug-mode="on"]) body:not(
+  [data-spw-surface="settings"],
+  [data-spw-surface="website"],
+  [data-spw-surface="plans"]
+) :where(
+  .spw-spell-path[data-spw-breadcrumb-state="closed"] .spw-spell-path__summary,
+  .spw-spell-path[data-spw-breadcrumb-state="closed"] .spw-spell-sorter-chip
+) {
+  font-size: 0.58rem;
+  opacity: 0.78;
+}
+
+html:not([data-spw-debug-mode="on"]) body:not(
+  [data-spw-surface="settings"],
+  [data-spw-surface="website"],
+  [data-spw-surface="plans"]
+) :where(
+  .spw-spell-path[data-spw-breadcrumb-state="closed"] .spw-spell-path__hint
+) {
+  display: none;
+}
+
+html[data-spw-debug-mode="on"] :where(
+  .site-frame [data-spw-slot],
+  .frame-card [data-spw-slot]
+) {
+  scroll-margin-top: calc(var(--header-height, 4rem) + 0.5rem);
 }
 
 .spw-state-inspector {

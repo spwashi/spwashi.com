@@ -304,3 +304,21 @@ export function normalizeMountHandle(result) {
 
   return { cleanup: null, refresh: null };
 }
+
+const INSPECT_LAB_SURFACES = new Set(['settings', 'website', 'plans']);
+
+export function isInspectLabSurface(root = BODY) {
+  return INSPECT_LAB_SURFACES.has(root?.dataset?.spwSurface || '');
+}
+
+/**
+ * Public reading surfaces stay visually quiet unless debug seams, cognitive
+ * handles, or inspect-lab routes are explicitly active.
+ */
+export function isReadingQuietChrome(root = document) {
+  const html = root.documentElement || HTML;
+  if (html.dataset.spwDebugMode === 'on') return false;
+  if (html.dataset.spwCognitiveHandles === 'on') return false;
+  if (isInspectLabSurface(root.body || BODY)) return false;
+  return true;
+}

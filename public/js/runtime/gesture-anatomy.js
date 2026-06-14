@@ -1,6 +1,7 @@
 import { writeDatasetValues } from '/public/js/kernel/dom-contracts.js';
 import { getSiteSettings, resolveTuningDiscoverability } from '/public/js/kernel/site-settings.js';
 import { registerDomSyncTask } from '/public/js/runtime/dom-sync-hub.js';
+import { isReadingQuietChrome } from '/public/js/runtime/runtime-helpers.js';
 
 const SLOT_SIGILS = Object.freeze({
   header: '⌁',
@@ -41,16 +42,14 @@ const GESTURE_CONTRACT_SELECTOR = [
 const SLOT_HOST_SELECTOR = '.site-frame, .frame-card, .vibe-widget';
 
 function shouldAnnotate() {
-  const settings = getSiteSettings();
-  const debugOn = document.documentElement.dataset.spwDebugMode === 'on';
-  const onHome = document.body?.dataset.spwSurface === 'home';
-  if (onHome && !debugOn && settings.cognitiveHandles !== 'on') return false;
+  if (isReadingQuietChrome()) return false;
 
+  const settings = getSiteSettings();
   const mode = document.documentElement.dataset.spwTuningDiscoverability
     || resolveTuningDiscoverability(settings);
   const stance = settings.metacognitiveStance || 'witness';
   if (settings.cognitiveHandles === 'on') return true;
-  if (debugOn) return true;
+  if (document.documentElement.dataset.spwDebugMode === 'on') return true;
   if (mode !== 'quiet') return true;
   if (stance === 'composer' || stance === 'overflow') return true;
   if (stance === 'integrator' && settings.developmentalIndicators === 'on') return true;
