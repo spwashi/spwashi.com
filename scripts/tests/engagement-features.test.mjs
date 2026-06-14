@@ -9,6 +9,7 @@ import {
   getRuntimeRewardPolicy,
   normalizeNotice,
   resolveNoticePresentation,
+  shouldSuppressScheduledNotices,
   selectScheduleItems,
   slugify,
   shouldSuppressNotice,
@@ -173,7 +174,8 @@ test('discovery notices suppress duplicate visible routes', () => {
 
 test('discovery notices downgrade modal promos on reading-quiet chrome', () => {
   assert.equal(resolveNoticePresentation('modal', { readingQuiet: true }), 'toast');
-  assert.equal(resolveNoticePresentation('modal', { readingQuiet: false }), 'modal');
+  assert.equal(resolveNoticePresentation('modal', { inspectLab: true }), 'toast');
+  assert.equal(resolveNoticePresentation('modal', { readingQuiet: false, inspectLab: false }), 'modal');
   assert.equal(resolveNoticePresentation('modal', { forceModal: true, readingQuiet: true }), 'modal');
   assert.equal(resolveNoticePresentation('popup', { readingQuiet: true }), 'popup');
 
@@ -218,6 +220,19 @@ test('discovery notices downgrade modal promos on reading-quiet chrome', () => {
 
   delete document.documentElement.dataset.spwDebugMode;
   delete document.documentElement.dataset.spwCognitiveHandles;
+  delete document.body.dataset.spwSurface;
+});
+
+test('discovery notices suppress scheduled promos on inspect-lab surfaces', () => {
+  document.body.dataset.spwSurface = 'settings';
+  assert.equal(shouldSuppressScheduledNotices(), true);
+
+  const suppressed = buildVisibleNotices(noticeFeed, date, {}, '/settings/');
+  assert.equal(suppressed.visible.length, 0);
+
+  document.body.dataset.spwSurface = 'topics';
+  assert.equal(shouldSuppressScheduledNotices(), false);
+
   delete document.body.dataset.spwSurface;
 });
 

@@ -6,7 +6,7 @@ import {
   getWeekIndex,
 } from '/public/js/kernel/feed-utils.js';
 import { annotateFloatingChromeElement } from '/public/js/kernel/dom-contracts.js';
-import { isReadingQuietChrome } from '/public/js/runtime/runtime-helpers.js';
+import { isInspectLabSurface, isReadingQuietChrome } from '/public/js/runtime/runtime-helpers.js';
 
 const FEED_URL = '/public/data/promo-wonder-cycle.json';
 const STORAGE_KEY = 'spw-discovery-notice-dismissals';
@@ -166,12 +166,27 @@ function readReadingQuietChrome() {
   }
 }
 
+function readInspectLabSurface() {
+  try {
+    if (typeof document === 'undefined') return false;
+    return isInspectLabSurface();
+  } catch {
+    return false;
+  }
+}
+
+export function shouldSuppressScheduledNotices() {
+  return readInspectLabSurface();
+}
+
 export function resolveNoticePresentation(presentation, options = {}) {
   const normalized = normalizePresentation(presentation);
   if (normalized !== 'modal') return normalized;
   if (options.forceModal === true) return normalized;
   const readingQuiet = options.readingQuiet ?? readReadingQuietChrome();
-  return readingQuiet ? 'toast' : normalized;
+  const inspectLab = options.inspectLab ?? readInspectLabSurface();
+  if (readingQuiet || inspectLab) return 'toast';
+  return normalized;
 }
 
 export function selectScheduleItems(feed, date = new Date()) {
@@ -552,6 +567,10 @@ export function normalizeNotice(raw, cadence, scheduleKey, index, locale) {
 }
 
 export function buildVisibleNotices(feed, date = new Date(), dismissals = readDismissals(), currentPath = window.location.pathname) {
+  if (shouldSuppressScheduledNotices()) {
+    return { dismissals, visible: [] };
+  }
+
   const locale = cleanText(feed?.sourceLocale || 'en') || 'en';
   const selected = selectScheduleItems(feed, date);
   const visible = [];
