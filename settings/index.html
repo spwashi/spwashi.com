@@ -26,7 +26,7 @@
 <body
     data-spw-surface="settings"
     data-spw-context="settings"
-    data-spw-features="operators navigator console"
+    data-spw-features="operators navigator console pretext-lab metrics"
     data-spw-kernel="site-settings"
     data-spw-lattice="author-workflow developmental-climate appearance typography accessibility chrome diagnostics"
     data-spw-page-family="runtime-observatory"
@@ -618,7 +618,7 @@
                 <a class="settings-shortcut-card" href="#typography-settings">
                     <span class="settings-shortcut-kicker">Reading comfort</span>
                     <strong>Typography</strong>
-                    <span>Type size, line spacing, and editorial reading mode.</span>
+                    <span>Type size, line spacing, live line-count preview, and editorial reading mode.</span>
                 </a>
 
                 <a class="settings-shortcut-card" href="#accessibility-settings">
@@ -1508,7 +1508,34 @@
                                     <span class="settings-option-copy"><strong>120%</strong></span>
                                 </label>
                             </div>
-                            <p class="frame-note">Normalization: scale × preset multiplier (small=0.93, normal=1, large=1.12) sets --site-root-font-size. Live preview via design hub immediate tuners.</p>
+                            <p class="frame-note">Normalization: scale × preset multiplier (small=0.93, normal=1, large=1.12) sets --site-root-font-size. The measurement preview below updates from the same root tokens inspected on <a href="/design/">/design/</a>.</p>
+                        </fieldset>
+
+                        <fieldset class="settings-fieldset settings-fieldset--wide" id="typography-measurement-preview" data-spw-feature="typography-measurement-preview" data-spw-box-model="control-card" data-spw-typography-measure-width="360">
+                            <legend>Measurement preview</legend>
+                            <p class="frame-note">Objective typography telemetry: line count, projected height, and wrap volatility at a chosen measure. Subjective taste still lives in presets and climate — this panel only reports what Pretext can honestly compute.</p>
+
+                            <div class="settings-measure-preview" data-spw-measure-kind="objective" data-spw-measure-source="settings-typography-preview">
+                                <label class="settings-measure-preview__width" for="typography-measure-width">
+                                    <span>Measure width</span>
+                                    <input id="typography-measure-width" data-typography-measure-width name="typographyMeasureWidth" type="range" min="220" max="720" step="12" value="360" />
+                                    <span data-typography-measure-width-label>360px</span>
+                                </label>
+
+                                <div class="settings-measure-preview__sample" data-spw-flow="pretext" data-spw-pretext-preset="prose-calm" data-text-kind="prose" data-text-wrap="responsive">
+                                    <p data-typography-measure-sample>Settings tune reading weather in this browser. Change scale or line spacing and watch line count, height, and wrap volatility update before you carry the choice back to a real route.</p>
+                                </div>
+
+                                <p class="settings-measure-preview__readout" aria-live="polite">
+                                    <span class="settings-measure-preview__label">Telemetry</span>
+                                    <code data-typography-measure-readout>awaiting measurement</code>
+                                </p>
+                            </div>
+
+                            <div class="vibe-widget-actions" role="group" aria-label="Typography measurement links">
+                                <a class="operator-chip" href="/design/">#&gt; design hub</a>
+                                <a class="operator-chip" href="/topics/software/pretext/">? pretext lab</a>
+                            </div>
                         </fieldset>
 
                         <fieldset class="settings-fieldset">

@@ -28,8 +28,12 @@
  * ---------------------------------------------------------------------------
  */
 
-import { loadPretext } from '../legacy/pretext-utils.js';
+import { loadPretext } from './pretext-utils.js';
 import { bus } from '/public/js/kernel/bus.js';
+import {
+  publishMeasurement,
+  writePretextMeasurementDataset,
+} from './pretext-measurement-bus.js';
 
 /* ==========================================================================
    1. Defaults, presets, channels
@@ -37,9 +41,10 @@ import { bus } from '/public/js/kernel/bus.js';
 
 const DEFAULTS = Object.freeze({
   root: document,
-  selector: '[data-spw-flow="pretext"]',
+  selector: '[data-spw-flow="pretext"][data-spw-pretext-live="true"]:not([data-spw-pretext-static])',
   scaffoldSelector: '[data-spw-pretext-scaffold], [data-spw-debug~="pretext"]',
 
+  pointerProjectionEnabled: false,
   pointerFieldX: 520,
   pointerFieldY: 260,
   centerSnapPx: 12,
@@ -338,11 +343,17 @@ async function ensurePretext() {
 
 function collectTargets(root, selector) {
   const targets = [];
-  if (root instanceof Element && root.matches(selector)) {
+  if (root instanceof Element && root.matches(selector) && !isStaticPretextHost(root)) {
     targets.push(root);
   }
-  root.querySelectorAll?.(selector).forEach((el) => targets.push(el));
+  root.querySelectorAll?.(selector).forEach((el) => {
+    if (!isStaticPretextHost(el)) targets.push(el);
+  });
   return targets;
+}
+
+function isStaticPretextHost(el) {
+  return el instanceof Element && el.hasAttribute('data-spw-pretext-static');
 }
 
 /* ==========================================================================
@@ -354,8 +365,10 @@ function ensureRuntimeListeners(config) {
 
   RUNTIME.config = config;
 
-  document.body.addEventListener('pointermove', onPointerMove, { passive: true });
-  window.addEventListener('blur', settleAllInstances);
+  if (config.pointerProjectionEnabled) {
+    document.body.addEventListener('pointermove', onPointerMove, { passive: true });
+    window.addEventListener('blur', settleAllInstances);
+  }
 
   if ('ResizeObserver' in window) {
     RUNTIME.resizeObserver = new ResizeObserver(onResize);
@@ -1074,6 +1087,33 @@ function syncSurfaceState(state) {
   el.style.setProperty('--pretext-beat', `${rhythm.beat}`);
   el.style.setProperty('--pretext-measure', `${rhythm.measure}`);
   el.style.setProperty('--pretext-bpm', `${rhythm.bpm}`);
+
+  writePretextMeasurementDataset(el, {
+    wrap: measurement.wrapVolatility,
+    measure: context.measureProfile,
+    widthClass: measurement.widthClass,
+    lineCount: measurement.canonicalLines,
+    projectedLineCount: measurement.canonicalLines,
+    heightPx: Math.round(measurement.canonicalLines * (state.substrate.lineHeightPx || state.config.defaultLineHeightPx)),
+    widthPx: measurement.projectedWidth,
+    source: 'pretext-physics',
+  });
+
+  publishMeasurement({
+    host: el,
+    kind: context.kind,
+    density: context.density,
+    measure: context.measureProfile,
+    projection: context.projectionFamily,
+    wrap: measurement.wrapVolatility,
+    widthClass: measurement.widthClass,
+    lineCount: measurement.canonicalLines,
+    projectedLineCount: measurement.canonicalLines,
+    widthPx: measurement.projectedWidth,
+    canonicalWidthPx: measurement.canonicalWidth,
+    projectedWidthPx: measurement.projectedWidth,
+    source: 'pretext-physics',
+  });
 }
 
 /* ==========================================================================

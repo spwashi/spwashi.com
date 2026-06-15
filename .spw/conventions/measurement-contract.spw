@@ -12,6 +12,7 @@
 @attention_field: ~"./attention-field.spw"
 @planning_ecology: ~"./planning-ecology.spw#operational_semantics_template"
 @workbench_claims: ~"../_workbench/.spw/harness/claim-protocol.spw"
+@pretext_measurement_bus: ~"../../public/js/semantic/pretext-measurement-bus.js"
 
 ^"core_distinction"{
   objective: .{

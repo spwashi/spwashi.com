@@ -20,6 +20,8 @@ export const MOUNT_WHEN = Object.freeze({
   REGION: 'region',
 });
 
+const PRETEXT_LIVE_SELECTOR = '[data-spw-flow="pretext"][data-spw-pretext-live="true"]:not([data-spw-pretext-static])';
+
 export const CORE_DEFS = [
   {
     id: 'site-settings',
@@ -370,6 +372,59 @@ export const FEATURE_DEFS = [
       const fn = mod?.initPretextLab;
       if (!isFn(fn)) return;
       return fn();
+    },
+  },
+  {
+    id: 'pretext-physics',
+    layer: MODULE_LAYERS.FEATURE,
+    when: MOUNT_WHEN.VISIBLE,
+    features: ['pretext-lab'],
+    selector: PRETEXT_LIVE_SELECTOR,
+    rootMode: 'each',
+    describes: 'pretext[measure.classify.signal] text[wrap-volatility.width-class] css[projection-vars]',
+    updates: ['data-text-wrap', 'data-text-measure', 'data-text-width-class', 'data-spw-pretext-width-class', '--pretext-canonical-width', '--pretext-projected-width'],
+    load: () => import('../semantic/pretext-physics.js'),
+    mount: (mod, ctx, root) => {
+      const fn = mod?.initPretextPhysics;
+      if (!isFn(fn) || !(root instanceof HTMLElement)) return;
+      return fn({
+        root,
+        selector: PRETEXT_LIVE_SELECTOR,
+        ornamentEnabled: false,
+        rhythmEnabled: false,
+        pointerProjectionEnabled: false,
+      });
+    },
+  },
+  {
+    id: 'typography-measurement-preview',
+    layer: MODULE_LAYERS.FEATURE,
+    when: MOUNT_WHEN.VISIBLE,
+    route: 'settings',
+    features: ['pretext-lab'],
+    selector: '#typography-measurement-preview',
+    describes: 'settings[typography.measure.preview] pretext[bus.telemetry] designer[conversation.handoff]',
+    updates: ['data-spw-typography-measure-state', 'data-spw-pretext-line-count', 'data-text-wrap', 'data-spw-measure-kind'],
+    load: () => import('../modules/typography-measurement-preview.js'),
+    mount: (mod, ctx, root) => {
+      const fn = mod?.initTypographyMeasurementPreview;
+      if (!isFn(fn)) return;
+      return fn(root);
+    },
+  },
+  {
+    id: 'frame-metrics',
+    layer: MODULE_LAYERS.FEATURE,
+    when: MOUNT_WHEN.VISIBLE,
+    features: ['metrics'],
+    selector: 'main',
+    describes: 'frame[text.measure] site-frame[line-count.height.wrap] bus[pretext-measurement]',
+    updates: ['data-spw-frame-line-count', 'data-spw-frame-wrap', 'data-spw-measure-kind', 'data-spw-measure-source'],
+    load: () => import('./frame-metrics.js'),
+    mount: (mod, ctx, root) => {
+      const fn = mod?.initFrameMetrics;
+      if (!isFn(fn)) return;
+      return fn(root);
     },
   },
 ];

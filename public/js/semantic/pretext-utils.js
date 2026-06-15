@@ -6,7 +6,7 @@ let _loading = null;
 const loadPretext = async () => {
     if (_module) return _module;
     if (!_loading) {
-        _loading = import(CDN_URL).then((mod) => {
+        _loading = import(/* @vite-ignore */ CDN_URL).then((mod) => {
             _module = mod;
             return mod;
         });

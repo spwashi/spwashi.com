@@ -11,6 +11,7 @@ import {
   writeDatasetValue,
   writeDatasetValues,
 } from '/public/js/kernel/dom-contracts.js';
+import { readPretextSignals } from '../semantic/pretext-measurement-bus.js';
 import { PAGE_ATTENTION_EVENT } from './page-state.js';
 
 const DEFAULT_SELECTOR = [
@@ -253,6 +254,8 @@ export function snapshotCompositionBox(target, options = {}) {
   const contentTone = resolveContentTone(el, box);
   const settlePhase = resolveSettlePhase(el, options.root || document.documentElement);
 
+  const pretext = readPretextSignals(el);
+
   return {
     selector: el.id ? `#${el.id}` : el.dataset.spwFeature ? `[data-spw-feature="${el.dataset.spwFeature}"]` : el.tagName.toLowerCase(),
     role,
@@ -263,6 +266,7 @@ export function snapshotCompositionBox(target, options = {}) {
     settlePhase,
     flow: box.flow,
     box,
+    pretext,
     story: describeBox(el, box, role, presence),
     semantics: {
       kind: el.dataset.spwKind || '',
@@ -284,12 +288,17 @@ export function annotateCompositionBox(target, options = {}) {
   writeDatasetValues(el, {
     spwBoxModel: snapshot.role,
     spwCompositionFlow: snapshot.flow,
-    spwBoxMeasure: snapshot.measure,
+    spwBoxMeasure: snapshot.pretext?.measure || snapshot.measure,
     spwBoxPresence: snapshot.presence,
     spwBoxOverflow: snapshot.box.overflowX || snapshot.box.overflowY ? 'true' : 'false',
     spwSizeContext: snapshot.sizeContext,
-    spwContentTone: snapshot.contentTone,
+    spwContentTone: snapshot.pretext?.wrap || snapshot.contentTone,
     spwBoxSettlePhase: snapshot.settlePhase,
+    spwTextWrap: snapshot.pretext?.wrap || '',
+    spwTextMeasure: snapshot.pretext?.measure || '',
+    spwTextWidthClass: snapshot.pretext?.widthClass || '',
+    spwMeasureKind: snapshot.pretext ? 'objective' : '',
+    spwMeasureSource: snapshot.pretext?.source || '',
   }, { missingOnly: options.missingOnly === true });
 
   if (options.story !== false) {
@@ -376,6 +385,11 @@ export const SPW_COMPOSITION_BOX_MODEL_CONTRACT = Object.freeze({
     'data-spw-size-context',
     'data-spw-content-tone',
     'data-spw-box-settle-phase',
+    'data-spw-text-wrap',
+    'data-spw-text-measure',
+    'data-spw-text-width-class',
+    'data-spw-measure-kind',
+    'data-spw-measure-source',
   ]),
   settlePhases: SETTLE_PHASES,
   roles: Object.freeze(['stage', 'fold', 'control-group', 'control-card', 'feature', 'choice-field', 'component']),

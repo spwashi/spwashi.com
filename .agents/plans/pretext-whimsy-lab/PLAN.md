@@ -11,18 +11,39 @@ The desired end state is a Pretext surface that can move from observatory to pla
 - **In scope**: define an honest capability lattice for Pretext in this repo; outline a ladder from observatory to whimsical/physical projection; define deterministic physics profiles and constraint families; predict experiment families, controls, telemetry, and feature-gating; map how SVG-backed projections and mobile-first interactions can support the lab without turning it into a separate app.
 - **Out of scope**: replacing the current observatory outright, depending on glyph-outline data Pretext does not provide, introducing an unconstrained particle engine, or making whimsy a site-wide default mode.
 
+## Utility Integration Pass
+
+The first runtime integration should make Pretext a typographic measurement bus before it becomes a wider effect system. Live runtime hosts use `data-spw-flow="pretext"` plus `data-spw-pretext-live="true"`; authored teaching specimens use `data-spw-pretext-static="true"` so their line markup is not rewritten. The `pretext-physics` module is visible-only and feature-gated through the existing `pretext-lab` behavior scope, which keeps CSS and JS scheduling aligned.
+
+The live pass should write wrap volatility, measure profile, width class, and projection CSS variables on one or two constrained specimens in `/topics/software/pretext/` and `/design/#rendering-contexts`. Pointer/rhythm projection stays disabled by default until a later `pretext-projection` slice proves it earns the cost.
+
+## Measurement Bus Extension
+
+`public/js/semantic/pretext-measurement-bus.js` is now the shared telemetry layer:
+
+- `pretext-physics` publishes `spw:pretext-measurement` after surface sync
+- `frame-metrics` consumes the bus and falls back to direct Pretext layout
+- `composition-box-model` reads `data-text-wrap` / measure signals from nested hosts
+- `typography-measurement-preview` on `/settings/#typography-measurement-preview` gives designers a width scrubber and objective readout tied to root typography tokens
+
+See `designer-conversation-canvas/PLAN.md` for the public-site design conversation framing.
+
 ## Files
 
 [NEW] .agents/plans/pretext-whimsy-lab/PLAN.md
 [NEW] .agents/plans/pretext-whimsy-lab/wip.spw
 [NEW] .agents/plans/pretext-whimsy-lab/pretext-whimsy-lab.spw
 [MOD?] topics/software/pretext/index.html - add experimental regions, experiment selectors, and bounded whimsy surfaces
+[MOD?] design/index.html - keep most rendering-context specimens static and make one live runtime proof
 [MOD?] topics/software/index.html - link into the whimsy lane or explain its place in the software surface
-[MOD?] public/js/pretext-lab.js - either widen or split the existing observatory runtime
-[MOD?] public/js/pretext-utils.js - capability adapters, caching, or fallbacks for experiment families
+[MOD?] public/js/runtime/module-catalog.js - visible feature-gated mount for `pretext-physics`
+[MOD?] public/js/semantic/pretext-lab.js - either widen or split the existing observatory runtime
+[MOD?] public/js/semantic/pretext-physics.js - live host selector, measurement signals, projection controls
+[MOD?] public/js/semantic/pretext-utils.js - capability adapters, caching, or fallbacks for experiment families
 [MOD?] public/css/style.css - whimsy surface containment, responsive stacking, and experiment-specific SVG/text styling
-[MOD?] public/js/spw-shared.js - shared helpers or registers if the lab starts projecting richer inspect state
-[MOD?] public/js/spw-console.js - optional projection of truthful experiment telemetry
+[MOD?] public/css/systems/pretext-physics.css - CSS-native typed variables and host containment
+[MOD?] public/js/kernel/shared.js - shared helpers or registers if the lab starts projecting richer inspect state
+[MOD?] public/js/interface/console.js - optional projection of truthful experiment telemetry
 [NEW?] public/js/pretext-whimsy-lab.js - separate experiment runtime so observatory logic stays readable
 [NEW?] public/js/pretext-physics-profiles.js - deterministic force profiles and constraint mappings derived from line metrics
 [NEW?] public/js/pretext-whimsy-presets.js - curated playful presets and experiment definitions

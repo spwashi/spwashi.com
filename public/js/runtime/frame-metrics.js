@@ -1,6 +1,12 @@
-import { loadPretext } from '/public/js/semantic/pretext-utils.js';
+import {
+  classifyWrapVolatility,
+  ensurePretextEngine,
+  formatMeasurementSummary,
+  measureTextLayout,
+  publishMeasurement,
+  readPretextSignals,
+} from '/public/js/semantic/pretext-measurement-bus.js';
 
-const METRICS_FONT = '16px JetBrains Mono, monospace';
 const LINE_HEIGHT = 26;
 const PADDING = 40;
 
@@ -24,6 +30,8 @@ const createMetricsBar = () => {
     const bar = document.createElement('div');
     bar.className = 'frame-metrics-bar';
     bar.setAttribute('aria-hidden', 'true');
+    bar.dataset.spwMeasureKind = 'objective';
+    bar.dataset.spwMeasureSource = 'frame-metrics';
 
     const label = document.createElement('span');
     label.className = 'frame-metrics-label';
@@ -37,7 +45,19 @@ const createMetricsBar = () => {
     return { bar, items };
 };
 
-const measureFrame = (frame, pretext, handleCache) => {
+const measureFrame = async (frame, handleCache) => {
+    const liveSignals = readPretextSignals(frame);
+    if (liveSignals?.lineCount) {
+        return {
+            lineCount: liveSignals.lineCount,
+            height: liveSignals.heightPx,
+            width: liveSignals.projectedWidth || liveSignals.canonicalWidth,
+            wrap: liveSignals.wrap,
+            measure: liveSignals.measure,
+            source: liveSignals.source,
+        };
+    }
+
     const text = getFramePrimaryText(frame);
     if (!text) return null;
 
@@ -47,28 +67,57 @@ const measureFrame = (frame, pretext, handleCache) => {
     let entry = handleCache.get(frame);
     if (!entry || entry.text !== text) {
         try {
-            const prepared = pretext.prepare(text, METRICS_FONT);
-            entry = { text, prepared };
+            const layout = await measureTextLayout({ text, width, lineHeightPx: LINE_HEIGHT });
+            entry = { text, layout };
             handleCache.set(frame, entry);
         } catch {
             return null;
         }
     }
 
-    try {
-        const result = pretext.layout(entry.prepared, width, LINE_HEIGHT);
-        return { lineCount: result.lineCount, height: result.height, width };
-    } catch {
-        return null;
-    }
+    const { layout } = entry;
+    const wrap = layout.wrap || classifyWrapVolatility(layout.lineCount, layout.lineCount);
+
+    return {
+        lineCount: layout.lineCount,
+        height: layout.height,
+        width: layout.width,
+        wrap,
+        measure: 'standard',
+        source: 'frame-metrics',
+    };
 };
 
-const updateAll = (tracked, pretext, handleCache) => {
-    tracked.forEach(({ frame, items }) => {
-        const metrics = measureFrame(frame, pretext, handleCache);
+const updateAll = async (tracked, handleCache) => {
+    await Promise.all(tracked.map(async ({ frame, bar, items }) => {
+        const metrics = await measureFrame(frame, handleCache);
         if (!metrics) return;
-        items.textContent = `${metrics.lineCount}L · ~${Math.round(metrics.height)}px · @${Math.round(metrics.width)}px`;
-    });
+
+        items.textContent = formatMeasurementSummary({
+            lineCount: metrics.lineCount,
+            heightPx: metrics.height,
+            widthPx: metrics.width,
+            wrap: metrics.wrap,
+            measure: metrics.measure,
+        });
+
+        frame.dataset.spwFrameLineCount = String(metrics.lineCount);
+        frame.dataset.spwFrameTextHeight = String(Math.round(metrics.height || 0));
+        frame.dataset.spwFrameMeasureWidth = String(Math.round(metrics.width || 0));
+        frame.dataset.spwFrameWrap = metrics.wrap || '';
+        frame.dataset.spwMeasureKind = 'objective';
+        frame.dataset.spwMeasureSource = metrics.source || 'frame-metrics';
+
+        publishMeasurement({
+            host: frame,
+            lineCount: metrics.lineCount,
+            heightPx: metrics.height,
+            widthPx: metrics.width,
+            wrap: metrics.wrap,
+            measure: metrics.measure,
+            source: metrics.source || 'frame-metrics',
+        });
+    }));
 };
 
 export async function initFrameMetrics(root = document) {
@@ -81,10 +130,9 @@ export async function initFrameMetrics(root = document) {
 
     initialized = true;
 
-    let pretext;
     try {
         if (document.fonts?.ready) await document.fonts.ready;
-        pretext = await loadPretext();
+        await ensurePretextEngine();
     } catch {
         initialized = false;
         return () => {};
@@ -106,7 +154,7 @@ export async function initFrameMetrics(root = document) {
         if (rafId) cancelAnimationFrame(rafId);
         rafId = requestAnimationFrame(() => {
             rafId = 0;
-            updateAll(tracked, pretext, handleCache);
+            updateAll(tracked, handleCache);
         });
     };
 
@@ -117,6 +165,8 @@ export async function initFrameMetrics(root = document) {
     } else {
         window.addEventListener('resize', scheduleUpdate, { passive: true });
     }
+
+    document.addEventListener('spw:pretext-measurement', scheduleUpdate, { passive: true });
 
     scheduleUpdate();
 
@@ -133,6 +183,7 @@ export async function initFrameMetrics(root = document) {
             window.removeEventListener('resize', scheduleUpdate);
         }
 
+        document.removeEventListener('spw:pretext-measurement', scheduleUpdate);
         tracked.forEach(({ bar }) => bar.remove());
 
         cleanupCurrent = null;

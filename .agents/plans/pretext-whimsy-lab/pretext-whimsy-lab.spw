@@ -11,9 +11,12 @@
  @svg_plan: ~"../svg-surface-integration/svg-surface-integration.spw"
  @css_plan: ~"../css-progressive-ornaments/css-progressive-ornaments.spw"
  @pretext_page: ~"topics/software/pretext/index.html"
- @lab: ~"public/js/pretext-lab.js"
- @utils: ~"public/js/pretext-utils.js"
- @css: ~"public/css/style.css?v=0.0.2"
+ @design_page: ~"design/index.html#rendering-contexts"
+ @module_catalog: ~"public/js/runtime/module-catalog.js"
+ @lab: ~"public/js/semantic/pretext-lab.js"
+ @physics: ~"public/js/semantic/pretext-physics.js"
+ @utils: ~"public/js/semantic/pretext-utils.js"
+ @css: ~"public/css/systems/pretext-physics.css"
 }
 
 ^["thesis"]{
@@ -101,6 +104,27 @@
   "width context"
  ]
  rule: "Telemetry should explain the play, not sit in a disconnected dashboard."
+}
+
+^["measurement_bus_contract"]{
+ definition: "Pretext should first act as a typographic measurement bus: prepare text once, classify line and wrap behavior, then expose stable state for CSS and inspectors."
+ live_host: "data-spw-flow='pretext' + data-spw-pretext-live='true'"
+ static_guard: "data-spw-pretext-static='true' marks authored specimen markup that teaches the contract and must not be rewritten by the runtime."
+ runtime_mount: "module-catalog mounts pretext-physics as visible-only, rootMode each, feature-gated by pretext-lab."
+ utility_signals: [
+  "data-text-wrap",
+  "data-text-measure",
+  "data-text-width-class",
+  "data-spw-pretext-width-class",
+  "--pretext-canonical-width",
+  "--pretext-projected-width",
+  "--pretext-influence"
+ ]
+ default_rule: "Pointer and rhythm projection stay disabled by default; a later projection slice can opt in after it proves utility and cost."
+ first_surfaces: [
+  "/topics/software/pretext/#pretext-observatory",
+  "/design/#rendering-contexts"
+ ]
 }
 
 ^["wonder"]{

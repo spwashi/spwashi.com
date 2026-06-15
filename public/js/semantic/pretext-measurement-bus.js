@@ -1,0 +1,208 @@
+/**
+ * Pretext Measurement Bus
+ *
+ * Shared typographic measurement layer for live Pretext hosts, frame metrics,
+ * composition snapshots, and designer-facing preview surfaces.
+ *
+ * JS predicts lines; consumers read stable signals and optional bus events.
+ */
+
+import { loadPretext } from './pretext-utils.js';
+
+export const PRETEXT_MEASUREMENT_EVENT = 'spw:pretext-measurement';
+
+export const WRAP_VOLATILITY = Object.freeze({
+  STABLE: 'stable',
+  RESPONSIVE: 'responsive',
+  VOLATILE: 'volatile',
+});
+
+export const MEASURE_KIND = Object.freeze({
+  OBJECTIVE: 'objective',
+});
+
+const PRETEXT_HOST_SELECTOR = '[data-spw-flow="pretext"]';
+
+let pretextPromise = null;
+
+function toNumber(value = '', fallback = 0) {
+  const parsed = Number.parseFloat(String(value));
+  return Number.isFinite(parsed) ? parsed : fallback;
+}
+
+export function classifyWrapVolatility(canonicalLines = 0, projectedLines = 0) {
+  const canonical = Math.max(0, Math.round(canonicalLines));
+  const projected = Math.max(0, Math.round(projectedLines));
+  const diff = Math.abs(projected - canonical);
+
+  if (diff >= 4) return WRAP_VOLATILITY.VOLATILE;
+  if (diff >= 2) return WRAP_VOLATILITY.RESPONSIVE;
+  return WRAP_VOLATILITY.STABLE;
+}
+
+export function findPretextHost(el) {
+  if (!(el instanceof Element)) return null;
+  if (el.matches(PRETEXT_HOST_SELECTOR)) return el;
+  return el.querySelector(PRETEXT_HOST_SELECTOR) || el.closest(PRETEXT_HOST_SELECTOR);
+}
+
+export function readPretextSignals(el) {
+  const host = findPretextHost(el);
+  if (!(host instanceof HTMLElement)) return null;
+
+  const canonicalWidth = toNumber(host.style.getPropertyValue('--pretext-canonical-width'));
+  const projectedWidth = toNumber(host.style.getPropertyValue('--pretext-projected-width'));
+
+  return {
+    host,
+    kind: host.dataset.textKind || host.dataset.spwPretextGenre || '',
+    density: host.dataset.textDensity || host.dataset.spwPretextDensity || '',
+    measure: host.dataset.textMeasure || host.dataset.spwPretextMeasure || '',
+    projection: host.dataset.textProjection || host.dataset.spwPretextProjection || '',
+    ornament: host.dataset.textOrnament || host.dataset.spwPretextOrnament || '',
+    wrap: host.dataset.textWrap || '',
+    widthClass: host.dataset.textWidthClass || host.dataset.spwPretextWidthClass || '',
+    mode: host.dataset.textMode || host.dataset.spwPretextMode || '',
+    preset: host.dataset.spwPretextPreset || '',
+    canonicalWidth,
+    projectedWidth,
+    lineCount: toNumber(host.dataset.spwPretextLineCount),
+    projectedLineCount: toNumber(host.dataset.spwPretextProjectedLineCount),
+    heightPx: toNumber(host.dataset.spwPretextHeightPx),
+    measureKind: MEASURE_KIND.OBJECTIVE,
+    source: host.dataset.spwPretextLive === 'true' ? 'pretext-live' : 'pretext-static',
+  };
+}
+
+export function formatMeasurementSummary(snapshot = {}) {
+  const parts = [
+    snapshot.lineCount ? `${snapshot.lineCount}L` : null,
+    snapshot.heightPx ? `~${Math.round(snapshot.heightPx)}px` : null,
+    snapshot.widthPx ? `@${Math.round(snapshot.widthPx)}px` : null,
+    snapshot.wrap ? `wrap:${snapshot.wrap}` : null,
+    snapshot.measure ? `measure:${snapshot.measure}` : null,
+  ].filter(Boolean);
+
+  return parts.length ? parts.join(' · ') : 'awaiting measurement';
+}
+
+export function publishMeasurement(detail = {}) {
+  if (typeof document === 'undefined') return;
+
+  const snapshot = {
+    measureKind: MEASURE_KIND.OBJECTIVE,
+    ...detail,
+  };
+
+  document.dispatchEvent(new CustomEvent(PRETEXT_MEASUREMENT_EVENT, {
+    detail: snapshot,
+    bubbles: false,
+  }));
+
+  return snapshot;
+}
+
+export async function ensurePretextEngine() {
+  if (!pretextPromise) {
+    pretextPromise = loadPretext().catch((error) => {
+      pretextPromise = null;
+      throw error;
+    });
+  }
+  return pretextPromise;
+}
+
+export function readDocumentTypography() {
+  const style = getComputedStyle(document.documentElement);
+  const rootFontSize = style.getPropertyValue('--site-root-font-size').trim() || '100%';
+  const lineHeight = style.getPropertyValue('--site-line-height').trim() || '1.68';
+  const bodyStyle = getComputedStyle(document.body);
+  const fontFamily = bodyStyle.fontFamily || 'system-ui, sans-serif';
+  const fontSize = bodyStyle.fontSize || '16px';
+  const parsedLineHeight = Number.parseFloat(lineHeight);
+  const lineHeightPx = Number.isFinite(parsedLineHeight) && parsedLineHeight < 4
+    ? Math.round(Number.parseFloat(fontSize) * parsedLineHeight)
+    : Math.round(Number.parseFloat(lineHeight) || 24);
+
+  return {
+    font: `${fontSize} ${fontFamily}`,
+    rootFontSize,
+    lineHeightPx,
+    monoFont: style.getPropertyValue('--site-mono-font').trim()
+      || "JetBrains Mono, ui-monospace, monospace",
+  };
+}
+
+export async function measureTextLayout({
+  text = '',
+  width = 320,
+  font,
+  lineHeightPx,
+  prepared,
+  pretext,
+} = {}) {
+  const engine = pretext || await ensurePretextEngine();
+  const typography = readDocumentTypography();
+  const resolvedFont = font || typography.font;
+  const resolvedLineHeight = lineHeightPx || typography.lineHeightPx;
+  const trimmed = String(text || '').trim();
+
+  if (!trimmed) {
+    return {
+      text: '',
+      width: Math.max(40, Math.round(width)),
+      lineCount: 0,
+      height: 0,
+      wrap: WRAP_VOLATILITY.STABLE,
+      lines: [],
+      measureKind: MEASURE_KIND.OBJECTIVE,
+      source: 'pretext-measurement-bus',
+    };
+  }
+
+  const handle = prepared || engine.prepare(trimmed, resolvedFont);
+  const layout = engine.layoutWithLines
+    ? engine.layoutWithLines(handle, Math.max(40, Math.round(width)), resolvedLineHeight)
+    : engine.layout(handle, Math.max(40, Math.round(width)), resolvedLineHeight);
+
+  const lineCount = layout.lineCount ?? layout.lines?.length ?? 0;
+  const height = layout.height ?? 0;
+  const lines = layout.lines || [];
+
+  return {
+    text: trimmed,
+    width: Math.max(40, Math.round(width)),
+    lineCount,
+    height,
+    wrap: classifyWrapVolatility(lineCount, lineCount),
+    lines,
+    font: resolvedFont,
+    lineHeightPx: resolvedLineHeight,
+    measureKind: MEASURE_KIND.OBJECTIVE,
+    source: 'pretext-measurement-bus',
+  };
+}
+
+export function writePretextMeasurementDataset(host, snapshot = {}) {
+  if (!(host instanceof HTMLElement)) return;
+
+  if (snapshot.wrap) host.dataset.textWrap = snapshot.wrap;
+  if (snapshot.measure) host.dataset.textMeasure = snapshot.measure;
+  if (snapshot.widthClass) host.dataset.textWidthClass = snapshot.widthClass;
+  if (Number.isFinite(snapshot.lineCount)) host.dataset.spwPretextLineCount = String(snapshot.lineCount);
+  if (Number.isFinite(snapshot.projectedLineCount)) {
+    host.dataset.spwPretextProjectedLineCount = String(snapshot.projectedLineCount);
+  }
+  if (Number.isFinite(snapshot.heightPx)) host.dataset.spwPretextHeightPx = String(Math.round(snapshot.heightPx));
+  if (Number.isFinite(snapshot.widthPx)) host.dataset.spwPretextWidthPx = String(Math.round(snapshot.widthPx));
+  host.dataset.spwMeasureKind = MEASURE_KIND.OBJECTIVE;
+  host.dataset.spwMeasureSource = snapshot.source || 'pretext-measurement-bus';
+}
+
+export const SPW_PRETEXT_MEASUREMENT_BUS_CONTRACT = Object.freeze({
+  event: PRETEXT_MEASUREMENT_EVENT,
+  hostSelector: PRETEXT_HOST_SELECTOR,
+  measureKind: MEASURE_KIND.OBJECTIVE,
+  portableUse:
+    'Import readPretextSignals(), measureTextLayout(), and publishMeasurement() when a surface needs honest typographic telemetry without mounting the full pretext-physics runtime.',
+});

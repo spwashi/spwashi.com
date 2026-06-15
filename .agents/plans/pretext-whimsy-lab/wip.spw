@@ -11,12 +11,15 @@
  @svg_plan: ~".agents/plans/svg-surface-integration/PLAN.md"
  @css_plan: ~".agents/plans/css-progressive-ornaments/PLAN.md"
  @pretext_page: ~"topics/software/pretext/index.html"
+ @design_page: ~"design/index.html#rendering-contexts"
  @software_page: ~"topics/software/index.html"
- @lab: ~"public/js/pretext-lab.js"
- @utils: ~"public/js/pretext-utils.js"
- @shared: ~"public/js/spw-shared.js"
- @console: ~"public/js/spw-console.js"
- @css: ~"public/css/style.css?v=0.0.2"
+ @module_catalog: ~"public/js/runtime/module-catalog.js"
+ @lab: ~"public/js/semantic/pretext-lab.js"
+ @physics: ~"public/js/semantic/pretext-physics.js"
+ @utils: ~"public/js/semantic/pretext-utils.js"
+ @shared: ~"public/js/kernel/shared.js"
+ @console: ~"public/js/interface/console.js"
+ @css: ~"public/css/systems/pretext-physics.css"
 }
 
 ^["intent"]{
@@ -55,7 +58,7 @@
 ^["parallel_work"]{
  critical_path: [#capability_lattice, #physics_profile_taxonomy]
  parallelizable: [#experiment_family_inventory, #svg_bridge_note, #telemetry_contract]
- shared_hot_files: ["topics/software/pretext/index.html", "public/js/pretext-lab.js", "public/js/pretext-utils.js", "public/css/style.css?v=0.0.2", "public/js/spw-shared.js", "public/js/spw-console.js"]
+ shared_hot_files: ["topics/software/pretext/index.html", "design/index.html", "public/js/runtime/module-catalog.js", "public/js/semantic/pretext-lab.js", "public/js/semantic/pretext-physics.js", "public/js/semantic/pretext-utils.js", "public/css/systems/pretext-physics.css", "public/js/kernel/shared.js", "public/js/interface/console.js"]
  merge_risks: [#runtime_bloat, #mode_collision, #rendering_divergence, #naming_drift]
  handoff_artifacts: [@plan, @artifact]
 }
@@ -99,6 +102,8 @@
  >>[2026-04-09] style - The lab has the best opportunity of any surface to make the site's metaphysics felt rather than merely read. Boon/bane, charge, pivot, and spirit phase already have physical analogues waiting in the site's semantic grammar. The first physics profiles should translate those, not invent generic forces with coincidentally similar names.
  >>[2026-04-09] observe - Candidate translations already present in the vocabulary: boon field → gentle gravity drawing lines toward a common anchor; bane pressure → distributing force that pushes overloaded lines outward; charge accumulation → progressive offset scaling by line order or dwell depth; pivot → sudden structural reorientation around a measured line's axis; spirit phase → ambient attractor that biases the overall field without eliminating alternatives.
  >>[2026-04-09] style - The signature delight quality on this site should feel like text learning its own weight — settling, orienting, responding to attention — rather than performing physics as spectacle. The difference between those two is whether the force is seeded by measurement or by aesthetic caprice.
+ >>[2026-06-15] decide - Ship the first integration as a measurement-bus pass: visible-only `pretext-physics`, live hosts opt in with `data-spw-pretext-live`, authored teaching specimens opt out with `data-spw-pretext-static`, and pointer/rhythm projection remains off by default.
+ >>[2026-06-15] observe - `/topics/software/pretext/` and `/design/#rendering-contexts` are the right first surfaces because they already teach parallel projections and static rendering contexts without requiring site-wide body-copy mutation.
 }
 
 ^["open"]{
@@ -130,10 +135,10 @@
  ~#base_ref: "main@d4e504661006b947d6f60591814b8f21020bed96"
  ~#rebased_at: ""
  ~#hygiene_split: "none"
- ~#files_hot: "topics/software/pretext/index.html, topics/software/index.html, public/js/pretext-lab.js, public/js/pretext-utils.js, public/js/spw-shared.js, public/js/spw-console.js, public/css/style.css?v=0.0.2"
+ ~#files_hot: "topics/software/pretext/index.html, design/index.html, public/js/runtime/module-catalog.js, public/js/semantic/pretext-lab.js, public/js/semantic/pretext-physics.js, public/js/semantic/pretext-utils.js, public/css/systems/pretext-physics.css"
  ~#next_commit: "1"
  ~#open_count: "9"
- ~#last_stream: "2026-04-09 21:29"
+ ~#last_stream: "2026-06-15"
  ~#taste_debt: "Do not let physics drift into canned particle spectacle or drown the observatory in novelty. Physics profiles should come from the site's own metaphysics vocabulary before they come from generic simulation. Log the metaphysical source of the first profile as a deliberate taste decision."
 }
 

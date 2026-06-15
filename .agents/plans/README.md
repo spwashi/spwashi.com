@@ -46,6 +46,7 @@ High-signal active examples:
 - `spw-surface-normalization/PLAN.md` — lightweight normalization of .spw writing style (headers, ^"sections", references, ~#metadata) to align with workbench self-modeling while preserving local voice, plus mechanisms for greater navigability and explicit dimensionality (temporal rhythms, practice depth, semantic layer, collaboration phase).
 - `model-guided-refinement/PLAN.md` — rails for less creative models: focus dimensions, semantic fixity tiers, elemental implementation effects, cross-language CSS/HTML/JS/.spw tracing, and the creative marketing engine contract for musicians/artists/collaborators.
 - `daily-kernel-development/PLAN.md` — one-session development exercise for semantic capacity, brand physics, regional sensory design, and cross-discipline ergonomics across engineers, animators, illustrators, designers, musicians, and collaborators.
+- `pretext-whimsy-lab/PLAN.md` — bounded Pretext measurement and projection work, now using a live/static host contract so typography physics stays opt-in and inspectable.
 - `professional-skill-development-worldbuilding/PLAN.md` — architecture for treating character sheets, budgeting, RPG Wednesday, Town Library quests, and proof cards as an immersive skill-development operating system with an evidence loop.
 
 Meta / ecology work:

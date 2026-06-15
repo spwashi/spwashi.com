@@ -48,6 +48,8 @@
 @discovery_powerups: ~"./conventions/discovery-powerups.spw"
 @daily_kernel: ~"./conventions/daily-kernel.spw"
 @data_spw_attribute_governance: ~"./conventions/data-spw-attribute-governance.spw"
+@pretext_whimsy_plan: ~"../.agents/plans/pretext-whimsy-lab/PLAN.md"
+@pretext_whimsy_model: ~"../.agents/plans/pretext-whimsy-lab/pretext-whimsy-lab.spw"
 @relational_attention_media: ~"./conventions/relational-attention-media.spw"
 @relational_attention_media_plan: ~"../.agents/plans/relational-attention-media/PLAN.md"
 @relational_attention_media_cache: ~"../.agents/plans/relational-attention-media/wip.spw"
@@ -100,7 +102,7 @@ frame_patterns: #[
 
 translations: .{
  software_surface = #[@literate_ui, @symmetry_ui, @ocean_ux][reg=set]
- pretext_surface = #[@surface_registry, @selection][reg=set]
+ pretext_surface = #[@surface_registry, @selection, @pretext_whimsy_plan, @pretext_whimsy_model][reg=set]
  labels_and_tokens = #[@naming, @selection][reg=set]
  installation = #[@submodule, @mount][reg=set]
  site_semantics = #[@conventions, @site_semantics][reg=set]
@@ -167,6 +169,7 @@ dispatch: .{
  semantic_capacity = @semantic_capacity
  discovery_powerups = @discovery_powerups
  daily_kernel = @daily_kernel
+ pretext_whimsy = @pretext_whimsy_model
  relational_attention_media = @relational_attention_media
  professional_skill_worldbuilding = @professional_skill_worldbuilding
  professional_skill_worldbuilding_cache = @professional_skill_worldbuilding_cache
