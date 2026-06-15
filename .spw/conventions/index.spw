@@ -27,6 +27,7 @@
 @operator_site_projection: ~"./operator-site-projection.spw"
 @operational_semantics: ~"./operational-semantics.spw"
 @measurement_contract: ~"./measurement-contract.spw"
+@designer_conversation_canvas: ~"./designer-conversation-canvas.spw"
 @typography_packing: ~"./typography-packing.spw"
 @model_guided_refinement: ~"./model-guided-refinement.spw"
 @semantic_capacity: ~"./semantic-capacity.spw"
@@ -57,6 +58,7 @@ dispatch: .{
  operator_site_projection = @operator_site_projection
  operational_semantics = @operational_semantics
  measurement = @measurement_contract
+ designer_conversation = @designer_conversation_canvas
  typography_packing = @typography_packing
  annotation_layer = @annotation_layer
  query_disposition = @query_disposition

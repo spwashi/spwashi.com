@@ -621,6 +621,12 @@
                     <span>Type size, line spacing, live line-count preview, and editorial reading mode.</span>
                 </a>
 
+                <a class="settings-shortcut-card" href="#designer-conversation-settings">
+                    <span class="settings-shortcut-kicker">Designer handoff</span>
+                    <strong>Conversation Canvas</strong>
+                    <span>Touchable specimens, named tokens, and measurable typography signals.</span>
+                </a>
+
                 <a class="settings-shortcut-card" href="#accessibility-settings">
                     <span class="settings-shortcut-kicker">Reduce friction</span>
                     <strong>Accessibility</strong>
@@ -1508,12 +1514,12 @@
                                     <span class="settings-option-copy"><strong>120%</strong></span>
                                 </label>
                             </div>
-                            <p class="frame-note">Normalization: scale × preset multiplier (small=0.93, normal=1, large=1.12) sets --site-root-font-size. The measurement preview below updates from the same root tokens inspected on <a href="/design/">/design/</a>.</p>
+                            <p class="frame-note">Normalization: scale × preset multiplier (small=0.93, normal=1, large=1.12) sets --site-root-font-size. The measurement preview below updates from the same root tokens designers inspect on <a href="/design/#conversation-canvas">/design/</a>.</p>
                         </fieldset>
 
                         <fieldset class="settings-fieldset settings-fieldset--wide" id="typography-measurement-preview" data-spw-feature="typography-measurement-preview" data-spw-box-model="control-card" data-spw-typography-measure-width="360">
                             <legend>Measurement preview</legend>
-                            <p class="frame-note">Objective typography telemetry: line count, projected height, and wrap volatility at a chosen measure. Subjective taste still lives in presets and climate — this panel only reports what Pretext can honestly compute.</p>
+                            <p class="frame-note">Objective typography telemetry for designer conversation: line count, projected height, and wrap volatility at a chosen measure. Subjective taste still lives in presets and climate — this panel only reports what Pretext can honestly compute.</p>
 
                             <div class="settings-measure-preview" data-spw-measure-kind="objective" data-spw-measure-source="settings-typography-preview">
                                 <label class="settings-measure-preview__width" for="typography-measure-width">
@@ -1532,9 +1538,11 @@
                                 </p>
                             </div>
 
-                            <div class="vibe-widget-actions" role="group" aria-label="Typography measurement links">
-                                <a class="operator-chip" href="/design/">#&gt; design hub</a>
-                                <a class="operator-chip" href="/topics/software/pretext/">? pretext lab</a>
+                            <div class="vibe-widget-actions" role="group" aria-label="Designer conversation links">
+                                <a class="operator-chip" href="/design/#conversation-canvas">#&gt; conversation canvas</a>
+                                <a class="operator-chip" href="/design/components/">^ component specimens</a>
+                                <a class="operator-chip" href="/design/catalog/">? design catalog</a>
+                                <a class="operator-chip" href="/topics/software/pretext/">~ pretext lab</a>
                             </div>
                         </fieldset>
 
@@ -1659,6 +1667,35 @@
                             <p class="settings-option-hint">
                                 This writes to the same browser-local <code>fontSizeScale</code> setting used by the shell controls.
                             </p>
+                        </fieldset>
+                    </div>
+                </details>
+
+                <details class="settings-category" data-spw-box-model="settings-fold" id="designer-conversation-settings">
+                    <summary class="settings-category-header">Designer conversation</summary>
+                    <div class="settings-grid">
+                        <fieldset class="settings-fieldset settings-fieldset--wide">
+                            <legend>Conversation canvas</legend>
+                            <p class="frame-note">
+                                Spwashi is a demo of a conversation between author, designer, and runtime — a public worktable where specimens, tokens, measurements, and taste notes share one route. Specimens stay in HTML; tokens stay in CSS; measurements stay objective; taste stays subjective.
+                            </p>
+                            <ul class="settings-conversation-primitives">
+                                <li><strong>Specimen</strong> — a touchable route fragment with slots, operators, and honest attrs (<a href="/design/components/">/design/components/</a>).</li>
+                                <li><strong>Token</strong> — a named CSS variable or semantic alias you can argue about in the catalog (<a href="/design/catalog/">/design/catalog/</a>).</li>
+                                <li><strong>Measurement</strong> — objective line count, height, and wrap volatility from the Pretext bus (<a href="#typography-measurement-preview">typography preview</a>).</li>
+                                <li><strong>Annotation</strong> — subjective resonance, climate, or wonder notes captured while reviewing (<a href="/settings/#semantic-settings">semantic detail</a>).</li>
+                            </ul>
+                        </fieldset>
+
+                        <fieldset class="settings-fieldset">
+                            <legend>Handoff surfaces</legend>
+                            <div class="vibe-widget-actions" role="group" aria-label="Designer handoff routes">
+                                <a class="operator-chip" href="/design/#conversation-canvas">#&gt; design canvas</a>
+                                <a class="operator-chip" href="/design/#rendering-contexts">^ rendering contexts</a>
+                                <a class="operator-chip" href="/topics/software/pretext/">? pretext field lab</a>
+                                <a class="operator-chip" href="/settings/#runtime-diagnostics-settings">~ runtime diagnostics</a>
+                            </div>
+                            <p class="frame-note">Turn on <strong>spec pills</strong> or <strong>debug seams</strong> in runtime diagnostics when you want frame metrics and inspector overlays during a review session.</p>
                         </fieldset>
                     </div>
                 </details>

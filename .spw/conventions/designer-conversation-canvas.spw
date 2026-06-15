@@ -1,0 +1,43 @@
+# Designer Conversation Canvas
+#
+# Spwashi as a public demo of conversation between author, designer, and runtime.
+# Touchable specimens + named tokens + measurable typography bus.
+
+#>designer_conversation_canvas
+#:convention #!design #!conversation #!measurement
+#:layer #!pragmatics
+
+@measurement_contract: ~"./measurement-contract.spw"
+@pretext_plan: ~"../../.agents/plans/pretext-whimsy-lab/PLAN.md"
+@designer_plan: ~"../../.agents/plans/designer-conversation-canvas/PLAN.md"
+@measurement_bus: ~"../../public/js/semantic/pretext-measurement-bus.js"
+
+thesis: .{
+  claim = `The site should read as a conversation canvas: specimens stay in HTML, tokens stay named in CSS and catalog, objective typography stays on the Pretext measurement bus, and subjective taste stays in annotations that declare data-spw-measure-kind="subjective".`
+  audience = `designers, illustrators, and collaborators who need specimens, tokens, and review notes to stay on the public route beside live measurements.`
+}
+
+primitives: .{
+  specimen = `Touchable route fragment with slots, operators, and stable data-spw-* attrs. Primary lane: /design/components/.`
+  token = `Named CSS variable or semantic alias queryable in /design/catalog/.`
+  measurement = `Objective line count, height, wrap volatility from pretext-measurement-bus.js and spw:pretext-measurement events.`
+  annotation = `Subjective resonance, climate, or wonder judgments captured during review; must not masquerade as objective telemetry.`
+}
+
+routes: .{
+  canvas = `/design/#conversation-canvas`
+  specimens = `/design/components/`
+  catalog = `/design/catalog/`
+  settings_preview = `/settings/#typography-measurement-preview`
+  pretext_lab = `/topics/software/pretext/`
+}
+
+runtime: .{
+  bus_module = `public/js/semantic/pretext-measurement-bus.js`
+  bus_event = `spw:pretext-measurement`
+  live_pretext_selector = `[data-spw-flow="pretext"][data-spw-pretext-live="true"]:not([data-spw-pretext-static])`
+  settings_preview_module = `typography-measurement-preview`
+  frame_metrics_feature = `metrics`
+}
+
+handoff_rule: `A designer review should cite at least one specimen URL, one token name, and one objective measurement when proposing a typography or layout change. Subjective notes are welcome beside measurements, never instead of them.`
