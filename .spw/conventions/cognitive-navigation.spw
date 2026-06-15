@@ -270,6 +270,14 @@
     consequence: "Improved layout breathing between header regions on narrow viewports; breadcrumbs and handles carry higher inspectable utility and visible consequence on interaction without new contracts."
     aligns_with: "operator-as-sigil model, Token System Balance Principles, component empty/default variants, data-spw-gesture consequence, liminality axes"
   }
+
+  ^"refinement_2026_shell_measurement_stability"{
+    ~#note: "Shell fit measurement is a damped signal, not a direct topology command."
+    change: "shell-disclosure.js caches the last real nav content width and applies hysteresis when resolving inline vs toggle mode and calm/tight/compressed pressure."
+    meaning: "A hidden toggle nav, font swap, resize observer pass, or route-discovery update should not be able to flip the entire shell field from one measurement jitter."
+    consequence: "Topology remains inspectable through the same data-spw-menu-* state axes, while late layout measurements settle through enter/exit bands before changing mode."
+    deferred: "Unify viewport and fit thresholds across shell-disclosure, contextual-ui, region profiling, and composition inspection once the shell field has browser-reviewed stability."
+  }
 }
 
 ^"page_locomotion_handle"{

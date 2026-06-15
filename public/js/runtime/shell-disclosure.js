@@ -100,6 +100,8 @@ const DEFAULTS = Object.freeze({
   narrowBreakpointPx: 720,
   midBreakpointPx: 980,
   compressedRatio: 1.55,
+  modeHysteresisRatio: 0.14,
+  pressureHysteresisRatio: 0.04,
   scrollLiftPx: 18,
   scrollDeepPx: 132,
   scrollDirectionDeadzonePx: 4,
@@ -278,13 +280,20 @@ function createState(config) {
     scrollRaf: 0,
     settleTimer: 0,
     lastTransitionSource: 'init',
+    navMeasure: {
+      contentWidth: 0,
+      navWidth: 0,
+      ratio: 1,
+      source: 'fallback',
+      measuredAt: 0,
+    },
     snapshot: null,
   };
 }
 
-function computeNavRatio(header, nav, navList) {
-  const navWidth = nav.clientWidth || Math.max(header.clientWidth * 0.58, 1);
-  if (!navWidth) return 1;
+function readNavContentWidth(nav, navList) {
+  if (!(nav instanceof HTMLElement) || !(navList instanceof HTMLElement)) return 0;
+
   const listItems = Array.from(navList.querySelectorAll(':scope > li'));
   const listStyle = window.getComputedStyle(navList);
   const columnGap = Number.parseFloat(listStyle.columnGap || listStyle.gap || '0') || 0;
@@ -292,8 +301,36 @@ function computeNavRatio(header, nav, navList) {
     if (!(item instanceof HTMLElement)) return total;
     return total + item.getBoundingClientRect().width;
   }, 0) + Math.max(0, listItems.length - 1) * columnGap;
-  const contentWidth = Math.max(nav.scrollWidth, navList.scrollWidth, measuredItemsWidth);
-  return contentWidth / navWidth;
+
+  return Math.max(nav.scrollWidth, navList.scrollWidth, measuredItemsWidth);
+}
+
+function computeNavRatio(header, nav, navList, state) {
+  const navWidth = nav.clientWidth || Math.max(header.clientWidth * 0.58, 1);
+  if (!navWidth) return 1;
+
+  const measuredContentWidth = readNavContentWidth(nav, navList);
+  const cachedContentWidth = state?.navMeasure?.contentWidth || 0;
+  const contentWidth = measuredContentWidth || cachedContentWidth;
+
+  if (!contentWidth) {
+    return state?.navMeasure?.ratio || 1;
+  }
+
+  const ratio = contentWidth / navWidth;
+  if (state?.navMeasure) {
+    state.navMeasure = {
+      contentWidth,
+      navWidth,
+      ratio,
+      source: measuredContentWidth ? 'measured' : 'cached-content',
+      measuredAt: measuredContentWidth
+        ? Math.round(performance.now())
+        : state.navMeasure.measuredAt,
+    };
+  }
+
+  return ratio;
 }
 
 function countPrimaryRoutes(navList) {
@@ -311,9 +348,15 @@ function countOverflowRoutes(navList) {
 
 function resolveMenuMode(header, nav, navList, state) {
   const tier = document.documentElement.dataset.spwViewportTier || getViewportTier(window.innerWidth, state.config);
+  const ratio = computeNavRatio(header, nav, navList, state);
   if (tier === 'compact' || tier === 'narrow') return MODES.TOGGLE;
 
-  const ratio = computeNavRatio(header, nav, navList);
+  const previousMode = state.snapshot?.mode || state.mode || MODES.INLINE;
+  const exitRatio = Math.max(1, state.config.compressedRatio - state.config.modeHysteresisRatio);
+  if (previousMode === MODES.TOGGLE) {
+    return ratio > exitRatio ? MODES.TOGGLE : MODES.INLINE;
+  }
+
   if (ratio > state.config.compressedRatio) return MODES.TOGGLE;
 
   return MODES.INLINE;
@@ -381,16 +424,31 @@ function syncShellChromeLayout(header, snapshot) {
   }
 }
 
-function resolveMenuPressure({ mode, ratio, navFit, tier, pointer }) {
+function resolveMenuPressure({ mode, ratio, navFit, tier, pointer, previousPressure, config = DEFAULTS }) {
   if (mode === MODES.TOGGLE && (tier === 'compact' || tier === 'narrow')) {
     return PRESSURES.CROWDED;
   }
 
-  if (ratio > 1.18 || navFit === 'compressed' || (tier === 'mid' && pointer === 'coarse')) {
+  const pressureMargin = config.pressureHysteresisRatio || 0;
+  const compressedEnterRatio = 1.18;
+  const compressedExitRatio = compressedEnterRatio - pressureMargin;
+  const tightEnterRatio = 1.02;
+  const tightExitRatio = tightEnterRatio - pressureMargin;
+  const compressedContext = navFit === 'compressed' || (tier === 'mid' && pointer === 'coarse');
+
+  if (previousPressure === PRESSURES.COMPRESSED && (ratio > compressedExitRatio || compressedContext)) {
     return PRESSURES.COMPRESSED;
   }
 
-  if (ratio > 1.02 || navFit === 'tight') {
+  if (ratio > compressedEnterRatio || compressedContext) {
+    return PRESSURES.COMPRESSED;
+  }
+
+  if (previousPressure === PRESSURES.TIGHT && (ratio > tightExitRatio || navFit === 'tight')) {
+    return PRESSURES.TIGHT;
+  }
+
+  if (ratio > tightEnterRatio || navFit === 'tight') {
     return PRESSURES.TIGHT;
   }
 
@@ -485,7 +543,7 @@ function buildMenuSnapshot(header, nav, navList, state, open, source) {
   const tier = html.dataset.spwViewportTier || getViewportTier(window.innerWidth, state.config);
   const pointer = html.dataset.spwPointerMode || getPointerMode();
   const navFit = header.dataset.spwNavFit || 'roomy';
-  const ratio = computeNavRatio(header, nav, navList);
+  const ratio = computeNavRatio(header, nav, navList, state);
   const primaryRouteCount = countPrimaryRoutes(navList);
   const overflowRouteCount = countOverflowRoutes(navList);
   const pressure = resolveMenuPressure({
@@ -494,6 +552,8 @@ function buildMenuSnapshot(header, nav, navList, state, open, source) {
     navFit,
     tier,
     pointer,
+    previousPressure: state.snapshot?.pressure,
+    config: state.config,
   });
   const topology = resolveMenuTopology(state.mode, pressure, tier);
   const phase = resolveMenuPhase(state, open, source);

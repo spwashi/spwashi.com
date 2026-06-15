@@ -9,6 +9,7 @@
 - The compressed header exposes primary `Menu`, contextual route discovery, utility/tune state, and diagnostic return hints in one chrome lane.
 - Opening the primary menu can change the header grid and shove content instead of projecting a stable route surface.
 - The contextual route discovery panel is mounted inside a scroll/paint-contained nav, so it can feel clipped or cramped.
+- Shell topology can flap near fit thresholds because `shell-disclosure.js` measures the nav, writes layout-driving menu attributes, then re-measures after CSS changes or while the toggle nav is hidden.
 
 ## Diagnosis
 
@@ -19,6 +20,7 @@
 - The shell runtime already owns mode, topology, pressure, phase, dismissal, return paths, and scroll lock state; adding a second route-menu state machine would duplicate working behavior.
 - The visible shell toggle copy was exposing runtime diagnostics (`project`, topology, return hints) that belong in data attributes, not in primary chrome.
 - `contextual-ui.js` correctly owns nearby/additional routes, but its `<details>` panel needs either a floating mount or an explicit popover-style containment patch.
+- A hidden toggle nav can report a zero content width, making the next shell sync think the route field is roomy enough for inline mode. Small font, resize, and route-discovery changes can also move the ratio around the compressed/tight thresholds.
 
 ## Planned Fix
 
@@ -30,6 +32,7 @@
 - Move toggle-mode nav out of header grid flow with a fixed overlay; keep the header grid stable while the route surface opens.
 - Keep `contextual-ui.js` as the nearby-route owner, but label it `Nearby` and keep gesture copy truthful.
 - Patch nearby route panel CSS as an out-of-flow popover on desktop; let it remain contained inside the sheet/mobile route field until a durable portal is warranted.
+- Cache the last real nav content measurement in `shell-disclosure.js` and use hysteresis for menu mode and pressure so a single measurement jitter does not rewrite the whole shell topology.
 
 ## Deferred Follow-Ups
 
@@ -37,3 +40,4 @@
 - Consider a visible menu topology label or settings toggle only after the stable default behavior is confirmed.
 - Portal the nearby-route panel through the existing floating chrome annotation contract if the CSS popover still collides with nav overflow on real pages.
 - Defer pinning/lock behavior until `Routes`, `Nearby`, `Tune`, and `Inspect` are visually and structurally distinct.
+- Consolidate viewport and fit thresholds across `shell-disclosure.js`, `contextual-ui.js`, region profiling, and composition inspection after the shell field is stable in browser review.
