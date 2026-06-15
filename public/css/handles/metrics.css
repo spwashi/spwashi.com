@@ -1,0 +1,16 @@
+/* ==========================================================================
+   metrics.css
+   --------------------------------------------------------------------------
+   Behavior bundle for body[data-spw-features~="metrics"].
+   Frame metrics bar structure and hover states live in handles/operators.css
+   (core). This scope exists so runtime modules can gate on the metrics feature.
+   ========================================================================== */
+
+:where([data-spw-features~="metrics"] .frame-metrics-bar) {
+  container-type: inline-size;
+}
+
+:where([data-spw-features~="metrics"] .frame-metrics-items) {
+  max-inline-size: 100%;
+  overflow-wrap: anywhere;
+}

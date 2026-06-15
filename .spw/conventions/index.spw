@@ -27,6 +27,7 @@
 @operator_site_projection: ~"./operator-site-projection.spw"
 @operational_semantics: ~"./operational-semantics.spw"
 @measurement_contract: ~"./measurement-contract.spw"
+@typography_packing: ~"./typography-packing.spw"
 @model_guided_refinement: ~"./model-guided-refinement.spw"
 @semantic_capacity: ~"./semantic-capacity.spw"
 @discovery_powerups: ~"./discovery-powerups.spw"
@@ -56,6 +57,7 @@ dispatch: .{
  operator_site_projection = @operator_site_projection
  operational_semantics = @operational_semantics
  measurement = @measurement_contract
+ typography_packing = @typography_packing
  annotation_layer = @annotation_layer
  query_disposition = @query_disposition
  planning_ecology = @planning_ecology

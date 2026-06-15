@@ -25,6 +25,9 @@ export const BEHAVIOR_SCOPES = Object.freeze({
         '/public/css/systems/svg-surfaces.css',
         '/public/css/systems/svg-personas.css',
     ],
+    metrics: [
+        '/public/css/handles/metrics.css',
+    ],
 });
 /** Route personality keyed by data-spw-surface. */
 export const ROUTE_SCOPES = Object.freeze({

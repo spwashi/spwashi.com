@@ -1,0 +1,36 @@
+# Typography And Packing Plan
+#
+# Shared measure, pad, gap, and grid thresholds for components and surfaces.
+
+#>typography_packing_plan
+#:convention #!typography #!layout #!components
+#:layer #!pragmatics
+
+@css: ~"../../public/css/components/typography-packing.css"
+@foundation: ~"../../public/css/components/foundation.css"
+@measurement_bus: ~"../../public/js/semantic/pretext-measurement-bus.js"
+@designer_conversation: ~"./designer-conversation-canvas.spw"
+
+tiers: .{
+  compact = `dense surfaces: tight pad/gap, --grid-min-compact, --measure-compact`
+  balanced = `default frames/cards: --pack-tier-balanced-*`
+  roomy = `soft/roomy density: loose pad/gap, --measure-reading`
+}
+
+routing: .{
+  density = `data-spw-density or data-spw-component-density on frame/panel/card`
+  line_spacing = `html[data-spw-line-spacing] from settings (compact|normal|loose)`
+  grid_pack = `data-spw-pack="fill|dense|balanced|compact|roomy" on .frame-grid`
+  typography_surface = `frame-note, spec-kicker, frame-copy, settings-prose use tier measures`
+}
+
+measurement: .{
+  objective = `Pretext bus reports line count + wrap volatility; packing tiers set CSS targets`
+  handoff = `Designer reviews cite specimen URL + token + measured lines at width`
+}
+
+validation: #[
+  `Settings line-spacing changes component gap/pad and prose line-height together.`
+  `frame-grid defaults to balanced packing unless data-spw-pack overrides.`
+  `frame-note and spec-kicker respect measure-panel/measure-card caps.`
+][reg=set]

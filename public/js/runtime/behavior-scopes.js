@@ -7,6 +7,7 @@
 export const BEHAVIOR_SCOPE_KEYS = Object.freeze([
   'console',
   'media-publishing',
+  'metrics',
   'pretext-lab',
   'rpg-gameplay',
   'svg-surfaces',
@@ -15,6 +16,7 @@ export const BEHAVIOR_SCOPE_KEYS = Object.freeze([
 export const BEHAVIOR_SCOPE_BUNDLES = Object.freeze({
   'console': '/public/css/bundles/behaviors/console.css',
   'media-publishing': '/public/css/bundles/behaviors/media-publishing.css',
+  'metrics': '/public/css/bundles/behaviors/metrics.css',
   'pretext-lab': '/public/css/bundles/behaviors/pretext-lab.css',
   'rpg-gameplay': '/public/css/bundles/behaviors/rpg-gameplay.css',
   'svg-surfaces': '/public/css/bundles/behaviors/svg-surfaces.css',

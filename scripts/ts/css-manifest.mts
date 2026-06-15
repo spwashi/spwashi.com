@@ -42,6 +42,9 @@ export const BEHAVIOR_SCOPES: Readonly<Record<string, readonly string[]>> = Obje
     '/public/css/systems/svg-surfaces.css',
     '/public/css/systems/svg-personas.css',
   ],
+  metrics: [
+    '/public/css/handles/metrics.css',
+  ],
 });
 
 /** Route personality keyed by data-spw-surface. */
