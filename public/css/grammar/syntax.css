@@ -938,6 +938,27 @@
   --grammar-motion-budget: 0.32;
 }
 
+/* Region tempo shapes local cascade offsets without overriding page-level arrival steps. */
+:where(.site-frame[data-spw-tempo="snap"]) {
+  --spw-settle-stagger-step: 10ms;
+  --spw-component-arrival-transition: 96ms var(--ease-mechanical, cubic-bezier(0.32, 0, 0, 1));
+}
+
+:where(.site-frame[data-spw-tempo="fast"]) {
+  --spw-settle-stagger-step: 12ms;
+  --spw-component-arrival-transition: 112ms var(--ease-mechanical, cubic-bezier(0.32, 0, 0, 1));
+}
+
+:where(.site-frame[data-spw-tempo="deliberate"]) {
+  --spw-settle-stagger-step: 24ms;
+  --spw-component-arrival-transition: 180ms var(--ease-settle, ease);
+}
+
+:where(.site-frame[data-spw-tempo="settle"]) {
+  --spw-settle-stagger-step: 28ms;
+  --spw-component-arrival-transition: 220ms var(--ease-settle, ease);
+}
+
 /* Region lifecycle harmonizes grammar tokens after deferred enrichment lands. */
 :where(.site-frame[data-spw-region-state="queued"], .site-frame[data-spw-region-state="primed"]) {
   --grammar-motion-budget: min(var(--grammar-motion-budget, 0.26), 0.14);

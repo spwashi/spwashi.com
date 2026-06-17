@@ -232,6 +232,15 @@ audience_translations: .{
  ][reg=set]
 }[reg=facet]
 
+production_ecology_garden_apparatus: .{
+ note = `How public work is framed on spwashi.com: not canon imposition, but legible production across garden and apparatus surfaces.`
+ garden = `Tending, return, compost, ecological channels, seasonal rhythm, collaborator-specific communication, healing through visible middles and named pressure before hardening.`
+ apparatus = `Braces, operators, runtime states, inspect queries, transdimensional mechanical grammar — the inspectable side of the production process that collaborators can read without guessing.`
+ shared_output = `Traced sediment: proof cards, session notes, semantic handles, spell trails — replayable at each collaborator's rhythm, not a single imposed voice.`
+ storytelling_metamechanics = `Narrative and interaction layers that encourage emergent stability: name pressure early, leave process legible, let patterns compost instead of reset.`
+ anti_pattern = `Avoid "public canon" as the default metaphor for what becomes shared; prefer rhythm, trace, sediment, channel, and inspectable production.`
+}[reg=facet]
+
 open_questions: #[
  .{ ask = `Which of the expanded vocabulary words should become data-spw-* tokens, and which should remain copy-only?` },
  .{ ask = `Should the word list be finite and curated, or open and organically extended as copy is written?` },

@@ -89,6 +89,12 @@ export function createModuleLoader(config = {}) {
     }
   }
 
+  function resetMountBatchState() {
+    mountBatchDepth = 0;
+    tokenFlushScheduled = false;
+    writeDatasetValue(html, 'spwRuntimeMountBatch', null);
+  }
+
   function flushRuntimeTokenUpdate(ctx) {
     tokenFlushScheduled = false;
     if (!ctx) return;
@@ -1023,23 +1029,32 @@ async function mountVisibleFeatures(defs, ctx) {
 
   const observer = new IntersectionObserver(
     (entries) => {
-      for (const entry of entries) {
-        if (!entry.isIntersecting) continue;
-        const el = entry.target;
+      const intersecting = entries.filter((entry) => entry.isIntersecting);
+      if (!intersecting.length) return;
 
-        for (const def of visibleDefs) {
-          if (!el.matches(def.selector)) continue;
-          annotateModuleTrigger(el, def, ctx, mountWhen.VISIBLE, 'triggered');
+      void (async () => {
+        beginMountBatch();
+        try {
+          await Promise.all(intersecting.map(async (entry) => {
+            const el = entry.target;
 
-          if (def.rootMode === 'single') {
-            void mountDefinition(def, ctx, null, 0);
-          } else {
-            void mountDefinition(def, ctx, el);
-          }
+            for (const def of visibleDefs) {
+              if (!el.matches(def.selector)) continue;
+              annotateModuleTrigger(el, def, ctx, mountWhen.VISIBLE, 'triggered');
+
+              if (def.rootMode === 'single') {
+                await mountDefinition(def, ctx, null, 0);
+              } else {
+                await mountDefinition(def, ctx, el);
+              }
+            }
+
+            observer.unobserve(el);
+          }));
+        } finally {
+          endMountBatch(ctx);
         }
-
-        observer.unobserve(el);
-      }
+      })();
     },
     {
       root: null,
@@ -1112,17 +1127,26 @@ async function mountRegionLayer(defs, ctx) {
 
   const observer = new IntersectionObserver(
     (entries) => {
-      for (const entry of entries) {
-        if (!entry.isIntersecting) continue;
-        const el = entry.target;
+      const intersecting = entries.filter((entry) => entry.isIntersecting);
+      if (!intersecting.length) return;
 
-        for (const def of regionDefs) {
-          if (!el.matches(def.selector)) continue;
-          void mountDefinition(def, ctx, el);
+      void (async () => {
+        beginMountBatch();
+        try {
+          await Promise.all(intersecting.map(async (entry) => {
+            const el = entry.target;
+
+            for (const def of regionDefs) {
+              if (!el.matches(def.selector)) continue;
+              await mountDefinition(def, ctx, el);
+            }
+
+            observer.unobserve(el);
+          }));
+        } finally {
+          endMountBatch(ctx);
         }
-
-        observer.unobserve(el);
-      }
+      })();
     },
     {
       root: null,
@@ -1202,9 +1226,32 @@ function refreshRuntime(ctx) {
 }
 
   function wireRuntimeTokens(ctx) {
-    ctx.bus.on('spw:module-mounted', () => scheduleRuntimeTokenUpdate(ctx));
-    ctx.bus.on('spw:module-failed', () => scheduleRuntimeTokenUpdate(ctx));
+    if (!ctx) return () => {};
+    if (ctx.runtimeTokensCleanup) return ctx.runtimeTokensCleanup;
+
+    const onMounted = () => scheduleRuntimeTokenUpdate(ctx);
+    const onFailed = () => scheduleRuntimeTokenUpdate(ctx);
+    const unsubscribeMounted = ctx.bus.on('spw:module-mounted', onMounted);
+    const unsubscribeFailed = ctx.bus.on('spw:module-failed', onFailed);
     updateRuntimeStateTokens(ctx);
+
+    const cleanup = () => {
+      unsubscribeMounted?.();
+      unsubscribeFailed?.();
+      delete ctx.runtimeTokensCleanup;
+      resetMountBatchState();
+      html?.style?.removeProperty('--spw-runtime-enhancement-intensity');
+      html?.style?.removeProperty('--spw-runtime-feature-intensity');
+      html?.style?.removeProperty('--spw-runtime-layer-count');
+      html?.style?.removeProperty('--spw-runtime-avg-module-ms');
+      html?.style?.removeProperty('--spw-site-rhythm-tempo');
+      html?.style?.removeProperty('--spw-site-rhythm-density');
+      writeDatasetValue(html, 'spwActiveLayers', null);
+      writeDatasetValue(html, 'spwSiteRhythm', null);
+    };
+
+    ctx.runtimeTokensCleanup = cleanup;
+    return cleanup;
   }
 
   return {
@@ -1230,5 +1277,6 @@ function refreshRuntime(ctx) {
     queueIdleEnhancements,
     refreshRuntime,
     wireRuntimeTokens,
+    resetMountBatchState,
   };
 }

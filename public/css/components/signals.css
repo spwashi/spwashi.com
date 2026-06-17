@@ -190,23 +190,60 @@
 }
 
 :where(html[data-spw-page-settling="true"]) main > :where(.site-frame, article > .site-frame):nth-child(2) {
-  transition-delay: var(--spw-settle-stagger-step, 18ms);
+  transition-delay: calc(var(--spw-settle-stagger-step, 18ms) * (1 - var(--spw-layout-cascade-hold, 0)));
 }
 
 :where(html[data-spw-page-settling="true"]) main > :where(.site-frame, article > .site-frame):nth-child(3) {
-  transition-delay: calc(var(--spw-settle-stagger-step, 18ms) * 2);
+  transition-delay: calc(var(--spw-settle-stagger-step, 18ms) * 2 * (1 - var(--spw-layout-cascade-hold, 0)));
 }
 
 :where(html[data-spw-page-settling="true"]) main > :where(.site-frame, article > .site-frame):nth-child(4) {
-  transition-delay: calc(var(--spw-settle-stagger-step, 18ms) * 3);
+  transition-delay: calc(var(--spw-settle-stagger-step, 18ms) * 3 * (1 - var(--spw-layout-cascade-hold, 0)));
 }
 
 :where(html[data-spw-page-settling="true"]) main > :where(.site-frame, article > .site-frame):nth-child(5) {
-  transition-delay: calc(var(--spw-settle-stagger-step, 18ms) * 4);
+  transition-delay: calc(var(--spw-settle-stagger-step, 18ms) * 4 * (1 - var(--spw-layout-cascade-hold, 0)));
 }
 
 :where(html[data-spw-page-settling="true"]) main > :where(.site-frame, article > .site-frame):nth-child(6) {
-  transition-delay: calc(var(--spw-settle-stagger-step, 18ms) * 5);
+  transition-delay: calc(var(--spw-settle-stagger-step, 18ms) * 5 * (1 - var(--spw-layout-cascade-hold, 0)));
+}
+
+/* Page-level tempo field mirrors region profiler cascade timing when JS has not yet written inline tokens. */
+:where(html[data-spw-page-tempo="snap"], html[data-spw-tempo-field~="snap"]:not([data-spw-page-tempo])) {
+  --spw-page-arrival-step-2-delay: 36ms;
+  --spw-page-arrival-step-3-delay: 84ms;
+  --spw-page-arrival-duration: 200ms;
+  --spw-page-return-duration: 140ms;
+  --spw-settle-stagger-step: 10ms;
+  --spw-region-profile-refresh-duration: 160ms;
+}
+
+:where(html[data-spw-page-tempo="fast"], html[data-spw-tempo-field~="fast"]:not([data-spw-page-tempo])) {
+  --spw-page-arrival-step-2-delay: 48ms;
+  --spw-page-arrival-step-3-delay: 108ms;
+  --spw-page-arrival-duration: 220ms;
+  --spw-page-return-duration: 160ms;
+  --spw-settle-stagger-step: 12ms;
+  --spw-region-profile-refresh-duration: 180ms;
+}
+
+:where(html[data-spw-page-tempo="deliberate"], html[data-spw-tempo-field~="deliberate"]:not([data-spw-page-tempo])) {
+  --spw-page-arrival-step-2-delay: 88ms;
+  --spw-page-arrival-step-3-delay: 196ms;
+  --spw-page-arrival-duration: 340ms;
+  --spw-page-return-duration: 220ms;
+  --spw-settle-stagger-step: 24ms;
+  --spw-region-profile-refresh-duration: 280ms;
+}
+
+:where(html[data-spw-page-tempo="settle"], html[data-spw-tempo-field~="settle"]:not([data-spw-page-tempo])) {
+  --spw-page-arrival-step-2-delay: 104ms;
+  --spw-page-arrival-step-3-delay: 232ms;
+  --spw-page-arrival-duration: 400ms;
+  --spw-page-return-duration: 260ms;
+  --spw-settle-stagger-step: 28ms;
+  --spw-region-profile-refresh-duration: 320ms;
 }
 
 :where([data-spw-box-settle-phase="step-1"], [data-spw-box-settle-phase="entering"]) {

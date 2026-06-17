@@ -31,6 +31,60 @@ export const SPW_REGION_PROFILER_CONTRACT = Object.freeze({
     'Import this module when a page needs region harmony, tempo, and density without booting site.js.',
 });
 
+const TEMPO_CASCADE_PROFILES = Object.freeze({
+  snap: {
+    step2: 36,
+    step3: 84,
+    arrival: 200,
+    returning: 140,
+    stagger: 10,
+    regionRefresh: 160,
+  },
+  fast: {
+    step2: 48,
+    step3: 108,
+    arrival: 220,
+    returning: 160,
+    stagger: 12,
+    regionRefresh: 180,
+  },
+  base: {
+    step2: 64,
+    step3: 148,
+    arrival: 280,
+    returning: 180,
+    stagger: 18,
+    regionRefresh: 220,
+  },
+  deliberate: {
+    step2: 88,
+    step3: 196,
+    arrival: 340,
+    returning: 220,
+    stagger: 24,
+    regionRefresh: 280,
+  },
+  settle: {
+    step2: 104,
+    step3: 232,
+    arrival: 400,
+    returning: 260,
+    stagger: 28,
+    regionRefresh: 320,
+  },
+});
+
+const TEMPO_DOMINANCE_ORDER = Object.freeze(['settle', 'deliberate', 'base', 'fast', 'snap']);
+
+const CASCADE_TIMING_STYLE_KEYS = Object.freeze([
+  '--spw-page-arrival-step-2-delay',
+  '--spw-page-arrival-step-3-delay',
+  '--spw-page-arrival-duration',
+  '--spw-page-return-duration',
+  '--spw-settle-stagger-step',
+  '--spw-region-profile-refresh-duration',
+]);
+
 function readSet(...values) {
   return new Set(values.filter(Boolean));
 }
@@ -146,6 +200,42 @@ export function applyRegionProfile(el, profile) {
   writeStyleValue(el, '--region-index', String(profile.index));
 }
 
+export function resolveDominantTempo(tempos = []) {
+  const set = tempos instanceof Set ? tempos : new Set(tempos.filter(Boolean));
+  for (const tempo of TEMPO_DOMINANCE_ORDER) {
+    if (set.has(tempo)) return tempo;
+  }
+  return 'base';
+}
+
+export function syncPageCascadeTiming(ctx, html = document.documentElement) {
+  const profiles = ctx?.regions?.map((entry) => entry.profile) || [];
+  const dominantTempo = resolveDominantTempo(profiles.map((profile) => profile.tempo));
+  const scale = TEMPO_CASCADE_PROFILES[dominantTempo] || TEMPO_CASCADE_PROFILES.base;
+
+  writeDatasetValue(html, 'spwPageTempo', dominantTempo);
+  writeStyleValue(html, '--spw-page-arrival-step-2-delay', `${scale.step2}ms`);
+  writeStyleValue(html, '--spw-page-arrival-step-3-delay', `${scale.step3}ms`);
+  writeStyleValue(html, '--spw-page-arrival-duration', `${scale.arrival}ms`);
+  writeStyleValue(html, '--spw-page-return-duration', `${scale.returning}ms`);
+  writeStyleValue(html, '--spw-settle-stagger-step', `${scale.stagger}ms`);
+  writeStyleValue(html, '--spw-region-profile-refresh-duration', `${scale.regionRefresh}ms`);
+
+  return {
+    dominantTempo,
+    scale,
+    regionCount: profiles.length,
+  };
+}
+
+export function clearPageCascadeTiming(html = document.documentElement) {
+  if (!(html instanceof HTMLElement)) return;
+  delete html.dataset.spwPageTempo;
+  for (const key of CASCADE_TIMING_STYLE_KEYS) {
+    html.style.removeProperty(key);
+  }
+}
+
 export function syncPageHarmony(ctx, html = document.documentElement) {
   const profiles = ctx.regions.map((entry) => entry.profile);
   const harmonies = new Set(profiles.map((profile) => profile.harmony));
@@ -155,6 +245,7 @@ export function syncPageHarmony(ctx, html = document.documentElement) {
   writeDatasetValue(html, 'spwTempoField', [...tempos].join(' '));
   writeDatasetValue(html, 'spwSpaceMotion', inferSpaceMotion());
   writeStyleValue(html, '--region-count', String(profiles.length));
+  syncPageCascadeTiming(ctx, html);
 }
 
 export function refreshRegionProfiles(ctx, reason = 'runtime-refresh', options = {}) {

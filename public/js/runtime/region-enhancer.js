@@ -50,6 +50,11 @@ export function initRegionEnhancer(ctx, root) {
       root.dataset.spwRegionLayer = 'settling';
       setRegionState(root, REGION_STATES.SETTLING);
       delete root.dataset.spwEnhanced;
+      delete root.dataset.spwMotionFamily;
+      delete root.dataset.spwHarmony;
+      delete root.dataset.spwDensity;
+      delete root.dataset.spwRegionGenome;
+      root.style.removeProperty('--region-harmonic-weight');
       const linked = root.querySelector('.spec-strip, .frame-operators, [data-spw-slot="meta"]');
       if (linked) delete linked.dataset.spwRegionLinked;
     },

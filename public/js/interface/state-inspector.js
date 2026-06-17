@@ -152,10 +152,57 @@ function anchorSatchelToChromeRail(root, { open = false } = {}) {
     return;
   }
 
+  if (root.dataset.spwSatchelPositioned !== 'user') {
+    clearSatchelInlinePosition(root);
+    root.dataset.spwSatchelAnchor = 'chrome-rail-closed';
+    root.dataset.spwSatchelSnap = 'bottom-right';
+    return;
+  }
+
   delete root.dataset.spwSatchelAnchor;
   const rect = launch.getBoundingClientRect();
   const snapped = snapSatchelPosition(launch, rect.left, rect.top);
   applyPositionToLaunch(launch, snapped.left, snapped.top, false);
+}
+
+function mountDefaultMobileSatchel(root) {
+  const launch = root.querySelector('.spw-state-inspector__launch');
+  if (!(launch instanceof HTMLElement)) return;
+  if (!isMobileSatchelViewport()) return;
+  if (root.dataset.spwSatchelPositioned === 'user') return;
+
+  clearSatchelInlinePosition(root);
+  root.dataset.spwSatchelAnchor = 'chrome-rail-closed';
+  root.dataset.spwSatchelSnap = 'bottom-right';
+}
+
+function formatPageStateLabel() {
+  const html = document.documentElement;
+  const pageState = html.dataset.spwPageState || 'booting';
+  const sectionToken = html.dataset.spwPageSectionCurrent || '';
+  const sectionPhase = html.dataset.spwPageSectionPhase || '';
+  const bits = [pageState];
+  if (sectionToken) bits.push(sectionToken.replace(/\s+/g, '_'));
+  if (sectionPhase && sectionPhase !== 'settled') bits.push(sectionPhase);
+  return bits.join(' · ');
+}
+
+function syncPageStateAwareness(root) {
+  if (!(root instanceof HTMLElement)) return;
+  const launch = root.querySelector('.spw-state-inspector__launch');
+  const status = root.querySelector('[data-spw-state-inspector-status]');
+  const label = formatPageStateLabel();
+  root.dataset.spwPageStateMirror = label;
+  if (launch instanceof HTMLElement) {
+    launch.dataset.spwPageStateMirror = label;
+    launch.setAttribute(
+      'aria-description',
+      `Page state ${label}. Drag to reposition on coarse pointers; double-tap area near edges to snap.`
+    );
+  }
+  if (status instanceof HTMLElement && root.dataset.spwStateInspector !== 'open') {
+    status.textContent = label;
+  }
 }
 
 function snapSatchelPosition(launch, left, top) {
@@ -203,7 +250,7 @@ function snapSatchelPosition(launch, left, top) {
 
   const centerX = left + w / 2;
   const centerY = top + h / 2;
-  let nearest = candidates[3];
+  let nearest = candidates[0];
   let nearestDistance = Number.POSITIVE_INFINITY;
 
   candidates.forEach((candidate) => {
@@ -551,20 +598,25 @@ function setOpen(root, open) {
   root.dataset.spwStateInspector = open ? 'open' : 'closed';
   launch.setAttribute('aria-expanded', open ? 'true' : 'false');
   panel.hidden = !open;
-  updateStatus(root, open ? 'State satchel opened.' : 'State satchel closed.');
+  updateStatus(root, open ? 'State satchel opened.' : formatPageStateLabel());
   if (open) {
     anchorSatchelToChromeRail(root, { open: true });
     syncControls(root);
+    syncPageStateAwareness(root);
     panel.focus({ preventScroll: true });
     return;
   }
 
-  delete root.dataset.spwSatchelAnchor;
   if (isMobileSatchelViewport()) {
     requestAnimationFrame(() => {
       anchorSatchelToChromeRail(root, { open: false });
+      syncPageStateAwareness(root);
     });
+    return;
   }
+
+  delete root.dataset.spwSatchelAnchor;
+  syncPageStateAwareness(root);
 }
 
 async function copySnapshot(root) {
@@ -623,7 +675,10 @@ function bindInspector(root) {
       if (root.dataset.spwStateInspector === 'open') {
         anchorSatchelToChromeRail(root, { open: true });
       } else {
-        requestAnimationFrame(() => anchorSatchelToChromeRail(root, { open: false }));
+        requestAnimationFrame(() => {
+          anchorSatchelToChromeRail(root, { open: false });
+          syncPageStateAwareness(root);
+        });
       }
       updateStatus(root, 'Satchel position reset.');
       return;
@@ -764,26 +819,43 @@ export function initStateInspector() {
   if (saved && launch) {
     requestAnimationFrame(() => {
       applyPositionToLaunch(launch, saved.left, saved.top, true);
+      syncPageStateAwareness(root);
     });
   } else if (launch) {
-    // Bake an explicit initial position so that enabling debug/seams (which mutates DOM)
-    // does not cause the fixed element to jump due to inset recalculation.
     requestAnimationFrame(() => {
-      const r = launch.getBoundingClientRect();
-      if (shouldSnapSatchelOnRelease()) {
-        const snapped = snapSatchelPosition(launch, r.left, r.top);
-        applyPositionToLaunch(launch, snapped.left, snapped.top, false);
-        return;
+      if (isMobileSatchelViewport()) {
+        mountDefaultMobileSatchel(root);
+      } else {
+        const r = launch.getBoundingClientRect();
+        applyPositionToLaunch(launch, r.left, r.top, false);
       }
-      applyPositionToLaunch(launch, r.left, r.top, false);
+      syncPageStateAwareness(root);
     });
   }
 
   const cleanupBindings = bindInspector(root);
   const cleanupDrag = bindSatchelDrag(root);
+  const handlePageStateAwareness = () => syncPageStateAwareness(root);
+  document.addEventListener('spw:page-attention-state', handlePageStateAwareness);
+  document.addEventListener('spw:page-transition-state', handlePageStateAwareness);
+  document.addEventListener('spw:section-locomotion-state', handlePageStateAwareness);
+  const pageStateObserver = new MutationObserver(handlePageStateAwareness);
+  pageStateObserver.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: [
+      'data-spw-page-state',
+      'data-spw-page-section-phase',
+      'data-spw-page-section-current',
+      'data-spw-page-section-index',
+    ],
+  });
   const clampSatchelPosition = () => {
     if (root.dataset.spwStateInspector === 'open') {
       anchorSatchelToChromeRail(root, { open: true });
+      return;
+    }
+    if (root.dataset.spwSatchelPositioned !== 'user' && isMobileSatchelViewport()) {
+      mountDefaultMobileSatchel(root);
       return;
     }
     const launchButton = root.querySelector('.spw-state-inspector__launch');
@@ -822,6 +894,10 @@ export function initStateInspector() {
   return () => {
     cleanupBindings();
     cleanupDrag?.();
+    document.removeEventListener('spw:page-attention-state', handlePageStateAwareness);
+    document.removeEventListener('spw:page-transition-state', handlePageStateAwareness);
+    document.removeEventListener('spw:section-locomotion-state', handlePageStateAwareness);
+    pageStateObserver.disconnect();
     window.removeEventListener('resize', clampSatchelPosition);
     window.visualViewport?.removeEventListener?.('resize', clampSatchelPosition);
     mo.disconnect();

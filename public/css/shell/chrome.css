@@ -4340,8 +4340,7 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
   position: fixed;
   left: 50%;
   bottom: calc(
-    var(--attention-handle-offset, 1rem)
-    + env(safe-area-inset-bottom)
+    var(--spw-floating-bottom-rail, var(--attention-handle-offset, 1rem))
     + var(--spw-floating-menu-clearance, 0px)
   );
   transform: translateX(-50%);
@@ -4975,8 +4974,7 @@ body > nav.spw-section-handle-shell {
   position: fixed;
   left: 50%;
   bottom: calc(
-    var(--attention-handle-offset, 1rem)
-    + env(safe-area-inset-bottom)
+    var(--spw-floating-bottom-rail, var(--attention-handle-offset, 1rem))
     + var(--spw-floating-menu-clearance, 0px)
   );
   margin: 0;

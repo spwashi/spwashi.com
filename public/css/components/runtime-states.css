@@ -191,6 +191,42 @@ html[data-spw-debug-mode="on"] :where(
   font-family: var(--site-mono-font, monospace);
 }
 
+.spw-state-inspector__launch[data-spw-page-state-mirror] {
+  position: relative;
+}
+
+.spw-state-inspector__launch[data-spw-page-state-mirror]::before {
+  content: attr(data-spw-page-state-mirror);
+  position: absolute;
+  inset: auto 0 calc(100% + 0.22rem) auto;
+  max-inline-size: min(16rem, 70vw);
+  padding: 0.14rem 0.38rem;
+  border: 1px solid color-mix(in srgb, var(--state-inspector-accent) 18%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-strong, #fff) 92%, var(--state-inspector-accent) 8%);
+  color: color-mix(in srgb, var(--ink-soft, rgba(14, 18, 20, 0.72)) 86%, var(--state-inspector-accent) 14%);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: 0;
+  transform: translateY(4px);
+  pointer-events: none;
+  transition:
+    opacity var(--duration-fast, 120ms) ease,
+    transform var(--duration-fast, 120ms) ease;
+}
+
+html[data-spw-page-state="region-enhanced"] .spw-state-inspector__launch[data-spw-page-state-mirror]::before,
+html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-state-mirror]::before,
+.spw-state-inspector__launch[data-spw-page-state-mirror]:is(:hover, :focus-visible)::before {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .spw-state-inspector__launch {
   min-block-size: 2.2rem;
   padding: 0.38rem 0.68rem;
@@ -358,7 +394,7 @@ html[data-spw-debug-mode="on"] :where(
     inset-block-end: calc(
       max(0.65rem, env(safe-area-inset-bottom))
       + var(--touch-target-compact, 2.15rem)
-      + 0.55rem
+      + 0.95rem
       + var(--spw-floating-menu-clearance, 0px)
     );
     inset-block-start: auto;

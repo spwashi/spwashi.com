@@ -72,6 +72,7 @@ import {
   snapshotGestureTargets,
 } from './runtime/gesture-contract.js';
 import {
+  clearPageCascadeTiming,
   primeRegions,
   refreshRegionProfiles,
 } from './runtime/region-profiler.js';
@@ -546,6 +547,7 @@ const {
   queueIdleEnhancements,
   refreshRuntime,
   wireRuntimeTokens,
+  resetMountBatchState,
 } = moduleLoader;
 
 /* ==========================================================================
@@ -649,6 +651,9 @@ function destroyRuntime() {
   if (!runtimeCtx) return;
   runtimeCtx.destroy();
   runtimeCtx = null;
+  regionEnrichmentPromise = null;
+  resetMountBatchState();
+  clearPageCascadeTiming(HTML);
   clearPageState(HTML, BODY);
   delete HTML.dataset.spwLayoutShiftState;
   delete HTML.dataset.spwLayoutShiftCount;
@@ -674,7 +679,9 @@ function scheduleRegionEnrichment(pageMeta, ctx) {
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         enrichRegionMetadata(pageMeta, { body: ctx.body || BODY });
-        primeRegions(ctx);
+        if (!ctx.regions.length) {
+          primeRegions(ctx);
+        }
         refreshRegionProfiles(ctx, 'region-metadata-enrichment');
         resolve();
       });
@@ -691,7 +698,7 @@ async function bootSite() {
   SITE_SURFACE = normalized.surface || SITE_SURFACE;
 
   runtimeCtx = createRuntimeContext();
-  wireRuntimeTokens(runtimeCtx);
+  runtimeCtx.addCleanup(wireRuntimeTokens(runtimeCtx));
   performance.mark('spw:boot-start');
   runtimeLogger.info('runtime boot started', { route: runtimeCtx.route }, SPW_LOG_RELATIONSHIPS.LIFECYCLE);
   const [
@@ -827,6 +834,7 @@ async function bootSite() {
   performance.mark('spw:immediate-layer-complete');
   performance.measure('spw:immediate-layer', 'spw:boot-start', 'spw:immediate-layer-complete');
   runtimeLogger.info('immediate layers mounted', { route: runtimeCtx.route }, SPW_LOG_RELATIONSHIPS.LIFECYCLE);
+  primeRegions(runtimeCtx);
   refreshRegionProfiles(runtimeCtx, 'immediate-enrichment');
 
   schedulePageArrival(runtimeCtx, PAGE_ARRIVAL.ENTERING, 'page-enter');

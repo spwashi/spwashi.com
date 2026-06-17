@@ -116,6 +116,9 @@ html[data-spw-page-section-phase="settled"] :where(
   section[data-spw-section-state="active"]
 ) {
   border-color: color-mix(in srgb, var(--active-op-color) 22%, var(--line, transparent));
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--active-op-color) 10%, transparent),
+    var(--component-shadow-quiet, var(--card-shadow, none));
 }
 
 html[data-spw-page-section-phase="traveling"] :where(

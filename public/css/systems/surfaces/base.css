@@ -119,3 +119,107 @@
 ) {
   height: 100%;
 }
+
+/* ==========================================================================
+   Shared route ecology (all surfaces)
+   ========================================================================== */
+
+:where(main) {
+  padding-block-end: calc(var(--spw-bottom-chrome-clearance, 0px) + clamp(1.5rem, 4vw, 2.75rem));
+}
+
+:where(main > .site-frame) {
+  scroll-margin-top: calc(var(--header-height, 4rem) + 0.85rem);
+}
+
+:where(.site-frame > .frame-body) {
+  display: grid;
+  gap: var(--spw-shell-panel-gap);
+  align-content: start;
+  min-width: 0;
+}
+
+:where(.site-frame .frame-heading) {
+  padding-block-end: 0.38rem;
+  margin-block-end: 0.08rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--spw-shell-line) 72%, transparent);
+}
+
+:where(.site-frame .frame-heading h2) {
+  flex: 1 1 12rem;
+  min-width: 0;
+  text-wrap: balance;
+}
+
+:where(.site-frame .inline-note) {
+  margin: 0;
+  max-inline-size: var(--spw-layout-measure, 68ch);
+  color: color-mix(in srgb, var(--ink-soft, rgba(14, 18, 20, 0.68)) 88%, var(--active-op-color, var(--teal)) 12%);
+  line-height: 1.52;
+  text-wrap: pretty;
+}
+
+:where(.site-frame[data-spw-attentional-weight="1.35"]) {
+  border-color: color-mix(in oklab, var(--active-op-color, var(--teal)) 30%, var(--line, transparent));
+}
+
+:where(.site-frame[data-spw-attentional-weight="1.25"]),
+:where(.site-frame[data-spw-attentional-weight="1.2"]) {
+  border-color: color-mix(in oklab, var(--active-op-color, var(--teal)) 24%, var(--line, transparent));
+}
+
+:where(.site-frame[data-spw-attentional-weight="1.15"]),
+:where(.site-frame[data-spw-attentional-weight="1.1"]),
+:where(.site-frame[data-spw-attentional-weight="1.05"]) {
+  border-color: color-mix(in oklab, var(--active-op-color, var(--teal)) 18%, var(--line, transparent));
+}
+
+:where(.site-frame[data-spw-attentional-weight="0.95"]),
+:where(.site-frame[data-spw-attentional-weight="0.92"]) {
+  opacity: 0.98;
+}
+
+:where(.site-frame .frame-panel, .site-frame .frame-card) {
+  transition:
+    transform var(--duration-fast, 120ms) var(--ease-mechanical, ease),
+    border-color var(--duration-base, 180ms) var(--ease-mechanical, ease),
+    box-shadow var(--duration-base, 180ms) var(--ease-mechanical, ease);
+}
+
+:where(.site-frame .frame-panel:is(:hover, :focus-within), .site-frame .frame-card:is(:hover, :focus-within)) {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 22%, var(--line, transparent));
+}
+
+@media (max-width: 40rem) {
+  :where(.site-frame) {
+    --surface-gap: clamp(0.52rem, 1.8vw, 0.76rem);
+    --surface-padding: clamp(0.68rem, 2.6vw, 0.88rem);
+  }
+
+  :where(.site-frame > .frame-body) {
+    gap: clamp(0.68rem, 2.4vw, 0.82rem);
+  }
+
+  :where(main) {
+    gap: clamp(0.85rem, 2.8vw, 1.15rem);
+  }
+
+  :where(.frame-grid--dense) {
+    --spw-grid-min-base: 100%;
+    --spw-grid-min-mid: 100%;
+    --spw-grid-min-narrow: 100%;
+    --spw-grid-min-compact: 100%;
+    gap: 0.62rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.site-frame .frame-panel, .site-frame .frame-card) {
+    transition: none;
+  }
+
+  :where(.site-frame .frame-panel:is(:hover, :focus-within), .site-frame .frame-card:is(:hover, :focus-within)) {
+    transform: none;
+  }
+}

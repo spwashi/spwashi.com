@@ -5,6 +5,12 @@
 import { FRAME_SELECTOR } from '../kernel/dom-contracts.js';
 import { safeQuery, safeQueryAll } from './runtime-helpers.js';
 import {
+  LENS_MODE_SETTLE_MS,
+  findLensModeSwitches,
+  parseLensModeQuery,
+  writeLensModeState,
+} from './lens-modes.js';
+import {
   REGION_STATES,
   refreshRegionProfiles,
   setRegionState,
@@ -41,6 +47,8 @@ function bindModeGroups(ctx) {
   if (!buttons.length) return () => {};
 
   const grouped = new Map();
+  const settleTimers = new WeakMap();
+  const activeTimers = new Set();
 
   for (const button of buttons) {
     const group = button.getAttribute('data-mode-group');
@@ -49,20 +57,35 @@ function bindModeGroups(ctx) {
     grouped.get(group).push(button);
   }
 
-  function applyMode(group, mode) {
+  const setTransientState = (element, state = 'changed') => {
+    if (!(element instanceof HTMLElement)) return;
+    element.dataset.spwLensState = state;
+    const existing = settleTimers.get(element);
+    if (existing) {
+      window.clearTimeout(existing);
+      activeTimers.delete(existing);
+    }
+    const timer = window.setTimeout(() => {
+      if (element.dataset.spwLensState === state) {
+        element.dataset.spwLensState = 'settled';
+      }
+      settleTimers.delete(element);
+      activeTimers.delete(timer);
+    }, LENS_MODE_SETTLE_MS);
+    settleTimers.set(element, timer);
+    activeTimers.add(timer);
+  };
+
+  function applyMode(group, mode, options = {}) {
     const groupButtons = grouped.get(group) || [];
-    for (const button of groupButtons) {
-      const isActive = button.getAttribute('data-set-mode') === mode;
-      button.setAttribute('aria-pressed', String(isActive));
-    }
-
-    const panels = safeQueryAll(`[data-mode-group="${CSS.escape(group)}"][data-mode-panel]`);
-    for (const panel of panels) {
-      const show = panel.getAttribute('data-mode-panel') === mode;
-      panel.hidden = !show;
-    }
-
-    ctx.bus.emit('spw:mode-change', { group, mode });
+    const detail = writeLensModeState({
+      group,
+      mode,
+      buttons: groupButtons,
+      source: options.source || 'mode-switch',
+      setTransientState: (element) => setTransientState(element, options.initial ? 'settled' : 'changed'),
+    });
+    if (detail) ctx.bus.emit('frame:mode', detail);
   }
 
   const handlers = [];
@@ -73,14 +96,34 @@ function bindModeGroups(ctx) {
       const group = button.getAttribute('data-mode-group');
       const mode = button.getAttribute('data-set-mode');
       if (!group || !mode) return;
-      applyMode(group, mode);
+      applyMode(group, mode, { source: 'mode-switch' });
     };
     button.addEventListener('click', handler);
     handlers.push(() => button.removeEventListener('click', handler));
   }
 
+  const initial = parseLensModeQuery(grouped);
+  for (const [group, groupButtons] of grouped.entries()) {
+    const active = initial?.group === group
+      ? groupButtons.find((button) => button.getAttribute('data-set-mode') === initial.mode)
+      : groupButtons.find((button) => button.getAttribute('aria-pressed') === 'true');
+    const mode = active?.getAttribute('data-set-mode') || groupButtons[0]?.getAttribute('data-set-mode');
+    if (mode) {
+      applyMode(group, mode, {
+        source: initial?.group === group ? 'query' : 'initial',
+        initial: true,
+      });
+    }
+  }
+
   return () => {
     for (const cleanup of handlers) cleanup();
+    for (const switchEl of findLensModeSwitches(buttons)) {
+      const timer = settleTimers.get(switchEl);
+      if (timer) window.clearTimeout(timer);
+    }
+    for (const timer of activeTimers) window.clearTimeout(timer);
+    activeTimers.clear();
   };
 }
 

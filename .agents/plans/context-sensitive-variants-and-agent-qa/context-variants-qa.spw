@@ -50,6 +50,16 @@ new_semantic_families: .{
     purpose = `Let a component be interpreted in relation to where the reader is, when the observation happened, and which local frame is active.`
     metaphysical_use = `Supports low-fantasy/animistic interface design: a card can feel like a local spirit whose behavior depends on position, season, attention, and accumulated return.`
   }[reg=facet]
+
+  lens_mode_state = .{
+    operation = `contract`
+    fixity = `stable`
+    shape = `{ group, mode, index, count, hostId, deepLink, source }`
+    attributes = #[data-spw-lens-group, data-spw-lens-mode, data-spw-lens-state, data-spw-lens-panel-state, data-spw-lens-deep-link, data-spw-deep-link-state]
+    event = `frame:mode (legacy DOM: spw:mode-change)`
+    query = `?lens=<group>:<mode>#<host-id>`
+    purpose = `Pair visual lens switching with QA-readable state and marketing-proof deep links. A screenshot QA artifact can now say which interpretive mode was active and how to reopen that same posture.`
+  }[reg=facet]
 }[reg=facet]
 
 contracts_to_extend: .{

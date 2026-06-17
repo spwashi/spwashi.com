@@ -5,6 +5,7 @@ import {
 } from '/public/js/kernel/shared.js';
 import { bus } from '/public/js/kernel/bus.js';
 import { getSiteSettings } from '/public/js/kernel/site-settings.js';
+import { writeLensModeState } from '/public/js/runtime/lens-modes.js';
 
 let initialized = false;
 
@@ -70,23 +71,22 @@ const createConsoleInterface = () => ({
     },
     setGroupMode(group, mode, options = {}) {
         if (!group || !mode) return;
-        document.querySelectorAll(`[data-mode-group="${CSS.escape(group)}"][data-set-mode]`).forEach((button) => {
-            button.setAttribute('aria-pressed', String(button.dataset.setMode === mode));
-        });
-        document.querySelectorAll(`[data-mode-group="${CSS.escape(group)}"][data-mode-panel]`).forEach((panel) => {
-            panel.hidden = panel.dataset.modePanel !== mode;
-        });
-
-        document.dispatchEvent(new CustomEvent('spw:mode-change', {
-            detail: {
-                group,
-                groupName: group,
-                mode,
-                label: mode,
-                source: options.source || 'console',
-                frameMeta: getFrameMeta(getActiveFrame()),
+        const buttons = [...document.querySelectorAll(`[data-mode-group="${CSS.escape(group)}"][data-set-mode]`)];
+        const detail = writeLensModeState({
+            group,
+            mode,
+            buttons,
+            source: options.source || 'console',
+            setTransientState: (element) => {
+                element.dataset.spwLensState = 'changed';
             },
-        }));
+        });
+        if (detail) {
+            bus.emit('frame:mode', {
+                ...detail,
+                frameMeta: getFrameMeta(getActiveFrame()),
+            });
+        }
     },
 });
 

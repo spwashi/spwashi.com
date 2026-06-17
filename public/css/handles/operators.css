@@ -462,7 +462,14 @@ html[data-spw-dimensional-breadcrumbs="on"] .spw-spell-path .spw-spell-meaning {
      Position lifted slightly so it doesn't bury footer nav text; uses floating safe inset. */
   inset-inline-start: max(0.75rem, env(safe-area-inset-left));
   inset-inline-end: auto;
-  bottom: calc(max(0.6rem, env(safe-area-inset-bottom)) + var(--spw-floating-menu-clearance, 0px));
+  bottom: calc(var(--spw-floating-bottom-rail, max(0.6rem, env(safe-area-inset-bottom))) + var(--spw-floating-menu-clearance, 0px));
+}
+
+@media (max-width: 720px) {
+  :root:has([data-spw-state-inspector-root]) .spw-console.is-collapsed {
+    inline-size: min(11.5rem, calc(50vw - 0.9rem));
+    max-inline-size: min(11.5rem, calc(50vw - 0.9rem));
+  }
 }
 
 :root:has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) {
@@ -1173,6 +1180,11 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
 :where(.frame-topline .frame-sigil + .spec-strip, .frame-heading .frame-sigil + .spw-component-meta) {
   align-self: flex-start;
   margin-inline-start: 0.22rem;
+}
+
+:where(.frame-topline > [data-spw-slot="meta"], .frame-heading > [data-spw-slot="meta"]) {
+  order: 0;
+  margin-inline-start: auto;
 }
 
 /* ==========================================================================
@@ -1920,11 +1932,22 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
 }
 
 .mode-switch {
+  --spw-lens-cascade-color: var(--active-op-color, var(--teal));
+  --spw-lens-track-bg: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.9)) 88%, var(--spw-lens-cascade-color) 12%);
+  --spw-lens-track-border: color-mix(in srgb, var(--spw-lens-cascade-color) 20%, var(--line, rgba(14, 18, 20, 0.14)) 80%);
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: calc(var(--spw-control-gap, 0.24rem) + 0.1rem);
   min-width: 0;
+  padding: 0.16rem;
+  border: 1px solid var(--spw-lens-track-border);
+  border-radius: var(--shape-control, 0.68rem);
+  background: var(--spw-lens-track-bg);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--surface-strong, #fff) 44%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--spw-lens-cascade-color) 7%, transparent);
+  isolation: isolate;
 }
 
 .mode-switch[aria-label]::before {
@@ -1990,7 +2013,7 @@ body[data-spw-surface="home"] #home-frame .mode-switch[aria-label]::before {
     inline-size: auto;
     width: auto;
     min-inline-size: 0;
-    font-size: calc(var(--text-size-chip, 0.84rem) - 0.05rem);
+    font-size: clamp(0.72rem, 2.7vw, calc(var(--text-size-chip, 0.84rem) - 0.04rem));
     padding-inline: calc(var(--spw-control-padding-inline, 0.72rem) - 0.2rem);
   }
 }
@@ -2039,6 +2062,8 @@ body[data-spw-surface="home"] #home-frame .mode-switch[aria-label]::before {
   align-items: center;
   text-align: center;
   white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: keep-all;
   overflow: hidden;
   text-overflow: ellipsis;
   color: var(--mode-switch-idle-ink);
@@ -2052,6 +2077,22 @@ body[data-spw-surface="home"] #home-frame .mode-switch[aria-label]::before {
     box-shadow var(--spw-interaction-commit, var(--spw-control-transition-base, 140ms ease)),
     transform var(--spw-interaction-acknowledge, var(--spw-control-transition-fast, 140ms ease)),
     font-weight var(--spw-interaction-commit, var(--spw-control-transition-fast, 140ms ease));
+}
+
+.mode-switch .frame-sigil[data-set-mode="surface"] {
+  --active-op-color: var(--op-surface-color, var(--op-topic-color, var(--teal)));
+}
+
+.mode-switch .frame-sigil[data-set-mode="syntax"] {
+  --active-op-color: var(--op-object-color, var(--teal));
+}
+
+.mode-switch .frame-sigil[data-set-mode="artifacts"] {
+  --active-op-color: var(--op-stream-color, var(--op-frame-color, var(--teal)));
+}
+
+.mode-switch .frame-sigil[data-set-mode="website"] {
+  --active-op-color: var(--op-action-color, var(--teal));
 }
 
 .mode-switch .frame-sigil:active {
@@ -2126,6 +2167,102 @@ body[data-spw-surface="home"] .mode-switch .frame-sigil[aria-pressed="true"] {
 
 .mode-switch .frame-sigil[aria-pressed="false"]:is(:hover, :focus-visible) {
   opacity: 1;
+}
+
+@keyframes spw-lens-commit-pulse {
+  0% {
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, var(--surface-strong, #fff) 44%, transparent),
+      0 0 0 1px color-mix(in srgb, var(--spw-lens-cascade-color) 7%, transparent);
+  }
+
+  42% {
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, var(--surface-strong, #fff) 44%, transparent),
+      0 0 0 3px color-mix(in srgb, var(--spw-lens-cascade-color) 18%, transparent);
+  }
+
+  100% {
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, var(--surface-strong, #fff) 44%, transparent),
+      0 0 0 1px color-mix(in srgb, var(--spw-lens-cascade-color) 7%, transparent);
+  }
+}
+
+@keyframes spw-lens-panel-enter {
+  from {
+    opacity: 0.72;
+    transform: translateY(0.18rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+:where(.mode-switch[data-spw-lens-mode="surface"], [data-spw-lens-mode="surface"]) {
+  --spw-lens-cascade-color: var(--op-surface-color, var(--op-topic-color, var(--teal)));
+}
+
+:where(.mode-switch[data-spw-lens-mode="syntax"], [data-spw-lens-mode="syntax"]) {
+  --spw-lens-cascade-color: var(--op-object-color, var(--teal));
+}
+
+:where(.mode-switch[data-spw-lens-mode="artifacts"], [data-spw-lens-mode="artifacts"]) {
+  --spw-lens-cascade-color: var(--op-stream-color, var(--op-frame-color, var(--teal)));
+}
+
+:where(.mode-switch[data-spw-lens-mode="website"], [data-spw-lens-mode="website"]) {
+  --spw-lens-cascade-color: var(--op-action-color, var(--teal));
+}
+
+:where(.mode-switch[data-spw-lens-state="changed"]) {
+  animation: spw-lens-commit-pulse 520ms var(--handle-ease, ease-out);
+}
+
+:where(.site-frame[data-spw-lens-mode]) > :where(.frame-topline, .frame-heading) {
+  border-color: color-mix(in srgb, var(--spw-lens-cascade-color) 20%, var(--line, rgba(14, 18, 20, 0.14)) 80%);
+  box-shadow:
+    inset 0 -1px 0 color-mix(in srgb, var(--spw-lens-cascade-color) 18%, transparent),
+    var(--spw-local-shadow, none);
+}
+
+:where(.site-frame[data-spw-lens-state="changed"]) > :where(.frame-topline, .frame-heading) {
+  transition:
+    border-color var(--handle-duration-base, 180ms) var(--handle-ease, ease),
+    box-shadow var(--handle-duration-base, 180ms) var(--handle-ease, ease);
+}
+
+:where([data-spw-lens-panel-state="active"]) {
+  animation: spw-lens-panel-enter 220ms var(--handle-ease, ease-out);
+}
+
+:where(html[data-spw-debug-mode="on"], html[data-spw-module-visuals="on"])
+  :where([data-spw-lens-deep-link]) > :where(.frame-topline, .frame-heading)::before {
+  content: attr(data-spw-deep-link-state);
+  display: inline-flex;
+  align-items: center;
+  max-inline-size: min(100%, 34ch);
+  overflow: hidden;
+  padding: 0.12rem 0.38rem;
+  border: 1px dashed color-mix(in srgb, var(--spw-lens-cascade-color) 26%, transparent);
+  border-radius: 999px;
+  color: color-mix(in srgb, var(--ink-soft, currentColor) 74%, var(--spw-lens-cascade-color) 26%);
+  font-family: var(--handle-meta-font);
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-overflow: ellipsis;
+  text-transform: lowercase;
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.mode-switch[data-spw-lens-state="changed"], [data-spw-lens-panel-state="active"]) {
+    animation: none;
+  }
 }
 
 /* ==========================================================================
@@ -3550,6 +3687,24 @@ html[data-spw-cognitive-handles="off"] :where(
     align-items: stretch;
   }
 
+  :where(.frame-heading > :is(h1, h2, h3)) {
+    flex: 0 1 auto;
+    max-inline-size: 100%;
+  }
+
+  :where(.frame-topline > [data-spw-slot="meta"], .frame-heading > [data-spw-slot="meta"]) {
+    order: 1;
+    width: 100%;
+    margin-inline-start: 0;
+    justify-content: flex-start;
+  }
+
+  :where(.frame-topline > .frame-prompt-copy, .frame-heading > .frame-prompt-copy) {
+    order: 2;
+    align-self: flex-start;
+    margin-block-start: 0;
+  }
+
   :where(.frame-topline > .frame-sigil, .frame-heading > .frame-sigil, .frame-topline > .spw-delimiter) {
     align-self: flex-start;
   }
@@ -3760,19 +3915,52 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
 
 /* The KERNEL ENTRY carry surface — makes the prose promise of "gestures can be carried" have a live, traversable consequence */
 .garden-carried {
-  margin-block-start: 0.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.28rem 0.42rem;
+  margin-block-start: 0.35rem;
+  padding: 0.38rem 0.52rem;
+  border: 1px dotted color-mix(in srgb, var(--active-op-color, var(--teal)) 16%, transparent);
+  border-radius: var(--shape-component, 6px);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 92%, var(--active-op-color, var(--teal)) 8%);
   font-size: 0.72rem;
   color: color-mix(in srgb, var(--ink-soft, rgba(27, 31, 35, 0.68)) 78%, var(--active-op-color, var(--teal)) 22%);
+  transition:
+      border-color 180ms ease,
+      background-color 180ms ease;
 }
+
+.garden-carried:has(.garden-carried__value:not(:empty):not(:-moz-only-whitespace)) {
+  border-style: solid;
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 24%, transparent);
+}
+
+.garden-carried:has(.garden-carried__value:not(:empty)) {
+  border-style: solid;
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 24%, transparent);
+}
+
 .garden-carried__label {
-  opacity: 0.75;
-  margin-inline-end: 0.35em;
+  opacity: 0.82;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
+
 .garden-carried__value {
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: 0.7rem;
   padding: 0.1rem 0.35rem;
   border-bottom: 1px dotted color-mix(in srgb, var(--active-op-color, var(--teal)) 30%, transparent);
+  transition: border-color 180ms ease, color 180ms ease;
+}
+
+.garden-carried__value:not(:empty):not(:-moz-only-whitespace) {
+  color: color-mix(in srgb, var(--active-op-color, var(--teal)) 78%, var(--ink, #1b1f23) 22%);
+  border-bottom-style: solid;
 }
 
 /* When a re-gather happens, the footer cauldron receives a short "still warm" flash via the JS class */

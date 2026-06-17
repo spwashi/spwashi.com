@@ -156,9 +156,44 @@
 }
 
 @media (max-width: 720px) {
-  :where([data-spw-floating-chrome="true"][data-spw-chrome-role="state-inspector"]:not([data-spw-state-inspector="open"]):not([data-spw-satchel-anchor="chrome-rail"])) {
+  :root {
+    --spw-floating-bottom-rail: max(0.65rem, env(safe-area-inset-bottom));
+  }
+
+  :root:has(
+    .spw-section-handle[data-spw-handle-state="visible"],
+    .spw-section-handle-shell[data-spw-handle-state="visible"]
+  ) {
+    --spw-floating-bottom-rail: calc(
+      max(0.65rem, env(safe-area-inset-bottom))
+      + var(--touch-target-compact, 2.15rem)
+      + 0.55rem
+    );
+  }
+
+  :where([data-spw-floating-chrome="true"][data-spw-chrome-role="state-inspector"]:not([data-spw-state-inspector="open"]):not([data-spw-satchel-anchor="chrome-rail"]):not([data-spw-satchel-anchor="chrome-rail-closed"])) {
     /* Reserve the mobile section-handle rail so floating tools do not stack on one tap target. */
-    inset-block-end: calc(max(0.8rem, env(safe-area-inset-bottom)) + var(--touch-target-compact, 2.15rem) + 1rem + var(--spw-floating-menu-clearance, 0px));
+    inset-block-end: calc(var(--spw-floating-bottom-rail) + var(--spw-floating-menu-clearance, 0px));
+  }
+
+  :where(
+    [data-spw-floating-chrome="true"][data-spw-chrome-role="state-inspector"][data-spw-satchel-anchor="chrome-rail-closed"][data-spw-state-inspector="closed"]:not([data-spw-satchel-positioned="user"])
+  ) {
+    position: fixed;
+    inset: auto max(0.65rem, env(safe-area-inset-right)) calc(var(--spw-floating-bottom-rail) + var(--spw-floating-menu-clearance, 0px)) auto;
+    left: auto !important;
+    top: auto !important;
+    transform: none;
+    inline-size: auto;
+    max-inline-size: min(11.5rem, calc(50vw - 0.8rem));
+    justify-items: end;
+    pointer-events: none;
+  }
+
+  :where(
+    [data-spw-floating-chrome="true"][data-spw-chrome-role="state-inspector"][data-spw-satchel-anchor="chrome-rail-closed"][data-spw-state-inspector="closed"]:not([data-spw-satchel-positioned="user"])
+  ) > * {
+    pointer-events: auto;
   }
 
   :where([data-spw-floating-chrome="true"][data-spw-chrome-role="state-inspector"][data-spw-state-inspector="open"],

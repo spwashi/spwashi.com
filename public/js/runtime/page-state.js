@@ -66,6 +66,20 @@ const readRootTimeToken = (name, fallback = 0) => {
   return parseCssTimeMs(getComputedStyle(document.documentElement).getPropertyValue(name), fallback);
 };
 
+const computeArrivalSettleDelay = (arrival = PAGE_ARRIVAL.ENTERING) => {
+  const step3 = readRootTimeToken('--spw-page-arrival-step-3-delay', 148);
+  const arrivalDuration = readRootTimeToken(
+    arrival === PAGE_ARRIVAL.RETURNING || arrival === PAGE_ARRIVAL.RESTORED
+      ? '--spw-page-return-duration'
+      : '--spw-page-arrival-duration',
+    arrival === PAGE_ARRIVAL.RETURNING || arrival === PAGE_ARRIVAL.RESTORED ? 180 : 280,
+  );
+  const regionRefresh = readRootTimeToken('--spw-region-profile-refresh-duration', 220);
+  const staggerStep = readRootTimeToken('--spw-settle-stagger-step', 18);
+  const cascadeTail = step3 + regionRefresh + (staggerStep * 2);
+  return Math.max(arrivalDuration, cascadeTail);
+};
+
 const prefersReducedMotion = () => (
   document.documentElement.dataset.spwReduceMotion === 'on'
   || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
@@ -205,11 +219,6 @@ export const schedulePageArrival = (ctx, arrival = PAGE_ARRIVAL.ENTERING, reason
     }, readRootTimeToken(token, fallback));
   });
 
-  const settleDelayToken = arrival === PAGE_ARRIVAL.RETURNING
-    ? '--spw-page-return-duration'
-    : '--spw-page-arrival-duration';
-  const settleDelayFallback = arrival === PAGE_ARRIVAL.RETURNING ? 180 : 280;
-
   addManagedTimeout(ctx, () => {
     setPageAttentionState(ctx, {
       presence: PAGE_PRESENCE.FOREGROUND,
@@ -217,7 +226,7 @@ export const schedulePageArrival = (ctx, arrival = PAGE_ARRIVAL.ENTERING, reason
       step: '0',
       reason: `${reason}-settled`,
     });
-  }, readRootTimeToken(settleDelayToken, settleDelayFallback));
+  }, computeArrivalSettleDelay(arrival));
 };
 
 export function initPageAttentionLifecycle(ctx) {
@@ -290,6 +299,7 @@ export function snapshotPageState(root = document.documentElement, body = docume
     attentionContext: htmlDataset.spwAttentionContext || '',
     harmonyField: htmlDataset.spwHarmonyField || '',
     tempoField: htmlDataset.spwTempoField || '',
+    pageTempo: htmlDataset.spwPageTempo || '',
     bodyState: bodyDataset.spwPageState || '',
   };
 }
@@ -325,6 +335,7 @@ export function clearPageState(root = document.documentElement, body = document.
     delete root.dataset.spwAttentionContext;
     delete root.dataset.spwHarmonyField;
     delete root.dataset.spwTempoField;
+    delete root.dataset.spwPageTempo;
   }
 
   if (body?.dataset) {

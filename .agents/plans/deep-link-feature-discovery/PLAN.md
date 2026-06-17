@@ -35,3 +35,21 @@ Make the site easier to navigate, inspect, and learn from by improving deep-link
 - `node --check public/js/interface/discovery-notices.js`
 - `git diff --check`
 - `npm run test:engagement`
+
+## 2026-06-17 Lens Mode Interaction Contract
+
+Mode switches now graduate from local visual controls into shared lens-mode surfaces for marketing proofs, feature QA, and deep-linkable route states.
+
+Implemented contract:
+- Runtime writes `data-spw-lens-group`, `data-spw-lens-mode`, `data-spw-lens-state`, `data-spw-lens-panel-state`, `data-spw-lens-deep-link`, and `data-spw-deep-link-state` across the switch, panels, and nearest inspectable host.
+- Root HTML receives `data-spw-active-lens-group` and `data-spw-active-lens-mode`.
+- Normal mode clicks emit canonical `frame:mode` through the bus, preserving the legacy `spw:mode-change` event for existing listeners.
+- Query links can use `?lens=<group>:<mode>#<host-id>` to open a route into a specific lens state.
+- Shared CSS in `public/css/handles/operators.css` owns pressed-state design, lens cascade color, host/panel microinteractions, and reduced-motion safety.
+
+Marketing/QA use:
+- Marketing cards can point to a proof posture without new route copy: e.g. a system-oriented pitch can deep-link to `?lens=home-lens:website#home-frame`.
+- QA can verify a lens by checking root state, host state, visible panel state, and the emitted `frame:mode` detail instead of relying on screenshots alone.
+
+Guardrail:
+- Do not create route-only `.mode-active` class families. Add route-specific visual depth by consuming the shared lens datasets and variables.

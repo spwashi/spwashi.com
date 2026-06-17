@@ -188,6 +188,26 @@
   anti_pattern = "Every feature announces itself, or no feature ever reveals why the page changed."
 }
 
+^"lens_mode_interaction_contract"{
+  operation = "contract"
+  fixity = "stable"
+  definition = "A lens mode is a reversible reading/filter state that changes visible consequence, host semantics, QA state, and optional shareable URL state without changing route identity."
+  html_contract = "Use .mode-switch with data-mode-group + data-set-mode controls and matching data-mode-panel surfaces. Put data-spw-inspect-mode-group on the nearest honest host when the state should be inspectable as one feature."
+  runtime_contract = .{
+    writer = "public/js/runtime/site-core-minimal.js owns normal page clicks; public/js/interface/console.js mirrors the same state for console, brace, and QA callers."
+    host_state = #[`data-spw-lens-group`, `data-spw-lens-mode`, `data-spw-lens-state`, `data-spw-lens-deep-link`, `data-spw-deep-link-state`][reg=set]
+    switch_state = #[`data-spw-lens-group`, `data-spw-lens-mode`, `data-spw-lens-state`, `data-spw-lens-deep-link`, `--spw-lens-count`, `--spw-lens-index`][reg=set]
+    panel_state = #[`data-spw-lens-panel-state`, `data-spw-lens-group`, `data-spw-lens-mode`][reg=set]
+    root_state = #[`html[data-spw-active-lens-group]`, `html[data-spw-active-lens-mode]`][reg=set]
+    event = "Emit canonical frame:mode through the site bus; legacy listeners continue to receive spw:mode-change."
+    query = "A shareable lens link may use ?lens=<group>:<mode>#<host-id>. Query state is an enhancement; hash targets and IDs must still work without JavaScript."
+  }[reg=facet]
+  css_contract = "Shared CSS should read data-spw-lens-mode / data-spw-lens-state and --spw-lens-cascade-color. Route CSS may consume those variables for local preview depth, but should not duplicate switch pressed-state logic."
+  marketing_use = "A marketing or offer surface can link to a frame plus lens mode when the pitch needs to show a specific proof posture: prose, syntax, artifact, system, QA, or feature demonstration."
+  qa_use = "A QA pass can assert root, host, switch, and panel state after changing a lens; deep-link QA should verify both URL query application and panel visibility."
+  anti_pattern = "A route invents .syntax-active/.marketing-active classes, updates panel display locally, and leaves no bus event, root state, or deep-linkable handle for QA."
+}
+
 ^"composable_discoverability_contract"{
   definition: "Composability and discoverability are the same architecture seen from two directions: a thing can be recombined safely when its meaning, ownership, state, and consequence can be found quickly."
   route_layer = "Use body metadata and stable ids so the route's semantic flow is visible before enhancement."
