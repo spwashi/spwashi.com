@@ -171,3 +171,21 @@ This increment uses a Vite failure as a forcing function, but the durable work i
 - Chrome checks on `/topics/`, `/topics/software/`, and `/topics/math/numerical-methods/` show no viewport rect overflow after the patch. Remaining topic-card scroll-width flags come from intentional media bleed inside illustrated cards.
 - `npm run check:local` reaches `[check] passed`; its final `check-generated` step exits 1 because `public/css/bundles/core.css` is a modified generated output in the unstaged working tree.
 - `git diff --check` passes.
+
+## Active Refinement - 2026-06-19 Conversation Audit
+
+This plan now owns the "page and card layout audit" thread from the current conversation when the issue is containment, alignment, wrapping, track sizing, or state-driven reflow.
+
+Redistributed tasks:
+
+- Audit card-heavy routes for the distinction between an inline operator handle and a structural operator-bearing card.
+- Keep page/card layout fixes in shared card, frame, grid, shell, or route-surface owners before adding page-local exceptions.
+- Check card anatomy against the slot contract: header, meta, body, figure, actions, footer.
+- Treat responsive density as a declared intent (`dense`, `compact`, `wide`, `atlas`, `split`) rather than an inline grid rewrite.
+- When a state attribute can alter visual weight, reserve the box model first: transparent borders, stable min sizes, wrapping safeguards, and safe overflow handling.
+- Leave generated CSS bundle drift as validation context; patch source CSS first and regenerate bundles intentionally.
+
+Validation additions:
+
+- `rg -n "frame-card|site-frame|frame-grid|data-spw-slot|data-spw-layout|data-spw-operator" **/index.html public/css`
+- Browser or static checks on one dense route, one long-reading route, one design route, and one RPG route after shared card/grid changes.

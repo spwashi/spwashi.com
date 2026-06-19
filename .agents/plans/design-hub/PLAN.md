@@ -61,9 +61,20 @@ Optional only if the route genuinely needs new styling beyond shared surfaces:
   - page/body state
   - component/region state
   - slot/local state
+- Component ecology specimen that makes mechanics visible through one embedded display:
+  - environment state changes context, material, and density
+  - variant state changes the local message-surface species
+  - behavior state changes card state, charge, selection, and resonance
+  - runtime writes inspectable data attributes and exposes console hooks through `spwDesignExperiments`
 - Rendering context tests showing multiple variants built from real data attributes.
 - Mobile interaction notes for compact navigation, section handles, control density, and hover/focus assumptions.
 - Gutter rail with quick jumps / questions so the page also exercises split layout.
+
+## Implementation Note
+
+- `/design/#component-ecology-specimens` now acts as the embedded feature specimen for component/environment state exploration.
+- `public/js/modules/design-experiments.js` owns the route-local wiring through `data-design-ecology-*`, writes corresponding `data-spw-*` state, emits `design:ecology-state`, and exposes `inspectEcologySpecimen()` / `setEcologySpecimen(...)` on `spwDesignExperiments`.
+- `public/css/routes/design-surface.css` projects the same state into the visible message-surface display, resonance meter, active controls, and compact readout.
 
 ### Link updates
 

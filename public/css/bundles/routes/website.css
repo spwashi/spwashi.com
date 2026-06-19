@@ -1135,6 +1135,266 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-page-seed="page_design_des
   box-shadow: inset 0 1px 0 color-mix(in srgb, white 28%, transparent);
 }
 
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-ecology-specimen) {
+  --design-ecology-accent: var(--design-surface-accent-strong);
+  --design-ecology-bubble-fill: color-mix(in srgb, var(--design-surface-panel-strong) 92%, var(--design-ecology-accent) 8%);
+  --design-ecology-bubble-line: color-mix(in srgb, var(--design-ecology-accent) 28%, var(--design-surface-line) 72%);
+  --design-ecology-bubble-radius: 1.2rem;
+  display: grid;
+  grid-template-columns: minmax(13rem, 0.72fr) minmax(18rem, 1.18fr) minmax(13rem, 0.76fr);
+  gap: clamp(0.72rem, 1.7vw, 1.05rem);
+  align-items: stretch;
+  margin-block: 1rem;
+  padding: clamp(0.72rem, 1.8vw, 1rem);
+  border: 1px solid color-mix(in srgb, var(--design-ecology-accent) 30%, var(--design-surface-line) 70%);
+  border-radius: calc(var(--shape-surface, 10px) + 4px);
+  background:
+    radial-gradient(circle at 12% 0%, color-mix(in srgb, var(--design-ecology-accent) 12%, transparent), transparent 38%),
+    linear-gradient(180deg, color-mix(in srgb, var(--design-surface-panel-strong) 98%, transparent), color-mix(in srgb, var(--design-surface-panel) 96%, transparent));
+  box-shadow:
+    0 18px 40px color-mix(in srgb, var(--design-ecology-accent) 9%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 34%, transparent);
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-ecology-specimen[data-design-ecology-environment="calm"]) {
+  --design-ecology-accent: color-mix(in srgb, var(--op-frame-color, #008080) 74%, var(--design-surface-accent-warm) 26%);
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-ecology-specimen[data-design-ecology-environment="social"]) {
+  --design-ecology-accent: color-mix(in srgb, var(--op-object-color, #c58b2a) 72%, var(--op-frame-color, #008080) 28%);
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-ecology-specimen[data-design-ecology-environment="inspect"]) {
+  --design-ecology-accent: color-mix(in srgb, var(--op-probe-color, #6a3fb8) 72%, var(--op-ref-color, #1d57a3) 28%);
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-ecology-controls, .design-ecology-readout, .design-ecology-stage) {
+  min-width: 0;
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-ecology-controls) {
+  display: grid;
+  gap: 0.65rem;
+  align-content: start;
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-ecology-control-group) {
+  display: grid;
+  gap: 0.38rem;
+  padding: 0.62rem 0.68rem;
+  border: 1px solid color-mix(in srgb, var(--design-ecology-accent) 18%, var(--design-surface-line) 82%);
+  border-radius: var(--shape-component, 0.65rem);
+  background: color-mix(in srgb, var(--design-surface-matte-strong) 90%, var(--design-ecology-accent) 5%);
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-ecology-control-group h3, .design-ecology-readout h3) {
+  margin: 0;
+  font-size: 0.86rem;
+  letter-spacing: 0.03em;
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-ecology-control-row) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-ecology-control-row .operator-chip) {
+  min-block-size: 1.82rem;
+  font-size: 0.74rem;
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-ecology-control-row .operator-chip[aria-pressed="true"]) {
+  border-color: color-mix(in srgb, var(--design-ecology-accent) 66%, var(--design-surface-line) 34%);
+  background: color-mix(in srgb, var(--design-ecology-accent) 18%, var(--design-surface-matte-strong));
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--design-ecology-accent) 26%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 38%, transparent);
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-ecology-stage) {
+  display: grid;
+  align-content: center;
+  gap: 0.72rem;
+  min-block-size: 100%;
+  padding: clamp(0.85rem, 2vw, 1.25rem);
+  border: 1px solid color-mix(in srgb, var(--design-ecology-accent) 24%, var(--design-surface-line) 76%);
+  border-radius: calc(var(--shape-surface, 10px) + 2px);
+  background:
+    radial-gradient(circle at 18% 18%, color-mix(in srgb, var(--design-ecology-accent) var(--design-ecology-resonance-ambient, 11%), transparent), transparent 36%),
+    linear-gradient(135deg, color-mix(in srgb, var(--design-surface-base-strong) 88%, var(--design-ecology-accent) 8%), color-mix(in srgb, var(--design-surface-matte) 94%, transparent));
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-chat-bubble) {
+  display: grid;
+  gap: 0.32rem;
+  max-inline-size: min(28rem, 92%);
+  padding: 0.72rem 0.82rem;
+  border: 1px solid var(--design-ecology-bubble-line);
+  border-radius: var(--design-ecology-bubble-radius);
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--design-ecology-accent) var(--design-ecology-resonance-wash, 3%), transparent), transparent 70%),
+    var(--design-ecology-bubble-fill);
+  box-shadow:
+    0 var(--design-ecology-resonance-lift, 0.49rem) 1.4rem color-mix(in srgb, var(--design-ecology-accent) var(--design-ecology-resonance-glow, 11%), transparent),
+    inset 0 1px 0 color-mix(in srgb, white 32%, transparent);
+  transition:
+    transform var(--component-transition-base),
+    box-shadow var(--component-transition-base),
+    border-color var(--component-transition-base),
+    background-color var(--component-transition-base);
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-chat-bubble--incoming) {
+  justify-self: start;
+  border-end-start-radius: 0.35rem;
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-chat-bubble--outgoing) {
+  justify-self: end;
+  border-end-end-radius: 0.35rem;
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-chat-bubble[data-design-ecology-variant="soft"]) {
+  --design-ecology-bubble-radius: 1.3rem;
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-chat-bubble[data-design-ecology-variant="ledger"]) {
+  --design-ecology-bubble-radius: 0.58rem;
+  --design-ecology-bubble-fill:
+    linear-gradient(180deg, color-mix(in srgb, var(--design-surface-matte-strong) 92%, transparent), color-mix(in srgb, var(--design-surface-panel) 94%, transparent));
+  font-family: var(--site-mono-font, monospace);
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-chat-bubble[data-design-ecology-variant="signal"]) {
+  --design-ecology-bubble-radius: 1rem 1rem 0.35rem 1rem;
+  border-style: dashed;
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-chat-bubble[data-design-ecology-behavior="selected"]) {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--design-ecology-accent) 58%, transparent);
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-chat-bubble[data-design-ecology-behavior="collected"]) {
+  transform: translateY(-3px) scale(1.01);
+  border-color: color-mix(in srgb, var(--design-ecology-accent) 72%, transparent);
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-chat-bubble__tag) {
+  color: color-mix(in srgb, var(--design-ecology-accent) 62%, var(--design-surface-ink-mid) 38%);
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-chat-bubble p, .design-chat-bubble small) {
+  margin: 0;
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-chat-bubble p) {
+  color: var(--design-surface-ink);
+  line-height: 1.42;
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-chat-bubble small) {
+  color: var(--design-surface-ink-soft);
+  font-size: 0.76rem;
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-ecology-readout) {
+  display: grid;
+  gap: 0.6rem;
+  align-content: start;
+  padding: 0.72rem 0.78rem;
+  border: 1px solid color-mix(in srgb, var(--design-ecology-accent) 24%, var(--design-surface-line) 76%);
+  border-radius: var(--shape-surface, 10px);
+  background: color-mix(in srgb, var(--design-surface-matte-strong) 92%, var(--design-ecology-accent) 5%);
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-ecology-readout dl) {
+  display: grid;
+  gap: 0.34rem;
+  margin: 0;
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-ecology-readout dl > div) {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.52rem;
+  padding: 0.36rem 0.45rem;
+  border-radius: var(--shape-element, 0.42rem);
+  background: color-mix(in srgb, var(--design-surface-base-strong) 88%, var(--design-ecology-accent) 4%);
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-ecology-readout dt) {
+  color: var(--design-surface-ink-mid);
+  font-size: 0.68rem;
+  font-weight: 750;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-ecology-readout dd) {
+  margin: 0;
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-ecology-readout code) {
+  color: color-mix(in srgb, var(--design-surface-ink) 74%, var(--design-ecology-accent) 26%);
+  font-size: 0.76rem;
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-ecology-meter) {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-block-size: 1.7rem;
+  overflow: hidden;
+  padding-inline: 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--design-ecology-accent) 24%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--design-surface-base-strong) 88%, transparent);
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-ecology-meter)::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  inline-size: 100%;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--design-ecology-accent) 34%, transparent), color-mix(in srgb, var(--design-ecology-accent) 12%, transparent));
+  opacity: 0.86;
+  transform: scaleX(var(--design-ecology-resonance, 0.18));
+  transform-origin: left center;
+  transition: transform var(--component-transition-deliberate);
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-ecology-meter span) {
+  position: relative;
+  z-index: 1;
+  color: var(--design-surface-ink);
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-ecology-status) {
+  margin: 0;
+  color: var(--design-surface-ink-soft);
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+@media (max-width: 72rem) {
+  :where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-ecology-specimen) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 :where(body[data-spw-page-family="design"]) :where(.spw-interaction-contract) {
   position: relative;
   display: grid;

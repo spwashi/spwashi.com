@@ -300,3 +300,30 @@ spw-plan-maintenance hygiene invoked post-commit: reviewed staged source changes
   .spw: new frame #interaction_timing_as_premium_verify documenting the concept, surfaces, and usage (verbatim request phrasing in the note).
   Validation: git diff --check, node --check on site-settings, catalog re-run (new attrs surfaced), full npm run check passed. Ties directly to the palettes review (image showed the dials and global contexts cards that now have the copy + verify), prior enhancement-level/feedback work, and the "premium feel to verify and communicate feature application and styling benefits".
   spw-plan-maintenance will pick the new frame on next sweep.
+
+## Plan Maintenance Sweep - 2026-06-19
+
+Invoked `spw-plan-maintenance` for active plan maintenance, completed-plan archival, consolidation, and source-surface updates.
+
+- Swept `.agents/plans/` as a large active ecology rather than treating the original four canonical tracks as the full current model.
+- Added `archive/2026-06-19-plan-maintenance.md` as the dated maintenance record.
+- Updated `.agents/plans/README.md` with active buckets for semantic rails, runtime/architecture, CSS/layout/interaction, and route/content/RPG systems.
+- Updated `.agents/plans/archive/README.md` with completed-reference policy.
+- Marked `state-satchel-card-gesture-fixes/PLAN.md` and `card-anatomy-interactions/PLAN.md` as completed/superseded references by index note, not physical moves, to avoid breaking direct citations.
+- Kept `dev-hot-reload/PLAN.md` in place as a stabilized operational foundation rather than an archive candidate.
+- Updated `.spw/conventions/planning-ecology.spw` so future agents can discover the maintenance sweep and ref-safe archive policy.
+
+Next pass: update `/about/plans/` from this taxonomy if the public editor surface should expose the new buckets.
+
+## Conversation Audit Redistribution - 2026-06-19
+
+Redistributed the current conversation's broad audit requests into existing owner plans instead of creating new parallel tracks.
+
+- Added `archive/2026-06-19-conversation-audit-redistribution.md` as the archived source bundle.
+- Routed page/card layout work to `component-box-model-responsive-audit` and `card-grid-density-audit`.
+- Routed HTML normalization to `semantic-html-normalization`.
+- Routed CSS microinteraction state and HTML alignment to `css-state-legibility`, with selector ownership in `css-maintainability-refactor`.
+- Routed Spw and `.spw` file audit work to `spw-surface-normalization` and planning ecology.
+- Routed broader architecture work to `site-source-layout`, `runtime-module-fluency`, and `css-maintainability-refactor`.
+
+This keeps conversation-driven audit language visible while making the next patch choose a precise owner surface.

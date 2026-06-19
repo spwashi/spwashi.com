@@ -57,3 +57,20 @@ Make the site behave like a learnable visual instrument: calm at rest, expressiv
 - Add a settings UI control for module visuals and audit mode if the query recipes prove useful.
 - Let templates emit component lifecycle attributes consistently when route generation matures.
 - Consider a dedicated article or design page that teaches the lifecycle tropes with examples for narrators, illustrators, and research-oriented RPG Wednesday collaborators.
+
+## Active Refinement - 2026-06-19 Conversation Audit
+
+This plan owns the runtime/inspectability side of the broader architectural refinement audit.
+
+Redistributed tasks:
+
+- Keep lifecycle state names aligned with HTML and CSS contracts rather than adding parallel runtime-only vocabulary.
+- When a module writes `data-spw-*`, confirm the state is either documented in an owner plan or intentionally transient.
+- Prefer diagnostics that explain mounted behavior, timing, and state ownership over new visible controls.
+- Coordinate with `css-state-legibility/PLAN.md` when runtime state needs hover/focus/pressed/verified/grounded styling.
+- Coordinate with `semantic-html-normalization/PLAN.md` when runtime inference depends on stable landmarks, ids, or section labels.
+
+Validation additions:
+
+- `rg -n "dataset\\.|setAttribute\\(\\\"data-spw|data-spw-" public/js public/css **/index.html`
+- `npm run check:runtime`

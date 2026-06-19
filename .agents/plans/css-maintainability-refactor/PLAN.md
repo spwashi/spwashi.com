@@ -77,3 +77,20 @@ Reduce CSS brittleness in the highest-leverage shared contracts so route work ca
 
 - Replacing all `:has(...)` usage sitewide.
 - Reorganizing the full route CSS file structure.
+
+## Active Refinement - 2026-06-19 Conversation Audit
+
+This plan now owns the architectural CSS cleanup portion of the "deeper audit on all fronts" and "broader architectural refinement audit" prompts.
+
+Redistributed tasks:
+
+- Consolidate repeated selector families into shared component, route-surface, or DOM-contract owners before adding new route-local selectors.
+- Use `css-state-legibility/PLAN.md` for microinteraction state vocabulary and this plan for selector ownership or layer-boundary cleanup.
+- Use `component-box-model-responsive-audit/PLAN.md` for containment and card-grid behavior; use this plan when a containment fix exposes a brittle selector architecture.
+- Keep generated bundle changes downstream of source CSS edits; never patch generated bundles as the architectural source of truth.
+- Record any durable new CSS/HTML contract in `.spw` only after it appears in more than one route or shared layer.
+
+Validation additions:
+
+- `rg -n ":has\\(|data-spw-slot|data-spw-layout|frame-grid|media-prose|frame-list--inline" public/css **/index.html`
+- `npm run check:local` after source CSS edits; inspect generated-output freshness separately from source validation.

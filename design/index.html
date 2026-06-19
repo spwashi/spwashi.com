@@ -210,6 +210,7 @@
                     <a class="operator-chip" href="#promptability-studio">@ prompt studio</a>
                     <a class="operator-chip" href="/design/components/#hook-region-anatomy">? hook anatomy</a>
                     <a class="operator-chip" href="/design/components/">* component glossary</a>
+                    <a class="operator-chip" href="#component-ecology-specimens">~ component ecology</a>
                     <a class="operator-chip" href="/design/folios/" data-spw-operator="object">^ folio archive</a>
                     <a class="operator-chip" href="/play/rpg-wednesday/">* RPG Wednesday</a>
                     <a class="operator-chip" href="/tools/midjourney/">~ midjourney bench</a>
@@ -363,6 +364,105 @@
                         <li><a href="/topics/software/spw/"><strong>Spw language</strong><span>Translate component relationships into operator and brace semantics.</span></a></li>
                         <li><a href="/cards/"><strong>Proof cards</strong><span>Capture the prompt result as a revisable artifact.</span></a></li>
                         <li><a href="/settings/?module-audit=on&amp;module-visuals=on"><strong>Module visuals</strong><span>Reveal which runtime modules changed state or appearance.</span></a></li>
+                    </ul>
+                </aside>
+            </section>
+
+            <section class="site-frame" id="component-ecology-specimens" aria-labelledby="component-ecology-specimens-title" data-spw-role="lab" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="mechanics resonance component-ecology" data-spw-affordance="tune" data-spw-liminality="instrument" data-spw-category-family="runtime" data-spw-locality="high" data-spw-consequence="state" data-spw-promptability="visible" data-spw-collectability="medium" data-spw-feature="component-ecology-specimens" data-spw-semantic-expression="component[ecology]{state.resonance.mechanics}" data-spw-related-routes="/design/components/|/design/runtime/|/design/interaction-design/|/design/palettes/|/settings/#semantic-settings">
+                <header class="frame-heading">
+                    <a class="frame-sigil" href="#component-ecology-specimens">~component_ecology</a>
+                    <h2 id="component-ecology-specimens-title">Component ecology should be learnable as mechanics, not only vocabulary.</h2>
+                </header>
+                <p class="frame-note">
+                    A customizable message bubble is a useful familiar specimen because it makes component-level variants obvious: the same message can change environment, surface, behavior, and social meaning without becoming a different product. This lab keeps those axes explicit and inspectable.
+                </p>
+
+                <div class="design-ecology-specimen"
+                     data-design-ecology-specimen
+                     data-design-ecology-environment="calm"
+                     data-design-ecology-variant="soft"
+                     data-design-ecology-behavior="rest"
+                     data-spw-kind="specimen"
+                     data-spw-role="component-lab"
+                     data-spw-feature="message-surface-ecology"
+                     data-spw-component-locality="design-ecology"
+                     data-spw-state-contract="environment variant behavior readout"
+                     aria-label="Component ecology specimen">
+                    <div class="design-ecology-controls" data-spw-slot="actions" aria-label="Component ecology controls">
+                        <section class="design-ecology-control-group" aria-labelledby="ecology-environment-title">
+                            <h3 id="ecology-environment-title">Environment</h3>
+                            <p class="frame-note">Changes context, material, and density.</p>
+                            <div class="design-ecology-control-row">
+                                <button class="operator-chip" type="button" data-design-ecology-set="environment:calm" aria-pressed="true">calm</button>
+                                <button class="operator-chip" type="button" data-design-ecology-set="environment:social" aria-pressed="false">social</button>
+                                <button class="operator-chip" type="button" data-design-ecology-set="environment:inspect" aria-pressed="false">inspect</button>
+                            </div>
+                        </section>
+                        <section class="design-ecology-control-group" aria-labelledby="ecology-variant-title">
+                            <h3 id="ecology-variant-title">Variant</h3>
+                            <p class="frame-note">Changes the component species without changing the root pattern.</p>
+                            <div class="design-ecology-control-row">
+                                <button class="operator-chip" type="button" data-design-ecology-set="variant:soft" aria-pressed="true">soft</button>
+                                <button class="operator-chip" type="button" data-design-ecology-set="variant:ledger" aria-pressed="false">ledger</button>
+                                <button class="operator-chip" type="button" data-design-ecology-set="variant:signal" aria-pressed="false">signal</button>
+                            </div>
+                        </section>
+                        <section class="design-ecology-control-group" aria-labelledby="ecology-behavior-title">
+                            <h3 id="ecology-behavior-title">Behavior</h3>
+                            <p class="frame-note">Changes selection, charge, and resonance.</p>
+                            <div class="design-ecology-control-row">
+                                <button class="operator-chip" type="button" data-design-ecology-set="behavior:rest" aria-pressed="true">rest</button>
+                                <button class="operator-chip" type="button" data-design-ecology-set="behavior:draft" aria-pressed="false">draft</button>
+                                <button class="operator-chip" type="button" data-design-ecology-set="behavior:selected" aria-pressed="false">selected</button>
+                                <button class="operator-chip" type="button" data-design-ecology-set="behavior:collected" aria-pressed="false">collected</button>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="design-ecology-stage" data-design-ecology-stage data-spw-slot="figure" aria-label="Message bubble ecology display">
+                        <article class="design-chat-bubble design-chat-bubble--incoming" data-design-ecology-bubble data-spw-kind="card" data-spw-role="message-specimen" data-spw-operator="probe" data-spw-slot="body">
+                            <span class="design-chat-bubble__tag">incoming specimen</span>
+                            <p>What changes when this bubble is calm, social, or inspectable?</p>
+                            <small>Environment sets the room before the variant speaks.</small>
+                        </article>
+                        <article class="design-chat-bubble design-chat-bubble--outgoing" data-design-ecology-bubble data-spw-kind="card" data-spw-role="message-specimen" data-spw-operator="frame" data-spw-slot="body">
+                            <span class="design-chat-bubble__tag">outgoing specimen</span>
+                            <p>Variant is not decoration. It is a local contract for how a component behaves in company.</p>
+                            <small>Behavior writes charge and resonance so the response is inspectable.</small>
+                        </article>
+                    </div>
+
+                    <aside class="design-ecology-readout" data-spw-slot="meta" aria-label="Component ecology state readout">
+                        <h3>State readout</h3>
+                        <dl>
+                            <div><dt>environment</dt><dd><code data-design-ecology-readout="environment">calm</code></dd></div>
+                            <div><dt>context</dt><dd><code data-design-ecology-readout="context">reading</code></dd></div>
+                            <div><dt>material</dt><dd><code data-design-ecology-readout="material">matte</code></dd></div>
+                            <div><dt>variant</dt><dd><code data-design-ecology-readout="variant">soft</code></dd></div>
+                            <div><dt>behavior</dt><dd><code data-design-ecology-readout="behavior">rest</code></dd></div>
+                            <div><dt>card state</dt><dd><code data-design-ecology-readout="cardState">skim</code></dd></div>
+                            <div><dt>charge</dt><dd><code data-design-ecology-readout="charge">0</code></dd></div>
+                            <div><dt>resonance</dt><dd><code data-design-ecology-readout="resonance">0.18</code></dd></div>
+                        </dl>
+                        <div class="design-ecology-meter" aria-hidden="true">
+                            <span>mechanics</span>
+                        </div>
+                        <p class="design-ecology-status" data-design-ecology-status role="status" aria-live="polite">Specimen ready.</p>
+                        <p class="frame-note">Console hooks: <code>spwDesignExperiments.inspectEcologySpecimen()</code> and <code>spwDesignExperiments.setEcologySpecimen({ behavior: "collected" })</code>.</p>
+                    </aside>
+                </div>
+
+                <aside class="spw-route-bridge" aria-labelledby="component-ecology-routes-title">
+                    <header>
+                        <h3 id="component-ecology-routes-title">Spokes that make the specimen useful</h3>
+                        <p>Each route below owns a different part of the ecology, so the hub can teach the whole mechanism without duplicating every rule.</p>
+                    </header>
+                    <ul class="spw-route-bridge__links">
+                        <li><a href="/design/components/"><strong>Component glossary</strong><span>Slots, variants, and reusable component anatomy.</span></a></li>
+                        <li><a href="/design/runtime/"><strong>Runtime lab</strong><span>Browser behavior, diagnostics, and state inspection.</span></a></li>
+                        <li><a href="/design/interaction-design/"><strong>Interaction design</strong><span>Gesture consequence, feedback, and learnability.</span></a></li>
+                        <li><a href="/design/palettes/"><strong>Palette grammar</strong><span>Resonance color, material states, and visible token ranges.</span></a></li>
+                        <li><a href="/settings/#semantic-settings"><strong>Semantic settings</strong><span>Root-level state that changes how much of the mechanics is visible.</span></a></li>
                     </ul>
                 </aside>
             </section>
@@ -1183,6 +1283,7 @@ spwCompose.inspect('#lab-behavior');</code></pre>
             <nav class="page-index" aria-label="Design hub sections">
                 <ul>
                     <li><a href="#design-hub">Hub</a></li>
+                    <li><a href="#component-ecology-specimens">Component Ecology</a></li>
                     <li><a href="#design-circuits">Circuits</a></li>
                     <li><a href="#context-stack">QA Bench</a></li>
                     <li><a href="#promptability-studio">Prompt Studio</a></li>
@@ -1204,6 +1305,7 @@ spwCompose.inspect('#lab-behavior');</code></pre>
                 <h2>Nearby Routes</h2>
                 <p><a class="operator-chip" href="/about/website/">website field guide</a></p>
                 <p><a class="operator-chip" href="/design/website/">website design</a></p>
+                <p><a class="operator-chip" href="#component-ecology-specimens">component ecology</a></p>
                 <p><a class="operator-chip" href="#promptability-studio">prompt studio</a></p>
                 <p><a class="operator-chip" href="/topics/software/pretext/">pretext physics</a></p>
                 <p><a class="operator-chip" href="/topics/software/renderers/">renderers</a></p>

@@ -6773,7 +6773,7 @@ html[data-spw-color-mode="auto"] .spw-discovery-notice--modal :is(
   pointer-events: auto;
   opacity: 0.96;
   transition: opacity 420ms ease, transform 420ms var(--shell-settle-ease);
-  z-index: 1050;
+  z-index: var(--spw-floating-tier-z, var(--z-toast, calc(var(--z-priority, 2000) + 18)));
 }
 .spw-discovery-notice--credits[data-spw-notice-click-target="href"] {
   cursor: pointer;
@@ -18134,16 +18134,16 @@ html[data-spw-color-mode="dark"] .spw-shell-utility-row .spw-shell-utility-butto
   --spw-floating-tier-z: var(--z-floating, var(--layer-floating, 100));
 }
 
+:where([data-spw-floating-chrome="true"][data-spw-chrome-tier="docked"]) {
+  --spw-floating-tier-z: var(--z-docked, var(--layer-docked, 900));
+}
+
 :where([data-spw-floating-chrome="true"][data-spw-chrome-tier="header"]) {
   --spw-floating-tier-z: var(--z-header, var(--layer-header, 1000));
 }
 
 :where([data-spw-floating-chrome="true"][data-spw-chrome-tier="priority"]) {
   --spw-floating-tier-z: var(--z-priority, var(--layer-priority, 2000));
-}
-
-:where([data-spw-floating-chrome="true"][data-spw-chrome-tier="modal"]) {
-  --spw-floating-tier-z: var(--z-modal, calc(var(--z-priority, var(--layer-priority, 2000)) + 30));
 }
 
 :where([data-spw-floating-chrome="true"][data-spw-chrome-tier="popover"]) {
@@ -18156,6 +18156,10 @@ html[data-spw-color-mode="dark"] .spw-shell-utility-row .spw-shell-utility-butto
 
 :where([data-spw-floating-chrome="true"][data-spw-chrome-tier="drawer"]) {
   --spw-floating-tier-z: var(--z-drawer, calc(var(--z-priority, var(--layer-priority, 2000)) + 20));
+}
+
+:where([data-spw-floating-chrome="true"][data-spw-chrome-tier="modal"]) {
+  --spw-floating-tier-z: var(--z-modal, calc(var(--z-priority, var(--layer-priority, 2000)) + 30));
 }
 
 :where([data-spw-floating-chrome="true"][data-spw-layout-owner="floating-chrome"]) {
@@ -18684,6 +18688,27 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.38rem;
+}
+
+.spw-state-inspector__position-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.32rem;
+}
+
+.spw-state-inspector__position-actions .operator-chip {
+  flex: 1 1 6.4rem;
+  justify-content: center;
+  min-block-size: 1.85rem;
+  font-size: 0.68rem;
+}
+
+.spw-state-inspector[data-spw-satchel-rail="left"] {
+  justify-items: start;
+}
+
+.spw-state-inspector[data-spw-satchel-rail="right"] {
+  justify-items: end;
 }
 
 .spw-state-inspector__toggle[aria-pressed="true"] {

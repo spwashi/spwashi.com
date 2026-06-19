@@ -78,3 +78,21 @@ none
 ## Spw Artifact
 
 None beyond `wip.spw`; the branch memory is the retained operational surface.
+
+## Active Refinement - 2026-06-19 Conversation Audit
+
+This plan now owns the "html normalization audit" thread from the current conversation. The task is not a full content rewrite; it is a route-skeleton and alignment pass that should make HTML more predictable for CSS, runtime modules, accessibility, and `.spw` inspection.
+
+Redistributed tasks:
+
+- Verify every high-traffic route has one stable `main` target, one clear skip-link destination, and section ids that match visible headings or route purpose.
+- Align repeated card/frame HTML with the shared component anatomy: header, meta, body, figure, actions, footer.
+- Prefer existing `data-spw-*` families on meaningful clusters over new wrappers or one-off attributes.
+- Check that interactive controls using `aria-pressed`, `aria-expanded`, `aria-controls`, or `data-set-mode` have a matching HTML target and a CSS state owner.
+- Replace legacy file/path assumptions in this plan as files are touched; current code lives in layered `public/css/**` and `public/js/**` modules, not the older monolithic `spw-*` names.
+
+Validation additions:
+
+- `rg -n "href=\"#main-content\"|id=\"main-content\"|aria-controls|data-set-mode" **/index.html`
+- Targeted duplicate-id checks on edited routes.
+- Spot-check that normalized HTML still renders without JavaScript before relying on runtime inference.

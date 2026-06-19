@@ -3114,7 +3114,7 @@ html[data-spw-color-mode="auto"] .spw-discovery-notice--modal :is(
   pointer-events: auto;
   opacity: 0.96;
   transition: opacity 420ms ease, transform 420ms var(--shell-settle-ease);
-  z-index: 1050;
+  z-index: var(--spw-floating-tier-z, var(--z-toast, calc(var(--z-priority, 2000) + 18)));
 }
 .spw-discovery-notice--credits[data-spw-notice-click-target="href"] {
   cursor: pointer;

@@ -937,11 +937,11 @@ frame #cauldron_collect_notes
 
 frame #component_state_machinability_ecology
   role extension
-  surface foundation + cards + state-inspector + design + rpg
+  surface foundation + cards + state-inspector + design + design-experiments + rpg
   concept component state, machinability, combinatoric behavior selection, layouts, artifact relationships, component ecology
-  data-spw-card-state, data-spw-stateful, data-spw-state-contract, data-spw-machinability, data-spw-artifact, data-spw-selection, data-spw-perspective, data-spw-mode (via card-state or badge-mode)
-  usage = "Visitors explore via design nook cycles, satchel snapshots (now captures charge/region/artifact too), rpg character cards. Develops vocabulary for business (high-density inspection) vs experiential (calm relationship) + how features compel in different contexts. Supports page-specific nav enhancements, text interaction semantic (concept labels), reasons to use layouts."
-  note "Ties prior page_architecture_vocabulary + tunable_material. Design hub as instrument + RPG as quality driver make ecology playable and inspectable (catalog + .spw)."
+  data-spw-card-state, data-spw-stateful, data-spw-state-contract, data-spw-machinability, data-spw-artifact, data-spw-selection, data-spw-perspective, data-spw-mode (via card-state or badge-mode), data-spw-resonance
+  usage = "Visitors explore via design nook cycles, /design/#component-ecology-specimens, satchel snapshots (now captures charge/region/artifact too), rpg character cards. The design specimen uses data-design-ecology-environment/variant/behavior as a route-local control surface, then writes inspectable data-spw-* state for context, material, density, variant, card-state, charge, selection, and resonance. Develops vocabulary for business (high-density inspection) vs experiential (calm relationship) + how features compel in different contexts. Supports page-specific nav enhancements, text interaction semantic (concept labels), reasons to use layouts."
+  note "Ties prior page_architecture_vocabulary + tunable_material. Design hub as instrument + RPG as quality driver make ecology playable and inspectable (catalog + .spw). Runtime owner for the embedded specimen is public/js/modules/design-experiments.js; CSS projection lives in public/css/routes/design-surface.css."
 
 frame #page_specific_nav_enhancements
   role note

@@ -163,16 +163,20 @@ export const SITE_TOPOGRAPHY = Object.freeze({
 
 export const FLOATING_CHROME_CONTRACT = Object.freeze({
   selector: '[data-spw-floating-chrome="true"][data-spw-layout-owner="floating-chrome"]',
-  tiers: Object.freeze(['floating', 'header', 'priority', 'modal', 'popover', 'toast', 'drawer']),
+  tiers: Object.freeze(['floating', 'docked', 'header', 'priority', 'popover', 'toast', 'drawer', 'modal']),
   roles: Object.freeze([
     'skip-link',
     'section-handle',
     'section-handle-shell',
+    'cauldron-chip',
+    'console',
     'topic-popover',
     'semantic-popover',
     'narrative-drawer',
     'discovery-toast-stack',
     'discovery-modal',
+    'application-credits',
+    'application-credit',
     'surface-map',
     'surface-map-panel',
     'state-inspector',

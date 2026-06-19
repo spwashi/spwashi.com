@@ -408,7 +408,7 @@ function ensureStackRoot() {
   stack.setAttribute(STACK_ATTR, '');
   annotateFloatingChromeElement(stack, {
     role: 'discovery-toast-stack',
-    tier: 'floating',
+    tier: 'toast',
     mutator: 'discovery-notices',
     reason: 'discoverability-toast',
     stylingAxis: 'notice-chrome',
@@ -452,7 +452,7 @@ function ensureCreditsRoot() {
   root.setAttribute('aria-label', 'Applied modules and settings (ephemeral credits)');
   annotateFloatingChromeElement(root, {
     role: 'application-credits',
-    tier: 'floating',
+    tier: 'toast',
     mutator: 'discovery-notices',
     reason: 'module-settings-credits',
     stylingAxis: 'notice-chrome',
@@ -485,7 +485,7 @@ export function showApplicationCredit(summary = 'Module applied', options = {}) 
   el.append(label, title);
   annotateFloatingChromeElement(el, {
     role: 'application-credit',
-    tier: 'floating',
+    tier: 'toast',
     mutator: 'discovery-notices',
     reason: options.reason || 'module-settings-credits',
     stylingAxis: 'notice-chrome',

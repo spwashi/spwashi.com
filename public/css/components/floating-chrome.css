@@ -18,16 +18,16 @@
   --spw-floating-tier-z: var(--z-floating, var(--layer-floating, 100));
 }
 
+:where([data-spw-floating-chrome="true"][data-spw-chrome-tier="docked"]) {
+  --spw-floating-tier-z: var(--z-docked, var(--layer-docked, 900));
+}
+
 :where([data-spw-floating-chrome="true"][data-spw-chrome-tier="header"]) {
   --spw-floating-tier-z: var(--z-header, var(--layer-header, 1000));
 }
 
 :where([data-spw-floating-chrome="true"][data-spw-chrome-tier="priority"]) {
   --spw-floating-tier-z: var(--z-priority, var(--layer-priority, 2000));
-}
-
-:where([data-spw-floating-chrome="true"][data-spw-chrome-tier="modal"]) {
-  --spw-floating-tier-z: var(--z-modal, calc(var(--z-priority, var(--layer-priority, 2000)) + 30));
 }
 
 :where([data-spw-floating-chrome="true"][data-spw-chrome-tier="popover"]) {
@@ -40,6 +40,10 @@
 
 :where([data-spw-floating-chrome="true"][data-spw-chrome-tier="drawer"]) {
   --spw-floating-tier-z: var(--z-drawer, calc(var(--z-priority, var(--layer-priority, 2000)) + 20));
+}
+
+:where([data-spw-floating-chrome="true"][data-spw-chrome-tier="modal"]) {
+  --spw-floating-tier-z: var(--z-modal, calc(var(--z-priority, var(--layer-priority, 2000)) + 30));
 }
 
 :where([data-spw-floating-chrome="true"][data-spw-layout-owner="floating-chrome"]) {

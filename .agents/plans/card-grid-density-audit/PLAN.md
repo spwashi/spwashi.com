@@ -32,3 +32,13 @@ Make card spacing and grid measure more granular without scattering route-local 
 - `git diff --check`
 - `rg` for removed inline grid styles and new density hints
 - `npm run build`
+
+## Redistribution Note - 2026-06-19
+
+The current conversation's page/card layout audit does not require a new plan. This file owns grid-density-specific follow-up; broader containment, slot anatomy, and state-driven reflow remain with `component-box-model-responsive-audit/PLAN.md`.
+
+Active follow-up:
+
+- Find route-local inline grid styles that can become shared density hints.
+- Prefer existing frame/card classes and `data-spw-layout` over new one-off grid wrappers.
+- Keep long-copy cards out of dense grids unless the route declares a clear browsing/scanning mode.

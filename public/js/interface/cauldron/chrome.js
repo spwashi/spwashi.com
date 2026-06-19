@@ -26,7 +26,7 @@ function createFloatingChip() {
   `;
   annotateFloatingChromeElement(chip, {
     role: 'cauldron-chip',
-    tier: 'floating',
+    tier: 'docked',
     mutator: 'cauldron-chrome',
     reason: 'floating-cauldron-chip',
     stylingAxis: 'page-locomotion',

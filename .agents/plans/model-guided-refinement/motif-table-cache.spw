@@ -1,0 +1,27 @@
+#>semantic_insight_cache
+#:model_guided_refinement
+
+^"motif_table_sticker_readings"{
+  operation: "cache"
+  fixity: "tending"
+  public_goal: "frame stickers as low-stakes invitations to interpret before they harden into canon"
+  source_surfaces: [
+    "index.html",
+    "play/index.html",
+    "play/rpg-wednesday/index.html",
+    "play/rpg-wednesday/library/index.html",
+    "about/index.html"
+  ]
+  claim: "A sticker is a portable handle that can move from motif to theme through production-team readings, then remain useful as a culture seed without becoming a finished lore object."
+  interaction_rule: {
+    sticker: "compressed sign that gives people something to point at"
+    production_team: "writer, designer, cook, engineer, performer, archivist, teacher, or any reader staging possibilities"
+    theme: "repeatable worldbuilding pressure that emerges from recurring associations"
+    canon_tier: "spark, draft, recurring, table-tested, canon, retired"
+  }
+  editor_guidance: [
+    "Keep the first public phrasing low-stakes: 'Not canon yet. Just a sticker reading.'",
+    "Prefer one concrete scene, prop, menu item, rule, or interface use over a broad lore explanation.",
+    "Use motif-table language where the route already supports promptable, participatory reading instead of inventing a new world bible."
+  ]
+}

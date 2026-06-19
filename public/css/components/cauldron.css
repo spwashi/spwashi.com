@@ -99,7 +99,7 @@
 .spw-cauldron-chip {
   position: fixed;
   inset: auto max(0.85rem, env(safe-area-inset-right)) calc(max(0.85rem, env(safe-area-inset-bottom)) + 3.2rem) auto;
-  z-index: var(--z-floating, var(--layer-floating, 100));
+  z-index: var(--spw-floating-tier-z, var(--z-docked, var(--layer-docked, 900)));
   display: inline-flex;
   align-items: center;
   gap: 0.38rem;

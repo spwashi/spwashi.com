@@ -239,6 +239,24 @@ Even without the index file, consistent use of dimension tags inside existing re
 - Apply the rules surgically to 3–5 high-traffic surfaces (fundamentals-practice-rhythms, the main slices review, site-semantics, precipitates-and-projections, one or two others).
 - Add a short "local .spw writing conventions" note that explicitly allows the earthy/collaborative voice inside the workbench-aligned forms.
 
+## Active Refinement - 2026-06-19 Conversation Audit
+
+This plan now owns the "Spw normalization audit" and ".spw file audit" threads from the current conversation. The immediate goal is to reduce semantic drift without flattening the site's local voice.
+
+Redistributed tasks:
+
+- Add or repair `#>` anchors and `#:layer` declarations only on surfaces that are already active owners or dispatch points.
+- Ensure new `.spw` meaning names its semantic-capacity operation: `cache`, `audit`, `align`, `prime`, `contract`, or `archive`.
+- Prefer `@shortname: ~"path"` references near the top of planning and convention surfaces that are used for agent dispatch.
+- Use `archive` as an operation when a concept is redistributed into another owner plan, not only when a file is physically moved.
+- Keep `.spw/_workbench` as reference/tooling; do not promote it to the site source of truth during normalization.
+- Cross-link redistributed audit bundles from `.agents/plans/archive/` only when they change future routing decisions.
+
+Validation additions:
+
+- `rg -n "^#>|^#:|@.*: ~|operation|archive_policy" .spw .agents/plans`
+- Confirm `.spw/conventions/planning-ecology.spw` dispatch references any new durable maintenance bundle.
+
 **Phase 2 — Navigability & Dispatch Strengthening**
 - Improve cross-referencing and dispatch blocks in the key index/review surfaces.
 - Pilot "sedimentation notes" in a few places (lightweight entries that trace movement of ideas across reviews and plans).

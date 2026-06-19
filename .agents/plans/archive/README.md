@@ -16,3 +16,20 @@ Archived notes:
 
 - `design-hub-expansion.md`
 - `overlay-alignment.md`
+
+Maintenance sweeps:
+
+- `2026-06-19-plan-maintenance.md` - Active plan ecology consolidation, completed-reference indexing, and archive policy refresh.
+- `2026-06-19-conversation-audit-redistribution.md` - Redistribution of broad audit prompts into the active owner plans.
+
+Completed or superseded references retained in place:
+
+- `../state-satchel-card-gesture-fixes/PLAN.md` - Implementation and validation are complete, but the plan remains in place as a direct reference target.
+- `../card-anatomy-interactions/PLAN.md` - Planning/audit work is complete and now serves as prior art for later RPG portal work.
+
+Archive policy:
+
+- Prefer index-level archival for completed references that still have direct citations.
+- Move files into `archive/` only in a ref-safe pass that updates all citations.
+- Keep stabilized operational foundations in place when they still explain current development workflow.
+- Archive broad conversational audit bundles once their work is redistributed into concrete owner plans.

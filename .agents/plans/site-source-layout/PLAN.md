@@ -196,3 +196,20 @@ Choose `site/` if the primary goal is to make the authored website feel like one
 Choose `src/` only if the repo is intentionally becoming a compile-first application where most authoring files are not directly site-shaped anymore.
 
 Choose `docs/` only for maintainer documentation, not as a second home for public site content.
+
+## Active Refinement - 2026-06-19 Conversation Audit
+
+This plan owns only the repository-boundary part of the broader architectural refinement audit. Do not use it as a dumping ground for HTML, CSS, or `.spw` normalization tasks.
+
+Current decision:
+
+- Keep route-level normalization work in existing root layout until a source-root migration is intentionally scheduled.
+- Do not move public routes into `site/` as part of an audit cleanup pass.
+- If repeated plan maintenance shows root clutter blocks work, revive this plan with a path-abstraction-first patch before any file moves.
+
+Redistributed elsewhere:
+
+- HTML route skeleton: `semantic-html-normalization/PLAN.md`
+- CSS selector/layer cleanup: `css-maintainability-refactor/PLAN.md`
+- Runtime lifecycle/inspectability: `runtime-module-fluency/PLAN.md`
+- `.spw` dispatch and file style: `spw-surface-normalization/PLAN.md`

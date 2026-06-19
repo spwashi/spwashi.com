@@ -5,6 +5,7 @@ import {
 } from '/public/js/kernel/shared.js';
 import { bus } from '/public/js/kernel/bus.js';
 import { getSiteSettings } from '/public/js/kernel/site-settings.js';
+import { annotateFloatingChromeElement } from '/public/js/kernel/dom-contracts.js';
 import { writeLensModeState } from '/public/js/runtime/lens-modes.js';
 
 let initialized = false;
@@ -151,11 +152,13 @@ const el = (tag, className, attrs = {}) => {
 
 const createConsole = () => {
     const root = el('aside', 'spw-console', { 'aria-label': 'Spw textual interface' });
-    // Ephemeral chrome architecture: mark for floating-chrome contract (z, material, ergonomics resonance with satchel).
-    // Allows CSS shared --chrome-* , data-spw-metamaterial for glass/matte, learnability cues.
-    root.setAttribute('data-spw-floating-chrome', 'true');
-    root.setAttribute('data-spw-chrome-role', 'console');
-    root.setAttribute('data-spw-chrome-tier', 'priority');
+    annotateFloatingChromeElement(root, {
+        role: 'console',
+        tier: 'priority',
+        mutator: 'console',
+        reason: 'runtime-console',
+        stylingAxis: 'console-chrome',
+    });
     // Initial material resonance (sync later with settings like satchel).
     const initMat = document.documentElement.dataset.spwBaseMetamaterial || 'glass';
     root.dataset.spwMetamaterial = initMat;

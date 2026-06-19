@@ -104,15 +104,77 @@ function readRootRemPx(value, fallbackRem = 0) {
   return Number.isFinite(numeric) ? numeric : fallbackRem * rootSize;
 }
 
+function getViewportBox() {
+  const viewport = window.visualViewport;
+  return {
+    width: Math.max(1, Math.min(
+      viewport?.width || Number.POSITIVE_INFINITY,
+      window.innerWidth || Number.POSITIVE_INFINITY,
+      document.documentElement?.clientWidth || Number.POSITIVE_INFINITY
+    )),
+    height: Math.max(1, Math.min(
+      viewport?.height || Number.POSITIVE_INFINITY,
+      window.innerHeight || Number.POSITIVE_INFINITY,
+      document.documentElement?.clientHeight || Number.POSITIVE_INFINITY
+    )),
+  };
+}
+
+function isVisibleChromeElement(element) {
+  if (!(element instanceof HTMLElement)) return false;
+  if (element.closest?.(`[${ROOT_ATTR}]`)) return false;
+  if (element.hidden || element.getAttribute('aria-hidden') === 'true') return false;
+  if (element.dataset.spwHandleState === 'hidden') return false;
+
+  const style = getComputedStyle(element);
+  if (style.display === 'none' || style.visibility === 'hidden' || style.opacity === '0') return false;
+
+  const rect = element.getBoundingClientRect();
+  return rect.width > 0 && rect.height > 0;
+}
+
+function getExternalBottomChromeReserve() {
+  const { height } = getViewportBox();
+  const selectors = [
+    '.spw-console',
+    '.spw-section-handle[data-spw-handle-state="visible"]',
+    '.spw-section-handle-shell[data-spw-handle-state="visible"]',
+    '.spw-cauldron-chip:not([hidden])',
+    '[data-pwa-toast="install"]',
+    '[data-spw-discovery-notice-stack]',
+    '[data-spw-discovery-credits]',
+  ];
+
+  return selectors
+    .flatMap((selector) => Array.from(document.querySelectorAll(selector)))
+    .filter(isVisibleChromeElement)
+    .reduce((reserve, element) => {
+      const rect = element.getBoundingClientRect();
+      if (rect.bottom <= 0 || rect.top >= height) return reserve;
+      return Math.max(reserve, height - rect.top + 12);
+    }, 0);
+}
+
+function getFloatingChromeTopReserve() {
+  const candidates = Array.from(document.querySelectorAll('.site-header, body > header'));
+  return candidates
+    .filter(isVisibleChromeElement)
+    .reduce((reserve, element) => {
+      const rect = element.getBoundingClientRect();
+      if (rect.bottom <= 0 || rect.top > 12) return reserve;
+      return Math.max(reserve, rect.bottom + 8);
+    }, 8);
+}
+
 function getFloatingChromeBottomReserve() {
-  const style = getComputedStyle(document.documentElement);
-  const clearance = readRootRemPx(style.getPropertyValue('--spw-bottom-chrome-clearance'), 0);
+  const externalReserve = getExternalBottomChromeReserve();
   if (!window.matchMedia('(max-width: 720px)').matches) {
-    return clearance;
+    return externalReserve;
   }
+  const style = getComputedStyle(document.documentElement);
   const handle = readRootRemPx(style.getPropertyValue('--touch-target-compact'), 2.15);
   const handleOffset = readRootRemPx(style.getPropertyValue('--attention-handle-offset'), 1);
-  return Math.max(clearance, handle + handleOffset + 12);
+  return Math.max(externalReserve, handle + handleOffset + 12);
 }
 
 function shouldSnapSatchelOnRelease() {
@@ -133,6 +195,7 @@ function clearSatchelInlinePosition(root) {
   root.style.transform = '';
   root.style.inlineSize = '';
   root.style.maxBlockSize = '';
+  delete root.dataset.spwSatchelRail;
 }
 
 function anchorSatchelToChromeRail(root, { open = false } = {}) {
@@ -215,26 +278,13 @@ function snapSatchelPosition(launch, left, top) {
     return { left, top };
   }
 
-  const viewport = window.visualViewport;
-  const vw = Math.max(1, Math.min(
-    viewport?.width || Number.POSITIVE_INFINITY,
-    window.innerWidth || Number.POSITIVE_INFINITY,
-    document.documentElement?.clientWidth || Number.POSITIVE_INFINITY
-  ));
-  const vh = Math.max(1, Math.min(
-    viewport?.height || Number.POSITIVE_INFINITY,
-    window.innerHeight || Number.POSITIVE_INFINITY,
-    document.documentElement?.clientHeight || Number.POSITIVE_INFINITY
-  ));
+  const { width: vw, height: vh } = getViewportBox();
   const rect = launch.getBoundingClientRect();
   const w = rect.width || 120;
   const h = rect.height || 36;
   const margin = 12;
   const bottomReserve = getFloatingChromeBottomReserve();
-  const shellOffset = readRootRemPx(
-    getComputedStyle(document.documentElement).getPropertyValue('--spw-shell-menu-offset'),
-    0
-  );
+  const topReserve = getFloatingChromeTopReserve();
 
   const candidates = shouldSnapSatchelOnRelease()
     ? [
@@ -242,8 +292,8 @@ function snapSatchelPosition(launch, left, top) {
       { left: vw - w - margin, top: vh - h - margin - bottomReserve, edge: 'bottom-right' },
     ]
     : [
-      { left: margin, top: margin + shellOffset, edge: 'top-left' },
-      { left: vw - w - margin, top: margin + shellOffset, edge: 'top-right' },
+      { left: margin, top: topReserve, edge: 'top-left' },
+      { left: vw - w - margin, top: topReserve, edge: 'top-right' },
       { left: margin, top: vh - h - margin - bottomReserve, edge: 'bottom-left' },
       { left: vw - w - margin, top: vh - h - margin - bottomReserve, edge: 'bottom-right' },
     ];
@@ -268,8 +318,28 @@ function snapSatchelPosition(launch, left, top) {
   return { left: nearest.left, top: nearest.top };
 }
 
+function getSatchelSnapPosition(launch, edge = 'bottom-right') {
+  const { width: vw, height: vh } = getViewportBox();
+  const rect = launch.getBoundingClientRect();
+  const w = rect.width || 120;
+  const h = rect.height || 36;
+  const margin = 12;
+  const topReserve = getFloatingChromeTopReserve();
+  const bottomTop = vh - h - margin - getFloatingChromeBottomReserve();
+
+  const positions = {
+    'top-left': { left: margin, top: topReserve },
+    'top-right': { left: vw - w - margin, top: topReserve },
+    'bottom-left': { left: margin, top: bottomTop },
+    'bottom-right': { left: vw - w - margin, top: bottomTop },
+  };
+
+  return positions[edge] || positions['bottom-right'];
+}
+
 function sanitizeRestoredPosition(left, top, width, height, viewportWidth, viewportHeight) {
   const margin = 12;
+  const topReserve = getFloatingChromeTopReserve();
   const bottomReserve = getFloatingChromeBottomReserve();
   const bottomRailTop = viewportHeight - height - margin - bottomReserve;
   const main = document.querySelector('main');
@@ -288,7 +358,7 @@ function sanitizeRestoredPosition(left, top, width, height, viewportWidth, viewp
 
   return {
     left: viewportWidth - width - margin,
-    top: bottomRailTop,
+    top: Math.max(topReserve, bottomRailTop),
   };
 }
 
@@ -301,17 +371,7 @@ function applyPositionToLaunch(launch, left, top, fallback = false) {
     if (isMobileSatchelViewport()) return;
   }
 
-  const viewport = window.visualViewport;
-  const vw = Math.max(1, Math.min(
-    viewport?.width || Number.POSITIVE_INFINITY,
-    window.innerWidth || Number.POSITIVE_INFINITY,
-    document.documentElement?.clientWidth || Number.POSITIVE_INFINITY
-  ));
-  const vh = Math.max(1, Math.min(
-    viewport?.height || Number.POSITIVE_INFINITY,
-    window.innerHeight || Number.POSITIVE_INFINITY,
-    document.documentElement?.clientHeight || Number.POSITIVE_INFINITY
-  ));
+  const { width: vw, height: vh } = getViewportBox();
   const rect = launch.getBoundingClientRect();
   const rootRect = root.getBoundingClientRect();
   const w = rect.width || 120;
@@ -320,6 +380,7 @@ function applyPositionToLaunch(launch, left, top, fallback = false) {
 
   const margin = 8;
   const bottomReserve = getFloatingChromeBottomReserve();
+  const topReserve = getFloatingChromeTopReserve();
   let nextLeft = left;
   let nextTop = top;
   if (fallback) {
@@ -331,8 +392,11 @@ function applyPositionToLaunch(launch, left, top, fallback = false) {
     nextTop = sanitized.top;
   }
   const clampedLeft = Math.max(margin, Math.min(nextLeft, vw - w - margin));
-  const clampedTop = Math.max(margin, Math.min(nextTop, vh - h - margin - bottomReserve));
-  const rootLeft = Math.max(margin, Math.min(clampedLeft + w - rootW, vw - rootW - margin));
+  const clampedTop = Math.max(topReserve, Math.min(nextTop, vh - h - margin - bottomReserve));
+  const rail = clampedLeft + w / 2 < vw / 2 ? 'left' : 'right';
+  const rootLeft = rail === 'left'
+    ? clampedLeft
+    : Math.max(margin, Math.min(clampedLeft + w - rootW, vw - rootW - margin));
 
   root.style.position = 'fixed';
   root.style.left = `${rootLeft}px`;
@@ -340,6 +404,8 @@ function applyPositionToLaunch(launch, left, top, fallback = false) {
   root.style.right = 'auto';
   root.style.bottom = 'auto';
   root.style.transform = 'none';
+  root.style.inlineSize = '';
+  root.dataset.spwSatchelRail = rail;
 
   launch.style.position = '';
   launch.style.left = '';
@@ -355,6 +421,21 @@ function applyPositionToLaunch(launch, left, top, fallback = false) {
   }
 }
 
+function snapLaunchToEdge(root, edge = 'bottom-right') {
+  const launch = root?.querySelector?.('.spw-state-inspector__launch');
+  if (!(root instanceof HTMLElement) || !(launch instanceof HTMLElement)) return;
+
+  delete root.dataset.spwSatchelAnchor;
+  root.dataset.spwSatchelRail = edge.includes('left') ? 'left' : 'right';
+  const position = getSatchelSnapPosition(launch, edge);
+  applyPositionToLaunch(launch, position.left, position.top, true);
+  const settled = launch.getBoundingClientRect();
+  savePosition(settled.left, settled.top);
+  root.dataset.spwSatchelSnap = edge;
+  root.dataset.spwSatchelPositioned = 'user';
+  launch.dataset.spwSatchelPositioned = 'user';
+}
+
 function resetLaunchToDefault(launch) {
   if (!launch) return;
   const root = launch.closest?.(`[${ROOT_ATTR}]`);
@@ -363,6 +444,7 @@ function resetLaunchToDefault(launch) {
     delete root.dataset.spwSatchelPositioned;
     delete root.dataset.spwSatchelSnap;
     delete root.dataset.spwSatchelAnchor;
+    delete root.dataset.spwSatchelRail;
   }
   launch.style.position = '';
   launch.style.left = '';
@@ -372,6 +454,19 @@ function resetLaunchToDefault(launch) {
   launch.style.transform = '';
   delete launch.dataset.spwSatchelPositioned;
   clearSavedPosition();
+}
+
+function restoreSavedLaunchPosition(root) {
+  if (!(root instanceof HTMLElement)) return false;
+  if (root.dataset.spwSatchelPositioned !== 'user') return false;
+
+  const launch = root.querySelector('.spw-state-inspector__launch');
+  const saved = loadSavedPosition();
+  if (!(launch instanceof HTMLElement) || !saved) return false;
+
+  delete root.dataset.spwSatchelAnchor;
+  applyPositionToLaunch(launch, saved.left, saved.top, true);
+  return true;
 }
 
 function setToggleState(config, enabled) {
@@ -518,6 +613,7 @@ function createInspector() {
   const summary = document.createElement('p');
   const actions = document.createElement('div');
   const copy = document.createElement('button');
+  const positionActions = document.createElement('div');
   const status = document.createElement('p');
   const close = document.createElement('button');
 
@@ -556,7 +652,7 @@ function createInspector() {
   title.textContent = 'State satchel';
 
   summary.className = 'spw-state-inspector__summary';
-  summary.textContent = 'Inspect and nudge temporary page state. Changes are learnable, announced, and visible as data-spw-* attributes. Minds cognitive/attentional physics (attention field, wonder, resonance) and material tunability (glass/matte via baseMetamaterial); tap/hold/drag are gestures within the model.';
+  summary.textContent = 'Inspect and nudge temporary page state. Changes are announced and visible as data-spw-* attributes. Drag or snap the satchel to a clear rail when it competes with reading.';
 
   actions.className = 'spw-state-inspector__actions';
   TOGGLES.forEach((config) => actions.append(createToggleButton(config)));
@@ -571,14 +667,24 @@ function createInspector() {
   close.dataset.spwStateInspectorClose = 'true';
   close.textContent = 'close';
 
-  // Lightweight reset for user-dragged satchel position
+  positionActions.className = 'spw-state-inspector__position-actions';
+  positionActions.setAttribute('aria-label', 'Satchel position');
+
+  ['bottom-left', 'bottom-right'].forEach((edge) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'operator-chip spw-state-inspector__position';
+    button.dataset.spwStateInspectorPosition = edge;
+    button.textContent = edge === 'bottom-left' ? 'lower left' : 'lower right';
+    positionActions.append(button);
+  });
+
   const resetPos = document.createElement('button');
   resetPos.type = 'button';
   resetPos.className = 'operator-chip spw-state-inspector__reset-pos';
   resetPos.dataset.spwStateInspectorResetPosition = 'true';
-  resetPos.textContent = 'Reset position';
-  resetPos.style.fontSize = '0.7rem';
-  resetPos.style.opacity = '0.75';
+  resetPos.textContent = 'reset rail';
+  positionActions.append(resetPos);
 
   status.className = 'spw-state-inspector__status';
   status.dataset.spwStateInspectorStatus = '';
@@ -586,7 +692,7 @@ function createInspector() {
   status.setAttribute('aria-live', 'polite');
   status.textContent = 'Closed.';
 
-  panel.append(title, summary, actions, copy, close, resetPos, status);
+  panel.append(title, summary, actions, positionActions, copy, close, status);
   root.append(launch, panel);
   return root;
 }
@@ -609,9 +715,18 @@ function setOpen(root, open) {
 
   if (isMobileSatchelViewport()) {
     requestAnimationFrame(() => {
+      if (restoreSavedLaunchPosition(root)) {
+        syncPageStateAwareness(root);
+        return;
+      }
       anchorSatchelToChromeRail(root, { open: false });
       syncPageStateAwareness(root);
     });
+    return;
+  }
+
+  if (restoreSavedLaunchPosition(root)) {
+    syncPageStateAwareness(root);
     return;
   }
 
@@ -668,7 +783,18 @@ function bindInspector(root) {
       return;
     }
 
-    // Lightweight "Reset satchel position" action inside the panel
+    const positionButton = event.target.closest('[data-spw-state-inspector-position]');
+    if (positionButton instanceof HTMLButtonElement) {
+      const edge = positionButton.dataset.spwStateInspectorPosition || 'bottom-right';
+      setOpen(root, false);
+      requestAnimationFrame(() => {
+        snapLaunchToEdge(root, edge);
+        syncPageStateAwareness(root);
+      });
+      updateStatus(root, `Satchel snapped to ${edge.replace('-', ' ')}.`);
+      return;
+    }
+
     if (event.target.closest('[data-spw-state-inspector-reset-position]')) {
       const launchBtn = root.querySelector('.spw-state-inspector__launch');
       resetLaunchToDefault(launchBtn);

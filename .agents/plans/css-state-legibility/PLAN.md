@@ -24,3 +24,20 @@ Stateful controls should read clearly in the stylesheet: shared layers own idle,
 - `git diff --check`
 - targeted `rg` for `--mode-switch-`, `--operator-chip-`, and `data-spw-nav-tokenized`
 - sanity-check that `wide` and `split` layouts still read from `main` as the page-edge owner
+
+## Active Refinement - 2026-06-19 Conversation Audit
+
+This plan now owns the "css microinteraction state and html alignment audit" thread from the current conversation.
+
+Redistributed tasks:
+
+- Treat `aria-pressed`, `aria-expanded`, `data-spw-grounded`, `data-spw-pinned`, `data-spw-collected`, `data-spw-floating-chrome`, and `data-spw-chrome-tier` as state contracts that require both HTML/runtime ownership and CSS projection.
+- Keep generic interaction styles in shared component or handle layers; route CSS should provide palette/intention variables rather than redefining pressed/hover/focus behavior.
+- Verify mode switches use `.frame-sigil[data-set-mode]` and that mode-switch-specific pressed styles outrank generic operator pressed styles.
+- Normalize microinteraction timing around deliberate, explainable states: focus-visible, hover, pressed, verified, collected, grounded, docked, toast, modal.
+- Where runtime writes a state attribute, confirm there is no route-local CSS that assumes a different state vocabulary.
+
+Validation additions:
+
+- `rg -n "aria-pressed|aria-expanded|data-set-mode|data-spw-grounded|data-spw-pinned|data-spw-collected|data-spw-floating-chrome|data-spw-chrome-tier" **/index.html public/js public/css`
+- `rg -n "\\[aria-pressed|\\[aria-expanded|data-spw-grounded|data-spw-pinned|data-spw-collected|data-spw-floating-chrome|data-spw-chrome-tier" public/css`
