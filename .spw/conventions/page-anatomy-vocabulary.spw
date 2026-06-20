@@ -1,0 +1,101 @@
+# Page Anatomy Vocabulary
+#
+# Stable vocabulary for naming website parts literally while allowing
+# route-specific illustrative anchors such as restaurant service and garden
+# maintenance.
+
+#>page_anatomy_vocabulary
+#:conventions #!semantics #!css #!js #!copy
+#:layer #!stable
+
+@plan: ~"../../.agents/plans/webpage-trope-vocabulary/PLAN.md"
+@wip: ~"../../.agents/plans/webpage-trope-vocabulary/wip.spw"
+@page_model: ~"../surfaces/page-model.spw"
+@css_instruction: ~"./css-instruction.spw"
+@model_guided_refinement: ~"./model-guided-refinement.spw"
+
+operation = "contract"
+fixity = "stable"
+
+^"thesis"{
+  claim: "A page can be expressive while still naming itself as a webpage: masthead, navigation, hero, callout, card, figure, route bridge, reference note, footer, and floating island should stay literal before metaphor is layered on."
+  risk: "If the home page uses 'home' as a broad concept, it stops explaining the actual home page and starts competing with deeper route metaphors."
+  rule: "Use `data-spw-anatomy` for page parts and `data-spw-vocabulary` for the vocabulary family that colors and gestures them."
+}
+
+^"vocabularies"{
+  webpage: .{
+    color_role = "frame teal"
+    gestures = "hover/focus preview, tap/click pin, escape or outside click clears runtime focus"
+    examples = #[`masthead`, `navigation`, `hero`, `callout`, `route-bridge`, `reference-note`, `footer`][reg=set]
+  }[reg=facet]
+  reference_document: .{
+    color_role = "probe violet"
+    gestures = "inspect, compare, copy seed, show matches"
+    examples = #[`field-guide`, `table-of-contents`, `caption`, `annotation`, `index`, `source-note`][reg=set]
+  }[reg=facet]
+  restaurant: .{
+    color_role = "object amber"
+    gestures = "sequence, service, repair, return"
+    examples = #[`host-stand`, `prep-rail`, `service-lane`, `table-touch`, `closing-check`][reg=set]
+  }[reg=facet]
+  garden: .{
+    color_role = "topic green"
+    gestures = "tend, prune, compost, season, harvest"
+    examples = #[`garden-bed`, `path`, `compost-loop`, `season-note`, `maintenance-log`][reg=set]
+  }[reg=facet]
+}
+
+^"html_contract"{
+  anatomy_attr = "data-spw-anatomy='masthead|navigation|hero|callout|card|figure|route-bridge|reference-note|floating-island|host-stand|garden-bed|...'"
+  vocabulary_attr = "data-spw-vocabulary='webpage|reference-document|restaurant|garden'"
+  optional_gesture = "data-spw-gesture-contract may name tap, hold, dismiss, drag, sequence, or return behavior."
+  rule = "Anatomy anchors should sit on meaningful existing elements or on compact lists/strips. Do not add empty wrappers only to carry labels."
+}
+
+^"runtime_contract"{
+  module = "public/js/runtime/page-anatomy.js"
+  root_states = #[`data-spw-anatomy-ready`, `data-spw-anatomy-focus`, `data-spw-anatomy-vocabulary`, `data-spw-anatomy-pinned`, `data-spw-page-serialization`, `data-spw-parallel-active`, `data-spw-popup-posture`, `data-spw-theme-biome`, `data-spw-palette-species`, `data-spw-palette-trace-recent`][reg=set]
+  events = #[`spw:page-anatomy-focus`, `spw:page-anatomy-parallel`][reg=set]
+  api = "window.__SPW_PAGE_ANATOMY__.snapshot(), serialize(), parallels(), goParallel(direction, group)"
+  progressive_enhancement = "Without JS, anchors remain readable labels and links. With JS, focus/pointer/click writes inspectable state, page serialization, parallel navigation, popup posture, and palette trace variables."
+}
+
+^"floating_islands"{
+  definition = "Floating chrome is a viewport island, not page flow. It needs a role, tier, dismiss behavior, and collision-aware placement."
+  roles = #[`state-satchel`, `region-menu-popover`, `parallel-navigator`, `section-handle-shell`, `console`, `toast-stack`][reg=set]
+  rule = "Use `data-spw-chrome-island` with `data-spw-floating-chrome='true'` when CSS/JS should reason about island anatomy."
+}
+
+^"parallel_navigation"{
+  attr = "data-spw-parallel with optional data-spw-parallel-label"
+  rule = "Use a parallel group when several nearby fragments answer the same page-anatomy question differently. The floating navigator cycles siblings by tap, arrow button, or horizontal swipe while preserving vertical scroll."
+  ergonomic_test = "A reader should be able to move between variants without losing their place or hiding the bottom route controls."
+}
+
+^"publisher_surface"{
+  purpose = "Let a page behave as literate material: copy, color, timing, disclosure, audience, and route path stay inspectable without forcing every visitor through the same register."
+  attrs = #[`data-spw-audience`, `data-spw-disclosure`, `data-spw-trope`, `data-spw-comedic-timing`, `data-spw-spatial-affordance`, `data-spw-inline-tone`][reg=set]
+  mature_rule = "Mature or context-sensitive humor should be carried as audience, disclosure, and timing metadata before it becomes visible copy. The public default stays generous and legible."
+  portability = "Future parallel publishing forks can specialize audience, trope, and disclosure semantics while keeping the shared page-anatomy and floating-chrome runtime."
+}
+
+^"palette_ecology"{
+  metaphor = "Palette is species; material is the surveying lens; theme biome is the local ecology produced by palette, surface, and route."
+  trace = "The runtime records a small local palette trace so lighting, inline emphasis, overlays, and page serialization can acknowledge accumulated reading context."
+  rule = "Palette depth should increase contrast and foreground/background expressiveness without making prose depend on color alone."
+}
+
+^"home_page_rule"{
+  fixed_identity = "Spwashi is the creator. The home page is the route."
+  copy_rule = "When the home route refers to itself, write 'this home page' or 'the home page', not broad 'home' unless it is clearly a route token."
+  broader_metaphor_rule = "Garden, restaurant, cookbook, and room metaphors can appear on the home page only as route anchors or anatomy examples, not as replacements for literal website orientation."
+}
+
+^"dispatch"{
+  @plan: @plan
+  @wip: @wip
+  @page_model: @page_model
+  @css_instruction: @css_instruction
+  @model_guided_refinement: @model_guided_refinement
+}

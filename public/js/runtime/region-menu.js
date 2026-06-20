@@ -1,4 +1,7 @@
-import { writeDatasetValue } from '/public/js/kernel/dom-contracts.js';
+import {
+  annotateFloatingChromeElement,
+  writeDatasetValue,
+} from '/public/js/kernel/dom-contracts.js';
 import { bus } from '/public/js/kernel/bus.js';
 import {
   collectSemanticBraceMatches,
@@ -30,9 +33,17 @@ const PREVIEW_DELAY_MS = Object.freeze({
   responsive: 520,
   expressive: 360,
 });
-const HOLD_OPEN_MS = 460;
+const HOLD_OPEN_MS = Object.freeze({
+  calm: 560,
+  responsive: 460,
+  expressive: 360,
+});
 const MOVE_CANCEL_PX = 10;
-const DOUBLE_TAP_OPEN_MS = 340;
+const DOUBLE_TAP_OPEN_MS = Object.freeze({
+  calm: 380,
+  responsive: 340,
+  expressive: 300,
+});
 
 let activeTarget = null;
 let activeMatches = [];
@@ -96,8 +107,14 @@ export function initSpwRegionMenu(root = document) {
 }
 
 function onClick(event) {
+  const menu = document.getElementById(MENU_ID);
+  if (menu?.contains(event.target)) return;
+
   const target = resolveTarget(event.target);
-  if (!target) return;
+  if (!target) {
+    if (isRegionMenuOpen()) closeMenu({ restoreFocus: false });
+    return;
+  }
 
   if (shouldHandleCoarseDoubleTap(target, event)) {
     if (consumeCoarseDoubleTap(target, event)) {
@@ -166,7 +183,7 @@ function onPointerDown(event) {
       writeDatasetValue(target, 'spwRegionPreview', 'true');
       writeDatasetValue(document.documentElement, 'spwRegionPreviewing', 'true');
       openMenu(target);
-    }, HOLD_OPEN_MS),
+    }, getHoldOpenDelay()),
   };
 }
 
@@ -260,7 +277,8 @@ function shouldHandleCoarseDoubleTap(target, event) {
 function consumeCoarseDoubleTap(target, event) {
   const now = Date.now();
   const sameTarget = coarseTapState?.target === target;
-  const withinWindow = sameTarget && now - coarseTapState.timestamp <= DOUBLE_TAP_OPEN_MS;
+  const doubleTapWindow = getDoubleTapOpenDelay();
+  const withinWindow = sameTarget && now - coarseTapState.timestamp <= doubleTapWindow;
 
   if (withinWindow) {
     clearCoarseTapState();
@@ -280,7 +298,7 @@ function consumeCoarseDoubleTap(target, event) {
         previewTarget = null;
       }
       clearCoarseTapState();
-    }, DOUBLE_TAP_OPEN_MS),
+    }, doubleTapWindow),
   };
 
   previewTarget = target;
@@ -316,6 +334,7 @@ function openMenu(target) {
   setRegionFocus(target, semantic);
 
   const menu = ensureMenu();
+  menu.dataset.spwPopupPosture = readPopupPosture();
   menu.replaceChildren(buildMenuContent(target, semantic, frame));
   positionMenu(menu, target);
   writeDatasetValue(menu, 'spwState', 'open');
@@ -341,19 +360,39 @@ function ensureMenu() {
   menu.className = 'spw-region-menu';
   menu.setAttribute('role', 'menu');
   menu.setAttribute('aria-label', 'Spw region menu');
+  menu.dataset.spwChromeIsland = 'region-menu-popover';
+  menu.dataset.spwDismissible = 'true';
+  menu.dataset.spwPopupPosture = readPopupPosture();
+  annotateFloatingChromeElement(menu, {
+    role: 'region-menu-popover',
+    tier: 'popover',
+    mutator: 'region-menu',
+    reason: 'semantic-region-actions',
+    stylingAxis: 'region-menu',
+  });
   document.body.appendChild(menu);
   return menu;
 }
 
 function buildMenuContent(target, semantic, frame) {
   const fragment = document.createDocumentFragment();
+  const header = document.createElement('header');
+  const dismiss = document.createElement('button');
   const title = document.createElement('p');
+  header.className = 'spw-region-menu__header';
   title.className = 'spw-region-menu__title';
   title.textContent = semantic.key || semantic.expression || readableTarget(target);
-  fragment.appendChild(title);
+  dismiss.type = 'button';
+  dismiss.className = 'spw-region-menu__dismiss';
+  dismiss.dataset.spwRegionAction = 'dismiss';
+  dismiss.textContent = 'dismiss';
+  dismiss.addEventListener('click', () => closeMenu({ restoreFocus: false }));
+  header.append(title, dismiss);
+  fragment.appendChild(header);
 
   const summary = document.createElement('p');
   summary.className = 'spw-region-menu__summary';
+  summary.dataset.spwPopupPosture = readPopupPosture();
   summary.textContent = buildSummary(semantic, target, frame);
   fragment.appendChild(summary);
 
@@ -626,6 +665,8 @@ function positionMenu(menu, target) {
 
   if (isCompactRegionViewport()) {
     menu.dataset.spwRegionMenuPlacement = 'sheet';
+    menu.dataset.spwRegionMenuVertical = 'bottom';
+    menu.dataset.spwRegionMenuHorizontal = 'stretch';
     menu.style.left = '';
     menu.style.right = '';
     menu.style.top = '';
@@ -635,20 +676,28 @@ function positionMenu(menu, target) {
     return;
   }
 
-  delete menu.dataset.spwRegionMenuPlacement;
+  menu.dataset.spwRegionMenuPlacement = 'popover';
   const rect = target.getBoundingClientRect();
   const viewport = window.visualViewport;
   const viewportWidth = Math.max(1, viewport?.width || window.innerWidth || 1);
   const viewportHeight = Math.max(1, viewport?.height || window.innerHeight || 1);
   const maxWidth = Math.min(304, viewportWidth - 24);
   const estimatedHeight = Math.min(416, viewportHeight - 24);
-  const left = clamp(rect.left, 12, Math.max(12, viewportWidth - maxWidth - 12));
+  const centeredLeft = rect.left + (rect.width / 2) - (maxWidth / 2);
+  const left = clamp(centeredLeft, 12, Math.max(12, viewportWidth - maxWidth - 12));
   const preferredTop = rect.bottom + 8;
   const fallbackTop = rect.top - estimatedHeight - 8;
-  const top = preferredTop + estimatedHeight <= viewportHeight - 12
-    ? preferredTop
-    : Math.max(12, fallbackTop);
+  const opensBelow = preferredTop + estimatedHeight <= viewportHeight - 12 || fallbackTop < 12;
+  const top = opensBelow ? preferredTop : Math.max(12, fallbackTop);
+  const targetCenter = rect.left + (rect.width / 2);
+  const horizontal = targetCenter < viewportWidth * 0.34
+    ? 'start'
+    : targetCenter > viewportWidth * 0.66
+      ? 'end'
+      : 'center';
 
+  menu.dataset.spwRegionMenuVertical = opensBelow ? 'below' : 'above';
+  menu.dataset.spwRegionMenuHorizontal = horizontal;
   menu.style.left = `${left}px`;
   menu.style.top = `${top}px`;
   menu.style.right = 'auto';
@@ -826,8 +875,24 @@ function clearPreviewTimer() {
 }
 
 function getPreviewDelay() {
-  const tuner = document.documentElement.dataset.spwInteractionTuner || 'calm';
-  return PREVIEW_DELAY_MS[tuner] || PREVIEW_DELAY_MS.calm;
+  const posture = readPopupPosture();
+  return PREVIEW_DELAY_MS[posture] || PREVIEW_DELAY_MS.calm;
+}
+
+function getHoldOpenDelay() {
+  const posture = readPopupPosture();
+  return HOLD_OPEN_MS[posture] || HOLD_OPEN_MS.calm;
+}
+
+function getDoubleTapOpenDelay() {
+  const posture = readPopupPosture();
+  return DOUBLE_TAP_OPEN_MS[posture] || DOUBLE_TAP_OPEN_MS.calm;
+}
+
+function readPopupPosture() {
+  return document.documentElement.dataset.spwPopupPosture
+    || document.documentElement.dataset.spwInteractionTuner
+    || 'calm';
 }
 
 function clearHoldState(options = {}) {
@@ -865,6 +930,7 @@ function shouldShowTuningHandles() {
     html.spwShowSemanticMetadata === 'on'
     || html.spwCognitiveHandles === 'on'
     || html.spwInteractionTuner === 'expressive'
+    || html.spwPopupPosture === 'expressive'
     || html.spwSemanticDensity === 'rich'
   );
 }

@@ -24,6 +24,7 @@
 @attention_field: ~"./conventions/attention-field.spw"
 @ornament_contract: ~"./conventions/ornament-contract.spw"
 @wonder_vocabulary: ~"./conventions/wonder-vocabulary.spw"
+@page_anatomy_vocabulary: ~"./conventions/page-anatomy-vocabulary.spw"
 @annotation_layer: ~"./conventions/annotation-layer.spw"
 @semantic_braces: ~"./conventions/semantic-braces.spw"
 @narrative_instrumentation: ~"./conventions/narrative-instrumentation.spw"
@@ -126,6 +127,7 @@ translations: .{
  professional_skill_worldbuilding = #[@professional_skill_worldbuilding, @professional_skill_worldbuilding_cache, @product_lines][reg=set]
  relational_attention_media = #[@relational_attention_media, @relational_attention_media_plan, @relational_attention_media_cache, @attention_field, @product_lines][reg=set]
  approach_and_narrative = #[@approach_topography, @product_lines, @wonder_vocabulary][reg=set]
+ page_anatomy_vocabulary = #[@page_anatomy_vocabulary, @page_model, @composition_box_model][reg=set]
  public_routes = #[@surfaces, @surface_registry][reg=set]
 }[reg=facet]
 
@@ -150,6 +152,7 @@ dispatch: .{
  attention_field = @attention_field
  ornament_contract = @ornament_contract
  wonder_vocabulary = @wonder_vocabulary
+ page_anatomy_vocabulary = @page_anatomy_vocabulary
  annotation_layer = @annotation_layer
  semantic_braces = @semantic_braces
  narrative_instrumentation = @narrative_instrumentation

@@ -24,6 +24,7 @@ Use these when a task is broad, cross-disciplinary, or likely to create reusable
 - `spw-surface-normalization/PLAN.md` — keep `.spw` surfaces navigable, dimensional, and reviewable as semantic capacity grows.
 - `modular-experience-slices/PLAN.md` — use slice contracts when ownership spans HTML, CSS, JS, `.spw`, validation, and practice beds.
 - `relational-attention-media/PLAN.md` — attention as self/local/global relation plus local media-seed production across genres.
+- `webpage-trope-vocabulary/PLAN.md` — literal website/reference-document anatomy, route-specific restaurant/garden anchors, shared `data-spw-anatomy` vocabulary, and floating chrome island rules.
 - `agent-optimization/PLAN.md` — use when the work changes the agent/editor operating environment itself.
 
 Small semantic discoveries do not always need a new plan. Use `.agents/plans/model-guided-refinement/templates/semantic-insight-cache.spw` for a single cache/audit/prime entry when implementation should wait.

@@ -674,6 +674,22 @@ export const ENHANCEMENT_DEFS = [
     },
   },
   {
+    id: 'page-anatomy',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: '[data-spw-anatomy], [data-spw-vocabulary]',
+    rootMode: 'single',
+    describes: 'page-anatomy[vocabulary]{focus.pin.reference}',
+    updates: ['data-spw-anatomy-ready', 'data-spw-anatomy-focus', 'data-spw-anatomy-vocabulary', 'data-spw-anatomy-pinned'],
+    evaluates: 'semantics interaction timing reference-document',
+    load: () => import('./page-anatomy.js'),
+    mount: (mod) => {
+      const fn = mod?.initPageAnatomy;
+      if (!isFn(fn)) return;
+      return fn(document);
+    },
+  },
+  {
     id: 'ingredient-lab',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,

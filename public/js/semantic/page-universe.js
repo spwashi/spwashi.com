@@ -111,6 +111,42 @@ function getDiscoverabilityProfile() {
     };
 }
 
+function cleanText(value = '') {
+    return String(value).replace(/\s+/g, ' ').trim();
+}
+
+function getPublisherSignals() {
+    return Array.from(document.querySelectorAll([
+        '[data-spw-audience]',
+        '[data-spw-trope]',
+        '[data-spw-disclosure]',
+        '[data-spw-comedic-timing]',
+        '[data-spw-spatial-affordance]',
+        '[data-spw-inline-tone]',
+    ].join(', '))).slice(0, 80).map((el) => ({
+        audience: el.dataset.spwAudience || '',
+        trope: el.dataset.spwTrope || '',
+        disclosure: el.dataset.spwDisclosure || '',
+        timing: el.dataset.spwComedicTiming || '',
+        affordance: el.dataset.spwSpatialAffordance || '',
+        tone: el.dataset.spwInlineTone || el.dataset.spwTone || '',
+        label: cleanText(el.dataset.spwLabel || el.getAttribute('aria-label') || el.textContent || '').slice(0, 160),
+        section: el.closest('[id]')?.id || '',
+    }));
+}
+
+function getPublisherProfile() {
+    return {
+        audience: document.body.dataset.spwAudience || '',
+        disclosure: document.body.dataset.spwDisclosure || '',
+        tone: document.body.dataset.spwTone || '',
+        readingPosture: document.documentElement.dataset.spwExplorePosture || 'reading',
+        popupPosture: document.documentElement.dataset.spwPopupPosture || document.documentElement.dataset.spwInteractionTuner || 'calm',
+        paletteTrace: document.documentElement.dataset.spwPaletteTraceRecent || '',
+        signals: getPublisherSignals()
+    };
+}
+
 function buildManifest() {
     return {
         _version:    '1.0',
@@ -123,6 +159,7 @@ function buildManifest() {
         storage:     STORAGE_POLICY,
         translation: TRANSLATION_POLICY,
         discovery:   getDiscoverabilityProfile(),
+        publisher:   getPublisherProfile(),
         // Convenience: full context dump for LLM hand-off
         toContextString() {
             const { toContextString: _, ...data } = this;

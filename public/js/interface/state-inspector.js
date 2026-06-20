@@ -515,6 +515,10 @@ function snapshotStateDimensions() {
       // Rich positional/time context from latest beat artifacts (when available)
       positionContext: (window.__SPW_SITE__?.beats?.snapshot?.()?.lastContext || null),
     },
+    pageAnatomy: {
+      snapshot: window.__SPW_PAGE_ANATOMY__?.snapshot?.() || null,
+      spw: window.__SPW_PAGE_ANATOMY__?.serialize?.() || '',
+    },
     state: {
       html: pickDataset(root.dataset),
       body: pickDataset(body?.dataset || {}),
@@ -613,6 +617,7 @@ function createInspector() {
   const summary = document.createElement('p');
   const actions = document.createElement('div');
   const copy = document.createElement('button');
+  const copySpw = document.createElement('button');
   const positionActions = document.createElement('div');
   const status = document.createElement('p');
   const close = document.createElement('button');
@@ -621,6 +626,8 @@ function createInspector() {
   root.setAttribute(ROOT_ATTR, '');
   root.dataset.spwStateInspector = 'closed';
   root.dataset.spwStateSerialization = 'route runtime accessibility layering interaction';
+  root.dataset.spwChromeIsland = 'state-satchel';
+  root.dataset.spwDismissible = 'panel';
   annotateFloatingChromeElement(root, {
     role: 'state-inspector',
     tier: 'drawer',
@@ -662,6 +669,11 @@ function createInspector() {
   copy.dataset.spwStateInspectorCopy = 'snapshot';
   copy.textContent = 'copy snapshot';
 
+  copySpw.type = 'button';
+  copySpw.className = 'operator-chip';
+  copySpw.dataset.spwStateInspectorCopy = 'page-spw';
+  copySpw.textContent = 'copy page Spw';
+
   close.type = 'button';
   close.className = 'operator-chip';
   close.dataset.spwStateInspectorClose = 'true';
@@ -692,7 +704,7 @@ function createInspector() {
   status.setAttribute('aria-live', 'polite');
   status.textContent = 'Closed.';
 
-  panel.append(title, summary, actions, positionActions, copy, close, status);
+  panel.append(title, summary, actions, positionActions, copy, copySpw, close, status);
   root.append(launch, panel);
   return root;
 }
@@ -748,6 +760,25 @@ async function copySnapshot(root) {
   }
 }
 
+async function copyPageSpw(root) {
+  const serialized = window.__SPW_PAGE_ANATOMY__?.serialize?.();
+  if (!serialized) {
+    updateStatus(root, 'Page Spw serializer is not available on this route.');
+    emitFeedback('Page Spw serializer is not available on this route.', 'copy');
+    return;
+  }
+
+  try {
+    await navigator.clipboard?.writeText(serialized);
+    updateStatus(root, 'Copied page Spw.');
+    emitFeedback('Copied the page anatomy serialization as Spw.', 'copy');
+  } catch {
+    updateStatus(root, 'Page Spw ready in console.');
+    console.info('[page anatomy spw]', serialized);
+    emitFeedback('Clipboard unavailable. Page Spw logged to console instead.', 'console');
+  }
+}
+
 function bindInspector(root) {
   const handleClick = (event) => {
     if (!(event.target instanceof Element)) return;
@@ -778,7 +809,12 @@ function bindInspector(root) {
       return;
     }
 
-    if (event.target.closest('[data-spw-state-inspector-copy]')) {
+    const copyButton = event.target.closest('[data-spw-state-inspector-copy]');
+    if (copyButton instanceof HTMLButtonElement) {
+      if (copyButton.dataset.spwStateInspectorCopy === 'page-spw') {
+        void copyPageSpw(root);
+        return;
+      }
       void copySnapshot(root);
       return;
     }
