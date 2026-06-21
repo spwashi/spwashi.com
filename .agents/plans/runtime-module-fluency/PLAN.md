@@ -34,6 +34,22 @@ Make the site behave like a learnable visual instrument: calm at rest, expressiv
 - Resonant mode: rails, handles, and semantic echoes become visible; use this for screenshots and visual fluency practice.
 - Theatrical mode: motion, palette, and screenshot-friendly staging can be stronger; keep this opt-in and reduced-motion safe.
 
+## Metacognitive Utility
+
+Runtime fluency should make a reader better at understanding the site, not only better at using a control panel. A mounted module should answer three questions when inspected:
+
+- What did this script notice in the authored page?
+- What did it change, defer, remember, or decline to mount?
+- How can a reader or editor return to the prior state?
+
+This is the performance-facing version of the site's hypermedia material value. The runtime turns page anatomy into a learnable substrate when timing, state, and consequence remain visible enough to form opinions without reading every source file.
+
+Cache relation:
+
+- Minimal and precision postures should favor low-cost warm return and clear reset paths.
+- Resonant and theatrical postures may spend more animation or ornament budget, but they should explain that extra cost through diagnostics, state labels, or local copy.
+- Module visuals should reveal load posture and semantic consequence, not merely decorate active scripts.
+
 ## Constraints
 
 - Static HTML remains the source of readable truth.
@@ -57,6 +73,7 @@ Make the site behave like a learnable visual instrument: calm at rest, expressiv
 - Add a settings UI control for module visuals and audit mode if the query recipes prove useful.
 - Let templates emit component lifecycle attributes consistently when route generation matures.
 - Consider a dedicated article or design page that teaches the lifecycle tropes with examples for narrators, illustrators, and research-oriented RPG Wednesday collaborators.
+- Consider a small cache/posture teaching surface once `runtime-bootstrap-performance` distinguishes cold boot, warm return, restored posture, restored checkpoint, and debug/audit posture.
 
 ## Active Refinement - 2026-06-19 Conversation Audit
 

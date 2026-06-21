@@ -8,6 +8,22 @@ The outcome: pages reach `interactive` and first meaningful paint faster on typi
 
 This work directly follows the 2026-04 script performance review and builds on the foundation laid by `runtime-load-instrumentation`, `runtime-module-fluency`, `js-runtime-composability`, and `mobile-runtime-foundation`.
 
+## Cache And Metamaterial Lens
+
+Performance work on this site is not only speed work. It should preserve the site's unique value as a hypermedia material: HTML, CSS, JS, `.spw`, images, plans, and local browser state should behave like layered media that can be inspected, tuned, returned to, and recombined.
+
+Cache strata to keep distinct:
+
+- **Transport cache:** browser cache, service worker routes, static assets, generated image variants, and sitemap/build artifacts. Goal: faster repeat visits without hiding deploy freshness.
+- **Runtime module cache:** ESM import cache, module registry records, mount decisions, timing entries, and selector gate results. Goal: reduce repeated boot work while keeping mount reasons observable.
+- **Semantic cache:** body metadata, `data-spw-*` contracts, design catalog outputs, `.spw` conventions, and plan indexes. Goal: let humans and agents recover meaning without rereading the whole codebase.
+- **Interaction cache:** settings, pins, checkpoints, dismissed notices, visit-state, and reader posture. Goal: let return visits feel remembered without making volatile diagnostics permanent.
+- **Cognitive cache:** repeated anatomy, route tropes, operator gestures, palette species, and copy patterns. Goal: reduce the reader's mental reparse cost while still allowing surprise and local nuance.
+
+Optimization rule: a patch should say which cache stratum it improves, what should remain volatile, and how a visitor or editor can inspect the result. Do not persist a state only because it is convenient. Do persist or precompute when it improves return-visit continuity, route comprehension, or editor auditability.
+
+Metacognitive utility: the runtime should help a reader notice how the page became meaningful. A fast page that explains its hydration, route posture, and local memory is stronger proof than a fast page that hides all structure.
+
 ## Current Baseline
 
 **What already works well:**
@@ -41,6 +57,12 @@ No new framework or heavy client dependencies are involved. The site remains han
 **Secondary (Phase 2 — reclassification, still contained):**
 - `public/js/kernel/site-settings.js`: identify cold subsystems that can safely move behind `VISIBLE` or `IDLE` (or be split into a lighter core + lazy features module) without losing settings persistence or page-level dataset application on first paint.
 - A small number of ENHANCEMENT modules currently declared `IMMEDIATE` whose selectors are broad (canvas, image metaphysics, some semantic layers) — evaluate moving to `VISIBLE` where the visual payoff is not needed for initial reading posture.
+
+**Cache / warm-return (Phase 2.5 — semantic performance, still progressive):**
+- Classify settings, pins, checkpoints, dismissals, and visit-state as interaction cache with explicit ownership and reset paths.
+- Decide whether selector-gate or route-manifest summaries should be precomputed at build time, derived once at boot, or left volatile.
+- Ensure any warm-return improvement keeps a visible or inspectable explanation: root attributes, module timings, state inspector rows, console helpers, or `.spw` references.
+- Treat cached meaning as a service flow: the page remembers enough to reduce friction, but not so much that a reader cannot understand or undo the remembered state.
 
 **Later / supporting (Phase 3+):**
 - Shared attention / region observer primitives (possible new small module under `runtime/` or augmentation of `attention-architecture.js` + `frame-metrics.js`).
@@ -144,6 +166,7 @@ If a patch introduces a new reusable semantic family or runtime state contract, 
 
 - If the wins are large, consider a lightweight "runtime posture" preset in the settings surface (reader vs. resonant vs. lab) that bakes in good default timing policies.
 - Long-term: a tiny build-time or catalog-time report of per-route "immediate module cost" (derived from the manifest + static analysis of defs) could live in the design catalog or a private editor surface — only if it proves low-maintenance.
+- Long-term: a cache posture report could distinguish cold boot, warm return, restored posture, restored checkpoint, and debug/audit posture without requiring analytics or network services.
 - Any canvas/SVG/image work that remains immediate for visual reasons can be further optimized inside those modules (e.g., rAF batching, off-main-thread where safe) as separate craft passes.
 
 This plan stays faithful to the site's values: hand-authored, inspectable, progressive, semantically rich, and measured with the tools the runtime already provides.

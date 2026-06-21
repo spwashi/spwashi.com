@@ -58,6 +58,54 @@
   failure_mode: "A generic > * selector assigns position or min-width to a fixed affordance, then debugging starts by guessing which broad rule stole layout ownership."
 }
 
+^"spacing_contract"{
+  rule: "Spacing is public trust infrastructure. It decides whether the site feels maintained, inspectable, and safe to fund before any single feature explains itself."
+  page_measure: "Every reachable route should preserve a readable main measure, stable side gutters, and a clear separation between page shell, region body, component clusters, and floating chrome."
+  component_measure: "Cards, panels, figures, and tool surfaces need stable internal padding, predictable gaps, and enough line height for long words, operator chips, and runtime labels to wrap without collision."
+  route_rule: "Route CSS may set local rhythm and personality, but shared spacing failures belong in shell, typography, grammar, components, systems, or handles before a route-local patch is accepted."
+  fixed_surface_rule: "Bottom navigation, state satchels, section handles, popovers, and page-anatomy controls must reserve lanes or compact before they hide primary content or each other."
+  density_rule: "Dense semantic pages may be compact, but compact does not mean cramped. Reduce repetition, shorten copy, or improve grid ownership before reducing touch targets or line height."
+}
+
+^"interactive_state_contract"{
+  rule: "Every interactive element should advertise rest, hover, focus-visible, active/pressed, selected/current, disabled, loading, expanded/collapsed, and dismissed/restorable states when those states exist."
+  parity: "Hover-only meaning is not acceptable. Keyboard focus, touch, and pointer interaction should receive equivalent state information even when their motion vocabulary differs."
+  touch_rule: "Controls should keep stable hit targets and not resize their neighbors when labels, icons, loading text, badges, or state indicators appear."
+  focus_rule: "Focus-visible treatment should be obvious, local, and compatible with operator color. It must not rely on color alone."
+  pressed_rule: "Pressed and selected states should read as semantic commitment, not generic glow. Use aria-pressed, aria-current, aria-expanded, data-spw-grounded, data-spw-pinned, or data-spw-chrome-state when those contracts fit."
+  dismissal_rule: "Dismissal is a state transition with restoration semantics. If a popup, island, notice, or card can disappear, the CSS should leave a clear return path or a compact state marker."
+  timing_rule: "Microinteractions should settle quickly enough to support reading. Richer transitions may be used for inspection or arrangement, but reduced-motion users must receive immediate, legible state changes."
+}
+
+^"accessible_route_sweep"{
+  rule: "A shared CSS change is not ready for feature implementation until representative accessible pages still read, tab, scroll, and wrap coherently."
+  route_matrix = #[
+    `home / entry surface`,
+    `about and website field guide / reference orientation`,
+    `topics and operator atlas / dense grammar`,
+    `settings and design surfaces / controls and live state`,
+    `play or recipes / illustrative domain pages`,
+    `contact or services / trust and next-action surfaces`,
+    `long-form blog or plan pages / sustained reading`
+  ][reg=set]
+  checks = #[
+    `no horizontal overflow at narrow widths`,
+    `focus path remains visible and ordered`,
+    `touch targets keep practical spacing`,
+    `floating chrome avoids fixed navigation and primary copy`,
+    `cards and panels preserve readable measure`,
+    `interactive states are visible without hover`,
+    `reduced-motion path remains informative`
+  ][reg=set]
+}
+
+^"fundraising_readiness"{
+  rule: "When a feature may be used for fundraising, CSS should make the work feel accountable before it feels flashy."
+  proof_surface = "Spacing, state clarity, and route consistency are part of the proof. A fundable demo should show that the system can absorb more ambition without collapsing into overlap, hidden state, or route-specific hacks."
+  restraint = "Do not add marketing spectacle to compensate for weak state communication. Improve hierarchy, affordances, copy density, and proof links first."
+  audience = "A supporter, collaborator, or future maintainer should be able to infer that interactions were designed, tested, and can be extended."
+}
+
 ^"import_manifest"{
   entrypoint: "public/css/style.css is the ordered manifest."
   layer_rule: "Do not change the @layer declaration order casually; add imports inside the existing owner layer."
@@ -77,6 +125,7 @@
   hidden_dependency: "A visual behavior depends on child order or a broad :has() selector without a header explaining the contract."
   debug_as_product: "Debug overlays become the only way to understand what the page is doing."
   duplicate_semantics: "A new data-spw-* name repeats an existing surface, feature, slot, module, role, or state concept."
+  fundraising_theater: "A feature looks impressive in one screenshot but has weak focus states, cramped spacing, or broken mobile/fixed chrome behavior on adjacent accessible pages."
 }
 
 ^"dispatch"{

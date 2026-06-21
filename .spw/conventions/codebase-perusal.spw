@@ -76,11 +76,23 @@ topical_trails: .{
   search = `rg "data-spw-|spw:" public/js public/ts`
   opinion_to_form = `Whether the state is authored truth, inferred projection, browser-local preference, or diagnostic residue.`
  }[reg=facet]
- css_projection_trail = .{
+ cache_performance_trail = .{
+  question = `Is this optimization reducing load cost, mental reparse cost, or both?`
+  read = #[@js_readme, @semantic_capacity, @planning_ecology][reg=set]
+  search = `rg "serviceWorker|localStorage|sessionStorage|timings\\(|spw:module|checkpoint|dismiss|cache|prefetch" public/js scripts .agents/plans .spw`
+  opinion_to_form = `Whether a proposed cache belongs to transport, runtime module, semantic, interaction, or cognitive memory, and whether the reset or inspection path is clear.`
+ }[reg=facet]
+css_projection_trail = .{
   question = `Which layer should express this visual consequence?`
   read = #[@css_readme, @css_instruction, @ornament_contract][reg=set]
   search = `rg "@layer|data-spw-|--spw-|--op-" public/css src/styles`
   opinion_to_form = `Whether a selector belongs in grammar, components, systems, routes, handles, effects, or ornament.`
+ }[reg=facet]
+ css_proof_trail = .{
+  question = `Would this feature surface still feel supportable on adjacent accessible pages?`
+  read = #[@css_readme, @css_instruction, @model_guided_refinement][reg=set]
+  search = `rg "focus-visible|aria-pressed|aria-current|aria-expanded|data-spw-chrome|data-spw-state|loading|disabled" public/css public/js *.html **/index.html`
+  opinion_to_form = `Whether spacing, focus, touch, selected/current, disabled, loading, dismissed, and restored states are robust enough for a fundraising-facing implementation.`
  }[reg=facet]
  anatomy_and_chrome_trail = .{
   question = `Is this page anatomy, component anatomy, or viewport chrome?`

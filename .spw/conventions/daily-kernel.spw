@@ -102,6 +102,26 @@
   future_theming = "Creative theming should tune brand physics and region roles before inventing new visual systems."
 }
 
+^"weekly_microbiome_practice"{
+  definition = "Weekly production and connection can be treated as a living microbiome: conversations, code patches, route tending, meals, gardens, and maintenance cycles leave byproducts that feed later work."
+  use_when = "A development comes from outside the screen: growers, food systems, hospitality, studio visits, collaborators, teaching moments, or routine maintenance that changes how the site should metabolize ideas."
+  kernel_defaults = .{
+    region = "garden | commons | workshop"
+    disciplines = "engineer + grower | writer + gardener | designer + host | software maintainer + food-system observer"
+    brand_physics = "grain | repair | cadence | resonance"
+    semantic_operation = "cache | prime | align"
+    output = "leaflet | daily-kernel note | plan-local cache"
+  }[reg=facet]
+  microbiome_mapping = .{
+    soil = "the repo: files, routes, conventions, plans, and assets that receive nutrients"
+    organisms = "skills, scripts, people, reviewers, conversations, route surfaces, and recurring practices"
+    nutrients = "evidence, vocabulary, constraints, jokes, metaphors, validation shortcuts, sensory details, and audience needs"
+    byproducts = "leaflets, copy seeds, semantic contracts, route anchors, archive notes, and improved future questions"
+    imbalance = "too many leaflets without merge targets, too many plans without decay, or too much metaphor without a surface that can metabolize it"
+  }[reg=facet]
+  rule = "Do not turn every conversation into doctrine. Let outside-world observations precipitate as leaflets first, then promote only when repeated work proves they feed the codebase."
+}
+
 ^"active_claims"{
   claim #daily-kernel-001 {
     layer = "pragmatic"

@@ -5,19 +5,19 @@
 #:layer #!pragmatics
 
 ^["roots"]{
- @plan: ~".agents/plans/style-image-cohesion/PLAN.md"
- @site_semantics: ~".spw/conventions/site-semantics.spw"
- @style_development: ~".spw/conventions/style-development.spw"
- @asset_management: ~".spw/conventions/asset-management.spw"
- @image_naming: ~"/Users/spwashi/.codex/skills/.system/image-naming-magic/SKILL.md"
- @image_optimize: ~"/Users/spwashi/.codex/skills/.system/image-optimize/SKILL.md"
- @home: ~"index.html"
- @about: ~"about/index.html"
- @website: ~"about/website/index.html"
- @topics: ~"topics/index.html"
- @software: ~"topics/software/index.html"
- @design: ~"design/index.html"
- @craft: ~"topics/craft/"
+ @plan: ~"./PLAN.md"
+ @site_semantics: ~"../../../.spw/conventions/site-semantics.spw"
+ @style_development: ~"../../../.spw/conventions/style-development.spw"
+ @asset_management: ~"../../../.spw/conventions/asset-management.spw"
+ @image_naming: ~"../../skills/image-naming-magic/SKILL.md"
+ @image_optimize: ~"../../skills/image-optimize/SKILL.md"
+ @home: ~"../../../index.html"
+ @about: ~"../../../about/index.html"
+ @website: ~"../../../about/website/index.html"
+ @topics: ~"../../../topics/index.html"
+ @software: ~"../../../topics/software/index.html"
+ @design: ~"../../../design/index.html"
+ @craft: ~"../../../topics/craft/"
 }
 
 ^["intent"]{

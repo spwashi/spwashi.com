@@ -16,6 +16,8 @@
   "Symmetry is playful — operator pairs are recognized in interaction, not just documentation."
   "Exploration is rewarded — links get markers (#), buttons get glows, and hidden depth rewards sustained interaction."
   "Nothing traps — all animations are reversible; all interactions are discoverable; all states are recoverable."
+  "No delight steals the hit target — spacing, focus rings, and touch affordances come before expressive motion."
+  "A fundraising proof should feel cared for before it feels spectacular."
 }
 
 ^"timing_vocabulary"{
@@ -210,12 +212,24 @@
     message: "Whimsy is safe for photosensitive users"
     implementation: "All animations are ≥300ms or have ≥300ms gaps"
   }
+
+  state_parity: {
+    rule: "Hover, focus-visible, tap, pressed, selected, loading, and dismissed states must communicate equivalent meaning even when the visual treatment differs."
+    message: "A visitor should be able to understand state by keyboard, touch, pointer, or reduced-motion path."
+    implementation: "Pair :hover with :focus-visible and durable aria/data-spw state selectors; never make hover the only disclosure path."
+  }
+
+  spacing_first: {
+    rule: "Interactive ornament must not reduce text measure, touch target size, or local gap stability."
+    message: "The site can feel alive without making the reader fight for space."
+    implementation: "Reserve dimensions for badges, handles, focus rings, and loading labels before animating them."
+  }
 }
 
 ^"css_organization"{
-  ~#note: "Whimsy CSS lives separately from core styles for clarity and iteration."
+  ~#note: "Whimsy is expressed through the layered CSS architecture rather than a single decorative file."
 
-  file: "public/css/whimsy.css"
+  file: "Layered owners under public/css/handles, effects, ornament, components, and route surfaces"
   sections: [
     "Typography whimsy (operator sigils, breathing)",
     "Frame & panel whimsy (perspective shifts, heading accents)",
@@ -231,8 +245,16 @@
     "Mobile adjustments (reduced animations, bigger touch targets)"
   ]
 
-  integration: "Imported into public/css/style.css after core styles and enhancements"
+  integration: "Imported through public/css/style.css in the layer that owns the behavior; route-local whimsy should not override shared accessibility or spacing contracts."
   naming_convention: "Classes are semantic (plan-card, operator-chip, frame-sigil) not decorative"
+}
+
+^"fundraising_restraint"{
+  ~#note: "How delight should behave when a page may become a proof surface for support."
+  rule: "Let polish demonstrate care through spacing, predictable states, and recovery paths before adding new visual effects."
+  useful_delight = "A subtle focus ring, clear selected state, stable card lift, or well-timed status cue can do more fundraising work than a large animation because it proves maintainability."
+  avoid = "Do not ship hover-only jokes, cramped chips, overlapping chrome, or layout-shifting badges as proof of personality."
+  route_expectation = "A supporter should be able to move from the featured surface to neighboring accessible routes and still feel the same hand in the spacing and states."
 }
 
 ^"future_whimsy_opportunities"{

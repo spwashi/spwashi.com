@@ -32,6 +32,18 @@ No other JS, CSS, HTML, or .spw files touched in the initial patch (perf mark na
 - These join the existing bus events (`spw:module-mounted`, `spw:page-*`), registry records, and query-driven policy as the observable load model.
 - Future .spw surfaces (site-semantics, timing-data-localization, page-model) can reference the `spw:*` perf names when editor inspection of load health is needed beyond one patch.
 
+## Cache Correlation Direction
+
+Future instrumentation should help distinguish the shape of a load, not only its duration:
+
+- cold boot: no useful browser/module/interaction cache available
+- warm return: browser cache or service worker helps resources arrive faster
+- restored posture: settings, palette, pins, or dismissed chrome changed the page after boot
+- restored checkpoint: a spell/checkpoint returned the reader to a previous route or local state
+- debug/audit posture: extra diagnostics intentionally added cost
+
+This can remain local and progressive. A `timings()` or diagnostics surface can label a load posture from existing runtime policy, module registry, and root attributes without adding analytics or external reporting. The useful question is not only "how many milliseconds?" but "which memory layer helped, which one cost us, and can an editor inspect that distinction?"
+
 ## Validation (per AGENTS.md)
 - `node --check public/js/site.js`
 - `git diff --check`
@@ -54,6 +66,7 @@ No other JS, CSS, HTML, or .spw files touched in the initial patch (perf mark na
 - If a dedicated load-diagnostics surface or state-inspector block for "load health" proves valuable, add a small entry to `.spw/conventions/narrative-instrumentation.spw` or `site-semantics.spw` and run `spw-plan-maintenance`.
 - Consider a builder/inspect query preset that turns on both audit + perf-visible load (already possible via existing recipes).
 - Correlate module load timings with layout-shift-audit or frame-metrics when both are active.
+- Correlate module timings with cache posture before optimizing for averages; a cold visitor, a returning reader, and an inspector in debug mode should not be treated as the same performance story.
 
 ## Ornament: Site Rhythm Display (added follow-up)
 **User request:** "there should be an ornament that can display site rhythm" + prior clarification that instrumentation must be visually inspectable on desktop and mobile.

@@ -13,6 +13,7 @@
 @plan_maintenance: ~"../../.agents/skills/spw-plan-maintenance/SKILL.md"
 @plan_maintenance_sweep_2026_06_19: ~"../../.agents/plans/archive/2026-06-19-plan-maintenance.md"
 @conversation_audit_redistribution_2026_06_19: ~"../../.agents/plans/archive/2026-06-19-conversation-audit-redistribution.md"
+@plan_maintenance_sweep_2026_06_21: ~"../../.agents/plans/archive/2026-06-21-planning-ecology-recursive-maintenance.md"
 @public_plans: ~"../../about/plans/index.html"
 @workbench_claim_protocol: ~"../_workbench/.spw/harness/claim-protocol.spw"
 @workbench_memory_surface: ~"../_workbench/.spw/harness/memory-surface.spw"
@@ -27,6 +28,7 @@ dispatch: .{
  plan_maintenance = @plan_maintenance
  plan_maintenance_sweep_2026_06_19 = @plan_maintenance_sweep_2026_06_19
  conversation_audit_redistribution_2026_06_19 = @conversation_audit_redistribution_2026_06_19
+ plan_maintenance_sweep_2026_06_21 = @plan_maintenance_sweep_2026_06_21
  public_plans = @public_plans
  claim_protocol = @workbench_claim_protocol
  memory_surface = @workbench_memory_surface
@@ -62,6 +64,16 @@ memory_rule: .{
   generated = `Catalogs, manifests, dist artifacts, and any rebuildable projection.`
   transition = `Move a claim from hot to warm or cold only after it has evidence_refs, affected files, validation, and an owner surface.`
   insight_cache = `Use semantic-capacity.spw for insights that are valuable but not ready for implementation: cache them with operation, fixity, evidence, pattern consideration, expansion prime, and validation.`
+  agentic_development_cache = `Repo-derived summaries that help agents avoid repeated discovery: route/runtime manifest, plan census, skill index, validation posture memo, semantic dispatch, and patch boundary notes. Each must name source, invalidation basis, and whether it is generated or authored.`
+}[reg=facet]
+
+agentic_cache_contract: .{
+  purpose = `Make repeated agent work cheaper without replacing authored source files.`
+  cacheable = `Route metadata, runtime definitions, plan ownership, skill availability, validation command summaries, archive decisions, and source-file references.`
+  not_cacheable = `Unvalidated model opinions, stale check results, browser observations without reproduction data, or generated summaries that no longer identify their source files.`
+  invalidation = `Every cache should say which files, commands, or git tree state make it stale. A cache that cannot be invalidated should stay as a plan note, not a generated artifact.`
+  state_home = `.agents/state/ for generated or semi-generated agent operating artifacts; .agents/plans/ for authored reasoning and archive records.`
+  validation = `Agent caches are advisory until the relevant local check or targeted rg/file-existence probe is rerun.`
 }[reg=facet]
 
 archive_policy: .{
@@ -71,6 +83,17 @@ archive_policy: .{
   completed_reference = `Landed or superseded plan content that remains in place because other files cite it directly.`
   archive = `Historical notes under .agents/plans/archive/ that should be used as reference only.`
   rule = `Physically move a completed plan into archive only in a ref-safe pass that updates all direct citations. Otherwise index it as a completed_reference.`
+}[reg=facet]
+
+tree_optimization: .{
+  observation = `As of 2026-06-21 the active plan tree is large enough to need virtual information architecture before physical reorganization.`
+  virtual_buckets = `Semantic rails, CSS/layout/interaction, runtime/JS/validation, media/image/sensory material, public route/proof/genre systems, templates/tooling, and fix queue.`
+  recursive_rule = `A maintenance pass succeeds when it reduces the cost of the next maintenance pass: fewer hidden WIPs, clearer owner surfaces, fewer stale links, and better archive records.`
+  wip_rule = `A WIP-only folder should be revived with PLAN.md, merged into an owner plan, or archived by index note the next time it is touched.`
+  fix_rule = `FIX.md-only folders are tactical queues, not missing plans; keep them narrow, falsifiable, and closeable.`
+  template_rule = `Template-only folders are tooling and should be named in the index so audits do not misread them as stale backlog.`
+  overgrowth_rule = `Empty folders and oversized/generated-looking plan artifacts should be documented as cleanup candidates before destructive or structural edits.`
+  spw_tree_benefit = `The plan tree should expose Spw operations: cache, audit, align, prime, contract, and archive. That lets humans and agents peruse the work by operation instead of only by folder name.`
 }[reg=facet]
 
 ^"operational_semantics_template"{
@@ -101,6 +124,9 @@ invariants: #[
  `New durable planning concepts should be wired through site.spw, this convention, and the relevant README or public page.`,
  `Plan-maintenance sweeps should preserve hand-authored voice while reducing stale cross-references.`,
  `Completed plans with live direct citations should be archived by index note before any physical move.`,
+ `Plan-tree consolidation should prefer virtual buckets and archive records before physical folder moves.`,
+ `WIP-only plan folders should not remain invisible once they are touched by a maintenance pass.`,
+ `Agentic development caches should summarize repo-derived facts with explicit invalidation; they must not replace source reads or final validation.`,
  `Architectural claims that drive refactors should name a falsification path before they become durable convention.`,
  `Major conceptual areas that participate in both cognitive practice and computational tooling should carry operational_semantics following the template above.`
 ][reg=set]

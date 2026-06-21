@@ -17,6 +17,9 @@
   measured_delight: "Playfulness grounded in real measured data, not decorative caprice."
   legible_force: "Physical or metaphysical effects that remain readable and inspectable rather than opaque."
   earned_wonder: "Moments of structural revelation strong enough to feel magical without violating calm defaults."
+  spatial_confidence: "The feeling that every surface has enough room to breathe, wrap, focus, and change state without asking the reader to forgive the layout."
+  accountable_interaction: "Interactive states that show what happened, what is still possible, and how to recover without requiring hidden knowledge."
+  proof_ready_polish: "A level of CSS care suitable for showing the work to supporters: not glossy, but visibly maintained, stable, and extensible."
 }
 
 ^"emerging_observations"{
@@ -69,6 +72,26 @@
   "Inspectability: any visual or interactive element that can be interrogated should be.",
   "Reversibility: aesthetic choices that trap or strand the visitor are style failures, not style preferences.",
   "Coherence: a seasonal ornament, a physics experiment, and an SVG illustration should be recognizable as belonging to the same sensibility.",
+  "Spatial confidence: cards, controls, figures, floating chrome, and text columns should not crowd each other when state changes.",
+  "State accountability: hover, focus, pressed, selected, disabled, loading, dismissed, and restored states should be legible when they exist.",
+}
+
+^"fundraising_css_posture"{
+  ~#note: "CSS stance before a feature implementation that may be used as a fundraising proof."
+  claim = `Fundraising-ready CSS is not campaign dressing. It is evidence that the system can receive more support without becoming brittle.`
+  spacing = `Whitespace should feel like maintenance and confidence: enough room for focus rings, tap targets, translated copy, runtime labels, and future state markers.`
+  interactive_states = `Every feature-facing affordance should show rest, focus, action, result, and recovery. A supporter should not have to guess whether the interface is alive, loading, pinned, selected, or dismissed.`
+  route_consistency = `Accessible routes should share enough rhythm that a feature demo feels like part of a living site, not an isolated prototype.`
+  restraint = `When proof value is high, reduce decorative novelty unless it clarifies hierarchy, state, or concept ownership.`
+  validation = `Review home, website/about, operator/topic, settings/design, play/recipe, contact/service, and long-form routes after shared CSS changes.`
+}
+
+^"state_and_spacing_philosophy"{
+  default = `At rest, pages should read like reference documents with generous enough spacing to invite perusal.`
+  on_contact = `On hover, focus, tap, or scroll proximity, surfaces may become more articulate, but should not steal space from neighboring content.`
+  on_commitment = `Pressed, selected, pinned, collected, or grounded states should use durable indicators instead of transient effects alone.`
+  on_absence = `Disabled, dismissed, collapsed, and loading states still need a visible posture. Absence is not the same as removal from the model.`
+  on_density = `Dense pages should gain hierarchy through grouping, rhythm, and inline emphasis before shrinking type, gaps, or touch targets.`
 }
 
 ^"choice_points_extended"{
@@ -105,6 +128,7 @@
 ^"dispatch"{
   @site: ~"../site.spw"
   @semantics: ~"./site-semantics.spw"
+  @css_instruction: ~"./css-instruction.spw"
   @css_plan: ~"../../.agents/plans/css-progressive-ornaments/wip.spw"
   @svg_plan: ~"../../.agents/plans/svg-surface-integration/wip.spw"
   @pretext_plan: ~"../../.agents/plans/pretext-whimsy-lab/wip.spw"

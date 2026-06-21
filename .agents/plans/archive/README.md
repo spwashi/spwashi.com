@@ -21,6 +21,7 @@ Maintenance sweeps:
 
 - `2026-06-19-plan-maintenance.md` - Active plan ecology consolidation, completed-reference indexing, and archive policy refresh.
 - `2026-06-19-conversation-audit-redistribution.md` - Redistribution of broad audit prompts into the active owner plans.
+- `2026-06-21-planning-ecology-recursive-maintenance.md` - Recursive plan-tree census, virtual bucket structure, WIP-only cleanup rule, and overgrowth queue.
 
 Completed or superseded references retained in place:
 
@@ -33,3 +34,5 @@ Archive policy:
 - Move files into `archive/` only in a ref-safe pass that updates all citations.
 - Keep stabilized operational foundations in place when they still explain current development workflow.
 - Archive broad conversational audit bundles once their work is redistributed into concrete owner plans.
+- Use virtual buckets before physical folder moves when the active tree is large or heavily cross-referenced.
+- Treat WIP-only folders as maintenance friction: revive, merge, or archive them the next time they are touched.

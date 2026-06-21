@@ -327,3 +327,52 @@ Redistributed the current conversation's broad audit requests into existing owne
 - Routed broader architecture work to `site-source-layout`, `runtime-module-fluency`, and `css-maintainability-refactor`.
 
 This keeps conversation-driven audit language visible while making the next patch choose a precise owner surface.
+
+## Plan Maintenance Sweep - 2026-06-21
+
+Refreshed the planning ecology before the next feature implementation commit, with focus on folder structure, archive policy, recursive optimization, and `.spw` tree benefits.
+
+- Ran a folder census: 170 active top-level plan folders plus `archive/`, 50 active `wip.spw` files, 11 `FIX.md`-only tracks, and a small set of nonstandard folders requiring explicit classification.
+- Added `archive/2026-06-21-planning-ecology-recursive-maintenance.md` as the dated maintenance record.
+- Updated `.agents/plans/README.md` with virtual buckets so the active tree can be perused by owner surface rather than raw directory listing.
+- Revived `style-image-cohesion/` with a compact `PLAN.md` and made its WIP references repo-relative and local-skill-aware.
+- Left `recent-plan-templates/` as intentional template tooling and documented `mobile-density-operator-semantics/` as an empty local overgrowth candidate.
+- Refined `spw-plan-maintenance` with recursive optimization rules: WIP-only cleanup, template-only classification, fix-only queue semantics, virtual buckets before physical moves, and oversized artifact handling.
+- Updated `.spw/conventions/planning-ecology.spw` with the new sweep reference and a `tree_optimization` facet.
+
+Next pass: project the bucket taxonomy onto `/about/plans/` when that public editor surface next changes, and split or cold-archive oversized plan artifacts only in a focused ref-safe cleanup pass.
+
+## Runtime Cache And Metamaterial Alignment - 2026-06-21
+
+Refined existing runtime/performance plans so the next implementation patch can optimize for both technical speed and the site's distinctive metacognitive utility.
+
+- Updated `runtime-bootstrap-performance/PLAN.md` with a cache-strata model: transport, runtime module, semantic, interaction, and cognitive cache.
+- Added warm-return/cache posture considerations to `runtime-load-instrumentation/PLAN.md` so future timing work can distinguish cold boot, warm return, restored posture, restored checkpoint, and debug/audit mode.
+- Extended `runtime-module-fluency/PLAN.md` with metacognitive utility criteria: what a module noticed, what it changed/deferred/remembered, and how to return.
+- Added `hypermedia_metamaterial_utility` to `.spw/conventions/semantic-capacity.spw` so metamaterial language has required owner layer, material property, cache posture, reader/editor utility, and validation.
+- Added a cache/performance trail to `.spw/conventions/codebase-perusal.spw` for maintainers forming opinions without a coding agent.
+
+Next implementation pass should name the cache stratum it improves and preserve a reset or inspection path for any remembered state.
+
+## Agentic Development Cache Alignment - 2026-06-21
+
+Clarified the intended caching target after the user specified agentic development caching and optimization.
+
+- Extended `agentic-dev-contracts/PLAN.md` with an explicit agentic development cache contract.
+- Defined cache families for route/runtime manifests, plan census/owner maps, skill availability, validation posture memos, semantic dispatch, and patch boundary notes.
+- Set guardrails: cache repo-derived facts with invalidation paths, not model opinions or stale check results.
+- Named future candidate artifacts under `.agents/state/`: `plans-index.json`, `skills-index.json`, and `checks/last-local-check.json`.
+- Kept the runtime/cache additions as adjacent but secondary, useful for the site's public hypermedia surface rather than the main agentic development cache.
+
+Next implementation pass should prefer a small generated plan census or agent fast-start summary only if repeated manual audits continue to cost more than the artifact would maintain.
+
+## Leaflet Precipitation And Weekly Microbiome Model - 2026-06-21
+
+Integrated the user's precipitation model as a lightweight semantic-capacity practice for recording byproducts of development, weekly production, and community connection.
+
+- Added `leaflet_precipitation` to `.spw/conventions/semantic-capacity.spw` with trigger, shape, promotion rule, decay rule, and microbiome metaphor.
+- Added `weekly_microbiome_practice` to `.spw/conventions/daily-kernel.spw` so conversations with growers, food systems, gardens, hospitality, and collaborators can become bounded kernels or leaflets before becoming doctrine.
+- Added `recent-plan-templates/leaflet-precipitation.template.spw` as the smallest repeatable artifact for small precipitates.
+- Updated the plan index so `recent-plan-templates/` is recognized as a source for leaflets rather than stale backlog.
+
+Next use: when a conversation, bug, route read, or social production rhythm leaves a useful residue, record a leaflet with evidence, nutrient, organism, byproduct, merge target, and decay rule.

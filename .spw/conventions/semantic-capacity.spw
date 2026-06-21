@@ -132,6 +132,42 @@
   model_rule = "A future model may elaborate a creative prime only after it identifies the audience, route, component, element, and fixity tier."
 }
 
+^"hypermedia_metamaterial_utility"{
+  operation = "contract"
+  fixity = "stable"
+  definition = "A hypermedia metamaterial claim is useful only when it names which authored layer behaves like a material, which property changes under interaction, and why that helps a reader think or return."
+  required_fields = #[
+    `layer`: "HTML, CSS, JS runtime, .spw, asset, plan, service worker, or browser-local state"
+    `material_property`: "structure, light, shadow, rhythm, memory, latency, gesture, density, figure-ground, or semantic emphasis"
+    `reader_utility`: "what a visitor can understand, compare, revisit, reset, cite, or extend"
+    `editor_utility`: "what a maintainer can inspect, validate, or safely change"
+    `cache_posture`: "volatile, session, local, build-time, service-worker, generated, or archived"
+    `validation`: "command, rg query, browser smoke, design catalog, state inspector, or route read"
+  ][reg=set]
+  rule = "Do not promote metamaterial language unless it improves selection, validation, return-visit continuity, or creative extension. Metaphor without an owner layer and validation path stays in a plan note."
+  performance_bridge = "Caching and performance optimization should reduce both load cost and mental reparse cost. A remembered setting, cached asset, or precomputed route summary is valuable when it remains inspectable and reversible."
+}
+
+^"leaflet_precipitation"{
+  operation = "cache"
+  fixity = "tending"
+  definition = "A leaflet is a small .spw precipitate: one useful byproduct of wondering, building, reading, conversation, browser observation, or weekly production rhythm that is not yet a plan or convention."
+  trigger = "Make a leaflet when an idea appears twice, affects future edits, and is too specific or young for a durable convention."
+  shape = .{
+    claim = "One sentence of what became clearer."
+    evidence = "Files, routes, screenshots, conversations, validation output, or repeated production moments."
+    nutrient = "What the idea feeds: route copy, CSS material, runtime timing, plan hygiene, image work, product line, community connection, or personal practice."
+    organism = "Which local surface can metabolize it: plan, route, convention, skill, template, archive, or public page."
+    byproduct = "What wondering produced that was not the original task: vocabulary, caution, metaphor, validation shortcut, audience register, or next patch seed."
+    merge_target = "Where it should go if it repeats."
+    decay_rule = "Archive if it stops feeding work; promote after repeated cross-surface use."
+  }[reg=facet]
+  promotion_rule = "one signal = note in working plan; two signals = leaflet; three signals across surfaces = convention or owner-plan section; landed or superseded = archive."
+  microbiome_metaphor = "A healthy codebase has microbial activity: small notes, reviews, plans, templates, and conversations digest raw experience into nutrients the next patch can absorb. The goal is not to preserve every scrap, but to keep decomposition active, local, and beneficial."
+  weekly_connection_use = "Use leaflets for developments that connect production with the week: conversations with growers, food systems, microbiomes, collaborators, route tending, maintenance cycles, and surprising byproducts of wondering along."
+  anti_pattern = "A leaflet becomes overgrowth when it repeats a plan, lacks evidence, has no organism that can metabolize it, or cannot decay."
+}
+
 ^"active_claims"{
   claim #semantic-capacity-001 {
     layer = "semantic"
@@ -140,6 +176,24 @@
     impl_ref = ".spw conventions, reviews, slices, surfaces, and plan-local templates"
     probe_ref = "Review a new .spw diff and confirm it changes selection, validation, or extension behavior rather than only adding prose."
     falsification = "Several new .spw files add evocative language but future agents still cannot tell what to edit, validate, compare, or avoid."
+    status = "active"
+  }
+  claim #semantic-capacity-002 {
+    layer = "semantic"
+    hypothesis = "The site's hypermedia/metamaterial vocabulary can guide implementation when each claim identifies a material layer, cache posture, reader utility, editor utility, and validation path."
+    spec_ref = ".spw/conventions/semantic-capacity.spw#hypermedia_metamaterial_utility"
+    impl_ref = ".agents/plans/runtime-bootstrap-performance/PLAN.md#cache-and-metamaterial-lens"
+    probe_ref = "Review the next performance or caching patch and confirm it names cache stratum, volatility, reset/inspection path, and user-facing utility."
+    falsification = "Future patches add evocative substrate language while leaving cache ownership, performance validation, and reset behavior implicit."
+    status = "active"
+  }
+  claim #semantic-capacity-003 {
+    layer = "pragmatic"
+    hypothesis = "Leaflet precipitation will let the site retain useful byproducts of development and weekly connection without forcing every insight into a full plan."
+    spec_ref = ".spw/conventions/semantic-capacity.spw#leaflet_precipitation"
+    impl_ref = ".agents/plans/recent-plan-templates/leaflet-precipitation.template.spw"
+    probe_ref = "Review a future leaflet and confirm it names evidence, nutrient, organism, byproduct, merge target, and decay rule."
+    falsification = "Leaflets accumulate as charming notes that future agents cannot merge, validate, archive, or apply."
     status = "active"
   }
 }

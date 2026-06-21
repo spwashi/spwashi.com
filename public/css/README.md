@@ -40,6 +40,19 @@ For new CSS and for rule blocks already touched in a patch, cluster declarations
 
 Do not churn large files only to reorder old declarations. The convention is meant to make active changes reviewable, not to produce noisy mechanical diffs.
 
+## Proof Posture
+
+Spacing and interactive states are part of the site's proof of care. Before a
+feature-oriented commit, shared CSS should preserve readable measure, stable
+gaps, visible focus, touch-friendly controls, and clear rest/hover/focus/active/
+selected/disabled/loading/dismissed states across representative reachable
+routes.
+
+Treat fundraising-facing polish as maintainability made visible. Prefer
+trustworthy spacing, durable state indicators, collision-free floating chrome,
+and recovery paths over isolated screenshot effects. A featured surface should
+still feel coherent when a reader moves to neighboring routes.
+
 Layer-owner debug labels use `--spw-debug-layer-owner` and `--spw-debug-layer-color` as inherited diagnostic markers. They show the cascade-resolved owner marker for selected elements when `html[data-spw-debug-layers="on"]` or `data-spw-debug="layers"` is active. They are not complete CSS provenance and should not be described as proof of which file supplied every declaration.
 
 Route surfaces can split under `routes/surfaces/` when a route grows into clear domains. Import those fragments directly from `style.css`; do not add one-file aliases or route shims.

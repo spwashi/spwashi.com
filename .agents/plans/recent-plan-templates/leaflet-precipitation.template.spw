@@ -1,0 +1,31 @@
+# leaflet - <short-slug>
+# Use for small .spw precipitates from development, conversation, production,
+# maintenance, or weekly connection. Keep it small enough to merge or archive.
+
+#:operation #!cache
+#:fixity #!tending
+#:source #!conversation
+#:region #!garden
+
+^"leaflet"{
+  id = "<short-stable-id>"
+  claim = "One sentence. What became clearer?"
+  source = "route read | browser smoke | code review | conversation | weekly production | collaborator note"
+  evidence = #[
+    "file, route, selector, screenshot, command, quote summary, or dated observation"
+  ][reg=set]
+  nutrient = "What this feeds: route copy, CSS material, runtime timing, plan hygiene, image work, product line, community connection, or practice."
+  organism = "Which surface can metabolize it: plan, route, convention, skill, template, archive, public page, or future patch."
+  byproduct = "What wondering produced that was not the original task: vocabulary, caution, metaphor, validation shortcut, audience register, or patch seed."
+  microbiome_relation = "How this participates in the codebase ecology: soil, organism, nutrient, byproduct, imbalance, or repair."
+  merge_target = "Where it goes if it repeats."
+  decay_rule = "Archive if it stops feeding work; promote after repeated cross-surface use."
+  next_action = "Smallest honest follow-up."
+}
+
+^"weekly_connection"{
+  production_dimension = "food | garden | studio | software | hospitality | research | publishing | maintenance"
+  connection_dimension = "conversation | collaborator | audience | neighbor | customer | reader | maintainer"
+  week_signal = "What rhythm, season, deadline, social contact, or maintenance cycle made the idea visible?"
+  validation = "rg check, route read, browser smoke, plan link, manual inspection, or later revisit date"
+}
