@@ -94,3 +94,15 @@ Validation additions:
 
 - `rg -n ":has\\(|data-spw-slot|data-spw-layout|frame-grid|media-prose|frame-list--inline" public/css **/index.html`
 - `npm run check:local` after source CSS edits; inspect generated-output freshness separately from source validation.
+
+## Active Refinement - 2026-06-20 Timing And Layout Contracts
+
+This pass owns a targeted architecture cleanup from the CSS/JS refinement brief:
+
+- Move shell z-index ownership for header indicators and floating chrome out of the handle layer.
+- Keep route-specific lens labels and selected-state animation overrides in route CSS, with shared mode-switch CSS exposing `--mode-switch-*` variables.
+- Prefer shared interaction timing tokens (`--spw-interaction-acknowledge`, `--spw-interaction-commit`, `--spw-interaction-settle`) for reusable handles.
+- Add declarative newspaper page width and compact mid-size 3-up grid behavior without replacing the existing layout tuner.
+- Keep split-layout rails narrow and content-owned at mid desktop widths by using a `max-content` rail track.
+- Treat semantic handles as performance hooks: hydrated features, modules, and handles can spend readiness variables so components feel like local systems coming online.
+- Let page/section transitions spend semantic hierarchy and inertia: active sections, adjacent sections, and floating navigation surfaces receive different resonance/timing variables.

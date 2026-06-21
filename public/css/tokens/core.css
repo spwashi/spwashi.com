@@ -346,6 +346,7 @@
   --shell-header-height: var(--header-height);
   --page-width: 72rem;
   --page-width-reading: 56rem;
+  --page-width-newspaper: 68rem;
   --page-width-wide: 84rem;
   --page-width-atlas: 104rem;
   --page-gutter: clamp(0.75rem, 2.5vw, 1.5rem);
@@ -795,6 +796,7 @@
   --spw-control-press-depth: 1px;
   --spw-interaction-acknowledge: var(--touch-acknowledge, 90ms) var(--ease-chassis, cubic-bezier(0.22, 0, 0, 1));
   --spw-interaction-commit: var(--touch-commit, 180ms) var(--ease-mechanical, cubic-bezier(0.32, 0, 0, 1));
+  --spw-interaction-settle: var(--touch-recover, 520ms) var(--ease-settle, cubic-bezier(0.20, 0.80, 0.20, 1));
   --spw-settle-offset-start: 2px;
   --spw-settle-offset-mid: 1px;
   --spw-settle-offset-end: 0.25px;

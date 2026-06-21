@@ -165,6 +165,14 @@
     "trace trace trace trace trace";
 }
 
+.header-op-indicator {
+  z-index: var(--z-header, var(--layer-header, 1000));
+}
+
+:where(.spw-navigator, .spw-console, .spw-nav) {
+  z-index: var(--z-priority, var(--layer-priority, 2000));
+}
+
 :where(.site-header.is-scrolled, body > header.is-scrolled) {
   --spw-header-opacity-local: 0.97;
 }

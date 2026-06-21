@@ -36,6 +36,7 @@
   /* Widths */
   --page-width: 72rem;
   --page-width-reading: 56rem;
+  --page-width-newspaper: 68rem;
   --page-width-wide: 84rem;
   --page-gutter-inline: var(--page-gutter, clamp(0.75rem, 2.5vw, 1.5rem));
   --page-gutter-block: clamp(0.9rem, 2.2vw, 1.8rem);
@@ -245,11 +246,17 @@ main {
 
 /* Layout variants: body[data-spw-layout] / main[data-spw-layout] opt a route into
    different uses of horizontal space on wide screens. Reading is the default.
-   "wide" lets key clusters breathe; "atlas" gives a rail for auxiliary content;
-   "split" is reading-column + rail for reading routes with navigation context. */
+   "newspaper" gives denser reference pages a printable measure; "wide" lets
+   key clusters breathe; "atlas" gives a rail for auxiliary content; "split" is
+   reading-column + rail for reading routes with navigation context. */
 :where(body[data-spw-layout="reading"]) main,
 main[data-spw-layout="reading"] {
   --spw-main-width: var(--page-width-reading);
+}
+
+:where(body[data-spw-layout="newspaper"]) main,
+main[data-spw-layout="newspaper"] {
+  --spw-main-width: var(--page-width-newspaper);
 }
 
 :where(body[data-spw-layout="wide"]) main,
@@ -310,8 +317,14 @@ main[data-spw-layout="atlas"] {
 @media (min-width: 72rem) and (max-width: 82rem) {
   :where(body[data-spw-layout="split"]) main,
   main[data-spw-layout="split"] {
-    grid-template-columns: minmax(0, 1fr) minmax(12.5rem, 0.28fr);
+    grid-template-columns: minmax(0, 1fr) minmax(12.5rem, max-content);
     column-gap: clamp(0.75rem, 1.4vw, 1rem);
+  }
+}
+
+@media (min-width: 56rem) and (max-width: 72rem) {
+  :where(body[data-spw-density="compact"]) main :where(.frame-grid--3up) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

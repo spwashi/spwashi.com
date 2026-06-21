@@ -52,6 +52,10 @@
  >>[2026-04-25] implement — moved page-arrival timing values into `spw-tokens.css` so CSS and JS share the same timing vocabulary.
  >>[2026-04-25] document — added `docs/developer-topography.md` for developers adapting the site as a starter business surface.
  >>[2026-04-25] implement — added the new shared JS contract module and its immediate dependencies to the service worker precache surface.
+ >>[2026-06-20] implement — moved shell z-index ownership out of `operators.css`, introduced `--spw-interaction-settle`, added `data-spw-layout="newspaper"` width support, and converted home lens exceptions into route-owned variables.
+ >>[2026-06-20] contract — semantic handles now act as paint-safe performance hooks: enhanced regions publish a readiness ring that hydrated features/modules/handles can spend without changing layout.
+ >>[2026-06-20] contract — page and section transitions now acknowledge hierarchy and inertia with active/adjacent section resonance plus faster floating-navigation physics during section travel.
+ >>[2026-06-20] implement — added right-lane reservation for the state satchel, constrained section handles and parallel navigation into the remaining mobile lane, and placed two optimized home image studies as hydration/resonance specimens.
 }
 
 ^["open"]{

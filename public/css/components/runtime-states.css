@@ -30,6 +30,67 @@
   text-decoration-line: underline;
 }
 
+/* Page and section transitions spend semantic hierarchy before decorative motion:
+   active content gets resonance, adjacent content keeps inertia, and floating
+   navigation surfaces answer faster than reading surfaces. */
+:where(html[data-spw-page-transition-phase="entering"], html[data-spw-page-transition-phase="returning"], html[data-spw-page-transition-phase="restored"]) {
+  --spw-transition-hierarchy-resonance: 0.16;
+  --spw-transition-hierarchy-shadow:
+    0 0 0 1px color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal, #008080))) 8%, transparent),
+    var(--spw-local-shadow, var(--component-shadow, none));
+}
+
+:where(html[data-spw-page-arrival="returning"], html[data-spw-page-arrival="restored"]) {
+  --spw-transition-hierarchy-resonance: 0.24;
+}
+
+:where(html[data-spw-page-section-direction="forward"]) {
+  --spw-section-inertia-shift: var(--spw-settle-offset-end, 0.25px);
+}
+
+:where(html[data-spw-page-section-direction="back"]) {
+  --spw-section-inertia-shift: calc(var(--spw-settle-offset-end, 0.25px) * -1);
+}
+
+:where([data-spw-section-state]) {
+  --spw-section-local-resonance: 0;
+  transition:
+    border-color var(--spw-interaction-commit, var(--component-transition-base)),
+    box-shadow var(--spw-interaction-settle, var(--component-transition-base)),
+    filter var(--spw-interaction-settle, var(--component-transition-base)),
+    opacity var(--spw-interaction-settle, var(--component-transition-base)),
+    transform var(--spw-interaction-settle, var(--component-transition-base));
+}
+
+:where([data-spw-section-state="active"]) {
+  --spw-section-local-resonance: var(--spw-transition-hierarchy-resonance, 0.12);
+  box-shadow: var(--spw-transition-hierarchy-shadow, var(--spw-local-shadow, var(--component-shadow, none)));
+  transform: translateY(calc(var(--spw-section-inertia-shift, 0px) * -1));
+}
+
+:where([data-spw-section-state="previous"], [data-spw-section-state="next"]) {
+  --spw-section-local-resonance: calc(var(--spw-transition-hierarchy-resonance, 0.12) * 0.42);
+  filter: saturate(calc(1 + var(--spw-section-local-resonance, 0) * 0.12));
+}
+
+:where(
+  [data-spw-floating-chrome="true"],
+  .spw-section-handle,
+  .spw-section-handle-shell,
+  .spw-nav,
+  .spw-console
+) {
+  --spw-transition-surface-physics: var(--spw-interaction-acknowledge, var(--component-transition-base));
+  transition:
+    box-shadow var(--spw-interaction-settle, var(--component-transition-base)),
+    opacity var(--spw-transition-surface-physics),
+    transform var(--spw-transition-surface-physics);
+}
+
+:where(html[data-spw-page-section-phase="traveling"]) :where(.spw-section-handle, .spw-section-handle-shell) {
+  --spw-transition-surface-physics: var(--spw-interaction-acknowledge, var(--touch-acknowledge, 90ms) var(--ease-chassis, ease));
+}
+
 :where([data-spw-module-trigger]) {
   --spw-module-trigger-color: var(--component-accent, var(--active-op-color, var(--teal)));
 }
@@ -449,6 +510,11 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+
+  :root:has([data-spw-state-inspector-root]) .spw-state-inspector__launch[data-spw-page-state-mirror]::before {
+    inset-inline-end: 0;
+    max-inline-size: var(--spw-floating-satchel-lane, min(11.5rem, calc(50vw - 0.8rem)));
+  }
 }
 
 :where(main > section.site-frame[data-spw-section-state], main > article > section.site-frame[data-spw-section-state]) {
@@ -612,6 +678,17 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
   --spw-region-profile-intensity: 1;
 }
 
+:where(html[data-spw-page-state="region-enhanced"], html[data-spw-page-state="enhanced"]) :where(
+  [data-spw-feature],
+  [data-spw-handle],
+  [data-spw-kind]:not(body):not(main),
+  [data-spw-module]
+) {
+  --spw-hydration-ready-shadow:
+    0 0 0 1px color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal, #008080))) 12%, transparent),
+    var(--spw-local-shadow, var(--component-shadow, none));
+}
+
 /* During cascade hold, limit transitions to paint-safe properties so runtime
    dataset writes do not trigger layout-affecting interpolation. */
 :where(
@@ -760,6 +837,12 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
   :where(.site-lede, .page-lede) {
     font-size: clamp(0.96rem, 0.9rem + 0.24vw, 1.08rem);
     line-height: 1.5;
+  }
+}
+
+@container (min-width: 36.01rem) and (max-width: 52rem) {
+  :where(.frame-grid--3up) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

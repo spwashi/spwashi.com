@@ -290,6 +290,7 @@
    ========================================================================== */
 
 :where([data-spw-hydration="loading"]) {
+  --spw-hydration-accent: var(--component-accent, var(--active-op-color, var(--teal, currentColor)));
   position: relative;
   min-height: 2.4rem;
   overflow: clip;
@@ -304,7 +305,7 @@
   background: linear-gradient(
     100deg,
     transparent 0%,
-    color-mix(in srgb, var(--component-accent, var(--ink, currentColor)) 8%, transparent) 42%,
+    color-mix(in srgb, var(--spw-hydration-accent) 8%, transparent) 42%,
     transparent 84%
   );
   background-size: 220% 100%;
@@ -317,6 +318,18 @@
 
 :where([data-spw-hydration="ready"]) {
   animation: spw-hydration-settle var(--spw-component-settle-transition, 260ms ease-out) both;
+}
+
+:where([data-spw-hydration="ready"]):where(
+  [data-spw-feature],
+  [data-spw-handle],
+  [data-spw-kind],
+  [data-spw-module]
+) {
+  box-shadow: var(--spw-hydration-ready-shadow, var(--spw-local-shadow, var(--component-shadow, none)));
+  transition:
+    box-shadow var(--spw-interaction-settle, var(--spw-component-settle-transition, 260ms ease-out)),
+    filter var(--spw-interaction-settle, var(--spw-component-settle-transition, 260ms ease-out));
 }
 
 :where([data-spw-hydration="error"]) {

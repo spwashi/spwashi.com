@@ -211,8 +211,11 @@ tunable_parameters: .{
  receptor_breadth = `data-spw-receptor-breadth (narrow|medium|wide). Determines which token classes trigger resonance in this component.`
  gradient_boundary = `data-spw-gradient-boundary='hard|soft|none'. Whether the gradient edge is visually marked.`
  liminality_floor = `data-spw-liminality-floor='entry|threshold|settled'. The minimum depth this region starts at.`
- grid_density = `data-spw-density on a grid cluster can tune track measure, gap, and child padding together. Dense/soft/roomy are layout-level hints, not only component-level posture.`
-  promptability = `data-spw-promptability='visible|latent|ambient'. Visible promptability should earn concrete copy or direct wiring, not merely add chrome.`
+ grid_density = `data-spw-density on a grid cluster can tune track measure, gap, and child padding together. Compact/dense/soft/roomy are layout-level hints, not only component-level posture; compact pages may collapse 3-up anatomy to 2-up in the tablet/mid-desktop band.`
+ page_layout = `body[data-spw-layout] chooses broad horizontal reading posture. Reading is narrow, newspaper is denser reference-document measure, wide is generous, atlas is survey-scale, and split pairs a reading column with a max-content rail.`
+ semantic_handle_performance = `A semantic handle is also a performance hook. When a feature, module, or handle hydrates, the page can expose readiness with paint-safe variables instead of adding new layout chrome; this makes components feel like small local systems coming online.`
+ transition_hierarchy = `Page and section transitions should treat active content, adjacent content, and floating navigation as different physical surfaces. Prior direction and arrival disposition bias resonance, tiny transform inertia, and timing without changing the reading order.`
+ promptability = `data-spw-promptability='visible|latent|ambient'. Visible promptability should earn concrete copy or direct wiring, not merely add chrome.`
 }[reg=facet]
 
 open_questions: #[

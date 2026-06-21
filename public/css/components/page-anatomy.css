@@ -370,8 +370,20 @@ html[data-spw-popup-posture="expressive"] .spw-parallel-nav {
     max-inline-size: min(28rem, calc(100vw - 8rem));
   }
 
+  :root:has([data-spw-state-inspector-root]) .spw-parallel-nav {
+    inset-inline-start: var(--spw-floating-inline-gutter, max(0.65rem, env(safe-area-inset-left)));
+    inset-inline-end: auto;
+    max-inline-size: max(9.5rem, var(--spw-floating-left-lane-max, calc(100vw - 13rem)));
+    transform: none;
+  }
+
   .spw-parallel-nav__state {
     min-inline-size: min(13rem, 46vw);
+  }
+
+  :root:has([data-spw-state-inspector-root]) .spw-parallel-nav__state {
+    min-inline-size: min(12rem, max(8rem, calc(var(--spw-floating-left-lane-max, 16rem) - 5.6rem)));
+    max-inline-size: min(16rem, max(8rem, calc(var(--spw-floating-left-lane-max, 16rem) - 5.6rem)));
   }
 }
 

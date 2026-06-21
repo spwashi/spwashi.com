@@ -943,6 +943,7 @@ html[data-spw-reduce-motion="on"] *::after {
   --shell-header-height: var(--header-height);
   --page-width: 72rem;
   --page-width-reading: 56rem;
+  --page-width-newspaper: 68rem;
   --page-width-wide: 84rem;
   --page-width-atlas: 104rem;
   --page-gutter: clamp(0.75rem, 2.5vw, 1.5rem);
@@ -1392,6 +1393,7 @@ html[data-spw-reduce-motion="on"] *::after {
   --spw-control-press-depth: 1px;
   --spw-interaction-acknowledge: var(--touch-acknowledge, 90ms) var(--ease-chassis, cubic-bezier(0.22, 0, 0, 1));
   --spw-interaction-commit: var(--touch-commit, 180ms) var(--ease-mechanical, cubic-bezier(0.32, 0, 0, 1));
+  --spw-interaction-settle: var(--touch-recover, 520ms) var(--ease-settle, cubic-bezier(0.20, 0.80, 0.20, 1));
   --spw-settle-offset-start: 2px;
   --spw-settle-offset-mid: 1px;
   --spw-settle-offset-end: 0.25px;
@@ -2760,6 +2762,7 @@ html[data-spw-reduce-motion="on"] {
   /* Widths */
   --page-width: 72rem;
   --page-width-reading: 56rem;
+  --page-width-newspaper: 68rem;
   --page-width-wide: 84rem;
   --page-gutter-inline: var(--page-gutter, clamp(0.75rem, 2.5vw, 1.5rem));
   --page-gutter-block: clamp(0.9rem, 2.2vw, 1.8rem);
@@ -2969,11 +2972,17 @@ main {
 
 /* Layout variants: body[data-spw-layout] / main[data-spw-layout] opt a route into
    different uses of horizontal space on wide screens. Reading is the default.
-   "wide" lets key clusters breathe; "atlas" gives a rail for auxiliary content;
-   "split" is reading-column + rail for reading routes with navigation context. */
+   "newspaper" gives denser reference pages a printable measure; "wide" lets
+   key clusters breathe; "atlas" gives a rail for auxiliary content; "split" is
+   reading-column + rail for reading routes with navigation context. */
 :where(body[data-spw-layout="reading"]) main,
 main[data-spw-layout="reading"] {
   --spw-main-width: var(--page-width-reading);
+}
+
+:where(body[data-spw-layout="newspaper"]) main,
+main[data-spw-layout="newspaper"] {
+  --spw-main-width: var(--page-width-newspaper);
 }
 
 :where(body[data-spw-layout="wide"]) main,
@@ -3034,8 +3043,14 @@ main[data-spw-layout="atlas"] {
 @media (min-width: 72rem) and (max-width: 82rem) {
   :where(body[data-spw-layout="split"]) main,
   main[data-spw-layout="split"] {
-    grid-template-columns: minmax(0, 1fr) minmax(12.5rem, 0.28fr);
+    grid-template-columns: minmax(0, 1fr) minmax(12.5rem, max-content);
     column-gap: clamp(0.75rem, 1.4vw, 1rem);
+  }
+}
+
+@media (min-width: 56rem) and (max-width: 72rem) {
+  :where(body[data-spw-density="compact"]) main :where(.frame-grid--3up) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -3822,6 +3837,14 @@ body > header:empty {
   --spw-shell-grid-areas:
     "sigil nav actions tune toggle"
     "trace trace trace trace trace";
+}
+
+.header-op-indicator {
+  z-index: var(--z-header, var(--layer-header, 1000));
+}
+
+:where(.spw-navigator, .spw-console, .spw-nav) {
+  z-index: var(--z-priority, var(--layer-priority, 2000));
 }
 
 :where(.site-header.is-scrolled, body > header.is-scrolled) {
@@ -17355,6 +17378,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
    ========================================================================== */
 
 :where([data-spw-hydration="loading"]) {
+  --spw-hydration-accent: var(--component-accent, var(--active-op-color, var(--teal, currentColor)));
   position: relative;
   min-height: 2.4rem;
   overflow: clip;
@@ -17369,7 +17393,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   background: linear-gradient(
     100deg,
     transparent 0%,
-    color-mix(in srgb, var(--component-accent, var(--ink, currentColor)) 8%, transparent) 42%,
+    color-mix(in srgb, var(--spw-hydration-accent) 8%, transparent) 42%,
     transparent 84%
   );
   background-size: 220% 100%;
@@ -17382,6 +17406,18 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
 
 :where([data-spw-hydration="ready"]) {
   animation: spw-hydration-settle var(--spw-component-settle-transition, 260ms ease-out) both;
+}
+
+:where([data-spw-hydration="ready"]):where(
+  [data-spw-feature],
+  [data-spw-handle],
+  [data-spw-kind],
+  [data-spw-module]
+) {
+  box-shadow: var(--spw-hydration-ready-shadow, var(--spw-local-shadow, var(--component-shadow, none)));
+  transition:
+    box-shadow var(--spw-interaction-settle, var(--spw-component-settle-transition, 260ms ease-out)),
+    filter var(--spw-interaction-settle, var(--spw-component-settle-transition, 260ms ease-out));
 }
 
 :where([data-spw-hydration="error"]) {
@@ -18529,8 +18565,20 @@ html[data-spw-popup-posture="expressive"] .spw-parallel-nav {
     max-inline-size: min(28rem, calc(100vw - 8rem));
   }
 
+  :root:has([data-spw-state-inspector-root]) .spw-parallel-nav {
+    inset-inline-start: var(--spw-floating-inline-gutter, max(0.65rem, env(safe-area-inset-left)));
+    inset-inline-end: auto;
+    max-inline-size: max(9.5rem, var(--spw-floating-left-lane-max, calc(100vw - 13rem)));
+    transform: none;
+  }
+
   .spw-parallel-nav__state {
     min-inline-size: min(13rem, 46vw);
+  }
+
+  :root:has([data-spw-state-inspector-root]) .spw-parallel-nav__state {
+    min-inline-size: min(12rem, max(8rem, calc(var(--spw-floating-left-lane-max, 16rem) - 5.6rem)));
+    max-inline-size: min(16rem, max(8rem, calc(var(--spw-floating-left-lane-max, 16rem) - 5.6rem)));
   }
 }
 
@@ -18575,6 +18623,13 @@ html[data-spw-popup-posture="expressive"] .spw-parallel-nav {
      popovers, drawers, toasts, route menus, section handles, and status panels.
    - Keep feature files responsible for visual personality, not z-index policy.
    ========================================================================== */
+
+:root {
+  --spw-floating-inline-gutter: max(0.65rem, env(safe-area-inset-left), env(safe-area-inset-right));
+  --spw-floating-satchel-lane: min(11.5rem, calc(50vw - 0.8rem));
+  --spw-floating-lane-gap: 0.65rem;
+  --spw-floating-left-lane-max: calc(100vw - var(--spw-floating-satchel-lane) - (2 * var(--spw-floating-inline-gutter)) - var(--spw-floating-lane-gap));
+}
 
 :where([data-spw-floating-chrome="true"]) {
   --spw-floating-tier-z: var(--z-floating, var(--layer-floating, 100));
@@ -18744,6 +18799,32 @@ html[data-spw-popup-posture="expressive"] .spw-parallel-nav {
     );
   }
 
+  :root:has([data-spw-state-inspector-root]) :where(
+    [data-spw-floating-chrome="true"][data-spw-chrome-role="section-handle"],
+    [data-spw-floating-chrome="true"][data-spw-chrome-role="section-handle-shell"],
+    .spw-section-handle,
+    .spw-section-handle-shell
+  ) {
+    left: var(--spw-floating-inline-gutter);
+    right: auto;
+    max-inline-size: max(9.5rem, var(--spw-floating-left-lane-max));
+    transform: none;
+  }
+
+  :root:has([data-spw-state-inspector-root]) :where(
+    .spw-section-handle[data-spw-handle-state="visible"],
+    .spw-section-handle-shell[data-spw-handle-state="visible"]
+  ) {
+    transform: translateY(0);
+  }
+
+  :root:has([data-spw-state-inspector-root]) :where(
+    .spw-section-handle[data-spw-handle-state="hidden"],
+    .spw-section-handle-shell[data-spw-handle-state="hidden"]
+  ) {
+    transform: translateY(6px);
+  }
+
   :where([data-spw-floating-chrome="true"][data-spw-chrome-role="state-inspector"]:not([data-spw-state-inspector="open"]):not([data-spw-satchel-anchor="chrome-rail"]):not([data-spw-satchel-anchor="chrome-rail-closed"])) {
     /* Reserve the mobile section-handle rail so floating tools do not stack on one tap target. */
     inset-block-end: calc(var(--spw-floating-bottom-rail) + var(--spw-floating-menu-clearance, 0px));
@@ -18758,7 +18839,7 @@ html[data-spw-popup-posture="expressive"] .spw-parallel-nav {
     top: auto !important;
     transform: none;
     inline-size: auto;
-    max-inline-size: min(11.5rem, calc(50vw - 0.8rem));
+    max-inline-size: var(--spw-floating-satchel-lane);
     justify-items: end;
     pointer-events: none;
   }
@@ -18862,6 +18943,67 @@ html[data-spw-popup-posture="expressive"] .spw-parallel-nav {
 
 :where([data-spw-deep-link]:hover, [data-spw-deep-link]:focus-within) > :where(.frame-topline, .frame-heading) :where(.frame-sigil[href^="#"]) {
   text-decoration-line: underline;
+}
+
+/* Page and section transitions spend semantic hierarchy before decorative motion:
+   active content gets resonance, adjacent content keeps inertia, and floating
+   navigation surfaces answer faster than reading surfaces. */
+:where(html[data-spw-page-transition-phase="entering"], html[data-spw-page-transition-phase="returning"], html[data-spw-page-transition-phase="restored"]) {
+  --spw-transition-hierarchy-resonance: 0.16;
+  --spw-transition-hierarchy-shadow:
+    0 0 0 1px color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal, #008080))) 8%, transparent),
+    var(--spw-local-shadow, var(--component-shadow, none));
+}
+
+:where(html[data-spw-page-arrival="returning"], html[data-spw-page-arrival="restored"]) {
+  --spw-transition-hierarchy-resonance: 0.24;
+}
+
+:where(html[data-spw-page-section-direction="forward"]) {
+  --spw-section-inertia-shift: var(--spw-settle-offset-end, 0.25px);
+}
+
+:where(html[data-spw-page-section-direction="back"]) {
+  --spw-section-inertia-shift: calc(var(--spw-settle-offset-end, 0.25px) * -1);
+}
+
+:where([data-spw-section-state]) {
+  --spw-section-local-resonance: 0;
+  transition:
+    border-color var(--spw-interaction-commit, var(--component-transition-base)),
+    box-shadow var(--spw-interaction-settle, var(--component-transition-base)),
+    filter var(--spw-interaction-settle, var(--component-transition-base)),
+    opacity var(--spw-interaction-settle, var(--component-transition-base)),
+    transform var(--spw-interaction-settle, var(--component-transition-base));
+}
+
+:where([data-spw-section-state="active"]) {
+  --spw-section-local-resonance: var(--spw-transition-hierarchy-resonance, 0.12);
+  box-shadow: var(--spw-transition-hierarchy-shadow, var(--spw-local-shadow, var(--component-shadow, none)));
+  transform: translateY(calc(var(--spw-section-inertia-shift, 0px) * -1));
+}
+
+:where([data-spw-section-state="previous"], [data-spw-section-state="next"]) {
+  --spw-section-local-resonance: calc(var(--spw-transition-hierarchy-resonance, 0.12) * 0.42);
+  filter: saturate(calc(1 + var(--spw-section-local-resonance, 0) * 0.12));
+}
+
+:where(
+  [data-spw-floating-chrome="true"],
+  .spw-section-handle,
+  .spw-section-handle-shell,
+  .spw-nav,
+  .spw-console
+) {
+  --spw-transition-surface-physics: var(--spw-interaction-acknowledge, var(--component-transition-base));
+  transition:
+    box-shadow var(--spw-interaction-settle, var(--component-transition-base)),
+    opacity var(--spw-transition-surface-physics),
+    transform var(--spw-transition-surface-physics);
+}
+
+:where(html[data-spw-page-section-phase="traveling"]) :where(.spw-section-handle, .spw-section-handle-shell) {
+  --spw-transition-surface-physics: var(--spw-interaction-acknowledge, var(--touch-acknowledge, 90ms) var(--ease-chassis, ease));
 }
 
 :where([data-spw-module-trigger]) {
@@ -19283,6 +19425,11 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+
+  :root:has([data-spw-state-inspector-root]) .spw-state-inspector__launch[data-spw-page-state-mirror]::before {
+    inset-inline-end: 0;
+    max-inline-size: var(--spw-floating-satchel-lane, min(11.5rem, calc(50vw - 0.8rem)));
+  }
 }
 
 :where(main > section.site-frame[data-spw-section-state], main > article > section.site-frame[data-spw-section-state]) {
@@ -19446,6 +19593,17 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
   --spw-region-profile-intensity: 1;
 }
 
+:where(html[data-spw-page-state="region-enhanced"], html[data-spw-page-state="enhanced"]) :where(
+  [data-spw-feature],
+  [data-spw-handle],
+  [data-spw-kind]:not(body):not(main),
+  [data-spw-module]
+) {
+  --spw-hydration-ready-shadow:
+    0 0 0 1px color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal, #008080))) 12%, transparent),
+    var(--spw-local-shadow, var(--component-shadow, none));
+}
+
 /* During cascade hold, limit transitions to paint-safe properties so runtime
    dataset writes do not trigger layout-affecting interpolation. */
 :where(
@@ -19594,6 +19752,12 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
   :where(.site-lede, .page-lede) {
     font-size: clamp(0.96rem, 0.9rem + 0.24vw, 1.08rem);
     line-height: 1.5;
+  }
+}
+
+@container (min-width: 36.01rem) and (max-width: 52rem) {
+  :where(.frame-grid--3up) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -22813,19 +22977,8 @@ html[data-spw-reading-groove="on"][data-spw-layout-flow="vertical-ribbon"] :wher
    ========================================================================== */
 
 /* ==========================================================================
-   1. Layering + handle tokens
+   1. Handle tokens
    ========================================================================== */
-
-header,
-.header-op-indicator {
-  z-index: var(--z-header, var(--layer-header, 1000));
-}
-
-.spw-navigator,
-.spw-console,
-.spw-nav {
-  z-index: var(--z-priority, var(--layer-priority, 2000));
-}
 
 /* Surface map / frame navigator (spw-nav) */
 .spw-nav {
@@ -23727,8 +23880,9 @@ html[data-spw-dimensional-breadcrumbs="on"] .spw-spell-path .spw-spell-meaning {
 ):active {
   --interaction-excitement: 0.42;
   transform: translateY(var(--spw-control-press-depth, 1px)) scale(var(--spw-micro-press-scale, 0.998));
-  transition-duration: var(--touch-acknowledge, 90ms);
-  transition-timing-function: var(--ease-chassis, cubic-bezier(0.22, 0, 0, 1));
+  transition:
+    transform var(--spw-interaction-acknowledge, var(--touch-acknowledge, 90ms) var(--ease-chassis, cubic-bezier(0.22, 0, 0, 1))),
+    box-shadow var(--spw-interaction-acknowledge, var(--touch-acknowledge, 90ms) var(--ease-chassis, cubic-bezier(0.22, 0, 0, 1)));
   animation: spw-operator-ripple 0.4s ease-out;
 }
 
@@ -24012,11 +24166,11 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
   font-weight: 500;
   box-shadow: var(--operator-chip-shadow);
   transition:
-    background-color var(--spw-control-transition-fast, var(--handle-duration-fast, 140ms) var(--handle-ease, ease)),
-    border-color var(--spw-control-transition-fast, var(--handle-duration-fast, 140ms) var(--handle-ease, ease)),
-    color var(--spw-control-transition-fast, var(--handle-duration-fast, 140ms) var(--handle-ease, ease)),
-    box-shadow var(--spw-control-transition-base, var(--handle-duration-fast, 140ms) var(--handle-ease, ease)),
-    transform var(--spw-control-transition-fast, var(--handle-duration-fast, 140ms) var(--handle-ease, ease));
+    background-color var(--spw-interaction-commit, var(--handle-duration-fast, 140ms) var(--handle-ease, ease)),
+    border-color var(--spw-interaction-commit, var(--handle-duration-fast, 140ms) var(--handle-ease, ease)),
+    color var(--spw-interaction-commit, var(--handle-duration-fast, 140ms) var(--handle-ease, ease)),
+    box-shadow var(--spw-interaction-settle, var(--handle-duration-fast, 140ms) var(--handle-ease, ease)),
+    transform var(--spw-interaction-acknowledge, var(--handle-duration-fast, 140ms) var(--handle-ease, ease));
 }
 
 .operator-chip:hover,
@@ -24761,22 +24915,6 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   white-space: nowrap;
 }
 
-body[data-spw-surface="home"] #home-frame .mode-switch[aria-label]::before {
-  content: "lens \2192";
-  max-inline-size: max-content;
-  overflow: visible;
-  padding: 0.14rem 0.42rem 0.14rem 0;
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
-  color: color-mix(in srgb, var(--ink-soft, rgba(14, 18, 20, 0.72)) 78%, var(--active-op-color, var(--teal)) 22%);
-  font-size: 0.68rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  text-overflow: clip;
-  white-space: nowrap;
-}
-
 /* Narrow viewports: unwrap the lens label and give pills a stable 2×2 grid. */
 @media (max-width: 56rem) {
   .mode-switch[aria-label] {
@@ -24833,6 +24971,10 @@ body[data-spw-surface="home"] #home-frame .mode-switch[aria-label]::before {
     inset 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 22%, transparent),
     0 2px 6px color-mix(in srgb, var(--active-op-color, var(--teal)) 10%, transparent);
   --mode-switch-active-lift: 0px;
+  --mode-switch-focus-shadow:
+    0 0 0 2px color-mix(in srgb, var(--active-op-color, var(--teal)) 20%, transparent),
+    var(--mode-switch-hover-shadow);
+  --mode-switch-pressed-animation: spw-operator-breath 2s ease-in-out infinite;
   position: relative;
   top: auto;
   left: auto;
@@ -24861,12 +25003,12 @@ body[data-spw-surface="home"] #home-frame .mode-switch[aria-label]::before {
   font-size: var(--text-size-chip, 0.84rem);
   line-height: 1.02;
   transition:
-    background-color var(--spw-interaction-commit, var(--spw-control-transition-fast, 140ms ease)),
-    border-color var(--spw-interaction-commit, var(--spw-control-transition-fast, 140ms ease)),
-    color var(--spw-interaction-commit, var(--spw-control-transition-fast, 140ms ease)),
-    box-shadow var(--spw-interaction-commit, var(--spw-control-transition-base, 140ms ease)),
-    transform var(--spw-interaction-acknowledge, var(--spw-control-transition-fast, 140ms ease)),
-    font-weight var(--spw-interaction-commit, var(--spw-control-transition-fast, 140ms ease));
+    background-color var(--spw-interaction-commit, var(--touch-commit, 180ms) var(--ease-mechanical, ease)),
+    border-color var(--spw-interaction-commit, var(--touch-commit, 180ms) var(--ease-mechanical, ease)),
+    color var(--spw-interaction-commit, var(--touch-commit, 180ms) var(--ease-mechanical, ease)),
+    box-shadow var(--spw-interaction-settle, var(--touch-recover, 520ms) var(--ease-settle, ease)),
+    transform var(--spw-interaction-acknowledge, var(--touch-acknowledge, 90ms) var(--ease-chassis, ease)),
+    font-weight var(--spw-interaction-commit, var(--touch-commit, 180ms) var(--ease-mechanical, ease));
 }
 
 .mode-switch .frame-sigil[data-set-mode="surface"] {
@@ -24887,8 +25029,9 @@ body[data-spw-surface="home"] #home-frame .mode-switch[aria-label]::before {
 
 .mode-switch .frame-sigil:active {
   transform: translateY(var(--spw-control-press-depth, 1px)) scale(var(--spw-micro-press-scale, 0.998));
-  transition-duration: var(--touch-acknowledge, 90ms);
-  transition-timing-function: var(--ease-chassis, cubic-bezier(0.22, 0, 0, 1));
+  transition:
+    transform var(--spw-interaction-acknowledge, var(--touch-acknowledge, 90ms) var(--ease-chassis, cubic-bezier(0.22, 0, 0, 1))),
+    box-shadow var(--spw-interaction-acknowledge, var(--touch-acknowledge, 90ms) var(--ease-chassis, cubic-bezier(0.22, 0, 0, 1)));
 }
 
 .mode-switch .frame-sigil[aria-pressed]::after {
@@ -24901,8 +25044,8 @@ body[data-spw-surface="home"] #home-frame .mode-switch[aria-label]::before {
   opacity: 0.18;
   transform: scale(0.72);
   transition:
-    opacity var(--spw-control-transition-fast, var(--handle-duration-fast, 140ms) var(--handle-ease, ease)),
-    transform var(--spw-control-transition-fast, var(--handle-duration-fast, 140ms) var(--handle-ease, ease));
+    opacity var(--spw-interaction-commit, var(--handle-duration-fast, 140ms) var(--handle-ease, ease)),
+    transform var(--spw-interaction-acknowledge, var(--handle-duration-fast, 140ms) var(--handle-ease, ease));
 }
 
 @media (prefers-color-scheme: dark) {
@@ -24925,6 +25068,11 @@ body[data-spw-surface="home"] #home-frame .mode-switch[aria-label]::before {
   transform: translateY(var(--mode-switch-hover-lift));
 }
 
+.mode-switch .frame-sigil:focus-visible {
+  box-shadow: var(--mode-switch-focus-shadow);
+  outline: none;
+}
+
 /* Explicit selected state must come after the base .mode-switch .frame-sigil rule to win cascade. */
 .mode-switch .frame-sigil[aria-pressed="true"] {
   background: var(--mode-switch-active-bg);
@@ -24934,10 +25082,7 @@ body[data-spw-surface="home"] #home-frame .mode-switch[aria-label]::before {
   box-shadow: var(--mode-switch-active-shadow);
   opacity: 1;
   transform: translateY(var(--mode-switch-active-lift));
-}
-
-body[data-spw-surface="home"] .mode-switch .frame-sigil[aria-pressed="true"] {
-  animation: none;
+  animation: var(--mode-switch-pressed-animation);
 }
 
 .mode-switch .frame-sigil[aria-pressed="true"]::after {
@@ -24945,7 +25090,7 @@ body[data-spw-surface="home"] .mode-switch .frame-sigil[aria-pressed="true"] {
   transform: scale(1);
 }
 
-.mode-switch .frame-sigil[aria-pressed="false"] {
+.mode-switch .frame-sigil:not([aria-pressed="true"]) {
   opacity: 1;
   background: var(--mode-switch-idle-bg);
   border-color: var(--mode-switch-idle-border);
@@ -24955,7 +25100,7 @@ body[data-spw-surface="home"] .mode-switch .frame-sigil[aria-pressed="true"] {
   transform: none;
 }
 
-.mode-switch .frame-sigil[aria-pressed="false"]:is(:hover, :focus-visible) {
+.mode-switch .frame-sigil:not([aria-pressed="true"]):is(:hover, :focus-visible) {
   opacity: 1;
 }
 
@@ -25530,8 +25675,9 @@ body:has([data-spw-gesture="sustained"][data-spw-form="brace"]) [data-spw-cauldr
 
 .spw-spell-path-toggle:active {
   transform: translateY(var(--spw-control-press-depth, 1px)) scale(var(--spw-micro-press-scale, 0.998));
-  transition-duration: var(--touch-acknowledge, 90ms);
-  transition-timing-function: var(--ease-chassis, cubic-bezier(0.22, 0, 0, 1));
+  transition:
+    transform var(--spw-interaction-acknowledge, var(--touch-acknowledge, 90ms) var(--ease-chassis, cubic-bezier(0.22, 0, 0, 1))),
+    box-shadow var(--spw-interaction-acknowledge, var(--touch-acknowledge, 90ms) var(--ease-chassis, cubic-bezier(0.22, 0, 0, 1)));
 }
 
 .spw-spell-path__title {

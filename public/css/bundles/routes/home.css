@@ -1742,6 +1742,89 @@ html[data-spw-color-mode="dark"] body[data-spw-surface="home"] {
   color: var(--home-accent-primary);
 }
 
+:where(body[data-spw-surface="home"] #home-frame .mode-switch) {
+  --mode-switch-pressed-animation: none;
+}
+
+:where(body[data-spw-surface="home"] #home-frame .mode-switch[aria-label]::before) {
+  content: "lens ->";
+  max-inline-size: max-content;
+  overflow: visible;
+  padding: 0.14rem 0.42rem 0.14rem 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  color: color-mix(in srgb, var(--ink-soft, rgba(14, 18, 20, 0.72)) 78%, var(--active-op-color, var(--teal)) 22%);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-overflow: clip;
+  white-space: nowrap;
+}
+
+:where(body[data-spw-surface="home"] .home-microcosm-strip) {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.72rem, 1.4vw, 1rem);
+  padding: clamp(0.58rem, 1.2vw, 0.82rem);
+  border: 1px solid color-mix(in srgb, var(--home-accent-primary, var(--teal)) 18%, var(--home-accent-line, rgba(0, 0, 0, 0.14)) 82%);
+  border-radius: var(--home-radius-md);
+  background:
+    radial-gradient(circle at 16% 10%, color-mix(in srgb, var(--home-accent-primary, var(--teal)) 8%, transparent), transparent 42%),
+    color-mix(in srgb, var(--home-surface-bg-muted, #fff) 94%, transparent);
+  box-shadow: var(--home-shadow);
+}
+
+:where(body[data-spw-surface="home"] .home-microcosm-figure) {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 0.58rem;
+  margin: 0;
+  padding: 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--home-accent-primary, var(--teal)) 16%, transparent);
+  border-radius: calc(var(--home-radius-md) - 2px);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, white 16%, transparent), transparent 58%),
+    color-mix(in srgb, var(--home-surface-bg-strong, #fff) 90%, var(--home-accent-primary, var(--teal)) 10%);
+  overflow: hidden;
+}
+
+:where(body[data-spw-surface="home"] .home-microcosm-figure picture) {
+  display: block;
+  overflow: hidden;
+  border-radius: calc(var(--home-radius-md) - 6px);
+  background: color-mix(in srgb, var(--home-accent-primary, var(--teal)) 10%, var(--home-surface-bg-muted, #fff));
+}
+
+:where(body[data-spw-surface="home"] .home-microcosm-figure img) {
+  display: block;
+  inline-size: 100%;
+  aspect-ratio: 1;
+  block-size: auto;
+  object-fit: cover;
+  transition:
+    filter var(--spw-interaction-settle, 520ms var(--ease-settle, ease)),
+    transform var(--spw-interaction-settle, 520ms var(--ease-settle, ease));
+}
+
+:where(body[data-spw-surface="home"] .home-microcosm-figure:is(:hover, :focus-within) img) {
+  filter: saturate(1.06) contrast(1.02);
+  transform: scale(1.012);
+}
+
+:where(body[data-spw-surface="home"] .home-microcosm-figure figcaption) {
+  display: grid;
+  gap: 0.24rem;
+  color: var(--ink-soft, rgba(27, 31, 35, 0.68));
+  font-size: 0.86rem;
+  line-height: 1.42;
+}
+
+:where(body[data-spw-surface="home"] .home-microcosm-figure figcaption strong) {
+  color: color-mix(in srgb, var(--ink, #111) 82%, var(--home-accent-primary, var(--teal)) 18%);
+  font-size: 0.9rem;
+}
+
 
 /* ==========================================================================
    8. Climate tuning surface
