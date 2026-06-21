@@ -1,0 +1,145 @@
+# Codebase Perusal
+#
+# Human-facing guide for forming strong opinions about this codebase when
+# coding agents are unavailable or when a reader wants to build taste before
+# changing files.
+
+#>codebase_perusal
+#:conventions #!orientation #!maintenance #!human
+#:layer #!pragmatics
+
+@site: ~"../site.spw"
+@index: ~"../index.spw"
+@semantic_capacity: ~"./semantic-capacity.spw"
+@model_guided_refinement: ~"./model-guided-refinement.spw"
+@page_model: ~"../surfaces/page-model.spw"
+@page_anatomy_vocabulary: ~"./page-anatomy-vocabulary.spw"
+@css_instruction: ~"./css-instruction.spw"
+@site_semantics: ~"./site-semantics.spw"
+@attention_field: ~"./attention-field.spw"
+@ornament_contract: ~"./ornament-contract.spw"
+@planning_ecology: ~"./planning-ecology.spw"
+@runtime_audit: ~"../reviews/runtime-audit/index.spw"
+@spw_maintenance_2026_06: ~"../reviews/spw-maintenance-2026-06.spw"
+@slices: ~"../slices/index.spw"
+@js_readme: ~"../../public/js/README.md"
+@css_readme: ~"../../public/css/README.md"
+@agents: ~"../../AGENTS.md"
+
+operation = "prime align"
+fixity = "stable"
+
+thesis: .{
+ claim = `The codebase should be perusable as a living reference document: a reader can walk trails, notice repeated anatomy, form opinions about ownership, and make a small update without needing a coding agent to remember the model for them.`
+ reason = `Dense topical foliage is useful when it gives a reader more footholds: owner files, local questions, route examples, validation paths, and reasons not to touch adjacent systems.`
+ risk = `If the .spw layer only stores high-level metaphors, a human maintainer must reconstruct the implementation map from memory. If it only stores file paths, it cannot help them decide what kind of change is worth making.`
+}[reg=facet]
+
+perusal_postures: .{
+ gardener = .{
+  use_when = `The question is about tending, pruning, propagation, accumulated palette, repeated route ecology, or seasonal maintenance.`
+  ask = `Which growth is healthy enough to become a convention, and which should stay composted in a plan or review?`
+  first_paths = #[@semantic_capacity, @planning_ecology, @slices][reg=set]
+ }[reg=facet]
+ restaurant_owner = .{
+  use_when = `The question is about service flow, route hospitality, inventory, menus, repeat visits, trust, or operational clarity.`
+  ask = `What does this surface serve, what must be stocked, and what should a visitor never have to ask twice?`
+  first_paths = #[@page_anatomy_vocabulary, @page_model, @site_semantics][reg=set]
+ }[reg=facet]
+ reference_librarian = .{
+  use_when = `The question is about indexes, citations, dispatch, referential integrity, searchability, or preserving old reasoning.`
+  ask = `Can a reader find the owner surface, the evidence, and the next place to look in under a minute?`
+  first_paths = #[@index, @site, @spw_maintenance_2026_06][reg=set]
+ }[reg=facet]
+ stage_manager = .{
+  use_when = `The question is about page arrival, timing, overlays, floating chrome, gestures, load states, or transition hierarchy.`
+  ask = `Which surface is on stage, which is waiting in the wing, and which should leave quietly?`
+  first_paths = #[@page_model, @runtime_audit, @ornament_contract][reg=set]
+ }[reg=facet]
+ material_editor = .{
+  use_when = `The question is about CSS layers, typographic density, palette, shadows, foreground/background contrast, or texture.`
+  ask = `Is this material structural, semantic, expressive, or ornamental?`
+  first_paths = #[@css_instruction, @ornament_contract, @attention_field][reg=set]
+ }[reg=facet]
+}[reg=facet]
+
+topical_trails: .{
+ page_truth_trail = .{
+  question = `Where does page identity live before runtime enhancement begins?`
+  read = #[@agents, @page_model, @site_semantics][reg=set]
+  search = `rg "data-spw-page-|data-spw-surface|data-spw-layout" *.html **/index.html`
+  opinion_to_form = `Whether a proposed change belongs on body metadata, a region, a feature, a component, or a floating island.`
+ }[reg=facet]
+ runtime_flow_trail = .{
+  question = `Which module owns the state I am about to rely on?`
+  read = #[@js_readme, @runtime_audit, @spw_maintenance_2026_06][reg=set]
+  search = `rg "data-spw-|spw:" public/js public/ts`
+  opinion_to_form = `Whether the state is authored truth, inferred projection, browser-local preference, or diagnostic residue.`
+ }[reg=facet]
+ css_projection_trail = .{
+  question = `Which layer should express this visual consequence?`
+  read = #[@css_readme, @css_instruction, @ornament_contract][reg=set]
+  search = `rg "@layer|data-spw-|--spw-|--op-" public/css src/styles`
+  opinion_to_form = `Whether a selector belongs in grammar, components, systems, routes, handles, effects, or ornament.`
+ }[reg=facet]
+ anatomy_and_chrome_trail = .{
+  question = `Is this page anatomy, component anatomy, or viewport chrome?`
+  read = #[@page_anatomy_vocabulary, @page_model][reg=set]
+  search = `rg "data-spw-anatomy|data-spw-chrome|floating-chrome|section-handle|state-satchel" . public`
+  opinion_to_form = `Whether the renderer should own placement, whether a handle is distinct enough, and whether dismissal has restoration semantics.`
+ }[reg=facet]
+ palette_and_attention_trail = .{
+  question = `Is color carrying a semantic signal, a material signal, or an ambient mood?`
+  read = #[@attention_field, @ornament_contract, @site_semantics][reg=set]
+  search = `rg "palette|wonder|resonance|shadow|light|theme|biome|species" .spw public/css public/js`
+  opinion_to_form = `Whether the palette should persist, accumulate, answer a page disposition, or remain a local treatment.`
+ }[reg=facet]
+ slice_extension_trail = .{
+  question = `Is this change a one-off patch, a feature cluster, or a durable experience slice?`
+  read = #[@slices, @semantic_capacity, @model_guided_refinement][reg=set]
+  search = `rg "data-spw-feature|slice|operation =|fixity =" .spw .agents/plans public`
+  opinion_to_form = `Whether the next note belongs in a route file, a convention, a review, a slice, or a plan.`
+ }[reg=facet]
+}[reg=facet]
+
+manual_update_flow: ?<
+ `Read AGENTS.md, then the nearest .spw convention or review for the surface you intend to change.`,
+ `Name the operation first: cache, audit, align, prime, contract, or archive.`,
+ `Name fixity: fixed, stable, tending, experimental, or volatile.`,
+ `Use rg to find the implementation stem across HTML, CSS, JS, and .spw before editing.`,
+ `Choose the smallest honest owner surface: route HTML, shared CSS, JS module, .spw convention, review, slice, or plan.`,
+ `Keep public route copy and inspector vocabulary aligned; do not invent a new data-spw stem when a current family fits.`,
+ `Run git diff --check and the smallest relevant local validation. Prefer npm run check:local before landing multi-surface semantic changes.`,
+ `If the change teaches a reusable relation, write it into .spw before memory fades. If it only records an unresolved hunch, cache it in a plan-local note.`
+>[reg=stream]
+
+opinion_prompts: #[
+ .{ ask = `What is the authored truth here, and what is only a projection?` },
+ .{ ask = `What would break if JavaScript did not run?` },
+ .{ ask = `Which file would a future maintainer search for first, and would they find this decision there?` },
+ .{ ask = `Does this change make the page more inspectable, or only more elaborate?` },
+ .{ ask = `Is the metaphor helping choose files and validation, or only decorating the explanation?` },
+ .{ ask = `What should be easier to remove, reset, or revise after this patch?` },
+ .{ ask = `Where is the restoration path if the reader dismisses, collapses, moves, or overrides this surface?` },
+ .{ ask = `What is the smallest future fork that could reuse this idea without inheriting unrelated personality?` }
+][reg=set]
+
+foliage_rules: #[
+ `Add leaves where they help navigation: named trails, examples, owner surfaces, and validation hooks.`,
+ `Do not thicken foliage by repeating copy across files. Cross-reference the owner surface instead.`,
+ `Prefer dense local vocabularies over broad essays: a maintainer should leave with searchable stems.`,
+ `A good .spw paragraph should help a reader decide what not to edit.`,
+ `A good route metaphor should map to a concrete anatomy, gesture, palette, timing, or state contract.`
+][reg=set]
+
+dispatch: .{
+ site = @site
+ semantic_capacity = @semantic_capacity
+ model_guided_refinement = @model_guided_refinement
+ page_model = @page_model
+ page_anatomy_vocabulary = @page_anatomy_vocabulary
+ css_instruction = @css_instruction
+ runtime_audit = @runtime_audit
+ spw_maintenance_2026_06 = @spw_maintenance_2026_06
+ slices = @slices
+}[reg=facet]

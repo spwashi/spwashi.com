@@ -6,14 +6,14 @@
 #:layer #!pragmatics
 
 @runtime: ~"../../../public/js/site.js"
-@page_metadata: ~"../../../public/js/page-metadata.js"
-@component_semantics: ~"../../../public/js/component-semantics.js"
-@semantic_chrome: ~"../../../public/js/semantic-chrome.js"
-@contextual_ui: ~"../../../public/js/contextual-ui.js"
-@settings: ~"../../../public/js/site-settings.js"
-@brace_pivots: ~"../../../public/js/brace-pivots.js"
-@wonder_memory: ~"../../../public/js/wonder-memory.js"
-@accent_palette: ~"../../../public/js/accent-palette.js"
+@page_metadata: ~"../../../public/js/kernel/page-metadata.js"
+@component_semantics: ~"../../../public/js/semantic/component-semantics.js"
+@semantic_chrome: ~"../../../public/js/interface/semantic-chrome.js"
+@contextual_ui: ~"../../../public/js/interface/contextual-ui.js"
+@settings: ~"../../../public/js/kernel/site-settings.js"
+@brace_pivots: ~"../../../public/js/runtime/brace-pivots.js"
+@wonder_memory: ~"../../../public/js/interface/wonder-memory.js"
+@accent_palette: ~"../../../public/js/interface/accent-palette.js"
 
 thesis: .{
  claim = `The application's seams are real and mostly well-intentioned, but several are implicit rather than declared.`
@@ -22,12 +22,12 @@ thesis: .{
 
 handoff_stream: ?<
  `page HTML authors explicit data-spw-* fields`,
- `page-metadata.js normalizes page shell, landmarks, and missing route metadata`,
+ `kernel/page-metadata.js normalizes page shell, landmarks, and missing route metadata`,
  `site.js collects regions and assigns region state, harmony, tempo, and density`,
- `component-semantics.js snapshots richer component semantics onto datasets`,
- `semantic-chrome.js projects those semantics into helper controls and meta tags`,
- `contextual-ui.js adds module-facing dimensions, salience, route-discovery UI, and device context`,
- `site-settings.js and wonder-memory / accent systems bias the resulting field with browser-local state`
+ `semantic/component-semantics.js snapshots richer component semantics onto datasets`,
+ `interface/semantic-chrome.js projects those semantics into helper controls and meta tags`,
+ `interface/contextual-ui.js adds module-facing dimensions, salience, route-discovery UI, and device context`,
+ `kernel/site-settings.js and interface/wonder-memory / accent systems bias the resulting field with browser-local state`
 >[reg=stream]
 
 seam_catalog: .{
@@ -82,7 +82,7 @@ implicit_contracts: .{
 }[reg=facet]
 
 where_the_seams_are_good: #[
- `component-semantics.js -> semantic-chrome.js is a relatively honest seam because the latter explicitly imports the former's snapshot function.`,
+ `semantic/component-semantics.js -> interface/semantic-chrome.js is a relatively honest seam because the latter explicitly imports the former's snapshot function.`,
  `site.js module records and normalized mount handles give the runtime a strong cleanup shape when modules actually return cleanup handles.`,
  `page-metadata.js keeping ARIA normalization close to page semantics is a sound seam between public HTML and runtime enhancement.`,
  `scripts/ts/runtime-contracts.mts now makes module IDs, dynamic import targets, generated typed output sources, and root-level JS entrypoint boundaries visible in npm run check.`

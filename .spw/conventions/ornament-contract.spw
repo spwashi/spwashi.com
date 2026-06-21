@@ -13,9 +13,9 @@
 @site_semantics: ~"./site-semantics.spw"
 @style_development: ~"./style-development.spw"
 @wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
-@wonder_memory_runtime: ~"../../public/js/wonder-memory.js"
-@accent_palette_runtime: ~"../../public/js/accent-palette.js"
-@settings_runtime: ~"../../public/js/site-settings.js"
+@wonder_memory_runtime: ~"../../public/js/interface/wonder-memory.js"
+@accent_palette_runtime: ~"../../public/js/interface/accent-palette.js"
+@settings_runtime: ~"../../public/js/kernel/site-settings.js"
 @runtime_audit_seams: ~"../reviews/runtime-audit/seams.spw"
 @runtime_audit_settings: ~"../reviews/runtime-audit/settings-state.spw"
 

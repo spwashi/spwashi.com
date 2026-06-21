@@ -1,0 +1,84 @@
+# Spw Maintenance 2026-06
+#
+# Repository-local audit for .spw freshness, references, and grammar alignment.
+
+#>spw_maintenance_2026_06
+#:review #!spw #!integrity #!grammar
+#:layer #!pragmatics
+
+@site: ~"../site.spw"
+@index: ~"../index.spw"
+@reviews: ~"./index.spw"
+@semantic_capacity: ~"../conventions/semantic-capacity.spw"
+@page_model: ~"../surfaces/page-model.spw"
+@page_anatomy_vocabulary: ~"../conventions/page-anatomy-vocabulary.spw"
+@codebase_perusal: ~"../conventions/codebase-perusal.spw"
+@runtime_audit: ~"./runtime-audit/index.spw"
+@css_architecture_alignment: ~"./css-architecture-alignment.spw"
+@slices: ~"../slices/index.spw"
+
+operation = "audit align"
+fixity = "stable"
+date = "2026-06-21"
+
+scope: .{
+ included = #[`.spw`, `.spw/reviews`, `.spw/conventions`, `.spw/surfaces`, `.spw/slices`, selected plan references from canonical reviews][reg=set]
+ excluded = #[`.spw/_workbench mounted canon`, `plan-local wip notebooks with historical prose refs`, `public image sidecar copy unless referenced by canonical indexes`][reg=set]
+ reason = `The site-local .spw layer should stay fresh and navigable without pretending every old WIP note is a stable contract.`
+}[reg=facet]
+
+audit_findings: .{
+ stale_runtime_refs = .{
+  finding = `Several reviews and conventions still cited the pre-refactor root public/js modules.`
+  aligned_to = #[`public/js/kernel`, `public/js/semantic`, `public/js/interface`, `public/js/runtime`, `public/js/modules`][reg=set]
+  validation = `Reference scan resolves current tilde-quoted links after path refresh.`
+ }[reg=facet]
+ relative_depth_drift = .{
+  finding = `Some review files used one fewer or one extra ../ segment after being moved under .spw/reviews.`
+  aligned_to = `Paths now resolve from the file that owns the reference, not from a remembered project root.`
+ }[reg=facet]
+ false_file_refs = .{
+  finding = `A few workflow labels were written as tilde-quoted references even though they named skills or commands rather than files.`
+  aligned_to = `Use plain strings for commands and skill handles; reserve tilde-quoted references for resolvable files, directories, or intentional route references.`
+ }[reg=facet]
+ missing_slice_index = .{
+  finding = `conventions/index.spw expected .spw/slices/index.spw, but only one slice leaf existed.`
+  aligned_to = @slices
+ }[reg=facet]
+chrome_grammar = .{
+  finding = `The floating chrome work now has stable vocabulary for field ownership, slots, posture, collision state, and distinct handles.`
+  aligned_to = #[@page_model, @page_anatomy_vocabulary][reg=set]
+ }[reg=facet]
+ perusal_density = .{
+  finding = `Manual codebase perusal needs thicker topical foliage: trails, posture names, opinion prompts, search stems, and update rituals that do not depend on coding-agent memory.`
+  aligned_to = @codebase_perusal
+ }[reg=facet]
+}[reg=facet]
+
+grammar_alignment_rules: #[
+ `Use named top-level dispatch references for stable files.`,
+ `Use = for scalar fields inside modern facet blocks unless the surrounding file already uses colon-object style.`,
+ `Use [reg=facet], [reg=set], and [reg=stream] deliberately; do not add register tags only for decoration.`,
+ `Use operation and fixity when a .spw change introduces or promotes meaning.`,
+ `Use plain strings for command labels, skill names, and non-file handles.`,
+ `Path references should resolve from the file that contains them. Root-like public route URLs may stay route strings when they are public navigation, not repo files.`
+][reg=set]
+
+deferred_work: #[
+ `Plan-local wip.spw files contain many historical root-relative prose references. They should be cleaned when each plan is revived, not bulk-normalized without context.`,
+ `The image sidecar layer should get a separate asset-sidecar grammar pass if those files become editor-facing beyond asset provenance.`,
+ `A parser-aware .spw reference checker would be better than regex scanning because syntax examples can contain intentional reference-shaped strings.`
+][reg=set]
+
+dispatch: .{
+ site = @site
+ index = @index
+ reviews = @reviews
+ semantic_capacity = @semantic_capacity
+ page_model = @page_model
+ page_anatomy_vocabulary = @page_anatomy_vocabulary
+ codebase_perusal = @codebase_perusal
+ runtime_audit = @runtime_audit
+ css_architecture_alignment = @css_architecture_alignment
+ slices = @slices
+}[reg=facet]

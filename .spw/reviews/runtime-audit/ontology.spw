@@ -6,10 +6,10 @@
 #:layer #!pragmatics
 
 @runtime: ~"../../../public/js/site.js"
-@page_metadata: ~"../../../public/js/page-metadata.js"
-@component_semantics: ~"../../../public/js/component-semantics.js"
-@contextual_ui: ~"../../../public/js/contextual-ui.js"
-@semantic_chrome: ~"../../../public/js/semantic-chrome.js"
+@page_metadata: ~"../../../public/js/kernel/page-metadata.js"
+@component_semantics: ~"../../../public/js/semantic/component-semantics.js"
+@contextual_ui: ~"../../../public/js/interface/contextual-ui.js"
+@semantic_chrome: ~"../../../public/js/interface/semantic-chrome.js"
 @site_semantics: ~"../../conventions/site-semantics.spw"
 @operator_semantics: ~"../../conventions/operator-semantics.spw"
 

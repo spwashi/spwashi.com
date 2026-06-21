@@ -11,8 +11,8 @@
 @page_model: ~"../surfaces/page-model.spw"
 @ornament_contract: ~"./ornament-contract.spw"
 @site_semantics: ~"./site-semantics.spw"
-@wonder_memory_runtime: ~"../../public/js/wonder-memory.js"
-@accent_palette_runtime: ~"../../public/js/accent-palette.js"
+@wonder_memory_runtime: ~"../../public/js/interface/wonder-memory.js"
+@accent_palette_runtime: ~"../../public/js/interface/accent-palette.js"
 @wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
 @cognitive_surface: ~"../philosophy/cognitive-surface.spw"
 
@@ -90,7 +90,7 @@ local_hormonal_model: .{
       `spw:wonder-state-changed`
       `spw:field-bias-updated`
     ][reg=set]
-    ownership = "runtime (wonder-memory.js, attention-architecture.js) + semantic (data-spw-* attributes) + effects (wonder.css, ornament.css)"
+    ownership = "runtime/interface (wonder-memory.js, attention-architecture.js) + semantic (data-spw-* attributes) + effects (wonder.css, ornament.css)"
   }[reg=facet]
 
   claims: .{
@@ -99,7 +99,7 @@ local_hormonal_model: .{
       layer = "pragmatic"
       hypothesis = "The attention field must be observable through stable data-spw-* attributes and resonance effects so that both humans and agents can inspect current bias without reverse-engineering CSS."
       spec_ref = ".spw/conventions/attention-field.spw#operational_semantics + site-semantics.spw#ui_resonance_contract"
-      impl_ref = "wonder-memory.js + data-spw-wonder-state / data-spw-attention on frames and operator chips"
+      impl_ref = "public/js/interface/wonder-memory.js + data-spw-wonder-state / data-spw-attention on frames and operator chips"
       probe_ref = "Hover or focus an operator; data-spw-resonance-probe and visual glow must appear; state inspector must reflect the field bias."
       falsification = "A strong resonance or attention effect exists whose current state cannot be read from the DOM or design catalog."
       status = "active"
@@ -109,7 +109,7 @@ local_hormonal_model: .{
       layer = "semantic"
       hypothesis = "Signal decay must be consistent with the documented temporal model (τ ≈ 40s) so that wonder memory behaves predictably across sessions."
       spec_ref = ".spw/conventions/attention-field.spw#local_hormonal_model"
-      impl_ref = "wonder-memory.js TTL and decay logic"
+      impl_ref = "public/js/interface/wonder-memory.js TTL and decay logic"
       probe_ref = "Perform an action, wait measured time, observe attention/resonance state decay in inspector and visuals."
       falsification = "Attention effects persist far longer or decay far faster than the model without an explicit exception in the projection."
       status = "active"

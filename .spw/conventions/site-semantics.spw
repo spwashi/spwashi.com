@@ -232,6 +232,9 @@
   definition: "Floating chrome is a non-content affordance that pins to the viewport or shell edge and remains available across nearby regions without becoming part of a card's reading order."
   html_contract: "Use annotateFloatingChromeElement(...) for runtime-created skip links, section handles, toast stacks, popovers, non-modal notices, and similar dismissable shells; use data-spw-floating-chrome='true' with data-spw-layout-owner='floating-chrome' for authored equivalents."
   z_index_contract: "Use --z-* aliases and data-spw-chrome-tier instead of local hard-coded z-index values for runtime-created chrome."
+  field_contract: "When multiple floating chrome affordances share a viewport band, register them with a floating chrome field instead of letting each element center, lift, or dodge independently."
+  alignment_contract: "Vertical, horizontal, and z-index placement should be assigned from role, slot preference, priority, posture, and collision state. Local CSS may describe an island's internal anatomy, but final viewport choreography belongs to the field."
+  handle_contract: "Movable chrome needs distinct interactive handles for grip, collapse, pin, and primary action. A button that opens content should not also be the only move handle."
   anatomy_rule: "Floating chrome may borrow card material, slot labels, or action chips, but it is not itself card anatomy."
   modal_relation: "Modal dialogs temporarily own focus and reading order. Floating chrome stays ambient or dismissable without becoming the whole page context."
   toast_relation: "A toast is one presentation of floating chrome: brief, edge-pinned, and non-blocking. A persistent notice or locomotion handle can share the same ownership contract while differing in copy and lifecycle."
@@ -246,6 +249,7 @@
   overlay = "Host-local alternate plane inside the same semantic boundary."
   popout = "Host-attached surface that intentionally escapes the host's interior edge."
   floating_chrome = "Viewport- or shell-edge affordance that is not card anatomy."
+  floating_chrome_field = "Renderer-owned choreography layer that resolves collisions between viewport affordances."
   modal = "Dialog or context-owning surface that temporarily becomes the dominant reading/focus owner."
   composition_consequence = "If the role is chosen correctly, selectors can stay broad without becoming leaky."
 }

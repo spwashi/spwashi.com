@@ -82,8 +82,8 @@
       "interactive-refinement — user provides context; skill suggests names",
       "lexicon-building — track patterns for reuse across images"
     ]
-    tool: ~"image-naming-magic"
-    skill: ~"/image-naming-magic [path]"
+    tool: "image-naming-magic"
+    skill: "image-naming-magic [path]"
   }
 
   optimization: {
@@ -97,7 +97,7 @@
     formats: ["avif", "webp", "png"]
     quality: { thumb: 40, display: 60, hero: 75 }
     tool: "ImageMagick CLI (convert, magick)"
-    skill: ~"/image-optimize [path]"
+    skill: "image-optimize [path]"
   }
 }
 
@@ -125,7 +125,7 @@
 ^"cross_references"{
   @style_development: ~"./conventions/style-development.spw"
   @asset_management: ~"./conventions/asset-management.spw"
-  @rpg_asset_capture: ~"../.agents/plans/rpg-asset-capture-frames/artifact.spw"
+  @rpg_asset_capture: ~"../.agents/plans/rpg-asset-capture-frames/rpg-asset-capture-frames.spw"
   @naming_skill: ~"../.agents/skills/image-naming-magic/SKILL.md"
   @optimize_skill: ~"../.agents/skills/image-optimize/SKILL.md"
 }

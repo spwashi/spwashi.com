@@ -127,7 +127,7 @@
 }
 
 ^"dispatch"{
-  @style_manifest: ~"../../../public/css/style.css"
+  @style_manifest: ~"../../public/css/style.css"
   @design_whimsy: ~"./design-whimsy.spw"
   @wonder_vocabulary: ~"./wonder-vocabulary.spw"
   @site_semantics: ~"./site-semantics.spw"

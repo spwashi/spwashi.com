@@ -15,10 +15,11 @@
 @fundamentals_practice_rhythms: ~"./fundamentals-practice-rhythms.spw"
 @workbench_metaphysics_application: ~"./workbench-metaphysics-application.spw"
 @spw_surface_normalization: ~"./spw-surface-normalization.spw"
+@spw_maintenance_2026_06: ~"./spw-maintenance-2026-06.spw"
 
 intent: .{
  goal = `Keep review surfaces grouped and easy to traverse in an editor.`
- scope = `Runtime, ontology, seams, lifecycle, state-flow, CSS architecture, modular experience slice / team collaboration, spw-workbench alignment, workbench metaphysics application, HTML/CSS structure + timing, classname/grammar/recognizability, fundamentals practice rhythms, and .spw surface normalization/navigability audits that belong to the public site rather than the mounted workbench.`
+ scope = `Runtime, ontology, seams, lifecycle, state-flow, CSS architecture, modular experience slice / team collaboration, spw-workbench alignment, workbench metaphysics application, HTML/CSS structure + timing, classname/grammar/recognizability, fundamentals practice rhythms, .spw surface normalization/navigability, and .spw maintenance audits that belong to the public site rather than the mounted workbench.`
 }[reg=facet]
 
 dispatch: .{
@@ -31,6 +32,7 @@ dispatch: .{
  classname_attribute_grammar_recognizability = @classname_attribute_grammar_recognizability
  fundamentals_practice_rhythms = @fundamentals_practice_rhythms
  workbench_metaphysics_application = @workbench_metaphysics_application
+ spw_maintenance_2026_06 = @spw_maintenance_2026_06
 }[reg=facet]
 
 invariants: #[

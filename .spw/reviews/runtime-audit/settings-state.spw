@@ -5,15 +5,15 @@
 #:review #!surface
 #:layer #!pragmatics
 
-@settings: ~"../../../public/js/site-settings.js"
-@brace_pivots: ~"../../../public/js/brace-pivots.js"
-@bus: ~"../../../public/js/bus.js"
-@wonder_memory: ~"../../../public/js/wonder-memory.js"
-@accent_palette: ~"../../../public/js/accent-palette.js"
+@settings: ~"../../../public/js/kernel/site-settings.js"
+@brace_pivots: ~"../../../public/js/runtime/brace-pivots.js"
+@bus: ~"../../../public/js/kernel/bus.js"
+@wonder_memory: ~"../../../public/js/interface/wonder-memory.js"
+@accent_palette: ~"../../../public/js/interface/accent-palette.js"
 @runtime: ~"../../../public/js/site.js"
 
 thesis: .{
- claim = `site-settings.js is the closest thing this application has to a canonical browser-local state manager.`
+ claim = `kernel/site-settings.js is the closest thing this application has to a canonical browser-local state manager.`
  benefit = `It already normalizes storage, derives architectural modifiers, applies datasets and CSS variables, and binds page-local widgets through one model.`
  risk = `The contract weakens whenever a module writes localStorage directly or emits settings:changed with a non-canonical payload shape.`
 }[reg=facet]
@@ -26,11 +26,11 @@ canonical_state_path: ?<
  `manager.save() / manager.reset()`,
  `bus.emit(settings:changed, applied_settings)`,
  `bindSettingsScope() / bindStandaloneSettingTriggers() / bindSettingsReadouts() react to the full normalized object`,
- `downstream systems such as wonder-memory and bus diagnostics read the resulting field`
+ `downstream systems such as interface/wonder-memory and kernel/bus diagnostics read the resulting field`
 >[reg=stream]
 
 canonical_invariants: #[
- `The storage key should be owned by site-settings.js, even if other modules can request mutations.`,
+ `The storage key should be owned by kernel/site-settings.js, even if other modules can request mutations.`,
  `settings:changed should carry a full normalized settings object, not an ad hoc partial shape.`,
  `Any module that changes settings should go through saveSiteSettings() or an equivalent manager entrypoint.`,
  `Bindings and PWA status listeners should return cleanup if the runtime expects modules to be restart-safe.`

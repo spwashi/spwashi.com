@@ -11,7 +11,7 @@
 @classname_grammar_recognizability: ~"./classname-patterns-attribute-grammar-recognizability.spw"
 @attention_field: ~"../conventions/attention-field.spw"
 @site: ~"../site.spw"
-@runtime_bootstrap_plan: ~"../.agents/plans/runtime-bootstrap-performance/PLAN.md"
+@runtime_bootstrap_plan: ~"../../.agents/plans/runtime-bootstrap-performance/PLAN.md"
 
 thesis: .{
   claim = `The site's HTML is consistently hand-authored with rich data-spw-* semantic markup (surface, features, kind, role, slot, form, layout, harmony, etc.) that maps well to the documented CSS layer contract and runtime ontology. However, the timing of when many of these attributes are written by JS (immediate vs observer-driven vs idle) creates measurable gaps between authored HTML state and final rendered state, with consequences for cascade, layout, paint, and CLS.`

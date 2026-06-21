@@ -88,6 +88,7 @@ composition_hierarchy: .{
    overlay = `Host-local plane. Uses data-spw-overlay or region-flow overlay when a child shares the host's semantic boundary but occupies a different layer.`
    popout = `Host-edge escape. Uses data-spw-region-flow='popout' when content remains semantically attached to the host but intentionally crosses its interior boundary.`
    floating_chrome = `Viewport- or shell-edge affordance. Runtime elements use annotateFloatingChromeElement(...); authored elements use data-spw-floating-chrome='true' and data-spw-layout-owner='floating-chrome'. Examples: skip links, section handles, cauldron chips, console, toast stacks, non-modal notices. The tier ladder is floating < docked < header < priority < popover < toast < drawer < modal.`
+   floating_chrome_field = `A renderer-owned viewport choreography region for multiple floating chrome participants. Individual tools register role, slot preference, priority, posture, and affordance anatomy; the field assigns final lanes, collision state, compactness, and z-index tier. This prevents separate islands from competing for the same bottom band or crossing the reading column by accident.`
    modal = `Context-owning dialog. Temporarily becomes the dominant reading/focus surface rather than ambient chrome.`
   }[reg=facet]
   precedence = #[
@@ -95,6 +96,8 @@ composition_hierarchy: .{
    `If the element belongs to a host but sits on another plane, it is an overlay.`,
    `If it escapes the host edge but still belongs to that host, it is a popout.`,
    `If it belongs to the viewport or shell rather than the card body, it is floating chrome.`,
+   `If two or more floating chrome elements share a viewport band, the floating chrome field owns final placement.`,
+   `If a floating chrome element can be moved, the movement affordance must be a distinct handle and not only the element's primary action.`,
    `If it temporarily owns focus and page context, it is modal.`
   ][reg=set]
  }[reg=facet]
@@ -109,6 +112,60 @@ composition_ladder: #[
  `Out-of-flow role declares geometry exceptions before selectors start guessing.`,
  `Runtime state should tune the declared structure, not redefine it.`
 ][reg=set]
+
+floating_chrome_field_contract: .{
+ operation = "contract"
+ problem = `The current floating chrome appears as unrelated islands: status, section/page navigation, state satchel, and popovers can occupy the same visual band while exposing no clear handle anatomy. The problem is not only z-index. It is ownership: each island believes it owns its own geometry.`
+ renderer_role = `A shared field renderer should accept chrome registrations and resolve slot, lane, compactness, collision, focus, and z-index state against the current page posture.`
+ participants = #[`state-satchel`, `section-handle-shell`, `surface-status`, `parallel-navigator`, `page-anatomy`, `region-menu-popover`, `console`, `toast-stack`][reg=set]
+ postures = .{
+  reading = `Minimize chrome, keep the reading column clear, collapse secondary controls into labeled islands, and prefer bottom corners or top-right status depending on scroll direction.`
+  inspect = `Expose labels, semantic state, route/section address, and collision hints. Handles may be visible, but primary copy must remain readable.`
+  arrange = `Make movement handles, snap lanes, pin state, and reset controls explicit. Arrange mode may be editor-facing first, but the anatomy should remain compatible with public inspection.`
+ }[reg=facet]
+ slot_model = .{
+  lanes = #[`bottom-left`, `bottom-center`, `bottom-right`, `top-right`, `side-rail`, `inline-popover`][reg=set]
+  constraints = #[
+   `The primary reading column is a protected lane unless a modal owns context.`,
+   `Bottom fixed navigation and state satchel cannot overlap; one must compact, lift, or hand off to the field.`,
+   `Horizontal centering belongs to the renderer, not to each island's local width calculation.`,
+   `Vertical placement must account for safe area, scroll momentum, keyboard/viewer chrome, and current section handle height.`,
+   `Z-index uses semantic tiers before numeric depth: floating, docked, header, priority, popover, toast, drawer, modal.`
+  ][reg=set]
+ }[reg=facet]
+ handle_anatomy = .{
+  grip = `Moves or requests a new lane. It must look and behave as a handle, not as content or a route action.`
+  collapse = `Reduces the island to its smallest meaningful label while preserving status and restoration path.`
+  pin = `Requests persistence in the current lane or page posture. Pin state should be visible in inspect/arrange postures.`
+  primary_action = `Performs the island's main work: open state satchel, jump route, show section, dismiss notice, or inspect context. It is distinct from grip, collapse, and pin.`
+ }[reg=facet]
+ data_contract = #[
+  `data-spw-floating-chrome-field`,
+  `data-spw-chrome-island`,
+  `data-spw-chrome-role`,
+  `data-spw-chrome-slot`,
+  `data-spw-chrome-priority`,
+  `data-spw-chrome-tier`,
+  `data-spw-chrome-state`,
+  `data-spw-chrome-posture`,
+  `data-spw-chrome-handle`,
+  `data-spw-chrome-collision`,
+  `data-spw-chrome-compact`
+ ][reg=set]
+ invariants = #[
+  `Chrome is communicative state first and decoration second.`,
+  `Movement handles are explicit interactive elements with accessible labels.`,
+  `The renderer can move an island without changing its semantic role.`,
+  `Dismissal should have timing, focus, and restoration semantics; it should not only remove DOM nodes.`,
+  `The field can serialize its state into page summaries so screenshots and recordings can explain why the chrome is where it is.`
+ ][reg=set]
+ open_seams = #[
+  `Should the first implementation create a single DOM overlay root or coordinate existing nodes through a shared registry?`,
+  `Should arrange posture be public, editor-only, or unlocked through an inspection setting?`,
+  `Which participants should be hard-reserved lanes versus opportunistic slots?`,
+  `How much collision state belongs in CSS custom properties versus data-spw-* attributes?`
+ ][reg=set]
+}[reg=facet]
 
 data_flow: .{
  note = `How semantic information moves through the composition hierarchy — from authored HTML to rendered field state.`
@@ -215,6 +272,8 @@ tunable_parameters: .{
  page_layout = `body[data-spw-layout] chooses broad horizontal reading posture. Reading is narrow, newspaper is denser reference-document measure, wide is generous, atlas is survey-scale, and split pairs a reading column with a max-content rail.`
  semantic_handle_performance = `A semantic handle is also a performance hook. When a feature, module, or handle hydrates, the page can expose readiness with paint-safe variables instead of adding new layout chrome; this makes components feel like small local systems coming online.`
  transition_hierarchy = `Page and section transitions should treat active content, adjacent content, and floating navigation as different physical surfaces. Prior direction and arrival disposition bias resonance, tiny transform inertia, and timing without changing the reading order.`
+ chrome_posture = `data-spw-chrome-posture='reading|inspect|arrange|suppressed' sets how visible, movable, and verbose floating chrome should be. Reading posture privileges calm placement; inspect posture privileges semantic labels; arrange posture privileges handles and lane feedback.`
+ chrome_field_lanes = `data-spw-chrome-slot and data-spw-chrome-collision let the field renderer explain lane assignment. CSS may style the result, but JS should resolve collisions from the shared field rather than from each island independently.`
  promptability = `data-spw-promptability='visible|latent|ambient'. Visible promptability should earn concrete copy or direct wiring, not merely add chrome.`
 }[reg=facet]
 
@@ -223,5 +282,7 @@ open_questions: #[
  .{ ask = `What is the right granularity for a gradient anchor — should it be a region, a feature, or a component?` },
  .{ ask = `How should the attentional topography be made inspectable — as a visible overlay, as data attributes, or as a separate inspect mode?` },
  .{ ask = `If a page has multiple attractors, how should the visitor be signaled that escape paths exist?` },
- .{ ask = `What mathematical structure best describes the superposition of a resonance gradient and a liminality gradient?` }
+ .{ ask = `What mathematical structure best describes the superposition of a resonance gradient and a liminality gradient?` },
+ .{ ask = `Should the floating chrome field render a single overlay root, or coordinate existing authored/runtime nodes through registrations?` },
+ .{ ask = `Which chrome posture transitions should obey page arrival inertia versus immediate user command?` }
 ][reg=set]

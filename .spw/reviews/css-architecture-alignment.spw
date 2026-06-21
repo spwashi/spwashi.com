@@ -4,19 +4,19 @@
 #:review #!css #!semantics #!architecture
 #:layer #!pragmatics
 
-@style_css: ~"../../../public/css/style.css"
-@css_instruction: ~"../../conventions/css-instruction.spw"
-@tokens_core: ~"../../../public/css/tokens/core.css"
-@grammar_syntax: ~"../../../public/css/grammar/syntax.css"
-@handles_operators: ~"../../../public/css/handles/operators.css"
-@effects_wonder: ~"../../../public/css/effects/wonder.css"
-@ornament: ~"../../../public/css/ornament/ornament.css"
+@style_css: ~"../../public/css/style.css"
+@css_instruction: ~"../conventions/css-instruction.spw"
+@tokens_core: ~"../../public/css/tokens/core.css"
+@grammar_syntax: ~"../../public/css/grammar/syntax.css"
+@handles_operators: ~"../../public/css/handles/operators.css"
+@effects_wonder: ~"../../public/css/effects/wonder.css"
+@ornament: ~"../../public/css/ornament/ornament.css"
 @spw_css_architecture_plan: ~"../../.agents/plans/spw-css-architecture/PLAN.md"
 @runtime_bootstrap_plan: ~"../../.agents/plans/runtime-bootstrap-performance/PLAN.md"
 @selector_timing_review: ~"./runtime-audit/selector-timing-chunking-musical-ontology.spw"
 @runtime_audit_index: ~"./runtime-audit/index.spw"
-@site_semantics: ~"../../conventions/site-semantics.spw"
-@attention_field: ~"../../conventions/attention-field.spw"
+@site_semantics: ~"../conventions/site-semantics.spw"
+@attention_field: ~"../conventions/attention-field.spw"
 
 thesis: .{
   claim = `The CSS architecture has strong layering and good data-attribute hygiene, but the semantic model expressed in CSS is not yet fully aligned with the runtime's Spw ontology (operators as forces, frames/braces as structural grammar, regions as harmony/tempo/density, attention-field as resonance, cauldron as emergence).`

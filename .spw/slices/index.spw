@@ -1,0 +1,38 @@
+# Slices Index
+#
+# Local registry for durable cross-layer experience slices.
+
+#>spw_slices_index
+#:index #!slices #!experience
+#:layer #!pragmatics
+
+@math_practice_labs: ~"./math-practice-labs/index.spw"
+@modular_experience_slices_plan: ~"../../.agents/plans/modular-experience-slices/PLAN.md"
+@page_model: ~"../surfaces/page-model.spw"
+@semantic_capacity: ~"../conventions/semantic-capacity.spw"
+
+operation = "align"
+fixity = "stable"
+
+intent: .{
+ goal = `Give site-local experience slices a real dispatch surface instead of letting individual slice paths be scattered through site.spw and plan notes.`
+ scope = `Slices own cross-layer implementation context: route HTML, CSS, JS, .spw contracts, validation, and practice beds.`
+}[reg=facet]
+
+dispatch: .{
+ math_practice_labs = @math_practice_labs
+ modular_experience_slices_plan = @modular_experience_slices_plan
+ page_model = @page_model
+ semantic_capacity = @semantic_capacity
+}[reg=facet]
+
+invariants: #[
+ `A slice should have a stable name, owner surfaces, validation path, and extension seam.`,
+ `Slice notes should reduce future coordination cost rather than duplicate route prose.`,
+ `A slice can cite workbench canon, but its public-site ownership stays local unless explicitly promoted.`
+][reg=set]
+
+open_questions: #[
+ .{ ask = `Which current feature clusters are ready to become durable slices rather than route-local notes?` },
+ .{ ask = `Should floating chrome field work become its own slice after the first renderer implementation lands?` }
+][reg=set]

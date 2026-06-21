@@ -5,8 +5,8 @@
 #:layer #!pragmatics
 
 @css_alignment: ~"./css-architecture-alignment.spw"
-@spw_css_architecture_plan: ~"../.agents/plans/spw-css-architecture/PLAN.md"
-@runtime_bootstrap_plan: ~"../.agents/plans/runtime-bootstrap-performance/PLAN.md"
+@spw_css_architecture_plan: ~"../../.agents/plans/spw-css-architecture/PLAN.md"
+@runtime_bootstrap_plan: ~"../../.agents/plans/runtime-bootstrap-performance/PLAN.md"
 @selector_timing: ~"./runtime-audit/selector-timing-chunking-musical-ontology.spw"
 @css_instruction: ~"../conventions/css-instruction.spw"
 @attention_field: ~"../conventions/attention-field.spw"
@@ -15,7 +15,7 @@
 @site: ~"../site.spw"
 @workbench_theory: ~"../_workbench/docs/theory/index.spw"
 @planning_ecology: ~"../conventions/planning-ecology.spw"
-@agent_optimization: ~"../.agents/plans/agent-optimization/PLAN.md"
+@agent_optimization: ~"../../.agents/plans/agent-optimization/PLAN.md"
 @workbench_alignment: ~"./workbench-alignment-audit.spw"
 @classname_grammar_recognizability: ~"./classname-patterns-attribute-grammar-recognizability.spw"
 
@@ -38,7 +38,7 @@ slices: .{
 
   attention_resonance_field = .{
     description = `The diffusive attention model, wonder states, charge, collection, resonance probes, section handles, and field influence. The "hormonal" or acoustic space of the site.`
-    current_locations = `public/js/runtime/attention-architecture.js, public/js/wonder-memory.js, public/css/effects/wonder.css, public/css/handles/operators.css (much of the :has() field logic), .spw/conventions/attention-field.spw`
+    current_locations = `public/js/runtime/attention-architecture.js, public/js/interface/wonder-memory.js, public/css/effects/wonder.css, public/css/handles/operators.css (much of the :has() field logic), .spw/conventions/attention-field.spw`
     natural_team = `Attention/perception researchers, field modelers, accessibility + wonder specialists`
   }
 

@@ -55,16 +55,20 @@ fixity = "stable"
 
 ^"runtime_contract"{
   module = "public/js/runtime/page-anatomy.js"
-  root_states = #[`data-spw-anatomy-ready`, `data-spw-anatomy-focus`, `data-spw-anatomy-vocabulary`, `data-spw-anatomy-pinned`, `data-spw-page-serialization`, `data-spw-parallel-active`, `data-spw-popup-posture`, `data-spw-theme-biome`, `data-spw-palette-species`, `data-spw-palette-trace-recent`][reg=set]
-  events = #[`spw:page-anatomy-focus`, `spw:page-anatomy-parallel`][reg=set]
+  root_states = #[`data-spw-anatomy-ready`, `data-spw-anatomy-focus`, `data-spw-anatomy-vocabulary`, `data-spw-anatomy-pinned`, `data-spw-page-serialization`, `data-spw-parallel-active`, `data-spw-popup-posture`, `data-spw-theme-biome`, `data-spw-palette-species`, `data-spw-palette-trace-recent`, `data-spw-floating-chrome-field`, `data-spw-chrome-posture`][reg=set]
+  events = #[`spw:page-anatomy-focus`, `spw:page-anatomy-parallel`, `spw:chrome-field-layout`, `spw:chrome-field-posture`][reg=set]
   api = "window.__SPW_PAGE_ANATOMY__.snapshot(), serialize(), parallels(), goParallel(direction, group)"
   progressive_enhancement = "Without JS, anchors remain readable labels and links. With JS, focus/pointer/click writes inspectable state, page serialization, parallel navigation, popup posture, and palette trace variables."
 }
 
 ^"floating_islands"{
   definition = "Floating chrome is a viewport island, not page flow. It needs a role, tier, dismiss behavior, and collision-aware placement."
-  roles = #[`state-satchel`, `region-menu-popover`, `parallel-navigator`, `section-handle-shell`, `console`, `toast-stack`][reg=set]
-  rule = "Use `data-spw-chrome-island` with `data-spw-floating-chrome='true'` when CSS/JS should reason about island anatomy."
+  roles = #[`floating-chrome-field`, `state-satchel`, `region-menu-popover`, `parallel-navigator`, `section-handle-shell`, `surface-status`, `page-anatomy`, `console`, `toast-stack`][reg=set]
+  field_rule = "The field is the logical region for viewport chrome. It can be implemented as one overlay root or as a registry coordinating existing islands, but it owns final lane assignment."
+  island_rule = "Use `data-spw-chrome-island` with `data-spw-floating-chrome='true'` when CSS/JS should reason about island anatomy."
+  handle_rule = "Use `data-spw-chrome-handle='grip|collapse|pin|primary|dismiss'` on distinct controls so movement, persistence, dismissal, and primary action are not visually conflated."
+  posture_rule = "Use `data-spw-chrome-posture='reading|inspect|arrange|suppressed'` to tune timing, verbosity, visible handles, and collision feedback."
+  collision_rule = "Use `data-spw-chrome-slot`, `data-spw-chrome-priority`, and `data-spw-chrome-collision` to explain why an island is centered, compacted, lifted, or moved to a corner."
 }
 
 ^"parallel_navigation"{
