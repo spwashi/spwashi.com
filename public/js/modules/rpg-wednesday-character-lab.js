@@ -44,6 +44,7 @@ const buildCharacterSeed = (character) => {
         character.literacies ? `literacies ${character.literacies}` : '',
         character.lineage ? `lineage ${character.lineage}` : '',
         character.pronouns ? `pronouns ${character.pronouns}` : '',
+        character.properties ? `properties ${character.properties}` : '',
         character.hook ? `hook ${character.hook}` : '',
         character.notes ? `notes ${character.notes}` : ''
     ].filter(Boolean);
@@ -105,6 +106,13 @@ export const initRpgCharacterLab = (section) => {
         value: '',
         placeholder: 'they/them, he/they, use title only'
     });
+    const { field: propertiesField, input: propertiesInput } = createField({
+        id: 'rpg-character-properties',
+        label: 'Properties / traits',
+        value: '',
+        rows: 4,
+        placeholder: 'temperament: patient and strange\nmicrobiome: compost-tender\nvisual anchor: brass moss lantern'
+    });
     const { field: imageUrlField, input: imageUrlInput } = createLineField({
         id: 'rpg-character-image-url',
         label: 'Art URL',
@@ -148,7 +156,7 @@ export const initRpgCharacterLab = (section) => {
         placeholder: 'Voice, bonds, ritual habits, prompt utility, week-to-week changes'
     });
 
-    [vocationField, literaciesField, lineageField, pronounsField, imageUrlField, notesField].forEach((field) => {
+    [vocationField, literaciesField, lineageField, pronounsField, propertiesField, imageUrlField, notesField].forEach((field) => {
         field.classList.add('rpg-character-lab__advanced');
     });
 
@@ -185,6 +193,7 @@ export const initRpgCharacterLab = (section) => {
     const summaryCharacters = createElement('strong', { text: '0' });
     const summaryPortraits = createElement('strong', { text: '0' });
     const summaryHooks = createElement('strong', { text: '0' });
+    const summaryProperties = createElement('strong', { text: '0' });
 
     const summary = createElement('div', { className: 'rpg-character-lab__summary' }, [
         createElement('div', { className: 'rpg-character-lab__summary-item' }, [
@@ -198,6 +207,10 @@ export const initRpgCharacterLab = (section) => {
         createElement('div', { className: 'rpg-character-lab__summary-item' }, [
             createElement('span', { text: 'hooks' }),
             summaryHooks
+        ]),
+        createElement('div', { className: 'rpg-character-lab__summary-item' }, [
+            createElement('span', { text: 'properties' }),
+            summaryProperties
         ])
     ]);
 
@@ -218,7 +231,7 @@ export const initRpgCharacterLab = (section) => {
     });
     const starter = createElement('p', {
         className: 'frame-note rpg-character-lab__starter',
-        text: 'Table narrator: what if the first pass stays narrow? Who is this person, what do they look like, and which kinds of development are they actually carrying right now?'
+        text: 'Table narrator: what if the first pass stays narrow? Add the properties someone just gave you, then let name, face, role, and pressure catch up.'
     });
     const composer = createElement('div', {
         className: 'rpg-character-lab__composer'
@@ -238,6 +251,7 @@ export const initRpgCharacterLab = (section) => {
             roleField,
             vocationField,
             uploadField,
+            propertiesField,
             hookField,
             literaciesField,
             lineageField,
@@ -298,6 +312,7 @@ export const initRpgCharacterLab = (section) => {
         hookInput.value = '';
         imageUrlInput.value = '';
         notesInput.value = '';
+        propertiesInput.value = '';
         uploadInput.value = '';
         uploadState.textContent = 'No portrait held yet';
         saveButton.textContent = '@ save character';
@@ -316,6 +331,7 @@ export const initRpgCharacterLab = (section) => {
         hookInput.value = character.hook || '';
         imageUrlInput.value = character.imageUrl || '';
         notesInput.value = character.notes || '';
+        propertiesInput.value = character.properties || '';
         uploadInput.value = '';
         uploadState.textContent = character.imageKey || character.imageUrl
             ? 'Portrait already attached'
@@ -331,9 +347,26 @@ export const initRpgCharacterLab = (section) => {
         summaryCharacters.textContent = String(deck.length);
         summaryPortraits.textContent = String(deck.filter((item) => item.imageKey || item.imageUrl).length);
         summaryHooks.textContent = String(deck.filter((item) => item.hook && item.hook.trim()).length);
+        summaryProperties.textContent = String(deck.reduce((total, item) => total + parseCharacterProperties(item.properties).length, 0));
         syncWorkbenchAttributes();
         notifyRpgStateChange('character-lab');
     };
+
+    const parseCharacterProperties = (value) => (
+        String(value || '')
+            .split(/\n+/)
+            .map((line) => line.trim())
+            .filter(Boolean)
+            .slice(0, 12)
+            .map((line) => {
+                const [rawLabel, ...rest] = line.split(':');
+                const label = rawLabel?.trim();
+                const detail = rest.join(':').trim();
+                return detail
+                    ? { label: previewText(label, 'property', 28), detail: previewText(detail, '', 72) }
+                    : { label: 'property', detail: previewText(line, '', 82) };
+            })
+    );
 
     const render = async () => {
         const currentToken = ++renderToken;
@@ -348,6 +381,7 @@ export const initRpgCharacterLab = (section) => {
         const cards = await Promise.all(deck.map(async (character) => {
             const imageDataUrl = character.imageKey ? await getImageDataUrl(character.imageKey).catch(() => null) : null;
             const previewUrl = imageDataUrl || character.imageUrl || '';
+            const properties = parseCharacterProperties(character.properties);
 
             const topMeta = [character.role, character.vocation, character.lineage, character.pronouns]
                 .filter(Boolean)
@@ -383,6 +417,17 @@ export const initRpgCharacterLab = (section) => {
                             className: 'rpg-character-card__literacies',
                             text: previewText(character.literacies, '', 180)
                         })
+                        : '',
+                    properties.length
+                        ? createElement('div', {
+                            className: 'rpg-character-card__properties',
+                            'aria-label': 'Character properties'
+                        }, properties.map((property) => (
+                            createElement('span', { className: 'rpg-character-property' }, [
+                                createElement('strong', { text: property.label }),
+                                createElement('span', { text: property.detail })
+                            ])
+                        )))
                         : '',
                     character.notes
                         ? createElement('p', {
@@ -462,6 +507,7 @@ export const initRpgCharacterLab = (section) => {
             literacies: literaciesInput.value.trim(),
             lineage: lineageInput.value.trim(),
             pronouns: pronounsInput.value.trim(),
+            properties: propertiesInput.value.trim(),
             hook: hookInput.value.trim(),
             notes: notesInput.value.trim(),
             imageUrl,

@@ -368,6 +368,40 @@
   display: block;
 }
 
+:where([data-spw-features~="rpg-gameplay"] .rpg-character-card__properties) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs, 0.4rem);
+}
+
+:where([data-spw-features~="rpg-gameplay"] .rpg-character-property) {
+  display: inline-grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: baseline;
+  max-inline-size: 100%;
+  gap: 0.32rem;
+  padding: 0.3rem 0.48rem;
+  border: 1px solid color-mix(in srgb, var(--active-op-color, #008080) 22%, var(--spw-shell-line));
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.16), transparent),
+    color-mix(in srgb, var(--surface-strong) 88%, var(--active-op-color, #008080) 8%);
+  color: var(--ink);
+  font-size: var(--text-size-xs, 0.78rem);
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+:where([data-spw-features~="rpg-gameplay"] .rpg-character-property strong) {
+  color: var(--teal-deep, #004d4d);
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.92em;
+}
+
+:where([data-spw-features~="rpg-gameplay"] .rpg-character-property strong::after) {
+  content: ":";
+}
+
 /* Asset Atlas Specific */
 :where([data-spw-features~="rpg-gameplay"] .rpg-asset-board-empty) {
   display: grid;
