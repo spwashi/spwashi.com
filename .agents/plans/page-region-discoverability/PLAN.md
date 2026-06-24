@@ -28,6 +28,7 @@ Stable interaction contract, incremental visual treatment. Reuse existing page-r
 - Add a shared interaction-color reward model: curiosity, relationship, and architecture each get a distinct accent channel that responds to charge-field state, operator hover/focus, route relations, visual cue cards, and component/frame semantics.
 - Add a live-day semantic topography pass for June 24, 2026 RPG Wednesday: homepage, Now, Play, RPG Wednesday, and Midjourney Bench now link the current update story through mindful development, creative play, image resources, and public artifacts.
 - Add `scripts/image-resource-manifest.mjs` plus `npm run images:manifest` to make tracked image resources easier to find, classify, reference, and swap without pointing public pages at raw or ignored image folders.
+- Refine mobile floating chrome alignment: section handles, parallel navigation, console, state satchel, and cauldron chip now share named bottom slots instead of independent offsets. Runtime chrome annotations include `data-spw-chrome-slot`, and floating sync now measures open chrome overlap for future occlusion and parallax reasoning.
 
 ## Out Of Scope
 
@@ -39,6 +40,8 @@ Stable interaction contract, incremental visual treatment. Reuse existing page-r
 
 - `node --check public/js/runtime/page-region-rail.js`
 - `node --check public/js/runtime/charge-field.js`
+- `node --check public/js/runtime/attention/section-handle.js`
+- `node --check public/js/kernel/dom-contracts.js`
 - `node --check scripts/image-resource-manifest.mjs`
 - `npm run images:manifest`
 - `git diff --check`

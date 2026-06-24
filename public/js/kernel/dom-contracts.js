@@ -164,6 +164,18 @@ export const SITE_TOPOGRAPHY = Object.freeze({
 export const FLOATING_CHROME_CONTRACT = Object.freeze({
   selector: '[data-spw-floating-chrome="true"][data-spw-layout-owner="floating-chrome"]',
   tiers: Object.freeze(['floating', 'docked', 'header', 'priority', 'popover', 'toast', 'drawer', 'modal']),
+  slots: Object.freeze([
+    'top-priority',
+    'bottom-console',
+    'bottom-left-travel',
+    'bottom-right-satchel',
+    'bottom-center',
+    'right-middle',
+    'popover',
+    'sheet',
+    'toast',
+    'modal',
+  ]),
   roles: Object.freeze([
     'skip-link',
     'section-handle',
@@ -201,6 +213,31 @@ const FLOATING_CHROME_DOCKED_ROLES = Object.freeze([
   'state-inspector',
   'state-satchel',
 ]);
+
+const FLOATING_CHROME_ROLE_SLOTS = Object.freeze({
+  'skip-link': 'top-priority',
+  console: 'bottom-console',
+  'section-handle': 'bottom-left-travel',
+  'section-handle-shell': 'bottom-left-travel',
+  'state-inspector': 'bottom-right-satchel',
+  'state-satchel': 'bottom-right-satchel',
+  'cauldron-chip': 'bottom-right-satchel',
+  'surface-map': 'right-middle',
+  'surface-map-panel': 'right-middle',
+  'parallel-navigator': 'bottom-left-travel',
+  'region-menu-popover': 'popover',
+  'topic-popover': 'popover',
+  'semantic-popover': 'popover',
+  'narrative-drawer': 'sheet',
+  'discovery-toast-stack': 'toast',
+  'application-credits': 'toast',
+  'application-credit': 'toast',
+  'pwa-status': 'toast',
+  'persona-tooltip': 'popover',
+  'persona-burst': 'toast',
+  'pronunciation-hint': 'popover',
+  'discovery-modal': 'modal',
+});
 
 export const FEATURE_CLUSTER_CONTRACT = Object.freeze({
   selector: '[data-spw-feature]',
@@ -269,17 +306,21 @@ export function createFloatingChromeDescriptor(options = {}) {
   const {
     role = '',
     tier = '',
+    slot = '',
     mutator = '',
     reason = '',
     stylingAxis = 'floating-chrome',
     overlay = '',
   } = options;
 
+  const resolvedSlot = slot || FLOATING_CHROME_ROLE_SLOTS[role] || '';
+
   const entries = {
     spwFloatingChrome: 'true',
     spwLayoutOwner: 'floating-chrome',
     spwChromeRole: role || null,
     spwChromeTier: tier || null,
+    spwChromeSlot: resolvedSlot || null,
     spwRuntimeMutator: mutator || null,
     spwRuntimeMutationReason: reason || null,
     spwRuntimeStylingAxis: stylingAxis || null,
@@ -290,6 +331,7 @@ export function createFloatingChromeDescriptor(options = {}) {
   return {
     role,
     tier,
+    slot: resolvedSlot,
     mutator,
     reason,
     stylingAxis,
@@ -344,6 +386,40 @@ function uniqueTokens(values = []) {
   return [...new Set(values.map((value) => normalizeTopographyToken(value)).filter(Boolean))];
 }
 
+function rectsOverlap(a, b, gutter = 4) {
+  if (!a || !b) return false;
+  return !(
+    a.right <= b.left + gutter
+    || a.left >= b.right - gutter
+    || a.bottom <= b.top + gutter
+    || a.top >= b.bottom - gutter
+  );
+}
+
+function measureFloatingChromeOcclusion(nodes = []) {
+  const boxes = nodes
+    .map((node) => ({
+      node,
+      role: node.dataset.spwChromeRole || 'chrome',
+      slot: node.dataset.spwChromeSlot || 'unassigned',
+      rect: node.getBoundingClientRect(),
+    }))
+    .filter(({ rect }) => rect.width > 0 && rect.height > 0);
+
+  const collisions = [];
+  boxes.forEach((box, index) => {
+    boxes.slice(index + 1).forEach((other) => {
+      if (!rectsOverlap(box.rect, other.rect)) return;
+      collisions.push(`${box.role}:${box.slot}->${other.role}:${other.slot}`);
+    });
+  });
+
+  return {
+    collisions,
+    state: collisions.length ? 'overlap' : 'clear',
+  };
+}
+
 function resolveFloatingChromeCompetition(openCount, dockedOpenCount) {
   if (openCount <= 1 && dockedOpenCount <= 1) return 'clear';
   if (openCount <= 2 && dockedOpenCount <= 2) return 'stacked';
@@ -363,16 +439,23 @@ export function syncFloatingChromeState(root = document, options = {}) {
   const open = rendered.filter(isFloatingChromeOpen);
   const roles = uniqueTokens(rendered.map((node) => node.dataset.spwChromeRole));
   const openRoles = uniqueTokens(open.map((node) => node.dataset.spwChromeRole));
+  const slots = uniqueTokens(rendered.map((node) => node.dataset.spwChromeSlot));
+  const openSlots = uniqueTokens(open.map((node) => node.dataset.spwChromeSlot));
   const dockedOpenCount = open.filter((node) => FLOATING_CHROME_DOCKED_ROLES.includes(node.dataset.spwChromeRole)).length;
   const competition = resolveFloatingChromeCompetition(open.length, dockedOpenCount);
+  const occlusion = measureFloatingChromeOcclusion(open);
 
   writeRuntimeDatasetValues(html, {
     spwFloatingChromeCount: String(rendered.length),
     spwFloatingChromeOpenCount: String(open.length),
     spwFloatingChromeRoles: roles.join(' ') || null,
     spwFloatingChromeOpenRoles: openRoles.join(' ') || null,
+    spwFloatingChromeSlots: slots.join(' ') || null,
+    spwFloatingChromeOpenSlots: openSlots.join(' ') || null,
     spwFloatingChromeCompetition: rendered.length ? competition : null,
     spwFloatingChromeBottom: dockedOpenCount ? 'occupied' : 'clear',
+    spwFloatingChromeOcclusion: open.length > 1 ? occlusion.state : 'clear',
+    spwFloatingChromeOcclusionPairs: occlusion.collisions.join('|') || null,
     spwRuntimeMutator: options.source || 'floating-chrome',
     spwRuntimeMutationReason: options.reason || 'chrome-state-sync',
     spwRuntimeStylingAxis: 'floating-chrome',
@@ -387,7 +470,10 @@ export function syncFloatingChromeState(root = document, options = {}) {
     dockedOpenCount,
     roles,
     openRoles,
+    slots,
+    openSlots,
     competition,
+    occlusion,
   };
 }
 

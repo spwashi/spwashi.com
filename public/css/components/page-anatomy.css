@@ -288,7 +288,7 @@ html[data-spw-anatomy-ready="true"] :where(.spw-anatomy-anchor, [data-spw-anatom
 .spw-parallel-nav {
   position: fixed;
   z-index: var(--spw-floating-tier-z, var(--z-docked, 900));
-  inset: auto auto calc(var(--spw-floating-bottom-rail, max(0.65rem, env(safe-area-inset-bottom))) + var(--touch-target-compact, 2.15rem) + 0.58rem) 50%;
+  inset: auto auto var(--spw-floating-slot-parallel-nav, calc(var(--spw-floating-bottom-rail, max(0.65rem, env(safe-area-inset-bottom))) + var(--touch-target-compact, 2.15rem) + 0.58rem)) 50%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -371,10 +371,10 @@ html[data-spw-popup-posture="expressive"] .spw-parallel-nav {
   }
 
   :root:has([data-spw-state-inspector-root]) .spw-parallel-nav {
-    inset-inline-start: var(--spw-floating-inline-gutter, max(0.65rem, env(safe-area-inset-left)));
+    inset-inline-start: var(--spw-floating-handle-inline-start, var(--spw-floating-inline-gutter, max(0.65rem, env(safe-area-inset-left))));
     inset-inline-end: auto;
     max-inline-size: max(9.5rem, var(--spw-floating-left-lane-max, calc(100vw - 13rem)));
-    transform: none;
+    transform: var(--spw-floating-handle-transform, none);
   }
 
   .spw-parallel-nav__state {

@@ -43,6 +43,16 @@ css_contract: .{
  route = `Route CSS may tune color, density, or image-card treatment without changing the shared rail contract.`
  theme = `Generated behavior surfaces should carry theme pack, palette resonance, and semantic density when those values affect perception.`
  color_reward = `public/css/effects/wonder.css projects curiosity, relationship, and architecture as shared reward colors instead of page-local novelty colors.`
+ floating_chrome = `Mobile floating chrome should resolve through named slots: bottom-console, bottom-left-travel, bottom-right-satchel, bottom-center, right-middle, popover, sheet, toast, and modal.`
+}[reg=facet]
+
+occlusion_contract: .{
+ slot_source = `public/css/components/floating-chrome.css defines bottom slot variables and lane widths.`
+ runtime_slot = `annotateFloatingChromeElement writes data-spw-chrome-slot from role so audits can reason about overlap before visual personality is applied.`
+ measured_overlap = `syncFloatingChromeState writes data-spw-floating-chrome-occlusion and data-spw-floating-chrome-occlusion-pairs after measuring open floating chrome rectangles.`
+ scroll_progression = `The section handle syncs floating chrome state when page progression makes it visible or hidden, so bottom clearance follows the actual rendered state.`
+ mobile_lanes = `When the state satchel exists, section handle and parallel navigation move into the left travel lane while satchel/cauldron occupy the right satchel lane.`
+ future_parallax = `Parallax or occlusion effects should consume slot/tier/state attributes first, then add depth or movement without changing ownership of the tap target.`
 }[reg=facet]
 
 color_reward_contract: .{
@@ -69,6 +79,8 @@ image_resource_contract: .{
 
 validation: #[
  `node --check public/js/runtime/page-region-rail.js`,
+ `node --check public/js/runtime/attention/section-handle.js`,
+ `node --check public/js/kernel/dom-contracts.js`,
  `node --check scripts/image-resource-manifest.mjs`,
  `npm run images:manifest`,
  `git diff --check`,

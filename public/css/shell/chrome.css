@@ -83,11 +83,11 @@
     --spw-bottom-chrome-clearance: max(var(--spw-bottom-chrome-clearance, 0px), 13.5rem);
   }
 
-  :root:has(.spw-section-handle, [data-spw-chrome-role="section-handle"]) {
+  :root:has(.spw-section-handle[data-spw-handle-state="visible"], [data-spw-chrome-role="section-handle"][data-spw-handle-state="visible"]) {
     --spw-bottom-chrome-clearance: max(var(--spw-bottom-chrome-clearance, 0px), 3.85rem);
   }
 
-  :root:has(.spw-section-handle, [data-spw-chrome-role="section-handle"]):has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) {
+  :root:has(.spw-section-handle[data-spw-handle-state="visible"], [data-spw-chrome-role="section-handle"][data-spw-handle-state="visible"]):has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) {
     --spw-bottom-chrome-clearance: max(var(--spw-bottom-chrome-clearance, 0px), 14.25rem);
   }
 }
@@ -4288,7 +4288,7 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
   html:has(body > header[data-spw-menu-mode="toggle"][data-spw-menu="open"]) :where(.spw-section-handle, .spw-section-handle-shell) {
     opacity: 0;
     pointer-events: none;
-    transform: translateX(-50%) translateY(0.45rem);
+    transform: var(--spw-floating-handle-transform, translateX(-50%)) translateY(0.45rem);
   }
 
   .site-header[data-spw-menu-mode="toggle"][data-spw-menu-topology="drawer-field"][data-spw-menu="open"] nav,
@@ -4363,18 +4363,20 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
   --spw-handle-direction-glow: 0 0 0 transparent;
   position: fixed;
   left: 50%;
+  left: var(--spw-floating-handle-inline-start, 50%);
+  right: var(--spw-floating-handle-inline-end, auto);
   bottom: calc(
-    max(var(--attention-handle-offset, 1rem), env(safe-area-inset-bottom))
+    var(--spw-floating-slot-section-handle, max(var(--attention-handle-offset, 1rem), env(safe-area-inset-bottom)))
     + var(--spw-floating-menu-clearance, 0px)
   );
-  transform: translateX(-50%);
+  transform: var(--spw-floating-handle-transform, translateX(-50%));
   z-index: var(--spw-floating-tier-z, var(--z-floating, 100));
 
   display: none;
   align-items: center;
   gap: 0.4rem;
   min-height: var(--touch-target-compact, 2.25rem);
-  max-width: calc(100vw - 2rem);
+  max-width: var(--spw-floating-handle-max-inline-size, calc(100vw - 2rem));
   padding: 0.36rem 0.8rem;
 
   border-radius: 999px;
@@ -4410,14 +4412,14 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
 .spw-section-handle-shell[data-spw-handle-state="visible"] {
   opacity: 1;
   pointer-events: auto;
-  transform: translateX(-50%) translateY(0);
+  transform: var(--spw-floating-handle-transform, translateX(-50%)) translateY(0);
 }
 
 .spw-section-handle[data-spw-handle-state="hidden"],
 .spw-section-handle-shell[data-spw-handle-state="hidden"] {
   opacity: 0;
   pointer-events: none;
-  transform: translateX(-50%) translateY(6px);
+  transform: var(--spw-floating-handle-transform, translateX(-50%)) translateY(6px);
 }
 
 .spw-section-handle .spw-section-handle__op {
@@ -4942,7 +4944,7 @@ html[data-spw-section-handle="off"] .spw-section-handle-shell {
 :where(html[data-spw-shell-menu-lock="true"], body[data-spw-shell-menu-lock="true"]) :where(.spw-section-handle, .spw-section-handle-shell) {
   opacity: 0;
   pointer-events: none;
-  transform: translateX(-50%) translateY(8px);
+  transform: var(--spw-floating-handle-transform, translateX(-50%)) translateY(8px);
 }
 
 @media (max-width: 540px) {
@@ -4996,9 +4998,10 @@ body > a.skip-link {
 body > .spw-section-handle,
 body > nav.spw-section-handle-shell {
   position: fixed;
-  left: 50%;
+  left: var(--spw-floating-handle-inline-start, 50%);
+  right: var(--spw-floating-handle-inline-end, auto);
   bottom: calc(
-    var(--spw-floating-bottom-rail, var(--attention-handle-offset, 1rem))
+    var(--spw-floating-slot-section-handle, var(--spw-floating-bottom-rail, var(--attention-handle-offset, 1rem)))
     + var(--spw-floating-menu-clearance, 0px)
   );
   margin: 0;

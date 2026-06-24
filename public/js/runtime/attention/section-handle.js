@@ -1,4 +1,7 @@
-import { annotateFloatingChromeElement } from '/public/js/kernel/dom-contracts.js';
+import {
+  annotateFloatingChromeElement,
+  syncFloatingChromeState,
+} from '/public/js/kernel/dom-contracts.js';
 import { appendToDocument } from '/public/js/kernel/dom-render.js';
 import {
   AUTO_HANDLE_MIN_SECTIONS,
@@ -389,6 +392,10 @@ function syncSectionHandlePhase(shell, handle, phase) {
 function syncSectionHandleVisibility(handle, shell, visible) {
   setHandleState(handle, visible ? 'visible' : 'hidden');
   setHandleState(shell, visible ? 'visible' : 'hidden');
+  syncFloatingChromeState(document, {
+    source: 'attention-architecture',
+    reason: visible ? 'section-handle-visible' : 'section-handle-hidden',
+  });
 }
 
 function syncSectionHandleAvailability(refs, activeIndex, sectionCount) {

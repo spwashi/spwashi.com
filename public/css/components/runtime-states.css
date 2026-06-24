@@ -474,7 +474,7 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
     position: fixed;
     inset-inline: max(0.65rem, env(safe-area-inset-left)) max(0.65rem, env(safe-area-inset-right));
     inset-block-end: calc(
-      max(0.65rem, env(safe-area-inset-bottom))
+      var(--spw-floating-slot-section-handle, max(0.65rem, env(safe-area-inset-bottom)))
       + var(--touch-target-compact, 2.15rem)
       + 0.95rem
       + var(--spw-floating-menu-clearance, 0px)

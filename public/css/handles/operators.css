@@ -451,7 +451,7 @@ html[data-spw-dimensional-breadcrumbs="on"] .spw-spell-path .spw-spell-meaning {
      Position lifted slightly so it doesn't bury footer nav text; uses floating safe inset. */
   inset-inline-start: max(0.75rem, env(safe-area-inset-left));
   inset-inline-end: auto;
-  bottom: calc(var(--spw-floating-bottom-rail, max(0.6rem, env(safe-area-inset-bottom))) + var(--spw-floating-menu-clearance, 0px));
+  bottom: calc(var(--spw-floating-slot-console, var(--spw-floating-bottom-rail, max(0.6rem, env(safe-area-inset-bottom)))) + var(--spw-floating-menu-clearance, 0px));
 }
 
 @media (max-width: 720px) {
