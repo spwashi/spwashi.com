@@ -153,6 +153,15 @@
     border-color 160ms var(--shell-ease);
 }
 
+:where(.site-header, body > header) {
+  --spw-header-trace-min-block: 2.35rem;
+  --spw-attention-posture-min-block: 2.1rem;
+}
+
+:where(.site-header, body > header):has(.spw-attention-posture-pill, .spw-spell-path) {
+  min-block-size: calc(var(--shell-header-min-height, 3.1rem) + var(--spw-attention-posture-min-block, 0px));
+}
+
 /* shell-trace is gated because it changes header geometry. */
 :where(body:not([data-spw-features~="shell-trace"]) .site-header, body:not([data-spw-features~="shell-trace"]) > header) {
   --spw-shell-grid-areas: "sigil nav actions tune toggle";
@@ -2369,7 +2378,7 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   width: min(100%, var(--page-width));
   margin-inline: auto;
   display: grid;
-  grid-template-columns: minmax(20rem, 1.08fr) minmax(17rem, 0.78fr);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
   gap: clamp(0.9rem, 2vw, 1.45rem) clamp(1.2rem, 3.2vw, 2.35rem);
   align-items: start;
 }

@@ -14,6 +14,10 @@ import {
   extractRuntimeArrayLiteral,
 } from './site-contracts/helpers.mjs';
 import { toPosixPath } from './shared/build-topology.mjs';
+import {
+  collectStylePropertyContractReport,
+  type StylePropertyWrite,
+} from './style-property-contract.mjs';
 
 const BEHAVIOR_SCOPE_KEYS = new Set(Object.keys(BEHAVIOR_SCOPES));
 
@@ -22,6 +26,7 @@ const __dirname = path.dirname(__filename);
 
 const ROOT_DIR = path.resolve(__dirname, '..', '..');
 const PUBLIC_JS_DIR = path.join(ROOT_DIR, 'public/js');
+const MODULES_DIR = path.join(PUBLIC_JS_DIR, 'modules');
 const PUBLIC_TS_DIR = path.join(ROOT_DIR, 'public/ts');
 const MODULE_CATALOG_PATH = path.join(PUBLIC_JS_DIR, 'runtime/module-catalog.js');
 
@@ -71,14 +76,20 @@ type RuntimeContractModule = {
 
 type RuntimeContractReport = {
   behaviorScopes: string[];
+  cssCustomProperties: string[];
+  dynamicStyleWrites: StylePropertyWrite[];
   errors: string[];
   kernelTypedShims: string[];
   modules: RuntimeContractModule[];
   recommendations: string[];
   ownerDirectories: string[];
   rootEntrypoints: string[];
+  stylePropertyWrites: StylePropertyWrite[];
+  topLevelModuleFiles: string[];
   typedImportViolations: string[];
   typedOutputs: string[];
+  unknownDynamicStyleWrites: StylePropertyWrite[];
+  unknownStylePropertyWrites: StylePropertyWrite[];
   warnings: string[];
 };
 
@@ -187,6 +198,15 @@ async function collectTopLevelJsDirectories(): Promise<string[]> {
   return entries
     .filter((entry) => entry.isDirectory())
     .map((entry) => entry.name)
+    .sort();
+}
+
+async function collectTopLevelModuleJsFiles(): Promise<string[]> {
+  if (!(await pathExists(MODULES_DIR))) return [];
+  const entries = await fs.readdir(MODULES_DIR, { withFileTypes: true });
+  return entries
+    .filter((entry) => entry.isFile() && entry.name.endsWith('.js'))
+    .map((entry) => `public/js/modules/${entry.name}`)
     .sort();
 }
 
@@ -462,6 +482,11 @@ export async function collectRuntimeContractReport(): Promise<RuntimeContractRep
     }
   }
 
+  const topLevelModuleFiles = await collectTopLevelModuleJsFiles();
+  for (const file of topLevelModuleFiles) {
+    errors.push(`${file} should move into a public/js/modules/<family>/ subdirectory.`);
+  }
+
   const typedOutputs = await collectTypedOutputs();
   for (const output of typedOutputs) {
     const basename = path.basename(output, '.js');
@@ -480,16 +505,31 @@ export async function collectRuntimeContractReport(): Promise<RuntimeContractRep
   const behaviorScopeReport = await collectBehaviorScopeModuleIssues();
   errors.push(...behaviorScopeReport.errors);
 
+  const stylePropertyReport = await collectStylePropertyContractReport();
+  for (const write of stylePropertyReport.unknownStyleWrites) {
+    const label = write.property || `${write.prefix || write.expression}*`;
+    errors.push(`${write.file}:${write.line} writes ${label}, but that custom property is not referenced by public/css and is not in the runtime property registry.`);
+  }
+  for (const write of stylePropertyReport.unknownDynamicStyleWrites) {
+    warnings.push(`${write.file}:${write.line} writes a dynamic style property (${write.expression}); add a static property, CSS reference, or registry allowance if this is intentional.`);
+  }
+
   return {
     behaviorScopes: behaviorScopeReport.scopes,
+    cssCustomProperties: stylePropertyReport.cssCustomProperties,
+    dynamicStyleWrites: stylePropertyReport.dynamicStyleWrites,
     errors,
     kernelTypedShims: kernelTypedShimReport.shims,
     modules,
     ownerDirectories,
     recommendations,
     rootEntrypoints,
+    stylePropertyWrites: stylePropertyReport.runtimeStyleWrites,
+    topLevelModuleFiles,
     typedImportViolations,
     typedOutputs,
+    unknownDynamicStyleWrites: stylePropertyReport.unknownDynamicStyleWrites,
+    unknownStylePropertyWrites: stylePropertyReport.unknownStyleWrites,
     warnings,
   };
 }
@@ -497,7 +537,7 @@ export async function collectRuntimeContractReport(): Promise<RuntimeContractRep
 export async function main(): Promise<void> {
   const report = await collectRuntimeContractReport();
 
-  console.log(`[runtime] modules=${report.modules.length} ownerDirs=${report.ownerDirectories.length} rootEntrypoints=${report.rootEntrypoints.length} typedOutputs=${report.typedOutputs.length} kernelShims=${report.kernelTypedShims.length} behaviorScopes=${report.behaviorScopes.length}`);
+  console.log(`[runtime] modules=${report.modules.length} ownerDirs=${report.ownerDirectories.length} rootEntrypoints=${report.rootEntrypoints.length} topLevelModuleFiles=${report.topLevelModuleFiles.length} styleWrites=${report.stylePropertyWrites.length} cssCustomProperties=${report.cssCustomProperties.length} typedOutputs=${report.typedOutputs.length} kernelShims=${report.kernelTypedShims.length} behaviorScopes=${report.behaviorScopes.length}`);
 
   if (report.warnings.length) {
     console.log(`[runtime] warnings=${report.warnings.length}`);

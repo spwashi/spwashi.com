@@ -44,7 +44,7 @@ slices: .{
 
   cauldron_composition_emergence = .{
     description = `Gathering, mixing, gardening of semantic ingredients into new forms. Cauldron phases, composition, boonhonk as color mixer, prompt/casting surfaces. The "kitchen" and "studio" emergence layer.`
-    current_locations = `public/js/interface/composition.js, public/js/modules/boonhonk-mixer.js, public/js/modules/rpg-wednesday-*.js (creative tools), .spw/conventions/ (related), routes/boonhonk-mixer.css`
+    current_locations = `public/js/interface/composition.js, public/js/modules/widgets/boonhonk-mixer.js, public/js/modules/rpg-wednesday/ (creative tools), .spw/conventions/ (related), public/css/routes/widgets/boonhonk-mixer.css`
     natural_team = `Composers, prompt engineers, RPG/creative tool builders, culinary metaphor lovers`
   }
 

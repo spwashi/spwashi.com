@@ -13,7 +13,7 @@ Extend that surface so a generated seed can also become a lightweight canon incr
 - `public/js/kernel/site-settings.js`: persisted attention dimension settings, labels, datasets, and preset.
 - `public/js/runtime/prepaint-state.js`: early dataset projection for saved attention posture.
 - `_partials/media-cauldron.html`: reusable local media production surface.
-- `public/js/modules/media-cauldron.js`: client-only seed generation and copy behavior.
+- `public/js/modules/media/cauldron.js`: client-only seed generation and copy behavior.
 - `play/index.html`: first route host for the Media Cauldron partial.
 - `index.html`: lightweight Living Concepts atlas for early discovery of attention posture, Media Cauldron, operators, Town Atlas, developmental climate, and proof cards.
 - `public/css/routes/surfaces/home.css`: route-local styling for the Living Concepts details grid.
@@ -29,7 +29,7 @@ Extend that surface so a generated seed can also become a lightweight canon incr
 ## Validation
 
 - Run `git diff --check`.
-- Run `node --check public/js/kernel/site-settings.js public/js/runtime/prepaint-state.js public/js/site.js public/js/modules/media-cauldron.js`.
+- Run `node --check public/js/kernel/site-settings.js public/js/runtime/prepaint-state.js public/js/site.js public/js/modules/media/cauldron.js`.
 - Use targeted `rg` checks for `attentionSelfRelation`, `media-cauldron`, `worldBuildingMode`, `copy-proof-card`, `living-concepts`, and `contemplative-hearth`.
 
 ## Out Of Scope

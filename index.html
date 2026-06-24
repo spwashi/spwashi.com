@@ -77,6 +77,9 @@
 </head>
 <body
     data-spw-surface="home"
+    data-spw-hydration="static"
+    data-spw-display-layer="reader"
+    data-spw-capture-mode="default"
     data-spw-stylesheet-mode="scoped"
     data-spw-route-family="kernel atlas semantic-lattice portable-publishing"
     data-spw-features="small-kernel semantic-lattice modular-projections portable-seeds operators navigator console media-publishing svg-surfaces topic-discovery prompt-utils"
@@ -134,6 +137,7 @@
         id="home-frame"
         aria-labelledby="home-title"
         aria-describedby="home-frame-note"
+        data-spw-frame="hero"
         data-spw-region="hook"
         data-spw-region-role="kernel-hero"
         data-spw-attentional-weight="1.35"
@@ -239,7 +243,7 @@
             </div>
         </header>
 
-        <div class="home-hero-grid" data-spw-slot="body">
+        <div class="home-hero-grid" data-spw-slot="body" data-spw-activates="hero-content">
             <div class="home-hero-copy">
                 <p class="page-kicker" data-spw-semantic-expression="kernel[entry]{orient}">home page entry</p>
                 <h1 id="home-title">
@@ -314,7 +318,7 @@
                     <li>lore</li>
                 </ul>
 
-                <div class="spw-reason-strip" aria-label="Home page reasons" data-spw-role="schema" data-spw-box-model="reason-strip" data-spw-composition-flow="grid" data-spw-attention="scan" data-spw-behavior="invite">
+                <div class="spw-reason-strip" role="list" aria-label="Home page reasons" data-spw-role="schema" data-spw-box-model="reason-strip" data-spw-composition-flow="grid" data-spw-attention="scan" data-spw-behavior="invite">
                     <div id="home-reason-why" data-spw-form="brace" data-spw-semantic-expression="home[why]{attention.relation.infrastructure}">
                         <strong>Why this home page exists</strong>
                         <p>To make the website legible at the entrance: who made it, what is here, how to inspect it, and which route should carry the next question.</p>

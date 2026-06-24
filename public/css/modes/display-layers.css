@@ -1,0 +1,22 @@
+/* ==========================================================================
+   display-layers.css
+   --------------------------------------------------------------------------
+   Reader/editor/inspect presentation-layer visibility rules.
+   ========================================================================== */
+
+:where(body[data-spw-display-layer="reader"]) .spw-nav-toggle-meta,
+:where(body[data-spw-display-layer="reader"]) .spw-nav-toggle-state,
+:where(body[data-spw-display-layer="reader"]) [data-spw-chrome-role="debug"],
+:where(body[data-spw-display-layer="reader"]) [data-spw-inspect-copy] {
+  display: none !important;
+}
+
+:where(body[data-spw-display-layer="reader"]) .site-header nav a:not(.operator-chip)[data-spw-nav-tokenized="true"]::before,
+:where(body[data-spw-display-layer="reader"]) .site-header nav a:not(.operator-chip)[data-spw-nav-tokenized="true"]::after {
+  content: none !important;
+  display: none !important;
+}
+
+:where(body[data-spw-display-layer="editor"], body[data-spw-display-layer="inspect"]) .site-header nav a:not(.operator-chip)[data-spw-nav-tokenized="true"]::before {
+  display: inline-flex;
+}

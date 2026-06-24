@@ -1,0 +1,21 @@
+/* ==========================================================================
+   hydration.css
+   --------------------------------------------------------------------------
+   Layout containment and transition guards for boot-time hydration.
+   ========================================================================== */
+
+:where(.site-header, body > header),
+:where(.site-header nav, body > header nav),
+:where([data-spw-frame="hero"] .frame-topline),
+:where([data-spw-activates]) {
+  transition-property: opacity, transform, filter, box-shadow, border-color;
+}
+
+html[data-spw-hydration="static"] :where(.site-header, body > header, .site-header nav, body > header nav, [data-spw-frame="hero"] .frame-topline, [data-spw-activates]),
+html[data-spw-hydration="activating"] :where(.site-header, body > header, .site-header nav, body > header nav, [data-spw-frame="hero"] .frame-topline, [data-spw-activates]) {
+  contain: layout style;
+}
+
+html[data-spw-hydration="ready"] :where(.site-header, body > header, .site-header nav, body > header nav, [data-spw-frame="hero"] .frame-topline, [data-spw-activates]) {
+  contain: none;
+}

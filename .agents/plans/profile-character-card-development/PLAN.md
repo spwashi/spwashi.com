@@ -61,7 +61,7 @@ Craft guard:
 Current repo shape:
 - `/tools/profile/` uses the shared card system as a local-only professional profile builder.
 - `/tools/character-sheet/` already proves that the same substrate can support a character-to-application translation lens.
-- `public/js/spw-profile-builder.js` and `public/js/spw-profile-tool.js` provide one shared data and rendering path.
+- `public/js/modules/profile/builder.js` and `public/js/modules/profile/tool.js` provide one shared data and rendering path.
 - `public/css/profile-card.css` already carries development-state semantics such as depth, completeness, focus, and card charge.
 - `/play/rpg-wednesday/cast/` currently has no card implementation, but its eventual recurring-character references fit the same family.
 
@@ -98,7 +98,7 @@ See also:
 ### Clarity of Semantic Layers, Option/Subitem Flow/Wrapping/Hierarchy, Component Composition (Current Pass)
 This pass directly addressed "clarity of semantic layers, option or subitem flow/wrapping/hierarchy; component composition":
 
-- **Rendered cards now emit the canonical slot contract**: Updated `profile-builder.js` renderProfileCard to add `data-spw-slot="header"`, `data-spw-slot="meta"`, `data-spw-slot="body"`, `data-spw-slot="footer"` on the major regions of the live `.profile-card`. This makes every published character/profile card a first-class, inspectable specimen of the universal slots anatomy documented in `/design/slots/`.
+- **Rendered cards now emit the canonical slot contract**: Updated `modules/profile/builder.js` renderProfileCard to add `data-spw-slot="header"`, `data-spw-slot="meta"`, `data-spw-slot="body"`, `data-spw-slot="footer"` on the major regions of the live `.profile-card`. This makes every published character/profile card a first-class, inspectable specimen of the universal slots anatomy documented in `/design/slots/`.
 - **Improved clarity in live builders**: Added explicit guidance in the character-sheet builder navigation area explaining that the panels are compositional slots with clear hierarchy (primary/secondary/tertiary from the taxonomy). On narrow screens they stack cleanly; the preview is the composed result.
 - **Hierarchy + wrapping enhancements**: Strengthened visual distinction for badge clusters (primary/approach/role vs. secondary/context/domain) in `profile-card.css` with better opacity/weight and explicit flex-wrap behavior that holds up on mobile without breaking composition.
 - **Design surface wiring**: Added a direct call-out in `/design/components/` linking the live rendered cards (now with proper slots) back to the glossary and `/design/slots/`. This closes the "edit → render → inspect composition" loop for producers, designers, and powerusers.

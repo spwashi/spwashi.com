@@ -54,7 +54,7 @@
 pilot_math_practice_labs: .{
   reason = `The strongest current candidate is the math-practice-labs pilot visible in the sibling Gemini worktree. It adds interactive vector-field and numerical-stepping labs to vector calculus and numerical methods. This is a better first pilot than an abstract slice because it forces the practice-bed model to answer concrete questions: how does a page teach a field, where does the runtime live, how does an SVG lab stay inspectable, and what does a returning developer need to know before changing it?`
   candidate_files = #[
-    `public/js/modules/math-diagrams.js`
+    `public/js/modules/math/diagrams.js`
     `topics/math/vector-calculus/index.html`
     `topics/math/numerical-methods/index.html`
   ][reg=set]
@@ -68,7 +68,7 @@ pilot_math_practice_labs: .{
   known_review_checks = #[
     `Ensure generated SVG marker IDs are unique per lab instance before landing if multiple labs can appear on one page.`
     `Keep the first landing focused; do not pull unrelated educational metadata or broad route redesign into the same patch.`
-    `Run node --check public/js/modules/math-diagrams.js and git diff --check; then smoke vector-calculus and numerical-methods routes.`
+    `Run node --check public/js/modules/math/diagrams.js and git diff --check; then smoke vector-calculus and numerical-methods routes.`
   ][reg=set]
 }
 

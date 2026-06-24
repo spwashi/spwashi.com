@@ -65,9 +65,9 @@ Make CSS easier to debug, teach, and refactor by moving from large hand-edited C
 
 ## First Proof
 
-- `src/styles/entries/design-experiments.css` -> `public/css/design-experiments.css`
-- `src/styles/entries/spw-debug.css` -> `public/css/spw-debug.css`
-- `src/styles/entries/tools-budgeting-surface.css` -> `public/css/tools-budgeting-surface.css`
+- `src/styles/entries/design-experiments.css` -> `public/css/routes/surfaces/design-experiments.css`
+- `src/styles/entries/debug.css` -> `public/css/effects/debug.css`
+- `src/styles/entries/tools-budgeting-surface.css` -> `public/css/routes/surfaces/tools-budgeting-surface.css`
 
 ## Out Of Scope
 

@@ -1,5 +1,7 @@
 import {
   annotateFloatingChromeElement,
+  positionFloatingChromePopover,
+  syncFloatingChromeState,
   writeDatasetValue,
 } from '/public/js/kernel/dom-contracts.js';
 import { bus } from '/public/js/kernel/bus.js';
@@ -340,6 +342,10 @@ function openMenu(target) {
   writeDatasetValue(menu, 'spwState', 'open');
   writeDatasetValue(target, 'spwRegionMenuTarget', 'true');
   document.documentElement.dataset.spwRegionMenu = 'open';
+  syncFloatingChromeState(document, {
+    source: 'region-menu',
+    reason: 'region-menu-opened',
+  });
   bus.emit?.('region-menu:opened', {
     target,
     semantic,
@@ -663,47 +669,23 @@ function isCompactRegionViewport() {
 function positionMenu(menu, target) {
   if (!(menu instanceof HTMLElement)) return;
 
-  if (isCompactRegionViewport()) {
-    menu.dataset.spwRegionMenuPlacement = 'sheet';
-    menu.dataset.spwRegionMenuVertical = 'bottom';
-    menu.dataset.spwRegionMenuHorizontal = 'stretch';
-    menu.style.left = '';
-    menu.style.right = '';
-    menu.style.top = '';
-    menu.style.bottom = '';
-    menu.style.width = '';
-    menu.style.maxWidth = '';
-    return;
+  const placement = positionFloatingChromePopover(menu, target, {
+    compact: isCompactRegionViewport(),
+    maxWidth: 304,
+    maxHeight: 416,
+    gutter: 12,
+    offset: 8,
+    bottomReserve: getRegionMenuBottomReserve(),
+    source: 'region-menu',
+  });
+
+  if (!placement) return;
+  menu.dataset.spwRegionMenuPlacement = placement.placement;
+  menu.dataset.spwRegionMenuVertical = placement.vertical;
+  menu.dataset.spwRegionMenuHorizontal = placement.horizontal;
+  if (placement.collision) {
+    menu.dataset.spwRegionMenuCollision = placement.collision;
   }
-
-  menu.dataset.spwRegionMenuPlacement = 'popover';
-  const rect = target.getBoundingClientRect();
-  const viewport = window.visualViewport;
-  const viewportWidth = Math.max(1, viewport?.width || window.innerWidth || 1);
-  const viewportHeight = Math.max(1, viewport?.height || window.innerHeight || 1);
-  const maxWidth = Math.min(304, viewportWidth - 24);
-  const estimatedHeight = Math.min(416, viewportHeight - 24);
-  const centeredLeft = rect.left + (rect.width / 2) - (maxWidth / 2);
-  const left = clamp(centeredLeft, 12, Math.max(12, viewportWidth - maxWidth - 12));
-  const preferredTop = rect.bottom + 8;
-  const fallbackTop = rect.top - estimatedHeight - 8;
-  const opensBelow = preferredTop + estimatedHeight <= viewportHeight - 12 || fallbackTop < 12;
-  const top = opensBelow ? preferredTop : Math.max(12, fallbackTop);
-  const targetCenter = rect.left + (rect.width / 2);
-  const horizontal = targetCenter < viewportWidth * 0.34
-    ? 'start'
-    : targetCenter > viewportWidth * 0.66
-      ? 'end'
-      : 'center';
-
-  menu.dataset.spwRegionMenuVertical = opensBelow ? 'below' : 'above';
-  menu.dataset.spwRegionMenuHorizontal = horizontal;
-  menu.style.left = `${left}px`;
-  menu.style.top = `${top}px`;
-  menu.style.right = 'auto';
-  menu.style.bottom = 'auto';
-  menu.style.width = '';
-  menu.style.maxWidth = '';
 }
 
 function focusMatches(target, semantic) {
@@ -853,6 +835,10 @@ function closeMenu(options = {}) {
   activeTarget = null;
 
   if (wasOpen) {
+    syncFloatingChromeState(document, {
+      source: 'region-menu',
+      reason: 'region-menu-closed',
+    });
     bus.emit?.('region-menu:closed', {
       target: previousTarget,
     });

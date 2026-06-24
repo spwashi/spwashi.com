@@ -47,7 +47,7 @@ These reviews and this plan together define:
 **Pilot A — math-practice-labs**
 
 This is the first concrete pilot because it already exists as uncommitted work in the Gemini worktree (`enhance-educational-semantic-structure`) and can be reviewed as a real practice-bed patch rather than a theory exercise. The current candidate files are:
-- `public/js/modules/math-diagrams.js`
+- `public/js/modules/math/diagrams.js`
 - `topics/math/vector-calculus/index.html`
 - `topics/math/numerical-methods/index.html`
 
@@ -56,7 +56,7 @@ The slice goal is to turn math vocabulary into playable reading/observation/gest
 Review posture before landing:
 - Keep the patch focused on the two math routes and the shared math diagram module.
 - Confirm generated SVG IDs are unique per lab instance before the work lands, especially marker IDs referenced with `url(#...)`.
-- Run `node --check public/js/modules/math-diagrams.js`, `git diff --check`, and a browser smoke on both math routes.
+- Run `node --check public/js/modules/math/diagrams.js`, `git diff --check`, and a browser smoke on both math routes.
 - Add a tending note after review that records what the math labs taught about practice-bed structure.
 
 **Pilot B — attention-resonance-field**

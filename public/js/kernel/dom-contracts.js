@@ -192,6 +192,16 @@ export const FLOATING_CHROME_CONTRACT = Object.freeze({
     'Use annotateFloatingChromeElement(...) when a runtime-created element floats above normal document flow and CSS needs a readable layer tier.',
 });
 
+const FLOATING_CHROME_SELECTOR = FLOATING_CHROME_CONTRACT.selector;
+const FLOATING_CHROME_OPEN_STATES = Object.freeze(['open', 'visible', 'active', 'expanded']);
+const FLOATING_CHROME_DOCKED_ROLES = Object.freeze([
+  'console',
+  'section-handle',
+  'section-handle-shell',
+  'state-inspector',
+  'state-satchel',
+]);
+
 export const FEATURE_CLUSTER_CONTRACT = Object.freeze({
   selector: '[data-spw-feature]',
   portableUse:
@@ -304,6 +314,194 @@ export function annotateFloatingChromeElement(el, options = {}) {
     source: descriptor.mutator || 'floating-chrome',
     reason: descriptor.reason || 'floating-chrome',
   });
+}
+
+function isFloatingChromeRendered(el) {
+  if (!globalThis.HTMLElement || !(el instanceof globalThis.HTMLElement)) return false;
+  if (el.hidden || el.getAttribute('aria-hidden') === 'true') return false;
+  return true;
+}
+
+function isFloatingChromeOpen(el) {
+  if (!isFloatingChromeRendered(el)) return false;
+
+  const stateValues = [
+    el.dataset.spwState,
+    el.dataset.spwMenu,
+    el.dataset.spwStateInspector,
+    el.dataset.spwHandleState,
+    el.dataset.spwDisclosureState,
+    el.dataset.spwPopupState,
+  ].filter(Boolean);
+
+  if (stateValues.some((value) => FLOATING_CHROME_OPEN_STATES.includes(value))) return true;
+  if (el.classList?.contains('is-visible') || el.classList?.contains('is-open')) return true;
+  if (el.matches?.('[open], [popover]:popover-open')) return true;
+  return false;
+}
+
+function uniqueTokens(values = []) {
+  return [...new Set(values.map((value) => normalizeTopographyToken(value)).filter(Boolean))];
+}
+
+function resolveFloatingChromeCompetition(openCount, dockedOpenCount) {
+  if (openCount <= 1 && dockedOpenCount <= 1) return 'clear';
+  if (openCount <= 2 && dockedOpenCount <= 2) return 'stacked';
+  return 'crowded';
+}
+
+export function syncFloatingChromeState(root = document, options = {}) {
+  const doc = root?.nodeType === globalThis.Node?.DOCUMENT_NODE
+    ? root
+    : root?.ownerDocument || globalThis.document;
+  const html = doc?.documentElement;
+  if (!(html instanceof globalThis.HTMLElement) || !doc?.querySelectorAll) return null;
+
+  const nodes = Array.from(doc.querySelectorAll(FLOATING_CHROME_SELECTOR))
+    .filter((node) => node instanceof globalThis.HTMLElement);
+  const rendered = nodes.filter(isFloatingChromeRendered);
+  const open = rendered.filter(isFloatingChromeOpen);
+  const roles = uniqueTokens(rendered.map((node) => node.dataset.spwChromeRole));
+  const openRoles = uniqueTokens(open.map((node) => node.dataset.spwChromeRole));
+  const dockedOpenCount = open.filter((node) => FLOATING_CHROME_DOCKED_ROLES.includes(node.dataset.spwChromeRole)).length;
+  const competition = resolveFloatingChromeCompetition(open.length, dockedOpenCount);
+
+  writeRuntimeDatasetValues(html, {
+    spwFloatingChromeCount: String(rendered.length),
+    spwFloatingChromeOpenCount: String(open.length),
+    spwFloatingChromeRoles: roles.join(' ') || null,
+    spwFloatingChromeOpenRoles: openRoles.join(' ') || null,
+    spwFloatingChromeCompetition: rendered.length ? competition : null,
+    spwFloatingChromeBottom: dockedOpenCount ? 'occupied' : 'clear',
+    spwRuntimeMutator: options.source || 'floating-chrome',
+    spwRuntimeMutationReason: options.reason || 'chrome-state-sync',
+    spwRuntimeStylingAxis: 'floating-chrome',
+  }, {
+    source: options.source || 'floating-chrome',
+    reason: options.reason || 'chrome-state-sync',
+  });
+
+  return {
+    count: rendered.length,
+    openCount: open.length,
+    dockedOpenCount,
+    roles,
+    openRoles,
+    competition,
+  };
+}
+
+function clearPopupPlacementStyles(popover) {
+  ['left', 'right', 'top', 'bottom', 'width', 'maxWidth'].forEach((property) => {
+    popover.style[property] = '';
+  });
+}
+
+function readViewportBox() {
+  const viewport = globalThis.visualViewport;
+  return {
+    width: Math.max(1, viewport?.width || globalThis.innerWidth || 1),
+    height: Math.max(1, viewport?.height || globalThis.innerHeight || 1),
+  };
+}
+
+function resolvePopupCollision(horizontalClamped, verticalFlipped) {
+  if (horizontalClamped && verticalFlipped) return 'corner-clamp';
+  if (horizontalClamped) return 'horizontal-clamp';
+  if (verticalFlipped) return 'vertical-flip';
+  return 'clear';
+}
+
+function clampNumber(value, min, max) {
+  return Math.min(Math.max(value, min), max);
+}
+
+export function positionFloatingChromePopover(popover, target, options = {}) {
+  if (!globalThis.HTMLElement || !(popover instanceof globalThis.HTMLElement)) return null;
+
+  const {
+    compact = false,
+    maxWidth = 304,
+    maxHeight = 416,
+    gutter = 12,
+    offset = 8,
+    bottomReserve = 0,
+    source = 'floating-chrome',
+  } = options;
+
+  if (compact || !(target instanceof globalThis.Element)) {
+    clearPopupPlacementStyles(popover);
+    writeRuntimeDatasetValues(popover, {
+      spwPopupPlacement: 'sheet',
+      spwPopupVertical: 'bottom',
+      spwPopupHorizontal: 'stretch',
+      spwPopupCollision: 'sheet',
+      spwRuntimeMutator: source,
+      spwRuntimeMutationReason: 'popup-placement',
+      spwRuntimeStylingAxis: 'popup-placement',
+    }, {
+      source,
+      reason: 'popup-placement',
+    });
+    return {
+      placement: 'sheet',
+      vertical: 'bottom',
+      horizontal: 'stretch',
+      collision: 'sheet',
+    };
+  }
+
+  const rect = target.getBoundingClientRect();
+  const viewport = readViewportBox();
+  const safeMaxWidth = Math.max(1, Math.min(maxWidth, viewport.width - (gutter * 2)));
+  const safeMaxHeight = Math.max(1, Math.min(maxHeight, viewport.height - (gutter * 2)));
+  const centeredLeft = rect.left + (rect.width / 2) - (safeMaxWidth / 2);
+  const left = clampNumber(centeredLeft, gutter, Math.max(gutter, viewport.width - safeMaxWidth - gutter));
+  const preferredTop = rect.bottom + offset;
+  const fallbackTop = rect.top - safeMaxHeight - offset;
+  const bottomLimit = Math.max(gutter, viewport.height - bottomReserve - gutter);
+  const opensBelow = preferredTop + safeMaxHeight <= bottomLimit || fallbackTop < gutter;
+  const top = opensBelow ? preferredTop : Math.max(gutter, fallbackTop);
+  const targetCenter = rect.left + (rect.width / 2);
+  const horizontal = targetCenter < viewport.width * 0.34
+    ? 'start'
+    : targetCenter > viewport.width * 0.66
+      ? 'end'
+      : 'center';
+  const verticalFlipped = !opensBelow;
+  const horizontalClamped = Math.abs(left - centeredLeft) > 0.5;
+  const collision = resolvePopupCollision(horizontalClamped, verticalFlipped);
+
+  writeRuntimeDatasetValues(popover, {
+    spwPopupPlacement: 'popover',
+    spwPopupVertical: opensBelow ? 'below' : 'above',
+    spwPopupHorizontal: horizontal,
+    spwPopupCollision: collision,
+    spwRuntimeMutator: source,
+    spwRuntimeMutationReason: 'popup-placement',
+    spwRuntimeStylingAxis: 'popup-placement',
+  }, {
+    source,
+    reason: 'popup-placement',
+  });
+
+  popover.style.left = `${left}px`;
+  popover.style.top = `${top}px`;
+  popover.style.right = 'auto';
+  popover.style.bottom = 'auto';
+  popover.style.width = '';
+  popover.style.maxWidth = '';
+
+  return {
+    placement: 'popover',
+    vertical: opensBelow ? 'below' : 'above',
+    horizontal,
+    collision,
+    left,
+    top,
+    maxWidth: safeMaxWidth,
+    maxHeight: safeMaxHeight,
+  };
 }
 
 export function describeFloatingChromeElement(element) {

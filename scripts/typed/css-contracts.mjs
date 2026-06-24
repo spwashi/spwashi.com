@@ -7,6 +7,7 @@ import { collectTagAttributes, splitList, stripQueryHash, } from './site-contrac
 import { shouldIgnoreValidationPath, toPosixPath, } from './shared/build-topology.mjs';
 import { collectCssBuildPlan } from './css-build.mjs';
 import { BEHAVIOR_SCOPES, listBundleTargets, ROUTE_SCOPES, } from './css-manifest.mjs';
+import { collectCssCustomProperties } from './style-property-contract.mjs';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, '..', '..');
@@ -24,6 +25,7 @@ const EXPECTED_LAYER_BY_CSS_DIR = new Map([
     ['reset', 'reset'],
     ['tokens', 'tokens'],
     ['shell', 'shell'],
+    ['modes', 'shell'],
     ['typography', 'typography'],
     ['grammar', 'grammar'],
     ['components', 'components'],
@@ -142,6 +144,7 @@ export async function collectCssContractReport() {
     const errors = [];
     const warnings = [];
     const cssFiles = await collectCssFiles();
+    const cssCustomProperties = await collectCssCustomProperties();
     const sourceFiles = await collectStyleSourceFiles();
     const buildPlan = await collectCssBuildPlan();
     const styleSource = await fs.readFile(STYLE_MANIFEST, 'utf8');
@@ -254,6 +257,7 @@ export async function collectCssContractReport() {
         }
     }
     return {
+        cssCustomProperties,
         cssFiles: cssFiles.map(relativeRepoPath),
         errors,
         imports,
@@ -264,7 +268,7 @@ export async function collectCssContractReport() {
 }
 export async function main() {
     const report = await collectCssContractReport();
-    console.log(`[css] files=${report.cssFiles.length} imports=${report.imports.length} routeStylesheets=${report.linkedStylesheets.length} sources=${report.sourceFiles.length}`);
+    console.log(`[css] files=${report.cssFiles.length} imports=${report.imports.length} routeStylesheets=${report.linkedStylesheets.length} customProperties=${report.cssCustomProperties.length} sources=${report.sourceFiles.length}`);
     if (report.warnings.length) {
         console.log(`[css] warnings=${report.warnings.length}`);
         for (const warning of report.warnings.slice(0, 12)) {

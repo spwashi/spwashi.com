@@ -96,8 +96,8 @@ function outputPathForEntry(entryPath: string): string {
   const cssRelativePath = relativeEntryPath.replace(/\.(?:pcss|postcss)$/i, '.css');
   const outputRelativePath = (() => {
     if (cssRelativePath === 'debug.css') return `effects/${cssRelativePath}`;
-    if (cssRelativePath === 'design-experiments.css') return `routes/${cssRelativePath}`;
-    if (cssRelativePath.endsWith('-surface.css')) return `routes/${cssRelativePath}`;
+    if (cssRelativePath === 'design-experiments.css') return `routes/surfaces/${cssRelativePath}`;
+    if (cssRelativePath.endsWith('-surface.css')) return `routes/surfaces/${cssRelativePath}`;
     return cssRelativePath;
   })();
   return path.join(PUBLIC_CSS_DIR, outputRelativePath);

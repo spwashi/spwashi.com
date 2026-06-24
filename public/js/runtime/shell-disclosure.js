@@ -1,6 +1,8 @@
 import { emitSpwAction } from '/public/js/kernel/shared.js';
 import {
+  annotateFloatingChromeElement,
   removeDatasetValues,
+  syncFloatingChromeState,
   writeDatasetValues,
   writeDatasetValue,
   writeRuntimeDatasetValues,
@@ -634,6 +636,10 @@ function syncShellOffset(header) {
   const rect = header.getBoundingClientRect();
   const offset = Math.max(0, rect.bottom || 0);
   document.documentElement.style.setProperty('--spw-shell-menu-offset', `${offset.toFixed(1)}px`);
+  syncFloatingChromeState(document, {
+    source: 'shell-disclosure',
+    reason: 'shell-offset',
+  });
 }
 
 function syncHeaderPointerField(header, event) {
@@ -681,6 +687,11 @@ function syncShellLock(snapshot) {
       source: 'shell-disclosure',
       reason: 'menu-scroll-lock',
     });
+  });
+
+  syncFloatingChromeState(document, {
+    source: 'shell-disclosure',
+    reason: shouldLock ? 'shell-menu-lock' : 'shell-menu-unlock',
   });
 }
 
@@ -796,6 +807,15 @@ function ensureAttentionPosturePanel(header, pill) {
   panel.setAttribute('role', 'dialog');
   panel.setAttribute('aria-label', 'Attention posture preview');
   panel.dataset.spwFeature = 'attention-posture-preview';
+  panel.dataset.spwChromeIsland = 'attention-posture-preview';
+  panel.dataset.spwPopupState = 'closed';
+  annotateFloatingChromeElement(panel, {
+    role: 'persona-tooltip',
+    tier: 'header',
+    mutator: 'shell-disclosure',
+    reason: 'attention-posture-preview',
+    stylingAxis: 'shell-popup',
+  });
   panel.innerHTML = `
     <div class="spw-attention-posture-panel__topline">
       <strong>Attention posture</strong>
@@ -828,7 +848,12 @@ function setAttentionPosturePanelOpen(header, open, { focusPill = false } = {}) 
   panel.hidden = !nextOpen;
   pill.setAttribute('aria-expanded', nextOpen ? 'true' : 'false');
   header.dataset.spwAttentionPosturePanel = nextOpen ? 'open' : 'closed';
+  writeDatasetValue(panel, 'spwPopupState', nextOpen ? 'open' : 'closed');
   syncAttentionPosturePanel(panel);
+  syncFloatingChromeState(document, {
+    source: 'shell-disclosure',
+    reason: nextOpen ? 'attention-posture-opened' : 'attention-posture-closed',
+  });
 
   if (!nextOpen && focusPill) {
     pill.focus();

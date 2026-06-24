@@ -92,7 +92,7 @@ const CORE_ASSETS = [
 
   '/public/css/style.css',
   '/public/css/effects/enhancements.css',
-  '/public/css/routes/design-experiments.css',
+  '/public/css/routes/surfaces/design-experiments.css',
 
   '/public/js/site.js',
   '/public/js/kernel/dom-contracts.js',
@@ -103,9 +103,9 @@ const CORE_ASSETS = [
   '/public/js/typed/promo-wonder-cycle.js',
   '/public/js/typed/feed-utils.js',
   '/public/js/kernel/site-settings.js',
-  '/public/js/modules/design-experiments.js',
+  '/public/js/modules/design/experiments.js',
   '/public/js/interface/palette-resonance.js',
-  '/public/js/modules/math-diagrams.js',
+  '/public/js/modules/math/diagrams.js',
   '/public/js/semantic/component-semantics.js',
   '/public/js/interface/contextual-ui.js',
   '/public/js/interface/semantic-chrome.js',

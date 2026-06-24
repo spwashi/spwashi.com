@@ -15,7 +15,7 @@
   "/topics/math/differential-equations/#slope-field-lab"
 ][reg=set]
 
-@runtime_module: ~"../../../public/js/modules/math-diagrams.js"
+@runtime_module: ~"../../../public/js/modules/math/diagrams.js"
 
 @practice_beds: #[
   reading: "Static diagrams + prose that remain when JS is unavailable."
@@ -39,7 +39,7 @@
   claim_id = "math-lab-control-status-001"
   layer = "pragmatic"
   hypothesis = "Controls inside a .math-interactive-lab update both the visual (SVG/canvas) and a visible status element so the consequence of a gesture is immediately observable to the reader and to any inspection tool."
-  spec_ref = ".spw/slices/math-practice-labs/index.spw + public/js/modules/math-diagrams.js"
+  spec_ref = ".spw/slices/math-practice-labs/index.spw + public/js/modules/math/diagrams.js"
   impl_ref = "data-control inputs + [data-role=status] or .math-diagram-status elements inside the lab container"
   probe_ref = "Interact with a slider or select in a live lab; both the diagram and the status text must change within one frame."
   falsification = "A control changes the diagram but leaves the status text stale, or the status text updates with no visible change to the diagram."
@@ -51,7 +51,7 @@
   layer = "generated"
   hypothesis = "SVG elements generated or mutated by math-diagrams.js use instance-safe identifiers (no hard-coded duplicate ids across multiple labs on the same page or across route loads)."
   spec_ref = ".spw/slices/math-practice-labs/index.spw"
-  impl_ref = "public/js/modules/math-diagrams.js (createSvgNode, id generation logic)"
+  impl_ref = "public/js/modules/math/diagrams.js (createSvgNode, id generation logic)"
   probe_ref = "Load a page with two different math labs (or the same lab mounted twice) and run a duplicate SVG id detector; no collisions."
   falsification = "Two <svg> or two elements inside different labs on one page share an id that is not namespaced by the lab instance."
   status = "active"
@@ -69,7 +69,7 @@
 }
 
 validation: #[
-  `node --check public/js/modules/math-diagrams.js`
+  `node --check public/js/modules/math/diagrams.js`
   `npm run catalog` (the labs appear with correct dimensions)
   `browser smoke on /topics/math/vector-calculus/ and /topics/math/numerical-methods/ with JS on and off`
   `duplicate SVG id scan across a page containing multiple labs`

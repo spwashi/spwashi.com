@@ -353,6 +353,8 @@
 
 :where(body[data-spw-surface="home"] #returner-drift .returner-grid) {
   gap: clamp(0.78rem, 1.4vw, 1rem);
+  --spw-grid-min-base: 17rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--spw-grid-min-base, 17rem)), 1fr));
 }
 
 :where(body[data-spw-surface="home"] #returner-drift .returner-card, body[data-spw-surface="home"] #returner-drift .returner-ledger) {
@@ -375,6 +377,8 @@
 
 :where(body[data-spw-surface="home"] #town-library-gateway .frame-grid--dense) {
   margin-block-start: 0.15rem;
+  --spw-grid-min-base: 17rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--spw-grid-min-base, 17rem)), 1fr));
 }
 
 /* ==========================================================================
@@ -495,13 +499,13 @@
 
   :where(#home-frame .home-brand-plate) {
     justify-self: start;
-    inline-size: min(100%, 15rem);
+    inline-size: min(100%, 13.75rem);
   }
 }
 
 @media (min-width: 48rem) and (max-width: 71.99rem) {
   :where(#home-frame .home-brand-plate) {
-    inline-size: min(100%, 14.5rem);
+    inline-size: min(100%, 13.25rem);
     padding: 0.58rem;
   }
 

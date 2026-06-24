@@ -33,7 +33,7 @@ If you are trying to learn the runtime, read in this order:
 10. `public/js/runtime/` for mounted processes, lifecycles, and page-state producers.
 11. `public/js/interface/` for visible affordances and user-facing controls.
 12. `public/js/semantic/` for projection, inference, and semantic helpers.
-13. `public/js/modules/` for route-specific feature bundles.
+13. `public/js/modules/` for clustered route-specific feature bundles.
 
 ## Folder Roles
 
@@ -42,7 +42,7 @@ If you are trying to learn the runtime, read in this order:
 - `runtime/`: module catalog/loader, active processes, route grounding, page-state, frame-state, spells, inspectors, gates, and lifecycle loops.
 - `runtime/page-hooks.js`: page-unique hooks, named handles, and console-facing page play helpers.
 - `interface/`: visible affordances, guide behavior, haptics, local controls, and chrome response.
-- `modules/`: page or feature bundles such as blog, services, RPG Wednesday, tools, profile, and care.
+- `modules/`: page or feature bundles clustered by owner. Keep the first level folder-only; see `public/js/modules/README.md`.
 - `media/`: image storage, image metaphysics, and SVG/media helpers.
 - `typed/`: generated browser-ready modules from `public/ts/`; do not hand-edit generated output.
 
@@ -148,7 +148,11 @@ Console helpers should reveal the same model:
   `spw-module-timing=topic-discovery:immediate` for one module, and
   `spw-module-only=` or `spw-module-skip=` to isolate behavior in QA links.
   Console helpers live at `window.__SPW_SITE__.listModules()`,
-  `snapshotModules()`, `auditModules()`, and `mountModule(id)`.
+  `snapshotModules()`, `auditModules()`, `mountModule(id)`,
+  `discoverQuery()`, and `window.spwCompose.queryState()`.
+  Query state is normalized before runtime boot into `data-spw-query-active`,
+  `data-spw-query-keys`, `data-spw-query-presets`, and the matching
+  `data-spw-runtime-*` / `data-spw-module-*` policy attributes.
   Keep the posture explicit: use audit-only URLs for precise, low-theatrics
   debugging; add module visuals only when screenshot-legible rails and handles
   help the page teach its script ecology. The runtime derives
@@ -198,5 +202,12 @@ implementation folders must stay in the recognized ownership set:
 `kernel/`, `runtime/`, `interface/`, `semantic/`, `modules/`, `media/`, and
 `typed/`. Adding a new top-level family should be a contract change, not an
 incidental file placement.
+
+The same check also audits `element.style.setProperty(...)` calls. Literal
+custom-property writes should either be consumed or defined somewhere under
+`public/css/`, or belong to a documented runtime-generated family in
+`scripts/ts/style-property-contract.mts`. Dynamic property writers are limited
+to small tuner/bridge modules whose purpose is to project a known registry onto
+CSS.
 
 Documentation route: `/design/composition/`.

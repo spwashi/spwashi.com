@@ -13,6 +13,7 @@ import {
   createSpwLogger,
   installSpwCompositionConsole,
   readConsoleLogBuffer,
+  snapshotSpwQueryState,
   SPW_LOG_RELATIONSHIPS,
 } from './kernel/instrumentation.js';
 import { bus as sharedBus } from './kernel/bus.js';
@@ -52,6 +53,12 @@ import {
   whenDocumentReady,
   whenWindowLoaded,
 } from './runtime/runtime-helpers.js';
+import {
+  DISPLAY_LAYERS,
+  HYDRATION_STATES,
+  initHydration,
+  progressHydration,
+} from './kernel/hydration.js';
 import {
   CORE_DEFS,
   ENHANCEMENT_DEFS as ENHANCEMENT_DEFS_BASE,
@@ -694,10 +701,20 @@ function scheduleRegionEnrichment(pageMeta, ctx) {
 async function bootSite() {
   await whenDocumentReady();
   performance.mark('spw:document-ready');
+  initHydration({
+    displayLayer: DISPLAY_LAYERS.READER,
+    hydrationState: HYDRATION_STATES.STATIC,
+  });
+  document.body?.setAttribute('aria-busy', 'true');
   const normalized = normalizeDocumentMetadata({ deferRegions: true });
   SITE_SURFACE = normalized.surface || SITE_SURFACE;
+  const queryDisposition = applySpwQueryDisposition(HTML, {
+    source: 'site-runtime',
+    scope: 'document',
+  });
 
   runtimeCtx = createRuntimeContext();
+  runtimeCtx.queryDisposition = queryDisposition;
   runtimeCtx.addCleanup(wireRuntimeTokens(runtimeCtx));
   performance.mark('spw:boot-start');
   runtimeLogger.info('runtime boot started', { route: runtimeCtx.route }, SPW_LOG_RELATIONSHIPS.LIFECYCLE);
@@ -810,11 +827,6 @@ async function bootSite() {
       },
     },
   });
-  const queryDisposition = applySpwQueryDisposition(HTML, {
-    source: 'site-runtime',
-    scope: 'document',
-  });
-  runtimeCtx.queryDisposition = queryDisposition;
   runtimeCtx.compose = composeApi;
   setPageState(PAGE_STATES.BOOTING);
   runtimeCtx.addCleanup(initPageAttentionLifecycle(runtimeCtx));
@@ -829,6 +841,7 @@ async function bootSite() {
   await mountImmediateLayer(CORE_DEFS, runtimeCtx);
   await mountImmediateLayer(FEATURE_DEFS, runtimeCtx);
   await mountImmediateLayer(ENHANCEMENT_DEFS, runtimeCtx);
+  progressHydration(HYDRATION_STATES.ACTIVATING);
   await prefetchRuntimeResources(runtimeCtx, FEATURE_DEFS, MOUNT_WHEN.VISIBLE, 'modulepreload');
   await prefetchRuntimeResources(runtimeCtx, ENHANCEMENT_DEFS, MOUNT_WHEN.IDLE, 'prefetch');
   performance.mark('spw:immediate-layer-complete');
@@ -847,9 +860,11 @@ async function bootSite() {
   await mountVisibleFeatures(FEATURE_DEFS, runtimeCtx);
   await mountInteractionFeatures(FEATURE_DEFS, runtimeCtx);
 
+  progressHydration(HYDRATION_STATES.READY);
   setPageState(PAGE_STATES.HYDRATED);
   performance.mark('spw:page-hydrated');
   runtimeCtx.bus.emit('spw:page-hydrated', { route: runtimeCtx.route });
+  document.body?.setAttribute('aria-busy', 'false');
 
   await scheduleRegionEnrichment(normalized.pageMeta, runtimeCtx);
   await mountRegionLayer(REGION_DEFS, runtimeCtx);
@@ -914,6 +929,7 @@ window.__SPW_SITE__ = {
   // Same discovery surface as the compose API for direct console/global access.
   discoverRuntimeLoad: () => runtimeCtx ? buildLoadDiscoverySnapshot(runtimeCtx) : null,
   discoverRuntimeResources: () => snapshotRuntimeResourceReadiness(runtimeCtx),
+  discoverQuery: () => snapshotSpwQueryState(HTML),
   discoverDeepLinks: (root = document) => snapshotDeepLinks(root),
   composition: {
     annotate: (root = document, options = {}) => annotateCompositionBoxes(root, options),

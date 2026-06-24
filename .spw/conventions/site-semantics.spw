@@ -233,6 +233,8 @@
   html_contract: "Use annotateFloatingChromeElement(...) for runtime-created skip links, section handles, toast stacks, popovers, non-modal notices, and similar dismissable shells; use data-spw-floating-chrome='true' with data-spw-layout-owner='floating-chrome' for authored equivalents."
   z_index_contract: "Use --z-* aliases and data-spw-chrome-tier instead of local hard-coded z-index values for runtime-created chrome."
   field_contract: "When multiple floating chrome affordances share a viewport band, register them with a floating chrome field instead of letting each element center, lift, or dodge independently."
+  runtime_contract: "Use syncFloatingChromeState(...) to publish root data-spw-floating-chrome-count/open-count/roles/open-roles/competition/bottom so CSS and inspectors can see chrome pressure without measuring each island independently."
+  popup_contract: "Use positionFloatingChromePopover(...) for runtime popups that need target-relative placement, sheet fallback, and readable data-spw-popup-placement/vertical/horizontal/collision state."
   alignment_contract: "Vertical, horizontal, and z-index placement should be assigned from role, slot preference, priority, posture, and collision state. Local CSS may describe an island's internal anatomy, but final viewport choreography belongs to the field."
   handle_contract: "Movable chrome needs distinct interactive handles for grip, collapse, pin, and primary action. A button that opens content should not also be the only move handle."
   anatomy_rule: "Floating chrome may borrow card material, slot labels, or action chips, but it is not itself card anatomy."
@@ -490,8 +492,8 @@ frame #console-instrumentability
 frame #query-disposition
   role convention
   surface design
-  concept query_parameters theming palette reflow
-  note "Opt-in query parameters may tune CSS variables, color tokens, palette resonance, data attributes, and reflow reasons for documentation demos."
+  concept query_parameters theming palette reflow runtime_policy
+  note "Opt-in query parameters may tune CSS variables, color tokens, palette resonance, data attributes, runtime/module policy, and reflow reasons for documentation demos. The site runtime normalizes applied query state before module boot into data-spw-query-active, data-spw-query-keys, data-spw-query-presets, and the matching data-spw-runtime-* / data-spw-module-* policy attributes."
 
 frame #runtime-behavior-lab
   role route
@@ -509,7 +511,7 @@ frame #module-fluency
   role convention
   surface design/runtime
   concept script_ecology module_audit semantic_motion
-  note "Runtime modules expose what they evaluate: routing, semantics, visual treatment, state, interaction, or surface-specific behavior. CSS may translate those dimensions into rails, handles, and debug labels, while query parameters can defer, isolate, or narrate modules for screenshots and team review."
+  note "Runtime modules expose what they evaluate: routing, semantics, visual treatment, state, interaction, or surface-specific behavior. CSS may translate those dimensions into rails, handles, and debug labels, while normalized query parameters can defer, isolate, or narrate modules for screenshots and team review. Use spwCompose.queryState() or __SPW_SITE__.discoverQuery() to inspect the applied query contract."
 
 frame #resonant-ground
   role convention
@@ -686,8 +688,20 @@ frame #compact-tuning-widget
   cross-link = "tiny 'related tuning' or 'full settings' chip at end of cluster, pointing to /settings/ anchor or /design/palettes/#spectral-workshop when palette-related"
   note "Compact contextual tuning widgets turn passive settings into an active, learnable vocabulary layer. They are always secondary in visual hierarchy (kicker + one short sentence max + chips). The global effect on the page is intentional — the whole site is the teaching instrument. Documented here so the design catalog and future editors can discover the exact reusable pattern for adding one near any high-impact component. Also supports wrapping/packing and light surrounding copy passes for component diversity and region value when the widget is introduced."
 
+frame #embedded-tuning-handles
+  role convention
+  surface design settings runtime panels menus gestures
+  concept component-anatomy embedded-controls local-tuning swipe material spacing
+  host = "site-frame | frame-panel | frame-card | mode-panel | page-panel | generic-panel | reading-card | note-card | spw-region-menu | [data-spw-kind=panel] | [data-spw-component-kind=panel]"
+  attrs = "data-spw-embedded-tuning-host, data-spw-embedded-tuning-mode, data-spw-embedded-tuning-dimensions, data-spw-embedded-tuning-count, data-spw-embedded-tuning-present"
+  control_contract = ".spw-embedded-tuning-handle uses existing [data-site-setting-set] chips for spacingTuner, baseMetamaterial, and interactionTuner; site-settings remains the only writer of canonical settings state."
+  placement_rule = "Handles are appended inside eligible component or menu hosts, capped per page, hidden in quiet mode, and visually embedded at the component edge so they read as anatomy rather than external chrome."
+  gesture_rule = "When gesture tuning is present or responsive interaction posture is active, CSS may project a quiet swipe rail from the host instead of adding separate swipe instructions."
+  exclusion_rule = "Do not add handles inside settings forms/scopes, floating chrome except region menus, hosts that already contain explicit setting triggers, or hosts marked data-spw-embedded-tuning-skip."
+  note "Embedded tuning handles make menus and panels locally configurable without creating a second settings page. The goal is discoverable embeddedness: one or two compact gestures near the surface whose spacing, material, or swipe posture they demonstrate. The implementation lives in tuning-discovery.js, tuning-discoverability.css, gesture-anatomy.css, and the module catalog entry."
+
 ^"script_structure_contract"{
-  definition: "The site's JavaScript is organized into stable architectural layers so that refactors, audits, and new features have predictable homes and ownership rules. Actual implementation files (e.g. public/js/modules/math-diagrams.js for labs, public/js/kernel/shared.js for operators) should carry comments referencing this contract and the operator-site-projection where relevant."
+  definition: "The site's JavaScript is organized into stable architectural layers and clustered feature modules so that refactors, audits, and new features have predictable homes and ownership rules. Actual implementation files (e.g. public/js/modules/math/diagrams.js for labs, public/js/modules/rpg-wednesday/index.js for the RPG route workbench, public/js/kernel/shared.js for operators) should carry comments referencing this contract and the operator-site-projection where relevant."
 
 ^"palette_theme_composability_contract"{
   definition: "Artistically selected palettes, theme packs, lighting (color-mode), developmental climate ('mind context'), component motifs (curriculum for care/memory/boundary, lab for technical depth, artifact for reflection), and surface material (glass/matte/contrast) compose via data-spw-* attributes + central PEDAGOGICAL_FLAVOR_TO_COMPONENT_MOTIF map (in shared.js) into readable, balanced, tunable visual+felt species. Tokens use --pigment-context-boost, motif-specific active-op overrides (with explicit dark+auto media variants for lighting balance), matte/contrast ink aliases, and climate accents. JS writes attrs early + emits 'spw:palette-state' + settings:changed for full instrumentability."
@@ -707,10 +721,12 @@ frame #compact-tuning-widget
     runtime: "progressive page and route behaviors that mount on specific pages or shells (shell disclosure, attention architecture, experiential gestures, section handles)."
     interface: "visible controls, diagnostic surfaces, and chrome that users or editors directly manipulate (console, state inspector, tuning widgets, floating chrome)."
     semantic: "markup interpretation, operator projection, and data-spw-* reading/writing (operators.js, projection, smart markup, queryable component logic)."
-    modules: "route-specific or domain-specific interactive labs and tools (math-diagrams, budgeting tool, character sheet, pretext labs)."
+    modules: "route-specific or domain-specific interactive labs and tools, clustered by owner (math/diagrams, tools/budgeting, profile/tool, rpg-wednesday/index, services/configurator, design/experiments)."
     typed: "generated or compiled outputs from the scripts/ts and public/ts pipelines (scripts/typed, public/js/typed)."
   ][reg=facet]
   ownership_rule: "A file or module should be explainable as belonging primarily to one layer. Cross-layer dependencies should be explicit and narrow (kernel is the only layer allowed to be imported by all others)."
+  cluster_rule: "Keep public/js/modules folder-only at the first level. Add a new subfolder when a feature family has a durable route/domain owner; direct route imports and module-catalog lazy imports should point at the clustered path, not compatibility aliases."
+  style_property_rule: "Runtime-written CSS custom properties are validated through scripts/ts/style-property-contract.mts. Literal style.setProperty('--token', ...) writes should be referenced by public/css or registered as generated runtime families; dynamic property writers should stay limited to settings, query tuning, instrumentation, and design-lab bridges."
   refactors_rule: "When moving code between layers, update the owning .spw contract, the design catalog entry if public, and any claim that names the previous home."
   utility_rule: "A script is valuable when it creates an observable consequence, lowers cognitive friction, or makes a semantic relation inspectable. If it only restates static HTML/CSS meaning, keep the value in the authored file tree instead."
   adjustment_rule: "Scripts that make seamless adjustments should write quiet state; scripts that create resonant pauses should emit named events and visible local consequence."
@@ -733,7 +749,7 @@ frame #compact-tuning-widget
     kind: "lab"
     role: "observation / gesture / teaching"
     feature: "math-interactive-lab"
-    module: "math-diagrams"
+    module: "modules/math/diagrams"
     state: "data-math-visual (the specific lab id)"
     consequence: "SVG diagram + status text + control inputs mutate in response to gesture; authored fallback diagram remains when JS is unavailable"
   }[reg=facet]
@@ -1026,9 +1042,17 @@ frame #ephemeral_chrome_architecture
   role extension
   surface floating-chrome.css + state-inspector.js + console.js + discovery-notices + shell (for integration)
   concept improve ephemeral chrome architecture (toasts, satchel, console, handles) for consistency, material, snap/fluid, ergonomics
-  data-spw-floating-chrome + chrome-tier/role , data-spw-chrome-fluid/snap , shared --chrome-* vars
-  usage = "Shared containment (z via tier, material, pad/gap/font for resonance), JS annotate + sync for satchel/console. Feature code owns content, chrome.css owns layout policy + learnability (feedback level affects chrome presence)."
+  data-spw-floating-chrome + chrome-tier/role , data-spw-chrome-fluid/snap , data-spw-popup-placement/vertical/horizontal/collision , root data-spw-floating-chrome-* pressure state , shared --chrome-* vars
+  usage = "Shared containment (z via tier, material, pad/gap/font for resonance), JS annotate + sync for satchel/console/popups. Feature code owns content, chrome.css owns layout policy + learnability (feedback level affects chrome presence)."
   note "Extends existing floating_chrome_contract. Console now uses attrs for arch; satchel/console resonate visually/ergonomically."
+
+frame #typographic_container_rhythm
+  role convention
+  surface public/css/tokens/core.css + public/css/shell/layout.css + public/css/components/typography-packing.css
+  concept bottom_up_layout typography_size device_size spacing_tuner container_rhythm
+  data-spw-font-size-scale + data-spw-line-spacing + data-spw-viewport-tier + data-spw-component-density + data-spw-spacing-tuner
+  usage = "Container gaps, padding, shell gutters, grid minima, and packing tiers derive from --spw-rhythm-unit. That unit composes user typography scale, line spacing, device tier, density, and spacing tuner state so bigger text earns wider columns and more breathing room while compact devices reduce chrome pressure."
+  note "Route CSS should prefer --spw-rhythm-unit, --spw-component-* gaps/pads, --grid-min-* thresholds, and shell rhythm aliases rather than hard-coded rem ladders when the spacing is meant to relate to text."
 
 frame #visible_console_satchel_resonance
   role extension

@@ -15,6 +15,9 @@
 
 @import url('/public/css/shell/layout.css') layer(shell);
 @import url('/public/css/shell/chrome.css') layer(shell);
+@import url('/public/css/modes/display-layers.css') layer(shell);
+@import url('/public/css/modes/hydration.css') layer(shell);
+@import url('/public/css/modes/capture.css') layer(shell);
 
 @import url('/public/css/typography/base.css') layer(typography);
 @import url('/public/css/typography/context.css') layer(typography);

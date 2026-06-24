@@ -198,9 +198,24 @@ export function readRuntimePolicy() {
     audit: ['1', 'true', 'on', 'yes', '*'].includes(String(auditValue).toLowerCase()),
     visuals: ['1', 'true', 'on', 'yes', '*'].includes(String(visualValue).toLowerCase()),
     delay: Number.isFinite(delay) && delay > 0 ? Math.min(delay, 5000) : 0,
-    only: readDelimitedSet(params.get('spw-module-only') || params.get('module-only')),
-    skip: readDelimitedSet(params.get('spw-module-skip') || params.get('module-skip')),
-    timingByModule: readModuleTimingMap(params.get('spw-module-timing') || params.get('module-timing')),
+    only: readDelimitedSet(
+      params.get('spw-module-only')
+      || params.get('module-only')
+      || HTML?.dataset.spwModuleOnly
+      || BODY?.dataset.spwModuleOnly
+    ),
+    skip: readDelimitedSet(
+      params.get('spw-module-skip')
+      || params.get('module-skip')
+      || HTML?.dataset.spwModuleSkip
+      || BODY?.dataset.spwModuleSkip
+    ),
+    timingByModule: readModuleTimingMap(
+      params.get('spw-module-timing')
+      || params.get('module-timing')
+      || HTML?.dataset.spwModuleTiming
+      || BODY?.dataset.spwModuleTiming
+    ),
   };
 }
 

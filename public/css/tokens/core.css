@@ -280,25 +280,58 @@
   --space-3xl: 4.5rem;
   --space-4xl: 6rem;
 
-  /* -- Shared Layout Rhythm -- */
-  --spw-flow-space: 1rem;
+  /* -- Shared Layout Rhythm --
+     Bottom-up rhythm starts with text. User typography scale, device size,
+     and spacing tuner state all feed this unit so containers breathe with
+     the words they hold instead of relying on unrelated rem constants. */
+  --spw-device-space-scale: 1;
+  --spw-type-space-scale: 1;
+  --spw-container-space-scale: 1;
+  --spw-density-space-scale: 1;
+  --spw-spacing-scale: 1;
+  --spw-rhythm-unit: calc(
+    1rem
+    * var(--spw-spacing-scale, 1)
+    * var(--spw-type-space-scale, 1)
+    * var(--spw-device-space-scale, 1)
+    * var(--spw-container-space-scale, 1)
+    * var(--spw-density-space-scale, 1)
+  );
+  --spw-rhythm-unit-tight: calc(var(--spw-rhythm-unit) * 0.58);
+  --spw-rhythm-unit-compact: calc(var(--spw-rhythm-unit) * 0.72);
+  --spw-rhythm-unit-loose: calc(var(--spw-rhythm-unit) * 1.18);
+  --spw-rhythm-unit-roomy: calc(var(--spw-rhythm-unit) * 1.5);
+
+  --spw-flow-space: var(--spw-rhythm-unit);
   --spw-heading-flow-space-multiplier: 1.5;
 
-  --spw-component-gap: 0.84rem;
-  --spw-component-gap-tight: 0.48rem;
-  --spw-component-gap-loose: 1.08rem;
-  --spw-component-gap-roomy: 1.42rem;
+  --spw-component-gap: calc(var(--spw-rhythm-unit) * 0.84);
+  --spw-component-gap-tight: calc(var(--spw-rhythm-unit) * 0.48);
+  --spw-component-gap-loose: calc(var(--spw-rhythm-unit) * 1.08);
+  --spw-component-gap-roomy: calc(var(--spw-rhythm-unit) * 1.42);
 
-  --spw-component-pad: 0.84rem;
-  --spw-component-pad-tight: 0.65rem;
-  --spw-component-pad-loose: 1.02rem;
-  --spw-component-pad-roomy: 1.28rem;
+  --spw-component-pad: calc(var(--spw-rhythm-unit) * 0.84);
+  --spw-component-pad-tight: calc(var(--spw-rhythm-unit) * 0.65);
+  --spw-component-pad-loose: calc(var(--spw-rhythm-unit) * 1.02);
+  --spw-component-pad-roomy: calc(var(--spw-rhythm-unit) * 1.28);
 
-  --spw-surface-gap: 0.84rem;
-  --spw-surface-padding: clamp(1rem, 2.25vw, 1.55rem);
-  --spw-slot-gap: clamp(0.54rem, 1.4vw, 0.8rem);
-  --spw-slot-gap-tight: 0.45rem 0.6rem;
-  --spw-hero-gap: clamp(1rem, 1.8vw, 1.35rem);
+  --spw-surface-gap: calc(var(--spw-rhythm-unit) * 0.84);
+  --spw-surface-padding: clamp(
+    calc(var(--spw-rhythm-unit) * 1),
+    2.25vw,
+    calc(var(--spw-rhythm-unit) * 1.55)
+  );
+  --spw-slot-gap: clamp(
+    calc(var(--spw-rhythm-unit) * 0.54),
+    1.4vw,
+    calc(var(--spw-rhythm-unit) * 0.8)
+  );
+  --spw-slot-gap-tight: calc(var(--spw-rhythm-unit) * 0.45) calc(var(--spw-rhythm-unit) * 0.6);
+  --spw-hero-gap: clamp(
+    calc(var(--spw-rhythm-unit) * 1),
+    1.8vw,
+    calc(var(--spw-rhythm-unit) * 1.35)
+  );
 
   --spw-shell-row-gap: 0.45rem;
   --spw-shell-trace-gap: 0.7rem;
@@ -349,7 +382,11 @@
   --page-width-newspaper: 68rem;
   --page-width-wide: 84rem;
   --page-width-atlas: 104rem;
-  --page-gutter: clamp(0.75rem, 2.5vw, 1.5rem);
+  --page-gutter: clamp(
+    calc(var(--spw-rhythm-unit) * 0.72),
+    2.5vw,
+    calc(var(--spw-rhythm-unit) * 1.5)
+  );
 
   --touch-target-min: 2.75rem;
   --touch-target-compact: 2.15rem;
@@ -363,12 +400,12 @@
   --attention-echo-duration: 480ms;
 
   /* -- Grid Thresholds -- */
-  --grid-min-compact: 12rem;
-  --grid-min-card: 15rem;
-  --grid-min-panel: 17rem;
-  --grid-min-feature: 19rem;
-  --grid-min-surface: 22rem;
-  --grid-min-reading: 28rem;
+  --grid-min-compact: calc(var(--spw-rhythm-unit) * 12);
+  --grid-min-card: calc(var(--spw-rhythm-unit) * 15);
+  --grid-min-panel: calc(var(--spw-rhythm-unit) * 17);
+  --grid-min-feature: calc(var(--spw-rhythm-unit) * 19);
+  --grid-min-surface: calc(var(--spw-rhythm-unit) * 22);
+  --grid-min-reading: calc(var(--spw-rhythm-unit) * 28);
 
   /* -- Shape Primitives -- */
   --radius-2xs: 3px;
@@ -1393,36 +1430,84 @@ html[data-author-mode="archive"] {
    10. Runtime Density, Theme, Contrast, and Motion Modes
    ========================================================================== */
 
+/* Typography-to-container rhythm */
+html[data-spw-font-size-scale="70"] {
+  --spw-type-space-scale: 0.86;
+}
+
+html[data-spw-font-size-scale="80"] {
+  --spw-type-space-scale: 0.9;
+}
+
+html[data-spw-font-size-scale="90"] {
+  --spw-type-space-scale: 0.95;
+}
+
+html[data-spw-font-size-scale="110"] {
+  --spw-type-space-scale: 1.08;
+}
+
+html[data-spw-font-size-scale="120"] {
+  --spw-type-space-scale: 1.16;
+}
+
+html[data-spw-line-spacing="compact"] {
+  --spw-container-space-scale: 0.94;
+}
+
+html[data-spw-line-spacing="loose"] {
+  --spw-container-space-scale: 1.08;
+}
+
+html[data-spw-viewport-tier="compact"],
+html[data-spw-viewport-tier="narrow"] {
+  --spw-device-space-scale: 0.94;
+}
+
+html[data-spw-viewport-tier="wide"] {
+  --spw-device-space-scale: 1.04;
+}
+
 /* Density */
 html[data-spw-component-density="dense"] {
-  --spw-flow-space: 0.9rem;
-  --spw-component-gap: 0.8rem;
-  --spw-component-gap-tight: 0.42rem;
-  --spw-component-gap-loose: 1rem;
-  --spw-component-gap-roomy: 1.28rem;
-  --spw-component-pad: 0.78rem;
-  --spw-component-pad-tight: 0.56rem;
-  --spw-component-pad-loose: 0.92rem;
-  --spw-component-pad-roomy: 1.12rem;
-  --spw-surface-gap: 0.8rem;
-  --spw-surface-padding: clamp(1rem, 2.1vw, 1.35rem);
+  --spw-density-space-scale: 0.9;
+  --spw-flow-space: calc(var(--spw-rhythm-unit) * 0.9);
+  --spw-component-gap: calc(var(--spw-rhythm-unit) * 0.8);
+  --spw-component-gap-tight: calc(var(--spw-rhythm-unit) * 0.42);
+  --spw-component-gap-loose: calc(var(--spw-rhythm-unit) * 1);
+  --spw-component-gap-roomy: calc(var(--spw-rhythm-unit) * 1.28);
+  --spw-component-pad: calc(var(--spw-rhythm-unit) * 0.78);
+  --spw-component-pad-tight: calc(var(--spw-rhythm-unit) * 0.56);
+  --spw-component-pad-loose: calc(var(--spw-rhythm-unit) * 0.92);
+  --spw-component-pad-roomy: calc(var(--spw-rhythm-unit) * 1.12);
+  --spw-surface-gap: calc(var(--spw-rhythm-unit) * 0.8);
+  --spw-surface-padding: clamp(
+    calc(var(--spw-rhythm-unit) * 0.9),
+    2.1vw,
+    calc(var(--spw-rhythm-unit) * 1.35)
+  );
   --spw-control-min-height: 2.05rem;
   --spw-control-padding-block: 0.22rem;
   --spw-control-padding-inline: 0.62rem;
 }
 
 html[data-spw-component-density="roomy"] {
-  --spw-flow-space: 1.08rem;
-  --spw-component-gap: 1rem;
-  --spw-component-gap-tight: 0.66rem;
-  --spw-component-gap-loose: 1.3rem;
-  --spw-component-gap-roomy: 1.72rem;
-  --spw-component-pad: 1rem;
-  --spw-component-pad-tight: 0.74rem;
-  --spw-component-pad-loose: 1.24rem;
-  --spw-component-pad-roomy: 1.56rem;
-  --spw-surface-gap: 1rem;
-  --spw-surface-padding: clamp(1.25rem, 2.7vw, 1.9rem);
+  --spw-density-space-scale: 1.12;
+  --spw-flow-space: calc(var(--spw-rhythm-unit) * 1.08);
+  --spw-component-gap: calc(var(--spw-rhythm-unit) * 1);
+  --spw-component-gap-tight: calc(var(--spw-rhythm-unit) * 0.66);
+  --spw-component-gap-loose: calc(var(--spw-rhythm-unit) * 1.3);
+  --spw-component-gap-roomy: calc(var(--spw-rhythm-unit) * 1.72);
+  --spw-component-pad: calc(var(--spw-rhythm-unit) * 1);
+  --spw-component-pad-tight: calc(var(--spw-rhythm-unit) * 0.74);
+  --spw-component-pad-loose: calc(var(--spw-rhythm-unit) * 1.24);
+  --spw-component-pad-roomy: calc(var(--spw-rhythm-unit) * 1.56);
+  --spw-surface-gap: calc(var(--spw-rhythm-unit) * 1);
+  --spw-surface-padding: clamp(
+    calc(var(--spw-rhythm-unit) * 1.15),
+    2.7vw,
+    calc(var(--spw-rhythm-unit) * 1.9)
+  );
   --spw-control-min-height: 2.22rem;
   --spw-control-padding-block: 0.3rem;
   --spw-control-padding-inline: 0.76rem;
@@ -2051,9 +2136,14 @@ html[data-spw-reduce-motion="on"] {
 /* Mobile rhythm */
 @media (max-width: 900px) {
   :root {
-    --spw-surface-padding: clamp(0.98rem, 2.4vw, 1.3rem);
-    --spw-hero-gap: 1rem;
-    --spw-slot-gap: 0.72rem;
+    --spw-device-space-scale: 0.97;
+    --spw-surface-padding: clamp(
+      calc(var(--spw-rhythm-unit) * 0.9),
+      2.4vw,
+      calc(var(--spw-rhythm-unit) * 1.3)
+    );
+    --spw-hero-gap: var(--spw-rhythm-unit);
+    --spw-slot-gap: calc(var(--spw-rhythm-unit) * 0.72);
     --spw-shell-row-gap: 0.4rem;
     --spw-shell-trace-gap: 0.58rem;
     --spw-shell-surface-padding-inline: 0.46rem;
@@ -2062,21 +2152,22 @@ html[data-spw-reduce-motion="on"] {
 
 @media (max-width: 760px) {
   :root {
-    --spw-flow-space: 0.88rem;
+    --spw-device-space-scale: 0.92;
+    --spw-flow-space: calc(var(--spw-rhythm-unit) * 0.88);
     --spw-heading-flow-space-multiplier: 1.32;
-    --spw-component-gap: 0.78rem;
-    --spw-component-gap-tight: 0.4rem;
-    --spw-component-gap-loose: 0.96rem;
-    --spw-component-gap-roomy: 1.2rem;
-    --spw-component-pad: 0.76rem;
-    --spw-component-pad-tight: 0.56rem;
-    --spw-component-pad-loose: 0.92rem;
-    --spw-component-pad-roomy: 1.08rem;
-    --spw-surface-gap: 0.78rem;
-    --spw-surface-padding: 0.82rem;
-    --spw-slot-gap: 0.56rem;
-    --spw-slot-gap-tight: 0.34rem 0.46rem;
-    --spw-hero-gap: 0.92rem;
+    --spw-component-gap: calc(var(--spw-rhythm-unit) * 0.78);
+    --spw-component-gap-tight: calc(var(--spw-rhythm-unit) * 0.4);
+    --spw-component-gap-loose: calc(var(--spw-rhythm-unit) * 0.96);
+    --spw-component-gap-roomy: calc(var(--spw-rhythm-unit) * 1.2);
+    --spw-component-pad: calc(var(--spw-rhythm-unit) * 0.76);
+    --spw-component-pad-tight: calc(var(--spw-rhythm-unit) * 0.56);
+    --spw-component-pad-loose: calc(var(--spw-rhythm-unit) * 0.92);
+    --spw-component-pad-roomy: calc(var(--spw-rhythm-unit) * 1.08);
+    --spw-surface-gap: calc(var(--spw-rhythm-unit) * 0.78);
+    --spw-surface-padding: calc(var(--spw-rhythm-unit) * 0.82);
+    --spw-slot-gap: calc(var(--spw-rhythm-unit) * 0.56);
+    --spw-slot-gap-tight: calc(var(--spw-rhythm-unit) * 0.34) calc(var(--spw-rhythm-unit) * 0.46);
+    --spw-hero-gap: calc(var(--spw-rhythm-unit) * 0.92);
     --spw-shell-row-gap: 0.36rem;
     --spw-shell-trace-gap: 0.46rem;
     --spw-shell-surface-padding-block: 0.34rem;
@@ -2094,13 +2185,14 @@ html[data-spw-reduce-motion="on"] {
 
 @media (max-width: 760px) and (orientation: landscape), (max-width: 640px) and (max-height: 520px) {
   :root {
-    --spw-flow-space: 0.8rem;
-    --spw-component-gap: 0.72rem;
-    --spw-component-gap-tight: 0.36rem;
-    --spw-component-pad: 0.7rem;
-    --spw-component-pad-tight: 0.5rem;
-    --spw-surface-gap: 0.72rem;
-    --spw-surface-padding: 0.72rem;
+    --spw-device-space-scale: 0.86;
+    --spw-flow-space: calc(var(--spw-rhythm-unit) * 0.8);
+    --spw-component-gap: calc(var(--spw-rhythm-unit) * 0.72);
+    --spw-component-gap-tight: calc(var(--spw-rhythm-unit) * 0.36);
+    --spw-component-pad: calc(var(--spw-rhythm-unit) * 0.7);
+    --spw-component-pad-tight: calc(var(--spw-rhythm-unit) * 0.5);
+    --spw-surface-gap: calc(var(--spw-rhythm-unit) * 0.72);
+    --spw-surface-padding: calc(var(--spw-rhythm-unit) * 0.72);
     --spw-shell-row-gap: 0.3rem;
     --spw-shell-surface-padding-block: 0.28rem;
     --spw-shell-surface-padding-inline: 0.34rem;
@@ -2114,9 +2206,10 @@ html[data-spw-reduce-motion="on"] {
 
 @media (max-width: 420px) {
   :root {
-    --spw-flow-space: 0.78rem;
-    --spw-surface-padding: 0.68rem;
-    --spw-component-pad: 0.68rem;
+    --spw-device-space-scale: 0.84;
+    --spw-flow-space: calc(var(--spw-rhythm-unit) * 0.78);
+    --spw-surface-padding: calc(var(--spw-rhythm-unit) * 0.68);
+    --spw-component-pad: calc(var(--spw-rhythm-unit) * 0.68);
     --spw-shell-trace-gap: 0.38rem;
     --spw-shell-surface-padding-inline: 0.3rem;
     --spw-control-padding-inline: 0.54rem;

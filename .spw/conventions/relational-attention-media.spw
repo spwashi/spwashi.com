@@ -33,5 +33,5 @@ routes: .{
   settings = ~"../../settings/index.html"
   play = ~"../../play/index.html"
   partial = ~"../../_partials/media-cauldron.html"
-  runtime = ~"../../public/js/modules/media-cauldron.js"
+  runtime = ~"../../public/js/modules/media/cauldron.js"
 }[reg=facet]

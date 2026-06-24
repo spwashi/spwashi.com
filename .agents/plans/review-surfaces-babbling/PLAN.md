@@ -14,7 +14,7 @@ The catalog and demo slice pages should be easier to scan, compare, and hand off
 
 ## Files
 
-- `[NEW] public/js/modules/design-review-surfaces.js`
+- `[NEW] public/js/modules/design/review-surfaces.js`
 - `[MOD] public/js/site.js`
 - `[NEW] public/css/routes/surfaces/review-surfaces.css`
 - `[MOD] public/css/style.css`
@@ -27,5 +27,5 @@ The catalog and demo slice pages should be easier to scan, compare, and hand off
 ## Validation
 
 - `git diff --check`
-- `node --check public/js/modules/design-review-surfaces.js`
+- `node --check public/js/modules/design/review-surfaces.js`
 - `npm run check`

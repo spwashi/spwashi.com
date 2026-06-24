@@ -7,6 +7,29 @@
    - Keep feature files responsible for visual personality, not z-index policy.
    ========================================================================== */
 
+/* ==========================================================================
+   0. Explicit Bottom Chrome Lanes
+   ========================================================================== */
+
+:root {
+  --spw-bottom-lane-console: max(0.65rem, env(safe-area-inset-bottom));
+  --spw-bottom-lane-pager: calc(var(--spw-bottom-lane-console) + 2.85rem);
+  --spw-bottom-lane-satchel: calc(var(--spw-bottom-lane-console) + 0.15rem);
+  --spw-bottom-lane-handle: calc(var(--spw-bottom-lane-satchel) + 2.4rem);
+}
+
+:where(.spw-console, [data-spw-chrome-role="console"]) {
+  inset-block-end: var(--spw-bottom-lane-console);
+}
+
+:where(.spw-state-inspector, [data-spw-chrome-role="state-inspector"]) {
+  inset-block-end: var(--spw-bottom-lane-satchel);
+}
+
+:where(.spw-section-handle, .spw-section-handle-shell, [data-spw-chrome-role="section-handle"]) {
+  inset-block-end: var(--spw-bottom-lane-handle);
+}
+
 :root {
   --spw-floating-inline-gutter: max(0.65rem, env(safe-area-inset-left), env(safe-area-inset-right));
   --spw-floating-satchel-lane: min(11.5rem, calc(50vw - 0.8rem));
@@ -59,6 +82,25 @@
 
 :where([data-spw-floating-chrome="true"][data-spw-chrome-role$="popover"]) {
   max-inline-size: min(28rem, calc(100vw - 1rem));
+}
+
+:where([data-spw-floating-chrome="true"][data-spw-popup-placement="popover"]) {
+  max-block-size: min(
+    26rem,
+    calc(100dvh - var(--spw-bottom-chrome-clearance, 0px) - 1.5rem)
+  );
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+:where([data-spw-floating-chrome="true"][data-spw-popup-placement="sheet"]) {
+  max-inline-size: calc(100vw - max(1rem, env(safe-area-inset-left) + env(safe-area-inset-right)));
+  max-block-size: min(
+    42dvh,
+    calc(100dvh - var(--spw-bottom-chrome-clearance, 0px) - var(--spw-floating-menu-clearance, 0px) - 4rem)
+  );
+  overflow: auto;
+  overscroll-behavior: contain;
 }
 
 :where([data-spw-floating-chrome="true"][data-spw-chrome-role$="drawer"]) {
@@ -162,6 +204,22 @@
   --chrome-font: 0.76rem;
   opacity: 0.9;
 }
+
+:root[data-spw-floating-chrome-competition="stacked"] {
+  --spw-floating-lane-gap: 0.75rem;
+}
+
+:root[data-spw-floating-chrome-competition="crowded"] {
+  --spw-floating-lane-gap: 0.85rem;
+  --spw-floating-safe-inset: max(1.15rem, env(safe-area-inset-bottom));
+}
+
+:root[data-spw-floating-chrome-bottom="occupied"] :where(
+  [data-spw-floating-chrome="true"][data-spw-popup-placement="popover"]
+) {
+  --spw-popup-bottom-awareness: occupied;
+}
+
 :where([data-spw-floating-chrome="true"][data-spw-metamaterial]) {
   /* resonance: material from global or local for glass/matte clear contrast on ephemeral too */
 }

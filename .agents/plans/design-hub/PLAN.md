@@ -73,7 +73,7 @@ Optional only if the route genuinely needs new styling beyond shared surfaces:
 ## Implementation Note
 
 - `/design/#component-ecology-specimens` now acts as the embedded feature specimen for component/environment state exploration.
-- `public/js/modules/design-experiments.js` owns the route-local wiring through `data-design-ecology-*`, writes corresponding `data-spw-*` state, emits `design:ecology-state`, and exposes `inspectEcologySpecimen()` / `setEcologySpecimen(...)` on `spwDesignExperiments`.
+- `public/js/modules/design/experiments.js` owns the route-local wiring through `data-design-ecology-*`, writes corresponding `data-spw-*` state, emits `design:ecology-state`, and exposes `inspectEcologySpecimen()` / `setEcologySpecimen(...)` on `spwDesignExperiments`.
 - `public/css/routes/design-surface.css` projects the same state into the visible message-surface display, resonance meter, active controls, and compact readout.
 
 ### Link updates

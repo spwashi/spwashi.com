@@ -1,0 +1,13 @@
+/* ==========================================================================
+   capture.css
+   --------------------------------------------------------------------------
+   Clean-capture visibility rules for screenshots and archival renders.
+   ========================================================================== */
+
+html[data-spw-capture-mode="clean"] .spw-console,
+html[data-spw-capture-mode="clean"] .spw-state-inspector,
+html[data-spw-capture-mode="clean"] .spw-discovery-notice-stack,
+html[data-spw-capture-mode="clean"] [data-spw-floating-chrome="true"],
+html[data-spw-capture-mode="clean"] [data-spw-runtime-status] {
+  display: none !important;
+}

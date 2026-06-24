@@ -15,9 +15,16 @@ export const SPW_QUERY_ALIASES = Object.freeze({
   log: Object.freeze(['spw-log', 'log']),
   logLevel: Object.freeze(['spw-log-level', 'log-level']),
   meaning: Object.freeze(['spw-meaning', 'meaning']),
+  moduleAudit: Object.freeze(['spw-module-audit', 'module-audit']),
+  moduleDelay: Object.freeze(['spw-module-delay', 'module-delay']),
+  moduleOnly: Object.freeze(['spw-module-only', 'module-only']),
+  moduleSkip: Object.freeze(['spw-module-skip', 'module-skip']),
+  moduleTiming: Object.freeze(['spw-module-timing', 'module-timing']),
+  moduleVisuals: Object.freeze(['spw-module-visuals', 'module-visuals']),
   palette: Object.freeze(['spw-palette', 'palette']),
   physics: Object.freeze(['spw-physics', 'physics']),
   reflow: Object.freeze(['spw-reflow', 'reflow']),
+  runtimeTiming: Object.freeze(['spw-runtime-timing', 'runtime-timing']),
   view: Object.freeze(['spw-view', 'view']),
 });
 
@@ -378,8 +385,15 @@ export const SPW_INSTRUMENTATION_CONTRACT = Object.freeze({
     interactionPreset: 'spw-interaction|interaction=<calm|tactile|puppet|screenshot>',
     logNamespaces: 'spw-log|log=<on|*|namespace[,namespace]>',
     logLevel: 'spw-log-level|log-level=<debug|info|warn|error>',
+    moduleAudit: 'spw-module-audit|module-audit=<on|off>',
+    moduleDelay: 'spw-module-delay|module-delay=<milliseconds>',
+    moduleOnly: 'spw-module-only|module-only=<module[,module]>',
+    moduleSkip: 'spw-module-skip|module-skip=<module[,module]>',
+    moduleTiming: 'spw-module-timing|module-timing=<module:timing[,module:timing]>',
+    moduleVisuals: 'spw-module-visuals|module-visuals=<on|off>',
     paletteResonance: 'spw-palette|palette=<route|craft|software|math>',
     physicsPreset: 'spw-physics|physics=<calm|tactile|puppet|screenshot>',
+    runtimeTiming: 'spw-runtime-timing|runtime-timing=<normal|eager|defer|quiet|manual>',
     meaningPreset: 'spw-meaning|meaning=<quiet|readable|inspect|screenshot>',
     viewingPreset: 'spw-view|view=<quiet|readable|inspect|screenshot>',
     tuningAttribute: 'spw-tune-<name>=<value>',
@@ -439,6 +453,40 @@ const readDebugTokens = (value = '') => (
     .split(/[,\s]+/)
     .map(normalizeToken)
     .filter(Boolean)
+);
+
+const normalizeBooleanSwitch = (value = '') => {
+  const normalized = normalizeToken(value);
+  if (['1', 'true', 'on', 'yes', '*'].includes(normalized)) return 'on';
+  if (['0', 'false', 'off', 'no', 'none'].includes(normalized)) return 'off';
+  return '';
+};
+
+const normalizeRuntimeTiming = (value = '') => {
+  const normalized = normalizeToken(value);
+  return ['normal', 'eager', 'defer', 'quiet', 'manual'].includes(normalized) ? normalized : '';
+};
+
+const normalizeModuleTimingList = (value = '') => (
+  String(value || '')
+    .split(/[\s,]+/)
+    .map((item) => {
+      const [rawModule, rawTiming] = item.split(':');
+      const moduleId = normalizeToken(rawModule);
+      const timing = normalizeToken(rawTiming);
+      if (!moduleId || !['immediate', 'visible', 'idle', 'interaction', 'region'].includes(timing)) return '';
+      return `${moduleId}:${timing}`;
+    })
+    .filter(Boolean)
+    .join(' ')
+);
+
+const normalizeModuleTokenList = (value = '') => (
+  String(value || '')
+    .split(/[\s,]+/)
+    .map(normalizeToken)
+    .filter(Boolean)
+    .join(' ')
 );
 
 const freezeAliasSets = (aliases = {}) => Object.fromEntries(
@@ -579,12 +627,19 @@ export function parseSpwQueryDisposition(search = globalThis.location?.search ||
   const disposition = {
     cssVars: {},
     data: {},
+    query: {
+      active: false,
+      keys: [],
+      presets: {},
+    },
     presets: {},
     reflowReason: '',
     tuning: {},
   };
 
   for (const [key, value] of params.entries()) {
+    disposition.query.active = true;
+    disposition.query.keys.push(normalizeToken(key) || key);
     const entry = {
       key,
       value,
@@ -625,6 +680,69 @@ export function parseSpwQueryDisposition(search = globalThis.location?.search ||
 
     if (queryContract.aliases.reflow?.has(key)) {
       disposition.reflowReason = normalizeReflowReason(value);
+      continue;
+    }
+
+    if (queryContract.aliases.runtimeTiming?.has(key)) {
+      const timing = normalizeRuntimeTiming(value);
+      if (timing) {
+        disposition.data.spwRuntimeTiming = timing;
+        disposition.tuning.runtimeTiming = timing;
+      }
+      continue;
+    }
+
+    if (queryContract.aliases.moduleDelay?.has(key)) {
+      const delay = Number.parseInt(value, 10);
+      if (Number.isFinite(delay) && delay > 0) {
+        disposition.data.spwModuleDelay = String(Math.min(delay, 5000));
+        disposition.tuning.moduleDelay = disposition.data.spwModuleDelay;
+      }
+      continue;
+    }
+
+    if (queryContract.aliases.moduleAudit?.has(key)) {
+      const enabled = normalizeBooleanSwitch(value);
+      if (enabled) {
+        disposition.data.spwModuleAudit = enabled === 'on' ? 'on' : '';
+        disposition.tuning.moduleAudit = enabled;
+      }
+      continue;
+    }
+
+    if (queryContract.aliases.moduleVisuals?.has(key)) {
+      const enabled = normalizeBooleanSwitch(value);
+      if (enabled) {
+        disposition.data.spwModuleVisuals = enabled === 'on' ? 'on' : '';
+        disposition.tuning.moduleVisuals = enabled;
+      }
+      continue;
+    }
+
+    if (queryContract.aliases.moduleOnly?.has(key)) {
+      const modules = normalizeModuleTokenList(value);
+      if (modules) {
+        disposition.data.spwModuleOnly = modules;
+        disposition.tuning.moduleOnly = modules.replace(/\s+/g, ',');
+      }
+      continue;
+    }
+
+    if (queryContract.aliases.moduleSkip?.has(key)) {
+      const modules = normalizeModuleTokenList(value);
+      if (modules) {
+        disposition.data.spwModuleSkip = modules;
+        disposition.tuning.moduleSkip = modules.replace(/\s+/g, ',');
+      }
+      continue;
+    }
+
+    if (queryContract.aliases.moduleTiming?.has(key)) {
+      const timingList = normalizeModuleTimingList(value);
+      if (timingList) {
+        disposition.data.spwModuleTiming = timingList;
+        disposition.tuning.moduleTiming = timingList.replace(/\s+/g, ',');
+      }
       continue;
     }
 
@@ -674,25 +792,33 @@ export function parseSpwQueryDisposition(search = globalThis.location?.search ||
 
     if (queryContract.aliases.physics?.has(key)) {
       const preset = normalizeToken(value);
-      applyPresetBundle(disposition, preset, queryContract.physicsPresets, 'physics', 'physics');
+      if (applyPresetBundle(disposition, preset, queryContract.physicsPresets, 'physics', 'physics')) {
+        disposition.query.presets.physics = preset;
+      }
       continue;
     }
 
     if (queryContract.aliases.meaning?.has(key)) {
       const preset = normalizeToken(value);
-      applyPresetBundle(disposition, preset, queryContract.meaningPresets, 'meaning', 'meaning');
+      if (applyPresetBundle(disposition, preset, queryContract.meaningPresets, 'meaning', 'meaning')) {
+        disposition.query.presets.meaning = preset;
+      }
       continue;
     }
 
     if (queryContract.aliases.view?.has(key)) {
       const preset = normalizeToken(value);
-      applyPresetBundle(disposition, preset, queryContract.meaningPresets, 'meaning', 'view');
+      if (applyPresetBundle(disposition, preset, queryContract.meaningPresets, 'meaning', 'view')) {
+        disposition.query.presets.view = preset;
+      }
       continue;
     }
 
     if (queryContract.aliases.interaction?.has(key)) {
       const preset = normalizeToken(value);
-      applyPresetBundle(disposition, preset, queryContract.physicsPresets, 'physics', 'interaction');
+      if (applyPresetBundle(disposition, preset, queryContract.physicsPresets, 'physics', 'interaction')) {
+        disposition.query.presets.interaction = preset;
+      }
       continue;
     }
 
@@ -708,6 +834,7 @@ export function parseSpwQueryDisposition(search = globalThis.location?.search ||
     }
   }
 
+  disposition.query.keys = [...new Set(disposition.query.keys)].sort();
   return disposition;
 }
 
@@ -726,6 +853,20 @@ export function applySpwQueryDisposition(target = globalThis.document?.documentE
     else element.dataset[key] = value;
   });
 
+  if (disposition.query.active) {
+    element.dataset.spwQueryActive = 'true';
+    element.dataset.spwQueryKeys = disposition.query.keys.join(' ');
+    const presetTokens = Object.entries(disposition.query.presets)
+      .map(([family, preset]) => `${family}:${preset}`)
+      .join(' ');
+    if (presetTokens) element.dataset.spwQueryPresets = presetTokens;
+    else delete element.dataset.spwQueryPresets;
+  } else {
+    delete element.dataset.spwQueryActive;
+    delete element.dataset.spwQueryKeys;
+    delete element.dataset.spwQueryPresets;
+  }
+
   if (Object.keys(disposition.tuning).length) {
     writeTuningAttributes(element, disposition.tuning, { source: options.source || 'query' });
   }
@@ -741,6 +882,28 @@ export function applySpwQueryDisposition(target = globalThis.document?.documentE
   }
 
   return disposition;
+}
+
+export function snapshotSpwQueryState(target = globalThis.document?.documentElement) {
+  const element = resolveTarget(target);
+  const dataset = element?.dataset || {};
+  return {
+    active: dataset.spwQueryActive === 'true',
+    keys: String(dataset.spwQueryKeys || '').split(/\s+/).filter(Boolean),
+    presets: String(dataset.spwQueryPresets || '').split(/\s+/).filter(Boolean),
+    runtimeTiming: dataset.spwRuntimeTiming || null,
+    moduleAudit: dataset.spwModuleAudit || null,
+    moduleVisuals: dataset.spwModuleVisuals || null,
+    moduleDelay: dataset.spwModuleDelay || null,
+    moduleOnly: dataset.spwModuleOnly || null,
+    moduleSkip: dataset.spwModuleSkip || null,
+    moduleTiming: dataset.spwModuleTiming || null,
+    tuning: Object.fromEntries(
+      Object.entries(dataset)
+        .filter(([key]) => key.startsWith(TUNING_PREFIX))
+        .sort(([left], [right]) => left.localeCompare(right))
+    ),
+  };
 }
 
 export function snapshotInstrumentationTarget(target, options = {}) {
@@ -903,7 +1066,26 @@ function shouldAnnounceConsoleSurface(globalObject = globalThis) {
   const debugOn = root?.dataset?.spwDebugMode === 'on';
   const logTokens = readLogTokens();
   const params = new URLSearchParams(String(globalObject.location?.search || '').replace(/^\?/, ''));
-  const hasDebugQuery = ['debug', 'spw-debug', 'log', 'spw-log', 'diagnostics', 'spw-diagnostics', 'qa', 'spw-qa']
+  const hasDebugQuery = [
+    'debug',
+    'spw-debug',
+    'log',
+    'spw-log',
+    'diagnostics',
+    'spw-diagnostics',
+    'qa',
+    'spw-qa',
+    'runtime-timing',
+    'spw-runtime-timing',
+    'module-audit',
+    'spw-module-audit',
+    'module-only',
+    'spw-module-only',
+    'module-skip',
+    'spw-module-skip',
+    'module-timing',
+    'spw-module-timing',
+  ]
     .some((key) => params.get(key));
 
   return isLocal || debugOn || logTokens.length > 0 || hasDebugQuery;
@@ -993,6 +1175,7 @@ function buildConsoleSnapshot(globalObject, controls = {}) {
     pageState: controls.pageState?.snapshot?.() || null,
     modules: controls.modules?.records?.() || siteApi.snapshotModules?.() || null,
     modulePolicy: controls.modules?.policy?.() || null,
+    query: snapshotSpwQueryState(html),
     bus: siteApi.bus?.getDiagnostics?.() || siteApi.bus?.recent?.(4) || null,
     runtimePosture: html?.dataset?.spwRuntimePosture || null,
     debugMode: html?.dataset?.spwDebugMode || null,
@@ -1057,6 +1240,7 @@ export function installSpwCompositionConsole(globalObject = globalThis, options 
     logger: (namespace, loggerOptions = {}) => createSpwLogger(namespace, loggerOptions),
     mark: (target, details = {}) => markInstrumented(target, options.namespace || 'spw-compose', details),
     query: (target = globalObject.document?.documentElement, queryOptions = {}) => applySpwQueryDisposition(target, { ...queryOptions, source: options.namespace || 'spw-compose' }),
+    queryState: (target = globalObject.document?.documentElement) => snapshotSpwQueryState(target),
     reflow: (target, reason, details = {}) => markReflowReason(target, reason, { ...details, source: options.namespace || 'spw-compose' }),
     layoutTrope: (target, trope, details = {}) => markLayoutTrope(target, trope, { ...details, source: options.namespace || 'spw-compose' }),
     tune: (target, entries = {}) => writeTuningAttributes(target, entries, { source: options.namespace || 'spw-compose' }),

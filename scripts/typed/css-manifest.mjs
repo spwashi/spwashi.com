@@ -31,7 +31,7 @@ export const BEHAVIOR_SCOPES = Object.freeze({
 });
 /** Route personality keyed by data-spw-surface. */
 export const ROUTE_SCOPES = Object.freeze({
-    about: ['/public/css/routes/about-surface.css'],
+    about: ['/public/css/routes/surfaces/about.css'],
     blog: [
         '/public/css/routes/surfaces/blog.css',
         '/public/css/routes/surfaces/blog-frames.css',
@@ -40,9 +40,9 @@ export const ROUTE_SCOPES = Object.freeze({
     ],
     care: [],
     cards: [],
-    contact: ['/public/css/routes/contact-surface.css'],
+    contact: ['/public/css/routes/surfaces/contact.css'],
     coordination: [],
-    craft: ['/public/css/routes/craft-surface.css'],
+    craft: ['/public/css/routes/surfaces/craft.css'],
     curriculum: [],
     home: [
         '/public/css/routes/surfaces/home.css',
@@ -58,19 +58,19 @@ export const ROUTE_SCOPES = Object.freeze({
         '/public/css/routes/surfaces/plans-relationships.css',
         '/public/css/routes/surfaces/plans-responsive.css',
     ],
-    play: ['/public/css/routes/play-surface.css'],
+    play: ['/public/css/routes/surfaces/play.css'],
     privacy: [],
-    recipes: ['/public/css/routes/recipes-surface.css'],
+    recipes: ['/public/css/routes/surfaces/recipes.css'],
     research: [],
     'rpg-wednesday': [
-        '/public/css/routes/play-surface.css',
-        '/public/css/routes/rpg-wednesday-surface.css',
+        '/public/css/routes/surfaces/play.css',
+        '/public/css/routes/surfaces/rpg-wednesday.css',
     ],
-    services: ['/public/css/routes/services-surface.css'],
-    'services-care': ['/public/css/routes/services-surface.css'],
-    'services-creator': ['/public/css/routes/services-surface.css'],
-    'services-ecosystem': ['/public/css/routes/services-surface.css'],
-    'services-systems': ['/public/css/routes/services-surface.css'],
+    services: ['/public/css/routes/surfaces/services.css'],
+    'services-care': ['/public/css/routes/surfaces/services.css'],
+    'services-creator': ['/public/css/routes/surfaces/services.css'],
+    'services-ecosystem': ['/public/css/routes/surfaces/services.css'],
+    'services-systems': ['/public/css/routes/surfaces/services.css'],
     settings: [
         '/public/css/routes/surfaces/settings.css',
         '/public/css/routes/surfaces/settings-forms.css',
@@ -78,12 +78,12 @@ export const ROUTE_SCOPES = Object.freeze({
         '/public/css/routes/surfaces/settings-runtime.css',
         '/public/css/routes/surfaces/settings-cues.css',
     ],
-    topics: ['/public/css/routes/topics-surface.css'],
+    topics: ['/public/css/routes/surfaces/topics.css'],
     town: [],
-    'tools-budgeting': ['/public/css/routes/tools-budgeting-surface.css'],
+    'tools-budgeting': ['/public/css/routes/surfaces/tools-budgeting-surface.css'],
     website: [
-        '/public/css/routes/website-surface.css',
-        '/public/css/routes/design-surface.css',
+        '/public/css/routes/surfaces/website.css',
+        '/public/css/routes/surfaces/design.css',
     ],
 });
 const ROUTE_BUNDLE_SLUGS = Object.freeze(Object.fromEntries(Object.entries(ROUTE_SCOPES)

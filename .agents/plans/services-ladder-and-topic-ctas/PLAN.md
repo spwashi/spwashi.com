@@ -19,8 +19,8 @@ Reshape the public services ladder around smaller honest entry points, synchroni
 
 ## Shared layers
 
-- `public/js/modules/services-configurator.js`
-- `public/js/modules/tool-budgeting.js`
+- `public/js/modules/services/configurator.js`
+- `public/js/modules/tools/budgeting.js`
 
 ## Public routes touched
 

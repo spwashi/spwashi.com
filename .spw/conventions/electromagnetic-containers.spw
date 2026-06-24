@@ -237,7 +237,7 @@
 }
 
 ^"technical_implementation"{
-  @system: ~"../../public/js/modules/electromagnetic-containers.js"
+  @system: ~"../../public/js/modules/effects/electromagnetic-containers.js"
   @styles: ~"../../public/css/effects/electromagnetic-container.css"
 
   init: "initElectromagneticContainers() runs on DOMContentLoaded"

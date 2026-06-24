@@ -79,7 +79,7 @@ export const FEATURE_DEFS = [
     selector: '[data-blog-interpreter]',
     route: 'blog',
     rootMode: 'each',
-    load: () => import('../modules/blog-interpreter.js'),
+    load: () => import('../modules/blog/interpreter.js'),
     mount: (mod, ctx, root) => {
       const fn = mod?.initBlogInterpreter;
       if (!isFn(fn)) return;
@@ -93,7 +93,7 @@ export const FEATURE_DEFS = [
     selector: '.specimen-card, #specimen-index',
     route: 'blog',
     rootMode: 'single',
-    load: () => import('../modules/blog-specimens.js'),
+    load: () => import('../modules/blog/specimens.js'),
     mount: (mod) => {
       const fn = mod?.initBlogSpecimens;
       if (!isFn(fn)) return;
@@ -106,7 +106,7 @@ export const FEATURE_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     route: 'blog',
     selector: '[data-blog-interpreter], #specimen-index',
-    load: () => import('../modules/attn-register.js'),
+    load: () => import('../modules/blog/attn-register.js'),
     mount: (mod) => {
       const fn = mod?.initAttnRegister;
       if (!isFn(fn)) return;
@@ -119,7 +119,7 @@ export const FEATURE_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     route: ['services', 'newyear'],
     selector: '[data-seed-card]',
-    load: () => import('../modules/seed-card.js'),
+    load: () => import('../modules/cards/seed-card.js'),
     mount: (mod) => {
       const fn = mod?.initSeedCards;
       if (!isFn(fn)) return;
@@ -132,7 +132,7 @@ export const FEATURE_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     route: 'services',
     selector: '[data-payment-card]',
-    load: () => import('../modules/payment-card.js'),
+    load: () => import('../modules/cards/payment-card.js'),
     mount: (mod) => {
       const fn = mod?.initPaymentCards;
       if (!isFn(fn)) return;
@@ -145,7 +145,7 @@ export const FEATURE_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     route: 'services',
     selector: '[data-services-configurator]',
-    load: () => import('../modules/services-configurator.js'),
+    load: () => import('../modules/services/configurator.js'),
     mount: (mod) => {
       const fn = mod?.initServicesConfigurators;
       if (!isFn(fn)) return;
@@ -159,7 +159,7 @@ export const FEATURE_DEFS = [
     features: ['rpg-gameplay'],
     route: 'rpg-wednesday',
     selector: 'main',
-    load: () => import('../modules/rpg-wednesday.js'),
+    load: () => import('../modules/rpg-wednesday/index.js'),
     mount: (mod) => {
       const fn = mod?.initRpgWednesday;
       if (!isFn(fn)) return;
@@ -185,7 +185,7 @@ export const FEATURE_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     route: 'settings',
     selector: '#payment-settings-container',
-    load: () => import('../modules/payment-card.js'),
+    load: () => import('../modules/cards/payment-card.js'),
     mount: (mod) => {
       const fn = mod?.initPaymentSettings;
       if (!isFn(fn)) return;
@@ -198,7 +198,7 @@ export const FEATURE_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     route: 'home',
     selector: '[data-home-section-index]',
-    load: () => import('../modules/home-section-index.js'),
+    load: () => import('../modules/home/section-index.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initHomeSectionIndex;
       if (!isFn(fn)) return;
@@ -242,7 +242,7 @@ export const FEATURE_DEFS = [
     rootMode: 'each',
     describes: 'media-cauldron[prime.select.generate] attention[self+local+global] artifact[prompt-pack]',
     updates: ['data-media-cauldron-state', 'data-media-cauldron-output', 'data-spw-attention-self-relation', 'data-spw-attention-local-relation', 'data-spw-attention-global-relation'],
-    load: () => import('../modules/media-cauldron.js'),
+    load: () => import('../modules/media/cauldron.js'),
     mount: (mod, ctx, root) => {
       const fn = mod?.initMediaCauldron;
       if (!isFn(fn)) return;
@@ -352,7 +352,7 @@ export const FEATURE_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     selector: '[data-boonhonk-mixer]',
     rootMode: 'single',
-    load: () => import('../modules/boonhonk-mixer.js'),
+    load: () => import('../modules/widgets/boonhonk-mixer.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initBoonhonkMixers;
       if (!isFn(fn)) return;
@@ -405,7 +405,7 @@ export const FEATURE_DEFS = [
     selector: '#typography-measurement-preview',
     describes: 'settings[typography.measure.preview] pretext[bus.telemetry] designer[conversation.handoff]',
     updates: ['data-spw-typography-measure-state', 'data-spw-pretext-line-count', 'data-text-wrap', 'data-spw-measure-kind'],
-    load: () => import('../modules/typography-measurement-preview.js'),
+    load: () => import('../modules/design/typography-measurement-preview.js'),
     mount: (mod, ctx, root) => {
       const fn = mod?.initTypographyMeasurementPreview;
       if (!isFn(fn)) return;
@@ -461,8 +461,16 @@ export const ENHANCEMENT_DEFS = [
     id: 'tuning-discovery',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
-    describes: 'embedded tuning surfaces marginalia + html[data-spw-tuning-discoverability]',
-    updates: ['data-spw-tuning-surface', 'data-spw-tuning-surface-count', 'data-spw-tuning-discoverability'],
+    describes: 'embedded tuning surfaces, component anatomy handles + html[data-spw-tuning-discoverability]',
+    updates: [
+      'data-spw-tuning-surface',
+      'data-spw-tuning-surface-count',
+      'data-spw-tuning-discoverability',
+      'data-spw-embedded-tuning-host',
+      'data-spw-embedded-tuning-count',
+      'data-spw-embedded-tuning-present',
+      'data-spw-embedded-tuning-dimensions',
+    ],
     load: () => import('./tuning-discovery.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initTuningDiscovery;
@@ -807,7 +815,7 @@ export const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     selector: '[data-design-experiments-root]',
     rootMode: 'single',
-    load: () => import('../modules/design-experiments.js'),
+    load: () => import('../modules/design/experiments.js'),
     mount: (mod) => {
       const fn = mod?.initDesignExperiments;
       if (!isFn(fn)) return;
@@ -820,7 +828,7 @@ export const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     selector: 'body[data-spw-page-role="asset-review"], body[data-spw-page-role="token-review"], body[data-spw-page-role="design-lab"]',
     rootMode: 'single',
-    load: () => import('../modules/design-review-surfaces.js'),
+    load: () => import('../modules/design/review-surfaces.js'),
     mount: (mod) => {
       const fn = mod?.initDesignReviewSurfaces;
       if (!isFn(fn)) return;

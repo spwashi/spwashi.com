@@ -175,6 +175,34 @@
   color: color-mix(in srgb, var(--active-op-color) 70%, var(--ink) 30%);
 }
 
+/* Embedded panel swipe rail: lives inside the generated handle to avoid pseudo-element collisions. */
+:where(.spw-embedded-tuning-handle__gesture-rail) {
+  position: absolute;
+  z-index: 1;
+  inset-block-end: -0.38rem;
+  inset-inline-start: 50%;
+  inline-size: min(4.8rem, 34%);
+  block-size: 0.18rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--active-op-color) 26%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--surface-strong) 52%, transparent);
+  opacity: 0.28;
+  pointer-events: none;
+  translate: -50% 0;
+  transition:
+    inline-size 160ms var(--ease-mechanical, ease),
+    opacity 160ms var(--ease-mechanical, ease);
+}
+
+:where(html:not([data-spw-interaction-tuner="responsive"]):not([data-spw-tuning-discoverability="revealed"]) .spw-embedded-tuning-handle__gesture-rail) {
+  display: none;
+}
+
+:where(.spw-embedded-tuning-handle:is(:hover, :focus-within) > .spw-embedded-tuning-handle__gesture-rail) {
+  inline-size: min(6.4rem, 44%);
+  opacity: 0.56;
+}
+
 /* Gesture state anatomy on interactive cards */
 :where(
   [data-spw-gesture="charging"],

@@ -61,9 +61,9 @@ function outputPathForEntry(entryPath) {
         if (cssRelativePath === 'debug.css')
             return `effects/${cssRelativePath}`;
         if (cssRelativePath === 'design-experiments.css')
-            return `routes/${cssRelativePath}`;
+            return `routes/surfaces/${cssRelativePath}`;
         if (cssRelativePath.endsWith('-surface.css'))
-            return `routes/${cssRelativePath}`;
+            return `routes/surfaces/${cssRelativePath}`;
         return cssRelativePath;
     })();
     return path.join(PUBLIC_CSS_DIR, outputRelativePath);

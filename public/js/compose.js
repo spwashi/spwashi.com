@@ -203,6 +203,7 @@ export {
   markReflowReason,
   parseSpwQueryDisposition,
   readConsoleLogBuffer,
+  snapshotSpwQueryState,
   snapshotInstrumentationTarget,
   writeTuningAttributes,
 } from './kernel/instrumentation.js';

@@ -74,6 +74,14 @@ For extensible theming, prefer custom properties and semantic attributes over
 route-specific selectors. A theme should be readable as a disposition layer before
 it becomes a pile of overrides.
 
+Runtime-written custom properties are part of the CSS contract. If JS writes a
+literal `--token` with `style.setProperty(...)`, the token should appear in
+`public/css/` or be registered as a generated runtime family in
+`scripts/ts/style-property-contract.mts`. Keep dynamic property writers narrow:
+settings, query tuning, instrumentation, and design labs may project registry
+values, but route modules should usually write named attributes or explicit
+custom properties.
+
 Query-driven demos can tune color and palette disposition with parameters like
 `spw-palette=craft`, `spw-color-active-op=%23008080`, and
 `spw-var-shape-component=8px` when JS opts into `applySpwQueryDisposition`.

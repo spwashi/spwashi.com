@@ -316,8 +316,8 @@ Cross-referenced with component layout/interactivity audit and the measurement p
 
 ### Audit Findings (Surgical Scope)
 - **services/index.html + sub-routes (creator/systems/ecosystem/care)**: Solid Spw semantics and operator navigation. Copy is clear but can more explicitly invite self-prep via the tools ("before you ask, try mapping the character of the work or your own capacity"). Configurator already has excellent learnable data grammar (svc-state, dimensions, charge) — prime candidate for trope wiring and vocabulary resonance.
-- **tools/budgeting/index.html + tool-budgeting.js + tools-budgeting-surface.css**: Strong local-only model, tier unlocking, time-as-numericity with cauldron priming. Friction points: hard confirm on reset (patronizing rule), functional but thin storytelling in messages, limited "context for personality/theme" (entries are bare), missed grounding (no markLayoutTrope or rich bus snapshots on milestone crosses, weak trace back to "why I saved this"), parallel money/time code is readable but repetitive. Tier cards good but can carry more microinteraction and optional depth.
-- **tools/character-sheet/index.html + profile-tool.js + profile-builder.js + profile-card.css**: Already excellent substrate (shared with /tools/profile/), translation map, notebook loop, multi-lens presets (character/translation/application/boonhonk), taxonomy for tropes that can be "played, drawn, rehearsed, implemented". Opportunity: stronger explicit tie to "self-imagination as the root funding decision", optional process flows (e.g. "seed from wonder", "carry to budgeting"), microinteractions on field/random/preset that surface vocabulary and offer to cauldron, integration of recent metacognitiveStance/processAttention as non-forcing developmental context.
+- **tools/budgeting/index.html + tool-budgeting.js + routes/surfaces/tools-budgeting-surface.css**: Strong local-only model, tier unlocking, time-as-numericity with cauldron priming. Friction points: hard confirm on reset (patronizing rule), functional but thin storytelling in messages, limited "context for personality/theme" (entries are bare), missed grounding (no markLayoutTrope or rich bus snapshots on milestone crosses, weak trace back to "why I saved this"), parallel money/time code is readable but repetitive. Tier cards good but can carry more microinteraction and optional depth.
+- **tools/character-sheet/index.html + modules/profile/tool.js + modules/profile/builder.js + profile-card.css**: Already excellent substrate (shared with /tools/profile/), translation map, notebook loop, multi-lens presets (character/translation/application/boonhonk), taxonomy for tropes that can be "played, drawn, rehearsed, implemented". Opportunity: stronger explicit tie to "self-imagination as the root funding decision", optional process flows (e.g. "seed from wonder", "carry to budgeting"), microinteractions on field/random/preset that surface vocabulary and offer to cauldron, integration of recent metacognitiveStance/processAttention as non-forcing developmental context.
 - **Cauldron (composition.js + chrome.css + footer + site-settings)**: Already rich grounding (origin, gesture-trace, age, primed, numericity quantifiers, wonder meta). Layout/UX can be further tightened for tools contexts (locality, density of meta on narrow, discoverability of traces without clutter). Perfect "optional process hub" — budget entries and character pressures should arrive with richer narrative payload so visitors can later "wonder about variants" when the spell resurfaces in a creative session.
 - **Cross-cutting**: Missed opportunities for instrumentation (funding-narrative and character-development tropes), vocabulary-term on key imaginative concepts, explicit links between budgeting/character/services as a "self-prep loop" for clearer, more personal commissioning. No broad redundancies found that fight communicability; small opportunities in parallel ledger logic and cauldron ingredient density.
 
@@ -342,11 +342,11 @@ Cross-referenced with component layout/interactivity audit and the measurement p
 - .agents/plans/funding-proof-cards/PLAN.md (cross-ref)
 - .agents/plans/profile-character-card-development/PLAN.md (cross-ref)
 - tools/budgeting/index.html (copy + optional context field)
-- public/js/modules/tool-budgeting.js (trope wiring, richer cauldron payload, optional flow)
+- public/js/modules/tools/budgeting.js (trope wiring, richer cauldron payload, optional flow)
 - tools/character-sheet/index.html (copy + metacog suggestion + micro wiring)
-- public/js/modules/profile-tool.js (or builder) (lens/preset enhancements)
+- public/js/modules/profile/tool.js (or builder) (lens/preset enhancements)
 - services/index.html + subpages (light copy + tool on-ramp links)
-- public/css/routes/tools-budgeting-surface.css (micro states if needed)
+- public/css/routes/surfaces/tools-budgeting-surface.css (micro states if needed)
 - public/css/components/cards/profile-card.css (if micro states)
 - public/js/interface/composition.js + public/css/shell/chrome.css (cauldron UX/layout further, richer tool-origin support)
 - public/js/kernel/instrumentation.js (if new trope names need registration)
@@ -401,7 +401,7 @@ North-star alignment: This is imagination development through computational + cu
 
 ### Expected Files (minimal)
 - .agents/plans/expressive-layout-tropes-fidget-manuscript/PLAN.md (this section + cross-refs)
-- tools/budgeting/index.html + public/js/modules/tool-budgeting.js (generalize motive into multi-dim resource support + richer emission)
+- tools/budgeting/index.html + public/js/modules/tools/budgeting.js (generalize motive into multi-dim resource support + richer emission)
 - public/js/interface/composition.js + public/css/shell/chrome.css (higher-order ingredient recognition + visuals, cauldron UX further)
 - public/js/kernel/instrumentation.js (trope kind registration if new)
 - Light copy/attr updates in services-configurator or character surfaces only where they immediately demonstrate scalability

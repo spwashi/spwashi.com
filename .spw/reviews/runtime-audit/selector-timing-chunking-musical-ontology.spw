@@ -6,7 +6,7 @@
 
 @runtime: ~"../../../public/js/site.js"
 @shared_kernel: ~"../../../public/js/kernel/shared.js"
-@boonhonk: ~"../../../public/js/modules/boonhonk-mixer.js"
+@boonhonk: ~"../../../public/js/modules/widgets/boonhonk-mixer.js"
 @composition: ~"../../../public/js/interface/composition.js"
 @attention_field: ~"../../conventions/attention-field.spw"
 @ornament: ~"../../conventions/ornament-contract.spw"

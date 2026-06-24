@@ -11,19 +11,19 @@
   --pack-tier-compact-gap: var(--component-gap-tight, 0.55rem);
   --pack-tier-compact-grid: var(--grid-min-compact, 12rem);
   --pack-tier-compact-measure: var(--measure-compact, 32ch);
-  --pack-tier-compact-flow: 0.78rem;
+  --pack-tier-compact-flow: calc(var(--spw-rhythm-unit, 1rem) * 0.78);
 
   --pack-tier-balanced-pad: var(--spw-component-pad, 0.9rem);
   --pack-tier-balanced-gap: var(--component-gap, 0.9rem);
   --pack-tier-balanced-grid: var(--grid-min-card, 15rem);
   --pack-tier-balanced-measure: var(--measure-panel, 52ch);
-  --pack-tier-balanced-flow: 0.95rem;
+  --pack-tier-balanced-flow: calc(var(--spw-rhythm-unit, 1rem) * 0.95);
 
   --pack-tier-roomy-pad: var(--spw-component-pad-loose, 1.15rem);
   --pack-tier-roomy-gap: var(--component-gap-loose, 1.2rem);
   --pack-tier-roomy-grid: var(--grid-min-feature, 19rem);
   --pack-tier-roomy-measure: var(--measure-reading, 68ch);
-  --pack-tier-roomy-flow: 1.12rem;
+  --pack-tier-roomy-flow: calc(var(--spw-rhythm-unit, 1rem) * 1.12);
 }
 
 /* --------------------------------------------------------------------------
@@ -39,8 +39,16 @@
   --component-gap: var(--pack-tier-compact-gap);
   --spw-grid-min-active: var(--pack-tier-compact-grid);
   --spw-flow-space: var(--pack-tier-compact-flow);
-  --surface-gap: clamp(0.55rem, 1.1vw, 0.82rem);
-  --surface-padding: clamp(0.68rem, 1.35vw, 0.95rem);
+  --surface-gap: clamp(
+    calc(var(--spw-rhythm-unit, 1rem) * 0.55),
+    1.1vw,
+    calc(var(--spw-rhythm-unit, 1rem) * 0.82)
+  );
+  --surface-padding: clamp(
+    calc(var(--spw-rhythm-unit, 1rem) * 0.68),
+    1.35vw,
+    calc(var(--spw-rhythm-unit, 1rem) * 0.95)
+  );
 }
 
 :where(
@@ -53,8 +61,16 @@
   --component-gap: var(--pack-tier-roomy-gap);
   --spw-grid-min-active: var(--pack-tier-roomy-grid);
   --spw-flow-space: var(--pack-tier-roomy-flow);
-  --surface-gap: clamp(0.95rem, 1.9vw, 1.35rem);
-  --surface-padding: clamp(1rem, 2vw, 1.45rem);
+  --surface-gap: clamp(
+    calc(var(--spw-rhythm-unit, 1rem) * 0.95),
+    1.9vw,
+    calc(var(--spw-rhythm-unit, 1rem) * 1.35)
+  );
+  --surface-padding: clamp(
+    calc(var(--spw-rhythm-unit, 1rem) * 1),
+    2vw,
+    calc(var(--spw-rhythm-unit, 1rem) * 1.45)
+  );
 }
 
 :where(.site-frame, .frame-panel, .frame-card, .frame-body) {
