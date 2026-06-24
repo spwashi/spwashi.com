@@ -196,12 +196,35 @@
 /* Shell defaults keep raw HTML routes usable before route CSS loads. */
 html {
   min-height: 100%;
-  scroll-padding-top: calc(var(--shell-header-height) + 1rem);
+  --spw-scroll-target-top-clearance: calc(var(--shell-header-height) + 1rem);
+  --spw-scroll-target-bottom-clearance: calc(
+    env(safe-area-inset-bottom)
+    + var(--spw-bottom-chrome-clearance, 0px)
+    + 0.75rem
+  );
+  scroll-padding-top: var(--spw-scroll-target-top-clearance);
   scroll-padding-bottom: calc(
     env(safe-area-inset-bottom)
     + var(--spw-bottom-chrome-clearance, 0px)
     + 0.75rem
   );
+}
+
+:where(main > section[id], main > article[id], main [data-spw-kind][id], main [data-spw-role][id]) {
+  scroll-margin-block-start: var(--spw-scroll-target-top-clearance);
+  scroll-margin-block-end: var(--spw-scroll-target-bottom-clearance);
+}
+
+@media (max-width: 720px) {
+  html {
+    --spw-scroll-target-top-clearance: calc(var(--shell-header-height) + 0.75rem);
+    --spw-scroll-target-bottom-clearance: calc(
+      env(safe-area-inset-bottom)
+      + var(--spw-bottom-chrome-clearance, 0px)
+      + var(--touch-target-compact, 2.15rem)
+      + 1rem
+    );
+  }
 }
 
 body {

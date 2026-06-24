@@ -27,6 +27,7 @@ html_contract: .{
  route_opt_in = `Add route-discovery to body[data-spw-features] when the page has data-spw-related-routes or a contextual header.`
  region_names = `Prefer ids, headings, data-spw-region-role, data-spw-role, and data-spw-feature on meaningful sections and clusters.`
  image_routes = `Use tracked public/images assets for image-backed route anchors; give honest alt text and route-specific captions.`
+ visual_link_board = `Use .spw-visual-link-board when a link should carry route text, image material, accent color, and visual-model cue copy as one discoverable affordance.`
 }[reg=facet]
 
 runtime_contract: .{
@@ -50,8 +51,10 @@ occlusion_contract: .{
  slot_source = `public/css/components/floating-chrome.css defines bottom slot variables and lane widths.`
  runtime_slot = `annotateFloatingChromeElement writes data-spw-chrome-slot from role so audits can reason about overlap before visual personality is applied.`
  measured_overlap = `syncFloatingChromeState writes data-spw-floating-chrome-occlusion and data-spw-floating-chrome-occlusion-pairs after measuring open floating chrome rectangles.`
+ rendered_state = `Hidden handles and closed popovers should not count as rendered chrome; the closed state satchel launch remains rendered because it is still an active tap target.`
  scroll_progression = `The section handle syncs floating chrome state when page progression makes it visible or hidden, so bottom clearance follows the actual rendered state.`
  mobile_lanes = `When the state satchel exists, section handle and parallel navigation move into the left travel lane while satchel/cauldron occupy the right satchel lane.`
+ scroll_clearance = `Anchor and section travel targets should reserve sticky-header clearance above and active bottom-chrome clearance below so page progression does not strand copy under floating controls.`
  future_parallax = `Parallax or occlusion effects should consume slot/tier/state attributes first, then add depth or movement without changing ownership of the tap target.`
 }[reg=facet]
 
@@ -68,6 +71,7 @@ visual_model_contract: .{
  copy_rule = `Visible copy may be evocative, but data-spw-visual-cues and data-spw-accent-anchor should name the machine-readable cue set directly.`
  palette_rule = `Image-backed cards should avoid one-note palette treatment; give each concept a distinct accent relation tied to operator colors or route materials.`
  swap_rule = `Before replacing a public image, regenerate public/data/image-resources.json, choose a tracked resource by concept/role/format, then update path, alt text, caption, route links, and data-spw-visual-cues together.`
+ link_rule = `When replacing text-only route chips with richer affordances, keep the whole visual card as one anchor and avoid nested links inside the card.`
 }[reg=facet]
 
 image_resource_contract: .{
@@ -88,4 +92,5 @@ validation: #[
  `rg route-discovery key route bodies`,
  `rg public/images/renders/unsorted-curation index.html`,
  `node scripts/check-site.mjs`
+ `rg ".spw-visual-link-card" index.html topics/index.html public/css/components/content.css`
 ][reg=set]

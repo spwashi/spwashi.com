@@ -361,6 +361,12 @@ export function annotateFloatingChromeElement(el, options = {}) {
 function isFloatingChromeRendered(el) {
   if (!globalThis.HTMLElement || !(el instanceof globalThis.HTMLElement)) return false;
   if (el.hidden || el.getAttribute('aria-hidden') === 'true') return false;
+  const handleState = el.dataset.spwHandleState;
+  const inspectorState = el.dataset.spwStateInspector;
+  const popupState = el.dataset.spwPopupState || el.dataset.spwDisclosureState;
+  if (handleState === 'hidden') return false;
+  if (popupState === 'hidden' || popupState === 'closed') return false;
+  if (inspectorState === 'closed' && el.querySelector?.('.spw-state-inspector__launch')) return true;
   return true;
 }
 

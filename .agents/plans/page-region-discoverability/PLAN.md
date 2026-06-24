@@ -29,6 +29,8 @@ Stable interaction contract, incremental visual treatment. Reuse existing page-r
 - Add a live-day semantic topography pass for June 24, 2026 RPG Wednesday: homepage, Now, Play, RPG Wednesday, and Midjourney Bench now link the current update story through mindful development, creative play, image resources, and public artifacts.
 - Add `scripts/image-resource-manifest.mjs` plus `npm run images:manifest` to make tracked image resources easier to find, classify, reference, and swap without pointing public pages at raw or ignored image folders.
 - Refine mobile floating chrome alignment: section handles, parallel navigation, console, state satchel, and cauldron chip now share named bottom slots instead of independent offsets. Runtime chrome annotations include `data-spw-chrome-slot`, and floating sync now measures open chrome overlap for future occlusion and parallax reasoning.
+- Tighten mobile scroll progression by separating closed satchel launch placement from open satchel panels, ignoring hidden chrome in occlusion math, and applying shared top/bottom scroll clearances to section targets.
+- Add a reusable visual link board component so route links can carry images, alt text, color accents, route rationale, and visual cue copy together on the homepage and topics atlas.
 
 ## Out Of Scope
 
@@ -47,4 +49,5 @@ Stable interaction contract, incremental visual treatment. Reuse existing page-r
 - `git diff --check`
 - `npm run check:local`
 - Targeted checks for `route-discovery`, image paths, and generated rail selectors.
+- Targeted checks for `.spw-visual-link-card`, tracked image paths, and mobile floating chrome state attributes.
 - `rg "ungated by selector"` should remain quiet in `node scripts/check-site.mjs` output unless a new document-wide module is intentionally added.

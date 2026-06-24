@@ -516,7 +516,11 @@ function updateSectionHandleState({
   syncSectionHandleSections(sections, state.activeIndex);
   syncSectionHandleAvailability(refs, state.activeIndex, sections.length);
 
-  const scrolledPast = window.scrollY > Math.max(HANDLE_VISIBILITY_SCROLL, (window.innerHeight || 800) * 0.34);
+  const compactViewport = window.matchMedia?.(HANDLE_COMPACT_QUERY).matches;
+  const scrollThreshold = compactViewport
+    ? Math.min(HANDLE_VISIBILITY_SCROLL, Math.max(160, (window.innerHeight || 800) * 0.18))
+    : Math.max(HANDLE_VISIBILITY_SCROLL, (window.innerHeight || 800) * 0.34);
+  const scrolledPast = window.scrollY > scrollThreshold;
   const visible = sections.length > 1 && (scrolledPast || state.activeIndex > 0);
   syncSectionHandleVisibility(handle, shell, visible);
 

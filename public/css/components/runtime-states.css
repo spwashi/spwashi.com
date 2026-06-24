@@ -470,7 +470,7 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
 
 @media (max-width: 720px) {
   .spw-state-inspector[data-spw-state-inspector="open"],
-  .spw-state-inspector[data-spw-satchel-anchor="chrome-rail"] {
+  .spw-state-inspector[data-spw-state-inspector="open"][data-spw-satchel-anchor="chrome-rail"] {
     position: fixed;
     inset-inline: max(0.65rem, env(safe-area-inset-left)) max(0.65rem, env(safe-area-inset-right));
     inset-block-end: calc(
@@ -494,12 +494,12 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
   }
 
   .spw-state-inspector[data-spw-state-inspector="open"] > *,
-  .spw-state-inspector[data-spw-satchel-anchor="chrome-rail"] > * {
+  .spw-state-inspector[data-spw-state-inspector="open"][data-spw-satchel-anchor="chrome-rail"] > * {
     pointer-events: auto;
   }
 
   .spw-state-inspector[data-spw-state-inspector="open"] .spw-state-inspector__panel,
-  .spw-state-inspector[data-spw-satchel-anchor="chrome-rail"] .spw-state-inspector__panel {
+  .spw-state-inspector[data-spw-state-inspector="open"][data-spw-satchel-anchor="chrome-rail"] .spw-state-inspector__panel {
     max-block-size: min(58dvh, calc(100dvh - var(--spw-shell-menu-offset, 4rem) - 8.5rem));
     margin-block-end: 0;
   }
