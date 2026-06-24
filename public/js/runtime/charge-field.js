@@ -36,6 +36,39 @@ const OPERATOR_DISCHARGE = Object.freeze({
   measure: 'release',
 });
 
+const CURIOSITY_OPERATORS = new Set([
+  'wonder',
+  'probe',
+  'potential',
+  'action',
+  'normalize',
+  'measure',
+]);
+
+const RELATIONSHIP_OPERATORS = new Set([
+  'ref',
+  'route',
+  'stream',
+  'surface',
+  'substrate',
+  'meta',
+  'resource',
+  'support',
+  'perspective',
+  'subject',
+  'confluence',
+]);
+
+const ARCHITECTURE_OPERATORS = new Set([
+  'frame',
+  'vibration',
+  'address',
+  'integration',
+  'object',
+  'value',
+  'binding',
+]);
+
 const READOUT_KEYS = Object.freeze({
   field: 'spwChargeField',
   intensity: 'spwChargeIntensity',
@@ -44,6 +77,18 @@ const READOUT_KEYS = Object.freeze({
 });
 
 const FRAME_SELECTOR = 'main section.site-frame, main .site-frame, section.site-frame';
+const RELATION_STYLE_PROPERTIES = Object.freeze([
+  '--spw-curiosity-reward',
+  '--spw-relationship-reward',
+  '--spw-architecture-reward',
+  '--spw-conceptual-nuance',
+]);
+
+function clamp01(value = 0) {
+  const next = Number(value);
+  if (!Number.isFinite(next)) return 0;
+  return Math.max(0, Math.min(1, next));
+}
 
 function eventElement(event) {
   const target = event?.target;
@@ -72,6 +117,28 @@ function inferDischarge(operatorType, detail = {}) {
   return OPERATOR_DISCHARGE[operatorType] || 'release';
 }
 
+function inferRelation(operatorType = '', discharge = '') {
+  if (CURIOSITY_OPERATORS.has(operatorType) || discharge === 'release') return 'curiosity';
+  if (RELATIONSHIP_OPERATORS.has(operatorType) || discharge === 'transfer') return 'relationship';
+  if (ARCHITECTURE_OPERATORS.has(operatorType) || discharge === 'ground' || discharge === 'project') {
+    return 'architecture';
+  }
+  return '';
+}
+
+function writeRelationReward(intensity = 0, relation = '') {
+  const reward = clamp01(intensity);
+  const curiosity = relation === 'curiosity' ? reward : 0;
+  const relationship = relation === 'relationship' ? reward : 0;
+  const architecture = relation === 'architecture' ? reward : 0;
+  const nuance = Math.max(curiosity, relationship, architecture);
+
+  document.documentElement.style.setProperty('--spw-curiosity-reward', curiosity.toFixed(2));
+  document.documentElement.style.setProperty('--spw-relationship-reward', relationship.toFixed(2));
+  document.documentElement.style.setProperty('--spw-architecture-reward', architecture.toFixed(2));
+  document.documentElement.style.setProperty('--spw-conceptual-nuance', nuance.toFixed(2));
+}
+
 function syncReadouts(root = document) {
   const html = document.documentElement;
   root.querySelectorAll('[data-charge-field-readout]').forEach((node) => {
@@ -95,6 +162,8 @@ export function initChargeField(ctx = null) {
   let decayTimer = null;
 
   const syncRoot = (state = {}) => {
+    const relation = state.relation
+      || inferRelation(state.carrier || '', state.discharge || '');
     const entries = {
       spwChargeField: state.field ?? null,
       spwChargeIntensity: state.intensity != null
@@ -102,6 +171,8 @@ export function initChargeField(ctx = null) {
         : null,
       spwLastDischarge: state.discharge ?? null,
       spwChargeCarrier: state.carrier ?? null,
+      spwConceptRelation: relation || null,
+      spwInteractionWonder: relation || null,
     };
 
     writeDatasetValues(document.documentElement, entries);
@@ -109,6 +180,7 @@ export function initChargeField(ctx = null) {
       '--spw-charge-field',
       String(state.intensity ?? 0)
     );
+    writeRelationReward(state.intensity ?? 0, relation);
     syncReadouts();
   };
 
@@ -237,6 +309,9 @@ export function initChargeField(ctx = null) {
     if (decayTimer) window.clearTimeout(decayTimer);
     syncRoot({});
     document.documentElement.style.removeProperty('--spw-charge-field');
+    RELATION_STYLE_PROPERTIES.forEach((property) => {
+      document.documentElement.style.removeProperty(property);
+    });
     document.querySelectorAll(FRAME_SELECTOR).forEach(clearFrameLiveState);
   };
 

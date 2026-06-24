@@ -16,6 +16,15 @@ const REGION_SIGILS = Object.freeze({
   tune: '~',
 });
 
+function readableToken(value = '', fallback = '') {
+  const text = String(value || fallback || '').trim();
+  if (!text) return '';
+  return text
+    .replace(/[-_]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .slice(0, 44);
+}
+
 function regionLabel(node) {
   const heading = node.querySelector(':scope > .frame-heading h1, :scope > .frame-heading h2, :scope > .frame-topline + h1, :scope > h1, :scope > h2, :scope > header h1, :scope > header h2');
   const text = heading?.textContent?.trim();
@@ -29,6 +38,27 @@ function regionSigil(node) {
   if (node.getAttribute('data-spw-affordance') === 'tune') return REGION_SIGILS.tune;
   const kind = node.getAttribute('data-spw-kind') || 'frame';
   return REGION_SIGILS[kind] || '·';
+}
+
+function regionMeta(node) {
+  const parts = [
+    readableToken(node.dataset.spwRegionRole),
+    readableToken(node.dataset.spwRole),
+    readableToken(node.dataset.spwFeature),
+  ].filter(Boolean);
+  return [...new Set(parts)].slice(0, 2).join(' · ');
+}
+
+function regionComponentSummary(node) {
+  const features = [...node.querySelectorAll('[data-spw-feature]')]
+    .map((child) => readableToken(child.dataset.spwFeature))
+    .filter(Boolean);
+  const kinds = [...node.querySelectorAll('[data-spw-kind], [data-spw-component-kind]')]
+    .map((child) => readableToken(child.dataset.spwKind || child.dataset.spwComponentKind))
+    .filter(Boolean)
+    .filter((kind) => kind !== 'frame');
+  const names = [...new Set([...features, ...kinds])].slice(0, 3);
+  return names.join(' · ');
 }
 
 function collectRegions(root = document) {
@@ -47,6 +77,8 @@ function collectRegions(root = document) {
     id: node.id,
     label: regionLabel(node),
     sigil: regionSigil(node),
+    meta: regionMeta(node),
+    componentSummary: regionComponentSummary(node),
     tune: node.getAttribute('data-spw-affordance') === 'tune',
     element: node,
   }));
@@ -67,6 +99,9 @@ function ensureRailRoot() {
 function renderRail(regions) {
   const rail = ensureRailRoot();
   rail.replaceChildren();
+  rail.dataset.spwThemePack = document.documentElement.dataset.spwThemePack || 'route';
+  rail.dataset.spwPaletteResonance = document.documentElement.dataset.spwPaletteResonance || 'route';
+  rail.dataset.spwSemanticDensity = document.documentElement.dataset.spwSemanticDensity || 'normal';
 
   if (regions.length < MIN_REGIONS) {
     writeDatasetValues(document.documentElement, { spwPageRegionRail: null });
@@ -87,6 +122,8 @@ function renderRail(regions) {
     link.className = 'spw-page-region-rail__link';
     link.href = `#${region.id}`;
     if (region.tune) link.dataset.spwAffordance = 'tune';
+    if (region.meta) link.dataset.spwRegionMeta = region.meta;
+    if (region.componentSummary) link.dataset.spwAccentConcept = region.componentSummary;
 
     const sigil = document.createElement('span');
     sigil.className = 'spw-page-region-rail__sigil';
@@ -95,9 +132,20 @@ function renderRail(regions) {
 
     const label = document.createElement('span');
     label.className = 'spw-page-region-rail__label';
-    label.textContent = region.label;
+    const name = document.createElement('span');
+    name.className = 'spw-page-region-rail__name';
+    name.textContent = region.label;
+    label.append(name);
+
+    if (region.meta || region.componentSummary) {
+      const meta = document.createElement('span');
+      meta.className = 'spw-page-region-rail__meta';
+      meta.textContent = region.componentSummary || region.meta;
+      label.append(meta);
+    }
 
     link.append(sigil, label);
+    link.title = [region.label, region.meta, region.componentSummary].filter(Boolean).join(' — ');
     item.append(link);
     list.append(item);
   });

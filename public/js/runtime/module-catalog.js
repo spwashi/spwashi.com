@@ -450,6 +450,11 @@ export const ENHANCEMENT_DEFS = [
     id: 'layout-shift-audit',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
+    selector: 'body',
+    rootMode: 'single',
+    describes: 'page-wide layout stability observer with explicit cleanup of PerformanceObserver state and root datasets',
+    updates: ['data-spw-layout-shift-state', 'data-spw-layout-shift-count', 'data-spw-layout-shift-total', 'data-spw-layout-shift-outcome'],
+    evaluates: 'layout stability page-lifecycle diagnostics',
     load: () => import('./layout-shift-audit.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initSpwLayoutShiftAudit;
@@ -461,6 +466,8 @@ export const ENHANCEMENT_DEFS = [
     id: 'tuning-discovery',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
+    selector: '[data-site-settings-scope], [data-spw-affordance="tune"], [data-spw-feature], .vibe-widget[data-spw-role="control"]',
+    rootMode: 'single',
     describes: 'embedded tuning surfaces, component anatomy handles + html[data-spw-tuning-discoverability]',
     updates: [
       'data-spw-tuning-surface',
@@ -482,8 +489,11 @@ export const ENHANCEMENT_DEFS = [
     id: 'page-region-rail',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
-    describes: 'desktop region index from main semantics + html[data-spw-page-region-rail]',
-    updates: ['data-spw-page-region-rail', 'data-spw-region-active'],
+    selector: 'main [id].site-frame, main [data-spw-region-role], main [data-spw-feature]',
+    rootMode: 'single',
+    describes: 'desktop region index from main semantics + html[data-spw-page-region-rail], refreshed through dom-sync teardown',
+    updates: ['data-spw-page-region-rail', 'data-spw-region-active', 'data-spw-region-role', 'data-spw-feature'],
+    evaluates: 'navigation region-discoverability component-discovery theme-readability',
     load: () => import('./page-region-rail.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initPageRegionRail;
@@ -495,7 +505,9 @@ export const ENHANCEMENT_DEFS = [
     id: 'charge-field',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
-    describes: 'charge/discharge field state on html + frame consequence-live projection',
+    selector: '[data-spw-gesture-contract], .operator-chip, .frame-sigil, .spw-living-term, [data-spw-operator]',
+    rootMode: 'single',
+    describes: 'charge/discharge field state on html + frame consequence-live projection; clears timers, bus subscriptions, frame state, and CSS custom property on teardown',
     updates: [
       'data-spw-charge-field',
       'data-spw-charge-intensity',
@@ -515,6 +527,8 @@ export const ENHANCEMENT_DEFS = [
     id: 'gesture-anatomy',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
+    selector: '[data-spw-gesture-contract], [data-spw-slot], .spw-living-term[data-spw-living-term]',
+    rootMode: 'single',
     describes: 'slot anatomy rails + data-spw-gesture-hint from gesture contracts',
     updates: ['data-spw-gesture-hint', 'data-spw-slot-label', 'data-spw-gesture-anatomy'],
     load: () => import('./gesture-anatomy.js'),
@@ -528,6 +542,8 @@ export const ENHANCEMENT_DEFS = [
     id: 'learnability-ledger',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
+    selector: '[data-spw-feature], [data-spw-box-model], [data-spw-gesture-contract], [data-spw-slot]',
+    rootMode: 'single',
     describes: 'metacognitive posture accounting, layout-contract audit, feature learnability resonance',
     updates: [
       'data-spw-learnability-ledger',
@@ -729,6 +745,11 @@ export const ENHANCEMENT_DEFS = [
     id: 'discovery-notices',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
+    selector: 'body',
+    rootMode: 'single',
+    describes: 'page-wide discovery notice layer for runtime rewards, with dismissal storage and escape/listener teardown',
+    updates: ['data-spw-discovery-notice-stack', 'data-spw-discovery-notice-modal', 'data-spw-feature-learning'],
+    evaluates: 'feedback discoverability reward-cadence floating-chrome',
     load: () => import('../interface/discovery-notices.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initSpwDiscoveryNotices;
@@ -740,6 +761,7 @@ export const ENHANCEMENT_DEFS = [
     id: 'state-inspector',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
+    selector: 'body',
     rootMode: 'single',
     describes: 'state[satchel]{inspect.modify.serialize.feedback}',
     updates: ['data-spw-state-inspector', 'data-spw-state-serialization-dimensions', 'data-spw-debug-mode', 'data-spw-module-visuals', 'data-spw-show-semantic-metadata', 'data-spw-feature-learning'],

@@ -213,6 +213,32 @@
   initial-value: 0.5;
 }
 
+/* Interaction color rewards: transient conceptual relation projected by
+   charge-field.js and consumed by wonder/effects surfaces. */
+@property --spw-curiosity-reward {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --spw-relationship-reward {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --spw-architecture-reward {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --spw-conceptual-nuance {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
 /* Runtime module layer influence tokens — driven by data-spw-active-layers on root.
    These allow CSS to react to which parts of the JS runtime are currently live,
    supporting smoother transitions, attentional modulation, and "computational"

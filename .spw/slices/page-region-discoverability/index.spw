@@ -1,0 +1,79 @@
+# Page Region Discoverability Slice
+
+#>page_region_discoverability
+#:slice #!attention #!navigation #!components
+#:layer #!pragmatics
+
+@plan: ~"../../../.agents/plans/page-region-discoverability/PLAN.md"
+@page_region_rail_js: ~"../../../public/js/runtime/page-region-rail.js"
+@page_region_rail_css: ~"../../../public/css/handles/page-region-rail.css"
+@contextual_ui_js: ~"../../../public/js/interface/contextual-ui.js"
+@module_catalog: ~"../../../public/js/runtime/module-catalog.js"
+@dom_sync_hub: ~"../../../public/js/runtime/dom-sync-hub.js"
+@image_resource_manifest_script: ~"../../../scripts/image-resource-manifest.mjs"
+@image_resource_manifest_json: ~"../../../public/data/image-resources.json"
+@attention_field: ~"../../conventions/attention-field.spw"
+@page_model: ~"../../surfaces/page-model.spw"
+
+operation = "contract"
+fixity = "stable"
+
+intent: .{
+ goal = `Page regions should be discoverable as local places and as cross-page concept flows.`
+ user_effect = `A reader can use the floating region rail, nearby route menu, image route anchors, section handle, and region menu to move from component to concept to route without memorizing the whole site.`
+}[reg=facet]
+
+html_contract: .{
+ route_opt_in = `Add route-discovery to body[data-spw-features] when the page has data-spw-related-routes or a contextual header.`
+ region_names = `Prefer ids, headings, data-spw-region-role, data-spw-role, and data-spw-feature on meaningful sections and clusters.`
+ image_routes = `Use tracked public/images assets for image-backed route anchors; give honest alt text and route-specific captions.`
+}[reg=facet]
+
+runtime_contract: .{
+ page_region_rail = `Builds a desktop region index from main region semantics and now exposes role/feature/component summaries.`
+ contextual_ui = `Reads route-discovery and data-spw-related-routes to add nearby routes in the header.`
+ section_handle = `Keeps narrow/mobile section awareness independent from the desktop rail.`
+ region_menu = `Allows local region inspection from sigils/operators without requiring the user to know CSS or JS internals.`
+ module_catalog = `Enhancement modules that behave page-wide must still declare selectors, describes, updates, evaluates, and cleanup intent so they are integrated rather than ambient.`
+ dom_sync_hub = `Refresh order should keep component-kind mirrors, page-region rails, tuning discovery, gesture anatomy, and learnability ledgers in a stable sequence.`
+}[reg=facet]
+
+css_contract: .{
+ shared = `public/css/handles/page-region-rail.css owns generic rail anatomy.`
+ route = `Route CSS may tune color, density, or image-card treatment without changing the shared rail contract.`
+ theme = `Generated behavior surfaces should carry theme pack, palette resonance, and semantic density when those values affect perception.`
+ color_reward = `public/css/effects/wonder.css projects curiosity, relationship, and architecture as shared reward colors instead of page-local novelty colors.`
+}[reg=facet]
+
+color_reward_contract: .{
+ curiosity = `Probe, wonder, action, visual-cue, and accent-concept affordances should brighten toward a curiosity channel when explored.`
+ relationship = `Ref, route, stream, related-route, and feature-flow affordances should reveal neighboring concept architecture through a distinct relationship channel.`
+ architecture = `Frame, address, object, component-kind, and region-role affordances should use a structural accent that makes page architecture feel discoverable.`
+ runtime = `public/js/runtime/charge-field.js writes data-spw-concept-relation and data-spw-interaction-wonder plus --spw-*-reward variables, then clears them during teardown.`
+ copy = `Copy should give visual models concrete cues that map to these channels: question, connection, structure, material, motion, and figure-ground pressure.`
+}[reg=facet]
+
+visual_model_contract: .{
+ cue_fields = `Prefer concrete visual cue stems in image-backed route cards: color, material, motion, figure-ground, object family, and component pressure.`
+ copy_rule = `Visible copy may be evocative, but data-spw-visual-cues and data-spw-accent-anchor should name the machine-readable cue set directly.`
+ palette_rule = `Image-backed cards should avoid one-note palette treatment; give each concept a distinct accent relation tied to operator colors or route materials.`
+ swap_rule = `Before replacing a public image, regenerate public/data/image-resources.json, choose a tracked resource by concept/role/format, then update path, alt text, caption, route links, and data-spw-visual-cues together.`
+}[reg=facet]
+
+image_resource_contract: .{
+ utility = `npm run images:manifest scans public/images and writes public/data/image-resources.json.`
+ terminal_filters = `scripts/image-resource-manifest.mjs supports --list, --concept, --role, and --format for fast live-session lookup.`
+ public_use = `Route pages may link to the manifest as a reference shelf, but public HTML should still point directly to stable tracked assets with honest alt text.`
+ live_context = `For RPG Wednesday or live builds, choose one image concept, one route, one artifact, and one caption job so visual material inspires development without becoming loose atmosphere.`
+}[reg=facet]
+
+validation: #[
+ `node --check public/js/runtime/page-region-rail.js`,
+ `node --check scripts/image-resource-manifest.mjs`,
+ `npm run images:manifest`,
+ `git diff --check`,
+ `npm run check:local`,
+ `rg route-discovery key route bodies`,
+ `rg public/images/renders/unsorted-curation index.html`,
+ `node scripts/check-site.mjs`
+][reg=set]

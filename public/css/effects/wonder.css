@@ -22,6 +22,16 @@
 :root {
   --wonder-accent-color: var(--spw-wonder-accent-base-color, var(--amber, #ffbf00));
   --delight-color: var(--spw-delight-base-color, var(--teal, #008080));
+  --spw-curiosity-color:
+    color-mix(in srgb, var(--op-probe-color, #8f5cff) 70%, var(--amber, #ffbf00));
+  --spw-relationship-color:
+    color-mix(in srgb, var(--op-ref-color, #2f6fba) 64%, var(--op-topic-color, #2e9f7f));
+  --spw-architecture-color:
+    color-mix(in srgb, var(--op-frame-color, #008080) 62%, var(--op-object-color, #c2872b));
+  --spw-curiosity-reward: 0;
+  --spw-relationship-reward: 0;
+  --spw-architecture-reward: 0;
+  --spw-conceptual-nuance: 0;
 
   --spw-wonder-duration-fast: var(--duration-fast, 120ms);
   --spw-wonder-duration-base: var(--duration-base, 200ms);
@@ -68,7 +78,10 @@
   [data-spw-charge],
   [data-spw-wonder-state],
   [data-spw-delight],
-  [data-spw-visited]
+  [data-spw-visited],
+  [data-spw-accent-concept],
+  [data-spw-visual-cues],
+  [data-spw-region-role]
 ) {
   /* Debug / inspection */
   --spw-debug-layer-owner: "effects";
@@ -193,7 +206,176 @@
 }
 
 /* ==========================================================================
-   4. Charge states
+   4. Conceptual color rewards
+   --------------------------------------------------------------------------
+   Curiosity, relationship, and architecture states are projected by the
+   charge-field runtime and by local semantic attributes. This keeps color
+   responsive to what the visitor is exploring rather than only to route theme.
+   ========================================================================== */
+
+html[data-spw-concept-relation="curiosity"],
+html[data-spw-interaction-wonder="curiosity"] {
+  --wonder-accent-color: var(--spw-curiosity-color);
+}
+
+html[data-spw-concept-relation="relationship"],
+html[data-spw-interaction-wonder="relationship"] {
+  --wonder-accent-color: var(--spw-relationship-color);
+}
+
+html[data-spw-concept-relation="architecture"],
+html[data-spw-interaction-wonder="architecture"] {
+  --wonder-accent-color: var(--spw-architecture-color);
+}
+
+:where(
+  [data-spw-operator="wonder"],
+  [data-spw-operator="probe"],
+  [data-spw-operator="action"],
+  [data-spw-accent-concept],
+  [data-spw-visual-cues]
+) {
+  --spw-reward-color: var(--spw-curiosity-color);
+}
+
+:where(
+  [data-spw-operator="ref"],
+  [data-spw-operator="route"],
+  [data-spw-operator="stream"],
+  [data-spw-operator="surface"],
+  main [data-spw-related-routes],
+  main [data-spw-route-link],
+  main [data-spw-route-family]
+) {
+  --spw-reward-color: var(--spw-relationship-color);
+}
+
+:where(
+  [data-spw-operator="frame"],
+  [data-spw-operator="address"],
+  [data-spw-operator="object"],
+  [data-spw-operator="integration"],
+  main [data-spw-region-role],
+  main [data-spw-component-kind],
+  main [data-spw-kind="frame"],
+  main [data-spw-kind="surface"]
+) {
+  --spw-reward-color: var(--spw-architecture-color);
+}
+
+:where(
+  main [data-spw-feature],
+  main [data-spw-region-role],
+  main [data-spw-component-kind],
+  main [data-spw-accent-concept],
+  main [data-spw-visual-cues],
+  .operator-chip,
+  .frame-sigil,
+  .spw-component-tag,
+  .spw-guide-chip
+) {
+  transition:
+    background-color var(--spw-wonder-duration-base) var(--spw-wonder-ease-mechanical),
+    border-color var(--spw-wonder-duration-base) var(--spw-wonder-ease-mechanical),
+    box-shadow var(--spw-wonder-duration-base) var(--spw-wonder-ease-mechanical),
+    color var(--spw-wonder-duration-base) var(--spw-wonder-ease-mechanical),
+    transform var(--spw-wonder-duration-fast) var(--spw-wonder-ease-mechanical);
+}
+
+:where(
+  main [data-spw-feature],
+  main [data-spw-region-role],
+  main [data-spw-component-kind],
+  main [data-spw-accent-concept],
+  main [data-spw-visual-cues],
+  .operator-chip,
+  .frame-sigil,
+  .spw-component-tag,
+  .spw-guide-chip
+):is(:hover, :focus-within, :focus-visible) {
+  border-color:
+    color-mix(in srgb, var(--spw-reward-color, var(--wonder-accent-color)) 34%, var(--line, transparent));
+  background-color:
+    color-mix(in srgb, var(--spw-reward-color, var(--wonder-accent-color)) 9%, transparent);
+  box-shadow:
+    var(--spw-local-shadow, none),
+    0 0 0 1px color-mix(in srgb, var(--spw-reward-color, var(--wonder-accent-color)) 18%, transparent),
+    0 10px 24px color-mix(in srgb, var(--spw-reward-color, var(--wonder-accent-color)) 9%, transparent);
+}
+
+:where(
+  main [data-spw-feature],
+  main [data-spw-region-role],
+  main [data-spw-component-kind],
+  main [data-spw-accent-concept],
+  main [data-spw-visual-cues]
+):is(:hover, :focus-within) {
+  --spw-local-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--spw-reward-color, var(--wonder-accent-color)) 10%, transparent);
+}
+
+:where(html[data-spw-concept-relation="curiosity"]) :where(
+  main [data-spw-accent-concept],
+  main [data-spw-visual-cues],
+  .operator-chip[data-spw-operator="probe"],
+  .operator-chip[data-spw-operator="wonder"]
+) {
+  --spw-reward-color: var(--spw-curiosity-color);
+  box-shadow:
+    var(--spw-local-shadow, none),
+    0 0 0 1px color-mix(in srgb, var(--spw-curiosity-color) 10%, transparent),
+    0 0 18px color-mix(in srgb, var(--spw-curiosity-color) calc(var(--spw-curiosity-reward, 0) * 14%), transparent);
+}
+
+:where(html[data-spw-concept-relation="relationship"]) :where(
+  main [data-spw-related-routes],
+  main [data-spw-feature],
+  .operator-chip[data-spw-operator="ref"],
+  .operator-chip[data-spw-operator="route"]
+) {
+  --spw-reward-color: var(--spw-relationship-color);
+  box-shadow:
+    var(--spw-local-shadow, none),
+    0 0 0 1px color-mix(in srgb, var(--spw-relationship-color) 10%, transparent),
+    0 0 18px color-mix(in srgb, var(--spw-relationship-color) calc(var(--spw-relationship-reward, 0) * 14%), transparent);
+}
+
+:where(html[data-spw-concept-relation="architecture"]) :where(
+  main [data-spw-region-role],
+  main [data-spw-component-kind],
+  .operator-chip[data-spw-operator="frame"],
+  .operator-chip[data-spw-operator="address"],
+  .operator-chip[data-spw-operator="object"]
+) {
+  --spw-reward-color: var(--spw-architecture-color);
+  box-shadow:
+    var(--spw-local-shadow, none),
+    0 0 0 1px color-mix(in srgb, var(--spw-architecture-color) 10%, transparent),
+    0 0 18px color-mix(in srgb, var(--spw-architecture-color) calc(var(--spw-architecture-reward, 0) * 14%), transparent);
+}
+
+@supports selector(:has(*)) {
+  :where(main, body):has(:where([data-spw-operator="wonder"], [data-spw-operator="probe"]):is(:hover, :focus-visible))
+    :where(main [data-spw-feature], main [data-spw-accent-concept], main [data-spw-visual-cues]) {
+    --spw-reward-color: var(--spw-curiosity-color);
+    --spw-resonance: 0.42;
+  }
+
+  :where(main, body):has(:where([data-spw-operator="ref"], [data-spw-operator="route"], [data-spw-operator="stream"]):is(:hover, :focus-visible))
+    :where(main [data-spw-related-routes], main [data-spw-route-link], main [data-spw-feature]) {
+    --spw-reward-color: var(--spw-relationship-color);
+    --spw-resonance: 0.4;
+  }
+
+  :where(main, body):has(:where([data-spw-operator="frame"], [data-spw-operator="address"], [data-spw-operator="object"]):is(:hover, :focus-visible))
+    :where(main [data-spw-region-role], main [data-spw-component-kind], main [data-spw-kind]) {
+    --spw-reward-color: var(--spw-architecture-color);
+    --spw-resonance: 0.38;
+  }
+}
+
+/* ==========================================================================
+   5. Charge states
    --------------------------------------------------------------------------
    JS can toggle these states to create a lightweight semantic lifecycle:
    idle → preview → arming → sustained → settled
@@ -272,7 +454,7 @@
 }
 
 /* ==========================================================================
-   5. Brace thresholds and large structural surfaces
+   6. Brace thresholds and large structural surfaces
    ========================================================================== */
 
 [data-spw-form="brace"][data-spw-charge="sustained"]::before,
@@ -310,7 +492,7 @@
 }
 
 /* ==========================================================================
-   6. Persona selector
+   7. Persona selector
    ========================================================================== */
 
 .persona-selector-mount {
@@ -399,7 +581,7 @@ html[data-spw-semantic-density="minimal"] .persona-selector-mount {
 }
 
 /* ==========================================================================
-   7. Persona-aware learnable surfaces
+   8. Persona-aware learnable surfaces
    ========================================================================== */
 
 [data-spw-persona="doodler"] .spec-pill {
@@ -430,7 +612,7 @@ html[data-spw-semantic-density="minimal"] .persona-selector-mount {
 }
 
 /* ==========================================================================
-   8. Persona-specific micro events
+   9. Persona-specific micro events
    ========================================================================== */
 
 [data-spw-persona="doodler"] .spw-delight::after,
@@ -479,7 +661,7 @@ html[data-spw-semantic-density="minimal"] .persona-selector-mount {
 }
 
 /* ==========================================================================
-   9. Wonder blocks
+   10. Wonder blocks
    --------------------------------------------------------------------------
    Good JS hooks:
    - [data-spw-wonder-block-state="idle|thinking|revealed|expanded"]

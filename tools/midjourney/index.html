@@ -75,7 +75,7 @@
         }
     </script>
 </head>
-<body data-spw-surface="tools-midjourney" data-spw-features="operators navigator console prompt-utils" data-spw-route-family="editorial image lab" data-spw-context="analysis" data-spw-wonder="projection resonance locality" data-spw-page-family="laboratory" data-spw-page-modes="collect compare stage prompt" data-spw-page-seed="page_tools_tools_midjourney" data-spw-page-role="prompt-lab" data-spw-related-routes="/|/tools/|/tools/profile/|/tools/character-sheet/|/play/rpg-wednesday/|/topics/site-design/|/topics/math/">
+<body data-spw-surface="tools-midjourney" data-spw-features="operators navigator console route-discovery prompt-utils" data-spw-route-family="editorial image lab resource-management" data-spw-context="analysis" data-spw-wonder="projection resonance locality" data-spw-page-family="laboratory" data-spw-page-modes="collect compare stage prompt swap" data-spw-page-seed="page_tools_tools_midjourney" data-spw-page-role="prompt-lab" data-spw-related-routes="/|/tools/|/tools/profile/|/tools/character-sheet/|/play/rpg-wednesday/|/topics/site-design/|/topics/math/">
 <a class="skip-link" href="#main-content">Skip to content</a>
 
     <spw-site-header
@@ -158,6 +158,7 @@
                 </figure>
                 <nav class="frame-operators" aria-label="Midjourney bench routes">
                     <a class="operator-chip" href="#prompt-mining-loop" data-spw-operator="~" data-spw-action="mine" data-spw-target="prompt-loop">~ mine prompt loop</a>
+                    <a class="operator-chip" href="#image-resource-utility" data-spw-operator="^" data-spw-action="manage" data-spw-target="image-resources">^ manage image resources</a>
                     <a class="operator-chip" href="#reference-packets" data-spw-operator="^" data-spw-action="publish" data-spw-target="reference-packets">^ publish reference packets</a>
                     <a class="operator-chip" href="#route-grammar" data-spw-operator="#" data-spw-action="anchor" data-spw-target="route-grammar"># anchor route grammar</a>
                     <a class="operator-chip" href="#collaboration-notes" data-spw-operator="~" data-spw-action="explore" data-spw-target="collaboration-notes">~ explore collaboration notes</a>
@@ -207,6 +208,55 @@
                     <a class="operator-chip" href="/cards/">^ keep a proof card</a>
                     <a class="operator-chip" href="/topics/software/browser/#web-platform-apis">? inspect browser substrates</a>
                     <a class="operator-chip" href="/topics/math/complexity/#parser-budgets">% compare memory cost</a>
+                </nav>
+            </section>
+
+            <section class="site-frame" id="image-resource-utility"
+                data-spw-role="utility"
+                data-spw-form="brace"
+                data-spw-meaning="local image resource manifest for finding, referencing, and swapping tracked visual concepts"
+                data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="projection locality architecture" data-spw-affordance="manage" data-spw-liminality="threshold" data-spw-category-family="tool" data-spw-locality="high" data-spw-consequence="swap" data-spw-promptability="visible" data-spw-collectability="high" data-spw-seed="page_tools_tools_midjourney__image_resource_utility" data-spw-context-relevance="image resources manifest concept swap route visual canon">
+                <header class="frame-heading">
+                    <a class="frame-sigil" href="#image-resource-utility">^"image_resource_utility"</a>
+                    <h2>Image Resource Utility</h2>
+                </header>
+                <p class="inline-note">A lightweight local utility now scans tracked public images and writes a concept-aware manifest. Use it before swapping a page image so the replacement has a stable path, inferred concepts, role, format, and a swap hint.</p>
+                <div class="frame-grid">
+                    <article class="frame-card" data-spw-kind="card" data-spw-role="command" data-spw-semantic-expression="image-resource[manifest]{scan.classify.write}">
+                        <span class="frame-card-sigil">$manifest</span>
+                        <strong>Regenerate the catalog</strong>
+                        <span>Run <code>npm run images:manifest</code>. The output lands at <a href="/public/data/image-resources.json">/public/data/image-resources.json</a> with 260 tracked resources in the first pass.</span>
+                    </article>
+                    <article class="frame-card" data-spw-kind="card" data-spw-role="command" data-spw-semantic-expression="image-resource[filter]{concept.role.format}">
+                        <span class="frame-card-sigil">?filter</span>
+                        <strong>Find a concept quickly</strong>
+                        <span>Use <code>node scripts/image-resource-manifest.mjs --list --concept=rpg-wednesday</code>, <code>--concept=site-design</code>, <code>--role=hero</code>, or <code>--format=webp</code> when a page needs a different visual register.</span>
+                    </article>
+                    <article class="frame-card" data-spw-kind="card" data-spw-role="workflow" data-spw-semantic-expression="image-resource[swap]{choose.alt.caption.route}">
+                        <span class="frame-card-sigil">@swap</span>
+                        <strong>Swap with semantics intact</strong>
+                        <span>Pick a resource, update the image path, rewrite honest alt text, keep the caption’s concept job, then verify the route still has a visual cue and a useful link.</span>
+                    </article>
+                    <article class="frame-card" data-spw-kind="card" data-spw-role="workflow" data-spw-semantic-expression="image-resource[live]{reference.update.inspire}">
+                        <span class="frame-card-sigil">*live</span>
+                        <strong>Use it during a stream</strong>
+                        <span>Reference the manifest as a living shelf: choose one concept, one route, one image, and one artifact that can inspire mindful development or creative play without derailing the session.</span>
+                    </article>
+                </div>
+                <figure class="image-study topic-photo-card" data-spw-image-prominence="supporting" data-spw-image-shape="landscape" data-spw-accent="resonance" data-spw-accent-palette="cool" data-spw-accent-anchor="website atlas weather image resource swap" data-spw-accent-operator="frame" data-spw-visual-cues="atlas weather corridor blue amber route architecture">
+                    <img src="/public/images/renders/unsorted-curation/website-atlas-weather-0.webp"
+                         alt="A blue and amber website atlas weather image with layered route architecture and atmospheric corridors."
+                         loading="lazy" decoding="async" width="1400" height="1400">
+                    <figcaption>
+                        <strong>Swappable concept shelf</strong>
+                        <span>Use atlas-style renders when the page needs architecture, route weather, and a clear reason for the next image choice.</span>
+                    </figcaption>
+                </figure>
+                <nav class="frame-operators" aria-label="Image resource utility links">
+                    <a class="operator-chip" href="/public/data/image-resources.json" data-spw-operator="ref">~ manifest json</a>
+                    <a class="operator-chip" href="/play/rpg-wednesday/" data-spw-operator="stream">* rpg wednesday</a>
+                    <a class="operator-chip" href="/topics/site-design/" data-spw-operator="frame">#&gt; site design</a>
+                    <a class="operator-chip" href="/cards/" data-spw-operator="object">^ proof cards</a>
                 </nav>
             </section>
 

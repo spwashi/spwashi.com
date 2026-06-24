@@ -2266,6 +2266,115 @@ html[data-spw-hydration="ready"] #home-frame .frame-topline {
   font-weight: 760;
 }
 
+:where(body[data-spw-surface="home"] .home-component-discovery) {
+  display: grid;
+  gap: var(--home-gap-md, 0.9rem);
+  margin-block: var(--home-gap-lg, 1.25rem);
+  padding: clamp(0.8rem, 1.6vw, 1.05rem);
+  border: 1px solid color-mix(in srgb, var(--home-accent-primary) 18%, var(--line, rgba(14, 18, 20, 0.14)));
+  border-radius: var(--home-radius-md, 8px);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--home-accent-primary) 8%, transparent), transparent 42%),
+    color-mix(in srgb, var(--home-surface-bg-strong) 94%, transparent);
+}
+
+:where(body[data-spw-surface="home"] .home-component-discovery__header) {
+  display: grid;
+  gap: 0.2rem;
+}
+
+:where(body[data-spw-surface="home"] .home-component-discovery__header h3) {
+  max-inline-size: 52ch;
+  margin: 0;
+  color: var(--home-accent-ink, var(--ink));
+  font-size: clamp(1.02rem, 0.96rem + 0.34vw, 1.22rem);
+  line-height: 1.22;
+  text-wrap: balance;
+}
+
+:where(body[data-spw-surface="home"] .home-component-discovery__grid) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  gap: var(--home-gap-sm, 0.62rem);
+}
+
+:where(body[data-spw-surface="home"] .home-discovery-card) {
+  --home-discovery-accent: var(--home-accent-primary);
+  --home-discovery-contrast: var(--home-accent-ember);
+  display: grid;
+  grid-template-rows: auto auto auto 1fr auto;
+  gap: 0.48rem;
+  min-width: 0;
+  padding: 0.68rem;
+  border: 1px solid color-mix(in srgb, var(--home-discovery-accent) 18%, var(--line, rgba(14, 18, 20, 0.14)));
+  border-radius: var(--home-radius-sm, 6px);
+  background:
+    linear-gradient(160deg, color-mix(in srgb, var(--home-discovery-accent) 10%, transparent), transparent 38%),
+    linear-gradient(18deg, transparent 52%, color-mix(in srgb, var(--home-discovery-contrast) 8%, transparent)),
+    color-mix(in srgb, var(--home-surface-bg-strong) 88%, var(--surface, #fff));
+  color: var(--ink, #1b1f23);
+  text-decoration: none;
+  transition:
+    border-color var(--home-transition-fast, 140ms ease),
+    box-shadow var(--home-transition-fast, 140ms ease),
+    transform var(--home-transition-fast, 140ms ease);
+}
+
+:where(body[data-spw-surface="home"] .home-discovery-card[data-spw-accent-palette="cool"]) {
+  --home-discovery-accent: color-mix(in srgb, var(--op-ref-color, #2477b3) 68%, var(--home-accent-primary));
+  --home-discovery-contrast: color-mix(in srgb, var(--op-probe-color, #7d5bd1) 54%, var(--amber, #c79a3b));
+}
+
+:where(body[data-spw-surface="home"] .home-discovery-card[data-spw-accent-palette="warm"]) {
+  --home-discovery-accent: color-mix(in srgb, var(--op-action-color, #006b6b) 48%, var(--amber, #c79a3b));
+  --home-discovery-contrast: color-mix(in srgb, var(--home-accent-ember) 72%, var(--op-topic-color, #2f8f6b));
+}
+
+:where(body[data-spw-surface="home"] .home-discovery-card[data-spw-accent-palette="bright"]) {
+  --home-discovery-accent: color-mix(in srgb, var(--op-topic-color, #2f8f6b) 52%, var(--home-accent-ember));
+  --home-discovery-contrast: color-mix(in srgb, var(--op-object-color, #b7791f) 72%, var(--op-probe-color, #7d5bd1));
+}
+
+:where(body[data-spw-surface="home"] .home-discovery-card:is(:hover, :focus-visible)) {
+  border-color: color-mix(in srgb, var(--home-discovery-accent) 48%, var(--line, rgba(14, 18, 20, 0.14)));
+  box-shadow: var(--home-shadow-quiet, 0 8px 22px rgba(0, 0, 0, 0.08));
+  transform: translateY(-2px);
+  outline: none;
+}
+
+:where(body[data-spw-surface="home"] .home-discovery-card .frame-card-media) {
+  margin: 0;
+  aspect-ratio: 1;
+  border-color: color-mix(in srgb, var(--home-discovery-accent) 26%, var(--line, rgba(14, 18, 20, 0.14)));
+}
+
+:where(body[data-spw-surface="home"] .home-discovery-card .frame-card-media img) {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+:where(body[data-spw-surface="home"] .home-discovery-card strong) {
+  color: var(--home-accent-ink, var(--ink));
+  line-height: 1.18;
+}
+
+:where(body[data-spw-surface="home"] .home-discovery-card [data-spw-slot="body"]) {
+  color: var(--ink-soft, rgba(27, 31, 35, 0.68));
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+:where(body[data-spw-surface="home"] .home-discovery-card__cue) {
+  align-self: end;
+  color: color-mix(in srgb, var(--home-discovery-accent) 62%, var(--ink-soft, rgba(27, 31, 35, 0.68)));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.64rem;
+  font-weight: 650;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
 @media (max-width: 640px) {
   :where(#choose-your-entrance .entrance-role-hooks) {
     grid-template-columns: 1fr;

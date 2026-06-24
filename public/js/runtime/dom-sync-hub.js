@@ -10,6 +10,7 @@ import { guardCall } from '/public/js/kernel/dom-render.js';
 
 const TASK_ORDER = Object.freeze([
   'component-kind-mirror',
+  'page-region-rail',
   'tuning-discovery',
   'gesture-anatomy',
   'learnability-ledger',
@@ -17,11 +18,18 @@ const TASK_ORDER = Object.freeze([
 
 const ATTRIBUTE_FILTER = Object.freeze([
   'data-spw-feature',
+  'data-spw-region-role',
+  'data-spw-role',
   'data-spw-gesture-contract',
   'data-spw-interaction-contract',
   'data-spw-slot',
   'data-spw-kind',
   'data-spw-component-kind',
+  'data-spw-image-discovery',
+  'data-spw-discovery-label',
+  'data-spw-discovery-title',
+  'data-spw-accent-anchor',
+  'data-spw-accent-palette',
   'data-site-settings-scope',
   'data-spw-affordance',
   'data-site-settings-panel',

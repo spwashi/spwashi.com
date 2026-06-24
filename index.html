@@ -82,7 +82,7 @@
     data-spw-capture-mode="default"
     data-spw-stylesheet-mode="scoped"
     data-spw-route-family="kernel atlas semantic-lattice portable-publishing"
-    data-spw-features="small-kernel semantic-lattice modular-projections portable-seeds operators navigator console media-publishing svg-surfaces topic-discovery prompt-utils"
+    data-spw-features="small-kernel semantic-lattice modular-projections portable-seeds operators navigator console route-discovery media-publishing svg-surfaces topic-discovery prompt-utils"
     data-spw-context="orientation"
     data-spw-wonder="orientation locality consequence texture portability"
     data-spw-page-family="kernel-atlas"
@@ -259,6 +259,9 @@
                 <p class="frame-note home-hero-note">
                     Home page recipe: choose a route, inspect one handle, carry the useful state forward.
                 </p>
+                <p class="frame-note home-live-note" data-spw-semantic-expression="live[wednesday]{develop.play.reference}">
+                    Today is RPG Wednesday, June 24, 2026. Useful live references: the <a href="/now/">Now page</a> for current support and updates, <a href="/play/rpg-wednesday/">RPG Wednesday</a> for creative play, and the <a href="/tools/midjourney/#image-resource-utility">image resource utility</a> for swapping tracked visual concepts without losing semantic context.
+                </p>
                 <p class="frame-note home-production-note" data-spw-semantic-expression="production[ecology]{garden.apparatus.rhythm}">
                     This home page is a <span class="spw-inline-emphasis" data-spw-inline-tone="literal" data-spw-spatial-affordance="threshold">literal website entrance</span> first. It points to two working surfaces: a <span class="spw-living-term" data-spw-living-term data-spw-concept="garden" tabindex="0" title="tap: inspect • hold to prime">garden</span> for tending and return; and an <span class="spw-living-term" data-spw-living-term data-spw-concept="apparatus" tabindex="0" title="tap: inspect • hold to prime">apparatus</span> of braces, operators, and inspectable states.
                 </p>
@@ -381,6 +384,7 @@
                 <nav class="frame-operators home-quick-start" aria-label="Quick start actions">
                     <span class="home-quick-start__label">next move</span>
                     <a class="operator-chip" href="/tools/midjourney/#prompt-mining-loop" data-spw-operator="~" data-spw-action="mine" data-spw-target="prompt-handles" data-spw-operator-reversibility="revisable" title="Extract prompt handles from a page or scene">~ extract prompt handles</a>
+                    <a class="operator-chip" href="/tools/midjourney/#image-resource-utility" data-spw-operator="^" data-spw-action="manage" data-spw-target="image-resources" data-spw-operator-reversibility="revisable" title="Find and swap tracked images by concept">^ manage image resources</a>
                     <a class="operator-chip" href="/play/rpg-wednesday/#image-publishing-loop" data-spw-operator="^" data-spw-action="publish" data-spw-target="rpg-images" data-spw-operator-reversibility="revisable" title="Publish session images as carryable traces for your table's rhythm">^ publish session traces</a>
                     <a class="operator-chip" href="/cards/" data-spw-operator="^" data-spw-action="make-proof" data-spw-target="proof-card" data-spw-operator-reversibility="revisable" title="Make a screenshot-ready proof card">^ make a proof card</a>
                     <a class="operator-chip" href="/design/folios/" data-spw-operator="*" data-spw-action="browse-folios" data-spw-target="folio-archive" data-spw-operator-reversibility="revisable" title="Browse the folio archive">* browse folios</a>
@@ -577,6 +581,72 @@
                     <span>Navigation should keep neighboring paths legible: multiple routes can gather around one luminous opening without collapsing into one label.</span>
                 </figcaption>
             </figure>
+        </aside>
+
+        <aside class="home-component-discovery" aria-labelledby="home-component-discovery-title"
+               data-spw-feature="component-discovery-atlas"
+               data-spw-role="route-discovery"
+               data-spw-box-model="image-route-grid"
+               data-spw-composition-flow="grid"
+               data-spw-semantic-expression="components[discover]{image.route.region}">
+            <header class="home-component-discovery__header">
+                <p class="spec-kicker">Component discovery</p>
+                <h3 id="home-component-discovery-title">Find the page region by the component you want to touch.</h3>
+            </header>
+            <div class="home-component-discovery__grid">
+                <a class="home-discovery-card" href="/topics/software/algorithms/" data-spw-kind="card" data-spw-role="routing" data-spw-operator="probe"
+                   data-spw-accent-palette="cool" data-spw-accent-anchor="teal lattice amber nodes proof diagram constraint"
+                   data-spw-visual-cues="teal lattice amber nodes crisp constraints inspectable field">
+                    <figure class="frame-card-media" data-spw-slot="figure" data-spw-image-discovery data-spw-discovery-label="Algorithm component" data-spw-discovery-title="Algorithm lattice" data-spw-discovery-why="Algorithm images route readers toward inspectable labs, proofs, and diagram components.">
+                        <img src="/public/images/renders/unsorted-curation/algorithm-lattice-0.webp"
+                             alt="A luminous algorithmic lattice with teal and amber cells arranged like an inspectable computational field."
+                             loading="lazy" decoding="async" width="1400" height="1400">
+                    </figure>
+                    <span class="frame-card-sigil" data-spw-slot="meta">?algorithm_labs</span>
+                    <strong data-spw-slot="header">Algorithm labs</strong>
+                    <span data-spw-slot="body">Teal grid, amber nodes, crisp constraint lines. Use when diagrams, proof cards, and software routes need to expose the moving parts.</span>
+                    <span class="home-discovery-card__cue">visual cue: field / lattice / proof pressure</span>
+                </a>
+                <a class="home-discovery-card" href="/topics/search/" data-spw-kind="card" data-spw-role="routing" data-spw-operator="ref"
+                   data-spw-accent-palette="cool" data-spw-accent-anchor="dark orbit bright thread route memory return"
+                   data-spw-visual-cues="dark orbital field bright route threads return path">
+                    <figure class="frame-card-media" data-spw-slot="figure" data-spw-image-discovery data-spw-discovery-label="Route thread" data-spw-discovery-title="Orbital thread field" data-spw-discovery-why="Thread images make search, rediscovery, and route-neighbor flows easier to remember.">
+                        <img src="/public/images/renders/unsorted-curation/orbital-thread-field.webp"
+                             alt="A dark orbital field with bright teal and amber route threads crossing through a structured center."
+                             loading="lazy" decoding="async" width="1400" height="1400">
+                    </figure>
+                    <span class="frame-card-sigil" data-spw-slot="meta">~search_threads</span>
+                    <strong data-spw-slot="header">Search and return</strong>
+                    <span data-spw-slot="body">Dark orbit, bright thread, visible return path. Use when vocabulary, route memory, or later rediscovery should stay traceable.</span>
+                    <span class="home-discovery-card__cue">visual cue: orbit / thread / memory path</span>
+                </a>
+                <a class="home-discovery-card" href="/care/" data-spw-kind="card" data-spw-role="routing" data-spw-operator="action"
+                   data-spw-accent-palette="warm" data-spw-accent-anchor="soft cabinet signal lights protocol compartments"
+                   data-spw-visual-cues="soft cabinet signal lights organized protocols warm compartments">
+                    <figure class="frame-card-media" data-spw-slot="figure" data-spw-image-discovery data-spw-discovery-label="Care protocol" data-spw-discovery-title="Care signal cabinet" data-spw-discovery-why="Care images route readers toward protocols, translation cards, and low-friction next moves.">
+                        <img src="/public/images/renders/unsorted-curation/care-signal-cabinet.webp"
+                             alt="A cabinet-like care interface with soft signal lights, warm shelves, and organized protocol compartments."
+                             loading="lazy" decoding="async" width="1400" height="1400">
+                    </figure>
+                    <span class="frame-card-sigil" data-spw-slot="meta">@care_protocols</span>
+                    <strong data-spw-slot="header">Care protocols</strong>
+                    <span data-spw-slot="body">Soft cabinet, signal lights, named compartments. Use when the interface should reduce pressure before it asks for a bigger decision.</span>
+                    <span class="home-discovery-card__cue">visual cue: cabinet / signal / stable threshold</span>
+                </a>
+                <a class="home-discovery-card" href="/about/#boonhonk-register" data-spw-kind="card" data-spw-role="routing" data-spw-operator="stream"
+                   data-spw-accent-palette="bright" data-spw-accent-anchor="playful machine bright controls social signal"
+                   data-spw-visual-cues="bright machine comic controls teal amber social signal">
+                    <figure class="frame-card-media" data-spw-slot="figure" data-spw-image-discovery data-spw-discovery-label="Register component" data-spw-discovery-title="Boonhonk machine register" data-spw-discovery-why="Register images help playful system behavior stay concrete enough to inspect.">
+                        <img src="/public/images/renders/unsorted-curation/boonhonk-machine-register.webp"
+                             alt="A bright mechanical register with playful teal and amber controls arranged like a small expressive machine."
+                             loading="lazy" decoding="async" width="1024" height="1024">
+                    </figure>
+                    <span class="frame-card-sigil" data-spw-slot="meta">*boonhonk_register</span>
+                    <strong data-spw-slot="header">Playful registers</strong>
+                    <span data-spw-slot="body">Bright controls, comic machine pressure, readable social signal. Use when tone and component behavior need to stay visible together.</span>
+                    <span class="home-discovery-card__cue">visual cue: machine / signal / playful pressure</span>
+                </a>
+            </div>
         </aside>
 
         <p

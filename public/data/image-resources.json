@@ -1,0 +1,3443 @@
+{
+  "generatedAt": "2026-06-24T14:44:55.252Z",
+  "sourceRoot": "/public/images/",
+  "count": 260,
+  "concepts": [
+    "about",
+    "algorithm",
+    "architecture",
+    "blog",
+    "care",
+    "character",
+    "craft",
+    "design",
+    "food",
+    "home",
+    "library",
+    "material-practice",
+    "nutrition",
+    "play",
+    "route-architecture",
+    "rpg",
+    "rpg-wednesday",
+    "session-memory",
+    "site-design",
+    "software",
+    "style-reference",
+    "support",
+    "surface",
+    "website",
+    "worldbuilding"
+  ],
+  "images": [
+    {
+      "id": "apple-touch",
+      "title": "Apple Touch",
+      "path": "/public/images/apple-touch-icon.png",
+      "directory": "public/images",
+      "format": "png",
+      "bytes": 14410,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/apple-touch-icon.png when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "compression-crystals",
+      "title": "Compression Crystals",
+      "path": "/public/images/assets/compression-crystals.png",
+      "directory": "public/images/assets",
+      "format": "png",
+      "bytes": 1120420,
+      "role": "image",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/compression-crystals.png when a image visual needs a stable tracked asset."
+    },
+    {
+      "id": "bane",
+      "title": "Bane",
+      "path": "/public/images/assets/home/bane.png",
+      "directory": "public/images/assets/home",
+      "format": "png",
+      "bytes": 42688,
+      "role": "image",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/assets/home/bane.png when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "bone",
+      "title": "Bone",
+      "path": "/public/images/assets/home/bone.png",
+      "directory": "public/images/assets/home",
+      "format": "png",
+      "bytes": 42685,
+      "role": "image",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/assets/home/bone.png when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "bonk",
+      "title": "Bonk",
+      "path": "/public/images/assets/home/bonk.png",
+      "directory": "public/images/assets/home",
+      "format": "png",
+      "bytes": 42687,
+      "role": "image",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/assets/home/bonk.png when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "book",
+      "title": "Book",
+      "path": "/public/images/assets/home/book.png",
+      "directory": "public/images/assets/home",
+      "format": "png",
+      "bytes": 42777,
+      "role": "image",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/assets/home/book.png when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "boon",
+      "title": "Boon",
+      "path": "/public/images/assets/home/boon.png",
+      "directory": "public/images/assets/home",
+      "format": "png",
+      "bytes": 42685,
+      "role": "image",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/assets/home/boon.png when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "dot-1",
+      "title": "Dot 1",
+      "path": "/public/images/assets/home/dot-1.png",
+      "directory": "public/images/assets/home",
+      "format": "png",
+      "bytes": 42779,
+      "role": "image",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/assets/home/dot-1.png when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "dot-2",
+      "title": "Dot 2",
+      "path": "/public/images/assets/home/dot-2.png",
+      "directory": "public/images/assets/home",
+      "format": "png",
+      "bytes": 42687,
+      "role": "image",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/assets/home/dot-2.png when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "dot-3",
+      "title": "Dot 3",
+      "path": "/public/images/assets/home/dot-3.png",
+      "directory": "public/images/assets/home",
+      "format": "png",
+      "bytes": 42685,
+      "role": "image",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/assets/home/dot-3.png when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "dot-4",
+      "title": "Dot 4",
+      "path": "/public/images/assets/home/dot-4.png",
+      "directory": "public/images/assets/home",
+      "format": "png",
+      "bytes": 42686,
+      "role": "image",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/assets/home/dot-4.png when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "dot-5",
+      "title": "Dot 5",
+      "path": "/public/images/assets/home/dot-5.png",
+      "directory": "public/images/assets/home",
+      "format": "png",
+      "bytes": 42687,
+      "role": "image",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/assets/home/dot-5.png when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "honk",
+      "title": "Honk",
+      "path": "/public/images/assets/home/honk.png",
+      "directory": "public/images/assets/home",
+      "format": "png",
+      "bytes": 42629,
+      "role": "image",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/assets/home/honk.png when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "rhythm",
+      "title": "Rhythm",
+      "path": "/public/images/assets/home/rhythm.png",
+      "directory": "public/images/assets/home",
+      "format": "png",
+      "bytes": 42722,
+      "role": "image",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/assets/home/rhythm.png when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi",
+      "title": "",
+      "path": "/public/images/assets/home/spwashi.png",
+      "directory": "public/images/assets/home",
+      "format": "png",
+      "bytes": 42597,
+      "role": "image",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/assets/home/spwashi.png when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "compression",
+      "title": "Compression",
+      "path": "/public/images/assets/illustrations/compression.png",
+      "directory": "public/images/assets/illustrations",
+      "format": "png",
+      "bytes": 1281654,
+      "role": "image",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/compression.png when a image visual needs a stable tracked asset."
+    },
+    {
+      "id": "home-og-card",
+      "title": "Home Og Card",
+      "path": "/public/images/assets/illustrations/home-og-card.jpg",
+      "directory": "public/images/assets/illustrations",
+      "format": "jpg",
+      "bytes": 144025,
+      "role": "social-card",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/home-og-card.jpg when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "lore-land-og-card",
+      "title": "Lore Land Og Card",
+      "path": "/public/images/assets/illustrations/lore-land-og-card.jpg",
+      "directory": "public/images/assets/illustrations",
+      "format": "jpg",
+      "bytes": 152186,
+      "role": "social-card",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/lore-land-og-card.jpg when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "lore-land-signal-poster",
+      "title": "Lore Land Signal Poster",
+      "path": "/public/images/assets/illustrations/lore-land-signal-poster-display.png",
+      "directory": "public/images/assets/illustrations",
+      "format": "png",
+      "bytes": 1850576,
+      "role": "display",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/lore-land-signal-poster-display.png when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "lore-land-signal-poster",
+      "title": "Lore Land Signal Poster",
+      "path": "/public/images/assets/illustrations/lore-land-signal-poster-display.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 163466,
+      "role": "display",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/lore-land-signal-poster-display.webp when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "lore-land-signal-poster",
+      "title": "Lore Land Signal Poster",
+      "path": "/public/images/assets/illustrations/lore-land-signal-poster.png",
+      "directory": "public/images/assets/illustrations",
+      "format": "png",
+      "bytes": 2612516,
+      "role": "image",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/lore-land-signal-poster.png when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "pretext-physics",
+      "title": "Pretext Physics",
+      "path": "/public/images/assets/illustrations/pretext-physics.png",
+      "directory": "public/images/assets/illustrations",
+      "format": "png",
+      "bytes": 928036,
+      "role": "image",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/pretext-physics.png when a image visual needs a stable tracked asset."
+    },
+    {
+      "id": "schedulers",
+      "title": "Schedulers",
+      "path": "/public/images/assets/illustrations/schedulers.png",
+      "directory": "public/images/assets/illustrations",
+      "format": "png",
+      "bytes": 963670,
+      "role": "image",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/schedulers.png when a image visual needs a stable tracked asset."
+    },
+    {
+      "id": "semantic-phases",
+      "title": "Semantic Phases",
+      "path": "/public/images/assets/illustrations/semantic-phases.png",
+      "directory": "public/images/assets/illustrations",
+      "format": "png",
+      "bytes": 749589,
+      "role": "image",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/semantic-phases.png when a image visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi-alchemy-token",
+      "title": "Alchemy Token",
+      "path": "/public/images/assets/motifs/spwashi-alchemy-token-display.png",
+      "directory": "public/images/assets/motifs",
+      "format": "png",
+      "bytes": 788477,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/motifs/spwashi-alchemy-token-display.png when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi-alchemy-token",
+      "title": "Alchemy Token",
+      "path": "/public/images/assets/motifs/spwashi-alchemy-token-display.webp",
+      "directory": "public/images/assets/motifs",
+      "format": "webp",
+      "bytes": 70764,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/motifs/spwashi-alchemy-token-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi-alchemy-token",
+      "title": "Alchemy Token",
+      "path": "/public/images/assets/motifs/spwashi-alchemy-token.png",
+      "directory": "public/images/assets/motifs",
+      "format": "png",
+      "bytes": 2361694,
+      "role": "image",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/motifs/spwashi-alchemy-token.png when a image visual needs a stable tracked asset."
+    },
+    {
+      "id": "scheduler-clockwork",
+      "title": "Scheduler Clockwork",
+      "path": "/public/images/assets/scheduler-clockwork.png",
+      "directory": "public/images/assets",
+      "format": "png",
+      "bytes": 1329270,
+      "role": "image",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture"
+      ],
+      "swapHint": "Use /public/images/assets/scheduler-clockwork.png when a software / algorithm / architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "lndr-garden",
+      "title": "Lndr Garden",
+      "path": "/public/images/creatures/lndr-garden.jpg",
+      "directory": "public/images/creatures",
+      "format": "jpg",
+      "bytes": 199828,
+      "role": "image",
+      "concepts": [],
+      "swapHint": "Use /public/images/creatures/lndr-garden.jpg when a image visual needs a stable tracked asset."
+    },
+    {
+      "id": "lndr-garden",
+      "title": "Lndr Garden",
+      "path": "/public/images/creatures/lndr-garden.webp",
+      "directory": "public/images/creatures",
+      "format": "webp",
+      "bytes": 108190,
+      "role": "image",
+      "concepts": [],
+      "swapHint": "Use /public/images/creatures/lndr-garden.webp when a image visual needs a stable tracked asset."
+    },
+    {
+      "id": "whimsical-landscape",
+      "title": "Whimsical Landscape",
+      "path": "/public/images/creatures/whimsical-landscape.jpg",
+      "directory": "public/images/creatures",
+      "format": "jpg",
+      "bytes": 165971,
+      "role": "image",
+      "concepts": [],
+      "swapHint": "Use /public/images/creatures/whimsical-landscape.jpg when a image visual needs a stable tracked asset."
+    },
+    {
+      "id": "whimsical-landscape",
+      "title": "Whimsical Landscape",
+      "path": "/public/images/creatures/whimsical-landscape.webp",
+      "directory": "public/images/creatures",
+      "format": "webp",
+      "bytes": 77982,
+      "role": "image",
+      "concepts": [],
+      "swapHint": "Use /public/images/creatures/whimsical-landscape.webp when a image visual needs a stable tracked asset."
+    },
+    {
+      "id": "favicon",
+      "title": "Favicon",
+      "path": "/public/images/favicon.svg",
+      "directory": "public/images",
+      "format": "svg",
+      "bytes": 249,
+      "role": "vector",
+      "concepts": [],
+      "swapHint": "Use /public/images/favicon.svg when a vector visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract-wash-study-0",
+      "title": "Abstract Wash Study 0",
+      "path": "/public/images/home/abstract-wash-study-0.jpg",
+      "directory": "public/images/home",
+      "format": "jpg",
+      "bytes": 64542,
+      "role": "image",
+      "concepts": [
+        "style-reference",
+        "surface",
+        "home"
+      ],
+      "swapHint": "Use /public/images/home/abstract-wash-study-0.jpg when a style-reference / surface / home visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract-wash-study-0",
+      "title": "Abstract Wash Study 0",
+      "path": "/public/images/home/abstract-wash-study-0.webp",
+      "directory": "public/images/home",
+      "format": "webp",
+      "bytes": 44028,
+      "role": "image",
+      "concepts": [
+        "style-reference",
+        "surface",
+        "home"
+      ],
+      "swapHint": "Use /public/images/home/abstract-wash-study-0.webp when a style-reference / surface / home visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract-wash-study-1",
+      "title": "Abstract Wash Study 1",
+      "path": "/public/images/home/abstract-wash-study-1.jpg",
+      "directory": "public/images/home",
+      "format": "jpg",
+      "bytes": 97622,
+      "role": "image",
+      "concepts": [
+        "style-reference",
+        "surface",
+        "home"
+      ],
+      "swapHint": "Use /public/images/home/abstract-wash-study-1.jpg when a style-reference / surface / home visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract-wash-study-1",
+      "title": "Abstract Wash Study 1",
+      "path": "/public/images/home/abstract-wash-study-1.webp",
+      "directory": "public/images/home",
+      "format": "webp",
+      "bytes": 70402,
+      "role": "image",
+      "concepts": [
+        "style-reference",
+        "surface",
+        "home"
+      ],
+      "swapHint": "Use /public/images/home/abstract-wash-study-1.webp when a style-reference / surface / home visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract-wash-study-2",
+      "title": "Abstract Wash Study 2",
+      "path": "/public/images/home/abstract-wash-study-2.jpg",
+      "directory": "public/images/home",
+      "format": "jpg",
+      "bytes": 98797,
+      "role": "image",
+      "concepts": [
+        "style-reference",
+        "surface",
+        "home"
+      ],
+      "swapHint": "Use /public/images/home/abstract-wash-study-2.jpg when a style-reference / surface / home visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract-wash-study-2",
+      "title": "Abstract Wash Study 2",
+      "path": "/public/images/home/abstract-wash-study-2.webp",
+      "directory": "public/images/home",
+      "format": "webp",
+      "bytes": 71486,
+      "role": "image",
+      "concepts": [
+        "style-reference",
+        "surface",
+        "home"
+      ],
+      "swapHint": "Use /public/images/home/abstract-wash-study-2.webp when a style-reference / surface / home visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract-wash-study-3",
+      "title": "Abstract Wash Study 3",
+      "path": "/public/images/home/abstract-wash-study-3.jpg",
+      "directory": "public/images/home",
+      "format": "jpg",
+      "bytes": 103333,
+      "role": "image",
+      "concepts": [
+        "style-reference",
+        "surface",
+        "home"
+      ],
+      "swapHint": "Use /public/images/home/abstract-wash-study-3.jpg when a style-reference / surface / home visual needs a stable tracked asset."
+    },
+    {
+      "id": "abstract-wash-study-3",
+      "title": "Abstract Wash Study 3",
+      "path": "/public/images/home/abstract-wash-study-3.webp",
+      "directory": "public/images/home",
+      "format": "webp",
+      "bytes": 82494,
+      "role": "image",
+      "concepts": [
+        "style-reference",
+        "surface",
+        "home"
+      ],
+      "swapHint": "Use /public/images/home/abstract-wash-study-3.webp when a style-reference / surface / home visual needs a stable tracked asset."
+    },
+    {
+      "id": "constellation-studio-1600",
+      "title": "Constellation Studio 1600",
+      "path": "/public/images/home/constellation-studio-1600.jpg",
+      "directory": "public/images/home",
+      "format": "jpg",
+      "bytes": 517794,
+      "role": "image",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/home/constellation-studio-1600.jpg when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "constellation-studio-1600",
+      "title": "Constellation Studio 1600",
+      "path": "/public/images/home/constellation-studio-1600.webp",
+      "directory": "public/images/home",
+      "format": "webp",
+      "bytes": 381590,
+      "role": "image",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/home/constellation-studio-1600.webp when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-study-0",
+      "title": "Papergami Study 0",
+      "path": "/public/images/home/papergami-study-0.jpg",
+      "directory": "public/images/home",
+      "format": "jpg",
+      "bytes": 66700,
+      "role": "image",
+      "concepts": [
+        "style-reference",
+        "surface",
+        "home"
+      ],
+      "swapHint": "Use /public/images/home/papergami-study-0.jpg when a style-reference / surface / home visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-study-0",
+      "title": "Papergami Study 0",
+      "path": "/public/images/home/papergami-study-0.webp",
+      "directory": "public/images/home",
+      "format": "webp",
+      "bytes": 37016,
+      "role": "image",
+      "concepts": [
+        "style-reference",
+        "surface",
+        "home"
+      ],
+      "swapHint": "Use /public/images/home/papergami-study-0.webp when a style-reference / surface / home visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-study-1",
+      "title": "Papergami Study 1",
+      "path": "/public/images/home/papergami-study-1.jpg",
+      "directory": "public/images/home",
+      "format": "jpg",
+      "bytes": 62733,
+      "role": "image",
+      "concepts": [
+        "style-reference",
+        "surface",
+        "home"
+      ],
+      "swapHint": "Use /public/images/home/papergami-study-1.jpg when a style-reference / surface / home visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-study-1",
+      "title": "Papergami Study 1",
+      "path": "/public/images/home/papergami-study-1.webp",
+      "directory": "public/images/home",
+      "format": "webp",
+      "bytes": 31284,
+      "role": "image",
+      "concepts": [
+        "style-reference",
+        "surface",
+        "home"
+      ],
+      "swapHint": "Use /public/images/home/papergami-study-1.webp when a style-reference / surface / home visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-study-2",
+      "title": "Papergami Study 2",
+      "path": "/public/images/home/papergami-study-2.jpg",
+      "directory": "public/images/home",
+      "format": "jpg",
+      "bytes": 72418,
+      "role": "image",
+      "concepts": [
+        "style-reference",
+        "surface",
+        "home"
+      ],
+      "swapHint": "Use /public/images/home/papergami-study-2.jpg when a style-reference / surface / home visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-study-2",
+      "title": "Papergami Study 2",
+      "path": "/public/images/home/papergami-study-2.webp",
+      "directory": "public/images/home",
+      "format": "webp",
+      "bytes": 42922,
+      "role": "image",
+      "concepts": [
+        "style-reference",
+        "surface",
+        "home"
+      ],
+      "swapHint": "Use /public/images/home/papergami-study-2.webp when a style-reference / surface / home visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-study-3",
+      "title": "Papergami Study 3",
+      "path": "/public/images/home/papergami-study-3.jpg",
+      "directory": "public/images/home",
+      "format": "jpg",
+      "bytes": 60388,
+      "role": "image",
+      "concepts": [
+        "style-reference",
+        "surface",
+        "home"
+      ],
+      "swapHint": "Use /public/images/home/papergami-study-3.jpg when a style-reference / surface / home visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-study-3",
+      "title": "Papergami Study 3",
+      "path": "/public/images/home/papergami-study-3.webp",
+      "directory": "public/images/home",
+      "format": "webp",
+      "bytes": 34910,
+      "role": "image",
+      "concepts": [
+        "style-reference",
+        "surface",
+        "home"
+      ],
+      "swapHint": "Use /public/images/home/papergami-study-3.webp when a style-reference / surface / home visual needs a stable tracked asset."
+    },
+    {
+      "id": "icon-192",
+      "title": "Icon 192",
+      "path": "/public/images/icon-192.png",
+      "directory": "public/images",
+      "format": "png",
+      "bytes": 15912,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/icon-192.png when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "icon-512",
+      "title": "Icon 512",
+      "path": "/public/images/icon-512.png",
+      "directory": "public/images",
+      "format": "png",
+      "bytes": 72206,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/icon-512.png when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "icon-maskable-512",
+      "title": "Icon Maskable 512",
+      "path": "/public/images/icon-maskable-512.png",
+      "directory": "public/images",
+      "format": "png",
+      "bytes": 72206,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/icon-maskable-512.png when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "spw-brand-plate",
+      "title": "Spw Brand Plate",
+      "path": "/public/images/logo/spw-brand-plate.svg",
+      "directory": "public/images/logo",
+      "format": "svg",
+      "bytes": 3403,
+      "role": "vector",
+      "concepts": [],
+      "swapHint": "Use /public/images/logo/spw-brand-plate.svg when a vector visual needs a stable tracked asset."
+    },
+    {
+      "id": "spw-lockup-horizontal",
+      "title": "Spw Lockup Horizontal",
+      "path": "/public/images/logo/spw-lockup-horizontal.svg",
+      "directory": "public/images/logo",
+      "format": "svg",
+      "bytes": 1187,
+      "role": "vector",
+      "concepts": [],
+      "swapHint": "Use /public/images/logo/spw-lockup-horizontal.svg when a vector visual needs a stable tracked asset."
+    },
+    {
+      "id": "spw-lockup-stacked",
+      "title": "Spw Lockup Stacked",
+      "path": "/public/images/logo/spw-lockup-stacked.svg",
+      "directory": "public/images/logo",
+      "format": "svg",
+      "bytes": 1354,
+      "role": "vector",
+      "concepts": [],
+      "swapHint": "Use /public/images/logo/spw-lockup-stacked.svg when a vector visual needs a stable tracked asset."
+    },
+    {
+      "id": "spw-mark-mask",
+      "title": "Spw Mark Mask",
+      "path": "/public/images/logo/spw-mark-mask.svg",
+      "directory": "public/images/logo",
+      "format": "svg",
+      "bytes": 765,
+      "role": "vector",
+      "concepts": [],
+      "swapHint": "Use /public/images/logo/spw-mark-mask.svg when a vector visual needs a stable tracked asset."
+    },
+    {
+      "id": "spw-mark-sm",
+      "title": "Spw Mark Sm",
+      "path": "/public/images/logo/spw-mark-sm.svg",
+      "directory": "public/images/logo",
+      "format": "svg",
+      "bytes": 894,
+      "role": "vector",
+      "concepts": [],
+      "swapHint": "Use /public/images/logo/spw-mark-sm.svg when a vector visual needs a stable tracked asset."
+    },
+    {
+      "id": "spw-mark-stroke",
+      "title": "Spw Mark Stroke",
+      "path": "/public/images/logo/spw-mark-stroke.svg",
+      "directory": "public/images/logo",
+      "format": "svg",
+      "bytes": 1576,
+      "role": "vector",
+      "concepts": [],
+      "swapHint": "Use /public/images/logo/spw-mark-stroke.svg when a vector visual needs a stable tracked asset."
+    },
+    {
+      "id": "spw-mark-symbol",
+      "title": "Spw Mark Symbol",
+      "path": "/public/images/logo/spw-mark-symbol.svg",
+      "directory": "public/images/logo",
+      "format": "svg",
+      "bytes": 1577,
+      "role": "vector",
+      "concepts": [],
+      "swapHint": "Use /public/images/logo/spw-mark-symbol.svg when a vector visual needs a stable tracked asset."
+    },
+    {
+      "id": "spw-mark",
+      "title": "Spw Mark",
+      "path": "/public/images/logo/spw-mark.svg",
+      "directory": "public/images/logo",
+      "format": "svg",
+      "bytes": 1208,
+      "role": "vector",
+      "concepts": [],
+      "swapHint": "Use /public/images/logo/spw-mark.svg when a vector visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi.logo-concept.common",
+      "title": "Logo Concept",
+      "path": "/public/images/logo/spwashi.logo-concept.common.png",
+      "directory": "public/images/logo",
+      "format": "png",
+      "bytes": 2226893,
+      "role": "image",
+      "concepts": [],
+      "swapHint": "Use /public/images/logo/spwashi.logo-concept.common.png when a image visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi.logo-concept.premium",
+      "title": "Logo Concept",
+      "path": "/public/images/logo/spwashi.logo-concept.premium.png",
+      "directory": "public/images/logo",
+      "format": "png",
+      "bytes": 2316712,
+      "role": "image",
+      "concepts": [],
+      "swapHint": "Use /public/images/logo/spwashi.logo-concept.premium.png when a image visual needs a stable tracked asset."
+    },
+    {
+      "id": "sticker-canon-field-study",
+      "title": "Sticker Canon Field Study",
+      "path": "/public/images/play/rpg-wednesday/sticker-canon-field-study.webp",
+      "directory": "public/images/play/rpg-wednesday",
+      "format": "webp",
+      "bytes": 176398,
+      "role": "image",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "play",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/play/rpg-wednesday/sticker-canon-field-study.webp when a rpg-wednesday / session-memory / character / play / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "woodfrog-paladin-species-study",
+      "title": "Woodfrog Paladin Species Study",
+      "path": "/public/images/play/rpg-wednesday/woodfrog-paladin-species-study.webp",
+      "directory": "public/images/play/rpg-wednesday",
+      "format": "webp",
+      "bytes": 143796,
+      "role": "image",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "play",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/play/rpg-wednesday/woodfrog-paladin-species-study.webp when a rpg-wednesday / session-memory / character / play / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_papergami_machinery_for_cognitive_layout_and_web_design_60a04090-e67f-4f86-b9bd-5b88653cbb88",
+      "title": "Papergami Machinery For Cognitive Layout And Web Design 60a04090 E67f 4f86 B9bd 5b88653cbb88",
+      "path": "/public/images/renders/_raw-2x2/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_60a04090-e67f-4f86-b9bd-5b88653cbb88.png",
+      "directory": "public/images/renders/_raw-2x2",
+      "format": "png",
+      "bytes": 5696811,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface",
+        "design"
+      ],
+      "swapHint": "Use /public/images/renders/_raw-2x2/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_60a04090-e67f-4f86-b9bd-5b88653cbb88.png when a style-reference / surface / design visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_papergami_machinery_for_cognitive_layout_and_web_design_709779d2-d69e-4599-9f8b-1c361bbe4e48",
+      "title": "Papergami Machinery For Cognitive Layout And Web Design 709779d2 D69e 4599 9f8b 1c361bbe4e48",
+      "path": "/public/images/renders/_raw-2x2/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_709779d2-d69e-4599-9f8b-1c361bbe4e48.png",
+      "directory": "public/images/renders/_raw-2x2",
+      "format": "png",
+      "bytes": 6401145,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface",
+        "design"
+      ],
+      "swapHint": "Use /public/images/renders/_raw-2x2/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_709779d2-d69e-4599-9f8b-1c361bbe4e48.png when a style-reference / surface / design visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_papergami_machinery_for_cognitive_layout_and_web_design_a422ce74-c637-4fde-b1b8-255680f9b83f",
+      "title": "Papergami Machinery For Cognitive Layout And Web Design A422ce74 C637 4fde B1b8 255680f9b83f",
+      "path": "/public/images/renders/_raw-2x2/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_a422ce74-c637-4fde-b1b8-255680f9b83f.png",
+      "directory": "public/images/renders/_raw-2x2",
+      "format": "png",
+      "bytes": 6277446,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface",
+        "design"
+      ],
+      "swapHint": "Use /public/images/renders/_raw-2x2/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_a422ce74-c637-4fde-b1b8-255680f9b83f.png when a style-reference / surface / design visual needs a stable tracked asset."
+    },
+    {
+      "id": "Brainstorming sketch with robot and text",
+      "title": "Brainstorming Sketch With Robot And Text",
+      "path": "/public/images/renders/_raw/chatgpt-renders/Brainstorming sketch with robot and text.png",
+      "directory": "public/images/renders/_raw/chatgpt-renders",
+      "format": "png",
+      "bytes": 2001647,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/chatgpt-renders/Brainstorming sketch with robot and text.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "Elegant ink logo on textured parchment",
+      "title": "Elegant Ink Logo On Textured Parchment",
+      "path": "/public/images/renders/_raw/chatgpt-renders/Elegant ink logo on textured parchment.png",
+      "directory": "public/images/renders/_raw/chatgpt-renders",
+      "format": "png",
+      "bytes": 3715077,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/chatgpt-renders/Elegant ink logo on textured parchment.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "Spwashi brand identity presentation",
+      "title": "Brand Identity Presentation",
+      "path": "/public/images/renders/_raw/chatgpt-renders/Spwashi brand identity presentation.png",
+      "directory": "public/images/renders/_raw/chatgpt-renders",
+      "format": "png",
+      "bytes": 3791950,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/chatgpt-renders/Spwashi brand identity presentation.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "Spwashi emblem with cosmic details",
+      "title": "Emblem With Cosmic Details",
+      "path": "/public/images/renders/_raw/chatgpt-renders/Spwashi emblem with cosmic details.png",
+      "directory": "public/images/renders/_raw/chatgpt-renders",
+      "format": "png",
+      "bytes": 2903413,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/chatgpt-renders/Spwashi emblem with cosmic details.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "Spwashi logo and brand identity design",
+      "title": "Logo And Brand Identity Design",
+      "path": "/public/images/renders/_raw/chatgpt-renders/Spwashi logo and brand identity design.png",
+      "directory": "public/images/renders/_raw/chatgpt-renders",
+      "format": "png",
+      "bytes": 2226319,
+      "role": "render",
+      "concepts": [
+        "design"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/chatgpt-renders/Spwashi logo and brand identity design.png when a design visual needs a stable tracked asset."
+    },
+    {
+      "id": "Spwashi logo concept and branding design",
+      "title": "Logo Concept And Branding Design",
+      "path": "/public/images/renders/_raw/chatgpt-renders/Spwashi logo concept and branding design.png",
+      "directory": "public/images/renders/_raw/chatgpt-renders",
+      "format": "png",
+      "bytes": 2127342,
+      "role": "render",
+      "concepts": [
+        "design"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/chatgpt-renders/Spwashi logo concept and branding design.png when a design visual needs a stable tracked asset."
+    },
+    {
+      "id": "Stylized emblem with fiery swirl",
+      "title": "Stylized Emblem With Fiery Swirl",
+      "path": "/public/images/renders/_raw/chatgpt-renders/Stylized emblem with fiery swirl.png",
+      "directory": "public/images/renders/_raw/chatgpt-renders",
+      "format": "png",
+      "bytes": 1420443,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/chatgpt-renders/Stylized emblem with fiery swirl.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "Whimsical characters in a misty landscape",
+      "title": "Whimsical Characters In A Misty Landscape",
+      "path": "/public/images/renders/_raw/chatgpt-renders/Whimsical characters in a misty landscape.png",
+      "directory": "public/images/renders/_raw/chatgpt-renders",
+      "format": "png",
+      "bytes": 2564346,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/chatgpt-renders/Whimsical characters in a misty landscape.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "Whimsical creatures and magical text garden",
+      "title": "Whimsical Creatures And Magical Text Garden",
+      "path": "/public/images/renders/_raw/chatgpt-renders/Whimsical creatures and magical text garden.png",
+      "directory": "public/images/renders/_raw/chatgpt-renders",
+      "format": "png",
+      "bytes": 3189447,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/chatgpt-renders/Whimsical creatures and magical text garden.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_a_seagull_who_is_a_car_salesman_--profile_3q5khel_--sty_b685877d-3450-4dc4-9627-411c4157a125",
+      "title": "A Seagull Who Is A Car Salesman Profile 3q5khel Sty B685877d 3450 4dc4 9627 411c4157a125",
+      "path": "/public/images/renders/_raw/spwashi_a_seagull_who_is_a_car_salesman_--profile_3q5khel_--sty_b685877d-3450-4dc4-9627-411c4157a125.png",
+      "directory": "public/images/renders/_raw",
+      "format": "png",
+      "bytes": 1499018,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/spwashi_a_seagull_who_is_a_car_salesman_--profile_3q5khel_--sty_b685877d-3450-4dc4-9627-411c4157a125.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_car_salesman_pigeon_--profile_3q5khel_--stylize_750_--v_25865b86-66c2-4e45-8098-4300c76db35c",
+      "title": "Car Salesman Pigeon Profile 3q5khel Stylize 750 V 25865b86 66c2 4e45 8098 4300c76db35c",
+      "path": "/public/images/renders/_raw/spwashi_car_salesman_pigeon_--profile_3q5khel_--stylize_750_--v_25865b86-66c2-4e45-8098-4300c76db35c.png",
+      "directory": "public/images/renders/_raw",
+      "format": "png",
+      "bytes": 1252081,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/spwashi_car_salesman_pigeon_--profile_3q5khel_--stylize_750_--v_25865b86-66c2-4e45-8098-4300c76db35c.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_car_salesman_pigon_--profile_3q5khel_--stylize_750_--v__760359f0-42b0-420c-accb-636091f09b29",
+      "title": "Car Salesman Pigon Profile 3q5khel Stylize 750 V 760359f0 42b0 420c Accb 636091f09b29",
+      "path": "/public/images/renders/_raw/spwashi_car_salesman_pigon_--profile_3q5khel_--stylize_750_--v__760359f0-42b0-420c-accb-636091f09b29.png",
+      "directory": "public/images/renders/_raw",
+      "format": "png",
+      "bytes": 6274331,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/spwashi_car_salesman_pigon_--profile_3q5khel_--stylize_750_--v__760359f0-42b0-420c-accb-636091f09b29.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_car_salesman_pigon_--profile_3q5khel_--stylize_750_--v__ced4c0cd-b543-42ec-bc06-d78bc4f07788",
+      "title": "Car Salesman Pigon Profile 3q5khel Stylize 750 V Ced4c0cd B543 42ec Bc06 D78bc4f07788",
+      "path": "/public/images/renders/_raw/spwashi_car_salesman_pigon_--profile_3q5khel_--stylize_750_--v__ced4c0cd-b543-42ec-bc06-d78bc4f07788.png",
+      "directory": "public/images/renders/_raw",
+      "format": "png",
+      "bytes": 5733231,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/spwashi_car_salesman_pigon_--profile_3q5khel_--stylize_750_--v__ced4c0cd-b543-42ec-bc06-d78bc4f07788.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_clean_background_wash_useful_for_tiling_in_HTML_0e0238e0-4617-4ca1-a87a-41a3928f3308",
+      "title": "Clean Background Wash Useful For Tiling In Html 0e0238e0 4617 4ca1 A87a 41a3928f3308",
+      "path": "/public/images/renders/_raw/spwashi_clean_background_wash_useful_for_tiling_in_HTML_0e0238e0-4617-4ca1-a87a-41a3928f3308.png",
+      "directory": "public/images/renders/_raw",
+      "format": "png",
+      "bytes": 1881486,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/spwashi_clean_background_wash_useful_for_tiling_in_HTML_0e0238e0-4617-4ca1-a87a-41a3928f3308.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_clean_background_wash_useful_for_tiling_in_HTML_3084fd06-d3a5-49d2-844f-0abd88a1345a",
+      "title": "Clean Background Wash Useful For Tiling In Html 3084fd06 D3a5 49d2 844f 0abd88a1345a",
+      "path": "/public/images/renders/_raw/spwashi_clean_background_wash_useful_for_tiling_in_HTML_3084fd06-d3a5-49d2-844f-0abd88a1345a.png",
+      "directory": "public/images/renders/_raw",
+      "format": "png",
+      "bytes": 1541866,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/spwashi_clean_background_wash_useful_for_tiling_in_HTML_3084fd06-d3a5-49d2-844f-0abd88a1345a.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_clean_background_wash_useful_for_tiling_in_HTML_3d5f94a4-a092-4d02-9ac5-c095061576c8",
+      "title": "Clean Background Wash Useful For Tiling In Html 3d5f94a4 A092 4d02 9ac5 C095061576c8",
+      "path": "/public/images/renders/_raw/spwashi_clean_background_wash_useful_for_tiling_in_HTML_3d5f94a4-a092-4d02-9ac5-c095061576c8.png",
+      "directory": "public/images/renders/_raw",
+      "format": "png",
+      "bytes": 1830413,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/spwashi_clean_background_wash_useful_for_tiling_in_HTML_3d5f94a4-a092-4d02-9ac5-c095061576c8.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_clean_background_wash_useful_for_tiling_in_HTML_83f6f4d2-b571-4d3e-bc93-3f0705f1b108",
+      "title": "Clean Background Wash Useful For Tiling In Html 83f6f4d2 B571 4d3e Bc93 3f0705f1b108",
+      "path": "/public/images/renders/_raw/spwashi_clean_background_wash_useful_for_tiling_in_HTML_83f6f4d2-b571-4d3e-bc93-3f0705f1b108.png",
+      "directory": "public/images/renders/_raw",
+      "format": "png",
+      "bytes": 1408833,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/spwashi_clean_background_wash_useful_for_tiling_in_HTML_83f6f4d2-b571-4d3e-bc93-3f0705f1b108.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_fusion_of_quvit_frame_and_bookation._calm_minimal_dec_a0cf1ede-6161-4a51-b86b-a64c12f46373_2",
+      "title": "Fusion Of Quvit Frame And Bookation",
+      "path": "/public/images/renders/_raw/spwashi_fusion_of_quvit_frame_and_bookation._calm_minimal_dec_a0cf1ede-6161-4a51-b86b-a64c12f46373_2.png",
+      "directory": "public/images/renders/_raw",
+      "format": "png",
+      "bytes": 1708026,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/spwashi_fusion_of_quvit_frame_and_bookation._calm_minimal_dec_a0cf1ede-6161-4a51-b86b-a64c12f46373_2.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_lndr_is_a_greyteal_rockgnome_with_a_boonhat_working_on__0564699b-85a8-4418-8682-4fb50c0011cc",
+      "title": "Lndr Is A Greyteal Rockgnome With A Boonhat Working On 0564699b 85a8 4418 8682 4fb50c0011cc",
+      "path": "/public/images/renders/_raw/spwashi_lndr_is_a_greyteal_rockgnome_with_a_boonhat_working_on__0564699b-85a8-4418-8682-4fb50c0011cc.png",
+      "directory": "public/images/renders/_raw",
+      "format": "png",
+      "bytes": 1933286,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/spwashi_lndr_is_a_greyteal_rockgnome_with_a_boonhat_working_on__0564699b-85a8-4418-8682-4fb50c0011cc.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_moss_covered_metal_--profile_3q5khel_--v_7_6709bec8-cc21-4b8b-b54f-e43139b1b86a",
+      "title": "Moss Covered Metal Profile 3q5khel V 7 6709bec8 Cc21 4b8b B54f E43139b1b86a",
+      "path": "/public/images/renders/_raw/spwashi_moss_covered_metal_--profile_3q5khel_--v_7_6709bec8-cc21-4b8b-b54f-e43139b1b86a.png",
+      "directory": "public/images/renders/_raw",
+      "format": "png",
+      "bytes": 6941426,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/spwashi_moss_covered_metal_--profile_3q5khel_--v_7_6709bec8-cc21-4b8b-b54f-e43139b1b86a.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_papergami_machinery_for_cognitive_layout_and_web_design_40e653d8-fc96-4a81-b8f1-95b727075e94",
+      "title": "Papergami Machinery For Cognitive Layout And Web Design 40e653d8 Fc96 4a81 B8f1 95b727075e94",
+      "path": "/public/images/renders/_raw/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_40e653d8-fc96-4a81-b8f1-95b727075e94.png",
+      "directory": "public/images/renders/_raw",
+      "format": "png",
+      "bytes": 1652378,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface",
+        "design"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_40e653d8-fc96-4a81-b8f1-95b727075e94.png when a style-reference / surface / design visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_papergami_machinery_for_cognitive_layout_and_web_design_480e1202-d03a-458a-9901-9332064234fd",
+      "title": "Papergami Machinery For Cognitive Layout And Web Design 480e1202 D03a 458a 9901 9332064234fd",
+      "path": "/public/images/renders/_raw/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_480e1202-d03a-458a-9901-9332064234fd.png",
+      "directory": "public/images/renders/_raw",
+      "format": "png",
+      "bytes": 1562656,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface",
+        "design"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_480e1202-d03a-458a-9901-9332064234fd.png when a style-reference / surface / design visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_papergami_machinery_for_cognitive_layout_and_web_design_4cc4be87-b09c-4811-8351-32aef42f8e8e",
+      "title": "Papergami Machinery For Cognitive Layout And Web Design 4cc4be87 B09c 4811 8351 32aef42f8e8e",
+      "path": "/public/images/renders/_raw/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_4cc4be87-b09c-4811-8351-32aef42f8e8e.png",
+      "directory": "public/images/renders/_raw",
+      "format": "png",
+      "bytes": 1393820,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface",
+        "design"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_4cc4be87-b09c-4811-8351-32aef42f8e8e.png when a style-reference / surface / design visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_papergami_machinery_for_cognitive_layout_and_web_design_5501fc63-f058-448c-8d59-2164db78df0c",
+      "title": "Papergami Machinery For Cognitive Layout And Web Design 5501fc63 F058 448c 8d59 2164db78df0c",
+      "path": "/public/images/renders/_raw/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_5501fc63-f058-448c-8d59-2164db78df0c.png",
+      "directory": "public/images/renders/_raw",
+      "format": "png",
+      "bytes": 1466568,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface",
+        "design"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_5501fc63-f058-448c-8d59-2164db78df0c.png when a style-reference / surface / design visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_papergami_machinery_for_cognitive_layout_and_web_design_80eab55b-38c7-49b9-b58e-70a9f477c4a3",
+      "title": "Papergami Machinery For Cognitive Layout And Web Design 80eab55b 38c7 49b9 B58e 70a9f477c4a3",
+      "path": "/public/images/renders/_raw/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_80eab55b-38c7-49b9-b58e-70a9f477c4a3.png",
+      "directory": "public/images/renders/_raw",
+      "format": "png",
+      "bytes": 1585511,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface",
+        "design"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_80eab55b-38c7-49b9-b58e-70a9f477c4a3.png when a style-reference / surface / design visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_papergami_machinery_for_cognitive_layout_and_web_design_c8ab90c1-35ee-4d6b-8e60-08a64095befb",
+      "title": "Papergami Machinery For Cognitive Layout And Web Design C8ab90c1 35ee 4d6b 8e60 08a64095befb",
+      "path": "/public/images/renders/_raw/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_c8ab90c1-35ee-4d6b-8e60-08a64095befb.png",
+      "directory": "public/images/renders/_raw",
+      "format": "png",
+      "bytes": 1667070,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface",
+        "design"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_c8ab90c1-35ee-4d6b-8e60-08a64095befb.png when a style-reference / surface / design visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_papergami_machinery_for_cognitive_layout_and_web_design_cdd1b9f4-e2a0-4873-a74e-d9ec19ddf78a",
+      "title": "Papergami Machinery For Cognitive Layout And Web Design Cdd1b9f4 E2a0 4873 A74e D9ec19ddf78a",
+      "path": "/public/images/renders/_raw/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_cdd1b9f4-e2a0-4873-a74e-d9ec19ddf78a.png",
+      "directory": "public/images/renders/_raw",
+      "format": "png",
+      "bytes": 1594839,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface",
+        "design"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_cdd1b9f4-e2a0-4873-a74e-d9ec19ddf78a.png when a style-reference / surface / design visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_papergami_machinery_for_cognitive_layout_and_web_design_edcaed11-1323-4dcb-ac24-103d7c9e2d9d",
+      "title": "Papergami Machinery For Cognitive Layout And Web Design Edcaed11 1323 4dcb Ac24 103d7c9e2d9d",
+      "path": "/public/images/renders/_raw/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_edcaed11-1323-4dcb-ac24-103d7c9e2d9d.png",
+      "directory": "public/images/renders/_raw",
+      "format": "png",
+      "bytes": 1439992,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface",
+        "design"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_edcaed11-1323-4dcb-ac24-103d7c9e2d9d.png when a style-reference / surface / design visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_shorse_shark_horse_hybrid_--profile_3q5khel_--stylize_7_cc6cdadc-9d37-4fcd-8126-c4b6aa90aec8",
+      "title": "Shorse Shark Horse Hybrid Profile 3q5khel Stylize 7 Cc6cdadc 9d37 4fcd 8126 C4b6aa90aec8",
+      "path": "/public/images/renders/_raw/spwashi_shorse_shark_horse_hybrid_--profile_3q5khel_--stylize_7_cc6cdadc-9d37-4fcd-8126-c4b6aa90aec8.png",
+      "directory": "public/images/renders/_raw",
+      "format": "png",
+      "bytes": 7178736,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/spwashi_shorse_shark_horse_hybrid_--profile_3q5khel_--stylize_7_cc6cdadc-9d37-4fcd-8126-c4b6aa90aec8.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_text_for_lore.land_--sref_4547657966_--profile_3q5khe_f80f8a9a-417f-4296-91c4-437909383170_1",
+      "title": "Text For Lore",
+      "path": "/public/images/renders/_raw/spwashi_text_for_lore.land_--sref_4547657966_--profile_3q5khe_f80f8a9a-417f-4296-91c4-437909383170_1.png",
+      "directory": "public/images/renders/_raw",
+      "format": "png",
+      "bytes": 970619,
+      "role": "render",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/spwashi_text_for_lore.land_--sref_4547657966_--profile_3q5khe_f80f8a9a-417f-4296-91c4-437909383170_1.png when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_text_for_lore.land_--sref_4547657966_--profile_3q5khel__c586d896-8837-412e-8334-628076fc7e66",
+      "title": "Text For Lore",
+      "path": "/public/images/renders/_raw/spwashi_text_for_lore.land_--sref_4547657966_--profile_3q5khel__c586d896-8837-412e-8334-628076fc7e66.png",
+      "directory": "public/images/renders/_raw",
+      "format": "png",
+      "bytes": 2957244,
+      "role": "render",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/spwashi_text_for_lore.land_--sref_4547657966_--profile_3q5khel__c586d896-8837-412e-8334-628076fc7e66.png when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_text_for_lore.land_--sref_5935039759_--profile_3q5khe_0a782827-1119-4fdb-906a-fd5c470222e4_0",
+      "title": "Text For Lore",
+      "path": "/public/images/renders/_raw/spwashi_text_for_lore.land_--sref_5935039759_--profile_3q5khe_0a782827-1119-4fdb-906a-fd5c470222e4_0.png",
+      "directory": "public/images/renders/_raw",
+      "format": "png",
+      "bytes": 587263,
+      "role": "render",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/spwashi_text_for_lore.land_--sref_5935039759_--profile_3q5khe_0a782827-1119-4fdb-906a-fd5c470222e4_0.png when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_text_for_lore.land_--sref_5935039759_--profile_3q5khe_d223f7a7-61e5-4678-9229-c911ee409fd3_2",
+      "title": "Text For Lore",
+      "path": "/public/images/renders/_raw/spwashi_text_for_lore.land_--sref_5935039759_--profile_3q5khe_d223f7a7-61e5-4678-9229-c911ee409fd3_2.png",
+      "directory": "public/images/renders/_raw",
+      "format": "png",
+      "bytes": 829948,
+      "role": "render",
+      "concepts": [
+        "library",
+        "worldbuilding"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/spwashi_text_for_lore.land_--sref_5935039759_--profile_3q5khe_d223f7a7-61e5-4678-9229-c911ee409fd3_2.png when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_the_text_2_active_now_in_the_upper_left_corner_of_your__3e3a2061-5b75-44e9-8254-5094d452d6a9",
+      "title": "The Text 2 Active Now In The Upper Left Corner Of Your 3e3a2061 5b75 44e9 8254 5094d452d6a9",
+      "path": "/public/images/renders/_raw/spwashi_the_text_2_active_now_in_the_upper_left_corner_of_your__3e3a2061-5b75-44e9-8254-5094d452d6a9.png",
+      "directory": "public/images/renders/_raw",
+      "format": "png",
+      "bytes": 1896011,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/spwashi_the_text_2_active_now_in_the_upper_left_corner_of_your__3e3a2061-5b75-44e9-8254-5094d452d6a9.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_watercolor_wash_--profile_3q5khel_--stylize_750_--v_7_c1ffd42b-1976-49e3-b8d6-21dcb4678d60_0",
+      "title": "Watercolor Wash Profile 3q5khel Stylize 750 V 7 C1ffd42b 1976 49e3 B8d6 21dcb4678d60 0",
+      "path": "/public/images/renders/_raw/spwashi_watercolor_wash_--profile_3q5khel_--stylize_750_--v_7_c1ffd42b-1976-49e3-b8d6-21dcb4678d60_0.png",
+      "directory": "public/images/renders/_raw",
+      "format": "png",
+      "bytes": 2013122,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/_raw/spwashi_watercolor_wash_--profile_3q5khel_--stylize_750_--v_7_c1ffd42b-1976-49e3-b8d6-21dcb4678d60_0.png when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_spwashi.com_favicon_c80c4b40-06c8-4661-b10f-873e42b5e03d",
+      "title": "",
+      "path": "/public/images/renders/2026-03-10-favicon-study/spwashi_spwashi.com_favicon_c80c4b40-06c8-4661-b10f-873e42b5e03d-display.avif",
+      "directory": "public/images/renders/2026-03-10-favicon-study",
+      "format": "avif",
+      "bytes": 9297,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-03-10-favicon-study/spwashi_spwashi.com_favicon_c80c4b40-06c8-4661-b10f-873e42b5e03d-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_spwashi.com_favicon_c80c4b40-06c8-4661-b10f-873e42b5e03d",
+      "title": "",
+      "path": "/public/images/renders/2026-03-10-favicon-study/spwashi_spwashi.com_favicon_c80c4b40-06c8-4661-b10f-873e42b5e03d-display.png",
+      "directory": "public/images/renders/2026-03-10-favicon-study",
+      "format": "png",
+      "bytes": 112703,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-03-10-favicon-study/spwashi_spwashi.com_favicon_c80c4b40-06c8-4661-b10f-873e42b5e03d-display.png when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_spwashi.com_favicon_c80c4b40-06c8-4661-b10f-873e42b5e03d",
+      "title": "",
+      "path": "/public/images/renders/2026-03-10-favicon-study/spwashi_spwashi.com_favicon_c80c4b40-06c8-4661-b10f-873e42b5e03d-display.webp",
+      "directory": "public/images/renders/2026-03-10-favicon-study",
+      "format": "webp",
+      "bytes": 7784,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-03-10-favicon-study/spwashi_spwashi.com_favicon_c80c4b40-06c8-4661-b10f-873e42b5e03d-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_spwashi.com_favicon_c80c4b40-06c8-4661-b10f-873e42b5e03d",
+      "title": "",
+      "path": "/public/images/renders/2026-03-10-favicon-study/spwashi_spwashi.com_favicon_c80c4b40-06c8-4661-b10f-873e42b5e03d-icon.avif",
+      "directory": "public/images/renders/2026-03-10-favicon-study",
+      "format": "avif",
+      "bytes": 910,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-03-10-favicon-study/spwashi_spwashi.com_favicon_c80c4b40-06c8-4661-b10f-873e42b5e03d-icon.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_spwashi.com_favicon_c80c4b40-06c8-4661-b10f-873e42b5e03d",
+      "title": "",
+      "path": "/public/images/renders/2026-03-10-favicon-study/spwashi_spwashi.com_favicon_c80c4b40-06c8-4661-b10f-873e42b5e03d-icon.png",
+      "directory": "public/images/renders/2026-03-10-favicon-study",
+      "format": "png",
+      "bytes": 9250,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-03-10-favicon-study/spwashi_spwashi.com_favicon_c80c4b40-06c8-4661-b10f-873e42b5e03d-icon.png when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_spwashi.com_favicon_c80c4b40-06c8-4661-b10f-873e42b5e03d",
+      "title": "",
+      "path": "/public/images/renders/2026-03-10-favicon-study/spwashi_spwashi.com_favicon_c80c4b40-06c8-4661-b10f-873e42b5e03d-icon.webp",
+      "directory": "public/images/renders/2026-03-10-favicon-study",
+      "format": "webp",
+      "bytes": 798,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-03-10-favicon-study/spwashi_spwashi.com_favicon_c80c4b40-06c8-4661-b10f-873e42b5e03d-icon.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_spwashi.com_favicon_c80c4b40-06c8-4661-b10f-873e42b5e03d",
+      "title": "",
+      "path": "/public/images/renders/2026-03-10-favicon-study/spwashi_spwashi.com_favicon_c80c4b40-06c8-4661-b10f-873e42b5e03d-large.avif",
+      "directory": "public/images/renders/2026-03-10-favicon-study",
+      "format": "avif",
+      "bytes": 44518,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-03-10-favicon-study/spwashi_spwashi.com_favicon_c80c4b40-06c8-4661-b10f-873e42b5e03d-large.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_spwashi.com_favicon_c80c4b40-06c8-4661-b10f-873e42b5e03d",
+      "title": "",
+      "path": "/public/images/renders/2026-03-10-favicon-study/spwashi_spwashi.com_favicon_c80c4b40-06c8-4661-b10f-873e42b5e03d-large.png",
+      "directory": "public/images/renders/2026-03-10-favicon-study",
+      "format": "png",
+      "bytes": 439024,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-03-10-favicon-study/spwashi_spwashi.com_favicon_c80c4b40-06c8-4661-b10f-873e42b5e03d-large.png when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_spwashi.com_favicon_c80c4b40-06c8-4661-b10f-873e42b5e03d",
+      "title": "",
+      "path": "/public/images/renders/2026-03-10-favicon-study/spwashi_spwashi.com_favicon_c80c4b40-06c8-4661-b10f-873e42b5e03d-large.webp",
+      "directory": "public/images/renders/2026-03-10-favicon-study",
+      "format": "webp",
+      "bytes": 34176,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-03-10-favicon-study/spwashi_spwashi.com_favicon_c80c4b40-06c8-4661-b10f-873e42b5e03d-large.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_spwashi.com_favicon_c80c4b40-06c8-4661-b10f-873e42b5e03d",
+      "title": "",
+      "path": "/public/images/renders/2026-03-10-favicon-study/spwashi_spwashi.com_favicon_c80c4b40-06c8-4661-b10f-873e42b5e03d.png",
+      "directory": "public/images/renders/2026-03-10-favicon-study",
+      "format": "png",
+      "bytes": 1645807,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-03-10-favicon-study/spwashi_spwashi.com_favicon_c80c4b40-06c8-4661-b10f-873e42b5e03d.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "brassica-twilight-transformation",
+      "title": "Brassica Twilight Transformation",
+      "path": "/public/images/renders/2026-05-B-rhythms/brassica-twilight-transformation-display.avif",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "avif",
+      "bytes": 24127,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/brassica-twilight-transformation-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "brassica-twilight-transformation",
+      "title": "Brassica Twilight Transformation",
+      "path": "/public/images/renders/2026-05-B-rhythms/brassica-twilight-transformation-display.png",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "png",
+      "bytes": 292811,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/brassica-twilight-transformation-display.png when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "brassica-twilight-transformation",
+      "title": "Brassica Twilight Transformation",
+      "path": "/public/images/renders/2026-05-B-rhythms/brassica-twilight-transformation-display.webp",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "webp",
+      "bytes": 22376,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/brassica-twilight-transformation-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "brassica-twilight-transformation",
+      "title": "Brassica Twilight Transformation",
+      "path": "/public/images/renders/2026-05-B-rhythms/brassica-twilight-transformation-hero.avif",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "avif",
+      "bytes": 98348,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/brassica-twilight-transformation-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "brassica-twilight-transformation",
+      "title": "Brassica Twilight Transformation",
+      "path": "/public/images/renders/2026-05-B-rhythms/brassica-twilight-transformation-hero.png",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "png",
+      "bytes": 1006224,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/brassica-twilight-transformation-hero.png when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "brassica-twilight-transformation",
+      "title": "Brassica Twilight Transformation",
+      "path": "/public/images/renders/2026-05-B-rhythms/brassica-twilight-transformation-hero.webp",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "webp",
+      "bytes": 76574,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/brassica-twilight-transformation-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "brassica-twilight-transformation",
+      "title": "Brassica Twilight Transformation",
+      "path": "/public/images/renders/2026-05-B-rhythms/brassica-twilight-transformation-thumb.avif",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "avif",
+      "bytes": 4671,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/brassica-twilight-transformation-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "brassica-twilight-transformation",
+      "title": "Brassica Twilight Transformation",
+      "path": "/public/images/renders/2026-05-B-rhythms/brassica-twilight-transformation-thumb.png",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "png",
+      "bytes": 80556,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/brassica-twilight-transformation-thumb.png when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "brassica-twilight-transformation",
+      "title": "Brassica Twilight Transformation",
+      "path": "/public/images/renders/2026-05-B-rhythms/brassica-twilight-transformation-thumb.webp",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "webp",
+      "bytes": 5376,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/brassica-twilight-transformation-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "brassica-twilight-transformation",
+      "title": "Brassica Twilight Transformation",
+      "path": "/public/images/renders/2026-05-B-rhythms/brassica-twilight-transformation.jpg",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "jpg",
+      "bytes": 406225,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/brassica-twilight-transformation.jpg when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "dough-tide-fold-no-hands",
+      "title": "Dough Tide Fold No Hands",
+      "path": "/public/images/renders/2026-05-B-rhythms/dough-tide-fold-no-hands-display.avif",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "avif",
+      "bytes": 21207,
+      "role": "display",
+      "concepts": [
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/dough-tide-fold-no-hands-display.avif when a food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "dough-tide-fold-no-hands",
+      "title": "Dough Tide Fold No Hands",
+      "path": "/public/images/renders/2026-05-B-rhythms/dough-tide-fold-no-hands-display.png",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "png",
+      "bytes": 287840,
+      "role": "display",
+      "concepts": [
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/dough-tide-fold-no-hands-display.png when a food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "dough-tide-fold-no-hands",
+      "title": "Dough Tide Fold No Hands",
+      "path": "/public/images/renders/2026-05-B-rhythms/dough-tide-fold-no-hands-display.webp",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "webp",
+      "bytes": 18988,
+      "role": "display",
+      "concepts": [
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/dough-tide-fold-no-hands-display.webp when a food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "dough-tide-fold-no-hands",
+      "title": "Dough Tide Fold No Hands",
+      "path": "/public/images/renders/2026-05-B-rhythms/dough-tide-fold-no-hands-hero.avif",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "avif",
+      "bytes": 83412,
+      "role": "hero",
+      "concepts": [
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/dough-tide-fold-no-hands-hero.avif when a food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "dough-tide-fold-no-hands",
+      "title": "Dough Tide Fold No Hands",
+      "path": "/public/images/renders/2026-05-B-rhythms/dough-tide-fold-no-hands-hero.png",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "png",
+      "bytes": 978677,
+      "role": "hero",
+      "concepts": [
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/dough-tide-fold-no-hands-hero.png when a food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "dough-tide-fold-no-hands",
+      "title": "Dough Tide Fold No Hands",
+      "path": "/public/images/renders/2026-05-B-rhythms/dough-tide-fold-no-hands-hero.webp",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "webp",
+      "bytes": 66064,
+      "role": "hero",
+      "concepts": [
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/dough-tide-fold-no-hands-hero.webp when a food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "dough-tide-fold-no-hands",
+      "title": "Dough Tide Fold No Hands",
+      "path": "/public/images/renders/2026-05-B-rhythms/dough-tide-fold-no-hands-thumb.avif",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "avif",
+      "bytes": 4265,
+      "role": "thumbnail",
+      "concepts": [
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/dough-tide-fold-no-hands-thumb.avif when a food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "dough-tide-fold-no-hands",
+      "title": "Dough Tide Fold No Hands",
+      "path": "/public/images/renders/2026-05-B-rhythms/dough-tide-fold-no-hands-thumb.png",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "png",
+      "bytes": 82477,
+      "role": "thumbnail",
+      "concepts": [
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/dough-tide-fold-no-hands-thumb.png when a food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "dough-tide-fold-no-hands",
+      "title": "Dough Tide Fold No Hands",
+      "path": "/public/images/renders/2026-05-B-rhythms/dough-tide-fold-no-hands-thumb.webp",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "webp",
+      "bytes": 4990,
+      "role": "thumbnail",
+      "concepts": [
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/dough-tide-fold-no-hands-thumb.webp when a food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "dough-tide-fold-no-hands",
+      "title": "Dough Tide Fold No Hands",
+      "path": "/public/images/renders/2026-05-B-rhythms/dough-tide-fold-no-hands.jpg",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "jpg",
+      "bytes": 399486,
+      "role": "render",
+      "concepts": [
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/dough-tide-fold-no-hands.jpg when a food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "fermentation-bubble-choir",
+      "title": "Fermentation Bubble Choir",
+      "path": "/public/images/renders/2026-05-B-rhythms/fermentation-bubble-choir-display.avif",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "avif",
+      "bytes": 20680,
+      "role": "display",
+      "concepts": [
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/fermentation-bubble-choir-display.avif when a food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "fermentation-bubble-choir",
+      "title": "Fermentation Bubble Choir",
+      "path": "/public/images/renders/2026-05-B-rhythms/fermentation-bubble-choir-display.png",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "png",
+      "bytes": 268281,
+      "role": "display",
+      "concepts": [
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/fermentation-bubble-choir-display.png when a food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "fermentation-bubble-choir",
+      "title": "Fermentation Bubble Choir",
+      "path": "/public/images/renders/2026-05-B-rhythms/fermentation-bubble-choir-display.webp",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "webp",
+      "bytes": 19266,
+      "role": "display",
+      "concepts": [
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/fermentation-bubble-choir-display.webp when a food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "fermentation-bubble-choir",
+      "title": "Fermentation Bubble Choir",
+      "path": "/public/images/renders/2026-05-B-rhythms/fermentation-bubble-choir-hero.avif",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "avif",
+      "bytes": 84540,
+      "role": "hero",
+      "concepts": [
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/fermentation-bubble-choir-hero.avif when a food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "fermentation-bubble-choir",
+      "title": "Fermentation Bubble Choir",
+      "path": "/public/images/renders/2026-05-B-rhythms/fermentation-bubble-choir-hero.png",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "png",
+      "bytes": 928818,
+      "role": "hero",
+      "concepts": [
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/fermentation-bubble-choir-hero.png when a food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "fermentation-bubble-choir",
+      "title": "Fermentation Bubble Choir",
+      "path": "/public/images/renders/2026-05-B-rhythms/fermentation-bubble-choir-hero.webp",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "webp",
+      "bytes": 67658,
+      "role": "hero",
+      "concepts": [
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/fermentation-bubble-choir-hero.webp when a food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "fermentation-bubble-choir",
+      "title": "Fermentation Bubble Choir",
+      "path": "/public/images/renders/2026-05-B-rhythms/fermentation-bubble-choir-thumb.avif",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "avif",
+      "bytes": 4078,
+      "role": "thumbnail",
+      "concepts": [
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/fermentation-bubble-choir-thumb.avif when a food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "fermentation-bubble-choir",
+      "title": "Fermentation Bubble Choir",
+      "path": "/public/images/renders/2026-05-B-rhythms/fermentation-bubble-choir-thumb.png",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "png",
+      "bytes": 75274,
+      "role": "thumbnail",
+      "concepts": [
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/fermentation-bubble-choir-thumb.png when a food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "fermentation-bubble-choir",
+      "title": "Fermentation Bubble Choir",
+      "path": "/public/images/renders/2026-05-B-rhythms/fermentation-bubble-choir-thumb.webp",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "webp",
+      "bytes": 4798,
+      "role": "thumbnail",
+      "concepts": [
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/fermentation-bubble-choir-thumb.webp when a food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "fermentation-bubble-choir",
+      "title": "Fermentation Bubble Choir",
+      "path": "/public/images/renders/2026-05-B-rhythms/fermentation-bubble-choir.jpg",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "jpg",
+      "bytes": 363512,
+      "role": "render",
+      "concepts": [
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/fermentation-bubble-choir.jpg when a food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "knife-rhythm-lattice-no-hands",
+      "title": "Knife Rhythm Lattice No Hands",
+      "path": "/public/images/renders/2026-05-B-rhythms/knife-rhythm-lattice-no-hands-display.avif",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "avif",
+      "bytes": 16362,
+      "role": "display",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture",
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/knife-rhythm-lattice-no-hands-display.avif when a software / algorithm / architecture / food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "knife-rhythm-lattice-no-hands",
+      "title": "Knife Rhythm Lattice No Hands",
+      "path": "/public/images/renders/2026-05-B-rhythms/knife-rhythm-lattice-no-hands-display.png",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "png",
+      "bytes": 203023,
+      "role": "display",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture",
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/knife-rhythm-lattice-no-hands-display.png when a software / algorithm / architecture / food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "knife-rhythm-lattice-no-hands",
+      "title": "Knife Rhythm Lattice No Hands",
+      "path": "/public/images/renders/2026-05-B-rhythms/knife-rhythm-lattice-no-hands-display.webp",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "webp",
+      "bytes": 13966,
+      "role": "display",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture",
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/knife-rhythm-lattice-no-hands-display.webp when a software / algorithm / architecture / food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "knife-rhythm-lattice-no-hands",
+      "title": "Knife Rhythm Lattice No Hands",
+      "path": "/public/images/renders/2026-05-B-rhythms/knife-rhythm-lattice-no-hands-hero.avif",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "avif",
+      "bytes": 63035,
+      "role": "hero",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture",
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/knife-rhythm-lattice-no-hands-hero.avif when a software / algorithm / architecture / food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "knife-rhythm-lattice-no-hands",
+      "title": "Knife Rhythm Lattice No Hands",
+      "path": "/public/images/renders/2026-05-B-rhythms/knife-rhythm-lattice-no-hands-hero.png",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "png",
+      "bytes": 696832,
+      "role": "hero",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture",
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/knife-rhythm-lattice-no-hands-hero.png when a software / algorithm / architecture / food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "knife-rhythm-lattice-no-hands",
+      "title": "Knife Rhythm Lattice No Hands",
+      "path": "/public/images/renders/2026-05-B-rhythms/knife-rhythm-lattice-no-hands-hero.webp",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "webp",
+      "bytes": 46290,
+      "role": "hero",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture",
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/knife-rhythm-lattice-no-hands-hero.webp when a software / algorithm / architecture / food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "knife-rhythm-lattice-no-hands",
+      "title": "Knife Rhythm Lattice No Hands",
+      "path": "/public/images/renders/2026-05-B-rhythms/knife-rhythm-lattice-no-hands-thumb.avif",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "avif",
+      "bytes": 3591,
+      "role": "thumbnail",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture",
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/knife-rhythm-lattice-no-hands-thumb.avif when a software / algorithm / architecture / food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "knife-rhythm-lattice-no-hands",
+      "title": "Knife Rhythm Lattice No Hands",
+      "path": "/public/images/renders/2026-05-B-rhythms/knife-rhythm-lattice-no-hands-thumb.png",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "png",
+      "bytes": 58345,
+      "role": "thumbnail",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture",
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/knife-rhythm-lattice-no-hands-thumb.png when a software / algorithm / architecture / food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "knife-rhythm-lattice-no-hands",
+      "title": "Knife Rhythm Lattice No Hands",
+      "path": "/public/images/renders/2026-05-B-rhythms/knife-rhythm-lattice-no-hands-thumb.webp",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "webp",
+      "bytes": 3914,
+      "role": "thumbnail",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture",
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/knife-rhythm-lattice-no-hands-thumb.webp when a software / algorithm / architecture / food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "knife-rhythm-lattice-no-hands",
+      "title": "Knife Rhythm Lattice No Hands",
+      "path": "/public/images/renders/2026-05-B-rhythms/knife-rhythm-lattice-no-hands.jpg",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "jpg",
+      "bytes": 339894,
+      "role": "render",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture",
+        "food",
+        "material-practice"
+      ],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/knife-rhythm-lattice-no-hands.jpg when a software / algorithm / architecture / food / material-practice visual needs a stable tracked asset."
+    },
+    {
+      "id": "pollination-golden-spiral",
+      "title": "Pollination Golden Spiral",
+      "path": "/public/images/renders/2026-05-B-rhythms/pollination-golden-spiral-display.avif",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "avif",
+      "bytes": 21066,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/pollination-golden-spiral-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "pollination-golden-spiral",
+      "title": "Pollination Golden Spiral",
+      "path": "/public/images/renders/2026-05-B-rhythms/pollination-golden-spiral-display.png",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "png",
+      "bytes": 296042,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/pollination-golden-spiral-display.png when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "pollination-golden-spiral",
+      "title": "Pollination Golden Spiral",
+      "path": "/public/images/renders/2026-05-B-rhythms/pollination-golden-spiral-display.webp",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "webp",
+      "bytes": 19748,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/pollination-golden-spiral-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "pollination-golden-spiral",
+      "title": "Pollination Golden Spiral",
+      "path": "/public/images/renders/2026-05-B-rhythms/pollination-golden-spiral-hero.avif",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "avif",
+      "bytes": 89678,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/pollination-golden-spiral-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "pollination-golden-spiral",
+      "title": "Pollination Golden Spiral",
+      "path": "/public/images/renders/2026-05-B-rhythms/pollination-golden-spiral-hero.png",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "png",
+      "bytes": 1054315,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/pollination-golden-spiral-hero.png when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "pollination-golden-spiral",
+      "title": "Pollination Golden Spiral",
+      "path": "/public/images/renders/2026-05-B-rhythms/pollination-golden-spiral-hero.webp",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "webp",
+      "bytes": 73462,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/pollination-golden-spiral-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "pollination-golden-spiral",
+      "title": "Pollination Golden Spiral",
+      "path": "/public/images/renders/2026-05-B-rhythms/pollination-golden-spiral-thumb.avif",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "avif",
+      "bytes": 4354,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/pollination-golden-spiral-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "pollination-golden-spiral",
+      "title": "Pollination Golden Spiral",
+      "path": "/public/images/renders/2026-05-B-rhythms/pollination-golden-spiral-thumb.png",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "png",
+      "bytes": 82485,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/pollination-golden-spiral-thumb.png when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "pollination-golden-spiral",
+      "title": "Pollination Golden Spiral",
+      "path": "/public/images/renders/2026-05-B-rhythms/pollination-golden-spiral-thumb.webp",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "webp",
+      "bytes": 5102,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/pollination-golden-spiral-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "pollination-golden-spiral",
+      "title": "Pollination Golden Spiral",
+      "path": "/public/images/renders/2026-05-B-rhythms/pollination-golden-spiral.jpg",
+      "directory": "public/images/renders/2026-05-B-rhythms",
+      "format": "jpg",
+      "bytes": 397409,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-05-B-rhythms/pollination-golden-spiral.jpg when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-architecture",
+      "title": "Papergami Architecture",
+      "path": "/public/images/renders/papergami/papergami-architecture.jpg",
+      "directory": "public/images/renders/papergami",
+      "format": "jpg",
+      "bytes": 231222,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/papergami/papergami-architecture.jpg when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-architecture",
+      "title": "Papergami Architecture",
+      "path": "/public/images/renders/papergami/papergami-architecture.webp",
+      "directory": "public/images/renders/papergami",
+      "format": "webp",
+      "bytes": 86268,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/papergami/papergami-architecture.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-botanical",
+      "title": "Papergami Botanical",
+      "path": "/public/images/renders/papergami/papergami-botanical.jpg",
+      "directory": "public/images/renders/papergami",
+      "format": "jpg",
+      "bytes": 230764,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/papergami/papergami-botanical.jpg when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-botanical",
+      "title": "Papergami Botanical",
+      "path": "/public/images/renders/papergami/papergami-botanical.webp",
+      "directory": "public/images/renders/papergami",
+      "format": "webp",
+      "bytes": 82980,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/papergami/papergami-botanical.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-collage",
+      "title": "Papergami Collage",
+      "path": "/public/images/renders/papergami/papergami-collage.jpg",
+      "directory": "public/images/renders/papergami",
+      "format": "jpg",
+      "bytes": 253260,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/papergami/papergami-collage.jpg when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-collage",
+      "title": "Papergami Collage",
+      "path": "/public/images/renders/papergami/papergami-collage.webp",
+      "directory": "public/images/renders/papergami",
+      "format": "webp",
+      "bytes": 99132,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/papergami/papergami-collage.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-cubes",
+      "title": "Papergami Cubes",
+      "path": "/public/images/renders/papergami/papergami-cubes.jpg",
+      "directory": "public/images/renders/papergami",
+      "format": "jpg",
+      "bytes": 199787,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/papergami/papergami-cubes.jpg when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-cubes",
+      "title": "Papergami Cubes",
+      "path": "/public/images/renders/papergami/papergami-cubes.webp",
+      "directory": "public/images/renders/papergami",
+      "format": "webp",
+      "bytes": 74724,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/papergami/papergami-cubes.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-kinetic",
+      "title": "Papergami Kinetic",
+      "path": "/public/images/renders/papergami/papergami-kinetic.jpg",
+      "directory": "public/images/renders/papergami",
+      "format": "jpg",
+      "bytes": 207702,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/papergami/papergami-kinetic.jpg when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-kinetic",
+      "title": "Papergami Kinetic",
+      "path": "/public/images/renders/papergami/papergami-kinetic.webp",
+      "directory": "public/images/renders/papergami",
+      "format": "webp",
+      "bytes": 79172,
+      "role": "render",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/renders/papergami/papergami-kinetic.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "algorithm-cosmos-3",
+      "title": "Algorithm Cosmos 3",
+      "path": "/public/images/renders/unsorted-curation/algorithm-cosmos-3.webp",
+      "directory": "public/images/renders/unsorted-curation",
+      "format": "webp",
+      "bytes": 257354,
+      "role": "render",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture"
+      ],
+      "swapHint": "Use /public/images/renders/unsorted-curation/algorithm-cosmos-3.webp when a software / algorithm / architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "algorithm-lattice-0",
+      "title": "Algorithm Lattice 0",
+      "path": "/public/images/renders/unsorted-curation/algorithm-lattice-0.webp",
+      "directory": "public/images/renders/unsorted-curation",
+      "format": "webp",
+      "bytes": 230468,
+      "role": "render",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture"
+      ],
+      "swapHint": "Use /public/images/renders/unsorted-curation/algorithm-lattice-0.webp when a software / algorithm / architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "boonhonk-machine-register",
+      "title": "Boonhonk Machine Register",
+      "path": "/public/images/renders/unsorted-curation/boonhonk-machine-register.webp",
+      "directory": "public/images/renders/unsorted-curation",
+      "format": "webp",
+      "bytes": 104638,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/unsorted-curation/boonhonk-machine-register.webp when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "care-signal-cabinet",
+      "title": "Care Signal Cabinet",
+      "path": "/public/images/renders/unsorted-curation/care-signal-cabinet.webp",
+      "directory": "public/images/renders/unsorted-curation",
+      "format": "webp",
+      "bytes": 171422,
+      "role": "render",
+      "concepts": [
+        "care",
+        "support"
+      ],
+      "swapHint": "Use /public/images/renders/unsorted-curation/care-signal-cabinet.webp when a care / support visual needs a stable tracked asset."
+    },
+    {
+      "id": "library-craft-register",
+      "title": "Library Craft Register",
+      "path": "/public/images/renders/unsorted-curation/library-craft-register.webp",
+      "directory": "public/images/renders/unsorted-curation",
+      "format": "webp",
+      "bytes": 229326,
+      "role": "render",
+      "concepts": [
+        "library",
+        "worldbuilding",
+        "craft"
+      ],
+      "swapHint": "Use /public/images/renders/unsorted-curation/library-craft-register.webp when a library / worldbuilding / craft visual needs a stable tracked asset."
+    },
+    {
+      "id": "nutrition-resource-shelf",
+      "title": "Nutrition Resource Shelf",
+      "path": "/public/images/renders/unsorted-curation/nutrition-resource-shelf.webp",
+      "directory": "public/images/renders/unsorted-curation",
+      "format": "webp",
+      "bytes": 233060,
+      "role": "render",
+      "concepts": [
+        "food",
+        "material-practice",
+        "nutrition"
+      ],
+      "swapHint": "Use /public/images/renders/unsorted-curation/nutrition-resource-shelf.webp when a food / material-practice / nutrition visual needs a stable tracked asset."
+    },
+    {
+      "id": "orbital-thread-field",
+      "title": "Orbital Thread Field",
+      "path": "/public/images/renders/unsorted-curation/orbital-thread-field.webp",
+      "directory": "public/images/renders/unsorted-curation",
+      "format": "webp",
+      "bytes": 310866,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/unsorted-curation/orbital-thread-field.webp when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "rpg-wednesday-signal-hype",
+      "title": "Rpg Wednesday Signal Hype",
+      "path": "/public/images/renders/unsorted-curation/rpg-wednesday-signal-hype.webp",
+      "directory": "public/images/renders/unsorted-curation",
+      "format": "webp",
+      "bytes": 295840,
+      "role": "render",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/renders/unsorted-curation/rpg-wednesday-signal-hype.webp when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "threshold-shelter-house",
+      "title": "Threshold Shelter House",
+      "path": "/public/images/renders/unsorted-curation/threshold-shelter-house.webp",
+      "directory": "public/images/renders/unsorted-curation",
+      "format": "webp",
+      "bytes": 93830,
+      "role": "render",
+      "concepts": [
+        "care",
+        "support",
+        "site-design",
+        "route-architecture"
+      ],
+      "swapHint": "Use /public/images/renders/unsorted-curation/threshold-shelter-house.webp when a care / support / site-design / route-architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "website-atlas-weather-0",
+      "title": "Website Atlas Weather 0",
+      "path": "/public/images/renders/unsorted-curation/website-atlas-weather-0.webp",
+      "directory": "public/images/renders/unsorted-curation",
+      "format": "webp",
+      "bytes": 130950,
+      "role": "render",
+      "concepts": [
+        "site-design",
+        "route-architecture",
+        "website"
+      ],
+      "swapHint": "Use /public/images/renders/unsorted-curation/website-atlas-weather-0.webp when a site-design / route-architecture / website visual needs a stable tracked asset."
+    },
+    {
+      "id": "website-atlas-weather-1",
+      "title": "Website Atlas Weather 1",
+      "path": "/public/images/renders/unsorted-curation/website-atlas-weather-1.webp",
+      "directory": "public/images/renders/unsorted-curation",
+      "format": "webp",
+      "bytes": 221026,
+      "role": "render",
+      "concepts": [
+        "site-design",
+        "route-architecture",
+        "website"
+      ],
+      "swapHint": "Use /public/images/renders/unsorted-curation/website-atlas-weather-1.webp when a site-design / route-architecture / website visual needs a stable tracked asset."
+    },
+    {
+      "id": "website-threshold-corridor-3",
+      "title": "Website Threshold Corridor 3",
+      "path": "/public/images/renders/unsorted-curation/website-threshold-corridor-3.webp",
+      "directory": "public/images/renders/unsorted-curation",
+      "format": "webp",
+      "bytes": 78032,
+      "role": "render",
+      "concepts": [
+        "site-design",
+        "route-architecture",
+        "website"
+      ],
+      "swapHint": "Use /public/images/renders/unsorted-curation/website-threshold-corridor-3.webp when a site-design / route-architecture / website visual needs a stable tracked asset."
+    },
+    {
+      "id": "woodfrog-rain-paladin",
+      "title": "Woodfrog Rain Paladin",
+      "path": "/public/images/renders/unsorted-curation/woodfrog-rain-paladin.webp",
+      "directory": "public/images/renders/unsorted-curation",
+      "format": "webp",
+      "bytes": 208986,
+      "role": "render",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character"
+      ],
+      "swapHint": "Use /public/images/renders/unsorted-curation/woodfrog-rain-paladin.webp when a rpg-wednesday / session-memory / character visual needs a stable tracked asset."
+    },
+    {
+      "id": "about-attention-register",
+      "title": "About Attention Register",
+      "path": "/public/images/routes/about-attention-register-hero.webp",
+      "directory": "public/images/routes",
+      "format": "webp",
+      "bytes": 85760,
+      "role": "hero",
+      "concepts": [
+        "about"
+      ],
+      "swapHint": "Use /public/images/routes/about-attention-register-hero.webp when a about visual needs a stable tracked asset."
+    },
+    {
+      "id": "about-attention-register",
+      "title": "About Attention Register",
+      "path": "/public/images/routes/about-attention-register-og.jpg",
+      "directory": "public/images/routes",
+      "format": "jpg",
+      "bytes": 108873,
+      "role": "social-card",
+      "concepts": [
+        "about"
+      ],
+      "swapHint": "Use /public/images/routes/about-attention-register-og.jpg when a about visual needs a stable tracked asset."
+    },
+    {
+      "id": "about-attention-register",
+      "title": "About Attention Register",
+      "path": "/public/images/routes/about-attention-register-square.webp",
+      "directory": "public/images/routes",
+      "format": "webp",
+      "bytes": 115734,
+      "role": "image",
+      "concepts": [
+        "about"
+      ],
+      "swapHint": "Use /public/images/routes/about-attention-register-square.webp when a about visual needs a stable tracked asset."
+    },
+    {
+      "id": "blog-thread-laboratory",
+      "title": "Blog Thread Laboratory",
+      "path": "/public/images/routes/blog-thread-laboratory-hero.webp",
+      "directory": "public/images/routes",
+      "format": "webp",
+      "bytes": 80538,
+      "role": "hero",
+      "concepts": [
+        "blog"
+      ],
+      "swapHint": "Use /public/images/routes/blog-thread-laboratory-hero.webp when a blog visual needs a stable tracked asset."
+    },
+    {
+      "id": "blog-thread-laboratory",
+      "title": "Blog Thread Laboratory",
+      "path": "/public/images/routes/blog-thread-laboratory-og.jpg",
+      "directory": "public/images/routes",
+      "format": "jpg",
+      "bytes": 103579,
+      "role": "social-card",
+      "concepts": [
+        "blog"
+      ],
+      "swapHint": "Use /public/images/routes/blog-thread-laboratory-og.jpg when a blog visual needs a stable tracked asset."
+    },
+    {
+      "id": "blog-thread-laboratory",
+      "title": "Blog Thread Laboratory",
+      "path": "/public/images/routes/blog-thread-laboratory-square.webp",
+      "directory": "public/images/routes",
+      "format": "webp",
+      "bytes": 110048,
+      "role": "image",
+      "concepts": [
+        "blog"
+      ],
+      "swapHint": "Use /public/images/routes/blog-thread-laboratory-square.webp when a blog visual needs a stable tracked asset."
+    },
+    {
+      "id": "craft-fragment-studio",
+      "title": "Craft Fragment Studio",
+      "path": "/public/images/routes/craft-fragment-studio-hero.webp",
+      "directory": "public/images/routes",
+      "format": "webp",
+      "bytes": 154496,
+      "role": "hero",
+      "concepts": [
+        "craft"
+      ],
+      "swapHint": "Use /public/images/routes/craft-fragment-studio-hero.webp when a craft visual needs a stable tracked asset."
+    },
+    {
+      "id": "craft-fragment-studio",
+      "title": "Craft Fragment Studio",
+      "path": "/public/images/routes/craft-fragment-studio-og.jpg",
+      "directory": "public/images/routes",
+      "format": "jpg",
+      "bytes": 158675,
+      "role": "social-card",
+      "concepts": [
+        "craft"
+      ],
+      "swapHint": "Use /public/images/routes/craft-fragment-studio-og.jpg when a craft visual needs a stable tracked asset."
+    },
+    {
+      "id": "craft-fragment-studio",
+      "title": "Craft Fragment Studio",
+      "path": "/public/images/routes/craft-fragment-studio-square.webp",
+      "directory": "public/images/routes",
+      "format": "webp",
+      "bytes": 229418,
+      "role": "image",
+      "concepts": [
+        "craft"
+      ],
+      "swapHint": "Use /public/images/routes/craft-fragment-studio-square.webp when a craft visual needs a stable tracked asset."
+    },
+    {
+      "id": "color-resonance-swirl-source",
+      "title": "Color Resonance Swirl",
+      "path": "/public/images/routes/design/color-resonance-swirl-source-display.avif",
+      "directory": "public/images/routes/design",
+      "format": "avif",
+      "bytes": 19286,
+      "role": "display",
+      "concepts": [
+        "design"
+      ],
+      "swapHint": "Use /public/images/routes/design/color-resonance-swirl-source-display.avif when a design visual needs a stable tracked asset."
+    },
+    {
+      "id": "color-resonance-swirl-source",
+      "title": "Color Resonance Swirl",
+      "path": "/public/images/routes/design/color-resonance-swirl-source-display.webp",
+      "directory": "public/images/routes/design",
+      "format": "webp",
+      "bytes": 16534,
+      "role": "display",
+      "concepts": [
+        "design"
+      ],
+      "swapHint": "Use /public/images/routes/design/color-resonance-swirl-source-display.webp when a design visual needs a stable tracked asset."
+    },
+    {
+      "id": "color-resonance-swirl-source",
+      "title": "Color Resonance Swirl",
+      "path": "/public/images/routes/design/color-resonance-swirl-source-hero.avif",
+      "directory": "public/images/routes/design",
+      "format": "avif",
+      "bytes": 101608,
+      "role": "hero",
+      "concepts": [
+        "design"
+      ],
+      "swapHint": "Use /public/images/routes/design/color-resonance-swirl-source-hero.avif when a design visual needs a stable tracked asset."
+    },
+    {
+      "id": "color-resonance-swirl-source",
+      "title": "Color Resonance Swirl",
+      "path": "/public/images/routes/design/color-resonance-swirl-source-hero.webp",
+      "directory": "public/images/routes/design",
+      "format": "webp",
+      "bytes": 78046,
+      "role": "hero",
+      "concepts": [
+        "design"
+      ],
+      "swapHint": "Use /public/images/routes/design/color-resonance-swirl-source-hero.webp when a design visual needs a stable tracked asset."
+    },
+    {
+      "id": "color-resonance-swirl-source",
+      "title": "Color Resonance Swirl",
+      "path": "/public/images/routes/design/color-resonance-swirl-source-thumb.avif",
+      "directory": "public/images/routes/design",
+      "format": "avif",
+      "bytes": 2845,
+      "role": "thumbnail",
+      "concepts": [
+        "design"
+      ],
+      "swapHint": "Use /public/images/routes/design/color-resonance-swirl-source-thumb.avif when a design visual needs a stable tracked asset."
+    },
+    {
+      "id": "color-resonance-swirl-source",
+      "title": "Color Resonance Swirl",
+      "path": "/public/images/routes/design/color-resonance-swirl-source-thumb.webp",
+      "directory": "public/images/routes/design",
+      "format": "webp",
+      "bytes": 3430,
+      "role": "thumbnail",
+      "concepts": [
+        "design"
+      ],
+      "swapHint": "Use /public/images/routes/design/color-resonance-swirl-source-thumb.webp when a design visual needs a stable tracked asset."
+    },
+    {
+      "id": "home-workbench-atlas",
+      "title": "Home Workbench Atlas",
+      "path": "/public/images/routes/home-workbench-atlas-hero.webp",
+      "directory": "public/images/routes",
+      "format": "webp",
+      "bytes": 69182,
+      "role": "hero",
+      "concepts": [
+        "site-design",
+        "route-architecture",
+        "home"
+      ],
+      "swapHint": "Use /public/images/routes/home-workbench-atlas-hero.webp when a site-design / route-architecture / home visual needs a stable tracked asset."
+    },
+    {
+      "id": "home-workbench-atlas",
+      "title": "Home Workbench Atlas",
+      "path": "/public/images/routes/home-workbench-atlas-og.jpg",
+      "directory": "public/images/routes",
+      "format": "jpg",
+      "bytes": 97409,
+      "role": "social-card",
+      "concepts": [
+        "site-design",
+        "route-architecture",
+        "home"
+      ],
+      "swapHint": "Use /public/images/routes/home-workbench-atlas-og.jpg when a site-design / route-architecture / home visual needs a stable tracked asset."
+    },
+    {
+      "id": "home-workbench-atlas",
+      "title": "Home Workbench Atlas",
+      "path": "/public/images/routes/home-workbench-atlas-square.webp",
+      "directory": "public/images/routes",
+      "format": "webp",
+      "bytes": 90788,
+      "role": "image",
+      "concepts": [
+        "site-design",
+        "route-architecture",
+        "home"
+      ],
+      "swapHint": "Use /public/images/routes/home-workbench-atlas-square.webp when a site-design / route-architecture / home visual needs a stable tracked asset."
+    },
+    {
+      "id": "honeycomb-resonance-source",
+      "title": "Honeycomb Resonance",
+      "path": "/public/images/routes/home/honeycomb-resonance-source-display.avif",
+      "directory": "public/images/routes/home",
+      "format": "avif",
+      "bytes": 34743,
+      "role": "display",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/routes/home/honeycomb-resonance-source-display.avif when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "honeycomb-resonance-source",
+      "title": "Honeycomb Resonance",
+      "path": "/public/images/routes/home/honeycomb-resonance-source-display.png",
+      "directory": "public/images/routes/home",
+      "format": "png",
+      "bytes": 447996,
+      "role": "display",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/routes/home/honeycomb-resonance-source-display.png when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "honeycomb-resonance-source",
+      "title": "Honeycomb Resonance",
+      "path": "/public/images/routes/home/honeycomb-resonance-source-display.webp",
+      "directory": "public/images/routes/home",
+      "format": "webp",
+      "bytes": 32512,
+      "role": "display",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/routes/home/honeycomb-resonance-source-display.webp when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "honeycomb-resonance-source",
+      "title": "Honeycomb Resonance",
+      "path": "/public/images/routes/home/honeycomb-resonance-source-hero.avif",
+      "directory": "public/images/routes/home",
+      "format": "avif",
+      "bytes": 169091,
+      "role": "hero",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/routes/home/honeycomb-resonance-source-hero.avif when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "honeycomb-resonance-source",
+      "title": "Honeycomb Resonance",
+      "path": "/public/images/routes/home/honeycomb-resonance-source-hero.png",
+      "directory": "public/images/routes/home",
+      "format": "png",
+      "bytes": 1697874,
+      "role": "hero",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/routes/home/honeycomb-resonance-source-hero.png when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "honeycomb-resonance-source",
+      "title": "Honeycomb Resonance",
+      "path": "/public/images/routes/home/honeycomb-resonance-source-hero.webp",
+      "directory": "public/images/routes/home",
+      "format": "webp",
+      "bytes": 141404,
+      "role": "hero",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/routes/home/honeycomb-resonance-source-hero.webp when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "honeycomb-resonance-source",
+      "title": "Honeycomb Resonance",
+      "path": "/public/images/routes/home/honeycomb-resonance-source-thumb.avif",
+      "directory": "public/images/routes/home",
+      "format": "avif",
+      "bytes": 5737,
+      "role": "thumbnail",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/routes/home/honeycomb-resonance-source-thumb.avif when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "honeycomb-resonance-source",
+      "title": "Honeycomb Resonance",
+      "path": "/public/images/routes/home/honeycomb-resonance-source-thumb.png",
+      "directory": "public/images/routes/home",
+      "format": "png",
+      "bytes": 113400,
+      "role": "thumbnail",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/routes/home/honeycomb-resonance-source-thumb.png when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "honeycomb-resonance-source",
+      "title": "Honeycomb Resonance",
+      "path": "/public/images/routes/home/honeycomb-resonance-source-thumb.webp",
+      "directory": "public/images/routes/home",
+      "format": "webp",
+      "bytes": 6774,
+      "role": "thumbnail",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/routes/home/honeycomb-resonance-source-thumb.webp when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "honeycomb-resonance-source",
+      "title": "Honeycomb Resonance",
+      "path": "/public/images/routes/home/honeycomb-resonance-source.png",
+      "directory": "public/images/routes/home",
+      "format": "png",
+      "bytes": 2008282,
+      "role": "image",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/routes/home/honeycomb-resonance-source.png when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "microcosm-canopy-source",
+      "title": "Microcosm Canopy",
+      "path": "/public/images/routes/home/microcosm-canopy-source-display.avif",
+      "directory": "public/images/routes/home",
+      "format": "avif",
+      "bytes": 22809,
+      "role": "display",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/routes/home/microcosm-canopy-source-display.avif when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "microcosm-canopy-source",
+      "title": "Microcosm Canopy",
+      "path": "/public/images/routes/home/microcosm-canopy-source-display.png",
+      "directory": "public/images/routes/home",
+      "format": "png",
+      "bytes": 317950,
+      "role": "display",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/routes/home/microcosm-canopy-source-display.png when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "microcosm-canopy-source",
+      "title": "Microcosm Canopy",
+      "path": "/public/images/routes/home/microcosm-canopy-source-display.webp",
+      "directory": "public/images/routes/home",
+      "format": "webp",
+      "bytes": 18954,
+      "role": "display",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/routes/home/microcosm-canopy-source-display.webp when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "microcosm-canopy-source",
+      "title": "Microcosm Canopy",
+      "path": "/public/images/routes/home/microcosm-canopy-source-hero.avif",
+      "directory": "public/images/routes/home",
+      "format": "avif",
+      "bytes": 107473,
+      "role": "hero",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/routes/home/microcosm-canopy-source-hero.avif when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "microcosm-canopy-source",
+      "title": "Microcosm Canopy",
+      "path": "/public/images/routes/home/microcosm-canopy-source-hero.png",
+      "directory": "public/images/routes/home",
+      "format": "png",
+      "bytes": 1209448,
+      "role": "hero",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/routes/home/microcosm-canopy-source-hero.png when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "microcosm-canopy-source",
+      "title": "Microcosm Canopy",
+      "path": "/public/images/routes/home/microcosm-canopy-source-hero.webp",
+      "directory": "public/images/routes/home",
+      "format": "webp",
+      "bytes": 78190,
+      "role": "hero",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/routes/home/microcosm-canopy-source-hero.webp when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "microcosm-canopy-source",
+      "title": "Microcosm Canopy",
+      "path": "/public/images/routes/home/microcosm-canopy-source-thumb.avif",
+      "directory": "public/images/routes/home",
+      "format": "avif",
+      "bytes": 4236,
+      "role": "thumbnail",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/routes/home/microcosm-canopy-source-thumb.avif when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "microcosm-canopy-source",
+      "title": "Microcosm Canopy",
+      "path": "/public/images/routes/home/microcosm-canopy-source-thumb.png",
+      "directory": "public/images/routes/home",
+      "format": "png",
+      "bytes": 87988,
+      "role": "thumbnail",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/routes/home/microcosm-canopy-source-thumb.png when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "microcosm-canopy-source",
+      "title": "Microcosm Canopy",
+      "path": "/public/images/routes/home/microcosm-canopy-source-thumb.webp",
+      "directory": "public/images/routes/home",
+      "format": "webp",
+      "bytes": 4544,
+      "role": "thumbnail",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/routes/home/microcosm-canopy-source-thumb.webp when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "microcosm-canopy-source",
+      "title": "Microcosm Canopy",
+      "path": "/public/images/routes/home/microcosm-canopy-source.png",
+      "directory": "public/images/routes/home",
+      "format": "png",
+      "bytes": 1758948,
+      "role": "image",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/routes/home/microcosm-canopy-source.png when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "occasion-threshold-field-source",
+      "title": "Occasion Threshold Field",
+      "path": "/public/images/routes/home/occasion-threshold-field-source-display.avif",
+      "directory": "public/images/routes/home",
+      "format": "avif",
+      "bytes": 8187,
+      "role": "display",
+      "concepts": [
+        "site-design",
+        "route-architecture",
+        "home"
+      ],
+      "swapHint": "Use /public/images/routes/home/occasion-threshold-field-source-display.avif when a site-design / route-architecture / home visual needs a stable tracked asset."
+    },
+    {
+      "id": "occasion-threshold-field-source",
+      "title": "Occasion Threshold Field",
+      "path": "/public/images/routes/home/occasion-threshold-field-source-display.webp",
+      "directory": "public/images/routes/home",
+      "format": "webp",
+      "bytes": 6666,
+      "role": "display",
+      "concepts": [
+        "site-design",
+        "route-architecture",
+        "home"
+      ],
+      "swapHint": "Use /public/images/routes/home/occasion-threshold-field-source-display.webp when a site-design / route-architecture / home visual needs a stable tracked asset."
+    },
+    {
+      "id": "occasion-threshold-field-source",
+      "title": "Occasion Threshold Field",
+      "path": "/public/images/routes/home/occasion-threshold-field-source-hero.avif",
+      "directory": "public/images/routes/home",
+      "format": "avif",
+      "bytes": 39007,
+      "role": "hero",
+      "concepts": [
+        "site-design",
+        "route-architecture",
+        "home"
+      ],
+      "swapHint": "Use /public/images/routes/home/occasion-threshold-field-source-hero.avif when a site-design / route-architecture / home visual needs a stable tracked asset."
+    },
+    {
+      "id": "occasion-threshold-field-source",
+      "title": "Occasion Threshold Field",
+      "path": "/public/images/routes/home/occasion-threshold-field-source-hero.webp",
+      "directory": "public/images/routes/home",
+      "format": "webp",
+      "bytes": 27056,
+      "role": "hero",
+      "concepts": [
+        "site-design",
+        "route-architecture",
+        "home"
+      ],
+      "swapHint": "Use /public/images/routes/home/occasion-threshold-field-source-hero.webp when a site-design / route-architecture / home visual needs a stable tracked asset."
+    },
+    {
+      "id": "occasion-threshold-field-source",
+      "title": "Occasion Threshold Field",
+      "path": "/public/images/routes/home/occasion-threshold-field-source-thumb.avif",
+      "directory": "public/images/routes/home",
+      "format": "avif",
+      "bytes": 1659,
+      "role": "thumbnail",
+      "concepts": [
+        "site-design",
+        "route-architecture",
+        "home"
+      ],
+      "swapHint": "Use /public/images/routes/home/occasion-threshold-field-source-thumb.avif when a site-design / route-architecture / home visual needs a stable tracked asset."
+    },
+    {
+      "id": "occasion-threshold-field-source",
+      "title": "Occasion Threshold Field",
+      "path": "/public/images/routes/home/occasion-threshold-field-source-thumb.webp",
+      "directory": "public/images/routes/home",
+      "format": "webp",
+      "bytes": 1772,
+      "role": "thumbnail",
+      "concepts": [
+        "site-design",
+        "route-architecture",
+        "home"
+      ],
+      "swapHint": "Use /public/images/routes/home/occasion-threshold-field-source-thumb.webp when a site-design / route-architecture / home visual needs a stable tracked asset."
+    },
+    {
+      "id": "math-signal-field",
+      "title": "Math Signal Field",
+      "path": "/public/images/routes/math-signal-field-hero.webp",
+      "directory": "public/images/routes",
+      "format": "webp",
+      "bytes": 124258,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/routes/math-signal-field-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "math-signal-field",
+      "title": "Math Signal Field",
+      "path": "/public/images/routes/math-signal-field-og.jpg",
+      "directory": "public/images/routes",
+      "format": "jpg",
+      "bytes": 141581,
+      "role": "social-card",
+      "concepts": [],
+      "swapHint": "Use /public/images/routes/math-signal-field-og.jpg when a social-card visual needs a stable tracked asset."
+    },
+    {
+      "id": "math-signal-field",
+      "title": "Math Signal Field",
+      "path": "/public/images/routes/math-signal-field-square.webp",
+      "directory": "public/images/routes",
+      "format": "webp",
+      "bytes": 168666,
+      "role": "image",
+      "concepts": [],
+      "swapHint": "Use /public/images/routes/math-signal-field-square.webp when a image visual needs a stable tracked asset."
+    },
+    {
+      "id": "boonhonk-machine-prop-source",
+      "title": "Boonhonk Machine Prop",
+      "path": "/public/images/routes/play/boonhonk-machine-prop-source-display.avif",
+      "directory": "public/images/routes/play",
+      "format": "avif",
+      "bytes": 18384,
+      "role": "display",
+      "concepts": [
+        "play"
+      ],
+      "swapHint": "Use /public/images/routes/play/boonhonk-machine-prop-source-display.avif when a play visual needs a stable tracked asset."
+    },
+    {
+      "id": "boonhonk-machine-prop-source",
+      "title": "Boonhonk Machine Prop",
+      "path": "/public/images/routes/play/boonhonk-machine-prop-source-display.webp",
+      "directory": "public/images/routes/play",
+      "format": "webp",
+      "bytes": 14820,
+      "role": "display",
+      "concepts": [
+        "play"
+      ],
+      "swapHint": "Use /public/images/routes/play/boonhonk-machine-prop-source-display.webp when a play visual needs a stable tracked asset."
+    },
+    {
+      "id": "boonhonk-machine-prop-source",
+      "title": "Boonhonk Machine Prop",
+      "path": "/public/images/routes/play/boonhonk-machine-prop-source-hero.avif",
+      "directory": "public/images/routes/play",
+      "format": "avif",
+      "bytes": 89855,
+      "role": "hero",
+      "concepts": [
+        "play"
+      ],
+      "swapHint": "Use /public/images/routes/play/boonhonk-machine-prop-source-hero.avif when a play visual needs a stable tracked asset."
+    },
+    {
+      "id": "boonhonk-machine-prop-source",
+      "title": "Boonhonk Machine Prop",
+      "path": "/public/images/routes/play/boonhonk-machine-prop-source-hero.webp",
+      "directory": "public/images/routes/play",
+      "format": "webp",
+      "bytes": 61958,
+      "role": "hero",
+      "concepts": [
+        "play"
+      ],
+      "swapHint": "Use /public/images/routes/play/boonhonk-machine-prop-source-hero.webp when a play visual needs a stable tracked asset."
+    },
+    {
+      "id": "boonhonk-machine-prop-source",
+      "title": "Boonhonk Machine Prop",
+      "path": "/public/images/routes/play/boonhonk-machine-prop-source-thumb.avif",
+      "directory": "public/images/routes/play",
+      "format": "avif",
+      "bytes": 3115,
+      "role": "thumbnail",
+      "concepts": [
+        "play"
+      ],
+      "swapHint": "Use /public/images/routes/play/boonhonk-machine-prop-source-thumb.avif when a play visual needs a stable tracked asset."
+    },
+    {
+      "id": "boonhonk-machine-prop-source",
+      "title": "Boonhonk Machine Prop",
+      "path": "/public/images/routes/play/boonhonk-machine-prop-source-thumb.webp",
+      "directory": "public/images/routes/play",
+      "format": "webp",
+      "bytes": 3534,
+      "role": "thumbnail",
+      "concepts": [
+        "play"
+      ],
+      "swapHint": "Use /public/images/routes/play/boonhonk-machine-prop-source-thumb.webp when a play visual needs a stable tracked asset."
+    },
+    {
+      "id": "traveling-pantry-machine-source",
+      "title": "Traveling Pantry Machine",
+      "path": "/public/images/routes/recipes/traveling-pantry-machine-source-display.avif",
+      "directory": "public/images/routes/recipes",
+      "format": "avif",
+      "bytes": 16388,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/routes/recipes/traveling-pantry-machine-source-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "traveling-pantry-machine-source",
+      "title": "Traveling Pantry Machine",
+      "path": "/public/images/routes/recipes/traveling-pantry-machine-source-display.webp",
+      "directory": "public/images/routes/recipes",
+      "format": "webp",
+      "bytes": 14132,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/routes/recipes/traveling-pantry-machine-source-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "traveling-pantry-machine-source",
+      "title": "Traveling Pantry Machine",
+      "path": "/public/images/routes/recipes/traveling-pantry-machine-source-hero.avif",
+      "directory": "public/images/routes/recipes",
+      "format": "avif",
+      "bytes": 69654,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/routes/recipes/traveling-pantry-machine-source-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "traveling-pantry-machine-source",
+      "title": "Traveling Pantry Machine",
+      "path": "/public/images/routes/recipes/traveling-pantry-machine-source-hero.webp",
+      "directory": "public/images/routes/recipes",
+      "format": "webp",
+      "bytes": 52888,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/routes/recipes/traveling-pantry-machine-source-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "traveling-pantry-machine-source",
+      "title": "Traveling Pantry Machine",
+      "path": "/public/images/routes/recipes/traveling-pantry-machine-source-thumb.avif",
+      "directory": "public/images/routes/recipes",
+      "format": "avif",
+      "bytes": 3216,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/routes/recipes/traveling-pantry-machine-source-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "traveling-pantry-machine-source",
+      "title": "Traveling Pantry Machine",
+      "path": "/public/images/routes/recipes/traveling-pantry-machine-source-thumb.webp",
+      "directory": "public/images/routes/recipes",
+      "format": "webp",
+      "bytes": 3674,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/routes/recipes/traveling-pantry-machine-source-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "site-design-resonance",
+      "title": "Site Design Resonance",
+      "path": "/public/images/routes/site-design-resonance-hero.webp",
+      "directory": "public/images/routes",
+      "format": "webp",
+      "bytes": 96742,
+      "role": "hero",
+      "concepts": [
+        "design"
+      ],
+      "swapHint": "Use /public/images/routes/site-design-resonance-hero.webp when a design visual needs a stable tracked asset."
+    },
+    {
+      "id": "site-design-resonance",
+      "title": "Site Design Resonance",
+      "path": "/public/images/routes/site-design-resonance-og.jpg",
+      "directory": "public/images/routes",
+      "format": "jpg",
+      "bytes": 123662,
+      "role": "social-card",
+      "concepts": [
+        "design"
+      ],
+      "swapHint": "Use /public/images/routes/site-design-resonance-og.jpg when a design visual needs a stable tracked asset."
+    },
+    {
+      "id": "site-design-resonance",
+      "title": "Site Design Resonance",
+      "path": "/public/images/routes/site-design-resonance-square.webp",
+      "directory": "public/images/routes",
+      "format": "webp",
+      "bytes": 129338,
+      "role": "image",
+      "concepts": [
+        "design"
+      ],
+      "swapHint": "Use /public/images/routes/site-design-resonance-square.webp when a design visual needs a stable tracked asset."
+    },
+    {
+      "id": "software-parser-weather",
+      "title": "Software Parser Weather",
+      "path": "/public/images/routes/software-parser-weather-hero.webp",
+      "directory": "public/images/routes",
+      "format": "webp",
+      "bytes": 116440,
+      "role": "hero",
+      "concepts": [
+        "software"
+      ],
+      "swapHint": "Use /public/images/routes/software-parser-weather-hero.webp when a software visual needs a stable tracked asset."
+    },
+    {
+      "id": "software-parser-weather",
+      "title": "Software Parser Weather",
+      "path": "/public/images/routes/software-parser-weather-og.jpg",
+      "directory": "public/images/routes",
+      "format": "jpg",
+      "bytes": 142323,
+      "role": "social-card",
+      "concepts": [
+        "software"
+      ],
+      "swapHint": "Use /public/images/routes/software-parser-weather-og.jpg when a software visual needs a stable tracked asset."
+    },
+    {
+      "id": "software-parser-weather",
+      "title": "Software Parser Weather",
+      "path": "/public/images/routes/software-parser-weather-square.webp",
+      "directory": "public/images/routes",
+      "format": "webp",
+      "bytes": 166992,
+      "role": "image",
+      "concepts": [
+        "software"
+      ],
+      "swapHint": "Use /public/images/routes/software-parser-weather-square.webp when a software visual needs a stable tracked asset."
+    },
+    {
+      "id": "topics-atlas-register",
+      "title": "Topics Atlas Register",
+      "path": "/public/images/routes/topics-atlas-register-hero.webp",
+      "directory": "public/images/routes",
+      "format": "webp",
+      "bytes": 142940,
+      "role": "hero",
+      "concepts": [
+        "site-design",
+        "route-architecture"
+      ],
+      "swapHint": "Use /public/images/routes/topics-atlas-register-hero.webp when a site-design / route-architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "topics-atlas-register",
+      "title": "Topics Atlas Register",
+      "path": "/public/images/routes/topics-atlas-register-og.jpg",
+      "directory": "public/images/routes",
+      "format": "jpg",
+      "bytes": 152607,
+      "role": "social-card",
+      "concepts": [
+        "site-design",
+        "route-architecture"
+      ],
+      "swapHint": "Use /public/images/routes/topics-atlas-register-og.jpg when a site-design / route-architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "topics-atlas-register",
+      "title": "Topics Atlas Register",
+      "path": "/public/images/routes/topics-atlas-register-square.webp",
+      "directory": "public/images/routes",
+      "format": "webp",
+      "bytes": 216954,
+      "role": "image",
+      "concepts": [
+        "site-design",
+        "route-architecture"
+      ],
+      "swapHint": "Use /public/images/routes/topics-atlas-register-square.webp when a site-design / route-architecture visual needs a stable tracked asset."
+    },
+    {
+      "id": "website-field-instrument",
+      "title": "Website Field Instrument",
+      "path": "/public/images/routes/website-field-instrument-hero.webp",
+      "directory": "public/images/routes",
+      "format": "webp",
+      "bytes": 96990,
+      "role": "hero",
+      "concepts": [
+        "site-design",
+        "route-architecture",
+        "website"
+      ],
+      "swapHint": "Use /public/images/routes/website-field-instrument-hero.webp when a site-design / route-architecture / website visual needs a stable tracked asset."
+    },
+    {
+      "id": "website-field-instrument",
+      "title": "Website Field Instrument",
+      "path": "/public/images/routes/website-field-instrument-og.jpg",
+      "directory": "public/images/routes",
+      "format": "jpg",
+      "bytes": 129219,
+      "role": "social-card",
+      "concepts": [
+        "site-design",
+        "route-architecture",
+        "website"
+      ],
+      "swapHint": "Use /public/images/routes/website-field-instrument-og.jpg when a site-design / route-architecture / website visual needs a stable tracked asset."
+    },
+    {
+      "id": "website-field-instrument",
+      "title": "Website Field Instrument",
+      "path": "/public/images/routes/website-field-instrument-square.webp",
+      "directory": "public/images/routes",
+      "format": "webp",
+      "bytes": 132680,
+      "role": "image",
+      "concepts": [
+        "site-design",
+        "route-architecture",
+        "website"
+      ],
+      "swapHint": "Use /public/images/routes/website-field-instrument-square.webp when a site-design / route-architecture / website visual needs a stable tracked asset."
+    },
+    {
+      "id": "studio-house",
+      "title": "Studio House",
+      "path": "/public/images/services/studio-house-hero.webp",
+      "directory": "public/images/services",
+      "format": "webp",
+      "bytes": 80920,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/services/studio-house-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "algorithm-signal-field-study",
+      "title": "Algorithm Signal Field Study",
+      "path": "/public/images/topics/math/algorithm-signal-field-study.webp",
+      "directory": "public/images/topics/math",
+      "format": "webp",
+      "bytes": 128072,
+      "role": "image",
+      "concepts": [
+        "software",
+        "algorithm",
+        "architecture"
+      ],
+      "swapHint": "Use /public/images/topics/math/algorithm-signal-field-study.webp when a software / algorithm / architecture visual needs a stable tracked asset."
+    }
+  ]
+}

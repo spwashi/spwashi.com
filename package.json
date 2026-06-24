@@ -24,6 +24,7 @@
     "dev:legacy:host": "node scripts/dev-server.mjs --host 0.0.0.0",
     "dev:legacy:open": "node scripts/dev-server.mjs --open",
     "dev:open": "npm run build:tools && npm run build:runtime && node scripts/css-build.mjs && node scripts/dev-orchestrator.mjs --open",
+    "images:manifest": "node scripts/image-resource-manifest.mjs",
     "manifest": "node scripts/generate-route-runtime-manifest.mjs",
     "preview:open": "node scripts/preview-open.mjs",
     "preview": "vite preview",
