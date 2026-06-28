@@ -13,6 +13,7 @@
   @brace_physics: ~"../_workbench/.spw/registries/brace-physics.spw"
   @literate_ui: ~"../_workbench/.spw/patterns/literate-ui.spw"
   @symmetry_ui: ~"../_workbench/.spw/applications/symmetry/symmetry-ui-design.spw"
+  @naming_structured_values: ~"./naming-and-structured-values.spw"
 }
 
 ^"axes"{
@@ -159,6 +160,19 @@
   selector_rule = "Prefer existing data-spw-* families and shared contract selectors before adding local class-only state."
   inspection_rule = "A component is under-modeled if a developer cannot locate its route, semantic role, CSS projection, runtime writer, and validation surface from the markup plus .spw references."
   counterexample = "A route adds an interactive lab with only visual classes and no data-math-visual/data-spw-feature/status output, so the design catalog and future agents cannot tell what the lab is for."
+}
+
+^"structured_value_contract"{
+  definition: "When a value carries siblings, branches, or lifecycle, expose the structure instead of hiding it inside one string."
+  rule: "Keep atomic labels as strings. Promote repeated alternatives to lists or sets, named subparts to facets, derived values to expressions, and rules or procedures to statements."
+  examples: #[
+    `data-spw-copy-depth`
+    `data-spw-content-variant`
+    `data-spw-content-tone`
+    `data-spw-page-modes`
+    `data-spw-related-routes`
+  ][reg=set]
+  xref = @naming_structured_values
 }
 
 ^"metainformational_component_ecology"{
@@ -530,7 +544,13 @@ frame #copy-depth-layers
   role convention
   surface copy/runtime
   concept semantic_density mood_reading theory_depth
-  note "Copy may declare optional layers with data-spw-copy-depth='normal|rich|genre'. Minimal copy remains visible. Normal and rich layers respond to semantic density. Genre layers respond to resonant or theatrical runtime posture when mood reading, trope reading, or combinatoric media practice should surface."
+  depths: .{
+    minimal = "always visible; never hidden behind enhancement"
+    normal = "default route prose"
+    rich = "optional explanation that deepens the same route"
+    genre = "resonant or theatrical posture for mood reading and combinatoric practice"
+  }[reg=facet]
+  rule = "Copy may declare optional layers with data-spw-copy-depth='normal|rich|genre'. Minimal copy remains visible. Normal and rich layers respond to semantic density. Genre layers respond to resonant or theatrical runtime posture when mood reading, trope reading, or combinatoric media practice should surface."
 
 frame #semantic-clusters
   role convention

@@ -25,7 +25,7 @@
 
 intent: .{
  goal = `Keep review surfaces grouped and easy to traverse in an editor.`
- scope = `Runtime, ontology, seams, lifecycle, state-flow, CSS architecture, modular experience slice / team collaboration, shell/header disclosure, gesture refinement, floating chrome, copy depth, spw-workbench alignment, workbench metaphysics application, HTML/CSS structure + timing, classname/grammar/recognizability, fundamentals practice rhythms, .spw surface normalization/navigability, and .spw maintenance audits that belong to the public site rather than the mounted workbench.`
+ scope = `Runtime, ontology, seams, lifecycle, state-flow, CSS architecture, modular experience slice / team collaboration, shell/header disclosure, gesture refinement, floating chrome, copy depth, spw-workbench alignment, workbench metaphysics application, HTML/CSS structure + timing, classname/grammar/recognizability, naming/structured values, fundamentals practice rhythms, .spw surface normalization/navigability, and .spw maintenance audits that belong to the public site rather than the mounted workbench.`
 }[reg=facet]
 
 dispatch: .{

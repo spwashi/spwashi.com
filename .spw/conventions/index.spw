@@ -35,6 +35,7 @@
 @discovery_powerups: ~"./discovery-powerups.spw"
 @daily_kernel: ~"./daily-kernel.spw"
 @data_spw_attribute_governance: ~"./data-spw-attribute-governance.spw"
+@naming_structured_values: ~"./naming-and-structured-values.spw"
 @relational_attention_media: ~"./relational-attention-media.spw"
 @attention_field: ~"./attention-field.spw"  # now carries aligned operational_semantics for cognitive+computational use
 @charge_cycle: ~"./charge-cycle.spw"
@@ -79,6 +80,7 @@ dispatch: .{
  page_anatomy_vocabulary = @page_anatomy_vocabulary
  codebase_perusal = @codebase_perusal
  data_spw_attribute_governance = @data_spw_attribute_governance
+ naming_structured_values = @naming_structured_values
  containers = @electromagnetic_containers
  circuit_components = @circuit_components
  versioning = @precipitates_projections

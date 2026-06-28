@@ -1,4 +1,4 @@
-# Classname Patterns, CSS as Literary Geology, Attribute Grammar Families, and Recognizability
+# Classname Patterns, CSS as Literary Geology, Attribute Grammar Families, Structured Values, and Recognizability
 
 #>spw_classname_attribute_grammar_recognizability
 #:review #!css #!semantics #!cognition #!collaboration
@@ -11,6 +11,7 @@
 @modular_slices_volleyball: ~"./modular-experience-slices-volleyball.spw"
 @precipitates: ~"../conventions/precipitates-and-projections.spw"
 @wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
+@naming_structured_values: ~"../conventions/naming-and-structured-values.spw"
 
 thesis: .{
   claim = `The site's current patterns (heavy data-spw-* as primary semantic grammar + a disciplined set of structural classes like .site-frame, .frame-*, .spw-*) already support high recognizability and cognitive ease. Treating CSS layers as geological strata (sedimentation of decisions over time) and consciously evolving "attribute grammar families" strengthens the "painting over years" model for human developer volleyball on experience slices.`
@@ -60,14 +61,31 @@ attribute_grammar_families: .{
     - Structural Anatomy: data-spw-kind, data-spw-role, data-spw-slot, data-spw-form (with --options variants), data-spw-perspective.
     - Operator & Force: data-spw-operator (the core linguistic primitives).
     - State & Field: data-spw-wonder-state, data-spw-charge, data-spw-resonance, data-spw-collected, data-spw-harmony/tempo/density, data-spw-cauldron-phase, data-spw-gesture-*.
-    - Runtime & Projection: data-spw-module-*, data-spw-runtime-*, data-spw-load-*, data-spw-semantic-* (expression, root, variant, behavior, lens).`
+    - Runtime & Projection: data-spw-module-*, data-spw-runtime-*, data-spw-load-*, data-spw-semantic-* (expression, root, variant, behavior, lens).
+    - Value Forms: data-spw-copy-depth, data-spw-content-variant, data-spw-content-tone, data-spw-page-modes, data-spw-related-routes — places where a string should yield to a list, set, facet, or statement.`
   brace_mirroring = `The semantic_brace_annotation in site-semantics.spw (root[variant]{behavior}<lens>) is already an explicit attribute grammar family that mirrors Spw syntax. This is one of the strongest existing examples of recognizability — the same mental model applies in markup, CSS selectors, JS, and .spw.`
   opportunities = `[
     "Make the families more explicit and documented (a small table or section in css-instruction.spw or a new lightweight convention).",
     "Encourage consistent use of data-spw-semantic-* for the brace-annotated form when a component needs rich discoverability.",
     "Consider a small 'grammar family' prefix convention for new attributes (e.g., data-spw-state-*, data-spw-semantic-*) to keep the namespace scannable.",
+    "Promote strings into lists, sets, facets, or statements when a value is doing menu, registry, or lifecycle work.",
     "Preserve the primacy of data attributes over classes for state and semantics (per css-instruction and site-semantics)."
   ]`
+}
+
+# 3b. Structured Values
+
+structured_values: .{
+  see = @naming_structured_values
+  observation = `Some of the site's most useful values already want to be lists, sets, or facets rather than strings: copy depth, content variant, content tone, page modes, related routes, and semantic clusters.`
+  sign = `If a value is doing selection, sequencing, or branching, the structure should be visible in the data shape instead of re-parsed from prose.`
+  examples = #[
+    `list: ordered route trails, depth ladders, visible sequences`
+    `set: peer vocabularies such as variants and tones`
+    `facet: values with named subparts, like depth plus rule or label plus state`
+    `statement: contract-like values that encode lifecycle or conversion rules`
+  ][reg=set]
+  recommendation = `Prefer the smallest structure that preserves the job. When a string starts carrying a menu, use a menu shape.`
 }
 
 # 4. Recognizability as a Dimension of Familiarity / Cognitive Ease
@@ -84,6 +102,7 @@ recognizability: .{
   recommendations_for_volleyball = `[
     "When a team works on a slice, they should audit and (where helpful) regularize classname and attribute usage within that slice's owned files for recognizability.",
     "Handoff reviews (per the modular-slices-volleyball protocol) should explicitly note any new patterns introduced and whether they extend an existing family or create a new one.",
+    "Promote prose-like values into lists, sets, facets, or statements when they are carrying multiple jobs.",
     "Treat 'does this increase or decrease recognizability for the next developer?' as a first-class review criterion alongside performance and semantics."
   ]`
 }

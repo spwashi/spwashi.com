@@ -51,6 +51,7 @@
 @discovery_powerups: ~"./conventions/discovery-powerups.spw"
 @daily_kernel: ~"./conventions/daily-kernel.spw"
 @data_spw_attribute_governance: ~"./conventions/data-spw-attribute-governance.spw"
+@naming_structured_values: ~"./conventions/naming-and-structured-values.spw"
 @pretext_whimsy_plan: ~"../.agents/plans/pretext-whimsy-lab/PLAN.md"
 @pretext_whimsy_model: ~"../.agents/plans/pretext-whimsy-lab/pretext-whimsy-lab.spw"
 @designer_conversation_plan: ~"../.agents/plans/designer-conversation-canvas/PLAN.md"
@@ -194,6 +195,7 @@ dispatch: .{
  discovery_powerups = @discovery_powerups
  daily_kernel = @daily_kernel
  pretext_whimsy = @pretext_whimsy_model
+ naming_structured_values = @naming_structured_values
  relational_attention_media = @relational_attention_media
  professional_skill_worldbuilding = @professional_skill_worldbuilding
  professional_skill_worldbuilding_cache = @professional_skill_worldbuilding_cache

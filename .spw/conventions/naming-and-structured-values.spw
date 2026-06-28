@@ -1,0 +1,98 @@
+# Naming and Structured Values
+#
+# Local guidance for naming families and choosing when a value should stay a
+# string or become a list, set, facet, expression, or statement.
+
+#>naming_structured_values
+#:conventions #!semantics #!css #!html #!copy
+#:layer #!pragmatics
+
+@site_semantics: ~"./site-semantics.spw"
+@page_anatomy_vocabulary: ~"./page-anatomy-vocabulary.spw"
+@data_spw_attribute_governance: ~"./data-spw-attribute-governance.spw"
+@semantic_capacity: ~"./semantic-capacity.spw"
+@recognizability_review: ~"../reviews/classname-patterns-attribute-grammar-recognizability.spw"
+
+operation = "contract"
+fixity = "stable"
+
+^"thesis"{
+  claim: "Naming is strongest when it preserves ownership, role, and variation in a way the next reader can recover quickly. Value structure is strongest when it keeps selection, sequence, and branching visible instead of hiding them inside one sentence."
+  why: "This site already uses explicit class stems, data-spw-* families, and .spw objects. The remaining work is to move prose-like values into lists, sets, facets, expressions, or statements when that structure is what the value really does."
+}
+
+^"naming_grammar"{
+  stem_rule: "Prefer one stable stem per concept family."
+  role_rule: "Name by public role before style: frame, card, surface, route, feature, handle, state, depth, mode."
+  slot_rule: "Use anatomy slots when the component has a readable interior: header, meta, body, figure, actions, footer."
+  modifier_rule: "Use short modifiers for variation or state. If the suffix starts describing a different concept, split the family."
+  bridge_rule: "If a route-local alias is needed, document the bridge back to the shared stem in .spw."
+  examples: #[
+    `site-frame, frame-topline, frame-sigil, frame-operators`
+    `spec-strip, spec-pill, plan-verb-strip, plan-links`
+    `data-spw-content-variant, data-spw-content-tone, data-spw-copy-depth`
+  ][reg=set]
+}
+
+^"value_forms"{
+  string: "Use a string for one atomic label, a short claim, or copy that never branches."
+  list: "Use a list when order matters and the reader should see a sequence, trail, or progression."
+  set: "Use a set when order does not matter and the values function as sibling members of one family."
+  facet: "Use a facet object when the value needs named subparts, role labels, or validation notes."
+  expression: "Use an expression when the value is derived, conditional, or phase-sensitive."
+  statement: "Use a statement when the value has to act like a rule, invariant, or small procedure."
+  conversion_rules: #[
+    `If a string contains repeated clauses or more than one job, promote it to structure.`
+    `If a value reads like a menu, registry, or route list, make it a list or set instead of prose.`
+    `If a value reads like a contract or lifecycle, make it a facet or statement.`
+    `If the value needs both human copy and machine selection, separate the roles into different fields.`
+  ][reg=set]
+}
+
+^"site_examples"{
+  copy_depth = .{
+    minimal = "always visible; never hidden behind enhancement"
+    normal = "default route prose"
+    rich = "optional explanation that deepens the same route"
+    genre = "resonant or theatrical posture for mood reading and combinatoric practice"
+  }[reg=facet]
+  content_variants = #[
+    `entry`
+    `compact`
+    `rich`
+  ][reg=set]
+  content_tones = #[
+    `dense`
+    `operator-heavy`
+    `text-long`
+    `light`
+  ][reg=set]
+  route_modes = #[
+    `reading`
+    `inspect`
+    `compare`
+    `build`
+  ][reg=set]
+  note = "These are the kinds of values that should stop hiding inside a sentence once they become selectable, switchable, or reviewable."
+}
+
+^"site_guidance"{
+  rule = "Keep strings for copy. Move repeated alternatives, selectable families, and branching semantics into lists, sets, or facets."
+  review_note = "When a .spw string starts doing registry work, consider whether the next patch should expose that structure instead of expanding the sentence."
+  indexing_rule = "Link this document from the conventions index, the site bridge, and the recognizability review so future reviewers can reach it from claim, implementation, and vocabulary."
+}
+
+references: .{
+  site_semantics = @site_semantics
+  page_anatomy_vocabulary = @page_anatomy_vocabulary
+  data_spw_attribute_governance = @data_spw_attribute_governance
+  semantic_capacity = @semantic_capacity
+  review = @recognizability_review
+}[reg=facet]
+
+invariants: #[
+  `Naming should make ownership and role easier to recover.`,
+  `Structured values should be used when a string starts behaving like a registry.`,
+  `If the value carries choice, sequence, or condition, that structure should be visible in the syntax.`,
+  `The doc should help editors spot where prose is doing too much work.`
+][reg=set]
