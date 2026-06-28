@@ -17,8 +17,14 @@ operation = "contract"
 fixity = "stable"
 
 ^"thesis"{
-  claim: "Naming is strongest when it preserves ownership, role, and variation in a way the next reader can recover quickly. Value structure is strongest when it keeps selection, sequence, and branching visible instead of hiding them inside one sentence."
-  why: "This site already uses explicit class stems, data-spw-* families, and .spw objects. The remaining work is to move prose-like values into lists, sets, facets, expressions, or statements when that structure is what the value really does."
+  claims = #[
+    `Naming is strongest when it preserves ownership, role, and variation in a way the next reader can recover quickly.`
+    `Value structure is strongest when it keeps selection, sequence, and branching visible instead of hiding them inside one sentence.`
+  ][reg=set]
+  evidence = #[
+    `This site already uses explicit class stems, data-spw-* families, and .spw objects.`
+    `The remaining work is to move prose-like values into lists, sets, facets, expressions, or statements when that structure is what the value really does.`
+  ][reg=set]
 }
 
 ^"naming_grammar"{
@@ -27,10 +33,33 @@ fixity = "stable"
   slot_rule: "Use anatomy slots when the component has a readable interior: header, meta, body, figure, actions, footer."
   modifier_rule: "Use short modifiers for variation or state. If the suffix starts describing a different concept, split the family."
   bridge_rule: "If a route-local alias is needed, document the bridge back to the shared stem in .spw."
-  examples: #[
-    `site-frame, frame-topline, frame-sigil, frame-operators`
-    `spec-strip, spec-pill, plan-verb-strip, plan-links`
-    `data-spw-content-variant, data-spw-content-tone, data-spw-copy-depth`
+  families: #[
+    .{
+      stem = "site-frame"
+      members = #[
+        `site-frame`
+        `frame-topline`
+        `frame-sigil`
+        `frame-operators`
+      ][reg=set]
+    }[reg=facet]
+    .{
+      stem = "spec"
+      members = #[
+        `spec-strip`
+        `spec-pill`
+        `plan-verb-strip`
+        `plan-links`
+      ][reg=set]
+    }[reg=facet]
+    .{
+      stem = "data-spw-content"
+      members = #[
+        `data-spw-content-variant`
+        `data-spw-content-tone`
+        `data-spw-copy-depth`
+      ][reg=set]
+    }[reg=facet]
   ][reg=set]
 }
 

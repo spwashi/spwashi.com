@@ -14,27 +14,31 @@
 @naming_structured_values: ~"../conventions/naming-and-structured-values.spw"
 
 thesis: .{
-  claim = `The site's current patterns (heavy data-spw-* as primary semantic grammar + a disciplined set of structural classes like .site-frame, .frame-*, .spw-*) already support high recognizability and cognitive ease. Treating CSS layers as geological strata (sedimentation of decisions over time) and consciously evolving "attribute grammar families" strengthens the "painting over years" model for human developer volleyball on experience slices.`
+  claims = #[
+    `The site's current patterns (heavy data-spw-* as primary semantic grammar + a disciplined set of structural classes like .site-frame, .frame-*, .spw-*) already support high recognizability and cognitive ease.`
+    `Treating CSS layers as geological strata (sedimentation of decisions over time) and consciously evolving "attribute grammar families" strengthens the "painting over years" model for human developer volleyball on experience slices.`
+  ][reg=set]
   local_scope = `All considerations here are scoped to this repository for developer collaboration (volleyball within this codebase). No upstreaming to the spw-workbench is implied.`
 }
 
 # 1. Classname Patterns — Current State and Observations
 
 classname_patterns: .{
-  dominant_style = `Hybrid but principled:
-    - Structural/layout primitives use clear, low-specificity class families: .site-frame, .frame-topline, .frame-heading, .frame-body, .frame-actions, .frame-panel, etc.
-    - Spw-specific affordances use the spw- prefix: .spw-section-handle, .spw-delimiter (with --brace/--angle/--circle modifiers), .spw-component-meta, .spw-component-tag, .spw-guide-chip, .spw-living-term.
-    - Modifiers follow a BEM-ish -- convention (site-hero--split-figure, spw-delimiter--brace).
-    - Many components combine a base class with data-spw-* for state (e.g., .operator-chip[data-spw-operator="probe"]).`
-  strengths = `[
-    "The spw- prefix makes Spw-native things instantly recognizable in both markup and CSS.",
-    "frame- family creates a coherent visual grammar for the core container metaphor.",
-    "Avoidance of deep descendant selectors in favor of data attributes + :where() keeps classes relatively flat and readable."
-  ]`
-  tensions = `[
-    "Some classes still feel presentational or historical (e.g., certain home-*, garden-*, or route-specific names) alongside the more systematic semantic ones.",
-    "The split between 'structural class' and 'semantic data attribute' is powerful but not always obvious to a returning developer — the boundary could be more explicitly documented per the css-instruction.spw 'semantic scope -> component noun' rule."
-  ]`
+  observations = #[
+    `Structural/layout primitives use clear, low-specificity class families: .site-frame, .frame-topline, .frame-heading, .frame-body, .frame-actions, .frame-panel, etc.`
+    `Spw-specific affordances use the spw- prefix: .spw-section-handle, .spw-delimiter (with --brace/--angle/--circle modifiers), .spw-component-meta, .spw-component-tag, .spw-guide-chip, .spw-living-term.`
+    `Modifiers follow a BEM-ish -- convention (site-hero--split-figure, spw-delimiter--brace).`
+    `Many components combine a base class with data-spw-* for state (e.g., .operator-chip[data-spw-operator="probe"]).`
+  ][reg=set]
+  strengths = #[
+    `The spw- prefix makes Spw-native things instantly recognizable in both markup and CSS.`
+    `frame- family creates a coherent visual grammar for the core container metaphor.`
+    `Avoidance of deep descendant selectors in favor of data attributes + :where() keeps classes relatively flat and readable.`
+  ][reg=set]
+  tensions = #[
+    `Some classes still feel presentational or historical (e.g., certain home-*, garden-*, or route-specific names) alongside the more systematic semantic ones.`
+    `The split between 'structural class' and 'semantic data attribute' is powerful but not always obvious to a returning developer — the boundary could be more explicitly documented per the css-instruction.spw 'semantic scope -> component noun' rule.`
+  ][reg=set]
 }
 
 # 2. CSS as a Literary Geology
@@ -56,21 +60,78 @@ css_geology: .{
 # 3. Attribute Grammar Families
 
 attribute_grammar_families: .{
-  current_families = `The data-spw-* namespace already forms several coherent families:
-    - Identity & Context: data-spw-surface, data-spw-features, data-spw-context, data-spw-wonder, data-spw-page-family/modes/role/seed.
-    - Structural Anatomy: data-spw-kind, data-spw-role, data-spw-slot, data-spw-form (with --options variants), data-spw-perspective.
-    - Operator & Force: data-spw-operator (the core linguistic primitives).
-    - State & Field: data-spw-wonder-state, data-spw-charge, data-spw-resonance, data-spw-collected, data-spw-harmony/tempo/density, data-spw-cauldron-phase, data-spw-gesture-*.
-    - Runtime & Projection: data-spw-module-*, data-spw-runtime-*, data-spw-load-*, data-spw-semantic-* (expression, root, variant, behavior, lens).
-    - Value Forms: data-spw-copy-depth, data-spw-content-variant, data-spw-content-tone, data-spw-page-modes, data-spw-related-routes — places where a string should yield to a list, set, facet, or statement.`
+  current_families = #[
+    .{
+      name = "Identity & Context"
+      members = #[
+        `data-spw-surface`
+        `data-spw-features`
+        `data-spw-context`
+        `data-spw-wonder`
+        `data-spw-page-family`
+        `data-spw-page-modes`
+        `data-spw-page-role`
+        `data-spw-page-seed`
+      ][reg=set]
+    }[reg=facet]
+    .{
+      name = "Structural Anatomy"
+      members = #[
+        `data-spw-kind`
+        `data-spw-role`
+        `data-spw-slot`
+        `data-spw-form`
+        `data-spw-perspective`
+      ][reg=set]
+    }[reg=facet]
+    .{
+      name = "Operator & Force"
+      members = #[
+        `data-spw-operator`
+      ][reg=set]
+    }[reg=facet]
+    .{
+      name = "State & Field"
+      members = #[
+        `data-spw-wonder-state`
+        `data-spw-charge`
+        `data-spw-resonance`
+        `data-spw-collected`
+        `data-spw-harmony`
+        `data-spw-tempo`
+        `data-spw-density`
+        `data-spw-cauldron-phase`
+        `data-spw-gesture-*`
+      ][reg=set]
+    }[reg=facet]
+    .{
+      name = "Runtime & Projection"
+      members = #[
+        `data-spw-module-*`
+        `data-spw-runtime-*`
+        `data-spw-load-*`
+        `data-spw-semantic-*`
+      ][reg=set]
+    }[reg=facet]
+    .{
+      name = "Value Forms"
+      members = #[
+        `data-spw-copy-depth`
+        `data-spw-content-variant`
+        `data-spw-content-tone`
+        `data-spw-page-modes`
+        `data-spw-related-routes`
+      ][reg=set]
+    }[reg=facet]
+  ][reg=set]
   brace_mirroring = `The semantic_brace_annotation in site-semantics.spw (root[variant]{behavior}<lens>) is already an explicit attribute grammar family that mirrors Spw syntax. This is one of the strongest existing examples of recognizability — the same mental model applies in markup, CSS selectors, JS, and .spw.`
-  opportunities = `[
-    "Make the families more explicit and documented (a small table or section in css-instruction.spw or a new lightweight convention).",
-    "Encourage consistent use of data-spw-semantic-* for the brace-annotated form when a component needs rich discoverability.",
-    "Consider a small 'grammar family' prefix convention for new attributes (e.g., data-spw-state-*, data-spw-semantic-*) to keep the namespace scannable.",
-    "Promote strings into lists, sets, facets, or statements when a value is doing menu, registry, or lifecycle work.",
-    "Preserve the primacy of data attributes over classes for state and semantics (per css-instruction and site-semantics)."
-  ]`
+  opportunities = #[
+    `Make the families more explicit and documented (a small table or section in css-instruction.spw or a new lightweight convention).`
+    `Encourage consistent use of data-spw-semantic-* for the brace-annotated form when a component needs rich discoverability.`
+    `Consider a small 'grammar family' prefix convention for new attributes (e.g., data-spw-state-*, data-spw-semantic-*) to keep the namespace scannable.`
+    `Promote strings into lists, sets, facets, or statements when a value is doing menu, registry, or lifecycle work.`
+    `Preserve the primacy of data attributes over classes for state and semantics (per css-instruction and site-semantics).`
+  ][reg=set]
 }
 
 # 3b. Structured Values
@@ -80,12 +141,12 @@ structured_values: .{
   observation = `Some of the site's most useful values already want to be lists, sets, or facets rather than strings: copy depth, content variant, content tone, page modes, related routes, and semantic clusters.`
   projection_note = `The DOM can still receive a serialized string, but the source model should stay explicit so the next editor can see which values are multi-part.`
   sign = `If a value is doing selection, sequencing, or branching, the structure should be visible in the data shape instead of re-parsed from prose.`
-  examples = #[
-    `list: ordered route trails, depth ladders, visible sequences`
-    `set: peer vocabularies such as variants and tones`
-    `facet: values with named subparts, like depth plus rule or label plus state`
-    `statement: contract-like values that encode lifecycle or conversion rules`
-  ][reg=set]
+  forms = .{
+    list = `ordered route trails, depth ladders, visible sequences`
+    set = `peer vocabularies such as variants and tones`
+    facet = `values with named subparts, like depth plus rule or label plus state`
+    statement = `contract-like values that encode lifecycle or conversion rules`
+  }[reg=facet]
   recommendation = `Prefer the smallest structure that preserves the job. When a string starts carrying a menu, use a menu shape.`
 }
 
@@ -100,23 +161,28 @@ recognizability: .{
   current_health = `Already quite good because of the data-attribute discipline and the spw- prefix. The main risks are:
     - Proliferation of ad-hoc class names in route or experiment files.
     - Attribute writes that happen late (timing audit) can make the "final" recognizable state different from the initial authored one.`
-  recommendations_for_volleyball = `[
-    "When a team works on a slice, they should audit and (where helpful) regularize classname and attribute usage within that slice's owned files for recognizability.",
-    "Handoff reviews (per the modular-slices-volleyball protocol) should explicitly note any new patterns introduced and whether they extend an existing family or create a new one.",
-    "Promote prose-like values into lists, sets, facets, or statements when they are carrying multiple jobs.",
-    "Treat 'does this increase or decrease recognizability for the next developer?' as a first-class review criterion alongside performance and semantics."
-  ]`
+  recommendations_for_volleyball = #[
+    `When a team works on a slice, they should audit and (where helpful) regularize classname and attribute usage within that slice's owned files for recognizability.`
+    `Handoff reviews (per the modular-slices-volleyball protocol) should explicitly note any new patterns introduced and whether they extend an existing family or create a new one.`
+    `Promote prose-like values into lists, sets, facets, or statements when they are carrying multiple jobs.`
+    `Treat 'does this increase or decrease recognizability for the next developer?' as a first-class review criterion alongside performance and semantics.`
+  ][reg=set]
 }
 
 # Synthesis & Local Recommendations
 
 local_recommendations: .{
-  for_developer_volleyball = `Make these four lenses part of the practical handoff ritual when working on a slice:
-    1. Audit the slice's classname patterns for consistency with the broader families.
-    2. Add a short "geological note" (in the slice's .spw or in a CSS file comment) when a change sediments into a new layer or refines an existing stratum.
-    3. Prefer extending existing attribute grammar families over minting new top-level data-spw- names.
-    4. Explicitly consider recognizability/cognitive ease in the slice handoff review.`
-  for_architecture = `These considerations reinforce the direction in the html-css-structure-audit and css-architecture-alignment reviews: strengthen the data-attribute grammar as the primary readable, inspectable layer, keep classes as lightweight structural scaffolding, and make the layered CSS more deliberately literary (readable history) so that long-term painting remains cognitively sustainable.`
+  for_developer_volleyball = #[
+    `Audit the slice's classname patterns for consistency with the broader families.`
+    `Add a short "geological note" (in the slice's .spw or in a CSS file comment) when a change sediments into a new layer or refines an existing stratum.`
+    `Prefer extending existing attribute grammar families over minting new top-level data-spw- names.`
+    `Explicitly consider recognizability/cognitive ease in the slice handoff review.`
+  ][reg=set]
+  for_architecture = #[
+    `These considerations reinforce the direction in the html-css-structure-audit and css-architecture-alignment reviews.`
+    `Strengthen the data-attribute grammar as the primary readable, inspectable layer.`
+    `Keep classes as lightweight structural scaffolding so long-term painting remains cognitively sustainable.`
+  ][reg=set]
 }
 
 This consideration treats classname patterns, geological legibility of CSS, coherent attribute grammars, and recognizability not as separate polish items but as core enablers of the local human collaboration model (volleyball on experience slices) that this repository is deliberately cultivating.
