@@ -155,11 +155,44 @@
     `feature`: "functional cluster via data-spw-feature or body data-spw-features"
     `module`: "runtime behavior when progressive JS owns the behavior"
     `state`: "current data-spw-* state written by HTML or runtime"
+    `composition_stability`: "whether page identity, component anatomy, and traversal anchors agree"
     `consequence`: "what visibly changes for the visitor or editor"
   ][reg=set]
   selector_rule = "Prefer existing data-spw-* families and shared contract selectors before adding local class-only state."
   inspection_rule = "A component is under-modeled if a developer cannot locate its route, semantic role, CSS projection, runtime writer, and validation surface from the markup plus .spw references."
   counterexample = "A route adds an interactive lab with only visual classes and no data-math-visual/data-spw-feature/status output, so the design catalog and future agents cannot tell what the lab is for."
+}
+
+^"stabilized_page_entry_contract"{
+  operation = "contract"
+  definition: "A page entry is stable when route-level metadata, hero-level feature naming, component slots, visual field posture, and traversal anchors agree."
+  authored_page_truth = #[
+    `data-spw-surface`
+    `data-spw-layout`
+    `data-spw-page-family`
+    `data-spw-page-role`
+    `data-spw-route-family`
+    `data-spw-context`
+  ][reg=set]
+  authored_entry_truth = #[
+    `data-spw-frame='hero'`
+    `data-spw-feature`
+    `data-spw-attentional-weight`
+    `data-spw-gradient-boundary`
+    `data-spw-composition-stability`
+    `data-spw-slot`
+  ][reg=set]
+  derived_runtime_truth = #[
+    `data-spw-region-genome`
+    `data-spw-component-address`
+    `data-spw-semantic-owner`
+    `data-spw-resolved-*`
+    `data-spw-composition-stability`
+  ][reg=set]
+  naming_rule: "Feature names should read as stable noun phrases with an entry suffix when they anchor a route hero, e.g. home-kernel-entry, research-decision-entry, settings-workbench-entry."
+  css_rule: "CSS may project these axes directly because they describe state and field posture; route-local selectors should not be required to make a page feel anchored."
+  js_rule: "Runtime inference fills gaps and summarizes agreement; authored public-spine routes should still name their entry feature and boundary posture explicitly."
+  anti_pattern: "A hero whose copy, body metadata, CSS treatment, and related routes each imply a different page job."
 }
 
 ^"structured_value_contract"{

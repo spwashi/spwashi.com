@@ -98,7 +98,7 @@ const STANCE_BY_LIMINALITY = Object.freeze({
   departed: 'exit'
 });
 
-const SEMANTIC_REGISTRY_VERSION = '0.4';
+const SEMANTIC_REGISTRY_VERSION = '0.5';
 let semanticRegistry = null;
 
 function tokenizeFeatureList(value = '') {
@@ -523,6 +523,7 @@ function buildComponentGenome(snapshotBase = {}) {
       ['inspectability', snapshotBase.inspectability],
       ['value', snapshotBase.valueLayer],
       ['stance', snapshotBase.stance],
+      ['stability', snapshotBase.compositionStability],
       ['route', snapshotBase.routeState],
       ['operator', snapshotBase.primaryOperator]
     ],
@@ -577,6 +578,29 @@ function inferStance(el, importance, interactivity) {
 
   if (importance === 'primary' || interactivity === 'controllable') return 'entry';
   return 'ground';
+}
+
+function inferCompositionStability(el, snapshotBase = {}) {
+  if (el.dataset.spwCompositionStability) return normalizeToken(el.dataset.spwCompositionStability);
+
+  const hasTopDownAnchor = Boolean(
+    snapshotBase.kind
+    && snapshotBase.role
+    && snapshotBase.context
+    && snapshotBase.meaning
+  );
+  const hasBottomUpAnchor = Boolean(
+    el.dataset.spwFeature
+    || snapshotBase.slots?.length
+    || snapshotBase.affordances?.length
+  );
+  const hasTraversalAnchor = snapshotBase.routeState && snapshotBase.routeState !== 'none';
+
+  if (snapshotBase.kind === 'hook') return 'volatile';
+  if (hasTopDownAnchor && hasBottomUpAnchor && hasTraversalAnchor) return 'anchored';
+  if (hasTopDownAnchor && hasBottomUpAnchor) return 'stable';
+  if (hasTopDownAnchor) return 'implicit';
+  return 'loose';
 }
 
 function setIfMissing(el, key, value) {
@@ -672,6 +696,15 @@ function snapshotComponentSemantics(el, options = {}) {
   const valueLayer = inferValueLayer(role, context);
   const stance = inferStance(el, importance, interactivity);
   const relationship = describeRelationship(el);
+  const compositionStability = inferCompositionStability(el, {
+    kind,
+    role,
+    meaning,
+    context,
+    slots,
+    affordances,
+    routeState: relationship.routeState
+  });
   const contract = inferFunctionalContract(el, {
     kind,
     role,
@@ -714,6 +747,7 @@ function snapshotComponentSemantics(el, options = {}) {
     inspectability,
     valueLayer,
     stance,
+    compositionStability,
     routeState: relationship.routeState,
     primaryOperator: relationship.primaryOperator,
     slots,
@@ -748,6 +782,7 @@ function snapshotComponentSemantics(el, options = {}) {
     features,
     valueLayer,
     stance,
+    compositionStability,
     routeState: relationship.routeState,
     branchCount: relationship.branchCount,
     primaryOperator: relationship.primaryOperator,
@@ -787,6 +822,7 @@ function applySemanticSnapshot(el, snapshot, options = {}) {
   writer(el, 'spwConfigDomain', snapshot.configDomain);
   writer(el, 'spwValueLayer', snapshot.valueLayer);
   writer(el, 'spwStance', snapshot.stance);
+  writer(el, 'spwCompositionStability', snapshot.compositionStability);
   writer(el, 'spwSemanticTagged', snapshot.semanticTagged);
   writer(el, 'spwSemanticVersion', snapshot.semanticVersion);
   writer(el, 'spwComponentId', snapshot.componentId);
@@ -858,7 +894,8 @@ function summarizeSemanticField(snapshots) {
     interactivity: new Set(),
     instrumentation: new Set(),
     owners: new Set(),
-    valueLayers: new Set()
+    valueLayers: new Set(),
+    compositionStability: new Set()
   };
 
   snapshots.forEach(({ snapshot }) => {
@@ -868,6 +905,7 @@ function summarizeSemanticField(snapshots) {
     summary.interactivity.add(snapshot.interactivity);
     summary.owners.add(snapshot.semanticOwner);
     summary.valueLayers.add(snapshot.valueLayer);
+    summary.compositionStability.add(snapshot.compositionStability);
     snapshot.affordances.forEach((value) => summary.affordances.add(value));
     snapshot.instrumentation.forEach((value) => summary.instrumentation.add(value));
   });
@@ -887,11 +925,13 @@ function summarizeSemanticField(snapshots) {
     instrumentation: [...summary.instrumentation],
     owners: [...summary.owners],
     valueLayers: [...summary.valueLayers],
+    compositionStability: [...summary.compositionStability],
     counts: {
       roles: countBy('role'),
       kinds: countBy('kind'),
       owners: countBy('semanticOwner'),
-      valueLayers: countBy('valueLayer')
+      valueLayers: countBy('valueLayer'),
+      compositionStability: countBy('compositionStability')
     }
   };
 }
@@ -926,6 +966,7 @@ function makePublicSnapshot(element, snapshot) {
     features: snapshot.features,
     valueLayer: snapshot.valueLayer,
     stance: snapshot.stance,
+    compositionStability: snapshot.compositionStability,
     routeState: snapshot.routeState,
     branchCount: snapshot.branchCount,
     primaryOperator: snapshot.primaryOperator,
@@ -964,6 +1005,7 @@ function createSemanticRegistry({ root, field, snapshots }) {
           if (filter.kind && record.snapshot.kind !== filter.kind) return false;
           if (filter.owner && record.snapshot.semanticOwner !== filter.owner) return false;
           if (filter.valueLayer && record.snapshot.valueLayer !== filter.valueLayer) return false;
+          if (filter.compositionStability && record.snapshot.compositionStability !== filter.compositionStability) return false;
           if (filter.instrumentation && !record.snapshot.instrumentation.includes(filter.instrumentation)) return false;
           return true;
         })

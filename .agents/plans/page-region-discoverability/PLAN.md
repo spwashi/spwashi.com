@@ -31,6 +31,7 @@ Stable interaction contract, incremental visual treatment. Reuse existing page-r
 - Refine mobile floating chrome alignment: section handles, parallel navigation, console, state satchel, and cauldron chip now share named bottom slots instead of independent offsets. Runtime chrome annotations include `data-spw-chrome-slot`, and floating sync now measures open chrome overlap for future occlusion and parallax reasoning.
 - Tighten mobile scroll progression by separating closed satchel launch placement from open satchel panels, ignoring hidden chrome in occlusion math, and applying shared top/bottom scroll clearances to section targets.
 - Add a reusable visual link board component so route links can carry images, alt text, color accents, route rationale, and visual cue copy together on the homepage and topics atlas.
+- Add a top-down/bottom-up stabilization pass: public-spine and section-hub entry regions now declare layout posture, feature identity, attentional weight, gradient boundary, and composition stability; region profiling and component semantics derive `data-spw-composition-stability` for the long tail so CSS, inspectors, and future agents can see when page identity, component anatomy, and route traversal agree.
 
 ## Out Of Scope
 
@@ -51,3 +52,7 @@ Stable interaction contract, incremental visual treatment. Reuse existing page-r
 - Targeted checks for `route-discovery`, image paths, and generated rail selectors.
 - Targeted checks for `.spw-visual-link-card`, tracked image paths, and mobile floating chrome state attributes.
 - `rg "ungated by selector"` should remain quiet in `node scripts/check-site.mjs` output unless a new document-wide module is intentionally added.
+
+## Validation Note
+
+- 2026-06-28 stabilization patch: validation intentionally skipped at user request ("No testing").

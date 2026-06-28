@@ -124,6 +124,38 @@ composition_ladder: #[
  `Runtime state should tune the declared structure, not redefine it.`
 ][reg=set]
 
+entry_stabilization_contract: .{
+ operation = "contract"
+ problem = `A route can look coherent while its body metadata, hero feature name, slot anatomy, and traversal links tell different stories. That drift makes CSS and JS guess which layer owns the page.`
+ authored_top_down = #[
+  `body[data-spw-layout]`,
+  `body[data-spw-page-family]`,
+  `body[data-spw-page-role]`,
+  `body[data-spw-route-family]`,
+  `body[data-spw-context]`,
+  `body[data-spw-related-routes]`
+ ][reg=set]
+ authored_bottom_up = #[
+  `[data-spw-feature]`,
+  `[data-spw-slot]`,
+  `[data-spw-attentional-weight]`,
+  `[data-spw-gradient-boundary]`,
+  `[data-spw-composition-stability]`
+ ][reg=set]
+ slot_values = #[header, meta, body, figure, actions, footer][reg=set]
+ derived_bottom_up = #[
+  `data-spw-region-genome`,
+  `data-spw-component-id`,
+  `data-spw-component-address`,
+  `data-spw-semantic-owner`,
+  `data-spw-resolved-*`,
+  `data-spw-composition-stability`
+ ][reg=set]
+ invariant = `Authored entry heroes should declare the page's primary feature and boundary posture; runtime may infer stability for the long tail, but it should not need to invent the public spine.`
+ css_projection = `Shared surface CSS may style attentional weight, gradient boundary, and composition stability because those axes describe field posture rather than route-local decoration.`
+ js_projection = `Region profiling and component semantics should derive missing stability values from page identity, feature names, slot anatomy, and route anchors.`
+}[reg=facet]
+
 floating_chrome_field_contract: .{
  operation = "contract"
  problem = `The current floating chrome appears as unrelated islands: status, section/page navigation, state satchel, and popovers can occupy the same visual band while exposing no clear handle anatomy. The problem is not only z-index. It is ownership: each island believes it owns its own geometry.`
@@ -285,6 +317,7 @@ tunable_parameters: .{
  decay_rate = `data-spw-decay-rate or CSS --spw-field-decay-rate. How quickly this region's charge falls off.`
  receptor_breadth = `data-spw-receptor-breadth (narrow|medium|wide). Determines which token classes trigger resonance in this component.`
  gradient_boundary = `data-spw-gradient-boundary='hard|soft|none'. Whether the gradient edge is visually marked.`
+ composition_stability = `data-spw-composition-stability='anchored|stable|implicit|loose|volatile'. Runtime-derived unless authored; expresses whether top-down page identity, bottom-up component anatomy, and traversal anchors agree.`
  liminality_floor = `data-spw-liminality-floor='entry|threshold|settled'. The minimum depth this region starts at.`
  grid_density = `data-spw-density on a grid cluster can tune track measure, gap, and child padding together. Compact/dense/soft/roomy are layout-level hints, not only component-level posture; compact pages may collapse 3-up anatomy to 2-up in the tablet/mid-desktop band.`
  page_layout = `body[data-spw-layout] chooses broad horizontal reading posture. Reading is narrow, newspaper is denser reference-document measure, wide is generous, atlas is survey-scale, and split pairs a reading column with a max-content rail.`

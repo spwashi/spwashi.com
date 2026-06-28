@@ -126,6 +126,46 @@ function inferRegionDensity(profile) {
   return 'medium';
 }
 
+function inferRegionAttentionalWeight(el, profile) {
+  if (el.dataset.spwAttentionalWeight) return el.dataset.spwAttentionalWeight;
+  if (el.classList.contains('site-hero')) return '1.25';
+  if (profile.kind === 'hook') return '1.2';
+  if (profile.role === 'schema' || profile.role === 'routing') return '1.15';
+  if (profile.role === 'orientation') return '1.1';
+  if (profile.kind === 'card' || profile.kind === 'panel') return '0.95';
+  return '1';
+}
+
+function inferRegionGradientBoundary(el, profile) {
+  if (el.dataset.spwGradientBoundary) return el.dataset.spwGradientBoundary;
+  if (el.classList.contains('site-hero') || profile.kind === 'hook') return 'hard';
+  if (profile.role === 'routing' || profile.role === 'schema') return 'soft';
+  if (profile.kind === 'card' || profile.kind === 'panel') return 'none';
+  return 'soft';
+}
+
+function inferRegionCompositionStability(el, profile) {
+  if (el.dataset.spwCompositionStability) return el.dataset.spwCompositionStability;
+
+  const hasTopDownAnchor = Boolean(profile.kind && profile.role && profile.context && profile.surface);
+  const hasBottomUpAnchor = Boolean(
+    el.dataset.spwFeature
+    || el.dataset.spwSlot
+    || el.querySelector?.(':scope > [data-spw-slot], :scope [data-spw-feature]')
+  );
+  const hasTraversalAnchor = Boolean(
+    el.id
+    || el.dataset.spwRelatedRoutes
+    || el.querySelector?.(':scope a[href], :scope [data-spw-related-routes]')
+  );
+
+  if (profile.kind === 'hook') return 'volatile';
+  if (hasTopDownAnchor && hasBottomUpAnchor && hasTraversalAnchor) return 'anchored';
+  if (hasTopDownAnchor && hasBottomUpAnchor) return 'stable';
+  if (hasTopDownAnchor) return 'implicit';
+  return 'loose';
+}
+
 export function inferSpaceMotion() {
   const width = window.innerWidth || document.documentElement.clientWidth || 0;
   if (width && width < 520) return 'fold';
@@ -143,6 +183,9 @@ function buildRegionGenome(profile = {}) {
     ['harmony', profile.harmony],
     ['tempo', profile.tempo],
     ['density', profile.density],
+    ['weight', profile.attentionalWeight],
+    ['boundary', profile.gradientBoundary],
+    ['stability', profile.compositionStability],
   ]);
 }
 
@@ -169,6 +212,9 @@ export function buildRegionProfile(el, index = 0, options = {}) {
     harmony: '',
     tempo: '',
     density: '',
+    attentionalWeight: '',
+    gradientBoundary: '',
+    compositionStability: '',
     genome: '',
     features: readSet(
       ...parseFeatureList(el.dataset.spwFeatures).values?.() || [],
@@ -181,6 +227,9 @@ export function buildRegionProfile(el, index = 0, options = {}) {
   profile.harmony = inferRegionHarmony(profile);
   profile.tempo = inferRegionTempo(profile);
   profile.density = inferRegionDensity(profile);
+  profile.attentionalWeight = inferRegionAttentionalWeight(el, profile);
+  profile.gradientBoundary = inferRegionGradientBoundary(el, profile);
+  profile.compositionStability = inferRegionCompositionStability(el, profile);
   profile.genome = buildRegionGenome(profile);
 
   return profile;
@@ -195,9 +244,13 @@ export function applyRegionProfile(el, profile) {
   writeDatasetValue(el, 'spwHarmony', profile.harmony);
   writeDatasetValue(el, 'spwTempo', profile.tempo);
   writeDatasetValue(el, 'spwDensity', profile.density);
+  writeDatasetValueIfMissing(el, 'spwAttentionalWeight', profile.attentionalWeight);
+  writeDatasetValueIfMissing(el, 'spwGradientBoundary', profile.gradientBoundary);
+  writeDatasetValue(el, 'spwCompositionStability', profile.compositionStability);
   writeDatasetValue(el, 'spwRegionKey', profile.key);
   writeDatasetValue(el, 'spwRegionGenome', profile.genome);
   writeStyleValue(el, '--region-index', String(profile.index));
+  writeStyleValue(el, '--spw-attentional-weight', profile.attentionalWeight);
 }
 
 export function resolveDominantTempo(tempos = []) {
@@ -240,9 +293,13 @@ export function syncPageHarmony(ctx, html = document.documentElement) {
   const profiles = ctx.regions.map((entry) => entry.profile);
   const harmonies = new Set(profiles.map((profile) => profile.harmony));
   const tempos = new Set(profiles.map((profile) => profile.tempo));
+  const gradientBoundaries = new Set(profiles.map((profile) => profile.gradientBoundary));
+  const stabilities = new Set(profiles.map((profile) => profile.compositionStability));
 
   writeDatasetValue(html, 'spwHarmonyField', harmonies);
   writeDatasetValue(html, 'spwTempoField', tempos);
+  writeDatasetValue(html, 'spwGradientBoundaryField', gradientBoundaries);
+  writeDatasetValue(html, 'spwCompositionStabilityField', stabilities);
   writeDatasetValue(html, 'spwSpaceMotion', inferSpaceMotion());
   writeStyleValue(html, '--region-count', String(profiles.length));
   syncPageCascadeTiming(ctx, html);

@@ -179,6 +179,38 @@
   opacity: 0.98;
 }
 
+:where(.site-frame[data-spw-gradient-boundary="hard"]) {
+  --site-frame-seam-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 38%, transparent);
+}
+
+:where(.site-frame[data-spw-gradient-boundary="soft"]) {
+  --site-frame-seam-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 22%, transparent);
+}
+
+:where(.site-frame[data-spw-gradient-boundary="none"])::before {
+  opacity: 0.18;
+}
+
+:where(.site-frame[data-spw-composition-stability="anchored"]) {
+  --spw-chassis-highlight:
+    inset 0 1px 0 color-mix(in srgb, white 22%, transparent),
+    inset 0.28rem 0 0 color-mix(in srgb, var(--active-op-color, var(--teal)) 12%, transparent);
+}
+
+:where(.site-frame[data-spw-composition-stability="stable"]) {
+  --spw-chassis-highlight:
+    inset 0 1px 0 color-mix(in srgb, white 18%, transparent),
+    inset 0.18rem 0 0 color-mix(in srgb, var(--active-op-color, var(--teal)) 8%, transparent);
+}
+
+:where(.site-frame[data-spw-composition-stability="implicit"]) {
+  --site-frame-seam-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 14%, transparent);
+}
+
+:where(.site-frame[data-spw-composition-stability="loose"]) {
+  border-style: dashed;
+}
+
 :where(.site-frame .frame-panel, .site-frame .frame-card) {
   transition:
     transform var(--duration-fast, 120ms) var(--ease-mechanical, ease),
