@@ -216,6 +216,7 @@
   runtime_layer = "Use selector gates, module definitions, bus events, and data-spw-module-* traces so mounted behavior explains why it mounted."
   spw_layer = "Use conventions, slice contracts, reviews, and tending notes when a pattern should survive beyond one patch."
   file_tree_rule = "The file tree earns complexity only when it improves search, ownership, review boundaries, or seasonal handoff. A new directory that hides cascade order or runtime loading is worse than a dense but honest file."
+  plan_index_rule = "When a conceptual area has an owner plan, a review bundle, and a convention, each surface should cross-link the others so future maintainers can move between claim, implementation, and vocabulary without reconstructing the map."
   validation = "A new or refactored feature should be explainable by following one path: route HTML -> semantic attributes -> CSS layer/file -> JS module/event -> .spw claim or slice."
 }
 

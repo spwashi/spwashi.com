@@ -2,11 +2,11 @@
 
 ## Public Goal
 
-Let readers tune how much copy is visible without splitting the site into separate versions. The base page should remain readable and crawlable; optional layers should reveal theory, genre, culinary vocabulary, and route bridges when semantic density or runtime posture asks for more depth.
+Let readers tune how much copy is visible without splitting the site into separate versions. The base page should remain readable and crawlable; optional layers should reveal theory, genre, culinary vocabulary, and route bridges when semantic density or runtime posture asks for more depth. This plan now also covers the entry/normal/dense distinction that route-register and inspect surfaces need to stay legible.
 
 ## Current Contract
 
-- `data-spw-copy-depth="normal|rich|genre"` marks optional copy layers.
+- `data-spw-copy-depth="entry|normal|rich|dense|technical|genre"` marks optional copy layers.
 - `data-spw-copy-label` names the layer in the UI.
 - `data-spw-semantic-expression` stores the compact Spw-shaped meaning label.
 - `data-spw-semantic-cluster` names resonance families such as `culinary`, `programming`, `learning`, and `genre`.
@@ -18,8 +18,11 @@ Let readers tune how much copy is visible without splitting the site into separa
 ## Display Rules
 
 - Minimal semantic density keeps the page calm.
+- Entry copy keeps first-contact routes legible.
 - Normal semantic density reveals `normal` copy.
 - Rich semantic density reveals `normal` and `rich` copy.
+- Dense copy is reserved for route registers and deep topical surfaces that can tolerate denser labels.
+- Technical copy is reserved for inspect/tool pages where the operational model should stay precise.
 - Resonant and theatrical runtime postures reveal `genre` copy.
 - Palette and developmental climate may bias which vocabulary cluster receives stronger visual emphasis.
 
@@ -36,6 +39,7 @@ Let readers tune how much copy is visible without splitting the site into separa
 
 - Add a settings UI note or control that previews copy-depth behavior directly.
 - Let route templates emit bridge sections with consistent `spw-route-bridge` markup.
+- Use `entry` for home/landing surfaces, `dense` for route registers, and `technical` for inspect pages rather than inventing new copy-depth names.
 - Consider a topic index for vocabulary clusters once enough culinary, programming, and genre terms have accumulated.
 - Explore exporting annotated components as compact Spw recipe cards, e.g. `card[reason]{produce.artifact}`, for future model expansion and crawler-facing route briefs.
 - Expand emphasis-tier audits across route hubs so primary, secondary, and tertiary meaning can be inspected consistently in screenshots and generated design catalogs.

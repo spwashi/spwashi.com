@@ -49,6 +49,19 @@
  future_option: "If the site later decides that all locales should be prefixed uniformly, that should be a deliberate migration plan rather than an accidental side effect of the first localization pass."
 }
 
+^"copy_depth_bridge"{
+ rule: "Localization should respect copy depth rather than flattening every surface to the same density."
+ source_depths: #[
+  `entry for landing and orientation surfaces`
+  `normal for default route prose`
+  `rich for optional explanatory layers`
+  `dense for route registers and deep topical pages`
+  `technical for inspect and tool pages`
+  `genre for resonant or theatrical runtime postures`
+ ][reg=set]
+ note: "This keeps localized pages readable while preserving the public site's intentional density ladder."
+}
+
 ^"spw_translation_role"{
  rule: "Spw should carry translation semantics, not emitted UI runtime."
  holds: [

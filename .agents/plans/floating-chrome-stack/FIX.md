@@ -6,10 +6,11 @@
 - The console set floating chrome attributes by hand, so it missed the shared `data-spw-layout-owner="floating-chrome"` contract.
 - Discovery credits and toast stacks were annotated as low floating tier even though their CSS and behavior expect toast-level priority.
 - The cauldron chip was visually persistent but sat on the ambient floating tier.
+- Viewport correction is still easier to read as a participant registry than a selector list.
 
 ## Diagnosis
 
-The site already has the right ownership model: floating chrome belongs to a shared contract instead of page-local z-index rules. The drift was in tier naming and runtime annotation. Once an element is annotated, the component-layer floating-chrome rule wins over earlier shell-layer z-index declarations, so the tier must be correct at the source.
+The site already has the right ownership model: floating chrome belongs to a shared contract instead of page-local z-index rules. The drift was in tier naming, runtime annotation, and how viewport participants are measured. Once an element is annotated, the component-layer floating-chrome rule wins over earlier shell-layer z-index declarations, so the tier must be correct at the source.
 
 ## Planned Fix
 
@@ -18,6 +19,7 @@ The site already has the right ownership model: floating chrome belongs to a sha
 - Route console creation through `annotateFloatingChromeElement(...)`.
 - Promote discovery notices to `toast` and cauldron chip to `docked`.
 - Keep interaction copy aligned with the public ethos: interactions should reveal change, return path, and persistence.
+- Prefer a small floating-chrome participant registry over repeated selector scans where practical.
 
 ## Deferred Follow-Ups
 

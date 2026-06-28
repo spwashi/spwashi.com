@@ -4,12 +4,12 @@ Refine gesture handling and page / region / component state logic so semantic in
 
 ## Goal
 
-Make shared gesture behavior calmer on mobile, remove accidental menu / brace activations during ordinary scrolling, and document the resulting interaction grammar through both visible settings-page copy and stable console helpers.
+Make shared gesture behavior calmer on mobile, remove accidental menu / brace activations during ordinary scrolling, and document the resulting interaction grammar through both visible settings-page copy and stable console helpers. Keep this pass focused on gesture intent; do not reopen the full shell or chrome ownership model here.
 
 ## Scope
 
 - In scope: brace / region gesture cleanup, viewport-safe semantic menu behavior, console-accessible gesture inspection helpers, and one settings-page documentation pass for gesture semantics, console discovery, and spell-oriented seeds.
-- Out of scope: a full redesign of shell chrome, new collector / explorer modes, verbosity summarization workflows, or a sitewide copy rewrite.
+- Out of scope: a full redesign of shell chrome, new collector / explorer modes, broader floating-chrome tier work, verbosity summarization workflows, or a sitewide copy rewrite.
 
 ## Files
 

@@ -61,6 +61,12 @@
 @relational_attention_media_cache: ~"../.agents/plans/relational-attention-media/wip.spw"
 @professional_skill_worldbuilding: ~"../.agents/plans/professional-skill-development-worldbuilding/PLAN.md"
 @professional_skill_worldbuilding_cache: ~"../.agents/plans/professional-skill-development-worldbuilding/wip.spw"
+@interaction_loop_contract: ~"../.agents/plans/interaction-loop-contract/PLAN.md"
+@gesture_state_refinement: ~"../.agents/plans/gesture-state-refinement/PLAN.md"
+@navigation_header_disclosure: ~"../.agents/plans/navigation-header-disclosure/PLAN.md"
+@floating_chrome_stack: ~"../.agents/plans/floating-chrome-stack/FIX.md"
+@semantic_copy_depth: ~"../.agents/plans/semantic-copy-depth/PLAN.md"
+@modular_experience_slices: ~"../.agents/plans/modular-experience-slices/PLAN.md"
 @slices: ~"./slices/index.spw"
 @canon: ~"./_workbench/.spw/index.spw"
 @mount: ~"./_workbench/.spw/mount.spw"
@@ -115,6 +121,7 @@ translations: .{
  style_development = #[@css_instruction, @style_development, @composable_art, @site_semantics][reg=set]
  philosophy = #[@philosophy, @graph][reg=set]
  reviews = #[@reviews, @site_semantics][reg=set]
+ planning_tracks = #[@interaction_loop_contract, @gesture_state_refinement, @navigation_header_disclosure, @floating_chrome_stack, @semantic_copy_depth, @modular_experience_slices][reg=set]
  interaction_model = #[@page_model, @attention_field, @ornament_contract, @site_semantics][reg=set]
  annotation_layer = #[@annotation_layer, @attention_field, @site_semantics][reg=set]
  narrative_instrumentation = #[@narrative_instrumentation, @annotation_layer, @attention_field, @site_semantics][reg=set]
@@ -166,6 +173,12 @@ dispatch: .{
  graph = @graph
  public_surfaces = @surfaces
  spw_maintenance_2026_06 = @spw_maintenance_2026_06
+ interaction_loop_contract = @interaction_loop_contract
+ gesture_state_refinement = @gesture_state_refinement
+ navigation_header_disclosure = @navigation_header_disclosure
+ floating_chrome_stack = @floating_chrome_stack
+ semantic_copy_depth = @semantic_copy_depth
+ modular_experience_slices = @modular_experience_slices
  slices = @slices
  workbench = @canon
  agents = @agents

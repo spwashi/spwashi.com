@@ -1,11 +1,11 @@
 # Plan: interaction-loop-contract
 
-Extract the shared interaction-loop semantics that are currently duplicated across the state inspector and image metaphysics runtime. The end state is a small contract module that owns canonical loop states, refresh reasons, labels, and timing reads so future components can join the same activation/resolution model without inventing parallel local semantics. Taste note: improve layering and clarity by moving the process vocabulary into one truthful surface.
+Extract the shared interaction-loop semantics that are currently duplicated across the state inspector and image metaphysics runtime. The end state is a small contract module that owns canonical loop states, refresh reasons, labels, and timing reads so future components can join the same activation/resolution model without inventing parallel local semantics. The next useful generalization is to let this become the shared interaction-feedback contract for other guarded, stateful runtime surfaces when they need the same prime/land/residue vocabulary. Taste note: improve layering and clarity by moving the process vocabulary into one truthful surface.
 
 ## Scope
 
-- **In scope**: shared loop-state constants/helpers, image refresh reason constants, timing helpers, and reintegration of the current state inspector and image metaphysics consumers
-- **Out of scope**: new page surfaces, new CSS ornament systems, broader bus/event renames, or extending the loop contract to unrelated runtimes in this pass
+- **In scope**: shared loop-state constants/helpers, image refresh reason constants, timing helpers, reintegration of the current state inspector and image metaphysics consumers, and the minimal eligibility/cancel-path handling that keeps interaction state honest
+- **Out of scope**: new page surfaces, new CSS ornament systems, broader bus/event renames, or inventing a second parallel interaction vocabulary for unrelated runtimes
 
 ## Files
 
@@ -44,7 +44,7 @@ none
 ## Validation
 
 - **Hypotheses**: extracting the loop contract reduces duplication without changing current behavior; image and inspector consumers still resolve through the same visible loop states
-- **Negative controls**: existing operator/brace/mode/settings/image interactions continue to function; no new CSS edits are required
+- **Negative controls**: existing operator/brace/mode/settings/image interactions continue to function; no new CSS edits are required; cancel and blur paths do not leave stale primed state
 - **Demo sequence**: `/ -> home frame state block`, `/settings/ -> runtime preferences state block`, image-heavy route with hold-to-visit and effect cycling
 
 ## Spw Artifact

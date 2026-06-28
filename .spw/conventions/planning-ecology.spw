@@ -15,6 +15,12 @@
 @conversation_audit_redistribution_2026_06_19: ~"../../.agents/plans/archive/2026-06-19-conversation-audit-redistribution.md"
 @plan_maintenance_sweep_2026_06_21: ~"../../.agents/plans/archive/2026-06-21-planning-ecology-recursive-maintenance.md"
 @public_plans: ~"../../about/plans/index.html"
+@interaction_loop_contract: ~"../../.agents/plans/interaction-loop-contract/PLAN.md"
+@gesture_state_refinement: ~"../../.agents/plans/gesture-state-refinement/PLAN.md"
+@navigation_header_disclosure: ~"../../.agents/plans/navigation-header-disclosure/PLAN.md"
+@floating_chrome_stack: ~"../../.agents/plans/floating-chrome-stack/FIX.md"
+@semantic_copy_depth: ~"../../.agents/plans/semantic-copy-depth/PLAN.md"
+@modular_experience_slices: ~"../../.agents/plans/modular-experience-slices/PLAN.md"
 @workbench_claim_protocol: ~"../_workbench/.spw/harness/claim-protocol.spw"
 @workbench_memory_surface: ~"../_workbench/.spw/harness/memory-surface.spw"
 @workbench_process_loop: ~"../_workbench/.spw/process/loop-observation.spw"
@@ -30,6 +36,12 @@ dispatch: .{
  conversation_audit_redistribution_2026_06_19 = @conversation_audit_redistribution_2026_06_19
  plan_maintenance_sweep_2026_06_21 = @plan_maintenance_sweep_2026_06_21
  public_plans = @public_plans
+ interaction_loop_contract = @interaction_loop_contract
+ gesture_state_refinement = @gesture_state_refinement
+ navigation_header_disclosure = @navigation_header_disclosure
+ floating_chrome_stack = @floating_chrome_stack
+ semantic_copy_depth = @semantic_copy_depth
+ modular_experience_slices = @modular_experience_slices
  claim_protocol = @workbench_claim_protocol
  memory_surface = @workbench_memory_surface
  process_loop = @workbench_process_loop
@@ -124,9 +136,10 @@ invariants: #[
  `New durable planning concepts should be wired through site.spw, this convention, and the relevant README or public page.`,
  `Plan-maintenance sweeps should preserve hand-authored voice while reducing stale cross-references.`,
  `Completed plans with live direct citations should be archived by index note before any physical move.`,
- `Plan-tree consolidation should prefer virtual buckets and archive records before physical folder moves.`,
- `WIP-only plan folders should not remain invisible once they are touched by a maintenance pass.`,
- `Agentic development caches should summarize repo-derived facts with explicit invalidation; they must not replace source reads or final validation.`,
- `Architectural claims that drive refactors should name a falsification path before they become durable convention.`,
- `Major conceptual areas that participate in both cognitive practice and computational tooling should carry operational_semantics following the template above.`
+  `Plan-tree consolidation should prefer virtual buckets and archive records before physical folder moves.`,
+  `WIP-only plan folders should not remain invisible once they are touched by a maintenance pass.`,
+  `Agentic development caches should summarize repo-derived facts with explicit invalidation; they must not replace source reads or final validation.`,
+  `Architectural claims that drive refactors should name a falsification path before they become durable convention.`,
+  `Major conceptual areas that participate in both cognitive practice and computational tooling should carry operational_semantics following the template above.`
+  `If an owner plan already exists, add the plan bridge here so the public plans page and review surfaces can route to it.`
 ][reg=set]

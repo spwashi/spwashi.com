@@ -24,11 +24,17 @@
 @site_semantics: ~"../conventions/site-semantics.spw"
 @planning_ecology: ~"../conventions/planning-ecology.spw"
 @fundamentals_practice: ~"./fundamentals-practice-rhythms.spw"
+@modular_experience_slices_plan: ~"../../.agents/plans/modular-experience-slices/PLAN.md"
+@interaction_loop_contract: ~"../../.agents/plans/interaction-loop-contract/PLAN.md"
+@navigation_header_disclosure: ~"../../.agents/plans/navigation-header-disclosure/PLAN.md"
+@floating_chrome_stack: ~"../../.agents/plans/floating-chrome-stack/FIX.md"
+@semantic_copy_depth: ~"../../.agents/plans/semantic-copy-depth/PLAN.md"
 
 thesis: .{
   claim = `The workbench .spw corpus is strongest where it treats philosophy, metaphysics, and script architecture as operational contracts: every major concept names its layer, source files, phase flow, source-of-truth status, falsification rule, memory placement, and query surface. The site .spw corpus already has rich descriptions of routes, CSS, runtime state, and practice rhythms, but it should apply more of that contract structure so its claims become easier to verify, refactor, and hand off.`
   scope = `This review applies workbench patterns to the site-facing .spw files only. It does not propose upstreaming site collaboration models to the workbench.`
   method = `Sampled the 227 .spw files under .spw/_workbench by entrypoint, workspace/mount, theory/runtime, registries, process, patterns, harness, examples, and audits; compared those patterns against site.spw, workspace.spw, conventions, reviews, and recent practice-bed plans.`
+  adjacent_contracts = `Interaction feedback, header disclosure, floating chrome, copy depth, and slice ownership are now adjacent plan surfaces that should inherit the same claim/probe shape when they become implementation-backed.`
 }[reg=facet]
 
 # Workbench Patterns Worth Importing
@@ -62,6 +68,7 @@ recommendations: .{
   use_scoped_evolution_for_big_refactors = `CSS layer-order changes, route visual redesigns, and new data-spw-* families should carry stable/experimental channel, impacted paths, probes, and rollback. This fits the current openness to deeper refactors while keeping them reviewable.`
   convert_reviews_gradually = `Do not rewrite every review. Start with the active surfaces: fundamentals-practice-rhythms, css-architecture-alignment, runtime-audit, and the future math-practice-labs tending note. Add claim chains only where a claim will guide implementation.`
   add_queryability_to_site_semantics = `Add a small queryable-component frame to site-semantics.spw that says each significant surface should expose kind, role, slot, feature, module, state, and consequence. This is the site translation of literate-ui queryability.`
+  index_with_relatives = `When a review gains a neighboring plan, include the plan bridge in the review graph so future maintainers can jump from audit to owner surface quickly.`
 }[reg=facet]
 
 # Candidate Site Kernel
@@ -130,5 +137,5 @@ guardrails: #[
 status: .{
   created = `2026-06-01 after a structured read-through of .spw/_workbench/**/*.spw entrypoints, theory/runtime, registries, process, patterns, harness, examples, and audits.`
   applied = `Initial workspace kernel, planning claim-chain, and site-semantics queryability/phase-flow frames have been added in the current working tree.`
-  next = `Use these frames to shape the first .spw/slices contract, likely math-practice-labs after its code patch is reviewed.`
+  next = `Use these frames to shape the first .spw/slices contract, likely math-practice-labs after its code patch is reviewed, and keep the adjacent interaction/header/floating/copy/slice plan tracks linked from the review graph.`
 }[reg=facet]

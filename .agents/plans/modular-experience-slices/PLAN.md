@@ -2,7 +2,7 @@
 
 ## Public Goal
 
-Evolve the file tree and collaboration surfaces *of this repository* so that stable "experience slices" (operator grammar, attention/resonance field, cauldron/composition, musical/rhythmic projection, wonder/ornament, brace physics, region harmony, creative play surfaces, math practice labs, etc.) can be owned and iteratively tended by human developer teams over years — like layers of an abstract painting or beds in a long-lived garden — while preserving core Spw contracts and inspectability.
+Evolve the file tree and collaboration surfaces *of this repository* so that stable "experience slices" (operator grammar, attention/resonance field, cauldron/composition, musical/rhythmic projection, wonder/ornament, brace physics, region harmony, creative play surfaces, math practice labs, etc.) can be owned and iteratively tended by human developer teams over years — like layers of an abstract painting or beds in a long-lived garden — while preserving core Spw contracts and inspectability. The planning target stays local to this repository; the slice model should help humans coordinate work here, not become an upstream workbench proposal.
 
 Support earthy, cyclical rhythms of participation and exchange: periods of focused tending on one or more slices, followed by natural sedimentation of contributions, weathering, and handoff artifacts that let other developers (or the same developers in a later season) continue the work without friction or erasure of prior layers.
 
@@ -32,7 +32,7 @@ These reviews and this plan together define:
 **In scope (bolder but principled):**
 - Define and stabilize the major experience slices as first-class concepts (initially in .spw).
 - Prototype bolder file tree structures (starting with CSS `slices/` parallel or embedded, with possible JS symmetry).
-- Develop and document earthy participation rhythms (per-slice .spw contracts, sedimentation notes, seasonal or cyclical review practices, and natural handoff surfaces).
+- Develop and document earthy participation rhythms (per-slice .spw contracts, sedimentation notes, seasonal or cyclical review practices, and natural handoff surfaces), especially for the first concrete pilots that already have nearby review surfaces.
 - Pilot with 1-2 slices, starting with the concrete math-practice-labs work already emerging in a sibling worktree, then generalizing only what proves useful.
 - Allow route visual redesign when the redesign clarifies semantic flow, exposes practice beds, improves accessibility, or makes the slice easier to inspect.
 - Allow CSS layer-order changes only when a specific semantic-flow problem cannot be solved by file redistribution, import manifests, or clearer ownership inside the existing layers.
@@ -157,5 +157,6 @@ The slice should support both rhythms:
 - [ ] Bolder tree prototype (CSS) implemented and validated
 - [ ] First human volleyball pilot completed with handoff artifacts
 - [ ] Tooling and instruction updates landed
+- [ ] `attention-resonance-field` slice contract clarified alongside the current attention-field / wonder / ornament surfaces
 
 This plan treats the site as a living, multi-author artwork that improves through deliberate, inspectable, volleyed contributions rather than big-bang rewrites.

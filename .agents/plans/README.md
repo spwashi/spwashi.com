@@ -23,6 +23,11 @@ Use these when a task is broad, cross-disciplinary, or likely to create reusable
 - `daily-kernel-development/PLAN.md` — run one-session kernels for engineers, animators, illustrators, designers, musicians, artists, and collaborators without broad rewrites.
 - `spw-surface-normalization/PLAN.md` — keep `.spw` surfaces navigable, dimensional, and reviewable as semantic capacity grows.
 - `modular-experience-slices/PLAN.md` — use slice contracts when ownership spans HTML, CSS, JS, `.spw`, validation, and practice beds.
+- `interaction-loop-contract/PLAN.md` — centralize shared interaction-feedback states, refresh reasons, and cancel/eligibility handling.
+- `gesture-state-refinement/PLAN.md` — calm gesture intent on mobile and document the resulting interaction grammar.
+- `navigation-header-disclosure/PLAN.md` — keep header disclosure roles, overlay state, and compact action ownership legible.
+- `floating-chrome-stack/FIX.md` — normalize floating chrome roles, tiers, console ownership, and viewport participation.
+- `semantic-copy-depth/PLAN.md` — formalize entry/normal/dense/technical copy depth alongside the existing semantic layers.
 - `relational-attention-media/PLAN.md` — attention as self/local/global relation plus local media-seed production across genres.
 - `webpage-trope-vocabulary/PLAN.md` — literal website/reference-document anatomy, route-specific restaurant/garden anchors, shared `data-spw-anatomy` vocabulary, and floating chrome island rules.
 - `agent-optimization/PLAN.md` — use when the work changes the agent/editor operating environment itself.
@@ -82,6 +87,10 @@ High-signal active examples:
 - `runtime-bootstrap-performance/PLAN.md` — reduce serial loading, immediate layer width, observer cost, and warm-return friction while preserving staged policy-driven loading, cache-stratum ownership, and full observability.
 - `floating-chrome-stack/FIX.md` — normalize floating chrome roles, tiers, console ownership, and discovery-credit alignment.
 - `modular-experience-slices/PLAN.md` — bolder file tree evolution supporting explicit "experience slice" ownership, practice beds, and tending-note handoffs. The first concrete pilot is `math-practice-labs`, with `attention-resonance-field` as the next slice contract candidate.
+- `interaction-loop-contract/PLAN.md` — shared interaction-feedback contract for state inspector and image metaphysics, now broadening toward other guarded runtime surfaces.
+- `gesture-state-refinement/PLAN.md` — mobile gesture cleanup, intentional menu / brace behavior, and console-facing inspection helpers.
+- `navigation-header-disclosure/PLAN.md` — generated header disclosure, menu overlay state, and compact action ownership.
+- `semantic-copy-depth/PLAN.md` — copy-depth tiers for entry, normal, rich, dense, technical, and genre surfaces.
 - `spw-surface-normalization/PLAN.md` — lightweight normalization of .spw writing style (headers, ^"sections", references, ~#metadata) to align with workbench self-modeling while preserving local voice, plus mechanisms for greater navigability and explicit dimensionality (temporal rhythms, practice depth, semantic layer, collaboration phase).
 - `model-guided-refinement/PLAN.md` — rails for less creative models: focus dimensions, semantic fixity tiers, elemental implementation effects, cross-language CSS/HTML/JS/.spw tracing, and the creative marketing engine contract for musicians/artists/collaborators.
 - `daily-kernel-development/PLAN.md` — one-session development exercise for semantic capacity, brand physics, regional sensory design, and cross-discipline ergonomics across engineers, animators, illustrators, designers, musicians, and collaborators.

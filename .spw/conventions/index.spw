@@ -47,6 +47,8 @@
 @workbench_selection: ~"../_workbench/.spw/conventions/selection.spw"
 @workbench_naming: ~"../_workbench/.spw/conventions/naming.spw"
 @workbench_submodule: ~"../_workbench/.spw/conventions/submodule.spw"
+@copy_localization: ~"./copy-localization.spw"
+@site_semantics: ~"./site-semantics.spw"
 
 dispatch: .{
  semantics = @site_semantics
@@ -71,6 +73,8 @@ dispatch: .{
  semantic_capacity = @semantic_capacity
  discovery_powerups = @discovery_powerups
  daily_kernel = @daily_kernel
+ copy_localization = @copy_localization
+ site_semantics = @site_semantics
  relational_attention_media = @relational_attention_media
  page_anatomy_vocabulary = @page_anatomy_vocabulary
  codebase_perusal = @codebase_perusal

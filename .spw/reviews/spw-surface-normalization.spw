@@ -7,6 +7,12 @@
 @plan: ~"../../.agents/plans/spw-surface-normalization/PLAN.md"
 @fundamentals_practice: ~"./fundamentals-practice-rhythms.spw"
 @modular_slices: ~"./modular-experience-slices-volleyball.spw"
+@modular_experience_slices_plan: ~"../../.agents/plans/modular-experience-slices/PLAN.md"
+@interaction_loop_contract: ~"../../.agents/plans/interaction-loop-contract/PLAN.md"
+@gesture_state_refinement: ~"../../.agents/plans/gesture-state-refinement/PLAN.md"
+@navigation_header_disclosure: ~"../../.agents/plans/navigation-header-disclosure/PLAN.md"
+@floating_chrome_stack: ~"../../.agents/plans/floating-chrome-stack/FIX.md"
+@semantic_copy_depth: ~"../../.agents/plans/semantic-copy-depth/PLAN.md"
 @planning_ecology: ~"../conventions/planning-ecology.spw"
 @css_instruction: ~"../conventions/css-instruction.spw"
 @agent_optimization: ~"../../.agents/plans/agent-optimization/PLAN.md"
@@ -16,6 +22,7 @@
 ^"purpose"{
   note = "This .spw is the living companion and dispatch surface for the normalization plan."
   claim = "Establish lightweight, workbench-aligned conventions for the site's .spw surfaces (headers, ^\"section\" scaffolding, @references, ~# micro-metadata, sedimentation notes) so they become naturally navigable and dimensional while preserving the local earthy, rhythmic, literary voice."
+  related_tracks = #[@interaction_loop_contract, @gesture_state_refinement, @navigation_header_disclosure, @floating_chrome_stack, @semantic_copy_depth, @modular_experience_slices_plan][reg=set]
   scope = "All work is scoped strictly local to this repository for human developer collaboration. No upstream changes to the spw-workbench are proposed or required."
 }
 
@@ -31,6 +38,7 @@
   deliverables = #[
     `Concrete before/after normalization examples`
     `Priority targets for first surgical pass (planning-ecology, css-instruction, fundamentals, slices review, precipitates, dispatch indexes)`
+    `Plan-review bridges for interaction, gesture, header disclosure, floating chrome, copy depth, and slice ownership`
     `Sedimentation note convention for handoff traces`
     `Lightweight dimensional declaration pattern + future index shape`
     `Semantic-capacity operations for cache/audit/align/prime/contract/archive`
