@@ -32,6 +32,7 @@ Stable interaction contract, incremental visual treatment. Reuse existing page-r
 - Tighten mobile scroll progression by separating closed satchel launch placement from open satchel panels, ignoring hidden chrome in occlusion math, and applying shared top/bottom scroll clearances to section targets.
 - Add a reusable visual link board component so route links can carry images, alt text, color accents, route rationale, and visual cue copy together on the homepage and topics atlas.
 - Add a top-down/bottom-up stabilization pass: public-spine and section-hub entry regions now declare layout posture, feature identity, attentional weight, gradient boundary, and composition stability; region profiling and component semantics derive `data-spw-composition-stability` for the long tail so CSS, inspectors, and future agents can see when page identity, component anatomy, and route traversal agree.
+- Split authored entry stability from runtime-resolved stability and pack occupancy: public CSS now projects authored public-spine state while derived stability stays inspectable/debuggable through resolved fields and occupancy summaries.
 
 ## Out Of Scope
 

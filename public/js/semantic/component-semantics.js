@@ -98,7 +98,7 @@ const STANCE_BY_LIMINALITY = Object.freeze({
   departed: 'exit'
 });
 
-const SEMANTIC_REGISTRY_VERSION = '0.5';
+const SEMANTIC_REGISTRY_VERSION = '0.6';
 let semanticRegistry = null;
 
 function tokenizeFeatureList(value = '') {
@@ -523,7 +523,8 @@ function buildComponentGenome(snapshotBase = {}) {
       ['inspectability', snapshotBase.inspectability],
       ['value', snapshotBase.valueLayer],
       ['stance', snapshotBase.stance],
-      ['stability', snapshotBase.compositionStability],
+      ['stability', snapshotBase.resolvedCompositionStability || snapshotBase.compositionStability],
+      ['occupancy', snapshotBase.packOccupancy],
       ['route', snapshotBase.routeState],
       ['operator', snapshotBase.primaryOperator]
     ],
@@ -580,9 +581,7 @@ function inferStance(el, importance, interactivity) {
   return 'ground';
 }
 
-function inferCompositionStability(el, snapshotBase = {}) {
-  if (el.dataset.spwCompositionStability) return normalizeToken(el.dataset.spwCompositionStability);
-
+function inferResolvedCompositionStability(el, snapshotBase = {}) {
   const hasTopDownAnchor = Boolean(
     snapshotBase.kind
     && snapshotBase.role
@@ -601,6 +600,23 @@ function inferCompositionStability(el, snapshotBase = {}) {
   if (hasTopDownAnchor && hasBottomUpAnchor) return 'stable';
   if (hasTopDownAnchor) return 'implicit';
   return 'loose';
+}
+
+function inferPackOccupancy(el, snapshotBase = {}) {
+  if (el.dataset.spwPackOccupancy) return normalizeToken(el.dataset.spwPackOccupancy);
+
+  const slotNodes = Array.from(el.querySelectorAll?.(':scope > [data-spw-slot]') || []);
+  const slotCount = slotNodes.length || snapshotBase.slots?.length || 0;
+  const filledCount = slotNodes.filter((node) => (
+    normalizeText(node.textContent || '') || node.querySelector?.(':scope > *')
+  )).length;
+  const ratio = slotCount ? filledCount / slotCount : 0;
+
+  if (snapshotBase.kind === 'hook') return 'balanced';
+  if (!slotCount) return snapshotBase.kind === 'card' || snapshotBase.kind === 'panel' ? 'compact' : 'sparse';
+  if (ratio <= 0.34) return 'sparse';
+  if (ratio <= 0.8) return 'balanced';
+  return 'full';
 }
 
 function setIfMissing(el, key, value) {
@@ -696,7 +712,7 @@ function snapshotComponentSemantics(el, options = {}) {
   const valueLayer = inferValueLayer(role, context);
   const stance = inferStance(el, importance, interactivity);
   const relationship = describeRelationship(el);
-  const compositionStability = inferCompositionStability(el, {
+  const resolvedCompositionStability = inferResolvedCompositionStability(el, {
     kind,
     role,
     meaning,
@@ -705,6 +721,11 @@ function snapshotComponentSemantics(el, options = {}) {
     affordances,
     routeState: relationship.routeState
   });
+  const compositionStability = el.dataset.spwCompositionStability
+    ? normalizeToken(el.dataset.spwCompositionStability)
+    : resolvedCompositionStability;
+  const compositionStabilitySource = el.dataset.spwCompositionStability ? 'authored' : '';
+  const packOccupancy = inferPackOccupancy(el, { kind, slots, affordances });
   const contract = inferFunctionalContract(el, {
     kind,
     role,
@@ -748,6 +769,8 @@ function snapshotComponentSemantics(el, options = {}) {
     valueLayer,
     stance,
     compositionStability,
+    resolvedCompositionStability,
+    packOccupancy,
     routeState: relationship.routeState,
     primaryOperator: relationship.primaryOperator,
     slots,
@@ -783,6 +806,9 @@ function snapshotComponentSemantics(el, options = {}) {
     valueLayer,
     stance,
     compositionStability,
+    compositionStabilitySource,
+    resolvedCompositionStability,
+    packOccupancy,
     routeState: relationship.routeState,
     branchCount: relationship.branchCount,
     primaryOperator: relationship.primaryOperator,
@@ -822,7 +848,13 @@ function applySemanticSnapshot(el, snapshot, options = {}) {
   writer(el, 'spwConfigDomain', snapshot.configDomain);
   writer(el, 'spwValueLayer', snapshot.valueLayer);
   writer(el, 'spwStance', snapshot.stance);
-  writer(el, 'spwCompositionStability', snapshot.compositionStability);
+  if (snapshot.compositionStabilitySource === 'authored') {
+    writeDatasetValueIfMissing(el, 'spwCompositionStability', snapshot.compositionStability);
+    writeDatasetValueIfMissing(el, 'spwCompositionStabilitySource', 'authored');
+  }
+  writeDatasetValue(el, 'spwResolvedCompositionStability', snapshot.resolvedCompositionStability);
+  writeDatasetValue(el, 'spwResolvedCompositionStabilitySource', 'component-semantics');
+  writeDatasetValue(el, 'spwPackOccupancy', snapshot.packOccupancy);
   writer(el, 'spwSemanticTagged', snapshot.semanticTagged);
   writer(el, 'spwSemanticVersion', snapshot.semanticVersion);
   writer(el, 'spwComponentId', snapshot.componentId);
@@ -895,7 +927,9 @@ function summarizeSemanticField(snapshots) {
     instrumentation: new Set(),
     owners: new Set(),
     valueLayers: new Set(),
-    compositionStability: new Set()
+    compositionStability: new Set(),
+    resolvedCompositionStability: new Set(),
+    packOccupancy: new Set()
   };
 
   snapshots.forEach(({ snapshot }) => {
@@ -906,6 +940,8 @@ function summarizeSemanticField(snapshots) {
     summary.owners.add(snapshot.semanticOwner);
     summary.valueLayers.add(snapshot.valueLayer);
     summary.compositionStability.add(snapshot.compositionStability);
+    summary.resolvedCompositionStability.add(snapshot.resolvedCompositionStability);
+    summary.packOccupancy.add(snapshot.packOccupancy);
     snapshot.affordances.forEach((value) => summary.affordances.add(value));
     snapshot.instrumentation.forEach((value) => summary.instrumentation.add(value));
   });
@@ -926,12 +962,16 @@ function summarizeSemanticField(snapshots) {
     owners: [...summary.owners],
     valueLayers: [...summary.valueLayers],
     compositionStability: [...summary.compositionStability],
+    resolvedCompositionStability: [...summary.resolvedCompositionStability],
+    packOccupancy: [...summary.packOccupancy],
     counts: {
       roles: countBy('role'),
       kinds: countBy('kind'),
       owners: countBy('semanticOwner'),
       valueLayers: countBy('valueLayer'),
-      compositionStability: countBy('compositionStability')
+      compositionStability: countBy('compositionStability'),
+      resolvedCompositionStability: countBy('resolvedCompositionStability'),
+      packOccupancy: countBy('packOccupancy')
     }
   };
 }
@@ -967,6 +1007,9 @@ function makePublicSnapshot(element, snapshot) {
     valueLayer: snapshot.valueLayer,
     stance: snapshot.stance,
     compositionStability: snapshot.compositionStability,
+    compositionStabilitySource: snapshot.compositionStabilitySource,
+    resolvedCompositionStability: snapshot.resolvedCompositionStability,
+    packOccupancy: snapshot.packOccupancy,
     routeState: snapshot.routeState,
     branchCount: snapshot.branchCount,
     primaryOperator: snapshot.primaryOperator,
@@ -1006,6 +1049,7 @@ function createSemanticRegistry({ root, field, snapshots }) {
           if (filter.owner && record.snapshot.semanticOwner !== filter.owner) return false;
           if (filter.valueLayer && record.snapshot.valueLayer !== filter.valueLayer) return false;
           if (filter.compositionStability && record.snapshot.compositionStability !== filter.compositionStability) return false;
+          if (filter.resolvedCompositionStability && record.snapshot.resolvedCompositionStability !== filter.resolvedCompositionStability) return false;
           if (filter.instrumentation && !record.snapshot.instrumentation.includes(filter.instrumentation)) return false;
           return true;
         })

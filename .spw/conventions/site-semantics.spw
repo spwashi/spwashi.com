@@ -177,22 +177,32 @@
   authored_entry_truth = #[
     `data-spw-frame='hero'`
     `data-spw-feature`
+    `data-spw-region-purpose`
     `data-spw-attentional-weight`
     `data-spw-gradient-boundary`
     `data-spw-composition-stability`
+    `data-spw-composition-stability-source='authored'`
     `data-spw-slot`
+    `data-spw-pack`
+  ][reg=set]
+  region_purpose_values = #[
+    `public-spine`
+    `section-hub`
+    `route-sorter`
   ][reg=set]
   derived_runtime_truth = #[
     `data-spw-region-genome`
     `data-spw-component-address`
     `data-spw-semantic-owner`
     `data-spw-resolved-*`
-    `data-spw-composition-stability`
+    `data-spw-resolved-composition-stability`
+    `data-spw-resolved-composition-stability-source`
+    `data-spw-pack-occupancy`
   ][reg=set]
   naming_rule: "Feature names should read as stable noun phrases with an entry suffix when they anchor a route hero, e.g. home-kernel-entry, research-decision-entry, settings-workbench-entry."
-  css_rule: "CSS may project these axes directly because they describe state and field posture; route-local selectors should not be required to make a page feel anchored."
-  js_rule: "Runtime inference fills gaps and summarizes agreement; authored public-spine routes should still name their entry feature and boundary posture explicitly."
-  anti_pattern: "A hero whose copy, body metadata, CSS treatment, and related routes each imply a different page job."
+  css_rule: "CSS may project authored entry stability directly on public-spine regions, section hubs, and entry-suffixed features because it describes field posture; resolved stability and occupancy stay in debug/inspection."
+  js_rule: "Runtime inference fills gaps and summarizes agreement; authored public-spine routes should still name their entry feature, region purpose, boundary posture, and pack model explicitly."
+  anti_pattern: "A hero whose copy, body metadata, CSS treatment, and related routes each imply a different page job, or whose derived stability is mistaken for an authored public spine."
 }
 
 ^"structured_value_contract"{

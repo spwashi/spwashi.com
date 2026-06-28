@@ -126,8 +126,14 @@ function inferRegionDensity(profile) {
   return 'medium';
 }
 
+function normalizeAttentionalWeight(value, fallback = '1') {
+  const parsed = Number.parseFloat(value);
+  if (!Number.isFinite(parsed)) return fallback;
+  return String(Math.min(1.6, Math.max(0.65, parsed)));
+}
+
 function inferRegionAttentionalWeight(el, profile) {
-  if (el.dataset.spwAttentionalWeight) return el.dataset.spwAttentionalWeight;
+  if (el.dataset.spwAttentionalWeight) return normalizeAttentionalWeight(el.dataset.spwAttentionalWeight);
   if (el.classList.contains('site-hero')) return '1.25';
   if (profile.kind === 'hook') return '1.2';
   if (profile.role === 'schema' || profile.role === 'routing') return '1.15';
@@ -144,9 +150,7 @@ function inferRegionGradientBoundary(el, profile) {
   return 'soft';
 }
 
-function inferRegionCompositionStability(el, profile) {
-  if (el.dataset.spwCompositionStability) return el.dataset.spwCompositionStability;
-
+function inferResolvedRegionCompositionStability(el, profile) {
   const hasTopDownAnchor = Boolean(profile.kind && profile.role && profile.context && profile.surface);
   const hasBottomUpAnchor = Boolean(
     el.dataset.spwFeature
@@ -164,6 +168,34 @@ function inferRegionCompositionStability(el, profile) {
   if (hasTopDownAnchor && hasBottomUpAnchor) return 'stable';
   if (hasTopDownAnchor) return 'implicit';
   return 'loose';
+}
+
+function inferRegionPackOccupancy(el, profile) {
+  if (el.dataset.spwPackOccupancy) return el.dataset.spwPackOccupancy;
+
+  const slotNodes = Array.from(el.querySelectorAll?.(':scope > [data-spw-slot]') || []);
+  const declaredSlots = new Set();
+  const filledSlots = new Set();
+
+  if (el.dataset.spwSlot) declaredSlots.add(el.dataset.spwSlot);
+
+  slotNodes.forEach((node) => {
+    const slotName = node.dataset.spwSlot;
+    if (!slotName) return;
+    declaredSlots.add(slotName);
+    const hasContent = Boolean(node.textContent?.trim() || node.querySelector?.(':scope > *'));
+    if (hasContent) filledSlots.add(slotName);
+  });
+
+  const declaredCount = declaredSlots.size;
+  const filledCount = filledSlots.size;
+  const ratio = declaredCount ? filledCount / declaredCount : 0;
+
+  if (profile.kind === 'hook') return 'balanced';
+  if (!declaredCount) return profile.kind === 'card' || profile.kind === 'panel' ? 'compact' : 'sparse';
+  if (ratio <= 0.34) return 'sparse';
+  if (ratio <= 0.8) return 'balanced';
+  return 'full';
 }
 
 export function inferSpaceMotion() {
@@ -186,6 +218,7 @@ function buildRegionGenome(profile = {}) {
     ['weight', profile.attentionalWeight],
     ['boundary', profile.gradientBoundary],
     ['stability', profile.compositionStability],
+    ['occupancy', profile.packOccupancy],
   ]);
 }
 
@@ -215,6 +248,9 @@ export function buildRegionProfile(el, index = 0, options = {}) {
     attentionalWeight: '',
     gradientBoundary: '',
     compositionStability: '',
+    compositionStabilitySource: '',
+    resolvedCompositionStability: '',
+    packOccupancy: '',
     genome: '',
     features: readSet(
       ...parseFeatureList(el.dataset.spwFeatures).values?.() || [],
@@ -229,7 +265,12 @@ export function buildRegionProfile(el, index = 0, options = {}) {
   profile.density = inferRegionDensity(profile);
   profile.attentionalWeight = inferRegionAttentionalWeight(el, profile);
   profile.gradientBoundary = inferRegionGradientBoundary(el, profile);
-  profile.compositionStability = inferRegionCompositionStability(el, profile);
+  profile.resolvedCompositionStability = inferResolvedRegionCompositionStability(el, profile);
+  profile.compositionStability = el.dataset.spwCompositionStability
+    ? el.dataset.spwCompositionStability
+    : profile.resolvedCompositionStability;
+  profile.compositionStabilitySource = el.dataset.spwCompositionStability ? 'authored' : '';
+  profile.packOccupancy = inferRegionPackOccupancy(el, profile);
   profile.genome = buildRegionGenome(profile);
 
   return profile;
@@ -246,7 +287,13 @@ export function applyRegionProfile(el, profile) {
   writeDatasetValue(el, 'spwDensity', profile.density);
   writeDatasetValueIfMissing(el, 'spwAttentionalWeight', profile.attentionalWeight);
   writeDatasetValueIfMissing(el, 'spwGradientBoundary', profile.gradientBoundary);
-  writeDatasetValue(el, 'spwCompositionStability', profile.compositionStability);
+  if (profile.compositionStabilitySource === 'authored') {
+    writeDatasetValueIfMissing(el, 'spwCompositionStability', profile.compositionStability);
+    writeDatasetValueIfMissing(el, 'spwCompositionStabilitySource', 'authored');
+  }
+  writeDatasetValue(el, 'spwResolvedCompositionStability', profile.resolvedCompositionStability);
+  writeDatasetValue(el, 'spwResolvedCompositionStabilitySource', 'region-profiler');
+  writeDatasetValue(el, 'spwPackOccupancy', profile.packOccupancy);
   writeDatasetValue(el, 'spwRegionKey', profile.key);
   writeDatasetValue(el, 'spwRegionGenome', profile.genome);
   writeStyleValue(el, '--region-index', String(profile.index));
@@ -295,11 +342,15 @@ export function syncPageHarmony(ctx, html = document.documentElement) {
   const tempos = new Set(profiles.map((profile) => profile.tempo));
   const gradientBoundaries = new Set(profiles.map((profile) => profile.gradientBoundary));
   const stabilities = new Set(profiles.map((profile) => profile.compositionStability));
+  const resolvedStabilities = new Set(profiles.map((profile) => profile.resolvedCompositionStability));
+  const occupancies = new Set(profiles.map((profile) => profile.packOccupancy));
 
   writeDatasetValue(html, 'spwHarmonyField', harmonies);
   writeDatasetValue(html, 'spwTempoField', tempos);
   writeDatasetValue(html, 'spwGradientBoundaryField', gradientBoundaries);
   writeDatasetValue(html, 'spwCompositionStabilityField', stabilities);
+  writeDatasetValue(html, 'spwResolvedCompositionStabilityField', resolvedStabilities);
+  writeDatasetValue(html, 'spwPackOccupancyField', occupancies);
   writeDatasetValue(html, 'spwSpaceMotion', inferSpaceMotion());
   writeStyleValue(html, '--region-count', String(profiles.length));
   syncPageCascadeTiming(ctx, html);

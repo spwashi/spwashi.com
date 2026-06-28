@@ -75,6 +75,7 @@ fixity = "stable"
     `If a string contains repeated clauses or more than one job, promote it to structure.`
     `If a value reads like a menu, registry, or route list, make it a list or set instead of prose.`
     `If a value reads like a contract or lifecycle, make it a facet or statement.`
+    `If a string mixes a primary role with a modifier or occupancy hint, split the primary role from the modifier field instead of packing both into one token string.`
     `If the value needs both human copy and machine selection, separate the roles into different fields.`
     `If a structured value must reach HTML, CSS, or JSON-LD, serialize the projection and keep the source shape explicit.`
   ][reg=set]
@@ -103,6 +104,13 @@ fixity = "stable"
     `inspect`
     `compare`
     `build`
+  ][reg=set]
+  structured_route_values = #[
+    `data-spw-region-purpose`
+    `data-spw-pack`
+    `data-spw-pack-occupancy`
+    `data-spw-page-modes`
+    `data-spw-related-routes`
   ][reg=set]
   note = "These are the kinds of values that should stop hiding inside a sentence once they become selectable, switchable, or reviewable."
 }

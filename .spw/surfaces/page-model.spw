@@ -140,20 +140,25 @@ entry_stabilization_contract: .{
   `[data-spw-slot]`,
   `[data-spw-attentional-weight]`,
   `[data-spw-gradient-boundary]`,
-  `[data-spw-composition-stability]`
+  `[data-spw-composition-stability]`,
+  `[data-spw-composition-stability-source="authored"]`,
+  `[data-spw-pack]`
  ][reg=set]
  slot_values = #[header, meta, body, figure, actions, footer][reg=set]
+ region_purpose_values = #[public-spine, section-hub, route-sorter][reg=set]
  derived_bottom_up = #[
   `data-spw-region-genome`,
   `data-spw-component-id`,
   `data-spw-component-address`,
   `data-spw-semantic-owner`,
   `data-spw-resolved-*`,
-  `data-spw-composition-stability`
+  `data-spw-resolved-composition-stability`,
+  `data-spw-pack-occupancy`
  ][reg=set]
- invariant = `Authored entry heroes should declare the page's primary feature and boundary posture; runtime may infer stability for the long tail, but it should not need to invent the public spine.`
- css_projection = `Shared surface CSS may style attentional weight, gradient boundary, and composition stability because those axes describe field posture rather than route-local decoration.`
- js_projection = `Region profiling and component semantics should derive missing stability values from page identity, feature names, slot anatomy, and route anchors.`
+ invariant = `Authored entry heroes and section hubs should declare the page's primary feature, region purpose, and boundary posture; runtime may infer resolved stability and occupancy for the long tail, but it should not need to invent the public spine.`
+ css_projection = `Shared surface CSS may style attentional weight, gradient boundary, and authored composition stability on public-spine regions, section hubs, and entry-suffixed features because these axes describe field posture rather than route-local decoration.`
+ js_projection = `Region profiling and component semantics should derive resolved stability and pack occupancy from page identity, feature names, slot anatomy, region purpose, and route anchors.`
+ pack_occupancy = `data-spw-pack-occupancy='sparse|balanced|full'. Slot-fill summary used to decide whether a region should reserve compact, balanced, or full packing.`
 }[reg=facet]
 
 floating_chrome_field_contract: .{

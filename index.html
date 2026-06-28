@@ -135,6 +135,8 @@
     <section
         class="site-frame site-hero site-hero--split-figure"
         id="home-frame"
+        data-spw-region-purpose="public-spine"
+        data-spw-pack="balanced"
         aria-labelledby="home-title"
         aria-describedby="home-frame-note"
         data-spw-frame="hero"
@@ -143,6 +145,7 @@
         data-spw-attentional-weight="1.35"
         data-spw-gradient-boundary="hard"
         data-spw-composition-stability="anchored"
+        data-spw-composition-stability-source="authored"
         data-spw-feature="home-kernel-entry"
         data-spw-page-zone="funnel"
         data-spw-kind="frame"
@@ -447,6 +450,8 @@
     <section
         class="site-frame"
         id="choose-your-entrance"
+        data-spw-region-purpose="route-sorter"
+        data-spw-pack="compact"
         aria-labelledby="choose-your-entrance-title"
         data-spw-region="wide"
         data-spw-region-role="threshold-sorter"
@@ -482,7 +487,7 @@
             Name the pressure you are under right now. Pick one door — not your whole identity.
         </p>
 
-        <ul class="spw-role-hooks entrance-role-hooks" role="list" aria-label="Home page entry roles" data-spw-vocab="learning collaboration" data-spw-box-model="role-hook-grid" data-spw-composition-flow="grid" data-spw-pack="fill">
+        <ul class="spw-role-hooks entrance-role-hooks" role="list" aria-label="Home page entry roles" data-spw-vocab="learning collaboration" data-spw-box-model="role-hook-grid" data-spw-composition-flow="grid" data-spw-pack="compact">
             <li tabindex="0">
                 <strong>For developers</strong>
                 <p>Route structure, reusable components, and prompts you can extract later.</p>
@@ -664,12 +669,12 @@
             A useful homepage is mise en place for attention: tools visible, surface clear enough to begin, next move findable without memorizing the whole pantry. Name the ingredients well and the same page becomes a story seed.
         </p>
 
-        <aside class="spw-route-bridge" data-spw-transition-surface="bridge" aria-label="Home page route bridge" data-spw-box-model="route-bridge" data-spw-composition-flow="stack">
+        <aside class="spw-route-bridge" data-spw-region-purpose="route-sorter" data-spw-transition-surface="bridge" aria-label="Home page route bridge" data-spw-box-model="route-bridge" data-spw-composition-flow="stack">
             <header>
                 <h3>Follow the next useful relation</h3>
                 <p>This copy is written for internal transit: each link says why the next surface exists before asking for the click.</p>
             </header>
-            <ul class="spw-route-bridge__links" data-spw-box-model="route-choice-field" data-spw-composition-flow="grid" data-spw-pack="fill dense">
+            <ul class="spw-route-bridge__links" data-spw-box-model="route-choice-field" data-spw-composition-flow="grid" data-spw-pack="compact dense">
                 <li><a href="/topics/software/" data-spw-operator="route"><strong>Software</strong><span>Projection runtimes, parser contracts, engineering research, and reusable component grammar.</span></a></li>
                 <li><a href="/topics/pedagogy/" data-spw-operator="route"><strong>Learning science</strong><span>Scaffolds, retrieval, transfer, and public artifacts as learning surfaces.</span></a></li>
                 <li><a href="/recipes/" data-spw-operator="route"><strong>Recipes</strong><span>Soup systems, wings, sauces, ingredient clusters, vegetable relationships, timing, texture, and shared company.</span></a></li>
@@ -677,7 +682,7 @@
             </ul>
         </aside>
 
-        <aside class="spw-visual-link-board" aria-labelledby="home-visual-routes-title" data-spw-feature="visual-route-bridge" data-spw-box-model="visual-link-board" data-spw-composition-flow="grid">
+        <aside class="spw-visual-link-board" aria-labelledby="home-visual-routes-title" data-spw-feature="visual-route-bridge" data-spw-region-purpose="visual-board" data-spw-box-model="visual-link-board" data-spw-composition-flow="grid">
             <header class="spw-visual-link-board__header">
                 <h3 id="home-visual-routes-title">Route by image, not only by label.</h3>
                 <p>These links pair a destination with text, color, and a concrete image cue so a reader or visual model can infer the route’s pressure before opening it.</p>
@@ -730,7 +735,7 @@
             </div>
         </aside>
 
-        <div class="frame-grid frame-grid--dense" data-spw-box-model="entry-card-grid" data-spw-composition-flow="grid" data-spw-pack="fill dense">
+        <div class="frame-grid frame-grid--dense" data-spw-box-model="entry-card-grid" data-spw-composition-flow="grid" data-spw-pack="compact dense">
                 <article class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-content-variant="entry" data-spw-input="commission referral direct ask" data-spw-operation="turn need into offer path" data-spw-return="services proof card contact path" data-spw-model-policy="summarize-only">
                     <h3>I have a concrete request.</h3>
                     <p>Open Services, Cards, Now, or Contact when the work needs to become an offer, a referral, a UX-flow test, or a direct ask. This path helps when the page should name the next move plainly instead of asking the reader to translate the whole atlas first.</p>
@@ -806,11 +811,14 @@
     <section
         class="site-frame"
         id="living-concepts"
+        data-spw-region-purpose="section-hub"
         aria-labelledby="living-concepts-title"
         data-spw-region="wide"
         data-spw-region-role="atlas"
         data-spw-attentional-weight="1"
         data-spw-page-zone="funnel"
+        data-spw-composition-stability="stable"
+        data-spw-composition-stability-source="authored"
         data-spw-kind="frame"
         data-spw-role="concept-atlas"
         data-spw-context="orientation"
@@ -953,11 +961,14 @@
     <section
         class="site-frame"
         id="learning-use-pattern"
+        data-spw-region-purpose="section-hub"
         aria-labelledby="learning-use-pattern-title"
         data-spw-region="read"
         data-spw-region-role="education-gateway"
         data-spw-attentional-weight="1.05"
         data-spw-page-zone="funnel"
+        data-spw-composition-stability="stable"
+        data-spw-composition-stability-source="authored"
         data-spw-kind="frame"
         data-spw-role="education-gateway"
         data-spw-context="education"
@@ -1279,12 +1290,12 @@
                 </div>
             </details>
 
-            <aside class="spw-route-bridge" aria-label="Integration atlas exits" data-spw-transition-surface="bridge">
+            <aside class="spw-route-bridge" data-spw-region-purpose="route-sorter" aria-label="Integration atlas exits" data-spw-transition-surface="bridge">
                 <header>
                     <h3>Pick a loop by material, not mood</h3>
                     <p>Food, line, state, character, and ledger each have a honest workshop on the site already.</p>
                 </header>
-                <ul class="spw-route-bridge__links">
+                <ul class="spw-route-bridge__links" data-spw-pack="compact dense">
                     <li><a href="/recipes/#cuisine-taxonomy-title"><strong>Recipe taxonomy</strong><span>Ingredient clusters, technique verbs, service scenes, and trade routes as shared vocabulary.</span></a></li>
                     <li><a href="/design/experiments/svg/"><strong>SVG experiments</strong><span>Diagram grammar, character props, and illustrator handoff without a framework.</span></a></li>
                     <li><a href="/design/experiments/css/"><strong>CSS experiments</strong><span>Contour, charge, gesture, and layout behaviors you can screenshot and reuse.</span></a></li>
@@ -1901,12 +1912,15 @@
     <section
         class="site-frame"
         id="promo-wonder-cycle"
+        data-spw-region-purpose="section-hub"
         aria-labelledby="promo-wonder-cycle-title"
         data-promo-wonder-cycle
         data-spw-region="wide"
         data-spw-region-role="promo-cycle"
         data-spw-attentional-weight="0.95"
         data-spw-page-zone="funnel"
+        data-spw-composition-stability="stable"
+        data-spw-composition-stability-source="authored"
         data-spw-feature="promo-wonder-cycle"
         data-spw-kind="frame"
         data-spw-role="promo-register"
@@ -1979,11 +1993,14 @@
     <section
         class="site-frame"
         id="reading-layers"
+        data-spw-region-purpose="section-hub"
         aria-labelledby="reading-layers-title"
         data-spw-region="read"
         data-spw-region-role="reading-layers"
         data-spw-attentional-weight="1.05"
         data-spw-page-zone="funnel"
+        data-spw-composition-stability="stable"
+        data-spw-composition-stability-source="authored"
         data-spw-kind="frame"
         data-spw-role="reference"
         data-spw-context="analysis"
