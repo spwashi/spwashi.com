@@ -76,6 +76,7 @@ High-signal active examples:
 - `site-color-tuning/PLAN.md`
 - `overlay-layer-ownership/FIX.md`
 - `menu-containment-navigation/FIX.md`
+- `space-menu-arcs-electrical/PLAN.md` — floating UI hierarchy, route menu field projection, arc lifecycle microfeedback, and opt-in circuit anatomy vocabulary.
 - `mobile-image-effects/FIX.md`
 - `runtime-route-css-regressions/FIX.md`
 - `runtime-bootstrap-performance/PLAN.md` — reduce serial loading, immediate layer width, observer cost, and warm-return friction while preserving staged policy-driven loading, cache-stratum ownership, and full observability.

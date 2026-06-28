@@ -34,9 +34,22 @@
 - Patch nearby route panel CSS as an out-of-flow popover on desktop; let it remain contained inside the sheet/mobile route field until a durable portal is warranted.
 - Cache the last real nav content measurement in `shell-disclosure.js` and use hysteresis for menu mode and pressure so a single measurement jitter does not rewrite the whole shell topology.
 
+## Landed Status - 2026-06-28
+
+- Route clicks now let default anchor navigation commit before menu cleanup.
+- Hidden toggle nav measurements reuse the last real content width and ignore small jitter.
+- Mobile discovery notices reserve bottom chrome clearance and only show one notice at a time.
+- Floating chrome measurement preserves declared bottom insets and ignores empty/hidden shells.
+- Route bridge cards now opt into tighter shared containment and wrapping below tablet widths.
+- Menu glyph state and toggle copy now carry the primary hierarchy: `Routes` closed, `Map` open.
+- Header fallback now keeps nav in an explicit grid track before disclosure hydration, while non-shell-trace diagnostic rows collapse out of the primary header.
+- Inline route discovery suppresses the secondary action lane and keeps the nearby route trigger as a compact dropdown instead of a vertical sliver.
+- Mobile open route navigation projects below the stable header as a bounded overlay for drawer-field topology instead of adding a tall reflow row.
+- The topics register brace now reads as a material-edge overlay with short corner cues, and the register chips have a dark-surface contrast override.
+
 ## Deferred Follow-Ups
 
-- Test the shell menu in the in-app browser across Home, Settings, Research, and Recipes.
+- Test the shell menu in the in-app browser across Home, Settings, Research, and Recipes after the `/topics/` model settles.
 - Consider a visible menu topology label or settings toggle only after the stable default behavior is confirmed.
 - Portal the nearby-route panel through the existing floating chrome annotation contract if the CSS popover still collides with nav overflow on real pages.
 - Defer pinning/lock behavior until `Routes`, `Nearby`, `Tune`, and `Inspect` are visually and structurally distinct.

@@ -359,3 +359,93 @@
   --component-arrival-offset: 0px;
   --component-arrival-opacity: 0.98;
 }
+
+/* ==========================================================================
+   10. Arc lifecycle keyframes
+   ========================================================================== */
+
+:root {
+  --spw-arc-color: var(--active-op-color, var(--semantic-accent, #008080));
+}
+
+@keyframes spw-arc-prime {
+  0% {
+    box-shadow: var(--spw-local-shadow, none);
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    box-shadow:
+      var(--spw-local-shadow, none),
+      0 0 0 2px color-mix(in srgb, var(--spw-arc-color) 22%, transparent),
+      0 0.45rem 1.2rem color-mix(in srgb, var(--spw-arc-color) 10%, transparent);
+    transform: translateY(-1px) scale(1.006);
+  }
+}
+
+@keyframes spw-arc-land {
+  0% {
+    box-shadow:
+      var(--spw-local-shadow, none),
+      0 0 0 0 color-mix(in srgb, var(--spw-arc-color) 44%, transparent);
+    transform: scale(0.992);
+  }
+  72% {
+    box-shadow:
+      var(--spw-local-shadow, none),
+      0 0 0 7px color-mix(in srgb, var(--spw-arc-color) 14%, transparent);
+  }
+  100% {
+    box-shadow:
+      var(--spw-local-shadow, none),
+      0 0 0 10px transparent;
+    transform: scale(1);
+  }
+}
+
+@keyframes spw-arc-residue {
+  0% {
+    box-shadow:
+      var(--spw-local-shadow, none),
+      inset 0 0 0 1px color-mix(in srgb, var(--spw-arc-color) 24%, transparent);
+  }
+  100% {
+    box-shadow:
+      var(--spw-local-shadow, none),
+      inset 0 0 0 1px color-mix(in srgb, var(--spw-arc-color) 6%, transparent);
+  }
+}
+
+:where(
+  [data-spw-arc],
+  .operator-chip,
+  .frame-sigil,
+  .spw-nav-toggle,
+  .site-header nav a,
+  body > header nav a,
+  a.frame-card,
+  button.frame-card,
+  .frame-card > a:first-child
+) {
+  --spw-arc-color: var(--active-op-color, var(--semantic-accent, #008080));
+}
+
+:where([data-spw-interaction-arc="prime"]) {
+  animation: spw-arc-prime 180ms var(--ease-settle, ease) both;
+}
+
+:where([data-spw-interaction-arc="land"]) {
+  animation: spw-arc-land 260ms var(--ease-settle, ease) both;
+}
+
+:where([data-spw-interaction-arc="residue"]) {
+  animation: spw-arc-residue 800ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where([data-spw-interaction-arc]) {
+    animation: none;
+    box-shadow:
+      var(--spw-local-shadow, none),
+      0 0 0 2px color-mix(in srgb, var(--spw-arc-color) 22%, transparent);
+  }
+}

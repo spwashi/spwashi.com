@@ -14,6 +14,7 @@
 @design_whimsy: ~"./design-whimsy.spw"
 @cognitive_navigation: ~"./cognitive-navigation.spw"
 @electromagnetic_containers: ~"./electromagnetic-containers.spw"
+@circuit_components: ~"./circuit-components.spw"
 @precipitates_projections: ~"./precipitates-and-projections.spw"
 @semantic_braces: ~"./semantic-braces.spw"
 @asset_management: ~"./asset-management.spw"
@@ -75,6 +76,7 @@ dispatch: .{
  codebase_perusal = @codebase_perusal
  data_spw_attribute_governance = @data_spw_attribute_governance
  containers = @electromagnetic_containers
+ circuit_components = @circuit_components
  versioning = @precipitates_projections
  semantic_braces = @semantic_braces
  selection = @workbench_selection

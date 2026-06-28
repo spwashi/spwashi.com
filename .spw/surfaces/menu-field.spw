@@ -1,0 +1,10 @@
+# Menu Field Surface Convention
+
+## Metaphor
+The navigation menu is represented as a "field disclosure" surface rather than a generic utility overlay.
+
+## States
+- **grounded**: Resting state showing current route context.
+- **oriented**: Open state revealing primary pathways.
+- **exploring**: Interacting with route links.
+- **waypointed**: Active selection and transition.

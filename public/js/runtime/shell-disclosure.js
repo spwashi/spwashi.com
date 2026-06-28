@@ -116,6 +116,7 @@ const MENU_DATASET_KEYS = Object.freeze([
   'spwMenuChanged',
   'spwMenuClarity',
   'spwMenu',
+  'spwMenuOverlay',
   'spwMenuPhase',
   'spwMenuSource',
   'spwMenuViewport',
@@ -308,11 +309,20 @@ function readNavContentWidth(nav, navList) {
 }
 
 function computeNavRatio(header, nav, navList, state) {
-  const navWidth = nav.clientWidth || Math.max(header.clientWidth * 0.58, 1);
+  const navStyle = window.getComputedStyle(nav);
+  const canMeasure = !nav.hidden && navStyle.display !== 'none' && navStyle.visibility !== 'hidden';
+  const cachedNavWidth = state?.navMeasure?.navWidth || 0;
+  const navWidth = canMeasure
+    ? nav.clientWidth || cachedNavWidth || Math.max(header.clientWidth * 0.58, 1)
+    : cachedNavWidth || Math.max(header.clientWidth * 0.58, 1);
   if (!navWidth) return 1;
 
-  const measuredContentWidth = readNavContentWidth(nav, navList);
+  const measuredRawContentWidth = canMeasure ? readNavContentWidth(nav, navList) : 0;
   const cachedContentWidth = state?.navMeasure?.contentWidth || 0;
+  const measuredContentWidth = measuredRawContentWidth && cachedContentWidth
+    && Math.abs(measuredRawContentWidth - cachedContentWidth) < 12
+    ? cachedContentWidth
+    : measuredRawContentWidth;
   const contentWidth = measuredContentWidth || cachedContentWidth;
 
   if (!contentWidth) {
@@ -571,6 +581,7 @@ function buildMenuSnapshot(header, nav, navList, state, open, source) {
   return {
     mode: state.mode,
     state: open ? 'open' : 'closed',
+    overlay: open && state.mode === MODES.TOGGLE ? 'active' : 'idle',
     phase,
     source,
     viewportTier: tier,
@@ -599,6 +610,7 @@ function writeMenuDatasets(el, snapshot, role) {
     spwMenuChanged: snapshot.changedAxes.join(' ') || 'none',
     spwMenuClarity: snapshot.clarity,
     spwMenu: snapshot.state,
+    spwMenuOverlay: snapshot.overlay,
     spwMenuPhase: snapshot.phase,
     spwMenuSource: snapshot.source,
     spwMenuViewport: snapshot.viewportTier,
@@ -1502,7 +1514,9 @@ function syncToggleCopy(toggle, snapshot) {
   const metaNode = toggle.querySelector('.spw-nav-toggle-meta');
 
   if (labelNode) {
-    labelNode.textContent = 'Routes';
+    labelNode.textContent = snapshot.mode !== MODES.INLINE && snapshot.state === 'open'
+      ? 'Map'
+      : 'Routes';
   }
 
   if (stateNode) {
@@ -1566,7 +1580,6 @@ function applyMenuState(header, nav, navList, toggle, state, open, source = 'sys
 
   nav.hidden = state.mode === MODES.TOGGLE ? !open : false;
   toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-  toggle.setAttribute('aria-pressed', open ? 'true' : 'false');
 
   if (open && state.mode === MODES.TOGGLE) {
     window.requestAnimationFrame(() => {
@@ -1671,6 +1684,7 @@ export function initSpwShellDisclosure(options = {}) {
   state.mode = resolveMenuMode(header, nav, navList, state);
   writeDatasetValues(header, {
     spwMenu: state.mode === MODES.TOGGLE ? 'closed' : 'open',
+    spwMenuOverlay: 'idle',
     spwMenuMode: state.mode,
     spwMenuPhase: PHASES.RESTING,
     spwMenuSource: 'init',
@@ -1841,19 +1855,14 @@ export function initSpwShellDisclosure(options = {}) {
     const href = link.getAttribute('href') || link.href || '';
     if (!href) return;
 
-    event.preventDefault();
-    event.stopPropagation();
-
     document.querySelectorAll('.spw-route-menu[open]').forEach((menu) => {
       menu.open = false;
       syncRouteMenuMode(menu);
     });
 
-    closeToggleMenu('route');
-
-    window.requestAnimationFrame(() => {
-      window.location.assign(href);
-    });
+    window.setTimeout(() => {
+      closeToggleMenu('route');
+    }, 0);
   };
 
   const handleDocumentClick = (event) => {

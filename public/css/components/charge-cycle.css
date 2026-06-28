@@ -6,6 +6,7 @@
 
 :root {
   --spw-charge-field: 0;
+  --spw-arc-color: var(--active-op-color, var(--semantic-accent, #008080));
 }
 
 /* Ambient field wash — stronger in workshop, subtle in field */
@@ -63,13 +64,13 @@
 @keyframes spw-discharge-echo {
   0% {
     box-shadow:
-      0 0 0 0 color-mix(in srgb, var(--active-op-color, #008080) 42%, transparent),
-      inset 3px 0 0 color-mix(in srgb, var(--active-op-color, #008080) 55%, transparent);
+      0 0 0 0 color-mix(in srgb, var(--spw-arc-color, var(--active-op-color, #008080)) 42%, transparent),
+      inset 3px 0 0 color-mix(in srgb, var(--spw-arc-color, var(--active-op-color, #008080)) 55%, transparent);
   }
   100% {
     box-shadow:
       0 0 0 12px transparent,
-      inset 3px 0 0 color-mix(in srgb, var(--active-op-color, #008080) 18%, transparent);
+      inset 3px 0 0 color-mix(in srgb, var(--spw-arc-color, var(--active-op-color, #008080)) 18%, transparent);
   }
 }
 

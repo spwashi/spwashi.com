@@ -52,6 +52,15 @@ const PAGE_ARRIVAL_STEP_SEQUENCE = Object.freeze([
 ]);
 
 const FLOATING_CHROME_SELECTOR = '.skip-link, .spw-section-handle, .spw-section-handle-shell';
+const BOTTOM_FLOATING_CHROME_SELECTOR = [
+  '[data-spw-floating-chrome="true"][data-spw-chrome-role="console"]',
+  '[data-spw-floating-chrome="true"][data-spw-chrome-role="parallel-navigator"]',
+  '[data-spw-floating-chrome="true"][data-spw-chrome-role="section-handle"]',
+  '[data-spw-floating-chrome="true"][data-spw-chrome-role="section-handle-shell"]',
+  '[data-spw-floating-chrome="true"][data-spw-chrome-role="state-inspector"]',
+  '[data-spw-floating-chrome="true"][data-spw-chrome-role="surface-map"]',
+  '[data-spw-floating-chrome="true"][data-spw-chrome-role="discovery-toast-stack"]',
+].join(',');
 
 const parseCssTimeMs = (value, fallback = 0) => {
   const raw = String(value || '').trim();
@@ -100,6 +109,118 @@ export function annotateFloatingChrome(root = document) {
       stylingAxis: 'page-chrome',
     });
   });
+}
+
+function isVisibleBottomFloatingChrome(element) {
+  if (!(element instanceof HTMLElement)) return false;
+  if (element.hidden || element.getAttribute('aria-hidden') === 'true') return false;
+  if (element.dataset.spwHandleState === 'hidden' || element.dataset.spwHandleShellState === 'hidden') return false;
+  const style = getComputedStyle(element);
+  if (style.display === 'none' || style.visibility === 'hidden') return false;
+  if (Number.parseFloat(style.opacity) <= 0.01) return false;
+  const rect = element.getBoundingClientRect();
+  return rect.width > 0 && rect.height > 0;
+}
+
+function measureFixedViewportCorrection(root = document) {
+  const html = document.documentElement;
+  const viewportHeight = window.visualViewport?.height || window.innerHeight || 0;
+  if (!viewportHeight) return 0;
+  const activeCorrectionY = Number.parseFloat(
+    getComputedStyle(html).getPropertyValue('--spw-fixed-viewport-correction-y')
+  ) || 0;
+  return Array.from(root.querySelectorAll?.(BOTTOM_FLOATING_CHROME_SELECTOR) || [])
+    .reduce((correction, element) => {
+      if (!isVisibleBottomFloatingChrome(element)) return correction;
+      const style = getComputedStyle(element);
+      if (style.position !== 'fixed') return correction;
+      const rect = element.getBoundingClientRect();
+      const bottomInset = Math.max(
+        0,
+        Number.parseFloat(style.bottom) || Number.parseFloat(style.insetBlockEnd) || 0,
+      );
+      const uncorrectedTop = rect.top - activeCorrectionY;
+      const uncorrectedBottom = rect.bottom - activeCorrectionY;
+      if (uncorrectedTop > viewportHeight + 24) {
+        return Math.min(correction, viewportHeight - bottomInset - uncorrectedBottom);
+      }
+      if (uncorrectedBottom < -24) {
+        return Math.max(correction, -uncorrectedTop);
+      }
+      return correction;
+    }, 0);
+}
+
+function updateFixedViewportCorrection() {
+  const html = document.documentElement;
+  if (!html) return;
+
+  const correctionY = measureFixedViewportCorrection(document);
+  if (correctionY === 0) {
+    html.style.removeProperty('--spw-fixed-viewport-correction-y');
+    delete html.dataset.spwFixedViewportCorrection;
+    return;
+  }
+
+  html.style.setProperty('--spw-fixed-viewport-correction-y', `${Math.round(correctionY)}px`);
+  html.dataset.spwFixedViewportCorrection = 'on';
+}
+
+function initFixedViewportCorrection() {
+  let frame = 0;
+  let pollTimer = 0;
+  let pollCount = 0;
+  let observer = null;
+  const schedule = () => {
+    if (frame) return;
+    frame = window.requestAnimationFrame(() => {
+      frame = 0;
+      updateFixedViewportCorrection();
+    });
+  };
+  const pollMountedChrome = () => {
+    schedule();
+    pollCount += 1;
+    if (pollCount < 10) {
+      pollTimer = window.setTimeout(pollMountedChrome, 180);
+    }
+  };
+
+  schedule();
+  pollMountedChrome();
+  window.addEventListener('scroll', schedule, { passive: true });
+  window.addEventListener('resize', schedule, { passive: true });
+  window.visualViewport?.addEventListener?.('resize', schedule, { passive: true });
+  window.visualViewport?.addEventListener?.('scroll', schedule, { passive: true });
+  if (typeof MutationObserver === 'function') {
+    observer = new MutationObserver(schedule);
+    observer.observe(document.documentElement, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: [
+        'class',
+        'data-spw-floating-chrome',
+        'data-spw-chrome-role',
+        'data-spw-handle-state',
+        'data-spw-state-inspector',
+      ],
+    });
+  }
+
+  return () => {
+    if (frame) window.cancelAnimationFrame(frame);
+    if (pollTimer) window.clearTimeout(pollTimer);
+    observer?.disconnect();
+    window.removeEventListener('scroll', schedule);
+    window.removeEventListener('resize', schedule);
+    window.visualViewport?.removeEventListener?.('resize', schedule);
+    window.visualViewport?.removeEventListener?.('scroll', schedule);
+    document.documentElement?.style?.removeProperty('--spw-fixed-viewport-correction-y');
+    if (document.documentElement?.dataset) {
+      delete document.documentElement.dataset.spwFixedViewportCorrection;
+    }
+  };
 }
 
 export function setPageState(state, root = document.documentElement) {
@@ -263,6 +384,7 @@ export function initPageAttentionLifecycle(ctx) {
   };
 
   annotateFloatingChrome(document);
+  const cleanupFixedViewportCorrection = initFixedViewportCorrection();
 
   document.addEventListener('visibilitychange', handleVisibilityChange);
   window.addEventListener('pageshow', handlePageShow);
@@ -277,6 +399,7 @@ export function initPageAttentionLifecycle(ctx) {
 
   return () => {
     clearPageAttentionSequence(ctx);
+    cleanupFixedViewportCorrection();
     document.removeEventListener('visibilitychange', handleVisibilityChange);
     window.removeEventListener('pageshow', handlePageShow);
     window.removeEventListener('pagehide', handlePageHide);

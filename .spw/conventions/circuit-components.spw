@@ -1,0 +1,16 @@
+# Circuit Components Convention
+
+## Metaphor
+Modules and styles mapped as an electrical circuit to specify their systemic roles and how they influence the attention field.
+
+## Component Roles
+- **resistor**: Attenuates and slows down propagation (e.g. `haptics.js`).
+- **capacitor**: Stores state or charge, releasing it on trigger (e.g. `wonder-memory.js`).
+- **inductor**: Builds up resonance momentum over time (e.g. `attention-architecture.js`).
+- **transformer**: Transforms signals from one context into another (e.g. `developmental-climate.js`, `canvas-accents.js`).
+
+## Physical Mapping
+- **Voltage**: Map to `--charge` state.
+- **Current**: Map to `--spw-resonance`.
+- **Inductance**: Map to `--spw-attention`.
+- **Capacitance**: Map to `--spw-field-balance`.

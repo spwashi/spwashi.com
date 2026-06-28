@@ -939,19 +939,19 @@
      textural backgrounds, and the Spectral Workshop on /design/palettes/.
      These are the single source of truth; the palettes page and catalog
      now reference them instead of magic strings. */
-  --pigment-teal-mineral: hsl(182 58% 30%);
-  --pigment-teal-electric: hsl(186 88% 38%);
-  --pigment-amber-resin: hsl(38 82% 50%);
-  --pigment-copper-oxide: hsl(22 58% 40%);
-  --pigment-violet-ink: hsl(268 48% 36%); /* tiny sat+depth bump for better math resonance distinction and swatch pop (low-attachment original) */
+  --pigment-teal-mineral: hsl(182 62% 28%);
+  --pigment-teal-electric: hsl(184 92% 35%);
+  --pigment-amber-resin: hsl(36 86% 48%);
+  --pigment-copper-oxide: hsl(22 62% 38%);
+  --pigment-violet-ink: hsl(268 56% 34%); /* tiny sat+depth bump for better math resonance distinction and swatch pop (low-attachment original) */
   /* Balanced for motif/lighting composability: probe color in curriculum or lab motifs under different theme packs. */
-  --pigment-rose-dust: hsl(342 44% 46%);
-  --pigment-clay-red: hsl(10 52% 42%);
-  --pigment-brass-warm: hsl(40 58% 45%); /* slight warm/craft lean for better distinction in craft-led mode (low-attachment original) */
+  --pigment-rose-dust: hsl(342 48% 44%);
+  --pigment-clay-red: hsl(10 56% 40%);
+  --pigment-brass-warm: hsl(38 64% 42%); /* slight warm/craft lean for better distinction in craft-led mode (low-attachment original) */
   --pigment-paper-cream: hsl(42 44% 94%);
   --pigment-charcoal-fiber: hsl(205 16% 12%);
-  --pigment-moss-soft: hsl(102 26% 34%);
-  --pigment-lapis-soft: hsl(214 58% 42%);
+  --pigment-moss-soft: hsl(104 32% 32%);
+  --pigment-lapis-soft: hsl(216 64% 39%);
 
   /* Context-aware pigment modulation tokens.
      These allow artistically selected palettes/theme packs to compose with

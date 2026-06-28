@@ -192,6 +192,17 @@
   container-type: inline-size;
 }
 
+:where(.frame-card, .operator-chip) {
+  transition:
+    transform 80ms var(--ease-settle, ease),
+    box-shadow var(--component-transition-fast, 120ms ease),
+    border-color var(--component-transition-fast, 120ms ease);
+}
+
+:where(.frame-card, .operator-chip):active {
+  transform: scale(0.984);
+}
+
 /* Region flow utilities: opt in when a region or component needs explicit
    containment behavior rather than inheriting the route default. */
 :where(

@@ -376,3 +376,15 @@ Integrated the user's precipitation model as a lightweight semantic-capacity pra
 - Updated the plan index so `recent-plan-templates/` is recognized as a source for leaflets rather than stale backlog.
 
 Next use: when a conversation, bug, route read, or social production rhythm leaves a useful residue, record a leaflet with evidence, nutrient, organism, byproduct, merge target, and decay rule.
+
+## Mobile Chrome Session Efficiency - 2026-06-24
+
+Captured the operational lessons from the mobile floating chrome / navigation overlay / route blur session so future visual-debug passes do not repeat the same alignment cost.
+
+- Separate runtime state from visual cascade state before editing. In this session, `data-spw-menu="open"` was a stale diagnostic-looking signal, while the real expanded drawer state was `data-spw-menu-overlay="active"` plus `aria-expanded="true"`. The blur still visible after that fix came from section ornament and text glow, not the menu scrim.
+- Rebuild generated CSS before browser verification. The local dev server serves bundled CSS for this route; source CSS edits are not enough evidence until `npm run build:css` refreshes `public/css/bundles/core.css`.
+- Probe computed styles in the browser at the target viewport before broadening selectors. Useful checks: active route, viewport width, header dataset, toggle `aria-expanded`, scrim selector match, pseudo-element `opacity/filter/mix-blend-mode`, and text `text-shadow/opacity/color`.
+- Respect the layer owner. Shell CSS should own navigation structure, overlay state, and drawer affordance; ornament CSS should own last-layer visual corrections when later effects make a correct shell/runtime state still read incorrectly.
+- Prefer state-specific selectors over broad visual suppression. The final path was a generalizable mobile/topics clarity rule plus the stricter menu overlay state, rather than a one-off route hack or blanket blur removal.
+
+Next pass: if this pattern recurs, add a small generated or authored agent fast-start note under `.agents/state/` that records the route URL, CSS bundle freshness, target viewport, and current overlay/ornament computed-style probes.

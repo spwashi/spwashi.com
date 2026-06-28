@@ -32,6 +32,7 @@
 import { bus } from '/public/js/kernel/bus.js';
 import { COMPONENT_KIND_MIRROR_SELECTOR } from '/public/js/kernel/dom-contracts.js';
 import { detectOperator, getOperatorDefinition } from '/public/js/kernel/shared.js';
+import { bindArcLifecycle } from '/public/js/interface/arc-lifecycle.js';
 
 const STORAGE_KEY = 'spw-grounded-registry';
 const SIGIL_COLLECTION_KEY = 'spw-sigil-collection';
@@ -88,6 +89,7 @@ const CHARGE_SELECTORS = [
 
 let initialized = false;
 let restoreObserver = null;
+let cleanupArcLifecycle = null;
 let unsubscribeBus = [];
 const passiveChargeTimers = new WeakMap();
 const holdPrimeTimers = new WeakMap();
@@ -168,6 +170,7 @@ export function initSpwHaptics() {
   annotateCauldronCandidates(document);
   syncSigilCollectionState();
   initRestoreObserver();
+  cleanupArcLifecycle = bindArcLifecycle(document);
 
   document.addEventListener('click', onGroundToggleClick, true);
   document.addEventListener('keydown', onGroundToggleKeydown, true);
@@ -206,6 +209,8 @@ export function initSpwHaptics() {
 
     restoreObserver?.disconnect();
     restoreObserver = null;
+    cleanupArcLifecycle?.();
+    cleanupArcLifecycle = null;
   };
 }
 

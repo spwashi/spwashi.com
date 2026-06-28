@@ -175,6 +175,16 @@ function readInspectLabSurface() {
   }
 }
 
+function readCompactViewport() {
+  try {
+    return typeof window !== 'undefined'
+      && typeof window.matchMedia === 'function'
+      && window.matchMedia('(max-width: 720px)').matches;
+  } catch {
+    return false;
+  }
+}
+
 export function shouldSuppressScheduledNotices() {
   return readInspectLabSurface();
 }
@@ -183,6 +193,8 @@ export function resolveNoticePresentation(presentation, options = {}) {
   const normalized = normalizePresentation(presentation);
   if (normalized !== 'modal') return normalized;
   if (options.forceModal === true) return normalized;
+  const compactViewport = options.compactViewport ?? readCompactViewport();
+  if (compactViewport) return 'toast';
   const readingQuiet = options.readingQuiet ?? readReadingQuietChrome();
   const inspectLab = options.inspectLab ?? readInspectLabSurface();
   if (readingQuiet || inspectLab) return 'toast';

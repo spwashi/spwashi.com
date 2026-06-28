@@ -73,6 +73,8 @@
  >>[2026-04-11 08:46] decide — extract a pure contract module rather than widening the bus or CSS layers
  >>[2026-04-11 08:58] implement — added a shared interaction-loop contract with canonical loop states, image refresh reasons, loop labels, and timing reads from CSS tokens
  >>[2026-04-11 09:01] integrate — rewired state inspector and image metaphysics onto the shared contract; local runtimes still own behavior, but no longer own duplicate strings
+ >>[2026-06-28 12:00] extend — arc lifecycle reads canonical loop states and timing from public/js/runtime/interaction-loop.js while haptics owns event composition
+ >>[2026-06-28 12:04] constrain — arc state is transient visual feedback only; it does not introduce a second interaction-loop state machine
 }
 
 ^["open"]{

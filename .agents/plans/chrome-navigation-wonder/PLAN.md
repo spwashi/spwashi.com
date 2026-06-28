@@ -63,6 +63,12 @@ This is not a new feature request — it is naming and deepening the existing co
 
 ## Recommended Next Actions (prioritized)
 
+### 2026-06-28 menu field execution note
+- Kept the existing shell disclosure state machine as the owner of menu mode, topology, pressure, phase, and dismissal.
+- Added a small arc lifecycle as haptics composition rather than a parallel interaction bus.
+- Documented the projected route-menu field in `.spw/surfaces/menu-field.spw` and the opt-in electrical vocabulary in `.spw/conventions/circuit-components.spw`.
+- New implementation owner plan: `.agents/plans/space-menu-arcs-electrical/PLAN.md`.
+
 ### 2026-05-31 shared polish patch
 - Preserve route label integrity in the primary header by preventing inline nav links from shrinking into each other; let the shell disclosure state choose inline vs toggle based on real overflow.
 - Make viewport tier, pointer mode, hover mode, and device context reliable from the always-mounted shell disclosure layer so intermediate breakpoint CSS can participate on every route.

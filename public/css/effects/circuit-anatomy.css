@@ -1,0 +1,64 @@
+/* ==========================================================================
+   circuit-anatomy.css
+   --------------------------------------------------------------------------
+   Opt-in electrical component anatomy for frames and cards.
+   ========================================================================== */
+
+html[data-spw-features~="circuit-anatomy"] :where([data-spw-circuit-role]) {
+  --spw-circuit-color: var(--active-op-color, var(--semantic-accent, #008080));
+  --spw-circuit-line: color-mix(in srgb, var(--spw-circuit-color) 28%, var(--line, rgba(14, 18, 20, 0.14)) 72%);
+  --spw-circuit-wash: color-mix(in srgb, var(--spw-circuit-color) 7%, transparent);
+  position: relative;
+  isolation: isolate;
+}
+
+html[data-spw-features~="circuit-anatomy"] :where([data-spw-circuit-role])::after {
+  content: "";
+  position: absolute;
+  inset: 0.62rem auto 0.62rem 0;
+  z-index: -1;
+  width: 3px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, transparent, var(--spw-circuit-line), transparent);
+  opacity: 0.68;
+  pointer-events: none;
+}
+
+html[data-spw-features~="circuit-anatomy"] :where([data-spw-circuit-role="resistor"]) {
+  --spw-circuit-color: var(--op-object-color, #a67c00);
+  background-image:
+    linear-gradient(135deg, var(--spw-circuit-wash) 0 10%, transparent 10% 24%),
+    var(--component-background-image, none);
+  background-size: 0.82rem 0.82rem, auto;
+}
+
+html[data-spw-features~="circuit-anatomy"] :where([data-spw-circuit-role="capacitor"]) {
+  --spw-circuit-color: var(--op-ref-color, #355f77);
+  box-shadow:
+    inset 4px 0 0 color-mix(in srgb, var(--spw-circuit-color) 28%, transparent),
+    inset -4px 0 0 color-mix(in srgb, var(--spw-circuit-color) 12%, transparent),
+    var(--spw-local-shadow, none);
+}
+
+html[data-spw-features~="circuit-anatomy"] :where([data-spw-circuit-role="inductor"]) {
+  --spw-circuit-color: var(--op-frame-color, #008080);
+  background-image:
+    radial-gradient(circle at 0.4rem 50%, var(--spw-circuit-wash) 0 0.28rem, transparent 0.3rem),
+    var(--component-background-image, none);
+  background-size: 1.1rem 100%, auto;
+}
+
+html[data-spw-features~="circuit-anatomy"] :where([data-spw-circuit-role="transformer"]) {
+  --spw-circuit-color: var(--op-probe-color, #4a2180);
+  border-color: color-mix(in srgb, var(--spw-circuit-color) 30%, var(--line, rgba(14, 18, 20, 0.14)) 70%);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--spw-circuit-color) 10%, transparent),
+    0 0.6rem 1.5rem color-mix(in srgb, var(--spw-circuit-color) 7%, transparent),
+    var(--spw-local-shadow, none);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html[data-spw-features~="circuit-anatomy"] :where([data-spw-circuit-role]:is(:hover, :focus-within))::after {
+    animation: spw-arc-residue 720ms ease-out both;
+  }
+}
