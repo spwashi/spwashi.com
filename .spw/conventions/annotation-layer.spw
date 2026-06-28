@@ -7,21 +7,43 @@
 #:runtime #!convention
 #:layer #!pragmatics
 
-claim = `Annotations should behave like small handles into the current page structure, not like decorative labels. A visitor can preview, pin, inspect, and release a concept; the DOM and console show the same state.`
+claim = .{
+ statement = `Annotations should behave like small handles into the current page structure, not like decorative labels.`
+ consequence = `A visitor can preview, pin, inspect, and release a concept; the DOM and console show the same state.`
+}[reg=facet]
 
 gesture_loop: #[
- `notice: a compact handle is visible where the concept naturally belongs, usually the shell or a section heading.`,
- `preview: hover or focus writes data-spw-annotation-state='preview' and highlights matching regions.`,
- `pin: click, Enter, Space, or hold writes data-spw-annotation-state='pinned'.`,
- `inspect: window.spwAnnotations.snapshot() exposes the active concept, state, source, active section, and matched regions.`,
- `release: Escape, second click, blur, or pointer leave returns the layer to idle unless pinned.`
+ .{ state = `notice`; effect = `A compact handle is visible where the concept naturally belongs, usually the shell or a section heading.` }[reg=facet]
+ .{ state = `preview`; effect = `Hover or focus writes data-spw-annotation-state='preview' and highlights matching regions.` }[reg=facet]
+ .{ state = `pin`; effect = `Click, Enter, Space, or hold writes data-spw-annotation-state='pinned'.` }[reg=facet]
+ .{ state = `inspect`; effect = `window.spwAnnotations.snapshot() exposes the active concept, state, source, active section, and matched regions.` }[reg=facet]
+ .{ state = `release`; effect = `Escape, second click, blur, or pointer leave returns the layer to idle unless pinned.` }[reg=facet]
 ][reg=set]
 
 html_contract: .{
  handle = `Use data-spw-annotation-handle on controls that teach a concept. Header templates emit .header-annotation when header_annotation is provided.`
- region_match = `Regions participate through existing data-spw-kind, data-spw-role, data-spw-context, data-spw-feature, data-spw-page-family, data-spw-role-cluster, data-spw-category-family, data-spw-meaning, and data-spw-wonder.`
- root_state = `The runtime writes data-spw-annotation, data-spw-annotation-scope, data-spw-annotation-state, and data-spw-annotation-source to html and body.`
- region_state = `Matched regions receive data-spw-annotation-match='true', data-spw-annotation, and data-spw-annotation-state.`
+ region_match = #[
+  `data-spw-kind`,
+  `data-spw-role`,
+  `data-spw-context`,
+  `data-spw-feature`,
+  `data-spw-page-family`,
+  `data-spw-role-cluster`,
+  `data-spw-category-family`,
+  `data-spw-meaning`,
+  `data-spw-wonder`
+ ][reg=set]
+ root_state = #[
+  `data-spw-annotation`,
+  `data-spw-annotation-scope`,
+  `data-spw-annotation-state`,
+  `data-spw-annotation-source`
+ ][reg=set]
+ region_state = #[
+  `data-spw-annotation-match='true'`,
+  `data-spw-annotation`,
+  `data-spw-annotation-state`
+ ][reg=set]
 }
 
 module_contract: .{

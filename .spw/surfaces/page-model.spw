@@ -16,9 +16,20 @@
 @site: ~"../site.spw"
 
 thesis: .{
- claim = `A page is a nested field of attentional possibility, not a flat sequence of content blocks. Its structure can be described top-down as a composition tree and bottom-up as a gradient field. Both descriptions are simultaneously true.`
- corollary = `The composition tree tells you what a page contains. The gradient field tells you how attention moves through it. A well-designed page has a topography that rewards deliberate traversal.`
- gap = `The site now names pages, features, and interaction contexts, but the ownership ladder between page metadata, region flow, feature identity, component anatomy, and out-of-flow affordances is still easy to blur. That ambiguity is where leaky selectors and composition drift tend to begin.`
+ claims = #[
+  `A page is a nested field of attentional possibility, not a flat sequence of content blocks.`,
+  `Its structure can be described top-down as a composition tree and bottom-up as a gradient field.`
+ ][reg=set]
+ evidence = #[
+  `The composition tree tells you what a page contains.`,
+  `The gradient field tells you how attention moves through it.`,
+  `A well-designed page has a topography that rewards deliberate traversal.`
+ ][reg=set]
+ gap = #[
+  `The site now names pages, features, and interaction contexts.`,
+  `The ownership ladder between page metadata, region flow, feature identity, component anatomy, and out-of-flow affordances is still easy to blur.`,
+  `That ambiguity is where leaky selectors and composition drift tend to begin.`
+ ][reg=set]
 }[reg=facet]
 
 composition_hierarchy: .{
@@ -262,7 +273,14 @@ attentional_topography: .{
 
 tunable_parameters: .{
  note = `Parameters that should be explicitly tunable at the page, region, or feature level.`
- page_attention_state = `html[data-spw-page-presence='foreground|background'] + html[data-spw-page-arrival='entering|returning|restored|settled'] + html[data-spw-page-arrival-step='0|1|2|3']. One shared producer should publish this along with a derived html[data-spw-page-transition] and html[data-spw-page-transition-phase] so cards, handles, and pretext can spend the same arrival physics without per-component timers.`
+ page_attention_state = .{
+  html = #[
+   `html[data-spw-page-presence='foreground|background']`,
+   `html[data-spw-page-arrival='entering|returning|restored|settled']`,
+   `html[data-spw-page-arrival-step='0|1|2|3']`
+  ][reg=set]
+  projection = `One shared producer should publish this along with a derived html[data-spw-page-transition] and html[data-spw-page-transition-phase] so cards, handles, and pretext can spend the same arrival physics without per-component timers.`
+ }[reg=facet]
  peak_weight = `data-spw-attentional-weight (0.0–2.0) on any region or feature. Scales how strongly it contributes to the field.`
  decay_rate = `data-spw-decay-rate or CSS --spw-field-decay-rate. How quickly this region's charge falls off.`
  receptor_breadth = `data-spw-receptor-breadth (narrow|medium|wide). Determines which token classes trigger resonance in this component.`

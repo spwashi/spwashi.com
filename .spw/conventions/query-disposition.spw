@@ -7,13 +7,48 @@
 #:convention #!runtime
 #:layer #!pragmatics
 
-claim = `Query parameters are a design surface when they describe reproducible conditions instead of incidental debug switches.`
+claim = .{
+ statement = `Query parameters are a design surface when they describe reproducible conditions instead of incidental debug switches.`
+ use = `Treat query strings as shared setup, not private debug flags.`
+}[reg=facet]
 
 metaphors: .{
- lab = `A query string can record calibrated conditions: palette, physics, meaning density, logging, and reflow reason.`
- painting = `The same controls can feel like ground, wash, contrast, outline, and motion when the public vocabulary needs studio language.`
- instrument = `The same page can be tuned from minimal reading to precise audit to resonant visual practice without changing the underlying route.`
- plugin = `Forks should be able to rename vocabulary or add instruments without editing parser internals.`
+ lab = .{
+  terms = #[
+   `palette`,
+   `physics`,
+   `meaning density`,
+   `logging`,
+   `reflow reason`
+  ][reg=set]
+  use = `A query string can record calibrated conditions.`
+ }[reg=facet]
+ painting = .{
+  terms = #[
+   `ground`,
+   `wash`,
+   `contrast`,
+   `outline`,
+   `motion`
+  ][reg=set]
+  use = `The same controls can feel like studio vocabulary.`
+ }[reg=facet]
+ instrument = .{
+  terms = #[
+   `minimal reading`,
+   `precise audit`,
+   `resonant visual practice`
+  ][reg=set]
+  use = `The same page can be tuned without changing the route.`
+ }[reg=facet]
+ plugin = .{
+  terms = #[
+   `rename vocabulary`,
+   `add instruments`,
+   `keep parser internals untouched`
+  ][reg=set]
+  use = `Forks should extend the contract rather than rewrite the parser.`
+ }[reg=facet]
 }[reg=facet]
 
 ^"operational_semantics"{
@@ -55,38 +90,41 @@ metaphors: .{
 }
 
 default_vocabulary: #[
- `spw-physics|physics`,
- `spw-meaning|meaning`,
- `spw-palette|palette`,
- `spw-log|log`,
- `spw-log-level|log-level`,
- `spw-reflow|reflow`,
- `spw-runtime-timing|runtime-timing`,
- `spw-module-timing|module-timing`,
- `spw-module-audit|module-audit`,
- `spw-module-visuals|module-visuals`,
- `spw-module-only|module-only`,
- `spw-module-skip|module-skip`
+ .{ alias = `spw-physics`; label = `physics` }[reg=facet]
+ .{ alias = `spw-meaning`; label = `meaning` }[reg=facet]
+ .{ alias = `spw-palette`; label = `palette` }[reg=facet]
+ .{ alias = `spw-log`; label = `log` }[reg=facet]
+ .{ alias = `spw-log-level`; label = `log-level` }[reg=facet]
+ .{ alias = `spw-reflow`; label = `reflow` }[reg=facet]
+ .{ alias = `spw-runtime-timing`; label = `runtime-timing` }[reg=facet]
+ .{ alias = `spw-module-timing`; label = `module-timing` }[reg=facet]
+ .{ alias = `spw-module-audit`; label = `module-audit` }[reg=facet]
+ .{ alias = `spw-module-visuals`; label = `module-visuals` }[reg=facet]
+ .{ alias = `spw-module-only`; label = `module-only` }[reg=facet]
+ .{ alias = `spw-module-skip`; label = `module-skip` }[reg=facet]
 ][reg=set]
 
 anti_commitments: #[
- `One-letter aliases are too strong a public promise right now.`,
- `Readable short names are preferable to cryptic shorthand for collaborators and screenshots.`,
- `The parser should accept custom query contracts from plugins and forks.`
+ .{ rule = `One-letter aliases are too strong a public promise right now.` }[reg=facet]
+ .{ rule = `Readable short names are preferable to cryptic shorthand for collaborators and screenshots.` }[reg=facet]
+ .{ rule = `The parser should accept custom query contracts from plugins and forks.` }[reg=facet]
 ][reg=set]
 
 implementation: .{
  portable_entry = ~"../../public/js/compose.js"
  parser = ~"../../public/js/kernel/instrumentation.js"
  design_surface = ~"../../design/index.html#query-disposition"
- api = `createSpwQueryContract({ aliases, physicsPresets, meaningPresets, handlers })`
+ api = .{
+  factory = `createSpwQueryContract({ aliases, physicsPresets, meaningPresets, handlers })`
+  parameters = #[aliases, physicsPresets, meaningPresets, handlers][reg=set]
+ }[reg=facet]
 }[reg=facet]
 
 invariants: #[
- `Canonical spw-* names remain available for collision-resistant embedding.`,
- `Readable aliases are for authored links and QA links.`,
- `Plugin handlers may extend query behavior but should leave inspectable data attributes, tuning attributes, or CSS variables behind.`,
- `Runtime module timing and visuals are query-tunable so QA links and screenshots can explain which script ecology is active.`,
- `Precision recipes should stay low-theatrics: explicit logs and data attributes before decorative motion.`,
- `A screenshot-worthy URL should explain what was tuned without requiring the console.`
+ .{ rule = `Canonical spw-* names remain available for collision-resistant embedding.` }[reg=facet]
+ .{ rule = `Readable aliases are for authored links and QA links.` }[reg=facet]
+ .{ rule = `Plugin handlers may extend query behavior but should leave inspectable data attributes, tuning attributes, or CSS variables behind.` }[reg=facet]
+ .{ rule = `Runtime module timing and visuals are query-tunable so QA links and screenshots can explain which script ecology is active.` }[reg=facet]
+ .{ rule = `Precision recipes should stay low-theatrics: explicit logs and data attributes before decorative motion.` }[reg=facet]
+ .{ rule = `A screenshot-worthy URL should explain what was tuned without requiring the console.` }[reg=facet]
 ][reg=set]

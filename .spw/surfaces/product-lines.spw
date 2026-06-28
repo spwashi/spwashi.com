@@ -20,66 +20,142 @@
 @promo_feed: ~"../../public/data/promo-wonder-cycle.json"
 
 thesis: .{
- claim = `A product line is a feature that has been named long enough and narrated clearly enough that its instances become collectible. Without narrative, a feature is a fixture; with narrative, a feature is an edition.`
- corollary = `Stubs are how product lines begin. A stub is a route that exists before its feature earns depth — it holds the name, sets the distance signal, and relieves pressure on the authoring calendar.`
+ claims = #[
+  `A product line is a feature that has been named long enough and narrated clearly enough that its instances become collectible.`,
+  `Without narrative, a feature is a fixture; with narrative, a feature is an edition.`
+ ][reg=set]
+ evidence = #[
+  `Stubs are how product lines begin.`,
+  `A stub is a route that exists before its feature earns depth — it holds the name, sets the distance signal, and relieves pressure on the authoring calendar.`
+ ][reg=set]
 }[reg=facet]
 
 product_lines: .{
  note = `Named lines in their current state. Each can be stubbed before it is filled.`
  recipes = .{
-  pitch = `Cooking as a developable expertise domain, with strong projection into learning, play, ritual, and annual planning. Social kitchen skills (hosting grammar, batch provision, service as repair, recovery, rhythm) form a primary practice surface rather than only a metaphor source.`
-  feature_shape = `Per-recipe card: ingredients as a set, steps as a stream, context as a facet, pedagogical note as a liminal layer. Principle registers and social grammar as developmental arcs.`
-  collectible_unit = `The recipe itself, its substitution matrix, its pedagogical note, its seasonal variant, and its use as expertise practice or holiday projection.`
-  audience_primary = illustrator
-  audience_bridge = `engineers read it as a DSL; librarians read it as a catalog entry; practitioners develop real hosting and craft expertise`
-  current_state = `Route exists at /recipes; now registered as primary craft domain in site.spw and surfaces.spw. Principle registers + #social-kitchen-grammar frame model expertise development. Cross-topic links and social projection lens active.`
+ pitch = `Cooking as a developable expertise domain, with strong projection into learning, play, ritual, and annual planning. Social kitchen skills (hosting grammar, batch provision, service as repair, recovery, rhythm) form a primary practice surface rather than only a metaphor source.`
+ feature_shape = `Per-recipe card: ingredients as a set, steps as a stream, context as a facet, pedagogical note as a liminal layer. Principle registers and social grammar as developmental arcs.`
+ collectible_unit = `The recipe itself, its substitution matrix, its pedagogical note, its seasonal variant, and its use as expertise practice or holiday projection.`
+ audience_primary = illustrator
+ audience_bridge = #[
+  `engineers read it as a DSL`,
+  `librarians read it as a catalog entry`,
+  `practitioners develop real hosting and craft expertise`
+ ][reg=set]
+ current_state = .{
+  summary = `Route exists at /recipes.`
+  evidence = #[
+   `registered as primary craft domain in site.spw and surfaces.spw`,
+   `principle registers + #social-kitchen-grammar frame model expertise development`,
+   `cross-topic links and social projection lens active`
+  ][reg=set]
+  next_step = `Add deeper instances and keep the route in active use.`
+ }[reg=facet]
  }[reg=facet]
  seed_cards = .{
   pitch = `Configurable, screenshottable cards for rates, asks, and offerings. The same card shape serves 'my hourly rate is X' and 'I need groceries this week'.`
   feature_shape = `A single card component with slots for header, body, badges, footer. Configurable accent and palette. Exportable as image.`
   collectible_unit = `A specific seed card instance — an edition with timestamp and context.`
   audience_primary = shared
-  audience_bridge = `engineers collect the template; illustrators collect the aesthetic; librarians collect the provenance`
-  current_state = `Planned but not routed. Needs dedicated surface at /seed-cards or similar.`
+  audience_bridge = #[
+   `engineers collect the template`,
+   `illustrators collect the aesthetic`,
+   `librarians collect the provenance`
+  ][reg=set]
+  current_state = .{
+   summary = `Planned but not routed.`
+   evidence = #[
+    `needs dedicated surface at /seed-cards or similar`
+   ][reg=set]
+   next_step = `Create the route and the first seed-card instances.`
+  }[reg=facet]
  }[reg=facet]
  rpg_character_sheet = .{
   pitch = `A professional profile authored as a character sheet. Abilities and skills map to real skills; items and features link to underlying documents. The Spwashi Lego — one card schema reused with different contents.`
   feature_shape = `Character sheet card with header (identity), badges (current state), sections (abilities, inventory, history), footer (contact).`
   collectible_unit = `The sheet as a whole; individual abilities as sub-cards; linked documents as expansions.`
   audience_primary = engineer
-  audience_bridge = `illustrators collect the card aesthetics; librarians collect the linked-document graph`
-  current_state = `Conceptual. Needs route and first sheet.`
+  audience_bridge = #[
+   `illustrators collect the card aesthetics`,
+   `librarians collect the linked-document graph`
+  ][reg=set]
+  current_state = .{
+   summary = `Conceptual.`
+   evidence = #[
+    `needs a route`,
+    `needs a first sheet`
+   ][reg=set]
+   next_step = `Establish the card schema and publish the first sheet.`
+  }[reg=facet]
  }[reg=facet]
  operator_atlas = .{
   pitch = `Each Spw operator as an entry with interaction, metaphysics, brace physics, and prefix/postfix symmetry. The atlas is the site's most-earned feature — visitors find it by approach.`
   feature_shape = `One route per operator; consistent frame set; runtime-interactive examples.`
   collectible_unit = `An operator entry; a specific brace treatment; a cross-operator symmetry.`
   audience_primary = engineer
-  audience_bridge = `illustrators collect the symbolic feel; librarians collect the taxonomy`
-  current_state = `Strongest existing product line. Expansion target: more operators, more symmetry cross-references.`
+  audience_bridge = #[
+   `illustrators collect the symbolic feel`,
+   `librarians collect the taxonomy`
+  ][reg=set]
+  current_state = .{
+   summary = `Strongest existing product line.`
+   evidence = #[
+    `more operators`,
+    `more symmetry cross-references`
+   ][reg=set]
+   next_step = `Expand operator entries and symmetry references.`
+  }[reg=facet]
  }[reg=facet]
  domain_cards = .{
   pitch = `Each side-domain (newyear.life, brainstorm.monster, clit.video) gets a card on the main site that sets distance and rewards arrival at the domain itself.`
   feature_shape = `Card with pitch, state, and outbound link. Linked domain treats the card as its opening-brace orientation.`
   collectible_unit = `The domain card; the domain's signature concept; the annual edition (for newyear.life).`
   audience_primary = shared
-  audience_bridge = `engineers see the infrastructure; illustrators see the aesthetic range; librarians see the register graph`
-  current_state = `Conceptual. Each domain needs at least a stub card on spwashi.com.`
+  audience_bridge = #[
+   `engineers see the infrastructure`,
+   `illustrators see the aesthetic range`,
+   `librarians see the register graph`
+  ][reg=set]
+  current_state = .{
+   summary = `Conceptual.`
+   evidence = #[
+    `each linked domain needs at least a stub card on spwashi.com`
+   ][reg=set]
+   next_step = `Add stub cards that set distance before the domain itself.`
+  }[reg=facet]
  }[reg=facet]
  play_sessions = .{
   pitch = `RPG Wednesday and other play routes as sessions — each session has local state, table register, and trace artifacts.`
   feature_shape = `Session index with date, table, register; individual session pages as threshold frames.`
   collectible_unit = `A session; a character moment; a table artifact.`
   audience_primary = shared
-  current_state = `Route exists; needs consistent session card shape and collectible policy.`
+  current_state = .{
+   summary = `Route exists.`
+   evidence = #[
+    `needs a consistent session card shape`,
+    `needs a collectible policy`
+   ][reg=set]
+   next_step = `Define the session card shape and collectibility rules.`
+  }[reg=facet]
  }[reg=facet]
  skill_os = .{
   pitch = `A professional development simulator disguised as a worldbuilding platform: character sheets, budgeting, RPG Wednesday, Town Library quests, and proof cards form one loop for turning imagination into operational capacity.`
   feature_shape = `Cross-route loop: choose/build character -> define pressure -> fund sprint -> simulate/practice -> log evidence -> publish/reuse artifact -> choose next quest.`
   collectible_unit = `A quest card, proof card, session receipt, budgeted sprint, or portfolio artifact that records a practiced skill under constraint.`
   audience_primary = shared
-  audience_bridge = `engineers read the protocol; artists read the character/world substrate; librarians read the evidence registry and recall path`
-  current_state = `First implementation slice landed in Town Library guide/quest cards: experimental evidence protocol fields plus copyable evidence briefs in the RPG Wednesday module. Next candidate is Tools or Cards so the protocol proves it is not route-local ornament.`
+  audience_bridge = #[
+   `engineers read the protocol`,
+   `artists read the character/world substrate`,
+   `librarians read the evidence registry and recall path`
+  ][reg=set]
+  current_state = .{
+   summary = `First implementation slice landed in Town Library guide/quest cards.`
+   evidence = #[
+    `experimental evidence protocol fields`,
+    `copyable evidence briefs in the RPG Wednesday module`
+   ][reg=set]
+   next_step = `Move the protocol to another route so it proves it is not route-local ornament.`
+  }[reg=facet]
  }[reg=facet]
 }[reg=facet]
 
