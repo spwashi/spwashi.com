@@ -78,6 +78,7 @@ attribute_grammar_families: .{
 structured_values: .{
   see = @naming_structured_values
   observation = `Some of the site's most useful values already want to be lists, sets, or facets rather than strings: copy depth, content variant, content tone, page modes, related routes, and semantic clusters.`
+  projection_note = `The DOM can still receive a serialized string, but the source model should stay explicit so the next editor can see which values are multi-part.`
   sign = `If a value is doing selection, sequencing, or branching, the structure should be visible in the data shape instead of re-parsed from prose.`
   examples = #[
     `list: ordered route trails, depth ladders, visible sequences`

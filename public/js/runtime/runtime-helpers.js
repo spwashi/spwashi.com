@@ -91,7 +91,23 @@ export function whenWindowLoaded() {
 }
 
 export function parseFeatureList(value) {
-  if (!value || typeof value !== 'string') return new Set();
+  if (!value) return new Set();
+  if (value instanceof Set) {
+    return new Set(
+      [...value]
+        .map((item) => normalizeRuntimeToken(item))
+        .filter(Boolean)
+    );
+  }
+  if (Array.isArray(value)) {
+    return new Set(
+      value
+        .flatMap((item) => String(item).split(/[\s,]+/))
+        .map((item) => normalizeRuntimeToken(item))
+        .filter(Boolean)
+    );
+  }
+  if (typeof value !== 'string') return new Set();
   return new Set(
     value
       .split(/[\s,]+/)

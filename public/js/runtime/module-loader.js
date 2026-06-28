@@ -467,7 +467,7 @@ function annotateModuleTarget(target, record) {
     writeDatasetValue(target, 'spwModuleDescribes', record.describes);
   }
   if (record.updates && Array.isArray(record.updates) && record.updates.length) {
-    writeDatasetValue(target, 'spwModuleUpdates', record.updates.join(' '));
+    writeDatasetValue(target, 'spwModuleUpdates', record.updates);
   }
 
   writeDatasetValue(target, 'spwModuleHydration', record.status === 'mounted' ? 'ready' : record.status);
@@ -510,8 +510,10 @@ function updateRuntimeStateTokens(ctx) {
     }
   }
 
-  const layersValue = [...activeLayers].sort().join(' ') || 'core';
-  writeDatasetValue(html, 'spwActiveLayers', layersValue);
+  const layersList = [...activeLayers].sort();
+  if (!layersList.length) layersList.push('core');
+  const layersValue = layersList.join(' ');
+  writeDatasetValue(html, 'spwActiveLayers', layersList);
 
   const enhancementIntensity = hasEnhancement ? 0.92 : 0.32;
   const featureIntensity = hasFeature ? 0.78 : 0.22;
@@ -563,8 +565,8 @@ function syncRuntimeModuleSummary(ctx, record) {
   writeDatasetValue(html, 'spwRuntimeLastModuleReason', record.reason);
   writeDatasetValue(html, 'spwRuntimeLastModuleEvaluates', record.evaluates);
   writeDatasetValue(html, 'spwRuntimeLastModuleDescribes', record.describes || null);
-  writeDatasetValue(html, 'spwRuntimeMountedModules', [...new Set(mounted)].join(' '));
-  writeDatasetValue(html, 'spwRuntimeFailedModules', [...new Set(failed)].join(' ') || null);
+  writeDatasetValue(html, 'spwRuntimeMountedModules', new Set(mounted));
+  writeDatasetValue(html, 'spwRuntimeFailedModules', new Set(failed));
   writeDatasetValue(html, 'spwRuntimeModuleCount', String(mounted.length));
   writeDatasetValue(html, 'spwRuntimeModuleLifecycleStages', stageSummary);
   writeDatasetValue(html, 'spwRuntimeModuleLifecycleSummary', timingSnapshot.latest

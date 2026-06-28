@@ -164,13 +164,16 @@
 
 ^"structured_value_contract"{
   definition: "When a value carries siblings, branches, or lifecycle, expose the structure instead of hiding it inside one string."
-  rule: "Keep atomic labels as strings. Promote repeated alternatives to lists or sets, named subparts to facets, derived values to expressions, and rules or procedures to statements."
+  rule: "Keep atomic labels as strings. Promote repeated alternatives to lists or sets, named subparts to facets, derived values to expressions, and rules or procedures to statements. Serialize only at the projection boundary that needs a scalar string."
+  projection_rule: "DOM dataset values, CSS custom properties, and JSON-LD text fields may be serialized projections, but the source shape stays explicit."
   examples: #[
     `data-spw-copy-depth`
     `data-spw-content-variant`
     `data-spw-content-tone`
     `data-spw-page-modes`
     `data-spw-related-routes`
+    `data-spw-route-family`
+    `data-spw-active-layers`
   ][reg=set]
   xref = @naming_structured_values
 }

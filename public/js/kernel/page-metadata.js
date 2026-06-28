@@ -1,6 +1,7 @@
 import {
   REGION_HOST_SELECTOR,
   REGION_SELECTOR as PAGE_METADATA_REGION_SELECTOR,
+  serializeDatasetValue,
   writeDatasetValue,
   writeDatasetValueIfMissing,
 } from '/public/js/kernel/dom-contracts.js';
@@ -239,6 +240,8 @@ const CONTEXT_STOP_WORDS = new Set([
   'matches',
 ]);
 
+// Route metadata stays compact in the rule table, then expands into lists and
+// route arrays before it is written to the DOM or structured data.
 const PAGE_METADATA_RULES = [
   {
     test: (pathname) => pathname === '/',
@@ -623,8 +626,29 @@ function safeQueryAll(selector, root = document) {
   }
 }
 
-function setDataIfMissing(el, key, value) {
-  writeDatasetValueIfMissing(el, key, value);
+function setDataIfMissing(el, key, value, options = {}) {
+  writeDatasetValueIfMissing(el, key, value, options);
+}
+
+function splitDelimitedList(value, separator, transform = (part) => part) {
+  if (value == null || value === '') return [];
+  const source = Array.isArray(value) || value instanceof Set ? [...value] : [value];
+  return source
+    .flatMap((item) => (item == null ? [] : String(item).split(separator)))
+    .map((part) => transform(String(part).trim()))
+    .filter(Boolean);
+}
+
+function splitTokenList(value) {
+  return splitDelimitedList(value, /[\s,]+/, (part) => normalizeToken(part));
+}
+
+function splitRouteList(value) {
+  return splitDelimitedList(value, /[|,]+/);
+}
+
+function serializeStructuredValue(value, separator = ' ') {
+  return serializeDatasetValue(value, { separator }) || '';
 }
 
 function pathMatchesPrefix(pathname, prefix) {
@@ -906,15 +930,16 @@ function resolvePageMetadata({ body = document.body, main = document.querySelect
   const segments = getPathSegments(pathname);
   const surface = body?.dataset?.spwSurface || deriveSurfaceFromPath(pathname);
   const context = inferContextFromSurface(surface, pathname);
+  const relatedRoutes = collectInternalRoutes(main || body || document.body, 8);
   const fallback = {
-    routeFamily: `editorial ${surface || 'site'} surface`,
+    routeFamily: splitTokenList(`editorial ${surface || 'site'} surface`),
     context,
-    wonder: inferWonderFromContext(context),
+    wonder: splitTokenList(inferWonderFromContext(context)),
     pageFamily: seedToken(segments[segments.length - 1] || surface || 'home').replace(/_/g, '-'),
-    pageModes: inferPageModes(context),
+    pageModes: splitTokenList(inferPageModes(context)),
     pageRole: inferPageRole(pathname, surface),
     pageSeed: getPageSeed(surface, segments),
-    relatedRoutes: '',
+    relatedRoutes,
     heroRole: context === 'routing' ? 'routing' : 'orientation',
     heroCategoryFamily: context === 'routing' ? 'register' : 'nook',
     heroLiminality: 'entry',
@@ -926,12 +951,13 @@ function resolvePageMetadata({ body = document.body, main = document.querySelect
 
   const matched = PAGE_METADATA_RULES.find((rule) => rule.test(pathname, surface, segments))?.meta || {};
   const meta = { ...fallback, ...matched };
-
-  if (!meta.relatedRoutes) {
-    meta.relatedRoutes = collectInternalRoutes(main || body || document.body, 8).join('|');
-  }
-
-  return meta;
+  return {
+    ...meta,
+    routeFamily: splitTokenList(meta.routeFamily),
+    wonder: splitTokenList(meta.wonder),
+    pageModes: splitTokenList(meta.pageModes),
+    relatedRoutes: splitRouteList(meta.relatedRoutes),
+  };
 }
 
 function ensureMetaTag(attributeName, attributeValue, content) {
@@ -1058,13 +1084,18 @@ function normalizeHeadMetadata(pageMeta, { body = document.body, main = document
     keywords: keywords || undefined,
     additionalProperty: [
       { '@type': 'PropertyValue', name: 'spwSurface', value: body?.dataset?.spwSurface || 'default' },
+      { '@type': 'PropertyValue', name: 'spwRouteFamily', value: serializeStructuredValue(pageMeta.routeFamily) },
       { '@type': 'PropertyValue', name: 'spwPageFamily', value: pageMeta.pageFamily },
+      { '@type': 'PropertyValue', name: 'spwPageModes', value: serializeStructuredValue(pageMeta.pageModes) },
       { '@type': 'PropertyValue', name: 'spwPageRole', value: pageMeta.pageRole },
       { '@type': 'PropertyValue', name: 'spwPageZone', value: pageMeta.pageZone },
       { '@type': 'PropertyValue', name: 'spwPageStatus', value: pageMeta.pageStatus },
       { '@type': 'PropertyValue', name: 'spwPageResponsibility', value: pageMeta.pageResponsibility },
       { '@type': 'PropertyValue', name: 'spwPagePrimaryAction', value: pageMeta.pagePrimaryAction },
-      { '@type': 'PropertyValue', name: 'spwWonder', value: pageMeta.wonder },
+      { '@type': 'PropertyValue', name: 'spwWonder', value: serializeStructuredValue(pageMeta.wonder) },
+      ...(pageMeta.relatedRoutes.length
+        ? [{ '@type': 'PropertyValue', name: 'spwRelatedRoutes', value: serializeStructuredValue(pageMeta.relatedRoutes) }]
+        : []),
     ],
   });
 
@@ -1200,10 +1231,10 @@ function normalizeShellMetadata(pageMeta, { body = document.body } = {}) {
     setDataIfMissing(header, 'spwCategoryFamily', 'portal');
     setDataIfMissing(header, 'spwSeed', `${pageMeta.pageSeed}__site_header`);
 
-    const related = collectInternalRoutes(header, 8).join('|');
-    const contextRelevance = collectContextTokens(header, 8).join(' ');
-    if (related) setDataIfMissing(header, 'spwRelatedRoutes', related);
-    if (contextRelevance) setDataIfMissing(header, 'spwContextRelevance', contextRelevance);
+    const related = collectInternalRoutes(header, 8);
+    const contextRelevance = collectContextTokens(header, 8);
+    if (related.length) setDataIfMissing(header, 'spwRelatedRoutes', related, { separator: '|' });
+    if (contextRelevance.length) setDataIfMissing(header, 'spwContextRelevance', contextRelevance);
   }
 
   const hero = safeQuery('.site-frame.site-hero, main > article > section:first-of-type, main > section:first-of-type');
@@ -1224,10 +1255,10 @@ function normalizeShellMetadata(pageMeta, { body = document.body } = {}) {
   setDataIfMissing(hero, 'spwCollectability', inferCollectability('frame', hero));
   setDataIfMissing(hero, 'spwSeed', `${pageMeta.pageSeed}__hero`);
 
-  const related = collectInternalRoutes(hero, 8).join('|');
-  const contextRelevance = collectContextTokens(hero, 8).join(' ');
-  if (related) setDataIfMissing(hero, 'spwRelatedRoutes', related);
-  if (contextRelevance) setDataIfMissing(hero, 'spwContextRelevance', contextRelevance);
+  const related = collectInternalRoutes(hero, 8);
+  const contextRelevance = collectContextTokens(hero, 8);
+  if (related.length) setDataIfMissing(hero, 'spwRelatedRoutes', related, { separator: '|' });
+  if (contextRelevance.length) setDataIfMissing(hero, 'spwContextRelevance', contextRelevance);
 }
 
 function normalizeRegionMetadata(pageMeta, { body = document.body } = {}) {
@@ -1237,8 +1268,8 @@ function normalizeRegionMetadata(pageMeta, { body = document.body } = {}) {
     const kind = inferRegionKind(el);
     const role = inferRegionRole(el);
     const context = inferRegionContext(el, body);
-    const related = collectInternalRoutes(el, 8).join('|');
-    const contextRelevance = collectContextTokens(el, 8).join(' ');
+    const related = collectInternalRoutes(el, 8);
+    const contextRelevance = collectContextTokens(el, 8);
 
     setDataIfMissing(el, 'spwSeed', deriveRegionSeed(el, pageMeta, index));
     setDataIfMissing(el, 'spwPromptability', inferPromptability(el));
@@ -1251,8 +1282,8 @@ function normalizeRegionMetadata(pageMeta, { body = document.body } = {}) {
     setDataIfMissing(el, 'spwWonder', pageMeta.wonder);
     setDataIfMissing(el, 'spwContext', context || pageMeta.context);
 
-    if (related) setDataIfMissing(el, 'spwRelatedRoutes', related);
-    if (contextRelevance) setDataIfMissing(el, 'spwContextRelevance', contextRelevance);
+    if (related.length) setDataIfMissing(el, 'spwRelatedRoutes', related, { separator: '|' });
+    if (contextRelevance.length) setDataIfMissing(el, 'spwContextRelevance', contextRelevance);
   });
 }
 
@@ -1268,7 +1299,9 @@ function applyPageMetadata(pageMeta, body = document.body) {
   setDataIfMissing(body, 'spwPageStatus', pageMeta.pageStatus);
   setDataIfMissing(body, 'spwPageResponsibility', pageMeta.pageResponsibility);
   setDataIfMissing(body, 'spwPagePrimaryAction', pageMeta.pagePrimaryAction);
-  if (pageMeta.relatedRoutes) setDataIfMissing(body, 'spwRelatedRoutes', pageMeta.relatedRoutes);
+  if (pageMeta.relatedRoutes.length) {
+    setDataIfMissing(body, 'spwRelatedRoutes', pageMeta.relatedRoutes, { separator: '|' });
+  }
 }
 
 function formatPageLabel(value = '') {

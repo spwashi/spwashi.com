@@ -41,11 +41,13 @@ fixity = "stable"
   facet: "Use a facet object when the value needs named subparts, role labels, or validation notes."
   expression: "Use an expression when the value is derived, conditional, or phase-sensitive."
   statement: "Use a statement when the value has to act like a rule, invariant, or small procedure."
+  projection: "Keep the source value structured in JS or .spw, then serialize it only at the edge that needs a scalar attribute."
   conversion_rules: #[
     `If a string contains repeated clauses or more than one job, promote it to structure.`
     `If a value reads like a menu, registry, or route list, make it a list or set instead of prose.`
     `If a value reads like a contract or lifecycle, make it a facet or statement.`
     `If the value needs both human copy and machine selection, separate the roles into different fields.`
+    `If a structured value must reach HTML, CSS, or JSON-LD, serialize the projection and keep the source shape explicit.`
   ][reg=set]
 }
 

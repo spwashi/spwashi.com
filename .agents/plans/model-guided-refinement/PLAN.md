@@ -47,6 +47,8 @@ Use `.spw/conventions/semantic-capacity.spw` to decide the operation first:
 - **contract:** promote a repeated pattern into durable guidance
 - **archive:** reduce active semantic load while preserving context
 
+When a value is inherently multi-part, keep the source shape as a list, set, facet, expression, or statement and serialize only at the DOM, CSS, or JSON-LD projection boundary that needs a scalar string.
+
 For small cached insights, use:
 
 - `.agents/plans/model-guided-refinement/templates/semantic-insight-cache.spw`

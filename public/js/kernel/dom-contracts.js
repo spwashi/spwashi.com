@@ -712,7 +712,8 @@ export function writeDatasetValue(el, key, value, options = {}) {
   if (!el?.dataset || !key) return false;
 
   const { allowEmpty = false, missingOnly = false } = options;
-  const shouldRemove = value == null || (!allowEmpty && value === '');
+  const next = serializeDatasetValue(value, options);
+  const shouldRemove = next == null || (!allowEmpty && next === '');
 
   if (shouldRemove) {
     if (missingOnly || !(key in el.dataset)) return false;
@@ -722,10 +723,37 @@ export function writeDatasetValue(el, key, value, options = {}) {
 
   if (missingOnly && el.dataset[key]) return false;
 
-  const next = String(value);
   if (el.dataset[key] === next) return false;
   el.dataset[key] = next;
   return true;
+}
+
+export function serializeDatasetValue(value, options = {}) {
+  const { allowEmpty = false, separator = ' ' } = options;
+
+  if (value == null) return null;
+
+  if (value instanceof Set) {
+    return serializeDatasetValue([...value], { allowEmpty, separator });
+  }
+
+  if (Array.isArray(value)) {
+    const items = value
+      .map((item) => serializeDatasetValue(item, { allowEmpty: true, separator }))
+      .filter((item) => item != null && item !== '');
+
+    if (!items.length) return allowEmpty ? '' : null;
+    return items.join(separator);
+  }
+
+  if (typeof value === 'string') return value;
+  if (typeof value === 'number' || typeof value === 'boolean' || typeof value === 'bigint') {
+    return String(value);
+  }
+
+  const text = String(value);
+  if (text) return text;
+  return allowEmpty ? '' : null;
 }
 
 export function writeDatasetValueIfMissing(el, key, value, options = {}) {

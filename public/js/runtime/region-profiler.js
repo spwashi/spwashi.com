@@ -241,8 +241,8 @@ export function syncPageHarmony(ctx, html = document.documentElement) {
   const harmonies = new Set(profiles.map((profile) => profile.harmony));
   const tempos = new Set(profiles.map((profile) => profile.tempo));
 
-  writeDatasetValue(html, 'spwHarmonyField', [...harmonies].join(' '));
-  writeDatasetValue(html, 'spwTempoField', [...tempos].join(' '));
+  writeDatasetValue(html, 'spwHarmonyField', harmonies);
+  writeDatasetValue(html, 'spwTempoField', tempos);
   writeDatasetValue(html, 'spwSpaceMotion', inferSpaceMotion());
   writeStyleValue(html, '--region-count', String(profiles.length));
   syncPageCascadeTiming(ctx, html);
