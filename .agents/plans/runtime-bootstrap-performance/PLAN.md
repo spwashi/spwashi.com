@@ -90,12 +90,16 @@ When a reusable concept emerges (e.g., "load budget", "module cost class", "obse
 - Update the module contract comment in `site.js` to note the parallel expectation for independent immediate work.
 - Validation: `node --check`, `git diff --check`, `npm run check`, smoke on home + a long content route with `?spw-runtime-timing=normal` and with `quiet`.
 
+Implementation note: the per-layer mount loop is now concurrent, `site.js` keeps core immediate modules ordered first, and feature/enhancement immediate layers mount together with label-safe marks (`spw:immediate-layer:core:parallel`, `spw:immediate-layer:feature:parallel`, `spw:immediate-layer:enhancement:parallel`) plus `spw:immediate-non-core-layers` for the overlapped wave. Independent visible/idle prefetch hinting also runs concurrently after the immediate wave.
+
 **Phase 2 — Immediate Layer Width Reduction (site-settings + selected enhancements)**
 - Audit `kernel/site-settings.js` cold paths (storage for pins/cauldron/discovery/images that are not required for the first dataset application on `<html>`/`<body>`).
 - Propose (and land) the smallest honest split or deferred mount for non-critical subsystems.
 - Reclassify 3–6 broad ENHANCEMENT immediate modules to `VISIBLE` where the first meaningful paint does not depend on them.
 - All changes remain behind the existing policy and selector gates; no behavior change for `eager` or debug postures.
 - Use the already-landed `timings()` + Performance surfaces to quantify before/after on representative routes.
+
+Implementation note: Phase 2a moved six selector-gated enhancement helpers from `IMMEDIATE` to `VISIBLE`: `gesture-anatomy`, `page-anatomy`, `ingredient-lab`, `image-discovery-rewards`, `local-memory-controls`, and `prompt-utils`. This keeps first-page readability, settings, shell disclosure, console/state surfaces, and core interaction state in the immediate wave while shifting helper, reward, prompt, and route-local lab work into near-viewport scheduling. `eager` and per-module timing overrides still provide the existing QA escape hatch.
 
 **Phase 3 — Observer & Listener Consolidation (if measurement justifies it)**
 - Evaluate a thin shared "region/attention observer coordinator" (or lightweight extension to existing attention-architecture primitives).
@@ -155,9 +159,9 @@ If a patch introduces a new reusable semantic family or runtime state contract, 
 
 - [x] Plan written and placed under `.agents/plans/runtime-bootstrap-performance/`
 - [x] Phase 0 cross-references added (listed in `.agents/plans/README.md` under high-signal runtime items; pointer added to `agent-optimization/PLAN.md`; discoverable via existing `@plans` / `@agent_optimization` dispatch in `.spw`)
-- [ ] Light `spw-plan-maintenance` sweep recorded (indexes + agent-optimization cross-link landed; no new durable semantic family yet so no immediate `.spw` dispatch change required)
-- [ ] Phase 1 patch (parallel immediate mounts) implemented + validated
-- [ ] Phase 2 patch (site-settings + selected module reclassification) scoped and reviewed
+- [x] Light `spw-plan-maintenance` sweep recorded (indexes + agent-optimization cross-link landed; no new durable semantic family yet so no immediate `.spw` dispatch change required)
+- [x] Phase 1 patch (parallel immediate mounts) implemented; source/runtime validation passed, with `check:local` still reporting the refreshed generated core CSS bundle until that output is staged
+- [x] Phase 2a patch (selected module reclassification) implemented; `site-settings` cold-path split remains future Phase 2b work
 - [ ] Measurement baseline captured (before) and re-captured (after) using existing tooling
 - [ ] .spw bridge added only if a stable new reusable contract emerges
 - [ ] `spw-plan-maintenance` run after significant landings (per its skill contract)

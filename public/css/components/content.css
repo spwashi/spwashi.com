@@ -800,6 +800,35 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   line-height: 1.5;
 }
 
+:where(.frame-list--inline) {
+  --frame-list-inline-accent: var(--active-op-color, var(--component-accent, var(--semantic-accent, #008080)));
+  --frame-list-inline-line: color-mix(in srgb, var(--frame-list-inline-accent) 24%, var(--line, rgba(14, 18, 20, 0.14)));
+  --frame-list-inline-ink: var(--ink-mid, var(--ink-soft, rgba(14, 18, 20, 0.68)));
+
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--frame-list-inline-min, 18rem)), 1fr));
+  gap: 0.55rem 0.9rem;
+  padding-inline-start: 0;
+  list-style: none;
+}
+
+:where(.frame-list--inline li) {
+  max-inline-size: none;
+  margin: 0;
+  padding-block: 0.12rem 0.18rem;
+  padding-inline-start: 0.72rem;
+  border-inline-start: 2px solid var(--frame-list-inline-line);
+  color: var(--frame-list-inline-ink);
+}
+
+:where(.frame-list--inline :is(a, strong)) {
+  color: color-mix(in srgb, var(--frame-list-inline-accent) 84%, var(--ink, currentColor));
+}
+
+:where(.frame-list--inline a) {
+  text-decoration-color: color-mix(in srgb, var(--frame-list-inline-accent) 28%, transparent);
+  text-underline-offset: 0.14em;
+}
+
 /* Portable literary surfaces. Safe to copy into a rogue page or generator
    output when the stylesheet itself needs to read like an annotated text. */
 :where(.spw-literary-note, [data-spw-textual-role="note"]) {

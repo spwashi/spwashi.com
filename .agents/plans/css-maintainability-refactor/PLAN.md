@@ -57,6 +57,25 @@ Reduce CSS brittleness in the highest-leverage shared contracts so route work ca
 - Repeated DOM selector families should live in `public/js/spw-dom-contracts.js` and be named by topography: route, shell, main, region, component, module, slot.
 - Runtime-written profile attributes such as `data-spw-component-genome` and `data-spw-region-genome` should be treated as composable axis bundles, not as another source of route-local naming.
 
+## Implementation Note - 2026-06-29 Media Prose Grid
+
+- Promoted `frame-grid[data-spw-layout="media-prose"]` and `.frame-grid--media-prose` into the shared surface grid contract in `public/css/systems/surfaces/base.css`.
+- Kept the existing `data-spw-layout="media-prose"` route markup as the explicit opt-in; no wrapper or route HTML churn was needed.
+- Narrowed the About and RPG Wednesday route grid overrides so they no longer mask or locally own the media/prose exception.
+- Added a shared narrow-screen collapse for the media/prose variant so future routes do not need one-off mobile grid rescues.
+
+## Implementation Note - 2026-06-29 Inline Frame Lists
+
+- Promoted `.frame-list--inline` into the shared content component contract for compact route-index guidance.
+- Removed route-local index list styling from About, Plans, and Recipes so the explicit inline variant owns this repeated pattern.
+- Kept the variant unboxed: it uses a light accent rail and responsive grid rhythm rather than nested card styling inside existing frames.
+
+## Implementation Note - 2026-06-29 Recipes Hero Slot Rail
+
+- Reworked the Recipes hero so `site-hero--split-figure` has one direct `data-spw-slot="figure"` rail instead of several direct figure-slot siblings.
+- Moved supporting recipe studies inside that rail and removed route CSS that manually assigned all supporting figures to the same desktop grid row.
+- Kept the visual treatment route-owned while letting the shared split-figure contract own header/body/figure/actions placement.
+
 ## Risks
 
 - Shared selector tightening could remove styling from a route that relied on accidental coverage.

@@ -526,7 +526,7 @@ export const ENHANCEMENT_DEFS = [
   {
     id: 'gesture-anatomy',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.VISIBLE,
     selector: '[data-spw-gesture-contract], [data-spw-slot], .spw-living-term[data-spw-living-term]',
     rootMode: 'single',
     describes: 'slot anatomy rails + data-spw-gesture-hint from gesture contracts',
@@ -700,7 +700,7 @@ export const ENHANCEMENT_DEFS = [
   {
     id: 'page-anatomy',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.VISIBLE,
     selector: '[data-spw-anatomy], [data-spw-vocabulary]',
     rootMode: 'single',
     describes: 'page-anatomy[vocabulary]{focus.pin.reference}',
@@ -716,7 +716,7 @@ export const ENHANCEMENT_DEFS = [
   {
     id: 'ingredient-lab',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.VISIBLE,
     selector: '[data-spw-ingredient-lab]',
     rootMode: 'single',
     load: () => import('./ingredient-lab.js'),
@@ -776,7 +776,7 @@ export const ENHANCEMENT_DEFS = [
   {
     id: 'image-discovery-rewards',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.VISIBLE,
     selector: '[data-spw-image-reward], [data-spw-image-discovery]',
     rootMode: 'single',
     describes: 'image[discovery]{reward.notice.cadence.production}',
@@ -931,7 +931,7 @@ export const ENHANCEMENT_DEFS = [
   {
     id: 'local-memory-controls',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.VISIBLE,
     selector: '[data-spw-memory-action]',
     rootMode: 'single',
     load: () => import('../interface/local-memory-controls.js'),
@@ -944,7 +944,7 @@ export const ENHANCEMENT_DEFS = [
   {
     id: 'prompt-utils',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.VISIBLE,
     selector: '[data-spw-promptability="visible"], [data-spw-prompt-host]',
     rootMode: 'single',
     load: () => import('../interface/prompt-utils.js'),

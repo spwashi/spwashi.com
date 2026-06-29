@@ -32,6 +32,8 @@ export const SPW_MODULE_LOADER_CONTRACT = Object.freeze({
     'Use createModuleLoader() when a page shell needs staged module mounting without inlining the bootstrap.',
   featureGating:
     'shouldScheduleDefinition() honors module def.features against ctx.features (body[data-spw-features]).',
+  immediateScheduling:
+    'Immediate definitions within a layer mount concurrently after any site-settings core seed; call sites may run independent non-core layers together.',
 });
 
 export function createModuleLoader(config = {}) {
@@ -997,11 +999,16 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
   }
 }
 
-async function mountImmediateLayer(defs, ctx) {
+async function mountImmediateLayer(defs, ctx, options = {}) {
   const eligible = defs.filter((def) => shouldScheduleDefinition(def, ctx, mountWhen.IMMEDIATE));
   if (!eligible.length) return;
 
-  performance.mark('spw:immediate-layer-batch-start');
+  const layerLabel = normalizeRuntimeToken(options.label || eligible[0]?.layer || 'layer') || 'layer';
+  const startMark = `spw:immediate-layer:${layerLabel}:batch-start`;
+  const endMark = `spw:immediate-layer:${layerLabel}:batch-end`;
+  const measureName = `spw:immediate-layer:${layerLabel}:parallel`;
+
+  performance.mark(startMark);
   beginMountBatch();
   try {
     const settingsDef = eligible.find((def) => def.id === 'site-settings');
@@ -1017,12 +1024,9 @@ async function mountImmediateLayer(defs, ctx) {
     endMountBatch(ctx);
   }
 
-  performance.mark('spw:immediate-layer-batch-end');
-  performance.measure(
-    'spw:immediate-layer-parallel',
-    'spw:immediate-layer-batch-start',
-    'spw:immediate-layer-batch-end',
-  );
+  performance.mark(endMark);
+  performance.measure(measureName, startMark, endMark);
+  performance.measure('spw:immediate-layer-parallel', startMark, endMark);
 }
 
 async function mountVisibleFeatures(defs, ctx) {

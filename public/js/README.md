@@ -35,6 +35,23 @@ If you are trying to learn the runtime, read in this order:
 12. `public/js/semantic/` for projection, inference, and semantic helpers.
 13. `public/js/modules/` for clustered route-specific feature bundles.
 
+## Bootstrap Scheduling
+
+The runtime keeps immediate core modules ordered because settings, shell state,
+and minimal page behavior seed later layers. After core, `site.js` mounts
+eligible feature and enhancement immediate layers in parallel through
+`runtime/module-loader.js`. Module definitions that require strict ordering
+should stay in `CORE_DEFS` or move behind `VISIBLE`, `IDLE`, `INTERACTION`, or
+`REGION` scheduling instead of depending on feature/enhancement array order.
+Interaction helpers, reward affordances, prompt utilities, and route-local labs
+should prefer `VISIBLE` when the first readable page state does not need them.
+
+Performance marks use layer labels such as
+`spw:immediate-layer:core:parallel` and
+`spw:immediate-layer:enhancement:parallel`, with
+`spw:immediate-non-core-layers` covering the overlapped feature/enhancement
+wave.
+
 ## Folder Roles
 
 - `kernel/`: durable primitives, settings (profiles/engine/ui split), shared contracts, and runtime bridges.

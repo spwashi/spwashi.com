@@ -279,22 +279,6 @@ body[data-spw-surface="plans"] {
     var(--plans-surface);
 }
 
-[data-spw-surface="plans"] #plans-index .frame-list {
-  display: grid;
-  gap: 0.55rem;
-  padding-left: 1.15rem;
-}
-
-[data-spw-surface="plans"] #plans-index .frame-list li {
-  color: var(--plans-ink-mid);
-}
-
-[data-spw-surface="plans"] #plans-index .frame-list a {
-  color: color-mix(in srgb, var(--plans-accent) 84%, var(--plans-ink));
-  text-decoration-color: color-mix(in srgb, var(--plans-accent) 24%, transparent);
-  text-underline-offset: 0.14em;
-}
-
 /* ==========================================================================
    4. Verb register
    ========================================================================== */

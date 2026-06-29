@@ -331,27 +331,11 @@ body[data-spw-surface="about"] {
     var(--about-surface);
 }
 
-[data-spw-surface="about"] #about-index .frame-list {
-  display: grid;
-  gap: 0.55rem;
-  padding-left: 1.15rem;
-}
-
-[data-spw-surface="about"] #about-index .frame-list li {
-  color: var(--about-ink-soft);
-}
-
-[data-spw-surface="about"] #about-index .frame-list a {
-  color: color-mix(in srgb, var(--about-accent) 84%, var(--about-ink));
-  text-decoration-color: color-mix(in srgb, var(--about-accent) 24%, transparent);
-  text-underline-offset: 0.14em;
-}
-
 /* ==========================================================================
    5. Panels and grids
    ========================================================================== */
 
-[data-spw-surface="about"] .frame-grid {
+[data-spw-surface="about"] .frame-grid:not([data-spw-layout="media-prose"]):not(.frame-grid--media-prose) {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
   gap: 0.95rem;

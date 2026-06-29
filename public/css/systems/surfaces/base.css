@@ -94,6 +94,33 @@
   min-width: 0;
 }
 
+:where(.frame-grid[data-spw-layout="media-prose"], .frame-grid--media-prose) {
+  grid-template-columns: minmax(0, 1fr) minmax(min(100%, 18rem), 0.72fr);
+  align-items: start;
+}
+
+:where(.frame-grid[data-spw-layout="media-prose"], .frame-grid--media-prose) > :where(*) {
+  min-width: 0;
+}
+
+:where(.frame-grid[data-spw-layout="media-prose"], .frame-grid--media-prose) > :first-child {
+  grid-column: auto;
+}
+
+:where(.frame-grid[data-spw-layout="media-prose"], .frame-grid--media-prose) > :is(figure, .image-study, .topic-photo-card) {
+  grid-column: auto;
+  align-self: start;
+  justify-self: center;
+  inline-size: min(100%, 30rem);
+  max-inline-size: 30rem;
+}
+
+@media (max-width: 48rem) {
+  :where(.frame-grid[data-spw-layout="media-prose"], .frame-grid--media-prose) {
+    grid-template-columns: 1fr;
+  }
+}
+
 :where(.frame-grid--dense) {
   gap: var(--component-gap-tight, 0.55rem);
 }

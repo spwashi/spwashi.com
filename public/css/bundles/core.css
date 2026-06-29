@@ -17862,6 +17862,35 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   line-height: 1.5;
 }
 
+:where(.frame-list--inline) {
+  --frame-list-inline-accent: var(--active-op-color, var(--component-accent, var(--semantic-accent, #008080)));
+  --frame-list-inline-line: color-mix(in srgb, var(--frame-list-inline-accent) 24%, var(--line, rgba(14, 18, 20, 0.14)));
+  --frame-list-inline-ink: var(--ink-mid, var(--ink-soft, rgba(14, 18, 20, 0.68)));
+
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--frame-list-inline-min, 18rem)), 1fr));
+  gap: 0.55rem 0.9rem;
+  padding-inline-start: 0;
+  list-style: none;
+}
+
+:where(.frame-list--inline li) {
+  max-inline-size: none;
+  margin: 0;
+  padding-block: 0.12rem 0.18rem;
+  padding-inline-start: 0.72rem;
+  border-inline-start: 2px solid var(--frame-list-inline-line);
+  color: var(--frame-list-inline-ink);
+}
+
+:where(.frame-list--inline :is(a, strong)) {
+  color: color-mix(in srgb, var(--frame-list-inline-accent) 84%, var(--ink, currentColor));
+}
+
+:where(.frame-list--inline a) {
+  text-decoration-color: color-mix(in srgb, var(--frame-list-inline-accent) 28%, transparent);
+  text-underline-offset: 0.14em;
+}
+
 /* Portable literary surfaces. Safe to copy into a rogue page or generator
    output when the stylesheet itself needs to read like an annotated text. */
 :where(.spw-literary-note, [data-spw-textual-role="note"]) {
@@ -21784,6 +21813,33 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
   min-width: 0;
 }
 
+:where(.frame-grid[data-spw-layout="media-prose"], .frame-grid--media-prose) {
+  grid-template-columns: minmax(0, 1fr) minmax(min(100%, 18rem), 0.72fr);
+  align-items: start;
+}
+
+:where(.frame-grid[data-spw-layout="media-prose"], .frame-grid--media-prose) > :where(*) {
+  min-width: 0;
+}
+
+:where(.frame-grid[data-spw-layout="media-prose"], .frame-grid--media-prose) > :first-child {
+  grid-column: auto;
+}
+
+:where(.frame-grid[data-spw-layout="media-prose"], .frame-grid--media-prose) > :is(figure, .image-study, .topic-photo-card) {
+  grid-column: auto;
+  align-self: start;
+  justify-self: center;
+  inline-size: min(100%, 30rem);
+  max-inline-size: 30rem;
+}
+
+@media (max-width: 48rem) {
+  :where(.frame-grid[data-spw-layout="media-prose"], .frame-grid--media-prose) {
+    grid-template-columns: 1fr;
+  }
+}
+
 :where(.frame-grid--dense) {
   gap: var(--component-gap-tight, 0.55rem);
 }
@@ -21867,6 +21923,43 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
 :where(.site-frame[data-spw-attentional-weight="0.95"]),
 :where(.site-frame[data-spw-attentional-weight="0.92"]) {
   opacity: 0.98;
+}
+
+:where(
+  .site-frame[data-spw-region-purpose="public-spine"][data-spw-composition-stability="anchored"],
+  .site-frame[data-spw-region-purpose="public-spine"][data-spw-composition-stability="stable"],
+  .site-frame[data-spw-region-purpose="section-hub"][data-spw-composition-stability="anchored"],
+  .site-frame[data-spw-region-purpose="section-hub"][data-spw-composition-stability="stable"],
+  .site-frame[data-spw-feature$="-entry"][data-spw-composition-stability="anchored"],
+  .site-frame[data-spw-feature$="-entry"][data-spw-composition-stability="stable"]
+) {
+  --site-frame-seam-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 38%, transparent);
+  --spw-chassis-highlight:
+    inset 0 1px 0 color-mix(in srgb, white 22%, transparent),
+    inset 0.28rem 0 0 color-mix(in srgb, var(--active-op-color, var(--teal)) 12%, transparent);
+}
+
+:where(
+  .site-frame[data-spw-region-purpose="public-spine"][data-spw-composition-stability="stable"],
+  .site-frame[data-spw-region-purpose="section-hub"][data-spw-composition-stability="stable"],
+  .site-frame[data-spw-feature$="-entry"][data-spw-composition-stability="stable"]
+) {
+  --site-frame-seam-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 22%, transparent);
+  --spw-chassis-highlight:
+    inset 0 1px 0 color-mix(in srgb, white 18%, transparent),
+    inset 0.18rem 0 0 color-mix(in srgb, var(--active-op-color, var(--teal)) 8%, transparent);
+}
+
+:where(.site-frame[data-spw-gradient-boundary="none"])::before {
+  opacity: 0.18;
+}
+
+:where(html[data-spw-debug-mode="on"]) :where(.site-frame[data-spw-resolved-composition-stability]) {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 12%, transparent);
+}
+
+:where(html[data-spw-debug-mode="on"]) :where(.site-frame[data-spw-resolved-composition-stability="loose"]) {
+  border-style: dashed;
 }
 
 :where(.site-frame .frame-panel, .site-frame .frame-card) {

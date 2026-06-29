@@ -344,31 +344,14 @@
   color: rgba(31, 36, 35, 0.7);
 }
 
-:where(body[data-spw-surface="rpg-wednesday"] .frame-grid) {
+:where(body[data-spw-surface="rpg-wednesday"] .frame-grid:not([data-spw-layout="media-prose"]):not(.frame-grid--media-prose)) {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: var(--space-md, 1rem);
 }
 
-:where(body[data-spw-surface="rpg-wednesday"] .frame-grid[data-spw-layout="media-prose"]) {
-  grid-template-columns: minmax(0, 1fr) minmax(min(100%, 18rem), 0.72fr);
-  align-items: start;
-}
-
-:where(body[data-spw-surface="rpg-wednesday"] .frame-grid > *) {
+:where(body[data-spw-surface="rpg-wednesday"] .frame-grid:not([data-spw-layout="media-prose"]):not(.frame-grid--media-prose) > *) {
   grid-column: span 6;
-}
-
-:where(body[data-spw-surface="rpg-wednesday"] .frame-grid[data-spw-layout="media-prose"] > :first-child) {
-  grid-column: auto;
-}
-
-:where(body[data-spw-surface="rpg-wednesday"] .frame-grid[data-spw-layout="media-prose"] > :is(figure, .image-study, .topic-photo-card)) {
-  grid-column: auto;
-  align-self: start;
-  justify-self: center;
-  inline-size: min(100%, 30rem);
-  max-inline-size: 30rem;
 }
 
 :where(body[data-spw-surface="rpg-wednesday"] #rpgw-character .frame-grid) {

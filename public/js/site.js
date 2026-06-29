@@ -141,6 +141,8 @@ import { createModuleLoader } from './runtime/module-loader.js';
  * Load instrumentation contract
  * - Phases and per-module costs are recorded with performance.mark/measure using the 'spw:' prefix
  *   (visible in DevTools Performance panel, getEntriesByType, and the timings() surfaces).
+ * - Immediate core modules mount first; independent feature/enhancement layers then mount together.
+ *   Modules with strict ordering requirements should stay in core or move behind visible/idle scheduling.
  * - Key transitions and module events are also emitted via the 'spw-runtime' logger (LIFECYCLE relation)
  *   so they respect ?log=spw-runtime&log-level=debug and the shared instrumentation controls.
  * - Existing internal timings (loadMs, durationMs, registry records, moduleAudit, data-spw-runtime-* attrs)
@@ -838,12 +840,23 @@ async function bootSite() {
   bindGlobalInteractions();
   annotateDeepLinkTargets(document);
 
-  await mountImmediateLayer(CORE_DEFS, runtimeCtx);
-  await mountImmediateLayer(FEATURE_DEFS, runtimeCtx);
-  await mountImmediateLayer(ENHANCEMENT_DEFS, runtimeCtx);
+  await mountImmediateLayer(CORE_DEFS, runtimeCtx, { label: 'core' });
+  performance.mark('spw:immediate-non-core-layers-start');
+  await Promise.all([
+    mountImmediateLayer(FEATURE_DEFS, runtimeCtx, { label: 'feature' }),
+    mountImmediateLayer(ENHANCEMENT_DEFS, runtimeCtx, { label: 'enhancement' }),
+  ]);
+  performance.mark('spw:immediate-non-core-layers-complete');
+  performance.measure(
+    'spw:immediate-non-core-layers',
+    'spw:immediate-non-core-layers-start',
+    'spw:immediate-non-core-layers-complete',
+  );
   progressHydration(HYDRATION_STATES.ACTIVATING);
-  await prefetchRuntimeResources(runtimeCtx, FEATURE_DEFS, MOUNT_WHEN.VISIBLE, 'modulepreload');
-  await prefetchRuntimeResources(runtimeCtx, ENHANCEMENT_DEFS, MOUNT_WHEN.IDLE, 'prefetch');
+  await Promise.all([
+    prefetchRuntimeResources(runtimeCtx, FEATURE_DEFS, MOUNT_WHEN.VISIBLE, 'modulepreload'),
+    prefetchRuntimeResources(runtimeCtx, ENHANCEMENT_DEFS, MOUNT_WHEN.IDLE, 'prefetch'),
+  ]);
   performance.mark('spw:immediate-layer-complete');
   performance.measure('spw:immediate-layer', 'spw:boot-start', 'spw:immediate-layer-complete');
   runtimeLogger.info('immediate layers mounted', { route: runtimeCtx.route }, SPW_LOG_RELATIONSHIPS.LIFECYCLE);
