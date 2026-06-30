@@ -422,9 +422,9 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-page-seed="page_design_des
 }
 
 :where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-material-controls .operator-chip[aria-pressed="true"]) {
-  border-color: color-mix(in srgb, var(--design-surface-accent-strong) 70%, var(--design-surface-line) 30%);
-  background: color-mix(in srgb, var(--design-surface-accent) 16%, var(--design-surface-matte-strong));
-  color: var(--design-surface-ink);
+  --operator-chip-active-border-intent: color-mix(in srgb, var(--design-surface-accent-strong) 70%, var(--design-surface-line) 30%);
+  --operator-chip-active-bg-intent: color-mix(in srgb, var(--design-surface-accent) 16%, var(--design-surface-matte-strong));
+  --operator-chip-active-ink-intent: var(--design-surface-ink);
 }
 
 :where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-material-stage) {
@@ -606,9 +606,9 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-page-seed="page_design_des
 }
 
 :where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-ecology-control-row .operator-chip[aria-pressed="true"]) {
-  border-color: color-mix(in srgb, var(--design-ecology-accent) 66%, var(--design-surface-line) 34%);
-  background: color-mix(in srgb, var(--design-ecology-accent) 18%, var(--design-surface-matte-strong));
-  box-shadow:
+  --operator-chip-active-border-intent: color-mix(in srgb, var(--design-ecology-accent) 66%, var(--design-surface-line) 34%);
+  --operator-chip-active-bg-intent: color-mix(in srgb, var(--design-ecology-accent) 18%, var(--design-surface-matte-strong));
+  --operator-chip-active-shadow-intent:
     0 0 0 1px color-mix(in srgb, var(--design-ecology-accent) 26%, transparent),
     inset 0 1px 0 color-mix(in srgb, white 38%, transparent);
 }

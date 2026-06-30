@@ -746,9 +746,9 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
 }
 
 :where(.operator-chip[aria-pressed="true"], .operator-chip[data-site-setting-active="true"]) {
-  border-color: color-mix(in srgb, var(--component-accent) 44%, transparent);
-  background: color-mix(in srgb, var(--component-accent) 14%, var(--component-surface-strong));
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--component-accent) 16%, transparent);
+  --operator-chip-active-border-intent: color-mix(in srgb, var(--component-accent) 44%, transparent);
+  --operator-chip-active-bg-intent: color-mix(in srgb, var(--component-accent) 14%, var(--component-surface-strong));
+  --operator-chip-active-shadow-intent: 0 0 0 1px color-mix(in srgb, var(--component-accent) 16%, transparent);
 }
 
 :where(.spec-strip) {

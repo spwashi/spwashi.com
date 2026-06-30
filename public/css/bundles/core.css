@@ -17808,9 +17808,9 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
 }
 
 :where(.operator-chip[aria-pressed="true"], .operator-chip[data-site-setting-active="true"]) {
-  border-color: color-mix(in srgb, var(--component-accent) 44%, transparent);
-  background: color-mix(in srgb, var(--component-accent) 14%, var(--component-surface-strong));
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--component-accent) 16%, transparent);
+  --operator-chip-active-border-intent: color-mix(in srgb, var(--component-accent) 44%, transparent);
+  --operator-chip-active-bg-intent: color-mix(in srgb, var(--component-accent) 14%, var(--component-surface-strong));
+  --operator-chip-active-shadow-intent: 0 0 0 1px color-mix(in srgb, var(--component-accent) 16%, transparent);
 }
 
 :where(.spec-strip) {
@@ -25629,6 +25629,16 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
   --operator-chip-hover-ink: var(--ink);
   --operator-chip-hover-shadow: var(--operator-chip-shadow);
   --operator-chip-hover-lift: 0px;
+  --operator-chip-active-bg: var(--operator-chip-active-bg-intent, color-mix(in oklab, var(--surface-strong, #fff) 82%, var(--active-op-color, var(--teal)) 18%));
+  --operator-chip-active-border: var(--operator-chip-active-border-intent, color-mix(in oklab, var(--active-op-color, var(--teal)) 44%, transparent));
+  --operator-chip-active-ink: var(--operator-chip-active-ink-intent, color-mix(in oklab, var(--active-op-color, var(--teal)) 88%, var(--ink, rgba(14, 18, 20, 0.92))));
+  --operator-chip-active-shadow: var(--operator-chip-active-shadow-intent,
+    inset 0 1px 0 color-mix(in srgb, white 28%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 18%, transparent),
+    0 0.18rem 0.85rem color-mix(in srgb, var(--active-op-color, var(--teal)) 10%, transparent));
+  --operator-chip-active-weight: var(--operator-chip-active-weight-intent, 650);
+  --operator-chip-active-lift: var(--operator-chip-active-lift-intent, 0px);
+  --operator-chip-active-animation: var(--operator-chip-active-animation-intent, none);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -25707,6 +25717,16 @@ html[data-spw-load-timing="defer"] .operator-chip:focus-visible {
     0 0 calc(0.7rem + var(--spw-collection-strength, 0) * 0.4rem) color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal))) 14%, transparent);
 }
 
+:where(.operator-chip:is([aria-pressed="true"], [data-site-setting-active="true"])) {
+  background: var(--operator-chip-active-bg);
+  border-color: var(--operator-chip-active-border);
+  color: var(--operator-chip-active-ink);
+  box-shadow: var(--operator-chip-active-shadow);
+  font-weight: var(--operator-chip-active-weight);
+  transform: translateY(var(--operator-chip-active-lift));
+  animation: var(--operator-chip-active-animation);
+}
+
 html[data-spw-color-mode="dark"] .operator-chip {
   --operator-chip-bg: color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.94)) 88%, var(--active-op-color, var(--teal, #008080)) 12%);
   --operator-chip-border: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 42%, rgba(255, 255, 255, 0.16) 58%);
@@ -25714,6 +25734,13 @@ html[data-spw-color-mode="dark"] .operator-chip {
   --operator-chip-hover-bg: color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.94)) 78%, var(--active-op-color, var(--teal, #008080)) 22%);
   --operator-chip-hover-border: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 54%, rgba(255, 255, 255, 0.18) 46%);
   --operator-chip-hover-ink: var(--ink-strong, rgba(245, 247, 250, 0.98));
+  --operator-chip-active-bg: var(--operator-chip-active-bg-intent, color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.94)) 66%, var(--active-op-color, var(--teal, #008080)) 34%));
+  --operator-chip-active-border: var(--operator-chip-active-border-intent, color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 62%, rgba(255, 255, 255, 0.2) 38%));
+  --operator-chip-active-ink: var(--operator-chip-active-ink-intent, var(--ink-strong, rgba(245, 247, 250, 0.98)));
+  --operator-chip-active-shadow: var(--operator-chip-active-shadow-intent,
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 22%, transparent),
+    0 0.18rem 0.85rem color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 14%, transparent));
   --operator-chip-shadow:
     inset 0 1px 0 rgba(255,255,255,0.05),
     0 0 0 1px rgba(0,0,0,0.08);
@@ -25730,6 +25757,13 @@ html[data-spw-color-mode="dark"] .operator-chip {
     --operator-chip-hover-bg: color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.94)) 78%, var(--active-op-color, var(--teal, #008080)) 22%);
     --operator-chip-hover-border: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 54%, rgba(255, 255, 255, 0.18) 46%);
     --operator-chip-hover-ink: var(--ink-strong, rgba(245, 247, 250, 0.98));
+    --operator-chip-active-bg: var(--operator-chip-active-bg-intent, color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.94)) 66%, var(--active-op-color, var(--teal, #008080)) 34%));
+    --operator-chip-active-border: var(--operator-chip-active-border-intent, color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 62%, rgba(255, 255, 255, 0.2) 38%));
+    --operator-chip-active-ink: var(--operator-chip-active-ink-intent, var(--ink-strong, rgba(245, 247, 250, 0.98)));
+    --operator-chip-active-shadow: var(--operator-chip-active-shadow-intent,
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 22%, transparent),
+      0 0.18rem 0.85rem color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 14%, transparent));
     --operator-chip-shadow:
       inset 0 1px 0 rgba(255,255,255,0.05),
       0 0 0 1px rgba(0,0,0,0.08);

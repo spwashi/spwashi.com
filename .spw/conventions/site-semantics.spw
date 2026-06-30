@@ -268,6 +268,17 @@
   anti_pattern = "A route invents .syntax-active/.marketing-active classes, updates panel display locally, and leaves no bus event, root state, or deep-linkable handle for QA."
 }
 
+^"pressed_handle_state_contract"{
+  operation = "contract"
+  fixity = "stable"
+  definition = "Pressed handles are semantic state projections: the control state comes from aria-pressed or data-site-setting-active, while route and component layers may only provide active-state intent variables."
+  html_contract = "Use aria-pressed='true' for toggleable controls and data-site-setting-active='true' for settings-bound chips. Do not introduce route-local active class names for the same state."
+  css_contract = "public/css/handles/operators.css owns the operator-chip pressed rendering through --operator-chip-active-* variables. Lower layers set --operator-chip-active-*-intent when a route needs a local palette or proof posture."
+  runtime_contract = "JavaScript updates the semantic state attribute; it should not also write visual-only classes for the same selected/pressed meaning."
+  validation = "rg -- '--operator-chip-active-|aria-pressed=\"true\"|data-site-setting-active=\"true\"' public/css public/js **/index.html"
+  anti_pattern = "A route hard-codes .operator-chip[aria-pressed='true'] background, border, and shadow after the shared handle layer, making pressed behavior depend on cascade accident instead of the state contract."
+}
+
 ^"composable_discoverability_contract"{
   definition: "Composability and discoverability are the same architecture seen from two directions: a thing can be recombined safely when its meaning, ownership, state, and consequence can be found quickly."
   route_layer = "Use body metadata and stable ids so the route's semantic flow is visible before enhancement."

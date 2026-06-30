@@ -1790,9 +1790,9 @@ html[data-spw-hydration="ready"] #home-frame .frame-topline {
 }
 
 :where(body[data-spw-surface="home"] .operator-chip[aria-pressed="true"], body[data-spw-surface="home"] .operator-chip[data-site-setting-active="true"]) {
-  border-color: color-mix(in srgb, var(--home-accent-primary) 40%, transparent);
-  background: color-mix(in srgb, var(--home-accent-primary) 14%, var(--home-surface-bg-strong));
-  color: var(--home-accent-primary);
+  --operator-chip-active-border-intent: color-mix(in srgb, var(--home-accent-primary) 40%, transparent);
+  --operator-chip-active-bg-intent: color-mix(in srgb, var(--home-accent-primary) 14%, var(--home-surface-bg-strong));
+  --operator-chip-active-ink-intent: var(--home-accent-primary);
 }
 
 :where(body[data-spw-surface="home"] #home-frame .mode-switch) {
