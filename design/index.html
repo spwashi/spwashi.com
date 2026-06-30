@@ -158,7 +158,8 @@
                         <p>These routes show where the design hub turns into a reusable page pattern, a teaching surface, or a browser-side test bench. I am treating them like material samples now: what is it made of, what happened to it, and what small fact could survive in a screenshot after the tab is gone?</p>
                     </header>
                     <ul class="spw-route-bridge__links">
-                        <li><a href="/design/components/"><strong>Component glossary</strong><span>See how named slots, wrappers, and states keep the anatomy readable.</span></a></li>
+                        <li><a href="/design/components/"><strong>Component glossary</strong><span>See how named slots, wrappers, specimens, and states keep the anatomy readable.</span></a></li>
+                        <li><a href="/design/components/#specimen-builder-rail"><strong>Specimen builders</strong><span>Start from a living component, then route into builders that can create proof cards, profiles, character cards, and prompt packets.</span></a></li>
                         <li><a href="/design/palettes/"><strong>Palette seeds</strong><span>Browse color, material, spell, cauldron, and lighting hooks before promoting tokens.</span></a></li>
                         <li><a href="/design/folios/"><strong>Folio archive</strong><span>Read laminated art artifacts as visual studies, skill prompts, and community memory.</span></a></li>
                         <li><a href="/topics/craft/"><strong>Craft processes</strong><span>Connect component anatomy to clay, fiber, wood, paper, metal, soil, seed, and baking without turning every sample into a museum label.</span></a></li>
@@ -214,6 +215,7 @@
                     <a class="operator-chip" href="#promptability-studio">@ prompt studio</a>
                     <a class="operator-chip" href="/design/components/#hook-region-anatomy">? hook anatomy</a>
                     <a class="operator-chip" href="/design/components/">* component glossary</a>
+                    <a class="operator-chip" href="/design/components/#specimen-builder-rail">@ specimen builders</a>
                     <a class="operator-chip" href="#component-ecology-specimens">~ component ecology</a>
                     <a class="operator-chip" href="/design/folios/" data-spw-operator="object">^ folio archive</a>
                     <a class="operator-chip" href="/play/rpg-wednesday/">* RPG Wednesday</a>
@@ -372,25 +374,43 @@
                 </aside>
             </section>
 
-            <section class="site-frame" id="component-ecology-specimens" aria-labelledby="component-ecology-specimens-title" data-spw-role="lab" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="mechanics resonance component-ecology" data-spw-affordance="tune" data-spw-liminality="instrument" data-spw-category-family="runtime" data-spw-locality="high" data-spw-consequence="state" data-spw-promptability="visible" data-spw-collectability="medium" data-spw-feature="component-ecology-specimens" data-spw-semantic-expression="component[ecology]{state.resonance.mechanics}" data-spw-related-routes="/design/components/|/design/runtime/|/design/interaction-design/|/design/palettes/|/settings/#semantic-settings">
+            <section class="site-frame" id="component-ecology-specimens" aria-labelledby="component-ecology-specimens-title" data-spw-role="lab" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="mechanics resonance component-ecology" data-spw-affordance="tune" data-spw-liminality="instrument" data-spw-category-family="runtime" data-spw-locality="high" data-spw-consequence="state" data-spw-promptability="visible" data-spw-collectability="medium" data-spw-feature="living-component-specimen" data-spw-semantic-expression="component-specimen[message-surface]{build.tune.serialize}" data-spw-specimen-builder="message-surface" data-spw-related-routes="/design/components/|/design/components/#specimen-builder-rail|/design/runtime/|/design/interaction-design/|/design/palettes/|/settings/#semantic-settings">
                 <header class="frame-heading">
                     <a class="frame-sigil" href="#component-ecology-specimens">~component_ecology</a>
-                    <h2 id="component-ecology-specimens-title">Component ecology should be learnable as mechanics, not only vocabulary.</h2>
+                    <h2 id="component-ecology-specimens-title">Living component specimens should be learnable as mechanics, not only vocabulary.</h2>
                 </header>
                 <p class="frame-note">
-                    A customizable message bubble is a useful familiar specimen because it makes component-level variants obvious: the same message can change environment, surface, behavior, and social meaning without becoming a different product. This lab keeps those axes explicit and inspectable.
+                    A customizable message bubble is a useful familiar specimen because it makes component-level variants obvious: the same message can change environment, surface, behavior, posture, and social meaning without becoming a different product. This lab keeps those axes explicit, serializable, and inspectable.
                 </p>
+
+                <div class="design-ecology-method" data-spw-kind="method" data-spw-role="grammar-physics" data-spw-semantic-expression="method-ecology[layout]{pack.reflow.settle}">
+                    <div>
+                        <strong>Pack</strong>
+                        <span>Available width decides whether the specimen is compact, balanced, or spacious.</span>
+                    </div>
+                    <div>
+                        <strong>Reflow</strong>
+                        <span>Posture changes where controls, stage, and readout sit in relation to one another.</span>
+                    </div>
+                    <div>
+                        <strong>Settle</strong>
+                        <span>Every posture change leaves a short trace so the visitor can see the method land.</span>
+                    </div>
+                </div>
 
                 <div class="design-ecology-specimen"
                      data-design-ecology-specimen
                      data-design-ecology-environment="calm"
                      data-design-ecology-variant="soft"
                      data-design-ecology-behavior="rest"
+                     data-design-ecology-posture="split"
                      data-spw-kind="specimen"
                      data-spw-role="component-lab"
-                     data-spw-feature="message-surface-ecology"
+                     data-spw-feature="living-message-surface"
+                     data-spw-semantic-expression="component-specimen[message-surface]{environment.variant.behavior.posture}"
+                     data-spw-specimen-builder="message-surface"
                      data-spw-component-locality="design-ecology"
-                     data-spw-state-contract="environment variant behavior readout"
+                     data-spw-state-contract="environment variant behavior posture packing settle readout"
                      aria-label="Component ecology specimen">
                     <div class="design-ecology-controls" data-spw-slot="actions" aria-label="Component ecology controls">
                         <section class="design-ecology-control-group" aria-labelledby="ecology-environment-title">
@@ -421,6 +441,15 @@
                                 <button class="operator-chip" type="button" data-design-ecology-set="behavior:collected" aria-pressed="false">collected</button>
                             </div>
                         </section>
+                        <section class="design-ecology-control-group" aria-labelledby="ecology-posture-title">
+                            <h3 id="ecology-posture-title">Posture</h3>
+                            <p class="frame-note">Changes packing, reflow, and how the method settles.</p>
+                            <div class="design-ecology-control-row">
+                                <button class="operator-chip" type="button" data-design-ecology-set="posture:stack" aria-pressed="false">stack</button>
+                                <button class="operator-chip" type="button" data-design-ecology-set="posture:split" aria-pressed="true">split</button>
+                                <button class="operator-chip" type="button" data-design-ecology-set="posture:atlas" aria-pressed="false">atlas</button>
+                            </div>
+                        </section>
                     </div>
 
                     <div class="design-ecology-stage" data-design-ecology-stage data-spw-slot="figure" aria-label="Message bubble ecology display">
@@ -447,14 +476,37 @@
                             <div><dt>card state</dt><dd><code data-design-ecology-readout="cardState">skim</code></dd></div>
                             <div><dt>charge</dt><dd><code data-design-ecology-readout="charge">0</code></dd></div>
                             <div><dt>resonance</dt><dd><code data-design-ecology-readout="resonance">0.18</code></dd></div>
+                            <div><dt>posture</dt><dd><code data-design-ecology-readout="posture">split</code></dd></div>
+                            <div><dt>packing</dt><dd><code data-design-ecology-readout="packing">balanced</code></dd></div>
+                            <div><dt>settle</dt><dd><code data-design-ecology-readout="settle">settled</code></dd></div>
+                            <div><dt>spw</dt><dd><code data-design-ecology-readout="expression">component-specimen[soft]{calm.rest.split}</code></dd></div>
+                            <div><dt>builder link</dt><dd><code data-design-ecology-readout="builderHref">/design/?componentSpecimen=calm:soft:rest:split#component-ecology-specimens</code></dd></div>
                         </dl>
                         <div class="design-ecology-meter" aria-hidden="true">
                             <span>mechanics</span>
                         </div>
+                        <div class="design-ecology-actions" role="group" aria-label="Copy specimen state">
+                            <button class="operator-chip" type="button" data-design-ecology-copy="expression">copy Spw</button>
+                            <button class="operator-chip" type="button" data-design-ecology-copy="link">copy state link</button>
+                        </div>
                         <p class="design-ecology-status" data-design-ecology-status role="status" aria-live="polite">Specimen ready.</p>
-                        <p class="frame-note">Console hooks: <code>spwDesignExperiments.inspectEcologySpecimen()</code> and <code>spwDesignExperiments.setEcologySpecimen({ behavior: "collected" })</code>.</p>
+                        <p class="frame-note">Console hooks: <code>spwDesignExperiments.inspectEcologySpecimen()</code> and <code>spwDesignExperiments.setEcologySpecimen({ behavior: "collected", posture: "atlas" })</code>.</p>
                     </aside>
                 </div>
+
+                <aside class="spw-route-bridge design-specimen-builder-rail" id="living-specimen-builder-rail" aria-labelledby="living-specimen-builder-title" data-spw-kind="rail" data-spw-role="builder-index" data-spw-semantic-expression="specimen-builder[component]{choose.create.carry}">
+                    <header>
+                        <h3 id="living-specimen-builder-title">Turn this specimen into a made thing</h3>
+                        <p>Use the living component as the contract, then choose a builder based on what the specimen should become.</p>
+                    </header>
+                    <ul class="spw-route-bridge__links">
+                        <li><a href="/design/components/#specimen-builder-rail"><strong>Builder rail</strong><span>Compare which builder should create the next specimen and which posture should carry it.</span></a></li>
+                        <li><a href="/tools/character-sheet/"><strong>Character card builder</strong><span>Create a specimen with slots, badges, and RPG-readable identity.</span></a></li>
+                        <li><a href="/tools/profile/"><strong>Profile builder</strong><span>Create a profile specimen that can feed visual prompts and route cards.</span></a></li>
+                        <li><a href="/cards/"><strong>Proof cards</strong><span>Turn the state into a kept local artifact with a clear next action.</span></a></li>
+                        <li><a href="/tools/midjourney/"><strong>Prompt packet bench</strong><span>Translate component state into image and style-reference packets.</span></a></li>
+                    </ul>
+                </aside>
 
                 <aside class="spw-route-bridge" aria-labelledby="component-ecology-routes-title">
                     <header>
@@ -462,7 +514,7 @@
                         <p>Each route below owns a different part of the ecology, so the hub can teach the whole mechanism without duplicating every rule.</p>
                     </header>
                     <ul class="spw-route-bridge__links">
-                        <li><a href="/design/components/"><strong>Component glossary</strong><span>Slots, variants, and reusable component anatomy.</span></a></li>
+                        <li><a href="/design/components/"><strong>Component glossary</strong><span>Slots, variants, reusable component anatomy, and specimen builders.</span></a></li>
                         <li><a href="/design/runtime/"><strong>Runtime lab</strong><span>Browser behavior, diagnostics, and state inspection.</span></a></li>
                         <li><a href="/design/interaction-design/"><strong>Interaction design</strong><span>Gesture consequence, feedback, and learnability.</span></a></li>
                         <li><a href="/design/palettes/"><strong>Palette grammar</strong><span>Resonance color, material states, and visible token ranges.</span></a></li>

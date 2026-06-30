@@ -264,6 +264,51 @@ body[data-spw-surface="about"] {
   color: color-mix(in srgb, var(--about-ink) 92%, var(--about-accent-2));
 }
 
+[data-spw-surface="about"] .about-story-map {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13.5rem), 1fr));
+  gap: 0.65rem;
+  margin-block: 1.15rem 1.25rem;
+}
+
+[data-spw-surface="about"] .about-story-map__item {
+  display: grid;
+  align-content: start;
+  gap: 0.36rem;
+  min-inline-size: 0;
+  padding: 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--about-line) 88%, transparent);
+  border-radius: 8px;
+  background:
+    linear-gradient(150deg, color-mix(in srgb, var(--about-accent-soft) 74%, transparent), transparent 58%),
+    color-mix(in srgb, var(--about-surface-strong) 96%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, white 26%, transparent);
+}
+
+[data-spw-surface="about"] .about-story-map__cue {
+  width: fit-content;
+  padding: 0.12rem 0.42rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--about-accent) 9%, transparent);
+  color: color-mix(in srgb, var(--about-accent) 84%, var(--about-ink));
+  font-family: var(--grammar-mono-font, var(--site-mono-font, monospace));
+  font-size: 0.68rem;
+  font-weight: 750;
+  letter-spacing: 0;
+}
+
+[data-spw-surface="about"] .about-story-map__item strong {
+  color: color-mix(in srgb, var(--about-ink) 92%, var(--about-accent-2));
+  font-size: 0.95rem;
+}
+
+[data-spw-surface="about"] .about-story-map__item p {
+  margin: 0;
+  color: var(--about-ink-soft);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
 @container (min-width: 860px) {
   [data-spw-surface="about"] #about-frame {
     grid-template-columns: minmax(18rem, 0.78fr) minmax(26rem, 1.22fr);

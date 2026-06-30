@@ -7,6 +7,7 @@
 import { bus } from '/public/js/kernel/bus.js';
 import {
   createSpwLogger,
+  markLayoutTrope,
   markInstrumented,
   snapshotInstrumentationTarget,
 } from '/public/js/kernel/instrumentation.js';
@@ -47,11 +48,14 @@ const ECOLOGY_STAGE_SELECTOR = '[data-design-ecology-stage]';
 const ECOLOGY_BUBBLE_SELECTOR = '[data-design-ecology-bubble]';
 const ECOLOGY_READOUT_SELECTOR = '[data-design-ecology-readout]';
 const ECOLOGY_STATUS_SELECTOR = '[data-design-ecology-status]';
+const ECOLOGY_COPY_SELECTOR = '[data-design-ecology-copy]';
+const ECOLOGY_SETTLE_TIMERS = new WeakMap();
 
 const ECOLOGY_AXES = Object.freeze({
   environment: Object.freeze(['calm', 'social', 'inspect']),
   variant: Object.freeze(['soft', 'ledger', 'signal']),
   behavior: Object.freeze(['rest', 'draft', 'selected', 'collected']),
+  posture: Object.freeze(['stack', 'split', 'atlas']),
 });
 
 const ECOLOGY_ENVIRONMENT_MAP = Object.freeze({
@@ -71,6 +75,12 @@ const ECOLOGY_BEHAVIOR_MAP = Object.freeze({
   draft: Object.freeze({ cardState: 'compact', interactionContext: 'inspecting', charge: '1', resonance: '0.36', selection: 'focused', machinability: 'high' }),
   selected: Object.freeze({ cardState: 'select', interactionContext: 'comparing', charge: '2', resonance: '0.68', selection: 'active', machinability: 'high' }),
   collected: Object.freeze({ cardState: 'activate', interactionContext: 'collecting', charge: '3', resonance: '0.92', selection: 'selected', machinability: 'high' }),
+});
+
+const ECOLOGY_POSTURE_MAP = Object.freeze({
+  stack: Object.freeze({ packing: 'compact', flow: 'serial', expression: 'layout-posture[stack]{pack.serial.settle}' }),
+  split: Object.freeze({ packing: 'balanced', flow: 'paired', expression: 'layout-posture[split]{compare.reflow.settle}' }),
+  atlas: Object.freeze({ packing: 'spacious', flow: 'survey', expression: 'layout-posture[atlas]{spread.scan.settle}' }),
 });
 
 const RULE_DATASET_KEYS = Object.freeze({
@@ -490,9 +500,77 @@ function getEcologyState(specimen) {
     environment: normalizeEcologyValue('environment', specimen?.dataset?.designEcologyEnvironment),
     variant: normalizeEcologyValue('variant', specimen?.dataset?.designEcologyVariant),
     behavior: normalizeEcologyValue('behavior', specimen?.dataset?.designEcologyBehavior),
+    posture: normalizeEcologyValue('posture', specimen?.dataset?.designEcologyPosture),
   };
 
   return Object.freeze(state);
+}
+
+function getEcologyLocationState() {
+  const params = new URLSearchParams(window.location.search || '');
+  const packed = params.get('componentSpecimen') || params.get('specimen');
+  const next = {};
+
+  if (packed) {
+    const [environment, variant, behavior, posture] = packed.split(/[:|,]/).map((part) => part.trim());
+    if (environment) next.environment = normalizeEcologyValue('environment', environment);
+    if (variant) next.variant = normalizeEcologyValue('variant', variant);
+    if (behavior) next.behavior = normalizeEcologyValue('behavior', behavior);
+    if (posture) next.posture = normalizeEcologyValue('posture', posture);
+  }
+
+  const environment = params.get('specimenEnvironment') || params.get('componentEnvironment');
+  const variant = params.get('specimenVariant') || params.get('componentVariant');
+  const behavior = params.get('specimenBehavior') || params.get('componentBehavior');
+  const posture = params.get('specimenPosture') || params.get('componentPosture');
+  if (environment) next.environment = normalizeEcologyValue('environment', environment);
+  if (variant) next.variant = normalizeEcologyValue('variant', variant);
+  if (behavior) next.behavior = normalizeEcologyValue('behavior', behavior);
+  if (posture) next.posture = normalizeEcologyValue('posture', posture);
+
+  return next;
+}
+
+function applyEcologyLocationState(specimen) {
+  if (!(specimen instanceof HTMLElement)) return;
+  const next = getEcologyLocationState();
+  Object.keys(ECOLOGY_AXES).forEach((axis) => {
+    if (!next[axis]) return;
+    const key = `designEcology${axis[0].toUpperCase()}${axis.slice(1)}`;
+    specimen.dataset[key] = next[axis];
+  });
+}
+
+function buildEcologyExpression(state) {
+  const variant = ECOLOGY_VARIANT_MAP[state.variant];
+  const posture = ECOLOGY_POSTURE_MAP[state.posture];
+  return `component-specimen[${state.variant}]{${state.environment}.${state.behavior}.${state.posture}} -> ${variant.expression} + ${posture.expression}`;
+}
+
+function buildEcologyDeepLink(state) {
+  const params = new URLSearchParams(window.location.search || '');
+  params.set('componentSpecimen', `${state.environment}:${state.variant}:${state.behavior}:${state.posture}`);
+  const query = params.toString();
+  return `${window.location.pathname}${query ? `?${query}` : ''}#component-ecology-specimens`;
+}
+
+async function copyText(text) {
+  if (!text) return false;
+  try {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(text);
+      return true;
+    }
+  } catch {
+    // Fall through to the prompt fallback below.
+  }
+
+  try {
+    window.prompt('Copy Spw specimen', text);
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 function writeEcologyAttribute(element, name, value) {
@@ -504,16 +582,99 @@ function writeEcologyAttribute(element, name, value) {
   element.dataset[name] = String(value);
 }
 
+function prefersReducedEcologyMotion() {
+  return window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches === true;
+}
+
+function classifyEcologyPacking(width = 0, state = {}) {
+  const normalizedWidth = Number.isFinite(width) && width > 0 ? width : 0;
+  if (state.posture === 'stack') return 'compact';
+  if (state.posture === 'atlas' && normalizedWidth >= 760) return 'spacious';
+  if (normalizedWidth && normalizedWidth < 620) return 'compact';
+  if (normalizedWidth && normalizedWidth > 1080) return 'spacious';
+  return ECOLOGY_POSTURE_MAP[state.posture]?.packing || 'balanced';
+}
+
+function writeEcologyReadout(specimen, key, value) {
+  if (!(specimen instanceof HTMLElement)) return;
+  specimen.querySelectorAll(`${ECOLOGY_READOUT_SELECTOR}[data-design-ecology-readout="${key}"]`).forEach((node) => {
+    if (node instanceof HTMLElement) node.textContent = value;
+  });
+}
+
+function setEcologySettleState(specimen, phase, source = 'runtime') {
+  if (!(specimen instanceof HTMLElement)) return;
+  specimen.dataset.spwSettleState = phase;
+  specimen.dataset.designEcologySettle = phase;
+  specimen.dataset.spwSettleSource = source;
+  document.documentElement.dataset.spwDesignEcologySettle = phase;
+  writeEcologyReadout(specimen, 'settle', phase);
+}
+
+function settleEcologySpecimen(specimen, source = 'control') {
+  if (!(specimen instanceof HTMLElement)) return;
+  const existing = ECOLOGY_SETTLE_TIMERS.get(specimen);
+  if (existing) window.clearTimeout(existing);
+
+  markLayoutTrope(specimen, 'ruleset-settle', {
+    source: 'design-ecology',
+    reason: 'layout',
+    scope: 'component-specimen',
+    tuning: {
+      posture: specimen.dataset.designEcologyPosture,
+      packing: specimen.dataset.spwPackingState,
+      source,
+    },
+  });
+
+  if (prefersReducedEcologyMotion()) {
+    setEcologySettleState(specimen, 'settled', source);
+    return;
+  }
+
+  setEcologySettleState(specimen, 'settling', source);
+  const timer = window.setTimeout(() => {
+    setEcologySettleState(specimen, 'settled', source);
+    ECOLOGY_SETTLE_TIMERS.delete(specimen);
+  }, 260);
+  ECOLOGY_SETTLE_TIMERS.set(specimen, timer);
+}
+
+function syncEcologyPacking(specimen, width = 0, source = 'measure') {
+  if (!(specimen instanceof HTMLElement)) return;
+  const state = getEcologyState(specimen);
+  const packing = classifyEcologyPacking(width, state);
+  const previous = specimen.dataset.spwPackingState;
+  specimen.dataset.designEcologyPacking = packing;
+  specimen.dataset.spwPackingState = packing;
+  specimen.dataset.spwPackingSource = source;
+  specimen.dataset.spwLayoutPosture = state.posture;
+  specimen.dataset.spwReflowModel = 'size-sensitive';
+  writeEcologyReadout(specimen, 'packing', packing);
+
+  if (previous && previous !== packing) {
+    markLayoutTrope(specimen, 'spacing-tune', {
+      source: 'design-ecology',
+      reason: 'measure',
+      scope: 'component-specimen',
+      tuning: { packing, width: Math.round(width || 0) },
+    });
+    settleEcologySpecimen(specimen, 'packing');
+  }
+}
+
 function syncEcologyTarget(element, state) {
   if (!(element instanceof HTMLElement)) return;
   const environment = ECOLOGY_ENVIRONMENT_MAP[state.environment];
   const variant = ECOLOGY_VARIANT_MAP[state.variant];
   const behavior = ECOLOGY_BEHAVIOR_MAP[state.behavior];
+  const posture = ECOLOGY_POSTURE_MAP[state.posture];
   const resonance = Number.parseFloat(behavior.resonance) || 0;
 
   element.dataset.designEcologyEnvironment = state.environment;
   element.dataset.designEcologyVariant = state.variant;
   element.dataset.designEcologyBehavior = state.behavior;
+  element.dataset.designEcologyPosture = state.posture;
   element.dataset.spwContext = environment.context;
   element.dataset.spwMetamaterial = environment.material;
   element.dataset.spwDensity = environment.density;
@@ -524,6 +685,8 @@ function syncEcologyTarget(element, state) {
   element.dataset.spwCharge = behavior.charge;
   element.dataset.spwMachinability = behavior.machinability;
   element.dataset.spwResonance = behavior.resonance;
+  element.dataset.spwLayoutPosture = state.posture;
+  element.dataset.spwPackingModel = posture.flow;
   element.style.setProperty('--design-ecology-charge', behavior.charge);
   element.style.setProperty('--design-ecology-resonance', behavior.resonance);
   element.style.setProperty('--design-ecology-resonance-wash', `${Math.round(resonance * 16)}%`);
@@ -539,13 +702,20 @@ function syncEcologySpecimen(specimen) {
   specimen.dataset.designEcologyEnvironment = state.environment;
   specimen.dataset.designEcologyVariant = state.variant;
   specimen.dataset.designEcologyBehavior = state.behavior;
-  specimen.dataset.spwStateContract = 'environment variant behavior readout';
+  specimen.dataset.designEcologyPosture = state.posture;
+  specimen.dataset.spwSemanticExpression = buildEcologyExpression(state);
+  specimen.dataset.spwSerializedCopy = buildEcologyExpression(state);
+  specimen.dataset.spwStateContract = 'environment variant behavior posture packing settle readout';
+  specimen.dataset.spwSpecimenBuilderHref = buildEcologyDeepLink(state);
   syncEcologyTarget(specimen, state);
+  syncEcologyPacking(specimen, specimen.getBoundingClientRect?.().width || 0, 'sync');
 
-  document.documentElement.dataset.spwDesignEcology = `${state.environment}:${state.variant}:${state.behavior}`;
+  document.documentElement.dataset.spwDesignEcology = `${state.environment}:${state.variant}:${state.behavior}:${state.posture}`;
   document.documentElement.dataset.spwDesignEcologyEnvironment = state.environment;
   document.documentElement.dataset.spwDesignEcologyVariant = state.variant;
   document.documentElement.dataset.spwDesignEcologyBehavior = state.behavior;
+  document.documentElement.dataset.spwDesignEcologyPosture = state.posture;
+  document.documentElement.dataset.spwDesignEcologyPacking = specimen.dataset.spwPackingState || 'balanced';
 
   specimen.querySelectorAll(ECOLOGY_STAGE_SELECTOR).forEach((stage) => syncEcologyTarget(stage, state));
   specimen.querySelectorAll(ECOLOGY_BUBBLE_SELECTOR).forEach((bubble) => syncEcologyTarget(bubble, state));
@@ -566,12 +736,17 @@ function syncEcologySpecimen(specimen) {
     if (key === 'cardState') node.textContent = ECOLOGY_BEHAVIOR_MAP[state.behavior].cardState;
     if (key === 'charge') node.textContent = ECOLOGY_BEHAVIOR_MAP[state.behavior].charge;
     if (key === 'resonance') node.textContent = ECOLOGY_BEHAVIOR_MAP[state.behavior].resonance;
+    if (key === 'posture') node.textContent = state.posture;
+    if (key === 'packing') node.textContent = specimen.dataset.spwPackingState || ECOLOGY_POSTURE_MAP[state.posture].packing;
+    if (key === 'settle') node.textContent = specimen.dataset.spwSettleState || 'settled';
+    if (key === 'expression') node.textContent = buildEcologyExpression(state);
+    if (key === 'builderHref') node.textContent = buildEcologyDeepLink(state);
   });
 
   const status = specimen.querySelector(ECOLOGY_STATUS_SELECTOR);
   writeStatus(
     status,
-    `Specimen: ${state.environment} environment, ${state.variant} variant, ${state.behavior} behavior.`,
+    `Specimen: ${state.environment} environment, ${state.variant} variant, ${state.behavior} behavior, ${state.posture} posture.`,
     'success'
   );
 
@@ -584,9 +759,29 @@ function syncEcologySpecimen(specimen) {
 function bindEcologySpecimen(specimen) {
   if (!(specimen instanceof HTMLElement)) return () => {};
 
+  applyEcologyLocationState(specimen);
   syncEcologySpecimen(specimen);
+  setEcologySettleState(specimen, 'settled', 'init');
 
   const controls = Array.from(specimen.querySelectorAll(ECOLOGY_CONTROL_SELECTOR));
+  const copyControls = Array.from(specimen.querySelectorAll(ECOLOGY_COPY_SELECTOR));
+  let resizeFrame = 0;
+  const schedulePackingSync = (width = 0, source = 'resize') => {
+    if (resizeFrame) window.cancelAnimationFrame(resizeFrame);
+    resizeFrame = window.requestAnimationFrame(() => {
+      resizeFrame = 0;
+      syncEcologyPacking(specimen, width || specimen.getBoundingClientRect().width, source);
+      document.documentElement.dataset.spwDesignEcologyPacking = specimen.dataset.spwPackingState || 'balanced';
+    });
+  };
+  const resizeObserver = typeof ResizeObserver === 'function'
+    ? new ResizeObserver((entries) => {
+      const width = entries[0]?.contentRect?.width || 0;
+      schedulePackingSync(width, 'resize');
+    })
+    : null;
+  if (resizeObserver) resizeObserver.observe(specimen);
+
   const handleClick = (event) => {
     const control = event.currentTarget;
     if (!(control instanceof HTMLElement)) return;
@@ -595,9 +790,12 @@ function bindEcologySpecimen(specimen) {
     const key = `designEcology${parsed.axis[0].toUpperCase()}${parsed.axis.slice(1)}`;
     specimen.dataset[key] = parsed.mode;
     syncEcologySpecimen(specimen);
+    settleEcologySpecimen(specimen, parsed.axis);
     const state = getEcologyState(specimen);
     bus.emit('design:ecology-state', {
       ...state,
+      packing: specimen.dataset.spwPackingState || 'balanced',
+      settle: specimen.dataset.spwSettleState || 'settling',
       source: 'design-experiments',
       element: specimen,
     }, {
@@ -606,9 +804,32 @@ function bindEcologySpecimen(specimen) {
   };
 
   controls.forEach((control) => control.addEventListener('click', handleClick));
+  const handleCopy = async (event) => {
+    const control = event.currentTarget;
+    if (!(control instanceof HTMLElement)) return;
+    const mode = control.getAttribute('data-design-ecology-copy') || 'expression';
+    const state = getEcologyState(specimen);
+    const text = mode === 'link' ? buildEcologyDeepLink(state) : buildEcologyExpression(state);
+    const copied = await copyText(text);
+    specimen.dataset.spwCopied = copied ? 'true' : 'false';
+    specimen.dataset.spwSerializedCopy = text;
+    const status = specimen.querySelector(ECOLOGY_STATUS_SELECTOR);
+    writeStatus(status, copied ? `Copied ${mode === 'link' ? 'specimen link' : 'Spw specimen expression'}.` : 'Copy unavailable.', copied ? 'success' : 'error');
+    window.setTimeout(() => {
+      if (specimen.dataset.spwCopied) delete specimen.dataset.spwCopied;
+    }, 900);
+  };
+
+  copyControls.forEach((control) => control.addEventListener('click', handleCopy));
 
   return () => {
+    if (resizeFrame) window.cancelAnimationFrame(resizeFrame);
+    if (resizeObserver) resizeObserver.disconnect();
+    const settleTimer = ECOLOGY_SETTLE_TIMERS.get(specimen);
+    if (settleTimer) window.clearTimeout(settleTimer);
+    ECOLOGY_SETTLE_TIMERS.delete(specimen);
     controls.forEach((control) => control.removeEventListener('click', handleClick));
+    copyControls.forEach((control) => control.removeEventListener('click', handleCopy));
   };
 }
 
@@ -668,7 +889,12 @@ function createDesignExperimentsConsole(roots) {
         specimen.dataset[key] = normalizeEcologyValue(axis, String(next[axis]));
       });
       syncEcologySpecimen(specimen);
-      return getEcologyState(specimen);
+      settleEcologySpecimen(specimen, 'console');
+      return {
+        ...getEcologyState(specimen),
+        packing: specimen.dataset.spwPackingState || 'balanced',
+        settle: specimen.dataset.spwSettleState || 'settling',
+      };
     },
     inspectMaterialBench(index = 0) {
       return snapshotInstrumentationTarget(getMaterialBenchList()[index], {

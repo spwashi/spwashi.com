@@ -100,6 +100,9 @@ surfaces: .{
  play = .{ path = ~"../play/index.html", role = `games, sessions, creative work` }[reg=facet]
  rpg_wednesday = .{ path = ~"../play/rpg-wednesday/index.html", role = `gameplay surface, local table state, session registers` }[reg=facet]
  recipes = .{ path = ~"../recipes/index.html", role = `craft domain, social kitchen, hosting grammar, expertise development` }[reg=facet]
+ design = .{ path = ~"../design/index.html", role = `design hub, living component specimen, grammar physics, route atlas, builder bridge` }[reg=facet]
+ design_components = .{ path = ~"../design/components/index.html", role = `component glossary, specimen cabinet, builder rail, slot anatomy` }[reg=facet]
+ settings = .{ path = ~"../settings/index.html", role = `settings workbench, tuning vocabulary, specimen posture links, runtime state` }[reg=facet]
 }[reg=facet]
 
 frame_patterns: #[

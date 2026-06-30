@@ -717,6 +717,32 @@ frame #sincere-absurd-copy-posture
   concept sentence_variation lived_friction material_fact subtle_absurdity clowncore_backdrop
   note "Public copy should resist overly smooth generic cadence: fewer totalizing lists, less feature-booth optimism, more concrete process, partial uncertainty, sentence-length variation, and specific material behavior. Absurdity can enter as a small background prop, a tiny hat, a fake mustache, or a shoe-level image, but it should not take over the sincere narrative."
 
+frame #about-narrative-topography
+  role route_contract
+  surface about/index.html + public/css/routes/surfaces/about.css
+  concept kernel lattice material_behavior absurd_backdrop skim_map story_terrain
+  data_spw_semantic_expression = "narrative[topography]{skim.return.material.absurd}"
+  note "The About route now exposes a compact story map so a skimming visitor can distinguish person/kernel, route/lattice, real material behavior, and subtle absurd backdrop before entering the denser registers. The clowncore/boonhonk atmosphere should remain background pressure: offstage signal, small prop, shoe-level joke, never the thing blocking the sincere account."
+
+frame #living-component-specimen-contract
+  role route_contract
+  fixity stable_tending
+  operation contract
+  surface design/index.html + design/components/index.html + settings/index.html + public/js/modules/design/experiments.js + public/css/routes/surfaces/design.css
+  concept living_component specimen_builder component_ecology settings_posture serializable_spw grammar_physics layout_posture size_sensitive_packing reflow settling method_ecology
+  data_spw_semantic_expression = "component-specimen[message-surface]{build.tune.serialize.posture}"
+  query = "?componentSpecimen=environment:variant:behavior:posture"
+  note "A living component specimen is an authored HTML component whose environment, variant, behavior, and posture can be tuned, serialized as a Spw expression, copied as a state link, and routed into a builder. Posture is authored intent; packing is measured from available width; settling is a transient microinteractive phase after a control, console, copy, or resize event. Design owns the active specimen; component glossary owns the builder rail; Settings owns posture links into exact specimen states. Builders should create artifacts such as character cards, profile specimens, proof cards, prompt packets, or SVG specimens without losing slot anatomy."
+
+frame #grammar-physics-method-ecology
+  role convention
+  fixity tending
+  operation align
+  surface design/index.html + public/js/modules/design/experiments.js + public/css/routes/surfaces/design.css
+  concept pack reflow settle posture method living_ecology layout_trope
+  rule "Use grammar physics when a layout change teaches method. Authored controls should name posture; CSS should perform the reflow; JS may measure packing and write settle state only when the feedback helps visitors skim what changed."
+  note "The design specimen uses pack/reflow/settle as a small performance substrate: controls choose a posture, container width classifies packing, and a short settle phase marks the method landing without making motion mandatory."
+
 frame #component-lifecycle-tropes
   role convention
   surface components/runtime
