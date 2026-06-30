@@ -55,10 +55,15 @@ const getCompactInternalHref = (url) => `${url.pathname || '/'}${url.hash}`;
 const isNavigatorHidden = () => getSiteSettings().navigatorDisplay === 'hidden';
 
 const getRouteLabel = (link) => {
-    if (link.classList.contains('frame-card')) {
-        return normalizeText(link.querySelector('strong')?.textContent || link.textContent);
-    }
-    return normalizeText(link.textContent);
+    const visible = link.classList.contains('frame-card')
+        ? normalizeText(link.querySelector('strong')?.textContent || link.textContent)
+        : normalizeText(link.textContent);
+    if (visible) return visible;
+    // Icon-only or whitespace links would otherwise be dropped — fall back to the
+    // accessible name so the route still surfaces in the map.
+    return normalizeText(
+        link.dataset.spwNavLabel || link.getAttribute('aria-label') || link.getAttribute('title') || ''
+    );
 };
 
 const collectRouteEntries = () => {
@@ -488,12 +493,18 @@ class SpwFrameNavigator {
         const labelEl = document.createElement('span');
         labelEl.className = 'spw-nav-item-label';
         labelEl.textContent = entry.label;
+        // Labels truncate with an ellipsis (CSS) — expose the full text on hover.
+        labelEl.title = entry.label;
         body.appendChild(labelEl);
 
-        if (entry.metaText) {
+        // Skip meta that only echoes the label (e.g. a frame whose sigil matches its heading).
+        const metaIsDistinct = entry.metaText
+            && entry.metaText.toLowerCase() !== entry.label.toLowerCase();
+        if (metaIsDistinct) {
             const meta = document.createElement('span');
             meta.className = 'spw-nav-item-meta';
             meta.textContent = entry.metaText;
+            meta.title = entry.metaText;
             body.appendChild(meta);
         }
 
@@ -541,7 +552,11 @@ class SpwFrameNavigator {
             counter.textContent = routeCount ? `${frameCopy} | ${routeCount} routes` : frameCopy;
         }
 
-        activeButton?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        // Only chase the active item into view while the panel is actually open —
+        // refresh() also runs on mode/settings changes when the map is closed.
+        if (this.isOpen()) {
+            activeButton?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        }
     }
 
     navigateFrames(dir) {

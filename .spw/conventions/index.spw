@@ -42,6 +42,8 @@
 @wonder_vocabulary: ~"./wonder-vocabulary.spw"
 @page_anatomy_vocabulary: ~"./page-anatomy-vocabulary.spw"
 @codebase_perusal: ~"./codebase-perusal.spw"
+@site_starter_component_kit: ~"./site-starter-component-kit.spw"
+@expressive_registers: ~"./expressive-registers.spw"
 @semantic_braces: ~"./semantic-braces.spw"
 @slices: ~"../slices/index.spw"
 @composable_art: ~"./composable-art-system.spw"
@@ -79,6 +81,8 @@ dispatch: .{
  relational_attention_media = @relational_attention_media
  page_anatomy_vocabulary = @page_anatomy_vocabulary
  codebase_perusal = @codebase_perusal
+ site_starter_component_kit = @site_starter_component_kit
+ expressive_registers = @expressive_registers
  data_spw_attribute_governance = @data_spw_attribute_governance
  naming_structured_values = @naming_structured_values
  containers = @electromagnetic_containers

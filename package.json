@@ -28,6 +28,7 @@
     "manifest": "node scripts/generate-route-runtime-manifest.mjs",
     "preview:open": "node scripts/preview-open.mjs",
     "preview": "vite preview",
+    "starter:inventory": "node scripts/starter-inventory.mjs",
     "check:watch": "node scripts/check-watch.mjs",
     "test:engagement": "npm run build:tools && npm run build:runtime && node --import ./scripts/tests/setup-dom-globals.mjs --import ./scripts/tests/register-public-imports.mjs --test scripts/tests/engagement-features.test.mjs",
     "sitemap": "node scripts/generate-sitemap.mjs",

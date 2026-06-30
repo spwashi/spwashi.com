@@ -30,16 +30,27 @@ function renderItemCard(item = {}, options = {}, locale = SOURCE_LOCALE) {
         operator: 'stream',
     });
     topline.append(operator);
-    if (item.tag) {
+    const tagText = cleanText(item.tag);
+    if (tagText) {
         const tag = el('span', 'media-card-tag');
-        tag.textContent = cleanText(item.tag);
+        tag.textContent = tagText;
+        tag.title = tagText;
         topline.append(tag);
     }
+    // Titles and prose can be clamped/truncated by the surface CSS — keep the full
+    // string reachable on hover so nothing reads as silently cut off.
+    const titleText = cleanText(item.title || 'Untitled feature');
     const title = el('strong', 'media-card-title');
-    title.textContent = cleanText(item.title || 'Untitled feature');
-    const summary = el('span', 'media-card-summary');
-    summary.textContent = cleanText(item.summary || item.why || '');
-    card.append(topline, title, summary);
+    title.textContent = titleText;
+    title.title = titleText;
+    card.append(topline, title);
+    const summaryText = cleanText(item.summary || item.why || '');
+    if (summaryText) {
+        const summary = el('span', 'media-card-summary');
+        summary.textContent = summaryText;
+        summary.title = summaryText;
+        card.append(summary);
+    }
     if (item.cta || options.showCta) {
         const cta = el('span', 'media-card-cta');
         cta.textContent = cleanText(item.cta || 'Open surface');
@@ -65,14 +76,20 @@ function renderFocus(host, item, options = {}, locale = SOURCE_LOCALE) {
         className: 'frame-card-sigil media-focus-operator',
         operator: 'stream',
     });
+    const headingText = cleanText(item.title || 'Current focus');
     const heading = el('h3');
-    heading.textContent = cleanText(item.title || 'Current focus');
+    heading.textContent = headingText;
+    heading.title = headingText;
     titleRow.append(operator, heading);
-    const summary = el('p');
-    summary.textContent = cleanText(item.summary || '');
     const link = el('a', 'operator-chip', { href: cleanText(item.href || '#') });
     link.textContent = cleanText(item.cta || 'Open focus');
-    article.append(label, titleRow, summary);
+    article.append(label, titleRow);
+    const summaryText = cleanText(item.summary || '');
+    if (summaryText) {
+        const summary = el('p');
+        summary.textContent = summaryText;
+        article.append(summary);
+    }
     if (item.why) {
         const why = el('p', 'frame-note');
         why.textContent = cleanText(item.why);

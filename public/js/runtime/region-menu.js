@@ -56,6 +56,7 @@ let previewTarget = null;
 let holdState = null;
 let coarseTapState = null;
 let menuOpenGraceUntil = 0;
+let repositionFrame = 0;
 
 export function isRegionMenuOpen() {
   return document.documentElement.dataset.spwRegionMenu === 'open';
@@ -239,6 +240,28 @@ function onKeyDown(event) {
   }
 }
 
+function cancelReposition() {
+  if (repositionFrame) {
+    cancelAnimationFrame(repositionFrame);
+    repositionFrame = 0;
+  }
+}
+
+function scheduleReposition() {
+  // scroll/resize can fire several times per frame, and positionMenu() reads
+  // layout (getBoundingClientRect + getComputedStyle) on each call. Coalesce the
+  // work into one frame so the popover tracks the target without thrashing.
+  if (repositionFrame) return;
+  repositionFrame = requestAnimationFrame(() => {
+    repositionFrame = 0;
+    if (document.documentElement.dataset.spwRegionMenu !== 'open') return;
+    const menu = document.getElementById(MENU_ID);
+    if (menu instanceof HTMLElement && activeTarget instanceof HTMLElement) {
+      positionMenu(menu, activeTarget);
+    }
+  });
+}
+
 function onViewportChange() {
   clearHoldState();
   clearCoarseTapState();
@@ -246,7 +269,7 @@ function onViewportChange() {
   if (document.documentElement.dataset.spwRegionMenu === 'open') {
     const menu = document.getElementById(MENU_ID);
     if (menu instanceof HTMLElement && activeTarget instanceof HTMLElement) {
-      positionMenu(menu, activeTarget);
+      scheduleReposition();
       return;
     }
   }
@@ -922,6 +945,7 @@ function collectRegionMatches(root, family) {
 
 function closeMenu(options = {}) {
   const { restoreFocus = true } = options;
+  cancelReposition();
   const wasOpen = document.documentElement.dataset.spwRegionMenu === 'open';
   const previousTarget = activeTarget;
   const menu = document.getElementById(MENU_ID);

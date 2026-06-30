@@ -9,6 +9,11 @@ contracts, runtime helpers, staged-loader contracts, gesture/region vocabulary,
 palette utilities, attention contracts, and interaction loop records without
 mounting the full site runtime.
 
+For new-site starter work, run `npm run starter:inventory -- --check` from the
+repo root. It verifies that the portable composition entrypoints and referenced
+imports still exist, then prints the component/design routes that explain the
+boundary.
+
 It also exports `SPW_COMPOSITION_CONTRACT`, a small documentation object for the
 browser-field / script-spell / stylesheet-disposition model.
 

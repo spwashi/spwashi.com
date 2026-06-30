@@ -227,12 +227,18 @@ function renderCard(item = {}, kind = 'promo', cadence = 'daily', locale = SOURC
         operator: cardOperatorType(kind),
         ariaHidden: true,
     });
+    const headingText = cleanText(item.title || fallbackTitle(kind));
     const heading = el('h3');
-    heading.textContent = cleanText(item.title || fallbackTitle(kind));
+    heading.textContent = headingText;
+    heading.title = headingText;
     titleRow.append(operator, heading);
-    const summary = el('p', 'promo-wonder-cycle__summary');
-    summary.textContent = cleanText(item.summary || '');
-    article.append(label, titleRow, summary);
+    article.append(label, titleRow);
+    const summaryText = cleanText(item.summary || '');
+    if (summaryText) {
+        const summary = el('p', 'promo-wonder-cycle__summary');
+        summary.textContent = summaryText;
+        article.append(summary);
+    }
     const why = cleanText(item.why || '');
     if (why) {
         const note = el('p', 'promo-wonder-cycle__why');

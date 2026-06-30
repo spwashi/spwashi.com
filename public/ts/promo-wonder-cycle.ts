@@ -265,14 +265,20 @@ function renderCard(
     operator: cardOperatorType(kind),
     ariaHidden: true,
   });
+  const headingText = cleanText(item.title || fallbackTitle(kind));
   const heading = el('h3');
-  heading.textContent = cleanText(item.title || fallbackTitle(kind));
+  heading.textContent = headingText;
+  heading.title = headingText;
   titleRow.append(operator, heading);
 
-  const summary = el('p', 'promo-wonder-cycle__summary');
-  summary.textContent = cleanText(item.summary || '');
+  article.append(label, titleRow);
 
-  article.append(label, titleRow, summary);
+  const summaryText = cleanText(item.summary || '');
+  if (summaryText) {
+    const summary = el('p', 'promo-wonder-cycle__summary');
+    summary.textContent = summaryText;
+    article.append(summary);
+  }
 
   const why = cleanText(item.why || '');
   if (why) {

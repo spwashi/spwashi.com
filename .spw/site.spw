@@ -27,6 +27,8 @@
 @wonder_vocabulary: ~"./conventions/wonder-vocabulary.spw"
 @page_anatomy_vocabulary: ~"./conventions/page-anatomy-vocabulary.spw"
 @codebase_perusal: ~"./conventions/codebase-perusal.spw"
+@site_starter_component_kit: ~"./conventions/site-starter-component-kit.spw"
+@expressive_registers: ~"./conventions/expressive-registers.spw"
 @annotation_layer: ~"./conventions/annotation-layer.spw"
 @semantic_braces: ~"./conventions/semantic-braces.spw"
 @narrative_instrumentation: ~"./conventions/narrative-instrumentation.spw"
@@ -139,6 +141,8 @@ translations: .{
  relational_attention_media = #[@relational_attention_media, @relational_attention_media_plan, @relational_attention_media_cache, @attention_field, @product_lines][reg=set]
  approach_and_narrative = #[@approach_topography, @product_lines, @wonder_vocabulary][reg=set]
  page_anatomy_vocabulary = #[@page_anatomy_vocabulary, @page_model, @composition_box_model][reg=set]
+ site_starter_component_kit = #[@site_starter_component_kit, @composition_box_model, @modular_experience_slices][reg=set]
+ expressive_registers = #[@expressive_registers, @attention_field, @approach_topography, @style_development][reg=set]
  codebase_perusal = #[@codebase_perusal, @spw_maintenance_2026_06, @semantic_capacity, @planning_ecology][reg=set]
  spw_maintenance = #[@spw_maintenance_2026_06, @semantic_capacity, @planning_ecology][reg=set]
  public_routes = #[@surfaces, @surface_registry][reg=set]
@@ -166,6 +170,8 @@ dispatch: .{
  ornament_contract = @ornament_contract
  wonder_vocabulary = @wonder_vocabulary
  page_anatomy_vocabulary = @page_anatomy_vocabulary
+ site_starter_component_kit = @site_starter_component_kit
+ expressive_registers = @expressive_registers
  codebase_perusal = @codebase_perusal
  annotation_layer = @annotation_layer
  semantic_braces = @semantic_braces

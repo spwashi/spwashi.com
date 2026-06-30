@@ -1,0 +1,115 @@
+# Site Starter Component Kit
+#
+# Contract for using spwashi.com as a source for new static sites and
+# component design without confusing portable composition primitives with the
+# full personal site shell.
+
+#>site_starter_component_kit
+#:convention #!starter #!components #!portable
+#:layer #!pragmatics
+
+@plan: ~"../../.agents/plans/site-starter-component-kit/PLAN.md"
+@compose_css: ~"../../public/css/compose.css"
+@compose_js: ~"../../public/js/compose.js"
+@css_readme: ~"../../public/css/README.md"
+@js_readme: ~"../../public/js/README.md"
+@starter_inventory: ~"../../scripts/starter-inventory.mjs"
+@design_composition: ~"../../design/composition/index.html"
+@design_components: ~"../../design/components/index.html"
+@design_hub: ~"../../design/index.html"
+@site_source_layout: ~"../../.agents/plans/site-source-layout/PLAN.md"
+@model_guided_refinement: ~"./model-guided-refinement.spw"
+@composition_box_model: ~"./composition-box-model.spw"
+
+^"thesis"{
+  operation = "contract"
+  fixity = "stable"
+  focus_dimension = "component"
+  audience = "engineer-toolmaker"
+  primary_element = "metal"
+  secondary_element = "wood"
+  claim = "The repo becomes useful for spawning new sites when portable composition entrypoints, component specimens, and site-specific boundaries are inventoryable before any scaffold exists."
+  risk = "Without a boundary, a new site may copy the full Spwashi shell, route copy, ornament, or runtime modules when it only needed the portable composition layer."
+  validation = "npm run starter:inventory -- --check"
+}
+
+^"portable_entrypoints"{
+  css = @compose_css
+  js = @compose_js
+  rule = "Start new-site experiments with compose.css and compose.js. Use style.css and site.js only when intentionally running the full spwashi.com shell."
+  css_scope = "tokens, typography, grammar, components, handles, and light effects"
+  js_scope = "DOM contracts, runtime helpers, page hooks, query disposition, palette/SVG tunability, component box model, and console instrumentation"
+  docs = #[@css_readme, @js_readme, @design_composition][reg=set]
+}
+
+^"site_specific_boundary"{
+  keep_local = #[
+    "public/css/style.css",
+    "public/js/site.js",
+    "public/css/routes/",
+    "public/css/shell/",
+    "public/css/ornament/",
+    "public/js/modules/",
+    "personal route copy",
+    "Spwashi creator identity",
+    "analytics and deployment identity",
+    "route-specific images and local content"
+  ][reg=set]
+  rule = "A starter should carry structure, tokens, component grammar, and portable helpers before it carries identity, route behavior, or ornamental site lore."
+}
+
+^"component_lab"{
+  surfaces = #[@design_components, @design_composition, @design_hub][reg=set]
+  promotion_rule = "A component becomes starter material only after it has slot anatomy, semantic state, CSS ownership, optional progressive JS, a specimen or documentation route, and validation."
+  anatomy = "header -> meta -> body -> figure -> actions -> footer"
+  inspectability = "Use data-spw-* families, composition-box-model snapshots, and design catalog output so component value can be read before copying code."
+  anti_pattern = "Copying a route-local card because it looks useful while leaving behind its state attributes, slot contract, accessibility affordances, or CSS owner."
+}
+
+^"inventory_contract"{
+  script = @starter_inventory
+  command = "npm run starter:inventory -- --check"
+  output = "portable CSS imports, JS exports, component CSS files, component/design docs, site-specific boundaries, and missing referenced files"
+  rule = "The inventory is an orientation and validation surface, not a generator. Add scaffolding only after repeated use proves what should be generated."
+}
+
+^"spawn_sequence"{
+  step_1 = "Run the inventory and read /design/composition/."
+  step_2 = "Choose compose.css plus only the portable JS helpers the host site needs."
+  step_3 = "Select one component specimen from /design/components/ and preserve its slot/state contract."
+  step_4 = "Replace identity, copy, routes, assets, and shell behavior with the host site's own material."
+  step_5 = "Validate with inventory, local browser inspection, and any host-site checks."
+}
+
+^"active_claims"{
+  claim #starter-component-kit-001 {
+    layer = "agent-editor"
+    hypothesis = "A future contributor can identify starter-kit material in under a minute by running the inventory and following the compose.css/compose.js boundary."
+    spec_ref = ".spw/conventions/site-starter-component-kit.spw#portable_entrypoints"
+    impl_ref = "scripts/starter-inventory.mjs + package.json#starter:inventory + public/css/README.md + public/js/README.md"
+    probe_ref = "npm run starter:inventory -- --check"
+    falsification = "A portable entrypoint is moved, deleted, or gains missing imports while the inventory still passes, or a contributor must inspect route CSS/site shell before finding the portable layer."
+    status = "active"
+  }
+  claim #starter-component-kit-002 {
+    layer = "component"
+    hypothesis = "New components become reusable more reliably when promotion requires slot anatomy, state attributes, CSS ownership, specimen docs, and validation before extraction."
+    spec_ref = ".spw/conventions/site-starter-component-kit.spw#component_lab"
+    impl_ref = "design/components/index.html + design/composition/index.html + public/css/components/"
+    probe_ref = "Review a proposed reusable component and confirm it satisfies the promotion_rule fields."
+    falsification = "A new copied component works only because of route-local shell assumptions or undocumented Spwashi-specific runtime state."
+    status = "active"
+  }
+}
+
+^"dispatch"{
+  @plan: @plan
+  @compose_css: @compose_css
+  @compose_js: @compose_js
+  @starter_inventory: @starter_inventory
+  @design_composition: @design_composition
+  @design_components: @design_components
+  @site_source_layout: @site_source_layout
+  @model_guided_refinement: @model_guided_refinement
+  @composition_box_model: @composition_box_model
+}

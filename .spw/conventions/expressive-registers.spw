@@ -1,0 +1,102 @@
+# Expressive Registers
+#
+# A learnable, composable model for projecting the site's registered scalar
+# channels (@property --spw-*) into visual expression. Channels are the nouns
+# of feeling; renderings are the verbs; a register is the viewpoint that decides
+# which nouns are loud. Grounded in the prairie-walk metaphor of approach.
+
+#>spw_expressive_registers
+#:model #!field #!css #!semantics
+#:layer #!pragmatics
+
+@tokens_core: ~"../../public/css/tokens/core.css"
+@registers_css: ~"../../public/css/systems/registers.css"
+@attention_field: ~"./attention-field.spw"
+@approach_topography: ~"../surfaces/approach-topography.spw"
+@site_semantics: ~"./site-semantics.spw"
+@css_alignment: ~"../reviews/css-architecture-alignment.spw"
+@cognitive_surface: ~"../philosophy/cognitive-surface.spw"
+
+thesis: .{
+ claim = `tokens/core.css already registers a vocabulary of expressive scalar channels (--spw-depth, --spw-valence, --spw-resonance, --spw-attention, --spw-field-intensity) but has no grammar that composes them into visual output. They are nouns without verbs.`
+ opportunity = `A small, fixed set of single-channel renderings plus a re-weighting "register" makes the channels a composable instrument: any element's expression is the sum of orthogonal channel projections, and switching register foregrounds a different conceptual dimension without changing the markup.`
+ why_this_model = `It is learnable because it is small and orthogonal; composable because each rendering reads exactly one channel; resonant because the channels already carry metaphysical polarity (approach/avoid, near/far, isolated/coupled) drawn from the prairie-walk reading in approach_topography.`
+ constraint = `Strictly additive and opt-in. Nothing renders until a surface marks a participant. No new layer. Lives in systems/ as the concrete first realization of the field-projection surface proposed in css_alignment.`
+}[reg=facet]
+
+# The three strata
+
+channels: .{
+ note = `The nouns. Already declared as @property scalars in tokens_core; registers.css does not invent them, only consumes them. Each has a documented polarity.`
+ depth = `--spw-depth — local liftedness / projection. 0 far → 1 near. Reads as elevation.`
+ valence = `--spw-valence — goal-relative direction. -1 avoid → 0 neutral → +1 approach. Reads as temperature.`
+ resonance = `--spw-resonance — cross-context coherence. 0 isolated → 1 coupled. Reads as a coupling ring that brightens when kin are active.`
+ attention = `--spw-attention — spatial / contextual focus. 0 ambient → 1 focal. Reads as salience weight (ink, scale).`
+ field = `--spw-field-intensity — local attention-field strength. 0 quiet → 1 charged. Reads as substrate wash on the register container.`
+ rule = `A channel is the single source of expressive truth. When a channel exists for a concern, style off the channel, never off the raw attribute that set it. This keeps the rendering layer orthogonal and the model composable.`
+}[reg=facet]
+
+renderings: .{
+ note = `The verbs. Each rendering reads exactly one channel times its register weight, so renderings sum cleanly and never entangle. Defined on [data-spw-express] participants.`
+ lift = `depth → translateY + shadow. The near develops out of the substrate.`
+ temperature = `valence → warm tint when approaching, cool tint when avoiding. Split into max(valence,0) and max(-valence,0) so a single channel carries both directions.`
+ coupling = `resonance → ring whose alpha tracks coherence; participates in the existing :has() resonance pinning so coupled kin brighten together.`
+ salience = `attention → font-weight and opacity. Ambient recedes; focal arrives. This is the "differential salience" axis named in approach_topography.`
+ wash = `field → substrate gradient on the [data-spw-register] container. Holds the journey without competing with figure (substrate vs figure discipline).`
+ invariant = `Every rendering must be diagnosable to one channel × one weight. A visual effect with no channel is noise, not expression (see approach_topography lighting_and_shadow invariant).`
+}[reg=facet]
+
+registers: .{
+ note = `The viewpoint. A register is a named weight mix set on a container [data-spw-register="..."]. It does not change channel values; it changes how loudly each rendering speaks. This is the lens-on-meaning that the brief called "differential salience via lenses".`
+ balanced = `All weights ~1. The neutral instrument; every dimension reads at its natural strength.`
+ depth = `Amplifies lift, damps the rest. The page becomes a topography; arrival elements rise.`
+ valence = `Amplifies temperature. The page becomes a field of approach and avoidance; warmth marks where to go.`
+ resonance = `Amplifies coupling. The page becomes a web of coherence; kin glow together, isolated marks stay quiet.`
+ attention = `Amplifies salience. The page becomes a hierarchy of focus; waypoints sharpen, substrate recedes.`
+ composability = `Because a register is only a weight vector over orthogonal renderings, registers can be authored, animated (the channels are @property-registered, so transitions interpolate), and in future re-weighted by runtime state without touching participant markup.`
+}[reg=facet]
+
+# Authoring handle
+
+approach_attribute: .{
+ note = `data-spw-approach is the one new authoring attribute. It fills the gap approach_topography names: that surface defines distant/approaching/arrival/return phases but no element ever carried them. One attribute sets several channels per the prairie phase, so authors compose feeling without writing calc().`
+ distant = `data-spw-approach="distant" → low depth (far), ambient attention, neutral valence. Orientation, low commitment.`
+ approaching = `data-spw-approach="approaching" → mid depth, mid attention, +valence. Development, building context.`
+ arrival = `data-spw-approach="arrival" → high depth (near), focal attention, full +valence. The felt event; rewards the scroll.`
+ return = `data-spw-approach="return" → mid depth, high resonance (the wonder trail couples), slight -valence. Carrying something away.`
+ discipline = `data-spw-approach is a shorthand that writes channels; channels may also be written by JS (attention-architecture, wonder-memory). The shorthand and the runtime must agree on channel meaning, never fight over the same element.`
+}[reg=facet]
+
+# Distinctions to keep clean
+
+vocabulary_guard: .{
+ note = `Three orthogonal axes already exist in the frame anatomy; register is a fourth and must not collide.`
+ lens = `Lens (mode-switch) filters WHAT content type is visible. Content selection. (AGENTS.md frame anatomy.)`
+ form = `Form (data-spw-form-options) chooses the spatial grammar of presentation. Structural arrangement.`
+ register = `Register (data-spw-register) tunes HOW INTENSELY each conceptual dimension reads. Expressive weighting. Orthogonal to both lens and form — a surface can hold all three.`
+ caution = `The brief used "lens" loosely to mean register. In the codebase, keep lens = content filter and register = expressive weighting, so the two stay teachable.`
+}[reg=facet]
+
+# Adoption
+
+adoption: .{
+ opt_in = `Zero effect until a surface adds [data-spw-register] to a container and [data-spw-express] to participants. Existing pages are untouched.`
+ smallest_demo = `A section with [data-spw-register="depth"] holding cards marked data-spw-approach="distant|approaching|arrival" and data-spw-express. Re-point the register and the same cards re-rank by a different dimension.`
+ candidate_surfaces = #[
+  `design route (the site's "research instrument" — interns inspect attrs + reason)`,
+  `the inert data-spw-interaction-* annotation cluster in design/runtime and design/palettes (conceptual relations currently with no visual expression)`,
+  `long topic pages that need approach development instead of a flat scroll`
+ ][reg=set]
+ next = `Wire one demonstration surface, then consider letting runtime state (region profile, wonder memory) drive register weights so the instrument plays itself.`
+}[reg=facet]
+
+status: .{
+ created = `2026-06-30. First realization of the field-projection surface proposed in css_alignment; consumes channels already registered in tokens_core; gives approach_topography its missing attribute.`
+ wired = `registers.css imported in style-core.css under layer(systems), dispatch wired through site.spw/conventions/index.spw, and a small authored sample lives on design/composition. Reference this contract from reviews/index.spw and css_alignment when extending.`
+ invariants = #[
+  `Renderings stay orthogonal — one channel each.`,
+  `Channels remain the single source of expressive truth.`,
+  `register ≠ lens ≠ form.`,
+  `Strictly additive; opt-in; no new layer; no !important outside ornament.`
+ ][reg=set]
+}[reg=facet]

@@ -1342,6 +1342,15 @@ html[data-spw-hydration="ready"] #home-frame .frame-topline {
   color: color-mix(in srgb, var(--home-accent-primary) 72%, var(--ink, #1b1f23) 28%);
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-weight: 800;
+  transition:
+    color var(--home-transition-fast),
+    opacity var(--home-transition-fast),
+    transform var(--home-transition-fast);
+}
+
+:where(#living-concepts .living-concept-card > summary:is(:hover, :focus-visible)::after) {
+  color: var(--home-accent-primary);
+  transform: scale(1.15);
 }
 
 :where(#living-concepts .living-concept-card[open] > summary::after) {

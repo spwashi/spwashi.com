@@ -91,6 +91,35 @@
             </p>
         </section>
 
+        <section class="frame-panel" aria-labelledby="starter-inventory-title" data-spw-kind="panel" data-spw-role="starter-inventory">
+            <h2 id="starter-inventory-title">Starter inventory</h2>
+            <p>
+                New-site and component experiments should begin by inventorying the portable layer. The local command
+                verifies the standalone entrypoints, referenced imports, component CSS, design docs, and the
+                Spwashi-specific surfaces that should stay behind by default.
+            </p>
+            <pre><code>npm run starter:inventory -- --check</code></pre>
+            <p class="frame-note">
+                Start with the inventory, then choose one component specimen from <a href="/design/components/">the component glossary</a>.
+            </p>
+        </section>
+
+        <section class="frame-panel" aria-labelledby="expressive-register-title" data-spw-kind="panel" data-spw-role="register-demo" data-spw-register="depth">
+            <h2 id="expressive-register-title">Expressive register sample</h2>
+            <p>
+                Registers let portable components show approach, distance, and arrival through a shared scalar field
+                instead of page-specific styling.
+            </p>
+            <div class="spec-strip" aria-label="Approach register samples">
+                <span class="spec-pill" data-spw-express data-spw-approach="distant">distant</span>
+                <span class="spec-pill" data-spw-express data-spw-approach="approaching">approaching</span>
+                <span class="spec-pill" data-spw-express data-spw-approach="arrival">arrival</span>
+            </div>
+            <pre><code>&lt;section data-spw-register="depth"&gt;
+  &lt;span data-spw-express data-spw-approach="arrival"&gt;arrival&lt;/span&gt;
+&lt;/section&gt;</code></pre>
+        </section>
+
         <section class="frame-panel" aria-labelledby="console-instrumentation-title" data-spw-kind="panel" data-spw-role="instrumentation">
             <h2 id="console-instrumentation-title">Console instrumentability</h2>
             <p>

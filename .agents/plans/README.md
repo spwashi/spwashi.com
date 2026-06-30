@@ -30,6 +30,7 @@ Use these when a task is broad, cross-disciplinary, or likely to create reusable
 - `semantic-copy-depth/PLAN.md` — formalize entry/normal/dense/technical copy depth alongside the existing semantic layers.
 - `relational-attention-media/PLAN.md` — attention as self/local/global relation plus local media-seed production across genres.
 - `webpage-trope-vocabulary/PLAN.md` — literal website/reference-document anatomy, route-specific restaurant/garden anchors, shared `data-spw-anatomy` vocabulary, and floating chrome island rules.
+- `site-starter-component-kit/PLAN.md` — portable compose.css/compose.js starter boundary, component specimen promotion, and inventory command for spawning new sites.
 - `agent-optimization/PLAN.md` — use when the work changes the agent/editor operating environment itself.
 
 Small semantic discoveries do not always need a new plan. Use `.agents/plans/model-guided-refinement/templates/semantic-insight-cache.spw` for a single cache/audit/prime entry when implementation should wait.
@@ -45,7 +46,7 @@ Use virtual buckets before physical moves:
 - Runtime, JS, and validation: `runtime-bootstrap-performance/`, `runtime-load-instrumentation/`, `runtime-module-fluency/`, `js-surface-ecology/`, `js-taxonomy-cleanup/`, `site-source-layout/`, `typescript-integration/`. Use this bucket for cold/warm load posture, cache strata, module mount cost, and metacognitive inspection utility.
 - Media, image, and sensory material: `style-image-cohesion/`, `midjourney-design-concepts/`, `relational-attention-media/`, `mobile-image-effects/`, `site-color-tuning/`, `theme-palette-marketability/`.
 - Public route, proof, and genre systems: `design-hub/`, `webpage-trope-vocabulary/`, `professional-skill-development-worldbuilding/`, `rpg-portal-fantasy/`, `expressive-layout-tropes-fidget-manuscript/`.
-- Templates and tooling: `recent-plan-templates/` is a template source, not an active backlog item. Use its leaflet precipitation template for small .spw byproducts before promoting them into plans or conventions.
+- Templates and tooling: `recent-plan-templates/` is a template source, not an active backlog item. Use its leaflet precipitation template for small .spw byproducts before promoting them into plans or conventions. `site-starter-component-kit/` owns the portable starter/component inventory boundary, not generated starter output yet.
 - Fix queue: `FIX.md`-only folders remain active tactical work unless a dated archive note says the fix has landed or been superseded.
 
 Consolidation posture:
@@ -77,6 +78,7 @@ The rest of `.agents/plans/` is an active backlog of route, CSS, runtime, image,
 High-signal active examples:
 
 - `design-hub/PLAN.md`
+- `site-starter-component-kit/PLAN.md` — make compose.css, compose.js, design specimens, and component promotion rules usable for spawning new sites without copying the full Spwashi shell.
 - `css-maintainability-refactor/PLAN.md`
 - `site-color-tuning/PLAN.md`
 - `overlay-layer-ownership/FIX.md`

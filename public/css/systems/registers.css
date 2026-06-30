@@ -1,0 +1,163 @@
+/* ==========================================================================
+   registers.css — Expressive Registers (systems layer)
+   --------------------------------------------------------------------------
+   A composable grammar that projects the registered scalar channels declared
+   in tokens/core.css (@property --spw-*) into visual expression.
+
+   The model, in three strata (see .spw/conventions/expressive-registers.spw):
+
+     1. CHANNELS  — nouns. Continuous scalars with documented polarity:
+        --spw-depth      0 far  → 1 near        (lift)
+        --spw-valence   -1 avoid → +1 approach  (temperature)
+        --spw-resonance  0 isolated → 1 coupled (coupling ring)
+        --spw-attention  0 ambient → 1 focal    (salience weight)
+        --spw-field-intensity 0 quiet → 1 charged (substrate wash)
+
+     2. RENDERINGS — verbs. Each reads exactly ONE channel × its register
+        weight, so renderings sum cleanly and never entangle.
+
+     3. REGISTERS  — the viewpoint. [data-spw-register="..."] sets a weight
+        mix: it does not change channel values, only how loudly each
+        rendering speaks. This is "differential salience via lenses".
+
+   Strictly additive and OPT-IN: nothing renders until a surface adds
+   [data-spw-register] to a container and [data-spw-express] to participants.
+   Register ≠ lens (content filter) ≠ form (spatial grammar) — all orthogonal.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Register weights — the viewpoint. Default to "balanced" so an opted-in
+   participant always has a full weight vector even with no register named.
+   -------------------------------------------------------------------------- */
+:where([data-spw-express]),
+:where([data-spw-register]) {
+  --reg-w-depth: 1;
+  --reg-w-valence: 1;
+  --reg-w-resonance: 1;
+  --reg-w-attention: 1;
+  --reg-w-field: 1;
+}
+
+:where([data-spw-register="depth"]) {
+  --reg-w-depth: 1.5;
+  --reg-w-valence: 0.4;
+  --reg-w-resonance: 0.4;
+  --reg-w-attention: 0.6;
+}
+:where([data-spw-register="valence"]) {
+  --reg-w-valence: 1.6;
+  --reg-w-depth: 0.5;
+  --reg-w-resonance: 0.4;
+  --reg-w-attention: 0.6;
+}
+:where([data-spw-register="resonance"]) {
+  --reg-w-resonance: 1.7;
+  --reg-w-depth: 0.4;
+  --reg-w-valence: 0.4;
+  --reg-w-attention: 0.5;
+}
+:where([data-spw-register="attention"]) {
+  --reg-w-attention: 1.6;
+  --reg-w-depth: 0.5;
+  --reg-w-valence: 0.5;
+  --reg-w-resonance: 0.4;
+}
+
+/* --------------------------------------------------------------------------
+   Authoring handle — data-spw-approach. One attribute sets several channels
+   per the prairie phase (approach_topography). Authors compose feeling
+   without writing calc(); runtime may also set the channels directly.
+   -------------------------------------------------------------------------- */
+:where([data-spw-approach="distant"]) {
+  --spw-depth: 0.15;
+  --spw-attention: 0.15;
+  --spw-valence: 0;
+}
+:where([data-spw-approach="approaching"]) {
+  --spw-depth: 0.5;
+  --spw-attention: 0.5;
+  --spw-valence: 0.5;
+}
+:where([data-spw-approach="arrival"]) {
+  --spw-depth: 1;
+  --spw-attention: 1;
+  --spw-valence: 1;
+}
+:where([data-spw-approach="return"]) {
+  --spw-depth: 0.5;
+  --spw-resonance: 0.85;
+  --spw-attention: 0.4;
+  --spw-valence: -0.3;
+}
+
+/* --------------------------------------------------------------------------
+   Renderings — verbs. Each composes channel × weight into one CSS effect.
+   Resolved factors are named so the cascade stays diagnosable.
+   -------------------------------------------------------------------------- */
+:where([data-spw-express]) {
+  --reg-depth: calc(var(--spw-depth, 0) * var(--reg-w-depth, 1));
+  --reg-valence: calc(var(--spw-valence, 0) * var(--reg-w-valence, 1));
+  --reg-resonance: calc(var(--spw-resonance, 0) * var(--reg-w-resonance, 1));
+  --reg-attention: calc(var(--spw-attention, 0) * var(--reg-w-attention, 1));
+
+  /* split valence into warm (approach) and cool (avoid) magnitudes */
+  --reg-warm: max(var(--reg-valence), 0);
+  --reg-cool: max(calc(-1 * var(--reg-valence)), 0);
+
+  /* salience: focal sharpens ink + presence, ambient recedes */
+  font-weight: calc(420 + var(--reg-attention) * 260);
+  opacity: calc(0.7 + var(--reg-attention) * 0.3);
+
+  /* lift: the near develops out of the substrate; coupling adds an outer ring */
+  transform: translateY(calc(var(--reg-depth) * -4px));
+  box-shadow:
+    0 calc(var(--reg-depth) * 6px) calc(var(--reg-depth) * 18px)
+      color-mix(in srgb, var(--ink, #1b1f23) calc(var(--reg-depth) * 16%), transparent),
+    0 0 0 calc(var(--reg-resonance) * 2px)
+      color-mix(in srgb, var(--spw-operator-color, var(--wonder-accent-color, #4aa3a3)) calc(var(--reg-resonance) * 40%), transparent);
+
+  /* temperature: a thin tint toward warm or cool by valence direction */
+  background-image: linear-gradient(
+    160deg,
+    color-mix(in srgb, var(--reg-warm-tint, #d98a4a) calc(var(--reg-warm) * 10%), transparent),
+    color-mix(in srgb, var(--reg-cool-tint, #4a82d9) calc(var(--reg-cool) * 10%), transparent)
+  );
+
+  transition:
+    transform var(--duration-fast, 160ms) var(--ease-mechanical, ease),
+    box-shadow var(--duration-fast, 160ms) var(--ease-mechanical, ease),
+    font-weight var(--duration-fast, 160ms) var(--ease-mechanical, ease),
+    opacity var(--duration-fast, 160ms) var(--ease-mechanical, ease);
+}
+
+/* wash: substrate gradient on the register container — holds the journey
+   without competing with figure (substrate vs figure discipline). */
+:where([data-spw-register]) {
+  background-image: radial-gradient(
+    120% 80% at 50% 0%,
+    color-mix(in srgb, var(--wonder-accent-color, #4aa3a3) calc(var(--spw-field-intensity, 0) * var(--reg-w-field, 1) * 6%), transparent),
+    transparent 70%
+  );
+}
+
+/* --------------------------------------------------------------------------
+   Coupling ↔ existing resonance field. When a kin operator is pinned by
+   attention-architecture (html[data-spw-resonance-probe]), lift coupled
+   participants' resonance so they brighten together under any register.
+   -------------------------------------------------------------------------- */
+@supports selector(:has(*)) {
+  :where(html[data-spw-resonance-probe]) :where([data-spw-express][data-spw-operator]) {
+    --spw-resonance: max(var(--spw-resonance, 0), 0.6);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Reduced motion — keep the expression, drop the movement.
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  :where([data-spw-express]) {
+    transform: none;
+    transition: box-shadow var(--duration-fast, 160ms) var(--ease-mechanical, ease),
+      opacity var(--duration-fast, 160ms) var(--ease-mechanical, ease);
+  }
+}

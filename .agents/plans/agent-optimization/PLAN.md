@@ -388,3 +388,15 @@ Captured the operational lessons from the mobile floating chrome / navigation ov
 - Prefer state-specific selectors over broad visual suppression. The final path was a generalizable mobile/topics clarity rule plus the stricter menu overlay state, rather than a one-off route hack or blanket blur removal.
 
 Next pass: if this pattern recurs, add a small generated or authored agent fast-start note under `.agents/state/` that records the route URL, CSS bundle freshness, target viewport, and current overlay/ornament computed-style probes.
+
+## Site Starter And Component Kit - 2026-06-30
+
+Captured the user's direction that this codebase should be useful for spawning new sites and designing new components.
+
+- Added `site-starter-component-kit/PLAN.md` as the owner plan for portable starter boundaries and component promotion.
+- Added `.spw/conventions/site-starter-component-kit.spw` so the portable compose layer, component lab, and site-specific boundaries are discoverable from the `.spw` dispatch.
+- Added `scripts/starter-inventory.mjs` plus `npm run starter:inventory` as a zero-dependency inventory and validation command for `compose.css`, `compose.js`, component CSS, and design docs.
+- Updated CSS and JS READMEs to route future starter work through the inventory instead of copying the full shell.
+- Wired the expressive-registers convention through `.spw` dispatch and added a small `/design/composition/` sample so the global `systems/registers.css` module has an authored proving surface.
+
+Next pass: use the inventory on a real small starter or component recipe before adding any scaffold generator.

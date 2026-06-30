@@ -4,6 +4,8 @@
 
 `compose.css` is the portable composition entrypoint. It exposes tokens, typography, grammar, components, handles, and light effects without the full site shell, route surfaces, or ornament layer.
 
+For new-site starter work, run `npm run starter:inventory -- --check` from the repo root. It lists the files currently treated as portable starter material and the site-specific surfaces that should not be copied by default.
+
 Implementation files live in folders that match the cascade layers:
 
 - `reset/`
@@ -61,7 +63,7 @@ Focused review slices can live under `routes/surfaces/` as well when they are me
 
 Reusable component styles belong under `components/`. The component layer is split by family (`foundation`, `surfaces`, `signals`, `cards`, `frames`, `pretext`, `content`, `controls`, and `runtime-states`) so filenames describe the local contract instead of repeating the project prefix. Card-specific component styles live in `components/cards/`; route folders should only own route-local layout and page identity.
 
-Use `compose.css` when another site wants the theme/component language but should keep its own page shell and route layout.
+Use `compose.css` when another site wants the theme/component language but should keep its own page shell and route layout. The durable boundary is tracked in `.spw/conventions/site-starter-component-kit.spw`.
 
 Documentation route: `/design/composition/`.
 

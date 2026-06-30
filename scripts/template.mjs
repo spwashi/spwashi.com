@@ -41,7 +41,7 @@
  * Zero deps. Shared by build.mjs and dev-server.mjs so dev matches prod.
  */
 
-import { promises as fs } from 'node:fs';
+import { promises as fs, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -358,8 +358,26 @@ function renderAnalyticsScript(vars) {
   return `    <script ${attrs.join(' ')}></script>`;
 }
 
+const PREPAINT_SOURCE_PATH = path.join(REPO_ROOT, 'public/js/runtime/prepaint-state.js');
+
+// Read the zero-dep preflight IIFE once and inline it into the head. Inlining
+// (rather than <script src>) removes a render-blocking network round-trip for a
+// script that must execute before first paint — so the saved theme / font /
+// color-scheme apply during parse instead of flashing the defaults and reflowing
+// once the external script lands. The file stays the single source of truth.
+let prepaintInlineSourceCache = null;
+function readPrepaintInlineSource() {
+  if (prepaintInlineSourceCache === null) {
+    // Escape any literal `</script` so the inlined body can't close the tag early.
+    prepaintInlineSourceCache = readFileSync(PREPAINT_SOURCE_PATH, 'utf8')
+      .replace(/<\/script/gi, '<\\/script')
+      .trim();
+  }
+  return prepaintInlineSourceCache;
+}
+
 function renderSettingsPreflightScript() {
-  return '    <script data-spw-settings-preflight src="/public/js/runtime/prepaint-state.js"></script>';
+  return `    <script data-spw-settings-preflight>\n${readPrepaintInlineSource()}\n    </script>`;
 }
 
 function injectSettingsPreflight(source) {

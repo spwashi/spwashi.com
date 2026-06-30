@@ -1154,6 +1154,16 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-page-seed="page_design_des
   border: 1px solid color-mix(in srgb, var(--design-surface-accent) 18%, var(--design-surface-line) 82%);
   border-radius: 8px;
   background: color-mix(in srgb, var(--design-surface-matte-strong) 91%, var(--design-surface-accent) 4%);
+  transition:
+    border-color 140ms var(--ease-mechanical, ease),
+    background-color 140ms var(--ease-mechanical, ease),
+    transform 140ms var(--ease-mechanical, ease);
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-ecology-method > div:is(:hover, :focus-within)) {
+  border-color: color-mix(in srgb, var(--design-surface-accent) 34%, var(--design-surface-line) 66%);
+  background: color-mix(in srgb, var(--design-surface-matte-strong) 88%, var(--design-surface-accent) 8%);
+  transform: translateY(-1px);
 }
 
 :where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-ecology-method strong) {
@@ -1539,6 +1549,22 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-page-seed="page_design_des
 }
 
 @media (prefers-reduced-motion: reduce) {
+  :where(body[data-spw-page-seed="page_design_design_hub"]) :where(
+    .design-ecology-specimen,
+    .design-ecology-method > div,
+    .design-qa-card,
+    .design-material-specimen
+  ) {
+    transition: none;
+  }
+
+  :where(body[data-spw-page-seed="page_design_design_hub"]) :where(
+    .design-ecology-specimen:is(:hover, :focus-within),
+    .design-ecology-method > div:is(:hover, :focus-within)
+  ) {
+    transform: none;
+  }
+
   :where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-ecology-specimen[data-spw-settle-state="settling"]) {
     transform: none;
   }
