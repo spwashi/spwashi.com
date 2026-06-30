@@ -1924,7 +1924,7 @@ html[data-spw-font-size-scale="120"] [data-spw-vocab]) {
   opacity: 0.7;
   filter: saturate(0.6);
 }
-:where(.topic-hero-grid li, .frame-operators a)[data-spw-active="true"] {
+:where(.frame-operators a)[data-spw-active="true"] {
   /* awareness of topical composition / site layout on tap */
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--component-accent)) 30%, transparent);
 }

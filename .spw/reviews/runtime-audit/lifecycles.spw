@@ -67,10 +67,29 @@ module_contract: .{
   normalize = `site.js wraps the result through normalizeMountHandle()`
   record = `the registry stores status, cleanup, refresh, root, mountedAt, and error`
  }[reg=facet]
+ metadata_alignment = .{
+  operation = "audit align"
+  fixity = "stable"
+  source = @module_catalog
+  result = `Core defaults, feature modules, region enhancement, and shared enhancements now carry describes/evaluates/updates metadata in the catalog, so runtime-contract audits can explain mounted behavior without treating enhancement modules as ambient.`
+  validation = `node scripts/runtime-contracts.mjs -> zero errors, warnings, and recommendations for the catalog metadata pass.`
+  non_goal = `This pass did not change selectors, mount timing, settings defaults, feature gates, route gates, or runtime behavior.`
+ }[reg=facet]
+ timing_effect_alignment = .{
+  operation = "audit align contract"
+  fixity = "stable"
+  source = @module_catalog
+  loader = @module_loader
+  result = `Modules with broad root, observer, storage, media, gesture, or floating-chrome impact can now declare timingArc and effectScope metadata. The loader projects those fields into snapshots, DOM annotations, audit records, runtime summaries, spell serialization, resource discovery, and module bus events.`
+  validation = `The runtime-contract checker parses timingArc/effectScope and fails malformed non-kebab contract tokens while leaving route-specific modules free to adopt the metadata incrementally.`
+  non_goal = `This pass did not change the actual scheduler, mount timing constants, selectors, feature gates, settings defaults, visual effects, or module behavior.`
+ }[reg=facet]
  good_properties = #[
   `The mount contract is small and uniform.`,
   `The registry can distinguish mounted and failed records.`,
-  `Core / feature / region / enhancement layers are explicit.`
+  `Core / feature / region / enhancement layers are explicit.`,
+  `Catalog metadata now names the semantic role and observed state writes for every mounted module definition.`,
+  `High-impact runtime modules can expose both intended timing posture and side-effect footprint without opening module source.`
  ][reg=set]
 }[reg=facet]
 

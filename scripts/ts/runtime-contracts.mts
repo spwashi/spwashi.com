@@ -34,6 +34,7 @@ const RUNTIME_FAMILIES = ['CORE_DEFS', 'FEATURE_DEFS', 'REGION_DEFS', 'ENHANCEME
 const VALID_LAYERS = new Set(['core', 'feature', 'region', 'enhancement']);
 const VALID_MOUNT_TIMINGS = new Set(['immediate', 'visible', 'idle', 'interaction', 'region']);
 const VALID_ROOT_MODES = new Set(['single', 'each']);
+const CONTRACT_TOKEN_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const ALLOWED_ROOT_JS_FILES = new Set(['compose.js', 'site.js']);
 const ALLOWED_JS_OWNER_DIRECTORIES = new Set([
   'interface',
@@ -59,6 +60,7 @@ type RuntimeFamily = (typeof RUNTIME_FAMILIES)[number];
 type RuntimeContractModule = {
   debugOnly: boolean;
   describes: string | null;
+  effectScope: string | null;
   evaluates: string | null;
   family: RuntimeFamily;
   features: string[];
@@ -70,6 +72,7 @@ type RuntimeContractModule = {
   rootMode: string | null;
   selectorContract: boolean;
   selector: string | null;
+  timingArc: string | null;
   updates: string[];
   when: string;
 };
@@ -132,6 +135,11 @@ function parseFeatures(source: string): string[] {
   return [...arrayMatch[1].matchAll(/(['"`])([^'"`]+)\1/g)].map((item) => item[2]);
 }
 
+function splitContractTokens(value: string | null): string[] {
+  if (!value) return [];
+  return value.split(/[\s,]+/).map((token) => token.trim()).filter(Boolean);
+}
+
 function parseExportedStringArray(source: string, name: string): string[] {
   const pattern = new RegExp(`export\\s+const\\s+${name}\\s*=\\s*Object\\.freeze\\(\\s*\\[([\\s\\S]*?)\\]\\s*\\)`);
   const match = source.match(pattern);
@@ -165,6 +173,7 @@ function parseRuntimeModule(objectLiteral: string, family: RuntimeFamily, index:
   return {
     debugOnly: /\bdebugOnly:\s*true\b/.test(objectLiteral),
     describes: parseQuotedProperty(objectLiteral, 'describes'),
+    effectScope: parseQuotedProperty(objectLiteral, 'effectScope'),
     evaluates: parseQuotedProperty(objectLiteral, 'evaluates'),
     family,
     features: parseFeatures(objectLiteral),
@@ -176,6 +185,7 @@ function parseRuntimeModule(objectLiteral: string, family: RuntimeFamily, index:
     rootMode: parseQuotedProperty(objectLiteral, 'rootMode'),
     selectorContract: /\bselector\s*:/.test(objectLiteral),
     selector: parseQuotedProperty(objectLiteral, 'selector'),
+    timingArc: parseQuotedProperty(objectLiteral, 'timingArc'),
     updates: parseUpdates(objectLiteral),
     when: parseConstantProperty(objectLiteral, 'when', 'MOUNT_WHEN') || 'immediate',
   };
@@ -370,6 +380,19 @@ function validateModule(
 
   if (module.rootMode && !VALID_ROOT_MODES.has(module.rootMode)) {
     errors.push(`${label} has invalid rootMode "${module.rootMode}".`);
+  }
+
+  if (module.timingArc) {
+    const timingTokens = splitContractTokens(module.timingArc);
+    if (timingTokens.length !== 1 || !CONTRACT_TOKEN_RE.test(timingTokens[0])) {
+      errors.push(`${label} timingArc must be a single lowercase kebab-case token.`);
+    }
+  }
+
+  for (const token of splitContractTokens(module.effectScope)) {
+    if (!CONTRACT_TOKEN_RE.test(token)) {
+      errors.push(`${label} effectScope token "${token}" must be lowercase kebab-case.`);
+    }
   }
 
   if (module.rootMode === 'each' && !module.selectorContract) {

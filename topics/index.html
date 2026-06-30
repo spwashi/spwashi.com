@@ -140,91 +140,133 @@
             </div>
         </header>
 
-        <div class="topic-hero-grid" data-spw-slot="body">
-            <div class="frame-body" data-spw-slot="body">
-                <p class="spec-kicker" data-spw-semantic-expression="atlas[topic]{orient}">Topic Register</p>
-                <h1 id="topics-title">Choose the surface that matches the kind of attention you have.</h1>
-                <section
-                    id="topics-hook"
-                    data-spw-kind="hook"
-                    data-spw-role="gate"
-                    data-spw-hook-variant="wonder"
-                    data-spw-operator="probe"
-                    data-spw-wonder="orientation comparison projection"
-                    data-spw-liminality="entry"
-                    data-spw-consequence="framing"
-                    data-spw-gesture-contract="tap:prime hold:inspect"
-                    class="hook-call"
-                    aria-label="Choose the surface that matches the kind of attention you have"
-                >
-                    <p class="hook-lede">
-                        The atlas is not a static directory: <span class="spw-living-term" data-spw-living-term data-spw-concept="attention-shape" tabindex="0">start from the question that changed shape</span>, then cross into a neighbor before the thought hardens into a silo.
-                    </p>
-                    <p class="hook-sub">
-                        <span data-spw-perspective="objective">Objective terminal:</span> hubs orient, leaves apply pressure, timelines hold memory, and operator pages export reusable handles.
-                        <span data-spw-perspective="subjective">Subjective terminal:</span> follow the route that made the next question smaller than it was yesterday.
-                    </p>
-                    <p class="hook-invitation">
-                        Pick one surface below, test a neighboring route, and leave with a proof card or prompt that can bring you back.
-                    </p>
-                </section>
+        <div class="frame-body topic-hero-copy" data-spw-slot="body">
+            <p class="spec-kicker" data-spw-semantic-expression="atlas[topic]{orient}">Topic Register</p>
+            <h1 id="topics-title">Choose the surface that matches the kind of attention you have.</h1>
+            <section
+                id="topics-hook"
+                data-spw-kind="hook"
+                data-spw-role="gate"
+                data-spw-hook-variant="wonder"
+                data-spw-operator="probe"
+                data-spw-wonder="orientation comparison projection"
+                data-spw-liminality="entry"
+                data-spw-consequence="framing"
+                data-spw-gesture-contract="tap:prime hold:inspect"
+                class="hook-call"
+                aria-label="Choose the surface that matches the kind of attention you have"
+            >
+                <p class="hook-lede">
+                    The atlas is not a static directory: <span class="spw-living-term" data-spw-living-term data-spw-concept="attention-shape" tabindex="0">start from the question that changed shape</span>, then cross into a neighbor before the thought hardens into a silo.
+                </p>
+                <p class="hook-sub">
+                    <span data-spw-perspective="objective">Objective terminal:</span> hubs orient, leaves apply pressure, timelines hold memory, and operator pages export reusable handles.
+                    <span data-spw-perspective="subjective">Subjective terminal:</span> follow the route that made the next question smaller than it was yesterday.
+                </p>
+                <p class="hook-invitation">
+                    Pick one surface below, test a neighboring route, and leave with a proof card or prompt that can bring you back.
+                </p>
+            </section>
 
-                <p id="topics-description" class="frame-note" data-spw-copy-depth="normal">If you already toured the atlas once, do not use it like a static directory. Use it when your current question changed shape. Start from the route that makes the next question smaller than it was yesterday, then cross into a neighbor before the thought hardens into a silo.</p>
-                <p class="frame-note" data-spw-copy-depth="normal">Different route structures should feel different on purpose: a hub gives orientation, a leaf gives pressure, a timeline gives memory, and a deep operator page gives a handle you can reuse elsewhere. The cauldron and spell language belongs here because collected fragments should be able to lead back to their charged source instead of becoming disconnected notes.</p>
-                <p class="frame-note" data-spw-copy-depth="normal">For returning learners, this atlas is a way to tune attention: follow the concept that brightened, test one neighboring surface, and keep only the prompt, screenshot, or route bridge that can help you return later.</p>
+            <p id="topics-description" class="frame-note" data-spw-copy-depth="normal">If you already toured the atlas once, do not use it like a static directory. Use it when your current question changed shape. Start from the route that makes the next question smaller than it was yesterday, then cross into a neighbor before the thought hardens into a silo.</p>
+            <p class="frame-note" data-spw-copy-depth="normal">Different route structures should feel different on purpose: a hub gives orientation, a leaf gives pressure, a timeline gives memory, and a deep operator page gives a handle you can reuse elsewhere. The cauldron and spell language belongs here because collected fragments should be able to lead back to their charged source instead of becoming disconnected notes.</p>
+            <p class="frame-note" data-spw-copy-depth="normal">For returning learners, this atlas is a way to tune attention: follow the concept that brightened, test one neighboring surface, and keep only the prompt, screenshot, or route bridge that can help you return later.</p>
 
-                <div class="spw-reason-strip" aria-label="Topic atlas reasons" data-spw-box-model="reason-strip" data-spw-composition-flow="grid" data-spw-feature="topic-attention-reasons">
+            <div class="spw-reason-strip" aria-label="Topic atlas reasons" data-spw-box-model="reason-strip" data-spw-composition-flow="grid" data-spw-feature="topic-attention-reasons">
+                <div>
+                    <strong>Use a hub for orientation</strong>
+                    <p>Start broad when the question is still foggy or when several domains are pulling on the same idea.</p>
+                </div>
+                <div>
+                    <strong>Use a leaf for pressure</strong>
+                    <p>Drop into a specific route when the next useful move is a proof card, component, prompt, or example.</p>
+                </div>
+                <div>
+                    <strong>Use a bridge for return</strong>
+                    <p>Leave with one adjacent route so the thought can keep moving without turning into another list.</p>
+                </div>
+            </div>
+
+            <div class="topic-route-board" data-spw-feature="topic-route-lanes" data-spw-box-model="lens-board" data-spw-composition-flow="lens" data-spw-inspect-mode-group="topic-route-lanes">
+                <div class="topic-route-board__head">
                     <div>
-                        <strong>Use a hub for orientation</strong>
-                        <p>Start broad when the question is still foggy or when several domains are pulling on the same idea.</p>
+                        <p class="topic-route-board__eyebrow">Route by attention</p>
+                        <p class="topic-route-board__prompt">System shape, learning pressure, public artifact, and live next step each ask for a different atlas posture.</p>
                     </div>
-                    <div>
-                        <strong>Use a leaf for pressure</strong>
-                        <p>Drop into a specific route when the next useful move is a proof card, component, prompt, or example.</p>
-                    </div>
-                    <div>
-                        <strong>Use a bridge for return</strong>
-                        <p>Leave with one adjacent route so the thought can keep moving without turning into another list.</p>
+                    <div class="mode-switch topic-route-switch" role="group" aria-label="Topic route lanes">
+                        <button class="frame-sigil" type="button" data-mode-group="topic-route-lanes" data-set-mode="systems" aria-pressed="true" data-spw-operator="select">.systems</button>
+                        <button class="frame-sigil" type="button" data-mode-group="topic-route-lanes" data-set-mode="learning" aria-pressed="false" data-spw-operator="select">?learning</button>
+                        <button class="frame-sigil" type="button" data-mode-group="topic-route-lanes" data-set-mode="making" aria-pressed="false" data-spw-operator="select">^making</button>
+                        <button class="frame-sigil" type="button" data-mode-group="topic-route-lanes" data-set-mode="current" aria-pressed="false" data-spw-operator="select">@current</button>
                     </div>
                 </div>
 
-                <nav aria-label="Topic index" class="frame-operators" data-spw-slot="actions">
-                    <a class="operator-chip" href="/topics/craft/" data-spw-operator="action">author craft</a>
-                    <a class="operator-chip" href="/topics/software/" data-spw-operator="route">software</a>
-                    <a class="operator-chip" href="/topics/software/#curricular-codebase" data-spw-operator="potential">curricularize codebase</a>
-                    <a class="operator-chip" href="/topics/software/algorithms/" data-spw-operator="stream">algorithm visualization</a>
-                    <a class="operator-chip" href="/topics/software/differential-lambda-calculus/" data-spw-operator="stream">differential lambda calculus</a>
-                    <a class="operator-chip" href="/topics/knowledge-bases/" data-spw-operator="address">knowledge bases</a>
-                    <a class="operator-chip" href="/topics/software/text-editing/" data-spw-operator="act">text editing</a>
-                    <a class="operator-chip" href="/tools/" data-spw-operator="object">tools</a>
-                    <a class="operator-chip" href="/topics/architecture/" data-spw-operator="address">architecture</a>
-                    <a class="operator-chip" href="/topics/pedagogy/" data-spw-operator="wonder">pedagogy</a>
-                    <a class="operator-chip" href="/topics/search/" data-spw-operator="wonder">search &amp; rediscovery</a>
-                    <a class="operator-chip" href="/topics/mental-health/" data-spw-operator="potential">mental health</a>
-                    <a class="operator-chip" href="/topics/nutrition/" data-spw-operator="potential">nutrition</a>
-                    <a class="operator-chip" href="/topics/math/trigonometry/#unit-circle-lab" data-spw-operator="stream">trigonometry</a>
-                    <a class="operator-chip" href="/topics/math/calculus/#calculus-lab" data-spw-operator="stream">calculus</a>
-                    <a class="operator-chip" href="/topics/math/differential-equations/#slope-field-lab" data-spw-operator="stream">differential equations</a>
-                    <a class="operator-chip" href="/topics/math/scale-intuition/" data-spw-operator="stream">scale intuition</a>
-                    <a class="operator-chip" href="/topics/math/statistical-analysis/" data-spw-operator="stream">statistical analysis</a>
-                    <a class="operator-chip" href="/design/website/" data-spw-operator="surface">website</a>
-                    <a class="operator-chip" href="/design/" data-spw-operator="address">design hub</a>
-                    <a class="operator-chip" href="/design/folios/" data-spw-operator="*">folio archive</a>
-                    <a class="operator-chip" href="/topics/math/" data-spw-operator="stream">math</a>
-                    <a class="operator-chip" href="/blog/" data-spw-operator="stream">blog</a>
-                    <a class="operator-chip" href="/play/" data-spw-operator="potential">play</a>
-                    <a class="operator-chip" href="/about/website/" data-spw-operator="address">site guide</a>
-                </nav>
-                <nav class="frame-operators" aria-label="Topic next steps" data-spw-slot="actions">
-                    <a class="operator-chip" href="/now/" data-spw-operator="value">$ current sprint</a>
-                    <a class="operator-chip" href="/cards/" data-spw-operator="integrate">^ proof cards</a>
-                    <a class="operator-chip" href="/membership/" data-spw-operator="address">#&gt; membership</a>
-                    <a class="operator-chip" href="/research/" data-spw-operator="wonder">? research</a>
-                    <a class="operator-chip" href="/topics/search/" data-spw-operator="wonder">? rediscovery</a>
-                    <a class="operator-chip" href="/services/" data-spw-operator="situate">@ services</a>
-                    <a class="operator-chip" href="/tools/" data-spw-operator="integrate">^ tools</a>
-                    <a class="operator-chip" href="/contact/" data-spw-operator="address">#&gt;contact</a>
-                </nav>
+                <div class="topic-route-board__panels">
+                    <nav class="topic-route-lane" aria-labelledby="topic-lane-systems-title" data-mode-group="topic-route-lanes" data-mode-panel="systems" data-spw-kind="lens" data-spw-role="routing" data-spw-route-lane="systems">
+                        <p class="topic-route-lane__kicker">build inspectable systems</p>
+                        <h2 id="topic-lane-systems-title">Structure is the problem.</h2>
+                        <p>These routes turn runtimes, grammars, tools, and knowledge structures into objects you can inspect, refactor, and teach.</p>
+                        <div class="frame-operators">
+                            <a class="operator-chip" href="/topics/software/" data-spw-operator="route">software</a>
+                            <a class="operator-chip" href="/topics/software/#curricular-codebase" data-spw-operator="potential">curricularize codebase</a>
+                            <a class="operator-chip" href="/topics/software/algorithms/" data-spw-operator="stream">algorithm visualization</a>
+                            <a class="operator-chip" href="/topics/software/differential-lambda-calculus/" data-spw-operator="stream">differential lambda calculus</a>
+                            <a class="operator-chip" href="/topics/knowledge-bases/" data-spw-operator="address">knowledge bases</a>
+                            <a class="operator-chip" href="/topics/software/text-editing/" data-spw-operator="act">text editing</a>
+                            <a class="operator-chip" href="/tools/" data-spw-operator="object">tools</a>
+                            <a class="operator-chip" href="/topics/architecture/" data-spw-operator="address">architecture</a>
+                        </div>
+                    </nav>
+
+                    <nav class="topic-route-lane" aria-labelledby="topic-lane-learning-title" data-mode-group="topic-route-lanes" data-mode-panel="learning" data-spw-kind="lens" data-spw-role="routing" data-spw-route-lane="learning" hidden>
+                        <p class="topic-route-lane__kicker">make the question smaller</p>
+                        <h2 id="topic-lane-learning-title">Concepts need pressure.</h2>
+                        <p>These routes are for explanations, labs, care context, and mathematical surfaces where the next useful move should become easier to see.</p>
+                        <div class="frame-operators">
+                            <a class="operator-chip" href="/topics/pedagogy/" data-spw-operator="wonder">pedagogy</a>
+                            <a class="operator-chip" href="/topics/search/" data-spw-operator="wonder">search &amp; rediscovery</a>
+                            <a class="operator-chip" href="/topics/mental-health/" data-spw-operator="potential">mental health</a>
+                            <a class="operator-chip" href="/topics/nutrition/" data-spw-operator="potential">nutrition</a>
+                            <a class="operator-chip" href="/topics/math/trigonometry/#unit-circle-lab" data-spw-operator="stream">trigonometry</a>
+                            <a class="operator-chip" href="/topics/math/calculus/#calculus-lab" data-spw-operator="stream">calculus</a>
+                            <a class="operator-chip" href="/topics/math/differential-equations/#slope-field-lab" data-spw-operator="stream">differential equations</a>
+                            <a class="operator-chip" href="/topics/math/scale-intuition/" data-spw-operator="stream">scale intuition</a>
+                            <a class="operator-chip" href="/topics/math/statistical-analysis/" data-spw-operator="stream">statistical analysis</a>
+                            <a class="operator-chip" href="/topics/math/" data-spw-operator="stream">math</a>
+                        </div>
+                    </nav>
+
+                    <nav class="topic-route-lane" aria-labelledby="topic-lane-making-title" data-mode-group="topic-route-lanes" data-mode-panel="making" data-spw-kind="lens" data-spw-role="routing" data-spw-route-lane="making" hidden>
+                        <p class="topic-route-lane__kicker">turn attention into artifacts</p>
+                        <h2 id="topic-lane-making-title">The work needs a public form.</h2>
+                        <p>These routes gather craft, design, site-making, play, and archival surfaces so a fragment can become something visible.</p>
+                        <div class="frame-operators">
+                            <a class="operator-chip" href="/topics/craft/" data-spw-operator="action">author craft</a>
+                            <a class="operator-chip" href="/design/website/" data-spw-operator="surface">website</a>
+                            <a class="operator-chip" href="/design/" data-spw-operator="address">design hub</a>
+                            <a class="operator-chip" href="/design/folios/" data-spw-operator="*">folio archive</a>
+                            <a class="operator-chip" href="/blog/" data-spw-operator="stream">blog</a>
+                            <a class="operator-chip" href="/play/" data-spw-operator="potential">play</a>
+                            <a class="operator-chip" href="/about/website/" data-spw-operator="address">site guide</a>
+                        </div>
+                    </nav>
+
+                    <nav class="topic-route-lane" aria-labelledby="topic-lane-current-title" data-mode-group="topic-route-lanes" data-mode-panel="current" data-spw-kind="lens" data-spw-role="routing" data-spw-route-lane="current" hidden>
+                        <p class="topic-route-lane__kicker">continue from here</p>
+                        <h2 id="topic-lane-current-title">The live working surface is next.</h2>
+                        <p>These links leave the atlas and move into the current sprint, proof cards, research, services, tools, or direct contact.</p>
+                        <div class="frame-operators">
+                            <a class="operator-chip" href="/now/" data-spw-operator="value">$ current sprint</a>
+                            <a class="operator-chip" href="/cards/" data-spw-operator="integrate">^ proof cards</a>
+                            <a class="operator-chip" href="/membership/" data-spw-operator="address">#&gt; membership</a>
+                            <a class="operator-chip" href="/research/" data-spw-operator="wonder">? research</a>
+                            <a class="operator-chip" href="/topics/search/" data-spw-operator="wonder">? rediscovery</a>
+                            <a class="operator-chip" href="/services/" data-spw-operator="situate">@ services</a>
+                            <a class="operator-chip" href="/tools/" data-spw-operator="integrate">^ tools</a>
+                            <a class="operator-chip" href="/contact/" data-spw-operator="address">#&gt;contact</a>
+                        </div>
+                    </nav>
+                </div>
             </div>
         </div>
 

@@ -47,6 +47,18 @@ Reduce the size and cognitive load of `public/js/site.js` by extracting the page
 - Consolidated annotation-layer region collection onto `collectAnnotationRegions()` with `ANNOTATION_LAYER_REGION_SELECTOR` in `dom-contracts.js`.
 - Updated `public/js/README.md` reading order and `.spw/reviews/runtime-audit/lifecycles.spw` paths to match the current folder taxonomy.
 
+## 2026-06 Catalog Metadata Alignment Pass
+- Audited `public/js/runtime/module-catalog.js` for default/core, feature, region, and enhancement entries that mounted without a semantic `describes` contract.
+- Added short `describes`, `updates`, and/or `evaluates` metadata to the remaining catalog entries so runtime audits can explain what each module changes without opening every module source first.
+- Kept this as catalog metadata only: no selector, mount timing, route gate, feature gate, settings default, or runtime behavior changed.
+- Validation result: `node scripts/runtime-contracts.mjs` now reports zero errors, warnings, or recommendations for module catalog metadata.
+
+## 2026-06 Timing And Effect Scope Pass
+- Added optional `timingArc` and `effectScope` catalog metadata for modules with broad root, observer, storage, media, gesture, or floating-chrome impact.
+- Threaded the new fields through module loader snapshots, DOM annotations, audit records, runtime summaries, spell serialization, resource discovery, and module bus events.
+- Updated the runtime contract checker to parse the new fields and fail malformed non-kebab contract tokens without requiring a broad rewrite of every route-specific feature module.
+- Kept this pass behavior-neutral: no selectors, route gates, feature gates, settings defaults, mount timing constants, or visual effects changed.
+
 ## Out of Scope
 - Renaming unrelated runtime modules.
 - Changing route-specific behavior beyond the page-state contract.

@@ -40,6 +40,16 @@ import {
 
 let lastSectionLogKey = '';
 let lastSectionIndex = 0;
+const EXPLICIT_SECTION_TRAVEL_SOURCES = new Set([
+  'prev',
+  'next',
+  'top',
+  'bottom',
+  'arrow-prev',
+  'arrow-next',
+  'home',
+  'end',
+]);
 
 function setHandleState(handle, state) {
   if (!handle) return;
@@ -596,8 +606,8 @@ function travelSectionHandleToIndex({
     inline: 'nearest',
   });
 
-  // ARIA hygiene: only announce for explicit button-driven travel (not passive scroll)
-  if (['prev', 'next', 'top', 'bottom'].includes(source)) {
+  // Announce explicit control travel only; passive scroll stays quiet.
+  if (EXPLICIT_SECTION_TRAVEL_SOURCES.has(source)) {
     const live = shell.querySelector('.spw-section-handle-live');
     const heading = target.querySelector('h1, h2, h3, .frame-sigil')?.textContent?.trim() || 'section';
     announceSectionTravel(live, heading);

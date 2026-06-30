@@ -34,6 +34,10 @@ export const SPW_MODULE_LOADER_CONTRACT = Object.freeze({
     'shouldScheduleDefinition() honors module def.features against ctx.features (body[data-spw-features]).',
   immediateScheduling:
     'Immediate definitions within a layer mount concurrently after any site-settings core seed; call sites may run independent non-core layers together.',
+  timingArc:
+    'Module definitions may name timingArc to explain the intended scheduling posture beyond raw mount timing.',
+  effectScope:
+    'Module definitions may name effectScope tokens to make global state, storage, observer, media, or local DOM side effects auditable.',
 });
 
 export function createModuleLoader(config = {}) {
@@ -140,6 +144,16 @@ function summarizeModuleLifecycle(record) {
   return lifecycle.map((entry) => entry.stage).join(' > ');
 }
 
+function normalizeModuleIntentValue(value) {
+  if (value == null) return [];
+  const values = Array.isArray(value) ? value : String(value).split(/[\s,]+/);
+  return values.map(normalizeRuntimeToken).filter(Boolean);
+}
+
+function summarizeModuleIntentValue(value, separator = '|') {
+  return normalizeModuleIntentValue(value).join(separator);
+}
+
 function snapshotModuleTimingStages(ctx) {
   if (!ctx) {
     return {
@@ -192,6 +206,8 @@ function snapshotModuleTimingStages(ctx) {
       loadMs: latest.loadMs,
       mountMs: latest.mountMs,
       durationMs: latest.durationMs,
+      timingArc: latest.timingArc || null,
+      effectScope: latest.effectScope || null,
       reason: latest.reason,
     } : null,
     records,
@@ -227,6 +243,8 @@ function listModuleDefinitions(ctx) {
       selector: def.selector || '',
       rootMode: def.rootMode || 'single',
       evaluates: inferModuleDimensions(def),
+      timingArc: def.timingArc || null,
+      effectScope: normalizeModuleIntentValue(def.effectScope),
       reason: ctx ? describeMountReason(def, ctx, null, effectiveWhen) : (def.reason || ''),
       status: record?.status || 'defined',
     };
@@ -246,6 +264,8 @@ function snapshotRuntimeModules(ctx) {
     reason: record.reason,
     describes: record.describes || null,
     updates: record.updates || null,
+    timingArc: record.timingArc || null,
+    effectScope: normalizeModuleIntentValue(record.effectScope),
     stage: record.stage || record.status || 'scheduled',
     stageAt: record.stageAt || null,
     lifecycle: Array.isArray(record.lifecycle)
@@ -273,6 +293,11 @@ function moduleRecordToSpellExpression(record) {
   const updatesPart = record.updates && record.updates.length
     ? `{updates:${record.updates.join('+')}}`
     : '';
+  const effectScope = normalizeModuleIntentValue(record.effectScope);
+  const effectPart = effectScope.length
+    ? `{effects:${effectScope.join('+')}}`
+    : '';
+  const arcPart = record.timingArc ? `{arc:${record.timingArc}}` : '';
   const lifecyclePart = record.stage ? `{stage:${record.stage}}` : '';
   const timingPart = record.durationMs
     ? `[${Math.round(record.durationMs)}ms]`
@@ -280,7 +305,7 @@ function moduleRecordToSpellExpression(record) {
   const statusPart = record.status ? `:${record.status}` : '';
 
   // Produce something like: #>module:cauldron{updates:data-spw-cauldron}[120ms]:mounted
-  return `#>${record.layer || 'module'}:${record.baseId || record.id}${updatesPart}${lifecyclePart}${timingPart}${statusPart} ${base}`.trim();
+  return `#>${record.layer || 'module'}:${record.baseId || record.id}${updatesPart}${effectPart}${arcPart}${lifecyclePart}${timingPart}${statusPart} ${base}`.trim();
 }
 
 /**
@@ -367,7 +392,11 @@ function describeMountReason(def, ctx, root = null, effectiveWhen = getEffective
     const updates = Array.isArray(def.updates) && def.updates.length
       ? ` updates:[${def.updates.join('|')}]`
       : '';
-    return `${base} ${def.describes}${updates}`;
+    const timing = def.timingArc ? ` timing:${def.timingArc}` : '';
+    const effects = def.effectScope
+      ? ` effects:[${summarizeModuleIntentValue(def.effectScope)}]`
+      : '';
+    return `${base} ${def.describes}${updates}${timing}${effects}`;
   }
 
   const routeReason = def.route
@@ -445,6 +474,8 @@ function shouldScheduleDefinition(def, ctx, expectedWhen = null) {
       effectiveWhen,
       status: 'skipped',
       reason,
+      timingArc: def.timingArc || null,
+      effectScope: normalizeModuleIntentValue(def.effectScope),
     });
   }
 
@@ -461,6 +492,8 @@ function annotateModuleTarget(target, record) {
   writeDatasetValue(target, 'spwModuleLifecycleStage', record.stage || record.status);
   writeDatasetValue(target, 'spwModuleReason', record.reason);
   writeDatasetValue(target, 'spwModuleEvaluates', record.evaluates);
+  writeDatasetValue(target, 'spwModuleTimingArc', record.timingArc || null);
+  writeDatasetValue(target, 'spwModuleEffectScope', record.effectScope || null);
   writeDatasetValue(target, 'spwModuleTriggerStatus', record.status);
   writeDatasetValue(target, 'spwModuleLifecycle', summarizeModuleLifecycle(record));
 
@@ -486,6 +519,8 @@ function annotateModuleTrigger(target, def, ctx, effectiveWhen, status = 'queued
   writeDatasetValue(target, 'spwModuleTriggerWhen', effectiveWhen);
   writeDatasetValue(target, 'spwModuleTriggerStatus', status);
   writeDatasetValue(target, 'spwModuleTriggerReason', reason);
+  writeDatasetValue(target, 'spwModuleTriggerTimingArc', def.timingArc || null);
+  writeDatasetValue(target, 'spwModuleTriggerEffectScope', normalizeModuleIntentValue(def.effectScope));
   writeDatasetValue(target, 'spwFeatureMountTrigger', `${def.id}:${effectiveWhen}`);
   if (def.selector) writeDatasetValue(target, 'spwModuleTriggerSelector', def.selector);
 }
@@ -567,6 +602,8 @@ function syncRuntimeModuleSummary(ctx, record) {
   writeDatasetValue(html, 'spwRuntimeLastModuleReason', record.reason);
   writeDatasetValue(html, 'spwRuntimeLastModuleEvaluates', record.evaluates);
   writeDatasetValue(html, 'spwRuntimeLastModuleDescribes', record.describes || null);
+  writeDatasetValue(html, 'spwRuntimeLastModuleTimingArc', record.timingArc || null);
+  writeDatasetValue(html, 'spwRuntimeLastModuleEffectScope', record.effectScope || null);
   writeDatasetValue(html, 'spwRuntimeMountedModules', new Set(mounted));
   writeDatasetValue(html, 'spwRuntimeFailedModules', new Set(failed));
   writeDatasetValue(html, 'spwRuntimeModuleCount', String(mounted.length));
@@ -585,6 +622,9 @@ function syncRuntimeModuleSummary(ctx, record) {
     writeDatasetValue(body, 'spwRuntimeLastModuleWhen', record.effectiveWhen);
     writeDatasetValue(body, 'spwRuntimeLastModuleReason', record.reason);
     writeDatasetValue(body, 'spwRuntimeLastModuleEvaluates', record.evaluates);
+    writeDatasetValue(body, 'spwRuntimeLastModuleDescribes', record.describes || null);
+    writeDatasetValue(body, 'spwRuntimeLastModuleTimingArc', record.timingArc || null);
+    writeDatasetValue(body, 'spwRuntimeLastModuleEffectScope', record.effectScope || null);
     writeDatasetValue(body, 'spwRuntimeModuleCount', String(mounted.length));
     writeDatasetValue(body, 'spwRuntimeModuleLifecycleStages', stageSummary);
     writeDatasetValue(body, 'spwRuntimeModuleLifecycleSummary', timingSnapshot.latest
@@ -648,6 +688,8 @@ function buildRuntimeResourceEntry(def, effectiveWhen, rel) {
     id: def.id,
     layer: def.layer,
     effectiveWhen,
+    timingArc: def.timingArc || null,
+    effectScope: normalizeModuleIntentValue(def.effectScope),
     rel,
     href,
     status: 'discovered',
@@ -768,6 +810,7 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
   const effectiveWhen = getEffectiveMountWhen(def, ctx);
   const reason = describeMountReason(def, ctx, root, effectiveWhen);
   const evaluates = inferModuleDimensions(def);
+  const effectScope = normalizeModuleIntentValue(def.effectScope);
   const scheduledAt = Math.round(performance.now());
 
   if (ctx.registry.has(recordId)) return ctx.registry.get(recordId);
@@ -782,6 +825,8 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
     reason,
     describes: def.describes || null,
     updates: Array.isArray(def.updates) ? def.updates : null,
+    timingArc: def.timingArc || null,
+    effectScope: effectScope.length ? effectScope : null,
     status: 'idle',
     stage: 'scheduled',
     stageAt: scheduledAt,
@@ -816,6 +861,8 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
       evaluates,
       effectiveWhen,
       reason,
+      timingArc: def.timingArc || null,
+      effectScope,
       status: 'loading',
     });
     pushModuleLifecycleStage(record, 'loading', { at: loadStartedAt, note: reason });
@@ -828,6 +875,8 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
       effectiveWhen,
       status: 'loading',
       reason,
+      timingArc: record.timingArc,
+      effectScope: record.effectScope,
     });
     performance.mark(`spw:module:${def.id}:load-start`);
     const mod = await def.load();
@@ -908,6 +957,8 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
       reason,
       describes: record.describes,
       updates: record.updates,
+      timingArc: record.timingArc,
+      effectScope: record.effectScope,
       loadMs: Math.round(record.loadMs),
       mountMs: Math.round(record.mountMs),
       durationMs: Math.round(record.durationMs),
@@ -931,6 +982,8 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
       reason,
       describes: record.describes,
       updates: record.updates,
+      timingArc: record.timingArc,
+      effectScope: record.effectScope,
       route: ctx.route,
       root,
       loadMs: record.loadMs,
@@ -977,6 +1030,8 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
       reason,
       describes: record.describes,
       updates: record.updates,
+      timingArc: record.timingArc,
+      effectScope: record.effectScope,
       error: error?.message || String(error),
     });
 
@@ -990,6 +1045,8 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
       requestedWhen: def.when || mountWhen.IMMEDIATE,
       effectiveWhen,
       reason,
+      timingArc: record.timingArc,
+      effectScope: record.effectScope,
       route: ctx.route,
       root,
       error,

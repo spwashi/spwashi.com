@@ -33,6 +33,7 @@ Stable interaction contract, incremental visual treatment. Reuse existing page-r
 - Add a reusable visual link board component so route links can carry images, alt text, color accents, route rationale, and visual cue copy together on the homepage and topics atlas.
 - Add a top-down/bottom-up stabilization pass: public-spine and section-hub entry regions now declare layout posture, feature identity, attentional weight, gradient boundary, and composition stability; region profiling and component semantics derive `data-spw-composition-stability` for the long tail so CSS, inspectors, and future agents can see when page identity, component anatomy, and route traversal agree.
 - Split authored entry stability from runtime-resolved stability and pack occupancy: public CSS now projects authored public-spine state while derived stability stays inspectable/debuggable through resolved fields and occupancy summaries.
+- Align section-handle runtime behavior with its inspectable contract: keyboard-driven section travel now announces through the same live region as button travel, and `module-catalog.js` names the page-section, handle, reading-groove, pinch-scale, resonance, and cauldron attributes that `attention-architecture` writes.
 
 ## Out Of Scope
 
@@ -43,6 +44,7 @@ Stable interaction contract, incremental visual treatment. Reuse existing page-r
 ## Validation
 
 - `node --check public/js/runtime/page-region-rail.js`
+- `node --check public/js/runtime/module-catalog.js`
 - `node --check public/js/runtime/charge-field.js`
 - `node --check public/js/runtime/attention/section-handle.js`
 - `node --check public/js/kernel/dom-contracts.js`

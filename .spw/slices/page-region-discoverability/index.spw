@@ -6,6 +6,7 @@
 
 @plan: ~"../../../.agents/plans/page-region-discoverability/PLAN.md"
 @page_region_rail_js: ~"../../../public/js/runtime/page-region-rail.js"
+@attention_section_handle_js: ~"../../../public/js/runtime/attention/section-handle.js"
 @page_region_rail_css: ~"../../../public/css/handles/page-region-rail.css"
 @contextual_ui_js: ~"../../../public/js/interface/contextual-ui.js"
 @module_catalog: ~"../../../public/js/runtime/module-catalog.js"
@@ -33,9 +34,9 @@ html_contract: .{
 runtime_contract: .{
  page_region_rail = `Builds a desktop region index from main region semantics and now exposes role/feature/component summaries.`
  contextual_ui = `Reads route-discovery and data-spw-related-routes to add nearby routes in the header.`
- section_handle = `Keeps narrow/mobile section awareness independent from the desktop rail.`
+ section_handle = `Keeps narrow/mobile section awareness independent from the desktop rail, publishes page-section state, and announces explicit control travel without making passive scroll noisy.`
  region_menu = `Allows local region inspection from sigils/operators without requiring the user to know CSS or JS internals.`
- module_catalog = `Enhancement modules that behave page-wide must still declare selectors, describes, updates, evaluates, and cleanup intent so they are integrated rather than ambient.`
+ module_catalog = `Enhancement modules that behave page-wide must declare selectors, describes, updates, evaluates, and cleanup intent. Attention architecture must name the page-section, handle, reading-groove, pinch-scale, resonance, and cauldron attributes it writes so inspectors can distinguish owned state from ambient page styling.`
  dom_sync_hub = `Refresh order should keep component-kind mirrors, page-region rails, tuning discovery, gesture anatomy, and learnability ledgers in a stable sequence.`
 }[reg=facet]
 
@@ -83,6 +84,7 @@ image_resource_contract: .{
 
 validation: #[
  `node --check public/js/runtime/page-region-rail.js`,
+ `node --check public/js/runtime/module-catalog.js`,
  `node --check public/js/runtime/attention/section-handle.js`,
  `node --check public/js/kernel/dom-contracts.js`,
  `node --check scripts/image-resource-manifest.mjs`,
@@ -91,6 +93,6 @@ validation: #[
  `npm run check:local`,
  `rg route-discovery key route bodies`,
  `rg public/images/renders/unsorted-curation index.html`,
- `node scripts/check-site.mjs`
+ `node scripts/check-site.mjs`,
  `rg ".spw-visual-link-card" index.html topics/index.html public/css/components/content.css`
 ][reg=set]

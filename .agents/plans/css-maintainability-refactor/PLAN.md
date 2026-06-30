@@ -76,6 +76,19 @@ Reduce CSS brittleness in the highest-leverage shared contracts so route work ca
 - Moved supporting recipe studies inside that rail and removed route CSS that manually assigned all supporting figures to the same desktop grid row.
 - Kept the visual treatment route-owned while letting the shared split-figure contract own header/body/figure/actions placement.
 
+## Implementation Note - 2026-06-29 Topics Hero Body Slot
+
+- Removed the `topic-hero-grid` wrapper from the Topics register hero so the actual `.frame-body` is the direct `data-spw-slot="body"` child.
+- Retargeted topic route CSS from wrapper placement to `.topic-hero-copy`, keeping the route-specific visual board placement separate from the shared split-figure body/figure contract.
+- Removed the stale shared `.topic-hero-grid` active-state selector now that route chips are covered by `.frame-operators`.
+
+## Implementation Note - 2026-06-29 Topics Route Lanes
+
+- Replaced the Topics register hero's flat chip wall with a semantic topic-route-lanes board that groups routes by attention posture: systems, learning, making, and current work.
+- Reused the existing data-mode-group / data-mode-panel lens runtime for lane switching instead of adding route-specific JavaScript.
+- Added route CSS for rail-style lane containment, mobile horizontal controls, desktop lane comparison layout, and reduced-motion-safe panel settling.
+- Tightened lane-board containment with explicit zero min-size tracks, bounded desktop switch width, route-specific switch colors, and non-animated selected state so the board does not widen the hero or keep breathing after selection.
+
 ## Risks
 
 - Shared selector tightening could remove styling from a route that relied on accidental coverage.
