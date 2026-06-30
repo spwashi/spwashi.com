@@ -484,16 +484,24 @@ export function syncFloatingChromeState(root = document, options = {}) {
 }
 
 function clearPopupPlacementStyles(popover) {
-  ['left', 'right', 'top', 'bottom', 'width', 'maxWidth'].forEach((property) => {
+  ['left', 'right', 'top', 'bottom', 'width', 'maxWidth', 'maxHeight'].forEach((property) => {
     popover.style[property] = '';
   });
 }
 
 function readViewportBox() {
   const viewport = globalThis.visualViewport;
+  const offsetLeft = viewport?.offsetLeft || 0;
+  const offsetTop = viewport?.offsetTop || 0;
+  const width = Math.max(1, viewport?.width || globalThis.innerWidth || 1);
+  const height = Math.max(1, viewport?.height || globalThis.innerHeight || 1);
   return {
-    width: Math.max(1, viewport?.width || globalThis.innerWidth || 1),
-    height: Math.max(1, viewport?.height || globalThis.innerHeight || 1),
+    left: offsetLeft,
+    top: offsetTop,
+    right: offsetLeft + width,
+    bottom: offsetTop + height,
+    width,
+    height,
   };
 }
 
@@ -506,6 +514,13 @@ function resolvePopupCollision(horizontalClamped, verticalFlipped) {
 
 function clampNumber(value, min, max) {
   return Math.min(Math.max(value, min), max);
+}
+
+function resolvePopupHorizontalRoom(rect, viewport, gutter) {
+  const midpoint = viewport.left + (viewport.width / 2);
+  if (rect.left < midpoint && viewport.right - rect.right < rect.left - viewport.left) return 'left-edge';
+  if (rect.right > midpoint && rect.left - viewport.left < viewport.right - rect.right) return 'right-edge';
+  return 'balanced';
 }
 
 export function positionFloatingChromePopover(popover, target, options = {}) {
@@ -528,6 +543,7 @@ export function positionFloatingChromePopover(popover, target, options = {}) {
       spwPopupVertical: 'bottom',
       spwPopupHorizontal: 'stretch',
       spwPopupCollision: 'sheet',
+      spwPopupRoom: 'viewport-sheet',
       spwRuntimeMutator: source,
       spwRuntimeMutationReason: 'popup-placement',
       spwRuntimeStylingAxis: 'popup-placement',
@@ -546,29 +562,37 @@ export function positionFloatingChromePopover(popover, target, options = {}) {
   const rect = target.getBoundingClientRect();
   const viewport = readViewportBox();
   const safeMaxWidth = Math.max(1, Math.min(maxWidth, viewport.width - (gutter * 2)));
-  const safeMaxHeight = Math.max(1, Math.min(maxHeight, viewport.height - (gutter * 2)));
+  const safeMaxHeight = Math.max(1, Math.min(maxHeight, viewport.height - bottomReserve - (gutter * 2)));
   const centeredLeft = rect.left + (rect.width / 2) - (safeMaxWidth / 2);
-  const left = clampNumber(centeredLeft, gutter, Math.max(gutter, viewport.width - safeMaxWidth - gutter));
+  const left = clampNumber(
+    centeredLeft,
+    viewport.left + gutter,
+    Math.max(viewport.left + gutter, viewport.right - safeMaxWidth - gutter)
+  );
   const preferredTop = rect.bottom + offset;
   const fallbackTop = rect.top - safeMaxHeight - offset;
-  const bottomLimit = Math.max(gutter, viewport.height - bottomReserve - gutter);
-  const opensBelow = preferredTop + safeMaxHeight <= bottomLimit || fallbackTop < gutter;
-  const top = opensBelow ? preferredTop : Math.max(gutter, fallbackTop);
+  const bottomLimit = Math.max(viewport.top + gutter, viewport.bottom - bottomReserve - gutter);
+  const opensBelow = preferredTop + safeMaxHeight <= bottomLimit || fallbackTop < viewport.top + gutter;
+  const top = opensBelow
+    ? Math.min(preferredTop, Math.max(viewport.top + gutter, bottomLimit - safeMaxHeight))
+    : Math.max(viewport.top + gutter, fallbackTop);
   const targetCenter = rect.left + (rect.width / 2);
-  const horizontal = targetCenter < viewport.width * 0.34
+  const horizontal = targetCenter < viewport.left + (viewport.width * 0.34)
     ? 'start'
-    : targetCenter > viewport.width * 0.66
+    : targetCenter > viewport.left + (viewport.width * 0.66)
       ? 'end'
       : 'center';
   const verticalFlipped = !opensBelow;
   const horizontalClamped = Math.abs(left - centeredLeft) > 0.5;
   const collision = resolvePopupCollision(horizontalClamped, verticalFlipped);
+  const room = resolvePopupHorizontalRoom(rect, viewport, gutter);
 
   writeRuntimeDatasetValues(popover, {
     spwPopupPlacement: 'popover',
     spwPopupVertical: opensBelow ? 'below' : 'above',
     spwPopupHorizontal: horizontal,
     spwPopupCollision: collision,
+    spwPopupRoom: room,
     spwRuntimeMutator: source,
     spwRuntimeMutationReason: 'popup-placement',
     spwRuntimeStylingAxis: 'popup-placement',
@@ -582,13 +606,15 @@ export function positionFloatingChromePopover(popover, target, options = {}) {
   popover.style.right = 'auto';
   popover.style.bottom = 'auto';
   popover.style.width = '';
-  popover.style.maxWidth = '';
+  popover.style.maxWidth = `${Math.round(safeMaxWidth)}px`;
+  popover.style.maxHeight = `${Math.round(safeMaxHeight)}px`;
 
   return {
     placement: 'popover',
     vertical: opensBelow ? 'below' : 'above',
     horizontal,
     collision,
+    room,
     left,
     top,
     maxWidth: safeMaxWidth,

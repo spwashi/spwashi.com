@@ -324,7 +324,7 @@ function createHandleShell(origin) {
   shell.dataset.spwHandleOrigin = origin;
   shell.innerHTML = `
     <button type="button" class="spw-section-handle-toggle" data-spw-handle-target="toggle" aria-expanded="false" aria-label="Expand page travel rail">
-      <span aria-hidden="true">more</span>
+      <span aria-hidden="true">rail</span>
     </button>
     <button type="button" class="spw-section-handle-step" data-spw-handle-target="top" data-spw-handle-advanced="true" aria-label="Jump to top of page">
       <span aria-hidden="true">↑</span>
@@ -390,8 +390,8 @@ function syncSectionHandleShellState(shell, toggleButton, compact) {
     'aria-label',
     compact ? 'Expand page travel rail' : 'Collapse page travel rail'
   );
-  toggleButton.title = compact ? 'Show more travel controls' : 'Show fewer travel controls';
-  toggleButton.textContent = compact ? 'more' : 'less';
+  toggleButton.title = compact ? 'Open page travel rail' : 'Compact page travel rail';
+  toggleButton.textContent = compact ? 'rail' : 'trim';
 }
 
 function syncSectionHandlePhase(shell, handle, phase) {

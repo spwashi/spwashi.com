@@ -698,6 +698,25 @@ frame #social-kitchen-grammar
   concept culinary hosting holiday planning projection budgeting expertise
   note "The six social kitchen skills (mise for presence, batch bases & provisions, service as reading/repair, recovery & byproduct alchemy, flexible technique verbs, rhythm & layered attention) form a coherent grammar for cooking for friends and family. They also project cleanly as a budgeting and concept development lens for holidays and annual rituals. Cooking is treated as a primary developable expertise domain with its own progression, not only a metaphor source for other surfaces."
 
+frame #culinary-sensory-media
+  role extension
+  surface recipes settings home
+  concept sensory_dimensions appetizers bread pastry service baking cultural_media hospitality
+  note "The culinary universe now treats sensory dimensions as teachable public vocabulary: snap, aroma, bitterness, sweetness, moisture, temperature, crumb, crust, flake, shelf life, and service timing. Appetizers model arrival and room-reading; breads and pastries model proof, layering, heat, patience, portability, ritual, migration, family memory, and other long-lived cultural media. This extends cooking from metaphor into hospitality skill, baking craft, and cultural transmission."
+
+frame #material-process-factoids
+  role convention
+  surface settings craft design svg recipes about
+  concept material_metaphor agriculture craft screenshots discovery factoid component_targets
+  data_spw_semantic_expression = "factoid[discovery]{material.process.screenshot}"
+  note "Material metaphor should carry factual process, not only texture words. Useful screenshot/discovery targets name a substrate, process, visible effect, and reusable analogy: clay shrinkage/cracking, wool felting, paper grain, wood movement, metal patina, seed spacing/yield, legumes/nitrogen, bread proofing, pastry lamination, dye uptake, glaze layering. Inline copy can use the factoid expression; distinct cards/callouts should make the fact visible enough that a screenshot or image model can recover it without the surrounding page."
+
+frame #sincere-absurd-copy-posture
+  role convention
+  surface route_copy settings recipes about design craft
+  concept sentence_variation lived_friction material_fact subtle_absurdity clowncore_backdrop
+  note "Public copy should resist overly smooth generic cadence: fewer totalizing lists, less feature-booth optimism, more concrete process, partial uncertainty, sentence-length variation, and specific material behavior. Absurdity can enter as a small background prop, a tiny hat, a fake mustache, or a shoe-level image, but it should not take over the sincere narrative."
+
 frame #component-lifecycle-tropes
   role convention
   surface components/runtime

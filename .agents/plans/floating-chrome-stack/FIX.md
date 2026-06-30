@@ -25,3 +25,13 @@ The site already has the right ownership model: floating chrome belongs to a sha
 
 - Audit remaining hard-coded z-index values in debug-only overlays separately.
 - Consider a generated lint that flags `data-spw-floating-chrome` without `data-spw-layout-owner`.
+
+## 2026-06-30 Interaction Pass
+
+- Desktop pointer/focus menus should anchor to the selected target, clamp within the visual viewport, flip above when bottom chrome or viewport height makes the lower edge unsafe, and write placement data for inspection.
+- Compact/coarse menus should become bottom sheets owned by the shared floating-chrome sheet slot, with menu-specific CSS limited to visual framing and action density.
+- Long semantic labels, contracts, and action labels should wrap inside the menu instead of widening the popover or increasing tap target ambiguity.
+- Bottom chrome participants should continue to reserve clearance through shared root variables so section travel, satchel launch, console, and region menus do not compete for the same tap lane.
+- Lore and metamaterial terms should clarify utility: put material/role/chrome identity in secondary metadata, and keep primary buttons outcome-first (`inspect`, `carry`, `mark`, `settle`).
+- Lens copy should serialize the active interpretive lens when an authored expression does not already include one, and visible lens controls should name the impact of the selected lens.
+- Mode and posture changes should produce skim-value feedback: the control should name which topographical distinction changed, such as reader orientation, schema/lens role, section field cues, or workshop anatomy.

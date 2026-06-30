@@ -2057,6 +2057,24 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   white-space: nowrap;
 }
 
+.mode-switch[data-spw-lens-feedback]::after {
+  content: attr(data-spw-lens-feedback);
+  flex: 1 1 9rem;
+  min-inline-size: 0;
+  max-inline-size: min(100%, 24ch);
+  overflow: hidden;
+  padding: 0.14rem 0.42rem;
+  border-radius: 999px;
+  color: color-mix(in srgb, var(--ink-muted, rgba(14, 18, 20, 0.64)) 78%, var(--spw-lens-cascade-color) 22%);
+  font-family: var(--handle-meta-font, var(--site-mono-font, monospace));
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 /* Narrow viewports: unwrap the lens label and give pills a stable 2×2 grid. */
 @media (max-width: 56rem) {
   .mode-switch[aria-label] {
@@ -2065,6 +2083,11 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
     align-items: stretch;
     width: 100%;
     gap: calc(var(--spw-control-gap, 0.24rem) + 0.14rem);
+  }
+
+  .mode-switch[data-spw-lens-feedback]::after {
+    grid-column: 1 / -1;
+    max-inline-size: 100%;
   }
 
   .mode-switch[aria-label]::before {

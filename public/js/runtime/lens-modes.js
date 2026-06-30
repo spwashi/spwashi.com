@@ -2,6 +2,23 @@ const LENS_MODE_QUERY_KEYS = Object.freeze(['spw-lens', 'lens', 'mode']);
 const DOCUMENT_NODE = 9;
 const FALLBACK_LOCATION = Object.freeze({ hash: '', pathname: '', search: '' });
 
+const LENS_MODE_IMPACTS = Object.freeze({
+  surface: 'reader-orientation',
+  syntax: 'structure-inspection',
+  artifacts: 'output-proof',
+  website: 'runtime-contract',
+  systems: 'system-relationships',
+  learning: 'practice-sequence',
+  making: 'buildable-work',
+  current: 'active-work',
+  source: 'source-shape',
+  library: 'reusable-api',
+  memory: 'retention-state',
+  operators: 'operator-vocabulary',
+  principles: 'design-rules',
+  workbench: 'implementation-context',
+});
+
 const getDocument = (root = document) => {
   if (root?.nodeType === DOCUMENT_NODE) return root;
   return root?.ownerDocument || document;
@@ -42,6 +59,30 @@ export function resolveLensMode(buttons = [], mode = '') {
   const activeButton = buttons[activeIndex] || buttons[0] || null;
   const resolvedMode = activeButton?.getAttribute('data-set-mode') || mode;
   return { activeButton, activeIndex, resolvedMode };
+}
+
+function humanizeLensToken(value = '') {
+  return String(value || '')
+    .trim()
+    .replace(/[-_]+/g, ' ')
+    .replace(/\s+/g, ' ');
+}
+
+function describeLensTopography(panel, host) {
+  const source = panel instanceof HTMLElement ? panel : host;
+  if (!(source instanceof HTMLElement)) return '';
+  const kind = humanizeLensToken(source.dataset.spwKind || source.dataset.spwComponentKind || '');
+  const role = humanizeLensToken(source.dataset.spwRole || '');
+  const feature = humanizeLensToken(source.dataset.spwFeature || host?.dataset?.spwFeature || '');
+  const parts = [role, kind, feature].filter(Boolean);
+  return [...new Set(parts)].slice(0, 2).join(' / ');
+}
+
+function describeLensFeedback({ mode, impact, panel, host }) {
+  const topography = describeLensTopography(panel, host);
+  const readableImpact = humanizeLensToken(impact || mode);
+  if (topography && readableImpact) return `${readableImpact} · ${topography}`;
+  return readableImpact || topography || humanizeLensToken(mode);
 }
 
 export function buildLensModeDeepLink(group, mode, host, locationRef = globalThis.location || FALLBACK_LOCATION) {
@@ -104,12 +145,23 @@ export function writeLensModeState({
 
   const hosts = findLensModeHosts(group, buttons, resolvedPanels);
   const primaryHost = hosts[0] || activeButton?.closest?.('.site-frame, [data-spw-feature], [data-spw-kind]') || null;
+  const activePanel = resolvedPanels.find((panel) => panel.getAttribute('data-mode-panel') === resolvedMode) || null;
   const deepLink = buildLensModeDeepLink(group, resolvedMode, primaryHost, getLocationRef(doc));
+  const lensImpact = LENS_MODE_IMPACTS[resolvedMode] || `${group}-emphasis`;
+  const lensFeedback = describeLensFeedback({
+    mode: resolvedMode,
+    impact: lensImpact,
+    panel: activePanel,
+    host: primaryHost,
+  });
 
   for (const switchEl of findLensModeSwitches(buttons)) {
     switchEl.dataset.spwLensGroup = group;
     switchEl.dataset.spwLensMode = resolvedMode;
+    switchEl.dataset.spwLensImpact = lensImpact;
+    switchEl.dataset.spwLensFeedback = lensFeedback;
     switchEl.dataset.spwLensDeepLink = deepLink;
+    switchEl.title = lensFeedback ? `Lens: ${lensFeedback}` : switchEl.title;
     switchEl.style.setProperty('--spw-lens-count', String(Math.max(1, buttons.length)));
     switchEl.style.setProperty('--spw-lens-index', String(activeIndex));
     setTransientState?.(switchEl);
@@ -118,6 +170,8 @@ export function writeLensModeState({
   for (const host of hosts) {
     host.dataset.spwLensGroup = group;
     host.dataset.spwLensMode = resolvedMode;
+    host.dataset.spwLensImpact = lensImpact;
+    host.dataset.spwLensFeedback = lensFeedback;
     host.dataset.spwDeepLinkState = `lens:${group}:${resolvedMode}`;
     host.dataset.spwLensDeepLink = deepLink;
     setTransientState?.(host);
@@ -125,6 +179,8 @@ export function writeLensModeState({
 
   doc.documentElement.dataset.spwActiveLensGroup = group;
   doc.documentElement.dataset.spwActiveLensMode = resolvedMode;
+  doc.documentElement.dataset.spwActiveLensImpact = lensImpact;
+  doc.documentElement.dataset.spwActiveLensFeedback = lensFeedback;
 
   return {
     group,
@@ -135,6 +191,8 @@ export function writeLensModeState({
     count: buttons.length,
     source,
     deepLink,
+    impact: lensImpact,
+    feedback: lensFeedback,
     hostId: primaryHost?.id || null,
   };
 }

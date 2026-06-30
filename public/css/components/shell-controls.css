@@ -383,6 +383,38 @@
   outline: none;
 }
 
+.spw-shell-utility-button[data-spw-posture-feedback]::after {
+  content: attr(data-spw-posture-feedback);
+  position: absolute;
+  z-index: calc(var(--z-popover, 2000) + 2);
+  inset: calc(100% + 0.34rem) auto auto 50%;
+  inline-size: max-content;
+  max-inline-size: min(28ch, calc(100vw - 1.5rem));
+  overflow-wrap: anywhere;
+  padding: 0.28rem 0.46rem;
+  border: 1px solid color-mix(in oklab, var(--spw-shell-chrome-accent-local) 22%, transparent);
+  border-radius: var(--shape-small, 0.55rem);
+  background: color-mix(in oklab, var(--surface-strong, #fff) 94%, var(--spw-shell-chrome-accent-local) 6%);
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  box-shadow: 0 0.42rem 1rem color-mix(in srgb, var(--shadow-color, #111) 13%, transparent);
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.62rem;
+  font-weight: 650;
+  line-height: 1.25;
+  opacity: 0;
+  pointer-events: none;
+  text-align: start;
+  transform: translate(-50%, -0.18rem);
+  transition:
+    opacity 120ms var(--shell-ease),
+    transform 120ms var(--shell-ease);
+}
+
+.spw-shell-utility-button[data-spw-posture-feedback]:is(:hover, :focus-visible)::after {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
 .spw-shell-utility-button:active {
   transform: translateY(1px);
 }

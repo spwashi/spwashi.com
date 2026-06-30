@@ -1342,8 +1342,12 @@ function syncUtilityRow(row) {
 
   row.querySelectorAll('[data-spw-shell-action="cycle-explore-posture"]').forEach((button) => {
     const arg = button.querySelector('.spw-utility-argument');
-    if (arg) arg.textContent = describeSettingValue('explorePosture', settings.explorePosture);
-    button.title = `Explore posture: ${describeSettingValue('explorePosture', settings.explorePosture)} (click to cycle)`;
+    const postureLabel = describeSettingValue('explorePosture', settings.explorePosture);
+    const postureFeedback = describeExplorePostureFeedback(settings.explorePosture);
+    if (arg) arg.textContent = postureLabel;
+    button.dataset.spwPostureFeedback = postureFeedback;
+    button.setAttribute('aria-label', `${postureLabel} posture. ${postureFeedback}. Click to cycle.`);
+    button.title = `${postureLabel}: ${postureFeedback}`;
   });
 
   syncThemeUtility(row);
@@ -1352,6 +1356,15 @@ function syncUtilityRow(row) {
   if (preservedScrollLeft > 0) {
     row.scrollLeft = preservedScrollLeft;
   }
+}
+
+function describeExplorePostureFeedback(posture = 'reading') {
+  const feedback = {
+    reading: 'quiet route reading; chrome recedes',
+    field: 'section field cues and local tuners surface',
+    workshop: 'component anatomy and tuning handles become inspectable',
+  };
+  return feedback[posture] || 'topographical feedback changes';
 }
 
 function syncThemeUtility(row) {

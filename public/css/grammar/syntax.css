@@ -556,6 +556,7 @@
 }
 
 .spw-region-menu {
+  --spw-region-menu-accent: var(--active-op-color, var(--teal, #008080));
   position: fixed;
   z-index: var(--z-popover, 50);
   display: grid;
@@ -565,19 +566,42 @@
   overflow: auto;
   overscroll-behavior: contain;
   padding: 0.72rem;
-  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 28%, var(--card-border));
+  border: 1px solid color-mix(in srgb, var(--spw-region-menu-accent) 28%, var(--card-border));
   border-radius: var(--shape-medium, 0.85rem);
   background:
     linear-gradient(
       145deg,
-      color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 8%, transparent),
+      color-mix(in srgb, var(--spw-region-menu-accent) 8%, transparent),
       transparent 56%
     ),
     color-mix(in srgb, var(--surface-strong, #fff) 93%, var(--matte-surface, #f5efe4) 7%);
   box-shadow:
+    0 0 0 2px var(--spw-popup-edge-accent, transparent),
+    0 0 0 1px color-mix(in srgb, var(--spw-region-menu-accent) 14%, transparent),
     0 0.8rem 2.2rem color-mix(in srgb, var(--shadow-color, #111) 18%, transparent),
     inset 0 0 0 1px color-mix(in srgb, #fff 36%, transparent);
   color: var(--ink, #111);
+  scrollbar-gutter: stable both-edges;
+  transition:
+    border-color 160ms var(--shell-ease, ease),
+    box-shadow 160ms var(--shell-ease, ease),
+    background 160ms var(--shell-ease, ease);
+}
+
+.spw-region-menu:has(.spw-region-menu__action-group[data-spw-interaction-lane="inspect"] button:is(:hover, :focus-visible)) {
+  --spw-region-menu-accent: var(--op-probe-color, var(--teal, #008080));
+}
+
+.spw-region-menu:has(.spw-region-menu__action-group[data-spw-interaction-lane="collect"] button:is(:hover, :focus-visible)) {
+  --spw-region-menu-accent: var(--op-action-color, var(--teal, #008080));
+}
+
+.spw-region-menu:has(.spw-region-menu__action-group[data-spw-interaction-lane="mark"] button:is(:hover, :focus-visible)) {
+  --spw-region-menu-accent: var(--op-object-color, var(--teal, #008080));
+}
+
+.spw-region-menu:has(.spw-region-menu__action-group[data-spw-interaction-lane="reset"] button:is(:hover, :focus-visible)) {
+  --spw-region-menu-accent: var(--ink-muted, #66706b);
 }
 
 .spw-region-menu[data-spw-state="closed"] {
@@ -597,11 +621,30 @@
   gap: 0.5rem;
 }
 
+.spw-region-menu__title-group {
+  display: grid;
+  min-inline-size: 0;
+  gap: 0.14rem;
+}
+
 .spw-region-menu__title {
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
   font-family: var(--grammar-mono-font);
   font-size: 0.86rem;
   font-weight: 800;
-  letter-spacing: 0.04em;
+  letter-spacing: 0;
+}
+
+.spw-region-menu__chrome-meta {
+  margin: 0;
+  color: color-mix(in srgb, var(--ink-muted, #66706b) 82%, var(--active-op-color, var(--teal, #008080)) 18%);
+  font-family: var(--grammar-mono-font);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
 }
 
 .spw-region-menu__dismiss {
@@ -628,6 +671,7 @@
   color: var(--ink-muted);
   font-size: 0.78rem;
   line-height: 1.45;
+  overflow-wrap: anywhere;
 }
 
 .spw-region-menu__handles,
@@ -665,7 +709,7 @@
 
 .spw-region-menu__contract {
   display: grid;
-  grid-template-columns: max-content minmax(0, 1fr);
+  grid-template-columns: minmax(4.5rem, max-content) minmax(0, 1fr);
   gap: 0.18rem 0.55rem;
   margin: 0.08rem 0 0.12rem;
   padding: 0.48rem;
@@ -691,12 +735,14 @@
 
 .spw-region-menu__contract dd {
   color: var(--ink);
+  overflow-wrap: anywhere;
 }
 
 .spw-region-menu button {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  min-inline-size: 0;
   min-block-size: 2.1rem;
   padding: 0.45rem 0.58rem;
   border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 20%, var(--card-border));
@@ -705,8 +751,9 @@
   color: var(--ink);
   cursor: pointer;
   font: 700 0.75rem/1.2 var(--grammar-mono-font);
-  letter-spacing: 0.035em;
+  letter-spacing: 0;
   text-align: start;
+  overflow-wrap: anywhere;
 }
 
 .spw-region-menu button:is(:hover, :focus-visible) {
@@ -714,6 +761,11 @@
   background: color-mix(in srgb, var(--surface-strong, #fff) 78%, var(--active-op-color, var(--teal, #008080)) 22%);
   outline: none;
   transform: translateY(-0.03rem);
+}
+
+.spw-region-menu button:active {
+  background: color-mix(in srgb, var(--surface-strong, #fff) 68%, var(--active-op-color, var(--teal, #008080)) 32%);
+  transform: translateY(0);
 }
 
 .spw-region-menu .spw-region-menu__dismiss {
@@ -773,8 +825,21 @@
 
 .spw-region-menu__action-group {
   grid-template-columns: repeat(auto-fit, minmax(7.2rem, 1fr));
+  align-items: stretch;
   padding-block-start: 0.28rem;
   border-block-start: 1px solid color-mix(in srgb, var(--line, rgba(0, 0, 0, 0.1)) 72%, transparent);
+}
+
+.spw-region-menu__action-label {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: color-mix(in srgb, var(--ink-muted, #66706b) 78%, var(--active-op-color, var(--teal, #008080)) 22%);
+  font-family: var(--grammar-mono-font);
+  font-size: 0.6rem;
+  font-weight: 850;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  text-transform: uppercase;
 }
 
 .spw-region-menu__action-group[data-spw-interaction-lane="inspect"] {
@@ -795,14 +860,6 @@
 
 @media (max-width: 720px) {
   .spw-region-menu[data-spw-region-menu-placement="sheet"] {
-    inset-inline: max(0.75rem, env(safe-area-inset-left)) max(0.75rem, env(safe-area-inset-right));
-    inset-block-start: auto;
-    inset-block-end: calc(
-      max(0.75rem, env(safe-area-inset-bottom))
-      + var(--spw-bottom-chrome-clearance, 3.1rem)
-      + var(--spw-floating-menu-clearance, 0px)
-    );
-    inline-size: auto;
     max-block-size: min(42dvh, calc(100dvh - var(--spw-bottom-chrome-clearance, 3.1rem) - 5rem));
     border-radius: var(--shape-floating, 1rem) var(--shape-floating, 1rem) var(--shape-medium, 0.85rem) var(--shape-medium, 0.85rem);
     box-shadow:
@@ -812,6 +869,10 @@
 
   .spw-region-menu[data-spw-region-menu-placement="sheet"] .spw-region-menu__action-group {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .spw-region-menu[data-spw-region-menu-placement="sheet"] .spw-region-menu__contract {
+    grid-template-columns: 1fr;
   }
 }
 

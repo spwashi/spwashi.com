@@ -7,6 +7,7 @@ import {
 import { bus } from '/public/js/kernel/bus.js';
 import {
   collectSemanticBraceMatches,
+  composeSemanticBraceExpression,
   deriveSemanticBraceExpression,
   parseSemanticBraceExpression,
 } from '/public/js/semantic/semantic-braces.js';
@@ -367,6 +368,7 @@ function ensureMenu() {
   menu.setAttribute('role', 'menu');
   menu.setAttribute('aria-label', 'Spw region menu');
   menu.dataset.spwChromeIsland = 'region-menu-popover';
+  menu.dataset.spwMetamaterial = 'shell';
   menu.dataset.spwDismissible = 'true';
   menu.dataset.spwPopupPosture = readPopupPosture();
   annotateFloatingChromeElement(menu, {
@@ -385,15 +387,21 @@ function buildMenuContent(target, semantic, frame) {
   const header = document.createElement('header');
   const dismiss = document.createElement('button');
   const title = document.createElement('p');
+  const chromeMeta = document.createElement('p');
+  const titleGroup = document.createElement('div');
   header.className = 'spw-region-menu__header';
+  titleGroup.className = 'spw-region-menu__title-group';
   title.className = 'spw-region-menu__title';
   title.textContent = semantic.key || semantic.expression || readableTarget(target);
+  chromeMeta.className = 'spw-region-menu__chrome-meta';
+  chromeMeta.textContent = buildChromeMeta(target);
   dismiss.type = 'button';
   dismiss.className = 'spw-region-menu__dismiss';
   dismiss.dataset.spwRegionAction = 'dismiss';
-  dismiss.textContent = 'dismiss';
+  dismiss.textContent = 'close';
   dismiss.addEventListener('click', () => closeMenu({ restoreFocus: false }));
-  header.append(title, dismiss);
+  titleGroup.append(title, chromeMeta);
+  header.append(titleGroup, dismiss);
   fragment.appendChild(header);
 
   const summary = document.createElement('p');
@@ -454,7 +462,7 @@ function buildMenuContent(target, semantic, frame) {
   if (suggestions.length) {
     const suggestTitle = document.createElement('p');
     suggestTitle.className = 'spw-region-menu__subtitle';
-    suggestTitle.textContent = 'Suggested Spells';
+    suggestTitle.textContent = 'Reusable moves';
     fragment.appendChild(suggestTitle);
 
     const list = document.createElement('div');
@@ -476,37 +484,45 @@ function buildMenuContent(target, semantic, frame) {
   const actionGroups = [
     [
       'inspect',
+      'Inspect',
       [
-        ['focus', 'Show matches', () => focusMatches(target, semantic)],
-        ['next', 'Next variant', () => moveMatch(1)],
-        ['prev', 'Previous variant', () => moveMatch(-1)],
+        ['focus', 'Show related', () => focusMatches(target, semantic)],
+        ['next', 'Next match', () => moveMatch(1)],
+        ['prev', 'Previous match', () => moveMatch(-1)],
       ],
     ],
     [
       'collect',
+      'Carry',
       [
-        ['capture', 'Save spell', () => captureSpell(target, semantic)],
-        ['copy', 'Copy seed', () => copySeed(target, semantic, frame)],
+        ['capture', 'Save move', () => captureSpell(target, semantic)],
+        ['copy', 'Copy source', () => copySeed(target, semantic, frame)],
       ],
     ],
     [
       'mark',
+      'Mark',
       [
-        ['mark', 'Mark region', () => toggleRegionMark(target)],
+        ['mark', 'Pin region', () => toggleRegionMark(target)],
       ],
     ],
     [
       'reset',
+      'Settle',
       [
-        ['clear', 'Clear focus', () => clearRegionFocus()],
+        ['clear', 'Clear highlight', () => clearRegionFocus()],
       ],
     ],
   ];
 
-  actionGroups.forEach(([lane, actions]) => {
+  actionGroups.forEach(([lane, label, actions]) => {
     const group = document.createElement('div');
     group.className = 'spw-region-menu__action-group';
     group.dataset.spwInteractionLane = lane;
+    const groupLabel = document.createElement('p');
+    groupLabel.className = 'spw-region-menu__action-label';
+    groupLabel.textContent = label;
+    group.appendChild(groupLabel);
 
     actions.forEach(([action, label, handler]) => {
       const button = document.createElement('button');
@@ -525,11 +541,27 @@ function buildMenuContent(target, semantic, frame) {
   return fragment;
 }
 
+function buildChromeMeta(target) {
+  const role = target.dataset.spwChromeRole || target.dataset.spwKind || target.dataset.spwFeature || 'semantic region';
+  const material = target.dataset.spwMetamaterial || 'shell';
+  const operator = target.dataset.spwOperator ? `${target.dataset.spwOperator} operator` : 'region actions';
+  return `${humanizeRegionToken(role)} · ${humanizeRegionToken(material)} · ${operator}`;
+}
+
+function humanizeRegionToken(value) {
+  return String(value || '')
+    .trim()
+    .replace(/[-_]+/g, ' ')
+    .replace(/\s+/g, ' ');
+}
+
 function captureSpell(target, semantic) {
+  const expression = serializeSemanticForLens(target, semantic);
   bus.emit?.('spell:capture', {
-    expression: semantic.expression || readableTarget(target),
+    expression,
     label: semantic.rootLabel || readableTarget(target),
   });
+  target.dataset.spwSerializedCopy = expression;
   writeDatasetValue(target, 'spwCaptured', 'true');
   setTimeout(() => writeDatasetValue(target, 'spwCaptured', null), 800);
 }
@@ -540,9 +572,11 @@ function buildSuggestions(semantic, target) {
   const operator = target.dataset.spwOperator || 'frame';
 
   if (family) {
-    suggestions.push([`?${family}`, `?{${family}}`]);
-    suggestions.push([`@${family}`, `@action{${family}}`]);
-    suggestions.push([`*${family}`, `*stream{${family}}`]);
+    const lens = getLensSerializationContext(target).mode;
+    const lensSuffix = lens ? `<${lens}>` : '';
+    suggestions.push([`?${family}`, `?{${family}}${lensSuffix}`]);
+    suggestions.push([`@${family}`, `@action{${family}}${lensSuffix}`]);
+    suggestions.push([`*${family}`, `*stream{${family}}${lensSuffix}`]);
   }
 
   if (semantic.behavior) {
@@ -598,6 +632,7 @@ function readableTarget(target) {
 function buildSummary(semantic, target, frame) {
   const parts = [];
   const operator = target.dataset.spwOperator || 'region';
+  const lensContext = getLensSerializationContext(target);
   const feature = target.dataset.spwFeature || frame?.dataset?.spwFeature || '';
   const frameName =
     frame?.querySelector?.(':scope > header h1, :scope > header h2, :scope > .frame-heading h2, :scope > .frame-topline .frame-sigil')
@@ -609,7 +644,8 @@ function buildSummary(semantic, target, frame) {
   if (semantic.rootLabel) parts.push(`root ${semantic.rootLabel}`);
   if (semantic.variantLabel) parts.push(`variant ${semantic.variantLabel}`);
   if (semantic.behaviorLabel) parts.push(`behavior ${semantic.behaviorLabel}`);
-  if (semantic.lensLabel) parts.push(`lens ${semantic.lensLabel}`);
+  if (semantic.lensLabel || lensContext.mode) parts.push(`lens ${semantic.lensLabel || lensContext.mode}`);
+  if (lensContext.impact) parts.push(lensContext.impact);
 
   const suffix = parts.length ? parts.join(' · ') : 'no parsed brace parts yet';
   return `${operator} in ${normalizeText(frameName)} · ${suffix}`;
@@ -617,6 +653,7 @@ function buildSummary(semantic, target, frame) {
 
 function buildContract(target, semantic, frame) {
   const source = target.closest('[data-spw-reading-cue], [data-spw-input], [data-spw-operation], [data-spw-return]');
+  const lensContext = getLensSerializationContext(target);
   const fields = [
     ['Feature', source?.dataset.spwFeature || target.dataset.spwFeature || frame?.dataset?.spwFeature],
     ['Concept', target.dataset.spwConcept],
@@ -628,6 +665,8 @@ function buildContract(target, semantic, frame) {
     ['Topic', target.dataset.spwTopic],
     ['Attention', target.dataset.spwAttention],
     ['Behavior', target.dataset.spwBehavior || semantic.behaviorLabel],
+    ['Lens', semantic.lensLabel || lensContext.label || lensContext.mode],
+    ['Lens impact', lensContext.impact],
     ['Recognition', target.dataset.spwRecognition],
     ['Operation', source?.dataset.spwOperation || target.dataset.spwOperation || semantic.behaviorLabel],
     ['Failure', target.dataset.spwFailureMode],
@@ -774,8 +813,77 @@ function buildSeed(target, semantic, frame) {
     || 'region'
   );
   const operator = target.dataset.spwOperator || 'frame';
-  const expression = semantic.key || semantic.expression || readableTarget(target);
-  return `${route}<${region}> ${operator}{${expression}}`;
+  const expression = serializeSemanticForLens(target, semantic);
+  const lensContext = getLensSerializationContext(target);
+  const lensPrefix = lensContext.mode ? `<${lensContext.mode}> ` : '';
+  return `${route}<${region}> ${lensPrefix}${operator}{${expression}}`;
+}
+
+function getLensSerializationContext(target) {
+  const activeRootMode = document.documentElement.dataset.spwActiveLensMode || '';
+  const escapedRootMode = activeRootMode && typeof CSS !== 'undefined' && typeof CSS.escape === 'function'
+    ? CSS.escape(activeRootMode)
+    : '';
+  const host = target?.closest?.('[data-spw-lens-mode], [data-spw-inspect-mode-group], [data-mode-group]')
+    || (escapedRootMode ? document.querySelector?.(`[data-spw-lens-mode="${escapedRootMode}"]`) : null);
+  const mode = normalizeText(
+    target?.dataset?.spwSemanticLensLabel
+    || target?.dataset?.spwSemanticLens
+    || host?.dataset?.spwLensMode
+    || document.documentElement?.dataset?.spwActiveLensMode
+    || ''
+  );
+  const group = normalizeText(
+    host?.dataset?.spwLensGroup
+    || target?.closest?.('[data-mode-group]')?.dataset?.modeGroup
+    || document.documentElement?.dataset?.spwActiveLensGroup
+    || ''
+  );
+  const activeButton = group && mode
+    ? document.querySelector(`[data-mode-group="${escapeCssToken(group)}"][data-set-mode="${escapeCssToken(mode)}"]`)
+    : null;
+  const label = normalizeText(activeButton?.textContent || mode);
+  const impact = describeLensImpact(mode, group);
+  return { group, mode, label, impact };
+}
+
+function escapeCssToken(value) {
+  if (typeof CSS !== 'undefined' && typeof CSS.escape === 'function') return CSS.escape(value);
+  return String(value || '').replace(/[^a-zA-Z0-9_-]/g, '\\$&');
+}
+
+function serializeSemanticForLens(target, semantic) {
+  const lensContext = getLensSerializationContext(target);
+  if (!semantic?.rootLabel && !semantic?.expression) return readableTarget(target);
+  if (semantic?.lensLabel || !lensContext.mode) return semantic.key || semantic.expression || readableTarget(target);
+  return composeSemanticBraceExpression({
+    root: semantic.rootLabel || semantic.root || readableTarget(target),
+    variant: semantic.variantLabel,
+    behavior: semantic.behaviorLabel,
+    lens: lensContext.mode,
+  });
+}
+
+function describeLensImpact(mode, group) {
+  const normalized = normalizeToken(mode);
+  const groupName = normalizeToken(group);
+  const impacts = {
+    surface: 'foregrounds reader-facing orientation',
+    syntax: 'foregrounds structure and operators',
+    artifacts: 'foregrounds reusable outputs',
+    website: 'foregrounds runtime and route contracts',
+    systems: 'foregrounds system relationships',
+    learning: 'foregrounds practice sequence',
+    making: 'foregrounds buildable work',
+    current: 'foregrounds active work',
+    source: 'foregrounds source shape',
+    library: 'foregrounds reusable API shape',
+    memory: 'foregrounds retention and state',
+    operators: 'foregrounds operator vocabulary',
+    principles: 'foregrounds design rules',
+    workbench: 'foregrounds implementation context',
+  };
+  return impacts[normalized] || (groupName ? `changes ${groupName} emphasis` : '');
 }
 
 function clearRegionFocus(close = true) {
