@@ -14,6 +14,7 @@
 @plan_maintenance_sweep_2026_06_19: ~"../../.agents/plans/archive/2026-06-19-plan-maintenance.md"
 @conversation_audit_redistribution_2026_06_19: ~"../../.agents/plans/archive/2026-06-19-conversation-audit-redistribution.md"
 @plan_maintenance_sweep_2026_06_21: ~"../../.agents/plans/archive/2026-06-21-planning-ecology-recursive-maintenance.md"
+@plan_maintenance_sweep_2026_06_30: ~"../../.agents/plans/archive/2026-06-30-plan-maintenance.md"
 @public_plans: ~"../../about/plans/index.html"
 @interaction_loop_contract: ~"../../.agents/plans/interaction-loop-contract/PLAN.md"
 @gesture_state_refinement: ~"../../.agents/plans/gesture-state-refinement/PLAN.md"
@@ -35,6 +36,7 @@ dispatch: .{
  plan_maintenance_sweep_2026_06_19 = @plan_maintenance_sweep_2026_06_19
  conversation_audit_redistribution_2026_06_19 = @conversation_audit_redistribution_2026_06_19
  plan_maintenance_sweep_2026_06_21 = @plan_maintenance_sweep_2026_06_21
+ plan_maintenance_sweep_2026_06_30 = @plan_maintenance_sweep_2026_06_30
  public_plans = @public_plans
  interaction_loop_contract = @interaction_loop_contract
  gesture_state_refinement = @gesture_state_refinement
@@ -98,13 +100,16 @@ archive_policy: .{
 }[reg=facet]
 
 tree_optimization: .{
-  observation = `As of 2026-06-21 the active plan tree is large enough to need virtual information architecture before physical reorganization.`
+  observation = `As of 2026-06-30 the active plan tree has 173 top-level active folders, 160 PLAN.md files, 50 wip.spw files, 13 total FIX.md files, and 11 true FIX-only tactical queues.`
+  latest_archive = @plan_maintenance_sweep_2026_06_30
   virtual_buckets = `Semantic rails, CSS/layout/interaction, runtime/JS/validation, media/image/sensory material, public route/proof/genre systems, templates/tooling, and fix queue.`
   recursive_rule = `A maintenance pass succeeds when it reduces the cost of the next maintenance pass: fewer hidden WIPs, clearer owner surfaces, fewer stale links, and better archive records.`
   wip_rule = `A WIP-only folder should be revived with PLAN.md, merged into an owner plan, or archived by index note the next time it is touched.`
   fix_rule = `FIX.md-only folders are tactical queues, not missing plans; keep them narrow, falsifiable, and closeable.`
+  completed_fix_rule = `Completed or superseded FIX references should leave high-signal active lists and be named in archive/README.md before any physical move.`
   template_rule = `Template-only folders are tooling and should be named in the index so audits do not misread them as stale backlog.`
   overgrowth_rule = `Empty folders and oversized/generated-looking plan artifacts should be documented as cleanup candidates before destructive or structural edits.`
+  public_projection_rule = `The /about/plans/ page should expose the same virtual buckets as .agents/plans/README.md when that public editor surface changes.`
   spw_tree_benefit = `The plan tree should expose Spw operations: cache, audit, align, prime, contract, and archive. That lets humans and agents peruse the work by operation instead of only by folder name.`
 }[reg=facet]
 
@@ -140,6 +145,6 @@ invariants: #[
   `WIP-only plan folders should not remain invisible once they are touched by a maintenance pass.`,
   `Agentic development caches should summarize repo-derived facts with explicit invalidation; they must not replace source reads or final validation.`,
   `Architectural claims that drive refactors should name a falsification path before they become durable convention.`,
-  `Major conceptual areas that participate in both cognitive practice and computational tooling should carry operational_semantics following the template above.`
+  `Major conceptual areas that participate in both cognitive practice and computational tooling should carry operational_semantics following the template above.`,
   `If an owner plan already exists, add the plan bridge here so the public plans page and review surfaces can route to it.`
 ][reg=set]

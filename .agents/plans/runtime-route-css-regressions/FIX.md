@@ -1,5 +1,9 @@
 # Fix: runtime-route-css-regressions
 
+## Maintenance Status - 2026-06-30
+
+Superseded reference retained in place. The missing visitation/bootstrap and route-structure failures described here are no longer the current active failure surface. Future runtime or route CSS regressions should route through `runtime-bootstrap-performance/`, `runtime-module-fluency/`, `site-source-layout/`, or a new narrowly scoped FIX note with fresh evidence.
+
 ## Failures
 
 | # | File | Test/Error | Class | Priority |

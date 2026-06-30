@@ -22,11 +22,16 @@ Maintenance sweeps:
 - `2026-06-19-plan-maintenance.md` - Active plan ecology consolidation, completed-reference indexing, and archive policy refresh.
 - `2026-06-19-conversation-audit-redistribution.md` - Redistribution of broad audit prompts into the active owner plans.
 - `2026-06-21-planning-ecology-recursive-maintenance.md` - Recursive plan-tree census, virtual bucket structure, WIP-only cleanup rule, and overgrowth queue.
+- `2026-06-30-plan-maintenance.md` - Plan census refresh, completed FIX-reference separation, public bucket projection, and `.spw` planning dispatch update.
 
 Completed or superseded references retained in place:
 
 - `../state-satchel-card-gesture-fixes/PLAN.md` - Implementation and validation are complete, but the plan remains in place as a direct reference target.
 - `../card-anatomy-interactions/PLAN.md` - Planning/audit work is complete and now serves as prior art for later RPG portal work.
+- `../overlay-layer-ownership/FIX.md` - Overlay marker ownership landed through `data-spw-overlay`; retained as rationale for the contract.
+- `../menu-containment-navigation/FIX.md` - Primary route/menu containment fixes landed on 2026-06-28; remaining shell questions belong to active shell and floating-chrome tracks.
+- `../mobile-image-effects/FIX.md` - Old raster-effect file paths are historical; current image effect ownership lives in the `metaphysical-paper.css` and `image-metaphysics.js` surfaces.
+- `../runtime-route-css-regressions/FIX.md` - Runtime bootstrap and route-structure failures are repaired or superseded; retained as regression history.
 
 Archive policy:
 

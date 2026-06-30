@@ -1,5 +1,9 @@
 # Menu Containment And Navigation Fix
 
+## Maintenance Status - 2026-06-30
+
+Completed reference retained in place. The primary menu containment work landed on 2026-06-28; the remaining deferred items now belong to shell disclosure, contextual route discovery, floating chrome, or route-specific browser review rather than this tactical queue.
+
 ## Visible Failures
 
 - Research route bridge cards can overflow the frame on narrow screens.

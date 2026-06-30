@@ -1,5 +1,9 @@
 # Fix: overlay-layer-ownership
 
+## Maintenance Status - 2026-06-30
+
+Completed reference retained in place. The `data-spw-overlay` marker contract has landed in shared CSS and `.spw` conventions, so this file now explains the rationale rather than naming active fix work. New overlay geometry questions should route through `floating-chrome-stack/`, `css-maintainability-refactor/`, or the relevant component owner.
+
 ## Failure
 
 - `public/css/spw-canvas-accents.css` treated every direct child of `.spw-accent-host` as a flow child by forcing `position: relative; z-index: 2;`.

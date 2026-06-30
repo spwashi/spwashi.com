@@ -1,5 +1,9 @@
 # Fix: mobile-image-effects
 
+## Maintenance Status - 2026-06-30
+
+Superseded reference retained in place. The old path names in this note are historical; current image-effect ownership lives in `public/css/effects/metaphysical-paper.css` and `public/js/media/image-metaphysics.js`. Future media-effect work should route through `style-image-cohesion/`, `relational-attention-media/`, or the current image-effect owner files.
+
 ## Failures
 
 | # | File | Test/Error | Class | Priority |

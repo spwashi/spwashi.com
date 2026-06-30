@@ -400,3 +400,17 @@ Captured the user's direction that this codebase should be useful for spawning n
 - Wired the expressive-registers convention through `.spw` dispatch and added a small `/design/composition/` sample so the global `systems/registers.css` module has an authored proving surface.
 
 Next pass: use the inventory on a real small starter or component recipe before adding any scaffold generator.
+
+## Plan Maintenance Sweep - 2026-06-30
+
+Refreshed the active planning architecture after the starter component kit work, while leaving concurrent runtime JS work untouched.
+
+- Ran a fresh census: 173 active top-level plan folders, 160 active `PLAN.md` files, 50 `wip.spw` files, 13 total `FIX.md` files, and 11 true `FIX.md`-only tactical queues.
+- Added `archive/2026-06-30-plan-maintenance.md` as the dated record for this sweep.
+- Updated `.agents/plans/README.md` so virtual buckets, active examples, completed references, and archive notes match the current tree.
+- Marked `overlay-layer-ownership`, `menu-containment-navigation`, `mobile-image-effects`, and `runtime-route-css-regressions` as completed or superseded references retained in place, not high-signal active work.
+- Updated `.agents/plans/archive/README.md` with the new sweep and completed-reference decisions.
+- Updated `.spw/conventions/planning-ecology.spw` so the semantic dispatch and tree posture point to the current maintenance record.
+- Projected plan buckets onto `/about/plans/` so the public editor surface mirrors the active owner architecture instead of only listing selected cards.
+
+Next pass: decide whether `mobile-density-operator-semantics/` should be revived, merged, or removed, and split oversized plan artifacts only in a focused ref-safe cleanup.
