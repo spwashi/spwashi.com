@@ -7,18 +7,21 @@
 #:layer #!pragmatics
 
 @css: ~"../../public/css/components/typography-packing.css"
+@dimensions: ~"./dimension-vocabulary.spw"
 @foundation: ~"../../public/css/components/foundation.css"
 @measurement_bus: ~"../../public/js/semantic/pretext-measurement-bus.js"
 @designer_conversation: ~"./designer-conversation-canvas.spw"
 
 tiers: .{
-  compact = `dense surfaces: tight pad/gap, --grid-min-compact, --measure-compact`
+  compact = `canonical compact tier: tight pad/gap, --grid-min-compact, --measure-compact (alias: dense)`
   balanced = `default frames/cards: --pack-tier-balanced-*`
-  roomy = `soft/roomy density: loose pad/gap, --measure-reading`
+  roomy = `canonical roomy tier: loose pad/gap, --measure-reading (aliases: soft, spacious)`
 }
 
 routing: .{
-  density = `data-spw-density or data-spw-component-density on frame/panel/card`
+  density = `data-spw-density or data-spw-component-density on frame/panel/card (dense→compact, roomy/soft→roomy)`
+  packing_state = `data-spw-packing-state compact|balanced|roomy|spacious on measured specimens`
+  occupancy = `data-spw-pack-occupancy sparse|balanced|full maps to tier ladder via dimensions.css`
   line_spacing = `html[data-spw-line-spacing] from settings (compact|normal|loose)`
   grid_pack = `data-spw-pack="fill|dense|balanced|compact|roomy" on .frame-grid`
   typography_surface = `frame-note, spec-kicker, frame-copy, settings-prose use tier measures`

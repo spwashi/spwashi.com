@@ -598,7 +598,7 @@ function buildSuggestions(semantic, target) {
     const lens = getLensSerializationContext(target).mode;
     const lensSuffix = lens ? `<${lens}>` : '';
     suggestions.push([`?${family}`, `?{${family}}${lensSuffix}`]);
-    suggestions.push([`@${family}`, `@action{${family}}${lensSuffix}`]);
+    suggestions.push([`!${family}`, `!action{${family}}${lensSuffix}`]);
     suggestions.push([`*${family}`, `*stream{${family}}${lensSuffix}`]);
   }
 

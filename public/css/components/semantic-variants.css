@@ -1,0 +1,381 @@
+/* ==========================================================================
+   components/semantic-variants.css
+   --------------------------------------------------------------------------
+   Component variant accents, lifecycle states, link-intent coloring, settings clusters.
+   ========================================================================== */
+
+:where([data-spw-component-variant]) {
+  --spw-variant-accent: var(--active-op-color, var(--component-accent));
+  --spw-variant-line: color-mix(in srgb, var(--spw-variant-accent) 22%, var(--line, rgba(14, 18, 20, 0.14)));
+}
+
+:where([data-spw-component-variant="primary"]) {
+  --spw-variant-accent: var(--op-action-color, var(--component-accent));
+}
+
+:where([data-spw-component-variant="reference"]) {
+  --spw-variant-accent: var(--op-ref-color, var(--component-accent));
+}
+
+:where([data-spw-component-variant="prompt"]) {
+  --spw-variant-accent: var(--op-probe-color, var(--component-accent));
+}
+
+:where([data-spw-component-variant="ambient"]) {
+  --spw-variant-accent: var(--op-frame-color, var(--component-accent));
+}
+
+:where([data-spw-component-variant]) :where(.frame-card-sigil, .frame-sigil, code) {
+  color: color-mix(in srgb, var(--ink, #111) 68%, var(--spw-variant-accent) 32%);
+}
+
+:where(a[data-spw-link-intent="route"]) {
+  color: color-mix(in srgb, var(--op-frame-color) 72%, var(--ink) 28%);
+}
+
+:where(a[data-spw-link-intent="query"], a[href*="?"]) {
+  color: color-mix(in srgb, var(--op-probe-color) 68%, var(--ink) 32%);
+}
+
+:where(a[data-spw-link-intent="flavor"]) {
+  color: color-mix(in srgb, var(--spw-flavor-accent, var(--op-object-color)) 70%, var(--ink) 30%);
+}
+
+:where(a[data-spw-link-intent="artifact"]) {
+  color: color-mix(in srgb, var(--op-object-color) 72%, var(--ink) 28%);
+}
+
+:where(.frame-card, .frame-panel, .spw-wisdom-card, .returner-card, .gratitude-card) {
+  border-color: color-mix(in srgb, var(--spw-region-frame-line, var(--line)) 78%, transparent);
+}
+
+:where(.frame-card[data-spw-component-variant], .spw-wisdom-card[data-spw-component-variant]) {
+  background:
+    linear-gradient(160deg, color-mix(in srgb, var(--spw-variant-accent) 5%, transparent), transparent 62%),
+    color-mix(in srgb, var(--surface-panel) 96%, transparent);
+}
+
+:where(.spw-settings-cluster) {
+  display: grid;
+  gap: var(--gap-panel, 0.75rem);
+  padding: calc(var(--inset-panel, 1rem) * var(--spw-spacing-scale, 1));
+  border: 1px solid var(--spw-region-frame-line, var(--line));
+  border-radius: var(--shape-surface, 12px);
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--spw-flavor-accent, var(--active-op-color)) 6%, transparent), transparent 62%),
+    var(--spw-region-frame-fill, var(--surface-panel));
+  color: var(--ink);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--surface-strong) 28%, transparent),
+    0 10px 24px color-mix(in srgb, var(--active-op-color) calc(var(--spw-lighting-guard, 0.34) * 8%), transparent);
+}
+
+:where(.spw-settings-cluster__header) {
+  display: grid;
+  gap: 0.28rem;
+}
+
+:where(.spw-settings-cluster__header > *) {
+  margin: 0;
+}
+
+:where(.spw-settings-cluster__copy) {
+  max-width: 68ch;
+  color: var(--ink-soft);
+}
+
+:where(.spw-settings-cluster__actions, .spw-settings-cluster__readout) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-inline-tight, 0.45rem);
+}
+
+:where(.spw-settings-cluster__note) {
+  display: grid;
+  gap: var(--space-3xs, 0.125rem);
+  max-inline-size: 74ch;
+  padding: 0.68rem 0.78rem;
+  border: 1px dashed color-mix(in srgb, var(--active-op-color) 22%, var(--line));
+  border-radius: var(--shape-component, 8px);
+  background: color-mix(in srgb, var(--surface-strong) 76%, var(--active-op-color) 4%);
+}
+
+:where(.spw-settings-cluster__note > *) {
+  margin: 0;
+}
+
+:where(.spw-settings-cluster__note kbd) {
+  padding: 0.04rem 0.24rem;
+  border: 1px solid color-mix(in srgb, currentColor 22%, transparent);
+  border-radius: var(--shape-micro, 4px);
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.82em;
+}
+
+:where(.spw-settings-cluster :is(button, .operator-chip, .theme-pack-chip-btn)) {
+  background-color: var(--spw-control-safe-bg);
+  color: var(--spw-control-safe-ink);
+}
+
+/* Button layout audit (semantic emphasis): operator-chip provides op sigil/arg distinction for localization/styling (see chrome utility sigil+arg spans); nooks use side-by-side chips for embedded component feel (bottom align via flex/baseline in shell/chrome); cauldron actions use operator-chip soft-pill cluster with flex-wrap for emphasis on action verbs while preserving resonance. Regional/nook + charge on lists discharge on tap for state semantics. No broad changes; preserves operator taxonomy emphasis over generic buttons. */
+
+:where([data-spw-region], .site-frame, .frame-panel) {
+  --spw-region-local-line: var(--spw-region-frame-line, var(--line));
+  --spw-region-local-fill: var(--spw-region-frame-fill, var(--surface-panel));
+}
+
+:where([data-spw-region="read"], [data-spw-region-role="reading"]) {
+  max-inline-size: var(--spw-layout-measure, 72ch);
+}
+
+:where([data-spw-region="wide"], [data-spw-region-role="atlas"]) {
+  max-inline-size: var(--spw-layout-frame-max, var(--page-width-wide, 82rem));
+}
+
+:where([data-spw-region="cluster"], [data-spw-region-role="settings-cluster"]) {
+  padding: calc(var(--inset-panel, 1rem) * var(--spw-spacing-scale, 1));
+  border-color: var(--spw-region-local-line);
+  background-color: var(--spw-region-local-fill);
+}
+
+:where([data-spw-component-lifecycle="draft"], html[data-spw-component-lifecycle="draft"] [data-spw-component-variant]) {
+  border-style: dashed;
+}
+
+:where([data-spw-component-lifecycle="stable"], html[data-spw-component-lifecycle="stable"] [data-spw-component-variant]) {
+  border-style: solid;
+  opacity: 1;
+}
+
+:where([data-spw-component-lifecycle="active"], html[data-spw-component-lifecycle="active"] [data-spw-component-variant]) {
+  box-shadow:
+    inset 0.22rem 0 0 color-mix(in srgb, var(--spw-variant-accent, var(--active-op-color)) 42%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--spw-variant-accent, var(--active-op-color)) 18%, transparent),
+    var(--component-shadow-quiet);
+}
+
+:where([data-spw-component-lifecycle="archived"], html[data-spw-component-lifecycle="archived"] [data-spw-component-variant]) {
+  filter: saturate(0.78);
+  opacity: 0.9;
+}
+
+/* Low-noise treatment for empty or default states — specific wisdom/card extensions only.
+   The base --spw-variant-accent contract + broad opacity lives in foundation.css (components layer).
+   This keeps the repeated rule in one shared location per containment audit guidance. */
+:where([data-spw-empty="true"], [data-spw-component-state="empty"], [data-spw-component-state="default"]) :where(.spw-wisdom-card, .card-sub-links) {
+  opacity: 0.6;
+}
+
+:where([data-spw-empty="true"] .spw-wisdom-card, [data-spw-component-state="empty"] .spw-wisdom-card) {
+  box-shadow: var(--component-shadow-quiet);
+  border-color: color-mix(in srgb, var(--line, rgba(14,18,20,0.14)) 70%, transparent);
+}
+
+:where(html[data-spw-module-visuals="on"], html[data-spw-semantic-density="rich"])
+  :where([data-spw-component-variant]) {
+  box-shadow:
+    inset 0.18rem 0 0 color-mix(in srgb, var(--spw-variant-accent) 34%, transparent),
+    var(--component-shadow-quiet);
+}
+
+:where(html[data-spw-semantic-density="rich"])
+  :where([data-spw-component-variant][data-spw-semantic-expression])::before {
+  content: attr(data-spw-component-variant) " · " attr(data-spw-semantic-expression);
+  display: inline-flex;
+  justify-self: start;
+  max-inline-size: 100%;
+  margin-block-end: var(--space-2xs, 0.25rem);
+  padding: 0.16rem 0.48rem;
+  border: 1px solid color-mix(in srgb, var(--spw-variant-accent) 18%, transparent);
+  border-radius: var(--component-radius-pill, 999px);
+  background: color-mix(in srgb, var(--component-surface-soft) 84%, var(--spw-variant-accent) 7%);
+  color: color-mix(in srgb, var(--ink, #111) 70%, var(--spw-variant-accent) 30%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.045em;
+  overflow-wrap: anywhere;
+}
+
+/* Interaction semantics genome — animator-facing physics tokens (component-interaction-semantics.js) */
+:where([data-spw-component-genome]) {
+  --spw-physics-mass: 1;
+  --spw-physics-damping: 0.82;
+  --spw-physics-stiffness: 0.78;
+}
+
+:where([data-spw-component-genome~="physics-light"]) {
+  --spw-physics-mass: 0.88;
+  --spw-physics-damping: 0.72;
+  --spw-physics-stiffness: 0.62;
+}
+
+:where([data-spw-component-genome~="physics-balanced"]) {
+  --spw-physics-mass: 1;
+  --spw-physics-damping: 0.82;
+  --spw-physics-stiffness: 0.78;
+}
+
+:where([data-spw-component-genome~="physics-charged"]) {
+  --spw-physics-mass: 1.14;
+  --spw-physics-damping: 0.9;
+  --spw-physics-stiffness: 0.92;
+}
+
+:where([data-spw-component-genome~="physics-scene"]) {
+  --spw-physics-mass: 1.08;
+  --spw-physics-damping: 0.86;
+  --spw-physics-stiffness: 0.84;
+}
+
+:where([data-spw-component-genome~="beat-approach"]) {
+  --spw-interaction-phase-weight: max(var(--spw-interaction-phase-weight, 0), 0.24);
+}
+
+:where([data-spw-component-genome~="beat-gather"]) {
+  --spw-interaction-phase-weight: max(var(--spw-interaction-phase-weight, 0), 0.42);
+}
+
+:where([data-spw-component-genome~="beat-commit"]) {
+  --spw-interaction-phase-weight: max(var(--spw-interaction-phase-weight, 0), 0.58);
+}
+
+:where([data-spw-component-genome~="beat-release"]) {
+  --spw-interaction-phase-weight: max(var(--spw-interaction-phase-weight, 0), 0.68);
+}
+
+:where([data-spw-component-genome~="beat-settle"]) {
+  --spw-ecology-settle-weight: max(var(--spw-ecology-settle-weight, 0), 0.72);
+}
+
+:where([data-spw-component-genome~="posture-mise"]) {
+  --spw-variant-accent: var(--op-object-color, var(--active-op-color));
+}
+
+:where([data-spw-component-genome~="posture-reduction"]) {
+  --spw-variant-accent: var(--op-stream-color, var(--active-op-color));
+}
+
+:where([data-spw-component-genome~="posture-ferment"]) {
+  --spw-variant-accent: var(--op-probe-color, var(--active-op-color));
+}
+
+:where([data-spw-copy-depth-resolved]:not([data-spw-copy-depth])) {
+  --spw-copy-depth-accent: var(--active-op-color, var(--component-accent));
+}
+
+:where(html[data-spw-module-visuals="on"]) :where([data-spw-copy-depth-resolved="entry"]:not([data-spw-copy-depth])) {
+  --spw-copy-depth-accent: var(--op-frame-color, var(--active-op-color));
+}
+
+:where(html[data-spw-module-visuals="on"]) :where([data-spw-copy-depth-resolved="rich"]:not([data-spw-copy-depth])) {
+  --spw-copy-depth-accent: var(--op-probe-color, var(--active-op-color));
+}
+
+:where(html[data-spw-module-visuals="on"]) :where([data-spw-copy-depth-resolved="technical"]:not([data-spw-copy-depth])) {
+  --spw-copy-depth-accent: var(--op-action-color, var(--active-op-color));
+}
+
+:where([data-spw-lifecycle-beat-resolved="gather"]) {
+  transition-duration: calc(var(--duration-base, 180ms) * var(--spw-physics-mass, 1));
+}
+
+:where([data-spw-lifecycle-beat-resolved="commit"]) {
+  box-shadow:
+    var(--spw-local-shadow, none),
+    0 0 0 1px color-mix(in srgb, var(--spw-variant-accent, var(--active-op-color)) 14%, transparent);
+}
+
+/* Interaction semantics genome — animator-facing physics tokens (component-interaction-semantics.js) */
+:where([data-spw-component-genome]) {
+  --spw-physics-mass: 1;
+  --spw-physics-damping: 0.82;
+  --spw-physics-stiffness: 0.78;
+}
+
+:where([data-spw-physics-mass]) {
+  --spw-physics-mass: var(--spw-physics-mass, 1);
+}
+
+:where([data-spw-component-genome~="physics-light"]) {
+  --spw-physics-mass: 0.88;
+  --spw-physics-damping: 0.72;
+  --spw-physics-stiffness: 0.62;
+}
+
+:where([data-spw-component-genome~="physics-balanced"]) {
+  --spw-physics-mass: 1;
+  --spw-physics-damping: 0.82;
+  --spw-physics-stiffness: 0.78;
+}
+
+:where([data-spw-component-genome~="physics-charged"]) {
+  --spw-physics-mass: 1.14;
+  --spw-physics-damping: 0.9;
+  --spw-physics-stiffness: 0.92;
+}
+
+:where([data-spw-component-genome~="physics-scene"]) {
+  --spw-physics-mass: 1.08;
+  --spw-physics-damping: 0.86;
+  --spw-physics-stiffness: 0.84;
+}
+
+:where([data-spw-component-genome~="beat-approach"]) {
+  --spw-interaction-phase-weight: max(var(--spw-interaction-phase-weight, 0), 0.24);
+}
+
+:where([data-spw-component-genome~="beat-gather"]) {
+  --spw-interaction-phase-weight: max(var(--spw-interaction-phase-weight, 0), 0.42);
+}
+
+:where([data-spw-component-genome~="beat-commit"]) {
+  --spw-interaction-phase-weight: max(var(--spw-interaction-phase-weight, 0), 0.58);
+}
+
+:where([data-spw-component-genome~="beat-release"]) {
+  --spw-interaction-phase-weight: max(var(--spw-interaction-phase-weight, 0), 0.68);
+}
+
+:where([data-spw-component-genome~="beat-settle"]) {
+  --spw-ecology-settle-weight: max(var(--spw-ecology-settle-weight, 0), 0.72);
+}
+
+:where([data-spw-component-genome~="posture-mise"]) {
+  --spw-variant-accent: var(--op-object-color, var(--active-op-color));
+}
+
+:where([data-spw-component-genome~="posture-reduction"]) {
+  --spw-variant-accent: var(--op-stream-color, var(--active-op-color));
+}
+
+:where([data-spw-component-genome~="posture-ferment"]) {
+  --spw-variant-accent: var(--op-probe-color, var(--active-op-color));
+}
+
+:where([data-spw-copy-depth-resolved]:not([data-spw-copy-depth])) {
+  --spw-copy-depth-accent: var(--active-op-color, var(--component-accent));
+}
+
+:where(html[data-spw-module-visuals="on"]) :where([data-spw-copy-depth-resolved="entry"]:not([data-spw-copy-depth])) {
+  --spw-copy-depth-accent: var(--op-frame-color, var(--active-op-color));
+}
+
+:where(html[data-spw-module-visuals="on"]) :where([data-spw-copy-depth-resolved="rich"]:not([data-spw-copy-depth])) {
+  --spw-copy-depth-accent: var(--op-probe-color, var(--active-op-color));
+}
+
+:where(html[data-spw-module-visuals="on"]) :where([data-spw-copy-depth-resolved="technical"]:not([data-spw-copy-depth])) {
+  --spw-copy-depth-accent: var(--op-action-color, var(--active-op-color));
+}
+
+:where([data-spw-lifecycle-beat-resolved="gather"]) {
+  transition-duration: calc(var(--duration-base, 180ms) * var(--spw-physics-mass, 1));
+}
+
+:where([data-spw-lifecycle-beat-resolved="commit"]) {
+  box-shadow:
+    var(--spw-local-shadow, none),
+    0 0 0 1px color-mix(in srgb, var(--spw-variant-accent, var(--active-op-color)) 14%, transparent);
+}

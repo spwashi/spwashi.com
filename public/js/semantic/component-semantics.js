@@ -34,11 +34,17 @@ import {
   COMPONENT_SELECTOR,
   buildAxisGenome,
   inferTopographyKind,
+  resolveCompositionTier,
   writeDatasetValue,
   writeDatasetValueIfMissing,
 } from '/public/js/kernel/dom-contracts.js';
 import {
+  applyInteractionSemantics,
+  snapshotInteractionSemantics,
+} from '/public/js/semantic/component-interaction-semantics.js';
+import {
   humanizeToken,
+  normalizeSlug,
   normalizeText,
   normalizeToken,
   unique,
@@ -46,7 +52,7 @@ import {
 import {
   deriveSemanticBraceExpression,
 } from '/public/js/semantic/semantic-braces.js';
-import { detectOperator } from '/public/js/kernel/shared.js';
+import { describeRelationship } from '/public/js/semantic/component-relationships.js';
 
 const DEFAULT_SELECTOR = COMPONENT_SELECTOR;
 
@@ -98,7 +104,7 @@ const STANCE_BY_LIMINALITY = Object.freeze({
   departed: 'exit'
 });
 
-const SEMANTIC_REGISTRY_VERSION = '0.6';
+const SEMANTIC_REGISTRY_VERSION = '0.7';
 let semanticRegistry = null;
 
 function tokenizeFeatureList(value = '') {
@@ -106,150 +112,6 @@ function tokenizeFeatureList(value = '') {
     .split(/[\s,]+/)
     .map(normalizeToken)
     .filter(Boolean);
-}
-
-function normalizeSlug(value = '') {
-  return humanizeToken(value)
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-}
-
-function toLocalUrl(href = '') {
-  if (!href) return null;
-
-  try {
-    const url = new URL(href, document.baseURI);
-    if (url.origin !== window.location.origin) return null;
-    return url;
-  } catch {
-    return null;
-  }
-}
-
-function collectRelationshipLinks(el) {
-  const relations = [];
-  const seen = new Set();
-  const selectors = [
-    ':scope > .frame-heading a[href]',
-    ':scope > .frame-topline a[href]',
-    ':scope > h1 a[href]',
-    ':scope > h2 a[href]',
-    ':scope > h3 a[href]',
-    ':scope > strong a[href]',
-    ':scope > [data-spw-slot="actions"] a[href]',
-    ':scope > .frame-operators a[href]',
-    ':scope > .card-sub-links a[href]',
-    ':scope > a[href]'
-  ];
-
-  const pushLink = (link) => {
-    if (!(link instanceof HTMLAnchorElement)) return;
-    if (link.closest('[hidden], [aria-hidden="true"]')) return;
-
-    const url = toLocalUrl(link.getAttribute('href') || '');
-    if (!url) return;
-
-    const key = `${url.pathname}${url.hash}`;
-    if (seen.has(key)) return;
-    seen.add(key);
-    relations.push({ link, url, key });
-  };
-
-  if (el instanceof HTMLAnchorElement && el.hasAttribute('href')) {
-    pushLink(el);
-  }
-
-  selectors.forEach((selector) => {
-    el.querySelectorAll?.(selector).forEach(pushLink);
-  });
-
-  return relations;
-}
-
-function resolvePrimaryRelationship(el, relations) {
-  if (!relations.length) return null;
-
-  const preferredSelectors = [
-    ':scope > .frame-heading a[href]',
-    ':scope > .frame-topline a[href]',
-    ':scope > h1 a[href]',
-    ':scope > h2 a[href]',
-    ':scope > h3 a[href]',
-    ':scope > [data-spw-slot="actions"] a[href]',
-    ':scope > .frame-operators a[href]',
-    ':scope > .card-sub-links a[href]',
-    ':scope > a[href]'
-  ];
-
-  if (el instanceof HTMLAnchorElement && el.hasAttribute('href')) {
-    return relations[0];
-  }
-
-  for (const selector of preferredSelectors) {
-    const match = el.querySelector?.(selector);
-    if (!(match instanceof HTMLAnchorElement)) continue;
-    const url = toLocalUrl(match.getAttribute('href') || '');
-    if (!url) continue;
-    const key = `${url.pathname}${url.hash}`;
-    const relation = relations.find((entry) => entry.key === key);
-    if (relation) return relation;
-  }
-
-  return relations[0];
-}
-
-function describeRelationship(el) {
-  const relations = collectRelationshipLinks(el);
-  const branchCount = relations.length;
-  const routeState = branchCount > 1 ? 'branching' : branchCount === 1 ? 'single' : 'none';
-  const primary = resolvePrimaryRelationship(el, relations);
-
-  if (!primary) {
-    return {
-      routeState,
-      branchCount: '0',
-      primaryOperator: '',
-      primaryPrefix: '',
-      primaryExpression: '',
-      primaryLabel: '',
-      routeMarker: ''
-    };
-  }
-
-  const label = normalizeText(
-    primary.link.dataset.spwNavLabel
-    || primary.link.getAttribute('aria-label')
-    || primary.link.textContent
-    || ''
-  );
-  const explicitExpression = normalizeText(
-    primary.link.dataset.spwNavExpression
-    || primary.link.dataset.spwToken
-    || primary.link.textContent
-    || ''
-  );
-  const detected = detectOperator(explicitExpression) || detectOperator(label);
-  const hashSlug = normalizeSlug(primary.url.hash.replace(/^#/, ''));
-  const pathSlug = normalizeSlug(primary.url.pathname.split('/').filter(Boolean).pop() || 'home');
-  const fallbackToken = primary.link.closest('.frame-operators')
-    ? `?${hashSlug || pathSlug || 'branch'}`
-    : `~${hashSlug || pathSlug || 'route'}`;
-  const expression = explicitExpression && detectOperator(explicitExpression)
-    ? explicitExpression
-    : fallbackToken;
-  const operator = detected?.type || detectOperator(expression)?.type || 'ref';
-  const prefix = detected?.prefix || detectOperator(expression)?.prefix || '~';
-  const routeMarker = branchCount > 1 ? `${prefix} {${branchCount}}` : prefix;
-
-  return {
-    routeState,
-    branchCount: String(branchCount),
-    primaryOperator: operator,
-    primaryPrefix: prefix,
-    primaryExpression: expression,
-    primaryLabel: label,
-    routeMarker
-  };
 }
 
 function getHeading(el) {
@@ -726,6 +588,7 @@ function snapshotComponentSemantics(el, options = {}) {
     : resolvedCompositionStability;
   const compositionStabilitySource = el.dataset.spwCompositionStability ? 'authored' : '';
   const packOccupancy = inferPackOccupancy(el, { kind, slots, affordances });
+  const compositionTier = resolveCompositionTier(el);
   const contract = inferFunctionalContract(el, {
     kind,
     role,
@@ -755,7 +618,7 @@ function snapshotComponentSemantics(el, options = {}) {
   const componentName = inferComponentName(el, componentBase);
   const semanticOwner = inferSemanticOwner(componentBase);
   const componentAddress = getComponentAddress(componentBase);
-  const componentGenome = buildComponentGenome({
+  const structuralGenome = buildComponentGenome({
     kind,
     role,
     form,
@@ -776,6 +639,24 @@ function snapshotComponentSemantics(el, options = {}) {
     slots,
     affordances
   });
+  const interaction = snapshotInteractionSemantics(el, {
+    kind,
+    role,
+    context,
+    importance,
+    density,
+    emphasis,
+    interactivity,
+    inspectability,
+    stance,
+    compositionTier,
+    primaryLabel: relationship.primaryLabel,
+  });
+  const mergedAffordances = unique([...affordances, ...interaction.interactionAffordances]);
+  const componentGenome = unique([
+    ...structuralGenome.split(/\s+/).filter(Boolean),
+    ...interaction.interactionGenome.split(/\s+/).filter(Boolean),
+  ]).join(' ');
 
   return {
     componentId,
@@ -801,7 +682,7 @@ function snapshotComponentSemantics(el, options = {}) {
     debugSource,
     inspectTarget,
     slots,
-    affordances,
+    affordances: mergedAffordances,
     features,
     valueLayer,
     stance,
@@ -809,6 +690,7 @@ function snapshotComponentSemantics(el, options = {}) {
     compositionStabilitySource,
     resolvedCompositionStability,
     packOccupancy,
+    compositionTier,
     routeState: relationship.routeState,
     branchCount: relationship.branchCount,
     primaryOperator: relationship.primaryOperator,
@@ -823,6 +705,18 @@ function snapshotComponentSemantics(el, options = {}) {
     tone: contract.tone,
     signature: contract.signature,
     semanticBrace,
+    gestureContract: interaction.gestureContract,
+    interactionContract: interaction.interactionContract,
+    lifecycleBeat: interaction.lifecycleBeat,
+    interactionPhaseAffinity: interaction.interactionPhaseAffinity,
+    physicsProfile: interaction.physicsProfile,
+    physicsMass: interaction.physicsMass,
+    physicsDamping: interaction.physicsDamping,
+    physicsStiffness: interaction.physicsStiffness,
+    copyDepth: interaction.copyDepth,
+    paletteDepth: interaction.paletteDepth,
+    themingPosture: interaction.themingPosture,
+    interactionGenome: interaction.interactionGenome,
     semanticTagged: 'true',
     semanticVersion: options.semanticVersion || SEMANTIC_REGISTRY_VERSION
   };
@@ -855,6 +749,9 @@ function applySemanticSnapshot(el, snapshot, options = {}) {
   writeDatasetValue(el, 'spwResolvedCompositionStability', snapshot.resolvedCompositionStability);
   writeDatasetValue(el, 'spwResolvedCompositionStabilitySource', 'component-semantics');
   writeDatasetValue(el, 'spwPackOccupancy', snapshot.packOccupancy);
+  if (snapshot.compositionTier && snapshot.compositionTier !== 'unknown') {
+    writer(el, 'spwCompositionTier', snapshot.compositionTier);
+  }
   writer(el, 'spwSemanticTagged', snapshot.semanticTagged);
   writer(el, 'spwSemanticVersion', snapshot.semanticVersion);
   writer(el, 'spwComponentId', snapshot.componentId);
@@ -895,6 +792,8 @@ function applySemanticSnapshot(el, snapshot, options = {}) {
   if (snapshot.slots.length) writer(el, 'spwSemanticSlots', snapshot.slots.join(' '));
   if (snapshot.affordances.length) writer(el, 'spwAffordances', snapshot.affordances.join(' '));
   if (snapshot.features.length) writer(el, 'spwFeatures', snapshot.features.join(' '));
+
+  applyInteractionSemantics(el, snapshot, { overwrite });
 }
 
 function collectSemanticTargets(root, selector = DEFAULT_SELECTOR) {
@@ -929,7 +828,11 @@ function summarizeSemanticField(snapshots) {
     valueLayers: new Set(),
     compositionStability: new Set(),
     resolvedCompositionStability: new Set(),
-    packOccupancy: new Set()
+    packOccupancy: new Set(),
+    lifecycleBeats: new Set(),
+    physicsProfiles: new Set(),
+    themingPostures: new Set(),
+    interactionPhaseAffinities: new Set()
   };
 
   snapshots.forEach(({ snapshot }) => {
@@ -942,6 +845,10 @@ function summarizeSemanticField(snapshots) {
     summary.compositionStability.add(snapshot.compositionStability);
     summary.resolvedCompositionStability.add(snapshot.resolvedCompositionStability);
     summary.packOccupancy.add(snapshot.packOccupancy);
+    summary.lifecycleBeats.add(snapshot.lifecycleBeat);
+    summary.physicsProfiles.add(snapshot.physicsProfile);
+    summary.themingPostures.add(snapshot.themingPosture);
+    summary.interactionPhaseAffinities.add(snapshot.interactionPhaseAffinity);
     snapshot.affordances.forEach((value) => summary.affordances.add(value));
     snapshot.instrumentation.forEach((value) => summary.instrumentation.add(value));
   });
@@ -964,6 +871,10 @@ function summarizeSemanticField(snapshots) {
     compositionStability: [...summary.compositionStability],
     resolvedCompositionStability: [...summary.resolvedCompositionStability],
     packOccupancy: [...summary.packOccupancy],
+    lifecycleBeats: [...summary.lifecycleBeats],
+    physicsProfiles: [...summary.physicsProfiles],
+    themingPostures: [...summary.themingPostures],
+    interactionPhaseAffinities: [...summary.interactionPhaseAffinities],
     counts: {
       roles: countBy('role'),
       kinds: countBy('kind'),
@@ -1023,6 +934,14 @@ function makePublicSnapshot(element, snapshot) {
     tone: snapshot.tone,
     signature: snapshot.signature,
     semanticBrace: snapshot.semanticBrace,
+    gestureContract: snapshot.gestureContract,
+    interactionContract: snapshot.interactionContract,
+    lifecycleBeat: snapshot.lifecycleBeat,
+    interactionPhaseAffinity: snapshot.interactionPhaseAffinity,
+    physicsProfile: snapshot.physicsProfile,
+    copyDepth: snapshot.copyDepth,
+    paletteDepth: snapshot.paletteDepth,
+    themingPosture: snapshot.themingPosture,
     semanticVersion: snapshot.semanticVersion
   };
 }
@@ -1050,6 +969,10 @@ function createSemanticRegistry({ root, field, snapshots }) {
           if (filter.valueLayer && record.snapshot.valueLayer !== filter.valueLayer) return false;
           if (filter.compositionStability && record.snapshot.compositionStability !== filter.compositionStability) return false;
           if (filter.resolvedCompositionStability && record.snapshot.resolvedCompositionStability !== filter.resolvedCompositionStability) return false;
+          if (filter.lifecycleBeat && record.snapshot.lifecycleBeat !== filter.lifecycleBeat) return false;
+          if (filter.physicsProfile && record.snapshot.physicsProfile !== filter.physicsProfile) return false;
+          if (filter.themingPosture && record.snapshot.themingPosture !== filter.themingPosture) return false;
+          if (filter.interactionPhaseAffinity && record.snapshot.interactionPhaseAffinity !== filter.interactionPhaseAffinity) return false;
           if (filter.instrumentation && !record.snapshot.instrumentation.includes(filter.instrumentation)) return false;
           return true;
         })

@@ -35,22 +35,22 @@ const EMBEDDED_TUNING_MAX = 16;
 const EMBEDDED_TUNING_DIMENSIONS = Object.freeze([
   Object.freeze({
     id: 'spacing',
-    label: 'Tighten',
-    title: 'Tighten component spacing',
+    label: 'Pack',
+    title: 'Tighten this component so linked content scans faster',
     setting: 'spacingTuner:compact',
     sigil: '↔',
   }),
   Object.freeze({
     id: 'material',
-    label: 'Matte',
-    title: 'Use matte surfaces for clearer embedded reading',
+    label: 'Ground',
+    title: 'Use matte material so embedded reading and links stay clear',
     setting: 'baseMetamaterial:matte',
     sigil: '■',
   }),
   Object.freeze({
     id: 'gesture',
-    label: 'Swipe',
-    title: 'Make interactions more responsive to swipe, hold, and panel gestures',
+    label: 'Move',
+    title: 'Make local navigation, swipe, hold, and panel gestures more responsive',
     setting: 'interactionTuner:responsive',
     sigil: '⌁',
   }),
@@ -102,7 +102,7 @@ function surfaceLabel(surface) {
   const text = heading?.textContent?.trim();
   if (text) return text.replace(/\s+/g, ' ').slice(0, 72);
   if (surface.id) return surface.id.replace(/-/g, ' ');
-  return 'tuning surface';
+  return 'extension surface';
 }
 
 function clearMarginalia(surface) {
@@ -135,14 +135,15 @@ function makeEmbeddedHandle(host, mode) {
   handle.dataset.spwEmbeddedTuningHandle = 'true';
   handle.dataset.spwEmbeddedTuningMode = mode;
   handle.dataset.spwEmbeddedTuningDimensions = EMBEDDED_TUNING_DIMENSIONS.map((dimension) => dimension.id).join(' ');
+  handle.dataset.spwHypermediaExtension = 'presentation layout gesture';
   handle.dataset.spwLocality = 'local';
-  handle.dataset.spwGestureHint = 'Local tuning: spacing, material, swipe posture';
+  handle.dataset.spwGestureHint = 'Local extension: pack layout, ground material, or change gesture posture';
   handle.setAttribute('role', 'group');
-  handle.setAttribute('aria-label', `Embedded tuning handles for ${surfaceLabel(host)}`);
+  handle.setAttribute('aria-label', `Hypermedia extension controls for ${surfaceLabel(host)}`);
 
   const label = document.createElement('span');
   label.className = 'spw-embedded-tuning-handle__label';
-  label.textContent = 'tune';
+  label.textContent = 'extend';
   handle.append(label);
 
   EMBEDDED_TUNING_DIMENSIONS.forEach((dimension) => {

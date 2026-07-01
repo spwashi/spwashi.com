@@ -357,6 +357,180 @@ const OPERATOR_FAMILIES = Object.freeze(
   Object.fromEntries(OPERATOR_DEFINITIONS.map(({ type, family }) => [type, family]))
 );
 
+const OPERATOR_GEOMETRY = Object.freeze({
+  frame: Object.freeze({
+    leftRole: 'address-source',
+    rightRole: 'named-resonance-field',
+    flow: 'source-to-address',
+    braceBias: 'objective',
+    geometry: 'anchor',
+    overload: 'address-vibration',
+    chargeRole: 'frame-lock',
+  }),
+  layer: Object.freeze({
+    leftRole: 'layer-source',
+    rightRole: 'resonance-field',
+    flow: 'source-to-register',
+    braceBias: 'objective',
+    geometry: 'field-plane',
+    overload: 'layer-vibration',
+    chargeRole: 'register-charge',
+  }),
+  vibration: Object.freeze({
+    leftRole: 'naming-source',
+    rightRole: 'resonant-category',
+    flow: 'name-to-field',
+    braceBias: 'objective',
+    geometry: 'frequency-anchor',
+    overload: 'name-or-tone',
+    chargeRole: 'resonance-charge',
+  }),
+  potential: Object.freeze({
+    leftRole: 'current-perspective',
+    rightRole: 'deferred-target',
+    flow: 'observer-to-potential',
+    braceBias: 'objective-to-subjective',
+    geometry: 'thread',
+    overload: 'reference-or-memory',
+    chargeRole: 'latent-charge',
+  }),
+  ground: Object.freeze({
+    leftRole: 'wandering-state',
+    rightRole: 'local-baseline',
+    flow: 'exploration-to-ground',
+    braceBias: 'objective',
+    geometry: 'center-of-gravity',
+    overload: 'return-or-default',
+    chargeRole: 'discharge',
+  }),
+  integration: Object.freeze({
+    leftRole: 'parts-or-evidence',
+    rightRole: 'inspectable-whole',
+    flow: 'implicit-to-explicit',
+    braceBias: 'objective-to-subjective',
+    geometry: 'lift',
+    overload: 'object-or-ascension',
+    chargeRole: 'integration-charge',
+  }),
+  wonder: Object.freeze({
+    leftRole: 'known-edge',
+    rightRole: 'open-aperture',
+    flow: 'certainty-to-question',
+    braceBias: 'subjective',
+    geometry: 'aperture',
+    overload: 'probe-or-uncertainty',
+    chargeRole: 'curiosity-charge',
+  }),
+  perspective: Object.freeze({
+    leftRole: 'observer-position',
+    rightRole: 'observed-field',
+    flow: 'viewpoint-to-observation',
+    braceBias: 'subjective-to-objective',
+    geometry: 'coordinate-origin',
+    overload: 'viewpoint-or-context',
+    chargeRole: 'situated-charge',
+  }),
+  value: Object.freeze({
+    leftRole: 'material-source',
+    rightRole: 'substance-or-flow',
+    flow: 'substance-to-salience',
+    braceBias: 'objective',
+    geometry: 'mass',
+    overload: 'value-or-stream',
+    chargeRole: 'material-charge',
+  }),
+  subject: Object.freeze({
+    leftRole: 'relation-inputs',
+    rightRole: 'bound-subject',
+    flow: 'adjacency-to-relation',
+    braceBias: 'balanced',
+    geometry: 'binding-axis',
+    overload: 'subject-or-merge',
+    chargeRole: 'relational-charge',
+  }),
+  binding: Object.freeze({
+    leftRole: 'loose-value',
+    rightRole: 'named-pin',
+    flow: 'value-to-register',
+    braceBias: 'objective',
+    geometry: 'pin',
+    overload: 'assignment-or-memory',
+    chargeRole: 'retention-charge',
+  }),
+  substrate: Object.freeze({
+    leftRole: 'carried-charge',
+    rightRole: 'support-layer',
+    flow: 'load-to-substrate',
+    braceBias: 'objective',
+    geometry: 'support-plane',
+    overload: 'resource-or-medium',
+    chargeRole: 'load-bearing-charge',
+  }),
+  normalize: Object.freeze({
+    leftRole: 'raw-measure',
+    rightRole: 'scaled-comparison',
+    flow: 'measurement-to-scale',
+    braceBias: 'balanced',
+    geometry: 'ratio',
+    overload: 'objective-or-subjective-measure',
+    chargeRole: 'ordinal-charge',
+  }),
+  action: Object.freeze({
+    leftRole: 'intent',
+    rightRole: 'observable-consequence',
+    flow: 'intent-to-effect',
+    braceBias: 'subjective-to-objective',
+    geometry: 'impulse',
+    overload: 'command-or-commitment',
+    chargeRole: 'release-charge',
+  }),
+  concept: Object.freeze({
+    leftRole: 'outside-context',
+    rightRole: 'concept-interior',
+    flow: 'outside-to-boundary',
+    braceBias: 'balanced',
+    geometry: 'opening-edge',
+    overload: 'concept-or-topic',
+    chargeRole: 'boundary-charge',
+  }),
+  'concept-edge': Object.freeze({
+    leftRole: 'concept-interior',
+    rightRole: 'projected-surface',
+    flow: 'boundary-to-output',
+    braceBias: 'balanced',
+    geometry: 'closing-edge',
+    overload: 'surface-or-projection',
+    chargeRole: 'projection-charge',
+  }),
+  scene: Object.freeze({
+    leftRole: 'conditions',
+    rightRole: 'staged-observation',
+    flow: 'structure-to-performance',
+    braceBias: 'subjective',
+    geometry: 'scene-plane',
+    overload: 'scene-or-context',
+    chargeRole: 'performance-charge',
+  }),
+  mode: Object.freeze({
+    leftRole: 'option-set',
+    rightRole: 'active-selection',
+    flow: 'alternatives-to-posture',
+    braceBias: 'balanced',
+    geometry: 'coordinate-choice',
+    overload: 'mode-or-variant',
+    chargeRole: 'ordinal-selection',
+  }),
+  direction: Object.freeze({
+    leftRole: 'objective-boundary',
+    rightRole: 'subjective-synthesis',
+    flow: 'objective-to-subjective',
+    braceBias: 'objective-to-subjective',
+    geometry: 'brace-container',
+    overload: 'containment-or-motion',
+    chargeRole: 'containment-charge',
+  }),
+});
+
 const OPERATOR_PREFIX_RE = /^(#>|#:|#|\.|\^|~|\?|@|\*|&|=|\$|%|!|>|<|\(|\[|\{)/;
 
 /* Note (2026-06 alignment with operator-site-projection + measurement-contract):
@@ -1130,6 +1304,84 @@ const describeOperator = (value = '') => {
   return detectOperator(value);
 };
 
+const getOperatorGeometry = (value = '') => {
+  const operator = getOperatorDefinition(value) || detectOperator(value);
+  if (!operator) return null;
+  return OPERATOR_GEOMETRY[operator.type] || null;
+};
+
+const SIGIL_PREFIX_OPERATOR_RE = /^(#>|#:|#|\.|\^|~|\?|@|\*|&|=|\$|%|!|>|<|\(|\[|\{)/;
+const SIGIL_POSTFIX_OPERATOR_RE = /(!|\^|\.|>|\)|\]|\})$/;
+const SIGIL_INFIX_EXPRESSION_RE = /^[^\[{(<]+[\[{<(]/;
+
+const FIXITY_BY_SIGIL_POSITION = Object.freeze({
+  prefix: 'stable',
+  infix: 'stable',
+  postfix: 'tending',
+  expression: 'stable',
+  unknown: 'experimental',
+});
+
+const parseSigilPosition = (sigil = '') => {
+  const text = normalizeText(sigil);
+  if (!text) {
+    return {
+      position: 'unknown',
+      operator: null,
+      delimiter: null,
+      fixity: FIXITY_BY_SIGIL_POSITION.unknown,
+    };
+  }
+
+  const prefixMatch = text.match(SIGIL_PREFIX_OPERATOR_RE);
+  if (prefixMatch) {
+    return {
+      position: 'prefix',
+      operator: detectOperator(prefixMatch[0]),
+      delimiter: null,
+      fixity: FIXITY_BY_SIGIL_POSITION.prefix,
+    };
+  }
+
+  if (SIGIL_INFIX_EXPRESSION_RE.test(text)) {
+    const delimiter = text.match(/[\[{<(]/)?.[0] || null;
+    return {
+      position: text.includes('[') || text.includes('{') || text.includes('<') || text.includes('(')
+        ? 'infix'
+        : 'expression',
+      operator: detectOperator(text),
+      delimiter,
+      fixity: FIXITY_BY_SIGIL_POSITION.infix,
+    };
+  }
+
+  const postfixMatch = text.match(SIGIL_POSTFIX_OPERATOR_RE);
+  if (postfixMatch) {
+    const delimiter = postfixMatch[1];
+    const isClosingBrace = delimiter === '}' || delimiter === ')' || delimiter === ']';
+    return {
+      position: 'postfix',
+      operator: isClosingBrace ? null : detectOperator(delimiter),
+      delimiter,
+      fixity: FIXITY_BY_SIGIL_POSITION.postfix,
+    };
+  }
+
+  return {
+    position: 'unknown',
+    operator: detectOperator(text),
+    delimiter: null,
+    fixity: FIXITY_BY_SIGIL_POSITION.unknown,
+  };
+};
+
+const resolveOperationalFixity = (value = '') => {
+  const parsed = typeof value === 'string'
+    ? parseSigilPosition(value)
+    : parseSigilPosition(value?.dataset?.spwSigil || value?.textContent || '');
+  return parsed.fixity || FIXITY_BY_SIGIL_POSITION.unknown;
+};
+
 /* ==========================================================================
    10. Ecology + instantiation resolution
    ========================================================================== */
@@ -1517,6 +1769,7 @@ export {
   OPERATOR_BY_PREFIX,
   OPERATOR_BY_TYPE,
   OPERATOR_FAMILIES,
+  OPERATOR_GEOMETRY,
   OPERATOR_INTENTS,
   OPERATOR_PREFIXES,
   SPW_CSS_STATE_TOKENS,
@@ -1546,6 +1799,9 @@ export {
   getHtmlRoot,
   getNavigationType,
   getOperatorDefinition,
+  getOperatorGeometry,
+  parseSigilPosition,
+  resolveOperationalFixity,
   getPageSurface,
   getRequestedFeatures,
   getSpellProfile,

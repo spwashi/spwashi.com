@@ -46,6 +46,7 @@
                 <h1 id="interaction-design-title">Interaction Design</h1>
                 <p>This page is for the behavior layer of the site: what changes when a person hovers, tabs, clicks, opens, closes, tunes, or revisits a surface. The useful question is not only whether an interaction looks nice. It is whether the interaction makes structure clearer, consequences legible, and next actions easier to infer.</p>
                 <p>Good interaction design reduces ambiguity. A control should say what it is, what state it is in, what will happen next, and how to recover if the user changes their mind.</p>
+                <p>This page is also a specimen of its own subject. The sigils beside each heading are live handles — hold one, or right-click it, to open a menu that inspects the region it names, marks it, or traces others like it. Press <kbd>g</kbd> to open the surface map of every frame and route, <kbd>[</kbd> and <kbd>]</kbd> to step between frames, or <kbd>/</kbd> to filter them. The behavior described here is the behavior you are already using to read it.</p>
                 <nav class="frame-operators" aria-label="Interaction design routes">
                     <a class="operator-chip" href="/design/website/">website</a>
                     <a class="operator-chip" href="/design/accessibility/">accessibility</a>
@@ -115,6 +116,166 @@
                         <p>The local site-facing reference for how this repo currently thinks about shell behavior, tuneable surfaces, and named interactions.</p>
                     </div>
                 </div>
+            </section>
+
+            <!-- Exemplar: content dimensionality through lenses. Uses the existing
+                 variant-selection runtime (.mode-switch + data-mode-panel) — no new JS.
+                 Styles are page-scoped on purpose so this stays a self-contained
+                 specimen; promote to a shared component (lens-dimensionality.css) if
+                 the direction is adopted. -->
+            <style>
+                /* Sigil as a facet handle: reads as manipulable and tints to the
+                   accent of the facet it currently points at. */
+                #content-dimensionality .frame-sigil[data-spw-facet-handle] {
+                    cursor: pointer;
+                    border-bottom: 1px dashed color-mix(in srgb, var(--lens-accent, var(--teal, #008080)) 55%, transparent);
+                    transition: color 320ms ease, border-color 320ms ease;
+                }
+                #content-dimensionality .frame-sigil[data-spw-facet-handle]:hover {
+                    color: var(--lens-accent, var(--teal, #008080));
+                }
+                #content-dimensionality .lens-switch {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 0.4rem;
+                    margin-block: 0.6rem 0.9rem;
+                }
+                #content-dimensionality .lens-switch__btn[aria-pressed="true"] {
+                    background: color-mix(in srgb, var(--lens-accent, var(--teal, #008080)) 18%, var(--surface, #fbfaf7));
+                    border-color: color-mix(in srgb, var(--lens-accent, var(--teal, #008080)) 55%, transparent);
+                    box-shadow: 0 0 0 1px color-mix(in srgb, var(--lens-accent, var(--teal, #008080)) 30%, transparent);
+                }
+                /* The stage carries perspective so each lens reads as a different
+                   depth-plane on the same content, not a flat tab swap. A min-height
+                   keeps the frame from reflowing as lenses of different length swap. */
+                #content-dimensionality .lens-stage {
+                    position: relative;
+                    min-block-size: 9.5rem;
+                    padding: 1rem 1.1rem;
+                    border-radius: 0.8rem;
+                    perspective: 900px;
+                    background:
+                        radial-gradient(120% 140% at 12% 0%, color-mix(in srgb, var(--lens-accent, var(--teal, #008080)) 10%, transparent), transparent 62%),
+                        color-mix(in srgb, var(--surface, #fbfaf7) 94%, var(--lens-accent, var(--teal, #008080)) 3%);
+                    border: 1px solid color-mix(in srgb, var(--lens-accent, var(--teal, #008080)) 22%, transparent);
+                    transition: background 480ms ease, border-color 480ms ease;
+                }
+                #content-dimensionality .lens-facet {
+                    margin: 0;
+                    animation: lens-emerge 520ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+                    transform-origin: 12% 40%;
+                }
+                #content-dimensionality .lens-facet__read {
+                    font-size: 1.02rem;
+                    line-height: 1.6;
+                    color: var(--ink, #1b2a2a);
+                }
+                #content-dimensionality .lens-facet__note {
+                    margin-block-start: 0.5rem;
+                    font-size: 0.8rem;
+                    letter-spacing: 0.04em;
+                    text-transform: uppercase;
+                    color: color-mix(in srgb, var(--lens-accent, var(--teal, #008080)) 78%, var(--ink-soft, #5a6a6a));
+                }
+                /* Per-dimension resonance: the stage tints via --lens-accent based
+                   on which facet is currently visible (the runtime toggles [hidden]),
+                   deepening in dimensional character down the list. :has() lets the
+                   host react to its visible child with no extra JS. */
+                #content-dimensionality:has(.lens-facet[data-spw-lens-dimension="surface"]:not([hidden]))   { --lens-accent: var(--op-ref-color, #2f6bd8); }
+                #content-dimensionality:has(.lens-facet[data-spw-lens-dimension="structure"]:not([hidden])) { --lens-accent: var(--op-probe-color, #7a4fb5); }
+                #content-dimensionality:has(.lens-facet[data-spw-lens-dimension="resonance"]:not([hidden])) { --lens-accent: var(--op-pragma-color, #b5563f); }
+                #content-dimensionality:has(.lens-facet[data-spw-lens-dimension="dimension"]:not([hidden]))  { --lens-accent: var(--op-topic-color, #1f8a8a); }
+                /* The "dimension" lens reads as extending past the flat plane:
+                   a bleed of glow beyond the stage edges + a slight tilt. */
+                #content-dimensionality .lens-facet[data-spw-lens-dimension="dimension"] {
+                    transform: rotateX(2.5deg) translateZ(14px);
+                }
+                #content-dimensionality:has(.lens-facet[data-spw-lens-dimension="dimension"]:not([hidden])) .lens-stage {
+                    box-shadow:
+                        0 0 40px color-mix(in srgb, var(--lens-accent) 22%, transparent),
+                        inset 0 0 30px color-mix(in srgb, var(--lens-accent) 10%, transparent);
+                }
+                @keyframes lens-emerge {
+                    from { opacity: 0; transform: translateY(6px) translateZ(-24px); }
+                    to   { opacity: 1; transform: translateY(0) translateZ(0); }
+                }
+                @media (prefers-reduced-motion: reduce) {
+                    #content-dimensionality .lens-facet { animation: none; }
+                    #content-dimensionality .lens-facet[data-spw-lens-dimension="dimension"] { transform: none; }
+                    #content-dimensionality .lens-stage { transition: none; }
+                }
+            </style>
+            <section
+                class="site-frame lens-specimen"
+                id="content-dimensionality"
+                data-spw-kind="frame"
+                data-spw-role="reference"
+                data-spw-feature="content-dimensionality"
+                data-spw-inspect-mode-group="dimensionality"
+                data-spw-wonder="resonance projection texture"
+            >
+                <header class="frame-heading">
+                    <a class="frame-sigil" href="#content-dimensionality">?["content_dimensionality"]</a>
+                    <h2>One interaction, four lenses</h2>
+                </header>
+                <p class="frame-note">
+                    The same interaction — a press-and-hold on a sigil — read through shifting dimensions.
+                    Switch lenses with the chips below, or manipulate this frame's own sigil (above, beside the
+                    heading): click it to advance a lens, shift-click to step back. The content does not change;
+                    your angle on it does — and the sigil you turn is the very gesture the lenses describe.
+                </p>
+
+                <div class="mode-switch lens-switch" role="group" aria-label="Dimensional lenses">
+                    <button type="button" class="operator-chip lens-switch__btn" data-mode-group="dimensionality" data-set-mode="surface" data-spw-operator="ref" aria-pressed="true">~ surface</button>
+                    <button type="button" class="operator-chip lens-switch__btn" data-mode-group="dimensionality" data-set-mode="structure" data-spw-operator="probe" aria-pressed="false">^ structure</button>
+                    <button type="button" class="operator-chip lens-switch__btn" data-mode-group="dimensionality" data-set-mode="resonance" data-spw-operator="pragma" aria-pressed="false">* resonance</button>
+                    <button type="button" class="operator-chip lens-switch__btn" data-mode-group="dimensionality" data-set-mode="dimension" data-spw-operator="topic" aria-pressed="false">&gt; dimension</button>
+                </div>
+
+                <div class="lens-stage" data-spw-lens-stage>
+                    <article class="lens-facet" data-mode-group="dimensionality" data-mode-panel="surface" data-spw-lens-dimension="surface">
+                        <p class="lens-facet__read">You press a sigil and keep pressing. After a short beat, a small menu blooms beside your finger — options for the thing you were holding.</p>
+                        <p class="lens-facet__note">surface · what it feels like</p>
+                    </article>
+                    <article class="lens-facet" data-mode-group="dimensionality" data-mode-panel="structure" data-spw-lens-dimension="structure" hidden>
+                        <p class="lens-facet__read">A pointerdown arms a timer. Movement past ten pixels cancels it. If the timer survives, it opens a menu keyed to the element's semantic family — the same handler that answers a right-click or an Alt+Enter.</p>
+                        <p class="lens-facet__note">structure · what composes it</p>
+                    </article>
+                    <article class="lens-facet" data-mode-group="dimensionality" data-mode-panel="resonance" data-spw-lens-dimension="resonance" hidden>
+                        <p class="lens-facet__read">Holding is patience made legible. The interface rewards dwelling the way a held note gathers weight before it resolves — the pause is not latency, it is the gesture asking whether you meant it.</p>
+                        <p class="lens-facet__note">resonance · what it echoes</p>
+                    </article>
+                    <article class="lens-facet" data-mode-group="dimensionality" data-mode-panel="dimension" data-spw-lens-dimension="dimension" hidden>
+                        <p class="lens-facet__read">The gesture is not on the page; it is a fold in it. The same hold, replayed, grounds a spell you can carry to another surface — the interaction casts a shadow into a space the flat screen only hints at.</p>
+                        <p class="lens-facet__note">dimension · how it extends beyond the plane</p>
+                    </article>
+                </div>
+
+                <!-- Sigil as facet-navigation handle: manipulating the sigil moves
+                     through the content's facets. Reuses the already-wired lens
+                     buttons (variant-selection.js) rather than a second mechanism;
+                     the #anchor stays reachable via keyboard/no-JS. -->
+                <script>
+                    (() => {
+                        const section = document.getElementById('content-dimensionality');
+                        const sigil = section && section.querySelector('.frame-sigil');
+                        const btns = section ? [...section.querySelectorAll('.lens-switch__btn')] : [];
+                        if (!sigil || btns.length < 2) return;
+                        sigil.dataset.spwFacetHandle = 'dimensionality';
+                        sigil.setAttribute('title', 'Manipulate this sigil to move through the content’s facets');
+                        const advance = (dir) => {
+                            const at = btns.findIndex((b) => b.getAttribute('aria-pressed') === 'true');
+                            const next = btns[((at < 0 ? 0 : at) + dir + btns.length) % btns.length];
+                            next.click();
+                            sigil.dataset.spwFacetActive = next.getAttribute('data-set-mode') || '';
+                        };
+                        sigil.addEventListener('click', (event) => {
+                            event.preventDefault();
+                            advance(event.shiftKey ? -1 : 1);
+                        });
+                        sigil.dataset.spwFacetActive = 'surface';
+                    })();
+                </script>
             </section>
         </article>
     </main>

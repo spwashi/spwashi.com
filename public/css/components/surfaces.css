@@ -44,7 +44,11 @@
   border-radius: var(--component-radius-tight);
   box-shadow: var(--component-shadow);
   opacity: var(--component-arrival-opacity);
-  transform: translateY(calc(var(--component-arrival-offset) - var(--component-surface-lift, 0px)));
+  transform: translateY(calc(
+    var(--component-arrival-offset)
+    + var(--spw-component-arrival-bias, 0px)
+    - var(--component-surface-lift, 0px)
+  ));
   overflow: clip;
   contain: paint style;
   transition: background var(--component-transition-deliberate),

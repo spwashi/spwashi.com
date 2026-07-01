@@ -695,6 +695,13 @@ body > header:has(.spw-spell-path) .spw-attention-posture-pill {
   overflow: clip;
 }
 
+.spw-spell-dock[data-spw-hypermedia-extension] {
+  border-color: color-mix(in srgb, var(--semantic-accent, var(--active-op-color, var(--teal))) 16%, var(--line, rgba(14,18,20,0.14)));
+  background:
+    linear-gradient(120deg, color-mix(in srgb, var(--semantic-accent, var(--active-op-color, var(--teal))) 6%, transparent), transparent 58%),
+    color-mix(in srgb, var(--surface-strong, rgba(255,255,255,0.78)) 94%, transparent);
+}
+
 .spw-spell-dock-summary {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
@@ -2065,6 +2072,35 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
 .spw-route-menu-link-token {
   align-self: center;
   text-align: right;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-label, 0.76rem);
+  color: color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 58%, var(--spw-shell-chrome-accent-local) 42%);
+}
+
+.spw-link-expression,
+.spw-route-menu-link-expression {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.08rem;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-label, 0.76rem);
+  letter-spacing: 0.01em;
+  color: color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 72%, var(--spw-shell-chrome-accent-local) 28%);
+}
+
+.spw-link-expression__prefix,
+.spw-route-menu-link-expression .spw-link-expression__prefix {
+  color: var(--spw-operator-color, var(--teal, #008080));
+  font-weight: 700;
+}
+
+.spw-link-expression__nucleus,
+.spw-route-menu-link-expression .spw-link-expression__nucleus {
+  font-weight: 500;
+}
+
+.spw-route-menu-link[data-spw-interaction-destination="projection"]:is(:hover, :focus-visible) .spw-link-expression__prefix {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--spw-operator-color, var(--teal, #008080)) 36%, transparent);
 }
 
 .spw-route-menu-link:is(:hover, :focus-visible) {
@@ -3768,6 +3804,55 @@ html[data-spw-base-metamaterial="matte"] .spw-discovery-notice .spw-discovery-no
     linear-gradient(180deg, color-mix(in srgb, var(--footer-accent, var(--active-op-color, var(--teal))) 5%, transparent), transparent 54%),
     var(--footer-panel-bg);
 }
+
+.site-footer__cauldron[data-spw-hypermedia-extension] {
+  border-color: color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 18%, var(--footer-panel-line));
+}
+
+.site-footer__cauldron-phase-rail {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.22rem;
+  margin: 0.02rem 0 0.04rem;
+  padding: 0;
+  list-style: none;
+}
+
+.site-footer__cauldron-phase-step {
+  display: grid;
+  align-items: center;
+  min-block-size: 1.55rem;
+  padding: 0.16rem 0.28rem;
+  border: 1px solid color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 12%, var(--footer-panel-line));
+  border-radius: calc(var(--shape-component, 6px) + 1px);
+  background: color-mix(in srgb, var(--footer-panel-bg) 92%, var(--component-accent, var(--active-op-color, var(--teal))) 8%);
+  color: color-mix(in srgb, var(--ink-muted, rgba(14, 18, 20, 0.58)) 84%, var(--component-accent, var(--active-op-color, var(--teal))) 16%);
+}
+
+.site-footer__cauldron-phase-step[data-spw-phase-complete="true"] {
+  border-color: color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 22%, var(--footer-panel-line));
+  color: color-mix(in srgb, var(--ink-soft, rgba(14, 18, 20, 0.72)) 74%, var(--component-accent, var(--active-op-color, var(--teal))) 26%);
+}
+
+.site-footer__cauldron-phase-step[data-spw-phase-active="true"] {
+  border-color: color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 40%, var(--footer-panel-line));
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 15%, transparent), transparent 78%),
+    color-mix(in srgb, var(--footer-panel-bg) 82%, var(--component-accent, var(--active-op-color, var(--teal))) 18%);
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  font-weight: 800;
+}
+
+.site-footer__cauldron-phase-label {
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-2xs, 0.72rem);
+  letter-spacing: 0.04em;
+}
+
 .site-footer__cauldron .site-footer__cauldron-status + .site-footer__cauldron-ingredients {
   margin-top: 0.1rem;
 }
@@ -3879,6 +3964,14 @@ html[data-spw-base-metamaterial="matte"] .spw-discovery-notice .spw-discovery-no
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 14%, transparent);
 }
 
+.cauldron-ingredient[data-spw-deep-link*="#"] {
+  --cauldron-chip-border: color-mix(in oklab, var(--op-ref-color, #4f7fbf) 30%, var(--line, rgba(14,18,20,0.14)) 70%);
+
+  box-shadow:
+    inset 2px 0 0 color-mix(in srgb, var(--op-ref-color, #4f7fbf) 24%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--op-ref-color, #4f7fbf) 10%, transparent);
+}
+
 /* Make cauldron ingredients feel like true "ingredients" — clear prime/gather affordance */
 .cauldron-ingredient::before {
   content: "⟐";
@@ -3969,6 +4062,13 @@ html[data-spw-base-metamaterial="matte"] .spw-discovery-notice .spw-discovery-no
 .cauldron-origin {
   font-style: italic;
   opacity: 0.65;
+}
+
+.cauldron-ingredient-meta.cauldron-deep-link {
+  border: 1px solid color-mix(in srgb, var(--op-ref-color, #4f7fbf) 22%, transparent);
+  background: color-mix(in srgb, var(--op-ref-color, #4f7fbf) 8%, transparent);
+  color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 78%, var(--op-ref-color, #4f7fbf) 22%);
+  font-weight: 700;
 }
 
 /* Further cauldron UX polish for funding/self-imagination tranche:

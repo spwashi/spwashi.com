@@ -1,0 +1,164 @@
+# Semantic Hierarchy
+#
+# Stacks the site's parallel hierarchy models so agents, editors, and runtime
+# modules can answer "which layer owns this meaning?" without collapsing them.
+
+#>semantic_hierarchy
+#:convention #!semantics #!structure
+#:layer #!pragmatics
+#:operation contract
+
+@page_model: ~"../surfaces/page-model.spw"
+@site_semantics: ~"./site-semantics.spw"
+@operator_semantics: ~"./operator-semantics.spw#positional_grammar"
+@semantic_braces: ~"./semantic-braces.spw"
+@model_guided_refinement: ~"./model-guided-refinement.spw#semantic_fixity"
+@semantic_capacity: ~"./semantic-capacity.spw"
+@css_instruction: ~"./css-instruction.spw"
+
+^"thesis"{
+  claim: "Spwashi.com carries several hierarchies at once. They are complementary, not interchangeable. Collapsing them produces leaky selectors, ambiguous ownership, and copy that decorates without teaching."
+  rule: "Name which hierarchy you are using before editing HTML, CSS, JS, or .spw. A patch should declare the owning stratum and the fixity tier of what changed."
+}
+
+^"stack_overview"{
+  ladders: [
+    "composition — where structure lives in the page tree"
+    "linguistic — how Spw meaning is declared in .spw and copy"
+    "expression — how a concept is scoped inside root[variant]{behavior}<lens>"
+    "positional — where operator force sits: prefix, infix, postfix"
+    "fixity — how durable the meaning is allowed to be"
+    "cascade — how CSS projection priority resolves conflicts"
+  ]
+  resolution_question: "If two layers disagree, composition authored truth wins for structure; fixed/stale convention wins for grammar; volatile runtime must not overwrite stable authored attrs."
+}
+
+^"composition_ladder"{
+  definition: "Top-down ownership of public structure. Each rung names a unit with inspectable identity."
+  ladder: #[
+    `page — body metadata: surface, page-family, page-role, route-family, context, layout`
+    `region — profiled sub-surface: harmony, tempo, density, region-role, region-genome`
+    `feature — named functional cluster: data-spw-feature on outermost coherent cluster`
+    `component — reusable semantic block: frame, panel, card, lens, surface, hook`
+    `slot — internal anatomy: header, meta, body, figure, actions, footer`
+    `module — progressive JS behavior mounted when route/DOM proves need`
+    `chrome — viewport/shell affordance outside ordinary reading flow`
+    `runtime — volatile tuning: phase, charge, gesture, occupancy, resolved stability`
+  ][reg=set]
+  html_contract: #[
+    `data-spw-composition-tier`
+    `data-spw-feature`
+    `data-spw-slot`
+    `data-spw-kind`
+    `data-spw-role`
+    `data-spw-semantic-owner`
+  ][reg=set]
+  invariant: "Runtime may infer resolved fields for the long tail, but must not invent the public spine: page identity, primary feature, and slot anatomy stay authored."
+  @owner: ~"../surfaces/page-model.spw#composition_hierarchy"
+}
+
+^"linguistic_stratum"{
+  definition: "How durable claims are declared in Spw surfaces and copy — not DOM depth."
+  strata: {
+    grammar: "Sigils, delimiters, prefix/infix/postfix, operator patterns — fixed/stale"
+    semantics: "Named concepts, expressions, component kind/form/role — stable"
+    pragmatics: "Route posture, audience register, interaction consequence — tending"
+    application: "One-route experiments, prompts, seeds — experimental/volatile"
+  }
+  operation_map: {
+    cache: "pragmatics | experimental"
+    audit: "semantics | pragmatics"
+    align: "semantics"
+    prime: "pragmatics | experimental"
+    contract: "grammar | semantics"
+    archive: "cold — preserves history without active dispatch"
+  }
+  @semantic_capacity: ~"./semantic-capacity.spw#operations"
+}
+
+^"expression_ladder"{
+  definition: "Inside a semantic expression, meaning narrows without replacing the root."
+  ladder: #[
+    `root — stable stem shared across routes`
+    `variant — [bracketed] sibling form; discoverable mode`
+    `behavior — {braced} affordance or direction; tending labels`
+    `lens — <angled> interpretive conduit`
+    `sigil — operator grammar on a handle or chip`
+  ][reg=set]
+  syntax: "root[variant]{behavior}<lens>"
+  attrs: #[`data-spw-semantic-root`, `data-spw-semantic-variant`, `data-spw-semantic-behavior`, `data-spw-semantic-lens`, `data-spw-semantic-expression`][reg=set]
+  @semantic_braces: ~"./semantic-braces.spw#grammar"
+}
+
+^"positional_ladder"{
+  definition: "Where force sits relative to a named unit — orthogonal to composition depth."
+  ladder: #[`prefix — prime`, `infix — scope`, `postfix — residue`][reg=set]
+  attrs: #[`data-spw-sigil-position`, `data-spw-sigil-prefix`, `data-spw-operator-flow`][reg=set]
+  @positional_grammar: ~"./operator-semantics.spw#positional_grammar"
+}
+
+^"fixity_ladder"{
+  definition: "Operational permission to change meaning — coldest to hottest."
+  ladder: #[
+    `fixed — do not change without plan + human review`
+    `stable — extend carefully with contract + validation`
+    `tending — local copy and practice-bed improvement`
+    `experimental — route-local trial only`
+    `volatile — runtime-owned; never promote to authored doctrine`
+  ][reg=set]
+  mapping: {
+    grammar_delimiters: "fixed"
+    composition_tier_names: "stable"
+    semantic_expressions: "stable"
+    capacity_verbs: "tending"
+    route_local_emphasis: "tending"
+    runtime_phase_charge: "volatile"
+  }
+  @model_guided_refinement: ~"./model-guided-refinement.spw#semantic_fixity"
+}
+
+^"cascade_ladder"{
+  definition: "CSS projection priority — lowest wins structure, highest wins final state."
+  ladder: "reset → tokens → shell → typography → grammar → components → systems → routes → handles → effects → ornament"
+  rule: "Semantic hierarchy in HTML/JS should not be re-derived from cascade order. Cascade resolves presentation conflicts; composition and fixity resolve meaning ownership."
+  @css_instruction: ~"./css-instruction.spw"
+}
+
+^"crosswalk"{
+  questions: {
+    "Where does this element live?": "composition_ladder"
+    "What concept does this phrase name?": "expression_ladder.root"
+    "How is this instance distinguished?": "expression_ladder.variant"
+    "What does it do here?": "expression_ladder.behavior"
+    "How should it be read?": "expression_ladder.lens"
+    "Which sigil force applies?": "positional_ladder + operator_physics"
+    "May an agent change this without a plan?": "fixity_ladder"
+    "Which stylesheet may override this look?": "cascade_ladder"
+    "What color should this depth layer use?": "coloring_depth.copy_depth_ladder"
+    "What material atmosphere applies here?": "coloring_depth.palette_depth_ladder"
+  }
+  anti_patterns: [
+    "using CSS layer names as data-spw-feature values"
+    "promoting volatile runtime phase into route copy"
+    "treating a slot as a feature because it has a heading"
+    "flattening root[variant]{behavior} into one opaque label"
+    "editing grammar delimiters for one route's visual taste"
+  ]
+}
+
+^"runtime_contract"{
+  modules: [
+    "public/js/kernel/dom-contracts.js resolveCompositionTier"
+    "public/js/semantic/component-semantics.js data-spw-composition-tier"
+    "public/js/semantic/operators.js data-spw-sigil-position + data-spw-fixity-tier"
+    "public/js/semantic/semantic-braces.js expression parse fields"
+  ]
+  inspect_rule: "State inspector and design catalog should list composition tier and fixity tier when present so hierarchy disagreements are visible without parsing prose."
+}
+
+validation: #[
+  `New reusable clusters declare data-spw-feature before deep slot styling.`
+  `Semantic expressions expose data-spw-semantic-expression when behavior or lens changes meaning.`
+  `Sigil-bearing controls expose position + fixity when they teach operator physics.`
+  `Volatile attrs do not replace missing authored composition metadata on entry heroes.`
+][reg=set]

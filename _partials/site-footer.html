@@ -1,8 +1,8 @@
 <footer class="site-footer" role="contentinfo">
     <div class="site-footer__inner">
         <div class="site-footer__identity">
-            <a class="site-footer__brand" href="/">#&gt;spwashi</a>
-            <p class="site-footer__summary">{ Spwashi }. I [build software] and [make art].</p>
+            <a class="site-footer__brand" href="/" data-spw-operator="frame" data-spw-sigil="#&gt;spwashi" data-spw-semantic-expression="identity[brand]{route.home}">#&gt;spwashi</a>
+            <p class="site-footer__summary" data-spw-semantic-expression="identity[footer]{creator.first}" data-spw-bare-spw="enhance"><span class="spw-delimiter spw-delimiter--brace" data-spw-form="brace" data-spw-perspective="objective" aria-hidden="true">{</span><span class="spw-living-term" data-spw-living-term data-spw-concept="spwashi" tabindex="0">Spwashi</span><span class="spw-delimiter spw-delimiter--brace" data-spw-form="brace" data-spw-perspective="subjective" aria-hidden="true">}</span>. I <span class="spw-delimiter spw-delimiter--square" data-spw-form="block" data-spw-perspective="objective" aria-hidden="true">[</span><span data-spw-vocab="software">build software</span><span class="spw-delimiter spw-delimiter--square" data-spw-form="block" data-spw-perspective="subjective" aria-hidden="true">]</span> and <span class="spw-delimiter spw-delimiter--square" data-spw-form="block" data-spw-perspective="objective" aria-hidden="true">[</span><span data-spw-vocab="art">make art</span><span class="spw-delimiter spw-delimiter--square" data-spw-form="block" data-spw-perspective="subjective" aria-hidden="true">]</span>.</p>
             <div class="site-footer__page-architecture" data-site-page-architecture>
                 <p class="site-footer__page-architecture-kicker">Page job</p>
                 <p class="site-footer__page-architecture-copy">
@@ -26,6 +26,7 @@
                 data-spw-feature="cauldron"
                 data-spw-cauldron
                 data-spw-cauldron-panel="compact"
+                data-spw-hypermedia-extension="state output resume"
                 data-spw-interaction-contract="tap inspect hold prime drag project double-click inspect-prime keyboard commit"
                 data-spw-interaction-tap="inspect semantic relation without storing it"
                 data-spw-interaction-hold="prime the held brace as a cauldron ingredient"
@@ -33,7 +34,7 @@
                 data-spw-interaction-double-click="inspect and prime semantic brace value immediately"
                 data-spw-interaction-keyboard="Enter or Space commits the focused semantic brace">
                 <div class="site-footer__cauldron-header">
-                    <p class="site-footer__cauldron-kicker">Spell pocket</p>
+                    <p class="site-footer__cauldron-kicker">Extension pocket</p>
                     <button
                         class="site-footer__cauldron-panel-toggle"
                         type="button"
@@ -43,7 +44,7 @@
                         show
                     </button>
                 </div>
-                <ol class="site-footer__cauldron-phase-rail" data-spw-cauldron-phase-rail aria-label="Cauldron phase">
+                <ol class="site-footer__cauldron-phase-rail" data-spw-cauldron-phase-rail aria-label="Hypermedia extension phase">
                     <li class="site-footer__cauldron-phase-step" data-spw-phase-step="empty">
                         <p class="site-footer__cauldron-phase-label">gather</p>
                     </li>
@@ -54,28 +55,28 @@
                         <p class="site-footer__cauldron-phase-label">compose</p>
                     </li>
                     <li class="site-footer__cauldron-phase-step" data-spw-phase-step="spell-ready">
-                        <p class="site-footer__cauldron-phase-label">cast</p>
+                        <p class="site-footer__cauldron-phase-label">extend</p>
                     </li>
                 </ol>
                 <div class="site-footer__cauldron-body" id="memory-garden-cauldron-body">
                     <p class="site-footer__cauldron-copy">
-                        <span data-cauldron-count>0</span> gathered forces resting here<span class="site-footer__cauldron-force-note" data-spw-cauldron-operators></span>.
+                        <span data-cauldron-count>0</span> saved fragments from links, gestures, and settings<span class="site-footer__cauldron-force-note" data-spw-cauldron-operators></span>.
                     </p>
                     <p class="site-footer__cauldron-status" role="status" aria-live="polite">
-                        <span data-cauldron-status data-cauldron-status-text>Hold any living term to stash a handle here. Mix when you want a reusable spell — skip it until then.</span>
+                        <span data-cauldron-status data-cauldron-status-text>Hold a living term or inspect a trail to save a fragment here. Mix when you want a portable extension.</span>
                         <span class="site-footer__cauldron-availability" data-cauldron-availability></span>
-                        <a href="/design/palettes/#spell-cauldron-hooks" class="cauldron-instruction-link" aria-label="Learn spell/cauldron hooks and interaction contract (compact)">hooks &amp; learnability</a>
+                        <a href="/design/palettes/#spell-cauldron-hooks" class="cauldron-instruction-link" aria-label="Learn trail, cauldron, and extension hooks (compact)">hooks &amp; learnability</a>
                     </p>
 
                     <!-- Populated by composition.js for inspectability and individual removal -->
                     <div class="site-footer__cauldron-ingredients" data-cauldron-ingredients aria-live="polite"></div>
                     <article class="site-footer__spell-preview" data-spw-spell-candidate data-spw-spell-state="empty" data-spw-operator-sequence="~ $ ! ^" hidden>
-                        <p class="site-footer__spell-preview-meta" data-spw-slot="meta">spell draft</p>
-                        <p class="site-footer__spell-preview-path" data-spw-slot="body">~ prompt → $ substrate → ! transform → ^ proof</p>
+                        <p class="site-footer__spell-preview-meta" data-spw-slot="meta">extension draft</p>
+                        <p class="site-footer__spell-preview-path" data-spw-slot="body">~ link → $ state → ! transform → ^ proof</p>
                     </article>
 
                     <div class="site-footer__cauldron-actions">
-                        <button class="operator-chip" type="button" data-spw-cauldron-action="mix" data-spw-action-tier="primary" data-spw-groundable="false">@ mix / cast</button>
+                        <button class="operator-chip" type="button" data-spw-cauldron-action="mix" data-spw-action-tier="primary" data-spw-groundable="false" data-spw-operator="action">! mix extension</button>
                         <button class="operator-chip" type="button" data-spw-cauldron-action="nourish" data-spw-action-tier="growth" data-spw-groundable="false">~ nourish</button>
                         <button class="operator-chip" type="button" data-spw-cauldron-action="vision" data-spw-action-tier="growth" data-spw-groundable="false" data-spw-intent="daily-to-prompt">~ vision seed</button>
                         <button class="operator-chip" type="button" data-spw-cauldron-action="plant" data-spw-action-tier="output" data-spw-groundable="false">^ plant</button>
@@ -103,7 +104,7 @@
                     <label class="site-footer__note-label" for="footer-local-note">Local note</label>
                     <div class="site-footer__note-row">
                         <input class="site-footer__note-input" id="footer-local-note" type="text" data-local-note-input placeholder="Leave a note for later">
-                        <button class="operator-chip" type="submit" data-spw-groundable="false">@ save note</button>
+                        <button class="operator-chip" type="submit" data-spw-groundable="false" data-spw-operator="action">! save note</button>
                     </div>
                     <input type="hidden" value="footer" data-local-note-context>
                     <p class="site-footer__note-preview">Latest: <span data-local-note-preview>No local note yet.</span> · <span data-local-note-count>0</span> saved · <span data-local-note-latest-time>not saved yet</span></p>

@@ -4,6 +4,11 @@
    Unified typography measure + component packing tiers across frames,
    panels, cards, and surface grids. Settings line-spacing and component
    density attrs route into the same token ladder.
+
+   Vocabulary (canonical + aliases) lives in tokens/dimensions.css:
+   compact | balanced | roomy
+   Aliases: dense→compact, soft/spacious→roomy
+   Occupancy: sparse→compact, full→roomy
    ========================================================================== */
 
 :root {
@@ -75,6 +80,14 @@
 
 :where(.site-frame, .frame-panel, .frame-card, .frame-body) {
   --spw-flow-space: var(--pack-tier-balanced-flow);
+  --component-pad: var(--spw-pack-pad-active, var(--pack-tier-balanced-pad));
+  --component-gap: var(--spw-pack-gap-active, var(--pack-tier-balanced-gap));
+}
+
+:where([data-spw-packing-state], [data-spw-pack-occupancy]) {
+  --component-pad: var(--spw-pack-pad-active);
+  --component-gap: var(--spw-pack-gap-active);
+  max-inline-size: var(--spw-pack-measure-active, none);
 }
 
 /* Settings line-spacing routes into packing + typography together */

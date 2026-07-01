@@ -1,0 +1,52 @@
+# Sigil And Identifier Contract
+#
+# Spw sigils are grammar tokens (operator + name). Identifiers are stable
+# addresses for hypermedia navigation and inspection.
+
+#>sigil_identifier_contract
+#:convention #!operators #!hypermedia
+#:layer #!pragmatics
+
+@operators_js: ~"../../public/js/semantic/operators.js"
+@dimension_vocabulary: ~"./dimension-vocabulary.spw"
+@hypermedia_2d: ~"./hypermedia-2d.spw"
+
+^"distinction"{
+  sigil: .{
+    role: "grammar"
+    definition: "Visible operator expression: prefix + name + optional delimiters."
+    attrs: #[`data-spw-sigil`, `data-spw-sigil-prefix`, `data-spw-sigil-name`, `data-spw-sigil-role="grammar"`][reg=set]
+    examples: "#>curriculum_frame", "?boundary_test", "^cask"
+  }
+
+  identifier: .{
+    role: "address"
+    definition: "Stable route/DOM/inspect address distinct from the sigil text."
+    attrs: #[`data-spw-identifier`, `data-spw-address-role="identifier"`, `data-spw-inspect`, `id`][reg=set]
+    resolution_order: "data-spw-identifier → data-spw-inspect → id → anchor hash → path slug"
+    examples: "curriculum-hero", "memory-buffers", "town_library"
+  }
+
+  position: .{
+    role: "grammar_slot"
+    definition: "Where force sits in the expression: prefix primes, infix scopes, postfix marks residue."
+    attrs: #[`data-spw-sigil-position`, `data-spw-fixity-tier`, `data-spw-phase-prefix`, `data-spw-phase-postfix`][reg=set]
+    values: "prefix | infix | postfix | expression"
+    fixity: "stable grammar; tending capacity labels; volatile phase/charge"
+    @positional_grammar: ~"./operator-semantics.spw#positional_grammar"
+  }
+}
+
+^"presentation"{
+  sigil_css: "operators.css — operator color, geometry, charge; grammar role is expressive."
+  identifier_css: "operators.css — subdued mono seam via data-spw-address-role; not operator-hued."
+  transition_css: "operators.css — data-spw-sigil-transition spends page/region payload as local motion without changing identifier meaning."
+  transition_js: "operator-interactions.js — reads page anatomy/topical payload and nearest region profile, then writes data-spw-sigil-payload-* attrs."
+  rule: "Never use sigil name as the only stable key when an identifier or inspect surface exists."
+}
+
+validation: #[
+  `operators.js writes spwSigilRole=grammar and spwAddressRole=identifier when both exist.`
+  `Frame sigils with href=#fragment must expose identifier from hash, sigil from data-spw-sigil.`
+  `Sigil transition microinteractions may carry page/region payload fields, but navigation identity remains data-spw-identifier/id/href.`
+][reg=set]

@@ -414,3 +414,13 @@ Refreshed the active planning architecture after the starter component kit work,
 - Projected plan buckets onto `/about/plans/` so the public editor surface mirrors the active owner architecture instead of only listing selected cards.
 
 Next pass: decide whether `mobile-density-operator-semantics/` should be revived, merged, or removed, and split oversized plan artifacts only in a focused ref-safe cleanup.
+
+## Working Tree Analysis Helper - 2026-07-01
+
+Closed a small agent-surface loop exposed by `patch-consolidator`: the skill referenced `./scripts/analyze-changes.sh`, but the helper was absent.
+
+- Added `scripts/analyze-changes.sh` as a read-only `git status --short` grouper by patch concern.
+- Buckets include route HTML, source CSS, generated CSS bundles, runtime JS, `.spw`, plans, agent skills, scripts, partials, images, and other.
+- The helper is intentionally advisory: it does not stage, revert, or mutate files.
+
+Next use: run it at the start of broad cleanup or commit-splitting passes, then restate the resulting buckets in plain language before editing.

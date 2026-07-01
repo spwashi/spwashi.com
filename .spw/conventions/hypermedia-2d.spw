@@ -1,0 +1,151 @@
+# Hypermedia 2D Alignment
+#
+# Maps Spw .spw planar semantics onto hypermedia HTML: vertical regions,
+# horizontal measure, and link edges as traversable spells.
+
+#>hypermedia_2d
+#:convention #!hypermedia #!layout #!spells
+#:layer #!semantics
+
+@site_semantics: ~"./site-semantics.spw"
+@dimension_vocabulary: ~"./dimension-vocabulary.spw"
+@sigil_identifier: ~"./sigil-identifier-contract.spw"
+@spells_js: ~"../../public/js/runtime/spells.js"
+@layout_css: ~"../../public/css/shell/layout.css"
+@workbench_runtime: ~"../_workbench/docs/runtime/spw/runtime-foundation.spw"
+
+^"axes"{
+  vertical: .{
+    html: #[`main > section`, `main > .site-frame`, `main > article`][reg=set]
+    tokens: #[`--page-section-gap`, `--page-stack-gap`, `--spw-real-estate-block`][reg=set]
+    spw: "succession and region profiling — Y-axis narrative depth"
+  }
+
+  horizontal: .{
+    html: #[`p`, `.frame-copy`, `.prose`, `[data-reading-region]`][reg=set]
+    tokens: #[`--measure-reading`, `--measure-panel`, `--spw-real-estate-inline`, `--spw-pack-measure-active`][reg=set]
+    spw: "measure and packing tiers — X-axis reading width"
+  }
+
+  edges: .{
+    html: #[`a[href]`, `[data-spw-interaction-contract]`, `[data-spw-deep-link]`][reg=set]
+    spells: "route + hash + settings checkpoint — hypermedia extensions"
+    sigil_vs_id: "sigil labels the edge grammar; identifier names the anchor node"
+  }
+}
+
+^"hydration_passes"{
+  lex: "static HTML grid — authored 2D structure visible without JS"
+  semantic: "sigil/operator annotation + measure projection"
+  pragmatic: "spells, settings momentum, grounded replay across edges"
+  attrs: #[`data-spw-hydration`, `data-spw-hydration-pass`][reg=set]
+  workbench_map: "lex→parse surface, semantic→normalize, pragmatic→interpret (runtime-foundation.spw)"
+}
+
+^"settings_spells_momentum"{
+  tuning: "settings changes emit spell:momentum and brief data-spw-settings-momentum"
+  spell_surface: "settings bundles prime cauldron via spell:primed (site-settings-engine.js)"
+  css: "runtime-states + dimensions spend momentum tokens during tuning phase"
+}
+
+^"query_composer"{
+  module: "public/js/kernel/query-composer.js"
+  keys: #[`view`, `meaning`, `interaction`, `layout`, `explore-posture`, `component-density`, `spacing`, `semantic-density`, `pack`, `variant`, `condense`, `precipitate`, `screenshot`][reg=set]
+  legacy_parse_only: #[`v→view`, `m→meaning`, `lyt→layout`, `pos→explore-posture`, `den→component-density`, `c→condense`, `p→precipitate`][reg=set]
+  compose: "composeSpwQuery({ view, meaning, interaction, layout, explore-posture, component-density, pack, condense, precipitate })"
+  serialize: "serializeSpwQuery(params) — always readable keys; legacy aliases parse but never serialize"
+  precipitation: "?c=print&p=print or ?condense=card&precipitate=condensed for print/screenshot projection"
+}
+
+^"settings_query_parity"{
+  module: "public/js/kernel/settings-query-parity.js"
+  bidirectional: "settingsToQueryParams ↔ queryParamsToSettingsPartial via SETTINGS_TO_QUERY"
+  share: "buildSettingsShareHref(settings) — deviation-only readable URLs (?layout=wide&explore-posture=workshop&component-density=dense)"
+  sync: "syncUrlFromSettings on apply when settings deviate; html[data-spw-query-parity=synced]"
+  posture_projection: "buildLayoutPostureDatasets → data-spw-layout, data-spw-layout-posture, data-spw-packing-state, data-spw-pack-occupancy on html"
+}
+
+^"layout_postures"{
+  css: "public/css/systems/layout-postures.css"
+  inputs: #[`data-spw-layout-tuner`, `data-spw-explore-posture`, `data-spw-component-density`, `data-spw-packing-state`][reg=set]
+  tokens: #[`--spw-layout-posture-weight`, `--spw-layout-posture-measure-bias`, `--spw-layout-posture-grid-bias`][reg=set]
+  note: "layout tuner projects to html data-spw-layout; route-authored body layout is preserved"
+}
+
+^"variant_selection"{
+  module: "public/js/runtime/variant-selection.js"
+  hosts: #[`.site-frame`, `.frame-card`, `[data-spw-feature]`, `[data-spw-semantic-variant]`, `[data-spw-content-variant]`][reg=set]
+  attrs: #[`data-spw-variant-selected`, `data-spw-component-variant-active`, `data-spw-query-variant`][reg=set]
+  query: "?variant=<mode-panel|semantic-variant> primes mode-switch and raises --spw-variant-selection-weight"
+}
+
+^"interaction_progression"{
+  phases: #[`idle`, `approach`, `prime`, `charge`, `inspect`, `discover`, `settle`][reg=set]
+  attrs: #[`data-spw-interaction-phase`, `data-spw-microinteraction-pulse`][reg=set]
+  salience: "concept-salience.js writes data-spw-concept-ref, data-spw-vocabulary-collectible, data-spw-learnable-dimension"
+  scroll: "scroll-gesture.css — pan-y for figures, horizontal snap rails, smooth scroll with reduced-motion respect"
+  print: "print-precipitation.css — condense tiers brief|card|print|full"
+}
+
+^"image_interaction"{
+  utilization: "image-utilization.js + image-utilization.css — lazy, decode, distribution, containment"
+  interaction: "image-interaction.js + image-interaction.css — mat framing, shape aspect, lens accent"
+  discovery: "image-discovery-rewards.js — intersection reveal + spw:discovery-reward toast"
+  states: #[`data-spw-image-interaction-state`, `data-spw-image-lens-active`, `data-spw-image-discovered`, `data-spw-image-discovery-state`][reg=set]
+  gesture: "studies: tap:prime swipe:toggle-lens hold:inspect · discovery: tap:discover swipe:toggle-lens hold:inspect"
+  copy: "figcaption.study-summary carries lens pill, gesture hint, and resonance paragraph"
+  audit: "route-local img:hover rules defer to systems/image-interaction.css token overrides"
+}
+
+^"film_education"{
+  hub: "/topics/film/"
+  role: "topic-hub — film-register with five topical stub leaves"
+  paths: #[`shot-language`, `editing`, `storyboard`, `voice`, `release-rhythm`][reg=set]
+  posture: "hub orients · leaf applies pressure · bridge carries screenshot/prompt/return artifact"
+  neighbors: #[`/design/`, `/topics/pedagogy/`, `/topics/craft/`, `/recipes/`, `/topics/software/spw/operators/scene/`, `/play/rpg-wednesday/`][reg=set]
+}
+
+^"film_scene_composition"{
+  register: "/topics/film/scene-composition/"
+  css: "public/css/systems/film-scene-composition.css"
+  beds: #[`mise-en-scene`, `reduction-beat`, `fermentation-hold`][reg=set]
+  culinary_map: {
+    mise_en_place: "mise-en-scene — prep before fire"
+    reduction: "reduction-beat — concentrate the frame"
+    fermentation: "fermentation-hold — quiet pressure then release"
+    service: "release-rhythm — plate leaves the kitchen"
+  }
+  interaction: "mode-switch lanes per bed; screenshot stage as proof artifact"
+  scene_interaction: "scene-interaction.js — lane radiogroup, image lens coupling, localStorage memory strip per mode panel"
+  attrs: #[`data-spw-scene-interactive`, `data-spw-scene-lane`, `data-spw-scene-lane-bind`, `data-spw-scene-focus-lane`][reg=set]
+}
+
+^"effect_interpretation"{
+  module: "public/js/semantic/effect-interpretation.js"
+  css: "public/css/systems/effect-interpretation.css"
+  chip_anatomy: "sigil + capacity — operator prefix names the force; capacity verb names the unique lens behavior"
+  positional_grammar: "prefix sigil + tending capacity verb; infix semantic-expression on figures; postfix residue stays runtime-owned"
+  @positional_grammar: ~"./operator-semantics.spw#positional_grammar"
+  attrs: #[`data-spw-lens-chip`, `data-spw-image-lens-capacity`, `data-spw-semantic-expression`, `data-spw-sigil`, `data-spw-gesture-contract`][reg=set]
+  capacities: {
+    probe: "? ask — wonder aperture"
+    frame: "#> address — name structure"
+    ref: "~ thread — lineage memory"
+    object: "^ commission — lift relation"
+    integrate: "^ circulate — bind circulation"
+    stream: "* rhythm — flow cadence"
+    baseline: ". settle — tactile ground"
+    route: "< path — scope entry"
+    potential: "~ defer — hold motif"
+    surface: "> project — render edge"
+    action: "! commit — force move"
+  }
+  interaction: "tap chip → select-lens (image-interaction.js); swipe still cycles; each capacity is non-interchangeable"
+}
+
+validation: #[
+  `Vertical section gaps and horizontal measure caps are token-owned, not route-local magic numbers.`
+  `Spells cite trail, anchor, state, resume hypermedia capabilities (spells.js).`
+  `2D layout attrs (data-spw-layout, data-spw-pack-occupancy) route through dimensions.css and layout-postures.css.`
+  `Settings deviations sync to compact query strings; variant query primes mode-switch selection.`
+][reg=set]

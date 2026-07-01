@@ -116,7 +116,7 @@
    9. Arrival / presence states
    ========================================================================== */
 
-:where(html[data-spw-page-settling="true"]) {
+:where(html[data-spw-page-settling="true"]:not([data-spw-loading-ecology-phase])) {
   --spw-site-rhythm-tempo: min(var(--spw-site-rhythm-tempo, 1), 0.88);
 }
 

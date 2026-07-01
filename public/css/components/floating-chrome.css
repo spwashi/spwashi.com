@@ -385,11 +385,253 @@
   transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
-/* Transient/disappearing toasts in stack: smaller footprint, auto-fade via cards.css
+/* Transient/disappearing toasts in stack: smaller footprint, auto-fade via card-ecology.css
    animation class or attr; keeps competition with scroll low (pointer-events none during fade). */
 :where([data-spw-floating-chrome="true"][data-spw-chrome-tier="toast"] .spw-toast--transient,
        [data-spw-floating-chrome="true"][data-spw-chrome-tier="toast"] [data-spw-toast="transient"]) {
   max-inline-size: 18rem;
   font-size: 0.82rem;
   padding: 0.25rem 0.55rem;
+}
+
+/* ==========================================================================
+   Reward collection: docked window + achievement toasts (reward-ui.js)
+   - Positioning by slot; capture.css already hides all floating chrome in
+     clean mode, so screenshots fed to Grok Imagine stay calm.
+   - Microinteraction state lives in data-attributes; honors reduce-motion.
+   ========================================================================== */
+:where(.spw-reward-dock[data-spw-chrome-role="collection-dock"]) {
+  position: fixed;
+  inset-block-end: calc(
+    max(0.75rem, env(safe-area-inset-bottom)) + var(--spw-bottom-chrome-clearance, 0px)
+  );
+  inset-inline-start: 50%;
+  translate: -50% 0;
+  display: grid;
+  justify-items: center;
+  gap: 0.4rem;
+  padding: 0;
+  pointer-events: none;
+  /* Settling mindfulness: stay invisible until the page has revealed the dock. */
+  opacity: 0;
+  transition: opacity 240ms ease, translate 240ms ease;
+}
+:where(.spw-reward-dock[data-spw-reward-reveal="revealed"]) {
+  opacity: 1;
+}
+:where(.spw-reward-dock > *) {
+  pointer-events: auto;
+}
+
+:where(.spw-reward-dock-trigger) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 32%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface, #fbfaf7) 86%, var(--teal, #008080) 6%);
+  color: var(--ink, #1b2a2a);
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 0.12);
+  transition: scale 140ms ease, box-shadow 140ms ease;
+}
+:where(.spw-reward-dock-trigger:hover) {
+  scale: 1.03;
+  box-shadow: 0 3px 14px rgb(0 0 0 / 0.18);
+}
+:where(.spw-reward-dock-glyph) {
+  color: var(--active-op-color, var(--teal, #008080));
+}
+
+/* Collectible tier escalation — the chip's accent deepens as a surface reveals
+   more distinct component kinds (singular → teeming). data-spw-reward-tier is
+   written by reward-ui; previously it had no visual treatment. */
+:where(.spw-reward-dock[data-spw-reward-tier="varied"] .spw-reward-dock-trigger) {
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 48%, transparent);
+}
+:where(.spw-reward-dock[data-spw-reward-tier="rich"] .spw-reward-dock-trigger) {
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 62%, transparent);
+  box-shadow: 0 2px 12px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 18%, rgb(0 0 0 / 0.12));
+}
+:where(.spw-reward-dock[data-spw-reward-tier="teeming"] .spw-reward-dock-trigger) {
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 78%, transparent);
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 20%, transparent),
+    0 2px 14px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 24%, rgb(0 0 0 / 0.12));
+}
+
+/* Consume the salience-graded easter-egg accent that reward-ui sets on <html>
+   during a rare reveal — the chip picks up a ring whose strength follows the
+   resolved salience (transparent when subtle, so it stays quiet). */
+:where(html[data-spw-reward-easter-egg]) :where(.spw-reward-dock-trigger) {
+  box-shadow:
+    0 0 0 2px var(--spw-reward-egg-accent, transparent),
+    0 3px 14px rgb(0 0 0 / 0.16);
+}
+
+/* Fresh-discovery pulse — a brief rewarded-wonder flicker. */
+:where(.spw-reward-dock[data-spw-collection-fresh] .spw-reward-dock-glyph) {
+  animation: spw-reward-pop 600ms ease;
+}
+@keyframes spw-reward-pop {
+  0% { scale: 1; }
+  40% { scale: 1.5; }
+  100% { scale: 1; }
+}
+
+:where(.spw-reward-dock-body) {
+  display: grid;
+  gap: 0.45rem;
+  max-inline-size: min(20rem, calc(100vw - 2rem));
+  padding: 0.6rem 0.75rem;
+  border-radius: 0.7rem;
+  background: color-mix(in srgb, var(--surface, #fbfaf7) 92%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ink, #1b2a2a) 12%, transparent);
+  box-shadow: 0 6px 22px rgb(0 0 0 / 0.16);
+}
+
+/* Redundancy handling / region collapsing: when the floating field is crowded
+   or this dock overlaps other chrome, syncFloatingChromeState() marks it
+   pressured and it collapses to just its chip, yielding space. The chip
+   compresses as it yields — material physics, not a hard cut. */
+:where(.spw-reward-dock[data-spw-chrome-collapse="pressured"] .spw-reward-dock-body) {
+  display: none;
+}
+:where(.spw-reward-dock[data-spw-chrome-collapse="pressured"] .spw-reward-dock-trigger) {
+  scale: 0.94;
+  opacity: 0.82;
+}
+:where(.spw-reward-summary) {
+  margin: 0;
+  font-weight: 600;
+  color: var(--ink, #1b2a2a);
+}
+:where(.spw-reward-kinds) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+:where(.spw-reward-kind) {
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  background: color-mix(in srgb, var(--op-topic-color, var(--teal, #008080)) 14%, transparent);
+  color: var(--ink, #1b2a2a);
+}
+:where(.spw-reward-kind.is-empty) {
+  background: transparent;
+  color: var(--ink-soft, #5a6a6a);
+  font-style: italic;
+}
+:where(.spw-reward-badges) {
+  display: grid;
+  gap: 0.2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+:where(.spw-reward-badge) {
+  font-size: 0.78rem;
+  color: var(--ink-soft, #5a6a6a);
+}
+:where(.spw-reward-badge[data-spw-earned="true"]) {
+  color: var(--active-op-color, var(--teal, #008080));
+  font-weight: 600;
+}
+:where(.spw-reward-actions) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  justify-content: flex-start;
+}
+:where(.spw-reward-actions .spw-reward-reset) {
+  font-size: 0.76rem;
+  padding-block: 0.2rem;
+}
+
+/* Achievement toast stack */
+:where(.spw-reward-toasts[data-spw-chrome-role="collection-toast-stack"]) {
+  position: fixed;
+  inset-block-start: calc(max(0.9rem, env(safe-area-inset-top)) + var(--spw-header-clearance, 3.5rem));
+  inset-inline-end: max(0.9rem, env(safe-area-inset-right));
+  display: grid;
+  gap: 0.4rem;
+  padding: 0;
+  pointer-events: none;
+}
+:where(.spw-reward-toast) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.7rem;
+  border-radius: 0.6rem;
+  background: color-mix(in srgb, var(--surface, #fbfaf7) 90%, var(--active-op-color, var(--teal, #008080)) 8%);
+  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 30%, transparent);
+  box-shadow: 0 4px 16px rgb(0 0 0 / 0.18);
+  color: var(--ink, #1b2a2a);
+  /* Microinteraction: enter from the right, leave upward. */
+  opacity: 0;
+  translate: 0.6rem 0;
+  transition: opacity 300ms ease, translate 300ms ease;
+}
+:where(.spw-reward-toast[data-spw-state="settled"]) {
+  opacity: 1;
+  translate: 0 0;
+}
+:where(.spw-reward-toast[data-spw-state="leave"]) {
+  opacity: 0;
+  translate: 0 -0.5rem;
+}
+:where(.spw-reward-toast-glyph) {
+  color: var(--active-op-color, var(--teal, #008080));
+}
+/* Rare-tier unlock gets a touch more presence (easter-egg seam). */
+:where(.spw-reward-toast[data-spw-reward-easter-egg="rare"]) {
+  border-color: color-mix(in srgb, var(--op-probe-color, #7a4fb5) 50%, transparent);
+  box-shadow: 0 4px 20px color-mix(in srgb, var(--op-probe-color, #7a4fb5) 30%, rgb(0 0 0 / 0.18));
+}
+
+/* Salience mechanics — how loudly a reward announces itself. Resolved at runtime
+   from page zone + rarity + the reader's attentional arc (reward-ui.js). */
+:where(.spw-reward-toast[data-spw-reward-salience="subtle"]) {
+  opacity: 0.9;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.12);
+}
+:where(.spw-reward-toast[data-spw-reward-salience="subtle"] .spw-reward-toast-glyph) {
+  opacity: 0.7;
+}
+:where(.spw-reward-toast[data-spw-reward-salience="vivid"]) {
+  box-shadow:
+    0 6px 22px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 26%, rgb(0 0 0 / 0.2)),
+    0 0 0 3px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 14%, transparent);
+}
+:where(.spw-reward-toast[data-spw-reward-salience="vivid"] .spw-reward-toast-glyph) {
+  animation: spw-reward-pop 700ms ease;
+}
+
+/* Page-level settling reveal: a rare unlock tints the document; vivid salience
+   lets the reader's dwell surface a fuller easter-egg accent. */
+:where(html[data-spw-reward-easter-egg][data-spw-reward-salience="vivid"]) {
+  --spw-reward-egg-accent: color-mix(in srgb, var(--op-probe-color, #7a4fb5) 20%, transparent);
+}
+:where(html[data-spw-reward-easter-egg][data-spw-reward-salience="notable"]) {
+  --spw-reward-egg-accent: color-mix(in srgb, var(--op-probe-color, #7a4fb5) 10%, transparent);
+}
+:where(html[data-spw-reward-easter-egg][data-spw-reward-salience="subtle"]) {
+  --spw-reward-egg-accent: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.spw-reward-dock, .spw-reward-toast, .spw-reward-dock-trigger) {
+    transition: none;
+  }
+  :where(.spw-reward-dock[data-spw-collection-fresh] .spw-reward-dock-glyph) {
+    animation: none;
+  }
+}
+:where(html[data-spw-reduce-motion="on"]) :where(.spw-reward-dock, .spw-reward-toast) {
+  transition: none;
 }

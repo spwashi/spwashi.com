@@ -700,16 +700,10 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="topics"]) {
   color: color-mix(in srgb, var(--ink, #1f2423) 86%, var(--topics-accent));
 }
 
-:where(body[data-spw-surface="topics"] .topic-photo-card img) {
-  transition:
-    transform var(--duration-deliberate, 360ms) var(--ease-mechanical, ease),
-    filter var(--duration-deliberate, 360ms) var(--ease-mechanical, ease);
-}
-
-:where(body[data-spw-surface="topics"] .topic-photo-card:hover img,
-       body[data-spw-surface="topics"] .topic-photo-card:focus-within img) {
-  transform: scale(1.016);
-  filter: saturate(1.04) contrast(1.02);
+:where(body[data-spw-surface="topics"] .topic-photo-card) {
+  --spw-image-interaction-lift: 1.016;
+  --spw-image-interaction-saturate: 1.04;
+  --spw-image-interaction-contrast: 1.02;
 }
 
 :where(body[data-spw-surface="topics"] .palette-probe) {

@@ -59,6 +59,31 @@ export const SEMANTIC_ATTRIBUTE_SELECTORS = Object.freeze([
   '[data-spw-inspect]',
 ]);
 
+export const OPERATOR_SIGNAL_SELECTORS = Object.freeze([
+  '.frame-sigil',
+  '.frame-card-sigil',
+  '.frame-panel-sigil',
+  '.syntax-token',
+  '.operator-chip',
+  '.spec-pill',
+  '.header-sigil',
+  '.site-footer__brand',
+  '.cognitive-token-sigil',
+  '.specimen-index-tag',
+  '.spw-section-handle__op',
+  '[data-spw-charge-key]',
+  '.spw-delimiter',
+]);
+
+export const BARE_SPW_CONTAINER_SELECTORS = Object.freeze([
+  '[data-spw-bare-spw="enhance"]',
+  '.site-footer__summary',
+  '[data-spw-material-context~="mutable-markup"]',
+]);
+
+export const OPERATOR_SIGNAL_SELECTOR = OPERATOR_SIGNAL_SELECTORS.join(', ');
+export const BARE_SPW_CONTAINER_SELECTOR = BARE_SPW_CONTAINER_SELECTORS.join(', ');
+
 export const COMPONENT_KIND_VALUES = Object.freeze([
   'frame',
   'panel',
@@ -199,6 +224,8 @@ export const FLOATING_CHROME_CONTRACT = Object.freeze({
     'persona-tooltip',
     'persona-burst',
     'pronunciation-hint',
+    'collection-dock',
+    'collection-toast-stack',
   ]),
   portableUse:
     'Use annotateFloatingChromeElement(...) when a runtime-created element floats above normal document flow and CSS needs a readable layer tier.',
@@ -212,6 +239,7 @@ const FLOATING_CHROME_DOCKED_ROLES = Object.freeze([
   'section-handle-shell',
   'state-inspector',
   'state-satchel',
+  'collection-dock',
 ]);
 
 const FLOATING_CHROME_ROLE_SLOTS = Object.freeze({
@@ -237,6 +265,8 @@ const FLOATING_CHROME_ROLE_SLOTS = Object.freeze({
   'persona-burst': 'toast',
   'pronunciation-hint': 'popover',
   'discovery-modal': 'modal',
+  'collection-dock': 'bottom-center',
+  'collection-toast-stack': 'toast',
 });
 
 export const FEATURE_CLUSTER_CONTRACT = Object.freeze({
@@ -413,15 +443,19 @@ function measureFloatingChromeOcclusion(nodes = []) {
     .filter(({ rect }) => rect.width > 0 && rect.height > 0);
 
   const collisions = [];
+  const collidingNodes = new Set();
   boxes.forEach((box, index) => {
     boxes.slice(index + 1).forEach((other) => {
       if (!rectsOverlap(box.rect, other.rect)) return;
       collisions.push(`${box.role}:${box.slot}->${other.role}:${other.slot}`);
+      collidingNodes.add(box.node);
+      collidingNodes.add(other.node);
     });
   });
 
   return {
     collisions,
+    collidingNodes,
     state: collisions.length ? 'overlap' : 'clear',
   };
 }
@@ -430,6 +464,26 @@ function resolveFloatingChromeCompetition(openCount, dockedOpenCount) {
   if (openCount <= 1 && dockedOpenCount <= 1) return 'clear';
   if (openCount <= 2 && dockedOpenCount <= 2) return 'stacked';
   return 'crowded';
+}
+
+// Ambient chrome that should yield (collapse to its minimal form) when the
+// floating field gets crowded or it directly overlaps another element. Extend
+// this list to opt a role into pressure-driven collapse.
+const FLOATING_CHROME_COLLAPSIBLE_ROLES = Object.freeze(['collection-dock']);
+
+function applyChromeCollapse(open = [], competition = 'clear', collidingNodes = new Set()) {
+  let collapsed = 0;
+  for (const node of open) {
+    if (!FLOATING_CHROME_COLLAPSIBLE_ROLES.includes(node.dataset.spwChromeRole)) continue;
+    const pressured = competition === 'crowded' || collidingNodes.has(node);
+    if (pressured) {
+      node.dataset.spwChromeCollapse = 'pressured';
+      collapsed += 1;
+    } else if (node.dataset.spwChromeCollapse) {
+      delete node.dataset.spwChromeCollapse;
+    }
+  }
+  return collapsed;
 }
 
 export function syncFloatingChromeState(root = document, options = {}) {
@@ -450,6 +504,8 @@ export function syncFloatingChromeState(root = document, options = {}) {
   const dockedOpenCount = open.filter((node) => FLOATING_CHROME_DOCKED_ROLES.includes(node.dataset.spwChromeRole)).length;
   const competition = resolveFloatingChromeCompetition(open.length, dockedOpenCount);
   const occlusion = measureFloatingChromeOcclusion(open);
+  // Redundancy handling: collapse ambient chrome that is crowded or overlapping.
+  const collapsedCount = applyChromeCollapse(open, competition, occlusion.collidingNodes);
 
   writeRuntimeDatasetValues(html, {
     spwFloatingChromeCount: String(rendered.length),
@@ -462,6 +518,7 @@ export function syncFloatingChromeState(root = document, options = {}) {
     spwFloatingChromeBottom: dockedOpenCount ? 'occupied' : 'clear',
     spwFloatingChromeOcclusion: open.length > 1 ? occlusion.state : 'clear',
     spwFloatingChromeOcclusionPairs: occlusion.collisions.join('|') || null,
+    spwFloatingChromeCollapsed: collapsedCount ? String(collapsedCount) : null,
     spwRuntimeMutator: options.source || 'floating-chrome',
     spwRuntimeMutationReason: options.reason || 'chrome-state-sync',
     spwRuntimeStylingAxis: 'floating-chrome',
@@ -480,6 +537,7 @@ export function syncFloatingChromeState(root = document, options = {}) {
     openSlots,
     competition,
     occlusion,
+    collapsedCount,
   };
 }
 
@@ -952,6 +1010,74 @@ export function createCardSigil(sigilText = '', {
   }
 
   return el;
+}
+
+const COMPOSITION_TIER_ORDER = Object.freeze([
+  'page',
+  'region',
+  'feature',
+  'component',
+  'slot',
+  'module',
+  'chrome',
+  'runtime',
+]);
+
+export function resolveCompositionTier(el) {
+  if (!globalThis.Element || !(el instanceof globalThis.Element)) return 'unknown';
+
+  if (el === globalThis.document?.body || el === globalThis.document?.documentElement) {
+    return 'page';
+  }
+
+  if (el.dataset?.spwFeature) return 'feature';
+  if (el.dataset?.spwSlot) return 'slot';
+  if (
+    el.dataset?.spwModuleTrigger
+    || el.dataset?.spwModule
+    || el.matches?.('[data-spw-module-trigger], [data-spw-module]')
+  ) {
+    return 'module';
+  }
+  if (
+    el.dataset?.spwFloatingChrome === 'true'
+    || el.dataset?.spwChromeRole
+    || el.dataset?.spwChromeIsland
+    || el.matches?.(FLOATING_CHROME_CONTRACT.selector)
+  ) {
+    return 'chrome';
+  }
+  if (
+    el.dataset?.spwRegionGenome
+    || el.dataset?.spwRegionRole
+    || el.matches?.(REGION_SELECTOR)
+    || el.matches?.(HOOK_REGION_SELECTOR)
+  ) {
+    return 'region';
+  }
+  if (matchesAny(el, COMPONENT_SELECTOR)) return 'component';
+
+  const volatileSignals = [
+    el.dataset?.spwPhase,
+    el.dataset?.spwCharge,
+    el.dataset?.spwGesture,
+    el.dataset?.spwResolvedCompositionStability,
+    el.dataset?.spwPackOccupancy,
+  ].some(Boolean);
+  if (volatileSignals && !el.dataset?.spwKind && !el.dataset?.spwRole) {
+    return 'runtime';
+  }
+
+  return 'unknown';
+}
+
+export function compareCompositionTiers(left = 'unknown', right = 'unknown') {
+  const leftIndex = COMPOSITION_TIER_ORDER.indexOf(left);
+  const rightIndex = COMPOSITION_TIER_ORDER.indexOf(right);
+  if (leftIndex === -1 && rightIndex === -1) return 0;
+  if (leftIndex === -1) return 1;
+  if (rightIndex === -1) return -1;
+  return leftIndex - rightIndex;
 }
 
 export function inferTopographyKind(el, fallback = 'component') {

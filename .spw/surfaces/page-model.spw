@@ -114,8 +114,10 @@ composition_hierarchy: .{
  }[reg=facet]
 }[reg=facet]
 
+@semantic_hierarchy: ~"../conventions/semantic-hierarchy.spw#composition_ladder"
+
 composition_ladder: #[
- `page metadata -> region flow -> feature -> component -> slot -> out-of-flow role -> runtime state`,
+ `page metadata -> region flow -> feature -> component -> slot -> module -> out-of-flow role -> runtime state`,
  `Page metadata establishes route identity and broad reading conditions.`,
  `Region flow decides how repeated children occupy a host.`,
  `Feature gives a coherent cluster a reusable name for CSS, JS, QA, and editor inspection.`,

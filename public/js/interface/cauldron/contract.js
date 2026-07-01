@@ -10,8 +10,8 @@ export const CAULDRON_CONTRACT = Object.freeze({
   phases: CAULDRON_PHASES,
   ingredientPhases: Object.freeze(['gathering', 'resonant', 'mature', 'decayed']),
   actions: Object.freeze({
-    mix: 'Combine gathered forces into an inspectable spell draft',
-    plant: 'Commit the current gathering as a durable spell trail',
+    mix: 'Combine saved fragments into an inspectable extension draft',
+    plant: 'Commit the current gathering as a durable trail',
     nourish: 'Refresh the most recent ingredient timestamp',
     prune: 'Remove ingredients older than the garden threshold',
     vision: 'Send the gathering to the Midjourney vision bench',
@@ -67,15 +67,15 @@ export function getCauldronStatusCopy(count, phase) {
     ? `${available} prime sources are visible on this page.`
     : 'No prime sources are visible in this viewport yet.';
   if (phase === 'empty') {
-    return `Hold a living term or brace to gather it. ${availabilityCopy}`;
+    return `Hold a living term or brace to save it as a fragment. ${availabilityCopy}`;
   }
   if (phase === 'primed') {
-    return '1 force gathered. Add another ingredient to compose a spell, or nourish this one for later.';
+    return '1 saved fragment. Add another fragment to compose an extension, or nourish this one for later.';
   }
   if (phase === 'mixing') {
-    return '2 forces gathered. A spell draft is available; mix to inspect the combination before planting.';
+    return '2 saved fragments. An extension draft is available; mix to inspect the combination before planting.';
   }
-  return `${count} forces gathered. Spell draft available: refine, cast, plant, or turn it into a vision seed.`;
+  return `${count} saved fragments. Extension draft available: refine, copy, plant, or turn it into a vision seed.`;
 }
 
 export function countPrimeableSources() {

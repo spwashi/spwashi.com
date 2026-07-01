@@ -142,11 +142,16 @@
                     <p class="spec-kicker" data-spw-semantic-expression="craft[author]{orient}">For Authors</p>
                     <h1 id="craft-title">Make a page feel like a book someone can touch.</h1>
                     <p class="craft-lede" data-spw-copy-depth="normal">Start with one fragment: a chapter card, a motif, a file tree, a tiny SVG. You do not need to become a developer before the web can become part of the story. Returning learners can jump straight from here to the fragment, SVG, or file routes when the only thing they need is a reminder of the pattern, not the whole framing again.</p>
-                    <figure class="image-study topic-photo-card" data-spw-slot="figure" data-spw-image-prominence="hero" data-spw-image-shape="landscape" data-spw-accent="resonance" data-spw-accent-palette="warm" data-spw-accent-resonance="image anchor recent manual" data-spw-accent-colors="#274f4d, #b78955, #d7c2a0, #7a8f87" data-spw-accent-anchor="craft authors html css svg fragments" data-spw-accent-operator="baseline">
+                    <p class="frame-note">Use the hero figure as a rehearsal surface: <span class="spw-effect-verb">tap</span> to focus, <span class="spw-effect-verb">swipe</span> to change lens, <span class="spw-effect-verb">hold</span> to inspect whether the page feels handled. Card grids below use image discovery rewards — worth trying before you prompt a new render in <a href="/tools/midjourney/">Midjourney</a>.</p>
+                    <figure class="image-study topic-photo-card" data-spw-slot="figure" data-spw-image-prominence="hero" data-spw-image-shape="landscape" data-spw-image-lens-cues="baseline|route|potential" data-spw-image-lens-active="baseline" data-spw-gesture-contract="tap:prime swipe:toggle-lens hold:inspect" data-spw-accent="resonance" data-spw-accent-palette="warm" data-spw-accent-resonance="image anchor recent manual" data-spw-accent-colors="#274f4d, #b78955, #d7c2a0, #7a8f87" data-spw-accent-anchor="craft authors html css svg fragments" data-spw-accent-operator="baseline" data-spw-visual-cues="warm studio notebook fragments handled page surface motif">
                         <img src="/public/images/routes/craft-fragment-studio-hero.webp" alt="A warm studio composite of books, notebook fragments, and craft materials for web authorship." width="1600" height="960">
-                        <figcaption>
-                            <strong>Fragment studio</strong>
-                            <span>One motif, one card, one file tradition, then another. The point is to give authors a page surface that can feel handled before it ever pretends to be an app. Keep going through <a href="/topics/craft/fragments/" data-spw-operator="route">fragments</a>, <a href="/topics/craft/svg/" data-spw-operator="potential">SVG storytelling</a>, and <a href="/about/website/" data-spw-operator="address">the website guide</a>. If you already know the territory, those are the three fastest returns.</span>
+                        <figcaption class="study-summary">
+                            <div class="meta-cluster">
+                                <span class="spec-pill">Tactile view</span>
+                                <span class="spw-image-lens-hint"><span class="spw-effect-verb">tap</span> to focus · <span class="spw-effect-verb">swipe</span> to change view · <span class="spw-effect-verb">hold</span> to inspect</span>
+                            </div>
+                            <p class="study-summary__lead"><strong>Fragment studio.</strong> Books, notebook scraps, and motif material keep the page feeling handled — one card, one file tradition, one touchable surface at a time.</p>
+                            <p class="study-summary__move"><span class="spw-effect-verb">swipe</span> toward <a href="/topics/craft/fragments/" data-spw-operator="route">fragments</a> or <a href="/topics/craft/svg/" data-spw-operator="potential">SVG storytelling</a> when you already know which ramp you need. <span class="spw-effect-verb">hold</span> to ask whether the surface feels authored before it pretends to be an app.</p>
                         </figcaption>
                     </figure>
                     <div class="craft-prompt-card" aria-label="Screenshot prompt for author craft" data-spw-kind="card" data-spw-role="control"
@@ -185,22 +190,37 @@
                 </header>
 
                 <div class="frame-body" data-spw-slot="body">
-                    <div class="craft-route-grid">
-                        <a class="frame-card" href="/topics/craft/fragments/" data-spw-kind="card" data-spw-role="routing" data-spw-context="routing" data-spw-category-family="portal" data-spw-promptability="latent" data-spw-collectability="high" data-spw-locality="medium" data-spw-consequence="entry" data-spw-seed="page_topics_topics_craft__card_1" data-spw-operator="address">
-                            <span class="frame-card-sigil">#&gt;html_css_fragments</span>
-                            <strong>Fragments</strong>
-                            <span>Small HTML and CSS pieces you can read, copy, screenshot, and change one line at a time.</span>
-                        </a>
-                        <a class="frame-card" href="/topics/craft/svg/" data-spw-kind="card" data-spw-role="routing" data-spw-context="routing" data-spw-category-family="portal" data-spw-promptability="latent" data-spw-collectability="high" data-spw-locality="medium" data-spw-consequence="entry" data-spw-seed="page_topics_topics_craft__card_2" data-spw-operator="integrate">
-                            <span class="frame-card-sigil">^"svg_storytelling"{</span>
-                            <strong>SVG storytelling</strong>
-                            <span>Motifs, marks, maps, material behaviors, and illustrator handoff ideas that can live inside a static page.</span>
-                        </a>
-                        <a class="frame-card" href="/topics/craft/files/" data-spw-kind="card" data-spw-role="routing" data-spw-context="routing" data-spw-category-family="portal" data-spw-promptability="latent" data-spw-collectability="high" data-spw-locality="medium" data-spw-consequence="entry" data-spw-seed="page_topics_topics_craft__card_3" data-spw-operator="potential">
-                            <span class="frame-card-sigil">~"file_traditions"</span>
-                            <strong>File traditions</strong>
-                            <span>Folders, extensions, and source files as a playful substrate for books, prompts, and community lore.</span>
-                        </a>
+                    <div class="craft-route-grid frame-grid">
+                        <article class="frame-card frame-card--illustrated" data-spw-kind="card" data-spw-role="routing" data-spw-context="routing" data-spw-category-family="portal" data-spw-promptability="latent" data-spw-collectability="high" data-spw-locality="medium" data-spw-consequence="entry" data-spw-seed="page_topics_topics_craft__card_1">
+                            <a href="/topics/craft/fragments/" data-spw-operator="address">
+                                <figure class="frame-card-media" data-spw-slot="figure" data-spw-image-surface data-spw-image-lens-cues="route|frame|probe" data-spw-image-lens-active="route" data-spw-gesture-contract="tap:prime swipe:toggle-lens hold:inspect" data-spw-image-prominence="feature" data-spw-image-shape="square" data-spw-accent="resonance" data-spw-accent-palette="warm" data-spw-accent-anchor="craft fragments html css screenshot">
+                                    <img src="/public/images/routes/craft-fragment-studio-square.webp" alt="Books, notebook fragments, and craft materials merged into a warm studio field for authoring." loading="lazy" decoding="async" width="1600" height="1600">
+                                </figure>
+                                <span class="frame-card-sigil">#&gt;html_css_fragments</span>
+                                <strong>Fragments</strong>
+                                <span>Small HTML and CSS pieces you can read, copy, screenshot, and change one line at a time.</span>
+                            </a>
+                        </article>
+                        <article class="frame-card frame-card--illustrated" data-spw-kind="card" data-spw-role="routing" data-spw-context="routing" data-spw-category-family="portal" data-spw-promptability="latent" data-spw-collectability="high" data-spw-locality="medium" data-spw-consequence="entry" data-spw-seed="page_topics_topics_craft__card_2">
+                            <a href="/topics/craft/svg/" data-spw-operator="integrate">
+                                <figure class="frame-card-media" data-spw-slot="figure" data-spw-image-surface data-spw-image-lens-cues="potential|probe|surface" data-spw-image-lens-active="potential" data-spw-gesture-contract="tap:discover swipe:toggle-lens hold:inspect" data-spw-image-discovery data-spw-discovery-label="Motif surface" data-spw-discovery-title="Color resonance swirl" data-spw-discovery-motion="potential lens" data-spw-discovery-why="Motif images help SVG storytelling stay concrete before it becomes code." data-spw-image-prominence="feature" data-spw-image-shape="square" data-spw-accent="resonance" data-spw-accent-palette="cool" data-spw-accent-anchor="craft svg motifs resonance palette">
+                                    <img src="/public/images/routes/design/color-resonance-swirl-source-thumb.webp" alt="A cool resonance swirl with teal structure and warm pigment bands, reading like a motif study for SVG storytelling." loading="lazy" decoding="async" width="1024" height="1024">
+                                </figure>
+                                <span class="frame-card-sigil">^"svg_storytelling"{</span>
+                                <strong>SVG storytelling</strong>
+                                <span>Motifs, marks, maps, material behaviors, and illustrator handoff ideas that can live inside a static page.</span>
+                            </a>
+                        </article>
+                        <article class="frame-card frame-card--illustrated" data-spw-kind="card" data-spw-role="routing" data-spw-context="routing" data-spw-category-family="portal" data-spw-promptability="latent" data-spw-collectability="high" data-spw-locality="medium" data-spw-consequence="entry" data-spw-seed="page_topics_topics_craft__card_3">
+                            <a href="/topics/craft/files/" data-spw-operator="potential">
+                                <figure class="frame-card-media" data-spw-slot="figure" data-spw-image-surface data-spw-image-lens-cues="ref|frame|integrate" data-spw-image-lens-active="ref" data-spw-gesture-contract="tap:prime swipe:toggle-lens hold:inspect" data-spw-image-prominence="feature" data-spw-image-shape="square" data-spw-accent="resonance" data-spw-accent-palette="warm" data-spw-accent-anchor="craft files library folders lore">
+                                    <img src="/public/images/renders/unsorted-curation/library-craft-register.webp" alt="A library-craft register with shelves, labeled compartments, and warm craft materials arranged like file traditions." loading="lazy" decoding="async" width="1400" height="1400">
+                                </figure>
+                                <span class="frame-card-sigil">~"file_traditions"</span>
+                                <strong>File traditions</strong>
+                                <span>Folders, extensions, and source files as a playful substrate for books, prompts, and community lore.</span>
+                            </a>
+                        </article>
                     </div>
                 </div>
 
@@ -239,6 +259,7 @@
 
                 <footer class="frame-actions" data-spw-slot="actions">
                     <nav class="frame-operators" aria-label="Related routes">
+                        <a class="operator-chip" href="/topics/film/storyboard/" data-spw-operator="scene">film storyboard stub</a>
                         <a class="operator-chip" href="/blog/" data-spw-operator="stream">turn notes into language</a>
                         <a class="operator-chip" href="/topics/software/" data-spw-operator="route">see the systems path</a>
                         <a class="operator-chip" href="/about/website/" data-spw-operator="address">read the site guide</a>

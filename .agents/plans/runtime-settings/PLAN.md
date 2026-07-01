@@ -6,9 +6,12 @@ Add a local-only settings surface for Spw runtime chrome.
 
 Create a discoverable `/settings/` page where visitors can quiet or hide the surface map, quiet or hide the console, and disable scroll-driven viewport activation. Taste note: this improves containment and calm by making the cognitive-machine chrome optable instead of unavoidable, without removing the deeper runtime features.
 
+2026-06-30 extension: the same settings system now owns component-reward visibility (`rewardDisplay`) and reset access for the browser-local component collection register.
+
 ## Scope
 
 - In scope: localStorage-backed settings, settings page markup, navigator/console/core hooks, CSS preference states, PWA cache registration.
+- In scope: canonical display settings for floating reward chrome and persistence-register reset hooks for browser-local runtime memories.
 - Out of scope: account sync, build tooling, redesigning the navigator, replacing existing keybindings.
 
 ## Files
@@ -21,6 +24,18 @@ Create a discoverable `/settings/` page where visitors can quiet or hide the sur
 [MOD] `public/css/style.css` - adds settings page layout and quiet/hidden runtime states.
 [MOD] `sw.js` - caches settings route and settings module.
 [MOD] `manifest.webmanifest` - bumps app version with service worker.
+[MOD] `public/js/kernel/site-settings-profiles.js` - declares `rewardDisplay` and shared storage keys for persistence registers.
+[MOD] `public/js/kernel/site-settings-engine.js` - writes `data-spw-reward-display` and exposes `component-collection` in the resettable persistence registry.
+[MOD] `public/js/kernel/site-settings-ui.js` - refreshes persistence readouts when component collection storage or events change.
+[MOD] `public/js/runtime/reward-ui.js` - reads `rewardDisplay` to separate docked, toasts-only, and hidden reward modes.
+
+## Active Extension - 2026-06-30 Reward Display and Component Persistence
+
+- `rewardDisplay` is a first-class setting, defaulting to `docked`, with `toasts` and `hidden` alternatives.
+- The settings manager writes `data-spw-reward-display` to `<html>` and `<body>` along with the rest of the root settings state.
+- `spw-component-collection` is represented in the Settings persistence register as `component-collection`, with count, latest, summary, and clear behavior.
+- Clearing collection state should call `window.spwComponentCollection.reset('settings-clear')` when available; only the settings registry fallback may remove `spw-component-collection` directly.
+- Runtime settings owns the preference and reset affordance; `component-collection.js` owns the collection data model.
 
 Craft guard:
 - `public/css/style.css` is already large; keep additions grouped and minimal.
@@ -35,6 +50,7 @@ Fuzz strategy:
 - Explore: manually inspect current navigator/console/viewport activation boundaries.
 - Stabilize: syntax-check changed JS and manifest JSON.
 - Ship gate: `git diff --check` plus commit-review poll.
+- Targeted checks: `node --check public/js/kernel/site-settings-profiles.js`, `node --check public/js/kernel/site-settings-engine.js`, `node --check public/js/kernel/site-settings-ui.js`, and `node --check public/js/runtime/reward-ui.js`.
 
 ## Agentic Hygiene
 

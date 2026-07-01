@@ -28,7 +28,14 @@ export const CORE_DEFS = [
     layer: MODULE_LAYERS.CORE,
     when: MOUNT_WHEN.IMMEDIATE,
     describes: 'root[data-spw-color-mode][data-spw-palette-resonance][data-spw-wonder-memory] settings surface',
-    updates: ['data-spw-color-mode', 'data-spw-palette-resonance', 'data-spw-wonder-memory', 'data-spw-semantic-density', 'data-spw-operator-saturation'],
+    updates: [
+      'data-spw-color-mode',
+      'data-spw-palette-resonance',
+      'data-spw-wonder-memory',
+      'data-spw-semantic-density',
+      'data-spw-operator-saturation',
+      'data-spw-reward-display',
+    ],
     timingArc: 'boot-core',
     effectScope: 'root-state storage settings',
     load: () => import('../kernel/site-settings.js'),
@@ -68,6 +75,27 @@ export const CORE_DEFS = [
       const fn = mod?.initSpwShellDisclosure;
       if (!isFn(fn)) return;
       return fn(ctx);
+    },
+  },
+  {
+    id: 'interactive-medium',
+    layer: MODULE_LAYERS.CORE,
+    when: MOUNT_WHEN.IMMEDIATE,
+    describes: 'medium[register|posture]{device|entertainment|module-tokens}',
+    updates: [
+      'data-spw-medium-register',
+      'data-spw-interaction-posture',
+      'data-spw-medium-intensity',
+      'data-spw-interactive-medium-ready',
+    ],
+    evaluates: 'viewport-tier pointer-mode hover-mode scene/play register display-variant module-style-modulator',
+    timingArc: 'boot-medium',
+    effectScope: 'root-state css-vars entertainment-routes',
+    load: () => import('./interactive-medium.js'),
+    mount: (mod) => {
+      const fn = mod?.initInteractiveMedium;
+      if (!isFn(fn)) return;
+      return fn();
     },
   },
   {
@@ -545,7 +573,7 @@ export const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     selector: '[data-site-settings-scope], [data-spw-affordance="tune"], [data-spw-feature], .vibe-widget[data-spw-role="control"]',
     rootMode: 'single',
-    describes: 'embedded tuning surfaces, component anatomy handles + html[data-spw-tuning-discoverability]',
+    describes: 'embedded hypermedia extension surfaces for layout, material, and gesture controls + html[data-spw-tuning-discoverability]',
     updates: [
       'data-spw-tuning-surface',
       'data-spw-tuning-surface-count',
@@ -554,6 +582,7 @@ export const ENHANCEMENT_DEFS = [
       'data-spw-embedded-tuning-count',
       'data-spw-embedded-tuning-present',
       'data-spw-embedded-tuning-dimensions',
+      'data-spw-hypermedia-extension',
     ],
     load: () => import('./tuning-discovery.js'),
     mount: (mod, ctx) => {
@@ -635,6 +664,75 @@ export const ENHANCEMENT_DEFS = [
       const fn = mod?.initLearnabilityLedger;
       if (!isFn(fn)) return;
       return fn(ctx);
+    },
+  },
+  {
+    id: 'component-collection',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IDLE,
+    selector: REGION_SELECTOR,
+    rootMode: 'single',
+    describes: 'collection[component-kinds] achievement[diversity] persistent[cross-session] reward[fresh-pulse]',
+    updates: [
+      'data-spw-collection-kinds',
+      'data-spw-collection-total',
+      'data-spw-collection-tier',
+      'data-spw-collection-achievements',
+      'data-spw-collection-fresh',
+    ],
+    evaluates: 'discovered component diversity, achievement unlocks, collectible memory',
+    timingArc: 'enhance-collection',
+    effectScope: 'root-state storage bus',
+    load: () => import('./component-collection.js'),
+    mount: (mod, ctx) => {
+      const fn = mod?.initComponentCollection;
+      if (!isFn(fn)) return;
+      return fn(ctx);
+    },
+  },
+  {
+    id: 'reward-ui',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IDLE,
+    selector: REGION_SELECTOR,
+    rootMode: 'single',
+    describes: 'reward[toasts.dock.settings] collection[component-kinds] capture-aware[clean] physical[charge-pulse]',
+    updates: [
+      'data-spw-reward-ui-init',
+      'data-spw-reward-easter-egg',
+      'data-spw-reward-tier',
+      'data-spw-reward-reveal',
+    ],
+    evaluates: 'achievement feedback, collection dock, settling reveal, reward tunability',
+    timingArc: 'enhance-reward',
+    effectScope: 'root-state floating-chrome toast bus',
+    load: () => import('./reward-ui.js'),
+    mount: (mod, ctx) => {
+      const fn = mod?.initRewardUI;
+      if (!isFn(fn)) return;
+      return fn(ctx);
+    },
+  },
+  {
+    id: 'frame-navigator',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IDLE,
+    selector: '.site-frame',
+    rootMode: 'single',
+    describes: 'surface-map[frames|routes] keyboard-spells[g|traverse|filter] navigator chrome',
+    updates: ['data-spw-nav-state', 'data-spw-nav-label'],
+    evaluates: 'frame traversal, route index, surface-map filter, keyboard navigation',
+    timingArc: 'enhance-navigator',
+    effectScope: 'floating-chrome listeners bus root-state',
+    load: () => import('./frame-navigator.js'),
+    // Opt-in via the page's `navigator` feature (a body feature, not a CSS
+    // behavior scope, so it can't use the catalog `features` field). The module
+    // also self-gates on the navigatorDisplay setting at runtime.
+    mount: (mod, ctx) => {
+      if (!ctx?.features?.has?.('navigator')) return;
+      const fn = mod?.initFrameNavigator;
+      if (!isFn(fn)) return;
+      return fn();
     },
   },
   {
@@ -757,9 +855,21 @@ export const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     selector: '[data-spw-kind], [data-spw-role], [data-spw-slot]',
     rootMode: 'single',
-    describes: 'component-semantics[authored|resolved] role inference',
-    updates: ['data-spw-component-kind', 'data-spw-role-resolved', 'data-spw-context-resolved', 'data-spw-composition-stability-resolved'],
-    evaluates: 'component ontology authored-vs-inferred semantics',
+    describes: 'component-semantics[authored|resolved] role interaction lifecycle physics',
+    updates: [
+      'data-spw-component-kind',
+      'data-spw-role-resolved',
+      'data-spw-context-resolved',
+      'data-spw-composition-stability-resolved',
+      'data-spw-lifecycle-beat-resolved',
+      'data-spw-interaction-phase-affinity',
+      'data-spw-physics-profile-resolved',
+      'data-spw-copy-depth-resolved',
+      'data-spw-theming-posture-resolved',
+      'data-spw-gesture-contract-resolved',
+      'data-spw-interaction-contract-resolved',
+    ],
+    evaluates: 'component ontology interaction-vocabulary lifecycle physics copy-depth',
     load: () => import('../semantic/component-semantics.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initSpwComponentSemantics;
@@ -1051,13 +1161,372 @@ export const ENHANCEMENT_DEFS = [
     },
   },
   {
+    id: 'module-effects',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: 'html',
+    rootMode: 'single',
+    describes: 'module[effects]{root-state.surface}',
+    updates: [
+      'data-spw-module-effects-active',
+      'data-spw-module-effect-pulse',
+      'data-spw-runtime-enhancement-active',
+      'data-spw-runtime-feature-active',
+      'data-spw-runtime-layer-pulse',
+    ],
+    effectScope: 'root-state css-vars ornament',
+    evaluates: 'runtime module side effects ornament pulse',
+    load: () => import('./module-effects.js'),
+    mount: (mod, ctx) => {
+      const fn = mod?.initModuleEffects;
+      if (!isFn(fn)) return;
+      return fn(ctx);
+    },
+  },
+  {
+    id: 'loading-ecology',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: 'html',
+    rootMode: 'single',
+    describes: 'ecology[loading|measure|settle]{prefetch.personalize.genre}',
+    updates: [
+      'data-spw-loading-ecology-phase',
+      'data-spw-loading-ecology-salience',
+      'data-spw-loading-ecology-rhythm',
+      'data-spw-loading-ecology-twinkle',
+      'data-spw-loading-ecology-trope',
+      'data-spw-loading-ecology-genre',
+      'data-spw-loading-ecology-dimensions',
+      'data-spw-loading-ecology-measure-kind',
+    ],
+    effectScope: 'root-state css-vars ornament measurement',
+    evaluates: 'loading measurement settling ecology salience rhythm trope genre packing dimensions',
+    load: () => import('./loading-ecology.js'),
+    mount: (mod, ctx) => {
+      const fn = mod?.initLoadingEcology;
+      if (!isFn(fn)) return;
+      return fn(ctx);
+    },
+  },
+  {
+    id: 'hydration-passes',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: 'html',
+    rootMode: 'single',
+    describes: 'hydration[pass|lex.semantic.pragmatic] workbench-alignment',
+    updates: [
+      'data-spw-hydration-pass',
+      'data-spw-hydration-pass-state',
+      'data-spw-hydration-pass-momentum',
+    ],
+    effectScope: 'root-state css-vars',
+    evaluates: 'multi-pass hydration workbench runtime phase narration',
+    load: () => import('./hydration-passes.js'),
+    mount: (mod, ctx) => {
+      const fn = mod?.initHydrationPasses;
+      if (!isFn(fn)) return;
+      return fn(ctx);
+    },
+  },
+  {
+    id: 'settings-momentum',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: 'html',
+    rootMode: 'single',
+    describes: 'settings[tuning] spell[momentum] replayable-climate',
+    updates: [
+      'data-spw-settings-momentum',
+      'data-spw-spell-momentum',
+      'data-spw-settings-tuning-phase',
+    ],
+    effectScope: 'root-state bus ornament',
+    evaluates: 'settings tuning spell momentum pulse',
+    load: () => import('./settings-momentum.js'),
+    mount: (mod, ctx) => {
+      const fn = mod?.initSettingsMomentum;
+      if (!isFn(fn)) return;
+      return fn(ctx);
+    },
+  },
+  {
+    id: 'image-utilization',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: 'main, [data-spw-image-surface], [data-spw-image-reward], [data-spw-image-discovery]',
+    rootMode: 'single',
+    describes: 'image[distribution|utilization] performance lazy-priority',
+    updates: [
+      'data-spw-image-utilization',
+      'data-spw-image-distribution',
+    ],
+    evaluates: 'image lazy loading decode priority distribution metadata',
+    load: () => import('../semantic/image-utilization.js'),
+    mount: (mod) => {
+      const fn = mod?.initImageUtilization;
+      if (!isFn(fn)) return;
+      return fn();
+    },
+  },
+  {
+    id: 'image-interaction',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: '.topic-photo-card, .image-study, [data-spw-image-reward], [data-spw-image-discovery], .frame-card-media, [data-spw-image-surface]',
+    rootMode: 'single',
+    describes: 'image[interaction]{prime|inspect|discover|lens} gesture-contract',
+    updates: [
+      'data-spw-image-interaction-state',
+      'data-spw-image-lens-active',
+      'data-spw-image-lens-cues',
+      'data-spw-gesture-contract',
+      'data-spw-interaction-contract',
+      'data-spw-interaction-affordance',
+      'data-spw-discovery-motion',
+    ],
+    evaluates: 'image hover focus hold swipe lens discovered interaction states',
+    load: () => import('../semantic/image-interaction.js'),
+    mount: (mod) => {
+      const fn = mod?.initImageInteraction;
+      if (!isFn(fn)) return;
+      return fn();
+    },
+  },
+  {
+    id: 'effect-interpretation',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.VISIBLE,
+    selector: '.topic-photo-card, .image-study, [data-spw-image-reward], [data-spw-image-discovery], .frame-card-media, [data-spw-image-surface]',
+    rootMode: 'single',
+    describes: 'effect[interpretation]{lens|cues|state} visual legend',
+    updates: [
+      'data-spw-effect-legend-ready',
+      'data-spw-effect-readout',
+      'data-spw-effect-view',
+      'data-spw-effect-state-value',
+      'data-spw-image-lens-capacity',
+      'data-spw-semantic-expression',
+      'data-spw-sigil',
+    ],
+    evaluates: 'operator sigil lens capacity chips visual cue tokens interaction state readouts',
+    load: () => import('../semantic/effect-interpretation.js'),
+    mount: (mod) => {
+      const fn = mod?.initEffectInterpretation;
+      if (!isFn(fn)) return;
+      return fn();
+    },
+  },
+  {
+    id: 'pulse-beat-tuner',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: 'html',
+    rootMode: 'single',
+    describes: 'rhythm[beat|freshness]{13-cycle|prime} settings-tuned pulse cadence',
+    updates: [
+      'data-spw-beat',
+      'data-spw-playing',
+      'data-spw-freshness-pulse',
+    ],
+    effectScope: 'root-state css-vars bus',
+    evaluates: 'interaction-tuner beat-interval freshness-weight microinteraction-pulse-duration',
+    load: () => import('./pulse-beat-tuner.js'),
+    mount: (mod) => {
+      const fn = mod?.initPulseBeatTuner;
+      if (!isFn(fn)) return;
+      return fn();
+    },
+  },
+  {
+    id: 'spw-key-events',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: 'html',
+    rootMode: 'single',
+    describes: 'key[potentiate|actualize]{scene-context|selection-thread}',
+    updates: [
+      'data-spw-key-selection',
+      'data-spw-selection-state',
+      'data-spw-key-potential',
+      'data-spw-scene-context',
+      'data-spw-scene-depth',
+      'data-spw-scene-state',
+      'data-spw-scene-posture',
+      'data-spw-reveal-phase',
+      'data-spw-information-reveal',
+      'data-spw-reveal-frame',
+      'data-spw-key-events-ready',
+    ],
+    evaluates: 'keyboard scene-enter scene-exit reveal-framing wonder-block-staging LM-interpretable context stack',
+    load: () => import('./spw-key-events.js'),
+    mount: (mod) => {
+      const fn = mod?.initSpwKeyEvents;
+      if (!isFn(fn)) return;
+      return fn();
+    },
+  },
+  {
+    id: 'scene-interaction',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.VISIBLE,
+    selector: '.spw-scene-bed[data-spw-scene-posture], .spw-scene-bed[data-spw-scene-interactive]',
+    rootMode: 'single',
+    describes: 'scene[bed]{lane-focus|image-coupling|local-memory}',
+    updates: [
+      'data-spw-scene-interactive',
+      'data-spw-scene-focus-lane',
+      'data-spw-scene-lane-active',
+      'data-spw-scene-image-active',
+      'data-spw-scene-local-state',
+    ],
+    evaluates: 'scene lanes radiogroup image lens localStorage scene-memory strip',
+    load: () => import('./scene-interaction.js'),
+    mount: (mod) => {
+      const fn = mod?.initSceneInteraction;
+      if (!isFn(fn)) return;
+      return fn();
+    },
+  },
+  {
+    id: 'topical-payload',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: 'html',
+    rootMode: 'single',
+    describes: 'topical[payload]{topics|lore|handles|scene|image}',
+    updates: ['data-spw-topical-payload-ready'],
+    evaluates: 'topics lore prompt-host scene-interpret semantic-expression image handles LM handoff',
+    load: () => import('./topical-payload.js'),
+    mount: (mod) => {
+      const fn = mod?.initTopicalPayload;
+      if (!isFn(fn)) return;
+      return fn();
+    },
+  },
+  {
+    id: 'palette-treat-discovery',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: '.palette-probe, .spw-shell-resonance-utility, html',
+    rootMode: 'single',
+    describes: 'palette[treat|splash] probe-chip discovery resonance echo',
+    updates: [
+      'data-spw-palette-treat-active',
+      'data-spw-palette-splash',
+      'data-spw-palette-treat-probe',
+      'data-spw-palette-treat',
+      'data-spw-palette-probe-rail',
+      'data-spw-palette-probe-index',
+      'data-spw-palette-probe-toolbar',
+    ],
+    effectScope: 'root-state probe-chips operators bus keyboard',
+    evaluates: 'freshness-pulse discovery-reward discover-phase palette-resonance arrow-reward probe keyboard-rail',
+    load: () => import('./palette-treat-discovery.js'),
+    mount: (mod) => {
+      const fn = mod?.initPaletteTreatDiscovery;
+      if (!isFn(fn)) return;
+      return fn();
+    },
+  },
+  {
+    id: 'interaction-progression',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: 'html',
+    rootMode: 'single',
+    describes: 'interaction[phase]{idle|approach|prime|charge|inspect|discover|settle}',
+    updates: ['data-spw-interaction-phase', 'data-spw-microinteraction-pulse'],
+    evaluates: 'gesture loop pinch swipe hover tap image ecology interaction-vocabulary',
+    load: () => import('./interaction-progression.js'),
+    mount: (mod) => {
+      const fn = mod?.initInteractionProgression;
+      if (!isFn(fn)) return;
+      return fn();
+    },
+  },
+  {
+    id: 'concept-salience',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.VISIBLE,
+    selector: '[data-spw-concept], [data-spw-semantic-expression], .study-summary, [data-spw-collectability]',
+    rootMode: 'single',
+    describes: 'concept[salience|vocabulary|collectible] learnable-dimension',
+    updates: [
+      'data-spw-concept-ref',
+      'data-spw-vocabulary-term',
+      'data-spw-vocabulary-collectible',
+      'data-spw-learnable-dimension',
+      'data-spw-salience-weight',
+    ],
+    evaluates: 'conceptual salience vocabulary collectibility dimension refs',
+    load: () => import('../semantic/concept-salience.js'),
+    mount: (mod) => {
+      const fn = mod?.initConceptSalience;
+      if (!isFn(fn)) return;
+      return fn();
+    },
+  },
+  {
+    id: 'precipitation-request',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: 'html',
+    rootMode: 'single',
+    describes: 'precipitation[condense|print|screenshot] query projection',
+    updates: [
+      'data-spw-condense-tier',
+      'data-spw-precipitation-mode',
+      'data-spw-precipitation-active',
+      'data-spw-print-ready',
+      'data-spw-query-condense',
+    ],
+    evaluates: 'condensation print screenshot precipitation from modular query',
+    load: () => import('./precipitation-request.js'),
+    mount: (mod) => {
+      const fn = mod?.initPrecipitationRequest;
+      if (!isFn(fn)) return;
+      return fn();
+    },
+  },
+  {
+    id: 'variant-selection',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.VISIBLE,
+    selector: '.site-frame, .frame-card, [data-spw-feature], [data-spw-semantic-variant], [data-spw-content-variant]',
+    rootMode: 'single',
+    describes: 'component[variant]{mode|semantic|content} query override',
+    updates: [
+      'data-spw-variant-selected',
+      'data-spw-component-variant-active',
+      'data-spw-variant-selection-source',
+      'data-spw-query-variant',
+    ],
+    evaluates: 'mode-switch variant selection query priming semantic weight',
+    load: () => import('./variant-selection.js'),
+    mount: (mod) => {
+      const fn = mod?.initVariantSelection;
+      if (!isFn(fn)) return;
+      return fn();
+    },
+  },
+  {
     id: 'navigation-spells',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
-    selector: 'header nav a[href], .site-header nav a[href], body > header nav a[href], .site-footer__nav a[href], .page-index a[href], .card-sub-links a[href], .frame-operators a[href]',
+    selector: 'header nav a[href], .site-header nav a[href], body > header nav a[href], .site-footer__nav a[href], .spw-route-menu-link[href], .operator-chip[href], .frame-sigil[href]',
     rootMode: 'single',
     describes: 'navigation[spell|grounding] route[replay]',
-    updates: ['data-spw-spell-path', 'data-spw-grounded-in'],
+    updates: [
+      'data-spw-nav-tokenized',
+      'data-spw-nav-expression',
+      'data-spw-interaction-contract',
+      'data-spw-interaction-affordance',
+      'data-spw-operator-geometry',
+      'data-spw-ground-key',
+    ],
+    effectScope: 'target-dom gesture-memory listeners',
     load: () => import('./navigation-spells.js'),
     mount: (mod) => {
       const fn = mod?.initSpwNavigationSpells;
@@ -1066,14 +1535,50 @@ export const ENHANCEMENT_DEFS = [
     },
   },
   {
+    id: 'bare-spw-markup',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: '[data-spw-bare-spw="enhance"], .site-footer__summary, [data-spw-material-context~="mutable-markup"]',
+    rootMode: 'single',
+    describes: 'markup[bare-spw]{delimiter.operator.wrap}',
+    updates: ['data-spw-bare-spw-enhanced', 'data-spw-form', 'data-spw-delimiter', 'data-spw-perspective'],
+    evaluates: 'bare Spw prose delimiter and inline operator discoverability',
+    load: () => import('../semantic/bare-spw-markup.js'),
+    mount: (mod) => {
+      const fn = mod?.initBareSpwMarkup;
+      if (!isFn(fn)) return;
+      return fn();
+    },
+  },
+  {
     id: 'operators',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
-    selector: '.frame-sigil, .frame-card-sigil, .syntax-token',
+    selector: '.frame-sigil, .frame-card-sigil, .frame-panel-sigil, .syntax-token, .operator-chip, .spec-pill, .header-sigil, .site-footer__brand, .spw-delimiter, [data-spw-charge-key], a[data-spw-operator], button[data-spw-operator], [data-spw-sigil]',
     rootMode: 'single',
-    describes: 'operators[sigil.detect.annotate] grammar projection',
-    updates: ['data-spw-operator', 'data-spw-sigil', 'data-spw-sigil-prefix', 'data-spw-operator-resolved'],
-    evaluates: 'operator grammar accessibility semantic projection',
+    describes: 'operators[sigil.detect.annotate.transition] grammar projection with page-region payload handoff',
+    updates: [
+      'data-spw-operator',
+      'data-spw-sigil',
+      'data-spw-sigil-prefix',
+      'data-spw-sigil-role',
+      'data-spw-identifier',
+      'data-spw-address-role',
+      'data-spw-operator-resolved',
+      'data-spw-operator-geometry',
+      'data-spw-operator-flow',
+      'data-spw-operator-brace-bias',
+      'data-spw-operator-charge-role',
+      'data-spw-sigil-transitions-ready',
+      'data-spw-active-sigil',
+      'data-spw-active-sigil-operator',
+      'data-spw-active-sigil-page',
+      'data-spw-active-sigil-region',
+      'data-spw-sigil-transition',
+      'data-spw-sigil-payload-scope',
+      'data-spw-sigil-region',
+    ],
+    evaluates: 'operator grammar accessibility semantic projection geometry transition page-region-payload',
     load: () => import('../semantic/operators.js'),
     mount: (mod) => {
       const fn = mod?.initSpwOperators;

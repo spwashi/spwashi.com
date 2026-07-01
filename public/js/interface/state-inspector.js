@@ -519,6 +519,10 @@ function snapshotStateDimensions() {
       snapshot: window.__SPW_PAGE_ANATOMY__?.snapshot?.() || null,
       spw: window.__SPW_PAGE_ANATOMY__?.serialize?.() || '',
     },
+    topicalPayload: {
+      snapshot: window.__SPW_TOPICAL_PAYLOAD__?.snapshot?.() || null,
+      spw: window.__SPW_TOPICAL_PAYLOAD__?.serialize?.() || '',
+    },
     state: {
       html: pickDataset(root.dataset),
       body: pickDataset(body?.dataset || {}),

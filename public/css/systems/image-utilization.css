@@ -1,0 +1,45 @@
+/* ==========================================================================
+   image-utilization.css
+   --------------------------------------------------------------------------
+   Performance + distribution for figures and reward/discovery image surfaces.
+   JS sets data-spw-image-utilization; CSS owns layout containment and decode
+   cost without blocking authored aspect ratios.
+   ========================================================================== */
+
+:root {
+  --spw-image-distribution-gap: var(--component-gap-tight, 0.55rem);
+  --spw-image-utilization-contain: layout style paint;
+}
+
+:where([data-spw-image-utilization="distributed"], [data-spw-image-distribution="cascade"]) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 12rem;
+}
+
+:where([data-spw-image-utilization="hero"], [data-spw-image-distribution="anchor"]) {
+  content-visibility: visible;
+}
+
+:where(main img, [data-spw-image-surface] img, [data-spw-image-reward] img, [data-spw-image-discovery] img) {
+  max-inline-size: 100%;
+  block-size: auto;
+  object-fit: cover;
+}
+
+:where([data-spw-image-reward], [data-spw-image-discovery], .frame-card-media, .image-study) {
+  contain: var(--spw-image-utilization-contain);
+}
+
+:where(html[data-spw-hydration-pass="lex"]) :where([data-spw-image-utilization="distributed"]) {
+  opacity: var(--spw-settle-opacity-mid, 0.985);
+}
+
+:where(html[data-spw-hydration-pass="pragmatic"]) :where([data-spw-image-discovered="true"]) {
+  --spw-image-utilization-contain: none;
+}
+
+:where(.spw-visual-link-board__grid, .frame-grid--media) {
+  display: grid;
+  gap: var(--spw-image-distribution-gap);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min-card, 15rem)), 1fr));
+}

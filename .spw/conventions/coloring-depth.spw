@@ -1,0 +1,110 @@
+# Coloring Depth
+#
+# How depth ladders earn color without collapsing operator physics into decoration.
+# Three parallel families: copy-depth (prose layers), palette-depth (material), composition-depth (structure).
+
+#>coloring_depth
+#:convention #!color #!semantics #!depth
+#:layer #!pragmatics
+#:operation contract
+
+@css: ~"../../public/css/systems/coloring-depth.css"
+@palette_depth: ~"../../public/css/systems/surfaces/palette-depth.css"
+@copy_depth_plan: ~"../../.agents/plans/semantic-copy-depth/PLAN.md"
+@semantic_hierarchy: ~"./semantic-hierarchy.spw"
+@operator_semantics: ~"./operator-semantics.spw#spell_evolution_note"
+@dimension_vocabulary: ~"./dimension-vocabulary.spw"
+@cognitive_navigation: ~"./cognitive-navigation.spw#dimensions_of_understanding"
+
+^"thesis"{
+  claim: "Depth should teach which ladder you are on. Color routes through operator accent families and material probes — not arbitrary hue — so copy layers, palette atmosphere, and composition tiers stay inspectable."
+  rule: "When adding depth coloring, name the owning ladder first. Copy-depth colors teach optional prose layers. Palette-depth colors teach theme material. Composition-depth colors teach structure only when module visuals or handles are active."
+  anti_pattern: "Using raw operator hue as the default surface accent when the operator is not the semantic payload."
+}
+
+^"copy_depth_ladder"{
+  definition: "Optional prose layers gated by semantic density and runtime posture."
+  attr: `data-spw-copy-depth`
+  tiers: .{
+    entry: .{ operator: "# frame", token: `--op-frame-color`, gate: "minimal | normal | rich semantic density" }[reg=facet]
+    normal: .{ operator: "~ ref", token: `--op-ref-color`, gate: "normal | rich semantic density" }[reg=facet]
+    rich: .{ operator: "? probe", token: `--op-probe-color`, gate: "rich semantic density" }[reg=facet]
+    dense: .{ operator: "* stream", token: `--op-stream-color`, gate: "rich semantic density" }[reg=facet]
+    technical: .{ operator: "! action", token: `--op-action-color`, gate: "precision posture | body[data-spw-page-modes~='inspect']" }[reg=facet]
+    genre: .{ operator: "^ object", token: `--op-object-color`, gate: "resonant | theatrical runtime posture" }[reg=facet]
+  }[reg=facet]
+  tokens: #[`--spw-copy-depth-accent`, `--spw-copy-depth-line`, `--spw-copy-depth-bg`][reg=set]
+  note: "Labels use --spw-copy-depth-accent; semantic-expression pills inherit the same accent. Essential meaning stays outside hidden layers."
+}
+
+^"palette_depth_ladder"{
+  definition: "Atmospheric material derived from --spw-palette-probe-1..4 and resonance bias."
+  tokens: #[`--spw-palette-depth-shadow`, `--spw-palette-depth-mid`, `--spw-palette-depth-highlight`, `--spw-palette-depth-wash`, `--spw-palette-depth-glow`, `--spw-palette-depth-field`][reg=set]
+  strength: `--palette-depth-strength` modulated by `data-spw-color-tuner` and `data-spw-high-contrast`
+  surfaces: #[`.vibe-widget`, `.palette-probe`, `.spw-shell-theme-utility`, `.spw-shell-resonance-utility`][reg=set]
+  @palette_depth: ~"../../public/css/systems/surfaces/palette-depth.css"
+}
+
+^"palette_treat_discovery"{
+  module: ~"../../public/js/runtime/palette-treat-discovery.js"
+  css: ~"../../public/css/systems/palette-treat.css"
+  attrs: #[
+    `data-spw-palette-treat-active`
+    `data-spw-palette-splash`
+    `data-spw-palette-treat-probe`
+    `data-spw-palette-treat` on `.palette-probe-chip`
+  ][reg=set]
+  event: `spw:palette-treat`
+  triggers: #[`spw:freshness-pulse beat-prime`, `spw:discovery-reward`, `spw:interaction-phase discover`, `paletteResonance settings change`, `arrow-reward keyboard`][reg=set]
+  beat_probe_map: .{ 1: probe-1, 5: probe-2, 9: probe-3, 13: probe-4 }[reg=facet]
+  resonance_probe_map: .{ route: 1, craft: 2, software: 3, math: 4 }[reg=facet]
+  keyboard: .{
+    probe_rail: `role=radiogroup on .palette-probe-swatches and .spw-shell-resonance-utility`
+    resonance_toolbar: `role=toolbar on .palette-probe-actions with paletteResonance chips`
+    arrows: `ArrowLeft|ArrowRight|ArrowUp|ArrowDown|Home|End move roving tabindex and fire arrow-reward splash`
+    reward: `data-spw-palette-splash=arrow-reward + spw:discovery-reward echo for interaction-progression`
+  }[reg=facet]
+  note: "Treats are decorative discoverability — probe chips splash, operators echo, palette-depth strengthens briefly. Disabled when reduce-motion, heavy throttling, or freshness-weight < 0.2."
+}
+
+^"composition_depth_ladder"{
+  definition: "Structural nesting accent — orthogonal to copy-depth and palette-depth."
+  attr: `data-spw-composition-tier`
+  tiers: .{
+    page: `--op-frame-color`
+    region: `--op-ref-color`
+    feature: `--op-probe-color`
+    component: `--op-object-color`
+    slot: `--op-stream-color`
+    module: `--op-action-color`
+    chrome: `--op-meta-color`
+    runtime: `--op-probe-color`
+  }[reg=facet]
+  spend_rule: "Composition depth coloring is opt-in via html[data-spw-module-visuals='on'] or cognitive handles — not default reading chrome."
+  @semantic_hierarchy: ~"./semantic-hierarchy.spw#composition_ladder"
+}
+
+^"abstraction_depth"{
+  definition: "Conceptual zoom axis from cognitive navigation — color warms as abstraction concretizes."
+  ladder: #[`concept → ref blue`, `specification → probe violet`, `implementation → action teal`, `instance → stream green`][reg=set]
+  note: "Abstraction depth may appear on data-cognitive-handle and data-abstraction-level when drill-down affordances ship. Until then, treat as documented crosswalk only."
+  @cognitive_navigation: ~"./cognitive-navigation.spw#dimensions_of_understanding"
+}
+
+^"crosswalk"{
+  questions: {
+    "Which optional copy layer is this?": "copy_depth_ladder + data-spw-copy-depth"
+    "What color should its label use?": "copy_depth_ladder.tiers.*.token"
+    "What material atmosphere applies?": "palette_depth_ladder"
+    "Which structure tier owns this cluster?": "composition_depth_ladder"
+    "Is this concept or instance zoom?": "abstraction_depth"
+  }
+  hierarchy_resolution: "Copy-depth teaches prose optional layers (linguistic/pragmatics). Composition-depth teaches DOM ownership (composition ladder). Palette-depth teaches theme material (cascade systems). They must not share one attr."
+}
+
+validation: #[
+  `Each copy-depth tier maps to one operator accent token in coloring-depth.css.`
+  `Display gates match semantic-copy-depth PLAN.md for entry, dense, and technical.`
+  `Palette-depth probes remain distinct from copy-depth borders.`
+  `Composition tier accents stay behind module-visuals unless a handle explicitly spends them.`
+][reg=set]

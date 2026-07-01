@@ -421,6 +421,8 @@ export function groundElement(el, overrides = {}) {
     realization: detail.realization,
     destination: detail.destination,
     href: detail.href,
+    deepLink: detail.deepLink,
+    deepLinkLabel: detail.deepLinkLabel,
     groundedAt: Date.now(),
     source: detail.source || 'manual'
   });
@@ -938,10 +940,44 @@ function buildSemanticDetail(el, overrides = {}) {
       overrides.href
       ?? (el instanceof HTMLAnchorElement ? el.getAttribute('href') : null)
       ?? null,
+    deepLink:
+      overrides.deepLink
+      ?? resolveElementDeepLink(el)
+      ?? null,
+    deepLinkLabel:
+      overrides.deepLinkLabel
+      ?? resolveElementDeepLinkLabel(el)
+      ?? null,
     source: overrides.source || 'manual',
     passive: Boolean(overrides.passive),
     fieldRootId: fieldRoot?.id || null
   };
+}
+
+function resolveElementDeepLink(el) {
+  if (!(el instanceof HTMLElement)) return null;
+
+  const directHash = el instanceof HTMLAnchorElement
+    ? el.getAttribute('href')
+    : null;
+  if (directHash && directHash.startsWith('#')) return directHash;
+
+  const target = el.id ? el : el.closest('[id]');
+  if (!(target instanceof HTMLElement) || !target.id) return null;
+  return `${window.location.pathname}${window.location.search}#${target.id}`;
+}
+
+function resolveElementDeepLinkLabel(el) {
+  if (!(el instanceof HTMLElement)) return null;
+  const target = el.id ? el : el.closest('[id]');
+  if (!(target instanceof HTMLElement)) return null;
+  return normalizeText(
+    target.dataset.spwDeepLinkLabel
+    || target.getAttribute('aria-label')
+    || target.querySelector?.('h1, h2, h3, h4, .frame-sigil, .page-kicker')?.textContent
+    || target.textContent
+    || target.id
+  ).slice(0, 80) || target.id || null;
 }
 
 /* ==========================================================================

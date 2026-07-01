@@ -1239,6 +1239,24 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
   margin-inline-start: auto;
 }
 
+/* Positional grammar seams (prefix / infix / postfix) */
+:where([data-spw-sigil-position="prefix"]) {
+  border-inline-start-width: 2px;
+}
+
+:where([data-spw-sigil-position="infix"]) {
+  border-style: dashed;
+  border-color: color-mix(in srgb, currentColor 22%, transparent);
+}
+
+:where([data-spw-sigil-position="postfix"]) {
+  border-inline-end-width: 2px;
+}
+
+:where([data-spw-fixity-tier="volatile"]) {
+  --spw-fixity-alpha: 0.72;
+}
+
 /* ==========================================================================
    5. Operator chips, spec pills, and component tags
    ========================================================================== */
@@ -3465,6 +3483,39 @@ body:has([data-spw-gesture="sustained"][data-spw-form="brace"]) [data-spw-cauldr
   line-height: 1.1;
 }
 
+.spell-ingredient[data-spw-operator-left-role],
+.spell-ingredient[data-spw-operator-right-role] {
+  --spell-geometry-rail: color-mix(in srgb, var(--active-op-color, var(--teal)) 20%, transparent);
+
+  box-shadow:
+    inset 2px 0 0 var(--spell-geometry-rail),
+    inset -2px 0 0 color-mix(in srgb, var(--op-ref-color, #4f7fbf) 18%, transparent);
+}
+
+.spell-ingredient[data-spw-operator-flow*="subjective-to-objective"] {
+  --spell-geometry-rail: color-mix(in srgb, var(--op-action-color, var(--teal-dark)) 22%, transparent);
+}
+
+.spell-ingredient[data-spw-operator-flow*="objective-to-subjective"] {
+  --spell-geometry-rail: color-mix(in srgb, var(--op-probe-color, #7a57c2) 22%, transparent);
+}
+
+.spell-ingredient[data-spw-operator-charge-role*="ordinal"] {
+  border-style: double;
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--op-object-color, #c48a28) 9%, transparent),
+      transparent 44%,
+      color-mix(in srgb, var(--op-object-color, #c48a28) 7%, transparent)
+    ),
+    color-mix(in srgb, var(--surface-strong, #fff) 94%, transparent);
+}
+
+.spell-ingredient[data-spw-deep-link*="#"] {
+  border-bottom-color: color-mix(in srgb, var(--op-ref-color, #4f7fbf) 38%, transparent);
+}
+
 .spell-ingredient-prefix,
 .spell-ingredient-postfix {
   color: var(--teal, #008080);
@@ -4074,6 +4125,59 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
 
 /* Spell provenance + garden trace on spell paths and atoms (direct "enhance spells similarly" continuation).
    Cohesive with the Garden State mirror and garden-consequence styles. Lives in handles layer. */
+.spell-capability-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.24rem;
+  align-items: center;
+  min-inline-size: 0;
+}
+
+.spell-capability {
+  display: inline-grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: baseline;
+  gap: 0.22rem;
+  max-inline-size: 100%;
+  min-block-size: 1.45rem;
+  padding: 0.14rem 0.38rem;
+  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal)) 16%, var(--line, rgba(14,18,20,0.14)));
+  border-radius: var(--shape-component, 6px);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 92%, var(--active-op-color, var(--teal)) 8%);
+  color: color-mix(in srgb, var(--ink-soft, rgba(27, 31, 35, 0.68)) 82%, var(--active-op-color, var(--teal)) 18%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.62rem;
+  line-height: 1.12;
+}
+
+.spell-capability__label {
+  color: color-mix(in srgb, var(--active-op-color, var(--teal)) 68%, var(--ink, #1b1f23) 32%);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.spell-capability__value {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.spw-spell-dock .spell-capability {
+  font-size: 0.58rem;
+}
+
+@media (max-width: 720px) {
+  .spell-capability {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.04rem;
+  }
+
+  .spell-capability__value {
+    white-space: normal;
+  }
+}
+
 .spell-provenance,
 .cauldron-garden-provenance,
 .spw-spell-path__garden-trace {
@@ -4157,4 +4261,315 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
     .spw-header-trace {
     display: none;
   }
+}
+
+/* ==========================================================================
+   Operator geometry projection
+   --------------------------------------------------------------------------
+   Maps semantic physics from data-spw-operator-geometry onto handle surfaces.
+   Geometry names align with shared.js OPERATOR_GEOMETRY and spell rendering.
+   ========================================================================== */
+
+:where([data-spw-operator-geometry="anchor"]) {
+  --spw-geometry-stability: 1;
+  --spw-geometry-motion: 0;
+}
+
+:where([data-spw-operator-geometry="field-plane"]) {
+  --spw-geometry-stability: 0.72;
+  --spw-geometry-motion: 0.18;
+}
+
+:where([data-spw-operator-geometry="frequency-anchor"]) {
+  --spw-geometry-stability: 0.82;
+  --spw-geometry-motion: 0.24;
+}
+
+:where([data-spw-operator-geometry="aperture"]) {
+  --spw-geometry-stability: 0.45;
+  --spw-geometry-motion: 0.42;
+}
+
+:where([data-spw-operator-geometry="lift"]) {
+  --spw-geometry-stability: 0.64;
+  --spw-geometry-motion: 0.28;
+}
+
+:where([data-spw-operator-geometry="mass"]) {
+  --spw-geometry-stability: 0.9;
+  --spw-geometry-motion: 0.08;
+}
+
+:where([data-spw-operator-geometry="brace-container"]) {
+  --spw-geometry-stability: 0.78;
+  --spw-geometry-motion: 0.12;
+}
+
+:where([data-spw-operator-geometry]) {
+  transition:
+    box-shadow calc(160ms + (80ms * var(--spw-geometry-motion, 0.2))) ease,
+    transform calc(160ms + (80ms * var(--spw-geometry-motion, 0.2))) ease;
+}
+
+:where(
+  [data-spw-operator-geometry]:is(:hover, :focus-visible),
+  [data-spw-operator-geometry][data-spw-gesture="charging"]
+) {
+  box-shadow:
+    0 0 0 calc(1px * var(--spw-geometry-stability, 0.6))
+      color-mix(in srgb, var(--spw-operator-color, var(--teal, #008080)) 34%, transparent),
+    0 calc(4px * var(--spw-geometry-motion, 0.2)) calc(14px * var(--spw-geometry-stability, 0.6))
+      color-mix(in srgb, var(--spw-operator-color, var(--teal, #008080)) 12%, transparent);
+}
+
+:where([data-spw-operator-brace-bias="objective"]) {
+  --spw-brace-wash: var(--objective-brace-wash, color-mix(in srgb, var(--teal, #008080) 10%, transparent));
+}
+
+:where([data-spw-operator-brace-bias="subjective"]) {
+  --spw-brace-wash: var(--subjective-brace-wash, color-mix(in srgb, var(--amber, #d4a017) 10%, transparent));
+}
+
+:where([data-spw-operator-brace-bias="objective-to-subjective"]) {
+  --spw-brace-wash: color-mix(
+    in srgb,
+    var(--objective-brace-wash, color-mix(in srgb, var(--teal, #008080) 10%, transparent)) 50%,
+    var(--subjective-brace-wash, color-mix(in srgb, var(--amber, #d4a017) 10%, transparent)) 50%
+  );
+}
+
+:where([data-spw-perspective="objective"].spw-delimiter) {
+  --spw-operator-color: var(--teal, #008080);
+}
+
+:where([data-spw-perspective="subjective"].spw-delimiter) {
+  --spw-operator-color: var(--amber, #d4a017);
+}
+
+:where([data-spw-interaction-contract]) {
+  transition:
+    box-shadow calc(160ms + (80ms * var(--spw-geometry-motion, 0.2))) ease,
+    transform calc(160ms + (80ms * var(--spw-geometry-motion, 0.2))) ease,
+    color 160ms ease;
+}
+
+:where(
+  [data-spw-interaction-contract]:is(:hover, :focus-visible),
+  [data-spw-interaction-contract][data-spw-loop-state="preview"]
+) {
+  box-shadow:
+    0 0 0 calc(1px * var(--spw-geometry-stability, 0.6))
+      color-mix(in srgb, var(--spw-operator-color, var(--teal, #008080)) 28%, transparent);
+}
+
+/* Loading ecology twinkle — beat-aligned operator salience during settle windows. */
+@keyframes spw-ecology-twinkle {
+  0%, 100% {
+    opacity: 1;
+    filter: saturate(1);
+  }
+
+  50% {
+    opacity: calc(0.86 + (var(--spw-ecology-twinkle, 0) * 0.1));
+    filter: saturate(calc(1 + (var(--spw-ecology-twinkle, 0) * 0.08)));
+  }
+}
+
+:where(html[data-spw-loading-ecology-twinkle="true"]:not([data-spw-reduce-motion="on"])) :where(
+  .operator-chip,
+  .syntax-token,
+  [data-spw-operator],
+  [data-spw-interaction-contract]
+) {
+  animation: spw-ecology-twinkle
+    calc(var(--spw-ecology-twinkle-duration, 760ms) / var(--spw-site-rhythm-tempo, 1))
+    var(--ease-settle, ease)
+    1;
+  animation-delay: calc(var(--spw-settle-stagger-step, 18ms) * var(--spw-ecology-beat-align, 0));
+}
+
+:where(html[data-spw-loading-ecology-phase="measuring"]) :where(
+  [data-spw-interaction-contract],
+  .operator-chip[href]
+) {
+  --spw-geometry-stability: calc(0.6 + (var(--spw-loading-ecology-surface, 0) * 0.12));
+}
+
+/* Payload-aware sigil transitions
+   JS writes page + nearest-region payload keys while a sigil is approached,
+   focused, or committed. The visual spend stays local to the token. */
+:where(
+  .frame-sigil,
+  .frame-card-sigil,
+  .frame-panel-sigil,
+  .syntax-token,
+  .operator-chip,
+  .spec-pill,
+  .header-sigil,
+  .site-footer__brand
+)[data-spw-sigil-transition] {
+  --spw-sigil-payload-color: var(--spw-operator-color, var(--active-op-color, var(--teal, #008080)));
+  --spw-sigil-transition-duration: var(--handle-duration-fast, 140ms);
+  --spw-sigil-payload-alpha: 22%;
+  --spw-sigil-payload-outline: 0px;
+  --spw-sigil-payload-outline-offset: 0px;
+  --spw-sigil-payload-lift: 0px;
+  --spw-sigil-payload-scale: 1;
+  --spw-sigil-saturate: 1;
+  --spw-sigil-brightness: 1;
+  outline: var(--spw-sigil-payload-outline) solid
+    color-mix(in srgb, var(--spw-sigil-payload-color) var(--spw-sigil-payload-alpha), transparent);
+  outline-offset: var(--spw-sigil-payload-outline-offset);
+  filter: saturate(var(--spw-sigil-saturate)) brightness(var(--spw-sigil-brightness));
+  translate: 0 var(--spw-sigil-payload-lift);
+  scale: var(--spw-sigil-payload-scale);
+  transition-property:
+    background-color,
+    border-color,
+    color,
+    box-shadow,
+    filter,
+    opacity,
+    outline-color,
+    outline-offset,
+    outline-width,
+    scale,
+    translate;
+  transition-duration: var(--spw-sigil-transition-duration);
+  transition-timing-function: var(--handle-ease, ease);
+}
+
+:where(
+  .frame-sigil,
+  .frame-card-sigil,
+  .frame-panel-sigil,
+  .syntax-token,
+  .operator-chip,
+  .spec-pill,
+  .header-sigil,
+  .site-footer__brand
+)[data-spw-sigil-payload-scope="page-region"] {
+  text-shadow: 0 0 0.7rem
+    color-mix(in srgb, var(--spw-sigil-payload-color) var(--spw-sigil-topic-alpha, 10%), transparent);
+}
+
+:where([data-spw-sigil-region-tempo="snap"]) {
+  --spw-sigil-transition-duration: 110ms;
+}
+
+:where([data-spw-sigil-region-tempo="fast"]) {
+  --spw-sigil-transition-duration: 130ms;
+}
+
+:where([data-spw-sigil-region-tempo="deliberate"]) {
+  --spw-sigil-transition-duration: 220ms;
+}
+
+:where([data-spw-sigil-region-tempo="settle"]) {
+  --spw-sigil-transition-duration: 260ms;
+}
+
+:where([data-spw-sigil-transition="approach"]) {
+  --spw-sigil-payload-alpha: 32%;
+  --spw-sigil-payload-outline: 1px;
+  --spw-sigil-payload-outline-offset: 2px;
+  --spw-sigil-payload-lift: -1px;
+  --spw-sigil-payload-scale: 1.004;
+  --spw-sigil-saturate: 1.08;
+  --spw-sigil-brightness: 1.02;
+}
+
+:where([data-spw-sigil-transition="prime"]) {
+  --spw-sigil-payload-alpha: 42%;
+  --spw-sigil-payload-outline: 1px;
+  --spw-sigil-payload-outline-offset: 3px;
+  --spw-sigil-payload-lift: -1px;
+  --spw-sigil-payload-scale: 1.006;
+  --spw-sigil-saturate: 1.12;
+  --spw-sigil-brightness: 1.03;
+}
+
+:where([data-spw-sigil-transition="commit"]) {
+  --spw-sigil-payload-alpha: 54%;
+  --spw-sigil-payload-outline: 2px;
+  --spw-sigil-payload-outline-offset: 1px;
+  --spw-sigil-payload-lift: 1px;
+  --spw-sigil-payload-scale: 0.996;
+  --spw-sigil-saturate: 1.16;
+  --spw-sigil-brightness: 1.04;
+  animation: spw-sigil-payload-commit
+    var(--spw-sigil-transition-duration)
+    var(--ease-settle, ease)
+    var(--spw-sigil-stagger-delay, 0ms)
+    1;
+}
+
+:where([data-spw-sigil-transition="release"]) {
+  --spw-sigil-payload-alpha: 18%;
+  --spw-sigil-payload-outline: 1px;
+  --spw-sigil-payload-outline-offset: 4px;
+  --spw-sigil-saturate: 0.96;
+  --spw-sigil-brightness: 1;
+}
+
+:where([data-spw-sigil-transition="settle"]) {
+  --spw-sigil-payload-alpha: 14%;
+  --spw-sigil-payload-outline: 1px;
+  --spw-sigil-payload-outline-offset: 5px;
+}
+
+@keyframes spw-sigil-payload-commit {
+  0% {
+    outline-offset: 0;
+    filter: saturate(1.04) brightness(1);
+  }
+
+  46% {
+    outline-offset: 3px;
+    filter: saturate(1.18) brightness(1.04);
+  }
+
+  100% {
+    outline-offset: var(--spw-sigil-payload-outline-offset);
+    filter: saturate(var(--spw-sigil-saturate)) brightness(var(--spw-sigil-brightness));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where([data-spw-sigil-transition]) {
+    --spw-sigil-payload-lift: 0px;
+    --spw-sigil-payload-scale: 1;
+    animation: none;
+    transition-duration: 1ms;
+  }
+}
+
+/* Sigil (grammar) vs identifier (stable address) — distinct visual roles */
+:where([data-spw-sigil-role="grammar"]) {
+  --spw-operator-color: var(--spw-operator-color, var(--active-op-color, var(--teal, #008080)));
+}
+
+:where([data-spw-address-role="identifier"]) {
+  font-variant-numeric: tabular-nums;
+}
+
+:where(
+  .frame-sigil[data-spw-address-role="identifier"],
+  .operator-chip[data-spw-address-role="identifier"],
+  [data-spw-sigil-role="grammar"][data-spw-address-role="identifier"]
+) {
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+}
+
+:where([data-spw-sigil-role="grammar"]:not([data-spw-address-role="identifier"])) {
+  font-weight: inherit;
+}
+
+:where([data-spw-address-role="identifier"]:not([data-spw-sigil-role="grammar"])) {
+  color: color-mix(in srgb, var(--ink-soft, currentColor) 82%, var(--active-op-color, var(--teal)) 18%);
+  font-size: 0.92em;
+}
+
+:where([data-spw-sigil-role="grammar"][data-spw-address-role="identifier"]) :where(.syntax-token, [data-spw-operator]) {
+  color: var(--spw-operator-color, var(--active-op-color, var(--teal, #008080)));
 }

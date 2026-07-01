@@ -1,3 +1,5 @@
+import { normalizeQuerySearch } from './query-composer.js';
+
 const DEFAULT_NAMESPACE = 'spw';
 const DEFAULT_TARGET_SELECTOR = '[data-spw-kind], [data-spw-role], [data-spw-feature], [data-spw-module], .site-frame, .frame-panel, .frame-card';
 const SPW_DATASET_PREFIX = 'spw';
@@ -26,6 +28,11 @@ export const SPW_QUERY_ALIASES = Object.freeze({
   reflow: Object.freeze(['spw-reflow', 'reflow']),
   runtimeTiming: Object.freeze(['spw-runtime-timing', 'runtime-timing']),
   view: Object.freeze(['spw-view', 'view']),
+  condense: Object.freeze(['spw-condense', 'condense', 'c']),
+  precipitate: Object.freeze(['spw-precipitate', 'precipitate', 'p']),
+  pack: Object.freeze(['spw-pack', 'pack']),
+  lens: Object.freeze(['spw-lens', 'lens', 'l']),
+  screenshot: Object.freeze(['spw-screenshot', 'screenshot', 'shot']),
 });
 
 export const SPW_PHYSICS_PRESETS = Object.freeze({
@@ -144,6 +151,16 @@ export const SPW_QUERY_PRESETS = Object.freeze({
     label: 'Screenshot view',
     href: '?view=screenshot&interaction=screenshot&palette=software',
     description: 'Stabilize the surface for capture and comparison.',
+  }),
+  print: Object.freeze({
+    label: 'Print precipitation',
+    href: '?condense=print&precipitate=print&view=readable',
+    description: 'Condense chrome and prepare a print-friendly page projection.',
+  }),
+  condensed: Object.freeze({
+    label: 'Condensed card',
+    href: '?condense=card&precipitate=condensed&view=readable',
+    description: 'Brief copy tier with screenshot-ready figure framing.',
   }),
   calm: Object.freeze({
     label: 'Calm interaction',
@@ -622,7 +639,8 @@ export function markLayoutTrope(target, trope, details = {}) {
 }
 
 export function parseSpwQueryDisposition(search = globalThis.location?.search || '', options = {}) {
-  const params = new URLSearchParams(String(search || '').replace(/^\?/, ''));
+  const normalizedSearch = normalizeQuerySearch(search);
+  const params = new URLSearchParams(String(normalizedSearch || '').replace(/^\?/, ''));
   const queryContract = options.queryContract || createSpwQueryContract(options);
   const disposition = {
     cssVars: {},
@@ -818,6 +836,43 @@ export function parseSpwQueryDisposition(search = globalThis.location?.search ||
       const preset = normalizeToken(value);
       if (applyPresetBundle(disposition, preset, queryContract.physicsPresets, 'physics', 'interaction')) {
         disposition.query.presets.interaction = preset;
+      }
+      continue;
+    }
+
+    if (queryContract.aliases.condense?.has(key)) {
+      const tier = normalizeToken(value);
+      if (['brief', 'card', 'print', 'full'].includes(tier)) {
+        disposition.data.spwCondenseTier = tier;
+        disposition.tuning.condense = tier;
+      }
+      continue;
+    }
+
+    if (queryContract.aliases.precipitate?.has(key)) {
+      const mode = normalizeToken(value);
+      if (['screenshot', 'card', 'condensed', 'print'].includes(mode)) {
+        disposition.data.spwPrecipitationMode = mode;
+        disposition.tuning.precipitate = mode;
+      }
+      continue;
+    }
+
+    if (queryContract.aliases.pack?.has(key)) {
+      const pack = normalizeToken(value);
+      if (['compact', 'balanced', 'roomy'].includes(pack)) {
+        disposition.data.spwPackingState = pack;
+        disposition.tuning.pack = pack;
+      }
+      continue;
+    }
+
+    if (queryContract.aliases.screenshot?.has(key)) {
+      const enabled = normalizeBooleanSwitch(value) || value === '1';
+      if (enabled) {
+        disposition.data.spwPrintReady = 'true';
+        disposition.data.spwPrecipitationMode = 'screenshot';
+        disposition.tuning.screenshot = 'on';
       }
       continue;
     }

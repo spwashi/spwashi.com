@@ -30,6 +30,12 @@
 @measurement_contract: ~"./measurement-contract.spw"
 @designer_conversation_canvas: ~"./designer-conversation-canvas.spw"
 @typography_packing: ~"./typography-packing.spw"
+@dimension_vocabulary: ~"./dimension-vocabulary.spw"
+@sigil_identifier_contract: ~"./sigil-identifier-contract.spw"
+@hypermedia_2d: ~"./hypermedia-2d.spw"
+@semantic_hierarchy: ~"./semantic-hierarchy.spw"
+@coloring_depth: ~"./coloring-depth.spw"
+@interaction_microstates: ~"./interaction-microstates.spw"
 @model_guided_refinement: ~"./model-guided-refinement.spw"
 @semantic_capacity: ~"./semantic-capacity.spw"
 @discovery_powerups: ~"./discovery-powerups.spw"
@@ -44,14 +50,11 @@
 @codebase_perusal: ~"./codebase-perusal.spw"
 @site_starter_component_kit: ~"./site-starter-component-kit.spw"
 @expressive_registers: ~"./expressive-registers.spw"
-@semantic_braces: ~"./semantic-braces.spw"
 @slices: ~"../slices/index.spw"
 @composable_art: ~"./composable-art-system.spw"
 @workbench_selection: ~"../_workbench/.spw/conventions/selection.spw"
 @workbench_naming: ~"../_workbench/.spw/conventions/naming.spw"
 @workbench_submodule: ~"../_workbench/.spw/conventions/submodule.spw"
-@copy_localization: ~"./copy-localization.spw"
-@site_semantics: ~"./site-semantics.spw"
 
 dispatch: .{
  semantics = @site_semantics
@@ -76,8 +79,6 @@ dispatch: .{
  semantic_capacity = @semantic_capacity
  discovery_powerups = @discovery_powerups
  daily_kernel = @daily_kernel
- copy_localization = @copy_localization
- site_semantics = @site_semantics
  relational_attention_media = @relational_attention_media
  page_anatomy_vocabulary = @page_anatomy_vocabulary
  codebase_perusal = @codebase_perusal
@@ -89,6 +90,9 @@ dispatch: .{
  circuit_components = @circuit_components
  versioning = @precipitates_projections
  semantic_braces = @semantic_braces
+ semantic_hierarchy = @semantic_hierarchy
+ coloring_depth = @coloring_depth
+ interaction_microstates = @interaction_microstates
  selection = @workbench_selection
  naming = @workbench_naming
  submodule = @workbench_submodule

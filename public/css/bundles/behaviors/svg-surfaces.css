@@ -474,7 +474,12 @@
 
 :where(.spw-svg-surface) {
     background: var(--surface, #ffffff);
-    transition: all var(--duration-deliberate, 360ms) var(--ease-mechanical, ease);
+    /* Scope the transition to compositor/paint properties — `all` also animated
+       layout properties, forcing reflow on every frame of the transition. */
+    transition:
+        background var(--duration-deliberate, 360ms) var(--ease-mechanical, ease),
+        filter var(--duration-deliberate, 360ms) var(--ease-mechanical, ease),
+        opacity var(--duration-deliberate, 360ms) var(--ease-mechanical, ease);
 }
 
 /* ─── Doodler@ ──────────────────────────────────────────────────────────── */

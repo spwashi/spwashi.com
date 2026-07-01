@@ -291,9 +291,17 @@
 
 :where([data-spw-hydration="loading"]) {
   --spw-hydration-accent: var(--component-accent, var(--active-op-color, var(--teal, currentColor)));
+  --spw-lifecycle-phase: pre;
+  --spw-pre-state-visibility: 0.82;
   position: relative;
   min-height: 2.4rem;
   overflow: clip;
+  background-color: color-mix(
+    in srgb,
+    var(--spw-color-layer-fill-muted, var(--component-surface-strong, var(--surface-strong)))
+      calc(100% - (var(--spw-pre-state-fill-mix, 0.12) * 100%)),
+    var(--spw-color-layer-accent-apparent, var(--spw-hydration-accent)) calc(var(--spw-pre-state-fill-mix, 0.12) * 100%)
+  );
 }
 
 :where([data-spw-hydration="loading"])::after {
@@ -302,10 +310,11 @@
   inset: 0;
   border-radius: inherit;
   pointer-events: none;
+  opacity: calc(0.45 + (var(--spw-pre-state-visibility, 0.82) * 0.4));
   background: linear-gradient(
     100deg,
     transparent 0%,
-    color-mix(in srgb, var(--spw-hydration-accent) 8%, transparent) 42%,
+    color-mix(in srgb, var(--spw-hydration-accent) calc(6% + (var(--spw-pre-state-visibility, 0.82) * 10%)), transparent) 42%,
     transparent 84%
   );
   background-size: 220% 100%;

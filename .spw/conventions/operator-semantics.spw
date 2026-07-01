@@ -55,6 +55,136 @@
   related: ["site-semantics.spw#composition-spellcasting", "cognitive-surface.spw#practitioner_artist_model", "attention-field.spw"]
 }
 
+^"operator_argument_geometry"{
+  ~#context: "The site now treats each operator as a small geometric anchor: a position, a left/right argument relation, a flow direction, and a charge role that can be projected into components without reducing the language to color."
+
+  runtime_surface: [
+    "public/js/kernel/shared.js OPERATOR_GEOMETRY",
+    "public/js/runtime/spells.js data-spw-operator-left-role/right-role/flow/geometry/charge-role",
+    "public/js/runtime/experiential.js data-spw-deep-link + data-spw-semantic-expression on link trails",
+    "public/js/interface/composition.js data-spw-deep-link on cauldron fragments",
+    "public/css/handles/operators.css + public/css/shell/chrome.css as low-specificity projections"
+  ]
+
+  left_side_rule: "The left side of an operator names the source side: evidence, stance, observer, loose value, current location, outside context, or objective boundary. It is the place pressure comes from."
+  right_side_rule: "The right side names the argument or consequence side: target, field, containment, scaled comparison, named pin, projected surface, or subjective synthesis. It is the place pressure becomes readable."
+
+  brace_axis: {
+    left_brace: "The opening brace marks objective boundary: shared structure, address, evidence, reproducible position, and the edge that can be inspected."
+    right_brace: "The closing brace marks subjective synthesis: interpreted meaning, felt resonance, local consequence, and the result of passing through the bounded region."
+    flow_rule: "A component may move objective_to_subjective, subjective_to_objective, or balanced. The flow must be visible in data-spw-operator-flow or in a nearby .spw note when it affects layout, copy, or interaction."
+    caution: "Do not map left/right to good/bad. Boon/bane or valence can color the field, but objective/subjective names argument direction."
+  }
+
+  overload_rule: {
+    allowed_when: "An overload is allowed only when the base operator physics remains inspectable and the overload names what changed."
+    required_fields: ["base_operator", "leftRole", "rightRole", "flow", "braceBias", "geometry", "chargeRole", "overload"]
+    examples: [
+      "% as objective-or-subjective-measure keeps raw-measure -> scaled-comparison and exposes ordinal-charge",
+      "{ as containment-or-motion keeps objective-boundary -> subjective-synthesis and exposes brace-container",
+      "~ as reference-or-memory keeps observer/current perspective -> deferred target and exposes latent-charge"
+    ]
+    anti_pattern: "Do not overload an operator merely to borrow its visual style. Use semantic accent, component motif, or ornament if the operator is not carrying the argument."
+  }
+
+  ornament_and_mantlepieces: {
+    ornament: "Ornament is a culture-bearing projection of state. It should reveal charge, ordinality, direction, or memory, not hide unclear structure behind decoration."
+    mantlepiece: "A mantlepiece is a stable display ledge for charged objects: a spell chip, cauldron fragment, breadcrumb crumb, settings nook, or operator rail that lets a small semantic object be seen, returned to, and compared."
+    component_rule: "Mantlepiece components should expose data-spw-semantic-expression plus at least one of data-spw-deep-link, data-spw-operator-charge-role, data-spw-ingredient-phase, data-spw-ordinality, or data-spw-semantic-charge when they claim charge or order."
+    css_rule: "Use low-specificity rails, borders, shadows, or material changes in handles/effects/shell layers. Reserve ornament layer overrides for final-state intensification, not ordinary semantics."
+  }
+
+  physical_modeling: {
+    thesis: "Spw operators are geometric anchors for force, field, containment, flow, selection, ratio, and impulse modeling. A UI component can therefore be reasoned about as an addressable physical system rather than only as a visual card."
+    charge: "Charge is stored tendency that can bias the next projection, inspection, or return."
+    ordinality: "Ordinality is not only numbered order; it is sequence under pressure. Mode choices, normalized scales, trails, and stacked ingredients should reveal where an item sits in a series."
+    validation: "A component that claims physical modeling should be inspectable through data attributes, deep links, and replayable state, not only through animation."
+  }
+
+  design_consequence: "Spells, cauldron, breadcrumbs, and embedded settings ornaments should be read as hypermedia mantlepieces: compact surfaces that preserve anchors, state, operator geometry, charge, and return paths."
+}
+
+^"positional_grammar"{
+  ~#thesis: "Operator force is not only which sigil appears, but where it sits in the expression. Prefix primes, infix scopes, postfix marks residue. Brace delimiters couple objective opening to subjective synthesis."
+
+  positions: {
+    prefix: .{
+      role: "priming"
+      definition: "Operator before the named unit. Prepares how the next structure should be read before contact."
+      timing: "before entry — wonder opens, frame names, action commits, ground settles"
+      examples: #[`#>curriculum_frame`, `?boundary_test`, `!memory_audit`, `.prep`, `~ref`][reg=set]
+      runtime_attrs: #[`data-spw-sigil-position="prefix"`, `data-spw-sigil-prefix`, `data-spw-operator-left-role`][reg=set]
+      fixity: "stable"
+    }[reg=facet]
+    infix: .{
+      role: "scoping"
+      definition: "Delimiter or operator between a stable root and a modifier. Changes instance, behavior, lens, or scene without replacing the root."
+      timing: "during reading — variant selection, behavior attachment, conduit projection, scene staging"
+      examples: #[`lens[probe]{wonder.aperture}`, `brace[boundary]`, `scene(comic)`, `film[kitchen]{scene.metaphor}`][reg=set]
+      delimiter_map: {
+        "[": "variant — discoverable sibling form; mode selection without consuming alternatives"
+        "{": "behavior — objective opening; bounded motion, direction, or containment begins"
+        "<": "lens — interpretive conduit or projection edge opens"
+        "(": "scene — staged midprocess context becomes observable"
+      }
+      runtime_attrs: #[`data-spw-sigil-position="infix"`, `data-spw-semantic-expression`, `data-spw-form`, `data-spw-perspective`][reg=set]
+      fixity: "stable"
+    }[reg=facet]
+    postfix: .{
+      role: "residue"
+      definition: "Operator after the named unit. Marks what the structure leaves behind after contact — commitment spent, lift completed, ground recovered."
+      timing: "after exit — acted-through, settled, projected, or closed"
+      examples: #[`commit!`, `token^`, `frame.`, `scene_close)`, `behavior}`][reg=set]
+      runtime_attrs: #[`data-spw-sigil-position="postfix"`, `data-spw-operator-right-role`, `data-spw-phase-postfix`][reg=set]
+      fixity: "tending"
+    }[reg=facet]
+  }
+
+  brace_coupling: {
+    opening: "{ — objective boundary; pressure enters shared structure"
+    closing: "} — subjective synthesis; local consequence becomes readable"
+    flow: "objective_to_subjective is the default brace traversal; reversing it should be explicit in copy or data-spw-operator-flow"
+    charge_rule: "Opening brace may accumulate inspectable charge; closing brace should discharge or make consequence visible"
+    pair_with: "() scene stages what {} contains; [] mode selects which brace instance is active"
+  }
+
+  operational_fixity: {
+    rule: "Positional grammar is stable; specific capacity verbs and one-route postfix experiments are tending; runtime phase labels are volatile."
+    tiers: {
+      fixed: #[`delimiter meanings ({[]<>)`, `prefix/postfix distinction`, `objective/subjective brace axis`][reg=set]
+      stable: #[`data-spw-sigil-position`, `data-spw-semantic-expression`, `operator geometry projection`][reg=set]
+      tending: #[`capacity verbs on effect chips`, `postfix residue copy on teaching routes`, `brace charge copy`][reg=set]
+      experimental: #[`novel infix stacks on one route`, `overload without required geometry fields`][reg=set]
+      volatile: #[`data-spw-phase`, `data-spw-charge`, `data-spw-gesture-source`][reg=set]
+    }
+    patch_rule: "A model may change tending copy locally. Changing stable positional attrs or fixed delimiter meaning requires .spw contract update and validation."
+  }
+
+  symmetry_pairs: [
+    "prefix ! (commit) ↔ postfix ! (acted-through)"
+    "prefix ? (open) ↔ postfix . (settled after inquiry)"
+    "prefix #> (address) ↔ postfix > (projected edge)"
+    "prefix ~ (thread) ↔ postfix ^ (lifted relation made inspectable)"
+    "opening { ↔ closing }"
+    "opening ( ↔ closing )"
+  ]
+
+  anti_patterns: [
+    "using @ as action prefix when ! is the committing move"
+    "treating trailing { as postfix residue when it opens objective containment"
+    "decorating prose with random delimiters that do not change inspectable capacity"
+    "collapsing infix variant and postfix residue into one flattened label"
+  ]
+
+  runtime_surface: [
+    "public/js/kernel/shared.js parseSigilPosition + resolveOperationalFixity"
+    "public/js/semantic/operators.js data-spw-sigil-position + data-spw-fixity-tier"
+    "public/js/kernel/states.js phase prefix/mid/postfix charge ladder"
+    "public/css/handles/operators.css positional seam hints"
+  ]
+  @semantic_hierarchy: ~"./semantic-hierarchy.spw#positional_ladder"
+}
+
 ^"operator_physics"{
   ~#thesis: "Operators are not arbitrary symbols. They encode spatial and attentional relationships that can be felt, observed, and built upon. The physics of operators emerges through priming, symmetry, and relational patterning."
 
@@ -351,5 +481,7 @@
   @site_semantics: ~"./site-semantics.spw"
   @spatial_grammar: ~"../philosophy/spatial-grammar.spw"
   @brace_physics: ~"../_workbench/.spw/registries/brace-physics.spw"
+  @operator_geometry_runtime: ~"../../public/js/kernel/shared.js"
+  @operator_geometry_projection: ~"../../public/css/handles/operators.css"
   @operator_atlas: ~"../../topics/software/spw/"
 }

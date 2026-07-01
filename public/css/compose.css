@@ -11,6 +11,7 @@
 @layer tokens, typography, grammar, components, handles, effects;
 
 @import url('./tokens/core.css') layer(tokens);
+@import url('./tokens/dimensions.css') layer(tokens);
 
 @import url('./typography/base.css') layer(typography);
 @import url('./typography/context.css') layer(typography);
@@ -22,6 +23,10 @@
 @import url('./components/surfaces.css') layer(components);
 @import url('./components/signals.css') layer(components);
 @import url('./components/cards.css') layer(components);
+@import url('./components/semantic-learning.css') layer(components);
+@import url('./components/semantic-variants.css') layer(components);
+@import url('./components/semantic-resonance.css') layer(components);
+@import url('./components/card-ecology.css') layer(components);
 @import url('./components/frames.css') layer(components);
 @import url('./components/pretext.css') layer(components);
 @import url('./components/content.css') layer(components);

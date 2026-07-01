@@ -68,10 +68,27 @@
   margin-block-start: 0;
 }
 
-:where(h1) { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; letter-spacing: -0.03em; }
-:where(h2) { font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; }
-:where(h3) { font-size: clamp(1.25rem, 3vw, 1.5rem); font-weight: 600; }
-:where(h4) { font-size: clamp(1.1rem, 2vw, 1.25rem); font-weight: 600; }
+:where(h1) {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  max-inline-size: min(100%, calc(var(--spw-real-estate-inline, var(--measure-reading, 68ch)) * var(--spw-typography-rank-1, 1)));
+}
+:where(h2) {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 700;
+  max-inline-size: min(100%, calc(var(--spw-real-estate-inline, var(--measure-reading, 68ch)) * var(--spw-typography-rank-2, 0.88)));
+}
+:where(h3) {
+  font-size: clamp(1.25rem, 3vw, 1.5rem);
+  font-weight: 600;
+  max-inline-size: min(100%, calc(var(--spw-real-estate-inline, var(--measure-panel, 52ch)) * var(--spw-typography-rank-3, 0.76)));
+}
+:where(h4) {
+  font-size: clamp(1.1rem, 2vw, 1.25rem);
+  font-weight: 600;
+  max-inline-size: min(100%, calc(var(--spw-real-estate-inline, var(--measure-panel, 52ch)) * var(--spw-typography-rank-4, 0.64)));
+}
 :where(h5) { font-size: 1rem; font-weight: 600; }
 :where(h6) {
   font-size: 0.85rem;

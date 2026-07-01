@@ -12,7 +12,8 @@
  *   ^   object  → source     → syntax    → projection
  *   ?   probe   → inquiry    → observation → result
  *   ~   ref     → local      → remote    → hyper
- *   @   action  → idle       → charging  → committed
+ *   !   action  → idle       → charging  → committed
+ *   @   perspective → idle  → situated  → revised
  *   *   stream  → source     → stream    → sink
  *   !   pragma  → hint       → constraint → pragma
  */
@@ -25,6 +26,7 @@ const SEMANTIC_PHASES = Object.freeze({
     'probe':   ['inquiry',   'observation', 'result'],
     'ref':     ['local',     'remote',      'hyper'],
     'action':  ['idle',      'charging',    'committed'],
+    'perspective': ['idle',  'situated',    'revised'],
     'stream':  ['source',    'stream',      'sink'],
     'pragma':  ['hint',      'constraint',  'pragma'],
 });
@@ -109,7 +111,7 @@ function updateFrameUI(frame) {
     if (consoleSurface) {
         const msg = document.createElement('div');
         msg.className = 'console-log';
-        msg.innerHTML = `<span class="log-op">@</span> [phase] `
+        msg.innerHTML = `<span class="log-op">!</span> [phase] `
             + `<span class="log-meta">${opType}</span> → `
             + `<span class="log-node">${phase}</span>`;
         consoleSurface.appendChild(msg);

@@ -1,0 +1,187 @@
+# Interaction Microstates
+#
+# Bridges gesture physics, interaction phases, pinch scaling, and CSS spend.
+
+#>interaction_microstates
+#:convention #!interaction #!gesture #!progression
+#:layer #!pragmatics
+#:operation contract
+
+@interaction_vocabulary: ~"../../public/js/runtime/interaction-vocabulary.js"
+@interaction_progression: ~"../../public/js/runtime/interaction-progression.js"
+@pulse_beat_tuner: ~"../../public/js/runtime/pulse-beat-tuner.js"
+@palette_treat_discovery: ~"../../public/js/runtime/palette-treat-discovery.js"
+@interactive_medium: ~"../../public/js/runtime/interactive-medium.js"
+@css_interactive_medium: ~"../../public/css/systems/interactive-medium.css"
+@css_palette_treat: ~"../../public/css/systems/palette-treat.css"
+@brace_gestures: ~"../../public/js/runtime/brace-gestures.js"
+@pinch_scale: ~"../../public/js/runtime/attention/pinch-scale.js"
+@link_copy: ~"../../public/js/semantic/link-copy.js"
+@css_progression: ~"../../public/css/systems/interaction-progression.css"
+@css_gesture_anatomy: ~"../../public/css/components/gesture-anatomy.css"
+@coloring_depth: ~"./coloring-depth.spw"
+@component_interaction_semantics: ~"../../public/js/semantic/component-interaction-semantics.js"
+@component_semantics: ~"../../public/js/semantic/component-semantics.js"
+
+^"phase_ladder"{
+  html_attr: `data-spw-interaction-phase`
+  pulse_attr: `data-spw-microinteraction-pulse`
+  phases: #[`idle`, `approach`, `prime`, `charge`, `inspect`, `discover`, `settle`][reg=set]
+  writers: #[
+    `interaction-progression.js — hover/focus/tap/pinch/swipe/ecology/image`
+    `brace-gestures.js — data-spw-gesture on local targets`
+    `pinch-scale.js — data-spw-pinch-scaling during text scale preview`
+  ][reg=set]
+}
+
+^"sigil_payload_transition"{
+  local_phase_attr: `data-spw-sigil-transition`
+  root_phase_attr: `data-spw-sigil-transition`
+  payload_scope_attr: `data-spw-sigil-payload-scope`
+  phases: #[`approach`, `prime`, `commit`, `release`, `settle`][reg=set]
+  payloads: #[
+    `data-spw-sigil-payload-page`
+    `data-spw-sigil-payload-family`
+    `data-spw-sigil-payload-role`
+    `data-spw-sigil-payload-topic`
+    `data-spw-sigil-region`
+    `data-spw-sigil-region-harmony`
+    `data-spw-sigil-region-tempo`
+    `data-spw-sigil-region-density`
+  ][reg=set]
+  writers: #[
+    `operator-interactions.js — reads page anatomy/topical payload plus nearest region profile`
+    `operators.css — spends phase, tempo, and payload scope as local outline/filter/translate motion`
+  ][reg=set]
+  api: `window.__SPW_SIGIL_TRANSITIONS__.snapshot()` 
+  event: `spw:sigil-transition`
+  bus_event: `sigil:transition`
+  rule: "Sigil transitions should carry the page key and nearest profiled region when available; visual motion is tending, payload keys are stable."
+}
+
+^"gesture_to_phase"{
+  mapping: .{
+    neutral: idle
+    active: approach
+    charging: prime
+    armed: charge
+    sustained: charge
+    projecting: inspect
+    committed: settle
+  }[reg=facet]
+  local_attr: `data-spw-gesture`
+  css: ~"../../public/css/components/gesture-anatomy.css#gesture-state-anatomy"
+}
+
+^"input_families"{
+  hover: .{ phase: approach, spend: "pre-state visibility, gesture hints, contract lift" }[reg=facet]
+  focus: .{ phase: prime, spend: "operator resonance, variant selection weight" }[reg=facet]
+  tap: .{ phase: "prime|charge per contract", spend: ":active press depth on coarse pointers" }[reg=facet]
+  hold: .{ phase: charge, spend: "brace armed/sustained, cauldron prime" }[reg=facet]
+  pinch: .{ phase: approach, spend: "font scale preview + palette-depth-strength bump" }[reg=facet]
+  swipe: .{ phase: discover, spend: "horizontal scroll rails, vocabulary underline pulse" }[reg=facet]
+}
+
+^"contract_layers"{
+  gesture_contract: `data-spw-gesture-contract="tap:inspect hold:prime"` — local affordance grammar
+  interaction_contract: `data-spw-interaction-contract="tap ground navigate"` — link/menu semantics from link-copy.js
+  loop_state: `data-spw-loop-state="preview|activated|resolved"` — sequence progression on navigable handles
+  loop_to_phase: .{ preview: prime, activated: charge, resolved: settle }[reg=facet]
+  image_swipe_event: `spw:image-swipe` — lens cycle discover pulse from image-interaction.js
+  rule: "Gesture contract teaches local verbs; interaction contract teaches navigation consequence; loop state teaches sequence position."
+}
+
+^"theming_nuance"{
+  tokens: #[
+    `--spw-interaction-phase-weight`
+    `--spw-interaction-phase-tuning`
+    `--spw-microinteraction-pulse-scale`
+    `--spw-microinteraction-pulse-duration`
+    `--spw-microinteraction-pulse-intensity`
+    `--spw-beat-interval-ms`
+    `--spw-freshness-weight`
+    `--spw-pulse-beat-cadence`
+    `--spw-ecology-beat-align`
+    `--palette-depth-strength`
+    `--spw-copy-depth-line-mix`
+    `--spw-copy-depth-bg-mix`
+    `--spw-color-layer-accent-subtle`
+  ][reg=set]
+  tuning: "Phase weight scales with data-spw-enhancement-level and data-spw-semantic-density on html."
+  coloring_depth: "Copy-depth borders deepen during charge/discover phases without changing tier accent family."
+  palette_depth: "Material probes strengthen slightly during charge/inspect and pinch preview."
+}
+
+^"pulse_beat_tuner"{
+  module: @pulse_beat_tuner
+  catalog: "pulse-beat-tuner in module-catalog.js — mounts initPulseBeatTuner at boot."
+  beat_attr: `data-spw-beat` — 1..13 baker's-dozen cycle
+  playing_attr: `data-spw-playing` — on|off when rhythm enabled
+  freshness_attr: `data-spw-freshness-pulse` — beat-prime|phase-*|component-lifecycle|settings-tuning
+  prime_beats: #[1, 5, 9, 13][reg=set]
+  event: `spw:freshness-pulse` — bus echo for discovery/reward surfaces
+  settings_writer: "site-settings-engine.js derives pulseDurationMs, beatIntervalMs, freshnessWeight from interactionTuner profile."
+  css_spend: @css_progression#pulse-beat-tuner
+  disable_when: #[`data-spw-reduce-motion=on`, `data-spw-animation-throttling=heavy`, `data-spw-freshness-weight<0.2`][reg=set]
+  palette_treats: @palette_treat_discovery — listens to freshness-pulse and discovery; spends @css_palette_treat on probe chips.
+}
+
+^"component_interaction_semantics"{
+  module: @component_interaction_semantics
+  registry: @component_semantics
+  beats: #[`rest`, `approach`, `gather`, `commit`, `release`, `settle`][reg=set]
+  physics_profiles: #[`light`, `balanced`, `charged`, `scene`][reg=set]
+  resolved_attrs: #[
+    `data-spw-gesture-contract-resolved`
+    `data-spw-interaction-contract-resolved`
+    `data-spw-lifecycle-beat-resolved`
+    `data-spw-interaction-phase-affinity`
+    `data-spw-physics-profile-resolved`
+    `data-spw-copy-depth-resolved`
+    `data-spw-theming-posture-resolved`
+  ][reg=set]
+  genome_tokens: "beat-*, phase-*, physics-*, copy-depth-*, posture-* appended to data-spw-component-genome."
+}
+
+^"interactive_medium"{
+  module: @interactive_medium
+  css: @css_interactive_medium
+  registers: #[`reading`, `lab`, `workshop`, `play`, `scene`][reg=set]
+  postures: #[`touch-field`, `touch-tablet`, `pointer-balanced`, `pointer-rich`][reg=set]
+  root_attrs: #[
+    `data-spw-medium-register`
+    `data-spw-interaction-posture`
+    `data-spw-medium-intensity`
+    `data-spw-interactive-medium-ready`
+  ][reg=set]
+  note: "Systems-layer tail import modulates scene/key-event tokens by viewport, pointer, packing tier, and route register."
+}
+
+^"consolidation"{
+  vocabulary_module: "interaction-vocabulary.js owns gesture→phase and contract→phase maps."
+  progression_module: "interaction-progression.js observes gestures/pinch/images/rails; does not duplicate brace physics."
+  component_module: "component-interaction-semantics.js infers per-component beats/contracts/physics; component-semantics.js writes resolved attrs."
+  brace_module: "brace-gestures.js owns pointer state machine; progression listens via data-spw-gesture mutations."
+  link_copy: "link-copy.js writes interaction-contract attrs; CSS spends them in interaction-progression.css + operators.css."
+}
+
+validation: #[
+  `Pinch preview sets data-spw-pinch-scaling and bumps approach-phase tokens.`
+  `Brace gestures write data-spw-gesture; progression maps armed/charging to charge/prime.`
+  `Arc lifecycle writes data-spw-loop-state; progression maps preview/activated/resolved to prime/charge/settle.`
+  `Image lens swipe dispatches spw:image-swipe and bumps discover phase.`
+  `Scroll-rail horizontal movement triggers discover pulse with cooldown.`
+  `Coarse pointers get :active affordances when hover is unavailable.`
+  `Copy-depth and palette-depth tokens respond to phase without new attrs on copy layers.`
+  `pulse-beat-tuner mounts from catalog; prime beats 1/5/9/13 dispatch spw:freshness-pulse and bump ecology-beat-align.`
+  `interactionTuner calm|responsive|expressive shifts beatTempo, pulseScale, and freshness weight into CSS tokens.`
+  `palette-treat-discovery splashes probe chips on beat-prime, discovery, discover-phase, and resonance change.`
+  `Probe rails are keyboard radiogroups; arrow keys fire arrow-reward treats and resonance toolbars rove with arrows.`
+  `spw-key-events potentiation threads focus via data-spw-selection-state=potentiated; Enter|Space actualizes scene hosts into data-spw-scene-state=entered.`
+  `Escape pops scene stack (data-spw-scene-depth) before clearing selection threads; scene packets include spw_context for LM handoff.`
+  `topical-payload aggregates topics, lore roles, scene-interpret handles, image chips, and active scene into pageAnatomy.snapshot.topicalPayload.`
+  `Information reveal phases frame → revealing → revealed → settling via data-spw-reveal-phase; wonder blocks pass through thinking before revealed.`
+  `scene-interaction beds rove lanes with radiogroup semantics, couple image lens to lane bind, and persist mode/lane/lens in localStorage.`
+  `interactive-medium classifies route register + interaction posture; writes device-aware tokens consumed by scene-interaction and spw-key-events.`
+  `Coarse/narrow viewports raise --spw-medium-touch-min; touch hover mode suppresses lane lift transforms.`
+][reg=set]

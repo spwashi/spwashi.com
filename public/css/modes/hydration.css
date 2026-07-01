@@ -19,3 +19,23 @@ html[data-spw-hydration="activating"] :where(.site-header, body > header, .site-
 html[data-spw-hydration="ready"] :where(.site-header, body > header, .site-header nav, body > header nav, [data-spw-frame="hero"] .frame-topline, [data-spw-activates]) {
   contain: none;
 }
+
+/* Pass momentum — brief surface echo when lex → semantic → pragmatic advances */
+html[data-spw-hydration-pass="lex"] {
+  --spw-hydration-pass-surface: 0.42;
+}
+
+html[data-spw-hydration-pass="semantic"],
+html[data-spw-hydration-pass-momentum="active"] {
+  --spw-hydration-pass-surface: 0.72;
+}
+
+html[data-spw-hydration-pass="pragmatic"] {
+  --spw-hydration-pass-surface: 1;
+}
+
+html[data-spw-hydration-pass="semantic"] :where([data-spw-sigil-role="grammar"], .syntax-token) {
+  transition:
+    color var(--spw-component-arrival-transition, 140ms var(--ease-settle)),
+    opacity var(--spw-component-arrival-transition, 140ms var(--ease-settle));
+}

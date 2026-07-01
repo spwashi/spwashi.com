@@ -714,6 +714,8 @@ async function bootSite() {
     source: 'site-runtime',
     scope: 'document',
   });
+  const { applyPrecipitationRequest } = await import('./runtime/precipitation-request.js');
+  applyPrecipitationRequest(document);
 
   runtimeCtx = createRuntimeContext();
   runtimeCtx.queryDisposition = queryDisposition;

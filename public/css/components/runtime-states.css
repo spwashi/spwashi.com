@@ -761,10 +761,198 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
     color-mix(in srgb, var(--component-accent, var(--teal, #008080)) 72%, var(--ink-soft, rgba(14, 18, 20, 0.72)) 28%);
 }
 
-:where(html[data-spw-prefetch-mode="selective"]) :where([data-spw-module], [data-spw-image-reward], [data-spw-image-discovery]) {
+/* Module effect surface — root-level tokens derived from mounted module side effects. */
+:where(html[data-spw-module-effects-active]) {
+  --spw-module-effect-surface: 1;
+}
+
+:where(html[data-spw-module-effect-pulse]) {
+  --spw-module-effect-pulse: 1;
+  --spw-site-rhythm-tempo: min(calc(var(--spw-site-rhythm-tempo, 1) * 1.08), 3.2);
+}
+
+:where(html[data-spw-runtime-enhancement-active="true"]) {
+  --spw-runtime-enhancement-intensity: max(var(--spw-runtime-enhancement-intensity, 0.32), 0.72);
+}
+
+:where(html[data-spw-runtime-feature-active="true"]) {
+  --spw-runtime-feature-intensity: max(var(--spw-runtime-feature-intensity, 0.22), 0.62);
+}
+
+:where(html[data-spw-runtime-layer-pulse="dense"]) {
+  --spw-site-rhythm-density: max(var(--spw-site-rhythm-density, 0.5), 0.92);
+}
+
+:where([data-spw-interaction-contract]) {
+  --spw-interaction-contract-surface: 1;
+}
+
+:where([data-spw-interaction-affordance]) {
+  cursor: pointer;
+}
+
+:where(
+  [data-spw-interaction-contract]:is(:hover, :focus-visible),
+  [data-spw-loop-state="preview"],
+  .spw-route-menu-link:is(:hover, :focus-visible)
+) {
+  --spw-interaction-loop-preview: 1;
+}
+
+:where([data-spw-loop-state="activated"], [data-spw-loop-state="resolved"]) {
+  --spw-interaction-loop-active: 1;
+}
+
+/* ==========================================================================
+   25b. Loading ecology surface
+   --------------------------------------------------------------------------
+   Root token projections for prefetch, measurement, settling, and genre
+   maturation. Environmental spending lives in substrate-ecology; arrival bias
+   spends through frames/surfaces; operator twinkle spends in operators.css.
+   ========================================================================== */
+
+:where(html[data-spw-loading-ecology-phase]) {
+  --spw-loading-ecology-surface: 1;
+}
+
+:where(html[data-spw-loading-ecology-phase="discovering"], html[data-spw-loading-ecology-phase="prefetching"]) {
+  --spw-layout-cascade-hold: max(var(--spw-layout-cascade-hold, 0), 0.72);
+  --spw-region-profile-intensity: min(var(--spw-region-profile-intensity, 1), 0.42);
+}
+
+:where(html[data-spw-loading-ecology-phase="measuring"]) {
+  --spw-layout-measure-settle: var(--spw-region-profile-refresh-duration, 220ms) var(--ease-settle);
+}
+
+:where(html[data-spw-loading-ecology-phase="mounting"]) {
+  --spw-site-rhythm-tempo: min(calc(var(--spw-site-rhythm-tempo, 1) * 0.92), 2.4);
+}
+
+:where(html[data-spw-loading-ecology-phase="settling"], html[data-spw-loading-ecology-phase="personalizing"]) {
+  --spw-site-rhythm-tempo: min(calc(var(--spw-site-rhythm-tempo, 1) * 0.94), 2.8);
+  --spw-ecology-settle-weight: 1;
+  --spw-component-transition-arrival: var(--spw-component-arrival-transition, 140ms var(--ease-settle));
+}
+
+:where(html[data-spw-loading-ecology-phase="settled"]) {
+  --spw-ecology-settle-weight: 0;
+  --spw-ecology-arrival-bias: 0px;
+}
+
+:where(html[data-spw-loading-ecology-salience="forward"]) {
+  --spw-ecology-salience-shift: var(--spw-settle-offset-start, 2px);
+}
+
+:where(html[data-spw-loading-ecology-salience="return"], html[data-spw-loading-ecology-salience="restore"]) {
+  --spw-ecology-salience-shift: calc(var(--spw-settle-offset-start, 2px) * -1);
+}
+
+:where(html[data-spw-loading-ecology-salience="anchor"]) {
+  --spw-ecology-salience-shift: 0px;
+}
+
+:where(html[data-spw-loading-ecology-salience="dormancy"]) {
+  --spw-ecology-salience-shift: var(--spw-settle-offset-mid, 1px);
+  --spw-site-rhythm-tempo: min(var(--spw-site-rhythm-tempo, 1), 0.72);
+}
+
+:where(html[data-spw-loading-ecology-salience]:not([data-spw-loading-ecology-salience="anchor"])) {
+  --spw-ecology-arrival-bias: calc(var(--spw-ecology-salience-shift, 0px) * -1 * var(--spw-ecology-settle-weight, 0));
+}
+
+:where(html[data-spw-loading-ecology-rhythm="snap"], html[data-spw-loading-ecology-rhythm="fast"]) {
+  --spw-ecology-beat-align: 0.42;
+}
+
+:where(html[data-spw-loading-ecology-rhythm="base"]) {
+  --spw-ecology-beat-align: 0.62;
+}
+
+:where(html[data-spw-loading-ecology-rhythm="deliberate"], html[data-spw-loading-ecology-rhythm="settle"]) {
+  --spw-ecology-beat-align: 1;
+}
+
+:where(html[data-spw-loading-ecology-twinkle="true"]) {
+  --spw-ecology-twinkle: 1;
+  --spw-site-rhythm-density: max(var(--spw-site-rhythm-density, 0.5), 0.88);
+  --spw-ecology-readiness-ring-strength: 1;
+}
+
+:where(html[data-spw-loading-ecology-dimensions~="fetch"]) {
+  --spw-ecology-readiness-ring-strength: max(var(--spw-ecology-readiness-ring-strength, 0), 0.72);
+}
+
+:where(html[data-spw-prefetch-mode="selective"]) :where(
+  [data-spw-module],
+  [data-spw-image-reward],
+  [data-spw-image-discovery]
+) {
   --spw-runtime-readiness-ring:
-    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 10%, transparent);
+    0 0 0 calc(1px + (1px * var(--spw-ecology-readiness-ring-strength, 0)))
+      color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) calc(10% + (8% * var(--spw-ecology-readiness-ring-strength, 0))), transparent),
+    0 0 calc(8px * var(--spw-ecology-twinkle, 0) * var(--spw-ecology-readiness-ring-strength, 0))
+      color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 8%, transparent);
   box-shadow: var(--spw-runtime-readiness-ring), var(--spw-local-shadow, var(--component-shadow, none));
+}
+
+:where(html[data-spw-loading-ecology-dimensions~="personalize"]) {
+  --spw-runtime-enhancement-intensity: max(var(--spw-runtime-enhancement-intensity, 0.32), 0.58);
+}
+
+:where(html[data-spw-loading-ecology-dimensions~="theme"]) {
+  --spw-component-settle-transition: var(--spw-interaction-settle, var(--component-transition-base));
+}
+
+:where(html[data-spw-loading-ecology-dimensions~="measure"]) :where(
+  [data-spw-flow="pretext"],
+  [data-spw-box-model]
+) {
+  transition:
+    opacity var(--spw-layout-measure-settle, 220ms var(--ease-settle)),
+    transform var(--spw-layout-measure-settle, 220ms var(--ease-settle));
+}
+
+:where(html[data-spw-loading-ecology-trope="ruleset-settle"]) {
+  --spw-ecology-trope-weight: 0.72;
+}
+
+:where(html[data-spw-loading-ecology-trope="theme-shift"], html[data-spw-loading-ecology-trope="spacing-tune"]) {
+  --spw-ecology-trope-weight: 0.78;
+}
+
+:where(html[data-spw-loading-ecology-trope="gestalt-rebalance"], html[data-spw-loading-ecology-trope="typography-flow"]) {
+  --spw-ecology-trope-weight: 0.86;
+}
+
+:where(html[data-spw-loading-ecology-genre]) {
+  --spw-salience-weight: calc(0.34 + (var(--spw-ecology-trope-weight, 0) * 0.12));
+}
+
+:where(html[data-spw-loading-ecology-phase="settling"], html[data-spw-loading-ecology-phase="personalizing"]) :where(
+  [data-spw-region-state="settling"],
+  [data-spw-module][data-spw-module-hydration="ready"]
+) {
+  --component-module-rail-opacity: calc(0.44 + (0.12 * var(--spw-ecology-settle-weight, 0)));
+}
+
+:where(html[data-spw-reduce-motion="on"]) {
+  --spw-ecology-twinkle: 0;
+  --spw-ecology-readiness-ring-strength: 0;
+  --spw-ecology-arrival-bias: 0px;
+}
+
+/* Settings tuning + spell momentum (brief pulse after canonical settings apply) */
+:where(html[data-spw-settings-momentum="pulse"]) {
+  --spw-runtime-enhancement-intensity: max(var(--spw-runtime-enhancement-intensity, 0.32), 0.64);
+  --spw-interaction-loop-active: 1;
+}
+
+:where(html[data-spw-spell-momentum="tuning"]) :where(
+  .spw-spell,
+  .spw-route-menu-link,
+  [data-spw-interaction-contract]
+) {
+  transition-duration: var(--touch-commit, 180ms);
 }
 
 
@@ -799,6 +987,13 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
 }
 
 @media (prefers-reduced-motion: reduce) {
+  :where(html[data-spw-loading-ecology-phase]) {
+    --spw-ecology-twinkle: 0;
+    --spw-ecology-readiness-ring-strength: 0;
+    --spw-ecology-arrival-bias: 0px;
+    --spw-ecology-settle-weight: 0;
+  }
+
   :where(*, *::before, *::after) {
     animation-duration: 1ms !important;
     animation-iteration-count: 1 !important;

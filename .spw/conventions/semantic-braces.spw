@@ -22,6 +22,20 @@
   parens: "() stage scenes and performative contexts."
   angles: "<> carry lenses, conduits, or interpretive filters; in authored HTML, prefer data attributes or escaped text so markup stays valid."
   discoverability: "A reader should be able to jump from one instance to another by shared root, then narrow by variant or behavior."
+  positional_coupling: "Root is stable (stable fixity). [variant] and {behavior} are infix scopes (stable grammar, tending labels). Closing } or acted-through ! are postfix residue (tending copy, volatile runtime phase)."
+}
+
+^"operational_fixity"{
+  expression_parts: {
+    root: .{ fixity = "stable"; rule = "Shared stem across routes; do not rename casually." }[reg=facet]
+    variant: .{ fixity = "stable"; rule = "Bracketed sibling form; extend only when the distinction is teachable." }[reg=facet]
+    behavior: .{ fixity = "tending"; rule = "Braced affordance labels may improve with practice beds." }[reg=facet]
+    lens: .{ fixity = "tending"; rule = "Angle conduit names how the root is being read." }[reg=facet]
+    scene: .{ fixity = "stable"; rule = "Paren staging marks midprocess observability." }[reg=facet]
+    residue: .{ fixity = "volatile"; rule = "Postfix charge and phase state are runtime-owned, not authored doctrine." }[reg=facet]
+  }
+  validation: "Semantic expressions should declare data-spw-semantic-expression when behavior or lens changes meaning; fixity tier should be inferable from position per operator-semantics.spw#positional_grammar."
+  @positional_grammar: ~"./operator-semantics.spw#positional_grammar"
 }
 
 ^"operational_semantics"{

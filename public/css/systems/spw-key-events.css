@@ -1,0 +1,288 @@
+/* ==========================================================================
+   spw-key-events.css
+   --------------------------------------------------------------------------
+   Potentiation threads, scene-context depth, and staged information reveals.
+   ========================================================================== */
+
+:root {
+  --spw-key-potential-strength: 0;
+  --spw-scene-context-strength: 0;
+  --spw-reveal-phase-weight: 0;
+  --spw-reveal-duration: var(--spw-wonder-duration-deliberate, 420ms);
+  --spw-reveal-duration-fast: var(--spw-wonder-duration-fast, 120ms);
+  --spw-reveal-ease: var(--spw-wonder-ease-settle, cubic-bezier(0.22, 1, 0.36, 1));
+  --spw-reveal-stagger-step: var(--spw-medium-reveal-stagger-step, 72ms);
+  --spw-reveal-frame-strength: 0;
+}
+
+:where(html[data-spw-key-selection="potentiated"]) {
+  --spw-key-potential-strength: calc(0.42 + (var(--spw-freshness-weight, 0.5) * 0.2));
+}
+
+:where(html[data-spw-key-selection="actualized"]) {
+  --spw-key-potential-strength: calc(0.62 + (var(--spw-freshness-weight, 0.5) * 0.28));
+}
+
+:where(html[data-spw-scene-depth]) {
+  --spw-scene-context-strength: calc(0.18 + (min(3, var(--spw-scene-depth, 0)) * 0.12));
+}
+
+:where(html[data-spw-reveal-phase="framing"]) {
+  --spw-reveal-frame-strength: calc(0.28 + (var(--spw-reveal-phase-weight, 0.35) * 0.4));
+}
+
+:where(html[data-spw-reveal-phase="revealing"]) {
+  --spw-reveal-frame-strength: calc(0.52 + (var(--spw-reveal-phase-weight, 0.72) * 0.35));
+}
+
+:where(html[data-spw-reveal-phase="revealed"]) {
+  --spw-reveal-frame-strength: calc(0.68 + (var(--spw-reveal-phase-weight, 1) * 0.22));
+}
+
+:where(html[data-spw-reveal-phase="settling"]) {
+  --spw-reveal-frame-strength: calc(0.22 + (var(--spw-reveal-phase-weight, 0.28) * 0.3));
+}
+
+:where(html[data-spw-information-reveal="on"]) {
+  --spw-microinteraction-pulse-intensity: calc(1 + (var(--spw-reveal-phase-weight, 0) * 0.18));
+}
+
+:where([data-spw-selection-state="potentiated"]) {
+  outline: 1px solid color-mix(
+    in srgb,
+    var(--op-ref-color, #1d57a3) calc(24% + (var(--spw-key-potential-strength) * 22%)),
+    transparent
+  );
+  outline-offset: 3px;
+  box-shadow:
+    0 0 0 calc(1px * var(--spw-key-potential-strength))
+    color-mix(in srgb, var(--op-ref-color, #1d57a3) 18%, transparent);
+  transition:
+    outline-color var(--spw-reveal-duration-fast) var(--spw-reveal-ease),
+    box-shadow var(--spw-reveal-duration) var(--spw-reveal-ease),
+    outline-offset var(--spw-reveal-duration-fast) var(--spw-reveal-ease);
+}
+
+:where([data-spw-selection-state="actualized"]) {
+  outline: 1px solid color-mix(
+    in srgb,
+    var(--op-frame-color, #008080) calc(34% + (var(--spw-key-potential-strength) * 24%)),
+    transparent
+  );
+  outline-offset: 4px;
+  transition:
+    outline-color var(--spw-reveal-duration) var(--spw-reveal-ease),
+    outline-offset var(--spw-reveal-duration) var(--spw-reveal-ease);
+}
+
+:where([data-spw-reveal-frame="arming"]) {
+  transform: translateY(1px) scale(0.998);
+  transition:
+    transform var(--spw-reveal-duration) var(--spw-reveal-ease),
+    box-shadow var(--spw-reveal-duration) var(--spw-reveal-ease);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--op-ref-color, #1d57a3) calc(12% + (var(--spw-reveal-frame-strength) * 18%)), transparent),
+    0 10px 24px color-mix(in srgb, var(--shadow, #000) 6%, transparent);
+}
+
+:where([data-spw-reveal-frame="open"]),
+:where([data-spw-scene-state="entered"]) {
+  position: relative;
+  transition:
+    transform var(--spw-reveal-duration) var(--spw-reveal-ease),
+    box-shadow var(--spw-reveal-duration) var(--spw-reveal-ease);
+  --spw-local-shadow:
+    0 0 0 1px color-mix(in srgb, var(--op-frame-color, #008080) calc(18% + (var(--spw-reveal-frame-strength) * 20%)), transparent),
+    0 14px 34px color-mix(in srgb, var(--shadow, #000) calc(8% + (var(--spw-scene-context-strength) * 10%)), transparent);
+}
+
+:where([data-spw-reveal-frame="open"])::before,
+:where([data-spw-scene-state="entered"])::before {
+  content: "";
+  position: absolute;
+  inset: -0.42rem;
+  border-radius: calc(var(--component-radius, 12px) + 0.35rem);
+  border: 1px solid color-mix(
+    in srgb,
+    var(--op-frame-color, #008080) calc(16% + (var(--spw-reveal-frame-strength) * 28%)),
+    transparent
+  );
+  pointer-events: none;
+  opacity: calc(0.35 + (var(--spw-reveal-frame-strength) * 0.55));
+  animation: spw-reveal-frame-breathe var(--spw-reveal-duration) var(--spw-reveal-ease) both;
+}
+
+:where([data-spw-reveal-frame="closing"]) {
+  opacity: 0.92;
+  transform: translateY(2px) scale(0.996);
+  transition:
+    opacity var(--spw-reveal-duration-fast) var(--spw-reveal-ease),
+    transform var(--spw-reveal-duration) var(--spw-reveal-ease);
+}
+
+:where(html[data-spw-scene-depth]) :where(main, body) {
+  background-image: radial-gradient(
+    120% 80% at 50% 0%,
+    color-mix(in srgb, var(--op-frame-color, #008080) calc(var(--spw-scene-context-strength) * 8%), transparent),
+    transparent 68%
+  );
+  transition: background-image var(--spw-reveal-duration) var(--spw-reveal-ease);
+}
+
+:where(html[data-spw-reveal-phase="revealing"], html[data-spw-reveal-phase="revealed"]) :where(main, body) {
+  background-image: radial-gradient(
+    118% 82% at 50% -4%,
+    color-mix(
+      in srgb,
+      var(--op-probe-color, #6a3fb8) calc(4% + (var(--spw-reveal-phase-weight, 0) * 10%)),
+      transparent
+    ),
+    radial-gradient(
+      120% 80% at 50% 0%,
+      color-mix(in srgb, var(--op-frame-color, #008080) calc(var(--spw-scene-context-strength) * 10%), transparent),
+      transparent 68%
+    );
+}
+
+:where([data-spw-scene-state="entered"] .spw-scene-bed__lane),
+:where([data-spw-scene-state="entered"] [data-spw-scene-lane]),
+:where([data-spw-reveal-frame="open"] .spw-scene-bed__lane),
+:where([data-spw-reveal-frame="open"] [data-spw-scene-lane]) {
+  border-inline-start: 2px solid color-mix(
+    in srgb,
+    var(--op-probe-color, #6a3fb8) calc(20% + (var(--spw-scene-context-strength) * 30%)),
+    transparent
+  );
+  padding-inline-start: 0.55rem;
+  opacity: 0;
+  transform: translateY(6px);
+  animation: spw-reveal-lane-rise var(--spw-reveal-duration) var(--spw-reveal-ease) forwards;
+}
+
+:where([data-spw-scene-state="entered"] .spw-scene-bed__lane:nth-child(1)),
+:where([data-spw-scene-state="entered"] [data-spw-scene-lane]:nth-child(1)),
+:where([data-spw-reveal-frame="open"] .spw-scene-bed__lane:nth-child(1)),
+:where([data-spw-reveal-frame="open"] [data-spw-scene-lane]:nth-child(1)) {
+  animation-delay: calc(var(--spw-reveal-stagger-step) * 0);
+}
+
+:where([data-spw-scene-state="entered"] .spw-scene-bed__lane:nth-child(2)),
+:where([data-spw-scene-state="entered"] [data-spw-scene-lane]:nth-child(2)),
+:where([data-spw-reveal-frame="open"] .spw-scene-bed__lane:nth-child(2)),
+:where([data-spw-reveal-frame="open"] [data-spw-scene-lane]:nth-child(2)) {
+  animation-delay: calc(var(--spw-reveal-stagger-step) * 1);
+}
+
+:where([data-spw-scene-state="entered"] .spw-scene-bed__lane:nth-child(3)),
+:where([data-spw-scene-state="entered"] [data-spw-scene-lane]:nth-child(3)),
+:where([data-spw-reveal-frame="open"] .spw-scene-bed__lane:nth-child(3)),
+:where([data-spw-reveal-frame="open"] [data-spw-scene-lane]:nth-child(3)) {
+  animation-delay: calc(var(--spw-reveal-stagger-step) * 2);
+}
+
+:where(.spw-wonder-block[data-spw-reveal-source="scene-enter"]),
+:where(.spw-wonder-block[data-spw-reveal-source="preview"]) {
+  transform-origin: top center;
+  transition:
+    opacity var(--spw-reveal-duration) var(--spw-reveal-ease),
+    transform var(--spw-reveal-duration) var(--spw-reveal-ease),
+    box-shadow var(--spw-reveal-duration) var(--spw-reveal-ease),
+    border-color var(--spw-reveal-duration) var(--spw-reveal-ease);
+}
+
+:where(.spw-wonder-block[data-spw-reveal-source="scene-enter"][data-spw-wonder-block-state="thinking"]),
+:where(.spw-wonder-block[data-spw-reveal-source="preview"][data-spw-wonder-block-state="thinking"]) {
+  opacity: 0.78;
+  transform: translateY(8px) scale(0.992);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--wonder-accent-color, var(--op-probe-color, #6a3fb8)) 18%, transparent),
+    0 8px 20px color-mix(in srgb, var(--shadow, #000) 5%, transparent);
+}
+
+:where(.spw-wonder-block[data-spw-reveal-source="scene-enter"][data-spw-wonder-block-state="thinking"]) .wonder-body,
+:where(.spw-wonder-block[data-spw-reveal-source="preview"][data-spw-wonder-block-state="thinking"]) .wonder-body {
+  opacity: 0.62;
+  filter: blur(0.3px);
+  transition: opacity var(--spw-reveal-duration-fast) var(--spw-reveal-ease);
+}
+
+:where(.spw-wonder-block[data-spw-reveal-source="scene-enter"][data-spw-wonder-block-state="revealed"]),
+:where(.spw-wonder-block[data-spw-reveal-source="scene-enter"][data-spw-wonder-block-state="expanded"]),
+:where(.spw-wonder-block[data-spw-reveal-source="preview"][data-spw-wonder-block-state="revealed"]),
+:where(.spw-wonder-block[data-spw-reveal-source="preview"][data-spw-wonder-block-state="expanded"]) {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  animation: spw-reveal-wonder-settle var(--spw-reveal-duration) var(--spw-reveal-ease) both;
+}
+
+:where(.spw-wonder-block[data-spw-reveal-source="scene-enter"][data-spw-wonder-block-state="revealed"]) .wonder-body,
+:where(.spw-wonder-block[data-spw-reveal-source="scene-enter"][data-spw-wonder-block-state="expanded"]) .wonder-body,
+:where(.spw-wonder-block[data-spw-reveal-source="preview"][data-spw-wonder-block-state="revealed"]) .wonder-body,
+:where(.spw-wonder-block[data-spw-reveal-source="preview"][data-spw-wonder-block-state="expanded"]) .wonder-body {
+  opacity: 1;
+  filter: none;
+  animation: spw-reveal-body-unveil calc(var(--spw-reveal-duration) * 1.1) var(--spw-reveal-ease) both;
+}
+
+@keyframes spw-reveal-frame-breathe {
+  from {
+    opacity: 0;
+    transform: scale(0.985);
+  }
+  to {
+    opacity: calc(0.35 + (var(--spw-reveal-frame-strength) * 0.55));
+    transform: scale(1);
+  }
+}
+
+@keyframes spw-reveal-lane-rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spw-reveal-wonder-settle {
+  from {
+    opacity: 0.7;
+    transform: translateY(10px) scale(0.988);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes spw-reveal-body-unveil {
+  from {
+    opacity: 0.45;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where([data-spw-selection-state="potentiated"], [data-spw-selection-state="actualized"]) {
+    transition: none;
+  }
+
+  :where([data-spw-reveal-frame="arming"], [data-spw-reveal-frame="open"], [data-spw-reveal-frame="closing"]) {
+    transform: none;
+    transition: none;
+  }
+
+  :where([data-spw-scene-state="entered"] .spw-scene-bed__lane),
+  :where([data-spw-scene-state="entered"] [data-spw-scene-lane]),
+  :where(.spw-wonder-block[data-spw-reveal-source="scene-enter"]) {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

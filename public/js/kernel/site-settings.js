@@ -32,6 +32,7 @@ import {
   setHighContrast,
   validatePartialSettings,
   validateSetting,
+  buildSettingsShareHref,
 } from './site-settings-engine.js';
 import {
   applyUxRecipe,
@@ -77,6 +78,7 @@ if (typeof window !== 'undefined') {
     queryRecipes: SETTINGS_QUERY_RECIPES,
     buildSettingsQueryHref,
     buildSettingsQuerySearch,
+    buildSettingsShareHref,
     recipes: UX_RECIPES,
     applyRecipe: applyUxRecipe,
     findActivePreset,

@@ -1,0 +1,258 @@
+/* ==========================================================================
+   effect-interpretation.css
+   --------------------------------------------------------------------------
+   Visual layer for interpreting image lenses, interaction states, and cues.
+   ========================================================================== */
+
+:where(
+  .topic-photo-card,
+  .image-study,
+  [data-spw-image-reward],
+  [data-spw-image-discovery],
+  .frame-card-media,
+  [data-spw-image-surface]
+) {
+  --spw-effect-accent: var(--spw-image-lens-accent, var(--active-op-color, var(--teal, #008080)));
+  --spw-effect-rail-opacity: 0;
+}
+
+:where(
+  .topic-photo-card[data-spw-image-lens-active],
+  .image-study[data-spw-image-lens-active],
+  [data-spw-image-surface][data-spw-image-lens-active],
+  .frame-card-media[data-spw-image-lens-active]
+)::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto auto 0;
+  inline-size: 100%;
+  block-size: 3px;
+  border-radius: var(--component-radius-tight, 8px) var(--component-radius-tight, 8px) 0 0;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--spw-effect-accent) 72%, transparent),
+    color-mix(in srgb, var(--spw-effect-accent) 28%, transparent)
+  );
+  opacity: calc(0.28 + (var(--spw-interaction-phase-weight, 0) * 0.42));
+  pointer-events: none;
+  z-index: 2;
+  transition: opacity var(--spw-image-interaction-duration, 360ms) var(--spw-image-interaction-ease, ease);
+}
+
+:where(
+  .topic-photo-card[data-spw-image-interaction-state="primed"],
+  .image-study[data-spw-image-interaction-state="primed"],
+  [data-spw-image-surface][data-spw-image-interaction-state="primed"]
+)::before {
+  --spw-effect-rail-opacity: 0.52;
+  opacity: max(var(--spw-effect-rail-opacity), 0.52);
+}
+
+:where(
+  .topic-photo-card[data-spw-image-interaction-state="inspecting"],
+  .image-study[data-spw-image-interaction-state="inspecting"],
+  [data-spw-image-surface][data-spw-image-interaction-state="inspecting"]
+)::before {
+  block-size: 4px;
+  opacity: 0.78;
+}
+
+:where(
+  .topic-photo-card[data-spw-image-interaction-state="discovered"],
+  .image-study[data-spw-image-interaction-state="discovered"],
+  [data-spw-image-discovery][data-spw-image-interaction-state="discovered"]
+)::before {
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--spw-effect-accent) 88%, white 12%),
+    color-mix(in srgb, var(--delight-color, var(--spw-effect-accent)) 42%, transparent)
+  );
+  opacity: 0.92;
+}
+
+:where(.spw-effect-state) {
+  position: absolute;
+  inset: 0.42rem 0.42rem auto auto;
+  z-index: 3;
+  padding: 0.16rem 0.46rem;
+  border: 1px solid color-mix(in srgb, var(--spw-effect-accent) 34%, var(--line, transparent));
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-strong, #fff) 88%, var(--spw-effect-accent) 12%);
+  color: color-mix(in srgb, var(--ink, currentColor) 78%, var(--spw-effect-accent) 22%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-2xs, 0.68rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  pointer-events: none;
+}
+
+:where(.spw-effect-legend) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.34rem;
+  align-items: center;
+}
+
+:where(.spw-effect-chip) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+  padding: 0.14rem 0.46rem;
+  border: 1px solid color-mix(in srgb, var(--line, transparent) 82%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-strong, #fff) 94%, var(--ink, #111) 6%);
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-size: var(--text-size-2xs, 0.68rem);
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  line-height: 1.25;
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    color 180ms ease,
+    box-shadow 180ms ease,
+    transform 140ms ease;
+}
+
+:where(button.spw-effect-chip) {
+  cursor: pointer;
+  font: inherit;
+  appearance: none;
+}
+
+:where(button.spw-effect-chip:hover),
+:where(button.spw-effect-chip:focus-visible) {
+  border-color: color-mix(in srgb, var(--spw-effect-chip-accent, var(--spw-effect-accent)) 30%, var(--line, transparent));
+  color: color-mix(in srgb, var(--ink, currentColor) 76%, var(--spw-effect-chip-accent, var(--spw-effect-accent)) 24%);
+  outline: none;
+}
+
+:where(.spw-effect-chip--lens) {
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+}
+
+:where(.spw-effect-chip__sigil) {
+  color: color-mix(in srgb, var(--spw-effect-chip-accent, var(--spw-effect-accent)) 78%, var(--ink, currentColor) 22%);
+  font-weight: 750;
+  letter-spacing: 0.01em;
+  line-height: 1;
+}
+
+:where(.spw-effect-chip__capacity) {
+  font-weight: 650;
+}
+
+:where(.spw-effect-chip[data-spw-operator="probe"]) { --spw-effect-chip-accent: var(--op-probe-color, #6a3fb8); }
+:where(.spw-effect-chip[data-spw-operator="frame"]) { --spw-effect-chip-accent: var(--op-frame-color, #1a9999); }
+:where(.spw-effect-chip[data-spw-operator="ref"]) { --spw-effect-chip-accent: var(--op-ref-color, #1d57a3); }
+:where(.spw-effect-chip[data-spw-operator="object"]) { --spw-effect-chip-accent: var(--op-object-color, #c68a22); }
+:where(.spw-effect-chip[data-spw-operator="integrate"]) { --spw-effect-chip-accent: var(--op-integrate-color, var(--teal, #008080)); }
+:where(.spw-effect-chip[data-spw-operator="stream"]) { --spw-effect-chip-accent: var(--op-stream-color, #2a8c76); }
+:where(.spw-effect-chip[data-spw-operator="route"]) { --spw-effect-chip-accent: var(--op-topic-color, #2e8b57); }
+:where(.spw-effect-chip[data-spw-operator="potential"]) { --spw-effect-chip-accent: var(--op-probe-color, #6a3fb8); }
+:where(.spw-effect-chip[data-spw-operator="baseline"]) { --spw-effect-chip-accent: var(--ink-soft, rgba(14, 18, 20, 0.68)); }
+:where(.spw-effect-chip[data-spw-operator="surface"]) { --spw-effect-chip-accent: var(--op-surface-color, #355f77); }
+:where(.spw-effect-chip[data-spw-operator="action"]) { --spw-effect-chip-accent: var(--op-action-color, #147a70); }
+
+:where(.spw-effect-chip[aria-pressed="true"]) {
+  border-color: color-mix(in srgb, var(--spw-effect-chip-accent, var(--spw-effect-accent)) 42%, var(--line, transparent));
+  background: color-mix(in srgb, var(--surface-strong, #fff) 78%, var(--spw-effect-chip-accent, var(--spw-effect-accent)) 22%);
+  color: color-mix(in srgb, var(--ink, currentColor) 70%, var(--spw-effect-chip-accent, var(--spw-effect-accent)) 30%);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--spw-effect-chip-accent, var(--spw-effect-accent)) 14%, transparent);
+}
+
+:where(
+  .topic-photo-card[data-spw-image-lens-active="probe"] .spw-effect-chip[data-spw-lens-chip="probe"],
+  .image-study[data-spw-image-lens-active="probe"] .spw-effect-chip[data-spw-lens-chip="probe"],
+  .topic-photo-card[data-spw-image-lens-active="frame"] .spw-effect-chip[data-spw-lens-chip="frame"],
+  .image-study[data-spw-image-lens-active="frame"] .spw-effect-chip[data-spw-lens-chip="frame"],
+  .topic-photo-card[data-spw-image-lens-active="ref"] .spw-effect-chip[data-spw-lens-chip="ref"],
+  .image-study[data-spw-image-lens-active="ref"] .spw-effect-chip[data-spw-lens-chip="ref"],
+  .topic-photo-card[data-spw-image-lens-active="object"] .spw-effect-chip[data-spw-lens-chip="object"],
+  .image-study[data-spw-image-lens-active="object"] .spw-effect-chip[data-spw-lens-chip="object"],
+  .topic-photo-card[data-spw-image-lens-active="integrate"] .spw-effect-chip[data-spw-lens-chip="integrate"],
+  .image-study[data-spw-image-lens-active="integrate"] .spw-effect-chip[data-spw-lens-chip="integrate"],
+  .topic-photo-card[data-spw-image-lens-active="stream"] .spw-effect-chip[data-spw-lens-chip="stream"],
+  .image-study[data-spw-image-lens-active="stream"] .spw-effect-chip[data-spw-lens-chip="stream"],
+  .topic-photo-card[data-spw-image-lens-active="baseline"] .spw-effect-chip[data-spw-lens-chip="baseline"],
+  .image-study[data-spw-image-lens-active="baseline"] .spw-effect-chip[data-spw-lens-chip="baseline"],
+  .topic-photo-card[data-spw-image-lens-active="route"] .spw-effect-chip[data-spw-lens-chip="route"],
+  .image-study[data-spw-image-lens-active="route"] .spw-effect-chip[data-spw-lens-chip="route"],
+  .topic-photo-card[data-spw-image-lens-active="potential"] .spw-effect-chip[data-spw-lens-chip="potential"],
+  .image-study[data-spw-image-lens-active="potential"] .spw-effect-chip[data-spw-lens-chip="potential"],
+  .topic-photo-card[data-spw-image-lens-active="surface"] .spw-effect-chip[data-spw-lens-chip="surface"],
+  .image-study[data-spw-image-lens-active="surface"] .spw-effect-chip[data-spw-lens-chip="surface"],
+  .frame-card-media[data-spw-image-lens-active] .spw-effect-chip[aria-pressed="true"]
+) {
+  border-color: color-mix(in srgb, var(--spw-effect-chip-accent, var(--spw-effect-accent)) 42%, var(--line, transparent));
+  background: color-mix(in srgb, var(--surface-strong, #fff) 78%, var(--spw-effect-chip-accent, var(--spw-effect-accent)) 22%);
+  color: color-mix(in srgb, var(--ink, currentColor) 70%, var(--spw-effect-chip-accent, var(--spw-effect-accent)) 30%);
+}
+
+:where(.spw-effect-cues) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.28rem;
+}
+
+:where(.spw-effect-verb) {
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.95em;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+  text-transform: lowercase;
+}
+
+:where(.spw-image-lens-hint) {
+  text-transform: none;
+}
+
+:where(.spw-effect-cue) {
+  padding: 0.1rem 0.38rem;
+  border-radius: 0.35rem;
+  background: color-mix(in srgb, var(--spw-effect-accent) 8%, var(--surface-strong, #fff) 92%);
+  color: var(--ink-soft, rgba(14, 18, 20, 0.62));
+  font-size: var(--text-size-2xs, 0.66rem);
+  line-height: 1.35;
+}
+
+:where(.study-summary) {
+  gap: 0.48rem;
+}
+
+:where(.study-summary .meta-cluster .spec-pill[data-spw-effect-view]) {
+  border-color: color-mix(in srgb, var(--spw-effect-accent) 28%, var(--line, transparent));
+  background: color-mix(in srgb, var(--surface-strong, #fff) 84%, var(--spw-effect-accent) 16%);
+}
+
+:where(html[data-spw-layout-posture="workshop"]) main::before,
+:where(html[data-spw-explore-posture="workshop"]) main::before {
+  content: "";
+  position: fixed;
+  inset: auto 0 0;
+  block-size: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 42%, transparent),
+    transparent
+  );
+  opacity: calc(var(--spw-layout-posture-weight, 0.5) * 0.72);
+  pointer-events: none;
+  z-index: var(--z-chrome-rail, 20);
+}
+
+:where(#live-interaction-playground [data-spw-component-variant-active]) {
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 22%, transparent),
+    var(--component-shadow, none);
+}
+
+:where(html[data-spw-reduce-motion="on"]) :where(
+  .topic-photo-card::before,
+  .image-study::before,
+  [data-spw-image-surface]::before
+) {
+  transition: none;
+}

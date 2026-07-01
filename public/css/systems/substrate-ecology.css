@@ -386,7 +386,75 @@
 }
 
 /* ==========================================================================
-   12. Reduced motion
+   12. Loading ecology field routing
+   --------------------------------------------------------------------------
+   Root ecology phases raise environmental field tokens; hosts inherit without
+   route-local timers. Succession stays on surfaces; this layer names the field.
+   ========================================================================== */
+
+:where(html[data-spw-loading-ecology-phase="discovering"]) {
+  --spw-field-inquiry: 0.18;
+  --spw-field-projection: 0.08;
+}
+
+:where(html[data-spw-loading-ecology-phase="prefetching"]) {
+  --spw-field-projection: 0.22;
+  --spw-field-memory: 0.14;
+  --spw-ecology-field-charge: 0.12;
+}
+
+:where(html[data-spw-loading-ecology-phase="measuring"]) {
+  --spw-field-comparison: 0.24;
+  --spw-field-constraint: 0.16;
+  --spw-ecology-field-charge: 0.18;
+}
+
+:where(html[data-spw-loading-ecology-phase="mounting"]) {
+  --spw-field-charge: 0.14;
+  --spw-field-resonance: 0.12;
+  --spw-ecology-field-resonance: 0.16;
+}
+
+:where(html[data-spw-loading-ecology-phase="settling"], html[data-spw-loading-ecology-phase="personalizing"]) {
+  --spw-field-resonance: calc(0.16 + (var(--spw-ecology-trope-weight, 0) * 0.18));
+  --spw-surface-local-resonance: calc(var(--spw-surface-resonance, 0.18) + var(--spw-ecology-field-resonance, 0));
+  --spw-ecology-field-charge: calc(0.14 + (var(--spw-ecology-beat-align, 0) * 0.1));
+}
+
+:where(html[data-spw-loading-ecology-phase="settled"]) {
+  --spw-field-memory: calc(0.16 + (var(--spw-ecology-trope-weight, 0) * 0.12));
+  --spw-surface-local-memory: calc(var(--spw-surface-memory, 0.16) + (var(--spw-ecology-trope-weight, 0) * 0.08));
+}
+
+:where(html[data-spw-loading-ecology-dimensions~="fetch"]) {
+  --spw-surface-local-permeability: calc(var(--spw-surface-permeability, 0.3) + 0.08);
+}
+
+:where(html[data-spw-loading-ecology-dimensions~="measure"]) {
+  --spw-surface-local-clarity: calc(var(--spw-surface-clarity, 0.62) + 0.06);
+}
+
+:where(html[data-spw-loading-ecology-dimensions~="personalize"], html[data-spw-loading-ecology-dimensions~="theme"]) {
+  --spw-surface-local-atmosphere: calc(var(--spw-surface-atmosphere, 0.18) + 0.08);
+  --spw-field-charge: calc(var(--spw-field-charge, 0) + 0.1);
+}
+
+:where(html[data-spw-loading-ecology-dimensions~="localize"], html[data-spw-loading-ecology-dimensions~="variant"]) {
+  --spw-field-orientation: 0.14;
+}
+
+:where(
+  [data-spw-succession='raw'],
+  [data-spw-succession='measured']
+) {
+  --spw-surface-local-resonance: calc(
+    var(--spw-surface-local-resonance, var(--spw-surface-resonance, 0.18))
+    + (var(--spw-loading-ecology-surface, 0) * 0.06)
+  );
+}
+
+/* ==========================================================================
+   13. Reduced motion
    ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {

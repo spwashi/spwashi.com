@@ -95,6 +95,7 @@
 
 ^"public_starter_topography"{
   rule: "The site should be explainable to another developer as route -> shell -> region -> feature -> component -> slot -> module."
+  @semantic_hierarchy: ~"./semantic-hierarchy.spw"
   source_contract: "../../../public/js/dom-contracts.js"
   docs: "../../../docs/developer-topography.md"
   layers: {
@@ -600,14 +601,17 @@ frame #tuning-postures
 frame #copy-depth-layers
   role convention
   surface copy/runtime
-  concept semantic_density mood_reading theory_depth
+  concept semantic_density mood_reading theory_depth coloring_depth
   depths: .{
     minimal = "always visible; never hidden behind enhancement"
-    normal = "default route prose"
-    rich = "optional explanation that deepens the same route"
-    genre = "resonant or theatrical posture for mood reading and combinatoric practice"
+    entry = "first-contact orientation; frame accent (#); visible at minimal+ density"
+    normal = "default route prose; ref accent (~); visible at normal+ density"
+    rich = "optional explanation; probe accent (?); visible at rich density"
+    dense = "route-register labels; stream accent (*); visible at rich density"
+    technical = "inspect/tool precision; action accent (!); visible at precision posture or inspect page-modes"
+    genre = "resonant or theatrical posture; object accent (^); mood reading and combinatoric practice"
   }[reg=facet]
-  rule = "Copy may declare optional layers with data-spw-copy-depth='normal|rich|genre'. Minimal copy remains visible. Normal and rich layers respond to semantic density. Genre layers respond to resonant or theatrical runtime posture when mood reading, trope reading, or combinatoric media practice should surface."
+  rule = "Copy may declare optional layers with data-spw-copy-depth='entry|normal|rich|dense|technical|genre'. Minimal copy remains visible. Entry through dense layers respond to semantic density. Technical layers respond to precision posture or inspect page-modes. Genre layers respond to resonant or theatrical runtime posture. Each tier routes label and border color through --spw-copy-depth-accent per coloring-depth.spw."
 
 frame #semantic-clusters
   role convention
@@ -749,11 +753,65 @@ frame #component-lifecycle-tropes
   concept lifecycle component_genomics page_state cauldron spell memory_gardening
   note "Components should be explainable as authored, addressed, loaded, mounted, ready, and resonant. Page templates can eventually emit these states as durable attributes so copy, CSS, and scripts describe the same lifecycle instead of competing for attention. Cauldron and spell surfaces extend the model with explicit phases (gathering | resonant | mature | decayed) and gardening actions so semantic memory itself becomes a tended, inspectable rhythm rather than an opaque list."
 
+frame #component-collection-reward-contract
+  role runtime_contract
+  fixity stable_tending
+  operation contract
+  surface public/js/runtime/region-profiler.js + public/js/runtime/component-collection.js + public/js/runtime/reward-ui.js + public/js/kernel/site-settings-*.js + settings/index.html + public/css/components/floating-chrome.css
+  concept region_diversity component_collection reward_display persistence reset inspectable_root_state
+  storage_key = "spw-component-collection"
+  events = #[
+    `spw:collection-updated`,
+    `spw:achievement-unlocked`
+  ][reg=set]
+  root_attributes = #[
+    `data-spw-region-kind-field`,
+    `data-spw-region-kind-count`,
+    `data-spw-region-diversity`,
+    `data-spw-region-semantic-depth`,
+    `data-spw-collection-kinds`,
+    `data-spw-collection-total`,
+    `data-spw-collection-tier`,
+    `data-spw-collection-achievements`,
+    `data-spw-collection-fresh`,
+    `data-spw-reward-display`
+  ][reg=set]
+  display_rule = "rewardDisplay is the canonical setting for component reward chrome: docked (dock + toasts), toasts (no persistent dock), hidden (no reward chrome)."
+  reset_rule = "Settings persistence and reward UI call the component collection API when mounted; only the settings registry fallback may remove spw-component-collection directly."
+  boundary_rule = "Page-region profiling emits diversity signals. Persistent component collection, achievements, and reward display are downstream runtime-settings/mindful-collection responsibilities, not page-region ownership."
+  note "This keeps region discovery useful for spawning/designing components while preserving module hygiene: profiler observes, collection stores, reward UI presents, settings tunes and clears, CSS animates only through named data attributes."
+
 frame #settling-field-contract
   role convention
   surface tokens/core.css + components/signals.css + components/surfaces.css + components/controls.css + components/runtime-states.css + page-state.js
   concept page_state settling microinteraction intermediate_state emergent_state
   note "Page settling is the shared projection of page-state.js arrival/presence/transition attributes into component CSS. Tokens own tiny lift, press, offset, and opacity values; components spend them on existing cards, panels, controls, hydration, and selection states. html[data-spw-page-settling] and html[data-spw-layout-settle-phase] name the page-level intermediate window; composition-box-model.js mirrors that into data-spw-box-settle-phase after measure/presence refresh. Intermediate states should be readable from existing data-spw-* attributes and should emerge from composed page/gesture/selection signals rather than route-local timers or new one-off state names."
+
+frame #loading-ecology-contract
+  role convention
+  surface loading-ecology.js + module-loader.js + page-state.js + region-profiler.js + pretext-measurement-bus.js + runtime-states.css + measurement-contract.spw
+  concept loading_ecology prefetch measurement settling personalization localization variant_selection theming salience_direction rhythm twinkle trope_precipitation genre_development
+  events = #[`spw:loading-ecology`, `spw:loading-ecology-trope`][reg=set]
+  root_attributes = #[
+    `data-spw-loading-ecology-phase`,
+    `data-spw-loading-ecology-salience`,
+    `data-spw-loading-ecology-rhythm`,
+    `data-spw-loading-ecology-twinkle`,
+    `data-spw-loading-ecology-trope`,
+    `data-spw-loading-ecology-genre`,
+    `data-spw-loading-ecology-dimensions`,
+    `data-spw-loading-ecology-measure-kind`
+  ][reg=set]
+  phase_rule = "Phases narrate the dominant ecological activity: discovering, prefetching, measuring, mounting, settling, personalizing, settled. They compose from page attention, resource profiling, measurement bus events, region diversity, and module mounts — not route-local timers."
+  trope_rule = "When settling completes, loading-ecology precipitates a layout trope (ruleset-settle, theme-shift, typography-flow, gestalt-rebalance, spacing-tune) via markLayoutTrope and mirrors it on data-spw-loading-ecology-trope for CSS and inspection."
+  genre_rule = "Genre development combines page family or explicit genre, palette resonance, developmental climate, and region diversity tier into data-spw-loading-ecology-genre so downstream ornament and collection systems can treat load completion as compositional maturation."
+  note "Measurement and settling are ecological opportunities: objective prefetch timing and subjective settle salience stay distinguishable via data-spw-loading-ecology-measure-kind while sharing the same intermediate window. Canonical tokens live in tokens/core.css + tokens/dimensions.css; substrate-ecology.css routes phases into field/surface tokens; signals.css defers page-settling rhythm when ecology is active; frames.css and surfaces.css spend --spw-ecology-arrival-bias through existing arrival transforms; operators.css owns beat-aligned twinkle on handles. Dimension vocabulary aligns packing, positioning, color layering, and pre-state visibility across CSS and loading-ecology.js."
+
+frame #dimension-vocabulary-contract
+  role convention
+  surface dimensions.css + dimension-vocabulary.spw + typography-packing.spw + foundation.css + controls.css
+  concept dimension_vocabulary packing occupancy positioning_phase color_layering pre_state empty_state variant_selection
+  note "tokens/dimensions.css is the CSS source of truth for cross-dimensional aliases. Packing canonical ladder is compact|balanced|roomy; dense/spacious/soft route through aliases. Positioning phases (approach|recall|restore|anchor|dormancy) compose ecology salience with page arrival. Pre-state visibility (subtle|balanced|apparent) theme-modulates fill/ink/line stacks for empty and hydration surfaces."
 
 frame #numericity-as-cauldron-ingredient
   role extension
@@ -1105,8 +1163,32 @@ frame #spell_cauldron_wonder_vocabulary
   surface public/js/runtime/spells.js + navigation-spells + guide-badge + experiential + settings + .spw/wonder-vocabulary
   concept spell + cauldron as enhanced discovery mechanism + satisfying tangential control
   data-spw-spell, data-spw-cauldron*, data-spw-wonder*, settings (physics-reason for ease, semantic-density for vocab richness)
-  usage = "Spells serialize grounded tokens with prefix/postfix + enriched vocab on high density; cauldron collects for later mix/plant. Wired to settings for modulation (fluid vs deliberate cast feel). Encourages bumbling interactive links, scroll through varied page structures, semantic density in markup for magic (while perf minded via enhancement-level). Tangential control over experience; culture of wonder + iterative AI synthesis across systems."
+  usage = "Spells serialize grounded tokens with prefix/postfix + enriched vocab on rich semantic density; cauldron collects for later mix/plant. Wired to settings for modulation (fluid vs deliberate cast feel). Encourages bumbling interactive links, scroll through varied page structures, semantic density in markup for magic (while perf minded via enhancement-level). Tangential control over experience; culture of wonder + iterative AI synthesis across systems."
   note "Builds on wonder-vocabulary.spw + prior cauldron/ornament. Design catalog now audits these as unique spwashi connections. Improves surface area for arcs + discovery."
+
+frame #hypermedia_extension_coherence
+  role contract
+  operation align
+  fixity tending
+  surface public/js/kernel/shared.js + public/js/runtime/spells.js + public/js/runtime/experiential.js + public/js/runtime/tuning-discovery.js + public/js/runtime/shell-disclosure.js + public/js/interface/composition.js + public/js/interface/cauldron/chrome.js + _partials/site-footer.html + public/css/shell/chrome.css + public/css/handles/operators.css + public/css/systems/surfaces/tuning-discoverability.css
+  concept spells cauldron breadcrumbs embedded_settings as hypermedia capabilities
+  data-spw-hypermedia-extension = "trail | routes | regions | deep-link | state | output | resume | presentation | layout | gesture | state-fragment"
+  data-spw-operator-* = "left-role right-role flow brace-bias geometry overload charge-role"
+  value = "A spell, trail, cauldron fragment, or embedded control should make a web capability more usable: return through links, preserve page state, tune presentation, inspect local regions, or resume a working set."
+  rule = "Use spell and cauldron language only when it names a concrete hypermedia capability. Public copy should explain link trail, hash anchor, saved state, presentation control, local gesture posture, operator geometry, or portable output before leaning on private metaphor."
+  layout_rule = "Capability chips, phase rails, breadcrumbs, cauldron fragments, and embedded handles should be compact mantlepiece surfaces with stable dimensions. Ornament must clarify state, action, traversal, charge, or ordinality."
+  validation = "Search data-spw-hypermedia-extension, data-spw-deep-link, and stale spell-pocket/tuning copy; run node --check on edited runtime modules and git diff --check."
+  note "This frame aligns the 2026-06 extension pass: breadcrumbs became link trails, spells became replayable path extensions with route/hash anchors, cauldron became an extension pocket for saved fragments, embedded controls became local layout/material/gesture extensions, and operator geometry exposes left/right argument roles."
+
+frame #operator_geometry_mantlepiece_contract
+  role contract
+  operation align
+  fixity tending
+  surface .spw/conventions/operator-semantics.spw + public/js/kernel/shared.js + public/js/runtime/spells.js + public/js/runtime/experiential.js + public/js/interface/composition.js + public/css/handles/operators.css + public/css/shell/chrome.css
+  concept operator left-right argument geometry + brace objective/subjective flow + semantic charge + ordinality
+  usage = "OPERATOR_GEOMETRY names leftRole/rightRole/flow/braceBias/geometry/overload/chargeRole. Spell chips project these as data-spw-operator-*; breadcrumbs and cauldron fragments carry data-spw-deep-link so a charged object can be returned to by route/hash."
+  rule = "Components may feel ornamental only when the ornament is a readable mantlepiece for semantics: a stable ledge for charge, order, argument direction, or a return path. If a chip claims ordinal or semantic charge, it must expose a data attribute or .spw note that names the charge."
+  note "This keeps Spw operators available as geometric anchors for physical modeling: fields, ratios, impulses, containment, and selection can become layout and interaction rules without turning into arbitrary color tokens."
 
 frame #liminality_materials_attentional_flow
   role extension

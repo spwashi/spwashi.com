@@ -150,13 +150,13 @@ const UTILITY_LABELS = Object.freeze({
     'color-light': 'Light',
     'color-dark': 'Dark',
     'font-down': 'Smaller',
-    'path-toggle': 'Path',
+    'path-toggle': 'Trail',
     'font-up': 'Larger',
     'clear-matte': 'Clear',
-    'toggle-cauldron-visibility': 'Vis',
+    'toggle-cauldron-visibility': 'State',
     'open-satchel': 'Satchel',
     settings: 'Atlas',
-    'reveal-tuners': 'Tuners',
+    'reveal-tuners': 'Extend',
     'cycle-explore-posture': 'Explore',
     'cycle-resonance': 'Bias',
     'cycle-color-tuner': 'Guard',
@@ -166,13 +166,13 @@ const UTILITY_LABELS = Object.freeze({
     'color-light': 'Light mode',
     'color-dark': 'Dark mode',
     'font-down': 'Smaller text',
-    'path-toggle': 'Reading path',
+    'path-toggle': 'Link trail',
     'font-up': 'Larger text',
     'clear-matte': 'Clear contrast',
-    'toggle-cauldron-visibility': 'Cauldron vis',
+    'toggle-cauldron-visibility': 'State visibility',
     'open-satchel': 'State satchel',
     settings: 'Settings atlas',
-    'reveal-tuners': 'Reveal tuners',
+    'reveal-tuners': 'Reveal extensions',
     'cycle-explore-posture': 'Cycle explore posture',
     'cycle-resonance': 'Cycle resonance',
     'cycle-color-tuner': 'Cycle color guard',
@@ -890,13 +890,13 @@ function upgradeUtilityRow(row) {
     cluster.dataset.spwUtilityCluster = 'tuning-discovery';
     cluster.dataset.spwUtilitySize = 'pair';
     cluster.setAttribute('role', 'group');
-    cluster.setAttribute('aria-label', 'Reveal embedded tuners on this page');
+    cluster.setAttribute('aria-label', 'Reveal embedded hypermedia extensions on this page');
     cluster.dataset.spwLocality = 'high';
     cluster.dataset.spwComponentLocality = 'tuning-surfaces';
     cluster.dataset.spwPhysicsReason = 'memory-gamified';
     cluster.dataset.spwModuleEvaluates = 'explore-posture tuning-surfaces';
     cluster.innerHTML = `
-      <button type="button" class="spw-shell-utility-button" data-spw-shell-action="reveal-tuners" data-spw-utility-size="text" aria-label="Reveal embedded tuning surfaces on this page" title="Reveal or jump to tuning surfaces embedded in this page">
+      <button type="button" class="spw-shell-utility-button" data-spw-shell-action="reveal-tuners" data-spw-utility-size="text" aria-label="Reveal embedded hypermedia extensions on this page" title="Reveal layout, material, and gesture extensions embedded in this page">
         <span class="spw-utility-sigil" aria-hidden="true">◇</span>
         <span class="spw-utility-argument"></span>
       </button>
@@ -1006,11 +1006,11 @@ function upgradeUtilityRow(row) {
     strip.className = 'spw-tuning-lexicon-strip';
     strip.dataset.spwTuningLexicon = '';
     strip.innerHTML = `
-      <p class="spw-tuning-lexicon-strip__kicker">Reading weather</p>
+      <p class="spw-tuning-lexicon-strip__kicker">Hypermedia extensions</p>
       <div class="spw-tuning-lexicon-strip__chips" data-spw-tuning-lexicon-chips></div>
       <p class="spw-tuning-lexicon-strip__meta" data-spw-tuning-lexicon-meta></p>
       <div class="spw-tuning-lexicon-strip__actions">
-        <button type="button" class="spw-shell-utility-button" data-spw-shell-action="reveal-tuners" data-spw-utility-size="text">Reveal on page</button>
+        <button type="button" class="spw-shell-utility-button" data-spw-shell-action="reveal-tuners" data-spw-utility-size="text">Reveal extensions</button>
         <a class="spw-shell-utility-button" data-spw-shell-action="settings" data-spw-utility-size="text" href="/settings/#runtime-preferences">Full observatory</a>
       </div>
     `;
@@ -1031,8 +1031,8 @@ function ensureUtilityRow(header) {
     const label = summary?.querySelector('.spw-shell-tools-summary__label');
     const glyph = summary?.querySelector('.spw-shell-tools-summary__knob-glyph');
     if (summary instanceof HTMLElement) {
-      summary.setAttribute('aria-label', 'Open reading weather controls for lighting, material, resonance, and page-local tuners');
-      summary.title = 'Reading weather: lighting, material, resonance, and embedded tuners on this page';
+      summary.setAttribute('aria-label', 'Open hypermedia extension controls for link trails, presentation, material, and page-local controls');
+      summary.title = 'Hypermedia extensions: link trail, presentation, material, and embedded controls on this page';
     }
     if (label) label.textContent = 'Weather';
     if (glyph) glyph.textContent = '◎';
@@ -1047,8 +1047,8 @@ function ensureUtilityRow(header) {
     const summary = document.createElement('summary');
     summary.className = 'spw-shell-tools-summary';
     summary.setAttribute('aria-expanded', 'false');
-    summary.setAttribute('aria-label', 'Open reading weather controls for lighting, material, resonance, and page-local tuners');
-    summary.title = 'Reading weather: lighting, material, resonance, and embedded tuners on this page';
+    summary.setAttribute('aria-label', 'Open hypermedia extension controls for link trails, presentation, material, and page-local controls');
+    summary.title = 'Hypermedia extensions: link trail, presentation, material, and embedded controls on this page';
     summary.innerHTML = `
       <span class="spw-shell-tools-summary__knob" aria-hidden="true">
         <span class="spw-shell-tools-summary__knob-glyph">◎</span>
@@ -1061,7 +1061,7 @@ function ensureUtilityRow(header) {
   row = document.createElement('div');
   row.className = 'spw-shell-utility-row';
   row.setAttribute('role', 'group');
-  row.setAttribute('aria-label', 'Reading weather and quick tuning controls');
+  row.setAttribute('aria-label', 'Hypermedia extension and quick tuning controls');
   // Granular architecture exposure for vocabulary, component locality (settings/menus), and flexible physics reason.
   // These attrs + clusters let CSS, catalog, and interns relate the shell controls directly to data structures
   // (baseMetamaterial, highContrast, fontScale, interaction state) without taking the visuals for granted.
@@ -1140,8 +1140,8 @@ function ensureUtilityRow(header) {
           <span class="spw-utility-argument"></span>
         </button>
       </div>
-      <div class="spw-utility-cluster" data-spw-utility-cluster="cognitive-path" data-spw-utility-size="single" role="group" aria-label="Cognitive path">
-        <button type="button" class="spw-shell-utility-button" data-spw-shell-action="path-toggle" data-spw-utility-size="icon" aria-label="Toggle cognitive path" title="Toggle cognitive path">
+      <div class="spw-utility-cluster" data-spw-utility-cluster="cognitive-path" data-spw-utility-size="single" role="group" aria-label="Link trail">
+        <button type="button" class="spw-shell-utility-button" data-spw-shell-action="path-toggle" data-spw-utility-size="icon" aria-label="Toggle link trail" title="Toggle link trail">
           <span class="spw-utility-sigil" aria-hidden="true">⟐</span>
           <span class="spw-utility-argument"></span>
         </button>
@@ -1152,8 +1152,8 @@ function ensureUtilityRow(header) {
           <span class="spw-utility-argument"></span>
         </a>
       </div>
-      <div class="spw-utility-cluster" data-spw-utility-cluster="cauldron-visibility" data-spw-utility-size="single" role="group" aria-label="Cauldron and spell candidate visibility" data-spw-locality="medium" data-spw-component-locality="cauldron-visual" data-spw-physics-reason="feedback-tuner" data-spw-module-evaluates="cauldron spell visibility">
-        <button type="button" class="spw-shell-utility-button" data-spw-shell-action="toggle-cauldron-visibility" data-spw-utility-size="icon" aria-label="Cycle cauldron and spell candidate visual mode (subtle / balanced / prominent)" title="Cycle visibility mode for cauldron ingredients and primed spell candidates">
+      <div class="spw-utility-cluster" data-spw-utility-cluster="cauldron-visibility" data-spw-utility-size="single" role="group" aria-label="Saved state visibility" data-spw-locality="medium" data-spw-component-locality="cauldron-visual" data-spw-physics-reason="feedback-tuner" data-spw-module-evaluates="cauldron spell visibility">
+        <button type="button" class="spw-shell-utility-button" data-spw-shell-action="toggle-cauldron-visibility" data-spw-utility-size="icon" aria-label="Cycle saved state visual mode (subtle / balanced / prominent)" title="Cycle visibility mode for saved fragments and primed link candidates">
           <span class="spw-utility-sigil" aria-hidden="true">◐</span>
           <span class="spw-utility-argument"></span>
         </button>
@@ -1164,8 +1164,8 @@ function ensureUtilityRow(header) {
           <span class="spw-utility-argument"></span>
         </button>
       </div>
-      <div class="spw-utility-cluster" data-spw-utility-cluster="tuning-discovery" data-spw-utility-size="pair" role="group" aria-label="Reveal embedded tuners on this page" data-spw-locality="high" data-spw-component-locality="tuning-surfaces" data-spw-physics-reason="memory-gamified" data-spw-module-evaluates="explore-posture tuning-surfaces">
-        <button type="button" class="spw-shell-utility-button" data-spw-shell-action="reveal-tuners" data-spw-utility-size="text" aria-label="Reveal embedded tuning surfaces on this page" title="Reveal or jump to tuning surfaces embedded in this page">
+      <div class="spw-utility-cluster" data-spw-utility-cluster="tuning-discovery" data-spw-utility-size="pair" role="group" aria-label="Reveal embedded hypermedia extensions on this page" data-spw-locality="high" data-spw-component-locality="tuning-surfaces" data-spw-physics-reason="memory-gamified" data-spw-module-evaluates="explore-posture tuning-surfaces">
+        <button type="button" class="spw-shell-utility-button" data-spw-shell-action="reveal-tuners" data-spw-utility-size="text" aria-label="Reveal embedded hypermedia extensions on this page" title="Reveal layout, material, and gesture extensions embedded in this page">
           <span class="spw-utility-sigil" aria-hidden="true">◇</span>
           <span class="spw-utility-argument"></span>
         </button>
@@ -1175,11 +1175,11 @@ function ensureUtilityRow(header) {
         </button>
       </div>
       <div class="spw-tuning-lexicon-strip" data-spw-tuning-lexicon>
-        <p class="spw-tuning-lexicon-strip__kicker">Reading weather</p>
+        <p class="spw-tuning-lexicon-strip__kicker">Hypermedia extensions</p>
         <div class="spw-tuning-lexicon-strip__chips" data-spw-tuning-lexicon-chips></div>
         <p class="spw-tuning-lexicon-strip__meta" data-spw-tuning-lexicon-meta></p>
         <div class="spw-tuning-lexicon-strip__actions">
-          <button type="button" class="spw-shell-utility-button" data-spw-shell-action="reveal-tuners" data-spw-utility-size="text">Reveal on page</button>
+          <button type="button" class="spw-shell-utility-button" data-spw-shell-action="reveal-tuners" data-spw-utility-size="text">Reveal extensions</button>
           <a class="spw-shell-utility-button" data-spw-shell-action="settings" data-spw-utility-size="text" href="/settings/#runtime-preferences">Full observatory</a>
         </div>
       </div>
@@ -1290,8 +1290,8 @@ function syncUtilityRow(row) {
     button.setAttribute('aria-disabled', pathToggle ? 'false' : 'true');
     button.setAttribute('aria-pressed', pathExpanded ? 'true' : 'false');
     button.title = pathToggle
-      ? (pathExpanded ? 'Collapse the reading path' : 'Expand the reading path')
-      : 'Open the reading path when the header trace finishes mounting';
+      ? (pathExpanded ? 'Collapse the link trail' : 'Expand the link trail')
+      : 'Open the link trail when the header trace finishes mounting';
   });
 
   row.querySelectorAll('[data-spw-shell-action="settings"]').forEach((button) => {
@@ -1318,7 +1318,7 @@ function syncUtilityRow(row) {
     const arg = button.querySelector('.spw-utility-argument');
     if (arg) arg.textContent = labels['toggle-cauldron-visibility'] || (compact ? vis : `vis:${vis}`);
     button.setAttribute('aria-pressed', vis !== 'subtle' ? 'true' : 'false');
-    button.title = `Cauldron/spell visibility: ${vis} (click to cycle subtle/balanced/prominent)`;
+    button.title = `Saved fragment visibility: ${vis} (click to cycle subtle/balanced/prominent)`;
     button.dataset.spwCauldronVisibility = vis;
   });
 
@@ -1336,8 +1336,8 @@ function syncUtilityRow(row) {
     if (arg) arg.textContent = labels['reveal-tuners'];
     const count = Number(document.documentElement.dataset.spwTuningSurfaceCount || 0);
     button.title = count
-      ? `Reveal or jump to ${count} tuning surface${count === 1 ? '' : 's'} on this page`
-      : 'Enable tuning discoverability and jump to embedded controls';
+      ? `Reveal or jump to ${count} layout/presentation extension${count === 1 ? '' : 's'} on this page`
+      : 'Enable extension discoverability and jump to embedded controls';
   });
 
   row.querySelectorAll('[data-spw-shell-action="cycle-explore-posture"]').forEach((button) => {
@@ -1442,8 +1442,8 @@ function syncTuningLexiconStrip(row) {
   const count = Number(document.documentElement.dataset.spwTuningSurfaceCount || 0);
   if (meta instanceof HTMLElement) {
     meta.textContent = count
-      ? `${count} embedded tuning surface${count === 1 ? '' : 's'} on this page. Presentation shifts; content stays legible.`
-      : 'No embedded tuners here yet. Weather controls still shape how every route reads.';
+      ? `${count} embedded extension surface${count === 1 ? '' : 's'} on this page. Layout, material, and gesture posture shift; content stays linkable.`
+      : 'No embedded extensions here yet. Shell controls still shape how every route reads.';
   }
 }
 

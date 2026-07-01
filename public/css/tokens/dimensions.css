@@ -1,0 +1,326 @@
+/* ==========================================================================
+   dimensions.css
+   --------------------------------------------------------------------------
+   Canonical cross-dimensional vocabulary for Spw surfaces.
+
+   File role (code as documentation)
+   - Names the axes that HTML attrs, JS datasets, and CSS tokens share.
+   - Provides alias routing so drifted terms (dense/spacious, soft/roomy) map
+     to one teachable ladder without rewriting every route.
+   - Owns pre-state / empty-state visibility and theme-diverse color stacks.
+   - Does not spend layout rules; components and systems consume these tokens.
+
+   Dimension axes
+   - spatial   : packing tiers, occupancy, room, measure
+   - temporal  : ecology phase, positioning phase, hydration lifecycle
+   - color     : fill / ink / line / accent layering per theme pack
+   - semantic  : variant, genre, resonance, succession
+   - attention : salience, depth, positioning bias
+
+   See also
+   - .spw/conventions/dimension-vocabulary.spw
+   - public/css/components/typography-packing.css
+   - public/js/runtime/loading-ecology.js (DIMENSION_VOCABULARY)
+   ========================================================================== */
+
+:root {
+  /* ------------------------------------------------------------------------
+     Spatial — packing tier ladder (canonical: compact | balanced | roomy)
+     ------------------------------------------------------------------------ */
+  --spw-pack-tier: balanced;
+  --spw-pack-occupancy-weight: 0.5;
+  --spw-pack-measure-active: var(--measure-panel, 52ch);
+  --spw-pack-pad-active: var(--spw-component-pad, 0.9rem);
+  --spw-pack-gap-active: var(--component-gap, 0.9rem);
+
+  /* ------------------------------------------------------------------------
+     Temporal — positioning phases (salience direction + page ecology)
+     ------------------------------------------------------------------------ */
+  --spw-position-phase: anchor;
+  --spw-position-bias-y: 0px;
+  --spw-position-depth: var(--depth-settled, 10);
+
+  /* ------------------------------------------------------------------------
+     Lifecycle — pre-state / empty / hydration visibility
+     subtle (0.22) → balanced (0.5) → apparent (0.82)
+     ------------------------------------------------------------------------ */
+  --spw-lifecycle-phase: ready;
+  --spw-pre-state-visibility: 0.5;
+  --spw-pre-state-fill-mix: 0.08;
+  --spw-pre-state-line-mix: 0.18;
+  --spw-pre-state-ink-mix: 0.62;
+
+  /* ------------------------------------------------------------------------
+     Color layering — theme-agnostic stack aliases (spend fill/ink/line/rest)
+     ------------------------------------------------------------------------ */
+  --spw-color-layer-fill: var(--spw-surface-fill-rest, var(--surface));
+  --spw-color-layer-fill-muted: var(--spw-surface-fill-soft, var(--surface-soft));
+  --spw-color-layer-ink: var(--ink, currentColor);
+  --spw-color-layer-ink-muted: var(--ink-soft, color-mix(in srgb, var(--ink, currentColor) 72%, transparent));
+  --spw-color-layer-line: var(--spw-surface-line-rest, var(--line));
+  --spw-color-layer-accent-subtle: color-mix(
+    in srgb,
+    var(--active-op-color, var(--teal, #008080)) 18%,
+    transparent
+  );
+  --spw-color-layer-accent-apparent: color-mix(
+    in srgb,
+    var(--active-op-color, var(--teal, #008080)) 42%,
+    transparent
+  );
+
+  /* ------------------------------------------------------------------------
+     Variant selection — semantic accent weight for chosen variant/genre
+     ------------------------------------------------------------------------ */
+  --spw-variant-selection-weight: 0;
+  --spw-variant-accent: var(--component-accent, var(--active-op-color, var(--teal, #008080)));
+
+  /* Real estate — horizontal measure + vertical stack (hypermedia 2D axes) */
+  --spw-real-estate-inline: var(--measure-reading, 68ch);
+  --spw-real-estate-block: var(--page-stack-gap, clamp(1rem, 2.3vw, 1.7rem));
+  --spw-real-estate-section: var(--page-section-gap, clamp(1.85rem, 4vw, 3.25rem));
+  --spw-typography-rank-1: 1;
+  --spw-typography-rank-2: 0.88;
+  --spw-typography-rank-3: 0.76;
+  --spw-typography-rank-4: 0.64;
+
+  /* Interactive medium — device + entertainment register (spent in systems layer) */
+  --spw-medium-touch-min: 2.75rem;
+  --spw-medium-lane-pad: 0.55rem;
+  --spw-medium-layout-gap-scale: 1;
+  --spw-medium-reveal-stagger-step: 72ms;
+  --spw-medium-accent-weight: 1;
+  --spw-medium-intensity: 0.5;
+  --spw-module-style-modulator: 1;
+}
+
+/* ==========================================================================
+   1. Packing tier routing
+   ========================================================================== */
+
+:where(
+  [data-spw-packing-state="compact"],
+  [data-spw-density="dense"],
+  [data-spw-component-density="dense"],
+  [data-spw-pack="compact"],
+  [data-spw-pack="dense"],
+  html[data-spw-design-ecology-packing="compact"]
+) {
+  --spw-pack-tier: compact;
+  --spw-pack-occupancy-weight: 0.28;
+  --spw-pack-measure-active: var(--measure-compact, 32ch);
+  --spw-pack-pad-active: var(--pack-tier-compact-pad, var(--spw-component-pad-tight, 0.65rem));
+  --spw-pack-gap-active: var(--pack-tier-compact-gap, var(--component-gap-tight, 0.55rem));
+}
+
+:where(
+  [data-spw-packing-state="balanced"],
+  [data-spw-pack="balanced"],
+  [data-spw-pack-occupancy="balanced"],
+  html[data-spw-design-ecology-packing="balanced"]
+) {
+  --spw-pack-tier: balanced;
+  --spw-pack-occupancy-weight: 0.5;
+  --spw-pack-measure-active: var(--measure-panel, 52ch);
+  --spw-pack-pad-active: var(--pack-tier-balanced-pad, var(--spw-component-pad, 0.9rem));
+  --spw-pack-gap-active: var(--pack-tier-balanced-gap, var(--component-gap, 0.9rem));
+}
+
+:where(
+  [data-spw-packing-state="roomy"],
+  [data-spw-packing-state="spacious"],
+  [data-spw-density="soft"],
+  [data-spw-density="roomy"],
+  [data-spw-component-density="roomy"],
+  [data-spw-pack="roomy"],
+  html[data-spw-design-ecology-packing="spacious"],
+  html[data-spw-design-ecology-packing="roomy"]
+) {
+  --spw-pack-tier: roomy;
+  --spw-pack-occupancy-weight: 0.78;
+  --spw-pack-measure-active: var(--measure-reading, 68ch);
+  --spw-pack-pad-active: var(--pack-tier-roomy-pad, var(--spw-component-pad-loose, 1.15rem));
+  --spw-pack-gap-active: var(--pack-tier-roomy-gap, var(--component-gap-loose, 1.2rem));
+}
+
+:where([data-spw-pack-occupancy="sparse"]) {
+  --spw-pack-tier: compact;
+  --spw-pack-occupancy-weight: 0.22;
+}
+
+:where([data-spw-pack-occupancy="full"]) {
+  --spw-pack-tier: roomy;
+  --spw-pack-occupancy-weight: 0.88;
+}
+
+/* ==========================================================================
+   2. Positioning phase routing
+   ========================================================================== */
+
+:where(html[data-spw-loading-ecology-salience="forward"], html[data-spw-page-arrival="entering"]) {
+  --spw-position-phase: approach;
+  --spw-position-bias-y: var(--spw-ecology-salience-shift, var(--spw-settle-offset-start, 2px));
+  --spw-position-depth: var(--depth-ambient, 1);
+}
+
+:where(html[data-spw-loading-ecology-salience="return"], html[data-spw-page-arrival="returning"]) {
+  --spw-position-phase: recall;
+  --spw-position-bias-y: calc(var(--spw-ecology-salience-shift, var(--spw-settle-offset-start, 2px)) * -1);
+}
+
+:where(html[data-spw-loading-ecology-salience="restore"], html[data-spw-page-arrival="restored"]) {
+  --spw-position-phase: restore;
+  --spw-position-depth: var(--depth-active, 50);
+}
+
+:where(html[data-spw-loading-ecology-salience="anchor"], html[data-spw-page-arrival="settled"]) {
+  --spw-position-phase: anchor;
+  --spw-position-bias-y: 0px;
+  --spw-position-depth: var(--depth-settled, 10);
+}
+
+:where(html[data-spw-loading-ecology-salience="dormancy"], html[data-spw-page-presence="background"]) {
+  --spw-position-phase: dormancy;
+  --spw-position-depth: var(--depth-ambient, 1);
+}
+
+/* Ecology arrival bias spends through frames/surfaces via --spw-ecology-arrival-bias */
+:where(html[data-spw-loading-ecology-phase]:not([data-spw-loading-ecology-phase="settled"])) {
+  --spw-position-phase: var(--spw-loading-ecology-phase, approach);
+}
+
+/* ==========================================================================
+   3. Lifecycle — pre-state, hydration, empty
+   ========================================================================== */
+
+:where([data-spw-hydration="loading"], [data-spw-component-state="pre"], [data-spw-lifecycle="pre"]) {
+  --spw-lifecycle-phase: pre;
+  --spw-pre-state-visibility: 0.82;
+  --spw-pre-state-fill-mix: 0.12;
+  --spw-pre-state-line-mix: 0.24;
+}
+
+:where([data-spw-hydration="ready"], [data-spw-lifecycle="ready"]) {
+  --spw-lifecycle-phase: ready;
+  --spw-pre-state-visibility: 0.5;
+}
+
+:where([data-spw-hydration="error"], [data-spw-lifecycle="error"]) {
+  --spw-lifecycle-phase: error;
+  --spw-pre-state-visibility: 0.72;
+  --spw-color-layer-accent-apparent: color-mix(in srgb, var(--danger, #9d2f2f) 38%, transparent);
+}
+
+:where([data-spw-empty="true"], [data-spw-component-state="empty"], [data-spw-lifecycle="empty"]) {
+  --spw-lifecycle-phase: empty;
+  --spw-pre-state-visibility: 0.22;
+  --spw-pre-state-fill-mix: 0.05;
+  --spw-pre-state-line-mix: 0.14;
+  --spw-pre-state-ink-mix: 0.52;
+}
+
+:where([data-spw-component-state="default"], [data-spw-lifecycle="default"]) {
+  --spw-lifecycle-phase: default;
+  --spw-pre-state-visibility: 0.34;
+}
+
+:where([data-spw-pre-state-visibility="subtle"]) {
+  --spw-pre-state-visibility: 0.22;
+}
+
+:where([data-spw-pre-state-visibility="balanced"]) {
+  --spw-pre-state-visibility: 0.5;
+}
+
+:where([data-spw-pre-state-visibility="apparent"]) {
+  --spw-pre-state-visibility: 0.82;
+}
+
+/* ==========================================================================
+   4. Theme-diverse pre-state / empty color stacks
+   ========================================================================== */
+
+:where(html[data-spw-theme-pack="neutral-paper"]) :where(
+  [data-spw-empty="true"],
+  [data-spw-component-state="empty"],
+  [data-spw-hydration="loading"]
+) {
+  --spw-color-layer-fill-muted: color-mix(in srgb, var(--pigment-paper-cream, #f7f3ea) 88%, var(--line, #ddd) 12%);
+  --spw-pre-state-fill-mix: calc(0.04 + (var(--spw-pre-state-visibility, 0.5) * 0.06));
+}
+
+:where(html[data-spw-theme-pack="electric-studio"]) :where(
+  [data-spw-empty="true"],
+  [data-spw-component-state="empty"],
+  [data-spw-hydration="loading"]
+) {
+  --spw-color-layer-accent-subtle: color-mix(in srgb, var(--pigment-teal-electric, #0aa) 24%, transparent);
+  --spw-pre-state-line-mix: calc(0.16 + (var(--spw-pre-state-visibility, 0.5) * 0.2));
+}
+
+:where(html[data-spw-theme-pack="ritual-vellum"], html[data-spw-theme-pack="oxide-ledger"]) :where(
+  [data-spw-empty="true"],
+  [data-spw-component-state="empty"]
+) {
+  --spw-pre-state-visibility: max(var(--spw-pre-state-visibility, 0.22), 0.28);
+  --spw-color-layer-ink-muted: color-mix(in srgb, var(--pigment-copper-oxide, #8a4a2a) 18%, var(--ink-soft, currentColor) 82%);
+}
+
+:where(html[data-spw-color-mode="dark"]) :where(
+  [data-spw-empty="true"],
+  [data-spw-component-state="empty"],
+  [data-spw-hydration="loading"]
+) {
+  --spw-pre-state-fill-mix: calc(0.06 + (var(--spw-pre-state-visibility, 0.5) * 0.08));
+  --spw-color-layer-fill-muted: color-mix(in srgb, var(--pigment-charcoal-fiber, #1a2024) 92%, var(--active-op-color, #008080) 8%);
+}
+
+/* ==========================================================================
+   5. Variant and content-variant selection
+   ========================================================================== */
+
+:where([data-spw-semantic-variant], [data-spw-content-variant]) {
+  --spw-variant-selection-weight: 0.58;
+}
+
+:where([data-spw-genre], [data-spw-page-modes]) {
+  --spw-variant-selection-weight: max(var(--spw-variant-selection-weight, 0), 0.42);
+}
+
+:where(html[data-spw-layout="reading"]) {
+  --spw-real-estate-inline: var(--page-width-reading, 56rem);
+}
+
+:where(html[data-spw-layout="wide"], html[data-spw-layout="atlas"]) {
+  --spw-real-estate-inline: var(--page-width-wide, 84rem);
+}
+
+:where(html[data-spw-layout="split"]) {
+  --spw-real-estate-inline: min(var(--page-width-wide, 84rem), 100%);
+}
+
+:where(main, [data-spw-page-role="content"]) {
+  --flow-space: var(--spw-real-estate-block);
+}
+
+:where(html[data-spw-hydration-pass="lex"]) {
+  --spw-real-estate-block: calc(var(--page-stack-gap, 1rem) * 0.94);
+}
+
+:where(html[data-spw-hydration-pass="pragmatic"]) {
+  --spw-real-estate-block: var(--page-stack-gap, clamp(1rem, 2.3vw, 1.7rem));
+}
+
+:where(html[data-spw-settings-momentum="pulse"]) {
+  --spw-variant-selection-weight: max(var(--spw-variant-selection-weight, 0), 0.62);
+  --spw-site-rhythm-tempo: min(calc(var(--spw-site-rhythm-tempo, 1) * 1.06), 3);
+}
+
+:where(html[data-spw-loading-ecology-dimensions~="variant"]) {
+  --spw-variant-selection-weight: max(var(--spw-variant-selection-weight, 0), 0.72);
+  --spw-variant-accent: color-mix(
+    in srgb,
+    var(--component-accent, var(--active-op-color, var(--teal, #008080))) 68%,
+    var(--pigment-violet-ink, #5a3d8a) 32%
+  );
+}

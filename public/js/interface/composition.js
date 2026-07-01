@@ -373,6 +373,15 @@ function handleIngredientInspect(e) {
     const targets = findPageTargetsForCauldronIngredient(ingEl, expr);
     if (targets.length) {
       const first = targets[0];
+      const deepLinkState = ensureElementDeepLink(first, expr);
+      if (deepLinkState.href) {
+        ingEl.dataset.spwDeepLink = deepLinkState.href;
+        ingEl.dataset.spwDeepLinkLabel = deepLinkState.label;
+        ingEl.dataset.spwSemanticExpression = deepLinkState.semanticExpression || expr;
+        if (window.history?.replaceState) {
+          window.history.replaceState(window.history.state, '', deepLinkState.href);
+        }
+      }
       first.scrollIntoView({ behavior: 'smooth', block: 'center' });
       first.classList.add('is-cauldron-jump-target', 'cauldron-highlight');
       const cat = ingEl.querySelector('[data-spw-wonder]')?.getAttribute('data-spw-wonder') ||
@@ -391,7 +400,7 @@ function handleIngredientInspect(e) {
       // Reward text teaches the bidirectional contract while surfacing live state (count/phase/primed).
       rewardSpellCauldronAction('hook-jump', {
         title: 'Cauldron hook: follow the trail',
-        summary: 'Collected ingredient jumped back to its living source on page (with temp highlight + category echo). This is the "state UX" half of spell/cauldron: the garden remembers the attention that fed it.',
+        summary: 'Collected ingredient jumped back to its living source and hash anchor (with temp highlight + category echo). This is the state UX half of spell/cauldron: the garden remembers the attention that fed it.',
         why: 'First-class reward for using the hook improves learnability of prime → collect → re-engage cycle. Ties to attentional rehearsal and subvocal operators.',
       });
     }
@@ -410,6 +419,12 @@ function handleIngredientInspect(e) {
 function findPageTargetsForCauldronIngredient(ingEl, expr) {
   if (!expr && !ingEl) return [];
   const results = new Set();
+  const deepLink = ingEl?.dataset?.spwDeepLink || '';
+  const hashId = deepLink.includes('#') ? deepLink.split('#').pop() : '';
+  if (hashId) {
+    const linkedTarget = document.getElementById(decodeURIComponent(hashId));
+    if (linkedTarget) results.add(linkedTarget);
+  }
   const escaped = expr ? CSS.escape(expr) : '';
   // Direct matches via data attrs that cauldron/render uses
   if (expr) {
@@ -435,6 +450,99 @@ function findPageTargetsForCauldronIngredient(ingEl, expr) {
   return Array.from(results);
 }
 
+function resolveCaptureDeepLink(detail = {}, sourceElement = null, expression = '') {
+  if (detail.deepLink) {
+    return {
+      href: String(detail.deepLink),
+      label: detail.deepLinkLabel || detail.label || expression,
+      semanticExpression: detail.semanticExpression || detail.semantic?.expression || expression,
+    };
+  }
+
+  if (detail.href && String(detail.href).includes('#')) {
+    return {
+      href: String(detail.href),
+      label: detail.deepLinkLabel || detail.label || expression,
+      semanticExpression: detail.semanticExpression || detail.semantic?.expression || expression,
+    };
+  }
+
+  if (sourceElement instanceof HTMLElement) {
+    return ensureElementDeepLink(sourceElement, expression);
+  }
+
+  const currentHash = window.location.hash;
+  if (currentHash) {
+    return {
+      href: `${window.location.pathname}${window.location.search}${currentHash}`,
+      label: detail.deepLinkLabel || detail.label || expression || currentHash.slice(1),
+      semanticExpression: detail.semanticExpression || detail.semantic?.expression || expression,
+    };
+  }
+
+  return {
+    href: `${window.location.pathname}${window.location.search}`,
+    label: detail.deepLinkLabel || detail.label || expression || 'route',
+    semanticExpression: detail.semanticExpression || detail.semantic?.expression || expression,
+  };
+}
+
+function ensureElementDeepLink(element, fallbackLabel = '') {
+  if (!(element instanceof HTMLElement)) {
+    return { href: '', label: fallbackLabel, semanticExpression: fallbackLabel };
+  }
+
+  if (!element.id) {
+    const seed = slugForDeepLink(
+      fallbackLabel
+      || element.dataset.spwSemanticExpression
+      || element.dataset.spwFeature
+      || element.textContent
+      || 'fragment'
+    );
+    let id = seed;
+    let index = 2;
+    while (document.getElementById(id)) {
+      id = `${seed}-${index}`;
+      index += 1;
+    }
+    element.id = id;
+  }
+
+  const href = `${window.location.pathname}${window.location.search}#${element.id}`;
+  const label = (
+    element.dataset.spwDeepLinkLabel
+    || element.getAttribute('aria-label')
+    || element.querySelector?.('h1, h2, h3, h4, .frame-sigil, .page-kicker')?.textContent?.trim()
+    || fallbackLabel
+    || element.id
+  );
+  const semanticExpression = (
+    element.dataset.spwSemanticExpression
+    || element.dataset.spwFeature
+    || element.dataset.spwKind
+    || fallbackLabel
+    || element.id
+  );
+
+  element.dataset.spwDeepLink = href;
+  element.dataset.spwDeepLinkLabel = label;
+  if (!element.dataset.spwSemanticExpression && semanticExpression) {
+    element.dataset.spwSemanticExpression = semanticExpression;
+  }
+
+  return { href, label, semanticExpression };
+}
+
+function slugForDeepLink(value = '') {
+  const slug = String(value)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 56);
+  return `spw-${slug || 'fragment'}`;
+}
+
 function announceCauldronStatus(message) {
   if (!message) return;
   document.querySelectorAll('[data-cauldron-status]').forEach((node) => {
@@ -458,7 +566,7 @@ function rewardSpellCauldronAction(actionType, extra = {}) {
     const count = ingredients.length;
     const phase = typeof computeCauldronPhase === 'function' ? computeCauldronPhase(ingredients) : 'unknown';
     const hasPrimed = ingredients.some(i => i.primedBy);
-    const summaryBase = `Cauldron: ${count} ingredients • phase ${phase}${hasPrimed ? ' • some primed' : ''}.`;
+    const summaryBase = `Cauldron: ${count} ingredients · phase ${phase}${hasPrimed ? ' · some primed' : ''}.`;
     const detail = {
       label: 'Spell / Cauldron',
       title: extra.title || `${actionType} • state update`,
@@ -540,11 +648,11 @@ function syncSpellPreview(ingredients, phase) {
     preview.dataset.spwOperatorSequence = operatorSequence;
     const meta = preview.querySelector('[data-spw-slot="meta"]');
     const body = preview.querySelector('[data-spw-slot="body"]');
-    if (meta) meta.textContent = `spell draft · ${count} ingredients · ${phase}`;
+    if (meta) meta.textContent = `extension draft · ${count} fragments · ${phase}`;
     if (body) {
       body.textContent = operators.length
-        ? `${operatorSequence} → spell draft`
-        : '~ prompt → $ substrate → ! transform → ^ proof';
+        ? `${operatorSequence} → extension draft`
+        : '~ link → $ state → ! transform → ^ proof';
     }
     if (becameReady) {
       preview.dataset.spwSpellReveal = 'true';
@@ -681,6 +789,7 @@ function syncCauldronHosts(ingredients, phase) {
     host.dataset.spwCauldronState = phase;
     host.dataset.spwCauldronCount = String(count);
     host.dataset.spwIngredientCount = String(count);
+    host.dataset.spwHypermediaExtension = 'state output resume';
     if (operators) {
       host.dataset.spwCauldronOperators = operators;
     } else {
@@ -773,7 +882,7 @@ function renderIngredientsList(ingredients) {
     return;
   }
 
-  const signature = ingredients.map(i => `${i.expression}|${i.capturedAt || 0}`).join('~');
+  const signature = ingredients.map(i => `${i.expression}|${i.deepLink || ''}|${i.capturedAt || 0}`).join('~');
   const previousSignature = container.dataset.lastSignature || '';
   if (previousSignature === signature) return;
   const arrival = detectIngredientArrival(ingredients, previousSignature);
@@ -810,6 +919,11 @@ function renderIngredientsList(ingredients) {
       meta += `<span class="cauldron-ingredient-meta cauldron-gesture-trace" data-spw-gesture-trace title="Gesture chain that created this ingredient">${escapeHtml(ing.gestureHistory)}</span>`;
     }
 
+    if (ing.deepLink) {
+      const deepLinkLabel = ing.deepLinkLabel || (String(ing.deepLink).includes('#') ? 'hash anchor' : 'route anchor');
+      meta += `<span class="cauldron-ingredient-meta cauldron-deep-link" data-spw-deep-link="${escapeHtml(ing.deepLink)}">${escapeHtml(deepLinkLabel)}</span>`;
+    }
+
     // Numericity quantifier surfacing (integrated, not brittle): when a numerical ingredient is present,
     // show its derived quantifiers as first-class options for selection/discovery in spells/navigation.
     if (ing.type === 'numerical' && Array.isArray(ing.quantifiers) && ing.quantifiers.length) {
@@ -826,21 +940,24 @@ function renderIngredientsList(ingredients) {
       meta += `<span class="cauldron-ingredient-meta cauldron-dimensions" data-higher-order="${ing.higherOrder ? 'true' : 'false'}">${dimList}</span>`;
     }
 
-    const title = `${ing.expression}${originText ? ` (from ${originText})` : ''}`;
+    const title = `${ing.expression}${originText ? ` (from ${originText})` : ''}${ing.deepLink ? ` - ${ing.deepLink}` : ''}`;
 
     return `
       <span class="cauldron-ingredient"
             data-spw-cauldron-ingredient
             data-spw-ingredient-state="collected"
-            data-spw-semantic-expression="${escapeHtml(ing.expression)}"
+            data-spw-semantic-expression="${escapeHtml(ing.semanticExpression || ing.expression)}"
             data-spw-ingredient-phase="${phase}"
             data-spw-source-route="${escapeHtml(ing.origin || ing.context || '')}"
             data-spw-source-element="${escapeHtml(ing.sourceElement || ing.expression)}"
+            ${ing.deepLink ? `data-spw-deep-link="${escapeHtml(ing.deepLink)}"` : ''}
+            ${ing.deepLinkLabel ? `data-spw-deep-link-label="${escapeHtml(ing.deepLinkLabel)}"` : ''}
             ${ing.origin ? `data-spw-origin="${escapeHtml(ing.origin)}"` : ''}
             ${ing.primedBy ? `data-spw-ingredient-primed="${escapeHtml(ing.primedBy)}"` : ''}
             tabindex="0"
             role="group"
-            aria-label="Ingredient: ${escapeHtml(ing.expression)}"
+            data-spw-hypermedia-extension="state-fragment"
+            aria-label="Saved hypermedia fragment: ${escapeHtml(ing.expression)}"
             title="${escapeHtml(title)}">
         ${op}${expr}
         ${meta ? `<span class="cauldron-ingredient-meta-group">${meta}</span>` : ''}
@@ -866,6 +983,10 @@ function onCapture(event) {
   if (!expression) return;
 
   const ingredients = getCauldron();
+  const sourceElement = detail.element instanceof HTMLElement
+    ? detail.element
+    : (detail.target instanceof HTMLElement ? detail.target : null);
+  const deepLinkState = resolveCaptureDeepLink(detail, sourceElement, expression);
 
   // Improve origin context for learning value (where this semantic came from)
   const origin = detail.origin
@@ -890,6 +1011,9 @@ function onCapture(event) {
     // (supports re-hydration and prompt enrichment).
     gestureHistory: detail.gestureHistory || detail.gestureChain || null,
     sourceElement: detail.sourceElement || detail.key || null,
+    deepLink: deepLinkState.href || null,
+    deepLinkLabel: deepLinkState.label || null,
+    semanticExpression: deepLinkState.semanticExpression || expression,
   };
 
   // Numericity: if this capture is a number concept (from living-term on rhythm text etc.),
@@ -917,8 +1041,8 @@ function onCapture(event) {
     };
     saveCauldron(ingredients);
     const message = ingredient.primedBy
-      ? `Refreshed primed ingredient from ${ingredient.originLabel || 'charged brace'}: ${ingredient.label}.`
-      : `Refreshed ingredient: ${ingredient.label}.`;
+      ? `Refreshed primed deep-link fragment from ${ingredient.originLabel || 'charged brace'}: ${ingredient.label}.`
+      : `Refreshed linkable fragment: ${ingredient.label}.`;
     announceCauldronStatus(message);
     bus.emit('cauldron:ingredient-refreshed', {
       expression,
@@ -932,8 +1056,8 @@ function onCapture(event) {
   ingredients.push(ingredient);
   saveCauldron(ingredients);
   const message = ingredient.primedBy
-    ? `Primed ingredient gathered from ${ingredient.originLabel || 'charged brace'}: ${ingredient.label}.`
-    : `Ingredient gathered: ${ingredient.label}.`;
+    ? `Primed deep-link fragment gathered from ${ingredient.originLabel || 'charged brace'}: ${ingredient.label}.`
+    : `Linkable fragment gathered: ${ingredient.label}.`;
   announceCauldronStatus(message);
   pulseCauldronFeedback('gather', { expression });
 }

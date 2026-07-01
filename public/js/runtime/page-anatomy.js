@@ -157,6 +157,93 @@ function describeElementPath(element) {
   return `${ownerId}${anatomy}`;
 }
 
+const KEY_BINDING_CATALOG = Object.freeze([
+  Object.freeze({ id: 'palette-probe-rail', keys: 'ArrowLeft|ArrowRight|Home|End', surface: 'palette-probe-rail', reward: 'arrow-reward' }),
+  Object.freeze({ id: 'resonance-toolbar', keys: 'ArrowLeft|ArrowRight|Home|End', surface: 'palette-probe-actions', reward: 'arrow-reward' }),
+  Object.freeze({ id: 'frame-traverse', keys: '[|]', surface: 'frame-navigator', intent: 'traverse-frames' }),
+  Object.freeze({ id: 'navigator-open', keys: 'g|/', surface: 'frame-navigator', intent: 'open-search' }),
+  Object.freeze({ id: 'section-travel', keys: 'ArrowLeft|ArrowRight|Home|End', surface: 'section-handle', intent: 'travel-section' }),
+  Object.freeze({ id: 'brace-commit', keys: 'Enter|Space', surface: 'semantic-brace', source: 'keyboard' }),
+  Object.freeze({ id: 'state-advance', keys: '+|-', surface: 'electromagnetic-container', intent: 'advance-retreat' }),
+  Object.freeze({ id: 'anatomy-pin', keys: 'Enter|Space|Escape', surface: 'page-anatomy', intent: 'pin-clear' }),
+  Object.freeze({ id: 'scene-enter', keys: 'Enter|Space', surface: 'scene-interpret', intent: 'enter-scene', reward: 'scene-context' }),
+  Object.freeze({ id: 'scene-exit', keys: 'Escape', surface: 'scene-interpret', intent: 'exit-scene' }),
+]);
+
+function describeFocusedControl(element) {
+  if (!(element instanceof HTMLElement)) return '';
+  if (element.matches('.palette-probe-chip')) {
+    return `probe:${element.dataset.spwPaletteProbeIndex || '?'}`;
+  }
+  if (element.matches('[data-site-setting-set^="paletteResonance:"]')) {
+    return element.getAttribute('data-site-setting-set') || 'paletteResonance';
+  }
+  if (element.matches(ANATOMY_SELECTOR)) {
+    return `anatomy:${element.dataset.spwAnatomy || describeElementPath(element)}`;
+  }
+  if (element.matches('[data-spw-prompt-host], [data-spw-scene-interpret], .spw-scene-bed[data-spw-scene-posture]')) {
+    return `scene:${element.dataset.spwScenePosture || element.dataset.spwPromptTitle || describeElementPath(element)}`;
+  }
+  if (element.dataset.spwForm || element.dataset.spwBrace) {
+    return `brace:${element.dataset.spwBrace || element.dataset.spwForm || 'form'}`;
+  }
+  const path = describeElementPath(element);
+  return path || element.tagName.toLowerCase();
+}
+
+function resolveActiveKeyBindings(element) {
+  if (!(element instanceof HTMLElement)) return KEY_BINDING_CATALOG;
+  if (element.matches('.palette-probe-chip') || element.closest('[data-spw-palette-probe-rail="ready"]')) {
+    return KEY_BINDING_CATALOG.filter((entry) => entry.id === 'palette-probe-rail');
+  }
+  if (element.matches('[data-site-setting-set^="paletteResonance:"]') || element.closest('[data-spw-palette-probe-toolbar="ready"]')) {
+    return KEY_BINDING_CATALOG.filter((entry) => entry.id === 'resonance-toolbar');
+  }
+  if (element.closest('.spw-section-handle, [data-spw-chrome-role="section-handle"]')) {
+    return KEY_BINDING_CATALOG.filter((entry) => entry.id === 'section-travel');
+  }
+  if (element.closest('[data-spw-form], [data-spw-brace]')) {
+    return KEY_BINDING_CATALOG.filter((entry) => entry.id === 'brace-commit');
+  }
+  if (element.closest(ANATOMY_SELECTOR)) {
+    return KEY_BINDING_CATALOG.filter((entry) => entry.id === 'anatomy-pin');
+  }
+  if (element.closest('[data-spw-scene-interpret], [data-spw-prompt-host], .spw-scene-bed[data-spw-scene-posture]')) {
+    return KEY_BINDING_CATALOG.filter((entry) => entry.id === 'scene-enter' || entry.id === 'scene-exit');
+  }
+  return KEY_BINDING_CATALOG;
+}
+
+export function collectInteractionTopography(html = document.documentElement) {
+  const active = document.activeElement;
+  const keyEvents = window.__SPW_KEY_EVENTS__?.snapshot?.() || null;
+  const medium = window.__SPW_INTERACTIVE_MEDIUM__?.snapshot?.() || null;
+  const sigilTransition = window.__SPW_SIGIL_TRANSITIONS__?.snapshot?.() || null;
+  return {
+    phase: html.dataset.spwInteractionPhase || 'idle',
+    beat: html.dataset.spwBeat || '',
+    playing: html.dataset.spwPlaying || '',
+    freshnessPulse: html.dataset.spwFreshnessPulse || '',
+    paletteSplash: html.dataset.spwPaletteSplash || '',
+    paletteTreatProbe: html.dataset.spwPaletteTreatProbe || '',
+    focus: describeFocusedControl(active),
+    bindings: resolveActiveKeyBindings(active),
+    catalog: KEY_BINDING_CATALOG,
+    keySelection: html.dataset.spwKeySelection || 'idle',
+    revealPhase: html.dataset.spwRevealPhase || 'idle',
+    sceneDepth: Number.parseInt(html.dataset.spwSceneDepth || '', 10) || 0,
+    sceneContext: html.dataset.spwSceneContext || '',
+    keyEvents,
+    medium,
+    sigilTransition,
+    viewportTier: html.dataset.spwViewportTier || '',
+    pointerMode: html.dataset.spwPointerMode || '',
+    hoverMode: html.dataset.spwHoverMode || '',
+    mediumRegister: html.dataset.spwMediumRegister || '',
+    interactionPosture: html.dataset.spwInteractionPosture || '',
+  };
+}
+
 function clearElementState(element) {
   if (!(element instanceof HTMLElement)) return;
   writeDatasetValue(element, 'spwAnatomyState', null, {
@@ -656,6 +743,8 @@ export function buildPageAnatomySnapshot(root = document) {
       paletteTrace: readPaletteTrace(),
     },
     floatingChrome: collectFloatingChromeRecords(),
+    interaction: collectInteractionTopography(html),
+    topicalPayload: window.__SPW_TOPICAL_PAYLOAD__?.snapshot?.() || null,
   };
 }
 
@@ -720,6 +809,119 @@ export function serializePageAnatomy(snapshot = buildPageAnatomySnapshot()) {
     lines.push('  related_routes = #[');
     snapshot.relatedRoutes.slice(0, 8).forEach((route) => lines.push(`    ~${spwQuote(route)}`));
     lines.push('  ][reg=set]');
+  }
+
+  if (snapshot.interaction) {
+    lines.push('  interaction_topography = .{');
+    if (snapshot.interaction.phase) lines.push(`    phase = ${spwQuote(snapshot.interaction.phase)}`);
+    if (snapshot.interaction.beat) lines.push(`    beat = ${spwQuote(snapshot.interaction.beat)}`);
+    if (snapshot.interaction.playing) lines.push(`    playing = ${spwQuote(snapshot.interaction.playing)}`);
+    if (snapshot.interaction.freshnessPulse) lines.push(`    freshness_pulse = ${spwQuote(snapshot.interaction.freshnessPulse)}`);
+    if (snapshot.interaction.paletteSplash) lines.push(`    palette_splash = ${spwQuote(snapshot.interaction.paletteSplash)}`);
+    if (snapshot.interaction.paletteTreatProbe) lines.push(`    palette_treat_probe = ${spwQuote(snapshot.interaction.paletteTreatProbe)}`);
+    if (snapshot.interaction.focus) lines.push(`    focus = ${spwQuote(snapshot.interaction.focus)}`);
+    if (snapshot.interaction.keySelection && snapshot.interaction.keySelection !== 'idle') {
+      lines.push(`    key_selection = ${spwQuote(snapshot.interaction.keySelection)}`);
+    }
+    if (snapshot.interaction.revealPhase && snapshot.interaction.revealPhase !== 'idle') {
+      lines.push(`    reveal_phase = ${spwQuote(snapshot.interaction.revealPhase)}`);
+    }
+    if (snapshot.interaction.sceneContext) {
+      lines.push(`    scene_context = ${spwQuote(snapshot.interaction.sceneContext)}`);
+    }
+    if (snapshot.interaction.sceneDepth) {
+      lines.push(`    scene_depth = ${snapshot.interaction.sceneDepth}`);
+    }
+    if (snapshot.interaction.keyEvents?.scene?.active) {
+      const scene = snapshot.interaction.keyEvents.scene.active;
+      if (scene.posture) lines.push(`    scene_posture = ${spwQuote(scene.posture)}`);
+      if (scene.promptTitle) lines.push(`    scene_prompt = ${spwQuote(scene.promptTitle)}`);
+    }
+    const medium = snapshot.interaction.medium;
+    if (medium?.register || snapshot.interaction.mediumRegister) {
+      lines.push(`    medium_register = ${spwQuote(medium?.register || snapshot.interaction.mediumRegister)}`);
+    }
+    if (snapshot.interaction.sigilTransition?.active) {
+      const sigil = snapshot.interaction.sigilTransition;
+      lines.push('    sigil_transition = .{');
+      if (sigil.phase) lines.push(`      phase = ${spwQuote(sigil.phase)}`);
+      if (sigil.active) lines.push(`      active = ${spwQuote(sigil.active)}`);
+      if (sigil.operator) lines.push(`      operator = ${spwQuote(sigil.operator)}`);
+      if (sigil.page) lines.push(`      page = ${spwQuote(sigil.page)}`);
+      if (sigil.region) lines.push(`      region = ${spwQuote(sigil.region)}`);
+      if (sigil.source) lines.push(`      source = ${spwQuote(sigil.source)}`);
+      if (sigil.from) lines.push(`      from = ${spwQuote(sigil.from)}`);
+      if (sigil.to) lines.push(`      to = ${spwQuote(sigil.to)}`);
+      lines.push('    }');
+    }
+    if (medium?.posture || snapshot.interaction.interactionPosture) {
+      lines.push(`    interaction_posture = ${spwQuote(medium?.posture || snapshot.interaction.interactionPosture)}`);
+    }
+    if (medium?.viewportTier || snapshot.interaction.viewportTier) {
+      lines.push(`    viewport_tier = ${spwQuote(medium?.viewportTier || snapshot.interaction.viewportTier)}`);
+    }
+    if (medium?.pointerMode || snapshot.interaction.pointerMode) {
+      lines.push(`    pointer_mode = ${spwQuote(medium?.pointerMode || snapshot.interaction.pointerMode)}`);
+    }
+    if (medium?.intensity) {
+      lines.push(`    medium_intensity = ${medium.intensity}`);
+    }
+    if (medium?.hosts?.total) {
+      lines.push(`    interactive_hosts = ${medium.hosts.total}`);
+    }
+    if (snapshot.interaction.bindings?.length) {
+      lines.push('    key_bindings = #[');
+      snapshot.interaction.bindings.forEach((entry) => {
+        lines.push(`      .{ id=${spwQuote(entry.id)} keys=${spwQuote(entry.keys)} surface=${spwQuote(entry.surface)}${entry.reward ? ` reward=${spwQuote(entry.reward)}` : ''}${entry.intent ? ` intent=${spwQuote(entry.intent)}` : ''}${entry.source ? ` source=${spwQuote(entry.source)}` : ''} }`);
+      });
+      lines.push('    ][reg=set]');
+    }
+    lines.push('  }');
+  }
+
+  if (snapshot.topicalPayload) {
+    const payload = snapshot.topicalPayload;
+    lines.push('  topical_payload = .{');
+    if (payload.topics?.length) {
+      lines.push('    topics = #[');
+      payload.topics.slice(0, 8).forEach((topic) => {
+        lines.push(`      .{ text=${spwQuote(topic.text)} count=${topic.count} }`);
+      });
+      lines.push('    ][reg=set]');
+    }
+    if (payload.lore?.length) {
+      lines.push('    lore = #[');
+      payload.lore.slice(0, 6).forEach((entry) => {
+        lines.push(`      .{ role=${spwQuote(entry.role)} id=${spwQuote(entry.id)} seed=${spwQuote(entry.seed)} }`);
+      });
+      lines.push('    ][reg=set]');
+    }
+    if (payload.handles?.length) {
+      lines.push('    handles = #[');
+      payload.handles.slice(0, 8).forEach((handle) => {
+        const interpret = handle.interpret ? ` interpret=${spwQuote(handle.interpret)}` : '';
+        const posture = handle.posture ? ` posture=${spwQuote(handle.posture)}` : '';
+        const prompt = handle.promptTitle ? ` prompt=${spwQuote(handle.promptTitle)}` : '';
+        lines.push(`      .{ kind=${spwQuote(handle.kind)} id=${spwQuote(handle.id)}${interpret}${posture}${prompt} }`);
+      });
+      lines.push('    ][reg=set]');
+    }
+    if (payload.promptChips?.length) {
+      lines.push('    image_handles = #[');
+      payload.promptChips.slice(0, 6).forEach((chip) => {
+        lines.push(`      .{ label=${spwQuote(chip.label)} host=${spwQuote(chip.host)} generator=${spwQuote(chip.generator)} }`);
+      });
+      lines.push('    ][reg=set]');
+    }
+    if (payload.activeScene) {
+      lines.push('    active_scene = .{');
+      lines.push(`      id = ${spwQuote(payload.activeScene.id || '')}`);
+      if (payload.activeScene.posture) lines.push(`      posture = ${spwQuote(payload.activeScene.posture)}`);
+      if (payload.activeScene.promptTitle) lines.push(`      prompt = ${spwQuote(payload.activeScene.promptTitle)}`);
+      lines.push(`      depth = ${payload.sceneDepth || 0}`);
+      lines.push('    }');
+    }
+    lines.push('  }');
   }
 
   lines.push('}');

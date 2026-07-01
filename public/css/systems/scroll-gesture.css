@@ -1,0 +1,46 @@
+/* ==========================================================================
+   scroll-gesture.css
+   --------------------------------------------------------------------------
+   Seamless vertical scroll with horizontal swipe reserved for lens/progression.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: no-preference) {
+  :where(html) {
+    scroll-behavior: smooth;
+  }
+}
+
+:where(html, body, main) {
+  overscroll-behavior-y: none;
+}
+
+:where(main) {
+  scroll-padding-top: calc(var(--shell-header-height, var(--header-height, 4rem)) + 0.75rem);
+}
+
+:where(
+  .topic-photo-card,
+  .image-study,
+  [data-spw-image-discovery],
+  [data-spw-image-reward],
+  .spw-visual-link-card,
+  .frame-card--illustrated a
+) {
+  touch-action: pan-y pinch-zoom;
+}
+
+:where([data-spw-gesture-contract*="swipe"]) {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+:where([data-spw-scroll-rail], .spw-visual-link-board__grid, .frame-grid--media) {
+  scroll-snap-type: x proximity;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-gutter: stable;
+}
+
+:where([data-spw-scroll-rail] > *, .spw-visual-link-board__grid > *, .frame-grid--media > *) {
+  scroll-snap-align: start;
+}

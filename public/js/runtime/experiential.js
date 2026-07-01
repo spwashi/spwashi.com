@@ -862,6 +862,7 @@ function renderBreadcrumbSpell() {
     activeFrame?.querySelector('.frame-sigil')?.textContent?.trim()
     || activeFrame?.id
     || null;
+  const deepLinkState = resolveBreadcrumbDeepLinkState({ url, activeFrame, activeFrameSigil });
 
   const activeModeButton = document.querySelector('[data-mode-group][data-set-mode][aria-pressed="true"]');
   const activeMode = activeModeButton?.dataset.setMode || null;
@@ -950,6 +951,7 @@ function renderBreadcrumbSpell() {
     shellSnapshot,
     cognitiveState,
     narrationMode,
+    deepLinkState,
   });
   const compactSummary = describeBreadcrumbSummary({
     surface,
@@ -971,6 +973,7 @@ function renderBreadcrumbSpell() {
     relatedRoutes,
     compact,
     pathState,
+    deepLinkState,
   });
 
   pathBar.dataset.spwBreadcrumbSurface = surface;
@@ -996,6 +999,11 @@ function renderBreadcrumbSpell() {
   pathBar.dataset.spwBreadcrumbPageRole = pageRole || 'none';
   pathBar.dataset.spwBreadcrumbPageResponsibility = pageResponsibility || 'none';
   pathBar.dataset.spwBreadcrumbRegionMenu = isRegionMenuOpen() ? 'open' : 'closed';
+  pathBar.dataset.spwDeepLink = deepLinkState.href;
+  pathBar.dataset.spwDeepLinkLabel = deepLinkState.label;
+  pathBar.dataset.spwDeepLinkState = deepLinkState.hash ? 'hash-anchor' : 'route-anchor';
+  pathBar.dataset.spwSemanticExpression = deepLinkState.semanticExpression;
+  pathBar.dataset.spwHypermediaExtension = 'trail routes regions deep-link';
   if (document.documentElement.dataset.spwDimensionalBreadcrumbs === 'on') {
     pathBar.setAttribute('data-dimensional-breadcrumb', 'spell-path');
   } else {
@@ -1020,8 +1028,8 @@ function renderBreadcrumbSpell() {
         data-spw-breadcrumb-action="toggle-path"
         aria-expanded="${pathState === 'open' ? 'true' : 'false'}"
         aria-controls="${trailId}"
-        aria-label="${escapeAttribute(`${pathState === 'open' ? 'Collapse' : 'Expand'} navigation trail. ${compactSummary}.`)}">
-        <span class="spw-spell-path__title">trail</span>
+        aria-label="${escapeAttribute(`${pathState === 'open' ? 'Collapse' : 'Expand'} link trail. ${compactSummary}.`)}">
+        <span class="spw-spell-path__title">link trail</span>
         <span class="spw-spell-path__summary">${escapeHtml(compactSummary)}</span>
       </button>
       ${compact ? '' : renderShellControl(shellSnapshot)}
@@ -1032,15 +1040,16 @@ function renderBreadcrumbSpell() {
       pageResponsibility,
       pathState,
       activeFrameSigil,
+      deepLinkState,
     })}
     ${showTrail && guide ? `<p class="spw-spell-path__guide">${guide}</p>` : ''}
-    ${showTrail ? `<ol class="spw-spell-trail" id="${trailId}" aria-label="Current navigation trail">
+    ${showTrail ? `<ol class="spw-spell-trail" id="${trailId}" aria-label="Current link trail">
       ${items.join('')}
     </ol>` : ''}
     ${showTrail && !compact && relatedRoutes.length ? renderBreadcrumbNearbyRoutes(relatedRoutes) : ''}
     ${showTrail ? `
     <details class="spw-spell-path__inspect">
-      <summary>Inspect trail</summary>
+      <summary>Inspect extension</summary>
       <p class="spw-spell-meaning">${escapeHtml(meaning)}</p>
     </details>` : ''}
     ${showTrail ? renderGardenTraceOnSpellPath() : ''}
@@ -1069,9 +1078,10 @@ function renderBreadcrumbSpell() {
 }
 
 function renderBreadcrumbLink({ kind, href, token, label, current = false }) {
+  const semanticExpression = `trail[${kind}]{${String(href).includes('#') ? 'hash' : 'route'}}`;
   return `
-    <li class="spw-spell-crumb" data-spw-crumb-kind="${escapeAttribute(kind)}" ${current ? 'data-spw-current="true"' : ''}>
-      <a class="spw-spell-link" href="${escapeAttribute(href)}">
+    <li class="spw-spell-crumb" data-spw-crumb-kind="${escapeAttribute(kind)}" data-spw-deep-link="${escapeAttribute(href)}" data-spw-semantic-expression="${escapeAttribute(semanticExpression)}" ${current ? 'data-spw-current="true"' : ''}>
+      <a class="spw-spell-link" href="${escapeAttribute(href)}" data-spw-deep-link="${escapeAttribute(href)}" data-spw-deep-link-label="${escapeAttribute(label)}" data-spw-semantic-expression="${escapeAttribute(semanticExpression)}">
         <span class="spw-spell-token">${escapeHtml(token)}</span>
         <span class="spw-spell-label">${escapeHtml(label)}</span>
       </a>
@@ -1135,12 +1145,14 @@ function renderSpellPathInteractionHint({
   pageResponsibility = '',
   pathState = 'closed',
   activeFrameSigil = null,
+  deepLinkState = null,
 } = {}) {
   const hint = describeSpellPathInteractionHint({
     compact,
     pageResponsibility,
     pathState,
     activeFrameSigil,
+    deepLinkState,
   });
   if (!hint) return '';
 
@@ -1152,26 +1164,67 @@ function describeSpellPathInteractionHint({
   pageResponsibility = '',
   pathState = 'closed',
   activeFrameSigil = null,
+  deepLinkState = null,
 } = {}) {
   const touch = isTouchPrimary();
+  const hasHashAnchor = Boolean(deepLinkState?.hash);
 
   if (pathState === 'open') return '';
 
   if (pageResponsibility === 'route sorter') {
     return touch
-      ? 'Tap @ for entrances, or expand the trail for nearby doors.'
-      : 'Use @ for entrances, or expand the trail for nearby routes.';
+      ? 'Tap @ for entrances, or expand the link trail for nearby doors.'
+      : 'Use @ for entrances, or expand the link trail for nearby routes.';
   }
 
   if (activeFrameSigil) {
     return touch
-      ? 'Expand the trail, or tap ? to inspect this frame.'
-      : 'Expand the trail, or use ? to inspect this frame.';
+      ? 'Expand the deep-link trail, or tap ? to inspect this frame.'
+      : 'Expand the deep-link trail, or use ? to inspect this frame.';
+  }
+
+  if (hasHashAnchor) {
+    return 'Expand for your current hash anchor and nearby routes.';
   }
 
   return touch
-    ? 'Expand for your trail and nearby routes.'
-    : 'Expand for your trail and nearby routes.';
+    ? 'Expand for your deep-link trail and nearby routes.'
+    : 'Expand for your deep-link trail and nearby routes.';
+}
+
+function resolveBreadcrumbDeepLinkState({ url, activeFrame, activeFrameSigil } = {}) {
+  const route = `${url.pathname}${url.search}`;
+  const hash = url.hash || (activeFrame?.id ? `#${activeFrame.id}` : '');
+  const href = `${route}${hash}`;
+  const target = activeFrame instanceof HTMLElement
+    ? activeFrame
+    : (hash ? document.getElementById(decodeURIComponent(hash.slice(1))) : null);
+  const label = target instanceof HTMLElement
+    ? (
+      target.dataset.spwDeepLinkLabel
+      || target.getAttribute('aria-label')
+      || target.querySelector?.('h1, h2, h3, h4, .frame-sigil, .page-kicker')?.textContent?.trim()
+      || activeFrameSigil
+      || target.id
+    )
+    : (activeFrameSigil || humanizePathPart(url.pathname.split('/').filter(Boolean).at(-1) || 'home'));
+  const semanticExpression = target instanceof HTMLElement
+    ? (
+      target.dataset.spwSemanticExpression
+      || target.dataset.spwFeature
+      || target.dataset.spwKind
+      || target.dataset.spwRole
+      || `route{${hash ? 'hash' : 'top'}}`
+    )
+    : `route{${hash ? 'hash' : 'top'}}`;
+
+  return {
+    route,
+    hash,
+    href,
+    label: stripWhitespace(label || 'route top'),
+    semanticExpression,
+  };
 }
 
 function resolveActiveFrameElement() {
@@ -1199,7 +1252,7 @@ function renderShellControl(shellSnapshot) {
       type="button"
       data-spw-breadcrumb-action="${escapeAttribute(action)}"
       aria-pressed="${pressed ? 'true' : 'false'}"
-      aria-label="${escapeAttribute(`Menu controls. ${shellSnapshot.returnHint}.`)}">
+      aria-label="${escapeAttribute(`Menu extension controls. ${shellSnapshot.returnHint}.`)}">
       <span class="spw-spell-shell-token">menu</span>
       <span class="spw-spell-shell-state">${escapeHtml(label)}</span>
     </button>
@@ -1211,7 +1264,7 @@ function renderBreadcrumbNearbyRoutes(routes) {
 
   return `
     <div class="spw-spell-neighborhood" aria-label="Nearby routes">
-      <span class="spw-spell-neighborhood__label">next stops</span>
+      <span class="spw-spell-neighborhood__label">linked routes</span>
       <ul class="spw-spell-neighborhood__list">
         ${routes.slice(0, MAX_BREADCRUMB_NEIGHBORS).map((route) => `
           <li class="spw-spell-neighborhood__item">
@@ -1380,22 +1433,26 @@ function describeBreadcrumbGuide({
   pagePrimaryAction,
   relatedRoutes,
   compact,
+  deepLinkState,
 }) {
-  let lead = 'Follow the trail to move without losing context.';
+  let lead = 'Follow the trail to move through route and hash anchors without losing Spw context.';
   if (pageResponsibility === 'route sorter') {
-    lead = 'Choose a doorway — reading stays in front while you orient.';
+    lead = 'Choose a doorway; reading stays in front while each route remains linkable.';
   } else if (pagePrimaryAction) {
     lead = `${humanizePathPart(pagePrimaryAction)} when you are ready.`;
   }
 
+  const anchor = deepLinkState?.hash
+    ? ` Current anchor: ${deepLinkState.label}.`
+    : '';
   const nearby = !compact && relatedRoutes.length
     ? ` ${relatedRoutes.length} nearby route${relatedRoutes.length === 1 ? '' : 's'} below.`
     : '';
 
-  return `<span class="spw-spell-path__guide-lead">${escapeHtml(`${lead}${nearby}`)}</span>`;
+  return `<span class="spw-spell-path__guide-lead">${escapeHtml(`${lead}${anchor}${nearby}`)}</span>`;
 }
 
-function describeBreadcrumbMeaning({ surface, pageRole, pageResponsibility, pagePrimaryAction, activeFrameSigil, activeMode, shellSnapshot, cognitiveState, narrationMode }) {
+function describeBreadcrumbMeaning({ surface, pageRole, pageResponsibility, pagePrimaryAction, activeFrameSigil, activeMode, shellSnapshot, cognitiveState, narrationMode, deepLinkState }) {
   const parts = [
     `surface ${surface}`,
     pageResponsibility ? `responsibility ${pageResponsibility}` : '',
@@ -1403,6 +1460,8 @@ function describeBreadcrumbMeaning({ surface, pageRole, pageResponsibility, page
     pageRole ? `role ${pageRole}` : '',
     activeFrameSigil ? `frame ${stripWhitespace(activeFrameSigil)}` : 'frame route-level',
     activeMode ? `mode ${humanizePathPart(activeMode)}` : 'mode ambient',
+    deepLinkState?.href ? `deep link ${deepLinkState.href}` : '',
+    deepLinkState?.semanticExpression ? `spw ${deepLinkState.semanticExpression}` : '',
     `menu ${humanizePathPart(shellSnapshot.topology)} ${shellSnapshot.state}`,
     `memory ${cognitiveState.familiarity}`,
     `liminality ${cognitiveState.liminality}`,

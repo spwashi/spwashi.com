@@ -72,6 +72,11 @@
     calc(var(--spw-rhythm-unit, 1rem) * 2)
   );
 
+  /* Hypermedia 2D real estate aliases (see tokens/dimensions.css) */
+  --spw-real-estate-inline: var(--page-width-reading, 56rem);
+  --spw-real-estate-block: var(--page-stack-gap);
+  --spw-real-estate-section: var(--page-section-gap);
+
   /* Header — alias core token so scroll chrome stays aligned sitewide */
   --shell-header-height: var(--header-height, 4rem);
   --shell-header-min-height: 0;

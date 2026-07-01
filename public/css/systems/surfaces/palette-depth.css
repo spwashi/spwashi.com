@@ -160,6 +160,51 @@ html[data-spw-theme-pack="glass-console"] {
 :where(.palette-probe-chip) {
   position: relative;
   z-index: 1;
+  transition:
+    transform var(--spw-microinteraction-pulse-duration, 280ms) var(--ease-settle, ease),
+    box-shadow var(--spw-microinteraction-pulse-duration, 280ms) var(--ease-settle, ease),
+    border-color var(--duration-fast, 140ms) var(--ease-mechanical, ease),
+    filter var(--duration-fast, 140ms) var(--ease-mechanical, ease);
+}
+
+:where(.palette-probe-chip:not([class*="--depth"]):is(:hover, :focus-visible)) {
+  transform: translateY(-1px) scale(1.04);
+}
+
+:where(.palette-probe-swatches:not(.palette-probe-swatches--depth) .palette-probe-chip:nth-child(1):is(:hover, :focus-visible)) {
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, #fff 28%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--spw-palette-probe-1) 28%, transparent),
+    0 0 10px color-mix(in srgb, var(--spw-palette-probe-1) 24%, transparent);
+}
+
+:where(.palette-probe-swatches:not(.palette-probe-swatches--depth) .palette-probe-chip:nth-child(2):is(:hover, :focus-visible)) {
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, #fff 28%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--spw-palette-probe-2) 28%, transparent),
+    0 0 10px color-mix(in srgb, var(--spw-palette-probe-2) 24%, transparent);
+}
+
+:where(.palette-probe-swatches:not(.palette-probe-swatches--depth) .palette-probe-chip:nth-child(3):is(:hover, :focus-visible)) {
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, #fff 28%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--spw-palette-probe-3) 28%, transparent),
+    0 0 10px color-mix(in srgb, var(--spw-palette-probe-3) 24%, transparent);
+}
+
+:where(.palette-probe-swatches:not(.palette-probe-swatches--depth) .palette-probe-chip:nth-child(4):is(:hover, :focus-visible)) {
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, #fff 28%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--spw-palette-probe-4) 28%, transparent),
+    0 0 10px color-mix(in srgb, var(--spw-palette-probe-4) 24%, transparent);
+}
+
+:where(.spw-shell-resonance-utility .palette-probe-chip--shell:is(:hover, :focus-visible)) {
+  transform: scale(1.12);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    0 0 0 1px color-mix(in srgb, var(--spw-palette-treat-accent, var(--spw-palette-probe-1)) 24%, transparent),
+    0 2px 6px color-mix(in srgb, var(--spw-palette-depth-shadow) 18%, transparent);
 }
 
 /* Shell theme utility depth */

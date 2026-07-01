@@ -1,0 +1,183 @@
+/* ==========================================================================
+   interactive-medium.css
+   --------------------------------------------------------------------------
+   Device-aware modulation for entertainment / interactive routes.
+   Imported last in the systems layer so module-added styles (scene-interaction,
+   spw-key-events, palette-treat) spend shared tokens without fighting layout.
+   ========================================================================== */
+
+:root {
+  --spw-medium-touch-min: 2.75rem;
+  --spw-medium-lane-pad: 0.55rem;
+  --spw-medium-layout-gap-scale: 1;
+  --spw-medium-reveal-stagger-step: 72ms;
+  --spw-medium-accent-weight: 1;
+  --spw-medium-hover-lift: 1px;
+  --spw-medium-scene-coupling: 0.42;
+  --spw-module-style-modulator: 1;
+  --spw-medium-lane-active-boost: 0.55;
+  --spw-medium-outline-offset: 3px;
+}
+
+/* --------------------------------------------------------------------------
+   Device specificity — pointer, hover, viewport tier
+   -------------------------------------------------------------------------- */
+
+:where(html[data-spw-pointer-mode="coarse"]) {
+  --spw-medium-touch-min: 3.15rem;
+  --spw-medium-lane-pad: 0.72rem;
+  --spw-medium-hover-lift: 0px;
+  --spw-medium-outline-offset: 4px;
+  --spw-medium-reveal-stagger-step: 58ms;
+}
+
+:where(html[data-spw-hover-mode="touch"]) {
+  --spw-medium-hover-lift: 0px;
+}
+
+:where(html[data-spw-viewport-tier="compact"], html[data-spw-viewport-tier="narrow"]) {
+  --spw-medium-layout-gap-scale: 0.92;
+  --spw-medium-touch-min: max(var(--spw-medium-touch-min, 2.75rem), 3rem);
+}
+
+:where(html[data-spw-viewport-tier="wide"]) {
+  --spw-medium-layout-gap-scale: 1.06;
+  --spw-medium-accent-weight: 1.04;
+}
+
+/* --------------------------------------------------------------------------
+   Interaction posture — entertainment utility tuning
+   -------------------------------------------------------------------------- */
+
+:where(html[data-spw-interaction-posture="touch-field"]) {
+  --spw-medium-touch-min: 3.35rem;
+  --spw-medium-lane-pad: 0.78rem;
+  --spw-medium-layout-gap-scale: 0.9;
+  --spw-medium-reveal-stagger-step: 52ms;
+  --spw-module-style-modulator: 1.12;
+}
+
+:where(html[data-spw-interaction-posture="touch-tablet"]) {
+  --spw-medium-touch-min: 3.05rem;
+  --spw-medium-lane-pad: 0.68rem;
+  --spw-module-style-modulator: 1.06;
+}
+
+:where(html[data-spw-interaction-posture="pointer-rich"]) {
+  --spw-medium-hover-lift: 2px;
+  --spw-medium-accent-weight: 1.08;
+  --spw-medium-scene-coupling: 0.48;
+}
+
+/* --------------------------------------------------------------------------
+   Medium register — route / entertainment targeting
+   -------------------------------------------------------------------------- */
+
+:where(html[data-spw-medium-register="scene"]) {
+  --spw-medium-accent-weight: 1.12;
+  --spw-medium-scene-coupling: 0.58;
+  --spw-medium-lane-active-boost: 0.68;
+  --spw-module-style-modulator: 1.1;
+  --spw-variant-selection-weight: max(var(--spw-variant-selection-weight, 0), 0.48);
+}
+
+:where(html[data-spw-medium-register="play"]) {
+  --spw-medium-accent-weight: 1.08;
+  --spw-medium-scene-coupling: 0.52;
+  --spw-medium-lane-active-boost: 0.62;
+  --spw-module-style-modulator: 1.08;
+}
+
+:where(html[data-spw-medium-register="workshop"], html[data-spw-medium-register="lab"]) {
+  --spw-medium-accent-weight: 1.04;
+  --spw-module-style-modulator: 1.04;
+}
+
+:where(html[data-spw-medium-register="reading"]) {
+  --spw-medium-accent-weight: 0.96;
+  --spw-module-style-modulator: 0.94;
+}
+
+:where(html[data-spw-interactive-medium-ready="true"]) {
+  --spw-medium-lane-active-boost: calc(0.48 + (var(--spw-medium-intensity, 0.5) * 0.28));
+  --spw-module-style-modulator: calc(0.88 + (var(--spw-medium-intensity, 0.5) * 0.24));
+}
+
+/* --------------------------------------------------------------------------
+   Display variants — packing + density parity on interactive hosts
+   -------------------------------------------------------------------------- */
+
+:where(html[data-spw-pack-tier="compact"], html[data-spw-component-density="dense"]) :where(
+  .spw-scene-bed[data-spw-scene-interactive],
+  .spw-scene-bed[data-spw-scene-posture]
+) {
+  --spw-medium-lane-pad: max(0.62rem, calc(var(--spw-pack-pad-active, 0.65rem) * 0.92));
+  --spw-medium-layout-gap-scale: 0.88;
+}
+
+:where(html[data-spw-pack-tier="roomy"], html[data-spw-component-density="roomy"]) :where(
+  .spw-scene-bed[data-spw-scene-interactive],
+  .spw-scene-bed[data-spw-scene-posture]
+) {
+  --spw-medium-lane-pad: calc(var(--spw-pack-pad-active, 1.15rem) * 0.72);
+  --spw-medium-layout-gap-scale: 1.08;
+}
+
+/* --------------------------------------------------------------------------
+   Container queries — scene bed layout variants inside route measure
+   -------------------------------------------------------------------------- */
+
+:where(.spw-scene-bed[data-spw-scene-interactive], .spw-scene-bed[data-spw-scene-posture]) {
+  container-type: inline-size;
+  container-name: spw-scene-bed;
+}
+
+@supports (container-type: inline-size) {
+  @container spw-scene-bed (max-width: 32rem) {
+    :where(.spw-scene-bed__layout) {
+      gap: calc(0.72rem * var(--spw-medium-layout-gap-scale, 1));
+    }
+
+    :where(.spw-scene-bed__stage) {
+      grid-template-columns: 1fr;
+      min-block-size: calc(var(--spw-medium-touch-min, 2.75rem) * 3.2);
+    }
+
+    :where(.spw-scene-bed__lane) {
+      min-block-size: var(--spw-medium-touch-min, 2.75rem);
+      padding: var(--spw-medium-lane-pad, 0.55rem);
+    }
+  }
+
+  @container spw-scene-bed (min-width: 32.01rem) {
+    :where(.spw-scene-bed__layout:has(.spw-scene-bed__figure)) {
+      gap: calc(0.85rem * var(--spw-medium-layout-gap-scale, 1));
+    }
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Module style impact — spend tokens on later-loaded interaction systems
+   -------------------------------------------------------------------------- */
+
+:where(html[data-spw-medium-register="scene"], html[data-spw-medium-register="play"]) :where(
+  .spw-scene-bed[data-spw-scene-interactive]
+) {
+  --spw-scene-lane-active-strength: var(--spw-medium-lane-active-boost, 0.55);
+  --spw-scene-image-coupling: var(--spw-medium-scene-coupling, 0.42);
+}
+
+:where(html[data-spw-medium-register="scene"]) :where(
+  [data-spw-selection-state="potentiated"],
+  [data-spw-selection-state="actualized"]
+) {
+  outline-offset: calc(var(--spw-medium-outline-offset, 3px) * var(--spw-module-style-modulator, 1));
+}
+
+:where(html[data-spw-reveal-phase="revealing"], html[data-spw-reveal-phase="revealed"]) :where(
+  [data-spw-scene-state="entered"],
+  [data-spw-reveal-frame="open"]
+) {
+  --spw-reveal-stagger-step: var(--spw-medium-reveal-stagger-step, 72ms);
+}
+

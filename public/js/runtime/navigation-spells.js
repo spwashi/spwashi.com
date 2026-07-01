@@ -1,3 +1,8 @@
+import {
+  applyInteractionSemanticsToLink,
+  applyOperatorGeometryToElement,
+  parseSpwExpression,
+} from '/public/js/semantic/link-copy.js';
 import { detectOperator } from '/public/js/kernel/shared.js';
 
 const TOKEN_SELECTOR = [
@@ -5,10 +10,15 @@ const TOKEN_SELECTOR = [
   'body > header nav a[href]',
   '.site-header nav a[href]',
   '.site-footer__nav a[href]',
+  '.site-footer__brand[href]',
   '.page-index a[href]',
   '.section-atlas a[href]',
   '.card-sub-links a[href]',
   '.frame-operators a[href]',
+  '.spw-route-menu-link[href]',
+  '.operator-chip[href]',
+  '.frame-sigil[href]',
+  '.syntax-token[href]',
 ].join(', ');
 
 const TOP_ROUTE_TOKENS = Object.freeze({
@@ -246,7 +256,17 @@ function applyNavigationSpellRecord(link, record, url) {
     spwNavPrefix: record.prefix,
     spwNavPostfix: record.postfix,
     spwNavExpression: record.expression,
+    spwNavToken: link.dataset.spwNavToken || record.baseToken,
   });
+
+  applyInteractionSemanticsToLink(link, {
+    destination: record.destination,
+    operator: record.operator,
+    expression: record.expression,
+    scope: record.scope,
+    label: record.label,
+  });
+  applyOperatorGeometryToElement(link, record.operator);
 
   if (record.isGroundable) {
     setLinkDataset(link, {
@@ -272,6 +292,27 @@ function applyNavigationSpellRecord(link, record, url) {
 
   if (!link.title) {
     link.title = record.title;
+  }
+
+  if (link.matches('.spw-route-menu-link') && !link.querySelector('.spw-link-expression')) {
+    const copy = link.querySelector('.spw-route-menu-link-copy');
+    if (copy instanceof HTMLElement) {
+      const parsed = parseSpwExpression(record.expression);
+      const expressionRow = document.createElement('span');
+      expressionRow.className = 'spw-link-expression spw-route-menu-link-expression';
+      if (parsed.prefix) {
+        const prefix = document.createElement('span');
+        prefix.className = 'spw-link-expression__prefix';
+        prefix.setAttribute('aria-hidden', 'true');
+        prefix.textContent = parsed.prefix;
+        expressionRow.append(prefix);
+      }
+      const nucleus = document.createElement('span');
+      nucleus.className = 'spw-link-expression__nucleus';
+      nucleus.textContent = parsed.nucleus || parsed.expression;
+      expressionRow.append(nucleus);
+      copy.prepend(expressionRow);
+    }
   }
 
   /* ARIA hygiene (gesture-aria-hygiene/FIX.md) — idempotent via data-spw-nav-tokenized guard in caller. */

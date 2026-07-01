@@ -508,17 +508,39 @@
   justify-content: flex-start;
 }
 
-/* Low-visual-weight contract for empty/default component states.
-   Reduces noise for placeholder or initial UI without hiding structure.
-   Families (cards, frames, controls, handles) extend or opt-in via selectors.
-   Routes through --spw-variant-accent (see cards.css for example usage). */
-:where([data-spw-empty="true"], [data-spw-component-state="empty"], [data-spw-component-state="default"]) {
-  --spw-variant-accent: color-mix(in srgb, var(--spw-variant-accent, var(--component-accent, var(--semantic-accent, var(--active-op-color, var(--teal))))) 32%, var(--line, rgba(14,18,20,0.14)) 68%);
+/* Pre-state / empty / default lifecycle (tokens/dimensions.css sets visibility).
+   Subtle: structure remains, accent recedes. Apparent: loading/hydration only.
+   Theme packs adjust fill/line mix; variant selection raises --spw-variant-selection-weight. */
+:where([data-spw-empty="true"], [data-spw-component-state="empty"], [data-spw-component-state="default"], [data-spw-lifecycle="empty"], [data-spw-lifecycle="default"]) {
+  --spw-variant-accent: color-mix(
+    in srgb,
+    var(--spw-variant-accent, var(--component-accent, var(--semantic-accent, var(--active-op-color, var(--teal)))))
+      calc(24% + (var(--spw-variant-selection-weight, 0) * 18%)),
+    var(--spw-color-layer-line, var(--line, rgba(14, 18, 20, 0.14)))
+      calc(76% - (var(--spw-variant-selection-weight, 0) * 12%))
+  );
+  background-color: color-mix(
+    in srgb,
+    var(--spw-color-layer-fill-muted, var(--component-surface, var(--surface)))
+      calc(100% - (var(--spw-pre-state-fill-mix, 0.05) * 100%)),
+    var(--spw-color-layer-accent-subtle, transparent)
+      calc(var(--spw-pre-state-fill-mix, 0.05) * 100%)
+  );
+  border-color: color-mix(
+    in srgb,
+    var(--spw-color-layer-line, var(--line)) calc(100% - (var(--spw-pre-state-line-mix, 0.14) * 100%)),
+    var(--spw-color-layer-accent-subtle, transparent) calc(var(--spw-pre-state-line-mix, 0.14) * 100%)
+  );
+  color: color-mix(
+    in srgb,
+    var(--spw-color-layer-ink-muted, var(--ink-soft, currentColor)) calc(var(--spw-pre-state-ink-mix, 0.52) * 100%),
+    var(--spw-color-layer-ink, var(--ink, currentColor)) calc((1 - var(--spw-pre-state-ink-mix, 0.52)) * 100%)
+  );
 }
 
-:where([data-spw-empty="true"], [data-spw-component-state="empty"], [data-spw-component-state="default"])
+:where([data-spw-empty="true"], [data-spw-component-state="empty"], [data-spw-component-state="default"], [data-spw-lifecycle="empty"], [data-spw-lifecycle="default"])
   :where(.frame-sigil, .spw-component-tag, .spw-guide-chip, .operator-chip[data-spw-nav-tokenized]) {
-  opacity: 0.58;
+  opacity: calc(0.42 + (var(--spw-pre-state-visibility, 0.34) * 0.28));
 }
 
 
@@ -775,7 +797,7 @@
    "materials as paint" play (spacing=brush, charge=layer, metamaterial=ground) + real physics
    (charge quanta, variability damping via reason, snap/fluid via chrome + gesture).
    Inclusive: accuracy players use precise charge counts + low-machinability; fantasy describe
-   "speech bubble swell" or "golem mass". See cards.css for card-specific + .spw frames. */
+   "speech bubble swell" or "golem mass". See cards.css + card-ecology.css for card-specific + .spw frames. */
 :root[data-spw-spacing="interactive"] { --spw-component-pad: 0.92rem; }
 :root[data-spw-spacing="descriptively-absent"] { --spw-component-pad: 0.42rem; }
 :root[data-spw-spacing="null"] { --spw-component-pad: 0.1rem; }
@@ -970,7 +992,10 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
 
 :where([data-spw-region-state="enhanced"], [data-spw-region-state="settling"]) {
   --component-module-rail-width: 3px;
-  --component-module-rail-opacity: calc(0.34 * var(--spw-region-profile-intensity, 1));
+  --component-module-rail-opacity: calc(
+    (0.34 + (0.08 * var(--spw-ecology-settle-weight, 0)))
+    * var(--spw-region-profile-intensity, 1)
+  );
 }
 
 :where(html[data-spw-harmony-field]) {

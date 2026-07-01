@@ -1,0 +1,243 @@
+/* ==========================================================================
+   components/semantic-learning.css
+   --------------------------------------------------------------------------
+   Metacognitive learning surfaces: learning-game loop, emphasis tiers, resonance lab.
+   See .spw/conventions/coloring-depth.spw and semantic-copy-depth plan.
+   ========================================================================== */
+
+:where(.spw-learning-game, .spw-semantic-emphasis-map) {
+  --spw-learning-accent: var(--active-op-color, var(--component-accent));
+  display: grid;
+  gap: var(--component-gap-tight);
+  margin-block: var(--component-gap) var(--component-gap-loose);
+  padding: var(--spw-component-pad-tight, 0.65rem);
+  border: 1px solid color-mix(in srgb, var(--spw-learning-accent) 24%, var(--line, rgba(14, 18, 20, 0.14)));
+  border-radius: var(--component-radius-loose);
+  background:
+    radial-gradient(
+      circle at top left,
+      color-mix(in srgb, var(--spw-learning-accent) 12%, transparent),
+      transparent 34%
+    ),
+    color-mix(in srgb, var(--component-surface-strong) 92%, var(--spw-learning-accent) 4%);
+  box-shadow: var(--component-shadow-quiet);
+}
+
+:where(.spw-learning-game header, .spw-semantic-emphasis-map header) {
+  display: grid;
+  gap: 0.25rem;
+}
+
+:where(.spw-learning-game h3, .spw-semantic-emphasis-map h3) {
+  margin: 0;
+  color: color-mix(in srgb, var(--ink, #111) 82%, var(--spw-learning-accent) 18%);
+  font-size: clamp(1rem, 1.8vw, 1.22rem);
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+:where(.spw-learning-game p, .spw-semantic-emphasis-map p) {
+  margin: 0;
+  color: var(--ink-soft, rgba(0, 0, 0, 0.62));
+  line-height: 1.45;
+}
+
+:where(.spw-learning-game ol) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12.5rem), 1fr));
+  gap: var(--space-xs, 0.5rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: spw-learning-step;
+}
+
+:where(.spw-learning-game li) {
+  counter-increment: spw-learning-step;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.32rem 0.55rem;
+  min-width: 0;
+  padding: 0.62rem 0.68rem;
+  border: 1px solid color-mix(in srgb, var(--spw-learning-accent) 18%, var(--line, rgba(14, 18, 20, 0.14)));
+  border-radius: var(--component-radius-loose);
+  background: color-mix(in srgb, var(--component-surface-soft) 88%, var(--spw-learning-accent) 5%);
+}
+
+:where(.spw-learning-game li)::before {
+  content: counter(spw-learning-step);
+  display: grid;
+  place-items: center;
+  inline-size: 1.65rem;
+  block-size: 1.65rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--spw-learning-accent) 18%, transparent);
+  color: color-mix(in srgb, var(--ink, #111) 72%, var(--spw-learning-accent) 28%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.76rem;
+  font-weight: 850;
+}
+
+:where(.spw-learning-game li strong) {
+  color: color-mix(in srgb, var(--ink, #111) 84%, var(--spw-learning-accent) 16%);
+  line-height: 1.2;
+}
+
+:where(.spw-learning-game li span) {
+  grid-column: 2;
+  color: var(--ink-soft, rgba(0, 0, 0, 0.62));
+  line-height: 1.36;
+}
+
+:where(.spw-semantic-emphasis-map) {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+:where(.spw-semantic-emphasis-map header) {
+  grid-column: 1 / -1;
+}
+
+:where(.spw-emphasis-tier) {
+  --spw-emphasis-accent: var(--spw-learning-accent);
+  display: grid;
+  align-content: start;
+  gap: 0.34rem;
+  min-width: 0;
+  padding: 0.7rem 0.76rem;
+  border: 1px solid color-mix(in srgb, var(--spw-emphasis-accent) 20%, var(--line, rgba(14, 18, 20, 0.14)));
+  border-radius: var(--component-radius-loose);
+  background: color-mix(in srgb, var(--component-surface-soft) 88%, var(--spw-emphasis-accent) 5%);
+}
+
+:where(.spw-emphasis-tier[data-spw-emphasis="primary"]) {
+  --spw-emphasis-accent: var(--op-action-color, var(--component-accent));
+  border-width: 2px;
+}
+
+:where(.spw-emphasis-tier[data-spw-emphasis="secondary"]) {
+  --spw-emphasis-accent: var(--op-frame-color, var(--component-accent));
+}
+
+:where(.spw-emphasis-tier[data-spw-emphasis="tertiary"]) {
+  --spw-emphasis-accent: var(--op-ref-color, var(--component-accent));
+  opacity: 0.92;
+}
+
+:where([data-spw-emphasis="primary"]) {
+  /* Primary emphasis leans action-oriented but routes through semantic accent first (see operator-semantics.spw#spell_evolution_note for the shift away from treating raw operator colors as universal surface defaults). */
+  --component-route-accent: var(--semantic-accent, var(--op-action-color, var(--component-accent)));
+}
+
+:where([data-spw-emphasis="secondary"]) {
+  --component-route-accent: var(--semantic-accent, var(--op-frame-color, var(--component-accent)));
+}
+
+:where([data-spw-emphasis="tertiary"]) {
+  --component-route-accent: var(--semantic-accent, var(--op-ref-color, var(--component-accent)));
+}
+
+:where(.spw-emphasis-tier strong) {
+  color: color-mix(in srgb, var(--ink, #111) 82%, var(--spw-emphasis-accent) 18%);
+  font-size: 0.96rem;
+  line-height: 1.2;
+}
+
+:where(.spw-emphasis-tier code) {
+  justify-self: start;
+  overflow-wrap: anywhere;
+  padding: 0.14rem 0.38rem;
+  border-radius: var(--component-radius-pill, 999px);
+  background: color-mix(in srgb, var(--component-surface-soft) 78%, var(--spw-emphasis-accent) 9%);
+  color: color-mix(in srgb, var(--ink, #111) 72%, var(--spw-emphasis-accent) 28%);
+  font-size: 0.72rem;
+}
+
+:where(.spw-resonance-lab) {
+  --spw-resonance-ground: color-mix(in srgb, var(--component-surface-strong) 92%, var(--active-op-color, var(--component-accent)) 5%);
+  --spw-resonance-line: color-mix(in srgb, var(--active-op-color, var(--component-accent)) 22%, var(--line, rgba(14, 18, 20, 0.14)));
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  gap: var(--component-gap-tight);
+  margin-block: var(--component-gap) var(--component-gap-loose);
+  padding: clamp(0.75rem, 2vw, 1rem);
+  border: 1px solid var(--spw-resonance-line);
+  border-radius: var(--component-radius-loose);
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--active-op-color, var(--component-accent)) 7%, transparent),
+      transparent 42%
+    ),
+    var(--spw-resonance-ground);
+  box-shadow: var(--component-shadow-quiet);
+}
+
+:where(.spw-resonance-lab > *) {
+  min-width: 0;
+  padding-block: 0.15rem;
+}
+
+:where(.spw-resonance-lab h3) {
+  margin: 0 0 0.35rem;
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  font-size: clamp(0.98rem, 1.8vw, 1.16rem);
+  line-height: 1.2;
+}
+
+:where(.spw-resonance-lab p) {
+  margin: 0;
+  color: color-mix(in srgb, var(--ink-soft, rgba(0, 0, 0, 0.62)) 90%, var(--ink, #111) 10%);
+  line-height: 1.48;
+}
+
+:where(.spw-resonance-lab [data-spw-resonance-axis]) {
+  position: relative;
+  padding-inline-start: 0.8rem;
+}
+
+:where(.spw-resonance-lab [data-spw-resonance-axis])::before {
+  content: "";
+  position: absolute;
+  inset: 0.18rem auto 0.18rem 0;
+  inline-size: 0.22rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--active-op-color, var(--component-accent)) 48%, transparent);
+  opacity: var(--spw-resonance-axis-opacity, 0.58);
+}
+
+:where(.spw-resonance-lab [data-spw-resonance-axis="ground"]) {
+  --spw-resonance-axis-opacity: 0.38;
+}
+
+:where(.spw-resonance-lab [data-spw-resonance-axis="precision"]) {
+  --spw-resonance-axis-opacity: 0.7;
+}
+
+:where(.spw-resonance-lab [data-spw-resonance-axis="projection"]) {
+  --spw-resonance-axis-opacity: 0.84;
+}
+
+@media (max-width: 54rem) {
+  :where(.spw-semantic-emphasis-map) {
+    grid-template-columns: 1fr;
+  }
+}
+
+:where(html[data-spw-runtime-posture="minimal"] .spw-resonance-lab) {
+  --spw-resonance-ground: color-mix(in srgb, var(--component-surface-strong) 96%, var(--bg, #f7f4ee) 4%);
+  --spw-resonance-line: color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 84%, transparent);
+}
+
+:where(html[data-spw-runtime-posture="precision"] .spw-resonance-lab) {
+  --spw-resonance-line: color-mix(in srgb, var(--op-ref-color, var(--component-accent)) 28%, var(--line, rgba(14, 18, 20, 0.14)));
+}
+
+:where(html[data-spw-runtime-posture="resonant"] .spw-resonance-lab) {
+  --spw-resonance-line: color-mix(in srgb, var(--op-probe-color, var(--component-accent)) 34%, var(--line, rgba(14, 18, 20, 0.14)));
+  --spw-resonance-ground: color-mix(in srgb, var(--component-surface-strong) 88%, var(--op-probe-color, var(--component-accent)) 8%);
+}
+
+:where(html[data-spw-runtime-posture="theatrical"] .spw-resonance-lab) {
+  --spw-resonance-line: color-mix(in srgb, var(--op-object-color, var(--component-accent)) 42%, var(--line, rgba(14, 18, 20, 0.14)));
+  --spw-resonance-ground: color-mix(in srgb, var(--component-surface-strong) 84%, var(--op-object-color, var(--component-accent)) 11%);
+}

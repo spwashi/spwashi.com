@@ -11,6 +11,29 @@ export const HYDRATION_STATES = Object.freeze({
   READY: 'ready',
 });
 
+/** Workbench-aligned pass names (lex → semantic → pragmatic). */
+export const HYDRATION_PASSES = Object.freeze({
+  LEX: 'lex',
+  SEMANTIC: 'semantic',
+  PRAGMATIC: 'pragmatic',
+});
+
+export const SPW_HYDRATION_CONTRACT = Object.freeze({
+  states: HYDRATION_STATES,
+  passes: HYDRATION_PASSES,
+  events: Object.freeze({
+    pass: 'spw:hydration-pass',
+  }),
+  portableUse:
+    'static/lex is authored HTML; activating/semantic is annotation and measure; ready/pragmatic is interactive spell surfaces.',
+});
+
+const HYDRATION_PASS_BY_STATE = Object.freeze({
+  [HYDRATION_STATES.STATIC]: HYDRATION_PASSES.LEX,
+  [HYDRATION_STATES.ACTIVATING]: HYDRATION_PASSES.SEMANTIC,
+  [HYDRATION_STATES.READY]: HYDRATION_PASSES.PRAGMATIC,
+});
+
 export const DISPLAY_LAYERS = Object.freeze({
   READER: 'reader',
   EDITOR: 'editor',
@@ -59,14 +82,16 @@ export function initHydration(options = {}) {
   );
 
   html.dataset.spwHydration = hydrationState;
+  html.dataset.spwHydrationPass = HYDRATION_PASS_BY_STATE[hydrationState] || HYDRATION_PASSES.LEX;
   if (body) {
     body.dataset.spwHydration = hydrationState;
+    body.dataset.spwHydrationPass = html.dataset.spwHydrationPass;
     body.dataset.spwDisplayLayer = displayLayer;
     body.dataset.spwCaptureMode = captureMode;
   }
   html.dataset.spwCaptureMode = captureMode;
 
-  return { hydrationState, displayLayer, captureMode };
+  return { hydrationState, hydrationPass: html.dataset.spwHydrationPass, displayLayer, captureMode };
 }
 
 export function progressHydration(nextState) {
@@ -74,8 +99,17 @@ export function progressHydration(nextState) {
   const body = readBody();
   const currentState = html.dataset.spwHydration || HYDRATION_STATES.STATIC;
   const normalized = normalizeHydrationState(nextState, currentState);
+  const pass = HYDRATION_PASS_BY_STATE[normalized] || HYDRATION_PASSES.LEX;
   html.dataset.spwHydration = normalized;
-  if (body) body.dataset.spwHydration = normalized;
+  html.dataset.spwHydrationPass = pass;
+  if (body) {
+    body.dataset.spwHydration = normalized;
+    body.dataset.spwHydrationPass = pass;
+  }
+
+  const detail = { state: normalized, pass, previous: currentState };
+  document.dispatchEvent(new CustomEvent(SPW_HYDRATION_CONTRACT.events.pass, { detail }));
+
   return normalized;
 }
 

@@ -12,6 +12,7 @@ const SITE_SETTINGS_KEY = 'spw-site-settings';
 const CAULDRON_STORAGE_KEY = 'spw-cauldron';
 const DISCOVERY_DISMISSALS_STORAGE_KEY = 'spw-discovery-notice-dismissals';
 const VISITED_IMAGE_STORAGE_KEY = 'spw-visited-image-surfaces';
+const COMPONENT_COLLECTION_STORAGE_KEY = 'spw-component-collection';
 
 const THEME_PACK_OPTIONS = Object.freeze([
   'neutral-paper',
@@ -126,9 +127,9 @@ const LAYOUT_TUNER_PROFILE = Object.freeze({
 });
 
 const INTERACTION_TUNER_PROFILE = Object.freeze({
-  calm: Object.freeze({scale: 0.82}),
-  responsive: Object.freeze({scale: 1}),
-  expressive: Object.freeze({scale: 1.18})
+  calm: Object.freeze({ scale: 0.82, pulseScale: 0.88, beatTempo: 0.76, freshness: 0.44 }),
+  responsive: Object.freeze({ scale: 1, pulseScale: 1, beatTempo: 1, freshness: 0.62 }),
+  expressive: Object.freeze({ scale: 1.18, pulseScale: 1.16, beatTempo: 1.24, freshness: 0.86 }),
 });
 
 const HEADER_OPACITY_VALUE = Object.freeze({
@@ -406,6 +407,7 @@ const DEFAULT_SITE_SETTINGS = Object.freeze({
   navigatorDisplay: 'quiet',
   spellPathDisplay: 'auto',
   consoleDisplay: 'hidden',
+  rewardDisplay: 'docked',
   viewportActivation: 'off',
 
   reduceMotion: 'off',
@@ -504,6 +506,7 @@ const SETTING_OPTIONS = Object.freeze({
   navigatorDisplay: new Set(['quiet', 'full', 'hidden']),
   spellPathDisplay: new Set(['collapsed', 'auto', 'expanded']),
   consoleDisplay: new Set(['collapsed', 'expanded', 'hidden']),
+  rewardDisplay: new Set(['docked', 'toasts', 'hidden']),
   viewportActivation: new Set(['off', 'on']),
 
   reduceMotion: new Set(['off', 'on']),
@@ -781,6 +784,7 @@ const SETTING_VALUE_LABELS = Object.freeze({
   navigatorDisplay: Object.freeze({quiet: 'Quiet', full: 'Full', hidden: 'Hidden'}),
   spellPathDisplay: Object.freeze({collapsed: 'Collapsed', auto: 'Auto', expanded: 'Expanded'}),
   consoleDisplay: Object.freeze({collapsed: 'Collapsed', expanded: 'Expanded', hidden: 'Hidden'}),
+  rewardDisplay: Object.freeze({docked: 'Docked', toasts: 'Toasts only', hidden: 'Hidden'}),
   viewportActivation: Object.freeze({off: 'Off', on: 'On'}),
   reduceMotion: Object.freeze({off: 'Motion allowed', on: 'Reduced motion'}),
   highContrast: Object.freeze({off: 'Standard contrast', on: 'High contrast'}),
@@ -1253,6 +1257,7 @@ export {
   CAULDRON_STORAGE_KEY,
   DISCOVERY_DISMISSALS_STORAGE_KEY,
   VISITED_IMAGE_STORAGE_KEY,
+  COMPONENT_COLLECTION_STORAGE_KEY,
   THEME_PACK_OPTIONS,
   ICON_PACK_OPTIONS,
   FONT_SIZE_PRESET_MULTIPLIER,

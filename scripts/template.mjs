@@ -579,7 +579,7 @@ function renderSiteHeader(vars) {
 
   return `<header ${attrs}>\n`
     + '    <div class="header-brand">\n'
-    + '        <a aria-label="Spwashi home" class="header-sigil" href="/">#&gt;spwashi</a>\n'
+    + '        <a aria-label="Spwashi home" class="header-sigil" href="/" data-spw-operator="frame" data-spw-sigil="#&gt;spwashi" data-spw-semantic-expression="identity[brand]{route.home}">#&gt;spwashi</a>\n'
     + (annotation
       ? `        <button type="button" class="header-annotation" data-spw-annotation-handle data-spw-annotation-kind="${attrEscape(annotation)}" aria-label="Inspect ${attrEscape(annotation)} annotation">${htmlEscape(annotation)}</button>\n`
       : '')

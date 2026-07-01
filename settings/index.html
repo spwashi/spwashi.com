@@ -315,8 +315,9 @@
                         <h3 class="vibe-widget-title">Choose a reader, builder, or inspector posture</h3>
                     </div>
                     <p class="vibe-widget-copy">
-                        Reader stays calm. Builder exposes structure. Inspector adds the debug layer. Lab pushes further into
-                        motion and palette bias.
+                        Each mode is a named way to load the site. <strong>Reader</strong> stays calm for browsing.
+                        <strong>Builder</strong> exposes structure with low theatrics. <strong>Inspector</strong> adds debug chrome and module audit.
+                        <strong>Lab</strong> pushes further for screenshots, QA, and comparison.
                     </p>
                     <div aria-label="Audience and inspection modes" class="vibe-widget-actions" role="group">
                         <a class="operator-chip" data-site-settings-query-mode="reader" href="?view=readable&amp;meaning=readable&amp;interaction=calm">Reader view</a>
@@ -372,7 +373,10 @@
                         <h3 class="vibe-widget-title">Choose what should become salient</h3>
                     </div>
                     <p class="vibe-widget-copy">
-                        These profiles change how the site teaches itself. Witness keeps anchors quiet, Composer emphasizes artifacts and actions, Explorer raises routes and prompts, Integrator favors relations, and Overflow exposes dense semantic traces. Turn developmental indicators on with a posture when you want to see the state change on the page.
+                        Choose what the page should emphasize while you work. <strong>Witness</strong> keeps anchors quiet.
+                        <strong>Composer</strong> foregrounds artifacts and actions. <strong>Explorer</strong> raises routes and prompts.
+                        <strong>Integrator</strong> favors relations between regions. <strong>Overflow</strong> exposes dense semantic traces.
+                        Turn developmental indicators on when you want to see the shift happen on the page.
                     </p>
                     <div aria-label="Metacognitive stances" class="vibe-widget-actions" role="group">
                         <button class="operator-chip" data-site-setting-set="metacognitiveStance:witness;developmentalIndicators:on;operationalVisibility:off" type="button">Witness</button>
@@ -420,14 +424,20 @@
                         <h3 class="vibe-widget-title">Play with variants, currents, and nearby companions</h3>
                     </div>
                     <p class="vibe-widget-copy">
-                        Pinch over the examples below (or use the scale controls) to change type size. Tap the cards to cycle component variants. The "current" cluster (density + posture + wonder + load) can surface extra narrative handles — a small taste of runtime modification as storytelling.
+                        A small playground for layout feel. Pinch to change type size, tap a card to cycle <strong>component variants</strong>,
+                        and watch how density, posture, wonder, and load timing surface different companion actions.
                     </p>
+                    <div class="spw-effect-legend spw-effect-legend--settings" aria-label="How to read variant effects">
+                        <span class="spw-effect-chip spw-effect-chip--lens" data-spw-operator="frame" data-spw-sigil="#>" data-spw-image-lens-capacity="weigh" data-spw-semantic-expression="variant[frame]{weight.density}" data-spw-gesture-contract="tap:cycle-variant" aria-pressed="true" title="#> weigh"><span class="spw-effect-chip__sigil" aria-hidden="true">#&gt;</span><span class="spw-effect-chip__capacity spw-effect-verb">weigh</span></span>
+                        <span class="spw-effect-chip spw-effect-chip--lens" data-spw-operator="probe" data-spw-sigil="?" data-spw-image-lens-capacity="bias" data-spw-semantic-expression="variant[probe]{measure.bias}" data-spw-gesture-contract="tap:surface-current" title="? bias"><span class="spw-effect-chip__sigil" aria-hidden="true">?</span><span class="spw-effect-chip__capacity spw-effect-verb">bias</span></span>
+                        <span class="spw-effect-chip spw-effect-chip--lens" data-spw-operator="ref" data-spw-sigil="~" data-spw-image-lens-capacity="surface" data-spw-semantic-expression="variant[ref]{companion.actions}" data-spw-gesture-contract="tap:open-companion" title="~ surface"><span class="spw-effect-chip__sigil" aria-hidden="true">~</span><span class="spw-effect-chip__capacity spw-effect-verb">surface</span></span>
+                    </div>
 
                     <!-- Mini playground using real component patterns -->
                     <div class="vibe-widget-actions" style="display: grid; gap: 0.6rem; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));" data-spw-feature="tuning-playground">
                         <div class="frame-card" data-spw-component-variant="primary" data-spw-semantic-expression="tuning:primary" style="padding: 0.6rem;">
                             <strong>Primary variant</strong>
-                            <p style="font-size: 0.9em; margin: 0.3rem 0 0;">Tap me to cycle variants. Long copy here demonstrates nearby play — swipe or tap edges for companion actions.</p>
+                            <p style="font-size: 0.9em; margin: 0.3rem 0 0;">Tap to cycle how this card presents itself. Extra copy here shows how nearby companion actions appear when the cluster changes.</p>
                             <div class="card-sub-links" style="margin-top: 0.4rem;">
                                 <a href="#" data-companion-action="cycle-variant">Cycle variant</a>
                                 <a href="#" data-companion-action="surface-current">Surface current</a>
@@ -436,7 +446,7 @@
 
                         <div class="frame-card" data-spw-component-variant="reference" data-spw-semantic-expression="tuning:reference" style="padding: 0.6rem;">
                             <strong>Reference variant</strong>
-                            <p style="font-size: 0.9em; margin: 0.3rem 0 0;">These companions are "fries at the bottom" — low-friction extras that appear or react based on your current semantic cluster.</p>
+                            <p style="font-size: 0.9em; margin: 0.3rem 0 0;">A quieter presentation for supporting detail. Companion links stay low-friction and respond to your current tuning cluster.</p>
                             <div class="card-sub-links" style="margin-top: 0.4rem;">
                                 <a href="#" data-companion-action="cycle-variant">Cycle variant</a>
                                 <a href="#" data-companion-action="surface-current">Surface current</a>
@@ -581,7 +591,7 @@
             data-spw-form="brace"
             data-spw-form-options="brace,block"
             data-spw-inspect="runtime_preferences"
-            data-spw-inspect-fields="authorMode,currentDevelopmentalClimate,colorMode,themePack,paletteResonance,baseMetamaterial,baseAffordance,componentDensity,operatorSaturation,grainIntensity,animationIntensity,wonderMemory,narrativeMode,busDiagnostics"
+            data-spw-inspect-fields="authorMode,currentDevelopmentalClimate,colorMode,themePack,paletteResonance,baseMetamaterial,baseAffordance,componentDensity,operatorSaturation,grainIntensity,animationIntensity,wonderMemory,narrativeMode,rewardDisplay,busDiagnostics"
             data-spw-kind="frame"
             data-spw-liminality="entry"
             data-spw-locality="medium"
@@ -1388,6 +1398,7 @@
 
                         <fieldset class="settings-fieldset">
                             <legend>Layout tuner</legend>
+                            <p class="frame-note">Sets page width and grid breathing room. Saved settings sync back to readable query keys such as <code>layout</code> and <code>component-density</code> when you share a link.</p>
                             <label class="settings-option">
                                 <input checked name="layoutTuner" type="radio" value="reading" />
                                 <span class="settings-option-copy"><strong>Reading</strong><span>Use a restrained measure for prose and documentation.</span></span>
@@ -1853,6 +1864,31 @@
                             <label class="settings-option">
                                 <input checked name="consoleDisplay" type="radio" value="hidden" />
                                 <span class="settings-option-copy"><strong>Hidden</strong></span>
+                            </label>
+                        </fieldset>
+
+                        <fieldset class="settings-fieldset">
+                            <legend>Collection rewards</legend>
+                            <label class="settings-option">
+                                <input checked name="rewardDisplay" type="radio" value="docked" />
+                                <span class="settings-option-copy">
+                    <strong>Docked</strong>
+                    <span>Show the collection dock and achievement toasts.</span>
+                  </span>
+                            </label>
+                            <label class="settings-option">
+                                <input name="rewardDisplay" type="radio" value="toasts" />
+                                <span class="settings-option-copy">
+                    <strong>Toasts only</strong>
+                    <span>Keep unlock feedback, hide the persistent dock.</span>
+                  </span>
+                            </label>
+                            <label class="settings-option">
+                                <input name="rewardDisplay" type="radio" value="hidden" />
+                                <span class="settings-option-copy">
+                    <strong>Hidden</strong>
+                    <span>Keep collection state quiet.</span>
+                  </span>
                             </label>
                         </fieldset>
 
@@ -2634,6 +2670,19 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
 
                 <div class="settings-persistence-list" data-site-persistence-list="resettable"></div>
             </article>
+
+            <article class="frame-panel settings-collection-panel" data-spw-feature="component-collection">
+                <p class="settings-panel-kicker">Discovered across the site</p>
+                <h3>Component collection</h3>
+                <p>
+                    As you explore, the runtime remembers the distinct component kinds each surface reveals and unlocks
+                    achievements for variety. This register mirrors the floating collection dock and persists per browser.
+                </p>
+
+                <div data-spw-collection-panel>
+                    <p class="settings-panel-empty">No components collected yet — explore a few surfaces to begin.</p>
+                </div>
+            </article>
         </section>
 
         <section
@@ -2711,16 +2760,16 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
 
                 <article class="frame-panel settings-query-panel" data-site-settings-query-lab data-spw-box-model="query-recipe-lab" data-spw-feature="settings-query-lab" data-spw-page-hook="query-recipes" data-spw-page-hook-label="Landing modes">
                     <h3>Query recipes</h3>
-                    <p>
-                        These links use the same query contract as the runtime. Reader mode keeps the native CSS defaults
-                        quiet; builder mode is a precise low-theatrics audit surface; inspect and lab mode add progressively
-                        more visible resonance for practice, screenshots, and comparison.
+                    <p class="settings-query-lede">
+                        Named landing modes you can share in the address bar. Each recipe uses readable query keys —
+                        <code>view</code>, <code>meaning</code>, <code>interaction</code>, and related settings —
+                        so a page can load in a chosen mood without re-explaining every control.
                     </p>
                     <p>
-                        When this site is discovered out of context, these recipes are intended to act as landing modes:
-                        a calm reader surface for casual browsing, a precision surface for debugging what mounted, and
-                        resonant lab surfaces for hobbyists, QA, narrators, and language models that need a page with a
-                        clear console story.
+                        <strong>Reader</strong> is for calm browsing. <strong>Builder</strong> exposes structure with little ornament.
+                        <strong>Inspector</strong> adds debug chrome and module audit. <strong>Lab</strong> goes further for screenshots,
+                        palette work, and side-by-side comparison. Out of context, these links are meant to be trustworthy entry points:
+                        readable surface, inspectable structure, or a console story you can follow.
                     </p>
                     <div class="settings-query-actions" role="group" aria-label="Query recipes">
                         <a class="operator-chip" data-site-settings-query-mode="reader" href="?view=readable&amp;meaning=readable&amp;interaction=calm">Reader view</a>
@@ -2734,6 +2783,7 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
                     </p>
                     <div class="settings-query-footer">
                         <button class="operator-chip" data-site-settings-query-copy="inspect" data-spw-handle="query-copy" data-spw-page-hook-label="Copy inspect query" type="button">Copy inspect query</button>
+                        <button class="operator-chip" data-site-settings-query-copy="share" data-spw-handle="query-share" data-spw-page-hook-label="Copy settings share link" type="button">Copy settings link</button>
                     </div>
                 </article>
             </div>
@@ -2860,10 +2910,10 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
             <aside class="spw-settings-cluster" data-spw-region="cluster" data-spw-region-role="settings-cluster" data-spw-box-model="configuration-cluster" data-spw-composition-flow="stack" data-spw-feature="settings-query-hub" data-spw-semantic-cluster="settings qa mood-reading layout contrast">
                 <header class="spw-settings-cluster__header">
                     <p class="eyebrow">Configuration links</p>
-                    <h3 class="spw-settings-cluster__title">Share a mood-reading setup without explaining every control.</h3>
-                    <p class="spw-settings-cluster__copy">These links use query parameters for quick QA and teaching. They are not separate themes; they are named ways to inspect spacing, contrast, module behavior, and local region frames.</p>
+                    <h3 class="spw-settings-cluster__title">Share a layout and tuning setup in one link.</h3>
+                    <p class="spw-settings-cluster__copy">When your controls drift from defaults, the address bar can carry that difference forward in plain words — for example <code>?layout=wide&amp;explore-posture=workshop&amp;component-density=dense</code>. These shortcuts are teaching lenses, not separate themes: named ways to show spacing, contrast, module behavior, and region framing during QA or walkthroughs.</p>
                     <p class="frame-note" style="margin-top:0.4rem;">
-                        This workbench itself is a living demonstration of the modern web platform: all state lives in localStorage, the surface is built with custom elements and progressive enhancement, theming and density use CSS custom properties + layers + :has(), interactions rely on pointer events and IntersectionObserver, and the entire system remains inspectable without any framework. Customize the shortcuts below to build your own teaching or project-specific lenses.
+                        State lives in localStorage; the surface uses progressive enhancement, CSS custom properties, and inspectable modules rather than a client framework. Customize the shortcuts below when you need a project-specific lens.
                     </p>
                 </header>
                 <div class="spw-settings-cluster__actions" id="config-shortcuts" role="group" aria-label="Configuration links">

@@ -270,12 +270,26 @@ const renderResult = (root, result) => {
     $('[data-blog-seed]', root).textContent = buildSeed(result);
 };
 
+const BLOG_STATE_TO_BEAT = Object.freeze({
+    empty: 'rest',
+    'needs-input': 'approach',
+    interpreting: 'gather',
+    interpreted: 'commit',
+});
+
 const setInterpreterState = (root, input, output, state, result = EMPTY_RESULT) => {
     root.dataset.blogState = state;
     root.dataset.blogLens = result.lens;
     root.dataset.blogTone = result.tone;
+    const beat = BLOG_STATE_TO_BEAT[state] || 'rest';
+    root.dataset.spwLifecycleBeat = beat;
+    root.dataset.spwLifecycleBeatResolved = beat;
     input.setAttribute('aria-invalid', state === 'needs-input' ? 'true' : 'false');
     output.setAttribute('aria-busy', state === 'interpreting' ? 'true' : 'false');
+    root.dispatchEvent(new CustomEvent('spw:component-lifecycle', {
+        detail: { beat, state, source: 'blog-interpreter' },
+        bubbles: true,
+    }));
 };
 
 export const initBlogInterpreter = (options = {}) => {

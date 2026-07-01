@@ -1,0 +1,306 @@
+/* ==========================================================================
+   image-interaction.css
+   --------------------------------------------------------------------------
+   Framing, hover/focus, tap/hold/swipe lens interaction for image figures.
+   Performance/containment stays in image-utilization.css.
+   ========================================================================== */
+
+:root {
+  --spw-image-frame-pad: 0.48rem;
+  --spw-image-frame-line: color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 72%, transparent);
+  --spw-image-mat: color-mix(in srgb, var(--surface-strong, #fff) 92%, var(--active-op-color, var(--teal, #008080)) 8%);
+  --spw-image-interaction-lift: 1.018;
+  --spw-image-interaction-saturate: 1.05;
+  --spw-image-interaction-contrast: 1.03;
+  --spw-image-interaction-duration: var(--duration-deliberate, 360ms);
+  --spw-image-interaction-ease: var(--ease-mechanical, ease);
+  --spw-image-interaction-ring: color-mix(in srgb, var(--spw-image-lens-accent, var(--active-op-color, var(--teal, #008080))) 22%, transparent);
+  --spw-image-interaction-glow: color-mix(in srgb, var(--spw-image-lens-accent, var(--active-op-color, var(--teal, #008080))) 10%, transparent);
+  --spw-image-lens-accent: var(--active-op-color, var(--teal, #008080));
+}
+
+:where(
+  .topic-photo-card,
+  .image-study,
+  [data-spw-image-reward],
+  [data-spw-image-discovery],
+  .frame-card-media,
+  .spw-visual-link-card__media,
+  [data-spw-image-surface]
+) {
+  --spw-image-interaction-scale: 1;
+  --spw-image-interaction-filter: none;
+  position: relative;
+  touch-action: pan-y;
+  border: 1px solid var(--spw-image-frame-line);
+  border-radius: var(--component-radius-tight, 8px);
+  background:
+    linear-gradient(165deg, color-mix(in srgb, var(--spw-image-mat) 88%, white 12%), var(--spw-image-mat)),
+    var(--spw-image-mat);
+  padding: var(--spw-image-frame-pad);
+  transition:
+    border-color var(--spw-image-interaction-duration) var(--spw-image-interaction-ease),
+    box-shadow var(--spw-image-interaction-duration) var(--spw-image-interaction-ease),
+    transform var(--spw-image-interaction-duration) var(--spw-image-interaction-ease);
+}
+
+:where(.topic-photo-card, .image-study)[data-spw-image-prominence="hero"]) {
+  --spw-image-frame-pad: 0.58rem;
+}
+
+:where(.topic-photo-card, .image-study)[data-spw-image-prominence="supporting"]) {
+  --spw-image-frame-pad: 0.38rem;
+  max-inline-size: min(100%, 36rem);
+}
+
+:where(.frame-card--illustrated .frame-card-media, .spw-visual-link-card__media) {
+  --spw-image-frame-pad: 0;
+  border: none;
+  background: transparent;
+  padding: 0;
+  border-radius: inherit;
+}
+
+:where(
+  .topic-photo-card img,
+  .image-study img,
+  [data-spw-image-reward] img,
+  [data-spw-image-discovery] img,
+  .frame-card-media img,
+  .spw-visual-link-card__media img,
+  [data-spw-image-surface] img
+) {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  border-radius: calc(var(--component-radius-tight, 8px) - 2px);
+  object-fit: cover;
+  transition:
+    transform var(--spw-image-interaction-duration) var(--spw-image-interaction-ease),
+    filter var(--spw-image-interaction-duration) var(--spw-image-interaction-ease);
+}
+
+:where([data-spw-image-shape="landscape"] img) {
+  aspect-ratio: 16 / 10;
+}
+
+:where([data-spw-image-shape="square"] img) {
+  aspect-ratio: 1 / 1;
+}
+
+:where([data-spw-image-shape="portrait"] img) {
+  aspect-ratio: 3 / 4;
+}
+
+:where([data-spw-image-lens-active="probe"]) {
+  --spw-image-lens-accent: var(--op-probe-color, #6a3fb8);
+}
+
+:where([data-spw-image-lens-active="frame"]) {
+  --spw-image-lens-accent: var(--op-frame-color, #1a9999);
+}
+
+:where([data-spw-image-lens-active="object"]) {
+  --spw-image-lens-accent: var(--op-object-color, #c68a22);
+}
+
+:where([data-spw-image-lens-active="ref"]) {
+  --spw-image-lens-accent: var(--op-ref-color, #1d57a3);
+}
+
+:where([data-spw-image-lens-active="action"]) {
+  --spw-image-lens-accent: var(--op-action-color, #147a70);
+}
+
+:where([data-spw-image-lens-active="stream"]) {
+  --spw-image-lens-accent: var(--op-stream-color, #2a8c76);
+}
+
+:where([data-spw-image-lens-active="surface"]) {
+  --spw-image-lens-accent: var(--op-surface-color, #355f77);
+}
+
+:where([data-spw-image-lens-active="integrate"]) {
+  --spw-image-lens-accent: var(--op-integrate-color, var(--teal, #008080));
+}
+
+:where([data-spw-image-lens-active="baseline"]) {
+  --spw-image-lens-accent: var(--ink-soft, rgba(14, 18, 20, 0.68));
+}
+
+:where([data-spw-image-lens-active="potential"]) {
+  --spw-image-lens-accent: var(--op-potential-color, var(--op-probe-color, #6a3fb8));
+}
+
+:where(
+  .topic-photo-card:is(:hover, :focus-within),
+  .image-study:is(:hover, :focus-within),
+  [data-spw-image-reward]:is(:hover, :focus-within),
+  [data-spw-image-discovery]:is(:hover, :focus-within),
+  .frame-card-media:is(:hover, :focus-within),
+  [data-spw-image-surface]:is(:hover, :focus-within),
+  [data-spw-image-interaction-state="primed"],
+  [data-spw-image-interaction-state="inspecting"],
+  [data-spw-image-interaction-state="lensed"]
+) {
+  border-color: color-mix(in srgb, var(--spw-image-interaction-ring) 68%, var(--line, transparent));
+  box-shadow:
+    0 0 0 1px var(--spw-image-interaction-glow),
+    var(--spw-local-shadow, var(--component-shadow, none));
+}
+
+:where(
+  .topic-photo-card:is(:hover, :focus-within) img,
+  .image-study:is(:hover, :focus-within) img,
+  [data-spw-image-reward]:is(:hover, :focus-within) img,
+  [data-spw-image-discovery]:is(:hover, :focus-within) img,
+  .frame-card-media:is(:hover, :focus-within) img,
+  [data-spw-image-surface]:is(:hover, :focus-within) img,
+  [data-spw-image-interaction-state="primed"] img,
+  [data-spw-image-interaction-state="inspecting"] img,
+  [data-spw-image-interaction-state="lensed"] img
+) {
+  transform: scale(var(--spw-image-interaction-lift));
+  filter: saturate(var(--spw-image-interaction-saturate)) contrast(var(--spw-image-interaction-contrast));
+}
+
+:where([data-spw-image-interaction-state="inspecting"]) {
+  transform: translateY(-1px);
+}
+
+:where([data-spw-image-interaction-state="inspecting"] img) {
+  --spw-image-interaction-lift: 1.024;
+}
+
+:where([data-spw-image-interaction-state="lensed"] img) {
+  filter:
+    saturate(calc(var(--spw-image-interaction-saturate) + 0.04))
+    contrast(calc(var(--spw-image-interaction-contrast) + 0.02));
+}
+
+:where([data-spw-image-discovered="true"], [data-spw-image-interaction-state="discovered"]) {
+  border-color: color-mix(in srgb, var(--spw-image-lens-accent, var(--active-op-color, var(--teal, #008080))) 28%, transparent);
+}
+
+:where([data-spw-image-discovered="true"]::after, [data-spw-image-discovery][data-spw-image-interaction-state="primed"]::after) {
+  border-color: color-mix(in srgb, var(--spw-image-lens-accent, var(--active-op-color, var(--teal, #008080))) 36%, transparent);
+}
+
+:where(
+  .topic-photo-card .study-summary,
+  .image-study .study-summary
+) {
+  display: grid;
+  gap: 0.42rem;
+  padding: 0.55rem 0.12rem 0.18rem;
+  min-width: 0;
+}
+
+:where(.study-summary .meta-cluster) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.38rem;
+  align-items: center;
+}
+
+:where(.study-summary .meta-cluster .spec-pill) {
+  margin: 0;
+}
+
+:where(.spw-image-lens-hint) {
+  color: color-mix(in srgb, var(--spw-image-lens-accent, var(--ink-soft, rgba(14, 18, 20, 0.68))) 72%, var(--ink, currentColor) 28%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-2xs, 0.68rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+}
+
+:where(.study-summary p, .study-summary > span:not(.spw-image-lens-hint)) {
+  margin: 0;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-size: var(--text-size-sm, 0.88rem);
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+:where(.study-summary__lead) {
+  color: color-mix(in srgb, var(--ink, currentColor) 88%, var(--spw-image-lens-accent, var(--active-op-color, var(--teal, #008080))) 12%);
+}
+
+:where(.study-summary__move) {
+  font-size: var(--text-size-xs, 0.82rem);
+  line-height: 1.45;
+  max-inline-size: 62ch;
+}
+
+:where(.study-summary strong) {
+  color: color-mix(in srgb, var(--ink, currentColor) 84%, var(--spw-image-lens-accent, var(--active-op-color, var(--teal, #008080))) 16%);
+}
+
+:where(html[data-spw-loading-ecology-twinkle="true"]) :where(
+  [data-spw-image-discovered="true"],
+  [data-spw-image-discovery][data-spw-image-interaction-state="primed"]
+) {
+  box-shadow:
+    var(--spw-runtime-readiness-ring, 0 0 0 1px var(--spw-image-interaction-glow)),
+    var(--spw-local-shadow, var(--component-shadow, none));
+}
+
+:where(html[data-spw-hydration-pass="semantic"]) :where(
+  [data-spw-image-discovery],
+  [data-spw-image-reward],
+  .topic-photo-card[data-spw-image-prominence="hero"]
+) {
+  opacity: var(--spw-settle-opacity-high, 1);
+}
+
+:where(html[data-spw-reduce-motion="on"]) {
+  --spw-image-interaction-lift: 1;
+  --spw-image-interaction-saturate: 1;
+  --spw-image-interaction-contrast: 1;
+  --spw-image-interaction-duration: 1ms;
+}
+
+:where(html[data-spw-reduce-motion="on"]) :where(
+  .topic-photo-card,
+  .image-study,
+  [data-spw-image-reward],
+  [data-spw-image-discovery],
+  .frame-card-media,
+  [data-spw-image-surface]
+) {
+  transform: none;
+}
+
+/* Phase coupling — image surfaces breathe with html interaction phase */
+:where(html[data-spw-interaction-phase="approach"]) :where(
+  [data-spw-image-interaction-state="primed"],
+  [data-spw-image-interaction-state="idle"]
+) {
+  --spw-image-interaction-lift: 1.012;
+}
+
+:where(html[data-spw-interaction-phase="inspect"]) :where([data-spw-image-interaction-state="inspecting"]) {
+  --spw-image-interaction-lift: 1.028;
+  border-color: color-mix(in srgb, var(--spw-image-interaction-ring) 82%, var(--line, transparent));
+}
+
+:where(html[data-spw-interaction-phase="charge"]) :where([data-spw-image-interaction-state="lensed"]) {
+  --spw-image-interaction-saturate: 1.08;
+}
+
+:where(html[data-spw-interaction-phase="discover"]) :where(
+  [data-spw-image-interaction-state="lensed"],
+  [data-spw-image-interaction-state="discovered"]
+) {
+  box-shadow:
+    inset 0 -2px 0 color-mix(in srgb, var(--spw-image-lens-accent) 22%, transparent),
+    0 0 0 1px var(--spw-image-interaction-glow),
+    var(--spw-local-shadow, var(--component-shadow, none));
+}
+
+:where(html[data-spw-microinteraction-pulse="discover"]) :where([data-spw-image-lens-active]) {
+  outline: 1px dashed color-mix(in srgb, var(--spw-image-lens-accent) 30%, transparent);
+  outline-offset: 3px;
+}

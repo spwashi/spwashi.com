@@ -34,16 +34,21 @@ Stable interaction contract, incremental visual treatment. Reuse existing page-r
 - Add a top-down/bottom-up stabilization pass: public-spine and section-hub entry regions now declare layout posture, feature identity, attentional weight, gradient boundary, and composition stability; region profiling and component semantics derive `data-spw-composition-stability` for the long tail so CSS, inspectors, and future agents can see when page identity, component anatomy, and route traversal agree.
 - Split authored entry stability from runtime-resolved stability and pack occupancy: public CSS now projects authored public-spine state while derived stability stays inspectable/debuggable through resolved fields and occupancy summaries.
 - Align section-handle runtime behavior with its inspectable contract: keyboard-driven section travel now announces through the same live region as button travel, and `module-catalog.js` names the page-section, handle, reading-groove, pinch-scale, resonance, and cauldron attributes that `attention-architecture` writes.
+- Add region-diversity output as a downstream signal for component collection rewards: `region-profiler.js` may summarize component kinds and diversity tiers, but persistent collection state is owned by `component-collection.js`, `reward-ui.js`, and runtime settings.
+- Add payload-aware sigil transitions: operator sigils now read page anatomy/topical payload plus nearest region profile fields, expose local/root `data-spw-sigil-*` attrs, and serialize the active handoff through page anatomy.
 
 ## Out Of Scope
 
-- No new framework, dependency, or client-side data store.
+- No new framework, dependency, or page-region-owned client-side data store. Page-region diversity may feed a downstream browser-local collection register, but this plan does not own persistence.
 - No mass restructuring of all route HTML.
 - No direct edits to ignored `00.unsorted` images; public pages only reference tracked `public/images/` assets.
 
 ## Validation
 
 - `node --check public/js/runtime/page-region-rail.js`
+- `node --check public/js/runtime/region-profiler.js`
+- `node --check public/js/runtime/component-collection.js`
+- `node --check public/js/runtime/reward-ui.js`
 - `node --check public/js/runtime/module-catalog.js`
 - `node --check public/js/runtime/charge-field.js`
 - `node --check public/js/runtime/attention/section-handle.js`

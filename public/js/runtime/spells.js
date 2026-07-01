@@ -7,7 +7,7 @@
  */
 
 import { bus } from '/public/js/kernel/bus.js';
-import { detectOperator, getOperatorDefinition } from '/public/js/kernel/shared.js';
+import { detectOperator, getOperatorDefinition, getOperatorGeometry } from '/public/js/kernel/shared.js';
 import { getActiveRecentPathMemory } from '/public/js/interface/accent-palette.js';
 import { getGroundedCouplings, getGroundedRegistry, getSigilCollection, restoreCheckpoint } from '/public/js/interface/haptics.js';
 import { describeCognitiveState } from '/public/js/runtime/cognitive-state.js';
@@ -25,6 +25,12 @@ const DESTINATION_LABELS = Object.freeze({
   settle: 'local returns',
   lens: 'topic lenses',
 });
+const HYPERMEDIA_CAPABILITIES = Object.freeze([
+  Object.freeze({ key: 'trail', label: 'trail', value: 'route + hash memory' }),
+  Object.freeze({ key: 'anchor', label: 'anchor', value: 'deep-link fragments' }),
+  Object.freeze({ key: 'state', label: 'state', value: 'settings + Spw context' }),
+  Object.freeze({ key: 'resume', label: 'resume', value: 'checkpoint working sets' }),
+]);
 const SPELL_BUNDLE_PREFIX = 'spw-checkpoint:';
 const bundleDateFormatter = new Intl.DateTimeFormat('en-US', {
   month: 'short',
@@ -42,6 +48,36 @@ function isCompactSpellDockViewport() {
 
 function getSpellSurface() {
   return document.body?.dataset.spwSurface || 'surface';
+}
+
+function getCurrentDeepLinkState() {
+  const url = new URL(window.location.href);
+  const hashId = decodeURIComponent(url.hash.replace(/^#/, ''));
+  const target = hashId ? document.getElementById(hashId) : null;
+  const label = target instanceof HTMLElement
+    ? (
+      target.dataset.spwDeepLinkLabel
+      || target.getAttribute('aria-label')
+      || target.querySelector?.('h1, h2, h3, h4, .frame-sigil, .page-kicker')?.textContent?.trim()
+      || target.id
+    )
+    : '';
+
+  return {
+    route: url.pathname,
+    hash: url.hash,
+    href: `${url.pathname}${url.search}${url.hash}`,
+    label: label || (url.hash ? hashId : 'route top'),
+    semanticExpression: target instanceof HTMLElement
+      ? (
+        target.dataset.spwSemanticExpression
+        || target.dataset.spwFeature
+        || target.dataset.spwKind
+        || target.dataset.spwRole
+        || ''
+      )
+      : '',
+  };
 }
 
 function getGroundedEntries() {
@@ -73,14 +109,11 @@ function buildSpellEntry(key, coupling = {}, index = 0, context = {}) {
   const postfix = coupling?.postfix || inferPostfix(expression, prefix);
   const nucleus = inferNucleus(expression, prefix, postfix);
   const operatorType = detected?.type || coupling?.substrate || 'ref';
+  const operatorGeometry = getOperatorGeometry(operatorType) || getOperatorGeometry(prefix);
   const destination = coupling?.destination || inferDestination(postfix, expression);
   const {density = 'medium', physics = 'playful'} = context || {};
 
-  // Improve spell wiring with settings and vocabulary discovery (per considerations): semanticDensity modulates richness of postfix/concept labels
-  // (higher density = more "magic" higher-order markup for wonder + cauldron collect); physicsReason modulates spell "ease" (springy/playful = fluid tangential control;
-  // precise = deliberate steps). This makes spell/cauldron an enhanced discovery mechanism with satisfying control, encourages adding semantic density to markup
-  // (for discoverable spells across pages with different structures) while minding perf via settings. Emits for cauldron/vocab surfaces + AI wonder synthesis.
-  const vocabRich = (density === 'high' || density === 'dense');
+  const vocabRich = density === 'rich';
   const spellEase = (physics.includes('spring') || physics === 'playful') ? 'fluid' : (physics === 'precise' ? 'deliberate' : 'standard');
   const enrichedPostfix = vocabRich ? (postfix + ' · ' + (coupling?.wonder || 'wonder')) : postfix;
 
@@ -94,8 +127,11 @@ function buildSpellEntry(key, coupling = {}, index = 0, context = {}) {
     nucleus,
     operatorType,
     operatorLabel: detected?.label || operatorType,
+    operatorGeometry,
     destination,
     href: coupling?.href || null,
+    deepLink: coupling?.deepLink || null,
+    deepLinkLabel: coupling?.deepLinkLabel || null,
     wonder: coupling?.wonder || 'orientation',
     context: coupling?.context || getSpellSurface(),
     group: coupling?.group || 'routes',
@@ -148,6 +184,7 @@ function buildSpellModel() {
   const destinationCounts = countBy(entries, (entry) => entry.destination);
   const combos = buildSpellCombos(entries);
   const narrationMode = document.documentElement.dataset.spwMeaningMode || 'readable';
+  const deepLinkState = getCurrentDeepLinkState();
   const cognitiveState = {
     ...describeCognitiveState({
     signalCount: entries.length,
@@ -168,7 +205,8 @@ function buildSpellModel() {
     combos,
     narrationMode,
     cognitiveState,
-    snippet: constructSpell(entries, cognitiveState),
+    deepLinkState,
+    snippet: constructSpell(entries, cognitiveState, deepLinkState),
   };
 }
 
@@ -201,28 +239,40 @@ function buildSpellCombos(entries) {
   return [...combos.values()];
 }
 
-function constructSpell(entries, cognitiveState = null) {
+function constructSpell(entries, cognitiveState = null, deepLinkState = null) {
   const timestamp = new Date().toISOString();
+  const route = deepLinkState?.route || window.location.pathname;
+  const deepLink = deepLinkState?.href || `${window.location.pathname}${window.location.search}${window.location.hash}`;
+  const anchor = deepLinkState?.hash || '#route-top';
+  const anchorLabel = deepLinkState?.label || 'route top';
+  const spwSemantic = deepLinkState?.semanticExpression || '.route';
   const lines = [
     '!cast_spell("navigation_lattice")',
     `#surface "${getSpellSurface()}"`,
+    `#route "${escapeSpellString(route)}"`,
+    `#deep_link "${escapeSpellString(deepLink)}"`,
+    `@anchor "${escapeSpellString(anchor)}"`,
+    `^"spw_semantics" "${escapeSpellString(spwSemantic)}"`,
     `=grounded ${entries.length}`,
     `@timestamp "${timestamp}"`,
     '',
     '^"replayable_navigation"{',
+    `  #>current "${escapeSpellString(anchorLabel)}" ~"${escapeSpellString(deepLink)}" #:anchor`,
   ];
 
   entries.forEach((entry) => {
     const destination = entry.destination || 'projection';
-    const href = entry.href || entry.key;
-    lines.push(`  ${entry.expression} ~"${href}" #:${destination}`);
+    const href = entry.deepLink || entry.href || entry.key;
+    const geometry = entry.operatorGeometry?.geometry || 'operator';
+    const anchorMark = String(href).includes('#') ? ' @hash' : '';
+    lines.push(`  ${entry.expression} ~"${escapeSpellString(href)}" #:${destination} ^${geometry}${anchorMark}`);
   });
 
   lines.push('}');
   lines.push('');
   lines.push('&"processing_hints"{');
 
-  buildProjectionNotes(entries, cognitiveState).forEach((note) => {
+  buildProjectionNotes(entries, cognitiveState, deepLinkState).forEach((note) => {
     lines.push(`  ${note}`);
   });
 
@@ -238,16 +288,22 @@ function constructSpell(entries, cognitiveState = null) {
   return lines.join('\n');
 }
 
-function buildProjectionNotes(entries, cognitiveState = null) {
+function buildProjectionNotes(entries, cognitiveState = null, deepLinkState = null) {
   const destinationCounts = new Map(countBy(entries, (entry) => entry.destination));
   const scopeCount = destinationCounts.get('scope') || 0;
   const projectionCount = destinationCounts.get('projection') || 0;
   const lensCount = destinationCounts.get('lens') || 0;
+  const anchoredCount = entries.filter((entry) => String(entry.deepLink || entry.href || '').includes('#')).length;
   const notes = [];
 
   if (scopeCount) notes.push(`~"scope_entries" =${scopeCount}`);
   if (projectionCount) notes.push(`>surface_jumps =${projectionCount}`);
   if (lensCount) notes.push(`<topic_lenses> =${lensCount}`);
+  if (anchoredCount) notes.push(`#deep_linked_fragments =${anchoredCount}`);
+  if (deepLinkState?.hash) {
+    notes.push(`~"current_hash" "${escapeSpellString(deepLinkState.hash)}"`);
+    notes.push('!"preserve_hash_anchor"');
+  }
 
   if (scopeCount && projectionCount) {
     notes.push('!"carry_local_scope_into_surface"');
@@ -274,6 +330,13 @@ function buildProjectionNotes(entries, cognitiveState = null) {
   }
 
   return notes;
+}
+
+function escapeSpellString(value = '') {
+  return String(value)
+    .replaceAll('\\', '\\\\')
+    .replaceAll('"', '\\"')
+    .replaceAll('\n', '\\n');
 }
 
 function ensureHeaderTraceHost() {
@@ -304,6 +367,7 @@ function ensureSpellDock() {
   dock = document.createElement('details');
   dock.className = 'spw-spell-dock';
   dock.setAttribute('data-spw-flow', 'pretext');
+  dock.dataset.spwHypermediaExtension = 'trail state resume';
   dock.dataset.textKind = 'ledger';
   dock.dataset.textDensity = 'soft';
   dock.dataset.textMeasure = 'tight';
@@ -313,7 +377,7 @@ function ensureSpellDock() {
   summary.className = 'spw-spell-dock-summary';
   summary.innerHTML = `
     <span class="spw-spell-dock-op">@</span>
-    <span class="spw-spell-dock-label">spellbook</span>
+    <span class="spw-spell-dock-label">path extensions</span>
     <span class="spw-spell-dock-count">0</span>
   `;
 
@@ -338,7 +402,7 @@ function updateSpellDock(model) {
   dock.dataset.spwSpellCognitive = model.cognitiveState.gradient;
   dock.dataset.spwSpellMeaningMode = model.narrationMode;
   if (parts.count) parts.count.textContent = String(model.entries.length);
-  if (parts.label) parts.label.textContent = model.entries.length ? 'spellbook' : 'ground lines';
+  if (parts.label) parts.label.textContent = model.entries.length ? 'path extensions' : 'link trail';
 
   if (!parts.body) return;
 
@@ -373,7 +437,22 @@ function getSpellDockParts(dock) {
 
 function renderEmptySpellDock() {
   return `
-    <p class="spell-note">Ground route links, page lines, or operator chips to assemble a readable navigation spell. The dock will tell you when the path still feels <strong>fresh</strong>, when it starts to feel <strong>familiar</strong>, and when it is settled enough to replay quickly.</p>
+    ${renderCapabilityStrip()}
+    <p class="spell-note">Ground links, page sections, or operator chips to extend the document with a resumable trail. The dock shows when the path is still <strong>fresh</strong>, when it becomes <strong>familiar</strong>, and when it is ready to replay.</p>
+  `;
+}
+
+function renderCapabilityStrip(extra = []) {
+  const items = [...HYPERMEDIA_CAPABILITIES, ...extra];
+  return `
+    <div class="spell-capability-strip" aria-label="Hypermedia capabilities">
+      ${items.map((item) => `
+        <span class="spell-capability" data-spw-hypermedia-capability="${escapeHtml(item.key)}">
+          <span class="spell-capability__label">${escapeHtml(item.label)}</span>
+          <span class="spell-capability__value">${escapeHtml(item.value)}</span>
+        </span>
+      `).join('')}
+    </div>
   `;
 }
 
@@ -439,12 +518,13 @@ function renderCompactSpellDock(preview, cognitive, effects, destinations, colle
       : '';
 
   return `
+    ${renderCapabilityStrip()}
     <div class="spell-visual spell-visual--compact">${preview}</div>
     <div class="spell-register-strip spell-register-strip--cognitive">${cognitive}</div>
     <div class="spell-register-strip spell-register-strip--effects">${effects}</div>
     <div class="spell-register-strip spell-register-strip--sigils">${collection}</div>
     <div class="spell-register-strip">${destinations}</div>
-    <p class="spell-note spell-note--compact"><strong>Replayable</strong> cognitive lines. Familiar paths help you return; liminal paths show the edge you are crossing.${narrationNote}</p>
+    <p class="spell-note spell-note--compact"><strong>Replayable hypermedia</strong>: familiar paths help you return, liminal paths show the edge you are crossing, and settings keep the trail legible.${narrationNote}</p>
   `;
 }
 
@@ -456,6 +536,7 @@ function renderExpandedSpellDock(preview, cognitive, effects, destinations, coll
       : '';
 
   return `
+    ${renderCapabilityStrip()}
     <div class="spell-visual spell-visual--compact">${preview}</div>
     <div class="spell-register-strip spell-register-strip--cognitive">${cognitive}</div>
     <div class="spell-register-strip spell-register-strip--effects">${effects}</div>
@@ -482,7 +563,7 @@ function renderSpellBoard(board, model) {
   if (!model.entries.length) {
     board.innerHTML = `
       <p class="frame-note">
-        No navigation spell assembled yet. Follow routes, section lines, or operator chips to build a readable sequence you can replay. Fresh paths become familiar when you ground a few more signals.
+        No path extension assembled yet. Follow links, section lines, or operator chips to build a readable sequence you can replay. Fresh paths become familiar when you ground a few more signals.
       </p>
     `;
     return;
@@ -514,11 +595,14 @@ function renderSpellBoard(board, model) {
       : '';
 
   board.innerHTML = `
+    ${renderCapabilityStrip([
+      { key: 'output', label: 'output', value: 'copy or cast a portable snippet' },
+    ])}
     <div class="spell-visual">
       ${model.entries.map(renderSpellAtom).join('')}
     </div>
     <div class="spell-ledger">
-      <p class="spell-note"><strong>A spell is a small replayable outcome.</strong> Prefix notation shapes intent. Postfix notation shapes what the interaction does next. <strong>Familiarity</strong> tells you how quickly the page should feel readable. <strong>Liminality</strong> tells you whether you are entering, holding, or settled.${narrationNote}</p>
+      <p class="spell-note"><strong>A spell is a hypermedia extension.</strong> It saves route and hash anchors beside settings, page state, and operator geometry. The left side of an operator carries source, stance, or evidence; the right side carries argument, containment, target, or consequence. <strong>Familiarity</strong> tells you how quickly the page should feel readable. <strong>Liminality</strong> tells you whether you are entering, holding, or settled.${narrationNote}</p>
       <div class="spell-register-strip spell-register-strip--cognitive">${cognitiveSummary}</div>
       <div class="spell-register-strip spell-register-strip--effects">${effectSummary}</div>
       <div class="spell-register-strip spell-register-strip--sigils">${collectionSummary}</div>
@@ -529,13 +613,13 @@ function renderSpellBoard(board, model) {
     <pre class="spell-source"><code>${escapeHtml(model.snippet)}</code></pre>
     <div class="spell-actions">
       <button class="operator-chip" type="button" data-spw-spell-action="${SPELL_ACTION.CAST}" data-spw-operator="action">
-        ! cast_spell
+        ! copy extension
       </button>
       <button class="operator-chip" type="button" data-spw-spell-action="${SPELL_ACTION.CHECKPOINT}" data-spw-operator="pragma">
-        ! checkpoint
+        ! save trail
       </button>
       <button class="operator-chip" type="button" data-spw-spell-action="${SPELL_ACTION.RESET}" data-spw-operator="binding">
-        = clear_spell
+        = clear trail
       </button>
     </div>
     ${buildSavedBundlesUI()}
@@ -621,9 +705,24 @@ function renderSpellAtom(entry) {
   const provenanceChip = hasProvenance
     ? `<span class="spell-provenance__chip" aria-hidden="true">✧</span>`
     : '';
+  const geometry = entry.operatorGeometry || {};
+  const geometryAttrs = [
+    ['data-spw-operator-left-role', geometry.leftRole],
+    ['data-spw-operator-right-role', geometry.rightRole],
+    ['data-spw-operator-flow', geometry.flow],
+    ['data-spw-operator-brace-bias', geometry.braceBias],
+    ['data-spw-operator-geometry', geometry.geometry],
+    ['data-spw-operator-overload', geometry.overload],
+    ['data-spw-operator-charge-role', geometry.chargeRole],
+    ['data-spw-deep-link', entry.deepLink || entry.href],
+    ['data-spw-deep-link-label', entry.deepLinkLabel],
+  ]
+    .filter(([, value]) => value)
+    .map(([name, value]) => `${name}="${escapeHtml(value)}"`)
+    .join(' ');
 
   return `
-    <span class="spell-ingredient" data-spw-atom="chip" data-spw-grounded="true" data-spw-operator="${escapeHtml(entry.operatorType)}"${provenanceAttr}>
+    <span class="spell-ingredient" data-spw-atom="chip" data-spw-grounded="true" data-spw-operator="${escapeHtml(entry.operatorType)}" ${geometryAttrs}${provenanceAttr}>
       <span class="spell-ingredient-prefix">${escapeHtml(entry.prefix || '')}</span>
       <span class="spell-ingredient-nucleus">${escapeHtml(entry.nucleus || entry.expression)}</span>
       <span class="spell-ingredient-postfix">${escapeHtml(entry.postfix || '')}</span>
@@ -664,11 +763,11 @@ function registerSpellActions() {
       // Teaches that spells are replayable extractions of attention/ingredients from cauldron state.
       document.dispatchEvent(new CustomEvent('spw:discovery-reward', {
         detail: {
-          label: 'Spell',
-          title: 'Spell cast',
-          summary: 'Current grounded attention composed into replayable snippet. Cauldron state (gather) → spell (cast) is the emergence cycle; the credit rewards using it.',
+          label: 'Path extension',
+          title: 'Extension copied',
+          summary: 'Current route/hash anchors, Spw expression, page state, and operator geometry composed into a replayable hypermedia snippet. Cauldron gather, trail resume, and settings context stay connected.',
           href: '/design/palettes/#spell-cauldron-hooks',
-          cta: 'See cauldron/spell hooks',
+          cta: 'See trail hooks',
           presentation: 'credits',
           rewardKind: 'spell-cauldron-literacy',
           cadence: 'reward',
@@ -677,15 +776,15 @@ function registerSpellActions() {
 
       if (navigator.clipboard?.writeText) {
         navigator.clipboard.writeText(snippet).then(() => {
-          if (button instanceof HTMLElement) button.textContent = '! cast (copied)';
+          if (button instanceof HTMLElement) button.textContent = '! extension copied';
         }).catch(() => {});
       }
     },
     checkpoint(button) {
-      const name = window.prompt('Save spell or working set as:', `Working Set - ${new Date().toLocaleDateString()}`);
+      const name = window.prompt('Save deep-link trail or working set as:', `Working Set - ${new Date().toLocaleDateString()}`);
       if (!name) return;
       bus.emit('spell:checkpoint', { name });
-      if (button instanceof HTMLElement) button.textContent = `! saved: ${name}`;
+      if (button instanceof HTMLElement) button.textContent = `! trail saved: ${name}`;
       renderAllSpellSurfaces();
     },
     restore(name, button) {
@@ -696,7 +795,7 @@ function registerSpellActions() {
     },
     reset(button) {
       bus.emit('spell:reset', { source: 'spell-board' });
-      if (button instanceof HTMLElement) button.textContent = '= cleared';
+      if (button instanceof HTMLElement) button.textContent = '= trail cleared';
     },
   };
 }

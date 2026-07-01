@@ -27,8 +27,17 @@ export const REGION_STATES = Object.freeze({
 
 export const SPW_REGION_PROFILER_CONTRACT = Object.freeze({
   states: REGION_STATES,
+  diversityTiers: Object.freeze(['singular', 'paired', 'varied', 'rich', 'teeming']),
+  diversityAttributes: Object.freeze({
+    kindField: 'data-spw-region-kind-field',
+    kindCount: 'data-spw-region-kind-count',
+    diversity: 'data-spw-region-diversity',
+    semanticDepth: 'data-spw-region-semantic-depth',
+  }),
   portableUse:
-    'Import this module when a page needs region harmony, tempo, and density without booting site.js.',
+    'Import this module when a page needs region harmony, tempo, and density without booting site.js. '
+    + 'Read the region-diversity tier (or subscribe to spw:regions-profiled) to reward surfaces that '
+    + 'reveal a wider spread of component kinds — the substrate for collection/achievement systems.',
 });
 
 const TEMPO_CASCADE_PROFILES = Object.freeze({
@@ -75,6 +84,25 @@ const TEMPO_CASCADE_PROFILES = Object.freeze({
 });
 
 const TEMPO_DOMINANCE_ORDER = Object.freeze(['settle', 'deliberate', 'base', 'fast', 'snap']);
+
+// Diversity tiers reward surfaces that reveal a wider spread of component kinds.
+// They give downstream collection/achievement systems an ordinal "how varied is
+// this surface" signal without those systems re-deriving it from the DOM.
+const REGION_DIVERSITY_TIERS = Object.freeze([
+  { tier: 'singular', min: 0 },
+  { tier: 'paired', min: 2 },
+  { tier: 'varied', min: 3 },
+  { tier: 'rich', min: 5 },
+  { tier: 'teeming', min: 8 },
+]);
+
+function resolveDiversityTier(distinctKinds = 0) {
+  let resolved = REGION_DIVERSITY_TIERS[0].tier;
+  for (const entry of REGION_DIVERSITY_TIERS) {
+    if (distinctKinds >= entry.min) resolved = entry.tier;
+  }
+  return resolved;
+}
 
 const CASCADE_TIMING_STYLE_KEYS = Object.freeze([
   '--spw-page-arrival-step-2-delay',
@@ -308,6 +336,40 @@ export function resolveDominantTempo(tempos = []) {
   return 'base';
 }
 
+/**
+ * Summarize how varied a set of region profiles is. Distinct component kinds
+ * drive the collectible "diversity" signal; roles/harmonies/contexts add a
+ * coarse semantic-depth measure. Pure — safe to call from tests or standalone.
+ */
+export function summarizeRegionDiversity(profiles = []) {
+  const kinds = new Set();
+  const roles = new Set();
+  const harmonies = new Set();
+  const contexts = new Set();
+
+  for (const profile of profiles) {
+    if (!profile) continue;
+    if (profile.kind) kinds.add(profile.kind);
+    if (profile.role) roles.add(profile.role);
+    if (profile.harmony) harmonies.add(profile.harmony);
+    if (profile.context) contexts.add(profile.context);
+  }
+
+  const diversityIndex = kinds.size;
+  return {
+    kinds,
+    roles,
+    harmonies,
+    contexts,
+    kindCount: kinds.size,
+    diversityIndex,
+    // Coarse "how much distinct semantic material is on this surface" score.
+    semanticDepth: kinds.size + roles.size + harmonies.size + contexts.size,
+    tier: resolveDiversityTier(diversityIndex),
+    total: profiles.length,
+  };
+}
+
 export function syncPageCascadeTiming(ctx, html = document.documentElement) {
   const profiles = ctx?.regions?.map((entry) => entry.profile) || [];
   const dominantTempo = resolveDominantTempo(profiles.map((profile) => profile.tempo));
@@ -338,12 +400,25 @@ export function clearPageCascadeTiming(html = document.documentElement) {
 
 export function syncPageHarmony(ctx, html = document.documentElement) {
   const profiles = ctx.regions.map((entry) => entry.profile);
-  const harmonies = new Set(profiles.map((profile) => profile.harmony));
-  const tempos = new Set(profiles.map((profile) => profile.tempo));
-  const gradientBoundaries = new Set(profiles.map((profile) => profile.gradientBoundary));
-  const stabilities = new Set(profiles.map((profile) => profile.compositionStability));
-  const resolvedStabilities = new Set(profiles.map((profile) => profile.resolvedCompositionStability));
-  const occupancies = new Set(profiles.map((profile) => profile.packOccupancy));
+
+  // Single pass to aggregate every harmony field — previously six separate
+  // .map()/Set passes over the same profiles on each region lifecycle refresh.
+  const harmonies = new Set();
+  const tempos = new Set();
+  const gradientBoundaries = new Set();
+  const stabilities = new Set();
+  const resolvedStabilities = new Set();
+  const occupancies = new Set();
+  for (const profile of profiles) {
+    harmonies.add(profile.harmony);
+    tempos.add(profile.tempo);
+    gradientBoundaries.add(profile.gradientBoundary);
+    stabilities.add(profile.compositionStability);
+    resolvedStabilities.add(profile.resolvedCompositionStability);
+    occupancies.add(profile.packOccupancy);
+  }
+
+  const diversity = summarizeRegionDiversity(profiles);
 
   writeDatasetValue(html, 'spwHarmonyField', harmonies);
   writeDatasetValue(html, 'spwTempoField', tempos);
@@ -351,9 +426,31 @@ export function syncPageHarmony(ctx, html = document.documentElement) {
   writeDatasetValue(html, 'spwCompositionStabilityField', stabilities);
   writeDatasetValue(html, 'spwResolvedCompositionStabilityField', resolvedStabilities);
   writeDatasetValue(html, 'spwPackOccupancyField', occupancies);
+  writeDatasetValue(html, 'spwRegionKindField', diversity.kinds);
+  writeDatasetValue(html, 'spwRegionKindCount', String(diversity.kindCount));
+  writeDatasetValue(html, 'spwRegionDiversity', diversity.tier);
+  writeDatasetValue(html, 'spwRegionSemanticDepth', String(diversity.semanticDepth));
   writeDatasetValue(html, 'spwSpaceMotion', inferSpaceMotion());
   writeStyleValue(html, '--region-count', String(profiles.length));
+  writeStyleValue(html, '--region-kind-count', String(diversity.kindCount));
   syncPageCascadeTiming(ctx, html);
+
+  return { diversity };
+}
+
+function serializeDiversity(diversity) {
+  if (!diversity) return null;
+  return {
+    kinds: [...diversity.kinds],
+    roles: [...diversity.roles],
+    harmonies: [...diversity.harmonies],
+    contexts: [...diversity.contexts],
+    kindCount: diversity.kindCount,
+    diversityIndex: diversity.diversityIndex,
+    semanticDepth: diversity.semanticDepth,
+    tier: diversity.tier,
+    total: diversity.total,
+  };
 }
 
 export function refreshRegionProfiles(ctx, reason = 'runtime-refresh', options = {}) {
@@ -361,11 +458,12 @@ export function refreshRegionProfiles(ctx, reason = 'runtime-refresh', options =
     entry.profile = buildRegionProfile(entry.el, index, options);
     applyRegionProfile(entry.el, entry.profile);
   });
-  syncPageHarmony(ctx, options.html || document.documentElement);
+  const { diversity } = syncPageHarmony(ctx, options.html || document.documentElement);
   ctx.bus.emit('spw:regions-profiled', {
     route: ctx.route,
     reason,
     count: ctx.regions.length,
+    diversity: serializeDiversity(diversity),
     profiles: ctx.regions.map((entry) => entry.profile),
   });
 }
@@ -385,11 +483,12 @@ export function primeRegions(ctx, options = {}) {
     };
   });
 
-  syncPageHarmony(ctx, options.html || document.documentElement);
+  const { diversity } = syncPageHarmony(ctx, options.html || document.documentElement);
 
   ctx.bus.emit('spw:regions-primed', {
     route: ctx.route,
     count: ctx.regions.length,
+    diversity: serializeDiversity(diversity),
     profiles: ctx.regions.map((entry) => entry.profile),
   });
 }

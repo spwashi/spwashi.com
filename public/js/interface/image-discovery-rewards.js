@@ -83,6 +83,7 @@ function markDiscovered(figure, seen) {
   seen[key] = Date.now();
   writeSeen(seen);
   figure.dataset.spwImageDiscovered = 'true';
+  figure.dataset.spwImageInteractionState = 'discovered';
 
   document.dispatchEvent(new CustomEvent(REWARD_EVENT, {
     detail: rewardPayload(figure),

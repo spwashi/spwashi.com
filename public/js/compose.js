@@ -209,6 +209,18 @@ export {
 } from './kernel/instrumentation.js';
 
 export {
+  SPW_QUERY_LEGACY_ALIASES,
+  SPW_QUERY_SHORT_KEYS,
+  SPW_QUERY_CANONICAL_ORDER,
+  composeSpwQuery,
+  serializeSpwQuery,
+  parseModularQuery,
+  buildSpwQueryHref,
+  normalizeQuerySearch,
+  expandQueryParams,
+} from './kernel/query-composer.js';
+
+export {
   SPW_SVG_PALETTES,
   SPW_SVG_TUNABILITY_CONTRACT,
   applySvgQueryTunability,

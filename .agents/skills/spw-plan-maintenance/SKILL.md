@@ -45,6 +45,7 @@ Read first:
 
 - The `agent-optimization/PLAN.md` track and its sub-patches (especially .spw modeling of the planning layer and public plans page maintenance).
 - The semantic-capacity/model-guided/daily-kernel rails that prepare future agents to make focused changes without broad CSS/JS drift.
-- Discoverability of `spw-plan-maintenance` itself and sibling skills (`ontology-workbench`, `semantics-rigor`, `craft-quality`, `feature-planning`).
+- Discoverability of `spw-plan-maintenance` itself and sibling skills (`spw-interactive-medium`, `ontology-workbench`, `semantics-rigor`, `craft-quality`, `feature-planning`, `patch-consolidator`).
+- Skills index (`.agents/skills/README.md`) stays aligned with current semantic rails: dimension vocabulary, interactive medium, experience slices.
 - Keeping the four canonical tracks and high-signal backlog items well-linked from both `.spw/site.spw` and the public `/about/plans/` surface.
 - Ensuring new plans created via `spw-feature-planning` or `spw-fix-planning` are immediately wired into the dispatch and indexes.

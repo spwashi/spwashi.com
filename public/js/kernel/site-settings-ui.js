@@ -11,6 +11,7 @@ import {
 import { shouldDisableServiceWorkerInDevelopment } from '/public/js/kernel/runtime-environment.js';
 import {
   CAULDRON_STORAGE_KEY,
+  COMPONENT_COLLECTION_STORAGE_KEY,
   DEFAULT_SITE_SETTINGS,
   DISCOVERY_DISMISSALS_STORAGE_KEY,
   PRESETS,
@@ -25,6 +26,7 @@ import {
   buildSettingsQuerySearch,
   getSettingsQueryRecipe,
 } from './site-settings-profiles.js';
+import { buildSettingsShareHref } from './settings-query-parity.js';
 import {
   buildPersistenceRegistries,
   describeDeviation,
@@ -902,7 +904,15 @@ const bindPersistenceControls = (root = document) => {
 
   const handleStorage = (event) => {
     if (!event.key) return;
-    if ([SITE_SETTINGS_KEY, getPinStorageKey(), CAULDRON_STORAGE_KEY, DISCOVERY_DISMISSALS_STORAGE_KEY, VISITED_IMAGE_STORAGE_KEY].includes(event.key)) {
+    const persistenceKeys = [
+      SITE_SETTINGS_KEY,
+      getPinStorageKey(),
+      CAULDRON_STORAGE_KEY,
+      DISCOVERY_DISMISSALS_STORAGE_KEY,
+      VISITED_IMAGE_STORAGE_KEY,
+      COMPONENT_COLLECTION_STORAGE_KEY,
+    ];
+    if (persistenceKeys.includes(event.key)) {
       sync();
     }
   };
@@ -915,6 +925,7 @@ const bindPersistenceControls = (root = document) => {
   const offCauldronUpdated = bus.on?.('cauldron:updated', sync);
   const offCauldronCleared = bus.on?.('cauldron:cleared', sync);
   const offImageVisited = bus.on?.('image:visited', sync);
+  const offCollectionUpdated = bus.on?.('collection-updated', sync);
   const handlePin = () => sync();
   const handleDiscoveryDismissals = () => sync();
   document.addEventListener('brace:pinned', handlePin);
@@ -930,6 +941,7 @@ const bindPersistenceControls = (root = document) => {
       offCauldronUpdated?.();
       offCauldronCleared?.();
       offImageVisited?.();
+      offCollectionUpdated?.();
     },
     refresh() {
       sync();
@@ -1110,7 +1122,7 @@ const bindSettingsQueryLab = (root = document) => {
   };
 
   const previewNode = panel.querySelector?.('[data-site-settings-query-preview]');
-  const copyButton = panel.querySelector?.('[data-site-settings-query-copy]');
+  const copyButtons = [...panel.querySelectorAll?.('[data-site-settings-query-copy]') || []];
   const links = [...panel.querySelectorAll?.('[data-site-settings-query-mode]') || []];
 
   const syncPreview = (mode = panel.dataset.siteSettingsQueryMode || 'inspect') => {
@@ -1140,16 +1152,22 @@ const bindSettingsQueryLab = (root = document) => {
     }
   };
 
-  const handleCopy = async () => {
-    const activeMode = panel.dataset.siteSettingsQueryMode || copyButton?.getAttribute('data-site-settings-query-copy') || 'inspect';
-    const text = buildSettingsQueryHref(activeMode, window.location);
+  const handleCopy = async (event) => {
+    const button = event?.currentTarget instanceof HTMLButtonElement
+      ? event.currentTarget
+      : copyButtons[0];
+    const copyMode = button?.getAttribute('data-site-settings-query-copy') || 'inspect';
+    const activeMode = panel.dataset.siteSettingsQueryMode || copyMode;
+    const text = copyMode === 'share'
+      ? buildSettingsShareHref(getSiteSettings(), window.location)
+      : buildSettingsQueryHref(activeMode, window.location);
     const {handleCopyButton} = await import('/public/js/kernel/copy.js');
     await handleCopyButton({
       text,
-      button: copyButton || undefined,
-      labelCopied: '✓ copied query',
-      labelFailed: '! copy query',
-      labelDefault: copyButton?.textContent || 'Copy query',
+      button: button || undefined,
+      labelCopied: copyMode === 'share' ? '✓ copied link' : '✓ copied query',
+      labelFailed: copyMode === 'share' ? '! copy link' : '! copy query',
+      labelDefault: button?.textContent || 'Copy query',
     });
   };
 
@@ -1162,13 +1180,13 @@ const bindSettingsQueryLab = (root = document) => {
     link.addEventListener('focus', () => syncPreview(mode));
   });
 
-  copyButton?.addEventListener('click', handleCopy);
+  copyButtons.forEach((button) => button.addEventListener('click', handleCopy));
   panel.addEventListener('click', handleClick);
   syncPreview(panel.dataset.siteSettingsQueryMode || 'inspect');
 
   return {
     cleanup() {
-      copyButton?.removeEventListener('click', handleCopy);
+      copyButtons.forEach((button) => button.removeEventListener('click', handleCopy));
       panel.removeEventListener('click', handleClick);
     },
     refresh() {
@@ -1177,6 +1195,7 @@ const bindSettingsQueryLab = (root = document) => {
         if (!mode) return;
         link.href = buildSettingsQueryHref(mode, window.location);
       });
+      panel.dataset.siteSettingsShareHref = buildSettingsShareHref(getSiteSettings(), window.location);
       syncPreview(panel.dataset.siteSettingsQueryMode || 'inspect');
     }
   };

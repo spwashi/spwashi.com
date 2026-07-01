@@ -11,6 +11,9 @@
 @contextual_ui_js: ~"../../../public/js/interface/contextual-ui.js"
 @module_catalog: ~"../../../public/js/runtime/module-catalog.js"
 @dom_sync_hub: ~"../../../public/js/runtime/dom-sync-hub.js"
+@region_profiler: ~"../../../public/js/runtime/region-profiler.js"
+@component_collection: ~"../../../public/js/runtime/component-collection.js"
+@reward_ui: ~"../../../public/js/runtime/reward-ui.js"
 @image_resource_manifest_script: ~"../../../scripts/image-resource-manifest.mjs"
 @image_resource_manifest_json: ~"../../../public/data/image-resources.json"
 @attention_field: ~"../../conventions/attention-field.spw"
@@ -36,6 +39,7 @@ runtime_contract: .{
  contextual_ui = `Reads route-discovery and data-spw-related-routes to add nearby routes in the header.`
  section_handle = `Keeps narrow/mobile section awareness independent from the desktop rail, publishes page-section state, and announces explicit control travel without making passive scroll noisy.`
  region_menu = `Allows local region inspection from sigils/operators without requiring the user to know CSS or JS internals.`
+ component_collection_consumer = `Region profiling may publish diversity signals for component collection, but the browser-local collection store, achievements, reward chrome, and reset path are owned by component-collection, reward-ui, and runtime settings.`
  module_catalog = `Enhancement modules that behave page-wide must declare selectors, describes, updates, evaluates, and cleanup intent. Attention architecture must name the page-section, handle, reading-groove, pinch-scale, resonance, and cauldron attributes it writes so inspectors can distinguish owned state from ambient page styling.`
  dom_sync_hub = `Refresh order should keep component-kind mirrors, page-region rails, tuning discovery, gesture anatomy, and learnability ledgers in a stable sequence.`
 }[reg=facet]

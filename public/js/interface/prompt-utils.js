@@ -485,8 +485,20 @@ function initWonderBlocks(runtime) {
             }
 
             previewButton.setAttribute('aria-pressed', nextExpanded ? 'true' : 'false');
-            block.dataset.spwWonderBlockState = nextExpanded ? 'revealed' : 'idle';
+            if (!nextExpanded) {
+                delete block.dataset.spwRevealSource;
+                block.dataset.spwWonderBlockState = 'idle';
+                refreshWonderBlock(runtime, block);
+                return;
+            }
+
+            block.dataset.spwRevealSource = 'preview';
+            block.dataset.spwWonderBlockState = 'thinking';
             refreshWonderBlock(runtime, block);
+            window.setTimeout(() => {
+                block.dataset.spwWonderBlockState = 'revealed';
+                refreshWonderBlock(runtime, block);
+            }, 280);
         });
 
         block.querySelectorAll('[data-target]').forEach((button) => {

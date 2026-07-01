@@ -65,6 +65,8 @@
 @professional_skill_worldbuilding: ~"../.agents/plans/professional-skill-development-worldbuilding/PLAN.md"
 @professional_skill_worldbuilding_cache: ~"../.agents/plans/professional-skill-development-worldbuilding/wip.spw"
 @interaction_loop_contract: ~"../.agents/plans/interaction-loop-contract/PLAN.md"
+@interaction_microstates: ~"./conventions/interaction-microstates.spw"
+@coloring_depth: ~"./conventions/coloring-depth.spw"
 @gesture_state_refinement: ~"../.agents/plans/gesture-state-refinement/PLAN.md"
 @navigation_header_disclosure: ~"../.agents/plans/navigation-header-disclosure/PLAN.md"
 @floating_chrome_stack: ~"../.agents/plans/floating-chrome-stack/FIX.md"

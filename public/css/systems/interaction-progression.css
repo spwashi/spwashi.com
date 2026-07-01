@@ -1,0 +1,277 @@
+/* ==========================================================================
+   interaction-progression.css
+   --------------------------------------------------------------------------
+   Interaction phase tokens and microinteraction pulses for progressive states.
+   ========================================================================== */
+
+:root {
+  --spw-interaction-phase-weight: 0;
+  --spw-microinteraction-pulse-scale: 1;
+  --spw-interaction-phase-tuning: 1;
+}
+
+:where(html[data-spw-enhancement-level="minimal"]) {
+  --spw-interaction-phase-tuning: 0.72;
+}
+
+:where(html[data-spw-enhancement-level="rich"]) {
+  --spw-interaction-phase-tuning: 1.14;
+}
+
+:where(html[data-spw-semantic-density="minimal"]) {
+  --spw-microinteraction-pulse-scale: 1;
+  --spw-interaction-phase-tuning: calc(var(--spw-interaction-phase-tuning, 1) * 0.86);
+}
+
+:where(html[data-spw-semantic-density="rich"]) {
+  --spw-interaction-phase-tuning: calc(var(--spw-interaction-phase-tuning, 1) * 1.08);
+}
+
+:where(html[data-spw-interaction-phase="approach"]) {
+  --spw-interaction-phase-weight: calc(0.28 * var(--spw-interaction-phase-tuning, 1));
+  --spw-pre-state-visibility: max(var(--spw-pre-state-visibility, 0.5), 0.62);
+}
+
+:where(html[data-spw-interaction-phase="prime"]) {
+  --spw-interaction-phase-weight: calc(0.46 * var(--spw-interaction-phase-tuning, 1));
+  --spw-variant-selection-weight: max(var(--spw-variant-selection-weight, 0), 0.34);
+}
+
+:where(html[data-spw-interaction-phase="charge"]) {
+  --spw-interaction-phase-weight: calc(0.58 * var(--spw-interaction-phase-tuning, 1));
+  --spw-ecology-twinkle: max(var(--spw-ecology-twinkle, 0), 0.42);
+}
+
+:where(html[data-spw-interaction-phase="inspect"]) {
+  --spw-interaction-phase-weight: calc(0.72 * var(--spw-interaction-phase-tuning, 1));
+  --spw-color-layer-accent-apparent: color-mix(
+    in srgb,
+    var(--active-op-color, var(--teal, #008080)) 52%,
+    transparent
+  );
+}
+
+:where(html[data-spw-interaction-phase="discover"]) {
+  --spw-interaction-phase-weight: calc(0.86 * var(--spw-interaction-phase-tuning, 1));
+  --spw-salience-weight: max(var(--spw-salience-weight, 0.34), 0.72);
+}
+
+:where(html[data-spw-interaction-phase="settle"]) {
+  --spw-interaction-phase-weight: calc(0.34 * var(--spw-interaction-phase-tuning, 1));
+  --spw-ecology-settle-weight: max(var(--spw-ecology-settle-weight, 0), 0.88);
+}
+
+:where(html[data-spw-microinteraction-pulse]) {
+  --spw-microinteraction-pulse-scale: 1.012;
+}
+
+:where(html[data-spw-microinteraction-pulse] :where(
+  [data-spw-image-interaction-state],
+  [data-spw-vocabulary-collectible="high"],
+  .study-summary
+)) {
+  transition:
+    box-shadow 220ms var(--ease-settle, ease),
+    border-color 220ms var(--ease-settle, ease),
+    transform 220ms var(--ease-settle, ease);
+}
+
+:where(html[data-spw-microinteraction-pulse="prime"] :where([data-spw-image-interaction-state="primed"])) {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 16%, transparent),
+    var(--spw-local-shadow, var(--component-shadow, none));
+}
+
+:where(html[data-spw-microinteraction-pulse="charge"] :where([data-spw-image-lens-active])) {
+  outline: 1px solid color-mix(in srgb, var(--spw-image-lens-accent, var(--active-op-color, var(--teal, #008080))) 24%, transparent);
+  outline-offset: 2px;
+}
+
+:where([data-spw-learnable-dimension]) {
+  --spw-salience-weight: calc(0.34 + (var(--spw-interaction-phase-weight, 0) * 0.22));
+}
+
+:where(html[data-spw-reduce-motion="on"]) {
+  --spw-microinteraction-pulse-scale: 1;
+}
+
+/* --------------------------------------------------------------------------
+   Pinch scaling + gesture state coupling
+   -------------------------------------------------------------------------- */
+
+:where(html[data-spw-pinch-scaling="true"], body[data-spw-pinch-scaling="true"]) {
+  --spw-interaction-phase-weight: max(var(--spw-interaction-phase-weight, 0), 0.32);
+  --spw-color-layer-accent-subtle: color-mix(
+    in srgb,
+    var(--active-op-color, var(--teal, #008080)) 28%,
+    transparent
+  );
+  --palette-depth-strength: calc(var(--palette-depth-strength, 1) * 1.06);
+}
+
+:where(html[data-spw-interaction-phase="charge"], html[data-spw-interaction-phase="inspect"]) {
+  --palette-depth-strength: calc(var(--palette-depth-strength, 1) * 1.04);
+}
+
+:where([data-spw-gesture="charging"], [data-spw-gesture="armed"], [data-spw-gesture="sustained"]) {
+  --spw-interaction-contract-surface: calc(1 + (var(--spw-interaction-phase-weight, 0) * 0.18));
+}
+
+/* Copy-depth accent breathes with phase (see coloring-depth.css tokens) */
+:where(html[data-spw-interaction-phase="prime"]) :where([data-spw-copy-depth]) {
+  --spw-copy-depth-bg-mix: calc(var(--spw-copy-depth-bg-mix, 4%) + 1%);
+}
+
+:where(html[data-spw-interaction-phase="charge"]) :where([data-spw-copy-depth]) {
+  --spw-copy-depth-line-mix: calc(var(--spw-copy-depth-line-mix, 22%) + 4%);
+  --spw-copy-depth-bg-mix: calc(var(--spw-copy-depth-bg-mix, 4%) + 2%);
+}
+
+:where(html[data-spw-interaction-phase="discover"]) :where([data-spw-copy-depth="genre"]) {
+  --spw-copy-depth-line-mix: calc(var(--spw-copy-depth-line-mix, 30%) + 4%);
+}
+
+/* --------------------------------------------------------------------------
+   Interaction contracts: hover, focus, active, loop sequence
+   -------------------------------------------------------------------------- */
+
+:where([data-spw-interaction-contract]) {
+  --spw-contract-press-depth: 0;
+}
+
+:where(
+  [data-spw-interaction-contract]:is(:hover, :focus-visible),
+  [data-spw-interaction-contract][data-spw-loop-state="preview"]
+) {
+  --spw-contract-press-depth: 1;
+  transform: translateY(calc(-1px * var(--spw-interaction-phase-weight, 0.28)));
+}
+
+:where([data-spw-interaction-contract]:active) {
+  --spw-contract-press-depth: 2;
+  transform: translateY(0);
+  transition-duration: 90ms;
+}
+
+:where([data-spw-interaction-contract][data-spw-loop-state="activated"]) {
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color)) 22%, transparent),
+    0 0 0 2px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color)) 10%, transparent);
+}
+
+:where([data-spw-interaction-contract][data-spw-loop-state="resolved"]) {
+  opacity: 0.92;
+  filter: saturate(0.94);
+}
+
+/* Coarse pointer: tap replaces hover affordance */
+@media (hover: none) and (pointer: coarse) {
+  :where(
+    [data-spw-interaction-contract]:active,
+    [data-spw-gesture-contract]:active,
+    .operator-chip:active
+  ) {
+    --spw-interaction-phase-weight: max(var(--spw-interaction-phase-weight, 0), 0.42);
+    transform: scale(0.992);
+  }
+
+  :where([data-spw-gesture-contract]:active) {
+    box-shadow:
+      inset 0 0 0 1px color-mix(in srgb, var(--active-op-color) 24%, transparent),
+      0 0 0 3px color-mix(in srgb, var(--active-op-color) 8%, transparent);
+  }
+}
+
+/* Scroll-rail swipe discoverability */
+:where([data-spw-scroll-rail], .spw-visual-link-board__grid, .frame-grid--media) {
+  scroll-behavior: smooth;
+}
+
+:where(html[data-spw-interaction-phase="discover"]) :where(
+  [data-spw-scroll-rail],
+  .spw-visual-link-board__grid,
+  .frame-grid--media
+) {
+  box-shadow: inset 0 -2px 0 color-mix(in srgb, var(--active-op-color) 18%, transparent);
+}
+
+:where(html[data-spw-microinteraction-pulse="discover"] :where([data-spw-vocab], [data-spw-semantic-cluster])) {
+  text-decoration-thickness: 0.1em;
+  text-underline-offset: 0.2em;
+}
+
+/* --------------------------------------------------------------------------
+   Pulse-beat tuner: settings-driven freshness + baker's-dozen beat cycle
+   -------------------------------------------------------------------------- */
+
+:where(html[data-spw-playing="on"]) {
+  --spw-ecology-beat-align: calc(0.18 + (var(--spw-freshness-weight, 0.62) * 0.42));
+}
+
+:where(html[data-spw-playing="on"][data-spw-beat="1"]) {
+  --spw-ecology-beat-align: calc(0.34 + (var(--spw-freshness-weight, 0.62) * 0.48));
+}
+
+:where(html[data-spw-playing="on"][data-spw-beat="5"]),
+:where(html[data-spw-playing="on"][data-spw-beat="9"]),
+:where(html[data-spw-playing="on"][data-spw-beat="13"]) {
+  --spw-ecology-beat-align: calc(0.52 + (var(--spw-freshness-weight, 0.62) * 0.38));
+  --spw-ecology-twinkle: max(var(--spw-ecology-twinkle, 0), calc(0.22 * var(--spw-freshness-weight, 0.62)));
+}
+
+:where(html[data-spw-freshness-pulse]) {
+  --spw-microinteraction-pulse-scale: calc(1 + (0.018 * var(--spw-microinteraction-pulse-intensity, 1) * var(--spw-freshness-weight, 0.62)));
+  --spw-ecology-twinkle: max(var(--spw-ecology-twinkle, 0), calc(0.34 * var(--spw-freshness-weight, 0.62)));
+  transition:
+    --spw-microinteraction-pulse-scale var(--spw-microinteraction-pulse-duration, 280ms) var(--ease-settle, ease),
+    --spw-ecology-twinkle var(--spw-microinteraction-pulse-duration, 280ms) var(--ease-settle, ease);
+}
+
+:where(html[data-spw-freshness-pulse="beat-prime"]) {
+  --spw-salience-weight: max(var(--spw-salience-weight, 0.34), calc(0.48 + (var(--spw-freshness-weight, 0.62) * 0.22)));
+}
+
+:where(html[data-spw-freshness-pulse^="phase-"]) {
+  --spw-interaction-phase-weight: max(
+    var(--spw-interaction-phase-weight, 0),
+    calc(0.28 + (var(--spw-freshness-weight, 0.62) * 0.24))
+  );
+}
+
+:where(html[data-spw-freshness-pulse="component-lifecycle"]) {
+  --spw-interaction-loop-preview: 1;
+}
+
+:where(html[data-spw-freshness-pulse="settings-tuning"]) {
+  --spw-site-rhythm-density: max(var(--spw-site-rhythm-density, 0.5), calc(0.62 + (var(--spw-freshness-weight, 0.62) * 0.28)));
+}
+
+:where(html[data-spw-freshness-pulse] :where(
+  .operator-chip,
+  [data-spw-operator],
+  [data-spw-interaction-contract],
+  [data-spw-gesture-contract],
+  .frame-card,
+  [data-spw-component-genome]
+)) {
+  transition:
+    box-shadow var(--spw-microinteraction-pulse-duration, 280ms) var(--ease-settle, ease),
+    border-color var(--spw-microinteraction-pulse-duration, 280ms) var(--ease-settle, ease),
+    transform var(--spw-microinteraction-pulse-duration, 280ms) var(--ease-settle, ease);
+}
+
+:where(html[data-spw-freshness-pulse="beat-prime"] :where(.operator-chip, [data-spw-operator])) {
+  box-shadow:
+    var(--spw-local-shadow, none),
+    0 0 0 1px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color)) calc(14% + (var(--spw-freshness-weight, 0.62) * 10%)), transparent);
+}
+
+:where(html[data-spw-freshness-pulse="settings-tuning"] :where(.spw-site-rhythm__node, [data-spw-ornament="site-rhythm"] .spw-site-rhythm__node)) {
+  transform: scale(calc(1 + (0.06 * var(--spw-freshness-weight, 0.62))));
+}
+
+:where(html[data-spw-reduce-motion="on"][data-spw-playing="on"]),
+:where(html[data-spw-reduce-motion="on"][data-spw-freshness-pulse]) {
+  --spw-ecology-beat-align: 0;
+  --spw-ecology-twinkle: 0;
+}

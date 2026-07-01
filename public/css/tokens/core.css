@@ -904,6 +904,29 @@
   --spw-component-arrival-transition: 140ms var(--ease-settle);
   --spw-component-settle-transition: 220ms var(--ease-settle);
 
+  /* Loading ecology + site rhythm — root-owned tokens that page-state, signals,
+     substrate-ecology, and runtime-states spend during prefetch/measure/settle. */
+  --spw-site-rhythm-tempo: 1;
+  --spw-site-rhythm-density: 0.5;
+  --spw-microinteraction-pulse-duration: 280ms;
+  --spw-microinteraction-pulse-intensity: 1;
+  --spw-beat-interval-ms: 1300;
+  --spw-freshness-weight: 0.62;
+  --spw-pulse-beat-cadence: 13;
+  --spw-loading-ecology-surface: 0;
+  --spw-ecology-settle-weight: 0;
+  --spw-ecology-salience-shift: 0px;
+  --spw-ecology-arrival-bias: 0px;
+  --spw-frame-arrival-bias: var(--spw-ecology-arrival-bias, 0px);
+  --spw-component-arrival-bias: var(--spw-ecology-arrival-bias, 0px);
+  --spw-ecology-twinkle: 0;
+  --spw-ecology-beat-align: 0;
+  --spw-ecology-trope-weight: 0;
+  --spw-ecology-field-charge: 0;
+  --spw-ecology-field-resonance: 0;
+  --spw-ecology-twinkle-duration: 760ms;
+  --spw-ecology-readiness-ring-strength: 0;
+
   --utility-shift-duration: var(--duration-deliberate);
   --utility-shift-ease: var(--ease-settle);
   --taste-drift-duration: var(--duration-base);

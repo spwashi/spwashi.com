@@ -1,0 +1,436 @@
+/* ==========================================================================
+   components/semantic-resonance.css
+   --------------------------------------------------------------------------
+   Vocabulary clusters, crossrefs, route bridges, wisdom decks, cuisine taxonomy.
+   ========================================================================== */
+
+:where([data-spw-semantic-cluster]) {
+  --spw-cluster-accent: var(--active-op-color, var(--component-accent));
+  --spw-cluster-line: color-mix(in srgb, var(--spw-cluster-accent) 22%, transparent);
+}
+
+:where([data-spw-semantic-cluster~="culinary"], [data-spw-vocab="culinary"]) {
+  --spw-cluster-accent: var(--op-object-color, #a67c00);
+}
+
+:where([data-spw-semantic-cluster~="programming"], [data-spw-vocab="programming"]) {
+  --spw-cluster-accent: var(--op-action-color, #005959);
+}
+
+:where([data-spw-semantic-cluster~="learning"], [data-spw-vocab="learning"]) {
+  --spw-cluster-accent: var(--op-probe-color, #4a2180);
+}
+
+:where([data-spw-semantic-cluster~="genre"], [data-spw-vocab="genre"]) {
+  --spw-cluster-accent: var(--op-stream-color, var(--op-ref-color, #1d57a3));
+}
+
+:where([data-spw-vocab]) {
+  border-radius: 0.22em;
+  background:
+    linear-gradient(
+      180deg,
+      transparent 62%,
+      color-mix(in srgb, var(--spw-cluster-accent, var(--active-op-color)) 14%, transparent) 62%
+    );
+  text-decoration: underline dotted color-mix(in srgb, var(--spw-cluster-accent, currentColor) 34%, transparent);
+  text-decoration-thickness: 0.07em;
+  text-underline-offset: 0.16em;
+}
+
+:where([data-spw-crossref-source="true"]) {
+  outline: 2px solid color-mix(in srgb, var(--spw-cluster-accent, var(--active-op-color, #1a9999)) 50%, transparent);
+  outline-offset: 0.18rem;
+}
+
+:where([data-spw-crossref="peer"]) {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--spw-cluster-accent, var(--active-op-color, #1a9999)) 24%, transparent),
+    0 0 0.9rem color-mix(in srgb, var(--spw-cluster-accent, var(--active-op-color, #1a9999)) 10%, transparent);
+}
+
+:where(
+  html[data-spw-runtime-posture="resonant"],
+  html[data-spw-runtime-posture="theatrical"]
+) :where([data-spw-crossref="peer"]) {
+  background-color: color-mix(in srgb, var(--spw-cluster-accent, var(--active-op-color, #1a9999)) 6%, transparent);
+}
+
+:where([data-spw-crossref="peer"][data-spw-semantic-expression])::after {
+  border-color: color-mix(in srgb, var(--spw-cluster-accent, var(--active-op-color, #1a9999)) 26%, transparent);
+  background: color-mix(in srgb, var(--component-surface-soft, #fff) 84%, var(--spw-cluster-accent, var(--active-op-color, #1a9999)) 8%);
+}
+
+:where(
+  html[data-spw-palette-resonance="craft"],
+  html[data-spw-palette-resonance="route"][data-spw-developmental-climate="weave"],
+  html[data-spw-developmental-climate="offer"]
+) :where([data-spw-semantic-cluster~="culinary"], [data-spw-vocab="culinary"]) {
+  background:
+    linear-gradient(
+      180deg,
+      transparent 48%,
+      color-mix(in srgb, var(--spw-cluster-accent) 22%, transparent) 48%
+    );
+  text-decoration-color: color-mix(in srgb, var(--spw-cluster-accent) 52%, transparent);
+}
+
+:where(html[data-spw-runtime-posture="precision"]) :where([data-spw-semantic-cluster~="programming"], [data-spw-vocab="programming"]),
+:where(html[data-spw-runtime-posture="resonant"]) :where([data-spw-semantic-cluster], [data-spw-vocab]),
+:where(html[data-spw-runtime-posture="theatrical"]) :where([data-spw-semantic-cluster], [data-spw-vocab]) {
+  box-shadow: inset 0 -0.12em 0 color-mix(in srgb, var(--spw-cluster-accent, var(--active-op-color)) 12%, transparent);
+}
+
+:where(.spw-route-bridge) {
+  --spw-route-bridge-accent: var(--active-op-color, var(--component-accent));
+  display: grid;
+  gap: 0.75rem;
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: 100%;
+  margin-block: var(--component-gap) var(--component-gap-loose);
+  padding: clamp(0.8rem, 2vw, 1rem);
+  overflow: clip;
+  border: 1px solid color-mix(in srgb, var(--spw-route-bridge-accent) 20%, var(--line, rgba(14, 18, 20, 0.14)));
+  border-radius: var(--component-radius-loose);
+  background:
+    radial-gradient(
+      circle at top right,
+      color-mix(in srgb, var(--spw-route-bridge-accent) 10%, transparent),
+      transparent 34%
+    ),
+    color-mix(in srgb, var(--component-surface-strong) 92%, var(--spw-route-bridge-accent) 4%);
+  view-transition-name: var(--spw-route-transition-name, none);
+}
+
+:where(.spw-route-bridge header) {
+  display: grid;
+  gap: var(--space-3xs, 0.125rem);
+  min-width: 0;
+}
+
+:where(.spw-route-bridge h3) {
+  margin: 0;
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  font-size: clamp(1rem, 1.7vw, 1.2rem);
+  line-height: 1.2;
+}
+
+:where(.spw-route-bridge p) {
+  margin: 0;
+  color: var(--ink-soft, rgba(0, 0, 0, 0.62));
+  line-height: 1.48;
+  max-width: 68ch;
+  overflow-wrap: anywhere;
+}
+
+:where(.spw-route-bridge__links) {
+  --spw-list-charge-gap: 0.55rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  gap: var(--spw-list-charge-gap);
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+  max-width: 100%;
+  list-style: none;
+  transition: gap var(--component-transition-base);
+}
+
+:where(.spw-route-bridge__links > li) {
+  min-width: 0;
+}
+
+:where(.spw-copy-motif-strip, [data-spw-list-behavior]) {
+  --spw-list-charge-gap: 0.38rem;
+  gap: var(--spw-list-charge-gap);
+  transition: gap var(--component-transition-base);
+}
+
+:where([data-spw-charge="arming"]) :where(.spw-route-bridge__links, .spw-copy-motif-strip, [data-spw-list-behavior]),
+:where(.spw-route-bridge__links, .spw-copy-motif-strip, [data-spw-list-behavior])[data-spw-charge="arming"] {
+  --spw-list-charge-gap: 0.68rem;
+}
+
+:where([data-spw-charge="preview"]) :where(.spw-route-bridge__links, .spw-copy-motif-strip, [data-spw-list-behavior]),
+:where(.spw-route-bridge__links, .spw-copy-motif-strip, [data-spw-list-behavior])[data-spw-charge="preview"] {
+  --spw-list-charge-gap: 0.78rem;
+}
+
+:where(.spw-route-bridge__links a) {
+  display: grid;
+  grid-template-columns: minmax(0, max-content) minmax(0, 1fr);
+  align-items: start;
+  gap: 0.2rem;
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: 100%;
+  min-height: 100%;
+  padding: 0.62rem 0.7rem;
+  border: 1px solid color-mix(in srgb, var(--spw-route-bridge-accent) 18%, var(--line, rgba(14, 18, 20, 0.14)));
+  border-radius: var(--component-radius-loose);
+  background: color-mix(in srgb, var(--component-surface-soft) 88%, var(--spw-route-bridge-accent) 5%);
+  color: inherit;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  transition:
+    background var(--component-transition-base),
+    border-color var(--component-transition-base),
+    transform var(--component-transition-fast);
+}
+
+:where(.spw-route-bridge__links[data-spw-charge="arming"] a, [data-spw-charge="arming"] .spw-route-bridge__links a) {
+  border-style: dashed;
+}
+
+:where(.spw-route-bridge__links[data-spw-charge="preview"] a, [data-spw-charge="preview"] .spw-route-bridge__links a) {
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--spw-route-bridge-accent) 9%, transparent), transparent 70%),
+    color-mix(in srgb, var(--component-surface-soft) 88%, var(--spw-route-bridge-accent) 5%);
+}
+
+:where(.spw-route-bridge__links a:is(:hover, :focus-visible)) {
+  border-color: color-mix(in srgb, var(--spw-route-bridge-accent) 42%, var(--line, rgba(14, 18, 20, 0.14)));
+  transform: translateY(-1px);
+}
+
+:where(.spw-route-bridge__links strong) {
+  color: color-mix(in srgb, var(--ink, #111) 80%, var(--spw-route-bridge-accent) 20%);
+  font-size: 0.92rem;
+  line-height: 1.25;
+  min-width: 0;
+  max-inline-size: 100%;
+  overflow-wrap: anywhere;
+}
+
+:where(.spw-route-bridge__links span) {
+  color: var(--ink-soft, rgba(0, 0, 0, 0.62));
+  font-size: 0.84rem;
+  line-height: 1.35;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 560px) {
+  :where(.spw-route-bridge) {
+    gap: 0.68rem;
+    margin-block: var(--component-gap-tight, 0.5rem) var(--component-gap, 0.75rem);
+    padding: 0.78rem;
+  }
+
+  :where(.spw-route-bridge__links) {
+    gap: 0.48rem;
+  }
+
+  :where(.spw-route-bridge__links a) {
+    grid-template-columns: 1fr;
+    gap: 0.28rem;
+    padding: 0.68rem;
+  }
+
+  :where(.spw-route-bridge__links strong) {
+    max-inline-size: 100%;
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+}
+
+@media (max-width: 720px) {
+  :where(.spw-route-bridge__links a) {
+    grid-template-columns: 1fr;
+  }
+}
+
+:where(.spw-wisdom-deck) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13.5rem), 1fr));
+  gap: var(--component-gap-tight);
+  margin-block: var(--component-gap) var(--component-gap-loose);
+}
+
+:where(.spw-wisdom-deck[data-spw-charge="arming"], [data-spw-charge="arming"] .spw-wisdom-deck) {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12.5rem), 1fr));
+}
+
+:where(.spw-wisdom-deck[data-spw-charge="preview"], [data-spw-charge="preview"] .spw-wisdom-deck) {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+}
+
+:where(html[data-spw-semantic-density="rich"] [data-spw-vocab],
+html[data-spw-font-size-scale="110"] [data-spw-vocab],
+html[data-spw-font-size-scale="120"] [data-spw-vocab]) {
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.18em;
+  text-decoration-color: color-mix(in srgb, var(--active-op-color, var(--component-accent)) 42%, transparent);
+}
+
+:where([data-spw-charge="arming"], [data-spw-charge="preview"]) :where([data-spw-vocab], [data-spw-semantic-expression]),
+:where([data-spw-vocab], [data-spw-semantic-expression]):is([data-spw-charge="arming"], [data-spw-charge="preview"]) {
+  color: color-mix(in srgb, currentColor 82%, var(--active-op-color, var(--component-accent)) 18%);
+}
+
+:where(.spw-wisdom-card) {
+  --spw-wisdom-accent: var(--active-op-color, var(--component-accent));
+  display: grid;
+  gap: 0.48rem;
+  min-width: 0;
+  padding: 0.82rem 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--spw-wisdom-accent) 18%, var(--line, rgba(14, 18, 20, 0.14)));
+  border-radius: var(--component-radius-loose);
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--spw-wisdom-accent) 7%, transparent),
+      transparent 46%
+    ),
+    color-mix(in srgb, var(--component-surface-strong) 92%, var(--spw-wisdom-accent) 4%);
+  box-shadow: var(--component-shadow-quiet);
+}
+
+:where(.spw-wisdom-card[data-spw-semantic-cluster~="culinary"]) {
+  --spw-wisdom-accent: var(--op-object-color, #a67c00);
+}
+
+:where(.spw-wisdom-card[data-spw-semantic-cluster~="garden"]) {
+  --spw-wisdom-accent: color-mix(in srgb, var(--op-topic-color, #2f7a5c) 88%, var(--op-frame-color, #008080));
+}
+
+:where(.spw-wisdom-card[data-spw-semantic-cluster~="play"]) {
+  --spw-wisdom-accent: var(--op-stream-color, var(--op-ref-color, #1d57a3));
+}
+
+:where(.spw-wisdom-card[data-spw-background-motion="pie-attention"]) {
+  background:
+    radial-gradient(
+      ellipse at 18% 16%,
+      color-mix(in srgb, var(--spw-wisdom-accent) 12%, transparent),
+      transparent 34%
+    ),
+    conic-gradient(
+      from 0.12turn at 84% 18%,
+      color-mix(in srgb, var(--spw-wisdom-accent) 10%, transparent),
+      transparent 0.18turn,
+      color-mix(in srgb, var(--op-object-color, #a67c00) 9%, transparent),
+      transparent 0.42turn
+    ),
+    color-mix(in srgb, var(--component-surface-strong) 92%, var(--spw-wisdom-accent) 4%);
+}
+
+:where(.spw-wisdom-card[data-spw-background-motion="pie-attention"])::before {
+  content: "";
+  inline-size: 2.6rem;
+  block-size: 2.6rem;
+  grid-row: 1 / span 3;
+  justify-self: end;
+  align-self: start;
+  border: 1px solid color-mix(in srgb, var(--spw-wisdom-accent) 24%, transparent);
+  border-radius: 50%;
+  background:
+    linear-gradient(36deg, transparent 48%, color-mix(in srgb, var(--spw-wisdom-accent) 34%, transparent) 49% 51%, transparent 52%),
+    linear-gradient(108deg, transparent 48%, color-mix(in srgb, var(--op-object-color, #a67c00) 26%, transparent) 49% 51%, transparent 52%);
+  opacity: 0.72;
+}
+
+:where(.spw-wisdom-card strong) {
+  color: color-mix(in srgb, var(--ink, #111) 82%, var(--spw-wisdom-accent) 18%);
+  font-size: 1rem;
+  line-height: 1.18;
+}
+
+:where(.spw-wisdom-card p) {
+  margin: 0;
+  color: var(--ink-soft, rgba(0, 0, 0, 0.62));
+  line-height: 1.45;
+}
+
+:where(.spw-wisdom-card code) {
+  justify-self: start;
+  padding: 0.12rem 0.4rem;
+  border: 1px solid color-mix(in srgb, var(--spw-wisdom-accent) 22%, transparent);
+  border-radius: var(--component-radius-pill, 999px);
+  background: color-mix(in srgb, var(--component-surface-soft) 86%, var(--spw-wisdom-accent) 6%);
+  color: color-mix(in srgb, var(--ink, #111) 72%, var(--spw-wisdom-accent) 28%);
+  font-size: 0.72rem;
+}
+
+:where(.spw-cuisine-taxonomy) {
+  --spw-cuisine-accent: var(--op-object-color, #a67c00);
+  display: grid;
+  gap: 0.8rem;
+  margin-block: var(--component-gap) var(--component-gap-loose);
+  padding: var(--spw-component-pad-tight, 0.65rem);
+  border: 1px solid color-mix(in srgb, var(--spw-cuisine-accent) 22%, var(--line, rgba(14, 18, 20, 0.14)));
+  border-radius: var(--component-radius-loose);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--spw-cuisine-accent) 9%, transparent), transparent 42%),
+    color-mix(in srgb, var(--component-surface-strong, #fff) 92%, var(--spw-cuisine-accent) 4%);
+  box-shadow: var(--component-shadow-quiet);
+}
+
+:where(.spw-cuisine-taxonomy header) {
+  display: grid;
+  gap: 0.25rem;
+}
+
+:where(.spw-cuisine-taxonomy h3, .spw-cuisine-taxonomy p) {
+  margin: 0;
+}
+
+:where(.spw-cuisine-taxonomy h3) {
+  color: color-mix(in srgb, var(--ink, #111) 82%, var(--spw-cuisine-accent) 18%);
+  font-size: clamp(1rem, 1.8vw, 1.18rem);
+  line-height: 1.2;
+}
+
+:where(.spw-cuisine-taxonomy p) {
+  color: var(--ink-soft, rgba(0, 0, 0, 0.62));
+  line-height: 1.45;
+}
+
+:where(.spw-cuisine-taxonomy dl) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  gap: var(--space-xs, 0.5rem);
+  margin: 0;
+}
+
+:where(.spw-cuisine-taxonomy dl > div) {
+  min-width: 0;
+  padding: 0.62rem 0.68rem;
+  border: 1px dashed color-mix(in srgb, var(--spw-cuisine-accent) 24%, var(--line, rgba(14, 18, 20, 0.14)));
+  border-radius: var(--component-radius-loose);
+  background: color-mix(in srgb, var(--component-surface-soft, #fff) 88%, var(--spw-cuisine-accent) 5%);
+}
+
+:where(.spw-cuisine-taxonomy dt) {
+  margin: 0 0 0.2rem;
+  color: color-mix(in srgb, var(--ink, #111) 78%, var(--spw-cuisine-accent) 22%);
+  font-weight: 850;
+}
+
+:where(.spw-cuisine-taxonomy dd) {
+  margin: 0;
+  color: var(--ink-soft, rgba(0, 0, 0, 0.62));
+  line-height: 1.4;
+}
+
+:where([data-spw-transition-surface]) {
+  view-transition-name: var(--spw-transition-surface-name, none);
+  contain: layout paint;
+}
+
+:where([data-spw-transition-surface="hero"]) {
+  --spw-transition-surface-name: route-hero;
+}
+
+:where([data-spw-transition-surface="bridge"]) {
+  --spw-transition-surface-name: route-bridge;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.spw-route-bridge__links a:is(:hover, :focus-visible)) {
+    transform: none;
+  }
+}

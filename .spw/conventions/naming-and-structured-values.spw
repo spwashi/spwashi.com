@@ -84,9 +84,12 @@ fixity = "stable"
 ^"site_examples"{
   copy_depth = .{
     minimal = "always visible; never hidden behind enhancement"
-    normal = "default route prose"
-    rich = "optional explanation that deepens the same route"
-    genre = "resonant or theatrical posture for mood reading and combinatoric practice"
+    entry = "first-contact orientation; frame accent"
+    normal = "default route prose; ref accent"
+    rich = "optional explanation; probe accent"
+    dense = "route-register labels; stream accent"
+    technical = "inspect/tool precision; action accent"
+    genre = "resonant or theatrical posture; object accent"
   }[reg=facet]
   content_variants = #[
     `entry`

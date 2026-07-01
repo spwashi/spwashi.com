@@ -23,6 +23,14 @@ import {
   PEDAGOGICAL_FLAVOR_TO_COMPONENT_MOTIF
 } from '/public/js/kernel/shared.js';
 import { markLayoutTrope } from '/public/js/kernel/instrumentation.js';
+import { parseModularQuery } from './query-composer.js';
+import {
+  buildLayoutPostureDatasets,
+  buildSettingsShareHref,
+  PARITY_QUERY_KEYS,
+  queryParamsToSettingsPartial,
+  syncUrlFromSettings,
+} from './settings-query-parity.js';
 import {
   DEFAULT_PALETTE_RESONANCE,
   PALETTE_RESONANCE_OPTIONS,
@@ -39,6 +47,7 @@ import {
 import {
   AUTHOR_WORKFLOW_TOKEN_VALUE,
   CAULDRON_STORAGE_KEY,
+  COMPONENT_COLLECTION_STORAGE_KEY,
   DEFAULT_SITE_SETTINGS,
   DEVELOPMENTAL_CLIMATES,
   DISCOVERY_DISMISSALS_STORAGE_KEY,
@@ -102,7 +111,7 @@ const QUERY_SETTING_ALIASES = Object.freeze({
   material: 'baseMetamaterial',
   'base-metamaterial': 'baseMetamaterial',
   'high-contrast': 'highContrast',
-  density: 'semanticDensity',
+  'component-density': 'componentDensity',
   'semantic-density': 'semanticDensity',
   explore: 'explorePosture',
   'explore-posture': 'explorePosture',
@@ -111,8 +120,8 @@ const QUERY_SETTING_ALIASES = Object.freeze({
   'cauldron-visibility': 'cauldronCandidateVisibility',
   'cauldron-candidate-visibility': 'cauldronCandidateVisibility',
   stance: 'metacognitiveStance',
-  posture: 'metacognitiveStance',
   'metacognitive-stance': 'metacognitiveStance',
+  'posture-stance': 'metacognitiveStance',
   self: 'attentionSelfRelation',
   'self-relation': 'attentionSelfRelation',
   local: 'attentionLocalRelation',
@@ -127,11 +136,21 @@ const QUERY_SETTING_ALIASES = Object.freeze({
 });
 
 const parseSettingsFromSearch = (search = window.location.search) => {
-  const params = new URLSearchParams(String(search || '').replace(/^\?/, ''));
+  const { params } = parseModularQuery(search);
+  const fromParity = queryParamsToSettingsPartial(params);
   const next = {};
 
-  params.forEach((value, key) => {
-    const settingName = QUERY_SETTING_ALIASES[key] || key;
+  Object.entries(fromParity).forEach(([name, value]) => {
+    if (!isKnownSetting(name)) return;
+    if (validateSetting(name, value).valid) next[name] = value;
+  });
+
+  const paramsRaw = new URLSearchParams(String(search || '').replace(/^\?/, ''));
+  paramsRaw.forEach((value, key) => {
+    const normalizedKey = String(key || '').trim().toLowerCase();
+    if (PARITY_QUERY_KEYS.has(normalizedKey)) return;
+
+    const settingName = QUERY_SETTING_ALIASES[normalizedKey] || QUERY_SETTING_ALIASES[key] || key;
     if (!isKnownSetting(settingName)) return;
     if (validateSetting(settingName, value).valid) next[settingName] = value;
   });
@@ -316,6 +335,16 @@ const clearCurrentPinState = () => {
   });
 };
 
+const clearComponentCollectionState = () => {
+  const html = document.documentElement;
+  if (!html) return;
+  html.dataset.spwCollectionKinds = '0';
+  html.dataset.spwCollectionTotal = '0';
+  html.dataset.spwCollectionTier = 'singular';
+  delete html.dataset.spwCollectionAchievements;
+  delete html.dataset.spwCollectionFresh;
+};
+
 const buildPersistenceRegistries = () => ([
   {
     id: 'site-settings',
@@ -431,6 +460,55 @@ const buildPersistenceRegistries = () => ([
       clearVisitedImageState();
     },
   },
+  {
+    id: 'component-collection',
+    label: 'Component collection',
+    description: 'Distinct component kinds and achievements discovered while moving through the site.',
+    scope: 'sitewide component-memory register',
+    source: 'component collection runtime',
+    storageKey: COMPONENT_COLLECTION_STORAGE_KEY,
+    read() {
+      const collection = safeParseStorageJson(COMPONENT_COLLECTION_STORAGE_KEY, {});
+      const kinds = collection.kinds && typeof collection.kinds === 'object' ? Object.keys(collection.kinds) : [];
+      const achievements = Array.isArray(collection.achievements) ? collection.achievements : [];
+      const routes = Array.isArray(collection.routes) ? collection.routes : [];
+      return {
+        count: kinds.length + achievements.length,
+        latest: collection.updatedAt || '',
+        summary: kinds.length || achievements.length
+          ? [
+            `${kinds.length} kind${kinds.length === 1 ? '' : 's'}`,
+            `${achievements.length} achievement${achievements.length === 1 ? '' : 's'}`,
+            `${routes.length} route${routes.length === 1 ? '' : 's'}`,
+          ].join(' · ')
+          : 'No component kinds collected',
+      };
+    },
+    clear() {
+      const api = window.spwComponentCollection;
+      if (api?.reset) {
+        api.reset('settings-clear');
+        return;
+      }
+
+      try {
+        localStorage.removeItem(COMPONENT_COLLECTION_STORAGE_KEY);
+      } catch {
+        // localStorage may be unavailable in private or sandboxed contexts.
+      }
+      clearComponentCollectionState();
+      bus.emit?.('collection-updated', {
+        reason: 'settings-clear',
+        route: '',
+        tier: 'singular',
+        newKinds: [],
+        distinctKinds: 0,
+        achievements: [],
+        newlyUnlocked: [],
+        reset: true,
+      });
+    },
+  },
 ]);
 
 const describeSettingsPatch = (partial = {}) => Object.entries(partial)
@@ -539,6 +617,33 @@ const deriveArchitecturalModifiers = (settings) => {
   const spacingTuner = SPACING_TUNER_PROFILE[settings.spacingTuner] || SPACING_TUNER_PROFILE.balanced;
   const layoutTuner = LAYOUT_TUNER_PROFILE[settings.layoutTuner] || LAYOUT_TUNER_PROFILE.reading;
   const interactionTuner = INTERACTION_TUNER_PROFILE[settings.interactionTuner] || INTERACTION_TUNER_PROFILE.calm;
+  const motionIntensity = MOTION_INTENSITY_MULTIPLIER[settings.animationIntensity] || 1;
+  const animationThrottle = ANIMATION_THROTTLE_MULTIPLIER[settings.animationThrottling] || 1;
+  const reduceMotionDamp = settings.reduceMotion === 'on' ? 0.38 : 1;
+  const freshnessWeight = clampNumber(
+    (interactionTuner.freshness ?? 0.62)
+      * enhancementFactor
+      * motionIntensity
+      * reduceMotionDamp,
+    0.12,
+    1,
+  );
+  const pulseIntensity = clampNumber(
+    (interactionTuner.pulseScale ?? interactionTuner.scale)
+      * enhancementFactor
+      * motionIntensity,
+    0.72,
+    1.32,
+  );
+  const beatTempo = clampNumber(
+    (interactionTuner.beatTempo ?? interactionTuner.scale)
+      * animationThrottle
+      * reduceMotionDamp,
+    0.32,
+    2.4,
+  );
+  const pulseDurationMs = Math.round(clampNumber(280 / pulseIntensity, 160, 520));
+  const beatIntervalMs = Math.round(clampNumber(1300 / beatTempo, 520, 2800));
   const materialBlur = `${clampNumber(contourProfile.materialBlurPx * fieldResonance.materialBlurScale, 2, 16)}px`;
 
   const ecology = Object.freeze({
@@ -600,7 +705,12 @@ const deriveArchitecturalModifiers = (settings) => {
       layoutMeasure: layoutTuner.measure,
       layoutFrameMax: layoutTuner.frameMax,
       layoutColumnMin: layoutTuner.columnMin,
-      interactionScale: interactionTuner.scale
+      interactionScale: interactionTuner.scale,
+      pulseIntensity,
+      beatTempo,
+      freshnessWeight,
+      pulseDurationMs,
+      beatIntervalMs,
     }),
     ecology,
     semantic: Object.freeze({
@@ -682,6 +792,7 @@ const buildDatasetEntries = (normalized, modifiers, deviations, climate) => {
     spwNavigator: normalized.navigatorDisplay,
     spwSpellPath: normalized.spellPathDisplay,
     spwConsole: normalized.consoleDisplay,
+    spwRewardDisplay: normalized.rewardDisplay,
     spwViewportActivation: normalized.viewportActivation,
     spwReduceMotion: normalized.reduceMotion,
     spwHighContrast: normalized.highContrast,
@@ -761,7 +872,9 @@ const buildDatasetEntries = (normalized, modifiers, deviations, climate) => {
     spwDeviationCount: String(deviations.length),
     spwDeviations: deviationNames.join(' ') || null,
     spwDeviationState: deviations.length > 0 ? 'deviated' : 'default',
-    spwTuningDiscoverability: resolveTuningDiscoverability(normalized)
+    spwTuningDiscoverability: resolveTuningDiscoverability(normalized),
+    spwFreshnessWeight: modifiers.tuning.freshnessWeight.toFixed(2),
+    spwPulseBeatCadence: '13',
   };
 
   // Semantic currents (emergent clusters...) – kept here as part of the dataset builder.
@@ -771,6 +884,8 @@ const buildDatasetEntries = (normalized, modifiers, deviations, climate) => {
     document.documentElement?.dataset?.spwLoadPosture || 'normal'
   ].filter(Boolean).join('+');
   entries.spwSemanticCurrent = currentSignature || null;
+
+  Object.assign(entries, buildLayoutPostureDatasets(normalized));
 
   return entries;
 };
@@ -803,7 +918,19 @@ class SiteSettingsManager {
     const datasetEntries = buildDatasetEntries(normalized, modifiers, deviations, climate);
 
     setDatasetEntries(this.root, datasetEntries);
-    if (this.body) setDatasetEntries(this.body, datasetEntries);
+    if (this.body) {
+      const { spwLayout, ...bodyEntries } = datasetEntries;
+      setDatasetEntries(this.body, bodyEntries);
+    }
+
+    const deviationCount = deviations.length;
+    if (deviationCount > 0) {
+      syncUrlFromSettings(normalized);
+      this.root.dataset.spwQueryParity = 'synced';
+    } else {
+      syncUrlFromSettings(normalized);
+      delete this.root.dataset.spwQueryParity;
+    }
 
     setStyleProperties(this.root, {
       '--author-annotation-strength': modifiers.author.annotationStrength,
@@ -840,6 +967,11 @@ class SiteSettingsManager {
       '--spw-layout-frame-max': modifiers.tuning.layoutFrameMax,
       '--spw-layout-column-min': modifiers.tuning.layoutColumnMin,
       '--spw-interaction-scale': modifiers.tuning.interactionScale,
+      '--spw-microinteraction-pulse-duration': `${modifiers.tuning.pulseDurationMs}ms`,
+      '--spw-microinteraction-pulse-intensity': modifiers.tuning.pulseIntensity.toFixed(2),
+      '--spw-beat-interval-ms': String(modifiers.tuning.beatIntervalMs),
+      '--spw-freshness-weight': modifiers.tuning.freshnessWeight.toFixed(2),
+      '--spw-site-rhythm-tempo': modifiers.tuning.beatTempo.toFixed(2),
       '--shape-element': modifiers.contour.shapeElement,
       '--shape-component': modifiers.contour.shapeComponent,
       '--shape-surface': modifiers.contour.shapeSurface,
@@ -1198,4 +1330,5 @@ export {
   setClearContrastMatte,
   resolveTuningDiscoverability,
   parseSettingsFromSearch,
+  buildSettingsShareHref,
 };

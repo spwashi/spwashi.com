@@ -16,8 +16,12 @@ export const GESTURE_TARGET_SELECTOR = [
   '.frame-card-sigil',
   '.frame-panel-sigil',
   '.operator-chip',
+  '.spw-route-menu-link',
+  '.spw-link-expression',
+  '.syntax-token',
   '[data-spw-feature]',
   '[data-spw-semantic-expression]',
+  '[data-spw-interaction-contract]',
 ].join(', ');
 
 export const GESTURE_VOCABULARY = Object.freeze({
@@ -184,8 +188,12 @@ export function inferGestureIntents(element) {
     gestures.add('project');
     gestures.add('settle');
   }
-  if (element.matches('.operator-chip, a[href], button, [data-set-mode], [data-site-setting-set]')) {
+  if (element.matches('.operator-chip, .spw-route-menu-link, .spw-link-expression, a[href], button, [data-set-mode], [data-site-setting-set]')) {
     gestures.add('ground');
+  }
+  if (element.matches('.spw-route-menu-link, [data-spw-interaction-contract]')) {
+    gestures.add('project');
+    gestures.add('settle');
   }
   if (element.matches('[data-mode-group], [data-set-mode], .mode-switch button')) {
     gestures.add('rotate');

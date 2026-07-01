@@ -22,6 +22,7 @@ import {
   writeDatasetValueIfMissing,
   writeStyleValue,
 } from '/public/js/kernel/dom-contracts.js';
+import { buildRouteMenuLink } from '/public/js/semantic/link-copy.js';
 import {
   normalizeToken,
   unique,
@@ -619,34 +620,7 @@ function updateRouteMenu() {
   details.querySelector(':scope > summary')?.setAttribute('aria-label', `Open nearby routes: ${routeCountLabel}`);
 
   panel.replaceChildren(
-    ...discoveryRoutes.map((route) => {
-      const link = document.createElement('a');
-      link.href = route.href;
-      link.className = 'spw-route-menu-link';
-
-      const copy = document.createElement('span');
-      copy.className = 'spw-route-menu-link-copy';
-
-      const title = document.createElement('span');
-      title.className = 'spw-route-menu-link-label';
-      title.textContent = route.label;
-
-      copy.append(title);
-
-      if (route.note) {
-        const note = document.createElement('span');
-        note.className = 'spw-route-menu-link-note';
-        note.textContent = route.note;
-        copy.append(note);
-      }
-
-      const token = document.createElement('span');
-      token.className = 'spw-route-menu-link-token';
-      token.textContent = route.token;
-
-      link.append(copy, token);
-      return link;
-    })
+    ...discoveryRoutes.map((route) => buildRouteMenuLink(route)),
   );
 
   syncRouteMenuMode(details);

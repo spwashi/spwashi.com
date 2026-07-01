@@ -12,6 +12,8 @@ export function normalizeToken(value = '') {
     .replace(/^-+|-+$/g, '');
 }
 
+export const normalizeSlug = normalizeToken;
+
 export function unique(values = []) {
   return [...new Set(values.filter(Boolean))];
 }

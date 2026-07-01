@@ -1,0 +1,171 @@
+/* ==========================================================================
+   systems/coloring-depth.css
+   --------------------------------------------------------------------------
+   Coloring depth: operator-accent routing for copy layers and composition tiers.
+
+   Ladders (see .spw/conventions/coloring-depth.spw)
+   - copy-depth     : data-spw-copy-depth → --spw-copy-depth-accent
+   - composition    : data-spw-composition-tier → --spw-composition-depth-accent
+   - palette-depth  : owned by surfaces/palette-depth.css (material probes)
+
+   Spend rule: copy-depth accents label optional prose layers; they do not replace
+   semantic-accent on ordinary reading surfaces.
+   ========================================================================== */
+
+:root {
+  --spw-copy-depth-accent: var(--active-op-color, var(--component-accent, #008080));
+  --spw-copy-depth-line-mix: 18%;
+  --spw-copy-depth-bg-mix: 4%;
+  --spw-composition-depth-accent: var(--active-op-color, var(--component-accent, #008080));
+}
+
+/* --------------------------------------------------------------------------
+   Copy-depth accent ladder
+   -------------------------------------------------------------------------- */
+
+:where([data-spw-copy-depth="entry"]) {
+  --spw-copy-depth-accent: var(--op-frame-color, var(--active-op-color, var(--component-accent)));
+  --spw-copy-depth-line-mix: 20%;
+  --spw-copy-depth-bg-mix: 5%;
+}
+
+:where([data-spw-copy-depth="normal"]) {
+  --spw-copy-depth-accent: var(--op-ref-color, var(--active-op-color, var(--component-accent)));
+  --spw-copy-depth-line-mix: 22%;
+  --spw-copy-depth-bg-mix: 4%;
+}
+
+:where([data-spw-copy-depth="rich"]) {
+  --spw-copy-depth-accent: var(--op-probe-color, var(--active-op-color, var(--component-accent)));
+  --spw-copy-depth-line-mix: 28%;
+  --spw-copy-depth-bg-mix: 5%;
+}
+
+:where([data-spw-copy-depth="dense"]) {
+  --spw-copy-depth-accent: var(--op-stream-color, var(--active-op-color, var(--component-accent)));
+  --spw-copy-depth-line-mix: 30%;
+  --spw-copy-depth-bg-mix: 6%;
+}
+
+:where([data-spw-copy-depth="technical"]) {
+  --spw-copy-depth-accent: var(--op-action-color, var(--active-op-color, var(--component-accent)));
+  --spw-copy-depth-line-mix: 26%;
+  --spw-copy-depth-bg-mix: 5%;
+}
+
+:where([data-spw-copy-depth="genre"]) {
+  --spw-copy-depth-accent: var(--op-object-color, var(--active-op-color, var(--component-accent)));
+  --spw-copy-depth-line-mix: 30%;
+  --spw-copy-depth-bg-mix: 7%;
+}
+
+:where([data-spw-copy-depth]) {
+  --spw-debug-layer-owner: "systems";
+  --spw-debug-layer-color: #2a7a6f;
+  --spw-copy-depth-line: color-mix(
+    in srgb,
+    var(--spw-copy-depth-accent) calc(var(--spw-copy-depth-line-mix) * 1),
+    var(--line, rgba(14, 18, 20, 0.14))
+  );
+  --spw-copy-depth-bg: color-mix(
+    in srgb,
+    var(--component-surface-strong, var(--surface-strong, #fff))
+      calc(100% - var(--spw-copy-depth-bg-mix)),
+    var(--spw-copy-depth-accent) var(--spw-copy-depth-bg-mix)
+  );
+  display: none;
+  margin-block: 0.75rem;
+  padding: 0.72rem 0.85rem;
+  border: 1px solid var(--spw-copy-depth-line);
+  border-radius: var(--component-radius-loose);
+  background: var(--spw-copy-depth-bg);
+  color: color-mix(in srgb, var(--ink-soft, rgba(0, 0, 0, 0.62)) 88%, var(--ink, #111) 12%);
+  line-height: 1.5;
+}
+
+:where([data-spw-copy-depth])::before {
+  display: block;
+  margin-block-end: 0.32rem;
+  color: color-mix(in srgb, var(--spw-copy-depth-accent) 72%, var(--ink, #111) 28%);
+  content: attr(data-spw-copy-label);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+:where(
+  html[data-spw-semantic-density="minimal"] [data-spw-copy-depth="entry"],
+  html[data-spw-semantic-density="normal"] [data-spw-copy-depth="entry"],
+  html[data-spw-semantic-density="normal"] [data-spw-copy-depth="normal"],
+  html[data-spw-semantic-density="rich"] [data-spw-copy-depth="entry"],
+  html[data-spw-semantic-density="rich"] [data-spw-copy-depth="normal"],
+  html[data-spw-semantic-density="rich"] [data-spw-copy-depth="rich"],
+  html[data-spw-semantic-density="rich"] [data-spw-copy-depth="dense"],
+  html[data-spw-runtime-posture="precision"] [data-spw-copy-depth="technical"],
+  body[data-spw-page-modes~="inspect"] [data-spw-copy-depth="technical"],
+  html[data-spw-runtime-posture="resonant"] [data-spw-copy-depth="genre"],
+  html[data-spw-runtime-posture="theatrical"] [data-spw-copy-depth="genre"]
+) {
+  display: block;
+}
+
+:where([data-spw-copy-depth][data-spw-semantic-expression]) {
+  position: relative;
+}
+
+:where([data-spw-copy-depth][data-spw-semantic-expression])::after {
+  content: attr(data-spw-semantic-expression);
+  display: inline-flex;
+  margin-block-start: 0.55rem;
+  padding: 0.16rem 0.48rem;
+  border-radius: var(--component-radius-pill, 999px);
+  background: color-mix(in srgb, var(--spw-copy-depth-accent) 10%, transparent);
+  color: color-mix(in srgb, var(--ink-soft, #555) 78%, var(--spw-copy-depth-accent) 22%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+/* --------------------------------------------------------------------------
+   Composition-tier depth accents (module-visuals only)
+   -------------------------------------------------------------------------- */
+
+:where(html[data-spw-module-visuals="on"] [data-spw-composition-tier="page"]) {
+  --spw-composition-depth-accent: var(--op-frame-color, var(--active-op-color));
+}
+
+:where(html[data-spw-module-visuals="on"] [data-spw-composition-tier="region"]) {
+  --spw-composition-depth-accent: var(--op-ref-color, var(--active-op-color));
+}
+
+:where(html[data-spw-module-visuals="on"] [data-spw-composition-tier="feature"]) {
+  --spw-composition-depth-accent: var(--op-probe-color, var(--active-op-color));
+}
+
+:where(html[data-spw-module-visuals="on"] [data-spw-composition-tier="component"]) {
+  --spw-composition-depth-accent: var(--op-object-color, var(--active-op-color));
+}
+
+:where(html[data-spw-module-visuals="on"] [data-spw-composition-tier="slot"]) {
+  --spw-composition-depth-accent: var(--op-stream-color, var(--active-op-color));
+}
+
+:where(html[data-spw-module-visuals="on"] [data-spw-composition-tier="module"]) {
+  --spw-composition-depth-accent: var(--op-action-color, var(--active-op-color));
+}
+
+:where(html[data-spw-module-visuals="on"] [data-spw-composition-tier="chrome"]) {
+  --spw-composition-depth-accent: var(--op-meta-color, var(--ink-soft, #555));
+}
+
+:where(html[data-spw-module-visuals="on"] [data-spw-composition-tier="runtime"]) {
+  --spw-composition-depth-accent: var(--op-probe-color, var(--active-op-color));
+}
+
+:where(html[data-spw-module-visuals="on"] [data-spw-composition-tier]) {
+  outline: 1px dashed color-mix(in srgb, var(--spw-composition-depth-accent) 28%, transparent);
+  outline-offset: 0.12rem;
+}

@@ -90,6 +90,42 @@ fixity = "stable"
   rule = "Palette depth should increase contrast and foreground/background expressiveness without making prose depend on color alone."
 }
 
+^"interaction_topography"{
+  definition = "Live interaction/rhythm slice captured at serialization time: phase, beat, palette splash, focused control, applicable key bindings, and active sigil transition."
+  module = "page-anatomy.js collectInteractionTopography()"
+  spw_field = "interaction_topography in #>page[route]{ ... }"
+  json_field = "pageAnatomy.snapshot.interaction in state-inspector JSON"
+  key_binding_rule = "Arrow keys rove native radiogroup/toolbar surfaces and may fire arrow-reward treats; [ ] traverse frames; Enter|Space commit braces; +|- advance electromagnetic containers."
+  scene_bindings = "Enter|Space on prompt-host or scene-bed actualizes scene context; Escape exits stacked scene contexts before clearing selection threads."
+  sigil_transition = "window.__SPW_SIGIL_TRANSITIONS__.snapshot() feeds interaction_topography.sigil_transition with phase, active sigil, operator, page key, region key, source, from, and to."
+  authoring = "HTML may document local keyboard consequence with data-spw-interaction-keyboard; runtime writes data-spw-gesture-source=keyboard on brace commit."
+}
+
+^"topical_payload"{
+  definition = "Portable page slice for LM handoff: topics, lore roles, scene/prompt handles, image-gen chips, semantic expressions, and active scene context."
+  module = "public/js/runtime/topical-payload.js"
+  api = "window.__SPW_TOPICAL_PAYLOAD__.snapshot(), serialize(), refresh()"
+  bus = #[`topical:refreshed`][reg=set]
+  attrs = #[`data-spw-scene-interpret`, `data-spw-lore-role`, `data-spw-prompt-host`, `data-spw-semantic-expression`][reg=set]
+  json_field = "pageAnatomy.snapshot.topicalPayload"
+  spw_field = "topical_payload in #>page[route]{ ... }"
+  image_handles = "operator-chip hrefs carrying spw_prompt_host, spw_prompt_target, spw_prompt_generator, spw_prompt_focus"
+}
+
+^"spw_key_events"{
+  definition = "Keyboard events serialized as Spw threads: potentiation holds ~potential without collapse; actualization commits into LM-interpretable scene contexts."
+  module = "public/js/runtime/spw-key-events.js"
+  api = "window.__SPW_KEY_EVENTS__.snapshot(), serialize(), enterScene(host), exitScene()"
+  bus = #[`key:potentiated`, `key:actualized`, `key:released`, `scene:enter`, `scene:exit`][reg=set]
+  attrs = #[`data-spw-key-selection`, `data-spw-selection-state`, `data-spw-scene-context`, `data-spw-scene-depth`, `data-spw-scene-state`][reg=set]
+  scene_hosts = #[`[data-spw-scene-interpret]`, `[data-spw-prompt-host]`, `.spw-scene-bed[data-spw-scene-posture]`, `.site-frame[data-spw-promptability="visible"]`][reg=set]
+  packet = "scene packet carries posture, lanes, seed, wonder, spw_context, wonder_prompt for external model handoff"
+  reveal_phases = #[`framing`, `revealing`, `revealed`, `settling`][reg=set]
+  reveal_attrs = #[`data-spw-reveal-phase`, `data-spw-information-reveal`, `data-spw-reveal-frame`][reg=set]
+  json_field = "pageAnatomy.snapshot.interaction.keyEvents"
+  spw_field = "interaction_topography.key_selection + scene_context in #>page[route]{ ... }"
+}
+
 ^"home_page_rule"{
   fixed_identity = "Spwashi is the creator. The home page is the route."
   copy_rule = "When the home route refers to itself, write 'this home page' or 'the home page', not broad 'home' unless it is clearly a route token."

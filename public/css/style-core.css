@@ -12,6 +12,7 @@
 
 @import url('/public/css/reset/base.css') layer(reset);
 @import url('/public/css/tokens/core.css') layer(tokens);
+@import url('/public/css/tokens/dimensions.css') layer(tokens);
 
 @import url('/public/css/shell/layout.css') layer(shell);
 @import url('/public/css/shell/chrome.css') layer(shell);
@@ -30,6 +31,10 @@
 @import url('/public/css/components/surfaces.css') layer(components);
 @import url('/public/css/components/signals.css') layer(components);
 @import url('/public/css/components/cards.css') layer(components);
+@import url('/public/css/components/semantic-learning.css') layer(components);
+@import url('/public/css/components/semantic-variants.css') layer(components);
+@import url('/public/css/components/semantic-resonance.css') layer(components);
+@import url('/public/css/components/card-ecology.css') layer(components);
 @import url('/public/css/components/frames.css') layer(components);
 @import url('/public/css/components/content.css') layer(components);
 @import url('/public/css/components/controls.css') layer(components);
@@ -42,6 +47,15 @@
 @import url('/public/css/components/frame-controls.css') layer(components);
 @import url('/public/css/components/charge-cycle.css') layer(components);
 
+@import url('/public/css/systems/image-utilization.css') layer(systems);
+@import url('/public/css/systems/image-interaction.css') layer(systems);
+@import url('/public/css/systems/interaction-progression.css') layer(systems);
+@import url('/public/css/systems/scroll-gesture.css') layer(systems);
+@import url('/public/css/systems/print-precipitation.css') layer(systems);
+@import url('/public/css/systems/layout-postures.css') layer(systems);
+@import url('/public/css/systems/effect-interpretation.css') layer(systems);
+@import url('/public/css/systems/film-scene-composition.css') layer(systems);
+@import url('/public/css/systems/scene-interaction.css') layer(systems);
 @import url('/public/css/systems/substrate-ecology.css') layer(systems);
 @import url('/public/css/systems/registers.css') layer(systems);
 @import url('/public/css/systems/surfaces/base.css') layer(systems);
@@ -52,6 +66,10 @@
 @import url('/public/css/systems/surfaces/tuning-discoverability.css') layer(systems);
 @import url('/public/css/systems/surfaces/learnability-ledger.css') layer(systems);
 @import url('/public/css/systems/surfaces/palette-depth.css') layer(systems);
+@import url('/public/css/systems/palette-treat.css') layer(systems);
+@import url('/public/css/systems/spw-key-events.css') layer(systems);
+@import url('/public/css/systems/interactive-medium.css') layer(systems);
+@import url('/public/css/systems/coloring-depth.css') layer(systems);
 @import url('/public/css/systems/surfaces/reading-layout.css') layer(systems);
 @import url('/public/css/systems/surfaces/philosophy.css') layer(systems);
 
