@@ -83,6 +83,7 @@ High-signal active examples:
 - `css-maintainability-refactor/PLAN.md`
 - `site-color-tuning/PLAN.md`
 - `space-menu-arcs-electrical/PLAN.md` - floating UI hierarchy, route menu field projection, arc lifecycle microfeedback, and opt-in circuit anatomy vocabulary.
+- `symphonic-loading-layered-editions/PLAN.md` - conducted load movements over the cascade layer order, impact-gradient variance rules, and cache/deploy edition surprise; carries explicit human-review gates for pacing sensation and bundling feel.
 - `runtime-bootstrap-performance/PLAN.md` - reduce serial loading, immediate layer width, observer cost, and warm-return friction while preserving staged policy-driven loading, cache-stratum ownership, and full observability.
 - `floating-chrome-stack/FIX.md` - normalize floating chrome roles, tiers, console ownership, and discovery-credit alignment.
 - `component-semantics-document-host/FIX.md` - keep document-host semantics from collapsing into generic component styling.
@@ -121,6 +122,8 @@ Archived historical notes live in `archive/`. Use them as reference only:
 - `archive/2026-06-21-planning-ecology-recursive-maintenance.md`
 - `archive/2026-06-30-plan-maintenance.md`
 - `archive/2026-07-02-triage-css-spw-physics.md`
+- `archive/2026-07-02-css-html-audit-alignment-responsive-performance.md`
+- `archive/2026-07-02-clustering-progressive-enhancement-js-composability.md`
 
 Archived plan folders: `archive/spw-css-architecture/` and `archive/css-semantic-modules/` landed and moved on 2026-07-02 in a ref-safe pass. The modular `public/css/` tree and its intent-variable contracts are their living successors; active selector/state work continues in `css-maintainability-refactor/` and `css-state-legibility/`.
 

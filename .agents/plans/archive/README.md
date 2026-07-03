@@ -29,6 +29,8 @@ Maintenance sweeps:
 - `2026-06-21-planning-ecology-recursive-maintenance.md` - Recursive plan-tree census, virtual bucket structure, WIP-only cleanup rule, and overgrowth queue.
 - `2026-06-30-plan-maintenance.md` - Plan census refresh, completed FIX-reference separation, public bucket projection, and `.spw` planning dispatch update.
 - `2026-07-02-triage-css-spw-physics.md` - Ranked execution slate for CSS architecture, runtime architecture, and Spw physics ubiquity; identified `spw-css-architecture/` and `css-semantic-modules/` as landed.
+- `2026-07-02-css-html-audit-alignment-responsive-performance.md` - Static audit of CSS delivery, font loading, breakpoint sprawl, and baseline defaults, with owner-plan routing and a suggested execution order.
+- `2026-07-02-clustering-progressive-enhancement-js-composability.md` - Selector-scatter metric, hydration/PE spine assessment, hidden-panel contract gap, and the missing custom-property/event contract index.
 
 Completed or superseded references retained in place:
 
