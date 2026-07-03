@@ -1026,22 +1026,22 @@ html[data-spw-hydration="ready"] #home-frame .frame-topline {
   }
 }
 
-:where(body[data-spw-surface="home"] .mode-switch .frame-sigil[aria-pressed="true"]) {
-  border-color: color-mix(in srgb, var(--home-accent-primary) 40%, transparent);
-  background: color-mix(in srgb, var(--home-accent-primary) 12%, var(--home-surface-bg-strong));
-  color: var(--home-accent-primary);
-  box-shadow:
+:where(body[data-spw-surface="home"] .mode-switch .frame-sigil) {
+  --mode-switch-active-border-intent: color-mix(in srgb, var(--home-accent-primary) 40%, transparent);
+  --mode-switch-active-bg-intent: color-mix(in srgb, var(--home-accent-primary) 12%, var(--home-surface-bg-strong));
+  --mode-switch-active-ink-intent: var(--home-accent-primary);
+  --mode-switch-active-shadow-intent:
       0 0 0 1px color-mix(in srgb, var(--home-accent-primary) 12%, transparent),
       0 0 18px color-mix(in srgb, var(--home-accent-primary) 14%, transparent);
 }
 
 @media (prefers-color-scheme: dark) {
-  html[data-spw-color-mode="auto"] body[data-spw-surface="home"] .mode-switch .frame-sigil[aria-pressed="true"],
-  html[data-spw-color-mode="dark"] body[data-spw-surface="home"] .mode-switch .frame-sigil[aria-pressed="true"] {
-    border-color: color-mix(in srgb, var(--home-accent-primary) 52%, transparent);
-    background: color-mix(in srgb, var(--home-accent-primary) 18%, var(--home-surface-bg-strong));
-    color: color-mix(in srgb, var(--home-accent-primary) 88%, var(--ink-strong) 12%);
-    box-shadow:
+  :where(html[data-spw-color-mode="auto"] body[data-spw-surface="home"] .mode-switch .frame-sigil,
+         html[data-spw-color-mode="dark"] body[data-spw-surface="home"] .mode-switch .frame-sigil) {
+    --mode-switch-active-border-intent: color-mix(in srgb, var(--home-accent-primary) 52%, transparent);
+    --mode-switch-active-bg-intent: color-mix(in srgb, var(--home-accent-primary) 18%, var(--home-surface-bg-strong));
+    --mode-switch-active-ink-intent: color-mix(in srgb, var(--home-accent-primary) 88%, var(--ink-strong) 12%);
+    --mode-switch-active-shadow-intent:
         0 0 0 1px color-mix(in srgb, var(--home-accent-primary) 18%, transparent),
         0 0 22px color-mix(in srgb, var(--home-accent-primary) 20%, transparent);
   }

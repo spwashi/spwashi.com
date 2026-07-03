@@ -680,7 +680,7 @@
   }
 
   :where(body[data-spw-surface="blog"] main) {
-    padding-inline: 0.8rem;
+    --spw-main-padding-inline: 0.8rem;
     padding-block-start: 0.8rem;
   }
 

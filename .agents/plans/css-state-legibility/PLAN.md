@@ -61,3 +61,28 @@ Validation additions:
 
 - `rg -n -- "--operator-chip-active-|aria-pressed=\"true\"|data-site-setting-active=\"true\"" public/css public/js **/index.html`
 - `npm run check:local`
+
+## Implementation Increment - 2026-07-02
+
+Focus dimension: `css_behavior/state-legibility`
+Fixity tier: stable
+Owner surfaces: `public/css/handles/operators.css`, route surface intent variables, `public/css/shell/layout.css`
+
+Landed the shared mode-switch state contract and repaired dead route intent:
+
+- Key discovery: because `handles` outranks `routes` in the layer order and the shared defaults are declared on the sigil element itself, route-layer pressed/hover re-descriptions AND route-set `--mode-switch-*` variables were silently dead code. Home, Topics, and RPG Wednesday pressed styling was rendering shared teal defaults, not the authored route palettes.
+- `public/css/handles/operators.css` now threads `--mode-switch-*-intent` indirection through every mode-switch state variable (light and dark defaults), mirroring the 2026-06-30 `--operator-chip-active-*-intent` pattern. Routes can set intent from any layer or ancestor.
+- Migrated dead blocks to live intent variables: `routes/surfaces/home.css` (pressed palette, light+dark), `routes/surfaces/topics.css` (lane pressed shadow, pressed-animation suppression), `routes/surfaces/rpg-wednesday.css` (idle/pressed palette via `--active-op-color` plus intent variables; raw `border-color`/`background`/`min-height` overrides removed). Visual effect: the authored route palettes now actually render; RPG switches gain in-palette hover response.
+- Shell gutter single ownership confirmed (`shell/layout.css` "main owns the page gutter"); converted three raw route `padding-inline` overrides on `main` to the `--spw-main-padding-inline` contract variable (`services.css`, `rpg-wednesday.css`, `play.css` at their <=820px breakpoints).
+- Primary-nav tokenized/overflow ownership confirmed coherent: `shell/chrome.css` owns the contract; `modes/display-layers.css` overrides are same-layer (`shell`) intentional mode projections.
+- File-reference refresh: the original `[MOD]` list (spw-handles.css, home-surface.css, spw-shell.css, spw-chrome.css) predates the modular split; current owners are `handles/operators.css`, `routes/surfaces/home.css`, `shell/layout.css`, `shell/chrome.css`.
+
+Follow-up:
+
+- `routes/surfaces/play.css` sections 6/9 re-describe hover/focus/pressed for sigils, chips, and generic buttons route-locally; most of it is dead under the layer order. It needs its own migration pass (bigger surface, includes non-mode-switch controls).
+- `.mode-switch .frame-sigil[data-set-mode="surface"|"syntax"|"artifacts"|"website"]` self-declare `--active-op-color` in the handles layer, which blocks ancestor palette override for those four modes; consider intent indirection if a route ever needs to re-tint them.
+
+Validation additions:
+
+- `rg -n -- "--mode-switch-.*-intent" public/css`
+- `rg -n "padding-inline: 0.8rem" public/css/routes` (should return nothing)

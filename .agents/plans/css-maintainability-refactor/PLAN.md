@@ -138,3 +138,9 @@ This pass owns a targeted architecture cleanup from the CSS/JS refinement brief:
 - Keep split-layout rails narrow and content-owned at mid desktop widths by using a `max-content` rail track.
 - Treat semantic handles as performance hooks: hydrated features, modules, and handles can spend readiness variables so components feel like local systems coming online.
 - Let page/section transitions spend semantic hierarchy and inertia: active sections, adjacent sections, and floating navigation surfaces receive different resonance/timing variables.
+
+## Implementation Note - 2026-07-02 Handle Scope Verification And Reference Refresh
+
+- Verified the "tighten the shared handle layer" scope item has landed: `handles/operators.css` styles named handle classes and explicit inline semantic carriers (`:where(a, button, span, strong, em, i, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator])`); the only bare `[data-spw-operator]` selector sets debug-owner variables. No structural pill-ification remains in the handle layer.
+- Likely-files refresh: `spw-handles.css`, `spw-components.css`, `spw-surfaces.css`, and `topics-surface.css` no longer exist (modular split); the DOM-contract owner planned as `public/js/spw-dom-contracts.js` lives at `public/js/kernel/dom-contracts.js`.
+- Cross-reference: the 2026-07-02 increment in `css-state-legibility/PLAN.md` records the mode-switch intent-variable contract and the routes-vs-handles dead-code discovery, which this plan's selector-ownership work should assume going forward: route-layer declarations cannot outrank handle-layer state rules, so route specialization must travel through `-intent` variables.

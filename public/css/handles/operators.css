@@ -2129,35 +2129,38 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   }
 }
 
-/* Shared mode-switch state lives here; routes should specialize with the
-   --mode-switch-* variables instead of re-describing pressed/hover logic. */
+/* Shared mode-switch state lives here; routes supply palette/intent through
+   --mode-switch-*-intent variables (set on the switch, a sigil, or any ancestor)
+   instead of re-describing pressed/hover logic. The -intent indirection exists
+   because these defaults are declared on the sigil itself in the handles layer,
+   which outranks both route-layer declarations and inherited ancestor values. */
 .mode-switch .frame-sigil {
-  --mode-switch-border-width: 1px;
-  --mode-switch-idle-bg: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.9)) 90%, var(--active-op-color, var(--teal)) 10%);
-  --mode-switch-idle-border: color-mix(in srgb, var(--active-op-color, var(--teal)) 34%, var(--line, rgba(14, 18, 20, 0.14)) 66%);
-  --mode-switch-idle-ink: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 88%, var(--active-op-color, var(--teal)) 12%);
-  --mode-switch-idle-shadow:
-    inset 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 8%, transparent);
-  --mode-switch-idle-weight: 500;
-  --mode-switch-hover-bg: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.9)) 84%, var(--active-op-color, var(--teal)) 16%);
-  --mode-switch-hover-border: color-mix(in srgb, var(--active-op-color, var(--teal)) 42%, transparent);
-  --mode-switch-hover-ink: var(--ink, rgba(14, 18, 20, 0.92));
-  --mode-switch-hover-shadow:
-    inset 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 12%, transparent);
-  --mode-switch-hover-lift: var(--spw-control-hover-lift, -1px);
-  --mode-switch-active-bg: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.9)) 72%, var(--active-op-color, var(--teal)) 28%);
-  --mode-switch-active-border: color-mix(in srgb, var(--active-op-color, var(--teal)) 58%, transparent);
-  --mode-switch-active-ink: var(--ink, rgba(14, 18, 20, 0.92));
-  --mode-switch-active-weight: 600;
-  --mode-switch-active-shadow:
+  --mode-switch-border-width: var(--mode-switch-border-width-intent, 1px);
+  --mode-switch-idle-bg: var(--mode-switch-idle-bg-intent, color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.9)) 90%, var(--active-op-color, var(--teal)) 10%));
+  --mode-switch-idle-border: var(--mode-switch-idle-border-intent, color-mix(in srgb, var(--active-op-color, var(--teal)) 34%, var(--line, rgba(14, 18, 20, 0.14)) 66%));
+  --mode-switch-idle-ink: var(--mode-switch-idle-ink-intent, color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 88%, var(--active-op-color, var(--teal)) 12%));
+  --mode-switch-idle-shadow: var(--mode-switch-idle-shadow-intent,
+    inset 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 8%, transparent));
+  --mode-switch-idle-weight: var(--mode-switch-idle-weight-intent, 500);
+  --mode-switch-hover-bg: var(--mode-switch-hover-bg-intent, color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.9)) 84%, var(--active-op-color, var(--teal)) 16%));
+  --mode-switch-hover-border: var(--mode-switch-hover-border-intent, color-mix(in srgb, var(--active-op-color, var(--teal)) 42%, transparent));
+  --mode-switch-hover-ink: var(--mode-switch-hover-ink-intent, var(--ink, rgba(14, 18, 20, 0.92)));
+  --mode-switch-hover-shadow: var(--mode-switch-hover-shadow-intent,
+    inset 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 12%, transparent));
+  --mode-switch-hover-lift: var(--mode-switch-hover-lift-intent, var(--spw-control-hover-lift, -1px));
+  --mode-switch-active-bg: var(--mode-switch-active-bg-intent, color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.9)) 72%, var(--active-op-color, var(--teal)) 28%));
+  --mode-switch-active-border: var(--mode-switch-active-border-intent, color-mix(in srgb, var(--active-op-color, var(--teal)) 58%, transparent));
+  --mode-switch-active-ink: var(--mode-switch-active-ink-intent, var(--ink, rgba(14, 18, 20, 0.92)));
+  --mode-switch-active-weight: var(--mode-switch-active-weight-intent, 600);
+  --mode-switch-active-shadow: var(--mode-switch-active-shadow-intent,
     inset 0 1px 0 rgba(255, 255, 255, 0.36),
     inset 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 22%, transparent),
-    0 2px 6px color-mix(in srgb, var(--active-op-color, var(--teal)) 10%, transparent);
-  --mode-switch-active-lift: 0px;
-  --mode-switch-focus-shadow:
+    0 2px 6px color-mix(in srgb, var(--active-op-color, var(--teal)) 10%, transparent));
+  --mode-switch-active-lift: var(--mode-switch-active-lift-intent, 0px);
+  --mode-switch-focus-shadow: var(--mode-switch-focus-shadow-intent,
     0 0 0 2px color-mix(in srgb, var(--active-op-color, var(--teal)) 20%, transparent),
-    var(--mode-switch-hover-shadow);
-  --mode-switch-pressed-animation: spw-operator-breath 2s ease-in-out infinite;
+    var(--mode-switch-hover-shadow));
+  --mode-switch-pressed-animation: var(--mode-switch-pressed-animation-intent, spw-operator-breath 2s ease-in-out infinite);
   position: relative;
   top: auto;
   left: auto;
@@ -2233,12 +2236,12 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
 
 @media (prefers-color-scheme: dark) {
   .mode-switch .frame-sigil {
-    --mode-switch-idle-bg: color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.92)) 82%, var(--active-op-color, var(--teal)) 18%);
-    --mode-switch-idle-border: color-mix(in srgb, var(--active-op-color, var(--teal)) 44%, rgba(255, 255, 255, 0.18) 56%);
-    --mode-switch-idle-ink: color-mix(in srgb, var(--ink, rgba(245, 247, 250, 0.96)) 92%, var(--active-op-color, var(--teal)) 8%);
-    --mode-switch-hover-bg: color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.92)) 74%, var(--active-op-color, var(--teal)) 26%);
-    --mode-switch-active-bg: color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.92)) 64%, var(--active-op-color, var(--teal)) 36%);
-    --mode-switch-active-ink: color-mix(in srgb, var(--ink, rgba(245, 247, 250, 0.98)) 96%, var(--active-op-color, var(--teal)) 4%);
+    --mode-switch-idle-bg: var(--mode-switch-idle-bg-intent, color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.92)) 82%, var(--active-op-color, var(--teal)) 18%));
+    --mode-switch-idle-border: var(--mode-switch-idle-border-intent, color-mix(in srgb, var(--active-op-color, var(--teal)) 44%, rgba(255, 255, 255, 0.18) 56%));
+    --mode-switch-idle-ink: var(--mode-switch-idle-ink-intent, color-mix(in srgb, var(--ink, rgba(245, 247, 250, 0.96)) 92%, var(--active-op-color, var(--teal)) 8%));
+    --mode-switch-hover-bg: var(--mode-switch-hover-bg-intent, color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.92)) 74%, var(--active-op-color, var(--teal)) 26%));
+    --mode-switch-active-bg: var(--mode-switch-active-bg-intent, color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.92)) 64%, var(--active-op-color, var(--teal)) 36%));
+    --mode-switch-active-ink: var(--mode-switch-active-ink-intent, color-mix(in srgb, var(--ink, rgba(245, 247, 250, 0.98)) 96%, var(--active-op-color, var(--teal)) 4%));
   }
 }
 

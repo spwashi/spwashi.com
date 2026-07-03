@@ -130,28 +130,26 @@
 }
 
 :where(body[data-spw-surface="rpg-wednesday"] .mode-switch) {
+  --active-op-color: var(--rpg-accent);
+  --mode-switch-idle-border-intent: color-mix(in srgb, var(--rpg-accent) 28%, rgba(18, 24, 28, 0.12));
+  --mode-switch-idle-bg-intent: rgba(255, 255, 255, 0.88);
+  --mode-switch-active-bg-intent:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--rpg-accent-soft) 70%, rgba(255, 255, 255, 0.88)),
+      rgba(255, 255, 255, 0.94)
+    );
+  --mode-switch-active-shadow-intent:
+    0 0 0 3px rgba(93, 147, 103, 0.14),
+    0 0.3rem 0.8rem rgba(0, 0, 0, 0.08);
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
 }
 
 :where(body[data-spw-surface="rpg-wednesday"] .mode-switch button) {
-  min-height: 2.35rem;
   min-width: 8.5rem;
-  border-color: color-mix(in srgb, var(--rpg-accent) 28%, rgba(18, 24, 28, 0.12));
-  background: rgba(255, 255, 255, 0.88);
-}
-
-:where(body[data-spw-surface="rpg-wednesday"] .mode-switch button[aria-pressed="true"]) {
-  background:
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--rpg-accent-soft) 70%, rgba(255, 255, 255, 0.88)),
-      rgba(255, 255, 255, 0.94)
-    );
-  box-shadow:
-    0 0 0 3px rgba(93, 147, 103, 0.14),
-    0 0.3rem 0.8rem rgba(0, 0, 0, 0.08);
+  --spw-control-min-height: 2.57rem; /* shared sigil min-height is calc(this - 0.22rem) = 2.35rem */
 }
 
 :where(body[data-spw-surface="rpg-wednesday"] .rpg-quick-actions) {
@@ -929,7 +927,7 @@
 
 @media (max-width: 820px) {
   :where(body[data-spw-surface="rpg-wednesday"]) main {
-    padding-inline: 0.8rem;
+    --spw-main-padding-inline: 0.8rem;
   }
 
   :where(body[data-spw-surface="rpg-wednesday"] .frame-grid) {

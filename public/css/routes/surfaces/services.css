@@ -135,7 +135,7 @@
 @media (max-width: 820px) {
   :where(body[data-spw-surface="services"]) {
     & main {
-      padding-inline: 0.8rem;
+      --spw-main-padding-inline: 0.8rem;
     }
 
     & #services-frame {
