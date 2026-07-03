@@ -17,6 +17,7 @@
  */
 
 import { bus } from '/public/js/kernel/bus.js';
+import { readCauldronState } from '/public/js/interface/cauldron/contract.js';
 import {
   createSpwLogger,
   snapshotInstrumentationTarget,
@@ -155,7 +156,7 @@ export function createBeatWindow(durationMs = getWindowMs(), options = {}) {
     measurements: [],
     snapshots: [],
     contextAtStart: readAmbientContext(),
-    cauldronPhaseAtStart: document.documentElement?.dataset?.spwCauldronPhase || '',
+    cauldronPhaseAtStart: readCauldronState(document.documentElement).phase || '',
   };
 
   activeBeats.add(beat);
@@ -237,7 +238,7 @@ function flushBeat(beat, reason) {
     measurementCount: beat.measurements.length,
     snapshotCount: beat.snapshots.length,
     cauldronPhaseStart: beat.cauldronPhaseAtStart,
-    cauldronPhaseEnd: document.documentElement?.dataset?.spwCauldronPhase || '',
+    cauldronPhaseEnd: readCauldronState(document.documentElement).phase || '',
     contextStart: beat.contextAtStart,
     contextEnd: readAmbientContext(),
     measurements: beat.measurements.slice(0, 50),
@@ -312,7 +313,7 @@ export function captureCurrentBeatArtifact(extra = {}) {
     version: '0.1',
     capturedAt: Date.now(),
     mode: root.dataset.spwPageModes || root.dataset.spwDebugMode || 'normal',
-    cauldronPhase: root.dataset.spwCauldronPhase || '',
+    cauldronPhase: readCauldronState(root).phase || '',
     sizeContext: root.dataset.spwSizeContext || '',
     contentTone: root.dataset.spwContentTone || '',
     context: readAmbientContext(),

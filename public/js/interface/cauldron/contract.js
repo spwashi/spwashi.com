@@ -18,20 +18,34 @@ export const CAULDRON_CONTRACT = Object.freeze({
     clear: 'Empty the cauldron',
     undo: 'Restore the previous gathering state',
     're-gather': 'Scroll to the cauldron and surface the last tended material',
+    decompose: 'Reopen a saved spell as cauldron ingredients for editing',
   }),
   attributes: Object.freeze({
     host: 'data-spw-cauldron',
-    phase: 'data-spw-cauldron-phase',
     state: 'data-spw-cauldron-state',
-    count: 'data-spw-cauldron-count',
     ingredient: 'data-spw-cauldron-ingredient',
     ingredientPhase: 'data-spw-ingredient-phase',
     action: 'data-spw-cauldron-action',
+    actionState: 'data-spw-cauldron-action-state',
     mirror: 'data-spw-cauldron-mirror',
     gardenPhase: 'data-spw-cauldron-garden-phase',
     discoverability: 'data-spw-cauldron-discoverability',
     resonance: 'data-spw-cauldron-resonance',
+    resonanceOperators: 'data-spw-cauldron-resonance-operators',
     collected: 'data-spw-cauldron-collected',
+    candidate: 'data-spw-cauldron-candidate',
+    candidateVisibility: 'data-spw-cauldron-candidate-visibility',
+    category: 'data-spw-cauldron-category',
+    cue: 'data-spw-cauldron-cue',
+    operators: 'data-spw-cauldron-operators',
+    outputState: 'data-spw-cauldron-output-state',
+    panel: 'data-spw-cauldron-panel',
+    panelToggle: 'data-spw-cauldron-panel-toggle',
+    phaseRail: 'data-spw-cauldron-phase-rail',
+    remove: 'data-spw-cauldron-remove',
+    visibility: 'data-spw-cauldron-visibility',
+    chipCount: 'data-spw-cauldron-chip-count',
+    chipPhase: 'data-spw-cauldron-chip-phase',
   }),
   events: Object.freeze({
     capture: 'spell:capture',
@@ -40,8 +54,40 @@ export const CAULDRON_CONTRACT = Object.freeze({
     gardened: 'cauldron:gardened',
     inspected: 'cauldron:ingredient-inspected',
     refreshed: 'cauldron:ingredient-refreshed',
+    decomposed: 'spell:decomposed',
   }),
 });
+
+/* Cauldron state travels as one axis bundle (G1 grammar, 2026-07-03):
+   data-spw-cauldron-state="phase:mixing count:4 garden:tending".
+   Top-down: querySelectorAll('[data-spw-cauldron-state~="phase:mixing"]')
+   finds every vessel surface in that phase. Bottom-up: one glance at an
+   element's dataset tells its whole vessel story. The retired per-axis
+   attributes (-phase, -count, -force-count, ingredient-count) said the
+   same things in four places. */
+export const CAULDRON_STATE_AXES = Object.freeze(['phase', 'count', 'garden', 'resonance', 'collected', 'discoverability']);
+
+export function composeCauldronState(parts = {}) {
+  return CAULDRON_STATE_AXES
+    .filter((axis) => parts[axis] !== undefined && parts[axis] !== null && parts[axis] !== '')
+    .map((axis) => `${axis}:${parts[axis]}`)
+    .join(' ');
+}
+
+export function readCauldronState(el) {
+  const raw = el?.dataset?.spwCauldronState || '';
+  const parsed = {};
+  raw.split(/\s+/).forEach((token) => {
+    const [axis, ...rest] = token.split(':');
+    if (axis && rest.length) parsed[axis] = rest.join(':');
+  });
+  return parsed;
+}
+
+export function applyCauldronState(el, parts = {}) {
+  if (!el) return;
+  el.dataset.spwCauldronState = composeCauldronState({ ...readCauldronState(el), ...parts });
+}
 
 export function computeIngredientPhase(ing) {
   if (!ing || !ing.capturedAt) return 'gathering';

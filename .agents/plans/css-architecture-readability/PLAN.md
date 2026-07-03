@@ -833,3 +833,11 @@ rg -n "data-spw-composition-flow|data-spw-box-model" .
 - Should compact debug mode be the default for layer labels on small screens?
 - Which component tokens are genuinely reused enough to deserve names?
 - Should `.spw/conventions/css-instruction.spw` become the canonical inspectable contract, or is `public/css/README.md` enough for now?
+
+## Implementation Note - 2026-07-03 Chapter Split And Genome Banners
+
+- Split the two largest surfaces into chapter files with rule order preserved verbatim and cascade equivalence proven against the flattened core bundle (comment-stripped, same-layer wrapper seams normalized): `handles/operators.css` (4578 lines) -> `handles/operators/` (ten chapters), `shell/chrome.css` (5623 lines) -> `shell/chrome/` (five chapters).
+- Each chapter opens with a literate banner: "Reads as" voice line, "Was" provenance, a genome block (states sensed, custom properties defined, intent hooks consumed), and a live probe hint.
+- `public/css/README.md` gained "Reading The Tree": naming anatomy (place / body part / disposition), moseying tree/rg probes, browser-toggling guidance, and the rule that a chapter whose genome and prose disagree is a bug.
+- Validation posture for future splits: banner-opener line boundaries only (a split at a banner's middle line leaves an unterminated comment seam); assert per-chunk brace balance on comment-stripped text; prove flattened-bundle equivalence before deleting the original.
+- `design/experiments/load-symphony/` added to `VALIDATION_IGNORED_PREFIXES` (review-demo copies, not production routes).

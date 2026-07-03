@@ -1,0 +1,642 @@
+/* ==========================================================================
+   operators/state-semantics.css — what pressed means here
+   --------------------------------------------------------------------------
+   Reads as: the mode-switch and pressed-state contracts; routes speak through -intent variables only
+   Was: handles/operators.css §8–9 (split 2026-07-03, rule order preserved verbatim)
+   Genome — states sensed: aria-current, aria-label, aria-pressed, data-set-mode, data-spw-allocation, data-spw-annotation-match, data-spw-bookmarked, data-spw-cauldron, data-spw-cauldron-mirror, data-spw-charge, data-spw-debug-mode, data-spw-form, data-spw-gesture, data-spw-ingredient-primed
+   Genome — custom properties defined: 29; intent hooks consumed: --mode-switch-active-bg-intent, --mode-switch-active-border-intent, --mode-switch-active-ink-intent, --mode-switch-active-lift-intent, --mode-switch-active-shadow-intent, --mode-switch-active-weight-intent, --mode-switch-border-width-intent, --mode-switch-focus-shadow-intent, --mode-switch-hover-bg-intent, --mode-switch-hover-border-intent, --mode-switch-hover-ink-intent, --mode-switch-hover-lift-intent, --mode-switch-hover-shadow-intent, --mode-switch-idle-bg-intent, --mode-switch-idle-border-intent, --mode-switch-idle-ink-intent, --mode-switch-idle-shadow-intent, --mode-switch-idle-weight-intent, --mode-switch-pressed-animation-intent
+   Probe: toggle me wholesale in DevTools > Sources, or set
+   html[data-spw-debug-layers="on"] to see layer owners breathe.
+   ========================================================================== */
+
+/* ==========================================================================
+   8. Handle state semantics
+   --------------------------------------------------------------------------
+   Selection, activation, latch, bookmark, knowledge, and allocation states.
+   ========================================================================== */
+
+:where([data-spw-selection="focused"]) {
+  --handle-line: color-mix(in srgb, var(--active-op-color, var(--teal)) 54%, transparent);
+}
+
+:where(
+  .operator-chip[aria-current="page"],
+  [data-spw-selection="active"],
+  [data-spw-selection="selected"]
+) {
+  background: var(--handle-bg-selected);
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 38%, transparent);
+  border-width: 1.5px;
+  color: color-mix(in srgb, var(--active-op-color, var(--teal)) 86%, var(--ink, rgba(14, 18, 20, 0.92)));
+  font-weight: 600;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.32),
+    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 12%, transparent),
+    0 2px 8px color-mix(in srgb, var(--active-op-color, var(--teal)) 8%, transparent);
+}
+
+:where(
+  .frame-sigil.is-selected,
+  .frame-sigil[aria-pressed="true"]
+) {
+  background: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.9)) 92%, var(--active-op-color, var(--teal)) 8%);
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 18%, transparent);
+  color: color-mix(in srgb, var(--active-op-color, var(--teal)) 76%, var(--ink, rgba(14, 18, 20, 0.92)));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    0 2px 8px color-mix(in srgb, var(--active-op-color, var(--teal)) 5%, transparent);
+}
+
+:where([data-spw-latched="true"]) {
+  background: color-mix(in srgb, var(--handle-bg) 86%, var(--active-op-color, var(--teal)) 8%);
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 48%, transparent);
+  box-shadow: var(--handle-shadow-latched);
+  transform: translateY(0.5px);
+}
+
+:where([data-spw-pinned="true"], [data-spw-bookmarked="true"]) {
+  border-color: color-mix(in srgb, var(--amber, #ffaa00) 62%, transparent);
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--amber, #ffaa00) 9%, transparent) 0%,
+      transparent 100%
+    ),
+    var(--handle-bg);
+}
+
+:where([data-spw-pinned="true"], [data-spw-bookmarked="true"])::after {
+  content: "";
+  position: absolute;
+  inset: auto 0.28rem 0.16rem auto;
+  width: 0.36rem;
+  height: 0.36rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--amber, #ffaa00) 72%, transparent);
+  opacity: 0.82;
+}
+
+:where([data-spw-knowledge="gained"]) {
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 32%, var(--line, transparent));
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--active-op-color, var(--teal)) 8%, transparent),
+      transparent 52%
+    ),
+    var(--handle-bg);
+}
+
+/* Allocation helps later copy generation: where is this token trying to live? */
+:where([data-spw-allocation]) {
+  --handle-allocation-color: var(--spw-substrate-color, var(--active-op-color, var(--teal)));
+}
+
+:where([data-spw-allocation="inline"]) {
+  border-style: solid;
+}
+
+:where([data-spw-allocation="adjacent"]) {
+  border-style: dashed;
+}
+
+:where([data-spw-allocation="room"]) {
+  border-style: double;
+}
+
+html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation])::before {
+  content: attr(data-spw-allocation);
+  position: absolute;
+  inset: auto auto calc(100% + 0.2rem) 50%;
+  transform: translateX(-50%);
+  padding: 0.08rem 0.28rem;
+  border-radius: var(--handle-radius-pill);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 92%, transparent);
+  border: 1px solid color-mix(in srgb, var(--handle-allocation-color) 22%, transparent);
+  color: var(--handle-ink-soft);
+  font-family: var(--handle-meta-font);
+  font-size: 0.54rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  opacity: 0;
+  pointer-events: none;
+}
+
+html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hover, :focus-visible))::before {
+  opacity: 0.92;
+}
+
+.mode-switch {
+  --spw-lens-cascade-color: var(--active-op-color, var(--teal));
+  --spw-lens-track-bg: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.9)) 88%, var(--spw-lens-cascade-color) 12%);
+  --spw-lens-track-border: color-mix(in srgb, var(--spw-lens-cascade-color) 20%, var(--line, rgba(14, 18, 20, 0.14)) 80%);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: calc(var(--spw-control-gap, 0.24rem) + 0.1rem);
+  min-width: 0;
+  padding: 0.16rem;
+  border: 1px solid var(--spw-lens-track-border);
+  border-radius: var(--shape-control, 0.68rem);
+  background: var(--spw-lens-track-bg);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--surface-strong, #fff) 44%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--spw-lens-cascade-color) 7%, transparent);
+  isolation: isolate;
+}
+
+.mode-switch[aria-label]::before {
+  content: attr(aria-label);
+  flex: 0 0 auto;
+  max-inline-size: min(100%, 22ch);
+  overflow: hidden;
+  padding: 0.14rem 0.42rem;
+  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal)) 14%, transparent);
+  border-radius: 999px;
+  box-shadow: var(--spw-chassis-highlight, inset 0 1px 0 rgba(255, 255, 255, 0.2));
+  color: color-mix(in srgb, var(--ink-soft, rgba(14, 18, 20, 0.72)) 82%, var(--active-op-color, var(--teal)) 18%);
+  font-family: var(--handle-meta-font, var(--site-mono-font, monospace));
+  font-size: 0.62rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  text-wrap: balance;
+  white-space: nowrap;
+}
+
+.mode-switch[data-spw-lens-feedback]::after {
+  content: attr(data-spw-lens-feedback);
+  flex: 1 1 9rem;
+  min-inline-size: 0;
+  max-inline-size: min(100%, 24ch);
+  overflow: hidden;
+  padding: 0.14rem 0.42rem;
+  border-radius: 999px;
+  color: color-mix(in srgb, var(--ink-muted, rgba(14, 18, 20, 0.64)) 78%, var(--spw-lens-cascade-color) 22%);
+  font-family: var(--handle-meta-font, var(--site-mono-font, monospace));
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Narrow viewports: unwrap the lens label and give pills a stable 2×2 grid. */
+@media (max-width: 56rem) {
+  .mode-switch[aria-label] {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(7.25rem, 1fr));
+    align-items: stretch;
+    width: 100%;
+    gap: calc(var(--spw-control-gap, 0.24rem) + 0.14rem);
+  }
+
+  .mode-switch[data-spw-lens-feedback]::after {
+    grid-column: 1 / -1;
+    max-inline-size: 100%;
+  }
+
+  .mode-switch[aria-label]::before {
+    grid-column: 1 / -1;
+    flex: none;
+    width: 100%;
+    max-inline-size: none;
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+    text-wrap: balance;
+  }
+
+  .mode-switch .frame-sigil {
+    flex: 1 1 auto;
+    inline-size: auto;
+    width: auto;
+    min-inline-size: 0;
+    font-size: clamp(0.72rem, 2.7vw, calc(var(--text-size-chip, 0.84rem) - 0.04rem));
+    padding-inline: calc(var(--spw-control-padding-inline, 0.72rem) - 0.2rem);
+  }
+}
+
+/* Shared mode-switch state lives here; routes supply palette/intent through
+   --mode-switch-*-intent variables (set on the switch, a sigil, or any ancestor)
+   instead of re-describing pressed/hover logic. The -intent indirection exists
+   because these defaults are declared on the sigil itself in the handles layer,
+   which outranks both route-layer declarations and inherited ancestor values. */
+.mode-switch .frame-sigil {
+  --mode-switch-border-width: var(--mode-switch-border-width-intent, 1px);
+  --mode-switch-idle-bg: var(--mode-switch-idle-bg-intent, color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.9)) 90%, var(--active-op-color, var(--teal)) 10%));
+  --mode-switch-idle-border: var(--mode-switch-idle-border-intent, color-mix(in srgb, var(--active-op-color, var(--teal)) 34%, var(--line, rgba(14, 18, 20, 0.14)) 66%));
+  --mode-switch-idle-ink: var(--mode-switch-idle-ink-intent, color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 88%, var(--active-op-color, var(--teal)) 12%));
+  --mode-switch-idle-shadow: var(--mode-switch-idle-shadow-intent,
+    inset 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 8%, transparent));
+  --mode-switch-idle-weight: var(--mode-switch-idle-weight-intent, 500);
+  --mode-switch-hover-bg: var(--mode-switch-hover-bg-intent, color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.9)) 84%, var(--active-op-color, var(--teal)) 16%));
+  --mode-switch-hover-border: var(--mode-switch-hover-border-intent, color-mix(in srgb, var(--active-op-color, var(--teal)) 42%, transparent));
+  --mode-switch-hover-ink: var(--mode-switch-hover-ink-intent, var(--ink, rgba(14, 18, 20, 0.92)));
+  --mode-switch-hover-shadow: var(--mode-switch-hover-shadow-intent,
+    inset 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 12%, transparent));
+  --mode-switch-hover-lift: var(--mode-switch-hover-lift-intent, var(--spw-control-hover-lift, -1px));
+  --mode-switch-active-bg: var(--mode-switch-active-bg-intent, color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.9)) 72%, var(--active-op-color, var(--teal)) 28%));
+  --mode-switch-active-border: var(--mode-switch-active-border-intent, color-mix(in srgb, var(--active-op-color, var(--teal)) 58%, transparent));
+  --mode-switch-active-ink: var(--mode-switch-active-ink-intent, var(--ink, rgba(14, 18, 20, 0.92)));
+  --mode-switch-active-weight: var(--mode-switch-active-weight-intent, 600);
+  --mode-switch-active-shadow: var(--mode-switch-active-shadow-intent,
+    inset 0 1px 0 rgba(255, 255, 255, 0.36),
+    inset 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 22%, transparent),
+    0 2px 6px color-mix(in srgb, var(--active-op-color, var(--teal)) 10%, transparent));
+  --mode-switch-active-lift: var(--mode-switch-active-lift-intent, 0px);
+  --mode-switch-focus-shadow: var(--mode-switch-focus-shadow-intent,
+    0 0 0 2px color-mix(in srgb, var(--active-op-color, var(--teal)) 20%, transparent),
+    var(--mode-switch-hover-shadow));
+  --mode-switch-pressed-animation: var(--mode-switch-pressed-animation-intent, spw-operator-breath 2s ease-in-out infinite);
+  position: relative;
+  top: auto;
+  left: auto;
+  display: inline-flex;
+  flex: 1 1 max(7.5rem, 20%);
+  inline-size: auto;
+  width: auto;
+  max-width: 100%;
+  min-height: calc(var(--spw-control-min-height, 2.1rem) - 0.22rem);
+  padding: calc(var(--spw-control-padding-block, 0.24rem) - 0.04rem) calc(var(--spw-control-padding-inline, 0.72rem) - 0.08rem);
+  border: var(--mode-switch-border-width) solid var(--mode-switch-idle-border);
+  border-radius: var(--spw-control-radius, var(--shape-control, 0.68rem));
+  background: var(--mode-switch-idle-bg);
+  box-shadow: var(--mode-switch-idle-shadow);
+  opacity: 1;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: keep-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--mode-switch-idle-ink);
+  font-weight: var(--mode-switch-idle-weight);
+  font-size: var(--text-size-chip, 0.84rem);
+  line-height: 1.02;
+  transition:
+    background-color var(--spw-interaction-commit, var(--touch-commit, 180ms) var(--ease-mechanical, ease)),
+    border-color var(--spw-interaction-commit, var(--touch-commit, 180ms) var(--ease-mechanical, ease)),
+    color var(--spw-interaction-commit, var(--touch-commit, 180ms) var(--ease-mechanical, ease)),
+    box-shadow var(--spw-interaction-settle, var(--touch-recover, 520ms) var(--ease-settle, ease)),
+    transform var(--spw-interaction-acknowledge, var(--touch-acknowledge, 90ms) var(--ease-chassis, ease)),
+    font-weight var(--spw-interaction-commit, var(--touch-commit, 180ms) var(--ease-mechanical, ease));
+}
+
+.mode-switch .frame-sigil[data-set-mode="surface"] {
+  --active-op-color: var(--op-surface-color, var(--op-topic-color, var(--teal)));
+}
+
+.mode-switch .frame-sigil[data-set-mode="syntax"] {
+  --active-op-color: var(--op-object-color, var(--teal));
+}
+
+.mode-switch .frame-sigil[data-set-mode="artifacts"] {
+  --active-op-color: var(--op-stream-color, var(--op-frame-color, var(--teal)));
+}
+
+.mode-switch .frame-sigil[data-set-mode="website"] {
+  --active-op-color: var(--op-action-color, var(--teal));
+}
+
+.mode-switch .frame-sigil:active {
+  transform: translateY(var(--spw-control-press-depth, 1px)) scale(var(--spw-micro-press-scale, 0.998));
+  transition:
+    transform var(--spw-interaction-acknowledge, var(--touch-acknowledge, 90ms) var(--ease-chassis, cubic-bezier(0.22, 0, 0, 1))),
+    box-shadow var(--spw-interaction-acknowledge, var(--touch-acknowledge, 90ms) var(--ease-chassis, cubic-bezier(0.22, 0, 0, 1)));
+}
+
+.mode-switch .frame-sigil[aria-pressed]::after {
+  content: "";
+  inline-size: 0.38rem;
+  block-size: 0.38rem;
+  margin-inline-start: 0.38rem;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.18;
+  transform: scale(0.72);
+  transition:
+    opacity var(--spw-interaction-commit, var(--handle-duration-fast, 140ms) var(--handle-ease, ease)),
+    transform var(--spw-interaction-acknowledge, var(--handle-duration-fast, 140ms) var(--handle-ease, ease));
+}
+
+@media (prefers-color-scheme: dark) {
+  .mode-switch .frame-sigil {
+    --mode-switch-idle-bg: var(--mode-switch-idle-bg-intent, color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.92)) 82%, var(--active-op-color, var(--teal)) 18%));
+    --mode-switch-idle-border: var(--mode-switch-idle-border-intent, color-mix(in srgb, var(--active-op-color, var(--teal)) 44%, rgba(255, 255, 255, 0.18) 56%));
+    --mode-switch-idle-ink: var(--mode-switch-idle-ink-intent, color-mix(in srgb, var(--ink, rgba(245, 247, 250, 0.96)) 92%, var(--active-op-color, var(--teal)) 8%));
+    --mode-switch-hover-bg: var(--mode-switch-hover-bg-intent, color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.92)) 74%, var(--active-op-color, var(--teal)) 26%));
+    --mode-switch-active-bg: var(--mode-switch-active-bg-intent, color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.92)) 64%, var(--active-op-color, var(--teal)) 36%));
+    --mode-switch-active-ink: var(--mode-switch-active-ink-intent, color-mix(in srgb, var(--ink, rgba(245, 247, 250, 0.98)) 96%, var(--active-op-color, var(--teal)) 4%));
+  }
+}
+
+.mode-switch .frame-sigil:is(:hover, :focus-visible) {
+  background: var(--mode-switch-hover-bg);
+  border-color: var(--mode-switch-hover-border);
+  color: var(--mode-switch-hover-ink);
+  box-shadow: var(--mode-switch-hover-shadow);
+  opacity: 1;
+  transform: translateY(var(--mode-switch-hover-lift));
+}
+
+.mode-switch .frame-sigil:focus-visible {
+  box-shadow: var(--mode-switch-focus-shadow);
+  outline: none;
+}
+
+/* Explicit selected state must come after the base .mode-switch .frame-sigil rule to win cascade. */
+.mode-switch .frame-sigil[aria-pressed="true"] {
+  background: var(--mode-switch-active-bg);
+  border-color: var(--mode-switch-active-border);
+  color: var(--mode-switch-active-ink);
+  font-weight: var(--mode-switch-active-weight);
+  box-shadow: var(--mode-switch-active-shadow);
+  opacity: 1;
+  transform: translateY(var(--mode-switch-active-lift));
+  animation: var(--mode-switch-pressed-animation);
+}
+
+.mode-switch .frame-sigil[aria-pressed="true"]::after {
+  opacity: 0.72;
+  transform: scale(1);
+}
+
+.mode-switch .frame-sigil:not([aria-pressed="true"]) {
+  opacity: 1;
+  background: var(--mode-switch-idle-bg);
+  border-color: var(--mode-switch-idle-border);
+  color: var(--mode-switch-idle-ink);
+  box-shadow: var(--mode-switch-idle-shadow);
+  font-weight: var(--mode-switch-idle-weight);
+  transform: none;
+}
+
+.mode-switch .frame-sigil:not([aria-pressed="true"]):is(:hover, :focus-visible) {
+  opacity: 1;
+}
+
+@keyframes spw-lens-commit-pulse {
+  0% {
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, var(--surface-strong, #fff) 44%, transparent),
+      0 0 0 1px color-mix(in srgb, var(--spw-lens-cascade-color) 7%, transparent);
+  }
+
+  42% {
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, var(--surface-strong, #fff) 44%, transparent),
+      0 0 0 3px color-mix(in srgb, var(--spw-lens-cascade-color) 18%, transparent);
+  }
+
+  100% {
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, var(--surface-strong, #fff) 44%, transparent),
+      0 0 0 1px color-mix(in srgb, var(--spw-lens-cascade-color) 7%, transparent);
+  }
+}
+
+@keyframes spw-lens-panel-enter {
+  from {
+    opacity: 0.72;
+    transform: translateY(0.18rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+:where(.mode-switch[data-spw-lens-mode="surface"], [data-spw-lens-mode="surface"]) {
+  --spw-lens-cascade-color: var(--op-surface-color, var(--op-topic-color, var(--teal)));
+}
+
+:where(.mode-switch[data-spw-lens-mode="syntax"], [data-spw-lens-mode="syntax"]) {
+  --spw-lens-cascade-color: var(--op-object-color, var(--teal));
+}
+
+:where(.mode-switch[data-spw-lens-mode="artifacts"], [data-spw-lens-mode="artifacts"]) {
+  --spw-lens-cascade-color: var(--op-stream-color, var(--op-frame-color, var(--teal)));
+}
+
+:where(.mode-switch[data-spw-lens-mode="website"], [data-spw-lens-mode="website"]) {
+  --spw-lens-cascade-color: var(--op-action-color, var(--teal));
+}
+
+:where(.mode-switch[data-spw-lens-state="changed"]) {
+  animation: spw-lens-commit-pulse 520ms var(--handle-ease, ease-out);
+}
+
+:where(.site-frame[data-spw-lens-mode]) > :where(.frame-topline, .frame-heading) {
+  border-color: color-mix(in srgb, var(--spw-lens-cascade-color) 20%, var(--line, rgba(14, 18, 20, 0.14)) 80%);
+  box-shadow:
+    inset 0 -1px 0 color-mix(in srgb, var(--spw-lens-cascade-color) 18%, transparent),
+    var(--spw-local-shadow, none);
+}
+
+:where(.site-frame[data-spw-lens-state="changed"]) > :where(.frame-topline, .frame-heading) {
+  transition:
+    border-color var(--handle-duration-base, 180ms) var(--handle-ease, ease),
+    box-shadow var(--handle-duration-base, 180ms) var(--handle-ease, ease);
+}
+
+:where([data-spw-lens-panel-state="active"]) {
+  animation: spw-lens-panel-enter 220ms var(--handle-ease, ease-out);
+}
+
+:where(html[data-spw-debug-mode="on"], html[data-spw-module-visuals="on"])
+  :where([data-spw-lens-deep-link]) > :where(.frame-topline, .frame-heading)::before {
+  content: attr(data-spw-deep-link-state);
+  display: inline-flex;
+  align-items: center;
+  max-inline-size: min(100%, 34ch);
+  overflow: hidden;
+  padding: 0.12rem 0.38rem;
+  border: 1px dashed color-mix(in srgb, var(--spw-lens-cascade-color) 26%, transparent);
+  border-radius: 999px;
+  color: color-mix(in srgb, var(--ink-soft, currentColor) 74%, var(--spw-lens-cascade-color) 26%);
+  font-family: var(--handle-meta-font);
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-overflow: ellipsis;
+  text-transform: lowercase;
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.mode-switch[data-spw-lens-state="changed"], [data-spw-lens-panel-state="active"]) {
+    animation: none;
+  }
+}
+
+/* ==========================================================================
+   9. Gesture states
+   ========================================================================== */
+
+:where([data-spw-form]) {
+  transition:
+    filter var(--handle-duration-base) var(--handle-settle-ease),
+    transform var(--handle-duration-base) var(--handle-settle-ease),
+    box-shadow var(--handle-duration-base) var(--handle-settle-ease),
+    border-color var(--handle-duration-base) var(--handle-settle-ease);
+}
+
+:where([data-spw-gesture="charging"][data-spw-form="brace"]),
+:where([data-spw-form="brace"]:hover),
+:where([data-spw-form="brace"]:focus-within) {
+  --brace-open-color: color-mix(in srgb, var(--spw-operator-color, var(--teal)) 54%, transparent);
+  --brace-close-color: color-mix(in srgb, var(--spw-operator-color, var(--teal)) 34%, transparent);
+  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--spw-operator-color, var(--teal)) 16%, transparent));
+}
+
+[data-spw-charge="active"],
+[data-spw-charge="sustained"],
+[data-spw-charge="manifest"] {
+  transform: none !important;
+}
+
+[data-spw-touch]:active,
+[data-spw-touch="tap"]:active {
+  transform: scale(0.985);
+  transition: transform 60ms var(--ease-mechanical, ease);
+}
+
+:where([data-spw-gesture="active"][data-spw-form="brace"]) {
+  --brace-open-color: color-mix(in srgb, var(--spw-operator-color, var(--teal)) 76%, transparent);
+  --brace-close-color: color-mix(in srgb, var(--spw-operator-color, var(--teal)) 58%, transparent);
+  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--spw-operator-color, var(--teal)) 22%, transparent));
+}
+
+:where([data-spw-gesture="active"][data-spw-form="block"]) {
+  box-shadow: var(--shadow-active, 0 4px 20px rgba(0, 0, 0, 0.10));
+  transform: translateY(0.5px);
+}
+
+/* Cohesion patch (Patch 008): living garden terms and tended disclosures inherit core gesture charge/armed visuals for unified feel */
+.spw-living-term[data-spw-gesture="armed"],
+.spw-garden-tended [data-spw-living-term][data-spw-gesture="armed"] {
+  border-bottom-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 55%, transparent);
+  background: color-mix(in srgb, var(--active-op-color, var(--teal)) 8%, transparent);
+}
+
+/* ARIA hygiene: armed state on any focusable gesture target shows distinct "hold to commit" affordance.
+   This bridges the data-spw-gesture state written by brace-gestures.js to visual + AT users. */
+:where([data-spw-gesture="armed"]):focus-visible {
+  outline: 1px dashed color-mix(in srgb, var(--active-op-color, var(--teal)) 65%, transparent);
+  outline-offset: 2px;
+}
+
+.spw-living-term[data-spw-gesture="charging"],
+.spw-garden-tended [data-spw-living-term][data-spw-gesture="charging"] {
+  border-bottom-color: var(--active-op-color, var(--teal));
+  background: color-mix(in srgb, var(--active-op-color, var(--teal)) 12%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 25%, transparent);
+}
+
+.spw-living-term[data-spw-gesture="sustained"],
+.spw-garden-tended [data-spw-living-term][data-spw-gesture="sustained"] {
+  border-bottom-style: solid;
+  border-bottom-color: var(--active-op-color, var(--teal));
+}
+
+@keyframes spw-handle-sustain-breath {
+  0%,
+  100% {
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--spw-operator-color, var(--teal)) 18%, transparent);
+  }
+
+  50% {
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--spw-operator-color, var(--teal)) 30%, transparent);
+  }
+}
+
+:where([data-spw-gesture="sustained"][data-spw-form="brace"]),
+:where([data-spw-gesture="sustained"][data-spw-form="block"]) {
+  animation: spw-handle-sustain-breath 1.6s ease-in-out infinite;
+}
+
+:where([data-spw-gesture="projecting"][data-spw-form="brace"]) {
+  transform: translate(calc(var(--drag-dx, 0px) * 0.03), calc(var(--drag-dy, 0px) * 0.03));
+}
+
+/* Interactive vocabulary development + resonance (vocabulary-resonance trope)
+   - Terms carrying Spw/operator/brace/measure language become primable, wonder-charged objects.
+   - Hover/prime/focus creates resonance (echo via wonder-memory, charge, annotation invitation).
+   - Supports page-specific attentional rhythm and game/poetry-style discoverability.
+   - Ties directly to 'vocabulary-resonance' trope and imagination-development north star.
+   - Modern CSS: uses :has() + :focus-visible for clean, context-sensitive behavior. */
+[data-spw-vocabulary-term],
+[data-spw-semantic-expression],
+.inline-note code,
+.frame-note code {
+  transition: color var(--duration-fast), background var(--duration-fast), box-shadow var(--duration-fast);
+  cursor: help;
+}
+
+[data-spw-vocabulary-term]:is(:hover, :focus-visible),
+[data-spw-semantic-expression]:is(:hover, :focus-visible),
+.inline-note code:is(:hover, :focus-visible),
+.frame-note code:is(:hover, :focus-visible) {
+  color: var(--active-op-color);
+  background: color-mix(in srgb, var(--active-op-color) 8%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--active-op-color) 25%, transparent);
+}
+
+/* When a vocabulary term is primed (via wonder-memory, annotation, or explicit data attr)
+   it participates in the larger resonance field — supports priming wonder mechanics
+   and easter-egg-like moments of recognition. */
+body:has([data-spw-wonder-state]:not([data-spw-wonder-state=""])) [data-spw-vocabulary-term],
+body:has([data-spw-annotation-match]) [data-spw-vocabulary-term] {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 3px;
+}
+
+/* Brace + operator + measurement topology enhancement (gestalt + phase coordination)
+   When a brace is in a strong gesture/phase state and contains or is near
+   measurement elements, strengthen proximity and common fate without causing
+   wrapping surprises. Supports the "brace as manuscript layer container" and
+   "fidget-tunable brace physics" directions. */
+:where([data-spw-form="brace"][data-spw-gesture]:has([data-spw-measure-kind]),
+       [data-spw-form="brace"][data-spw-gesture] [data-spw-measure-kind]) {
+  --brace-measure-tint: color-mix(in srgb, var(--measure-tint, var(--spw-operator-color)) 22%, transparent);
+  border-color: var(--brace-measure-tint);
+  transition: border-color var(--duration-fast) var(--ease-settle);
+}
+
+:where([data-spw-form="brace"][data-spw-gesture="sustained"] [data-spw-measure-kind]) {
+  /* Sustained brace gesture makes contained measures participate in the breath */
+  animation: spw-handle-sustain-breath 1.6s ease-in-out infinite;
+}
+
+:where([data-spw-gesture="projecting"][data-spw-form="block"]) {
+  transform: translate(calc(var(--drag-dx, 0px) * 0.02), calc(var(--drag-dy, 0px) * 0.02));
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.10);
+}
+
+/* Primed containment → cauldron tether (additive, inside gesture block).
+   A charged/armed brace signals local value ready for gathering; the cauldron
+   host and any primed ingredients receive a soft visual echo without new tokens. */
+body:has([data-spw-gesture="armed"][data-spw-form="brace"]) [data-spw-cauldron],
+body:has([data-spw-gesture="charging"][data-spw-form="brace"]) [data-spw-cauldron],
+body:has([data-spw-gesture="sustained"][data-spw-form="brace"]) [data-spw-cauldron],
+body:has([data-spw-gesture="armed"][data-spw-form="brace"]) [data-spw-cauldron-mirror],
+body:has([data-spw-gesture="charging"][data-spw-form="brace"]) [data-spw-cauldron-mirror],
+body:has([data-spw-gesture="sustained"][data-spw-form="brace"]) [data-spw-cauldron-mirror] {
+  --cauldron-tether: color-mix(in srgb, var(--active-op-color, var(--teal)) 18%, transparent);
+  box-shadow: 0 0 0 1px var(--cauldron-tether);
+}
+
+.cauldron-ingredient[data-spw-ingredient-primed] {
+  border-style: dashed;
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 32%, var(--cauldron-chip-border));
+}
+

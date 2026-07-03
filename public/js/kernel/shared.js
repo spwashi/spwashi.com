@@ -1310,6 +1310,37 @@ const getOperatorGeometry = (value = '') => {
   return OPERATOR_GEOMETRY[operator.type] || null;
 };
 
+/* Operator/operand split: every Spw expression is an operator acting on an
+   operand. The geometry table already names the positional roles (leftRole /
+   rightRole); this helper makes the operand itself first-class so surfaces
+   can project it as the data-spw-op bundle:
+   data-spw-op="operator:frame operand:address position:prefix".
+   Top-down: [data-spw-op~="operator:frame"] finds every framed thing;
+   combinatorics come free by stacking token matchers. */
+const splitOperatorExpression = (expression = '') => {
+  const normalized = normalizeText(expression);
+  const definition = detectOperator(normalized);
+  if (!definition) {
+    return { operator: '', prefix: '', operand: normalized, position: '' };
+  }
+  const operand = normalized.replace(definition.pattern, '').trim();
+  return {
+    operator: definition.type,
+    prefix: definition.prefix || '',
+    operand,
+    position: 'prefix',
+  };
+};
+
+const composeOpBundle = (expression = '') => {
+  const parts = splitOperatorExpression(expression);
+  const tokens = [];
+  if (parts.operator) tokens.push(`operator:${parts.operator}`);
+  if (parts.operand) tokens.push(`operand:${parts.operand.replace(/\s+/g, '_').slice(0, 48)}`);
+  if (parts.position) tokens.push(`position:${parts.position}`);
+  return tokens.join(' ');
+};
+
 const SIGIL_PREFIX_OPERATOR_RE = /^(#>|#:|#|\.|\^|~|\?|@|\*|&|=|\$|%|!|>|<|\(|\[|\{)/;
 const SIGIL_POSTFIX_OPERATOR_RE = /(!|\^|\.|>|\)|\]|\})$/;
 const SIGIL_INFIX_EXPRESSION_RE = /^[^\[{(<]+[\[{<(]/;
@@ -1800,6 +1831,8 @@ export {
   getNavigationType,
   getOperatorDefinition,
   getOperatorGeometry,
+  splitOperatorExpression,
+  composeOpBundle,
   parseSigilPosition,
   resolveOperationalFixity,
   getPageSurface,

@@ -1,0 +1,1280 @@
+/* ==========================================================================
+   shell/chrome/adaptive.css — the hall resizes
+   --------------------------------------------------------------------------
+   Reads as: responsive chrome behavior and reduced-motion collapse across header, nav, and footer
+   Was: shell/chrome.css §4–5 (split 2026-07-03, rule order preserved verbatim)
+   Genome — states sensed: aria-expanded, data-spw-action-tier, data-spw-active-layers, data-spw-breadcrumb-state, data-spw-breadcrumb-viewport, data-spw-cauldron-action, data-spw-cauldron-candidate-visibility, data-spw-cauldron-discoverability, data-spw-cauldron-garden-phase, data-spw-cauldron-mirror, data-spw-cauldron-state (G1 bundle: phase/count axes), data-spw-cognitive-container, data-spw-deep-link
+   Genome — custom properties defined: 9; intent hooks consumed: none
+   Probe: toggle me wholesale in DevTools > Sources, or set
+   html[data-spw-debug-layers="on"] to see layer owners breathe.
+   ========================================================================== */
+
+
+/* ==========================================================================
+   4. Responsive
+   ========================================================================== */
+
+@media (max-width: 720px) {
+  .spw-discovery-notice-stack {
+    inset-inline: max(0.75rem, env(safe-area-inset-left)) max(0.75rem, env(safe-area-inset-right));
+    /* Keep daily promo toasts above the bottom floating chrome lane. */
+    inset-block-end: calc(max(0.8rem, env(safe-area-inset-bottom)) + var(--spw-floating-slot-control, 3.15rem) + 0.75rem);
+    width: auto;
+    max-block-size: min(31dvh, 13rem);
+    max-inline-size: none;
+    align-content: end;
+    gap: 0.45rem;
+    overflow: hidden;
+  }
+
+  .spw-discovery-notice-stack > .spw-discovery-notice:nth-of-type(n + 2) {
+    display: none;
+  }
+
+  .spw-discovery-notice {
+    gap: 0.38rem;
+    max-block-size: min(31dvh, 13rem);
+    padding: 0.66rem 0.72rem;
+    border-radius: clamp(0.72rem, 3vw, 0.92rem);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 56%),
+      rgba(18, 23, 26, 0.98);
+    color: rgba(244, 248, 246, 0.98);
+    border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 22%, rgba(255, 255, 255, 0.18));
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.34);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .spw-discovery-notice__label {
+    font-size: 0.62rem;
+    letter-spacing: 0.04em;
+  }
+
+  .spw-discovery-notice__title {
+    font-size: 0.88rem;
+    line-height: 1.25;
+  }
+
+  .spw-discovery-notice__summary {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    font-size: 0.72rem;
+    line-height: 1.35;
+  }
+
+  .spw-discovery-notice__title,
+  .spw-discovery-notice__summary,
+  .spw-discovery-notice__offer {
+    color: rgba(244, 248, 246, 0.98);
+  }
+
+  .spw-discovery-notice__offer,
+  .spw-discovery-notice__why,
+  .spw-discovery-notice__handles,
+  .spw-discovery-notice__meta {
+    display: none;
+  }
+
+  .spw-discovery-notice__label,
+  .spw-discovery-notice__why,
+  .spw-discovery-notice__dismiss {
+    color: rgba(218, 226, 222, 0.86);
+  }
+
+  .spw-discovery-notice__actions {
+    gap: 0.32rem;
+    margin-block-start: 0.08rem;
+  }
+
+  .spw-discovery-notice__cta,
+  .spw-discovery-notice__dismiss {
+    min-height: 1.85rem;
+    padding: 0.28rem 0.56rem;
+    border-radius: 0.42rem;
+    font-size: 0.72rem;
+  }
+
+  .spw-discovery-notice--modal {
+    max-height: min(62vh, 22rem);
+  }
+
+  :where(.site-header, body > header) {
+    min-height: auto;
+    align-content: start;
+    row-gap: 0.32rem;
+    column-gap: 0.42rem;
+    padding-block: var(--spw-shell-surface-padding-block, 0.38rem);
+  }
+
+  :where(.site-header nav, body > header nav) {
+    justify-self: stretch;
+    mask-image: linear-gradient(
+      90deg,
+      transparent,
+      #000 0.75rem,
+      #000 calc(100% - 0.75rem),
+      transparent
+    );
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent,
+      #000 0.75rem,
+      #000 calc(100% - 0.75rem),
+      transparent
+    );
+  }
+
+  .header-sigil,
+  .spw-nav-toggle {
+    padding-inline: max(0.85rem, env(safe-area-inset-left));
+  }
+
+  .spw-nav-toggle {
+    grid-area: toggle;
+    display: inline-flex;
+    margin-inline-end: 0;
+    justify-self: end;
+  }
+
+  .spw-header-actions {
+    justify-self: end;
+    gap: 0.2rem;
+    max-inline-size: min(48vw, 16.5rem);
+  }
+
+  .spw-header-action--cauldron {
+    inline-size: 3.9rem;
+    padding-inline: 0.44rem;
+    font-size: 0.66rem;
+  }
+
+  .spw-attention-posture-pill {
+    inline-size: 8.8rem;
+    max-inline-size: 8.8rem;
+    padding-inline: 0.42rem;
+  }
+
+  .spw-attention-posture-pill__kicker {
+    display: none;
+  }
+
+  .spw-attention-posture-pill__value {
+    font-size: 0.62rem;
+  }
+
+  .site-header[data-spw-shell-layout="toggle-field"] .spw-header-actions,
+  body > header[data-spw-shell-layout="toggle-field"] .spw-header-actions {
+    display: none;
+  }
+
+  .header-annotation {
+    max-width: min(100%, 24ch);
+    text-align: left;
+  }
+
+  .header-brand {
+    gap: 0.35rem;
+    padding-inline-start: 0;
+  }
+
+  .header-brand,
+  .header-sigil {
+    min-width: 0;
+  }
+
+  :where(.site-header nav, body > header nav) {
+    grid-area: nav;
+    grid-column: 1 / -1;
+    width: 100%;
+    max-width: none;
+  }
+
+  .site-header[data-spw-menu-mode="toggle"] nav,
+  body > header[data-spw-menu-mode="toggle"] nav {
+    grid-area: auto;
+    grid-column: auto;
+    width: auto;
+    max-width: none;
+  }
+
+  :where(.site-header[data-spw-menu-mode="toggle"][data-spw-menu="closed"] nav,
+         body > header[data-spw-menu-mode="toggle"][data-spw-menu="closed"] nav) {
+    display: none;
+  }
+
+  :where(.site-header:not([data-spw-menu-mode]), body > header:not([data-spw-menu-mode])) nav ul {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+    grid-template-columns: unset;
+    gap: 0.28rem;
+    padding-block-end: 0.12rem;
+  }
+
+  :where(.site-header:not([data-spw-menu-mode]), body > header:not([data-spw-menu-mode])) nav a {
+    width: auto;
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  :where(.site-header ul, body > header ul) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 5.4rem), 1fr));
+    gap: 0.35rem;
+    width: 100%;
+    max-width: none;
+    padding-inline: var(--page-gutter-inline);
+  }
+
+  :where(.site-header nav a, body > header nav a) {
+    width: 100%;
+    border-radius: var(--shell-panel-radius);
+    justify-content: start;
+  }
+
+  :where(.site-header:not([data-spw-shell-disclosure-init]) nav,
+         body > header:not([data-spw-shell-disclosure-init]) nav) {
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+  }
+
+  :where(.site-header:not([data-spw-shell-disclosure-init]) ul,
+         body > header:not([data-spw-shell-disclosure-init]) ul) {
+    display: flex;
+    flex-wrap: nowrap;
+    width: max-content;
+    max-width: none;
+    padding-inline: max(0.55rem, env(safe-area-inset-left)) max(0.55rem, env(safe-area-inset-right));
+  }
+
+  :where(.site-header:not([data-spw-shell-disclosure-init]) nav a,
+         body > header:not([data-spw-shell-disclosure-init]) nav a) {
+    width: auto;
+    white-space: nowrap;
+  }
+
+  .spw-route-menu-host {
+    grid-column: 1 / -1;
+  }
+
+  .spw-route-menu-trigger {
+    width: 100%;
+    justify-content: space-between;
+    border-radius: var(--shell-panel-radius);
+  }
+
+  .spw-route-menu-panel {
+    position: static;
+    min-width: 0;
+    margin-top: 0.35rem;
+    padding: 0.35rem;
+  }
+
+  :where(.site-header, body > header) .spw-header-trace:has(.spw-spell-path) {
+    display: block;
+    grid-column: 1 / -1;
+    min-block-size: 0;
+    padding-inline: max(0.35rem, env(safe-area-inset-left)) max(0.35rem, env(safe-area-inset-right));
+  }
+
+  :where(.site-header[data-spw-menu-mode="toggle"] .spw-header-trace:has(.spw-spell-path),
+         body > header[data-spw-menu-mode="toggle"] .spw-header-trace:has(.spw-spell-path)) {
+    max-block-size: min(7.5rem, 28dvh);
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+
+  .site-header[data-spw-menu-mode="toggle"][data-spw-menu="closed"] .spw-header-trace:has(.spw-spell-path[data-spw-breadcrumb-state="closed"]),
+  body > header[data-spw-menu-mode="toggle"][data-spw-menu="closed"] .spw-header-trace:has(.spw-spell-path[data-spw-breadcrumb-state="closed"]) {
+    max-block-size: 3.2rem;
+    overflow: hidden;
+  }
+
+  :where(.site-header[data-spw-menu-mode="toggle"][data-spw-menu="open"],
+         body > header[data-spw-menu-mode="toggle"][data-spw-menu="open"]) .spw-header-trace {
+    display: none;
+    min-block-size: 0;
+    max-block-size: 0;
+    overflow: hidden;
+    padding-block: 0;
+  }
+
+  :where(.site-header, body > header) .spw-spell-path {
+    margin: 0;
+    padding: 0.08rem 0 0;
+    border-top: 1px solid color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 82%, transparent);
+  }
+
+  :where(.site-header[data-spw-menu-mode="toggle"] .spw-spell-path[data-spw-breadcrumb-viewport="compact"] .spw-spell-trail,
+         body > header[data-spw-menu-mode="toggle"] .spw-spell-path[data-spw-breadcrumb-viewport="compact"] .spw-spell-trail) {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    mask-image: linear-gradient(90deg, transparent, #000 0.6rem, #000 calc(100% - 0.6rem), transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 0.6rem, #000 calc(100% - 0.6rem), transparent);
+  }
+
+  :where(.site-header[data-spw-menu-mode="toggle"] .spw-spell-path[data-spw-breadcrumb-viewport="compact"] .spw-spell-crumb,
+         body > header[data-spw-menu-mode="toggle"] .spw-spell-path[data-spw-breadcrumb-viewport="compact"] .spw-spell-crumb) {
+    flex: 0 0 auto;
+  }
+
+  :where(.site-header[data-spw-menu-mode="toggle"] .spw-spell-path .spw-spell-meaning,
+         .site-header[data-spw-menu-mode="toggle"] .spw-spell-path__garden-trace,
+         body > header[data-spw-menu-mode="toggle"] .spw-spell-path .spw-spell-meaning,
+         body > header[data-spw-menu-mode="toggle"] .spw-spell-path__garden-trace) {
+    display: none;
+  }
+
+  .spw-spell-dock {
+    display: none;
+  }
+
+  .spw-shell-utility-row {
+    flex-wrap: wrap;
+    overflow-x: visible;
+    touch-action: pan-y;
+    scroll-snap-type: none;
+    scrollbar-width: auto;
+    row-gap: 0.22rem;
+  }
+
+  .site-footer__inner {
+    grid-template-columns: 1fr;
+    gap: 0.55rem 0;
+  }
+
+  .site-footer__identity {
+    /* Dense children (cauldron + settings form + architecture) need tighter, consistent rhythm on stack */
+    gap: 0.32rem;
+  }
+
+  .site-footer__settings {
+    margin-top: 0.45rem;
+    padding-top: 0.3rem;
+    border-top: 1px solid color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 65%, transparent);
+  }
+
+  .site-footer__nav {
+    padding-top: 0.2rem;
+  }
+
+  .site-footer__nav-links {
+    gap: 0.28rem 0.34rem;
+  }
+
+  .site-footer__cauldron-ingredients {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 420px) {
+  .spw-header-actions {
+    gap: 0.22rem;
+    max-inline-size: 6.8rem;
+  }
+
+  .spw-header-action--cauldron {
+    inline-size: 4.3rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .spw-attention-posture-pill {
+    inline-size: 2.5rem;
+    max-inline-size: 2.5rem;
+    padding-inline: 0.28rem;
+  }
+
+  .spw-attention-posture-pill::before {
+    content: "attn";
+    color: color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 82%, var(--spw-shell-chrome-accent-local) 18%);
+    font-size: 0.55rem;
+    font-weight: 760;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .spw-attention-posture-pill__value {
+    display: none;
+  }
+}
+
+/* Richer cauldron ingredient list — supports the force-gathering / emergence model */
+.site-footer__cauldron-ingredients {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.22rem 0.3rem;
+  margin: 0.3rem 0 0.15rem;
+  font-size: 0.71rem;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  align-items: flex-end; /* buttons/actions at bottom of footer cauldron layout */
+}
+
+.site-footer__cauldron-status {
+  margin: 0.18rem 0 0;
+  max-inline-size: 58ch;
+  color: color-mix(in srgb, var(--ink-soft, rgba(14, 18, 20, 0.72)) 86%, var(--component-accent, var(--active-op-color, var(--teal))) 14%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-2xs, 0.72rem);
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+/* Compact instruction link for footer cauldron discoverability (links to palettes hooks section with contract/demo/learnability text).
+   Small, inline, doesn't disrupt the status reflection of state. */
+.site-footer__cauldron-status .cauldron-instruction-link {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.78em;
+  opacity: 0.75;
+  text-decoration: underline;
+  margin-inline-start: 0.35em;
+  white-space: nowrap;
+}
+
+.site-footer__cauldron-availability {
+  display: inline;
+  color: color-mix(in srgb, var(--ink-muted, rgba(14,18,20,0.58)) 84%, var(--component-accent, var(--active-op-color, var(--teal))) 16%);
+}
+.site-footer__cauldron-status .cauldron-instruction-link:hover,
+.site-footer__cauldron-status .cauldron-instruction-link:focus {
+  opacity: 1;
+}
+
+/* Improved footer cauldron layout: status + ingredients flex container with actions (clear etc) bottom-aligned; resonates with .spw-cauldron-footer pattern for cards. Better ergonomics, visual grouping for learnability of collection state. */
+.site-footer__cauldron {
+  display: flex;
+  flex-direction: column;
+  gap: 0.32rem;
+  margin-top: 0.12rem;
+  padding: 0.68rem;
+  border: 1px solid var(--footer-panel-line);
+  border-radius: var(--shape-surface, 8px);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--footer-accent, var(--active-op-color, var(--teal))) 5%, transparent), transparent 54%),
+    var(--footer-panel-bg);
+}
+
+.site-footer__cauldron[data-spw-hypermedia-extension] {
+  border-color: color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 18%, var(--footer-panel-line));
+}
+
+.site-footer__cauldron-phase-rail {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.22rem;
+  margin: 0.02rem 0 0.04rem;
+  padding: 0;
+  list-style: none;
+}
+
+.site-footer__cauldron-phase-step {
+  display: grid;
+  align-items: center;
+  min-block-size: 1.55rem;
+  padding: 0.16rem 0.28rem;
+  border: 1px solid color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 12%, var(--footer-panel-line));
+  border-radius: calc(var(--shape-component, 6px) + 1px);
+  background: color-mix(in srgb, var(--footer-panel-bg) 92%, var(--component-accent, var(--active-op-color, var(--teal))) 8%);
+  color: color-mix(in srgb, var(--ink-muted, rgba(14, 18, 20, 0.58)) 84%, var(--component-accent, var(--active-op-color, var(--teal))) 16%);
+}
+
+.site-footer__cauldron-phase-step[data-spw-phase-complete="true"] {
+  border-color: color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 22%, var(--footer-panel-line));
+  color: color-mix(in srgb, var(--ink-soft, rgba(14, 18, 20, 0.72)) 74%, var(--component-accent, var(--active-op-color, var(--teal))) 26%);
+}
+
+.site-footer__cauldron-phase-step[data-spw-phase-active="true"] {
+  border-color: color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 40%, var(--footer-panel-line));
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 15%, transparent), transparent 78%),
+    color-mix(in srgb, var(--footer-panel-bg) 82%, var(--component-accent, var(--active-op-color, var(--teal))) 18%);
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  font-weight: 800;
+}
+
+.site-footer__cauldron-phase-label {
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-2xs, 0.72rem);
+  letter-spacing: 0.04em;
+}
+
+.site-footer__cauldron .site-footer__cauldron-status + .site-footer__cauldron-ingredients {
+  margin-top: 0.1rem;
+}
+
+.site-footer__cauldron[data-spw-cauldron-state~="phase:empty"] {
+  opacity: 0.88;
+}
+
+.site-footer__cauldron[data-spw-cauldron-state~="phase:empty"] .site-footer__cauldron-actions .operator-chip:not([data-spw-cauldron-action="clear"]) {
+  opacity: 0.42;
+}
+
+.site-footer__cauldron[data-spw-cauldron-state~="phase:spell-ready"] {
+  border-color: color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 28%, var(--footer-panel-line));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 16%, transparent);
+}
+
+.site-footer__spell-preview {
+  display: grid;
+  gap: 0.12rem;
+  padding: 0.48rem 0.58rem;
+  border: 1px solid color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 18%, transparent);
+  border-radius: calc(var(--shape-control, 0.78rem) - 0.18rem);
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 9%, transparent), transparent 72%),
+    color-mix(in srgb, var(--surface-strong, #fff) 92%, transparent);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+}
+
+.site-footer__spell-preview[hidden] {
+  display: none;
+}
+
+.site-footer__spell-preview-meta,
+.site-footer__spell-preview-path {
+  margin: 0;
+}
+
+.site-footer__spell-preview-meta {
+  color: var(--ink-muted, rgba(14, 18, 20, 0.58));
+  font-size: var(--text-size-2xs, 0.72rem);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.site-footer__spell-preview-path {
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  font-size: var(--text-size-xs, 0.82rem);
+  overflow-wrap: anywhere;
+  letter-spacing: 0.01em;
+  transition: color var(--spw-control-transition-fast, 120ms ease);
+}
+
+.site-footer__spell-preview[data-spw-spell-state="draft"] .site-footer__spell-preview-meta {
+  color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 58%, var(--component-accent, var(--active-op-color, var(--teal))) 42%);
+}
+
+.site-footer__cauldron[data-spw-cauldron-state~="phase:spell-ready"] .site-footer__spell-preview {
+  border-color: color-mix(in srgb, var(--op-action-color, var(--teal-dark)) 28%, transparent);
+}
+
+/* Visual state reflection on footer cauldron (phase axis of data-spw-cauldron-state from computeCauldronPhase + sync).
+   Improves state UX discoverability: resonant/mature states get subtle "charged" accent/emphasis so the garden feels alive and tended.
+   Compact, uses existing tokens, no new heavy rules. */
+.site-footer__cauldron[data-spw-cauldron-garden-phase="resonant"] {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 18%, transparent), var(--card-shadow);
+}
+.site-footer__cauldron[data-spw-cauldron-garden-phase="mature"] {
+  border-color: color-mix(in srgb, var(--op-action-color, var(--teal-dark)) 24%, var(--line));
+}
+.site-footer__cauldron[data-spw-cauldron-state~="phase:empty"] {
+  opacity: 0.85;
+}
+
+/* Cauldron ingredients — styled as inspectable semantic chips using shared tokens */
+.cauldron-ingredient {
+  --cauldron-chip-bg: color-mix(in oklab, var(--surface-strong, #fff) 94%, var(--component-accent, var(--active-op-color, var(--teal))) 6%);
+  --cauldron-chip-border: color-mix(in oklab, var(--component-accent, var(--active-op-color, var(--teal))) 16%, var(--line, rgba(14,18,20,0.14)) 84%);
+  --cauldron-chip-ink: var(--ink-soft, rgba(14, 18, 20, 0.72));
+
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spw-control-gap, 0.28rem);
+  min-height: var(--spw-control-min-height, 2.15rem);
+  padding: var(--spw-control-padding-block, 0.26rem) calc(var(--spw-control-padding-inline, 0.68rem) * 0.7);
+  border: 1px solid var(--cauldron-chip-border);
+  border-radius: var(--spw-control-radius, var(--shape-control, 0.78rem));
+  background: var(--cauldron-chip-bg);
+  color: var(--cauldron-chip-ink);
+  font-size: var(--text-size-chip, 0.82rem);
+  line-height: var(--spw-control-line-height, 1.08);
+  white-space: nowrap;
+  transition:
+    background-color var(--spw-control-transition-fast),
+    border-color var(--spw-control-transition-fast),
+    color var(--spw-control-transition-fast),
+    box-shadow var(--spw-control-transition-base),
+    transform var(--spw-control-transition-fast);
+  cursor: grab;
+  touch-action: manipulation;
+  position: relative;
+}
+
+/* Primed / state reflection on individual cauldron ingredients (data-spw-ingredient-primed from gesture).
+   Enhances state UX visibility in footer: primed ones "glow" with the action color to reflect the charged origin.
+   Improves discoverability of the primed containment concept without extra elements. */
+.cauldron-ingredient[data-spw-ingredient-primed] {
+  --cauldron-chip-border: color-mix(in srgb, var(--active-op-color, var(--teal)) 32%, var(--line));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 14%, transparent);
+}
+
+.cauldron-ingredient[data-spw-deep-link*="#"] {
+  --cauldron-chip-border: color-mix(in oklab, var(--op-ref-color, #4f7fbf) 30%, var(--line, rgba(14,18,20,0.14)) 70%);
+
+  box-shadow:
+    inset 2px 0 0 color-mix(in srgb, var(--op-ref-color, #4f7fbf) 24%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--op-ref-color, #4f7fbf) 10%, transparent);
+}
+
+/* Make cauldron ingredients feel like true "ingredients" — clear prime/gather affordance */
+.cauldron-ingredient::before {
+  content: "⟐";
+  font-size: 0.7em;
+  opacity: 0.5;
+  margin-right: -0.1em;
+}
+
+.cauldron-ingredient[data-spw-ingredient-primed="true"] {
+  --cauldron-chip-border: color-mix(in oklab, var(--component-accent, var(--active-op-color, var(--teal))) 38%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 22%, transparent);
+  transform: translateY(-0.5px);
+}
+
+/* Device optimization for cauldron ingredients (larger comfortable tap targets on narrow viewports) */
+@media (max-width: 720px) {
+  .cauldron-ingredient {
+    min-height: 2.4rem;
+    padding: 0.32rem 0.55rem;
+    font-size: 0.78rem;
+  }
+  .cauldron-ingredient-remove {
+    min-width: 1.6rem;
+    min-height: 1.6rem;
+  }
+}
+
+.cauldron-ingredient:hover,
+.cauldron-ingredient:focus-visible {
+  --cauldron-chip-bg: color-mix(in oklab, var(--surface-strong, #fff) 90%, var(--component-accent, var(--active-op-color, var(--teal))) 10%);
+  --cauldron-chip-border: color-mix(in oklab, var(--component-accent, var(--active-op-color, var(--teal))) 28%, transparent);
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 18%, transparent);
+  transform: translateY(-1px);
+}
+
+/* Cauldron locality: ingredients can be scoped to a cognitive container for more natural, local gathering/reset cycles */
+[data-spw-cognitive-container] .cauldron-ingredient {
+  font-size: 0.68rem;
+  min-height: 1.9rem;
+}
+
+[data-spw-cognitive-container] .site-footer__cauldron-ingredients {
+  gap: 0.18rem 0.24rem;
+}
+
+.cauldron-ingredient:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 40%, transparent);
+  outline-offset: 1px;
+}
+
+.cauldron-ingredient[data-spw-ingredient-inspect="active"] {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 35%, transparent);
+}
+
+.cauldron-ingredient-op {
+  font-weight: 700;
+  color: var(--active-op-color, var(--component-accent, var(--teal)));
+  opacity: 0.9;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+}
+
+.cauldron-ingredient-expr {
+  max-width: 18ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+}
+
+.cauldron-ingredient-meta-group {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+  opacity: 0.7;
+  font-size: 0.72em;
+}
+
+.cauldron-ingredient-meta,
+.cauldron-origin {
+  padding: 0.05rem 0.35rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--line, rgba(14,18,20,0.14)) 12%, transparent);
+  font-size: 0.68em;
+  letter-spacing: 0.02em;
+}
+
+.cauldron-origin {
+  font-style: italic;
+  opacity: 0.65;
+}
+
+.cauldron-ingredient-meta.cauldron-deep-link {
+  border: 1px solid color-mix(in srgb, var(--op-ref-color, #4f7fbf) 22%, transparent);
+  background: color-mix(in srgb, var(--op-ref-color, #4f7fbf) 8%, transparent);
+  color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 78%, var(--op-ref-color, #4f7fbf) 22%);
+  font-weight: 700;
+}
+
+/* Further cauldron UX polish for funding/self-imagination tranche:
+   Ingredients carrying character-capacity or budgeting origin get a subtle, inspectable accent.
+   This makes the "trace changes and wonder about variants" path from budgeting/character tools
+   immediately visible in the memory garden without adding rules, chrome, or cognitive load.
+   Powerusers can query [data-spw-origin*="budgeting"] or [data-spw-wonder="character-capacity"].
+   Scoped, additive, respects existing meta styles and locality. */
+.cauldron-ingredient[data-spw-origin*="budgeting"],
+.cauldron-ingredient[data-spw-wonder="character-capacity"],
+.cauldron-ingredient[data-spw-origin*="character"] {
+  --cauldron-chip-border: color-mix(in oklab, var(--op-object-color, #c48a28) 28%, var(--cauldron-chip-border, currentColor) 72%);
+}
+.cauldron-ingredient[data-spw-wonder="character-capacity"] .cauldron-origin,
+.cauldron-ingredient[data-spw-origin*="character"] .cauldron-origin {
+  font-weight: 600;
+  opacity: 0.82;
+}
+
+/* Deeper higher-order dimension rendering in cauldron (from budgeting macros + resource modeling).
+   Keeps the memory garden as a first-class viewer for complex, shareable, higher-order models.
+   Small, scoped, additive — reuses existing meta chip aesthetics. */
+.cauldron-dimension-chip {
+  padding: 0.05rem 0.3rem;
+  border-radius: 0.25rem;
+  background: color-mix(in oklab, var(--op-object-color, #c48a28) 12%, transparent);
+  font-size: 0.65em;
+  margin-right: 0.15rem;
+}
+.cauldron-ingredient-meta.cauldron-dimensions {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.1rem;
+}
+
+.cauldron-primed {
+  border: 1px dashed color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 32%, transparent);
+  background: color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 10%, transparent);
+  color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 78%, var(--component-accent, var(--active-op-color, var(--teal))) 22%);
+  font-weight: 700;
+}
+
+.cauldron-ingredient-remove {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  opacity: 0.5;
+  font-size: 1.05em;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 0.15rem;
+  border-radius: 999px;
+  transition: opacity var(--spw-control-transition-fast), color var(--spw-control-transition-fast);
+  align-self: flex-end; /* button alignment at bottom of cauldron chip / footer layout */
+  min-width: 1.5rem;
+  min-height: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cauldron-ingredient-remove:hover,
+.cauldron-ingredient-remove:focus-visible {
+  opacity: 1;
+  color: var(--danger, #9d2f2f);
+  background: color-mix(in srgb, var(--danger, #9d2f2f) 12%, transparent);
+}
+
+/* Consistent disabled state for cauldron controls (mix/clear use .operator-chip) */
+.site-footer__cauldron button[disabled],
+.site-footer__cauldron [data-spw-cauldron-action][disabled] {
+  opacity: 0.45;
+  pointer-events: none;
+  filter: saturate(0.6);
+}
+
+/* Improve footer cauldron layout and action buttons for better visual ergonomics and learnability.
+   Actions in a responsive flex wrap (2-col on narrow like screenshot, more on wide).
+   Soft, cohesive pill styling to match the "Memory Garden" presentation in reference views (light bg, subtle borders, consistent with operator-chip but tuned for cauldron context).
+   Buttons have good tap targets, left-aligned operator+label for scannability, hover feedback.
+   The row uses gap for breathing room; on wider viewports they can breathe more or wrap cleanly.
+   Ties to learnability (clear actions with operators), configurable (the actions themselves are the "verbs" for feedback level of engagement with the garden).
+*/
+.site-footer__cauldron-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-top: 0.35rem;
+}
+.site-footer__cauldron-actions .operator-chip {
+  flex: 1 1 calc(50% - 0.125rem);
+  min-height: 2.1rem;
+  padding: 0.28rem 0.55rem;
+  font-size: 0.78rem;
+  justify-content: flex-start;
+  background: color-mix(in srgb, var(--surface-strong, #f8f5f0) 96%, var(--component-accent, var(--active-op-color, #2a6b6b)) 4%);
+  border: 1px solid color-mix(in srgb, var(--line, rgba(0,0,0,0.1)) 40%, transparent);
+  color: color-mix(in srgb, var(--ink, #222) 85%, var(--component-accent, #2a6b6b) 15%);
+  border-radius: 10px;
+  box-shadow: none;
+  transition: transform 80ms, background 80ms, border-color 80ms, color 80ms;
+}
+
+.site-footer__cauldron-actions .operator-chip[data-spw-action-tier="primary"] {
+  flex-basis: 100%;
+  justify-content: center;
+  font-weight: 800;
+  background: color-mix(in srgb, var(--surface-strong, #f8f5f0) 82%, var(--component-accent, var(--active-op-color, #2a6b6b)) 18%);
+  border-color: color-mix(in srgb, var(--component-accent, #2a6b6b) 34%, transparent);
+}
+
+.site-footer__cauldron-actions .operator-chip[data-spw-action-tier="cleanup"] {
+  flex-grow: 0;
+  opacity: 0.72;
+}
+
+.site-footer__cauldron-actions .operator-chip[data-spw-action-tier="output"] {
+  border-style: dashed;
+  border-color: color-mix(in srgb, var(--op-object-color, #c48a28) 30%, transparent);
+}
+
+.site-footer__cauldron[data-spw-cauldron-state~="phase:empty"] .operator-chip[data-spw-action-tier="primary"],
+.site-footer__cauldron[data-spw-cauldron-state~="phase:primed"] .operator-chip[data-spw-action-tier="primary"] {
+  background: color-mix(in srgb, var(--surface-strong, #f8f5f0) 97%, transparent);
+  border-color: color-mix(in srgb, var(--line, rgba(0,0,0,0.1)) 42%, transparent);
+  color: color-mix(in srgb, var(--ink-soft, #555) 68%, transparent);
+}
+.site-footer__cauldron-actions .operator-chip:hover:not(:disabled),
+.site-footer__cauldron-actions .operator-chip:focus-visible:not(:disabled) {
+  background: color-mix(in srgb, var(--surface-strong, #f8f5f0) 90%, var(--component-accent, #2a6b6b) 10%);
+  border-color: color-mix(in srgb, var(--component-accent, #2a6b6b) 25%, transparent);
+  color: var(--ink, #111);
+  transform: translateY(-1px);
+}
+
+.site-footer__cauldron[data-spw-cauldron-state~="phase:primed"] .operator-chip[data-spw-action-tier="primary"]:not(:disabled),
+.site-footer__cauldron[data-spw-cauldron-discoverability="compose-next"] .operator-chip[data-spw-cauldron-action="mix"]:not(:disabled) {
+  border-color: color-mix(in srgb, var(--component-accent, #2a6b6b) 38%, transparent);
+  color: color-mix(in srgb, var(--ink, #111) 78%, var(--component-accent, #2a6b6b) 22%);
+}
+@media (min-width: 640px) {
+  .site-footer__cauldron-actions .operator-chip {
+    flex: 0 1 auto;
+    min-width: 7.5rem;
+  }
+}
+
+/* Lifecycle phases for memory gardening (additive, respects existing layers) */
+.cauldron-ingredient[data-spw-ingredient-phase="mature"] {
+  opacity: 0.78;
+  filter: saturate(0.75);
+}
+.cauldron-ingredient[data-spw-ingredient-phase="decayed"] {
+  opacity: 0.55;
+  text-decoration: line-through;
+  filter: grayscale(0.6) saturate(0.4);
+}
+
+.site-footer__cauldron[data-spw-cauldron-garden-phase="mature"],
+.site-footer__cauldron[data-spw-cauldron-garden-phase="resonant"] {
+  border-color: color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 18%, var(--line, rgba(14,18,20,0.14)) 82%);
+}
+
+/* Visual mode toggle + settings wiring for differential cauldron / spell candidate visibility.
+   Uses data-spw-cauldron-candidate-visibility (subtle|balanced|prominent) from site-settings.
+   Prominent: stronger wash/highlight on ingredients and primed/candidate items for learnability when "visual" mode.
+   Subtle: muted for clean reading. Balanced default. Improves token logic (reuses --cauldron-candidate-wash etc from tokens).
+   Cascade: tokens first, then these rules in shell (after material in effects). */
+html[data-spw-cauldron-candidate-visibility="prominent"] {
+  --cauldron-candidate-wash: color-mix(in srgb, var(--active-op-color, var(--teal)) 20%, transparent);
+  --spell-candidate-wash: color-mix(in srgb, var(--active-op-color, var(--teal)) 14%, transparent);
+  --cauldron-highlight: color-mix(in srgb, var(--active-op-color, var(--teal)) 28%, transparent);
+  --region-jump-target: color-mix(in srgb, var(--active-op-color, var(--teal)) 24%, transparent);
+}
+html[data-spw-cauldron-candidate-visibility="prominent"] .cauldron-ingredient,
+[data-spw-cauldron-candidate-visibility="prominent"] .cauldron-ingredient {
+  --cauldron-chip-bg: color-mix(in oklab, var(--surface-strong, #fff) 80%, var(--component-accent, var(--active-op-color, var(--teal))) 20%);
+  --cauldron-chip-border: color-mix(in oklab, var(--component-accent, var(--active-op-color, var(--teal))) 35%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 25%, transparent);
+}
+html[data-spw-cauldron-candidate-visibility="balanced"] {
+  --cauldron-candidate-wash: color-mix(in srgb, var(--active-op-color, var(--teal)) 10%, transparent);
+  --spell-candidate-wash: color-mix(in srgb, var(--active-op-color, var(--teal)) 7%, transparent);
+}
+html[data-spw-cauldron-candidate-visibility="subtle"] {
+  --cauldron-candidate-wash: transparent;
+  --spell-candidate-wash: transparent;
+  --cauldron-highlight: transparent;
+}
+html[data-spw-cauldron-candidate-visibility="subtle"] .cauldron-ingredient,
+[data-spw-cauldron-candidate-visibility="subtle"] .cauldron-ingredient {
+  --cauldron-chip-bg: color-mix(in oklab, var(--surface-strong, #fff) 98%, var(--component-accent, var(--active-op-color, var(--teal))) 2%);
+  --cauldron-chip-border: color-mix(in oklab, var(--component-accent, var(--active-op-color, var(--teal))) 8%, transparent);
+  opacity: 0.82;
+}
+/* Spell candidates (primed living terms, charged interactables) differentially visible in prominent mode */
+html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-ingredient-primed],
+html[data-spw-cauldron-candidate-visibility="prominent"] .spw-living-term[data-spw-gesture],
+html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-primed] {
+  --spell-candidate-wash: color-mix(in srgb, var(--active-op-color, var(--teal)) 12%, transparent);
+  background: var(--spell-candidate-wash);
+  outline: 1px dashed color-mix(in srgb, var(--active-op-color, var(--teal)) 40%, transparent);
+  outline-offset: 1px;
+}
+html[data-spw-cauldron-candidate-visibility="subtle"] [data-spw-ingredient-primed],
+html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-gesture] {
+  opacity: 0.7;
+}
+
+/* Subtle gardening affordance on prune/plant/nourish when the garden has material */
+.site-footer__cauldron [data-spw-cauldron-action="prune"],
+.site-footer__cauldron [data-spw-cauldron-action="nourish"],
+.site-footer__cauldron [data-spw-cauldron-action="plant"] {
+  transition: opacity 120ms ease, filter 120ms ease;
+}
+.site-footer__cauldron[data-spw-cauldron-garden-phase="mature"] [data-spw-cauldron-action="prune"],
+.site-footer__cauldron[data-spw-cauldron-garden-phase="decayed"] [data-spw-cauldron-action="prune"] {
+  opacity: 1;
+  border-color: color-mix(in srgb, var(--op-action-color, var(--teal-dark)) 34%, transparent);
+}
+
+[data-spw-cauldron-mirror] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.5rem;
+  align-items: center;
+}
+
+[data-spw-cauldron-mirror] [data-spw-mirror-label] {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.65rem;
+  padding: 0.16rem 0.42rem;
+  border: 1px solid color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 14%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-strong, #fff) 92%, transparent);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-2xs, 0.72rem);
+}
+
+/* Header/nav transitional behavior tied to active runtime layers */
+:root[data-spw-active-layers="core"] :where(.site-header, body > header) {
+  --spw-header-opacity-local: 0.7;
+  transition-duration: 80ms;
+}
+
+:root[data-spw-active-layers~="enhancement"] :where(.site-header, body > header) {
+  --spw-header-opacity-local: 0.98;
+}
+
+/* Structures that help the learner stay with the actual combination
+   rather than over-valuing any single mnemonic */
+.cauldron-combination-record {
+  margin-bottom: 0.75rem;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid color-mix(in srgb, var(--spw-shell-chrome-line-local) 65%, transparent);
+  border-radius: 6px;
+  background: color-mix(in oklab, var(--surface, rgba(255,255,255,0.65)) 96%, transparent);
+}
+
+.cauldron-section-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.65;
+  margin: 0 0 0.35rem;
+}
+
+.cauldron-crystallization {
+  padding-top: 0.5rem;
+  border-top: 1px dashed color-mix(in srgb, var(--line, rgba(14,18,20,0.14)) 70%, transparent);
+}
+
+/* Subtle visual reflection of the suggested cast liminality (deeper projection of semantics into the UI) */
+.cauldron-crystallization[data-spw-liminality="deep"] {
+  border-left: 3px solid color-mix(in srgb, var(--semantic-accent, var(--component-accent)) 35%, transparent);
+}
+.cauldron-crystallization[data-spw-liminality="nested"] {
+  border-left: 2px solid color-mix(in srgb, var(--semantic-accent, var(--component-accent)) 25%, transparent);
+}
+
+.cauldron-mnemonic-note,
+.cauldron-test-prompt {
+  font-size: 0.72rem;
+  opacity: 0.75;
+  margin: 0.35rem 0;
+}
+
+.cauldron-mnemonic {
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  background: color-mix(in srgb, var(--surface-strong) 90%, transparent);
+  padding: 0.4rem 0.55rem;
+  border-radius: 4px;
+  white-space: pre-wrap;
+}
+
+.cauldron-plus {
+  opacity: 0.5;
+  margin: 0 0.2rem;
+}
+
+@media (max-width: 600px) {
+  :where(.site-header, body > header) {
+    padding-top: max(0.12rem, env(safe-area-inset-top));
+  }
+
+  .spw-nav-toggle {
+    min-height: max(2.24rem, var(--spw-control-min-height, 2.02rem));
+    padding:
+      calc(var(--spw-control-padding-block, 0.2rem) + 0.14rem)
+      calc(var(--spw-control-padding-inline, 0.6rem) + 0.18rem);
+  }
+
+  .spw-shell-utility-row {
+    width: 100%;
+    flex-wrap: wrap;
+    overflow-x: visible;
+    gap: 0.18rem;
+    touch-action: pan-y;
+    scroll-snap-type: none;
+    scrollbar-width: auto;
+    row-gap: 0.22rem;
+  }
+
+  .spw-utility-cluster {
+    flex: 0 0 auto;
+    min-block-size: 1.58rem;
+    border-radius: calc(var(--shape-control, 0.78rem) - 0.2rem);
+  }
+
+  .spw-shell-utility-button {
+    min-inline-size: 1.72rem;
+    min-height: 1.58rem;
+    padding: 0.12rem 0.32rem;
+    font-size: 0.62rem;
+    letter-spacing: 0.02em;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .spw-route-menu-host {
+    grid-column: 1 / -1;
+  }
+
+  .spw-route-menu {
+    width: 100%;
+  }
+
+  .spw-route-menu-trigger {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .spw-route-menu-panel {
+    position: static;
+    inset: auto;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    max-height: none;
+    margin-top: 0.35rem;
+  }
+
+  .spw-shell-utility-row {
+    width: 100%;
+    flex-wrap: wrap;
+    overflow-x: visible;
+    gap: 0.18rem;
+    touch-action: pan-y;
+    scroll-snap-type: none;
+    scrollbar-width: auto;
+    row-gap: 0.22rem;
+  }
+
+  .spw-utility-cluster {
+    flex: 0 0 auto;
+  }
+
+  .spw-shell-utility-button {
+    min-inline-size: 1.72rem;
+    min-height: 1.58rem;
+    padding: 0.12rem 0.32rem;
+    font-size: 0.62rem;
+    letter-spacing: 0.02em;
+  }
+}
+
+@media (max-width: 480px) {
+  :where(.site-header, body > header) .spw-spell-path {
+    font-size: var(--text-size-2xs, 0.72rem);
+  }
+
+  .spw-spell-dock-summary {
+    font-size: var(--text-size-2xs, 0.72rem);
+  }
+
+  :where(.site-header ul, body > header ul) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .spw-spell-dock {
+    display: none;
+  }
+
+  .spw-spell-dock-summary {
+    min-height: 1.82rem;
+    padding: 0.22rem 0.5rem;
+  }
+
+  .spw-spell-dock-body {
+    gap: 0.38rem;
+    padding: 0.12rem 0.5rem 0.5rem;
+  }
+
+  .spw-spell-dock[data-spw-viewport="compact"] .spell-source--compact {
+    display: none;
+  }
+
+  .spw-spell-dock[data-spw-viewport="compact"] .spell-visual--compact {
+    gap: 0.22rem 0.28rem;
+  }
+
+  .spw-spell-dock[data-spw-viewport="compact"] .spell-ingredient {
+    min-height: 1.72rem;
+    padding: 0.18rem 0.42rem;
+    font-size: var(--text-size-2xs, 0.72rem);
+  }
+
+  .spw-spell-dock[data-spw-viewport="compact"] .spell-register-strip {
+    gap: 0.24rem 0.3rem;
+  }
+
+  .spw-spell-dock[data-spw-viewport="compact"] .spell-register {
+    padding: 0.12rem 0.36rem;
+    font-size: var(--text-size-2xs, 0.72rem);
+  }
+
+  .spw-spell-dock[data-spw-viewport="compact"] .spell-note--compact {
+    font-size: var(--text-size-xs, 0.8rem);
+    line-height: 1.4;
+  }
+}
+
+@media (max-width: 340px) {
+  :where(.site-header ul, body > header ul) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .site-header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"]:has(.spw-nav-toggle[aria-expanded="true"]),
+  body > header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"]:has(.spw-nav-toggle[aria-expanded="true"]) {
+    position: relative;
+    z-index: 2020;
+  }
+
+  html:has(.site-header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"] .spw-nav-toggle[aria-expanded="true"])::after,
+  html:has(body > header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"] .spw-nav-toggle[aria-expanded="true"])::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: calc(var(--z-header, 1000) - 1);
+    background: color-mix(in oklab, var(--bg, #111) 52%, transparent);
+    backdrop-filter: blur(4px) saturate(0.94);
+    -webkit-backdrop-filter: blur(4px) saturate(0.94);
+    pointer-events: none;
+  }
+
+  .site-header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"]:has(.spw-nav-toggle[aria-expanded="true"]) nav,
+  body > header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"]:has(.spw-nav-toggle[aria-expanded="true"]) nav {
+    z-index: 2020;
+  }
+
+  html:has(.site-header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"] .spw-nav-toggle[aria-expanded="true"]) .spw-state-inspector[data-spw-state-inspector="closed"]:not([data-spw-satchel-positioned="user"]),
+  html:has(body > header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"] .spw-nav-toggle[aria-expanded="true"]) .spw-state-inspector[data-spw-state-inspector="closed"]:not([data-spw-satchel-positioned="user"]) {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(0.45rem);
+    transition:
+      opacity 160ms var(--shell-ease, ease),
+      transform 160ms var(--shell-ease, ease);
+  }
+
+  html:has(.site-header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"] .spw-nav-toggle[aria-expanded="true"]) :where(.spw-section-handle, .spw-section-handle-shell),
+  html:has(body > header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"] .spw-nav-toggle[aria-expanded="true"]) :where(.spw-section-handle, .spw-section-handle-shell) {
+    opacity: 0;
+    pointer-events: none;
+    transform: var(--spw-floating-handle-transform, translateX(-50%)) translateY(0.45rem);
+  }
+
+  .site-header[data-spw-menu-mode="toggle"][data-spw-menu-topology="drawer-field"][data-spw-menu="open"] nav,
+  body > header[data-spw-menu-mode="toggle"][data-spw-menu-topology="drawer-field"][data-spw-menu="open"] nav {
+    grid-area: nav;
+    grid-column: 1 / -1;
+    justify-self: stretch;
+    align-self: start;
+    width: 100%;
+    max-width: none;
+    margin-block-start: 0.12rem;
+  }
+
+  .site-header[data-spw-menu-mode="toggle"][data-spw-menu-topology="drawer-field"][data-spw-menu="open"] ul,
+  body > header[data-spw-menu-mode="toggle"][data-spw-menu-topology="drawer-field"][data-spw-menu="open"] ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, clamp(6.2rem, 35vw, 8.5rem)), 1fr));
+    justify-items: stretch;
+    align-items: stretch;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    padding: 0.36rem clamp(0.38rem, 2.8vw, 0.8rem);
+  }
+
+  :where(.site-header[data-spw-menu-mode="toggle"][data-spw-menu-topology="drawer-field"][data-spw-menu="open"] li,
+         body > header[data-spw-menu-mode="toggle"][data-spw-menu-topology="drawer-field"][data-spw-menu="open"] li) {
+    min-width: 0;
+  }
+
+  :where(.site-header[data-spw-menu-mode="toggle"][data-spw-menu-topology="drawer-field"][data-spw-menu="open"] nav a,
+         body > header[data-spw-menu-mode="toggle"][data-spw-menu-topology="drawer-field"][data-spw-menu="open"] nav a) {
+    min-width: 0;
+    min-height: 2.6rem;
+    align-items: center;
+  }
+}
+
+/* ==========================================================================
+   5. Reduced motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.site-header, body > header) {
+    --spw-shell-pointer-opacity: 0.22;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  :where(.site-header, body > header, .site-header nav, body > header nav, .spw-nav-toggle, .spw-nav-toggle-copy, .site-header nav a, body > header nav a, .site-footer__nav a) {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
+}

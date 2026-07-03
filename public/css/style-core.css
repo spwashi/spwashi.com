@@ -15,7 +15,11 @@
 @import url('/public/css/tokens/dimensions.css') layer(tokens);
 
 @import url('/public/css/shell/layout.css') layer(shell);
-@import url('/public/css/shell/chrome.css') layer(shell);
+@import url('/public/css/shell/chrome/header.css') layer(shell);
+@import url('/public/css/shell/chrome/navigation.css') layer(shell);
+@import url('/public/css/shell/chrome/footer.css') layer(shell);
+@import url('/public/css/shell/chrome/adaptive.css') layer(shell);
+@import url('/public/css/shell/chrome/section-context.css') layer(shell);
 @import url('/public/css/modes/display-layers.css') layer(shell);
 @import url('/public/css/modes/hydration.css') layer(shell);
 @import url('/public/css/modes/capture.css') layer(shell);
@@ -74,7 +78,16 @@
 @import url('/public/css/systems/surfaces/philosophy.css') layer(systems);
 
 @import url('/public/css/handles/cognitive-handles.css') layer(handles);
-@import url('/public/css/handles/operators.css') layer(handles);
+@import url('/public/css/handles/operators/tokens.css') layer(handles);
+@import url('/public/css/handles/operators/primitive.css') layer(handles);
+@import url('/public/css/handles/operators/sigils-and-chips.css') layer(handles);
+@import url('/public/css/handles/operators/attention-states.css') layer(handles);
+@import url('/public/css/handles/operators/state-semantics.css') layer(handles);
+@import url('/public/css/handles/operators/bias-and-phrases.css') layer(handles);
+@import url('/public/css/handles/operators/spell-breadcrumbs.css') layer(handles);
+@import url('/public/css/handles/operators/metrics-and-cognition.css') layer(handles);
+@import url('/public/css/handles/operators/adaptive.css') layer(handles);
+@import url('/public/css/handles/operators/geometry-projection.css') layer(handles);
 @import url('/public/css/handles/metrics.css') layer(handles);
 @import url('/public/css/handles/phase-controls.css') layer(handles);
 @import url('/public/css/handles/logo.css') layer(handles);

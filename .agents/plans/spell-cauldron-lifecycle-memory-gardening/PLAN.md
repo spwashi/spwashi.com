@@ -93,3 +93,6 @@ After this patch lands and has a few weeks of use: evaluate whether "memory gard
 **Status**: Planning complete per spw-feature-planning skill + AGENTS.md. Minimal file prediction done. Ready for implementation in strict smallest-surface order (JS behavior → CSS state refinement → showcase pages → contracts/plan artifacts). All work stays site-first. 
 
 Next action after plan approval: mark planning todo complete and begin with the core JS surfaces (composition.js + spells.js) for lifecycle + gardening primitives.
+## Ownership Note - 2026-07-03
+
+Merged into `spellcraft-authoring/PLAN.md` as the consolidated owner of spell/cauldron authorship, selection, and styling. This file stays as reference; route new work to the owner plan.

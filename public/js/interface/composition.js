@@ -28,11 +28,13 @@
  */
 
 import { bus } from '/public/js/kernel/bus.js';
+import { composeOpBundle } from '/public/js/kernel/shared.js';
 import { guardCall } from '/public/js/kernel/dom-render.js';
 import {
   CAULDRON_CONTRACT,
   GARDEN_PRUNE_DAYS,
   MAX_INGREDIENTS,
+  applyCauldronState,
   computeCauldronPhase,
   computeIngredientPhase,
   countPrimeableSources,
@@ -644,7 +646,6 @@ function syncSpellPreview(ingredients, phase) {
   document.querySelectorAll('[data-spw-spell-candidate]').forEach((preview) => {
     preview.hidden = !ready;
     preview.dataset.spwSpellState = ready ? 'draft' : 'empty';
-    preview.dataset.spwIngredientCount = String(count);
     preview.dataset.spwOperatorSequence = operatorSequence;
     const meta = preview.querySelector('[data-spw-slot="meta"]');
     const body = preview.querySelector('[data-spw-slot="body"]');
@@ -722,7 +723,6 @@ function syncCauldronState() {
   }
 
   const root = document.documentElement;
-  root.dataset.spwCauldronCount = String(count);
 
   const phase = computeCauldronPhase(ingredients);
   const availableSources = countPrimeableSources();
@@ -730,12 +730,9 @@ function syncCauldronState() {
   syncCollectedSourceMarks(ingredients);
   syncOperatorResonance(ingredients);
   syncDiscoverabilityCues(count, phase, availableSources);
-  root.dataset.spwCauldronState = phase;
-  root.dataset.spwCauldronPhase = phase;
+  applyCauldronState(root, { phase, count });
   syncCauldronHosts(ingredients, phase);
 
-  // Richer inspectability for the taxonomy / attention model
-  root.dataset.spwCauldronForceCount = String(count);
   if (count > 0) {
     const operators = [...new Set(ingredients.map(i => i.operator).filter(Boolean))];
     root.dataset.spwCauldronOperators = operators.join(' ');
@@ -785,10 +782,7 @@ function syncCauldronHosts(ingredients, phase) {
   const hosts = document.querySelectorAll('[data-spw-cauldron]');
   syncGardenHealth(hosts, ingredients);
   hosts.forEach((host) => {
-    host.dataset.spwCauldronPhase = phase;
-    host.dataset.spwCauldronState = phase;
-    host.dataset.spwCauldronCount = String(count);
-    host.dataset.spwIngredientCount = String(count);
+    applyCauldronState(host, { phase, count });
     host.dataset.spwHypermediaExtension = 'state output resume';
     if (operators) {
       host.dataset.spwCauldronOperators = operators;
@@ -817,8 +811,7 @@ function renderCauldronMirrors(ingredients, phase) {
     : (cauldronTrace.lastGesture || '—');
 
   document.querySelectorAll('[data-spw-cauldron-mirror]').forEach((mirror) => {
-    mirror.dataset.spwCauldronPhase = phase;
-    mirror.dataset.spwCauldronCount = String(count);
+    applyCauldronState(mirror, { phase, count });
     const phaseEl = mirror.querySelector('[data-spw-mirror-label="phase"]');
     const countEl = mirror.querySelector('[data-spw-mirror-label="count"]');
     const operatorsEl = mirror.querySelector('[data-spw-mirror-label="operators"]');
@@ -946,6 +939,7 @@ function renderIngredientsList(ingredients) {
       <span class="cauldron-ingredient"
             data-spw-cauldron-ingredient
             data-spw-ingredient-state="collected"
+            data-spw-op="${escapeHtml(composeOpBundle(ing.semanticExpression || ing.expression))}"
             data-spw-semantic-expression="${escapeHtml(ing.semanticExpression || ing.expression)}"
             data-spw-ingredient-phase="${phase}"
             data-spw-source-route="${escapeHtml(ing.origin || ing.context || '')}"

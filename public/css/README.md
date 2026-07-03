@@ -98,3 +98,64 @@ Use `.spw-demo-rail` and `.spw-demo-card` from `public/css/effects/demos.css`
 when a route needs tasteful internal marketing: a short reason, a reproducible
 demo link, and an honest next step. These are meant for discoverability and QA,
 not broad campaign banners.
+
+## Reading The Tree: Chapters, Genomes, And Moseying
+
+CSS here is a medium for literature as much as layout. The 2026-07-03 chunking
+pass split the two largest surfaces into chapter files whose banners follow a
+shared anatomy:
+
+- **Reads as:** one line of honest voice — what this chapter is about, written
+  for a person browsing, not a build tool.
+- **Was:** provenance (which file and sections it came from), so history stays
+  traceable without archaeology.
+- **Genome:** an auto-derivable signature — the state attributes the chapter
+  senses (`aria-*`, `data-*`), how many custom properties it defines, and which
+  `-intent` hooks it consumes. When a chapter's behavior changes, its genome
+  changes; regenerate the lines with the probes below rather than hand-editing.
+- **Probe:** how to toggle or observe the chapter live.
+
+Chapter directories so far: `handles/operators/` (ten chapters, the operators
+codex) and `shell/chrome/` (five chapters, the stage). `style-core.css` imports
+chapters in reading order; order within a layer is load-bearing, so new
+chapters are inserted, never appended casually.
+
+### Naming anatomy
+
+File and selector names narrate in the same grammar: **place** (layer or
+directory: shell, handles, routes), **body part** (header, navigation,
+sigils-and-chips), **disposition** (adaptive, attention-states,
+state-semantics). A reader should be able to guess a file's contents from its
+path aloud, and vice versa.
+
+### Moseying probes
+
+Tree commands as invitations, not audits:
+
+- `tree public/css -L 2` — the table of contents.
+- `tree public/css/handles/operators` — one codex, chapter by chapter.
+- `rg -l 'aria-pressed' public/css` — who senses pressing?
+- `rg "Reads as:" public/css -A0` — every chapter's opening line at once.
+- `rg "var\(--[a-z-]+-intent" public/css -o | sort | uniq -c` — the intent
+  vocabulary in circulation.
+- `rg -c '\.operator-chip' public/css` — scatter check for a shared species.
+
+### Toggling in the browser, tuning as a shared pastime
+
+- DevTools > Sources > `public/css/...` — chapters are small enough to disable
+  wholesale and feel what a page loses; that felt difference is the chapter's
+  real documentation.
+- `html[data-spw-debug-layers="on"]` — paints layer ownership so readers see
+  which stratum is speaking.
+- Editors tuning `@layer` order or chapter membership should do it in a demo
+  copy first (see `.agents/plans/symphonic-loading-layered-editions/demo/`),
+  because layer choreography is a felt decision reviewed in a browser.
+
+### Microinteraction and state documentation
+
+State contracts live nearest the rules that project them: shared pressed/hover
+behavior in `handles/operators/state-semantics.css`, route palettes through
+`-intent` variables only, and the philosophy in
+`.spw/conventions/site-semantics.spw`. When a selector changes interaction
+behavior, record the contract beside the selector or in the relevant `.spw`
+surface — a chapter whose genome and prose disagree is a bug.

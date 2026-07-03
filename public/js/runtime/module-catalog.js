@@ -408,12 +408,27 @@ export const FEATURE_DEFS = [
     },
   },
   {
+    id: 'effect-ledger',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    describes: 'effect-ledger[record|list|clear] precipitated literacy residue',
+    updates: ['data-spw-effects'],
+    evaluates: 'named-effects recognition precipitation press-rung-1',
+    load: () => import('./effect-ledger.js'),
+    mount: (mod) => {
+      const fn = mod?.initEffectLedger;
+      if (!isFn(fn)) return;
+      const cleanup = fn();
+      return { cleanup: isFn(cleanup) ? cleanup : null };
+    },
+  },
+  {
     id: 'cauldron',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
     features: ['console'],
     describes: 'cauldron[gather|mix|garden] force[operator] emergence[composition]',
-    updates: ['data-spw-cauldron', 'data-spw-cauldron-phase', 'data-spw-cauldron-count', 'data-spw-cauldron-ingredient', 'data-spw-ingredient-phase', 'data-spw-semantic-expression'],
+    updates: ['data-spw-cauldron', 'data-spw-cauldron-state', 'data-spw-cauldron-ingredient', 'data-spw-ingredient-phase', 'data-spw-semantic-expression'],
     evaluates: 'semantics composition learning attention-field emergence',
     load: () => import('../interface/composition.js'),
     mount: (mod) => {

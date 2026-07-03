@@ -1,0 +1,557 @@
+/* ==========================================================================
+   operators/sigils-and-chips.css — the visible instruments
+   --------------------------------------------------------------------------
+   Reads as: frame sigils, operator chips, spec pills, component tags: the faces readers actually touch
+   Was: handles/operators.css §4–5 (split 2026-07-03, rule order preserved verbatim)
+   Genome — states sensed: aria-current, aria-pressed, data-site-setting-active, data-spw-annotation-match, data-spw-annotation-state, data-spw-collected, data-spw-color-mode, data-spw-debug-mode, data-spw-fixity-tier, data-spw-grounded, data-spw-load-posture, data-spw-load-timing, data-spw-meaning-mode, data-spw-operator
+   Genome — custom properties defined: 21; intent hooks consumed: --operator-chip-active-animation-intent, --operator-chip-active-bg-intent, --operator-chip-active-border-intent, --operator-chip-active-ink-intent, --operator-chip-active-lift-intent, --operator-chip-active-shadow-intent, --operator-chip-active-weight-intent
+   Probe: toggle me wholesale in DevTools > Sources, or set
+   html[data-spw-debug-layers="on"] to see layer owners breathe.
+   ========================================================================== */
+
+/* ==========================================================================
+   4. Frame sigils
+   --------------------------------------------------------------------------
+   Frame sigils are anchor handles. Hidden by default except in room-sign seams.
+   ========================================================================== */
+
+.frame-sigil {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 0;
+  overflow: hidden;
+  font-size: 0;
+}
+
+.frame-topline .frame-sigil,
+.frame-heading .frame-sigil {
+  position: static;
+  display: inline-flex;
+  inline-size: fit-content;
+  width: auto;
+  max-width: 100%;
+  overflow: visible;
+  min-height: 1.62rem;
+  padding: 0.12rem 0.54rem 0.12rem 0.62rem;
+  border: 1px solid color-mix(in srgb, currentColor 16%, transparent);
+  border-inline-start-width: 1.5px;
+  border-radius: var(--shape-control, 0.78rem);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 94%, transparent);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.24);
+  color: color-mix(in srgb, var(--ink-soft) 88%, var(--active-op-color, var(--teal)) 12%);
+  font-size: var(--text-size-label, 0.76rem);
+  line-height: var(--spw-frame-sigil-line-height, 1);
+  opacity: 0.82;
+  justify-content: flex-start;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition:
+    opacity var(--handle-duration-fast) var(--handle-ease),
+    color var(--handle-duration-fast) var(--handle-ease),
+    border-color var(--handle-duration-fast) var(--handle-ease);
+}
+
+:where(.frame-topline .frame-sigil, .frame-heading .frame-sigil):hover,
+:where(.frame-topline .frame-sigil, .frame-heading .frame-sigil):focus-visible {
+  opacity: 1;
+  color: var(--active-op-color, var(--teal));
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 36%, transparent);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 90%, var(--active-op-color, var(--teal)) 10%);
+  outline: none;
+}
+
+:where(.frame-topline .frame-sigil + .spec-strip, .frame-heading .frame-sigil + .spw-component-meta) {
+  align-self: flex-start;
+  margin-inline-start: 0.22rem;
+}
+
+:where(.frame-topline > [data-spw-slot="meta"], .frame-heading > [data-spw-slot="meta"]) {
+  order: 0;
+  margin-inline-start: auto;
+}
+
+/* Positional grammar seams (prefix / infix / postfix) */
+:where([data-spw-sigil-position="prefix"]) {
+  border-inline-start-width: 2px;
+}
+
+:where([data-spw-sigil-position="infix"]) {
+  border-style: dashed;
+  border-color: color-mix(in srgb, currentColor 22%, transparent);
+}
+
+:where([data-spw-sigil-position="postfix"]) {
+  border-inline-end-width: 2px;
+}
+
+:where([data-spw-fixity-tier="volatile"]) {
+  --spw-fixity-alpha: 0.72;
+}
+
+/* ==========================================================================
+   5. Operator chips, spec pills, and component tags
+   ========================================================================== */
+
+.operator-chip {
+  --operator-chip-border-width: 1px;
+  --operator-chip-border-style: solid;
+  --operator-chip-bg: color-mix(in oklab, var(--surface-strong, #fff) 92%, var(--active-op-color, var(--teal)) 8%);
+  --operator-chip-border: color-mix(in oklab, var(--active-op-color, var(--teal)) 18%, transparent);
+  --operator-chip-ink: color-mix(in oklab, var(--active-op-color, var(--teal)) 76%, var(--ink, rgba(14, 18, 20, 0.92)));
+  --operator-chip-shadow: none;
+  --operator-chip-hover-bg: color-mix(in oklab, var(--surface-strong, #fff) 88%, var(--active-op-color, var(--teal)) 12%);
+  --operator-chip-hover-border: var(--operator-chip-border);
+  --operator-chip-hover-ink: var(--ink);
+  --operator-chip-hover-shadow: var(--operator-chip-shadow);
+  --operator-chip-hover-lift: 0px;
+  --operator-chip-active-bg: var(--operator-chip-active-bg-intent, color-mix(in oklab, var(--surface-strong, #fff) 82%, var(--active-op-color, var(--teal)) 18%));
+  --operator-chip-active-border: var(--operator-chip-active-border-intent, color-mix(in oklab, var(--active-op-color, var(--teal)) 44%, transparent));
+  --operator-chip-active-ink: var(--operator-chip-active-ink-intent, color-mix(in oklab, var(--active-op-color, var(--teal)) 88%, var(--ink, rgba(14, 18, 20, 0.92))));
+  --operator-chip-active-shadow: var(--operator-chip-active-shadow-intent,
+    inset 0 1px 0 color-mix(in srgb, white 28%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 18%, transparent),
+    0 0.18rem 0.85rem color-mix(in srgb, var(--active-op-color, var(--teal)) 10%, transparent));
+  --operator-chip-active-weight: var(--operator-chip-active-weight-intent, 650);
+  --operator-chip-active-lift: var(--operator-chip-active-lift-intent, 0px);
+  --operator-chip-active-animation: var(--operator-chip-active-animation-intent, none);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spw-control-gap, 0.28rem);
+  min-height: var(--spw-control-min-height, max(2.15rem, var(--touch-target-compact, 2.25rem)));
+  padding: var(--spw-control-padding-block, 0.28rem) var(--spw-control-padding-inline, 0.72rem);
+  border-width: var(--operator-chip-border-width);
+  border-style: var(--operator-chip-border-style);
+  border-radius: var(--spw-control-radius, var(--shape-control, 0.78rem));
+  white-space: nowrap;
+  text-decoration: none;
+  line-height: var(--spw-control-line-height, 1.08);
+  font-size: var(--text-size-chip, 0.82rem);
+  background: var(--operator-chip-bg);
+  border-color: var(--operator-chip-border);
+  color: var(--operator-chip-ink);
+  font-weight: 500;
+  box-shadow: var(--operator-chip-shadow);
+  transition:
+    background-color var(--spw-interaction-commit, var(--handle-duration-fast, 140ms) var(--handle-ease, ease)),
+    border-color var(--spw-interaction-commit, var(--handle-duration-fast, 140ms) var(--handle-ease, ease)),
+    color var(--spw-interaction-commit, var(--handle-duration-fast, 140ms) var(--handle-ease, ease)),
+    box-shadow var(--spw-interaction-settle, var(--handle-duration-fast, 140ms) var(--handle-ease, ease)),
+    transform var(--spw-interaction-acknowledge, var(--handle-duration-fast, 140ms) var(--handle-ease, ease));
+}
+
+.operator-chip:hover,
+.operator-chip:focus-visible {
+  background: var(--operator-chip-hover-bg);
+  border-color: var(--operator-chip-hover-border);
+  color: var(--operator-chip-hover-ink);
+  box-shadow: var(--operator-chip-hover-shadow);
+  transform: translateY(var(--operator-chip-hover-lift));
+  outline: none;
+}
+
+/* Microinteraction refinement tied to runtime load posture/timing.
+   When the page was loaded in a "quiet" or "defer" posture (user or editor choice),
+   tone down the physical feedback (lift, shadow) for calmer feel.
+   This is rule refinement using the explicit load attrs we added for discovery/customization. */
+html[data-spw-load-posture="quiet"] .operator-chip:hover,
+html[data-spw-load-posture="quiet"] .operator-chip:focus-visible,
+html[data-spw-load-timing="quiet"] .operator-chip:hover,
+html[data-spw-load-timing="quiet"] .operator-chip:focus-visible,
+html[data-spw-load-timing="defer"] .operator-chip:hover,
+html[data-spw-load-timing="defer"] .operator-chip:focus-visible {
+  transform: none;
+  box-shadow: var(--operator-chip-hover-shadow, 0 1px 3px rgba(0,0,0,0.06));
+}
+
+/* Probe and pragma chips should not feel interchangeable.
+   Probe stays open/reversible; pragma reads as a stronger local constraint. */
+.operator-chip[data-spw-operator="probe"],
+.operator-chip[data-spw-operator="wonder"] {
+  --operator-chip-border-style: dashed;
+  --operator-chip-bg: color-mix(in oklab, var(--surface-strong, #fff) 95%, var(--op-probe-color, var(--active-op-color, var(--teal))) 5%);
+  --operator-chip-border: color-mix(in oklab, var(--op-probe-color, var(--active-op-color, var(--teal))) 28%, transparent);
+  --operator-chip-hover-bg: color-mix(in oklab, var(--surface-strong, #fff) 90%, var(--op-probe-color, var(--active-op-color, var(--teal))) 10%);
+}
+
+.operator-chip[data-spw-operator="pragma"],
+.operator-chip[data-spw-operator="action"] {
+  --operator-chip-bg: color-mix(in oklab, var(--surface-strong, #fff) 88%, var(--op-pragma-color, var(--active-op-color, var(--teal))) 12%);
+  --operator-chip-border: color-mix(in oklab, var(--op-pragma-color, var(--active-op-color, var(--teal))) 34%, transparent);
+  --operator-chip-hover-bg: color-mix(in oklab, var(--surface-strong, #fff) 84%, var(--op-pragma-color, var(--active-op-color, var(--teal))) 16%);
+  --operator-chip-hover-shadow:
+    inset 0 0 0 1px color-mix(in oklab, var(--op-pragma-color, var(--active-op-color, var(--teal))) 16%, transparent);
+}
+
+:where(.operator-chip, .spec-pill, .syntax-token)[data-spw-collected="true"] {
+  --operator-chip-border-style: solid;
+  --operator-chip-hover-lift: -1px;
+  box-shadow:
+    var(--operator-chip-shadow, none),
+    0 0 0 1px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal))) 26%, transparent),
+    0 0 calc(0.7rem + var(--spw-collection-strength, 0) * 0.4rem) color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal))) 14%, transparent);
+}
+
+:where(.operator-chip:is([aria-pressed="true"], [data-site-setting-active="true"])) {
+  background: var(--operator-chip-active-bg);
+  border-color: var(--operator-chip-active-border);
+  color: var(--operator-chip-active-ink);
+  box-shadow: var(--operator-chip-active-shadow);
+  font-weight: var(--operator-chip-active-weight);
+  transform: translateY(var(--operator-chip-active-lift));
+  animation: var(--operator-chip-active-animation);
+}
+
+html[data-spw-color-mode="dark"] .operator-chip {
+  --operator-chip-bg: color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.94)) 88%, var(--active-op-color, var(--teal, #008080)) 12%);
+  --operator-chip-border: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 42%, rgba(255, 255, 255, 0.16) 58%);
+  --operator-chip-ink: color-mix(in srgb, var(--ink-strong, rgba(245, 247, 250, 0.98)) 90%, var(--active-op-color, var(--teal, #008080)) 10%);
+  --operator-chip-hover-bg: color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.94)) 78%, var(--active-op-color, var(--teal, #008080)) 22%);
+  --operator-chip-hover-border: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 54%, rgba(255, 255, 255, 0.18) 46%);
+  --operator-chip-hover-ink: var(--ink-strong, rgba(245, 247, 250, 0.98));
+  --operator-chip-active-bg: var(--operator-chip-active-bg-intent, color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.94)) 66%, var(--active-op-color, var(--teal, #008080)) 34%));
+  --operator-chip-active-border: var(--operator-chip-active-border-intent, color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 62%, rgba(255, 255, 255, 0.2) 38%));
+  --operator-chip-active-ink: var(--operator-chip-active-ink-intent, var(--ink-strong, rgba(245, 247, 250, 0.98)));
+  --operator-chip-active-shadow: var(--operator-chip-active-shadow-intent,
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 22%, transparent),
+    0 0.18rem 0.85rem color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 14%, transparent));
+  --operator-chip-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.05),
+    0 0 0 1px rgba(0,0,0,0.08);
+  --operator-chip-hover-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.08),
+    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 14%, transparent);
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-spw-color-mode="auto"] .operator-chip {
+    --operator-chip-bg: color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.94)) 88%, var(--active-op-color, var(--teal, #008080)) 12%);
+    --operator-chip-border: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 42%, rgba(255, 255, 255, 0.16) 58%);
+    --operator-chip-ink: color-mix(in srgb, var(--ink-strong, rgba(245, 247, 250, 0.98)) 90%, var(--active-op-color, var(--teal, #008080)) 10%);
+    --operator-chip-hover-bg: color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.94)) 78%, var(--active-op-color, var(--teal, #008080)) 22%);
+    --operator-chip-hover-border: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 54%, rgba(255, 255, 255, 0.18) 46%);
+    --operator-chip-hover-ink: var(--ink-strong, rgba(245, 247, 250, 0.98));
+    --operator-chip-active-bg: var(--operator-chip-active-bg-intent, color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.94)) 66%, var(--active-op-color, var(--teal, #008080)) 34%));
+    --operator-chip-active-border: var(--operator-chip-active-border-intent, color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 62%, rgba(255, 255, 255, 0.2) 38%));
+    --operator-chip-active-ink: var(--operator-chip-active-ink-intent, var(--ink-strong, rgba(245, 247, 250, 0.98)));
+    --operator-chip-active-shadow: var(--operator-chip-active-shadow-intent,
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 22%, transparent),
+      0 0.18rem 0.85rem color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 14%, transparent));
+    --operator-chip-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.05),
+      0 0 0 1px rgba(0,0,0,0.08);
+    --operator-chip-hover-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.08),
+      0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 14%, transparent);
+  }
+}
+
+.spec-pill {
+  color: color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 88%, var(--active-op-color, var(--teal)) 12%);
+  border-color: color-mix(in oklab, var(--active-op-color, var(--teal)) 18%, var(--handle-line-soft) 82%);
+  background: color-mix(in oklab, var(--surface-strong, #fff) 94%, var(--active-op-color, var(--teal)) 6%);
+  border-radius: var(--shape-control, 0.78rem);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.34);
+}
+
+.spw-discovery-notice__handle.spec-pill {
+  display: inline-flex;
+  align-items: center;
+  inline-size: auto;
+  block-size: auto;
+  min-inline-size: 0;
+  min-block-size: 0;
+  min-height: 0;
+  padding: 0.08rem 0.34rem;
+  border-radius: var(--shape-element, 4px);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 88%, var(--active-op-color, var(--teal)) 12%);
+  color: color-mix(in srgb, rgba(14, 18, 20, 0.96) 88%, var(--active-op-color, var(--teal)) 12%);
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.68rem;
+  font-weight: 650;
+  line-height: 1.1;
+  letter-spacing: 0.025em;
+  text-transform: none;
+  box-shadow: inset 0 1px 0 color-mix(in srgb, white 28%, transparent);
+}
+
+:where(html[data-spw-color-mode="dark"]) :where(.site-frame, .frame-card, .frame-panel, .mode-panel) :where(.spw-component-tag, .spec-pill) {
+  background: color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.94)) 88%, var(--active-op-color, var(--teal, #008080)) 12%);
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 36%, rgba(255, 255, 255, 0.16) 64%);
+  color: color-mix(in srgb, var(--ink-strong, rgba(245, 247, 250, 0.98)) 90%, var(--active-op-color, var(--teal, #008080)) 10%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.05),
+    0 0 0 1px rgba(0,0,0,0.08);
+}
+
+@media (prefers-color-scheme: dark) {
+  :where(html[data-spw-color-mode="auto"]) :where(.site-frame, .frame-card, .frame-panel, .mode-panel) :where(.spw-component-tag, .spec-pill) {
+    background: color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.94)) 88%, var(--active-op-color, var(--teal, #008080)) 12%);
+    border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 36%, rgba(255, 255, 255, 0.16) 64%);
+    color: color-mix(in srgb, var(--ink-strong, rgba(245, 247, 250, 0.98)) 90%, var(--active-op-color, var(--teal, #008080)) 10%);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.05),
+      0 0 0 1px rgba(0,0,0,0.08);
+  }
+}
+
+.spw-discovery-notice__handle.spec-pill {
+  background: color-mix(in srgb, var(--surface-strong, #fff) 88%, var(--active-op-color, var(--teal)) 12%);
+  color: color-mix(in srgb, rgba(14, 18, 20, 0.96) 88%, var(--active-op-color, var(--teal)) 12%);
+}
+
+:where(
+  a.spec-pill,
+  a.badge,
+  a.tag,
+  a.pill,
+  a.frame-sigil,
+  a.frame-card-sigil,
+  a.spw-component-tag,
+  a.spw-guide-chip
+):visited {
+  color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 82%, var(--active-op-color, var(--teal)) 18%);
+  background: var(--handle-bg);
+  border-color: var(--handle-line-soft);
+}
+
+a.operator-chip:visited {
+  color: var(--operator-chip-ink);
+  background: var(--operator-chip-bg);
+  border-color: var(--operator-chip-border);
+}
+
+:where(
+  .operator-chip,
+  .spec-pill,
+  .badge,
+  .tag,
+  .pill,
+  .frame-sigil,
+  .frame-card-sigil,
+  .spw-component-tag,
+  .spw-guide-chip,
+  .header-annotation
+)[data-spw-grounded="true"]:not([aria-current="page"]) {
+  color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 82%, var(--active-op-color, var(--teal)) 18%);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.2), transparent 68%),
+    color-mix(in oklab, var(--surface-strong, #fff) 90%, var(--active-op-color, var(--teal)) 10%);
+  border-color: color-mix(in oklab, var(--active-op-color, var(--teal)) 18%, var(--handle-line-soft));
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.24),
+    0 0 0 1px color-mix(in oklab, var(--active-op-color, var(--teal)) 8%, transparent);
+}
+
+:where(html[data-spw-color-mode="dark"]) :where(
+  .operator-chip,
+  .spec-pill,
+  .badge,
+  .tag,
+  .pill,
+  .frame-sigil,
+  .frame-card-sigil,
+  .spw-component-tag,
+  .spw-guide-chip,
+  .header-annotation
+)[data-spw-grounded="true"]:not([aria-current="page"]) {
+  color: var(--operator-chip-ink, color-mix(in srgb, var(--ink-strong, rgba(245, 247, 250, 0.98)) 90%, var(--active-op-color, var(--teal, #008080)) 10%));
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.06), transparent 68%),
+    var(--operator-chip-bg, color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.94)) 86%, var(--active-op-color, var(--teal, #008080)) 14%));
+  border-color: var(--operator-chip-border, color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 42%, rgba(255, 255, 255, 0.16) 58%));
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.06),
+    0 0 0 1px rgba(0,0,0,0.12);
+}
+
+@media (prefers-color-scheme: dark) {
+  :where(html[data-spw-color-mode="auto"]) :where(
+    .operator-chip,
+    .spec-pill,
+    .badge,
+    .tag,
+    .pill,
+    .frame-sigil,
+    .frame-card-sigil,
+    .spw-component-tag,
+    .spw-guide-chip,
+    .header-annotation
+  )[data-spw-grounded="true"]:not([aria-current="page"]) {
+    color: var(--operator-chip-ink, color-mix(in srgb, var(--ink-strong, rgba(245, 247, 250, 0.98)) 90%, var(--active-op-color, var(--teal, #008080)) 10%));
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.06), transparent 68%),
+      var(--operator-chip-bg, color-mix(in srgb, var(--surface-strong, rgba(18, 22, 28, 0.94)) 86%, var(--active-op-color, var(--teal, #008080)) 14%));
+    border-color: var(--operator-chip-border, color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 42%, rgba(255, 255, 255, 0.16) 58%));
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.06),
+      0 0 0 1px rgba(0,0,0,0.12);
+  }
+}
+
+:where(
+  .operator-chip,
+  .spec-pill,
+  .badge,
+  .tag,
+  .pill,
+  .frame-sigil,
+  .frame-card-sigil,
+  .spw-component-tag,
+  .spw-guide-chip,
+  .header-annotation
+)[data-spw-grounded="true"]:not([aria-current="page"])::before {
+  content: "";
+  inline-size: 0.36rem;
+  block-size: 0.36rem;
+  border-radius: 999px;
+  flex: 0 0 auto;
+  margin-inline-end: 0.14rem;
+  background:
+    radial-gradient(circle at 35% 35%, rgba(255,255,255,0.8), transparent 38%),
+    color-mix(in oklab, var(--active-op-color, var(--teal)) 72%, transparent);
+  box-shadow: 0 0 0.5rem color-mix(in oklab, var(--active-op-color, var(--teal)) 16%, transparent);
+}
+
+.spw-component-tag {
+  appearance: none;
+  -webkit-appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.24em;
+  flex: 0 1 auto;
+  width: fit-content;
+  max-inline-size: min(100%, 28ch);
+  min-inline-size: 8ch;
+  border-radius: var(--handle-radius-tight);
+  color: var(--ink);
+  background: var(--semantic-metadata-bg, color-mix(in srgb, var(--surface-strong, #fff) 90%, transparent));
+  border-color: var(--semantic-metadata-line, color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 88%, transparent));
+  pointer-events: auto;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
+  font: inherit;
+  line-height: 1.16;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.spw-guide-chip {
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: var(--handle-radius-tight);
+  background: var(--semantic-metadata-bg, color-mix(in oklab, var(--surface-soft, #fff) 88%, var(--active-op-color, var(--teal)) 12%));
+  color: var(--semantic-metadata-ink, color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 82%, var(--active-op-color, var(--teal)) 18%));
+  border-color: var(--semantic-metadata-line, color-mix(in oklab, var(--active-op-color, var(--teal)) 18%, var(--handle-line-soft) 82%));
+  pointer-events: auto;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
+  font: inherit;
+  text-align: left;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
+/* Substrate-aware tags and guide chips inherit the broader linguistic system. */
+:where(.spw-component-tag, .spw-guide-chip)[data-spw-substrate] {
+  color: var(--spw-substrate-color, color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 78%, var(--active-op-color, var(--teal)) 22%));
+  border-color: color-mix(in oklab, var(--spw-substrate-border, var(--handle-line-soft)) 94%, transparent);
+  background: color-mix(in oklab, var(--spw-substrate-bg-soft, var(--surface-soft)) 82%, var(--active-op-color, var(--teal)) 18%);
+}
+
+:where(.spw-component-tag, .spw-guide-chip)[data-spw-role]::before,
+:where(.spw-component-tag, .spw-guide-chip)[data-spw-stance]::after {
+  font-size: 0.9em;
+  opacity: 0.6;
+}
+
+:where(.spw-component-tag, .spw-guide-chip)[data-spw-role]::before {
+  margin-right: 0.24em;
+}
+
+html[data-spw-show-semantic-metadata="on"] :where(.spw-component-tag, .spw-guide-chip)[data-spw-role]::before,
+html[data-spw-debug-mode="on"] :where(.spw-component-tag, .spw-guide-chip)[data-spw-role]::before {
+  content: attr(data-spw-role);
+}
+
+html[data-spw-show-semantic-metadata="on"] :where(.spw-component-tag, .spw-guide-chip)[data-spw-stance]::after {
+  content: attr(data-spw-stance);
+  margin-left: 0.28em;
+  text-transform: uppercase;
+}
+
+html[data-spw-debug-mode="on"] :where(.spw-component-tag, .spw-guide-chip)[data-spw-stance]::after {
+  content: attr(data-spw-stance);
+  margin-left: 0.28em;
+  text-transform: uppercase;
+}
+
+:where(.spw-component-tag, .spw-guide-chip, .header-annotation):is(:hover, :focus-visible) {
+  border-color: color-mix(in srgb, var(--delight-color, var(--teal, #008080)) 28%, transparent);
+  background: color-mix(in oklab, var(--surface-strong, #fff) 88%, var(--delight-color, var(--teal, #008080)) 12%);
+  color: color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 84%, var(--delight-color, var(--teal, #008080)) 16%);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--delight-color, var(--teal, #008080)) 12%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  outline: none;
+}
+
+:where([data-spw-annotation-match="true"]) {
+  --spw-field-intensity: max(var(--spw-field-intensity, 0), 0.42);
+  outline: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 18%, transparent);
+  outline-offset: 2px;
+}
+
+:where([data-spw-annotation-state="preview"]) {
+  --spw-field-intensity: max(var(--spw-field-intensity, 0), 0.34);
+}
+
+:where([data-spw-annotation-state="pinned"]) {
+  --spw-field-intensity: max(var(--spw-field-intensity, 0), 0.58);
+}
+
+:where(html[data-spw-meaning-mode="quiet"]) :where(
+  .spw-component-meta,
+  .spw-component-guides,
+  .spw-semantic-seam,
+  .spw-section-handle-shell
+) {
+  opacity: 0.78;
+}
+
+:where(html[data-spw-meaning-mode="inspect"]) :where(
+  .spw-component-tag,
+  .spw-guide-chip,
+  .header-annotation,
+  [data-spw-annotation-match="true"]
+) {
+  --handle-line: color-mix(in srgb, var(--active-op-color, var(--teal)) 48%, transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 10%, transparent),
+    var(--handle-shadow-rest);
+}
+
+:where(html[data-spw-meaning-mode="screenshot"]) :where(
+  .spw-component-tag,
+  .spw-guide-chip,
+  .header-annotation,
+  .operator-chip,
+  .spec-pill,
+  [data-spw-annotation-match="true"]
+) {
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 42%, var(--line, rgba(14, 18, 20, 0.14)));
+  background: color-mix(in srgb, var(--surface-strong, #fff) 90%, transparent);
+  color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 88%, var(--active-op-color, var(--teal)) 12%);
+}
+

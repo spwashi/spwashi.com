@@ -1,0 +1,324 @@
+/* ==========================================================================
+   operators/primitive.css — the shared handle body
+   --------------------------------------------------------------------------
+   Reads as: what every handle is before it becomes anything: box, seat, seam, and debug pulse
+   Was: handles/operators.css §2–3 (split 2026-07-03, rule order preserved verbatim)
+   Genome — states sensed: aria-current, aria-pressed, data-spw-charge-key, data-spw-handle, data-spw-inline-form, data-spw-operator, data-spw-projection, data-spw-selection, data-spw-show-semantic-metadata, data-spw-state-inspector, data-spw-surface
+   Genome — custom properties defined: 3; intent hooks consumed: none
+   Probe: toggle me wholesale in DevTools > Sources, or set
+   html[data-spw-debug-layers="on"] to see layer owners breathe.
+   ========================================================================== */
+
+/* ==========================================================================
+   2. Shared handle primitive
+   --------------------------------------------------------------------------
+   The handle primitive is intentionally broad. Specific nouns bias from here.
+   Raw semantic attributes only get handle treatment on inline-capable tags.
+   ========================================================================== */
+
+/* Handle gateway: add only things visitors can grasp or scan. */
+:where(
+  .operator-chip,
+  .syntax-token,
+  .spec-pill,
+  .badge,
+  .tag,
+  .pill,
+  .frame-sigil,
+  .frame-card-sigil,
+  .resonance-sigil,
+  .spw-delimiter,
+  .spw-component-tag,
+  .spw-guide-chip,
+  .persona-chip,
+  [data-spw-handle="true"],
+  :where(a, button, span, strong, em, i, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator])
+) {
+  --handle-arrival-lift: 0px;
+  --handle-arrival-opacity: 1;
+  --interaction-excitement: 0;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2em;
+  min-width: 0;
+  max-width: 100%;
+  min-height: var(--handle-min-height);
+  padding: var(--handle-pad-y) var(--handle-pad-x);
+  padding-top: calc(var(--handle-pad-y) + var(--handle-baseline-offset));
+  box-sizing: border-box;
+  border: 1.25px solid var(--handle-line);
+  border-radius: var(--handle-radius);
+  background: var(--handle-bg);
+  color: var(--handle-ink);
+  text-decoration: none;
+  text-shadow: none;
+  opacity: var(--handle-arrival-opacity);
+  box-shadow:
+      var(--handle-shadow-rest),
+      0 0 calc(var(--interaction-excitement) * 12px) color-mix(in srgb, currentColor calc(var(--interaction-excitement) * 40%), transparent);
+  transform: translateY(calc(var(--handle-arrival-lift) + (var(--interaction-excitement) * -2px)));
+  cursor: pointer;
+  contain: paint style;
+  transition:
+    color var(--handle-duration-fast) var(--handle-ease),
+    background-color var(--handle-duration-fast) var(--handle-ease),
+    border-color var(--handle-duration-base) var(--handle-ease),
+    box-shadow var(--handle-duration-base) var(--handle-settle-ease),
+    transform var(--handle-duration-fast) var(--handle-settle-ease),
+    opacity var(--handle-duration-fast) var(--handle-ease),
+    filter var(--handle-duration-base) var(--handle-settle-ease);
+}
+
+:where(
+  .operator-chip,
+  .syntax-token,
+  .spec-pill,
+  .badge,
+  .tag,
+  .pill,
+  .frame-sigil,
+  .frame-card-sigil,
+  .resonance-sigil,
+  .spw-delimiter,
+  .spw-component-tag,
+  .spw-guide-chip,
+  .persona-chip,
+  [data-spw-handle="true"]
+):is(:hover, :focus-visible) {
+  --interaction-excitement: 0.82;
+}
+
+@keyframes spw-operator-breath {
+  0%, 100% {
+    box-shadow:
+      var(--handle-shadow-rest),
+      0 0 8px color-mix(in srgb, currentColor 20%, transparent);
+  }
+  50% {
+    box-shadow:
+      var(--handle-shadow-rest),
+      0 0 16px color-mix(in srgb, currentColor 40%, transparent);
+  }
+}
+
+:where(
+  .operator-chip,
+  .syntax-token,
+  .spec-pill,
+  .badge,
+  .tag,
+  .pill,
+  .frame-sigil,
+  .frame-card-sigil,
+  .resonance-sigil,
+  .spw-delimiter,
+  .spw-component-tag,
+  .spw-guide-chip,
+  .persona-chip,
+  [data-spw-handle="true"]
+):is([data-spw-selection="active"], [data-spw-selection="selected"], [aria-current="page"], [aria-pressed="true"]) {
+  --interaction-excitement: 1;
+  animation: spw-operator-breath 2s ease-in-out infinite;
+}
+
+@keyframes spw-operator-ripple {
+  0% { box-shadow: 0 0 0 0px color-mix(in srgb, currentColor 40%, transparent); }
+  100% { box-shadow: 0 0 0 12px transparent; }
+}
+
+:where(
+  .operator-chip,
+  .syntax-token,
+  .frame-sigil,
+  .frame-card-sigil
+):active {
+  --interaction-excitement: 0.42;
+  transform: translateY(var(--spw-control-press-depth, 1px)) scale(var(--spw-micro-press-scale, 0.998));
+  transition:
+    transform var(--spw-interaction-acknowledge, var(--touch-acknowledge, 90ms) var(--ease-chassis, cubic-bezier(0.22, 0, 0, 1))),
+    box-shadow var(--spw-interaction-acknowledge, var(--touch-acknowledge, 90ms) var(--ease-chassis, cubic-bezier(0.22, 0, 0, 1)));
+  animation: spw-operator-ripple 0.4s ease-out;
+}
+
+/* Inline handles should read like annotated language before they read as pills. */
+/* The :not() list keeps full controls from flattening into prose tokens. */
+:where(
+  .syntax-token,
+  .spw-delimiter,
+  :where(a, button, span, strong, em, i, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator])
+):not(.operator-chip):not(.frame-sigil):not(.spec-pill):not(.spw-component-tag):not(.spw-guide-chip) {
+  min-height: auto;
+  padding-inline: var(--handle-pad-inline-inline);
+  padding-block: var(--handle-pad-block-inline);
+  border-color: transparent;
+  background: transparent;
+  border-radius: var(--handle-radius-tight);
+  box-shadow: none;
+}
+
+/* Handles that mostly communicate metadata should stay compact. */
+:where(.spw-component-tag, .spw-guide-chip, .frame-card-sigil, .resonance-sigil) {
+  min-height: var(--handle-min-height-compact);
+  padding-inline: 0.42rem;
+  font-family: var(--handle-meta-font);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+}
+
+/* ==========================================================================
+   Visual refinement for .spw-component-tag (rune slip / codex treatment)
+   --------------------------------------------------------------------------
+   The tag is the visible face of the semantic kernel (the system inspected
+   in the reference screenshot). Default remains compact metadata. When the
+   kernel is projected (data-spw-projection, rpg-wednesday surface, or the
+   home gateway we enhanced), the tag becomes a "codex slip" — textured,
+   lifted, and resonant — so the computational labels feel like artifacts
+   that belong in the overgrown library stacks.
+   ========================================================================== */
+
+:where(.spw-component-tag) {
+  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal)) 16%, var(--handle-line-soft, rgba(0, 0, 0, 0.12)) 84%);
+  border-radius: var(--handle-radius-tight, 0.28rem);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 95%, var(--active-op-color, var(--teal)) 5%);
+  box-shadow: inset 0 0.5px 0 rgba(255, 255, 255, 0.38);
+  transition:
+    background var(--handle-duration-fast, 140ms) var(--handle-ease),
+    border-color var(--handle-duration-fast, 140ms) var(--handle-ease),
+    box-shadow var(--handle-duration-fast, 140ms) var(--handle-ease),
+    transform var(--handle-duration-fast, 140ms) var(--handle-ease);
+}
+
+/* Projection / portal fantasy variant — feels like a physical slip from the codex */
+:where([data-spw-projection] .spw-component-tag),
+:where(body[data-spw-surface="rpg-wednesday"] .spw-component-tag),
+:where(#town-library-gateway .spw-component-tag) {
+  background: color-mix(in srgb, var(--surface-strong, #fff) 90%, var(--active-op-color, var(--teal)) 10%);
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 26%, var(--handle-line-soft) 74%);
+  box-shadow:
+    var(--projection-lift-xs, 1px) var(--projection-lift-xs, 1px) 0 color-mix(in srgb, var(--active-op-color, var(--teal)) 12%, transparent),
+    inset 0 0.5px 0 rgba(255, 255, 255, 0.48);
+}
+
+:where([data-spw-projection] .spw-component-tag):hover,
+:where([data-spw-projection] .spw-component-tag):focus-visible,
+:where(body[data-spw-surface="rpg-wednesday"] .spw-component-tag):hover,
+:where(body[data-spw-surface="rpg-wednesday"] .spw-component-tag):focus-visible,
+:where(#town-library-gateway .spw-component-tag):hover,
+:where(#town-library-gateway .spw-component-tag):focus-visible {
+  background: color-mix(in srgb, var(--surface-strong, #fff) 86%, var(--active-op-color, var(--teal)) 14%);
+  box-shadow:
+    var(--projection-lift-sm, 2px) var(--projection-lift-sm, 2px) 0 color-mix(in srgb, var(--active-op-color, var(--teal)) 16%, transparent),
+    0 0 0 calc(1px * var(--spw-resonance, 0.55)) color-mix(in srgb, var(--active-op-color, var(--teal)) 32%, transparent);
+  transform: translateY(-0.5px);
+}
+
+/* Better containment for metas hosting tags in dense inspect/home contexts
+   (directly addresses the long raw attribute lists visible in the reference screenshot) */
+:where(.spw-component-meta) {
+  max-inline-size: 100%;
+}
+
+/* Dense control rows inside custom inspector panels (e.g. the header bar with
+   Light/Dark, text size, and CHOOSE WHAT pills in the read/inspect sidebar).
+   Prevents over-packing, clipping at panel edges, and awkward wrapping. */
+:where(.spw-state-inspector__panel, .read-inspect-panel, .kernel-inspector, [data-spw-state-inspector]) .spw-component-meta,
+:where(.spw-state-inspector__panel, .read-inspect-panel, .kernel-inspector, [data-spw-state-inspector]) .frame-operators,
+:where(.spw-state-inspector__panel, .read-inspect-panel, .kernel-inspector, [data-spw-state-inspector]) .spec-strip {
+  flex-wrap: wrap;
+  gap: var(--handle-gap, 0.38rem);
+  align-items: center;
+}
+
+html[data-spw-show-semantic-metadata="on"] :where(.spw-component-meta) {
+  flex-wrap: wrap;
+  gap: var(--handle-gap-tight, 0.22rem);
+}
+
+/* Extra breathing room for component tags and dense control groups when inside
+   inspector / read-mode panels (addresses clipping and over-packing visible in
+   the custom left sidebar in the reference screenshot). */
+:where(.spw-state-inspector, [data-spw-state-inspector], .read-inspect-panel, .kernel-inspector) :where(.spw-component-meta, .spw-component-tag, .spec-pill, .operator-chip) {
+  gap: var(--handle-gap, 0.38rem);
+}
+
+:where(.spw-state-inspector, [data-spw-state-inspector], .read-inspect-panel, .kernel-inspector) .spw-component-tag {
+  min-inline-size: 2.8rem; /* prevent aggressive shrinking that causes clipping */
+  padding-inline: 0.5rem;
+}
+
+/* ==========================================================================
+   3. Handle layout, siblings, and room seams
+   ========================================================================== */
+
+:where(.frame-topline, .frame-heading) > :where(.spec-strip, .frame-operators, .spw-component-meta) {
+  min-width: 0;
+}
+
+:where(.frame-topline, .frame-heading) > .spw-component-meta {
+  margin-left: auto;
+  justify-content: flex-end;
+}
+
+:where(.frame-topline > .frame-sigil + .spec-strip) {
+  margin-inline-start: 0.1rem;
+}
+
+:where(.frame-topline > .frame-sigil + .spw-component-meta) {
+  margin-inline-start: auto;
+}
+
+:where(.frame-operators > * + *, .spec-strip > * + *)::before {
+  content: none;
+}
+
+/* Dense seams become descriptive when metadata mode is on. */
+html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-strip > *)[data-spw-operator]::after {
+  content: attr(data-spw-operator);
+  position: absolute;
+  inset: auto auto calc(100% + 0.2rem) 50%;
+  transform: translateX(-50%);
+  padding: 0.08rem 0.32rem;
+  border: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+  border-radius: var(--handle-radius-pill);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 92%, transparent);
+  color: var(--handle-ink-soft);
+  font-family: var(--handle-meta-font);
+  font-size: 0.56rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  opacity: 0;
+  pointer-events: none;
+  white-space: nowrap;
+  transition: opacity var(--handle-duration-fast) var(--handle-ease);
+}
+
+html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-strip > *)[data-spw-operator]:is(:hover, :focus-visible)::after {
+  opacity: 0.92;
+}
+
+/* Rich route choices and card-body links carry operator metadata, but their
+   contents are card anatomy rather than inline handles. Preserve the component
+   grid contract instead of letting the handle primitive compress them. */
+:where(.spw-route-bridge__links a[data-spw-operator], a.frame-card[data-spw-operator], .frame-card > a:first-child[data-spw-operator]) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  align-content: start;
+  justify-content: stretch;
+  justify-items: start;
+  gap: var(--card-rhythm, var(--component-gap-tight, 0.65rem));
+  inline-size: 100%;
+  max-inline-size: 100%;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  color: inherit;
+  overflow-wrap: anywhere;
+  text-align: start;
+  white-space: normal;
+}
+

@@ -1,0 +1,880 @@
+/* ==========================================================================
+   operators/spell-breadcrumbs.css — the long spell path
+   --------------------------------------------------------------------------
+   Reads as: breadcrumb spellwork: a single subsystem, kept whole so its story reads uninterrupted
+   Was: handles/operators.css §13 (split 2026-07-03, rule order preserved verbatim)
+   Genome — states sensed: aria-expanded, data-spw-breadcrumb-menu-changed, data-spw-breadcrumb-menu-clarity, data-spw-breadcrumb-menu-mode, data-spw-breadcrumb-menu-phase, data-spw-breadcrumb-menu-state, data-spw-breadcrumb-region-menu, data-spw-breadcrumb-reversible, data-spw-breadcrumb-state, data-spw-breadcrumb-viewport, data-spw-crumb-kind, data-spw-current, data-spw-deep-link, data-spw-operator-charge-role
+   Genome — custom properties defined: 1; intent hooks consumed: none
+   Probe: toggle me wholesale in DevTools > Sources, or set
+   html[data-spw-debug-layers="on"] to see layer owners breathe.
+   ========================================================================== */
+
+/* ==========================================================================
+   13. Spell breadcrumbs
+   ========================================================================== */
+
+.spw-spell-path {
+  display: grid;
+  gap: 0.18rem;
+  min-width: 0;
+  position: relative;
+  margin-block: 0.24rem 0.56rem;
+  padding: 0.18rem 0;
+  border: 0;
+  border-top: 1px solid color-mix(in srgb, var(--teal, #008080) 16%, transparent);
+  border-radius: 0;
+  background: transparent;
+  color: var(--ink-soft);
+  font-family: var(--handle-meta-font);
+  font-size: 0.72rem;
+  contain: layout style;
+  transition:
+    color 120ms ease,
+    opacity 120ms ease,
+    background-color 140ms ease,
+    border-color 140ms ease;
+}
+
+.spw-spell-path[data-spw-breadcrumb-state="open"] {
+  padding: 0.18rem 0.24rem 0.22rem;
+  border: 1px solid color-mix(in srgb, var(--teal, #008080) 10%, var(--line, rgba(14, 18, 20, 0.14)) 90%);
+  border-radius: var(--shape-control, 0.78rem);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.14), transparent 52%),
+    color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.9)) 96%, var(--teal, #008080) 4%);
+}
+
+:where(.site-header, body > header) .spw-spell-path {
+  align-self: start;
+  justify-self: stretch;
+  margin-block: 0;
+}
+
+.spw-spell-path[data-spw-breadcrumb-reversible="true"] {
+  box-shadow: none;
+}
+
+.spw-spell-path__header {
+  display: flex;
+  align-items: center;
+  gap: 0.28rem 0.5rem;
+  min-width: 0;
+}
+
+.spw-spell-path-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.24rem 0.4rem;
+  min-width: 0;
+  min-height: var(--touch-target-compact, 2.15rem);
+  padding: 0.12rem 0.28rem 0.12rem 0;
+  border: 1px solid transparent;
+  border-radius: var(--shape-control, 0.78rem);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition:
+    background-color var(--spw-interaction-commit, 180ms ease),
+    border-color var(--spw-interaction-commit, 180ms ease),
+    color var(--spw-interaction-commit, 180ms ease),
+    transform var(--spw-interaction-acknowledge, 90ms ease),
+    box-shadow var(--spw-interaction-commit, 180ms ease);
+}
+
+.spw-spell-path-toggle::after {
+  content: "›";
+  flex: 0 0 auto;
+  color: color-mix(in srgb, var(--teal, #008080) 58%, var(--ink-soft));
+  font-size: 0.92rem;
+  line-height: 1;
+  transform: rotate(90deg);
+  transition: transform var(--spw-interaction-commit, 180ms var(--ease-chassis, ease));
+}
+
+.spw-spell-path-toggle[aria-expanded="true"]::after {
+  transform: rotate(-90deg);
+}
+
+.spw-spell-path-toggle:is(:hover, :focus-visible) {
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  border-color: color-mix(in srgb, var(--teal, #008080) 18%, transparent);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 92%, var(--teal, #008080) 8%);
+  box-shadow: var(--spw-chassis-highlight, inset 0 1px 0 rgba(255, 255, 255, 0.2));
+  transform: translateY(var(--spw-control-hover-lift, -1px));
+  outline: none;
+}
+
+.spw-spell-path-toggle:active {
+  transform: translateY(var(--spw-control-press-depth, 1px)) scale(var(--spw-micro-press-scale, 0.998));
+  transition:
+    transform var(--spw-interaction-acknowledge, var(--touch-acknowledge, 90ms) var(--ease-chassis, cubic-bezier(0.22, 0, 0, 1))),
+    box-shadow var(--spw-interaction-acknowledge, var(--touch-acknowledge, 90ms) var(--ease-chassis, cubic-bezier(0.22, 0, 0, 1)));
+}
+
+.spw-spell-path__title {
+  color: var(--ink-soft);
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.spw-spell-path__summary {
+  color: color-mix(in srgb, var(--ink-soft) 82%, var(--ink, rgba(14, 18, 20, 0.92)) 18%);
+  font-size: 0.68rem;
+  line-height: 1.2;
+}
+
+.spw-spell-shell {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32rem;
+  min-height: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-soft);
+  font: inherit;
+  cursor: pointer;
+  transition:
+    color 140ms ease,
+    opacity 140ms ease;
+}
+
+.spw-spell-shell:is(:hover, :focus-visible) {
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  outline: none;
+}
+
+.spw-spell-shell-token {
+  color: var(--teal);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.spw-spell-shell-state {
+  color: var(--ink-soft);
+  font-size: 0.64rem;
+}
+
+.spw-spell-sorter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+  min-height: var(--touch-target-compact, 2.15rem);
+  margin-inline-start: auto;
+  padding: 0.18rem 0.52rem;
+  border: 1px solid color-mix(in srgb, var(--op-action-color, #0d7a72) 28%, var(--line, rgba(14, 18, 20, 0.14)) 72%);
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.3), transparent 58%),
+    color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.94)) 92%, var(--op-action-color, #0d7a72) 8%);
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  font: inherit;
+  text-decoration: none;
+  white-space: nowrap;
+  touch-action: manipulation;
+  transition:
+    border-color 140ms ease,
+    background-color 140ms ease,
+    transform 140ms ease;
+}
+
+.spw-spell-sorter-chip:is(:hover, :focus-visible) {
+  border-color: color-mix(in srgb, var(--op-action-color, #0d7a72) 46%, transparent);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.spw-spell-sorter-chip:active {
+  transform: translateY(0);
+  background: color-mix(in srgb, var(--op-action-color, #0d7a72) 12%, var(--surface-strong, #fff) 88%);
+}
+
+.spw-spell-sorter-chip__label-short {
+  display: none;
+}
+
+.spw-spell-sorter-chip__token {
+  color: var(--op-action-color, #0d7a72);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.spw-spell-sorter-chip__label {
+  color: var(--ink-soft);
+  font-size: 0.64rem;
+  letter-spacing: 0.02em;
+}
+
+.spw-spell-crumb[data-spw-crumb-kind="region"] .spw-spell-token {
+  color: var(--op-probe-color, #7c4dff);
+}
+
+.spw-spell-crumb[data-spw-crumb-kind="region"][data-spw-current="true"] .spw-spell-button {
+  border-color: color-mix(in srgb, var(--op-probe-color, #7c4dff) 42%, transparent);
+  background: color-mix(in srgb, var(--op-probe-color, #7c4dff) 10%, var(--surface-strong, #fff) 90%);
+}
+
+.spw-spell-path[data-spw-breadcrumb-region-menu="open"] .spw-spell-crumb[data-spw-crumb-kind="region"] .spw-spell-label {
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+}
+
+.spw-spell-path__hint {
+  display: none;
+  margin: 0;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.64));
+  font-size: 0.62rem;
+  line-height: 1.35;
+}
+
+.spw-spell-path[data-spw-breadcrumb-state="closed"] .spw-spell-path__hint {
+  display: block;
+  padding-inline: 0.12rem 0;
+}
+
+.spw-spell-button,
+.spw-spell-link,
+.spw-spell-shell {
+  touch-action: manipulation;
+}
+
+.spw-spell-button:active,
+.spw-spell-sorter-chip:active {
+  opacity: 0.92;
+}
+
+.spw-spell-trail {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 0.3rem 0.36rem;
+  list-style: none;
+  margin: 0;
+  padding: 0.08rem 0.12rem 0.12rem;
+  min-width: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scrollbar-width: thin;
+  mask-image: linear-gradient(90deg, transparent, #000 0.65rem, #000 calc(100% - 0.65rem), transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 0.65rem, #000 calc(100% - 0.65rem), transparent);
+}
+
+.spw-spell-path[data-spw-breadcrumb-viewport="compact"] .spw-spell-trail {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  overflow-x: visible;
+  overflow-y: visible;
+  overscroll-behavior: auto;
+  scroll-snap-type: none;
+  mask-image: none;
+  -webkit-mask-image: none;
+  touch-action: pan-y;
+  gap: 0.28rem 0.32rem;
+  padding: 0.12rem 0.04rem 0.16rem;
+}
+
+.spw-spell-path[data-spw-breadcrumb-viewport="compact"] .spw-spell-crumb {
+  flex: 0 1 auto;
+  max-inline-size: 100%;
+  scroll-snap-align: none;
+}
+
+.spw-spell-path[data-spw-breadcrumb-viewport="compact"] .spw-spell-crumb:not(:last-child)::after {
+  margin-inline-start: 0.1rem;
+}
+
+.spw-spell-path[data-spw-breadcrumb-viewport="compact"] .spw-spell-path__header {
+  flex-wrap: wrap;
+  row-gap: 0.22rem;
+}
+
+.spw-spell-path[data-spw-breadcrumb-viewport="compact"] .spw-spell-path-toggle {
+  flex: 1 1 min(100%, 14rem);
+}
+
+.spw-spell-path[data-spw-breadcrumb-viewport="compact"] .spw-spell-sorter-chip {
+  margin-inline-start: 0;
+}
+
+.spw-spell-path[data-spw-breadcrumb-viewport="compact"] .spw-spell-sorter-chip__label {
+  display: none;
+}
+
+.spw-spell-path[data-spw-breadcrumb-viewport="compact"] .spw-spell-sorter-chip__label-short {
+  display: inline;
+}
+
+.spw-spell-path__guide {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.16rem 0.34rem;
+  align-items: baseline;
+  margin: 0.06rem 0 0;
+  color: var(--ink-soft);
+  font-size: 0.64rem;
+  line-height: 1.35;
+}
+
+.spw-spell-path__guide-lead,
+.spw-spell-path__guide-action {
+  min-width: 0;
+}
+
+.spw-spell-path__guide-action {
+  color: var(--ink);
+}
+
+.spw-spell-path__guide-details {
+  color: var(--ink-soft);
+  opacity: 0.88;
+}
+
+.spw-spell-neighborhood {
+  display: grid;
+  gap: 0.22rem;
+  margin: 0.06rem 0 0;
+}
+
+.spw-spell-neighborhood__label {
+  color: var(--ink-soft);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.spw-spell-neighborhood__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.28rem 0.34rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+.spw-spell-neighborhood__item {
+  min-width: 0;
+}
+
+.spw-spell-neighborhood__link {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.18rem 0.28rem;
+  min-height: 1.84rem;
+  padding: 0.14rem 0.42rem;
+  border: 1px solid color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 82%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-strong, #fff) 92%, var(--teal, #008080) 8%);
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  text-decoration: none;
+  transition:
+    border-color 140ms ease,
+    background-color 140ms ease,
+    color 140ms ease,
+    transform 140ms ease;
+}
+
+.spw-spell-neighborhood__link:is(:hover, :focus-visible) {
+  border-color: color-mix(in srgb, var(--teal, #008080) 24%, transparent);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 88%, var(--teal, #008080) 12%);
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.spw-spell-neighborhood__name {
+  color: var(--teal);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.spw-spell-neighborhood__note {
+  color: var(--ink-soft);
+  font-size: 0.6rem;
+  line-height: 1.25;
+}
+
+.spw-spell-crumb {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.18rem;
+  min-width: 0;
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+}
+
+.spw-spell-crumb:not(:last-child)::after {
+  content: "→";
+  margin-inline-start: 0.18rem;
+  color: var(--line-strong);
+  opacity: 0.72;
+}
+
+.spw-spell-link,
+.spw-spell-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.18rem;
+  min-height: max(2.05rem, var(--spw-control-min-height, 2.15rem));
+  min-width: 0;
+  padding: calc(var(--spw-control-padding-block, 0.22rem) + 0.02rem) calc(var(--spw-control-padding-inline, 0.48rem) - 0.04rem);
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  font: inherit;
+  text-decoration: none;
+  contain: paint style;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition:
+    border-color 140ms ease,
+    background-color 140ms ease,
+    color 140ms ease,
+    transform 140ms ease;
+}
+
+.spw-spell-link:is(:hover, :focus-visible),
+.spw-spell-button:is(:hover, :focus-visible) {
+  border-color: color-mix(in srgb, var(--semantic-accent, var(--active-op-color, var(--teal, #008080))) 18%, transparent);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 94%, var(--semantic-accent, var(--active-op-color, var(--teal, #008080))) 6%);
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.spw-spell-crumb[data-spw-current="true"] .spw-spell-link,
+.spw-spell-crumb[data-spw-current="true"] .spw-spell-button {
+  border-color: color-mix(in srgb, var(--semantic-accent-emphasis, var(--semantic-accent, var(--active-op-color, var(--teal, #008080)))) 22%, transparent);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 92%, var(--semantic-accent-emphasis, var(--semantic-accent, var(--active-op-color, var(--teal, #008080)))) 8%);
+}
+
+.spw-spell-token {
+  color: var(--semantic-accent, var(--active-op-color, var(--teal, #008080)));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.spw-spell-label {
+  min-width: 0;
+  color: var(--ink);
+  text-wrap: nowrap;
+}
+
+.spw-spell-meaning {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.66rem;
+  line-height: 1.45;
+}
+
+.spell-register-strip--effects .spell-register {
+  border-color: color-mix(in srgb, var(--teal, #008080) 22%, transparent);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 90%, var(--teal, #008080) 10%);
+}
+
+.spw-spell-path[data-spw-breadcrumb-state="closed"] .spw-spell-trail,
+.spw-spell-path[data-spw-breadcrumb-state="closed"] .spw-spell-meaning,
+.spw-spell-path[data-spw-breadcrumb-state="closed"] .spw-spell-path__guide,
+.spw-spell-path[data-spw-breadcrumb-state="closed"] .spw-spell-neighborhood,
+.spw-spell-path[data-spw-breadcrumb-state="closed"] .spw-spell-path__inspect,
+.spw-spell-path[data-spw-breadcrumb-state="closed"] .spw-spell-path__garden-trace {
+  display: none;
+}
+
+.spw-spell-path[data-spw-breadcrumb-state="open"] .spw-spell-path__hint {
+  display: none;
+}
+
+.spw-spell-path__inspect {
+  margin: 0.08rem 0 0;
+  color: var(--ink-soft);
+  font-size: 0.64rem;
+  line-height: 1.4;
+}
+
+.spw-spell-path__inspect > summary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.55rem;
+  padding: 0.08rem 0.2rem;
+  color: color-mix(in srgb, var(--ink-soft) 82%, var(--teal, #008080) 18%);
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.spw-spell-path__inspect > summary::-webkit-details-marker {
+  display: none;
+}
+
+.spw-spell-path__inspect > summary::before {
+  content: "›";
+  margin-inline-end: 0.28rem;
+  color: color-mix(in srgb, var(--teal, #008080) 58%, var(--ink-soft));
+}
+
+.spw-spell-path__inspect[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+.spw-spell-path__inspect .spw-spell-meaning {
+  margin: 0.2rem 0 0;
+  padding: 0.34rem 0.42rem;
+  border: 1px dashed color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 88%, transparent);
+  border-radius: var(--shape-small, 0.55rem);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 90%, transparent);
+}
+
+.spw-spell-neighborhood__note {
+  display: none;
+}
+
+.spw-spell-path__garden-trace {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.28rem 0.38rem;
+  margin: 0.12rem 0 0;
+  padding: 0.2rem 0.46rem;
+  border: 1px solid color-mix(in srgb, var(--teal, #008080) 14%, var(--line, rgba(14, 18, 20, 0.14)) 86%);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-strong, #fff) 92%, var(--teal, #008080) 8%);
+  font-size: 0.64rem;
+}
+
+.spell-provenance__label {
+  color: color-mix(in srgb, var(--teal, #008080) 68%, var(--ink-soft));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.spw-spell-path__guide-lead {
+  color: color-mix(in srgb, var(--ink-soft) 78%, var(--ink, rgba(14, 18, 20, 0.92)) 22%);
+  font-size: 0.66rem;
+  line-height: 1.38;
+}
+
+@keyframes spw-breadcrumb-shell-project {
+  0% {
+    opacity: 0.86;
+    transform: translateY(-0.06rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spw-breadcrumb-shell-settle {
+  0% {
+    opacity: 0.9;
+    transform: translateY(0.04rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spw-breadcrumb-copy-clarify {
+  0% {
+    opacity: 0.82;
+    transform: translateY(-0.04rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* The breadcrumb and shell expose the same settle/open physics as the header. */
+.spw-spell-path[data-spw-breadcrumb-menu-state="open"] {
+  color: color-mix(in srgb, var(--ink-soft) 76%, var(--ink, rgba(14, 18, 20, 0.92)) 24%);
+}
+
+.spw-spell-path[data-spw-breadcrumb-menu-clarity="project"] {
+  animation: spw-breadcrumb-shell-project 120ms ease-out;
+}
+
+.spw-spell-path[data-spw-breadcrumb-menu-clarity="settle"] {
+  animation: spw-breadcrumb-shell-settle 100ms ease-out;
+}
+
+.spw-spell-path[data-spw-breadcrumb-menu-state="open"] .spw-spell-shell {
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+}
+
+.spw-spell-path[data-spw-breadcrumb-menu-state="closed"][data-spw-breadcrumb-reversible="true"] {
+  border-style: solid;
+}
+
+.spw-spell-path[data-spw-breadcrumb-menu-phase="settling"][data-spw-breadcrumb-reversible="true"] .spw-spell-shell-state,
+.spw-spell-path[data-spw-breadcrumb-menu-mode="toggle"][data-spw-breadcrumb-reversible="true"] .spw-spell-shell-state {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 0.16rem;
+}
+
+.spw-spell-path[data-spw-breadcrumb-menu-changed~="state"] .spw-spell-shell,
+.spw-spell-path[data-spw-breadcrumb-menu-changed~="mode"] .spw-spell-shell,
+.spw-spell-path[data-spw-breadcrumb-menu-changed~="phase"] .spw-spell-meaning {
+  animation: spw-breadcrumb-copy-clarify 100ms ease-out;
+}
+
+@media (max-width: 720px) {
+  :where(.site-header, body > header) .spw-spell-path {
+    width: 100%;
+    margin-block: 0;
+  }
+
+  .spw-spell-path {
+    gap: 0.12rem;
+    margin-block: 0.08rem 0.18rem;
+    padding: 0.12rem 0 0;
+  }
+
+  .spw-spell-path__header {
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 0.32rem;
+  }
+
+  .spw-spell-path-toggle {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .spw-spell-path__summary {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .spw-spell-path__guide,
+  .spw-spell-neighborhood {
+    display: none;
+  }
+
+  .spw-spell-sorter-chip__label-full {
+    display: none;
+  }
+
+  .spw-spell-sorter-chip__label-short {
+    display: inline;
+  }
+
+  .spw-spell-path[data-spw-breadcrumb-state="closed"] {
+    padding-block: 0.08rem 0;
+  }
+
+  .spw-spell-path[data-spw-breadcrumb-state="closed"] .spw-spell-shell {
+    min-height: auto;
+    padding: 0;
+  }
+
+  .spw-spell-path[data-spw-breadcrumb-state="closed"] .spw-spell-shell-state {
+    display: none;
+  }
+}
+
+.spell-visual {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.48rem;
+  align-items: center;
+  min-width: 0;
+}
+
+.spell-board-content {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.spell-visual--compact {
+  gap: 0.3rem 0.36rem;
+}
+
+.spell-ingredient {
+  display: inline-grid;
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  align-items: center;
+  gap: 0.08rem;
+  min-height: 2rem;
+  padding: 0.26rem 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--teal, #008080) 20%, transparent);
+  border-radius: 0.42rem;
+  background: color-mix(in srgb, var(--surface-strong, #fff) 96%, transparent);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.76rem;
+  line-height: 1.1;
+}
+
+.spell-ingredient[data-spw-operator-left-role],
+.spell-ingredient[data-spw-operator-right-role] {
+  --spell-geometry-rail: color-mix(in srgb, var(--active-op-color, var(--teal)) 20%, transparent);
+
+  box-shadow:
+    inset 2px 0 0 var(--spell-geometry-rail),
+    inset -2px 0 0 color-mix(in srgb, var(--op-ref-color, #4f7fbf) 18%, transparent);
+}
+
+.spell-ingredient[data-spw-operator-flow*="subjective-to-objective"] {
+  --spell-geometry-rail: color-mix(in srgb, var(--op-action-color, var(--teal-dark)) 22%, transparent);
+}
+
+.spell-ingredient[data-spw-operator-flow*="objective-to-subjective"] {
+  --spell-geometry-rail: color-mix(in srgb, var(--op-probe-color, #7a57c2) 22%, transparent);
+}
+
+.spell-ingredient[data-spw-operator-charge-role*="ordinal"] {
+  border-style: double;
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--op-object-color, #c48a28) 9%, transparent),
+      transparent 44%,
+      color-mix(in srgb, var(--op-object-color, #c48a28) 7%, transparent)
+    ),
+    color-mix(in srgb, var(--surface-strong, #fff) 94%, transparent);
+}
+
+.spell-ingredient[data-spw-deep-link*="#"] {
+  border-bottom-color: color-mix(in srgb, var(--op-ref-color, #4f7fbf) 38%, transparent);
+}
+
+.spell-ingredient-prefix,
+.spell-ingredient-postfix {
+  color: var(--teal, #008080);
+  font-weight: 700;
+}
+
+.spell-ingredient-nucleus {
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+}
+
+.spell-ledger {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.spell-register-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.32rem 0.42rem;
+  min-width: 0;
+}
+
+.spell-register {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.24rem;
+  padding: 0.16rem 0.46rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface, #fff) 92%, transparent);
+  border: 1px solid color-mix(in srgb, var(--line, rgba(14,18,20,0.14)) 74%, transparent);
+  color: var(--ink-soft, rgba(14, 18, 20, 0.72));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.68rem;
+}
+
+.spell-note {
+  margin: 0;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.72));
+  font-size: 0.8rem;
+  line-height: 1.55;
+}
+
+.spell-source {
+  margin: 0;
+  padding: 0.72rem 0.84rem;
+  border-radius: 0.48rem;
+  background: color-mix(in srgb, var(--surface-code, rgba(18, 23, 30, 0.94)) 90%, transparent);
+  color: color-mix(in srgb, white 90%, var(--teal, #008080) 10%);
+  overflow: auto;
+}
+
+.spell-source code {
+  display: block;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.74rem;
+  line-height: 1.6;
+}
+
+.spell-source--compact {
+  max-block-size: 12rem;
+  padding: 0.56rem 0.68rem;
+}
+
+.spell-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.42rem;
+}
+
+.spell-actions--bundles {
+  margin-top: 0.1rem;
+}
+
+.spell-bundle-bank {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.spell-bundle-grid {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.spell-bundle-card {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.72rem 0.84rem;
+  border: 1px solid color-mix(in srgb, var(--line, rgba(14,18,20,0.14)) 78%, transparent);
+  border-radius: 0.56rem;
+  background: color-mix(in srgb, var(--surface, #fff) 94%, transparent);
+}
+
+.spell-bundle-card__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.42rem;
+}
+
+.spell-bundle-card__title {
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  font-size: 0.82rem;
+}
+
+.spell-bundle-card__meta {
+  margin: 0;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.72));
+  font-size: 0.74rem;
+  line-height: 1.5;
+}
+

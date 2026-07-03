@@ -7,11 +7,12 @@
  */
 
 import { bus } from '/public/js/kernel/bus.js';
-import { detectOperator, getOperatorDefinition, getOperatorGeometry } from '/public/js/kernel/shared.js';
+import { composeOpBundle, detectOperator, getOperatorDefinition, getOperatorGeometry } from '/public/js/kernel/shared.js';
 import { getActiveRecentPathMemory } from '/public/js/interface/accent-palette.js';
 import { getGroundedCouplings, getGroundedRegistry, getSigilCollection, restoreCheckpoint } from '/public/js/interface/haptics.js';
 import { describeCognitiveState } from '/public/js/runtime/cognitive-state.js';
 import { getSiteSettings } from '/public/js/kernel/site-settings.js';
+import { CAULDRON_CONTRACT } from '/public/js/interface/cauldron/contract.js';
 
 const SPELL_ACTION = Object.freeze({
   CAST: 'cast',
@@ -676,6 +677,9 @@ function renderSavedBundleCard(bundle) {
         <button class="operator-chip" type="button" data-spw-spell-restore="${escapeHtml(bundle.name)}" data-spw-operator="ref">
           ~ restore "${escapeHtml(bundle.name)}"
         </button>
+        <button class="operator-chip" type="button" data-spw-spell-decompose="${escapeHtml(bundle.name)}" data-spw-operator="substrate" title="Reopen this spell as cauldron ingredients for editing">
+          $ decompose
+        </button>
       </div>
     </article>
   `;
@@ -722,7 +726,7 @@ function renderSpellAtom(entry) {
     .join(' ');
 
   return `
-    <span class="spell-ingredient" data-spw-atom="chip" data-spw-grounded="true" data-spw-operator="${escapeHtml(entry.operatorType)}" ${geometryAttrs}${provenanceAttr}>
+    <span class="spell-ingredient" data-spw-atom="chip" data-spw-grounded="true" data-spw-operator="${escapeHtml(entry.operatorType)}" data-spw-op="${escapeHtml(composeOpBundle(entry.expression || entry.nucleus || ''))}" ${geometryAttrs}${provenanceAttr}>
       <span class="spell-ingredient-prefix">${escapeHtml(entry.prefix || '')}</span>
       <span class="spell-ingredient-nucleus">${escapeHtml(entry.nucleus || entry.expression)}</span>
       <span class="spell-ingredient-postfix">${escapeHtml(entry.postfix || '')}</span>
@@ -749,6 +753,15 @@ function bindSpellActions(root) {
     button.addEventListener('click', () => {
       const bundleName = button.dataset.spwSpellRestore;
       window.spwSpells?.restore(bundleName, button);
+    });
+  });
+
+  root.querySelectorAll('[data-spw-spell-decompose]').forEach((button) => {
+    if (button.dataset.spwSpellBound === 'true') return;
+    button.dataset.spwSpellBound = 'true';
+    button.addEventListener('click', () => {
+      const bundleName = button.dataset.spwSpellDecompose;
+      window.spwSpells?.decompose(bundleName, button);
     });
   });
 }
@@ -796,6 +809,37 @@ function registerSpellActions() {
     reset(button) {
       bus.emit('spell:reset', { source: 'spell-board' });
       if (button instanceof HTMLElement) button.textContent = '= trail cleared';
+    },
+    /* Decompose: reopen a saved spell as cauldron ingredients (edit = decompose,
+       adjust, re-mix). Ingredients enter through the same spell:capture front
+       door as hold-priming, so the cauldron owns all storage mutations. */
+    decompose(name, button) {
+      if (!name) return;
+      const parsed = parseSpellBundle(localStorage.getItem(`${SPELL_BUNDLE_PREFIX}${name}`));
+      const registry = Array.isArray(parsed?.registry) ? parsed.registry : [];
+      if (!registry.length) {
+        if (button instanceof HTMLElement) button.textContent = '$ nothing to decompose';
+        return;
+      }
+      registry.slice(0, CAULDRON_CONTRACT.maxIngredients).forEach((key) => {
+        const tail = String(key).split(':').pop() || String(key);
+        bus.emit(CAULDRON_CONTRACT.events.capture, {
+          expression: tail,
+          label: tail,
+          origin: 'spellbook-decompose',
+          originLabel: name,
+          primedBy: 'decompose',
+          sourceElement: String(key),
+          gestureHistory: `spell->decompose->gather:${tail}`,
+        }, { target: document });
+      });
+      bus.emit(CAULDRON_CONTRACT.events.decomposed, {
+        name,
+        count: Math.min(registry.length, CAULDRON_CONTRACT.maxIngredients),
+        total: registry.length,
+        path: parsed?.path || '',
+      });
+      if (button instanceof HTMLElement) button.textContent = `$ reopened as ${Math.min(registry.length, CAULDRON_CONTRACT.maxIngredients)} ingredients`;
     },
   };
 }

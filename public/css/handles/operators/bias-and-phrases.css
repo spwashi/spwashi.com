@@ -1,0 +1,223 @@
+/* ==========================================================================
+   operators/bias-and-phrases.css — accent and inflection
+   --------------------------------------------------------------------------
+   Reads as: operator/substrate/role bias, inline delimiters, brace phrases, swappable hints
+   Was: handles/operators.css §10–12 (split 2026-07-03, rule order preserved verbatim)
+   Genome — states sensed: data-spw-features, data-spw-gesture, data-spw-handle, data-spw-hint-density, data-spw-hint-surface, data-spw-inline-form, data-spw-operator, data-spw-role-cluster, data-spw-stance, data-spw-substrate, data-spw-swappable
+   Genome — custom properties defined: 4; intent hooks consumed: none
+   Probe: toggle me wholesale in DevTools > Sources, or set
+   html[data-spw-debug-layers="on"] to see layer owners breathe.
+   ========================================================================== */
+
+/* ==========================================================================
+   10. Operator, substrate, role, and stance bias
+   --------------------------------------------------------------------------
+   This is where the file becomes more semantically integrated with the site.
+   ========================================================================== */
+
+:where([data-spw-features~="operators"] :where(main, footer) [data-spw-operator],
+       [data-spw-features~="console"] .spw-console [data-spw-operator]) {
+  color: var(--spw-operator-color, currentColor);
+  border-color: var(--spw-operator-border, currentColor);
+}
+
+:where([data-spw-features~="operators"] :where(main, footer) [data-spw-operator]) {
+  background: var(--spw-operator-bg-soft, transparent);
+}
+
+:where([data-spw-features~="operators"] :where(main, footer) [data-spw-operator]:is(:hover, :focus-visible)) {
+  filter: brightness(1.04);
+}
+
+:where([data-spw-substrate]) {
+  --handle-line:
+    color-mix(in srgb, var(--spw-substrate-border, var(--handle-line)) 92%, transparent);
+  --handle-bg:
+    color-mix(in srgb, var(--spw-substrate-bg-soft, var(--surface-strong)) 72%, transparent);
+  --handle-ink:
+    var(--spw-substrate-color, var(--active-op-color, var(--teal)));
+}
+
+:where([data-spw-role-cluster="reference"]) {
+  --handle-line:
+    color-mix(in srgb, var(--op-ref-border, var(--handle-line)) 92%, transparent);
+  --handle-bg:
+    color-mix(in srgb, var(--op-ref-bg-soft, var(--surface-soft)) 72%, transparent);
+  --handle-ink:
+    var(--op-ref-color, var(--handle-ink));
+}
+
+:where([data-spw-role-cluster="schema"]) {
+  --handle-line:
+    color-mix(in srgb, var(--op-object-border, var(--handle-line)) 92%, transparent);
+  --handle-bg:
+    color-mix(in srgb, var(--op-object-bg-soft, var(--surface-soft)) 72%, transparent);
+  --handle-ink:
+    var(--op-object-color, var(--handle-ink));
+}
+
+:where([data-spw-role-cluster="probe"]) {
+  --handle-line:
+    color-mix(in srgb, var(--op-probe-border, var(--handle-line)) 92%, transparent);
+  --handle-bg:
+    color-mix(in srgb, var(--op-probe-bg-soft, var(--surface-soft)) 72%, transparent);
+  --handle-ink:
+    var(--op-probe-color, var(--handle-ink));
+}
+
+:where([data-spw-role-cluster="surface"]) {
+  --handle-line:
+    color-mix(in srgb, var(--op-surface-border, var(--handle-line)) 92%, transparent);
+  --handle-bg:
+    color-mix(in srgb, var(--op-surface-bg-soft, var(--surface-soft)) 72%, transparent);
+  --handle-ink:
+    var(--op-surface-color, var(--handle-ink));
+}
+
+:where([data-spw-role-cluster="pragma"]) {
+  --handle-line:
+    color-mix(in srgb, var(--op-pragma-border, var(--handle-line)) 92%, transparent);
+  --handle-bg:
+    color-mix(in srgb, var(--op-pragma-bg-soft, var(--surface-soft)) 72%, transparent);
+  --handle-ink:
+    var(--op-pragma-color, var(--handle-ink));
+}
+
+:where([data-spw-stance="entry"]) {
+  --handle-underline-offset: 0.18em;
+}
+
+:where([data-spw-stance="ground"]) {
+  --handle-underline-offset: 0.14em;
+}
+
+:where([data-spw-stance="exit"]) {
+  opacity: 0.86;
+}
+
+/* ==========================================================================
+   11. Inline delimiters and brace phrases
+   ========================================================================== */
+
+.spw-delimiter {
+  padding-inline: 0.08rem;
+  border-radius: 0.18rem;
+  font-family: var(--handle-meta-font);
+  font-weight: 700;
+  cursor: help;
+}
+
+.spw-delimiter--angle {
+  color: var(--op-concept-color, var(--op-surface-color, var(--teal)));
+}
+
+.spw-delimiter--circle {
+  color: var(--op-scene-color, var(--op-ref-color, rgba(60, 40, 120, 0.82)));
+}
+
+.spw-delimiter--square {
+  color: var(--op-mode-color, var(--op-probe-color, var(--teal)));
+}
+
+.spw-delimiter--brace {
+  color: var(--op-direction-color, var(--op-frame-color, var(--teal)));
+}
+
+[data-spw-inline-form] {
+  position: relative;
+  display: inline;
+  border-radius: 0.2rem;
+  transition:
+    background-color var(--handle-duration-fast) var(--handle-ease),
+    color var(--handle-duration-fast) var(--handle-ease);
+}
+
+[data-spw-inline-form="brace"] {
+  background: linear-gradient(
+    180deg,
+    transparent 72%,
+    color-mix(in srgb, var(--op-direction-color, var(--op-frame-color, var(--teal))) 14%, transparent) 72%
+  );
+}
+
+[data-spw-inline-form="angle"] {
+  background: linear-gradient(
+    180deg,
+    transparent 72%,
+    color-mix(in srgb, var(--op-concept-color, var(--op-surface-color, var(--teal))) 14%, transparent) 72%
+  );
+}
+
+[data-spw-inline-form="square"] {
+  background: linear-gradient(
+    180deg,
+    transparent 72%,
+    color-mix(in srgb, var(--op-mode-color, var(--op-probe-color, var(--teal))) 14%, transparent) 72%
+  );
+}
+
+[data-spw-inline-form="circle"] {
+  background: linear-gradient(
+    180deg,
+    transparent 72%,
+    color-mix(in srgb, var(--op-scene-color, var(--op-ref-color, rgba(60, 40, 120, 0.82))) 14%, transparent) 72%
+  );
+}
+
+/* Children and sibling integration for inline learning surfaces. */
+:where([data-spw-inline-form] > .spw-delimiter:first-child) {
+  margin-inline-end: 0.04em;
+}
+
+:where([data-spw-inline-form] > .spw-delimiter:last-child) {
+  margin-inline-start: 0.04em;
+}
+
+:where([data-spw-inline-form] + [data-spw-inline-form]) {
+  margin-inline-start: 0.08em;
+}
+
+/* ==========================================================================
+   12. Swappable affordance and roomy hints
+   ========================================================================== */
+
+:where([data-spw-swappable] .frame-sigil, [data-spw-swappable] .frame-card-sigil) {
+  cursor: pointer;
+}
+
+:where([data-spw-swappable] .frame-sigil)::before {
+  content: "";
+  position: absolute;
+  inset: auto 0 0.08rem 0;
+  border-bottom: 1px dashed color-mix(in srgb, var(--teal, #008080) 36%, transparent);
+  opacity: 0.66;
+}
+
+:where([data-spw-gesture="charging"][data-spw-swappable] .frame-sigil)::before,
+:where([data-spw-swappable] .frame-sigil:is(:hover, :focus-visible))::before {
+  border-color: color-mix(in srgb, var(--teal, #008080) 72%, transparent);
+  opacity: 1;
+}
+
+[data-spw-hint-surface] {
+  display: none;
+  margin-top: 0.35rem;
+  color: var(--ink-soft);
+  font-family: var(--handle-meta-font);
+  font-size: 0.64rem;
+  line-height: 1.35;
+  letter-spacing: 0.03em;
+}
+
+@container (min-width: 44rem) {
+  [data-spw-hint-surface][data-spw-hint-density="roomy"] {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+}
+
+:where([data-spw-hint-surface] > [data-spw-handle="true"] + [data-spw-handle="true"]) {
+  margin-inline-start: 0.1rem;
+}
+

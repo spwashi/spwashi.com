@@ -40,3 +40,7 @@ The site already has several adjacent ideas that point at the same thing: spells
 - The vocabulary could become more theoretical instead of more intuitive if the new labels are too abstract.
 - Overlapping with wonder-memory or breadcrumb semantics could make the feature feel redundant if the boundaries are not kept clear.
 - Too much route-specific wording would weaken the shared model and make the spell surface feel bolted on.
+
+## Ownership Note - 2026-07-03
+
+Merged into `spellcraft-authoring/PLAN.md` as the consolidated owner of spell/cauldron authorship, selection, and styling. This file stays as reference; route new work to the owner plan.

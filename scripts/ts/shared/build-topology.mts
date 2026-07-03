@@ -47,6 +47,7 @@ export const VALIDATION_IGNORED_SEGMENTS = [
 
 export const VALIDATION_IGNORED_PREFIXES = [
   'design/catalog/',
+  'design/experiments/load-symphony/',
 ] as const;
 
 export const IMAGE_EXTENSIONS = [

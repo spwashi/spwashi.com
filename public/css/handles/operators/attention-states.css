@@ -1,0 +1,209 @@
+/* ==========================================================================
+   operators/attention-states.css — how handles notice you
+   --------------------------------------------------------------------------
+   Reads as: hover, focus, keyboard arrival, and the literate underline seam
+   Was: handles/operators.css §6–7 (split 2026-07-03, rule order preserved verbatim)
+   Genome — states sensed: data-spw-charge-key, data-spw-handle, data-spw-inline-form, data-spw-nav-destination, data-spw-operator, data-spw-operator-reversibility, data-spw-page-arrival, data-spw-page-arrival-step, data-spw-page-transition-phase
+   Genome — custom properties defined: 2; intent hooks consumed: none
+   Probe: toggle me wholesale in DevTools > Sources, or set
+   html[data-spw-debug-layers="on"] to see layer owners breathe.
+   ========================================================================== */
+
+/* ==========================================================================
+   6. Hover / focus / keyboard states
+   ========================================================================== */
+
+:where(
+  .syntax-token,
+  .spec-pill,
+  .badge,
+  .tag,
+  .pill,
+  .spw-delimiter,
+  .operator-chip,
+  [data-spw-handle="true"],
+  :where(a, button, span, strong, em, i, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator])
+):is(:hover, :focus-visible) {
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 76%, transparent);
+  background: var(--handle-bg-active);
+  box-shadow: var(--handle-shadow-focus);
+  outline: none;
+}
+
+:where(.spec-pill, .badge, .tag, .pill):hover {
+  transform: none;
+}
+
+:where(
+  .operator-chip,
+  .spec-pill,
+  .badge,
+  .tag,
+  .pill,
+  .frame-sigil,
+  .frame-card-sigil,
+  .spw-component-tag,
+  .spw-guide-chip,
+  .spw-spell-button,
+  .spw-spell-shell,
+  .spw-spell-link
+):is(
+  [data-spw-operator-reversibility="reversible"],
+  [data-spw-operator-reversibility="recoverable"],
+  [data-spw-operator-reversibility="returnable"],
+  [data-spw-operator-reversibility="deferrable"],
+  [data-spw-operator-reversibility="inspectable"],
+  [data-spw-operator-reversibility="revisable"],
+  [data-spw-operator-reversibility="replayable"]
+) {
+  border-style: dashed;
+}
+
+:where(
+  .operator-chip,
+  .spec-pill,
+  .badge,
+  .tag,
+  .pill,
+  .frame-sigil,
+  .frame-card-sigil,
+  .spw-component-tag,
+  .spw-guide-chip,
+  .spw-spell-button,
+  .spw-spell-shell,
+  .spw-spell-link
+):is(
+  [data-spw-operator-reversibility="committing"],
+  [data-spw-operator-reversibility="sticky"],
+  [data-spw-operator-reversibility="constraining"],
+  [data-spw-operator-reversibility="projected"],
+  [data-spw-operator-reversibility="scoping"]
+) {
+  box-shadow:
+    inset 0 -1.5px 0 color-mix(in srgb, currentColor 22%, transparent),
+    var(--handle-shadow-rest);
+}
+
+:where(
+  html[data-spw-page-arrival]:not([data-spw-page-arrival="settled"]),
+  html[data-spw-page-transition-phase]:not([data-spw-page-transition-phase="settled"])
+) :where(
+  .operator-chip,
+  .spec-pill,
+  .badge,
+  .tag,
+  .pill,
+  .frame-sigil,
+  .frame-card-sigil,
+  .spw-component-tag,
+  .spw-guide-chip
+) {
+  transition-timing-function: var(--ease-settle, ease);
+}
+
+:where(html[data-spw-page-arrival-step="1"]) :where(
+  .operator-chip,
+  .spec-pill,
+  .badge,
+  .tag,
+  .pill,
+  .frame-sigil,
+  .frame-card-sigil,
+  .spw-component-tag,
+  .spw-guide-chip
+):not(:hover):not(:focus-visible) {
+  --handle-arrival-lift: 1px;
+  --handle-arrival-opacity: 0.96;
+}
+
+:where(html[data-spw-page-arrival-step="2"]) :where(
+  .operator-chip,
+  .spec-pill,
+  .badge,
+  .tag,
+  .pill,
+  .frame-sigil,
+  .frame-card-sigil,
+  .spw-component-tag,
+  .spw-guide-chip
+):not(:hover):not(:focus-visible) {
+  --handle-arrival-lift: 0.5px;
+  --handle-arrival-opacity: 0.985;
+}
+
+:where(
+  .syntax-token,
+  .spw-delimiter,
+  :where(a, button, span, strong, em, i, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator])
+):hover {
+  transform: none;
+}
+
+/* ==========================================================================
+   7. Literate underline seam
+   --------------------------------------------------------------------------
+   These seams help inline semantics remain readable inside prose.
+   ========================================================================== */
+
+:where(
+  .syntax-token,
+  .spw-delimiter,
+  :where(a, button, span, strong, em, i, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator])
+):not(.operator-chip):not(.frame-sigil):not(.spw-component-tag):not(.spw-guide-chip) {
+  text-decoration-line: underline;
+  text-decoration-color: color-mix(in srgb, currentColor 28%, transparent);
+  text-decoration-thickness: var(--handle-underline-thickness);
+  text-underline-offset: var(--handle-underline-offset);
+  text-decoration-skip-ink: auto;
+}
+
+:where(
+  .syntax-token,
+  .spw-delimiter,
+  :where(a, button, span, strong, em, i, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator])
+):not(.operator-chip):not(.frame-sigil):not(.spw-component-tag):not(.spw-guide-chip):is(:hover, :focus-visible) {
+  text-decoration-color: color-mix(in srgb, currentColor 62%, transparent);
+}
+
+/* ARIA + navigation-spells hygiene: directional affordance for destination semantics on key link families.
+   projection (cross-route) gets a distinct forward-leaning treatment; scope/settle stay more contained. */
+:where(
+  .operator-chip,
+  .header-sigil,
+  .frame-operators a,
+  .site-header nav a,
+  body > header nav a
+)[data-spw-nav-destination="projection"] {
+  text-decoration-style: solid;
+  text-decoration-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 42%, transparent);
+  text-decoration-thickness: calc(var(--handle-underline-thickness, 1.5px) * 1.1);
+}
+
+:where(
+  .operator-chip,
+  .header-sigil,
+  .frame-operators a,
+  .site-header nav a,
+  body > header nav a
+)[data-spw-nav-destination="scope"] {
+  text-decoration-style: dotted;
+  text-decoration-color: color-mix(in srgb, currentColor 38%, transparent);
+}
+
+:where(
+  .operator-chip,
+  .header-sigil,
+  .frame-operators a,
+  .site-header nav a,
+  body > header nav a
+)[data-spw-nav-destination="settle"] {
+  text-decoration-style: dashed;
+  text-decoration-color: color-mix(in srgb, currentColor 28%, transparent);
+}
+
+:where(em .syntax-token, em .spw-delimiter, em :where(a, button, span, strong, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator])),
+:where(i .syntax-token, i .spw-delimiter, i :where(a, button, span, strong, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator])) {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+

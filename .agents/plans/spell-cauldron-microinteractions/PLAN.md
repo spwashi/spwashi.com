@@ -43,3 +43,7 @@ term / card / route / image -> prime -> collect in cauldron -> compose spell -> 
 - `node --check public/js/interface/haptics.js`
 - `git diff --check`
 - `npm run check:local`
+
+## Ownership Note - 2026-07-03
+
+Merged into `spellcraft-authoring/PLAN.md` as the consolidated owner of spell/cauldron authorship, selection, and styling. This file stays as reference; route new work to the owner plan.

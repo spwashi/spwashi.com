@@ -1,8 +1,19 @@
 /* ==========================================================================
-   components/cauldron.css
+   components/cauldron.css — the working vessel
    --------------------------------------------------------------------------
-   Memory Garden Cauldron UX chrome — phase rail, floating chip, and mobile
-   panel collapse for the footer gathering vessel.
+   Reads as: the cauldron's bench chrome — phase rail, floating chip, and
+   mobile panel collapse for the footer gathering vessel where spells are
+   made and remade.
+   Genome — states sensed: data-spw-cauldron-state (G1 bundle: phase axis),
+   data-spw-cauldron-action, data-spw-cauldron-collected, data-spw-cauldron-cue,
+   data-spw-cauldron-discoverability, data-spw-cauldron-garden-phase,
+   data-spw-cauldron-output-state, data-spw-cauldron-panel,
+   data-spw-cauldron-resonance(-operators), data-spw-spell-reveal, data-spw-spell-state
+   Contract: public/js/interface/cauldron/contract.js owns every attribute
+   name and the state-bundle grammar; a selector here without a contract
+   entry is a bug.
+   Probe: toggle me wholesale in DevTools > Sources, or set
+   html[data-spw-debug-layers="on"] to see layer owners breathe.
    ========================================================================== */
 
 .site-footer__cauldron-header {
@@ -147,7 +158,7 @@
   letter-spacing: 0.06em;
 }
 
-.spw-cauldron-chip[data-spw-cauldron-phase="spell-ready"] {
+.spw-cauldron-chip[data-spw-cauldron-state~="phase:spell-ready"] {
   border-color: color-mix(in srgb, var(--op-action-color, var(--teal-dark)) 32%, var(--line));
 }
 
@@ -159,11 +170,11 @@
   color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 72%, var(--ink-muted, rgba(14, 18, 20, 0.58)));
 }
 
-.site-footer__cauldron[data-spw-cauldron-phase="primed"] {
+.site-footer__cauldron[data-spw-cauldron-state~="phase:primed"] {
   border-color: color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 22%, var(--footer-panel-line));
 }
 
-.site-footer__cauldron[data-spw-cauldron-phase="mixing"] .site-footer__spell-preview {
+.site-footer__cauldron[data-spw-cauldron-state~="phase:mixing"] .site-footer__spell-preview {
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 20%, transparent);
 }
 
@@ -240,7 +251,7 @@ html[data-spw-cauldron-cue="hold-to-gather"] .site-footer__cauldron-availability
   color: var(--component-accent, var(--active-op-color, var(--teal)));
 }
 
-html[data-spw-cauldron-resonance-operators] .site-footer__cauldron[data-spw-cauldron-phase="spell-ready"] {
+html[data-spw-cauldron-resonance-operators] .site-footer__cauldron[data-spw-cauldron-state~="phase:spell-ready"] {
   border-color: color-mix(in srgb, var(--op-action-color, var(--teal-dark)) 30%, var(--footer-panel-line));
 }
 

@@ -57,3 +57,7 @@ Implementation in progress.
 - Enhanced: gesture consequences are now documented in HTML through data-spw-interaction-* attributes, design runtime/palette pages include a style specimen, and semantic brace double-click provides a deliberate inspect+prime shortcut.
 
 See the full session plan artifact for deeper rationale and exact success criteria. This surface is the stable tracking point in the repo.
+
+## Ownership Note - 2026-07-03
+
+Merged into `spellcraft-authoring/PLAN.md` as the consolidated owner of spell/cauldron authorship, selection, and styling. This file stays as reference; route new work to the owner plan.

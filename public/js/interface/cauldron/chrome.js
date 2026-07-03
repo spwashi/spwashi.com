@@ -1,6 +1,6 @@
 import { annotateFloatingChromeElement } from '/public/js/kernel/dom-contracts.js';
 import { appendToDocument, guardCall } from '/public/js/kernel/dom-render.js';
-import { computeCauldronPhase } from './contract.js';
+import { applyCauldronState, computeCauldronPhase } from './contract.js';
 import { isPhaseComplete } from './resonance.js';
 import { getCauldron } from './storage.js';
 
@@ -74,8 +74,7 @@ function syncFloatingChip() {
   if (phaseNode) {
     phaseNode.textContent = phase === 'spell-ready' ? 'cast' : phase === 'mixing' ? 'compose' : phase === 'primed' ? 'prime' : 'gather';
   }
-  chip.dataset.spwCauldronPhase = phase;
-  chip.dataset.spwCauldronCount = String(count);
+  applyCauldronState(chip, { phase, count });
 
   const scrolled = window.scrollY > Math.max(420, window.innerHeight * 0.42);
   const footerVisible = (() => {
@@ -100,7 +99,7 @@ export function setupCauldronChrome() {
 
 export function syncCauldronPhaseRail(phase) {
   document.querySelectorAll(PHASE_RAIL_SELECTOR).forEach((rail) => {
-    rail.dataset.spwCauldronPhase = phase;
+    applyCauldronState(rail, { phase });
     rail.querySelectorAll('[data-spw-phase-step]').forEach((step) => {
       const stepPhase = step.getAttribute('data-spw-phase-step');
       step.dataset.spwPhaseActive = stepPhase === phase ? 'true' : 'false';

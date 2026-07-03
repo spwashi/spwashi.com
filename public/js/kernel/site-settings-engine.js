@@ -409,7 +409,8 @@ const buildPersistenceRegistries = () => ([
     },
     clear() {
       localStorage.removeItem(CAULDRON_STORAGE_KEY);
-      document.documentElement.dataset.spwCauldronCount = '0';
+      // G1 bundle form (see interface/cauldron/contract.js); kernel avoids the interface import
+      document.documentElement.dataset.spwCauldronState = 'phase:empty count:0';
       bus.emit?.('cauldron:cleared', {});
     },
   },

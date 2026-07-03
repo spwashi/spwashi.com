@@ -84,6 +84,9 @@ High-signal active examples:
 - `site-color-tuning/PLAN.md`
 - `space-menu-arcs-electrical/PLAN.md` - floating UI hierarchy, route menu field projection, arc lifecycle microfeedback, and opt-in circuit anatomy vocabulary.
 - `symphonic-loading-layered-editions/PLAN.md` - conducted load movements over the cascade layer order, impact-gradient variance rules, and cache/deploy edition surprise; carries explicit human-review gates for pacing sensation and bundling feel.
+- `shell-model-vocabulary-consolidation/PLAN.md` - census-then-glossary consolidation of shell/chrome/edge/overlay words and the 1,049-name `data-spw-*` attribute vocabulary; model and grammar choices gate on human review.
+- `spellcraft-authoring/PLAN.md` - consolidated owner of spell/cauldron authorship: write/edit/decompose spells, select and style elements/concepts/artifacts through -intent channels, Stagecraft + G1/G2 attribute refit, live-performance and capture-interpretation constraints. Supersedes the five prior spell/cauldron tracks (each carries a merged-into note).
+- `literacy-precipitation-press/PLAN.md` - north-star lore ladder: named esoteric effects -> bulletin boards -> print precipitation -> publishing surface -> paper manufacturer tuned to learnability and genre; editorial rungs gate on Spwashi.
 - `runtime-bootstrap-performance/PLAN.md` - reduce serial loading, immediate layer width, observer cost, and warm-return friction while preserving staged policy-driven loading, cache-stratum ownership, and full observability.
 - `floating-chrome-stack/FIX.md` - normalize floating chrome roles, tiers, console ownership, and discovery-credit alignment.
 - `component-semantics-document-host/FIX.md` - keep document-host semantics from collapsing into generic component styling.
