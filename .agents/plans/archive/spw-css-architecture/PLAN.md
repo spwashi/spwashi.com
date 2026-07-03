@@ -77,3 +77,12 @@ none
 - `.spw/reviews/fundamentals-practice-rhythms.spw` and `.agents/plans/modular-experience-slices/PLAN.md` now make route visual redesign and CSS layer-order review allowable when they clarify semantic flow. The CSS architecture stance is: try redistribution, slice manifests, and ownership documentation first; if layer order itself blocks repeated practice-bed work, propose that as a standalone migration with `style.css`, `AGENTS.md`, `css-instruction.spw`, and validation updated together.
 
 The 2026 reviews (alignment + slices/volleyball + html-css-structure-audit) are the current canonical references for redistribution and team collaboration models. The new html-css-structure-audit.spw specifically calls out the timing of JS-applied data-spw-* attributes as a major remaining source of layout/cascade friction that affects how CSS semantics are realized.
+
+## Maintenance Status - 2026-07-02
+
+The core architectural end state described above has landed and this plan is now a completed reference, not active work:
+
+- `public/css/style.css` is a 43-line manifest; `public/css/style-core.css` owns the cascade layer order (`reset, tokens, shell, typography, grammar, components, systems, routes, handles, effects, ornament`) and kernel imports.
+- The tree is split into ~149 focused modules under `tokens/`, `grammar/`, `handles/`, `components/`, `systems/`, `routes/`, `effects/`, `ornament/`.
+- Operator and brace semantics are first-class in `public/css/handles/operators.css` and `public/css/grammar/`, with intent-variable contracts (`--operator-chip-*-intent`, `--mode-switch-*-intent`) for route specialization.
+- Remaining brace/operator expressiveness work continues under `css-state-legibility/`, `css-maintainability-refactor/`, and the physics plans; do not route new architecture tasks here.

@@ -131,7 +131,7 @@
 ^"dispatch"{
   @style_manifest: ~"../../public/css/style.css"
   @debug_css: ~"../../public/css/effects/debug.css"
-  @css_source_plan: ~"../../.agents/plans/css-semantic-modules/PLAN.md"
+  @css_source_plan: ~"../../.agents/plans/archive/css-semantic-modules/PLAN.md"
   @style_development: ~"./style-development.spw"
   @site_semantics: ~"./site-semantics.spw"
 }

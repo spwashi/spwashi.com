@@ -5,7 +5,7 @@
 #:layer #!pragmatics
 
 @css_alignment: ~"./css-architecture-alignment.spw"
-@spw_css_architecture_plan: ~"../../.agents/plans/spw-css-architecture/PLAN.md"
+@spw_css_architecture_plan: ~"../../.agents/plans/archive/spw-css-architecture/PLAN.md"
 @runtime_bootstrap_plan: ~"../../.agents/plans/runtime-bootstrap-performance/PLAN.md"
 @selector_timing: ~"./runtime-audit/selector-timing-chunking-musical-ontology.spw"
 @css_instruction: ~"../conventions/css-instruction.spw"

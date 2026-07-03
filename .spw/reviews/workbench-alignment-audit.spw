@@ -14,7 +14,7 @@
 @modular_slices_volleyball: ~"./modular-experience-slices-volleyball.spw"
 @selector_timing: ~"./runtime-audit/selector-timing-chunking-musical-ontology.spw"
 @agent_optimization: ~"../../.agents/plans/agent-optimization/PLAN.md"
-@spw_css_architecture: ~"../../.agents/plans/spw-css-architecture/PLAN.md"
+@spw_css_architecture: ~"../../.agents/plans/archive/spw-css-architecture/PLAN.md"
 @runtime_bootstrap: ~"../../.agents/plans/runtime-bootstrap-performance/PLAN.md"
 @workbench_index: ~"../_workbench/.spw/index.spw"
 @workbench_mount: ~"../_workbench/.spw/mount.spw"

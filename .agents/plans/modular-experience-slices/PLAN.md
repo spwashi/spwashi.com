@@ -144,7 +144,7 @@ The slice should support both rhythms:
 
 ## Relation to Existing Work
 
-- Direct evolution of `spw-css-architecture/PLAN.md` and the 2026 CSS alignment + runtime performance work.
+- Direct evolution of `archive/spw-css-architecture/PLAN.md` and the 2026 CSS alignment + runtime performance work.
 - Uses the same .spw review + plan ecology that already supports agent-optimization and long-term collaboration.
 - The slices are projections of the same Spw metaphysics (operators as voices, field as resonance, precipitates as meaning crystallization) that the workbench models.
 

@@ -11,7 +11,7 @@
 @handles_operators: ~"../../public/css/handles/operators.css"
 @effects_wonder: ~"../../public/css/effects/wonder.css"
 @ornament: ~"../../public/css/ornament/ornament.css"
-@spw_css_architecture_plan: ~"../../.agents/plans/spw-css-architecture/PLAN.md"
+@spw_css_architecture_plan: ~"../../.agents/plans/archive/spw-css-architecture/PLAN.md"
 @runtime_bootstrap_plan: ~"../../.agents/plans/runtime-bootstrap-performance/PLAN.md"
 @selector_timing_review: ~"./runtime-audit/selector-timing-chunking-musical-ontology.spw"
 @runtime_audit_index: ~"./runtime-audit/index.spw"

@@ -75,3 +75,11 @@ Make CSS easier to debug, teach, and refactor by moving from large hand-edited C
 - Converting every file into source modules in one pass.
 - CSS-in-JS or framework CSS Modules.
 - Minification or hashed production class names.
+
+## Maintenance Status - 2026-07-02
+
+The file-split architecture this plan argued for is now the tree's reality, and the plan retires to completed-reference status:
+
+- Large hand-edited surfaces were split into the modular `public/css/` tree (see `spw-css-architecture/PLAN.md` status of the same date).
+- The `src/styles/entries/` -> generated-output pipeline exists and owns its three first proofs (`design-experiments`, `debug`, `tools-budgeting-surface`).
+- Converting further routes to source modules is an opportunistic per-touch decision, not a standing backlog item; `css-maintainability-refactor/` owns selector/ownership cleanup in the modular tree.

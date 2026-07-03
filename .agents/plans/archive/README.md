@@ -17,12 +17,18 @@ Archived notes:
 - `design-hub-expansion.md`
 - `overlay-alignment.md`
 
+Archived plan folders (moved here in ref-safe passes):
+
+- `spw-css-architecture/` - Landed 2026-07-02: the modular `public/css/` tree, layer-order kernel in `style-core.css`, and operator/brace handle contracts realize this plan's end state.
+- `css-semantic-modules/` - Landed 2026-07-02: the file-split architecture is the tree's reality; the `src/styles/entries/` pipeline owns its first proofs, and further conversions are per-touch decisions.
+
 Maintenance sweeps:
 
 - `2026-06-19-plan-maintenance.md` - Active plan ecology consolidation, completed-reference indexing, and archive policy refresh.
 - `2026-06-19-conversation-audit-redistribution.md` - Redistribution of broad audit prompts into the active owner plans.
 - `2026-06-21-planning-ecology-recursive-maintenance.md` - Recursive plan-tree census, virtual bucket structure, WIP-only cleanup rule, and overgrowth queue.
 - `2026-06-30-plan-maintenance.md` - Plan census refresh, completed FIX-reference separation, public bucket projection, and `.spw` planning dispatch update.
+- `2026-07-02-triage-css-spw-physics.md` - Ranked execution slate for CSS architecture, runtime architecture, and Spw physics ubiquity; identified `spw-css-architecture/` and `css-semantic-modules/` as landed.
 
 Completed or superseded references retained in place:
 

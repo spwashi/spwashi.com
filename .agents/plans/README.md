@@ -120,5 +120,8 @@ Archived historical notes live in `archive/`. Use them as reference only:
 - `archive/2026-06-19-conversation-audit-redistribution.md`
 - `archive/2026-06-21-planning-ecology-recursive-maintenance.md`
 - `archive/2026-06-30-plan-maintenance.md`
+- `archive/2026-07-02-triage-css-spw-physics.md`
+
+Archived plan folders: `archive/spw-css-architecture/` and `archive/css-semantic-modules/` landed and moved on 2026-07-02 in a ref-safe pass. The modular `public/css/` tree and its intent-variable contracts are their living successors; active selector/state work continues in `css-maintainability-refactor/` and `css-state-legibility/`.
 
 Archive candidates should be notes whose intent is already superseded by a canonical track or a landed fix. Keep active backlog items out of `archive/` until the related work clearly lands or is replaced.

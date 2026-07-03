@@ -34,5 +34,5 @@
 
 ## Deferred
 
-- Broader CSS architecture consolidation around grammar, handles, and ornaments remains in `.agents/plans/spw-css-architecture/`.
+- Broader CSS architecture consolidation around grammar, handles, and ornaments remains in `.agents/plans/archive/spw-css-architecture/`.
 - Route-specific surfaces beyond the blog will continue to use their existing palettes; this fix only makes the global controls materially truthful.
