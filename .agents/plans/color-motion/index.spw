@@ -1,0 +1,85 @@
+# Plan Index — Color And Microinteraction Timing Improvement Plan
+#
+# Improve the site's color coherence, interaction feel, and recognizable behavior without flattening its character. The work should make the palette more intentional, make operator…
+
+#>plan_color_motion_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Improve the site's color coherence, interaction feel, and recognizable behavior without flattening its character. The work should make the palette more intentional, make operator colors easier to distinguish, and make hover/focus/charge/reveal timing communicate behavior clearly instead of feeling randomly animated. This is not a redesign. The goal is to tune the existing Spw visual language through tokens, semantic aliases, targeted interaction contracts, and a personality audit of the site's most repeated behaviors.`
+ owner = `color-motion`
+ kind = `plan`
+ bucket = `canonical_tracks`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "canonical_tracks"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@core: ~"../../../public/css/tokens/core.css"
+@material: ~"../../../public/css/effects/material.css"
+@wonder: ~"../../../public/css/effects/wonder.css"
+@ornament: ~"../../../public/css/ornament/ornament.css"
+@cards: ~"../../../public/css/components/cards.css"
+@foundation: ~"../../../public/css/components/foundation.css"
+@home: ~"../../../public/css/routes/surfaces/home.css"
+@settings: ~"../../../public/css/routes/surfaces/settings.css"
+
+dispatch: .{
+ plan = @plan
+ core = @core
+ material = @material
+ wonder = @wonder
+ ornament = @ornament
+ cards = @cards
+ foundation = @foundation
+ home = @home
+ settings = @settings
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-color_motion-001"
+ layer = "pragmatic"
+ hypothesis = `Improve the site's color coherence, interaction feel, and recognizable behavior without flattening its character. The work should make the palette more intentional, make operator colors easier to distinguish, and make hover/focus/charge/reveal timing communicate behavior clearly instead of feeling randomly animated. This is not a redesign. The goal is to tune the existing Spw visual language through tokens, semantic aliases, targeted interaction contracts, and a personality audit of the site's most repeated behaviors.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/css/tokens/core.css"
+ probe_ref = `/`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/css/tokens/core.css unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+validation: #[
+ `/`,
+ `/settings/`,
+ `/design/`,
+ `/website/`,
+ `one content-heavy route such as /blog/ or /recipes/`,
+ `light mode`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does color-motion own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of color-motion?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether color-motion still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Improve the site's color coherence, interaction feel, and recognizable behavior without flattening its character. The work should make the…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

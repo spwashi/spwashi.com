@@ -1,0 +1,69 @@
+# Plan Index — Attention Cue Gestures
+#
+# Extend the reading-groove behavior to more editorial and hybrid pages. - Keep the effect browser-local and reversible through canonical settings. - Add a touch gesture for text…
+
+#>plan_attention_cue_gestures_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Extend the reading-groove behavior to more editorial and hybrid pages. - Keep the effect browser-local and reversible through canonical settings. - Add a touch gesture for text scaling that writes through the existing fontSizeScale setting.`
+ owner = `attention-cue-gestures`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@site_settings: ~"../../../public/js/kernel/site-settings.js"
+@site: ~"../../../public/js/site.js"
+@settings_index_html: ~"../../../settings/index.html"
+@play_index_html: ~"../../../play/index.html"
+@attention_field: ~"../../../.spw/conventions/attention-field.spw"
+
+dispatch: .{
+ plan = @plan
+ site_settings = @site_settings
+ site = @site
+ settings_index_html = @settings_index_html
+ play_index_html = @play_index_html
+ attention_field = @attention_field
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-attention_cue_gestures-001"
+ layer = "pragmatic"
+ hypothesis = `Extend the reading-groove behavior to more editorial and hybrid pages. - Keep the effect browser-local and reversible through canonical settings. - Add a touch gesture for text scaling that writes through the existing fontSizeScale setting.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/js/kernel/site-settings.js"
+ probe_ref = `rg 'attention-cue-gestures' .agents/plans/attention-cue-gestures`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/kernel/site-settings.js unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does attention-cue-gestures own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of attention-cue-gestures?`, see = @index }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Extend the reading-groove behavior to more editorial and hybrid pages. - Keep the effect browser-local and reversible through canonical…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

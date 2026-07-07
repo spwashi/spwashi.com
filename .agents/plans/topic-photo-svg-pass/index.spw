@@ -1,0 +1,94 @@
+# Plan Index — topic-photo-svg-pass
+#
+# Make the topic atlas feel more inhabited. The topic surfaces should stop reading like isolated text stubs and start behaving like a connected field guide with real visual…
+
+#>plan_topic_photo_svg_pass_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Make the topic atlas feel more inhabited. The topic surfaces should stop reading like isolated text stubs and start behaving like a connected field guide with real visual references, better route cross-links, and richer diagrammatic cues. All photo references in this pass must come from images that already live in public/.`
+ owner = `topic-photo-svg-pass`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@public: ~"../../../public/"
+@topics_index_html: ~"../../../topics/index.html"
+@topics_architecture_index_html: ~"../../../topics/architecture/index.html"
+@topics_pedagogy_index_html: ~"../../../topics/pedagogy/index.html"
+@topics_craft_svg_index_html: ~"../../../topics/craft/svg/index.html"
+@topics_site_design_index_html: ~"../../../topics/site-design/index.html"
+@topics_math_index_html: ~"../../../topics/math/index.html"
+@images: ~"../../../public/images/"
+
+dispatch: .{
+ plan = @plan
+ wip = @wip
+ public = @public
+ topics_index_html = @topics_index_html
+ topics_architecture_index_html = @topics_architecture_index_html
+ topics_pedagogy_index_html = @topics_pedagogy_index_html
+ topics_craft_svg_index_html = @topics_craft_svg_index_html
+ topics_site_design_index_html = @topics_site_design_index_html
+ topics_math_index_html = @topics_math_index_html
+ images = @images
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-topic_photo_svg_pass-001"
+ layer = "pragmatic"
+ hypothesis = `Make the topic atlas feel more inhabited. The topic surfaces should stop reading like isolated text stubs and start behaving like a connected field guide with real visual references, better route cross-links, and richer diagrammatic cues. All photo references in this pass must come from images that already live in public/.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/ unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `In scope: a bounded update to topics/index.html, topics/architecture/index.html, topics/pedagogy/index.html, topics/craft/svg/index.html, shared topic-facing CSS, two new topic stubs (/topics/site-design/, /topics/math/), and service worker route registration.`,
+ ][reg=set]
+ out = #[
+  `: new generated raster assets, external downloads, broad copy rewrites across the whole site, build tooling, or a full overhaul of every topic route.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `Manual sanity pass for balanced HTML and route links`,
+ `Confirm new routes are present in sw.js`,
+ `Confirm all newly added image references point into public/images/`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does topic-photo-svg-pass own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of topic-photo-svg-pass?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether topic-photo-svg-pass still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Make the topic atlas feel more inhabited. The topic surfaces should stop reading like isolated text stubs and start behaving like a…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

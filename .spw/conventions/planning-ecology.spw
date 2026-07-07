@@ -29,6 +29,11 @@
 @chrome_navigation_wonder: ~"../../.agents/plans/chrome-navigation-wonder/PLAN.md"
 @chrome_navigation_wonder_index: ~"../../.agents/plans/chrome-navigation-wonder/index.spw"
 @component_taxonomy: ~"./component-taxonomy.spw"
+@wip_notebook: ~"./wip-notebook.spw"
+@plan_directory_indexes: ~"../../scripts/maintain-plan-directory-indexes.mjs"
+@plan_wip_index_conventions: ~"../../.agents/plans/plan-wip-index-conventions/PLAN.md"
+@plan_index: ~"./plan-index.spw"
+@plans_root: ~"../../.agents/plans/index.spw"
 
 dispatch: .{
  agents = @agents
@@ -54,6 +59,11 @@ dispatch: .{
  chrome_navigation_wonder = @chrome_navigation_wonder
  chrome_navigation_wonder_index = @chrome_navigation_wonder_index
  component_taxonomy = @component_taxonomy
+ wip_notebook = @wip_notebook
+ plan_directory_indexes = @plan_directory_indexes
+ plan_wip_index_conventions = @plan_wip_index_conventions
+ plan_index = @plan_index
+ plans_root = @plans_root
 }[reg=facet]
 
 roles: #[
@@ -111,6 +121,7 @@ tree_optimization: .{
   virtual_buckets = `Semantic rails, CSS/layout/interaction, runtime/JS/validation, media/image/sensory material, public route/proof/genre systems, templates/tooling, and fix queue.`
   recursive_rule = `A maintenance pass succeeds when it reduces the cost of the next maintenance pass: fewer hidden WIPs, clearer owner surfaces, fewer stale links, and better archive records.`
   wip_rule = `A WIP-only folder should be revived with PLAN.md, merged into an owner plan, or archived by index note the next time it is touched.`
+  plan_index_rule = `Every plan directory with PLAN.md, FIX.md, wip.spw, or named .spw artifacts should expose index.spw. Regenerate with scripts/maintain-plan-directory-indexes.mjs during plan-ecology sweeps.`
   fix_rule = `FIX.md-only folders are tactical queues, not missing plans; keep them narrow, falsifiable, and closeable.`
   completed_fix_rule = `Completed or superseded FIX references should leave high-signal active lists and be named in archive/README.md before any physical move.`
   template_rule = `Template-only folders are tooling and should be named in the index so audits do not misread them as stale backlog.`

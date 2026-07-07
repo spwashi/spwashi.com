@@ -1,9 +1,31 @@
-# wip - unsorted-image-rollout
-# Branch: main
-# Started: 2026-04-15
-
+# wip — unsorted-image-rollout
+#
+#>plan_unsorted_image_rollout_wip
+#:operation #!cache
+#:fixity #!tending
 #:layer #!pragmatics
 
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@plans_root: ~"../../../.agents/plans/index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+
+operation = "cache"
+fixity = "tending"
+
+^"selection_probes"{
+ probes = #[ `rg 'unsorted-image-rollout' topics/index.html`, `Run git diff --check.`, `test -f topics/index.html`, ][reg=set]
+ rule = "Run probes before trusting cached plan_context."
+}[reg=facet]
+
+^"plan_context"{
+ goal = `The desired end state is a site where a few top-level routes immediately feel more visual without losing their editorial clarity. Images should not read like loose decoration. Each selected render should reinforce a nearby claim, echo the copy, and point the reader toward another route or section. The practical target is the surfaces people are most likely to screenshot first: the home hero, the topic atlas, and the main software-oriented hubs.`
+ owner = `unsorted-image-rollout`
+ operation = "prime"
+ bucket = "media_image_sensory"
+ validation = #[ `Run git diff --check.`, `Sanity-check the updated hubs for balanced tags and anchor flow.`, `Verify the new 00.unsorted/ paths are referenced correctly from the edited pages.`, `Confirm the image-bearing cards still participate in the current hover/drag/hold interaction layer.`, ][reg=set]
+ hot_files = #[ `topics/index.html`, `topics/software/index.html`, `.agents/plans/unsorted-image-rollout/PLAN.md`, `.agents/plans/unsorted-image-rollout/wip.spw`, ][reg=set]
+}[reg=facet]
 ^["roots"]{
  @plan: ~".agents/plans/unsorted-image-rollout/PLAN.md"
  @home: ~"index.html"

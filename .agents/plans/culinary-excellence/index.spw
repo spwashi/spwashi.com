@@ -1,0 +1,65 @@
+# Plan Index — Culinary Excellence Enhancement
+#
+# Public goal: Elevate the site's culinary surfaces so "culinary excellence" reads as rigorous craft, precise language, and living metaphor — not only vehicle for other domains.…
+
+#>plan_culinary_excellence_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Public goal: Elevate the site's culinary surfaces so "culinary excellence" reads as rigorous craft, precise language, and living metaphor — not only vehicle for other domains. Strengthen copy precision/vividness and bidirectional topic linking so recipes/ becomes a stronger, more legible hub in the lattice.`
+ owner = `culinary-excellence`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@site_semantics: ~"../../../.spw/conventions/site-semantics.spw"
+@site: ~"../../../.spw/site.spw"
+@surfaces: ~"../../../.spw/surfaces.spw"
+
+dispatch: .{
+ plan = @plan
+ site_semantics = @site_semantics
+ site = @site
+ surfaces = @surfaces
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-culinary_excellence-001"
+ layer = "pragmatic"
+ hypothesis = `Public goal: Elevate the site's culinary surfaces so "culinary excellence" reads as rigorous craft, precise language, and living metaphor — not only vehicle for other domains. Strengthen copy precision/vividness and bidirectional topic linking so recipes/ becomes a stronger, more legible hub in the lattice.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../.spw/conventions/site-semantics.spw"
+ probe_ref = `rg 'culinary-excellence' .agents/plans/culinary-excellence`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../.spw/conventions/site-semantics.spw unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does culinary-excellence own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of culinary-excellence?`, see = @index }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Public goal: Elevate the site's culinary surfaces so "culinary excellence" reads as rigorous craft, precise language, and living metaphor —…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

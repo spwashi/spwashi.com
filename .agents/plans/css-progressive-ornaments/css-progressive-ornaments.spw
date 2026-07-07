@@ -1,4 +1,8 @@
-# css-progressive-ornaments
+^"operational_hooks"{
+ selectors = #[ `public/css/style.css`, `topics/software/index.html`, `topics/software/pretext/index.html`, `.spw/conventions/site-semantics.spw`, ][reg=set]
+ probe_ref = `Hypotheses: a CSS split by responsibility will reduce future edit risk; keeping style.css as the import entrypoint will preserve GitHub Pages simplicity; ornament layers can add seasonal wonder without contaminating layout; progressive enhancement rules will keep experiments reversible.`
+ owner_claim = ~"./index.spw#owner_claim"
+}[reg=facet]# css-progressive-ornaments
 # Distilled CSS architecture note for splitting the current stylesheet while
 # making progressive enhancement and seasonal ornaments safe to ship.
 
@@ -6,6 +10,13 @@
 #:semantics #!surface
 #:layer #!pragmatics
 
+^"plan_linkage"{
+ plan = ~"./PLAN.md"
+ index = ~"./index.spw"
+ goal = `The desired end state is a CSS architecture that keeps the GitHub Pages static deployment simple while making style ownership obvious: base page shell, Spw semantic components, runtime chrome, page surfaces, progressive enhancements, and seasonal ornaments should each have a clear home. The first implementation should be a no-behavior split that preserves the existing <link href="/public/css/style.css?v=0.0.2"> contract. The taste note is calm core, summoned delight: seasonal features and ornaments may add wonder, but they must never become required for navigation, readability, accessibility, or layout stability.`
+ owner = `css-progressive-ornaments`
+ bucket = "active_backlog"
+}[reg=facet]
 ^["thesis"]{
  claim: "The core CSS should describe stable structure; ornaments should be detachable projections over that structure."
  why: "This keeps the site calm, usable, and cacheable on GitHub Pages while still allowing seasonal wonder and small progressive features to appear when conditions are right."

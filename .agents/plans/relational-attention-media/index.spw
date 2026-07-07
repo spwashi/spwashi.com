@@ -1,0 +1,91 @@
+# Plan Index — Relational Attention Media
+#
+# Make attention and meditation practical relational dimensions across the site: self relation, local context, and global horizon. Use those dimensions to generate stable, copyable…
+
+#>plan_relational_attention_media_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Make attention and meditation practical relational dimensions across the site: self relation, local context, and global horizon. Use those dimensions to generate stable, copyable media seeds across prose, lyric, visual, storyboard, audio, and curriculum work. Extend that surface so a generated seed can also become a lightweight canon increment: a proof card, Town Atlas note, or markdown artifact that preserves source ingredient, posture, and next action without needing a remote model call.`
+ owner = `relational-attention-media`
+ kind = `plan`
+ bucket = `semantic_rails`
+ artifact_shape = `PLAN.md | wip.spw | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "semantic_rails"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@settings_index_html: ~"../../../settings/index.html"
+@site_settings: ~"../../../public/js/kernel/site-settings.js"
+@prepaint_state: ~"../../../public/js/runtime/prepaint-state.js"
+@cauldron: ~"../../../public/js/modules/media/cauldron.js"
+@play_index_html: ~"../../../play/index.html"
+@home: ~"../../../public/css/routes/surfaces/home.css"
+@relational_attention_media: ~"../../../.spw/conventions/relational-attention-media.spw"
+
+dispatch: .{
+ plan = @plan
+ wip = @wip
+ settings_index_html = @settings_index_html
+ site_settings = @site_settings
+ prepaint_state = @prepaint_state
+ cauldron = @cauldron
+ play_index_html = @play_index_html
+ home = @home
+ relational_attention_media = @relational_attention_media
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-relational_attention_media-001"
+ layer = "pragmatic"
+ hypothesis = `Make attention and meditation practical relational dimensions across the site: self relation, local context, and global horizon. Use those dimensions to generate stable, copyable media seeds across prose, lyric, visual, storyboard, audio, and curriculum work. Extend that surface so a generated seed can also become a lightweight canon increment: a proof card, Town Atlas note, or markdown artifact that preserves source ingredient, posture, and next action without needing a remote model call.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../settings/index.html"
+ probe_ref = `Run git diff --check.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../settings/index.html unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `index.html: homepage reason strip names attention as relational infrastructure.`,
+  `settings/index.html: browser-local attention posture controls and Contemplative Hearth preset.`,
+  `public/js/kernel/site-settings.js: persisted attention dimension settings, labels, datasets, and preset.`,
+  `public/js/runtime/prepaint-state.js: early dataset projection for saved attention posture.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `Run git diff --check.`,
+ `Run node --check public/js/kernel/site-settings.js public/js/runtime/prepaint-state.js public/js/site.js public/js/modules/media/cauldron.js.`,
+ `Use targeted rg checks for attentionSelfRelation, media-cauldron, worldBuildingMode, copy-proof-card, living-concepts, and contemplative-hearth.`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does relational-attention-media own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of relational-attention-media?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether relational-attention-media still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Make attention and meditation practical relational dimensions across the site: self relation, local context, and global horizon. Use those…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

@@ -1,0 +1,88 @@
+# Plan Index — Mindful Collection Controls
+#
+# Make guide-badge collections easier to undo and easier to clear in bulk without turning collection into a sticky reward trap.
+
+#>plan_mindful_collection_controls_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Make guide-badge collections easier to undo and easier to clear in bulk without turning collection into a sticky reward trap.`
+ owner = `mindful-collection-controls`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@index: ~"../../../settings/index.html"
+@ornament_contract: ~"../../../.spw/conventions/ornament-contract.spw"
+@component_collection: ~"../../../public/js/runtime/component-collection.js"
+@reward_ui: ~"../../../public/js/runtime/reward-ui.js"
+@floating_chrome: ~"../../../public/css/components/floating-chrome.css"
+
+dispatch: .{
+ plan = @plan
+ index = @index
+ ornament_contract = @ornament_contract
+ component_collection = @component_collection
+ reward_ui = @reward_ui
+ floating_chrome = @floating_chrome
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-mindful_collection_controls-001"
+ layer = "pragmatic"
+ hypothesis = `Make guide-badge collections easier to undo and easier to clear in bulk without turning collection into a sticky reward trap.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../settings/index.html"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../settings/index.html unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `Keep collected state backward-compatible for ornament CSS.`,
+  `Store intention separately from boolean collected state.`,
+  `Make re-click release a collected badge quickly.`,
+  `Add local bulk controls in Settings for clear_today and clear_all.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `node --check public/js/spw-guide-badge.js`,
+ `node --check public/js/spw-spells.js`,
+ `node --check public/js/runtime/component-collection.js`,
+ `node --check public/js/runtime/reward-ui.js`,
+ `node --check public/js/kernel/site-settings-engine.js`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does mindful-collection-controls own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of mindful-collection-controls?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether mindful-collection-controls still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Make guide-badge collections easier to undo and easier to clear in bulk without turning collection into a sticky reward trap.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

@@ -1,0 +1,76 @@
+# Plan Index — Learning Science Community Pass
+#
+# Improve core site copy and route markup so the site serves Spwashi's community more directly across three needs: - education: help people enter difficult material with clearer…
+
+#>plan_learning_science_community_pass_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Improve core site copy and route markup so the site serves Spwashi's community more directly across three needs: - education: help people enter difficult material with clearer scaffolds - stabilization: help people find smaller next steps, safer boundaries, and better re-entry - play: protect experimentation, wonder, and artifact-making as real learning modes`
+ owner = `learning-science-community-pass`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@about_index_html: ~"../../../about/index.html"
+@topics_index_html: ~"../../../topics/index.html"
+@topics_pedagogy_index_html: ~"../../../topics/pedagogy/index.html"
+@play_index_html: ~"../../../play/index.html"
+@workbench: ~"../../../.spw/_workbench"
+
+dispatch: .{
+ plan = @plan
+ about_index_html = @about_index_html
+ topics_index_html = @topics_index_html
+ topics_pedagogy_index_html = @topics_pedagogy_index_html
+ play_index_html = @play_index_html
+ workbench = @workbench
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-learning_science_community_pass-001"
+ layer = "pragmatic"
+ hypothesis = `Improve core site copy and route markup so the site serves Spwashi's community more directly across three needs: - education: help people enter difficult material with clearer scaffolds - stabilization: help people find smaller next steps, safer boundaries, and better re-entry - play: protect experimentation, wonder, and artifact-making as real learning modes`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../about/index.html"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../about/index.html unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `targeted markup sanity checks with rg`,
+ `balanced structure review on edited routes`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does learning-science-community-pass own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of learning-science-community-pass?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether learning-science-community-pass still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Improve core site copy and route markup so the site serves Spwashi's community more directly across three needs: - education: help people…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

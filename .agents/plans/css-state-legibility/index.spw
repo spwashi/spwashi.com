@@ -1,0 +1,83 @@
+# Plan Index — css-state-legibility
+#
+# Stateful controls should read clearly in the stylesheet: shared layers own idle, hover, focus, and pressed behavior; route layers provide palette and intent through variables;…
+
+#>plan_css_state_legibility_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Stateful controls should read clearly in the stylesheet: shared layers own idle, hover, focus, and pressed behavior; route layers provide palette and intent through variables; shell layout owns page gutters exactly once. The result should be easier to read for both humans and agents because the CSS explains where state comes from and which layer is responsible for it.`
+ owner = `css-state-legibility`
+ kind = `plan`
+ bucket = `css_layout_interaction`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "css_layout_interaction"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@site_semantics: ~"../../../.spw/conventions/site-semantics.spw"
+@content: ~"../../../public/css/components/content.css"
+@home_panels: ~"../../../public/css/routes/surfaces/home-panels.css"
+@design: ~"../../../public/css/routes/surfaces/design.css"
+@layout: ~"../../../public/css/shell/layout.css"
+
+dispatch: .{
+ plan = @plan
+ site_semantics = @site_semantics
+ content = @content
+ home_panels = @home_panels
+ design = @design
+ layout = @layout
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-css_state_legibility-001"
+ layer = "pragmatic"
+ hypothesis = `Stateful controls should read clearly in the stylesheet: shared layers own idle, hover, focus, and pressed behavior; route layers provide palette and intent through variables; shell layout owns page gutters exactly once. The result should be easier to read for both humans and agents because the CSS explains where state comes from and which layer is responsible for it.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../.spw/conventions/site-semantics.spw"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../.spw/conventions/site-semantics.spw unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `In scope: shared handle state tokens, homepage lens/button projection through route variables, shell gutter ownership, and primary-nav overflow ownership.`,
+  `-`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `targeted rg for --mode-switch-, --operator-chip-, and data-spw-nav-tokenized`,
+ `sanity-check that wide and split layouts still read from main as the page-edge owner`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does css-state-legibility own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of css-state-legibility?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether css-state-legibility still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Stateful controls should read clearly in the stylesheet: shared layers own idle, hover, focus, and pressed behavior; route layers provide…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

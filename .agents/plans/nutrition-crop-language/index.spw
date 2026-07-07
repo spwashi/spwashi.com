@@ -1,0 +1,75 @@
+# Plan Index — Nutrition Crop Language
+#
+# Update the public copy across the site so vegetables read as dimensional objects with relationships, not just ingredients. The site should wonder about size, shape, density,…
+
+#>plan_nutrition_crop_language_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Update the public copy across the site so vegetables read as dimensional objects with relationships, not just ingredients. The site should wonder about size, shape, density, storage, seasonality, adjacency, and the way one crop changes the rest of the plate or garden.`
+ owner = `nutrition-crop-language`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+
+dispatch: .{
+ plan = @plan
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-nutrition_crop_language-001"
+ layer = "pragmatic"
+ hypothesis = `Update the public copy across the site so vegetables read as dimensional objects with relationships, not just ingredients. The site should wonder about size, shape, density, storage, seasonality, adjacency, and the way one crop changes the rest of the plate or garden.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"./PLAN.md"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ./PLAN.md unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `Home: revise the main editorial loop so the site’s cooking metaphor explicitly includes vegetable form and relational thinking.`,
+  `Play: let RPG Wednesday and the broader play hub treat vegetables as a shared rules surface for timing, trade, and table pressure.`,
+  `Recipes: sharpen the kitchen copy so crops, cuts, and neighbor ingredients read as teachable dimensions.`,
+  `About: keep the creator-identity framing while making the food language more reflective of vegetables as systems.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `Targeted rg review for the updated phrases and any accidental copy drift.`,
+ `Basic surrounding-markup scan for balanced tags on each edited route.`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does nutrition-crop-language own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of nutrition-crop-language?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether nutrition-crop-language still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Update the public copy across the site so vegetables read as dimensional objects with relationships, not just ingredients. The site should…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

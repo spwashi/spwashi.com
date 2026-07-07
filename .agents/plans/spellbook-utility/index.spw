@@ -1,0 +1,84 @@
+# Plan Index — spellbook-utility
+#
+# The desired end state is a spell surface that earns its metaphor by doing useful work. Right now the spell board and header dock serialize grounded tokens into a readable snippet,…
+
+#>plan_spellbook_utility_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `The desired end state is a spell surface that earns its metaphor by doing useful work. Right now the spell board and header dock serialize grounded tokens into a readable snippet, but they mostly act as documentation of prior interaction. The next step is not more serialization depth; it is executable value. The spellbook should become the inspectable catalog of a few proven interaction macros: things that restore a saved cognitive state, reopen a pinned working set, or otherwise reduce the cost of returning to an in-progress line of thought. The taste note is earned fluency + working memory recovery: spells should feel like learned reflexes that help a person resume, compare, and continue, not like ritual language layered on top of ordinary navigation.`
+ owner = `spellbook-utility`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@plan_spellcraft_authoring: ~"./spellcraft-authoring/index.spw"
+@index: ~"../../../settings/index.html"
+
+dispatch: .{
+ plan = @plan
+ wip = @wip
+ plan_spellcraft_authoring = @plan_spellcraft_authoring
+ index = @index
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-spellbook_utility-001"
+ layer = "pragmatic"
+ hypothesis = `The desired end state is a spell surface that earns its metaphor by doing useful work. Right now the spell board and header dock serialize grounded tokens into a readable snippet, but they mostly act as documentation of prior interaction. The next step is not more serialization depth; it is executable value. The spellbook should become the inspectable catalog of a few proven interaction macros: things that restore a saved cognitive state, reopen a pinned working set, or otherwise reduce the cost of returning to an in-progress line of thought. The taste note is earned fluency + working memory recovery: spells should feel like learned reflexes that help a person resume, compare, and continue, not like ritual language layered on top of ordinary navigation.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../settings/index.html"
+ probe_ref = `Hypotheses: a utility-first spellboard will make repeat visits more valuable; checkpoint restore will become the first spell people actually use; pinned working-set replay will make the bookmark registry feel alive instead of archival.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../settings/index.html unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `In scope: narrowing the spell system to a few replayable actions; spellboard copy and structure that foreground outcomes over notation; checkpoint listing and restore; pinned-frame working-set replay; metadata that makes saved spells legible (what they restore, when they were saved, what page/frames they concern); clear reversibility and reset paths.`,
+ ][reg=set]
+ out = #[
+  `: arbitrary browser-side Spw execution; freeform spell composition; command-palette-style incantation entry; account sync or cloud persistence; opening many tabs as a default replay action; making core navigation depend on spells.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `Hypotheses: a utility-first spellboard will make repeat visits more valuable; checkpoint restore will become the first spell people actually use; pinned working-set replay will make the bookmark registry feel alive instead of archival.`,
+ `Negative controls: empty-state spell surfaces remain calm and legible; users who never save checkpoints or pins still encounter a complete site; normal route navigation continues without spell knowledge.`,
+ `Demo sequence:`,
+ `Ground several links or concepts, save a checkpoint, reset haptics, restore the checkpoint from the spell board, and verify grounded state returns.`,
+ `Pin several frames, visit /settings/#bookmarks and /settings/#spell-board, trigger resume_pins, and verify the working set becomes a guided sequence rather than a dead listing.`,
+ `Confirm reset and back-out paths remain obvious after each spell.`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does spellbook-utility own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of spellbook-utility?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether spellbook-utility still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: The desired end state is a spell surface that earns its metaphor by doing useful work. Right now the spell board and header dock serialize…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

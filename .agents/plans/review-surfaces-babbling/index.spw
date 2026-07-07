@@ -1,0 +1,84 @@
+# Plan Index — review-surfaces-babbling
+#
+# The catalog and demo slice pages should be easier to scan, compare, and hand off. Instead of only linking to the parent pages, each split page should generate a compact review…
+
+#>plan_review_surfaces_babbling_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `The catalog and demo slice pages should be easier to scan, compare, and hand off. Instead of only linking to the parent pages, each split page should generate a compact review rail with a readable summary, a small SVG map of the relevant links, and quick chips for the page's local review verbs.`
+ owner = `review-surfaces-babbling`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@assets: ~"../../../design/catalog/assets"
+@tokens: ~"../../../design/catalog/tokens"
+@controls: ~"../../../design/experiments/css/controls"
+@handoff: ~"../../../design/experiments/svg/handoff"
+
+dispatch: .{
+ plan = @plan
+ assets = @assets
+ tokens = @tokens
+ controls = @controls
+ handoff = @handoff
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-review_surfaces_babbling-001"
+ layer = "pragmatic"
+ hypothesis = `The catalog and demo slice pages should be easier to scan, compare, and hand off. Instead of only linking to the parent pages, each split page should generate a compact review rail with a readable summary, a small SVG map of the relevant links, and quick chips for the page's local review verbs.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../design/catalog/assets"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../design/catalog/assets unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `In scope: design/catalog/assets, design/catalog/tokens, design/experiments/css/controls, and design/experiments/svg/handoff.`,
+  `Shared work: one JS enhancer, one route CSS file, and minor layout/feature updates on the split pages.`,
+ ][reg=set]
+ out = #[
+  `: redesigning the parent catalog or experiment pages, new generated catalog artifacts, or changing route content beyond the split-page affordance.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `node --check public/js/modules/design/review-surfaces.js`,
+ `npm run check`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does review-surfaces-babbling own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of review-surfaces-babbling?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether review-surfaces-babbling still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: The catalog and demo slice pages should be easier to scan, compare, and hand off. Instead of only linking to the parent pages, each split…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

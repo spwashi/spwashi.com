@@ -1,0 +1,96 @@
+# Plan Index — gesture-inspectability-metaphysics
+#
+# Turn the site’s current interaction grammar into a coherent, browser-tested system instead of a set of adjacent local passes. The public result should be: - brace gestures that…
+
+#>plan_gesture_inspectability_metaphysics_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Turn the site’s current interaction grammar into a coherent, browser-tested system instead of a set of adjacent local passes. The public result should be: - brace gestures that feel deliberate on touch, pointer, and keyboard - inspect surfaces that explain what the runtime believes is happening - metaphysics layers that stay legible as interaction grammar, not decorative lore - a validation loop that exercises real routes and real state transitions in the browser before further semantic expansion Taste note: inspectable wonder with operational discipline.`
+ owner = `gesture-inspectability-metaphysics`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@brace_gestures: ~"../../../public/js/runtime/brace-gestures.js"
+@attention_architecture: ~"../../../public/js/runtime/attention-architecture.js"
+@spells: ~"../../../public/js/runtime/spells.js"
+@experiential: ~"../../../public/js/runtime/experiential.js"
+@image_metaphysics: ~"../../../public/js/media/image-metaphysics.js"
+@discovery_notices: ~"../../../public/js/interface/discovery-notices.js"
+@site_semantics: ~"../../../.spw/conventions/site-semantics.spw"
+@attention_field: ~"../../../.spw/conventions/attention-field.spw"
+
+dispatch: .{
+ plan = @plan
+ wip = @wip
+ brace_gestures = @brace_gestures
+ attention_architecture = @attention_architecture
+ spells = @spells
+ experiential = @experiential
+ image_metaphysics = @image_metaphysics
+ discovery_notices = @discovery_notices
+ site_semantics = @site_semantics
+ attention_field = @attention_field
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-gesture_inspectability_metaphysics-001"
+ layer = "pragmatic"
+ hypothesis = `Turn the site’s current interaction grammar into a coherent, browser-tested system instead of a set of adjacent local passes. The public result should be: - brace gestures that feel deliberate on touch, pointer, and keyboard - inspect surfaces that explain what the runtime believes is happening - metaphysics layers that stay legible as interaction grammar, not decorative lore - a validation loop that exercises real routes and real state transitions in the browser before further semantic expansion Taste note: inspectable wonder with operational discipline.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/js/runtime/brace-gestures.js"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/runtime/brace-gestures.js unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `In scope: shared runtime contracts, shared CSS/state projections, route specimens used for validation, and .spw notes that keep the system inspectable.`,
+  `In scope: browser-audit planning for touch, pointer, keyboard, mobile, and wide desktop behavior.`,
+  `In scope: state ownership and precedence questions across shell, frame, card, overlay, ornament, and image helper layers.`,
+  `-`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `node --check for every edited JS runtime module`,
+ `targeted rg checks for data-spw-* state families and duplicated ownership`,
+ `browser verification on the canonical specimen routes at:`,
+ `mobile narrow touch`,
+ `desktop pointer`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does gesture-inspectability-metaphysics own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of gesture-inspectability-metaphysics?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether gesture-inspectability-metaphysics still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Turn the site’s current interaction grammar into a coherent, browser-tested system instead of a set of adjacent local passes. The public…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

@@ -1,0 +1,94 @@
+# Plan Index — agentic-dev-contracts
+#
+# The desired end state is a repo where an agent can answer two basic questions cheaply: "what is this route?" and "did I break the site contract?" The first answer should come from…
+
+#>plan_agentic_dev_contracts_index
+#:index #!plan
+#:operation #!contract
+#:layer #!pragmatics
+
+operation = "contract"
+fixity = "stable"
+
+intent: .{
+ goal = `The desired end state is a repo where an agent can answer two basic questions cheaply: "what is this route?" and "did I break the site contract?" The first answer should come from a generated manifest instead of repeated ad hoc parsing. The second should come from a single check command instead of remembered shell rituals. This keeps the site hand-authored while making its structure more inspectable. The next optimization layer is agentic development caching: derived, invalidatable summaries that help an agent avoid re-reading the same broad surfaces every turn while still treating authored files as the source of truth.`
+ owner = `agentic-dev-contracts`
+ kind = `plan`
+ bucket = `semantic_rails`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "semantics | pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "warm"
+ bucket = "semantic_rails"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@site_contracts: ~"../../../scripts/site-contracts.mjs"
+@generate_route_runtime_manifest: ~"../../../scripts/generate-route-runtime-manifest.mjs"
+@check_site: ~"../../../scripts/check-site.mjs"
+@public_js_site_js: ~"../../../public/js/site.js"
+@spw_site_spw: ~"../../../.spw/site.spw"
+@index: ~"../../../.spw/conventions/index.spw"
+@plans: ~"../../../.agents/plans/"
+
+dispatch: .{
+ plan = @plan
+ site_contracts = @site_contracts
+ generate_route_runtime_manifest = @generate_route_runtime_manifest
+ check_site = @check_site
+ public_js_site_js = @public_js_site_js
+ spw_site_spw = @spw_site_spw
+ index = @index
+ plans = @plans
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-agentic_dev_contracts-001"
+ layer = "pragmatic"
+ hypothesis = `The desired end state is a repo where an agent can answer two basic questions cheaply: "what is this route?" and "did I break the site contract?" The first answer should come from a generated manifest instead of repeated ad hoc parsing. The second should come from a single check command instead of remembered shell rituals. This keeps the site hand-authored while making its structure more inspectable. The next optimization layer is agentic development caching: derived, invalidatable summaries that help an agent avoid re-reading the same broad surfaces every turn while still treating authored files as the source of truth.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../scripts/site-contracts.mjs"
+ probe_ref = `node scripts/generate-route-runtime-manifest.mjs`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../scripts/site-contracts.mjs unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `In scope: a generated route/runtime manifest, a unified npm run check entrypoint, and validation for required route metadata plus shared entry assets.`,
+  `In scope: SVG/spec maps derived from route HTML and public SVG assets so agents can find structural diagram surfaces without grepping the repo.`,
+  `In scope: repo-local script helpers that read route HTML and the site.js staged runtime registry.`,
+  `In scope: future repo-local cache surfaces that summarize plan ownership, skill availability, validation posture, route metadata, and recent maintenance sweeps.`,
+ ][reg=set]
+ out = #[
+  `Out of scope: caching model opinions, hiding source files behind generated summaries, or treating a past validation result as current without a source-tree invalidation check.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `node scripts/generate-route-runtime-manifest.mjs`,
+ `npm run check`,
+ `git diff --check`,
+ `node --check for new/edited script modules`,
+ `For future generated agent caches: verify the artifact names its source files and invalidation basis, and keep generated outputs out of commits unless the repo already tracks that artifact class.`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does agentic-dev-contracts own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of agentic-dev-contracts?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether agentic-dev-contracts still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: The desired end state is a repo where an agent can answer two basic questions cheaply: "what is this route?" and "did I break the site…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

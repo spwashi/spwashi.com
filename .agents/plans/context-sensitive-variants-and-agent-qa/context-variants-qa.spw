@@ -1,9 +1,19 @@
-# Context-Sensitive Variants + Agent Browser QA (Initial Contract Note)
+^"operational_hooks"{
+ selectors = #[ `public/js/runtime/composition-box-model.js`, `public/css/components/frames.css`, `public/css/components/cards.css`, `public/js/kernel/instrumentation.js`, ][reg=set]
+ owner_claim = ~"./index.spw#owner_claim"
+}[reg=facet]# Context-Sensitive Variants + Agent Browser QA (Initial Contract Note)
 
 #>context_variants_agent_qa
 #:layer #!pragmatics #!runtime
 #:status #!planning
 
+^"plan_linkage"{
+ plan = ~"./PLAN.md"
+ index = ~"./index.spw"
+ goal = `Make component variants on spwashi.com feel *alive* to their actual situation — size/layout container, local theming resonance, and content pressure — while giving coding agents (and humans in debug mode) the ability to both *view* the rendered browser state (vision/screenshots + rects) and *read* the rich semantic DOM we already author (data-spw-* + runtime state + bus + contracts). Taste note: Extend the existing attribute-driven, CSS-first, highly inspectable system rather than layering a new variant engine on top of it.`
+ owner = `context-sensitive-variants-and-agent-qa`
+ bucket = "active_backlog"
+}[reg=facet]
 @parent: ~"../PLAN.md"
 @related: ~"../../../.spw/conventions/composition-box-model.spw"
 @related: ~"../../../.spw/conventions/site-semantics.spw"

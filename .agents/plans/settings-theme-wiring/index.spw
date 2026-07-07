@@ -1,0 +1,65 @@
+# Plan Index — settings-theme-wiring
+#
+# The storage/apply pipeline is coherent, but many data-spw-* flags have no CSS or JS consumers.
+
+#>plan_settings_theme_wiring_index
+#:index #!plan
+#:operation #!audit
+#:layer #!pragmatics
+
+operation = "audit"
+fixity = "tending"
+
+intent: .{
+ goal = `The storage/apply pipeline is coherent, but many data-spw-* flags have no CSS or JS consumers.`
+ owner = `settings-theme-wiring`
+ kind = `fix`
+ bucket = `fix_queue`
+ artifact_shape = `FIX.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "observation | gesture"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "exchange"
+ memory_tier = "hot"
+ bucket = "fix_queue"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@fix: ~"./FIX.md"
+@site: ~"../../../public/js/site.js"
+@index: ~"../../../settings/index.html"
+@spw_css_architecture: ~"../../../.agents/plans/archive/spw-css-architecture/"
+
+dispatch: .{
+ fix = @fix
+ site = @site
+ index = @index
+ spw_css_architecture = @spw_css_architecture
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-settings_theme_wiring-001"
+ layer = "pragmatic"
+ hypothesis = `The storage/apply pipeline is coherent, but many data-spw-* flags have no CSS or JS consumers.`
+ spec_ref = ~"./FIX.md"
+ impl_ref = ~"../../../public/js/site.js"
+ probe_ref = `rg 'settings-theme-wiring' .agents/plans/settings-theme-wiring`
+ falsification = `The listed failure mode returns after the planned fix lands.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does settings-theme-wiring own, and what should stay out of scope?`, see = @fix }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of settings-theme-wiring?`, see = @index }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: The storage/apply pipeline is coherent, but many data-spw-* flags have no CSS or JS consumers.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

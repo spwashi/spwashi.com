@@ -1,0 +1,81 @@
+# Plan Index — dev-hot-reload
+#
+# The desired end state is not "make the site depend on a bundler." The desired end state is a faster local editing loop: save a file, see the browser update, and avoid cache…
+
+#>plan_dev_hot_reload_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `The desired end state is not "make the site depend on a bundler." The desired end state is a faster local editing loop: save a file, see the browser update, and avoid cache confusion from the service worker while developing. Production should remain a static export that still works from ordinary hosting, and the dev stack should stay legible enough that it does not become the new center of gravity for the project.`
+ owner = `dev-hot-reload`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@template: ~"../../../scripts/template.mjs"
+@public: ~"../../../public/"
+
+dispatch: .{
+ plan = @plan
+ template = @template
+ public = @public
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-dev_hot_reload-001"
+ layer = "pragmatic"
+ hypothesis = `The desired end state is not "make the site depend on a bundler." The desired end state is a faster local editing loop: save a file, see the browser update, and avoid cache confusion from the service worker while developing. Production should remain a static export that still works from ordinary hosting, and the dev stack should stay legible enough that it does not become the new center of gravity for the project.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../scripts/template.mjs"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../scripts/template.mjs unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `In scope: local dev server choice, route-aware local serving, automatic browser refresh on HTML/CSS/JS changes, and explicit development handling for service worker registration and cache state.`,
+  `In scope: Vite multi-page entry discovery, route-aware HTML reload, template partial reload, and explicit development handling for service worker registration and cache state.`,
+  `-`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `node --check scripts/template.mjs when template behavior changes`,
+ `npm run typecheck`,
+ `npm run build:vite`,
+ `targeted route checks on /, /about/, /blog/, and one nested topic route in the local server`,
+ `confirm that editing CSS triggers immediate visual refresh`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does dev-hot-reload own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of dev-hot-reload?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether dev-hot-reload still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: The desired end state is not "make the site depend on a bundler." The desired end state is a faster local editing loop: save a file, see…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

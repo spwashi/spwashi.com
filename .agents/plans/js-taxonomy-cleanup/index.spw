@@ -1,0 +1,90 @@
+# Plan Index — JS Taxonomy Cleanup
+#
+# Remove the spw- prefix from the JavaScript source tree, keep the runtime naming semantically legible by folder, and consolidate obvious shared primitives into their owning layer.
+
+#>plan_js_taxonomy_cleanup_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Remove the spw- prefix from the JavaScript source tree, keep the runtime naming semantically legible by folder, and consolidate obvious shared primitives into their owning layer.`
+ owner = `js-taxonomy-cleanup`
+ kind = `plan`
+ bucket = `runtime_js_validation`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "runtime_js_validation"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@js: ~"../../../public/js/"
+@ts: ~"../../../public/ts/"
+@kernel: ~"../../../public/js/kernel/"
+@interface: ~"../../../public/js/interface/"
+@runtime: ~"../../../public/js/runtime/"
+@semantic: ~"../../../public/js/semantic/"
+@media: ~"../../../public/js/media/"
+@modules: ~"../../../public/js/modules/"
+
+dispatch: .{
+ plan = @plan
+ js = @js
+ ts = @ts
+ kernel = @kernel
+ interface = @interface
+ runtime = @runtime
+ semantic = @semantic
+ media = @media
+ modules = @modules
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-js_taxonomy_cleanup-001"
+ layer = "pragmatic"
+ hypothesis = `Remove the spw- prefix from the JavaScript source tree, keep the runtime naming semantically legible by folder, and consolidate obvious shared primitives into their owning layer.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/js/"
+ probe_ref = `node --check on touched JS files`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/ unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `Rename prefixed source files in public/js/ and the TypeScript sources in public/ts/.`,
+  `Update imports and file references in the site runtime, helper modules, and JS docs.`,
+  `Keep behavior stable; this pass is about naming, ownership, and path clarity.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `node --check on touched JS files`,
+ `git diff --check`,
+ `npm run check`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does js-taxonomy-cleanup own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of js-taxonomy-cleanup?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether js-taxonomy-cleanup still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Remove the spw- prefix from the JavaScript source tree, keep the runtime naming semantically legible by folder, and consolidate obvious…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

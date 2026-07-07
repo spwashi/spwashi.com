@@ -1,4 +1,8 @@
-# rpg-session-notes
+^"operational_hooks"{
+ selectors = #[ `.agents/plans/rpg-local-gameplay/PLAN.md`, `.agents/plans/blog-blob-spw/PLAN.md`, ][reg=set]
+ probe_ref = `git diff --check`
+ owner_claim = ~"./index.spw#owner_claim"
+}[reg=facet]# rpg-session-notes
 # Distilled semantic note for an RPG session note as a durable intermediate
 # object between local gameplay capture and the published session ledger.
 
@@ -6,6 +10,13 @@
 #:semantics #!surface
 #:layer #!pragmatics
 
+^"plan_linkage"{
+ plan = ~"./PLAN.md"
+ index = ~"./index.spw"
+ goal = `The desired end state is a campaign memory model where private or semi-structured session material can be captured, revisited, and promoted deliberately. A session note should be able to hold what happened at the table, what changed in characters, what might become canon, and what pressure should carry forward, without requiring immediate publication as a polished session page. This should align with the local gameplay kit, the public sessions/ route, and the new blog-blob thinking while staying distinct from them. The taste note is play residue + durable memory seam: session notes should preserve the energy of actual play while remaining structured enough to feed the campaign record later.`
+ owner = `rpg-session-notes`
+ bucket = "active_backlog"
+}[reg=facet]
 ^["thesis"]{
  claim: "An RPG session note is a durable intermediate campaign-memory object: more structured than immediate table capture, less finalized than the published session page, and useful as the promotion seam for canon, cast, world, and arc updates."
  why: "The current RPG Wednesday surfaces already distinguish local gameplay state from public campaign pages. A session note gives the middle state a name so table residue can be reviewed before it hardens into public memory."

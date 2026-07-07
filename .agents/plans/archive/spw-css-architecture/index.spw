@@ -1,0 +1,89 @@
+# Plan Index — spw-css-architecture
+#
+# The site should express Spw grammar visibly and consistently: braces should read as containment and charge, operators should act as meaningful handles for emphasis, selection, and…
+
+#>plan_spw_css_architecture_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "cold"
+
+intent: .{
+ goal = `The site should express Spw grammar visibly and consistently: braces should read as containment and charge, operators should act as meaningful handles for emphasis, selection, and timing, and decorative motion or texture should project from those semantics rather than compete with them. The current end state is not "more layers in style.css"; it is a smaller, clearer root stylesheet that delegates to focused modules for tokens, grammar, ornaments, and surface overrides. Taste note: improve layering, containment, and expressiveness without losing the calm static-HTML feel of the site.`
+ owner = `spw-css-architecture`
+ kind = `plan`
+ bucket = `archive`
+ artifact_shape = `PLAN.md | wip.spw | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "return"
+ memory_tier = "cold"
+ bucket = "archive"
+}[reg=facet]
+
+@plans_root: ~"../../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@style: ~"../../../../public/css/style.css"
+@site: ~"../../../../public/js/site.js"
+@css_architecture_alignment: ~"../../../../.spw/reviews/css-architecture-alignment.spw"
+@modular_experience_slices_volleyball: ~"../../../../.spw/reviews/modular-experience-slices-volleyball.spw"
+@fundamentals_practice_rhythms: ~"../../../../.spw/reviews/fundamentals-practice-rhythms.spw"
+@style_core: ~"../../../../public/css/style-core.css"
+@grammar: ~"../../../../public/css/grammar/"
+
+dispatch: .{
+ plan = @plan
+ wip = @wip
+ style = @style
+ site = @site
+ css_architecture_alignment = @css_architecture_alignment
+ modular_experience_slices_volleyball = @modular_experience_slices_volleyball
+ fundamentals_practice_rhythms = @fundamentals_practice_rhythms
+ style_core = @style_core
+ grammar = @grammar
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-spw_css_architecture-001"
+ layer = "pragmatic"
+ hypothesis = `The site should express Spw grammar visibly and consistently: braces should read as containment and charge, operators should act as meaningful handles for emphasis, selection, and timing, and decorative motion or texture should project from those semantics rather than compete with them. The current end state is not "more layers in style.css"; it is a smaller, clearer root stylesheet that delegates to focused modules for tokens, grammar, ornaments, and surface overrides. Taste note: improve layering, containment, and expressiveness without losing the calm static-HTML feel of the site.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../../public/css/style.css"
+ probe_ref = `Hypotheses: a contributor can answer "where do brace physics live?", "where do operator colors/states live?", and "where do page-specific overrides live?" without opening multiple unrelated files.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../../public/css/style.css unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `In scope: decomposing public/css/style.css responsibilities; defining a stable semantic CSS substrate for braces, operators, selection handles, and resonance/timing states; moving surface-specific overrides into smaller files; aligning SVG/blog/craft surfaces to consume shared grammar tokens instead of ad hoc local styling.`,
+  `-`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `Hypotheses: a contributor can answer "where do brace physics live?", "where do operator colors/states live?", and "where do page-specific overrides live?" without opening multiple unrelated files.`,
+ `Negative controls: existing home/blog/craft/lore routes remain readable without decorative motion, and palette/type changes do not leak across surfaces accidentally.`,
+ `Demo sequence: /, /blog/, /topics/craft/, /about/domains/lore.land/, an SVG surface route, and one reduced-motion browser session.`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does spw-css-architecture own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of spw-css-architecture?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether spw-css-architecture still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: The site should express Spw grammar visibly and consistently: braces should read as containment and charge, operators should act as…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

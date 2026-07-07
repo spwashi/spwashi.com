@@ -1,0 +1,76 @@
+# Plan Index — Daily Kernel Development Exercise
+#
+# Create a repeatable "daily kernel" development exercise: a small, tunable practice loop for improving this codebase's semantic capacity, brand physics, regional experience design,…
+
+#>plan_daily_kernel_development_index
+#:index #!plan
+#:operation #!contract
+#:layer #!pragmatics
+
+operation = "contract"
+fixity = "stable"
+
+intent: .{
+ goal = `Create a repeatable "daily kernel" development exercise: a small, tunable practice loop for improving this codebase's semantic capacity, brand physics, regional experience design, and cross-discipline collaboration. The exercise should help professional engineers, animators, illustrators, designers, musicians, writers, and patrons explore the same system without flattening their differences. Each daily kernel should be small enough to implement or review in one session, but meaningful enough to strengthen the site's long-term product and learning value.`
+ owner = `daily-kernel-development`
+ kind = `plan`
+ bucket = `semantic_rails`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "semantics | pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "warm"
+ bucket = "semantic_rails"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@daily_kernel: ~"../../../.spw/conventions/daily-kernel.spw"
+@site: ~"../../../.spw/site.spw"
+@index: ~"../../../.spw/conventions/index.spw"
+@readme: ~"../../../.agents/plans/README.md"
+
+dispatch: .{
+ plan = @plan
+ daily_kernel = @daily_kernel
+ site = @site
+ index = @index
+ readme = @readme
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-daily_kernel_development-001"
+ layer = "pragmatic"
+ hypothesis = `Create a repeatable "daily kernel" development exercise: a small, tunable practice loop for improving this codebase's semantic capacity, brand physics, regional experience design, and cross-discipline collaboration. The exercise should help professional engineers, animators, illustrators, designers, musicians, writers, and patrons explore the same system without flattening their differences. Each daily kernel should be small enough to implement or review in one session, but meaningful enough to strengthen the site's long-term product and learning value.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../.spw/conventions/daily-kernel.spw"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../.spw/conventions/daily-kernel.spw unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `targeted rg for new stems and anchors`,
+ `npm run check:css for CSS changes`,
+ `node --check <edited-js-file> for JS changes`,
+ `browser smoke for route-local visual changes`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does daily-kernel-development own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of daily-kernel-development?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether daily-kernel-development still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Create a repeatable "daily kernel" development exercise: a small, tunable practice loop for improving this codebase's semantic capacity,…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

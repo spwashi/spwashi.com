@@ -1,4 +1,8 @@
-# pretext-whimsy-lab
+^"operational_hooks"{
+ selectors = #[ `public/js/semantic/pretext-measurement-bus.js`, `.agents/plans/pretext-whimsy-lab/pretext-whimsy-lab.spw`, ][reg=set]
+ probe_ref = `Hypotheses: Pretext's line and height outputs are enough to support a bounded family of playful, inspectable physical projections; separating observatory and whimsy runtimes will preserve clarity; mobile-first containment and truthful telemetry will keep the lab teachable.`
+ owner_claim = ~"./index.spw#owner_claim"
+}[reg=facet]# pretext-whimsy-lab
 # Distilled capability note for using Pretext as a bounded engine for playful,
 # inspectable typographic physics surfaces.
 
@@ -6,6 +10,13 @@
 #:semantics #!surface
 #:layer #!pragmatics
 
+^"plan_linkage"{
+ plan = ~"./PLAN.md"
+ index = ~"./index.spw"
+ goal = `The desired end state is a Pretext surface that can move from observatory to playful typographic physics lab without lying about the substrate. The immediate task is to map which kinds of whimsy and physical intuition are honest consequences of line prediction, height estimation, mixed-script handling, width transforms, and explicit constraint mappings, and which are just generic animation wearing a Pretext badge. This track should stay explicitly experimental and likely centered on the existing Pretext page, while preparing patterns that later SVG widgets or Spw-backed pages can borrow. The taste note is measured delight + legible force: typographic play should feel surprising and generous, but still inspectable, mobile-first, and grounded in real layout data.`
+ owner = `pretext-whimsy-lab`
+ bucket = "active_backlog"
+}[reg=facet]
 ^["roots"]{
  @runtime_plan: ~"../mobile-runtime-foundation/mobile-runtime-foundation.spw"
  @svg_plan: ~"../svg-surface-integration/svg-surface-integration.spw"

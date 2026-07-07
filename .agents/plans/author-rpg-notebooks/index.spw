@@ -1,0 +1,84 @@
+# Plan Index — Author RPG Notebooks
+#
+# Improve the site’s journaling, note-taking, and character-development affordances for two overlapping audiences: - authors who need a clean bridge from private fragments into…
+
+#>plan_author_rpg_notebooks_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Improve the site’s journaling, note-taking, and character-development affordances for two overlapping audiences: - authors who need a clean bridge from private fragments into publishable surfaces - RPG players who need a clean bridge from session residue into cast, world, and arc memory The feature should strengthen the existing local-first posture. Private notes stay private by default; public routes teach what should move from scratch material into stable canon.`
+ owner = `author-rpg-notebooks`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@topics_craft_index_html: ~"../../../topics/craft/index.html"
+@play_rpg_wednesday_index_html: ~"../../../play/rpg-wednesday/index.html"
+@play_rpg_wednesday_sessions_index_html: ~"../../../play/rpg-wednesday/sessions/index.html"
+@rpg_local_gameplay: ~"../../../.agents/plans/rpg-local-gameplay/rpg-local-gameplay.spw"
+
+dispatch: .{
+ plan = @plan
+ topics_craft_index_html = @topics_craft_index_html
+ play_rpg_wednesday_index_html = @play_rpg_wednesday_index_html
+ play_rpg_wednesday_sessions_index_html = @play_rpg_wednesday_sessions_index_html
+ rpg_local_gameplay = @rpg_local_gameplay
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-author_rpg_notebooks-001"
+ layer = "pragmatic"
+ hypothesis = `Improve the site’s journaling, note-taking, and character-development affordances for two overlapping audiences: - authors who need a clean bridge from private fragments into publishable surfaces - RPG players who need a clean bridge from session residue into cast, world, and arc memory The feature should strengthen the existing local-first posture. Private notes stay private by default; public routes teach what should move from scratch material into stable canon.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../topics/craft/index.html"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../topics/craft/index.html unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `Add author-facing notebook guidance on the craft route.`,
+  `Deepen the character-sheet builder so it supports richer character-development prompts instead of only high-level translation.`,
+  `Refine RPG Wednesday’s local gameplay kit so it separates scratch notes from canon candidates and character beats.`,
+  `Teach the journal-to-canon flow in the public RPG routes.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `node --check public/js/rpg-wednesday.js`,
+ `targeted rg checks for new journal/canon terminology`,
+ `npm run build`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does author-rpg-notebooks own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of author-rpg-notebooks?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether author-rpg-notebooks still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Improve the site’s journaling, note-taking, and character-development affordances for two overlapping audiences: - authors who need a clean…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

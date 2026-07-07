@@ -1,0 +1,645 @@
+# Plans Root Index
+#
+# Virtual-bucket dispatch across .agents/plans/.
+
+#>plans_root_index
+#:index #!plans #!agents
+#:operation #!align
+#:layer #!editor_inspectability
+
+operation = "align"
+fixity = "stable"
+
+intent: .{
+ goal = `Route agents and editors through plan folders by virtual bucket, operation, and owner_claim instead of directory name alone.`
+ scope = `Active plan ecology under .agents/plans/; excludes recent-plan-templates tooling.`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation"
+ semantic_layer = "pragmatics | semantics"
+ collaboration_phase = "exchange | tending"
+ memory_tier = "hot | warm"
+}[reg=facet]
+
+@readme: ~"./README.md"
+@planning_ecology: ~"../../.spw/conventions/planning-ecology.spw"
+@plan_index_convention: ~"../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../.spw/conventions/wip-notebook.spw"
+@maintain_script: ~"../../scripts/maintain-plan-directory-indexes.mjs"
+
+reading_order: .{
+ sequence = ?< @planning_ecology, @plan_index_convention, @readme >[reg=stream]
+ rule = `Read ecology + convention, then bucket dispatch, then a plan index.spw.`
+}[reg=facet]
+
+^"canonical_tracks"{
+ label = "canonical tracks"
+ count = 4
+ members = #[
+  `color-motion`,
+  `css-architecture-readability`,
+  `midjourney-design-concepts`,
+  `reference-assignment-template`,
+ ][reg=set]
+}[reg=facet]
+
+@plan_color_motion: ~"./color-motion/index.spw"
+@plan_css_architecture_readability: ~"./css-architecture-readability/index.spw"
+@plan_midjourney_design_concepts: ~"./midjourney-design-concepts/index.spw"
+@plan_reference_assignment_template: ~"./reference-assignment-template/index.spw"
+^"semantic_rails"{
+ label = "semantic rails"
+ count = 10
+ members = #[
+  `agent-optimization`,
+  `agentic-dev-contracts`,
+  `daily-kernel-development`,
+  `discovery-powerups`,
+  `model-guided-refinement`,
+  `modular-experience-slices`,
+  `plan-wip-index-conventions`,
+  `relational-attention-media`,
+  `semantic-copy-depth`,
+  `spw-surface-normalization`,
+ ][reg=set]
+}[reg=facet]
+
+@plan_agent_optimization: ~"./agent-optimization/index.spw"
+@plan_agentic_dev_contracts: ~"./agentic-dev-contracts/index.spw"
+@plan_daily_kernel_development: ~"./daily-kernel-development/index.spw"
+@plan_discovery_powerups: ~"./discovery-powerups/index.spw"
+@plan_model_guided_refinement: ~"./model-guided-refinement/index.spw"
+@plan_modular_experience_slices: ~"./modular-experience-slices/index.spw"
+@plan_plan_wip_index_conventions: ~"./plan-wip-index-conventions/index.spw"
+@plan_relational_attention_media: ~"./relational-attention-media/index.spw"
+@plan_semantic_copy_depth: ~"./semantic-copy-depth/index.spw"
+@plan_spw_surface_normalization: ~"./spw-surface-normalization/index.spw"
+^"css_layout_interaction"{
+ label = "css layout interaction"
+ count = 14
+ members = #[
+  `card-anatomy-interactions`,
+  `card-grid-density-audit`,
+  `chrome-navigation-wonder`,
+  `component-box-model-responsive-audit`,
+  `css-maintainability-refactor`,
+  `css-state-legibility`,
+  `gesture-state-refinement`,
+  `hook-region-anatomy`,
+  `interaction-loop-contract`,
+  `navigation-header-disclosure`,
+  `page-region-discoverability`,
+  `shell-model-vocabulary-consolidation`,
+  `space-menu-arcs-electrical`,
+  `vertical-rhythm-container-audit`,
+ ][reg=set]
+}[reg=facet]
+
+@plan_card_anatomy_interactions: ~"./card-anatomy-interactions/index.spw"
+@plan_card_grid_density_audit: ~"./card-grid-density-audit/index.spw"
+@plan_chrome_navigation_wonder: ~"./chrome-navigation-wonder/index.spw"
+@plan_component_box_model_responsive_audit: ~"./component-box-model-responsive-audit/index.spw"
+@plan_css_maintainability_refactor: ~"./css-maintainability-refactor/index.spw"
+@plan_css_state_legibility: ~"./css-state-legibility/index.spw"
+@plan_gesture_state_refinement: ~"./gesture-state-refinement/index.spw"
+@plan_hook_region_anatomy: ~"./hook-region-anatomy/index.spw"
+@plan_interaction_loop_contract: ~"./interaction-loop-contract/index.spw"
+@plan_navigation_header_disclosure: ~"./navigation-header-disclosure/index.spw"
+@plan_page_region_discoverability: ~"./page-region-discoverability/index.spw"
+@plan_shell_model_vocabulary_consolidation: ~"./shell-model-vocabulary-consolidation/index.spw"
+@plan_space_menu_arcs_electrical: ~"./space-menu-arcs-electrical/index.spw"
+@plan_vertical_rhythm_container_audit: ~"./vertical-rhythm-container-audit/index.spw"
+^"runtime_js_validation"{
+ label = "runtime js validation"
+ count = 10
+ members = #[
+  `curricularize-codebase-typescript`,
+  `javascript-standalone-utility`,
+  `js-surface-ecology`,
+  `js-taxonomy-cleanup`,
+  `runtime-bootstrap-performance`,
+  `runtime-load-instrumentation`,
+  `runtime-module-fluency`,
+  `runtime-settings`,
+  `site-source-layout`,
+  `typescript-integration`,
+ ][reg=set]
+}[reg=facet]
+
+@plan_curricularize_codebase_typescript: ~"./curricularize-codebase-typescript/index.spw"
+@plan_javascript_standalone_utility: ~"./javascript-standalone-utility/index.spw"
+@plan_js_surface_ecology: ~"./js-surface-ecology/index.spw"
+@plan_js_taxonomy_cleanup: ~"./js-taxonomy-cleanup/index.spw"
+@plan_runtime_bootstrap_performance: ~"./runtime-bootstrap-performance/index.spw"
+@plan_runtime_load_instrumentation: ~"./runtime-load-instrumentation/index.spw"
+@plan_runtime_module_fluency: ~"./runtime-module-fluency/index.spw"
+@plan_runtime_settings: ~"./runtime-settings/index.spw"
+@plan_site_source_layout: ~"./site-source-layout/index.spw"
+@plan_typescript_integration: ~"./typescript-integration/index.spw"
+^"media_image_sensory"{
+ label = "media image sensory"
+ count = 7
+ members = #[
+  `image-metaphysics-aesthetic-pass`,
+  `image-visit-metaphysics`,
+  `palette-semantics-improvements`,
+  `palette-theme-composability-instrumentability`,
+  `site-color-tuning`,
+  `style-image-cohesion`,
+  `unsorted-image-rollout`,
+ ][reg=set]
+}[reg=facet]
+
+@plan_image_metaphysics_aesthetic_pass: ~"./image-metaphysics-aesthetic-pass/index.spw"
+@plan_image_visit_metaphysics: ~"./image-visit-metaphysics/index.spw"
+@plan_palette_semantics_improvements: ~"./palette-semantics-improvements/index.spw"
+@plan_palette_theme_composability_instrumentability: ~"./palette-theme-composability-instrumentability/index.spw"
+@plan_site_color_tuning: ~"./site-color-tuning/index.spw"
+@plan_style_image_cohesion: ~"./style-image-cohesion/index.spw"
+@plan_unsorted_image_rollout: ~"./unsorted-image-rollout/index.spw"
+^"public_route_proof_genre"{
+ label = "public route proof genre"
+ count = 12
+ members = #[
+  `care-interface-atlas`,
+  `design-hub`,
+  `expressive-layout-tropes-fidget-manuscript`,
+  `literacy-precipitation-press`,
+  `professional-skill-development-worldbuilding`,
+  `rpg-local-gameplay`,
+  `rpg-portal-fantasy`,
+  `rpg-wednesday-learning-library`,
+  `services-ladder-and-topic-ctas`,
+  `spellcraft-authoring`,
+  `town-atlas-story-kit`,
+  `webpage-trope-vocabulary`,
+ ][reg=set]
+}[reg=facet]
+
+@plan_care_interface_atlas: ~"./care-interface-atlas/index.spw"
+@plan_design_hub: ~"./design-hub/index.spw"
+@plan_expressive_layout_tropes_fidget_manuscript: ~"./expressive-layout-tropes-fidget-manuscript/index.spw"
+@plan_literacy_precipitation_press: ~"./literacy-precipitation-press/index.spw"
+@plan_professional_skill_development_worldbuilding: ~"./professional-skill-development-worldbuilding/index.spw"
+@plan_rpg_local_gameplay: ~"./rpg-local-gameplay/index.spw"
+@plan_rpg_portal_fantasy: ~"./rpg-portal-fantasy/index.spw"
+@plan_rpg_wednesday_learning_library: ~"./rpg-wednesday-learning-library/index.spw"
+@plan_services_ladder_and_topic_ctas: ~"./services-ladder-and-topic-ctas/index.spw"
+@plan_spellcraft_authoring: ~"./spellcraft-authoring/index.spw"
+@plan_town_atlas_story_kit: ~"./town-atlas-story-kit/index.spw"
+@plan_webpage_trope_vocabulary: ~"./webpage-trope-vocabulary/index.spw"
+^"fix_queue"{
+ label = "fix queue"
+ count = 11
+ members = #[
+  `attention-shell-contrast`,
+  `chrome-copy-collision`,
+  `component-semantics-document-host`,
+  `floating-chrome-stack`,
+  `gesture-aria-hygiene`,
+  `menu-containment-navigation`,
+  `mobile-image-effects`,
+  `overlay-layer-ownership`,
+  `runtime-route-css-regressions`,
+  `settings-theme-wiring`,
+  `theme-palette-marketability`,
+ ][reg=set]
+}[reg=facet]
+
+@plan_attention_shell_contrast: ~"./attention-shell-contrast/index.spw"
+@plan_chrome_copy_collision: ~"./chrome-copy-collision/index.spw"
+@plan_component_semantics_document_host: ~"./component-semantics-document-host/index.spw"
+@plan_floating_chrome_stack: ~"./floating-chrome-stack/index.spw"
+@plan_gesture_aria_hygiene: ~"./gesture-aria-hygiene/index.spw"
+@plan_menu_containment_navigation: ~"./menu-containment-navigation/index.spw"
+@plan_mobile_image_effects: ~"./mobile-image-effects/index.spw"
+@plan_overlay_layer_ownership: ~"./overlay-layer-ownership/index.spw"
+@plan_runtime_route_css_regressions: ~"./runtime-route-css-regressions/index.spw"
+@plan_settings_theme_wiring: ~"./settings-theme-wiring/index.spw"
+@plan_theme_palette_marketability: ~"./theme-palette-marketability/index.spw"
+^"active_backlog"{
+ label = "active backlog"
+ count = 106
+ members = #[
+  `algorithm-scale-statistics-rpg-bridges`,
+  `attention-cue-gestures`,
+  `audience-onboarding-copy`,
+  `author-craft-ramps`,
+  `author-rpg-notebooks`,
+  `blog-blob-spw`,
+  `blog-input-interpreter`,
+  `brace-cauldron-primed-collection`,
+  `brace-literacy-guides`,
+  `cadence-text-resonance`,
+  `calculus-trigonometry-field-guides`,
+  `care-stats-notes-and-rpg-atlas`,
+  `catalog-demo-splits`,
+  `chrome-distribution-momentum-pass`,
+  `cinematic-handles`,
+  `cognitive-navigation`,
+  `component-rhythm-variety`,
+  `content-responsive-layout`,
+  `context-sensitive-variants-and-agent-qa`,
+  `copy-localization`,
+  `css-progressive-ornaments`,
+  `css-sensitive-attribute-writes`,
+  `culinary-excellence`,
+  `dark-contrast-pass`,
+  `deep-link-feature-discovery`,
+  `designer-conversation-canvas`,
+  `dev-hot-reload`,
+  `discovery-notice-popups`,
+  `editable-page-shell`,
+  `explore-anatomy`,
+  `fairytale-cookbook-theory`,
+  `funding-proof-cards`,
+  `gesture-inspectability-metaphysics`,
+  `hero-image-whimsy`,
+  `instrumentation-legibility`,
+  `interaction-grammar`,
+  `js-runtime-composability`,
+  `language-ladder-runtime-instrumentation`,
+  `learning-science-community-pass`,
+  `learning-science-enhancement`,
+  `living-learning-surface`,
+  `living-medium-copy-pass`,
+  `lore-land-marketing`,
+  `math-topic-expansion`,
+  `media-feature-brief`,
+  `media-publishing`,
+  `mindful-collection-controls`,
+  `minimal-brace-disclosure`,
+  `mobile-brace-path-polish`,
+  `mobile-runtime-foundation`,
+  `narration-markup-cold-reads`,
+  `narrative-grammar-infrastructure`,
+  `nutrition-crop-language`,
+  `operator-resonance-alignment`,
+  `operator-semantics-refinement`,
+  `palette-resonance`,
+  `pretext-whimsy-lab`,
+  `production-demonstration-pass`,
+  `profile-character-card-development`,
+  `promo-wonder-cycle`,
+  `promptable-image-library-pass`,
+  `pure-math-routes`,
+  `pwa-experience`,
+  `reader-builder-entrances`,
+  `return-visitor-surface-pass`,
+  `review-surfaces-babbling`,
+  `rpg-asset-capture-frames`,
+  `rpg-boonwap-fabric`,
+  `rpg-character-hub`,
+  `rpg-live-session-atlas`,
+  `rpg-playable-copy`,
+  `rpg-seed-metacognition-pass`,
+  `rpg-session-notes`,
+  `rpg-wednesday-kit-refactor`,
+  `screenshot-semantics`,
+  `semantic-html-normalization`,
+  `settings-discoverability-consolidation`,
+  `settings-theme-packs`,
+  `settings-widgets-low-friction`,
+  `shell-harmony-pass`,
+  `shell-logo-branding`,
+  `shell-semantic-physics`,
+  `site-copy-component-settings-june-2026`,
+  `site-starter-component-kit`,
+  `skill-folio-operating-system`,
+  `spell-cauldron-lifecycle-memory-gardening`,
+  `spell-cauldron-microinteractions`,
+  `spell-cognition-familiarity`,
+  `spellbook-utility`,
+  `spw-operator-pages`,
+  `state-block-projections`,
+  `state-satchel-card-gesture-fixes`,
+  `story-prompt-surface-pass`,
+  `svg-aesthetic-depth-pass`,
+  `svg-handoff-copy-alignment`,
+  `svg-surface-integration`,
+  `symphonic-loading-layered-editions`,
+  `team-orientation`,
+  `template-shell-refactor`,
+  `theming-icon-packs-public-versioning`,
+  `top-level-route-seo`,
+  `topic-photo-svg-pass`,
+  `typography-reading-groove`,
+  `vibe-setting-widgets`,
+  `voice-grounding-pass`,
+  `wonder-memory`,
+ ][reg=set]
+}[reg=facet]
+
+@plan_algorithm_scale_statistics_rpg_bridges: ~"./algorithm-scale-statistics-rpg-bridges/index.spw"
+@plan_attention_cue_gestures: ~"./attention-cue-gestures/index.spw"
+@plan_audience_onboarding_copy: ~"./audience-onboarding-copy/index.spw"
+@plan_author_craft_ramps: ~"./author-craft-ramps/index.spw"
+@plan_author_rpg_notebooks: ~"./author-rpg-notebooks/index.spw"
+@plan_blog_blob_spw: ~"./blog-blob-spw/index.spw"
+@plan_blog_input_interpreter: ~"./blog-input-interpreter/index.spw"
+@plan_brace_cauldron_primed_collection: ~"./brace-cauldron-primed-collection/index.spw"
+@plan_brace_literacy_guides: ~"./brace-literacy-guides/index.spw"
+@plan_cadence_text_resonance: ~"./cadence-text-resonance/index.spw"
+@plan_calculus_trigonometry_field_guides: ~"./calculus-trigonometry-field-guides/index.spw"
+@plan_care_stats_notes_and_rpg_atlas: ~"./care-stats-notes-and-rpg-atlas/index.spw"
+@plan_catalog_demo_splits: ~"./catalog-demo-splits/index.spw"
+@plan_chrome_distribution_momentum_pass: ~"./chrome-distribution-momentum-pass/index.spw"
+@plan_cinematic_handles: ~"./cinematic-handles/index.spw"
+@plan_cognitive_navigation: ~"./cognitive-navigation/index.spw"
+@plan_component_rhythm_variety: ~"./component-rhythm-variety/index.spw"
+@plan_content_responsive_layout: ~"./content-responsive-layout/index.spw"
+@plan_context_sensitive_variants_and_agent_qa: ~"./context-sensitive-variants-and-agent-qa/index.spw"
+@plan_copy_localization: ~"./copy-localization/index.spw"
+@plan_css_progressive_ornaments: ~"./css-progressive-ornaments/index.spw"
+@plan_css_sensitive_attribute_writes: ~"./css-sensitive-attribute-writes/index.spw"
+@plan_culinary_excellence: ~"./culinary-excellence/index.spw"
+@plan_dark_contrast_pass: ~"./dark-contrast-pass/index.spw"
+@plan_deep_link_feature_discovery: ~"./deep-link-feature-discovery/index.spw"
+@plan_designer_conversation_canvas: ~"./designer-conversation-canvas/index.spw"
+@plan_dev_hot_reload: ~"./dev-hot-reload/index.spw"
+@plan_discovery_notice_popups: ~"./discovery-notice-popups/index.spw"
+@plan_editable_page_shell: ~"./editable-page-shell/index.spw"
+@plan_explore_anatomy: ~"./explore-anatomy/index.spw"
+@plan_fairytale_cookbook_theory: ~"./fairytale-cookbook-theory/index.spw"
+@plan_funding_proof_cards: ~"./funding-proof-cards/index.spw"
+@plan_gesture_inspectability_metaphysics: ~"./gesture-inspectability-metaphysics/index.spw"
+@plan_hero_image_whimsy: ~"./hero-image-whimsy/index.spw"
+@plan_instrumentation_legibility: ~"./instrumentation-legibility/index.spw"
+@plan_interaction_grammar: ~"./interaction-grammar/index.spw"
+@plan_js_runtime_composability: ~"./js-runtime-composability/index.spw"
+@plan_language_ladder_runtime_instrumentation: ~"./language-ladder-runtime-instrumentation/index.spw"
+@plan_learning_science_community_pass: ~"./learning-science-community-pass/index.spw"
+@plan_learning_science_enhancement: ~"./learning-science-enhancement/index.spw"
+@plan_living_learning_surface: ~"./living-learning-surface/index.spw"
+@plan_living_medium_copy_pass: ~"./living-medium-copy-pass/index.spw"
+@plan_lore_land_marketing: ~"./lore-land-marketing/index.spw"
+@plan_math_topic_expansion: ~"./math-topic-expansion/index.spw"
+@plan_media_feature_brief: ~"./media-feature-brief/index.spw"
+@plan_media_publishing: ~"./media-publishing/index.spw"
+@plan_mindful_collection_controls: ~"./mindful-collection-controls/index.spw"
+@plan_minimal_brace_disclosure: ~"./minimal-brace-disclosure/index.spw"
+@plan_mobile_brace_path_polish: ~"./mobile-brace-path-polish/index.spw"
+@plan_mobile_runtime_foundation: ~"./mobile-runtime-foundation/index.spw"
+@plan_narration_markup_cold_reads: ~"./narration-markup-cold-reads/index.spw"
+@plan_narrative_grammar_infrastructure: ~"./narrative-grammar-infrastructure/index.spw"
+@plan_nutrition_crop_language: ~"./nutrition-crop-language/index.spw"
+@plan_operator_resonance_alignment: ~"./operator-resonance-alignment/index.spw"
+@plan_operator_semantics_refinement: ~"./operator-semantics-refinement/index.spw"
+@plan_palette_resonance: ~"./palette-resonance/index.spw"
+@plan_pretext_whimsy_lab: ~"./pretext-whimsy-lab/index.spw"
+@plan_production_demonstration_pass: ~"./production-demonstration-pass/index.spw"
+@plan_profile_character_card_development: ~"./profile-character-card-development/index.spw"
+@plan_promo_wonder_cycle: ~"./promo-wonder-cycle/index.spw"
+@plan_promptable_image_library_pass: ~"./promptable-image-library-pass/index.spw"
+@plan_pure_math_routes: ~"./pure-math-routes/index.spw"
+@plan_pwa_experience: ~"./pwa-experience/index.spw"
+@plan_reader_builder_entrances: ~"./reader-builder-entrances/index.spw"
+@plan_return_visitor_surface_pass: ~"./return-visitor-surface-pass/index.spw"
+@plan_review_surfaces_babbling: ~"./review-surfaces-babbling/index.spw"
+@plan_rpg_asset_capture_frames: ~"./rpg-asset-capture-frames/index.spw"
+@plan_rpg_boonwap_fabric: ~"./rpg-boonwap-fabric/index.spw"
+@plan_rpg_character_hub: ~"./rpg-character-hub/index.spw"
+@plan_rpg_live_session_atlas: ~"./rpg-live-session-atlas/index.spw"
+@plan_rpg_playable_copy: ~"./rpg-playable-copy/index.spw"
+@plan_rpg_seed_metacognition_pass: ~"./rpg-seed-metacognition-pass/index.spw"
+@plan_rpg_session_notes: ~"./rpg-session-notes/index.spw"
+@plan_rpg_wednesday_kit_refactor: ~"./rpg-wednesday-kit-refactor/index.spw"
+@plan_screenshot_semantics: ~"./screenshot-semantics/index.spw"
+@plan_semantic_html_normalization: ~"./semantic-html-normalization/index.spw"
+@plan_settings_discoverability_consolidation: ~"./settings-discoverability-consolidation/index.spw"
+@plan_settings_theme_packs: ~"./settings-theme-packs/index.spw"
+@plan_settings_widgets_low_friction: ~"./settings-widgets-low-friction/index.spw"
+@plan_shell_harmony_pass: ~"./shell-harmony-pass/index.spw"
+@plan_shell_logo_branding: ~"./shell-logo-branding/index.spw"
+@plan_shell_semantic_physics: ~"./shell-semantic-physics/index.spw"
+@plan_site_copy_component_settings_june_2026: ~"./site-copy-component-settings-june-2026/index.spw"
+@plan_site_starter_component_kit: ~"./site-starter-component-kit/index.spw"
+@plan_skill_folio_operating_system: ~"./skill-folio-operating-system/index.spw"
+@plan_spell_cauldron_lifecycle_memory_gardening: ~"./spell-cauldron-lifecycle-memory-gardening/index.spw"
+@plan_spell_cauldron_microinteractions: ~"./spell-cauldron-microinteractions/index.spw"
+@plan_spell_cognition_familiarity: ~"./spell-cognition-familiarity/index.spw"
+@plan_spellbook_utility: ~"./spellbook-utility/index.spw"
+@plan_spw_operator_pages: ~"./spw-operator-pages/index.spw"
+@plan_state_block_projections: ~"./state-block-projections/index.spw"
+@plan_state_satchel_card_gesture_fixes: ~"./state-satchel-card-gesture-fixes/index.spw"
+@plan_story_prompt_surface_pass: ~"./story-prompt-surface-pass/index.spw"
+@plan_svg_aesthetic_depth_pass: ~"./svg-aesthetic-depth-pass/index.spw"
+@plan_svg_handoff_copy_alignment: ~"./svg-handoff-copy-alignment/index.spw"
+@plan_svg_surface_integration: ~"./svg-surface-integration/index.spw"
+@plan_symphonic_loading_layered_editions: ~"./symphonic-loading-layered-editions/index.spw"
+@plan_team_orientation: ~"./team-orientation/index.spw"
+@plan_template_shell_refactor: ~"./template-shell-refactor/index.spw"
+@plan_theming_icon_packs_public_versioning: ~"./theming-icon-packs-public-versioning/index.spw"
+@plan_top_level_route_seo: ~"./top-level-route-seo/index.spw"
+@plan_topic_photo_svg_pass: ~"./topic-photo-svg-pass/index.spw"
+@plan_typography_reading_groove: ~"./typography-reading-groove/index.spw"
+@plan_vibe_setting_widgets: ~"./vibe-setting-widgets/index.spw"
+@plan_voice_grounding_pass: ~"./voice-grounding-pass/index.spw"
+@plan_wonder_memory: ~"./wonder-memory/index.spw"
+^"archive"{
+ label = "archive"
+ count = 2
+ members = #[
+  `css-semantic-modules`,
+  `spw-css-architecture`,
+ ][reg=set]
+}[reg=facet]
+
+@plan_css_semantic_modules: ~"./archive/css-semantic-modules/index.spw"
+@plan_spw_css_architecture: ~"./archive/spw-css-architecture/index.spw"
+dispatch: .{
+ readme = @readme
+ planning_ecology = @planning_ecology
+ plan_index_convention = @plan_index_convention
+ wip_notebook = @wip_notebook
+ maintain_script = @maintain_script
+ plan_color_motion = @plan_color_motion
+ plan_css_architecture_readability = @plan_css_architecture_readability
+ plan_midjourney_design_concepts = @plan_midjourney_design_concepts
+ plan_reference_assignment_template = @plan_reference_assignment_template
+ plan_agent_optimization = @plan_agent_optimization
+ plan_agentic_dev_contracts = @plan_agentic_dev_contracts
+ plan_daily_kernel_development = @plan_daily_kernel_development
+ plan_discovery_powerups = @plan_discovery_powerups
+ plan_model_guided_refinement = @plan_model_guided_refinement
+ plan_modular_experience_slices = @plan_modular_experience_slices
+ plan_plan_wip_index_conventions = @plan_plan_wip_index_conventions
+ plan_relational_attention_media = @plan_relational_attention_media
+ plan_semantic_copy_depth = @plan_semantic_copy_depth
+ plan_spw_surface_normalization = @plan_spw_surface_normalization
+ plan_card_anatomy_interactions = @plan_card_anatomy_interactions
+ plan_card_grid_density_audit = @plan_card_grid_density_audit
+ plan_chrome_navigation_wonder = @plan_chrome_navigation_wonder
+ plan_component_box_model_responsive_audit = @plan_component_box_model_responsive_audit
+ plan_css_maintainability_refactor = @plan_css_maintainability_refactor
+ plan_css_state_legibility = @plan_css_state_legibility
+ plan_gesture_state_refinement = @plan_gesture_state_refinement
+ plan_hook_region_anatomy = @plan_hook_region_anatomy
+ plan_interaction_loop_contract = @plan_interaction_loop_contract
+ plan_navigation_header_disclosure = @plan_navigation_header_disclosure
+ plan_page_region_discoverability = @plan_page_region_discoverability
+ plan_shell_model_vocabulary_consolidation = @plan_shell_model_vocabulary_consolidation
+ plan_space_menu_arcs_electrical = @plan_space_menu_arcs_electrical
+ plan_vertical_rhythm_container_audit = @plan_vertical_rhythm_container_audit
+ plan_curricularize_codebase_typescript = @plan_curricularize_codebase_typescript
+ plan_javascript_standalone_utility = @plan_javascript_standalone_utility
+ plan_js_surface_ecology = @plan_js_surface_ecology
+ plan_js_taxonomy_cleanup = @plan_js_taxonomy_cleanup
+ plan_runtime_bootstrap_performance = @plan_runtime_bootstrap_performance
+ plan_runtime_load_instrumentation = @plan_runtime_load_instrumentation
+ plan_runtime_module_fluency = @plan_runtime_module_fluency
+ plan_runtime_settings = @plan_runtime_settings
+ plan_site_source_layout = @plan_site_source_layout
+ plan_typescript_integration = @plan_typescript_integration
+ plan_image_metaphysics_aesthetic_pass = @plan_image_metaphysics_aesthetic_pass
+ plan_image_visit_metaphysics = @plan_image_visit_metaphysics
+ plan_palette_semantics_improvements = @plan_palette_semantics_improvements
+ plan_palette_theme_composability_instrumentability = @plan_palette_theme_composability_instrumentability
+ plan_site_color_tuning = @plan_site_color_tuning
+ plan_style_image_cohesion = @plan_style_image_cohesion
+ plan_unsorted_image_rollout = @plan_unsorted_image_rollout
+ plan_care_interface_atlas = @plan_care_interface_atlas
+ plan_design_hub = @plan_design_hub
+ plan_expressive_layout_tropes_fidget_manuscript = @plan_expressive_layout_tropes_fidget_manuscript
+ plan_literacy_precipitation_press = @plan_literacy_precipitation_press
+ plan_professional_skill_development_worldbuilding = @plan_professional_skill_development_worldbuilding
+ plan_rpg_local_gameplay = @plan_rpg_local_gameplay
+ plan_rpg_portal_fantasy = @plan_rpg_portal_fantasy
+ plan_rpg_wednesday_learning_library = @plan_rpg_wednesday_learning_library
+ plan_services_ladder_and_topic_ctas = @plan_services_ladder_and_topic_ctas
+ plan_spellcraft_authoring = @plan_spellcraft_authoring
+ plan_town_atlas_story_kit = @plan_town_atlas_story_kit
+ plan_webpage_trope_vocabulary = @plan_webpage_trope_vocabulary
+ plan_attention_shell_contrast = @plan_attention_shell_contrast
+ plan_chrome_copy_collision = @plan_chrome_copy_collision
+ plan_component_semantics_document_host = @plan_component_semantics_document_host
+ plan_floating_chrome_stack = @plan_floating_chrome_stack
+ plan_gesture_aria_hygiene = @plan_gesture_aria_hygiene
+ plan_menu_containment_navigation = @plan_menu_containment_navigation
+ plan_mobile_image_effects = @plan_mobile_image_effects
+ plan_overlay_layer_ownership = @plan_overlay_layer_ownership
+ plan_runtime_route_css_regressions = @plan_runtime_route_css_regressions
+ plan_settings_theme_wiring = @plan_settings_theme_wiring
+ plan_theme_palette_marketability = @plan_theme_palette_marketability
+ plan_algorithm_scale_statistics_rpg_bridges = @plan_algorithm_scale_statistics_rpg_bridges
+ plan_attention_cue_gestures = @plan_attention_cue_gestures
+ plan_audience_onboarding_copy = @plan_audience_onboarding_copy
+ plan_author_craft_ramps = @plan_author_craft_ramps
+ plan_author_rpg_notebooks = @plan_author_rpg_notebooks
+ plan_blog_blob_spw = @plan_blog_blob_spw
+ plan_blog_input_interpreter = @plan_blog_input_interpreter
+ plan_brace_cauldron_primed_collection = @plan_brace_cauldron_primed_collection
+ plan_brace_literacy_guides = @plan_brace_literacy_guides
+ plan_cadence_text_resonance = @plan_cadence_text_resonance
+ plan_calculus_trigonometry_field_guides = @plan_calculus_trigonometry_field_guides
+ plan_care_stats_notes_and_rpg_atlas = @plan_care_stats_notes_and_rpg_atlas
+ plan_catalog_demo_splits = @plan_catalog_demo_splits
+ plan_chrome_distribution_momentum_pass = @plan_chrome_distribution_momentum_pass
+ plan_cinematic_handles = @plan_cinematic_handles
+ plan_cognitive_navigation = @plan_cognitive_navigation
+ plan_component_rhythm_variety = @plan_component_rhythm_variety
+ plan_content_responsive_layout = @plan_content_responsive_layout
+ plan_context_sensitive_variants_and_agent_qa = @plan_context_sensitive_variants_and_agent_qa
+ plan_copy_localization = @plan_copy_localization
+ plan_css_progressive_ornaments = @plan_css_progressive_ornaments
+ plan_css_sensitive_attribute_writes = @plan_css_sensitive_attribute_writes
+ plan_culinary_excellence = @plan_culinary_excellence
+ plan_dark_contrast_pass = @plan_dark_contrast_pass
+ plan_deep_link_feature_discovery = @plan_deep_link_feature_discovery
+ plan_designer_conversation_canvas = @plan_designer_conversation_canvas
+ plan_dev_hot_reload = @plan_dev_hot_reload
+ plan_discovery_notice_popups = @plan_discovery_notice_popups
+ plan_editable_page_shell = @plan_editable_page_shell
+ plan_explore_anatomy = @plan_explore_anatomy
+ plan_fairytale_cookbook_theory = @plan_fairytale_cookbook_theory
+ plan_funding_proof_cards = @plan_funding_proof_cards
+ plan_gesture_inspectability_metaphysics = @plan_gesture_inspectability_metaphysics
+ plan_hero_image_whimsy = @plan_hero_image_whimsy
+ plan_instrumentation_legibility = @plan_instrumentation_legibility
+ plan_interaction_grammar = @plan_interaction_grammar
+ plan_js_runtime_composability = @plan_js_runtime_composability
+ plan_language_ladder_runtime_instrumentation = @plan_language_ladder_runtime_instrumentation
+ plan_learning_science_community_pass = @plan_learning_science_community_pass
+ plan_learning_science_enhancement = @plan_learning_science_enhancement
+ plan_living_learning_surface = @plan_living_learning_surface
+ plan_living_medium_copy_pass = @plan_living_medium_copy_pass
+ plan_lore_land_marketing = @plan_lore_land_marketing
+ plan_math_topic_expansion = @plan_math_topic_expansion
+ plan_media_feature_brief = @plan_media_feature_brief
+ plan_media_publishing = @plan_media_publishing
+ plan_mindful_collection_controls = @plan_mindful_collection_controls
+ plan_minimal_brace_disclosure = @plan_minimal_brace_disclosure
+ plan_mobile_brace_path_polish = @plan_mobile_brace_path_polish
+ plan_mobile_runtime_foundation = @plan_mobile_runtime_foundation
+ plan_narration_markup_cold_reads = @plan_narration_markup_cold_reads
+ plan_narrative_grammar_infrastructure = @plan_narrative_grammar_infrastructure
+ plan_nutrition_crop_language = @plan_nutrition_crop_language
+ plan_operator_resonance_alignment = @plan_operator_resonance_alignment
+ plan_operator_semantics_refinement = @plan_operator_semantics_refinement
+ plan_palette_resonance = @plan_palette_resonance
+ plan_pretext_whimsy_lab = @plan_pretext_whimsy_lab
+ plan_production_demonstration_pass = @plan_production_demonstration_pass
+ plan_profile_character_card_development = @plan_profile_character_card_development
+ plan_promo_wonder_cycle = @plan_promo_wonder_cycle
+ plan_promptable_image_library_pass = @plan_promptable_image_library_pass
+ plan_pure_math_routes = @plan_pure_math_routes
+ plan_pwa_experience = @plan_pwa_experience
+ plan_reader_builder_entrances = @plan_reader_builder_entrances
+ plan_return_visitor_surface_pass = @plan_return_visitor_surface_pass
+ plan_review_surfaces_babbling = @plan_review_surfaces_babbling
+ plan_rpg_asset_capture_frames = @plan_rpg_asset_capture_frames
+ plan_rpg_boonwap_fabric = @plan_rpg_boonwap_fabric
+ plan_rpg_character_hub = @plan_rpg_character_hub
+ plan_rpg_live_session_atlas = @plan_rpg_live_session_atlas
+ plan_rpg_playable_copy = @plan_rpg_playable_copy
+ plan_rpg_seed_metacognition_pass = @plan_rpg_seed_metacognition_pass
+ plan_rpg_session_notes = @plan_rpg_session_notes
+ plan_rpg_wednesday_kit_refactor = @plan_rpg_wednesday_kit_refactor
+ plan_screenshot_semantics = @plan_screenshot_semantics
+ plan_semantic_html_normalization = @plan_semantic_html_normalization
+ plan_settings_discoverability_consolidation = @plan_settings_discoverability_consolidation
+ plan_settings_theme_packs = @plan_settings_theme_packs
+ plan_settings_widgets_low_friction = @plan_settings_widgets_low_friction
+ plan_shell_harmony_pass = @plan_shell_harmony_pass
+ plan_shell_logo_branding = @plan_shell_logo_branding
+ plan_shell_semantic_physics = @plan_shell_semantic_physics
+ plan_site_copy_component_settings_june_2026 = @plan_site_copy_component_settings_june_2026
+ plan_site_starter_component_kit = @plan_site_starter_component_kit
+ plan_skill_folio_operating_system = @plan_skill_folio_operating_system
+ plan_spell_cauldron_lifecycle_memory_gardening = @plan_spell_cauldron_lifecycle_memory_gardening
+ plan_spell_cauldron_microinteractions = @plan_spell_cauldron_microinteractions
+ plan_spell_cognition_familiarity = @plan_spell_cognition_familiarity
+ plan_spellbook_utility = @plan_spellbook_utility
+ plan_spw_operator_pages = @plan_spw_operator_pages
+ plan_state_block_projections = @plan_state_block_projections
+ plan_state_satchel_card_gesture_fixes = @plan_state_satchel_card_gesture_fixes
+ plan_story_prompt_surface_pass = @plan_story_prompt_surface_pass
+ plan_svg_aesthetic_depth_pass = @plan_svg_aesthetic_depth_pass
+ plan_svg_handoff_copy_alignment = @plan_svg_handoff_copy_alignment
+ plan_svg_surface_integration = @plan_svg_surface_integration
+ plan_symphonic_loading_layered_editions = @plan_symphonic_loading_layered_editions
+ plan_team_orientation = @plan_team_orientation
+ plan_template_shell_refactor = @plan_template_shell_refactor
+ plan_theming_icon_packs_public_versioning = @plan_theming_icon_packs_public_versioning
+ plan_top_level_route_seo = @plan_top_level_route_seo
+ plan_topic_photo_svg_pass = @plan_topic_photo_svg_pass
+ plan_typography_reading_groove = @plan_typography_reading_groove
+ plan_vibe_setting_widgets = @plan_vibe_setting_widgets
+ plan_voice_grounding_pass = @plan_voice_grounding_pass
+ plan_wonder_memory = @plan_wonder_memory
+ plan_css_semantic_modules = @plan_css_semantic_modules
+ plan_spw_css_architecture = @plan_spw_css_architecture
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `Which virtual bucket owns this class of work?`, see = @readme }[reg=facet],
+ .{ ask = `What is the smallest plan index to open for a bounded patch?`, see = @plan_index_convention }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Every listed plan folder exposes ./<slug>/index.spw.`
+ `Virtual buckets mirror .agents/plans/README.md before physical folder moves.`
+ `Regenerate this root index with scripts/maintain-plan-directory-indexes.mjs.`
+][reg=set]
+

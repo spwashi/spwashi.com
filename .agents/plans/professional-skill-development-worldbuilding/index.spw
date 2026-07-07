@@ -1,0 +1,67 @@
+# Plan Index — Professional Skill Development & Worldbuilding Architecture
+#
+# We want to reframe the relationship between worldbuilding/character design and professional/technical skill development.
+
+#>plan_professional_skill_development_worldbuilding_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `We want to reframe the relationship between worldbuilding/character design and professional/technical skill development.`
+ owner = `professional-skill-development-worldbuilding`
+ kind = `plan`
+ bucket = `public_route_proof_genre`
+ artifact_shape = `PLAN.md | wip.spw | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "public_route_proof_genre"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@play_rpg_wednesday_index_html: ~"../../../play/rpg-wednesday/index.html"
+@play_rpg_wednesday_library_index_html: ~"../../../play/rpg-wednesday/library/index.html"
+@cards: ~"../../../public/css/components/cards.css"
+
+dispatch: .{
+ plan = @plan
+ wip = @wip
+ play_rpg_wednesday_index_html = @play_rpg_wednesday_index_html
+ play_rpg_wednesday_library_index_html = @play_rpg_wednesday_library_index_html
+ cards = @cards
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-professional_skill_development_worldbuilding-001"
+ layer = "pragmatic"
+ hypothesis = `We want to reframe the relationship between worldbuilding/character design and professional/technical skill development.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../play/rpg-wednesday/index.html"
+ probe_ref = `rg 'professional-skill-development-worldbuilding' .agents/plans/professional-skill-development-worldbuilding`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../play/rpg-wednesday/index.html unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does professional-skill-development-worldbuilding own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of professional-skill-development-worldbuilding?`, see = @index }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: We want to reframe the relationship between worldbuilding/character design and professional/technical skill development.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

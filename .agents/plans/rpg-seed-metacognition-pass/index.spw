@@ -1,0 +1,78 @@
+# Plan Index — rpg-seed-metacognition-pass
+#
+# Make RPG Wednesday, character development, and nearby design routes feel more like live thinking surfaces: - swag and dice become valid local asset concepts instead of only item…
+
+#>plan_rpg_seed_metacognition_pass_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Make RPG Wednesday, character development, and nearby design routes feel more like live thinking surfaces: - swag and dice become valid local asset concepts instead of only item and threat - topic links read as metacognitive handles for the kind of thinking a visitor needs next - some component descriptions carry a clearly identified narrator voice so dialogue and characterization can accumulate over time`
+ owner = `rpg-seed-metacognition-pass`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@play_rpg_wednesday_index_html: ~"../../../play/rpg-wednesday/index.html"
+@play_rpg_wednesday_character_index_html: ~"../../../play/rpg-wednesday/character/index.html"
+@play_rpg_wednesday_arcs_index_html: ~"../../../play/rpg-wednesday/arcs/index.html"
+@design_index_html: ~"../../../design/index.html"
+@design_components_index_html: ~"../../../design/components/index.html"
+
+dispatch: .{
+ plan = @plan
+ play_rpg_wednesday_index_html = @play_rpg_wednesday_index_html
+ play_rpg_wednesday_character_index_html = @play_rpg_wednesday_character_index_html
+ play_rpg_wednesday_arcs_index_html = @play_rpg_wednesday_arcs_index_html
+ design_index_html = @design_index_html
+ design_components_index_html = @design_components_index_html
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-rpg_seed_metacognition_pass-001"
+ layer = "pragmatic"
+ hypothesis = `Make RPG Wednesday, character development, and nearby design routes feel more like live thinking surfaces: - swag and dice become valid local asset concepts instead of only item and threat - topic links read as metacognitive handles for the kind of thinking a visitor needs next - some component descriptions carry a clearly identified narrator voice so dialogue and characterization can accumulate over time`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../play/rpg-wednesday/index.html"
+ probe_ref = `node --check public/js/rpg-wednesday-state.js`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../play/rpg-wednesday/index.html unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+validation: #[
+ `node --check public/js/rpg-wednesday-state.js`,
+ `node --check public/js/rpg-wednesday-asset-atlas.js`,
+ `node --check public/js/rpg-wednesday-character-lab.js`,
+ `git diff --check`,
+ `npm run check`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does rpg-seed-metacognition-pass own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of rpg-seed-metacognition-pass?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether rpg-seed-metacognition-pass still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Make RPG Wednesday, character development, and nearby design routes feel more like live thinking surfaces: - swag and dice become valid…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

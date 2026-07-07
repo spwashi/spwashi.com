@@ -1,0 +1,82 @@
+# Plan Index — calculus-trigonometry-field-guides
+#
+# Build a broader calculus literacy cluster: deepen the calculus route through Calc I, II, and III, add a differential-equations route, and keep the explanations grounded in…
+
+#>plan_calculus_trigonometry_field_guides_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Build a broader calculus literacy cluster: deepen the calculus route through Calc I, II, and III, add a differential-equations route, and keep the explanations grounded in portable SVG visualizations and intuition-first copy.`
+ owner = `calculus-trigonometry-field-guides`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@topics_math_index_html: ~"../../../topics/math/index.html"
+@topics_index_html: ~"../../../topics/index.html"
+@topics_math_trigonometry_index_html: ~"../../../topics/math/trigonometry/index.html"
+@topics_math_calculus_index_html: ~"../../../topics/math/calculus/index.html"
+@topics_math_differential_equations_index_html: ~"../../../topics/math/differential-equations/index.html"
+@topics_software_differential_lambda_calculus_index_html: ~"../../../topics/software/differential-lambda-calculus/index.html"
+@topics_software_spw_index_html: ~"../../../topics/software/spw/index.html"
+@topics_software_index_html: ~"../../../topics/software/index.html"
+
+dispatch: .{
+ plan = @plan
+ topics_math_index_html = @topics_math_index_html
+ topics_index_html = @topics_index_html
+ topics_math_trigonometry_index_html = @topics_math_trigonometry_index_html
+ topics_math_calculus_index_html = @topics_math_calculus_index_html
+ topics_math_differential_equations_index_html = @topics_math_differential_equations_index_html
+ topics_software_differential_lambda_calculus_index_html = @topics_software_differential_lambda_calculus_index_html
+ topics_software_spw_index_html = @topics_software_spw_index_html
+ topics_software_index_html = @topics_software_index_html
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-calculus_trigonometry_field_guides-001"
+ layer = "pragmatic"
+ hypothesis = `Build a broader calculus literacy cluster: deepen the calculus route through Calc I, II, and III, add a differential-equations route, and keep the explanations grounded in portable SVG visualizations and intuition-first copy.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../topics/math/index.html"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../topics/math/index.html unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `node --check public/js/spw-math-diagrams.js`,
+ `npm run check`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does calculus-trigonometry-field-guides own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of calculus-trigonometry-field-guides?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether calculus-trigonometry-field-guides still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Build a broader calculus literacy cluster: deepen the calculus route through Calc I, II, and III, add a differential-equations route, and…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

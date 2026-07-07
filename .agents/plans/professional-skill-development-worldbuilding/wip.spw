@@ -1,3 +1,29 @@
+^"selection_probes"{
+ probes = #[ `rg 'professional-skill-development-worldbuilding' play/rpg-wednesday/index.html`, `rg 'professional-skill-development-worldbuilding' .agents/plans`, `test -f play/rpg-wednesday/index.html`, ][reg=set]
+ rule = "Run probes before trusting cached plan_context."
+}[reg=facet]
+
+^"plan_context"{
+ goal = `We want to reframe the relationship between worldbuilding/character design and professional/technical skill development.`
+ owner = `professional-skill-development-worldbuilding`
+ operation = "prime"
+ bucket = "public_route_proof_genre"
+ hot_files = #[ `play/rpg-wednesday/index.html`, `play/rpg-wednesday/library/index.html`, `public/css/components/cards.css`, ][reg=set]
+}[reg=facet]
+# wip — professional-skill-development-worldbuilding
+#
+#>plan_professional_skill_development_worldbuilding_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@plans_root: ~"../../../.agents/plans/index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+
+operation = "cache"
+fixity = "tending"
 # Professional Skill Development and Worldbuilding
 #
 # Plan-local semantic cache for the higher-level Skill OS thesis.

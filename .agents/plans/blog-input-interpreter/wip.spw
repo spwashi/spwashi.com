@@ -1,9 +1,31 @@
-# wip - blog-input-interpreter
-# Branch: main
-# Started: 2026-04-10
-
+# wip — blog-input-interpreter
+#
+#>plan_blog_input_interpreter_wip
+#:operation #!cache
+#:fixity #!tending
 #:layer #!pragmatics
 
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@plans_root: ~"../../../.agents/plans/index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+
+operation = "cache"
+fixity = "tending"
+
+^"selection_probes"{
+ probes = #[ `rg 'blog-input-interpreter' public/js/site.js`, `A pasted draft produces a title, summary, tags, questions, outline, and draft seed.`, `test -f public/js/site.js`, ][reg=set]
+ rule = "Run probes before trusting cached plan_context."
+}[reg=facet]
+
+^"plan_context"{
+ goal = `Create a framework-free /blog/ route that is useful before there is a full archive. The first version lets a visitor paste draft text, Spw fragments, or wonder notes and receive a local interpretation: title suggestion, summary, tags, questions, outline, stats, and a copyable Spw-style draft seed. Taste note: the blog should feel like an editorial workbench and a permission structure for noticing, not a generic feed or an AI demo. The deeper goal is to establish the blog as the public writing pipeline for the site: - Raw input becomes a structured draft. - Spw operators can act as temporary scaffolds for thought without replacing prose. - Wonder stays present as a serious input, not decoration. - Some interpreted drafts should mature into durable blog blobs before they become posts. - Structured drafts can later become hand-written static posts. - The interpreter explains what it inferred instead of pretending to know. - The privacy boundary stays obvious: local interpretation first, no network dependency by default.`
+ owner = `blog-input-interpreter`
+ operation = "prime"
+ bucket = "active_backlog"
+ validation = #[ `A pasted draft produces a title, summary, tags, questions, outline, and draft seed.`, `A pasted wonder note or Spw fragment produces prompts that help turn it into readable language.`, `The route explains local-only behavior clearly enough that a visitor understands the privacy boundary.`, `The blog nav addition remains usable on mobile.`, `Existing optional features still initialize.`, `Static pages remain readable without the blog JS.`, ][reg=set]
+ hot_files = #[ `public/js/site.js`, `public/css/style.css`, `.agents/plans/blog-blob-spw/PLAN.md`, `.agents/plans/copy-localization/PLAN.md`, ][reg=set]
+}[reg=facet]
 ^["roots"]{
  @plan: ~".agents/plans/blog-input-interpreter/PLAN.md"
  @artifact: ~".agents/plans/blog-input-interpreter/blog-input-interpreter.spw"

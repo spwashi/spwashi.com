@@ -1,0 +1,80 @@
+# Plan Index — operator-semantics-refinement
+#
+# The desired end state is a coherent operator system where: 1. Lineage is clear: Users understand how operators evolved from the original set (~ # . ? ! * & @ ^ <> [] {}) to…
+
+#>plan_operator_semantics_refinement_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `The desired end state is a coherent operator system where: 1. Lineage is clear: Users understand how operators evolved from the original set (~ # . ? ! * & @ ^ <> [] {}) to current implementation, and why the evolution makes sense. 2. Physics is discoverable: Operators behave according to underlying principles (spatial relationships, containment, reference, projection, etc.) that can be felt through interaction and explained through documentation. 3. Symmetry is legible: Users recognize that operators have natural pairing relationships (~ pairs with @, # pairs with ., ? pairs with !) that create coherent dynamics. 4. Priming is meaningful: Operator sequences feel natural because each operator sets up expectation for what comes next. A sequence like ~(#frame) ?! feels inevitable rather than arbitrary. 5. Interpretation emerges: Over time, users develop intuitions about how operators work together, discovering traditions and patterns that are grounded in physics rather than arbitrarily imposed.`
+ owner = `operator-semantics-refinement`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | operator-lineage-discovery.spw | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@operator_lineage_discovery: ~"./operator-lineage-discovery.spw"
+
+dispatch: .{
+ plan = @plan
+ operator_lineage_discovery = @operator_lineage_discovery
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-operator_semantics_refinement-001"
+ layer = "pragmatic"
+ hypothesis = `The desired end state is a coherent operator system where: 1. Lineage is clear: Users understand how operators evolved from the original set (~ # . ? ! * & @ ^ <> [] {}) to current implementation, and why the evolution makes sense. 2. Physics is discoverable: Operators behave according to underlying principles (spatial relationships, containment, reference, projection, etc.) that can be felt through interaction and explained through documentation. 3. Symmetry is legible: Users recognize that operators have natural pairing relationships (~ pairs with @, # pairs with ., ? pairs with !) that create coherent dynamics. 4. Priming is meaningful: Operator sequences feel natural because each operator sets up expectation for what comes next. A sequence like ~(#frame) ?! feels inevitable rather than arbitrary. 5. Interpretation emerges: Over time, users develop intuitions about how operators work together, discovering traditions and patterns that are grounded in physics rather than arbitrarily imposed.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"./PLAN.md"
+ probe_ref = `Hypotheses:`
+ falsification = `A patch cannot satisfy the public goal while leaving ./PLAN.md unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `In scope: operator lineage documentation; physics explanations for each operator; symmetry pair mappings; priming rules and examples; interaction pattern descriptions; discoverability enhancements; alignment with interaction-grammar and spw-operator-pages plans.`,
+ ][reg=set]
+ out = #[
+  `: implementing operator-based UI widgets (that's interaction-grammar); rewriting operator atlas pages (that's spw-operator-pages); changing the HTML structure (that's mobile-runtime-foundation).`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `Hypotheses:`,
+ `Operators will feel less arbitrary once their lineage is documented.`,
+ `Users will recognize operator symmetry without being told explicitly.`,
+ `Operator sequences will feel natural when priming is understood.`,
+ `New users will intuitively discover operator patterns over time.`,
+ `Negative controls:`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does operator-semantics-refinement own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of operator-semantics-refinement?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether operator-semantics-refinement still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: The desired end state is a coherent operator system where: 1. Lineage is clear: Users understand how operators evolved from the original…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

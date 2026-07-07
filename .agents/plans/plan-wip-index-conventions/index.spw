@@ -1,0 +1,83 @@
+# Plan Index — plan-wip-index-conventions
+#
+# Every plan folder should expose a small index.spw dispatch surface, and every wip.spw should declare operation, fixity, and plan linkage without pretending to be cold convention.…
+
+#>plan_plan_wip_index_conventions_index
+#:index #!plan
+#:operation #!contract
+#:layer #!pragmatics
+
+operation = "contract"
+fixity = "stable"
+
+intent: .{
+ goal = `Every plan folder should expose a small index.spw dispatch surface, and every wip.spw should declare operation, fixity, and plan linkage without pretending to be cold convention. Agents and returning humans can enter a plan folder and know what to read first.`
+ owner = `plan-wip-index-conventions`
+ kind = `plan`
+ bucket = `semantic_rails`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "semantics | pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "warm"
+ bucket = "semantic_rails"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@plan_index: ~"../../../.spw/conventions/plan-index.spw"
+@spw_surfaces_index_spw: ~"../../../.spw/surfaces/index.spw"
+@maintain_plan_directory_indexes: ~"../../../scripts/maintain-plan-directory-indexes.mjs"
+@plans: ~"../../../.agents/plans/"
+@agents_plans_index_spw: ~"../../../.agents/plans/index.spw"
+
+dispatch: .{
+ plan = @plan
+ plan_index = @plan_index
+ spw_surfaces_index_spw = @spw_surfaces_index_spw
+ maintain_plan_directory_indexes = @maintain_plan_directory_indexes
+ plans = @plans
+ agents_plans_index_spw = @agents_plans_index_spw
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-plan_wip_index_conventions-001"
+ layer = "pragmatic"
+ hypothesis = `Every plan folder should expose a small index.spw dispatch surface, and every wip.spw should declare operation, fixity, and plan linkage without pretending to be cold convention. Agents and returning humans can enter a plan folder and know what to read first.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../.spw/conventions/wip-notebook.spw"
+ probe_ref = `node scripts/maintain-plan-directory-indexes.mjs --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../.spw/conventions/wip-notebook.spw unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `In scope: .spw/conventions/wip-notebook.spw, .spw/conventions/plan-index.spw, .agents/plans/index.spw, .spw/surfaces/index.spw, scripts/maintain-plan-directory-indexes.mjs, plan-specific index.spw / wip.spw / named .spw with Spw features (dimensions, owner_claim, editor_prompts, selection_probes, operational_hooks, virtual buckets), dispatch wiring in planning-ecology.spw and conventions/index.spw.`,
+  `-`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `node scripts/maintain-plan-directory-indexes.mjs --check`,
+ `git diff --check`,
+ `npm run check:local when only plan/.spw/script files change`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does plan-wip-index-conventions own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of plan-wip-index-conventions?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether plan-wip-index-conventions still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Every plan folder should expose a small index.spw dispatch surface, and every wip.spw should declare operation, fixity, and plan linkage…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

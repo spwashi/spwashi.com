@@ -1,9 +1,31 @@
 # wip — rpg-local-gameplay
-# Branch: main
-# Started: 2026-04-10
-
+#
+#>plan_rpg_local_gameplay_wip
+#:operation #!cache
+#:fixity #!tending
 #:layer #!pragmatics
 
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@plans_root: ~"../../../.agents/plans/index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+
+operation = "cache"
+fixity = "tending"
+
+^"selection_probes"{
+ probes = #[ `rg 'rpg-local-gameplay' public/css/style.css`, `node --check public/js/rpg-wednesday.js`, `test -f public/css/style.css`, ][reg=set]
+ rule = "Run probes before trusting cached plan_context."
+}[reg=facet]
+
+^"plan_context"{
+ goal = `RPG Wednesday should move from a static campaign index toward a lightweight table aid. The first useful layer is a local gameplay kit that lets a player or GM track the current scene, party, initiative, clocks, quick notes, and session log seeds directly on the published pages without requiring a backend or build pipeline. Those seeds should be able to mature into RPG session notes before they harden into public session pages, cast memory, world memory, or arc records. Taste note: improve usefulness and trust. The feature should feel like a quiet table tool, not an app takeover; local data must be clearly local and easy to export or clear.`
+ owner = `rpg-local-gameplay`
+ operation = "prime"
+ bucket = "public_route_proof_genre"
+ validation = #[ `node --check public/js/rpg-wednesday.js`, `node --check public/js/site.js`, `node --check sw.js`, `python3 -m json.tool manifest.webmanifest`, `git diff --check`, `npm --prefix .spw/_workbench run lint:spw`, ][reg=set]
+ hot_files = #[ `public/css/style.css`, `.agents/plans/rpg-session-notes/PLAN.md`, `.agents/plans/rpg-local-gameplay/rpg-local-gameplay.spw`, ][reg=set]
+}[reg=facet]
 ^["roots"]{
  @plan: ~".agents/plans/rpg-local-gameplay/PLAN.md"
  @artifact: ~".agents/plans/rpg-local-gameplay/rpg-local-gameplay.spw"

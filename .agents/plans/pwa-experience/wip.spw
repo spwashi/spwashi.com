@@ -1,9 +1,30 @@
 # wip — pwa-experience
-# Branch: feature/pwa-experience
-# Started: 2026-04-09
-
+#
+#>plan_pwa_experience_wip
+#:operation #!cache
+#:fixity #!tending
 #:layer #!pragmatics
 
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@plans_root: ~"../../../.agents/plans/index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+
+operation = "cache"
+fixity = "tending"
+
+^"selection_probes"{
+ probes = #[ `rg 'pwa-experience' public`, `Hypotheses: the root worker will control page navigations; the update prompt will only appear when a waiting worker exists; install affordances will appear only when the browser can install or when iOS needs a manual hint.`, ][reg=set]
+ rule = "Run probes before trusting cached plan_context."
+}[reg=facet]
+
+^"plan_context"{
+ goal = `The desired end state is a static site that behaves like a credible lightweight web app: it can be installed cleanly, it serves a graceful offline fallback, and it only asks the user to reload when a real update is waiting. This addresses correctness first, because the current worker scope and cache keys do not line up with how the site is actually routed. The taste note is trust + containment: the PWA shell should feel deliberate, legible, and non-intrusive instead of optimistic but brittle.`
+ owner = `pwa-experience`
+ operation = "prime"
+ bucket = "active_backlog"
+ validation = #[ `Hypotheses: the root worker will control page navigations; the update prompt will only appear when a waiting worker exists; install affordances will appear only when the browser can install or when iOS needs a manual hint.`, `Negative controls: directory routing, existing HTML content, and shared stylesheet usage remain unchanged.`, `Demo sequence: load /, confirm worker registration, reload into a controlled session, simulate offline navigation to a cached route and to an uncached route, and confirm update/install prompts behave sanely.`, ][reg=set]
+}[reg=facet]
 ^["roots"]{
  @cluster: ~".agents/plans/plan-ecology-clustering/plan-ecology-clustering.spw"
  @plan: ~".agents/plans/pwa-experience/PLAN.md"

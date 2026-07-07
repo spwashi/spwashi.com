@@ -1,0 +1,74 @@
+# Plan Index Convention
+#
+# How plan-directory .spw artifacts use Spw features for traversal, claims,
+# and agent selection without replacing PLAN.md sequencing.
+
+#>plan_index_convention
+#:convention #!plans #!index #!agents
+#:layer #!editor_inspectability
+
+@wip_notebook: ~"./wip-notebook.spw"
+@planning_ecology: ~"./planning-ecology.spw"
+@semantic_capacity: ~"./semantic-capacity.spw"
+@plans_root: ~"../../.agents/plans/index.spw"
+@maintain_script: ~"../../scripts/maintain-plan-directory-indexes.mjs"
+
+operation = "contract"
+fixity = "stable"
+
+^"file_roles"{
+  index_spw = "Traversal + selection surface: intent, dimensions, dispatch, owner_claim, editor_prompts, bucket, related_plans."
+  wip_spw = "Hot cache: plan_context, selection_probes, open_questions; pairs with PLAN.md."
+  named_spw = "Stable model artifact: plan_linkage + operational_hooks when the plan owns reusable semantics."
+  plan_md = "Sequencing source of truth for scope, phases, and validation order."
+}
+
+^"required_spw_features"{
+  anchors = #[
+    `#>plan_<slug>_index`,
+    `#>plan_<slug>_wip when wip exists`,
+    `#:operation #!cache|audit|align|prime|contract|archive`,
+    `#:fixity #!tending|stable|experimental|cold`,
+    `#:layer #!pragmatics`
+  ][reg=set]
+  blocks = #[
+    `intent facet with goal, owner, kind`,
+    `^"dimensions" facet for practice_depth, semantic_layer, collaboration_phase, memory_tier`,
+    `dispatch with @references and [reg=facet]`,
+    `^"owner_claim" with falsification when validation exists`,
+    `editor_prompts for first-read routing`,
+    `validation [reg=set] when PLAN.md names checks`
+  ][reg=set]
+  indexing = #[
+    `Every plan index cites @plans_root and @wip_notebook`,
+    `Related plans cross-link through @plan_<slug> refs`,
+    `Implementation refs resolve from PLAN.md backtick paths`,
+    `Root plans/index.spw groups folders by virtual bucket`
+  ][reg=set]
+}
+
+^"selection_probes"{
+  definition = "Small rg- or command-friendly probes that let agents falsify whether a plan still matches the tree."
+  minimum = "At least one probe_ref per owner_claim."
+  examples = #[
+    `rg '<slug>' .agents/plans`,
+    `test -f <impl_ref>`,
+    `npm run check:local`,
+    `node --check <module>`
+  ][reg=set]
+}
+
+^"dispatch"{
+  wip_notebook = @wip_notebook
+  planning_ecology = @planning_ecology
+  semantic_capacity = @semantic_capacity
+  plans_root = @plans_root
+  maintain_script = @maintain_script
+}
+
+invariants: #[
+  `index.spw routes; PLAN.md sequences.`,
+  `Owner claims must name a falsification path.`,
+  `Regenerate plan indexes with scripts/maintain-plan-directory-indexes.mjs during ecology sweeps.`,
+  `Promote repeated owner_claim patterns into .spw/slices/ or .spw/conventions/.`
+][reg=set]

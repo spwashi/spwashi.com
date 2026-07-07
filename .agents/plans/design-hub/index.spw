@@ -1,0 +1,76 @@
+# Plan Index — design-hub
+#
+# Create a top-level /design/ hub that declares design as a first-class public surface on the site, gives collaborators a shared page for team communication, and exposes real…
+
+#>plan_design_hub_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Create a top-level /design/ hub that declares design as a first-class public surface on the site, gives collaborators a shared page for team communication, and exposes real rendering-context tests built from the existing Spw/Pretext contracts. The hub should do three things at once: - explain how global and local data attributes shape display context - provide circuits into the existing design-facing routes and feature sets - act as a stable manual test page for split layout, pretext flow, material/context variants, and mobile reading behavior`
+ owner = `design-hub`
+ kind = `plan`
+ bucket = `public_route_proof_genre`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "public_route_proof_genre"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@design_index_html: ~"../../../design/index.html"
+@about_website_index_html: ~"../../../about/website/index.html"
+@topics_site_design_index_html: ~"../../../topics/site-design/index.html"
+@style: ~"../../../public/css/style.css"
+@experiments: ~"../../../public/js/modules/design/experiments.js"
+
+dispatch: .{
+ plan = @plan
+ design_index_html = @design_index_html
+ about_website_index_html = @about_website_index_html
+ topics_site_design_index_html = @topics_site_design_index_html
+ style = @style
+ experiments = @experiments
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-design_hub-001"
+ layer = "pragmatic"
+ hypothesis = `Create a top-level /design/ hub that declares design as a first-class public surface on the site, gives collaborators a shared page for team communication, and exposes real rendering-context tests built from the existing Spw/Pretext contracts. The hub should do three things at once: - explain how global and local data attributes shape display context - provide circuits into the existing design-facing routes and feature sets - act as a stable manual test page for split layout, pretext flow, material/context variants, and mobile reading behavior`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../design/index.html"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../design/index.html unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `targeted sanity read for changed HTML around headers, rails, and closing tags`,
+ `no JS edits unless a runtime gap appears`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does design-hub own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of design-hub?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether design-hub still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Create a top-level /design/ hub that declares design as a first-class public surface on the site, gives collaborators a shared page for…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

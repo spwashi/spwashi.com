@@ -1,0 +1,87 @@
+# Plan Index — css-progressive-ornaments
+#
+# The desired end state is a CSS architecture that keeps the GitHub Pages static deployment simple while making style ownership obvious: base page shell, Spw semantic components,…
+
+#>plan_css_progressive_ornaments_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `The desired end state is a CSS architecture that keeps the GitHub Pages static deployment simple while making style ownership obvious: base page shell, Spw semantic components, runtime chrome, page surfaces, progressive enhancements, and seasonal ornaments should each have a clear home. The first implementation should be a no-behavior split that preserves the existing <link href="/public/css/style.css?v=0.0.2"> contract. The taste note is calm core, summoned delight: seasonal features and ornaments may add wonder, but they must never become required for navigation, readability, accessibility, or layout stability.`
+ owner = `css-progressive-ornaments`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | css-progressive-ornaments.spw | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@css_progressive_ornaments: ~"./css-progressive-ornaments.spw"
+@style: ~"../../../public/css/style.css"
+@topics_software_index_html: ~"../../../topics/software/index.html"
+@topics_software_pretext_index_html: ~"../../../topics/software/pretext/index.html"
+@site_semantics: ~"../../../.spw/conventions/site-semantics.spw"
+
+dispatch: .{
+ plan = @plan
+ wip = @wip
+ css_progressive_ornaments = @css_progressive_ornaments
+ style = @style
+ topics_software_index_html = @topics_software_index_html
+ topics_software_pretext_index_html = @topics_software_pretext_index_html
+ site_semantics = @site_semantics
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-css_progressive_ornaments-001"
+ layer = "pragmatic"
+ hypothesis = `The desired end state is a CSS architecture that keeps the GitHub Pages static deployment simple while making style ownership obvious: base page shell, Spw semantic components, runtime chrome, page surfaces, progressive enhancements, and seasonal ornaments should each have a clear home. The first implementation should be a no-behavior split that preserves the existing <link href="/public/css/style.css?v=0.0.2"> contract. The taste note is calm core, summoned delight: seasonal features and ornaments may add wonder, but they must never become required for navigation, readability, accessibility, or layout stability.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/css/style.css"
+ probe_ref = `Hypotheses: a CSS split by responsibility will reduce future edit risk; keeping style.css as the import entrypoint will preserve GitHub Pages simplicity; ornament layers can add seasonal wonder without contaminating layout; progressive enhancement rules will keep experiments reversible.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/css/style.css unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `In scope: plan a CSS file split, cascade ordering, route ownership, progressive enhancement rules, seasonal ornament gates, reduced-motion/fallback contracts, PWA cache considerations, and validation strategy for GitHub Pages.`,
+ ][reg=set]
+ out = #[
+  `: changing visual design in the first split, introducing Sass/PostCSS/Vite, adding a JavaScript season scheduler, or moving HTML pages to a generated build pipeline.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `Hypotheses: a CSS split by responsibility will reduce future edit risk; keeping style.css as the import entrypoint will preserve GitHub Pages simplicity; ornament layers can add seasonal wonder without contaminating layout; progressive enhancement rules will keep experiments reversible.`,
+ `Negative controls: existing HTML links stay unchanged, route rendering stays visually equivalent after the no-behavior split, and reduced-motion users see no new motion burden.`,
+ `Demo sequence: load home, software, operator atlas, Pretext, play, and offline pages; compare before/after screenshots at mobile and desktop widths; disable cache/network after first load; enable reduced motion; then toggle a seasonal body/data feature and confirm only ornamental layer changes.`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does css-progressive-ornaments own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of css-progressive-ornaments?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether css-progressive-ornaments still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: The desired end state is a CSS architecture that keeps the GitHub Pages static deployment simple while making style ownership obvious: base…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

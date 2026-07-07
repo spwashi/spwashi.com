@@ -1,0 +1,75 @@
+# Plan Index — Voice Grounding Pass
+#
+# Make the core site introduction sound more like Spwashi and less like generalized AI-generated creator copy.
+
+#>plan_voice_grounding_pass_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Make the core site introduction sound more like Spwashi and less like generalized AI-generated creator copy.`
+ owner = `voice-grounding-pass`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@index: ~"../../../about/index.html"
+
+dispatch: .{
+ plan = @plan
+ index = @index
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-voice_grounding_pass-001"
+ layer = "pragmatic"
+ hypothesis = `Make the core site introduction sound more like Spwashi and less like generalized AI-generated creator copy.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../about/index.html"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../about/index.html unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `index.html`,
+  `about/index.html`,
+  `now/index.html`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `targeted rg checks for inserted phrases`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does voice-grounding-pass own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of voice-grounding-pass?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether voice-grounding-pass still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Make the core site introduction sound more like Spwashi and less like generalized AI-generated creator copy.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

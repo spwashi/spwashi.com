@@ -1,0 +1,91 @@
+# Plan Index — Explore Anatomy (B → C → D → A)
+#
+# Make page and component anatomy explorable sitewide: embedded route workshops for tinkering, an auto-built region rail for navigation, clearer lens vs form controls, and an…
+
+#>plan_explore_anatomy_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Make page and component anatomy explorable sitewide: embedded route workshops for tinkering, an auto-built region rail for navigation, clearer lens vs form controls, and an explicit explore posture decoupled from semantic density.`
+ owner = `explore-anatomy`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@embedded_workshop: ~"../../../public/css/components/embedded-workshop.css"
+@frame_controls: ~"../../../public/css/components/frame-controls.css"
+@public_css_handles_page_region_rail_css: ~"../../../public/css/handles/page-region-rail.css"
+@public_js_runtime_page_region_rail_js: ~"../../../public/js/runtime/page-region-rail.js"
+@site_settings_profiles: ~"../../../public/js/kernel/site-settings-profiles.js"
+@site_settings_engine: ~"../../../public/js/kernel/site-settings-engine.js"
+@shell_disclosure: ~"../../../public/js/runtime/shell-disclosure.js"
+@module_catalog: ~"../../../public/js/runtime/module-catalog.js"
+
+dispatch: .{
+ plan = @plan
+ embedded_workshop = @embedded_workshop
+ frame_controls = @frame_controls
+ public_css_handles_page_region_rail_css = @public_css_handles_page_region_rail_css
+ public_js_runtime_page_region_rail_js = @public_js_runtime_page_region_rail_js
+ site_settings_profiles = @site_settings_profiles
+ site_settings_engine = @site_settings_engine
+ shell_disclosure = @shell_disclosure
+ module_catalog = @module_catalog
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-explore_anatomy-001"
+ layer = "pragmatic"
+ hypothesis = `Make page and component anatomy explorable sitewide: embedded route workshops for tinkering, an auto-built region rail for navigation, clearer lens vs form controls, and an explicit explore posture decoupled from semantic density.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/css/components/embedded-workshop.css"
+ probe_ref = `npm run check:local`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/css/components/embedded-workshop.css unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `B — spw-embedded-workshop contract on topics, about, services (home pattern export).`,
+  `C — page-region-rail.js + page-region-rail.css (desktop region index from main semantics).`,
+  `D — frame-controls.css (lens vs form axes); slot markup on key landing frames.`,
+  `A — explorePosture setting (reading | field | workshop) drives data-spw-tuning-discoverability; shell cycle in Weather.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `npm run check:local`,
+ `node --check on new/edited JS`,
+ `git diff --check`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does explore-anatomy own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of explore-anatomy?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether explore-anatomy still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Make page and component anatomy explorable sitewide: embedded route workshops for tinkering, an auto-built region rail for navigation,…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

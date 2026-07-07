@@ -1,4 +1,8 @@
-# rpg-asset-capture-frames
+^"operational_hooks"{
+ selectors = #[ `.agents/plans/screenshot-semantics/PLAN.md`, `.agents/plans/rpg-asset-capture-frames/rpg-asset-capture-frames.spw`, ][reg=set]
+ probe_ref = `Hypotheses: players can stage a character or item in under a minute; screenshot mode produces a clean frame at mobile and desktop widths; unlockable motifs increase curiosity without blocking utility.`
+ owner_claim = ~"./index.spw#owner_claim"
+}[reg=facet]# rpg-asset-capture-frames
 # Distilled model for local RPG image assets, screenshot-ready card staging,
 # prompt helpers, and exploration-reward motifs.
 
@@ -6,6 +10,13 @@
 #:semantics #!surface
 #:layer #!pragmatics
 
+^"plan_linkage"{
+ plan = ~"./PLAN.md"
+ index = ~"./index.spw"
+ goal = `RPG Wednesday should let players upload local character, item, place, and artifact images, then stage those assets inside stable screenshot-friendly frames. The site is not responsible for automating capture or sending media to Midjourney, Grok, or any external service; it should prepare a well-designed local surface that players can screenshot manually and pair with a copyable prompt note. Taste note: improve usefulness, trust, and earned wonder. Customizations should feel like discovering more of the campaign interface, not like a generic gamified skin store.`
+ owner = `rpg-asset-capture-frames`
+ bucket = "active_backlog"
+}[reg=facet]
 ^["thesis"]{
  claim: "RPG Wednesday can become a local media staging table: players upload assets, frame them with campaign semantics, screenshot manually, and carry the result to external image or animation tools."
  why: "This preserves GitHub Pages simplicity and privacy while making the site useful as a pre-production surface for character, item, place, artifact, and threat imagery."

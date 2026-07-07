@@ -1,9 +1,31 @@
-# wip - media-publishing
-# Branch: main
-# Started: 2026-04-10
-
+# wip — media-publishing
+#
+#>plan_media_publishing_wip
+#:operation #!cache
+#:fixity #!tending
 #:layer #!pragmatics
 
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@plans_root: ~"../../../.agents/plans/index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+
+operation = "cache"
+fixity = "tending"
+
+^"selection_probes"{
+ probes = #[ `rg 'media-publishing' public/data/media-focus.json`, `Hypotheses: a visitor can see the current editorial focus and follow surfaced pages/topics/components.`, `test -f public/data/media-focus.json`, ][reg=set]
+ rule = "Run probes before trusting cached plan_context."
+}[reg=facet]
+
+^"plan_context"{
+ goal = `Create a lightweight publishing layer that can market and reference current site surfaces without introducing a build pipeline. The feature should let a JSON file configure weekly and daily focus, featured pages, featured topics, and featured components, then progressively render those into existing HTML frames. Taste note: improve clarity, inspectability, and editorial rhythm while preserving the static, hand-written site.`
+ owner = `media-publishing`
+ operation = "prime"
+ bucket = "active_backlog"
+ validation = #[ `Hypotheses: a visitor can see the current editorial focus and follow surfaced pages/topics/components.`, `Negative controls: existing frame navigation, console, settings, and RPG gameplay features continue loading.`, `Demo sequence: /, /about/website/, offline cache after service-worker update.`, ][reg=set]
+ hot_files = #[ `public/data/media-focus.json`, `public/js/site.js`, `about/website/index.html`, `public/css/style.css`, ][reg=set]
+}[reg=facet]
 ^["roots"]{
  @plan: ~".agents/plans/media-publishing/PLAN.md"
  @config: ~"public/data/media-focus.json"

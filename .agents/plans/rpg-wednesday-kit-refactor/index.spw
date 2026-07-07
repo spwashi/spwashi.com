@@ -1,0 +1,80 @@
+# Plan Index — rpg-wednesday-kit-refactor
+#
+# The local gameplay kit should feel like a stable live-session work surface instead of a long form with a few extra controls bolted on. During play, it should be easy to: - move…
+
+#>plan_rpg_wednesday_kit_refactor_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `The local gameplay kit should feel like a stable live-session work surface instead of a long form with a few extra controls bolted on. During play, it should be easy to: - move between scene, initiative, clocks, asset atlas, notes, and brief lanes - add or revise cards without hunting for the right field - keep the notes lane visible while the asset atlas grows - operate key session actions from the keyboard when hands are already on the laptop - extend the JavaScript later without treating one large route module as the only seam`
+ owner = `rpg-wednesday-kit-refactor`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@site: ~"../../../public/js/site.js"
+
+dispatch: .{
+ plan = @plan
+ site = @site
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-rpg_wednesday_kit_refactor-001"
+ layer = "pragmatic"
+ hypothesis = `The local gameplay kit should feel like a stable live-session work surface instead of a long form with a few extra controls bolted on. During play, it should be easy to: - move between scene, initiative, clocks, asset atlas, notes, and brief lanes - add or revise cards without hunting for the right field - keep the notes lane visible while the asset atlas grows - operate key session actions from the keyboard when hands are already on the laptop - extend the JavaScript later without treating one large route module as the only seam`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/js/site.js"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/site.js unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `In scope: route-local JavaScript modularization, keyboard navigation and action shortcuts, clearer asset-atlas empty and edit states, gameplay-grid layout changes, and concise UI copy that teaches the live workflow.`,
+ ][reg=set]
+ out = #[
+  `: backend sync, multiplayer state, automatic screenshots, Discord or TikTok integrations, or a full sitewide component-system rewrite.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `node --check public/js/rpg-wednesday.js`,
+ `node --check public/js/rpg-wednesday-state.js`,
+ `node --check public/js/rpg-wednesday-dom.js`,
+ `node --check public/js/rpg-wednesday-shortcuts.js`,
+ `npm run check`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does rpg-wednesday-kit-refactor own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of rpg-wednesday-kit-refactor?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether rpg-wednesday-kit-refactor still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: The local gameplay kit should feel like a stable live-session work surface instead of a long form with a few extra controls bolted on.…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

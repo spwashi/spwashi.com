@@ -1,0 +1,65 @@
+# Plan Index — mobile-image-effects
+#
+# Both failures are on the raster-image treatment path.
+
+#>plan_mobile_image_effects_index
+#:index #!plan
+#:operation #!audit
+#:layer #!pragmatics
+
+operation = "audit"
+fixity = "tending"
+
+intent: .{
+ goal = `Both failures are on the raster-image treatment path.`
+ owner = `mobile-image-effects`
+ kind = `fix`
+ bucket = `fix_queue`
+ artifact_shape = `FIX.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "observation | gesture"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "exchange"
+ memory_tier = "hot"
+ bucket = "fix_queue"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@fix: ~"./FIX.md"
+@metaphysical_paper: ~"../../../public/css/effects/metaphysical-paper.css"
+@image_metaphysics: ~"../../../public/js/media/image-metaphysics.js"
+@wip: ~"../../../.agents/plans/unsorted-image-rollout/wip.spw"
+
+dispatch: .{
+ fix = @fix
+ metaphysical_paper = @metaphysical_paper
+ image_metaphysics = @image_metaphysics
+ wip = @wip
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-mobile_image_effects-001"
+ layer = "pragmatic"
+ hypothesis = `Both failures are on the raster-image treatment path.`
+ spec_ref = ~"./FIX.md"
+ impl_ref = ~"../../../public/css/effects/metaphysical-paper.css"
+ probe_ref = `rg 'mobile-image-effects' .agents/plans/mobile-image-effects`
+ falsification = `The listed failure mode returns after the planned fix lands.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does mobile-image-effects own, and what should stay out of scope?`, see = @fix }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of mobile-image-effects?`, see = @index }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Both failures are on the raster-image treatment path.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

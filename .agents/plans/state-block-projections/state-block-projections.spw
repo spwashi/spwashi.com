@@ -1,5 +1,17 @@
-#>state_block_projection
+^"operational_hooks"{
+ selectors = #[ `public/js/site.js`, `.agents/plans/state-block-projections/state-block-projections.spw`, ][reg=set]
+ probe_ref = `Hypotheses: small code-like state blocks will make component state easier to read and will deepen the interaction grammar when tokens mutate real underlying state`
+ owner_claim = ~"./index.spw#owner_claim"
+}[reg=facet]#>state_block_projection
 #:layer #!interaction
+
+^"plan_linkage"{
+ plan = ~"./PLAN.md"
+ index = ~"./index.spw"
+ goal = `The site should expose more of its live state through its own notation instead of explaining interaction only in prose. Small code-like state blocks should summarize what a component can currently do, and on selected surfaces they should let the visitor cycle operator, brace, mode, or value state directly from the block itself. The taste note is clarity + expressiveness: the blocks should feel like useful diagnostic surfaces, not novelty stickers, and they should only mutate state that the underlying component already owns.`
+ owner = `state-block-projections`
+ bucket = "active_backlog"
+}[reg=facet]
 
 ^"thesis"{
   claim: "A state block should reveal a real mutation surface, not simulate one."

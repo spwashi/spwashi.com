@@ -1,0 +1,91 @@
+# Plan Index — rpg-playable-copy
+#
+# Make the site’s public entry points feel like they belong to a recurring play system instead of a loose set of lore pages. The current Wednesday cadence should be legible as a…
+
+#>plan_rpg_playable_copy_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Make the site’s public entry points feel like they belong to a recurring play system instead of a loose set of lore pages. The current Wednesday cadence should be legible as a release rhythm: a visitor should understand where to start, how to seed a session, where the log lives, and how the Town Library and related routes support play rather than just describing it. The copy should stay grounded in the creator identity and the existing site voice. The aim is not to make everything fantasy-themed. It is to make the site more playable, more replayable, and easier to enter from the home page or the RPG Wednesday routes.`
+ owner = `rpg-playable-copy`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@play: ~"../../../play/"
+@rpg_wednesday: ~"../../../play/rpg-wednesday/"
+@sessions: ~"../../../play/rpg-wednesday/sessions/"
+@play_rpg_wednesday_index_html: ~"../../../play/rpg-wednesday/index.html"
+@play_rpg_wednesday_sessions_index_html: ~"../../../play/rpg-wednesday/sessions/index.html"
+@play_rpg_wednesday_library_index_html: ~"../../../play/rpg-wednesday/library/index.html"
+@about_index_html: ~"../../../about/index.html"
+@settings_index_html: ~"../../../settings/index.html"
+
+dispatch: .{
+ plan = @plan
+ play = @play
+ rpg_wednesday = @rpg_wednesday
+ sessions = @sessions
+ play_rpg_wednesday_index_html = @play_rpg_wednesday_index_html
+ play_rpg_wednesday_sessions_index_html = @play_rpg_wednesday_sessions_index_html
+ play_rpg_wednesday_library_index_html = @play_rpg_wednesday_library_index_html
+ about_index_html = @about_index_html
+ settings_index_html = @settings_index_html
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-rpg_playable_copy-001"
+ layer = "pragmatic"
+ hypothesis = `Make the site’s public entry points feel like they belong to a recurring play system instead of a loose set of lore pages. The current Wednesday cadence should be legible as a release rhythm: a visitor should understand where to start, how to seed a session, where the log lives, and how the Town Library and related routes support play rather than just describing it. The copy should stay grounded in the creator identity and the existing site voice. The aim is not to make everything fantasy-themed. It is to make the site more playable, more replayable, and easier to enter from the home page or the RPG Wednesday routes.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../play/"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../play/ unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `In scope: public copy on the home page, play/ hub, play/rpg-wednesday/, play/rpg-wednesday/sessions/, and the Town Library gateway where that language can help the play model.`,
+  `In scope: small metadata or route-label adjustments if they clarify the play surface.`,
+  `In scope: a light release-day cue tied to the 13th/26th cadence already present in the campaign structure.`,
+  `-`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `targeted rg checks for updated RPG Wednesday phrases and release-day language`,
+ `browser spot check on the home and RPG Wednesday routes if the hierarchy changes`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does rpg-playable-copy own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of rpg-playable-copy?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether rpg-playable-copy still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Make the site’s public entry points feel like they belong to a recurring play system instead of a loose set of lore pages. The current…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

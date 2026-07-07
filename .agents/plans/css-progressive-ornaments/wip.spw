@@ -1,9 +1,31 @@
-# wip - css-progressive-ornaments
-# Branch: feature/css-progressive-ornaments
-# Started: 2026-04-09
-
+# wip — css-progressive-ornaments
+#
+#>plan_css_progressive_ornaments_wip
+#:operation #!cache
+#:fixity #!tending
 #:layer #!pragmatics
 
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@plans_root: ~"../../../.agents/plans/index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+
+operation = "cache"
+fixity = "tending"
+
+^"selection_probes"{
+ probes = #[ `rg 'css-progressive-ornaments' public/css/style.css`, `Hypotheses: a CSS split by responsibility will reduce future edit risk; keeping style.css as the import entrypoint will preserve GitHub Pages simplicity; ornament layers can add seasonal wonder without contaminating layout; progressive enhancement rules will keep experiments reversible.`, `test -f public/css/style.css`, ][reg=set]
+ rule = "Run probes before trusting cached plan_context."
+}[reg=facet]
+
+^"plan_context"{
+ goal = `The desired end state is a CSS architecture that keeps the GitHub Pages static deployment simple while making style ownership obvious: base page shell, Spw semantic components, runtime chrome, page surfaces, progressive enhancements, and seasonal ornaments should each have a clear home. The first implementation should be a no-behavior split that preserves the existing <link href="/public/css/style.css?v=0.0.2"> contract. The taste note is calm core, summoned delight: seasonal features and ornaments may add wonder, but they must never become required for navigation, readability, accessibility, or layout stability.`
+ owner = `css-progressive-ornaments`
+ operation = "prime"
+ bucket = "active_backlog"
+ validation = #[ `Hypotheses: a CSS split by responsibility will reduce future edit risk; keeping style.css as the import entrypoint will preserve GitHub Pages simplicity; ornament layers can add seasonal wonder without contaminating layout; progressive enhancement rules will keep experiments reversible.`, `Negative controls: existing HTML links stay unchanged, route rendering stays visually equivalent after the no-behavior split, and reduced-motion users see no new motion burden.`, `Demo sequence: load home, software, operator atlas, Pretext, play, and offline pages; compare before/after screenshots at mobile and desktop widths; disable cache/network after first load; enable reduced motion; then toggle a seasonal body/data feature and confirm only ornamental layer changes.`, ][reg=set]
+ hot_files = #[ `public/css/style.css`, `topics/software/index.html`, `topics/software/pretext/index.html`, `.spw/conventions/site-semantics.spw`, `.agents/plans/css-progressive-ornaments/PLAN.md`, `.agents/plans/css-progressive-ornaments/wip.spw`, ][reg=set]
+}[reg=facet]
 ^["roots"]{
  @plan: ~".agents/plans/css-progressive-ornaments/PLAN.md"
  @artifact: ~".agents/plans/css-progressive-ornaments/css-progressive-ornaments.spw"

@@ -1,0 +1,63 @@
+# Plan Index — Floating Chrome Stack
+#
+# Add docked as the persistent-but-below-header tier.
+
+#>plan_floating_chrome_stack_index
+#:index #!plan
+#:operation #!audit
+#:layer #!pragmatics
+
+operation = "audit"
+fixity = "tending"
+
+intent: .{
+ goal = `Add docked as the persistent-but-below-header tier.`
+ owner = `floating-chrome-stack`
+ kind = `fix`
+ bucket = `fix_queue`
+ artifact_shape = `FIX.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "observation | gesture"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "exchange"
+ memory_tier = "hot"
+ bucket = "fix_queue"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@fix: ~"./FIX.md"
+
+dispatch: .{
+ fix = @fix
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-floating_chrome_stack-001"
+ layer = "pragmatic"
+ hypothesis = `Add docked as the persistent-but-below-header tier.`
+ spec_ref = ~"./FIX.md"
+ impl_ref = ~"./PLAN.md"
+ probe_ref = `rg 'floating-chrome-stack' .agents/plans/floating-chrome-stack`
+ falsification = `The listed failure mode returns after the planned fix lands.`
+ status = "active"
+}[reg=facet]
+
+next_action: .{
+ step = `Add docked as the persistent-but-below-header tier.`
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does floating-chrome-stack own, and what should stay out of scope?`, see = @fix }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of floating-chrome-stack?`, see = @index }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Add docked as the persistent-but-below-header tier.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

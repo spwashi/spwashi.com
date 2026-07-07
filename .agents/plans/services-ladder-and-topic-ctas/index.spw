@@ -1,0 +1,63 @@
+# Plan Index — Services Ladder And Topic CTAs
+#
+# Reshape the public services ladder around smaller honest entry points, synchronize pricing language with the configurator and budgeting tool, and add context-specific CTA paths on…
+
+#>plan_services_ladder_and_topic_ctas_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Reshape the public services ladder around smaller honest entry points, synchronize pricing language with the configurator and budgeting tool, and add context-specific CTA paths on nearby routes.`
+ owner = `services-ladder-and-topic-ctas`
+ kind = `plan`
+ bucket = `public_route_proof_genre`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "public_route_proof_genre"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@configurator: ~"../../../public/js/modules/services/configurator.js"
+@budgeting: ~"../../../public/js/modules/tools/budgeting.js"
+
+dispatch: .{
+ plan = @plan
+ configurator = @configurator
+ budgeting = @budgeting
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-services_ladder_and_topic_ctas-001"
+ layer = "pragmatic"
+ hypothesis = `Reshape the public services ladder around smaller honest entry points, synchronize pricing language with the configurator and budgeting tool, and add context-specific CTA paths on nearby routes.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/js/modules/services/configurator.js"
+ probe_ref = `rg 'services-ladder-and-topic-ctas' .agents/plans/services-ladder-and-topic-ctas`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/modules/services/configurator.js unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does services-ladder-and-topic-ctas own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of services-ladder-and-topic-ctas?`, see = @index }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Reshape the public services ladder around smaller honest entry points, synchronize pricing language with the configurator and budgeting…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

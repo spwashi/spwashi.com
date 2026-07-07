@@ -1,9 +1,31 @@
 # wip — media-feature-brief
-# Branch: main
-# Started: 2026-04-10
-
+#
+#>plan_media_feature_brief_wip
+#:operation #!cache
+#:fixity #!tending
 #:layer #!pragmatics
 
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@plans_root: ~"../../../.agents/plans/index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+
+operation = "cache"
+fixity = "tending"
+
+^"selection_probes"{
+ probes = #[ `rg 'media-feature-brief' .agents/plans/media-feature-brief/media-feature-brief.spw`, `Confirm the new route and all added links use root-relative paths.`, `test -f .agents/plans/media-feature-brief/media-feature-brief.spw`, ][reg=set]
+ rule = "Run probes before trusting cached plan_context."
+}[reg=facet]
+
+^"plan_context"{
+ goal = `The site has accumulated a PWA shell, Spw operator routes, frame navigation, console affordances, Pretext experiments, and a developing metaphysics of cognitive surfaces. This plan adds a concise public communication surface so media enthusiasts can understand what to notice and where to explore without needing to read the implementation notes first. Taste note: improve clarity and expressiveness while preserving the hand-authored, calm-at-rest site voice.`
+ owner = `media-feature-brief`
+ operation = "prime"
+ bucket = "active_backlog"
+ validation = #[ `Confirm the new route and all added links use root-relative paths.`, `Confirm manifest.webmanifest remains valid JSON.`, `Confirm .spw syntax passes the workbench lint gate if available.`, `Confirm git diff --check reports no whitespace errors.`, ][reg=set]
+ hot_files = #[ `.agents/plans/media-feature-brief/media-feature-brief.spw`, ][reg=set]
+}[reg=facet]
 ^["roots"]{
  @plan: ~".agents/plans/media-feature-brief/PLAN.md"
  @artifact: ~".agents/plans/media-feature-brief/media-feature-brief.spw"

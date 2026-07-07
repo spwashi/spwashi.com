@@ -1,0 +1,79 @@
+# Plan Index — screenshot-semantics
+#
+# The desired end state is a site where a screenshot at any moment captures something worth keeping: current address, liminality phase, operator grammar engaged, and the journey…
+
+#>plan_screenshot_semantics_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `The desired end state is a site where a screenshot at any moment captures something worth keeping: current address, liminality phase, operator grammar engaged, and the journey fragment that led here. This requires selection and priming semantics that survive without runtime context — visual markers legible in a still image, not just in an interactive session. The artist use case drives this: someone who screenshots a good idea, marks a moment of developed thinking, or collects a token from an interesting journey through a cognitive surface. A well-primed screenshot should communicate what kind of surface this is, what is being examined, and how deeply the visit has gone. The taste note is legible capture + journey memory: every meaningful state should be screenshot-worthy, and the screenshot should be able to suggest how the state was reached.`
+ owner = `screenshot-semantics`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | screenshot-semantics.spw | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@screenshot_semantics: ~"./screenshot-semantics.spw"
+
+dispatch: .{
+ plan = @plan
+ wip = @wip
+ screenshot_semantics = @screenshot_semantics
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-screenshot_semantics-001"
+ layer = "pragmatic"
+ hypothesis = `The desired end state is a site where a screenshot at any moment captures something worth keeping: current address, liminality phase, operator grammar engaged, and the journey fragment that led here. This requires selection and priming semantics that survive without runtime context — visual markers legible in a still image, not just in an interactive session. The artist use case drives this: someone who screenshots a good idea, marks a moment of developed thinking, or collects a token from an interesting journey through a cognitive surface. A well-primed screenshot should communicate what kind of surface this is, what is being examined, and how deeply the visit has gone. The taste note is legible capture + journey memory: every meaningful state should be screenshot-worthy, and the screenshot should be able to suggest how the state was reached.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../.agents/plans/screenshot-semantics/screenshot-semantics.spw"
+ probe_ref = `Hypotheses: persistent data attributes and CSS-driven selection states will make screenshots legible without runtime context; priming states will be achievable through all input modes; journey tokens will feel like earned marks rather than tracking labels.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../.agents/plans/screenshot-semantics/screenshot-semantics.spw unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `In scope: priming semantics (how pre-selection attention is visualized without hover), selection state visual persistence (what carries meaning in a still image), journey token design (what a captured state communicates about its path), data attributes and CSS that carry state legibly without JavaScript, screenshottable state taxonomy, and visual markers for liminality, selection, and operator engagement.`,
+ ][reg=set]
+ out = #[
+  `: screenshot automation, social sharing infrastructure, server-side rendering, persistent screenshot storage, or URL-encoded state reconstruction beyond what simple hashes already support.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `Hypotheses: persistent data attributes and CSS-driven selection states will make screenshots legible without runtime context; priming states will be achievable through all input modes; journey tokens will feel like earned marks rather than tracking labels.`,
+ `Negative controls: calm default state remains undisturbed; no new JavaScript required for basic state legibility.`,
+ `Demo sequence: navigate to a named frame via keyboard, screenshot; address an operator card via touch, screenshot; reach a nested liminality state on the software page, screenshot — compare all three for information density and legibility without explanatory text.`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does screenshot-semantics own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of screenshot-semantics?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether screenshot-semantics still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: The desired end state is a site where a screenshot at any moment captures something worth keeping: current address, liminality phase,…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

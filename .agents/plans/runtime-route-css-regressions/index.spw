@@ -1,0 +1,67 @@
+# Plan Index — runtime-route-css-regressions
+#
+# The runtime bootstrap regressed during the visitation/image pass: site.js was wired to a module that never landed.
+
+#>plan_runtime_route_css_regressions_index
+#:index #!plan
+#:operation #!audit
+#:layer #!pragmatics
+
+operation = "audit"
+fixity = "tending"
+
+intent: .{
+ goal = `The runtime bootstrap regressed during the visitation/image pass: site.js was wired to a module that never landed.`
+ owner = `runtime-route-css-regressions`
+ kind = `fix`
+ bucket = `fix_queue`
+ artifact_shape = `FIX.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "observation | gesture"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "exchange"
+ memory_tier = "hot"
+ bucket = "fix_queue"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@fix: ~"./FIX.md"
+@topics_software_compilers_index_html: ~"../../../topics/software/compilers/index.html"
+@topics_software_distributed_index_html: ~"../../../topics/software/distributed/index.html"
+@topics_software_compression_index_html: ~"../../../topics/software/compression/index.html"
+@topics_software_schedulers_index_html: ~"../../../topics/software/schedulers/index.html"
+
+dispatch: .{
+ fix = @fix
+ topics_software_compilers_index_html = @topics_software_compilers_index_html
+ topics_software_distributed_index_html = @topics_software_distributed_index_html
+ topics_software_compression_index_html = @topics_software_compression_index_html
+ topics_software_schedulers_index_html = @topics_software_schedulers_index_html
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-runtime_route_css_regressions-001"
+ layer = "pragmatic"
+ hypothesis = `The runtime bootstrap regressed during the visitation/image pass: site.js was wired to a module that never landed.`
+ spec_ref = ~"./FIX.md"
+ impl_ref = ~"../../../topics/software/compilers/index.html"
+ probe_ref = `rg 'runtime-route-css-regressions' .agents/plans/runtime-route-css-regressions`
+ falsification = `The listed failure mode returns after the planned fix lands.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does runtime-route-css-regressions own, and what should stay out of scope?`, see = @fix }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of runtime-route-css-regressions?`, see = @index }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: The runtime bootstrap regressed during the visitation/image pass: site.js was wired to a module that never landed.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

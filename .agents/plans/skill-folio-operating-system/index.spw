@@ -1,0 +1,67 @@
+# Plan Index — Skill-Folio Operating System
+#
+# Update spwashi.com into a clearer public surface for skill development, artifact processing, visual systems, and community-rooted creative practice.
+
+#>plan_skill_folio_operating_system_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Update spwashi.com into a clearer public surface for skill development, artifact processing, visual systems, and community-rooted creative practice.`
+ owner = `skill-folio-operating-system`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@index: ~"../../../design/folios/index.html"
+@site: ~"../../../.spw/site.spw"
+@product_lines: ~"../../../.spw/surfaces/product-lines.spw"
+
+dispatch: .{
+ plan = @plan
+ wip = @wip
+ index = @index
+ site = @site
+ product_lines = @product_lines
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-skill_folio_operating_system-001"
+ layer = "pragmatic"
+ hypothesis = `Update spwashi.com into a clearer public surface for skill development, artifact processing, visual systems, and community-rooted creative practice.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../design/folios/index.html"
+ probe_ref = `rg 'skill-folio-operating-system' .agents/plans/skill-folio-operating-system`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../design/folios/index.html unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does skill-folio-operating-system own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of skill-folio-operating-system?`, see = @index }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Update spwashi.com into a clearer public surface for skill development, artifact processing, visual systems, and community-rooted creative…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

@@ -1,0 +1,69 @@
+# Plan Index — Spell + Cauldron Microinteractions
+#
+# Make the cauldron feel like a working vessel and spells feel like composed, inspectable outputs. text term / card / route / image -> prime -> collect in cauldron -> compose spell…
+
+#>plan_spell_cauldron_microinteractions_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Make the cauldron feel like a working vessel and spells feel like composed, inspectable outputs. text term / card / route / image -> prime -> collect in cauldron -> compose spell -> publish / copy / route / proof`
+ owner = `spell-cauldron-microinteractions`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@plan_spellcraft_authoring: ~"./spellcraft-authoring/index.spw"
+
+dispatch: .{
+ plan = @plan
+ plan_spellcraft_authoring = @plan_spellcraft_authoring
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-spell_cauldron_microinteractions-001"
+ layer = "pragmatic"
+ hypothesis = `Make the cauldron feel like a working vessel and spells feel like composed, inspectable outputs. text term / card / route / image -> prime -> collect in cauldron -> compose spell -> publish / copy / route / proof`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"./PLAN.md"
+ probe_ref = `node --check public/js/interface/composition.js`
+ falsification = `A patch cannot satisfy the public goal while leaving ./PLAN.md unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+validation: #[
+ `node --check public/js/interface/composition.js`,
+ `node --check public/js/interface/haptics.js`,
+ `git diff --check`,
+ `npm run check:local`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does spell-cauldron-microinteractions own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of spell-cauldron-microinteractions?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether spell-cauldron-microinteractions still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Make the cauldron feel like a working vessel and spells feel like composed, inspectable outputs. text term / card / route / image -> prime…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

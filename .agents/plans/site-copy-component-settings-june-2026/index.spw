@@ -1,0 +1,82 @@
+# Plan Index — Site Copy, Component Diversity, Conceptual Depth, Screenshot Value, and Settings UX/Architecture (June 2026)
+#
+# Freshen and deepen site copy for June while improving component variety, conceptual clarity, topical discoverability (especially curriculum, operators, measurement, priming), the…
+
+#>plan_site_copy_component_settings_june_2026_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Freshen and deepen site copy for June while improving component variety, conceptual clarity, topical discoverability (especially curriculum, operators, measurement, priming), the value of screenshots for different page regions, and the settings surface as the primary control + learning layer for the site's operational semantics, developmental climate, and new contracts. This continues the "living learning surface" direction: the site should feel more alive, more useful for active engagement (priming, measuring, studying), and more inspectable/coherent for both humans and agents.`
+ owner = `site-copy-component-settings-june-2026`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+
+dispatch: .{
+ plan = @plan
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-site_copy_component_settings_june_2026-001"
+ layer = "pragmatic"
+ hypothesis = `Freshen and deepen site copy for June while improving component variety, conceptual clarity, topical discoverability (especially curriculum, operators, measurement, priming), the value of screenshots for different page regions, and the settings surface as the primary control + learning layer for the site's operational semantics, developmental climate, and new contracts. This continues the "living learning surface" direction: the site should feel more alive, more useful for active engagement (priming, measuring, studying), and more inspectable/coherent for both humans and agents.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"./PLAN.md"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ./PLAN.md unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `In scope (smallest honest surfaces first):`,
+  `Copy freshening on high-traffic entry points (home, Town Library, curriculum, about, settings) for June voice, priming UX value, and ties to recent operational semantics (operators as handles, subjective/objective measures, curriculum as active practice).`,
+  `Component diversity: vary usage of frames/panels/cards, living-terms, operator chips, tuning widgets, semantic expressions without new wrappers or bloat.`,
+  `Conceptual depth & discoverability: strengthen links, explanations, and data-spw-* attributes that surface curriculum, operator projections, measurement contract, priming gestures.`,
+ ][reg=set]
+ out = #[
+  `Large new features or routes.`,
+  `New npm packages.`,
+  `Reordering CSS layers or major refactors (use existing patterns).`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `rg for new/updated data-spw-*, links to /curriculum/, operator chips, measure references`,
+ `Manual review of varied screenshot regions`,
+ `Settings page walkthrough for UX friction`,
+ `No new dependencies or layer reordering`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does site-copy-component-settings-june-2026 own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of site-copy-component-settings-june-2026?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether site-copy-component-settings-june-2026 still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Freshen and deepen site copy for June while improving component variety, conceptual clarity, topical discoverability (especially…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

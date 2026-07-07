@@ -1,0 +1,81 @@
+# Plan Index — vibe-setting-widgets
+#
+# The desired end state is a settings route that begins with obvious, high-impact choices and immediate feedback instead of reading like a registry dump. Small reusable widgets…
+
+#>plan_vibe_setting_widgets_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `The desired end state is a settings route that begins with obvious, high-impact choices and immediate feedback instead of reading like a registry dump. Small reusable widgets should also appear on flagship routes so visitors can tune their own experience in context rather than only on /settings/. Taste note: improve clarity, expressiveness, and layering while keeping the controls honest, accessible, and visibly connected to the runtime.`
+ owner = `vibe-setting-widgets`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@settings_index_html: ~"../../../settings/index.html"
+@play_rpg_wednesday_index_html: ~"../../../play/rpg-wednesday/index.html"
+
+dispatch: .{
+ plan = @plan
+ wip = @wip
+ settings_index_html = @settings_index_html
+ play_rpg_wednesday_index_html = @play_rpg_wednesday_index_html
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-vibe_setting_widgets-001"
+ layer = "pragmatic"
+ hypothesis = `The desired end state is a settings route that begins with obvious, high-impact choices and immediate feedback instead of reading like a registry dump. Small reusable widgets should also appear on flagship routes so visitors can tune their own experience in context rather than only on /settings/. Taste note: improve clarity, expressiveness, and layering while keeping the controls honest, accessible, and visibly connected to the runtime.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../settings/index.html"
+ probe_ref = `Hypotheses: a reader should be able to change a high-level vibe choice near the top of /settings/ or from a route-local widget and immediately see active-state and readout changes without reloading.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../settings/index.html unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `In scope: make declarative setting triggers work cleanly outside form scopes, add a reusable variant-widget pattern with active-state/readout feedback, reorder /settings/ around experiential controls before technical inspection, and seed mini vibe widgets on the home, software, and math routes.`,
+ ][reg=set]
+ out = #[
+  `: redesign every route, add new settings beyond what already exists, rewrite unrelated runtime modules, or touch unrelated worktree drift in shared CSS and play surfaces.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `Hypotheses: a reader should be able to change a high-level vibe choice near the top of /settings/ or from a route-local widget and immediately see active-state and readout changes without reloading.`,
+ `Negative controls: existing presets, field validation, and pages without the new widgets should keep current behavior.`,
+ `Demo sequence: open /settings/, change color/palette/wonder-memory variants from the new top-level widget surfaces, confirm applied-state updates, then visit /, /topics/software/, and /topics/math/ to adjust those same settings from local mini widgets.`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does vibe-setting-widgets own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of vibe-setting-widgets?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether vibe-setting-widgets still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: The desired end state is a settings route that begins with obvious, high-impact choices and immediate feedback instead of reading like a…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

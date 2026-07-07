@@ -1,0 +1,85 @@
+# Plan Index — image-visit-metaphysics
+#
+# The desired end state is an image system that behaves like the rest of the site: effects come from semantics, not randomness. Conceptual surfaces can feel distant or unresolved,…
+
+#>plan_image_visit_metaphysics_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `The desired end state is an image system that behaves like the rest of the site: effects come from semantics, not randomness. Conceptual surfaces can feel distant or unresolved, hybrid surfaces can feel latent or aqueous, and realized surfaces can feel more settled and paper-sharp. Holding an image or SVG should mark it as visited, reward the reader with a persistent glow, and preserve that attention as a returnable memory rather than a transient hover flourish. The taste note is wonder with legibility: the interaction should stay playful, but every glow, blur, and helper handle should explain something about the surface rather than merely decorating it.`
+ owner = `image-visit-metaphysics`
+ kind = `plan`
+ bucket = `media_image_sensory`
+ artifact_shape = `PLAN.md | wip.spw | image-visit-metaphysics.spw | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "media_image_sensory"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@image_visit_metaphysics: ~"./image-visit-metaphysics.spw"
+@site: ~"../../../public/js/site.js"
+@style: ~"../../../public/css/style.css"
+@index: ~"../../../topics/software/compression/index.html"
+
+dispatch: .{
+ plan = @plan
+ wip = @wip
+ image_visit_metaphysics = @image_visit_metaphysics
+ site = @site
+ style = @style
+ index = @index
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-image_visit_metaphysics-001"
+ layer = "pragmatic"
+ hypothesis = `The desired end state is an image system that behaves like the rest of the site: effects come from semantics, not randomness. Conceptual surfaces can feel distant or unresolved, hybrid surfaces can feel latent or aqueous, and realized surfaces can feel more settled and paper-sharp. Holding an image or SVG should mark it as visited, reward the reader with a persistent glow, and preserve that attention as a returnable memory rather than a transient hover flourish. The taste note is wonder with legibility: the interaction should stay playful, but every glow, blur, and helper handle should explain something about the surface rather than merely decorating it.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/js/site.js"
+ probe_ref = `Hypotheses: semantic treatments will feel more intentional than randomized hover effects; hold-to-visit will create a clearer memory ritual than click toggles; a persistent visited glow will make returnable image surfaces legible across pages.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/site.js unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `In scope: semantic image treatment mapping; hold-to-visit interaction; persistent visited glow for raster and SVG surfaces; a compact helper operator for image surfaces; localStorage persistence; thoughtful integration on existing image-bearing routes already in progress.`,
+ ][reg=set]
+ out = #[
+  `: global asset generation, server-backed gating, blanket image insertion across the whole site, changes to PWA icons or OG assets, and any rewrite of the broader CSS architecture.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `Hypotheses: semantic treatments will feel more intentional than randomized hover effects; hold-to-visit will create a clearer memory ritual than click toggles; a persistent visited glow will make returnable image surfaces legible across pages.`,
+ `Negative controls: icons, OG metadata assets, and ordinary inline images should remain untouched; image surfaces should not shift layout when the helper or visited state appears.`,
+ `Demo sequence: load a page with raster and SVG surfaces, hover to preview treatment, hold to mark visited, reload, and confirm that the glow and helper state restore without changing page layout.`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does image-visit-metaphysics own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of image-visit-metaphysics?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether image-visit-metaphysics still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: The desired end state is an image system that behaves like the rest of the site: effects come from semantics, not randomness. Conceptual…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

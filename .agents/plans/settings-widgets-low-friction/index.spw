@@ -1,0 +1,75 @@
+# Plan Index — Pervasive Low-Friction Interactive Settings Widgets (Palette + Broader Tuning Clusters)
+#
+# Slug: settings-widgets-low-friction
+
+#>plan_settings_widgets_low_friction_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Slug: settings-widgets-low-friction`
+ owner = `settings-widgets-low-friction`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@tuning: ~"../../../public/css/systems/surfaces/tuning.css"
+@design_palettes_index_html: ~"../../../design/palettes/index.html"
+@settings_index_html: ~"../../../settings/index.html"
+@topics_software_index_html: ~"../../../topics/software/index.html"
+@design_components_index_html: ~"../../../design/components/index.html"
+@design_density_index_html: ~"../../../design/density/index.html"
+@design: ~"../../../design/"
+@about_index_html: ~"../../../about/index.html"
+
+dispatch: .{
+ plan = @plan
+ tuning = @tuning
+ design_palettes_index_html = @design_palettes_index_html
+ settings_index_html = @settings_index_html
+ topics_software_index_html = @topics_software_index_html
+ design_components_index_html = @design_components_index_html
+ design_density_index_html = @design_density_index_html
+ design = @design
+ about_index_html = @about_index_html
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-settings_widgets_low_friction-001"
+ layer = "pragmatic"
+ hypothesis = `Slug: settings-widgets-low-friction`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/css/systems/surfaces/tuning.css"
+ probe_ref = `rg 'settings-widgets-low-friction' .agents/plans/settings-widgets-low-friction`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/css/systems/surfaces/tuning.css unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does settings-widgets-low-friction own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of settings-widgets-low-friction?`, see = @index }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Slug: settings-widgets-low-friction`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

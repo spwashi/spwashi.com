@@ -1,0 +1,91 @@
+# Plan Index — blog-input-interpreter
+#
+# Create a framework-free /blog/ route that is useful before there is a full archive. The first version lets a visitor paste draft text, Spw fragments, or wonder notes and receive a…
+
+#>plan_blog_input_interpreter_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Create a framework-free /blog/ route that is useful before there is a full archive. The first version lets a visitor paste draft text, Spw fragments, or wonder notes and receive a local interpretation: title suggestion, summary, tags, questions, outline, stats, and a copyable Spw-style draft seed. Taste note: the blog should feel like an editorial workbench and a permission structure for noticing, not a generic feed or an AI demo. The deeper goal is to establish the blog as the public writing pipeline for the site: - Raw input becomes a structured draft. - Spw operators can act as temporary scaffolds for thought without replacing prose. - Wonder stays present as a serious input, not decoration. - Some interpreted drafts should mature into durable blog blobs before they become posts. - Structured drafts can later become hand-written static posts. - The interpreter explains what it inferred instead of pretending to know. - The privacy boundary stays obvious: local interpretation first, no network dependency by default.`
+ owner = `blog-input-interpreter`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | blog-input-interpreter.spw | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@blog_input_interpreter: ~"./blog-input-interpreter.spw"
+@plan_blog_blob_spw: ~"./blog-blob-spw/index.spw"
+@plan_copy_localization: ~"./copy-localization/index.spw"
+@site: ~"../../../public/js/site.js"
+@style: ~"../../../public/css/style.css"
+@agents_plans_blog_blob_spw_plan_md: ~"../../../.agents/plans/blog-blob-spw/PLAN.md"
+@agents_plans_copy_localization_plan_md: ~"../../../.agents/plans/copy-localization/PLAN.md"
+
+dispatch: .{
+ plan = @plan
+ wip = @wip
+ blog_input_interpreter = @blog_input_interpreter
+ plan_blog_blob_spw = @plan_blog_blob_spw
+ plan_copy_localization = @plan_copy_localization
+ site = @site
+ style = @style
+ agents_plans_blog_blob_spw_plan_md = @agents_plans_blog_blob_spw_plan_md
+ agents_plans_copy_localization_plan_md = @agents_plans_copy_localization_plan_md
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-blog_input_interpreter-001"
+ layer = "pragmatic"
+ hypothesis = `Create a framework-free /blog/ route that is useful before there is a full archive. The first version lets a visitor paste draft text, Spw fragments, or wonder notes and receive a local interpretation: title suggestion, summary, tags, questions, outline, stats, and a copyable Spw-style draft seed. Taste note: the blog should feel like an editorial workbench and a permission structure for noticing, not a generic feed or an AI demo. The deeper goal is to establish the blog as the public writing pipeline for the site: - Raw input becomes a structured draft. - Spw operators can act as temporary scaffolds for thought without replacing prose. - Wonder stays present as a serious input, not decoration. - Some interpreted drafts should mature into durable blog blobs before they become posts. - Structured drafts can later become hand-written static posts. - The interpreter explains what it inferred instead of pretending to know. - The privacy boundary stays obvious: local interpretation first, no network dependency by default.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/js/site.js"
+ probe_ref = `A pasted draft produces a title, summary, tags, questions, outline, and draft seed.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/site.js unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+validation: #[
+ `A pasted draft produces a title, summary, tags, questions, outline, and draft seed.`,
+ `A pasted wonder note or Spw fragment produces prompts that help turn it into readable language.`,
+ `The route explains local-only behavior clearly enough that a visitor understands the privacy boundary.`,
+ `The blog nav addition remains usable on mobile.`,
+ `Existing optional features still initialize.`,
+ `Static pages remain readable without the blog JS.`,
+][reg=set]
+
+open_questions: #[
+ .{ ask = `Should future published posts be hand-authored HTML only, or should Spw seeds become the canonical source?` }[reg=facet],
+ .{ ask = `Should the interpreter eventually emit a blog-blob scaffold in addition to the compact seed?` }[reg=facet],
+ .{ ask = `Should draft text ever persist locally, or should v1 intentionally avoid storage?` }[reg=facet],
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does blog-input-interpreter own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of blog-input-interpreter?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether blog-input-interpreter still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Create a framework-free /blog/ route that is useful before there is a full archive. The first version lets a visitor paste draft text, Spw…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

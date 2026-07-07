@@ -1,9 +1,31 @@
-# wip - cinematic-handles
-# Branch: feature/cinematic-handles
-# Started: 2026-04-09
-
+# wip — cinematic-handles
+#
+#>plan_cinematic_handles_wip
+#:operation #!cache
+#:fixity #!tending
 #:layer #!pragmatics
 
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@plans_root: ~"../../../.agents/plans/index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+
+operation = "cache"
+fixity = "tending"
+
+^"selection_probes"{
+ probes = #[ `rg 'cinematic-handles' .agents/plans/cinematic-handles/cinematic-handles.spw`, `Hypotheses: named timing tokens will make motion decisions auditable and consistent; token-level reduced-motion overrides will produce more complete safety than per-rule approaches; layer depth vocabulary will make z-stacking decisions semantically legible.`, `test -f .agents/plans/cinematic-handles/cinematic-handles.spw`, ][reg=set]
+ rule = "Run probes before trusting cached plan_context."
+}[reg=facet]
+
+^"plan_context"{
+ goal = `The desired end state is a motion system where every transition has a name derived from the site's own vocabulary, every reveal has a quality that matches its semantic role, and every motion has a reduced-motion safe contract. Instead of anonymous milliseconds and bezier curves, transitions carry names like "boon-settle," "pivot-arc," or "threshold-cross" — names that connect motion to meaning and make timing decisions auditable, not incidental. The wider aim includes layers and lighting as an attention model: depth should feel like depth (not just z-index), and surfaces should carry ambient lighting states that shift as attention moves. Together these give the site a cinematic quality — the sense that spatial and temporal transitions are authored rather than defaulted. The taste note is earned motion + semantic depth: every animation should be the right animation for that semantic state, authored from the site's own grammar rather than borrowed from a design trend.`
+ owner = `cinematic-handles`
+ operation = "prime"
+ bucket = "active_backlog"
+ validation = #[ `Hypotheses: named timing tokens will make motion decisions auditable and consistent; token-level reduced-motion overrides will produce more complete safety than per-rule approaches; layer depth vocabulary will make z-stacking decisions semantically legible.`, `Negative controls: all interactions remain fully functional without motion; static screenshots are informationally equivalent to animated states.`, `Demo sequence: trigger a brace pivot, a frame reveal, and a charge discharge — compare before/after timing token naming; disable motion and verify each transition remains semantically understandable; check that ambient, settled, and active layers are distinguishable without color alone.`, ][reg=set]
+ hot_files = #[ `.agents/plans/cinematic-handles/cinematic-handles.spw`, ][reg=set]
+}[reg=facet]
 ^["roots"]{
  @plan: ~".agents/plans/cinematic-handles/PLAN.md"
  @artifact: ~".agents/plans/cinematic-handles/cinematic-handles.spw"

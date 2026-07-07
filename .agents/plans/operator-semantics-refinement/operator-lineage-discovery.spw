@@ -1,6 +1,18 @@
-#>operator_lineage_discovery
+^"operational_hooks"{
+ selectors = #[ ][reg=set]
+ probe_ref = `Hypotheses:`
+ owner_claim = ~"./index.spw#owner_claim"
+}[reg=facet]#>operator_lineage_discovery
 #:notebook #!operators
 #:layer #!pragmatics
+
+^"plan_linkage"{
+ plan = ~"./PLAN.md"
+ index = ~"./index.spw"
+ goal = `The desired end state is a coherent operator system where: 1. Lineage is clear: Users understand how operators evolved from the original set (~ # . ? ! * & @ ^ <> [] {}) to current implementation, and why the evolution makes sense. 2. Physics is discoverable: Operators behave according to underlying principles (spatial relationships, containment, reference, projection, etc.) that can be felt through interaction and explained through documentation. 3. Symmetry is legible: Users recognize that operators have natural pairing relationships (~ pairs with @, # pairs with ., ? pairs with !) that create coherent dynamics. 4. Priming is meaningful: Operator sequences feel natural because each operator sets up expectation for what comes next. A sequence like ~(#frame) ?! feels inevitable rather than arbitrary. 5. Interpretation emerges: Over time, users develop intuitions about how operators work together, discovering traditions and patterns that are grounded in physics rather than arbitrarily imposed.`
+ owner = `operator-semantics-refinement`
+ bucket = "active_backlog"
+}[reg=facet]
 
 ^"discovery_journey"{
   ~#note: "How a user discovers and internalizes operator lineage through interaction and documentation."

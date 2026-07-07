@@ -1,9 +1,31 @@
-# wip - spw-operator-pages
-# Branch: feature/spw-operator-pages
-# Started: 2026-04-09
-
+# wip — spw-operator-pages
+#
+#>plan_spw_operator_pages_wip
+#:operation #!cache
+#:fixity #!tending
 #:layer #!pragmatics
 
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@plans_root: ~"../../../.agents/plans/index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+
+operation = "cache"
+fixity = "tending"
+
+^"selection_probes"{
+ probes = #[ `rg 'spw-operator-pages' topics/software/spw/index.html`, `Hypotheses: a stable page per operator will make the grammar more learnable; repeated page structure will let visitors compare operators; compact route hooks will make the atlas discoverable without bloating the software page.`, `test -f topics/software/spw/index.html`, ][reg=set]
+ rule = "Run probes before trusting cached plan_context."
+}[reg=facet]
+
+^"plan_context"{
+ goal = `The desired end state is a mobile-first operator reference that treats each Spw operator as an interaction primitive, a metaphysical model, and a future UI authoring contract. The pages should teach what an operator does, how it behaves when clicked or inspected, how prefix/postfix symmetry changes attention, and how brace physics can pivot a reader toward deeper structure. The taste note is compact ritual clarity: these pages should feel like a small cognitive machine, not a glossary dump.`
+ owner = `spw-operator-pages`
+ operation = "prime"
+ bucket = "active_backlog"
+ validation = #[ `Hypotheses: a stable page per operator will make the grammar more learnable; repeated page structure will let visitors compare operators; compact route hooks will make the atlas discoverable without bloating the software page.`, `Negative controls: existing page routes, software content, header nav, analytics snippets, and framework-free structure remain intact.`, `Demo sequence: open /topics/software/, find the Spw operator atlas, open * stream, traverse the operator ring on mobile width, then go offline after first load and confirm cached operator pages still resolve.`, ][reg=set]
+ hot_files = #[ `topics/software/spw/index.html`, `topics/software/index.html`, `.spw/site.spw`, `.spw/surfaces.spw`, `.spw/conventions/site-semantics.spw`, `public/css/style.css`, ][reg=set]
+}[reg=facet]
 ^["roots"]{
  @plan: ~".agents/plans/spw-operator-pages/PLAN.md"
  @artifact: ~".agents/plans/spw-operator-pages/spw-operator-pages.spw"

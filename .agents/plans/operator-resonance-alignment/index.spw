@@ -1,0 +1,84 @@
+# Plan Index — Operator Resonance Alignment
+#
+# Make Spw sigils easier to read as semantic handles for transformations across routes, chips, cards, settings, prompt mining, and evidence capture. A sigil should tell the visitor…
+
+#>plan_operator_resonance_alignment_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Make Spw sigils easier to read as semantic handles for transformations across routes, chips, cards, settings, prompt mining, and evidence capture. A sigil should tell the visitor what kind of operation a link, card, tool, or route performs. It should not be decoration, a generic destination marker, or an accidental synonym for another operator.`
+ owner = `operator-resonance-alignment`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@operator_alignment: ~"../../../.spw/conventions/operator-alignment.spw"
+@spw_conventions_index_spw: ~"../../../.spw/conventions/index.spw"
+@spw_site_spw: ~"../../../.spw/site.spw"
+@operators: ~"../../../public/js/semantic/operators.js"
+@shared: ~"../../../public/js/kernel/shared.js"
+@play_rpg_wednesday_index_html: ~"../../../play/rpg-wednesday/index.html"
+@component_semantics: ~"../../../public/js/semantic/component-semantics.js"
+@public_js_site_js: ~"../../../public/js/site.js"
+
+dispatch: .{
+ plan = @plan
+ operator_alignment = @operator_alignment
+ spw_conventions_index_spw = @spw_conventions_index_spw
+ spw_site_spw = @spw_site_spw
+ operators = @operators
+ shared = @shared
+ play_rpg_wednesday_index_html = @play_rpg_wednesday_index_html
+ component_semantics = @component_semantics
+ public_js_site_js = @public_js_site_js
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-operator_resonance_alignment-001"
+ layer = "pragmatic"
+ hypothesis = `Make Spw sigils easier to read as semantic handles for transformations across routes, chips, cards, settings, prompt mining, and evidence capture. A sigil should tell the visitor what kind of operation a link, card, tool, or route performs. It should not be decoration, a generic destination marker, or an accidental synonym for another operator.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../.spw/conventions/operator-alignment.spw"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../.spw/conventions/operator-alignment.spw unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `node --check public/js/kernel/shared.js`,
+ `node --check public/js/semantic/operators.js`,
+ `npm run check:local`,
+ `Targeted rg checks for operator-alignment, data-spw-operator-resolved, and $ inspect current substrate.`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does operator-resonance-alignment own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of operator-resonance-alignment?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether operator-resonance-alignment still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Make Spw sigils easier to read as semantic handles for transformations across routes, chips, cards, settings, prompt mining, and evidence…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

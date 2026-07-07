@@ -1,0 +1,63 @@
+# Plan Index — Menu Containment And Navigation Fix
+#
+# Add shared containment rules for route bridges and their card links.
+
+#>plan_menu_containment_navigation_index
+#:index #!plan
+#:operation #!audit
+#:layer #!pragmatics
+
+operation = "audit"
+fixity = "tending"
+
+intent: .{
+ goal = `Add shared containment rules for route bridges and their card links.`
+ owner = `menu-containment-navigation`
+ kind = `fix`
+ bucket = `fix_queue`
+ artifact_shape = `FIX.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "observation | gesture"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "exchange"
+ memory_tier = "hot"
+ bucket = "fix_queue"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@fix: ~"./FIX.md"
+
+dispatch: .{
+ fix = @fix
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-menu_containment_navigation-001"
+ layer = "pragmatic"
+ hypothesis = `Add shared containment rules for route bridges and their card links.`
+ spec_ref = ~"./FIX.md"
+ impl_ref = ~"./PLAN.md"
+ probe_ref = `rg 'menu-containment-navigation' .agents/plans/menu-containment-navigation`
+ falsification = `The listed failure mode returns after the planned fix lands.`
+ status = "active"
+}[reg=facet]
+
+next_action: .{
+ step = `Add shared containment rules for route bridges and their card links.`
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does menu-containment-navigation own, and what should stay out of scope?`, see = @fix }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of menu-containment-navigation?`, see = @index }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Add shared containment rules for route bridges and their card links.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

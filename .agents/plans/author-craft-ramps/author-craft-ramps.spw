@@ -1,5 +1,17 @@
-#>author_craft_ramps
+^"operational_hooks"{
+ selectors = #[ `topics/index.html`, `topics/craft/index.html`, `topics/craft/fragments/index.html`, `topics/craft/svg/index.html`, ][reg=set]
+ probe_ref = `Hypotheses: an author can open /topics/craft/, choose a ramp, and understand one concrete next step; a developer friend can see where they could help; screenshots capture prompt cards and motifs without needing runtime context.`
+ owner_claim = ~"./index.spw#owner_claim"
+}[reg=facet]#>author_craft_ramps
 #:layer #!ux
+
+^"plan_linkage"{
+ plan = ~"./PLAN.md"
+ index = ~"./index.spw"
+ goal = `Build a small /topics/craft/ cluster for a BookTok-adjacent author friend who may not identify as technical but is willing to explore HTML and CSS in fragments. The highest-value first pass should make the web feel like a sensory book object, an illustrator collaboration surface, and a playful file tradition. Taste note: bookish wonder without beige nostalgia — tactile, screenshot-worthy, and useful enough to hand to a creative collaborator.`
+ owner = `author-craft-ramps`
+ bucket = "active_backlog"
+}[reg=facet]
 
 ^"contract"{
  audience: "author friend willing to explore web fragments"

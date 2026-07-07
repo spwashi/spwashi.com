@@ -1,0 +1,74 @@
+# Plan Index — Editable Page Shell
+#
+# Make high-traffic pages easier for naive models to edit in place by moving repeated head and navigation chrome into HTML-native template directives while preserving hand-authored…
+
+#>plan_editable_page_shell_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Make high-traffic pages easier for naive models to edit in place by moving repeated head and navigation chrome into HTML-native template directives while preserving hand-authored route content.`
+ owner = `editable-page-shell`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@template: ~"../../../scripts/template.mjs"
+@index: ~"../../../settings/index.html"
+@page_model: ~"../../../.spw/surfaces/page-model.spw"
+
+dispatch: .{
+ plan = @plan
+ template = @template
+ index = @index
+ page_model = @page_model
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-editable_page_shell-001"
+ layer = "pragmatic"
+ hypothesis = `Make high-traffic pages easier for naive models to edit in place by moving repeated head and navigation chrome into HTML-native template directives while preserving hand-authored route content.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../scripts/template.mjs"
+ probe_ref = `node --check scripts/template.mjs`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../scripts/template.mjs unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+validation: #[
+ `node --check scripts/template.mjs`,
+ `node --check public/js/spw-shell-disclosure.js`,
+ `npm run check`,
+ `npm run build -- --skip-image-check --skip-catalog for a fast render smoke test`,
+ `targeted rg checks for unrendered spw-site-head / spw-site-header in dist/`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does editable-page-shell own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of editable-page-shell?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether editable-page-shell still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Make high-traffic pages easier for naive models to edit in place by moving repeated head and navigation chrome into HTML-native template…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

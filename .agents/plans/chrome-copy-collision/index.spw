@@ -1,0 +1,63 @@
+# Plan Index — chrome-copy-collision
+#
+# Keep the section handle on its own safe-area rail and let other floating tools use the raised clearance rail.
+
+#>plan_chrome_copy_collision_index
+#:index #!plan
+#:operation #!audit
+#:layer #!pragmatics
+
+operation = "audit"
+fixity = "tending"
+
+intent: .{
+ goal = `Keep the section handle on its own safe-area rail and let other floating tools use the raised clearance rail.`
+ owner = `chrome-copy-collision`
+ kind = `fix`
+ bucket = `fix_queue`
+ artifact_shape = `FIX.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "observation | gesture"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "exchange"
+ memory_tier = "hot"
+ bucket = "fix_queue"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@fix: ~"./FIX.md"
+
+dispatch: .{
+ fix = @fix
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-chrome_copy_collision-001"
+ layer = "pragmatic"
+ hypothesis = `Keep the section handle on its own safe-area rail and let other floating tools use the raised clearance rail.`
+ spec_ref = ~"./FIX.md"
+ impl_ref = ~"./PLAN.md"
+ probe_ref = `rg 'chrome-copy-collision' .agents/plans/chrome-copy-collision`
+ falsification = `The listed failure mode returns after the planned fix lands.`
+ status = "active"
+}[reg=facet]
+
+next_action: .{
+ step = `Keep the section handle on its own safe-area rail and let other floating tools use the raised clearance rail.`
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does chrome-copy-collision own, and what should stay out of scope?`, see = @fix }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of chrome-copy-collision?`, see = @index }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Keep the section handle on its own safe-area rail and let other floating tools use the raised clearance rail.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

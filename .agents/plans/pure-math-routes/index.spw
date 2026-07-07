@@ -1,0 +1,89 @@
+# Plan Index — pure-math-routes
+#
+# The desired end state is a math hub that no longer points only sideways into software topics, but also downward into a few durable pure-math lenses that are easy to browse…
+
+#>plan_pure_math_routes_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `The desired end state is a math hub that no longer points only sideways into software topics, but also downward into a few durable pure-math lenses that are easy to browse visually. The new routes should make abstract ideas legible through diagrams, short conceptual groupings, and explicit neighborhood links rather than long formal exposition. The taste note is expressive clarity: the pages should feel like compact visual study sheets, not textbook stubs.`
+ owner = `pure-math-routes`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@math: ~"../../../topics/math/"
+@topics_math_topology_index_html: ~"../../../topics/math/topology/index.html"
+@topics_math_symmetry_index_html: ~"../../../topics/math/symmetry/index.html"
+@topics_math_combinatorics_index_html: ~"../../../topics/math/combinatorics/index.html"
+@topics_math_index_html: ~"../../../topics/math/index.html"
+@topics_index_html: ~"../../../topics/index.html"
+
+dispatch: .{
+ plan = @plan
+ wip = @wip
+ math = @math
+ topics_math_topology_index_html = @topics_math_topology_index_html
+ topics_math_symmetry_index_html = @topics_math_symmetry_index_html
+ topics_math_combinatorics_index_html = @topics_math_combinatorics_index_html
+ topics_math_index_html = @topics_math_index_html
+ topics_index_html = @topics_index_html
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-pure_math_routes-001"
+ layer = "pragmatic"
+ hypothesis = `The desired end state is a math hub that no longer points only sideways into software topics, but also downward into a few durable pure-math lenses that are easy to browse visually. The new routes should make abstract ideas legible through diagrams, short conceptual groupings, and explicit neighborhood links rather than long formal exposition. The taste note is expressive clarity: the pages should feel like compact visual study sheets, not textbook stubs.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../topics/math/"
+ probe_ref = `Hypotheses: a small trio of pure-math routes will make the math surface feel broader and easier to explore; short SVG diagrams will improve scanability without new runtime code.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../topics/math/ unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `In scope: create a few new static pure-math routes beneath topics/math/, update the existing math hub to distinguish pure-math paths from software-adjacent neighbors, expose the routes from the topic atlas, add only the shared CSS needed for the new diagrams/cards, and register the pages in the service worker core routes.`,
+ ][reg=set]
+ out = #[
+  `: adding JavaScript visualizations, introducing new image assets or build tooling, rewriting the software math pages, or turning the site into a full math curriculum.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `Hypotheses: a small trio of pure-math routes will make the math surface feel broader and easier to explore; short SVG diagrams will improve scanability without new runtime code.`,
+ `Negative controls: existing shared navigation, existing software math routes, analytics snippets, and asset paths remain intact.`,
+ `Demo sequence: open /topics/math/, move into topology, symmetry, and combinatorics, then return to /topics/ and confirm the new routes are discoverable from the atlas card.`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does pure-math-routes own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of pure-math-routes?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether pure-math-routes still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: The desired end state is a math hub that no longer points only sideways into software topics, but also downward into a few durable…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

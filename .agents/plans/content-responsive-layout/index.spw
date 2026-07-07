@@ -1,0 +1,79 @@
+# Plan Index — content-responsive-layout
+#
+# The site should stop depending on a small number of viewport breakpoints and instead let components adapt from their own content measure, card density, and overlay ownership. This…
+
+#>plan_content_responsive_layout_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `The site should stop depending on a small number of viewport breakpoints and instead let components adapt from their own content measure, card density, and overlay ownership. This pass focuses on the shell, shared grids, settings surfaces, console chrome, and the pretext lab so mobile and narrow containers remain legible without truncation or awkward stacking. Taste note: improve containment and clarity by making layout decisions derive from ergonomic measure and component content rather than fixed repeat counts.`
+ owner = `content-responsive-layout`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@interaction_loop_contract: ~"../../../.agents/plans/interaction-loop-contract/"
+
+dispatch: .{
+ plan = @plan
+ wip = @wip
+ interaction_loop_contract = @interaction_loop_contract
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-content_responsive_layout-001"
+ layer = "pragmatic"
+ hypothesis = `The site should stop depending on a small number of viewport breakpoints and instead let components adapt from their own content measure, card density, and overlay ownership. This pass focuses on the shell, shared grids, settings surfaces, console chrome, and the pretext lab so mobile and narrow containers remain legible without truncation or awkward stacking. Taste note: improve containment and clarity by making layout decisions derive from ergonomic measure and component content rather than fixed repeat counts.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../.agents/plans/interaction-loop-contract/"
+ probe_ref = `Hypotheses: content-driven min/max rules reduce truncation and make the settings shell calmer on narrow screens; CSS tokenized widths produce more coherent pretext demo projections than hardcoded ratios.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../.agents/plans/interaction-loop-contract/ unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `In scope: shared CSS tokens for layout measure, shell/header density tuning, responsive grid/card rules in shared CSS, settings surface ergonomics, console/persona mobile containment, and wiring pretext lab width presets to shared tokens.`,
+ ][reg=set]
+ out = #[
+  `: unrelated interaction-loop JS currently dirty in the worktree, route-specific copy rewrites outside responsive touch points, major visual redesigns, and non-layout semantic/runtime changes.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `Hypotheses: content-driven min/max rules reduce truncation and make the settings shell calmer on narrow screens; CSS tokenized widths produce more coherent pretext demo projections than hardcoded ratios.`,
+ `Negative controls: desktop reading width, card tone, and existing interaction semantics should remain intact.`,
+ `Demo sequence: inspect /settings/, /topics/software/pretext/, and one console-enabled route on narrow and mid-width layouts by reading the CSS contracts and verifying no syntax/diff regressions.`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does content-responsive-layout own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of content-responsive-layout?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether content-responsive-layout still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: The site should stop depending on a small number of viewport breakpoints and instead let components adapt from their own content measure,…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

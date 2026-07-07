@@ -1,0 +1,79 @@
+# Plan Index — svg-surface-integration
+#
+# The desired end state is a site that can use SVG as a first-class surface language: small widgets, inspectable illustrations, and deeper interactive components can share one…
+
+#>plan_svg_surface_integration_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `The desired end state is a site that can use SVG as a first-class surface language: small widgets, inspectable illustrations, and deeper interactive components can share one mobile-first host contract instead of each becoming a special case. The immediate task is to define that ecosystem before implementation: when SVG should stay external and static, when it should become inline and addressable, how it participates in brace/block semantics, how it pivots into deeper structure on touch, and how future Spw-backed components and pages can project through the same substrate. The taste note is diagrammatic warmth + inspectable restraint: the site should gain clearer structure and a little more wonder, not more ornamental motion.`
+ owner = `svg-surface-integration`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | svg-surface-integration.spw | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@svg_surface_integration: ~"./svg-surface-integration.spw"
+
+dispatch: .{
+ plan = @plan
+ wip = @wip
+ svg_surface_integration = @svg_surface_integration
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-svg_surface_integration-001"
+ layer = "pragmatic"
+ hypothesis = `The desired end state is a site that can use SVG as a first-class surface language: small widgets, inspectable illustrations, and deeper interactive components can share one mobile-first host contract instead of each becoming a special case. The immediate task is to define that ecosystem before implementation: when SVG should stay external and static, when it should become inline and addressable, how it participates in brace/block semantics, how it pivots into deeper structure on touch, and how future Spw-backed components and pages can project through the same substrate. The taste note is diagrammatic warmth + inspectable restraint: the site should gain clearer structure and a little more wonder, not more ornamental motion.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../.agents/plans/svg-surface-integration/svg-surface-integration.spw"
+ probe_ref = `Hypotheses: a shared SVG host contract will let illustrations, widgets, and interactive components evolve without splintering the runtime; inline-versus-external rules will keep authoring tractable; mobile-first inspect/invoke semantics will make SVG surfaces teachable rather than gimmicky.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../.agents/plans/svg-surface-integration/svg-surface-integration.spw unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `In scope: define a taxonomy for SVG illustrations, widgets, and interactive components; choose an asset strategy for inline versus external SVG; predict runtime and CSS seams for mobile-first containment and inspectability; define host contracts for SVG-backed surfaces; map how future Spw-backed components/pages can author through this system.`,
+ ][reg=set]
+ out = #[
+  `: shipping a full widget library in this pass, introducing a build pipeline or icon compiler, converting every existing raster asset, or treating SVG as a replacement for all HTML layout.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `Hypotheses: a shared SVG host contract will let illustrations, widgets, and interactive components evolve without splintering the runtime; inline-versus-external rules will keep authoring tractable; mobile-first inspect/invoke semantics will make SVG surfaces teachable rather than gimmicky.`,
+ `Negative controls: route structure, existing hand-authored HTML, and the site's calm default state remain intact.`,
+ `Demo sequence: open a page with an SVG host, inspect a labeled node on touch and keyboard, invoke a local pivot without losing orientation, confirm console or local inspect surfaces can name the active node, and verify the same surface still degrades to a readable static state.`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does svg-surface-integration own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of svg-surface-integration?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether svg-surface-integration still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: The desired end state is a site that can use SVG as a first-class surface language: small widgets, inspectable illustrations, and deeper…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

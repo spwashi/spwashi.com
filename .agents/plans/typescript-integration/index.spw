@@ -1,0 +1,101 @@
+# Plan Index — typescript-integration
+#
+# The desired end state is a site repo where TypeScript sharpens the parts that already behave like schema systems: - the static build/export path - the design catalog that…
+
+#>plan_typescript_integration_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `The desired end state is a site repo where TypeScript sharpens the parts that already behave like schema systems: - the static build/export path - the design catalog that documents data-spw-* and CSS tokens - the route/runtime manifest - the largest shape-heavy browser registries - future chunk/layer manifests for whitelabel-ready composition - release metadata that can carry both named releases and deterministic content identities The public site should still read as hand-authored HTML/CSS/JS unless a later explicit decision changes that.`
+ owner = `typescript-integration`
+ kind = `plan`
+ bucket = `runtime_js_validation`
+ artifact_shape = `PLAN.md | wip.spw | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "runtime_js_validation"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@build: ~"../../../scripts/build.mjs"
+@generate_design_catalog: ~"../../../scripts/generate-design-catalog.mjs"
+@generate_sitemap: ~"../../../scripts/generate-sitemap.mjs"
+@site_contracts: ~"../../../scripts/site-contracts.mjs"
+@css_manifest: ~"../../../scripts/ts/css-manifest.mts"
+@css_bundle: ~"../../../scripts/ts/css-bundle.mts"
+@site: ~"../../../public/js/site.js"
+@scripts: ~"../../../scripts/"
+
+dispatch: .{
+ plan = @plan
+ wip = @wip
+ build = @build
+ generate_design_catalog = @generate_design_catalog
+ generate_sitemap = @generate_sitemap
+ site_contracts = @site_contracts
+ css_manifest = @css_manifest
+ css_bundle = @css_bundle
+ site = @site
+ scripts = @scripts
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-typescript_integration-001"
+ layer = "pragmatic"
+ hypothesis = `The desired end state is a site repo where TypeScript sharpens the parts that already behave like schema systems: - the static build/export path - the design catalog that documents data-spw-* and CSS tokens - the route/runtime manifest - the largest shape-heavy browser registries - future chunk/layer manifests for whitelabel-ready composition - release metadata that can carry both named releases and deterministic content identities The public site should still read as hand-authored HTML/CSS/JS unless a later explicit decision changes that.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../scripts/build.mjs"
+ probe_ref = `Preserve existing checks:`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../scripts/build.mjs unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `In scope:`,
+  `a site-root TS setup scoped to scripts/ first`,
+  `typed schemas for build output, design catalog output, and route/runtime manifests`,
+  `typed asset and precache manifests`,
+ ][reg=set]
+ out = #[
+  `template-driven route generation`,
+  `converting all public/js/*.js to .ts in one pass`,
+  `bundler-first migration of the public runtime`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `Preserve existing checks:`,
+ `npm run build`,
+ `npm run catalog`,
+ `npm run sitemap`,
+ `npm run check`,
+ `git diff --check`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does typescript-integration own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of typescript-integration?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether typescript-integration still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: The desired end state is a site repo where TypeScript sharpens the parts that already behave like schema systems: - the static build/export…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

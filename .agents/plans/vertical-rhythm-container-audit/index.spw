@@ -1,0 +1,83 @@
+# Plan Index — Vertical Rhythm, Component Containers & Layout Motifs Consistency Audit
+#
+# Ensure the site's vertical rhythm (spacing scales, flow, line-heights, component gaps), container primitives (frame-card, mode-panel, site-frame, various cards/panels), and layout…
+
+#>plan_vertical_rhythm_container_audit_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Ensure the site's vertical rhythm (spacing scales, flow, line-heights, component gaps), container primitives (frame-card, mode-panel, site-frame, various cards/panels), and layout motifs (data-spw-layout variants, grids, hero structures, gutter rails) feel cohesive, token-driven, and predictable across shared layers and routes. This improves craft quality, editor inspectability (via design catalog and data attributes), and the overall "manuscript + instrument" reading experience. Focus on semantic naming and shared surface consistency rather than new features or copy.`
+ owner = `vertical-rhythm-container-audit`
+ kind = `plan`
+ bucket = `css_layout_interaction`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "css_layout_interaction"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@core: ~"../../../public/css/tokens/core.css"
+@layout: ~"../../../public/css/shell/layout.css"
+@site_semantics: ~"../../../.spw/conventions/site-semantics.spw"
+
+dispatch: .{
+ plan = @plan
+ core = @core
+ layout = @layout
+ site_semantics = @site_semantics
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-vertical_rhythm_container_audit-001"
+ layer = "pragmatic"
+ hypothesis = `Ensure the site's vertical rhythm (spacing scales, flow, line-heights, component gaps), container primitives (frame-card, mode-panel, site-frame, various cards/panels), and layout motifs (data-spw-layout variants, grids, hero structures, gutter rails) feel cohesive, token-driven, and predictable across shared layers and routes. This improves craft quality, editor inspectability (via design catalog and data attributes), and the overall "manuscript + instrument" reading experience. Focus on semantic naming and shared surface consistency rather than new features or copy.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/css/tokens/core.css"
+ probe_ref = `Targeted rg for token usage vs magic numbers in components.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/css/tokens/core.css unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `Shared CSS (highest priority for smallest honest patches):`,
+  `public/css/tokens/core.css (spacing scale, flow-space, component-* gaps/pads, line-heights, manuscript rhythm)`,
+  `public/css/typography/*.css (base flow rhythm, context pressure modulation, editorial)`,
+  `public/css/components/*.css (cards.css, frames.css, and siblings — card-rhythm, internal gaps/padding)`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `Targeted rg for token usage vs magic numbers in components.`,
+ `Visual/structural review of key routes (home, topics, services, blog, play routes) before/after.`,
+ `Design catalog regeneration + spot-check of affected attributes.`,
+ `Full npm run check.`,
+ `Update this plan with findings + patch log.`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does vertical-rhythm-container-audit own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of vertical-rhythm-container-audit?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether vertical-rhythm-container-audit still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Ensure the site's vertical rhythm (spacing scales, flow, line-heights, component gaps), container primitives (frame-card, mode-panel,…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

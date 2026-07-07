@@ -1,0 +1,85 @@
+# Plan Index — spell-cognition-familiarity
+#
+# The site already has several adjacent ideas that point at the same thing: spells as replayable outcomes, breadcrumbs as cognitive path, wonder memory as recent-path resonance, and…
+
+#>plan_spell_cognition_familiarity_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `The site already has several adjacent ideas that point at the same thing: spells as replayable outcomes, breadcrumbs as cognitive path, wonder memory as recent-path resonance, and liminality as page depth. This pass should align those ideas so they read as one integrated model instead of separate metaphors. The user-facing result should be intuitive: the spell dock should tell you whether a path feels fresh, familiar, or deeply grounded; the breadcrumb trail should explain how a page is being held in memory; and the page state should expose liminal gradients as a readable part of the worldbuilding rather than a hidden implementation detail.`
+ owner = `spell-cognition-familiarity`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@plan_spellcraft_authoring: ~"./spellcraft-authoring/index.spw"
+@spells: ~"../../../public/js/runtime/spells.js"
+@experiential: ~"../../../public/js/runtime/experiential.js"
+@wonder_memory: ~"../../../public/js/interface/wonder-memory.js"
+@cognitive_surface: ~"../../../.spw/philosophy/cognitive-surface.spw"
+
+dispatch: .{
+ plan = @plan
+ plan_spellcraft_authoring = @plan_spellcraft_authoring
+ spells = @spells
+ experiential = @experiential
+ wonder_memory = @wonder_memory
+ cognitive_surface = @cognitive_surface
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-spell_cognition_familiarity-001"
+ layer = "pragmatic"
+ hypothesis = `The site already has several adjacent ideas that point at the same thing: spells as replayable outcomes, breadcrumbs as cognitive path, wonder memory as recent-path resonance, and liminality as page depth. This pass should align those ideas so they read as one integrated model instead of separate metaphors. The user-facing result should be intuitive: the spell dock should tell you whether a path feels fresh, familiar, or deeply grounded; the breadcrumb trail should explain how a page is being held in memory; and the page state should expose liminal gradients as a readable part of the worldbuilding rather than a hidden implementation detail.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/js/runtime/spells.js"
+ probe_ref = `node --check for edited JS modules`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/runtime/spells.js unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `In scope: shared runtime copy/state in public/js/runtime/spells.js, public/js/runtime/experiential.js, and public/js/interface/wonder-memory.js.`,
+  `In scope: small state projection updates in shared CSS only if a new readable register needs visual support.`,
+  `In scope: public data attributes or helper outputs that let the console, settings, and spell surfaces describe familiarity and liminality clearly.`,
+  `-`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `node --check for edited JS modules`,
+ `git diff --check`,
+ `npm run check`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does spell-cognition-familiarity own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of spell-cognition-familiarity?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether spell-cognition-familiarity still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: The site already has several adjacent ideas that point at the same thing: spells as replayable outcomes, breadcrumbs as cognitive path,…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

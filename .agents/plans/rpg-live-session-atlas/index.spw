@@ -1,0 +1,76 @@
+# Plan Index — rpg-live-session-atlas
+#
+# RPG Wednesday should be easier to run live across phone, tablet, and desktop widths while a session is happening on TikTok and Discord. The local kit should support a fast rhythm…
+
+#>plan_rpg_live_session_atlas_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `RPG Wednesday should be easier to run live across phone, tablet, and desktop widths while a session is happening on TikTok and Discord. The local kit should support a fast rhythm of: - adding a scene, item, texture, or image reference - putting it in a timeline and namespace - collapsing or collecting it without losing it - moving it around as context changes - screenshotting the resulting cards for later interpretation in external art tools`
+ owner = `rpg-live-session-atlas`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+
+dispatch: .{
+ plan = @plan
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-rpg_live_session_atlas-001"
+ layer = "pragmatic"
+ hypothesis = `RPG Wednesday should be easier to run live across phone, tablet, and desktop widths while a session is happening on TikTok and Discord. The local kit should support a fast rhythm of: - adding a scene, item, texture, or image reference - putting it in a timeline and namespace - collapsing or collecting it without losing it - moving it around as context changes - screenshotting the resulting cards for later interpretation in external art tools`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"./PLAN.md"
+ probe_ref = `node --check public/js/rpg-wednesday.js`
+ falsification = `A patch cannot satisfy the public goal while leaving ./PLAN.md unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `In scope: route copy for the live-session use case, local asset-card metadata in the RPG gameplay kit, IndexedDB-backed local image storage, export/import that preserves local images, responsive layout tuning for more device sizes, and collectible/collapsible card behavior.`,
+ ][reg=set]
+ out = #[
+  `: cloud sync, multiplayer editing, automatic screenshotting, Discord or Midjourney integrations, and a separate route just for asset management.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `node --check public/js/rpg-wednesday.js`,
+ `git diff --check`,
+ `npm run check`,
+ `targeted rg checks for new RPG asset selectors and route copy`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does rpg-live-session-atlas own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of rpg-live-session-atlas?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether rpg-live-session-atlas still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: RPG Wednesday should be easier to run live across phone, tablet, and desktop widths while a session is happening on TikTok and Discord. The…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

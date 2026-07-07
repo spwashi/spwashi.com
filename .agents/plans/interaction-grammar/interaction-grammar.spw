@@ -1,4 +1,8 @@
-# interaction-grammar
+^"operational_hooks"{
+ selectors = #[ `.agents/plans/interaction-grammar/interaction-grammar.spw`, ][reg=set]
+ probe_ref = `Hypotheses: circuit progression will make the site feel deeper over time without requiring upfront investment; a more accessible brace physics vocabulary will improve legibility of the operator atlas and Pretext surfaces; Spw framing of other languages will make spatial relationships between notations more visible.`
+ owner_claim = ~"./index.spw#owner_claim"
+}[reg=facet]# interaction-grammar
 # Distilled semantic note for interactive circuits, brace physics vocabulary,
 # and Spw as a substrate for spatial cognition and multi-language surfaces.
 
@@ -6,6 +10,13 @@
 #:semantics #!surface
 #:layer #!pragmatics
 
+^"plan_linkage"{
+ plan = ~"./PLAN.md"
+ index = ~"./index.spw"
+ goal = `The desired end state is a site interaction system that rewards familiarity: repeated use builds skill and fluency, interactions have a recognizable grammar, and the underlying physics metaphor is legible enough to discuss, teach, and play with. A secondary aim is to make Spw useful as a substrate for exercising cognition and spatial relationship — where the grammar can illuminate how other languages, notations, and structures work rather than replacing them. The immediate task is twofold: design a progression ladder for interactive circuits (how interactions become familiar, then fluent, then habitual); and rethink whether the boon/bane vocabulary that names brace physics is cognitively accessible or whether it needs a bridge, supplement, or replacement. The taste note is practiced grammar + honest physics: interactions should feel learnable the way a musical instrument is learnable — rewarding fluency without requiring it — and the physics should work at the level of ordinary physical intuition before it becomes Spw doctrine.`
+ owner = `interaction-grammar`
+ bucket = "active_backlog"
+}[reg=facet]
 ^["thesis"]{
  claim: "Interactions on this site should reward familiarity the way a musical instrument rewards practice — depth available from the start, but not required; fluency earned through repeated engagement; wonder arriving through the physics of the grammar rather than through decoration. Spw should serve as a host that makes other languages and spatial relationships more legible, not a replacement for them."
  why: "A site that only serves first-time visitors has no arc. A cognitive tool for practitioners needs a progression ladder, a vocabulary that can be discussed, and enough spatial honesty that the physics feels learnable rather than arbitrary."

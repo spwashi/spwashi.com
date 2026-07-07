@@ -1,6 +1,31 @@
-# wip - language-ladder-runtime-instrumentation
-# Branch: feature/language-ladder-runtime-instrumentation
+# wip — language-ladder-runtime-instrumentation
+#
+#>plan_language_ladder_runtime_instrumentation_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
 
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@plans_root: ~"../../../.agents/plans/index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+
+operation = "cache"
+fixity = "tending"
+
+^"selection_probes"{
+ probes = #[ `rg 'language-ladder-runtime-instrumentation' public/js/site.js`, `git diff --check`, `test -f public/js/site.js`, ][reg=set]
+ rule = "Run probes before trusting cached plan_context."
+}[reg=facet]
+
+^"plan_context"{
+ goal = `Make the development experience on spwashi.com feel progressively teachable rather than merely executable. The codebase should help a developer relate to code as a staged practice: first read the structure, then observe the runtime, then tune the timing, then compare the effect of different JavaScript forms, and eventually use TypeScript where it sharpens contracts and makes philosophy-like distinctions between shape, behavior, and proof more explicit. The experience should stay hand-authored, progressively enhanced, and inspectable. Static HTML remains the readable baseline, JavaScript adds learning and observation affordances when present, and TypeScript is introduced where it improves the contract layer without turning the site into a framework demo.`
+ owner = `language-ladder-runtime-instrumentation`
+ operation = "prime"
+ bucket = "active_backlog"
+ validation = #[ `git diff --check`, `node --check on edited JS modules`, `targeted browser smoke for the runtime stages and console helpers`, `npm run check when build/runtime contracts or public surfaces change`, `review that the ladder remains understandable without runtime features enabled`, ][reg=set]
+ hot_files = #[ `public/js/site.js`, `public/js/kernel/instrumentation.js`, `public/js/runtime/runtime-helpers.js`, `settings/index.html`, `public/js/README.md`, `.spw/conventions/`, ][reg=set]
+}[reg=facet]
 @plan: ~".agents/plans/language-ladder-runtime-instrumentation/PLAN.md"
 @related: ~"../runtime-module-fluency/PLAN.md"
 @related: ~"../runtime-load-instrumentation/PLAN.md"

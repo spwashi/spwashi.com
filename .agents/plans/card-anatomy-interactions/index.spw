@@ -1,0 +1,73 @@
+# Plan Index — Card Anatomy & Interaction Semantics Enhancement
+#
+# Status: Planning / Audit complete
+
+#>plan_card_anatomy_interactions_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Status: Planning / Audit complete`
+ owner = `card-anatomy-interactions`
+ kind = `plan`
+ bucket = `css_layout_interaction`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "css_layout_interaction"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@plan_agent_optimization: ~"./agent-optimization/index.spw"
+@play_rpg_wednesday_library_index_html: ~"../../../play/rpg-wednesday/library/index.html"
+@page_model: ~"../../../.spw/surfaces/page-model.spw"
+@css: ~"../../../public/css/"
+@design_components_index_html: ~"../../../design/components/index.html"
+@site_semantics: ~"../../../.spw/conventions/site-semantics.spw"
+@site: ~"../../../public/js/site.js"
+
+dispatch: .{
+ plan = @plan
+ plan_agent_optimization = @plan_agent_optimization
+ play_rpg_wednesday_library_index_html = @play_rpg_wednesday_library_index_html
+ page_model = @page_model
+ css = @css
+ design_components_index_html = @design_components_index_html
+ site_semantics = @site_semantics
+ site = @site
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-card_anatomy_interactions-001"
+ layer = "pragmatic"
+ hypothesis = `Status: Planning / Audit complete`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../play/rpg-wednesday/library/index.html"
+ probe_ref = `rg 'card-anatomy-interactions' .agents/plans/card-anatomy-interactions`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../play/rpg-wednesday/library/index.html unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does card-anatomy-interactions own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of card-anatomy-interactions?`, see = @index }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Status: Planning / Audit complete`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

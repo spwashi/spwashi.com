@@ -1,9 +1,31 @@
-# wip - runtime-settings
-# Branch: main
-# Started: 2026-04-10
-
+# wip — runtime-settings
+#
+#>plan_runtime_settings_wip
+#:operation #!cache
+#:fixity #!tending
 #:layer #!pragmatics
 
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@plans_root: ~"../../../.agents/plans/index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+
+operation = "cache"
+fixity = "tending"
+
+^"selection_probes"{
+ probes = #[ `rg 'runtime-settings' settings/index.html`, `Hypotheses: visitors can reduce intrusive runtime chrome without losing route access.`, `test -f settings/index.html`, ][reg=set]
+ rule = "Run probes before trusting cached plan_context."
+}[reg=facet]
+
+^"plan_context"{
+ goal = `Create a discoverable /settings/ page where visitors can quiet or hide the surface map, quiet or hide the console, and disable scroll-driven viewport activation. Taste note: this improves containment and calm by making the cognitive-machine chrome optable instead of unavoidable, without removing the deeper runtime features. 2026-06-30 extension: the same settings system now owns component-reward visibility (rewardDisplay) and reset access for the browser-local component collection register.`
+ owner = `runtime-settings`
+ operation = "prime"
+ bucket = "runtime_js_validation"
+ validation = #[ `Hypotheses: visitors can reduce intrusive runtime chrome without losing route access.`, `Negative controls: RPG Wednesday local gameplay changes and existing optional feature loading still work.`, `Demo sequence: visit /settings/, choose quiet/hidden preferences, reload home/software pages, confirm runtime chrome follows preferences.`, ][reg=set]
+ hot_files = #[ `settings/index.html`, `public/js/site.js`, `public/css/style.css`, `public/js/kernel/site-settings-profiles.js`, `public/js/kernel/site-settings-engine.js`, `public/js/kernel/site-settings-ui.js`, ][reg=set]
+}[reg=facet]
 ^["roots"]{
  @plan: ~".agents/plans/runtime-settings/PLAN.md"
  @settings: ~"public/js/site-settings.js"

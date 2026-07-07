@@ -1,0 +1,61 @@
+# Plan Index — Team Copy Reading & Production Orientation
+#
+# To orient team production around the core human-first values, narratives, and structural metaphors of spwashi.com. As collaborators begin prioritizing their personal lives,…
+
+#>plan_team_orientation_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `To orient team production around the core human-first values, narratives, and structural metaphors of spwashi.com. As collaborators begin prioritizing their personal lives, relationships, and families, the site's own copy serves as a structural blueprint for sustainable, high-quality craft that honors pacing, boundaries, and compound practice rather than high-friction sprints. We read the copy not to memorize biography, but to establish a shared language for what we build: treating software as an editorial kitchen, code as punctuation, and version history as sedimented tending.`
+ owner = `team-orientation`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@design_whimsy: ~"../../../.spw/conventions/design-whimsy.spw"
+
+dispatch: .{
+ plan = @plan
+ design_whimsy = @design_whimsy
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-team_orientation-001"
+ layer = "pragmatic"
+ hypothesis = `To orient team production around the core human-first values, narratives, and structural metaphors of spwashi.com. As collaborators begin prioritizing their personal lives, relationships, and families, the site's own copy serves as a structural blueprint for sustainable, high-quality craft that honors pacing, boundaries, and compound practice rather than high-friction sprints. We read the copy not to memorize biography, but to establish a shared language for what we build: treating software as an editorial kitchen, code as punctuation, and version history as sedimented tending.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../.spw/conventions/design-whimsy.spw"
+ probe_ref = `rg 'team-orientation' .agents/plans/team-orientation`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../.spw/conventions/design-whimsy.spw unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does team-orientation own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of team-orientation?`, see = @index }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: To orient team production around the core human-first values, narratives, and structural metaphors of spwashi.com. As collaborators begin…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

@@ -1,4 +1,8 @@
-# cognitive-navigation
+^"operational_hooks"{
+ selectors = #[ `.agents/plans/cognitive-navigation/cognitive-navigation.spw`, ][reg=set]
+ probe_ref = `Hypotheses: liminality-aware navigation will make cognitive depth legible; Spw breadcrumbs will capture path quality rather than just page history; spell recognition will make expert patterns inductively discoverable.`
+ owner_claim = ~"./index.spw#owner_claim"
+}[reg=facet]# cognitive-navigation
 # Distilled semantic note for liminality as navigation, Spw breadcrumbs,
 # spells, filetype components, and accessibility as cognitive map.
 
@@ -6,6 +10,13 @@
 #:semantics #!surface
 #:layer #!pragmatics
 
+^"plan_linkage"{
+ plan = ~"./PLAN.md"
+ index = ~"./index.spw"
+ goal = `The desired end state is a site that can be navigated as a cognitive space: you know where you are in the liminality sequence, you can trace the path that brought you here, there are legible components for different kinds of content (states, registers, filetypes), and the interactions you've learned can be named and repeated as spells. The wider purpose is a cognitive tool for artists and practitioners — someone who uses this space to develop ideas should be able to orient, deepen, and return, and the tools they've developed should be inspectable and shareable. Spw provides the spatial grammar for this kind of navigation: liminality is not a decoration axis but a depth axis you can traverse and return from; breadcrumbs are not browser history but cognitive path through conceptual space; spells are not scripts but named sequences of attention that feel like learned reflexes when mastered. Accessibility is foundational here: the semantic HTML and ARIA tree should be the canonical cognitive map of each page, not a compliance layer layered on top. The taste note is cognitive cartography + earned fluency: the site should feel like a place that deepens with familiarity while remaining fully legible to someone arriving for the first time.`
+ owner = `cognitive-navigation`
+ bucket = "active_backlog"
+}[reg=facet]
 ^["thesis"]{
  claim: "The site should be navigable as a cognitive space — you know where you are in the depth sequence, you can trace the path that brought you here, the tools you've learned can be named and repeated, and the semantic HTML is the canonical map of each page. Navigation should feel like inhabiting a place that deepens with familiarity, not like moving through a document."
  why: "A cognitive tool for practitioners and artists has a different navigation model than a document site. The relevant questions are not 'where am I in the URL tree?' but 'how deep am I in this idea, what path did I take to get here, and what have I learned to do in this space?'"

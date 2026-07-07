@@ -1,9 +1,31 @@
-# wip - cognitive-navigation
-# Branch: feature/cognitive-navigation
-# Started: 2026-04-09
-
+# wip — cognitive-navigation
+#
+#>plan_cognitive_navigation_wip
+#:operation #!cache
+#:fixity #!tending
 #:layer #!pragmatics
 
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@plans_root: ~"../../../.agents/plans/index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+
+operation = "cache"
+fixity = "tending"
+
+^"selection_probes"{
+ probes = #[ `rg 'cognitive-navigation' .agents/plans/cognitive-navigation/cognitive-navigation.spw`, `Hypotheses: liminality-aware navigation will make cognitive depth legible; Spw breadcrumbs will capture path quality rather than just page history; spell recognition will make expert patterns inductively discoverable.`, `test -f .agents/plans/cognitive-navigation/cognitive-navigation.spw`, ][reg=set]
+ rule = "Run probes before trusting cached plan_context."
+}[reg=facet]
+
+^"plan_context"{
+ goal = `The desired end state is a site that can be navigated as a cognitive space: you know where you are in the liminality sequence, you can trace the path that brought you here, there are legible components for different kinds of content (states, registers, filetypes), and the interactions you've learned can be named and repeated as spells. The wider purpose is a cognitive tool for artists and practitioners — someone who uses this space to develop ideas should be able to orient, deepen, and return, and the tools they've developed should be inspectable and shareable. Spw provides the spatial grammar for this kind of navigation: liminality is not a decoration axis but a depth axis you can traverse and return from; breadcrumbs are not browser history but cognitive path through conceptual space; spells are not scripts but named sequences of attention that feel like learned reflexes when mastered. Accessibility is foundational here: the semantic HTML and ARIA tree should be the canonical cognitive map of each page, not a compliance layer layered on top. The taste note is cognitive cartography + earned fluency: the site should feel like a place that deepens with familiarity while remaining fully legible to someone arriving for the first time.`
+ owner = `cognitive-navigation`
+ operation = "prime"
+ bucket = "active_backlog"
+ validation = #[ `Hypotheses: liminality-aware navigation will make cognitive depth legible; Spw breadcrumbs will capture path quality rather than just page history; spell recognition will make expert patterns inductively discoverable.`, `Negative controls: all routes and content remain accessible without engaging breadcrumbs, spells, or deep liminality navigation; landmark structure is navigable independently.`, `Demo sequence: navigate from entry to projected liminality on the software page and observe the breadcrumb trail; trigger a spell through observed pattern; navigate back through the liminality sequence; verify the accessibility landmark map matches the cognitive map at each phase.`, ][reg=set]
+ hot_files = #[ `.agents/plans/cognitive-navigation/cognitive-navigation.spw`, ][reg=set]
+}[reg=facet]
 ^["roots"]{
  @plan: ~".agents/plans/cognitive-navigation/PLAN.md"
  @artifact: ~".agents/plans/cognitive-navigation/cognitive-navigation.spw"

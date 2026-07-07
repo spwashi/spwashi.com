@@ -1,9 +1,30 @@
 # wip — site-color-tuning
-# Branch: main
-# Started: 2026-04-16
-
+#
+#>plan_site_color_tuning_wip
+#:operation #!cache
+#:fixity #!tending
 #:layer #!pragmatics
 
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@plans_root: ~"../../../.agents/plans/index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+
+operation = "cache"
+fixity = "tending"
+
+^"selection_probes"{
+ probes = #[ `rg 'site-color-tuning' public`, `Hypotheses: shared cards, panels, and image helpers should look more coherent across home, topics, website, and settings after the token/material pass; dark mode should feel like a related palette, not a separately patched one.`, ][reg=set]
+ rule = "Run probes before trusting cached plan_context."
+}[reg=facet]
+
+^"plan_context"{
+ goal = `The desired end state is a site whose light and dark themes feel deliberately composed at the token level, with shared cards, materials, and image chrome responding consistently before any route-specific styling takes over. Route surfaces should still keep their own identity, but they should no longer need to fight a paper-heavy base or literal white fallbacks to look coherent. Taste note: improve expressiveness, layering, and clarity by making the color system feel authored rather than accumulated.`
+ owner = `site-color-tuning`
+ operation = "prime"
+ bucket = "media_image_sensory"
+ validation = #[ `Hypotheses: shared cards, panels, and image helpers should look more coherent across home, topics, website, and settings after the token/material pass; dark mode should feel like a related palette, not a separately patched one.`, `Negative controls: route-specific accents should remain identifiable, and the current settings/resonance wiring and copy changes should stay untouched.`, `Demo sequence: inspect /, /topics/, /about/website/, and /settings/ in light and dark themes, confirm shared surfaces no longer stay paper-white, then verify route accents still feel distinct.`, ][reg=set]
+}[reg=facet]
 ^["roots"]{
  @plan: ~".agents/plans/site-color-tuning/PLAN.md"
  @tokens: ~"public/css/spw-tokens.css"

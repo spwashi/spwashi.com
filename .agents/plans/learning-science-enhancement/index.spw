@@ -1,0 +1,87 @@
+# Plan Index — learning-science-enhancement
+#
+# The site already uses deep pedagogical models (Constructionism, ZPD, Cognitive Surface), but they are often expressed in site-local jargon. This plan aims to bridge these with…
+
+#>plan_learning_science_enhancement_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `The site already uses deep pedagogical models (Constructionism, ZPD, Cognitive Surface), but they are often expressed in site-local jargon. This plan aims to bridge these with established Learning Science terminology (Dual Coding, Signaling, Contiguity, Cognitive Load) to make the "why" behind the design more legible and to strengthen the site's role as a learning environment.`
+ owner = `learning-science-enhancement`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@topics_pedagogy_index_html: ~"../../../topics/pedagogy/index.html"
+@software: ~"../../../topics/software/"
+@math: ~"../../../topics/math/"
+@cognitive_surface: ~"../../../.spw/philosophy/cognitive-surface.spw"
+@topics_software_index_html: ~"../../../topics/software/index.html"
+@topics_math_index_html: ~"../../../topics/math/index.html"
+
+dispatch: .{
+ plan = @plan
+ topics_pedagogy_index_html = @topics_pedagogy_index_html
+ software = @software
+ math = @math
+ cognitive_surface = @cognitive_surface
+ topics_software_index_html = @topics_software_index_html
+ topics_math_index_html = @topics_math_index_html
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-learning_science_enhancement-001"
+ layer = "pragmatic"
+ hypothesis = `The site already uses deep pedagogical models (Constructionism, ZPD, Cognitive Surface), but they are often expressed in site-local jargon. This plan aims to bridge these with established Learning Science terminology (Dual Coding, Signaling, Contiguity, Cognitive Load) to make the "why" behind the design more legible and to strengthen the site's role as a learning environment.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../topics/pedagogy/index.html"
+ probe_ref = `Principles are clearly defined on /topics/pedagogy/.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../topics/pedagogy/index.html unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `In scope: topics/pedagogy/index.html updates, new LS-specific components (e.g., spw-ls-marker, spw-principle-card), updates to topics/software/ and topics/math/ to demonstrate principles.`,
+ ][reg=set]
+ out = #[
+  `: creating a full learning management system (LMS), adding quizzes, or major architectural changes to the CSS/JS runtime.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `Principles are clearly defined on /topics/pedagogy/.`,
+ `A visitor can see a "principle in action" marker on a software or math page.`,
+ `The cognitive-surface.spw reflects the alignment with learning science.`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does learning-science-enhancement own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of learning-science-enhancement?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether learning-science-enhancement still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: The site already uses deep pedagogical models (Constructionism, ZPD, Cognitive Surface), but they are often expressed in site-local jargon.…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

@@ -1,0 +1,77 @@
+# Plan Index — RPG Wednesday Learning Library
+#
+# Make the education direction useful without scattering the site into many top-level routes. The first public surface is a namespaced town-library hub under…
+
+#>plan_rpg_wednesday_learning_library_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Make the education direction useful without scattering the site into many top-level routes. The first public surface is a namespaced town-library hub under /play/rpg-wednesday/library/ that turns RPG Wednesday into a college-facing learning world: visitors can enter a civic-magical library, choose a quest, meet guide characters, use boonhonk as a reflection fit, plant a garden seed, and map the work to portfolio-ready college skills.`
+ owner = `rpg-wednesday-learning-library`
+ kind = `plan`
+ bucket = `public_route_proof_genre`
+ artifact_shape = `PLAN.md | wip.spw | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "public_route_proof_genre"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+
+dispatch: .{
+ plan = @plan
+ wip = @wip
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-rpg_wednesday_learning_library-001"
+ layer = "pragmatic"
+ hypothesis = `Make the education direction useful without scattering the site into many top-level routes. The first public surface is a namespaced town-library hub under /play/rpg-wednesday/library/ that turns RPG Wednesday into a college-facing learning world: visitors can enter a civic-magical library, choose a quest, meet guide characters, use boonhonk as a reflection fit, plant a garden seed, and map the work to portfolio-ready college skills.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"./PLAN.md"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ./PLAN.md unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `Add /play/rpg-wednesday/library/ as the education-oriented hub.`,
+  `Add homepage and play-surface gateway links that point to the library without repositioning the whole site at once.`,
+  `Add RPG Wednesday route links so the existing campaign surface promotes the library as an actionable learning path.`,
+  `Improve discoverability through header navigation, contextual data-spw-related-routes, hero action chips, active-game cards, and route-atlas cards.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `rg checks for /play/rpg-wednesday/library/ links and new anchors`,
+ `HTML sanity review around edited sections`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does rpg-wednesday-learning-library own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of rpg-wednesday-learning-library?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether rpg-wednesday-learning-library still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Make the education direction useful without scattering the site into many top-level routes. The first public surface is a namespaced…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

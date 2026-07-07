@@ -1,9 +1,30 @@
 # wip — interaction-loop-contract
-# Branch: feature/interaction-loop-contract
-# Started: 2026-04-11
-
+#
+#>plan_interaction_loop_contract_wip
+#:operation #!cache
+#:fixity #!tending
 #:layer #!pragmatics
 
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@plans_root: ~"../../../.agents/plans/index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+
+operation = "cache"
+fixity = "tending"
+
+^"selection_probes"{
+ probes = #[ `rg 'interaction-loop-contract' public`, `Hypotheses: extracting the loop contract reduces duplication without changing current behavior; image and inspector consumers still resolve through the same visible loop states`, ][reg=set]
+ rule = "Run probes before trusting cached plan_context."
+}[reg=facet]
+
+^"plan_context"{
+ goal = `Extract the shared interaction-loop semantics that are currently duplicated across the state inspector and image metaphysics runtime. The end state is a small contract module that owns canonical loop states, refresh reasons, labels, and timing reads so future components can join the same activation/resolution model without inventing parallel local semantics. The next useful generalization is to let this become the shared interaction-feedback contract for other guarded, stateful runtime surfaces when they need the same prime/land/residue vocabulary. Taste note: improve layering and clarity by moving the process vocabulary into one truthful surface.`
+ owner = `interaction-loop-contract`
+ operation = "prime"
+ bucket = "css_layout_interaction"
+ validation = #[ `Hypotheses: extracting the loop contract reduces duplication without changing current behavior; image and inspector consumers still resolve through the same visible loop states`, `Negative controls: existing operator/brace/mode/settings/image interactions continue to function; no new CSS edits are required; cancel and blur paths do not leave stale primed state`, `Demo sequence: / -> home frame state block, /settings/ -> runtime preferences state block, image-heavy route with hold-to-visit and effect cycling`, ][reg=set]
+}[reg=facet]
 ^["roots"]{
  @cluster: ~".agents/plans/plan-ecology-clustering/plan-ecology-clustering.spw"
  @plan: ~".agents/plans/interaction-loop-contract/PLAN.md"

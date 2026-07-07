@@ -44,6 +44,10 @@
 @agentic_contracts: ~"../.agents/plans/agentic-dev-contracts/PLAN.md"
 @plan_maintenance: ~"../.agents/skills/spw-plan-maintenance/SKILL.md"
 @planning_ecology: ~"./conventions/planning-ecology.spw"
+@wip_notebook: ~"./conventions/wip-notebook.spw"
+@plan_index: ~"./conventions/plan-index.spw"
+@plans_root: ~"../.agents/plans/index.spw"
+@surfaces_index: ~"./surfaces/index.spw"
 @operator_site_projection: ~"./conventions/operator-site-projection.spw"
 @operator_alignment: ~"./conventions/operator-alignment.spw"
 @operational_semantics: ~"./conventions/operational-semantics.spw"
@@ -199,6 +203,10 @@ dispatch: .{
  agent_optimization = @agent_optimization
  plan_maintenance = @plan_maintenance
  planning_ecology = @planning_ecology
+ wip_notebook = @wip_notebook
+ plan_index = @plan_index
+ plans_root = @plans_root
+ surfaces_index = @surfaces_index
  operator_site_projection = @operator_site_projection
  operator_alignment = @operator_alignment
  model_guided_refinement = @model_guided_refinement

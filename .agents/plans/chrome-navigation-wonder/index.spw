@@ -26,6 +26,9 @@ intent: .{
  bucket = "chrome_navigation"
 }[reg=facet]
 
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @fix: ~"./FIX.md"
 @component_taxonomy: ~"../../../.spw/conventions/component-taxonomy.spw"
@@ -35,10 +38,16 @@ intent: .{
 @attention_field: ~"../../../.spw/conventions/attention-field.spw"
 @cognitive_navigation: ~"../../../.spw/conventions/cognitive-navigation.spw"
 @expressive_registers: ~"../../../.spw/conventions/expressive-registers.spw"
+@plan_space_menu_arcs_electrical: ~"./space-menu-arcs-electrical/index.spw"
+@menu_field: ~"../../../.spw/surfaces/menu-field.spw"
+@circuit_components: ~"../../../.spw/conventions/circuit-components.spw"
 
 dispatch: .{
  plan = @plan
  fix = @fix
+ plans_root = @plans_root
+ plan_index_convention = @plan_index_convention
+ wip_notebook = @wip_notebook
  component_taxonomy = @component_taxonomy
  navigation_header_disclosure = @navigation_header_disclosure
  floating_chrome_stack = @floating_chrome_stack
@@ -46,6 +55,9 @@ dispatch: .{
  attention_field = @attention_field
  cognitive_navigation = @cognitive_navigation
  expressive_registers = @expressive_registers
+ plan_space_menu_arcs_electrical = @plan_space_menu_arcs_electrical
+ menu_field = @menu_field
+ circuit_components = @circuit_components
 }[reg=facet]
 
 ^"owner_claim"{
@@ -71,10 +83,12 @@ editor_prompts: #[
  .{ ask = `What is the mobile footer/cauldron rhythm problem?`, see = @plan }[reg=facet],
  .{ ask = `How should chrome participate in the attentional field?`, see = @component_taxonomy }[reg=facet],
  .{ ask = `What hover-stability fixes are still open?`, see = @fix }[reg=facet],
+ .{ ask = `Which plan index convention routes this directory?`, see = @plan_index_convention }[reg=facet],
 ][reg=set]
 
 invariants: #[
  `Operators stay the force layer; semantic-accent stays the projection layer.`,
  `Reach/return/invitation project through existing locomotion surfaces; approach stays on handle shell only.`,
  `Chrome CSS edits target public/css/shell/chrome/* after the 2026 split.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
 ][reg=set]

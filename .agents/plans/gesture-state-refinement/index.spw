@@ -1,0 +1,83 @@
+# Plan Index — gesture-state-refinement
+#
+# Make shared gesture behavior calmer on mobile, remove accidental menu / brace activations during ordinary scrolling, and document the resulting interaction grammar through both…
+
+#>plan_gesture_state_refinement_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Make shared gesture behavior calmer on mobile, remove accidental menu / brace activations during ordinary scrolling, and document the resulting interaction grammar through both visible settings-page copy and stable console helpers. Keep this pass focused on gesture intent; do not reopen the full shell or chrome ownership model here.`
+ owner = `gesture-state-refinement`
+ kind = `plan`
+ bucket = `css_layout_interaction`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "css_layout_interaction"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@brace_gestures: ~"../../../public/js/runtime/brace-gestures.js"
+@region_menu: ~"../../../public/js/runtime/region-menu.js"
+@site: ~"../../../public/js/site.js"
+@index: ~"../../../settings/index.html"
+
+dispatch: .{
+ plan = @plan
+ brace_gestures = @brace_gestures
+ region_menu = @region_menu
+ site = @site
+ index = @index
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-gesture_state_refinement-001"
+ layer = "pragmatic"
+ hypothesis = `Make shared gesture behavior calmer on mobile, remove accidental menu / brace activations during ordinary scrolling, and document the resulting interaction grammar through both visible settings-page copy and stable console helpers. Keep this pass focused on gesture intent; do not reopen the full shell or chrome ownership model here.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/js/runtime/brace-gestures.js"
+ probe_ref = `node --check public/js/runtime/brace-gestures.js`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/runtime/brace-gestures.js unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `In scope: brace / region gesture cleanup, viewport-safe semantic menu behavior, console-accessible gesture inspection helpers, and one settings-page documentation pass for gesture semantics, console discovery, and spell-oriented seeds.`,
+  `-`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `node --check public/js/runtime/brace-gestures.js`,
+ `node --check public/js/runtime/region-menu.js`,
+ `node --check public/js/site.js`,
+ `git diff --check`,
+ `npm run check`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does gesture-state-refinement own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of gesture-state-refinement?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether gesture-state-refinement still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Make shared gesture behavior calmer on mobile, remove accidental menu / brace activations during ordinary scrolling, and document the…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+
