@@ -14,10 +14,24 @@ intent: .{
  goal = `Public Goal: Turn the 16-page curriculum report into interactive, concept-first learning experiences on spwashi.com. Learners progress through 6 economic-analogy CS modules as quests, manipulate bounded analogies in simulations + mandatory boundary tests, produce exportable proof-card artifacts, track progress locally (no login), and synthesize in capstone portfolios. The site becomes a *living, usable LMS* that demonstrates its own principles (readable systems, developmental climate as equity, constructive play, local-first, recursive notice→name→fold→note→return loop).`
  owner = `living-learning-surface`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@plan_rpg_wednesday_learning_library: ~"./rpg-wednesday-learning-library/index.spw"
+@plan_learning_science_enhancement: ~"./learning-science-enhancement/index.spw"
 @contextual_ui: ~"../../../public/js/interface/contextual-ui.js"
 @operator_site_projection: ~"../../../.spw/conventions/operator-site-projection.spw"
 @play_rpg_wednesday_library_index_html: ~"../../../play/rpg-wednesday/library/index.html"
@@ -28,6 +42,8 @@ intent: .{
 
 dispatch: .{
  plan = @plan
+ plan_rpg_wednesday_learning_library = @plan_rpg_wednesday_learning_library
+ plan_learning_science_enhancement = @plan_learning_science_enhancement
  contextual_ui = @contextual_ui
  operator_site_projection = @operator_site_projection
  play_rpg_wednesday_library_index_html = @play_rpg_wednesday_library_index_html
@@ -35,6 +51,17 @@ dispatch: .{
  site_settings = @site_settings
  shared = @shared
  core = @core
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-living_learning_surface-001"
+ layer = "pragmatic"
+ hypothesis = `Public Goal: Turn the 16-page curriculum report into interactive, concept-first learning experiences on spwashi.com. Learners progress through 6 economic-analogy CS modules as quests, manipulate bounded analogies in simulations + mandatory boundary tests, produce exportable proof-card artifacts, track progress locally (no login), and synthesize in capstone portfolios. The site becomes a *living, usable LMS* that demonstrates its own principles (readable systems, developmental climate as equity, constructive play, local-first, recursive notice→name→fold→note→return loop).`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/js/interface/contextual-ui.js"
+ probe_ref = `git diff --check, node --check <edited-js>, npm run check (full or targeted) before landing.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/interface/contextual-ui.js unchanged or untested.`
+ status = "active"
 }[reg=facet]
 
 validation: #[
@@ -46,9 +73,15 @@ validation: #[
  `Pedagogical: Memory module demonstrates full contract (economic parallel + tech trace + *mandatory* boundary test + Cask quest + artifact path). Analogy stress-tests prevent over-extension.`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does living-learning-surface own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of living-learning-surface?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether living-learning-surface still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: Public Goal: Turn the 16-page curriculum report into interactive, concept-first learning experiences on spwashi.com. Learners progress…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

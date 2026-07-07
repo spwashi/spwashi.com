@@ -14,10 +14,24 @@ intent: .{
  goal = `Establish a lightweight but consistent writing and structural model for the site's .spw surfaces (conventions, philosophy, reviews, surfaces, and application notes) so that they feel like natural, readable extensions of the spw-workbench's own self-modeling canon, while remaining distinctly local to this repository for human developer collaboration. Make the collection of .spw files more navigable (easy to traverse, cross-reference, and discover relevant surfaces) and more dimensional (explicitly layered along meaningful axes such as temporal rhythm, practice depth, semantic layer, and collaboration phase) so that developers with varying skill levels and familiarity can more easily enter, tend, and exchange within the living documentation of the site. This work directly supports the local "earthy rhythms of participation and exchange" model (tending experience slices like garden beds or painting layers over seasons) and the need for practice structures that accommodate developers arriving with different relationships to the fundamentals. It also prepares for a larger expansion in semantic capacity: many more operators, audience registers, practice beds, creative prompts, product lines, and slice contracts can exist if .spw surfaces make clear whether they are caching insight, auditing understanding, aligning patterns, priming expansion, creating a contract, or archiving old context.`
  owner = `spw-surface-normalization`
  kind = `plan`
+ bucket = `semantic_rails`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "semantics | pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "warm"
+ bucket = "semantic_rails"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@plan_modular_experience_slices: ~"./modular-experience-slices/index.spw"
+@plan_agent_optimization: ~"./agent-optimization/index.spw"
 @semantic_capacity: ~"../../../.spw/conventions/semantic-capacity.spw"
 @fundamentals_practice_rhythms: ~"../../../.spw/reviews/fundamentals-practice-rhythms.spw"
 @modular_experience_slices_volleyball: ~"../../../.spw/reviews/modular-experience-slices-volleyball.spw"
@@ -29,6 +43,8 @@ intent: .{
 
 dispatch: .{
  plan = @plan
+ plan_modular_experience_slices = @plan_modular_experience_slices
+ plan_agent_optimization = @plan_agent_optimization
  semantic_capacity = @semantic_capacity
  fundamentals_practice_rhythms = @fundamentals_practice_rhythms
  modular_experience_slices_volleyball = @modular_experience_slices_volleyball
@@ -39,9 +55,25 @@ dispatch: .{
  planning_ecology = @planning_ecology
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-spw_surface_normalization-001"
+ layer = "pragmatic"
+ hypothesis = `Establish a lightweight but consistent writing and structural model for the site's .spw surfaces (conventions, philosophy, reviews, surfaces, and application notes) so that they feel like natural, readable extensions of the spw-workbench's own self-modeling canon, while remaining distinctly local to this repository for human developer collaboration. Make the collection of .spw files more navigable (easy to traverse, cross-reference, and discover relevant surfaces) and more dimensional (explicitly layered along meaningful axes such as temporal rhythm, practice depth, semantic layer, and collaboration phase) so that developers with varying skill levels and familiarity can more easily enter, tend, and exchange within the living documentation of the site. This work directly supports the local "earthy rhythms of participation and exchange" model (tending experience slices like garden beds or painting layers over seasons) and the need for practice structures that accommodate developers arriving with different relationships to the fundamentals. It also prepares for a larger expansion in semantic capacity: many more operators, audience registers, practice beds, creative prompts, product lines, and slice contracts can exist if .spw surfaces make clear whether they are caching insight, auditing understanding, aligning patterns, priming expansion, creating a contract, or archiving old context.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../.spw/conventions/semantic-capacity.spw"
+ probe_ref = `rg 'spw-surface-normalization' .agents/plans/spw-surface-normalization`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../.spw/conventions/semantic-capacity.spw unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does spw-surface-normalization own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of spw-surface-normalization?`, see = @index }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: Establish a lightweight but consistent writing and structural model for the site's .spw surfaces (conventions, philosophy, reviews,…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

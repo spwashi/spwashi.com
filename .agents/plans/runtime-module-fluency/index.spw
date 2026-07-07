@@ -14,10 +14,24 @@ intent: .{
  goal = `Make the site behave like a learnable visual instrument: calm at rest, expressive when practiced, and inspectable when a reader wants to understand which scripts changed behavior or visuals. The complexity should feel closer to a French horn than a random control panel: stable ground, repeated fingerings, and visually legible resonance.`
  owner = `runtime-module-fluency`
  kind = `plan`
+ bucket = `runtime_js_validation`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "runtime_js_validation"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@plan_css_state_legibility: ~"./css-state-legibility/index.spw"
+@plan_semantic_html_normalization: ~"./semantic-html-normalization/index.spw"
 @site: ~"../../../public/js/site.js"
 @foundation: ~"../../../public/css/components/foundation.css"
 @index: ~"../../../settings/index.html"
@@ -26,11 +40,24 @@ intent: .{
 
 dispatch: .{
  plan = @plan
+ plan_css_state_legibility = @plan_css_state_legibility
+ plan_semantic_html_normalization = @plan_semantic_html_normalization
  site = @site
  foundation = @foundation
  index = @index
  query_disposition = @query_disposition
  site_semantics = @site_semantics
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-runtime_module_fluency-001"
+ layer = "pragmatic"
+ hypothesis = `Make the site behave like a learnable visual instrument: calm at rest, expressive when practiced, and inspectable when a reader wants to understand which scripts changed behavior or visuals. The complexity should feel closer to a French horn than a random control panel: stable ground, repeated fingerings, and visually legible resonance.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/js/site.js"
+ probe_ref = `node --check public/js/site.js`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/site.js unchanged or untested.`
+ status = "active"
 }[reg=facet]
 
 scope: .{
@@ -51,9 +78,15 @@ validation: #[
  `window.__SPW_SITE__.snapshotModules()`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does runtime-module-fluency own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of runtime-module-fluency?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether runtime-module-fluency still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: Make the site behave like a learnable visual instrument: calm at rest, expressive when practiced, and inspectable when a reader wants to…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

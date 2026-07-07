@@ -14,8 +14,20 @@ intent: .{
  goal = `Refine the site's primary navigation, footer, ornament application, linking surfaces, and spell-driven flow so the experience has clearer visual rhythm, better mobile ergonomics, consistent distribution of decorative and functional weight, and stronger "momentum" (the feeling that navigation, spells, and transitions carry the visitor forward naturally). This is a craft-quality / polish pass following the recent runtime load instrumentation and site-rhythm ornament work. It prioritizes shared surfaces over per-route changes.`
  owner = `chrome-distribution-momentum-pass`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @navigation_spells: ~"../../../public/js/runtime/navigation-spells.js"
@@ -37,6 +49,17 @@ dispatch: .{
  frame_navigator = @frame_navigator
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-chrome_distribution_momentum_pass-001"
+ layer = "pragmatic"
+ hypothesis = `Refine the site's primary navigation, footer, ornament application, linking surfaces, and spell-driven flow so the experience has clearer visual rhythm, better mobile ergonomics, consistent distribution of decorative and functional weight, and stronger "momentum" (the feeling that navigation, spells, and transitions carry the visitor forward naturally). This is a craft-quality / polish pass following the recent runtime load instrumentation and site-rhythm ornament work. It prioritizes shared surfaces over per-route changes.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/js/runtime/navigation-spells.js"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/runtime/navigation-spells.js unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
 validation: #[
  `git diff --check`,
  `node --check on any edited JS`,
@@ -46,9 +69,15 @@ validation: #[
  `Preserve all existing copy, analytics, metadata, and semantic structure`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does chrome-distribution-momentum-pass own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of chrome-distribution-momentum-pass?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether chrome-distribution-momentum-pass still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: Refine the site's primary navigation, footer, ornament application, linking surfaces, and spell-driven flow so the experience has clearer…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

@@ -14,8 +14,20 @@ intent: .{
  goal = `The desired end state is a site interaction system that rewards familiarity: repeated use builds skill and fluency, interactions have a recognizable grammar, and the underlying physics metaphor is legible enough to discuss, teach, and play with. A secondary aim is to make Spw useful as a substrate for exercising cognition and spatial relationship — where the grammar can illuminate how other languages, notations, and structures work rather than replacing them. The immediate task is twofold: design a progression ladder for interactive circuits (how interactions become familiar, then fluent, then habitual); and rethink whether the boon/bane vocabulary that names brace physics is cognitively accessible or whether it needs a bridge, supplement, or replacement. The taste note is practiced grammar + honest physics: interactions should feel learnable the way a musical instrument is learnable — rewarding fluency without requiring it — and the physics should work at the level of ordinary physical intuition before it becomes Spw doctrine.`
  owner = `interaction-grammar`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | interaction-grammar.spw | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
@@ -25,6 +37,17 @@ dispatch: .{
  plan = @plan
  wip = @wip
  interaction_grammar = @interaction_grammar
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-interaction_grammar-001"
+ layer = "pragmatic"
+ hypothesis = `The desired end state is a site interaction system that rewards familiarity: repeated use builds skill and fluency, interactions have a recognizable grammar, and the underlying physics metaphor is legible enough to discuss, teach, and play with. A secondary aim is to make Spw useful as a substrate for exercising cognition and spatial relationship — where the grammar can illuminate how other languages, notations, and structures work rather than replacing them. The immediate task is twofold: design a progression ladder for interactive circuits (how interactions become familiar, then fluent, then habitual); and rethink whether the boon/bane vocabulary that names brace physics is cognitively accessible or whether it needs a bridge, supplement, or replacement. The taste note is practiced grammar + honest physics: interactions should feel learnable the way a musical instrument is learnable — rewarding fluency without requiring it — and the physics should work at the level of ordinary physical intuition before it becomes Spw doctrine.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../.agents/plans/interaction-grammar/interaction-grammar.spw"
+ probe_ref = `Hypotheses: circuit progression will make the site feel deeper over time without requiring upfront investment; a more accessible brace physics vocabulary will improve legibility of the operator atlas and Pretext surfaces; Spw framing of other languages will make spatial relationships between notations more visible.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../.agents/plans/interaction-grammar/interaction-grammar.spw unchanged or untested.`
+ status = "active"
 }[reg=facet]
 
 scope: .{
@@ -42,9 +65,15 @@ validation: #[
  `Demo sequence: visit as a first-time user — identify the entry circuit; return after repeated use — identify what new recognition is available; test brace physics vocabulary with a user unfamiliar with Spw; view a multi-language surface and confirm the framed language teaches something about itself.`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does interaction-grammar own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of interaction-grammar?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether interaction-grammar still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: The desired end state is a site interaction system that rewards familiarity: repeated use builds skill and fluency, interactions have a…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

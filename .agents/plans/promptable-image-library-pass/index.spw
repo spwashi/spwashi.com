@@ -1,6 +1,6 @@
 # Plan Index — promptable-image-library-pass
 #
-# - Make promptable links easier to share as memeable URLs and image seeds.
+# Make promptable links easier to share as memeable URLs and image seeds.
 
 #>plan_promptable_image_library_pass_index
 #:index #!plan
@@ -11,11 +11,23 @@ operation = "prime"
 fixity = "tending"
 
 intent: .{
- goal = `- Make promptable links easier to share as memeable URLs and image seeds.`
+ goal = `Make promptable links easier to share as memeable URLs and image seeds.`
  owner = `promptable-image-library-pass`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @play_rpg_wednesday_index_html: ~"../../../play/rpg-wednesday/index.html"
@@ -33,9 +45,25 @@ dispatch: .{
  operator_alignment = @operator_alignment
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-promptable_image_library_pass-001"
+ layer = "pragmatic"
+ hypothesis = `Make promptable links easier to share as memeable URLs and image seeds.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../play/rpg-wednesday/index.html"
+ probe_ref = `rg 'promptable-image-library-pass' .agents/plans/promptable-image-library-pass`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../play/rpg-wednesday/index.html unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does promptable-image-library-pass own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of promptable-image-library-pass?`, see = @index }[reg=facet],
+][reg=set]
+
 invariants: #[
- `Owner intent: - Make promptable links easier to share as memeable URLs and image seeds.`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Make promptable links easier to share as memeable URLs and image seeds.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

@@ -7,19 +7,25 @@
 
 @plan: ~"./PLAN.md"
 @index: ~"./index.spw"
+@plans_root: ~"../../../.agents/plans/index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 
 operation = "cache"
 fixity = "tending"
 
+^"selection_probes"{
+ probes = #[ `rg 'gesture-inspectability-metaphysics' public/js/runtime/brace-gestures.js`, `git diff --check`, `test -f public/js/runtime/brace-gestures.js`, ][reg=set]
+ rule = "Run probes before trusting cached plan_context."
+}[reg=facet]
+
 ^"plan_context"{
  goal = `Turn the site’s current interaction grammar into a coherent, browser-tested system instead of a set of adjacent local passes. The public result should be: - brace gestures that feel deliberate on touch, pointer, and keyboard - inspect surfaces that explain what the runtime believes is happening - metaphysics layers that stay legible as interaction grammar, not decorative lore - a validation loop that exercises real routes and real state transitions in the browser before further semantic expansion Taste note: inspectable wonder with operational discipline.`
  owner = `gesture-inspectability-metaphysics`
  operation = "prime"
+ bucket = "active_backlog"
  validation = #[ `git diff --check`, `node --check for every edited JS runtime module`, `targeted rg checks for data-spw-* state families and duplicated ownership`, `browser verification on the canonical specimen routes at:`, `mobile narrow touch`, `desktop pointer`, ][reg=set]
  hot_files = #[ `public/js/runtime/brace-gestures.js`, `public/js/runtime/attention-architecture.js`, `public/js/runtime/spells.js`, `public/js/runtime/experiential.js`, `public/js/media/image-metaphysics.js`, `public/js/interface/discovery-notices.js`, ][reg=set]
 }[reg=facet]
-
 #>gesture_inspectability_metaphysics
 #:plan #!runtime
 #:layer #!pragmatics

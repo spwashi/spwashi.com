@@ -14,11 +14,27 @@ intent: .{
  goal = `Make the development experience on spwashi.com feel progressively teachable rather than merely executable. The codebase should help a developer relate to code as a staged practice: first read the structure, then observe the runtime, then tune the timing, then compare the effect of different JavaScript forms, and eventually use TypeScript where it sharpens contracts and makes philosophy-like distinctions between shape, behavior, and proof more explicit. The experience should stay hand-authored, progressively enhanced, and inspectable. Static HTML remains the readable baseline, JavaScript adds learning and observation affordances when present, and TypeScript is introduced where it improves the contract layer without turning the site into a framework demo.`
  owner = `language-ladder-runtime-instrumentation`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
+@plan_runtime_module_fluency: ~"./runtime-module-fluency/index.spw"
+@plan_runtime_load_instrumentation: ~"./runtime-load-instrumentation/index.spw"
+@plan_typescript_integration: ~"./typescript-integration/index.spw"
+@plan_agent_optimization: ~"./agent-optimization/index.spw"
 @public_js_site_js: ~"../../../public/js/site.js"
 @instrumentation: ~"../../../public/js/kernel/instrumentation.js"
 @runtime_helpers: ~"../../../public/js/runtime/runtime-helpers.js"
@@ -30,6 +46,10 @@ intent: .{
 dispatch: .{
  plan = @plan
  wip = @wip
+ plan_runtime_module_fluency = @plan_runtime_module_fluency
+ plan_runtime_load_instrumentation = @plan_runtime_load_instrumentation
+ plan_typescript_integration = @plan_typescript_integration
+ plan_agent_optimization = @plan_agent_optimization
  public_js_site_js = @public_js_site_js
  instrumentation = @instrumentation
  runtime_helpers = @runtime_helpers
@@ -37,6 +57,17 @@ dispatch: .{
  readme = @readme
  conventions = @conventions
  spw_site_spw = @spw_site_spw
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-language_ladder_runtime_instrumentation-001"
+ layer = "pragmatic"
+ hypothesis = `Make the development experience on spwashi.com feel progressively teachable rather than merely executable. The codebase should help a developer relate to code as a staged practice: first read the structure, then observe the runtime, then tune the timing, then compare the effect of different JavaScript forms, and eventually use TypeScript where it sharpens contracts and makes philosophy-like distinctions between shape, behavior, and proof more explicit. The experience should stay hand-authored, progressively enhanced, and inspectable. Static HTML remains the readable baseline, JavaScript adds learning and observation affordances when present, and TypeScript is introduced where it improves the contract layer without turning the site into a framework demo.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/js/site.js"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/site.js unchanged or untested.`
+ status = "active"
 }[reg=facet]
 
 scope: .{
@@ -61,9 +92,15 @@ validation: #[
  `review that the ladder remains understandable without runtime features enabled`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does language-ladder-runtime-instrumentation own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of language-ladder-runtime-instrumentation?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether language-ladder-runtime-instrumentation still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: Make the development experience on spwashi.com feel progressively teachable rather than merely executable. The codebase should help a…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

@@ -14,10 +14,24 @@ intent: .{
  goal = `Make the site's "cauldron" (collection/resonance vessel for semantic ingredients) and "spells" (grounded, serializable, replayable interaction units / checkpoints) feel like living, gardenable memory rather than static lists.`
  owner = `spell-cauldron-lifecycle-memory-gardening`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@plan_agent_optimization: ~"./agent-optimization/index.spw"
+@plan_spellcraft_authoring: ~"./spellcraft-authoring/index.spw"
 @site_semantics: ~"../../../.spw/conventions/site-semantics.spw"
 @composition: ~"../../../public/js/interface/composition.js"
 @spells: ~"../../../public/js/runtime/spells.js"
@@ -29,6 +43,8 @@ intent: .{
 
 dispatch: .{
  plan = @plan
+ plan_agent_optimization = @plan_agent_optimization
+ plan_spellcraft_authoring = @plan_spellcraft_authoring
  site_semantics = @site_semantics
  composition = @composition
  spells = @spells
@@ -39,9 +55,35 @@ dispatch: .{
  spell_cauldron_lifecycle_memory_gardening = @spell_cauldron_lifecycle_memory_gardening
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-spell_cauldron_lifecycle_memory_gardening-001"
+ layer = "pragmatic"
+ hypothesis = `Make the site's "cauldron" (collection/resonance vessel for semantic ingredients) and "spells" (grounded, serializable, replayable interaction units / checkpoints) feel like living, gardenable memory rather than static lists.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../.spw/conventions/site-semantics.spw"
+ probe_ref = `After JS changes: node --check + manual smoke (capture ingredients, mix, inspect, new prune/nourish actions, observe new phase data attrs on html + ingredients).`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../.spw/conventions/site-semantics.spw unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+validation: #[
+ `After JS changes: node --check + manual smoke (capture ingredients, mix, inspect, new prune/nourish actions, observe new phase data attrs on html + ingredients).`,
+ `After CSS: visual check of state-driven styles for cauldron/spell presence + lifecycle phases (reduced motion safe); git diff --check.`,
+ `Page enhancements: load design/runtime and blog, verify live mirrors update, inline tuning controls work.`,
+ `Full gate: npm run check (includes CSS contracts, generated manifest, route validation, audit).`,
+ `Editor inspectability: the new phases and gardening concepts appear in the design catalog once data attrs are used, and in the .spw note.`,
+ `Regression: existing spell checkpoints, cauldron mix/clear, grounded navigation, and wonder memory flows continue to work unchanged.`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does spell-cauldron-lifecycle-memory-gardening own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of spell-cauldron-lifecycle-memory-gardening?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether spell-cauldron-lifecycle-memory-gardening still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: Make the site's "cauldron" (collection/resonance vessel for semantic ingredients) and "spells" (grounded, serializable, replayable…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

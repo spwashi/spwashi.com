@@ -7,19 +7,25 @@
 
 @plan: ~"./PLAN.md"
 @index: ~"./index.spw"
+@plans_root: ~"../../../.agents/plans/index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 
 operation = "cache"
 fixity = "tending"
 
+^"selection_probes"{
+ probes = #[ `rg 'topic-photo-svg-pass' public/`, `git diff --check`, `test -f public/`, ][reg=set]
+ rule = "Run probes before trusting cached plan_context."
+}[reg=facet]
+
 ^"plan_context"{
  goal = `Make the topic atlas feel more inhabited. The topic surfaces should stop reading like isolated text stubs and start behaving like a connected field guide with real visual references, better route cross-links, and richer diagrammatic cues. All photo references in this pass must come from images that already live in public/.`
  owner = `topic-photo-svg-pass`
  operation = "prime"
+ bucket = "active_backlog"
  validation = #[ `git diff --check`, `Manual sanity pass for balanced HTML and route links`, `Confirm new routes are present in sw.js`, `Confirm all newly added image references point into public/images/`, ][reg=set]
  hot_files = #[ `public/`, `topics/index.html`, `topics/architecture/index.html`, `topics/pedagogy/index.html`, `topics/craft/svg/index.html`, `topics/site-design/index.html`, ][reg=set]
 }[reg=facet]
-
 ^["roots"]{
  @plan: ~".agents/plans/topic-photo-svg-pass/PLAN.md"
  @topics: ~"topics/index.html"

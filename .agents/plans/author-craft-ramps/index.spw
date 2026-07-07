@@ -14,8 +14,20 @@ intent: .{
  goal = `Build a small /topics/craft/ cluster for a BookTok-adjacent author friend who may not identify as technical but is willing to explore HTML and CSS in fragments. The highest-value first pass should make the web feel like a sensory book object, an illustrator collaboration surface, and a playful file tradition. Taste note: bookish wonder without beige nostalgia — tactile, screenshot-worthy, and useful enough to hand to a creative collaborator.`
  owner = `author-craft-ramps`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | author-craft-ramps.spw | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
@@ -43,6 +55,17 @@ dispatch: .{
  about_website_index_html = @about_website_index_html
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-author_craft_ramps-001"
+ layer = "pragmatic"
+ hypothesis = `Build a small /topics/craft/ cluster for a BookTok-adjacent author friend who may not identify as technical but is willing to explore HTML and CSS in fragments. The highest-value first pass should make the web feel like a sensory book object, an illustrator collaboration surface, and a playful file tradition. Taste note: bookish wonder without beige nostalgia — tactile, screenshot-worthy, and useful enough to hand to a creative collaborator.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../topics/index.html"
+ probe_ref = `Hypotheses: an author can open /topics/craft/, choose a ramp, and understand one concrete next step; a developer friend can see where they could help; screenshots capture prompt cards and motifs without needing runtime context.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../topics/index.html unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
 scope: .{
  in = #[
   `In scope: topic index, craft landing page, fragments route, SVG storytelling route, file traditions route, localized craft CSS, internal links from high-traffic surfaces, manifest and service worker cache updates.`,
@@ -58,9 +81,15 @@ validation: #[
  `Demo sequence: open /topics/, follow Craft, open Fragments, inspect one code/result pair, open SVG Storytelling, inspect one motif, open File Traditions, follow a cross-link to Blog or Software.`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does author-craft-ramps own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of author-craft-ramps?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether author-craft-ramps still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: Build a small /topics/craft/ cluster for a BookTok-adjacent author friend who may not identify as technical but is willing to explore HTML…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

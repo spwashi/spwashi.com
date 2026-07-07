@@ -9,6 +9,8 @@
 @planning_ecology: ~"./planning-ecology.spw"
 @semantic_capacity: ~"./semantic-capacity.spw"
 @insight_cache_template: ~"../../.agents/plans/model-guided-refinement/templates/semantic-insight-cache.spw"
+@plan_index: ~"./plan-index.spw"
+@plans_root: ~"../../.agents/plans/index.spw"
 
 operation = "contract"
 fixity = "stable"
@@ -59,6 +61,8 @@ fixity = "stable"
   planning_ecology = @planning_ecology
   semantic_capacity = @semantic_capacity
   insight_cache_template = @insight_cache_template
+  plan_index = @plan_index
+  plans_root = @plans_root
 }
 
 invariants: #[

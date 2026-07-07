@@ -14,8 +14,20 @@ intent: .{
  goal = `The desired end state is a site where image interactions feel less generic and more anchored to what the image is doing in the surrounding prose. Instead of a fixed accent palette, important figures should be able to resonate with their own colors, lean toward parser/math/play/software neighborhoods, and accept image-specific override knobs directly in HTML. The taste note is semantic atmosphere: the canvas should feel like a visual consequence of the image and its anchors, not an ornamental layer pasted on top.`
  owner = `palette-resonance`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
@@ -29,6 +41,17 @@ dispatch: .{
  topics_software_index_html = @topics_software_index_html
  topics_software_parsers_index_html = @topics_software_parsers_index_html
  topics_math_index_html = @topics_math_index_html
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-palette_resonance-001"
+ layer = "pragmatic"
+ hypothesis = `The desired end state is a site where image interactions feel less generic and more anchored to what the image is doing in the surrounding prose. Instead of a fixed accent palette, important figures should be able to resonate with their own colors, lean toward parser/math/play/software neighborhoods, and accept image-specific override knobs directly in HTML. The taste note is semantic atmosphere: the canvas should feel like a visual consequence of the image and its anchors, not an ornamental layer pasted on top.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../topics/software/index.html"
+ probe_ref = `Hypotheses: palette-driven accents will make image interactions feel more image-specific; small semantic/path biases will make route heroes feel better tied to their surrounding copy.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../topics/software/index.html unchanged or untested.`
+ status = "active"
 }[reg=facet]
 
 scope: .{
@@ -46,9 +69,15 @@ validation: #[
  `Demo sequence: visit /topics/software/, /topics/software/parsers/, and /topics/math/; interact with the hero figures before and after clicking a few route/operator links; confirm that the accent palette remains image-led but shifts slightly with the recent path memory and respects per-image overrides.`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does palette-resonance own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of palette-resonance?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether palette-resonance still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: The desired end state is a site where image interactions feel less generic and more anchored to what the image is doing in the surrounding…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

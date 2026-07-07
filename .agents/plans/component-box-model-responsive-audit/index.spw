@@ -14,8 +14,20 @@ intent: .{
  goal = `Audit and improve the site's core components (frames, cards, operator chips, measure displays, status elements) for consistent box model behavior, proper handling of data-spw-* attributes that affect layout, and high-value responsive improvements across media widths (narrow mobile to wide desktop) and aspect ratios (portrait, landscape, square, ultra-wide). Focus on making the visual grammar (especially around operators, measurements, priming, and curriculum surfaces) more robust and screenshot-friendly without introducing overgeneralized rules that break specific pages or the layered CSS architecture. This work supports the site's evolution as a Living Learning Surface with strong operational semantics: components must remain legible, stable, and tunable whether viewed on a phone in portrait, a laptop, or a large monitor.`
  owner = `component-box-model-responsive-audit`
  kind = `plan`
+ bucket = `css_layout_interaction`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "css_layout_interaction"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @css_build: ~"../../../scripts/css-build.mjs"
@@ -27,6 +39,17 @@ dispatch: .{
  css_build = @css_build
  core = @core
  relational_state = @relational_state
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-component_box_model_responsive_audit-001"
+ layer = "pragmatic"
+ hypothesis = `Audit and improve the site's core components (frames, cards, operator chips, measure displays, status elements) for consistent box model behavior, proper handling of data-spw-* attributes that affect layout, and high-value responsive improvements across media widths (narrow mobile to wide desktop) and aspect ratios (portrait, landscape, square, ultra-wide). Focus on making the visual grammar (especially around operators, measurements, priming, and curriculum surfaces) more robust and screenshot-friendly without introducing overgeneralized rules that break specific pages or the layered CSS architecture. This work supports the site's evolution as a Living Learning Surface with strong operational semantics: components must remain legible, stable, and tunable whether viewed on a phone in portrait, a laptop, or a large monitor.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../scripts/css-build.mjs"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../scripts/css-build.mjs unchanged or untested.`
+ status = "active"
 }[reg=facet]
 
 scope: .{
@@ -50,9 +73,15 @@ validation: #[
  `Update of this plan with findings and fixes`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does component-box-model-responsive-audit own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of component-box-model-responsive-audit?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether component-box-model-responsive-audit still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: Audit and improve the site's core components (frames, cards, operator chips, measure displays, status elements) for consistent box model…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

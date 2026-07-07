@@ -14,8 +14,20 @@ intent: .{
  goal = `Reduce header overload while keeping the site's semantic controls discoverable: - keep Routes as the primary navigation disclosure - make Media Cauldron and current attention posture visible in the header - move secondary reading/display controls behind a Display disclosure on constrained layouts - preserve existing shell-disclosure, settings, cauldron, and route-menu ownership - keep the overlay contract explicit so data-spw-menu-overlay, data-spw-menu-mode, data-spw-menu-topology, and aria-expanded remain separately legible`
  owner = `navigation-header-disclosure`
  kind = `plan`
+ bucket = `css_layout_interaction`
+ artifact_shape = `PLAN.md | FIX.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "css_layout_interaction"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @fix: ~"./FIX.md"
@@ -29,6 +41,17 @@ dispatch: .{
  shell_disclosure = @shell_disclosure
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-navigation_header_disclosure-001"
+ layer = "pragmatic"
+ hypothesis = `Reduce header overload while keeping the site's semantic controls discoverable: - keep Routes as the primary navigation disclosure - make Media Cauldron and current attention posture visible in the header - move secondary reading/display controls behind a Display disclosure on constrained layouts - preserve existing shell-disclosure, settings, cauldron, and route-menu ownership - keep the overlay contract explicit so data-spw-menu-overlay, data-spw-menu-mode, data-spw-menu-topology, and aria-expanded remain separately legible`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../scripts/template.mjs"
+ probe_ref = `node --check public/js/runtime/shell-disclosure.js`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../scripts/template.mjs unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
 validation: #[
  `node --check public/js/runtime/shell-disclosure.js`,
  `node --check scripts/template.mjs`,
@@ -36,9 +59,15 @@ validation: #[
  `targeted rg checks for the new shell action and feature names`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does navigation-header-disclosure own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of navigation-header-disclosure?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether navigation-header-disclosure still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: Reduce header overload while keeping the site's semantic controls discoverable: - keep Routes as the primary navigation disclosure - make…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

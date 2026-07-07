@@ -14,11 +14,24 @@ intent: .{
  goal = `Improve the primary navigation (header via <spw-site-header>), section handles, breadcrumbs, and footer so they are genuinely pleasant on mobile, encourage curiosity/discovery/wonder, and feel like part of the Spw attentional field rather than administrative chrome. Simultaneously honor the philosophical shift: operators as "elements or forces" for metaphysical play (grammar of thought, interactions that produce resonance and emergence), with surface theming carried by the semantic accent family rather than direct operator hues. This keeps the operator palette as a stable, inspectable "periodic table" of forces while surfaces and ornament project lived accent. Support the longer-term vision of a scientifically-social component taxonomy: a model with enough depth and rhythmic discovery that it naturally invites wonder about the underlying sciences of attention, systemic resonance, and emergence — and makes art a natural extension rather than a separate domain.`
  owner = `chrome-navigation-wonder`
  kind = `plan`
+ bucket = `css_layout_interaction`
+ artifact_shape = `PLAN.md | FIX.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "css_layout_interaction"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @fix: ~"./FIX.md"
+@plan_space_menu_arcs_electrical: ~"./space-menu-arcs-electrical/index.spw"
 @menu_field: ~"../../../.spw/surfaces/menu-field.spw"
 @circuit_components: ~"../../../.spw/conventions/circuit-components.spw"
 @chrome_navigation_wonder: ~"../../../.agents/plans/chrome-navigation-wonder/"
@@ -26,14 +39,31 @@ intent: .{
 dispatch: .{
  plan = @plan
  fix = @fix
+ plan_space_menu_arcs_electrical = @plan_space_menu_arcs_electrical
  menu_field = @menu_field
  circuit_components = @circuit_components
  chrome_navigation_wonder = @chrome_navigation_wonder
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-chrome_navigation_wonder-001"
+ layer = "pragmatic"
+ hypothesis = `Improve the primary navigation (header via <spw-site-header>), section handles, breadcrumbs, and footer so they are genuinely pleasant on mobile, encourage curiosity/discovery/wonder, and feel like part of the Spw attentional field rather than administrative chrome. Simultaneously honor the philosophical shift: operators as "elements or forces" for metaphysical play (grammar of thought, interactions that produce resonance and emergence), with surface theming carried by the semantic accent family rather than direct operator hues. This keeps the operator palette as a stable, inspectable "periodic table" of forces while surfaces and ornament project lived accent. Support the longer-term vision of a scientifically-social component taxonomy: a model with enough depth and rhythmic discovery that it naturally invites wonder about the underlying sciences of attention, systemic resonance, and emergence — and makes art a natural extension rather than a separate domain.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../.spw/surfaces/menu-field.spw"
+ probe_ref = `rg 'chrome-navigation-wonder' .agents/plans/chrome-navigation-wonder`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../.spw/surfaces/menu-field.spw unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does chrome-navigation-wonder own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of chrome-navigation-wonder?`, see = @index }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: Improve the primary navigation (header via <spw-site-header>), section handles, breadcrumbs, and footer so they are genuinely pleasant on…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

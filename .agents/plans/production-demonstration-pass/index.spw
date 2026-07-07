@@ -14,8 +14,20 @@ intent: .{
  goal = `Make the spwashi.com site a stronger, more legible demonstration of thoughtful modern production practices in three visible areas: - Media: Full use of the existing asset contracts (image-optimize, image-naming-magic, .spw sidecars, assets.spw discovery, size tiers, AVIF/WebP/PNG, proper <picture>/srcset/sizes with semantic alt and data attributes) so heroes, motifs, illustrations, and figures load faster, adapt better, and carry linguistic meaning. - Platform primitives: Deliberate, progressive, and documented use of current web platform capabilities (View Transitions API, Popover API, CSS Anchor Positioning, scroll/view timelines, advanced container queries, PerformanceObserver surfaces, etc.) presented as "grounded in the Spw grammar and semantic model" rather than decorative add-ons. - Accessibility: Expand the existing design/accessibility/ register into a living flagship pattern library and audit surface that demonstrates inclusive production hygiene (keyboard, focus, semantics, announcements, reduced-motion respect for all wonder/ornament/effects, contrast/density interplay) while staying inside the hand-authored, operator-driven aesthetic. Taste note: structural demonstration, not spectacle. Every addition must remain inspectable via existing data-spw-* surfaces, .spw conventions, and the design catalog. The site should teach by example what disciplined, framework-free, linguistically coherent modern web production looks like. Creator identity preserved: "I'm Spwashi. I build software and make art." All work must keep the person-first voice and recursive editorial loop (make → inspect → reroute → repeat) visible.`
  owner = `production-demonstration-pass`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @effects: ~"../../../public/css/effects/"
@@ -37,6 +49,17 @@ dispatch: .{
  asset_management = @asset_management
  conventions = @conventions
  images = @images
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-production_demonstration_pass-001"
+ layer = "pragmatic"
+ hypothesis = `Make the spwashi.com site a stronger, more legible demonstration of thoughtful modern production practices in three visible areas: - Media: Full use of the existing asset contracts (image-optimize, image-naming-magic, .spw sidecars, assets.spw discovery, size tiers, AVIF/WebP/PNG, proper <picture>/srcset/sizes with semantic alt and data attributes) so heroes, motifs, illustrations, and figures load faster, adapt better, and carry linguistic meaning. - Platform primitives: Deliberate, progressive, and documented use of current web platform capabilities (View Transitions API, Popover API, CSS Anchor Positioning, scroll/view timelines, advanced container queries, PerformanceObserver surfaces, etc.) presented as "grounded in the Spw grammar and semantic model" rather than decorative add-ons. - Accessibility: Expand the existing design/accessibility/ register into a living flagship pattern library and audit surface that demonstrates inclusive production hygiene (keyboard, focus, semantics, announcements, reduced-motion respect for all wonder/ornament/effects, contrast/density interplay) while staying inside the hand-authored, operator-driven aesthetic. Taste note: structural demonstration, not spectacle. Every addition must remain inspectable via existing data-spw-* surfaces, .spw conventions, and the design catalog. The site should teach by example what disciplined, framework-free, linguistically coherent modern web production looks like. Creator identity preserved: "I'm Spwashi. I build software and make art." All work must keep the person-first voice and recursive editorial loop (make → inspect → reroute → repeat) visible.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/css/effects/"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/css/effects/ unchanged or untested.`
+ status = "active"
 }[reg=facet]
 
 scope: .{
@@ -62,9 +85,15 @@ validation: #[
  `Visual sanity on home, design/*, 1–2 topic routes, accessibility page itself (desktop + narrow).`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does production-demonstration-pass own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of production-demonstration-pass?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether production-demonstration-pass still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: Make the spwashi.com site a stronger, more legible demonstration of thoughtful modern production practices in three visible areas: - Media:…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

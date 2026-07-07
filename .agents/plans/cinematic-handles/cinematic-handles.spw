@@ -1,4 +1,8 @@
-# cinematic-handles
+^"operational_hooks"{
+ selectors = #[ `.agents/plans/cinematic-handles/cinematic-handles.spw`, ][reg=set]
+ probe_ref = `Hypotheses: named timing tokens will make motion decisions auditable and consistent; token-level reduced-motion overrides will produce more complete safety than per-rule approaches; layer depth vocabulary will make z-stacking decisions semantically legible.`
+ owner_claim = ~"./index.spw#owner_claim"
+}[reg=facet]# cinematic-handles
 # Distilled semantic note for naming timing and motion with the site's own
 # vocabulary and giving transitions, layers, and lighting semantic depth.
 
@@ -11,6 +15,7 @@
  index = ~"./index.spw"
  goal = `The desired end state is a motion system where every transition has a name derived from the site's own vocabulary, every reveal has a quality that matches its semantic role, and every motion has a reduced-motion safe contract. Instead of anonymous milliseconds and bezier curves, transitions carry names like "boon-settle," "pivot-arc," or "threshold-cross" — names that connect motion to meaning and make timing decisions auditable, not incidental. The wider aim includes layers and lighting as an attention model: depth should feel like depth (not just z-index), and surfaces should carry ambient lighting states that shift as attention moves. Together these give the site a cinematic quality — the sense that spatial and temporal transitions are authored rather than defaulted. The taste note is earned motion + semantic depth: every animation should be the right animation for that semantic state, authored from the site's own grammar rather than borrowed from a design trend.`
  owner = `cinematic-handles`
+ bucket = "active_backlog"
 }[reg=facet]
 ^["thesis"]{
  claim: "Every transition on this site should have a name derived from the Spw grammar that describes what is semantically changing — not just how fast it changes. Named timing tokens make motion decisions auditable, allow reduced-motion contracts to live at the token level, and give the site a consistent temporal personality."

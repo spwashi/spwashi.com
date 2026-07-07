@@ -1,11 +1,16 @@
+^"selection_probes"{
+ probes = #[ `rg 'spellbook-utility' settings/index.html`, `Hypotheses: a utility-first spellboard will make repeat visits more valuable; checkpoint restore will become the first spell people actually use; pinned working-set replay will make the bookmark registry feel alive instead of archival.`, `test -f settings/index.html`, ][reg=set]
+ rule = "Run probes before trusting cached plan_context."
+}[reg=facet]
+
 ^"plan_context"{
  goal = `The desired end state is a spell surface that earns its metaphor by doing useful work. Right now the spell board and header dock serialize grounded tokens into a readable snippet, but they mostly act as documentation of prior interaction. The next step is not more serialization depth; it is executable value. The spellbook should become the inspectable catalog of a few proven interaction macros: things that restore a saved cognitive state, reopen a pinned working set, or otherwise reduce the cost of returning to an in-progress line of thought. The taste note is earned fluency + working memory recovery: spells should feel like learned reflexes that help a person resume, compare, and continue, not like ritual language layered on top of ordinary navigation.`
  owner = `spellbook-utility`
  operation = "prime"
- validation = #[ `Hypotheses: a utility-first spellboard will make repeat visits more valuable; checkpoint restore will become the first spell people actually use; pinned working-set replay will make the bookmark registry feel alive instead of archival.`, `Negative controls: empty-state spell surfaces remain calm and legible; users who never save checkpoints or pins still encounter a complete site; normal route navigation continues without spell knowledge.`, `Demo sequence:`, ][reg=set]
+ bucket = "active_backlog"
+ validation = #[ `Hypotheses: a utility-first spellboard will make repeat visits more valuable; checkpoint restore will become the first spell people actually use; pinned working-set replay will make the bookmark registry feel alive instead of archival.`, `Negative controls: empty-state spell surfaces remain calm and legible; users who never save checkpoints or pins still encounter a complete site; normal route navigation continues without spell knowledge.`, `Demo sequence:`, `Ground several links or concepts, save a checkpoint, reset haptics, restore the checkpoint from the spell board, and verify grounded state returns.`, `Pin several frames, visit /settings/#bookmarks and /settings/#spell-board, trigger resume_pins, and verify the working set becomes a guided sequence rather than a dead listing.`, `Confirm reset and back-out paths remain obvious after each spell.`, ][reg=set]
  hot_files = #[ `settings/index.html`, `.agents/plans/spellbook-utility/PLAN.md`, `.agents/plans/spellbook-utility/wip.spw`, ][reg=set]
 }[reg=facet]
-
 # wip — spellbook-utility
 #
 #>plan_spellbook_utility_wip
@@ -15,6 +20,7 @@
 
 @plan: ~"./PLAN.md"
 @index: ~"./index.spw"
+@plans_root: ~"../../../.agents/plans/index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 
 operation = "cache"

@@ -14,8 +14,20 @@ intent: .{
  goal = `Slug: palette-semantics-improvements`
  owner = `palette-semantics-improvements`
  kind = `plan`
+ bucket = `media_image_sensory`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "media_image_sensory"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @site_semantics: ~"../../../.spw/conventions/site-semantics.spw"
@@ -39,9 +51,25 @@ dispatch: .{
  operator_semantics = @operator_semantics
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-palette_semantics_improvements-001"
+ layer = "pragmatic"
+ hypothesis = `Slug: palette-semantics-improvements`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../.spw/conventions/site-semantics.spw"
+ probe_ref = `rg 'palette-semantics-improvements' .agents/plans/palette-semantics-improvements`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../.spw/conventions/site-semantics.spw unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does palette-semantics-improvements own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of palette-semantics-improvements?`, see = @index }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: Slug: palette-semantics-improvements`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

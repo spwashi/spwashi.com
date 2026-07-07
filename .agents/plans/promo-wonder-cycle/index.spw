@@ -14,8 +14,20 @@ intent: .{
  goal = `Create site structures that can change by day and by week, with separate lanes for: - promo: conversion-facing highlights, CTA cards, services, work samples, and contact nudges - wonder: atmospheric, exploratory, lore-adjacent, or curiosity-building surfaces The site should be able to serve those structures from local HTML first, then optionally hydrate them from a JSON feed.`
  owner = `promo-wonder-cycle`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
@@ -23,6 +35,17 @@ intent: .{
 dispatch: .{
  plan = @plan
  wip = @wip
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-promo_wonder_cycle-001"
+ layer = "pragmatic"
+ hypothesis = `Create site structures that can change by day and by week, with separate lanes for: - promo: conversion-facing highlights, CTA cards, services, work samples, and contact nudges - wonder: atmospheric, exploratory, lore-adjacent, or curiosity-building surfaces The site should be able to serve those structures from local HTML first, then optionally hydrate them from a JSON feed.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"./PLAN.md"
+ probe_ref = `Confirm day/week selection is deterministic for a given date.`
+ falsification = `A patch cannot satisfy the public goal while leaving ./PLAN.md unchanged or untested.`
+ status = "active"
 }[reg=facet]
 
 validation: #[
@@ -33,9 +56,15 @@ validation: #[
  `Run node --check for any edited JS modules.`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does promo-wonder-cycle own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of promo-wonder-cycle?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether promo-wonder-cycle still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: Create site structures that can change by day and by week, with separate lanes for: - promo: conversion-facing highlights, CTA cards,…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

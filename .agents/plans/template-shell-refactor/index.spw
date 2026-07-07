@@ -14,8 +14,20 @@ intent: .{
  goal = `Reduce repeated page chrome in route HTML by improving the HTML-native template renderer and moving repeated shell markup behind explicit directives.`
  owner = `template-shell-refactor`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @template: ~"../../../scripts/template.mjs"
@@ -23,6 +35,17 @@ intent: .{
 dispatch: .{
  plan = @plan
  template = @template
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-template_shell_refactor-001"
+ layer = "pragmatic"
+ hypothesis = `Reduce repeated page chrome in route HTML by improving the HTML-native template renderer and moving repeated shell markup behind explicit directives.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../scripts/template.mjs"
+ probe_ref = `npm run build:tools`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../scripts/template.mjs unchanged or untested.`
+ status = "active"
 }[reg=facet]
 
 scope: .{
@@ -41,9 +64,15 @@ validation: #[
  `targeted route checks for remaining footer/header duplication`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does template-shell-refactor own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of template-shell-refactor?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether template-shell-refactor still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: Reduce repeated page chrome in route HTML by improving the HTML-native template renderer and moving repeated shell markup behind explicit…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

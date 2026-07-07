@@ -1,10 +1,15 @@
+^"selection_probes"{
+ probes = #[ `rg 'skill-folio-operating-system' design/folios/index.html`, `rg 'skill-folio-operating-system' .agents/plans`, `test -f design/folios/index.html`, ][reg=set]
+ rule = "Run probes before trusting cached plan_context."
+}[reg=facet]
+
 ^"plan_context"{
  goal = `Update spwashi.com into a clearer public surface for skill development, artifact processing, visual systems, and community-rooted creative practice.`
  owner = `skill-folio-operating-system`
  operation = "prime"
+ bucket = "active_backlog"
  hot_files = #[ `design/folios/index.html`, `.spw/site.spw`, `.spw/surfaces/product-lines.spw`, `.agents/plans/skill-folio-operating-system/wip.spw`, ][reg=set]
 }[reg=facet]
-
 # wip — skill-folio-operating-system
 #
 #>plan_skill_folio_operating_system_wip
@@ -14,6 +19,7 @@
 
 @plan: ~"./PLAN.md"
 @index: ~"./index.spw"
+@plans_root: ~"../../../.agents/plans/index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 
 operation = "cache"

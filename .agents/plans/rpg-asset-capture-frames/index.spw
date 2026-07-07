@@ -14,17 +14,42 @@ intent: .{
  goal = `RPG Wednesday should let players upload local character, item, place, and artifact images, then stage those assets inside stable screenshot-friendly frames. The site is not responsible for automating capture or sending media to Midjourney, Grok, or any external service; it should prepare a well-designed local surface that players can screenshot manually and pair with a copyable prompt note. Taste note: improve usefulness, trust, and earned wonder. Customizations should feel like discovering more of the campaign interface, not like a generic gamified skin store.`
  owner = `rpg-asset-capture-frames`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | rpg-asset-capture-frames.spw | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
 @rpg_asset_capture_frames: ~"./rpg-asset-capture-frames.spw"
+@plan_screenshot_semantics: ~"./screenshot-semantics/index.spw"
 
 dispatch: .{
  plan = @plan
  wip = @wip
  rpg_asset_capture_frames = @rpg_asset_capture_frames
+ plan_screenshot_semantics = @plan_screenshot_semantics
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-rpg_asset_capture_frames-001"
+ layer = "pragmatic"
+ hypothesis = `RPG Wednesday should let players upload local character, item, place, and artifact images, then stage those assets inside stable screenshot-friendly frames. The site is not responsible for automating capture or sending media to Midjourney, Grok, or any external service; it should prepare a well-designed local surface that players can screenshot manually and pair with a copyable prompt note. Taste note: improve usefulness, trust, and earned wonder. Customizations should feel like discovering more of the campaign interface, not like a generic gamified skin store.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../.agents/plans/screenshot-semantics/PLAN.md"
+ probe_ref = `Hypotheses: players can stage a character or item in under a minute; screenshot mode produces a clean frame at mobile and desktop widths; unlockable motifs increase curiosity without blocking utility.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../.agents/plans/screenshot-semantics/PLAN.md unchanged or untested.`
+ status = "active"
 }[reg=facet]
 
 scope: .{
@@ -42,9 +67,15 @@ validation: #[
  `Demo sequence: upload an image, name it as a character, choose a motif, enter screenshot mode, manually screenshot, copy the prompt note, reload the page, confirm the asset and motif persist locally, export, clear, import, and confirm recovery.`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does rpg-asset-capture-frames own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of rpg-asset-capture-frames?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether rpg-asset-capture-frames still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: RPG Wednesday should let players upload local character, item, place, and artifact images, then stage those assets inside stable…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

@@ -14,8 +14,20 @@ intent: .{
  goal = `Make this site interactive enough for game developers to imagine 1000 fidget toys for the next generation of office work (tactile, tunable, generative, physics-y micro-interactions that feel like adjusting parameters on a living object), and readable enough for authors to imagine a magic manuscript that reaches varied audiences while letting them express layers of semantic intent with precision and joy.`
  owner = `expressive-layout-tropes-fidget-manuscript`
  kind = `plan`
+ bucket = `public_route_proof_genre`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "public_route_proof_genre"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @layout_shift_audit: ~"../../../public/js/runtime/layout-shift-audit.js"
@@ -33,9 +45,25 @@ dispatch: .{
  attention_architecture = @attention_architecture
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-expressive_layout_tropes_fidget_manuscript-001"
+ layer = "pragmatic"
+ hypothesis = `Make this site interactive enough for game developers to imagine 1000 fidget toys for the next generation of office work (tactile, tunable, generative, physics-y micro-interactions that feel like adjusting parameters on a living object), and readable enough for authors to imagine a magic manuscript that reaches varied audiences while letting them express layers of semantic intent with precision and joy.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/js/runtime/layout-shift-audit.js"
+ probe_ref = `rg 'expressive-layout-tropes-fidget-manuscript' .agents/plans/expressive-layout-tropes-fidget-manuscript`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/runtime/layout-shift-audit.js unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does expressive-layout-tropes-fidget-manuscript own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of expressive-layout-tropes-fidget-manuscript?`, see = @index }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: Make this site interactive enough for game developers to imagine 1000 fidget toys for the next generation of office work (tactile, tunable,…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

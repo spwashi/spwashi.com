@@ -14,8 +14,20 @@ intent: .{
  goal = `Make the site easier to navigate, inspect, and learn from by improving deep-link affordances, teaching feature discovery through lightweight toasts, and exposing why runtime features mount.`
  owner = `deep-link-feature-discovery`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @site: ~"../../../public/js/site.js"
@@ -39,6 +51,17 @@ dispatch: .{
  site_semantics = @site_semantics
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-deep_link_feature_discovery-001"
+ layer = "pragmatic"
+ hypothesis = `Make the site easier to navigate, inspect, and learn from by improving deep-link affordances, teaching feature discovery through lightweight toasts, and exposing why runtime features mount.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/js/site.js"
+ probe_ref = `node --check public/js/site.js`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/site.js unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
 validation: #[
  `node --check public/js/site.js`,
  `node --check public/js/interface/discovery-notices.js`,
@@ -46,9 +69,15 @@ validation: #[
  `npm run test:engagement`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does deep-link-feature-discovery own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of deep-link-feature-discovery?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether deep-link-feature-discovery still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: Make the site easier to navigate, inspect, and learn from by improving deep-link affordances, teaching feature discovery through…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

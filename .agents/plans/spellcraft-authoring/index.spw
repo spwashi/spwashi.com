@@ -14,13 +14,50 @@ intent: .{
  goal = `A visitor (or Spwashi on camera) can *write* a spell, not merely accumulate one: select things on the page, drop them in the cauldron, compose them into a named spell, cast it to see the page change, reopen it later to edit. Spells graduate from navigation traces to small legible programs whose two primary verb families are select (element, concept, artifact) and style (bias, swap, remember, screenshot). The taste note is workshop, not ledger: the cauldron is a bench where things are made and remade, and the spellbook is a shelf you take things down from.`
  owner = `spellcraft-authoring`
  kind = `plan`
+ bucket = `public_route_proof_genre`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "public_route_proof_genre"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@plan_literacy_precipitation_press: ~"./literacy-precipitation-press/index.spw"
+@spells: ~"../../../public/js/runtime/spells.js"
+@cauldron: ~"../../../public/js/interface/cauldron/"
+@contract: ~"../../../public/js/interface/cauldron/contract.js"
+@observation_beats: ~"../../../public/js/runtime/observation-beats.js"
 
 dispatch: .{
  plan = @plan
+ plan_literacy_precipitation_press = @plan_literacy_precipitation_press
+ spells = @spells
+ cauldron = @cauldron
+ contract = @contract
+ observation_beats = @observation_beats
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-spellcraft_authoring-001"
+ layer = "pragmatic"
+ hypothesis = `A visitor (or Spwashi on camera) can *write* a spell, not merely accumulate one: select things on the page, drop them in the cauldron, compose them into a named spell, cast it to see the page change, reopen it later to edit. Spells graduate from navigation traces to small legible programs whose two primary verb families are select (element, concept, artifact) and style (bias, swap, remember, screenshot). The taste note is workshop, not ledger: the cauldron is a bench where things are made and remade, and the spellbook is a shelf you take things down from.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/js/runtime/spells.js"
+ probe_ref = `Attribute census before/after (26+9+4 -> ~8) with no orphaned CSS readers (rg per family).`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/runtime/spells.js unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+next_action: .{
+ step = `Contract refit (agent-executable): SPELL_CONTRACT extracted alongside CAULDRON_CONTRACT; G1/G2 attribute migration through contract.js with CSS readers in the same patch; flattened-bundle equivalence + check:local. Sanctioned by the 2026-07-03 grammar direction.`
 }[reg=facet]
 
 validation: #[
@@ -30,9 +67,15 @@ validation: #[
  `No-JS: spell surfaces degrade to readable prose traces; nothing sole-source hides behind the overlay.`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does spellcraft-authoring own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of spellcraft-authoring?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether spellcraft-authoring still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: A visitor (or Spwashi on camera) can *write* a spell, not merely accumulate one: select things on the page, drop them in the cauldron,…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

@@ -14,8 +14,20 @@ intent: .{
  goal = `A layered style and interaction refinement pass that addresses space efficiency, mobile menu layout issues, arc/loop lifecycle indicators, and the circuit metaphor for JS module relationships.`
  owner = `space-menu-arcs-electrical`
  kind = `plan`
+ bucket = `css_layout_interaction`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "css_layout_interaction"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 
@@ -23,9 +35,25 @@ dispatch: .{
  plan = @plan
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-space_menu_arcs_electrical-001"
+ layer = "pragmatic"
+ hypothesis = `A layered style and interaction refinement pass that addresses space efficiency, mobile menu layout issues, arc/loop lifecycle indicators, and the circuit metaphor for JS module relationships.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"./PLAN.md"
+ probe_ref = `rg 'space-menu-arcs-electrical' .agents/plans/space-menu-arcs-electrical`
+ falsification = `A patch cannot satisfy the public goal while leaving ./PLAN.md unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does space-menu-arcs-electrical own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of space-menu-arcs-electrical?`, see = @index }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: A layered style and interaction refinement pass that addresses space efficiency, mobile menu layout issues, arc/loop lifecycle indicators,…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

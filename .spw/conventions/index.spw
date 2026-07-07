@@ -26,6 +26,8 @@
 @query_disposition: ~"./query-disposition.spw"
 @planning_ecology: ~"./planning-ecology.spw"
 @wip_notebook: ~"./wip-notebook.spw"
+@plan_index: ~"./plan-index.spw"
+@plans_root: ~"../../.agents/plans/index.spw"
 @surfaces_index: ~"../surfaces/index.spw"
 @operator_site_projection: ~"./operator-site-projection.spw"
 @operational_semantics: ~"./operational-semantics.spw"
@@ -77,6 +79,8 @@ dispatch: .{
  query_disposition = @query_disposition
  planning_ecology = @planning_ecology
  wip_notebook = @wip_notebook
+ plan_index = @plan_index
+ plans_root = @plans_root
  surfaces_index = @surfaces_index
  cognition = @cognitive_navigation
  model_guided_refinement = @model_guided_refinement

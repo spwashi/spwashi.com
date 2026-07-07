@@ -1,4 +1,8 @@
-# media-feature-brief
+^"operational_hooks"{
+ selectors = #[ `.agents/plans/media-feature-brief/media-feature-brief.spw`, ][reg=set]
+ probe_ref = `Confirm the new route and all added links use root-relative paths.`
+ owner_claim = ~"./index.spw#owner_claim"
+}[reg=facet]# media-feature-brief
 # Distilled communication model for explaining the developed website to media
 # enthusiasts without requiring implementation context.
 
@@ -11,6 +15,7 @@
  index = ~"./index.spw"
  goal = `The site has accumulated a PWA shell, Spw operator routes, frame navigation, console affordances, Pretext experiments, and a developing metaphysics of cognitive surfaces. This plan adds a concise public communication surface so media enthusiasts can understand what to notice and where to explore without needing to read the implementation notes first. Taste note: improve clarity and expressiveness while preserving the hand-authored, calm-at-rest site voice.`
  owner = `media-feature-brief`
+ bucket = "active_backlog"
 }[reg=facet]
 ^["thesis"]{
  claim: "The website is becoming an installable, inspectable media surface: static pages at rest, but with a visible grammar for navigation, reflection, and cognitive structure."

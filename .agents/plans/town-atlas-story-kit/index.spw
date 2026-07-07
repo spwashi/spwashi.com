@@ -14,8 +14,20 @@ intent: .{
  goal = `Create a durable town atlas layer that separates practical visitor utility from story substrate, while keeping both indexable and cross-linkable. The site already has strong story-generation affordances in routes like /play/, /play/rpg-wednesday/, /cards/, /services/, and /topics/, but those motifs currently share the same first-read space. The atlas layer should give the story material a stable container so practical visitors can move directly to work, support, research, or contact, while story-focused visitors can enter a structured world bible.`
  owner = `town-atlas-story-kit`
  kind = `plan`
+ bucket = `public_route_proof_genre`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "public_route_proof_genre"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @play_index_html: ~"../../../play/index.html"
@@ -33,15 +45,32 @@ dispatch: .{
  play = @play
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-town_atlas_story_kit-001"
+ layer = "pragmatic"
+ hypothesis = `Create a durable town atlas layer that separates practical visitor utility from story substrate, while keeping both indexable and cross-linkable. The site already has strong story-generation affordances in routes like /play/, /play/rpg-wednesday/, /cards/, /services/, and /topics/, but those motifs currently share the same first-read space. The atlas layer should give the story material a stable container so practical visitors can move directly to work, support, research, or contact, while story-focused visitors can enter a structured world bible.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../play/index.html"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../play/index.html unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
 validation: #[
  `git diff --check`,
  `targeted sanity read for the new route and updated links`,
  `npm run check`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does town-atlas-story-kit own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of town-atlas-story-kit?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether town-atlas-story-kit still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: Create a durable town atlas layer that separates practical visitor utility from story substrate, while keeping both indexable and…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

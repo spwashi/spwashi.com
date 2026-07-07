@@ -7,19 +7,25 @@
 
 @plan: ~"./PLAN.md"
 @index: ~"./index.spw"
+@plans_root: ~"../../../.agents/plans/index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 
 operation = "cache"
 fixity = "tending"
 
+^"selection_probes"{
+ probes = #[ `rg 'content-responsive-layout' .agents/plans/interaction-loop-contract/`, `Hypotheses: content-driven min/max rules reduce truncation and make the settings shell calmer on narrow screens; CSS tokenized widths produce more coherent pretext demo projections than hardcoded ratios.`, `test -f .agents/plans/interaction-loop-contract/`, ][reg=set]
+ rule = "Run probes before trusting cached plan_context."
+}[reg=facet]
+
 ^"plan_context"{
  goal = `The site should stop depending on a small number of viewport breakpoints and instead let components adapt from their own content measure, card density, and overlay ownership. This pass focuses on the shell, shared grids, settings surfaces, console chrome, and the pretext lab so mobile and narrow containers remain legible without truncation or awkward stacking. Taste note: improve containment and clarity by making layout decisions derive from ergonomic measure and component content rather than fixed repeat counts.`
  owner = `content-responsive-layout`
  operation = "prime"
+ bucket = "active_backlog"
  validation = #[ `Hypotheses: content-driven min/max rules reduce truncation and make the settings shell calmer on narrow screens; CSS tokenized widths produce more coherent pretext demo projections than hardcoded ratios.`, `Negative controls: desktop reading width, card tone, and existing interaction semantics should remain intact.`, `Demo sequence: inspect /settings/, /topics/software/pretext/, and one console-enabled route on narrow and mid-width layouts by reading the CSS contracts and verifying no syntax/diff regressions.`, ][reg=set]
  hot_files = #[ `.agents/plans/interaction-loop-contract/`, ][reg=set]
 }[reg=facet]
-
 ^["roots"]{
  @cluster: ~".agents/plans/plan-ecology-clustering/plan-ecology-clustering.spw"
  @plan: ~".agents/plans/content-responsive-layout/PLAN.md"

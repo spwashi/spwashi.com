@@ -14,8 +14,20 @@ intent: .{
  goal = `Turn site references into small UX improvements or reversible experiments.`
  owner = `reference-assignment-template`
  kind = `plan`
+ bucket = `canonical_tracks`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "canonical_tracks"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 
@@ -23,9 +35,25 @@ dispatch: .{
  plan = @plan
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-reference_assignment_template-001"
+ layer = "pragmatic"
+ hypothesis = `Turn site references into small UX improvements or reversible experiments.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"./PLAN.md"
+ probe_ref = `rg 'reference-assignment-template' .agents/plans/reference-assignment-template`
+ falsification = `A patch cannot satisfy the public goal while leaving ./PLAN.md unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does reference-assignment-template own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of reference-assignment-template?`, see = @index }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: Turn site references into small UX improvements or reversible experiments.`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

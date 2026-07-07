@@ -14,8 +14,20 @@ intent: .{
  goal = `The desired end state is a site runtime that treats mobile and coarse-pointer use as the primary case rather than a degraded desktop fallback. The immediate task is not to ship new chrome, but to formalize the implementation surface: page regions with ownership, portable interaction semantics that do not depend on hover, complete operator interaction meanings, inspectable registers that back navigator/console projections, semantic HTML structures that act as the canonical reflection surface, and a clean preparation layer for future Spw blocks and scripts as UI. The longer arc is a cognitive machine that can produce wonder without becoming noisy: structure should become more legible as the user engages it, Spw symmetry should remain checkable across modalities, charge/bias metaphysics should be inspectable rather than hidden, and future Spw-backed components/pages should inherit that same ecosystem rather than bypass it. The taste note is clarity + containment: preserve the site's calm surface while making its deeper machinery easier to reason about, inspect, and extend.`
  owner = `mobile-runtime-foundation`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | mobile-runtime-foundation.spw | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
@@ -25,6 +37,17 @@ dispatch: .{
  plan = @plan
  wip = @wip
  mobile_runtime_foundation = @mobile_runtime_foundation
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-mobile_runtime_foundation-001"
+ layer = "pragmatic"
+ hypothesis = `The desired end state is a site runtime that treats mobile and coarse-pointer use as the primary case rather than a degraded desktop fallback. The immediate task is not to ship new chrome, but to formalize the implementation surface: page regions with ownership, portable interaction semantics that do not depend on hover, complete operator interaction meanings, inspectable registers that back navigator/console projections, semantic HTML structures that act as the canonical reflection surface, and a clean preparation layer for future Spw blocks and scripts as UI. The longer arc is a cognitive machine that can produce wonder without becoming noisy: structure should become more legible as the user engages it, Spw symmetry should remain checkable across modalities, charge/bias metaphysics should be inspectable rather than hidden, and future Spw-backed components/pages should inherit that same ecosystem rather than bypass it. The taste note is clarity + containment: preserve the site's calm surface while making its deeper machinery easier to reason about, inspect, and extend.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../.agents/plans/mobile-runtime-foundation/mobile-runtime-foundation.spw"
+ probe_ref = `Hypotheses: a shared region/register model will reduce runtime duplication; complete operator interaction semantics will prevent decorative grammar; portable inspect/invoke semantics will make mobile behavior easier to teach; prefix/postfix symmetry will let keyboard and touch feel like different entrances into the same grammar; semantic reflection into native HTML structures will keep the runtime honest across modalities; inspectable charge and bias can make brace physics useful without hidden state; recursive/fractal surface geometry can improve learnability if the same boundary/inspect/pivot pattern repeats across scales; block/script UI can be prepared without running the full language runtime in-browser.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../.agents/plans/mobile-runtime-foundation/mobile-runtime-foundation.spw unchanged or untested.`
+ status = "active"
 }[reg=facet]
 
 scope: .{
@@ -42,9 +65,15 @@ validation: #[
  `Demo sequence: identify the active region on mobile, inspect a component without hover, invoke the same component with touch or keyboard, pivot into a deeper surface without losing orientation, and confirm navigator/console can describe the same underlying register state.`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does mobile-runtime-foundation own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of mobile-runtime-foundation?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether mobile-runtime-foundation still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: The desired end state is a site runtime that treats mobile and coarse-pointer use as the primary case rather than a degraded desktop…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

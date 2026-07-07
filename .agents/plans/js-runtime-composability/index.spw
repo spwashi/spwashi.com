@@ -14,8 +14,20 @@ intent: .{
  goal = `Reduce the size and cognitive load of public/js/site.js by extracting the page-state / attention lifecycle contract into a dedicated runtime module, while keeping the runtime behavior and datasets stable.`
  owner = `js-runtime-composability`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @site: ~"../../../public/js/site.js"
@@ -24,7 +36,7 @@ intent: .{
 @runtime_contracts: ~"../../../scripts/ts/runtime-contracts.mts"
 @check_site: ~"../../../scripts/ts/check-site.mts"
 @lifecycles: ~"../../../.spw/reviews/runtime-audit/lifecycles.spw"
-@module_catalog: ~"../../../public/js/runtime/module-catalog.js"
+@public_js_runtime_module_catalog_js: ~"../../../public/js/runtime/module-catalog.js"
 
 dispatch: .{
  plan = @plan
@@ -34,7 +46,18 @@ dispatch: .{
  runtime_contracts = @runtime_contracts
  check_site = @check_site
  lifecycles = @lifecycles
- module_catalog = @module_catalog
+ public_js_runtime_module_catalog_js = @public_js_runtime_module_catalog_js
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-js_runtime_composability-001"
+ layer = "pragmatic"
+ hypothesis = `Reduce the size and cognitive load of public/js/site.js by extracting the page-state / attention lifecycle contract into a dedicated runtime module, while keeping the runtime behavior and datasets stable.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/js/site.js"
+ probe_ref = `node --check public/js/site.js`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/site.js unchanged or untested.`
+ status = "active"
 }[reg=facet]
 
 scope: .{
@@ -54,9 +77,15 @@ validation: #[
  `npm run check`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does js-runtime-composability own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of js-runtime-composability?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether js-runtime-composability still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: Reduce the size and cognitive load of public/js/site.js by extracting the page-state / attention lifecycle contract into a dedicated…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

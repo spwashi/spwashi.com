@@ -14,10 +14,23 @@ intent: .{
  goal = `Make this repository useful as a source for new static sites and new component work without turning spwashi.com into a generic framework. A future builder should be able to answer three questions quickly: - Which files are portable starter-kit material? - Which public routes are component-design specimens? - Which parts are personal Spwashi site shell, copy, route identity, or runtime behavior that should stay behind? This is a codebase reuse and design-systems track. The first patch establishes the inventory and contract; later patches may add scaffold templates only after the portable boundary proves stable.`
  owner = `site-starter-component-kit`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@plan_site_source_layout: ~"./site-source-layout/index.spw"
 @site_starter_component_kit: ~"../../../.spw/conventions/site-starter-component-kit.spw"
 @public_css_compose_css: ~"../../../public/css/compose.css"
 @public_js_compose_js: ~"../../../public/js/compose.js"
@@ -29,6 +42,7 @@ intent: .{
 
 dispatch: .{
  plan = @plan
+ plan_site_source_layout = @plan_site_source_layout
  site_starter_component_kit = @site_starter_component_kit
  public_css_compose_css = @public_css_compose_css
  public_js_compose_js = @public_js_compose_js
@@ -39,6 +53,17 @@ dispatch: .{
  style = @style
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-site_starter_component_kit-001"
+ layer = "pragmatic"
+ hypothesis = `Make this repository useful as a source for new static sites and new component work without turning spwashi.com into a generic framework. A future builder should be able to answer three questions quickly: - Which files are portable starter-kit material? - Which public routes are component-design specimens? - Which parts are personal Spwashi site shell, copy, route identity, or runtime behavior that should stay behind? This is a codebase reuse and design-systems track. The first patch establishes the inventory and contract; later patches may add scaffold templates only after the portable boundary proves stable.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../.spw/conventions/site-starter-component-kit.spw"
+ probe_ref = `npm run starter:inventory -- --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../.spw/conventions/site-starter-component-kit.spw unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
 validation: #[
  `npm run starter:inventory -- --check`,
  `node --check scripts/starter-inventory.mjs`,
@@ -46,9 +71,15 @@ validation: #[
  `npm run check:local when CSS, JS, route HTML, or build behavior changes`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does site-starter-component-kit own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of site-starter-component-kit?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether site-starter-component-kit still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: Make this repository useful as a source for new static sites and new component work without turning spwashi.com into a generic framework. A…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

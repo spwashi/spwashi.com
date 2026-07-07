@@ -14,8 +14,20 @@ intent: .{
  goal = `The desired end state is a site that can be navigated as a cognitive space: you know where you are in the liminality sequence, you can trace the path that brought you here, there are legible components for different kinds of content (states, registers, filetypes), and the interactions you've learned can be named and repeated as spells. The wider purpose is a cognitive tool for artists and practitioners — someone who uses this space to develop ideas should be able to orient, deepen, and return, and the tools they've developed should be inspectable and shareable. Spw provides the spatial grammar for this kind of navigation: liminality is not a decoration axis but a depth axis you can traverse and return from; breadcrumbs are not browser history but cognitive path through conceptual space; spells are not scripts but named sequences of attention that feel like learned reflexes when mastered. Accessibility is foundational here: the semantic HTML and ARIA tree should be the canonical cognitive map of each page, not a compliance layer layered on top. The taste note is cognitive cartography + earned fluency: the site should feel like a place that deepens with familiarity while remaining fully legible to someone arriving for the first time.`
  owner = `cognitive-navigation`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | cognitive-navigation.spw | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
@@ -25,6 +37,17 @@ dispatch: .{
  plan = @plan
  wip = @wip
  cognitive_navigation = @cognitive_navigation
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-cognitive_navigation-001"
+ layer = "pragmatic"
+ hypothesis = `The desired end state is a site that can be navigated as a cognitive space: you know where you are in the liminality sequence, you can trace the path that brought you here, there are legible components for different kinds of content (states, registers, filetypes), and the interactions you've learned can be named and repeated as spells. The wider purpose is a cognitive tool for artists and practitioners — someone who uses this space to develop ideas should be able to orient, deepen, and return, and the tools they've developed should be inspectable and shareable. Spw provides the spatial grammar for this kind of navigation: liminality is not a decoration axis but a depth axis you can traverse and return from; breadcrumbs are not browser history but cognitive path through conceptual space; spells are not scripts but named sequences of attention that feel like learned reflexes when mastered. Accessibility is foundational here: the semantic HTML and ARIA tree should be the canonical cognitive map of each page, not a compliance layer layered on top. The taste note is cognitive cartography + earned fluency: the site should feel like a place that deepens with familiarity while remaining fully legible to someone arriving for the first time.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../.agents/plans/cognitive-navigation/cognitive-navigation.spw"
+ probe_ref = `Hypotheses: liminality-aware navigation will make cognitive depth legible; Spw breadcrumbs will capture path quality rather than just page history; spell recognition will make expert patterns inductively discoverable.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../.agents/plans/cognitive-navigation/cognitive-navigation.spw unchanged or untested.`
+ status = "active"
 }[reg=facet]
 
 scope: .{
@@ -42,9 +65,15 @@ validation: #[
  `Demo sequence: navigate from entry to projected liminality on the software page and observe the breadcrumb trail; trigger a spell through observed pattern; navigate back through the liminality sequence; verify the accessibility landmark map matches the cognitive map at each phase.`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does cognitive-navigation own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of cognitive-navigation?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether cognitive-navigation still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: The desired end state is a site that can be navigated as a cognitive space: you know where you are in the liminality sequence, you can…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

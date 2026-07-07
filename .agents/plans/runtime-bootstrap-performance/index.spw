@@ -14,10 +14,26 @@ intent: .{
  goal = `Reduce main-thread blocking time, serial dynamic import penalties, and observer/listener fragmentation in the shared JS runtime bootstrap (site.js + kernel/runtime modules) while preserving (and strengthening) the existing staged lifecycle model, policy-driven tuning surface, rich spw:* observability, and progressive-enhancement guarantees. The outcome: pages reach interactive and first meaningful paint faster on typical connections and devices, especially on content-rich routes, without regressing the semantic density, editor inspectability, or "runtime as instrument" character of the site. This work directly follows the 2026-04 script performance review and builds on the foundation laid by runtime-load-instrumentation, runtime-module-fluency, js-runtime-composability, and mobile-runtime-foundation.`
  owner = `runtime-bootstrap-performance`
  kind = `plan`
+ bucket = `runtime_js_validation`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "runtime_js_validation"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@plan_agent_optimization: ~"./agent-optimization/index.spw"
+@plan_runtime_load_instrumentation: ~"./runtime-load-instrumentation/index.spw"
+@plan_runtime_module_fluency: ~"./runtime-module-fluency/index.spw"
+@plan_js_runtime_composability: ~"./js-runtime-composability/index.spw"
 @site: ~"../../../public/js/site.js"
 @site_settings: ~"../../../public/js/kernel/site-settings.js"
 @site_semantics: ~"../../../.spw/conventions/site-semantics.spw"
@@ -28,6 +44,10 @@ intent: .{
 
 dispatch: .{
  plan = @plan
+ plan_agent_optimization = @plan_agent_optimization
+ plan_runtime_load_instrumentation = @plan_runtime_load_instrumentation
+ plan_runtime_module_fluency = @plan_runtime_module_fluency
+ plan_js_runtime_composability = @plan_js_runtime_composability
  site = @site
  site_settings = @site_settings
  site_semantics = @site_semantics
@@ -37,9 +57,25 @@ dispatch: .{
  readme = @readme
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-runtime_bootstrap_performance-001"
+ layer = "pragmatic"
+ hypothesis = `Reduce main-thread blocking time, serial dynamic import penalties, and observer/listener fragmentation in the shared JS runtime bootstrap (site.js + kernel/runtime modules) while preserving (and strengthening) the existing staged lifecycle model, policy-driven tuning surface, rich spw:* observability, and progressive-enhancement guarantees. The outcome: pages reach interactive and first meaningful paint faster on typical connections and devices, especially on content-rich routes, without regressing the semantic density, editor inspectability, or "runtime as instrument" character of the site. This work directly follows the 2026-04 script performance review and builds on the foundation laid by runtime-load-instrumentation, runtime-module-fluency, js-runtime-composability, and mobile-runtime-foundation.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/js/site.js"
+ probe_ref = `rg 'runtime-bootstrap-performance' .agents/plans/runtime-bootstrap-performance`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/site.js unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does runtime-bootstrap-performance own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of runtime-bootstrap-performance?`, see = @index }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: Reduce main-thread blocking time, serial dynamic import penalties, and observer/listener fragmentation in the shared JS runtime bootstrap…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

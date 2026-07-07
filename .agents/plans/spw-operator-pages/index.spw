@@ -14,8 +14,20 @@ intent: .{
  goal = `The desired end state is a mobile-first operator reference that treats each Spw operator as an interaction primitive, a metaphysical model, and a future UI authoring contract. The pages should teach what an operator does, how it behaves when clicked or inspected, how prefix/postfix symmetry changes attention, and how brace physics can pivot a reader toward deeper structure. The taste note is compact ritual clarity: these pages should feel like a small cognitive machine, not a glossary dump.`
  owner = `spw-operator-pages`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | spw-operator-pages.spw | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
@@ -39,6 +51,17 @@ dispatch: .{
  style = @style
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-spw_operator_pages-001"
+ layer = "pragmatic"
+ hypothesis = `The desired end state is a mobile-first operator reference that treats each Spw operator as an interaction primitive, a metaphysical model, and a future UI authoring contract. The pages should teach what an operator does, how it behaves when clicked or inspected, how prefix/postfix symmetry changes attention, and how brace physics can pivot a reader toward deeper structure. The taste note is compact ritual clarity: these pages should feel like a small cognitive machine, not a glossary dump.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../topics/software/spw/index.html"
+ probe_ref = `Hypotheses: a stable page per operator will make the grammar more learnable; repeated page structure will let visitors compare operators; compact route hooks will make the atlas discoverable without bloating the software page.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../topics/software/spw/index.html unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
 scope: .{
  in = #[
   `In scope: add a /topics/software/spw/ atlas, add one static route for each operator currently defined in public/js/spw-shared.js, link the atlas from the software and home surfaces, update public route registries, add compact CSS for operator cards/details, and include PWA cache/shortcut hooks.`,
@@ -54,9 +77,15 @@ validation: #[
  `Demo sequence: open /topics/software/, find the Spw operator atlas, open * stream, traverse the operator ring on mobile width, then go offline after first load and confirm cached operator pages still resolve.`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does spw-operator-pages own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of spw-operator-pages?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether spw-operator-pages still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: The desired end state is a mobile-first operator reference that treats each Spw operator as an interaction primitive, a metaphysical model,…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

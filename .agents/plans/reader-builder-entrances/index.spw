@@ -14,8 +14,20 @@ intent: .{
  goal = `Give readers and computer-literate visitors a first-class path through the site by pairing clear prose entrances with inspectable runtime and query-mode entrances. The site should reward two kinds of visitors without making either one parse the whole lattice: - readers who want the method, canon, and narrative surfaces - builders who want the CSS, settings, query modes, and browser-local runtime to stay legible`
  owner = `reader-builder-entrances`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @index: ~"../../../settings/index.html"
@@ -29,14 +41,31 @@ dispatch: .{
  site_settings = @site_settings
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-reader_builder_entrances-001"
+ layer = "pragmatic"
+ hypothesis = `Give readers and computer-literate visitors a first-class path through the site by pairing clear prose entrances with inspectable runtime and query-mode entrances. The site should reward two kinds of visitors without making either one parse the whole lattice: - readers who want the method, canon, and narrative surfaces - builders who want the CSS, settings, query modes, and browser-local runtime to stay legible`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../settings/index.html"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../settings/index.html unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
 validation: #[
  `git diff --check`,
  `npm run check`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does reader-builder-entrances own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of reader-builder-entrances?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether reader-builder-entrances still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: Give readers and computer-literate visitors a first-class path through the site by pairing clear prose entrances with inspectable runtime…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

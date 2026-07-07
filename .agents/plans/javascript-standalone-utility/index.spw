@@ -14,8 +14,20 @@ intent: .{
  goal = `Improve marginal utility of site JavaScript by making a useful behavior available in three contexts: - As a standalone import from public/js/compose.js. - As a console/debug helper through window.spwCompose. - As a progressive enhancement on pages that opt into the relevant markup.`
  owner = `javascript-standalone-utility`
  kind = `plan`
+ bucket = `runtime_js_validation`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "runtime_js_validation"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @compose: ~"../../../public/js/compose.js"
@@ -27,9 +39,25 @@ dispatch: .{
  composition_box_model = @composition_box_model
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-javascript_standalone_utility-001"
+ layer = "pragmatic"
+ hypothesis = `Improve marginal utility of site JavaScript by making a useful behavior available in three contexts: - As a standalone import from public/js/compose.js. - As a console/debug helper through window.spwCompose. - As a progressive enhancement on pages that opt into the relevant markup.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/js/compose.js"
+ probe_ref = `rg 'javascript-standalone-utility' .agents/plans/javascript-standalone-utility`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/compose.js unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does javascript-standalone-utility own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of javascript-standalone-utility?`, see = @index }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: Improve marginal utility of site JavaScript by making a useful behavior available in three contexts: - As a standalone import from…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

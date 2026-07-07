@@ -14,8 +14,20 @@ intent: .{
  goal = `The site should begin from a minimalist baseline: lighter semantic density, less always-on chrome, and clearer separation between primary reading flow and optional diagnostics. Mobile navigation should disclose intentionally through a hamburger control instead of wrapping the full header list into a noisy block. Brace edges and diagnostic surfaces should read as actionable thresholds with visible entry, projection, dismissal, and return paths. Taste note: improve containment, clarity, and expressiveness without adding a second interaction model.`
  owner = `minimal-brace-disclosure`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
@@ -25,6 +37,17 @@ dispatch: .{
  plan = @plan
  wip = @wip
  site = @site
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-minimal_brace_disclosure-001"
+ layer = "pragmatic"
+ hypothesis = `The site should begin from a minimalist baseline: lighter semantic density, less always-on chrome, and clearer separation between primary reading flow and optional diagnostics. Mobile navigation should disclose intentionally through a hamburger control instead of wrapping the full header list into a noisy block. Brace edges and diagnostic surfaces should read as actionable thresholds with visible entry, projection, dismissal, and return paths. Taste note: improve containment, clarity, and expressiveness without adding a second interaction model.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/js/site.js"
+ probe_ref = `Hypotheses: the default view feels quieter, the mobile header reads as one compact control surface, and diagnostics no longer dominate reading flow.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/site.js unchanged or untested.`
+ status = "active"
 }[reg=facet]
 
 scope: .{
@@ -42,9 +65,15 @@ validation: #[
  `Demo sequence: load /settings/ on a narrow viewport, open/close the menu, activate a braced frame, click brace affordances, collapse/dismiss diagnostics, and recover them.`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does minimal-brace-disclosure own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of minimal-brace-disclosure?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether minimal-brace-disclosure still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: The site should begin from a minimalist baseline: lighter semantic density, less always-on chrome, and clearer separation between primary…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

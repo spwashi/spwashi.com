@@ -14,8 +14,20 @@ intent: .{
  goal = `Create a discoverable /settings/ page where visitors can quiet or hide the surface map, quiet or hide the console, and disable scroll-driven viewport activation. Taste note: this improves containment and calm by making the cognitive-machine chrome optable instead of unavoidable, without removing the deeper runtime features. 2026-06-30 extension: the same settings system now owns component-reward visibility (rewardDisplay) and reset access for the browser-local component collection register.`
  owner = `runtime-settings`
  kind = `plan`
+ bucket = `runtime_js_validation`
+ artifact_shape = `PLAN.md | wip.spw | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "runtime_js_validation"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
@@ -39,6 +51,17 @@ dispatch: .{
  reward_ui = @reward_ui
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-runtime_settings-001"
+ layer = "pragmatic"
+ hypothesis = `Create a discoverable /settings/ page where visitors can quiet or hide the surface map, quiet or hide the console, and disable scroll-driven viewport activation. Taste note: this improves containment and calm by making the cognitive-machine chrome optable instead of unavoidable, without removing the deeper runtime features. 2026-06-30 extension: the same settings system now owns component-reward visibility (rewardDisplay) and reset access for the browser-local component collection register.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../settings/index.html"
+ probe_ref = `Hypotheses: visitors can reduce intrusive runtime chrome without losing route access.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../settings/index.html unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
 scope: .{
  in = #[
   `In scope: localStorage-backed settings, settings page markup, navigator/console/core hooks, CSS preference states, PWA cache registration.`,
@@ -53,9 +76,15 @@ validation: #[
  `Demo sequence: visit /settings/, choose quiet/hidden preferences, reload home/software pages, confirm runtime chrome follows preferences.`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does runtime-settings own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of runtime-settings?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether runtime-settings still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: Create a discoverable /settings/ page where visitors can quiet or hide the surface map, quiet or hide the console, and disable…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

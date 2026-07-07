@@ -1,10 +1,15 @@
+^"selection_probes"{
+ probes = #[ `rg 'rpg-wednesday-learning-library' public`, `git diff --check`, ][reg=set]
+ rule = "Run probes before trusting cached plan_context."
+}[reg=facet]
+
 ^"plan_context"{
  goal = `Make the education direction useful without scattering the site into many top-level routes. The first public surface is a namespaced town-library hub under /play/rpg-wednesday/library/ that turns RPG Wednesday into a college-facing learning world: visitors can enter a civic-magical library, choose a quest, meet guide characters, use boonhonk as a reflection fit, plant a garden seed, and map the work to portfolio-ready college skills.`
  owner = `rpg-wednesday-learning-library`
  operation = "prime"
+ bucket = "public_route_proof_genre"
  validation = #[ `git diff --check`, `rg checks for /play/rpg-wednesday/library/ links and new anchors`, `HTML sanity review around edited sections`, ][reg=set]
 }[reg=facet]
-
 # wip — rpg-wednesday-learning-library
 #
 #>plan_rpg_wednesday_learning_library_wip
@@ -14,6 +19,7 @@
 
 @plan: ~"./PLAN.md"
 @index: ~"./index.spw"
+@plans_root: ~"../../../.agents/plans/index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 
 operation = "cache"

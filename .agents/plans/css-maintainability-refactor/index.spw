@@ -14,11 +14,25 @@ intent: .{
  goal = `Reduce CSS brittleness in the highest-leverage shared contracts so route work can compose from explicit structure instead of relying on inferred DOM shape or over-broad semantic selectors.`
  owner = `css-maintainability-refactor`
  kind = `plan`
+ bucket = `css_layout_interaction`
+ artifact_shape = `PLAN.md | wip.spw | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "css_layout_interaction"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
+@plan_css_state_legibility: ~"./css-state-legibility/index.spw"
+@plan_component_box_model_responsive_audit: ~"./component-box-model-responsive-audit/index.spw"
 @play_rpg_wednesday_index_html: ~"../../../play/rpg-wednesday/index.html"
 @about_index_html: ~"../../../about/index.html"
 @about_plans_index_html: ~"../../../about/plans/index.html"
@@ -31,6 +45,8 @@ intent: .{
 dispatch: .{
  plan = @plan
  wip = @wip
+ plan_css_state_legibility = @plan_css_state_legibility
+ plan_component_box_model_responsive_audit = @plan_component_box_model_responsive_audit
  play_rpg_wednesday_index_html = @play_rpg_wednesday_index_html
  about_index_html = @about_index_html
  about_plans_index_html = @about_plans_index_html
@@ -39,6 +55,17 @@ dispatch: .{
  topics_software_parsers_index_html = @topics_software_parsers_index_html
  topics_math_index_html = @topics_math_index_html
  topics_math_category_theory_index_html = @topics_math_category_theory_index_html
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-css_maintainability_refactor-001"
+ layer = "pragmatic"
+ hypothesis = `Reduce CSS brittleness in the highest-leverage shared contracts so route work can compose from explicit structure instead of relying on inferred DOM shape or over-broad semantic selectors.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../play/rpg-wednesday/index.html"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../play/rpg-wednesday/index.html unchanged or untested.`
+ status = "active"
 }[reg=facet]
 
 scope: .{
@@ -59,9 +86,15 @@ validation: #[
  `npm run build`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does css-maintainability-refactor own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of css-maintainability-refactor?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether css-maintainability-refactor still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: Reduce CSS brittleness in the highest-leverage shared contracts so route work can compose from explicit structure instead of relying on…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

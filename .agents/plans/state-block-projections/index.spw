@@ -14,8 +14,20 @@ intent: .{
  goal = `The site should expose more of its live state through its own notation instead of explaining interaction only in prose. Small code-like state blocks should summarize what a component can currently do, and on selected surfaces they should let the visitor cycle operator, brace, mode, or value state directly from the block itself. The taste note is clarity + expressiveness: the blocks should feel like useful diagnostic surfaces, not novelty stickers, and they should only mutate state that the underlying component already owns.`
  owner = `state-block-projections`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | state-block-projections.spw | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
@@ -27,6 +39,17 @@ dispatch: .{
  wip = @wip
  state_block_projections = @state_block_projections
  site = @site
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-state_block_projections-001"
+ layer = "pragmatic"
+ hypothesis = `The site should expose more of its live state through its own notation instead of explaining interaction only in prose. Small code-like state blocks should summarize what a component can currently do, and on selected surfaces they should let the visitor cycle operator, brace, mode, or value state directly from the block itself. The taste note is clarity + expressiveness: the blocks should feel like useful diagnostic surfaces, not novelty stickers, and they should only mutate state that the underlying component already owns.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/js/site.js"
+ probe_ref = `Hypotheses: small code-like state blocks will make component state easier to read and will deepen the interaction grammar when tokens mutate real underlying state`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/site.js unchanged or untested.`
+ status = "active"
 }[reg=facet]
 
 scope: .{
@@ -44,9 +67,15 @@ validation: #[
  `Demo sequence: open home hero and swap mode/operator/brace from the state block; open Pretext and cycle lens state from the block; open settings and cycle a small set of appearance/runtime values from the block; mark an image visited and confirm the image state block updates`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does state-block-projections own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of state-block-projections?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether state-block-projections still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: The site should expose more of its live state through its own notation instead of explaining interaction only in prose. Small code-like…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

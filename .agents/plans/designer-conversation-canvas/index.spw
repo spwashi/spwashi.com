@@ -14,8 +14,20 @@ intent: .{
  goal = `Designers should be able to open the public site, touch specimens, cite tokens by name, read objective typography telemetry, and leave subjective annotations that stay queryable beside measurements.`
  owner = `designer-conversation-canvas`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @pretext_measurement_bus: ~"../../../public/js/semantic/pretext-measurement-bus.js"
@@ -39,6 +51,17 @@ dispatch: .{
  typography_packing = @typography_packing
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-designer_conversation_canvas-001"
+ layer = "pragmatic"
+ hypothesis = `Designers should be able to open the public site, touch specimens, cite tokens by name, read objective typography telemetry, and leave subjective annotations that stay queryable beside measurements.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/js/semantic/pretext-measurement-bus.js"
+ probe_ref = `npm run check:local`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/semantic/pretext-measurement-bus.js unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
 scope: .{
  in = #[
   `In scope: Pretext measurement bus as shared telemetry layer; settings typography preview; design hub conversation canvas frame; frame-metrics mount behind metrics feature; settings designer-handoff copy and links; .spw convention for conversation primitives.`,
@@ -55,9 +78,15 @@ validation: #[
  `Live Pretext hosts on design/pretext routes publish spw:pretext-measurement events`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does designer-conversation-canvas own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of designer-conversation-canvas?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether designer-conversation-canvas still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: Designers should be able to open the public site, touch specimens, cite tokens by name, read objective typography telemetry, and leave…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

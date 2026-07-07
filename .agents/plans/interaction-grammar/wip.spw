@@ -7,19 +7,25 @@
 
 @plan: ~"./PLAN.md"
 @index: ~"./index.spw"
+@plans_root: ~"../../../.agents/plans/index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 
 operation = "cache"
 fixity = "tending"
 
+^"selection_probes"{
+ probes = #[ `rg 'interaction-grammar' .agents/plans/interaction-grammar/interaction-grammar.spw`, `Hypotheses: circuit progression will make the site feel deeper over time without requiring upfront investment; a more accessible brace physics vocabulary will improve legibility of the operator atlas and Pretext surfaces; Spw framing of other languages will make spatial relationships between notations more visible.`, `test -f .agents/plans/interaction-grammar/interaction-grammar.spw`, ][reg=set]
+ rule = "Run probes before trusting cached plan_context."
+}[reg=facet]
+
 ^"plan_context"{
  goal = `The desired end state is a site interaction system that rewards familiarity: repeated use builds skill and fluency, interactions have a recognizable grammar, and the underlying physics metaphor is legible enough to discuss, teach, and play with. A secondary aim is to make Spw useful as a substrate for exercising cognition and spatial relationship — where the grammar can illuminate how other languages, notations, and structures work rather than replacing them. The immediate task is twofold: design a progression ladder for interactive circuits (how interactions become familiar, then fluent, then habitual); and rethink whether the boon/bane vocabulary that names brace physics is cognitively accessible or whether it needs a bridge, supplement, or replacement. The taste note is practiced grammar + honest physics: interactions should feel learnable the way a musical instrument is learnable — rewarding fluency without requiring it — and the physics should work at the level of ordinary physical intuition before it becomes Spw doctrine.`
  owner = `interaction-grammar`
  operation = "prime"
+ bucket = "active_backlog"
  validation = #[ `Hypotheses: circuit progression will make the site feel deeper over time without requiring upfront investment; a more accessible brace physics vocabulary will improve legibility of the operator atlas and Pretext surfaces; Spw framing of other languages will make spatial relationships between notations more visible.`, `Negative controls: all content remains accessible to first-time visitors; operator atlas pages remain standalone-legible; the framed languages remain legible on their own terms.`, `Demo sequence: visit as a first-time user — identify the entry circuit; return after repeated use — identify what new recognition is available; test brace physics vocabulary with a user unfamiliar with Spw; view a multi-language surface and confirm the framed language teaches something about itself.`, ][reg=set]
  hot_files = #[ `.agents/plans/interaction-grammar/interaction-grammar.spw`, ][reg=set]
 }[reg=facet]
-
 ^["roots"]{
  @plan: ~".agents/plans/interaction-grammar/PLAN.md"
  @artifact: ~".agents/plans/interaction-grammar/interaction-grammar.spw"

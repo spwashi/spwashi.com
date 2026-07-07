@@ -14,13 +14,36 @@ intent: .{
  goal = `The desired end state is a site that can publish multiple language variants without losing the authored quality of the current HTML routes or the inspectability of the site's semantic model. English remains the canonical editorial source for now, but the architecture should make room for other locale editions and for Spw to participate in translation as an authored projection layer: not only "string replacement," but deliberate restatement of tone, operator vocabulary, and conceptual framing. The taste note is authored source + inspectable projection: copy should stay readable in the route source, locale variants should be explicit and reviewable, and translation should be able to carry Spw-specific nuance rather than being trapped in a generic i18n substrate.`
  owner = `copy-localization`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 
 dispatch: .{
  plan = @plan
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-copy_localization-001"
+ layer = "pragmatic"
+ hypothesis = `The desired end state is a site that can publish multiple language variants without losing the authored quality of the current HTML routes or the inspectability of the site's semantic model. English remains the canonical editorial source for now, but the architecture should make room for other locale editions and for Spw to participate in translation as an authored projection layer: not only "string replacement," but deliberate restatement of tone, operator vocabulary, and conceptual framing. The taste note is authored source + inspectable projection: copy should stay readable in the route source, locale variants should be explicit and reviewable, and translation should be able to carry Spw-specific nuance rather than being trapped in a generic i18n substrate.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"./PLAN.md"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ./PLAN.md unchanged or untested.`
+ status = "active"
 }[reg=facet]
 
 scope: .{
@@ -41,9 +64,15 @@ validation: #[
  `build a one-route locale prototype and inspect generated output paths plus metadata`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does copy-localization own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of copy-localization?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether copy-localization still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: The desired end state is a site that can publish multiple language variants without losing the authored quality of the current HTML routes…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

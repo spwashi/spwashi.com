@@ -1,6 +1,6 @@
 # Plan Index — Shell Logo Branding
 #
-# - Tighten mobile shell motion and clarify the section/path controls. - Increase Spwashi branding with shared header/footer mark treatment and a home hero brand plate. - Keep the…
+# Tighten mobile shell motion and clarify the section/path controls. - Increase Spwashi branding with shared header/footer mark treatment and a home hero brand plate. - Keep the SVG…
 
 #>plan_shell_logo_branding_index
 #:index #!plan
@@ -11,11 +11,23 @@ operation = "prime"
 fixity = "tending"
 
 intent: .{
- goal = `- Tighten mobile shell motion and clarify the section/path controls. - Increase Spwashi branding with shared header/footer mark treatment and a home hero brand plate. - Keep the SVG mark geometry consistent across runtime, shared assets, and public presentation.`
+ goal = `Tighten mobile shell motion and clarify the section/path controls. - Increase Spwashi branding with shared header/footer mark treatment and a home hero brand plate. - Keep the SVG mark geometry consistent across runtime, shared assets, and public presentation.`
  owner = `shell-logo-branding`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @spw_brand_plate: ~"../../../public/images/logo/spw-brand-plate.svg"
@@ -25,9 +37,25 @@ dispatch: .{
  spw_brand_plate = @spw_brand_plate
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-shell_logo_branding-001"
+ layer = "pragmatic"
+ hypothesis = `Tighten mobile shell motion and clarify the section/path controls. - Increase Spwashi branding with shared header/footer mark treatment and a home hero brand plate. - Keep the SVG mark geometry consistent across runtime, shared assets, and public presentation.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/images/logo/spw-brand-plate.svg"
+ probe_ref = `rg 'shell-logo-branding' .agents/plans/shell-logo-branding`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/images/logo/spw-brand-plate.svg unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does shell-logo-branding own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of shell-logo-branding?`, see = @index }[reg=facet],
+][reg=set]
+
 invariants: #[
- `Owner intent: - Tighten mobile shell motion and clarify the section/path controls. - Increase Spwashi branding with shared header/footer mark treatment…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Tighten mobile shell motion and clarify the section/path controls. - Increase Spwashi branding with shared header/footer mark treatment and…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

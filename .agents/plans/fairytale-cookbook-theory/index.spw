@@ -14,8 +14,20 @@ intent: .{
  goal = `Make spwashi.com feel more like a fairytale guide into itself: an academic-adjacent living cookbook for software engineers, parents, and returning learners who want to stay intellectually sharp while developing practical theory, family nutrition intuition, and story-rich mnemonic practice.`
  owner = `fairytale-cookbook-theory`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 
@@ -23,9 +35,25 @@ dispatch: .{
  plan = @plan
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-fairytale_cookbook_theory-001"
+ layer = "pragmatic"
+ hypothesis = `Make spwashi.com feel more like a fairytale guide into itself: an academic-adjacent living cookbook for software engineers, parents, and returning learners who want to stay intellectually sharp while developing practical theory, family nutrition intuition, and story-rich mnemonic practice.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"./PLAN.md"
+ probe_ref = `rg 'fairytale-cookbook-theory' .agents/plans/fairytale-cookbook-theory`
+ falsification = `A patch cannot satisfy the public goal while leaving ./PLAN.md unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does fairytale-cookbook-theory own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of fairytale-cookbook-theory?`, see = @index }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: Make spwashi.com feel more like a fairytale guide into itself: an academic-adjacent living cookbook for software engineers, parents, and…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

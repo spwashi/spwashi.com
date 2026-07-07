@@ -1,6 +1,6 @@
 # Plan Index — Discovery Notice Popups
 #
-# - Improve site discoverability with small dismissible pop-ups that surface useful internal pages and offers. - Keep the notices schedule-driven so the surface can change by day or…
+# Improve site discoverability with small dismissible pop-ups that surface useful internal pages and offers. - Keep the notices schedule-driven so the surface can change by day or…
 
 #>plan_discovery_notice_popups_index
 #:index #!plan
@@ -11,11 +11,23 @@ operation = "prime"
 fixity = "tending"
 
 intent: .{
- goal = `- Improve site discoverability with small dismissible pop-ups that surface useful internal pages and offers. - Keep the notices schedule-driven so the surface can change by day or week without hand-editing routes.`
+ goal = `Improve site discoverability with small dismissible pop-ups that surface useful internal pages and offers. - Keep the notices schedule-driven so the surface can change by day or week without hand-editing routes.`
  owner = `discovery-notice-popups`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @data: ~"../../../public/data/"
@@ -33,6 +45,17 @@ dispatch: .{
  spw = @spw
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-discovery_notice_popups-001"
+ layer = "pragmatic"
+ hypothesis = `Improve site discoverability with small dismissible pop-ups that surface useful internal pages and offers. - Keep the notices schedule-driven so the surface can change by day or week without hand-editing routes.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/data/"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/data/ unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
 validation: #[
  `git diff --check`,
  `node --check on touched JS modules`,
@@ -40,9 +63,15 @@ validation: #[
  `browser smoke check on the home page and one content route`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does discovery-notice-popups own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of discovery-notice-popups?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether discovery-notice-popups still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
- `Owner intent: - Improve site discoverability with small dismissible pop-ups that surface useful internal pages and offers. - Keep the notices…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Improve site discoverability with small dismissible pop-ups that surface useful internal pages and offers. - Keep the notices…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

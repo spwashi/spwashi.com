@@ -14,8 +14,20 @@ intent: .{
  goal = `The desired end state is a broader, more navigable math/theory cluster that feels like a genuine field guide instead of a thin hub. The new routes should be intuition-first, cross-linked, and visually legible on static pages, with at least a couple of portable interactive diagrams that do not depend on build tooling or heavyweight runtimes. The taste note is playful clarity: the pages should feel mathematically serious, but still welcoming and fun to explore.`
  owner = `math-topic-expansion`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
@@ -41,6 +53,17 @@ dispatch: .{
  topics_index_html = @topics_index_html
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-math_topic_expansion-001"
+ layer = "pragmatic"
+ hypothesis = `The desired end state is a broader, more navigable math/theory cluster that feels like a genuine field guide instead of a thin hub. The new routes should be intuition-first, cross-linked, and visually legible on static pages, with at least a couple of portable interactive diagrams that do not depend on build tooling or heavyweight runtimes. The taste note is playful clarity: the pages should feel mathematically serious, but still welcoming and fun to explore.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../topics/software/parsers/"
+ probe_ref = `Hypotheses: intuition-first routes plus portable interactive SVG diagrams will make the math cluster feel more inhabitable and exploratory; better cross-links will make theory pages easier to traverse as a network.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../topics/software/parsers/ unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
 scope: .{
  in = #[
   `In scope: create new static routes for complexity, field-theory, number-theory, and category-theory; upgrade topics/software/parsers/; add a small shared JS module for portable interactive SVG-based math diagrams; update math/software/topic hub discoverability; extend shared topic CSS as needed; and register the new routes in the service worker.`,
@@ -56,9 +79,15 @@ validation: #[
  `Demo sequence: open /topics/math/, enter number theory and interact with the modular diagram, open category theory and use the composition explorer, open complexity, field theory, and upgraded parsers, then return through the topic atlas.`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does math-topic-expansion own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of math-topic-expansion?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether math-topic-expansion still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: The desired end state is a broader, more navigable math/theory cluster that feels like a genuine field guide instead of a thin hub. The new…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

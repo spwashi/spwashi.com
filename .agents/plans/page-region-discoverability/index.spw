@@ -14,8 +14,20 @@ intent: .{
  goal = `Make page regions across the site easier to discover, compare, and move through. A visitor should be able to understand both the local region they are in and the nearby page routes that carry the same concept forward.`
  owner = `page-region-discoverability`
  kind = `plan`
+ bucket = `css_layout_interaction`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "css_layout_interaction"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @public_js_runtime_page_region_rail_js: ~"../../../public/js/runtime/page-region-rail.js"
@@ -33,6 +45,17 @@ dispatch: .{
  images = @images
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-page_region_discoverability-001"
+ layer = "pragmatic"
+ hypothesis = `Make page regions across the site easier to discover, compare, and move through. A visitor should be able to understand both the local region they are in and the nearby page routes that carry the same concept forward.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/js/runtime/page-region-rail.js"
+ probe_ref = `node --check public/js/runtime/page-region-rail.js`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/runtime/page-region-rail.js unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
 validation: #[
  `node --check public/js/runtime/page-region-rail.js`,
  `node --check public/js/runtime/region-profiler.js`,
@@ -42,9 +65,15 @@ validation: #[
  `node --check public/js/runtime/charge-field.js`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does page-region-discoverability own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of page-region-discoverability?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether page-region-discoverability still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: Make page regions across the site easier to discover, compare, and move through. A visitor should be able to understand both the local…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

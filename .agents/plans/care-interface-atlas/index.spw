@@ -14,8 +14,20 @@ intent: .{
  goal = `Make Spwashi more useful for engineers and other analytical processors who have tried therapy, run into translation barriers, and need non-clinical language, cards, community protocols, and safety boundaries before or alongside licensed care.`
  owner = `care-interface-atlas`
  kind = `plan`
+ bucket = `public_route_proof_genre`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "public_route_proof_genre"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @index: ~"../../../topics/mental-health/index.html"
@@ -29,15 +41,32 @@ dispatch: .{
  surfaces = @surfaces
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-care_interface_atlas-001"
+ layer = "pragmatic"
+ hypothesis = `Make Spwashi more useful for engineers and other analytical processors who have tried therapy, run into translation barriers, and need non-clinical language, cards, community protocols, and safety boundaries before or alongside licensed care.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../topics/mental-health/index.html"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../topics/mental-health/index.html unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
 validation: #[
  `git diff --check`,
  `targeted rg checks for /care/ and data-spw-feature`,
  `npm run check`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does care-interface-atlas own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of care-interface-atlas?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether care-interface-atlas still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: Make Spwashi more useful for engineers and other analytical processors who have tried therapy, run into translation barriers, and need…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

@@ -1,4 +1,8 @@
-# screenshot-semantics
+^"operational_hooks"{
+ selectors = #[ `.agents/plans/screenshot-semantics/screenshot-semantics.spw`, ][reg=set]
+ probe_ref = `Hypotheses: persistent data attributes and CSS-driven selection states will make screenshots legible without runtime context; priming states will be achievable through all input modes; journey tokens will feel like earned marks rather than tracking labels.`
+ owner_claim = ~"./index.spw#owner_claim"
+}[reg=facet]# screenshot-semantics
 # Distilled semantic note for making site states legible in still captures
 # and developing the site as a cognitive tool for artists.
 
@@ -11,6 +15,7 @@
  index = ~"./index.spw"
  goal = `The desired end state is a site where a screenshot at any moment captures something worth keeping: current address, liminality phase, operator grammar engaged, and the journey fragment that led here. This requires selection and priming semantics that survive without runtime context — visual markers legible in a still image, not just in an interactive session. The artist use case drives this: someone who screenshots a good idea, marks a moment of developed thinking, or collects a token from an interesting journey through a cognitive surface. A well-primed screenshot should communicate what kind of surface this is, what is being examined, and how deeply the visit has gone. The taste note is legible capture + journey memory: every meaningful state should be screenshot-worthy, and the screenshot should be able to suggest how the state was reached.`
  owner = `screenshot-semantics`
+ bucket = "active_backlog"
 }[reg=facet]
 ^["thesis"]{
  claim: "A screenshot of this site at any meaningfully addressed state should communicate: what kind of surface this is, what is being examined, how deeply the visit has gone, and a trace of the path that brought it here — without requiring runtime context or explanatory text."

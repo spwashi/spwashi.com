@@ -7,19 +7,25 @@
 
 @plan: ~"./PLAN.md"
 @index: ~"./index.spw"
+@plans_root: ~"../../../.agents/plans/index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 
 operation = "cache"
 fixity = "tending"
 
+^"selection_probes"{
+ probes = #[ `rg 'pretext-whimsy-lab' public/js/semantic/pretext-measurement-bus.js`, `Hypotheses: Pretext's line and height outputs are enough to support a bounded family of playful, inspectable physical projections; separating observatory and whimsy runtimes will preserve clarity; mobile-first containment and truthful telemetry will keep the lab teachable.`, `test -f public/js/semantic/pretext-measurement-bus.js`, ][reg=set]
+ rule = "Run probes before trusting cached plan_context."
+}[reg=facet]
+
 ^"plan_context"{
  goal = `The desired end state is a Pretext surface that can move from observatory to playful typographic physics lab without lying about the substrate. The immediate task is to map which kinds of whimsy and physical intuition are honest consequences of line prediction, height estimation, mixed-script handling, width transforms, and explicit constraint mappings, and which are just generic animation wearing a Pretext badge. This track should stay explicitly experimental and likely centered on the existing Pretext page, while preparing patterns that later SVG widgets or Spw-backed pages can borrow. The taste note is measured delight + legible force: typographic play should feel surprising and generous, but still inspectable, mobile-first, and grounded in real layout data.`
  owner = `pretext-whimsy-lab`
  operation = "prime"
+ bucket = "active_backlog"
  validation = #[ `Hypotheses: Pretext's line and height outputs are enough to support a bounded family of playful, inspectable physical projections; separating observatory and whimsy runtimes will preserve clarity; mobile-first containment and truthful telemetry will keep the lab teachable.`, `Negative controls: the current Pretext observatory remains understandable, the rest of the site does not inherit whimsy by accident, and the library bridge stays thin.`, `Demo sequence: open the Pretext page, switch from observatory to a whimsy experiment, change text/width/line-height, verify the playful surface updates from the same prepared handle and reports honest metrics, then simulate an offline or failed-load state and confirm the surface degrades explicitly.`, ][reg=set]
  hot_files = #[ `public/js/semantic/pretext-measurement-bus.js`, `.agents/plans/pretext-whimsy-lab/pretext-whimsy-lab.spw`, ][reg=set]
 }[reg=facet]
-
 ^["roots"]{
  @plan: ~".agents/plans/pretext-whimsy-lab/PLAN.md"
  @artifact: ~".agents/plans/pretext-whimsy-lab/pretext-whimsy-lab.spw"

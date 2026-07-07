@@ -14,10 +14,23 @@ intent: .{
  goal = `A visitor's first seconds should read as movements: structure seats itself silently, reading arrives complete, instruments come online with eased acknowledgment, and atmosphere settles last. A returning visitor should feel remembered; a visitor on a different device, cache generation, or deploy edition should feel a small, safe stylistic surprise - different ornament weather over an identical city. The taste note is conducted arrival + governed variance: sequencing is intentional (never FOUC), and surprise is confined to layers that cannot move structure or break interaction contracts.`
  owner = `symphonic-loading-layered-editions`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@plan_runtime_bootstrap_performance: ~"./runtime-bootstrap-performance/index.spw"
 @site_semantics: ~"../../../.spw/conventions/site-semantics.spw"
 @style_core: ~"../../../public/css/style-core.css"
 @css_bundle: ~"../../../scripts/css-bundle.mjs"
@@ -29,6 +42,7 @@ intent: .{
 
 dispatch: .{
  plan = @plan
+ plan_runtime_bootstrap_performance = @plan_runtime_bootstrap_performance
  site_semantics = @site_semantics
  style_core = @style_core
  css_bundle = @css_bundle
@@ -39,6 +53,17 @@ dispatch: .{
  effects = @effects
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-symphonic_loading_layered_editions-001"
+ layer = "pragmatic"
+ hypothesis = `A visitor's first seconds should read as movements: structure seats itself silently, reading arrives complete, instruments come online with eased acknowledgment, and atmosphere settles last. A returning visitor should feel remembered; a visitor on a different device, cache generation, or deploy edition should feel a small, safe stylistic surprise - different ornament weather over an identical city. The taste note is conducted arrival + governed variance: sequencing is intentional (never FOUC), and surprise is confined to layers that cannot move structure or break interaction contracts.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../.spw/conventions/site-semantics.spw"
+ probe_ref = `Lighthouse/DevTools: CLS 0 attributable to movements III/IV; reading complete before atmosphere requests start on a throttled profile.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../.spw/conventions/site-semantics.spw unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
 validation: #[
  `Lighthouse/DevTools: CLS 0 attributable to movements III/IV; reading complete before atmosphere requests start on a throttled profile.`,
  `prefers-reduced-motion: all movement easing collapses; content identical.`,
@@ -47,9 +72,15 @@ validation: #[
  `npm run check:css extended with the variance-eligible property lint for variant files.`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does symphonic-loading-layered-editions own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of symphonic-loading-layered-editions?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether symphonic-loading-layered-editions still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: A visitor's first seconds should read as movements: structure seats itself silently, reading arrives complete, instruments come online with…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

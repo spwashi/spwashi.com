@@ -14,8 +14,20 @@ intent: .{
  goal = `The end state is a coherent loop where recent route and operator selections leave a readable trace across image accents, nearby cards, and selected guidance surfaces instead of vanishing as isolated hover effects. This should feel legible and intentional: a reader can change the memory behavior from the settings model or from small route-local controls, then immediately see the impact on hero images and surrounding grammar. Taste note: improve expressiveness and layering without smuggling in opaque controls or breaking the hand-written route surfaces.`
  owner = `wonder-memory`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
@@ -23,6 +35,17 @@ intent: .{
 dispatch: .{
  plan = @plan
  wip = @wip
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-wonder_memory-001"
+ layer = "pragmatic"
+ hypothesis = `The end state is a coherent loop where recent route and operator selections leave a readable trace across image accents, nearby cards, and selected guidance surfaces instead of vanishing as isolated hover effects. This should feel legible and intentional: a reader can change the memory behavior from the settings model or from small route-local controls, then immediately see the impact on hero images and surrounding grammar. Taste note: improve expressiveness and layering without smuggling in opaque controls or breaking the hand-written route surfaces.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"./PLAN.md"
+ probe_ref = `Hypotheses: wonderMemory changes should alter recent-path persistence, root datasets/CSS variables, and visible accent behavior without page reload.`
+ falsification = `A patch cannot satisfy the public goal while leaving ./PLAN.md unchanged or untested.`
+ status = "active"
 }[reg=facet]
 
 scope: .{
@@ -40,9 +63,15 @@ validation: #[
  `Demo sequence: change wonder-memory on /settings/, visit /topics/software/, click parser/math routes, then confirm image resonance and matched cards/links update on /topics/software/parsers/ and /topics/math/.`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does wonder-memory own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of wonder-memory?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether wonder-memory still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: The end state is a coherent loop where recent route and operator selections leave a readable trace across image accents, nearby cards, and…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

@@ -14,8 +14,20 @@ intent: .{
  goal = `The desired end state is a site where important routes introduce themselves with a visible hero image or diagram instead of leading with text alone, and where those surfaces feel tactile rather than inert. The interaction target is whimsical legibility: drag and touch should gently bend or energize the image, canvas accents should resonate with page palette, SVG filters should be available everywhere, and hero figures should feel more prominent without turning into novelty widgets.`
  owner = `hero-image-whimsy`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
@@ -41,6 +53,17 @@ dispatch: .{
  topics_math_field_theory_index_html = @topics_math_field_theory_index_html
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-hero_image_whimsy-001"
+ layer = "pragmatic"
+ hypothesis = `The desired end state is a site where important routes introduce themselves with a visible hero image or diagram instead of leading with text alone, and where those surfaces feel tactile rather than inert. The interaction target is whimsical legibility: drag and touch should gently bend or energize the image, canvas accents should resonate with page palette, SVG filters should be available everywhere, and hero figures should feel more prominent without turning into novelty widgets.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/js/site.js"
+ probe_ref = `Hypotheses: more routes with hero imagery will improve scanability and route identity; drag/touch-aware image metaphysics will make image surfaces feel more intentional without requiring custom page scripts.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/site.js unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
 scope: .{
  in = #[
   `In scope: create plan artifacts, mount the dormant shared SVG/filter/canvas/image modules from public/js/site.js, extend the image metaphysics layer with drag/touch/prominence state, add shared hero-image layout rules, and retrofit key math/software routes with hero figures using existing assets and portable SVG surfaces.`,
@@ -56,9 +79,15 @@ validation: #[
  `Demo sequence: visit /topics/software/, /topics/software/parsers/, /topics/math/, /topics/math/number-theory/, /topics/math/category-theory/, /topics/math/complexity/, and /topics/math/field-theory/; verify hero image presence, internal links, and calm interaction behavior on hover/touch.`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does hero-image-whimsy own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of hero-image-whimsy?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether hero-image-whimsy still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: The desired end state is a site where important routes introduce themselves with a visible hero image or diagram instead of leading with…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

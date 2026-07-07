@@ -14,8 +14,20 @@ intent: .{
  goal = `Make the site's CSS easier to read, inspect, and refactor while improving the developer experience of changing UX behavior. The next series should turn the first debug-label pass into a literate maintainability program: clearer ownership boundaries, behavior-facing names, smaller files, stronger local tokens, less selector guesswork, and repeatable validation. This is a CSS architecture plan, not a redesign. The site should look materially the same unless a local cleanup reveals a small behavior bug or a confusing affordance that should be corrected in place.`
  owner = `css-architecture-readability`
  kind = `plan`
+ bucket = `canonical_tracks`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "canonical_tracks"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @style: ~"../../../public/css/style.css"
@@ -39,9 +51,25 @@ dispatch: .{
  settings_forms = @settings_forms
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-css_architecture_readability-001"
+ layer = "pragmatic"
+ hypothesis = `Make the site's CSS easier to read, inspect, and refactor while improving the developer experience of changing UX behavior. The next series should turn the first debug-label pass into a literate maintainability program: clearer ownership boundaries, behavior-facing names, smaller files, stronger local tokens, less selector guesswork, and repeatable validation. This is a CSS architecture plan, not a redesign. The site should look materially the same unless a local cleanup reveals a small behavior bug or a confusing affordance that should be corrected in place.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/css/style.css"
+ probe_ref = `rg 'css-architecture-readability' .agents/plans/css-architecture-readability`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/css/style.css unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does css-architecture-readability own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of css-architecture-readability?`, see = @index }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: Make the site's CSS easier to read, inspect, and refactor while improving the developer experience of changing UX behavior. The next series…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

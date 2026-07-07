@@ -7,19 +7,25 @@
 
 @plan: ~"./PLAN.md"
 @index: ~"./index.spw"
+@plans_root: ~"../../../.agents/plans/index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 
 operation = "cache"
 fixity = "tending"
 
+^"selection_probes"{
+ probes = #[ `rg 'mobile-runtime-foundation' .agents/plans/mobile-runtime-foundation/mobile-runtime-foundation.spw`, `Hypotheses: a shared region/register model will reduce runtime duplication; complete operator interaction semantics will prevent decorative grammar; portable inspect/invoke semantics will make mobile behavior easier to teach; prefix/postfix symmetry will let keyboard and touch feel like different entrances into the same grammar; semantic reflection into native HTML structures will keep the runtime honest across modalities; inspectable charge and bias can make brace physics useful without hidden state; recursive/fractal surface geometry can improve learnability if the same boundary/inspect/pivot pattern repeats across scales; block/script UI can be prepared without running the full language runtime in-browser.`, `test -f .agents/plans/mobile-runtime-foundation/mobile-runtime-foundation.spw`, ][reg=set]
+ rule = "Run probes before trusting cached plan_context."
+}[reg=facet]
+
 ^"plan_context"{
  goal = `The desired end state is a site runtime that treats mobile and coarse-pointer use as the primary case rather than a degraded desktop fallback. The immediate task is not to ship new chrome, but to formalize the implementation surface: page regions with ownership, portable interaction semantics that do not depend on hover, complete operator interaction meanings, inspectable registers that back navigator/console projections, semantic HTML structures that act as the canonical reflection surface, and a clean preparation layer for future Spw blocks and scripts as UI. The longer arc is a cognitive machine that can produce wonder without becoming noisy: structure should become more legible as the user engages it, Spw symmetry should remain checkable across modalities, charge/bias metaphysics should be inspectable rather than hidden, and future Spw-backed components/pages should inherit that same ecosystem rather than bypass it. The taste note is clarity + containment: preserve the site's calm surface while making its deeper machinery easier to reason about, inspect, and extend.`
  owner = `mobile-runtime-foundation`
  operation = "prime"
+ bucket = "active_backlog"
  validation = #[ `Hypotheses: a shared region/register model will reduce runtime duplication; complete operator interaction semantics will prevent decorative grammar; portable inspect/invoke semantics will make mobile behavior easier to teach; prefix/postfix symmetry will let keyboard and touch feel like different entrances into the same grammar; semantic reflection into native HTML structures will keep the runtime honest across modalities; inspectable charge and bias can make brace physics useful without hidden state; recursive/fractal surface geometry can improve learnability if the same boundary/inspect/pivot pattern repeats across scales; block/script UI can be prepared without running the full language runtime in-browser.`, `Negative controls: route structure, current visual voice, and basic static-site simplicity remain intact.`, `Demo sequence: identify the active region on mobile, inspect a component without hover, invoke the same component with touch or keyboard, pivot into a deeper surface without losing orientation, and confirm navigator/console can describe the same underlying register state.`, ][reg=set]
  hot_files = #[ `.agents/plans/mobile-runtime-foundation/mobile-runtime-foundation.spw`, ][reg=set]
 }[reg=facet]
-
 ^["roots"]{
  @plan: ~".agents/plans/mobile-runtime-foundation/PLAN.md"
  @artifact: ~".agents/plans/mobile-runtime-foundation/mobile-runtime-foundation.spw"

@@ -14,11 +14,27 @@ intent: .{
  goal = `The desired end state is a repo where: - the authored website lives under one obvious source root: site/ - generated deploy output continues to live in dist/ - build/dev/check scripts continue to work without changing public URLs - non-site concerns such as .agents/, .spw/, .github/, and tooling no longer visually compete with route folders at the repo root - templates and partials stay inside the site source tree as non-routable authoring surfaces This is a repository-clarity change, not a framework migration. The public site should still behave like a hand-authored static site with root-relative asset paths and directory routing.`
  owner = `site-source-layout`
  kind = `plan`
+ bucket = `runtime_js_validation`
+ artifact_shape = `PLAN.md | wip.spw | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "runtime_js_validation"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
+@plan_semantic_html_normalization: ~"./semantic-html-normalization/index.spw"
+@plan_css_maintainability_refactor: ~"./css-maintainability-refactor/index.spw"
+@plan_runtime_module_fluency: ~"./runtime-module-fluency/index.spw"
+@plan_spw_surface_normalization: ~"./spw-surface-normalization/index.spw"
 @scripts: ~"../../../scripts/"
 @spw: ~"../../../.spw/"
 @build: ~"../../../scripts/build.mjs"
@@ -31,6 +47,10 @@ intent: .{
 dispatch: .{
  plan = @plan
  wip = @wip
+ plan_semantic_html_normalization = @plan_semantic_html_normalization
+ plan_css_maintainability_refactor = @plan_css_maintainability_refactor
+ plan_runtime_module_fluency = @plan_runtime_module_fluency
+ plan_spw_surface_normalization = @plan_spw_surface_normalization
  scripts = @scripts
  spw = @spw
  build = @build
@@ -39,6 +59,17 @@ dispatch: .{
  generate_sitemap = @generate_sitemap
  generate_design_catalog = @generate_design_catalog
  site_contracts = @site_contracts
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-site_source_layout-001"
+ layer = "pragmatic"
+ hypothesis = `The desired end state is a repo where: - the authored website lives under one obvious source root: site/ - generated deploy output continues to live in dist/ - build/dev/check scripts continue to work without changing public URLs - non-site concerns such as .agents/, .spw/, .github/, and tooling no longer visually compete with route folders at the repo root - templates and partials stay inside the site source tree as non-routable authoring surfaces This is a repository-clarity change, not a framework migration. The public site should still behave like a hand-authored static site with root-relative asset paths and directory routing.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../scripts/"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../scripts/ unchanged or untested.`
+ status = "active"
 }[reg=facet]
 
 scope: .{
@@ -64,9 +95,15 @@ validation: #[
  `/`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does site-source-layout own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of site-source-layout?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether site-source-layout still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: The desired end state is a repo where: - the authored website lives under one obvious source root: site/ - generated deploy output…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

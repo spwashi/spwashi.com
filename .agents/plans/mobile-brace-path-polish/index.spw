@@ -1,6 +1,6 @@
 # Plan Index — Mobile Brace And Path Polish
 #
-# - Make brace interactions easier to learn on mobile. - Ensure the shell PATH control has a meaningful target across more routes. - Remove dead vertical space above closing braces…
+# Make brace interactions easier to learn on mobile. - Ensure the shell PATH control has a meaningful target across more routes. - Remove dead vertical space above closing braces…
 
 #>plan_mobile_brace_path_polish_index
 #:index #!plan
@@ -11,11 +11,23 @@ operation = "prime"
 fixity = "tending"
 
 intent: .{
- goal = `- Make brace interactions easier to learn on mobile. - Ensure the shell PATH control has a meaningful target across more routes. - Remove dead vertical space above closing braces when a frame footer only carries the brace marker.`
+ goal = `Make brace interactions easier to learn on mobile. - Ensure the shell PATH control has a meaningful target across more routes. - Remove dead vertical space above closing braces when a frame footer only carries the brace marker.`
  owner = `mobile-brace-path-polish`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @experiential: ~"../../../public/js/runtime/experiential.js"
@@ -33,9 +45,25 @@ dispatch: .{
  index = @index
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-mobile_brace_path_polish-001"
+ layer = "pragmatic"
+ hypothesis = `Make brace interactions easier to learn on mobile. - Ensure the shell PATH control has a meaningful target across more routes. - Remove dead vertical space above closing braces when a frame footer only carries the brace marker.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/js/runtime/experiential.js"
+ probe_ref = `rg 'mobile-brace-path-polish' .agents/plans/mobile-brace-path-polish`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/runtime/experiential.js unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does mobile-brace-path-polish own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of mobile-brace-path-polish?`, see = @index }[reg=facet],
+][reg=set]
+
 invariants: #[
- `Owner intent: - Make brace interactions easier to learn on mobile. - Ensure the shell PATH control has a meaningful target across more routes. - Remove…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Make brace interactions easier to learn on mobile. - Ensure the shell PATH control has a meaningful target across more routes. - Remove…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

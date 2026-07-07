@@ -14,19 +14,44 @@ intent: .{
  goal = `The desired end state is a Pretext surface that can move from observatory to playful typographic physics lab without lying about the substrate. The immediate task is to map which kinds of whimsy and physical intuition are honest consequences of line prediction, height estimation, mixed-script handling, width transforms, and explicit constraint mappings, and which are just generic animation wearing a Pretext badge. This track should stay explicitly experimental and likely centered on the existing Pretext page, while preparing patterns that later SVG widgets or Spw-backed pages can borrow. The taste note is measured delight + legible force: typographic play should feel surprising and generous, but still inspectable, mobile-first, and grounded in real layout data.`
  owner = `pretext-whimsy-lab`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | pretext-whimsy-lab.spw | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
 @pretext_whimsy_lab: ~"./pretext-whimsy-lab.spw"
+@plan_designer_conversation_canvas: ~"./designer-conversation-canvas/index.spw"
 @pretext_measurement_bus: ~"../../../public/js/semantic/pretext-measurement-bus.js"
 
 dispatch: .{
  plan = @plan
  wip = @wip
  pretext_whimsy_lab = @pretext_whimsy_lab
+ plan_designer_conversation_canvas = @plan_designer_conversation_canvas
  pretext_measurement_bus = @pretext_measurement_bus
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-pretext_whimsy_lab-001"
+ layer = "pragmatic"
+ hypothesis = `The desired end state is a Pretext surface that can move from observatory to playful typographic physics lab without lying about the substrate. The immediate task is to map which kinds of whimsy and physical intuition are honest consequences of line prediction, height estimation, mixed-script handling, width transforms, and explicit constraint mappings, and which are just generic animation wearing a Pretext badge. This track should stay explicitly experimental and likely centered on the existing Pretext page, while preparing patterns that later SVG widgets or Spw-backed pages can borrow. The taste note is measured delight + legible force: typographic play should feel surprising and generous, but still inspectable, mobile-first, and grounded in real layout data.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/js/semantic/pretext-measurement-bus.js"
+ probe_ref = `Hypotheses: Pretext's line and height outputs are enough to support a bounded family of playful, inspectable physical projections; separating observatory and whimsy runtimes will preserve clarity; mobile-first containment and truthful telemetry will keep the lab teachable.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/semantic/pretext-measurement-bus.js unchanged or untested.`
+ status = "active"
 }[reg=facet]
 
 scope: .{
@@ -44,9 +69,15 @@ validation: #[
  `Demo sequence: open the Pretext page, switch from observatory to a whimsy experiment, change text/width/line-height, verify the playful surface updates from the same prepared handle and reports honest metrics, then simulate an offline or failed-load state and confirm the surface degrades explicitly.`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does pretext-whimsy-lab own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of pretext-whimsy-lab?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether pretext-whimsy-lab still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: The desired end state is a Pretext surface that can move from observatory to playful typographic physics lab without lying about the…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

@@ -14,19 +14,46 @@ intent: .{
  goal = `The desired end state is a campaign memory model where private or semi-structured session material can be captured, revisited, and promoted deliberately. A session note should be able to hold what happened at the table, what changed in characters, what might become canon, and what pressure should carry forward, without requiring immediate publication as a polished session page. This should align with the local gameplay kit, the public sessions/ route, and the new blog-blob thinking while staying distinct from them. The taste note is play residue + durable memory seam: session notes should preserve the energy of actual play while remaining structured enough to feed the campaign record later.`
  owner = `rpg-session-notes`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | rpg-session-notes.spw | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @rpg_session_notes: ~"./rpg-session-notes.spw"
+@plan_rpg_local_gameplay: ~"./rpg-local-gameplay/index.spw"
+@plan_blog_blob_spw: ~"./blog-blob-spw/index.spw"
 @agents_plans_rpg_local_gameplay_plan_md: ~"../../../.agents/plans/rpg-local-gameplay/PLAN.md"
 @agents_plans_blog_blob_spw_plan_md: ~"../../../.agents/plans/blog-blob-spw/PLAN.md"
 
 dispatch: .{
  plan = @plan
  rpg_session_notes = @rpg_session_notes
+ plan_rpg_local_gameplay = @plan_rpg_local_gameplay
+ plan_blog_blob_spw = @plan_blog_blob_spw
  agents_plans_rpg_local_gameplay_plan_md = @agents_plans_rpg_local_gameplay_plan_md
  agents_plans_blog_blob_spw_plan_md = @agents_plans_blog_blob_spw_plan_md
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-rpg_session_notes-001"
+ layer = "pragmatic"
+ hypothesis = `The desired end state is a campaign memory model where private or semi-structured session material can be captured, revisited, and promoted deliberately. A session note should be able to hold what happened at the table, what changed in characters, what might become canon, and what pressure should carry forward, without requiring immediate publication as a polished session page. This should align with the local gameplay kit, the public sessions/ route, and the new blog-blob thinking while staying distinct from them. The taste note is play residue + durable memory seam: session notes should preserve the energy of actual play while remaining structured enough to feed the campaign record later.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../.agents/plans/rpg-local-gameplay/PLAN.md"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../.agents/plans/rpg-local-gameplay/PLAN.md unchanged or untested.`
+ status = "active"
 }[reg=facet]
 
 scope: .{
@@ -45,9 +72,15 @@ validation: #[
  `confirm the distinctions between gameplay seed, session note, public session page, and arc record are crisp enough to use later`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does rpg-session-notes own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of rpg-session-notes?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether rpg-session-notes still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: The desired end state is a campaign memory model where private or semi-structured session material can be captured, revisited, and promoted…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

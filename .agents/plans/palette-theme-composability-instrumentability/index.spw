@@ -14,13 +14,36 @@ intent: .{
  goal = `Refine CSS tokens and JS architecture so that artistically selected palettes, theme packs, lighting conditions, and component motifs compose in a logical, learnable, and highly inspectable way. Make tuning easy and readable across contexts while improving color balance, attribute timing for no-FOUC state application, and evolutionary semantic enhancement through combinatoric component trees. This directly supports the site's identity as a tunable, living medium for practice and learning, where operators, measures, and surfaces can be primed and experienced in rich, context-aware ways.`
  owner = `palette-theme-composability-instrumentability`
  kind = `plan`
+ bucket = `media_image_sensory`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "media_image_sensory"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 
 dispatch: .{
  plan = @plan
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-palette_theme_composability_instrumentability-001"
+ layer = "pragmatic"
+ hypothesis = `Refine CSS tokens and JS architecture so that artistically selected palettes, theme packs, lighting conditions, and component motifs compose in a logical, learnable, and highly inspectable way. Make tuning easy and readable across contexts while improving color balance, attribute timing for no-FOUC state application, and evolutionary semantic enhancement through combinatoric component trees. This directly supports the site's identity as a tunable, living medium for practice and learning, where operators, measures, and surfaces can be primed and experienced in rich, context-aware ways.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"./PLAN.md"
+ probe_ref = `rg 'palette-theme-composability-instrumentability' .agents/plans/palette-theme-composability-instrumentability`
+ falsification = `A patch cannot satisfy the public goal while leaving ./PLAN.md unchanged or untested.`
+ status = "active"
 }[reg=facet]
 
 scope: .{
@@ -32,9 +55,14 @@ scope: .{
  ][reg=set]
 }[reg=facet]
 
+editor_prompts: #[
+ .{ ask = `What does palette-theme-composability-instrumentability own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of palette-theme-composability-instrumentability?`, see = @index }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: Refine CSS tokens and JS architecture so that artistically selected palettes, theme packs, lighting conditions, and component motifs…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

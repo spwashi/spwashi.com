@@ -14,8 +14,20 @@ intent: .{
  goal = `Origin: Proposed by another agent session. Captured here for tracking and execution.`
  owner = `gesture-aria-hygiene`
  kind = `fix`
+ bucket = `fix_queue`
+ artifact_shape = `FIX.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "observation | gesture"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "exchange"
+ memory_tier = "hot"
+ bucket = "fix_queue"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @fix: ~"./FIX.md"
 @brace_gestures: ~"../../../public/js/runtime/brace-gestures.js"
@@ -31,9 +43,25 @@ dispatch: .{
  frame_navigator = @frame_navigator
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-gesture_aria_hygiene-001"
+ layer = "pragmatic"
+ hypothesis = `Origin: Proposed by another agent session. Captured here for tracking and execution.`
+ spec_ref = ~"./FIX.md"
+ impl_ref = ~"../../../public/js/runtime/brace-gestures.js"
+ probe_ref = `rg 'gesture-aria-hygiene' .agents/plans/gesture-aria-hygiene`
+ falsification = `The listed failure mode returns after the planned fix lands.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does gesture-aria-hygiene own, and what should stay out of scope?`, see = @fix }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of gesture-aria-hygiene?`, see = @index }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: Origin: Proposed by another agent session. Captured here for tracking and execution.`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

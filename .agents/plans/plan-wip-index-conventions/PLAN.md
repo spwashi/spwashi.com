@@ -8,7 +8,7 @@ Every plan folder should expose a small `index.spw` dispatch surface, and every 
 
 ## Scope
 
-- In scope: `.spw/conventions/wip-notebook.spw`, `.spw/surfaces/index.spw`, `scripts/maintain-plan-directory-indexes.mjs`, plan-specific `index.spw`, `wip.spw`, and named `.spw` artifacts derived from each folder's `PLAN.md` or `FIX.md`, dispatch wiring in `planning-ecology.spw` and `conventions/index.spw`.
+- In scope: `.spw/conventions/wip-notebook.spw`, `.spw/conventions/plan-index.spw`, `.agents/plans/index.spw`, `.spw/surfaces/index.spw`, `scripts/maintain-plan-directory-indexes.mjs`, plan-specific `index.spw` / `wip.spw` / named `.spw` with Spw features (dimensions, owner_claim, editor_prompts, selection_probes, operational_hooks, virtual buckets), dispatch wiring in `planning-ecology.spw` and `conventions/index.spw`.
 - Out of scope: bulk rewriting legacy wip body content, physical plan-folder moves, generated `.agents/state/plans-index.json` (follow-up for `agentic-dev-contracts/`).
 
 ## Validation

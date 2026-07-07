@@ -7,19 +7,25 @@
 
 @plan: ~"./PLAN.md"
 @index: ~"./index.spw"
+@plans_root: ~"../../../.agents/plans/index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 
 operation = "cache"
 fixity = "tending"
 
+^"selection_probes"{
+ probes = #[ `rg 'rpg-asset-capture-frames' .agents/plans/screenshot-semantics/PLAN.md`, `Hypotheses: players can stage a character or item in under a minute; screenshot mode produces a clean frame at mobile and desktop widths; unlockable motifs increase curiosity without blocking utility.`, `test -f .agents/plans/screenshot-semantics/PLAN.md`, ][reg=set]
+ rule = "Run probes before trusting cached plan_context."
+}[reg=facet]
+
 ^"plan_context"{
  goal = `RPG Wednesday should let players upload local character, item, place, and artifact images, then stage those assets inside stable screenshot-friendly frames. The site is not responsible for automating capture or sending media to Midjourney, Grok, or any external service; it should prepare a well-designed local surface that players can screenshot manually and pair with a copyable prompt note. Taste note: improve usefulness, trust, and earned wonder. Customizations should feel like discovering more of the campaign interface, not like a generic gamified skin store.`
  owner = `rpg-asset-capture-frames`
  operation = "prime"
+ bucket = "active_backlog"
  validation = #[ `Hypotheses: players can stage a character or item in under a minute; screenshot mode produces a clean frame at mobile and desktop widths; unlockable motifs increase curiosity without blocking utility.`, `Negative controls: RPG routes remain readable without JavaScript; local gameplay state still loads; PWA offline core routes continue working.`, `Demo sequence: upload an image, name it as a character, choose a motif, enter screenshot mode, manually screenshot, copy the prompt note, reload the page, confirm the asset and motif persist locally, export, clear, import, and confirm recovery.`, ][reg=set]
  hot_files = #[ `.agents/plans/screenshot-semantics/PLAN.md`, `.agents/plans/rpg-asset-capture-frames/rpg-asset-capture-frames.spw`, ][reg=set]
 }[reg=facet]
-
 ^["roots"]{
  @plan: ~".agents/plans/rpg-asset-capture-frames/PLAN.md"
  @artifact: ~".agents/plans/rpg-asset-capture-frames/rpg-asset-capture-frames.spw"

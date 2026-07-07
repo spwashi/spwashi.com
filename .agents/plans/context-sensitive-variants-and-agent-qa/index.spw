@@ -14,8 +14,20 @@ intent: .{
  goal = `Make component variants on spwashi.com feel *alive* to their actual situation — size/layout container, local theming resonance, and content pressure — while giving coding agents (and humans in debug mode) the ability to both *view* the rendered browser state (vision/screenshots + rects) and *read* the rich semantic DOM we already author (data-spw-* + runtime state + bus + contracts). Taste note: Extend the existing attribute-driven, CSS-first, highly inspectable system rather than layering a new variant engine on top of it.`
  owner = `context-sensitive-variants-and-agent-qa`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | context-variants-qa.spw | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @context_variants_qa: ~"./context-variants-qa.spw"
@@ -41,6 +53,17 @@ dispatch: .{
  design = @design
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-context_sensitive_variants_and_agent_qa-001"
+ layer = "pragmatic"
+ hypothesis = `Make component variants on spwashi.com feel *alive* to their actual situation — size/layout container, local theming resonance, and content pressure — while giving coding agents (and humans in debug mode) the ability to both *view* the rendered browser state (vision/screenshots + rects) and *read* the rich semantic DOM we already author (data-spw-* + runtime state + bus + contracts). Taste note: Extend the existing attribute-driven, CSS-first, highly inspectable system rather than layering a new variant engine on top of it.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/js/runtime/composition-box-model.js"
+ probe_ref = `rg 'context-sensitive-variants-and-agent-qa' .agents/plans/context-sensitive-variants-and-agent-qa`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/runtime/composition-box-model.js unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
 scope: .{
  in = #[
   `In scope:`,
@@ -55,9 +78,14 @@ scope: .{
  ][reg=set]
 }[reg=facet]
 
+editor_prompts: #[
+ .{ ask = `What does context-sensitive-variants-and-agent-qa own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of context-sensitive-variants-and-agent-qa?`, see = @index }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: Make component variants on spwashi.com feel *alive* to their actual situation — size/layout container, local theming resonance, and content…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

@@ -14,8 +14,20 @@ intent: .{
  goal = `Prepare this codebase for refinement by a model that can read .spw, follow explicit connections, and make competent local changes, but should not be expected to improvise tastefully through the full CSS and JavaScript surface. The plan turns broad creative direction into rails: - where to look first - what not to touch - how CSS, HTML, JS, and .spw names should line up - which semantic concepts are fixed, stable, tending, experimental, or volatile - how creative/marketing surfaces should become coherent enough that musicians and artists want to explore and extend them This is not a new framework. It is a focus contract for future agents and collaborators.`
  owner = `model-guided-refinement`
  kind = `plan`
+ bucket = `semantic_rails`
+ artifact_shape = `PLAN.md | motif-table-cache.spw | operator-curriculum-physics-cache.spw | rpg-analog-worldbuilding-cache.spw | rpg-note-interaction-cache.spw | voice-flow-cache.spw | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "semantics | pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "warm"
+ bucket = "semantic_rails"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @motif_table_cache: ~"./motif-table-cache.spw"
@@ -49,6 +61,17 @@ dispatch: .{
  index = @index
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-model_guided_refinement-001"
+ layer = "pragmatic"
+ hypothesis = `Prepare this codebase for refinement by a model that can read .spw, follow explicit connections, and make competent local changes, but should not be expected to improvise tastefully through the full CSS and JavaScript surface. The plan turns broad creative direction into rails: - where to look first - what not to touch - how CSS, HTML, JS, and .spw names should line up - which semantic concepts are fixed, stable, tending, experimental, or volatile - how creative/marketing surfaces should become coherent enough that musicians and artists want to explore and extend them This is not a new framework. It is a focus contract for future agents and collaborators.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../.spw/conventions/semantic-capacity.spw"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../.spw/conventions/semantic-capacity.spw unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
 validation: #[
  `git diff --check`,
  `node --check <edited-js-file>`,
@@ -57,9 +80,15 @@ validation: #[
  `targeted rg for new semantic names, anchors, data attributes, and plan slugs`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does model-guided-refinement own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of model-guided-refinement?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether model-guided-refinement still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: Prepare this codebase for refinement by a model that can read .spw, follow explicit connections, and make competent local changes, but…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

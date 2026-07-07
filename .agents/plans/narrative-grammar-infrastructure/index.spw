@@ -14,8 +14,20 @@ intent: .{
  goal = `Make narrative instrumentation useful across routes without letting the runtime guess too aggressively from ordinary prose.`
  owner = `narrative-grammar-infrastructure`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @narrative_instrumentation: ~"../../../public/js/semantic/narrative-instrumentation.js"
@@ -25,9 +37,25 @@ dispatch: .{
  narrative_instrumentation = @narrative_instrumentation
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-narrative_grammar_infrastructure-001"
+ layer = "pragmatic"
+ hypothesis = `Make narrative instrumentation useful across routes without letting the runtime guess too aggressively from ordinary prose.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/js/semantic/narrative-instrumentation.js"
+ probe_ref = `rg 'narrative-grammar-infrastructure' .agents/plans/narrative-grammar-infrastructure`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/semantic/narrative-instrumentation.js unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does narrative-grammar-infrastructure own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of narrative-grammar-infrastructure?`, see = @index }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: Make narrative instrumentation useful across routes without letting the runtime guess too aggressively from ordinary prose.`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

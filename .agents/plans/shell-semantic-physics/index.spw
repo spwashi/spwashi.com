@@ -14,8 +14,20 @@ intent: .{
  goal = `Turn the breadcrumb and hamburger menu into inspectable, semantically meaningful shell instruments. The breadcrumb should expose route, frame, mode, and shell state as separate readable parts with reversible interactions. The menu should project its own operational physics through stable datasets, explicit custom events, and CSS that documents how pressure, phase, topology, and return paths work.`
  owner = `shell-semantic-physics`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @cognitive_navigation: ~"../../../.spw/conventions/cognitive-navigation.spw"
@@ -23,6 +35,17 @@ intent: .{
 dispatch: .{
  plan = @plan
  cognitive_navigation = @cognitive_navigation
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-shell_semantic_physics-001"
+ layer = "pragmatic"
+ hypothesis = `Turn the breadcrumb and hamburger menu into inspectable, semantically meaningful shell instruments. The breadcrumb should expose route, frame, mode, and shell state as separate readable parts with reversible interactions. The menu should project its own operational physics through stable datasets, explicit custom events, and CSS that documents how pressure, phase, topology, and return paths work.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../.spw/conventions/cognitive-navigation.spw"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../.spw/conventions/cognitive-navigation.spw unchanged or untested.`
+ status = "active"
 }[reg=facet]
 
 scope: .{
@@ -39,9 +62,15 @@ validation: #[
  `npm run build`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does shell-semantic-physics own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of shell-semantic-physics?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether shell-semantic-physics still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: Turn the breadcrumb and hamburger menu into inspectable, semantically meaningful shell instruments. The breadcrumb should expose route,…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

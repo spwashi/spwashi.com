@@ -7,19 +7,25 @@
 
 @plan: ~"./PLAN.md"
 @index: ~"./index.spw"
+@plans_root: ~"../../../.agents/plans/index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 
 operation = "cache"
 fixity = "tending"
 
+^"selection_probes"{
+ probes = #[ `rg 'brace-literacy-guides' settings/index.html`, `Hypotheses: brace-role metadata can drive clearer CSS without rewriting page HTML; local page metadata + persisted traces can improve smart grouping without bespoke route code`, `test -f settings/index.html`, ][reg=set]
+ rule = "Run probes before trusting cached plan_context."
+}[reg=facet]
+
 ^"plan_context"{
  goal = `The site should explain more of itself through its own interaction grammar. Brace forms need clearer differentiation between conceptual and realized surfaces, substrate needs to read as a first-class distinction, and phrasing cues should help people parse what is idea, what is artifact, and what is guidance. The quality bar here is clarity and expressiveness: richer semantics, better salience, and settings that actually help people read the system rather than just decorate it. This branch also needs to avoid the shallow-accumulation problem from recent fast edits. New smart/localStorage behavior should be heuristic but legible, grounded in page metadata and existing component semantics, not a parallel lore layer.`
  owner = `brace-literacy-guides`
  operation = "prime"
+ bucket = "active_backlog"
  validation = #[ `Hypotheses: brace-role metadata can drive clearer CSS without rewriting page HTML; local page metadata + persisted traces can improve smart grouping without bespoke route code`, `Negative controls: existing navigation, console, and phase/disposition controls remain functional; routes without grounded traces stay quiet`, `Demo sequence: visit /settings/, toggle literacy/conceptual guide settings, interact with operator chips / cards on a content route, confirm cognitive surface + smart console reflect substrate and phrasing changes`, `Fuzz strategy:`, `Explore: query DOM metadata and localStorage traces while exercising brace gestures`, `Stabilize: git diff --check, node --check on touched JS modules, targeted selector/consumer searches`, ][reg=set]
  hot_files = #[ `settings/index.html`, `public/js/site.js`, `public/css/style.css`, `.agents/plans/brace-literacy-guides/brace-literacy-guides.spw`, ][reg=set]
 }[reg=facet]
-
 ^["roots"]{
  @cluster: ~".agents/plans/plan-ecology-clustering/plan-ecology-clustering.spw"
  @plan: ~".agents/plans/brace-literacy-guides/PLAN.md"

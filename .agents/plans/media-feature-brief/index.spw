@@ -14,8 +14,20 @@ intent: .{
  goal = `The site has accumulated a PWA shell, Spw operator routes, frame navigation, console affordances, Pretext experiments, and a developing metaphysics of cognitive surfaces. This plan adds a concise public communication surface so media enthusiasts can understand what to notice and where to explore without needing to read the implementation notes first. Taste note: improve clarity and expressiveness while preserving the hand-authored, calm-at-rest site voice.`
  owner = `media-feature-brief`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | media-feature-brief.spw | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
@@ -25,6 +37,17 @@ dispatch: .{
  plan = @plan
  wip = @wip
  media_feature_brief = @media_feature_brief
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-media_feature_brief-001"
+ layer = "pragmatic"
+ hypothesis = `The site has accumulated a PWA shell, Spw operator routes, frame navigation, console affordances, Pretext experiments, and a developing metaphysics of cognitive surfaces. This plan adds a concise public communication surface so media enthusiasts can understand what to notice and where to explore without needing to read the implementation notes first. Taste note: improve clarity and expressiveness while preserving the hand-authored, calm-at-rest site voice.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../.agents/plans/media-feature-brief/media-feature-brief.spw"
+ probe_ref = `Confirm the new route and all added links use root-relative paths.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../.agents/plans/media-feature-brief/media-feature-brief.spw unchanged or untested.`
+ status = "active"
 }[reg=facet]
 
 scope: .{
@@ -43,9 +66,15 @@ validation: #[
  `Confirm git diff --check reports no whitespace errors.`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does media-feature-brief own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of media-feature-brief?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether media-feature-brief still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: The site has accumulated a PWA shell, Spw operator routes, frame navigation, console affordances, Pretext experiments, and a developing…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

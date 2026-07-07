@@ -1,4 +1,8 @@
-#>blog_input_interpreter
+^"operational_hooks"{
+ selectors = #[ `public/js/site.js`, `public/css/style.css`, `.agents/plans/blog-blob-spw/PLAN.md`, `.agents/plans/copy-localization/PLAN.md`, ][reg=set]
+ probe_ref = `A pasted draft produces a title, summary, tags, questions, outline, and draft seed.`
+ owner_claim = ~"./index.spw#owner_claim"
+}[reg=facet]#>blog_input_interpreter
 #:layer #!ux
 
 ^"plan_linkage"{
@@ -6,7 +10,9 @@
  index = ~"./index.spw"
  goal = `Create a framework-free /blog/ route that is useful before there is a full archive. The first version lets a visitor paste draft text, Spw fragments, or wonder notes and receive a local interpretation: title suggestion, summary, tags, questions, outline, stats, and a copyable Spw-style draft seed. Taste note: the blog should feel like an editorial workbench and a permission structure for noticing, not a generic feed or an AI demo. The deeper goal is to establish the blog as the public writing pipeline for the site: - Raw input becomes a structured draft. - Spw operators can act as temporary scaffolds for thought without replacing prose. - Wonder stays present as a serious input, not decoration. - Some interpreted drafts should mature into durable blog blobs before they become posts. - Structured drafts can later become hand-written static posts. - The interpreter explains what it inferred instead of pretending to know. - The privacy boundary stays obvious: local interpretation first, no network dependency by default.`
  owner = `blog-input-interpreter`
+ bucket = "active_backlog"
 }[reg=facet]
+
 ^"contract"{
  source: "pasted text, Spw fragments, or wonder notes"
  privacy: "local browser only; no network interpretation"

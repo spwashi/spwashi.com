@@ -14,17 +14,42 @@ intent: .{
  goal = `The desired end state is a publishing model where not every meaningful writing artifact has to become either "raw note" or "finished article." A blog blob should hold live material that has already accumulated enough shape to be worth naming, reviewing, translating, or routing, but has not yet earned full post status. The blog interpreter can emit toward a blob; localization can later translate from blob-aware copy units; published blog routes can distill or project a blob without erasing the intermediate semantic layer. The taste note is coherent mass + inspectable transition: the blob is not a dump, and it is not a miniature post. It is a charged writing body that still admits revision, re-lensing, and selective projection.`
  owner = `blog-blob-spw`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | blog-blob-spw.spw | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @blog_blob_spw: ~"./blog-blob-spw.spw"
+@plan_blog_input_interpreter: ~"./blog-input-interpreter/index.spw"
 @copy_localization: ~"../../../.spw/conventions/copy-localization.spw"
 
 dispatch: .{
  plan = @plan
  blog_blob_spw = @blog_blob_spw
+ plan_blog_input_interpreter = @plan_blog_input_interpreter
  copy_localization = @copy_localization
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-blog_blob_spw-001"
+ layer = "pragmatic"
+ hypothesis = `The desired end state is a publishing model where not every meaningful writing artifact has to become either "raw note" or "finished article." A blog blob should hold live material that has already accumulated enough shape to be worth naming, reviewing, translating, or routing, but has not yet earned full post status. The blog interpreter can emit toward a blob; localization can later translate from blob-aware copy units; published blog routes can distill or project a blob without erasing the intermediate semantic layer. The taste note is coherent mass + inspectable transition: the blob is not a dump, and it is not a miniature post. It is a charged writing body that still admits revision, re-lensing, and selective projection.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../.spw/conventions/copy-localization.spw"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../.spw/conventions/copy-localization.spw unchanged or untested.`
+ status = "active"
 }[reg=facet]
 
 scope: .{
@@ -43,9 +68,15 @@ validation: #[
  `confirm the distinctions between note, seed, blob, and post are crisp enough to use in later implementation`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does blog-blob-spw own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of blog-blob-spw?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether blog-blob-spw still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: The desired end state is a publishing model where not every meaningful writing artifact has to become either "raw note" or "finished…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

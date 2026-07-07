@@ -14,8 +14,20 @@ intent: .{
  goal = `Make the staged runtime bootstrap and dynamic module loading (core → feature → region → enhancement layers) first-class observable behavior for editors, debuggers, and performance tooling. - Use the standard Performance API (marks + measures under spw:* namespace) so DevTools timelines, traces, and RUM see boot phases and per-module import/mount costs with zero custom code. - Wire the existing createSpwLogger + spw-log / log-level query controls into the load path using the LIFECYCLE relation so structured load traces respect site-wide diagnostics posture. - Extend the public modules surface (window.__SPW_SITE__.modules, spwCompose.modules) with a timings() snapshot that correlates Performance entries with the existing per-module loadMs/durationMs records and spell expressions. - Preserve all current behavior, data attributes, bus events, audit, and snapshots. No new visual weight, no new data-spw-* state unless it emerges from existing page/module state. This improves editor inspectability and runtime debug surface for the load process, extending the module fluency, instrumentation legibility, and timing-data-localization work.`
  owner = `runtime-load-instrumentation`
  kind = `plan`
+ bucket = `runtime_js_validation`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "runtime_js_validation"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @site: ~"../../../public/js/site.js"
@@ -31,9 +43,25 @@ dispatch: .{
  ornament_contract = @ornament_contract
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-runtime_load_instrumentation-001"
+ layer = "pragmatic"
+ hypothesis = `Make the staged runtime bootstrap and dynamic module loading (core → feature → region → enhancement layers) first-class observable behavior for editors, debuggers, and performance tooling. - Use the standard Performance API (marks + measures under spw:* namespace) so DevTools timelines, traces, and RUM see boot phases and per-module import/mount costs with zero custom code. - Wire the existing createSpwLogger + spw-log / log-level query controls into the load path using the LIFECYCLE relation so structured load traces respect site-wide diagnostics posture. - Extend the public modules surface (window.__SPW_SITE__.modules, spwCompose.modules) with a timings() snapshot that correlates Performance entries with the existing per-module loadMs/durationMs records and spell expressions. - Preserve all current behavior, data attributes, bus events, audit, and snapshots. No new visual weight, no new data-spw-* state unless it emerges from existing page/module state. This improves editor inspectability and runtime debug surface for the load process, extending the module fluency, instrumentation legibility, and timing-data-localization work.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/js/site.js"
+ probe_ref = `rg 'runtime-load-instrumentation' .agents/plans/runtime-load-instrumentation`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/site.js unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does runtime-load-instrumentation own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of runtime-load-instrumentation?`, see = @index }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: Make the staged runtime bootstrap and dynamic module loading (core → feature → region → enhancement layers) first-class observable behavior…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

@@ -14,8 +14,20 @@ intent: .{
  goal = `The theme issue is not one stray token. The route-level topic and website surfaces were authored as stable light papers and never finished with matching dark/auto variable sets. Shared surface chrome also hardcodes white highlights, so even correctly themed routes still leak light-mode treatment through cards and image controls.`
  owner = `theme-palette-marketability`
  kind = `fix`
+ bucket = `fix_queue`
+ artifact_shape = `FIX.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "observation | gesture"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "exchange"
+ memory_tier = "hot"
+ bucket = "fix_queue"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @fix: ~"./FIX.md"
 @topics_site_design_index_html: ~"../../../topics/site-design/index.html"
@@ -29,9 +41,25 @@ dispatch: .{
  settings_index_html = @settings_index_html
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-theme_palette_marketability-001"
+ layer = "pragmatic"
+ hypothesis = `The theme issue is not one stray token. The route-level topic and website surfaces were authored as stable light papers and never finished with matching dark/auto variable sets. Shared surface chrome also hardcodes white highlights, so even correctly themed routes still leak light-mode treatment through cards and image controls.`
+ spec_ref = ~"./FIX.md"
+ impl_ref = ~"../../../topics/site-design/index.html"
+ probe_ref = `rg 'theme-palette-marketability' .agents/plans/theme-palette-marketability`
+ falsification = `The listed failure mode returns after the planned fix lands.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does theme-palette-marketability own, and what should stay out of scope?`, see = @fix }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of theme-palette-marketability?`, see = @index }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: The theme issue is not one stray token. The route-level topic and website surfaces were authored as stable light papers and never finished…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

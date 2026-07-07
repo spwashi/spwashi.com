@@ -14,8 +14,20 @@ intent: .{
  goal = `The desired end state is a site where the design hub, component glossary, recipes hub, blog, and about page each feel like they have a distinct reason to exist. The design pages should double as direct-wiring demo surfaces. Recipes should feel like an invitational substrate rather than only a registry. The blog should read as a thread laboratory that rewards filming and wandering. The about page should lean into typography, storytelling, and practical direction instead of generic self-description. Across these routes, promptability should become a visible, reversible affordance rather than an accidental side effect.`
  owner = `story-prompt-surface-pass`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
@@ -41,6 +53,17 @@ dispatch: .{
  page_model = @page_model
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-story_prompt_surface_pass-001"
+ layer = "pragmatic"
+ hypothesis = `The desired end state is a site where the design hub, component glossary, recipes hub, blog, and about page each feel like they have a distinct reason to exist. The design pages should double as direct-wiring demo surfaces. Recipes should feel like an invitational substrate rather than only a registry. The blog should read as a thread laboratory that rewards filming and wandering. The about page should lean into typography, storytelling, and practical direction instead of generic self-description. Across these routes, promptability should become a visible, reversible affordance rather than an accidental side effect.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../design/"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../design/ unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
 scope: .{
  in = #[
   `In scope: shared prompt/demo interaction wiring, shared promptability styling, updated footer quick actions, route HTML rewrites for design/, design/components/, recipes/, blog/, and about/, integration of existing curated render studies, and small .spw residue to keep the new route-cluster ideas inspectable.`,
@@ -58,9 +81,15 @@ validation: #[
  `npm run build`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does story-prompt-surface-pass own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of story-prompt-surface-pass?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether story-prompt-surface-pass still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: The desired end state is a site where the design hub, component glossary, recipes hub, blog, and about page each feel like they have a…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

@@ -1,6 +1,6 @@
 # Plan Index — cadence-text-resonance
 #
-# - Surfaces that already carry data-spw-cadence (promo cards, discovery notices) should feel rhythmically distinct in CSS (gradients, timing, weight, accent) without new JS. - The…
+# Surfaces that already carry data-spw-cadence (promo cards, discovery notices) should feel rhythmically distinct in CSS (gradients, timing, weight, accent) without new JS. - The…
 
 #>plan_cadence_text_resonance_index
 #:index #!plan
@@ -11,11 +11,23 @@ operation = "prime"
 fixity = "tending"
 
 intent: .{
- goal = `- Surfaces that already carry data-spw-cadence (promo cards, discovery notices) should feel rhythmically distinct in CSS (gradients, timing, weight, accent) without new JS. - The home promo cycle (and similar) should ship the present-day copy in static HTML so crawlers and no-JS readers see accurate, non-dated text about releases and support rhythms. - Text interpretation / measurement code must react when users change font scale or line spacing; this is the entry point for broader "copy resilience" helpers.`
+ goal = `Surfaces that already carry data-spw-cadence (promo cards, discovery notices) should feel rhythmically distinct in CSS (gradients, timing, weight, accent) without new JS. - The home promo cycle (and similar) should ship the present-day copy in static HTML so crawlers and no-JS readers see accurate, non-dated text about releases and support rhythms. - Text interpretation / measurement code must react when users change font scale or line spacing; this is the entry point for broader "copy resilience" helpers.`
  owner = `cadence-text-resonance`
  kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | cadence-text-interpretation.spw | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @cadence_text_interpretation: ~"./cadence-text-interpretation.spw"
@@ -31,6 +43,17 @@ dispatch: .{
  timing_data_localization = @timing_data_localization
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-cadence_text_resonance-001"
+ layer = "pragmatic"
+ hypothesis = `Surfaces that already carry data-spw-cadence (promo cards, discovery notices) should feel rhythmically distinct in CSS (gradients, timing, weight, accent) without new JS. - The home promo cycle (and similar) should ship the present-day copy in static HTML so crawlers and no-JS readers see accurate, non-dated text about releases and support rhythms. - Text interpretation / measurement code must react when users change font scale or line spacing; this is the entry point for broader "copy resilience" helpers.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/js/semantic/pretext-physics.js"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/semantic/pretext-physics.js unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
 validation: #[
  `git diff --check`,
  `node --check on edited JS`,
@@ -38,9 +61,15 @@ validation: #[
  `Browser smoke: settings font scales + pretext surfaces update; home view-source shows the daily promo copy; discovery notices + promo cards show cadence-driven styles.`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does cadence-text-resonance own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of cadence-text-resonance?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether cadence-text-resonance still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
- `Owner intent: - Surfaces that already carry data-spw-cadence (promo cards, discovery notices) should feel rhythmically distinct in CSS (gradients,…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Surfaces that already carry data-spw-cadence (promo cards, discovery notices) should feel rhythmically distinct in CSS (gradients, timing,…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

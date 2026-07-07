@@ -1,3 +1,10 @@
+^"plan_linkage"{
+ plan = ~"../PLAN.md"
+ index = ~"../index.spw"
+ goal = `Prepare this codebase for refinement by a model that can read .spw, follow explicit connections, and make competent local changes, but should not be expected to improvise tastefully through the full CSS and JavaScript surface. The plan turns broad creative direction into rails: - where to look first - what not to touch - how CSS, HTML, JS, and .spw names should line up - which semantic concepts are fixed, stable, tending, experimental, or volatile - how creative/marketing surfaces should become coherent enough that musicians and artists want to explore and extend them This is not a new framework. It is a focus contract for future agents and collaborators.`
+ cache_topic = `rpg-analog-worldbuilding`
+ operation = "cache"
+}[reg=facet]
 #>semantic_insight_cache
 #:model_guided_refinement
 

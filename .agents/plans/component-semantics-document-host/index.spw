@@ -14,8 +14,20 @@ intent: .{
  goal = `Keep component semantics scoped to reusable page components by skipping document.documentElement and document.body during semantic target collection.`
  owner = `component-semantics-document-host`
  kind = `fix`
+ bucket = `fix_queue`
+ artifact_shape = `FIX.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "observation | gesture"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "exchange"
+ memory_tier = "hot"
+ bucket = "fix_queue"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @fix: ~"./FIX.md"
 @component_semantics: ~"../../../public/js/semantic/component-semantics.js"
@@ -27,9 +39,25 @@ dispatch: .{
  dom_contracts = @dom_contracts
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-component_semantics_document_host-001"
+ layer = "pragmatic"
+ hypothesis = `Keep component semantics scoped to reusable page components by skipping document.documentElement and document.body during semantic target collection.`
+ spec_ref = ~"./FIX.md"
+ impl_ref = ~"../../../public/js/semantic/component-semantics.js"
+ probe_ref = `rg 'component-semantics-document-host' .agents/plans/component-semantics-document-host`
+ falsification = `The listed failure mode returns after the planned fix lands.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does component-semantics-document-host own, and what should stay out of scope?`, see = @fix }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of component-semantics-document-host?`, see = @index }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: Keep component semantics scoped to reusable page components by skipping document.documentElement and document.body during semantic target…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

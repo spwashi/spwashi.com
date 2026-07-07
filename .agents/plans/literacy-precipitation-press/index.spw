@@ -14,18 +14,48 @@ intent: .{
  goal = `North-star lore and staged architecture for spwashi.com as a place where literacy precipitates into physical form: named abilities become tangible items, learning leaves printable residue on bulletin boards, the site becomes a publishing surface, and eventually - literally - a paper manufacturer for aesthetics tuned to learnability and genre preferences. (Spwashi direction, 2026-07-03.)`
  owner = `literacy-precipitation-press`
  kind = `plan`
+ bucket = `public_route_proof_genre`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "public_route_proof_genre"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@observation_beats: ~"../../../public/js/runtime/observation-beats.js"
 
 dispatch: .{
  plan = @plan
+ observation_beats = @observation_beats
 }[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-literacy_precipitation_press-001"
+ layer = "pragmatic"
+ hypothesis = `North-star lore and staged architecture for spwashi.com as a place where literacy precipitates into physical form: named abilities become tangible items, learning leaves printable residue on bulletin boards, the site becomes a publishing surface, and eventually - literally - a paper manufacturer for aesthetics tuned to learnability and genre preferences. (Spwashi direction, 2026-07-03.)`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/js/runtime/observation-beats.js"
+ probe_ref = `rg 'literacy-precipitation-press' .agents/plans/literacy-precipitation-press`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/runtime/observation-beats.js unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does literacy-precipitation-press own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of literacy-precipitation-press?`, see = @index }[reg=facet],
+][reg=set]
 
 invariants: #[
  `Owner intent: North-star lore and staged architecture for spwashi.com as a place where literacy precipitates into physical form: named abilities become…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 

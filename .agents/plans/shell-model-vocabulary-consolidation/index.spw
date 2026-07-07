@@ -14,15 +14,46 @@ intent: .{
  goal = `A human team member should be able to hold the site's structural vocabulary in their head: a small set of names for where things sit (shell strata), how they float (chrome tiers), how they cover (overlays), and how they cling to boundaries (edges/rails) - with the same names appearing in CSS selectors, JS modules, data-spw-* attributes, and .spw conventions. Today the vocabulary has accreted: floating-chrome (~20 files), chrome-tier, data-spw-overlay, vessel, gutter/region rails, islands, and the section-context "pocket" handle all describe adjacent ideas with separate words. The taste note is fewer, truer words: consolidation should feel like a glossary tightening, not a rename storm.`
  owner = `shell-model-vocabulary-consolidation`
  kind = `plan`
+ bucket = `css_layout_interaction`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "css_layout_interaction"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@plan_floating_chrome_stack: ~"./floating-chrome-stack/index.spw"
+@plan_navigation_header_disclosure: ~"./navigation-header-disclosure/index.spw"
+@plan_symphonic_loading_layered_editions: ~"./symphonic-loading-layered-editions/index.spw"
 @readme: ~"../../../public/css/README.md"
+@dom_contracts: ~"../../../public/js/kernel/dom-contracts.js"
 
 dispatch: .{
  plan = @plan
+ plan_floating_chrome_stack = @plan_floating_chrome_stack
+ plan_navigation_header_disclosure = @plan_navigation_header_disclosure
+ plan_symphonic_loading_layered_editions = @plan_symphonic_loading_layered_editions
  readme = @readme
+ dom_contracts = @dom_contracts
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-shell_model_vocabulary_consolidation-001"
+ layer = "pragmatic"
+ hypothesis = `A human team member should be able to hold the site's structural vocabulary in their head: a small set of names for where things sit (shell strata), how they float (chrome tiers), how they cover (overlays), and how they cling to boundaries (edges/rails) - with the same names appearing in CSS selectors, JS modules, data-spw-* attributes, and .spw conventions. Today the vocabulary has accreted: floating-chrome (~20 files), chrome-tier, data-spw-overlay, vessel, gutter/region rails, islands, and the section-context "pocket" handle all describe adjacent ideas with separate words. The taste note is fewer, truer words: consolidation should feel like a glossary tightening, not a rename storm.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/css/README.md"
+ probe_ref = `Census numbers before/after each migration word (scatter must go down, never up).`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/css/README.md unchanged or untested.`
+ status = "active"
 }[reg=facet]
 
 validation: #[
@@ -31,9 +62,15 @@ validation: #[
  `A new-collaborator test: someone from the network reads the glossary and correctly predicts which file styles a floating handle, an overlay, and a rail.`,
 ][reg=set]
 
+editor_prompts: #[
+ .{ ask = `What does shell-model-vocabulary-consolidation own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of shell-model-vocabulary-consolidation?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether shell-model-vocabulary-consolidation still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
 invariants: #[
  `Owner intent: A human team member should be able to hold the site's structural vocabulary in their head: a small set of names for where things sit (shell…`,
- `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
- `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
 
