@@ -8,13 +8,15 @@
   grounding: "Handles are inspired by brace physics and spatial grammar: they let you 'grab' a concept and navigate through it. Dimensional navigation recognizes that meaning often exists across multiple simultaneous axes."
 }
 
-^"confidence_radar"{
-  scope = `What can locomotion affect? Section trail, not whole-site settings unless explicitly opened.`
-  recover = `How does the reader return to safety? Top anchor, settings reset, menu close.`
-  apply = `What is the useful next move? Previous/next section, related operator chip.`
-  projection = #[`data-spw-learner-confidence`, `data-spw-learner-scope`, `data-spw-learner-recovery`, `data-spw-learner-apply`, `data-spw-cognitive-inventory`][reg=set]
+^"locomotion_expression"{
+  reach = `What moves are available? data-spw-handle-availability lists top prev current next bottom; html/body carry page-section count and edge.`
+  return = `How does the reader settle? top in availability, ornamental_reversibility paths, and settled handle phase.`
+  invitation = `What does chrome invite? data-spw-section-handle-label copy plus data-spw-wonder-entry="section-locomotion" on the handle shell.`
+  approach = `Taste register on handle only: data-spw-approach distant | approaching | arrival per expressive_registers.spw.`
+  projection = #[`data-spw-handle-availability`, `data-spw-page-section-count`, `data-spw-section-handle-label`, `data-spw-wonder-entry`, `data-spw-approach`][reg=set]
   plan_ref = ~"../../.agents/plans/chrome-navigation-wonder/PLAN.md"
   taxonomy_ref = ~"./component-taxonomy.spw"
+  registers_ref = ~"./expressive-registers.spw"
 }[reg=facet]
 
 ^"dimensions_of_understanding"{
@@ -304,7 +306,8 @@
   html_contract: [
     "the fallback .spw-section-handle remains valid without JS",
     "the enhanced locomotion field mirrors current section label, token, availability, and travel phase through data attributes",
-    "html and body reflect current section id, index, count, and edge so other modules can react without querying the locomotion UI directly"
+    "html and body reflect current section id, index, count, and edge so other modules can react without querying the locomotion UI directly",
+    "the handle shell alone carries data-spw-wonder-entry and data-spw-approach for wonder invitation and expressive register; do not duplicate reach/return/invitation attrs on the root"
   ]
 
   motion_contract: [

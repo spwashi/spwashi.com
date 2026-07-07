@@ -16,6 +16,7 @@ fixity = "tending"
 @ornament_contract: ~"./ornament-contract.spw"
 @site_semantics: ~"./site-semantics.spw"
 @cognitive_navigation: ~"./cognitive-navigation.spw"
+@expressive_registers: ~"./expressive-registers.spw"
 @operator_semantics: ~"./operator-semantics.spw"
 @plan: ~"../../.agents/plans/chrome-navigation-wonder/PLAN.md"
 
@@ -44,23 +45,25 @@ fixity = "tending"
  rhythmic_signature = `Repeated timing/gesture cues that make the pattern recognizable across routes.`
 }[reg=facet]
 
-^"confidence_radar"{
- scope = `What can this action affect? Prefer section-locomotion and menu disclosure datasets over new widgets.`
- recover = `How does the reader return to a safe state? top, settings, skip-link, close overlay.`
- apply = `What useful next move can the reader try? next section, related route, inspect panel.`
- inventory = `Expose page / feature / route via data-spw-cognitive-inventory on locomotion surfaces.`
+^"locomotion_expression"{
+ reach = `What moves are available? data-spw-handle-availability and data-spw-page-section-count on html/body.`
+ return = `How does the reader settle? top in availability plus ornamental_reversibility return paths.`
+ invitation = `What does chrome invite? data-spw-section-handle-label and data-spw-wonder-entry on the handle shell.`
+ approach = `Expressive register shorthand on handle only: data-spw-approach distant | approaching | arrival.`
  attrs = #[
-  `data-spw-learner-confidence`,
-  `data-spw-learner-scope`,
-  `data-spw-learner-recovery`,
-  `data-spw-learner-apply`,
-  `data-spw-cognitive-inventory`
+  `data-spw-handle-availability`,
+  `data-spw-page-section-current`,
+  `data-spw-page-section-count`,
+  `data-spw-section-handle-label`,
+  `data-spw-wonder-entry`,
+  `data-spw-approach`
  ][reg=set]
+ discipline = `Do not mirror reach/return/invitation onto html/body with parallel attrs; page_locomotion_handle datasets already publish legibility.`
 }[reg=facet]
 
 ^"chrome_as_field"{
  header = `Primary nav and menu topology are field disclosure, not admin chrome.`
- section_handle = `Section locomotion invites wonder via data-spw-wonder-entry and field-balance-weighted chrome.`
+ section_handle = `Section locomotion invites wonder via data-spw-wonder-entry, data-spw-approach, and field-balance-weighted chrome.`
  footer = `Footer identity, cauldron, and settings share component-gap rhythm on mobile stack.`
  breadcrumb = `Dimensional breadcrumbs should become collectible Spw-expressible surfaces.`
 }[reg=facet]
@@ -70,11 +73,12 @@ dispatch: .{
  ornament = @ornament_contract
  site_semantics = @site_semantics
  cognition = @cognitive_navigation
+ expressive_registers = @expressive_registers
  operators = @operator_semantics
  plan = @plan
 }[reg=facet]
 
 validation: #[
- `rg 'data-spw-learner-confidence|data-spw-wonder-entry' public/js/runtime/attention`,
+ `rg 'data-spw-wonder-entry|data-spw-approach|syncChromeLocomotionExpression' public/js/runtime/attention`,
  `rg 'component-taxonomy' .spw/conventions`,
 ][reg=set]

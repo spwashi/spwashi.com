@@ -34,6 +34,7 @@ intent: .{
 @gesture_state_refinement: ~"../gesture-state-refinement/PLAN.md"
 @attention_field: ~"../../../.spw/conventions/attention-field.spw"
 @cognitive_navigation: ~"../../../.spw/conventions/cognitive-navigation.spw"
+@expressive_registers: ~"../../../.spw/conventions/expressive-registers.spw"
 
 dispatch: .{
  plan = @plan
@@ -44,21 +45,22 @@ dispatch: .{
  gesture_state_refinement = @gesture_state_refinement
  attention_field = @attention_field
  cognitive_navigation = @cognitive_navigation
+ expressive_registers = @expressive_registers
 }[reg=facet]
 
 ^"owner_claim"{
  claim_id = "plan-chrome-navigation-wonder-001"
  layer = "pragmatic"
- hypothesis = `Section locomotion and shell chrome can project learner-confidence and wonder-entry signals without new widgets.`
+ hypothesis = `Section locomotion can project taste and wonder through existing page_locomotion_handle datasets plus handle-only wonder-entry and approach attrs — no parallel root attrs.`
  spec_ref = ~"./PLAN.md"
  impl_ref = ~"../../../public/js/runtime/attention/section-handle.js"
- probe_ref = `rg 'data-spw-learner-confidence|data-spw-wonder-entry' public/js/runtime/attention`
- falsification = `Mobile chrome still reads as utility-only after locomotion datasets and field-balance styling land.`
+ probe_ref = `rg 'data-spw-wonder-entry|data-spw-approach|syncChromeLocomotionExpression' public/js/runtime/attention`
+ falsification = `Mobile chrome still reads as utility-only after locomotion_expression datasets and field-balance styling land.`
  status = "active"
 }[reg=facet]
 
 implementation_phases: ?<
- `Phase 0 — confidence radar on section handle (landed)`,
+ `Phase 0 — locomotion_expression on section handle (landed)`,
  `Phase 1 — footer mobile rhythm + nav toggle stable copy + wonder-entry chrome`,
  `Phase 2 — breadcrumbs as collectible surface`,
  `Phase 3 — operator-forces doc pass + design hub on-ramp`,
@@ -73,6 +75,6 @@ editor_prompts: #[
 
 invariants: #[
  `Operators stay the force layer; semantic-accent stays the projection layer.`,
- `Confidence projects through existing locomotion surfaces, not parallel widgets.`,
+ `Reach/return/invitation project through existing locomotion surfaces; approach stays on handle shell only.`,
  `Chrome CSS edits target public/css/shell/chrome/* after the 2026 split.`,
 ][reg=set]

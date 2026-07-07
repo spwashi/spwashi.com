@@ -75,15 +75,14 @@ This is not a new feature request — it is naming and deepening the existing co
 - Use shared content-grid fallbacks for `frame-grid--2up` / `frame-grid--3up` below desktop widths so tablet routes get honest columns instead of squeezed fixed tracks.
 - Add subtle touch/active feedback to shared card-like surfaces and richer section-handle direction glow without adding new route markup.
 
-0. **Confidence as a dimension of existing radar**:
-   - Do not add a standalone "learner confidence" widget unless a route needs it locally.
-   - Project confidence through the existing sample dock, section handle, settings reset paths, and semantic inventory.
-   - Treat confidence as three inspectable questions:
-     - `scope`: what can this action affect?
-     - `recover`: how does the reader return to a safe state?
-     - `apply`: what useful next move can the reader try?
-   - Expose the current cognitive inventory (`page / feature / route`) in the sample dock so discovery feels bounded instead of open-ended.
-   - Prefer dataset state such as `data-spw-learner-confidence`, `data-spw-learner-scope`, `data-spw-learner-recovery`, and `data-spw-cognitive-inventory` over a new parallel confidence model.
+0. **Locomotion legibility via existing datasets (no parallel root attrs)**:
+   - Do not add a standalone confidence widget or duplicate reach/return/invitation attrs on `<html>` / `<body>`.
+   - Map chrome taste through three inspectable questions already carried by `page_locomotion_handle`:
+     - `reach`: what moves are available? → `data-spw-handle-availability`, `data-spw-page-section-count`
+     - `return`: how does the reader settle? → `top` in availability + `ornamental_reversibility` return paths
+     - `invitation`: what does chrome invite? → `data-spw-section-handle-label`, `data-spw-wonder-entry`
+   - On the handle shell only, add expressive register shorthand: `data-spw-approach` (`distant` | `approaching` | `arrival`) per `expressive-registers.spw`.
+   - Keep wonder invitation styling in `section-context.css` tied to `--field-balance`; defer full `data-spw-express` on chrome until register renderings are reviewed for shadow conflicts.
 
 1. **Immediate surgical polish (chrome + footer)**:
    - Small CSS tweaks in public/css/shell/chrome.css for footer mobile: tighter rhythm inside identity (use more --component-pad/gap), better alignment when stacked, ensure cauldron + settings form don't fight for space.
@@ -138,11 +137,12 @@ Next concrete patch or deeper modeling session should reference this plan.
 
 ### Landed — Phase 0 + Phase 1 (partial)
 
-- `public/js/runtime/attention/section-handle.js` — learner-confidence radar datasets (`data-spw-learner-*`, `data-spw-cognitive-inventory`) and `data-spw-wonder-entry="section-locomotion"` on the section handle when the trail is active.
+- `public/js/runtime/attention/section-handle.js` — `syncChromeLocomotionExpression`: `data-spw-wonder-entry="section-locomotion"` and `data-spw-approach` on handle/shell when the trail is active; reach/return/invitation legibility stays on existing `page_locomotion_handle` root datasets.
 - `public/css/shell/chrome/section-context.css` — wonder-entry styling tied to `--field-balance`.
 - `public/css/shell/chrome/navigation.css` — stable `spw-nav-toggle-copy` inline size (FIX.md hover jitter).
 - `public/css/shell/chrome/footer.css` — mobile stack rhythm for identity, cauldron, settings, and nav.
-- `.spw/conventions/component-taxonomy.spw` — scientifically-social taxonomy + confidence radar contract.
+- `.spw/conventions/component-taxonomy.spw` — scientifically-social taxonomy + `locomotion_expression` contract.
+- `.spw/conventions/cognitive-navigation.spw` — `page_locomotion_handle` html_contract extended for wonder-entry + approach discipline.
 - `.agents/plans/chrome-navigation-wonder/index.spw` — plan dispatch and owner_claim.
 
 ### Next

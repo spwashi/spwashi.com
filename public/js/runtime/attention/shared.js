@@ -61,11 +61,7 @@ export const PINCH_ACTIVE_ATTR = 'data-spw-pinch-scaling';
 export const PAGE_SECTION_EVENT = 'spw:section-locomotion-state';
 export const SUBVOCAL_REHEARSAL_ATTR = 'data-spw-subvocal-rehearsal';
 export const CAULDRON_RESONANCE_ATTR = 'data-spw-cauldron-resonance';
-export const LEARNER_CONFIDENCE_ATTR = 'data-spw-learner-confidence';
-export const LEARNER_SCOPE_ATTR = 'data-spw-learner-scope';
-export const LEARNER_RECOVERY_ATTR = 'data-spw-learner-recovery';
-export const LEARNER_APPLY_ATTR = 'data-spw-learner-apply';
-export const COGNITIVE_INVENTORY_ATTR = 'data-spw-cognitive-inventory';
+export const APPROACH_ATTR = 'data-spw-approach';
 export const WONDER_ENTRY_ATTR = 'data-spw-wonder-entry';
 export const AUTO_HANDLE_MIN_SECTIONS = 4;
 export const HANDLE_VISIBILITY_SCROLL = 240;
@@ -129,6 +125,8 @@ export const ATTENTION_ARCHITECTURE_CONTRACT = Object.freeze({
     subvocalRehearsal: SUBVOCAL_REHEARSAL_ATTR,
     cauldronResonance: CAULDRON_RESONANCE_ATTR,
     resonanceKey: RESONANCE_KEY_ATTR,
+    wonderEntry: WONDER_ENTRY_ATTR,
+    approach: APPROACH_ATTR,
   }),
   thresholds: Object.freeze({
     autoHandleMinSections: AUTO_HANDLE_MIN_SECTIONS,
@@ -143,7 +141,7 @@ export const logger = createSpwLogger('attention-architecture', {
   role: 'runtime',
   metaphor: 'attention-field',
   owns: 'section locomotion, operator resonance probe',
-  writes: 'data-spw-page-section-*, data-spw-section-state, data-spw-resonance-probe, data-spw-subvocal-rehearsal, data-spw-cauldron-resonance',
+  writes: 'data-spw-page-section-*, data-spw-section-state, data-spw-resonance-probe, data-spw-subvocal-rehearsal, data-spw-cauldron-resonance, data-spw-wonder-entry, data-spw-approach',
 });
 
 export { SPW_LOG_RELATIONSHIPS };

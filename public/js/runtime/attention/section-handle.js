@@ -5,8 +5,8 @@ import {
 import { appendToDocument } from '/public/js/kernel/dom-render.js';
 import {
   AUTO_HANDLE_MIN_SECTIONS,
+  APPROACH_ATTR,
   CAULDRON_RESONANCE_ATTR,
-  COGNITIVE_INVENTORY_ATTR,
   HANDLE_AVAILABILITY_ATTR,
   HANDLE_COMPACT_QUERY,
   HANDLE_ENHANCED_ATTR,
@@ -19,10 +19,6 @@ import {
   HANDLE_STATE_ATTR,
   HANDLE_TRAVEL_SETTLE_MS,
   HANDLE_VISIBILITY_SCROLL,
-  LEARNER_APPLY_ATTR,
-  LEARNER_CONFIDENCE_ATTR,
-  LEARNER_RECOVERY_ATTR,
-  LEARNER_SCOPE_ATTR,
   OPERATOR_SECTION_SELECTOR,
   PAGE_SECTION_COUNT_ATTR,
   PAGE_SECTION_CURRENT_ATTR,
@@ -467,53 +463,27 @@ function syncSectionHandleSections(sections, activeIndex) {
    so it can visually "invite" wonder priming and feel more alive with the page content.
    This ties the floating chrome directly to interactive vocabulary development and
    page-specific attentional rhythm without new heavy logic. */
-function buildCognitiveInventory() {
-  const body = document.body?.dataset || {};
-  const parts = [
-    body.spwPageRole || 'page',
-    body.spwFeatures?.split(/\s+/).filter(Boolean)[0] || '',
-    body.spwSurface || 'route',
-  ].filter(Boolean);
-  return parts.join(' / ');
+function resolveHandleApproach(visible, phase, sectionCount) {
+  if (!visible || sectionCount <= 1) return 'distant';
+  if (phase === 'traveling') return 'approaching';
+  return 'arrival';
 }
 
-function syncLearnerConfidenceRadar(snapshot, visible, handle, shell) {
-  const inventory = buildCognitiveInventory();
-  const recovery = snapshot.availability.includes('top') ? 'top-or-settings' : 'settings';
-  const apply = snapshot.currentLabel || 'next-section';
-  const scope = visible ? 'section-locomotion' : 'page';
-  const confidenceAttrs = visible && snapshot.sectionCount > 1
-    ? {
-      [LEARNER_CONFIDENCE_ATTR]: 'bounded',
-      [LEARNER_SCOPE_ATTR]: scope,
-      [LEARNER_RECOVERY_ATTR]: recovery,
-      [LEARNER_APPLY_ATTR]: apply,
-      [COGNITIVE_INVENTORY_ATTR]: inventory,
-    }
-    : null;
-
-  [document.documentElement, document.body].forEach((node) => {
-    if (confidenceAttrs) {
-      writeAttributes(node, confidenceAttrs);
-    } else {
-      clearAttributes(node, [
-        LEARNER_CONFIDENCE_ATTR,
-        LEARNER_SCOPE_ATTR,
-        LEARNER_RECOVERY_ATTR,
-        LEARNER_APPLY_ATTR,
-        COGNITIVE_INVENTORY_ATTR,
-      ]);
-    }
-  });
+/** Wonder invitation + expressive approach on the handle shell only.
+    Reach, return, and invitation copy use existing page_locomotion_handle datasets
+    (availability, page-section-*, section-handle-label) — no parallel root attrs. */
+function syncChromeLocomotionExpression(snapshot, visible, phase, handle, shell) {
+  const activeTrail = visible && snapshot.sectionCount > 1;
+  const approach = resolveHandleApproach(visible, phase, snapshot.sectionCount);
 
   [handle, shell].forEach((node) => {
     if (!(node instanceof HTMLElement)) return;
-    if (visible && snapshot.sectionCount > 1) {
+    if (activeTrail) {
       node.setAttribute(WONDER_ENTRY_ATTR, 'section-locomotion');
-      node.setAttribute('aria-description', `Section trail: ${snapshot.currentLabel}. Use prev and next to move; settings restores defaults.`);
+      node.setAttribute(APPROACH_ATTR, approach);
     } else {
       node.removeAttribute(WONDER_ENTRY_ATTR);
-      node.removeAttribute('aria-description');
+      node.removeAttribute(APPROACH_ATTR);
     }
   });
 }
@@ -592,7 +562,7 @@ function updateSectionHandleState({
   syncSectionHandleVisibility(handle, shell, visible);
 
   writePageSectionDatasets(snapshot);
-  syncLearnerConfidenceRadar(snapshot, visible, handle, shell);
+  syncChromeLocomotionExpression(snapshot, visible, state.phase, handle, shell);
 
   // Enhance floating chrome UX with vocabulary context (for resonance + priming)
   syncSectionVocabularyHint(sections, state.activeIndex, handle, shell);
@@ -892,7 +862,7 @@ function createSectionHandleController({
     window.clearTimeout(state.travelTimer);
     shell.remove();
     handle.hidden = false;
-    clearAttributes(handle, [HANDLE_ENHANCED_ATTR, HANDLE_PHASE_ATTR, HANDLE_AVAILABILITY_ATTR]);
+    clearAttributes(handle, [HANDLE_ENHANCED_ATTR, HANDLE_PHASE_ATTR, HANDLE_AVAILABILITY_ATTR, WONDER_ENTRY_ATTR, APPROACH_ATTR]);
     sections.forEach((section) => {
       clearAttributes(section, [SECTION_STATE_ATTR, SECTION_INDEX_ATTR, SECTION_TIER_ATTR]);
     });
@@ -904,11 +874,6 @@ function createSectionHandleController({
         PAGE_SECTION_PHASE_ATTR,
         PAGE_SECTION_EDGE_ATTR,
         PAGE_SECTION_DIRECTION_ATTR,
-        LEARNER_CONFIDENCE_ATTR,
-        LEARNER_SCOPE_ATTR,
-        LEARNER_RECOVERY_ATTR,
-        LEARNER_APPLY_ATTR,
-        COGNITIVE_INVENTORY_ATTR,
       ]);
       node.style.removeProperty('--spw-section-progress');
       node.style.removeProperty('--spw-section-step');
