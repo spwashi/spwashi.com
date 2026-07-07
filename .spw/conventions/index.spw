@@ -55,6 +55,8 @@
 @workbench_selection: ~"../_workbench/.spw/conventions/selection.spw"
 @workbench_naming: ~"../_workbench/.spw/conventions/naming.spw"
 @workbench_submodule: ~"../_workbench/.spw/conventions/submodule.spw"
+@language: ~"../language/index.spw"
+@language_v04: ~"../language/v04/index.spw"
 
 dispatch: .{
  semantics = @site_semantics
@@ -96,6 +98,8 @@ dispatch: .{
  selection = @workbench_selection
  naming = @workbench_naming
  submodule = @workbench_submodule
+ language = @language
+ language_v04 = @language_v04
 }[reg=facet]
 
 invariants: #[

@@ -1,0 +1,40 @@
+# Operation And Fixity Types
+#
+# Typed enums for semantic-capacity operations and fixity tiers.
+
+#>spw_v04_operation_fixity_types
+#:pillar #!v04 #!semantics
+#:operation #!contract
+#:fixity #!stable
+#:layer #!semantics
+
+operation = "contract"
+fixity = "stable"
+
+^"dimensions"{
+ semantic_layer = "semantics"
+ practice_depth = "contract"
+ memory_tier = "warm"
+ priority = "8"
+}[reg=facet]
+
+^"types"{
+ operation = #[cache, audit, align, prime, contract, archive][reg=set]
+ fixity = #[fixed, stable, tending, experimental, volatile, cold][reg=set]
+ rule = `operation and fixity are header-enforced enums, not free prose keys.`
+ invalid = `contract + volatile without archive_of`
+}[reg=facet]
+
+^"language_delta"{
+ header = `#:operation #!cache` plus `operation = "cache"` must agree
+ promotion = `cache -> contract requires evidence_refs and validation block`
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "v04-op-fixity-001"
+ hypothesis = `Typed operation/fixity lets indexes query plans by semantic job, not folder name.`
+ probe_ref = `rg 'operation = "' .spw/language/v04`
+ status = "active"
+}[reg=facet]
+
+@semantic_capacity: ~"../../../conventions/semantic-capacity.spw"

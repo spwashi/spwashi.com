@@ -83,6 +83,10 @@
 @symmetry_ui: ~"./_workbench/.spw/applications/symmetry/symmetry-ui-design.spw"
 @ocean_ux: ~"./_workbench/.spw/biome/ocean/ux.spw"
 @surface_registry: ~"./_workbench/.spw/surfaces/index.spw"
+@language: ~"./language/index.spw"
+@language_v04: ~"./language/v04/index.spw"
+@spw_language_v04_plan: ~"../.agents/plans/spw-language-v04/PLAN.md"
+@spw_language_v04_plan_index: ~"../.agents/plans/spw-language-v04/index.spw"
 
 @operational_semantics: ~"./conventions/operational-semantics.spw"
 @measurement_contract: ~"./conventions/measurement-contract.spw"
@@ -148,6 +152,7 @@ translations: .{
  codebase_perusal = #[@codebase_perusal, @spw_maintenance_2026_06, @semantic_capacity, @planning_ecology][reg=set]
  spw_maintenance = #[@spw_maintenance_2026_06, @semantic_capacity, @planning_ecology][reg=set]
  public_routes = #[@surfaces, @surface_registry][reg=set]
+ language_evolution = #[@language, @language_v04, @spw_language_v04_plan, @spw_language_v04_plan_index][reg=set]
 }[reg=facet]
 
 integration_contract: .{
@@ -217,6 +222,10 @@ dispatch: .{
  symmetry_ui = @symmetry_ui
  ocean_ux = @ocean_ux
  surfaces = @surface_registry
+ language = @language
+ language_v04 = @language_v04
+ spw_language_v04_plan = @spw_language_v04_plan
+ spw_language_v04_plan_index = @spw_language_v04_plan_index
 }[reg=facet]
 
 open_questions: #[

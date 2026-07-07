@@ -26,6 +26,9 @@
 @workbench_memory_surface: ~"../_workbench/.spw/harness/memory-surface.spw"
 @workbench_process_loop: ~"../_workbench/.spw/process/loop-observation.spw"
 @semantic_capacity: ~"./semantic-capacity.spw"
+@spw_language_v04_plan: ~"../../.agents/plans/spw-language-v04/PLAN.md"
+@spw_language_v04_plan_index: ~"../../.agents/plans/spw-language-v04/index.spw"
+@language_v04: ~"../language/v04/index.spw"
 
 dispatch: .{
  agents = @agents
@@ -48,6 +51,9 @@ dispatch: .{
  memory_surface = @workbench_memory_surface
  process_loop = @workbench_process_loop
  semantic_capacity = @semantic_capacity
+ spw_language_v04_plan = @spw_language_v04_plan
+ spw_language_v04_plan_index = @spw_language_v04_plan_index
+ language_v04 = @language_v04
 }[reg=facet]
 
 roles: #[

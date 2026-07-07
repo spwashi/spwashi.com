@@ -1,0 +1,81 @@
+# Spw Language v0.4 Index
+#
+# Dispatch for the recommended language-improvement pillar artifacts.
+
+#>spw_language_v04_index
+#:index #!language #!v04
+#:operation #!prime
+#:layer #!grammar
+
+operation = "prime"
+fixity = "tending"
+
+^"dimensions"{
+ temporal_rhythm = "sedimentation | specification"
+ practice_depth = "reading | observation | contract"
+ semantic_layer = "grammar | semantics | pragmatics"
+ collaboration_phase = "initiation | exchange"
+ memory_tier = "warm"
+}[reg=facet]
+
+intent: .{
+ goal = `Make the full v0.4 improvement stack traversable as dimensionally rich Spw artifacts before parser work lands upstream.`
+ audience = `agents, editors, language contributors, site readers on the operator atlas`
+ upstream = `spw-workbench feature/spw-language-v04`
+}[reg=facet]
+
+@roadmap: ~"./roadmap.spw"
+@plan: ~"../../../.agents/plans/spw-language-v04/PLAN.md"
+@operator_atlas: ~"../../../topics/software/spw/index.html#language-evolution-v04"
+
+@profiles_and_validator: ~"./pillars/profiles-and-validator.spw"
+@grammar_unification: ~"./pillars/grammar-unification.spw"
+@operation_fixity_types: ~"./pillars/operation-fixity-types.spw"
+@stem_projection: ~"./pillars/stem-projection.spw"
+@typed_references_indexing: ~"./pillars/typed-references-indexing.spw"
+@claim_probe_syntax: ~"./pillars/claim-probe-syntax.spw"
+@register_serialization: ~"./pillars/register-serialization.spw"
+@runtime_goals_pipeline: ~"./pillars/runtime-goals-pipeline.spw"
+@precipitate_projections: ~"./pillars/precipitate-projections.spw"
+@lsp_editor_lenses: ~"./pillars/lsp-editor-lenses.spw"
+@core_experimental_namespace: ~"./pillars/core-experimental-namespace.spw"
+@submodule_bridge: ~"./pillars/submodule-bridge.spw"
+
+dispatch: .{
+ roadmap = @roadmap
+ plan = @plan
+ operator_atlas = @operator_atlas
+ profiles_and_validator = @profiles_and_validator
+ grammar_unification = @grammar_unification
+ operation_fixity_types = @operation_fixity_types
+ stem_projection = @stem_projection
+ typed_references_indexing = @typed_references_indexing
+ claim_probe_syntax = @claim_probe_syntax
+ register_serialization = @register_serialization
+ runtime_goals_pipeline = @runtime_goals_pipeline
+ precipitate_projections = @precipitate_projections
+ lsp_editor_lenses = @lsp_editor_lenses
+ core_experimental_namespace = @core_experimental_namespace
+ submodule_bridge = @submodule_bridge
+}[reg=facet]
+
+priority_stack: ?<
+ @profiles_and_validator,
+ @typed_references_indexing,
+ @claim_probe_syntax,
+ @stem_projection,
+ @precipitate_projections,
+ @register_serialization,
+ @lsp_editor_lenses
+>[reg=stream]
+
+editor_prompts: #[
+ .{ ask = `Which pillar should I read for indexing strength vs executable claims?`, see = @roadmap }[reg=facet],
+ .{ ask = `What is the upstream/submodule handoff for this pillar set?`, see = @submodule_bridge }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Every pillar declares dimensions, owner_claim, validation probes, and projection targets.`,
+ `Pillar order follows priority_stack unless a task names one stem explicitly.`,
+ `Public copy on the operator atlas must stay aligned with roadmap thesis.`
+][reg=set]

@@ -1,0 +1,45 @@
+# Stem Projection
+#
+# One semantic stem projected into HTML, CSS, JS, and .spw surfaces.
+
+#>spw_v04_stem_projection
+#:pillar #!v04 #!projection
+#:operation #!contract
+#:fixity #!stable
+#:layer #!semantics
+
+operation = "contract"
+fixity = "stable"
+
+^"dimensions"{
+ semantic_layer = "semantics | application"
+ practice_depth = "contract | observation"
+ collaboration_phase = "exchange"
+ priority = "4"
+}[reg=facet]
+
+^"stem_shape"{
+ stem = `attention_field`
+ html = `data-spw-field-wonder, data-spw-resonance-probe`
+ css = `--attention-field-radius, --attention-field-decay`
+ js = `SpwBus attention events, attention-architecture.js ownership`
+ spw = `@attention_field: ~"./attention-field.spw"`
+}[reg=facet]
+
+^"language_delta"{
+ syntax = `stem attention_field { project html { ... } css { ... } js { ... } spw { ... } }`
+ rule = `Renaming a stem is a language refactor, not four independent greps.`
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "v04-stem-001"
+ hypothesis = `Stem blocks eliminate parallel vocabulary between site semantics and runtime.`
+ impl_ref = ~"../../../conventions/attention-field.spw"
+ probe_ref = `rg 'attention.field|attention_field' public/js public/css .spw/conventions`
+ status = "active"
+}[reg=facet]
+
+^"projection_targets"{
+ catalog = `design catalog stem index`
+ agent_manifest = `.agents/state/runtime/route-runtime-manifest.json`
+}[reg=facet]

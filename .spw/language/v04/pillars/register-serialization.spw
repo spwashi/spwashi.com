@@ -1,0 +1,38 @@
+# Register Serialization
+#
+# reg=probe and reg=projection sinks for multi-audience emit.
+
+#>spw_v04_register_serialization
+#:pillar #!v04 #!registers
+#:operation #!prime
+#:fixity #!tending
+#:layer #!grammar
+
+operation = "prime"
+fixity = "tending"
+
+^"dimensions"{
+ semantic_layer = "grammar | pragmatics"
+ practice_depth = "contract"
+ priority = "6"
+}[reg=facet]
+
+^"registers"{
+ facet = `human dispatch cards and intent blocks`
+ set = `validation, invariants, probes`
+ stream = `reading_order, priority_stack, inspection_order`
+ probe = `machine-runnable checks [reg=probe] (new)`
+ projection = `HTML/CSS/JS/JSON/manifest emit shapes [reg=projection] (new)`
+}[reg=facet]
+
+^"language_delta"{
+ example = `intent: .{ goal = \`...\` }[reg=facet | reg=projection]`
+ emit = `precipitate intent[reg=projection] -> .agents/state/plans-index.json`
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "v04-registers-001"
+ hypothesis = `One source node can precipitate prose, JSON, and rg probes by register.`
+ probe_ref = `rg 'reg=stream' .spw/language`
+ status = "active"
+}[reg=facet]

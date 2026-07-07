@@ -1,0 +1,35 @@
+# Core And Experimental Namespace
+#
+# Small required core; wonder and literary layers opt-in.
+
+#>spw_v04_core_experimental_namespace
+#:pillar #!v04 #!namespace
+#:operation #!align
+#:fixity #!stable
+#:layer #!grammar
+
+operation = "align"
+fixity = "stable"
+
+^"dimensions"{
+ semantic_layer = "grammar"
+ practice_depth = "reading | contract"
+ priority = "10"
+}[reg=facet]
+
+^"core"{
+ required = #[references, sections, dispatch, operation, fixity, claim][reg=set]
+ profiles = `sit on core; do not fork syntax per folder`
+}[reg=facet]
+
+^"experimental"{
+ namespace = `#:profile #!experimental` or `^"experimental"{ ... }`
+ includes = #[wonder probes, literary geology metaphors, RPG substrate essays][reg=set]
+ tool_rule = `Agents may skip experimental blocks unless task names that profile`
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "v04-namespace-001"
+ hypothesis = `Separating core from experimental keeps agent parse cost bounded as semantic capacity grows.`
+ status = "active"
+}[reg=facet]

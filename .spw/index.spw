@@ -18,6 +18,8 @@
 @workbench: ~"./_workbench/.spw/index.spw"
 @workbench_mount: ~"./_workbench/.spw/mount.spw"
 @workbench_workspace: ~"./_workbench/.spw/workspace.spw"
+@language: ~"./language/index.spw"
+@language_v04: ~"./language/v04/index.spw"
 
 intent: .{
  goal = `Provide one stable site-local entrypoint that bridges publishing decisions on spwashi.com to the installed spw-workbench canon.`
@@ -32,6 +34,8 @@ dispatch: .{
  workbench = @workbench
  workbench_mount = @workbench_mount
  workbench_workspace = @workbench_workspace
+ language = @language
+ language_v04 = @language_v04
  about = ~"../about/index.html"
  play = ~"../play/index.html"
  software = ~"../topics/software/index.html"

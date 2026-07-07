@@ -1,0 +1,44 @@
+# Claim And Probe Syntax
+#
+# Executable claims and probe blocks wired toward CI.
+
+#>spw_v04_claim_probe_syntax
+#:pillar #!v04 #!claims
+#:operation #!contract
+#:fixity #!stable
+#:layer #!pragmatics
+
+operation = "contract"
+fixity = "stable"
+
+^"dimensions"{
+ practice_depth = "observation | gesture"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "exchange"
+ priority = "3"
+}[reg=facet]
+
+^"claim_syntax"{
+ block = `claim <id> { hypothesis, spec_ref, impl_ref, probe_ref, falsification, status }`
+ inherit = `slice contracts may extend owner_claim with override semantics`
+}[reg=facet]
+
+^"probe_syntax"{
+ block = `probe <id> { run: "rg ..." | run: "npm run ..." | run: "test -f ..." }`
+ wonder_bridge = `!probe{ ... } desugars to probe block with profile experimental`
+}[reg=facet]
+
+^"language_delta"{
+ ci_hook = `npm run check:spw-claims` runs probe_ref for active claims in touched files
+ status_enum = #[active, confirmed, refuted, superseded][reg=set]
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "v04-claim-probe-001"
+ hypothesis = `Claims with probes turn Spw into a falsifiable hypermedia contract language.`
+  spec_ref = ~"../../../_workbench/.spw/harness/claim-protocol.spw"
+ probe_ref = `rg 'owner_claim' .spw/language/v04/pillars`
+ status = "active"
+}[reg=facet]
+
+validation: #[`rg 'probe_ref' .spw/language/v04/pillars/claim-probe-syntax.spw`][reg=set]

@@ -1,0 +1,39 @@
+# LSP And Editor Lenses
+#
+# Dimension filters, go-to-owner, claim overlays.
+
+#>spw_v04_lsp_editor_lenses
+#:pillar #!v04 #!lsp
+#:operation #!prime
+#:fixity #!tending
+#:layer #!editor_inspectability
+
+operation = "prime"
+fixity = "tending"
+
+^"dimensions"{
+ practice_depth = "observation | gesture"
+ collaboration_phase = "exchange"
+ priority = "7"
+}[reg=facet]
+
+^"lenses"{
+ bucket = `filter plan indexes by virtual bucket`
+ fixity = `show only tending | experimental surfaces`
+ operation = `show cache vs contract files`
+ memory_tier = `hot wip vs warm review vs cold convention`
+ practice_depth = `reading vs gesture practice beds`
+}[reg=facet]
+
+^"editor_affordances"{
+ go_to_owner = `from data-spw-* in HTML jump to stem .spw`
+ claim_overlay = `gutter shows active/refuted/superseded`
+ rename_stem = `refactor stem across HTML/CSS/JS/.spw`
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "v04-lsp-001"
+ hypothesis = `Lenses make dimensional declarations useful daily, not only for audits.`
+  impl_ref = ~"../../../_workbench/.agents/plans/vscode-workspace-atlas/PLAN.md"
+ status = "active"
+}[reg=facet]

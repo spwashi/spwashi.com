@@ -1,0 +1,41 @@
+# Runtime Goals And Pipeline
+#
+# First-class goals and prime-to-precipitate passes.
+
+#>spw_v04_runtime_goals_pipeline
+#:pillar #!v04 #!runtime
+#:operation #!prime
+#:fixity #!tending
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+^"dimensions"{
+ semantic_layer = "pragmatics"
+ practice_depth = "reading | observation"
+ priority = "9"
+}[reg=facet]
+
+^"runtime_goals"{
+ modes = #[explain, index, execute, onboard, audit][reg=set]
+ header = `#:goal #!index` selects which passes run on a file
+}[reg=facet]
+
+^"pipeline"{
+ stages = ?< prime, wonder, desugar, extract, precipitate >[reg=stream]
+ strata = #[char, word, token, node, block, file, upstream][reg=set]
+}[reg=facet]
+
+^"language_delta"{
+ integrity = `canonical AST hash for cache invalidation`
+ agent_cache = `.agents/state/*` invalidates on semantic hash change, not mtime alone`
+}[reg=facet]
+
+@spec_alignment: ~"../../../_workbench/docs/specs/spw/spec-alignment.spw"
+
+^"owner_claim"{
+ claim_id = "v04-pipeline-001"
+ hypothesis = `Goal-tagged passes make Spw a compiler for meaning rather than a highlighter.`
+ status = "active"
+}[reg=facet]

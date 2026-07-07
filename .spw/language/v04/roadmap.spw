@@ -1,0 +1,60 @@
+# Spw v0.4 Roadmap
+#
+# Consolidated language-improvement thesis for site and workbench alignment.
+
+#>spw_language_v04_roadmap
+#:roadmap #!language #!v04
+#:operation #!prime
+#:fixity #!tending
+#:layer #!semantics
+
+operation = "prime"
+fixity = "tending"
+
+^"dimensions"{
+ temporal_rhythm = "specification | sedimentation"
+ practice_depth = "reading | contract | tending"
+ semantic_layer = "semantics | pragmatics"
+ collaboration_phase = "initiation"
+ memory_tier = "warm"
+ priority_horizon = "v0.4.0"
+}[reg=facet]
+
+^"thesis"{
+ claim = "Spw should become a compiler for meaning: profiles for file shapes, typed refs for indexing, claims with probes for falsification, stems for cross-language projection, registers for multi-sink precipitates."
+ risk = "If improvements stay essay-level conventions, agents will keep re-learning dialects per folder."
+ method = "Express each improvement as a pillar artifact with dimensions, owner_claim, probes, and upstream bridge before changing the workbench submodule."
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "spw-language-v04-roadmap-001"
+ layer = "semantic"
+ hypothesis = "A v0.4 pillar set can guide workbench grammar work without blocking public site copy and inspection."
+ spec_ref = ~"../../../.agents/plans/spw-language-v04/PLAN.md"
+ impl_ref = ~"./index.spw"
+ probe_ref = `rg 'spw_language_v04' .spw/language`
+ falsification = `Pillar files exist but the operator atlas and workbench spec do not cite the same priority stack within one release cycle.`
+ status = "active"
+}[reg=facet]
+
+^"priority_stack"{
+ sequence = #[
+  `profiles + validator`,
+  `typed references + indexing`,
+  `claim + probe syntax`,
+  `stem projection to HTML/CSS/JS`,
+  `precipitate projections (indexes/manifests)`,
+  `register serialization (probe/projection)`,
+  `LSP/editor lenses`,
+  `grammar unification + operation/fixity types`,
+  `runtime goals + pipeline`,
+  `core vs experimental namespace`,
+  `submodule bridge`
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `rg '#language-evolution-v04' topics/software/spw/index.html`,
+ `test -f .spw/language/v04/index.spw`,
+ `rg 'owner_claim' .spw/language/v04/pillars`,
+][reg=set]

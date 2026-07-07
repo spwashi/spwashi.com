@@ -1,0 +1,40 @@
+# Precipitate Projections
+#
+# Indexes and manifests as language outputs, not ad hoc scripts.
+
+#>spw_v04_precipitate_projections
+#:pillar #!v04 #!precipitate
+#:operation #!contract
+#:fixity #!tending
+#:layer #!pragmatics
+
+operation = "contract"
+fixity = "tending"
+
+^"dimensions"{
+ temporal_rhythm = "sedimentation | precipitation"
+ practice_depth = "contract | tending"
+ semantic_layer = "pragmatics"
+ priority = "5"
+}[reg=facet]
+
+^"precipitate_targets"{
+ plans_index = `.agents/plans/index.spw` from plan folders
+ route_manifest = `.agents/state/runtime/route-runtime-manifest.json` from routes + runtime
+ design_catalog = `design/catalog/` from data-spw-* census
+ sitemap = `dist/sitemap.xml` from route canonicals
+}[reg=facet]
+
+^"language_delta"{
+ syntax = `precipitate plans_index from .agents/plans/**/index.spw overlay ^"notes"`
+ rule = `Generated views declare source_hash and regen command in header comment`
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "v04-precipitate-001"
+ hypothesis = `The repo is the database; Spw indexes are views with provenance.`
+ probe_ref = `rg 'precipitate' .spw/language/v04`
+ status = "active"
+}[reg=facet]
+
+@literacy_press: ~"../../../../.agents/plans/literacy-precipitation-press/PLAN.md"

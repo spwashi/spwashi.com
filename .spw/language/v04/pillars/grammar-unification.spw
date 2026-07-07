@@ -1,0 +1,42 @@
+# Grammar Unification
+#
+# One section AST; deprecate parallel dialect shapes.
+
+#>spw_v04_grammar_unification
+#:pillar #!v04 #!grammar
+#:operation #!align
+#:fixity #!tending
+#:layer #!grammar
+
+operation = "align"
+fixity = "tending"
+
+^"dimensions"{
+ temporal_rhythm = "sedimentation"
+ practice_depth = "reading | contract"
+ semantic_layer = "grammar"
+ collaboration_phase = "weathering"
+ memory_tier = "warm"
+ priority = "8"
+}[reg=facet]
+
+^"thesis"{
+ claim = `^"name"{} is the canonical section node; ^["name"]{} desugars to the same AST.`
+ rule = `One literal form for strings; one colon style inside facet blocks.`
+}[reg=facet]
+
+^"language_delta"{
+ canonical_section = `^"section_name"{ ... }[reg=facet]`
+ deprecated = #[`^["section"]{}`, `top-level free key = prose blocks`][reg=set]
+ desugar_rule = `Legacy wonder and stream blocks remain parseable but emit profile warnings.`
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "v04-grammar-001"
+ hypothesis = `A single section AST makes LSP outline, validate-spw, and agent edits predictable.`
+ probe_ref = `rg '\\^\\["' .spw --glob '!_workbench/**' | wc -l`
+ falsification = `New site files continue introducing a third section shape after v0.4 lands.`
+ status = "active"
+}[reg=facet]
+
+validation: #[`rg 'canonical_section' .spw/language/v04/pillars/grammar-unification.spw`][reg=set]
