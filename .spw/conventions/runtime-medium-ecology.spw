@@ -1,0 +1,118 @@
+# Runtime Medium Ecology
+#
+# Agricultural-organism metaphor for JavaScript module clustering, nutrient
+# distribution, and holistic codebase growth. operation: contract | fixity: tending
+
+#>runtime_medium_ecology
+#:convention #!runtime #!javascript #!ecology
+#:layer #!pragmatics
+
+@audit: ~"../audits/module-export-standalone-2026-07.spw"
+@module_export_contract: ~"./module-export-contract.spw"
+@module_medium_surface: ~"../surfaces/runtime-module-medium.spw"
+@module_updates_contract: ~"../../public/js/runtime/module-updates-contract.js"
+@behavior_scopes: ~"../../public/js/runtime/behavior-scopes.js"
+@module_catalog: ~"../../public/js/runtime/module-catalog.js"
+@compose_entry: ~"../../public/js/compose.js"
+@decomposition_plan: ~"../../.agents/plans/runtime-module-decomposition/PLAN.md"
+
+^"thesis"{
+  claim: "The site's JavaScript runtime is a living medium — not a bag of files. Nutrients (state contracts, events, attrs) are minded fractally: declared at the leaf (module updates), pooled in guilds (behavior clusters), transported by rhizosphere (kernel), and expressed in canopy (chrome/navigation). Growth can be in-place (one module adopts SPW_MODULE_EXPORT) or holistic (compose + catalog + .spw stay aligned)."
+  falsification: "If agents still invent parallel export shapes, duplicate storage, or ungated document-wide modules after this contract, the metaphor failed to compress decisions."
+}
+
+^"medium_anatomy"{
+  taproot: .{
+    role = `site.js — single orchestrator; not a standalone script`
+    growth_rule = `Consume guild contracts; do not absorb feature logic`
+  }[reg=facet]
+  rhizosphere: .{
+    role = `kernel/ — nutrient transport, storage envelopes, bus, dom projection`
+    files = #[`dom-contracts.js`, `bus.js`, `shared.js`, `site-settings.js`, `storage.js (planned)`][reg=set]
+    fractal_rule = `writeDatasetValue tiers: author-owned | transient | inspection`
+  }[reg=facet]
+  canopy: .{
+    role = `shell, navigation, floating chrome, section handles`
+    files = #[`shell-disclosure.js`, `navigation-locomotion.js`, `frame-navigator.js`, `attention/section-handle.js`][reg=set]
+    growth_rule = `Call syncFloatingChromeState; declare updates on travel`
+  }[reg=facet]
+  mycelium: .{
+    role = `bus.emit first; DOM alias via LEGACY map only when public`
+    nutrient = `events in module updates contract`
+  }[reg=facet]
+  pollinator: .{
+    role = `compose.js — portable re-exports for console, extensions, prompts`
+    rule = `Grade B contract modules should eventually surface here by guild`
+  }[reg=facet]
+  field_beds: .{
+    role = `MODULE_LAYERS.FEATURE — route-local plots; lowest cross-route risk`
+    growth_rule = `May stay init-only until promoted to enhancement`
+  }[reg=facet]
+  compost_pass: .{
+    role = `MOUNT_WHEN.SETTLED / side-effect inits — late refinement after medium settles`
+    examples = #[`layout-assumptions`, `prepaint-state`][reg=set]
+  }[reg=facet]
+}
+
+^"nutrient_fractal"{
+  definition: "A nutrient is any inspectable state the runtime writes. Fractal means the same kind is named at every scale."
+
+  levels: #[
+    .{ scale = `leaf`, carrier = `module updates token`, example = `data-spw-bottom-lane-mode` }[reg=facet],
+    .{ scale = `guild`, carrier = `updatesDescribe.summary`, example = `attr:data-spw-nav-state|css-var:--spw-floating-slot-*` }[reg=facet],
+    .{ scale = `horizon`, carrier = `MODULE_LAYERS`, example = `enhancement writes html attrs; feature writes route root` }[reg=facet],
+    .{ scale = `medium`, carrier = `html[data-spw-runtime-*]`, example = `policy, posture, enhancement intensity` }[reg=facet],
+  ][reg=set]
+
+  conflict_detection: `findModuleUpdateConflicts(listModules()) — same nutrient claimed by two modules`
+}
+
+^"guild_taxonomy"{
+  definition: "Guilds cluster behavior for growth planning. They cross-cut MODULE_LAYERS and behavior-scopes."
+
+  guilds: #[
+    .{ id = `substrate`, stem = `rhizosphere`, duty = `contracts, storage, projection, bus` }[reg=facet],
+    .{ id = `orientation`, stem = `canopy`, duty = `shell, navigation, page-state, locomotion` }[reg=facet],
+    .{ id = `symbiosis`, stem = `pollination`, duty = `attention, wonder, resonance, experiential` }[reg=facet],
+    .{ id = `memory`, stem = `reserve`, duty = `haptics, spells, pins, local notes, visitation` }[reg=facet],
+    .{ id = `inspection`, stem = `sensing`, duty = `state blocks, console, observation, anatomy, box-model` }[reg=facet],
+    .{ id = `expression`, stem = `flowering`, duty = `operators, braces, gestures, sigils, spells surface` }[reg=facet],
+    .{ id = `media`, stem = `fruiting`, duty = `image, svg, canvas, scene, interactive medium` }[reg=facet],
+    .{ id = `literacy`, stem = `seed`, duty = `pretext, typography, narrative, precipitation` }[reg=facet],
+    .{ id = `field`, stem = `plot`, duty = `route feature modules — blog, rpg, services, design labs` }[reg=facet],
+  ][reg=set]
+}
+
+^"growth_modes"{
+  in_place: .{
+    meaning = `One module adopts SPW_MODULE_EXPORT + updates contract without splitting file`
+    good_for = `Grade B contracts, spwModule six-pack migration`
+  }[reg=facet]
+  holistic: .{
+    meaning = `Catalog + compose + .spw + CSS behavior bundle move together`
+    good_for = `New guild, renamed inspector surfaces, behavior-scope alignment`
+  }[reg=facet]
+  guild_split: .{
+    meaning = `Orchestrator fractures into guild-aligned modules (decomposition plan)`
+    good_for = `shell-disclosure, experiential, haptics, shared.js`
+  }[reg=facet]
+}
+
+^"clustering_schemes"{
+  legacy_axes: #[`MODULE_LAYERS`, `MOUNT_WHEN`, `behavior-scopes features`, `evaluates dimensions`][reg=set]
+  proposed_axes: #[
+    `guild (runtime-medium-ecology)`
+    `export_grade (A|B|C|D from audit)`
+    `nutrient_kinds (from module-updates-contract)`
+    `effectScope (from catalog)`
+    `timingArc (from catalog)`
+  ][reg=set]
+  selection_rule: "Catalog keeps layer/when for scheduling; guild is for documentation, compose batches, and split planning."
+}
+
+dispatch: .{
+  audit = @audit
+  export_contract = @module_export_contract
+  medium_map = @module_medium_surface
+  decomposition = @decomposition_plan
+}[reg=facet]

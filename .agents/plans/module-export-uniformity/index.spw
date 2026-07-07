@@ -1,0 +1,40 @@
+# Plan Index — Module Export Uniformity
+
+#>plan_module_export_uniformity_index
+#:index #!plan
+#:operation #!audit
+#:layer #!pragmatics
+
+operation = "audit"
+fixity = "tending"
+
+intent: .{
+ goal = `Unify JavaScript module export patterns and categorize runtime modules under runtime-medium ecology for fractal nutrient distribution and holistic growth.`
+ owner = `module-export-uniformity`
+ kind = `plan`
+ bucket = `runtime_contract`
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@plan: ~"./PLAN.md"
+@audit: ~"../../../.spw/audits/module-export-standalone-2026-07.spw"
+@ecology: ~"../../../.spw/conventions/runtime-medium-ecology.spw"
+@export_contract: ~"../../../.spw/conventions/module-export-contract.spw"
+@medium_map: ~"../../../.spw/surfaces/runtime-module-medium.spw"
+@decomposition: ~"../runtime-module-decomposition/PLAN.md"
+
+dispatch: .{
+ plan = @plan
+ audit = @audit
+ ecology = @ecology
+ export_contract = @export_contract
+ medium_map = @medium_map
+ decomposition = @decomposition
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What are the standalone script grades?`, see = @audit }[reg=facet],
+ .{ ask = `Which guild owns navigation modules?`, see = @medium_map }[reg=facet],
+ .{ ask = `What is the target export shape?`, see = @export_contract }[reg=facet],
+][reg=set]
