@@ -12,6 +12,14 @@
 operation = "cache"
 fixity = "tending"
 
+^"plan_context"{
+ goal = `Create a discoverable /settings/ page where visitors can quiet or hide the surface map, quiet or hide the console, and disable scroll-driven viewport activation. Taste note: this improves containment and calm by making the cognitive-machine chrome optable instead of unavoidable, without removing the deeper runtime features. 2026-06-30 extension: the same settings system now owns component-reward visibility (rewardDisplay) and reset access for the browser-local component collection register.`
+ owner = `runtime-settings`
+ operation = "prime"
+ validation = #[ `Hypotheses: visitors can reduce intrusive runtime chrome without losing route access.`, `Negative controls: RPG Wednesday local gameplay changes and existing optional feature loading still work.`, `Demo sequence: visit /settings/, choose quiet/hidden preferences, reload home/software pages, confirm runtime chrome follows preferences.`, ][reg=set]
+ hot_files = #[ `settings/index.html`, `public/js/site.js`, `public/css/style.css`, `public/js/kernel/site-settings-profiles.js`, `public/js/kernel/site-settings-engine.js`, `public/js/kernel/site-settings-ui.js`, ][reg=set]
+}[reg=facet]
+
 ^["roots"]{
  @plan: ~".agents/plans/runtime-settings/PLAN.md"
  @settings: ~"public/js/site-settings.js"

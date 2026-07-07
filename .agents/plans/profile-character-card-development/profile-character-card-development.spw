@@ -6,6 +6,12 @@
 #:semantics #!surface
 #:layer #!pragmatics
 
+^"plan_linkage"{
+ plan = ~"./PLAN.md"
+ index = ~"./index.spw"
+ goal = `The desired end state is a card model that can describe a person, a role, a character, or a recurring campaign figure without pretending those are the same thing. The site already has one shared renderer and visual system for profile cards, but the surrounding concept is still split: /tools/profile/ frames the card as a professional identity artifact, /tools/character-sheet/ frames it as a translation device from character grammar into mentorship-facing engineering language, and /play/rpg-wednesday/cast/ hints at future character references without yet sharing the card doctrine explicitly. The refinement should clarify that there is one card substrate with multiple lenses and multiple promotion paths, and that cards are also compact editorial instruments: they help routes summarize a figure, help writers keep recurring identity legible, help longer prose stay anchored in a stable local model, and eventually give hired authors a reliable briefing surface for writing in alignment with the site's voice and semantics. The taste note is identity under lens, not identity collapse: a card can project different aspects of a person or character without flattening them into one static summary.`
+ owner = `profile-character-card-development`
+}[reg=facet]
 ^["thesis"]{
  claim: "The site's profile card, character sheet card, and future cast card should be understood as one card family with multiple lenses, not as unrelated tools that happen to share a renderer."
  why: "The renderer and CSS already behave like a shared substrate. The missing piece is doctrine: what remains stable across the family, what changes by lens, how card development relates to notes, blobs, session memory, and public routes, and why cards are editorially useful beyond being export artifacts."

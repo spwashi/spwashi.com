@@ -1,21 +1,54 @@
-# Plan Directory Index — spell-cognition-familiarity
+# Plan Index — spell-cognition-familiarity
 #
-# Dispatch surface for this plan folder.
+# The site already has several adjacent ideas that point at the same thing: spells as replayable outcomes, breadcrumbs as cognitive path, wonder memory as recent-path resonance, and…
 
 #>plan_spell_cognition_familiarity_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `The site already has several adjacent ideas that point at the same thing: spells as replayable outcomes, breadcrumbs as cognitive path, wonder memory as recent-path resonance, and liminality as page depth. This pass should align those ideas so they read as one integrated model instead of separate metaphors. The user-facing result should be intuitive: the spell dock should tell you whether a path feels fresh, familiar, or deeply grounded; the breadcrumb trail should explain how a page is being held in memory; and the page state should expose liminal gradients as a readable part of the worldbuilding rather than a hidden implementation detail.`
+ owner = `spell-cognition-familiarity`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@spells: ~"../../../public/js/runtime/spells.js"
+@experiential: ~"../../../public/js/runtime/experiential.js"
+@wonder_memory: ~"../../../public/js/interface/wonder-memory.js"
+@cognitive_surface: ~"../../../.spw/philosophy/cognitive-surface.spw"
 
 dispatch: .{
  plan = @plan
+ spells = @spells
+ experiential = @experiential
+ wonder_memory = @wonder_memory
+ cognitive_surface = @cognitive_surface
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `In scope: shared runtime copy/state in public/js/runtime/spells.js, public/js/runtime/experiential.js, and public/js/interface/wonder-memory.js.`,
+  `In scope: small state projection updates in shared CSS only if a new readable register needs visual support.`,
+  `In scope: public data attributes or helper outputs that let the console, settings, and spell surfaces describe familiarity and liminality clearly.`,
+  `-`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `node --check for edited JS modules`,
+ `git diff --check`,
+ `npm run check`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: The site already has several adjacent ideas that point at the same thing: spells as replayable outcomes, breadcrumbs as cognitive path,…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

@@ -12,6 +12,14 @@
 operation = "cache"
 fixity = "tending"
 
+^"plan_context"{
+ goal = `The desired end state is a repo where: - the authored website lives under one obvious source root: site/ - generated deploy output continues to live in dist/ - build/dev/check scripts continue to work without changing public URLs - non-site concerns such as .agents/, .spw/, .github/, and tooling no longer visually compete with route folders at the repo root - templates and partials stay inside the site source tree as non-routable authoring surfaces This is a repository-clarity change, not a framework migration. The public site should still behave like a hand-authored static site with root-relative asset paths and directory routing.`
+ owner = `site-source-layout`
+ operation = "prime"
+ validation = #[ `git diff --check`, `node --check for each edited script module`, `npm run build`, `npm run check`, `targeted route checks in local dev on:`, `/`, ][reg=set]
+ hot_files = #[ `scripts/`, `.spw/`, `scripts/build.mjs`, `scripts/dev-server.mjs`, `scripts/template.mjs`, `scripts/generate-sitemap.mjs`, ][reg=set]
+}[reg=facet]
+
 ^["roots"]{
  @plan: ~".agents/plans/site-source-layout/PLAN.md"
  @site_model: ~".spw/site.spw"

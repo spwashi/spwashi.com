@@ -1,23 +1,66 @@
-# Plan Directory Index — story-prompt-surface-pass
+# Plan Index — story-prompt-surface-pass
 #
-# Dispatch surface for this plan folder.
+# The desired end state is a site where the design hub, component glossary, recipes hub, blog, and about page each feel like they have a distinct reason to exist. The design pages…
 
 #>plan_story_prompt_surface_pass_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `The desired end state is a site where the design hub, component glossary, recipes hub, blog, and about page each feel like they have a distinct reason to exist. The design pages should double as direct-wiring demo surfaces. Recipes should feel like an invitational substrate rather than only a registry. The blog should read as a thread laboratory that rewards filming and wandering. The about page should lean into typography, storytelling, and practical direction instead of generic self-description. Across these routes, promptability should become a visible, reversible affordance rather than an accidental side effect.`
+ owner = `story-prompt-surface-pass`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
+@design: ~"../../../design/"
+@components: ~"../../../design/components/"
+@about: ~"../../../about/"
+@site: ~"../../../public/js/site.js"
+@design_index_html: ~"../../../design/index.html"
+@design_components_index_html: ~"../../../design/components/index.html"
+@about_index_html: ~"../../../about/index.html"
+@page_model: ~"../../../.spw/surfaces/page-model.spw"
 
 dispatch: .{
  plan = @plan
  wip = @wip
+ design = @design
+ components = @components
+ about = @about
+ site = @site
+ design_index_html = @design_index_html
+ design_components_index_html = @design_components_index_html
+ about_index_html = @about_index_html
+ page_model = @page_model
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `In scope: shared prompt/demo interaction wiring, shared promptability styling, updated footer quick actions, route HTML rewrites for design/, design/components/, recipes/, blog/, and about/, integration of existing curated render studies, and small .spw residue to keep the new route-cluster ideas inspectable.`,
+ ][reg=set]
+ out = #[
+  `: a full copy rewrite of every route on the site, a new image processing pipeline, external asset downloads, or replacing the static hand-authored routing model.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `node --check public/js/site.js`,
+ `node --check public/js/spw-prompt-utils.js`,
+ `targeted rg checks for promptability hooks, image paths, and shared footer usage`,
+ `npm run build`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: The desired end state is a site where the design hub, component glossary, recipes hub, blog, and about page each feel like they have a…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

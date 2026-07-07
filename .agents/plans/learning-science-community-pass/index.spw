@@ -1,21 +1,47 @@
-# Plan Directory Index — learning-science-community-pass
+# Plan Index — Learning Science Community Pass
 #
-# Dispatch surface for this plan folder.
+# Improve core site copy and route markup so the site serves Spwashi's community more directly across three needs: - education: help people enter difficult material with clearer…
 
 #>plan_learning_science_community_pass_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Improve core site copy and route markup so the site serves Spwashi's community more directly across three needs: - education: help people enter difficult material with clearer scaffolds - stabilization: help people find smaller next steps, safer boundaries, and better re-entry - play: protect experimentation, wonder, and artifact-making as real learning modes`
+ owner = `learning-science-community-pass`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@about_index_html: ~"../../../about/index.html"
+@topics_index_html: ~"../../../topics/index.html"
+@topics_pedagogy_index_html: ~"../../../topics/pedagogy/index.html"
+@play_index_html: ~"../../../play/index.html"
+@workbench: ~"../../../.spw/_workbench"
 
 dispatch: .{
  plan = @plan
+ about_index_html = @about_index_html
+ topics_index_html = @topics_index_html
+ topics_pedagogy_index_html = @topics_pedagogy_index_html
+ play_index_html = @play_index_html
+ workbench = @workbench
 }[reg=facet]
 
+validation: #[
+ `git diff --check`,
+ `targeted markup sanity checks with rg`,
+ `balanced structure review on edited routes`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Improve core site copy and route markup so the site serves Spwashi's community more directly across three needs: - education: help people…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

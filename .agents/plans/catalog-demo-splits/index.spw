@@ -1,21 +1,48 @@
-# Plan Directory Index — catalog-demo-splits
+# Plan Index — catalog-demo-splits
 #
-# Dispatch surface for this plan folder.
+# The design catalog should remain the canonical inventory, but its long sections need dedicated review pages for faster lookup and less scrolling. The CSS and SVG experiment routes…
 
 #>plan_catalog_demo_splits_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `The design catalog should remain the canonical inventory, but its long sections need dedicated review pages for faster lookup and less scrolling. The CSS and SVG experiment routes should also become thinner hubs that link to focused subpages for the rule bench, variable lab, diagram posture, tunability, and handoff guidance. The intent is not to multiply pages for its own sake; it is to make the existing structure easier to inspect, navigate, and review.`
+ owner = `catalog-demo-splits`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@index: ~"../../../design/index.html"
 
 dispatch: .{
  plan = @plan
+ index = @index
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `In scope: design/catalog route splits for asset review and at least one other long catalog section, CSS experiment route splits, SVG experiment route splits, and hub links from design/index.html.`,
+ ][reg=set]
+ out = #[
+  `: broad copy rewrites, new media generation, runtime behavior changes, or a full redesign of the existing design hub.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `npm run check`,
+ `Manual route sanity for the new pages and their links back to the hub pages`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: The design catalog should remain the canonical inventory, but its long sections need dedicated review pages for faster lookup and less…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

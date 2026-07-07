@@ -1,25 +1,55 @@
-# Plan Directory Index — rpg-local-gameplay
+# Plan Index — rpg-local-gameplay
 #
-# Dispatch surface for this plan folder.
+# RPG Wednesday should move from a static campaign index toward a lightweight table aid. The first useful layer is a local gameplay kit that lets a player or GM track the current…
 
 #>plan_rpg_local_gameplay_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `RPG Wednesday should move from a static campaign index toward a lightweight table aid. The first useful layer is a local gameplay kit that lets a player or GM track the current scene, party, initiative, clocks, quick notes, and session log seeds directly on the published pages without requiring a backend or build pipeline. Those seeds should be able to mature into RPG session notes before they harden into public session pages, cast memory, world memory, or arc records. Taste note: improve usefulness and trust. The feature should feel like a quiet table tool, not an app takeover; local data must be clearly local and easy to export or clear.`
+ owner = `rpg-local-gameplay`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
 @rpg_local_gameplay: ~"./rpg-local-gameplay.spw"
+@style: ~"../../../public/css/style.css"
 
 dispatch: .{
  plan = @plan
  wip = @wip
  rpg_local_gameplay = @rpg_local_gameplay
+ style = @style
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `In scope: a feature-gated JavaScript module for /play/rpg-wednesday/ pages, localStorage persistence, import/export/reset controls, existing-page discoverability, CSS for the kit, and PWA cache updates for the RPG routes and module.`,
+ ][reg=set]
+ out = #[
+  `: accounts, cloud sync, multiplayer state, generated public session pages, dice physics, combat automation beyond a simple initiative list, or a build pipeline.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `node --check public/js/rpg-wednesday.js`,
+ `node --check public/js/site.js`,
+ `node --check sw.js`,
+ `python3 -m json.tool manifest.webmanifest`,
+ `git diff --check`,
+ `npm --prefix .spw/_workbench run lint:spw`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: RPG Wednesday should move from a static campaign index toward a lightweight table aid. The first useful layer is a local gameplay kit that…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

@@ -1,21 +1,55 @@
-# Plan Directory Index — symphonic-loading-layered-editions
+# Plan Index — symphonic-loading-layered-editions
 #
-# Dispatch surface for this plan folder.
+# A visitor's first seconds should read as movements: structure seats itself silently, reading arrives complete, instruments come online with eased acknowledgment, and atmosphere…
 
 #>plan_symphonic_loading_layered_editions_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `A visitor's first seconds should read as movements: structure seats itself silently, reading arrives complete, instruments come online with eased acknowledgment, and atmosphere settles last. A returning visitor should feel remembered; a visitor on a different device, cache generation, or deploy edition should feel a small, safe stylistic surprise - different ornament weather over an identical city. The taste note is conducted arrival + governed variance: sequencing is intentional (never FOUC), and surprise is confined to layers that cannot move structure or break interaction contracts.`
+ owner = `symphonic-loading-layered-editions`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@site_semantics: ~"../../../.spw/conventions/site-semantics.spw"
+@style_core: ~"../../../public/css/style-core.css"
+@css_bundle: ~"../../../scripts/css-bundle.mjs"
+@hydration: ~"../../../public/css/modes/hydration.css"
+@dom_render: ~"../../../public/js/kernel/dom-render.js"
+@core: ~"../../../public/css/tokens/core.css"
+@ornament: ~"../../../public/css/ornament/"
+@effects: ~"../../../public/css/effects/"
 
 dispatch: .{
  plan = @plan
+ site_semantics = @site_semantics
+ style_core = @style_core
+ css_bundle = @css_bundle
+ hydration = @hydration
+ dom_render = @dom_render
+ core = @core
+ ornament = @ornament
+ effects = @effects
 }[reg=facet]
 
+validation: #[
+ `Lighthouse/DevTools: CLS 0 attributable to movements III/IV; reading complete before atmosphere requests start on a throttled profile.`,
+ `prefers-reduced-motion: all movement easing collapses; content identical.`,
+ `No-JS: movements I-II render a complete readable page; no edition attribute appears.`,
+ `Two clean profiles with different SW installs receive different editions; the same profile receives its edition again on return.`,
+ `npm run check:css extended with the variance-eligible property lint for variant files.`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: A visitor's first seconds should read as movements: structure seats itself silently, reading arrives complete, instruments come online with…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

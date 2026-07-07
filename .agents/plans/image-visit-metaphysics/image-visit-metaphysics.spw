@@ -1,6 +1,12 @@
 #>image_visit_metaphysics
 #:layer #!design
 
+^"plan_linkage"{
+ plan = ~"./PLAN.md"
+ index = ~"./index.spw"
+ goal = `The desired end state is an image system that behaves like the rest of the site: effects come from semantics, not randomness. Conceptual surfaces can feel distant or unresolved, hybrid surfaces can feel latent or aqueous, and realized surfaces can feel more settled and paper-sharp. Holding an image or SVG should mark it as visited, reward the reader with a persistent glow, and preserve that attention as a returnable memory rather than a transient hover flourish. The taste note is wonder with legibility: the interaction should stay playful, but every glow, blur, and helper handle should explain something about the surface rather than merely decorating it.`
+ owner = `image-visit-metaphysics`
+}[reg=facet]
 ^"claim"{
   .image_surface = "A page surface that carries an image or SVG as part of the site's conceptual phrasing."
   .visited = "A remembered encounter, earned by sustained attention rather than incidental hover."

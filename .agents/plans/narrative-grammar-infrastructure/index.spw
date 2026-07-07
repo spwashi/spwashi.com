@@ -1,21 +1,33 @@
-# Plan Directory Index — narrative-grammar-infrastructure
+# Plan Index — Narrative Grammar Infrastructure
 #
-# Dispatch surface for this plan folder.
+# Make narrative instrumentation useful across routes without letting the runtime guess too aggressively from ordinary prose.
 
 #>plan_narrative_grammar_infrastructure_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Make narrative instrumentation useful across routes without letting the runtime guess too aggressively from ordinary prose.`
+ owner = `narrative-grammar-infrastructure`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@narrative_instrumentation: ~"../../../public/js/semantic/narrative-instrumentation.js"
 
 dispatch: .{
  plan = @plan
+ narrative_instrumentation = @narrative_instrumentation
 }[reg=facet]
 
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Make narrative instrumentation useful across routes without letting the runtime guess too aggressively from ordinary prose.`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

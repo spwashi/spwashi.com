@@ -1,21 +1,41 @@
-# Plan Directory Index — promptable-image-library-pass
+# Plan Index — promptable-image-library-pass
 #
-# Dispatch surface for this plan folder.
+# - Make promptable links easier to share as memeable URLs and image seeds.
 
 #>plan_promptable_image_library_pass_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `- Make promptable links easier to share as memeable URLs and image seeds.`
+ owner = `promptable-image-library-pass`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@play_rpg_wednesday_index_html: ~"../../../play/rpg-wednesday/index.html"
+@design_index_html: ~"../../../design/index.html"
+@design_components_index_html: ~"../../../design/components/index.html"
+@about_index_html: ~"../../../about/index.html"
+@operator_alignment: ~"../../../.spw/conventions/operator-alignment.spw"
 
 dispatch: .{
  plan = @plan
+ play_rpg_wednesday_index_html = @play_rpg_wednesday_index_html
+ design_index_html = @design_index_html
+ design_components_index_html = @design_components_index_html
+ about_index_html = @about_index_html
+ operator_alignment = @operator_alignment
 }[reg=facet]
 
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: - Make promptable links easier to share as memeable URLs and image seeds.`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

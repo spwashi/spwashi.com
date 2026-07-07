@@ -1,21 +1,35 @@
-# Plan Directory Index — component-semantics-document-host
+# Plan Index — Component Semantics Document Host Guard
 #
-# Dispatch surface for this plan folder.
+# Keep component semantics scoped to reusable page components by skipping document.documentElement and document.body during semantic target collection.
 
 #>plan_component_semantics_document_host_index
 #:index #!plan
+#:operation #!audit
 #:layer #!pragmatics
+
+operation = "audit"
+fixity = "tending"
+
+intent: .{
+ goal = `Keep component semantics scoped to reusable page components by skipping document.documentElement and document.body during semantic target collection.`
+ owner = `component-semantics-document-host`
+ kind = `fix`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @fix: ~"./FIX.md"
+@component_semantics: ~"../../../public/js/semantic/component-semantics.js"
+@dom_contracts: ~"../../../public/js/kernel/dom-contracts.js"
 
 dispatch: .{
  fix = @fix
+ component_semantics = @component_semantics
+ dom_contracts = @dom_contracts
 }[reg=facet]
 
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Keep component semantics scoped to reusable page components by skipping document.documentElement and document.body during semantic target…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

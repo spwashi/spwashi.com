@@ -1,21 +1,39 @@
-# Plan Directory Index — settings-theme-packs
+# Plan Index — settings-theme-packs
 #
-# Dispatch surface for this plan folder.
+# Make the existing palette chooser surfaces act on canonical runtime state, and expand the site with authored theme families that each have distinct light and dark variants.
 
 #>plan_settings_theme_packs_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Make the existing palette chooser surfaces act on canonical runtime state, and expand the site with authored theme families that each have distinct light and dark variants.`
+ owner = `settings-theme-packs`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@settings_index_html: ~"../../../settings/index.html"
+@design_index_html: ~"../../../design/index.html"
+@design_palettes_index_html: ~"../../../design/palettes/index.html"
+@settings_state: ~"../../../.spw/reviews/runtime-audit/settings-state.spw"
 
 dispatch: .{
  plan = @plan
+ settings_index_html = @settings_index_html
+ design_index_html = @design_index_html
+ design_palettes_index_html = @design_palettes_index_html
+ settings_state = @settings_state
 }[reg=facet]
 
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Make the existing palette chooser surfaces act on canonical runtime state, and expand the site with authored theme families that each have…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

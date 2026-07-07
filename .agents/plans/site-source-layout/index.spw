@@ -1,23 +1,72 @@
-# Plan Directory Index — site-source-layout
+# Plan Index — site-source-layout
 #
-# Dispatch surface for this plan folder.
+# The desired end state is a repo where: - the authored website lives under one obvious source root: site/ - generated deploy output continues to live in dist/ - build/dev/check…
 
 #>plan_site_source_layout_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `The desired end state is a repo where: - the authored website lives under one obvious source root: site/ - generated deploy output continues to live in dist/ - build/dev/check scripts continue to work without changing public URLs - non-site concerns such as .agents/, .spw/, .github/, and tooling no longer visually compete with route folders at the repo root - templates and partials stay inside the site source tree as non-routable authoring surfaces This is a repository-clarity change, not a framework migration. The public site should still behave like a hand-authored static site with root-relative asset paths and directory routing.`
+ owner = `site-source-layout`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
+@scripts: ~"../../../scripts/"
+@spw: ~"../../../.spw/"
+@build: ~"../../../scripts/build.mjs"
+@dev_server: ~"../../../scripts/dev-server.mjs"
+@template: ~"../../../scripts/template.mjs"
+@generate_sitemap: ~"../../../scripts/generate-sitemap.mjs"
+@generate_design_catalog: ~"../../../scripts/generate-design-catalog.mjs"
+@site_contracts: ~"../../../scripts/site-contracts.mjs"
 
 dispatch: .{
  plan = @plan
  wip = @wip
+ scripts = @scripts
+ spw = @spw
+ build = @build
+ dev_server = @dev_server
+ template = @template
+ generate_sitemap = @generate_sitemap
+ generate_design_catalog = @generate_design_catalog
+ site_contracts = @site_contracts
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `In scope:`,
+  `repo structure around a new site/ source root`,
+  `moving route HTML, static assets, partials, service worker, and web manifest into site/`,
+  `updating build/dev/check/catalog/sitemap/template scripts to understand site/`,
+ ][reg=set]
+ out = #[
+  `framework adoption`,
+  `bundler adoption`,
+  `changing route URLs`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `node --check for each edited script module`,
+ `npm run build`,
+ `npm run check`,
+ `targeted route checks in local dev on:`,
+ `/`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: The desired end state is a repo where: - the authored website lives under one obvious source root: site/ - generated deploy output…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

@@ -1,10 +1,20 @@
-# Plan Directory Index — interaction-loop-contract
+# Plan Index — interaction-loop-contract
 #
-# Dispatch surface for this plan folder.
+# Extract the shared interaction-loop semantics that are currently duplicated across the state inspector and image metaphysics runtime. The end state is a small contract module that…
 
 #>plan_interaction_loop_contract_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Extract the shared interaction-loop semantics that are currently duplicated across the state inspector and image metaphysics runtime. The end state is a small contract module that owns canonical loop states, refresh reasons, labels, and timing reads so future components can join the same activation/resolution model without inventing parallel local semantics. The next useful generalization is to let this become the shared interaction-feedback contract for other guarded, stateful runtime surfaces when they need the same prime/land/residue vocabulary. Taste note: improve layering and clarity by moving the process vocabulary into one truthful surface.`
+ owner = `interaction-loop-contract`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
@@ -15,9 +25,24 @@ dispatch: .{
  wip = @wip
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `In scope: shared loop-state constants/helpers, image refresh reason constants, timing helpers, reintegration of the current state inspector and image metaphysics consumers, and the minimal eligibility/cancel-path handling that keeps interaction state honest`,
+ ][reg=set]
+ out = #[
+  `: new page surfaces, new CSS ornament systems, broader bus/event renames, or inventing a second parallel interaction vocabulary for unrelated runtimes`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `Hypotheses: extracting the loop contract reduces duplication without changing current behavior; image and inspector consumers still resolve through the same visible loop states`,
+ `Negative controls: existing operator/brace/mode/settings/image interactions continue to function; no new CSS edits are required; cancel and blur paths do not leave stale primed state`,
+ `Demo sequence: / -> home frame state block, /settings/ -> runtime preferences state block, image-heavy route with hold-to-visit and effect cycling`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Extract the shared interaction-loop semantics that are currently duplicated across the state inspector and image metaphysics runtime. The…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

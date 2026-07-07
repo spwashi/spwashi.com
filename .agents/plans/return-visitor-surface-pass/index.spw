@@ -1,21 +1,50 @@
-# Plan Directory Index — return-visitor-surface-pass
+# Plan Index — return-visitor-surface-pass
 #
-# Dispatch surface for this plan folder.
+# Refresh the main hub routes so they reward repeat visitors instead of re-explaining the site from zero every time. The public outcome should be more movement, more reasons to…
 
 #>plan_return_visitor_surface_pass_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Refresh the main hub routes so they reward repeat visitors instead of re-explaining the site from zero every time. The public outcome should be more movement, more reasons to revisit, and more layout/component variety across the top-level surfaces.`
+ owner = `return-visitor-surface-pass`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@topics_index_html: ~"../../../topics/index.html"
+@play_index_html: ~"../../../play/index.html"
+@about_index_html: ~"../../../about/index.html"
 
 dispatch: .{
  plan = @plan
+ topics_index_html = @topics_index_html
+ play_index_html = @play_index_html
+ about_index_html = @about_index_html
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `In scope: home, topics, services, play, and about hub copy/layout updates; one shared reusable return-visitor component family in shared CSS; selective social-image diversification where a hub still points at a generic card.`,
+  `-`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `targeted rg checks for new ids/classes and updated image refs`,
+ `sanity-check surrounding markup for balanced tags and route flow`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Refresh the main hub routes so they reward repeat visitors instead of re-explaining the site from zero every time. The public outcome…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

@@ -1,10 +1,20 @@
-# Plan Directory Index — living-medium-copy-pass
+# Plan Index — Living Medium Copy Pass
 #
-# Dispatch surface for this plan folder.
+# Update the public copy across spwashi.com so major routes read more clearly as lore, documentation, and a developing medium that can support RPG Wednesday, generative practice,…
 
 #>plan_living_medium_copy_pass_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Update the public copy across spwashi.com so major routes read more clearly as lore, documentation, and a developing medium that can support RPG Wednesday, generative practice, and reusable media seeds.`
+ owner = `living-medium-copy-pass`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
@@ -14,8 +24,8 @@ dispatch: .{
 }[reg=facet]
 
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Update the public copy across spwashi.com so major routes read more clearly as lore, documentation, and a developing medium that can…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

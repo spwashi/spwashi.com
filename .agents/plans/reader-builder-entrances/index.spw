@@ -1,21 +1,42 @@
-# Plan Directory Index — reader-builder-entrances
+# Plan Index — reader / builder entrances
 #
-# Dispatch surface for this plan folder.
+# Give readers and computer-literate visitors a first-class path through the site by pairing clear prose entrances with inspectable runtime and query-mode entrances. The site should…
 
 #>plan_reader_builder_entrances_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Give readers and computer-literate visitors a first-class path through the site by pairing clear prose entrances with inspectable runtime and query-mode entrances. The site should reward two kinds of visitors without making either one parse the whole lattice: - readers who want the method, canon, and narrative surfaces - builders who want the CSS, settings, query modes, and browser-local runtime to stay legible`
+ owner = `reader-builder-entrances`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@index: ~"../../../settings/index.html"
+@template: ~"../../../scripts/template.mjs"
+@site_settings: ~"../../../public/js/kernel/site-settings.js"
 
 dispatch: .{
  plan = @plan
+ index = @index
+ template = @template
+ site_settings = @site_settings
 }[reg=facet]
 
+validation: #[
+ `git diff --check`,
+ `npm run check`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Give readers and computer-literate visitors a first-class path through the site by pairing clear prose entrances with inspectable runtime…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

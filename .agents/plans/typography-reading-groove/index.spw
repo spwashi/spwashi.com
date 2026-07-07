@@ -1,10 +1,20 @@
-# Plan Directory Index — typography-reading-groove
+# Plan Index — Typography Reading Groove
 #
-# Dispatch surface for this plan folder.
+# Make long-form reading surfaces feel more musical and skimmable while scrolling, especially for audiences who are mostly listening and only partially watching the screen.
 
 #>plan_typography_reading_groove_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Make long-form reading surfaces feel more musical and skimmable while scrolling, especially for audiences who are mostly listening and only partially watching the screen.`
+ owner = `typography-reading-groove`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
@@ -13,9 +23,22 @@ dispatch: .{
  plan = @plan
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `public/js/runtime/spw-attention-architecture.js`,
+  `public/css/typography/spw-typesetting.css`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `node --check public/js/runtime/spw-attention-architecture.js`,
+ `targeted rg checks for the reading-groove attributes`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Make long-form reading surfaces feel more musical and skimmable while scrolling, especially for audiences who are mostly listening and only…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

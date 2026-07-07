@@ -1,21 +1,54 @@
-# Plan Directory Index — chrome-distribution-momentum-pass
+# Plan Index — Chrome Distribution + Momentum Pass
 #
-# Dispatch surface for this plan folder.
+# Refine the site's primary navigation, footer, ornament application, linking surfaces, and spell-driven flow so the experience has clearer visual rhythm, better mobile ergonomics,…
 
 #>plan_chrome_distribution_momentum_pass_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Refine the site's primary navigation, footer, ornament application, linking surfaces, and spell-driven flow so the experience has clearer visual rhythm, better mobile ergonomics, consistent distribution of decorative and functional weight, and stronger "momentum" (the feeling that navigation, spells, and transitions carry the visitor forward naturally). This is a craft-quality / polish pass following the recent runtime load instrumentation and site-rhythm ornament work. It prioritizes shared surfaces over per-route changes.`
+ owner = `chrome-distribution-momentum-pass`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@navigation_spells: ~"../../../public/js/runtime/navigation-spells.js"
+@attention_architecture: ~"../../../public/js/runtime/attention-architecture.js"
+@ornament: ~"../../../public/css/ornament/ornament.css"
+@spells: ~"../../../public/js/runtime/spells.js"
+@experiential: ~"../../../public/js/runtime/experiential.js"
+@ornament_contract: ~"../../../.spw/conventions/ornament-contract.spw"
+@frame_navigator: ~"../../../public/js/runtime/frame-navigator.js"
 
 dispatch: .{
  plan = @plan
+ navigation_spells = @navigation_spells
+ attention_architecture = @attention_architecture
+ ornament = @ornament
+ spells = @spells
+ experiential = @experiential
+ ornament_contract = @ornament_contract
+ frame_navigator = @frame_navigator
 }[reg=facet]
 
+validation: #[
+ `git diff --check`,
+ `node --check on any edited JS`,
+ `npm run check (full suite)`,
+ `Targeted rg for selectors, data-spw-* patterns, and new rhythm usage`,
+ `Manual review on desktop + narrow viewports (nav/footer stacking, touch targets, ornament subtlety, spell feedback during navigation)`,
+ `Preserve all existing copy, analytics, metadata, and semantic structure`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Refine the site's primary navigation, footer, ornament application, linking surfaces, and spell-driven flow so the experience has clearer…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

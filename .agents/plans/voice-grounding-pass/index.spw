@@ -1,21 +1,46 @@
-# Plan Directory Index — voice-grounding-pass
+# Plan Index — Voice Grounding Pass
 #
-# Dispatch surface for this plan folder.
+# Make the core site introduction sound more like Spwashi and less like generalized AI-generated creator copy.
 
 #>plan_voice_grounding_pass_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Make the core site introduction sound more like Spwashi and less like generalized AI-generated creator copy.`
+ owner = `voice-grounding-pass`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@index: ~"../../../about/index.html"
 
 dispatch: .{
  plan = @plan
+ index = @index
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `index.html`,
+  `about/index.html`,
+  `now/index.html`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `targeted rg checks for inserted phrases`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Make the core site introduction sound more like Spwashi and less like generalized AI-generated creator copy.`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

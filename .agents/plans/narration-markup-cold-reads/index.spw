@@ -1,21 +1,40 @@
-# Plan Directory Index — narration-markup-cold-reads
+# Plan Index — narration markup and cold-read prose
 #
-# Dispatch surface for this plan folder.
+# Make prose-heavy surfaces easier to read aloud, easier for crawlers and models to parse, and easier for humans to reuse on other pages or in generator outputs. The site already…
 
 #>plan_narration_markup_cold_reads_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Make prose-heavy surfaces easier to read aloud, easier for crawlers and models to parse, and easier for humans to reuse on other pages or in generator outputs. The site already has portable literary text utilities and strong story surfaces. This pass adds a small narration contract so copy can be marked up as cue + text + aside without inventing route-specific wrappers.`
+ owner = `narration-markup-cold-reads`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@play_rpg_wednesday_library_index_html: ~"../../../play/rpg-wednesday/library/index.html"
+@design_experiments_css_index_html: ~"../../../design/experiments/css/index.html"
 
 dispatch: .{
  plan = @plan
+ play_rpg_wednesday_library_index_html = @play_rpg_wednesday_library_index_html
+ design_experiments_css_index_html = @design_experiments_css_index_html
 }[reg=facet]
 
+validation: #[
+ `git diff --check`,
+ `npm run check`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Make prose-heavy surfaces easier to read aloud, easier for crawlers and models to parse, and easier for humans to reuse on other pages or…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

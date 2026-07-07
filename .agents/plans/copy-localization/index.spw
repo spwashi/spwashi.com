@@ -1,10 +1,20 @@
-# Plan Directory Index — copy-localization
+# Plan Index — copy-localization
 #
-# Dispatch surface for this plan folder.
+# The desired end state is a site that can publish multiple language variants without losing the authored quality of the current HTML routes or the inspectability of the site's…
 
 #>plan_copy_localization_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `The desired end state is a site that can publish multiple language variants without losing the authored quality of the current HTML routes or the inspectability of the site's semantic model. English remains the canonical editorial source for now, but the architecture should make room for other locale editions and for Spw to participate in translation as an authored projection layer: not only "string replacement," but deliberate restatement of tone, operator vocabulary, and conceptual framing. The taste note is authored source + inspectable projection: copy should stay readable in the route source, locale variants should be explicit and reviewable, and translation should be able to carry Spw-specific nuance rather than being trapped in a generic i18n substrate.`
+ owner = `copy-localization`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
@@ -13,9 +23,27 @@ dispatch: .{
  plan = @plan
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `In scope: locale-aware route strategy; canonical source-locale rules; how copy units are identified; where translation payloads live; how the template/build/sitemap system should evolve; lang, hreflang, and canonical rules; how Spw-authored translation notes and copy variants should be modeled; rollout order for adding the first non-English locale.`,
+ ][reg=set]
+ out = #[
+  `: machine translation in production, runtime locale switching, browser-language negotiation redirects, CMS integration, user-contributed translations, or translating the entire site in one pass.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `node --check scripts/template.mjs`,
+ `node --check scripts/build.mjs`,
+ `node --check scripts/generate-sitemap.mjs`,
+ `targeted rg for lang=, canonical, and hreflang`,
+ `build a one-route locale prototype and inspect generated output paths plus metadata`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: The desired end state is a site that can publish multiple language variants without losing the authored quality of the current HTML routes…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

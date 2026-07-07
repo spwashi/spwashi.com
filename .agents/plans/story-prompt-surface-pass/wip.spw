@@ -1,3 +1,11 @@
+^"plan_context"{
+ goal = `The desired end state is a site where the design hub, component glossary, recipes hub, blog, and about page each feel like they have a distinct reason to exist. The design pages should double as direct-wiring demo surfaces. Recipes should feel like an invitational substrate rather than only a registry. The blog should read as a thread laboratory that rewards filming and wandering. The about page should lean into typography, storytelling, and practical direction instead of generic self-description. Across these routes, promptability should become a visible, reversible affordance rather than an accidental side effect.`
+ owner = `story-prompt-surface-pass`
+ operation = "prime"
+ validation = #[ `git diff --check`, `node --check public/js/site.js`, `node --check public/js/spw-prompt-utils.js`, `targeted rg checks for promptability hooks, image paths, and shared footer usage`, `npm run build`, ][reg=set]
+ hot_files = #[ `design/`, `design/components/`, `about/`, `public/js/site.js`, `design/index.html`, `design/components/index.html`, ][reg=set]
+}[reg=facet]
+
 # wip — story-prompt-surface-pass
 #
 #>plan_story_prompt_surface_pass_wip

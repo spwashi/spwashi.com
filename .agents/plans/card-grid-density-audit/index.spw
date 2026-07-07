@@ -1,21 +1,52 @@
-# Plan Directory Index — card-grid-density-audit
+# Plan Index — card-grid-density-audit
 #
-# Dispatch surface for this plan folder.
+# Make card spacing and grid measure more granular without scattering route-local inline grid styles or over-collapsing layouts on tablet and narrow-landscape widths.
 
 #>plan_card_grid_density_audit_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Make card spacing and grid measure more granular without scattering route-local inline grid styles or over-collapsing layouts on tablet and narrow-landscape widths.`
+ owner = `card-grid-density-audit`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@topics_software_renderers_index_html: ~"../../../topics/software/renderers/index.html"
+@topics_software_geometry_index_html: ~"../../../topics/software/geometry/index.html"
+@topics_software_lattices_index_html: ~"../../../topics/software/lattices/index.html"
+@design_components_index_html: ~"../../../design/components/index.html"
 
 dispatch: .{
  plan = @plan
+ topics_software_renderers_index_html = @topics_software_renderers_index_html
+ topics_software_geometry_index_html = @topics_software_geometry_index_html
+ topics_software_lattices_index_html = @topics_software_lattices_index_html
+ design_components_index_html = @design_components_index_html
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `In scope: shared card/grid CSS, shared reference-card anatomy, route HTML that still hard-codes grid tracks or misses density hints, and component glossary wording where the new contract should stay visible.`,
+  `-`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `rg for removed inline grid styles and new density hints`,
+ `npm run build`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Make card spacing and grid measure more granular without scattering route-local inline grid styles or over-collapsing layouts on tablet and…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

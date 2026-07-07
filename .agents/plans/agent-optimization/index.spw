@@ -1,21 +1,56 @@
-# Plan Directory Index — agent-optimization
+# Plan Index — Agent Optimization for spwashi.com
 #
-# Dispatch surface for this plan folder.
+# Make the full agent operating environment for this repository (.agents/, skills, planning ecology, .spw bridges, public editor surfaces, and validation contracts) itself a…
 
 #>plan_agent_optimization_index
 #:index #!plan
+#:operation #!contract
 #:layer #!pragmatics
+
+operation = "contract"
+fixity = "stable"
+
+intent: .{
+ goal = `Make the full agent operating environment for this repository (.agents/, skills, planning ecology, .spw bridges, public editor surfaces, and validation contracts) itself a first-class, low-friction, inspectable surface. The outcome: AI agents, human editors, and future collaborators can answer "how do I work on this site effectively?" and "did my change preserve the intended contracts?" with minimal repeated discovery or tribal knowledge. This work extends and matures the foundation laid by agentic-dev-contracts (route/runtime manifest + unified npm run check) into the broader planning, skills, ontology, and documentation layers that agents actually use when operating on the site. The site should remain hand-authored and human-primary. Agent optimization is an editor/inspectability affordance, not a new runtime or build system.`
+ owner = `agent-optimization`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@site: ~"../../../.spw/site.spw"
+@operator_site_projection: ~"../../../.spw/conventions/operator-site-projection.spw"
+@operational_semantics: ~"../../../.spw/conventions/operational-semantics.spw"
+@measurement_contract: ~"../../../.spw/conventions/measurement-contract.spw"
+@experiential: ~"../../../public/js/runtime/experiential.js"
+@shared: ~"../../../public/js/kernel/shared.js"
+@site_semantics: ~"../../../.spw/conventions/site-semantics.spw"
+@instrumentation: ~"../../../public/js/kernel/instrumentation.js"
 
 dispatch: .{
  plan = @plan
+ site = @site
+ operator_site_projection = @operator_site_projection
+ operational_semantics = @operational_semantics
+ measurement_contract = @measurement_contract
+ experiential = @experiential
+ shared = @shared
+ site_semantics = @site_semantics
+ instrumentation = @instrumentation
 }[reg=facet]
 
+validation: #[
+ `git diff --check`,
+ `npm run check (or the narrower check:css / syntax subsets as appropriate)`,
+ `Manual review of .spw dispatch and any new models for balance and thinness`,
+ `Spot-check that /about/plans/ and key READMEs remain coherent (no broken conceptual links)`,
+ `npm run catalog (to ensure no unintended design-catalog side effects)`,
+ `Browser sanity on /about/plans/`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Make the full agent operating environment for this repository (.agents/, skills, planning ecology, .spw bridges, public editor surfaces,…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

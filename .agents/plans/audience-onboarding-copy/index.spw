@@ -1,21 +1,50 @@
-# Plan Directory Index — audience-onboarding-copy
+# Plan Index — audience-onboarding-copy
 #
-# Dispatch surface for this plan folder.
+# Make the home, about, services, topics, and tools surfaces read like a credible invitation into a decentralized team: one that can onboard developers, illustrators, authors, and a…
 
 #>plan_audience_onboarding_copy_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Make the home, about, services, topics, and tools surfaces read like a credible invitation into a decentralized team: one that can onboard developers, illustrators, authors, and a college freshman who is still deciding what they want to study. The copy should assume the reader is smart, busy, and professionally fluent, while also naming the internal routes that help them start.`
+ owner = `audience-onboarding-copy`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@about_index_html: ~"../../../about/index.html"
+@topics_index_html: ~"../../../topics/index.html"
 
 dispatch: .{
  plan = @plan
+ about_index_html = @about_index_html
+ topics_index_html = @topics_index_html
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `In scope: route intro copy, internal links, section labels, and page-level metadata on the primary entry surfaces.`,
+ ][reg=set]
+ out = #[
+  `: visual redesign, new runtime behavior, new routes, or restructuring the overall site taxonomy.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `targeted rg for the updated route labels and links`,
+ `visual spot check in a browser if the diff shifts hierarchy or nav density`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Make the home, about, services, topics, and tools surfaces read like a credible invitation into a decentralized team: one that can onboard…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

@@ -7,6 +7,12 @@
 #:semantics #!runtime #!interaction
 #:layer #!pragmatics
 
+^"plan_linkage"{
+ plan = ~"./PLAN.md"
+ index = ~"./index.spw"
+ goal = `- Braces (already rich with data-spw-gesture, data-spw-charge, semantic expressions) become live priming vessels. - Charging/holding a brace containment now feeds the cauldron with a "primed" ingredient carrying the expression + origin context. - Cauldron footer/mirrors react subtly; copy in grammar lens and Spw docs teaches "braces hold local value attached to a stable root." - Everything stays additive, progressive, inspectable via bus + data attrs, reversible via existing prune.`
+ owner = `brace-cauldron-primed-collection`
+}[reg=facet]
 ^"thesis"{
   "A charged brace (containment form carrying semantic expression) is now a live priming vessel. Its gesture lifecycle (charging → armed → committed) surfaces the local value it holds as a gatherable cauldron ingredient, carrying primedBy + origin context."
   "This makes the cauldron's collection semantics discoverable through the same containment interactions used for inspection, pinning, and semantic expansion."

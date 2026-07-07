@@ -1,21 +1,55 @@
-# Plan Directory Index — author-rpg-notebooks
+# Plan Index — Author RPG Notebooks
 #
-# Dispatch surface for this plan folder.
+# Improve the site’s journaling, note-taking, and character-development affordances for two overlapping audiences: - authors who need a clean bridge from private fragments into…
 
 #>plan_author_rpg_notebooks_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Improve the site’s journaling, note-taking, and character-development affordances for two overlapping audiences: - authors who need a clean bridge from private fragments into publishable surfaces - RPG players who need a clean bridge from session residue into cast, world, and arc memory The feature should strengthen the existing local-first posture. Private notes stay private by default; public routes teach what should move from scratch material into stable canon.`
+ owner = `author-rpg-notebooks`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@topics_craft_index_html: ~"../../../topics/craft/index.html"
+@play_rpg_wednesday_index_html: ~"../../../play/rpg-wednesday/index.html"
+@play_rpg_wednesday_sessions_index_html: ~"../../../play/rpg-wednesday/sessions/index.html"
+@rpg_local_gameplay: ~"../../../.agents/plans/rpg-local-gameplay/rpg-local-gameplay.spw"
 
 dispatch: .{
  plan = @plan
+ topics_craft_index_html = @topics_craft_index_html
+ play_rpg_wednesday_index_html = @play_rpg_wednesday_index_html
+ play_rpg_wednesday_sessions_index_html = @play_rpg_wednesday_sessions_index_html
+ rpg_local_gameplay = @rpg_local_gameplay
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `Add author-facing notebook guidance on the craft route.`,
+  `Deepen the character-sheet builder so it supports richer character-development prompts instead of only high-level translation.`,
+  `Refine RPG Wednesday’s local gameplay kit so it separates scratch notes from canon candidates and character beats.`,
+  `Teach the journal-to-canon flow in the public RPG routes.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `node --check public/js/rpg-wednesday.js`,
+ `targeted rg checks for new journal/canon terminology`,
+ `npm run build`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Improve the site’s journaling, note-taking, and character-development affordances for two overlapping audiences: - authors who need a clean…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

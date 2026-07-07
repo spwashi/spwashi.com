@@ -6,6 +6,12 @@
 #:semantics #!surface
 #:layer #!pragmatics
 
+^"plan_linkage"{
+ plan = ~"./PLAN.md"
+ index = ~"./index.spw"
+ goal = `The desired end state is a mobile-first operator reference that treats each Spw operator as an interaction primitive, a metaphysical model, and a future UI authoring contract. The pages should teach what an operator does, how it behaves when clicked or inspected, how prefix/postfix symmetry changes attention, and how brace physics can pivot a reader toward deeper structure. The taste note is compact ritual clarity: these pages should feel like a small cognitive machine, not a glossary dump.`
+ owner = `spw-operator-pages`
+}[reg=facet]
 ^["thesis"]{
  claim: "Each operator should be a public page because each operator is a way of changing attention, not merely a token in a syntax table."
  why: "A user can compare pages, move through the operator ring, and learn the grammar as a machine for navigation, reflection, and projected structure."

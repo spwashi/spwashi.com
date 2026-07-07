@@ -1,23 +1,51 @@
-# Plan Directory Index — blog-blob-spw
+# Plan Index — blog-blob-spw
 #
-# Dispatch surface for this plan folder.
+# The desired end state is a publishing model where not every meaningful writing artifact has to become either "raw note" or "finished article." A blog blob should hold live…
 
 #>plan_blog_blob_spw_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `The desired end state is a publishing model where not every meaningful writing artifact has to become either "raw note" or "finished article." A blog blob should hold live material that has already accumulated enough shape to be worth naming, reviewing, translating, or routing, but has not yet earned full post status. The blog interpreter can emit toward a blob; localization can later translate from blob-aware copy units; published blog routes can distill or project a blob without erasing the intermediate semantic layer. The taste note is coherent mass + inspectable transition: the blob is not a dump, and it is not a miniature post. It is a charged writing body that still admits revision, re-lensing, and selective projection.`
+ owner = `blog-blob-spw`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @blog_blob_spw: ~"./blog-blob-spw.spw"
+@copy_localization: ~"../../../.spw/conventions/copy-localization.spw"
 
 dispatch: .{
  plan = @plan
  blog_blob_spw = @blog_blob_spw
+ copy_localization = @copy_localization
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `In scope: semantic definition of a blob; lifecycle position between interpreter output and post; how a blob differs from note, seed, draft, and post; candidate Spw shape; how localization and translation should treat blobs; whether blobs become private authoring files, public route elements, or both.`,
+ ][reg=set]
+ out = #[
+  `: implementing blob storage, a blob editor, automatic post generation, database persistence, or turning all blog content into blobs immediately.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `semantic read-through against .agents/plans/blog-input-interpreter/PLAN.md`,
+ `semantic read-through against .spw/conventions/copy-localization.spw`,
+ `confirm the distinctions between note, seed, blob, and post are crisp enough to use in later implementation`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: The desired end state is a publishing model where not every meaningful writing artifact has to become either "raw note" or "finished…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

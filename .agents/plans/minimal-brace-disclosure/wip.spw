@@ -12,6 +12,14 @@
 operation = "cache"
 fixity = "tending"
 
+^"plan_context"{
+ goal = `The site should begin from a minimalist baseline: lighter semantic density, less always-on chrome, and clearer separation between primary reading flow and optional diagnostics. Mobile navigation should disclose intentionally through a hamburger control instead of wrapping the full header list into a noisy block. Brace edges and diagnostic surfaces should read as actionable thresholds with visible entry, projection, dismissal, and return paths. Taste note: improve containment, clarity, and expressiveness without adding a second interaction model.`
+ owner = `minimal-brace-disclosure`
+ operation = "prime"
+ validation = #[ `Hypotheses: the default view feels quieter, the mobile header reads as one compact control surface, and diagnostics no longer dominate reading flow.`, `Negative controls: existing console history, state inspector field cycling, and brace hold/pin gestures remain functional.`, `Demo sequence: load /settings/ on a narrow viewport, open/close the menu, activate a braced frame, click brace affordances, collapse/dismiss diagnostics, and recover them.`, ][reg=set]
+ hot_files = #[ `public/js/site.js`, ][reg=set]
+}[reg=facet]
+
 ^["roots"]{
  @cluster: ~".agents/plans/plan-ecology-clustering/plan-ecology-clustering.spw"
  @plan: ~".agents/plans/minimal-brace-disclosure/PLAN.md"

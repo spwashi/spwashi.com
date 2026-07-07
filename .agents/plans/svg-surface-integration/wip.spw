@@ -12,6 +12,14 @@
 operation = "cache"
 fixity = "tending"
 
+^"plan_context"{
+ goal = `The desired end state is a site that can use SVG as a first-class surface language: small widgets, inspectable illustrations, and deeper interactive components can share one mobile-first host contract instead of each becoming a special case. The immediate task is to define that ecosystem before implementation: when SVG should stay external and static, when it should become inline and addressable, how it participates in brace/block semantics, how it pivots into deeper structure on touch, and how future Spw-backed components and pages can project through the same substrate. The taste note is diagrammatic warmth + inspectable restraint: the site should gain clearer structure and a little more wonder, not more ornamental motion.`
+ owner = `svg-surface-integration`
+ operation = "prime"
+ validation = #[ `Hypotheses: a shared SVG host contract will let illustrations, widgets, and interactive components evolve without splintering the runtime; inline-versus-external rules will keep authoring tractable; mobile-first inspect/invoke semantics will make SVG surfaces teachable rather than gimmicky.`, `Negative controls: route structure, existing hand-authored HTML, and the site's calm default state remain intact.`, `Demo sequence: open a page with an SVG host, inspect a labeled node on touch and keyboard, invoke a local pivot without losing orientation, confirm console or local inspect surfaces can name the active node, and verify the same surface still degrades to a readable static state.`, ][reg=set]
+ hot_files = #[ `.agents/plans/svg-surface-integration/svg-surface-integration.spw`, ][reg=set]
+}[reg=facet]
+
 ^["roots"]{
  @plan: ~".agents/plans/svg-surface-integration/PLAN.md"
  @artifact: ~".agents/plans/svg-surface-integration/svg-surface-integration.spw"

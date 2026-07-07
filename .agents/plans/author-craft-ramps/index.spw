@@ -1,25 +1,66 @@
-# Plan Directory Index — author-craft-ramps
+# Plan Index — author-craft-ramps
 #
-# Dispatch surface for this plan folder.
+# Build a small /topics/craft/ cluster for a BookTok-adjacent author friend who may not identify as technical but is willing to explore HTML and CSS in fragments. The highest-value…
 
 #>plan_author_craft_ramps_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Build a small /topics/craft/ cluster for a BookTok-adjacent author friend who may not identify as technical but is willing to explore HTML and CSS in fragments. The highest-value first pass should make the web feel like a sensory book object, an illustrator collaboration surface, and a playful file tradition. Taste note: bookish wonder without beige nostalgia — tactile, screenshot-worthy, and useful enough to hand to a creative collaborator.`
+ owner = `author-craft-ramps`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
 @author_craft_ramps: ~"./author-craft-ramps.spw"
+@topics_index_html: ~"../../../topics/index.html"
+@topics_craft_index_html: ~"../../../topics/craft/index.html"
+@topics_craft_fragments_index_html: ~"../../../topics/craft/fragments/index.html"
+@topics_craft_svg_index_html: ~"../../../topics/craft/svg/index.html"
+@topics_craft_files_index_html: ~"../../../topics/craft/files/index.html"
+@style: ~"../../../public/css/style.css"
+@topics_software_index_html: ~"../../../topics/software/index.html"
+@about_website_index_html: ~"../../../about/website/index.html"
 
 dispatch: .{
  plan = @plan
  wip = @wip
  author_craft_ramps = @author_craft_ramps
+ topics_index_html = @topics_index_html
+ topics_craft_index_html = @topics_craft_index_html
+ topics_craft_fragments_index_html = @topics_craft_fragments_index_html
+ topics_craft_svg_index_html = @topics_craft_svg_index_html
+ topics_craft_files_index_html = @topics_craft_files_index_html
+ style = @style
+ topics_software_index_html = @topics_software_index_html
+ about_website_index_html = @about_website_index_html
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `In scope: topic index, craft landing page, fragments route, SVG storytelling route, file traditions route, localized craft CSS, internal links from high-traffic surfaces, manifest and service worker cache updates.`,
+ ][reg=set]
+ out = #[
+  `: build tooling, CMS, external image generation, account features, automated screenshot capture, or a full course.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `Hypotheses: an author can open /topics/craft/, choose a ramp, and understand one concrete next step; a developer friend can see where they could help; screenshots capture prompt cards and motifs without needing runtime context.`,
+ `Negative controls: software routes, blog route, and PWA cache behavior remain intact.`,
+ `Demo sequence: open /topics/, follow Craft, open Fragments, inspect one code/result pair, open SVG Storytelling, inspect one motif, open File Traditions, follow a cross-link to Blog or Software.`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Build a small /topics/craft/ cluster for a BookTok-adjacent author friend who may not identify as technical but is willing to explore HTML…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

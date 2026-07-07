@@ -1,23 +1,69 @@
-# Plan Directory Index — language-ladder-runtime-instrumentation
+# Plan Index — Language Ladder + Runtime Instrumentation
 #
-# Dispatch surface for this plan folder.
+# Make the development experience on spwashi.com feel progressively teachable rather than merely executable. The codebase should help a developer relate to code as a staged…
 
 #>plan_language_ladder_runtime_instrumentation_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Make the development experience on spwashi.com feel progressively teachable rather than merely executable. The codebase should help a developer relate to code as a staged practice: first read the structure, then observe the runtime, then tune the timing, then compare the effect of different JavaScript forms, and eventually use TypeScript where it sharpens contracts and makes philosophy-like distinctions between shape, behavior, and proof more explicit. The experience should stay hand-authored, progressively enhanced, and inspectable. Static HTML remains the readable baseline, JavaScript adds learning and observation affordances when present, and TypeScript is introduced where it improves the contract layer without turning the site into a framework demo.`
+ owner = `language-ladder-runtime-instrumentation`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
+@public_js_site_js: ~"../../../public/js/site.js"
+@instrumentation: ~"../../../public/js/kernel/instrumentation.js"
+@runtime_helpers: ~"../../../public/js/runtime/runtime-helpers.js"
+@index: ~"../../../settings/index.html"
+@readme: ~"../../../public/js/README.md"
+@conventions: ~"../../../.spw/conventions/"
+@spw_site_spw: ~"../../../.spw/site.spw"
 
 dispatch: .{
  plan = @plan
  wip = @wip
+ public_js_site_js = @public_js_site_js
+ instrumentation = @instrumentation
+ runtime_helpers = @runtime_helpers
+ index = @index
+ readme = @readme
+ conventions = @conventions
+ spw_site_spw = @spw_site_spw
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `staged runtime timing vocabulary for module cascades`,
+  `explicit instrumentation for module scheduling, loading, mounting, settlement, and failure`,
+  `a developer-facing ladder for JS exploration before TS migration`,
+  `console and debug surfaces that can explain the same state in compact language`,
+ ][reg=set]
+ out = #[
+  `framework migration`,
+  `turning the site into an educational app with a separate runtime`,
+  `hiding the public site behind a developer mode`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `node --check on edited JS modules`,
+ `targeted browser smoke for the runtime stages and console helpers`,
+ `npm run check when build/runtime contracts or public surfaces change`,
+ `review that the ladder remains understandable without runtime features enabled`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Make the development experience on spwashi.com feel progressively teachable rather than merely executable. The codebase should help a…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

@@ -1,10 +1,20 @@
-# Plan Directory Index — promo-wonder-cycle
+# Plan Index — Promo / Wonder Cycle Plan
 #
-# Dispatch surface for this plan folder.
+# Create site structures that can change by day and by week, with separate lanes for: - promo: conversion-facing highlights, CTA cards, services, work samples, and contact nudges -…
 
 #>plan_promo_wonder_cycle_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Create site structures that can change by day and by week, with separate lanes for: - promo: conversion-facing highlights, CTA cards, services, work samples, and contact nudges - wonder: atmospheric, exploratory, lore-adjacent, or curiosity-building surfaces The site should be able to serve those structures from local HTML first, then optionally hydrate them from a JSON feed.`
+ owner = `promo-wonder-cycle`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
@@ -15,9 +25,17 @@ dispatch: .{
  wip = @wip
 }[reg=facet]
 
+validation: #[
+ `Confirm day/week selection is deterministic for a given date.`,
+ `Confirm static fallback renders without the feed.`,
+ `Confirm route copy still reads cleanly for human visitors.`,
+ `Run git diff --check after edits.`,
+ `Run node --check for any edited JS modules.`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Create site structures that can change by day and by week, with separate lanes for: - promo: conversion-facing highlights, CTA cards,…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

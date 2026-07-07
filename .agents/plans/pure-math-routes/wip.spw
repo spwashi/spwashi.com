@@ -12,6 +12,14 @@
 operation = "cache"
 fixity = "tending"
 
+^"plan_context"{
+ goal = `The desired end state is a math hub that no longer points only sideways into software topics, but also downward into a few durable pure-math lenses that are easy to browse visually. The new routes should make abstract ideas legible through diagrams, short conceptual groupings, and explicit neighborhood links rather than long formal exposition. The taste note is expressive clarity: the pages should feel like compact visual study sheets, not textbook stubs.`
+ owner = `pure-math-routes`
+ operation = "prime"
+ validation = #[ `Hypotheses: a small trio of pure-math routes will make the math surface feel broader and easier to explore; short SVG diagrams will improve scanability without new runtime code.`, `Negative controls: existing shared navigation, existing software math routes, analytics snippets, and asset paths remain intact.`, `Demo sequence: open /topics/math/, move into topology, symmetry, and combinatorics, then return to /topics/ and confirm the new routes are discoverable from the atlas card.`, ][reg=set]
+ hot_files = #[ `topics/math/`, `topics/math/topology/index.html`, `topics/math/symmetry/index.html`, `topics/math/combinatorics/index.html`, `topics/math/index.html`, `topics/index.html`, ][reg=set]
+}[reg=facet]
+
 ^["roots"]{
  @plan: ~".agents/plans/pure-math-routes/PLAN.md"
  @math_hub: ~"topics/math/index.html"

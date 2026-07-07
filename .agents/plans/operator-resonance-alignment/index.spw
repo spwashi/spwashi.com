@@ -1,21 +1,55 @@
-# Plan Directory Index — operator-resonance-alignment
+# Plan Index — Operator Resonance Alignment
 #
-# Dispatch surface for this plan folder.
+# Make Spw sigils easier to read as semantic handles for transformations across routes, chips, cards, settings, prompt mining, and evidence capture. A sigil should tell the visitor…
 
 #>plan_operator_resonance_alignment_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Make Spw sigils easier to read as semantic handles for transformations across routes, chips, cards, settings, prompt mining, and evidence capture. A sigil should tell the visitor what kind of operation a link, card, tool, or route performs. It should not be decoration, a generic destination marker, or an accidental synonym for another operator.`
+ owner = `operator-resonance-alignment`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@operator_alignment: ~"../../../.spw/conventions/operator-alignment.spw"
+@spw_conventions_index_spw: ~"../../../.spw/conventions/index.spw"
+@spw_site_spw: ~"../../../.spw/site.spw"
+@operators: ~"../../../public/js/semantic/operators.js"
+@shared: ~"../../../public/js/kernel/shared.js"
+@play_rpg_wednesday_index_html: ~"../../../play/rpg-wednesday/index.html"
+@component_semantics: ~"../../../public/js/semantic/component-semantics.js"
+@public_js_site_js: ~"../../../public/js/site.js"
 
 dispatch: .{
  plan = @plan
+ operator_alignment = @operator_alignment
+ spw_conventions_index_spw = @spw_conventions_index_spw
+ spw_site_spw = @spw_site_spw
+ operators = @operators
+ shared = @shared
+ play_rpg_wednesday_index_html = @play_rpg_wednesday_index_html
+ component_semantics = @component_semantics
+ public_js_site_js = @public_js_site_js
 }[reg=facet]
 
+validation: #[
+ `git diff --check`,
+ `node --check public/js/kernel/shared.js`,
+ `node --check public/js/semantic/operators.js`,
+ `npm run check:local`,
+ `Targeted rg checks for operator-alignment, data-spw-operator-resolved, and $ inspect current substrate.`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Make Spw sigils easier to read as semantic handles for transformations across routes, chips, cards, settings, prompt mining, and evidence…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

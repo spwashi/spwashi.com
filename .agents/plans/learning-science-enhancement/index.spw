@@ -1,21 +1,58 @@
-# Plan Directory Index — learning-science-enhancement
+# Plan Index — learning-science-enhancement
 #
-# Dispatch surface for this plan folder.
+# The site already uses deep pedagogical models (Constructionism, ZPD, Cognitive Surface), but they are often expressed in site-local jargon. This plan aims to bridge these with…
 
 #>plan_learning_science_enhancement_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `The site already uses deep pedagogical models (Constructionism, ZPD, Cognitive Surface), but they are often expressed in site-local jargon. This plan aims to bridge these with established Learning Science terminology (Dual Coding, Signaling, Contiguity, Cognitive Load) to make the "why" behind the design more legible and to strengthen the site's role as a learning environment.`
+ owner = `learning-science-enhancement`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@topics_pedagogy_index_html: ~"../../../topics/pedagogy/index.html"
+@software: ~"../../../topics/software/"
+@math: ~"../../../topics/math/"
+@cognitive_surface: ~"../../../.spw/philosophy/cognitive-surface.spw"
+@topics_software_index_html: ~"../../../topics/software/index.html"
+@topics_math_index_html: ~"../../../topics/math/index.html"
 
 dispatch: .{
  plan = @plan
+ topics_pedagogy_index_html = @topics_pedagogy_index_html
+ software = @software
+ math = @math
+ cognitive_surface = @cognitive_surface
+ topics_software_index_html = @topics_software_index_html
+ topics_math_index_html = @topics_math_index_html
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `In scope: topics/pedagogy/index.html updates, new LS-specific components (e.g., spw-ls-marker, spw-principle-card), updates to topics/software/ and topics/math/ to demonstrate principles.`,
+ ][reg=set]
+ out = #[
+  `: creating a full learning management system (LMS), adding quizzes, or major architectural changes to the CSS/JS runtime.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `Principles are clearly defined on /topics/pedagogy/.`,
+ `A visitor can see a "principle in action" marker on a software or math page.`,
+ `The cognitive-surface.spw reflects the alignment with learning science.`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: The site already uses deep pedagogical models (Constructionism, ZPD, Cognitive Surface), but they are often expressed in site-local jargon.…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

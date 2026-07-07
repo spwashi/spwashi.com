@@ -1,10 +1,20 @@
-# Plan Directory Index — mobile-runtime-foundation
+# Plan Index — mobile-runtime-foundation
 #
-# Dispatch surface for this plan folder.
+# The desired end state is a site runtime that treats mobile and coarse-pointer use as the primary case rather than a degraded desktop fallback. The immediate task is not to ship…
 
 #>plan_mobile_runtime_foundation_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `The desired end state is a site runtime that treats mobile and coarse-pointer use as the primary case rather than a degraded desktop fallback. The immediate task is not to ship new chrome, but to formalize the implementation surface: page regions with ownership, portable interaction semantics that do not depend on hover, complete operator interaction meanings, inspectable registers that back navigator/console projections, semantic HTML structures that act as the canonical reflection surface, and a clean preparation layer for future Spw blocks and scripts as UI. The longer arc is a cognitive machine that can produce wonder without becoming noisy: structure should become more legible as the user engages it, Spw symmetry should remain checkable across modalities, charge/bias metaphysics should be inspectable rather than hidden, and future Spw-backed components/pages should inherit that same ecosystem rather than bypass it. The taste note is clarity + containment: preserve the site's calm surface while making its deeper machinery easier to reason about, inspect, and extend.`
+ owner = `mobile-runtime-foundation`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
@@ -17,9 +27,24 @@ dispatch: .{
  mobile_runtime_foundation = @mobile_runtime_foundation
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `In scope: define a page-region model, portable interaction semantics, complete operator interaction semantics, shared register/runtime boundaries, inspectability rules, UX constraints for an effective cognitive machine, prefix/postfix and reflection symmetry rules, HTML accessibility structures as semantic mirrors, recursive/fractal surface geometry as a structural model, brace-physics, charge/bias projection semantics, pivot semantics, no-dead-end exploration rules, and future-facing block/script host contracts; predict the runtime files and markup surfaces likely to change when implementation begins.`,
+ ][reg=set]
+ out = #[
+  `: shipping the full spell system now, running the Spw parser in the browser, redesigning page aesthetics, or implementing block/script execution in this pass.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `Hypotheses: a shared region/register model will reduce runtime duplication; complete operator interaction semantics will prevent decorative grammar; portable inspect/invoke semantics will make mobile behavior easier to teach; prefix/postfix symmetry will let keyboard and touch feel like different entrances into the same grammar; semantic reflection into native HTML structures will keep the runtime honest across modalities; inspectable charge and bias can make brace physics useful without hidden state; recursive/fractal surface geometry can improve learnability if the same boundary/inspect/pivot pattern repeats across scales; block/script UI can be prepared without running the full language runtime in-browser.`,
+ `Negative controls: route structure, current visual voice, and basic static-site simplicity remain intact.`,
+ `Demo sequence: identify the active region on mobile, inspect a component without hover, invoke the same component with touch or keyboard, pivot into a deeper surface without losing orientation, and confirm navigator/console can describe the same underlying register state.`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: The desired end state is a site runtime that treats mobile and coarse-pointer use as the primary case rather than a degraded desktop…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

@@ -1,21 +1,54 @@
-# Plan Directory Index — site-starter-component-kit
+# Plan Index — Site Starter And Component Kit
 #
-# Dispatch surface for this plan folder.
+# Make this repository useful as a source for new static sites and new component work without turning spwashi.com into a generic framework. A future builder should be able to answer…
 
 #>plan_site_starter_component_kit_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Make this repository useful as a source for new static sites and new component work without turning spwashi.com into a generic framework. A future builder should be able to answer three questions quickly: - Which files are portable starter-kit material? - Which public routes are component-design specimens? - Which parts are personal Spwashi site shell, copy, route identity, or runtime behavior that should stay behind? This is a codebase reuse and design-systems track. The first patch establishes the inventory and contract; later patches may add scaffold templates only after the portable boundary proves stable.`
+ owner = `site-starter-component-kit`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@site_starter_component_kit: ~"../../../.spw/conventions/site-starter-component-kit.spw"
+@public_css_compose_css: ~"../../../public/css/compose.css"
+@public_js_compose_js: ~"../../../public/js/compose.js"
+@catalog: ~"../../../design/catalog/"
+@starter_inventory: ~"../../../scripts/starter-inventory.mjs"
+@public_css_readme_md: ~"../../../public/css/README.md"
+@public_js_readme_md: ~"../../../public/js/README.md"
+@style: ~"../../../public/css/style.css"
 
 dispatch: .{
  plan = @plan
+ site_starter_component_kit = @site_starter_component_kit
+ public_css_compose_css = @public_css_compose_css
+ public_js_compose_js = @public_js_compose_js
+ catalog = @catalog
+ starter_inventory = @starter_inventory
+ public_css_readme_md = @public_css_readme_md
+ public_js_readme_md = @public_js_readme_md
+ style = @style
 }[reg=facet]
 
+validation: #[
+ `npm run starter:inventory -- --check`,
+ `node --check scripts/starter-inventory.mjs`,
+ `git diff --check`,
+ `npm run check:local when CSS, JS, route HTML, or build behavior changes`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Make this repository useful as a source for new static sites and new component work without turning spwashi.com into a generic framework. A…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

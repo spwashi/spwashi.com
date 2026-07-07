@@ -1,21 +1,47 @@
-# Plan Directory Index — design-hub
+# Plan Index — design-hub
 #
-# Dispatch surface for this plan folder.
+# Create a top-level /design/ hub that declares design as a first-class public surface on the site, gives collaborators a shared page for team communication, and exposes real…
 
 #>plan_design_hub_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Create a top-level /design/ hub that declares design as a first-class public surface on the site, gives collaborators a shared page for team communication, and exposes real rendering-context tests built from the existing Spw/Pretext contracts. The hub should do three things at once: - explain how global and local data attributes shape display context - provide circuits into the existing design-facing routes and feature sets - act as a stable manual test page for split layout, pretext flow, material/context variants, and mobile reading behavior`
+ owner = `design-hub`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@design_index_html: ~"../../../design/index.html"
+@about_website_index_html: ~"../../../about/website/index.html"
+@topics_site_design_index_html: ~"../../../topics/site-design/index.html"
+@style: ~"../../../public/css/style.css"
+@experiments: ~"../../../public/js/modules/design/experiments.js"
 
 dispatch: .{
  plan = @plan
+ design_index_html = @design_index_html
+ about_website_index_html = @about_website_index_html
+ topics_site_design_index_html = @topics_site_design_index_html
+ style = @style
+ experiments = @experiments
 }[reg=facet]
 
+validation: #[
+ `git diff --check`,
+ `targeted sanity read for changed HTML around headers, rails, and closing tags`,
+ `no JS edits unless a runtime gap appears`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Create a top-level /design/ hub that declares design as a first-class public surface on the site, gives collaborators a shared page for…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

@@ -12,6 +12,14 @@
 operation = "cache"
 fixity = "tending"
 
+^"plan_context"{
+ goal = `The desired end state is an image system that behaves like the rest of the site: effects come from semantics, not randomness. Conceptual surfaces can feel distant or unresolved, hybrid surfaces can feel latent or aqueous, and realized surfaces can feel more settled and paper-sharp. Holding an image or SVG should mark it as visited, reward the reader with a persistent glow, and preserve that attention as a returnable memory rather than a transient hover flourish. The taste note is wonder with legibility: the interaction should stay playful, but every glow, blur, and helper handle should explain something about the surface rather than merely decorating it.`
+ owner = `image-visit-metaphysics`
+ operation = "prime"
+ validation = #[ `Hypotheses: semantic treatments will feel more intentional than randomized hover effects; hold-to-visit will create a clearer memory ritual than click toggles; a persistent visited glow will make returnable image surfaces legible across pages.`, `Negative controls: icons, OG metadata assets, and ordinary inline images should remain untouched; image surfaces should not shift layout when the helper or visited state appears.`, `Demo sequence: load a page with raster and SVG surfaces, hover to preview treatment, hold to mark visited, reload, and confirm that the glow and helper state restore without changing page layout.`, ][reg=set]
+ hot_files = #[ `public/js/site.js`, `public/css/style.css`, `topics/software/compression/index.html`, `.agents/plans/image-visit-metaphysics/image-visit-metaphysics.spw`, ][reg=set]
+}[reg=facet]
+
 ^["roots"]{
  @plan: ~".agents/plans/image-visit-metaphysics/PLAN.md"
  @artifact: ~".agents/plans/image-visit-metaphysics/image-visit-metaphysics.spw"

@@ -1,21 +1,52 @@
-# Plan Directory Index — dev-hot-reload
+# Plan Index — dev-hot-reload
 #
-# Dispatch surface for this plan folder.
+# The desired end state is not "make the site depend on a bundler." The desired end state is a faster local editing loop: save a file, see the browser update, and avoid cache…
 
 #>plan_dev_hot_reload_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `The desired end state is not "make the site depend on a bundler." The desired end state is a faster local editing loop: save a file, see the browser update, and avoid cache confusion from the service worker while developing. Production should remain a static export that still works from ordinary hosting, and the dev stack should stay legible enough that it does not become the new center of gravity for the project.`
+ owner = `dev-hot-reload`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@template: ~"../../../scripts/template.mjs"
+@public: ~"../../../public/"
 
 dispatch: .{
  plan = @plan
+ template = @template
+ public = @public
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `In scope: local dev server choice, route-aware local serving, automatic browser refresh on HTML/CSS/JS changes, and explicit development handling for service worker registration and cache state.`,
+  `In scope: Vite multi-page entry discovery, route-aware HTML reload, template partial reload, and explicit development handling for service worker registration and cache state.`,
+  `-`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `node --check scripts/template.mjs when template behavior changes`,
+ `npm run typecheck`,
+ `npm run build:vite`,
+ `targeted route checks on /, /about/, /blog/, and one nested topic route in the local server`,
+ `confirm that editing CSS triggers immediate visual refresh`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: The desired end state is not "make the site depend on a bundler." The desired end state is a faster local editing loop: save a file, see…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

@@ -1,5 +1,11 @@
 # Cadence + Text Interpretation Bridge Note
 
+^"plan_linkage"{
+ plan = ~"./PLAN.md"
+ index = ~"./index.spw"
+ goal = `- Surfaces that already carry data-spw-cadence (promo cards, discovery notices) should feel rhythmically distinct in CSS (gradients, timing, weight, accent) without new JS. - The home promo cycle (and similar) should ship the present-day copy in static HTML so crawlers and no-JS readers see accurate, non-dated text about releases and support rhythms. - Text interpretation / measurement code must react when users change font scale or line spacing; this is the entry point for broader "copy resilience" helpers.`
+ owner = `cadence-text-resonance`
+}[reg=facet]
 ^"runtime_expectation"{
   text_sizing: "Components that measure or project text (pretext physics, frame metrics, future copy interpreters) must subscribe to typography settings changes and re-interpret on fontSizeScale, lineSpacing, pinchTextScale."
   cadence_resonance: "Any surface carrying data-spw-cadence should be eligible for CSS rhythm differentiation (daily = immediate return, cycle/streak = heavier editorial close)."

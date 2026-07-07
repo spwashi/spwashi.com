@@ -1,21 +1,41 @@
-# Plan Directory Index — expressive-layout-tropes-fidget-manuscript
+# Plan Index — Expressive Layout Tropes, Fidget Toys, and Magic Manuscript Layering
 #
-# Dispatch surface for this plan folder.
+# Make this site interactive enough for game developers to imagine 1000 fidget toys for the next generation of office work (tactile, tunable, generative, physics-y…
 
 #>plan_expressive_layout_tropes_fidget_manuscript_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Make this site interactive enough for game developers to imagine 1000 fidget toys for the next generation of office work (tactile, tunable, generative, physics-y micro-interactions that feel like adjusting parameters on a living object), and readable enough for authors to imagine a magic manuscript that reaches varied audiences while letting them express layers of semantic intent with precision and joy.`
+ owner = `expressive-layout-tropes-fidget-manuscript`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@layout_shift_audit: ~"../../../public/js/runtime/layout-shift-audit.js"
+@instrumentation: ~"../../../public/js/kernel/instrumentation.js"
+@index: ~"../../../settings/index.html"
+@layout: ~"../../../public/css/shell/layout.css"
+@attention_architecture: ~"../../../public/js/runtime/attention-architecture.js"
 
 dispatch: .{
  plan = @plan
+ layout_shift_audit = @layout_shift_audit
+ instrumentation = @instrumentation
+ index = @index
+ layout = @layout
+ attention_architecture = @attention_architecture
 }[reg=facet]
 
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Make this site interactive enough for game developers to imagine 1000 fidget toys for the next generation of office work (tactile, tunable,…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

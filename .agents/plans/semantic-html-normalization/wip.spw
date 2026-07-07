@@ -12,6 +12,14 @@
 operation = "cache"
 fixity = "tending"
 
+^"plan_context"{
+ goal = `The desired end state is a site where the static HTML carries a clearer, more consistent semantic skeleton across as many routes as practical: predictable main targets, skip links, stronger section labeling, and less ad hoc page-to-page drift. The runtime should then reinforce that structure by inferring the repetitive metadata and filling in missing relationships instead of requiring every page to hand-author the same semantic boilerplate. Taste note: improve clarity, layering, and a11y while keeping the site's genre-rich semantics readable rather than over-instrumented.`
+ owner = `semantic-html-normalization`
+ operation = "prime"
+ validation = #[ `Hypotheses: most routes should converge on the same top-level semantic skeleton; repeated section frames should expose clearer accessible names; and the runtime should be able to infer more metadata with less HTML boilerplate.`, `Negative controls: page copy, route order, and existing interactive settings/image behaviors should remain functionally unchanged.`, `Demo sequence: open representative pages from /, /about/website/, /settings/, /topics/math/, /topics/software/parsers/, and /topics/software/spw/operators/ref/; verify skip-link behavior, main targeting, section labeling, and semantic metadata overlays still make sense.`, ][reg=set]
+ hot_files = #[ `about/website/index.html`, `settings/index.html`, `topics/math/index.html`, `topics/site-design/index.html`, `topics/software/index.html`, `.agents/plans/vibe-setting-widgets/wip.spw`, ][reg=set]
+}[reg=facet]
+
 ^["roots"]{
  @plan: ~".agents/plans/semantic-html-normalization/PLAN.md"
  @home: ~"index.html"

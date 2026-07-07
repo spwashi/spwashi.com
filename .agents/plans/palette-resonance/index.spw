@@ -1,23 +1,54 @@
-# Plan Directory Index — palette-resonance
+# Plan Index — palette-resonance
 #
-# Dispatch surface for this plan folder.
+# The desired end state is a site where image interactions feel less generic and more anchored to what the image is doing in the surrounding prose. Instead of a fixed accent…
 
 #>plan_palette_resonance_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `The desired end state is a site where image interactions feel less generic and more anchored to what the image is doing in the surrounding prose. Instead of a fixed accent palette, important figures should be able to resonate with their own colors, lean toward parser/math/play/software neighborhoods, and accept image-specific override knobs directly in HTML. The taste note is semantic atmosphere: the canvas should feel like a visual consequence of the image and its anchors, not an ornamental layer pasted on top.`
+ owner = `palette-resonance`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
+@topics_software_index_html: ~"../../../topics/software/index.html"
+@topics_software_parsers_index_html: ~"../../../topics/software/parsers/index.html"
+@topics_math_index_html: ~"../../../topics/math/index.html"
 
 dispatch: .{
  plan = @plan
  wip = @wip
+ topics_software_index_html = @topics_software_index_html
+ topics_software_parsers_index_html = @topics_software_parsers_index_html
+ topics_math_index_html = @topics_math_index_html
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `In scope: create plan artifacts, add a new resonance accent to the shared canvas runtime, support manual palette/anchor/strength overrides through data-spw-accent-* attributes, track a lightweight recent operational path signal from clicked routes/operators, and opt a few existing hero figures into the new accent so the behavior is immediately visible.`,
+ ][reg=set]
+ out = #[
+  `: editing the user-modified contextual UI module, introducing new dependencies, building a full image management system, or turning every site image into an always-on canvas experiment.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `Hypotheses: palette-driven accents will make image interactions feel more image-specific; small semantic/path biases will make route heroes feel better tied to their surrounding copy.`,
+ `Negative controls: existing non-resonance accents, current image helper controls, and unrelated contextual UI work remain intact.`,
+ `Demo sequence: visit /topics/software/, /topics/software/parsers/, and /topics/math/; interact with the hero figures before and after clicking a few route/operator links; confirm that the accent palette remains image-led but shifts slightly with the recent path memory and respects per-image overrides.`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: The desired end state is a site where image interactions feel less generic and more anchored to what the image is doing in the surrounding…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

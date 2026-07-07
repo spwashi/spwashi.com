@@ -1,10 +1,20 @@
-# Plan Directory Index — image-metaphysics-aesthetic-pass
+# Plan Index — image-metaphysics-aesthetic-pass
 #
-# Dispatch surface for this plan folder.
+# Keep the existing semantic image-treatment contract, but make the control chrome explain state more clearly and make each treatment read as a distinct image grammar across mobile,…
 
 #>plan_image_metaphysics_aesthetic_pass_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Keep the existing semantic image-treatment contract, but make the control chrome explain state more clearly and make each treatment read as a distinct image grammar across mobile, tablet, and wide hero surfaces. Taste note: interactive wonder with composure.`
+ owner = `image-metaphysics-aesthetic-pass`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
@@ -13,9 +23,23 @@ dispatch: .{
  plan = @plan
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `In scope: shared helper layout, helper state wording, responsive helper behavior, and the raster/vector presentation of pixelize, watercolor, and clarify.`,
+ ][reg=set]
+ out = #[
+  `: new dependencies, route-specific rewrites, new stored settings, and renaming the canonical effect values in JS.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `node --check public/js/spw-image-metaphysics.js`,
+ `git diff --check`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Keep the existing semantic image-treatment contract, but make the control chrome explain state more clearly and make each treatment read as…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

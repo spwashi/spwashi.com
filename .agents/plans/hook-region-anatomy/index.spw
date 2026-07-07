@@ -1,23 +1,58 @@
-# Plan Directory Index — hook-region-anatomy
+# Plan Index — Hook Region Anatomy (Entry Call to Wonder / Action)
 #
-# Dispatch surface for this plan folder.
+# Add a distinct, top-of-page "hook" region to landing pages as a first-class part of the documented page anatomy. This region serves as a volatile, high-value, configurable call to…
 
 #>plan_hook_region_anatomy_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Add a distinct, top-of-page "hook" region to landing pages as a first-class part of the documented page anatomy. This region serves as a volatile, high-value, configurable call to wonder or action that: - Immediately surfaces the Spw operations, concepts, or "why this page exists" invitation that the route represents. - Rewards the vertical scrolling progression the homepage already demonstrates: the hook is the first interactive "stand" that orients attention, then hands off to deeper narrative, operators, and related routes. - Supports gestures (tap/hold/prime/resonate patterns already in use) that let visitors relate directly to context and navigate concepts — both within the page and outward to motion toward other pages. - Encourages a living relationship with pages: interacting with the hook primes semantic tokens that participate in the site's conceptual resonance system, making cross-page and intra-page navigation feel connective rather than purely link-driven. The hook is not the stable hero frame, not a generic page-hook landmark, and not only a styled "playable-hook" line. It is a profiled, inspectable region (peak attractor) that editors can make relatively volatile (swap emphasis, operator foreground, or call copy) without disturbing the deeper hero or page body. Outcome for visitors: the top of a landing page feels like a deliberate threshold you *do something with* (relate, gesture, move) rather than only read past.`
+ owner = `hook-region-anatomy`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
+@dom_contracts: ~"../../../public/js/kernel/dom-contracts.js"
+@page_metadata: ~"../../../public/js/kernel/page-metadata.js"
+@frames: ~"../../../public/css/components/frames.css"
+@wonder: ~"../../../public/css/effects/wonder.css"
+@home: ~"../../../public/css/routes/surfaces/home.css"
+@site: ~"../../../public/js/site.js"
+@topics_index_html: ~"../../../topics/index.html"
+@about_index_html: ~"../../../about/index.html"
 
 dispatch: .{
  plan = @plan
  wip = @wip
+ dom_contracts = @dom_contracts
+ page_metadata = @page_metadata
+ frames = @frames
+ wonder = @wonder
+ home = @home
+ site = @site
+ topics_index_html = @topics_index_html
+ about_index_html = @about_index_html
 }[reg=facet]
 
+validation: #[
+ `Author the plan first (this document).`,
+ `Make the dom-contracts selector addition + CSS + page-model + site-semantics updates + 3-4 route examples.`,
+ `Run after each meaningful edit:`,
+ `git diff --check`,
+ `node --check public/js/kernel/dom-contracts.js (and any other touched .js)`,
+ `npm run check (includes audit, typecheck, CSS contracts, manifest, route runtime validation)`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Add a distinct, top-of-page "hook" region to landing pages as a first-class part of the documented page anatomy. This region serves as a…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

@@ -1,10 +1,20 @@
-# Plan Directory Index — palette-theme-composability-instrumentability
+# Plan Index — Palette, Theme, and Composability Instrumentability Improvements
 #
-# Dispatch surface for this plan folder.
+# Refine CSS tokens and JS architecture so that artistically selected palettes, theme packs, lighting conditions, and component motifs compose in a logical, learnable, and highly…
 
 #>plan_palette_theme_composability_instrumentability_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Refine CSS tokens and JS architecture so that artistically selected palettes, theme packs, lighting conditions, and component motifs compose in a logical, learnable, and highly inspectable way. Make tuning easy and readable across contexts while improving color balance, attribute timing for no-FOUC state application, and evolutionary semantic enhancement through combinatoric component trees. This directly supports the site's identity as a tunable, living medium for practice and learning, where operators, measures, and surfaces can be primed and experienced in rich, context-aware ways.`
+ owner = `palette-theme-composability-instrumentability`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
@@ -13,9 +23,18 @@ dispatch: .{
  plan = @plan
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `CSS tokens (core.css): balance pigments for lighting/motifs, add/refine context tokens for palettes + themes + motifs.`,
+  `JS (site-settings, related interface modules): improve timing of data-spw-* writes (color-mode, theme-pack, palette-resonance, motif, etc.), add instrumentation for inspection (more data attrs, events for palette state changes).`,
+  `Composability: make combinations (e.g., ritual-vellum + dark + craft-resonance + subjective-measure-motif) first-class, documented, and easy to author/tune.`,
+  `Audit additional components: tuning widgets, guide badges, cards, pretext elements, floating chrome — how they respond to palette/theme/motif/lighting.`,
+ ][reg=set]
+}[reg=facet]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Refine CSS tokens and JS architecture so that artistically selected palettes, theme packs, lighting conditions, and component motifs…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

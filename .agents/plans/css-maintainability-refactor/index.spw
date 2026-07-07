@@ -1,23 +1,67 @@
-# Plan Directory Index — css-maintainability-refactor
+# Plan Index — CSS Maintainability Refactor
 #
-# Dispatch surface for this plan folder.
+# Reduce CSS brittleness in the highest-leverage shared contracts so route work can compose from explicit structure instead of relying on inferred DOM shape or over-broad semantic…
 
 #>plan_css_maintainability_refactor_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Reduce CSS brittleness in the highest-leverage shared contracts so route work can compose from explicit structure instead of relying on inferred DOM shape or over-broad semantic selectors.`
+ owner = `css-maintainability-refactor`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
+@play_rpg_wednesday_index_html: ~"../../../play/rpg-wednesday/index.html"
+@about_index_html: ~"../../../about/index.html"
+@about_plans_index_html: ~"../../../about/plans/index.html"
+@topics_index_html: ~"../../../topics/index.html"
+@topics_software_index_html: ~"../../../topics/software/index.html"
+@topics_software_parsers_index_html: ~"../../../topics/software/parsers/index.html"
+@topics_math_index_html: ~"../../../topics/math/index.html"
+@topics_math_category_theory_index_html: ~"../../../topics/math/category-theory/index.html"
 
 dispatch: .{
  plan = @plan
  wip = @wip
+ play_rpg_wednesday_index_html = @play_rpg_wednesday_index_html
+ about_index_html = @about_index_html
+ about_plans_index_html = @about_plans_index_html
+ topics_index_html = @topics_index_html
+ topics_software_index_html = @topics_software_index_html
+ topics_software_parsers_index_html = @topics_software_parsers_index_html
+ topics_math_index_html = @topics_math_index_html
+ topics_math_category_theory_index_html = @topics_math_category_theory_index_html
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `Tighten the shared handle layer so semantic attributes do not implicitly become pill-like UI.`,
+  `Replace the inferred media-prose grid auto-detection with explicit shared layout hooks.`,
+  `Replace the Recipes hero child-order layout with explicit slot wiring.`,
+  `Replace one route-local frame-list override with a reusable list variant.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `targeted rg checks for:`,
+ `site-hero--split-figure`,
+ `frame-grid--media-prose`,
+ `frame-list--inline`,
+ `npm run build`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Reduce CSS brittleness in the highest-leverage shared contracts so route work can compose from explicit structure instead of relying on…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

@@ -1,21 +1,54 @@
-# Plan Directory Index — css-state-legibility
+# Plan Index — css-state-legibility
 #
-# Dispatch surface for this plan folder.
+# Stateful controls should read clearly in the stylesheet: shared layers own idle, hover, focus, and pressed behavior; route layers provide palette and intent through variables;…
 
 #>plan_css_state_legibility_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Stateful controls should read clearly in the stylesheet: shared layers own idle, hover, focus, and pressed behavior; route layers provide palette and intent through variables; shell layout owns page gutters exactly once. The result should be easier to read for both humans and agents because the CSS explains where state comes from and which layer is responsible for it.`
+ owner = `css-state-legibility`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@site_semantics: ~"../../../.spw/conventions/site-semantics.spw"
+@content: ~"../../../public/css/components/content.css"
+@home_panels: ~"../../../public/css/routes/surfaces/home-panels.css"
+@design: ~"../../../public/css/routes/surfaces/design.css"
+@layout: ~"../../../public/css/shell/layout.css"
 
 dispatch: .{
  plan = @plan
+ site_semantics = @site_semantics
+ content = @content
+ home_panels = @home_panels
+ design = @design
+ layout = @layout
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `In scope: shared handle state tokens, homepage lens/button projection through route variables, shell gutter ownership, and primary-nav overflow ownership.`,
+  `-`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `targeted rg for --mode-switch-, --operator-chip-, and data-spw-nav-tokenized`,
+ `sanity-check that wide and split layouts still read from main as the page-edge owner`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Stateful controls should read clearly in the stylesheet: shared layers own idle, hover, focus, and pressed behavior; route layers provide…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

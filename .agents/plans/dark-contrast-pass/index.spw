@@ -1,21 +1,50 @@
-# Plan Directory Index — dark-contrast-pass
+# Plan Index — Dark Contrast Pass
 #
-# Dispatch surface for this plan folder.
+# Improve dark-mode legibility across shared cards and the settings route without flattening the material system or introducing new visual noise.
 
 #>plan_dark_contrast_pass_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Improve dark-mode legibility across shared cards and the settings route without flattening the material system or introducing new visual noise.`
+ owner = `dark-contrast-pass`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@surfaces: ~"../../../public/css/components/surfaces.css"
+@settings: ~"../../../public/css/routes/surfaces/settings.css"
+@settings_notes: ~"../../../public/css/routes/surfaces/settings-notes.css"
 
 dispatch: .{
  plan = @plan
+ surfaces = @surfaces
+ settings = @settings
+ settings_notes = @settings_notes
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `Adjust shared card/panel text defaults so soft text stays readable in dark mode.`,
+  `Tighten settings route shortcuts, query cards, and notes against the dark surface.`,
+  `Keep the fix local to contrast and text emphasis; do not redesign layout or color identity.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `npm run check`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Improve dark-mode legibility across shared cards and the settings route without flattening the material system or introducing new visual…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

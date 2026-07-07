@@ -1,21 +1,59 @@
-# Plan Directory Index — mindful-collection-controls
+# Plan Index — Mindful Collection Controls
 #
-# Dispatch surface for this plan folder.
+# Make guide-badge collections easier to undo and easier to clear in bulk without turning collection into a sticky reward trap.
 
 #>plan_mindful_collection_controls_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Make guide-badge collections easier to undo and easier to clear in bulk without turning collection into a sticky reward trap.`
+ owner = `mindful-collection-controls`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@index: ~"../../../settings/index.html"
+@ornament_contract: ~"../../../.spw/conventions/ornament-contract.spw"
+@component_collection: ~"../../../public/js/runtime/component-collection.js"
+@reward_ui: ~"../../../public/js/runtime/reward-ui.js"
+@floating_chrome: ~"../../../public/css/components/floating-chrome.css"
 
 dispatch: .{
  plan = @plan
+ index = @index
+ ornament_contract = @ornament_contract
+ component_collection = @component_collection
+ reward_ui = @reward_ui
+ floating_chrome = @floating_chrome
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `Keep collected state backward-compatible for ornament CSS.`,
+  `Store intention separately from boolean collected state.`,
+  `Make re-click release a collected badge quickly.`,
+  `Add local bulk controls in Settings for clear_today and clear_all.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `node --check public/js/spw-guide-badge.js`,
+ `node --check public/js/spw-spells.js`,
+ `node --check public/js/runtime/component-collection.js`,
+ `node --check public/js/runtime/reward-ui.js`,
+ `node --check public/js/kernel/site-settings-engine.js`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Make guide-badge collections easier to undo and easier to clear in bulk without turning collection into a sticky reward trap.`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

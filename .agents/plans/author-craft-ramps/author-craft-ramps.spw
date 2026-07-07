@@ -1,6 +1,12 @@
 #>author_craft_ramps
 #:layer #!ux
 
+^"plan_linkage"{
+ plan = ~"./PLAN.md"
+ index = ~"./index.spw"
+ goal = `Build a small /topics/craft/ cluster for a BookTok-adjacent author friend who may not identify as technical but is willing to explore HTML and CSS in fragments. The highest-value first pass should make the web feel like a sensory book object, an illustrator collaboration surface, and a playful file tradition. Taste note: bookish wonder without beige nostalgia — tactile, screenshot-worthy, and useful enough to hand to a creative collaborator.`
+ owner = `author-craft-ramps`
+}[reg=facet]
 ^"contract"{
  audience: "author friend willing to explore web fragments"
  bridge: "creative writing, sensory books, illustrator motifs, files, and local web pages"

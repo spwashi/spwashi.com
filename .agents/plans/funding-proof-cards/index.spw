@@ -1,10 +1,20 @@
-# Plan Directory Index — funding-proof-cards
+# Plan Index — Funding Proof Cards Conversion Pass
 #
-# Dispatch surface for this plan folder.
+# Turn the site from a broad atlas into a clearer funding, coordination, membership, research, and record-making surface without changing the underlying design system.
 
 #>plan_funding_proof_cards_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Turn the site from a broad atlas into a clearer funding, coordination, membership, research, and record-making surface without changing the underlying design system.`
+ owner = `funding-proof-cards`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
@@ -13,9 +23,15 @@ dispatch: .{
  plan = @plan
 }[reg=facet]
 
+validation: #[
+ `Run git diff --check.`,
+ `Run npm run check if route edits are broad enough to affect site contracts.`,
+ `Use rg checks for new route links and canonical URLs.`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Turn the site from a broad atlas into a clearer funding, coordination, membership, research, and record-making surface without changing the…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

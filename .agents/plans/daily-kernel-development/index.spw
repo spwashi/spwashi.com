@@ -1,21 +1,47 @@
-# Plan Directory Index — daily-kernel-development
+# Plan Index — Daily Kernel Development Exercise
 #
-# Dispatch surface for this plan folder.
+# Create a repeatable "daily kernel" development exercise: a small, tunable practice loop for improving this codebase's semantic capacity, brand physics, regional experience design,…
 
 #>plan_daily_kernel_development_index
 #:index #!plan
+#:operation #!contract
 #:layer #!pragmatics
+
+operation = "contract"
+fixity = "stable"
+
+intent: .{
+ goal = `Create a repeatable "daily kernel" development exercise: a small, tunable practice loop for improving this codebase's semantic capacity, brand physics, regional experience design, and cross-discipline collaboration. The exercise should help professional engineers, animators, illustrators, designers, musicians, writers, and patrons explore the same system without flattening their differences. Each daily kernel should be small enough to implement or review in one session, but meaningful enough to strengthen the site's long-term product and learning value.`
+ owner = `daily-kernel-development`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@daily_kernel: ~"../../../.spw/conventions/daily-kernel.spw"
+@site: ~"../../../.spw/site.spw"
+@index: ~"../../../.spw/conventions/index.spw"
+@readme: ~"../../../.agents/plans/README.md"
 
 dispatch: .{
  plan = @plan
+ daily_kernel = @daily_kernel
+ site = @site
+ index = @index
+ readme = @readme
 }[reg=facet]
 
+validation: #[
+ `git diff --check`,
+ `targeted rg for new stems and anchors`,
+ `npm run check:css for CSS changes`,
+ `node --check <edited-js-file> for JS changes`,
+ `browser smoke for route-local visual changes`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Create a repeatable "daily kernel" development exercise: a small, tunable practice loop for improving this codebase's semantic capacity,…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

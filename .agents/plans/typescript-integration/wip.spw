@@ -12,6 +12,14 @@
 operation = "cache"
 fixity = "tending"
 
+^"plan_context"{
+ goal = `The desired end state is a site repo where TypeScript sharpens the parts that already behave like schema systems: - the static build/export path - the design catalog that documents data-spw-* and CSS tokens - the route/runtime manifest - the largest shape-heavy browser registries - future chunk/layer manifests for whitelabel-ready composition - release metadata that can carry both named releases and deterministic content identities The public site should still read as hand-authored HTML/CSS/JS unless a later explicit decision changes that.`
+ owner = `typescript-integration`
+ operation = "prime"
+ validation = #[ `Preserve existing checks:`, `npm run build`, `npm run catalog`, `npm run sitemap`, `npm run check`, `git diff --check`, ][reg=set]
+ hot_files = #[ `scripts/build.mjs`, `scripts/generate-design-catalog.mjs`, `scripts/generate-sitemap.mjs`, `scripts/site-contracts.mjs`, `scripts/ts/css-manifest.mts`, `scripts/ts/css-bundle.mts`, ][reg=set]
+}[reg=facet]
+
 ^["roots"]{
  @plan: ~".agents/plans/typescript-integration/PLAN.md"
  @site: ~".spw/site.spw"

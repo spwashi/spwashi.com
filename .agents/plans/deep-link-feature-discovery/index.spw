@@ -1,21 +1,54 @@
-# Plan Directory Index — deep-link-feature-discovery
+# Plan Index — deep-link feature discovery and mount visibility
 #
-# Dispatch surface for this plan folder.
+# Make the site easier to navigate, inspect, and learn from by improving deep-link affordances, teaching feature discovery through lightweight toasts, and exposing why runtime…
 
 #>plan_deep_link_feature_discovery_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Make the site easier to navigate, inspect, and learn from by improving deep-link affordances, teaching feature discovery through lightweight toasts, and exposing why runtime features mount.`
+ owner = `deep-link-feature-discovery`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@site: ~"../../../public/js/site.js"
+@discovery_notices: ~"../../../public/js/interface/discovery-notices.js"
+@runtime_states: ~"../../../public/css/components/runtime-states.css"
+@floating_chrome: ~"../../../public/css/components/floating-chrome.css"
+@core: ~"../../../public/css/tokens/core.css"
+@state_inspector: ~"../../../public/js/interface/state-inspector.js"
+@home: ~"../../../public/css/routes/surfaces/home.css"
+@site_semantics: ~"../../../.spw/conventions/site-semantics.spw"
 
 dispatch: .{
  plan = @plan
+ site = @site
+ discovery_notices = @discovery_notices
+ runtime_states = @runtime_states
+ floating_chrome = @floating_chrome
+ core = @core
+ state_inspector = @state_inspector
+ home = @home
+ site_semantics = @site_semantics
 }[reg=facet]
 
+validation: #[
+ `node --check public/js/site.js`,
+ `node --check public/js/interface/discovery-notices.js`,
+ `git diff --check`,
+ `npm run test:engagement`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Make the site easier to navigate, inspect, and learn from by improving deep-link affordances, teaching feature discovery through…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

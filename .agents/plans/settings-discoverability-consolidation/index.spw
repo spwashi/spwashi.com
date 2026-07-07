@@ -1,21 +1,47 @@
-# Plan Directory Index — settings-discoverability-consolidation
+# Plan Index — settings-discoverability-consolidation
 #
-# Dispatch surface for this plan folder.
+# Make the settings page easier to enter and scan by adding deep-linkable shortcut paths into the large runtime register, then improve cross-site discoverability with a shared…
 
 #>plan_settings_discoverability_consolidation_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Make the settings page easier to enter and scan by adding deep-linkable shortcut paths into the large runtime register, then improve cross-site discoverability with a shared footer surface that reflects the current browser-local atmosphere and links back into the most useful settings slices.`
+ owner = `settings-discoverability-consolidation`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@index: ~"../../../settings/index.html"
 
 dispatch: .{
  plan = @plan
+ index = @index
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `In scope: settings-route shortcut copy and anchors, light settings-page JS for opening deep-linked categories, shared footer partial consolidation, and shared footer styling for browser-local settings readouts.`,
+  `-`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `node --check public/js/site-settings.js`,
+ `targeted rg for new settings anchors and spw-include src="site-footer"`,
+ `sanity-check that footer readouts still bind on non-settings routes via the shared settings runtime`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Make the settings page easier to enter and scan by adding deep-linkable shortcut paths into the large runtime register, then improve…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

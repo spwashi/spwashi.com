@@ -1,23 +1,46 @@
-# Plan Directory Index — cadence-text-resonance
+# Plan Index — cadence-text-resonance
 #
-# Dispatch surface for this plan folder.
+# - Surfaces that already carry data-spw-cadence (promo cards, discovery notices) should feel rhythmically distinct in CSS (gradients, timing, weight, accent) without new JS. - The…
 
 #>plan_cadence_text_resonance_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `- Surfaces that already carry data-spw-cadence (promo cards, discovery notices) should feel rhythmically distinct in CSS (gradients, timing, weight, accent) without new JS. - The home promo cycle (and similar) should ship the present-day copy in static HTML so crawlers and no-JS readers see accurate, non-dated text about releases and support rhythms. - Text interpretation / measurement code must react when users change font scale or line spacing; this is the entry point for broader "copy resilience" helpers.`
+ owner = `cadence-text-resonance`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @cadence_text_interpretation: ~"./cadence-text-interpretation.spw"
+@pretext_physics: ~"../../../public/js/semantic/pretext-physics.js"
+@promo_wonder_cycle: ~"../../../public/css/components/promo-wonder-cycle.css"
+@timing_data_localization: ~"../../../.spw/philosophy/timing-data-localization.spw"
 
 dispatch: .{
  plan = @plan
  cadence_text_interpretation = @cadence_text_interpretation
+ pretext_physics = @pretext_physics
+ promo_wonder_cycle = @promo_wonder_cycle
+ timing_data_localization = @timing_data_localization
 }[reg=facet]
 
+validation: #[
+ `git diff --check`,
+ `node --check on edited JS`,
+ `npm run check (or the contract + CSS + route slices)`,
+ `Browser smoke: settings font scales + pretext surfaces update; home view-source shows the daily promo copy; discovery notices + promo cards show cadence-driven styles.`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: - Surfaces that already carry data-spw-cadence (promo cards, discovery notices) should feel rhythmically distinct in CSS (gradients,…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

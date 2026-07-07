@@ -1,21 +1,63 @@
-# Plan Directory Index — designer-conversation-canvas
+# Plan Index — designer-conversation-canvas
 #
-# Dispatch surface for this plan folder.
+# Designers should be able to open the public site, touch specimens, cite tokens by name, read objective typography telemetry, and leave subjective annotations that stay queryable…
 
 #>plan_designer_conversation_canvas_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Designers should be able to open the public site, touch specimens, cite tokens by name, read objective typography telemetry, and leave subjective annotations that stay queryable beside measurements.`
+ owner = `designer-conversation-canvas`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@pretext_measurement_bus: ~"../../../public/js/semantic/pretext-measurement-bus.js"
+@typography_measurement_preview: ~"../../../public/js/modules/design/typography-measurement-preview.js"
+@frame_metrics: ~"../../../public/js/runtime/frame-metrics.js"
+@composition_box_model: ~"../../../public/js/runtime/composition-box-model.js"
+@settings_index_html: ~"../../../settings/index.html"
+@design_index_html: ~"../../../design/index.html"
+@designer_conversation_canvas: ~"../../../.spw/conventions/designer-conversation-canvas.spw"
+@typography_packing: ~"../../../public/css/components/typography-packing.css"
 
 dispatch: .{
  plan = @plan
+ pretext_measurement_bus = @pretext_measurement_bus
+ typography_measurement_preview = @typography_measurement_preview
+ frame_metrics = @frame_metrics
+ composition_box_model = @composition_box_model
+ settings_index_html = @settings_index_html
+ design_index_html = @design_index_html
+ designer_conversation_canvas = @designer_conversation_canvas
+ typography_packing = @typography_packing
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `In scope: Pretext measurement bus as shared telemetry layer; settings typography preview; design hub conversation canvas frame; frame-metrics mount behind metrics feature; settings designer-handoff copy and links; .spw convention for conversation primitives.`,
+ ][reg=set]
+ out = #[
+  `: External design-tool import/export, collaborative commenting backend, site-wide pointer physics, replacing design catalog generation.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `npm run check:local`,
+ `Settings #typography-measurement-preview updates telemetry when font scale / line spacing changes`,
+ `Design hub with metrics feature shows frame-metrics bars`,
+ `Live Pretext hosts on design/pretext routes publish spw:pretext-measurement events`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Designers should be able to open the public site, touch specimens, cite tokens by name, read objective typography telemetry, and leave…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

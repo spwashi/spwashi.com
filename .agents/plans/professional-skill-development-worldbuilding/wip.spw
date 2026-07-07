@@ -1,3 +1,10 @@
+^"plan_context"{
+ goal = `We want to reframe the relationship between worldbuilding/character design and professional/technical skill development.`
+ owner = `professional-skill-development-worldbuilding`
+ operation = "prime"
+ hot_files = #[ `play/rpg-wednesday/index.html`, `play/rpg-wednesday/library/index.html`, `public/css/components/cards.css`, ][reg=set]
+}[reg=facet]
+
 # wip — professional-skill-development-worldbuilding
 #
 #>plan_professional_skill_development_worldbuilding_wip

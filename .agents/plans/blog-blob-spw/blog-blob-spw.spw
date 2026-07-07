@@ -6,6 +6,12 @@
 #:semantics #!surface
 #:layer #!pragmatics
 
+^"plan_linkage"{
+ plan = ~"./PLAN.md"
+ index = ~"./index.spw"
+ goal = `The desired end state is a publishing model where not every meaningful writing artifact has to become either "raw note" or "finished article." A blog blob should hold live material that has already accumulated enough shape to be worth naming, reviewing, translating, or routing, but has not yet earned full post status. The blog interpreter can emit toward a blob; localization can later translate from blob-aware copy units; published blog routes can distill or project a blob without erasing the intermediate semantic layer. The taste note is coherent mass + inspectable transition: the blob is not a dump, and it is not a miniature post. It is a charged writing body that still admits revision, re-lensing, and selective projection.`
+ owner = `blog-blob-spw`
+}[reg=facet]
 ^["thesis"]{
  claim: "A blog blob is a durable intermediate writing object: more bounded than a note, less finalized than a post, and semantically rich enough to revisit, translate, and project."
  why: "The current blog model moves from raw input to local interpretation to seed to eventual post. That is useful, but it compresses too much editorial life into the gap between seed and publication. A blob gives that middle state an inspectable identity."

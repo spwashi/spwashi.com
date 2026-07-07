@@ -1,21 +1,45 @@
-# Plan Directory Index — curricularize-codebase-typescript
+# Plan Index — curricularize-codebase-typescript
 #
-# Dispatch surface for this plan folder.
+# Make spwashi.com demonstrate the idea "curricularize your codebase": structure should be inspectable, teachable, and credible to experienced engineers while still supporting the…
 
 #>plan_curricularize_codebase_typescript_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Make spwashi.com demonstrate the idea "curricularize your codebase": structure should be inspectable, teachable, and credible to experienced engineers while still supporting the public creator identity. TypeScript should trace the outline of the architecture people recognize: page data, event contracts, runtime phases, settings, and component ownership.`
+ owner = `curricularize-codebase-typescript`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@public_js_typed: ~"../../../public/js/typed/"
+@scripts_typed: ~"../../../scripts/typed/"
+@site_contracts: ~"../../../scripts/ts/site-contracts"
 
 dispatch: .{
  plan = @plan
+ public_js_typed = @public_js_typed
+ scripts_typed = @scripts_typed
+ site_contracts = @site_contracts
 }[reg=facet]
 
+validation: #[
+ `npm run build:runtime`,
+ `npm run typecheck`,
+ `npm run build:vite`,
+ `node --check for wrapper JS files`,
+ `targeted rg checks that existing imports still resolve through stable public paths`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Make spwashi.com demonstrate the idea "curricularize your codebase": structure should be inspectable, teachable, and credible to…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

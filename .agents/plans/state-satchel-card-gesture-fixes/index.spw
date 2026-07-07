@@ -1,21 +1,47 @@
-# Plan Directory Index — state-satchel-card-gesture-fixes
+# Plan Index — State Satchel Stability, Card Layout Robustness, and Touch Gesture Refinement
 #
-# Dispatch surface for this plan folder.
+# Slug: state-satche l-card-gesture-fixes
 
 #>plan_state_satchel_card_gesture_fixes_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Slug: state-satche l-card-gesture-fixes`
+ owner = `state-satchel-card-gesture-fixes`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@state_inspector: ~"../../../public/js/interface/state-inspector.js"
+@floating_chrome: ~"../../../public/css/components/floating-chrome.css"
+@brace_gestures: ~"../../../public/js/runtime/brace-gestures.js"
+@runtime_states: ~"../../../public/css/components/runtime-states.css"
+@cards: ~"../../../public/css/components/cards.css"
+@seams: ~"../../../.spw/reviews/runtime-audit/seams.spw"
+@attention_field: ~"../../../.spw/conventions/attention-field.spw"
+@tuning: ~"../../../public/css/systems/surfaces/tuning.css"
 
 dispatch: .{
  plan = @plan
+ state_inspector = @state_inspector
+ floating_chrome = @floating_chrome
+ brace_gestures = @brace_gestures
+ runtime_states = @runtime_states
+ cards = @cards
+ seams = @seams
+ attention_field = @attention_field
+ tuning = @tuning
 }[reg=facet]
 
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Slug: state-satche l-card-gesture-fixes`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

@@ -1,23 +1,44 @@
-# Plan Directory Index — navigation-header-disclosure
+# Plan Index — Navigation Header Disclosure
 #
-# Dispatch surface for this plan folder.
+# Reduce header overload while keeping the site's semantic controls discoverable: - keep Routes as the primary navigation disclosure - make Media Cauldron and current attention…
 
 #>plan_navigation_header_disclosure_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Reduce header overload while keeping the site's semantic controls discoverable: - keep Routes as the primary navigation disclosure - make Media Cauldron and current attention posture visible in the header - move secondary reading/display controls behind a Display disclosure on constrained layouts - preserve existing shell-disclosure, settings, cauldron, and route-menu ownership - keep the overlay contract explicit so data-spw-menu-overlay, data-spw-menu-mode, data-spw-menu-topology, and aria-expanded remain separately legible`
+ owner = `navigation-header-disclosure`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @fix: ~"./FIX.md"
+@template: ~"../../../scripts/template.mjs"
+@shell_disclosure: ~"../../../public/js/runtime/shell-disclosure.js"
 
 dispatch: .{
  plan = @plan
  fix = @fix
+ template = @template
+ shell_disclosure = @shell_disclosure
 }[reg=facet]
 
+validation: #[
+ `node --check public/js/runtime/shell-disclosure.js`,
+ `node --check scripts/template.mjs`,
+ `git diff --check`,
+ `targeted rg checks for the new shell action and feature names`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Reduce header overload while keeping the site's semantic controls discoverable: - keep Routes as the primary navigation disclosure - make…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

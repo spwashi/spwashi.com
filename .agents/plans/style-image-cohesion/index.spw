@@ -1,23 +1,65 @@
-# Plan Directory Index — style-image-cohesion
+# Plan Index — Style Image Cohesion
 #
-# Dispatch surface for this plan folder.
+# Define a small, coherent image grammar for the site so creator identity, route atmosphere, and reference-document anatomy feel related without turning every page into the same…
 
 #>plan_style_image_cohesion_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Define a small, coherent image grammar for the site so creator identity, route atmosphere, and reference-document anatomy feel related without turning every page into the same screenshot.`
+ owner = `style-image-cohesion`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
+@asset_management: ~"../../../.spw/conventions/asset-management.spw"
+@style_development: ~"../../../.spw/conventions/style-development.spw"
+@images: ~"../../../public/images/"
+@about_index_html: ~"../../../about/index.html"
+@about_website_index_html: ~"../../../about/website/index.html"
+@topics_index_html: ~"../../../topics/index.html"
+@topics_software_index_html: ~"../../../topics/software/index.html"
+@craft: ~"../../../topics/craft/"
 
 dispatch: .{
  plan = @plan
  wip = @wip
+ asset_management = @asset_management
+ style_development = @style_development
+ images = @images
+ about_index_html = @about_index_html
+ about_website_index_html = @about_website_index_html
+ topics_index_html = @topics_index_html
+ topics_software_index_html = @topics_software_index_html
+ craft = @craft
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `Keep the first batch small enough to prove cohesion before broad route wiring.`,
+  `Use captions, alt text, and framing to explain why an image belongs on a page.`,
+  `Prefer shared visual grammar with route-specific crops, foregrounds, and material disposition rather than one-off decorative images.`,
+  `Keep image generation, naming, and optimization behind the local image skills so assets remain inspectable.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `Check all referenced route and convention paths before promoting assets.`,
+ `Run the image naming and optimization workflows for any tracked image.`,
+ `Run git diff --check after copy or reference edits.`,
+ `Confirm pages remain readable without images and captions are specific enough to explain function, not just subject.`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Define a small, coherent image grammar for the site so creator identity, route atmosphere, and reference-document anatomy feel related…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

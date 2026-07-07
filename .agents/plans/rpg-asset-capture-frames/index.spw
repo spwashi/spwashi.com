@@ -1,10 +1,20 @@
-# Plan Directory Index — rpg-asset-capture-frames
+# Plan Index — rpg-asset-capture-frames
 #
-# Dispatch surface for this plan folder.
+# RPG Wednesday should let players upload local character, item, place, and artifact images, then stage those assets inside stable screenshot-friendly frames. The site is not…
 
 #>plan_rpg_asset_capture_frames_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `RPG Wednesday should let players upload local character, item, place, and artifact images, then stage those assets inside stable screenshot-friendly frames. The site is not responsible for automating capture or sending media to Midjourney, Grok, or any external service; it should prepare a well-designed local surface that players can screenshot manually and pair with a copyable prompt note. Taste note: improve usefulness, trust, and earned wonder. Customizations should feel like discovering more of the campaign interface, not like a generic gamified skin store.`
+ owner = `rpg-asset-capture-frames`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
@@ -17,9 +27,24 @@ dispatch: .{
  rpg_asset_capture_frames = @rpg_asset_capture_frames
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `In scope: a local asset register using IndexedDB for image blobs and lightweight localStorage metadata, screenshot-mode card frames, aspect presets, prompt text helpers, motif/color customization, and exploration rewards that unlock local presentation options.`,
+ ][reg=set]
+ out = #[
+  `: automatic DOM screenshots, external AI integrations, cloud sync, accounts, shared multiplayer assets, monetized unlocks, or build tooling.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `Hypotheses: players can stage a character or item in under a minute; screenshot mode produces a clean frame at mobile and desktop widths; unlockable motifs increase curiosity without blocking utility.`,
+ `Negative controls: RPG routes remain readable without JavaScript; local gameplay state still loads; PWA offline core routes continue working.`,
+ `Demo sequence: upload an image, name it as a character, choose a motif, enter screenshot mode, manually screenshot, copy the prompt note, reload the page, confirm the asset and motif persist locally, export, clear, import, and confirm recovery.`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: RPG Wednesday should let players upload local character, item, place, and artifact images, then stage those assets inside stable…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

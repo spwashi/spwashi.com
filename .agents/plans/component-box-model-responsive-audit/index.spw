@@ -1,21 +1,58 @@
-# Plan Directory Index — component-box-model-responsive-audit
+# Plan Index — Component, CSS Box Model, and Attribute Timing Responsive Audit
 #
-# Dispatch surface for this plan folder.
+# Audit and improve the site's core components (frames, cards, operator chips, measure displays, status elements) for consistent box model behavior, proper handling of data-spw-*…
 
 #>plan_component_box_model_responsive_audit_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Audit and improve the site's core components (frames, cards, operator chips, measure displays, status elements) for consistent box model behavior, proper handling of data-spw-* attributes that affect layout, and high-value responsive improvements across media widths (narrow mobile to wide desktop) and aspect ratios (portrait, landscape, square, ultra-wide). Focus on making the visual grammar (especially around operators, measurements, priming, and curriculum surfaces) more robust and screenshot-friendly without introducing overgeneralized rules that break specific pages or the layered CSS architecture. This work supports the site's evolution as a Living Learning Surface with strong operational semantics: components must remain legible, stable, and tunable whether viewed on a phone in portrait, a laptop, or a large monitor.`
+ owner = `component-box-model-responsive-audit`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@css_build: ~"../../../scripts/css-build.mjs"
+@core: ~"../../../public/css/bundles/core.css"
+@relational_state: ~"../../../public/css/ornament/relational-state.css"
 
 dispatch: .{
  plan = @plan
+ css_build = @css_build
+ core = @core
+ relational_state = @relational_state
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `In scope:`,
+  `Audit of shared component CSS (frames.css, operators.css, controls.css, surfaces.css, etc.)`,
+  `Box model issues: padding, border, margin, flex/grid gaps, min-width/overflow behaviors.`,
+  `Attribute timing: styles driven by [data-spw-measure-kind], [data-spw-operator], [data-spw-kind], [data-spw-selection], etc. – ensure they don't cause reflows, FOUC, or unexpected wrapping at different breakpoints.`,
+ ][reg=set]
+ out = #[
+  `Major layer reordering in style.css`,
+  `New npm tooling or build changes`,
+  `Full redesign of any route`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `rg checks for new selectors against actual page usage`,
+ `Review of affected components in context of curriculum, math labs, settings, home`,
+ `Update of this plan with findings and fixes`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Audit and improve the site's core components (frames, cards, operator chips, measure displays, status elements) for consistent box model…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

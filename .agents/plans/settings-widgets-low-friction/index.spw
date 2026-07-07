@@ -1,21 +1,47 @@
-# Plan Directory Index — settings-widgets-low-friction
+# Plan Index — Pervasive Low-Friction Interactive Settings Widgets (Palette + Broader Tuning Clusters)
 #
-# Dispatch surface for this plan folder.
+# Slug: settings-widgets-low-friction
 
 #>plan_settings_widgets_low_friction_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Slug: settings-widgets-low-friction`
+ owner = `settings-widgets-low-friction`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@tuning: ~"../../../public/css/systems/surfaces/tuning.css"
+@design_palettes_index_html: ~"../../../design/palettes/index.html"
+@settings_index_html: ~"../../../settings/index.html"
+@topics_software_index_html: ~"../../../topics/software/index.html"
+@design_components_index_html: ~"../../../design/components/index.html"
+@design_density_index_html: ~"../../../design/density/index.html"
+@design: ~"../../../design/"
+@about_index_html: ~"../../../about/index.html"
 
 dispatch: .{
  plan = @plan
+ tuning = @tuning
+ design_palettes_index_html = @design_palettes_index_html
+ settings_index_html = @settings_index_html
+ topics_software_index_html = @topics_software_index_html
+ design_components_index_html = @design_components_index_html
+ design_density_index_html = @design_density_index_html
+ design = @design
+ about_index_html = @about_index_html
 }[reg=facet]
 
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Slug: settings-widgets-low-friction`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

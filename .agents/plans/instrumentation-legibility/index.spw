@@ -1,21 +1,42 @@
-# Plan Directory Index — instrumentation-legibility
+# Plan Index — Instrumentation Legibility
 #
-# Dispatch surface for this plan folder.
+# Refine recent developmental-climate and semantic-chrome changes so component instrumentation remains useful to machines and debuggers without crowding the public reading hierarchy.
 
 #>plan_instrumentation_legibility_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Refine recent developmental-climate and semantic-chrome changes so component instrumentation remains useful to machines and debuggers without crowding the public reading hierarchy.`
+ owner = `instrumentation-legibility`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@page_model: ~"../../../.spw/surfaces/page-model.spw"
 
 dispatch: .{
  plan = @plan
+ page_model = @page_model
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `Shared climate styling: public/css/spw-developmental-climate.css`,
+  `Shared component/chrome styling: public/css/spw-components.css, public/css/spw-handles.css, public/css/spw-wonder.css`,
+  `Runtime metadata producers: public/js/spw-component-semantics.js, public/js/spw-semantic-chrome.js, public/js/spw-state-inspector.js, public/js/spw-prompt-utils.js, public/js/site-settings.js`,
+  `Inspectable model: .spw/surfaces/page-model.spw`,
+ ][reg=set]
 }[reg=facet]
 
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Refine recent developmental-climate and semantic-chrome changes so component instrumentation remains useful to machines and debuggers…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

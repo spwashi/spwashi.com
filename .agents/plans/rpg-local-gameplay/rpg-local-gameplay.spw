@@ -6,6 +6,12 @@
 #:semantics #!surface
 #:layer #!pragmatics
 
+^"plan_linkage"{
+ plan = ~"./PLAN.md"
+ index = ~"./index.spw"
+ goal = `RPG Wednesday should move from a static campaign index toward a lightweight table aid. The first useful layer is a local gameplay kit that lets a player or GM track the current scene, party, initiative, clocks, quick notes, and session log seeds directly on the published pages without requiring a backend or build pipeline. Those seeds should be able to mature into RPG session notes before they harden into public session pages, cast memory, world memory, or arc records. Taste note: improve usefulness and trust. The feature should feel like a quiet table tool, not an app takeover; local data must be clearly local and easy to export or clear.`
+ owner = `rpg-local-gameplay`
+}[reg=facet]
 ^["thesis"]{
  claim: "A public campaign page can become useful at the table if it adds a local, private gameplay register without pretending local notes are published canon."
  why: "The static route remains the shared source of orientation. localStorage becomes the personal table layer for scene state, initiative, clocks, scratch notes, character beats, canon candidates, and recap seeds that can later mature into session notes before public campaign memory is updated."

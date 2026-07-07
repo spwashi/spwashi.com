@@ -1,10 +1,20 @@
-# Plan Directory Index — model-guided-refinement
+# Plan Index — Model-Guided Refinement Rails
 #
-# Dispatch surface for this plan folder.
+# Prepare this codebase for refinement by a model that can read .spw, follow explicit connections, and make competent local changes, but should not be expected to improvise…
 
 #>plan_model_guided_refinement_index
 #:index #!plan
+#:operation #!contract
 #:layer #!pragmatics
+
+operation = "contract"
+fixity = "stable"
+
+intent: .{
+ goal = `Prepare this codebase for refinement by a model that can read .spw, follow explicit connections, and make competent local changes, but should not be expected to improvise tastefully through the full CSS and JavaScript surface. The plan turns broad creative direction into rails: - where to look first - what not to touch - how CSS, HTML, JS, and .spw names should line up - which semantic concepts are fixed, stable, tending, experimental, or volatile - how creative/marketing surfaces should become coherent enough that musicians and artists want to explore and extend them This is not a new framework. It is a focus contract for future agents and collaborators.`
+ owner = `model-guided-refinement`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
@@ -13,6 +23,14 @@
 @rpg_analog_worldbuilding_cache: ~"./rpg-analog-worldbuilding-cache.spw"
 @rpg_note_interaction_cache: ~"./rpg-note-interaction-cache.spw"
 @voice_flow_cache: ~"./voice-flow-cache.spw"
+@semantic_capacity: ~"../../../.spw/conventions/semantic-capacity.spw"
+@daily_kernel: ~"../../../.spw/conventions/daily-kernel.spw"
+@site: ~"../../../.spw/site.spw"
+@model_guided_refinement: ~"../../../.spw/conventions/model-guided-refinement.spw"
+@site_semantics: ~"../../../.spw/conventions/site-semantics.spw"
+@product_lines: ~"../../../.spw/surfaces/product-lines.spw"
+@promo_wonder_cycle: ~"../../../public/data/promo-wonder-cycle.json"
+@index: ~"../../../.spw/conventions/index.spw"
 
 dispatch: .{
  plan = @plan
@@ -21,11 +39,27 @@ dispatch: .{
  rpg_analog_worldbuilding_cache = @rpg_analog_worldbuilding_cache
  rpg_note_interaction_cache = @rpg_note_interaction_cache
  voice_flow_cache = @voice_flow_cache
+ semantic_capacity = @semantic_capacity
+ daily_kernel = @daily_kernel
+ site = @site
+ model_guided_refinement = @model_guided_refinement
+ site_semantics = @site_semantics
+ product_lines = @product_lines
+ promo_wonder_cycle = @promo_wonder_cycle
+ index = @index
 }[reg=facet]
 
+validation: #[
+ `git diff --check`,
+ `node --check <edited-js-file>`,
+ `npm run check:css for CSS source changes`,
+ `npm run check for broad architecture changes`,
+ `targeted rg for new semantic names, anchors, data attributes, and plan slugs`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Prepare this codebase for refinement by a model that can read .spw, follow explicit connections, and make competent local changes, but…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

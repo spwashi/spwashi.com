@@ -12,6 +12,14 @@
 operation = "cache"
 fixity = "tending"
 
+^"plan_context"{
+ goal = `The site should make lore.land feel like a current, important destination rather than a stray external link buried in a register. The end state is a tighter internal path: the homepage signal surfaces should point toward lore.land, the about surface should name it more vividly, the lore.land explainer route should sell the destination with enough specificity that a reader has a reason to click through, and the homepage/lore-land links should resolve to beautiful social cards when shared. Taste note: improve clarity and expressiveness while preserving the site's calm, hand-authored editorial rhythm.`
+ owner = `lore-land-marketing`
+ operation = "prime"
+ validation = #[ `Hypotheses: a first-time reader can spot lore.land as a live narrative destination from the homepage or about surface without hunting through external links.`, `Negative controls: existing software/play/craft routes remain legible and are not displaced by lore-land promotion.`, `Demo sequence: /, /about, /about/domains/lore.land/, /about/website/.`, ][reg=set]
+ hot_files = #[ `public/data/media-focus.json`, `about/domains/lore.land/`, `about/index.html`, `about/domains/lore.land/index.html`, `public/css/style.css`, `public/images/assets/illustrations/`, ][reg=set]
+}[reg=facet]
+
 ^["roots"]{
  @plan: ~".agents/plans/lore-land-marketing/PLAN.md"
  @home: ~"index.html"

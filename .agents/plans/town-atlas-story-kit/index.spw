@@ -1,21 +1,47 @@
-# Plan Directory Index — town-atlas-story-kit
+# Plan Index — town-atlas-story-kit
 #
-# Dispatch surface for this plan folder.
+# Create a durable town atlas layer that separates practical visitor utility from story substrate, while keeping both indexable and cross-linkable. The site already has strong…
 
 #>plan_town_atlas_story_kit_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Create a durable town atlas layer that separates practical visitor utility from story substrate, while keeping both indexable and cross-linkable. The site already has strong story-generation affordances in routes like /play/, /play/rpg-wednesday/, /cards/, /services/, and /topics/, but those motifs currently share the same first-read space. The atlas layer should give the story material a stable container so practical visitors can move directly to work, support, research, or contact, while story-focused visitors can enter a structured world bible.`
+ owner = `town-atlas-story-kit`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@play_index_html: ~"../../../play/index.html"
+@play_rpg_wednesday_index_html: ~"../../../play/rpg-wednesday/index.html"
+@topics_index_html: ~"../../../topics/index.html"
+@style: ~"../../../public/css/style.css"
+@play: ~"../../../play/"
 
 dispatch: .{
  plan = @plan
+ play_index_html = @play_index_html
+ play_rpg_wednesday_index_html = @play_rpg_wednesday_index_html
+ topics_index_html = @topics_index_html
+ style = @style
+ play = @play
 }[reg=facet]
 
+validation: #[
+ `git diff --check`,
+ `targeted sanity read for the new route and updated links`,
+ `npm run check`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Create a durable town atlas layer that separates practical visitor utility from story substrate, while keeping both indexable and…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

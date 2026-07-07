@@ -1,21 +1,35 @@
-# Plan Directory Index — javascript-standalone-utility
+# Plan Index — JavaScript Standalone Utility Pass
 #
-# Dispatch surface for this plan folder.
+# Improve marginal utility of site JavaScript by making a useful behavior available in three contexts: - As a standalone import from public/js/compose.js. - As a console/debug…
 
 #>plan_javascript_standalone_utility_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Improve marginal utility of site JavaScript by making a useful behavior available in three contexts: - As a standalone import from public/js/compose.js. - As a console/debug helper through window.spwCompose. - As a progressive enhancement on pages that opt into the relevant markup.`
+ owner = `javascript-standalone-utility`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@compose: ~"../../../public/js/compose.js"
+@composition_box_model: ~"../../../public/js/runtime/composition-box-model.js"
 
 dispatch: .{
  plan = @plan
+ compose = @compose
+ composition_box_model = @composition_box_model
 }[reg=facet]
 
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Improve marginal utility of site JavaScript by making a useful behavior available in three contexts: - As a standalone import from…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

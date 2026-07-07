@@ -12,6 +12,14 @@
 operation = "cache"
 fixity = "tending"
 
+^"plan_context"{
+ goal = `The desired end state is a site where a screenshot at any moment captures something worth keeping: current address, liminality phase, operator grammar engaged, and the journey fragment that led here. This requires selection and priming semantics that survive without runtime context — visual markers legible in a still image, not just in an interactive session. The artist use case drives this: someone who screenshots a good idea, marks a moment of developed thinking, or collects a token from an interesting journey through a cognitive surface. A well-primed screenshot should communicate what kind of surface this is, what is being examined, and how deeply the visit has gone. The taste note is legible capture + journey memory: every meaningful state should be screenshot-worthy, and the screenshot should be able to suggest how the state was reached.`
+ owner = `screenshot-semantics`
+ operation = "prime"
+ validation = #[ `Hypotheses: persistent data attributes and CSS-driven selection states will make screenshots legible without runtime context; priming states will be achievable through all input modes; journey tokens will feel like earned marks rather than tracking labels.`, `Negative controls: calm default state remains undisturbed; no new JavaScript required for basic state legibility.`, `Demo sequence: navigate to a named frame via keyboard, screenshot; address an operator card via touch, screenshot; reach a nested liminality state on the software page, screenshot — compare all three for information density and legibility without explanatory text.`, ][reg=set]
+ hot_files = #[ `.agents/plans/screenshot-semantics/screenshot-semantics.spw`, ][reg=set]
+}[reg=facet]
+
 ^["roots"]{
  @plan: ~".agents/plans/screenshot-semantics/PLAN.md"
  @artifact: ~".agents/plans/screenshot-semantics/screenshot-semantics.spw"

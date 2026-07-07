@@ -1,23 +1,53 @@
-# Plan Directory Index — rpg-session-notes
+# Plan Index — rpg-session-notes
 #
-# Dispatch surface for this plan folder.
+# The desired end state is a campaign memory model where private or semi-structured session material can be captured, revisited, and promoted deliberately. A session note should be…
 
 #>plan_rpg_session_notes_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `The desired end state is a campaign memory model where private or semi-structured session material can be captured, revisited, and promoted deliberately. A session note should be able to hold what happened at the table, what changed in characters, what might become canon, and what pressure should carry forward, without requiring immediate publication as a polished session page. This should align with the local gameplay kit, the public sessions/ route, and the new blog-blob thinking while staying distinct from them. The taste note is play residue + durable memory seam: session notes should preserve the energy of actual play while remaining structured enough to feed the campaign record later.`
+ owner = `rpg-session-notes`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @rpg_session_notes: ~"./rpg-session-notes.spw"
+@agents_plans_rpg_local_gameplay_plan_md: ~"../../../.agents/plans/rpg-local-gameplay/PLAN.md"
+@agents_plans_blog_blob_spw_plan_md: ~"../../../.agents/plans/blog-blob-spw/PLAN.md"
 
 dispatch: .{
  plan = @plan
  rpg_session_notes = @rpg_session_notes
+ agents_plans_rpg_local_gameplay_plan_md = @agents_plans_rpg_local_gameplay_plan_md
+ agents_plans_blog_blob_spw_plan_md = @agents_plans_blog_blob_spw_plan_md
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `In scope: semantic definition of an RPG session note; its relation to local gameplay seeds, public session pages, canon candidates, arcs, and campaign memory; candidate Spw shape; how session notes differ from blog blobs; how session notes could later support translation or public adaptation.`,
+ ][reg=set]
+ out = #[
+  `: implementing editors, storage beyond the existing local gameplay kit, auto-generating session routes, or redesigning the current RPG Wednesday pages.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `semantic read-through against .agents/plans/rpg-local-gameplay/PLAN.md`,
+ `semantic read-through against .agents/plans/blog-blob-spw/PLAN.md`,
+ `confirm the distinctions between gameplay seed, session note, public session page, and arc record are crisp enough to use later`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: The desired end state is a campaign memory model where private or semi-structured session material can be captured, revisited, and promoted…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

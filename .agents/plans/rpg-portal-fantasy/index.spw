@@ -1,21 +1,41 @@
-# Plan Directory Index — rpg-portal-fantasy
+# Plan Index — RPG Portal Fantasy: Projecting Semantic Wonder & Topic Merits into RPG Wednesday
 #
-# Dispatch surface for this plan folder.
+# Status: Active — Patch 003 (cozy copy) landed; Patch 004 (Midjourney + daily prompt mapping + character UX + blended artifacts) in progress
 
 #>plan_rpg_portal_fantasy_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Status: Active — Patch 003 (cozy copy) landed; Patch 004 (Midjourney + daily prompt mapping + character UX + blended artifacts) in progress`
+ owner = `rpg-portal-fantasy`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@semantic_chrome: ~"../../../public/js/interface/semantic-chrome.js"
+@component_semantics: ~"../../../public/js/semantic/component-semantics.js"
+@play_rpg_wednesday_library_index_html: ~"../../../play/rpg-wednesday/library/index.html"
+@home_panels: ~"../../../public/css/routes/surfaces/home-panels.css"
+@play_rpg_wednesday_character_index_html: ~"../../../play/rpg-wednesday/character/index.html"
 
 dispatch: .{
  plan = @plan
+ semantic_chrome = @semantic_chrome
+ component_semantics = @component_semantics
+ play_rpg_wednesday_library_index_html = @play_rpg_wednesday_library_index_html
+ home_panels = @home_panels
+ play_rpg_wednesday_character_index_html = @play_rpg_wednesday_character_index_html
 }[reg=facet]
 
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Status: Active — Patch 003 (cozy copy) landed; Patch 004 (Midjourney + daily prompt mapping + character UX + blended artifacts) in progress`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

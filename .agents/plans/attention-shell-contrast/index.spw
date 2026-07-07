@@ -1,10 +1,20 @@
-# Plan Directory Index — attention-shell-contrast
+# Plan Index — attention-shell-contrast
 #
-# Dispatch surface for this plan folder.
+# The recent attention/handle pass improved button styling, but it still relies on low-opacity inactive states and low-separation fills. On compact screens that makes the mode strip…
 
 #>plan_attention_shell_contrast_index
 #:index #!plan
+#:operation #!audit
 #:layer #!pragmatics
+
+operation = "audit"
+fixity = "tending"
+
+intent: .{
+ goal = `The recent attention/handle pass improved button styling, but it still relies on low-opacity inactive states and low-separation fills. On compact screens that makes the mode strip and the mobile menu button look washed into the surrounding paper.`
+ owner = `attention-shell-contrast`
+ kind = `fix`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @fix: ~"./FIX.md"
@@ -14,8 +24,8 @@ dispatch: .{
 }[reg=facet]
 
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: The recent attention/handle pass improved button styling, but it still relies on low-opacity inactive states and low-separation fills. On…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

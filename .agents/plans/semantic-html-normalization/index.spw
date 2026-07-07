@@ -1,23 +1,58 @@
-# Plan Directory Index — semantic-html-normalization
+# Plan Index — semantic-html-normalization
 #
-# Dispatch surface for this plan folder.
+# The desired end state is a site where the static HTML carries a clearer, more consistent semantic skeleton across as many routes as practical: predictable main targets, skip…
 
 #>plan_semantic_html_normalization_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `The desired end state is a site where the static HTML carries a clearer, more consistent semantic skeleton across as many routes as practical: predictable main targets, skip links, stronger section labeling, and less ad hoc page-to-page drift. The runtime should then reinforce that structure by inferring the repetitive metadata and filling in missing relationships instead of requiring every page to hand-author the same semantic boilerplate. Taste note: improve clarity, layering, and a11y while keeping the site's genre-rich semantics readable rather than over-instrumented.`
+ owner = `semantic-html-normalization`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
+@about_website_index_html: ~"../../../about/website/index.html"
+@settings_index_html: ~"../../../settings/index.html"
+@topics_math_index_html: ~"../../../topics/math/index.html"
+@topics_site_design_index_html: ~"../../../topics/site-design/index.html"
+@topics_software_index_html: ~"../../../topics/software/index.html"
 
 dispatch: .{
  plan = @plan
  wip = @wip
+ about_website_index_html = @about_website_index_html
+ settings_index_html = @settings_index_html
+ topics_math_index_html = @topics_math_index_html
+ topics_site_design_index_html = @topics_site_design_index_html
+ topics_software_index_html = @topics_software_index_html
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `In scope: normalize top-level landmarks and skip-target structure across route HTML files; add or derive ids and ARIA labels/relationships for repeated page regions; trim reliance on hand-authored semantic bookkeeping where the runtime can infer it; and simplify nearby CSS/JS that duplicates semantic state groupings or region-normalization behavior.`,
+ ][reg=set]
+ out = #[
+  `: redesign route copy, rewrite every semantic data attribute out of the site, change major visual layout patterns, or touch unrelated local drift unless it directly intersects the normalization pass.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `Hypotheses: most routes should converge on the same top-level semantic skeleton; repeated section frames should expose clearer accessible names; and the runtime should be able to infer more metadata with less HTML boilerplate.`,
+ `Negative controls: page copy, route order, and existing interactive settings/image behaviors should remain functionally unchanged.`,
+ `Demo sequence: open representative pages from /, /about/website/, /settings/, /topics/math/, /topics/software/parsers/, and /topics/software/spw/operators/ref/; verify skip-link behavior, main targeting, section labeling, and semantic metadata overlays still make sense.`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: The desired end state is a site where the static HTML carries a clearer, more consistent semantic skeleton across as many routes as…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

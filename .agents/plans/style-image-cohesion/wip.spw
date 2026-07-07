@@ -12,6 +12,14 @@
 operation = "cache"
 fixity = "tending"
 
+^"plan_context"{
+ goal = `Define a small, coherent image grammar for the site so creator identity, route atmosphere, and reference-document anatomy feel related without turning every page into the same screenshot.`
+ owner = `style-image-cohesion`
+ operation = "prime"
+ validation = #[ `Check all referenced route and convention paths before promoting assets.`, `Run the image naming and optimization workflows for any tracked image.`, `Run git diff --check after copy or reference edits.`, `Confirm pages remain readable without images and captions are specific enough to explain function, not just subject.`, ][reg=set]
+ hot_files = #[ `.spw/conventions/asset-management.spw`, `.spw/conventions/style-development.spw`, `public/images/`, `about/index.html`, `about/website/index.html`, `topics/index.html`, ][reg=set]
+}[reg=facet]
+
 ^["roots"]{
  @plan: ~"./PLAN.md"
  @site_semantics: ~"../../../.spw/conventions/site-semantics.spw"

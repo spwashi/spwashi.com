@@ -1,10 +1,20 @@
-# Plan Directory Index — css-sensitive-attribute-writes
+# Plan Index — CSS-Sensitive Attribute Writes
 #
-# Dispatch surface for this plan folder.
+# Keep interaction state visually responsive without letting runtime discovery casually rewrite author-owned semantic attributes that CSS uses for route, context, wonder, and…
 
 #>plan_css_sensitive_attribute_writes_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Keep interaction state visually responsive without letting runtime discovery casually rewrite author-owned semantic attributes that CSS uses for route, context, wonder, and operator styling.`
+ owner = `css-sensitive-attribute-writes`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
@@ -13,9 +23,25 @@ dispatch: .{
  plan = @plan
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `public/js/brace-gestures.js`,
+  `Treat gesture/charge/pin attributes as transient visual state.`,
+  `Treat data-spw-resolved-* attributes as optional inspection hints.`,
+  `Avoid rewriting data-spw-context, data-spw-wonder, or data-spw-operator except for explicit user actions or future explicit opt-in.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `node --check public/js/brace-gestures.js`,
+ `npm run check`,
+ `npm run build`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Keep interaction state visually responsive without letting runtime discovery casually rewrite author-owned semantic attributes that CSS…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

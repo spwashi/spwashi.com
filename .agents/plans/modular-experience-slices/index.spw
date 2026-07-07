@@ -1,21 +1,68 @@
-# Plan Directory Index — modular-experience-slices
+# Plan Index — Modular Experience Slices & Earthy Rhythms of Participation
 #
-# Dispatch surface for this plan folder.
+# Evolve the file tree and collaboration surfaces *of this repository* so that stable "experience slices" (operator grammar, attention/resonance field, cauldron/composition,…
 
 #>plan_modular_experience_slices_index
 #:index #!plan
+#:operation #!contract
 #:layer #!pragmatics
+
+operation = "contract"
+fixity = "stable"
+
+intent: .{
+ goal = `Evolve the file tree and collaboration surfaces *of this repository* so that stable "experience slices" (operator grammar, attention/resonance field, cauldron/composition, musical/rhythmic projection, wonder/ornament, brace physics, region harmony, creative play surfaces, math practice labs, etc.) can be owned and iteratively tended by human developer teams over years — like layers of an abstract painting or beds in a long-lived garden — while preserving core Spw contracts and inspectability. The planning target stays local to this repository; the slice model should help humans coordinate work here, not become an upstream workbench proposal. Support earthy, cyclical rhythms of participation and exchange: periods of focused tending on one or more slices, followed by natural sedimentation of contributions, weathering, and handoff artifacts that let other developers (or the same developers in a later season) continue the work without friction or erasure of prior layers. Scoping note (per current direction): This pattern is intentionally local/downstream to this repository for developer conversation and coordination. It is not being positioned for updates to the spw-workbench at this time.`
+ owner = `modular-experience-slices`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@modular_experience_slices_volleyball: ~"../../../.spw/reviews/modular-experience-slices-volleyball.spw"
+@workbench_alignment_audit: ~"../../../.spw/reviews/workbench-alignment-audit.spw"
+@fundamentals_practice_rhythms: ~"../../../.spw/reviews/fundamentals-practice-rhythms.spw"
+@diagrams: ~"../../../public/js/modules/math/diagrams.js"
+@topics_math_vector_calculus_index_html: ~"../../../topics/math/vector-calculus/index.html"
+@topics_math_numerical_methods_index_html: ~"../../../topics/math/numerical-methods/index.html"
+@attention_architecture: ~"../../../public/js/runtime/attention-architecture.js"
+@wonder: ~"../../../public/css/effects/wonder.css"
 
 dispatch: .{
  plan = @plan
+ modular_experience_slices_volleyball = @modular_experience_slices_volleyball
+ workbench_alignment_audit = @workbench_alignment_audit
+ fundamentals_practice_rhythms = @fundamentals_practice_rhythms
+ diagrams = @diagrams
+ topics_math_vector_calculus_index_html = @topics_math_vector_calculus_index_html
+ topics_math_numerical_methods_index_html = @topics_math_numerical_methods_index_html
+ attention_architecture = @attention_architecture
+ wonder = @wonder
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `In scope (bolder but principled):`,
+  `Define and stabilize the major experience slices as first-class concepts (initially in .spw).`,
+  `Prototype bolder file tree structures (starting with CSS slices/ parallel or embedded, with possible JS symmetry).`,
+  `Develop and document earthy participation rhythms (per-slice .spw contracts, sedimentation notes, seasonal or cyclical review practices, and natural handoff surfaces), especially for the first concrete pilots that already have nearby review surfaces.`,
+ ][reg=set]
+ out = #[
+  `Full migration of every file in one go.`,
+  `Any change that breaks existing data-spw-* contracts or runtime module loading.`,
+  `New npm dependencies without accompanying plan + human review.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `Strict respect for AGENTS.md (css-instruction.spw, surgical changes, no un-planned deps). If the CSS layer order itself changes, that patch must update AGENTS.md and the relevant .spw convention in the same reviewable unit.`,
+ `git diff --check, npm run check (CSS and full subsets), manual review on key routes.`,
+ `A new contributor (or returning one after months) should be able to make a coherent change to one slice by primarily working inside that slice's directories + its .spw contract.`,
+ `Existing editor surfaces (design catalog, runtime timings, state inspector) continue to work and ideally become more useful because ownership is clearer.`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Evolve the file tree and collaboration surfaces *of this repository* so that stable "experience slices" (operator grammar,…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

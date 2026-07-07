@@ -1,3 +1,10 @@
+^"plan_context"{
+ goal = `Create site structures that can change by day and by week, with separate lanes for: - promo: conversion-facing highlights, CTA cards, services, work samples, and contact nudges - wonder: atmospheric, exploratory, lore-adjacent, or curiosity-building surfaces The site should be able to serve those structures from local HTML first, then optionally hydrate them from a JSON feed.`
+ owner = `promo-wonder-cycle`
+ operation = "prime"
+ validation = #[ `Confirm day/week selection is deterministic for a given date.`, `Confirm static fallback renders without the feed.`, `Confirm route copy still reads cleanly for human visitors.`, `Run git diff --check after edits.`, `Run node --check for any edited JS modules.`, ][reg=set]
+}[reg=facet]
+
 # wip — promo-wonder-cycle
 #
 #>plan_promo_wonder_cycle_wip

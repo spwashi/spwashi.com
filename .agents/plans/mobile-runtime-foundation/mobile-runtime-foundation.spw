@@ -6,6 +6,12 @@
 #:semantics #!surface
 #:layer #!pragmatics
 
+^"plan_linkage"{
+ plan = ~"./PLAN.md"
+ index = ~"./index.spw"
+ goal = `The desired end state is a site runtime that treats mobile and coarse-pointer use as the primary case rather than a degraded desktop fallback. The immediate task is not to ship new chrome, but to formalize the implementation surface: page regions with ownership, portable interaction semantics that do not depend on hover, complete operator interaction meanings, inspectable registers that back navigator/console projections, semantic HTML structures that act as the canonical reflection surface, and a clean preparation layer for future Spw blocks and scripts as UI. The longer arc is a cognitive machine that can produce wonder without becoming noisy: structure should become more legible as the user engages it, Spw symmetry should remain checkable across modalities, charge/bias metaphysics should be inspectable rather than hidden, and future Spw-backed components/pages should inherit that same ecosystem rather than bypass it. The taste note is clarity + containment: preserve the site's calm surface while making its deeper machinery easier to reason about, inspect, and extend.`
+ owner = `mobile-runtime-foundation`
+}[reg=facet]
 ^["roots"]{
  @site: ~".spw/site.spw"
  @site_semantics: ~".spw/conventions/site-semantics.spw"

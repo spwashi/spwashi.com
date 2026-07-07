@@ -1,21 +1,62 @@
-# Plan Directory Index — rpg-playable-copy
+# Plan Index — rpg-playable-copy
 #
-# Dispatch surface for this plan folder.
+# Make the site’s public entry points feel like they belong to a recurring play system instead of a loose set of lore pages. The current Wednesday cadence should be legible as a…
 
 #>plan_rpg_playable_copy_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Make the site’s public entry points feel like they belong to a recurring play system instead of a loose set of lore pages. The current Wednesday cadence should be legible as a release rhythm: a visitor should understand where to start, how to seed a session, where the log lives, and how the Town Library and related routes support play rather than just describing it. The copy should stay grounded in the creator identity and the existing site voice. The aim is not to make everything fantasy-themed. It is to make the site more playable, more replayable, and easier to enter from the home page or the RPG Wednesday routes.`
+ owner = `rpg-playable-copy`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@play: ~"../../../play/"
+@rpg_wednesday: ~"../../../play/rpg-wednesday/"
+@sessions: ~"../../../play/rpg-wednesday/sessions/"
+@play_rpg_wednesday_index_html: ~"../../../play/rpg-wednesday/index.html"
+@play_rpg_wednesday_sessions_index_html: ~"../../../play/rpg-wednesday/sessions/index.html"
+@play_rpg_wednesday_library_index_html: ~"../../../play/rpg-wednesday/library/index.html"
+@about_index_html: ~"../../../about/index.html"
+@settings_index_html: ~"../../../settings/index.html"
 
 dispatch: .{
  plan = @plan
+ play = @play
+ rpg_wednesday = @rpg_wednesday
+ sessions = @sessions
+ play_rpg_wednesday_index_html = @play_rpg_wednesday_index_html
+ play_rpg_wednesday_sessions_index_html = @play_rpg_wednesday_sessions_index_html
+ play_rpg_wednesday_library_index_html = @play_rpg_wednesday_library_index_html
+ about_index_html = @about_index_html
+ settings_index_html = @settings_index_html
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `In scope: public copy on the home page, play/ hub, play/rpg-wednesday/, play/rpg-wednesday/sessions/, and the Town Library gateway where that language can help the play model.`,
+  `In scope: small metadata or route-label adjustments if they clarify the play surface.`,
+  `In scope: a light release-day cue tied to the 13th/26th cadence already present in the campaign structure.`,
+  `-`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `targeted rg checks for updated RPG Wednesday phrases and release-day language`,
+ `browser spot check on the home and RPG Wednesday routes if the hierarchy changes`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Make the site’s public entry points feel like they belong to a recurring play system instead of a loose set of lore pages. The current…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

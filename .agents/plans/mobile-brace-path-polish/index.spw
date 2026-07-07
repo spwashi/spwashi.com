@@ -1,21 +1,41 @@
-# Plan Directory Index — mobile-brace-path-polish
+# Plan Index — Mobile Brace And Path Polish
 #
-# Dispatch surface for this plan folder.
+# - Make brace interactions easier to learn on mobile. - Ensure the shell PATH control has a meaningful target across more routes. - Remove dead vertical space above closing braces…
 
 #>plan_mobile_brace_path_polish_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `- Make brace interactions easier to learn on mobile. - Ensure the shell PATH control has a meaningful target across more routes. - Remove dead vertical space above closing braces when a frame footer only carries the brace marker.`
+ owner = `mobile-brace-path-polish`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@experiential: ~"../../../public/js/runtime/experiential.js"
+@region_menu: ~"../../../public/js/runtime/region-menu.js"
+@shell_disclosure: ~"../../../public/js/runtime/shell-disclosure.js"
+@frames: ~"../../../public/css/components/frames.css"
+@index: ~"../../../settings/index.html"
 
 dispatch: .{
  plan = @plan
+ experiential = @experiential
+ region_menu = @region_menu
+ shell_disclosure = @shell_disclosure
+ frames = @frames
+ index = @index
 }[reg=facet]
 
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: - Make brace interactions easier to learn on mobile. - Ensure the shell PATH control has a meaningful target across more routes. - Remove…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

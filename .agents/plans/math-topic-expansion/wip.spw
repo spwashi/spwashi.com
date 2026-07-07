@@ -12,6 +12,14 @@
 operation = "cache"
 fixity = "tending"
 
+^"plan_context"{
+ goal = `The desired end state is a broader, more navigable math/theory cluster that feels like a genuine field guide instead of a thin hub. The new routes should be intuition-first, cross-linked, and visually legible on static pages, with at least a couple of portable interactive diagrams that do not depend on build tooling or heavyweight runtimes. The taste note is playful clarity: the pages should feel mathematically serious, but still welcoming and fun to explore.`
+ owner = `math-topic-expansion`
+ operation = "prime"
+ validation = #[ `Hypotheses: intuition-first routes plus portable interactive SVG diagrams will make the math cluster feel more inhabitable and exploratory; better cross-links will make theory pages easier to traverse as a network.`, `Negative controls: existing nav, route families, analytics, and non-feature files remain intact.`, `Demo sequence: open /topics/math/, enter number theory and interact with the modular diagram, open category theory and use the composition explorer, open complexity, field theory, and upgraded parsers, then return through the topic atlas.`, ][reg=set]
+ hot_files = #[ `topics/software/parsers/`, `topics/math/complexity/index.html`, `topics/math/field-theory/index.html`, `topics/math/number-theory/index.html`, `topics/math/category-theory/index.html`, `topics/software/parsers/index.html`, ][reg=set]
+}[reg=facet]
+
 ^["roots"]{
  @plan: ~".agents/plans/math-topic-expansion/PLAN.md"
  @math_hub: ~"topics/math/index.html"

@@ -1,25 +1,59 @@
-# Plan Directory Index — brace-literacy-guides
+# Plan Index — brace-literacy-guides
 #
-# Dispatch surface for this plan folder.
+# The site should explain more of itself through its own interaction grammar. Brace forms need clearer differentiation between conceptual and realized surfaces, substrate needs to…
 
 #>plan_brace_literacy_guides_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `The site should explain more of itself through its own interaction grammar. Brace forms need clearer differentiation between conceptual and realized surfaces, substrate needs to read as a first-class distinction, and phrasing cues should help people parse what is idea, what is artifact, and what is guidance. The quality bar here is clarity and expressiveness: richer semantics, better salience, and settings that actually help people read the system rather than just decorate it. This branch also needs to avoid the shallow-accumulation problem from recent fast edits. New smart/localStorage behavior should be heuristic but legible, grounded in page metadata and existing component semantics, not a parallel lore layer.`
+ owner = `brace-literacy-guides`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
 @brace_literacy_guides: ~"./brace-literacy-guides.spw"
+@index: ~"../../../settings/index.html"
+@site: ~"../../../public/js/site.js"
+@style: ~"../../../public/css/style.css"
 
 dispatch: .{
  plan = @plan
  wip = @wip
  brace_literacy_guides = @brace_literacy_guides
+ index = @index
+ site = @site
+ style = @style
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `In scope: brace-role semantics for conceptual vs realized content, substrate and phrasing heuristics, CSS salience updates in split CSS files, settings wiring for literacy handles/conceptual guides, smarter localStorage-driven cognitive surfaces, and a small semantics note tying those pieces together.`,
+ ][reg=set]
+ out = #[
+  `: route-wide copy rewrites, a full style.css architecture rewrite, replacing current localStorage systems, or any network/LLM-backed intelligence.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `Hypotheses: brace-role metadata can drive clearer CSS without rewriting page HTML; local page metadata + persisted traces can improve smart grouping without bespoke route code`,
+ `Negative controls: existing navigation, console, and phase/disposition controls remain functional; routes without grounded traces stay quiet`,
+ `Demo sequence: visit /settings/, toggle literacy/conceptual guide settings, interact with operator chips / cards on a content route, confirm cognitive surface + smart console reflect substrate and phrasing changes`,
+ `Fuzz strategy:`,
+ `Explore: query DOM metadata and localStorage traces while exercising brace gestures`,
+ `Stabilize: git diff --check, node --check on touched JS modules, targeted selector/consumer searches`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: The site should explain more of itself through its own interaction grammar. Brace forms need clearer differentiation between conceptual and…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

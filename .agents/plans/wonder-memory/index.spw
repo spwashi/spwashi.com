@@ -1,10 +1,20 @@
-# Plan Directory Index — wonder-memory
+# Plan Index — wonder-memory
 #
-# Dispatch surface for this plan folder.
+# The end state is a coherent loop where recent route and operator selections leave a readable trace across image accents, nearby cards, and selected guidance surfaces instead of…
 
 #>plan_wonder_memory_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `The end state is a coherent loop where recent route and operator selections leave a readable trace across image accents, nearby cards, and selected guidance surfaces instead of vanishing as isolated hover effects. This should feel legible and intentional: a reader can change the memory behavior from the settings model or from small route-local controls, then immediately see the impact on hero images and surrounding grammar. Taste note: improve expressiveness and layering without smuggling in opaque controls or breaking the hand-written route surfaces.`
+ owner = `wonder-memory`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
@@ -15,9 +25,24 @@ dispatch: .{
  wip = @wip
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `In scope: add a normalized wonderMemory setting, expose it on /settings/, support small declarative setting triggers on route pages, connect recent-path memory to palette resonance and wonder-state ornament, and update flagship software/math route copy so the interaction is explained where it happens.`,
+ ][reg=set]
+ out = #[
+  `: redesign the entire settings page, rewrite contextual UI, touch unrelated worktree edits, or add new generated images/assets for this slice.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `Hypotheses: wonderMemory changes should alter recent-path persistence, root datasets/CSS variables, and visible accent behavior without page reload.`,
+ `Negative controls: existing presets, non-wonder settings, and pages without the new local control strips should continue to function.`,
+ `Demo sequence: change wonder-memory on /settings/, visit /topics/software/, click parser/math routes, then confirm image resonance and matched cards/links update on /topics/software/parsers/ and /topics/math/.`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: The end state is a coherent loop where recent route and operator selections leave a readable trace across image accents, nearby cards, and…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

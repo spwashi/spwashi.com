@@ -12,6 +12,14 @@
 operation = "cache"
 fixity = "tending"
 
+^"plan_context"{
+ goal = `Reduce CSS brittleness in the highest-leverage shared contracts so route work can compose from explicit structure instead of relying on inferred DOM shape or over-broad semantic selectors.`
+ owner = `css-maintainability-refactor`
+ operation = "prime"
+ validation = #[ `git diff --check`, `targeted rg checks for:`, `site-hero--split-figure`, `frame-grid--media-prose`, `frame-list--inline`, `npm run build`, ][reg=set]
+ hot_files = #[ `play/rpg-wednesday/index.html`, `about/index.html`, `about/plans/index.html`, `topics/index.html`, `topics/software/index.html`, `topics/software/parsers/index.html`, ][reg=set]
+}[reg=facet]
+
 ^["roots"]{
  @plan: ~".agents/plans/css-maintainability-refactor/PLAN.md"
  @contracts: ~"public/js/spw-dom-contracts.js"

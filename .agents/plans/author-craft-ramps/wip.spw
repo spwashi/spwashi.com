@@ -12,6 +12,14 @@
 operation = "cache"
 fixity = "tending"
 
+^"plan_context"{
+ goal = `Build a small /topics/craft/ cluster for a BookTok-adjacent author friend who may not identify as technical but is willing to explore HTML and CSS in fragments. The highest-value first pass should make the web feel like a sensory book object, an illustrator collaboration surface, and a playful file tradition. Taste note: bookish wonder without beige nostalgia — tactile, screenshot-worthy, and useful enough to hand to a creative collaborator.`
+ owner = `author-craft-ramps`
+ operation = "prime"
+ validation = #[ `Hypotheses: an author can open /topics/craft/, choose a ramp, and understand one concrete next step; a developer friend can see where they could help; screenshots capture prompt cards and motifs without needing runtime context.`, `Negative controls: software routes, blog route, and PWA cache behavior remain intact.`, `Demo sequence: open /topics/, follow Craft, open Fragments, inspect one code/result pair, open SVG Storytelling, inspect one motif, open File Traditions, follow a cross-link to Blog or Software.`, ][reg=set]
+ hot_files = #[ `topics/index.html`, `topics/craft/index.html`, `topics/craft/fragments/index.html`, `topics/craft/svg/index.html`, `topics/craft/files/index.html`, `public/css/style.css`, ][reg=set]
+}[reg=facet]
+
 ^["roots"]{
  @plan: ~".agents/plans/author-craft-ramps/PLAN.md"
  @artifact: ~".agents/plans/author-craft-ramps/author-craft-ramps.spw"

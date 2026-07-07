@@ -1,23 +1,53 @@
-# Plan Directory Index — unsorted-image-rollout
+# Plan Index — unsorted-image-rollout
 #
-# Dispatch surface for this plan folder.
+# The desired end state is a site where a few top-level routes immediately feel more visual without losing their editorial clarity. Images should not read like loose decoration.…
 
 #>plan_unsorted_image_rollout_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `The desired end state is a site where a few top-level routes immediately feel more visual without losing their editorial clarity. Images should not read like loose decoration. Each selected render should reinforce a nearby claim, echo the copy, and point the reader toward another route or section. The practical target is the surfaces people are most likely to screenshot first: the home hero, the topic atlas, and the main software-oriented hubs.`
+ owner = `unsorted-image-rollout`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
+@topics_index_html: ~"../../../topics/index.html"
+@topics_software_index_html: ~"../../../topics/software/index.html"
 
 dispatch: .{
  plan = @plan
  wip = @wip
+ topics_index_html = @topics_index_html
+ topics_software_index_html = @topics_software_index_html
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `In scope: create plan artifacts, add a shared illustrated-card treatment, update existing hero/media regions to use curated 00.unsorted/ images, revise nearby copy/captions so the images deepen route discoverability, and keep the new figures compatible with the existing image interaction layer.`,
+ ][reg=set]
+ out = #[
+  `: bulk-sorting or renaming the whole 00.unsorted/ library, generating new artwork, editing unrelated UI modules already modified in the worktree, or building a full image-management system.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `Run git diff --check.`,
+ `Sanity-check the updated hubs for balanced tags and anchor flow.`,
+ `Verify the new 00.unsorted/ paths are referenced correctly from the edited pages.`,
+ `Confirm the image-bearing cards still participate in the current hover/drag/hold interaction layer.`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: The desired end state is a site where a few top-level routes immediately feel more visual without losing their editorial clarity. Images…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

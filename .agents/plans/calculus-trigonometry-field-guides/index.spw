@@ -1,21 +1,53 @@
-# Plan Directory Index — calculus-trigonometry-field-guides
+# Plan Index — calculus-trigonometry-field-guides
 #
-# Dispatch surface for this plan folder.
+# Build a broader calculus literacy cluster: deepen the calculus route through Calc I, II, and III, add a differential-equations route, and keep the explanations grounded in…
 
 #>plan_calculus_trigonometry_field_guides_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Build a broader calculus literacy cluster: deepen the calculus route through Calc I, II, and III, add a differential-equations route, and keep the explanations grounded in portable SVG visualizations and intuition-first copy.`
+ owner = `calculus-trigonometry-field-guides`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@topics_math_index_html: ~"../../../topics/math/index.html"
+@topics_index_html: ~"../../../topics/index.html"
+@topics_math_trigonometry_index_html: ~"../../../topics/math/trigonometry/index.html"
+@topics_math_calculus_index_html: ~"../../../topics/math/calculus/index.html"
+@topics_math_differential_equations_index_html: ~"../../../topics/math/differential-equations/index.html"
+@topics_software_differential_lambda_calculus_index_html: ~"../../../topics/software/differential-lambda-calculus/index.html"
+@topics_software_spw_index_html: ~"../../../topics/software/spw/index.html"
+@topics_software_index_html: ~"../../../topics/software/index.html"
 
 dispatch: .{
  plan = @plan
+ topics_math_index_html = @topics_math_index_html
+ topics_index_html = @topics_index_html
+ topics_math_trigonometry_index_html = @topics_math_trigonometry_index_html
+ topics_math_calculus_index_html = @topics_math_calculus_index_html
+ topics_math_differential_equations_index_html = @topics_math_differential_equations_index_html
+ topics_software_differential_lambda_calculus_index_html = @topics_software_differential_lambda_calculus_index_html
+ topics_software_spw_index_html = @topics_software_spw_index_html
+ topics_software_index_html = @topics_software_index_html
 }[reg=facet]
 
+validation: #[
+ `git diff --check`,
+ `node --check public/js/spw-math-diagrams.js`,
+ `npm run check`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Build a broader calculus literacy cluster: deepen the calculus route through Calc I, II, and III, add a differential-equations route, and…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

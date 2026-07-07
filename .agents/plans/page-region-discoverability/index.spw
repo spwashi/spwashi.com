@@ -1,21 +1,50 @@
-# Plan Directory Index — page-region-discoverability
+# Plan Index — Page Region Discoverability
 #
-# Dispatch surface for this plan folder.
+# Make page regions across the site easier to discover, compare, and move through. A visitor should be able to understand both the local region they are in and the nearby page…
 
 #>plan_page_region_discoverability_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Make page regions across the site easier to discover, compare, and move through. A visitor should be able to understand both the local region they are in and the nearby page routes that carry the same concept forward.`
+ owner = `page-region-discoverability`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@public_js_runtime_page_region_rail_js: ~"../../../public/js/runtime/page-region-rail.js"
+@public_css_handles_page_region_rail_css: ~"../../../public/css/handles/page-region-rail.css"
+@index: ~"../../../.spw/slices/page-region-discoverability/index.spw"
+@image_resource_manifest: ~"../../../scripts/image-resource-manifest.mjs"
+@images: ~"../../../public/images/"
 
 dispatch: .{
  plan = @plan
+ public_js_runtime_page_region_rail_js = @public_js_runtime_page_region_rail_js
+ public_css_handles_page_region_rail_css = @public_css_handles_page_region_rail_css
+ index = @index
+ image_resource_manifest = @image_resource_manifest
+ images = @images
 }[reg=facet]
 
+validation: #[
+ `node --check public/js/runtime/page-region-rail.js`,
+ `node --check public/js/runtime/region-profiler.js`,
+ `node --check public/js/runtime/component-collection.js`,
+ `node --check public/js/runtime/reward-ui.js`,
+ `node --check public/js/runtime/module-catalog.js`,
+ `node --check public/js/runtime/charge-field.js`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Make page regions across the site easier to discover, compare, and move through. A visitor should be able to understand both the local…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

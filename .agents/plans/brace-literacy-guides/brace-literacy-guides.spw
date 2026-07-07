@@ -1,6 +1,12 @@
 #:layer #!semantics
 
 #>brace_literacy_guides
+^"plan_linkage"{
+ plan = ~"./PLAN.md"
+ index = ~"./index.spw"
+ goal = `The site should explain more of itself through its own interaction grammar. Brace forms need clearer differentiation between conceptual and realized surfaces, substrate needs to read as a first-class distinction, and phrasing cues should help people parse what is idea, what is artifact, and what is guidance. The quality bar here is clarity and expressiveness: richer semantics, better salience, and settings that actually help people read the system rather than just decorate it. This branch also needs to avoid the shallow-accumulation problem from recent fast edits. New smart/localStorage behavior should be heuristic but legible, grounded in page metadata and existing component semantics, not a parallel lore layer.`
+ owner = `brace-literacy-guides`
+}[reg=facet]
 ^["scope"]{
  ~#subject: "brace semantics, substrate distinction, phrasing, literacy handles"
  ~#status: "draft"

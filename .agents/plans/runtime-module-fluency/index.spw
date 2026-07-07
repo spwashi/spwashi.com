@@ -1,21 +1,59 @@
-# Plan Directory Index — runtime-module-fluency
+# Plan Index — Runtime Module Fluency
 #
-# Dispatch surface for this plan folder.
+# Make the site behave like a learnable visual instrument: calm at rest, expressive when practiced, and inspectable when a reader wants to understand which scripts changed behavior…
 
 #>plan_runtime_module_fluency_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Make the site behave like a learnable visual instrument: calm at rest, expressive when practiced, and inspectable when a reader wants to understand which scripts changed behavior or visuals. The complexity should feel closer to a French horn than a random control panel: stable ground, repeated fingerings, and visually legible resonance.`
+ owner = `runtime-module-fluency`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@site: ~"../../../public/js/site.js"
+@foundation: ~"../../../public/css/components/foundation.css"
+@index: ~"../../../settings/index.html"
+@query_disposition: ~"../../../.spw/conventions/query-disposition.spw"
+@site_semantics: ~"../../../.spw/conventions/site-semantics.spw"
 
 dispatch: .{
  plan = @plan
+ site = @site
+ foundation = @foundation
+ index = @index
+ query_disposition = @query_disposition
+ site_semantics = @site_semantics
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `public/js/site.js: expose runtime module definitions, mount reasons, timing policy, audit records, and console controls.`,
+  `public/css/components/foundation.css: translate module dimensions into subtle rails and handle treatments when module visuals are enabled.`,
+  `src/styles/entries/debug.css: make debug labels show module status and evaluated dimensions.`,
+  `settings/index.html: add query recipes that let readers enter reader, builder, inspector, and lab modes with meaningful diagnostics.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `node --check public/js/site.js`,
+ `git diff --check`,
+ `npm run check`,
+ `Spot-check settings query links and console helpers:`,
+ `window.__SPW_SITE__.listModules()`,
+ `window.__SPW_SITE__.snapshotModules()`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Make the site behave like a learnable visual instrument: calm at rest, expressive when practiced, and inspectable when a reader wants to…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

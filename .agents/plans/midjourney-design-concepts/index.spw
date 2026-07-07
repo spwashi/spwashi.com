@@ -1,21 +1,53 @@
-# Plan Directory Index — midjourney-design-concepts
+# Plan Index — Midjourney-Inspired Focused Design Concepts Plan
 #
-# Dispatch surface for this plan folder.
+# Use Midjourney as an inspiration and concept-sketching tool for focused UX directions, then translate the best ideas into repo-native CSS, HTML semantics, image treatments,…
 
 #>plan_midjourney_design_concepts_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Use Midjourney as an inspiration and concept-sketching tool for focused UX directions, then translate the best ideas into repo-native CSS, HTML semantics, image treatments, behavior notes, and .spw inspection notes. The output should be design direction and interaction personality, not unfiltered generated-image decoration. The site should keep feeling authored by Spwashi. Midjourney can help discover palettes, materials, spatial metaphors, behavior metaphors, and visual motifs, but implementation should remain deliberate, accessible, and maintainable.`
+ owner = `midjourney-design-concepts`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@raw: ~"../../../public/images/renders/_raw/"
+@raw_2x2: ~"../../../public/images/renders/_raw-2x2/"
+@unsorted_curation: ~"../../../public/images/renders/unsorted-curation/"
+@2026_03_10_favicon_study: ~"../../../public/images/renders/2026-03-10-favicon-study/"
+@papergami: ~"../../../public/images/renders/papergami/"
+@illustrations: ~"../../../public/images/assets/illustrations/"
+@motifs: ~"../../../public/images/assets/motifs/"
+@home: ~"../../../public/images/routes/home/"
 
 dispatch: .{
  plan = @plan
+ raw = @raw
+ raw_2x2 = @raw_2x2
+ unsorted_curation = @unsorted_curation
+ 2026_03_10_favicon_study = @2026_03_10_favicon_study
+ papergami = @papergami
+ illustrations = @illustrations
+ motifs = @motifs
+ home = @home
 }[reg=facet]
 
+validation: #[
+ `Target route at mobile and desktop widths.`,
+ `/design/catalog/ for image references and sidecars.`,
+ `Light, dark, and reduced-motion modes when the concept affects CSS.`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Use Midjourney as an inspiration and concept-sketching tool for focused UX directions, then translate the best ideas into repo-native CSS,…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

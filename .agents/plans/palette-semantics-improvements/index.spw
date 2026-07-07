@@ -1,21 +1,47 @@
-# Plan Directory Index — palette-semantics-improvements
+# Plan Index — Improve Palette Semantics, Discoverability, Playful/Functional Depth
 #
-# Dispatch surface for this plan folder.
+# Slug: palette-semantics-improvements
 
 #>plan_palette_semantics_improvements_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Slug: palette-semantics-improvements`
+ owner = `palette-semantics-improvements`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@site_semantics: ~"../../../.spw/conventions/site-semantics.spw"
+@design_palettes_index_html: ~"../../../design/palettes/index.html"
+@core: ~"../../../public/css/tokens/core.css"
+@settings_index_html: ~"../../../settings/index.html"
+@topics_software_index_html: ~"../../../topics/software/index.html"
+@catalog: ~"../../../design/catalog/"
+@style: ~"../../../public/css/style.css"
+@operator_semantics: ~"../../../.spw/conventions/operator-semantics.spw"
 
 dispatch: .{
  plan = @plan
+ site_semantics = @site_semantics
+ design_palettes_index_html = @design_palettes_index_html
+ core = @core
+ settings_index_html = @settings_index_html
+ topics_software_index_html = @topics_software_index_html
+ catalog = @catalog
+ style = @style
+ operator_semantics = @operator_semantics
 }[reg=facet]
 
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Slug: palette-semantics-improvements`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

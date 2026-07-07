@@ -1,21 +1,62 @@
-# Plan Directory Index — js-runtime-composability
+# Plan Index — JS Runtime Composability
 #
-# Dispatch surface for this plan folder.
+# Reduce the size and cognitive load of public/js/site.js by extracting the page-state / attention lifecycle contract into a dedicated runtime module, while keeping the runtime…
 
 #>plan_js_runtime_composability_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Reduce the size and cognitive load of public/js/site.js by extracting the page-state / attention lifecycle contract into a dedicated runtime module, while keeping the runtime behavior and datasets stable.`
+ owner = `js-runtime-composability`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@site: ~"../../../public/js/site.js"
+@page_state: ~"../../../public/js/runtime/page-state.js"
+@readme: ~"../../../public/js/README.md"
+@runtime_contracts: ~"../../../scripts/ts/runtime-contracts.mts"
+@check_site: ~"../../../scripts/ts/check-site.mts"
+@lifecycles: ~"../../../.spw/reviews/runtime-audit/lifecycles.spw"
+@module_catalog: ~"../../../public/js/runtime/module-catalog.js"
 
 dispatch: .{
  plan = @plan
+ site = @site
+ page_state = @page_state
+ readme = @readme
+ runtime_contracts = @runtime_contracts
+ check_site = @check_site
+ lifecycles = @lifecycles
+ module_catalog = @module_catalog
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `Extract page lifecycle helpers from public/js/site.js into a focused runtime module.`,
+  `Keep the shared page-state vocabulary, timing behavior, and dataset writes centralized.`,
+  `Update documentation that currently says the page-state contract lives only in site.js.`,
+  `Add runtime architecture checks that make module definitions, generated typed outputs, and root-level entrypoint boundaries fail visibly when they drift.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `node --check public/js/site.js`,
+ `node --check public/js/runtime/page-state.js`,
+ `npm run check:runtime`,
+ `git diff --check`,
+ `npm run check`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Reduce the size and cognitive load of public/js/site.js by extracting the page-state / attention lifecycle contract into a dedicated…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

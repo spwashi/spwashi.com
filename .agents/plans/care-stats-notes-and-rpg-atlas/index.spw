@@ -1,21 +1,45 @@
-# Plan Directory Index — care-stats-notes-and-rpg-atlas
+# Plan Index — Care Stats, Notes, and RPG Atlas
 #
-# Dispatch surface for this plan folder.
+# Add a practical page about low-cost supports when therapy is inaccessible, then connect that public guidance to two browser-local systems: 1. a reusable local note register that…
 
 #>plan_care_stats_notes_and_rpg_atlas_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Add a practical page about low-cost supports when therapy is inaccessible, then connect that public guidance to two browser-local systems: 1. a reusable local note register that can be captured quickly and revisited later 2. a lower-noise RPG Wednesday asset composer that treats title-first scene cards as a valid starting point`
+ owner = `care-stats-notes-and-rpg-atlas`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@settings_index_html: ~"../../../settings/index.html"
+@site: ~"../../../public/js/site.js"
+@play_rpg_wednesday_index_html: ~"../../../play/rpg-wednesday/index.html"
 
 dispatch: .{
  plan = @plan
+ settings_index_html = @settings_index_html
+ site = @site
+ play_rpg_wednesday_index_html = @play_rpg_wednesday_index_html
 }[reg=facet]
 
+validation: #[
+ `git diff --check`,
+ `node --check public/js/spw-local-notes.js`,
+ `node --check public/js/rpg-wednesday-asset-atlas.js`,
+ `node --check public/js/site.js`,
+ `npm run check`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Add a practical page about low-cost supports when therapy is inaccessible, then connect that public guidance to two browser-local systems:…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

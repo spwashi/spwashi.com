@@ -1,10 +1,20 @@
-# Plan Directory Index — rpg-wednesday-learning-library
+# Plan Index — RPG Wednesday Learning Library
 #
-# Dispatch surface for this plan folder.
+# Make the education direction useful without scattering the site into many top-level routes. The first public surface is a namespaced town-library hub under…
 
 #>plan_rpg_wednesday_learning_library_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Make the education direction useful without scattering the site into many top-level routes. The first public surface is a namespaced town-library hub under /play/rpg-wednesday/library/ that turns RPG Wednesday into a college-facing learning world: visitors can enter a civic-magical library, choose a quest, meet guide characters, use boonhonk as a reflection fit, plant a garden seed, and map the work to portfolio-ready college skills.`
+ owner = `rpg-wednesday-learning-library`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
@@ -15,9 +25,24 @@ dispatch: .{
  wip = @wip
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `Add /play/rpg-wednesday/library/ as the education-oriented hub.`,
+  `Add homepage and play-surface gateway links that point to the library without repositioning the whole site at once.`,
+  `Add RPG Wednesday route links so the existing campaign surface promotes the library as an actionable learning path.`,
+  `Improve discoverability through header navigation, contextual data-spw-related-routes, hero action chips, active-game cards, and route-atlas cards.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `rg checks for /play/rpg-wednesday/library/ links and new anchors`,
+ `HTML sanity review around edited sections`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Make the education direction useful without scattering the site into many top-level routes. The first public surface is a namespaced…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

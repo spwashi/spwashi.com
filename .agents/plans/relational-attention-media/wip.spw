@@ -1,3 +1,11 @@
+^"plan_context"{
+ goal = `Make attention and meditation practical relational dimensions across the site: self relation, local context, and global horizon. Use those dimensions to generate stable, copyable media seeds across prose, lyric, visual, storyboard, audio, and curriculum work. Extend that surface so a generated seed can also become a lightweight canon increment: a proof card, Town Atlas note, or markdown artifact that preserves source ingredient, posture, and next action without needing a remote model call.`
+ owner = `relational-attention-media`
+ operation = "prime"
+ validation = #[ `Run git diff --check.`, `Run node --check public/js/kernel/site-settings.js public/js/runtime/prepaint-state.js public/js/site.js public/js/modules/media/cauldron.js.`, `Use targeted rg checks for attentionSelfRelation, media-cauldron, worldBuildingMode, copy-proof-card, living-concepts, and contemplative-hearth.`, ][reg=set]
+ hot_files = #[ `settings/index.html`, `public/js/kernel/site-settings.js`, `public/js/runtime/prepaint-state.js`, `public/js/modules/media/cauldron.js`, `play/index.html`, `public/css/routes/surfaces/home.css`, ][reg=set]
+}[reg=facet]
+
 # Relational Attention Media Cache
 
 #>relational_attention_media

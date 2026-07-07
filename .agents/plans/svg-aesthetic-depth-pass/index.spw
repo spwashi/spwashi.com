@@ -1,21 +1,52 @@
-# Plan Directory Index — svg-aesthetic-depth-pass
+# Plan Index — svg-aesthetic-depth-pass
 #
-# Dispatch surface for this plan folder.
+# The desired end state is a prompt + architecture brief pair that makes a downstream model start from the site's actual shape: - hand-authored HTML - shell-driven responsive…
 
 #>plan_svg_aesthetic_depth_pass_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `The desired end state is a prompt + architecture brief pair that makes a downstream model start from the site's actual shape: - hand-authored HTML - shell-driven responsive layouts - additive wonder states - SVG host contracts - diagrammatic warmth + inspectable restraint The immediate task is not implementation. It is to make the later analysis phase cheaper to ground, more aesthetically coherent, and more attentive to mobile, tablet, wide, and long-display behavior.`
+ owner = `svg-aesthetic-depth-pass`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@topics_craft_svg_index_html: ~"../../../topics/craft/svg/index.html"
+@about_index_html: ~"../../../about/index.html"
+@agents_plans_svg_surface_integration_plan_md: ~"../../../.agents/plans/svg-surface-integration/PLAN.md"
+@svg_surface_integration: ~"../../../.agents/plans/svg-surface-integration/svg-surface-integration.spw"
+@svg_infrastructure: ~"../../../.agents/prompts/svg-infrastructure.md"
+@svg_aesthetic_depth_pass_memo: ~"../../../.agents/state/svg-aesthetic-depth-pass-memo.md"
+@agents_plans_svg_aesthetic_depth_pass_plan_md: ~"../../../.agents/plans/svg-aesthetic-depth-pass/PLAN.md"
+@agents_plans_agentic_dev_contracts_plan_md: ~"../../../.agents/plans/agentic-dev-contracts/PLAN.md"
 
 dispatch: .{
  plan = @plan
+ topics_craft_svg_index_html = @topics_craft_svg_index_html
+ about_index_html = @about_index_html
+ agents_plans_svg_surface_integration_plan_md = @agents_plans_svg_surface_integration_plan_md
+ svg_surface_integration = @svg_surface_integration
+ svg_infrastructure = @svg_infrastructure
+ svg_aesthetic_depth_pass_memo = @svg_aesthetic_depth_pass_memo
+ agents_plans_svg_aesthetic_depth_pass_plan_md = @agents_plans_svg_aesthetic_depth_pass_plan_md
+ agents_plans_agentic_dev_contracts_plan_md = @agents_plans_agentic_dev_contracts_plan_md
 }[reg=facet]
 
+validation: #[
+ `git diff --check`,
+ `rg -n "svg-aesthetic-depth-pass|SVG Aesthetic Depth Pass For Opus 4.7" .agents/prompts .agents/plans`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: The desired end state is a prompt + architecture brief pair that makes a downstream model start from the site's actual shape: -…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

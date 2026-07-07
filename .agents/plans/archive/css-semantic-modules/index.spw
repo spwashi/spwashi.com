@@ -1,21 +1,56 @@
-# Plan Directory Index — css-semantic-modules
+# Plan Index — CSS Semantic Modules
 #
-# Dispatch surface for this plan folder.
+# Make CSS easier to debug, teach, and refactor by moving from large hand-edited CSS files toward semantic source modules while preserving the current static-site output contract.
 
 #>plan_css_semantic_modules_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "cold"
+
+intent: .{
+ goal = `Make CSS easier to debug, teach, and refactor by moving from large hand-edited CSS files toward semantic source modules while preserving the current static-site output contract.`
+ owner = `css-semantic-modules`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@style: ~"../../../../public/css/style.css"
+@css: ~"../../../../public/css/"
+@css_build: ~"../../../../scripts/ts/css-build.mts"
+@css_contracts: ~"../../../../scripts/ts/css-contracts.mts"
+@css_instruction: ~"../../../../.spw/conventions/css-instruction.spw"
+@design_experiments: ~"../../../../public/css/routes/surfaces/design-experiments.css"
+@debug: ~"../../../../public/css/effects/debug.css"
+@tools_budgeting_surface: ~"../../../../public/css/routes/surfaces/tools-budgeting-surface.css"
 
 dispatch: .{
  plan = @plan
+ style = @style
+ css = @css
+ css_build = @css_build
+ css_contracts = @css_contracts
+ css_instruction = @css_instruction
+ design_experiments = @design_experiments
+ debug = @debug
+ tools_budgeting_surface = @tools_budgeting_surface
 }[reg=facet]
 
+validation: #[
+ `git diff --check`,
+ `npm run build:tools`,
+ `npm run build:css`,
+ `npm run check:css`,
+ `npm run check`,
+ `Targeted check that generated CSS still imports from public/css/style.css.`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Make CSS easier to debug, teach, and refactor by moving from large hand-edited CSS files toward semantic source modules while preserving…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

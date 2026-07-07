@@ -1,21 +1,53 @@
-# Plan Directory Index — algorithm-scale-statistics-rpg-bridges
+# Plan Index — algorithm-scale-statistics-rpg-bridges
 #
-# Dispatch surface for this plan folder.
+# Add a small topic cluster for algorithm intuition, scale intuition, and statistical analysis, then connect those routes into RPG Wednesday surfaces where layout, compression,…
 
 #>plan_algorithm_scale_statistics_rpg_bridges_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Add a small topic cluster for algorithm intuition, scale intuition, and statistical analysis, then connect those routes into RPG Wednesday surfaces where layout, compression, mnemonic play, and canon-building already matter.`
+ owner = `algorithm-scale-statistics-rpg-bridges`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@topics_index_html: ~"../../../topics/index.html"
+@topics_math_index_html: ~"../../../topics/math/index.html"
+@topics_software_index_html: ~"../../../topics/software/index.html"
+@play_rpg_wednesday_index_html: ~"../../../play/rpg-wednesday/index.html"
+@play_rpg_wednesday_arcs_index_html: ~"../../../play/rpg-wednesday/arcs/index.html"
+@play_rpg_wednesday_world_index_html: ~"../../../play/rpg-wednesday/world/index.html"
+@topics_software_algorithms_index_html: ~"../../../topics/software/algorithms/index.html"
+@topics_math_scale_intuition_index_html: ~"../../../topics/math/scale-intuition/index.html"
 
 dispatch: .{
  plan = @plan
+ topics_index_html = @topics_index_html
+ topics_math_index_html = @topics_math_index_html
+ topics_software_index_html = @topics_software_index_html
+ play_rpg_wednesday_index_html = @play_rpg_wednesday_index_html
+ play_rpg_wednesday_arcs_index_html = @play_rpg_wednesday_arcs_index_html
+ play_rpg_wednesday_world_index_html = @play_rpg_wednesday_world_index_html
+ topics_software_algorithms_index_html = @topics_software_algorithms_index_html
+ topics_math_scale_intuition_index_html = @topics_math_scale_intuition_index_html
 }[reg=facet]
 
+validation: #[
+ `git diff --check`,
+ `npm run check`,
+ `targeted rg for route links and anchors`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Add a small topic cluster for algorithm intuition, scale intuition, and statistical analysis, then connect those routes into RPG Wednesday…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

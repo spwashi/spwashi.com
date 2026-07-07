@@ -1,21 +1,48 @@
-# Plan Directory Index — discovery-notice-popups
+# Plan Index — Discovery Notice Popups
 #
-# Dispatch surface for this plan folder.
+# - Improve site discoverability with small dismissible pop-ups that surface useful internal pages and offers. - Keep the notices schedule-driven so the surface can change by day or…
 
 #>plan_discovery_notice_popups_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `- Improve site discoverability with small dismissible pop-ups that surface useful internal pages and offers. - Keep the notices schedule-driven so the surface can change by day or week without hand-editing routes.`
+ owner = `discovery-notice-popups`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@data: ~"../../../public/data/"
+@promo_wonder_cycle: ~"../../../public/data/promo-wonder-cycle.json"
+@site: ~"../../../public/js/site.js"
+@js: ~"../../../public/js/"
+@spw: ~"../../../.spw/"
 
 dispatch: .{
  plan = @plan
+ data = @data
+ promo_wonder_cycle = @promo_wonder_cycle
+ site = @site
+ js = @js
+ spw = @spw
 }[reg=facet]
 
+validation: #[
+ `git diff --check`,
+ `node --check on touched JS modules`,
+ `npm run check`,
+ `browser smoke check on the home page and one content route`,
+][reg=set]
+
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: - Improve site discoverability with small dismissible pop-ups that surface useful internal pages and offers. - Keep the notices…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

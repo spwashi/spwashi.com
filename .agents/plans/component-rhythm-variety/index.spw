@@ -1,21 +1,35 @@
-# Plan Directory Index — component-rhythm-variety
+# Plan Index — Component Rhythm Variety
 #
-# Dispatch surface for this plan folder.
+# Make shared components feel more specific and scannable by tightening vertical rhythm, differentiating frame/card roles more clearly, and sharpening copy toward concrete outputs.
 
 #>plan_component_rhythm_variety_index
 #:index #!plan
+#:operation #!prime
 #:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Make shared components feel more specific and scannable by tightening vertical rhythm, differentiating frame/card roles more clearly, and sharpening copy toward concrete outputs.`
+ owner = `component-rhythm-variety`
+ kind = `plan`
+}[reg=facet]
 
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@frames: ~"../../../public/css/components/frames.css"
+@cards: ~"../../../public/css/components/cards.css"
 
 dispatch: .{
  plan = @plan
+ frames = @frames
+ cards = @cards
 }[reg=facet]
 
 invariants: #[
- `PLAN.md sequences work when present.`,
- `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
- `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+ `Owner intent: Make shared components feel more specific and scannable by tightening vertical rhythm, differentiating frame/card roles more clearly, and…`,
+ `PLAN.md or FIX.md remains the sequencing source; this index routes inspection.`,
+ `Promote durable claims to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
 ][reg=set]
 

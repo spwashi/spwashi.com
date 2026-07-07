@@ -12,6 +12,14 @@
 operation = "cache"
 fixity = "tending"
 
+^"plan_context"{
+ goal = `The site should expose more of its live state through its own notation instead of explaining interaction only in prose. Small code-like state blocks should summarize what a component can currently do, and on selected surfaces they should let the visitor cycle operator, brace, mode, or value state directly from the block itself. The taste note is clarity + expressiveness: the blocks should feel like useful diagnostic surfaces, not novelty stickers, and they should only mutate state that the underlying component already owns.`
+ owner = `state-block-projections`
+ operation = "prime"
+ validation = #[ `Hypotheses: small code-like state blocks will make component state easier to read and will deepen the interaction grammar when tokens mutate real underlying state`, `Negative controls: existing mode-switch buttons, image helper chips, and settings form interactions must continue working normally`, `Demo sequence: open home hero and swap mode/operator/brace from the state block; open Pretext and cycle lens state from the block; open settings and cycle a small set of appearance/runtime values from the block; mark an image visited and confirm the image state block updates`, ][reg=set]
+ hot_files = #[ `public/js/site.js`, `.agents/plans/state-block-projections/state-block-projections.spw`, ][reg=set]
+}[reg=facet]
+
 ^["roots"]{
  @cluster: ~".agents/plans/plan-ecology-clustering/plan-ecology-clustering.spw"
  @plan: ~".agents/plans/state-block-projections/PLAN.md"
