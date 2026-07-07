@@ -1,0 +1,69 @@
+# Module Export Contract
+#
+# Target uniformity for JavaScript module exports across catalog, compose, and
+# optional spwModule compatibility. operation: contract | fixity: stable
+
+#>module_export_contract
+#:convention #!runtime #!javascript
+#:layer #!pragmatics
+
+@audit: ~"../audits/module-export-standalone-2026-07.spw"
+@ecology: ~"./runtime-medium-ecology.spw"
+@medium_map: ~"../surfaces/runtime-module-medium.spw"
+@loader: ~"../../public/js/runtime/module-loader.js"
+@shared_resolver: ~"../../public/js/kernel/shared.js"
+
+^"target_shape"{
+  canonical: `SPW_MODULE_EXPORT frozen object`
+  fields: #[
+    `id — optional; defaults from catalog def.id`
+    `mount — required function (mod, ctx, root?) => cleanup | { cleanup, refresh } | void`
+    `refresh — optional`
+    `contract — optional SPW_*_CONTRACT reference`
+    `updates — optional; normalized by module-updates-contract`
+    `guild — optional runtime-medium guild id`
+  ][reg=set]
+
+  compatibility_alias: `export const spwModule = SPW_MODULE_EXPORT — one release tolerance`
+
+  legacy_mount_names: #[
+    `export function initX() — catalog mount callback may call directly today`
+    `export async function initX()`
+  ][reg=set]
+}
+
+^"resolver_order"{
+  steps: ?<
+    `1. module.SPW_MODULE_EXPORT.mount if present`,
+    `2. module.spwModule.mount (alias)`,
+    `3. module.default.mount if object default`,
+    `4. first export matching /^init[A-Z]/ invoked by catalog mount wrapper`,
+    `5. audit skip with reason export-shape-missing`
+  >[reg=stream]
+}
+
+^"compose_rule"{
+  portable_surface: `compose.js re-exports contract helpers and Grade A/B guild batches`
+  console_rule: `window.spwCompose.describeModuleExport(id) returns mount + updates + guild`
+  literate_rule: `Every portable export names field, target, gesture, visible result (SPW_COMPOSITION_CONTRACT)`
+}
+
+^"inspection_dataset"{
+  on_mount: #[
+    `data-spw-module-export-shape`
+    `data-spw-module-guild`
+    `data-spw-module-export-grade`
+  ][reg=set]
+}
+
+validation: #[
+  `npm run check:runtime warns when catalog import target lacks resolvable mount`,
+  `node --check on module-export-contract.js`,
+  `describeModuleExport() returns stable JSON for all catalog ids (goal)`
+][reg=set]
+
+dispatch: .{
+  audit = @audit
+  ecology = @ecology
+  medium_map = @medium_map
+}[reg=facet]

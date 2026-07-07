@@ -37,6 +37,12 @@
 @spw_language_v04_plan: ~"../../.agents/plans/spw-language-v04/PLAN.md"
 @spw_language_v04_plan_index: ~"../../.agents/plans/spw-language-v04/index.spw"
 @language_v04: ~"../language/v04/index.spw"
+@module_export_uniformity: ~"../../.agents/plans/module-export-uniformity/PLAN.md"
+@module_export_uniformity_index: ~"../../.agents/plans/module-export-uniformity/index.spw"
+@runtime_medium_ecology: ~"./runtime-medium-ecology.spw"
+@module_export_contract: ~"./module-export-contract.spw"
+@module_export_audit: ~"../audits/module-export-standalone-2026-07.spw"
+@runtime_module_medium: ~"../surfaces/runtime-module-medium.spw"
 
 dispatch: .{
  agents = @agents
@@ -70,6 +76,12 @@ dispatch: .{
  spw_language_v04_plan = @spw_language_v04_plan
  spw_language_v04_plan_index = @spw_language_v04_plan_index
  language_v04 = @language_v04
+ module_export_uniformity = @module_export_uniformity
+ module_export_uniformity_index = @module_export_uniformity_index
+ runtime_medium_ecology = @runtime_medium_ecology
+ module_export_contract = @module_export_contract
+ module_export_audit = @module_export_audit
+ runtime_module_medium = @runtime_module_medium
 }[reg=facet]
 
 roles: #[

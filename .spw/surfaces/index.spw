@@ -11,6 +11,7 @@
 @product_lines: ~"./product-lines.spw"
 @menu_field: ~"./menu-field.spw"
 @approach_topography: ~"./approach-topography.spw"
+@runtime_module_medium: ~"./runtime-module-medium.spw"
 
 dispatch: .{
  registry = @registry
@@ -18,6 +19,7 @@ dispatch: .{
  product_lines = @product_lines
  menu_field = @menu_field
  approach_topography = @approach_topography
+ runtime_module_medium = @runtime_module_medium
 }[reg=facet]
 
 invariants: #[

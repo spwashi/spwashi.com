@@ -1,0 +1,135 @@
+# Module export + standalone script audit (2026-07)
+#
+# operation: audit
+# fixity: tending
+# method: node --check all tracked .js; heuristic standalone grades on public/js
+
+#>module_export_standalone_audit_2026_07
+#:audit #!runtime #!javascript
+#:operation #!audit
+#:layer #!editor_inspectability
+
+@runtime_medium_ecology: ~"../conventions/runtime-medium-ecology.spw"
+@module_export_contract: ~"../conventions/module-export-contract.spw"
+@runtime_module_medium: ~"../surfaces/runtime-module-medium.spw"
+@module_updates_contract: ~"../../public/js/runtime/module-updates-contract.js"
+@compose_entry: ~"../../public/js/compose.js"
+@module_catalog: ~"../../public/js/runtime/module-catalog.js"
+@plan: ~"../../.agents/plans/module-export-uniformity/PLAN.md"
+
+audit_run: .{
+  at = `2026-07-07`
+  scope = `public/js + scripts (192 files)`
+  syntax = `node --check`
+  syntax_pass = 192
+  syntax_fail = 0
+  runtime_contract = `npm run check:runtime — 92 catalog modules, passed`
+}[reg=facet]
+
+^"standalone_grades"{
+  definition: "Standalone here means portable import surface, not `node file.js` execution. Three postures from compose contract: syntax-valid ESM, importable without site.js, re-exported from compose.js."
+
+  A_node_portable: .{
+    count = 15
+    meaning = `Exports present; no document/window/localStorage/HTMLElement/matchMedia in source; no /public/js absolute imports`
+    files = #[
+      `interface/cauldron/helpers.js`
+      `interface/cauldron/trace.js`
+      `interface/cauldron/undo.js`
+      `interface/palette-resonance.js`
+      `kernel/bus.js`
+      `kernel/feed-utils.js`
+      `kernel/query-composer.js`
+      `kernel/runtime-environment.js`
+      `kernel/settings-query-parity.js`
+      `modules/profile/builder.js`
+      `runtime/behavior-scopes.js`
+      `runtime/interaction-vocabulary.js`
+      `semantic/pretext-utils.js`
+      `semantic/semantic-utils.js`
+      `typed/json-feeds.js`
+    ][reg=set]
+    node_import_ok = `~12 leaf modules; bus.js fails (document at load); absolute /public/js paths break Node without Vite resolver`
+  }[reg=facet]
+
+  B_contract_export: .{
+    count = 23
+    meaning = `Named exports plus SPW_*_CONTRACT frozen surface`
+    compose_covered = 20
+    gap = `Most Grade B modules are not yet re-exported from compose.js`
+  }[reg=facet]
+
+  C_browser_module: .{
+    count = 147
+    meaning = `Requires DOM/runtime shell; valid syntax only`
+  }[reg=facet]
+
+  D_side_effect: .{
+    count = 4
+    meaning = `No exports; mount via import side effects only`
+    files = #[
+      `modules/math/diagrams.js`
+      `modules/tools/budgeting.js`
+      `runtime/prepaint-state.js`
+    ][reg=set]
+  }[reg=facet]
+}
+
+^"export_pattern_inventory"{
+  catalog_modules = 92
+  init_function_exports = 99
+  spw_module_exports = 6
+  contract_only_surfaces = 14
+  compose_reexport_sources = 21
+
+  spw_module_files: #[
+    `interface/state-inspector.js`
+    `runtime/interactive-medium.js`
+    `runtime/page-anatomy.js`
+    `runtime/scene-interaction.js`
+    `runtime/spw-key-events.js`
+    `runtime/topical-payload.js`
+  ][reg=set]
+
+  mount_resolver_today: `shared.js accepts module.spwModule.mount; module-catalog mount callbacks call init* directly — dual path`
+
+  uniformity_gap: #[
+    `init* naming is inconsistent (initSpwX vs initX)`
+    `only 6/92 catalog targets expose spwModule`
+    `compose covers ~10% of public/js`
+    `absolute /public/js imports block Node standalone import`
+  ][reg=set]
+}
+
+^"orchestrator_watch"{
+  note = `Largest browser modules: poor standalone decomposition candidates; growth should flow through guild splits and export contract first.`
+  files: #[
+    .{ path = `runtime/shell-disclosure.js`, lines = 2283 }[reg=facet]
+    .{ path = `runtime/experiential.js`, lines = 2184 }[reg=facet]
+    .{ path = `kernel/shared.js`, lines = 1991 }[reg=facet]
+    .{ path = `interface/haptics.js`, lines = 1168 }[reg=facet]
+    .{ path = `interface/state-inspector.js`, lines = 1104 }[reg=facet]
+    .{ path = `runtime/page-anatomy.js`, lines = 1139 }[reg=facet]
+  ][reg=set]
+}
+
+^"blockers"{
+  absolute_import_paths: `Root-absolute /public/js/... imports require browser bundler resolver`
+  browser_top_level: `Some A-grade files still touch document when evaluated (bus.js)`
+  dual_mount_paths: `catalog mount vs spwModule.mount vs raw init export`
+}
+
+next_actions: ?<
+ `Land module-export-contract.spw + runtime-medium-ecology.spw`,
+ `Add module-export-contract.js adapter in module-loader`,
+ `Migrate spwModule six-pack to SPW_MODULE_EXPORT with alias tolerance`,
+ `Add check-standalone.mjs to check:local`,
+ `Promote Grade B contracts to compose by guild`
+>[reg=stream]
+
+dispatch: .{
+  ecology = @runtime_medium_ecology
+  export_contract = @module_export_contract
+  medium_map = @runtime_module_medium
+  plan = @plan
+}[reg=facet]

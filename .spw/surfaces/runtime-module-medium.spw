@@ -1,0 +1,195 @@
+# Runtime Module Medium Map
+#
+# Initial guild categorization for 92 catalog modules. operation: align | fixity: tending
+# Update when catalog ids change; regenerate via maintain-plan-directory-indexes or manual audit.
+
+#>runtime_module_medium
+#:surface #!runtime #!catalog
+#:layer #!editor_inspectability
+
+@ecology: ~"../conventions/runtime-medium-ecology.spw"
+@export_contract: ~"../conventions/module-export-contract.spw"
+@audit: ~"../audits/module-export-standalone-2026-07.spw"
+@catalog: ~"../../public/js/runtime/module-catalog.js"
+
+^"substrate"{
+  guild = `rhizosphere`
+  modules: #[
+    `site-settings`
+    `site-core-minimal`
+    `module-effects`
+    `hydration-passes`
+    `loading-ecology`
+    `layout-assumptions`
+  ][reg=set]
+  export_priority = `B-contract → compose batch 1`
+}
+
+^"orientation"{
+  guild = `canopy`
+  modules: #[
+    `shell-disclosure`
+    `navigation-locomotion`
+    `navigation-spells`
+    `frame-navigator`
+    `page-region-rail`
+    `attention-architecture`
+    `region-menu`
+    `layout-shift-audit`
+  ][reg=set]
+  note = `page-state is catalog-adjacent lifecycle; grouped here for nutrient overlap with arrival/settle`
+  export_priority = `split shell-disclosure before export uniformity`
+}
+
+^"symbiosis"{
+  guild = `pollination`
+  modules: #[
+    `experiential`
+    `charge-field`
+    `gesture-anatomy`
+    `learnability-ledger`
+    `component-collection`
+    `reward-ui`
+    `settings-momentum`
+    `concept-salience`
+    `palette-treat-discovery`
+    `guide`
+    `guide-badge`
+  ][reg=set]
+}
+
+^"memory"{
+  guild = `reserve`
+  modules: #[
+    `haptics`
+    `spells`
+    `local-notes`
+    `local-memory-controls`
+    `cauldron`
+    `boonhonk-mixer`
+    `image-discovery-rewards`
+  ][reg=set]
+  nutrient_focus = #[`storage`, `pins`, `checkpoints`, `collection`][reg=set]
+}
+
+^"inspection"{
+  guild = `sensing`
+  modules: #[
+    `state-inspector`
+    `console`
+    `observation-beats`
+    `page-anatomy`
+    `composition-box-model`
+    `semantic-crossrefs`
+    `component-semantics`
+    `contextual-ui`
+    `topic-discovery`
+    `design-review-surfaces`
+    `effect-ledger`
+    `sigil-anatomy`
+  ][reg=set]
+  spw_module_today: #[`state-inspector`, `page-anatomy`][reg=set]
+}
+
+^"expression"{
+  guild = `flowering`
+  modules: #[
+    `operators`
+    `brace-physics`
+    `brace-pivots`
+    `bare-spw-markup`
+    `annotation-layer`
+    `pronunciation-hints`
+    `prompt-utils`
+    `variant-selection`
+    `pulse-beat-tuner`
+  ][reg=set]
+}
+
+^"media"{
+  guild = `fruiting`
+  modules: #[
+    `interactive-medium`
+    `scene-interaction`
+    `spw-key-events`
+    `topical-payload`
+    `image-metaphysics`
+    `image-interaction`
+    `image-utilization`
+    `effect-interpretation`
+    `svg-filters`
+    `svg-tunability`
+    `canvas-accents`
+    `logo-runtime`
+    `media-cauldron`
+    `media-publishing`
+    `ingredient-lab`
+  ][reg=set]
+  spw_module_today: #[`interactive-medium`, `scene-interaction`, `spw-key-events`, `topical-payload`][reg=set]
+}
+
+^"literacy"{
+  guild = `seed`
+  modules: #[
+    `narrative-instrumentation`
+    `pretext-lab`
+    `pretext-physics`
+    `typography-measurement-preview`
+    `frame-metrics`
+    `precipitation-request`
+    `discovery-notices`
+    `tuning-discovery`
+  ][reg=set]
+}
+
+^"field"{
+  guild = `plot`
+  layer = `FEATURE`
+  modules: #[
+    `blog-interpreter`
+    `blog-specimens`
+    `attn-register`
+    `seed-cards`
+    `payment-cards`
+    `services-configurators`
+    `rpg-wednesday`
+    `settings-page`
+    `payment-settings`
+    `home-section-index`
+    `promo-wonder-cycle`
+    `design-experiments`
+    `region-enhancer`
+  ][reg=set]
+}
+
+^"uncategorized_watch"{
+  modules: #[
+    `pwa-update-handler`
+    `semantic-chrome`
+    `interaction-progression`
+  ][reg=set]
+  action = `Assign guild on next catalog touch; pwa→substrate, semantic-chrome→inspection, interaction-progression→symbiosis`
+}
+
+^"export_migration_queue"{
+  priority_1_spw_module_six: #[
+    `state-inspector`
+    `interactive-medium`
+    `page-anatomy`
+    `scene-interaction`
+    `spw-key-events`
+    `topical-payload`
+  ][reg=set]
+  priority_2_compose_guild_batches: #[`substrate`, `inspection`, `literacy`][reg=set]
+  priority_3_side_effect_exports: #[`prepaint-state`][reg=set]
+}
+
+module_count = 92
+guild_count = 9
+
+dispatch: .{
+  ecology = @ecology
+  export_contract = @export_contract
+  audit = @audit
+  catalog = @catalog
+}[reg=facet]

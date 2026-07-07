@@ -261,6 +261,14 @@ export {
 } from './runtime/module-updates-contract.js';
 
 export {
+  SPW_MODULE_EXPORT_CONTRACT,
+  SPW_MODULE_EXPORT_SHAPE,
+  createModuleExport,
+  describeModuleExport,
+  resolveModuleMount,
+} from './runtime/module-export-contract.js';
+
+export {
   BEHAVIOR_SCOPE_BUNDLES,
   BEHAVIOR_SCOPE_KEYS,
   SPW_BEHAVIOR_SCOPES_CONTRACT,

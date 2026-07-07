@@ -1642,6 +1642,13 @@ const resolveFeatureInitializer = (module, exportName) => {
     };
   }
 
+  if (typeof module?.SPW_MODULE_EXPORT?.mount === 'function') {
+    return {
+      kind: 'module-export',
+      fn: module.SPW_MODULE_EXPORT.mount
+    };
+  }
+
   if (typeof module?.spwModule?.mount === 'function') {
     return {
       kind: 'module-contract',
