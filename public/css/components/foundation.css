@@ -41,11 +41,11 @@
     color-mix(in srgb, var(--component-surface-strong) 96%, var(--component-accent) 4%);
 
   /* Shadow */
-  --component-shadow: var(--spw-depth-card-shadow, var(--shadow-base, 0 10px 24px rgba(0, 0, 0, 0.06)));
-  --component-shadow-active: var(--spw-depth-card-shadow-active, var(--shadow-active, 0 16px 34px rgba(0, 0, 0, 0.10)));
+  --component-shadow: var(--spw-elevation-card-shadow, var(--shadow-base, 0 10px 24px rgba(0, 0, 0, 0.06)));
+  --component-shadow-active: var(--spw-elevation-card-shadow-active, var(--shadow-active, 0 16px 34px rgba(0, 0, 0, 0.10)));
   --component-shadow-quiet: var(--shadow-sm, 0 4px 12px rgba(0, 0, 0, 0.03));
-  --component-frame-shadow: var(--spw-depth-frame-shadow, var(--component-shadow));
-  --component-frame-shadow-active: var(--spw-depth-frame-shadow-active, var(--component-shadow-active));
+  --component-frame-shadow: var(--spw-elevation-frame-shadow, var(--component-shadow));
+  --component-frame-shadow-active: var(--spw-elevation-frame-shadow-active, var(--component-shadow-active));
 
   /* Accent — prefer semantic accent family for theme coherence across routes and ornament projection.
      Falls back through active-op-color (runtime) then teal primitive. */

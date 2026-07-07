@@ -25,6 +25,40 @@ const MEMORY_TARGET_SELECTOR = [
 
 const SITEWIDE_ONLY_SELECTOR = '.intent-cluster, .context-edge-card, .math-lens-card';
 const RESONANT_BLOCK_SELECTOR = '.topic-photo-card, .intent-cluster, .context-edge-card, .math-lens-card';
+const LIMINALITY_CHARGE = Object.freeze({
+    entry: 0.05,
+    threshold: 0.1,
+    settled: 0.12,
+    nested: 0.16,
+    projected: 0.22,
+    deep: 0.28,
+});
+const FAMILIARITY_GROUND = Object.freeze({
+    fresh: 0,
+    familiar: 0.04,
+    practiced: 0.08,
+    fluent: 0.12,
+    habitual: 0.16,
+});
+
+function computeWonderFieldBalance({
+    strength = 0,
+    signalCount = 0,
+    liminality = 'settled',
+    familiarity = 'fresh',
+} = {}) {
+    const strengthNorm = Math.min(1, Math.max(0, Number(strength) / 2));
+    const signalBoost = Math.min(0.18, Math.max(0, Number(signalCount) || 0) * 0.02);
+    const liminalityCharge = LIMINALITY_CHARGE[liminality] ?? 0.1;
+    const familiarityGround = FAMILIARITY_GROUND[familiarity] ?? 0.05;
+    const balance = 0.38 + strengthNorm * 0.34 + signalBoost + liminalityCharge - familiarityGround * 0.5;
+    return Math.min(0.88, Math.max(0.22, balance)).toFixed(4);
+}
+
+export function computeLocomotionFieldBalance(progress = 0) {
+    const normalized = Math.min(1, Math.max(0, Number(progress) || 0));
+    return (0.42 + normalized * 0.28).toFixed(4);
+}
 
 function readTargetMemorySnapshot(target) {
     return {
@@ -135,6 +169,7 @@ function clearRootState(root) {
     root.style.removeProperty('--delight-color');
     root.style.removeProperty('--spw-wonder-memory-color');
     root.style.removeProperty('--spw-wonder-memory-alt-color');
+    root.style.removeProperty('--field-balance');
 }
 
 function collectTargets(root = document) {
@@ -199,6 +234,12 @@ export function applyWonderMemoryState(root = document) {
     host.style.setProperty('--delight-color', secondary);
     host.style.setProperty('--spw-wonder-memory-color', primary);
     host.style.setProperty('--spw-wonder-memory-alt-color', secondary);
+    host.style.setProperty('--field-balance', computeWonderFieldBalance({
+        strength,
+        signalCount: recent.tokens.length,
+        liminality: cognitiveState.liminality,
+        familiarity: cognitiveState.familiarity,
+    }));
 
     targets.forEach((target) => {
         if (mode !== 'sitewide' && target.matches(SITEWIDE_ONLY_SELECTOR)) {

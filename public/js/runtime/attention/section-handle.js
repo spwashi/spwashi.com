@@ -3,6 +3,7 @@ import {
   syncFloatingChromeState,
 } from '/public/js/kernel/dom-contracts.js';
 import { appendToDocument } from '/public/js/kernel/dom-render.js';
+import { computeLocomotionFieldBalance } from '/public/js/interface/wonder-memory.js';
 import {
   AUTO_HANDLE_MIN_SECTIONS,
   APPROACH_ATTR,
@@ -472,6 +473,19 @@ function resolveHandleApproach(visible, phase, sectionCount) {
 /** Wonder invitation + expressive approach on the handle shell only.
     Reach, return, and invitation copy use existing page_locomotion_handle datasets
     (availability, page-section-*, section-handle-label) — no parallel root attrs. */
+function syncRootFieldBalance(visible, activeIndex, sectionCount) {
+  const root = document.documentElement;
+  if (root.dataset.spwWonderMemoryState === 'active') return;
+
+  if (visible && sectionCount > 1) {
+    const progress = getSectionProgress(activeIndex, sectionCount);
+    root.style.setProperty('--field-balance', computeLocomotionFieldBalance(progress));
+    return;
+  }
+
+  root.style.removeProperty('--field-balance');
+}
+
 function syncChromeLocomotionExpression(snapshot, visible, phase, handle, shell) {
   const activeTrail = visible && snapshot.sectionCount > 1;
   const approach = resolveHandleApproach(visible, phase, snapshot.sectionCount);
@@ -563,6 +577,7 @@ function updateSectionHandleState({
 
   writePageSectionDatasets(snapshot);
   syncChromeLocomotionExpression(snapshot, visible, state.phase, handle, shell);
+  syncRootFieldBalance(visible, state.activeIndex, sections.length);
 
   // Enhance floating chrome UX with vocabulary context (for resonance + priming)
   syncSectionVocabularyHint(sections, state.activeIndex, handle, shell);
@@ -878,6 +893,9 @@ function createSectionHandleController({
       node.style.removeProperty('--spw-section-progress');
       node.style.removeProperty('--spw-section-step');
     });
+    if (document.documentElement.dataset.spwWonderMemoryState !== 'active') {
+      document.documentElement.style.removeProperty('--field-balance');
+    }
     if (generated) {
       handle.remove();
     }

@@ -692,7 +692,8 @@ html[data-spw-reduce-motion="on"] *::after {
   initial-value: 0;
 }
 
-/* Local liftedness / projection */
+/* Local liftedness / projection (expressive register channel — not material elevation).
+   Material shadows use --spw-elevation-* tokens in section 4. */
 @property --spw-depth {
   syntax: "<number>";
   inherits: true;
@@ -1296,21 +1297,31 @@ html[data-spw-reduce-motion="on"] *::after {
   0 2px 6px rgba(0, 0, 0, 0.04);
   --card-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.52);
 
-  --spw-depth-card-shadow: var(--card-shadow);
-  --spw-depth-card-shadow-active: var(--card-highlight), var(--card-shadow-hover);
-  --spw-depth-frame-shadow: var(--card-highlight), var(--card-shadow);
-  --spw-depth-frame-shadow-active: var(--card-highlight), var(--card-shadow-hover);
-
   --floating-bg: var(--surface-strong);
   --floating-bg-warm: rgba(255, 251, 242, 0.92);
   --floating-shadow: 0 8px 32px rgba(0, 0, 0, 0.12),
   0 2px 8px rgba(0, 0, 0, 0.06);
   --floating-shadow-side: 2px 0 20px rgba(0, 0, 0, 0.09);
 
-  --spw-depth-floating-shadow: var(--floating-shadow);
-  --spw-depth-shell-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
-  --spw-depth-shell-shadow-lifted: 0 6px 18px rgba(0, 0, 0, 0.06);
-  --spw-depth-shell-shadow-deep: 0 10px 28px rgba(0, 0, 0, 0.08);
+  /* Material elevation shadows (box-shadow stacks). Distinct from @property --spw-depth. */
+  --spw-elevation-card-shadow: var(--card-shadow);
+  --spw-elevation-card-shadow-active: var(--card-highlight), var(--card-shadow-hover);
+  --spw-elevation-frame-shadow: var(--card-highlight), var(--card-shadow);
+  --spw-elevation-frame-shadow-active: var(--card-highlight), var(--card-shadow-hover);
+  --spw-elevation-floating-shadow: var(--floating-shadow);
+  --spw-elevation-shell-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+  --spw-elevation-shell-shadow-lifted: 0 6px 18px rgba(0, 0, 0, 0.06);
+  --spw-elevation-shell-shadow-deep: 0 10px 28px rgba(0, 0, 0, 0.08);
+
+  /* Deprecated aliases — prefer --spw-elevation-* for material shadows. */
+  --spw-depth-card-shadow: var(--spw-elevation-card-shadow);
+  --spw-depth-card-shadow-active: var(--spw-elevation-card-shadow-active);
+  --spw-depth-frame-shadow: var(--spw-elevation-frame-shadow);
+  --spw-depth-frame-shadow-active: var(--spw-elevation-frame-shadow-active);
+  --spw-depth-floating-shadow: var(--spw-elevation-floating-shadow);
+  --spw-depth-shell-shadow: var(--spw-elevation-shell-shadow);
+  --spw-depth-shell-shadow-lifted: var(--spw-elevation-shell-shadow-lifted);
+  --spw-depth-shell-shadow-deep: var(--spw-elevation-shell-shadow-deep);
 
   --projection-lift-xs: 1px;
   --projection-lift-sm: 2px;
@@ -1493,6 +1504,12 @@ html[data-spw-reduce-motion="on"] *::after {
   --spw-page-arrival-step-3-delay: 148ms;
   --spw-page-arrival-duration: 280ms;
   --spw-page-return-duration: 180ms;
+  /* Settle declaration bounds: guard settles a born-entering page if boot
+     never conducts the arc; quiet-window is the evidence quiescence required
+     to declare settled; max-delay bounds the whole declaration. */
+  --spw-page-arrival-guard-delay: 1600ms;
+  --spw-page-settle-quiet-window: 160ms;
+  --spw-page-settle-max-delay: 2400ms;
   --spw-region-profile-refresh-duration: 220ms;
   --spw-region-profile-intensity: 1;
   --spw-layout-cascade-hold: 0;
@@ -2766,6 +2783,9 @@ html[data-spw-reduce-motion="on"] {
   --spw-page-arrival-step-3-delay: 1ms;
   --spw-page-arrival-duration: 1ms;
   --spw-page-return-duration: 1ms;
+  --spw-page-arrival-guard-delay: 1ms;
+  --spw-page-settle-quiet-window: 1ms;
+  --spw-page-settle-max-delay: 1ms;
   --spw-region-profile-refresh-duration: 1ms;
   --spw-component-arrival-transition: 1ms linear;
   --spw-component-settle-transition: 1ms linear;
@@ -4398,7 +4418,7 @@ body > header:empty {
     );
   box-shadow:
     inset 0 -1px 0 color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 90%, transparent),
-    var(--spw-depth-shell-shadow, 0 2px 10px rgba(0, 0, 0, 0.03));
+    var(--spw-elevation-shell-shadow, 0 2px 10px rgba(0, 0, 0, 0.03));
 
   backdrop-filter: blur(6px) saturate(1.02);
   -webkit-backdrop-filter: blur(6px) saturate(1.02);
@@ -4453,14 +4473,14 @@ body > header:empty {
 :where(.site-header[data-spw-shell-scroll="lifted"], body > header[data-spw-shell-scroll="lifted"]) {
   box-shadow:
     inset 0 -1px 0 color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 90%, transparent),
-    var(--spw-depth-shell-shadow-lifted, 0 6px 18px rgba(0, 0, 0, 0.06));
+    var(--spw-elevation-shell-shadow-lifted, 0 6px 18px rgba(0, 0, 0, 0.06));
 }
 
 :where(.site-header[data-spw-shell-scroll="deep"], body > header[data-spw-shell-scroll="deep"]) {
   --spw-header-opacity-local: 0.99;
   box-shadow:
     inset 0 -1px 0 color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 90%, transparent),
-    var(--spw-depth-shell-shadow-deep, 0 10px 28px rgba(0, 0, 0, 0.08));
+    var(--spw-elevation-shell-shadow-deep, 0 10px 28px rgba(0, 0, 0, 0.08));
 }
 
 :where(.site-header[data-spw-shell-scroll-direction="down"], body > header[data-spw-shell-scroll-direction="down"]) {
@@ -5230,7 +5250,7 @@ body > header:has(.spw-spell-path) .spw-attention-posture-pill {
     color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 92%, var(--spw-shell-chrome-accent-local) 8%);
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.36),
-    var(--spw-depth-card-shadow, 0 4px 12px rgba(0,0,0,0.032));
+    var(--spw-elevation-card-shadow, 0 4px 12px rgba(0,0,0,0.032));
   mask-image: linear-gradient(
     90deg,
     transparent,
@@ -5491,7 +5511,7 @@ body > header:has(.spw-spell-path) .spw-attention-posture-pill {
   -webkit-tap-highlight-color: transparent;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.42),
-    var(--spw-depth-card-shadow, 0 2px 6px rgba(0, 0, 0, 0.022));
+    var(--spw-elevation-card-shadow, 0 2px 6px rgba(0, 0, 0, 0.022));
   transition:
     border-color var(--spw-motion-quick, var(--shell-duration-fast) var(--shell-ease)),
     background var(--spw-motion-quick, var(--shell-duration-fast) var(--shell-ease)),
@@ -5504,11 +5524,14 @@ body > header:has(.spw-spell-path) .spw-attention-posture-pill {
   display: grid;
   gap: 0.04rem;
   min-width: 0;
+  min-inline-size: 6.75rem;
   text-align: left;
   transform-origin: left center;
 }
 
 .spw-nav-toggle-label {
+  display: inline-block;
+  min-inline-size: 5.25ch;
   line-height: 1;
 }
 
@@ -6791,12 +6814,37 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
 @media (max-width: 520px) {
   .site-footer__inner {
     grid-template-columns: 1fr;
-    gap: 0.6rem;
+    gap: var(--component-gap, 0.65rem);
+  }
+
+  .site-footer__identity {
+    gap: var(--component-gap, 0.42rem);
   }
 
   .site-footer__page-architecture {
     margin-top: 0.35rem;
     padding-top: 0.45rem;
+  }
+
+  .site-footer__cauldron {
+    margin-top: 0.2rem;
+    padding: var(--component-pad, 0.55rem);
+  }
+
+  .site-footer__settings {
+    margin-top: 0.28rem;
+    padding: var(--component-pad, 0.55rem);
+    gap: var(--component-gap, 0.42rem);
+  }
+
+  .site-footer__note-entry {
+    flex-basis: 100%;
+    min-width: 0;
+  }
+
+  .site-footer__nav {
+    justify-content: flex-start;
+    padding-top: 0.35rem;
   }
 }
 
@@ -9144,6 +9192,26 @@ body:has([data-spw-wonder-state]:not([data-spw-wonder-state=""])) .spw-section-h
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 18%, transparent),
     var(--handle-shadow-rest, 0 1px 3px rgba(0,0,0,0.06));
+}
+
+/* Wonder invitation: section locomotion participates in the attentional field. */
+.spw-section-handle[data-spw-wonder-entry="section-locomotion"],
+.spw-section-handle-shell[data-spw-wonder-entry="section-locomotion"] {
+  border-color: color-mix(
+    in srgb,
+    var(--semantic-accent, var(--active-op-color, var(--teal, #008080)))
+      calc(18% + (var(--field-balance, 0.5) * 14%)),
+    transparent
+  );
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.38) inset,
+    0 6px 18px color-mix(
+      in srgb,
+      var(--semantic-accent, var(--active-op-color, var(--teal, #008080)))
+        calc(8% + (var(--field-balance, 0.5) * 10%)),
+      rgba(0, 0, 0, 0.08)
+    ),
+    var(--spw-handle-direction-glow);
 }
 
 .spw-section-handle-shell[data-spw-handle-phase="traveling"]::after {
@@ -13206,11 +13274,11 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
     color-mix(in srgb, var(--component-surface-strong) 96%, var(--component-accent) 4%);
 
   /* Shadow */
-  --component-shadow: var(--spw-depth-card-shadow, var(--shadow-base, 0 10px 24px rgba(0, 0, 0, 0.06)));
-  --component-shadow-active: var(--spw-depth-card-shadow-active, var(--shadow-active, 0 16px 34px rgba(0, 0, 0, 0.10)));
+  --component-shadow: var(--spw-elevation-card-shadow, var(--shadow-base, 0 10px 24px rgba(0, 0, 0, 0.06)));
+  --component-shadow-active: var(--spw-elevation-card-shadow-active, var(--shadow-active, 0 16px 34px rgba(0, 0, 0, 0.10)));
   --component-shadow-quiet: var(--shadow-sm, 0 4px 12px rgba(0, 0, 0, 0.03));
-  --component-frame-shadow: var(--spw-depth-frame-shadow, var(--component-shadow));
-  --component-frame-shadow-active: var(--spw-depth-frame-shadow-active, var(--component-shadow-active));
+  --component-frame-shadow: var(--spw-elevation-frame-shadow, var(--component-shadow));
+  --component-frame-shadow-active: var(--spw-elevation-frame-shadow-active, var(--component-shadow-active));
 
   /* Accent — prefer semantic accent family for theme coherence across routes and ornament projection.
      Falls back through active-op-color (runtime) then teal primitive. */
@@ -14307,10 +14375,15 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
   --component-gap: var(--spw-pack-gap-active, var(--pack-tier-balanced-gap));
 }
 
+/* Packing attributes are state reporting (root field projections, profiler
+   writes on regions) — they tune spacing physics via custom properties but
+   never set their carrier's geometry. Spending --spw-pack-measure-active as
+   max-inline-size here clamped html and every profiled frame to a prose
+   measure; measure belongs to content-role rules (prose, notes, kickers)
+   that spend the token deliberately. */
 :where([data-spw-packing-state], [data-spw-pack-occupancy]) {
   --component-pad: var(--spw-pack-pad-active);
   --component-gap: var(--spw-pack-gap-active);
-  max-inline-size: var(--spw-pack-measure-active, none);
 }
 
 /* Settings line-spacing routes into packing + typography together */
@@ -19358,7 +19431,10 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   opacity: var(--spw-settle-opacity-mid, 0.985);
 }
 
-:where([data-spw-hydration="ready"]) {
+/* Component altitude only: html/body wear data-spw-hydration as state
+   narration, and replaying the settle animation on the root fades the whole
+   page every time hydration reaches ready. */
+:where([data-spw-hydration="ready"]):not(html, body) {
   animation: spw-hydration-settle var(--spw-component-settle-transition, 260ms ease-out) both;
 }
 
@@ -22745,11 +22821,11 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
     transform var(--spw-image-interaction-duration) var(--spw-image-interaction-ease);
 }
 
-:where(.topic-photo-card, .image-study)[data-spw-image-prominence="hero"]) {
+:where(.topic-photo-card, .image-study)[data-spw-image-prominence="hero"] {
   --spw-image-frame-pad: 0.58rem;
 }
 
-:where(.topic-photo-card, .image-study)[data-spw-image-prominence="supporting"]) {
+:where(.topic-photo-card, .image-study)[data-spw-image-prominence="supporting"] {
   --spw-image-frame-pad: 0.38rem;
   max-inline-size: min(100%, 36rem);
 }
@@ -26888,12 +26964,15 @@ html[data-spw-theme-pack="glass-console"] {
 }
 
 :where(html[data-spw-reveal-phase="revealing"], html[data-spw-reveal-phase="revealed"]) :where(main, body) {
-  background-image: radial-gradient(
-    118% 82% at 50% -4%,
-    color-mix(
-      in srgb,
-      var(--op-probe-color, #6a3fb8) calc(4% + (var(--spw-reveal-phase-weight, 0) * 10%)),
-      transparent
+  background-image:
+    radial-gradient(
+      118% 82% at 50% -4%,
+      color-mix(
+        in srgb,
+        var(--op-probe-color, #6a3fb8) calc(4% + (var(--spw-reveal-phase-weight, 0) * 10%)),
+        transparent
+      ),
+      transparent 70%
     ),
     radial-gradient(
       120% 80% at 50% 0%,
@@ -29432,7 +29511,7 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
    --------------------------------------------------------------------------
    Reads as: frame sigils, operator chips, spec pills, component tags: the faces readers actually touch
    Was: handles/operators.css §4–5 (split 2026-07-03, rule order preserved verbatim)
-   Genome — states sensed: aria-current, aria-pressed, data-site-setting-active, data-spw-annotation-match, data-spw-annotation-state, data-spw-collected, data-spw-color-mode, data-spw-debug-mode, data-spw-fixity-tier, data-spw-grounded, data-spw-load-posture, data-spw-load-timing, data-spw-meaning-mode, data-spw-operator
+   Genome — states sensed: aria-current, aria-pressed, data-site-setting-active, data-spw-annotation-match, data-spw-annotation-state, data-spw-collected, data-spw-color-mode, data-spw-debug-mode, data-spw-fixity-tier, data-spw-grounded, data-spw-load-posture, data-spw-load-timing, data-spw-meaning-mode, data-spw-op (position axis), data-spw-op-disposition (charge/discharge/reference/dereference), data-spw-operator, data-spw-sigil-position
    Genome — custom properties defined: 21; intent hooks consumed: --operator-chip-active-animation-intent, --operator-chip-active-bg-intent, --operator-chip-active-border-intent, --operator-chip-active-ink-intent, --operator-chip-active-lift-intent, --operator-chip-active-shadow-intent, --operator-chip-active-weight-intent
    Probe: toggle me wholesale in DevTools > Sources, or set
    html[data-spw-debug-layers="on"] to see layer owners breathe.
@@ -29503,9 +29582,17 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
   margin-inline-start: auto;
 }
 
-/* Positional grammar seams (prefix / infix / postfix) */
-:where([data-spw-sigil-position="prefix"]) {
+/* Positional grammar seams (prefix / infix / postfix).
+   Prefix leads attention forward into the operand; postfix reflects back on
+   what was just read. Buttons and copy share the seams: the data-spw-op
+   bundle carries position for atoms, data-spw-sigil-position for sigils. */
+:where([data-spw-sigil-position="prefix"], [data-spw-op~="position:prefix"]) {
   border-inline-start-width: 2px;
+  background-image: linear-gradient(
+    to right,
+    color-mix(in srgb, var(--active-op-color, var(--teal)) 9%, transparent),
+    transparent 38%
+  );
 }
 
 :where([data-spw-sigil-position="infix"]) {
@@ -29513,8 +29600,80 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
   border-color: color-mix(in srgb, currentColor 22%, transparent);
 }
 
-:where([data-spw-sigil-position="postfix"]) {
+:where([data-spw-sigil-position="postfix"], [data-spw-op~="position:postfix"]) {
   border-inline-end-width: 2px;
+  background-image: linear-gradient(
+    to left,
+    color-mix(in srgb, var(--active-op-color, var(--teal)) 9%, transparent),
+    transparent 38%
+  );
+}
+
+/* ── Operational disposition physics ──────────────────────────────────────
+   Containers determine what a sigil's payload does (spatial physics):
+   charge      - the vessel accumulates; sigils pull inward   (cauldron host)
+   discharge   - composed state releases outward              (cast, reset)
+   reference   - a name is minted that points at state        (checkpoint)
+   dereference - a name resolves back into substance          (restore, decompose)
+   Paint-only by the impact gradient; no layout, no timing changes. */
+:where([data-spw-op-disposition="charge"]) :where(.frame-sigil, .operator-chip, .cauldron-ingredient) {
+  box-shadow: inset 0 0 0.55em color-mix(in srgb, var(--active-op-color, var(--teal)) 12%, transparent);
+}
+
+:where(.operator-chip[data-spw-op-disposition="discharge"], [data-spw-op-disposition="discharge"] .frame-sigil) {
+  box-shadow: 0 0 0.6em color-mix(in srgb, var(--active-op-color, var(--teal)) 14%, transparent);
+}
+
+:where(.operator-chip[data-spw-op-disposition="reference"]) {
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 44%, transparent);
+  text-underline-offset: var(--handle-underline-offset, 0.16em);
+}
+
+:where(.operator-chip[data-spw-op-disposition="dereference"]) {
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-thickness: var(--handle-underline-thickness, 1.5px);
+  text-decoration-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 56%, transparent);
+  text-underline-offset: var(--handle-underline-offset, 0.16em);
+}
+
+/* Flavor axis (drift resolution, 2026-07-03): data-spw-operator agrees with
+   the visible sigil; the destination's genre keeps its color through a
+   flavor: token in the op bundle. One map, alias register, paint-only. */
+:where([data-spw-op~="flavor:stream"]) { --active-op-color: var(--op-stream-color); }
+:where([data-spw-op~="flavor:wonder"]) { --active-op-color: var(--op-wonder-color, var(--op-probe-color)); }
+:where([data-spw-op~="flavor:integrate"]) { --active-op-color: var(--op-integration-color, var(--op-object-color)); }
+:where([data-spw-op~="flavor:surface"]) { --active-op-color: var(--op-surface-color, var(--op-concept-color)); }
+:where([data-spw-op~="flavor:action"]) { --active-op-color: var(--op-action-color); }
+:where([data-spw-op~="flavor:route"]) { --active-op-color: var(--op-route-color, var(--op-frame-color)); }
+
+/* Sigil anatomy (hydrated): raw HTML keeps fused text; the sigil-anatomy
+   module wraps sigil and operand in distinct spans with spacing preserved,
+   so these rules are enhancement-only and cause no shift at hydration.
+   The sigil is the grammar voice; the operand keeps the reading voice. */
+:where([data-spw-sigil-anatomy="hydrated"]) .spw-sigil {
+  font-family: var(--handle-meta-font, var(--site-mono-font, monospace));
+  font-weight: 650;
+  color: color-mix(in srgb, var(--active-op-color, var(--teal)) 78%, currentColor);
+}
+
+:where([data-spw-sigil-anatomy="hydrated"]) .spw-operand {
+  font-weight: inherit;
+}
+
+/* Sigils in copy are references: an inline semantic carrier inside prose
+   points at something primeable, so it wears the reference seam by default
+   (dotted; dereferencing resolves it solid elsewhere). Reading stays calm -
+   the seam is quieter than link styling and never changes layout. */
+:where(p, li, dd, figcaption, .frame-note)
+  :where(a, span, strong, em, i, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator]):not(.operator-chip, .frame-sigil) {
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 30%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: var(--handle-underline-offset, 0.16em);
 }
 
 :where([data-spw-fixity-tier="volatile"]) {

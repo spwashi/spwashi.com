@@ -95,7 +95,8 @@
   initial-value: 0;
 }
 
-/* Local liftedness / projection */
+/* Local liftedness / projection (expressive register channel — not material elevation).
+   Material shadows use --spw-elevation-* tokens in section 4. */
 @property --spw-depth {
   syntax: "<number>";
   inherits: true;
@@ -699,21 +700,31 @@
   0 2px 6px rgba(0, 0, 0, 0.04);
   --card-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.52);
 
-  --spw-depth-card-shadow: var(--card-shadow);
-  --spw-depth-card-shadow-active: var(--card-highlight), var(--card-shadow-hover);
-  --spw-depth-frame-shadow: var(--card-highlight), var(--card-shadow);
-  --spw-depth-frame-shadow-active: var(--card-highlight), var(--card-shadow-hover);
-
   --floating-bg: var(--surface-strong);
   --floating-bg-warm: rgba(255, 251, 242, 0.92);
   --floating-shadow: 0 8px 32px rgba(0, 0, 0, 0.12),
   0 2px 8px rgba(0, 0, 0, 0.06);
   --floating-shadow-side: 2px 0 20px rgba(0, 0, 0, 0.09);
 
-  --spw-depth-floating-shadow: var(--floating-shadow);
-  --spw-depth-shell-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
-  --spw-depth-shell-shadow-lifted: 0 6px 18px rgba(0, 0, 0, 0.06);
-  --spw-depth-shell-shadow-deep: 0 10px 28px rgba(0, 0, 0, 0.08);
+  /* Material elevation shadows (box-shadow stacks). Distinct from @property --spw-depth. */
+  --spw-elevation-card-shadow: var(--card-shadow);
+  --spw-elevation-card-shadow-active: var(--card-highlight), var(--card-shadow-hover);
+  --spw-elevation-frame-shadow: var(--card-highlight), var(--card-shadow);
+  --spw-elevation-frame-shadow-active: var(--card-highlight), var(--card-shadow-hover);
+  --spw-elevation-floating-shadow: var(--floating-shadow);
+  --spw-elevation-shell-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+  --spw-elevation-shell-shadow-lifted: 0 6px 18px rgba(0, 0, 0, 0.06);
+  --spw-elevation-shell-shadow-deep: 0 10px 28px rgba(0, 0, 0, 0.08);
+
+  /* Deprecated aliases — prefer --spw-elevation-* for material shadows. */
+  --spw-depth-card-shadow: var(--spw-elevation-card-shadow);
+  --spw-depth-card-shadow-active: var(--spw-elevation-card-shadow-active);
+  --spw-depth-frame-shadow: var(--spw-elevation-frame-shadow);
+  --spw-depth-frame-shadow-active: var(--spw-elevation-frame-shadow-active);
+  --spw-depth-floating-shadow: var(--spw-elevation-floating-shadow);
+  --spw-depth-shell-shadow: var(--spw-elevation-shell-shadow);
+  --spw-depth-shell-shadow-lifted: var(--spw-elevation-shell-shadow-lifted);
+  --spw-depth-shell-shadow-deep: var(--spw-elevation-shell-shadow-deep);
 
   --projection-lift-xs: 1px;
   --projection-lift-sm: 2px;
@@ -896,6 +907,12 @@
   --spw-page-arrival-step-3-delay: 148ms;
   --spw-page-arrival-duration: 280ms;
   --spw-page-return-duration: 180ms;
+  /* Settle declaration bounds: guard settles a born-entering page if boot
+     never conducts the arc; quiet-window is the evidence quiescence required
+     to declare settled; max-delay bounds the whole declaration. */
+  --spw-page-arrival-guard-delay: 1600ms;
+  --spw-page-settle-quiet-window: 160ms;
+  --spw-page-settle-max-delay: 2400ms;
   --spw-region-profile-refresh-duration: 220ms;
   --spw-region-profile-intensity: 1;
   --spw-layout-cascade-hold: 0;
@@ -2169,6 +2186,9 @@ html[data-spw-reduce-motion="on"] {
   --spw-page-arrival-step-3-delay: 1ms;
   --spw-page-arrival-duration: 1ms;
   --spw-page-return-duration: 1ms;
+  --spw-page-arrival-guard-delay: 1ms;
+  --spw-page-settle-quiet-window: 1ms;
+  --spw-page-settle-max-delay: 1ms;
   --spw-region-profile-refresh-duration: 1ms;
   --spw-component-arrival-transition: 1ms linear;
   --spw-component-settle-transition: 1ms linear;

@@ -189,7 +189,137 @@ declare global {
 
     /** Collection group name of media elements */
     mediaCollection?: string;
+
+    /* ── G1 axis bundles (2026-07-03 grammar) ─────────────────────────────
+       Bundles carry space-separated `axis:value` tokens so CSS can match
+       combinatorially with [data-*~="axis:value"] and a reader can learn an
+       element's whole story from one attribute. Contracts own the axes:
+       interface/cauldron/contract.js, kernel/shared.js, runtime/effect-ledger.js. */
+
+    /** Cauldron vessel state bundle, e.g. "phase:mixing count:4".
+        Axes: phase | count | garden | resonance | collected | discoverability. */
+    spwCauldronState?: `phase:${'empty' | 'primed' | 'mixing' | 'spell-ready'}${string}` | string;
+
+    /** Operator/operand projection, e.g. "operator:frame operand:address position:prefix".
+        Written by kernel composeOpBundle(); never hand-author divergent axes. */
+    spwOp?: `operator:${string}` | `operand:${string}` | string;
+
+    /** Effect-ledger residue on <html>, e.g. "count:12 last:spell-cast". */
+    spwEffects?: `count:${number}${string}` | string;
+
+    /** Operand text where a surface exposes it standalone (prefer the spwOp bundle). */
+    spwOperand?: string;
+
+    /** What a sigil's operational payload does here, determined by its
+        container (spatial physics): the cauldron charges, casting discharges,
+        checkpoints reference, restore/decompose dereference. */
+    spwOpDisposition?: 'charge' | 'discharge' | 'reference' | 'dereference';
+
+    /** Sigil/operand anatomy state written by runtime/sigil-anatomy.js:
+        raw HTML ships fused text; "hydrated" means the module wrapped
+        .spw-sigil/.spw-operand spans; "authored" means markup already had
+        its own anatomy; "bare" means no sigil to split. */
+    spwSigilAnatomy?: 'hydrated' | 'authored' | 'bare';
+
+    /** Wonder invitation marker on section-handle chrome */
+    spwWonderEntry?: 'section-locomotion' | string;
+
+    /** Expressive approach phase (expressive-registers.spw shorthand) */
+    spwApproach?: 'distant' | 'approaching' | 'arrival' | 'return';
+
+    /** Active section id published on html/body by attention-architecture */
+    spwPageSectionCurrent?: string;
+    spwPageSectionIndex?: string;
+    spwPageSectionCount?: string;
+    spwPageSectionPhase?: 'settled' | 'traveling';
+    spwPageSectionEdge?: 'top' | 'middle' | 'bottom';
+    spwPageSectionDirection?: 'forward' | 'back' | 'steady';
+
+    /** Section-handle chrome state */
+    spwHandleState?: 'hidden' | 'visible';
+    spwHandlePhase?: 'settled' | 'traveling';
+    spwHandleAvailability?: string;
+    spwSectionHandleLabel?: string;
+    spwSectionHandleOp?: string;
+    spwSectionHasVocabulary?: 'true';
+
+    /** Wonder-memory root projection (canvas-accents / wonder-memory.js) */
+    spwWonderMemoryState?: 'active' | string;
   }
+}
+
+/** A cauldron ingredient as normalized by interface/cauldron/storage.js. */
+export interface SpwIngredient {
+  expression: string;
+  label: string;
+  /** Operator sigil prefix (e.g. "#>", "^"); '' when the expression is bare. */
+  operator?: string;
+  /** Expression with the operator prefix stripped. */
+  operand?: string;
+  wonder?: string;
+  capturedAt: number;
+  type?: 'numerical' | string;
+  value?: number;
+  unit?: string;
+}
+
+/** One precipitated effect recorded by runtime/effect-ledger.js. */
+export interface SpwEffectEntry {
+  kind: string;
+  label: string;
+  summary: string;
+  rewardKind: string;
+  path: string;
+  at: number;
+}
+
+/** The transdimensional chip payload: the invariant a chip carries across
+    every dimension crossing - surface DOM -> cauldron ingredient -> spell
+    step -> effect-ledger entry -> printed artifact. Each dimension may add
+    fields; none may lose these. Lifecycle vocabulary: candidate -> primed ->
+    collected -> composed -> cast -> (decayed | archived), with reference
+    chips additionally fresh -> familiar. */
+export interface SpwChipPayload {
+  /** The Spw expression, fused form (source of truth for re-parsing). */
+  expression: string;
+  /** Human reading of the expression. */
+  label: string;
+  /** Operator grammar at capture time (kernel splitOperatorExpression). */
+  op?: SpwOperatorSplit;
+  /** Where the chip was when captured (route/surface). */
+  origin?: string;
+  /** Deep link back to the source dimension, when one exists. */
+  deepLink?: string;
+  /** Capture moment; lifecycle phases derive from age plus interaction. */
+  capturedAt?: number;
+  /** Current lifecycle phase (see vocabulary above). */
+  lifecycle?: string;
+}
+
+/** One typed segment of a contour expression; the brace type is the slot. */
+export interface SpwContourSegment {
+  slot: 'payload' | 'mode' | 'queue';
+  delimiter: '(' | '[' | '{' | string;
+  content: string;
+}
+
+/** Result of kernel parseContourExpression() — a head plus typed brace
+    segments, e.g. topic(primary payload)[mode]{discussion queue}, intended
+    to be painted over an article as an annotation contour. */
+export interface SpwContour {
+  head: string;
+  segments: SpwContourSegment[];
+  remainder: string;
+}
+
+/** Result of kernel splitOperatorExpression(). */
+export interface SpwOperatorSplit {
+  /** Operator type name (e.g. "frame"); '' when no operator matched. */
+  operator: string;
+  /** The sigil delimiter as written (e.g. "#>", "$", "."). */
+  prefix: string;
+  operand: string;
+  position: 'prefix' | 'postfix' | 'infix' | 'expression' | '';
 }
 
 export {};

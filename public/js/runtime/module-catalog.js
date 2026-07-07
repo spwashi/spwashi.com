@@ -408,6 +408,21 @@ export const FEATURE_DEFS = [
     },
   },
   {
+    id: 'sigil-anatomy',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    describes: 'sigil-anatomy[hydrate] raw fused text -> sigil/operand elements',
+    updates: ['data-spw-sigil-anatomy', 'data-spw-op'],
+    evaluates: 'operator-grammar anatomy hydration capture-legibility',
+    load: () => import('./sigil-anatomy.js'),
+    mount: (mod) => {
+      const fn = mod?.initSigilAnatomy;
+      if (!isFn(fn)) return;
+      const cleanup = fn();
+      return { cleanup: isFn(cleanup) ? cleanup : null };
+    },
+  },
+  {
     id: 'effect-ledger',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
@@ -804,7 +819,13 @@ export const ENHANCEMENT_DEFS = [
     selector: '[data-spw-accent]',
     rootMode: 'single',
     describes: 'canvas-accent[wave|vortex|lattice] background resonance',
-    updates: ['--spw-accent-strength', '--spw-accent-color-1', '--spw-accent-color-2'],
+    updates: [
+      '--spw-accent-strength',
+      '--spw-accent-color-1',
+      '--spw-accent-color-2',
+      '--field-balance',
+      'data-spw-wonder-memory-state',
+    ],
     evaluates: 'visual accents canvas resonance reduced-motion',
     timingArc: 'immediate-visual',
     effectScope: 'canvas css-vars media-query',
@@ -1136,6 +1157,8 @@ export const ENHANCEMENT_DEFS = [
       'data-spw-section-handle-label',
       'data-spw-section-handle-op',
       'data-spw-section-has-vocabulary',
+      'data-spw-wonder-entry',
+      'data-spw-approach',
       'data-spw-reading-groove',
       'data-spw-reading-groove-count',
       'data-spw-reading-beat',
@@ -1149,6 +1172,7 @@ export const ENHANCEMENT_DEFS = [
       'data-spw-cauldron-resonance',
       '--spw-section-progress',
       '--spw-section-step',
+      '--field-balance',
     ],
     timingArc: 'immediate-attention',
     effectScope: 'root-state section-state listeners css-vars',
