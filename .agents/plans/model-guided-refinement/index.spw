@@ -1,0 +1,31 @@
+# Plan Directory Index — model-guided-refinement
+#
+# Dispatch surface for this plan folder.
+
+#>plan_model_guided_refinement_index
+#:index #!plan
+#:layer #!pragmatics
+
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@motif_table_cache: ~"./motif-table-cache.spw"
+@operator_curriculum_physics_cache: ~"./operator-curriculum-physics-cache.spw"
+@rpg_analog_worldbuilding_cache: ~"./rpg-analog-worldbuilding-cache.spw"
+@rpg_note_interaction_cache: ~"./rpg-note-interaction-cache.spw"
+@voice_flow_cache: ~"./voice-flow-cache.spw"
+
+dispatch: .{
+ plan = @plan
+ motif_table_cache = @motif_table_cache
+ operator_curriculum_physics_cache = @operator_curriculum_physics_cache
+ rpg_analog_worldbuilding_cache = @rpg_analog_worldbuilding_cache
+ rpg_note_interaction_cache = @rpg_note_interaction_cache
+ voice_flow_cache = @voice_flow_cache
+}[reg=facet]
+
+invariants: #[
+ `PLAN.md sequences work when present.`,
+ `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
+ `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+][reg=set]
+

@@ -1,8 +1,16 @@
 # wip — rpg-local-gameplay
-# Branch: main
-# Started: 2026-04-10
-
+#
+#>plan_rpg_local_gameplay_wip
+#:operation #!cache
+#:fixity #!tending
 #:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+
+operation = "cache"
+fixity = "tending"
 
 ^["roots"]{
  @plan: ~".agents/plans/rpg-local-gameplay/PLAN.md"

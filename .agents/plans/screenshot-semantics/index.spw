@@ -1,0 +1,25 @@
+# Plan Directory Index — screenshot-semantics
+#
+# Dispatch surface for this plan folder.
+
+#>plan_screenshot_semantics_index
+#:index #!plan
+#:layer #!pragmatics
+
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@screenshot_semantics: ~"./screenshot-semantics.spw"
+
+dispatch: .{
+ plan = @plan
+ wip = @wip
+ screenshot_semantics = @screenshot_semantics
+}[reg=facet]
+
+invariants: #[
+ `PLAN.md sequences work when present.`,
+ `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
+ `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+][reg=set]
+

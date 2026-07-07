@@ -1,8 +1,16 @@
-# wip - pretext-whimsy-lab
-# Branch: feature/pretext-whimsy-lab
-# Started: 2026-04-09
-
+# wip — pretext-whimsy-lab
+#
+#>plan_pretext_whimsy_lab_wip
+#:operation #!cache
+#:fixity #!tending
 #:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+
+operation = "cache"
+fixity = "tending"
 
 ^["roots"]{
  @plan: ~".agents/plans/pretext-whimsy-lab/PLAN.md"

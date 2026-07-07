@@ -1,8 +1,16 @@
-# wip - image-visit-metaphysics
-# Branch: feature/image-visit-metaphysics
-# Started: 2026-04-10
-
+# wip — image-visit-metaphysics
+#
+#>plan_image_visit_metaphysics_wip
+#:operation #!cache
+#:fixity #!tending
 #:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+
+operation = "cache"
+fixity = "tending"
 
 ^["roots"]{
  @plan: ~".agents/plans/image-visit-metaphysics/PLAN.md"

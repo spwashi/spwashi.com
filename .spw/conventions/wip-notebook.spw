@@ -1,0 +1,69 @@
+# Wip Notebook Convention
+#
+# Rules for plan-local wip.spw files: hot tending memory beside PLAN.md.
+
+#>wip_notebook
+#:convention #!plans #!memory
+#:layer #!editor_inspectability
+
+@planning_ecology: ~"./planning-ecology.spw"
+@semantic_capacity: ~"./semantic-capacity.spw"
+@insight_cache_template: ~"../../.agents/plans/model-guided-refinement/templates/semantic-insight-cache.spw"
+
+operation = "contract"
+fixity = "stable"
+
+^"role"{
+  definition: "wip.spw is hot-tier plan memory. It caches intent, evidence, and open questions while work is tending. It is not a convention, slice contract, or traversal index."
+  pairs_with = "PLAN.md sequences work; wip.spw holds compact reference-first context for agents and returning humans."
+  not_for = #[
+    `durable site semantics`
+    `cross-plan dispatch registries`
+    `stable citation targets from .spw/conventions/`
+  ][reg=set]
+}
+
+^"required_shape"{
+  header = #[
+    `# short title or wip - <slug>`
+    `#>plan_<slug>_wip`
+    `#:operation #!cache | #:operation #!audit | #:operation #!prime`
+    `#:fixity #!tending | #:fixity #!experimental`
+    `#:layer #!pragmatics`
+  ][reg=set]
+  linkage = #[
+    `@plan: ~"./PLAN.md" when PLAN.md exists`
+    `operation and fixity fields when using facet blocks`
+  ][reg=set]
+  rule = "New wip files should follow semantic-insight-cache.spw unless the plan needs a fuller development stream."
+}
+
+^"legacy_stream"{
+  note: "Older wip files may still use ^[\"roots\"], ^[\"intent\"], and ^[\"development\"] blocks from the workbench stream era."
+  on_touch = #[
+    `refresh tilde-quoted paths to resolve from the wip file location`
+    `add #>anchor, operation, and fixity if missing`
+    `move durable claims into named <slug>.spw or .spw/reviews/`
+    `archive or delete if the plan is completed and citations are gone`
+  ][reg=set]
+  deprecation = "Do not copy the legacy stream blocks into new wip files."
+}
+
+^"promotion"{
+  stream_to_model = "When a plan graduates, promote stable meaning into <slug>.spw, .spw/slices/, or .spw/conventions/; keep wip.spw as tending notes or archive it."
+  citation_rule = ".spw/conventions/ and cold indexes should cite PLAN.md or promoted named .spw artifacts, not wip.spw."
+  insight_cache = "Single insights use model-guided-refinement/templates/semantic-insight-cache.spw instead of a new plan folder."
+}
+
+^"dispatch"{
+  planning_ecology = @planning_ecology
+  semantic_capacity = @semantic_capacity
+  insight_cache_template = @insight_cache_template
+}
+
+invariants: #[
+  `wip.spw stays in the hot memory tier.`,
+  `Every plan directory with planning artifacts should expose index.spw for traversal.`,
+  `wip.spw must not be the only durable record of a reusable contract.`,
+  `On touch, revive paths or promote; do not bulk-normalize historical prose without plan context.`
+][reg=set]

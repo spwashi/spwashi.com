@@ -1,0 +1,25 @@
+# Plan Directory Index — rpg-asset-capture-frames
+#
+# Dispatch surface for this plan folder.
+
+#>plan_rpg_asset_capture_frames_index
+#:index #!plan
+#:layer #!pragmatics
+
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@rpg_asset_capture_frames: ~"./rpg-asset-capture-frames.spw"
+
+dispatch: .{
+ plan = @plan
+ wip = @wip
+ rpg_asset_capture_frames = @rpg_asset_capture_frames
+}[reg=facet]
+
+invariants: #[
+ `PLAN.md sequences work when present.`,
+ `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
+ `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+][reg=set]
+

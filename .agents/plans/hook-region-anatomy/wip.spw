@@ -1,3 +1,16 @@
+# wip — hook-region-anatomy
+#
+#>plan_hook_region_anatomy_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+
+operation = "cache"
+fixity = "tending"
 # Hook Region (wip)
 #
 # Staged ontology note for the proposed hook region anatomy feature.

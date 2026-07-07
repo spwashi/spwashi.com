@@ -1,0 +1,25 @@
+# Plan Directory Index — mobile-runtime-foundation
+#
+# Dispatch surface for this plan folder.
+
+#>plan_mobile_runtime_foundation_index
+#:index #!plan
+#:layer #!pragmatics
+
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@mobile_runtime_foundation: ~"./mobile-runtime-foundation.spw"
+
+dispatch: .{
+ plan = @plan
+ wip = @wip
+ mobile_runtime_foundation = @mobile_runtime_foundation
+}[reg=facet]
+
+invariants: #[
+ `PLAN.md sequences work when present.`,
+ `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
+ `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+][reg=set]
+

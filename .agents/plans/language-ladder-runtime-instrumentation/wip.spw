@@ -1,5 +1,16 @@
-# wip - language-ladder-runtime-instrumentation
-# Branch: feature/language-ladder-runtime-instrumentation
+# wip — language-ladder-runtime-instrumentation
+#
+#>plan_language_ladder_runtime_instrumentation_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+
+operation = "cache"
+fixity = "tending"
 
 @plan: ~".agents/plans/language-ladder-runtime-instrumentation/PLAN.md"
 @related: ~"../runtime-module-fluency/PLAN.md"

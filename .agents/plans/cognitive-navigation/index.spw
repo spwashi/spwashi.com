@@ -1,0 +1,25 @@
+# Plan Directory Index — cognitive-navigation
+#
+# Dispatch surface for this plan folder.
+
+#>plan_cognitive_navigation_index
+#:index #!plan
+#:layer #!pragmatics
+
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@cognitive_navigation: ~"./cognitive-navigation.spw"
+
+dispatch: .{
+ plan = @plan
+ wip = @wip
+ cognitive_navigation = @cognitive_navigation
+}[reg=facet]
+
+invariants: #[
+ `PLAN.md sequences work when present.`,
+ `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
+ `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+][reg=set]
+

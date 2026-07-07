@@ -1,8 +1,16 @@
-# wip - typescript-integration
-# Branch: main
-# Started: 2026-04-18
-
+# wip — typescript-integration
+#
+#>plan_typescript_integration_wip
+#:operation #!cache
+#:fixity #!tending
 #:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+
+operation = "cache"
+fixity = "tending"
 
 ^["roots"]{
  @plan: ~".agents/plans/typescript-integration/PLAN.md"

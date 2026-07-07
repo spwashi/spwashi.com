@@ -1,8 +1,16 @@
-# wip - topic-photo-svg-pass
-# Branch: main
-# Started: 2026-04-15
-
+# wip — topic-photo-svg-pass
+#
+#>plan_topic_photo_svg_pass_wip
+#:operation #!cache
+#:fixity #!tending
 #:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+
+operation = "cache"
+fixity = "tending"
 
 ^["roots"]{
  @plan: ~".agents/plans/topic-photo-svg-pass/PLAN.md"

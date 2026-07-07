@@ -1,0 +1,26 @@
+# Site Surfaces Index
+#
+# Registry for site-local .spw surface documents under surfaces/.
+
+#>spw_site_surfaces_index
+#:index #!surfaces
+#:layer #!pragmatics
+
+@registry: ~"../surfaces.spw"
+@page_model: ~"./page-model.spw"
+@product_lines: ~"./product-lines.spw"
+@menu_field: ~"./menu-field.spw"
+@approach_topography: ~"./approach-topography.spw"
+
+dispatch: .{
+ registry = @registry
+ page_model = @page_model
+ product_lines = @product_lines
+ menu_field = @menu_field
+ approach_topography = @approach_topography
+}[reg=facet]
+
+invariants: #[
+ `This index routes attention; surface documents own the semantics.`,
+ `Public route lists stay in surfaces.spw; this index names local surface contracts only.`
+][reg=set]

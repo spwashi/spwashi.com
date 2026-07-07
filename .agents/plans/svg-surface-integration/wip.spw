@@ -1,8 +1,16 @@
-# wip - svg-surface-integration
-# Branch: feature/svg-surface-integration
-# Started: 2026-04-09
-
+# wip — svg-surface-integration
+#
+#>plan_svg_surface_integration_wip
+#:operation #!cache
+#:fixity #!tending
 #:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+
+operation = "cache"
+fixity = "tending"
 
 ^["roots"]{
  @plan: ~".agents/plans/svg-surface-integration/PLAN.md"

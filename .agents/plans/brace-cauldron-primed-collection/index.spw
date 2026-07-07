@@ -1,0 +1,23 @@
+# Plan Directory Index — brace-cauldron-primed-collection
+#
+# Dispatch surface for this plan folder.
+
+#>plan_brace_cauldron_primed_collection_index
+#:index #!plan
+#:layer #!pragmatics
+
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@alignment_note: ~"./alignment-note.spw"
+
+dispatch: .{
+ plan = @plan
+ alignment_note = @alignment_note
+}[reg=facet]
+
+invariants: #[
+ `PLAN.md sequences work when present.`,
+ `wip.spw holds hot tending memory when present; see wip-notebook.spw.`,
+ `Promote durable meaning to named .spw artifacts, .spw/slices/, or .spw/conventions/.`,
+][reg=set]
+

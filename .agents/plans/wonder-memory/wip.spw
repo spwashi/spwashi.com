@@ -1,8 +1,16 @@
 # wip — wonder-memory
-# Branch: feature/wonder-memory
-# Started: 2026-04-15
-
+#
+#>plan_wonder_memory_wip
+#:operation #!cache
+#:fixity #!tending
 #:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+
+operation = "cache"
+fixity = "tending"
 
 ^["roots"]{
  @plan: ~".agents/plans/wonder-memory/PLAN.md"

@@ -1,4 +1,16 @@
 # wip — gesture-inspectability-metaphysics
+#
+#>plan_gesture_inspectability_metaphysics_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+
+operation = "cache"
+fixity = "tending"
 
 #>gesture_inspectability_metaphysics
 #:plan #!runtime

@@ -1,8 +1,16 @@
 # wip — minimal-brace-disclosure
-# Branch: feature/minimal-brace-disclosure
-# Started: 2026-04-11
-
+#
+#>plan_minimal_brace_disclosure_wip
+#:operation #!cache
+#:fixity #!tending
 #:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+
+operation = "cache"
+fixity = "tending"
 
 ^["roots"]{
  @cluster: ~".agents/plans/plan-ecology-clustering/plan-ecology-clustering.spw"

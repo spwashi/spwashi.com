@@ -1,3 +1,16 @@
+# wip — skill-folio-operating-system
+#
+#>plan_skill_folio_operating_system_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+
+operation = "cache"
+fixity = "tending"
 #>skill_folio_operating_system
 #:plan #!semantic-capacity #!skill-os #!folios
 #:layer #!pragmatics

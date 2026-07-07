@@ -1,8 +1,16 @@
-# wip - hero-image-whimsy
-# Branch: main
-# Started: 2026-04-15
-
+# wip — hero-image-whimsy
+#
+#>plan_hero_image_whimsy_wip
+#:operation #!cache
+#:fixity #!tending
 #:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+
+operation = "cache"
+fixity = "tending"
 
 ^["roots"]{
  @plan: ~".agents/plans/hero-image-whimsy/PLAN.md"

@@ -1,8 +1,16 @@
-# wip - spw-operator-pages
-# Branch: feature/spw-operator-pages
-# Started: 2026-04-09
-
+# wip — spw-operator-pages
+#
+#>plan_spw_operator_pages_wip
+#:operation #!cache
+#:fixity #!tending
 #:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+
+operation = "cache"
+fixity = "tending"
 
 ^["roots"]{
  @plan: ~".agents/plans/spw-operator-pages/PLAN.md"

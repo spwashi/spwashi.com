@@ -1,8 +1,16 @@
-# wip - math-topic-expansion
-# Branch: main
-# Started: 2026-04-15
-
+# wip — math-topic-expansion
+#
+#>plan_math_topic_expansion_wip
+#:operation #!cache
+#:fixity #!tending
 #:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+
+operation = "cache"
+fixity = "tending"
 
 ^["roots"]{
  @plan: ~".agents/plans/math-topic-expansion/PLAN.md"

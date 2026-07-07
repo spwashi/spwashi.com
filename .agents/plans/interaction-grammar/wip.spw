@@ -1,8 +1,16 @@
-# wip - interaction-grammar
-# Branch: feature/interaction-grammar
-# Started: 2026-04-09
-
+# wip — interaction-grammar
+#
+#>plan_interaction_grammar_wip
+#:operation #!cache
+#:fixity #!tending
 #:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+
+operation = "cache"
+fixity = "tending"
 
 ^["roots"]{
  @plan: ~".agents/plans/interaction-grammar/PLAN.md"

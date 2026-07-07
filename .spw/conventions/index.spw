@@ -25,6 +25,8 @@
 @annotation_layer: ~"./annotation-layer.spw"
 @query_disposition: ~"./query-disposition.spw"
 @planning_ecology: ~"./planning-ecology.spw"
+@wip_notebook: ~"./wip-notebook.spw"
+@surfaces_index: ~"../surfaces/index.spw"
 @operator_site_projection: ~"./operator-site-projection.spw"
 @operational_semantics: ~"./operational-semantics.spw"
 @measurement_contract: ~"./measurement-contract.spw"
@@ -74,6 +76,8 @@ dispatch: .{
  annotation_layer = @annotation_layer
  query_disposition = @query_disposition
  planning_ecology = @planning_ecology
+ wip_notebook = @wip_notebook
+ surfaces_index = @surfaces_index
  cognition = @cognitive_navigation
  model_guided_refinement = @model_guided_refinement
  semantic_capacity = @semantic_capacity

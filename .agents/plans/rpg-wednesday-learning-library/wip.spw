@@ -1,3 +1,16 @@
+# wip — rpg-wednesday-learning-library
+#
+#>plan_rpg_wednesday_learning_library_wip
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+
+operation = "cache"
+fixity = "tending"
 # RPG Wednesday Learning Library WIP
 
 #>rpg_wednesday_learning_library

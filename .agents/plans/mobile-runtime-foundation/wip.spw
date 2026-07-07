@@ -1,8 +1,16 @@
-# wip - mobile-runtime-foundation
-# Branch: feature/mobile-runtime-foundation
-# Started: 2026-04-09
-
+# wip — mobile-runtime-foundation
+#
+#>plan_mobile_runtime_foundation_wip
+#:operation #!cache
+#:fixity #!tending
 #:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+
+operation = "cache"
+fixity = "tending"
 
 ^["roots"]{
  @plan: ~".agents/plans/mobile-runtime-foundation/PLAN.md"
