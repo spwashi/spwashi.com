@@ -325,7 +325,10 @@
   opacity: var(--spw-settle-opacity-mid, 0.985);
 }
 
-:where([data-spw-hydration="ready"]) {
+/* Component altitude only: html/body wear data-spw-hydration as state
+   narration, and replaying the settle animation on the root fades the whole
+   page every time hydration reaches ready. */
+:where([data-spw-hydration="ready"]):not(html, body) {
   animation: spw-hydration-settle var(--spw-component-settle-transition, 260ms ease-out) both;
 }
 

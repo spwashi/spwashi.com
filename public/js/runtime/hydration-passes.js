@@ -60,8 +60,11 @@ export function initHydrationPasses(ctx) {
   });
 
   const onPass = (event) => {
-    const payload = syncHydrationPassSurface(event?.detail || {});
-    ctx?.bus?.emit?.(SPW_HYDRATION_CONTRACT.events.pass, payload);
+    /* Sync only — never re-emit the pass event here. The bus is DOM-backed
+       (bus.on == document.addEventListener, bus.emit == dispatchEvent), so
+       any bus subscriber already hears the original event; mirroring it
+       recursed until the stack overflowed and froze hydration at "static". */
+    syncHydrationPassSurface(event?.detail || {});
   };
 
   document.addEventListener(SPW_HYDRATION_CONTRACT.events.pass, onPass);

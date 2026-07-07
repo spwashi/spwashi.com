@@ -84,10 +84,15 @@
   --component-gap: var(--spw-pack-gap-active, var(--pack-tier-balanced-gap));
 }
 
+/* Packing attributes are state reporting (root field projections, profiler
+   writes on regions) — they tune spacing physics via custom properties but
+   never set their carrier's geometry. Spending --spw-pack-measure-active as
+   max-inline-size here clamped html and every profiled frame to a prose
+   measure; measure belongs to content-role rules (prose, notes, kickers)
+   that spend the token deliberately. */
 :where([data-spw-packing-state], [data-spw-pack-occupancy]) {
   --component-pad: var(--spw-pack-pad-active);
   --component-gap: var(--spw-pack-gap-active);
-  max-inline-size: var(--spw-pack-measure-active, none);
 }
 
 /* Settings line-spacing routes into packing + typography together */

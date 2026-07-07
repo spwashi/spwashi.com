@@ -4,6 +4,14 @@
 
 import { writeDatasetValue } from '../kernel/dom-contracts.js';
 import { MODULE_LAYERS, MOUNT_WHEN } from './module-catalog.js';
+import {
+  annotateModuleUpdatesTarget,
+  describeModuleUpdates,
+  findModuleUpdateConflicts,
+  formatModuleUpdatesSpell,
+  normalizeModuleUpdates,
+  summarizeModuleUpdates,
+} from './module-updates-contract.js';
 import { REGION_STATES, setRegionState } from './region-profiler.js';
 import {
   matchesFeatures,
@@ -38,6 +46,8 @@ export const SPW_MODULE_LOADER_CONTRACT = Object.freeze({
     'Module definitions may name timingArc to explain the intended scheduling posture beyond raw mount timing.',
   effectScope:
     'Module definitions may name effectScope tokens to make global state, storage, observer, media, or local DOM side effects auditable.',
+  updatesContract:
+    'Module updates accept flat strings or kind:name objects; runtime normalizes them into attrs, css vars, aria, classes, and events for inspection.',
 });
 
 export function createModuleLoader(config = {}) {
@@ -245,6 +255,10 @@ function listModuleDefinitions(ctx) {
       evaluates: inferModuleDimensions(def),
       timingArc: def.timingArc || null,
       effectScope: normalizeModuleIntentValue(def.effectScope),
+      describes: def.describes || null,
+      updates: normalizeModuleUpdates(def.updates),
+      updatesSummary: summarizeModuleUpdates(def.updates),
+      updatesDescribe: describeModuleUpdates(def.updates),
       reason: ctx ? describeMountReason(def, ctx, null, effectiveWhen) : (def.reason || ''),
       status: record?.status || 'defined',
     };
@@ -263,7 +277,9 @@ function snapshotRuntimeModules(ctx) {
     status: record.status,
     reason: record.reason,
     describes: record.describes || null,
-    updates: record.updates || null,
+    updates: normalizeModuleUpdates(record.updates),
+    updatesSummary: summarizeModuleUpdates(record.updates),
+    updatesDescribe: describeModuleUpdates(record.updates),
     timingArc: record.timingArc || null,
     effectScope: normalizeModuleIntentValue(record.effectScope),
     stage: record.stage || record.status || 'scheduled',
@@ -290,9 +306,7 @@ function snapshotRuntimeModules(ctx) {
 function moduleRecordToSpellExpression(record) {
   if (!record) return null;
   const base = record.describes || record.reason || record.baseId || record.id;
-  const updatesPart = record.updates && record.updates.length
-    ? `{updates:${record.updates.join('+')}}`
-    : '';
+  const updatesPart = formatModuleUpdatesSpell(record.updates);
   const effectScope = normalizeModuleIntentValue(record.effectScope);
   const effectPart = effectScope.length
     ? `{effects:${effectScope.join('+')}}`
@@ -389,9 +403,8 @@ function describeMountReason(def, ctx, root = null, effectiveWhen = getEffective
   // Prefer explicit, semantically meaningful description when provided by the module author.
   if (def.describes) {
     const base = def.reason || `${effectiveWhen} ${def.layer}`;
-    const updates = Array.isArray(def.updates) && def.updates.length
-      ? ` updates:[${def.updates.join('|')}]`
-      : '';
+    const updatesSummary = summarizeModuleUpdates(def.updates);
+    const updates = updatesSummary ? ` updates:{${updatesSummary}}` : '';
     const timing = def.timingArc ? ` timing:${def.timingArc}` : '';
     const effects = def.effectScope
       ? ` effects:[${summarizeModuleIntentValue(def.effectScope)}]`
@@ -501,9 +514,7 @@ function annotateModuleTarget(target, record) {
   if (record.describes) {
     writeDatasetValue(target, 'spwModuleDescribes', record.describes);
   }
-  if (record.updates && Array.isArray(record.updates) && record.updates.length) {
-    writeDatasetValue(target, 'spwModuleUpdates', record.updates);
-  }
+  annotateModuleUpdatesTarget(target, record.updates);
 
   writeDatasetValue(target, 'spwModuleHydration', record.status === 'mounted' ? 'ready' : record.status);
   if (Number.isFinite(record.durationMs)) {
@@ -670,6 +681,7 @@ function buildLoadDiscoverySnapshot(ctx) {
     resources: snapshotRuntimeResourceReadiness(ctx),
     considered: listModuleDefinitions(ctx),
     mounted: snapshotRuntimeModules(ctx),
+    updateConflicts: findModuleUpdateConflicts(listModuleDefinitions(ctx)),
     lifecycle: timingStages,
     skipped: [...(ctx.moduleSkipAuditKeys || [])],
   };
@@ -824,7 +836,9 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
     effectiveWhen,
     reason,
     describes: def.describes || null,
-    updates: Array.isArray(def.updates) ? def.updates : null,
+    updates: normalizeModuleUpdates(def.updates),
+    updatesSummary: summarizeModuleUpdates(def.updates),
+    updatesDescribe: describeModuleUpdates(def.updates),
     timingArc: def.timingArc || null,
     effectScope: effectScope.length ? effectScope : null,
     status: 'idle',
@@ -1228,7 +1242,22 @@ async function mountRegionLayer(defs, ctx) {
 
 function queueIdleEnhancements(defs, ctx) {
   const idleDefs = defs.filter((def) => shouldScheduleDefinition(def, ctx, mountWhen.IDLE));
-  if (!idleDefs.length) return;
+  const hasSettled = defs.some((def) => shouldScheduleDefinition(def, ctx, mountWhen.SETTLED));
+
+  const finalizeEnhancement = () => {
+    setPageState(pageStates.ENHANCED);
+    ctx.bus.emit('spw:page-enhanced', { route: ctx.route });
+    queueSettledEnhancements(defs, ctx);
+  };
+
+  if (!idleDefs.length) {
+    if (!hasSettled) return;
+    const handle = onIdle(() => {
+      finalizeEnhancement();
+    });
+    ctx.addTimer(handle);
+    return;
+  }
 
   const handle = onIdle(async () => {
     if (ctx.runtimePolicy.delay) {
@@ -1254,8 +1283,7 @@ function queueIdleEnhancements(defs, ctx) {
       endMountBatch(ctx);
     }
 
-    setPageState(pageStates.ENHANCED);
-    ctx.bus.emit('spw:page-enhanced', { route: ctx.route });
+    finalizeEnhancement();
   });
 
   for (const def of idleDefs) {
@@ -1263,6 +1291,30 @@ function queueIdleEnhancements(defs, ctx) {
   }
 
   ctx.addTimer(handle);
+}
+
+function queueSettledEnhancements(defs, ctx) {
+  const settledDefs = defs.filter((def) => shouldScheduleDefinition(def, ctx, mountWhen.SETTLED));
+  if (!settledDefs.length) return;
+
+  const run = async () => {
+    await new Promise((resolve) => {
+      globalThis.requestAnimationFrame(() => {
+        globalThis.requestAnimationFrame(resolve);
+      });
+    });
+
+    beginMountBatch();
+    try {
+      await Promise.all(settledDefs.map((def) => mountDefinition(def, ctx, null, 0)));
+    } finally {
+      endMountBatch(ctx);
+    }
+
+    ctx.bus.emit('spw:layout-assumptions-ready', { route: ctx.route });
+  };
+
+  void run();
 }
 
 function refreshRuntime(ctx) {
@@ -1327,6 +1379,10 @@ function refreshRuntime(ctx) {
     snapshotRuntimeModules,
     moduleRecordToSpellExpression,
     snapshotRuntimeAsSpellbook,
+    describeModuleUpdates,
+    findModuleUpdateConflicts,
+    normalizeModuleUpdates,
+    summarizeModuleUpdates,
     mountModuleById,
     buildLoadDiscoverySnapshot,
     snapshotRuntimeResourceReadiness,
@@ -1338,6 +1394,7 @@ function refreshRuntime(ctx) {
     mountInteractionFeatures,
     mountRegionLayer,
     queueIdleEnhancements,
+    queueSettledEnhancements,
     refreshRuntime,
     wireRuntimeTokens,
     resetMountBatchState,

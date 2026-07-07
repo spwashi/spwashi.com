@@ -27,12 +27,15 @@
  * To extend: add new spell handlers in the keydown listener or extend renderList/appendEntry.
  */
 import {
+    annotateFloatingChromeElement,
+    syncFloatingChromeState,
+} from '/public/js/kernel/dom-contracts.js';
+import {
     detectOperator,
     emitSpwAction,
     getFrameMeta,
     isInputFocused
 } from '/public/js/kernel/shared.js';
-import { annotateFloatingChromeElement } from '/public/js/kernel/dom-contracts.js';
 import { getSiteSettings } from '/public/js/kernel/site-settings.js';
 
 const NAV_ROUTE_SELECTOR = [
@@ -582,6 +585,10 @@ class SpwFrameNavigator {
         this.refresh();
         requestAnimationFrame(() => this.searchInput.focus());
         emitSpwAction('#>map.open', 'surface map');
+        syncFloatingChromeState(document, {
+            source: 'frame-navigator',
+            reason: 'surface-map-open',
+        });
     }
 
     close(options = {}) {
@@ -592,6 +599,10 @@ class SpwFrameNavigator {
         this.triggerBtn.setAttribute('aria-expanded', 'false');
         if (options.restoreFocus) this.triggerBtn.focus();
         if (wasOpen) emitSpwAction('!map.close', 'surface map');
+        syncFloatingChromeState(document, {
+            source: 'frame-navigator',
+            reason: 'surface-map-close',
+        });
     }
 
     toggle() {

@@ -3,7 +3,7 @@
    --------------------------------------------------------------------------
    Reads as: frame sigils, operator chips, spec pills, component tags: the faces readers actually touch
    Was: handles/operators.css §4–5 (split 2026-07-03, rule order preserved verbatim)
-   Genome — states sensed: aria-current, aria-pressed, data-site-setting-active, data-spw-annotation-match, data-spw-annotation-state, data-spw-collected, data-spw-color-mode, data-spw-debug-mode, data-spw-fixity-tier, data-spw-grounded, data-spw-load-posture, data-spw-load-timing, data-spw-meaning-mode, data-spw-operator
+   Genome — states sensed: aria-current, aria-pressed, data-site-setting-active, data-spw-annotation-match, data-spw-annotation-state, data-spw-collected, data-spw-color-mode, data-spw-debug-mode, data-spw-fixity-tier, data-spw-grounded, data-spw-load-posture, data-spw-load-timing, data-spw-meaning-mode, data-spw-op (position axis), data-spw-op-disposition (charge/discharge/reference/dereference), data-spw-operator, data-spw-sigil-position
    Genome — custom properties defined: 21; intent hooks consumed: --operator-chip-active-animation-intent, --operator-chip-active-bg-intent, --operator-chip-active-border-intent, --operator-chip-active-ink-intent, --operator-chip-active-lift-intent, --operator-chip-active-shadow-intent, --operator-chip-active-weight-intent
    Probe: toggle me wholesale in DevTools > Sources, or set
    html[data-spw-debug-layers="on"] to see layer owners breathe.
@@ -74,9 +74,17 @@
   margin-inline-start: auto;
 }
 
-/* Positional grammar seams (prefix / infix / postfix) */
-:where([data-spw-sigil-position="prefix"]) {
+/* Positional grammar seams (prefix / infix / postfix).
+   Prefix leads attention forward into the operand; postfix reflects back on
+   what was just read. Buttons and copy share the seams: the data-spw-op
+   bundle carries position for atoms, data-spw-sigil-position for sigils. */
+:where([data-spw-sigil-position="prefix"], [data-spw-op~="position:prefix"]) {
   border-inline-start-width: 2px;
+  background-image: linear-gradient(
+    to right,
+    color-mix(in srgb, var(--active-op-color, var(--teal)) 9%, transparent),
+    transparent 38%
+  );
 }
 
 :where([data-spw-sigil-position="infix"]) {
@@ -84,8 +92,80 @@
   border-color: color-mix(in srgb, currentColor 22%, transparent);
 }
 
-:where([data-spw-sigil-position="postfix"]) {
+:where([data-spw-sigil-position="postfix"], [data-spw-op~="position:postfix"]) {
   border-inline-end-width: 2px;
+  background-image: linear-gradient(
+    to left,
+    color-mix(in srgb, var(--active-op-color, var(--teal)) 9%, transparent),
+    transparent 38%
+  );
+}
+
+/* ── Operational disposition physics ──────────────────────────────────────
+   Containers determine what a sigil's payload does (spatial physics):
+   charge      - the vessel accumulates; sigils pull inward   (cauldron host)
+   discharge   - composed state releases outward              (cast, reset)
+   reference   - a name is minted that points at state        (checkpoint)
+   dereference - a name resolves back into substance          (restore, decompose)
+   Paint-only by the impact gradient; no layout, no timing changes. */
+:where([data-spw-op-disposition="charge"]) :where(.frame-sigil, .operator-chip, .cauldron-ingredient) {
+  box-shadow: inset 0 0 0.55em color-mix(in srgb, var(--active-op-color, var(--teal)) 12%, transparent);
+}
+
+:where(.operator-chip[data-spw-op-disposition="discharge"], [data-spw-op-disposition="discharge"] .frame-sigil) {
+  box-shadow: 0 0 0.6em color-mix(in srgb, var(--active-op-color, var(--teal)) 14%, transparent);
+}
+
+:where(.operator-chip[data-spw-op-disposition="reference"]) {
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 44%, transparent);
+  text-underline-offset: var(--handle-underline-offset, 0.16em);
+}
+
+:where(.operator-chip[data-spw-op-disposition="dereference"]) {
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-thickness: var(--handle-underline-thickness, 1.5px);
+  text-decoration-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 56%, transparent);
+  text-underline-offset: var(--handle-underline-offset, 0.16em);
+}
+
+/* Flavor axis (drift resolution, 2026-07-03): data-spw-operator agrees with
+   the visible sigil; the destination's genre keeps its color through a
+   flavor: token in the op bundle. One map, alias register, paint-only. */
+:where([data-spw-op~="flavor:stream"]) { --active-op-color: var(--op-stream-color); }
+:where([data-spw-op~="flavor:wonder"]) { --active-op-color: var(--op-wonder-color, var(--op-probe-color)); }
+:where([data-spw-op~="flavor:integrate"]) { --active-op-color: var(--op-integration-color, var(--op-object-color)); }
+:where([data-spw-op~="flavor:surface"]) { --active-op-color: var(--op-surface-color, var(--op-concept-color)); }
+:where([data-spw-op~="flavor:action"]) { --active-op-color: var(--op-action-color); }
+:where([data-spw-op~="flavor:route"]) { --active-op-color: var(--op-route-color, var(--op-frame-color)); }
+
+/* Sigil anatomy (hydrated): raw HTML keeps fused text; the sigil-anatomy
+   module wraps sigil and operand in distinct spans with spacing preserved,
+   so these rules are enhancement-only and cause no shift at hydration.
+   The sigil is the grammar voice; the operand keeps the reading voice. */
+:where([data-spw-sigil-anatomy="hydrated"]) .spw-sigil {
+  font-family: var(--handle-meta-font, var(--site-mono-font, monospace));
+  font-weight: 650;
+  color: color-mix(in srgb, var(--active-op-color, var(--teal)) 78%, currentColor);
+}
+
+:where([data-spw-sigil-anatomy="hydrated"]) .spw-operand {
+  font-weight: inherit;
+}
+
+/* Sigils in copy are references: an inline semantic carrier inside prose
+   points at something primeable, so it wears the reference seam by default
+   (dotted; dereferencing resolves it solid elsewhere). Reading stays calm -
+   the seam is quieter than link styling and never changes layout. */
+:where(p, li, dd, figcaption, .frame-note)
+  :where(a, span, strong, em, i, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator]):not(.operator-chip, .frame-sigil) {
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 30%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: var(--handle-underline-offset, 0.16em);
 }
 
 :where([data-spw-fixity-tier="volatile"]) {

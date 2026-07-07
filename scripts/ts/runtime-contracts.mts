@@ -32,7 +32,7 @@ const MODULE_CATALOG_PATH = path.join(PUBLIC_JS_DIR, 'runtime/module-catalog.js'
 
 const RUNTIME_FAMILIES = ['CORE_DEFS', 'FEATURE_DEFS', 'REGION_DEFS', 'ENHANCEMENT_DEFS'] as const;
 const VALID_LAYERS = new Set(['core', 'feature', 'region', 'enhancement']);
-const VALID_MOUNT_TIMINGS = new Set(['immediate', 'visible', 'idle', 'interaction', 'region']);
+const VALID_MOUNT_TIMINGS = new Set(['immediate', 'visible', 'idle', 'interaction', 'region', 'settled']);
 const VALID_ROOT_MODES = new Set(['single', 'each']);
 const CONTRACT_TOKEN_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const ALLOWED_ROOT_JS_FILES = new Set(['compose.js', 'site.js']);
@@ -123,6 +123,67 @@ function parseUpdates(source: string): string[] {
   const match = source.match(/updates:\s*\[([\s\S]*?)\]/);
   if (!match) return [];
   return [...match[1].matchAll(/(['"`])([^'"`]+)\1/g)].map((item) => item[2]);
+}
+
+const MODULE_UPDATE_SCOPES = new Set(['html', 'root', 'body', 'document', 'frame']);
+const MODULE_UPDATE_KINDS = new Set(['attr', 'css-var', 'aria', 'class', 'event', 'selector', 'property']);
+const MODULE_UPDATE_KIND_ALIASES = new Map([
+  ['attribute', 'attr'],
+  ['attributes', 'attr'],
+  ['dataset', 'attr'],
+  ['var', 'css-var'],
+  ['css', 'css-var'],
+  ['style', 'property'],
+]);
+
+function isKnownModuleUpdateKind(token: string): boolean {
+  const normalized = token.toLowerCase();
+  return MODULE_UPDATE_KINDS.has(normalized) || MODULE_UPDATE_KIND_ALIASES.has(normalized);
+}
+
+function normalizeModuleUpdateKind(token: string): string {
+  const normalized = token.toLowerCase();
+  return MODULE_UPDATE_KIND_ALIASES.get(normalized) || (MODULE_UPDATE_KINDS.has(normalized) ? normalized : 'attr');
+}
+
+function classifyModuleUpdateToken(token: string, allowScope = true): { kind: string; name: string; scope?: string } | null {
+  const raw = token.trim();
+  if (!raw) return null;
+
+  if (allowScope) {
+    const scopeMatch = raw.match(/^([a-z]+):(.+)$/i);
+    if (scopeMatch && MODULE_UPDATE_SCOPES.has(scopeMatch[1].toLowerCase())) {
+      const inner = classifyModuleUpdateToken(scopeMatch[2], false);
+      return inner ? { ...inner, scope: scopeMatch[1].toLowerCase() } : null;
+    }
+  }
+
+  const explicit = raw.match(/^([a-z-]+):(.+)$/i);
+  if (explicit && isKnownModuleUpdateKind(explicit[1])) {
+    const kind = normalizeModuleUpdateKind(explicit[1]);
+    const name = explicit[2].trim();
+    return name ? { kind, name } : null;
+  }
+
+  if (raw.startsWith('--')) return { kind: 'css-var', name: raw };
+  if (raw.startsWith('aria-')) return { kind: 'aria', name: raw };
+  if (raw.startsWith('.')) return { kind: 'class', name: raw };
+  if (raw.startsWith('spw:') || /^[a-z][a-z0-9-]*:[a-z0-9-]+$/.test(raw)) return { kind: 'event', name: raw };
+  if (/^[#.[]/.test(raw) || raw.includes(' ')) return { kind: 'selector', name: raw };
+  return { kind: 'attr', name: raw };
+}
+
+function validateModuleUpdateToken(token: string): string | null {
+  const parsed = classifyModuleUpdateToken(token);
+  if (!parsed) return 'empty-token';
+
+  const { kind, name } = parsed;
+  if (kind === 'css-var' && !/^--[a-z0-9-]+$/.test(name)) return 'css-var-shape';
+  if (kind === 'aria' && !/^aria-[a-z0-9-]+$/.test(name)) return 'aria-shape';
+  if (kind === 'class' && !/^\.[a-z0-9_-]+$/.test(name)) return 'class-shape';
+  if (kind === 'event' && !/^[a-z][a-z0-9-]*:[a-z0-9-]+$/.test(name)) return 'event-shape';
+  if (kind === 'attr' && !/^(data-[a-z0-9-]+|aria-[a-z0-9-]+|[a-z][a-z0-9-]*)$/.test(name)) return 'attr-shape';
+  return null;
 }
 
 function parseFeatures(source: string): string[] {
@@ -448,6 +509,26 @@ function validateModule(
 
   if (module.layer !== 'core' && module.describes && !module.updates.length && !module.evaluates) {
     recommendations.push(`${label} describes behavior but names neither updates nor evaluates.`);
+  }
+
+  const seenUpdates = new Set<string>();
+  for (const token of module.updates) {
+    const issue = validateModuleUpdateToken(token);
+    if (issue) {
+      warnings.push(`${label} updates token "${token}" has ${issue}; use attr:, css-var:, aria:, class:, event:, selector:, or property: prefixes when inference is ambiguous.`);
+    }
+    const parsed = classifyModuleUpdateToken(token);
+    if (!parsed) continue;
+    const key = `${parsed.scope ? `${parsed.scope}:` : ''}${parsed.kind}:${parsed.name}`;
+    if (seenUpdates.has(key)) {
+      warnings.push(`${label} repeats update ${key}.`);
+      continue;
+    }
+    seenUpdates.add(key);
+  }
+
+  if (module.updates.length > 12) {
+    recommendations.push(`${label} lists ${module.updates.length} updates; group by kind in catalog comments or split into focused modules when the contract becomes hard to scan.`);
   }
 }
 

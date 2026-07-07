@@ -332,11 +332,16 @@ const OPERATOR_TYPE_ALIASES = Object.freeze({
   surface: 'concept-edge',
   address: 'frame',
   select: 'mode',
+  /* intent-verb forms authored in route HTML (2026-07-03 sigil audit):
+     without these, getOperatorDefinition returned null and affordances
+     fell back to generic for ~50 authored handles. */
   integrate: 'integration',
+  situate: 'perspective',
+  bind: 'binding',
+  act: 'action',
+  tune: 'normalize',
   ascension: 'integration',
   publish: 'integration',
-  situate: 'perspective',
-  act: 'action',
   meta: 'substrate',
   resource: 'substrate',
   support: 'substrate',
@@ -1317,20 +1322,129 @@ const getOperatorGeometry = (value = '') => {
    data-spw-op="operator:frame operand:address position:prefix".
    Top-down: [data-spw-op~="operator:frame"] finds every framed thing;
    combinatorics come free by stacking token matchers. */
+/**
+ * Split a Spw expression into its operator and operand, honoring sigil
+ * position (prefix leads attention forward; postfix reflects back).
+ * Delegates position detection to parseSigilPosition so button labels,
+ * copy sigils, and spell atoms all read the same grammar.
+ * Mirror shape: SpwOperatorSplit in types/spw.d.ts.
+ * @param {string} [expression] e.g. "#>address", "orientation.", "plain words"
+ * @returns {{operator: string, prefix: string, operand: string, position: 'prefix'|'postfix'|'infix'|'expression'|''}}
+ */
 const splitOperatorExpression = (expression = '') => {
   const normalized = normalizeText(expression);
   const definition = detectOperator(normalized);
-  if (!definition) {
-    return { operator: '', prefix: '', operand: normalized, position: '' };
+  if (definition) {
+    return {
+      operator: definition.type,
+      prefix: definition.prefix || '',
+      operand: normalized.replace(definition.pattern, '').trim(),
+      position: 'prefix',
+    };
   }
-  const operand = normalized.replace(definition.pattern, '').trim();
-  return {
-    operator: definition.type,
-    prefix: definition.prefix || '',
-    operand,
-    position: 'prefix',
-  };
+  const sigil = parseSigilPosition(normalized);
+  if (sigil.position === 'postfix' && sigil.delimiter) {
+    return {
+      operator: sigil.operator?.type || '',
+      prefix: sigil.delimiter,
+      operand: normalized.slice(0, -sigil.delimiter.length).trim(),
+      position: 'postfix',
+    };
+  }
+  if (sigil.position === 'infix' || sigil.position === 'expression') {
+    return { operator: sigil.operator?.type || '', prefix: '', operand: normalized, position: sigil.position };
+  }
+  return { operator: '', prefix: '', operand: normalized, position: '' };
 };
+
+/* Operator affordances: what each role invites you to do with it.
+   Copy, tooltips, menus, and QA surfaces should all read verbs from this
+   one table. The first five are Spwashi's vocabulary verbatim (2026-07-03);
+   the rest are drafts derived from each operator's own intent line, awaiting
+   tuning - edit words here, never inline elsewhere. */
+const OPERATOR_AFFORDANCES = Object.freeze({
+  /* Spwashi-given */
+  substrate: Object.freeze(['charge', 'inspect']),
+  action: Object.freeze(['prime', 'dry-run', 'preview']),
+  subject: Object.freeze(['collect']),
+  perspective: Object.freeze(['trace', 'pivot']),
+  potential: Object.freeze(['store', 'discharge']),
+  /* derived from intent, draft register */
+  frame: Object.freeze(['ring', 'address']),
+  layer: Object.freeze(['peel', 'sound']),
+  vibration: Object.freeze(['name', 'resonate']),
+  ground: Object.freeze(['settle', 'return']),
+  integration: Object.freeze(['lift', 'join']),
+  wonder: Object.freeze(['open', 'ask']),
+  value: Object.freeze(['weigh', 'mark']),
+  binding: Object.freeze(['pin', 'label']),
+  normalize: Object.freeze(['measure', 'tune']),
+  concept: Object.freeze(['enter', 'bound']),
+  'concept-edge': Object.freeze(['close', 'seal']),
+  scene: Object.freeze(['stage', 'observe']),
+  mode: Object.freeze(['choose', 'compare']),
+  direction: Object.freeze(['steer', 'hold']),
+});
+const DEFAULT_AFFORDANCES = Object.freeze(['inspect']);
+
+/**
+ * Verbs an operator role affords. Unlisted roles fall back to ['inspect'].
+ * @param {string} [type] operator type name (e.g. "substrate")
+ * @returns {readonly string[]}
+ */
+const getOperatorAffordances = (type = '') => {
+  const definition = getOperatorDefinition(type);
+  return OPERATOR_AFFORDANCES[definition?.type || normalizeToken(type)] || DEFAULT_AFFORDANCES;
+};
+
+/* Contour expressions: a head followed by typed brace segments, painted on
+   top of an article as an annotation contour. The brace type IS the slot:
+   topic(primary payload)[mode]{specific discussion queue}
+        ()  payload — what the contour carries
+        []  mode    — how it wants to be read
+        {}  queue   — the open discussion it gathers
+   (Spwashi grammar example, 2026-07-03.) */
+const CONTOUR_SLOT_BY_DELIMITER = Object.freeze({ '(': 'payload', '[': 'mode', '{': 'queue' });
+const CONTOUR_CLOSER = Object.freeze({ '(': ')', '[': ']', '{': '}' });
+
+/**
+ * Parse a contour expression into head + typed segments.
+ * Mirror shape: SpwContour in types/spw.d.ts.
+ * @param {string} [expression] e.g. "topic(primary payload)[mode]{queue...}"
+ * @returns {{head: string, segments: Array<{slot: 'payload'|'mode'|'queue', delimiter: string, content: string}>, remainder: string}}
+ */
+const parseContourExpression = (expression = '') => {
+  const text = normalizeText(expression);
+  const headMatch = text.match(/^[^([{]*/);
+  const head = (headMatch?.[0] || '').trim();
+  const segments = [];
+  let rest = text.slice(headMatch?.[0].length || 0);
+  while (rest) {
+    const open = rest[0];
+    const slot = CONTOUR_SLOT_BY_DELIMITER[open];
+    if (!slot) break;
+    const closeIndex = rest.indexOf(CONTOUR_CLOSER[open]);
+    if (closeIndex === -1) break;
+    segments.push({ slot, delimiter: open, content: rest.slice(1, closeIndex).trim() });
+    rest = rest.slice(closeIndex + 1);
+  }
+  return { head, segments, remainder: rest.trim() };
+};
+
+/**
+ * Project an expression as the data-spw-op bundle value.
+ * @param {string} [expression]
+ * @returns {string} e.g. "operator:frame operand:address position:prefix"
+ */
+const OP_DISPATCH_BY_POSITION = Object.freeze({
+  /* Positional dispatch: where attention goes when the expression fires.
+     Prefix reaches forward into what follows; postfix reflects on what came
+     before; infix encloses what it contains. */
+  prefix: 'forward',
+  postfix: 'reflect',
+  infix: 'enclose',
+  expression: 'enclose',
+});
 
 const composeOpBundle = (expression = '') => {
   const parts = splitOperatorExpression(expression);
@@ -1338,6 +1452,8 @@ const composeOpBundle = (expression = '') => {
   if (parts.operator) tokens.push(`operator:${parts.operator}`);
   if (parts.operand) tokens.push(`operand:${parts.operand.replace(/\s+/g, '_').slice(0, 48)}`);
   if (parts.position) tokens.push(`position:${parts.position}`);
+  const dispatch = OP_DISPATCH_BY_POSITION[parts.position];
+  if (dispatch) tokens.push(`dispatch:${dispatch}`);
   return tokens.join(' ');
 };
 
@@ -1833,6 +1949,9 @@ export {
   getOperatorGeometry,
   splitOperatorExpression,
   composeOpBundle,
+  parseContourExpression,
+  getOperatorAffordances,
+  OPERATOR_AFFORDANCES,
   parseSigilPosition,
   resolveOperationalFixity,
   getPageSurface,

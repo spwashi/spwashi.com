@@ -388,15 +388,24 @@ export function annotateFloatingChromeElement(el, options = {}) {
   });
 }
 
+function isSectionHandleShellSibling(el) {
+  return el?.classList?.contains?.('spw-section-handle-shell');
+}
+
+function isSupersededSectionHandle(el) {
+  if (el.dataset.spwChromeRole !== 'section-handle') return false;
+  const shell = el.nextElementSibling;
+  return isSectionHandleShellSibling(shell);
+}
+
 function isFloatingChromeRendered(el) {
   if (!globalThis.HTMLElement || !(el instanceof globalThis.HTMLElement)) return false;
   if (el.hidden || el.getAttribute('aria-hidden') === 'true') return false;
+  if (isSupersededSectionHandle(el)) return false;
   const handleState = el.dataset.spwHandleState;
-  const inspectorState = el.dataset.spwStateInspector;
   const popupState = el.dataset.spwPopupState || el.dataset.spwDisclosureState;
   if (handleState === 'hidden') return false;
   if (popupState === 'hidden' || popupState === 'closed') return false;
-  if (inspectorState === 'closed' && el.querySelector?.('.spw-state-inspector__launch')) return true;
   return true;
 }
 
@@ -460,10 +469,291 @@ function measureFloatingChromeOcclusion(nodes = []) {
   };
 }
 
-function resolveFloatingChromeCompetition(openCount, dockedOpenCount) {
+function resolveFloatingChromeCompetition(openCount, dockedOpenCount, overlap = false) {
+  if (overlap) return 'crowded';
   if (openCount <= 1 && dockedOpenCount <= 1) return 'clear';
   if (openCount <= 2 && dockedOpenCount <= 2) return 'stacked';
   return 'crowded';
+}
+
+const BOTTOM_LANE_MOBILE_QUERY = '(max-width: 720px), (pointer: coarse)';
+const BOTTOM_LANE_SLOT_GAP_PX = 10.4;
+const BOTTOM_LANE_MENU_CLEARANCE_PX = 68;
+const BOTTOM_LANE_MANAGED_STYLE_KEYS = Object.freeze([
+  '--spw-floating-slot-section-handle',
+  '--spw-floating-slot-satchel',
+  '--spw-floating-slot-console',
+  '--spw-floating-slot-parallel-nav',
+  '--spw-floating-bottom-rail',
+  '--spw-bottom-chrome-clearance',
+  '--spw-floating-handle-inline-start',
+  '--spw-floating-handle-inline-end',
+  '--spw-floating-handle-transform',
+  '--spw-floating-handle-max-inline-size',
+  '--spw-floating-satchel-lane',
+  '--spw-floating-inline-gutter',
+  '--spw-floating-menu-clearance',
+]);
+
+let bottomLaneListenersBound = false;
+
+function ensureBottomLaneListeners() {
+  if (bottomLaneListenersBound || typeof globalThis.window === 'undefined') return;
+  bottomLaneListenersBound = true;
+  const resync = () => {
+    globalThis.requestAnimationFrame(() => {
+      syncFloatingChromeState(globalThis.document, {
+        source: 'floating-chrome',
+        reason: 'viewport-resize',
+      });
+    });
+  };
+  globalThis.window.addEventListener('resize', resync, { passive: true });
+  globalThis.window.visualViewport?.addEventListener?.('resize', resync, { passive: true });
+  globalThis.window.addEventListener('scroll', resync, { passive: true });
+}
+
+function isMobileBottomLane() {
+  return globalThis.matchMedia?.(BOTTOM_LANE_MOBILE_QUERY)?.matches ?? false;
+}
+
+function pxToRem(px) {
+  const rootStyle = globalThis.getComputedStyle?.(globalThis.document?.documentElement);
+  const fontSize = Number.parseFloat(rootStyle?.fontSize) || 16;
+  return `${(px / fontSize).toFixed(3)}rem`;
+}
+
+function readSafeAreaInsetPx(edge = 'bottom') {
+  const root = globalThis.document?.documentElement;
+  if (!root || !globalThis.getComputedStyle) return BOTTOM_LANE_SLOT_GAP_PX;
+  const style = globalThis.getComputedStyle(root);
+  const token = style.getPropertyValue(
+    edge === 'bottom' ? '--spw-floating-slot-bottom-base' : '--spw-floating-slot-gutter'
+  ).trim();
+  if (token.endsWith('rem')) {
+    const rem = Number.parseFloat(token);
+    const rootPx = Number.parseFloat(style.fontSize) || 16;
+    if (Number.isFinite(rem)) return rem * rootPx;
+  }
+  if (token.endsWith('px')) {
+    const px = Number.parseFloat(token);
+    if (Number.isFinite(px)) return px;
+  }
+  return BOTTOM_LANE_SLOT_GAP_PX;
+}
+
+function measureElementChrome(el) {
+  if (!(el instanceof globalThis.HTMLElement)) return null;
+  if (el.hidden || el.getAttribute('aria-hidden') === 'true') return null;
+  const rect = el.getBoundingClientRect();
+  if (rect.width <= 0 || rect.height <= 0) return null;
+  const viewportHeight = globalThis.innerHeight
+    || globalThis.document?.documentElement?.clientHeight
+    || 0;
+  return {
+    el,
+    rect,
+    height: rect.height,
+    width: rect.width,
+    bottomInset: Math.max(0, viewportHeight - rect.bottom),
+    top: rect.top,
+  };
+}
+
+function readMenuClearancePx(doc) {
+  const menuOpen = doc.querySelector(
+    '.site-header[data-spw-menu-mode="toggle"][data-spw-menu="open"], body > header[data-spw-menu-mode="toggle"][data-spw-menu="open"]'
+  );
+  return menuOpen ? BOTTOM_LANE_MENU_CLEARANCE_PX : 0;
+}
+
+function findBottomLaneHandle(doc) {
+  const shell = doc.querySelector('.spw-section-handle-shell[data-spw-handle-state="visible"]');
+  if (shell instanceof globalThis.HTMLElement && !shell.hidden) return shell;
+  const handle = doc.querySelector('.spw-section-handle[data-spw-handle-state="visible"]:not([hidden])');
+  return handle instanceof globalThis.HTMLElement ? handle : null;
+}
+
+function findBottomLaneInspector(doc) {
+  return doc.querySelector('[data-spw-state-inspector-root]');
+}
+
+function findBottomLaneConsole(doc) {
+  const consoleNode = doc.querySelector('.spw-console');
+  if (!(consoleNode instanceof globalThis.HTMLElement)) return null;
+  if (consoleNode.hidden || consoleNode.getAttribute('aria-hidden') === 'true') return null;
+  return consoleNode;
+}
+
+function findBottomLaneSurfaceMap(doc) {
+  const nav = doc.querySelector('.spw-nav');
+  if (!(nav instanceof globalThis.HTMLElement)) return null;
+  if (doc.documentElement?.dataset?.spwNavigator === 'hidden') return null;
+  return nav;
+}
+
+function clearBottomLaneManagedStyles(html) {
+  BOTTOM_LANE_MANAGED_STYLE_KEYS.forEach((key) => {
+    html.style.removeProperty(key);
+  });
+}
+
+function measureAndApplyBottomLane(doc, html, { competition, occlusion }) {
+  const mobile = isMobileBottomLane();
+  const menuClearancePx = readMenuClearancePx(doc);
+  const safeBottomPx = readSafeAreaInsetPx('bottom');
+  const safeSidePx = Math.max(readSafeAreaInsetPx('left'), readSafeAreaInsetPx('right'));
+
+  const handleEl = findBottomLaneHandle(doc);
+  const inspectorRoot = findBottomLaneInspector(doc);
+  const consoleEl = findBottomLaneConsole(doc);
+  const surfaceMapEl = findBottomLaneSurfaceMap(doc);
+
+  const handleMeasure = measureElementChrome(handleEl);
+  const consoleMeasure = measureElementChrome(consoleEl);
+  const inspectorLaunch = inspectorRoot?.querySelector?.('.spw-state-inspector__launch');
+  const inspectorPanel = inspectorRoot?.dataset?.spwStateInspector === 'open'
+    ? inspectorRoot?.querySelector?.('.spw-state-inspector__panel:not([hidden])')
+    : null;
+  const launchMeasure = measureElementChrome(inspectorLaunch);
+  const panelMeasure = measureElementChrome(inspectorPanel);
+  const navOpen = surfaceMapEl?.classList?.contains('is-open')
+    || surfaceMapEl?.dataset?.spwNavState === 'open';
+  const navPanel = navOpen
+    ? surfaceMapEl?.querySelector?.('.spw-nav-panel:not([hidden])')
+    : null;
+  const navPanelMeasure = measureElementChrome(navPanel);
+  const surfaceMeasure = measureElementChrome(surfaceMapEl?.querySelector?.('.spw-nav-strip') || surfaceMapEl);
+
+  if (!handleMeasure && !launchMeasure && !consoleMeasure && !surfaceMeasure && !panelMeasure && !navPanelMeasure) {
+    clearBottomLaneManagedStyles(html);
+    writeRuntimeDatasetValues(html, {
+      spwBottomLaneManaged: null,
+      spwBottomLaneMode: null,
+      spwBottomLaneHandle: null,
+      spwBottomLaneClearancePx: null,
+      spwBottomLaneNav: null,
+    }, {
+      source: 'floating-chrome',
+      reason: 'bottom-lane-clear',
+    });
+    return null;
+  }
+
+  let tierBottomPx = safeBottomPx + menuClearancePx;
+  const vars = {};
+  let clearancePx = safeBottomPx + menuClearancePx;
+
+  if (consoleMeasure) {
+    vars['--spw-floating-slot-console'] = pxToRem(tierBottomPx);
+    tierBottomPx += consoleMeasure.height + BOTTOM_LANE_SLOT_GAP_PX;
+    clearancePx = Math.max(clearancePx, tierBottomPx);
+  } else {
+    vars['--spw-floating-slot-console'] = pxToRem(safeBottomPx + menuClearancePx);
+  }
+
+  const travelRowHeightPx = Math.max(handleMeasure?.height || 0, launchMeasure?.height || 0, 0);
+  const travelRowBottomPx = tierBottomPx;
+
+  vars['--spw-floating-slot-section-handle'] = pxToRem(travelRowBottomPx);
+  vars['--spw-floating-slot-satchel'] = pxToRem(travelRowBottomPx);
+  vars['--spw-floating-bottom-rail'] = pxToRem(travelRowBottomPx);
+
+  if (travelRowHeightPx > 0) {
+    clearancePx = Math.max(clearancePx, travelRowBottomPx + travelRowHeightPx);
+  }
+
+  const parallelNavBottomPx = travelRowBottomPx + travelRowHeightPx + BOTTOM_LANE_SLOT_GAP_PX;
+  vars['--spw-floating-slot-parallel-nav'] = pxToRem(parallelNavBottomPx);
+  if (surfaceMeasure) {
+    clearancePx = Math.max(clearancePx, parallelNavBottomPx + surfaceMeasure.height);
+  }
+
+  if (navPanelMeasure) {
+    clearancePx = Math.max(
+      clearancePx,
+      Math.max(0, (globalThis.innerHeight || 0) - navPanelMeasure.top) + BOTTOM_LANE_SLOT_GAP_PX
+    );
+    if (mobile) laneMode = 'stacked';
+  }
+
+  if (panelMeasure) {
+    clearancePx = Math.max(
+      clearancePx,
+      Math.max(0, (globalThis.innerHeight || 0) - panelMeasure.top) + BOTTOM_LANE_SLOT_GAP_PX
+    );
+  }
+
+  vars['--spw-bottom-chrome-clearance'] = pxToRem(clearancePx + BOTTOM_LANE_SLOT_GAP_PX);
+  vars['--spw-floating-menu-clearance'] = pxToRem(menuClearancePx);
+
+  let laneMode = mobile ? 'split' : 'desktop';
+  let handleLane = handleMeasure ? 'expanded' : null;
+
+  if (mobile && (handleMeasure || launchMeasure)) {
+    const satchelLanePx = launchMeasure?.width
+      ? Math.ceil(launchMeasure.width + 16)
+      : Math.min(184, ((globalThis.innerWidth || 360) * 0.5) - 13);
+    const gutterPx = Math.max(BOTTOM_LANE_SLOT_GAP_PX, safeSidePx);
+    const leftLaneMaxPx = Math.max(
+      152,
+      (globalThis.innerWidth || 360) - satchelLanePx - (gutterPx * 2) - BOTTOM_LANE_SLOT_GAP_PX
+    );
+
+    vars['--spw-floating-inline-gutter'] = pxToRem(gutterPx);
+    vars['--spw-floating-satchel-lane'] = pxToRem(satchelLanePx);
+    vars['--spw-floating-handle-inline-start'] = pxToRem(gutterPx);
+    vars['--spw-floating-handle-inline-end'] = 'auto';
+    vars['--spw-floating-handle-transform'] = 'none';
+    vars['--spw-floating-handle-max-inline-size'] = pxToRem(leftLaneMaxPx);
+
+    if (handleMeasure && launchMeasure) laneMode = 'split';
+    else if (handleMeasure) laneMode = 'handle-only';
+    else laneMode = 'satchel-only';
+  } else if (!mobile) {
+    [
+      '--spw-floating-handle-inline-start',
+      '--spw-floating-handle-inline-end',
+      '--spw-floating-handle-transform',
+      '--spw-floating-handle-max-inline-size',
+      '--spw-floating-satchel-lane',
+      '--spw-floating-inline-gutter',
+    ].forEach((key) => {
+      html.style.removeProperty(key);
+    });
+    laneMode = 'desktop';
+  }
+
+  const overlap = occlusion?.state === 'overlap';
+  if (competition === 'crowded' || overlap) {
+    laneMode = mobile ? 'crowded' : 'stacked';
+    if (handleMeasure) handleLane = 'compact';
+  } else if (competition === 'stacked' && mobile && handleMeasure && launchMeasure) {
+    handleLane = 'compact';
+  }
+
+  Object.entries(vars).forEach(([key, value]) => {
+    html.style.setProperty(key, value);
+  });
+
+  writeRuntimeDatasetValues(html, {
+    spwBottomLaneManaged: 'true',
+    spwBottomLaneMode: laneMode,
+    spwBottomLaneHandle: handleLane,
+    spwBottomLaneClearancePx: String(Math.round(clearancePx)),
+    spwBottomLaneNav: navOpen ? 'open' : (surfaceMeasure ? 'strip' : null),
+  }, {
+    source: 'floating-chrome',
+    reason: 'bottom-lane-layout',
+  });
+
+  return {
+    laneMode,
+    handleLane,
+    clearancePx,
+    travelRowBottomPx,
+    travelRowHeightPx,
+  };
 }
 
 // Ambient chrome that should yield (collapse to its minimal form) when the
@@ -501,11 +791,18 @@ export function syncFloatingChromeState(root = document, options = {}) {
   const openRoles = uniqueTokens(open.map((node) => node.dataset.spwChromeRole));
   const slots = uniqueTokens(rendered.map((node) => node.dataset.spwChromeSlot));
   const openSlots = uniqueTokens(open.map((node) => node.dataset.spwChromeSlot));
-  const dockedOpenCount = open.filter((node) => FLOATING_CHROME_DOCKED_ROLES.includes(node.dataset.spwChromeRole)).length;
-  const competition = resolveFloatingChromeCompetition(open.length, dockedOpenCount);
+  const dockedOpen = open.filter((node) => FLOATING_CHROME_DOCKED_ROLES.includes(node.dataset.spwChromeRole));
+  const dockedOpenCount = dockedOpen.length;
   const occlusion = measureFloatingChromeOcclusion(open);
+  const competition = resolveFloatingChromeCompetition(
+    open.length,
+    dockedOpenCount,
+    occlusion.state === 'overlap'
+  );
   // Redundancy handling: collapse ambient chrome that is crowded or overlapping.
   const collapsedCount = applyChromeCollapse(open, competition, occlusion.collidingNodes);
+  ensureBottomLaneListeners();
+  const bottomLane = measureAndApplyBottomLane(doc, html, { competition, occlusion });
 
   writeRuntimeDatasetValues(html, {
     spwFloatingChromeCount: String(rendered.length),
@@ -538,6 +835,7 @@ export function syncFloatingChromeState(root = document, options = {}) {
     competition,
     occlusion,
     collapsedCount,
+    bottomLane,
   };
 }
 
@@ -789,7 +1087,8 @@ function hasClass(el, className) {
 }
 
 function matchesAny(el, selectors = []) {
-  return selectors.some((selector) => el?.matches?.(selector));
+  const selectorList = Array.isArray(selectors) ? selectors : [selectors];
+  return selectorList.some((selector) => selector && el?.matches?.(selector));
 }
 
 export function writeDatasetValue(el, key, value, options = {}) {

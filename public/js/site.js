@@ -121,13 +121,17 @@ import { createModuleLoader } from './runtime/module-loader.js';
  * A module definition should provide:
  * - id
  * - layer: "core" | "feature" | "region" | "enhancement"
- * - when: "immediate" | "visible" | "idle" | "interaction" | "region"
+ * - when: "immediate" | "visible" | "idle" | "interaction" | "region" | "settled"
  * - selector?: CSS selector
  * - route?: string | string[]
  * - features?: string | string[] — body[data-spw-features] tokens required before scheduling (aligns with CSS behavior bundles)
  * - reason?: human-readable load reason for audit surfaces
  * - describes?: Spw-style semantic expression describing what the module does or the structures it affects (strongly preferred for clarity)
- * - updates?: string[] — data-spw-* attributes, selectors, or Spw expressions describing the specific elements/structures updated by this module (for meaningful descriptions, attentional models, serialization)
+ * - updates?: string[] | { kind, name, scope? }[] — attrs, css vars, aria, classes, events,
+ *   selectors, or properties the module writes. Flat strings are inferred (`data-spw-*`,
+ *   `--token`, `aria-*`, `.class`, `spw:event`). Explicit kind prefixes (`attr:…`,
+ *   `css-var:…`) and scope prefixes (`html:data-spw-*`, `root:--token`) are supported.
+ *   Runtime normalizes these for inspection via module-updates-contract.js.
  * - rootMode?: "single" | "each"
  * - evaluates?: explicit dimensions (inferred if absent)
  * - load(): Promise<module>
@@ -833,6 +837,7 @@ async function bootSite() {
   });
   runtimeCtx.compose = composeApi;
   setPageState(PAGE_STATES.BOOTING);
+  writeDatasetValue(document.documentElement, 'spwRuntimeStage', 'boot');
   runtimeCtx.addCleanup(initPageAttentionLifecycle(runtimeCtx));
   runtimeCtx.addCleanup(initRuntimeResourceAwareness(runtimeCtx));
 
@@ -865,7 +870,7 @@ async function bootSite() {
   primeRegions(runtimeCtx);
   refreshRegionProfiles(runtimeCtx, 'immediate-enrichment');
 
-  schedulePageArrival(runtimeCtx, PAGE_ARRIVAL.ENTERING, 'page-enter');
+  schedulePageArrival(runtimeCtx, runtimeCtx.pageArrivalKind || PAGE_ARRIVAL.ENTERING, 'page-enter');
 
   setPageState(PAGE_STATES.INTERACTIVE);
   runtimeCtx.bus.emit('spw:page-interactive', { route: runtimeCtx.route });
@@ -899,6 +904,7 @@ async function bootSite() {
   });
 
   // Final site-ready mark for traces that end before full window load
+  writeDatasetValue(document.documentElement, 'spwRuntimeStage', 'ready');
   performance.mark('spw:site-ready');
   performance.measure('spw:boot-to-ready', 'spw:boot-start', 'spw:site-ready');
   runtimeLogger.info('site ready (post region)', { route: runtimeCtx.route }, SPW_LOG_RELATIONSHIPS.LIFECYCLE);

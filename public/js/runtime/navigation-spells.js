@@ -3,6 +3,7 @@ import {
   applyOperatorGeometryToElement,
   parseSpwExpression,
 } from '/public/js/semantic/link-copy.js';
+import { writeDatasetValue } from '/public/js/kernel/dom-contracts.js';
 import { detectOperator } from '/public/js/kernel/shared.js';
 
 const TOKEN_SELECTOR = [
@@ -390,6 +391,38 @@ function applyTokens(root = document) {
   root.querySelectorAll?.(TOKEN_SELECTOR).forEach((link) => annotateLink(link));
 }
 
+function syncSectionLocomotionExpression(detail = {}) {
+  const html = document.documentElement;
+  const sectionId = detail.currentId || '';
+  if (!sectionId) {
+    writeDatasetValue(html, 'spwNavExpression', null);
+    return;
+  }
+
+  const hashLinks = document.querySelectorAll(
+    `a[href="#${CSS.escape(sectionId)}"], a[href$="#${CSS.escape(sectionId)}"]`
+  );
+  hashLinks.forEach((link) => {
+    if (!(link instanceof HTMLAnchorElement)) return;
+    link.dataset.spwNavSectionCurrent = 'true';
+    link.dataset.spwNavExpression = detail.currentToken
+      ? `${detail.currentToken} ${detail.currentLabel || sectionId}`
+      : (detail.currentLabel || sectionId);
+  });
+
+  document.querySelectorAll('[data-spw-nav-section-current="true"]').forEach((link) => {
+    if (!(link instanceof HTMLAnchorElement)) return;
+    const href = link.getAttribute('href') || '';
+    if (!href.endsWith(`#${sectionId}`)) {
+      delete link.dataset.spwNavSectionCurrent;
+    }
+  });
+
+  writeDatasetValue(html, 'spwNavExpression', detail.currentToken
+    ? `${detail.currentToken} · ${detail.currentLabel || sectionId}`
+    : (detail.currentLabel || sectionId));
+}
+
 export function initSpwNavigationSpells() {
   if (document.body?.dataset?.spwNavigationSpellsInit === '1') {
     return { cleanup() {}, refresh() {} };
@@ -397,6 +430,17 @@ export function initSpwNavigationSpells() {
 
   document.body.dataset.spwNavigationSpellsInit = '1';
   applyTokens(document);
+
+  const onSectionLocomotion = (event) => {
+    syncSectionLocomotionExpression(event?.detail || {});
+    if (event?.detail?.phase === 'settled') {
+      applyTokens(document);
+    }
+  };
+  const onNavigationRefresh = () => applyTokens(document);
+
+  document.addEventListener('spw:section-locomotion-state', onSectionLocomotion);
+  document.addEventListener('spw:navigation-refresh', onNavigationRefresh);
 
   const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
@@ -415,6 +459,8 @@ export function initSpwNavigationSpells() {
   return {
     cleanup() {
       observer.disconnect();
+      document.removeEventListener('spw:section-locomotion-state', onSectionLocomotion);
+      document.removeEventListener('spw:navigation-refresh', onNavigationRefresh);
     },
     refresh() {
       applyTokens(document);

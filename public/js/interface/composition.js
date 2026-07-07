@@ -751,7 +751,10 @@ function syncCauldronState() {
   document.querySelectorAll('[data-cauldron-count]').forEach((node) => {
     node.textContent = String(count);
   });
-  document.querySelectorAll('[data-spw-cauldron-operators]').forEach((node) => {
+  /* Display mirrors only. The root and vessel hosts carry this attribute as
+     state data; writing textContent into them erases the page or the vessel
+     (it did — browser check, 2026-07-03). */
+  document.querySelectorAll('[data-spw-cauldron-operators]:not(html):not([data-spw-cauldron])').forEach((node) => {
     const operators = root.dataset.spwCauldronOperators;
     node.textContent = operators ? `· forces: ${operators}` : '';
   });
@@ -783,6 +786,9 @@ function syncCauldronHosts(ingredients, phase) {
   syncGardenHealth(hosts, ingredients);
   hosts.forEach((host) => {
     applyCauldronState(host, { phase, count });
+    /* Spatial physics: the vessel is a charging container; sigils inside it
+       express accumulation until cast (discharge) or checkpoint (reference). */
+    host.dataset.spwOpDisposition = 'charge';
     host.dataset.spwHypermediaExtension = 'state output resume';
     if (operators) {
       host.dataset.spwCauldronOperators = operators;

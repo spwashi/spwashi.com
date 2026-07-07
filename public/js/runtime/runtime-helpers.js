@@ -7,7 +7,7 @@
  */
 
 const RUNTIME_TIMING_POLICIES = new Set(['normal', 'eager', 'defer', 'quiet', 'manual']);
-const MOUNT_WHEN_VALUES = new Set(['immediate', 'visible', 'idle', 'interaction', 'region']);
+const MOUNT_WHEN_VALUES = new Set(['immediate', 'visible', 'idle', 'interaction', 'region', 'settled']);
 const HTML = document.documentElement;
 const BODY = document.body;
 

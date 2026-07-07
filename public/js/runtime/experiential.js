@@ -335,6 +335,8 @@ function initSpellBreadcrumbs() {
   document.addEventListener('spw:memory:recent-path', update);
   document.addEventListener('spw:page-attention-state', update);
   document.addEventListener('spw:page-transition-state', update);
+  document.addEventListener('spw:section-locomotion-state', update);
+  document.addEventListener('spw:navigation-locomotion', update);
   document.addEventListener('spw:settings:changed', () => {
     if (!runtime.pathExpandedManual) {
       runtime.pathExpanded = resolveSpellPathExpandedDefault();

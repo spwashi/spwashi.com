@@ -257,3 +257,9 @@ The public site should still read as hand-authored HTML/CSS/JS unless a later ex
 - If the goal is CSS chunking, split ownership semantically first, compile second.
 - If the goal is TS in the browser, start with JSDoc and extracted contract modules around `site.js` rather than forcing a full runtime pipeline.
 - Do not adopt a full public-runtime TS-plus-bundler path unless that becomes its own explicit project.
+
+## Implementation Increment - 2026-07-03 Types As Documentation
+
+- `types/spw.d.ts` gained the G1 bundle dataset keys (`spwCauldronState`, `spwOp`, `spwEffects`) with template-literal grammar hints, plus exported mirror shapes `SpwIngredient`, `SpwEffectEntry`, `SpwOperatorSplit` - typechecked via the existing `types/**/*.d.ts` include.
+- Runtime JS stays un-typechecked by policy (`checkJs: false`), so the JS side documents through plain JSDoc referencing the mirror shapes by name: `cauldron/contract.js` (CauldronStateParts typedef + helper signatures), `cauldron/storage.js` (normalizeIngredient), `kernel/shared.js` (splitOperatorExpression, composeOpBundle), `runtime/effect-ledger.js` (record). IDE hover carries the contract on camera; the d.ts carries it through tsc.
+- Pattern for future passes: shapes live once in `types/spw.d.ts`; JS declares "Mirror shape: X in types/spw.d.ts" rather than duplicating structure.

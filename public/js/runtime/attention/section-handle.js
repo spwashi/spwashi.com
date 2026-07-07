@@ -574,6 +574,7 @@ function updateSectionHandleState({
   const scrolledPast = window.scrollY > scrollThreshold;
   const visible = sections.length > 1 && (scrolledPast || state.activeIndex > 0);
   syncSectionHandleVisibility(handle, shell, visible);
+  syncBottomLaneHandlePressure(state, shell, refs.toggleButton);
 
   writePageSectionDatasets(snapshot);
   syncChromeLocomotionExpression(snapshot, visible, state.phase, handle, shell);
@@ -663,6 +664,14 @@ function setSectionHandleCompactMode(state, shell, toggleButton) {
   syncSectionHandleShellState(shell, toggleButton, state.compact);
 }
 
+function syncBottomLaneHandlePressure(state, shell, toggleButton) {
+  const pressure = document.documentElement.dataset.spwBottomLaneHandle;
+  if (pressure !== 'compact' || state.manualCompact) return;
+  if (state.compact) return;
+  state.compact = true;
+  setSectionHandleCompactMode(state, shell, toggleButton);
+}
+
 function createSectionHandleController({
   sections,
   handle,
@@ -714,6 +723,10 @@ function createSectionHandleController({
         state.manualCompact = true;
         setSectionHandleCompactMode(state, shell, refs.toggleButton);
         updateActiveState('toggle');
+        syncFloatingChromeState(document, {
+          source: 'attention-architecture',
+          reason: 'section-handle-compact-toggle',
+        });
 
         // Instrumentation for debuggability of floating chrome interactions
         try {

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
+    <title>Spwashi • Spellcraft Bench</title>
+    <meta name="description" content="Deterministic QA and screenshot bench for the spellcraft system: cauldron vessel phases, operator/operand atoms, effect-ledger residue, and the decompose walkthrough — every specimen state authored in markup so captures are reproducible.">
+    <meta name="robots" content="noindex">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="/public/css/style.css">
+<script type="module" src="/public/js/site.js"></script>
+</head>
+<body
+    data-spw-surface="website"
+    data-spw-features="operators navigator console inspectability"
+    data-spw-route-family="design experiments qa"
+    data-spw-context="verification"
+    data-spw-wonder="reproducibility recognition"
+    data-spw-page-family="spec"
+    data-spw-page-modes="reading inspect compare"
+    data-spw-page-seed="page_design_experiments_spellcraft_bench"
+    data-spw-page-role="qa-bench"
+    data-spw-layout="wide"
+    data-spw-related-routes="/design/components/|/design/experiments/load-symphony/a/">
+
+<header class="site-header">
+    <nav aria-label="Bench navigation">
+        <a href="/design/">design</a>
+        <a href="/design/components/">components</a>
+        <a href="/topics/">topics</a>
+    </nav>
+</header>
+
+<main>
+    <article class="site-frame">
+        <header data-spw-slot="header">
+            <h1>Spellcraft Bench</h1>
+            <p class="frame-note">Every specimen below is authored in static markup with explicit state bundles, so a screenshot taken today matches one taken next month unless a contract changed. Capture order for QA runs: vessel phases, atom grammar, ledger residue, decompose walkthrough.</p>
+        </header>
+
+        <section data-spw-anatomy="specimen-set" aria-labelledby="bench-phases">
+            <h2 id="bench-phases">1. Vessel phases (static state bundles)</h2>
+            <p>Four hosts carrying each <code>data-spw-cauldron-state</code> phase token. CSS must render each distinctly with no JS present.</p>
+            <div class="frame-grid">
+                <div class="frame-panel site-footer__cauldron" data-spw-cauldron data-spw-cauldron-state="phase:empty count:0">
+                    <strong>empty</strong> <code>phase:empty count:0</code>
+                </div>
+                <div class="frame-panel site-footer__cauldron" data-spw-cauldron data-spw-cauldron-state="phase:primed count:1">
+                    <strong>primed</strong> <code>phase:primed count:1</code>
+                </div>
+                <div class="frame-panel site-footer__cauldron" data-spw-cauldron data-spw-cauldron-state="phase:mixing count:2">
+                    <strong>mixing</strong> <code>phase:mixing count:2</code>
+                </div>
+                <div class="frame-panel site-footer__cauldron" data-spw-cauldron data-spw-cauldron-state="phase:spell-ready count:3">
+                    <strong>spell-ready</strong> <code>phase:spell-ready count:3</code>
+                </div>
+            </div>
+        </section>
+
+        <section data-spw-anatomy="specimen-set" aria-labelledby="bench-atoms">
+            <h2 id="bench-atoms">2. Atom grammar (operator × operand)</h2>
+            <p>Operand-bearing atoms show the binding seam; bare operators read as open valences (italic, dimmed). Combinatoric probe: <code>[data-spw-op~="operator:frame"]</code>.</p>
+            <p>
+                <span class="spell-ingredient" data-spw-atom="chip" data-spw-op="operator:frame operand:address position:prefix"><span class="spell-ingredient-prefix">#&gt;</span><span class="spell-ingredient-nucleus">address</span></span>
+                <span class="spell-ingredient" data-spw-atom="chip" data-spw-op="operator:probe operand:system position:prefix"><span class="spell-ingredient-prefix">^</span><span class="spell-ingredient-nucleus">system</span></span>
+                <span class="spell-ingredient" data-spw-atom="chip" data-spw-op="operand:orientation position:postfix"><span class="spell-ingredient-nucleus">orientation</span><span class="spell-ingredient-postfix">.</span></span>
+                <span class="spell-ingredient" data-spw-atom="chip" data-spw-op="operator:frame position:prefix"><span class="spell-ingredient-prefix">#&gt;</span><span class="spell-ingredient-nucleus">(open valence)</span></span>
+                <span class="cauldron-ingredient" data-spw-cauldron-ingredient data-spw-op="operator:stream operand:structure position:prefix" data-spw-semantic-expression="~structure">~structure</span>
+            </p>
+            <h3>Sigil anatomy (raw vs hydrated)</h3>
+            <p>Chips below are authored as fused text; with JS the sigil-anatomy module wraps <code>.spw-sigil</code>/<code>.spw-operand</code> with spacing preserved (inspect to compare raw source vs hydrated DOM — zero layout shift is the contract). Without JS the fused text is the reading.</p>
+            <p>
+                <a class="operator-chip" href="/now/" data-spw-operator="substrate">$ now</a>
+                <a class="operator-chip" href="/topics/" data-spw-operator="value">* topics</a>
+                <button class="operator-chip" type="button" data-spw-operator="ground">.orientation</button>
+            </p>
+            <h3>Disposition physics (container determines payload)</h3>
+            <p>The same chip under each disposition. Charge pulls inward, discharge radiates, reference points (dotted), dereference resolves (solid).</p>
+            <p>
+                <span data-spw-op-disposition="charge"><button class="operator-chip" type="button" data-spw-operator="substrate">$ in a charging vessel</button></span>
+                <button class="operator-chip" type="button" data-spw-operator="action" data-spw-op-disposition="discharge">! discharging cast</button>
+                <button class="operator-chip" type="button" data-spw-operator="binding" data-spw-op-disposition="reference">= minted reference</button>
+                <button class="operator-chip" type="button" data-spw-operator="ref" data-spw-op-disposition="dereference">~ resolved dereference</button>
+            </p>
+        </section>
+
+        <section data-spw-anatomy="specimen-set" aria-labelledby="bench-affordances">
+            <h2 id="bench-affordances">2a. Effect vocabulary (one table, one source)</h2>
+            <p>Verbs per operator role from <code>OPERATOR_AFFORDANCES</code> in <code>kernel/shared.js</code>. Bold rows are Spwashi-given vocabulary; the rest are intent-derived drafts awaiting tuning. Atom tooltips read from the same table.</p>
+            <div style="overflow-x: auto;">
+            <table>
+                <thead><tr><th>sigil</th><th>role</th><th>affords</th></tr></thead>
+                <tbody>
+                    <tr><td><code>$</code></td><td><strong>substrate</strong></td><td><strong>charge, inspect</strong></td></tr>
+                    <tr><td><code>!</code></td><td><strong>action</strong></td><td><strong>prime, dry-run, preview</strong></td></tr>
+                    <tr><td><code>&amp;</code></td><td><strong>subject</strong></td><td><strong>collect</strong></td></tr>
+                    <tr><td><code>@</code></td><td><strong>perspective</strong></td><td><strong>trace, pivot</strong></td></tr>
+                    <tr><td><code>~</code></td><td><strong>potential</strong></td><td><strong>store, discharge</strong></td></tr>
+                    <tr><td><code>#&gt;</code></td><td>frame</td><td>ring, address</td></tr>
+                    <tr><td><code>#:</code></td><td>layer</td><td>peel, sound</td></tr>
+                    <tr><td><code>#</code></td><td>vibration</td><td>name, resonate</td></tr>
+                    <tr><td><code>.</code></td><td>ground</td><td>settle, return</td></tr>
+                    <tr><td><code>^</code></td><td>integration</td><td>lift, join</td></tr>
+                    <tr><td><code>?</code></td><td>wonder</td><td>open, ask</td></tr>
+                    <tr><td><code>*</code></td><td>value</td><td>weigh, mark</td></tr>
+                    <tr><td><code>=</code></td><td>binding</td><td>pin, label</td></tr>
+                    <tr><td><code>%</code></td><td>normalize</td><td>measure, tune</td></tr>
+                    <tr><td><code>&lt;</code> <code>&gt;</code></td><td>concept / edge</td><td>enter, bound / close, seal</td></tr>
+                    <tr><td><code>(</code> <code>[</code> <code>{</code></td><td>scene / mode / direction</td><td>stage, observe / choose, compare / steer, hold</td></tr>
+                </tbody>
+            </table>
+            </div>
+        </section>
+
+        <section data-spw-anatomy="specimen-set" aria-labelledby="bench-contour">
+            <h2 id="bench-contour">2b. Contour anatomy (static)</h2>
+            <p>A contour is a compound expression painted over an article; the brace type is the semantic slot. Parser: <code>parseContourExpression</code> in <code>kernel/shared.js</code>. The painting overlay itself is gated design work — this specimen documents the grammar only.</p>
+            <p class="frame-note" style="font-family: var(--site-mono-font, monospace);">
+                <span data-spw-contour-head>topic</span><span data-spw-contour-slot="payload">(primary payload)</span><span data-spw-contour-slot="mode">[mode]</span><span data-spw-contour-slot="queue">{specific discussion queue…}</span>
+            </p>
+        </section>
+
+        <section data-spw-anatomy="specimen-set" aria-labelledby="bench-ledger">
+            <h2 id="bench-ledger">3. Effect ledger residue</h2>
+            <p>With JS: the buttons below seed and read <code>window.spwEffects</code>; the <code>&lt;html&gt;</code> element carries <code>data-spw-effects="count:n last:kind"</code>. Without JS this section stays prose — the ledger is residue, never load-bearing.</p>
+            <p>
+                <button class="operator-chip" type="button" data-bench-action="seed-effect" data-spw-operator="action">! seed one effect</button>
+                <button class="operator-chip" type="button" data-bench-action="list-effects" data-spw-operator="probe">? list to console</button>
+                <button class="operator-chip" type="button" data-bench-action="clear-effects" data-spw-operator="binding">= clear ledger</button>
+            </p>
+            <output data-bench-ledger-readout aria-live="polite"></output>
+        </section>
+
+        <section data-spw-anatomy="specimen-set" aria-labelledby="bench-decompose">
+            <h2 id="bench-decompose">4. Decompose walkthrough (the gated demo)</h2>
+            <ol>
+                <li>Hold-prime any living term or brace on a content route to gather ingredients.</li>
+                <li>Save a working set from the spell dock (checkpoint).</li>
+                <li>Press <code>$ decompose</code> on the saved bundle card: its registry re-enters the cauldron through <code>spell:capture</code>.</li>
+                <li>Confirm the vessel phase bundle advances and the ledger records <code>spell-decomposed</code>.</li>
+            </ol>
+            <p class="frame-note">This walkthrough is the promotion gate for the decompose verb: it must feel like reopening a draft, not replaying a log.</p>
+        </section>
+    </article>
+</main>
+
+<footer class="site-footer">
+    <p>Spellcraft bench — a QA surface. Specimens are contracts made visible; if a screenshot here surprises you, a contract moved.</p>
+</footer>
+
+<script type="module">
+  const readout = document.querySelector('[data-bench-ledger-readout]');
+  const render = () => {
+    const entries = window.spwEffects?.list() || [];
+    readout.textContent = entries.length
+      ? `${entries.length} effects — latest: ${entries[0].label} (${entries[0].kind})`
+      : 'ledger empty';
+  };
+  document.addEventListener('click', (event) => {
+    const btn = event.target.closest('[data-bench-action]');
+    if (!btn) return;
+    const action = btn.dataset.benchAction;
+    if (action === 'seed-effect') {
+      document.dispatchEvent(new CustomEvent('spw:discovery-reward', {
+        detail: { label: 'Bench specimen effect', summary: 'Seeded deterministically from the spellcraft bench.', rewardKind: 'bench-seed', presentation: 'silent' },
+      }));
+    }
+    if (action === 'list-effects') console.table(window.spwEffects?.list() || []);
+    if (action === 'clear-effects') window.spwEffects?.clear();
+    setTimeout(render, 50);
+  });
+  setTimeout(render, 600);
+</script>
+</body>
+</html>

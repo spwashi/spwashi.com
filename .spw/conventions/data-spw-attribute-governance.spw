@@ -24,6 +24,22 @@ inference: .{
   preferred_key = `When resonance or matching needs a stable handle, prefer an explicit data-spw-resonance-key over scraping copy.`
 }[reg=facet]
 
+rhythm: .{
+  claim = `Every data-spw-* attribute has a temporal shape, an altitude, and a register. Declaring all three makes state explorable dimension by dimension and traceable across scales, instead of memorized attribute by attribute.`
+  temporal_shapes = .{
+    state = `A monotone or deliberately-switched value that rules may load-bear on (data-spw-hydration, data-spw-page-state, data-spw-runtime-stage). States move forward or switch on intent; they never oscillate on their own.`
+    arc = `A bounded start-to-end performance with steps (data-spw-page-arrival + data-spw-page-arrival-step). An arc is born in its start state and reaches its end state exactly once per performance; its end is declared by evidence, bounded by tokens.`
+    pulse = `Momentary emphasis with a timer-bound life (data-spw-hydration-pass-momentum, data-spw-loading-ecology-twinkle, phase pulses). Pulses are decoration-only; rules must never load-bear on a pulse.`
+    residue = `A durable trace of past effects (data-spw-effects, ledger projections, handoffs). Residue is memory that makes return feel earned; clearing it loses nothing structural.`
+  }[reg=facet]
+  fractal_rule = `The same shapes recur at every altitude: page arrival on html, region settling on regions, box settle phase on components. A reader who learns one altitude can read them all, and a new attribute should rhyme with the altitude above it rather than inventing a new shape.`
+  altitude_rule = `Fractal attributes demand altitude-guarded selectors. html, body, and profiled regions wear component vocabulary (packing, occupancy, hydration) as field projections - state narration for inspection and inheritance - never as instructions to style themselves as content. A selector keyed to a component-altitude attribute must exclude the root altitudes (:not(html, body)) unless it names them deliberately; box properties and animations leaking to the root are container bugs (a bare packing selector once collapsed the whole document to a 52ch panel measure).`
+  geometry_rule = `State-reporting attributes may tune custom properties on their carrier but never set the carrier's own geometry (inline-size, max-inline-size, position, display). Geometry is spent by content-role rules (prose, notes, kickers, named frames) that read the tuned tokens deliberately. This is what separates reporting from instruction when registry writes (region profiler, component semantics) and styling contracts share one attribute namespace.`
+  natural_register = `Attribute names may associate with natural phenomena (settle, precipitate, twinkle, climate, tempo, contour) because embodied metaphors are learnable and expressive.`
+  hyper_register = `The medium exceeds nature: state can reverse instantly, superpose, replay, or fork. When a capability exceeds its natural metaphor, keep the natural name for the common case and expose the hyper capability through explicit values or a companion attribute - never by quietly bending what the metaphor implies. This keeps storyline metaphors expressive without letting them cap or distort system semantics.`
+  trace_rule = `Every attribute family is enumerated in a JS contract object (SPW_*_CONTRACT), registered in a convention frame, and readable in the state inspector. An attribute that appears in fewer than all three places is a sprawl bug, not a style choice.`
+}[reg=facet]
+
 region_menu: .{
   lanes = #[`inspect`, `collect`, `mark`, `reset`][reg=set]
   labels = #[`Show matches`, `Save spell`, `Copy seed`, `Mark region`][reg=set]

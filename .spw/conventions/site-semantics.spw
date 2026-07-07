@@ -787,6 +787,26 @@ frame #settling-field-contract
   concept page_state settling microinteraction intermediate_state emergent_state
   note "Page settling is the shared projection of page-state.js arrival/presence/transition attributes into component CSS. Tokens own tiny lift, press, offset, and opacity values; components spend them on existing cards, panels, controls, hydration, and selection states. html[data-spw-page-settling] and html[data-spw-layout-settle-phase] name the page-level intermediate window; composition-box-model.js mirrors that into data-spw-box-settle-phase after measure/presence refresh. Intermediate states should be readable from existing data-spw-* attributes and should emerge from composed page/gesture/selection signals rather than route-local timers or new one-off state names."
 
+frame #settle-declaration-contract
+  role convention
+  surface page-state.js + prepaint-state.js + site.js + tokens/core.css
+  concept page_state arrival settling evidence quiescence route_confirmation contour guidance_rail handoff
+  events = #[`spw:page-settle-confirm`][reg=set]
+  root_attributes = #[
+    `data-spw-page-settle-confirmation`,
+    `data-spw-contour-rail`
+  ][reg=set]
+  body_attributes = #[
+    `data-spw-settle-confirm`,
+    `data-spw-settle-contour`
+  ][reg=set]
+  arc_rule = "The page is born in its arrival state (entering cold; returning/restored when a fresh same-session handoff exists) and reaches settled exactly once per arc. The boot/mounting window runs under arrival rules; a guard token settles the page if boot never conducts the arc."
+  evidence_rule = "Settled is declared by evidence: the arrival choreography's minimum delay has elapsed and no settle-worthy event (module mount, region profile, pretext measurement, hydration, region enhancement) arrived within --spw-page-settle-quiet-window, bounded by --spw-page-settle-max-delay. data-spw-page-settle-confirmation records how the declaration happened: pending, auto, route, guard."
+  route_rule = "Routes opt into the declaration: body[data-spw-settle-confirm=route] holds settle at the confirming edge until spw:page-settle-confirm (or the max bound); body[data-spw-settle-contour] names the page's arrival character and rides the settled payload, so site navigation hears one familiar declaration while pages keep unique contour."
+  rail_rule = "Copy-editor guidance rails are forgiving query params a link author may append: ?tempo= (snap|fast|deliberate|settle) applied at prepaint into the signals.css tempo cluster; ?contour= mirrored as html[data-spw-contour-rail]. Rails identify themselves, never overwrite authored base attributes, and are never load-bearing."
+  handoff_rule = "Between-page transitions ride a sessionStorage handoff written at pagehide and consumed once at init; freshness is bounded (30s) so stale handoffs decay to a cold entering arrival."
+  note "Timing bounds live in tokens/core.css (--spw-page-arrival-guard-delay, --spw-page-settle-quiet-window, --spw-page-settle-max-delay) so the declaration rhythm is tunable and inspectable. Reduced motion collapses the arc to an immediate settled state with no confirmation attribute."
+
 frame #loading-ecology-contract
   role convention
   surface loading-ecology.js + module-loader.js + page-state.js + region-profiler.js + pretext-measurement-bus.js + runtime-states.css + measurement-contract.spw
@@ -816,7 +836,7 @@ frame #dimension-vocabulary-contract
 frame #numericity-as-cauldron-ingredient
   role extension
   surface about + software + cauldron + spells
-  concept numericity rhythmic-allocation quantifier dimensional baker's-dozen-easter-egg
+  concept numericity rhythmic-allocation quantifier dimensional bakers-dozen-easter-egg
   note "Rhythmic numbers and allocations are recognized as typed 'numerical' ingredients. The specific baker's dozen (13-modulo) derivations and '13-step' language are treated as an easter egg layer: functional in the quantifier derivation and data-spw-numericity system, but de-emphasized in main prose. They surface delightfully in cauldron outputs, tooltips on living-terms (when numericity mode is active), and inspection. This keeps the motif powerful for engaged users and video creators without overwhelming new visitors. The 13-day personal cycles remain available for tips/bundles as a separate, lighter pattern."
 
 frame #svg-art-runtime
@@ -966,9 +986,9 @@ frame #embedded-tuning-handles
     `data-spw-wonder-memory`
   ][reg=set]
   projection_layers: #[
-    `public/css/effects/wonder.css` (resonance glow via :has() and --spw-resonance)`
-    `public/css/ornament/ornament.css` (attention field, grain, glow responses)`
-    `public/css/handles/operators.css` (operator color and pressed states modulated by resonance)`
+    `public/css/effects/wonder.css (resonance glow via :has() and --spw-resonance)`
+    `public/css/ornament/ornament.css (attention field, grain, glow responses)`
+    `public/css/handles/operators.css (operator color and pressed states modulated by resonance)`
   ][reg=set]
   validation: .{
     operator_resonance: "Focus or hover one [data-spw-operator=frame]; observe soft echo glow on other matching operators across the page without the hovered one changing its own treatment."

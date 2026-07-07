@@ -8,6 +8,12 @@ export function inferOperator(expression = '') {
   return splitOperatorExpression(expression).prefix;
 }
 
+/**
+ * Normalize any stored/captured item into an ingredient.
+ * Mirror shape: SpwIngredient in types/spw.d.ts.
+ * @param {string | Partial<{expression: string, label: string, operator: string, operand: string, wonder: string, capturedAt: number}> | null} item
+ * @returns {{expression: string, label: string, operator?: string, operand?: string, wonder?: string, capturedAt: number} | null}
+ */
 export function normalizeIngredient(item) {
   if (!item) return null;
   if (typeof item === 'string') {

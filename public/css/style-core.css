@@ -111,4 +111,5 @@
 @import url('/public/css/ornament/whimsy.css') layer(ornament);
 @import url('/public/css/ornament/relational-state.css') layer(ornament);
 @import url('/public/css/ornament/canvas-accents.css') layer(ornament);
+@import url('/public/css/ornament/layout-assumptions.css') layer(ornament);
 @import url('/public/css/ornament/ornament.css') layer(ornament);

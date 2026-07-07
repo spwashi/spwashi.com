@@ -1155,3 +1155,89 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
   /* Give prose areas inside cards breathing room even when seams/overlays are present */
   max-width: 100%;
 }
+
+/* Module updates contract — grouped inspection surfaces on mounted triggers */
+:where([data-spw-module-updates-contract]) {
+  --spw-module-updates-accent: color-mix(in srgb, var(--op-probe-color, #6a3fb8) 58%, var(--teal, #008080) 42%);
+}
+
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="layout"]) :where(
+  [data-spw-module][data-spw-module-updates-brief]
+)::after {
+  content: attr(data-spw-module) " · " attr(data-spw-module-updates-brief);
+  position: absolute;
+  inset-block-end: calc(100% + 0.18rem);
+  inset-inline-start: 0;
+  max-inline-size: min(22rem, 78vw);
+  padding: 0.12rem 0.42rem;
+  border: 1px solid color-mix(in srgb, var(--spw-module-updates-accent) 28%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-strong, #fff) 92%, var(--spw-module-updates-accent) 8%);
+  color: color-mix(in srgb, var(--ink-soft, rgba(14, 18, 20, 0.72)) 82%, var(--spw-module-updates-accent) 18%);
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+  opacity: 0.92;
+}
+
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="layout"]) :where(
+  [data-spw-module][data-spw-module-updates-readable]:hover,
+  [data-spw-module][data-spw-module-updates-readable]:focus-within
+)::before {
+  content: attr(data-spw-module-updates-readable);
+  position: absolute;
+  inset-block-end: calc(100% + 1.45rem);
+  inset-inline-start: 0;
+  z-index: 4;
+  max-inline-size: min(28rem, 92vw);
+  padding: 0.34rem 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--spw-module-updates-accent) 34%, transparent);
+  border-radius: 0.42rem;
+  background: color-mix(in srgb, var(--surface-strong, #fff) 96%, var(--spw-module-updates-accent) 4%);
+  color: color-mix(in srgb, var(--ink, #0e1214) 88%, var(--spw-module-updates-accent) 12%);
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.56rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.35;
+  white-space: normal;
+  pointer-events: none;
+  opacity: 0.98;
+  box-shadow: 0 0.35rem 0.9rem color-mix(in srgb, var(--ink, #0e1214) 12%, transparent);
+}
+
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="layout"]) :where(
+  [data-spw-module-updates-kinds~="attr"]
+) {
+  outline-color: color-mix(in srgb, var(--op-topic-color, #2e8b57) 36%, transparent);
+}
+
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="layout"]) :where(
+  [data-spw-module-updates-kinds~="css-var"]
+) {
+  outline-color: color-mix(in srgb, var(--op-object-color, #c9a227) 36%, transparent);
+}
+
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="layout"]) :where(
+  [data-spw-module-updates-kinds~="aria"]
+) {
+  outline-color: color-mix(in srgb, var(--op-ref-color, #3b6ea8) 36%, transparent);
+}
+
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="layout"]) :where(
+  [data-spw-module-updates-kinds~="class"]
+) {
+  outline-color: color-mix(in srgb, var(--op-action-color, #006666) 36%, transparent);
+}
+
+:where(html[data-spw-debug-mode="on"], [data-spw-debug~="layout"]) :where(
+  [data-spw-module-updates-kinds~="event"]
+) {
+  outline-color: color-mix(in srgb, var(--op-frame-color, #008080) 36%, transparent);
+}

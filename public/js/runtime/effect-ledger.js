@@ -60,6 +60,13 @@ function projectLedgerState(entries) {
     .join(' ');
 }
 
+/**
+ * Precipitate one named effect into the ledger.
+ * Mirror shape: SpwEffectEntry in types/spw.d.ts.
+ * @param {string} kind stable effect kind (e.g. "spell-cast")
+ * @param {{label?: string, title?: string, summary?: string, rewardKind?: string}} [detail]
+ * @returns {{kind: string, label: string, summary: string, rewardKind: string, path: string, at: number}}
+ */
 function record(kind, detail = {}) {
   const entry = {
     kind,

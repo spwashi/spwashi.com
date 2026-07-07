@@ -37,3 +37,13 @@ The entire ladder above rung 1 is editorial/brand territory: board curation mode
 1. Effect ledger: collect discovery-reward emissions into an inspectable, replayable ledger surface.
 2. One bulletin-board route specimen with three artifact types pinned (seed card, spell record, proof card).
 3. Print-precipitation pass: one artifact type rendering print-faithful with edition stamp.
+
+## Materialized Attention Extensions (Spwashi, 2026-07-03)
+
+Spw's endgame is a **layer of materialized attention** - the notation itself becomes merchandise, music, and curriculum:
+
+- **Souvenir boilerplates:** empty or placeholder `.spw` scripts sold as physical artifacts in souvenir shops - a blank spell is a gift the way a fine blank notebook is. Rung 5's paper manufacturing gains a product line: printed boilerplates whose emptiness is the point (open valences at retail). The bench/specimen discipline supplies the print masters.
+- **Symphonic sigil animation:** braces and sigils translate into animation with **tone and resonance minded** - the operator geometry table (flow, charge roles, brace bias) becomes a scoring vocabulary. Coordinates with `symphonic-loading-layered-editions/` (movements) and the `data-spw-op` grammar (each operator x operand combination is a phrase that can sound). Audio is opt-in and capture-mode aware; reduced-motion implies reduced-sonance.
+- **The math bridge:** Spw as a reason to learn the abstract math meaningful for acoustics and materials science - resonance, wave behavior, and material response are already the metaphor layer; make them the curriculum layer too, routed through `topics/math/` (field theory, complexity) with the Applied Learning Science lens. A visitor who plays with brace resonance should find a graded path to the real mathematics of why bells ring and materials sing.
+
+Gates: product decisions (what sells in a shop), sonic palette, and curriculum sequencing are Spwashi's; the agent-executable groundwork is keeping operator geometry, resonance vocabulary, and specimen discipline coherent enough that sound, print, and curriculum can all read from the same contracts.

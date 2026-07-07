@@ -46,6 +46,10 @@ export const CAULDRON_CONTRACT = Object.freeze({
     visibility: 'data-spw-cauldron-visibility',
     chipCount: 'data-spw-cauldron-chip-count',
     chipPhase: 'data-spw-cauldron-chip-phase',
+    /* Cross-cutting (shared with spellbook actions; see types/spw.d.ts):
+       the vessel writes charge; cast/reset write discharge; checkpoint
+       writes reference; restore/decompose write dereference. */
+    opDisposition: 'data-spw-op-disposition',
   }),
   events: Object.freeze({
     capture: 'spell:capture',
@@ -67,6 +71,21 @@ export const CAULDRON_CONTRACT = Object.freeze({
    same things in four places. */
 export const CAULDRON_STATE_AXES = Object.freeze(['phase', 'count', 'garden', 'resonance', 'collected', 'discoverability']);
 
+/**
+ * @typedef {Object} CauldronStateParts
+ * @property {'empty'|'primed'|'mixing'|'spell-ready'} [phase]
+ * @property {number|string} [count]
+ * @property {string} [garden] garden lifecycle summary
+ * @property {number|string} [resonance]
+ * @property {boolean|string} [collected]
+ * @property {string} [discoverability]
+ */
+
+/**
+ * Serialize state parts into the G1 bundle value ("phase:mixing count:4").
+ * @param {CauldronStateParts} parts
+ * @returns {string}
+ */
 export function composeCauldronState(parts = {}) {
   return CAULDRON_STATE_AXES
     .filter((axis) => parts[axis] !== undefined && parts[axis] !== null && parts[axis] !== '')
@@ -74,6 +93,11 @@ export function composeCauldronState(parts = {}) {
     .join(' ');
 }
 
+/**
+ * Parse an element's bundle back into parts (inverse of composeCauldronState).
+ * @param {{ dataset?: DOMStringMap } | null | undefined} el
+ * @returns {CauldronStateParts & Record<string, string>}
+ */
 export function readCauldronState(el) {
   const raw = el?.dataset?.spwCauldronState || '';
   const parsed = {};
@@ -84,6 +108,11 @@ export function readCauldronState(el) {
   return parsed;
 }
 
+/**
+ * Merge parts into an element's existing bundle (unnamed axes survive).
+ * @param {{ dataset?: DOMStringMap } | null | undefined} el
+ * @param {CauldronStateParts} parts
+ */
 export function applyCauldronState(el, parts = {}) {
   if (!el) return;
   el.dataset.spwCauldronState = composeCauldronState({ ...readCauldronState(el), ...parts });

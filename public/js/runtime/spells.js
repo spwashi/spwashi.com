@@ -7,7 +7,7 @@
  */
 
 import { bus } from '/public/js/kernel/bus.js';
-import { composeOpBundle, detectOperator, getOperatorDefinition, getOperatorGeometry } from '/public/js/kernel/shared.js';
+import { composeOpBundle, detectOperator, getOperatorAffordances, getOperatorDefinition, getOperatorGeometry } from '/public/js/kernel/shared.js';
 import { getActiveRecentPathMemory } from '/public/js/interface/accent-palette.js';
 import { getGroundedCouplings, getGroundedRegistry, getSigilCollection, restoreCheckpoint } from '/public/js/interface/haptics.js';
 import { describeCognitiveState } from '/public/js/runtime/cognitive-state.js';
@@ -613,13 +613,13 @@ function renderSpellBoard(board, model) {
     </div>
     <pre class="spell-source"><code>${escapeHtml(model.snippet)}</code></pre>
     <div class="spell-actions">
-      <button class="operator-chip" type="button" data-spw-spell-action="${SPELL_ACTION.CAST}" data-spw-operator="action">
+      <button class="operator-chip" type="button" data-spw-spell-action="${SPELL_ACTION.CAST}" data-spw-operator="action" data-spw-op-disposition="discharge">
         ! copy extension
       </button>
-      <button class="operator-chip" type="button" data-spw-spell-action="${SPELL_ACTION.CHECKPOINT}" data-spw-operator="pragma">
+      <button class="operator-chip" type="button" data-spw-spell-action="${SPELL_ACTION.CHECKPOINT}" data-spw-operator="pragma" data-spw-op-disposition="reference">
         ! save trail
       </button>
-      <button class="operator-chip" type="button" data-spw-spell-action="${SPELL_ACTION.RESET}" data-spw-operator="binding">
+      <button class="operator-chip" type="button" data-spw-spell-action="${SPELL_ACTION.RESET}" data-spw-operator="binding" data-spw-op-disposition="discharge">
         = clear trail
       </button>
     </div>
@@ -674,10 +674,10 @@ function renderSavedBundleCard(bundle) {
       </div>
       <p class="spell-bundle-card__meta">${escapeHtml(formatSpellBundleMeta(bundle))}</p>
       <div class="spell-actions spell-actions--bundles">
-        <button class="operator-chip" type="button" data-spw-spell-restore="${escapeHtml(bundle.name)}" data-spw-operator="ref">
+        <button class="operator-chip" type="button" data-spw-spell-restore="${escapeHtml(bundle.name)}" data-spw-operator="ref" data-spw-op-disposition="dereference">
           ~ restore "${escapeHtml(bundle.name)}"
         </button>
-        <button class="operator-chip" type="button" data-spw-spell-decompose="${escapeHtml(bundle.name)}" data-spw-operator="substrate" title="Reopen this spell as cauldron ingredients for editing">
+        <button class="operator-chip" type="button" data-spw-spell-decompose="${escapeHtml(bundle.name)}" data-spw-operator="substrate" data-spw-op-disposition="dereference" title="Reopen this spell as cauldron ingredients for editing">
           $ decompose
         </button>
       </div>
@@ -726,7 +726,7 @@ function renderSpellAtom(entry) {
     .join(' ');
 
   return `
-    <span class="spell-ingredient" data-spw-atom="chip" data-spw-grounded="true" data-spw-operator="${escapeHtml(entry.operatorType)}" data-spw-op="${escapeHtml(composeOpBundle(entry.expression || entry.nucleus || ''))}" ${geometryAttrs}${provenanceAttr}>
+    <span class="spell-ingredient" data-spw-atom="chip" data-spw-grounded="true" data-spw-operator="${escapeHtml(entry.operatorType)}" data-spw-op="${escapeHtml(composeOpBundle(entry.expression || entry.nucleus || ''))}" title="${escapeHtml(`${entry.operatorLabel} — affords: ${getOperatorAffordances(entry.operatorType).join(', ')}`)}" ${geometryAttrs}${provenanceAttr}>
       <span class="spell-ingredient-prefix">${escapeHtml(entry.prefix || '')}</span>
       <span class="spell-ingredient-nucleus">${escapeHtml(entry.nucleus || entry.expression)}</span>
       <span class="spell-ingredient-postfix">${escapeHtml(entry.postfix || '')}</span>

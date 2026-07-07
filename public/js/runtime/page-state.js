@@ -6,6 +6,15 @@ import {
 /**
  * Page state models the visible lifecycle of a page shell: booting,
  * interaction, arrival, and whether the browser is foregrounded or returned.
+ *
+ * Arrival doctrine: the page is born `entering` (init writes it before any
+ * module mounts) and reaches `settled` exactly once per arc. Settled is
+ * declared by evidence — quiescence across mount/measure/enrichment events —
+ * bounded by CSS-token timers, never by a blind timeout alone. Routes may opt
+ * into the declaration with body[data-spw-settle-confirm="route"] (hold settle
+ * for `spw:page-settle-confirm`) and name their arrival character with
+ * body[data-spw-settle-contour]; both ride the settled payload so navigation
+ * chrome hears a familiar declaration while pages keep a unique contour.
  */
 export const PAGE_STATES = Object.freeze({
   BOOTING: 'booting',
@@ -29,6 +38,24 @@ export const PAGE_ARRIVAL = Object.freeze({
 
 export const PAGE_ATTENTION_EVENT = 'spw:page-attention-state';
 export const PAGE_TRANSITION_EVENT = 'spw:page-transition-state';
+export const PAGE_SETTLE_CONFIRM_EVENT = 'spw:page-settle-confirm';
+
+/** How the settled end state was declared, projected as data-spw-page-settle-confirmation. */
+export const PAGE_SETTLE_CONFIRMATIONS = Object.freeze({
+  PENDING: 'pending',
+  AUTO: 'auto',
+  ROUTE: 'route',
+  GUARD: 'guard',
+});
+
+/** Settle-worthy evidence: any of these arriving keeps the page in its arc. */
+export const PAGE_SETTLE_EVIDENCE_EVENTS = Object.freeze([
+  'spw:module-mounted',
+  'spw:regions-profiled',
+  'spw:pretext-measurement',
+  'spw:page-hydrated',
+  'spw:page-region-enhanced',
+]);
 
 /**
  * Compact contract for page-state consumers and console readers.
@@ -37,12 +64,24 @@ export const SPW_PAGE_STATE_CONTRACT = Object.freeze({
   states: PAGE_STATES,
   presence: PAGE_PRESENCE,
   arrival: PAGE_ARRIVAL,
+  settleConfirmations: PAGE_SETTLE_CONFIRMATIONS,
+  settleEvidence: PAGE_SETTLE_EVIDENCE_EVENTS,
   events: Object.freeze({
     attention: PAGE_ATTENTION_EVENT,
     transition: PAGE_TRANSITION_EVENT,
+    settleConfirm: PAGE_SETTLE_CONFIRM_EVENT,
+  }),
+  attributes: Object.freeze({
+    /* html, runtime-written: how the last settle was declared */
+    settleConfirmation: 'data-spw-page-settle-confirmation',
+    /* body, route-authored: "route" holds settle for the confirm event */
+    routeConfirm: 'data-spw-settle-confirm',
+    /* body, route-authored: named arrival character carried on the settled payload */
+    routeContour: 'data-spw-settle-contour',
   }),
   portableUse:
-    'Use this module when page attention, arrival, visibility, or transition state needs to be tracked and narrated consistently.',
+    'Use this module when page attention, arrival, visibility, or transition state needs to be tracked and narrated consistently. '
+    + 'Settled is evidence-declared (quiescence within token bounds); routes opt in via data-spw-settle-confirm and data-spw-settle-contour on body.',
 });
 
 const PAGE_ARRIVAL_STEP_SEQUENCE = Object.freeze([
@@ -283,6 +322,8 @@ export const setPageAttentionState = (ctx, detail = {}) => {
     reason: detail.reason || 'runtime',
     route: ctx?.route || document.body?.dataset?.spwSurface || 'default',
   };
+  if (detail.settleConfirmation) payload.settleConfirmation = detail.settleConfirmation;
+  if (detail.contour) payload.contour = detail.contour;
 
   if (ctx?.bus?.emit) {
     ctx.bus.emit(PAGE_ATTENTION_EVENT, payload);
@@ -293,7 +334,15 @@ export const setPageAttentionState = (ctx, detail = {}) => {
   }
 };
 
+const teardownSettleWatch = (ctx) => {
+  const watch = ctx?.pageSettleWatch;
+  if (!watch) return;
+  ctx.pageSettleWatch = null;
+  watch.teardown();
+};
+
 export const clearPageAttentionSequence = (ctx) => {
+  teardownSettleWatch(ctx);
   if (!ctx?.pageAttentionTimers?.size) return;
   ctx.pageAttentionTimers.forEach((timerId) => {
     window.clearTimeout(timerId);
@@ -312,6 +361,152 @@ const addManagedTimeout = (ctx, callback, delay) => {
   ctx?.pageAttentionTimers?.add(timerId);
   ctx?.addTimer?.(timerId);
   return timerId;
+};
+
+const PAGE_HANDOFF_KEY = 'spw-page-handoff';
+const PAGE_HANDOFF_FRESH_MS = 30000;
+
+/**
+ * Copy-editor guidance rails: forgiving query params (?contour=hearth) that a
+ * link author can append to tune arrival character without touching settings.
+ * Rails identify themselves (data-spw-contour-rail) and never overwrite
+ * authored base attributes, per data-spw-attribute-governance.
+ */
+const readQueryRail = (name) => {
+  try {
+    const value = new URLSearchParams(window.location.search).get(name) || '';
+    return value.trim().toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40);
+  } catch {
+    return '';
+  }
+};
+
+const writePageHandoff = () => {
+  try {
+    sessionStorage.setItem(PAGE_HANDOFF_KEY, JSON.stringify({
+      path: window.location.pathname,
+      at: Date.now(),
+    }));
+  } catch {
+    /* handoff is residue, never load-bearing */
+  }
+};
+
+const consumePageHandoff = () => {
+  try {
+    const raw = sessionStorage.getItem(PAGE_HANDOFF_KEY);
+    if (!raw) return null;
+    sessionStorage.removeItem(PAGE_HANDOFF_KEY);
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed !== 'object') return null;
+    if (Date.now() - (parsed.at || 0) > PAGE_HANDOFF_FRESH_MS) return null;
+    return parsed;
+  } catch {
+    return null;
+  }
+};
+
+/**
+ * Intra-site navigation arrives as returning (restored when reloading the same
+ * path); cold arrivals enter. The handoff is consumed once so the resolved
+ * kind holds for the whole arc.
+ */
+export const resolveArrivalKind = () => {
+  const handoff = consumePageHandoff();
+  if (!handoff) return PAGE_ARRIVAL.ENTERING;
+  return handoff.path === window.location.pathname ? PAGE_ARRIVAL.RESTORED : PAGE_ARRIVAL.RETURNING;
+};
+
+const readRouteSettleContract = () => {
+  const body = document.body;
+  return {
+    confirmMode: body?.dataset?.spwSettleConfirm === 'route'
+      ? PAGE_SETTLE_CONFIRMATIONS.ROUTE
+      : PAGE_SETTLE_CONFIRMATIONS.AUTO,
+    contour: document.documentElement.dataset.spwContourRail || body?.dataset?.spwSettleContour || '',
+  };
+};
+
+/**
+ * Watch for settle evidence and declare the settled end state exactly once.
+ * Settled means: the arrival choreography's minimum delay has elapsed AND no
+ * settle-worthy evidence arrived within the quiet window AND (for routes that
+ * opted in) the route confirmed — all bounded by the max-delay token so an
+ * arc can never hang.
+ */
+const beginSettleWatch = (ctx, arrival, reason) => {
+  const html = document.documentElement;
+  const { confirmMode, contour } = readRouteSettleContract();
+  const minDelay = computeArrivalSettleDelay(arrival);
+  const quietWindow = readRootTimeToken('--spw-page-settle-quiet-window', 160);
+  const maxDelay = Math.max(minDelay, readRootTimeToken('--spw-page-settle-max-delay', minDelay + 1400));
+  const startedAt = performance.now();
+  let lastEvidenceAt = startedAt;
+  let quietTimer = 0;
+  let maxTimer = 0;
+
+  writeDatasetValue(html, 'spwPageSettleConfirmation', PAGE_SETTLE_CONFIRMATIONS.PENDING);
+
+  const onEvidence = () => {
+    lastEvidenceAt = performance.now();
+    scheduleQuietCheck();
+  };
+
+  const teardown = () => {
+    if (quietTimer) window.clearTimeout(quietTimer);
+    if (maxTimer) window.clearTimeout(maxTimer);
+    quietTimer = 0;
+    maxTimer = 0;
+    PAGE_SETTLE_EVIDENCE_EVENTS.forEach((name) => document.removeEventListener(name, onEvidence));
+    if (html.dataset.spwPageSettleConfirmation === PAGE_SETTLE_CONFIRMATIONS.PENDING) {
+      delete html.dataset.spwPageSettleConfirmation;
+    }
+  };
+
+  const settle = (confirmation) => {
+    teardownSettleWatch(ctx);
+    writeDatasetValue(html, 'spwPageSettleConfirmation', confirmation);
+    setPageAttentionState(ctx, {
+      presence: PAGE_PRESENCE.FOREGROUND,
+      arrival: PAGE_ARRIVAL.SETTLED,
+      step: '0',
+      reason: `${reason}-settled`,
+      settleConfirmation: confirmation,
+      contour,
+    });
+  };
+
+  const scheduleQuietCheck = () => {
+    if (quietTimer) window.clearTimeout(quietTimer);
+    const now = performance.now();
+    const wait = Math.max(
+      minDelay - (now - startedAt),
+      quietWindow - (now - lastEvidenceAt),
+      0,
+    );
+    quietTimer = window.setTimeout(() => {
+      quietTimer = 0;
+      const at = performance.now();
+      if (at - startedAt < minDelay || at - lastEvidenceAt < quietWindow) {
+        scheduleQuietCheck();
+        return;
+      }
+      if (confirmMode === PAGE_SETTLE_CONFIRMATIONS.ROUTE && !ctx.pageSettleRouteConfirmed) {
+        /* hold at the confirming edge; route confirm or the max bound resolves it */
+        return;
+      }
+      settle(confirmMode);
+    }, wait);
+  };
+
+  maxTimer = window.setTimeout(() => {
+    maxTimer = 0;
+    settle(PAGE_SETTLE_CONFIRMATIONS.GUARD);
+  }, maxDelay);
+
+  PAGE_SETTLE_EVIDENCE_EVENTS.forEach((name) => document.addEventListener(name, onEvidence, { passive: true }));
+  ctx.pageSettleWatch = { teardown, onRouteConfirm: scheduleQuietCheck };
+  scheduleQuietCheck();
 };
 
 export const schedulePageArrival = (ctx, arrival = PAGE_ARRIVAL.ENTERING, reason = 'page-enter') => {
@@ -340,14 +535,7 @@ export const schedulePageArrival = (ctx, arrival = PAGE_ARRIVAL.ENTERING, reason
     }, readRootTimeToken(token, fallback));
   });
 
-  addManagedTimeout(ctx, () => {
-    setPageAttentionState(ctx, {
-      presence: PAGE_PRESENCE.FOREGROUND,
-      arrival: PAGE_ARRIVAL.SETTLED,
-      step: '0',
-      reason: `${reason}-settled`,
-    });
-  }, computeArrivalSettleDelay(arrival));
+  beginSettleWatch(ctx, arrival, reason);
 };
 
 export function initPageAttentionLifecycle(ctx) {
@@ -375,6 +563,7 @@ export function initPageAttentionLifecycle(ctx) {
 
   const handlePageHide = () => {
     clearPageAttentionSequence(ctx);
+    writePageHandoff();
     setPageAttentionState(ctx, {
       presence: PAGE_PRESENCE.BACKGROUND,
       arrival: PAGE_ARRIVAL.SETTLED,
@@ -383,19 +572,57 @@ export function initPageAttentionLifecycle(ctx) {
     });
   };
 
+  const handleRouteSettleConfirm = () => {
+    /* Route confirmation persists across arcs: a page confirms once, and later
+       returning/restored arcs settle on evidence without demanding re-confirmation. */
+    ctx.pageSettleRouteConfirmed = true;
+    ctx.pageSettleWatch?.onRouteConfirm?.();
+  };
+
   annotateFloatingChrome(document);
   const cleanupFixedViewportCorrection = initFixedViewportCorrection();
 
   document.addEventListener('visibilitychange', handleVisibilityChange);
   window.addEventListener('pageshow', handlePageShow);
   window.addEventListener('pagehide', handlePageHide);
+  document.addEventListener(PAGE_SETTLE_CONFIRM_EVENT, handleRouteSettleConfirm, { passive: true });
 
-  setPageAttentionState(ctx, {
-    presence: document.hidden ? PAGE_PRESENCE.BACKGROUND : PAGE_PRESENCE.FOREGROUND,
-    arrival: PAGE_ARRIVAL.SETTLED,
-    step: '0',
-    reason: 'page-init',
-  });
+  const contourRail = readQueryRail('contour');
+  if (contourRail) {
+    writeDatasetValue(document.documentElement, 'spwContourRail', contourRail);
+  }
+  ctx.pageArrivalKind = resolveArrivalKind();
+
+  if (document.hidden || prefersReducedMotion()) {
+    setPageAttentionState(ctx, {
+      presence: document.hidden ? PAGE_PRESENCE.BACKGROUND : PAGE_PRESENCE.FOREGROUND,
+      arrival: PAGE_ARRIVAL.SETTLED,
+      step: '0',
+      reason: 'page-init',
+    });
+  } else {
+    /* Born in its arrival state (entering cold, returning/restored when a
+       fresh intra-site handoff exists): the boot/mounting window runs under
+       arrival rules, and settled is declared once by the arrival arc. The
+       guard settles anyway if boot never conducts the arc (it is a managed
+       timer, so the real schedulePageArrival call replaces it). */
+    setPageAttentionState(ctx, {
+      presence: PAGE_PRESENCE.FOREGROUND,
+      arrival: ctx.pageArrivalKind,
+      step: '0',
+      reason: 'page-init',
+    });
+    addManagedTimeout(ctx, () => {
+      writeDatasetValue(document.documentElement, 'spwPageSettleConfirmation', PAGE_SETTLE_CONFIRMATIONS.GUARD);
+      setPageAttentionState(ctx, {
+        presence: PAGE_PRESENCE.FOREGROUND,
+        arrival: PAGE_ARRIVAL.SETTLED,
+        step: '0',
+        reason: 'page-init-guard-settled',
+        settleConfirmation: PAGE_SETTLE_CONFIRMATIONS.GUARD,
+      });
+    }, readRootTimeToken('--spw-page-arrival-guard-delay', 1600));
+  }
 
   return () => {
     clearPageAttentionSequence(ctx);
@@ -403,6 +630,7 @@ export function initPageAttentionLifecycle(ctx) {
     document.removeEventListener('visibilitychange', handleVisibilityChange);
     window.removeEventListener('pageshow', handlePageShow);
     window.removeEventListener('pagehide', handlePageHide);
+    document.removeEventListener(PAGE_SETTLE_CONFIRM_EVENT, handleRouteSettleConfirm);
   };
 }
 
@@ -419,6 +647,8 @@ export function snapshotPageState(root = document.documentElement, body = docume
     step: htmlDataset.spwPageArrivalStep || '0',
     transition: htmlDataset.spwPageTransition || '',
     phase: htmlDataset.spwPageTransitionPhase || '',
+    settleConfirmation: htmlDataset.spwPageSettleConfirmation || '',
+    settleContour: bodyDataset.spwSettleContour || '',
     attentionContext: htmlDataset.spwAttentionContext || '',
     harmonyField: htmlDataset.spwHarmonyField || '',
     tempoField: htmlDataset.spwTempoField || '',
@@ -455,6 +685,7 @@ export function clearPageState(root = document.documentElement, body = document.
     delete root.dataset.spwPageTransitionPhase;
     delete root.dataset.spwPageSettling;
     delete root.dataset.spwLayoutSettlePhase;
+    delete root.dataset.spwPageSettleConfirmation;
     delete root.dataset.spwAttentionContext;
     delete root.dataset.spwHarmonyField;
     delete root.dataset.spwTempoField;

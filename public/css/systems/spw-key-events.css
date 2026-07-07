@@ -130,12 +130,15 @@
 }
 
 :where(html[data-spw-reveal-phase="revealing"], html[data-spw-reveal-phase="revealed"]) :where(main, body) {
-  background-image: radial-gradient(
-    118% 82% at 50% -4%,
-    color-mix(
-      in srgb,
-      var(--op-probe-color, #6a3fb8) calc(4% + (var(--spw-reveal-phase-weight, 0) * 10%)),
-      transparent
+  background-image:
+    radial-gradient(
+      118% 82% at 50% -4%,
+      color-mix(
+        in srgb,
+        var(--op-probe-color, #6a3fb8) calc(4% + (var(--spw-reveal-phase-weight, 0) * 10%)),
+        transparent
+      ),
+      transparent 70%
     ),
     radial-gradient(
       120% 80% at 50% 0%,

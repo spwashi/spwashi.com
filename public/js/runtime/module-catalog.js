@@ -18,6 +18,7 @@ export const MOUNT_WHEN = Object.freeze({
   IDLE: 'idle',
   INTERACTION: 'interaction',
   REGION: 'region',
+  SETTLED: 'settled',
 });
 
 const PRETEXT_LIVE_SELECTOR = '[data-spw-flow="pretext"][data-spw-pretext-live="true"]:not([data-spw-pretext-static])';
@@ -1551,6 +1552,30 @@ export const ENHANCEMENT_DEFS = [
     },
   },
   {
+    id: 'navigation-locomotion',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IMMEDIATE,
+    selector: 'main',
+    rootMode: 'single',
+    describes: 'navigation[locomotion] transition[section-travel] spell[cast] chrome[sync]',
+    updates: [
+      'data-spw-navigation-locomotion',
+      'data-spw-navigation-transition',
+      'data-spw-navigation-section',
+      'data-spw-spell-momentum',
+      'data-spw-bottom-lane-nav',
+    ],
+    evaluates: 'navigation transitions spells floating-chrome section-locomotion',
+    timingArc: 'immediate-navigation',
+    effectScope: 'root-state listeners bus floating-chrome',
+    load: () => import('./navigation-locomotion.js'),
+    mount: (mod, ctx) => {
+      const fn = mod?.initNavigationLocomotion;
+      if (!isFn(fn)) return;
+      return fn(ctx);
+    },
+  },
+  {
     id: 'navigation-spells',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
@@ -1718,6 +1743,33 @@ export const ENHANCEMENT_DEFS = [
       return fn(ctx);
     },
   },
+  {
+    id: 'layout-assumptions',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.SETTLED,
+    selector: 'body',
+    rootMode: 'single',
+    describes: 'late layout alignment pass: module assumptions, compromises, refinements after runtime settle',
+    updates: [
+      'data-spw-layout-assumptions-active',
+      'data-spw-layout-assumptions-pass',
+      'data-spw-layout-assumptions-compromises',
+      'data-spw-layout-assumptions-refinements',
+      'data-spw-layout-correction',
+      'data-spw-layout-assumption-correction',
+      'data-spw-bottom-lane-handle',
+      '--spw-bottom-chrome-clearance',
+    ],
+    evaluates: 'layout alignment floating-chrome bottom-lane clearance module-settle',
+    timingArc: 'after-all-settled',
+    effectScope: 'root-state layout-correction observers floating-chrome',
+    load: () => import('./layout-assumptions.js'),
+    mount: (mod, ctx) => {
+      const fn = mod?.initLayoutAssumptions;
+      if (!isFn(fn)) return;
+      return fn(ctx);
+    },
+  },
 ];
 
 
@@ -1732,3 +1784,22 @@ export const MODULE_DEFS = [
   ...REGION_DEFS,
   ...ENHANCEMENT_DEFS,
 ];
+
+export {
+  SPW_MODULE_UPDATES_CONTRACT,
+  annotateModuleUpdatesTarget,
+  buildModuleUpdatesIndex,
+  classifyModuleUpdate,
+  coerceModuleUpdates,
+  describeModuleUpdates,
+  findModuleUpdateConflicts,
+  findModuleUpdateOwners,
+  formatModuleUpdatesBrief,
+  formatModuleUpdatesReadable,
+  formatModuleUpdatesSpell,
+  mergeModuleUpdates,
+  normalizeModuleUpdates,
+  readModuleUpdatesFromTarget,
+  summarizeModuleUpdates,
+  validateModuleUpdateToken,
+} from './module-updates-contract.js';

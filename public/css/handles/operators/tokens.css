@@ -361,6 +361,10 @@ html[data-spw-dimensional-breadcrumbs="on"] .spw-spell-path .spw-spell-meaning {
     inline-size: min(20rem, calc(100vw - 1rem));
   }
 
+  html[data-spw-bottom-lane-managed="true"] .spw-nav {
+    inset-block-end: calc(var(--spw-floating-slot-parallel-nav, 3.2rem) + var(--spw-floating-menu-clearance, 0px));
+  }
+
   .spw-nav-panel {
     max-block-size: min(28rem, calc(100dvh - 6.5rem - var(--spw-floating-menu-clearance, 0px)));
   }

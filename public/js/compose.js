@@ -242,6 +242,25 @@ export {
 } from './runtime/module-loader.js';
 
 export {
+  SPW_MODULE_UPDATES_CONTRACT,
+  annotateModuleUpdatesTarget,
+  buildModuleUpdatesIndex,
+  classifyModuleUpdate,
+  coerceModuleUpdates,
+  describeModuleUpdates,
+  findModuleUpdateConflicts,
+  findModuleUpdateOwners,
+  formatModuleUpdatesBrief,
+  formatModuleUpdatesReadable,
+  formatModuleUpdatesSpell,
+  mergeModuleUpdates,
+  normalizeModuleUpdates,
+  readModuleUpdatesFromTarget,
+  summarizeModuleUpdates,
+  validateModuleUpdateToken,
+} from './runtime/module-updates-contract.js';
+
+export {
   BEHAVIOR_SCOPE_BUNDLES,
   BEHAVIOR_SCOPE_KEYS,
   SPW_BEHAVIOR_SCOPES_CONTRACT,

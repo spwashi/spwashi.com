@@ -161,6 +161,18 @@
   html.dataset.spwSettingsPreflight = 'ready';
   html.dataset.spwRuntimeStage = 'preflight';
 
+  // Copy-editor guidance rail: ?tempo= tunes the arrival pacing cluster
+  // (signals.css tempo token blocks) from the first frame. Forgiving —
+  // unknown values are ignored; the region profiler may refine tempo later.
+  try {
+    const tempoRail = (new URLSearchParams(window.location.search).get('tempo') || '').trim().toLowerCase();
+    if (new Set(['snap', 'fast', 'deliberate', 'settle']).has(tempoRail)) {
+      html.dataset.spwPageTempo = tempoRail;
+    }
+  } catch {
+    /* rails are guidance, never load-bearing */
+  }
+
   html.style.colorScheme = colorMode === 'auto' ? 'light dark' : colorMode;
   html.style.setProperty('--font-size-scale', `${fontSizeScale}%`);
   html.style.setProperty('--site-root-font-size', `${Math.round(fontSizeScale * fontScale)}%`);

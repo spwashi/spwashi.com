@@ -44,11 +44,11 @@
     transform var(--spw-image-interaction-duration) var(--spw-image-interaction-ease);
 }
 
-:where(.topic-photo-card, .image-study)[data-spw-image-prominence="hero"]) {
+:where(.topic-photo-card, .image-study)[data-spw-image-prominence="hero"] {
   --spw-image-frame-pad: 0.58rem;
 }
 
-:where(.topic-photo-card, .image-study)[data-spw-image-prominence="supporting"]) {
+:where(.topic-photo-card, .image-study)[data-spw-image-prominence="supporting"] {
   --spw-image-frame-pad: 0.38rem;
   max-inline-size: min(100%, 36rem);
 }

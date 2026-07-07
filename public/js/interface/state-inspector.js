@@ -1,5 +1,6 @@
 import {
   annotateFloatingChromeElement,
+  syncFloatingChromeState,
   writeRuntimeDatasetValues,
 } from '/public/js/kernel/dom-contracts.js';
 import { bus } from '/public/js/kernel/bus.js';
@@ -198,6 +199,13 @@ function clearSatchelInlinePosition(root) {
   delete root.dataset.spwSatchelRail;
 }
 
+function syncInspectorBottomLane(reason = 'state-inspector') {
+  syncFloatingChromeState(document, {
+    source: 'state-inspector',
+    reason,
+  });
+}
+
 function anchorSatchelToChromeRail(root, { open = false } = {}) {
   const launch = root.querySelector('.spw-state-inspector__launch');
   if (!(launch instanceof HTMLElement)) return;
@@ -206,6 +214,7 @@ function anchorSatchelToChromeRail(root, { open = false } = {}) {
     clearSatchelInlinePosition(root);
     root.dataset.spwSatchelAnchor = 'chrome-rail';
     root.dataset.spwSatchelSnap = isMobileSatchelViewport() ? 'bottom-rail' : 'bottom-right-rail';
+    syncInspectorBottomLane('satchel-anchor-open');
     return;
   }
 
@@ -219,6 +228,7 @@ function anchorSatchelToChromeRail(root, { open = false } = {}) {
     clearSatchelInlinePosition(root);
     root.dataset.spwSatchelAnchor = 'chrome-rail-closed';
     root.dataset.spwSatchelSnap = 'bottom-right';
+    syncInspectorBottomLane('satchel-anchor-closed');
     return;
   }
 
@@ -226,6 +236,7 @@ function anchorSatchelToChromeRail(root, { open = false } = {}) {
   const rect = launch.getBoundingClientRect();
   const snapped = snapSatchelPosition(launch, rect.left, rect.top);
   applyPositionToLaunch(launch, snapped.left, snapped.top, false);
+  syncInspectorBottomLane('satchel-anchor-user');
 }
 
 function mountDefaultMobileSatchel(root) {
@@ -237,6 +248,7 @@ function mountDefaultMobileSatchel(root) {
   clearSatchelInlinePosition(root);
   root.dataset.spwSatchelAnchor = 'chrome-rail-closed';
   root.dataset.spwSatchelSnap = 'bottom-right';
+  syncInspectorBottomLane('satchel-default-mobile');
 }
 
 function formatPageStateLabel() {
@@ -726,6 +738,7 @@ function setOpen(root, open) {
     syncControls(root);
     syncPageStateAwareness(root);
     panel.focus({ preventScroll: true });
+    syncInspectorBottomLane('inspector-open');
     return;
   }
 
@@ -733,21 +746,25 @@ function setOpen(root, open) {
     requestAnimationFrame(() => {
       if (restoreSavedLaunchPosition(root)) {
         syncPageStateAwareness(root);
+        syncInspectorBottomLane('inspector-closed-saved');
         return;
       }
       anchorSatchelToChromeRail(root, { open: false });
       syncPageStateAwareness(root);
+      syncInspectorBottomLane('inspector-closed-mobile');
     });
     return;
   }
 
   if (restoreSavedLaunchPosition(root)) {
     syncPageStateAwareness(root);
+    syncInspectorBottomLane('inspector-closed-saved');
     return;
   }
 
   delete root.dataset.spwSatchelAnchor;
   syncPageStateAwareness(root);
+  syncInspectorBottomLane('inspector-closed');
 }
 
 async function copySnapshot(root) {
@@ -1033,10 +1050,14 @@ export function initStateInspector() {
       rect.top,
       root.dataset.spwSatchelPositioned === 'user'
     );
+    syncInspectorBottomLane('satchel-clamp');
   };
   window.addEventListener('resize', clampSatchelPosition, { passive: true });
   window.visualViewport?.addEventListener?.('resize', clampSatchelPosition, { passive: true });
   syncControls(root);
+  requestAnimationFrame(() => {
+    syncInspectorBottomLane('inspector-mounted');
+  });
   writeRuntimeDatasetValues(document.documentElement, {
     spwStateInspector: 'available',
     spwStateSerializationDimensions: TOGGLES.map((entry) => entry.dimension).join(' | '),
