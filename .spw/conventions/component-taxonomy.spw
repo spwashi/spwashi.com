@@ -1,0 +1,80 @@
+# Component Taxonomy
+#
+# Scientifically-social model: components as stable interaction patterns between
+# operator forces and the attentional field.
+
+#>component_taxonomy
+#:convention #!taxonomy #!components
+#:operation #!contract
+#:fixity #!tending
+#:layer #!semantics
+
+operation = "contract"
+fixity = "tending"
+
+@attention_field: ~"./attention-field.spw"
+@ornament_contract: ~"./ornament-contract.spw"
+@site_semantics: ~"./site-semantics.spw"
+@cognitive_navigation: ~"./cognitive-navigation.spw"
+@operator_semantics: ~"./operator-semantics.spw"
+@plan: ~"../../.agents/plans/chrome-navigation-wonder/PLAN.md"
+
+^"dimensions"{
+ temporal_rhythm = "sedimentation | observation"
+ practice_depth = "reading | contract"
+ semantic_layer = "semantics | pragmatics"
+ collaboration_phase = "exchange"
+ memory_tier = "warm"
+}[reg=facet]
+
+^"thesis"{
+ claim = "A component is a stable interaction pattern between operator forces and field state — not merely a CSS class or a DOM wrapper."
+ operator_layer = "Operators remain the elemental grammar: frame, probe, object, ref, action, surface."
+ accent_layer = "Semantic-accent and component-accent tokens project lived surface mood without replacing operator identity."
+ ornament_layer = "Ornament is the visual projection of field balance, resonance, and collection strength."
+}[reg=facet]
+
+^"taxonomic_dimensions"{
+ locality = `How far the pattern travels: page, region, feature, component, slot, chrome.`
+ consequence = `What changes after contact: memory, framing, navigation, collection, projection.`
+ promptability = `Whether the pattern invites a follow-up question or probe.`
+ collectability = `Whether the pattern can be gathered into cauldron, spell, or bookmark state.`
+ liminality = `Entry, threshold, middle, return — where the reader stands in the spirit cycle.`
+ materiality = `Matte, glass, code, chrome — which substrate carries the encounter.`
+ rhythmic_signature = `Repeated timing/gesture cues that make the pattern recognizable across routes.`
+}[reg=facet]
+
+^"confidence_radar"{
+ scope = `What can this action affect? Prefer section-locomotion and menu disclosure datasets over new widgets.`
+ recover = `How does the reader return to a safe state? top, settings, skip-link, close overlay.`
+ apply = `What useful next move can the reader try? next section, related route, inspect panel.`
+ inventory = `Expose page / feature / route via data-spw-cognitive-inventory on locomotion surfaces.`
+ attrs = #[
+  `data-spw-learner-confidence`,
+  `data-spw-learner-scope`,
+  `data-spw-learner-recovery`,
+  `data-spw-learner-apply`,
+  `data-spw-cognitive-inventory`
+ ][reg=set]
+}[reg=facet]
+
+^"chrome_as_field"{
+ header = `Primary nav and menu topology are field disclosure, not admin chrome.`
+ section_handle = `Section locomotion invites wonder via data-spw-wonder-entry and field-balance-weighted chrome.`
+ footer = `Footer identity, cauldron, and settings share component-gap rhythm on mobile stack.`
+ breadcrumb = `Dimensional breadcrumbs should become collectible Spw-expressible surfaces.`
+}[reg=facet]
+
+dispatch: .{
+ attention_field = @attention_field
+ ornament = @ornament_contract
+ site_semantics = @site_semantics
+ cognition = @cognitive_navigation
+ operators = @operator_semantics
+ plan = @plan
+}[reg=facet]
+
+validation: #[
+ `rg 'data-spw-learner-confidence|data-spw-wonder-entry' public/js/runtime/attention`,
+ `rg 'component-taxonomy' .spw/conventions`,
+][reg=set]

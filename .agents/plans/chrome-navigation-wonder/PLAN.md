@@ -133,3 +133,20 @@ This is not a new feature request — it is naming and deepening the existing co
 - design/ hub and spokes (the living demonstration surface)
 
 Next concrete patch or deeper modeling session should reference this plan.
+
+## Implementation Status (2026-07)
+
+### Landed — Phase 0 + Phase 1 (partial)
+
+- `public/js/runtime/attention/section-handle.js` — learner-confidence radar datasets (`data-spw-learner-*`, `data-spw-cognitive-inventory`) and `data-spw-wonder-entry="section-locomotion"` on the section handle when the trail is active.
+- `public/css/shell/chrome/section-context.css` — wonder-entry styling tied to `--field-balance`.
+- `public/css/shell/chrome/navigation.css` — stable `spw-nav-toggle-copy` inline size (FIX.md hover jitter).
+- `public/css/shell/chrome/footer.css` — mobile stack rhythm for identity, cauldron, settings, and nav.
+- `.spw/conventions/component-taxonomy.spw` — scientifically-social taxonomy + confidence radar contract.
+- `.agents/plans/chrome-navigation-wonder/index.spw` — plan dispatch and owner_claim.
+
+### Next
+
+- Phase 2: dimensional breadcrumbs as a first-class collectible surface.
+- Phase 3: operator-forces / semantic-accent two-layer doc pass in `tokens/core.css` and operator atlas.
+- Re-run `npm run check:local` after landing; validate mobile on home, design hub, and one long topic route.

@@ -26,6 +26,9 @@
 @workbench_memory_surface: ~"../_workbench/.spw/harness/memory-surface.spw"
 @workbench_process_loop: ~"../_workbench/.spw/process/loop-observation.spw"
 @semantic_capacity: ~"./semantic-capacity.spw"
+@chrome_navigation_wonder: ~"../../.agents/plans/chrome-navigation-wonder/PLAN.md"
+@chrome_navigation_wonder_index: ~"../../.agents/plans/chrome-navigation-wonder/index.spw"
+@component_taxonomy: ~"./component-taxonomy.spw"
 
 dispatch: .{
  agents = @agents
@@ -48,6 +51,9 @@ dispatch: .{
  memory_surface = @workbench_memory_surface
  process_loop = @workbench_process_loop
  semantic_capacity = @semantic_capacity
+ chrome_navigation_wonder = @chrome_navigation_wonder
+ chrome_navigation_wonder_index = @chrome_navigation_wonder_index
+ component_taxonomy = @component_taxonomy
 }[reg=facet]
 
 roles: #[

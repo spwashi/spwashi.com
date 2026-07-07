@@ -314,11 +314,14 @@
   display: grid;
   gap: 0.04rem;
   min-width: 0;
+  min-inline-size: 6.75rem;
   text-align: left;
   transform-origin: left center;
 }
 
 .spw-nav-toggle-label {
+  display: inline-block;
+  min-inline-size: 5.25ch;
   line-height: 1;
 }
 

@@ -55,6 +55,8 @@
 @workbench_selection: ~"../_workbench/.spw/conventions/selection.spw"
 @workbench_naming: ~"../_workbench/.spw/conventions/naming.spw"
 @workbench_submodule: ~"../_workbench/.spw/conventions/submodule.spw"
+@component_taxonomy: ~"./component-taxonomy.spw"
+@chrome_navigation_wonder: ~"../../.agents/plans/chrome-navigation-wonder/PLAN.md"
 
 dispatch: .{
  semantics = @site_semantics
@@ -96,6 +98,8 @@ dispatch: .{
  selection = @workbench_selection
  naming = @workbench_naming
  submodule = @workbench_submodule
+ component_taxonomy = @component_taxonomy
+ chrome_navigation_wonder = @chrome_navigation_wonder
 }[reg=facet]
 
 invariants: #[

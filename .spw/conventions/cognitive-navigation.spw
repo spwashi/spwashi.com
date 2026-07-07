@@ -8,6 +8,15 @@
   grounding: "Handles are inspired by brace physics and spatial grammar: they let you 'grab' a concept and navigate through it. Dimensional navigation recognizes that meaning often exists across multiple simultaneous axes."
 }
 
+^"confidence_radar"{
+  scope = `What can locomotion affect? Section trail, not whole-site settings unless explicitly opened.`
+  recover = `How does the reader return to safety? Top anchor, settings reset, menu close.`
+  apply = `What is the useful next move? Previous/next section, related operator chip.`
+  projection = #[`data-spw-learner-confidence`, `data-spw-learner-scope`, `data-spw-learner-recovery`, `data-spw-learner-apply`, `data-spw-cognitive-inventory`][reg=set]
+  plan_ref = ~"../../.agents/plans/chrome-navigation-wonder/PLAN.md"
+  taxonomy_ref = ~"./component-taxonomy.spw"
+}[reg=facet]
+
 ^"dimensions_of_understanding"{
   ~#note: "The primary axes along which the site's content is organized. Navigation happens along these dimensions."
 

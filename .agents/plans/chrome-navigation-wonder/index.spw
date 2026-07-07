@@ -1,0 +1,78 @@
+# Plan Index — Chrome Navigation Wonder
+#
+# Chrome, navigation, and metaphysical wonder: field-like shell affordances.
+
+#>plan_chrome_navigation_wonder_index
+#:index #!plan #!chrome
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Improve header, section handles, breadcrumbs, and footer so they invite curiosity and participate in the attentional field — operators as forces, semantic-accent as lived projection.`
+ owner = `chrome-navigation-wonder`
+ kind = `plan`
+ bucket = `chrome_navigation`
+ artifact_shape = `PLAN.md | FIX.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "contract | observation | tending"
+ semantic_layer = "pragmatics | application"
+ collaboration_phase = "exchange"
+ memory_tier = "hot"
+ bucket = "chrome_navigation"
+}[reg=facet]
+
+@plan: ~"./PLAN.md"
+@fix: ~"./FIX.md"
+@component_taxonomy: ~"../../../.spw/conventions/component-taxonomy.spw"
+@navigation_header_disclosure: ~"../navigation-header-disclosure/PLAN.md"
+@floating_chrome_stack: ~"../floating-chrome-stack/FIX.md"
+@gesture_state_refinement: ~"../gesture-state-refinement/PLAN.md"
+@attention_field: ~"../../../.spw/conventions/attention-field.spw"
+@cognitive_navigation: ~"../../../.spw/conventions/cognitive-navigation.spw"
+
+dispatch: .{
+ plan = @plan
+ fix = @fix
+ component_taxonomy = @component_taxonomy
+ navigation_header_disclosure = @navigation_header_disclosure
+ floating_chrome_stack = @floating_chrome_stack
+ gesture_state_refinement = @gesture_state_refinement
+ attention_field = @attention_field
+ cognitive_navigation = @cognitive_navigation
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-chrome-navigation-wonder-001"
+ layer = "pragmatic"
+ hypothesis = `Section locomotion and shell chrome can project learner-confidence and wonder-entry signals without new widgets.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/js/runtime/attention/section-handle.js"
+ probe_ref = `rg 'data-spw-learner-confidence|data-spw-wonder-entry' public/js/runtime/attention`
+ falsification = `Mobile chrome still reads as utility-only after locomotion datasets and field-balance styling land.`
+ status = "active"
+}[reg=facet]
+
+implementation_phases: ?<
+ `Phase 0 — confidence radar on section handle (landed)`,
+ `Phase 1 — footer mobile rhythm + nav toggle stable copy + wonder-entry chrome`,
+ `Phase 2 — breadcrumbs as collectible surface`,
+ `Phase 3 — operator-forces doc pass + design hub on-ramp`,
+ `Phase 4 — component taxonomy convention wiring`
+>[reg=stream]
+
+editor_prompts: #[
+ .{ ask = `What is the mobile footer/cauldron rhythm problem?`, see = @plan }[reg=facet],
+ .{ ask = `How should chrome participate in the attentional field?`, see = @component_taxonomy }[reg=facet],
+ .{ ask = `What hover-stability fixes are still open?`, see = @fix }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Operators stay the force layer; semantic-accent stays the projection layer.`,
+ `Confidence projects through existing locomotion surfaces, not parallel widgets.`,
+ `Chrome CSS edits target public/css/shell/chrome/* after the 2026 split.`,
+][reg=set]

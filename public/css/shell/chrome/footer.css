@@ -64,12 +64,37 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
 @media (max-width: 520px) {
   .site-footer__inner {
     grid-template-columns: 1fr;
-    gap: 0.6rem;
+    gap: var(--component-gap, 0.65rem);
+  }
+
+  .site-footer__identity {
+    gap: var(--component-gap, 0.42rem);
   }
 
   .site-footer__page-architecture {
     margin-top: 0.35rem;
     padding-top: 0.45rem;
+  }
+
+  .site-footer__cauldron {
+    margin-top: 0.2rem;
+    padding: var(--component-pad, 0.55rem);
+  }
+
+  .site-footer__settings {
+    margin-top: 0.28rem;
+    padding: var(--component-pad, 0.55rem);
+    gap: var(--component-gap, 0.42rem);
+  }
+
+  .site-footer__note-entry {
+    flex-basis: 100%;
+    min-width: 0;
+  }
+
+  .site-footer__nav {
+    justify-content: flex-start;
+    padding-top: 0.35rem;
   }
 }
 

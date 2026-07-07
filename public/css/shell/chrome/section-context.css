@@ -222,6 +222,26 @@ body:has([data-spw-wonder-state]:not([data-spw-wonder-state=""])) .spw-section-h
     var(--handle-shadow-rest, 0 1px 3px rgba(0,0,0,0.06));
 }
 
+/* Wonder invitation: section locomotion participates in the attentional field. */
+.spw-section-handle[data-spw-wonder-entry="section-locomotion"],
+.spw-section-handle-shell[data-spw-wonder-entry="section-locomotion"] {
+  border-color: color-mix(
+    in srgb,
+    var(--semantic-accent, var(--active-op-color, var(--teal, #008080)))
+      calc(18% + (var(--field-balance, 0.5) * 14%)),
+    transparent
+  );
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.38) inset,
+    0 6px 18px color-mix(
+      in srgb,
+      var(--semantic-accent, var(--active-op-color, var(--teal, #008080)))
+        calc(8% + (var(--field-balance, 0.5) * 10%)),
+      rgba(0, 0, 0, 0.08)
+    ),
+    var(--spw-handle-direction-glow);
+}
+
 .spw-section-handle-shell[data-spw-handle-phase="traveling"]::after {
   opacity: 1;
   box-shadow:

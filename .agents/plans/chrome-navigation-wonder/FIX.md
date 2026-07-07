@@ -18,6 +18,10 @@
 - Keep the primary nav’s hover and current-link states within the same box model footprint.
 - Make the active route marker explicit but width-stable, so navigation reads better without adding layout jitter.
 
+## Landed (2026-07)
+
+- `public/css/shell/chrome/navigation.css` reserves `min-inline-size` on `.spw-nav-toggle-copy` and `.spw-nav-toggle-label` so disclosure copy changes do not reflow the header grid.
+
 ## Deferred Follow-Ups
 
 - If the header still feels noisy in practice, revisit the disclosure copy itself rather than adding more visual motion.

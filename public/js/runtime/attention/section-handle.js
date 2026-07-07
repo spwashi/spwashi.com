@@ -6,6 +6,7 @@ import { appendToDocument } from '/public/js/kernel/dom-render.js';
 import {
   AUTO_HANDLE_MIN_SECTIONS,
   CAULDRON_RESONANCE_ATTR,
+  COGNITIVE_INVENTORY_ATTR,
   HANDLE_AVAILABILITY_ATTR,
   HANDLE_COMPACT_QUERY,
   HANDLE_ENHANCED_ATTR,
@@ -18,6 +19,10 @@ import {
   HANDLE_STATE_ATTR,
   HANDLE_TRAVEL_SETTLE_MS,
   HANDLE_VISIBILITY_SCROLL,
+  LEARNER_APPLY_ATTR,
+  LEARNER_CONFIDENCE_ATTR,
+  LEARNER_RECOVERY_ATTR,
+  LEARNER_SCOPE_ATTR,
   OPERATOR_SECTION_SELECTOR,
   PAGE_SECTION_COUNT_ATTR,
   PAGE_SECTION_CURRENT_ATTR,
@@ -31,6 +36,7 @@ import {
   SECTION_TIER_ATTR,
   SPW_LOG_RELATIONSHIPS,
   SUBVOCAL_REHEARSAL_ATTR,
+  WONDER_ENTRY_ATTR,
   clearAttributes,
   getScrollBehavior,
   logger,
@@ -461,6 +467,57 @@ function syncSectionHandleSections(sections, activeIndex) {
    so it can visually "invite" wonder priming and feel more alive with the page content.
    This ties the floating chrome directly to interactive vocabulary development and
    page-specific attentional rhythm without new heavy logic. */
+function buildCognitiveInventory() {
+  const body = document.body?.dataset || {};
+  const parts = [
+    body.spwPageRole || 'page',
+    body.spwFeatures?.split(/\s+/).filter(Boolean)[0] || '',
+    body.spwSurface || 'route',
+  ].filter(Boolean);
+  return parts.join(' / ');
+}
+
+function syncLearnerConfidenceRadar(snapshot, visible, handle, shell) {
+  const inventory = buildCognitiveInventory();
+  const recovery = snapshot.availability.includes('top') ? 'top-or-settings' : 'settings';
+  const apply = snapshot.currentLabel || 'next-section';
+  const scope = visible ? 'section-locomotion' : 'page';
+  const confidenceAttrs = visible && snapshot.sectionCount > 1
+    ? {
+      [LEARNER_CONFIDENCE_ATTR]: 'bounded',
+      [LEARNER_SCOPE_ATTR]: scope,
+      [LEARNER_RECOVERY_ATTR]: recovery,
+      [LEARNER_APPLY_ATTR]: apply,
+      [COGNITIVE_INVENTORY_ATTR]: inventory,
+    }
+    : null;
+
+  [document.documentElement, document.body].forEach((node) => {
+    if (confidenceAttrs) {
+      writeAttributes(node, confidenceAttrs);
+    } else {
+      clearAttributes(node, [
+        LEARNER_CONFIDENCE_ATTR,
+        LEARNER_SCOPE_ATTR,
+        LEARNER_RECOVERY_ATTR,
+        LEARNER_APPLY_ATTR,
+        COGNITIVE_INVENTORY_ATTR,
+      ]);
+    }
+  });
+
+  [handle, shell].forEach((node) => {
+    if (!(node instanceof HTMLElement)) return;
+    if (visible && snapshot.sectionCount > 1) {
+      node.setAttribute(WONDER_ENTRY_ATTR, 'section-locomotion');
+      node.setAttribute('aria-description', `Section trail: ${snapshot.currentLabel}. Use prev and next to move; settings restores defaults.`);
+    } else {
+      node.removeAttribute(WONDER_ENTRY_ATTR);
+      node.removeAttribute('aria-description');
+    }
+  });
+}
+
 function syncSectionVocabularyHint(sections, activeIndex, handle, shell) {
   if (!handle || !shell) return;
   const active = sections[activeIndex];
@@ -535,6 +592,7 @@ function updateSectionHandleState({
   syncSectionHandleVisibility(handle, shell, visible);
 
   writePageSectionDatasets(snapshot);
+  syncLearnerConfidenceRadar(snapshot, visible, handle, shell);
 
   // Enhance floating chrome UX with vocabulary context (for resonance + priming)
   syncSectionVocabularyHint(sections, state.activeIndex, handle, shell);
@@ -846,6 +904,11 @@ function createSectionHandleController({
         PAGE_SECTION_PHASE_ATTR,
         PAGE_SECTION_EDGE_ATTR,
         PAGE_SECTION_DIRECTION_ATTR,
+        LEARNER_CONFIDENCE_ATTR,
+        LEARNER_SCOPE_ATTR,
+        LEARNER_RECOVERY_ATTR,
+        LEARNER_APPLY_ATTR,
+        COGNITIVE_INVENTORY_ATTR,
       ]);
       node.style.removeProperty('--spw-section-progress');
       node.style.removeProperty('--spw-section-step');
