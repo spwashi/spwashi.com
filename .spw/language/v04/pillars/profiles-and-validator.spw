@@ -1,0 +1,56 @@
+# Profiles And Validator
+#
+# File profiles that imply required Spw blocks and validate-spw diagnostics.
+
+#>spw_v04_profiles_validator
+#:pillar #!v04 #!validator
+#:operation #!contract
+#:fixity #!stable
+#:layer #!grammar
+
+operation = "contract"
+fixity = "stable"
+
+^"dimensions"{
+ temporal_rhythm = "specification"
+ practice_depth = "contract | observation"
+ semantic_layer = "grammar"
+ collaboration_phase = "exchange"
+ memory_tier = "warm"
+ priority = "1"
+}[reg=facet]
+
+intent: .{
+ goal = `Replace dialect drift with declared profiles: index, convention, review, slice, plan-index, wip-notebook, pillar.`
+ tool = `validate-spw --profile <name>`
+}[reg=facet]
+
+^"profiles"{
+ plan_index = #[`intent`, `dimensions`, `dispatch`, `owner_claim`, `editor_prompts`, `validation`][reg=set]
+ convention = #[`operation`, `fixity`, `invariants`, `dispatch`][reg=set]
+ pillar = #[`dimensions`, `thesis`, `owner_claim`, `language_delta`, `validation`][reg=set]
+ wip_notebook = #[`plan_context`, `selection_probes`][reg=set]
+}[reg=facet]
+
+^"language_delta"{
+ syntax = `#:profile #!plan-index | #:profile #!pillar | #:profile #!convention`
+ rule = `Parser rejects missing required blocks for the declared profile.`
+ migration = `Infer profile from legacy #:index #:convention tags; emit warnings before hard errors.`
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "v04-profiles-001"
+ hypothesis = `Profile validation reduces agent re-parse cost more than prose normalization alone.`
+ spec_ref = ~"./profiles-and-validator.spw"
+  impl_ref = ~"../../../_workbench/.claude/commands/validate-spw.md"
+ probe_ref = `validate-spw .spw/language/v04/pillars/profiles-and-validator.spw`
+ falsification = `Files pass validate-spw while missing owner_claim or dispatch required by their profile.`
+ status = "active"
+}[reg=facet]
+
+^"projection_targets"{
+ workbench = #[`docs/specs/spw/v04/PROFILES.md`, `packages/spw-cli validate --profile`][reg=set]
+ site = #[`.agents/plans/*/index.spw`, `.spw/language/v04/pillars/*.spw`][reg=set]
+}[reg=facet]
+
+validation: #[`rg '#:profile' .spw/language/v04/pillars`][reg=set]

@@ -34,6 +34,9 @@
 @plan_wip_index_conventions: ~"../../.agents/plans/plan-wip-index-conventions/PLAN.md"
 @plan_index: ~"./plan-index.spw"
 @plans_root: ~"../../.agents/plans/index.spw"
+@spw_language_v04_plan: ~"../../.agents/plans/spw-language-v04/PLAN.md"
+@spw_language_v04_plan_index: ~"../../.agents/plans/spw-language-v04/index.spw"
+@language_v04: ~"../language/v04/index.spw"
 
 dispatch: .{
  agents = @agents
@@ -64,6 +67,9 @@ dispatch: .{
  plan_wip_index_conventions = @plan_wip_index_conventions
  plan_index = @plan_index
  plans_root = @plans_root
+ spw_language_v04_plan = @spw_language_v04_plan
+ spw_language_v04_plan_index = @spw_language_v04_plan_index
+ language_v04 = @language_v04
 }[reg=facet]
 
 roles: #[

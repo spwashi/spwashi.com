@@ -1,0 +1,43 @@
+# Typed References And Indexing
+#
+# Resolved references, broken-link errors, queryable indexes.
+
+#>spw_v04_typed_references_indexing
+#:pillar #!v04 #!index
+#:operation #!contract
+#:fixity #!stable
+#:layer #!grammar
+
+operation = "contract"
+fixity = "stable"
+
+^"dimensions"{
+ practice_depth = "observation | contract"
+ semantic_layer = "grammar | pragmatics"
+ priority = "2"
+}[reg=facet]
+
+^"reference_algebra"{
+ file = `~"relative/path"`
+ tagged = `~#spec "./file.spw"`
+ concept = `~<register>"./file.ts"`
+ composed = `~#bench <throughput>"./benchmark.spw"`
+ dispatch = `@alias: ~"./path"`
+}[reg=facet]
+
+^"language_delta"{
+ ref_node = `{ path, anchor, exists, layer, owner_stem }`
+ error = `Unresolved ~" path is a validate-spw error, not a maintenance note.`
+ index_rule = `index.spw files are projections with optional ^"overlay" hand edits.`
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "v04-refs-001"
+ hypothesis = `Typed refs plus existence checks make Spw indexes trustworthy for agents.`
+  spec_ref = ~"../../../_workbench/docs/specs/spw/reference-conventions.spw"
+ probe_ref = `rg '~"' .spw/language/v04 | head`
+ falsification = `Indexes dispatch to paths that fail existence checks without validator errors.`
+ status = "active"
+}[reg=facet]
+
+@reference_conventions: ~"../../../_workbench/docs/specs/spw/reference-conventions.spw"

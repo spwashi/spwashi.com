@@ -1,0 +1,59 @@
+# Submodule Bridge
+#
+# spw-workbench update path and site pin ritual for v0.4.
+
+#>spw_v04_submodule_bridge
+#:pillar #!v04 #!submodule
+#:operation #!align
+#:fixity #!tending
+#:layer #!editor_inspectability
+
+operation = "align"
+fixity = "tending"
+
+^"dimensions"{
+ collaboration_phase = "exchange | return"
+ memory_tier = "warm"
+ practice_depth = "contract | tending"
+ priority = "11"
+}[reg=facet]
+
+@submodule: ~"../../../_workbench"
+@gitmodules: ~"../../../../.gitmodules"
+@mount: ~"../../../mount.spw"
+@plan: ~"../../../../.agents/plans/spw-language-v04/PLAN.md"
+@language_v04: ~"../index.spw"
+
+^"upstream_layout"{
+ docs = #[`docs/specs/spw/v04/PROFILES.md`, `docs/specs/spw/v04/CLAIMS.md`, `docs/specs/spw/v04/STEMS.md`][reg=set]
+ lib = #[`lib/spw-v0.4.0/` scaffold next to v0.3.0][reg=set]
+ cli = #[`validate-spw --profile`, `precipitate` command family][reg=set]
+ branch = `feature/spw-language-v04`
+}[reg=facet]
+
+^"pin_ritual"{
+ steps = ?<
+  `Land pillar contracts in workbench docs/specs/spw/v04/`,
+  `Implement profile validator in spw-cli`,
+  `Merge upstream; tag workbench v0.4.0-alpha`,
+  `cd .spw/_workbench && git fetch && git checkout <tag>`,
+  `cd repo root && git add .spw/_workbench && git commit`,
+  `npm run check:local && validate-spw on .spw/language/v04`
+ >[reg=stream]
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "v04-submodule-001"
+ hypothesis = `Site pillar artifacts can lead workbench grammar work without forking two truths permanently.`
+ spec_ref = ~"./submodule-bridge.spw"
+ impl_ref = ~"../../../../.gitmodules"
+ probe_ref = `git submodule status .spw/_workbench`
+ falsification = `Site pillars and workbench v04 spec diverge with no dated reconciliation note.`
+ status = "active"
+}[reg=facet]
+
+validation: #[
+ `test -f .gitmodules`,
+ `test -d .spw/_workbench/.spw`,
+ `rg 'spw-workbench' .gitmodules`,
+][reg=set]

@@ -1,0 +1,36 @@
+# Spw Language Evolution Index
+#
+# Site-local registry for language-direction artifacts that precede or
+# accompany workbench submodule updates.
+
+#>spw_language_index
+#:index #!language #!grammar
+#:operation #!align
+#:layer #!semantics
+
+operation = "align"
+fixity = "stable"
+
+@mount: ~"../mount.spw"
+@workbench: ~"../_workbench/.spw/index.spw"
+@reference_conventions: ~"../_workbench/docs/specs/spw/reference-conventions.spw"
+@spec_alignment: ~"../_workbench/docs/specs/spw/spec-alignment.spw"
+@v04: ~"./v04/index.spw"
+@plan: ~"../../.agents/plans/spw-language-v04/PLAN.md"
+
+dispatch: .{
+ mount = @mount
+ workbench = @workbench
+ reference_conventions = @reference_conventions
+ spec_alignment = @spec_alignment
+ v04 = @v04
+ plan = @plan
+}[reg=facet]
+
+reading_order: ?< @plan, @v04, @reference_conventions, @spec_alignment, @workbench >[reg=stream]
+
+invariants: #[
+ `Site language artifacts propose; workbench canon proves.`,
+ `v0.4 pillars stay inspectable before the submodule pin moves.`,
+ `Promote landed grammar into workbench docs/specs and lib/spw-v0.4.0/.`
+][reg=set]
