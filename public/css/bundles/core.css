@@ -23719,6 +23719,44 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
         transition: none;
     }
 }
+
+/* ─── Composition-lab bench (demonstration surface) ─────────────────────── */
+/*
+ * Minimal layout for the /design/composition/ gravity bench. Specimens are
+ * spaced far apart so scrolling moves each one through the viewport and its
+ * vertical gravity visibly flips.
+ */
+
+.spatial-gravity-bench {
+    display: grid;
+    gap: 60vh;
+    margin-top: var(--space-md, 1rem);
+}
+
+.spatial-gravity-specimen {
+    padding: var(--gravity-rhythm, var(--spw-gravity-rhythm, 1rem)) var(--space-md, 1rem);
+    border: 1px solid var(--line, rgba(14, 18, 20, 0.14));
+    border-radius: var(--shape-surface, 10px);
+    background: var(--surface-strong, #ffffff);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spw-gravity-rhythm, var(--space-sm, 0.75rem));
+}
+
+.spatial-gravity-status {
+    margin: 0;
+}
+
+.spatial-gravity-reveal {
+    padding: var(--space-sm, 0.75rem);
+    border-radius: var(--shape-component, 8px);
+    background: color-mix(in srgb, var(--active-op-color, #008080) 8%, var(--surface, #ffffff));
+    border: 1px dashed color-mix(in srgb, var(--active-op-color, #008080) 30%, transparent);
+}
+
+.spatial-gravity-reveal strong {
+    color: var(--active-op-color, #008080);
+}
 }
 
 /* /public/css/systems/print-precipitation.css */
