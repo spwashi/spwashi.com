@@ -4,10 +4,17 @@ import {
   writeRuntimeDatasetValues,
 } from '/public/js/kernel/dom-contracts.js';
 import { bus } from '/public/js/kernel/bus.js';
+import { collapseText as normalizeText } from '/public/js/kernel/text-normalization.js';
+import {
+  readJson,
+  removeJson,
+  STORAGE_KEYS,
+  writeJson,
+} from '/public/js/kernel/storage-utils.js';
 
 const ROOT_ATTR = 'data-spw-state-inspector-root';
 const PANEL_ID = 'spw-state-inspector-panel';
-const POSITION_STORAGE_KEY = 'spw-state-satchel-position';
+const POSITION_STORAGE_KEY = STORAGE_KEYS.STATE_SATCHEL_POSITION;
 const TOGGLES = [
   {
     key: 'debug',
@@ -44,8 +51,12 @@ const TOGGLES = [
   },
 ];
 
-function normalizeText(value = '') {
-  return String(value).replace(/\s+/g, ' ').trim();
+function writeSatchelState(root, entries, reason) {
+  if (!(root instanceof HTMLElement)) return;
+  writeRuntimeDatasetValues(root, entries, {
+    source: 'state-inspector',
+    reason,
+  });
 }
 
 function getToggleState(config) {
@@ -72,27 +83,19 @@ function syncSatchelMaterial(root, launch, panel) {
 // --- Lightweight satchel position persistence + drag support ---
 
 function loadSavedPosition() {
-  try {
-    const raw = localStorage.getItem(POSITION_STORAGE_KEY);
-    if (!raw) return null;
-    const pos = JSON.parse(raw);
-    if (typeof pos?.left === 'number' && typeof pos?.top === 'number') {
-      return { left: pos.left, top: pos.top };
-    }
-  } catch {}
+  const pos = readJson(POSITION_STORAGE_KEY, null, { requireObject: true });
+  if (typeof pos?.left === 'number' && typeof pos?.top === 'number') {
+    return { left: pos.left, top: pos.top };
+  }
   return null;
 }
 
 function savePosition(left, top) {
-  try {
-    localStorage.setItem(POSITION_STORAGE_KEY, JSON.stringify({ left, top }));
-  } catch {}
+  return writeJson(POSITION_STORAGE_KEY, { left, top });
 }
 
 function clearSavedPosition() {
-  try {
-    localStorage.removeItem(POSITION_STORAGE_KEY);
-  } catch {}
+  return removeJson(POSITION_STORAGE_KEY);
 }
 
 function readRootRemPx(value, fallbackRem = 0) {
@@ -144,6 +147,7 @@ function getExternalBottomChromeReserve() {
     '[data-pwa-toast="install"]',
     '[data-spw-discovery-notice-stack]',
     '[data-spw-discovery-credits]',
+    '[data-spw-state-inspector-root][data-spw-state-inspector="open"]',
   ];
 
   return selectors
@@ -212,27 +216,33 @@ function anchorSatchelToChromeRail(root, { open = false } = {}) {
 
   if (open) {
     clearSatchelInlinePosition(root);
-    root.dataset.spwSatchelAnchor = 'chrome-rail';
-    root.dataset.spwSatchelSnap = isMobileSatchelViewport() ? 'bottom-rail' : 'bottom-right-rail';
+    writeSatchelState(root, {
+      spwSatchelAnchor: 'chrome-rail',
+      spwSatchelSnap: isMobileSatchelViewport() ? 'bottom-rail' : 'bottom-right-rail',
+    }, 'satchel-anchor-open');
     syncInspectorBottomLane('satchel-anchor-open');
     return;
   }
 
   if (!isMobileSatchelViewport()) {
-    delete root.dataset.spwSatchelAnchor;
-    delete root.dataset.spwSatchelSnap;
+    writeSatchelState(root, {
+      spwSatchelAnchor: null,
+      spwSatchelSnap: null,
+    }, 'satchel-anchor-desktop');
     return;
   }
 
   if (root.dataset.spwSatchelPositioned !== 'user') {
     clearSatchelInlinePosition(root);
-    root.dataset.spwSatchelAnchor = 'chrome-rail-closed';
-    root.dataset.spwSatchelSnap = 'bottom-right';
+    writeSatchelState(root, {
+      spwSatchelAnchor: 'chrome-rail-closed',
+      spwSatchelSnap: 'bottom-right',
+    }, 'satchel-anchor-closed');
     syncInspectorBottomLane('satchel-anchor-closed');
     return;
   }
 
-  delete root.dataset.spwSatchelAnchor;
+  writeSatchelState(root, { spwSatchelAnchor: null }, 'satchel-anchor-user');
   const rect = launch.getBoundingClientRect();
   const snapped = snapSatchelPosition(launch, rect.left, rect.top);
   applyPositionToLaunch(launch, snapped.left, snapped.top, false);
@@ -246,8 +256,10 @@ function mountDefaultMobileSatchel(root) {
   if (root.dataset.spwSatchelPositioned === 'user') return;
 
   clearSatchelInlinePosition(root);
-  root.dataset.spwSatchelAnchor = 'chrome-rail-closed';
-  root.dataset.spwSatchelSnap = 'bottom-right';
+  writeSatchelState(root, {
+    spwSatchelAnchor: 'chrome-rail-closed',
+    spwSatchelSnap: 'bottom-right',
+  }, 'satchel-default-mobile');
   syncInspectorBottomLane('satchel-default-mobile');
 }
 

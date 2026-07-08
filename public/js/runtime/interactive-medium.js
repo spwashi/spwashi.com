@@ -7,6 +7,7 @@
  */
 
 import { writeDatasetValues } from '/public/js/kernel/dom-contracts.js';
+import { presenceToken as normalizeToken } from '/public/js/kernel/text-normalization.js';
 
 export const MEDIUM_REGISTERS = Object.freeze({
   SCENE: 'scene',
@@ -56,10 +57,6 @@ let hostObserver = null;
 let routeObserver = null;
 let activeRoot = document;
 let handleSync = null;
-
-function normalizeToken(value = '') {
-  return String(value).trim().toLowerCase();
-}
 
 function tokenIncludes(haystack = '', needle = '') {
   const tokens = normalizeToken(haystack).split(/\s+/).filter(Boolean);

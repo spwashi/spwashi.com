@@ -1,17 +1,23 @@
 import { bus } from '/public/js/kernel/bus.js';
 import { initPersonaSelector } from '/public/js/interface/persona-selector.js';
 import { createSpwLogger } from '/public/js/kernel/instrumentation.js';
-import { annotateFloatingChromeElement } from '/public/js/kernel/dom-contracts.js';
+import { annotateFloatingChromeElement, writeRuntimeDatasetValues } from '/public/js/kernel/dom-contracts.js';
+import {
+  readStorageText,
+  runCriticalPath,
+  STORAGE_KEYS,
+  writeStorageText,
+} from '/public/js/kernel/storage-utils.js';
 
 const PERSONAS = ['viewer', 'doodler', 'scribe'];
-const STORAGE_KEY = 'spw-active-persona';
+const STORAGE_KEY = STORAGE_KEYS.ACTIVE_PERSONA;
 const logger = createSpwLogger('spw-personas');
 
 let scribeTooltip = null;
 
 export function initSpwPersonas() {
-    const active = localStorage.getItem(STORAGE_KEY) || 'viewer';
-    applyPersona(active);
+    const active = readStorageText(STORAGE_KEY, 'viewer');
+    runCriticalPath('personas:init', () => applyPersona(active), null);
     initPersonaSelector();
 
     bus.on('persona:shift', (e) => {
@@ -106,11 +112,17 @@ function augmentDoodler(el) {
 }
 
 function applyPersona(persona) {
-    document.body.dataset.spwPersona = persona;
-    localStorage.setItem(STORAGE_KEY, persona);
-    hideScribeTooltip(); 
-    bus.emit('persona:active', { persona });
-    logger.info('active persona', { persona });
+    const next = PERSONAS.includes(persona) ? persona : 'viewer';
+    writeRuntimeDatasetValues(document.body, {
+        spwPersona: next,
+    }, {
+        source: 'personas',
+        reason: 'persona-shift',
+    });
+    writeStorageText(STORAGE_KEY, next);
+    hideScribeTooltip();
+    bus.emit('persona:active', { persona: next });
+    logger.info('active persona', { persona: next });
 }
 
 window.spwShiftPersona = (persona) => bus.emit('persona:shift', { persona });

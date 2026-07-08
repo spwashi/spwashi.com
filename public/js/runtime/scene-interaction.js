@@ -6,18 +6,16 @@
 
 import { bus } from '/public/js/kernel/bus.js';
 import { writeDatasetValue } from '/public/js/kernel/dom-contracts.js';
+import { semanticToken as normalizeToken } from '/public/js/kernel/text-normalization.js';
+import { readJson, STORAGE_KEYS, writeJson } from '/public/js/kernel/storage-utils.js';
 
 const BED_SELECTOR = '.spw-scene-bed[data-spw-scene-interactive], .spw-scene-bed[data-spw-scene-posture]';
 const LANE_SELECTOR = '.spw-scene-bed__lane, [data-spw-scene-lane]';
 const FIGURE_SELECTOR = '.spw-scene-bed__figure, .image-study[data-spw-scene-lane-bind]';
-const STORAGE_KEY = 'spw-scene-interaction-v1';
+const STORAGE_KEY = STORAGE_KEYS.SCENE_INTERACTION;
 
 let initialized = false;
 const bedState = new Map();
-
-function normalizeToken(value = '') {
-  return String(value).replace(/\s+/g, ' ').trim().toLowerCase();
-}
 
 function readLaneId(lane) {
   if (!(lane instanceof HTMLElement)) return '';
@@ -34,20 +32,11 @@ function readBedId(bed) {
 }
 
 function readStorage() {
-  try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : {};
-  } catch {
-    return {};
-  }
+  return readJson(STORAGE_KEY, {}, { requireObject: true });
 }
 
 function writeStorage(store) {
-  try {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
-  } catch {
-    // local-only enhancement; ignore quota errors
-  }
+  writeJson(STORAGE_KEY, store);
 }
 
 function readActiveMode(bed) {

@@ -12,8 +12,16 @@
  */
 
 import { bus } from '/public/js/kernel/bus.js';
+import { writeRuntimeDatasetValues } from '/public/js/kernel/dom-contracts.js';
+import { guardCall } from '/public/js/kernel/dom-render.js';
+import {
+  readJson,
+  runCriticalPath,
+  STORAGE_KEYS,
+  writeJson,
+} from '/public/js/kernel/storage-utils.js';
 
-const LEDGER_KEY = 'spw-effect-ledger';
+const LEDGER_KEY = STORAGE_KEYS.EFFECT_LEDGER;
 const MAX_EFFECTS = 60;
 
 export const EFFECT_LEDGER_CONTRACT = Object.freeze({
@@ -35,37 +43,33 @@ export const EFFECT_LEDGER_CONTRACT = Object.freeze({
 });
 
 function readLedger() {
-  try {
-    const parsed = JSON.parse(localStorage.getItem(LEDGER_KEY) || '[]');
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return [];
-  }
+  return readJson(LEDGER_KEY, [], { requireArray: true });
 }
 
 function writeLedger(entries) {
-  try {
-    localStorage.setItem(LEDGER_KEY, JSON.stringify(entries.slice(0, MAX_EFFECTS)));
-  } catch {
-    /* storage may be unavailable; the ledger is residue, never load-bearing */
-  }
+  return writeJson(LEDGER_KEY, entries.slice(0, MAX_EFFECTS));
 }
 
 function projectLedgerState(entries) {
   const root = document.documentElement;
   if (!root) return;
+
   const last = entries[0]?.kind || '';
-  root.dataset.spwEffects = [`count:${entries.length}`, last ? `last:${last}` : '']
-    .filter(Boolean)
-    .join(' ');
+  writeRuntimeDatasetValues(root, {
+    spwEffects: [`count:${entries.length}`, last ? `last:${last}` : '']
+      .filter(Boolean)
+      .join(' '),
+    spwEffectLedgerCount: entries.length ? String(entries.length) : null,
+    spwEffectLedgerLast: last || null,
+  }, {
+    source: 'effect-ledger',
+    reason: 'ledger-projection',
+  });
 }
 
 /**
  * Precipitate one named effect into the ledger.
  * Mirror shape: SpwEffectEntry in types/spw.d.ts.
- * @param {string} kind stable effect kind (e.g. "spell-cast")
- * @param {{label?: string, title?: string, summary?: string, rewardKind?: string}} [detail]
- * @returns {{kind: string, label: string, summary: string, rewardKind: string, path: string, at: number}}
  */
 function record(kind, detail = {}) {
   const entry = {
@@ -77,7 +81,8 @@ function record(kind, detail = {}) {
     at: Date.now(),
   };
   const entries = [entry, ...readLedger()];
-  writeLedger(entries);
+  if (!writeLedger(entries)) return entry;
+
   projectLedgerState(entries);
   bus.emit(EFFECT_LEDGER_CONTRACT.events.recorded, entry);
   return entry;
@@ -86,14 +91,35 @@ function record(kind, detail = {}) {
 export function initEffectLedger() {
   const unsubs = [];
 
-  const onReward = (event) => record(event?.detail?.rewardKind || 'discovery-reward', event?.detail || {});
+  const onReward = guardCall(
+    (event) => record(event?.detail?.rewardKind || 'discovery-reward', event?.detail || {}),
+    'effect-ledger:reward',
+    { silent: true },
+  );
   document.addEventListener('spw:discovery-reward', onReward, { passive: true });
   unsubs.push(() => document.removeEventListener('spw:discovery-reward', onReward));
 
-  unsubs.push(bus.on('spell:cast', (event) => record('spell-cast', { label: 'Spell cast', summary: event?.detail?.snippet ? 'Composed state serialized as a replayable extension.' : '', ...event?.detail })));
-  unsubs.push(bus.on('spell:decomposed', (event) => record('spell-decomposed', { label: `Spell reopened: ${event?.detail?.name || ''}`, summary: 'A saved spell returned to the cauldron as ingredients.', ...event?.detail })));
+  unsubs.push(bus.on('spell:cast', guardCall(
+    (event) => record('spell-cast', {
+      label: 'Spell cast',
+      summary: event?.detail?.snippet ? 'Composed state serialized as a replayable extension.' : '',
+      ...event?.detail,
+    }),
+    'effect-ledger:cast',
+    { silent: true },
+  )));
 
-  projectLedgerState(readLedger());
+  unsubs.push(bus.on('spell:decomposed', guardCall(
+    (event) => record('spell-decomposed', {
+      label: `Spell reopened: ${event?.detail?.name || ''}`,
+      summary: 'A saved spell returned to the cauldron as ingredients.',
+      ...event?.detail,
+    }),
+    'effect-ledger:decomposed',
+    { silent: true },
+  )));
+
+  runCriticalPath('effect-ledger:project', () => projectLedgerState(readLedger()), null);
 
   window.spwEffects = {
     list: () => readLedger(),
@@ -104,5 +130,7 @@ export function initEffectLedger() {
     },
   };
 
-  return () => unsubs.forEach((fn) => { try { fn(); } catch { /* already gone */ } });
+  return () => unsubs.forEach((fn) => {
+    runCriticalPath('effect-ledger:teardown', () => fn(), null);
+  });
 }

@@ -9,6 +9,15 @@ import { writeRuntimeDatasetValues } from '/public/js/kernel/dom-contracts.js';
 
 const primedRoutes = new Set();
 
+/** Respect Save-Data and reduced-data preferences before prefetching routes. */
+export function canPrefetchRoute() {
+  const connection = globalThis.navigator?.connection;
+  if (connection?.saveData) return false;
+  if (connection?.effectiveType === 'slow-2g' || connection?.effectiveType === '2g') return false;
+  if (globalThis.matchMedia?.('(prefers-reduced-data: reduce)')?.matches) return false;
+  return true;
+}
+
 /** Trailing-slash stable pathname for same-origin routes. */
 export function normalizePathname(pathname = '') {
   if (!pathname || pathname === '/') return '/';
@@ -79,7 +88,7 @@ export function primeRouteTransition(href, options = {}) {
   const html = globalThis.document?.documentElement;
   if (!html) return true;
 
-  if (options.prefetch !== false && globalThis.document?.head) {
+  if (options.prefetch !== false && canPrefetchRoute() && globalThis.document?.head) {
     const existing = globalThis.document.head.querySelector(`link[data-spw-route-prime="${path}"]`);
     if (!existing) {
       const link = globalThis.document.createElement('link');
@@ -120,6 +129,7 @@ export const ROUTE = Object.freeze({
   path: normalizeRoutePath,
   list: parseRouteList,
   context: hydrateRouteContext,
+  canPrefetch: canPrefetchRoute,
   prime: primeRouteTransition,
   clearPrime: clearRoutePrimeState,
 });

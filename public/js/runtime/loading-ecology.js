@@ -10,6 +10,7 @@
 
 import { writeDatasetValue } from '/public/js/kernel/dom-contracts.js';
 import { markLayoutTrope } from '/public/js/kernel/instrumentation.js';
+import { runtimeToken as normalizeToken } from '/public/js/kernel/text-normalization.js';
 import { PAGE_ARRIVAL, PAGE_PRESENCE } from '/public/js/runtime/page-state.js';
 
 export const ECOLOGY_PHASES = Object.freeze({
@@ -102,10 +103,6 @@ const ecology = {
   lastTrope: '',
   lastGenre: '',
 };
-
-function normalizeToken(value = '') {
-  return String(value || '').trim().toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, '');
-}
 
 function readSalienceDirection(html) {
   const presence = html.dataset.spwPagePresence || PAGE_PRESENCE.FOREGROUND;

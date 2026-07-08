@@ -47,22 +47,33 @@ audited_at = "2026-07-08"
 
 ^"remaining"{
   normalize_forks: #[
-    `interactive-medium presenceToken`
-    `loading-ecology local normalizeToken`
-    `haptics/prompt-utils local normalizeText`
+    `haptics/prompt-utils/pretext-physics local normalizeText`
+    `narrative-instrumentation local normalizeToken`
+    `page-metadata separator-aware normalizeToken`
   ][reg=set]
   storage: #[
-    `discovery-notices, effect-ledger, gate, personas → readJson`
     `haptics readJsonStorage → readJson wrapper`
+    `local-notes, cognitive-surface safeJsonParse`
   ][reg=set]
   chrome: #[
     `rename runtime/state-inspector.js when safe`
-    `satchel toggles → writeRuntimeDatasetValues pass`
   ][reg=set]
   design_growth: #[
-    `CSS audit matrix for visitation × theme-pack × wonder-memory`
-    `Save-Data gate on route prefetch`
+    `expand kernel-audit bed with live toggles`
     `component hydrateRouteContext adoption in feature modules`
+  ][reg=set]
+}
+
+^"wave_two_landed"{
+  at = "2026-07-08"
+  items: #[
+    `storage-utils critical-path helpers + persona/effect keys`
+    `route-utils canPrefetchRoute Save-Data gate`
+    `discovery-notices storage + chrome projection`
+    `effect-ledger, gate, personas, scene-interaction storage migration`
+    `state-inspector satchel writeSatchelState + position storage`
+    `normalize forks: interactive-medium, loading-ecology, spw-key-events, topical-payload, annotation-layer, scene-interaction`
+    `design/experiments/kernel-audit practice bed`
   ][reg=set]
 }
 

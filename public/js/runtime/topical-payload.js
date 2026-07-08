@@ -7,6 +7,7 @@
 
 import { bus } from '/public/js/kernel/bus.js';
 import { writeDatasetValue } from '/public/js/kernel/dom-contracts.js';
+import { collapseText as normalizeText } from '/public/js/kernel/text-normalization.js';
 
 const TOPIC_SELECTOR = '.spw-topic, [data-spw-topic]';
 const LORE_SELECTOR = '[data-spw-lore-role]';
@@ -20,10 +21,6 @@ const PROMPT_CHIP_SELECTOR = 'a.operator-chip[href*="spw_prompt"]';
 
 let initialized = false;
 let lastRefreshAt = 0;
-
-function normalizeText(value = '') {
-  return String(value).replace(/\s+/g, ' ').trim();
-}
 
 function escapeSpwString(value = '') {
   return normalizeText(value).replace(/\\/g, '\\\\').replace(/"/g, '\\"');

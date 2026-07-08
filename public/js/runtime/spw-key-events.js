@@ -7,6 +7,7 @@
 
 import { bus } from '/public/js/kernel/bus.js';
 import { writeDatasetValue } from '/public/js/kernel/dom-contracts.js';
+import { collapseText as normalizeText } from '/public/js/kernel/text-normalization.js';
 import { readMicrointeractionPulseMs } from './pulse-beat-tuner.js';
 
 const SCENE_HOST_SELECTOR = [
@@ -47,10 +48,6 @@ const REVEAL_PHASE_WEIGHT = Object.freeze({
   revealed: 1,
   settling: 0.28,
 });
-
-function normalizeText(value = '') {
-  return String(value).replace(/\s+/g, ' ').trim();
-}
 
 function describePath(element) {
   if (!(element instanceof HTMLElement)) return '';

@@ -5,11 +5,22 @@ import {
   createJsonFeedLoader,
   getWeekIndex,
 } from '/public/js/kernel/feed-utils.js';
-import { annotateFloatingChromeElement } from '/public/js/kernel/dom-contracts.js';
+import {
+  annotateFloatingChromeElement,
+  syncFloatingChromeState,
+  writeRuntimeDatasetValues,
+} from '/public/js/kernel/dom-contracts.js';
+import { semanticToken } from '/public/js/kernel/text-normalization.js';
+import {
+  readJson,
+  runCriticalPath,
+  STORAGE_KEYS,
+  writeJson,
+} from '/public/js/kernel/storage-utils.js';
 import { isInspectLabSurface, isReadingQuietChrome } from '/public/js/runtime/runtime-helpers.js';
 
 const FEED_URL = '/public/data/promo-wonder-cycle.json';
-const STORAGE_KEY = 'spw-discovery-notice-dismissals';
+const STORAGE_KEY = STORAGE_KEYS.DISCOVERY_DISMISSALS;
 const STACK_ATTR = 'data-spw-discovery-notice-stack';
 const MODAL_ATTR = 'data-spw-discovery-notice-modal';
 const NOTICE_ATTR = 'data-spw-discovery-notice';
@@ -18,7 +29,7 @@ const NOTICE_HIDE_DELAY_MS = 180;
 const DISMISSALS_CHANGED_EVENT = 'spw:discovery-dismissals-changed';
 const DISCOVERY_REWARD_EVENT = 'spw:discovery-reward';
 const PRESENTATIONS = new Set(['toast', 'popup', 'modal', 'credits']);
-const FEATURE_LEARNING_STORAGE_KEY = 'spw-feature-learning-toasts';
+const FEATURE_LEARNING_STORAGE_KEY = STORAGE_KEYS.FEATURE_LEARNING_TOASTS;
 const FEATURE_LEARNING_LIMIT = 3;
 const RUNTIME_REWARD_LINGER_MS = 4600;
 const CREDITS_REWARD_LINGER_MS = 5600;
@@ -38,34 +49,37 @@ async function getSharedBus() {
 }
 
 export function slugify(value = '') {
-  return cleanText(value)
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '') || 'notice';
-}
-
-function safeParse(value, fallback) {
-  try {
-    return value ? JSON.parse(value) : fallback;
-  } catch {
-    return fallback;
-  }
+  return semanticToken(value) || 'notice';
 }
 
 function readDismissals() {
-  try {
-    return safeParse(localStorage.getItem(STORAGE_KEY), {});
-  } catch {
-    return {};
-  }
+  return readJson(STORAGE_KEY, {}, { requireObject: true });
 }
 
 function writeDismissals(next) {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
-  } catch {
-    // Local storage is optional here.
-  }
+  return writeJson(STORAGE_KEY, next);
+}
+
+function syncDiscoveryChromeState(reason = 'discovery-notices') {
+  const stack = document.querySelector(`[${STACK_ATTR}]`);
+  const modal = document.querySelector(`[${MODAL_ATTR}]`);
+  const credits = document.querySelector('[data-spw-discovery-credits]');
+  const stackCount = stack?.children?.length || 0;
+  const creditsCount = credits?.children?.length || 0;
+
+  writeRuntimeDatasetValues(document.documentElement, {
+    spwDiscoveryNoticeStack: stackCount ? String(stackCount) : null,
+    spwDiscoveryNoticeModal: modal ? 'open' : null,
+    spwDiscoveryCreditsCount: creditsCount ? String(creditsCount) : null,
+    spwDiscoveryNoticesActive: (stackCount || modal || creditsCount) ? 'true' : null,
+  }, {
+    source: 'discovery-notices',
+    reason,
+  });
+
+  runCriticalPath('discovery:chrome-sync', () => {
+    syncFloatingChromeState(document, { source: 'discovery-notices', reason });
+  }, null);
 }
 
 export function getDateKeys(date = new Date()) {
@@ -430,6 +444,7 @@ function ensureStackRoot() {
   stack.setAttribute(MODULE_ATTR, 'ready');
   const host = document.body || document.documentElement;
   host.append(stack);
+  syncDiscoveryChromeState('stack-created');
   return stack;
 }
 
@@ -536,6 +551,7 @@ function dismissNotice(notice, root, dismissals) {
     notice.article.remove();
     if (!root.childElementCount) root.remove();
     clearRemoveEscapeListenerIfIdle();
+    syncDiscoveryChromeState('notice-dismissed');
   }, NOTICE_HIDE_DELAY_MS);
 }
 
@@ -779,19 +795,14 @@ function handleDiscoveryReward(event) {
 }
 
 function readFeatureLearningState() {
-  try {
-    return safeParse(sessionStorage.getItem(FEATURE_LEARNING_STORAGE_KEY), { shown: [], count: 0 });
-  } catch {
-    return { shown: [], count: 0 };
-  }
+  return readJson(FEATURE_LEARNING_STORAGE_KEY, { shown: [], count: 0 }, {
+    storage: sessionStorage,
+    requireObject: true,
+  });
 }
 
 function writeFeatureLearningState(next) {
-  try {
-    sessionStorage.setItem(FEATURE_LEARNING_STORAGE_KEY, JSON.stringify(next));
-  } catch {
-    // Learning toasts are optional.
-  }
+  return writeJson(FEATURE_LEARNING_STORAGE_KEY, next, { storage: sessionStorage });
 }
 
 function buildFeatureLearningHref(detail = {}) {
@@ -891,9 +902,11 @@ export async function initSpwDiscoveryNotices(ctx = {}) {
     cleanupEventApi();
     stack.remove();
     document.querySelector(`[${MODAL_ATTR}]`)?.remove();
+    syncDiscoveryChromeState('module-cleanup');
   };
 
   ctx.addCleanup?.(cleanup);
+  syncDiscoveryChromeState('module-mounted');
 
   // Reactive adoption of global material / matte-clear-contrast choice.
   // When the design hub bench "apply matte clear globally" (or settings) updates

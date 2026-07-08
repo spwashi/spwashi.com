@@ -3,6 +3,7 @@ import {
   createSpwLogger,
   markInstrumented,
 } from '/public/js/kernel/instrumentation.js';
+import { humanizeToken, semanticToken as normalizeToken } from '/public/js/kernel/text-normalization.js';
 import { collectAnnotationRegions } from '/public/js/semantic/role-inference.js';
 
 const ROOT = document.documentElement;
@@ -30,21 +31,6 @@ const DATASET_KEYS = Object.freeze([
   'spwAnnotationState',
   'spwAnnotationSource',
 ]);
-
-function normalizeToken(value = '') {
-  return String(value)
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-}
-
-function humanizeToken(value = '') {
-  return String(value)
-    .trim()
-    .replace(/[-_]+/g, ' ')
-    .replace(/\s+/g, ' ');
-}
 
 function readTokenList(value = '') {
   return String(value)

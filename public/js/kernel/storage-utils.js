@@ -22,9 +22,11 @@ export const STORAGE_KEYS = Object.freeze({
   IMAGE_PROMPT_MEMORY: 'spw-image-prompt-memory',
   SEMANTICS_UNLOCKED: 'spw-semantics-unlocked',
   PREPAINT_STATE: 'spw-prepaint-state',
-  SCENE_INTERACTION: 'spw-scene-interaction',
+  SCENE_INTERACTION: 'spw-scene-interaction-v1',
   EFFECT_LEDGER: 'spw-effect-ledger',
   PALETTE_TRACE: 'spw-palette-trace',
+  ACTIVE_PERSONA: 'spw-active-persona',
+  FEATURE_LEARNING_TOASTS: 'spw-feature-learning-toasts',
 });
 
 /** Guild-oriented topology for audits and agent inspection. */
@@ -50,9 +52,13 @@ export const STORAGE_TOPOLOGY = Object.freeze({
   discovery: Object.freeze([
     STORAGE_KEYS.DISCOVERY_DISMISSALS,
     STORAGE_KEYS.SEMANTICS_UNLOCKED,
+    STORAGE_KEYS.FEATURE_LEARNING_TOASTS,
   ]),
   inspection: Object.freeze([
     STORAGE_KEYS.STATE_SATCHEL_POSITION,
+  ]),
+  expression: Object.freeze([
+    STORAGE_KEYS.ACTIVE_PERSONA,
   ]),
 });
 
@@ -99,6 +105,69 @@ export function removeJson(key, options = {}) {
     return true;
   } catch {
     return false;
+  }
+}
+
+/** Read a scalar storage flag (`'true'` / absent). */
+export function readStorageFlag(key, options = {}) {
+  const storage = resolveStorage(options);
+  if (!storage || typeof storage.getItem !== 'function') return false;
+  try {
+    return storage.getItem(key) === 'true';
+  } catch {
+    return false;
+  }
+}
+
+/** Persist a scalar storage flag. */
+export function writeStorageFlag(key, value, options = {}) {
+  const storage = resolveStorage(options);
+  if (!storage || typeof storage.setItem !== 'function') return false;
+  try {
+    if (value) storage.setItem(key, 'true');
+    else storage.removeItem(key);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/** Read plain-text storage values (persona ids, simple tokens). */
+export function readStorageText(key, fallback = '', options = {}) {
+  const storage = resolveStorage(options);
+  if (!storage || typeof storage.getItem !== 'function') return fallback;
+  try {
+    const raw = storage.getItem(key);
+    return raw == null || raw === '' ? fallback : String(raw);
+  } catch {
+    return fallback;
+  }
+}
+
+/** Write plain-text storage values. */
+export function writeStorageText(key, value, options = {}) {
+  const storage = resolveStorage(options);
+  if (!storage || typeof storage.setItem !== 'function') return false;
+  try {
+    if (value == null || value === '') storage.removeItem(key);
+    else storage.setItem(key, String(value));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Critical-path wrapper: never throw through init/teardown surfaces.
+ * Logs a tagged warning and returns fallback on failure.
+ */
+export function runCriticalPath(label, task, fallback = null) {
+  try {
+    return typeof task === 'function' ? task() : task;
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    console.warn(`[spw-critical:${label}]`, message);
+    return fallback;
   }
 }
 
