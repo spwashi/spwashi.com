@@ -1,0 +1,47 @@
+# Interaction Ecology
+#
+# Dispatch coordinator for interaction feedback, gestures, chrome disclosure,
+# and floating viewport islands.
+
+#>interaction_ecology
+#:convention #!ecology #!interaction #!chrome
+#:operation #!align
+#:fixity #!tending
+#:layer #!pragmatics
+
+@architecture_ecology: ~"./spw-architecture-ecology.spw"
+@interaction_microstates: ~"./interaction-microstates.spw"
+@attention_field: ~"./attention-field.spw"
+@page_anatomy: ~"./page-anatomy-vocabulary.spw"
+@interaction_loop_plan: ~"../../.agents/plans/interaction-loop-contract/PLAN.md"
+@gesture_plan: ~"../../.agents/plans/gesture-state-refinement/PLAN.md"
+@header_plan: ~"../../.agents/plans/navigation-header-disclosure/PLAN.md"
+@floating_chrome_fix: ~"../../.agents/plans/floating-chrome-stack/FIX.md"
+@chrome_wonder_plan: ~"../../.agents/plans/chrome-navigation-wonder/PLAN.md"
+
+operation = "align"
+fixity = "tending"
+
+^"routing"{
+ owner_plan: "interaction-loop-contract"
+ satellite_plans: #[`gesture-state-refinement`, `navigation-header-disclosure`, `floating-chrome-stack`, `chrome-navigation-wonder`][reg=set]
+ conventions: #[`interaction-microstates`, `attention-field`, `page-anatomy-vocabulary#floating_islands`][reg=set]
+ conflict_rule: "Shared interaction-feedback states live in interaction-loop-contract; gesture grammar extends, does not fork."
+ first_read: "interaction-loop-contract PLAN; interaction-microstates.spw for phase ladder."
+}
+
+^"owner_claim"{
+ claim_id = "ecology-interaction-001"
+ layer = "pragmatic"
+ hypothesis = `Interaction and chrome patches route through one feedback owner and microstates convention.`
+ probe_ref = `rg 'interaction-ecology|interaction-loop-contract' .spw .agents/plans`
+ falsification = `New modules invent parallel interaction-phase attrs without governance registration.`
+ status = "active"
+}
+
+dispatch: .{
+ architecture = @architecture_ecology
+ microstates = @interaction_microstates
+ attention = @attention_field
+ anatomy = @page_anatomy
+}[reg=facet]

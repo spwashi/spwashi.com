@@ -1,0 +1,50 @@
+# Agent Ecology
+#
+# Dispatch coordinator for agent operating layer: plans, skills, precipitates,
+# validation posture, and editor seams.
+
+#>agent_ecology
+#:convention #!ecology #!agents #!plans
+#:operation #!align
+#:fixity #!tending
+#:layer #!editor_inspectability
+
+@architecture_ecology: ~"./spw-architecture-ecology.spw"
+@planning_ecology: ~"./planning-ecology.spw"
+@plan_index: ~"./plan-index.spw"
+@wip_notebook: ~"./wip-notebook.spw"
+@codebase_perusal: ~"./codebase-perusal.spw"
+@plans_root: ~"../../.agents/plans/index.spw"
+@agent_optimization_plan: ~"../../.agents/plans/agent-optimization/PLAN.md"
+@agentic_contracts_plan: ~"../../.agents/plans/agentic-dev-contracts/PLAN.md"
+@wip_index_plan: ~"../../.agents/plans/plan-wip-index-conventions/PLAN.md"
+@maintain_script: ~"../../scripts/maintain-plan-directory-indexes.mjs"
+
+operation = "align"
+fixity = "tending"
+
+^"routing"{
+ owner_plan: "agent-optimization"
+ satellite_plans: #[`agentic-dev-contracts`, `plan-wip-index-conventions`, `context-sensitive-variants-and-agent-qa`][reg=set]
+ conventions: #[`planning-ecology`, `plan-index`, `wip-notebook`, `codebase-perusal`][reg=set]
+ precipitates: #[`.agents/state/plans-index.json`, `.agents/state/skills-index.json`][reg=set]
+ invalidation_rule: "Regenerate precipitates when plan index, SKILL.md, or owner-registry changes."
+ first_read: "planning-ecology.spw for buckets; plans/index.spw for dispatch; agentic-dev-contracts for check/manifest."
+}
+
+^"owner_claim"{
+ claim_id = "ecology-agent-001"
+ layer = "pragmatic"
+ hypothesis = `Agent routing uses ecology hubs and precipitated indexes instead of full tree scans.`
+ probe_ref = `test -f .agents/state/plans-index.json || rg 'agent-ecology|planning-ecology' .spw/conventions`
+ falsification = `Agents still required to read >80 site.spw @ refs to find plan owners after wave H.`
+ status = "active"
+}
+
+dispatch: .{
+ architecture = @architecture_ecology
+ planning = @planning_ecology
+ plan_index = @plan_index
+ wip = @wip_notebook
+ plans_root = @plans_root
+}[reg=facet]

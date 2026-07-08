@@ -50,10 +50,12 @@ reading_order: .{
 @plan_reference_assignment_template: ~"./reference-assignment-template/index.spw"
 ^"semantic_rails"{
  label = "semantic rails"
- count = 10
+ count = 12
  members = #[
   `agent-optimization`,
   `agentic-dev-contracts`,
+  `component-region-personality`,
+  `spw-architecture-ecology`,
   `daily-kernel-development`,
   `discovery-powerups`,
   `model-guided-refinement`,
@@ -74,6 +76,8 @@ reading_order: .{
 @plan_plan_wip_index_conventions: ~"./plan-wip-index-conventions/index.spw"
 @plan_relational_attention_media: ~"./relational-attention-media/index.spw"
 @plan_semantic_copy_depth: ~"./semantic-copy-depth/index.spw"
+@plan_component_region_personality: ~"./component-region-personality/index.spw"
+@plan_spw_architecture_ecology: ~"./spw-architecture-ecology/index.spw"
 @plan_spw_surface_normalization: ~"./spw-surface-normalization/index.spw"
 ^"css_layout_interaction"{
  label = "css layout interaction"
@@ -220,7 +224,7 @@ reading_order: .{
 @plan_theme_palette_marketability: ~"./theme-palette-marketability/index.spw"
 ^"active_backlog"{
  label = "active backlog"
- count = 106
+ count = 113
  members = #[
   `algorithm-scale-statistics-rpg-bridges`,
   `attention-cue-gestures`,
@@ -256,14 +260,17 @@ reading_order: .{
   `funding-proof-cards`,
   `gesture-inspectability-metaphysics`,
   `hero-image-whimsy`,
+  `homonym-renaming`,
   `instrumentation-legibility`,
   `interaction-grammar`,
   `js-runtime-composability`,
   `language-ladder-runtime-instrumentation`,
+  `language-reclustering`,
   `learning-science-community-pass`,
   `learning-science-enhancement`,
   `living-learning-surface`,
   `living-medium-copy-pass`,
+  `locomotion-collapse-redistribution`,
   `lore-land-marketing`,
   `math-topic-expansion`,
   `media-feature-brief`,
@@ -272,6 +279,7 @@ reading_order: .{
   `minimal-brace-disclosure`,
   `mobile-brace-path-polish`,
   `mobile-runtime-foundation`,
+  `module-export-uniformity`,
   `narration-markup-cold-reads`,
   `narrative-grammar-infrastructure`,
   `nutrition-crop-language`,
@@ -296,6 +304,7 @@ reading_order: .{
   `rpg-seed-metacognition-pass`,
   `rpg-session-notes`,
   `rpg-wednesday-kit-refactor`,
+  `runtime-module-decomposition`,
   `screenshot-semantics`,
   `semantic-html-normalization`,
   `settings-discoverability-consolidation`,
@@ -311,6 +320,8 @@ reading_order: .{
   `spell-cauldron-microinteractions`,
   `spell-cognition-familiarity`,
   `spellbook-utility`,
+  `spw-language-v04`,
+  `spw-metaphysical-language`,
   `spw-operator-pages`,
   `state-block-projections`,
   `state-satchel-card-gesture-fixes`,
@@ -365,14 +376,17 @@ reading_order: .{
 @plan_funding_proof_cards: ~"./funding-proof-cards/index.spw"
 @plan_gesture_inspectability_metaphysics: ~"./gesture-inspectability-metaphysics/index.spw"
 @plan_hero_image_whimsy: ~"./hero-image-whimsy/index.spw"
+@plan_homonym_renaming: ~"./homonym-renaming/index.spw"
 @plan_instrumentation_legibility: ~"./instrumentation-legibility/index.spw"
 @plan_interaction_grammar: ~"./interaction-grammar/index.spw"
 @plan_js_runtime_composability: ~"./js-runtime-composability/index.spw"
 @plan_language_ladder_runtime_instrumentation: ~"./language-ladder-runtime-instrumentation/index.spw"
+@plan_language_reclustering: ~"./language-reclustering/index.spw"
 @plan_learning_science_community_pass: ~"./learning-science-community-pass/index.spw"
 @plan_learning_science_enhancement: ~"./learning-science-enhancement/index.spw"
 @plan_living_learning_surface: ~"./living-learning-surface/index.spw"
 @plan_living_medium_copy_pass: ~"./living-medium-copy-pass/index.spw"
+@plan_locomotion_collapse_redistribution: ~"./locomotion-collapse-redistribution/index.spw"
 @plan_lore_land_marketing: ~"./lore-land-marketing/index.spw"
 @plan_math_topic_expansion: ~"./math-topic-expansion/index.spw"
 @plan_media_feature_brief: ~"./media-feature-brief/index.spw"
@@ -381,6 +395,7 @@ reading_order: .{
 @plan_minimal_brace_disclosure: ~"./minimal-brace-disclosure/index.spw"
 @plan_mobile_brace_path_polish: ~"./mobile-brace-path-polish/index.spw"
 @plan_mobile_runtime_foundation: ~"./mobile-runtime-foundation/index.spw"
+@plan_module_export_uniformity: ~"./module-export-uniformity/index.spw"
 @plan_narration_markup_cold_reads: ~"./narration-markup-cold-reads/index.spw"
 @plan_narrative_grammar_infrastructure: ~"./narrative-grammar-infrastructure/index.spw"
 @plan_nutrition_crop_language: ~"./nutrition-crop-language/index.spw"
@@ -405,6 +420,7 @@ reading_order: .{
 @plan_rpg_seed_metacognition_pass: ~"./rpg-seed-metacognition-pass/index.spw"
 @plan_rpg_session_notes: ~"./rpg-session-notes/index.spw"
 @plan_rpg_wednesday_kit_refactor: ~"./rpg-wednesday-kit-refactor/index.spw"
+@plan_runtime_module_decomposition: ~"./runtime-module-decomposition/index.spw"
 @plan_screenshot_semantics: ~"./screenshot-semantics/index.spw"
 @plan_semantic_html_normalization: ~"./semantic-html-normalization/index.spw"
 @plan_settings_discoverability_consolidation: ~"./settings-discoverability-consolidation/index.spw"
@@ -420,6 +436,8 @@ reading_order: .{
 @plan_spell_cauldron_microinteractions: ~"./spell-cauldron-microinteractions/index.spw"
 @plan_spell_cognition_familiarity: ~"./spell-cognition-familiarity/index.spw"
 @plan_spellbook_utility: ~"./spellbook-utility/index.spw"
+@plan_spw_language_v04: ~"./spw-language-v04/index.spw"
+@plan_spw_metaphysical_language: ~"./spw-metaphysical-language/index.spw"
 @plan_spw_operator_pages: ~"./spw-operator-pages/index.spw"
 @plan_state_block_projections: ~"./state-block-projections/index.spw"
 @plan_state_satchel_card_gesture_fixes: ~"./state-satchel-card-gesture-fixes/index.spw"
@@ -467,6 +485,8 @@ dispatch: .{
  plan_plan_wip_index_conventions = @plan_plan_wip_index_conventions
  plan_relational_attention_media = @plan_relational_attention_media
  plan_semantic_copy_depth = @plan_semantic_copy_depth
+ plan_component_region_personality = @plan_component_region_personality
+ plan_spw_architecture_ecology = @plan_spw_architecture_ecology
  plan_spw_surface_normalization = @plan_spw_surface_normalization
  plan_card_anatomy_interactions = @plan_card_anatomy_interactions
  plan_card_grid_density_audit = @plan_card_grid_density_audit
@@ -556,14 +576,17 @@ dispatch: .{
  plan_funding_proof_cards = @plan_funding_proof_cards
  plan_gesture_inspectability_metaphysics = @plan_gesture_inspectability_metaphysics
  plan_hero_image_whimsy = @plan_hero_image_whimsy
+ plan_homonym_renaming = @plan_homonym_renaming
  plan_instrumentation_legibility = @plan_instrumentation_legibility
  plan_interaction_grammar = @plan_interaction_grammar
  plan_js_runtime_composability = @plan_js_runtime_composability
  plan_language_ladder_runtime_instrumentation = @plan_language_ladder_runtime_instrumentation
+ plan_language_reclustering = @plan_language_reclustering
  plan_learning_science_community_pass = @plan_learning_science_community_pass
  plan_learning_science_enhancement = @plan_learning_science_enhancement
  plan_living_learning_surface = @plan_living_learning_surface
  plan_living_medium_copy_pass = @plan_living_medium_copy_pass
+ plan_locomotion_collapse_redistribution = @plan_locomotion_collapse_redistribution
  plan_lore_land_marketing = @plan_lore_land_marketing
  plan_math_topic_expansion = @plan_math_topic_expansion
  plan_media_feature_brief = @plan_media_feature_brief
@@ -572,6 +595,7 @@ dispatch: .{
  plan_minimal_brace_disclosure = @plan_minimal_brace_disclosure
  plan_mobile_brace_path_polish = @plan_mobile_brace_path_polish
  plan_mobile_runtime_foundation = @plan_mobile_runtime_foundation
+ plan_module_export_uniformity = @plan_module_export_uniformity
  plan_narration_markup_cold_reads = @plan_narration_markup_cold_reads
  plan_narrative_grammar_infrastructure = @plan_narrative_grammar_infrastructure
  plan_nutrition_crop_language = @plan_nutrition_crop_language
@@ -596,6 +620,7 @@ dispatch: .{
  plan_rpg_seed_metacognition_pass = @plan_rpg_seed_metacognition_pass
  plan_rpg_session_notes = @plan_rpg_session_notes
  plan_rpg_wednesday_kit_refactor = @plan_rpg_wednesday_kit_refactor
+ plan_runtime_module_decomposition = @plan_runtime_module_decomposition
  plan_screenshot_semantics = @plan_screenshot_semantics
  plan_semantic_html_normalization = @plan_semantic_html_normalization
  plan_settings_discoverability_consolidation = @plan_settings_discoverability_consolidation
@@ -611,6 +636,8 @@ dispatch: .{
  plan_spell_cauldron_microinteractions = @plan_spell_cauldron_microinteractions
  plan_spell_cognition_familiarity = @plan_spell_cognition_familiarity
  plan_spellbook_utility = @plan_spellbook_utility
+ plan_spw_language_v04 = @plan_spw_language_v04
+ plan_spw_metaphysical_language = @plan_spw_metaphysical_language
  plan_spw_operator_pages = @plan_spw_operator_pages
  plan_state_block_projections = @plan_state_block_projections
  plan_state_satchel_card_gesture_fixes = @plan_state_satchel_card_gesture_fixes

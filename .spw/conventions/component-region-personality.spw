@@ -1,0 +1,367 @@
+# Component Region Personality
+#
+# Contract for meaningful component real estate, region voice, referentiality
+# tiers, copy collectibility, linking contour, and screenshot literacy — so
+# public pages stay human while meta-documentation lives in components built
+# for that degree of self-reference.
+
+#>component_region_personality
+#:convention #!components #!copy #!regions #!liminality
+#:operation #!contract
+#:fixity #!tending
+#:layer #!pragmatics
+
+@page_model: ~"../surfaces/page-model.spw"
+@component_taxonomy: ~"./component-taxonomy.spw"
+@page_anatomy: ~"./page-anatomy-vocabulary.spw"
+@copy_localization: ~"./copy-localization.spw"
+@living_medium_copy: ~"./living-medium-copy.spw"
+@coloring_depth: ~"./coloring-depth.spw"
+@interaction_microstates: ~"./interaction-microstates.spw"
+@expressive_registers: ~"./expressive-registers.spw"
+@data_spw_governance: ~"./data-spw-attribute-governance.spw"
+@semantic_copy_depth_plan: ~"../../.agents/plans/semantic-copy-depth/PLAN.md"
+@plan: ~"../../.agents/plans/component-region-personality/PLAN.md"
+@spw_architecture_ecology: ~"./spw-architecture-ecology.spw"
+@copy_ecology: ~"./copy-ecology.spw"
+@region_component_ecology: ~"./region-component-ecology.spw"
+@capture_ecology: ~"./capture-ecology.spw"
+@copy_extract: ~"../../scripts/extract-site-copy.mjs"
+@design_catalog: ~"../../scripts/generate-design-catalog.mjs"
+
+operation = "contract"
+fixity = "tending"
+
+^"thesis"{
+  claim: "Public HTML should feel like a developing component ecology with region personality, not a repeated meta-documentation scaffold. Mechanical voice belongs in referential components; invitation copy should route attention into tunable surfaces; screenshots should be treated as first-class interpretable media."
+  audience: "Editing team launching a media company; returning readers; models interpreting captured surfaces."
+  risk: "If every hub repeats the same hook scaffold, vocabulary, and chip rows, tone collapses into self-description and components stop teaching their own slots."
+  rule: "A region earns its voice from anatomy + referentiality + lens state — not from page-local prose that re-explains the site model."
+}
+
+^"audit_evidence"{
+  operation: "audit"
+  source: "HTML copy review, 2026-07-07"
+  findings: #[
+    `Objective terminal / Subjective terminal pair appears verbatim on seven hub routes (topics, design, design/components, services, about, load-symphony a/b).`,
+    `Home hero includes agent-instruction copy: Operational entry: select a conceptual route...`,
+    `Tour-guide openers cluster: Return here when, Use this page as, Start here, Dive into, Explore the, For a deep.`,
+    `Duplicated paragraphs on services/ (hook vs site-lede) and topics/ (hook vs frame-note).`,
+    `~91% of anchors use operator-chip styling; visual-link-card and query-intent links are rare outside home.`,
+    `Overworked public vocabulary: legible, inspectable, atlas, proof card, threshold/corridor/next door, resting point.`,
+    `Symmetrical triplets (hub/leaf/bridge, objective/subjective/invitation) signal template drift when metaphor does not earn the symmetry.`
+  ][reg=set]
+  validation: #[
+    `rg 'Objective terminal' **/*.html`,
+    `rg 'Operational entry' index.html`,
+    `rg 'Return here when' **/*.html`,
+    `rg 'class="operator-chip"' --glob '*.html' | wc -l`
+  ][reg=set]
+}
+
+^"referentiality_tiers"{
+  definition: "How much a component talks about the site, its own grammar, or agent/editor mechanics."
+  tiers: .{
+    public: .{
+      role = "Topic, invitation, scene, service offer, human story."
+      copy_rule = "First-person where Spwashi speaks; concrete nouns; no scaffold labels unless glossary-linked."
+      components = #[`hook-call (invitation variant)`, `site-lede`, `spw-narration`, `topic-hero-copy`, `visual-link-card`, `reason-strip`][reg=set]
+      referentiality_attr = `data-spw-referentiality="public"`
+    }[reg=facet]
+    editorial: .{
+      role = "Route bridges, neighbor rails, motif strips, editorial asides."
+      copy_rule = "May name routes and components, but each link carries a reason, not a tour."
+      components = #[`route-bridge`, `home-discovery-card`, `topic-route-lane`, `inline-note`, `copy-collectible`][reg=set]
+      referentiality_attr = `data-spw-referentiality="editorial"`
+    }[reg=facet]
+    technical: .{
+      role = "Inspect surfaces, operator contracts, settings explanations, component glossary specimens."
+      copy_rule = "Precise operational language welcome; pair with anatomy labels and glossary anchors."
+      components = #[`frame-sigil`, `spec-pill`, `component-specimen`, `data-spw-copy-depth="technical"` blocks][reg=set]
+      referentiality_attr = `data-spw-referentiality="technical"`
+    }[reg=facet]
+    agent: .{
+      role = "Editor/agent orientation inside clearly marked anatomy — never in public hero voice."
+      copy_rule = "Imperative steps, file pointers, validation commands; hidden or technical copy-depth by default."
+      components = #[`agent-anatomy`, `reference-note`, `data-spw-anatomy="reference-note"`, `data-spw-copy-depth="technical"`][reg=set]
+      referentiality_attr = `data-spw-referentiality="agent"`
+    }[reg=facet]
+  }[reg=facet]
+  migration_rule: "When moving meta-doc out of a hero, delete the prose duplicate — do not stack public + technical layers saying the same thing."
+}
+
+^"region_personality"{
+  definition: "A region's recognizable voice from harmony, tempo, density, vocabulary family, and link contour — not from repeated kickers."
+  dimensions: #[
+    `data-spw-vocabulary on region or feature (webpage | reference-document | restaurant | garden | studio | broadcast)`,
+    `data-spw-copy-motifs on body or feature for repeatable route-native stems`,
+    `data-spw-register on container for expressive salience (balanced | depth | valence | resonance | attention)`,
+    `data-spw-copy-depth on optional layers inside the region`,
+    `link_contour_profile (chip-dense | card-forward | prose-inline | pill-taxonomy)`
+  ][reg=set]
+  examples: .{
+    home_entrance: .{ vocabulary = "webpage + garden", motifs = "cookbook magazine research prompt lore", contour = "card-forward + query-intent" }[reg=facet]
+    topics_register: .{ vocabulary = "reference-document", motifs = "shelf register field-guide", contour = "lane-switch + selective chips" }[reg=facet]
+    services_threshold: .{ vocabulary = "restaurant + studio", motifs = "commission doorway lane", contour = "visual-link-card + short prose" }[reg=facet]
+    care_translation: .{ vocabulary = "garden + webpage", motifs = "cabinet signal drawer", contour = "prose-first + protocol chips" }[reg=facet]
+    software_inspect: .{ vocabulary = "reference-document", motifs = "syntax grammar projection", contour = "technical specimens + glossary" }[reg=facet]
+  }[reg=facet]
+  anti_pattern: "Giving every hub the same spec-kicker + hook-call + three frame-notes + fourteen operator chips regardless of route family."
+}
+
+^"liminality_projection"{
+  thesis: "Spw names where the reader stands in a spirit cycle; HTML is the projection surface for gradients between states."
+  liminality_values: #[`entry`, `threshold`, `middle`, `return`, `exit`][reg=set]
+  html_handles: #[
+    `data-spw-liminality on hook, frame, feature`,
+    `data-spw-kind="hook" at entry peaks`,
+    `data-spw-gradient-boundary on high-weight regions`,
+    `data-spw-express + data-spw-register for scalar salience without extra prose`,
+    `progressive clarity via heading order, aria landmarks, skip links, section-handle — not label noise`
+  ][reg=set]
+  accessibility_rule: "Liminality must remain navigable when labels are suppressed: color/register shifts, focus order, and section handles carry progression."
+  spw_expression: "Compact labels like surface[readable]{interact} stay in data-spw-semantic-expression; human invitation stays in visible hook-lede."
+}
+
+^"familiarity_and_label_modes"{
+  thesis: "Features may teach with explicit labels first, then rely on visual hierarchy and color after familiarity."
+  settings_seams: #[
+    `data-spw-semantic-density (existing)`,
+    `data-spw-show-spec-pills (existing)`,
+    `proposed: data-spw-label-posture = named | familiar | silent`,
+    `proposed: data-spw-feature-familiarity = intro | practiced | fluent per feature or component family`
+  ][reg=set]
+  behavior: .{
+    named: .{ show = "component labels, copy-depth tags, anatomy cues, operator gloss" }[reg=facet]
+    familiar: .{ show = "primary headings + color/register; hide secondary scaffold labels" }[reg=facet]
+    silent: .{ show = "content + hierarchy only; glossary and inspect gestures still available" }[reg=facet]
+  }[reg=facet]
+  authoring_rule: "Introduce a feature with data-spw-label-posture='named' on its feature root; document the off-ramp in settings and component glossary."
+  team_note: "Editing team can screenshot named mode for training, familiar mode for publish, silent mode for hero/atmosphere references."
+}
+
+^"perspective_pair_component"{
+  definition: "Template for objective/subjective terminals — intentional redundancy, not inline prose repetition."
+  status: "prime"
+  html_contract: .{
+    root = `section[data-spw-feature="perspective-pair"] or div[data-spw-kind="hook"] with data-spw-hook-variant="perspective"`
+    faces = `data-spw-perspective="objective|subjective" on spans or aside faces — labels optional via label posture`
+    glossary = `link to /design/components/#perspective-pair or operator glossary; do not spell 'Objective terminal' on every hub`
+    copy_unit = `data-spw-copy-unit on each face for translation`
+  }[reg=facet]
+  presence_rule: "At most one perspective-pair per landing page above the fold. Leaf routes omit unless teaching inspect literacy."
+  audit: `rg 'Objective terminal' **/*.html` should trend toward 0 in public copy; matches should live in template specimen or glossary."
+}
+
+^"agent_anatomy_component"{
+  definition: "Clearly marked region for agent/editor instructions — not visitor invitation."
+  html_contract: .{
+    anatomy = `data-spw-anatomy="reference-note"`
+    referentiality = `data-spw-referentiality="agent"`
+    copy_depth = `data-spw-copy-depth="technical"`
+    feature = `data-spw-feature="agent-anatomy" optional on editor-facing routes`
+    visibility = "visible in HTML for crawl/screenshot honesty; visually subdued unless inspect posture"
+  }[reg=facet]
+  home_migration: "Replace Operational entry prose with agent-anatomy on a technical layer OR move to about/website inspect region."
+}
+
+^"copy_collectible"{
+  definition: "Named prose unit (frame-note, page-lede, inline-note) that an editing team can audit, swap, and translate."
+  html_contract: .{
+    copy_unit = `data-spw-copy-unit="route.surface.block_id" stable semantic id — never raw English text`
+    locale = `data-spw-locale when emitted; source locale implicit until /es/ rollout`
+    copy_depth = `data-spw-copy-depth per coloring_depth ladder`
+    semantic_expression = `data-spw-semantic-expression optional compact Spw label`
+    collectible_role = `data-spw-textual-role="lede|note|aside|kicker|invitation|narration"`
+  }[reg=facet]
+  team_workflow: #[
+    `Author in HTML with copy-unit ids on collectibles.`,
+    `extract-site-copy.mjs extended to emit copy-unit manifest for editorial review.`,
+    `Design catalog lists copy-units per route for screenshot ↔ copy audit.`,
+    `Localization binds via copy-localization.spw — no string-replace layer.`
+  ][reg=set]
+  templating: "Prefer partials for repeated collectibles (perspective-pair, leaf-neighbor-rail, route-bridge) once copy-unit ids are stable."
+}
+
+^"vocabulary_register"{
+  operation: "align"
+  policy: "Rotate metaphors by route family; retire consultant-deck and atlas-default naming on public surfaces."
+  retire_or_restate: .{
+    proof_card: .{
+      problem = "Wrong tone for screenshot/model literacy goal."
+      replacements = #[`screenshot artifact`, `capture note`, `local record`, `interpretable capture`, `model-readable surface`, `published capture`][reg=set]
+      concept = "Websites can be screenshotted and interpreted by other models; design and blog consumption should teach that literacy."
+    }[reg=facet]
+    atlas: .{
+      problem = "Over-defaulted index naming."
+      replacements = #[`register`, `shelf`, `field guide`, `topic index`, `kitchen`, `route map`, `broadcast schedule`][reg=set]
+      component_rename_candidates = #[`topic-register`, `route-shelf`, `field-guide-portal`][reg=set]
+    }[reg=facet]
+    legible: .{
+      replacements = #[`readable`, `plain`, `followable`, `nameable`, `obvious`][reg=set]
+      keep_when = "Technical contrast with illegible runtime or legal/plain-language register."
+    }[reg=facet]
+    inspectable: .{
+      replacements = #[`traceable`, `open-box`, `show-your-work`, `reviewable`][reg=set]
+      keep_when = "Software operator contracts and glossary specimens."
+    }[reg=facet]
+    resting_point: .{
+      replacements = #[`bookmark`, `bench`, `holding page`, `pause shelf`, `bookmark lane`][reg=set]
+      visual_pairing = "Prefer accompanying SVG or Midjourney render per route family when metaphor rotates."
+    }[reg=facet]
+    consultant_deck: .{
+      examples = #[`Strategic Landscape`, `structured action surface`, `compounding stability`, `turn recurring practice into useful evidence`][reg=set]
+      policy = "One sentence max per page in public tier; move rest to plans/, technical specimens, or media-company internal docs."
+      reframe = "State what the reader can do next, not what the page optimizes as a system."
+    }[reg=facet]
+  }[reg=facet]
+  motif_expansion: "Place underused home motifs (cookbook, magazine, research, prompt, lore) on features slated for fresh pages — one motif per new route seed."
+}
+
+^"symmetry_triplet_smell_test"{
+  rule: "Three parallel bullets or faces are allowed when the metaphor is the content — not when it pads scaffolding."
+  pass_examples: #[`care protocol steps`, `curriculum module trilogy with distinct artifacts`, `recipe mise/reduction/fermentation verbs`][reg=set]
+  fail_examples: #[`objective/subjective/invitation saying the same entry`, `hub/leaf/bridge repeated on every index`, `three frame-notes with identical rhythm before first action`][reg=set]
+  fix: "Merge into one collectible, move one face to perspective-pair template, or convert third item to a visual link."
+}
+
+^"linking_contour"{
+  thesis: "Links should let attention flow into components with varied silhouette — not uniform chip strings."
+  profiles: .{
+    chip_jump: .{ class = "operator-chip", when = "cross-route jump with operator semantics" }[reg=facet]
+    prose_reference: .{ class = "plain a", when = "in-sentence human reference" }[reg=facet]
+    visual_card: .{ class = "spw-visual-link-card | home-discovery-card", when = "hub → major child with figure" }[reg=facet]
+    taxonomy_pill: .{ class = "spec-pill href", when = "plan/topic taxonomy hop" }[reg=facet]
+    query_tune: .{ attr = "data-spw-link-intent=query", when = "tunable reading surface" }[reg=facet]
+    glossary_anchor: .{ href = "/design/components/#...", when = "technical term first use" }[reg=facet]
+  }[reg=facet]
+  density_rule: "Above the fold: ≤6 operator chips + ≥1 non-chip link pattern per hero region."
+  destination_effects: #[
+    `data-spw-link-intent for query/disposition`,
+    `data-spw-operator preserved for resonance`,
+    `proposed: data-spw-link-contour = prose|chip|card|pill|external`,
+    `proposed: context-specific link classes only when contour attr insufficient`
+  ][reg=set]
+  long_component_rule: "frame-operators rows >8 links → split into contour groups, visual cards, or collapsible route drawer feature."
+}
+
+^"leaf_topic_discoverability"{
+  problem: "Leaf topic pages lack neighbor context and hydrate poorly for editing-team inspiration."
+  template_feature: `leaf-neighbor-rail`
+  html_contract: .{
+    feature = `data-spw-feature="leaf-neighbor-rail"`
+    hydration = `static HTML default; optional JSON hydrate for timed neighbors later`
+    slots = #[`prev-route`, `next-route`, `sibling-cluster`, `hub-return`, `capture-prompt`][reg=set]
+    copy = "One-line reason per neighbor link; screenshot literacy line optional in editorial tier"
+  }[reg=facet]
+  rollout: "Add to topic leaf template partial before one-off per-page edits."
+}
+
+^"screenshot_literacy"{
+  thesis: "A captured page region is interpretable media — design choices should survive screenshot → model → blog discussion."
+  public_copy_stem: "Publish surfaces worth capturing: labeled regions, stable anatomy, readable hierarchy even in silent label mode."
+  avoids: #[`proof card as default noun`, `chip-only navigation with no prose anchors`, `duplicate scaffolds that confuse model summary`][reg=set]
+  supports: #[`copy-unit ids in catalog`, `page-anatomy vocabulary`, `emphasis tiers data-spw-emphasis`, `regional figures with study-summary`][reg=set]
+  blog_bridge: "Blog routes may cite capture artifacts and name which component regions were intentional."
+}
+
+^"component_ecology_audit"{
+  operation: "audit"
+  dimensions: #[
+    `coverage: which features exist per route family vs page-model.feature gap`,
+    `contour diversity: chip vs card vs prose ratio per hero`,
+    `referentiality drift: public heroes with technical/agent copy`,
+    `copy-unit coverage: named collectibles per hub`,
+    `perspective-pair duplication count`,
+    `vocabulary_register violations (atlas, proof card, legible density)`,
+    `leaf-neighbor-rail presence on topic leaves`
+  ][reg=set]
+  outputs: #[
+    `design/catalog/ component + copy-unit cross-reference`,
+    `rg-based audit scripts in plan validation`,
+    `editor checklist for media-team inspiration passes`
+  ][reg=set]
+}
+
+^"edit_waves"{
+  wave_0_contract: .{
+    name = "Document and wire"
+    scope = "This .spw, plan index, bridges in site.spw and conventions/index.spw"
+    validation = "npm run check:local"
+  }[reg=facet]
+  wave_1_voice_surgery: .{
+    name = "De-mechanize public voice"
+    patches = #[
+      `Remove or relocate home Operational entry to agent-anatomy / technical layer`,
+      `Deduplicate services hook vs site-lede; topics hook vs first frame-note`,
+      `Replace tour-guide trilogy on home (Dive into / Explore / Learn how) with varied attentional verbs`,
+      `Extract seven perspective-pair instances into template component or glossary-linked partial; drop inline Objective terminal labels on hubs`,
+      `Consolidate load-symphony experiment duplicates of topics copy`
+    ][reg=set]
+    files = #[`index.html`, `services/index.html`, `topics/index.html`, `about/index.html`, `design/index.html`, `design/components/index.html`][reg=set]
+  }[reg=facet]
+  wave_2_copy_collectibles: .{
+    name = "Name copy for team + i18n"
+    patches = #[
+      `Add data-spw-copy-unit to hero ledes, frame-notes, hook faces on hub routes`,
+      `Extend extract-site-copy.mjs to emit copy-unit manifest`,
+      `Add data-spw-textual-role and data-spw-referentiality to collectibles`,
+      `Document copy-unit naming scheme in copy-localization.spw bridge paragraph`
+    ][reg=set]
+  }[reg=facet]
+  wave_3_linking_contour: .{
+    name = "Component-forward links"
+    patches = #[
+      `Promote spw-visual-link-card partial to topics/, services/, recipes/ heroes`,
+      `Cap frame-operators rows; add route drawer or card grid where >8 links`,
+      `Add data-spw-link-contour attr; align link-copy.js destination styling`,
+      `Increase data-spw-link-intent on tuning surfaces beyond home`
+    ][reg=set]
+  }[reg=facet]
+  wave_4_leaf_template_familiarity: .{
+    name = "Leaves, labels, regions"
+    patches = #[
+      `leaf-neighbor-rail partial on topic leaf template`,
+      `perspective-pair + agent-anatomy specimens in design/components`,
+      `settings control for data-spw-label-posture (named | familiar | silent)`,
+      `vocabulary_register pass: atlas/proof card/resting point rotation`,
+      `region personality pass: data-spw-vocabulary + motifs per hub family`
+    ][reg=set]
+  }[reg=facet]
+  sequencing: "Wave 1 before 3 (copy must be honest before link contour changes). Wave 2 can parallel 1 on touched files. Wave 4 after partials exist."
+}
+
+^"invariants"{
+  "Public hero voice does not contain agent instructions.",
+  "Objective/subjective terminals appear at most once per landing page unless inside perspective-pair template specimen.",
+  "Every duplicated paragraph on a route is a bug until merged or referentiality-tier split is intentional.",
+  "Essential meaning stays visible when label posture is silent.",
+  "Copy-unit ids are semantic and stable — not English sentence hashes.",
+  "Screenshot literacy is taught with capture-friendly anatomy, not proof-card branding.",
+  "Meta-documentation lives in technical or agent referentiality — not stacked on public invitation.",
+}
+
+^"validation"{
+  commands: #[
+    `rg 'Objective terminal' **/*.html`,
+    `rg 'Operational entry' **/*.html`,
+    `rg 'proof card' **/*.html -i`,
+    `rg 'data-spw-copy-unit' **/*.html | wc -l`,
+    `npm run check:local`,
+    `npm run catalog`
+  ][reg=set]
+  falsification: "Wave 1 complete when hub heroes have zero verbatim perspective-pair labels outside glossary/specimen routes."
+}
+
+dispatch: .{
+  page_model = @page_model
+  taxonomy = @component_taxonomy
+  copy = @living_medium_copy
+  localization = @copy_localization
+  depth = @coloring_depth
+  architecture_ecology = @spw_architecture_ecology
+  copy_ecology = @copy_ecology
+  region_component_ecology = @region_component_ecology
+  capture_ecology = @capture_ecology
+  plan = @plan
+}[reg=facet]

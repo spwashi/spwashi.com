@@ -9,6 +9,7 @@
 
 @site_bridge: ~"./site-semantics.spw"
 @copy_localization: ~"./copy-localization.spw"
+@component_region_personality: ~"./component-region-personality.spw"
 
 ^"copy_contract"{
   rule: "Major landing surfaces should answer what this is, why it exists, who it is for, what can happen here, what it connects to, and what it can produce."
@@ -29,4 +30,6 @@
   setting_resonance: "Settings may tune copy density, familiarity, and immersion, but they should not become the only path to understanding a page."
   motif_rule: "Repeat a small set of route-specific motifs in metadata or a short visible note so readers can build familiarity without every page sounding identical."
   motif_storage: "Use body data-spw-copy-motifs, JSON-LD about lists, meta keywords, or compact motif strips to surface the repeated vocabulary."
+  referentiality_rule: "Meta-documentation and agent instructions belong in referentiality-tier components (technical, agent) — not in public hero voice. See component-region-personality.spw."
+  collectible_rule: "Frame-notes and page-ledes should be copy collectibles with data-spw-copy-unit ids when an editing team will audit or translate them."
 }

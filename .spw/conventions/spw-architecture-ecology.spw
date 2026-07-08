@@ -1,0 +1,427 @@
+# Spw Architecture Ecology
+#
+# Target topology, promotion protocol, ecology coordinators, owner registry,
+# component-template surface, site.spw slimness, review graduation, language
+# ecology, slice promotion, convention hygiene, precipitates, and directional
+# alignment for the site's inspectable documentation layer.
+
+#>spw_architecture_ecology
+#:convention #!architecture #!ecology #!plans #!agents
+#:operation #!contract
+#:fixity #!tending
+#:layer #!editor_inspectability
+
+@plan: ~"../../.agents/plans/spw-architecture-ecology/PLAN.md"
+@planning_ecology: ~"./planning-ecology.spw"
+@plan_index: ~"./plan-index.spw"
+@semantic_capacity: ~"./semantic-capacity.spw"
+@surface_normalization_plan: ~"../../.agents/plans/spw-surface-normalization/PLAN.md"
+@surface_normalization_review: ~"../reviews/spw-surface-normalization.spw"
+@agent_optimization: ~"../../.agents/plans/agent-optimization/PLAN.md"
+@agentic_contracts: ~"../../.agents/plans/agentic-dev-contracts/PLAN.md"
+@modular_experience_slices: ~"../../.agents/plans/modular-experience-slices/PLAN.md"
+@spw_language_v04: ~"../language/v04/index.spw"
+@spw_metaphysical_language: ~"../../.agents/plans/spw-metaphysical-language/PLAN.md"
+@language_reclustering: ~"../../.agents/plans/language-reclustering/PLAN.md"
+@component_region_personality: ~"./component-region-personality.spw"
+@operational_semantics: ~"./operational-semantics.spw"
+@precipitates_projections: ~"./precipitates-and-projections.spw"
+@wip_notebook: ~"./wip-notebook.spw"
+@site: ~"../site.spw"
+@slices_index: ~"../slices/index.spw"
+@maintain_plan_indexes: ~"../../scripts/maintain-plan-directory-indexes.mjs"
+
+operation = "contract"
+fixity = "tending"
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending | contract"
+ temporal_rhythm = "sedimentation | seasonal | return"
+ semantic_layer = "grammar | semantics | pragmatics | editor_inspectability"
+ collaboration_phase = "initiation | exchange | tending | succession"
+ memory_tier = "hot | warm | cold | generated"
+}[reg=facet]
+
+^"thesis"{
+ claim: "The plan tree is indexed; the .spw layer needs an explicit ecology: where artifacts live, how they promote, who owns concepts, and how agents/editors route without re-reading 182 folders or 92 site.spw refs."
+ audience: "Agents, human editors, media-company authoring team, language contributors."
+ risk: "Parallel plans and duplicate reviews invent parallel vocabulary; site.spw becomes a junk drawer; conventions lack falsifiable claims; slices stay theoretical."
+ rule: "Route through ecology coordinators and owner-registry before adding plan refs to site.spw or new convention prose."
+ directional_alignment: #[
+  `Creator-first public surfaces stay in route HTML; .spw owns inspectable contracts.`,
+  `Hand-authored source truth; generated artifacts name invalidation.`,
+  `Semantic-capacity operations govern layer transitions, not folder moves alone.`,
+  `Media launch needs precipitated copy-units, templates, and capture literacy — not more meta-doc in heroes.`,
+  `Language disputes resolve through language-ecology + construct-codex drift ledger, not ad hoc renames.`
+ ][reg=set]
+}
+
+^"topology"{
+ definition: "Six authored .spw homes plus two generated/agent layers."
+ layers: .{
+  conventions: .{
+    role = "Durable rules, invariants, vocabulary stems, ecology coordinators, owner-registry."
+    fixity = "stable | tending"
+    examples = #[`semantic-capacity`, `planning-ecology`, `component-region-personality`, `language-ecology (planned)`][reg=set]
+  }[reg=facet]
+  surfaces: .{
+    role = "Models and registries: page-model, component-templates, approach-topography."
+    fixity = "stable | tending"
+  }[reg=facet]
+  slices: .{
+    role = "Cross-layer ownership: route HTML + CSS + JS + .spw + validation + practice bed."
+    fixity = "stable"
+    gap = "Only two slices today vs many slice-worthy plans."
+  }[reg=facet]
+  reviews: .{
+    role = "Time-bounded audits with evidence, tradeoffs, promotion metadata."
+    fixity = "warm → cold after promotion"
+    not_for = `Duplicating convention rules indefinitely.`
+  }[reg=facet]
+  language: .{
+    role = "Meta-grammar: v04 pillars, future construct-codex, drift ledger."
+    fixity = "tending | experimental until v04 lands upstream"
+  }[reg=facet]
+  audits: .{
+    role = "Generated census artifacts (language-census, module-export audits)."
+    fixity = "generated"
+  }[reg=facet]
+  plans: .{
+    role = "Hot sequencing: PLAN.md orders work; index.spw routes; wip.spw caches."
+    location = ".agents/plans/"
+    fixity = "hot"
+  }[reg=facet]
+  state: .{
+    role = "Precipitated indexes: plans-index, skills-index, copy-units manifest."
+    location = ".agents/state/"
+    fixity = "generated"
+  }[reg=facet]
+ }[reg=facet]
+ hub_rule: "site.spw exposes translation hubs only; leaf resolution goes conventions/index.spw → ecology coordinator → plans/index.spw."
+}
+
+^"promotion_protocol"{
+ definition: "Map semantic-capacity operations to layer transitions."
+ operations: .{
+  cache: .{ from = "chat, observation, weekly note", to = "wip.spw | semantic-insight-cache.spw", gate = "no owner yet" }[reg=facet]
+  prime: .{ from = "plan", to = "language/v04/pillar | named plan .spw", gate = "grammar direction without implementation" }[reg=facet]
+  audit: .{ from = "codebase, route read, census", to = "reviews/", gate = "evidence + falsification" }[reg=facet]
+  align: .{ from = "duplicate owners", to = "ecology coordinator + owner-registry entry", gate = "parallel plans on same surface" }[reg=facet]
+  contract: .{ from = "review | stabilized plan", to = "conventions/ | slices/", gate = "2+ routes or shared layer depend on it" }[reg=facet]
+  archive: .{ from = "any", to = "archive note + status=superseded", gate = "owner plan absorbs; refs updated or indexed" }[reg=facet]
+ }[reg=facet]
+ required_on_promotion: #[
+  `operation and fixity in header`
+  `^"dimensions" facet when human-facing collaboration matters`
+  `owner_claim with probe_ref and falsification when enforceable`
+  `dispatch facet (≤8 direct refs; defer overflow to coordinator)`
+  `validation commands`
+ ][reg=set]
+ anti_pattern: "Copying a PLAN.md paragraph into a convention without shrinking the plan's scope."
+ graduation_example: "spw-surface-normalization review rules extract into conventions/surface-normalization-rules.spw; review keeps promotion_metadata only."
+}
+
+^"review_promotion_metadata"{
+ html_contract: "N/A — applies to .spw/reviews/*.spw headers and facet blocks."
+ required_fields: .{
+  promotion_status = "draft | active | promoted | stale"
+  review_by = "YYYY-MM-DD"
+  promoted_to = "~\"../conventions/<name>.spw\" when graduated"
+  supersedes = "optional prior review path"
+  evidence_refs = "files, commands, census snapshots"
+ }[reg=facet]
+ rule: "A review that duplicates an active convention for >6 months without promotion_status=promoted is a hygiene defect."
+ on_touch: #[
+  `Add promotion_status to touched reviews`
+  `If rules migrated, point promoted_to at convention and trim duplicate prose`
+ ][reg=set]
+}
+
+^"ecology_coordinators"{
+ definition: "Thin convention dispatch files that route cross-plan work without new PLAN sprawl."
+ status: "prime — files land in wave A"
+ coordinators: .{
+  copy_ecology: .{
+    path = "~\"./copy-ecology.spw\" (planned)"
+    owner_plan = "semantic-copy-depth (sequence) + component-region-personality (voice/templates)"
+    satellite_plans = #[`hook-region-anatomy`, `audience-onboarding-copy`, `copy-localization`][reg=set]
+    conventions = #[`living-medium-copy`, `copy-localization`, `coloring-depth`, `component-region-personality`][reg=set]
+    conflict_rule = "Public copy contracts beat plan prose; copy-unit ids beat raw English."
+  }[reg=facet]
+  region_component_ecology: .{
+    path = "~\"./region-component-ecology.spw\" (planned)"
+    owner_plan = "page-region-discoverability"
+    satellite_plans = #[`hook-region-anatomy`, `webpage-trope-vocabulary`, `component-region-personality`][reg=set]
+    slice = "page-region-discoverability"
+    conventions = #[`page-model`, `component-taxonomy`, `page-anatomy-vocabulary`, `component-region-personality`][reg=set]
+  }[reg=facet]
+  language_ecology: .{
+    path = "~\"./language-ecology.spw\" (planned)"
+    owner_plan = "spw-metaphysical-language"
+    satellite_plans = #[`language-reclustering`, `homonym-renaming`, `spw-language-v04`, `shell-model-vocabulary-consolidation`][reg=set]
+    conventions = #[`data-spw-attribute-governance`, `naming-and-structured-values`, `operator-semantics`, `construct-codex (planned)`][reg=set]
+    conflict_rule = "construct-codex drift ledger arbitrates glyph and operator disputes; reclustering assigns clusters; homonym-renaming executes word moves."
+  }[reg=facet]
+  interaction_ecology: .{
+    path = "~\"./interaction-ecology.spw\" (planned)"
+    owner_plan = "interaction-loop-contract"
+    satellite_plans = #[`gesture-state-refinement`, `navigation-header-disclosure`, `floating-chrome-stack`, `chrome-navigation-wonder`][reg=set]
+    conventions = #[`interaction-microstates`, `attention-field`, `page-anatomy-vocabulary#floating_islands`][reg=set]
+  }[reg=facet]
+  capture_ecology: .{
+    path = "~\"./capture-ecology.spw\" (planned)"
+    owner_plan = "spellcraft-authoring"
+    satellite_plans = #[`relational-attention-media`, `literacy-precipitation-press`, `rpg-asset-capture-frames`][reg=set]
+    conventions = #[`relational-attention-media`, `component-region-personality#screenshot_literacy`][reg=set]
+    note = "Unifies screenshot/model interpretability vocabulary; retires proof-card as default noun."
+  }[reg=facet]
+  agent_ecology: .{
+    path = "~\"./agent-ecology.spw\" (planned)"
+    owner_plan = "agent-optimization"
+    satellite_plans = #[`agentic-dev-contracts`, `plan-wip-index-conventions`, `context-sensitive-variants-and-agent-qa`][reg=set]
+    conventions = #[`planning-ecology`, `plan-index`, `wip-notebook`, `codebase-perusal`][reg=set]
+  }[reg=facet]
+ }[reg=facet]
+ dispatch_rule: "conventions/index.spw gains ecology dispatch facet; site.spw translations.ecologies points at coordinators — not individual plans."
+}
+
+^"owner_registry"{
+ definition: "Machine- and human-readable concept → owner map."
+ path: "~\"./owner-registry.spw\" (planned wave B)"
+ entry_shape: .{
+  concept = "stable stem, e.g. copy-depth, perspective-pair, cauldron-phase"
+  owner_plan = "single sequencing owner"
+  owner_convention = "durable contract path"
+  owner_slice = "optional slice path"
+  probe_ref = "rg or command"
+  falsification = "concrete disproof"
+  status = "active | superseded"
+ }[reg=facet]
+ seed_sources: #[
+  `operational-semantics.spw#active_contracts`
+  `ecology coordinators`
+  `.agents/plans/index.spw semantic_rails + fix_queue`
+  `component-templates surface (when landed)`
+ ][reg=set]
+ precipitate: ".agents/state/plans-index.json owner_map section (wave C)"
+}
+
+^"component_templates_surface"{
+ definition: "Registry of inspectable HTML partial contracts for editors and agents."
+ path: "~\"../surfaces/component-templates.spw\" (planned wave E)"
+ status: "prime"
+ templates: #[
+  `perspective-pair`
+  `agent-anatomy`
+  `copy-collectible`
+  `leaf-neighbor-rail`
+  `visual-link-card`
+  `hook-call (invitation | perspective | action variants)`
+  `route-bridge`
+  `specimen-card`
+ ][reg=set]
+ entry_shape: .{
+  template_id = "stable kebab id"
+  referentiality = "public | editorial | technical | agent"
+  slots = "header | body | actions | figure per page-model"
+  copy_unit_pattern = "route.surface.block_id"
+  link_contour = "prose | chip | card | pill | query | glossary"
+  glossary_anchor = "/design/components/#..."
+  partial_path = "_partials/<name>.html when extracted"
+ }[reg=facet]
+ wire: #[`operational-semantics registry extension`, `design catalog cross-ref`, `component-region-personality`][reg=set]
+}
+
+^"site_spw_slimness"{
+ current_problem: "site.spw carries ~90+ @ refs; flat dispatch duplicates conventions/index.spw."
+ target: .{
+  keep = #[`translations facet`, `operational_layer`, `integration_contract`, `surfaces route map`][reg=set]
+  move_out = `Per-plan @ refs → ecology coordinators or planning-ecology only`
+  add = `translations.ecologies = copy | region_component | language | interaction | capture | agent | planning`
+  read_rule = "Agent reads site.spw hubs → one coordinator → owner plan; never full flat dispatch scan."
+ }[reg=facet]
+ migration: "Wave H — remove redundant @ refs only after coordinator dispatch exists and owner-registry entries cover them."
+}
+
+^"convention_hygiene"{
+ definition: "Enforceable shape for conventions/ and promoted slices."
+ required_header: #[
+  `# title + purpose comment`
+  `#>unique_anchor`
+  `#:category tags`
+  `operation = "contract|align|prime|..."`
+  `fixity = "stable|tending|experimental"`
+  `#:layer declaration`
+ ][reg=set]
+ required_blocks: #[
+  `^"thesis" or intent facet`
+  `^"dimensions" on collaboration-facing contracts`
+  `^"owner_claim" when enforceable`
+  `dispatch facet (≤8 refs)`
+  `invariants [reg=set]`
+  `validation [reg=set] when checks exist`
+ ][reg=set]
+ validator: "scripts/validate-conventions.mjs using language/v04/pillars/profiles-and-validator.spw rules (wave D partial)"
+ baseline_gap: "As of 2026-07 audit: 54 conventions; few declare dimensions; one owner_claim; language census ~18% full-trace."
+ on_touch_rule: "Any touched convention in an architecture-ecology wave must meet hygiene checklist."
+}
+
+^"language_ecology"{
+ owner_plan: "spw-metaphysical-language"
+ grammar_substrate: "spw-language-v04 pillars"
+ cluster_work: "language-reclustering"
+ rename_execution: "homonym-renaming"
+ supreme_court: "construct-codex.spw + drift_ledger facet (wave D)"
+ bucket_alignment: "Promote language plans from active_backlog-only routing to semantic_rails in plans/index.spw + README"
+ sequencing: .{
+  step_1 = "Declare clusters facet in data-spw-attribute-governance (reclustering prime)"
+  step_2 = "Land construct-codex with operator/registry/_ brace idioms"
+  step_3 = "Wire language-ecology coordinator dispatch"
+  step_4 = "Rerun language-census; commit improved full-trace baseline"
+ }[reg=facet]
+ event_grammar_boundary: "bus-local domain:verb vs broadcast spw:domain-verb per language-reclustering plan — declare in language-ecology."
+}
+
+^"slices_and_consolidation"{
+ consolidation_model: "spellcraft-authoring pattern: one owner plan, satellite plans keep PLAN.md with merged-into note, ecology coordinator routes — no physical folder merge until ref-safe pass."
+ slice_candidates: .{
+  page_region_discoverability: .{ status = "exists", action = "complete contract + coordinator link" }[reg=facet]
+  math_practice_labs: .{ status = "exists", action = "maintain as modular-experience-slices pilot A" }[reg=facet]
+  attention_resonance_field: .{ status = "planned", owner = "modular-experience-slices pilot B" }[reg=facet]
+  spellcraft_authoring: .{ status = "planned", owner = "spellcraft-authoring plan" }[reg=facet]
+  copy_collectibles: .{ status = "planned", owner = "component-region-personality wave 2" }[reg=facet]
+  chrome_field: .{ status = "planned", owner = "floating-chrome-stack" }[reg=facet]
+ }[reg=facet]
+ promotion_gate: "Slice promotion requires slice index entry, validation path, practice-bed note template, and owner-registry row."
+}
+
+^"precipitates"{
+ definition: "Generated artifacts that make ecology traversable."
+ outputs: .{
+  plans_index_json: .{
+    path = ".agents/state/plans-index.json"
+    source = "maintain-plan-directory-indexes.mjs + owner-registry"
+    invalidation = "any .agents/plans/**/PLAN.md|index.spw|FIX.md change"
+  }[reg=facet]
+  skills_index_json: .{
+    path = ".agents/state/skills-index.json"
+    source = ".agents/skills/**/SKILL.md crawl"
+    invalidation = "skill file add/remove/rename"
+  }[reg=facet]
+  copy_units_manifest: .{
+    path = "design/catalog/copy-units.json or .agents/state/copy-units.json"
+    source = "extract-site-copy.mjs + data-spw-copy-unit"
+    invalidation = "route HTML copy-unit attrs change"
+  }[reg=facet]
+ }[reg=facet]
+ v04_bridge: "register-serialization.spw precipitate intent; claim-probe-syntax for convention validation in check:local when safe."
+ public_projection: "Optional: generate /about/plans/ bucket cards from plans-index.json (wave I) — hand page stays until gen proven."
+}
+
+^"additional_rails"{
+ note: "Concerns easy to miss; include in owner-registry as they land."
+ items: #[
+  `skills-index.spw convention bridge (agent-ecology)`
+  `wip.spw legacy_stream migration on touch (wip-notebook)`
+  `design catalog ↔ component-templates ↔ copy-units cross-ref`
+  `public /about/plans/ ↔ plans-index.json parity with README buckets`
+  `modular-experience-slices tending-note template promotion into .spw/slices/<slug>/tending-notes/`
+  `agentic_cache_contract invalidation on all .agents/state/*`
+  `relationship to spw-surface-normalization graduation (avoid duplicate normalization owners)`
+  `relationship to component-region-personality (public copy) vs this plan (meta .spw architecture)`
+  `hypermedia_2d and capture-mode attrs in capture-ecology`
+  `product-lines and creative-marketing engine dispatch for media company offers`
+  `experience-slice ownership vs route-local HTML (modular-experience-slices)`
+ ][reg=set]
+}
+
+^"edit_waves"{
+ wave_a_coordinators: .{
+  name = "Ecology coordinator shells"
+  deliver = #[`copy-ecology.spw`, `region-component-ecology.spw`, `language-ecology.spw`, `interaction-ecology.spw`, `capture-ecology.spw`, `agent-ecology.spw`][reg=set]
+  wire = #[`conventions/index.spw`, `planning-ecology.spw`][reg=set]
+ }[reg=facet]
+ wave_b_owner_registry: .{
+  name = "Owner registry"
+  deliver = `owner-registry.spw seeded from operational-semantics + coordinators`
+ }[reg=facet]
+ wave_c_precipitates: .{
+  name = "Agent/editor indexes"
+  deliver = #[`plans-index.json`, `skills-index.json`][reg=set]
+  extend = `maintain-plan-directory-indexes.mjs`
+ }[reg=facet]
+ wave_d_language_hygiene: .{
+  name = "Language court + convention validator"
+  deliver = #[`construct-codex.spw (minimal)`, `language-ecology dispatch complete`, `validate-conventions.mjs partial`][reg=set]
+  align = `semantic_rails bucket for language plans in index.spw + README`
+ }[reg=facet]
+ wave_e_component_templates: .{
+  name = "Component templates surface"
+  deliver = `surfaces/component-templates.spw + design/components specimens`
+ }[reg=facet]
+ wave_f_slice_promotion: .{
+  name = "Slice promotion"
+  deliver = `≥3 new slice index entries with validation + tending-note paths`
+ }[reg=facet]
+ wave_g_review_graduation: .{
+  name = "Review promotion metadata"
+  deliver = `promotion_status on all reviews; graduate surface-normalization rules where ready`
+ }[reg=facet]
+ wave_h_site_slim: .{
+  name = "site.spw slimness"
+  deliver = `translations.ecologies hub; prune redundant @ refs after registry complete`
+ }[reg=facet]
+ wave_i_public_projection: .{
+  name = "Public plans projection (optional)"
+  deliver = `about/plans bucket cards from plans-index.json or build step`
+ }[reg=facet]
+ sequencing: "A → B → C before expanding convention prose. D and E may parallel after A. H after B+C. I last."
+}
+
+^"owner_claim"{
+ claim_id = "convention-spw_architecture_ecology-001"
+ layer = "pragmatic"
+ hypothesis = `An explicit .spw ecology with coordinators, owner-registry, promotion protocol, and precipitates reduces agent/editor discovery cost while keeping hand-authored routes primary.`
+ spec_ref = ~"./spw-architecture-ecology.spw"
+ impl_ref = ~"../../.agents/plans/spw-architecture-ecology/PLAN.md"
+ probe_ref = `rg 'spw-architecture-ecology|ecology_coordinators|owner-registry' .spw .agents/plans/spw-architecture-ecology`
+ falsification = `After wave A, conventions/index.spw has no ecology dispatch and site.spw still lists >80 plan-level @ refs without coordinator routing.`
+ status = "active"
+}[reg=facet]
+
+^"validation"{
+ commands: #[
+  `rg 'spw-architecture-ecology' .spw .agents/plans`,
+  `test -f .spw/conventions/spw-architecture-ecology.spw`,
+  `npm run check:local`,
+  `node scripts/maintain-plan-directory-indexes.mjs --dry-run when script supports it`
+ ][reg=set]
+ wave_gates: .{
+  wave_a = "6 ecology coordinator files exist and conventions/index.spw dispatches them"
+  wave_b = "owner-registry.spw has ≥20 seeded entries with falsification"
+  wave_c = "plans-index.json and skills-index.json generated with invalidation notes"
+  wave_h = "site.spw @ ref count drops materially; translations.ecologies present"
+ }[reg=facet]
+}
+
+^"invariants"{
+ "site.spw is a hub, not a plan dump."
+ "Ecology coordinators route; owner plans sequence; conventions contract; reviews audit until promoted."
+ "Promotion uses semantic-capacity operations explicitly."
+ "No physical plan-folder merge without ref-safe index notes."
+ "Generated state artifacts always declare invalidation."
+ "Language vocabulary disputes go through language-ecology + construct-codex, not parallel HTML copy."
+ "Component templates are inspectable contracts, not ad hoc partials."
+ "This plan owns .spw meta-architecture; component-region-personality owns public copy/templates implementation."
+}
+
+dispatch: .{
+ plan = @plan
+ planning = @planning_ecology
+ semantic_capacity = @semantic_capacity
+ site = @site
+ slices = @slices_index
+ operational = @operational_semantics
+ component_region = @component_region_personality
+ language_v04 = @spw_language_v04
+}[reg=facet]

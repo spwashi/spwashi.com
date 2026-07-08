@@ -12,6 +12,7 @@ import {
   normalizeModuleUpdates,
   summarizeModuleUpdates,
 } from './module-updates-contract.js';
+import { resolveModuleMount } from './module-export-contract.js';
 import { REGION_STATES, setRegionState } from './region-profiler.js';
 import {
   matchesFeatures,
@@ -48,6 +49,8 @@ export const SPW_MODULE_LOADER_CONTRACT = Object.freeze({
     'Module definitions may name effectScope tokens to make global state, storage, observer, media, or local DOM side effects auditable.',
   updatesContract:
     'Module updates accept flat strings or kind:name objects; runtime normalizes them into attrs, css vars, aria, classes, and events for inspection.',
+  moduleExportFallback:
+    'Definitions may keep explicit mount adapters; definitions without one fall back to SPW_MODULE_EXPORT, spwModule, default.mount, or init* exports.',
 });
 
 export function createModuleLoader(config = {}) {
@@ -109,6 +112,16 @@ export function createModuleLoader(config = {}) {
     mountBatchDepth = 0;
     tokenFlushScheduled = false;
     writeDatasetValue(html, 'spwRuntimeMountBatch', null);
+  }
+
+  function mountModuleDefinition(def, mod, ctx, root) {
+    if (typeof def?.mount === 'function') {
+      return def.mount(mod, ctx, root);
+    }
+
+    const resolved = resolveModuleMount(mod);
+    if (!resolved?.fn) return undefined;
+    return resolved.fn(ctx, root);
   }
 
   function flushRuntimeTokenUpdate(ctx) {
@@ -908,7 +921,7 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
     );
 
     const mountStartedAt = performance.now();
-    const result = await def.mount(mod, ctx, root);
+    const result = await mountModuleDefinition(def, mod, ctx, root);
     const mountEndedAt = performance.now();
     performance.mark(`spw:module:${def.id}:mount-end`);
     performance.measure(

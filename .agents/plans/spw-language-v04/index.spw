@@ -1,117 +1,95 @@
-# Plan Index — Spw Language v0.4
+# Plan Index — spw-language-v04
 #
-# Elaborate Spw as a language toward v0.4: profiles, typed references, executable
-# claims, stem projection, register precipitates, and workbench submodule alignment.
+# Readers and agents on spwashi.com can inspect a coherent v0.4 language direction without waiting for the workbench submodule to catch up. Site copy on the Spw operator atlas…
 
 #>plan_spw_language_v04_index
-#:index #!plan #!language
+#:index #!plan
 #:operation #!prime
-#:layer #!grammar
+#:layer #!pragmatics
 
 operation = "prime"
 fixity = "tending"
 
 intent: .{
- goal = `Readers and agents on spwashi.com can inspect a coherent v0.4 language direction before the workbench submodule catches up. Site copy on the operator atlas names the improvement stack; .spw/language/v04/ carries inspectable contracts, claims, dimensions, and submodule bridge.`
+ goal = `Readers and agents on spwashi.com can inspect a coherent v0.4 language direction without waiting for the workbench submodule to catch up. Site copy on the Spw operator atlas should name the improvement stack in public language; local .spw/language/v04/ should carry the inspectable contracts, claims, dimensions, and submodule bridge.`
  owner = `spw-language-v04`
  kind = `plan`
- bucket = `language_evolution`
- artifact_shape = `PLAN.md | index.spw | pillar.spw`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
 ^"dimensions"{
- temporal_rhythm = "specification | sedimentation"
- practice_depth = "reading | contract | tending"
- semantic_layer = "grammar | semantics | pragmatics"
- collaboration_phase = "initiation | exchange"
- memory_tier = "warm"
- bucket = "language_evolution"
- priority_horizon = "v0.4.0"
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
 }[reg=facet]
 
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@index: ~"./index.spw"
 @plan: ~"./PLAN.md"
-@language_index: ~"../../../.spw/language/index.spw"
-@language_v04: ~"../../../.spw/language/v04/index.spw"
-@roadmap: ~"../../../.spw/language/v04/roadmap.spw"
-@operator_atlas: ~"../../../topics/software/spw/index.html#language-evolution-v04"
-@submodule_bridge: ~"../../../.spw/language/v04/pillars/submodule-bridge.spw"
-
-@profiles_and_validator: ~"../../../.spw/language/v04/pillars/profiles-and-validator.spw"
-@typed_references_indexing: ~"../../../.spw/language/v04/pillars/typed-references-indexing.spw"
-@claim_probe_syntax: ~"../../../.spw/language/v04/pillars/claim-probe-syntax.spw"
-@stem_projection: ~"../../../.spw/language/v04/pillars/stem-projection.spw"
-@precipitate_projections: ~"../../../.spw/language/v04/pillars/precipitate-projections.spw"
-@register_serialization: ~"../../../.spw/language/v04/pillars/register-serialization.spw"
-@lsp_editor_lenses: ~"../../../.spw/language/v04/pillars/lsp-editor-lenses.spw"
-@grammar_unification: ~"../../../.spw/language/v04/pillars/grammar-unification.spw"
-@operation_fixity_types: ~"../../../.spw/language/v04/pillars/operation-fixity-types.spw"
-@runtime_goals_pipeline: ~"../../../.spw/language/v04/pillars/runtime-goals-pipeline.spw"
-@core_experimental_namespace: ~"../../../.spw/language/v04/pillars/core-experimental-namespace.spw"
+@v04: ~"../../../.spw/language/v04/"
+@topics_software_spw_index_html: ~"../../../topics/software/spw/index.html"
+@spw_index_spw: ~"../../../.spw/index.spw"
+@site: ~"../../../.spw/site.spw"
+@spw_conventions_index_spw: ~"../../../.spw/conventions/index.spw"
+@pillars: ~"../../../.spw/language/v04/pillars/"
+@spw_language_v04_index_spw: ~"../../../.spw/language/v04/index.spw"
+@workbench: ~"../../../.spw/_workbench"
 
 dispatch: .{
  plan = @plan
- language_index = @language_index
- language_v04 = @language_v04
- roadmap = @roadmap
- operator_atlas = @operator_atlas
- submodule_bridge = @submodule_bridge
- profiles_and_validator = @profiles_and_validator
- typed_references_indexing = @typed_references_indexing
- claim_probe_syntax = @claim_probe_syntax
- stem_projection = @stem_projection
- precipitate_projections = @precipitate_projections
- register_serialization = @register_serialization
- lsp_editor_lenses = @lsp_editor_lenses
- grammar_unification = @grammar_unification
- operation_fixity_types = @operation_fixity_types
- runtime_goals_pipeline = @runtime_goals_pipeline
- core_experimental_namespace = @core_experimental_namespace
+ v04 = @v04
+ topics_software_spw_index_html = @topics_software_spw_index_html
+ spw_index_spw = @spw_index_spw
+ site = @site
+ spw_conventions_index_spw = @spw_conventions_index_spw
+ pillars = @pillars
+ spw_language_v04_index_spw = @spw_language_v04_index_spw
+ workbench = @workbench
 }[reg=facet]
 
-priority_stack: ?<
- @profiles_and_validator,
- @typed_references_indexing,
- @claim_probe_syntax,
- @stem_projection,
- @precipitate_projections,
- @register_serialization,
- @lsp_editor_lenses,
- @grammar_unification,
- @operation_fixity_types,
- @runtime_goals_pipeline,
- @core_experimental_namespace,
- @submodule_bridge
->[reg=stream]
-
 ^"owner_claim"{
- claim_id = "plan-spw-language-v04-001"
- layer = "semantic"
- hypothesis = `A v0.4 pillar set on spwashi.com can guide workbench grammar work without blocking public site copy and inspection.`
+ claim_id = "plan-spw_language_v04-001"
+ layer = "pragmatic"
+ hypothesis = `Readers and agents on spwashi.com can inspect a coherent v0.4 language direction without waiting for the workbench submodule to catch up. Site copy on the Spw operator atlas should name the improvement stack in public language; local .spw/language/v04/ should carry the inspectable contracts, claims, dimensions, and submodule bridge.`
  spec_ref = ~"./PLAN.md"
- impl_ref = ~"../../../.spw/language/v04/index.spw"
- probe_ref = `rg 'spw_language_v04' .spw/language`
- falsification = `Pillar files exist but the operator atlas and workbench spec do not cite the same priority stack within one release cycle.`
+ impl_ref = ~"../../../.spw/language/v04/"
+ probe_ref = `git diff --check`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../.spw/language/v04/ unchanged or untested.`
  status = "active"
 }[reg=facet]
 
-editor_prompts: #[
- .{ ask = `Which pillar should I read for indexing strength vs executable claims?`, see = @roadmap }[reg=facet],
- .{ ask = `What is the upstream submodule handoff for v0.4?`, see = @submodule_bridge }[reg=facet],
- .{ ask = `Where is the public copy for this language direction?`, see = @operator_atlas }[reg=facet],
+next_action: .{
+ step = `Land pillar .spw files with dimensions, owner_claim, editor_prompts, validation probes.`
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `In scope: .agents/plans/spw-language-v04/, .spw/language/v04/ pillar artifacts, topics/software/spw/index.html copy, dispatch wiring in .spw/index.spw, .spw/site.spw, .spw/conventions/index.spw, submodule update procedure in submodule-bridge.spw.`,
+  `-`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check`,
+ `rg language-evolution-v04 topics/software/spw/index.html`,
+ `rg spw_language_v04 .spw`,
+ `Manual read: .spw/language/v04/index.spw dispatch resolves all pillar paths`,
+ `Future: node .spw/_workbench/.../validate-spw on pillar files after submodule pin`,
 ][reg=set]
 
-selection_probes: #[
- `profiles + validator`,
- `typed references`,
- `claim probe syntax`,
- `stem projection`,
- `precipitate projections`,
- `submodule bridge`
+editor_prompts: #[
+ .{ ask = `What does spw-language-v04 own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of spw-language-v04?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether spw-language-v04 still holds?`, see = @plan }[reg=facet],
 ][reg=set]
 
 invariants: #[
- `PLAN.md sequences phases; index.spw routes inspection and pillar selection.`,
- `Every pillar declares dimensions, owner_claim, language_delta, and validation probes.`,
- `Site language artifacts propose; workbench canon proves after submodule pin.`,
- `Promote landed grammar into .spw/conventions/ via semantic-capacity contract operation.`,
+ `Owner intent: Readers and agents on spwashi.com can inspect a coherent v0.4 language direction without waiting for the workbench submodule to catch up.…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]

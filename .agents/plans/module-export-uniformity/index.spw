@@ -1,40 +1,81 @@
-# Plan Index — Module Export Uniformity
+# Plan Index — module-export-uniformity
+#
+# Every runtime module should expose a predictable export surface for catalog mounting, compose portability, and inspection — without forcing browser modules to pretend they are…
 
 #>plan_module_export_uniformity_index
 #:index #!plan
-#:operation #!audit
+#:operation #!prime
 #:layer #!pragmatics
 
-operation = "audit"
+operation = "prime"
 fixity = "tending"
 
 intent: .{
- goal = `Unify JavaScript module export patterns and categorize runtime modules under runtime-medium ecology for fractal nutrient distribution and holistic growth.`
+ goal = `Every runtime module should expose a predictable export surface for catalog mounting, compose portability, and inspection — without forcing browser modules to pretend they are Node scripts. The codebase should read like one living medium: nutrients (state contracts) flow through guilds (behavior clusters), roots (kernel) and canopy (chrome) stay distinct, and growth can happen in-place (incremental refactors) or holistically (compose/catalog alignment).`
  owner = `module-export-uniformity`
  kind = `plan`
- bucket = `runtime_contract`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
 }[reg=facet]
 
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@index: ~"./index.spw"
 @plan: ~"./PLAN.md"
-@audit: ~"../../../.spw/audits/module-export-standalone-2026-07.spw"
-@ecology: ~"../../../.spw/conventions/runtime-medium-ecology.spw"
-@export_contract: ~"../../../.spw/conventions/module-export-contract.spw"
-@medium_map: ~"../../../.spw/surfaces/runtime-module-medium.spw"
-@decomposition: ~"../runtime-module-decomposition/PLAN.md"
+@plan_runtime_module_decomposition: ~"../runtime-module-decomposition/index.spw"
+@plan_javascript_standalone_utility: ~"../javascript-standalone-utility/index.spw"
+@module_export_standalone_2026_07: ~"../../../.spw/audits/module-export-standalone-2026-07.spw"
+@runtime_medium_ecology: ~"../../../.spw/conventions/runtime-medium-ecology.spw"
+@runtime_module_medium: ~"../../../.spw/surfaces/runtime-module-medium.spw"
+@spw_conventions_module_export_contract_spw: ~"../../../.spw/conventions/module-export-contract.spw"
+@public_js_runtime_module_export_contract_js: ~"../../../public/js/runtime/module-export-contract.js"
 
 dispatch: .{
  plan = @plan
- audit = @audit
- ecology = @ecology
- export_contract = @export_contract
- medium_map = @medium_map
- decomposition = @decomposition
+ plan_runtime_module_decomposition = @plan_runtime_module_decomposition
+ plan_javascript_standalone_utility = @plan_javascript_standalone_utility
+ module_export_standalone_2026_07 = @module_export_standalone_2026_07
+ runtime_medium_ecology = @runtime_medium_ecology
+ runtime_module_medium = @runtime_module_medium
+ spw_conventions_module_export_contract_spw = @spw_conventions_module_export_contract_spw
+ public_js_runtime_module_export_contract_js = @public_js_runtime_module_export_contract_js
 }[reg=facet]
 
+^"owner_claim"{
+ claim_id = "plan-module_export_uniformity-001"
+ layer = "pragmatic"
+ hypothesis = `Every runtime module should expose a predictable export surface for catalog mounting, compose portability, and inspection — without forcing browser modules to pretend they are Node scripts. The codebase should read like one living medium: nutrients (state contracts) flow through guilds (behavior clusters), roots (kernel) and canopy (chrome) stay distinct, and growth can happen in-place (incremental refactors) or holistically (compose/catalog alignment).`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../.spw/audits/module-export-standalone-2026-07.spw"
+ probe_ref = `node --check on new JS`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../.spw/audits/module-export-standalone-2026-07.spw unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+validation: #[
+ `node --check on new JS`,
+ `npm run check:runtime`,
+ `Spw parser on new .spw surfaces`,
+ `git diff --check`,
+][reg=set]
+
 editor_prompts: #[
- .{ ask = `What are the standalone script grades?`, see = @audit }[reg=facet],
- .{ ask = `Which guild owns navigation modules?`, see = @medium_map }[reg=facet],
- .{ ask = `What is the target export shape?`, see = @export_contract }[reg=facet],
+ .{ ask = `What does module-export-uniformity own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of module-export-uniformity?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether module-export-uniformity still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Every runtime module should expose a predictable export surface for catalog mounting, compose portability, and inspection — without forcing…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]

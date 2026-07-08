@@ -30,10 +30,12 @@ intent: .{
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@math: ~"../../../topics/math/"
 @observation_beats: ~"../../../public/js/runtime/observation-beats.js"
 
 dispatch: .{
  plan = @plan
+ math = @math
  observation_beats = @observation_beats
 }[reg=facet]
 
@@ -42,9 +44,9 @@ dispatch: .{
  layer = "pragmatic"
  hypothesis = `North-star lore and staged architecture for spwashi.com as a place where literacy precipitates into physical form: named abilities become tangible items, learning leaves printable residue on bulletin boards, the site becomes a publishing surface, and eventually - literally - a paper manufacturer for aesthetics tuned to learnability and genre preferences. (Spwashi direction, 2026-07-03.)`
  spec_ref = ~"./PLAN.md"
- impl_ref = ~"../../../public/js/runtime/observation-beats.js"
+ impl_ref = ~"../../../topics/math/"
  probe_ref = `rg 'literacy-precipitation-press' .agents/plans/literacy-precipitation-press`
- falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/runtime/observation-beats.js unchanged or untested.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../topics/math/ unchanged or untested.`
  status = "active"
 }[reg=facet]
 

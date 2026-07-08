@@ -14,6 +14,7 @@ const PUBLIC_JS_DIR = path.join(ROOT_DIR, 'public/js');
 const MODULES_DIR = path.join(PUBLIC_JS_DIR, 'modules');
 const PUBLIC_TS_DIR = path.join(ROOT_DIR, 'public/ts');
 const MODULE_CATALOG_PATH = path.join(PUBLIC_JS_DIR, 'runtime/module-catalog.js');
+const MODULE_UPDATES_CONTRACT_PATH = path.join(PUBLIC_JS_DIR, 'runtime/module-updates-contract.js');
 const RUNTIME_FAMILIES = ['CORE_DEFS', 'FEATURE_DEFS', 'REGION_DEFS', 'ENHANCEMENT_DEFS'];
 const VALID_LAYERS = new Set(['core', 'feature', 'region', 'enhancement']);
 const VALID_MOUNT_TIMINGS = new Set(['immediate', 'visible', 'idle', 'interaction', 'region', 'settled']);
@@ -71,8 +72,14 @@ const MODULE_UPDATE_KIND_ALIASES = new Map([
     ['attributes', 'attr'],
     ['dataset', 'attr'],
     ['var', 'css-var'],
+    ['css-var', 'css-var'],
     ['css', 'css-var'],
     ['style', 'property'],
+    ['property', 'property'],
+    ['class', 'class'],
+    ['aria', 'aria'],
+    ['event', 'event'],
+    ['selector', 'selector'],
 ]);
 function isKnownModuleUpdateKind(token) {
     const normalized = token.toLowerCase();
@@ -127,6 +134,67 @@ function validateModuleUpdateToken(token) {
     if (kind === 'attr' && !/^(data-[a-z0-9-]+|aria-[a-z0-9-]+|[a-z][a-z0-9-]*)$/.test(name))
         return 'attr-shape';
     return null;
+}
+function sameStringList(a, b) {
+    if (a.length !== b.length)
+        return false;
+    return a.every((value, index) => value === b[index]);
+}
+function sortedStrings(values) {
+    return [...values].sort((a, b) => a.localeCompare(b));
+}
+function parseFrozenStringArray(source, name) {
+    const match = source.match(new RegExp(`export const ${name} = Object\\.freeze\\(\\[([\\s\\S]*?)\\]\\);`));
+    if (!match)
+        return null;
+    return [...match[1].matchAll(/(['"`])([^'"`]+)\1/g)].map((item) => item[2]);
+}
+function parseFrozenAliasObject(source, name) {
+    const match = source.match(new RegExp(`const ${name} = Object\\.freeze\\(\\{([\\s\\S]*?)\\}\\);`));
+    if (!match)
+        return null;
+    const aliases = new Map();
+    const aliasRe = /(?:(['"`])([^'"`]+)\1|([a-zA-Z0-9_-]+))\s*:\s*(['"`])([^'"`]+)\4/g;
+    for (const item of match[1].matchAll(aliasRe)) {
+        aliases.set(item[2] || item[3], item[5]);
+    }
+    return aliases;
+}
+async function collectModuleUpdateGrammarIssues() {
+    const errors = [];
+    const source = await fs.readFile(MODULE_UPDATES_CONTRACT_PATH, 'utf8');
+    const runtimeKinds = parseFrozenStringArray(source, 'MODULE_UPDATE_KINDS');
+    const runtimeScopes = parseFrozenStringArray(source, 'MODULE_UPDATE_SCOPES');
+    const runtimeAliases = parseFrozenAliasObject(source, 'KIND_ALIASES');
+    if (!runtimeKinds) {
+        errors.push(`${relativeRepoPath(MODULE_UPDATES_CONTRACT_PATH)} does not expose parseable MODULE_UPDATE_KINDS.`);
+    }
+    else if (!sameStringList(sortedStrings(MODULE_UPDATE_KINDS), sortedStrings(runtimeKinds))) {
+        errors.push(`module update kind grammar drifted: TS=${sortedStrings(MODULE_UPDATE_KINDS).join(',')} runtime=${sortedStrings(runtimeKinds).join(',')}.`);
+    }
+    if (!runtimeScopes) {
+        errors.push(`${relativeRepoPath(MODULE_UPDATES_CONTRACT_PATH)} does not expose parseable MODULE_UPDATE_SCOPES.`);
+    }
+    else if (!sameStringList(sortedStrings(MODULE_UPDATE_SCOPES), sortedStrings(runtimeScopes))) {
+        errors.push(`module update scope grammar drifted: TS=${sortedStrings(MODULE_UPDATE_SCOPES).join(',')} runtime=${sortedStrings(runtimeScopes).join(',')}.`);
+    }
+    if (!runtimeAliases) {
+        errors.push(`${relativeRepoPath(MODULE_UPDATES_CONTRACT_PATH)} does not expose parseable KIND_ALIASES.`);
+        return errors;
+    }
+    const localAliasKeys = sortedStrings(MODULE_UPDATE_KIND_ALIASES.keys());
+    const runtimeAliasKeys = sortedStrings(runtimeAliases.keys());
+    if (!sameStringList(localAliasKeys, runtimeAliasKeys)) {
+        errors.push(`module update alias grammar drifted: TS=${localAliasKeys.join(',')} runtime=${runtimeAliasKeys.join(',')}.`);
+    }
+    for (const key of runtimeAliasKeys) {
+        const local = MODULE_UPDATE_KIND_ALIASES.get(key);
+        const runtime = runtimeAliases.get(key);
+        if (local !== runtime) {
+            errors.push(`module update alias "${key}" maps to "${local}" in TS but "${runtime}" at runtime.`);
+        }
+    }
+    return errors;
 }
 function parseFeatures(source) {
     const stringMatch = source.match(/features:\s*(['"`])([^'"`]+)\1/);
@@ -421,6 +489,7 @@ export async function collectRuntimeContractReport() {
     const warnings = [];
     const moduleCatalog = await fs.readFile(MODULE_CATALOG_PATH, 'utf8');
     const modules = [];
+    errors.push(...await collectModuleUpdateGrammarIssues());
     for (const family of RUNTIME_FAMILIES) {
         const arrayLiteral = extractRuntimeArrayLiteral(moduleCatalog, family);
         if (!arrayLiteral) {

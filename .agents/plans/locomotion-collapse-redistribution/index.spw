@@ -1,0 +1,69 @@
+# Plan Index — locomotion-collapse-redistribution
+#
+# Elements should *travel*, not teleport: when layout changes move something, the movement reads as a conducted arc in the site's charge vocabulary. Space left behind should…
+
+#>plan_locomotion_collapse_redistribution_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Elements should *travel*, not teleport: when layout changes move something, the movement reads as a conducted arc in the site's charge vocabulary. Space left behind should collapse deliberately during settle windows, never mid-interaction. Variants should announce whether they change form or style, and arrive through the same windows. The runtime should do its work inside a small set of named windows (arrival steps, settle quiet-window, post-settle idle, background) so timing is inspectable, tunable, and cheap.`
+ owner = `locomotion-collapse-redistribution`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@index: ~"./index.spw"
+@plan: ~"./PLAN.md"
+@query_composer: ~"../../../public/js/kernel/query-composer.js"
+
+dispatch: .{
+ plan = @plan
+ query_composer = @query_composer
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-locomotion_collapse_redistribution-001"
+ layer = "pragmatic"
+ hypothesis = `Elements should *travel*, not teleport: when layout changes move something, the movement reads as a conducted arc in the site's charge vocabulary. Space left behind should collapse deliberately during settle windows, never mid-interaction. Variants should announce whether they change form or style, and arrive through the same windows. The runtime should do its work inside a small set of named windows (arrival steps, settle quiet-window, post-settle idle, background) so timing is inspectable, tunable, and cheap.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/js/kernel/query-composer.js"
+ probe_ref = `Locomotion pass adds zero long tasks during arrival steps (Performance panel, spw: marks).`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/kernel/query-composer.js unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+validation: #[
+ `Locomotion pass adds zero long tasks during arrival steps (Performance panel, spw: marks).`,
+ `Reduced motion: no arcs, instant placement, collapse without transition.`,
+ `Return visit with frozen state: first paint matches remembered state; settle re-confirms auto.`,
+ `Timings comparison shows narration modules leaving the boot-critical path.`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does locomotion-collapse-redistribution own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of locomotion-collapse-redistribution?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether locomotion-collapse-redistribution still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Elements should *travel*, not teleport: when layout changes move something, the movement reads as a conducted arc in the site's charge…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]

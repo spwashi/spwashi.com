@@ -1,0 +1,59 @@
+# Copy Ecology
+#
+# Dispatch coordinator for public copy depth, collectibles, referentiality, and
+# localization — routes agents without duplicating PLAN.md prose.
+
+#>copy_ecology
+#:convention #!ecology #!copy #!dispatch
+#:operation #!align
+#:fixity #!tending
+#:layer #!pragmatics
+
+@architecture_ecology: ~"./spw-architecture-ecology.spw"
+@component_region_personality: ~"./component-region-personality.spw"
+@living_medium_copy: ~"./living-medium-copy.spw"
+@copy_localization: ~"./copy-localization.spw"
+@coloring_depth: ~"./coloring-depth.spw"
+@semantic_copy_depth_plan: ~"../../.agents/plans/semantic-copy-depth/PLAN.md"
+@component_region_plan: ~"../../.agents/plans/component-region-personality/PLAN.md"
+@hook_region_plan: ~"../../.agents/plans/hook-region-anatomy/PLAN.md"
+@audience_onboarding_plan: ~"../../.agents/plans/audience-onboarding-copy/PLAN.md"
+@copy_localization_plan: ~"../../.agents/plans/copy-localization/PLAN.md"
+
+operation = "align"
+fixity = "tending"
+
+^"dimensions"{
+ practice_depth = "reading | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "exchange"
+ memory_tier = "warm"
+}[reg=facet]
+
+^"routing"{
+ owner_plans: #[
+  `semantic-copy-depth — copy-depth ladder and display rules`
+  `component-region-personality — referentiality, templates, voice surgery, copy-units`
+ ][reg=set]
+ satellite_plans: #[`hook-region-anatomy`, `audience-onboarding-copy`, `copy-localization`][reg=set]
+ conventions: #[`living-medium-copy`, `copy-localization`, `coloring-depth`, `component-region-personality`][reg=set]
+ conflict_rule: "Public route copy contracts beat plan prose; data-spw-copy-unit ids beat raw English strings."
+ first_read: "component-region-personality for voice/templates; semantic-copy-depth for depth tiers."
+}
+
+^"owner_claim"{
+ claim_id = "ecology-copy-001"
+ layer = "pragmatic"
+ hypothesis = `Copy work routes through two owner plans and four conventions without parallel hero meta-doc.`
+ probe_ref = `rg 'copy-ecology|component-region-personality|semantic-copy-depth' .spw/conventions .agents/plans`
+ falsification = `Hub HTML still adds new Objective terminal labels after component-region-personality wave 1.`
+ status = "active"
+}
+
+dispatch: .{
+ architecture = @architecture_ecology
+ personality = @component_region_personality
+ living_medium = @living_medium_copy
+ localization = @copy_localization
+ depth = @coloring_depth
+}[reg=facet]

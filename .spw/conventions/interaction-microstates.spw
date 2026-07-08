@@ -22,6 +22,9 @@
 @coloring_depth: ~"./coloring-depth.spw"
 @component_interaction_semantics: ~"../../public/js/semantic/component-interaction-semantics.js"
 @component_semantics: ~"../../public/js/semantic/component-semantics.js"
+@charge_field: ~"../../public/js/runtime/charge-field.js"
+@effect_ledger: ~"../../public/js/runtime/effect-ledger.js"
+@attribute_governance: ~"./data-spw-attribute-governance.spw"
 
 ^"phase_ladder"{
   html_attr: `data-spw-interaction-phase`
@@ -32,6 +35,22 @@
     `brace-gestures.js — data-spw-gesture on local targets`
     `pinch-scale.js — data-spw-pinch-scaling during text scale preview`
   ][reg=set]
+}
+
+^"reward_contract"{
+  claim: `Every interaction resolves into feedback or arc clarity - never silent absorption. A touch that moves state shows the movement; a touch that moves nothing reveals potential instead: which arcs are reachable from here, what charging would become, where a gesture could land. An interaction the surface swallows is a contract violation, not a neutral outcome.`
+  feedback_forms: #[
+    `charge phase advance (armed/preview/charged per @charge_field) - the ladder is itself feedback`,
+    `effect precipitation (@effect_ledger, reward-ui) - landed arcs become residue`,
+    `locomotion arc - movement renders its own acknowledgment (locomotion-collapse-redistribution plan)`,
+    `settle confirmation - completion is visible (data-spw-page-settle-confirmation), not implied`
+  ][reg=set]
+  potential_forms: #[
+    `preview phases telegraph the arc destination shape, not just a glow`,
+    `armed states name the discharge kind (release/transfer/ground/project per @charge_field)`,
+    `unavailable arcs read as grounded, with the reason inspectable`
+  ][reg=set]
+  boundary_rule: "Potential display is pulse/charge-shaped (transient, settles on leave); reward display is residue-shaped (durable, ledger-backed) - the temporal shapes in @attribute_governance rhythm. Do not promote a preview into residue without a deliberate landing."
 }
 
 ^"sigil_payload_transition"{
@@ -166,6 +185,7 @@
 }
 
 validation: #[
+  `Every interactive affordance resolves per reward_contract: state movement is shown or reachable arcs are revealed; no silent absorption.`
   `Pinch preview sets data-spw-pinch-scaling and bumps approach-phase tokens.`
   `Brace gestures write data-spw-gesture; progression maps armed/charging to charge/prime.`
   `Arc lifecycle writes data-spw-loop-state; progression maps preview/activated/resolved to prime/charge/settle.`

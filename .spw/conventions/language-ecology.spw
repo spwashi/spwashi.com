@@ -1,0 +1,57 @@
+# Language Ecology
+#
+# Dispatch coordinator for Spw language tracks: v04 grammar, reclustering,
+# metaphysical codex, homonym renames, attribute governance.
+
+#>language_ecology
+#:convention #!ecology #!language #!dispatch
+#:operation #!align
+#:fixity #!tending
+#:layer #!grammar
+
+@architecture_ecology: ~"./spw-architecture-ecology.spw"
+@language_v04: ~"../language/v04/index.spw"
+@attribute_governance: ~"./data-spw-attribute-governance.spw"
+@naming_structured_values: ~"./naming-and-structured-values.spw"
+@operator_semantics: ~"./operator-semantics.spw"
+@metaphysical_plan: ~"../../.agents/plans/spw-metaphysical-language/PLAN.md"
+@reclustering_plan: ~"../../.agents/plans/language-reclustering/PLAN.md"
+@homonym_plan: ~"../../.agents/plans/homonym-renaming/PLAN.md"
+@v04_plan: ~"../../.agents/plans/spw-language-v04/PLAN.md"
+@shell_vocab_plan: ~"../../.agents/plans/shell-model-vocabulary-consolidation/PLAN.md"
+@language_census: ~"../audits/language-census.spw"
+
+operation = "align"
+fixity = "tending"
+
+^"routing"{
+ owner_plan: "spw-metaphysical-language"
+ grammar_substrate: "spw-language-v04"
+ cluster_work: "language-reclustering"
+ rename_execution: "homonym-renaming"
+ supreme_court: "construct-codex.spw + drift_ledger (wave D)"
+ satellite_plans: #[`shell-model-vocabulary-consolidation`][reg=set]
+ conventions: #[`data-spw-attribute-governance`, `naming-and-structured-values`, `operator-semantics`][reg=set]
+ conflict_rule: "construct-codex drift ledger arbitrates glyph disputes; reclustering assigns clusters; homonym-renaming executes word moves — never all three at once on the same stem."
+ event_grammar: "bus-local domain:verb vs broadcast spw:domain-verb — boundary declared here."
+ bucket_note: "Promote language plans to semantic_rails in plans/index.spw (wave D)."
+ health_probe: "language-census.spw full-trace percentage + unregistered attribute count."
+}
+
+^"owner_claim"{
+ claim_id = "ecology-language-001"
+ layer = "semantic"
+ hypothesis = `Language vocabulary grows inside declared clusters with a single arbitration surface for operator and attribute disputes.`
+ probe_ref = `node scripts/language-census.mjs && rg 'language-ecology|construct-codex' .spw`
+ falsification = `New data-spw-* attrs land without cluster registration or census trace legs.`
+ status = "active"
+}
+
+dispatch: .{
+ architecture = @architecture_ecology
+ v04 = @language_v04
+ governance = @attribute_governance
+ naming = @naming_structured_values
+ operators = @operator_semantics
+ census = @language_census
+}[reg=facet]

@@ -14,6 +14,8 @@
 @floating_chrome_stack: ~"../../.agents/plans/floating-chrome-stack/FIX.md"
 @semantic_copy_depth: ~"../../.agents/plans/semantic-copy-depth/PLAN.md"
 @planning_ecology: ~"../conventions/planning-ecology.spw"
+@spw_architecture_ecology: ~"../conventions/spw-architecture-ecology.spw"
+@spw_architecture_ecology_plan: ~"../../.agents/plans/spw-architecture-ecology/PLAN.md"
 @css_instruction: ~"../conventions/css-instruction.spw"
 @agent_optimization: ~"../../.agents/plans/agent-optimization/PLAN.md"
 @semantic_capacity: ~"../conventions/semantic-capacity.spw"
@@ -51,4 +53,12 @@
   insight = "As semantic capacity expands, .spw surfaces should not all become mini-plans. Reviews should audit and synthesize; conventions should fix vocabulary and invariants; slices should own cross-layer context; templates should make repeated agent work safer."
   evidence = #[@semantic_capacity, @model_guided_refinement, @plan][reg=set]
   next = "Use semantic-capacity.spw#insight_cache_shape when a new idea is valuable but not ready for route, CSS, JS, or convention work."
+  graduation = "Promotion protocol and review metadata live in spw-architecture-ecology.spw; graduate this review's rules into conventions when wave G lands."
+}
+
+^"promotion_metadata"{
+  promotion_status = "active"
+  review_by = "2026-04"
+  promoted_to = "pending — target conventions/surface-normalization-rules.spw via spw-architecture-ecology wave G"
+  supersedes = "none"
 }

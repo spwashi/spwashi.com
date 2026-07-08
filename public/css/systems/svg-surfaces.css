@@ -158,6 +158,49 @@
     transform: none;
 }
 
+/* Touch devices get real touch targets in the rail at any viewport width,
+   and chips skip the double-tap zoom delay. */
+.spw-svg-rail > *,
+[data-spw-svg-action] {
+    touch-action: manipulation;
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-figure:is([data-spw-svg-device="coarse"], [data-spw-svg-device="hoverless"]) .spw-svg-rail > * {
+    min-height: max(2.15rem, var(--touch-target-compact, 2.15rem));
+    display: flex;
+    align-items: center;
+}
+
+/* ─── Declarative scale variants ────────────────────────────────────────── */
+/*
+ * data-spw-svg-scale on the figure declares how much column the surface
+ * claims. wide: an expanded measure for primary diagrams. narrow-wide:
+ * full-bleed illustration — always the whole column. compact: glyph and
+ * token cards stay small and centered instead of inflating to fill a cell.
+ */
+
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-scale="wide"] .spw-svg-surface {
+    max-width: min(100%, calc(var(--measure-panel, 52rem) * var(--spw-svg-scale-factor, 1) * 1.3));
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-scale="narrow-wide"] .spw-svg-surface {
+    max-width: 100%;
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-scale="compact"] .spw-svg-surface {
+    max-width: min(100%, 16rem);
+    margin-inline: auto;
+}
+
+/* ─── Anchor positioning ────────────────────────────────────────────────── */
+/* Anchor arrivals (rail chips, shared node URLs) land below the sticky
+   header instead of underneath it. */
+
+[data-spw-features~="svg-surfaces"] .spw-svg-figure,
+[data-spw-features~="svg-surfaces"] .spw-svg-surface g[id] {
+    scroll-margin-top: calc(var(--shell-header-height, var(--header-height, 4rem)) + var(--space-md, 1rem));
+}
+
 [data-spw-features~="svg-surfaces"] .spw-svg-flow--animated {
     /* Using generic animation token fallback if --duration-slow is missing */
     animation: svg-flow-dash var(--spw-svg-motion-rate, 4s) linear infinite;
@@ -220,6 +263,61 @@
     box-shadow:
         var(--spw-svg-surface-shadow),
         0 8px 20px color-mix(in srgb, var(--spw-svg-brand-accent, var(--active-op-color, #008080)) 8%, transparent);
+}
+
+/* ─── Addressable nodes ─────────────────────────────────────────────────── */
+/*
+ * Named <g id> groups are the diagram's stable seams. Rail chips that anchor
+ * to a group preview it on hover/focus (svg-tunability.js writes
+ * data-spw-svg-node-state), and arriving at a node via its anchor pulses it
+ * once so the jump lands visibly instead of silently.
+ */
+
+[data-spw-features~="svg-surfaces"] .spw-svg-surface g[id] {
+    transition: opacity var(--duration-base, 200ms) var(--ease-smooth, ease);
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-surface g[data-spw-svg-node-state="dimmed"] {
+    opacity: 0.34;
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-surface g[data-spw-svg-node-state="focused"] .spw-svg-node,
+[data-spw-features~="svg-surfaces"] .spw-svg-surface g[id]:target .spw-svg-node {
+    stroke-width: calc(var(--line-thick, 2.5px) * var(--spw-svg-stroke-scale, 1) * 1.3);
+    filter: drop-shadow(0 0 5px color-mix(in srgb, currentColor 30%, transparent));
+}
+
+@keyframes svg-node-target-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-surface g[id]:target {
+    animation: svg-node-target-pulse 900ms var(--ease-smooth, ease) 2;
+}
+
+/* ─── Copy actions ──────────────────────────────────────────────────────── */
+/*
+ * data-spw-svg-action chips resolve into a visible settle state — the copy
+ * either lands ("copied") or fails ("no clipboard"); never silent.
+ */
+
+[data-spw-svg-action][data-spw-svg-action-state="copied"] {
+    border-color: var(--op-action-color, #005959);
+    color: var(--op-action-color, #005959);
+}
+
+[data-spw-svg-action][data-spw-svg-action-state="copied"]::after {
+    content: " ✓ copied";
+}
+
+[data-spw-svg-action][data-spw-svg-action-state="failed"] {
+    border-color: var(--op-pragma-color, #883a3a);
+    color: var(--op-pragma-color, #883a3a);
+}
+
+[data-spw-svg-action][data-spw-svg-action-state="failed"]::after {
+    content: " ✕ no clipboard";
 }
 
 /* ─── Typography & Labels ───────────────────────────────────────────────── */
@@ -395,6 +493,10 @@
         border-radius: var(--shape-component, 8px);
     }
 
+    [data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-pointer]::after {
+        border-radius: var(--shape-component, 8px);
+    }
+
     [data-spw-features~="svg-surfaces"] .spw-svg-label {
         font-size: 0.8rem;
     }
@@ -422,6 +524,10 @@
         border-radius: var(--shape-component, 8px);
     }
 
+    [data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-pointer]::after {
+        border-radius: var(--shape-component, 8px);
+    }
+
     [data-spw-features~="svg-surfaces"] .spw-svg-label {
         font-size: 0.78rem;
     }
@@ -442,6 +548,10 @@
 
 @media (prefers-reduced-motion: reduce) {
     [data-spw-features~="svg-surfaces"] .spw-svg-flow {
+        animation: none;
+    }
+
+    [data-spw-features~="svg-surfaces"] .spw-svg-surface g[id]:target {
         animation: none;
     }
 

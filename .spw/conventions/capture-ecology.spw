@@ -1,0 +1,48 @@
+# Capture Ecology
+#
+# Dispatch coordinator for screenshot/model literacy, spell authoring, media
+# seeds, and publishable capture surfaces.
+
+#>capture_ecology
+#:convention #!ecology #!capture #!media
+#:operation #!align
+#:fixity #!tending
+#:layer #!pragmatics
+
+@architecture_ecology: ~"./spw-architecture-ecology.spw"
+@component_region_personality: ~"./component-region-personality.spw"
+@relational_attention_media: ~"./relational-attention-media.spw"
+@product_lines: ~"../surfaces/product-lines.spw"
+@spellcraft_plan: ~"../../.agents/plans/spellcraft-authoring/PLAN.md"
+@relational_media_plan: ~"../../.agents/plans/relational-attention-media/PLAN.md"
+@literacy_press_plan: ~"../../.agents/plans/literacy-precipitation-press/PLAN.md"
+@rpg_capture_plan: ~"../../.agents/plans/rpg-asset-capture-frames/PLAN.md"
+@screenshot_semantics_plan: ~"../../.agents/plans/screenshot-semantics/PLAN.md"
+
+operation = "align"
+fixity = "tending"
+
+^"routing"{
+ owner_plan: "spellcraft-authoring"
+ satellite_plans: #[`relational-attention-media`, `literacy-precipitation-press`, `rpg-asset-capture-frames`, `screenshot-semantics`][reg=set]
+ conventions: #[`relational-attention-media`, `component-region-personality#screenshot_literacy`][reg=set]
+ vocabulary_rule: "Prefer screenshot artifact, capture note, interpretable capture — not proof card as default noun."
+ media_company_bridge: "product-lines.spw for offers; capture surfaces must read on camera and in model interpretation."
+ conflict_rule: "Spell/cauldron authoring owns selection+style verbs; media seeds own relation triad copy."
+}
+
+^"owner_claim"{
+ claim_id = "ecology-capture-001"
+ layer = "pragmatic"
+ hypothesis = `Capture literacy routes through spellcraft owner with shared screenshot vocabulary in component-region-personality.`
+ probe_ref = `rg 'capture-ecology|screenshot_literacy|spellcraft-authoring' .spw .agents/plans`
+ falsification = `New public copy defaults to proof-card noun for screenshot-discussable surfaces.`
+ status = "active"
+}
+
+dispatch: .{
+ architecture = @architecture_ecology
+ personality = @component_region_personality
+ relational_media = @relational_attention_media
+ product_lines = @product_lines
+}[reg=facet]

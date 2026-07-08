@@ -1,0 +1,64 @@
+# Plan Index — Component Region Personality
+#
+# Meaningful component real estate, region voice, referentiality tiers, copy
+# collectibility, linking contour, and screenshot literacy for media-team surfaces.
+
+#>plan_component_region_personality_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Develop meaningful component real estate and region personality so public copy serves a component ecology — meta-doc lives in referential components, links flow attention into tunable surfaces, and named copy supports editing-team + i18n workflow.`
+ owner = `component-region-personality`
+ kind = `plan`
+ bucket = `semantic_rails`
+ artifact_shape = `PLAN.md | index.spw | ../.spw/conventions/component-region-personality.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | tending | build"
+ semantic_layer = "pragmatics | semantics"
+ collaboration_phase = "tending | exchange"
+ memory_tier = "hot"
+ bucket = "semantic_rails"
+}[reg=facet]
+
+@plans_root: ~"../index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@convention: ~"../../../.spw/conventions/component-region-personality.spw"
+@semantic_copy_depth: ~"../semantic-copy-depth/index.spw"
+@copy_localization: ~"../../../.spw/conventions/copy-localization.spw"
+@page_model: ~"../../../.spw/surfaces/page-model.spw"
+@plan: ~"./PLAN.md"
+
+dispatch: .{
+ plan = @plan
+ convention = @convention
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-component_region_personality-001"
+ layer = "pragmatic"
+ hypothesis = `Region personality and referentiality tiers reduce mechanical copy while component ecology, linking contour, and copy-unit naming make surfaces workable for a media editing team and screenshot/model literacy.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../.spw/conventions/component-region-personality.spw#edit_waves"
+ probe_ref = `rg 'component-region-personality|Objective terminal|data-spw-copy-unit' .spw .agents/plans/component-region-personality **/*.html`
+ falsification = `Hub routes still carry verbatim Objective terminal labels and home Operational entry after wave 1.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `Which referentiality tier should this copy use?`, see = @convention }[reg=facet],
+ .{ ask = `What is the next edit wave and which files does it touch?`, see = @plan }[reg=facet],
+ .{ ask = `How do copy-unit ids relate to localization?`, see = @copy_localization }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `PLAN.md sequences waves; convention holds durable contracts.`,
+ `Wave 1 voice surgery precedes linking contour redistribution.`,
+ `Promote partials to modular-experience-slices when stable.`,
+][reg=set]

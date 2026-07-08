@@ -7,7 +7,14 @@
 #>data_spw_attribute_governance
 #:conventions #!attributes #!interaction-state #!runtime
 
-claim: "data-spw-* attributes are an authoring and runtime language. Authored values must remain legible, inferred values must identify themselves, and interaction state must name whether it is transient, selected, marked, grounded, or collected."
+@site_semantics: ~"./site-semantics.spw"
+@interaction_microstates: ~"./interaction-microstates.spw"
+@dimension_vocabulary: ~"./dimension-vocabulary.spw"
+@page_state: ~"../../public/js/runtime/page-state.js"
+@dom_contracts: ~"../../public/js/kernel/dom-contracts.js"
+@dom_probes: ~"../../.agents/debugging/dom-probes.md"
+
+claim: "data-spw-* attributes are an authoring and runtime language. Authored values must remain legible, inferred values must identify themselves, and interaction state must name whether it is transient, selected, marked, grounded, or collected. Temporal shape, altitude, and register (see rhythm below) make the language learnable dimension by dimension; the settle-declaration-contract in @site_semantics and the reward_contract in @interaction_microstates are its two anchor applications."
 
 states: .{
   charge = `Transient passive attention. Hover, focus, or nearby preview may arm, preview, charge, and settle it. Charge does not mean saved, chosen, grounded, or collected.`

@@ -11,3 +11,22 @@ html[data-spw-capture-mode="clean"] [data-spw-floating-chrome="true"],
 html[data-spw-capture-mode="clean"] [data-spw-runtime-status] {
   display: none !important;
 }
+
+/* SVG surfaces: freeze flows and drop pointer artifacts so the same tuned
+   diagram captures identically every time. Labels stay at full presence. */
+html[data-spw-capture-mode="clean"] .spw-svg-flow--animated {
+  animation-play-state: paused !important;
+}
+
+html[data-spw-capture-mode="clean"] .spw-svg-figure[data-spw-svg-pointer]::after {
+  opacity: 0 !important;
+}
+
+html[data-spw-capture-mode="clean"] .spw-svg-surface {
+  transform: none !important;
+}
+
+html[data-spw-capture-mode="clean"] .spw-svg-label,
+html[data-spw-capture-mode="clean"] .spw-svg-note {
+  opacity: 1 !important;
+}

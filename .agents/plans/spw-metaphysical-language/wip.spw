@@ -1,0 +1,207 @@
+# wip — spw-metaphysical-language
+#
+# Spw already behaves like a language on this site — operators prime attention, braces hold charge, positions carry force — but its description is distributed…
+
+#>plan_spw_metaphysical_language_wip
+#:operation #!prime
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@plans_root: ~"../../../.agents/plans/index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+
+operation = "prime"
+fixity = "tending"
+
+^"selection_probes"{
+ probes = #[ `rg 'spw-metaphysical-language' .spw/_workbench/`, `git diff --check; npm run check after any HTML/CSS/JS touch.`, `test -f .spw/_workbench/`, ][reg=set]
+ rule = "Run probes before trusting cached plan_context."
+}[reg=facet]
+
+^"plan_context"{
+ goal = `Spw already behaves like a language on this site — operators prime attention, braces hold charge, positions carry force — but its description is distributed across conventions, atlas pages, runtime attributes, and memory. This plan makes the language *describable as itself*: every construct named, every sigil's assignment justified by the properties of the glyph, every semantic drift ledgered and arbitrated, and a durable path from "notation on a webpage" to "artifact you can hold, teach with, sell, or install in another industry." Creator identity preserved: "I'm Spwashi. I build software and make art." The language is the art and the software at once; describing it is not paperwork, it is the product line maturing.`
+ owner = `spw-metaphysical-language`
+ operation = "prime"
+ bucket = "active_backlog"
+ validation = #[ `git diff --check; npm run check after any HTML/CSS/JS touch.`, `Codex completeness probe: every data-spw-operator value and every sigil in`, `Drift-ledger probe: each ledger row has claim_id, evidence refs, and status.`, `Bridge probe: rg confirms codex entries cite (not restate) owner`, `Print pilot probe: operator-deck print stylesheet renders one legible card`, `Industry pilot probe: each load-bearing brief names an existing route or`, ][reg=set]
+ hot_files = #[ `.spw/_workbench/`, `.spw/conventions/`, ][reg=set]
+}[reg=facet]
+^["roots"]{
+ @plan: ~".agents/plans/spw-metaphysical-language/PLAN.md"
+ @index: ~".agents/plans/spw-metaphysical-language/index.spw"
+ @matrix: ~".agents/plans/spw-metaphysical-language/sigil-property-matrix.spw"
+ @research: ~".agents/plans/spw-metaphysical-language/sigil-physics-research.spw"
+ @operator_semantics: ~".spw/conventions/operator-semantics.spw"
+ @operator_alignment: ~".spw/conventions/operator-alignment.spw"
+ @sigil_contract: ~".spw/conventions/sigil-identifier-contract.spw"
+ @semantic_braces: ~".spw/conventions/semantic-braces.spw"
+ @charge_cycle: ~".spw/conventions/charge-cycle.spw"
+ @semantic_capacity: ~".spw/conventions/semantic-capacity.spw"
+ @precipitates: ~".spw/conventions/precipitates-and-projections.spw"
+ @planning_ecology: ~".spw/conventions/planning-ecology.spw"
+ @product_lines: ~".spw/surfaces/product-lines.spw"
+ @spatial_grammar: ~".spw/philosophy/spatial-grammar.spw"
+ @brace_physics: ~".spw/_workbench/.spw/registries/brace-physics.spw"
+ @atlas: ~"topics/software/spw/index.html"
+ @operators_route: ~"topics/software/spw/operators/"
+ @operators_js: ~"public/js/semantic/operators.js"
+ @shared_kernel: ~"public/js/kernel/shared.js"
+ @operators_css: ~"public/css/handles/operators.css"
+ @sibling_semantics_plan: ~".agents/plans/operator-semantics-refinement/PLAN.md"
+ @sibling_pages_plan: ~".agents/plans/spw-operator-pages/PLAN.md"
+ @sibling_production_plan: ~".agents/plans/production-demonstration-pass/PLAN.md"
+}
+
+^["intent"]{
+ ~#goal: "Describe Spw as a metaphysical language in full: construct codex, sigil-property alignment protocol, production/manufacturing ladder past the screen, and industry integration briefs with pilots."
+ ~#taste: "bridge-don't-fork; falsifiable metaphysics; editions with provenance; the language stays writable live and legible in capture"
+}
+
+^["development"]{
+ lane: #semantic_rail
+ ladder: #convention_to_manufacture
+ develops: [#construct_codex, #sigil_properties, #drift_arbitration, #production_ladder, #industry_projection]
+ review_surfaces: [@plan, @matrix, @operator_alignment, @atlas]
+}
+
+^["concept_index"]{
+ primary: [#construct_codex, #sigil_property_matrix, #drift_ledger, #alignment_protocol, #labeled_braces, #coverage_algebra, #operator_deck, #edition_provenance, #sigil_physics_show]
+ constructs: [#operator_sigils, #delimiter_couples, #label_escape, #positional_grammar, #semantic_expression, #file_idioms, #threshold_sequence, #composition_families, #registers, #dispatch]
+ physics_axes: [#juxtaposition_envelope, #fundamental_motions, #object_kit, #higher_dimensions, #skim_anchors, #verso_legibility, #transparency_stack, #sound_writing, #stabilization, #evolution_fabric]
+ industries: [#learning_science, #publishing, #library_science, #culinary, #rpg, #music, #show_production, #agent_tooling]
+ tensions: [#codex_vs_second_canon, #arbitration_vs_fiat, #metaphysics_vs_falsifiability, #manufacture_vs_scope_creep, #stage_vs_canon, #spectacle_vs_instrument]
+}
+
+^["drift_ledger_seeds"]{
+ ~#note: "Each row becomes a claim chain in the sigil property matrix before any registry or copy change."
+ drift[at]{_001}: "@ = ref (author correction) vs 'enters perspective' (operator-alignment gloss); glyph lineage favors address/handle; candidate synthesis is ref-as-entered-perspective."
+ drift[pct]{_002}: "% = meta/normalize (registry) vs measurement/reduction (author reads ratio/partition in the glyph); measurement-contract.spw is evidence surface."
+ drift[amp]{_003}: "& subject sits between . and ^; may reduce into . as subject-as-traversal — pointing and reaching-into as one gesture."
+ drift[hash]{_004}: "# repetition as dimensional channel tuning (# d1 time, ## d2 attention, ### d3 relationship, ##### d5 meaning) is used but undocumented."
+ drift[und]{_005}: "_ as label/escape (?_query = probe named query) with intrinsic-operator history; holds a name flat against the grammar's tendency to interpret."
+ drift[brace]{_006}: "Labeled braces {_A }_A permit overlapping non-nesting scopes ({_A {_B }_A }_B valid); load-bearing for selection spans; described nowhere durable."
+}
+
+^["stream"]{
+ >>[2026-07-07 00:10] observe - Canon is distributed: lineage/physics in operator-semantics.spw, registry in operator-alignment.spw, grammar/address split in sigil-identifier-contract.spw, expression syntax in semantic-braces.spw, atlas at /topics/software/spw/. No single construct census exists.
+ >>[2026-07-07 00:10] observe - Three operator lists disagree on membership: original set (~ # . ? ! * & @ ^ <> () [] {}), site registry (adds = $ %, drops delimiters), operator-pages family list (#> #: . ^ ~ ? @ * & = $ % ! >). No surface names which list governs which layer.
+ >>[2026-07-07 00:12] decide - New semantic-rail plan rather than extending operator-semantics-refinement: this track owns description + alignment + manufacture + industry projection, and cites the sibling plans for lineage and atlas work.
+ >>[2026-07-07 00:14] semantics - The strongest metaphysical claim: Spw operators are sigils in the working sense — compressed intent that accumulates charge through attention and discharges through action. charge-cycle.spw and brace-gesture charge already implement this physics; the codex should say so explicitly and falsifiably.
+ >>[2026-07-07 00:16] taste - Bridge-don't-fork is the codex survival rule. The codex adds a uniform entry shape and drift notes; owner conventions keep their content. A second canon would be worse than no codex.
+ >>[2026-07-07 00:18] decide - Arbitration order for drift: author correction > glyph-property evidence > original-set lineage > site registry gloss > runtime label. No operator-meaning change lands without author sign-off (sensation-review-gates posture extended to semantics).
+ >>[2026-07-07 00:20] observe - Manufacturing has an existing on-ramp: product-lines.spw editions/collectibles, seed-card infrastructure, the Spwashi Lego card schema, and the image pipeline from production-demonstration-pass. The new rung is 'manufactured artifact' with .spw sidecar provenance.
+ >>[2026-07-07 00:22] decide - Industry sequencing: learning science, RPG, and agent tooling are load-bearing (live surfaces exist); publishing, library science, culinary are near-term; music and show production are exploratory, gated on a collaborator.
+ >>[2026-07-07 10:05] decide - Workstream E added: a show presenting the sigils that IS the research instrument for their physics. Audience comprehension, transcription, verso/skim/dictation trials are the measurements. Segment anatomy: present, perform, probe (pre-registered expectation), precipitate (evidence + edition).
+ >>[2026-07-07 10:07] semantics - Prefix/postfix juxtaposition read as one gesture seen twice: prefix wind-up, name contact, postfix follow-through. In sound this is literal ADSR: prefix anacrusis, name sustain, postfix release tail. Same-sigil sandwiches (!commit!) and asymmetric sandwiches (?name. vs !name?) test non-commutativity.
+ >>[2026-07-07 10:09] semantics - Nine-motion basis proposed (strike, wave, loop, cross, settle, thread, lift, split, hook); every sigil decomposes into <=3 motions. Best single finding: _ is a ground-level thread that literally holds the name flat against interpretation — the glyph's geometry IS the drift-und-005 semantics. Also: @ as loop-around-settle (address embracing referent) is glyph evidence for drift-at-001; % as settle/split/settle and % as a two-note musical interval are independent evidence lines for drift-pct-002.
+ >>[2026-07-07 10:11] semantics - Glyphs as stabilized motion: combinations of fundamental motions that survive six pressures (speed, scale, verso, skim, capture, sound) crystallize into letterforms. This is precipitates-and-projections at the glyph scale — the language's crystallization model explains its own alphabet.
+ >>[2026-07-07 10:13] observe - Transparent substrate is a semantic medium: vellum overlays make the labeled-brace coverage algebra physical (stacking = composition, weaving band edges = interleaving), and verso reading is a selection pressure — mirror-symmetric sigils (= * # ^) survive back-reading; mirrored ? is the irony mark, so verso can invert meaning, not just orientation.
+ >>[2026-07-07 10:15] taste - Evolution-fabric axis is the philosophy capstone and the easiest to inflate. It stays plan-local until sigil-evolution-005 has an evidence pass; the drift ledger is the fossil record and arbitration is documented selection, never silent replacement.
+ >>[2026-07-07 10:17] maintain - sigil-physics-research.spw written with five claim chains (skim-001, verso-002, sound-003, motion-004, evolution-005), all untested; PLAN.md gained Workstream E, show risks, segment validation probes, and renumbered commits; show-production industry brief upgraded exploratory -> near-term since the show is its pilot.
+ >>[2026-07-07 11:02] semantics - fable_charm section minted: ten cross-surface observations, each with saw/wisdom/toward shape, each discharging toward one plan direction. Strongest cross-site reading: the domain register is an operator atlas at biographical scale (newyear.life = threshold held annually, brainstorm.monster = ~ potential in public, clit.video = ! immediacy layered) — four longitudinal selection environments already running for the evolution fabric.
+ >>[2026-07-07 11:04] taste - A charm is not doctrine: it spends charge when read and recharges only through disagreement plus evidence. The discharge_rule routes charm mismatches back into this stream so the charm stays falsifiable like everything else in the plan.
+}
+
+^["open"]{
+ ?[codex_shape]: "One dense construct-codex.spw or a codex/ directory — at what entry count does the split rule from spw-surface-normalization trigger?"
+ ?[sigil_craft_register]: "Is the charged-compressed-intent correspondence public copy or editor-layer lore? Strongest claim, easiest to misread as decoration."
+ ?[cascade]: "If @ arbitrates to ref, does ~ narrow to potential/thread exclusively — and which copy surfaces cascade?"
+ ?[brace_convention]: "Does the labeled-brace coverage algebra get its own convention now or after selection-span runtime stabilizes?"
+ ?[second_artifact]: "After the operator deck, which industry earns the next physical artifact — recipe card or show cue sheet?"
+ ?[deck_anatomy]: "Does the operator deck reuse the character-sheet card schema verbatim, or does a card-per-operator need a geometry panel the Lego schema lacks?"
+ ?[episode_one]: "Single sigil (candidates: ~ or !) or one cross-sigil probe — the verso trial covers the whole set at once?"
+ ?[show_medium]: "Live-first (staged episodes) or capture-first (TikTok-scale segments accumulating into episodes)?"
+ ?[kit_order]: "Does the object kit precede the deck in manufacturing, since the show needs props before cards?"
+ ?[signature_ownership]: "Who owns the sonic signature recordings as an edition — the musician, the show, or the language?"
+ ?[sound_notation]: "Do sound signatures need their own notation, or does expression syntax suffice as a score?"
+}
+
+^["fable_charm"]{
+ ~#minted_by: "Claude Fable 5"
+ ~#minted: "2026-07-07"
+ ~#register: "A charm is a small charged object left on the plan's mantlepiece. Each line was gathered by reading across the site's surfaces — conventions, philosophy, plans, product lines, the domain register — and each discharges toward one of this plan's directions. A charm is not doctrine; it spends its charge when read, and recharges only when someone disagrees with a line and brings evidence."
+
+ charms: #[
+  .{
+   saw = `Every arbitrated drift in the ledger (@, %, &) happened where the gloss outran the glyph; every operator that never drifted (., !, ~) has geometry that does its own talking.`
+   wisdom = `When gloss and glyph argue, side with the glyph — it has been paying rent longer than any registry entry.`
+   toward = ~"./sigil-physics-research.spw#axis_composition_as_motion"
+  },
+  .{
+   saw = `Across maintenance sweeps, the surfaces that survived (braces, charge, thresholds) all had bodies first — a route, an attribute, a gesture, a card — and canon followed. The ones that decayed were meanings without bodies.`
+   wisdom = `Body before canon. Meaning that cannot be touched, clicked, stacked, or struck decays into ornament no matter how true it is.`
+   toward = ~"./PLAN.md#workstream-c--production--manufacturing"
+  },
+  .{
+   saw = `The drift ledger is the most trustworthy surface in this plan precisely because it records disagreement instead of smoothing it. The wip streams do the same at daily scale.`
+   wisdom = `A language that publishes its own fossil record earns practitioners that a polished grammar never will. Keep the disagreements louder than the resolutions.`
+   toward = ~"./sigil-physics-research.spw#axis_evolution_fabric"
+  },
+  .{
+   saw = `? and ! pair everywhere on the site, but the wonder doctrine keeps ? senior — probes outnumber commits on every surface that feels alive.`
+   wisdom = `On stage, open more questions than you close. Reading the open questions aloud is not humility theater; it is the show's immune system against its own charisma.`
+   toward = ~"./sigil-physics-research.spw#show_format"
+  },
+  .{
+   saw = `planning-ecology keeps every bridge thin, and the thin bridges are the ones still standing. That is ~ physics at plan scale: hold the path without collapsing it.`
+   wisdom = `Keep the industry briefs potential-shaped. A brief that pretends to be canon gets archived; a brief that stays a held thread gets picked up.`
+   toward = ~"./PLAN.md#workstream-d--industry-integration"
+  },
+  .{
+   saw = `The domain register reads as an operator atlas at biographical scale: newyear.life is a threshold sequence lived annually, brainstorm.monster is ~ seed potential in public, clit.video is ! immediacy layered until it rewards.`
+   wisdom = `Each site is one operator held long. That gives the evolution fabric four extra selection environments already running — the domains are longitudinal experiments that started before the research program had a name.`
+   toward = ~"./sigil-physics-research.spw#axis_evolution_fabric"
+  },
+  .{
+   saw = `The three audiences read three properties: engineers read grammar, illustrators read geometry and material, librarians read provenance — and those are exactly the columns every codex entry carries.`
+   wisdom = `Simultaneous legibility and sigil alignment are one test wearing two costumes. If a codex entry serves all three readers, its sigil is probably well assigned; if one reader has no door, look for a drift.`
+   toward = ~"./PLAN.md#workstream-a--construct-codex"
+  },
+  .{
+   saw = `The best surfaces here charge on approach and discharge on return — prefix primes the skim, postfix pays the reread, and the wonder trail remembers the visit.`
+   wisdom = `Design every page and every segment so the second pass is the gift. A language optimized only for first contact trains skimmers; one that rewards return trains practitioners.`
+   toward = ~"./sigil-physics-research.spw#axis_skimmability"
+  },
+  .{
+   saw = `The capture loop (screenshot to model to image and back) already selects glyphs and chrome for legibility, faster and more ruthlessly than any human reader.`
+   wisdom = `Capture is fast-forwarded history: what survives the rig previews what survives transmission. Treat every capture pass as a free stabilization trial and log it as one.`
+   toward = ~"./sigil-physics-research.spw#axis_stabilization"
+  },
+  .{
+   saw = `Metaphysics inflates exactly where validation lags — the philosophy index knew this and demanded a counterexample per claim before this plan existed.`
+   wisdom = `Five claims are untested. Keep them hungry: feed them probes, not adjectives. The day a claim gets confirmed by enthusiasm instead of a trial, retire the charm.`
+   toward = ~"./PLAN.md#validation-loop"
+  }
+ ][reg=set]
+
+ discharge_rule: `Point a collaborator at one charm before a working session and one direction after it. If a charm stops matching the surfaces — if a thin bridge collapses, if a bodiless meaning thrives — that mismatch is evidence, and belongs in the stream.`
+}
+
+^["commits"]{
+ ~[1]: "#[spw-lang] - plan, wip, and index for the metaphysical-language track"
+ ~[2]: "&[codex] - construct codex convention with census, entry shape, and bridges"
+ ~[3]: "%[sigils] - sigil property matrix, drift ledger, and evidence gathering"
+ ~[4]: "?[show] - sigil-physics research program, axes, claims, and segment format"
+ ~[5]: "=[protocol] - sigil alignment protocol promoted with arbitration order"
+ ~[6]: "![drift] - first arbitrated drift lands across registry, atlas copy, and codex"
+ ~[7]: "^[manufacture] - production ladder contract + deck/object-kit/overlay pilots"
+ ~[8]: "*[segment] - first show segment recorded: pre-registered probe, result, edition"
+ ~[9]: "~[industries] - eight integration briefs; pilots for learning/RPG/agents/show"
+ ~[10]: ".[maintenance] - plan-maintenance handoff, index wiring, archive notes"
+}
+
+^["cache"]{
+ ~#status: "planned"
+ ~#hygiene_split: "none"
+ ~#files_hot: ".agents/plans/spw-metaphysical-language/PLAN.md, .agents/plans/spw-metaphysical-language/index.spw, .agents/plans/spw-metaphysical-language/wip.spw, .agents/plans/spw-metaphysical-language/sigil-physics-research.spw"
+ ~#next_commit: "1"
+ ~#open_count: "11"
+ ~#last_stream: "2026-07-07 11:04"
+ ~#mantlepiece: "fable_charm — ten saw/wisdom/toward objects; recharge by disagreement plus evidence"
+ ~#taste_debt: "Do not let the codex restate owner conventions; do not arbitrate operator meanings by fiat; do not let industry briefs enter conventions without a pilot artifact; do not let stage excitement write canon or let segments air without a pre-registered expectation."
+}
+
+^["done"]{
+}

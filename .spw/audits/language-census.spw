@@ -1,0 +1,306 @@
+# Language Census — generated 2026-07-07
+#
+# GENERATED ARTIFACT — do not hand-edit. Regenerate: node scripts/language-census.mjs
+# Measures the trace rule from data-spw-attribute-governance.spw (rhythm.trace_rule):
+# every attribute family should appear in a JS contract, a convention, and the inspector.
+
+#>language_census
+#:audit #!language #!attributes #!events
+#:operation observe
+
+@generator: ~"../../scripts/language-census.mjs"
+@governance: ~"../conventions/data-spw-attribute-governance.spw"
+
+totals: .{
+  attributes = 1208
+  attrs_full_trace_js_css_spw = 216
+  attrs_unregistered_in_spw = 626
+  attrs_js_only = 183
+  attrs_css_only = 218
+  events_total = 178
+  events_broadcast_spw = 71
+  events_bus_local = 107
+}[reg=facet]
+
+suffix_taxonomy: .{
+  state = 60
+  mode = 28
+  label = 21
+  phase = 20
+  active = 20
+  count = 19
+  kind = 18
+  role = 16
+  source = 13
+  posture = 13
+  resolved = 12
+  tier = 11
+  surface = 10
+  context = 10
+  action = 9
+  status = 9
+}[reg=facet]
+
+homonym_spread: .{
+  settle = "js:49 css:56"
+  prime = "js:40 css:16"
+  charge = "js:48 css:39"
+  ground = "js:48 css:120"
+  arc = "js:68 css:33"
+  phase = "js:62 css:37"
+  harmony = "js:8 css:4"
+  tempo = "js:17 css:9"
+  climate = "js:20 css:11"
+  spell = "js:51 css:17"
+}[reg=facet]
+
+attrs_css_only_never_written_by_js: #[
+  `data-spw-accent-concept`,
+  `data-spw-active-layers`,
+  `data-spw-allocation`,
+  `data-spw-anatomy-state`,
+  `data-spw-author-surface`,
+  `data-spw-base-material`,
+  `data-spw-bookmarked`,
+  `data-spw-bottom-lane-managed`,
+  `data-spw-bottom-lane-mode`,
+  `data-spw-brace-state`,
+  `data-spw-breadcrumb-menu-changed`,
+  `data-spw-breadcrumb-menu-clarity`,
+  `data-spw-breadcrumb-menu-mode`,
+  `data-spw-breadcrumb-menu-phase`,
+  `data-spw-breadcrumb-menu-state`,
+  `data-spw-breadcrumb-region-menu`,
+  `data-spw-breadcrumb-reversible`,
+  `data-spw-breadcrumb-state`,
+  `data-spw-breadcrumb-viewport`,
+  `data-spw-brush-active`,
+  `data-spw-brush-mode`,
+  `data-spw-charge-direction`,
+  `data-spw-charge-phase`,
+  `data-spw-charge-state`,
+  `data-spw-child-active`,
+  `data-spw-chrome-collapse`,
+  `data-spw-chrome-fluid`,
+  `data-spw-chrome-island`,
+  `data-spw-chrome-position`,
+  `data-spw-chrome-tier`,
+  `data-spw-circuit-role`,
+  `data-spw-cognitive-container`,
+  `data-spw-cognitive-handles`,
+  `data-spw-color-tuner`,
+  `data-spw-component-density`,
+  `data-spw-component-genome`,
+  `data-spw-component-id`,
+  `data-spw-component-lifecycle`,
+  `data-spw-component-state`,
+  `data-spw-concept-label`,
+  `data-spw-concept-relation`,
+  `data-spw-config-domain`,
+  `data-spw-connection-posture`,
+  `data-spw-container`,
+  `data-spw-content`,
+  `data-spw-context-match`,
+  `data-spw-controls-open`,
+  `data-spw-copied`,
+  `… +170 more`
+][reg=set]
+
+attrs_js_only_never_spent_or_registered: #[
+  `data-spw-attention-posture`,
+  `data-spw-attention-posture-label`,
+  `data-spw-effect-legend-host`,
+  `data-spw-effect-legend-ready`,
+  `data-spw-effect-readout`,
+  `data-spw-effect-state`,
+  `data-spw-effect-state-value`,
+  `data-spw-enhance`,
+  `data-spw-enhanced`,
+  `data-spw-evidence-hydrated`,
+  `data-spw-example`,
+  `data-spw-expression`,
+  `data-spw-field-root`,
+  `data-spw-frame-line-count`,
+  `data-spw-frame-wrap`,
+  `data-spw-functional-application`,
+  `data-spw-garden-on-path`,
+  `data-spw-gesture-anatomy`,
+  `data-spw-gesture-priority`,
+  `data-spw-gesture-trace`,
+  `data-spw-ground-key`,
+  `data-spw-grounded-wonder`,
+  `data-spw-guide-previous-liminality`,
+  `data-spw-guide-reason`,
+  `data-spw-handle-count`,
+  `data-spw-handle-current`,
+  `data-spw-handle-index`,
+  `data-spw-handle-kind`,
+  `data-spw-handle-origin`,
+  `data-spw-handle-source`,
+  `data-spw-handle-target`,
+  `data-spw-header-annotation`,
+  `data-spw-hook`,
+  `data-spw-hydration-pass-state`,
+  `data-spw-hypermedia-capability`,
+  `data-spw-id`,
+  `data-spw-image-managed`,
+  `data-spw-implementation-mutations`,
+  `data-spw-importance`,
+  `data-spw-ingredient-enhanced`,
+  `data-spw-ingredient-mode-set`,
+  `data-spw-ingredient-state`,
+  `data-spw-ingredient-status`,
+  `data-spw-inspect-semantic-focus-count`,
+  `data-spw-inspect-semantic-focus-root`,
+  `data-spw-interaction-hint`,
+  `data-spw-keep-user-select-none`,
+  `data-spw-key-events-ready`,
+  `… +135 more`
+][reg=set]
+
+events_emitted_never_heard: #[
+  `author:mode`,
+  `brace:pivoted`,
+  `canvas:painted`,
+  `cauldron:ingredient-refreshed`,
+  `cauldron:offer`,
+  `copy:failed`,
+  `core:knowledge`,
+  `design:ecology-state`,
+  `electromagnetic:initialized`,
+  `electromagnetic:slice-change`,
+  `field:charged`,
+  `frame:mode`,
+  `guide-badge:cleared`,
+  `guide-badge:collected`,
+  `guide-badge:ready`,
+  `guide-badge:released`,
+  `hormone:changed`,
+  `key:actualized`,
+  `key:potentiated`,
+  `key:released`,
+  `page-anatomy:focus`,
+  `page-anatomy:parallel`,
+  `persona:projected`,
+  `presets:measured`,
+  `prompt:copied`,
+  `recipe:complexity`,
+  `recipe:detail`,
+  `region-menu:tuned`,
+  `render:error`,
+  `reveal:cancelled`,
+  `reveal:phase`,
+  `scene:lane-focus`,
+  `scene:state-changed`,
+  `semantic-crossref:cleared`,
+  `semantic-crossref:focused`,
+  `sequence:selected`,
+  `settings:deviations-changed`,
+  `sigil:collected`,
+  `sigil:transition`,
+  `spell:primed`,
+  `spw:achievement-unlocked`,
+  `spw:beat:flush`,
+  `spw:beat:start`,
+  `spw:chrome-interaction`,
+  `spw:collection-updated`,
+  `spw:core-refresh`,
+  `spw:discovery-notice-shown`,
+  `spw:hash-target`,
+  `… +23 more`
+][reg=set]
+
+events_heard_never_emitted: #[
+  `brace:activate`,
+  `brace:activated`,
+  `brace:armed`,
+  `brace:charge-start`,
+  `brace:committed`,
+  `brace:pinned`,
+  `brace:sustained`,
+  `brace:swapped`,
+  `charge:armed`,
+  `charge:preview`,
+  `charge:settled`,
+  `frame:activated`,
+  `rhythm:measure`,
+  `rhythm:phase`,
+  `rhythm:pulse`,
+  `rhythm:reset`,
+  `rhythm:start`,
+  `rhythm:stop`,
+  `rhythm:tempo`,
+  `spell:decomposed`,
+  `spell:momentum`,
+  `spirit:peak`,
+  `spw:beat:request`,
+  `spw:development-shifted`,
+  `spw:freshness-pulse`,
+  `spw:interaction-phase`,
+  `spw:layout-assumptions-updated`,
+  `spw:layout-shift`,
+  `spw:loading-ecology`,
+  `spw:memory:recent-path`,
+  `spw:mode-change`,
+  `spw:page-attention-state`,
+  `spw:page-extended`,
+  `spw:page-transition-state`,
+  `spw:pretext-measurement`,
+  `spw:qa:enter-screenshot`,
+  `spw:section-locomotion-state`,
+  `spw:semantic-snapshot`,
+  `spw:settings-change`,
+  `spw:settings-momentum`,
+  `spw:settings:changed`,
+  `spw:shell-menu-state`,
+  `stream:phase`,
+  `stream:pulse`
+][reg=set]
+
+bus_local_event_domains: #[
+  `author`,
+  `brace`,
+  `canvas`,
+  `cauldron`,
+  `charge`,
+  `copy`,
+  `core`,
+  `design`,
+  `development`,
+  `electromagnetic`,
+  `field`,
+  `frame`,
+  `gate`,
+  `guide-badge`,
+  `hormone`,
+  `image`,
+  `key`,
+  `lattice`,
+  `memory`,
+  `operator`,
+  `page-anatomy`,
+  `persona`,
+  `presets`,
+  `prime`,
+  `prompt`,
+  `recipe`,
+  `region-menu`,
+  `render`,
+  `reveal`,
+  `rhythm`,
+  `scene`,
+  `semantic-crossref`,
+  `sequence`,
+  `settings`,
+  `sigil`,
+  `spell`,
+  `spirit`,
+  `state-inspector`,
+  `stream`,
+  `topic`,
+  `topical`,
+  `universe`,
+  `visitation`
+][reg=set]
+
+note "css-only attributes are either authored-HTML-driven (fine) or dead selectors; js-only attributes are unspent state or narration missing its convention registration. Both lists are the census's working surface — each entry either gains its missing trace legs or gets retired via the homonym-renaming / language-reclustering plans."

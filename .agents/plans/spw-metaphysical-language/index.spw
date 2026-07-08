@@ -1,0 +1,97 @@
+# Plan Index — spw-metaphysical-language
+#
+# Spw already behaves like a language on this site — operators prime attention, braces hold charge, positions carry force — but its description is distributed across conventions,…
+
+#>plan_spw_metaphysical_language_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Spw already behaves like a language on this site — operators prime attention, braces hold charge, positions carry force — but its description is distributed across conventions, atlas pages, runtime attributes, and memory. This plan makes the language *describable as itself*: every construct named, every sigil's assignment justified by the properties of the glyph, every semantic drift ledgered and arbitrated, and a durable path from "notation on a webpage" to "artifact you can hold, teach with, sell, or install in another industry." Creator identity preserved: "I'm Spwashi. I build software and make art." The language is the art and the software at once; describing it is not paperwork, it is the product line maturing.`
+ owner = `spw-metaphysical-language`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | wip.spw | sigil-physics-research.spw | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@index: ~"./index.spw"
+@plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@sigil_physics_research: ~"./sigil-physics-research.spw"
+@workbench: ~"../../../.spw/_workbench/"
+@conventions: ~"../../../.spw/conventions/"
+
+dispatch: .{
+ plan = @plan
+ wip = @wip
+ sigil_physics_research = @sigil_physics_research
+ workbench = @workbench
+ conventions = @conventions
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-spw_metaphysical_language-001"
+ layer = "pragmatic"
+ hypothesis = `Spw already behaves like a language on this site — operators prime attention, braces hold charge, positions carry force — but its description is distributed across conventions, atlas pages, runtime attributes, and memory. This plan makes the language *describable as itself*: every construct named, every sigil's assignment justified by the properties of the glyph, every semantic drift ledgered and arbitrated, and a durable path from "notation on a webpage" to "artifact you can hold, teach with, sell, or install in another industry." Creator identity preserved: "I'm Spwashi. I build software and make art." The language is the art and the software at once; describing it is not paperwork, it is the product line maturing.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../.spw/_workbench/"
+ probe_ref = `git diff --check; npm run check after any HTML/CSS/JS touch.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../.spw/_workbench/ unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+scope: .{
+ in = #[
+  `In scope:`,
+  `Construct codex convention + wiring (conventions index, site.spw ref).`,
+  `Sigil property matrix + drift ledger + alignment protocol.`,
+  `Production-ladder contract; manufacturing specs for deck + specimen sheet`,
+ ][reg=set]
+ out = #[
+  `Rewriting operator atlas pages wholesale (route through spw-operator-pages`,
+  `Runtime widget development (route through interaction-grammar /`,
+  `Any actual print vendor selection, fulfillment, or storefront.`,
+ ][reg=set]
+}[reg=facet]
+
+validation: #[
+ `git diff --check; npm run check after any HTML/CSS/JS touch.`,
+ `Codex completeness probe: every data-spw-operator value and every sigil in`,
+ `Drift-ledger probe: each ledger row has claim_id, evidence refs, and status.`,
+ `Bridge probe: rg confirms codex entries cite (not restate) owner`,
+ `Print pilot probe: operator-deck print stylesheet renders one legible card`,
+ `Industry pilot probe: each load-bearing brief names an existing route or`,
+][reg=set]
+
+open_questions: #[
+ .{ ask = `Should the codex live as one dense file or a directory` }[reg=facet],
+ .{ ask = `Is the sigil-craft correspondence (charged compressed intent) public copy or` }[reg=facet],
+ .{ ask = `Does the labeled-brace coverage algebra deserve its own convention now, or` }[reg=facet],
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does spw-metaphysical-language own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of spw-metaphysical-language?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether spw-metaphysical-language still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: Spw already behaves like a language on this site — operators prime attention, braces hold charge, positions carry force — but its…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]

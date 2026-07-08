@@ -19,6 +19,13 @@
  * - spw-svg-space=0.75rem
  * - spw-svg-motion=slow|quick|paused
  * - spw-svg-pointer=field|tilt|trace|none
+ *
+ * Hosts with a .spw-svg-rail companion get addressable-node behavior: rail
+ * chips that anchor to a named <g id> inside the SVG preview that node on
+ * hover/focus (data-spw-svg-node-state on groups, data-spw-svg-focus-node on
+ * the host). Chips with data-spw-svg-action="copy-url|copy-source" serialize
+ * the host's current tuning into a shareable URL or copy the SVG source for
+ * handoff, with a visible copied/failed settle state.
  */
 
 import {
@@ -148,6 +155,11 @@ export const SPW_SVG_TUNABILITY_CONTRACT = Object.freeze({
     responsive: 'data-spw-svg-responsive',
     interactive: 'data-spw-svg-interactive',
     device: 'data-spw-svg-device',
+    scale: 'data-spw-svg-scale',
+    focusNode: 'data-spw-svg-focus-node',
+    nodeState: 'data-spw-svg-node-state',
+    action: 'data-spw-svg-action',
+    actionState: 'data-spw-svg-action-state',
   }),
   queryParameters: Object.freeze({
     stroke: 'spw-svg-stroke=<number>',
@@ -175,7 +187,7 @@ const logger = createSpwLogger('spw-svg-tunability', {
   role: 'svg-controller',
   metaphor: 'pointer-spell',
   owns: SVG_HOST_SELECTOR,
-  writes: 'data-spw-svg-pointer-state, SVG tuning custom properties',
+  writes: 'data-spw-svg-pointer-state, data-spw-svg-focus-node, data-spw-svg-node-state, data-spw-svg-action-state, SVG tuning custom properties',
 });
 
 const HOST_STATE = new WeakMap();
@@ -384,6 +396,157 @@ export function applySvgQueryTunability(root = globalThis.document, options = {}
   return hosts;
 }
 
+export function serializeSvgTunability(host) {
+  const params = new URLSearchParams();
+  if (!isElement(host)) return params.toString();
+
+  const dataset = host.dataset || {};
+  const read = (property) => host.style?.getPropertyValue?.(property).trim() || '';
+
+  const palette = normalizeToken(dataset.spwSvgPalette || '');
+  if (SPW_SVG_PALETTES[palette]) params.set('spw-svg-palette', palette);
+
+  const pairs = [
+    ['spw-svg-stroke', read('--spw-svg-stroke-scale')],
+    ['spw-svg-dash', read('--spw-svg-flow-dash')],
+    ['spw-svg-gap', read('--spw-svg-flow-gap')],
+    ['spw-svg-label', read('--spw-svg-label-spacing')],
+    ['spw-svg-space', read('--spw-svg-space')],
+    ['spw-svg-motion-rate', read('--spw-svg-motion-rate')],
+    ['spw-svg-pointer-lift', read('--spw-svg-pointer-lift')],
+  ];
+  if (!SPW_SVG_PALETTES[palette]) {
+    pairs.push(
+      ['spw-svg-accent', read('--spw-svg-brand-accent')],
+      ['spw-svg-field', read('--spw-svg-brand-field')],
+      ['spw-svg-fill', read('--spw-svg-node-fill-mix')],
+    );
+  }
+  pairs.forEach(([key, value]) => {
+    if (value) params.set(key, value);
+  });
+
+  const motion = normalizeToken(dataset.spwSvgTuneMotion || '');
+  if (MOTION_STATES.has(motion)) params.set('spw-svg-motion', motion);
+
+  const contrast = normalizeToken(dataset.spwSvgTuneContrast || '');
+  if (CONTRAST_STATES.has(contrast)) params.set('spw-svg-contrast', contrast);
+
+  const pointer = normalizeToken(dataset.spwSvgPointer || '');
+  if (POINTER_MODES.has(pointer)) params.set('spw-svg-pointer', pointer);
+
+  const semantic = normalizeToken(dataset.spwSvgSemantic || '');
+  if (SEMANTIC_MODES.has(semantic)) params.set('spw-svg-semantic', semantic);
+
+  const responsive = normalizeToken(dataset.spwSvgResponsive || '');
+  if (RESPONSIVE_MODES.has(responsive)) params.set('spw-svg-responsive', responsive);
+
+  const interactive = normalizeToken(dataset.spwSvgInteractive || '');
+  if (INTERACTIVE_MODES.has(interactive)) params.set('spw-svg-interactive', interactive);
+
+  return params.toString();
+}
+
+const buildTunedUrl = (host) => {
+  const base = globalThis.location?.href || 'https://spwashi.com/';
+  const url = new URL(base);
+  url.search = serializeSvgTunability(host);
+  const anchorId = host.id || host.closest?.('[id]')?.id || '';
+  if (anchorId) url.hash = anchorId;
+  return url.toString();
+};
+
+const copyText = async (text) => {
+  try {
+    await globalThis.navigator?.clipboard?.writeText?.(text);
+    return true;
+  } catch (_) {
+    return false;
+  }
+};
+
+const getNamedGroups = (host) => [...(host.querySelectorAll?.('svg g[id]') || [])];
+
+const setNodeFocus = (host, targetId = '') => {
+  const groups = getNamedGroups(host);
+  if (!groups.length) return;
+
+  groups.forEach((group) => {
+    if (!targetId) {
+      removeDatasetValues(group, ['spwSvgNodeState']);
+      return;
+    }
+    writeDatasetValues(group, {
+      spwSvgNodeState: group.id === targetId ? 'focused' : 'dimmed',
+    });
+  });
+
+  if (targetId) {
+    writeDatasetValues(host, { spwSvgFocusNode: targetId });
+  } else {
+    removeDatasetValues(host, ['spwSvgFocusNode']);
+  }
+};
+
+function initRailCompanion(host) {
+  if (host.dataset.spwSvgRailManaged === 'true') return;
+
+  const rail = host.querySelector?.('.spw-svg-rail');
+  if (!rail) return;
+
+  const chips = [...rail.querySelectorAll('a[href^="#"]')].filter((chip) => {
+    const id = (chip.getAttribute('href') || '').slice(1);
+    return id && host.querySelector(`svg g[id="${globalThis.CSS?.escape?.(id) ?? id}"]`);
+  });
+  if (!chips.length) return;
+
+  writeDatasetValues(host, { spwSvgRailManaged: 'true' });
+  markInstrumented(host, 'spw-svg-tunability', { tags: ['svg-rail', 'node-focus'] });
+
+  chips.forEach((chip) => {
+    const id = (chip.getAttribute('href') || '').slice(1);
+    writeDatasetValues(chip, { spwSvgNodeRef: id });
+    chip.addEventListener('pointerenter', () => setNodeFocus(host, id), { passive: true });
+    chip.addEventListener('pointerleave', () => setNodeFocus(host, ''), { passive: true });
+    chip.addEventListener('focusin', () => setNodeFocus(host, id));
+    chip.addEventListener('focusout', () => setNodeFocus(host, ''));
+  });
+}
+
+const ACTION_SETTLE_MS = 1600;
+
+function initActionChips(host) {
+  const chips = [...(host.querySelectorAll?.('[data-spw-svg-action]') || [])];
+
+  chips.forEach((chip) => {
+    if (chip.dataset.spwSvgActionManaged === 'true') return;
+    writeDatasetValues(chip, { spwSvgActionManaged: 'true' });
+
+    chip.addEventListener('click', async (event) => {
+      event.preventDefault();
+      const kind = normalizeToken(chip.dataset.spwSvgAction || '');
+
+      let payload = '';
+      if (kind === 'copy-url') payload = buildTunedUrl(host);
+      if (kind === 'copy-source') payload = host.querySelector?.('svg')?.outerHTML || '';
+      if (!payload) return;
+
+      const copied = await copyText(payload);
+      writeDatasetValues(chip, { spwSvgActionState: copied ? 'copied' : 'failed' });
+      globalThis.setTimeout?.(() => {
+        removeDatasetValues(chip, ['spwSvgActionState']);
+      }, ACTION_SETTLE_MS);
+
+      logger.info('svg action', {
+        action: kind,
+        host: host.dataset.spwSvgHost || 'svg',
+        copied,
+        bytes: payload.length,
+      });
+    });
+  });
+}
+
 const getHostState = (host) => {
   let state = HOST_STATE.get(host);
   if (state) return state;
@@ -461,15 +624,64 @@ const getDeviceMode = () => {
   return 'fine';
 };
 
+/* Device mode is live, not a boot-time snapshot: attaching a mouse to a
+   tablet, docking, or orientation change re-resolves data-spw-svg-device on
+   every host that did not author an explicit device. Scroll/resize invalidate
+   cached host rects so the pointer field never tracks a stale position. */
+
+const POINTER_MANAGED_HOSTS = new Set();
+const DEVICE_TRACKED_HOSTS = new Set();
+let deviceWatcherStarted = false;
+
+const invalidateHostRects = () => {
+  POINTER_MANAGED_HOSTS.forEach((host) => {
+    if (!host.isConnected) {
+      POINTER_MANAGED_HOSTS.delete(host);
+      return;
+    }
+    const state = HOST_STATE.get(host);
+    if (state) state.rect = null;
+  });
+};
+
+const syncDeviceMode = () => {
+  const mode = getDeviceMode();
+  DEVICE_TRACKED_HOSTS.forEach((host) => {
+    if (!host.isConnected) {
+      DEVICE_TRACKED_HOSTS.delete(host);
+      return;
+    }
+    writeDatasetValues(host, { spwSvgDevice: mode });
+  });
+  logger.debug('device mode resolved', { mode, hosts: DEVICE_TRACKED_HOSTS.size });
+};
+
+const startDeviceWatcher = () => {
+  if (deviceWatcherStarted || typeof window === 'undefined') return;
+  deviceWatcherStarted = true;
+
+  if (window.matchMedia) {
+    ['(hover: none)', '(pointer: coarse)'].forEach((query) => {
+      window.matchMedia(query).addEventListener?.('change', syncDeviceMode);
+    });
+  }
+  window.addEventListener('resize', invalidateHostRects, { passive: true });
+  window.addEventListener('scroll', invalidateHostRects, { passive: true });
+};
+
 function initPointerHost(host) {
   const pointerMode = normalizeToken(host.dataset.spwSvgPointer || '');
   if (!POINTER_MODES.has(pointerMode) || host.dataset.spwSvgPointerManaged === 'true') return;
 
+  const authoredDevice = normalizeToken(host.dataset.spwSvgDevice || '');
   writeDatasetValues(host, {
     spwSvgPointerManaged: 'true',
     spwSvgPointerState: host.dataset.spwSvgPointerState || 'rest',
-    spwSvgDevice: host.dataset.spwSvgDevice || getDeviceMode(),
+    spwSvgDevice: DEVICE_MODES.has(authoredDevice) ? authoredDevice : getDeviceMode(),
   });
+  if (!DEVICE_MODES.has(authoredDevice)) DEVICE_TRACKED_HOSTS.add(host);
+  POINTER_MANAGED_HOSTS.add(host);
+  startDeviceWatcher();
   markInstrumented(host, 'spw-svg-tunability', { tags: ['svg-pointer', pointerMode] });
 
   host.addEventListener('pointerenter', (event) => {
@@ -529,7 +741,11 @@ function initPointerHost(host) {
 export function initSpwSvgTunability(root = globalThis.document, options = {}) {
   const hosts = getHosts(root);
   applySvgQueryTunability(root, options);
-  hosts.forEach(initPointerHost);
+  hosts.forEach((host) => {
+    initPointerHost(host);
+    initRailCompanion(host);
+    initActionChips(host);
+  });
 
   if (hosts.length) {
     logger.debug('initialized svg tunability hosts', { count: hosts.length });

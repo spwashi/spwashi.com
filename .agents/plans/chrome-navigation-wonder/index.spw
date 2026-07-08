@@ -1,9 +1,9 @@
-# Plan Index — Chrome Navigation Wonder
+# Plan Index — Chrome, Navigation, and Metaphysical Wonder (2026 review)
 #
-# Chrome, navigation, and metaphysical wonder: field-like shell affordances.
+# Improve the primary navigation (header via <spw-site-header>), section handles, breadcrumbs, and footer so they are genuinely pleasant on mobile, encourage…
 
 #>plan_chrome_navigation_wonder_index
-#:index #!plan #!chrome
+#:index #!plan
 #:operation #!prime
 #:layer #!pragmatics
 
@@ -11,84 +11,69 @@ operation = "prime"
 fixity = "tending"
 
 intent: .{
- goal = `Improve header, section handles, breadcrumbs, and footer so they invite curiosity and participate in the attentional field — operators as forces, semantic-accent as lived projection.`
+ goal = `Improve the primary navigation (header via <spw-site-header>), section handles, breadcrumbs, and footer so they are genuinely pleasant on mobile, encourage curiosity/discovery/wonder, and feel like part of the Spw attentional field rather than administrative chrome. Simultaneously honor the philosophical shift: operators as "elements or forces" for metaphysical play (grammar of thought, interactions that produce resonance and emergence), with surface theming carried by the semantic accent family rather than direct operator hues. This keeps the operator palette as a stable, inspectable "periodic table" of forces while surfaces and ornament project lived accent. Support the longer-term vision of a scientifically-social component taxonomy: a model with enough depth and rhythmic discovery that it naturally invites wonder about the underlying sciences of attention, systemic resonance, and emergence — and makes art a natural extension rather than a separate domain.`
  owner = `chrome-navigation-wonder`
  kind = `plan`
- bucket = `chrome_navigation`
+ bucket = `css_layout_interaction`
  artifact_shape = `PLAN.md | FIX.md | index.spw`
 }[reg=facet]
 
 ^"dimensions"{
- practice_depth = "contract | observation | tending"
- semantic_layer = "pragmatics | application"
- collaboration_phase = "exchange"
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
  memory_tier = "hot"
- bucket = "chrome_navigation"
+ bucket = "css_layout_interaction"
 }[reg=facet]
 
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@index: ~"./index.spw"
 @plan: ~"./PLAN.md"
 @fix: ~"./FIX.md"
-@component_taxonomy: ~"../../../.spw/conventions/component-taxonomy.spw"
-@navigation_header_disclosure: ~"../navigation-header-disclosure/PLAN.md"
-@floating_chrome_stack: ~"../floating-chrome-stack/FIX.md"
-@gesture_state_refinement: ~"../gesture-state-refinement/PLAN.md"
-@attention_field: ~"../../../.spw/conventions/attention-field.spw"
-@cognitive_navigation: ~"../../../.spw/conventions/cognitive-navigation.spw"
-@expressive_registers: ~"../../../.spw/conventions/expressive-registers.spw"
 @plan_space_menu_arcs_electrical: ~"./space-menu-arcs-electrical/index.spw"
 @menu_field: ~"../../../.spw/surfaces/menu-field.spw"
 @circuit_components: ~"../../../.spw/conventions/circuit-components.spw"
+@component_taxonomy: ~"../../../.spw/conventions/component-taxonomy.spw"
+@section_handle: ~"../../../public/js/runtime/attention/section-handle.js"
+@section_context: ~"../../../public/css/shell/chrome/section-context.css"
+@navigation: ~"../../../public/css/shell/chrome/navigation.css"
+@footer: ~"../../../public/css/shell/chrome/footer.css"
+@cognitive_navigation: ~"../../../.spw/conventions/cognitive-navigation.spw"
 
 dispatch: .{
  plan = @plan
  fix = @fix
- plans_root = @plans_root
- plan_index_convention = @plan_index_convention
- wip_notebook = @wip_notebook
- component_taxonomy = @component_taxonomy
- navigation_header_disclosure = @navigation_header_disclosure
- floating_chrome_stack = @floating_chrome_stack
- gesture_state_refinement = @gesture_state_refinement
- attention_field = @attention_field
- cognitive_navigation = @cognitive_navigation
- expressive_registers = @expressive_registers
  plan_space_menu_arcs_electrical = @plan_space_menu_arcs_electrical
  menu_field = @menu_field
  circuit_components = @circuit_components
+ component_taxonomy = @component_taxonomy
+ section_handle = @section_handle
+ section_context = @section_context
+ navigation = @navigation
+ footer = @footer
+ cognitive_navigation = @cognitive_navigation
 }[reg=facet]
 
 ^"owner_claim"{
- claim_id = "plan-chrome-navigation-wonder-001"
+ claim_id = "plan-chrome_navigation_wonder-001"
  layer = "pragmatic"
- hypothesis = `Section locomotion can project taste and wonder through existing page_locomotion_handle datasets plus handle-only wonder-entry and approach attrs — no parallel root attrs.`
+ hypothesis = `Improve the primary navigation (header via <spw-site-header>), section handles, breadcrumbs, and footer so they are genuinely pleasant on mobile, encourage curiosity/discovery/wonder, and feel like part of the Spw attentional field rather than administrative chrome. Simultaneously honor the philosophical shift: operators as "elements or forces" for metaphysical play (grammar of thought, interactions that produce resonance and emergence), with surface theming carried by the semantic accent family rather than direct operator hues. This keeps the operator palette as a stable, inspectable "periodic table" of forces while surfaces and ornament project lived accent. Support the longer-term vision of a scientifically-social component taxonomy: a model with enough depth and rhythmic discovery that it naturally invites wonder about the underlying sciences of attention, systemic resonance, and emergence — and makes art a natural extension rather than a separate domain.`
  spec_ref = ~"./PLAN.md"
- impl_ref = ~"../../../public/js/runtime/attention/section-handle.js"
- probe_ref = `rg 'data-spw-wonder-entry|data-spw-approach|syncChromeLocomotionExpression' public/js/runtime/attention`
- falsification = `Mobile chrome still reads as utility-only after locomotion_expression datasets and field-balance styling land.`
+ impl_ref = ~"../../../.spw/surfaces/menu-field.spw"
+ probe_ref = `rg 'chrome-navigation-wonder' .agents/plans/chrome-navigation-wonder`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../.spw/surfaces/menu-field.spw unchanged or untested.`
  status = "active"
 }[reg=facet]
 
-implementation_phases: ?<
- `Phase 0 — locomotion_expression on section handle (landed)`,
- `Phase 1 — footer mobile rhythm + nav toggle stable copy + wonder-entry chrome`,
- `Phase 2 — breadcrumbs as collectible surface`,
- `Phase 3 — operator-forces doc pass + design hub on-ramp`,
- `Phase 4 — component taxonomy convention wiring`
->[reg=stream]
-
 editor_prompts: #[
- .{ ask = `What is the mobile footer/cauldron rhythm problem?`, see = @plan }[reg=facet],
- .{ ask = `How should chrome participate in the attentional field?`, see = @component_taxonomy }[reg=facet],
- .{ ask = `What hover-stability fixes are still open?`, see = @fix }[reg=facet],
- .{ ask = `Which plan index convention routes this directory?`, see = @plan_index_convention }[reg=facet],
+ .{ ask = `What does chrome-navigation-wonder own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of chrome-navigation-wonder?`, see = @index }[reg=facet],
 ][reg=set]
 
 invariants: #[
- `Operators stay the force layer; semantic-accent stays the projection layer.`,
- `Reach/return/invitation project through existing locomotion surfaces; approach stays on handle shell only.`,
- `Chrome CSS edits target public/css/shell/chrome/* after the 2026 split.`,
+ `Owner intent: Improve the primary navigation (header via <spw-site-header>), section handles, breadcrumbs, and footer so they are genuinely pleasant on…`,
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]

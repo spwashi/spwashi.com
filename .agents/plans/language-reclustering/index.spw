@@ -1,0 +1,70 @@
+# Plan Index — language-reclustering
+#
+# A contributor (human or agent) who learns one cluster can predict the rest: suffix tells grammatical category, family tells dimension, altitude tells scope, temporal shape tells…
+
+#>plan_language_reclustering_index
+#:index #!plan
+#:operation #!prime
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `A contributor (human or agent) who learns one cluster can predict the rest: suffix tells grammatical category, family tells dimension, altitude tells scope, temporal shape tells lifecycle. New vocabulary lands *inside* a cluster or deliberately founds one — never beside the system. The census baseline (2026-07: 18% full-trace coverage, 712 attributes unregistered in .spw) trends toward full trace without a big-bang rename.`
+ owner = `language-reclustering`
+ kind = `plan`
+ bucket = `active_backlog`
+ artifact_shape = `PLAN.md | index.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "active_backlog"
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@plan: ~"./PLAN.md"
+@scripts_language_census_mjs: ~"../../../scripts/language-census.mjs"
+@spw_audits_language_census_spw: ~"../../../.spw/audits/language-census.spw"
+
+dispatch: .{
+ plan = @plan
+ scripts_language_census_mjs = @scripts_language_census_mjs
+ spw_audits_language_census_spw = @spw_audits_language_census_spw
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-language_reclustering-001"
+ layer = "pragmatic"
+ hypothesis = `A contributor (human or agent) who learns one cluster can predict the rest: suffix tells grammatical category, family tells dimension, altitude tells scope, temporal shape tells lifecycle. New vocabulary lands *inside* a cluster or deliberately founds one — never beside the system. The census baseline (2026-07: 18% full-trace coverage, 712 attributes unregistered in .spw) trends toward full trace without a big-bang rename.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../scripts/language-census.mjs"
+ probe_ref = `Census rerun shows monotonic full-trace improvement per touched cluster; no new unregistered attributes in reviewed patches.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../scripts/language-census.mjs unchanged or untested.`
+ status = "active"
+}[reg=facet]
+
+validation: #[
+ `Census rerun shows monotonic full-trace improvement per touched cluster; no new unregistered attributes in reviewed patches.`,
+ `Settings-changed event consolidated to one canonical + aliases; defensive triple-listeners removed.`,
+ `New feature patches name their cluster in review; vocabulary landing outside any cluster is flagged.`,
+][reg=set]
+
+editor_prompts: #[
+ .{ ask = `What does language-reclustering own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of language-reclustering?`, see = @index }[reg=facet],
+ .{ ask = `What command or check falsifies whether language-reclustering still holds?`, see = @plan }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: A contributor (human or agent) who learns one cluster can predict the rest: suffix tells grammatical category, family tells dimension,…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
+][reg=set]
+

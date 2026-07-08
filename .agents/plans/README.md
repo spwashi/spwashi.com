@@ -28,9 +28,13 @@ Use these when a task is broad, cross-disciplinary, or likely to create reusable
 - `navigation-header-disclosure/PLAN.md` — keep header disclosure roles, overlay state, and compact action ownership legible.
 - `floating-chrome-stack/FIX.md` — normalize floating chrome roles, tiers, console ownership, and viewport participation.
 - `semantic-copy-depth/PLAN.md` — formalize entry/normal/dense/technical copy depth alongside the existing semantic layers.
+- `spw-architecture-ecology/PLAN.md` — `.spw` topology, promotion protocol, ecology coordinators, owner registry, component-template surface, `site.spw` slimness, review graduation, language-ecology alignment, slice promotion, convention hygiene, and precipitated agent/editor indexes.
 - `relational-attention-media/PLAN.md` — attention as self/local/global relation plus local media-seed production across genres.
 - `webpage-trope-vocabulary/PLAN.md` — literal website/reference-document anatomy, route-specific restaurant/garden anchors, shared `data-spw-anatomy` vocabulary, and floating chrome island rules.
 - `site-starter-component-kit/PLAN.md` — portable compose.css/compose.js starter boundary, component specimen promotion, and inventory command for spawning new sites.
+- `spw-metaphysical-language/PLAN.md` — construct codex, sigil-property alignment protocol with drift ledger, production/manufacturing ladder past the screen, and industry integration briefs; use when work describes or arbitrates the Spw language itself.
+- `language-reclustering/PLAN.md` — dimensional clusters for the attribute/event lexicon, census-driven trace coverage, event-grammar boundary (broadcast vs bus-local), nutritious-architecture practices; use when vocabulary is added, audited, or consolidated.
+- `homonym-renaming/PLAN.md` — semantic-geometry verdicts on load-bearing homonyms (settle/prime/ground/phase), echo-vs-homonym criteria, alias-windowed rename mechanics; use before renaming any shared vocabulary.
 - `agent-optimization/PLAN.md` — use when the work changes the agent/editor operating environment itself.
 
 Small semantic discoveries do not always need a new plan. Use `.agents/plans/model-guided-refinement/templates/semantic-insight-cache.spw` for a single cache/audit/prime entry when implementation should wait.

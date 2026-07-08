@@ -1,0 +1,334 @@
+^"plan_linkage"{
+ plan = ~"./PLAN.md"
+ index = ~"./index.spw"
+ goal = `Spw already behaves like a language on this site — operators prime attention, braces hold charge, positions carry force — but its description is distributed across conventions, atlas pages, runtime attributes, and memory. This plan makes the language *describable as itself*: every construct named, every sigil's assignment justified by the properties of the glyph, every semantic drift ledgered and arbitrated, and a durable path from "notation on a webpage" to "artifact you can hold, teach with, sell, or install in another industry." Creator identity preserved: "I'm Spwashi. I build software and make art." The language is the art and the software at once; describing it is not paperwork, it is the product line maturing.`
+ owner = `spw-metaphysical-language`
+ bucket = "active_backlog"
+}[reg=facet]
+
+^"operational_hooks"{
+ selectors = #[ `.spw/_workbench/`, `.spw/conventions/`, ][reg=set]
+ probe_ref = `git diff --check; npm run check after any HTML/CSS/JS touch.`
+ owner_claim = ~"./index.spw#owner_claim"
+}[reg=facet]
+
+# Sigil Physics Research Program & Show
+#
+# A show that presents the sigils, and a research program about their physics.
+# The show is not promotion for the research; the show IS the instrument —
+# audience attention, transcription, skimming, and dictation are the measurements.
+# Evidence flows into the sigil property matrix and the drift ledger.
+
+#>sigil_physics_research
+#:research #!sigils #!show
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@matrix: ~"./sigil-property-matrix.spw"
+@operator_semantics: ~"../../../.spw/conventions/operator-semantics.spw"
+@charge_cycle: ~"../../../.spw/conventions/charge-cycle.spw"
+@semantic_braces: ~"../../../.spw/conventions/semantic-braces.spw"
+@precipitates: ~"../../../.spw/conventions/precipitates-and-projections.spw"
+@product_lines: ~"../../../.spw/surfaces/product-lines.spw"
+@atlas: ~"../../../topics/software/spw/index.html"
+
+intent: .{
+ goal = `Present each sigil publicly while researching its physics live: juxtaposition, motion, dimension, skimmability, substrate transparency, sound, stabilization, and evolutionary fabric. Every segment carries one falsifiable expectation.`
+ stance = `The show is timing-and-attention orchestration made visible — the stated value prop performed as content. Stage excitement never writes canon; evidence routes through the arbitration protocol like everything else.`
+}[reg=facet]
+
+^"show_format"{
+  working_title: "Sigil Physics"
+  premise: "One sigil (or one physics question) per segment. The glyph is presented, its motion is performed, one experiment runs live, and the result precipitates into the research record."
+
+  segment_anatomy: .{
+    present = `Glyph at display scale: name, lineage, current site gloss, and its open drift entries if any. Honest about disagreement — drift is content, not embarrassment.`
+    perform = `The sigil's fundamental-motion decomposition performed as choreography or enacted with the object kit. The audience sees the motion before the mark.`
+    probe = `One live experiment with a pre-registered falsifiable expectation: skim trial, verso read, sound dictation, transcription test, or juxtaposition ordering task.`
+    precipitate = `Result logged to the property matrix or drift ledger on camera; segment edition minted (still, plate, or card) with provenance sidecar.`
+  }[reg=facet]
+
+  instrumentation: .{
+    audience_as_apparatus = `Comprehension, transcription accuracy, ordering judgments, and reaction timing are the measurements. The audience is told this — consented instrumentation is part of the premise.`
+    capture_legibility = `Segments staged for the capture loop: recording rig over paper and editor, data-spw-capture-mode respected, stills promptable for the image pipeline.`
+    distribution = `Long segments for YouTube; motion/probe cuts for TikTok; episode pages on-site as the durable record with the evidence attached.`
+  }[reg=facet]
+
+  risk_protocol: .{
+    metaphor_fixation_gate = `Interpretations proposed on stage enter a ?-queue and wait. Nothing moves from stage to codex without the arbitration order (author > glyph evidence > lineage > registry > runtime).`
+    fixation_release = `Each episode closes by naming what was NOT concluded — open questions read aloud keep the wonder register honest and inoculate against premature doctrine.`
+  }[reg=facet]
+
+  collaborators: .{
+    musician = `owns sonic signatures and the dictation experiments`
+    illustrator = `owns motion plates and the transparency/overlay props`
+    librarian = `owns episode provenance, accession of segment editions, and the fossil record`
+    production = `dregg.net collaboration; cue sheets authored in threshold-sequence notation (the show-production industry brief's pilot artifact)`
+  }[reg=facet]
+}
+
+^"axis_juxtaposition"{
+  ~#thesis: "Prefix and postfix are one motion seen twice: prefix is wind-up, the name is contact, postfix is follow-through. Juxtaposition research treats the full expression as a gesture envelope."
+
+  forms: .{
+    same_sigil_sandwich = `!commit! — primed and acted-through; the sigil's entry force and its residue on the same name. Question: does the reader experience this as emphasis, completion, or a cycle?`
+    asymmetric_sandwich = `?name. — opened then settled; !name? — committed then reopened. Ordering should be non-commutative if positional grammar is real.`
+    envelope_reading = `prefix = attack, name = sustain, postfix = release. An expression is an ADSR envelope; sound writing (below) makes this literal.`
+  }[reg=facet]
+
+  experiments: #[
+    `ordering task: audiences sort shuffled sandwiches (?x! vs !x?) by felt narrative; non-random sorting supports non-commutativity`,
+    `residue recall: after a skim pass, readers report postfix marks at lower rates than prefix marks if priming dominates first-pass reading (predicted by positional grammar)`
+  ][reg=set]
+}
+
+^"axis_composition_as_motion"{
+  ~#thesis: "Each operator decomposes into 1–3 fundamental motions. Composition of operators is choreography (sequenced motion) or assembly (combined objects). A glyph is the trace a motion leaves."
+
+  fundamental_motions: #[
+    `strike — impulse, discharge`,
+    `wave — oscillation, sustained potential`,
+    `loop — enclosure, self-reference`,
+    `cross — intersection, lattice`,
+    `settle — rest, termination, point`,
+    `thread — continuous line, connection`,
+    `lift — upstroke, elevation`,
+    `split — divergence, partition`,
+    `hook — arrested curve, held return`
+  ][reg=set]
+
+  decompositions: .{
+    "~" = `wave — one unterminated oscillation; potential that never settles`
+    "#" = `cross + cross — a lattice; resonant structure that other things can hang on`
+    "." = `settle — the minimal motion; full stop as ground`
+    "?" = `hook + settle — an open curve arrested above a point; inquiry held over ground without touching it`
+    "!" = `strike + settle — impulse discharged onto ground; commitment with visible consequence`
+    "*" = `strike ×n from center — radiation; material burst into presence`
+    "&" = `loop + thread + return — a self-crossing braid; binding that passes through itself`
+    "@" = `loop around settle — an enclosure wrapped around a point; an address embracing its referent (evidence for the ref reading, drift-at-001)`
+    "^" = `lift + lift converging — apex; two upstrokes meeting at an inspectable peak`
+    "=" = `thread ∥ thread — two parallels; equivalence held under tension`
+    "$" = `wave threaded through strike — a layer running through substance; substrate through value`
+    "%" = `settle + split + settle — two masses across a divider; ratio and partition (evidence for the measurement reading, drift-pct-002)`
+    "_" = `ground-level thread — a flat line under the name; the glyph literally holds the name flat against interpretation (drift-und-005: the semantics IS the geometry)`
+    "{}" = `hook stack — a three-point clasp; grip that can interleave when labeled`
+    "[]" = `angular clasp — rigid selection; mode pinned without curvature`
+    "()" = `single arc — soft enclosure; stage wings`
+    "<>" = `split/convergence — aperture; the mouth of a conduit`
+  }[reg=facet]
+
+  object_kit: .{
+    note = `Composition as objects: a physical kit whose manipulation enacts the grammar. Props for the show, artifact class for manufacturing (extends the operator deck).`
+    pieces = #[
+      `thread/cord (~) — can be laid toward, tied off, or left slack`,
+      `peg/anchor (#) — things hang on it and resonate when struck`,
+      `ground plate (.) — where pieces come to rest`,
+      `aperture/lens (?) — held over a piece without touching it`,
+      `stamp (!) — leaves a mark; irreversible on paper, that is the point`,
+      `vessel (*) — holds concrete material`,
+      `knot (&) — binds two threads into one subject`,
+      `ring/collar (@) — encircles one piece as the referent`,
+      `pedestal (^) — lifts a piece into display`,
+      `balance scale (%) — two pans across a divider`,
+      `membrane ($) — a translucent layer pieces rest on`,
+      `clamp (=) — pins two pieces into equivalence`,
+      `labeled translucent bands ({_A }_A) — interleave without nesting; the coverage algebra as physical overlay`
+    ][reg=set]
+    rule = `Every kit manipulation must correspond to a writable expression and vice versa — the kit is a semantics-preserving projection, not a toy.`
+  }[reg=facet]
+
+  experiments: #[
+    `reproducibility: independent annotators decompose glyphs into fundamental motions; ≥threshold agreement supports the decomposition table`,
+    `kit round-trip: an expression assembled in objects is transcribed back to notation by a second person; loss measures projection fidelity`
+  ][reg=set]
+}
+
+^"axis_higher_dimensions"{
+  ~#thesis: "A glyph is a low-dimensional projection of a higher-dimensional motion. The projection chain runs: motion (space+time) → stroke (2d trace) → glyph (stabilized form) → sequence position (1d). Each research direction restores a lost dimension."
+
+  restorations: .{
+    animation = `restores time — the sigil performed as motion on screen or stage; the glyph is its own freeze-frame`
+    overlay_stack = `restores depth — transparent sheets stack scopes along z; labeled braces become literal layers you can lift and reorder`
+    channel_tuning = `# repetition as dimension index (drift-hash-004): # d1 time, ## d2 attention, ### d3 relationship, ##### d5 meaning — frame depth as channel selection`
+    object_form = `restores volume — the kit gives glyphs mass, balance, and orientation; composition becomes assembly with real statics`
+  }[reg=facet]
+
+  research_questions: #[
+    `does the coverage algebra of labeled braces behave as a z-axis (reorderable layers) or as true interleaving (order-sensitive weave)?`,
+    `which sigils survive projection best — i.e., whose 1d/2d forms still evoke their motion without animation?`,
+    `is there a natural d4/d6 in the channel-tuning ladder, or do the named dimensions (time, attention, relationship, meaning) exhaust the useful range?`
+  ][reg=set]
+}
+
+^"axis_skimmability"{
+  ~#thesis: "Sigils are skim anchors. A marked page should yield its argument structure — who acts, what is open, what settled, what binds — at skim velocity, before any name is read."
+
+  mechanics: .{
+    first_pass = `prefix sigils dominate skim reading (priming works at speed); the skimmer catches force and phase`
+    second_pass = `postfix residue and brace closure read on return; the page rewards re-approach without punishing the skim`
+    depth_alignment = `skim tiers align with copy-depth tiers (entry/normal/dense/technical): a denser register should add sigil information, not sigil noise`
+  }[reg=facet]
+
+  claims: .{
+    skim_structure: {
+      claim_id = "sigil-skim-001"
+      layer = "semantic"
+      hypothesis = "Readers skimming a sigil-marked page report argument structure (open questions, committed actions, bound subjects) more accurately than readers skimming the same page unmarked."
+      spec_ref = ".agents/plans/spw-metaphysical-language/sigil-physics-research.spw#axis_skimmability"
+      impl_ref = "any operator-marked route; show segment probe"
+      probe_ref = "timed skim trial, marked vs unmarked copy, structure-recall questionnaire"
+      falsification = "No accuracy difference, or marked copy reads slower without accuracy gain — sigils would be decoration under skim."
+      status = "untested"
+    }
+  }[reg=facet]
+}
+
+^"axis_transparent_substrate"{
+  ~#thesis: "Thin and transparent paper is a semantic medium, not just a material constraint. Overlay sheets make the labeled-brace coverage algebra physical, and show-through makes glyph geometry testable from both sides."
+
+  constraints: .{
+    ink_weight = `glyphs must hold identity at show-through opacity; thin strokes vanish, heavy strokes bleed — the matrix ink-weight dimension gets physical bounds`
+    verso_legibility = `a glyph read through the back of the sheet is mirrored: mirror-symmetric forms (=, *, #, ^) survive; chiral forms (?, &, $) flip — mirrored ? is the irony mark ⸮, a warning that verso reading can invert meaning, not just orientation`
+    stack_depth = `how many sheets deep does a lower scope stay legible? that number is the practical dimension limit of the overlay algebra`
+  }[reg=facet]
+
+  artifact: .{
+    vellum_overlay_kit = `manufacturing artifact: a base sheet plus labeled translucent band sheets; stacking composes expressions; interleaving {_A {_B }_A }_B is performed by physically weaving band edges`
+    show_use = `audience members compose an expression by stacking; the composed stack is photographed as a segment edition`
+  }[reg=facet]
+
+  claims: .{
+    verso_ranking: {
+      claim_id = "sigil-verso-002"
+      layer = "authored"
+      hypothesis = "Mirror-symmetry class predicts verso legibility ranking: symmetric sigils are identified through the sheet at higher rates than chiral sigils."
+      spec_ref = "#axis_transparent_substrate"
+      impl_ref = "sigil specimen sheets printed on vellum"
+      probe_ref = "verso identification trial during a show segment"
+      falsification = "Identification rates uncorrelated with symmetry class — geometry would not be the operative property."
+      status = "untested"
+    }
+  }[reg=facet]
+}
+
+^"axis_sound_writing"{
+  ~#thesis: "Each operator has a sonic signature whose envelope matches its physics. An expression is then performable as sound, and writable from sound — dictation runs both directions. This also makes the language readable without sight."
+
+  signatures: .{
+    "!" = `sharp transient, immediate decay — the strike`
+    "?" = `rising inflection, unresolved — the held hook`
+    "." = `low thud, dead stop — settlement`
+    "~" = `sustained sine with vibrato — the wave that never settles`
+    "#" = `struck resonance (bell/marimba lattice) — vibration lineage made audible`
+    "*" = `broadband burst — material presence as noise`
+    "&" = `two voices braided into a chord — binding heard as harmony`
+    "@" = `spatialized locating ping — an address panned to a position`
+    "^" = `upward glissando — lift into display`
+    "=" = `steady unison pair — equivalence as zero beat frequency`
+    "$" = `sub-bass drone under everything — the substrate you feel more than hear`
+    "%" = `a two-note interval — ratio is literally a musical interval; the measurement reading is native to sound (drift-pct-002 evidence)`
+    "{}" = `filter opening/closing — containment as envelope onset and release`
+    "[]" = `gate clicks — mode switched, alternatives intact`
+    "()" = `reverb on/off — scene as acoustic space`
+    "<>" = `timbral sweep — the conduit coloring what passes through`
+  }[reg=facet]
+
+  envelope_rule: `Prefix sounds as anacrusis (upbeat), the name sustains, postfix sounds as release tail. The juxtaposition axis and the sound axis are the same physics in different media.`
+
+  claims: .{
+    dictation: {
+      claim_id = "sigil-sound-003"
+      layer = "semantic"
+      hypothesis = "Listeners trained on the signature table transcribe short sonic expressions back to notation above chance, and errors cluster within composition families rather than across them."
+      spec_ref = "#axis_sound_writing"
+      impl_ref = "musician-owned signature recordings; show dictation probe"
+      probe_ref = "dictation trial: play expression, collect transcriptions, score by edit distance and family confusion matrix"
+      falsification = "Chance-level transcription or cross-family confusion — signatures would be arbitrary skins, not physics."
+      status = "untested"
+    }
+  }[reg=facet]
+
+  accessibility_note: `A validated signature table is a screen-free reading channel: sonification of brace charge and operator sequence extends the a11y posture from production-demonstration-pass into the language itself.`
+}
+
+^"axis_stabilization"{
+  ~#thesis: "A glyph is stabilized motion — the residue of a repeated gesture crystallized under pressure. The fundamental motions combine, and the combinations that survive fast writing, small sizes, verso viewing, skim reading, and capture become glyph forms. Stabilization is how motion precipitates into form."
+
+  pressures: #[
+    `speed — live writing on camera; motions that collapse under speed lose their glyphs`,
+    `scale — chip-size and print-size rendering; detail beyond the ink-weight floor is selected out`,
+    `verso — transparency reading punishes chirality`,
+    `skim — anchor strength under velocity`,
+    `capture — legibility in the screenshot/prompt loop`,
+    `sound — a motion without a performable envelope resists dictation`
+  ][reg=set]
+
+  precipitation_parallel: `This is the precipitates-and-projections cycle at the glyph scale: motion (idea) → stroke (design) → glyph (implementation) → typographic mark in context (instance). The language's own crystallization model explains its own letterforms.`
+
+  claims: .{
+    attractor: {
+      claim_id = "sigil-motion-004"
+      layer = "authored"
+      hypothesis = "Glyph decompositions into ≤3 fundamental motions are reproducible: independent annotators given the motion set converge on the same decomposition for most sigils."
+      spec_ref = "#axis_composition_as_motion"
+      impl_ref = "decomposition table above"
+      probe_ref = "annotation trial with ≥3 independent annotators; agreement threshold pre-registered"
+      falsification = "Decompositions diverge widely — the motion set would be a post-hoc story, not a generative basis."
+      status = "untested"
+    }
+  }[reg=facet]
+}
+
+^"axis_evolution_fabric"{
+  ~#thesis: "Language is a species-scale evolution fabric: the inheritance channel through which cognitive moves propagate across a population faster than genes. Glyphs vary, are selected by the stabilization pressures, and are inherited through teaching, capture, and use. Designing sigils deliberately is participating in that evolution on purpose."
+
+  mechanism: .{
+    variation = `hand drift, register differences, deliberate overloads, cross-industry adaptations`
+    selection = `the stabilization pressures plus comprehension measures from the show — the site, the show, print, and sound are four distinct selection environments`
+    inheritance = `atlas pages, the deck, workshops, capture loops, and agent tooling — each transmits forms to new practitioners with different fidelity`
+    fossil_record = `the drift ledger and wip streams; arbitration is documented selection, never silent replacement`
+  }[reg=facet]
+
+  claims: .{
+    convergence: {
+      claim_id = "sigil-evolution-005"
+      layer = "semantic"
+      hypothesis = "Practitioners writing Spw under shared pressure (speed trials, dictation, verso constraints) converge on similar glyph simplifications; convergent forms differ from the canonical form in predictable, pressure-specific ways."
+      spec_ref = "#axis_evolution_fabric"
+      impl_ref = "workshop and show writing samples, collected with provenance"
+      probe_ref = "compare simplification patterns across independent practitioners per pressure condition"
+      falsification = "Divergence without pattern — evolution would be a metaphor here, not a mechanism."
+      status = "untested"
+    }
+  }[reg=facet]
+
+  promotion_gate: `This axis is the philosophy capstone and the easiest to inflate. It stays plan-local until sigil-evolution-005 has at least one evidence pass; then it becomes a .spw/philosophy/ candidate (evolution-fabric.spw) carrying its counterexamples with it, per the philosophy-index invariant.`
+}
+
+^"matrix_feed"{
+  rule: "Each axis contributes columns to the sigil property matrix; the show contributes rows of evidence. The matrix stays the single accumulation point so Workstream B arbitration and Workstream E research never fork."
+  new_dimensions: #[
+    `motion decomposition (from axis_composition_as_motion)`,
+    `verso legibility / mirror-symmetry class (from axis_transparent_substrate)`,
+    `sonic signature fit (from axis_sound_writing)`,
+    `skim anchor strength (from axis_skimmability)`,
+    `juxtaposition envelope behavior (from axis_juxtaposition)`,
+    `stabilization robustness across pressures (from axis_stabilization)`
+  ][reg=set]
+}
+
+validation: #[
+  `Every show segment pre-registers one falsifiable expectation before airing; the expectation and result both appear in the episode record.`,
+  `Every claim above carries claim_chain fields and starts untested; status changes require a probe run, not a rehearsal.`,
+  `Stage interpretations pass the ?-queue and the arbitration order before touching codex, registry, or atlas copy.`,
+  `Segment editions carry .spw sidecars with episode, date, probe, and result.`
+][reg=set]
+
+open: #[
+  .{ ask = `Is episode one a single sigil (candidates: ~ for potential-as-premise, or ! for the most legible experiment) or a physics question across sigils (the verso trial covers the whole set at once)?` },
+  .{ ask = `Live-first or capture-first — staged episodes with an audience, or TikTok-scale segments that accumulate into episodes?` },
+  .{ ask = `Does the object kit precede the deck in manufacturing order, since the show needs props before cards?` },
+  .{ ask = `Who owns the signature recordings as an edition — the musician collaborator, the show, or the language?` },
+  .{ ask = `Do sound signatures need a notation of their own, or is the existing expression syntax sufficient as a score?` }
+][reg=set]

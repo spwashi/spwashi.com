@@ -36,7 +36,7 @@ intent: .{
 @public_js_site_js: ~"../../../public/js/site.js"
 @spw_site_spw: ~"../../../.spw/site.spw"
 @index: ~"../../../.spw/conventions/index.spw"
-@plans: ~"../../../.agents/plans/"
+@route_runtime_manifest: ~"../../../.agents/state/runtime/route-runtime-manifest.json"
 
 dispatch: .{
  plan = @plan
@@ -46,7 +46,7 @@ dispatch: .{
  public_js_site_js = @public_js_site_js
  spw_site_spw = @spw_site_spw
  index = @index
- plans = @plans
+ route_runtime_manifest = @route_runtime_manifest
 }[reg=facet]
 
 ^"owner_claim"{

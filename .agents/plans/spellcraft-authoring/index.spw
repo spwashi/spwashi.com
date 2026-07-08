@@ -35,6 +35,8 @@ intent: .{
 @cauldron: ~"../../../public/js/interface/cauldron/"
 @contract: ~"../../../public/js/interface/cauldron/contract.js"
 @observation_beats: ~"../../../public/js/runtime/observation-beats.js"
+@shared: ~"../../../public/js/kernel/shared.js"
+@sigil_anatomy: ~"../../../public/js/runtime/sigil-anatomy.js"
 
 dispatch: .{
  plan = @plan
@@ -43,6 +45,8 @@ dispatch: .{
  cauldron = @cauldron
  contract = @contract
  observation_beats = @observation_beats
+ shared = @shared
+ sigil_anatomy = @sigil_anatomy
 }[reg=facet]
 
 ^"owner_claim"{

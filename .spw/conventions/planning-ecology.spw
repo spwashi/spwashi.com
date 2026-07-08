@@ -43,6 +43,8 @@
 @module_export_contract: ~"./module-export-contract.spw"
 @module_export_audit: ~"../audits/module-export-standalone-2026-07.spw"
 @runtime_module_medium: ~"../surfaces/runtime-module-medium.spw"
+@spw_architecture_ecology: ~"./spw-architecture-ecology.spw"
+@spw_architecture_ecology_plan: ~"../../.agents/plans/spw-architecture-ecology/PLAN.md"
 
 dispatch: .{
  agents = @agents
@@ -82,6 +84,8 @@ dispatch: .{
  module_export_contract = @module_export_contract
  module_export_audit = @module_export_audit
  runtime_module_medium = @runtime_module_medium
+ spw_architecture_ecology = @spw_architecture_ecology
+ spw_architecture_ecology_plan = @spw_architecture_ecology_plan
 }[reg=facet]
 
 roles: #[

@@ -1,0 +1,52 @@
+# Region Component Ecology
+#
+# Dispatch coordinator for page regions, hooks, component templates, and
+# discoverability slices.
+
+#>region_component_ecology
+#:convention #!ecology #!regions #!components
+#:operation #!align
+#:fixity #!tending
+#:layer #!pragmatics
+
+@architecture_ecology: ~"./spw-architecture-ecology.spw"
+@component_region_personality: ~"./component-region-personality.spw"
+@page_model: ~"../surfaces/page-model.spw"
+@component_taxonomy: ~"./component-taxonomy.spw"
+@page_anatomy: ~"./page-anatomy-vocabulary.spw"
+@page_region_slice: ~"../slices/page-region-discoverability/index.spw"
+@page_region_plan: ~"../../.agents/plans/page-region-discoverability/PLAN.md"
+@hook_region_plan: ~"../../.agents/plans/hook-region-anatomy/PLAN.md"
+@webpage_trope_plan: ~"../../.agents/plans/webpage-trope-vocabulary/PLAN.md"
+@component_region_plan: ~"../../.agents/plans/component-region-personality/PLAN.md"
+
+operation = "align"
+fixity = "tending"
+
+^"routing"{
+ owner_plan: "page-region-discoverability"
+ satellite_plans: #[`hook-region-anatomy`, `webpage-trope-vocabulary`, `component-region-personality`][reg=set]
+ slice: "page-region-discoverability"
+ conventions: #[`page-model (surface)`, `component-taxonomy`, `page-anatomy-vocabulary`, `component-region-personality`][reg=set]
+ templates_surface: "~\"../surfaces/component-templates.spw\" (wave E)"
+ conflict_rule: "page-model region/feature layers beat ad hoc data-spw-feature sprawl."
+ first_read: "page-region-discoverability PLAN for runtime rail; component-region-personality for template contracts."
+}
+
+^"owner_claim"{
+ claim_id = "ecology-region-component-001"
+ layer = "pragmatic"
+ hypothesis = `Region personality and linking contour route through one discoverability owner plus component-region-personality templates.`
+ probe_ref = `rg 'region-component-ecology|page-region-discoverability' .spw .agents/plans`
+ falsification = `New hub pages add hook-call scaffolds without checking referentiality tier or template registry.`
+ status = "active"
+}
+
+dispatch: .{
+ architecture = @architecture_ecology
+ personality = @component_region_personality
+ page_model = @page_model
+ taxonomy = @component_taxonomy
+ anatomy = @page_anatomy
+ slice = @page_region_slice
+}[reg=facet]

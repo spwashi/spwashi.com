@@ -40,18 +40,18 @@ export function resolveModuleMount(mod) {
   if (!mod || typeof mod !== 'object') return null;
 
   if (isFn(mod.SPW_MODULE_EXPORT?.mount)) {
-    return { fn: mod.SPW_MODULE_EXPORT.mount, shape: 'SPW_MODULE_EXPORT' };
+    return { fn: mod.SPW_MODULE_EXPORT.mount, shape: 'SPW_MODULE_EXPORT', surface: mod.SPW_MODULE_EXPORT };
   }
   if (isFn(mod.spwModule?.mount)) {
-    return { fn: mod.spwModule.mount, shape: 'spwModule' };
+    return { fn: mod.spwModule.mount, shape: 'spwModule', surface: mod.spwModule };
   }
   if (isFn(mod.default?.mount)) {
-    return { fn: mod.default.mount, shape: 'default' };
+    return { fn: mod.default.mount, shape: 'default', surface: mod.default };
   }
 
   for (const [key, value] of Object.entries(mod)) {
     if (INIT_EXPORT_RE.test(key) && isFn(value)) {
-      return { fn: value, shape: key };
+      return { fn: value, shape: key, surface: null };
     }
   }
 
@@ -60,7 +60,7 @@ export function resolveModuleMount(mod) {
 
 export function describeModuleExport(mod, meta = {}) {
   const resolved = resolveModuleMount(mod);
-  const exportSurface = mod?.SPW_MODULE_EXPORT || mod?.spwModule || null;
+  const exportSurface = resolved?.surface || mod?.SPW_MODULE_EXPORT || mod?.spwModule || null;
   const updates = normalizeModuleUpdates(exportSurface?.updates || meta.updates);
   const updatesDescribe = describeModuleUpdates(updates);
 

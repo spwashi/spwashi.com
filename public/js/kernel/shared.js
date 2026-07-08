@@ -1656,6 +1656,13 @@ const resolveFeatureInitializer = (module, exportName) => {
     };
   }
 
+  if (typeof module?.default?.mount === 'function') {
+    return {
+      kind: 'module-contract',
+      fn: module.default.mount
+    };
+  }
+
   if (typeof module?.default === 'function') {
     return {
       kind: 'default',
@@ -1687,7 +1694,7 @@ const loadFeature = async (specifier, exportName, options = {}) => {
   const context = options.context || createSpwRuntimeContext(options.root || getDefaultEventTarget());
   const args = Array.isArray(options.args) ? options.args : [];
 
-  if (resolved.kind === 'module-contract') {
+  if (resolved.kind === 'module-contract' || resolved.kind === 'module-export') {
     return resolved.fn(context);
   }
 

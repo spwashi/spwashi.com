@@ -1,0 +1,81 @@
+# Plan Index — Spw Architecture Ecology
+#
+# .spw layer topology, promotion protocol, ecology coordinators, owner registry,
+# component templates, site.spw slimness, language ecology, slices, precipitates.
+
+#>plan_spw_architecture_ecology_index
+#:index #!plan
+#:operation #!contract
+#:layer #!editor_inspectability
+
+operation = "contract"
+fixity = "tending"
+
+intent: .{
+ goal = `Strengthen the .spw layer as an inspectable ecology: coordinators, owner registry, promotion protocol, component-template surface, slimmer site.spw, review graduation, language alignment, slice promotion, convention hygiene, and precipitated indexes for agents and editors.`
+ owner = `spw-architecture-ecology`
+ kind = `plan`
+ bucket = `semantic_rails`
+ artifact_shape = `PLAN.md | index.spw | ../../../.spw/conventions/spw-architecture-ecology.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | observation | tending | contract"
+ temporal_rhythm = "sedimentation | return"
+ semantic_layer = "semantics | pragmatics | editor_inspectability"
+ collaboration_phase = "tending | exchange"
+ memory_tier = "hot"
+ bucket = "semantic_rails"
+}[reg=facet]
+
+@plans_root: ~"../index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@convention: ~"../../../.spw/conventions/spw-architecture-ecology.spw"
+@planning_ecology: ~"../../../.spw/conventions/planning-ecology.spw"
+@semantic_capacity: ~"../../../.spw/conventions/semantic-capacity.spw"
+@surface_normalization: ~"../spw-surface-normalization/index.spw"
+@agent_optimization: ~"../agent-optimization/index.spw"
+@agentic_contracts: ~"../agentic-dev-contracts/index.spw"
+@modular_slices: ~"../modular-experience-slices/index.spw"
+@language_v04: ~"../spw-language-v04/index.spw"
+@metaphysical_language: ~"../spw-metaphysical-language/index.spw"
+@component_region_personality: ~"../component-region-personality/index.spw"
+@plan: ~"./PLAN.md"
+
+dispatch: .{
+ plan = @plan
+ convention = @convention
+ planning_ecology = @planning_ecology
+ semantic_capacity = @semantic_capacity
+ surface_normalization = @surface_normalization
+ agent_optimization = @agent_optimization
+ agentic_contracts = @agentic_contracts
+ modular_slices = @modular_slices
+ language_v04 = @language_v04
+ metaphysical_language = @metaphysical_language
+ component_region_personality = @component_region_personality
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-spw_architecture_ecology-001"
+ layer = "pragmatic"
+ hypothesis = `Explicit ecology coordinators, owner-registry, promotion protocol, and precipitates reduce discovery cost across 182 plans and 54 conventions without replacing hand-authored routes.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../.spw/conventions/spw-architecture-ecology.spw#edit_waves"
+ probe_ref = `rg 'spw-architecture-ecology|ecology_coordinators|owner-registry' .spw .agents/plans/spw-architecture-ecology`
+ falsification = `Wave A complete but conventions/index.spw has no ecology dispatch and no *-ecology.spw coordinator files exist.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What is the .spw topology and promotion protocol?`, see = @convention }[reg=facet],
+ .{ ask = `Which wave should run next and what files does it touch?`, see = @plan }[reg=facet],
+ .{ ask = `How does this relate to surface-normalization and component-region-personality?`, see = @convention#thesis }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `PLAN.md sequences waves A–I; convention holds durable contracts.`,
+ `Wave A coordinators before site.spw ref pruning.`,
+ `Promote slice and language work through owner-registry entries.`,
+][reg=set]

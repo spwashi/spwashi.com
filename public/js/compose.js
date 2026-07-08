@@ -227,6 +227,7 @@ export {
   applySvgTunability,
   initSpwSvgTunability,
   parseSvgTunabilitySearch,
+  serializeSvgTunability,
 } from './media/svg-tunability.js';
 
 export {

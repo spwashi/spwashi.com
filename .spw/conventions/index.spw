@@ -60,6 +60,9 @@
 @workbench_naming: ~"../_workbench/.spw/conventions/naming.spw"
 @workbench_submodule: ~"../_workbench/.spw/conventions/submodule.spw"
 @component_taxonomy: ~"./component-taxonomy.spw"
+@component_region_personality: ~"./component-region-personality.spw"
+@spw_architecture_ecology: ~"./spw-architecture-ecology.spw"
+@spw_architecture_ecology_plan: ~"../../.agents/plans/spw-architecture-ecology/PLAN.md"
 @chrome_navigation_wonder: ~"../../.agents/plans/chrome-navigation-wonder/PLAN.md"
 @language: ~"../language/index.spw"
 @language_v04: ~"../language/v04/index.spw"
@@ -112,6 +115,8 @@ dispatch: .{
  naming = @workbench_naming
  submodule = @workbench_submodule
  component_taxonomy = @component_taxonomy
+ component_region_personality = @component_region_personality
+ spw_architecture_ecology = @spw_architecture_ecology
  chrome_navigation_wonder = @chrome_navigation_wonder
  language = @language
  language_v04 = @language_v04
