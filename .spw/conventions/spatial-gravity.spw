@@ -1,0 +1,92 @@
+# Spatial Gravity
+#
+# Width/height philosophy, edge + vertical gravity, opportunistic variant
+# selection, flush alignment, boundary overlap, and density/salience.
+
+#>spatial_gravity
+#:convention #!layout #!responsive #!components
+#:layer #!pragmatics
+
+@runtime: ~"../../public/js/runtime/spatial-gravity.js"
+@css: ~"../../public/css/systems/spatial-gravity.css"
+@composition_box_model: ~"./composition-box-model.spw"
+@dimension_vocabulary: ~"./dimension-vocabulary.spw"
+@typography_packing: ~"./typography-packing.spw"
+@site_semantics: ~"./site-semantics.spw"
+@anatomy_audit: ~"../audits/component-anatomy-device-packing-2026-07.spw"
+@measurement_contract: ~"./measurement-contract.spw"
+
+purpose: .{
+  plain = `Let a component read where it sits and how much room it has, then choose a variant — instead of hard-coding a breakpoint.`
+  resonance = `Grounds the conceptual #cognitive_gravity_planes (@site_semantics) in real viewport geometry: "down" stops being a metaphor and becomes a measured pull the component answers to. Interacting with a tracked component should clarify how attention, scale, and room shape layout.`
+}[reg=facet]
+
+^"two_axes"{
+  claim: `Width and height are independent. measure is the inline band; extent is the block band against the viewport. A component can be wide-but-squat or narrow-but-overtall; the pair, not either alone, says how to pack.`
+  measure: #[`narrow < 340px`, `comfortable < 680px`, `wide`][reg=set]
+  extent: #[`squat < 0.25vh`, `contained <= 1vh`, `tall <= 1.8vh`, `overtall`][reg=set]
+  attrs: .{
+    measure = `data-spw-measure-band`
+    extent = `data-spw-extent`
+    composite = `data-spw-space-variant = <measure>-<extent>-<vertical>`
+  }[reg=facet]
+  rule: `overtall tightens internal rhythm (do not force a long scroll for one component); tall may breathe. Height decisions read extent; width decisions read measure. Do not overload measure to carry both.`
+}
+
+^"gravity"{
+  edge_gravity: `data-spw-edge-gravity = top|bottom|left|right|none — the nearest viewport edge within a 12% threshold, plus --spw-edge-proximity (0..1). A component near an edge should announce it, not silently clip; expansions should open away from it.`
+  vertical_gravity: `data-spw-vertical-gravity = rises|balanced|falls — which way expandable content should grow to stay on-screen. Near the bottom → rises (opens up); near the top → falls (opens down). --spw-vertical-bias (-1..1) carries the raw signal for smooth response.`
+  open_direction: `data-spw-gravity="open" adds data-spw-open-direction=up|down; CSS flips visual growth (flex-direction) while DOM order stays put for reading + a11y.`
+  performance: `One shared rAF-throttled scroll/resize listener; IntersectionObserver gates measurement to on-screen tracked elements. Response stays in transform/opacity/color, never layout thrash.`
+}
+
+^"opportunistic_variant"{
+  claim: `Variant selection is opportunistic when it reads available space at the moment, not a media query guessed in advance. The composite data-spw-space-variant is the single handle a component or its CSS keys off; it changes as the component moves and resizes.`
+  contrast: `Media queries answer "how wide is the shell"; container queries answer "how wide is my box"; spatial gravity answers "where am I and which way is there room". These are the axes named in @anatomy_audit — keep each decision keyed to the axis that actually owns it.`
+}
+
+# --- Extensions requested 2026-07-08: flush, overlap, density/salience, settings ---
+
+^"flush_and_surface_seating"{
+  question: `Which elements should be flush with which edges or surfaces?`
+  principle: `Flushness encodes relationship. An element goes flush to a boundary when it belongs to that boundary's system: shell chrome (header, footer, section handle) seats flush to the viewport edge because it frames everything; a rail seats flush to its figure because it annotates that figure; reading content holds an inset measure because it belongs to the reader, not the frame.`
+  rules: #[
+    `Chrome + navigation: flush to viewport edge (owns the frame).`,
+    `Companion rails, gutters, spines: flush to the host they annotate, inset from the page.`,
+    `Reading + primary content: never flush to the viewport; hold measure so line length stays workable (@typography_packing).`,
+    `Edge-gravity="none" is the resting state — most content should read as unbounded, discovering an edge only when it nears one.`
+  ][reg=set]
+  open = `Formalize a data-spw-seating attribute (flush-viewport | flush-host | inset) so seating is declared, not inferred from ad hoc margins.`
+}
+
+^"boundary_overlap"{
+  question: `What should happen when boundaries overlap?`
+  principle: `Overlap is a contest for the same pixels; resolve it by precedence, not z-index luck. The nearer-to-attention layer wins the space; the other yields (reflow, collapse, or scroll) rather than clipping.`
+  cases: #[
+    `Sticky chrome vs anchored target: target yields via scroll-margin (already landed for svg nodes in @anatomy_audit) so arrivals clear the header.`,
+    `Expansion vs viewport edge: expansion yields direction via vertical gravity (opens toward room) rather than overflowing.`,
+    `Rail vs surface at narrow measure: rail collapses to a scroll strip; surface keeps full width (svg-surfaces precedent).`,
+    `Two peers competing: the one with higher salience holds; the other demotes to a quieter density.`
+  ][reg=set]
+  rule: `Overlap resolution must be visible and inspectable — a yielded element should read as deliberately grounded (why it yielded), never as a silent clip. Ties to the interaction reward contract: no silent absorption.`
+}
+
+^"density_and_salience"{
+  claim: `Density is how much material occupies a box; salience is how much attention a thing earns. They are orthogonal and both belong to the spatial model.`
+  density: `Carried by @typography_packing tiers (compact|balanced|roomy) + @composition_box_model content-tone (light|balanced|dense|operator-heavy|media-dominant). Extent and measure feed density: a squat wide box can afford roomy; an overtall narrow box should compact.`
+  salience: `The lens/persona axis. The same component reads differently depending on the active persona (svg-personas), page context, and charge/attention field. Salience decides which peer wins a boundary contest and which content holds flush vs insets.`
+  rule: `Raising density should not silently raise salience, and vice versa. A dense panel can be low-salience background; a single sparse chip can be the highest-salience element. Keep the two tunable independently so scale changes readability (density) without hijacking priority (salience).`
+}
+
+^"settings_as_learning_surface"{
+  claim: `Configuration is a teaching instrument, not just a preferences store. Every spatial knob exposed in settings should make its concept legible by letting the reader feel the change.`
+  method: #[
+    `Each setting names the axis it moves (shell-width, box-width, input-capability, density, salience, gravity) so the control teaches the vocabulary.`,
+    `Changes preview live on a specimen (the workbench pattern from the svg lab: move a control → surface responds → the shareable state rebuilds).`,
+    `A tracked component's data-spw-gravity-readout narrates its own state as you scroll — the surface explains itself.`,
+    `Settings persist and carry across routes so the learner sees the same lens applied everywhere (site-settings-engine).`
+  ][reg=set]
+  rule: `A setting that changes something the reader cannot perceive or inspect is a contract violation. Prefer settings whose effect is visible on the current page over settings that only matter elsewhere.`
+}
+
+runtime_demo: `/design/composition/ — spatial gravity bench: scroll to watch specimens narrate edge, vertical, extent, and measure live.`

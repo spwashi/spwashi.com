@@ -933,7 +933,7 @@ export const ENHANCEMENT_DEFS = [
   {
     id: 'spatial-gravity',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.VISIBLE,
+    when: MOUNT_WHEN.IMMEDIATE,
     selector: '[data-spw-gravity]',
     rootMode: 'single',
     describes: 'spatial-gravity[edge|vertical|extent] opportunistic variant selection',

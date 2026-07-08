@@ -171,7 +171,11 @@ const ensureIntersectionObserver = () => {
 const bindListeners = () => {
   if (listenersBound || typeof window === 'undefined') return;
   listenersBound = true;
-  window.addEventListener('scroll', scheduleMeasure, { passive: true });
+  // Capture phase catches scroll from ANY container, not just the window —
+  // scroll does not bubble, so a bubble-phase window listener misses pages
+  // whose scroll lives on an inner element. Measurement is viewport-relative
+  // (getBoundingClientRect) so it stays correct regardless of the scroller.
+  document.addEventListener('scroll', scheduleMeasure, { passive: true, capture: true });
   window.addEventListener('resize', scheduleMeasure, { passive: true });
   window.visualViewport?.addEventListener?.('resize', scheduleMeasure, { passive: true });
 };
@@ -181,12 +185,16 @@ const trackElement = (el) => {
   tracked.add(el);
   markInstrumented(el, 'spw-spatial-gravity', { tags: ['gravity', el.dataset.spwGravity || 'track'] });
 
+  // Measure once at track time so the component reports a state immediately
+  // (no empty-readout window before the first scroll). The IntersectionObserver
+  // then keeps it fresh and gates ongoing measurement to on-screen elements.
+  measureElement(el);
+
   const observer = ensureIntersectionObserver();
   if (observer) {
     observer.observe(el);
   } else {
     onScreen.add(el);
-    measureElement(el);
   }
 };
 
