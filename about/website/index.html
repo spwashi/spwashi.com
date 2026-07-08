@@ -818,6 +818,7 @@
                     data-spw-svg-scale="wide"
                     data-spw-svg-motion="static"
                     data-spw-svg-companion="rail"
+                    data-spw-svg-persona="visitor editor maintainer rendering-model"
                     data-spw-role="illustration"
                     data-spw-meaning="cognitive machine stage diagram"
                     data-spw-accent="resonance"
@@ -834,35 +835,35 @@
                         <g id="machine-stage-orient">
                             <circle class="spw-svg-node spw-svg-node--probe" cx="126" cy="150" r="44"></circle>
                             <text class="spw-svg-label" x="126" y="146" text-anchor="middle">orient</text>
-                            <text class="spw-svg-note" x="126" y="165" text-anchor="middle"># frame</text>
+                            <text class="spw-svg-note" x="126" y="165" text-anchor="middle">visitor frame</text>
                         </g>
                         <g id="machine-stage-inspect">
                             <circle class="spw-svg-node spw-svg-node--ref" cx="248" cy="94" r="42"></circle>
                             <text class="spw-svg-label" x="248" y="90" text-anchor="middle">inspect</text>
-                            <text class="spw-svg-note" x="248" y="109" text-anchor="middle">? probe</text>
+                            <text class="spw-svg-note" x="248" y="109" text-anchor="middle">editor probe</text>
                         </g>
                         <g id="machine-stage-invoke">
                             <circle class="spw-svg-node spw-svg-node--action" cx="360" cy="150" r="46"></circle>
                             <text class="spw-svg-label" x="360" y="146" text-anchor="middle">invoke</text>
-                            <text class="spw-svg-note" x="360" y="165" text-anchor="middle">@ action</text>
+                            <text class="spw-svg-note" x="360" y="165" text-anchor="middle">action seam</text>
                         </g>
                         <g id="machine-stage-reflect">
                             <circle class="spw-svg-node spw-svg-node--object" cx="472" cy="206" r="42"></circle>
                             <text class="spw-svg-label" x="472" y="202" text-anchor="middle">reflect</text>
-                            <text class="spw-svg-note" x="472" y="221" text-anchor="middle">$ meta</text>
+                            <text class="spw-svg-note" x="472" y="221" text-anchor="middle">state mirror</text>
                         </g>
                         <g id="machine-stage-pivot">
                             <circle class="spw-svg-node spw-svg-node--surface" cx="594" cy="150" r="44"></circle>
                             <text class="spw-svg-label" x="594" y="146" text-anchor="middle">pivot</text>
-                            <text class="spw-svg-note" x="594" y="165" text-anchor="middle">&gt; surface</text>
+                            <text class="spw-svg-note" x="594" y="165" text-anchor="middle">route pivot</text>
                         </g>
                     </svg>
                     <aside class="spw-svg-rail" aria-label="Machine diagram register">
-                        <a class="operator-chip" data-spw-operator="frame" href="#machine-stage-orient">orient / frame</a>
-                        <a class="operator-chip" data-spw-operator="ref" href="#machine-stage-inspect">inspect / probe</a>
-                        <a class="operator-chip" data-spw-operator="action" href="#machine-stage-invoke">invoke / action</a>
-                        <a class="operator-chip" data-spw-operator="object" href="#machine-stage-reflect">reflect / meta</a>
-                        <a class="operator-chip" data-spw-operator="surface" href="#machine-stage-pivot">pivot / surface</a>
+                        <a class="operator-chip" data-spw-operator="frame" href="#machine-stage-orient">visitor frame</a>
+                        <a class="operator-chip" data-spw-operator="ref" href="#machine-stage-inspect">editor probe</a>
+                        <a class="operator-chip" data-spw-operator="action" href="#machine-stage-invoke">action seam</a>
+                        <a class="operator-chip" data-spw-operator="object" href="#machine-stage-reflect">state mirror</a>
+                        <a class="operator-chip" data-spw-operator="surface" href="#machine-stage-pivot">route pivot</a>
                     </aside>
                     <figcaption>An addressable SVG host for the five-stage sequence, with named nodes that can be handed off without losing the structural contract.</figcaption>
                 </figure>

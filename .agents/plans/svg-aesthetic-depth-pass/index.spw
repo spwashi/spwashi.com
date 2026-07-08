@@ -40,6 +40,10 @@ intent: .{
 @svg_aesthetic_depth_pass_memo: ~"../../../.agents/state/svg-aesthetic-depth-pass-memo.md"
 @agents_plans_svg_aesthetic_depth_pass_plan_md: ~"../../../.agents/plans/svg-aesthetic-depth-pass/PLAN.md"
 @agents_plans_agentic_dev_contracts_plan_md: ~"../../../.agents/plans/agentic-dev-contracts/PLAN.md"
+@svg_aesthetic_depth_pass_wip: ~"./wip.spw"
+@design_experiments_svg_index_html: ~"../../../design/experiments/svg/index.html"
+@svg_surfaces_css: ~"../../../public/css/systems/svg-surfaces.css"
+@svg_tunability_js: ~"../../../public/js/media/svg-tunability.js"
 
 dispatch: .{
  plan = @plan
@@ -53,6 +57,10 @@ dispatch: .{
  svg_aesthetic_depth_pass_memo = @svg_aesthetic_depth_pass_memo
  agents_plans_svg_aesthetic_depth_pass_plan_md = @agents_plans_svg_aesthetic_depth_pass_plan_md
  agents_plans_agentic_dev_contracts_plan_md = @agents_plans_agentic_dev_contracts_plan_md
+ svg_aesthetic_depth_pass_wip = @svg_aesthetic_depth_pass_wip
+ design_experiments_svg_index_html = @design_experiments_svg_index_html
+ svg_surfaces_css = @svg_surfaces_css
+ svg_tunability_js = @svg_tunability_js
 }[reg=facet]
 
 ^"owner_claim"{
@@ -60,16 +68,30 @@ dispatch: .{
  layer = "pragmatic"
  hypothesis = `The desired end state is a prompt + architecture brief pair that makes a downstream model start from the site's actual shape: - hand-authored HTML - shell-driven responsive layouts - additive wonder states - SVG host contracts - diagrammatic warmth + inspectable restraint The immediate task is not implementation. It is to make the later analysis phase cheaper to ground, more aesthetically coherent, and more attentive to mobile, tablet, wide, and long-display behavior.`
  spec_ref = ~"./PLAN.md"
- impl_ref = ~"../../../topics/craft/svg/index.html"
+ impl_ref = ~"../../../design/experiments/svg/index.html"
  probe_ref = `git diff --check`
- falsification = `A patch cannot satisfy the public goal while leaving ../../../topics/craft/svg/index.html unchanged or untested.`
+ falsification = `A patch cannot satisfy the current implementation slice while leaving ../../../design/experiments/svg/index.html, ../../../public/css/systems/svg-surfaces.css, and ../../../public/js/media/svg-tunability.js unchanged or untested.`
  status = "active"
 }[reg=facet]
 
 validation: #[
  `git diff --check`,
  `rg -n "svg-aesthetic-depth-pass|SVG Aesthetic Depth Pass For Opus 4.7" .agents/prompts .agents/plans`,
+ `rg -n "spw-svg-env|data-spw-svg-environment|svg-screenshot-model-packet" design/experiments/svg public/css public/js`,
+ `rg -n "data-spw-svg-persona|spw-svg-persona|data-spw-svg-persona-active" design topics recipes about care blog public/js public/css`,
+ `node --check public/js/media/svg-tunability.js`,
 ][reg=set]
+
+^"landed_2026_07"{
+  at = "2026-07-08"
+  items: #[
+    `SVG environments studio|proof|poster|model in css + spw-svg-env query`,
+    `svg-tunability immediate mount + workbench + capture packet on design/experiments/svg`,
+    `data-spw-svg-persona audience facet across 34+ route hosts; figcaption register in svg-surfaces.css`,
+    `persona lens: spw-svg-persona query, data-spw-svg-persona-active|match, harmony tokens + design lab chips`,
+    `device sizing: --spw-svg-resolved-radius, --spw-svg-hit-min, scale tiers, capture clean pointer lift`
+  ][reg=set]
+}
 
 editor_prompts: #[
  .{ ask = `What does svg-aesthetic-depth-pass own, and what should stay out of scope?`, see = @plan }[reg=facet],
@@ -82,4 +104,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

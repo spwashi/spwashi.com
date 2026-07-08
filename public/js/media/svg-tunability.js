@@ -6,6 +6,7 @@
  * Hosts opt in with data attributes such as:
  * - data-spw-svg-host="diagram-posture"
  * - data-spw-svg-pointer="field|tilt|trace"
+ * - data-spw-svg-persona="designer builder reviewer rendering-model"
  *
  * Query parameters can tune hosts without page-local scripts:
  * - spw-svg-stroke=1.2
@@ -19,6 +20,8 @@
  * - spw-svg-space=0.75rem
  * - spw-svg-motion=slow|quick|paused
  * - spw-svg-pointer=field|tilt|trace|none
+ * - spw-svg-env=studio|proof|poster|model
+ * - spw-svg-persona=<audience-token>
  *
  * Hosts with a .spw-svg-rail companion get addressable-node behavior: rail
  * chips that anchor to a named <g id> inside the SVG preview that node on
@@ -28,6 +31,7 @@
  * handoff, with a visible copied/failed settle state.
  */
 
+import { bus } from '../kernel/bus.js';
 import {
   createSpwLogger,
   markInstrumented,
@@ -67,6 +71,7 @@ const SEMANTIC_MODES = new Set(['diagram', 'icon', 'illustration', 'map', 'proje
 const RESPONSIVE_MODES = new Set(['fluid', 'fixed', 'contain', 'project']);
 const INTERACTIVE_MODES = new Set(['hover', 'tap', 'prime', 'note']);
 const DEVICE_MODES = new Set(['fine', 'coarse', 'hoverless']);
+const ENVIRONMENT_STATES = new Set(['studio', 'proof', 'poster', 'model']);
 const NUMERIC_TUNINGS = Object.freeze({
   strokeScale: '--spw-svg-stroke-scale',
   flowDash: '--spw-svg-flow-dash',
@@ -108,6 +113,9 @@ const SVG_DATASET_KEYS = Object.freeze([
   'spwSvgPointerX',
   'spwSvgPointerY',
   'spwSvgDevice',
+  'spwSvgEnvironment',
+  'spwSvgEnvironmentReason',
+  'spwSvgPersonaMatch',
 ]);
 
 export const SPW_SVG_PALETTES = Object.freeze({
@@ -143,6 +151,21 @@ export const SPW_SVG_PALETTES = Object.freeze({
   }),
 });
 
+export const SPW_SVG_ENVIRONMENTS = Object.freeze({
+  studio: Object.freeze({
+    reason: 'Use the calm authored surface for in-page reading and iterative design review.',
+  }),
+  proof: Object.freeze({
+    reason: 'Use a high-legibility settled state for QA, comparison, and print-like checking.',
+  }),
+  poster: Object.freeze({
+    reason: 'Use a richer capture state when the SVG needs to carry as a featured visual piece.',
+  }),
+  model: Object.freeze({
+    reason: 'Use a settled labeled state for screenshot interpretation by Midjourney or another rendering model.',
+  }),
+});
+
 export const SPW_SVG_TUNABILITY_CONTRACT = Object.freeze({
   selector: SVG_HOST_SELECTOR,
   attributes: Object.freeze({
@@ -154,6 +177,8 @@ export const SPW_SVG_TUNABILITY_CONTRACT = Object.freeze({
     semantic: 'data-spw-svg-semantic',
     responsive: 'data-spw-svg-responsive',
     interactive: 'data-spw-svg-interactive',
+    persona: 'data-spw-svg-persona',
+    environment: 'data-spw-svg-environment',
     device: 'data-spw-svg-device',
     scale: 'data-spw-svg-scale',
     focusNode: 'data-spw-svg-focus-node',
@@ -178,6 +203,8 @@ export const SPW_SVG_TUNABILITY_CONTRACT = Object.freeze({
     semantic: 'spw-svg-semantic=<diagram|icon|illustration|map|project-motif>',
     responsive: 'spw-svg-responsive=<fluid|fixed|contain|project>',
     interactive: 'spw-svg-interactive=<hover|tap|prime|note>',
+    environment: 'spw-svg-env=<studio|proof|poster|model>',
+    persona: 'spw-svg-persona=<audience-token>',
   }),
   performanceRule:
     'Pointer mode writes CSS custom properties in requestAnimationFrame; visible response should stay in transform, opacity, color, and shadow rather than layout.',
@@ -187,7 +214,7 @@ const logger = createSpwLogger('spw-svg-tunability', {
   role: 'svg-controller',
   metaphor: 'pointer-spell',
   owns: SVG_HOST_SELECTOR,
-  writes: 'data-spw-svg-pointer-state, data-spw-svg-focus-node, data-spw-svg-node-state, data-spw-svg-action-state, SVG tuning custom properties',
+  writes: 'data-spw-svg-pointer-state, data-spw-svg-environment, data-spw-svg-persona-active, data-spw-svg-persona-match, data-spw-svg-focus-node, data-spw-svg-node-state, data-spw-svg-action-state, SVG tuning custom properties',
 });
 
 const HOST_STATE = new WeakMap();
@@ -247,6 +274,8 @@ export function applySvgTunability(target, options = {}) {
   const responsive = normalizeToken(options.responsive || '');
   const interactive = normalizeToken(options.interactive || '');
   const device = normalizeToken(options.device || '');
+  const environment = normalizeToken(options.environment || '');
+  const environmentSpec = SPW_SVG_ENVIRONMENTS[environment];
 
   resetSvgTunability(host);
 
@@ -275,6 +304,8 @@ export function applySvgTunability(target, options = {}) {
     spwSvgSemantic: SEMANTIC_MODES.has(semantic) ? semantic : '',
     spwSvgResponsive: RESPONSIVE_MODES.has(responsive) ? responsive : '',
     spwSvgInteractive: INTERACTIVE_MODES.has(interactive) ? interactive : '',
+    spwSvgEnvironment: environmentSpec ? environment : '',
+    spwSvgEnvironmentReason: environmentSpec?.reason || '',
     spwSvgDevice: DEVICE_MODES.has(device) ? device : '',
   });
 
@@ -298,6 +329,8 @@ export function applySvgTunability(target, options = {}) {
     svgSemantic: semantic,
     svgResponsive: responsive,
     svgInteractive: interactive,
+    svgEnvironment: environment,
+    svgEnvironmentReason: environmentSpec?.reason,
     svgDevice: device,
   }, { source: 'spw-svg-tunability' });
 
@@ -377,6 +410,12 @@ export function parseSvgTunabilitySearch(search = globalThis.location?.search ||
   const interactive = normalizeToken(params.get('spw-svg-interactive') || '');
   if (INTERACTIVE_MODES.has(interactive)) tuning.interactive = interactive;
 
+  const environment = normalizeToken(params.get('spw-svg-env') || params.get('spw-svg-environment') || '');
+  if (ENVIRONMENT_STATES.has(environment)) tuning.environment = environment;
+
+  const persona = normalizeToken(params.get('spw-svg-persona') || '');
+  if (persona) tuning.persona = persona;
+
   const device = normalizeToken(params.get('spw-svg-device') || '');
   if (DEVICE_MODES.has(device)) tuning.device = device;
 
@@ -443,6 +482,12 @@ export function serializeSvgTunability(host) {
 
   const interactive = normalizeToken(dataset.spwSvgInteractive || '');
   if (INTERACTIVE_MODES.has(interactive)) params.set('spw-svg-interactive', interactive);
+
+  const environment = normalizeToken(dataset.spwSvgEnvironment || '');
+  if (ENVIRONMENT_STATES.has(environment)) params.set('spw-svg-env', environment);
+
+  const persona = normalizeToken(globalThis.document?.documentElement?.dataset?.spwSvgPersonaActive || '');
+  if (persona) params.set('spw-svg-persona', persona);
 
   return params.toString();
 }
@@ -624,6 +669,8 @@ const getDeviceMode = () => {
   return 'fine';
 };
 
+const hostHasActivePointerMode = (host) => POINTER_MODES.has(normalizeToken(host?.dataset?.spwSvgPointer || ''));
+
 /* Device mode is live, not a boot-time snapshot: attaching a mouse to a
    tablet, docking, or orientation change re-resolves data-spw-svg-device on
    every host that did not author an explicit device. Scroll/resize invalidate
@@ -685,11 +732,13 @@ function initPointerHost(host) {
   markInstrumented(host, 'spw-svg-tunability', { tags: ['svg-pointer', pointerMode] });
 
   host.addEventListener('pointerenter', (event) => {
+    if (!hostHasActivePointerMode(host)) return;
     measureHost(host);
     queuePointerWrite(host, event);
   }, { passive: true });
 
   host.addEventListener('pointermove', (event) => {
+    if (!hostHasActivePointerMode(host)) return;
     queuePointerWrite(host, event);
   }, { passive: true });
 
@@ -698,6 +747,7 @@ function initPointerHost(host) {
   }, { passive: true });
 
   host.addEventListener('focusin', () => {
+    if (!hostHasActivePointerMode(host)) return;
     host.dataset.spwSvgPointerState = 'active';
     host.style.setProperty('--spw-svg-pointer-intensity', '0.66');
   });
@@ -738,17 +788,210 @@ function initPointerHost(host) {
   }
 }
 
+/* Live workbench: form controls that drive applySvgTunability on a target
+   specimen directly, with a live shareable-URL readout. Moving a control
+   retunes the diagram and rewrites the URL you would copy — the lab becomes a
+   playable instrument instead of a static demo. Framework-free and
+   inspectable on purpose: this is meant to be legible as training material. */
+
+const WORKBENCH_INPUT_SELECTOR = '[data-spw-svg-tune]';
+
+const readWorkbenchValue = (input) => {
+  const raw = input.value?.trim?.() ?? '';
+  if (!raw) return '';
+  const unit = input.dataset.spwSvgTuneUnit || '';
+  return unit && input.type === 'range' ? `${raw}${unit}` : raw;
+};
+
+const renderWorkbenchEcho = (input) => {
+  const field = input.closest?.('.svg-workbench__field');
+  const echo = field?.querySelector?.('[data-spw-svg-tune-echo]');
+  if (!echo) return;
+  echo.textContent = readWorkbenchValue(input) || 'authored';
+};
+
+const collectWorkbenchOptions = (workbench) => {
+  const options = {};
+  workbench.querySelectorAll(WORKBENCH_INPUT_SELECTOR).forEach((input) => {
+    const key = input.dataset.spwSvgTune;
+    if (!key) return;
+    const value = readWorkbenchValue(input);
+    if (!value) return;
+    options[key] = value;
+  });
+  return options;
+};
+
+const renderWorkbenchReadout = (workbench, host) => {
+  const query = serializeSvgTunability(host);
+  const readout = workbench.querySelector('[data-spw-svg-workbench-url]');
+  if (readout) readout.textContent = query ? `?${query}` : '(authored defaults)';
+
+  workbench.querySelectorAll('[data-spw-svg-workbench-count]').forEach((node) => {
+    const count = query ? new URLSearchParams(query).size : 0;
+    node.textContent = String(count);
+  });
+};
+
+function initSvgWorkbench(workbench) {
+  if (workbench.dataset.spwSvgWorkbenchManaged === 'true') return;
+
+  const targetSelector = workbench.dataset.spwSvgWorkbenchTarget || '';
+  const doc = resolveDocument(workbench);
+  const host = resolveHost(targetSelector || workbench, doc);
+  if (!host) return;
+
+  writeDatasetValues(workbench, { spwSvgWorkbenchManaged: 'true' });
+  markInstrumented(workbench, 'spw-svg-tunability', { tags: ['svg-workbench'] });
+
+  const retune = () => {
+    applySvgTunability(host, { ...collectWorkbenchOptions(workbench), root: doc });
+    renderWorkbenchReadout(workbench, host);
+  };
+
+  workbench.querySelectorAll(WORKBENCH_INPUT_SELECTOR).forEach((input) => {
+    const event = input.tagName === 'SELECT' ? 'change' : 'input';
+    renderWorkbenchEcho(input);
+    input.addEventListener(event, () => {
+      renderWorkbenchEcho(input);
+      retune();
+    });
+  });
+
+  const reset = workbench.querySelector('[data-spw-svg-workbench-reset]');
+  if (reset) {
+    reset.addEventListener('click', (event) => {
+      event.preventDefault();
+      workbench.querySelectorAll(WORKBENCH_INPUT_SELECTOR).forEach((input) => {
+        if (input.tagName === 'SELECT') input.selectedIndex = 0;
+        else if (input.type === 'range') input.value = input.defaultValue;
+        renderWorkbenchEcho(input);
+      });
+      resetSvgTunability(host);
+      renderWorkbenchReadout(workbench, host);
+    });
+  }
+
+  // The workbench's copy button lives outside the target host, so wire it to
+  // serialize the target rather than relying on initActionChips' host scan.
+  const copyUrl = workbench.querySelector('[data-spw-svg-action="copy-url"]');
+  if (copyUrl && copyUrl.dataset.spwSvgActionManaged !== 'true') {
+    writeDatasetValues(copyUrl, { spwSvgActionManaged: 'true' });
+    copyUrl.addEventListener('click', async (event) => {
+      event.preventDefault();
+      const copied = await copyText(buildTunedUrl(host));
+      writeDatasetValues(copyUrl, { spwSvgActionState: copied ? 'copied' : 'failed' });
+      globalThis.setTimeout?.(() => removeDatasetValues(copyUrl, ['spwSvgActionState']), ACTION_SETTLE_MS);
+    });
+  }
+
+  renderWorkbenchReadout(workbench, host);
+}
+
+const readHostPersonaTokens = (host) => (host.getAttribute('data-spw-svg-persona') || '')
+  .split(/\s+/)
+  .map(normalizeToken)
+  .filter(Boolean);
+
+const resolveHtmlRoot = (root = globalThis.document) => root?.documentElement || null;
+
+export function applySvgPersonaLens(persona = '', root = globalThis.document) {
+  const html = resolveHtmlRoot(root);
+  if (!html) return '';
+
+  const token = normalizeToken(persona);
+  if (!token) {
+    removeDatasetValues(html, ['spwSvgPersonaActive']);
+    writeStyleValue(html, '--spw-svg-persona-harmony', '0');
+    getHosts(root).forEach((host) => removeDatasetValues(host, ['spwSvgPersonaMatch']));
+    bus.emit('svg:persona-selected', { persona: '', source: 'svg-tunability' });
+    return '';
+  }
+
+  writeDatasetValues(html, { spwSvgPersonaActive: token });
+  writeStyleValue(html, '--spw-svg-persona-harmony', '1');
+
+  getHosts(root).forEach((host) => {
+    if (!host.getAttribute('data-spw-svg-persona')) return;
+    const match = readHostPersonaTokens(host).includes(token);
+    writeDatasetValues(host, {
+      spwSvgPersonaMatch: match ? 'true' : 'dim',
+    });
+  });
+
+  bus.emit('svg:persona-selected', { persona: token, source: 'svg-tunability' });
+  logger.info('svg persona lens active', { persona: token });
+  return token;
+}
+
+export function applySvgPersonaQuery(root = globalThis.document, options = {}) {
+  const tuning = parseSvgTunabilitySearch(options.search);
+  if (!tuning.persona) return '';
+  return applySvgPersonaLens(tuning.persona, root);
+}
+
+const PERSONA_SELECT_SELECTOR = '[data-spw-svg-persona-select]';
+
+function syncPersonaSelectChips(root, active = '') {
+  const token = normalizeToken(active);
+  root.querySelectorAll(PERSONA_SELECT_SELECTOR).forEach((chip) => {
+    const value = normalizeToken(chip.dataset.spwSvgPersonaSelect || '');
+    const pressed = Boolean(token) && value === token;
+    chip.setAttribute('aria-pressed', pressed ? 'true' : 'false');
+    writeDatasetValues(chip, {
+      spwSvgPersonaSelectState: pressed ? 'active' : '',
+    });
+  });
+}
+
+function initPersonaLens(root = globalThis.document) {
+  const chips = [...(root?.querySelectorAll?.(PERSONA_SELECT_SELECTOR) || [])];
+  if (!chips.length) return;
+
+  chips.forEach((chip) => {
+    if (chip.dataset.spwSvgPersonaSelectManaged === 'true') return;
+    writeDatasetValues(chip, { spwSvgPersonaSelectManaged: 'true' });
+
+    chip.addEventListener('click', (event) => {
+      event.preventDefault();
+      const next = normalizeToken(chip.dataset.spwSvgPersonaSelect || '');
+      const current = normalizeToken(root.documentElement?.dataset?.spwSvgPersonaActive || '');
+      const persona = current === next ? '' : next;
+
+      if (typeof globalThis.history?.replaceState === 'function' && globalThis.location) {
+        const url = new URL(globalThis.location.href);
+        if (persona) url.searchParams.set('spw-svg-persona', persona);
+        else url.searchParams.delete('spw-svg-persona');
+        globalThis.history.replaceState(null, '', url);
+      }
+
+      applySvgPersonaLens(persona, root);
+      syncPersonaSelectChips(root, persona);
+    });
+  });
+
+  const active = normalizeToken(root.documentElement?.dataset?.spwSvgPersonaActive || '')
+    || normalizeToken(parseSvgTunabilitySearch(globalThis.location?.search).persona || '');
+  if (active) applySvgPersonaLens(active, root);
+  syncPersonaSelectChips(root, active);
+}
+
 export function initSpwSvgTunability(root = globalThis.document, options = {}) {
   const hosts = getHosts(root);
   applySvgQueryTunability(root, options);
+  applySvgPersonaQuery(root, options);
   hosts.forEach((host) => {
     initPointerHost(host);
     initRailCompanion(host);
     initActionChips(host);
   });
 
+  const workbenches = [...(root?.querySelectorAll?.('[data-spw-svg-workbench]') || [])];
+  workbenches.forEach(initSvgWorkbench);
+  initPersonaLens(root);
+
   if (hosts.length) {
-    logger.debug('initialized svg tunability hosts', { count: hosts.length });
+    logger.debug('initialized svg tunability hosts', { count: hosts.length, workbenches: workbenches.length });
   }
 
   return hosts;

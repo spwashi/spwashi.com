@@ -543,7 +543,7 @@
 }
 
 [data-spw-page-family="experiment-lab"] .design-svg-stage .spw-svg-surface {
-  max-width: none;
+  max-width: var(--spw-svg-surface-max, none);
 }
 
 [data-spw-page-family="experiment-lab"] .design-svg-frame-rect {
@@ -572,6 +572,161 @@
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
 }
 
+[data-spw-page-family="experiment-lab"] .svg-workbench {
+  --svg-workbench-accent: var(--active-op-color, #008080);
+  display: grid;
+  gap: var(--gap-panel, 1rem);
+  margin-block-start: var(--gap-surface, 1.25rem);
+  padding: clamp(1rem, 2vw, 1.45rem);
+  border: 1px solid color-mix(in srgb, var(--svg-workbench-accent) 22%, var(--line, rgba(14, 18, 20, 0.14)));
+  border-radius: var(--shape-surface, 10px);
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--svg-workbench-accent) 8%, transparent),
+      transparent 42%
+    ),
+    color-mix(in srgb, var(--surface-strong) 94%, var(--surface) 6%);
+  box-shadow: var(--shadow-sm);
+}
+
+[data-spw-page-family="experiment-lab"] .svg-workbench__head {
+  display: grid;
+  gap: var(--gap-inline-tight, 0.48rem);
+  max-inline-size: min(100%, 70ch);
+}
+
+[data-spw-page-family="experiment-lab"] .svg-workbench__head h3 {
+  margin: 0;
+}
+
+[data-spw-page-family="experiment-lab"] .svg-workbench__controls {
+  display: grid;
+  gap: var(--gap-panel, 1rem);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+}
+
+[data-spw-page-family="experiment-lab"] .svg-workbench__field {
+  display: grid;
+  gap: var(--gap-inline-tight, 0.48rem);
+  min-inline-size: 0;
+  padding: 0.72rem;
+  border: 1px solid color-mix(in srgb, var(--svg-workbench-accent) 14%, var(--line, rgba(14, 18, 20, 0.14)));
+  border-radius: var(--shape-component, 8px);
+  background: color-mix(in srgb, var(--surface) 92%, var(--svg-workbench-accent) 8%);
+}
+
+[data-spw-page-family="experiment-lab"] .svg-workbench__field > span {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.35rem;
+  color: var(--ink-soft);
+  font-size: var(--text-size-xs, 0.78rem);
+  font-weight: 700;
+}
+
+[data-spw-page-family="experiment-lab"] .svg-workbench__field code {
+  color: color-mix(in srgb, var(--ink) 72%, var(--svg-workbench-accent) 28%);
+}
+
+[data-spw-page-family="experiment-lab"] .svg-workbench__field input,
+[data-spw-page-family="experiment-lab"] .svg-workbench__field select {
+  inline-size: 100%;
+  min-block-size: max(2.35rem, var(--touch-target-compact, 2.15rem));
+}
+
+[data-spw-page-family="experiment-lab"] .svg-workbench__field input[type="range"] {
+  accent-color: var(--svg-workbench-accent);
+}
+
+[data-spw-page-family="experiment-lab"] .svg-workbench__carry {
+  display: grid;
+  gap: var(--gap-inline, 0.7rem);
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+}
+
+[data-spw-page-family="experiment-lab"] .svg-workbench__url {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  overflow-x: auto;
+  padding: 0.62rem 0.72rem;
+  border: 1px solid var(--line, rgba(14, 18, 20, 0.14));
+  border-radius: var(--shape-component, 8px);
+  background: color-mix(in srgb, var(--surface-code) 92%, transparent);
+  color: color-mix(in srgb, white 88%, var(--svg-workbench-accent) 12%);
+  font-family: var(--site-mono-font);
+  font-size: var(--text-size-xs, 0.78rem);
+  white-space: nowrap;
+}
+
+[data-spw-page-family="experiment-lab"] .svg-workbench__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--gap-inline-tight, 0.48rem);
+}
+
+[data-spw-page-family="experiment-lab"] .svg-environment-grid,
+[data-spw-page-family="experiment-lab"] .svg-capture-packet {
+  display: grid;
+  gap: var(--gap-panel, 1rem);
+}
+
+[data-spw-page-family="experiment-lab"] .svg-environment-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+}
+
+[data-spw-page-family="experiment-lab"] .svg-environment-card {
+  display: grid;
+  gap: var(--gap-inline-tight, 0.48rem);
+  padding: 0.82rem;
+  border: 1px solid color-mix(in srgb, var(--active-op-color) 14%, var(--line));
+  border-radius: var(--shape-component, 8px);
+  background: color-mix(in srgb, var(--surface-strong) 94%, var(--active-op-color) 6%);
+}
+
+[data-spw-page-family="experiment-lab"] .svg-environment-card h3,
+[data-spw-page-family="experiment-lab"] .svg-environment-card p {
+  margin: 0;
+}
+
+[data-spw-page-family="experiment-lab"] .svg-capture-packet {
+  margin-block-start: var(--gap-surface, 1.25rem);
+  padding: clamp(1rem, 2vw, 1.35rem);
+  border: 1px solid color-mix(in srgb, var(--op-ref-color, #1d57a3) 20%, var(--line));
+  border-radius: var(--shape-surface, 10px);
+  background:
+    linear-gradient(
+      120deg,
+      color-mix(in srgb, var(--op-ref-color, #1d57a3) 8%, transparent),
+      transparent 44%
+    ),
+    var(--surface-strong);
+}
+
+[data-spw-page-family="experiment-lab"] .svg-capture-packet__fields {
+  display: grid;
+  gap: 0.42rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+[data-spw-page-family="experiment-lab"] .svg-capture-packet__fields li {
+  display: grid;
+  gap: 0.16rem;
+  padding: 0.65rem;
+  border-radius: var(--shape-component, 8px);
+  background: color-mix(in srgb, var(--surface) 90%, var(--op-ref-color, #1d57a3) 10%);
+}
+
+[data-spw-page-family="experiment-lab"] .svg-capture-packet__fields strong {
+  color: color-mix(in srgb, var(--ink) 78%, var(--op-ref-color, #1d57a3) 22%);
+}
+
 [data-spw-page-family="experiment-lab"] .design-reading-card {
   background:
     linear-gradient(
@@ -593,6 +748,16 @@
 
   [data-spw-page-family="experiment-lab"] .design-rule-stage {
     grid-template-columns: minmax(0, 0.95fr) minmax(0, 0.9fr) minmax(16rem, 0.7fr);
+  }
+}
+
+@media (max-width: 48rem) {
+  [data-spw-page-family="experiment-lab"] .svg-workbench__carry {
+    grid-template-columns: 1fr;
+  }
+
+  [data-spw-page-family="experiment-lab"] .svg-workbench__actions {
+    justify-content: flex-start;
   }
 }
 

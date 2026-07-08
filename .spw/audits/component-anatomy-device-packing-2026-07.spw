@@ -1,0 +1,107 @@
+# Component anatomy + spacing/packing across device sizes (2026-07)
+#
+# operation: audit
+# fixity: tending
+# method: read spacing/anatomy CSS + svg-surface device work; note improvable seams
+
+#>component_anatomy_device_packing_2026_07
+#:audit #!layout #!components #!responsive
+#:operation #!audit
+#:layer #!pragmatics
+
+@composition_box_model: ~"../conventions/composition-box-model.spw"
+@typography_packing: ~"../conventions/typography-packing.spw"
+@dimension_vocabulary: ~"../conventions/dimension-vocabulary.spw"
+@component_taxonomy: ~"../conventions/component-taxonomy.spw"
+@measurement_contract: ~"../conventions/measurement-contract.spw"
+@page_anatomy_vocabulary: ~"../conventions/page-anatomy-vocabulary.spw"
+@interaction_microstates: ~"../conventions/interaction-microstates.spw"
+@css_svg_surfaces: ~"../../public/css/systems/svg-surfaces.css"
+@css_typography_packing: ~"../../public/css/components/typography-packing.css"
+@css_gesture_anatomy: ~"../../public/css/components/gesture-anatomy.css"
+@css_capture: ~"../../public/css/modes/capture.css"
+@svg_tunability: ~"../../public/js/media/svg-tunability.js"
+
+audit_run: .{
+  at = `2026-07-08`
+  scope = `component anatomy + spacing/packing seams surfaced while landing SVG device scaling`
+  posture = `observations, not yet a contract — each entry names a seam and a direction`
+  origin = `svg-surfaces device/scale/rail work exposed patterns that repeat sitewide`
+}[reg=facet]
+
+^"breakpoint_source_of_truth"{
+  seam: "Device response is split across three uncoordinated mechanisms that can disagree on the same surface."
+  observed: #[
+    `viewport media queries (max-width: 700px / 719px / min-width: 720px / 72rem) — svg-surfaces uses all four`,
+    `container queries (@container max-width: 30rem) — same file, different origin box than the media queries`,
+    `runtime device mode (data-spw-svg-device fine|coarse|hoverless from matchMedia pointer/hover) — a third axis`
+  ][reg=set]
+  friction: `A rail at 710px viewport inside a wide container gets the mobile media rule but not the small-container rule; the compact border-radius and the label font-size step at different boundaries. The three systems each have a defensible reason to exist (page shell vs component box vs input capability) but no shared vocabulary names which one owns a given decision.`
+  direction: `Name the three axes in @dimension_vocabulary as distinct: shell-width, box-width, input-capability. A component decision should declare which axis it keys off. Prefer container-width for anything about the component's own packing; reserve viewport media for shell-level chrome; reserve device mode for pointer/hover affordances only.`
+}
+
+^"touch_target_packing"{
+  seam: "Touch-target minimums are applied per-component at the leaf, not inherited from a packing tier."
+  observed: #[
+    `--touch-target-min (2.75rem) and --touch-target-compact (2.15rem) exist in tokens/core.css`,
+    `svg-surfaces re-asserts min-height: max(2.15rem, var(--touch-target-compact)) twice: once in a max-width:719px media block, once in a device=coarse/hoverless block`,
+    `the two conditions overlap but are not the same set — a fine-pointer narrow viewport (desktop resized) gets touch sizing it does not need; a coarse-pointer wide viewport only got it after the device-mode rule was added`
+  ][reg=set]
+  friction: `Every interactive-chip host re-derives "is this touch, make it bigger" locally. The rule belongs to the packing tier (@typography_packing tiers: compact|balanced|roomy), which already routes pad/gap density but does not yet route minimum hit-size.`
+  direction: `Add a hit-size band to the packing tier ladder so data-spw-density / data-spw-pack-occupancy carry a --pack-hit-min alongside --pack pad/gap. Leaf components read one token instead of re-testing device. Coarse pointer promotes the tier rather than adding a parallel rule.`
+}
+
+^"rail_variant_across_sizes"{
+  seam: "The rail companion changes layout personality three times with hand-tuned column math at each step."
+  observed: #[
+    `<720px: rail becomes a horizontal scroll strip with an edge mask and scroll-snap`,
+    `>=720px: rail becomes a sticky right column at min(20%, 14rem)`,
+    `>=72rem: same rail widens to min(28%, 18rem)`,
+    `the SVG surface's own max-width is a fourth variant (data-spw-svg-scale wide|narrow-wide|compact) resolved separately`
+  ][reg=set]
+  friction: `Four independent width decisions (rail collapse, rail narrow, rail wide, surface scale) describe one thing: how a figure+register pair packs into available inline space. They are readable individually but there is no single place that says "this is the figure-with-rail packing model." A new host author copies four rules and hopes the boundaries line up.`
+  direction: `Lift figure-with-rail into a named packing variant in @composition_box_model (data-spw-box-model="figure-rail") with the collapse/narrow/wide behavior as one tier set keyed to container width. The scale attribute stays authored, but the rail response derives from the same container thresholds instead of viewport media.`
+}
+
+^"pointer_field_geometry_duplication"{
+  seam: "The pointer-field overlay's rounded corner is restated in three breakpoints to track the surface radius."
+  observed: #[
+    `.spw-svg-figure[data-spw-svg-pointer]::after uses border-radius: var(--shape-surface, 10px)`,
+    `the surface drops to --shape-component (8px) at @container 30rem and @media 700px`,
+    `the ::after overlay had to add matching overrides in both blocks so the glow corner does not overhang the clipped surface corner`
+  ][reg=set]
+  friction: `The overlay radius should never be authored independently of the surface radius — it is the same edge. Two elements tracking one geometric fact by copy is the class of bug that silently drifts.`
+  direction: `Have the surface publish its resolved radius as a custom property (--spw-svg-resolved-radius) set once per breakpoint; the overlay reads that property. One breakpoint edit, both corners follow. Generalize: any decorative pseudo-element that traces a real element's corner should read a published radius token, never restate the media query.`
+}
+
+^"scroll_margin_anchor_anatomy"{
+  seam: "Anchor arrival positioning was missing until addressable nodes forced it, and it is set per-surface."
+  observed: #[
+    `svg node anchors (g[id]) and figures now set scroll-margin-top to clear the sticky header via --shell-header-height`,
+    `this is the correct value but it is authored locally in svg-surfaces; other in-page anchor targets (frame headings, sections) may or may not clear the header consistently`
+  ][reg=set]
+  friction: `"Where does an anchored jump land" is a page-anatomy fact (@page_anatomy_vocabulary), not an SVG fact. Any addressable target under a sticky header needs the same scroll-margin, and right now each surface that discovers the problem fixes it locally.`
+  direction: `Define a sitewide scroll-margin-top default on the anchor-target class family (headings, sections, addressable nodes) keyed to --shell-header-height, so new addressable content inherits correct landing without rediscovering the header overlap.`
+}
+
+^"capture_state_is_a_component_variant"{
+  seam: "Clean-capture is a real component variant but is expressed only as a suppression list."
+  observed: #[
+    `@css_capture hides chrome (console, inspector, floating chrome) under data-spw-capture-mode=clean`,
+    `svg surfaces additionally freeze flow animation, drop the pointer overlay, and null the tilt transform in capture mode — added because motion/pointer artifacts break reproducible screenshots`,
+    `so capture mode is now doing two jobs: hide chrome, and settle motion/interaction to a canonical still frame`
+  ][reg=set]
+  friction: `Capture is treated as "hide things," but for interactive components it is really "resolve to the settled variant" — the same settled state @interaction_microstates already names as the end of the reward ladder. The relationship between capture-clean and interaction-settle is implied, not stated.`
+  direction: `Name capture-clean as a request for every component's settled variant, and let components that already track a settle state reuse it. A component with a defined settled frame gets capture correctness for free instead of each surface enumerating what to freeze.`
+}
+
+^"variant_axes_summary"{
+  claim: `Across these seams the same four axes keep reappearing under different local names. Naming them once lets components declare which axis owns each decision instead of re-testing conditions at every leaf.`
+  axes: #[
+    `shell-width — viewport media; owns page chrome and header, not component packing`,
+    `box-width — container query; owns a component's own pad/gap/collapse/scale`,
+    `input-capability — pointer/hover device mode; owns hit-size and pointer affordances only`,
+    `settle-state — interaction phase; owns the canonical still frame that capture, reduced-motion, and screenshots all want`
+  ][reg=set]
+  next: `Promote the strongest of these (breakpoint_source_of_truth axes + touch_target_packing hit-size band) from observation into @dimension_vocabulary and @typography_packing before the next component ships its own copy of the same four decisions.`
+}

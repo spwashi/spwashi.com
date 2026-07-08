@@ -799,12 +799,12 @@ export const ENHANCEMENT_DEFS = [
   {
     id: 'svg-tunability',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.VISIBLE,
+    when: MOUNT_WHEN.IMMEDIATE,
     features: ['svg-surfaces'],
-    selector: '[data-spw-svg-host], .spw-svg-figure[data-spw-svg-pointer]',
+    selector: '[data-spw-svg-host], .spw-svg-figure[data-spw-svg-pointer], [data-spw-svg-workbench]',
     rootMode: 'single',
-    describes: 'svg[tune|pointer|query] responsive diagram controls',
-    updates: ['data-spw-svg-pointer-state', 'data-spw-svg-device', '--spw-svg-pointer-x', '--spw-svg-pointer-intensity'],
+    describes: 'svg[tune|pointer|query|workbench] responsive diagram controls',
+    updates: ['data-spw-svg-pointer-state', 'data-spw-svg-device', 'data-spw-svg-environment', 'data-spw-svg-environment-reason', 'data-spw-svg-persona-active', 'data-spw-svg-persona-match', 'data-spw-svg-node-state', 'data-spw-svg-focus-node', '--spw-svg-pointer-x', '--spw-svg-pointer-intensity', '--spw-svg-persona-harmony'],
     evaluates: 'svg tunability pointer query device responsiveness',
     load: () => import('../media/svg-tunability.js'),
     mount: (mod) => {
@@ -928,6 +928,22 @@ export const ENHANCEMENT_DEFS = [
       const fn = mod?.initSpwCompositionBoxModel;
       if (!isFn(fn)) return;
       return fn(ctx);
+    },
+  },
+  {
+    id: 'spatial-gravity',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.VISIBLE,
+    selector: '[data-spw-gravity]',
+    rootMode: 'single',
+    describes: 'spatial-gravity[edge|vertical|extent] opportunistic variant selection',
+    updates: ['data-spw-edge-gravity', 'data-spw-vertical-gravity', 'data-spw-extent', 'data-spw-measure-band', 'data-spw-space-variant', 'data-spw-open-direction', '--spw-edge-proximity', '--spw-vertical-bias'],
+    evaluates: 'viewport geometry edge detection vertical gravity variant selection',
+    load: () => import('./spatial-gravity.js'),
+    mount: (mod) => {
+      const fn = mod?.initSpwSpatialGravity;
+      if (!isFn(fn)) return;
+      return fn(document);
     },
   },
   {

@@ -52,6 +52,9 @@
     --spw-svg-pointer-intensity: 0;
     --spw-svg-motion-rate: 4s;
     --spw-svg-node-fill-mix: 10%;
+    --spw-svg-resolved-radius: var(--shape-surface, 10px);
+    --spw-svg-hit-min: var(--spw-medium-touch-min, var(--touch-target-compact, 2.15rem));
+    --spw-svg-surface-max: calc(var(--measure-panel, 52rem) * var(--spw-svg-scale-factor, 1));
     --spw-svg-device-pointer-lift: var(--spw-svg-pointer-lift, 0.42);
     --spw-svg-brand-accent: var(--active-op-color, #008080);
     --spw-svg-brand-field: var(--surface, #ffffff);
@@ -59,7 +62,9 @@
     --spw-svg-surface-shadow: var(--component-shadow, 0 1px 3px rgba(0,0,0,0.05));
     display: grid;
     gap: calc(var(--spw-svg-space, var(--space-sm, 0.6rem)) * var(--spw-svg-gap-scale, 1));
+    inline-size: 100%;
     margin: 0;
+    min-inline-size: 0;
     container-type: inline-size;
     position: relative;
     isolation: isolate;
@@ -68,10 +73,10 @@
 [data-spw-features~="svg-surfaces"] .spw-svg-surface {
     display: block;
     width: 100%;
-    max-width: calc(var(--measure-panel, 52rem) * var(--spw-svg-scale-factor, 1));
+    max-width: var(--spw-svg-surface-max);
     height: auto;
     border: 1px solid var(--spw-svg-surface-border);
-    border-radius: var(--shape-surface, 10px);
+    border-radius: var(--spw-svg-resolved-radius);
     background:
         linear-gradient(
             180deg,
@@ -153,6 +158,7 @@
 [data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-device="coarse"],
 [data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-device="hoverless"] {
     --spw-svg-device-pointer-lift: 0.12;
+    --spw-svg-hit-min: var(--spw-medium-touch-min, var(--touch-target-min, 2.75rem));
     gap: max(0.8rem, var(--spw-svg-space, 0.6rem));
 }
 
@@ -169,7 +175,7 @@
 }
 
 [data-spw-features~="svg-surfaces"] .spw-svg-figure:is([data-spw-svg-device="coarse"], [data-spw-svg-device="hoverless"]) .spw-svg-rail > * {
-    min-height: max(2.15rem, var(--touch-target-compact, 2.15rem));
+    min-height: max(2.15rem, var(--spw-svg-hit-min, var(--touch-target-compact, 2.15rem)));
     display: flex;
     align-items: center;
 }
@@ -182,16 +188,23 @@
  * token cards stay small and centered instead of inflating to fill a cell.
  */
 
-[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-scale="wide"] .spw-svg-surface {
-    max-width: min(100%, calc(var(--measure-panel, 52rem) * var(--spw-svg-scale-factor, 1) * 1.3));
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-scale="wide"] {
+    --spw-svg-surface-max: min(100%, calc(var(--measure-panel, 52rem) * var(--spw-svg-scale-factor, 1) * 1.3));
 }
 
-[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-scale="narrow-wide"] .spw-svg-surface {
-    max-width: 100%;
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-scale="narrow-wide"] {
+    --spw-svg-surface-max: 100%;
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-scale="feature"] {
+    --spw-svg-surface-max: min(100%, calc(var(--page-width-wide, 68rem) * 0.94));
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-scale="compact"] {
+    --spw-svg-surface-max: min(100%, 16rem);
 }
 
 [data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-scale="compact"] .spw-svg-surface {
-    max-width: min(100%, 16rem);
     margin-inline: auto;
 }
 
@@ -231,13 +244,81 @@
     --spw-svg-node-fill-mix: 18%;
 }
 
+/* Environment modes keep one authored SVG useful under several viewing
+   conditions: calm studio review, proof-sheet checking, poster capture, and
+   image-model handoff. */
+
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-environment="studio"] {
+    --spw-svg-caption-opacity: 0.94;
+    --spw-svg-narrative-intensity: 0.9;
+    --spw-svg-rail-intensity: 0.88;
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-environment="proof"] {
+    --spw-svg-device-pointer-lift: 0;
+    --spw-svg-node-fill-mix: 7%;
+    --spw-svg-caption-opacity: 1;
+    --spw-svg-narrative-intensity: 1;
+    --spw-svg-rail-intensity: 1;
+    --spw-svg-surface-shadow: 0 0 0 1px color-mix(in srgb, var(--ink, #161c1d) 8%, transparent);
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-environment="proof"] .spw-svg-flow--animated {
+    animation-play-state: paused;
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-environment="proof"] .spw-svg-surface {
+    filter: contrast(1.04) saturate(0.92);
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-environment="poster"] {
+    --spw-svg-node-fill-mix: 20%;
+    --spw-svg-caption-opacity: 1;
+    --spw-svg-narrative-intensity: 0.96;
+    --spw-svg-rail-intensity: 0.9;
+    --spw-svg-surface-shadow:
+        0 0 0 1px color-mix(in srgb, var(--spw-svg-brand-accent, var(--active-op-color, #008080)) 16%, transparent),
+        0 18px 40px color-mix(in srgb, var(--spw-svg-brand-accent, var(--active-op-color, #008080)) 14%, transparent);
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-environment="poster"] .spw-svg-surface {
+    background:
+        radial-gradient(
+            circle at 12% 18%,
+            color-mix(in srgb, var(--op-object-color, #a67c00) 10%, transparent),
+            transparent 34%
+        ),
+        linear-gradient(
+            135deg,
+            color-mix(in srgb, var(--spw-svg-brand-accent, var(--active-op-color, #008080)) 9%, transparent),
+            transparent 44%
+        ),
+        var(--spw-svg-brand-field, var(--surface, #ffffff));
+    filter: saturate(1.08) contrast(1.02);
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-environment="model"] {
+    --spw-svg-device-pointer-lift: 0;
+    --spw-svg-node-fill-mix: 15%;
+    --spw-svg-caption-opacity: 1;
+    --spw-svg-narrative-intensity: 1;
+    --spw-svg-rail-intensity: 1;
+    --spw-svg-surface-shadow:
+        0 0 0 1px color-mix(in srgb, var(--op-ref-color, #1d57a3) 16%, transparent),
+        0 10px 24px color-mix(in srgb, var(--op-ref-color, #1d57a3) 8%, transparent);
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-environment="model"] .spw-svg-flow--animated {
+    animation-play-state: paused;
+}
+
 [data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-pointer]::after {
     content: "";
     position: absolute;
     inset: 0;
     z-index: 2;
     pointer-events: none;
-    border-radius: var(--shape-surface, 10px);
+    border-radius: var(--spw-svg-resolved-radius);
     opacity: calc(var(--spw-svg-pointer-intensity, 0) * 0.48);
     background:
         radial-gradient(
@@ -247,6 +328,10 @@
         );
     mix-blend-mode: multiply;
     transition: opacity var(--duration-base, 200ms) var(--ease-smooth, ease);
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-companion="rail"][data-spw-svg-pointer]::after {
+    grid-area: surface;
 }
 
 [data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-pointer="trace"][data-spw-svg-pointer-state="active"] .spw-svg-flow {
@@ -394,6 +479,7 @@
     gap: var(--space-2xs, 0.36rem);
     align-content: start;
     margin: 0;
+    min-inline-size: 0;
     padding: 0;
     color: var(--ink-soft, rgba(14, 18, 20, 0.68));
     font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
@@ -464,7 +550,7 @@
 
     /* Larger touch targets on mobile for rail chips */
     .spw-svg-rail > * {
-        min-height: max(2.15rem, var(--touch-target-compact, 2.15rem));
+        min-height: max(2.15rem, var(--spw-svg-hit-min, var(--touch-target-compact, 2.15rem)));
         display: flex;
         align-items: center;
         scroll-snap-align: start;
@@ -523,12 +609,16 @@
 /* ─── Responsive & Accessibility ────────────────────────────────────────── */
 
 @media (max-width: 700px) {
+    [data-spw-features~="svg-surfaces"] .spw-svg-figure {
+        --spw-svg-resolved-radius: var(--shape-component, 8px);
+    }
+
     [data-spw-features~="svg-surfaces"] .spw-svg-surface {
-        border-radius: var(--shape-component, 8px);
+        border-radius: var(--spw-svg-resolved-radius);
     }
 
     [data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-pointer]::after {
-        border-radius: var(--shape-component, 8px);
+        border-radius: var(--spw-svg-resolved-radius);
     }
 
     [data-spw-features~="svg-surfaces"] .spw-svg-label {
@@ -547,6 +637,66 @@
     [data-spw-features~="svg-surfaces"] .spw-svg-flow-diagram .op-intent-label {
         display: none;
     }
+}
+
+/* ─── Persona facet ───────────────────────────────────────────────────── */
+/* Audiences live on data-spw-svg-persona; titles stay geometry-first. */
+
+:where(.spw-svg-figure[data-spw-svg-persona] > figcaption)::before {
+    content: "audiences · " attr(data-spw-svg-persona);
+    display: block;
+    margin-block-end: 0.4rem;
+    font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+    font-size: 0.72rem;
+    letter-spacing: 0.03em;
+    color: var(--ink-soft, rgba(14, 18, 20, 0.62));
+}
+
+:where(html[data-spw-capture-mode="clean"] .spw-svg-figure[data-spw-svg-persona] > figcaption)::before {
+    content: none;
+}
+
+/* ─── Persona lens harmony ─────────────────────────────────────────────── */
+/* Active audience selection harmonizes matching hosts and lets charge
+   develop across the page without repeating persona lists in prose. */
+
+:where(html[data-spw-svg-persona-active]) {
+    --spw-svg-persona-harmony: 1;
+}
+
+:where(html[data-spw-svg-persona-active] .spw-svg-figure[data-spw-svg-persona-match="true"]) {
+    --spw-svg-pointer-lift: calc(0.42 + (var(--spw-svg-persona-harmony, 1) * 0.14));
+    --spw-svg-narrative-intensity: 1;
+    --spw-svg-rail-intensity: 1;
+}
+
+:where(html[data-spw-svg-persona-active] .spw-svg-figure[data-spw-svg-persona-match="true"] .spw-svg-surface) {
+    border-color: color-mix(in srgb, var(--spw-svg-brand-accent, var(--active-op-color, #008080)) 34%, var(--spw-shell-line, rgba(14, 18, 20, 0.14)));
+    box-shadow:
+        0 0 0 1px color-mix(in srgb, var(--spw-svg-brand-accent, var(--active-op-color, #008080)) 14%, transparent),
+        0 12px 30px color-mix(in srgb, var(--spw-svg-brand-accent, var(--active-op-color, #008080)) 12%, transparent);
+}
+
+:where(html[data-spw-svg-persona-active] .spw-svg-figure[data-spw-svg-persona-match="true"] > figcaption)::before {
+    color: color-mix(in srgb, var(--spw-svg-brand-accent, var(--active-op-color, #008080)) 72%, var(--ink-soft, rgba(14, 18, 20, 0.62)));
+    font-weight: 600;
+}
+
+:where(html[data-spw-svg-persona-active] .spw-svg-figure[data-spw-svg-persona-match="dim"]) {
+    --spw-svg-narrative-intensity: 0.62;
+    --spw-svg-rail-intensity: 0.58;
+    opacity: 0.78;
+    transition: opacity var(--duration-base, 200ms) var(--ease-mechanical, ease);
+}
+
+:where(html[data-spw-svg-persona-active] .spw-svg-figure[data-spw-svg-persona-match="dim"] .spw-svg-surface) {
+    filter: saturate(0.88);
+}
+
+:where([data-spw-svg-persona-select][data-spw-svg-persona-select-state="active"]) {
+    border-color: color-mix(in srgb, var(--spw-svg-brand-accent, var(--active-op-color, #008080)) 42%, transparent);
+    color: var(--spw-svg-brand-accent, var(--active-op-color, #008080));
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--spw-svg-brand-accent, var(--active-op-color, #008080)) 18%, transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {

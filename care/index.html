@@ -142,7 +142,7 @@
                     <h2>Care Interface Model</h2>
                 </header>
                 <p class="inline-note">The shape is simple: need -> language -> card -> protocol -> share boundary -> escalation path -> local record.</p>
-                <figure class="spw-svg-figure" data-spw-svg-host="care-model" data-spw-svg-kind="addressable-diagram" data-spw-svg-scale="wide">
+                <figure class="spw-svg-figure" data-spw-svg-host="care-model" data-spw-svg-kind="addressable-diagram" data-spw-svg-scale="wide" data-spw-svg-persona="client helper coordinator reviewer">
                     <svg class="spw-svg-surface spw-svg-flow-diagram" viewBox="0 0 960 360" role="img" aria-labelledby="care-model-svg-title care-model-svg-desc" xmlns="http://www.w3.org/2000/svg">
                         <title id="care-model-svg-title">Care interface model flow</title>
                         <desc id="care-model-svg-desc">A flow diagram showing need moving through language, card, protocol, share boundary, escalation path, and local record.</desc>
@@ -153,17 +153,17 @@
                         <g class="op-node--probe">
                             <circle class="spw-svg-node spw-svg-node--probe" cx="112" cy="182" r="44"></circle>
                             <text class="spw-svg-label" x="82" y="178">? need</text>
-                            <text class="spw-svg-note" x="72" y="200">what hurts?</text>
+                            <text class="spw-svg-note" x="72" y="200">client signal</text>
                         </g>
                         <g class="op-node--ref">
                             <rect class="spw-svg-node spw-svg-node--ref" x="196" y="134" width="116" height="96" rx="16"></rect>
                             <text class="spw-svg-label" x="222" y="176">~ name</text>
-                            <text class="spw-svg-note" x="214" y="199">shared words</text>
+                            <text class="spw-svg-note" x="214" y="199">shared language</text>
                         </g>
                         <g class="op-node--object">
                             <rect class="spw-svg-node spw-svg-node--object" x="352" y="134" width="116" height="96" rx="16"></rect>
                             <text class="spw-svg-label" x="380" y="176">^ card</text>
-                            <text class="spw-svg-note" x="374" y="199">hold state</text>
+                            <text class="spw-svg-note" x="374" y="199">private record</text>
                         </g>
                         <g class="op-node--stream">
                             <rect class="spw-svg-node spw-svg-node--stream" x="508" y="134" width="136" height="96" rx="16"></rect>
@@ -173,7 +173,7 @@
                         <g class="op-node--action">
                             <rect class="spw-svg-node spw-svg-node--action" x="684" y="134" width="136" height="96" rx="16"></rect>
                             <text class="spw-svg-label" x="716" y="176">@ share</text>
-                            <text class="spw-svg-note" x="708" y="199">choose room</text>
+                            <text class="spw-svg-note" x="708" y="199">choose audience</text>
                         </g>
                         <g class="op-node--pragma">
                             <circle class="spw-svg-node spw-svg-node--pragma" cx="842" cy="182" r="44"></circle>
@@ -318,7 +318,7 @@
                     <div class="frame-panel"><h3>Package</h3><p>Turn the useful part into a card: debug log, witness card, both-can-be-true card, or therapist translation sheet.</p></div>
                     <div class="frame-panel"><h3>Route</h3><p>Choose the next audience: self, friend, group, therapist, public post, or crisis support. The audience is part of the care decision.</p></div>
                 </div>
-                <figure class="spw-svg-figure" data-spw-svg-host="social-care-routing" data-spw-svg-kind="addressable-diagram" data-spw-svg-scale="wide">
+                <figure class="spw-svg-figure" data-spw-svg-host="social-care-routing" data-spw-svg-kind="addressable-diagram" data-spw-svg-scale="wide" data-spw-svg-persona="client friend facilitator publisher">
                     <svg class="spw-svg-surface spw-svg-flow-diagram" viewBox="0 0 960 300" role="img" aria-labelledby="social-care-svg-title social-care-svg-desc" xmlns="http://www.w3.org/2000/svg">
                         <title id="social-care-svg-title">Social prompt to care structure</title>
                         <desc id="social-care-svg-desc">A diagram showing a social prompt moving into private processing, a local card, and separate sharing routes.</desc>
@@ -345,18 +345,18 @@
                         <g class="op-node--ref">
                             <rect class="spw-svg-node spw-svg-node--ref" x="704" y="42" width="150" height="76" rx="16"></rect>
                             <text class="spw-svg-label" x="736" y="76">~ witness</text>
-                            <text class="spw-svg-note" x="730" y="98">friend / circle</text>
+                            <text class="spw-svg-note" x="730" y="98">friend / group</text>
                         </g>
                         <g class="op-node--action">
                             <rect class="spw-svg-node spw-svg-node--action" x="704" y="182" width="150" height="76" rx="16"></rect>
                             <text class="spw-svg-label" x="734" y="216">@ publish</text>
-                            <text class="spw-svg-note" x="724" y="238">video / thread</text>
+                            <text class="spw-svg-note" x="724" y="238">video / post</text>
                         </g>
                         <g class="op-node--pragma">
                             <circle class="spw-svg-node spw-svg-node--pragma" cx="858" cy="150" r="34"></circle>
                             <text class="spw-svg-label" x="840" y="154">!</text>
                         </g>
-                        <text class="spw-svg-note" x="54" y="54">The platform can start the thought. The card decides what is safe to share.</text>
+                        <text class="spw-svg-note" x="54" y="54">The platform can start the thought; the card decides each audience boundary.</text>
                         <text class="spw-svg-note" x="798" y="154">boundary</text>
                     </svg>
                     <figcaption>

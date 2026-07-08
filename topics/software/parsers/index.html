@@ -202,7 +202,7 @@
                     <h2>Portable Diagram: From Marks To Memory</h2>
                 </header>
                 <p class="frame-note">This is the parser pipeline as a structural story. Characters become tokens. Tokens become a concrete syntax tree that still remembers punctuation and local grouping. That tree can be normalized into an AST or library layer. Eventually the objects you keep, discard, intern, or cache become part of the runtime memory strategy. Read it alongside the <a href="/topics/math/category-theory/#commuting-square">commuting square</a> if you want a more compositional lens, or the <a href="/topics/math/complexity/#parser-budgets">complexity page</a> if you want the cost model.</p>
-                <figure class="spw-svg-figure">
+                <figure class="spw-svg-figure" data-spw-svg-persona="learner implementer reviewer rendering-model">
                     <svg class="spw-svg-surface spw-svg-flow-diagram" viewBox="0 0 980 340" role="img" aria-labelledby="parser-map-title parser-map-desc">
                         <title id="parser-map-title">Parser map from characters to memory</title>
                         <desc id="parser-map-desc">A flow diagram showing characters becoming tokens, tokens becoming a concrete syntax tree, then an abstract syntax tree, a normalized library layer, and finally runtime memory policies.</desc>

@@ -18,6 +18,10 @@ html[data-spw-capture-mode="clean"] .spw-svg-flow--animated {
   animation-play-state: paused !important;
 }
 
+html[data-spw-capture-mode="clean"] .spw-svg-figure {
+  --spw-svg-device-pointer-lift: 0 !important;
+}
+
 html[data-spw-capture-mode="clean"] .spw-svg-figure[data-spw-svg-pointer]::after {
   opacity: 0 !important;
 }

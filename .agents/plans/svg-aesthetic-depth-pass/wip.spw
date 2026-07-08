@@ -1,0 +1,91 @@
+# SVG Aesthetic Depth Pass WIP
+#
+# Plan-local cache for the 2026-07-08 SVG environment and capture slice.
+
+#>svg_aesthetic_depth_pass_wip
+#:cache #!svg #!capture #!rendering-model
+#:operation #!align
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@design_svg_route: ~"../../../design/experiments/svg/index.html"
+@svg_surfaces_css: ~"../../../public/css/systems/svg-surfaces.css"
+@design_experiments_css_source: ~"../../../src/styles/entries/design-experiments.css"
+@svg_tunability_js: ~"../../../public/js/media/svg-tunability.js"
+
+^"svg_environment_capture"{
+  id = "svg-environment-capture-2026-07"
+  operation = "align"
+  fixity = "stable | tending"
+  source = "chat + implementation"
+  claim = "A featured SVG becomes a stronger screenshot-to-render-model artifact when the same authored graphic can be viewed as studio, proof, poster, or model handoff without changing its stable seams."
+  evidence = #[
+    `design/experiments/svg/index.html#svg-tunability-contract`,
+    `design/experiments/svg/index.html#svg-brand-screenshot`,
+    `public/css/systems/svg-surfaces.css[data-spw-svg-environment]`,
+    `public/js/media/svg-tunability.js SPW_SVG_ENVIRONMENTS`,
+    `src/styles/entries/design-experiments.css .svg-workbench`
+  ][reg=set]
+  pattern_consideration = #[
+    `same SVG under different environment reasons`,
+    `same capture mode across SVG, image, and scene-bed surfaces`,
+    `same featured piece across mobile, wide, and clean capture states`
+  ][reg=set]
+  expansion_prime = "If this repeats outside SVG, compare cards, image-study figures, and scene beds before promoting a wider data-spw-capture-environment family."
+  validation = `rg -n "spw-svg-env|data-spw-svg-environment|svg-screenshot-model-packet" design/experiments/svg public/css public/js .agents/plans`
+  do_not_promote_until = "At least one non-SVG featured surface needs the same viewing-environment distinction."
+}
+
+^"svg_persona_markup_copy"{
+  id = "svg-persona-markup-copy-2026-07"
+  operation = "align"
+  fixity = "tending"
+  source = "chat follow-up + implementation"
+  claim = "Embedded SVGs gain differential value when data-spw-svg-persona names audiences as a facet, titles and descs stay geometry-first, and compact diagram labels or rails carry role-specific seams instead of repeating persona lists in prose."
+  evidence = #[
+    `design/experiments/svg/index.html[data-spw-svg-persona]`,
+    `about/index.html#boonhonk-disposition-diagram`,
+    `care/index.html[data-spw-svg-persona]`,
+    `topics/math/**/index.html[data-spw-svg-persona]`,
+    `topics/software/browser/index.html[data-spw-svg-persona]`,
+    `topics/craft/svg/index.html[data-spw-svg-persona]`,
+    `topics/craft/fragments/index.html[data-spw-svg-persona]`,
+    `public/css/systems/svg-surfaces.css .spw-svg-figure[data-spw-svg-persona] > figcaption::before`
+  ][reg=set]
+  pattern_consideration = #[
+    `data-spw-svg-persona is the audience facet; figcaption ::before renders a compact register`,
+    `do not repeat persona lists in title, desc, or aria-label when the facet is present`,
+    `visible SVG text and spec-pills carry role seams; model handoff uses environment + stable node ids`
+  ][reg=set]
+  validation = `rg -n "data-spw-svg-persona|persona-specific|rendering-model" design topics recipes about care blog public/js .agents/plans`
+  do_not_promote_until = "At least one route needs active persona switching rather than only markup interpretation."
+}
+
+^"svg_persona_lens_harmony"{
+  id = "svg-persona-lens-harmony-2026-07"
+  operation = "align"
+  fixity = "stable | tending"
+  source = "chat follow-up + implementation"
+  claim = "Selecting an SVG audience lens should harmonize matching hosts through root and host data attributes plus CSS tokens, letting charge and pointer momentum develop without repeating persona lists in title or desc prose."
+  evidence = #[
+    `public/js/media/svg-tunability.js applySvgPersonaLens`,
+    `public/css/systems/svg-surfaces.css html[data-spw-svg-persona-active]`,
+    `design/experiments/svg/index.html#svg-persona-lens`,
+    `?spw-svg-persona=<token>`
+  ][reg=set]
+  pattern_consideration = #[
+    `facet lists audiences on the host; lens selects one active viewing reason`,
+    `matching hosts gain pointer lift and border resonance; non-matching hosts recede`,
+    `bus event svg:persona-selected for downstream charge or wonder coupling`
+  ][reg=set]
+  validation = `rg -n "spw-svg-persona|data-spw-svg-persona-active|applySvgPersonaLens" public/js public/css design/experiments/svg`
+  do_not_promote_until = "Charge-field or wonder layers consume svg:persona-selected with a falsifiable cross-route test."
+}
+
+dispatch: .{
+  plan = @plan
+  design_svg_route = @design_svg_route
+  svg_surfaces_css = @svg_surfaces_css
+  design_experiments_css_source = @design_experiments_css_source
+  svg_tunability_js = @svg_tunability_js
+}

@@ -92,7 +92,15 @@ SVG surfaces add a narrower, screenshot-friendly layer of tuning through
 `public/css/systems/svg-surfaces.css`. Brand and QA states can drive
 `--spw-svg-brand-accent`, `--spw-svg-brand-field`, `--spw-svg-stroke-scale`,
 `--spw-svg-space`, `--spw-svg-flow-dash`, and `--spw-svg-flow-gap` through
-`applySvgQueryTunability`.
+`applySvgQueryTunability`. Use `spw-svg-env=studio|proof|poster|model` when the
+same authored SVG needs to be compared as an in-page diagram, proof sheet,
+featured capture, or rendering-model handoff. Use `data-spw-svg-persona` on the
+host figure as an audience facet; keep `<title>` / `<desc>` geometry-first and
+let the figcaption register (`.spw-svg-figure > figcaption::before`) surface the
+facet instead of repeating persona lists in prose. Use `spw-svg-persona=<token>` or
+`data-spw-svg-persona-select` chips to activate a lens: matching hosts write
+`data-spw-svg-persona-match="true"`, others recede, and `--spw-svg-persona-harmony`
+develops property resonance on the page.
 
 Use `.spw-demo-rail` and `.spw-demo-card` from `public/css/effects/demos.css`
 when a route needs tasteful internal marketing: a short reason, a reproducible

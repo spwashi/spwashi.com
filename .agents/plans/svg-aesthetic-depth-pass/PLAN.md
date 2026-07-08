@@ -18,6 +18,31 @@ The immediate task is not implementation. It is to make the later analysis phase
 
 How should SVG-backed surfaces deepen the site's existing spatial logic and interactive wonder without breaking the calm shell, the mobile-first contract, or the agent-readable structure?
 
+## 2026-07-08 Implementation Slice
+
+The current patch moves this plan from priming-only into a small implementation slice.
+
+- **Public goal:** featured SVG pieces can be tuned, compared, captured, and handed to a rendering model without losing their site grammar.
+- **Focus dimension:** component family, specifically `spw-svg-figure` / SVG feature surfaces.
+- **Fixity tier:** stable for the shared SVG host attributes and query contract; tending for route-local copy and the live workbench layout.
+- **Primary element:** metal, because the work names a reproducible contract, query parameters, and validation surfaces.
+- **Secondary element:** air, because the same SVG needs readable device sizing, calmer proof states, and clear screenshot conditions.
+- **Owner surfaces:** `design/experiments/svg/index.html`, `public/css/systems/svg-surfaces.css`, `src/styles/entries/design-experiments.css`, `public/js/media/svg-tunability.js`, and this plan.
+- **Validation path:** `node --check public/js/media/svg-tunability.js`, `node --check public/js/runtime/module-catalog.js`, `npm run build:css`, `npm run check:local`, targeted `rg` for `spw-svg-env`, `data-spw-svg-environment`, and `data-spw-svg-persona`.
+
+The slice adds four named SVG viewing environments:
+
+- `studio` for ordinary in-page diagram review
+- `proof` for label, stroke, and repeatable capture checks
+- `poster` for a featured piece with stronger visual carry
+- `model` for settled screenshot interpretation by Midjourney or another rendering model
+
+The environments are intentionally viewing reasons, not decorative theme names. A future model should be able to compare the same SVG across those reasons and decide whether the structure, material fact, and stable seams survive.
+
+The follow-up markup copy slice adds `data-spw-svg-persona` as an audience facet on SVG hosts across the site. Titles and descriptions stay geometry-first; the facet plus a compact figcaption register carry who the diagram serves. Visible `<text>`, rails, and spec-pills hold role-specific seams where the viewBox has room — not repeated persona lists in prose. Persona values are reader-facing reasons, not behavioral states.
+
+The persona lens slice adds active selection through `spw-svg-persona` query, `html[data-spw-svg-persona-active]`, host `data-spw-svg-persona-match`, and harmony tokens (`--spw-svg-persona-harmony`, pointer lift, narrative intensity) so matching SVG hosts resonate while others recede. The design lab exposes selectable chips; charge and wonder can read the same root state without duplicating persona prose.
+
 ## Hypothesis
 
 The future analysis will be better if the model is primed with:
@@ -111,6 +136,8 @@ The prompt should still require Opus to verify repo facts before leaning on the 
 - Whether wide and long displays need rails, sectional satellites, or multi-plane host behavior
 - Whether wonder is currently too static, too decorative, or too weakly tied to inspectable relation
 - Whether manifest / route contracts should expose more SVG-specific host metadata for agents
+- Whether `data-spw-svg-environment` should graduate from an SVG-specific tuning contract into a wider capture-environment vocabulary for cards, images, and scene beds
+- Whether `data-spw-svg-persona` should stay as markup copy or become a tunable lens with visible comparison states
 
 ## Evaluation Criteria
 
@@ -127,3 +154,5 @@ The later Opus memo should be considered strong if it:
 
 - `git diff --check`
 - `rg -n "svg-aesthetic-depth-pass|SVG Aesthetic Depth Pass For Opus 4.7" .agents/prompts .agents/plans`
+- `rg -n "spw-svg-env|data-spw-svg-environment|svg-screenshot-model-packet" design/experiments/svg public/css public/js .agents/plans`
+- `rg -n "data-spw-svg-persona|persona-specific|rendering-model" design topics recipes about care blog public/js .agents/plans`
