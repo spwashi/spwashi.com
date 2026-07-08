@@ -23,6 +23,7 @@ fixity = "tending"
     .{ file = "route-utils.js", guild = "orientation", duty = "pathname, href, list parse, transition prime" }[reg=facet],
     .{ file = "storage-utils.js", guild = "memory", duty = "readJson/writeJson + STORAGE_KEYS topology" }[reg=facet],
     .{ file = "visited-surfaces-storage.js", guild = "memory", duty = "image surface visitation envelope" }[reg=facet],
+    .{ file = "feature-route-context.js", guild = "orientation", duty = "projectFeatureRouteContext for feature modules" }[reg=facet],
     .{ file = "dom-render.js", guild = "substrate", duty = "el(), hydration, runSafe, guardCall" }[reg=facet],
   ][reg=set]
 }

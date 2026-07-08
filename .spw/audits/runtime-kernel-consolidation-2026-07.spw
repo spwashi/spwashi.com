@@ -47,12 +47,12 @@ audited_at = "2026-07-08"
 
 ^"remaining"{
   normalize_forks: #[
-    `haptics/prompt-utils/pretext-physics local normalizeText`
+    `prompt-utils/pretext-physics local normalizeText`
     `narrative-instrumentation local normalizeToken`
     `page-metadata separator-aware normalizeToken`
+    `operator-interactions, console, home/section-index local normalizeText`
   ][reg=set]
   storage: #[
-    `haptics readJsonStorage → readJson wrapper`
     `local-notes, cognitive-surface safeJsonParse`
   ][reg=set]
   chrome: #[
@@ -60,7 +60,17 @@ audited_at = "2026-07-08"
   ][reg=set]
   design_growth: #[
     `expand kernel-audit bed with live toggles`
-    `component hydrateRouteContext adoption in feature modules`
+  ][reg=set]
+}
+
+^"wave_three_landed"{
+  at = "2026-07-08"
+  items: #[
+    `haptics.js storage-utils migration + guardCall bus handlers + writeRuntimeDatasetValues sigil count`
+    `storage-utils duplicate SIGIL_COLLECTION key removed`
+    `feature-route-context.js wired: interactive-medium, loading-ecology, topical-payload, frame-navigator`
+    `frame-navigator normalizePathname + collapseText from kernel`
+    `floating-chrome.css discovery-notice lane + satchel-open toast offset + launch touch targets`
   ][reg=set]
 }
 

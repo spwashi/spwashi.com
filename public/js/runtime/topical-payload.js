@@ -7,6 +7,7 @@
 
 import { bus } from '/public/js/kernel/bus.js';
 import { writeDatasetValue } from '/public/js/kernel/dom-contracts.js';
+import { projectFeatureRouteContext } from '/public/js/kernel/feature-route-context.js';
 import { collapseText as normalizeText } from '/public/js/kernel/text-normalization.js';
 
 const TOPIC_SELECTOR = '.spw-topic, [data-spw-topic]';
@@ -286,6 +287,10 @@ function publishApi() {
     serialize: () => serializeTopicalPayloadToSpw(collectTopicalPayload(document)),
     refresh: () => {
       lastRefreshAt = Date.now();
+      projectFeatureRouteContext(document.documentElement, {
+        source: 'topical-payload',
+        reason: 'refresh',
+      });
       writeDatasetValue(document.documentElement, 'spwTopicalPayloadReady', 'true', {
         source: 'topical-payload',
         reason: 'refresh',
@@ -296,6 +301,11 @@ function publishApi() {
 
   window.__SPW_TOPICAL_PAYLOAD__ = api;
   window.spwTopicalPayload = api;
+
+  projectFeatureRouteContext(document.documentElement, {
+    source: 'topical-payload',
+    reason: 'api-ready',
+  });
 
   writeDatasetValue(document.documentElement, 'spwTopicalPayloadReady', 'true', {
     source: 'topical-payload',

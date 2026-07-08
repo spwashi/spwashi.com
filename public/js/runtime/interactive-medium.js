@@ -7,6 +7,7 @@
  */
 
 import { writeDatasetValues } from '/public/js/kernel/dom-contracts.js';
+import { projectFeatureRouteContext } from '/public/js/kernel/feature-route-context.js';
 import { presenceToken as normalizeToken } from '/public/js/kernel/text-normalization.js';
 
 export const MEDIUM_REGISTERS = Object.freeze({
@@ -242,6 +243,11 @@ export function collectInteractiveMedium(root = document) {
 
 function applyInteractiveMedium(snapshot, html = readHtml()) {
   if (!html) return;
+
+  projectFeatureRouteContext(html, {
+    source: 'interactive-medium',
+    reason: 'medium-sync',
+  });
 
   writeDatasetValues(html, {
     spwMediumRegister: snapshot.register,

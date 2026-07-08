@@ -30,6 +30,8 @@ import {
     annotateFloatingChromeElement,
     syncFloatingChromeState,
 } from '/public/js/kernel/dom-contracts.js';
+import { projectFeatureRouteContext } from '/public/js/kernel/feature-route-context.js';
+import { normalizePathname } from '/public/js/kernel/route-utils.js';
 import {
     detectOperator,
     emitSpwAction,
@@ -37,6 +39,7 @@ import {
     isInputFocused
 } from '/public/js/kernel/shared.js';
 import { getSiteSettings } from '/public/js/kernel/site-settings.js';
+import { collapseText as normalizeText } from '/public/js/kernel/text-normalization.js';
 
 const NAV_ROUTE_SELECTOR = [
     'main .frame-operators a[href]',
@@ -47,11 +50,6 @@ const NAV_ROUTE_SELECTOR = [
     'main .frame-list a[href]',
     'main p a[href]'
 ].join(', ');
-
-const normalizePathname = (pathname = '') =>
-    (!pathname || pathname === '/') ? '/' : pathname.replace(/\/+$/, '');
-
-const normalizeText = (value = '') => value.replace(/\s+/g, ' ').trim();
 
 const getCompactInternalHref = (url) => `${url.pathname || '/'}${url.hash}`;
 
@@ -152,6 +150,10 @@ class SpwFrameNavigator {
         if (!siteFrameEls.length) return;
 
         this.initialized = true;
+        projectFeatureRouteContext(document.documentElement, {
+            source: 'frame-navigator',
+            reason: 'init',
+        });
         this.buildUI();
         document.body.appendChild(this.root);
 
@@ -387,6 +389,11 @@ class SpwFrameNavigator {
 
     refresh() {
         if (!this.list) return;
+
+        projectFeatureRouteContext(document.documentElement, {
+            source: 'frame-navigator',
+            reason: 'refresh',
+        });
 
         const frames = this.updateFrames();
         const routes = collectRouteEntries();

@@ -9,6 +9,7 @@
  */
 
 import { writeDatasetValue } from '/public/js/kernel/dom-contracts.js';
+import { projectFeatureRouteContext } from '/public/js/kernel/feature-route-context.js';
 import { markLayoutTrope } from '/public/js/kernel/instrumentation.js';
 import { runtimeToken as normalizeToken } from '/public/js/kernel/text-normalization.js';
 import { PAGE_ARRIVAL, PAGE_PRESENCE } from '/public/js/runtime/page-state.js';
@@ -283,6 +284,11 @@ function syncEcology(ctx, reason = 'runtime') {
   const html = document.documentElement;
   const body = document.body;
   if (!html) return null;
+
+  projectFeatureRouteContext(html, {
+    source: 'loading-ecology',
+    reason,
+  });
 
   const phase = resolveDominantPhase(html);
   const salience = readSalienceDirection(html);
