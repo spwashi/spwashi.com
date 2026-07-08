@@ -55,6 +55,7 @@
 @import url('/public/css/systems/image-interaction.css') layer(systems);
 @import url('/public/css/systems/interaction-progression.css') layer(systems);
 @import url('/public/css/systems/scroll-gesture.css') layer(systems);
+@import url('/public/css/systems/spatial-gravity.css') layer(systems);
 @import url('/public/css/systems/print-precipitation.css') layer(systems);
 @import url('/public/css/systems/layout-postures.css') layer(systems);
 @import url('/public/css/systems/effect-interpretation.css') layer(systems);

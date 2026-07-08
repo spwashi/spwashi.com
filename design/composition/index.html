@@ -189,6 +189,42 @@ writeDatasetValue(card, 'spwCast', 'preview');
 const record = createLoopRecord('preview', 'operator');</code></pre>
         </section>
 
+        <section class="frame-panel" aria-labelledby="spatial-gravity-title" data-spw-kind="panel" data-spw-role="spatial-demo" data-spw-wonder="gravity edge extent variant">
+            <h2 id="spatial-gravity-title">Spatial gravity bench</h2>
+            <p>
+                Width and height are two independent axes. <code>measure</code> is the inline band; <code>extent</code>
+                is the block band against the viewport. A component can be wide but squat, or narrow but overtall — the
+                pair, not either alone, tells it how to pack. Beyond size, a component also has a <em>position</em>: how
+                near it sits to each viewport edge, and which way it should grow to stay on screen. This grounds the
+                site's <code>#cognitive_gravity_planes</code> idea in real geometry.
+            </p>
+            <p>
+                Scroll the page and watch each specimen narrate its own gravity. Nothing is hard-coded to a breakpoint;
+                <code>runtime/spatial-gravity.js</code> measures the live rectangle and writes the variant.
+            </p>
+
+            <div class="spatial-gravity-bench">
+                <article class="frame-card spatial-gravity-specimen" data-spw-gravity data-spw-kind="card" data-spw-role="specimen">
+                    <h3>Specimen A — edge + vertical gravity</h3>
+                    <p>As this card approaches the top or bottom of the frame, its vertical gravity flips: content should
+                        grow toward whichever side has room.</p>
+                    <p class="spatial-gravity-status" data-spw-gravity-readout aria-live="polite"></p>
+                </article>
+
+                <article class="frame-card spatial-gravity-specimen" data-spw-gravity="open" data-spw-kind="card" data-spw-role="specimen">
+                    <div class="spatial-gravity-reveal" data-spw-gravity-reveal>
+                        <strong>Opportunistic reveal</strong>
+                        <p>This block sits above or below its header depending on measured room — it opens toward the
+                            roomier side rather than off the nearest edge.</p>
+                    </div>
+                    <header>
+                        <h3>Specimen B — opportunistic opening</h3>
+                        <p class="spatial-gravity-status" data-spw-gravity-readout aria-live="polite"></p>
+                    </header>
+                </article>
+            </div>
+        </section>
+
         <section class="frame-panel" aria-labelledby="literate-extension-title" data-spw-kind="panel" data-spw-role="extension-contract">
             <h2 id="literate-extension-title">Literate extension contract</h2>
             <p>

@@ -1,0 +1,167 @@
+/* ==========================================================================
+ * spatial-gravity.css
+ * --------------------------------------------------------------------------
+ * The visible + functional half of runtime/spatial-gravity.js. Opt-in via
+ * [data-spw-gravity]; the runtime writes edge/vertical gravity, extent, and a
+ * proximity custom property, and these rules turn that into behavior you can
+ * feel: expansions open toward room, and the nearest viewport edge announces
+ * itself as you scroll.
+ *
+ * This grounds the conceptual #cognitive_gravity_planes in real geometry —
+ * "down" stops being a metaphor and becomes a measured pull the component
+ * responds to. Ungated so any surface can opt a component in.
+ * ========================================================================== */
+
+[data-spw-gravity] {
+    --spw-edge-proximity: 0;
+    --spw-vertical-bias: 0;
+}
+
+/* ─── Edge proximity: feel the nearest edge ─────────────────────────────── */
+/*
+ * As a tracked element nears a viewport edge, a hairline on that side gains
+ * presence. The point is legibility: interacting near an edge should tell you
+ * the edge is there and shaping the component, not silently clip it.
+ */
+
+[data-spw-gravity]:not([data-spw-edge-gravity="none"]) {
+    position: relative;
+}
+
+[data-spw-gravity]:not([data-spw-edge-gravity="none"])::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    opacity: calc(var(--spw-edge-proximity, 0) * 0.9);
+    transition: opacity var(--duration-base, 200ms) var(--ease-smooth, ease);
+}
+
+[data-spw-gravity][data-spw-edge-gravity="top"]::after {
+    box-shadow: inset 0 3px 0 -1px color-mix(in srgb, var(--active-op-color, #008080) 60%, transparent);
+}
+[data-spw-gravity][data-spw-edge-gravity="bottom"]::after {
+    box-shadow: inset 0 -3px 0 -1px color-mix(in srgb, var(--active-op-color, #008080) 60%, transparent);
+}
+[data-spw-gravity][data-spw-edge-gravity="left"]::after {
+    box-shadow: inset 3px 0 0 -1px color-mix(in srgb, var(--active-op-color, #008080) 60%, transparent);
+}
+[data-spw-gravity][data-spw-edge-gravity="right"]::after {
+    box-shadow: inset -3px 0 0 -1px color-mix(in srgb, var(--active-op-color, #008080) 60%, transparent);
+}
+
+/* ─── Opportunistic opening direction ───────────────────────────────────── */
+/*
+ * data-spw-gravity="open" panels grow toward the roomier side. The runtime
+ * sets data-spw-open-direction from vertical gravity; CSS anchors the reveal
+ * so an expansion near the bottom of the frame opens upward instead of off
+ * the edge. Content order stays in DOM; only the visual growth flips.
+ */
+
+[data-spw-gravity="open"] {
+    display: flex;
+    flex-direction: column;
+}
+
+[data-spw-gravity="open"] [data-spw-gravity-reveal] {
+    transform-origin: top center;
+    transition:
+        max-height var(--duration-base, 200ms) var(--ease-smooth, ease),
+        opacity var(--duration-fast, 120ms) var(--ease-mechanical, ease);
+}
+
+[data-spw-gravity="open"][data-spw-open-direction="up"] {
+    flex-direction: column-reverse;
+}
+
+[data-spw-gravity="open"][data-spw-open-direction="up"] [data-spw-gravity-reveal] {
+    transform-origin: bottom center;
+}
+
+/* ─── Extent: height band affects internal packing ──────────────────────── */
+/*
+ * Extent is the block-axis counterpart of measure. A tall specimen can afford
+ * generous internal rhythm; an overtall one should tighten so it does not
+ * force the reader into a long scroll for a single component.
+ */
+
+[data-spw-gravity][data-spw-extent="squat"] {
+    --spw-gravity-rhythm: var(--space-xs, 0.5rem);
+}
+[data-spw-gravity][data-spw-extent="contained"] {
+    --spw-gravity-rhythm: var(--space-sm, 0.75rem);
+}
+[data-spw-gravity][data-spw-extent="tall"] {
+    --spw-gravity-rhythm: var(--space-md, 1rem);
+}
+[data-spw-gravity][data-spw-extent="overtall"] {
+    --spw-gravity-rhythm: var(--space-xs, 0.5rem);
+}
+
+/* ─── Gravity readout (resonance) ───────────────────────────────────────── */
+/*
+ * When a component carries a [data-spw-gravity-readout] child, it mirrors the
+ * live state so scrolling the specimen visibly narrates its own gravity. This
+ * is the "interacting clarifies the concept" surface.
+ */
+
+[data-spw-gravity-readout] {
+    font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+    font-size: var(--text-size-xs, 0.72rem);
+    letter-spacing: 0.02em;
+    color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+    display: inline-flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+[data-spw-gravity-readout] b {
+    font-weight: 700;
+    color: var(--active-op-color, #008080);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    [data-spw-gravity]:not([data-spw-edge-gravity="none"])::after,
+    [data-spw-gravity="open"] [data-spw-gravity-reveal] {
+        transition: none;
+    }
+}
+
+/* ─── Composition-lab bench (demonstration surface) ─────────────────────── */
+/*
+ * Minimal layout for the /design/composition/ gravity bench. Specimens are
+ * spaced far apart so scrolling moves each one through the viewport and its
+ * vertical gravity visibly flips.
+ */
+
+.spatial-gravity-bench {
+    display: grid;
+    gap: 60vh;
+    margin-top: var(--space-md, 1rem);
+}
+
+.spatial-gravity-specimen {
+    padding: var(--gravity-rhythm, var(--spw-gravity-rhythm, 1rem)) var(--space-md, 1rem);
+    border: 1px solid var(--line, rgba(14, 18, 20, 0.14));
+    border-radius: var(--shape-surface, 10px);
+    background: var(--surface-strong, #ffffff);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spw-gravity-rhythm, var(--space-sm, 0.75rem));
+}
+
+.spatial-gravity-status {
+    margin: 0;
+}
+
+.spatial-gravity-reveal {
+    padding: var(--space-sm, 0.75rem);
+    border-radius: var(--shape-component, 8px);
+    background: color-mix(in srgb, var(--active-op-color, #008080) 8%, var(--surface, #ffffff));
+    border: 1px dashed color-mix(in srgb, var(--active-op-color, #008080) 30%, transparent);
+}
+
+.spatial-gravity-reveal strong {
+    color: var(--active-op-color, #008080);
+}
