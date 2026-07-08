@@ -23691,6 +23691,62 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
     --spw-gravity-rhythm: var(--space-xs, 0.5rem);
 }
 
+/* ─── Seating: flush vs inset ───────────────────────────────────────────── */
+/*
+ * Flushness encodes belonging. data-spw-seating declares it instead of leaving
+ * it to ad-hoc margins:
+ *   flush-viewport — full-bleed to the viewport edge (chrome that frames all).
+ *   flush-host     — flush to the containing surface, no gap from its edge.
+ *   inset          — holds a gutter; never touches the boundary (reading content).
+ */
+
+[data-spw-seating="flush-viewport"] {
+    margin-inline: calc(50% - 50vw);
+    max-width: 100vw;
+    border-radius: 0;
+}
+
+[data-spw-seating="flush-host"] {
+    margin: 0;
+    border-radius: inherit;
+}
+
+[data-spw-seating="inset"] {
+    margin-inline: auto;
+    max-width: min(100%, var(--measure-reading, 68ch));
+}
+
+/* ─── Boundary overlap: the yielded layer demotes visibly ───────────────── */
+/*
+ * When runtime/spatial-gravity.js marks a lower-salience element as yielded in
+ * a boundary contest, it recedes — quieter, desaturated, non-interactive on the
+ * contested frame — rather than clipping silently. The winner is untouched.
+ */
+
+[data-spw-yielded="true"] {
+    opacity: 0.55;
+    filter: saturate(0.7);
+    transition:
+        opacity var(--duration-base, 200ms) var(--ease-smooth, ease),
+        filter var(--duration-base, 200ms) var(--ease-smooth, ease);
+}
+
+[data-spw-yielded="true"]::before {
+    content: attr(data-spw-yield-reason);
+    position: absolute;
+    inset-block-start: 0.25rem;
+    inset-inline-end: 0.4rem;
+    font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+    font-size: var(--text-size-2xs, 0.62rem);
+    color: var(--ink-soft, rgba(14, 18, 20, 0.5));
+    pointer-events: none;
+}
+
+/* Salience as a resting emphasis, independent of density. */
+[data-spw-salience="focal"] { --spw-salience-weight: 1; }
+[data-spw-salience="ambient"] { --spw-salience-weight: 0.5; }
+[data-spw-salience="background"] { --spw-salience-weight: 0.25; opacity: 0.82; }
+
 /* ─── Gravity readout (resonance) ───────────────────────────────────────── */
 /*
  * When a component carries a [data-spw-gravity-readout] child, it mirrors the
@@ -23759,6 +23815,38 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
 
 .spatial-gravity-reveal strong {
     color: var(--active-op-color, #008080);
+}
+
+.spatial-gravity-subhead {
+    margin-top: var(--space-lg, 1.5rem);
+}
+
+/* Overlap demo: two cards deliberately share space so the salience contest is
+   visible at rest (no scroll needed). */
+.spatial-gravity-overlap {
+    position: relative;
+    min-height: 12rem;
+    margin-top: var(--space-md, 1rem);
+}
+
+.spatial-gravity-overlap .spatial-gravity-contender {
+    position: absolute;
+    width: min(60%, 20rem);
+    padding: var(--space-sm, 0.75rem) var(--space-md, 1rem);
+    border: 1px solid var(--line, rgba(14, 18, 20, 0.14));
+    border-radius: var(--shape-surface, 10px);
+    background: var(--surface-strong, #ffffff);
+}
+
+.spatial-gravity-contender--ambient {
+    inset-block-start: 0;
+    inset-inline-start: 0;
+}
+
+.spatial-gravity-contender--focal {
+    inset-block-start: 3.5rem;
+    inset-inline-start: 30%;
+    border-color: color-mix(in srgb, var(--active-op-color, #008080) 40%, var(--line, rgba(14, 18, 20, 0.14)));
 }
 }
 

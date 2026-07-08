@@ -56,19 +56,29 @@ purpose: .{
     `Reading + primary content: never flush to the viewport; hold measure so line length stays workable (@typography_packing).`,
     `Edge-gravity="none" is the resting state — most content should read as unbounded, discovering an edge only when it nears one.`
   ][reg=set]
-  open = `Formalize a data-spw-seating attribute (flush-viewport | flush-host | inset) so seating is declared, not inferred from ad hoc margins.`
+  realized = `data-spw-seating = flush-viewport | flush-host | inset (spatial-gravity.css). Seating is declared, not inferred from ad hoc margins.`
 }
 
 ^"boundary_overlap"{
   question: `What should happen when boundaries overlap?`
-  principle: `Overlap is a contest for the same pixels; resolve it by precedence, not z-index luck. The nearer-to-attention layer wins the space; the other yields (reflow, collapse, or scroll) rather than clipping.`
+  principle: `Overlap is a contest for the same pixels; resolve it by precedence, not z-index luck. The higher-salience layer holds the space; the other yields (reflow, collapse, or scroll) rather than clipping.`
+  realized: `data-spw-salience = background|ambient|primary|focal ranks priority. runtime/spatial-gravity.js pairwise-tests on-screen tracked rects; the lower-salience overlapper gets data-spw-yielded=true + data-spw-yield-reason=held-by-<winner>, and CSS demotes it (opacity/saturate + a visible reason label). N is small — only opted-in on-screen elements — so pairwise is cheap.`
   cases: #[
-    `Sticky chrome vs anchored target: target yields via scroll-margin (already landed for svg nodes in @anatomy_audit) so arrivals clear the header.`,
+    `Sticky chrome vs anchored target: target yields via scroll-margin (landed for svg nodes in @anatomy_audit) so arrivals clear the header.`,
     `Expansion vs viewport edge: expansion yields direction via vertical gravity (opens toward room) rather than overflowing.`,
     `Rail vs surface at narrow measure: rail collapses to a scroll strip; surface keeps full width (svg-surfaces precedent).`,
-    `Two peers competing: the one with higher salience holds; the other demotes to a quieter density.`
+    `Two peers competing: the higher-salience holds; the other demotes (data-spw-yielded).`
   ][reg=set]
-  rule: `Overlap resolution must be visible and inspectable — a yielded element should read as deliberately grounded (why it yielded), never as a silent clip. Ties to the interaction reward contract: no silent absorption.`
+  rule: `Overlap resolution must be visible and inspectable — a yielded element reads as deliberately grounded (why it yielded), never as a silent clip. Ties to the interaction reward contract: no silent absorption.`
+}
+
+^"applied_patterns"{
+  claim: `Popovers, overlays, navigation, and variant selection are not separate systems — they are the gravity/seating/salience primitives composed. Building each on the shared substrate keeps behavior consistent and inspectable instead of re-solving positioning per widget.`
+  popover: `A popover is data-spw-gravity="open" (opens toward room via vertical gravity, never off the nearest edge) + high salience (holds the contested space while open) + edge-gravity awareness (flips horizontally near left/right edges). The anchor's edge/vertical gravity chooses the opening direction; no per-popover flip logic.`
+  overlay: `A modal/overlay is data-spw-salience="focal" seated flush-viewport (it frames everything beneath). Lower-salience content under it reads as yielded automatically. Dismissal returns salience to the layer beneath — the contest reverses rather than a z-index teardown.`
+  navigation: `Chrome + nav seat flush-viewport (they own the frame). In-page nav targets yield to sticky chrome via scroll-margin so arrivals land clear. A nav that opens a drawer is a popover case: it opens toward room and holds salience while open.`
+  variant_selection: `data-spw-space-variant is the single opportunistic handle a component keys off — it already composes measure + extent + vertical gravity, and changes as the component moves/resizes. Prefer selecting a variant from space-variant over authoring a media query, so the choice tracks real room, not a guessed breakpoint.`
+  rule: `A new floating/positioned UI should reach for these attributes before writing bespoke getBoundingClientRect + flip logic. If a pattern needs geometry the primitives do not expose, extend spatial-gravity.js so every consumer benefits, rather than measuring privately.`
 }
 
 ^"density_and_salience"{

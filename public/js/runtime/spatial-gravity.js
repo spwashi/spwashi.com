@@ -31,7 +31,7 @@
  * IntersectionObserver gate so only on-screen tracked elements are measured.
  */
 
-import { writeDatasetValues, writeStyleValue } from '../kernel/dom-contracts.js';
+import { writeDatasetValues, removeDatasetValues, writeStyleValue } from '../kernel/dom-contracts.js';
 import { createSpwLogger, markInstrumented } from '../kernel/instrumentation.js';
 
 const GRAVITY_SELECTOR = '[data-spw-gravity]';
@@ -52,9 +52,26 @@ const isElement = (value) => Boolean(value) && value.nodeType === 1;
 
 const tracked = new Set();
 const onScreen = new Set();
+const elementState = new Map();
 let intersectionObserver = null;
 let rafId = 0;
 let listenersBound = false;
+
+/* Salience is the attention axis (orthogonal to density). When two tracked
+   elements contend for the same pixels, the higher-salience one holds and the
+   lower-salience one yields visibly — boundary contests resolve by declared
+   priority, not z-index luck. */
+const SALIENCE_RANK = Object.freeze({ background: 0, ambient: 1, primary: 2, focal: 3 });
+
+const normalizeToken = (value = '') => String(value).trim().toLowerCase();
+
+const resolveSalience = (el) => {
+  const declared = normalizeToken(el.dataset.spwSalience || '');
+  return declared in SALIENCE_RANK ? declared : 'primary';
+};
+
+const rectsIntersect = (a, b) =>
+  a.left < b.right && b.left < a.right && a.top < b.bottom && b.top < a.bottom;
 
 const resolveMeasureBand = (inlineSize) => {
   if (inlineSize < MEASURE_BANDS.narrow) return 'narrow';
@@ -130,6 +147,11 @@ const measureElement = (el) => {
   writeStyleValue(el, '--spw-edge-proximity', edge.proximity.toFixed(3));
   writeStyleValue(el, '--spw-vertical-bias', clamp(vertical.bias, -1, 1).toFixed(3));
 
+  // Record rect + salience for the overlap-resolution pass.
+  const salience = resolveSalience(el);
+  elementState.set(el, { el, rect, salience });
+  if (el.dataset.spwSalience) writeDatasetValues(el, { spwSalienceRank: String(SALIENCE_RANK[salience]) });
+
   // Optional legibility surface: if the specimen carries a readout child, let
   // it narrate its own gravity as you scroll — interaction clarifies concept.
   const readout = el.querySelector?.('[data-spw-gravity-readout]');
@@ -142,9 +164,38 @@ const measureElement = (el) => {
   }
 };
 
+/* Boundary overlap: when two on-screen tracked elements share pixels, the
+   lower-salience one yields (data-spw-yielded) with a reason, so the contest is
+   visible and inspectable rather than a silent clip. N is small — only opted-in
+   [data-spw-gravity] elements currently on screen — so pairwise is fine. */
+const resolveOverlaps = () => {
+  const items = [...elementState.values()].filter((s) => s?.rect && s.el.isConnected);
+  items.forEach(({ el }) => {
+    if (el.dataset.spwYielded) removeDatasetValues(el, ['spwYielded', 'spwYieldReason']);
+  });
+
+  for (let i = 0; i < items.length; i += 1) {
+    for (let j = i + 1; j < items.length; j += 1) {
+      const a = items[i];
+      const b = items[j];
+      if (!rectsIntersect(a.rect, b.rect)) continue;
+      const rankA = SALIENCE_RANK[a.salience];
+      const rankB = SALIENCE_RANK[b.salience];
+      if (rankA === rankB) continue; // equal salience: neither is forced to yield
+      const loser = rankA < rankB ? a : b;
+      const winner = rankA < rankB ? b : a;
+      writeDatasetValues(loser.el, {
+        spwYielded: 'true',
+        spwYieldReason: `held-by-${winner.salience}`,
+      });
+    }
+  }
+};
+
 const measureOnScreen = () => {
   rafId = 0;
   onScreen.forEach(measureElement);
+  resolveOverlaps();
 };
 
 const scheduleMeasure = () => {
@@ -162,6 +213,10 @@ const ensureIntersectionObserver = () => {
         measureElement(entry.target);
       } else {
         onScreen.delete(entry.target);
+        elementState.delete(entry.target);
+        if (entry.target.dataset.spwYielded) {
+          removeDatasetValues(entry.target, ['spwYielded', 'spwYieldReason']);
+        }
       }
     });
   }, { rootMargin: '20% 0px' });
@@ -214,7 +269,10 @@ export function initSpwSpatialGravity(root = document, options = {}) {
 
 export function measureSpatialGravity(target) {
   const el = typeof target === 'string' ? document.querySelector(target) : target;
-  if (isElement(el)) measureElement(el);
+  if (isElement(el)) {
+    measureElement(el);
+    resolveOverlaps();
+  }
   return el || null;
 }
 
@@ -227,6 +285,9 @@ export const SPW_SPATIAL_GRAVITY_CONTRACT = Object.freeze({
     'data-spw-measure-band',
     'data-spw-space-variant',
     'data-spw-open-direction',
+    'data-spw-salience-rank',
+    'data-spw-yielded',
+    'data-spw-yield-reason',
   ]),
   customProperties: Object.freeze(['--spw-edge-proximity', '--spw-vertical-bias']),
   performanceRule:

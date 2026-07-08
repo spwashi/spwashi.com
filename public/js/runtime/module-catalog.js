@@ -936,9 +936,9 @@ export const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     selector: '[data-spw-gravity]',
     rootMode: 'single',
-    describes: 'spatial-gravity[edge|vertical|extent] opportunistic variant selection',
-    updates: ['data-spw-edge-gravity', 'data-spw-vertical-gravity', 'data-spw-extent', 'data-spw-measure-band', 'data-spw-space-variant', 'data-spw-open-direction', '--spw-edge-proximity', '--spw-vertical-bias'],
-    evaluates: 'viewport geometry edge detection vertical gravity variant selection',
+    describes: 'spatial-gravity[edge|vertical|extent|salience] opportunistic variant + overlap resolution',
+    updates: ['data-spw-edge-gravity', 'data-spw-vertical-gravity', 'data-spw-extent', 'data-spw-measure-band', 'data-spw-space-variant', 'data-spw-open-direction', 'data-spw-salience-rank', 'data-spw-yielded', 'data-spw-yield-reason', '--spw-edge-proximity', '--spw-vertical-bias'],
+    evaluates: 'viewport geometry edge detection vertical gravity salience overlap variant selection',
     load: () => import('./spatial-gravity.js'),
     mount: (mod) => {
       const fn = mod?.initSpwSpatialGravity;

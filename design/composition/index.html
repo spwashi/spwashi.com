@@ -223,6 +223,25 @@ const record = createLoopRecord('preview', 'operator');</code></pre>
                     </header>
                 </article>
             </div>
+
+            <h3 class="spatial-gravity-subhead">Boundary overlap resolves by salience</h3>
+            <p>
+                When two elements contend for the same pixels, the higher-salience one holds and the lower-salience one
+                yields <em>visibly</em> — it recedes and labels why, instead of clipping silently or fighting over
+                z-index. These two cards overlap on purpose; the ambient one loses to the focal one.
+            </p>
+            <div class="spatial-gravity-overlap">
+                <article class="frame-card spatial-gravity-contender spatial-gravity-contender--ambient"
+                         data-spw-gravity data-spw-salience="ambient" data-spw-kind="card" data-spw-role="specimen">
+                    <h4>Ambient card</h4>
+                    <p>Lower salience — yields the contested space.</p>
+                </article>
+                <article class="frame-card spatial-gravity-contender spatial-gravity-contender--focal"
+                         data-spw-gravity data-spw-salience="focal" data-spw-kind="card" data-spw-role="specimen">
+                    <h4>Focal card</h4>
+                    <p>Higher salience — holds the space.</p>
+                </article>
+            </div>
         </section>
 
         <section class="frame-panel" aria-labelledby="literate-extension-title" data-spw-kind="panel" data-spw-role="extension-contract">
