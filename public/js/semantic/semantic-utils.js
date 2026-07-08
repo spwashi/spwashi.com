@@ -1,18 +1,13 @@
-export function normalizeText(value = '') {
-  return String(value).replace(/\s+/g, ' ').trim();
-}
-
-export function humanizeToken(value = '') {
-  return normalizeText(String(value).replace(/[_-]+/g, ' ')).toLowerCase();
-}
-
-export function normalizeToken(value = '') {
-  return humanizeToken(value)
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-}
-
-export const normalizeSlug = normalizeToken;
+export {
+  collapseText,
+  humanizeToken,
+  normalizeSlug,
+  normalizeText,
+  normalizeToken,
+  semanticToken,
+  TEXT,
+  TOKEN,
+} from '/public/js/kernel/text-normalization.js';
 
 export function unique(values = []) {
   return [...new Set(values.filter(Boolean))];

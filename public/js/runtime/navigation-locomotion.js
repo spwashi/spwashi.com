@@ -5,6 +5,7 @@
  */
 
 import { syncFloatingChromeState, writeDatasetValue } from '/public/js/kernel/dom-contracts.js';
+import { primeRouteTransition } from '/public/js/kernel/route-utils.js';
 import { emitSpwAction } from '/public/js/kernel/shared.js';
 import { PAGE_SECTION_EVENT } from './attention/shared.js';
 
@@ -117,9 +118,28 @@ export const SPW_NAVIGATION_LOCOMOTION_CONTRACT = Object.freeze({
   }),
 });
 
+function onInternalLinkIntent(event) {
+  const anchor = event.target?.closest?.('a[href]');
+  if (!anchor) return;
+
+  try {
+    const url = new URL(anchor.href, window.location.href);
+    if (url.origin !== window.location.origin) return;
+    if (url.pathname === window.location.pathname) return;
+  } catch {
+    return;
+  }
+
+  primeRouteTransition(anchor.getAttribute('href'), {
+    mode: 'locomotion-intent',
+    reason: 'nav-link-intent',
+  });
+}
+
 export function initNavigationLocomotion(ctx) {
   document.addEventListener(PAGE_SECTION_EVENT, onSectionLocomotion);
   document.addEventListener('spw:page-transition-state', onPageTransition);
+  document.addEventListener('focusin', onInternalLinkIntent);
 
   const unsubNav = ctx?.bus?.on?.('spw:layout-assumptions-updated', () => {
     syncFloatingChromeState(document, {
@@ -131,6 +151,7 @@ export function initNavigationLocomotion(ctx) {
   return () => {
     document.removeEventListener(PAGE_SECTION_EVENT, onSectionLocomotion);
     document.removeEventListener('spw:page-transition-state', onPageTransition);
+    document.removeEventListener('focusin', onInternalLinkIntent);
     unsubNav?.();
     window.clearTimeout(locomotionTimer);
     locomotionTimer = 0;

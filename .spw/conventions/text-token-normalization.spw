@@ -1,0 +1,54 @@
+# Text and Token Normalization
+#
+# Kernel contract for namespaced normalization variants. operation: contract | fixity: stable
+
+#>text_token_normalization
+#:convention #!javascript #!kernel
+#:layer #!pragmatics
+
+@module: ~"../../public/js/kernel/text-normalization.js"
+@semantic_utils: ~"../../public/js/semantic/semantic-utils.js"
+@runtime_helpers: ~"../../public/js/runtime/runtime-helpers.js"
+@naming_structured_values: ~"./naming-and-structured-values.spw"
+
+operation = "contract"
+fixity = "stable"
+
+^"thesis"{
+  claim: "Text collapse and token slugging are not one function. The kernel exports named variants so query keys, semantic slugs, runtime feature IDs, nav handles, and presence tokens stay distinguishable."
+  falsification: "If a new module adds a private normalizeToken without citing a variant tier, the contract failed to compress decisions."
+}
+
+^"variant_tiers"{
+  tiers: #[
+    .{ id = "TEXT.collapse", fn = "collapseText", alias = "normalizeText", use = "labels, operator expressions, copy trimming" }[reg=facet],
+    .{ id = "TOKEN.semantic", fn = "semanticToken", alias = "normalizeToken|normalizeSlug", use = "data-spw-* families, .spw keys, component IDs" }[reg=facet],
+    .{ id = "TOKEN.runtime", fn = "runtimeToken", alias = "normalizeRuntimeToken", use = "module features, mount timing, body[data-spw-features]" }[reg=facet],
+    .{ id = "TOKEN.query", fn = "queryKey", use = "URL query and settings-query parity keys" }[reg=facet],
+    .{ id = "TOKEN.nav", fn = "navSlug", use = "navigation spell tokens with underscore convention" }[reg=facet],
+    .{ id = "TOKEN.presence", fn = "presenceToken", use = "whitespace-delimited includes checks" }[reg=facet],
+    .{ id = "TOKEN.anatomy", fn = "anatomyToken", use = "page-anatomy snapshots with quote stripping" }[reg=facet],
+  ][reg=set]
+}
+
+^"namespaces"{
+  TEXT: "whitespace-only transforms"
+  TOKEN: "machine-readable token transforms"
+  rule: "Import from kernel/text-normalization.js or semantic-utils re-exports; do not fork one-liners."
+}
+
+^"migration"{
+  completed: #[
+    `shared.js re-exports kernel variants`
+    `semantic-utils.js re-exports kernel variants`
+    `runtime-helpers.normalizeRuntimeToken delegates to runtimeToken`
+    `query-composer and settings-query-parity use queryKey`
+    `navigation-spells uses navSlug`
+    `page-anatomy uses anatomyToken`
+  ][reg=set]
+  remaining: #[
+    `interactive-medium presenceToken`
+    `loading-ecology runtimeToken for tempo reads`
+    `haptics and prompt-utils local normalizeText copies`
+  ][reg=set]
+}

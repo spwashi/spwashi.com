@@ -1,0 +1,48 @@
+# Route Transit and Memory
+#
+# Route normalization, hydration context, and transition priming. operation: contract
+
+#>route_transit_memory
+#:convention #!javascript #!navigation
+#:layer #!pragmatics
+
+@module: ~"../../public/js/kernel/route-utils.js"
+@gesture_contract: ~"../../public/js/runtime/gesture-contract.js"
+@navigation_locomotion: ~"../../public/js/runtime/navigation-locomotion.js"
+@cognitive_navigation: ~"./cognitive-navigation.spw"
+@page_model: ~"../surfaces/page-model.spw"
+
+operation = "contract"
+fixity = "tending"
+
+^"api"{
+  normalizePathname: "trailing-slash stable pathname"
+  normalizeRouteHref: "pathname from arbitrary href"
+  normalizeRoutePath: "pathname + search + hash; empty when cross-origin"
+  parseRouteList: "pipe/comma delimited deduped pathnames"
+  hydrateRouteContext: "{ pathname, segments, leaf, depth } for component state hydration"
+  primeRouteTransition: "prefetch link + html[data-spw-route-primed] for CSS ornament"
+}
+
+^"hydration"{
+  claim: "Component clusters should read hydrateRouteContext once per mount and project leaf/depth into data-spw-page-* only when the route family needs it."
+  related_routes: "Use parseRouteList on body[data-spw-related-routes]; experiential and contextual-ui now share route-utils."
+}
+
+^"transition_priming"{
+  triggers: #[
+    `focusin on same-origin nav anchors (navigation-locomotion)`
+    `future: spell momentum and frame-navigator intent`
+  ][reg=set]
+  attrs: #[
+    `html[data-spw-route-primed]`
+    `html[data-spw-route-prime-mode]`
+    `link[data-spw-route-prime] prefetch marker`
+  ][reg=set]
+  css_hook: "ornament and wonder layers may echo primed routes with theme-sensitive memory."
+}
+
+^"prefetch_policy"{
+  default: "prefetch on intent (focusin), not on every hover"
+  respect: "Save-Data and prefers-reduced-data should gate prefetch in a future pass"
+}

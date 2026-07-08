@@ -1,27 +1,21 @@
-const PIN_STORAGE_KEY = 'spw-pins';
+import { readJson, removeJson, writeJson, STORAGE_KEYS } from '/public/js/kernel/storage-utils.js';
 
-function safeParse(value, fallback) {
-  try {
-    return value ? JSON.parse(value) : fallback;
-  } catch {
-    return fallback;
-  }
-}
+const PIN_STORAGE_KEY = STORAGE_KEYS.PIN_REGISTRY;
 
 export function getPinStorageKey() {
   return PIN_STORAGE_KEY;
 }
 
 export function readPins() {
-  return safeParse(localStorage.getItem(PIN_STORAGE_KEY), {});
+  return readJson(PIN_STORAGE_KEY, {}, { requireObject: true });
 }
 
 export function writePins(pins) {
-  localStorage.setItem(PIN_STORAGE_KEY, JSON.stringify(pins));
+  return writeJson(PIN_STORAGE_KEY, pins);
 }
 
 export function clearPins() {
-  localStorage.removeItem(PIN_STORAGE_KEY);
+  return removeJson(PIN_STORAGE_KEY);
 }
 
 export function buildPinRecord(meta = {}, page = window.location.pathname) {

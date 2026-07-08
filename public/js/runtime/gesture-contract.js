@@ -8,7 +8,10 @@ import {
   FEATURE_CLUSTER_CONTRACT,
   inferTopographyKind,
 } from '../kernel/dom-contracts.js';
+import { normalizeRoutePath } from '/public/js/kernel/route-utils.js';
 import { safeQueryAll } from './runtime-helpers.js';
+
+export { normalizeRoutePath };
 
 export const GESTURE_TARGET_SELECTOR = [
   '.spw-delimiter',
@@ -83,20 +86,6 @@ export const SPW_GESTURE_CONTRACT = Object.freeze({
   vocabulary: GESTURE_VOCABULARY,
   seeds: GESTURE_SPELL_SEEDS,
 });
-
-export function normalizeRoutePath(value = '') {
-  const raw = String(value || '').trim();
-  if (!raw) return '/';
-
-  try {
-    const url = new URL(raw, window.location.href);
-    if (url.origin !== window.location.origin) return '';
-    return `${url.pathname.replace(/\/+$/, '/') || '/'}${url.search}${url.hash}`;
-  } catch {
-    if (raw.startsWith('/')) return raw.replace(/\/+$/, '/') || '/';
-    return `/${raw.replace(/^\/+/, '').replace(/\/+$/, '/')}`;
-  }
-}
 
 function titleFromPath(pathname = '') {
   return String(pathname || '/')

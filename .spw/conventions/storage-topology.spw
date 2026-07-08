@@ -1,0 +1,56 @@
+# Storage Topology
+#
+# Browser-local key families and implied interactive models. operation: audit | contract
+
+#>storage_topology
+#:convention #!javascript #!privacy
+#:layer #!pragmatics
+
+@module: ~"../../public/js/kernel/storage-utils.js"
+@visited_surfaces: ~"../../public/js/kernel/visited-surfaces-storage.js"
+@site_settings_engine: ~"../../public/js/kernel/site-settings-engine.js"
+@timing_data_localization: ~"../philosophy/timing-data-localization.spw"
+@privacy_skill: ~"../../.agents/skills/spw-privacy-engineering/SKILL.md"
+
+operation = "contract"
+fixity = "tending"
+
+^"topology"{
+  substrate: "canonical site settings and prepaint — site-settings-engine owns writes"
+  memory: "visitation, checkpoints, pins, haptics, cauldron, collection, traces"
+  discovery: "notice dismissals, semantics gate unlock"
+  inspection: "floating satchel position, dev toggles"
+}
+
+^"key_naming"{
+  rule: "spw-<domain>-<noun> or spw-<domain>:<dynamic> for checkpoint bundles"
+  prefix_families: #[
+    .{ prefix = "spw-site-settings", model = "global tuning substrate" }[reg=facet],
+    .{ prefix = "spw-visited-image-surfaces", model = "theme-sensitive surface memory" }[reg=facet],
+    .{ prefix = "spw-checkpoint:", model = "spell replay bundles via haptics bus" }[reg=facet],
+    .{ prefix = "spw-pins", model = "experiential bookmarks" }[reg=facet],
+  ][reg=set]
+}
+
+^"interactive_models"{
+  integrated: #[
+    `visitation — image-metaphysics writes, visitation reads, profiles derive climate`
+    `checkpoints — spells surface → bus → haptics storage`
+    `pins — experiential + pin-registry`
+  ][reg=set]
+  prune_candidates: #[
+    `duplicate safeParse one-liners in feature modules`
+    `direct JSON.parse without requireObject guard`
+  ][reg=set]
+  generalize_next: #[
+    `discovery-notices dismissals → readJson`
+    `effect-ledger → readJson with array guard`
+    `gate semantics unlock → STORAGE_KEYS.SEMANTICS_UNLOCKED`
+  ][reg=set]
+}
+
+^"api"{
+  readJson: "parse with fallback + optional requireObject/requireArray"
+  writeJson: "stringify with try/catch false return"
+  removeJson: "safe removeItem"
+}

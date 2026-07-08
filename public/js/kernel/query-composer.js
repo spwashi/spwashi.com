@@ -59,10 +59,6 @@ export const SPW_QUERY_CANONICAL_ORDER = Object.freeze([
 
 const LEGACY_KEY_SET = new Set(Object.keys(SPW_QUERY_LEGACY_ALIASES));
 
-function normalizeToken(value = '') {
-  return String(value || '').trim().toLowerCase().replace(/\s+/g, '-');
-}
-
 export function expandQueryKey(key = '') {
   const raw = String(key || '').trim();
   if (!raw) return '';

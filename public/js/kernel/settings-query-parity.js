@@ -4,6 +4,7 @@
  * Bidirectional parity between canonical site settings and modular query strings.
  */
 
+import { queryKey } from '/public/js/kernel/text-normalization.js';
 import { DEFAULT_SITE_SETTINGS } from './site-settings-profiles.js';
 import {
   composeSpwQuery,
@@ -71,10 +72,6 @@ const LAYOUT_TUNER_TO_LAYOUT = Object.freeze({
   atlas: 'atlas',
 });
 
-function normalizeToken(value = '') {
-  return String(value || '').trim().toLowerCase().replace(/\s+/g, '-');
-}
-
 function isDefaultSetting(name, value) {
   return DEFAULT_SITE_SETTINGS[name] === value;
 }
@@ -94,18 +91,18 @@ export function queryParamsToSettingsPartial(params = {}) {
   const partial = {};
 
   Object.entries(expanded).forEach(([key, value]) => {
-    const setting = QUERY_TO_SETTING[key] || QUERY_TO_SETTING[normalizeToken(key)];
+    const setting = QUERY_TO_SETTING[key] || QUERY_TO_SETTING[queryKey(key)];
     if (!setting || setting === 'pack') return;
     partial[setting] = value;
   });
 
   if (expanded.pack) {
-    const density = PACK_TO_DENSITY[normalizeToken(expanded.pack)];
+    const density = PACK_TO_DENSITY[queryKey(expanded.pack)];
     if (density) partial.componentDensity = density;
     if (!partial.spacingTuner) {
-      partial.spacingTuner = normalizeToken(expanded.pack) === 'compact'
+      partial.spacingTuner = queryKey(expanded.pack) === 'compact'
         ? 'compact'
-        : normalizeToken(expanded.pack) === 'roomy' ? 'roomy' : 'balanced';
+        : queryKey(expanded.pack) === 'roomy' ? 'roomy' : 'balanced';
     }
   }
 

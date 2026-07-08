@@ -4,6 +4,7 @@
  * Query-driven condensation and print preparation from Spw projection requests.
  */
 
+import { writeRuntimeDatasetValues } from '/public/js/kernel/dom-contracts.js';
 import { parseModularQuery, serializeSpwQuery } from '/public/js/kernel/query-composer.js';
 
 const CONDENSE_TIERS = new Set(['brief', 'card', 'print', 'full']);
@@ -35,34 +36,33 @@ export function applyPrecipitationRequest(root = document, search = root.default
   const { params } = parseModularQuery(search);
   const tier = resolveTier(params);
   const mode = resolveMode(params, tier);
-
-  if (tier) html.dataset.spwCondenseTier = tier;
-  else delete html.dataset.spwCondenseTier;
-
-  if (mode) html.dataset.spwPrecipitationMode = mode;
-  else delete html.dataset.spwPrecipitationMode;
-
   const printReady = tier === 'print' || mode === 'print' || mode === 'screenshot' || params.screenshot === '1';
+  const active = Boolean(tier || mode);
+
+  writeRuntimeDatasetValues(html, {
+    spwCondenseTier: tier || null,
+    spwPrecipitationMode: mode || null,
+    spwPrintReady: printReady ? 'true' : null,
+    spwPrecipitationActive: active ? 'true' : null,
+    spwQueryCondense: active
+      ? serializeSpwQuery({ condense: tier || mode }).replace(/^\?/, '') || tier || mode
+      : null,
+  }, {
+    source: 'precipitation-request',
+    reason: 'query-precipitation',
+  });
+
   if (printReady) {
-    html.dataset.spwPrintReady = 'true';
     body?.setAttribute('data-spw-capture-mode', 'screenshot');
   } else {
-    delete html.dataset.spwPrintReady;
-  }
-
-  if (tier || mode) {
-    html.dataset.spwPrecipitationActive = 'true';
-    html.dataset.spwQueryCondense = serializeSpwQuery({ condense: tier || mode }).replace(/^\?/, '') || tier || mode;
-  } else {
-    delete html.dataset.spwPrecipitationActive;
-    delete html.dataset.spwQueryCondense;
+    body?.removeAttribute('data-spw-capture-mode');
   }
 
   return { tier, mode, printReady, params };
 }
 
 export function initPrecipitationRequest(root = document) {
-  const result = applyPrecipitationRequest(root);
+  applyPrecipitationRequest(root);
   const onPopState = () => applyPrecipitationRequest(root);
   window.addEventListener('popstate', onPopState);
   return () => window.removeEventListener('popstate', onPopState);

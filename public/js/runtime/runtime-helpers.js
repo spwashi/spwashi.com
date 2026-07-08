@@ -6,6 +6,8 @@
  * registry handling, and guardrails for scripts that want to be portable.
  */
 
+import { runtimeToken } from '/public/js/kernel/text-normalization.js';
+
 const RUNTIME_TIMING_POLICIES = new Set(['normal', 'eager', 'defer', 'quiet', 'manual']);
 const MOUNT_WHEN_VALUES = new Set(['immediate', 'visible', 'idle', 'interaction', 'region', 'settled']);
 const HTML = document.documentElement;
@@ -144,11 +146,7 @@ export function matchesFeatures(def, activeFeatures) {
 }
 
 export function normalizeRuntimeToken(value = '') {
-  return String(value || '')
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9_-]+/g, '-')
-    .replace(/^-+|-+$/g, '');
+  return runtimeToken(value);
 }
 
 export function readDelimitedSet(value = '') {

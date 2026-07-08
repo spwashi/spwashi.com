@@ -3,6 +3,10 @@ import {
   annotateFloatingChromeElement,
   writeDatasetValue,
 } from '/public/js/kernel/dom-contracts.js';
+import {
+  anatomyToken as normalizeToken,
+  collapseText as normalizeText,
+} from '/public/js/kernel/text-normalization.js';
 
 const ANATOMY_SELECTOR = '[data-spw-anatomy]';
 const INTERACTIVE_SELECTOR = 'a[href], button, input, select, textarea, summary, [role="button"], [tabindex]';
@@ -38,18 +42,6 @@ let parallelGroups = new Map();
 let parallelGroupOrder = [];
 let activeParallelGroup = '';
 let activeParallelIndex = 0;
-
-function normalizeText(value = '') {
-  return String(value).replace(/\s+/g, ' ').trim();
-}
-
-function normalizeToken(value = '') {
-  return normalizeText(value)
-    .toLowerCase()
-    .replace(/['"]/g, '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-}
 
 function spwQuote(value = '') {
   return `\`${normalizeText(value).replace(/\\/g, '\\\\').replace(/`/g, '\\`')}\``;

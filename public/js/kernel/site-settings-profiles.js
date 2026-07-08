@@ -7,12 +7,13 @@ import {
   PALETTE_RESONANCE_OPTIONS,
 } from '/public/js/interface/palette-resonance.js';
 import { AUTHOR_WORKFLOW_MODES } from '/public/js/kernel/shared.js';
+import { STORAGE_KEYS } from '/public/js/kernel/storage-utils.js';
 
-const SITE_SETTINGS_KEY = 'spw-site-settings';
-const CAULDRON_STORAGE_KEY = 'spw-cauldron';
-const DISCOVERY_DISMISSALS_STORAGE_KEY = 'spw-discovery-notice-dismissals';
-const VISITED_IMAGE_STORAGE_KEY = 'spw-visited-image-surfaces';
-const COMPONENT_COLLECTION_STORAGE_KEY = 'spw-component-collection';
+const SITE_SETTINGS_KEY = STORAGE_KEYS.SITE_SETTINGS;
+const CAULDRON_STORAGE_KEY = STORAGE_KEYS.CAULDRON;
+const DISCOVERY_DISMISSALS_STORAGE_KEY = STORAGE_KEYS.DISCOVERY_DISMISSALS;
+const VISITED_IMAGE_STORAGE_KEY = STORAGE_KEYS.VISITED_SURFACES;
+const COMPONENT_COLLECTION_STORAGE_KEY = STORAGE_KEYS.COMPONENT_COLLECTION;
 
 const THEME_PACK_OPTIONS = Object.freeze([
   'neutral-paper',

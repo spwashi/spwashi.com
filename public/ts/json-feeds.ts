@@ -25,15 +25,7 @@ export type {
   PromoWonderPair,
 } from '../../types/json-feeds';
 
-const DAY_KEYS = [
-  'sunday',
-  'monday',
-  'tuesday',
-  'wednesday',
-  'thursday',
-  'friday',
-  'saturday',
-] as const;
+import { DAY_KEYS } from './feed-utils.js';
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return Boolean(value) && typeof value === 'object' && !Array.isArray(value);

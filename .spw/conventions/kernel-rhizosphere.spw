@@ -1,0 +1,48 @@
+# Kernel Rhizosphere
+#
+# Nutrient transport layer: normalization, routes, storage, DOM render. operation: contract
+
+#>kernel_rhizosphere
+#:convention #!javascript #!kernel
+#:layer #!pragmatics
+
+@text_token_normalization: ~"./text-token-normalization.spw"
+@route_transit_memory: ~"./route-transit-memory.spw"
+@storage_topology: ~"./storage-topology.spw"
+@dom_render: ~"../../public/js/kernel/dom-render.js"
+@runtime_medium_ecology: ~"./runtime-medium-ecology.spw"
+@data_spw_attribute_governance: ~"./data-spw-attribute-governance.spw"
+@audit: ~"../audits/runtime-kernel-consolidation-2026-07.spw"
+
+operation = "contract"
+fixity = "tending"
+
+^"modules"{
+  rhizosphere: #[
+    .{ file = "text-normalization.js", guild = "substrate", duty = "namespaced TEXT/TOKEN variants" }[reg=facet],
+    .{ file = "route-utils.js", guild = "orientation", duty = "pathname, href, list parse, transition prime" }[reg=facet],
+    .{ file = "storage-utils.js", guild = "memory", duty = "readJson/writeJson + STORAGE_KEYS topology" }[reg=facet],
+    .{ file = "visited-surfaces-storage.js", guild = "memory", duty = "image surface visitation envelope" }[reg=facet],
+    .{ file = "dom-render.js", guild = "substrate", duty = "el(), hydration, runSafe, guardCall" }[reg=facet],
+  ][reg=set]
+}
+
+^"dataset_write_tiers"{
+  tiers: #[
+    .{ tier = "author-owned", writer = "route HTML / settings UI", rule = "prefer explicit attrs in markup" }[reg=facet],
+    .{ tier = "transient", writer = "writeDatasetValue", rule = "interaction, locomotion, precipitation, visitation bursts" }[reg=facet],
+    .{ tier = "inspection", writer = "writeRuntimeDatasetValues", rule = "floating chrome, module updates, audits" }[reg=facet],
+  ][reg=set]
+  enforcement: "Cross-cutting html/body state should use dom-contracts writers with source and reason."
+}
+
+^"dom_render_hygiene"{
+  canonical: "kernel/dom-render.js"
+  typed_bridge: "typed/feed-utils keeps Node-check-safe local el; kernel/feed-utils.js overlays dom-render exports for browser consumers"
+  long_term: "Typed feed loaders stay in feed-utils; DOM creation stays in dom-render."
+}
+
+^"orchestrator_consistency"{
+  pattern: "Orchestrators (attention-architecture, visitation, precipitation-request) use guardCall or writeRuntimeDatasetValues."
+  bus_first: "Storage mutations that affect ornament emit bus events (image:visited, visitation:updated)."
+}

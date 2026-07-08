@@ -27,6 +27,11 @@ import {
   isRegionMenuOpen,
   openRegionMenuForElement,
 } from '/public/js/runtime/region-menu.js';
+import {
+  normalizePathname,
+  normalizeRouteHref,
+  parseRouteList,
+} from '/public/js/kernel/route-utils.js';
 import { isReadingQuietChrome } from '/public/js/runtime/runtime-helpers.js';
 
 const ROOMY_WIDTH_PX = 704;
@@ -157,22 +162,6 @@ const BREADCRUMB_ROUTE_REGISTRY = Object.freeze({
   '/topics/': { label: 'Topics', note: 'Browse the atlas.' },
   '/topics/craft/': { label: 'Craft', note: 'Author-facing ramps into HTML, CSS, and SVG.' },
 });
-
-function normalizePathname(pathname = '') {
-  if (!pathname || pathname === '/') return '/';
-  return pathname.replace(/\/+$/, '/') || '/';
-}
-
-function normalizeRouteHref(value = '') {
-  const raw = String(value || '').trim();
-  if (!raw) return '';
-
-  try {
-    return normalizePathname(new URL(raw, window.location.href).pathname);
-  } catch {
-    return normalizePathname(raw);
-  }
-}
 
 const OPERATOR_INFO = Object.freeze({
   '#>': { type: 'frame', label: 'frame address', intent: 'name a resonance handle', wonder: 'resonance' },
@@ -1298,12 +1287,7 @@ function collectRelatedBreadcrumbRoutes(currentPath = '') {
 }
 
 function parseRelatedRouteList(value = '') {
-  return Array.from(new Set(
-    String(value)
-      .split(/[|,]/)
-      .map((part) => normalizeRouteHref(part))
-      .filter(Boolean)
-  ));
+  return parseRouteList(value);
 }
 
 function describeBreadcrumbRoute(pathname = '') {

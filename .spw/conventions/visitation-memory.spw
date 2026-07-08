@@ -1,0 +1,55 @@
+# Visitation Memory
+#
+# Cross-surface visitation UX and theme-sensitive memory. operation: contract
+
+#>visitation_memory
+#:convention #!javascript #!media #!wonder
+#:layer #!pragmatics
+
+@storage: ~"../../public/js/kernel/visited-surfaces-storage.js"
+@visitation_runtime: ~"../../public/js/runtime/visitation.js"
+@image_metaphysics: ~"../../public/js/media/image-metaphysics.js"
+@wonder_vocabulary: ~"./wonder-vocabulary.spw"
+@ornament_contract: ~"./ornament-contract.spw"
+@interaction_microstates: ~"./interaction-microstates.spw"
+
+operation = "contract"
+fixity = "tending"
+
+^"thesis"{
+  claim: "Visitation is surface memory, not just a boolean. Raster and vector surfaces record medium, pages[], and visitedAt; page-level datasets summarize count and on-page presence for ornament."
+}
+
+^"surface_types"{
+  raster: .{ medium = "raster", burst = "data-spw-visit-burst", settled = "data-spw-visited" }[reg=facet]
+  vector: .{ medium = "vector", burst = "data-spw-visit-burst", settled = "data-spw-visited" }[reg=facet]
+  attrs: #[
+    `host[data-spw-visited-medium]`
+    `html[data-spw-visited-surface-count]`
+    `html[data-spw-visited-on-page]`
+  ][reg=set]
+}
+
+^"events"{
+  bus: #[
+    `image:visited — writer emits after storage commit`
+    `visitation:updated — reader projects datasets after storage read`
+  ][reg=set]
+}
+
+^"theme_sensitive_memory"{
+  css_tests: #[
+    `visited + wonder-memory palette resonance`
+    `visit-burst microinteraction duration (~900ms)`
+    `theme-pack biome hints from page-anatomy THEME_BIOME_BY_PACK`
+  ][reg=set]
+  material_model: "Treat visit-burst as a brief charge discharge; settled visited as matte memory on glass surfaces."
+}
+
+^"audit_fields"{
+  combine: #[
+    `data-spw-visited × data-spw-metamaterial`
+    `data-spw-visited-on-page × data-spw-wonder-memory`
+    `data-spw-visit-burst × prefers-reduced-motion`
+  ][reg=set]
+}

@@ -10,6 +10,11 @@
  */
 
 import { bus } from '/public/js/kernel/bus.js';
+import { readJson, writeJson, STORAGE_KEYS } from '/public/js/kernel/storage-utils.js';
+import {
+    readVisitedMap,
+    recordVisitedSurface,
+} from '/public/js/kernel/visited-surfaces-storage.js';
 import {
     dispatchImageRefresh,
     IMAGE_REFRESH_EVENT,
@@ -17,8 +22,7 @@ import {
 } from '/public/js/runtime/interaction-loop.js';
 import { getCanvasAccentInstance } from '/public/js/interface/canvas-accents.js';
 
-const VISITED_KEY = 'spw-visited-image-surfaces';
-const PROMPT_MEMORY_KEY = 'spw-image-prompt-memory';  // local association of images ↔ prompts for creative resonance
+const PROMPT_MEMORY_KEY = STORAGE_KEYS.IMAGE_PROMPT_MEMORY;
 const HOLD_DURATION_MS = 480;
 const DRAG_CANCEL_DISTANCE_PX = 12;
 const PRIMED_DELAY_MS = 120;
@@ -102,20 +106,6 @@ const HOST_RESIZE_OBSERVER = typeof ResizeObserver === 'function'
         });
     })
     : null;
-
-const safeParse = (value, fallback) => {
-    try {
-        return value ? JSON.parse(value) : fallback;
-    } catch {
-        return fallback;
-    }
-};
-
-const readVisitedMap = () => safeParse(localStorage.getItem(VISITED_KEY), {});
-
-const writeVisitedMap = (map) => {
-    localStorage.setItem(VISITED_KEY, JSON.stringify(map));
-};
 
 const getMedium = (host) => (host.querySelector('svg') ? 'vector' : 'raster');
 const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
@@ -660,21 +650,20 @@ function syncHost(host) {
 
 function markVisited(host) {
     const key = getSurfaceKey(host);
-    const map = readVisitedMap();
-    const existing = map[key] || { pages: [] };
+    const medium = getMedium(host);
 
-    map[key] = {
-        visitedAt: new Date().toISOString(),
-        medium: getMedium(host),
-        pages: Array.from(new Set([...(existing.pages || []), window.location.pathname]))
-    };
+    recordVisitedSurface({
+        key,
+        page: window.location.pathname,
+        medium,
+        host,
+    });
 
-    writeVisitedMap(map);
     host.dataset.spwVisited = 'true';
     host.dataset.spwVisitBurst = 'true';
+    host.dataset.spwVisitedMedium = medium;
     syncHost(host);
     dispatchImageRefresh(host, IMAGE_REFRESH_REASONS.VISITED);
-    bus.emit('image:visited', { key, page: window.location.pathname, medium: getMedium(host) }, { element: host });
 
     window.setTimeout(() => {
         delete host.dataset.spwVisitBurst;
@@ -966,9 +955,9 @@ export function rememberImagePrompt(surfaceEl, promptText) {
   surfaceEl.dataset.spwImagePrompt = promptText.slice(0, 280);
 
   try {
-    const mem = JSON.parse(localStorage.getItem('spw-image-prompt-memory') || '{}');
+    const mem = readJson(PROMPT_MEMORY_KEY, {}, { requireObject: true });
     mem[id] = { prompt: promptText.slice(0, 280), ts: Date.now() };
-    localStorage.setItem('spw-image-prompt-memory', JSON.stringify(mem));
+    writeJson(PROMPT_MEMORY_KEY, mem);
   } catch {}
 }
 
@@ -980,7 +969,7 @@ export function recallImagePrompt(surfaceEl) {
   if (surfaceEl.dataset.spwImagePrompt) return surfaceEl.dataset.spwImagePrompt;
 
   try {
-    const mem = JSON.parse(localStorage.getItem('spw-image-prompt-memory') || '{}');
+    const mem = readJson(PROMPT_MEMORY_KEY, {}, { requireObject: true });
     return mem[id]?.prompt || null;
   } catch { return null; }
 }

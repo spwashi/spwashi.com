@@ -6,54 +6,53 @@
  */
 
 import { bus } from '/public/js/kernel/bus.js';
-
-const VISITED_KEY = 'spw-visited-image-surfaces';
-
-const safeParse = (value, fallback) => {
-    try {
-        return value ? JSON.parse(value) : fallback;
-    } catch {
-        return fallback;
-    }
-};
-
-function readVisitedMap() {
-    return safeParse(localStorage.getItem(VISITED_KEY), {});
-}
+import { writeRuntimeDatasetValues } from '/public/js/kernel/dom-contracts.js';
+import { normalizePathname } from '/public/js/kernel/route-utils.js';
+import {
+  VISITED_SURFACES_KEY,
+  getVisitedCountOnPage,
+  getVisitedSurfaceCount,
+  readVisitedMap,
+} from '/public/js/kernel/visited-surfaces-storage.js';
 
 function applyVisitationState() {
-    const map = readVisitedMap();
-    const entries = Object.values(map);
-    const page = window.location.pathname;
-    const pageCount = entries.filter((entry) => Array.isArray(entry?.pages) && entry.pages.includes(page)).length;
+  const entries = Object.values(readVisitedMap());
+  const page = normalizePathname(window.location.pathname);
+  const pageCount = getVisitedCountOnPage(page);
+  const count = getVisitedSurfaceCount();
 
-    document.documentElement.dataset.spwVisitedSurfaceCount = String(entries.length);
-    document.body.dataset.spwVisitedSurfaceCount = String(entries.length);
+  writeRuntimeDatasetValues(document.documentElement, {
+    spwVisitedSurfaceCount: String(count),
+    spwVisitedOnPage: pageCount > 0 ? 'true' : null,
+  }, {
+    source: 'visitation',
+    reason: 'visitation-sync',
+  });
 
-    if (pageCount > 0) {
-        document.documentElement.dataset.spwVisitedOnPage = 'true';
-        document.body.dataset.spwVisitedOnPage = 'true';
-    } else {
-        delete document.documentElement.dataset.spwVisitedOnPage;
-        delete document.body.dataset.spwVisitedOnPage;
-    }
+  writeRuntimeDatasetValues(document.body, {
+    spwVisitedSurfaceCount: String(count),
+    spwVisitedOnPage: pageCount > 0 ? 'true' : null,
+  }, {
+    source: 'visitation',
+    reason: 'visitation-sync',
+  });
 
-    bus.emit('visitation:updated', {
-        count: entries.length,
-        page,
-        pageCount,
-    });
+  bus.emit('visitation:updated', {
+    count,
+    page,
+    pageCount,
+  });
 }
 
 export function initSpwVisitation() {
+  applyVisitationState();
+
+  bus.on('image:visited', () => {
     applyVisitationState();
+  });
 
-    bus.on('image:visited', () => {
-        applyVisitationState();
-    });
-
-    window.addEventListener('storage', (event) => {
-        if (event.key !== VISITED_KEY) return;
-        applyVisitationState();
-    });
+  window.addEventListener('storage', (event) => {
+    if (event.key !== VISITED_SURFACES_KEY) return;
+    applyVisitationState();
+  });
 }

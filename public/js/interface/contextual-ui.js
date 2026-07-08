@@ -24,6 +24,11 @@ import {
 } from '/public/js/kernel/dom-contracts.js';
 import { buildRouteMenuLink } from '/public/js/semantic/link-copy.js';
 import {
+  normalizePathname,
+  normalizeRouteHref,
+  parseRouteList,
+} from '/public/js/kernel/route-utils.js';
+import {
   normalizeToken,
   unique,
 } from '/public/js/semantic/semantic-utils.js';
@@ -77,28 +82,8 @@ const SALIENCE_WEIGHTS = Object.freeze({
   focal: 0.94,
 });
 
-function normalizePathname(pathname = '') {
-  if (!pathname || pathname === '/') return '/';
-  return pathname.replace(/\/+$/, '/') || '/';
-}
-
-function normalizeRouteHref(value = '') {
-  const raw = String(value || '').trim();
-  if (!raw) return '';
-
-  try {
-    return normalizePathname(new URL(raw, window.location.href).pathname);
-  } catch {
-    return normalizePathname(raw);
-  }
-}
-
 function parseContextTokens(value = '') {
   return unique(String(value).split(/[\s,]+/).map(normalizeToken));
-}
-
-function parseRoutePathList(value = '') {
-  return unique(String(value).split(/[|,]/).map(normalizeRouteHref));
 }
 
 function titleFromRoutePath(pathname = '') {
@@ -424,7 +409,7 @@ function collectExistingNavPaths(navList) {
 
 function collectContextualRoutes(header, existingPaths) {
   const currentPath = normalizeRouteHref(window.location.pathname);
-  const relatedPaths = parseRoutePathList([
+  const relatedPaths = parseRouteList([
     document.body?.dataset?.spwRelatedRoutes,
     header?.dataset?.spwRelatedRoutes,
   ].filter(Boolean).join('|'));

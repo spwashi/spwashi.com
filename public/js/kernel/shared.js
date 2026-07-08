@@ -20,6 +20,11 @@
    ========================================================================== */
 
 import { bus } from '/public/js/kernel/bus.js';
+import {
+  collapseText as normalizeText,
+  humanizeToken as humanize,
+  semanticToken as normalizeToken,
+} from '/public/js/kernel/text-normalization.js';
 
 /* ==========================================================================
    1. Safe environment helpers
@@ -864,16 +869,6 @@ const SPW_HORMONAL_PROFILES = Object.freeze({
 /* ==========================================================================
    5. Normalization helpers
    ========================================================================== */
-
-const normalizeText = (value = '') => String(value).replace(/\s+/g, ' ').trim();
-
-const humanize = (value = '') => normalizeText(value)
-  .replace(/[_-]+/g, ' ')
-  .toLowerCase();
-
-const normalizeToken = (value = '') => humanize(value)
-  .replace(/[^a-z0-9]+/g, '-')
-  .replace(/^-+|-+$/g, '');
 
 const readDataTokens = (value = '') => new Set(
   String(value)

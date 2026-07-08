@@ -69,6 +69,14 @@
 @runtime_medium_ecology: ~"./runtime-medium-ecology.spw"
 @module_export_contract: ~"./module-export-contract.spw"
 @module_export_audit: ~"../audits/module-export-standalone-2026-07.spw"
+@component_anatomy_device_packing_audit: ~"../audits/component-anatomy-device-packing-2026-07.spw"
+@kernel_rhizosphere: ~"./kernel-rhizosphere.spw"
+@text_token_normalization: ~"./text-token-normalization.spw"
+@route_transit_memory: ~"./route-transit-memory.spw"
+@storage_topology: ~"./storage-topology.spw"
+@visitation_memory: ~"./visitation-memory.spw"
+@floating_chrome_coherence: ~"./floating-chrome-coherence.spw"
+@runtime_kernel_consolidation_audit: ~"../audits/runtime-kernel-consolidation-2026-07.spw"
 
 dispatch: .{
  semantics = @site_semantics
@@ -123,6 +131,14 @@ dispatch: .{
  runtime_medium_ecology = @runtime_medium_ecology
  module_export_contract = @module_export_contract
  module_export_audit = @module_export_audit
+ component_anatomy_device_packing_audit = @component_anatomy_device_packing_audit
+ kernel = @kernel_rhizosphere
+ text_tokens = @text_token_normalization
+ route_transit = @route_transit_memory
+ storage = @storage_topology
+ visitation = @visitation_memory
+ floating_chrome = @floating_chrome_coherence
+ runtime_kernel_audit = @runtime_kernel_consolidation_audit
 }[reg=facet]
 
 invariants: #[

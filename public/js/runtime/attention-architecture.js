@@ -7,6 +7,7 @@
  * --------------------------------------------------------------------------
  */
 
+import { guardCall } from '/public/js/kernel/dom-render.js';
 import { ATTENTION_ARCHITECTURE_CONTRACT } from './attention/shared.js';
 import { initSectionHandle } from './attention/section-handle.js';
 import { initResonanceProbe } from './attention/resonance-probe.js';
@@ -20,11 +21,16 @@ export function initSpwAttentionArchitecture(ctx) {
   const root = (ctx && ctx.root) || document;
   const cleanups = [];
 
-  try { cleanups.push(initScrollCadenceState()); } catch (_) {}
-  try { cleanups.push(initSectionHandle(root)); } catch (_) {}
-  try { cleanups.push(initResonanceProbe(root)); } catch (_) {}
-  try { cleanups.push(initReadingGroove(root)); } catch (_) {}
-  try { cleanups.push(initPinchTextScale(root)); } catch (_) {}
+  const safeInit = (factory, name) => {
+    const cleanup = guardCall(factory, `attention:${name}`, { silent: true })();
+    if (cleanup) cleanups.push(cleanup);
+  };
+
+  safeInit(initScrollCadenceState, 'scroll-cadence');
+  safeInit(() => initSectionHandle(root), 'section-handle');
+  safeInit(() => initResonanceProbe(root), 'resonance-probe');
+  safeInit(() => initReadingGroove(root), 'reading-groove');
+  safeInit(() => initPinchTextScale(root), 'pinch-scale');
 
   const busUnsubs = [];
   try {

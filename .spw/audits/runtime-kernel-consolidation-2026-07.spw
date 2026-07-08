@@ -1,0 +1,71 @@
+# Runtime Kernel Consolidation Audit
+#
+# July 2026 precipitate of rhizosphere module extraction. operation: audit
+
+#>runtime_kernel_consolidation_2026_07
+#:audit #!javascript #!kernel
+#:layer #!pragmatics
+
+@kernel_rhizosphere: ~"../conventions/kernel-rhizosphere.spw"
+@text_token_normalization: ~"../conventions/text-token-normalization.spw"
+@route_transit_memory: ~"../conventions/route-transit-memory.spw"
+@storage_topology: ~"../conventions/storage-topology.spw"
+@visitation_memory: ~"../conventions/visitation-memory.spw"
+@floating_chrome_coherence: ~"../conventions/floating-chrome-coherence.spw"
+@precipitates: ~"../conventions/precipitates-and-projections.spw"
+
+operation = "audit"
+fixity = "snapshot"
+audited_at = "2026-07-08"
+
+^"precipitate"{
+  operator = "^"
+  phase = "crystallization"
+  summary = "Extracted kernel text/route/storage/visitation modules; migrated high-traffic consumers; precipitated .spw contracts."
+}
+
+^"landed"{
+  modules: #[
+    `public/js/kernel/text-normalization.js`
+    `public/js/kernel/route-utils.js`
+    `public/js/kernel/storage-utils.js`
+    `public/js/kernel/visited-surfaces-storage.js`
+  ][reg=set]
+  migrations: #[
+    `shared.js + semantic-utils re-export kernel text variants`
+    `gesture-contract re-exports normalizeRoutePath from route-utils`
+    `contextual-ui, experiential, navigation-spells use route-utils`
+    `visitation + image-metaphysics share visited-surfaces-storage`
+    `pin-registry, site-settings-profiles use storage-utils keys`
+    `precipitation-request uses writeRuntimeDatasetValues`
+    `attention-architecture uses guardCall orchestration`
+    `navigation-locomotion primes routes on link focusin`
+    `feed-utils.ts re-exports dom-render el/cleanText`
+    `json-feeds.ts imports DAY_KEYS from feed-utils`
+  ][reg=set]
+}
+
+^"remaining"{
+  normalize_forks: #[
+    `interactive-medium presenceToken`
+    `loading-ecology local normalizeToken`
+    `haptics/prompt-utils local normalizeText`
+  ][reg=set]
+  storage: #[
+    `discovery-notices, effect-ledger, gate, personas → readJson`
+    `haptics readJsonStorage → readJson wrapper`
+  ][reg=set]
+  chrome: #[
+    `rename runtime/state-inspector.js when safe`
+    `satchel toggles → writeRuntimeDatasetValues pass`
+  ][reg=set]
+  design_growth: #[
+    `CSS audit matrix for visitation × theme-pack × wonder-memory`
+    `Save-Data gate on route prefetch`
+    `component hydrateRouteContext adoption in feature modules`
+  ][reg=set]
+}
+
+^"validation"{
+  commands: #[`npm run check:local`, `node --check` on edited kernel/runtime modules][reg=set]
+}

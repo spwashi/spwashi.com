@@ -5,6 +5,8 @@ import {
 } from '/public/js/semantic/link-copy.js';
 import { writeDatasetValue } from '/public/js/kernel/dom-contracts.js';
 import { detectOperator } from '/public/js/kernel/shared.js';
+import { normalizePathname } from '/public/js/kernel/route-utils.js';
+import { navSlug as normalizeSlug } from '/public/js/kernel/text-normalization.js';
 
 const TOKEN_SELECTOR = [
   '.header-sigil[href]',
@@ -56,22 +58,6 @@ const WONDER_BY_SCOPE = Object.freeze({
   operator: 'projection',
   atlas: 'comparison',
 });
-
-function normalizePathname(pathname = '') {
-  if (!pathname || pathname === '/') return '/';
-  return pathname.replace(/\/+$/, '/') || '/';
-}
-
-function normalizeSlug(value = '') {
-  return String(value)
-    .trim()
-    .toLowerCase()
-    .replace(/['".,!?()[\]/]+/g, ' ')
-    .replace(/&/g, ' and ')
-    .replace(/[–—-]+/g, ' ')
-    .replace(/\s+/g, '_')
-    .replace(/^_+|_+$/g, '') || 'token';
-}
 
 function getVisibleLabel(link) {
   if (!(link instanceof Element)) return '';

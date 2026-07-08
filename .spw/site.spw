@@ -100,6 +100,8 @@
 @runtime_medium_ecology: ~"./conventions/runtime-medium-ecology.spw"
 @module_export_contract: ~"./conventions/module-export-contract.spw"
 @runtime_module_medium: ~"./surfaces/runtime-module-medium.spw"
+@kernel_rhizosphere: ~"./conventions/kernel-rhizosphere.spw"
+@runtime_kernel_consolidation_audit: ~"./audits/runtime-kernel-consolidation-2026-07.spw"
 
 @operational_semantics: ~"./conventions/operational-semantics.spw"
 @measurement_contract: ~"./conventions/measurement-contract.spw"
