@@ -1,0 +1,205 @@
+# Data Model — Improvement & QA Audit
+#
+# The plan's data model made explicit: what entities exist, what shape they
+# must hold, how the model improves, and how any agent or human audits it.
+# QA here is not bureaucracy — it is what lets .spw complexity become a
+# culture source instead of sprawl.
+
+#>spw_lang_data_model_qa
+#:contract #!qa #!data_model
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@index: ~"./index.spw"
+@research: ~"./sigil-physics-research.spw"
+@matrix: ~"./sigil-property-matrix.spw"
+@planning_ecology: ~"../../../.spw/conventions/planning-ecology.spw"
+@attr_governance: ~"../../../.spw/conventions/data-spw-attribute-governance.spw"
+@semantic_capacity: ~"../../../.spw/conventions/semantic-capacity.spw"
+@naming: ~"../../../.spw/conventions/naming-and-structured-values.spw"
+
+intent: .{
+ goal = `Name every data entity this plan produces, fix its required shape, define legal status transitions, and give each shape a runnable audit probe — so the model can be QA'd by grep before it is trusted by anyone.`
+ stance = `A field that cannot be audited is a decoration. A status that cannot transition illegally cannot rot silently.`
+}[reg=facet]
+
+^"entity_registry"{
+  ~#note: "Every entity carries a stable id, a shape, an owner surface, and a probe. Shapes extend the claim_chain template from planning-ecology rather than inventing parallel forms."
+
+  claim_chain: .{
+    id_pattern = "kebab-domain-nnn (e.g. sigil-skim-001)"
+    required = #[`claim_id`, `layer`, `hypothesis`, `spec_ref`, `impl_ref`, `probe_ref`, `falsification`, `status`][reg=set]
+    status_vocab = #[`untested`, `active`, `confirmed`, `refuted`, `superseded`][reg=set]
+    legal_transitions = `untested -> active (probe named and scheduled); active -> confirmed | refuted (probe run recorded); any -> superseded (successor claim_id named). No status change without a probe_ref event; confirmed-by-enthusiasm is an illegal transition.`
+    owner = @planning_ecology
+  }[reg=facet]
+
+  drift_entry: .{
+    id_pattern = "drift-slug-nnn (e.g. drift-at-001)"
+    required = #[`id`, `tension`, `sources`, `glyph_evidence`, `evidence_to_gather`, `status`, `toward`][reg=set]
+    status_vocab = #[`open`, `gathering`, `arbitrated`, `propagated`][reg=set]
+    legal_transitions = `open -> gathering (evidence work begun); gathering -> arbitrated (arbitration order applied, author sign-off recorded); arbitrated -> propagated (registry + atlas copy + codex + data-spw audit all updated in one traceable pass). Reverse transitions require a new stream entry naming why.`
+    owner = @wip
+    cascade_rule = `An arbitrated drift must name its cascades (e.g. @ -> ~ narrowing) as new open entries before it may claim propagated.`
+  }[reg=facet]
+
+  matrix_row: .{
+    id_pattern = "one row per sigil, keyed by the sigil itself"
+    required = #[`sigil`, `per-dimension score`, `evidence_ref per scored cell`, `unscored cells marked, not omitted`][reg=set]
+    rule = `A score without an evidence_ref is an opinion; the matrix stores it as hypothesis, rendered distinctly. Columns are registered in the matrix header before any row uses them.`
+    owner = @matrix
+  }[reg=facet]
+
+  segment_record: .{
+    id_pattern = "seg-eNN-nnn (episode, sequence)"
+    required = #[`id`, `subject (sigil or cross-sigil probe)`, `pre_registered_expectation`, `probe_run`, `result`, `matrix_or_ledger_ref`, `edition_ref`][reg=set]
+    rule = `All seven fields or it is not a segment (mirrors the PLAN.md segment probe). The expectation field must be written before the recording date in the stream.`
+    owner = @research
+  }[reg=facet]
+
+  edition_sidecar: .{
+    id_pattern = "ed-slug-nnn"
+    required = #[`id`, `artifact`, `timestamp`, `provenance (who/where/from-what)`, `probe_ref or none`, `parent segment or line`][reg=set]
+    rule = `Every manufactured or minted artifact names a sidecar; a sidecar names its parent. Orphan editions fail QA.`
+    owner = @plan
+  }[reg=facet]
+
+  charm: .{
+    id_pattern = "section-scoped; entries ordered"
+    required = #[`saw`, `wisdom`, `toward (resolving ref)`, `section-level ~#minted_by and ~#minted`][reg=set]
+    rule = `Wisdom without a saw is a slogan; a saw without a toward is trivia. Charm mismatches route to the stream per the discharge_rule.`
+    owner = @wip
+  }[reg=facet]
+
+  stream_entry: .{
+    shape = ">>[YYYY-MM-DD HH:MM] verb - note"
+    verb_vocab = #[`observe`, `decide`, `taste`, `semantics`, `implement`, `maintain`][reg=set]
+    rule = `Timestamps ascend; the cache block's ~#last_stream equals the final entry's timestamp; ~#open_count equals the count of ?[...] lines. A stale cache block is a QA failure, not a style issue.`
+    owner = @wip
+  }[reg=facet]
+
+  ref: .{
+    shape = `@name: ~"relative/path" or ~"relative/path#anchor"`
+    rule = `Every ~ path resolves from the file's own directory; every #anchor names an existing ^"section" or heading. Unresolvable refs are the fastest-rotting entity in the ecology and get audited first.`
+    owner = `every .spw file in this plan`
+  }[reg=facet]
+}
+
+^"improvement_directions"{
+  ~#note: "How the model gets better, in priority order. Each direction converts an informal habit into an auditable shape."
+
+  directions: #[
+    .{ dir = `stable ids everywhere` ; detail = `Extend the claim_id discipline to drifts, segments, editions: every referenceable object gets a kebab id so evidence can cite it without quoting prose.` },
+    .{ dir = `structure over strings` ; detail = `Any string that encodes fields (id + tension + status in one sentence) is promoted to a [reg=facet] with named fields. The drift ledger in wip.spw is the first conversion; strings remain only for genuinely atomic prose.` },
+    .{ dir = `typed evidence` ; detail = `Every evidence item names its source and its invalidation basis, per the agentic_cache_contract: what file, command, or tree state makes it stale.` },
+    .{ dir = `enumerable statuses with legal transitions` ; detail = `Status fields draw from closed vocabularies; transitions require a recorded event. Illegal transitions are grep-detectable because the vocabularies are closed.` },
+    .{ dir = `bidirectional refs` ; detail = `Matrix cells cite ledger ids; ledger entries cite matrix dimensions; claims cite both. A one-way citation graph hides rot; round-trips expose it.` },
+    .{ dir = `provenance on authored wisdom` ; detail = `Anything aphoristic (charms, taste notes promoted to rules) carries minted_by/minted so future arbitration knows whose voice it weighs.` },
+    .{ dir = `register discipline` ; detail = `[reg=facet] for keyed shapes, [reg=set] for unordered members, [reg=stream] for ordered flows. Register misuse is a model smell: a set that secretly orders, a facet that is really prose.` },
+    .{ dir = `runtime alignment` ; detail = `When a model field projects into HTML, its attribute follows the data-spw-* families in the attribute-governance convention; no plan-local attribute dialects.` }
+  ][reg=set]
+
+  budget_rule: `Complexity is invested, not accumulated: deepen a shape only where reading it teaches practice or a probe consumes it. Structure that neither teaches nor audits is sprawl — the exact pain this repo's traceability posture exists to prevent.`
+}
+
+^"qa_audit_protocol"{
+  ~#note: "Runnable probes, cheapest first. All run from the repo root; all are read-only. A QA pass is the probes plus a stream entry recording what was found."
+
+  probes: .{
+    register_lint = .{
+      question = `Are all registers drawn from the closed vocabulary?`
+      command = `rg -o '\[reg=[a-z]+\]' -N .agents/plans/spw-metaphysical-language | sort | uniq -c`
+      pass = `only [reg=facet], [reg=set], [reg=stream] appear`
+    }[reg=facet]
+    id_uniqueness = .{
+      question = `Is every claim_id and drift id unique across the plan and conventions?`
+      command = `rg -oN 'claim_id = "[^"]+"|id = "drift-[^"]+"' .spw .agents/plans | sort | uniq -d`
+      pass = `empty output`
+    }[reg=facet]
+    claim_completeness = .{
+      question = `Does every claim block carry all eight required fields?`
+      command = `rg -c 'claim_id' .agents/plans/spw-metaphysical-language/*.spw ; rg -c 'falsification' .agents/plans/spw-metaphysical-language/*.spw`
+      pass = `per-file counts match; any mismatch names the incomplete block`
+    }[reg=facet]
+    status_vocab = .{
+      question = `Do all status fields use closed vocabularies?`
+      command = `rg -oN 'status = "[^"]+"' .agents/plans/spw-metaphysical-language | sort -u`
+      pass = `every value appears in a status_vocab set in this file`
+    }[reg=facet]
+    ref_resolution = .{
+      question = `Does every ~"path" resolve and every #anchor exist?`
+      command = `rg -oN '~"[^"]+"' .agents/plans/spw-metaphysical-language | sort -u  # then resolve each path relative to its file; anchors checked against ^"..." sections`
+      pass = `all paths exist; all anchors match a section; failures are listed with owning file`
+    }[reg=facet]
+    stream_hygiene = .{
+      question = `Do stream timestamps ascend and does the cache block match reality?`
+      command = `rg -oN '>>\[[0-9: -]+\]' .agents/plans/spw-metaphysical-language/wip.spw ; rg -N '~#last_stream|~#open_count' .agents/plans/spw-metaphysical-language/wip.spw ; rg -c '\?\[' .agents/plans/spw-metaphysical-language/wip.spw`
+      pass = `timestamps monotonic; ~#last_stream equals final timestamp; ~#open_count equals ?[ count`
+    }[reg=facet]
+    sidecar_coverage = .{
+      question = `Does every edition_ref point at a sidecar and every sidecar at a parent?`
+      command = `rg -oN 'edition_ref|ed-[a-z0-9-]+' .agents/plans/spw-metaphysical-language | sort -u`
+      pass = `no orphan edition ids (cited but never defined, or defined but never cited)`
+    }[reg=facet]
+    attr_governance = .{
+      question = `Do projected attributes follow the data-spw-* families?`
+      command = `rg -oN 'data-spw-[a-z-]+' .agents/plans/spw-metaphysical-language | sort -u  # compare against data-spw-attribute-governance.spw families`
+      pass = `every attribute matches an existing family or has a governance note proposing it`
+    }[reg=facet]
+  }[reg=facet]
+
+  cadence: .{
+    per_patch = `register_lint + id_uniqueness + any probe touching the entities the patch changed`
+    per_segment = `segment_record probe (seven fields) + sidecar_coverage before the episode record is published`
+    per_sweep = `full protocol during spw-plan-maintenance passes; findings land in the stream and, if structural, as improvement_directions entries here`
+  }[reg=facet]
+
+  escalation: `A probe failure is evidence, not shame: log it in the stream with the failing entity id. Repeated failures of the same probe indicate a shape that is too expensive to maintain — flatten it per the budget_rule rather than letting it rot.`
+}
+
+^"culture_source"{
+  ~#thesis: "A culture source is a body of files whose structure transmits practice: reading them teaches how to work here before anyone explains it. The .spw complexity in this plan is deliberately invested so the files themselves carry the culture — its epistemics, its taste, its disagreements, its rhythms — to new practitioners and agents."
+
+  investment_map: .{
+    epistemic_culture = `claim chains and the QA protocol: how this culture decides what is true (probes, falsification, legal transitions — never enthusiasm)`
+    disagreement_culture = `the drift ledger and arbitration order: how this culture holds conflict in public without letting it rot or letting one voice win by default`
+    temporal_culture = `wip streams and cache blocks: how this culture remembers — timestamped verbs, honest status, no retroactive smoothing`
+    wisdom_culture = `charms with saw/wisdom/toward and provenance: how this culture passes judgment forward while keeping it falsifiable and owned`
+    navigational_culture = `index dispatch and @refs: how this culture teaches a newcomer where everything lives without a tour guide`
+    typing_culture = `registers and entity shapes: how this culture distinguishes a keyed thing from a set from a flow, so structure is read at a glance`
+  }[reg=facet]
+
+  seeding_rule: `Begin the culture source by upgrading key areas, not everything: the drift ledger (disagreement), the claim inventory (epistemics), and the charm (wisdom) are the three seeds. Each upgrade must pass its own QA probe on landing — a culture source that fails its own audits teaches cynicism instead.`
+
+  transmission_test: `The culture source works when a newcomer (human or agent) can, from the files alone: cite an entity by id, run one probe, add one correctly-shaped entry, and disagree with one charm in the sanctioned way. That four-move onboarding is the falsifiable definition of 'culture transmitted'.`
+
+  claims: .{
+    qa_grepability: {
+      claim_id = "qa-model-001"
+      layer = "pragmatic"
+      hypothesis = "Every entity shape in this plan can be audited by the documented read-only probes without opening a browser or trusting memory."
+      spec_ref = ".agents/plans/spw-metaphysical-language/data-model-qa.spw#qa_audit_protocol"
+      impl_ref = "wip.spw, index.spw, sigil-physics-research.spw, sigil-property-matrix.spw"
+      probe_ref = "run the full probe set; each returns pass/fail without manual interpretation beyond the documented pass condition"
+      falsification = "An entity exists whose correctness can only be judged by re-reading prose — the shape is under-structured or the probe is missing."
+      status = "active"
+    }
+    culture_transmission: {
+      claim_id = "qa-culture-002"
+      layer = "semantic"
+      hypothesis = "A newcomer given only this plan's .spw files completes the four-move onboarding (cite by id, run a probe, add a shaped entry, disagree with a charm) without out-of-band instruction."
+      spec_ref = "#culture_source"
+      impl_ref = "the plan directory as a whole"
+      probe_ref = "onboarding trial with one collaborator or one fresh agent session; moves scored complete/incomplete"
+      falsification = "The newcomer needs a human walkthrough for any of the four moves — the structure is not yet carrying the culture."
+      status = "untested"
+    }
+  }[reg=facet]
+}
+
+open: #[
+ .{ ask = `Should the ref_resolution probe become a small checked script under scripts/ (invalidation: this plan's file set), or stay a documented manual probe until a second plan adopts the protocol?` },
+ .{ ask = `Does the matrix want a generated projection (agentic cache with named invalidation) once rows exceed hand-audit scale, per the agentic_cache_contract?` },
+ .{ ask = `When a second plan adopts entity shapes from here, does this file promote to .spw/conventions/ as the ecology-wide data-model contract, or stay plan-local as the reference implementation?` }
+][reg=set]

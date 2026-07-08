@@ -1,0 +1,152 @@
+# Public Workshop Ecology
+#
+# Site copy carries instructions for experimenting with features, and the site
+# develops an ecology in which technologies are explored and tested, mounted
+# in public spaces where they can be read and elaborated, then precipitate
+# into products sold by merchants in the community. The market is not the
+# endpoint — sales pump substrate back into exploration.
+
+#>spw_public_workshop_ecology
+#:contract #!copy #!ecology #!commerce
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@qa: ~"./data-model-qa.spw"
+@research: ~"./sigil-physics-research.spw"
+@product_lines: ~"../../../.spw/surfaces/product-lines.spw"
+@precipitates: ~"../../../.spw/conventions/precipitates-and-projections.spw"
+@operator_alignment: ~"../../../.spw/conventions/operator-alignment.spw"
+@living_medium_copy: ~"../../../.spw/conventions/living-medium-copy.spw"
+@annotation_layer: ~"../../../.spw/conventions/annotation-layer.spw"
+@interaction_microstates: ~"../../../.spw/conventions/interaction-microstates.spw"
+@attr_governance: ~"../../../.spw/conventions/data-spw-attribute-governance.spw"
+@town: ~"../../../town/"
+@design: ~"../../../design/"
+@tools: ~"../../../tools/"
+
+intent: .{
+ goal = `Turn the site into a working commons: every experimental technology is mounted with copy that teaches visitors how to experiment with it, elaboration has a place to land, precipitation has a named condition of arrival, and community merchants sell what precipitates — with sales discharging back into exploration.`
+ stance = `The site is the workshop and the reading room, not the store. Merchants are community members; the site contributes provenance, mounting space, and the copy that turns visitors into experimenters.`
+}[reg=facet]
+
+^"ecology_cycle"{
+  ~#note: "The threshold sequence extended into a loop. Linear pipelines starve; this cycle closes because the merchant's $ discharges back into the next ~."
+
+  stages: .{
+    explore = .{ operator = "~" ; act = `a technology is held as potential on a workshop bench — a plan, a wip, a semantic-capacity cache entry` }[reg=facet]
+    test = .{ operator = "?" ; act = `public, reversible probing — the visitor can try it and undo it; experiments carry their protocol in copy` }[reg=facet]
+    measure = .{ operator = "%" ; act = `evidence gathers in public: matrix rows, probe results, elaboration counts — measurement is visible, not backstage` }[reg=facet]
+    mount = .{ operator = "^" ; act = `the technology is lifted into a public space as inspectable work-in-progress — mounted before finished, honest about phase` }[reg=facet]
+    read = .{ operator = "# ." ; act = `the mounted thing is addressable (anchored) and returnable (grounded); reading surfaces expose its state, claims, and history` }[reg=facet]
+    elaborate = .{ operator = "&" ; act = `community members bind annotations, remixes, comparisons, and reports to the mounted technology; elaboration lands somewhere named, never into the void` }[reg=facet]
+    precipitate = .{ operator = "*" ; act = `the technology resolves into a usable product form: deck, print, card, kit, session, recipe, theme — an edition with a sidecar` }[reg=facet]
+    exchange = .{ operator = "$" ; act = `a community merchant sells the precipitate; provenance travels with it; the sale is substrate — it funds, supplies, or triggers the next exploration` }[reg=facet]
+  }[reg=facet]
+
+  cycle_rule: `$ discharges into ~ : every exchange names what it pumps back into the workshop (time, money, materials, attention, a commissioned next experiment). A sale that feeds nothing back is a leak in the ecology, not a win.`
+  sequence_attr: `data-spw-operator-sequence='~ ? % ^ & * $' — proposed as a governance note extending the existing threshold_sequence, not replacing it; the mount/elaborate stages are the public-commons addition.`
+}
+
+^"copy_contract"{
+  ~#thesis: "Instructions for experimenting are copy, not chrome. Every mounted technology's route copy carries a six-part anatomy that turns a reader into an experimenter, an experimenter into an elaborator, and an elaborator into a potential merchant."
+
+  copy_anatomy: .{
+    invitation = `one sentence naming what can be tried right now — present tense, no prerequisites`
+    experiment_protocol = `how to test it: the gesture or input to try, what to watch for, and how to reset — reversibility stated up front so probing stays ?-shaped`
+    reading_surface = `where the technology's state and evidence can be read: the inspector attribute, the catalog entry, the matrix row, the claim id`
+    elaboration_path = `how to annotate, remix, report, or extend — and where that elaboration lands (annotation layer, cauldron, session note, contact path)`
+    precipitation_signal = `the named condition of arrival under which this becomes a product — not a deadline, a condition (per the stub contract's future-state rule)`
+    merchant_path = `who would sell the precipitate and how a community member becomes that merchant — the ecology's standing invitation`
+  }[reg=facet]
+
+  rules: #[
+    `instructions live in the route's copy voice (living-medium posture), depth-tiered with the copy-depth ladder: the invitation reads at entry depth, the protocol at normal, the reading surface at technical`,
+    `every experiment interaction honors the interaction reward contract: feedback or clarity about potential arcs, never silent absorption`,
+    `experiment copy is capture-legible: a screenshot of the mounted technology carries enough instruction to be interpretable in the capture loop`,
+    `mounted phase is honest: copy never presents an experiment as a product or a product as an experiment; the phase is inspectable`,
+    `the six-part anatomy is required for mounted technologies, not for every feature — mounting is a claim that experimentation is invited`
+  ][reg=set]
+}
+
+^"public_mounting"{
+  ~#note: "What counts as a public space, and what mounting requires."
+
+  commons: .{
+    design_commons = .{ route = @design ; character = `specimen benches — components and technologies shown with their anatomy exposed` }[reg=facet]
+    play_commons = .{ route = `/play/ and /rpg/` ; character = `session benches — technologies tested through play; the show's segments mount here` }[reg=facet]
+    tool_commons = .{ route = @tools ; character = `utility benches — standalone technologies visitors use for real work while they are still experiments` }[reg=facet]
+    town_commons = .{ route = @town ; character = `the market and the library — merchant stalls for precipitates, accession records for provenance, quests that route visitors through the workshop` }[reg=facet]
+    topic_commons = .{ route = `/topics/` ; character = `reading rooms — where mounted technologies are explained, compared, and connected to their lineage` }[reg=facet]
+  }[reg=facet]
+
+  mounting_contract: #[
+    `a mounted technology has a stable address (anchor + identifier per the sigil-identifier contract)`,
+    `it carries the six-part copy anatomy`,
+    `its phase is machine-readable (proposed data-spw-mount-phase='bench|mounted|elaborating|precipitating|precipitated' — routed through attribute governance before any markup lands)`,
+    `its elaborations accumulate somewhere addressable, so the next reader sees what previous readers built`,
+    `unmounting is honest: a technology that leaves the commons gets an archive note, not a silent 404`
+  ][reg=set]
+}
+
+^"merchant_ecology"{
+  ~#thesis: "Merchants are community members — the network's illustrators, painters, librarians, gardeners, and engineers — selling what the commons precipitates. The site contributes mounting space, provenance, and experimenter-generating copy; it does not become a store."
+
+  merchant_genres: .{
+    illustrator = `prints, specimen sheets, brace-field posters, deck art editions`
+    painter = `physical editions, painted variants of digital precipitates`
+    librarian = `accession services, provenance records, curated collections and reading paths`
+    gardener = `seasonal/seed editions — the newyear.life annual seed-card format generalized`
+    engineer = `kits, tools, themes, runbooks — the object kit and starter-kit lineage`
+  }[reg=facet]
+
+  merchant_contract: #[
+    `a merchant product cites its provenance chain: which mounted technology, which elaborations, which edition sidecar — unbroken from mount to sale`,
+    `becoming a merchant is an elaboration path: elaborate a mounted technology until it precipitates, and the precipitate is yours to sell`,
+    `pricing and fulfillment belong to the merchant; the site's seed-card infrastructure carries the offer (rates and asks use the same card)`,
+    `each sale names its discharge: what returns to the workshop (per the cycle_rule)`,
+    `the town market stall is the on-site projection of a merchant's offer — a card with pitch, provenance, and outbound path, following the domain-card shape`
+  ][reg=set]
+
+  onboarding_note: `The merchant path is the ecology's growth mechanism: copy invites experimenting, experimenting invites elaborating, elaborating invites precipitating, precipitating invites selling. Each rung is named in the copy anatomy so a visitor can see the whole ladder from the first invitation.`
+}
+
+^"claims"{
+  eco_copy_001: {
+    claim_id = "eco-copy-001"
+    layer = "semantic"
+    hypothesis = "Mounted technologies whose route copy carries the six-part anatomy accumulate more elaboration events (annotations, remixes, reports, contact-path follow-ups) than mounted technologies without it."
+    spec_ref = ".agents/plans/spw-metaphysical-language/public-workshop-ecology.spw#copy_contract"
+    impl_ref = "pilot route copy (first mounted technology) vs a matched mounted surface without the anatomy"
+    probe_ref = "compare elaboration counts across the matched pair over a fixed window; counts read from annotation layer, cauldron captures, and contact follow-ups"
+    falsification = "No difference in elaboration — the instructions are decoration and the anatomy should be flattened per the complexity budget."
+    status = "untested"
+  }
+  eco_precip_002: {
+    claim_id = "eco-precip-002"
+    layer = "pragmatic"
+    hypothesis = "At least one technology completes the full loop — mounted, elaborated by a community member, precipitated into a product, sold by a community merchant — with an unbroken provenance chain from mount to sale and a named discharge back into the workshop."
+    spec_ref = "#merchant_ecology"
+    impl_ref = "first merchant stall in the town commons; edition sidecar chain"
+    probe_ref = "walk the provenance chain of the first sold precipitate: mount address -> elaboration records -> edition sidecar -> stall card -> discharge note; every link resolvable"
+    falsification = "A precipitate sells without a resolvable chain, or nothing precipitates within the pilot's condition of arrival — the ecology is a diagram, not a loop."
+    status = "untested"
+  }
+}
+
+^"pilot"{
+  smallest_honest: .{
+    mounted_technology = `the brace/cauldron gathering system — already public, already interactive, already accumulating captured ingredients; it lacks only the six-part copy anatomy`
+    copy_pass = `write invitation, experiment protocol, reading surface, elaboration path, precipitation signal, and merchant path into its host route copy at the correct depth tiers`
+    stall_stub = `one town market stall stub following the stub contract: the operator deck as the first named precipitate-in-waiting, with its merchant path open`
+    measure = `begin the eco-copy-001 window when the copy pass lands`
+  }[reg=facet]
+  boundary = `No storefront machinery, no payment integration, no inventory system in this plan. The stall is a card with provenance and an outbound path; commerce mechanics stay with the merchant.`
+}
+
+open: #[
+ .{ ask = `Does the site take anything from a sale besides provenance — a tithe to the workshop, a listing norm, or nothing formal beyond the named discharge?` },
+ .{ ask = `Where do elaborations land for visitors without local-state persistence — is the contact path enough, or does the annotation layer need a public inbox surface?` },
+ .{ ask = `Is data-spw-mount-phase a new attribute family or a reuse of the existing threshold-state vocabulary — governance note needed before any markup.` },
+ .{ ask = `Does the show mount into the play commons as a technology itself (segments as mounted experiments), unifying Workstreams E and G on one contract?` }
+][reg=set]
