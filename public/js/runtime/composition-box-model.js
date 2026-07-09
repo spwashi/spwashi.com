@@ -17,6 +17,7 @@ import { PAGE_ATTENTION_EVENT } from './page-state.js';
 const DEFAULT_SELECTOR = [
   '[data-spw-box-model]',
   '[data-spw-composition-flow]',
+  '[data-spw-pack-local]',
   '[data-site-settings-panel]',
   '[data-spw-feature]',
   '.site-frame',
@@ -40,6 +41,28 @@ const MEASURE_BANDS = Object.freeze({
   comfortable: 640,
   wide: 960,
 });
+
+/* Component-local packing mirror. These px values mirror the @container
+   breakpoints in component-packing.css (26rem / 44rem at a 16px root) so the
+   inspectable data-spw-pack-layout attribute agrees with the CSS that actually
+   lays the card out. Only written for [data-spw-pack-local] opt-ins. */
+const PACK_LAYOUT_BANDS = Object.freeze({ split: 416, feature: 704 });
+
+const resolvePackLayout = (box) => {
+  // Use the content-box inline size — that is what `container-type: inline-size`
+  // measures, so the mirror matches the @container decision at the boundaries.
+  const width = box.contentInline || box.inlineSize;
+  if (width >= PACK_LAYOUT_BANDS.feature) return 'feature';
+  if (width >= PACK_LAYOUT_BANDS.split) return 'split';
+  return 'stack';
+};
+
+const resolvePackFill = (el) => {
+  const items = el.querySelectorAll?.('[data-spw-pack-region] > *').length || el.children?.length || 0;
+  if (items <= 2) return 'sparse';
+  if (items <= 5) return 'balanced';
+  return 'full';
+};
 
 const PRESENCE_STATES = Object.freeze({
   HIDDEN: 'hidden',
@@ -305,6 +328,23 @@ export function annotateCompositionBox(target, options = {}) {
     writeDatasetValue(el, 'spwBoxStory', snapshot.story);
   }
 
+  // Component-local packing mirror: expose the resolved internal-layout variant
+  // and content fill so the CSS container-query decision is inspectable and
+  // available to JS consumers. Only for elements that opt into packing.
+  if (el.matches?.('[data-spw-pack-local]')) {
+    const packLayout = resolvePackLayout(snapshot.box);
+    const packFill = resolvePackFill(el);
+    writeDatasetValues(el, {
+      spwPackLayout: packLayout,
+      spwPackFill: packFill,
+    }, { missingOnly: options.missingOnly === true });
+
+    const readout = el.querySelector('[data-spw-pack-readout]');
+    if (readout) {
+      readout.textContent = `layout: ${packLayout} · fill: ${packFill} · ${Math.round(snapshot.box.inlineSize)}px`;
+    }
+  }
+
   return snapshot;
 }
 
@@ -390,6 +430,9 @@ export const SPW_COMPOSITION_BOX_MODEL_CONTRACT = Object.freeze({
     'data-spw-text-width-class',
     'data-spw-measure-kind',
     'data-spw-measure-source',
+    // Component-local packing mirror (for [data-spw-pack-local] cards)
+    'data-spw-pack-layout',
+    'data-spw-pack-fill',
   ]),
   settlePhases: SETTLE_PHASES,
   roles: Object.freeze(['stage', 'fold', 'control-group', 'control-card', 'feature', 'choice-field', 'component']),

@@ -87,33 +87,58 @@ const resolveExtent = (blockSize, viewportHeight) => {
   return 'overtall';
 };
 
-const resolveVerticalGravity = (rect, viewportHeight) => {
-  const center = rect.top + rect.height / 2;
-  const roomAbove = center;
-  const roomBelow = viewportHeight - center;
-  const bias = (roomBelow - roomAbove) / Math.max(1, viewportHeight);
-  // More room below → content "falls" (opens down). More room above → "rises".
-  if (bias > VERTICAL_DEADZONE) return { gravity: 'falls', bias };
-  if (bias < -VERTICAL_DEADZONE) return { gravity: 'rises', bias };
+/* The raw primitive: room on each side of the element, in px (clamped >= 0).
+   Everything else — gravity, edges, fit — derives from these four numbers, so
+   consumers can either read a derived convenience (data-spw-vertical-gravity)
+   or compute their own from room (e.g. a popover capping its height to the
+   room below: max-block-size: var(--spw-room-below)). */
+const axisGravity = (roomStart, roomEnd, span, startName, endName) => {
+  const bias = (roomEnd - roomStart) / Math.max(1, span);
+  if (bias > VERTICAL_DEADZONE) return { gravity: endName, bias };
+  if (bias < -VERTICAL_DEADZONE) return { gravity: startName, bias };
   return { gravity: 'balanced', bias };
 };
 
-const resolveEdgeGravity = (rect, viewportWidth, viewportHeight) => {
-  const distances = {
-    top: rect.top,
-    bottom: viewportHeight - rect.bottom,
-    left: rect.left,
-    right: viewportWidth - rect.right,
+const resolveSpatial = (rect, vw, vh) => {
+  const room = {
+    above: Math.max(0, rect.top),
+    below: Math.max(0, vh - rect.bottom),
+    left: Math.max(0, rect.left),
+    right: Math.max(0, vw - rect.right),
   };
-  const nearest = Object.entries(distances).reduce(
-    (best, entry) => (entry[1] < best[1] ? entry : best),
-    ['none', Infinity],
-  );
-  const threshold = Math.min(viewportWidth, viewportHeight) * EDGE_THRESHOLD_RATIO;
-  const proximity = clamp(1 - nearest[1] / Math.max(1, threshold), 0, 1);
+  const threshold = Math.min(vw, vh) * EDGE_THRESHOLD_RATIO;
+  const near = (dist) => clamp(1 - dist / Math.max(1, threshold), 0, 1);
+  const prox = {
+    top: near(room.above),
+    bottom: near(room.below),
+    left: near(room.left),
+    right: near(room.right),
+  };
+
+  // Which way expandable content should grow to stay on-screen.
+  const vertical = axisGravity(room.above, room.below, vh, 'rises', 'falls');
+  const horizontal = axisGravity(room.left, room.right, vw, 'trails', 'leads');
+
+  // Two-axis edge classification (corner-aware).
+  const edgeY = prox.top === 0 && prox.bottom === 0 ? 'middle' : (prox.top >= prox.bottom ? 'top' : 'bottom');
+  const edgeX = prox.left === 0 && prox.right === 0 ? 'center' : (prox.left >= prox.right ? 'left' : 'right');
+  const edge = [edgeY === 'middle' ? '' : edgeY, edgeX === 'center' ? '' : edgeX].filter(Boolean).join('-') || 'none';
+
+  // 2D opening anchor for popovers/overlays: <up|down>-<start|end|center>.
+  const openVertical = vertical.gravity === 'rises' ? 'up' : 'down';
+  const openHorizontal = horizontal.gravity === 'trails' ? 'start' : horizontal.gravity === 'leads' ? 'end' : 'center';
+
   return {
-    edge: nearest[1] > threshold ? 'none' : nearest[0],
-    proximity,
+    room,
+    prox,
+    edgeProximity: Math.max(prox.top, prox.bottom, prox.left, prox.right),
+    vertical,
+    horizontal,
+    edgeY,
+    edgeX,
+    edge,
+    openVertical,
+    openAnchor: `${openVertical}-${openHorizontal}`,
   };
 };
 
@@ -128,24 +153,37 @@ const measureElement = (el) => {
 
   const measureBand = resolveMeasureBand(rect.width);
   const extent = resolveExtent(rect.height, viewportHeight);
-  const vertical = resolveVerticalGravity(rect, viewportHeight);
-  const edge = resolveEdgeGravity(rect, viewportWidth, viewportHeight);
+  const s = resolveSpatial(rect, viewportWidth, viewportHeight);
 
   writeDatasetValues(el, {
     spwMeasureBand: measureBand,
     spwExtent: extent,
-    spwVerticalGravity: vertical.gravity,
-    spwEdgeGravity: edge.edge,
-    spwSpaceVariant: `${measureBand}-${extent}-${vertical.gravity}`,
+    spwVerticalGravity: s.vertical.gravity,
+    spwHorizontalGravity: s.horizontal.gravity,
+    spwEdgeGravity: s.edge,
+    spwEdgeX: s.edgeX,
+    spwEdgeY: s.edgeY,
+    spwSpaceVariant: `${measureBand}-${extent}-${s.vertical.gravity}`,
   });
 
   if (el.dataset.spwGravity === 'open') {
     // Expandable content grows toward the roomier side so it stays on-screen.
-    writeDatasetValues(el, { spwOpenDirection: vertical.gravity === 'rises' ? 'up' : 'down' });
+    writeDatasetValues(el, { spwOpenDirection: s.openVertical, spwOpenAnchor: s.openAnchor });
   }
 
-  writeStyleValue(el, '--spw-edge-proximity', edge.proximity.toFixed(3));
-  writeStyleValue(el, '--spw-vertical-bias', clamp(vertical.bias, -1, 1).toFixed(3));
+  // Room in px is the composable primitive: CSS can cap a popover to it
+  // (max-block-size: var(--spw-room-below)) without any JS fit math.
+  writeStyleValue(el, '--spw-room-above', `${Math.round(s.room.above)}px`);
+  writeStyleValue(el, '--spw-room-below', `${Math.round(s.room.below)}px`);
+  writeStyleValue(el, '--spw-room-left', `${Math.round(s.room.left)}px`);
+  writeStyleValue(el, '--spw-room-right', `${Math.round(s.room.right)}px`);
+  writeStyleValue(el, '--spw-proximity-top', s.prox.top.toFixed(3));
+  writeStyleValue(el, '--spw-proximity-bottom', s.prox.bottom.toFixed(3));
+  writeStyleValue(el, '--spw-proximity-left', s.prox.left.toFixed(3));
+  writeStyleValue(el, '--spw-proximity-right', s.prox.right.toFixed(3));
+  writeStyleValue(el, '--spw-edge-proximity', s.edgeProximity.toFixed(3));
+  writeStyleValue(el, '--spw-vertical-bias', clamp(s.vertical.bias, -1, 1).toFixed(3));
+  writeStyleValue(el, '--spw-horizontal-bias', clamp(s.horizontal.bias, -1, 1).toFixed(3));
 
   // Record rect + salience for the overlap-resolution pass.
   const salience = resolveSalience(el);
@@ -157,8 +195,9 @@ const measureElement = (el) => {
   const readout = el.querySelector?.('[data-spw-gravity-readout]');
   if (readout) {
     readout.innerHTML =
-      `<span>edge <b>${edge.edge}</b></span>`
-      + `<span>vertical <b>${vertical.gravity}</b></span>`
+      `<span>edge <b>${s.edge}</b></span>`
+      + `<span>vertical <b>${s.vertical.gravity}</b></span>`
+      + `<span>horizontal <b>${s.horizontal.gravity}</b></span>`
       + `<span>extent <b>${extent}</b></span>`
       + `<span>measure <b>${measureBand}</b></span>`;
   }
@@ -280,16 +319,32 @@ export const SPW_SPATIAL_GRAVITY_CONTRACT = Object.freeze({
   selector: GRAVITY_SELECTOR,
   attributes: Object.freeze([
     'data-spw-edge-gravity',
+    'data-spw-edge-x',
+    'data-spw-edge-y',
     'data-spw-vertical-gravity',
+    'data-spw-horizontal-gravity',
     'data-spw-extent',
     'data-spw-measure-band',
     'data-spw-space-variant',
     'data-spw-open-direction',
+    'data-spw-open-anchor',
     'data-spw-salience-rank',
     'data-spw-yielded',
     'data-spw-yield-reason',
   ]),
-  customProperties: Object.freeze(['--spw-edge-proximity', '--spw-vertical-bias']),
+  customProperties: Object.freeze([
+    '--spw-room-above',
+    '--spw-room-below',
+    '--spw-room-left',
+    '--spw-room-right',
+    '--spw-proximity-top',
+    '--spw-proximity-bottom',
+    '--spw-proximity-left',
+    '--spw-proximity-right',
+    '--spw-edge-proximity',
+    '--spw-vertical-bias',
+    '--spw-horizontal-bias',
+  ]),
   performanceRule:
     'One shared rAF-throttled scroll/resize listener; IntersectionObserver gates measurement to on-screen tracked elements. Visible response should stay in transform, opacity, and color.',
 });

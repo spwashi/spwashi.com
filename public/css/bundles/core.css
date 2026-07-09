@@ -23606,14 +23606,21 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
 
 [data-spw-gravity] {
     --spw-edge-proximity: 0;
+    --spw-proximity-top: 0;
+    --spw-proximity-bottom: 0;
+    --spw-proximity-left: 0;
+    --spw-proximity-right: 0;
     --spw-vertical-bias: 0;
+    --spw-horizontal-bias: 0;
 }
 
-/* ─── Edge proximity: feel the nearest edge ─────────────────────────────── */
+/* ─── Edge proximity: feel each edge independently ──────────────────────── */
 /*
- * As a tracked element nears a viewport edge, a hairline on that side gains
- * presence. The point is legibility: interacting near an edge should tell you
- * the edge is there and shaping the component, not silently clip it.
+ * Four inset shadows, one per side, each faded by that side's proximity
+ * (0..1). A component in a corner lights up two sides at once. The point is
+ * legibility: nearing an edge should tell you the edge is shaping the
+ * component, not silently clip it. Corner-aware, so it works with the
+ * two-axis edge gravity (top-left, bottom-right, …).
  */
 
 [data-spw-gravity]:not([data-spw-edge-gravity="none"]) {
@@ -23626,21 +23633,12 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
     inset: 0;
     pointer-events: none;
     border-radius: inherit;
-    opacity: calc(var(--spw-edge-proximity, 0) * 0.9);
-    transition: opacity var(--duration-base, 200ms) var(--ease-smooth, ease);
-}
-
-[data-spw-gravity][data-spw-edge-gravity="top"]::after {
-    box-shadow: inset 0 3px 0 -1px color-mix(in srgb, var(--active-op-color, #008080) 60%, transparent);
-}
-[data-spw-gravity][data-spw-edge-gravity="bottom"]::after {
-    box-shadow: inset 0 -3px 0 -1px color-mix(in srgb, var(--active-op-color, #008080) 60%, transparent);
-}
-[data-spw-gravity][data-spw-edge-gravity="left"]::after {
-    box-shadow: inset 3px 0 0 -1px color-mix(in srgb, var(--active-op-color, #008080) 60%, transparent);
-}
-[data-spw-gravity][data-spw-edge-gravity="right"]::after {
-    box-shadow: inset -3px 0 0 -1px color-mix(in srgb, var(--active-op-color, #008080) 60%, transparent);
+    box-shadow:
+        inset 0 3px 0 -1px color-mix(in srgb, var(--active-op-color, #008080) calc(var(--spw-proximity-top, 0) * 70%), transparent),
+        inset 0 -3px 0 -1px color-mix(in srgb, var(--active-op-color, #008080) calc(var(--spw-proximity-bottom, 0) * 70%), transparent),
+        inset 3px 0 0 -1px color-mix(in srgb, var(--active-op-color, #008080) calc(var(--spw-proximity-left, 0) * 70%), transparent),
+        inset -3px 0 0 -1px color-mix(in srgb, var(--active-op-color, #008080) calc(var(--spw-proximity-right, 0) * 70%), transparent);
+    transition: box-shadow var(--duration-base, 200ms) var(--ease-smooth, ease);
 }
 
 /* ─── Opportunistic opening direction ───────────────────────────────────── */
@@ -23669,6 +23667,32 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
 
 [data-spw-gravity="open"][data-spw-open-direction="up"] [data-spw-gravity-reveal] {
     transform-origin: bottom center;
+}
+
+/* 2D anchor: horizontal alignment for popover-shaped reveals. The reveal aligns
+   to whichever inline side has room (start/end), and its height caps to the room
+   available in the opening direction so it never overflows the viewport. */
+[data-spw-gravity="open"] [data-spw-gravity-reveal] {
+    align-self: stretch;
+    max-block-size: none;
+}
+
+[data-spw-gravity="open"][data-spw-open-anchor$="-start"] [data-spw-gravity-reveal] {
+    align-self: start;
+}
+
+[data-spw-gravity="open"][data-spw-open-anchor$="-end"] [data-spw-gravity-reveal] {
+    align-self: end;
+}
+
+[data-spw-gravity="open"][data-spw-open-direction="down"] [data-spw-gravity-reveal] {
+    max-block-size: var(--spw-room-below, none);
+    overflow: auto;
+}
+
+[data-spw-gravity="open"][data-spw-open-direction="up"] [data-spw-gravity-reveal] {
+    max-block-size: var(--spw-room-above, none);
+    overflow: auto;
 }
 
 /* ─── Extent: height band affects internal packing ──────────────────────── */
@@ -23847,6 +23871,141 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
     inset-block-start: 3.5rem;
     inset-inline-start: 30%;
     border-color: color-mix(in srgb, var(--active-op-color, #008080) 40%, var(--line, rgba(14, 18, 20, 0.14)));
+}
+}
+
+/* /public/css/systems/component-packing.css */
+@layer systems {
+/* ==========================================================================
+ * component-packing.css
+ * --------------------------------------------------------------------------
+ * Component-local layout: a card arranges its OWN regions by its own inline
+ * size, not the viewport. This is the container-relative counterpart to
+ * spatial-gravity.css (which is viewport-relative): outer gravity says where a
+ * card sits; inner packing says how the card arranges itself. Both are
+ * first-class, and a card in a narrow column packs the same way whether that
+ * column is on a phone or a sidebar on a wide screen — because it reads its
+ * container, not the screen.
+ *
+ * Native + framework-free on purpose (container queries + :has), so it doubles
+ * as a legible reference. The box model mirrors the resolved variant into
+ * data-spw-pack-layout / data-spw-pack-fill for inspection + JS consumers.
+ * ========================================================================== */
+
+/* Opt in: the card becomes an inline-size container; its region grid responds
+   to the card's width. Breakpoints mirror composition-box-model MEASURE_BANDS
+   so the inspectable attribute and the CSS agree. */
+[data-spw-pack-local] {
+    container: spw-pack / inline-size;
+}
+
+[data-spw-pack-regions] {
+    display: grid;
+    gap: var(--spw-pack-gap, var(--space-sm, 0.75rem));
+    grid-template-areas:
+        "media"
+        "body"
+        "actions";
+}
+
+[data-spw-pack-region="media"] { grid-area: media; min-inline-size: 0; }
+[data-spw-pack-region="body"] { grid-area: body; min-inline-size: 0; }
+[data-spw-pack-region="actions"] { grid-area: actions; min-inline-size: 0; }
+
+/* Split: media seats beside body once the card itself is wide enough. */
+@container spw-pack (min-width: 26rem) {
+    [data-spw-pack-regions] {
+        grid-template-columns: minmax(7rem, 1fr) minmax(0, 1.7fr);
+        grid-template-areas:
+            "media body"
+            "media actions";
+        align-items: start;
+    }
+}
+
+/* Feature: three lanes when the card has room to spread. */
+@container spw-pack (min-width: 44rem) {
+    [data-spw-pack-regions] {
+        grid-template-columns: minmax(7rem, 1fr) minmax(0, 2fr) minmax(6rem, auto);
+        grid-template-areas: "media body actions";
+        align-items: center;
+    }
+}
+
+/* Content-count awareness (the other packing axis). A card holding many items
+   tightens its rhythm regardless of width — :has counts without JS. */
+[data-spw-pack-regions]:has(> [data-spw-pack-region] > :nth-child(6)) {
+    --spw-pack-gap: var(--space-xs, 0.5rem);
+}
+
+/* Density from the box model's content tone: dense/operator-heavy content packs
+   tighter, long-form content breathes. Orthogonal to the width axis above. */
+[data-spw-pack-local][data-spw-content-tone="dense"],
+[data-spw-pack-local][data-spw-content-tone="operator-heavy"] {
+    --spw-pack-gap: var(--space-xs, 0.5rem);
+}
+
+[data-spw-pack-local][data-spw-content-tone="text-long"] {
+    --spw-pack-gap: var(--space-md, 1rem);
+}
+
+/* Inspectable fill band (written by composition-box-model) can also drive
+   packing when :has is unavailable. */
+[data-spw-pack-local][data-spw-pack-fill="full"] {
+    --spw-pack-gap: var(--space-xs, 0.5rem);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    [data-spw-pack-regions] {
+        transition: gap var(--duration-base, 200ms) var(--ease-smooth, ease);
+    }
+}
+
+/* ─── Composition-lab demo ──────────────────────────────────────────────── */
+/*
+ * A user-resizable wrapper so the card's OWN width changes independent of the
+ * viewport — the clearest way to feel component-local (container) packing.
+ */
+.pack-demo-resizer {
+    resize: horizontal;
+    overflow: auto;
+    min-inline-size: 14rem;
+    max-inline-size: 100%;
+    inline-size: 100%;
+    padding-block-end: var(--space-xs, 0.5rem);
+    border-inline-start: 2px solid color-mix(in srgb, var(--active-op-color, #008080) 30%, transparent);
+    padding-inline-start: var(--space-sm, 0.75rem);
+}
+
+.pack-card {
+    padding: var(--space-md, 1rem);
+}
+
+.pack-card__media {
+    display: grid;
+    place-items: center;
+    min-block-size: 4rem;
+    border-radius: var(--shape-component, 8px);
+    background: color-mix(in srgb, var(--active-op-color, #008080) 12%, var(--surface, #ffffff));
+    color: var(--active-op-color, #008080);
+}
+
+.pack-card__thumb {
+    font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+    font-size: var(--text-size-xs, 0.72rem);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.pack-card__body h4 {
+    margin: 0 0 0.35rem;
+}
+
+.pack-card__actions {
+    display: flex;
+    gap: var(--space-2xs, 0.36rem);
+    flex-wrap: wrap;
+    align-content: start;
 }
 }
 

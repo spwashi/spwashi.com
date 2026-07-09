@@ -14,14 +14,21 @@
 
 [data-spw-gravity] {
     --spw-edge-proximity: 0;
+    --spw-proximity-top: 0;
+    --spw-proximity-bottom: 0;
+    --spw-proximity-left: 0;
+    --spw-proximity-right: 0;
     --spw-vertical-bias: 0;
+    --spw-horizontal-bias: 0;
 }
 
-/* ─── Edge proximity: feel the nearest edge ─────────────────────────────── */
+/* ─── Edge proximity: feel each edge independently ──────────────────────── */
 /*
- * As a tracked element nears a viewport edge, a hairline on that side gains
- * presence. The point is legibility: interacting near an edge should tell you
- * the edge is there and shaping the component, not silently clip it.
+ * Four inset shadows, one per side, each faded by that side's proximity
+ * (0..1). A component in a corner lights up two sides at once. The point is
+ * legibility: nearing an edge should tell you the edge is shaping the
+ * component, not silently clip it. Corner-aware, so it works with the
+ * two-axis edge gravity (top-left, bottom-right, …).
  */
 
 [data-spw-gravity]:not([data-spw-edge-gravity="none"]) {
@@ -34,21 +41,12 @@
     inset: 0;
     pointer-events: none;
     border-radius: inherit;
-    opacity: calc(var(--spw-edge-proximity, 0) * 0.9);
-    transition: opacity var(--duration-base, 200ms) var(--ease-smooth, ease);
-}
-
-[data-spw-gravity][data-spw-edge-gravity="top"]::after {
-    box-shadow: inset 0 3px 0 -1px color-mix(in srgb, var(--active-op-color, #008080) 60%, transparent);
-}
-[data-spw-gravity][data-spw-edge-gravity="bottom"]::after {
-    box-shadow: inset 0 -3px 0 -1px color-mix(in srgb, var(--active-op-color, #008080) 60%, transparent);
-}
-[data-spw-gravity][data-spw-edge-gravity="left"]::after {
-    box-shadow: inset 3px 0 0 -1px color-mix(in srgb, var(--active-op-color, #008080) 60%, transparent);
-}
-[data-spw-gravity][data-spw-edge-gravity="right"]::after {
-    box-shadow: inset -3px 0 0 -1px color-mix(in srgb, var(--active-op-color, #008080) 60%, transparent);
+    box-shadow:
+        inset 0 3px 0 -1px color-mix(in srgb, var(--active-op-color, #008080) calc(var(--spw-proximity-top, 0) * 70%), transparent),
+        inset 0 -3px 0 -1px color-mix(in srgb, var(--active-op-color, #008080) calc(var(--spw-proximity-bottom, 0) * 70%), transparent),
+        inset 3px 0 0 -1px color-mix(in srgb, var(--active-op-color, #008080) calc(var(--spw-proximity-left, 0) * 70%), transparent),
+        inset -3px 0 0 -1px color-mix(in srgb, var(--active-op-color, #008080) calc(var(--spw-proximity-right, 0) * 70%), transparent);
+    transition: box-shadow var(--duration-base, 200ms) var(--ease-smooth, ease);
 }
 
 /* ─── Opportunistic opening direction ───────────────────────────────────── */
@@ -77,6 +75,32 @@
 
 [data-spw-gravity="open"][data-spw-open-direction="up"] [data-spw-gravity-reveal] {
     transform-origin: bottom center;
+}
+
+/* 2D anchor: horizontal alignment for popover-shaped reveals. The reveal aligns
+   to whichever inline side has room (start/end), and its height caps to the room
+   available in the opening direction so it never overflows the viewport. */
+[data-spw-gravity="open"] [data-spw-gravity-reveal] {
+    align-self: stretch;
+    max-block-size: none;
+}
+
+[data-spw-gravity="open"][data-spw-open-anchor$="-start"] [data-spw-gravity-reveal] {
+    align-self: start;
+}
+
+[data-spw-gravity="open"][data-spw-open-anchor$="-end"] [data-spw-gravity-reveal] {
+    align-self: end;
+}
+
+[data-spw-gravity="open"][data-spw-open-direction="down"] [data-spw-gravity-reveal] {
+    max-block-size: var(--spw-room-below, none);
+    overflow: auto;
+}
+
+[data-spw-gravity="open"][data-spw-open-direction="up"] [data-spw-gravity-reveal] {
+    max-block-size: var(--spw-room-above, none);
+    overflow: auto;
 }
 
 /* ─── Extent: height band affects internal packing ──────────────────────── */

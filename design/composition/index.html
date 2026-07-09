@@ -224,6 +224,34 @@ const record = createLoopRecord('preview', 'operator');</code></pre>
                 </article>
             </div>
 
+            <h3 class="spatial-gravity-subhead">Component-local packing</h3>
+            <p>
+                Outer gravity says where a card sits; inner packing says how it arranges itself. This card reads its
+                <em>own</em> width (a container query), not the viewport — drag the handle to narrow it and its regions
+                repack stack → split → feature. A card in a sidebar packs the same way whether that sidebar is on a phone
+                or a wide screen, because it reads its container. The resolved variant is mirrored to
+                <code>data-spw-pack-layout</code> for inspection.
+            </p>
+            <div class="pack-demo-resizer">
+                <article class="frame-card pack-card" data-spw-pack-local data-spw-kind="card" data-spw-role="specimen">
+                    <div data-spw-pack-regions>
+                        <div class="pack-card__media" data-spw-pack-region="media" aria-hidden="true">
+                            <span class="pack-card__thumb">media</span>
+                        </div>
+                        <div class="pack-card__body" data-spw-pack-region="body">
+                            <h4>Adaptive card</h4>
+                            <p>Regions reflow by this card's own inline size. Narrow the container and watch the media,
+                                body, and actions restack.</p>
+                            <p class="spatial-gravity-status"><span data-spw-pack-readout>resize to see the variant</span></p>
+                        </div>
+                        <div class="pack-card__actions" data-spw-pack-region="actions">
+                            <button type="button" class="operator-chip">open</button>
+                            <button type="button" class="operator-chip">save</button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
             <h3 class="spatial-gravity-subhead">Boundary overlap resolves by salience</h3>
             <p>
                 When two elements contend for the same pixels, the higher-salience one holds and the lower-salience one

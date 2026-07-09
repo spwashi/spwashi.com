@@ -36,6 +36,7 @@
 @typography_packing: ~"./typography-packing.spw"
 @dimension_vocabulary: ~"./dimension-vocabulary.spw"
 @spatial_gravity: ~"./spatial-gravity.spw"
+@component_packing: ~"./component-packing.spw"
 @sigil_identifier_contract: ~"./sigil-identifier-contract.spw"
 @hypermedia_2d: ~"./hypermedia-2d.spw"
 @semantic_hierarchy: ~"./semantic-hierarchy.spw"

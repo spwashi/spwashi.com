@@ -34,10 +34,12 @@ purpose: .{
 }
 
 ^"gravity"{
-  edge_gravity: `data-spw-edge-gravity = top|bottom|left|right|none — the nearest viewport edge within a 12% threshold, plus --spw-edge-proximity (0..1). A component near an edge should announce it, not silently clip; expansions should open away from it.`
-  vertical_gravity: `data-spw-vertical-gravity = rises|balanced|falls — which way expandable content should grow to stay on-screen. Near the bottom → rises (opens up); near the top → falls (opens down). --spw-vertical-bias (-1..1) carries the raw signal for smooth response.`
-  open_direction: `data-spw-gravity="open" adds data-spw-open-direction=up|down; CSS flips visual growth (flex-direction) while DOM order stays put for reading + a11y.`
-  performance: `One shared rAF-throttled scroll/resize listener; IntersectionObserver gates measurement to on-screen tracked elements. Response stays in transform/opacity/color, never layout thrash.`
+  raw_primitive: `Room on each side, in px: --spw-room-above | -below | -left | -right. This is the composable base — everything else derives from it, and CSS can use it directly (a popover caps its height with max-block-size: var(--spw-room-below), no JS fit math). Per-side proximity --spw-proximity-top|-bottom|-left|-right (0..1) is the normalized form.`
+  edge_gravity: `Two-axis and corner-aware. data-spw-edge-y = top|middle|bottom, data-spw-edge-x = left|center|right, and data-spw-edge-gravity combines them (top-left, bottom, center, …). A component near an edge announces it (per-side glow driven by proximity), never silently clips.`
+  vertical_gravity: `data-spw-vertical-gravity = rises|balanced|falls — which way expandable content grows to stay on-screen. Near the bottom → rises (opens up); near the top → falls. --spw-vertical-bias (-1..1) is the smooth signal.`
+  horizontal_gravity: `data-spw-horizontal-gravity = trails|balanced|leads — the inline counterpart. Near the right edge → trails (opens toward inline-start); near the left → leads. --spw-horizontal-bias (-1..1).`
+  opening: `data-spw-gravity="open" adds data-spw-open-direction=up|down and data-spw-open-anchor=<up|down>-<start|end|center> — the 2D opening for popover-shaped reveals. CSS flips growth (flex-direction) + aligns (align-self) + caps height to room, while DOM order stays put for reading + a11y.`
+  performance: `One shared rAF-throttled capture-phase scroll/resize listener (catches inner-container scroll); IntersectionObserver gates measurement to on-screen tracked elements. Response stays in transform/opacity/color/shadow, never layout thrash.`
 }
 
 ^"opportunistic_variant"{
@@ -74,7 +76,7 @@ purpose: .{
 
 ^"applied_patterns"{
   claim: `Popovers, overlays, navigation, and variant selection are not separate systems — they are the gravity/seating/salience primitives composed. Building each on the shared substrate keeps behavior consistent and inspectable instead of re-solving positioning per widget.`
-  popover: `A popover is data-spw-gravity="open" (opens toward room via vertical gravity, never off the nearest edge) + high salience (holds the contested space while open) + edge-gravity awareness (flips horizontally near left/right edges). The anchor's edge/vertical gravity chooses the opening direction; no per-popover flip logic.`
+  popover: `A popover is data-spw-gravity="open" reading data-spw-open-anchor (2D: opens up/down toward vertical room, aligns start/end toward inline room) + high salience (holds the contested space while open) + max-block-size: var(--spw-room-below|above) so it never overflows. The anchor's room measurements choose direction and cap size; no per-popover flip or fit logic.`
   overlay: `A modal/overlay is data-spw-salience="focal" seated flush-viewport (it frames everything beneath). Lower-salience content under it reads as yielded automatically. Dismissal returns salience to the layer beneath — the contest reverses rather than a z-index teardown.`
   navigation: `Chrome + nav seat flush-viewport (they own the frame). In-page nav targets yield to sticky chrome via scroll-margin so arrivals land clear. A nav that opens a drawer is a popover case: it opens toward room and holds salience while open.`
   variant_selection: `data-spw-space-variant is the single opportunistic handle a component keys off — it already composes measure + extent + vertical gravity, and changes as the component moves/resizes. Prefer selecting a variant from space-variant over authoring a media query, so the choice tracks real room, not a guessed breakpoint.`

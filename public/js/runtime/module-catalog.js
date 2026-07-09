@@ -918,10 +918,10 @@ export const ENHANCEMENT_DEFS = [
     id: 'composition-box-model',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
-    selector: '[data-spw-box-model], [data-spw-composition-flow], [data-site-settings-panel], body[data-spw-surface="settings"] .settings-fieldset',
+    selector: '[data-spw-box-model], [data-spw-composition-flow], [data-spw-pack-local], [data-site-settings-panel], body[data-spw-surface="settings"] .settings-fieldset',
     rootMode: 'single',
-    describes: 'box-model[presence|measure|story] composition[flow]',
-    updates: ['data-spw-box-model', 'data-spw-box-presence', 'data-spw-box-measure', 'data-spw-box-story', 'data-spw-composition-flow', 'data-spw-box-settle-phase', 'data-spw-size-context', 'data-spw-content-tone'],
+    describes: 'box-model[presence|measure|story|pack] composition[flow]',
+    updates: ['data-spw-box-model', 'data-spw-box-presence', 'data-spw-box-measure', 'data-spw-box-story', 'data-spw-composition-flow', 'data-spw-box-settle-phase', 'data-spw-size-context', 'data-spw-content-tone', 'data-spw-pack-layout', 'data-spw-pack-fill'],
     evaluates: 'layout semantics spacing-semantics state storytelling',
     load: () => import('./composition-box-model.js'),
     mount: (mod, ctx) => {
@@ -936,9 +936,9 @@ export const ENHANCEMENT_DEFS = [
     when: MOUNT_WHEN.IMMEDIATE,
     selector: '[data-spw-gravity]',
     rootMode: 'single',
-    describes: 'spatial-gravity[edge|vertical|extent|salience] opportunistic variant + overlap resolution',
-    updates: ['data-spw-edge-gravity', 'data-spw-vertical-gravity', 'data-spw-extent', 'data-spw-measure-band', 'data-spw-space-variant', 'data-spw-open-direction', 'data-spw-salience-rank', 'data-spw-yielded', 'data-spw-yield-reason', '--spw-edge-proximity', '--spw-vertical-bias'],
-    evaluates: 'viewport geometry edge detection vertical gravity salience overlap variant selection',
+    describes: 'spatial-gravity[room|edge|gravity|salience] two-axis positioning + overlap resolution',
+    updates: ['data-spw-edge-gravity', 'data-spw-edge-x', 'data-spw-edge-y', 'data-spw-vertical-gravity', 'data-spw-horizontal-gravity', 'data-spw-extent', 'data-spw-measure-band', 'data-spw-space-variant', 'data-spw-open-direction', 'data-spw-open-anchor', 'data-spw-salience-rank', 'data-spw-yielded', 'data-spw-yield-reason', '--spw-room-below', '--spw-proximity-top', '--spw-edge-proximity', '--spw-vertical-bias', '--spw-horizontal-bias'],
+    evaluates: 'viewport geometry room measurement two-axis gravity salience overlap variant selection',
     load: () => import('./spatial-gravity.js'),
     mount: (mod) => {
       const fn = mod?.initSpwSpatialGravity;

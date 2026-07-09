@@ -1,0 +1,48 @@
+# Component-Local Packing
+#
+# How a card arranges its own regions by its own size — the container-relative
+# counterpart to spatial-gravity (which is viewport-relative).
+
+#>component_packing
+#:convention #!layout #!components #!responsive
+#:layer #!pragmatics
+
+@css: ~"../../public/css/systems/component-packing.css"
+@runtime: ~"../../public/js/runtime/composition-box-model.js"
+@spatial_gravity: ~"./spatial-gravity.spw"
+@composition_box_model: ~"./composition-box-model.spw"
+@typography_packing: ~"./typography-packing.spw"
+@dimension_vocabulary: ~"./dimension-vocabulary.spw"
+
+purpose: .{
+  plain = `Let a card select its internal layout from its own inline size and content, not the viewport.`
+  pairing = `Outer gravity (spatial-gravity) says where a card sits; inner packing says how it arranges itself. Both first-class. A card in a sidebar packs the same way whether that sidebar is on a phone or a wide screen — it reads its container, not the screen.`
+}[reg=facet]
+
+^"why_container_not_viewport"{
+  claim: `Viewport media queries answer "how wide is the screen" — the wrong question for a component that can appear in a wide main column, a narrow rail, or a grid cell. The component-local question is "how wide am I", answered by container queries.`
+  rule: `Prefer a container query for a card's internal layout; reserve viewport media for page-shell chrome. This is the box-width axis from @dimension_vocabulary / the anatomy audit — keep the decision keyed to the axis that owns it.`
+}
+
+^"opt_in"{
+  attr: `data-spw-pack-local on the card makes it an inline-size container (container: spw-pack / inline-size).`
+  regions: `A [data-spw-pack-regions] child holds the region grid; regions carry data-spw-pack-region = media | body | actions and reflow by the card's width.`
+}
+
+^"two_packing_axes"{
+  width: `Container query selects the layout: stack (default) -> split (media beside body, >=26rem) -> feature (three lanes, >=44rem). Pure CSS, no flash, no JS.`
+  content: `Orthogonal to width. :has(> [data-spw-pack-region] > :nth-child(6)) tightens gap when a card holds many items; @composition_box_model content-tone (dense|operator-heavy|text-long) tunes density from what the card actually contains. A card can be wide but content-dense, or narrow but sparse — both axes apply.`
+  rule: `Width chooses arrangement; content chooses density. Do not overload one to carry the other (echoes the measure/extent split in @spatial_gravity two_axes).`
+}
+
+^"inspectability"{
+  claim: `The CSS container query is the behavior; the box model mirrors the resolved variant so the decision is legible, matching the site's measure -> attribute -> CSS philosophy.`
+  writes: #[
+    `data-spw-pack-layout = stack | split | feature (mirrors the @container breakpoints; PACK_LAYOUT_BANDS in composition-box-model.js are the 26rem/44rem equivalents so JS and CSS agree).`,
+    `data-spw-pack-fill = sparse | balanced | full (item count band).`,
+    `[data-spw-pack-readout] child narrates layout + fill + measured px, like the gravity readout — interacting (resizing) clarifies the concept.`
+  ][reg=set]
+  caution = `The px mirror and the rem @container breakpoints must be kept in sync by hand (JS cannot read a container query threshold). If one moves, move the other; the comment in each file names the pair.`
+}
+
+runtime_demo: `/design/composition/ — a user-resizable card: drag the handle to change the card's own width and watch its regions repack stack -> split -> feature, independent of the viewport.`
