@@ -21281,9 +21281,15 @@ html:has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) :wher
   display: grid;
   gap: 0.45rem;
   max-inline-size: min(20rem, calc(100vw - 2rem));
+  /* A large collection scrolls inside the panel instead of towering over the
+     page from its bottom anchor. */
+  max-block-size: min(55vh, 24rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   padding: 0.6rem 0.75rem;
   border-radius: 0.7rem;
   background: color-mix(in srgb, var(--surface, #fbfaf7) 92%, transparent);
+  backdrop-filter: blur(8px);
   border: 1px solid color-mix(in srgb, var(--ink, #1b2a2a) 12%, transparent);
   box-shadow: 0 6px 22px rgb(0 0 0 / 0.16);
 }
@@ -21313,6 +21319,9 @@ html:has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) :wher
   padding: 0.1rem 0.45rem;
   border-radius: 999px;
   font-size: 0.74rem;
+  /* Chips are single tokens; never let ambient layout squeeze them into
+     letter-stacks. */
+  white-space: nowrap;
   background: color-mix(in srgb, var(--op-topic-color, var(--teal, #008080)) 14%, transparent);
   color: var(--ink, #1b2a2a);
 }
@@ -23685,13 +23694,17 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
     align-self: end;
 }
 
+/* Measured room caps the reveal so it never overflows the viewport. A consumer
+   can also impose a content ceiling with --spw-gravity-reveal-max (e.g. a dock
+   that should scroll a large collection rather than fill the whole column); the
+   reveal then grows to the smaller of measured room and that ceiling. */
 [data-spw-gravity="open"][data-spw-open-direction="down"] [data-spw-gravity-reveal] {
-    max-block-size: var(--spw-room-below, none);
+    max-block-size: min(var(--spw-room-below, 100vh), var(--spw-gravity-reveal-max, 100vh));
     overflow: auto;
 }
 
 [data-spw-gravity="open"][data-spw-open-direction="up"] [data-spw-gravity-reveal] {
-    max-block-size: var(--spw-room-above, none);
+    max-block-size: min(var(--spw-room-above, 100vh), var(--spw-gravity-reveal-max, 100vh));
     overflow: auto;
 }
 
@@ -29678,6 +29691,13 @@ html[data-spw-dimensional-breadcrumbs="on"] .spw-spell-path .spw-spell-meaning {
   gap: var(--handle-gap);
   align-items: baseline;
   min-width: 0;
+}
+
+/* Swipe rails: keep vertical scroll native but claim horizontal gestures for
+   badge cycling (topic-discovery.js), so a sideways drag isn't cancelled by
+   the browser mid-swipe. */
+:where(.spec-strip, .frame-operators) {
+  touch-action: pan-y;
 }
 
 :where([data-spw-operator], .operator-chip, .frame-sigil, .frame-card-sigil) {
@@ -41175,6 +41195,14 @@ html[data-spw-narrative-mode="on"] :where([data-spw-narrative-copy])::selection 
             var(--surface-strong, #fff) 92%,
             var(--active-op-color, #008080) 8%
         );
+    color: var(--ink-strong, var(--ink, #161c1d));
+}
+
+/* A swipe in flight (topic-discovery.js marks the rail) acknowledges itself the
+   same way hover does — the rail is awake and listening, not silently absorbing. */
+:where(.spec-strip[data-spw-gesture="swipe"] .spec-pill,
+       .frame-operators[data-spw-gesture="swipe"] .operator-chip) {
+    border-color: var(--token-border-strong, rgba(0, 128, 128, 0.8));
     color: var(--ink-strong, var(--ink, #161c1d));
 }
 

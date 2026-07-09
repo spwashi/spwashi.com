@@ -781,6 +781,13 @@ html[data-spw-dimensional-breadcrumbs="on"] .spw-spell-path .spw-spell-meaning {
   min-width: 0;
 }
 
+/* Swipe rails: keep vertical scroll native but claim horizontal gestures for
+   badge cycling (topic-discovery.js), so a sideways drag isn't cancelled by
+   the browser mid-swipe. */
+:where(.spec-strip, .frame-operators) {
+  touch-action: pan-y;
+}
+
 :where([data-spw-operator], .operator-chip, .frame-sigil, .frame-card-sigil) {
   /* Debug / inspection */
   --spw-debug-layer-owner: "handles";

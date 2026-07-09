@@ -93,13 +93,17 @@
     align-self: end;
 }
 
+/* Measured room caps the reveal so it never overflows the viewport. A consumer
+   can also impose a content ceiling with --spw-gravity-reveal-max (e.g. a dock
+   that should scroll a large collection rather than fill the whole column); the
+   reveal then grows to the smaller of measured room and that ceiling. */
 [data-spw-gravity="open"][data-spw-open-direction="down"] [data-spw-gravity-reveal] {
-    max-block-size: var(--spw-room-below, none);
+    max-block-size: min(var(--spw-room-below, 100vh), var(--spw-gravity-reveal-max, 100vh));
     overflow: auto;
 }
 
 [data-spw-gravity="open"][data-spw-open-direction="up"] [data-spw-gravity-reveal] {
-    max-block-size: var(--spw-room-above, none);
+    max-block-size: min(var(--spw-room-above, 100vh), var(--spw-gravity-reveal-max, 100vh));
     overflow: auto;
 }
 

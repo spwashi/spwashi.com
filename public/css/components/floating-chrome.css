@@ -472,11 +472,19 @@ html:has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) :wher
   );
   inset-inline-start: 50%;
   translate: -50% 0;
-  display: grid;
-  justify-items: center;
+  /* Flex column-reverse so the panel sits above the trigger (opening upward
+     from this bottom anchor). When spatial gravity is mounted it owns the
+     direction via data-spw-open-direction from the systems layer; this is the
+     correct static fallback. */
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
   gap: 0.4rem;
   padding: 0;
   pointer-events: none;
+  /* Content ceiling for the gravity-driven reveal: grow to measured room, but
+     scroll a large collection rather than fill the column. */
+  --spw-gravity-reveal-max: 24rem;
   /* Settling mindfulness: stay invisible until the page has revealed the dock. */
   opacity: 0;
   transition: opacity 240ms ease, translate 240ms ease;
@@ -551,9 +559,15 @@ html:has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) :wher
   display: grid;
   gap: 0.45rem;
   max-inline-size: min(20rem, calc(100vw - 2rem));
+  /* A large collection scrolls inside the panel instead of towering over the
+     page from its bottom anchor. */
+  max-block-size: min(55vh, 24rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   padding: 0.6rem 0.75rem;
   border-radius: 0.7rem;
   background: color-mix(in srgb, var(--surface, #fbfaf7) 92%, transparent);
+  backdrop-filter: blur(8px);
   border: 1px solid color-mix(in srgb, var(--ink, #1b2a2a) 12%, transparent);
   box-shadow: 0 6px 22px rgb(0 0 0 / 0.16);
 }
@@ -583,6 +597,9 @@ html:has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) :wher
   padding: 0.1rem 0.45rem;
   border-radius: 999px;
   font-size: 0.74rem;
+  /* Chips are single tokens; never let ambient layout squeeze them into
+     letter-stacks. */
+  white-space: nowrap;
   background: color-mix(in srgb, var(--op-topic-color, var(--teal, #008080)) 14%, transparent);
   color: var(--ink, #1b2a2a);
 }

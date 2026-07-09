@@ -194,6 +194,14 @@
     color: var(--ink-strong, var(--ink, #161c1d));
 }
 
+/* A swipe in flight (topic-discovery.js marks the rail) acknowledges itself the
+   same way hover does — the rail is awake and listening, not silently absorbing. */
+:where(.spec-strip[data-spw-gesture="swipe"] .spec-pill,
+       .frame-operators[data-spw-gesture="swipe"] .operator-chip) {
+    border-color: var(--token-border-strong, rgba(0, 128, 128, 0.8));
+    color: var(--ink-strong, var(--ink, #161c1d));
+}
+
 /* ==========================================================================
    6. Forms & Controls
    ========================================================================== */

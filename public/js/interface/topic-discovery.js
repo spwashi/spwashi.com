@@ -247,28 +247,46 @@ function showPopover(el) {
 // ── Badge swipe ────────────────────────────────────────────────────────────
 
 function initBadgeSwipe() {
-    let startX = 0;
-    let startY = 0;
-    let swiping = null;
+    // Pointer events instead of touch events so mouse and pen drags swipe too.
+    const SWIPE_MIN_PX = 40;
+    const SWIPE_INTENT_PX = 12;
 
     const badgeContainers = document.querySelectorAll('.spec-strip, .frame-operators');
 
     badgeContainers.forEach(container => {
-        container.addEventListener('touchstart', (e) => {
-            if (e.touches.length !== 1) return;
-            startX = e.touches[0].clientX;
-            startY = e.touches[0].clientY;
-            swiping = container;
+        let startX = 0;
+        let startY = 0;
+        let activePointerId = null;
+
+        container.addEventListener('pointerdown', (e) => {
+            if (!e.isPrimary) return;
+            activePointerId = e.pointerId;
+            startX = e.clientX;
+            startY = e.clientY;
         }, { passive: true });
 
-        container.addEventListener('touchend', (e) => {
-            if (swiping !== container) return;
-            const touch = e.changedTouches[0];
-            const dx = touch.clientX - startX;
-            const dy = touch.clientY - startY;
+        container.addEventListener('pointermove', (e) => {
+            if (e.pointerId !== activePointerId || container.dataset.spwGesture === 'swipe') return;
+            const dx = e.clientX - startX;
+            const dy = e.clientY - startY;
+            // Horizontal intent → visible gesture state, so CSS can acknowledge
+            // the swipe in flight (interaction-reward contract: no silent input).
+            if (Math.abs(dx) > SWIPE_INTENT_PX && Math.abs(dx) > Math.abs(dy)) {
+                container.dataset.spwGesture = 'swipe';
+            }
+        }, { passive: true });
+
+        const endSwipe = (e) => {
+            if (e.pointerId !== activePointerId) return;
+            activePointerId = null;
+            delete container.dataset.spwGesture;
+            if (e.type === 'pointercancel') return;
+
+            const dx = e.clientX - startX;
+            const dy = e.clientY - startY;
 
             // Only horizontal swipes
-            if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 2) {
+            if (Math.abs(dx) > SWIPE_MIN_PX && Math.abs(dx) > Math.abs(dy) * 2) {
                 const badges = Array.from(container.querySelectorAll(BADGE_SELECTOR));
                 const currentActive = container.querySelector('.is-badge-active');
                 let idx = badges.indexOf(currentActive);
@@ -288,10 +306,21 @@ function initBadgeSwipe() {
                     const topicText = next.textContent.trim().toLowerCase();
                     selectTopic(topicText);
                 }
-            }
 
-            swiping = null;
-        }, { passive: true });
+                // A mouse swipe ends in a click on whichever badge the cursor
+                // stopped over; swallow it so it can't override the selection
+                // the swipe just made. (Touch swipes don't produce a click.)
+                const swallowClick = (clickEvent) => {
+                    clickEvent.stopPropagation();
+                    clickEvent.preventDefault();
+                };
+                container.addEventListener('click', swallowClick, { capture: true, once: true });
+                setTimeout(() => container.removeEventListener('click', swallowClick, { capture: true }), 250);
+            }
+        };
+
+        container.addEventListener('pointerup', endSwipe, { passive: true });
+        container.addEventListener('pointercancel', endSwipe, { passive: true });
     });
 }
 

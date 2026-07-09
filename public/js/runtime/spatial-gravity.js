@@ -27,8 +27,11 @@
  *   --spw-edge-proximity     0..1  (1 = touching the nearest edge)
  *   --spw-vertical-bias    -1..1  (<0 room above, >0 room below)
  *
- * Performance: one shared scroll/resize listener, rAF-throttled, and an
- * IntersectionObserver gate so only on-screen tracked elements are measured.
+ * Performance: one shared scroll/resize listener, rAF-throttled, with an
+ * IntersectionObserver gate so only on-screen tracked elements are measured, a
+ * ResizeObserver so an element that grows re-derives its room, and a
+ * MutationObserver so opt-in chrome added after mount is picked up. All churn
+ * funnels through the same rAF measure pass.
  */
 
 import { writeDatasetValues, removeDatasetValues, writeStyleValue } from '../kernel/dom-contracts.js';
@@ -54,6 +57,8 @@ const tracked = new Set();
 const onScreen = new Set();
 const elementState = new Map();
 let intersectionObserver = null;
+let resizeObserver = null;
+let mutationObserver = null;
 let rafId = 0;
 let listenersBound = false;
 
@@ -262,6 +267,39 @@ const ensureIntersectionObserver = () => {
   return intersectionObserver;
 };
 
+/* A tracked element that changes size (a panel expanding, a card reflowing)
+   has new room around it, so its gravity must be re-derived — otherwise an
+   opening panel keeps the open-direction it had while collapsed. Scoped to
+   tracked elements only, and folded into the shared rAF measure so a burst of
+   resizes costs one measurement. */
+const ensureResizeObserver = () => {
+  if (resizeObserver || typeof ResizeObserver !== 'function') return resizeObserver;
+  resizeObserver = new ResizeObserver(() => scheduleMeasure());
+  return resizeObserver;
+};
+
+/* Adoption gate: the module mounts once, before most floating chrome exists.
+   Watch for opt-in elements added later (docks, popovers, disclosure panels
+   built at runtime) so [data-spw-gravity] works on dynamic surfaces, not only
+   nodes present at first paint. */
+const ensureMutationObserver = () => {
+  if (mutationObserver || typeof MutationObserver !== 'function') return mutationObserver;
+  mutationObserver = new MutationObserver((records) => {
+    let found = false;
+    for (const record of records) {
+      record.addedNodes.forEach((node) => {
+        if (!isElement(node)) return;
+        if (node.matches?.(GRAVITY_SELECTOR)) { trackElement(node); found = true; }
+        node.querySelectorAll?.(GRAVITY_SELECTOR).forEach((el) => { trackElement(el); found = true; });
+      });
+    }
+    if (found) scheduleMeasure();
+  });
+  const host = document.body || document.documentElement;
+  if (host) mutationObserver.observe(host, { childList: true, subtree: true });
+  return mutationObserver;
+};
+
 const bindListeners = () => {
   if (listenersBound || typeof window === 'undefined') return;
   listenersBound = true;
@@ -290,6 +328,7 @@ const trackElement = (el) => {
   } else {
     onScreen.add(el);
   }
+  ensureResizeObserver()?.observe(el);
 };
 
 export function initSpwSpatialGravity(root = document, options = {}) {
@@ -299,6 +338,7 @@ export function initSpwSpatialGravity(root = document, options = {}) {
   if (!elements.length) return [];
 
   bindListeners();
+  ensureMutationObserver();
   elements.forEach(trackElement);
   scheduleMeasure();
 

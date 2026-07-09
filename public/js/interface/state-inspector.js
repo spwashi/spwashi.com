@@ -897,48 +897,79 @@ function bindInspector(root) {
 
 // --- Lightweight drag support for the satchel launch button ---
 
+const SATCHEL_DRAG_SLOP_PX = 6;
+const SATCHEL_FLING_PROJECTION_MS = 120;
+const SATCHEL_FLING_MAX_PROJECTION_PX = 320;
+
 function bindSatchelDrag(root) {
   const launch = root.querySelector('.spw-state-inspector__launch');
   if (!launch) return () => {};
 
+  let pressed = false;
   let dragging = false;
+  let activePointerId = null;
   let startX = 0, startY = 0;
   let startLeft = 0, startTop = 0;
+  let lastX = 0, lastY = 0, lastT = 0;
+  let velocityX = 0, velocityY = 0;
   let rafId = null;
 
   const updateDragPosition = (newLeft, newTop) => {
     applyPositionToLaunch(launch, newLeft, newTop, true);
   };
 
-  const onPointerDown = (e) => {
-    if (!e.isPrimary || e.button !== 0) return;
-    if (root.dataset.spwStateInspector === 'open') return;
-
+  const beginDrag = () => {
     dragging = true;
     launch.dataset.spwDragState = 'dragging';
-    launch.dataset.spwDragging = 'true'; // keep legacy for now
+    launch.dataset.spwDragging = 'true'; // the click handler reads this to swallow the post-drag click
     root.dataset.spwDragState = 'dragging'; // explicit state on container for broader styling
     // Mind attentional physics during drag (tap/hold/drag are gestures in the field model; drag here is
     // repositioning the satchel "mass" within the attention field). Use data attrs so CSS/inspect
     // (wonder, ornament) can respond; this makes satchel a first-class participant in cognitive physics.
     launch.dataset.spwGesture = 'drag';
     launch.dataset.spwAttention = 'sustained';
-    startX = e.clientX;
-    startY = e.clientY;
+  };
+
+  const onPointerDown = (e) => {
+    if (!e.isPrimary || e.button !== 0) return;
+    if (root.dataset.spwStateInspector === 'open') return;
+
+    pressed = true;
+    activePointerId = e.pointerId;
+    startX = lastX = e.clientX;
+    startY = lastY = e.clientY;
+    lastT = e.timeStamp;
+    velocityX = 0;
+    velocityY = 0;
 
     const rect = launch.getBoundingClientRect();
     startLeft = rect.left;
     startTop = rect.top;
 
     launch.setPointerCapture?.(e.pointerId);
-    e.preventDefault();
   };
 
   const onPointerMove = (e) => {
-    if (!dragging) return;
+    if (!pressed || e.pointerId !== activePointerId) return;
 
     const dx = e.clientX - startX;
     const dy = e.clientY - startY;
+
+    // Slop gate: a press only becomes a drag after deliberate movement, so a
+    // tap stays a tap and never gets charged as a drag gesture.
+    if (!dragging) {
+      if (Math.hypot(dx, dy) < SATCHEL_DRAG_SLOP_PX) return;
+      beginDrag();
+    }
+
+    const dt = e.timeStamp - lastT;
+    if (dt > 0) {
+      velocityX = (e.clientX - lastX) / dt;
+      velocityY = (e.clientY - lastY) / dt;
+      lastX = e.clientX;
+      lastY = e.clientY;
+      lastT = e.timeStamp;
+    }
 
     const newLeft = startLeft + dx;
     const newTop = startTop + dy;
@@ -951,7 +982,15 @@ function bindSatchelDrag(root) {
   };
 
   const onPointerUp = (e) => {
-    if (!dragging) return;
+    if (!pressed || e.pointerId !== activePointerId) return;
+    pressed = false;
+    activePointerId = null;
+
+    try {
+      launch.releasePointerCapture?.(e.pointerId);
+    } catch {}
+
+    if (!dragging) return; // plain tap: leave the click to the toggle handler
 
     if (rafId) {
       cancelAnimationFrame(rafId);
@@ -959,7 +998,6 @@ function bindSatchelDrag(root) {
     }
 
     dragging = false;
-    delete launch.dataset.spwDragging;
     launch.dataset.spwDragState = 'idle';
     delete root.dataset.spwDragState;
     // Clear attentional/gesture markers on release (field model decay; satchel no longer "charged" by the drag gesture).
@@ -967,26 +1005,31 @@ function bindSatchelDrag(root) {
     delete launch.dataset.spwAttention;
 
     const rect = launch.getBoundingClientRect();
-    const snapped = snapSatchelPosition(launch, rect.left, rect.top);
+    // Honor the toss: project the release point a beat along the fling
+    // velocity so a throw toward a corner snaps where the finger was headed,
+    // not just where it let go.
+    const project = (v) => Math.max(
+      -SATCHEL_FLING_MAX_PROJECTION_PX,
+      Math.min(SATCHEL_FLING_MAX_PROJECTION_PX, v * SATCHEL_FLING_PROJECTION_MS)
+    );
+    const snapped = snapSatchelPosition(launch, rect.left + project(velocityX), rect.top + project(velocityY));
     if (snapped.left !== rect.left || snapped.top !== rect.top) {
       applyPositionToLaunch(launch, snapped.left, snapped.top, true);
     }
     const settled = launch.getBoundingClientRect();
     savePosition(settled.left, settled.top);
 
-    try {
-      launch.releasePointerCapture?.(e.pointerId);
-    } catch {}
-
-    // Small delay so the click handler can see the flag
+    // The click for this pointerup dispatches synchronously after this handler,
+    // so spwDragging must outlive it — clear on the next task, not inline.
     setTimeout(() => {
+      delete launch.dataset.spwDragging;
       if (launch.dataset.spwDragState === 'idle') {
         delete launch.dataset.spwDragState;
       }
-    }, 80);
+    }, 0);
   };
 
-  launch.addEventListener('pointerdown', onPointerDown, { passive: false });
+  launch.addEventListener('pointerdown', onPointerDown, { passive: true });
   window.addEventListener('pointermove', onPointerMove, { passive: true });
   window.addEventListener('pointerup', onPointerUp, { passive: true });
   window.addEventListener('pointercancel', onPointerUp, { passive: true });

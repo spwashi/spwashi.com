@@ -33,6 +33,7 @@ import { annotateFloatingChromeElement } from '/public/js/kernel/dom-contracts.j
 import { el, clearChildren } from '/public/js/kernel/dom-render.js';
 import { getSiteSettings } from '/public/js/kernel/site-settings.js';
 import { ACHIEVEMENTS } from '/public/js/runtime/component-collection.js';
+import { measureSpatialGravity } from '/public/js/runtime/spatial-gravity.js';
 
 const TOAST_LINGER_MS = 4200;
 const TOAST_LEAVE_MS = 360;
@@ -147,6 +148,10 @@ export function initRewardUI(ctx = {}) {
     });
     dock.setAttribute('aria-label', 'Component collection');
     dock.dataset.spwRewardReveal = 'pending';
+    // Opt the dock into spatial gravity: the panel opens toward the roomier
+    // side (upward from the bottom-center anchor) and its height caps to the
+    // measured room above, scrolling past a ceiling instead of towering.
+    dock.dataset.spwGravity = 'open';
 
     dockTrigger = el('button', 'spw-reward-dock-trigger', {
       type: 'button',
@@ -158,7 +163,7 @@ export function initRewardUI(ctx = {}) {
       dockCount,
     );
 
-    dockBody = el('div', 'spw-reward-dock-body', { hidden: true });
+    dockBody = el('div', 'spw-reward-dock-body', { hidden: true, dataset: { spwGravityReveal: 'collection' } });
 
     dockTrigger.addEventListener('click', () => toggleDock());
     dock.append(dockTrigger, dockBody);
@@ -172,7 +177,12 @@ export function initRewardUI(ctx = {}) {
     dockBody.hidden = !dockExpanded;
     dock.dataset.spwState = dockExpanded ? 'expanded' : 'collapsed';
     dockTrigger.setAttribute('aria-expanded', dockExpanded ? 'true' : 'false');
-    if (dockExpanded) renderDock();
+    if (dockExpanded) {
+      renderDock();
+      // Measure now so the panel opens the correct way on the first expand,
+      // before the ResizeObserver would otherwise catch up a frame later.
+      try { measureSpatialGravity(dock); } catch {}
+    }
   };
 
   const renderCollectionInto = (host) => {
@@ -181,7 +191,10 @@ export function initRewardUI(ctx = {}) {
     const kindsRow = el('div', 'spw-reward-kinds');
     if (kinds.length) {
       kinds.forEach((kind) => {
-        kindsRow.append(el('span', { className: 'spw-reward-kind', text: kind, dataset: { spwKind: kind } }));
+        // data-spw-collected-kind, NOT data-spw-kind: the chip names a collected
+        // specimen. Carrying the component-kind contract attribute would dress
+        // the chip as a real component (frame layout, container queries).
+        kindsRow.append(el('span', { className: 'spw-reward-kind', text: kind, dataset: { spwCollectedKind: kind } }));
       });
     } else {
       kindsRow.append(el('span', { className: 'spw-reward-kind is-empty', text: 'none yet' }));
