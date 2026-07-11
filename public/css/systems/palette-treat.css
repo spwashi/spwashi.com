@@ -8,26 +8,44 @@
   --spw-palette-treat-strength: 0;
   --spw-palette-treat-accent: var(--spw-palette-probe-1, var(--active-op-color, #008080));
   --spw-palette-treat-ring: transparent;
+  /* Session-depth gain: escalates the sprinkle the deeper the reader is into a
+     rich, settled session. Written from palette-treat-discovery.js via
+     data-spw-palette-treat-depth (0..4). 1 = first-visit baseline. */
+  --spw-palette-treat-depth-gain: 1;
 }
 
-:where(html[data-spw-palette-treat-active="on"]) {
-  --spw-palette-treat-strength: calc(var(--spw-freshness-weight, 0.62) * var(--spw-microinteraction-pulse-intensity, 1));
+/* These live-state overrides target the root element, so they must out-specify
+   the :root defaults above — otherwise :root (specificity 0,1,0) wins and the
+   sprinkle strength/accent stay pinned to their resting values. :root[attr]
+   (0,2,0) clears that bar; :where(html[attr]) does NOT (it is specificity 0),
+   so do not "simplify" these back to :where — it silently disables the treat. */
+:root[data-spw-palette-treat-depth="1"] { --spw-palette-treat-depth-gain: 1.12; }
+:root[data-spw-palette-treat-depth="2"] { --spw-palette-treat-depth-gain: 1.26; }
+:root[data-spw-palette-treat-depth="3"] { --spw-palette-treat-depth-gain: 1.42; }
+:root[data-spw-palette-treat-depth="4"] { --spw-palette-treat-depth-gain: 1.6; }
+
+:root[data-spw-palette-treat-active="on"] {
+  --spw-palette-treat-strength: calc(
+    var(--spw-freshness-weight, 0.62)
+    * var(--spw-microinteraction-pulse-intensity, 1)
+    * var(--spw-palette-treat-depth-gain, 1)
+  );
   --palette-depth-strength: calc(var(--palette-depth-strength, 1) * (1 + (var(--spw-palette-treat-strength) * 0.1)));
 }
 
-:where(html[data-spw-palette-treat-probe="1"]) {
+:root[data-spw-palette-treat-probe="1"] {
   --spw-palette-treat-accent: var(--spw-palette-probe-1, var(--active-op-color, #008080));
 }
 
-:where(html[data-spw-palette-treat-probe="2"]) {
+:root[data-spw-palette-treat-probe="2"] {
   --spw-palette-treat-accent: var(--spw-palette-probe-2, var(--op-object-color, #c68a22));
 }
 
-:where(html[data-spw-palette-treat-probe="3"]) {
+:root[data-spw-palette-treat-probe="3"] {
   --spw-palette-treat-accent: var(--spw-palette-probe-3, var(--op-ref-color, #1d57a3));
 }
 
-:where(html[data-spw-palette-treat-probe="4"]) {
+:root[data-spw-palette-treat-probe="4"] {
   --spw-palette-treat-accent: var(--spw-palette-probe-4, var(--op-probe-color, #6a3fb8));
 }
 

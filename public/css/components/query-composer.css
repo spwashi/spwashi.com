@@ -1,0 +1,121 @@
+/* ==========================================================================
+   query-composer.css
+   --------------------------------------------------------------------------
+   Embeddable share-setup UI for feature hubs and floating chrome (state satchel).
+   Instruments live in query-link-composer.js; this file owns layout + expand.
+   ========================================================================== */
+
+:where(.spw-query-composer) {
+  display: grid;
+  gap: 0.55rem;
+  min-inline-size: 0;
+  padding: var(--inset-component, 0.9rem);
+  border: 1px solid color-mix(in srgb, var(--line-strong, rgba(0, 128, 128, 0.28)) 55%, transparent);
+  border-radius: var(--shape-component, 6px);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.16), transparent 58%),
+    color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.94)) 94%, transparent);
+}
+
+:where(.spw-query-composer__kicker) {
+  margin: 0;
+  font-family: var(--site-mono-font, monospace);
+  font-size: var(--text-size-label, 0.72rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--op-action-color, #006666) 78%, var(--ink, #111));
+}
+
+:where(.spw-query-composer__title) {
+  margin: 0;
+  font-size: var(--text-size-sm, 0.95rem);
+  color: var(--ink-strong, rgba(14, 18, 20, 0.96));
+}
+
+:where(.spw-query-composer__note) {
+  margin: 0;
+  max-inline-size: 52ch;
+  color: color-mix(in srgb, var(--ink, #111) 78%, transparent);
+  line-height: 1.5;
+  font-size: var(--text-size-xs, 0.82rem);
+}
+
+:where(.spw-query-composer__fields) {
+  display: grid;
+  gap: 0.55rem;
+}
+
+:where(.spw-query-composer__group-label) {
+  margin: 0 0 0.25rem;
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--ink, #111) 62%, transparent);
+}
+
+:where(.spw-query-composer__chips, .spw-query-composer__actions, .spw-query-composer__settings-row) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+:where(.spw-query-composer__preview) {
+  display: block;
+  margin: 0;
+  padding: 0.45rem 0.6rem;
+  border-radius: var(--shape-element, 4px);
+  background: color-mix(in srgb, var(--op-action-color, #006666) 8%, transparent);
+  color: color-mix(in srgb, var(--op-action-color, #006666) 88%, var(--ink, #111));
+  font-size: 0.72rem;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+:where([data-spw-query-composer-key][aria-pressed="true"]),
+:where([data-spw-query-composer-include-settings][aria-pressed="true"]) {
+  outline: 2px solid color-mix(in srgb, var(--op-action-color, #006666) 48%, transparent);
+  outline-offset: 1px;
+}
+
+:where([data-spw-query-composer-key][data-spw-query-composer-state="off"]) {
+  opacity: 0.78;
+}
+
+/* Compact / floating chrome: collapsed by default, expand for full instruments */
+:where(.spw-query-composer[data-spw-query-composer-compact="true"]:not([data-spw-query-composer-expanded="true"]))
+  :where(
+    [data-spw-query-composer-fields],
+    [data-spw-query-composer-preview],
+    [data-spw-query-composer-actions]
+  ) {
+  display: none;
+}
+
+:where(.spw-query-composer[data-spw-query-composer-compact="true"][data-spw-query-composer-expanded="true"]) {
+  max-block-size: min(70vh, 28rem);
+  overflow: auto;
+}
+
+:where(.spw-state-inspector__share) {
+  margin-block: 0.35rem;
+}
+
+:where(.spw-state-inspector__panel .spw-query-composer) {
+  --chrome-pad: 0.45rem;
+  padding: var(--chrome-pad);
+  font-size: var(--chrome-font, 0.82rem);
+}
+
+/* Module-visuals: treat composer hosts as discoverable islands */
+:where(html[data-spw-module-visuals="on"] [data-spw-feature="query-composer"]) {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--op-action-color, #006666) 32%, transparent),
+    var(--spw-local-shadow, none);
+}
+
+/* Floating chrome competition: shrink quiet composers when crowded */
+:where(html[data-spw-floating-chrome-competition="crowded"] .spw-query-composer--chrome:not([data-spw-query-composer-expanded="true"])) {
+  opacity: 0.88;
+}

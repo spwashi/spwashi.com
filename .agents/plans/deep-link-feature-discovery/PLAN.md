@@ -53,3 +53,28 @@ Marketing/QA use:
 
 Guardrail:
 - Do not create route-only `.mode-active` class families. Add route-specific visual depth by consuming the shared lens datasets and variables.
+
+## 2026-07-10 Feature Field Guide Progression
+
+The reusable discovery layer now distinguishes a named feature from a generic
+runtime mount. Opted-in `data-spw-feature` clusters can declare traits,
+progression, and memory; the runtime classifies first meetings as `novel` or
+`convergent`, and later meetings as `return`.
+
+Performance and lifecycle guardrails:
+
+- `feature-discovery` mounts at idle only when the route declares the matching
+  `data-spw-features` behavior scope.
+- Its CSS lives in the feature-discovery behavior bundle, outside the core CSS
+  payload.
+- Feature owners register through the ready API instead of statically importing
+  the guide into sitewide modules.
+- Canonical bus emission is already DOM-visible; do not dispatch the same event
+  a second time.
+- Direct pre-init discoveries must hydrate persistent memory before mutation so
+  idle initialization cannot overwrite them.
+
+Current proof species are palette probes (`depth`, persistent memory) and the
+spatial-gravity bench (custom traversal, session memory). Keep enrollment
+deliberate; the generic `data-spw-feature` inventory is not itself permission to
+collect visitor history.

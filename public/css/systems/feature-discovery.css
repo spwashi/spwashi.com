@@ -1,0 +1,98 @@
+/* ==========================================================================
+   feature-discovery.css
+   --------------------------------------------------------------------------
+   The visible half of runtime/feature-discovery.js. A [data-spw-feature]
+   cluster that has opted into the field guide gets quiet, naturalist feedback
+   as a visitor meets it:
+
+     encounter="novel"      first sighting of a wholly new species
+     encounter="convergent" first sighting of a species whose trait you have
+                            already collected elsewhere (convergent evolution)
+     encounter="return"     a species met before; its progression has deepened
+
+   Feedback is deliberately subtle by default (a settling ring, a faint
+   progression underline) — loudness is a sensation-tuning decision. Uses only
+   outline/box-shadow/animation so it forces no positioning context on arbitrary
+   content clusters, and never shifts layout.
+   ========================================================================== */
+
+:where([data-spw-feature-encounter]) {
+  --spw-feature-accent: var(--active-op-color, #008080);
+  --spw-feature-convergent-accent: var(--op-probe-color, #7a4fb5);
+  /* Progression presence grows in discrete steps set by the level tokens. */
+  --spw-feature-presence: 0;
+  /* Theatrics scale: enhancement climate multiplies encounter ornament. */
+  --spw-feature-theatrics: var(--spw-enhancement-factor, 1);
+  transition: box-shadow var(--duration-base, 220ms) var(--ease-smooth, ease);
+}
+
+/* Progression: a faint underline-weight glow that deepens as the local level
+   climbs. Discrete steps keep it legible and avoid attr()-to-number parsing. */
+:where([data-spw-feature-level="1"]) { --spw-feature-presence: 0.28; }
+:where([data-spw-feature-level="2"]) { --spw-feature-presence: 0.5; }
+:where([data-spw-feature-level="3"]) { --spw-feature-presence: 0.72; }
+:where([data-spw-feature-level="4"]) { --spw-feature-presence: 0.9; }
+
+/* Climate: minimal visits keep discovery quiet; rich stages more ornament. */
+:where(html[data-spw-enhancement-level="minimal"] [data-spw-feature-encounter]) {
+  --spw-feature-theatrics: 0;
+  --spw-feature-presence: 0;
+}
+:where(html[data-spw-enhancement-level="balanced"] [data-spw-feature-encounter]) {
+  --spw-feature-theatrics: 0.72;
+}
+:where(html[data-spw-enhancement-level="rich"] [data-spw-feature-encounter]) {
+  --spw-feature-theatrics: 1.12;
+}
+
+:where([data-spw-feature-encounter="return"][data-spw-feature-level]:not([data-spw-feature-level="0"])) {
+  box-shadow: inset 0 calc(-2px * var(--spw-feature-presence) * var(--spw-feature-theatrics, 1)) 0 -1px
+    color-mix(
+      in srgb,
+      var(--spw-feature-accent)
+        calc(var(--spw-feature-presence) * 60% * var(--spw-feature-theatrics, 1)),
+      transparent
+    );
+}
+
+/* A first sighting settles in with a ring that fades — the "new species" note.
+   Convergent sightings borrow the probe hue instead, so recognizing a familiar
+   trait on a new form reads differently from a wholly novel find. */
+:where([data-spw-feature-fresh="novel"]) {
+  animation: spw-feature-sight
+    calc(2000ms * max(var(--spw-feature-theatrics, 1), 0.01))
+    var(--ease-smooth, ease) 1;
+}
+:where([data-spw-feature-fresh="convergent"]) {
+  animation: spw-feature-converge
+    calc(2000ms * max(var(--spw-feature-theatrics, 1), 0.01))
+    var(--ease-smooth, ease) 1;
+}
+
+:where(html[data-spw-enhancement-level="minimal"] [data-spw-feature-fresh]) {
+  animation: none;
+}
+
+@keyframes spw-feature-sight {
+  0%   { box-shadow: 0 0 0 0 color-mix(in srgb, var(--spw-feature-accent) 40%, transparent); }
+  30%  { box-shadow: 0 0 0 3px color-mix(in srgb, var(--spw-feature-accent) 32%, transparent); }
+  100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--spw-feature-accent) 0%, transparent); }
+}
+@keyframes spw-feature-converge {
+  0%   { box-shadow: 0 0 0 0 color-mix(in srgb, var(--spw-feature-convergent-accent) 42%, transparent); }
+  30%  { box-shadow: 0 0 0 3px color-mix(in srgb, var(--spw-feature-convergent-accent) 34%, transparent); }
+  100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--spw-feature-convergent-accent) 0%, transparent); }
+}
+
+/* When a convergent trait is present, a hair of the probe hue lingers in the
+   progression glow — the field guide quietly remembers the resemblance. */
+:where([data-spw-feature-convergent]) {
+  --spw-feature-accent: color-mix(in srgb, var(--op-probe-color, #7a4fb5) 40%, var(--active-op-color, #008080));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where([data-spw-feature-fresh]) {
+    animation: none;
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--spw-feature-accent) 24%, transparent);
+  }
+}
