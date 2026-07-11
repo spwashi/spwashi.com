@@ -23,6 +23,7 @@ import {
   collectTagAttributes,
   normalizeInternalRoute,
   normalizeSpace,
+  readModuleCatalogSource,
   routePathFromFile,
   splitList,
   splitPipeList,
@@ -215,8 +216,7 @@ async function parseRouteFile(absoluteFilePath: string) {
 export async function buildRouteRuntimeManifest() {
   const routeFiles = await walkForRouteFiles(ROOT_DIR);
   const parsedRoutes = await Promise.all(routeFiles.map((filePath) => parseRouteFile(filePath)));
-  const moduleCatalogPath = path.join(ROOT_DIR, 'public/js/runtime/module-catalog.js');
-  const moduleCatalogSource = await fs.readFile(moduleCatalogPath, 'utf8');
+  const moduleCatalogSource = await readModuleCatalogSource(path.join(ROOT_DIR, 'public/js/runtime'));
   const runtimeDefinitions = collectRuntimeDefinitionsFromSource(moduleCatalogSource);
   const svgAssetFiles = await walkForFilesByExtension(path.join(ROOT_DIR, 'public'), '.svg');
   const svgAssets = svgAssetFiles.map((absolutePath) => `/${relativeRepoPath(absolutePath)}`).sort();

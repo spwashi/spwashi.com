@@ -225,7 +225,7 @@ export function mergeModuleUpdates(...sources) {
   return normalizeModuleUpdates(sources.flat().filter(Boolean));
 }
 
-export function groupModuleUpdatesByKind(updates) {
+function groupModuleUpdatesByKind(updates) {
   const grouped = Object.fromEntries(MODULE_UPDATE_KINDS.map((kind) => [kind, []]));
   normalizeModuleUpdates(updates).forEach((entry) => {
     if (!grouped[entry.kind]) grouped[entry.kind] = [];
@@ -309,11 +309,7 @@ export function formatModuleUpdatesBrief(updates) {
   return `${normalized.length} update${normalized.length === 1 ? '' : 's'} · ${kindLabels.join(', ')}`;
 }
 
-export function serializeModuleUpdatesContract(updates) {
-  return summarizeModuleUpdates(updates, { separator: DATASET_SEPARATOR });
-}
-
-export function listModuleUpdateNames(updates, kind = null) {
+function listModuleUpdateNames(updates, kind = null) {
   const normalized = normalizeModuleUpdates(updates);
   if (!kind) return normalized.map((entry) => entry.name);
   return normalized.filter((entry) => entry.kind === kind).map((entry) => entry.name);

@@ -1,3 +1,6 @@
+import { promises as fs } from 'node:fs';
+import path from 'node:path';
+
 import type {
   RuntimeDefinition,
   SvgHost,
@@ -276,9 +279,30 @@ export function parseRuntimeDefinition(objectLiteral: string, family: string): R
   };
 }
 
+/** Family files under public/js/runtime/ — catalog barrel re-exports these. */
+export const MODULE_CATALOG_FAMILY_FILES = Object.freeze({
+  CORE_DEFS: 'module-catalog-core.js',
+  FEATURE_DEFS: 'module-catalog-feature.js',
+  REGION_DEFS: 'module-catalog-region.js',
+  ENHANCEMENT_DEFS: 'module-catalog-enhancement.js',
+} as const);
+
+/**
+ * Concatenate family sources so extractRuntimeArrayLiteral still finds
+ * `export const *_DEFS = […]` after the catalog split.
+ */
+export async function readModuleCatalogSource(runtimeDir: string): Promise<string> {
+  const parts = await Promise.all(
+    Object.values(MODULE_CATALOG_FAMILY_FILES).map((file) =>
+      fs.readFile(path.join(runtimeDir, file), 'utf8'),
+    ),
+  );
+  return parts.join('\n');
+}
+
 /**
  * Parse staged module defs from catalog (or any source that still uses const *_DEFS = […]).
- * After runtime extraction, definitions live in public/js/runtime/module-catalog.js, not site.js.
+ * Families live in module-catalog-*.js; pass concatenated source from readModuleCatalogSource().
  */
 export function collectRuntimeDefinitionsFromSource(catalogSource: string): RouteRuntimeManifest['runtimeDefinitions'] {
   const families = ['CORE_DEFS', 'FEATURE_DEFS', 'REGION_DEFS', 'ENHANCEMENT_DEFS'] as const;

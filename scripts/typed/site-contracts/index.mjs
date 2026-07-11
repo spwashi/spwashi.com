@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { renderTemplate } from '../../template.mjs';
 import { CORE_BUNDLE_HREF } from '../css-manifest.mjs';
 import { EXPECTED_SITE_SCRIPT_PREFIX, EXPECTED_STYLESHEET_PREFIX, REQUIRED_BODY_DATA_KEYS, } from './types.mjs';
-import { buildSvgSpecMaps, collectManifestIssues, collectRuntimeDefinitionsFromSource, countMatches, deriveRouteRuntime, extractBodyAttributes, extractSvgHosts, extractTitle, collectTagAttributes, normalizeInternalRoute, normalizeSpace, routePathFromFile, splitList, splitPipeList, stripQueryHash, summarizeBySurface, } from './helpers.mjs';
+import { buildSvgSpecMaps, collectManifestIssues, collectRuntimeDefinitionsFromSource, countMatches, deriveRouteRuntime, extractBodyAttributes, extractSvgHosts, extractTitle, collectTagAttributes, normalizeInternalRoute, normalizeSpace, readModuleCatalogSource, routePathFromFile, splitList, splitPipeList, stripQueryHash, summarizeBySurface, } from './helpers.mjs';
 import { shouldIgnoreValidationPath, toPosixPath, } from '../shared/build-topology.mjs';
 export { collectManifestIssues, };
 const __filename = fileURLToPath(import.meta.url);
@@ -162,8 +162,7 @@ async function parseRouteFile(absoluteFilePath) {
 export async function buildRouteRuntimeManifest() {
     const routeFiles = await walkForRouteFiles(ROOT_DIR);
     const parsedRoutes = await Promise.all(routeFiles.map((filePath) => parseRouteFile(filePath)));
-    const moduleCatalogPath = path.join(ROOT_DIR, 'public/js/runtime/module-catalog.js');
-    const moduleCatalogSource = await fs.readFile(moduleCatalogPath, 'utf8');
+    const moduleCatalogSource = await readModuleCatalogSource(path.join(ROOT_DIR, 'public/js/runtime'));
     const runtimeDefinitions = collectRuntimeDefinitionsFromSource(moduleCatalogSource);
     const svgAssetFiles = await walkForFilesByExtension(path.join(ROOT_DIR, 'public'), '.svg');
     const svgAssets = svgAssetFiles.map((absolutePath) => `/${relativeRepoPath(absolutePath)}`).sort();

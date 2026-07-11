@@ -3,7 +3,7 @@
  */
 
 import { writeDatasetValue } from '../kernel/dom-contracts.js';
-import { MODULE_LAYERS, MOUNT_WHEN } from './module-catalog.js';
+import { MODULE_LAYERS, MOUNT_WHEN } from './module-catalog-constants.js';
 import {
   annotateModuleUpdatesTarget,
   describeModuleUpdates,

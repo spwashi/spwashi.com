@@ -209,11 +209,13 @@
   letter-spacing: 0.03em;
 }
 
-@container (min-width: 44rem) {
-  [data-spw-hint-surface][data-spw-hint-density="roomy"] {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
+@supports (container-type: inline-size) {
+  @container (min-width: 44rem) {
+    [data-spw-hint-surface][data-spw-hint-density="roomy"] {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
   }
 }
 

@@ -594,9 +594,11 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
 :where([data-spw-list-timing="stagger"]) > :nth-child(6) { --spw-list-step-index: 6; }
 :where([data-spw-list-timing="stagger"]) > :nth-child(n + 7) { --spw-list-step-index: 7; }
 
-@container (min-width: 46rem) {
-  :where([data-spw-ingredient-lab] .spw-amount-grid) {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+@supports (container-type: inline-size) {
+  @container (min-width: 46rem) {
+    :where([data-spw-ingredient-lab] .spw-amount-grid) {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
   }
 }
 

@@ -53,7 +53,15 @@ const ROOT_DIR = path.resolve(__dirname, '..', '..');
 const PUBLIC_JS_DIR = path.join(ROOT_DIR, 'public/js');
 const MODULES_DIR = path.join(PUBLIC_JS_DIR, 'modules');
 const PUBLIC_TS_DIR = path.join(ROOT_DIR, 'public/ts');
-const MODULE_CATALOG_PATH = path.join(PUBLIC_JS_DIR, 'runtime/module-catalog.js');
+const MODULE_CATALOG_DIR = path.join(PUBLIC_JS_DIR, 'runtime');
+/** Barrel path — dynamic import() resolution is relative to this directory. */
+const MODULE_CATALOG_PATH = path.join(MODULE_CATALOG_DIR, 'module-catalog.js');
+const MODULE_CATALOG_FAMILY_FILES = Object.freeze({
+  CORE_DEFS: 'module-catalog-core.js',
+  FEATURE_DEFS: 'module-catalog-feature.js',
+  REGION_DEFS: 'module-catalog-region.js',
+  ENHANCEMENT_DEFS: 'module-catalog-enhancement.js',
+} as const);
 const MODULE_UPDATES_CONTRACT_PATH = path.join(PUBLIC_JS_DIR, 'runtime/module-updates-contract.js');
 const SITE_RUNTIME_PATH = path.join(PUBLIC_JS_DIR, 'site.js');
 
@@ -754,19 +762,28 @@ function validateModule(
   }
 }
 
+async function readModuleCatalogFamilies(): Promise<{ family: RuntimeFamily; source: string }[]> {
+  return Promise.all(
+    RUNTIME_FAMILIES.map(async (family) => {
+      const file = MODULE_CATALOG_FAMILY_FILES[family];
+      const source = await fs.readFile(path.join(MODULE_CATALOG_DIR, file), 'utf8');
+      return { family, source };
+    }),
+  );
+}
+
 export async function collectRuntimeContractReport(): Promise<RuntimeContractReport> {
   const errors: string[] = [];
   const recommendations: string[] = [];
   const warnings: string[] = [];
-  const moduleCatalog = await fs.readFile(MODULE_CATALOG_PATH, 'utf8');
   const modules: RuntimeContractModule[] = [];
 
   errors.push(...await collectModuleUpdateGrammarIssues());
 
-  for (const family of RUNTIME_FAMILIES) {
-    const arrayLiteral = extractRuntimeArrayLiteral(moduleCatalog, family);
+  for (const { family, source } of await readModuleCatalogFamilies()) {
+    const arrayLiteral = extractRuntimeArrayLiteral(source, family);
     if (!arrayLiteral) {
-      errors.push(`public/js/runtime/module-catalog.js is missing ${family}.`);
+      errors.push(`public/js/runtime/${MODULE_CATALOG_FAMILY_FILES[family]} is missing ${family}.`);
       continue;
     }
 

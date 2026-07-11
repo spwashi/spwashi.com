@@ -896,76 +896,78 @@
   transform: scale(1.02) !important;
 }
 
-@container (max-width: 38rem) {
-  :where(.frame-topline, .frame-heading) {
-    align-items: stretch;
+@supports (container-type: inline-size) {
+  @container (max-width: 38rem) {
+    :where(.frame-topline, .frame-heading) {
+      align-items: stretch;
+    }
+
+    :where(
+      .frame-topline > .spec-strip,
+      .frame-topline > .mode-switch,
+      .frame-topline > .frame-operators,
+      .frame-topline > .spw-component-meta,
+      .frame-heading > .spw-component-meta
+    ) {
+      width: 100%;
+      margin-left: 0;
+      margin-inline-start: 0;
+      justify-content: flex-start;
+    }
+
+    /* Soft PE for mode-switch inside narrow containers.
+       Canonical track/chrome lives in handles/state-semantics (lens-track, lens-chrome).
+       These :where() rules only reinforce flex equal-share when handles media
+       queries have not already applied; they never reintroduce 2-col grid. */
+    :where(.mode-switch[aria-label]:not([data-spw-lens-track="row"])) {
+      display: flex;
+      flex-flow: row wrap;
+      gap: calc(var(--spw-control-gap, 0.24rem) + 0.14rem);
+      width: 100%;
+      min-inline-size: 0;
+    }
+
+    :where(.mode-switch[aria-label]:not([data-spw-lens-chrome~="silent"]))::before {
+      flex: 1 1 100%;
+      max-inline-size: none;
+      overflow: visible;
+      text-overflow: clip;
+      white-space: normal;
+      text-wrap: balance;
+    }
+
+    :where(
+      .frame-topline > .mode-switch:not([data-spw-lens-track="row"]) > .frame-sigil,
+      .frame-topline > .frame-operators > *
+    ) {
+      flex: 1 1 0;
+      justify-content: center;
+      min-inline-size: min(100%, 4.25rem);
+      white-space: nowrap;
+    }
   }
 
-  :where(
-    .frame-topline > .spec-strip,
-    .frame-topline > .mode-switch,
-    .frame-topline > .frame-operators,
-    .frame-topline > .spw-component-meta,
-    .frame-heading > .spw-component-meta
-  ) {
-    width: 100%;
-    margin-left: 0;
-    margin-inline-start: 0;
-    justify-content: flex-start;
+  @container (max-width: 32rem) {
+    :where(.frame-topline, .frame-heading) {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    :where(.frame-topline > .frame-sigil, .frame-heading > .frame-sigil, .frame-topline > .spw-delimiter) {
+      align-self: flex-start;
+    }
   }
 
-  /* Soft PE for mode-switch inside narrow containers.
-     Canonical track/chrome lives in handles/state-semantics (lens-track, lens-chrome).
-     These :where() rules only reinforce flex equal-share when handles media
-     queries have not already applied; they never reintroduce 2-col grid. */
-  :where(.mode-switch[aria-label]:not([data-spw-lens-track="row"])) {
-    display: flex;
-    flex-flow: row wrap;
-    gap: calc(var(--spw-control-gap, 0.24rem) + 0.14rem);
-    width: 100%;
-    min-inline-size: 0;
+  @container (max-width: 28rem) {
+    :where(.frame-heading > .frame-sigil) {
+      display: none;
+    }
   }
 
-  :where(.mode-switch[aria-label]:not([data-spw-lens-chrome~="silent"]))::before {
-    flex: 1 1 100%;
-    max-inline-size: none;
-    overflow: visible;
-    text-overflow: clip;
-    white-space: normal;
-    text-wrap: balance;
-  }
-
-  :where(
-    .frame-topline > .mode-switch:not([data-spw-lens-track="row"]) > .frame-sigil,
-    .frame-topline > .frame-operators > *
-  ) {
-    flex: 1 1 0;
-    justify-content: center;
-    min-inline-size: min(100%, 4.25rem);
-    white-space: nowrap;
-  }
-}
-
-@container (max-width: 32rem) {
-  :where(.frame-topline, .frame-heading) {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  :where(.frame-topline > .frame-sigil, .frame-heading > .frame-sigil, .frame-topline > .spw-delimiter) {
-    align-self: flex-start;
-  }
-}
-
-@container (max-width: 28rem) {
-  :where(.frame-heading > .frame-sigil) {
-    display: none;
-  }
-}
-
-@container (max-width: 26rem) {
-  :where(.frame-topline) {
-    margin-bottom: 0;
+  @container (max-width: 26rem) {
+    :where(.frame-topline) {
+      margin-bottom: 0;
+    }
   }
 }
 

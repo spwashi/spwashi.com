@@ -127,10 +127,18 @@ function classifyTokens(counts, tiers) {
 }
 
 async function catalogHygiene() {
-  const catalogPath = path.join(ROOT, 'public/js/runtime/module-catalog.js');
+  const familyFiles = [
+    'module-catalog-core.js',
+    'module-catalog-feature.js',
+    'module-catalog-region.js',
+    'module-catalog-enhancement.js',
+  ];
   let text;
   try {
-    text = await fs.readFile(catalogPath, 'utf8');
+    const parts = await Promise.all(
+      familyFiles.map((file) => fs.readFile(path.join(ROOT, 'public/js/runtime', file), 'utf8')),
+    );
+    text = parts.join('\n');
   } catch {
     return null;
   }

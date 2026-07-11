@@ -13,22 +13,24 @@
    17. Responsive alignment
    ========================================================================== */
 
-@container (max-width: 38rem) {
-  :where(.frame-topline, .frame-heading) {
-    align-items: stretch;
-  }
+@supports (container-type: inline-size) {
+  @container (max-width: 38rem) {
+    :where(.frame-topline, .frame-heading) {
+      align-items: stretch;
+    }
 
-  :where(.frame-topline > .spec-strip,
-         .frame-topline > .frame-operators,
-         .frame-topline > .spw-component-meta,
-         .frame-heading > .spw-component-meta) {
-    width: 100%;
-    margin-left: 0;
-    justify-content: flex-start;
-  }
+    :where(.frame-topline > .spec-strip,
+           .frame-topline > .frame-operators,
+           .frame-topline > .spw-component-meta,
+           .frame-heading > .spw-component-meta) {
+      width: 100%;
+      margin-left: 0;
+      justify-content: flex-start;
+    }
 
-  :where(.frame-operators > *, .spec-strip > *, .spw-component-meta > *) {
-    flex: 0 1 auto;
+    :where(.frame-operators > *, .spec-strip > *, .spw-component-meta > *) {
+      flex: 0 1 auto;
+    }
   }
 }
 
