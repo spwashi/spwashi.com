@@ -59,6 +59,15 @@
   --spw-floating-safe-inset: max(1rem, env(safe-area-inset-bottom));
   --spw-floating-menu-clearance: 0px;
   box-sizing: border-box;
+  min-inline-size: 0;
+  max-inline-size: calc(100vi - (2 * var(--spw-floating-inline-gutter, 0.75rem)));
+  overflow-wrap: anywhere;
+  text-wrap: pretty;
+}
+
+:where([data-spw-floating-chrome="true"]) :where(button, a, [role="button"], p, li, span) {
+  min-inline-size: 0;
+  max-inline-size: 100%;
 }
 
 :where([data-spw-floating-chrome="true"][data-spw-chrome-tier="floating"]) {
@@ -221,8 +230,13 @@
   display: grid;
   justify-items: end;
   gap: 0.45rem;
-  inline-size: min(25rem, calc(100vw - 1.2rem));
+  inline-size: auto;
+  max-inline-size: min(25rem, calc(100vw - 1.2rem));
   pointer-events: none;
+}
+
+:where([data-spw-floating-chrome="true"][data-spw-chrome-role="state-inspector"][data-spw-state-inspector="open"]) {
+  inline-size: min(25rem, calc(100vw - 1.2rem));
 }
 
 :where([data-spw-floating-chrome="true"][data-spw-chrome-role="state-inspector"] > *) {
@@ -468,7 +482,8 @@ html:has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) :wher
 :where(.spw-reward-dock[data-spw-chrome-role="collection-dock"]) {
   position: fixed;
   inset-block-end: calc(
-    max(0.75rem, env(safe-area-inset-bottom)) + var(--spw-bottom-chrome-clearance, 0px)
+    var(--spw-floating-slot-bottom-base, max(0.75rem, env(safe-area-inset-bottom)))
+    + var(--spw-floating-menu-clearance, 0px)
   );
   inset-inline-start: 50%;
   translate: -50% 0;

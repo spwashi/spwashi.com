@@ -32,6 +32,8 @@
 @import url('./components/content.css') layer(components);
 @import url('./components/controls.css') layer(components);
 @import url('./components/runtime-states.css') layer(components);
+@import url('./components/query-composer.css') layer(components);
+@import url('./systems/semantic-copy-lens.css') layer(systems);
 
 @import url('./handles/cognitive-handles.css') layer(handles);
 @import url('./handles/operators.css') layer(handles);

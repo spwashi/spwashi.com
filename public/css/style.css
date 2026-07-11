@@ -8,6 +8,7 @@
 @import url('/public/css/components/promo-wonder-cycle.css') layer(components);
 
 @import url('/public/css/systems/pretext-physics.css') layer(systems);
+@import url('/public/css/systems/feature-discovery.css') layer(systems);
 @import url('/public/css/systems/svg-surfaces.css') layer(systems);
 @import url('/public/css/systems/svg-personas.css') layer(systems);
 @import url('/public/css/systems/surfaces/rpg.css') layer(systems);

@@ -422,6 +422,30 @@
   min-width: 0;
 }
 
+/* Structural slots inside columnar component shells must keep the component's
+   available measure. Several frame families use align-items:flex-start; without
+   an explicit stretch, prose slots collapse to min-content and render as a
+   vertical ribbon of words. */
+:where(
+  .site-frame,
+  .frame-panel,
+  .frame-card,
+  .media-card,
+  .software-card,
+  .operator-card,
+  .mode-panel,
+  .ref-card
+) > :where(
+  [data-spw-slot="header"],
+  [data-spw-slot="body"],
+  [data-spw-slot="figure"],
+  [data-spw-slot="footer"]
+) {
+  align-self: stretch;
+  inline-size: 100%;
+  max-inline-size: 100%;
+}
+
 :where([data-spw-slot="header"], .frame-topline, .frame-heading) {
   display: flex;
   align-items: flex-start;
@@ -473,6 +497,10 @@
   color: var(--ink-soft, rgba(0, 0, 0, 0.6));
   font-size: 0.88em;
   max-inline-size: 65ch;
+}
+
+:where([data-spw-slot="footer"]) {
+  min-width: 0;
 }
 
 :where(.spw-semantic-seam) {

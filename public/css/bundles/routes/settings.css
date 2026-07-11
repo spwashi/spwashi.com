@@ -853,6 +853,129 @@
   flex-wrap: wrap;
   gap: var(--space-xs, 0.5rem);
 }
+
+/* Feature scopes technical readout (inspect only — no storage) */
+:where(body[data-spw-surface="settings"] .settings-feature-scope-panel) {
+  margin-top: var(--space-lg, 1.5rem);
+  display: grid;
+  gap: var(--space-sm, 0.75rem);
+}
+
+:where(body[data-spw-surface="settings"] .settings-feature-scope-panel > p) {
+  margin: 0;
+  max-inline-size: 58ch;
+  color: var(--settings-ink-soft);
+  line-height: 1.55;
+}
+
+:where(body[data-spw-surface="settings"] .settings-feature-scope-inline) {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: var(--text-size-label, 0.72rem);
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+  color: var(--settings-accent);
+}
+
+:where(body[data-spw-surface="settings"] .settings-feature-scope-list) {
+  display: grid;
+  gap: var(--space-xs, 0.5rem);
+  margin-top: var(--space-xs, 0.5rem);
+}
+
+:where(body[data-spw-surface="settings"] .settings-feature-scope-empty) {
+  margin: 0;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--settings-control-line-soft);
+  border-radius: var(--shape-component, 6px);
+  background: var(--settings-control-bg);
+  color: var(--settings-ink-soft);
+}
+
+:where(body[data-spw-surface="settings"] .settings-feature-scope-row) {
+  display: grid;
+  grid-template-columns: minmax(8rem, 12rem) auto 1fr;
+  gap: 0.45rem 0.75rem;
+  align-items: baseline;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid var(--settings-control-line-soft);
+  border-radius: var(--shape-component, 6px);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 62%),
+    var(--settings-control-bg);
+}
+
+:where(body[data-spw-surface="settings"] .settings-feature-scope-row[data-site-feature-scope-kind="scope-idle"]) {
+  opacity: 0.78;
+}
+
+:where(body[data-spw-surface="settings"] .settings-feature-scope-token) {
+  font-size: var(--text-size-xs, 0.82rem);
+  color: var(--settings-ink-strong);
+}
+
+:where(body[data-spw-surface="settings"] .settings-feature-scope-badge) {
+  font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
+  font-size: var(--text-size-label, 0.72rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--settings-accent);
+}
+
+:where(body[data-spw-surface="settings"] .settings-feature-scope-badge[data-kind="presence-only"]) {
+  color: color-mix(in srgb, var(--op-probe-color, hsl(270 40% 42%)) 88%, var(--settings-ink));
+}
+
+:where(body[data-spw-surface="settings"] .settings-feature-scope-badge[data-kind="scope-idle"]) {
+  color: var(--settings-muted);
+}
+
+:where(body[data-spw-surface="settings"] .settings-feature-scope-detail) {
+  font-size: var(--text-size-xs, 0.82rem);
+  color: var(--settings-ink-soft);
+  line-height: 1.45;
+}
+
+@media (max-width: 40rem) {
+  :where(body[data-spw-surface="settings"] .settings-feature-scope-row) {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Partial theatrics lab (embeddable on settings; pattern reusable elsewhere) */
+:where(body[data-spw-surface="settings"] .settings-partial-lab-panel) {
+  margin-top: var(--space-lg, 1.5rem);
+  display: grid;
+  gap: var(--space-sm, 0.75rem);
+}
+
+:where(body[data-spw-surface="settings"] .settings-partial-lab-panel > p) {
+  margin: 0;
+  max-inline-size: 62ch;
+  color: var(--settings-ink-soft);
+  line-height: 1.55;
+}
+
+:where(body[data-spw-surface="settings"] .settings-feature-lab-toggles) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+:where(
+  body[data-spw-surface="settings"] [data-site-feature-lab-toggle][aria-pressed="true"],
+  body[data-spw-surface="website"] [data-site-feature-lab-toggle][aria-pressed="true"]
+) {
+  outline: 2px solid color-mix(in srgb, var(--op-topic-color, #2f6f5e) 55%, transparent);
+  outline-offset: 1px;
+}
+
+:where(
+  body[data-spw-surface="settings"] [data-site-feature-lab-toggle][data-site-feature-lab-state="off"],
+  body[data-spw-surface="website"] [data-site-feature-lab-toggle][data-site-feature-lab-state="off"]
+) {
+  opacity: 0.72;
+}
 }
 
 /* /public/css/routes/surfaces/settings-runtime.css */

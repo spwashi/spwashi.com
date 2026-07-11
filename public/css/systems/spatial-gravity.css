@@ -31,7 +31,12 @@
  * two-axis edge gravity (top-left, bottom-right, …).
  */
 
-[data-spw-gravity]:not([data-spw-edge-gravity="none"]) {
+/* Establish a positioning context for the edge-glow ::after — but never on
+   chrome that already positions itself (fixed/absolute floating chrome), since
+   this rule lives in a later cascade layer and would otherwise override the
+   author's position and drop the element out of its anchor. Fixed/absolute
+   already form a containing block, so the ::after still anchors correctly. */
+[data-spw-gravity]:not([data-spw-edge-gravity="none"]):not([data-spw-floating-chrome="true"]) {
     position: relative;
 }
 

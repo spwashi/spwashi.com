@@ -218,6 +218,28 @@
   gap: 0.42rem;
 }
 
+/* Embeddable partial theatrics / feature-lab stack (settings + design specimens) */
+:where(.spw-partial-lab-stack) {
+  display: grid;
+  gap: 0.65rem;
+  margin-block-start: 0.35rem;
+}
+
+:where(.settings-feature-lab-toggles) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+:where([data-site-feature-lab-toggle][aria-pressed="true"]) {
+  outline: 2px solid color-mix(in srgb, var(--op-topic-color, #2f6f5e) 55%, transparent);
+  outline-offset: 1px;
+}
+
+:where([data-site-feature-lab-toggle][data-site-feature-lab-state="off"]) {
+  opacity: 0.72;
+}
+
 :where(.site-deviation-surface, .settings-note-list) {
   display: grid;
   gap: 0.5rem;

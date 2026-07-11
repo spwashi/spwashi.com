@@ -47,6 +47,7 @@
 @import url('/public/css/components/page-anatomy.css') layer(components);
 @import url('/public/css/components/floating-chrome.css') layer(components);
 @import url('/public/css/components/runtime-states.css') layer(components);
+@import url('/public/css/components/query-composer.css') layer(components);
 @import url('/public/css/components/embedded-workshop.css') layer(components);
 @import url('/public/css/components/frame-controls.css') layer(components);
 @import url('/public/css/components/charge-cycle.css') layer(components);
@@ -76,6 +77,7 @@
 @import url('/public/css/systems/spw-key-events.css') layer(systems);
 @import url('/public/css/systems/interactive-medium.css') layer(systems);
 @import url('/public/css/systems/coloring-depth.css') layer(systems);
+@import url('/public/css/systems/semantic-copy-lens.css') layer(systems);
 @import url('/public/css/systems/surfaces/reading-layout.css') layer(systems);
 @import url('/public/css/systems/surfaces/philosophy.css') layer(systems);
 

@@ -150,6 +150,8 @@
   opacity: 0.9;
   transform: scaleX(var(--spw-section-progress, 0));
   transform-origin: left center;
+  /* section-step (0–1 within current section) softens opacity as you enter. */
+  opacity: calc(0.55 + (var(--spw-section-step, 0) * 0.45));
   transition:
     transform 180ms var(--ease-settle, ease),
     opacity 180ms var(--ease-settle, ease);

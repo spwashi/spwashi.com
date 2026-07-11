@@ -265,6 +265,7 @@
 [data-spw-slot="body"] { order: 0; flex: 1 1 auto; }
 [data-spw-slot="figure"] { order: 1; }
 [data-spw-slot="actions"] { order: 2; }
+[data-spw-slot="footer"] { order: 3; }
 
 /* Slot interaction */
 :where(.site-frame[data-spw-active="true"]) [data-spw-slot="header"] {

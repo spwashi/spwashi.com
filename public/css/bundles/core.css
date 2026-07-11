@@ -13678,6 +13678,30 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
   min-width: 0;
 }
 
+/* Structural slots inside columnar component shells must keep the component's
+   available measure. Several frame families use align-items:flex-start; without
+   an explicit stretch, prose slots collapse to min-content and render as a
+   vertical ribbon of words. */
+:where(
+  .site-frame,
+  .frame-panel,
+  .frame-card,
+  .media-card,
+  .software-card,
+  .operator-card,
+  .mode-panel,
+  .ref-card
+) > :where(
+  [data-spw-slot="header"],
+  [data-spw-slot="body"],
+  [data-spw-slot="figure"],
+  [data-spw-slot="footer"]
+) {
+  align-self: stretch;
+  inline-size: 100%;
+  max-inline-size: 100%;
+}
+
 :where([data-spw-slot="header"], .frame-topline, .frame-heading) {
   display: flex;
   align-items: flex-start;
@@ -13729,6 +13753,10 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
   color: var(--ink-soft, rgba(0, 0, 0, 0.6));
   font-size: 0.88em;
   max-inline-size: 65ch;
+}
+
+:where([data-spw-slot="footer"]) {
+  min-width: 0;
 }
 
 :where(.spw-semantic-seam) {
@@ -16558,98 +16586,8 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
     0 0 0 1px color-mix(in srgb, var(--spw-variant-accent, var(--active-op-color)) 14%, transparent);
 }
 
-/* Interaction semantics genome — animator-facing physics tokens (component-interaction-semantics.js) */
-:where([data-spw-component-genome]) {
-  --spw-physics-mass: 1;
-  --spw-physics-damping: 0.82;
-  --spw-physics-stiffness: 0.78;
-}
-
-:where([data-spw-physics-mass]) {
-  --spw-physics-mass: var(--spw-physics-mass, 1);
-}
-
-:where([data-spw-component-genome~="physics-light"]) {
-  --spw-physics-mass: 0.88;
-  --spw-physics-damping: 0.72;
-  --spw-physics-stiffness: 0.62;
-}
-
-:where([data-spw-component-genome~="physics-balanced"]) {
-  --spw-physics-mass: 1;
-  --spw-physics-damping: 0.82;
-  --spw-physics-stiffness: 0.78;
-}
-
-:where([data-spw-component-genome~="physics-charged"]) {
-  --spw-physics-mass: 1.14;
-  --spw-physics-damping: 0.9;
-  --spw-physics-stiffness: 0.92;
-}
-
-:where([data-spw-component-genome~="physics-scene"]) {
-  --spw-physics-mass: 1.08;
-  --spw-physics-damping: 0.86;
-  --spw-physics-stiffness: 0.84;
-}
-
-:where([data-spw-component-genome~="beat-approach"]) {
-  --spw-interaction-phase-weight: max(var(--spw-interaction-phase-weight, 0), 0.24);
-}
-
-:where([data-spw-component-genome~="beat-gather"]) {
-  --spw-interaction-phase-weight: max(var(--spw-interaction-phase-weight, 0), 0.42);
-}
-
-:where([data-spw-component-genome~="beat-commit"]) {
-  --spw-interaction-phase-weight: max(var(--spw-interaction-phase-weight, 0), 0.58);
-}
-
-:where([data-spw-component-genome~="beat-release"]) {
-  --spw-interaction-phase-weight: max(var(--spw-interaction-phase-weight, 0), 0.68);
-}
-
-:where([data-spw-component-genome~="beat-settle"]) {
-  --spw-ecology-settle-weight: max(var(--spw-ecology-settle-weight, 0), 0.72);
-}
-
-:where([data-spw-component-genome~="posture-mise"]) {
-  --spw-variant-accent: var(--op-object-color, var(--active-op-color));
-}
-
-:where([data-spw-component-genome~="posture-reduction"]) {
-  --spw-variant-accent: var(--op-stream-color, var(--active-op-color));
-}
-
-:where([data-spw-component-genome~="posture-ferment"]) {
-  --spw-variant-accent: var(--op-probe-color, var(--active-op-color));
-}
-
-:where([data-spw-copy-depth-resolved]:not([data-spw-copy-depth])) {
-  --spw-copy-depth-accent: var(--active-op-color, var(--component-accent));
-}
-
-:where(html[data-spw-module-visuals="on"]) :where([data-spw-copy-depth-resolved="entry"]:not([data-spw-copy-depth])) {
-  --spw-copy-depth-accent: var(--op-frame-color, var(--active-op-color));
-}
-
-:where(html[data-spw-module-visuals="on"]) :where([data-spw-copy-depth-resolved="rich"]:not([data-spw-copy-depth])) {
-  --spw-copy-depth-accent: var(--op-probe-color, var(--active-op-color));
-}
-
-:where(html[data-spw-module-visuals="on"]) :where([data-spw-copy-depth-resolved="technical"]:not([data-spw-copy-depth])) {
-  --spw-copy-depth-accent: var(--op-action-color, var(--active-op-color));
-}
-
-:where([data-spw-lifecycle-beat-resolved="gather"]) {
-  transition-duration: calc(var(--duration-base, 180ms) * var(--spw-physics-mass, 1));
-}
-
-:where([data-spw-lifecycle-beat-resolved="commit"]) {
-  box-shadow:
-    var(--spw-local-shadow, none),
-    0 0 0 1px color-mix(in srgb, var(--spw-variant-accent, var(--active-op-color)) 14%, transparent);
-}
+/* Genome + copy-depth accents: single chapter. Lens-sensitive copy lives in
+   systems/semantic-copy-lens.css (semantic bundle chunk). */
 }
 
 /* /public/css/components/semantic-resonance.css */
@@ -17596,6 +17534,7 @@ html[data-spw-font-size-scale="120"] [data-spw-vocab]) {
 [data-spw-slot="body"] { order: 0; flex: 1 1 auto; }
 [data-spw-slot="figure"] { order: 1; }
 [data-spw-slot="actions"] { order: 2; }
+[data-spw-slot="footer"] { order: 3; }
 
 /* Slot interaction */
 :where(.site-frame[data-spw-active="true"]) [data-spw-slot="header"] {
@@ -19347,6 +19286,28 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   gap: 0.42rem;
 }
 
+/* Embeddable partial theatrics / feature-lab stack (settings + design specimens) */
+:where(.spw-partial-lab-stack) {
+  display: grid;
+  gap: 0.65rem;
+  margin-block-start: 0.35rem;
+}
+
+:where(.settings-feature-lab-toggles) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+:where([data-site-feature-lab-toggle][aria-pressed="true"]) {
+  outline: 2px solid color-mix(in srgb, var(--op-topic-color, #2f6f5e) 55%, transparent);
+  outline-offset: 1px;
+}
+
+:where([data-site-feature-lab-toggle][data-site-feature-lab-state="off"]) {
+  opacity: 0.72;
+}
+
 :where(.site-deviation-surface, .settings-note-list) {
   display: grid;
   gap: 0.5rem;
@@ -20789,6 +20750,15 @@ html[data-spw-popup-posture="expressive"] .spw-parallel-nav {
   --spw-floating-safe-inset: max(1rem, env(safe-area-inset-bottom));
   --spw-floating-menu-clearance: 0px;
   box-sizing: border-box;
+  min-inline-size: 0;
+  max-inline-size: calc(100vi - (2 * var(--spw-floating-inline-gutter, 0.75rem)));
+  overflow-wrap: anywhere;
+  text-wrap: pretty;
+}
+
+:where([data-spw-floating-chrome="true"]) :where(button, a, [role="button"], p, li, span) {
+  min-inline-size: 0;
+  max-inline-size: 100%;
 }
 
 :where([data-spw-floating-chrome="true"][data-spw-chrome-tier="floating"]) {
@@ -20951,8 +20921,13 @@ html[data-spw-popup-posture="expressive"] .spw-parallel-nav {
   display: grid;
   justify-items: end;
   gap: 0.45rem;
-  inline-size: min(25rem, calc(100vw - 1.2rem));
+  inline-size: auto;
+  max-inline-size: min(25rem, calc(100vw - 1.2rem));
   pointer-events: none;
+}
+
+:where([data-spw-floating-chrome="true"][data-spw-chrome-role="state-inspector"][data-spw-state-inspector="open"]) {
+  inline-size: min(25rem, calc(100vw - 1.2rem));
 }
 
 :where([data-spw-floating-chrome="true"][data-spw-chrome-role="state-inspector"] > *) {
@@ -21198,15 +21173,24 @@ html:has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) :wher
 :where(.spw-reward-dock[data-spw-chrome-role="collection-dock"]) {
   position: fixed;
   inset-block-end: calc(
-    max(0.75rem, env(safe-area-inset-bottom)) + var(--spw-bottom-chrome-clearance, 0px)
+    var(--spw-floating-slot-bottom-base, max(0.75rem, env(safe-area-inset-bottom)))
+    + var(--spw-floating-menu-clearance, 0px)
   );
   inset-inline-start: 50%;
   translate: -50% 0;
-  display: grid;
-  justify-items: center;
+  /* Flex column-reverse so the panel sits above the trigger (opening upward
+     from this bottom anchor). When spatial gravity is mounted it owns the
+     direction via data-spw-open-direction from the systems layer; this is the
+     correct static fallback. */
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
   gap: 0.4rem;
   padding: 0;
   pointer-events: none;
+  /* Content ceiling for the gravity-driven reveal: grow to measured room, but
+     scroll a large collection rather than fill the column. */
+  --spw-gravity-reveal-max: 24rem;
   /* Settling mindfulness: stay invisible until the page has revealed the dock. */
   opacity: 0;
   transition: opacity 240ms ease, translate 240ms ease;
@@ -21574,6 +21558,79 @@ html:has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) :wher
 
 :where(html[data-spw-module-visuals="on"], html[data-spw-debug-mode="on"]) :where([data-spw-module-trigger-status="queued"], [data-spw-module-trigger-status="waiting"]) > :where(.frame-topline, .frame-heading)::after {
   opacity: 0.72;
+}
+
+/* Feature partial presence — learnable islands when orchestration is visible.
+   Outline only (no layout shift). Session feature-lab mutes use the same rail. */
+:where(html[data-spw-module-visuals="on"]) :where([data-spw-feature]) {
+  --spw-feature-island-ring:
+    0 0 0 1px color-mix(in srgb, var(--op-topic-color, #2f6f5e) 28%, transparent);
+  box-shadow: var(--spw-feature-island-ring), var(--spw-local-shadow, var(--component-shadow, none));
+  transition:
+    box-shadow var(--duration-base, 220ms) var(--ease-smooth, ease),
+    opacity var(--duration-base, 220ms) var(--ease-smooth, ease);
+}
+
+:where(html[data-spw-module-visuals="on"]) :where([data-spw-feature][data-spw-feature-encounter]) {
+  --spw-feature-island-ring:
+    0 0 0 1px color-mix(in srgb, var(--active-op-color, #008080) 38%, transparent),
+    0 0 12px color-mix(in srgb, var(--active-op-color, #008080) 10%, transparent);
+}
+
+/* Session feature lab: show that body features were rewritten this visit.
+   Prefer html::after so we do not fight body::after grain/debug overlays. */
+:where(body[data-spw-feature-lab="session"]) {
+  --spw-feature-lab-cue: 1;
+}
+
+:where(html[data-spw-module-visuals="on"]:has(body[data-spw-feature-lab="session"]))::after {
+  content: "feature lab active";
+  position: fixed;
+  inset-block-end: 0.65rem;
+  inset-inline-end: 0.65rem;
+  z-index: 40;
+  max-inline-size: min(28ch, calc(100vw - 1.5rem));
+  padding: 0.35rem 0.55rem;
+  border: 1px solid color-mix(in srgb, var(--op-probe-color, #7a4fb5) 36%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-strong, #fff) 92%, var(--op-probe-color, #7a4fb5) 8%);
+  color: color-mix(in srgb, var(--ink, #111) 82%, var(--op-probe-color, #7a4fb5) 18%);
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+  pointer-events: none;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+/* Mount pulse: brief learnable flash when a module writes effect tokens. */
+:where(html[data-spw-module-visuals="on"][data-spw-module-effect-pulse]) {
+  --spw-module-effect-pulse-ring:
+    inset 0 0 0 2px color-mix(in srgb, var(--op-action-color, #006666) 22%, transparent);
+  outline: 2px solid color-mix(in srgb, var(--op-action-color, #006666) 28%, transparent);
+  outline-offset: -2px;
+  transition: outline-color 320ms var(--ease-smooth, ease);
+}
+
+/* Ecology phase label for inspect postures — teaches reflow as a sequence.
+   html::before keeps body free for grain texture. */
+:where(
+  html[data-spw-module-visuals="on"][data-spw-loading-ecology-phase]:not([data-spw-loading-ecology-phase="settled"])
+)::before {
+  content: "load · " attr(data-spw-loading-ecology-phase);
+  position: fixed;
+  inset-block-start: 0.55rem;
+  inset-inline-start: 0.55rem;
+  z-index: 40;
+  padding: 0.3rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--op-action-color, #006666) 30%, transparent);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 90%, var(--op-action-color, #006666) 10%);
+  color: color-mix(in srgb, var(--ink, #111) 80%, var(--op-action-color, #006666) 20%);
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  pointer-events: none;
 }
 
 
@@ -22688,6 +22745,131 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
 }
 }
 
+/* /public/css/components/query-composer.css */
+@layer components {
+/* ==========================================================================
+   query-composer.css
+   --------------------------------------------------------------------------
+   Embeddable share-setup UI for feature hubs and floating chrome (state satchel).
+   Instruments live in query-link-composer.js; this file owns layout + expand.
+   ========================================================================== */
+
+:where(.spw-query-composer) {
+  display: grid;
+  gap: 0.55rem;
+  min-inline-size: 0;
+  padding: var(--inset-component, 0.9rem);
+  border: 1px solid color-mix(in srgb, var(--line-strong, rgba(0, 128, 128, 0.28)) 55%, transparent);
+  border-radius: var(--shape-component, 6px);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.16), transparent 58%),
+    color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.94)) 94%, transparent);
+}
+
+:where(.spw-query-composer__kicker) {
+  margin: 0;
+  font-family: var(--site-mono-font, monospace);
+  font-size: var(--text-size-label, 0.72rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--op-action-color, #006666) 78%, var(--ink, #111));
+}
+
+:where(.spw-query-composer__title) {
+  margin: 0;
+  font-size: var(--text-size-sm, 0.95rem);
+  color: var(--ink-strong, rgba(14, 18, 20, 0.96));
+}
+
+:where(.spw-query-composer__note) {
+  margin: 0;
+  max-inline-size: 52ch;
+  color: color-mix(in srgb, var(--ink, #111) 78%, transparent);
+  line-height: 1.5;
+  font-size: var(--text-size-xs, 0.82rem);
+}
+
+:where(.spw-query-composer__fields) {
+  display: grid;
+  gap: 0.55rem;
+}
+
+:where(.spw-query-composer__group-label) {
+  margin: 0 0 0.25rem;
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--ink, #111) 62%, transparent);
+}
+
+:where(.spw-query-composer__chips, .spw-query-composer__actions, .spw-query-composer__settings-row) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+:where(.spw-query-composer__preview) {
+  display: block;
+  margin: 0;
+  padding: 0.45rem 0.6rem;
+  border-radius: var(--shape-element, 4px);
+  background: color-mix(in srgb, var(--op-action-color, #006666) 8%, transparent);
+  color: color-mix(in srgb, var(--op-action-color, #006666) 88%, var(--ink, #111));
+  font-size: 0.72rem;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+:where([data-spw-query-composer-key][aria-pressed="true"]),
+:where([data-spw-query-composer-include-settings][aria-pressed="true"]) {
+  outline: 2px solid color-mix(in srgb, var(--op-action-color, #006666) 48%, transparent);
+  outline-offset: 1px;
+}
+
+:where([data-spw-query-composer-key][data-spw-query-composer-state="off"]) {
+  opacity: 0.78;
+}
+
+/* Compact / floating chrome: collapsed by default, expand for full instruments */
+:where(.spw-query-composer[data-spw-query-composer-compact="true"]:not([data-spw-query-composer-expanded="true"]))
+  :where(
+    [data-spw-query-composer-fields],
+    [data-spw-query-composer-preview],
+    [data-spw-query-composer-actions]
+  ) {
+  display: none;
+}
+
+:where(.spw-query-composer[data-spw-query-composer-compact="true"][data-spw-query-composer-expanded="true"]) {
+  max-block-size: min(70vh, 28rem);
+  overflow: auto;
+}
+
+:where(.spw-state-inspector__share) {
+  margin-block: 0.35rem;
+}
+
+:where(.spw-state-inspector__panel .spw-query-composer) {
+  --chrome-pad: 0.45rem;
+  padding: var(--chrome-pad);
+  font-size: var(--chrome-font, 0.82rem);
+}
+
+/* Module-visuals: treat composer hosts as discoverable islands */
+:where(html[data-spw-module-visuals="on"] [data-spw-feature="query-composer"]) {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--op-action-color, #006666) 32%, transparent),
+    var(--spw-local-shadow, none);
+}
+
+/* Floating chrome competition: shrink quiet composers when crowded */
+:where(html[data-spw-floating-chrome-competition="crowded"] .spw-query-composer--chrome:not([data-spw-query-composer-expanded="true"])) {
+  opacity: 0.88;
+}
+}
+
 /* /public/css/components/embedded-workshop.css */
 @layer components {
 /* ==========================================================================
@@ -23632,7 +23814,12 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
  * two-axis edge gravity (top-left, bottom-right, …).
  */
 
-[data-spw-gravity]:not([data-spw-edge-gravity="none"]) {
+/* Establish a positioning context for the edge-glow ::after — but never on
+   chrome that already positions itself (fixed/absolute floating chrome), since
+   this rule lives in a later cascade layer and would otherwise override the
+   author's position and drop the element out of its anchor. Fixed/absolute
+   already form a containing block, so the ::after still anchors correctly. */
+[data-spw-gravity]:not([data-spw-edge-gravity="none"]):not([data-spw-floating-chrome="true"]) {
     position: relative;
 }
 
@@ -27257,26 +27444,44 @@ html[data-spw-theme-pack="glass-console"] {
   --spw-palette-treat-strength: 0;
   --spw-palette-treat-accent: var(--spw-palette-probe-1, var(--active-op-color, #008080));
   --spw-palette-treat-ring: transparent;
+  /* Session-depth gain: escalates the sprinkle the deeper the reader is into a
+     rich, settled session. Written from palette-treat-discovery.js via
+     data-spw-palette-treat-depth (0..4). 1 = first-visit baseline. */
+  --spw-palette-treat-depth-gain: 1;
 }
 
-:where(html[data-spw-palette-treat-active="on"]) {
-  --spw-palette-treat-strength: calc(var(--spw-freshness-weight, 0.62) * var(--spw-microinteraction-pulse-intensity, 1));
+/* These live-state overrides target the root element, so they must out-specify
+   the :root defaults above — otherwise :root (specificity 0,1,0) wins and the
+   sprinkle strength/accent stay pinned to their resting values. :root[attr]
+   (0,2,0) clears that bar; :where(html[attr]) does NOT (it is specificity 0),
+   so do not "simplify" these back to :where — it silently disables the treat. */
+:root[data-spw-palette-treat-depth="1"] { --spw-palette-treat-depth-gain: 1.12; }
+:root[data-spw-palette-treat-depth="2"] { --spw-palette-treat-depth-gain: 1.26; }
+:root[data-spw-palette-treat-depth="3"] { --spw-palette-treat-depth-gain: 1.42; }
+:root[data-spw-palette-treat-depth="4"] { --spw-palette-treat-depth-gain: 1.6; }
+
+:root[data-spw-palette-treat-active="on"] {
+  --spw-palette-treat-strength: calc(
+    var(--spw-freshness-weight, 0.62)
+    * var(--spw-microinteraction-pulse-intensity, 1)
+    * var(--spw-palette-treat-depth-gain, 1)
+  );
   --palette-depth-strength: calc(var(--palette-depth-strength, 1) * (1 + (var(--spw-palette-treat-strength) * 0.1)));
 }
 
-:where(html[data-spw-palette-treat-probe="1"]) {
+:root[data-spw-palette-treat-probe="1"] {
   --spw-palette-treat-accent: var(--spw-palette-probe-1, var(--active-op-color, #008080));
 }
 
-:where(html[data-spw-palette-treat-probe="2"]) {
+:root[data-spw-palette-treat-probe="2"] {
   --spw-palette-treat-accent: var(--spw-palette-probe-2, var(--op-object-color, #c68a22));
 }
 
-:where(html[data-spw-palette-treat-probe="3"]) {
+:root[data-spw-palette-treat-probe="3"] {
   --spw-palette-treat-accent: var(--spw-palette-probe-3, var(--op-ref-color, #1d57a3));
 }
 
-:where(html[data-spw-palette-treat-probe="4"]) {
+:root[data-spw-palette-treat-probe="4"] {
   --spw-palette-treat-accent: var(--spw-palette-probe-4, var(--op-probe-color, #6a3fb8));
 }
 
@@ -28091,6 +28296,198 @@ html[data-spw-theme-pack="glass-console"] {
 :where(html[data-spw-module-visuals="on"] [data-spw-composition-tier]) {
   outline: 1px dashed color-mix(in srgb, var(--spw-composition-depth-accent) 28%, transparent);
   outline-offset: 0.12rem;
+}
+}
+
+/* /public/css/systems/semantic-copy-lens.css */
+@layer systems {
+/* ==========================================================================
+   systems/semantic-copy-lens.css
+   --------------------------------------------------------------------------
+   Reads as: lens-sensitive copy and kind diversity for freshness and flow.
+   Was: ad-hoc copy-depth notes + duplicate accents in semantic-variants.
+   Genome: data-spw-copy-lens, data-spw-active-lens-mode, data-spw-kind hook|lens|metric
+   Probe: switch a mode-switch lens; toggle semantic density; observe which
+         copy layers appear and how hook/lens/metric rhythm shifts.
+
+   Chunk of the semantic surface (with coloring-depth.css) so copy + lens
+   stay a readable chapter instead of growing semantic-variants indefinitely.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Lens-sensitive copy
+   Space-separated tokens on data-spw-copy-lens, e.g. "surface default" or
+   "syntax artifacts". Hidden until density + active lens allow them.
+   -------------------------------------------------------------------------- */
+
+:where([data-spw-copy-lens]) {
+  display: none;
+  margin-block: 0.55rem;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid color-mix(
+    in srgb,
+    var(--spw-copy-depth-accent, var(--active-op-color, #008080)) 22%,
+    var(--line, rgba(14, 18, 20, 0.14))
+  );
+  border-radius: var(--component-radius-loose, 8px);
+  background: color-mix(
+    in srgb,
+    var(--surface-strong, #fff) 94%,
+    var(--spw-copy-depth-accent, var(--active-op-color, #008080)) 6%
+  );
+  color: color-mix(in srgb, var(--ink-soft, rgba(0, 0, 0, 0.62)) 88%, var(--ink, #111) 12%);
+  line-height: 1.55;
+  animation: none;
+}
+
+:where([data-spw-copy-lens])::before {
+  display: block;
+  margin-block-end: 0.28rem;
+  color: color-mix(in srgb, var(--spw-copy-depth-accent, var(--active-op-color)) 70%, var(--ink, #111) 30%);
+  content: attr(data-spw-copy-label);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Always-visible default line when no lens is active */
+:where(
+  html:not([data-spw-active-lens-mode]) [data-spw-copy-lens~="default"],
+  html:not([data-spw-active-lens-mode]) [data-spw-copy-lens~="always"],
+  [data-spw-copy-lens~="always"]
+) {
+  display: block;
+}
+
+/* Match document active lens (from lens-modes.js) */
+:where(html[data-spw-active-lens-mode="surface"] [data-spw-copy-lens~="surface"]),
+:where(html[data-spw-active-lens-mode="syntax"] [data-spw-copy-lens~="syntax"]),
+:where(html[data-spw-active-lens-mode="artifacts"] [data-spw-copy-lens~="artifacts"]),
+:where(html[data-spw-active-lens-mode="website"] [data-spw-copy-lens~="website"]),
+:where(html[data-spw-active-lens-mode="systems"] [data-spw-copy-lens~="systems"]),
+:where(html[data-spw-active-lens-mode="learning"] [data-spw-copy-lens~="learning"]),
+:where(html[data-spw-active-lens-mode="making"] [data-spw-copy-lens~="making"]),
+:where(html[data-spw-active-lens-mode="current"] [data-spw-copy-lens~="current"]),
+:where(html[data-spw-active-lens-mode="source"] [data-spw-copy-lens~="source"]),
+:where(html[data-spw-active-lens-mode="library"] [data-spw-copy-lens~="library"]),
+:where(html[data-spw-active-lens-mode="memory"] [data-spw-copy-lens~="memory"]),
+:where(html[data-spw-active-lens-mode="operators"] [data-spw-copy-lens~="operators"]),
+:where(html[data-spw-active-lens-mode="principles"] [data-spw-copy-lens~="principles"]),
+:where(html[data-spw-active-lens-mode="workbench"] [data-spw-copy-lens~="workbench"]),
+:where(html[data-spw-active-lens-mode="read"] [data-spw-copy-lens~="read"]),
+:where(html[data-spw-active-lens-mode="inspect"] [data-spw-copy-lens~="inspect"]),
+:where(html[data-spw-active-lens-mode="reuse"] [data-spw-copy-lens~="reuse"]),
+:where(html[data-spw-active-lens-mode="play"] [data-spw-copy-lens~="play"]) {
+  display: block;
+  animation: spw-lens-copy-in 420ms var(--ease-smooth, ease);
+}
+
+/* Host-scoped lens (frame already set data-spw-lens-mode) */
+:where([data-spw-lens-mode="surface"] [data-spw-copy-lens~="surface"]),
+:where([data-spw-lens-mode="syntax"] [data-spw-copy-lens~="syntax"]),
+:where([data-spw-lens-mode="artifacts"] [data-spw-copy-lens~="artifacts"]),
+:where([data-spw-lens-mode="website"] [data-spw-copy-lens~="website"]),
+:where([data-spw-lens-mode="read"] [data-spw-copy-lens~="read"]),
+:where([data-spw-lens-mode="inspect"] [data-spw-copy-lens~="inspect"]),
+:where([data-spw-lens-mode="reuse"] [data-spw-copy-lens~="reuse"]),
+:where([data-spw-lens-mode="play"] [data-spw-copy-lens~="play"]) {
+  display: block;
+  animation: spw-lens-copy-in 420ms var(--ease-smooth, ease);
+}
+
+@keyframes spw-lens-copy-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where([data-spw-copy-lens]) {
+    animation: none !important;
+  }
+}
+
+/* Freshness: when a lens is active, slightly lift matching copy accent */
+:where(html[data-spw-active-lens-mode] [data-spw-copy-lens]) {
+  --spw-copy-depth-line-mix: calc(var(--spw-copy-depth-line-mix, 22%) + 4%);
+  --spw-copy-depth-bg-mix: calc(var(--spw-copy-depth-bg-mix, 4%) + 2%);
+}
+
+/* Flow: stack consecutive lens/copy layers with a quieter gap */
+:where([data-spw-copy-lens] + [data-spw-copy-lens]),
+:where([data-spw-copy-depth] + [data-spw-copy-lens]),
+:where([data-spw-copy-lens] + [data-spw-copy-depth]) {
+  margin-block-start: 0.4rem;
+}
+
+/* --------------------------------------------------------------------------
+   Component kind diversity — distinct cadence for underused kinds
+   -------------------------------------------------------------------------- */
+
+:where(main [data-spw-kind="hook"], main [data-spw-component-kind="hook"]) {
+  --spw-kind-rhythm: 1.12;
+  --spw-variant-accent: var(--op-action-color, var(--active-op-color, #006666));
+  margin-block: calc(0.85rem * var(--spw-kind-rhythm, 1));
+}
+
+:where(main [data-spw-kind="lens"], main [data-spw-component-kind="lens"]) {
+  --spw-kind-rhythm: 0.92;
+  --spw-variant-accent: var(--op-probe-color, var(--active-op-color, #7a4fb5));
+  padding-block: 0.35rem;
+  border-inline-start: 2px solid color-mix(in srgb, var(--spw-variant-accent) 42%, transparent);
+  padding-inline-start: 0.75rem;
+}
+
+:where(main [data-spw-kind="metric"], main [data-spw-component-kind="metric"]) {
+  --spw-kind-rhythm: 0.88;
+  --spw-variant-accent: var(--op-stream-color, var(--active-op-color, #2a7a6f));
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+}
+
+:where(main [data-spw-kind="metric"] .spw-metric-grid),
+:where(.spw-metric-grid) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 8.5rem), 1fr));
+  gap: 0.5rem;
+  margin-block: 0.55rem;
+}
+
+:where(.spw-metric-grid > *) {
+  margin: 0;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid color-mix(in srgb, var(--op-stream-color, #2a7a6f) 22%, var(--line, rgba(14, 18, 20, 0.14)));
+  border-radius: var(--shape-component, 6px);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 94%, var(--op-stream-color, #2a7a6f) 6%);
+}
+
+:where(.spw-metric-grid strong) {
+  display: block;
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--op-stream-color, #2a7a6f) 70%, var(--ink, #111));
+}
+
+/* Collection fresh pulse when a new kind is discovered */
+:where(html[data-spw-collection-fresh] main [data-spw-kind]) {
+  transition: box-shadow 480ms var(--ease-smooth, ease);
+}
+
+:where(html[data-spw-collection-fresh~="hook"] main [data-spw-kind="hook"]),
+:where(html[data-spw-collection-fresh~="lens"] main [data-spw-kind="lens"]),
+:where(html[data-spw-collection-fresh~="metric"] main [data-spw-kind="metric"]) {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--spw-variant-accent, var(--active-op-color)) 28%, transparent),
+    0 0 14px color-mix(in srgb, var(--spw-variant-accent, var(--active-op-color)) 12%, transparent);
 }
 }
 
