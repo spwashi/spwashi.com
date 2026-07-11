@@ -128,3 +128,41 @@ export type RouteRuntimeManifest = {
   };
   surfaces: Record<string, number>;
 };
+
+/** Mount timings accepted by module-catalog / runtime-contracts. */
+export const VALID_MOUNT_WHEN = Object.freeze([
+  'immediate',
+  'visible',
+  'idle',
+  'interaction',
+  'region',
+  'settled',
+] as const);
+
+export type MountWhen = (typeof VALID_MOUNT_WHEN)[number];
+
+/** Catalog layers accepted by module-catalog / runtime-contracts. */
+export const VALID_MODULE_LAYERS = Object.freeze([
+  'core',
+  'feature',
+  'region',
+  'enhancement',
+] as const);
+
+export type ModuleLayer = (typeof VALID_MODULE_LAYERS)[number];
+
+/**
+ * Hygiene posture for new catalog entries (agentic-development audit).
+ * Not enforced as errors — used as documentation + recommendation targets.
+ */
+export type CatalogHygieneHints = {
+  /** Prefer VISIBLE/IDLE/INTERACTION unless CORE identity/settings/shell. */
+  preferNonImmediate: boolean;
+  /**
+   * Pair features: with CSS BEHAVIOR_SCOPES when optional CSS is involved,
+   * or with PRESENCE_FEATURE_KEYS (operators, navigator, …) for JS-only gates.
+   */
+  preferFeaturesGate: boolean;
+  /** Stamp timingArc on IMMEDIATE enhancement with broad effectScope. */
+  preferTimingArcWhenImmediate: boolean;
+};

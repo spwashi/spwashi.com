@@ -42,8 +42,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export const ROOT_DIR = path.resolve(__dirname, '..', '..', '..');
+/** Repo-local agent cache by default (was TMPDIR — easy to leave stale). Override with SPW_ROUTE_MANIFEST_OUTPUT. */
 export const ROUTE_MANIFEST_OUTPUT = process.env.SPW_ROUTE_MANIFEST_OUTPUT
-  || path.join(process.env.TMPDIR || '/tmp', 'spwashi-route-runtime-manifest.json');
+  || path.join(ROOT_DIR, '.agents/state/runtime/route-runtime-manifest.json');
 
 function relativeRepoPath(absolutePath: string): string {
   return toPosixPath(path.relative(ROOT_DIR, absolutePath));
@@ -214,8 +215,9 @@ async function parseRouteFile(absoluteFilePath: string) {
 export async function buildRouteRuntimeManifest() {
   const routeFiles = await walkForRouteFiles(ROOT_DIR);
   const parsedRoutes = await Promise.all(routeFiles.map((filePath) => parseRouteFile(filePath)));
-  const siteJs = await fs.readFile(path.join(ROOT_DIR, 'public/js/site.js'), 'utf8');
-  const runtimeDefinitions = collectRuntimeDefinitionsFromSource(siteJs);
+  const moduleCatalogPath = path.join(ROOT_DIR, 'public/js/runtime/module-catalog.js');
+  const moduleCatalogSource = await fs.readFile(moduleCatalogPath, 'utf8');
+  const runtimeDefinitions = collectRuntimeDefinitionsFromSource(moduleCatalogSource);
   const svgAssetFiles = await walkForFilesByExtension(path.join(ROOT_DIR, 'public'), '.svg');
   const svgAssets = svgAssetFiles.map((absolutePath) => `/${relativeRepoPath(absolutePath)}`).sort();
 

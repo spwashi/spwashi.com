@@ -1,17 +1,19 @@
 import process from 'node:process';
-import { ROUTE_MANIFEST_OUTPUT, collectManifestIssues, runGitDiffCheck, runSyntaxChecks, writeRouteRuntimeManifest, } from './site-contracts/index.mjs';
+import { buildRouteRuntimeManifest, collectManifestIssues, runGitDiffCheck, runSyntaxChecks, } from './site-contracts/index.mjs';
 import { collectCssContractReport } from './css-contracts.mjs';
 import { collectJsonContractReport } from './json-contracts.mjs';
 import { collectRuntimeContractReport } from './runtime-contracts.mjs';
 export async function main() {
-    const manifest = await writeRouteRuntimeManifest();
+    // Validation should not mutate the repo-local agent cache. `npm run manifest`
+    // is the explicit refresh command; checks derive the same data in memory.
+    const manifest = await buildRouteRuntimeManifest();
     const manifestIssues = collectManifestIssues(manifest);
     const syntaxReport = await runSyntaxChecks();
     const cssReport = await collectCssContractReport();
     const runtimeReport = await collectRuntimeContractReport();
     const jsonReport = await collectJsonContractReport();
     const gitDiffResult = runGitDiffCheck();
-    console.log(`[check] manifest=${ROUTE_MANIFEST_OUTPUT}`);
+    console.log('[check] manifest=in-memory (refresh cache with npm run manifest)');
     console.log(`[check] routes=${manifest.routeCount} svgRoutes=${manifest.maps.svgRoutes.length} specRoutes=${manifest.maps.specRoutes.length}`);
     console.log(`[check] syntax targets=${syntaxReport.targets.length}`);
     console.log(`[check] css files=${cssReport.cssFiles.length} imports=${cssReport.imports.length} routeStylesheets=${cssReport.linkedStylesheets.length} sources=${cssReport.sourceFiles.length}`);

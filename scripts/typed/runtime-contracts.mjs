@@ -4,9 +4,29 @@ import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 import { BEHAVIOR_SCOPE_MODULE_HREF, BEHAVIOR_SCOPES, listBehaviorScopeBundles, listBehaviorScopeKeys, } from './css-manifest.mjs';
 import { extractObjectLiterals, extractRuntimeArrayLiteral, } from './site-contracts/helpers.mjs';
+import { VALID_MODULE_LAYERS, VALID_MOUNT_WHEN, } from './site-contracts/types.mjs';
 import { toPosixPath } from './shared/build-topology.mjs';
 import { collectStylePropertyContractReport, } from './style-property-contract.mjs';
 const BEHAVIOR_SCOPE_KEYS = new Set(Object.keys(BEHAVIOR_SCOPES));
+/**
+ * Body feature tokens that gate JS catalog mounts without a CSS behavior bundle.
+ * Matches common baseline packs (operators / navigator) and route chrome tokens.
+ * Runtime matchesFeatures() already accepts any body token; this set only widens
+ * the catalog contract so presence-only gates are not forced into BEHAVIOR_SCOPES.
+ */
+const PRESENCE_FEATURE_KEYS = new Set([
+    'operators',
+    'navigator',
+    'route-discovery',
+    'inspectability',
+    'themes',
+    'field-guide',
+    'promptability',
+    'topic-discovery',
+    'prompt-utils',
+    'collectability',
+]);
+const ALLOWED_FEATURE_KEYS = new Set([...BEHAVIOR_SCOPE_KEYS, ...PRESENCE_FEATURE_KEYS]);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, '..', '..');
@@ -15,9 +35,10 @@ const MODULES_DIR = path.join(PUBLIC_JS_DIR, 'modules');
 const PUBLIC_TS_DIR = path.join(ROOT_DIR, 'public/ts');
 const MODULE_CATALOG_PATH = path.join(PUBLIC_JS_DIR, 'runtime/module-catalog.js');
 const MODULE_UPDATES_CONTRACT_PATH = path.join(PUBLIC_JS_DIR, 'runtime/module-updates-contract.js');
+const SITE_RUNTIME_PATH = path.join(PUBLIC_JS_DIR, 'site.js');
 const RUNTIME_FAMILIES = ['CORE_DEFS', 'FEATURE_DEFS', 'REGION_DEFS', 'ENHANCEMENT_DEFS'];
-const VALID_LAYERS = new Set(['core', 'feature', 'region', 'enhancement']);
-const VALID_MOUNT_TIMINGS = new Set(['immediate', 'visible', 'idle', 'interaction', 'region', 'settled']);
+const VALID_LAYERS = new Set(VALID_MODULE_LAYERS);
+const VALID_MOUNT_TIMINGS = new Set(VALID_MOUNT_WHEN);
 const VALID_ROOT_MODES = new Set(['single', 'each']);
 const CONTRACT_TOKEN_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const ALLOWED_ROOT_JS_FILES = new Set(['compose.js', 'site.js']);
@@ -67,6 +88,7 @@ function parseUpdates(source) {
 }
 const MODULE_UPDATE_SCOPES = new Set(['html', 'root', 'body', 'document', 'frame']);
 const MODULE_UPDATE_KINDS = new Set(['attr', 'css-var', 'aria', 'class', 'event', 'selector', 'property']);
+const MODULE_UPDATE_ROLES = new Set(['structural', 'flourish', 'inspect', 'residue', 'measure', 'diagnostic']);
 const MODULE_UPDATE_KIND_ALIASES = new Map([
     ['attribute', 'attr'],
     ['attributes', 'attr'],
@@ -81,6 +103,17 @@ const MODULE_UPDATE_KIND_ALIASES = new Map([
     ['event', 'event'],
     ['selector', 'selector'],
 ]);
+const MODULE_UPDATE_ROLE_ALIASES = new Map([
+    ['structure', 'structural'],
+    ['flourishes', 'flourish'],
+    ['ornament', 'flourish'],
+    ['pulse', 'flourish'],
+    ['inspection', 'inspect'],
+    ['memory', 'residue'],
+    ['metric', 'measure'],
+    ['diagnostics', 'diagnostic'],
+    ['debug', 'diagnostic'],
+]);
 function isKnownModuleUpdateKind(token) {
     const normalized = token.toLowerCase();
     return MODULE_UPDATE_KINDS.has(normalized) || MODULE_UPDATE_KIND_ALIASES.has(normalized);
@@ -89,15 +122,33 @@ function normalizeModuleUpdateKind(token) {
     const normalized = token.toLowerCase();
     return MODULE_UPDATE_KIND_ALIASES.get(normalized) || (MODULE_UPDATE_KINDS.has(normalized) ? normalized : 'attr');
 }
-function classifyModuleUpdateToken(token, allowScope = true) {
+function normalizeModuleUpdateRole(token) {
+    const normalized = token.toLowerCase();
+    if (MODULE_UPDATE_ROLES.has(normalized))
+        return normalized;
+    return MODULE_UPDATE_ROLE_ALIASES.get(normalized) || null;
+}
+function classifyModuleUpdateToken(token, options = {}) {
+    const allowScope = options.allowScope !== false;
+    const allowRole = options.allowRole !== false;
     const raw = token.trim();
     if (!raw)
         return null;
     if (allowScope) {
         const scopeMatch = raw.match(/^([a-z]+):(.+)$/i);
         if (scopeMatch && MODULE_UPDATE_SCOPES.has(scopeMatch[1].toLowerCase())) {
-            const inner = classifyModuleUpdateToken(scopeMatch[2], false);
+            const inner = classifyModuleUpdateToken(scopeMatch[2], { allowScope: false, allowRole });
             return inner ? { ...inner, scope: scopeMatch[1].toLowerCase() } : null;
+        }
+    }
+    if (allowRole) {
+        const roleMatch = raw.match(/^([a-z]+):(.+)$/i);
+        if (roleMatch) {
+            const role = normalizeModuleUpdateRole(roleMatch[1]);
+            if (role) {
+                const inner = classifyModuleUpdateToken(roleMatch[2], { allowScope: false, allowRole: false });
+                return inner ? { ...inner, role } : null;
+            }
         }
     }
     const explicit = raw.match(/^([a-z-]+):(.+)$/i);
@@ -165,6 +216,7 @@ async function collectModuleUpdateGrammarIssues() {
     const source = await fs.readFile(MODULE_UPDATES_CONTRACT_PATH, 'utf8');
     const runtimeKinds = parseFrozenStringArray(source, 'MODULE_UPDATE_KINDS');
     const runtimeScopes = parseFrozenStringArray(source, 'MODULE_UPDATE_SCOPES');
+    const runtimeRoles = parseFrozenStringArray(source, 'MODULE_UPDATE_ROLES');
     const runtimeAliases = parseFrozenAliasObject(source, 'KIND_ALIASES');
     if (!runtimeKinds) {
         errors.push(`${relativeRepoPath(MODULE_UPDATES_CONTRACT_PATH)} does not expose parseable MODULE_UPDATE_KINDS.`);
@@ -177,6 +229,12 @@ async function collectModuleUpdateGrammarIssues() {
     }
     else if (!sameStringList(sortedStrings(MODULE_UPDATE_SCOPES), sortedStrings(runtimeScopes))) {
         errors.push(`module update scope grammar drifted: TS=${sortedStrings(MODULE_UPDATE_SCOPES).join(',')} runtime=${sortedStrings(runtimeScopes).join(',')}.`);
+    }
+    if (!runtimeRoles) {
+        errors.push(`${relativeRepoPath(MODULE_UPDATES_CONTRACT_PATH)} does not expose parseable MODULE_UPDATE_ROLES.`);
+    }
+    else if (!sameStringList(sortedStrings(MODULE_UPDATE_ROLES), sortedStrings(runtimeRoles))) {
+        errors.push(`module update role grammar drifted: TS=${sortedStrings(MODULE_UPDATE_ROLES).join(',')} runtime=${sortedStrings(runtimeRoles).join(',')}.`);
     }
     if (!runtimeAliases) {
         errors.push(`${relativeRepoPath(MODULE_UPDATES_CONTRACT_PATH)} does not expose parseable KIND_ALIASES.`);
@@ -249,10 +307,16 @@ function parseRuntimeModule(objectLiteral, family, index) {
         index,
         layer: parseConstantProperty(objectLiteral, 'layer', 'MODULE_LAYERS') || family.replace(/_DEFS$/, '').toLowerCase(),
         objectLiteral,
+        // route: '…' | "…" | [ … ] | Identifier — avoid bare "route:" inside describes.
+        routeContract: /\broute\s*:\s*(?:[\[\`'"]|[A-Za-z_$])/.test(objectLiteral),
         rootMode: parseQuotedProperty(objectLiteral, 'rootMode'),
-        selectorContract: /\bselector\s*:/.test(objectLiteral),
+        // Constant selectors (REGION_SELECTOR, PRETEXT_LIVE_SELECTOR) are still
+        // real demand gates even when this lightweight parser cannot resolve their
+        // literal value for reporting.
+        selectorContract: /\bselector\s*:\s*(?:[\`'"]|[A-Za-z_$])/.test(objectLiteral),
         selector: parseQuotedProperty(objectLiteral, 'selector'),
         timingArc: parseQuotedProperty(objectLiteral, 'timingArc'),
+        timingChunk: parseQuotedProperty(objectLiteral, 'timingChunk'),
         updates: parseUpdates(objectLiteral),
         when: parseConstantProperty(objectLiteral, 'when', 'MOUNT_WHEN') || 'immediate',
     };
@@ -415,6 +479,19 @@ function validateModule(module, errors, warnings, recommendations) {
             errors.push(`${label} timingArc must be a single lowercase kebab-case token.`);
         }
     }
+    if (module.timingChunk) {
+        const chunkTokens = splitContractTokens(module.timingChunk);
+        if (chunkTokens.length !== 1 || !CONTRACT_TOKEN_RE.test(chunkTokens[0])) {
+            errors.push(`${label} timingChunk must be a single lowercase kebab-case token.`);
+        }
+        else if (module.when === 'idle'
+            && !['idle-residue', 'idle-collectible', 'idle-chrome', 'idle-lab', 'idle-default'].includes(chunkTokens[0])) {
+            recommendations.push(`${label} timingChunk "${chunkTokens[0]}" is nonstandard; prefer idle-residue|idle-collectible|idle-chrome|idle-lab|idle-default.`);
+        }
+    }
+    else if (module.when === 'idle' && module.layer !== 'core') {
+        recommendations.push(`${label} is IDLE without timingChunk; loader will infer from timingArc, but explicit chunk documents residue-before-flourish order.`);
+    }
     for (const token of splitContractTokens(module.effectScope)) {
         if (!CONTRACT_TOKEN_RE.test(token)) {
             errors.push(`${label} effectScope token "${token}" must be lowercase kebab-case.`);
@@ -450,8 +527,10 @@ function validateModule(module, errors, warnings, recommendations) {
         warnings.push(`${label} is ungated by selector; confirm it is intentionally document-wide.`);
     }
     for (const feature of module.features) {
-        if (!BEHAVIOR_SCOPE_KEYS.has(feature)) {
-            errors.push(`${label} features "${feature}" is not a recognized CSS behavior scope (${[...BEHAVIOR_SCOPE_KEYS].join(', ')}).`);
+        if (!ALLOWED_FEATURE_KEYS.has(feature)) {
+            errors.push(`${label} features "${feature}" is not a recognized body feature gate `
+                + `(CSS BEHAVIOR_SCOPES: ${[...BEHAVIOR_SCOPE_KEYS].join(', ')}; `
+                + `presence-only: ${[...PRESENCE_FEATURE_KEYS].join(', ')}).`);
         }
     }
     if (module.features.length && module.selector?.includes('data-spw-features~=')) {
@@ -463,15 +542,31 @@ function validateModule(module, errors, warnings, recommendations) {
     if (module.layer !== 'core' && module.describes && !module.updates.length && !module.evaluates) {
         recommendations.push(`${label} describes behavior but names neither updates nor evaluates.`);
     }
+    // Feature / mount hygiene (agentic-development + BRP): prefer demand-coupled activation.
+    if (module.when === 'immediate' && module.layer === 'enhancement' && !module.debugOnly) {
+        if (!module.features.length && !module.selectorContract) {
+            warnings.push(`${label} is ENHANCEMENT+IMMEDIATE with no features gate and no selector contract; confirm it must run on every page at boot.`);
+        }
+    }
+    if (module.when === 'immediate' && module.layer === 'feature' && !module.routeContract && !module.selectorContract && !module.features.length) {
+        warnings.push(`${label} is FEATURE+IMMEDIATE without route, selector, or features gate; feature modules should be demand-coupled.`);
+    }
+    if (module.layer === 'enhancement' && module.when === 'immediate' && module.effectScope && /observer|document-wide|root-state/.test(module.effectScope) && !module.timingArc) {
+        recommendations.push(`${label} effectScope suggests broad side effects (${module.effectScope}); pair IMMEDIATE with timingArc or lower mount when.`);
+    }
     const seenUpdates = new Set();
+    let rolefulCount = 0;
     for (const token of module.updates) {
         const issue = validateModuleUpdateToken(token);
         if (issue) {
-            warnings.push(`${label} updates token "${token}" has ${issue}; use attr:, css-var:, aria:, class:, event:, selector:, or property: prefixes when inference is ambiguous.`);
+            warnings.push(`${label} updates token "${token}" has ${issue}; use scope:, role: (flourish|residue|…), and kind: prefixes when inference is ambiguous.`);
         }
         const parsed = classifyModuleUpdateToken(token);
         if (!parsed)
             continue;
+        if (parsed.role)
+            rolefulCount += 1;
+        // Collision key is DOM identity (scope+kind+name), not topology role.
         const key = `${parsed.scope ? `${parsed.scope}:` : ''}${parsed.kind}:${parsed.name}`;
         if (seenUpdates.has(key)) {
             warnings.push(`${label} repeats update ${key}.`);
@@ -479,8 +574,22 @@ function validateModule(module, errors, warnings, recommendations) {
         }
         seenUpdates.add(key);
     }
-    if (module.updates.length > 12) {
-        recommendations.push(`${label} lists ${module.updates.length} updates; group by kind in catalog comments or split into focused modules when the contract becomes hard to scan.`);
+    if (module.layer !== 'core' && !module.updates.length) {
+        recommendations.push(`${label} has no updates[]; declare surface writes (or explicit empty intent) for inspect/flourish topology.`);
+    }
+    if (module.layer !== 'core' && !module.evaluates) {
+        recommendations.push(`${label} is missing evaluates; name dimensions or outcomes the module changes.`);
+    }
+    if (module.layer === 'enhancement'
+        && module.updates.length >= 3
+        && rolefulCount === 0
+        && /flourish|ornament|reward|residue|collect|pulse|chrome/.test(`${module.effectScope || ''} ${module.timingArc || ''} ${module.id}`)) {
+        recommendations.push(`${label} looks flourish/residue-shaped but updates lack role: prefixes; prefer flourish: / residue: / structural: topology.`);
+    }
+    const hasRoleOrKindPrefix = module.updates.every((token) => (/^(?:attr|css-var|aria|class|event|selector|property|html|root|body|document|frame|structural|flourish|inspect|residue|measure|diagnostic):/.test(token)
+        || token.startsWith('--')));
+    if (module.updates.length > 12 && !hasRoleOrKindPrefix) {
+        recommendations.push(`${label} lists ${module.updates.length} updates; add role/kind prefixes or split when the contract becomes hard to scan.`);
     }
 }
 export async function collectRuntimeContractReport() {
@@ -511,6 +620,19 @@ export async function collectRuntimeContractReport() {
         }
         else {
             seen.set(module.id, module);
+        }
+    }
+    const siteRuntime = await fs.readFile(SITE_RUNTIME_PATH, 'utf8');
+    const nonCoreModules = modules.filter((module) => module.layer !== 'core' && module.layer !== 'region');
+    const schedulerRequirements = [
+        { timings: ['visible'], call: 'mountVisibleFeatures(NON_CORE_DEFS' },
+        { timings: ['interaction'], call: 'mountInteractionFeatures(NON_CORE_DEFS' },
+        { timings: ['idle', 'settled'], call: 'queueIdleEnhancements(NON_CORE_DEFS' },
+    ];
+    for (const requirement of schedulerRequirements) {
+        const used = nonCoreModules.some((module) => requirement.timings.includes(module.when));
+        if (used && !siteRuntime.includes(requirement.call)) {
+            errors.push(`public/js/site.js does not schedule ${requirement.timings.join('/')} non-core definitions through NON_CORE_DEFS.`);
         }
     }
     for (const module of modules) {
@@ -580,7 +702,15 @@ export async function collectRuntimeContractReport() {
 }
 export async function main() {
     const report = await collectRuntimeContractReport();
+    const enhancementModules = report.modules.filter((module) => module.layer === 'enhancement' && !module.debugOnly);
+    const enhancementImmediate = enhancementModules.filter((module) => module.when === 'immediate');
+    const demandGatedImmediate = enhancementImmediate.filter((module) => (module.routeContract || module.selectorContract || module.features.length > 0));
+    const idleModules = report.modules.filter((module) => module.when === 'idle' && !module.debugOnly);
+    const idleChunked = idleModules.filter((module) => Boolean(module.timingChunk));
+    const rolefulModules = report.modules.filter((module) => (module.updates.some((token) => /(?:^|:)(?:structural|flourish|inspect|residue|measure|diagnostic):/.test(token)
+        || /^(?:structural|flourish|inspect|residue|measure|diagnostic):/.test(token))));
     console.log(`[runtime] modules=${report.modules.length} ownerDirs=${report.ownerDirectories.length} rootEntrypoints=${report.rootEntrypoints.length} topLevelModuleFiles=${report.topLevelModuleFiles.length} styleWrites=${report.stylePropertyWrites.length} cssCustomProperties=${report.cssCustomProperties.length} typedOutputs=${report.typedOutputs.length} kernelShims=${report.kernelTypedShims.length} behaviorScopes=${report.behaviorScopes.length}`);
+    console.log(`[runtime] mountHygiene enhancementImmediate=${enhancementImmediate.length}/${enhancementModules.length} demandGated=${demandGatedImmediate.length}/${enhancementImmediate.length} timingArc=${enhancementImmediate.filter((module) => Boolean(module.timingArc)).length}/${enhancementImmediate.length} idleChunk=${idleChunked.length}/${idleModules.length} rolefulUpdates=${rolefulModules.length}/${report.modules.length}`);
     if (report.warnings.length) {
         console.log(`[runtime] warnings=${report.warnings.length}`);
         for (const warning of report.warnings.slice(0, 12)) {

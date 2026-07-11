@@ -11,6 +11,9 @@ export const BEHAVIOR_SCOPES = Object.freeze({
     console: [
         '/public/css/components/cauldron.css',
     ],
+    'feature-discovery': [
+        '/public/css/systems/feature-discovery.css',
+    ],
     'media-publishing': [
         '/public/css/components/promo-wonder-cycle.css',
     ],

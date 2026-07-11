@@ -139,8 +139,13 @@ export function extractSvgHosts(html: string): SvgHost[] {
 }
 
 export function extractRuntimeArrayLiteral(source: string, arrayName: string): string {
-  const marker = `const ${arrayName} = [`;
-  const startIndex = source.indexOf(marker);
+  // Prefer export const (module-catalog.js); fall back to const (legacy site.js embeds).
+  const markers = [`export const ${arrayName} = [`, `const ${arrayName} = [`];
+  let startIndex = -1;
+  for (const candidate of markers) {
+    startIndex = source.indexOf(candidate);
+    if (startIndex >= 0) break;
+  }
   if (startIndex < 0) return '';
 
   const bracketStart = source.indexOf('[', startIndex);
@@ -257,7 +262,7 @@ export function parseRuntimeDefinition(objectLiteral: string, family: string): R
   const when = objectLiteral.match(/when:\s*MOUNT_WHEN\.([A-Z_]+)/)?.[1]?.toLowerCase() || 'immediate';
   const selector = objectLiteral.match(/selector:\s*'([^']+)'/)?.[1] || null;
   const rootMode = objectLiteral.match(/rootMode:\s*'([^']+)'/)?.[1] || null;
-  const importPath = objectLiteral.match(/import\('([^']+)'\)/)?.[1] || null;
+  const importPath = objectLiteral.match(/import\(\s*['"]([^'"]+)['"]\s*\)/)?.[1] || null;
   const route = parseRouteList(objectLiteral);
 
   return {
@@ -271,12 +276,16 @@ export function parseRuntimeDefinition(objectLiteral: string, family: string): R
   };
 }
 
-export function collectRuntimeDefinitionsFromSource(siteJs: string): RouteRuntimeManifest['runtimeDefinitions'] {
+/**
+ * Parse staged module defs from catalog (or any source that still uses const *_DEFS = […]).
+ * After runtime extraction, definitions live in public/js/runtime/module-catalog.js, not site.js.
+ */
+export function collectRuntimeDefinitionsFromSource(catalogSource: string): RouteRuntimeManifest['runtimeDefinitions'] {
   const families = ['CORE_DEFS', 'FEATURE_DEFS', 'REGION_DEFS', 'ENHANCEMENT_DEFS'] as const;
   const runtime: Partial<Record<(typeof families)[number], RuntimeDefinition[]>> = {};
 
   for (const family of families) {
-    const arrayLiteral = extractRuntimeArrayLiteral(siteJs, family);
+    const arrayLiteral = extractRuntimeArrayLiteral(catalogSource, family);
     runtime[family] = extractObjectLiterals(arrayLiteral).map((objectLiteral) => parseRuntimeDefinition(objectLiteral, family));
   }
 
