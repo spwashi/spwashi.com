@@ -226,6 +226,7 @@ export const FLOATING_CHROME_CONTRACT = Object.freeze({
     'pronunciation-hint',
     'collection-dock',
     'collection-toast-stack',
+    'query-composer',
   ]),
   portableUse:
     'Use annotateFloatingChromeElement(...) when a runtime-created element floats above normal document flow and CSS needs a readable layer tier.',
@@ -267,6 +268,7 @@ const FLOATING_CHROME_ROLE_SLOTS = Object.freeze({
   'discovery-modal': 'modal',
   'collection-dock': 'bottom-center',
   'collection-toast-stack': 'toast',
+  'query-composer': 'bottom-right-satchel',
 });
 
 export const FEATURE_CLUSTER_CONTRACT = Object.freeze({
@@ -617,13 +619,20 @@ function measureAndApplyBottomLane(doc, html, { competition, occlusion }) {
     : null;
   const launchMeasure = measureElementChrome(inspectorLaunch);
   const panelMeasure = measureElementChrome(inspectorPanel);
-  const navOpen = surfaceMapEl?.classList?.contains('is-open')
-    || surfaceMapEl?.dataset?.spwNavState === 'open';
+  const navOpen = mobile && (
+    surfaceMapEl?.classList?.contains('is-open')
+    || surfaceMapEl?.dataset?.spwNavState === 'open'
+  );
   const navPanel = navOpen
     ? surfaceMapEl?.querySelector?.('.spw-nav-panel:not([hidden])')
     : null;
   const navPanelMeasure = measureElementChrome(navPanel);
-  const surfaceMeasure = measureElementChrome(surfaceMapEl?.querySelector?.('.spw-nav-strip') || surfaceMapEl);
+  // Desktop chrome occupies named corners/edges rather than one vertical
+  // bottom ladder. The navigation strip only participates in the compact
+  // bottom-lane calculation where it actually consumes that rail.
+  const surfaceMeasure = mobile
+    ? measureElementChrome(surfaceMapEl?.querySelector?.('.spw-nav-strip') || surfaceMapEl)
+    : null;
 
   if (!handleMeasure && !launchMeasure && !consoleMeasure && !surfaceMeasure && !panelMeasure && !navPanelMeasure) {
     clearBottomLaneManagedStyles(html);
@@ -643,11 +652,12 @@ function measureAndApplyBottomLane(doc, html, { competition, occlusion }) {
   let tierBottomPx = safeBottomPx + menuClearancePx;
   const vars = {};
   let clearancePx = safeBottomPx + menuClearancePx;
+  let laneMode = mobile ? 'split' : 'desktop-snap';
 
   if (consoleMeasure) {
     vars['--spw-floating-slot-console'] = pxToRem(tierBottomPx);
-    tierBottomPx += consoleMeasure.height + BOTTOM_LANE_SLOT_GAP_PX;
-    clearancePx = Math.max(clearancePx, tierBottomPx);
+    clearancePx = Math.max(clearancePx, tierBottomPx + consoleMeasure.height);
+    if (mobile) tierBottomPx += consoleMeasure.height + BOTTOM_LANE_SLOT_GAP_PX;
   } else {
     vars['--spw-floating-slot-console'] = pxToRem(safeBottomPx + menuClearancePx);
   }
@@ -663,7 +673,9 @@ function measureAndApplyBottomLane(doc, html, { competition, occlusion }) {
     clearancePx = Math.max(clearancePx, travelRowBottomPx + travelRowHeightPx);
   }
 
-  const parallelNavBottomPx = travelRowBottomPx + travelRowHeightPx + BOTTOM_LANE_SLOT_GAP_PX;
+  const parallelNavBottomPx = mobile
+    ? travelRowBottomPx + travelRowHeightPx + BOTTOM_LANE_SLOT_GAP_PX
+    : safeBottomPx + menuClearancePx;
   vars['--spw-floating-slot-parallel-nav'] = pxToRem(parallelNavBottomPx);
   if (surfaceMeasure) {
     clearancePx = Math.max(clearancePx, parallelNavBottomPx + surfaceMeasure.height);
@@ -674,7 +686,7 @@ function measureAndApplyBottomLane(doc, html, { competition, occlusion }) {
       clearancePx,
       Math.max(0, (globalThis.innerHeight || 0) - navPanelMeasure.top) + BOTTOM_LANE_SLOT_GAP_PX
     );
-    if (mobile) laneMode = 'stacked';
+    laneMode = 'stacked';
   }
 
   if (panelMeasure) {
@@ -687,7 +699,6 @@ function measureAndApplyBottomLane(doc, html, { competition, occlusion }) {
   vars['--spw-bottom-chrome-clearance'] = pxToRem(clearancePx + BOTTOM_LANE_SLOT_GAP_PX);
   vars['--spw-floating-menu-clearance'] = pxToRem(menuClearancePx);
 
-  let laneMode = mobile ? 'split' : 'desktop';
   let handleLane = handleMeasure ? 'expanded' : null;
 
   if (mobile && (handleMeasure || launchMeasure)) {
@@ -711,17 +722,15 @@ function measureAndApplyBottomLane(doc, html, { competition, occlusion }) {
     else if (handleMeasure) laneMode = 'handle-only';
     else laneMode = 'satchel-only';
   } else if (!mobile) {
-    [
-      '--spw-floating-handle-inline-start',
-      '--spw-floating-handle-inline-end',
-      '--spw-floating-handle-transform',
-      '--spw-floating-handle-max-inline-size',
-      '--spw-floating-satchel-lane',
-      '--spw-floating-inline-gutter',
-    ].forEach((key) => {
-      html.style.removeProperty(key);
-    });
-    laneMode = 'desktop';
+    const gutterPx = Math.max(BOTTOM_LANE_SLOT_GAP_PX, safeSidePx);
+    const leftSnapMaxPx = Math.max(240, Math.min(420, (globalThis.innerWidth || 1200) * 0.38));
+    vars['--spw-floating-inline-gutter'] = pxToRem(gutterPx);
+    vars['--spw-floating-handle-inline-start'] = pxToRem(gutterPx);
+    vars['--spw-floating-handle-inline-end'] = 'auto';
+    vars['--spw-floating-handle-transform'] = 'none';
+    vars['--spw-floating-handle-max-inline-size'] = pxToRem(leftSnapMaxPx);
+    vars['--spw-floating-satchel-lane'] = pxToRem(leftSnapMaxPx);
+    laneMode = 'desktop-snap';
   }
 
   const overlap = occlusion?.state === 'overlap';

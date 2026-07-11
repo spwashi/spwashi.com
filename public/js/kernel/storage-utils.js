@@ -28,6 +28,7 @@ export const STORAGE_KEYS = Object.freeze({
   PALETTE_TRACE: 'spw-palette-trace',
   ACTIVE_PERSONA: 'spw-active-persona',
   FEATURE_LEARNING_TOASTS: 'spw-feature-learning-toasts',
+  FEATURE_DISCOVERY: 'spw-feature-discovery',
 });
 
 /** Guild-oriented topology for audits and agent inspection. */
@@ -55,6 +56,7 @@ export const STORAGE_TOPOLOGY = Object.freeze({
     STORAGE_KEYS.DISCOVERY_DISMISSALS,
     STORAGE_KEYS.SEMANTICS_UNLOCKED,
     STORAGE_KEYS.FEATURE_LEARNING_TOASTS,
+    STORAGE_KEYS.FEATURE_DISCOVERY,
   ]),
   inspection: Object.freeze([
     STORAGE_KEYS.STATE_SATCHEL_POSITION,

@@ -57,7 +57,307 @@ import {
   clearPins,
   getPinStorageKey,
 } from '/public/js/runtime/pin-registry.js';
+import {
+  BEHAVIOR_SCOPE_BUNDLES,
+  BEHAVIOR_SCOPE_KEYS,
+} from '/public/js/runtime/behavior-scopes.js';
+import { parseFeatureList } from '/public/js/runtime/runtime-helpers.js';
+import {
+  clearFeatureLabSession,
+  describeFeatureLabState,
+  toggleFeatureLabToken,
+} from '/public/js/runtime/feature-lab.js';
 
+/**
+ * Inspect-only snapshot: body[data-spw-features] vs generated BEHAVIOR_SCOPE_KEYS.
+ * No storage — presence is authored on the route, not a settings preference.
+ */
+const buildFeatureScopeSnapshot = (featureSource = document.body?.dataset?.spwFeatures) => {
+  const activeSet = parseFeatureList(featureSource);
+  const active = [...activeSet].sort();
+  const knownScopes = [...BEHAVIOR_SCOPE_KEYS];
+  const scopeSet = new Set(knownScopes);
+  const scopedActive = active.filter((token) => scopeSet.has(token));
+  const presenceOnly = active.filter((token) => !scopeSet.has(token));
+  const scopesIdle = knownScopes.filter((key) => !activeSet.has(key));
+
+  return Object.freeze({
+    active: Object.freeze(active),
+    knownScopes: Object.freeze(knownScopes),
+    scopedActive: Object.freeze(scopedActive),
+    presenceOnly: Object.freeze(presenceOnly),
+    scopesIdle: Object.freeze(scopesIdle),
+  });
+};
+
+const formatTokenList = (tokens, emptyLabel = 'none') => (
+  tokens.length ? tokens.join(' ') : emptyLabel
+);
+
+const syncFeatureScopeReadouts = (root = document) => {
+  if (!root?.querySelectorAll) return;
+
+  const hasAny = Boolean(
+    root.querySelector?.(
+      '[data-site-feature-scope-panel], [data-site-feature-scope-list], [data-site-feature-scope-body]'
+    )
+  );
+  if (!hasAny) return;
+
+  const snapshot = buildFeatureScopeSnapshot();
+
+  root.querySelectorAll('[data-site-feature-scope-body]').forEach((node) => {
+    node.textContent = formatTokenList(snapshot.active, 'none on body');
+  });
+  root.querySelectorAll('[data-site-feature-scope-scoped]').forEach((node) => {
+    node.textContent = formatTokenList(snapshot.scopedActive, 'none active');
+  });
+  root.querySelectorAll('[data-site-feature-scope-presence-only]').forEach((node) => {
+    node.textContent = formatTokenList(snapshot.presenceOnly, 'none');
+  });
+  root.querySelectorAll('[data-site-feature-scope-idle]').forEach((node) => {
+    node.textContent = formatTokenList(snapshot.scopesIdle, 'all scopes active');
+  });
+  root.querySelectorAll('[data-site-feature-scope-body-count]').forEach((node) => {
+    node.textContent = String(snapshot.active.length);
+  });
+  root.querySelectorAll('[data-site-feature-scope-scoped-count]').forEach((node) => {
+    node.textContent = `${snapshot.scopedActive.length} / ${snapshot.knownScopes.length}`;
+  });
+  root.querySelectorAll('[data-site-feature-scope-presence-count]').forEach((node) => {
+    node.textContent = String(snapshot.presenceOnly.length);
+  });
+  root.querySelectorAll('[data-site-feature-scope-idle-count]').forEach((node) => {
+    node.textContent = String(snapshot.scopesIdle.length);
+  });
+
+  root.querySelectorAll('[data-site-feature-scope-list]').forEach((host) => {
+    host.innerHTML = '';
+    host.setAttribute('role', 'list');
+
+    const appendRow = ({ token, kind, detail }) => {
+      const row = document.createElement('div');
+      row.className = 'settings-feature-scope-row';
+      row.setAttribute('role', 'listitem');
+      row.dataset.siteFeatureScopeKind = kind;
+      row.dataset.siteFeatureScopeToken = token;
+
+      const name = document.createElement('code');
+      name.className = 'settings-feature-scope-token';
+      name.textContent = token;
+
+      const badge = document.createElement('span');
+      badge.className = 'settings-feature-scope-badge';
+      badge.dataset.kind = kind;
+      badge.textContent = kind === 'scoped-active'
+        ? 'active scope'
+        : kind === 'presence-only'
+          ? 'presence only'
+          : 'scope off page';
+
+      const note = document.createElement('span');
+      note.className = 'settings-feature-scope-detail';
+      note.textContent = detail;
+
+      row.append(name, badge, note);
+      host.appendChild(row);
+    };
+
+    snapshot.scopedActive.forEach((token) => {
+      const bundle = BEHAVIOR_SCOPE_BUNDLES[token];
+      appendRow({
+        token,
+        kind: 'scoped-active',
+        detail: bundle
+          ? `CSS behavior bundle eligible · ${bundle.replace(/^\/public\/css\/bundles\//, '')}`
+          : 'On body and in BEHAVIOR_SCOPE_KEYS',
+      });
+    });
+
+    snapshot.presenceOnly.forEach((token) => {
+      appendRow({
+        token,
+        kind: 'presence-only',
+        detail: 'On body[data-spw-features]; no CSS behavior bundle (runtime / catalog gate only)',
+      });
+    });
+
+    snapshot.scopesIdle.forEach((token) => {
+      const bundle = BEHAVIOR_SCOPE_BUNDLES[token];
+      appendRow({
+        token,
+        kind: 'scope-idle',
+        detail: bundle
+          ? `Known scope · not on this page · ${bundle.replace(/^\/public\/css\/bundles\//, '')}`
+          : 'Known BEHAVIOR_SCOPE_KEYS entry · not on this page',
+      });
+    });
+
+    if (!snapshot.active.length && !snapshot.knownScopes.length) {
+      const empty = document.createElement('p');
+      empty.className = 'settings-feature-scope-empty';
+      empty.textContent = 'No page features or behavior scopes available to inspect.';
+      host.appendChild(empty);
+    }
+  });
+};
+
+const bindFeatureScopeReadouts = (root = document) => {
+  if (!(root instanceof HTMLElement) && root !== document) {
+    return {
+      cleanup() {},
+      refresh() {},
+    };
+  }
+
+  const hasHosts = Boolean(
+    root.querySelector?.(
+      '[data-site-feature-scope-panel], [data-site-feature-scope-list], [data-site-feature-scope-body]'
+    )
+  );
+  if (!hasHosts) {
+    return {
+      cleanup() {},
+      refresh() {},
+    };
+  }
+
+  const sync = () => syncFeatureScopeReadouts(root);
+  sync();
+
+  return {
+    cleanup() {},
+    refresh() {
+      sync();
+    },
+  };
+};
+
+const FEATURE_LAB_CANDIDATES = Object.freeze([
+  ...BEHAVIOR_SCOPE_KEYS,
+  'operators',
+  'navigator',
+  'console',
+  'metrics',
+  'feature-discovery',
+  'inspectability',
+  'themes',
+]);
+
+const uniqueFeatureLabTokens = () => {
+  const seen = new Set();
+  const out = [];
+  FEATURE_LAB_CANDIDATES.forEach((token) => {
+    if (seen.has(token)) return;
+    seen.add(token);
+    out.push(token);
+  });
+  return out;
+};
+
+const syncFeatureLabControls = (root = document) => {
+  if (!root?.querySelectorAll) return;
+
+  const state = describeFeatureLabState(document.body);
+  const activeSet = parseFeatureList(state.active);
+
+  root.querySelectorAll('[data-site-feature-lab-ops]').forEach((node) => {
+    node.textContent = state.opsString || 'none (authored only)';
+  });
+  root.querySelectorAll('[data-site-feature-lab-active]').forEach((node) => {
+    node.textContent = state.active || 'none';
+  });
+  root.querySelectorAll('[data-site-feature-lab-authored]').forEach((node) => {
+    node.textContent = state.authored || 'none';
+  });
+  root.querySelectorAll('[data-site-feature-lab-status]').forEach((node) => {
+    node.textContent = state.applied
+      ? `session lab · +${state.added.length} −${state.removed.length}`
+      : 'authored body features';
+  });
+
+  root.querySelectorAll('[data-site-feature-lab-toggle]').forEach((control) => {
+    const token = control.getAttribute('data-site-feature-lab-toggle') || '';
+    if (!token) return;
+    const on = activeSet.has(token);
+    control.setAttribute('aria-pressed', on ? 'true' : 'false');
+    control.dataset.siteFeatureLabState = on ? 'on' : 'off';
+    if (control instanceof HTMLButtonElement && !control.dataset.siteFeatureLabLabelled) {
+      control.dataset.siteFeatureLabLabelled = 'true';
+    }
+  });
+};
+
+const ensureFeatureLabToggleStrip = (root = document) => {
+  root.querySelectorAll('[data-site-feature-lab-toggles]').forEach((host) => {
+    if (host.childElementCount > 0) return;
+    uniqueFeatureLabTokens().forEach((token) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'operator-chip';
+      button.setAttribute('data-site-feature-lab-toggle', token);
+      button.setAttribute('data-spw-operator', 'select');
+      button.textContent = token;
+      host.appendChild(button);
+    });
+  });
+};
+
+const bindFeatureLabControls = (root = document) => {
+  if (!(root instanceof HTMLElement) && root !== document) {
+    return {
+      cleanup() {},
+      refresh() {},
+    };
+  }
+
+  const hasHosts = Boolean(
+    root.querySelector?.(
+      '[data-site-feature-lab-panel], [data-site-feature-lab-toggle], [data-site-feature-lab-toggles], [data-site-feature-lab-clear]'
+    )
+  );
+  if (!hasHosts) {
+    return {
+      cleanup() {},
+      refresh() {},
+    };
+  }
+
+  ensureFeatureLabToggleStrip(root);
+  syncFeatureLabControls(root);
+
+  const handleClick = (event) => {
+    const clearBtn = event.target instanceof Element
+      ? event.target.closest('[data-site-feature-lab-clear]')
+      : null;
+    if (clearBtn instanceof HTMLElement) {
+      clearFeatureLabSession();
+      window.location.reload();
+      return;
+    }
+
+    const toggle = event.target instanceof Element
+      ? event.target.closest('[data-site-feature-lab-toggle]')
+      : null;
+    if (!(toggle instanceof HTMLElement)) return;
+    const token = toggle.getAttribute('data-site-feature-lab-toggle');
+    if (!token) return;
+    toggleFeatureLabToken(token, { body: document.body });
+    window.location.reload();
+  };
+
+  root.addEventListener('click', handleClick);
+
+  return {
+    cleanup() {
+      root.removeEventListener('click', handleClick);
+    },
+    refresh() {
+      ensureFeatureLabToggleStrip(root);
+      syncFeatureLabControls(root);
+    },
+  };
+};
 
 const collectSettingsFromScope = (root) => {
   const next = {};
@@ -1029,7 +1329,9 @@ export const initSiteSettingsBindings = (settingsManager = manager) => {
     .filter((scope) => !forms.some((form) => form === scope || form.contains(scope)));
   const hasStandaloneTriggers = [...document.querySelectorAll('[data-site-setting-set], [data-site-settings-recipe]')]
     .some((control) => !control.closest('[data-site-settings-form], [data-site-settings-scope]'));
-  const hasReadouts = Boolean(document.querySelector('[data-settings-state], [data-site-setting-value], [data-site-deviation-count], [data-site-deviation-list], [data-site-persistence-list]'));
+  const hasReadouts = Boolean(document.querySelector(
+    '[data-settings-state], [data-site-setting-value], [data-site-deviation-count], [data-site-deviation-list], [data-site-persistence-list], [data-site-feature-scope-panel], [data-site-feature-scope-list], [data-site-feature-lab-panel]'
+  ));
 
   if ((!forms.length && !scopes.length && !hasStandaloneTriggers && !hasReadouts) || settingsManager._initialized) return null;
 
@@ -1051,6 +1353,16 @@ export const initSiteSettingsBindings = (settingsManager = manager) => {
   const readouts = bindSettingsReadouts(document);
   const deviationControls = bindDeviationControls(document);
   const persistenceControls = bindPersistenceControls(document);
+  const featureScopeReadouts = bindFeatureScopeReadouts(document);
+  const featureLabControls = bindFeatureLabControls(document);
+
+  let queryComposers = { cleanup() {}, refresh() {} };
+  // Lazy: hubs may exist without the settings page shell.
+  import('/public/js/runtime/query-link-composer.js')
+    .then((mod) => {
+      queryComposers = mod.bindQueryComposers?.(document) || queryComposers;
+    })
+    .catch(() => {});
 
   initPwaStatusDisplay(settingsManager);
 
@@ -1061,6 +1373,9 @@ export const initSiteSettingsBindings = (settingsManager = manager) => {
       readouts.cleanup();
       deviationControls.cleanup();
       persistenceControls.cleanup();
+      featureScopeReadouts.cleanup();
+      featureLabControls.cleanup();
+      queryComposers.cleanup?.();
       settingsManager._initialized = false;
       settingsManager._pwaInitialized = false;
     },
@@ -1070,6 +1385,9 @@ export const initSiteSettingsBindings = (settingsManager = manager) => {
       readouts.refresh();
       deviationControls.refresh();
       persistenceControls.refresh();
+      featureScopeReadouts.refresh();
+      featureLabControls.refresh();
+      queryComposers.refresh?.();
       initPwaStatusDisplay(settingsManager);
     }
   };
@@ -1206,16 +1524,25 @@ export const initSiteSettingsPage = () => {
   const routing = initSettingsCategoryRouting(manager);
   const queryLab = bindSettingsQueryLab();
 
+  let queryComposers = { cleanup() {}, refresh() {} };
+  import('/public/js/runtime/query-link-composer.js')
+    .then((mod) => {
+      queryComposers = mod.bindQueryComposers?.(document) || queryComposers;
+    })
+    .catch(() => {});
+
   return {
     cleanup() {
       bindings?.cleanup?.();
       routing?.cleanup?.();
       queryLab?.cleanup?.();
+      queryComposers?.cleanup?.();
     },
     refresh() {
       bindings?.refresh?.();
       syncSettingsCategoryTarget();
       queryLab?.refresh?.();
+      queryComposers?.refresh?.();
     }
   };
 };
@@ -1223,12 +1550,17 @@ export const initSiteSettingsPage = () => {
 export {
   applyUxRecipe,
   bindDeviationControls,
+  bindFeatureLabControls,
+  bindFeatureScopeReadouts,
   bindSettingsField,
   bindSettingsReadouts,
   bindSettingsScope,
   bindStandaloneSettingTriggers,
+  buildFeatureScopeSnapshot,
   collectSettingsFromScope,
   syncDeviationReadouts,
+  syncFeatureLabControls,
+  syncFeatureScopeReadouts,
   syncPresetControls,
   syncSettingsReadouts,
   syncSettingsUx,

@@ -225,6 +225,8 @@
                 <a class="operator-chip" href="#attention-posture-settings">attention posture</a>
                 <a class="operator-chip" href="#runtime-preferences">preferences</a>
                 <a class="operator-chip" href="#applied-state">runtime state</a>
+                <a class="operator-chip" href="#feature-scopes">feature scopes</a>
+                <a class="operator-chip" href="#partial-theatrics-lab">partial lab</a>
                 <a class="operator-chip" href="#designer-conversation-settings">designer conversation</a>
                 <a class="operator-chip" href="#settings-notes">notes + resets</a>
                 <a class="operator-chip" href="#stored-data">saved data</a>
@@ -2370,9 +2372,20 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
                 <h2>Current Runtime State</h2>
             </header>
 
-            <p class="frame-note">
+            <p class="frame-note" data-spw-copy-lens="default" data-spw-copy-label="default">
                 A readable local summary of what the site is currently expressing in this browser.
             </p>
+            <p data-spw-copy-depth="entry" data-spw-copy-label="entry">
+                Public default stays calm. Lab and share setups live in Partial lab and query links — not as permanent site defaults.
+            </p>
+            <p data-spw-copy-depth="technical" data-spw-copy-label="technical">
+                Feature scopes and session feature lab report presence; enhancement climate reports theatrics; query composer reports shareable orchestration.
+            </p>
+            <div class="spw-metric-grid" data-spw-kind="metric" data-spw-role="schema" aria-label="Settings surface metrics">
+                <p><strong>visit climate</strong> enhancement · density · wonder</p>
+                <p><strong>share setup</strong> query composer · recipes</p>
+                <p><strong>inspect</strong> scopes · module-visuals · satchel</p>
+            </div>
 
             <div class="settings-state-grid" data-settings-state-grid data-spw-box-model="state-readout-grid" data-spw-composition-flow="grid" data-spw-feature="settings-applied-state">
                 <article class="settings-state-card">
@@ -2485,6 +2498,170 @@ spwCompose.controls.composition.snapshot().map(box => box.story)
                     <strong data-settings-state="busDiagnostics">off</strong>
                 </article>
             </div>
+
+            <article
+                class="frame-panel settings-feature-scope-panel"
+                data-site-feature-scope-panel
+                data-spw-box-model="technical-readout"
+                data-spw-feature="settings-feature-scopes"
+                data-spw-measure-kind="objective"
+                data-spw-role="schema"
+                id="feature-scopes"
+            >
+                <p class="settings-panel-kicker">Technical · inspect only</p>
+                <h3>Page features vs behavior scopes</h3>
+                <p>
+                    Presence for optional JS/CSS partials is authored on
+                    <code>body[data-spw-features]</code>, not stored as a preference.
+                    Tokens that appear in generated <code>BEHAVIOR_SCOPE_KEYS</code> can load a CSS
+                    behavior bundle; other tokens still gate catalog modules. This panel does not
+                    toggle anything — edit the route markup (or a template) to change eligibility.
+                </p>
+
+                <div class="settings-state-grid" data-spw-box-model="feature-scope-summary">
+                    <article class="settings-state-card">
+                        <span class="settings-state-label">body features</span>
+                        <strong data-site-feature-scope-body-count>…</strong>
+                        <code class="settings-feature-scope-inline" data-site-feature-scope-body>operators navigator console pretext-lab metrics</code>
+                    </article>
+                    <article class="settings-state-card">
+                        <span class="settings-state-label">scoped active</span>
+                        <strong data-site-feature-scope-scoped-count>…</strong>
+                        <code class="settings-feature-scope-inline" data-site-feature-scope-scoped>console pretext-lab metrics</code>
+                    </article>
+                    <article class="settings-state-card">
+                        <span class="settings-state-label">presence only</span>
+                        <strong data-site-feature-scope-presence-count>…</strong>
+                        <code class="settings-feature-scope-inline" data-site-feature-scope-presence-only>operators navigator</code>
+                    </article>
+                    <article class="settings-state-card">
+                        <span class="settings-state-label">scopes off page</span>
+                        <strong data-site-feature-scope-idle-count>…</strong>
+                        <code class="settings-feature-scope-inline" data-site-feature-scope-idle>…</code>
+                    </article>
+                </div>
+
+                <div
+                    class="settings-feature-scope-list"
+                    data-site-feature-scope-list
+                    aria-label="Feature and behavior scope alignment"
+                >
+                    <p class="settings-feature-scope-empty">Loading page feature alignment…</p>
+                </div>
+            </article>
+
+            <article
+                class="frame-panel settings-partial-lab-panel"
+                data-site-feature-lab-panel
+                data-site-settings-scope
+                data-spw-box-model="control-card"
+                data-spw-feature="settings-partial-theatrics-lab"
+                data-spw-measure-kind="objective"
+                data-spw-role="control"
+                id="partial-theatrics-lab"
+            >
+                <p class="settings-panel-kicker">Technical · embeddable lab</p>
+                <h3>Partial theatrics + orchestration</h3>
+                <p>
+                    Three knobs editors already have, made explicit here:
+                    <strong>theatrics</strong> (enhancement climate, live),
+                    <strong>orchestration learn mode</strong> (query recipes that reveal mounts and reflows),
+                    and <strong>presence</strong> (session feature lab that rewrites
+                    <code>body[data-spw-features]</code> then reloads — not a permanent preference).
+                </p>
+
+                <section
+                    class="spw-query-composer"
+                    data-spw-query-composer
+                    data-spw-feature="query-composer"
+                    data-spw-box-model="control-card"
+                    data-spw-query-composer-label="settings share setup"
+                    data-spw-collectability="medium"
+                    data-spw-guide-badge="collect"
+                    aria-labelledby="query-composer-title"
+                >
+                    <p class="spw-query-composer__kicker settings-panel-kicker">Share setup · query</p>
+                    <h3 id="query-composer-title" class="spw-query-composer__title">Build a link for this page</h3>
+                    <p class="spw-query-composer__note">
+                        Orchestration makes mounts and reflows learnable. Theatrics scales ornament.
+                        Offer to cauldron joins the spell path and collectible ecology.
+                        Feature presence still uses the session lab below (reload).
+                    </p>
+                    <div data-spw-query-composer-fields class="spw-query-composer__fields"></div>
+                    <code class="spw-query-composer__preview settings-query-preview" data-spw-query-composer-preview>…</code>
+                    <div class="spw-query-composer__actions vibe-widget-actions" data-spw-query-composer-actions>
+                        <button type="button" class="operator-chip" data-spw-query-composer-copy>Copy link</button>
+                        <button type="button" class="operator-chip" data-spw-query-composer-apply>Apply setup</button>
+                        <button type="button" class="operator-chip" data-spw-query-composer-cauldron>Offer to cauldron</button>
+                    </div>
+                </section>
+
+                <div class="vibe-widget-grid vibe-widget-grid--compact" data-spw-composition-flow="grid">
+                    <article class="vibe-widget" data-spw-kind="card" data-spw-role="control">
+                        <div class="vibe-widget-header">
+                            <p class="vibe-widget-kicker">Theatrics</p>
+                            <h3 class="vibe-widget-title">Enhancement climate</h3>
+                        </div>
+                        <p class="vibe-widget-copy">
+                            Scales ornament on already-mounted partials (feature-discovery rings, grain, chrome).
+                            Does not unload modules.
+                        </p>
+                        <div class="vibe-widget-actions" role="group" aria-label="Enhancement level">
+                            <button class="operator-chip" type="button" data-site-setting-set="enhancementLevel:minimal" data-spw-operator="select">Minimal</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="enhancementLevel:balanced" data-spw-operator="select">Balanced</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="enhancementLevel:rich" data-spw-operator="select">Rich</button>
+                        </div>
+                        <div class="vibe-widget-meta">
+                            <span class="spec-pill">enhancement: <span data-settings-state="enhancementLevel">minimal</span></span>
+                        </div>
+                    </article>
+
+                    <article class="vibe-widget" data-spw-kind="card" data-spw-role="control">
+                        <div class="vibe-widget-header">
+                            <p class="vibe-widget-kicker">Orchestration</p>
+                            <h3 class="vibe-widget-title">Make load learnable</h3>
+                        </div>
+                        <p class="vibe-widget-copy">
+                            Query disposition turns mounts, delays, and audits into readable sequences.
+                            Use these when a reflow feels like a lump — it should feel like a phase.
+                        </p>
+                        <div class="vibe-widget-actions" role="group" aria-label="Orchestration recipes">
+                            <a class="operator-chip" href="?module-visuals=on&amp;module-audit=on&amp;view=inspect&amp;meaning=inspect" data-spw-operator="probe">Show mounts</a>
+                            <a class="operator-chip" href="?module-visuals=on&amp;module-delay=450&amp;runtime-timing=eager&amp;view=inspect" data-spw-operator="probe">Slow mounts</a>
+                            <a class="operator-chip" href="?module-visuals=on&amp;module-only=feature-discovery,loading-ecology,module-effects&amp;view=inspect" data-spw-operator="probe">Only discovery path</a>
+                            <a class="operator-chip" href="?" data-spw-operator="ref">Clear query</a>
+                        </div>
+                    </article>
+
+                    <article class="vibe-widget" data-spw-kind="card" data-spw-role="control">
+                        <div class="vibe-widget-header">
+                            <p class="vibe-widget-kicker">Presence</p>
+                            <h3 class="vibe-widget-title">Session feature lab</h3>
+                        </div>
+                        <p class="vibe-widget-copy">
+                            Toggle tokens on or off for this browser tab session, then reload.
+                            Authored route features return when you clear the lab.
+                        </p>
+                        <div class="vibe-widget-meta">
+                            <span class="spec-pill">status: <span data-site-feature-lab-status>authored body features</span></span>
+                            <span class="spec-pill">ops: <code data-site-feature-lab-ops>none</code></span>
+                        </div>
+                        <p class="frame-note">
+                            Authored: <code data-site-feature-lab-authored>…</code><br>
+                            Active: <code data-site-feature-lab-active>…</code>
+                        </p>
+                        <div
+                            class="vibe-widget-actions settings-feature-lab-toggles"
+                            role="group"
+                            aria-label="Session feature tokens"
+                            data-site-feature-lab-toggles
+                        ></div>
+                        <div class="vibe-widget-actions">
+                            <button class="operator-chip" type="button" data-site-feature-lab-clear data-spw-operator="action">Clear session lab + reload</button>
+                        </div>
+                    </article>
+                </div>
+            </article>
         </section>
 
         <section

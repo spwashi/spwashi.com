@@ -732,9 +732,39 @@ function createInspector() {
   status.setAttribute('aria-live', 'polite');
   status.textContent = 'Closed.';
 
-  panel.append(title, summary, actions, positionActions, copy, copySpw, close, status);
+  const shareHost = document.createElement('section');
+  shareHost.className = 'spw-query-composer spw-query-composer--chrome spw-state-inspector__share';
+  shareHost.setAttribute('data-spw-query-composer', '');
+  shareHost.dataset.spwFeature = 'query-composer';
+  shareHost.dataset.spwQueryComposerCompact = 'true';
+  shareHost.dataset.spwQueryComposerExpanded = 'false';
+  shareHost.setAttribute('data-spw-query-composer-label', 'satchel share setup');
+  shareHost.setAttribute('data-spw-box-model', 'control-card');
+  const shareKicker = document.createElement('p');
+  shareKicker.className = 'spw-query-composer__kicker';
+  shareKicker.textContent = 'Share setup · query';
+  const shareNote = document.createElement('p');
+  shareNote.className = 'spw-query-composer__note';
+  shareNote.textContent = 'Expand to build a link. Offer to cauldron joins spells/collectibles.';
+  shareHost.append(shareKicker, shareNote);
+
+  panel.append(title, summary, actions, shareHost, positionActions, copy, copySpw, close, status);
   root.append(launch, panel);
   return root;
+}
+
+function ensureSatchelQueryComposer(root) {
+  const host = root.querySelector?.('[data-spw-query-composer]');
+  if (!(host instanceof HTMLElement) || host.dataset.spwQueryComposerBound === 'true') return;
+
+  import('/public/js/runtime/query-link-composer.js')
+    .then((mod) => {
+      mod.hydrateQueryComposer?.(host);
+      mod.bindQueryComposers?.(root);
+    })
+    .catch(() => {
+      /* composer optional if chunk fails */
+    });
 }
 
 function setOpen(root, open) {
@@ -749,6 +779,7 @@ function setOpen(root, open) {
     anchorSatchelToChromeRail(root, { open: true });
     syncControls(root);
     syncPageStateAwareness(root);
+    ensureSatchelQueryComposer(root);
     panel.focus({ preventScroll: true });
     syncInspectorBottomLane('inspector-open');
     return;

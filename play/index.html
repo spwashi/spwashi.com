@@ -120,7 +120,21 @@
                 </div>
                 <p class="page-kicker">campaigns • session logs • world notes • creative tools</p>
                 <h1 id="play-title">Play</h1>
-                <p class="spw-playable-hook">A session is where a joke becomes evidence.</p>
+                <section
+                    class="hook-call"
+                    id="play-hook"
+                    data-spw-kind="hook"
+                    data-spw-role="call"
+                    data-spw-liminality="entry"
+                    data-spw-slot="body"
+                    aria-label="Play entry hook"
+                >
+                    <p class="hook-lede spw-playable-hook">A session is where a joke becomes evidence.</p>
+                    <p class="hook-sub">
+                        <span data-spw-perspective="objective">Objective:</span> rules, logs, sheets, and world notes that stay readable after the table.
+                        <span data-spw-perspective="subjective">Subjective:</span> pressure that still feels like play, not homework.
+                    </p>
+                </section>
                 <ul class="spw-copy-motif-strip" aria-label="Play copy motifs" data-spw-box-model="motif-strip" data-spw-composition-flow="inline-wrap">
                     <li>session</li>
                     <li>canon</li>
@@ -128,15 +142,51 @@
                     <li>return</li>
                     <li>tool</li>
                 </ul>
-                <div class="focus-lens-container prose" data-spw-typeset-surface="editorial" data-spw-focus-lens="editorial" data-spw-slot="body">
-                    <p>Play keeps rules, session logs, character sheets, and world notes readable after the table is done. If you have been here before, use this page to resume canon, step sideways into a tool, or notice which game structures still make sense outside games. <a href="/play/rpg-wednesday/">RPG Wednesday</a> is the first full example, <a href="/town/">Town Atlas</a> holds the structured world bible, and <a href="/tools/character-sheet/">the character-sheet builder</a> turns that grammar into a mentorship-facing engineering surface. If you remember the old route, <a href="/rpg/">/rpg/</a> now works as a short portal back into the same cluster.</p>
-                    <p class="frame-note" data-spw-semantic-expression="play[catalog]{campaign.tool.not-yet-game}">There is no separate games grid yet — no casual arcade catalog beside the site. Play here means campaign surfaces, session memory, worldbuilding registers, and table tools that stay readable after the scene ends. Bounded games may appear later; for now, treat <a href="/tools/">tools</a>, <a href="/recipes/">recipes</a>, and <a href="/design/experiments/svg/">SVG/CSS labs</a> as the adjacent workshops.</p>
-                    <p class="frame-note">I also use play surfaces for captioned worldbuilding, literacy, numeracy, and public learning. That keeps the work available to humans first while leaving a structured trail that external models can read without guessing the intent.</p>
-                    <p class="frame-note">Shared play generates rules, voices, memory, and consequence under pressure. That makes it one of the clearest places to test whether a readable system stays alive in use. A good table spell can carry scene anchors, character terms, component states, and image prompts without making the play feel like documentation homework.</p>
-                    <p class="frame-note">Today’s version of that test is RPG Wednesday, June 24, 2026: use the live session as a development studio. Reference one site update, one visual cue, and one table artifact that can become a card, prompt packet, recap, or next route.</p>
-                    <p class="frame-note">For the community, play is not a reward after the serious work. It is one of the safest places to practice transfer, collaboration, risk, and recovery while leaving behind memorable artifacts.</p>
-                    <p class="frame-note">Cuisine gives the play surface practical verbs. Prep the table like mise en place, reduce a scene to the active pressure, and let vegetables teach scale: root, leaf, stem, and fruit each carry different timing, weight, and social distance. Slow arcs can ferment until they have earned a name.</p>
-                    <p class="frame-note">Try a play lens:
+                <div
+                    class="mode-switch"
+                    role="group"
+                    aria-label="Play lens"
+                    data-spw-kind="lens"
+                    data-spw-role="control"
+                >
+                    <button type="button" class="frame-sigil" data-mode-group="play-lens" data-set-mode="play" aria-pressed="true">play</button>
+                    <button type="button" class="frame-sigil" data-mode-group="play-lens" data-set-mode="memory" aria-pressed="false">memory</button>
+                    <button type="button" class="frame-sigil" data-mode-group="play-lens" data-set-mode="making" aria-pressed="false">making</button>
+                </div>
+                <div class="spw-metric-grid" data-spw-kind="metric" data-spw-role="schema" aria-label="Play surface metrics">
+                    <p><strong>primary route</strong> RPG Wednesday</p>
+                    <p><strong>memory</strong> sessions · cast · world</p>
+                    <p><strong>tools</strong> character sheet · library</p>
+                </div>
+                <div class="focus-lens-container prose" data-spw-typeset-surface="editorial" data-spw-focus-lens="editorial" data-spw-slot="body" data-spw-inspect-mode-group="play-lens">
+                    <p data-spw-copy-lens="default play" data-spw-copy-label="play">
+                        Play keeps rules, session logs, character sheets, and world notes readable after the table is done.
+                        Resume canon, step into a tool, or notice which structures still make sense outside games.
+                        <a href="/play/rpg-wednesday/">RPG Wednesday</a> is the full example;
+                        <a href="/town/">Town Atlas</a> holds the world bible;
+                        the <a href="/tools/character-sheet/">character-sheet builder</a> turns that grammar into a mentorship surface.
+                    </p>
+                    <p data-spw-copy-lens="memory" data-spw-copy-label="memory lens">
+                        Session memory is the durable product: recaps, cast pressure, and world rules that return next week.
+                        If you have been here before, skip straight to <a href="/play/rpg-wednesday/sessions/">session logs</a> or the library.
+                    </p>
+                    <p data-spw-copy-depth="normal" data-spw-copy-label="normal">
+                        Shared play tests whether a readable system stays alive under pressure — rules, voices, and consequence without turning the table into documentation.
+                    </p>
+                    <p data-spw-copy-lens="making" data-spw-copy-label="making lens">
+                        Use the live table as a studio: one site update, one visual cue, one table artifact that can become a card, prompt packet, or next route.
+                        Adjacent workshops live in <a href="/tools/">tools</a>, <a href="/recipes/">recipes</a>, and <a href="/design/experiments/svg/">SVG/CSS labs</a>.
+                    </p>
+                    <p data-spw-copy-depth="rich" data-spw-copy-label="rich">
+                        Play is not a reward after serious work — it is a safe place to practice transfer, collaboration, risk, and recovery while leaving memorable artifacts.
+                    </p>
+                    <p class="frame-note" data-spw-copy-depth="entry" data-spw-copy-label="entry" data-spw-semantic-expression="play[catalog]{campaign.tool.not-yet-game}">
+                        No arcade grid yet — play means campaign surfaces, session memory, worldbuilding, and table tools.
+                        <a href="/rpg/">/rpg/</a> is a short portal into the same cluster.
+                    </p>
+                    <p class="frame-note" data-spw-copy-depth="genre" data-spw-copy-label="genre">
+                        Cuisine gives practical verbs: mise en place for prep, reduction for scene pressure, fermentation for slow arcs that earn a name.
+                        Try
                         <a data-spw-link-intent="query" href="?flavor=culinary&amp;layout=wide&amp;spacing=roomy">service table</a>,
                         <a data-spw-link-intent="query" href="?flavor=garden&amp;layout=atlas&amp;interaction=calm">season map</a>, or
                         <a data-spw-link-intent="query" href="?flavor=runtime&amp;lighting=guarded&amp;interaction=responsive">stateful table</a>.
@@ -166,7 +216,7 @@
                     </figcaption>
                 </figure>
                 <div class="spw-wisdom-deck" aria-label="Play wisdom cards" data-spw-box-model="wisdom-deck" data-spw-composition-flow="grid">
-                    <article class="spw-wisdom-card" data-spw-semantic-cluster="play culinary" data-spw-semantic-expression="pantry[scene]{resource.choice}">
+                    <article class="spw-wisdom-card" data-spw-kind="card" data-spw-component-variant="reference" data-spw-semantic-cluster="play culinary" data-spw-semantic-expression="pantry[scene]{resource.choice}">
                         <strong>Pantry pressure</strong>
                         <p>A limited pantry is a rules surface. Road-salt pickles, cornbread, lantern broth, chili, and black garlic stew make scarcity, substitution, and taste visible without stopping the scene to explain stakes.</p>
                         <code>resource -> choice</code>
