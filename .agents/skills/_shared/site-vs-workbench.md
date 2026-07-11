@@ -1,22 +1,27 @@
 # Site vs Workbench Boundary
 
-Use `spwashi.com` skills for:
+I kept conflating “the language” with “the website.” They share ideas; they are
+not one codebase.
 
-- public copy and route structure
-- CSS tokens, surfaces, menus, and image treatment
-- browser runtime behavior in `public/js/`
-- `.spw` files that explain or inspect the site
+## Use spwashi.com skills for
 
-Use `.spw/_workbench` only when:
+- Public copy and route HTML
+- CSS tokens, surfaces, menus, images
+- Browser runtime in `public/js/`
+- `.spw` that explains or inspects **this site**
 
-- a mounted script or reference is the actual source of truth
-- the user explicitly wants to change parser/tooling canon
-- a site concept depends on a workbench ontology that should change upstream
+## Use `.spw/_workbench` only when
 
-Do not assume the workbench constraints apply to the site:
+- A mounted script or parser is the actual source of truth
+- The user explicitly wants tooling/canon upstream
+- A site concept truly depends on changing workbench ontology
 
-- the site is mostly HTML/CSS/JS, not a TypeScript app
-- many improvements are copy, semantics, or layout changes, not package-level refactors
-- validation is usually route-focused, not full-app build/test coverage
+## Do not assume workbench rules on the site
 
-If a change truly spans both surfaces, say so explicitly and patch them as two related systems, not as one merged workflow.
+- The site is mostly HTML/CSS/JS, not a TypeScript application
+- Many improvements are copy, layout, or progressive enhancement—not packages
+- Validation is route- and contract-focused, not full-app test coverage
+- Site skills can be lighter than workbench process theater
+
+If work spans both, say so and patch them as two related systems—not one merged
+workflow that smuggles workbench complexity into public routes.

@@ -1,37 +1,40 @@
 ---
 name: spw-ontology-workbench
-description: Build and refine site-facing ontologies in `.spw` for routes, interactions, semantic families, and editor inspection. Use when modeling concepts and relations that should stay inspectable beyond prose.
+description: Model durable site concepts in .spw when relations must outlive a patch. Not every idea needs an ontology.
 ---
 
 # Spw Ontology Workbench for spwashi.com
 
-Read first:
+Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 
-- `../_shared/site-workflow.md`
-- `../_shared/site-vs-workbench.md`
+## Intent
 
-## Default Workflow
+Ontologies help when names and relations keep getting rediscovered. They hurt when
+every experiment becomes a family in `site.spw`.
 
-1. Identify the domain boundary: route taxonomy, component roles, settings state, image semantics, concept families, **agent contracts, planning ecology, semantic capacity, daily kernels, brand physics, creative marketing engine, or editor inspectability surfaces**.
-2. Separate authored language from inferred runtime language.
-3. Decide the `.spw` operation before writing: cache, audit, align, prime, contract, or archive.
-4. Write or update `.spw` files that expose:
-   - entities
-   - relations
-   - invariants
-   - open seams
-5. Keep the ontology inspectable in the editor; do not bury it only in JS constants or CSS selectors.
-6. Use `.spw/_workbench` theory assets as references when useful, but keep the site ontology honest to the public system it describes.
+## When to use
 
-When modeling the agent layer itself (see `agent-optimization/PLAN.md`), treat "planning surfaces", "skill affordances", "validation contracts", and ".spw dispatch for editors" as first-class domains.
-When modeling cross-discipline creative/product work, prefer the daily-kernel shape: focus, discipline pair, university-style region, brand physics, intensity, operation, output, validation, and do-not-touch.
+- Route/component roles, settings state, image semantics that already recur
+- Agent contracts or planning ecology **after** they have proven sticky
+- Aligning or archiving competing models
 
-## Good Outputs
+## When not to use
 
-- review bundles under `.spw/reviews/`
-- route/topic maps
-- state-flow or lifecycle notes
-- semantic family registries
-- agent/planning surface models (e.g., dispatch entries for `@agents`, `@plans`, editor seams, skill contracts) — see `agent-optimization/PLAN.md` and the `.spw/site.spw` agents block
-- semantic-capacity operation maps
-- daily-kernel and brand-physics models
+- One-route copy experiments
+- Premature “complete” maps of a half-built feature
+
+## Workflow
+
+1. Bound the domain (what is **out** of scope).
+2. Separate authored language from runtime inference.
+3. Operation first: cache / audit / align / prime / contract / **archive**.
+4. Entities, relations, invariants, open seams—minimal set.
+5. Keep it inspectable in `.spw`; do not only bury it in JS constants.
+6. Workbench theory is reference only unless upstream truly changes.
+
+Cross-discipline one-offs → daily-kernel shape, not a new ontology tree.
+
+## Good outputs
+
+- Small review bundles, state-flow notes, registries that replace confusion
+- Archive notes that reduce active load

@@ -4,6 +4,8 @@
 
 Make the full agent operating environment for this repository (`.agents/`, skills, planning ecology, `.spw` bridges, public editor surfaces, and validation contracts) itself a first-class, low-friction, inspectable surface. The outcome: AI agents, human editors, and future collaborators can answer "how do I work on this site effectively?" and "did my change preserve the intended contracts?" with minimal repeated discovery or tribal knowledge.
 
+**Induction audit (2026-07):** Nested Spw at `.spw/audits/commit-skill-induction-2026-07/` analyzes commit history and skill phrasing for long-term pain (plan inflation, attribute sprawl, IMMEDIATE width, meta-track competition). Success includes stop-conditions and archive quotas, not only more inspectability.
+
 This work extends and matures the foundation laid by `agentic-dev-contracts` (route/runtime manifest + unified `npm run check`) into the broader planning, skills, ontology, and documentation layers that agents actually use when operating on the site.
 
 The site should remain hand-authored and human-primary. Agent optimization is an editor/inspectability affordance, not a new runtime or build system.
@@ -424,3 +426,21 @@ Closed a small agent-surface loop exposed by `patch-consolidator`: the skill ref
 - The helper is intentionally advisory: it does not stage, revert, or mutate files.
 
 Next use: run it at the start of broad cleanup or commit-splitting passes, then restate the resulting buckets in plain language before editing.
+
+## Bounded Runtime Hygiene Feedback - 2026-07-10
+
+Enhanced the proposed agent/runtime pass without adding another index or cache.
+
+- Reused the typed mount/layer constants in `runtime-contracts.mts` instead of
+  maintaining a second closed vocabulary.
+- Replaced per-module recommendation flooding with one mount-hygiene census;
+  specific warnings remain for ungated and broad-effect immediate modules.
+- Moved feature-discovery CSS out of the core bundle and made its runtime share
+  the same explicit behavior gate.
+- Reclassified spatial gravity to visible and palette treats to idle, reducing
+  immediate definitions from 63 to 61 in the current audit census.
+- Extended the existing interaction-microstates convention and
+  deep-link-feature-discovery plan instead of creating a new convention index.
+
+Next pass: use the aggregate census to choose one measured immediate-width
+slice; do not convert the remaining backlog into dozens of repetitive notes.

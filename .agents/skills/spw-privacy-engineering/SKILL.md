@@ -1,32 +1,34 @@
 ---
 name: spw-privacy-engineering
-description: Audit privacy and data-handling risks in the spwashi.com site. Use for local storage, service worker state, embeds, analytics snippets, asset metadata, and disclosure of browser-resident behavior.
+description: Audit browser-resident privacy risks—storage, service worker, embeds, analytics, asset metadata. Use when data handling changes, not as a default every patch.
 ---
 
 # Spw Privacy Engineering for spwashi.com
 
-Read first:
+Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 
-- `../_shared/site-workflow.md`
-- `../_shared/site-vs-workbench.md`
+## Intent
 
-## Default Workflow
+Privacy work is real when storage, embeds, or analytics move. It is not a
+reason to add more inspect surfaces.
 
-1. Inventory browser-visible data flows:
-   - localStorage/sessionStorage
-   - service worker caches
-   - analytics or third-party embeds
-   - image or media metadata
-2. Identify what is stored, for how long, and whether the user can understand or clear it.
-3. Prefer private-by-default behavior:
-   - short retention
-   - explicit naming
-   - easy reset paths
-4. If a feature is mostly ornamental, question whether it needs persistence at all.
+## Look at
 
-## Good Outputs
+- localStorage / IndexedDB / site-settings ownership
+- Service worker caches and offline behavior
+- Third-party embeds and scripts
+- Analytics snippets
+- Image/EXIF and public asset metadata
+- What is disclosed vs silent in the UI
 
-- concise data inventory
-- retention and disclosure fixes
-- settings copy clarifications
-- reduced or normalized storage/state behavior
+## Workflow
+
+1. Name the data flow and retention.
+2. Prefer existing settings/storage modules over new keys.
+3. Document browser-resident behavior where users can find it.
+4. Avoid expanding collection “for agents.”
+
+## Validation
+
+- Trace writes to storage through known modules
+- Confirm settings/reset paths still make sense

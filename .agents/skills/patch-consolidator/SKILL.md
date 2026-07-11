@@ -1,43 +1,42 @@
 ---
 name: patch-consolidator
-description: Group mixed site changes into coherent patches before commit. Use when HTML, CSS, JS, images, and `.spw` edits have drifted together and need clearer boundaries, experience-slice grouping, or better commit shape.
+description: Split mixed working trees into reviewable commits. Use when HTML/CSS/JS/.spw drifted into one blob.
 ---
 
 # Patch Consolidator for spwashi.com
 
-Read first:
+Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 
-- `../_shared/site-workflow.md`
-- `../_shared/site-vs-workbench.md`
+## Intent
 
-## Default Workflow
+Mixed diffs are normal when exploring. Shipping them as one commit is how review
+and reverts die. This skill is for **shape**, not for inventing more work.
 
-1. Inspect the current diff by **concern**, not only by file type.
-2. Group changes into reviewable patches:
-   - copy and routing
-   - design-system / CSS tokens
-   - runtime module + catalog registration
-   - interactive-medium / scene / key-event slice
-   - image curation
-   - `.spw` inspection artifacts
-   - agent/skills/plan ecology (→ `agent-optimization/`)
-3. Call out cross-layer patches only when they serve one clear idea or one experience slice.
-4. Leave unrelated user work untouched.
-5. Use `./scripts/analyze-changes.sh` for a quick summary; restate boundaries in plain language.
+## Workflow
 
-## Suggested patch boundaries (site direction)
+1. Group by **concern**, not only file type.
+2. Typical buckets:
+   - copy / routing
+   - design tokens / shared CSS
+   - runtime module + catalog
+   - scene/interactive medium (only if that was the job)
+   - images
+   - `.spw` / plans / skills (meta—keep separate when possible)
+3. Cross-layer only when one idea truly needs all layers.
+4. Leave unrelated user work alone.
+5. Optional: `./scripts/analyze-changes.sh` for a summary.
 
-| Patch theme | Typical files | Split if mixed with |
-|-------------|---------------|---------------------|
-| Scene / entertainment medium | `interactive-medium.*`, `scene-interaction.*`, `spw-key-events.*`, film/play routes | unrelated topic copy |
-| Dimension / tokens | `dimensions.css`, `dimension-vocabulary.spw`, layout-postures | route HTML only |
-| Runtime catalog | `module-catalog.js`, new `public/js/runtime/*.js` | CSS unless same module |
-| Page anatomy / handoff | `page-anatomy.js`, `topical-payload.js` | unrelated settings work |
-| Skills / plans | `.agents/skills/`, `.agents/plans/` | public route features |
+## Split table
 
-## Good Outputs
+| Theme | Typical files | Split if mixed with |
+|-------|---------------|---------------------|
+| Scene / play medium | interactive-medium, scene-interaction, play routes | unrelated marketing copy |
+| Tokens / dimensions | dimensions.css, packing CSS | single route HTML only |
+| Catalog / runtime | module-catalog, runtime/*.js | unrelated CSS |
+| Skills / plans | `.agents/*` | public feature work |
 
-- suggested commit groupings with one-line intent each
-- hidden coupling notes (e.g. CSS import order depends on JS dataset)
-- files that must land together
-- files that should be split to keep review honest
+## Outputs
+
+- Suggested commit list with one-line intents
+- Must-land-together notes
+- What to leave out of this PR

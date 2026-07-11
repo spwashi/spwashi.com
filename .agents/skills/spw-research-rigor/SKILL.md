@@ -1,36 +1,38 @@
 ---
 name: spw-research-rigor
-description: Turn design, content, and runtime questions in the spwashi.com site into reproducible research notes. Use for experiments, audits, hypothesis-driven interaction work, and structured follow-up writing.
+description: Turn fuzzy design/runtime questions into a small reproducible note. Prefer light artifacts over new permanent systems.
 ---
 
 # Spw Research Rigor for spwashi.com
 
-Read first:
+Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 
-- `../_shared/site-workflow.md`
-- `../_shared/site-vs-workbench.md`
+## Intent
 
-## Default Workflow
+Research notes stop vibes-only arguments. They should not automatically become
+new conventions, modules, or metaphor families.
 
-1. State the question plainly.
-2. Separate hypothesis, method, artifact set, and validation.
-3. If the question is semantic or creative/product-facing, classify it as a semantic-capacity operation: cache, audit, align, prime, contract, or archive.
-4. If the question crosses engineers, animators, illustrators, designers, musicians, artists, or collaborators, frame it as a daily-kernel audit before implementation.
-5. Record the work in the lightest durable form:
-   - `PLAN.md` or `FIX.md`
-   - `.spw/reviews/...`
-   - semantic insight cache
-   - daily-kernel note
-   - focused route notes when the result is public-facing
-6. Prefer observable claims over vibe-only conclusions.
-7. End with next experiments or unresolved variables.
+## Workflow
 
-## Good Research Surfaces
+1. State the question in one plain sentence.
+2. Hypothesis, method, artifacts, validation—separate them.
+3. Semantic-capacity op if `.spw`: cache / audit / align / prime / contract / **archive**.
+4. Cross-discipline → daily-kernel fields only if the session is truly multi-role.
+5. Lightest durable form that still helps next week:
+   - short plan or FIX
+   - nested or single `.spw` audit/review
+   - insight cache
+   - route note if public-facing
+6. Observable claims over taste-only conclusions.
+7. End with next experiment **or** “stop / do not build.”
 
-- interaction learnability
-- menu discoverability
-- theme/palette behavior
-- image prominence and copy coupling
-- semantics and lifecycle audits
-- brand-physics and regional sensory development
-- creative marketing/audience register audits
+## Good surfaces
+
+Learnability, menus, theme/palette, image–copy coupling, lifecycle audits,
+audience registers—when someone will act on the result.
+
+## Anti-patterns
+
+- Research that only produces more indexes
+- A new coordinate system for a one-off probe
+- Skipping archive when the question is answered

@@ -1,55 +1,40 @@
 ---
 name: spw-css-dom-lab
-description: Design and run small, reversible UI experiments for the spwashi.com site using HTML, CSS, and DOM APIs. Use for interaction prototypes, device-aware surface tests, container-query layout variants, and stateful experiments without new dependencies.
+description: Small reversible HTML/CSS/DOM experiments. Keep them local until a second consumer appears.
 ---
 
 # Spw CSS + DOM Lab for spwashi.com
 
-Read first:
+Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 
-- `../_shared/site-workflow.md`
-- `../_shared/site-vs-workbench.md`
+## Intent (honest)
 
-## Default Workflow
+Labs were meant to stay cheap. The failure mode was graduating every interesting
+experiment into shared tokens, an IMMEDIATE module, and a convention.
 
-1. Name the hypothesis: what should feel more learnable, vivid, ergonomic, or inspectable?
-2. For cross-discipline experiments, fill daily-kernel fields first.
-3. Start with HTML/CSS; add JS only for state, timing, sampling, or pointer logic.
-4. Keep experiments reversible:
-   - isolate to one selector family or data attribute
-   - avoid inline styles (except dynamic CSS vars from runtime)
-   - prefer progressive enhancement
-5. Test against: desktop reading, narrow viewport, coarse pointer, reduced motion, and declared intensity.
-6. If the pattern survives, fold into shared tokens, systems CSS, runtime module, `.spw` contract, or insight cache — not a page trick.
+## Workflow
 
-## Systems-layer experiment rules
+1. Name a hypothesis (feel, learnability, ergonomics)—one sentence.
+2. HTML/CSS first; JS only for state, timing, or pointer logic.
+3. Isolate: one selector family or one attribute; reversible.
+4. Test: narrow + wide, coarse pointer, reduced motion.
+5. **Promotion rule:** second real consumer **or** explicit product request—then
+   fold into shared CSS/module/.spw. Otherwise leave route-local or delete.
 
-- Base behavior → module CSS (`scene-interaction.css`, `spw-key-events.css`, etc.)
-- Device/register modulation → `interactive-medium.css` (imported **after** modules it tunes)
-- Canonical token defaults → `dimensions.css` or `tokens/core.css`
-- Do not reorder `style-core.css` layers for experiments; use file position within the same layer
+## Do not
 
-## Good Targets
+- Register a new catalog `immediate` module for a lab
+- Invent a sitewide `data-spw-*` family for a one-route probe
+- Import lab CSS into the core bundle “just in case”
 
-- scene bed layout variants (`container-type: inline-size`, `@supports`)
-- touch vs hover affordances (`data-spw-hover-mode`)
-- reveal/stagger timing via `--spw-medium-reveal-stagger-step`
-- packing-tier parity on interactive hosts
-- menus, chips, settings widgets, wonder/resonance controls
-- daily-kernel studio/lab/theater experiments
+## Systems-layer note
 
-## Promotion checklist
-
-Before folding an experiment into shared code:
-
-- [ ] Works without JS? If not, registered in `module-catalog.js`?
-- [ ] Tokens named in `dimension-vocabulary.spw`?
-- [ ] Snapshot or serialize path for inspection?
-- [ ] Reduced-motion and touch paths verified?
+If modulating interactive modules, consume dimension / medium tokens; do not
+fork viewport detection. Base layout stays in components/routes; systems tails
+modulate.
 
 ## Validation
 
+- Visual check on the host route
 - `git diff --check`
-- `node --check` on touched JS
-- `rg` for experiment selectors/attrs
-- optional browser smoke at 2 viewport widths
+- No catalog change unless promotion is intentional

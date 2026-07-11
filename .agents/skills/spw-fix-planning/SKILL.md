@@ -1,40 +1,38 @@
 ---
 name: spw-fix-planning
-description: Plan a fix for regressions or runtime issues in the spwashi.com site before editing. Use for UI regressions, broken interactions, layout bugs, or lifecycle/state problems that need a structured fix note.
+description: Structure a multi-layer regression before coding. For obvious one-file bugs, just fix them.
 ---
 
 # Spw Fix Planning for spwashi.com
 
-Read first:
+Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 
-- `../_shared/site-workflow.md`
-- `../_shared/site-vs-workbench.md`
+## Intent
 
-## When to Use
+FIX notes help when the failure mode is unclear or multi-layer. They are not
+required to justify a three-line CSS tweak.
 
-- the bug spans multiple layers
-- the failure mode is unclear
-- you need a durable fix note before implementation
-- the failure is stale semantic dispatch, missing plan/skill wiring, or a broken model-guided/daily-kernel/semantic-capacity reference
+## When to use
 
-## Default Workflow
+- Bug spans layers or routes
+- Root cause is unknown
+- You need a durable note for later (lifecycle, settings, agent dispatch)
+- Agent/planning indexes themselves are broken
 
-1. Record the visible failure, affected routes, and reproduction hints.
-2. Separate symptom, root cause, and likely ripple.
-3. Predict the smallest file set that can contain the fix.
-4. Write `.agents/plans/<slug>/FIX.md` with:
-   - failures
-   - diagnosis
-   - planned fix
-   - deferred follow-ups
-5. Add `.spw` review notes when the bug is really an ontology, settings, lifecycle, semantic-capacity, model-guided, or daily-kernel seam.
+## When not to use
+
+- Single file, clear cause → edit and validate
+- “Maybe write a plan later” → do not open PLAN.md for a fix
+
+## Workflow
+
+1. Visible failure, routes, how to reproduce.
+2. Symptom vs likely root vs ripple.
+3. Smallest file set that can contain the fix.
+4. If multi-layer or unclear: `.agents/plans/<slug>/FIX.md` (failures, diagnosis, fix, deferred).
+5. `.spw` review only if the bug is really ontology/lifecycle/settings seam—not by default.
 
 ## Validation
 
-- syntax checks for touched JS
-- asset/anchor checks for touched routes
-- `git diff --check`
-
-When the regression or lifecycle issue lives in the agent/planning layer (stale indexes, missing `.spw` dispatch, broken skill references, maintenance drift), record it under `.agents/plans/agent-optimization/` (or a focused sub-plan) and invoke `spw-plan-maintenance` as part of the fix.
-
-When the regression lives in the new semantic rails, check `.spw/site.spw`, `.spw/conventions/index.spw`, `.agents/plans/README.md`, and the relevant skill wrapper before editing runtime code.
+- `node --check` / route spot-check / `git diff --check`
+- Agent-layer regressions → `agent-optimization/` + plan-maintenance if indexes broke

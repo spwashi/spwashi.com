@@ -1,27 +1,36 @@
 ---
 name: spw-operator-lattice
-description: Inspect and relate Spw operator usage across the spwashi.com site. Use for querying `.spw` files, HTML `data-spw-*` patterns, route semantics, and operator-driven cross-link structures.
+description: Inspect Spw operator usage across .spw, HTML data-spw-*, and route links. Use for operator/cross-link audits—not to sprinkle more chips everywhere.
 ---
 
 # Spw Operator Lattice for spwashi.com
 
-Read first:
+Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 
-- `../_shared/site-workflow.md`
-- `../_shared/site-vs-workbench.md`
+## Intent
 
-## Default Workflow
+Operators are a real grammar on this site. Overusing chips as decoration made
+pages noisier without teaching more.
 
-1. Pick the surface to inspect:
-   - `.spw` files
-   - HTML operator chips and anchors
-   - JS or CSS data-attribute contracts
-2. Query with `rg` first; only reach for workbench tooling if the question truly needs parser-aware analysis.
-3. Compare authored operator language to runtime/operator styling language.
-4. Record mismatches as editor-facing `.spw` notes when they affect future development.
+## Use when
 
-## Typical Questions
+- Auditing operator consistency (frame/probe/object/…)
+- Fixing broken conceptual cross-links
+- Aligning colors/tokens with operator identity
 
-- Which operators cluster around a route family?
-- Where do public metaphors drift from runtime semantics?
-- Which handles, chips, or attributes imply the same concept with different names?
+## Avoid
+
+- Adding operator chips to every paragraph “for density”
+- New operator types without shared definitions + tokens
+
+## Workflow
+
+1. Query existing usage (`.spw`, `data-spw-operator`, chips).
+2. Prefer reusing established operators over inventing synonyms.
+3. Change shared definitions/tokens only when the lattice truly shifted.
+4. Keep public copy readable without requiring operator literacy.
+
+## Validation
+
+- `rg` for operator names and chip selectors
+- Spot-check contrast and focus states

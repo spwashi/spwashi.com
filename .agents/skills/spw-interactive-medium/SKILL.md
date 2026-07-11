@@ -1,6 +1,6 @@
 ---
 name: spw-interactive-medium
-description: Build and tune spwashi.com as an entertainment and interactive medium — scene beds, keyboard scenes, device-aware display variants, topical payloads, and module-added style impact. Use for play/film/practice-bed routes, scene-interaction, spw-key-events, interactive-medium tokens, viewport/pointer specificity, and LM-handoff serialization.
+description: Play, scene, and practice-bed behavior—device-aware tokens, keyboard scenes, topical payloads. Not for ordinary editorial reading routes.
 ---
 
 # Spw Interactive Medium for spwashi.com
@@ -9,71 +9,54 @@ Read first:
 
 - `../_shared/site-workflow.md`
 - `../_shared/site-vs-workbench.md`
-- `references/interactive-medium-rails.md` when implementing or auditing
+- `references/interactive-medium-rails.md` when implementing
 
-## When to Use
+## Intent (honest)
 
-- the route should feel like play, practice, scene composition, or campaign — not only reading
-- work touches scene beds, lane focus, image coupling, keyboard potentiation/actualization, or staged reveals
-- display must respect viewport tier, pointer mode, hover capability, packing tier, or layout posture
-- module-added CSS must modulate earlier systems without fighting layout (systems-layer tail import)
-- serialization must land in `pageAnatomy`, `topicalPayload`, or Spw for LM/editor handoff
+This stack grew because play/practice routes needed shared device and scene
+grammar. It is easy to over-apply on reading pages. **Default reading routes
+should stay light.**
 
-## Default Workflow
+## When to use
 
-1. **Classify the medium register** before adding behavior:
-   - `scene` — practice beds, film modes, `data-spw-scene-interactive`, scene-interpret hosts
-   - `play` — RPG/campaign surfaces, `data-spw-context="play"`
-   - `workshop` / `lab` — compose/build/practice routes with interactive hosts
-   - `reading` — default; keep module modulation light
-2. **Respect device specificity** — read existing root state from shell-disclosure:
-   - `data-spw-viewport-tier`, `data-spw-pointer-mode`, `data-spw-hover-mode`, `data-spw-device-context`
-   - let `interactive-medium.js` write `data-spw-medium-register`, `data-spw-interaction-posture`, `--spw-medium-intensity`
-3. **Patch in layer order** (smallest honest surface):
-   - route HTML — scene bed anatomy, `data-spw-scene-interpret`, images, memory strips
-   - shared tokens — `public/css/tokens/dimensions.css` for canonical medium axes
-   - systems CSS — base module styles (`scene-interaction.css`, `spw-key-events.css`) consume `--spw-medium-*`
-   - systems tail — `interactive-medium.css` imported **after** module systems to modulate tokens
-   - runtime — register in `public/js/runtime/module-catalog.js`; expose `window.__SPW_*__` snapshot APIs
-4. **Wire inspection** when the contract is reusable:
-   - `.spw/conventions/dimension-vocabulary.spw` (`interactive_medium` axis)
-   - `.spw/conventions/interaction-microstates.spw`
-   - `.spw/slices/` or `.agents/plans/modular-experience-slices/` when ownership spans routes
-5. **Validate interaction topography** — confirm snapshots include medium + device context:
-   - `window.__SPW_INTERACTIVE_MEDIUM__.snapshot()`
-   - `window.__SPW_PAGE_ANATOMY__.serialize()` → `interaction_topography`
-   - `window.__SPW_TOPICAL_PAYLOAD__.serialize()` → `interactive_medium`
+- Route is play, practice, scene, film, or campaign—not only reading
+- Scene beds, lane focus, keyboard potentiation, staged reveals
+- Module CSS must respect viewport/pointer without forking media queries
+- LM/editor handoff serialization is an explicit product need
 
-## Implementation Rails
+## When not to use
 
-| Concern | Canonical owner | Do not duplicate |
-|--------|-----------------|------------------|
-| Lane radiogroup + local memory | `scene-interaction.js` | keyboard roving in page scripts |
-| Potentiation / scene enter-exit | `spw-key-events.js` | one-off keydown handlers on routes |
-| Device + register tokens | `interactive-medium.js` + tail CSS | per-route media-query touch hacks |
-| Topics/lore/handles/scene state | `topical-payload.js` | ad-hoc JSON builders |
-| Interaction + key catalog | `page-anatomy.js` | parallel binding tables |
+- Editorial copy or static curriculum pages
+- Adding “intensity” for its own sake on the home/about reading path
+- Serializing everything “for the agent” without a consumer
 
-## Edge Cases
+## Workflow
 
-- **Coarse + narrow** → `touch-field` posture; suppress hover lift (`data-spw-hover-mode="touch"`)
-- **Dynamic scene beds** → listen for `spw:scene-bed-ready`; use MutationObserver sparingly with rAF debounce
-- **Mode-switch panels** → scene-interaction must re-sync lane focus on `spw:variant-selected`
-- **Reduced motion** → prefer token dampening; disable transforms/animations in module CSS `@media (prefers-reduced-motion: reduce)`
-- **Boot order** — `shell-disclosure` before `interactive-medium`; signature-cache to avoid redundant root writes
-- **Host counting** — dedupe beds, scene-interpret, prompt-host, and wonder blocks when scoring intensity
+1. Classify register: `scene` | `play` | `workshop`/`lab` | keep `reading` light.
+2. Reuse shell device state; let `interactive-medium.js` own medium tokens—do not re-detect.
+3. Patch smallest surface: HTML bed → tokens → systems CSS → tail modulator → catalog (prefer non-immediate).
+4. Wire `.spw` / slices only when the contract is reused across routes.
+5. Validate snapshots only if handoff is in scope:
+   - `__SPW_INTERACTIVE_MEDIUM__`, page-anatomy, topical-payload
 
-## Good Outputs
+## Owners (do not duplicate)
 
-- scene beds with keyboard + pointer parity and inspectable local state
-- device-aware touch targets without breaking reading routes
-- topical/scene payloads serializable to Spw
-- module CSS that spends shared tokens instead of route-local `!important`
-- plan note under `modular-experience-slices/` when the slice outlives one patch
+| Concern | Owner |
+|---------|--------|
+| Lanes + local memory | `scene-interaction.js` |
+| Potentiation / scene stack | `spw-key-events.js` |
+| Device + register tokens | `interactive-medium.js` + tail CSS |
+| Topics/handles/scene state | `topical-payload.js` |
+
+## Edges
+
+- Coarse + narrow → touch-field; suppress hover lifts
+- Reduced motion → dampen tokens; no gratuitous transforms
+- Boot: shell-disclosure before interactive-medium
+- Deduplicate hosts when scoring intensity
 
 ## Validation
 
-- `node --check` on touched runtime modules
-- `npm run check:local` for ordinary patches
-- `rg` for selector alignment: `BED_SELECTOR` / `SCENE_HOST_SELECTOR` / `data-spw-medium-register`
-- browser smoke on one practice-bed route + one play route at narrow and wide widths
+- `node --check` on touched modules
+- Smoke one practice + one play route, narrow and wide
+- `check:runtime` if catalog changed

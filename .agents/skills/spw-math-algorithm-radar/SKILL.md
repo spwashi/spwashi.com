@@ -1,33 +1,26 @@
 ---
 name: spw-math-algorithm-radar
-description: Map relevant math and algorithm ideas onto the spwashi.com site. Use for visualization strategy, intuition-building copy, interaction design, parser-adjacent thinking, and learning-roadmap notes tied to public pages.
+description: Map math/algorithm ideas onto public pages and practice beds. Use for learning routes—not to force labs onto every topic.
 ---
 
-# Spw Math + Algorithm Radar for spwashi.com
+# Spw Math / Algorithm Radar for spwashi.com
 
-Read first:
+Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 
-- `../_shared/site-workflow.md`
-- `../_shared/site-vs-workbench.md`
+## Intent
 
-## Default Workflow
+Math pages benefit from honest intuition and optional labs. Not every concept
+needs a live diagram on first ship.
 
-1. Decide whether the question is:
-   - math for teaching on the site
-   - math for implementing the site
-   - math for adjacent parser or ontology thinking
-2. Map the concept to public surfaces:
-   - route copy
-   - diagrams or SVG/canvas interactions
-   - cards, anchors, and cross-links
-   - `.spw` theory notes
-3. Prefer intuition first: invariants, transformation, adjacency, growth, containment, symmetry, or complexity.
-4. If an algorithm is proposed, say what site behavior it improves and why a lighter approach would or would not suffice.
+## Workflow
 
-## Useful Outputs
+1. Name the learner outcome.
+2. Prefer static clarity (copy, figure, one interaction) before full practice beds.
+3. If interactive: use existing math/practice patterns; register modules non-immediate when possible.
+4. Serialize/inspect only when the lab is meant for handoff or reuse.
 
-- topic expansion ideas
-- visualization patterns
-- interactive diagram concepts
-- concise learning ladders
-- `.spw` maps that make the field inspectable
+## Validation
+
+- Reading path works without JS
+- Lab degrades cleanly
+- `node --check` / catalog check if runtime added

@@ -1,50 +1,46 @@
 ---
 name: spw-craft-quality
-description: Improve craft quality of the spwashi.com site across HTML, CSS, JS, copy, and `.spw` surfaces. Use for clarity passes, design-system cleanup, runtime polish, device-aware interaction craft, and structural refactors that stay reviewable.
+description: Improve clarity, hierarchy, a11y, device parity, and maintainability on a small public slice. Prefer removing weight over adding inspectability.
 ---
 
 # Spw Craft Quality for spwashi.com
 
-Read first:
+Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 
-- `../_shared/site-workflow.md`
-- `../_shared/site-vs-workbench.md`
+## Intent (honest)
 
-## Default Workflow
+Craft used to mean “stronger defaults, visible state, and serialization for
+everything that mattered.” Serialization is still good for real runtime state.
+It is a poor substitute for calmer HTML and CSS.
 
-1. Choose one quality axis: clarity, semantics, visual hierarchy, interaction learnability, a11y, device parity, or maintainability.
-2. For cross-discipline work, choose a daily-kernel shape first.
-3. Find the smallest public slice: one route, one shared layer, one runtime module, or one `.spw` bundle.
-4. Prefer shared fixes before page-local patches:
-   - tokens (`dimensions.css`, `core.css`) before surfaces
-   - surfaces before route-specific CSS
-   - semantic HTML before JS
-   - module base CSS before systems-tail modulation
-5. Keep hand-authored copy legible; remove incidental complexity instead of layering workarounds.
-6. Update `.spw` when introducing concepts, lifecycles, slice contracts, or agent rails.
+## Workflow
 
-## Quality Heuristics
+1. Pick **one** axis: clarity, hierarchy, learnability, a11y, device parity, maintainability.
+2. Bound the slice: one route, one shared layer, or one module—not the whole ontology.
+3. Prefer shared tokens/components before route CSS; HTML before JS.
+4. Remove incidental complexity (extra attrs, dead modes, unused observers).
+5. Update `.spw` only if a reusable contract changed—not for every polish pass.
 
-- Favor stronger defaults over more toggles.
-- Align visual hierarchy with semantic hierarchy.
-- Use data attributes intentionally; no sprawl for cosmetic one-offs.
-- Interaction learnable: visible state beats hidden cleverness.
-- **Device parity**: touch targets, hover-gated transforms, viewport-tier grid columns — test compact + wide.
-- **Module craft**: signature-cache root writes; proper listener/observer cleanup; exported resolvers for tests.
-- **CSS craft**: `:where()` for additive rules; `@supports` for container queries; no `!important` outside ornament.
-- **Serialization craft**: if state matters, it should appear in `__SPW_*__.snapshot()` or Spw serialize.
-- Concepts in code should often exist in copy or `.spw` too.
+## Heuristics
 
-## Runtime maintainability patterns
+- Stronger defaults over more toggles.
+- Visual hierarchy follows semantic hierarchy.
+- Data attributes for real state—not cosmetic one-offs.
+- Visible state beats hidden cleverness.
+- Device parity: touch targets, hover-only motion, compact + wide.
+- CSS: `:where()` for additive rules; no `!important` outside ornament.
+- Module craft: cleanup listeners/observers; one bus emitter per event family.
+- If state only exists for agents, question whether the public page needs it.
 
-- Deduplicate selectors shared across modules (`BED_SELECTOR`, `SCENE_HOST_SELECTOR`).
-- Debounce resize/DOM sync with `requestAnimationFrame`.
-- Avoid double-counting DOM hosts when scoring intensity or salience.
-- Bus events + DOM `spw:*` events should have one canonical emitter.
+## Runtime
+
+- Debounce resize / DOM sync with rAF.
+- Prefer non-`immediate` catalog mounts for polish modules.
+- Review source CSS layers; ignore bundle noise unless shipping CSS.
 
 ## Validation
 
 - `git diff --check`
 - `node --check` on touched JS
-- `npm run check:runtime` when module catalog or contracts change
-- targeted `rg` for selectors, attrs, import order
+- `check:runtime` if catalog touched
+- Spot-check compact viewport when layout moved

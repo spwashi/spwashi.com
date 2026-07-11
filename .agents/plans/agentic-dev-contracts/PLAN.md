@@ -55,6 +55,11 @@ Non-cacheable or volatile:
 
 Optimization rule: if an agent repeats the same census, route scan, or skill-routing audit twice, the next pass should either add a small generated artifact under `.agents/state/`, improve an existing README/index, or document why the repetition is safer than caching.
 
+Validation boundary: `check-site` builds the manifest in memory and must stay
+read-only. `npm run manifest` is the explicit cache refresh that writes
+`.agents/state/runtime/route-runtime-manifest.json`; `manifest:tmp` provides the
+same generated evidence when the editor cache is not writable.
+
 Initial candidate artifacts:
 
 - `.agents/state/runtime/route-runtime-manifest.json` remains the canonical generated route/runtime cache.
@@ -69,3 +74,9 @@ Initial candidate artifacts:
 - `git diff --check`
 - `node --check` for new/edited script modules
 - For future generated agent caches: verify the artifact names its source files and invalidation basis, and keep generated outputs out of commits unless the repo already tracks that artifact class.
+
+## Usage audit (2026-07)
+
+Nested Spw: `.spw/audits/agentic-development-2026-07/`.
+
+Finding: `.agents/state/runtime/route-runtime-manifest.json` can lag the tree (sample `generatedAt` 2026-04-17, `routeCount` 77, pre-refactor `./spw-*.js` import paths). Agents must run `npm run manifest` before trusting the cache. HTML required body keys and `data-spw-features` gating remain the strongest shared HTML features; TypeScript serves checks (`scripts/ts`), not route modules; Spw serves coordinates and audits.

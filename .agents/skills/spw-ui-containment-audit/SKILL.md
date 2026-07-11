@@ -1,49 +1,36 @@
 ---
 name: spw-ui-containment-audit
-description: Audit containment, sizing, scroll, and alignment issues in the spwashi.com site. Use for card measure problems, menu structure, mobile overflow, hero sizing, scene-bed layout, container-query breakpoints, and touch-target sizing across viewport tiers.
+description: Find and fix overflow, measure, and packing issues. Structural CSS first—not new dimensions.
 ---
 
 # Spw UI Containment Audit for spwashi.com
 
-Read first:
+Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 
-- `../_shared/site-workflow.md`
-- `../_shared/site-vs-workbench.md`
+## Intent
 
-## Default Workflow
+Containment bugs are usually hierarchy and measure, not missing metadata.
 
-1. Identify the failing container, not just the visible symptom.
-2. Trace containment through HTML structure, CSS layout mode, JS datasets, and root viewport state:
-   - `data-spw-viewport-tier`, `data-spw-layout`, `data-spw-pack-tier`
-   - `container-type` / `@container` on interactive hosts (`.spw-scene-bed`)
-3. Prefer structural fixes:
-   - correct grid/flex ownership
-   - width and measure constraints (`--spw-real-estate-inline`, `--page-width-*`)
-   - consistent gaps via `--spw-medium-layout-gap-scale` / `--component-gap`
-   - stable mobile behavior and touch min heights (`--spw-medium-touch-min`)
-4. Check whether the issue is hierarchy, not overflow.
-5. If a layout rule repeats, move it to shared components or systems — not route-local hacks.
+## Workflow
 
-## Device-specific audit matrix
+1. Find the failing **container**, not only the symptom.
+2. Trace HTML structure → CSS layout → only then JS datasets / viewport attrs.
+3. Prefer structural fixes: grid/flex ownership, measure tokens, gaps, touch mins.
+4. If hierarchy is wrong, fix hierarchy before adding packing attrs.
+5. Promote repeating rules to shared components/systems—not route one-offs **and**
+   not a new packing theory unless the axis is missing.
+
+## Device matrix
 
 | Signal | Check |
 |--------|-------|
-| `compact` / `narrow` tier | grid column collapse, lane stack, nav pressure |
-| `coarse` pointer | touch targets ≥ `--spw-medium-touch-min`; no hover-only affordances |
-| `touch` hover mode | suppress `translateY` hover lifts; keep `:focus-visible` |
-| `split` / `wide` layout | gutter rail, scene figure side-by-side |
-| packing `compact` | lane pad + gap scale on scene beds |
-
-## Common Targets
-
-- nav and menu clusters (shell-disclosure pressure)
-- scene beds: stage grid, figure coupling, memory strip
-- card bodies, hero figures, image grids
-- settings widgets and operator chips
-- long-copy measure and inline wrapping
+| compact / narrow | columns collapse, nav pressure |
+| coarse pointer | touch targets; no hover-only essentials |
+| touch hover mode | suppress lift transforms; keep focus-visible |
+| pack-local cards | container queries on the card, not only viewport media |
 
 ## Validation
 
-- reproduce at `compact` and `wide` widths
-- `rg` for conflicting `min-block-size`, `padding`, `grid-template-columns` on same selector family
-- prefer `spw-interactive-medium` skill when fixes need register-aware tokens
+- Reproduce compact + wide
+- `rg` conflicting min-size/padding/grid on the same family
+- Interactive-medium skill only if the bug is medium-token specific

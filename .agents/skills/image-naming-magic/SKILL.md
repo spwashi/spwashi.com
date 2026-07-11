@@ -1,29 +1,21 @@
 ---
 name: image-naming-magic
-description: Curate names, alt text, and semantic placement for site images and promoted renders. Use when sorting `00.unsorted`, naming tracked derivatives, or aligning images with route copy and palette behavior.
+description: Name, alt-text, and place site images so they fit route copy and palette. Use when promoting or sorting assets—not for every temporary render.
 ---
 
 # Image Naming Magic for spwashi.com
 
-Read first:
+Read first: `../_shared/site-workflow.md`, `./references/naming-lexicon.spw` if present.
 
-- `../_shared/site-workflow.md`
-- `./references/naming-lexicon.spw`
+## Workflow
 
-## Default Workflow
-
-1. Start from the image's role on the site: hero, card, diagram, specimen, or ornament.
-2. Name the image for feeling plus structure, not literal object description.
-3. Make the name useful downstream:
-   - tracked filename or derivative label
-   - caption language
-   - alt text
-   - palette or resonance associations
-4. If the image carries a reusable concept, consider a `.spw` note or sidecar.
+1. Role first: hero, card, diagram, specimen, ornament.
+2. Name for feeling + structure, not only object inventory.
+3. Make the name useful: filename, caption, alt, optional palette association.
+4. `.spw` or sidecar only if the image carries a reusable concept.
 
 ## Heuristics
 
-- Prefer concise kebab-case names.
-- Tie names to route meaning, not only visual style.
-- Let alt text describe the image honestly; let captions carry the metaphor.
-- If the image came from `00.unsorted`, promote a tracked derivative before wiring it into public pages.
+- Alt text serves people first, SEO second
+- Do not invent a full icon ontology for one-off art
+- Prefer consistent stems with existing image libraries when they exist

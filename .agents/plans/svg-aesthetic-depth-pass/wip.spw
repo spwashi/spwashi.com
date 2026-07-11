@@ -82,6 +82,27 @@
   do_not_promote_until = "Charge-field or wonder layers consume svg:persona-selected with a falsifiable cross-route test."
 }
 
+^"viewing_reason_alignment"{
+  id = "viewing-reason-alignment-2026-07"
+  operation = "align"
+  fixity = "tending"
+  source = "five-track architecture audit + .spw documentation pass"
+  claim = "SVG persona facet work folds into the cross-media viewing-reason convention; P0 code fixes are tracked in the audit, not duplicated here."
+  evidence = #[
+    `.spw/conventions/viewing-reason.spw`,
+    `.spw/audits/viewing-reason-cross-media-2026-07.spw`,
+    `.spw/conventions/index.spw dispatch viewing_reason`,
+    `public/css/systems/svg-surfaces.css figcaption register (attr target bug)`,
+    `public/js/media/svg-tunability.js SVG_HOST_SELECTOR`
+  ][reg=set]
+  p0_code = #[
+    `Fix audiences register attr() target`,
+    `Extend SVG_HOST_SELECTOR for bare svg[data-spw-svg-persona]`,
+    `Add svg:persona-selected consumer`
+  ][reg=set]
+  validation = `rg -n "viewing_reason|viewing-reason" .spw/conventions .spw/audits .agents/plans/svg-aesthetic-depth-pass`
+}
+
 dispatch: .{
   plan = @plan
   design_svg_route = @design_svg_route

@@ -1,31 +1,44 @@
 ---
 name: spw-typescript-affordances
-description: Apply TypeScript thinking where it helps the spwashi.com repo without forcing the site into a TypeScript build. Use for mounted workbench code, typed helper scripts, and safer state-shape design in plain JS modules.
+description: Use TypeScript where checks and contracts pay off. Do not convert the public site to a TS app.
 ---
 
 # Spw TypeScript Affordances for spwashi.com
 
-Read first:
+Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 
-- `../_shared/site-workflow.md`
-- `../_shared/site-vs-workbench.md`
+## Intent (honest)
 
-## Default Workflow
+It was unclear whether the site should become a TypeScript codebase. What proved
+useful was typing **build and validation**, not rewriting every module.
 
-1. Confirm the target actually benefits from typing:
-   - mounted workbench scripts or TS files
-   - complex JS state objects
-   - event/detail payloads
-   - configuration registries
-2. Do not introduce a new TS build path for route code just because types would be nice.
-3. In plain JS, prefer TS-inspired discipline:
-   - normalization functions
-   - closed string sets
-   - JSDoc typedefs where they reduce ambiguity
-   - explicit shape checks at boundaries
-4. If the edit belongs upstream in `.spw/_workbench`, say so and patch the right surface intentionally.
+## Use TypeScript for
+
+| Surface | Why |
+|---------|-----|
+| `scripts/ts/site-contracts/` | Route body keys, manifest shape |
+| `scripts/ts/runtime-contracts.mts` | Catalog mount/feature hygiene |
+| `scripts/ts/css-manifest.mts` | BEHAVIOR_SCOPES / ROUTE_SCOPES |
+| `public/ts/*` (few files) | bus, feeds, dom-contracts—portable edges |
+
+## Prefer plain JS for
+
+- Route modules, most `interface/` and `runtime/` processes
+- Quick progressive enhancement
+- Anything that is mostly DOM narrative
+
+In plain JS: closed string sets, `Object.freeze` contracts, normalize helpers,
+JSDoc at boundaries when it reduces real ambiguity.
+
+## Feature / bundle hygiene (adjacent)
+
+- Catalog `features:` must match CSS behavior scope keys when used as gates.
+- New modules: prefer `visible` / `idle` / `interaction`; `immediate` + enhancement → `timingArc` or reclassify. `npm run check:runtime` reports the aggregate mount-hygiene debt and reserves per-module warnings for ungated or broad-effect cases.
+- Review CSS under layer folders; treat `bundles/*` as generated.
+- Manifest: `npm run manifest` → `.agents/state/runtime/route-runtime-manifest.json`.
 
 ## Validation
 
-- `node --check` for edited JS
-- workbench-side type or script checks only when workbench files changed
+- `npm run build:tools` after `scripts/ts/**` edits
+- `npm run check:runtime` for catalog/contract work
+- `node --check` for plain JS

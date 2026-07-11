@@ -56,6 +56,8 @@ Default decision rule:
 ## Validation
 - Run `git diff --check` after edits.
 - Run `node --check <file>` for edited JS modules.
+- For **site runtime** feature packs (`data-spw-features`) or multi-audit work, run `npm run ecology`. Thoroughness: `.spw/audits/index.spw`. Loop: `.spw/conventions/recursive-improvement.spw`.
+- For **Spw language** features (operators, braces, claims, v04 pillars), run `npm run ecology:language`. Entry: `.spw/language/feature-utilization.spw`. Loop: `.spw/language/recursive-improvement.spw`. Do not conflate language operators with the runtime pack token `operators`.
 - For ordinary HTML/CSS/JS/`.spw` work that does not touch dependencies, prefer `npm run check:local`; it runs the local build, CSS/runtime/site contracts, generated-output checks, and `git diff --check` without the network-backed npm audit.
 - Run `npm run audit` (or `npm run check`, which includes it) before landing changes that touch dependencies: `devDependencies`, `dependencies`, `package-lock.json`, install tooling, or any package resolution surface. A script-only `package.json` edit may use `check:local` plus targeted review unless the dependency graph changes.
 - Agents must not introduce new npm packages (via `npm install`, `npx`, etc.) without an accompanying plan note under `.agents/plans/` (or `agent-optimization/`) and human review. Prefer `npm ci --ignore-scripts` for any temporary installs.

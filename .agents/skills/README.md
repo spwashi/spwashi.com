@@ -1,43 +1,67 @@
 # Mounted Skills
 
-Site-local skills for spwashi.com agent and editor work. Each `SKILL.md` is the entry point; some skills include `references/` or `scripts/`.
+Local skills for agents and editors working on spwashi.com. Each `SKILL.md` is
+the entry. Some include `references/` or scripts.
 
-Workbench-mounted skills also exist under `.spw/_workbench/.agents/skills/` — use those scripts when the workbench is the source of truth. See `_shared/site-vs-workbench.md`.
+Workbench skills also live under `.spw/_workbench/.agents/skills/` when the
+workbench is the source of truth. See `_shared/site-vs-workbench.md`.
 
-## Core Skills for Site Work
+These notes accumulated while the site was still figuring out what “agentic”
+and “inspectable” should mean. Treat them as tools, not obligations.
 
-| Skill | Use when |
-|-------|----------|
-| `spw-interactive-medium` | Entertainment/scene beds, device-aware tokens, keyboard scenes, topical/LM handoff |
-| `spw-semantics-rigor` | Ontology, naming, dimension vocabulary, cross-layer attribute alignment |
-| `spw-feature-planning` | Plan before cross-route or cross-layer features |
-| `spw-fix-planning` | Plan before fixing test/build/UI regressions |
-| `spw-craft-quality` | Clarity, maintainability, device parity, runtime/CSS polish |
-| `spw-css-dom-lab` | Small reversible interaction/layout experiments |
-| `spw-ui-containment-audit` | Overflow, measure, container queries, touch targets |
-| `spw-plan-maintenance` | Sweep plans, `.spw` dispatch, skills index after significant landings |
-| `patch-consolidator` | Group messy working-tree diffs into reviewable commits |
-| `image-optimize` / `image-naming-magic` | Promote and name site images |
+## Core skills
 
-## Semantic rails (plans + conventions)
+| Skill | Reach for when |
+|-------|----------------|
+| `spw-interactive-medium` | Play/scene/practice beds—not ordinary editorial reading |
+| `spw-semantics-rigor` | Naming drift, ontology mess, cross-layer attribute cleanup |
+| `spw-feature-planning` | Truly multi-route or shared-layer work *before* coding |
+| `spw-fix-planning` | Regressions that need a FIX note, not a novel |
+| `spw-craft-quality` | Clarity, a11y, device parity, maintainability passes |
+| `spw-css-dom-lab` | Small reversible experiments |
+| `spw-ui-containment-audit` | Overflow, measure, touch targets, packing |
+| `spw-plan-maintenance` | After a landing that actually moved plans/skills/dispatch |
+| `spw-typescript-affordances` | Checks, contracts, kernel-adjacent types—not route rewrites |
+| `patch-consolidator` | Mixed diffs that need reviewable commit shape |
+| `image-optimize` / `image-naming-magic` | Promoting and naming public images |
 
-- `model-guided-refinement/` + `.spw/conventions/model-guided-refinement.spw`
-- `daily-kernel-development/` + `.spw/conventions/daily-kernel.spw`
-- `modular-experience-slices/` + `.spw/slices/` — practice beds, tending notes, slice ownership
-- `spw-surface-normalization/` — navigable `.spw` surfaces
-- `.spw/conventions/semantic-capacity.spw` — cache, audit, align, prime, contract, archive
-- `.spw/conventions/dimension-vocabulary.spw` — spatial/temporal/semantic/attention/interactive_medium
-- `.spw/conventions/interaction-microstates.spw` — gestures, phases, scene/key-event contracts
+Secondary: privacy, math radar, operator lattice, ontology workbench, research rigor—when that domain is the job.
 
-## Agent optimization track
+## Rails (optional, not a checklist for every patch)
 
-- `.agents/plans/agent-optimization/PLAN.md` — skills, planning ecology, public `/about/plans/`
-- `.agents/plans/agentic-dev-contracts/PLAN.md` — validation caches, route/runtime manifests
+- model-guided-refinement, daily-kernel, experience slices
+- semantic-capacity (cache / audit / align / prime / contract / **archive**)
+- dimension-vocabulary, interaction-microstates
 
-## Validation defaults
+If the patch is one route’s copy, you probably do not need a rail.
+
+## Agent environment (meta)
+
+- `agent-optimization/PLAN.md` — skills, plans page, editor DX
+- `agentic-dev-contracts/PLAN.md` — manifest + `npm run check*`
+- Audits that record weight and hygiene:
+  - `commit-skill-induction-2026-07` — when skill phrasing overgrew the tree
+  - `agentic-development-2026-07` — HTML/CSS/TS/Spw feature matrix + hygiene roadmap
+  - `build-runtime-performance-2026-07` — boot and build cost
+
+## Restraint (prefer product calm over more system)
+
+I used to resolve ambiguity by adding inspectability. That was only half right.
+
+- Do not add `data-spw-*` without an existing family or a volatile/local label
+- Do not add catalog `IMMEDIATE` for labs/metacognition without a cost note
+- Do not create `PLAN.md` for single-file fixes (`FIX.md` or just ship)
+- Do not generate empty plan `index.spw` without an owner plan
+- Prefer `VISIBLE` / `IDLE` / `INTERACTION` over `IMMEDIATE` for non-core work
+- Prefer one coordinate row over a new metaphor taxonomy
+- Review CSS **sources**, not only `public/css/bundles/*`
+- Run `npm run manifest` when route/catalog identity matters; do not trust stale caches
+
+## Validation
 
 - `npm run check:local` — ordinary patches (no network audit)
-- `npm run check:runtime` — module catalog / runtime contract changes
-- `npm run check` — dependency-sensitive or pre-land sweeps
+- `npm run check:runtime` — catalog / export / mount hygiene
+- `npm run manifest` — refresh agent route/runtime cache
+- `npm run check` — dependency-sensitive landings
 
-Use `spw-plan-maintenance` after landing changes that affect multiple plans, conventions, or skills.
+`spw-plan-maintenance` is for real multi-surface landings—not a victory lap after every commit.

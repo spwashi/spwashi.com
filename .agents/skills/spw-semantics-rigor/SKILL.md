@@ -1,73 +1,78 @@
 ---
 name: spw-semantics-rigor
-description: Make the spwashi.com semantics model more rigorous across copy, HTML data attributes, CSS tokens, JS state, and `.spw` inspection files. Use for ontology cleanup, concept alignment, runtime/state naming, dimension vocabulary, and interactive-medium contracts.
+description: Clean up naming and meaning across copy, data-spw attributes, CSS tokens, JS state, and .spw notes. Use when ontology drifted—not when every new string needs a convention.
 ---
 
 # Spw Semantics Rigor for spwashi.com
 
-Read first:
+Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 
-- `../_shared/site-workflow.md`
-- `../_shared/site-vs-workbench.md`
+## Intent (honest)
 
-## Default Workflow
+This skill grew when every concept felt like it needed HTML + CSS + JS + `.spw`
+alignment. Cross-language stems help **when a name is reused**. They hurt when
+every local label becomes a sitewide family.
 
-1. Identify the semantic layer in question:
-   - public copy
-   - HTML/data attributes
-   - CSS tokens or category families
-   - JS datasets/events/state
-   - `.spw` conceptual surfaces
-2. Distinguish authored truth from inferred truth.
-3. Classify the semantic operation when `.spw` is involved: cache, audit, align, prime, contract, or archive (see `.spw/conventions/semantic-capacity.spw`).
-4. Classify fixity before changing shared meaning: fixed, stable, tending, experimental, or volatile (see `.spw/conventions/model-guided-refinement.spw`).
-5. Trace cross-language stems — one concept should map consistently across:
-   - HTML `data-spw-*`
-   - CSS `--spw-*` tokens and `[data-spw-*]` selectors
-   - JS `dataset.spw*` / bus events / `__SPW_*__` snapshots
-   - `.spw` convention names and validation lines
-6. Prefer one canonical name per concept unless the distinction is real and teachable.
-7. When the model matters beyond one patch, write it down in `.spw` and wire through `.spw/conventions/index.spw` or `.spw/site.spw`.
+**Use this skill for cleanup and alignment.** Do not use it as a license to invent
+new attributes so the model “looks complete.”
 
-The agent/planning/editor-inspectability layer is an active rigor surface — see `agent-optimization/PLAN.md` and the `@agents` block in `site.spw`.
+## When to use
 
-For cross-discipline work, route through `.spw/conventions/daily-kernel.spw`.
+- Two names mean the same thing in different layers
+- Authored truth is being overwritten by inference
+- Homonyms (settle, resonance, density, salience) are colliding
+- A real reusable contract is missing a home in `.spw`
 
-## Dimension vocabulary rails
+## When not to use
 
-Use `.spw/conventions/dimension-vocabulary.spw` + `public/css/tokens/dimensions.css` when work touches:
+- One-off copy on a single route
+- A volatile experiment that will die in a week
+- “Make it more inspectable” with no reader or agent job
 
-- **spatial** — packing tier, occupancy, measure (`data-spw-pack-tier`, `--spw-pack-*`)
-- **temporal** — ecology phase, lifecycle, hydration (`data-spw-hydration`, `--spw-lifecycle-phase`)
-- **semantic** — variants, genres, page modes (`data-spw-semantic-variant`, `--spw-variant-selection-weight`)
-- **attention** — pre-state visibility, salience, resonance
-- **interactive_medium** — registers, postures, device context (`data-spw-medium-register`, `--spw-medium-*`)
+## Workflow
 
-Alias routing belongs in tokens/CSS — do not fork parallel attribute names for dense/roomy, touch/hover, or scene/play registers.
+1. Name the layer you are actually changing (copy / attr / token / JS / `.spw`).
+2. Prefer **reuse**: does an existing `data-spw-*` family already cover it?
+3. If `.spw` is involved, pick an operation: `cache | audit | align | prime | contract | archive`
+   (archive is underused—use it when superseding).
+4. Fixity: fixed / stable / tending / experimental / volatile.
+5. Cross-language stem **only if** the concept already or will shortly appear in more than one layer.
+6. Write or update `.spw` when the name will outlive the patch—not for every intermediate thought.
+7. Wire `site.spw` / conventions index only for durable contracts.
 
-## Interactive-medium semantics
+Creator identity still wins: Spwashi = person; site = surface.
 
-When entertainment or scene work introduces reusable state, align with:
+## Homonyms (do not invent parallel stems)
 
-- `interactive-medium.js` — register/posture/intensity (not duplicate viewport detection)
-- `scene-interaction.js` — lane focus, image coupling, local memory
-- `spw-key-events.js` — potentiation, scene stack, reveal phases
-- `topical-payload.js` + `page-anatomy.js` — serialization for inspection/LM handoff
+Map via coordinates, not new names:
 
-Use skill `spw-interactive-medium` for implementation; use this skill for naming audits and `.spw` contracts.
+- **settle** — interaction / box / page / capture altitudes
+- **resonance** — channel vs probe vs palette vs free-text accent
+- **density** — typography packing vs content-tone vs pack-fill
+- **salience** — gravity ranks vs module-field vs personas
+  See `.spw/conventions/metaphor-dimensional-lexicon.spw` and naming disambiguation.
 
-## Drift audit checklist
+## Dimension vocabulary
 
-- [ ] Does an existing `data-spw-*` family already cover this?
-- [ ] Is the CSS token owned by the right layer (tokens vs systems vs routes)?
-- [ ] Does JS write through `dom-contracts.js` / `site-settings.js` rather than ad-hoc dataset mutation?
-- [ ] Is the concept inspectable in Spw serialize output?
-- [ ] Does copy match creator-first identity (Spwashi = person, site = surface)?
+Use when packing/medium/lifecycle **aliases are already drifting**—not to introduce
+new axes by default. See `dimension-vocabulary.spw` + `tokens/dimensions.css`.
 
-## Good Outputs
+## Drift checklist
 
-- invariants and role/cluster maps
-- state-flow notes and semantic drift audits
-- renamed data attributes or events with cross-layer trace table
-- semantic insight-cache entries or daily-kernel notes
-- convention updates in `.spw/conventions/` with validation lines
+- [ ] Existing family covers this?
+- [ ] Token lives in the right CSS layer?
+- [ ] JS writes through `dom-contracts` / `site-settings`?
+- [ ] Full-trace path (JS contract or CSS consumer) or explicitly volatile/local?
+- [ ] Copy still creator-first?
+
+## Good outputs
+
+- Fewer names, clearer owners
+- Rename tables with old → new and layers touched
+- Archive notes for dead families
+- Insight cache only when the insight is small and not ready to implement
+
+## Related hard lessons
+
+Language census (many attrs unregistered), commit-skill-induction (inspectability
+overgrowth). Prefer full-trace on high-traffic families over new families.

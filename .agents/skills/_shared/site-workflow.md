@@ -1,66 +1,127 @@
 # spwashi.com Site Workflow
 
-This repository is a hand-authored static site with four main edit surfaces:
+Notes for working on this site. Written when the stack was still forming and it
+was unclear which rails would matter. Some of them do. Some of them grew weight.
 
-- route HTML in directory `index.html` files
+## What this repo is
+
+Hand-authored static site. The parts that usually get edited:
+
+- route HTML (`…/index.html`)
 - shared CSS under `public/css/`
-- shared JavaScript modules under `public/js/`
-- editor-facing `.spw` bridges under `.spw/` and `.agents/plans/`
-- agent operating surfaces (skills, planning ecology, validation contracts, public editor pages such as `/about/plans/`) — maintained via `spw-plan-maintenance` and tracked in `agent-optimization/PLAN.md`
+- shared JS under `public/js/`
+- optional editor notes under `.spw/` and `.agents/plans/`
+
+There is also an agent/editor layer (skills, plans, checks, `/about/plans/`).
+It helps when concepts must last. It does not need to grow on every patch.
 
 ## Creator identity
 
-Spwashi is a creator identity first. Copy leads with the person ("I build software and make art."); the site is a surface for the work.
+Spwashi is a person first: software and art. The site is a surface for the work.
+When unsure, lead with the person, not the system.
+
+## What I thought I needed vs what I actually need
+
+Early on it felt necessary that every idea be inspectable: body metadata,
+`data-spw-*`, a plan, a `.spw` convention, a catalog module, a serialize hook.
+That made the site agent-friendly. It also produced attribute sprawl, boot-time
+width, and a large plan ecology.
+
+**Usually enough:**
+
+1. A clear public goal (copy, flow, one interaction, or one layout fix).
+2. The smallest honest surface (HTML → shared CSS → progressive JS).
+3. A local check that matches the change (`check:local`, `check:runtime`, or just `node --check`).
+
+**Sometimes needed:**
+
+- A plan when the work truly spans routes or shared layers.
+- A `.spw` note when a concept will be reused or argued about later.
+- Catalog registration when there is real progressive behavior.
+
+**Rarely needed on day one:**
+
+- A new metaphor family or dimension axis.
+- A new `IMMEDIATE` enhancement module “for completeness.”
+- Wiring every dispatch in `site.spw` for a one-off experiment.
 
 ## Default edit order
 
-1. Clarify the public goal: copy, route flow, interaction, entertainment utility, or editor inspectability.
-2. Patch the smallest honest surface:
-   - copy or semantics in route HTML
-   - shared tokens/components/surfaces before page-local CSS
-   - progressive-enhancement JS only when HTML/CSS cannot carry the behavior
-   - `.spw` files when the concept should stay inspectable in the editor
-3. Preserve hand-written structure and root-relative asset paths.
-4. Keep the site framework-free unless the user explicitly asks for tooling.
-5. Treat `.spw/_workbench` as optional reference/tooling, not the default edit target.
+1. Name the public outcome in plain language.
+2. Prefer HTML/CSS over JS; prefer shared CSS over route-only hacks.
+3. Keep root-relative assets (`/public/css/…`, `/public/js/site.js`).
+4. Stay framework-free unless explicitly asked.
+5. Leave `.spw/_workbench` alone unless the work is genuinely workbench canon.
 
-## Semantic rails (read before broad work)
+## Semantic rails (use when stuck, not by default)
 
-| Rail | When |
-|------|------|
-| `model-guided-refinement/` + `.spw/conventions/model-guided-refinement.spw` | focus dimensions, fixity tiers, cross-language traces |
-| `daily-kernel-development/` + `.spw/conventions/daily-kernel.spw` | cross-discipline one-session kernels |
-| `modular-experience-slices/` + `.spw/slices/` | durable ownership across HTML/CSS/JS/`.spw`/validation |
-| `spw-surface-normalization/` | navigable `.spw` surfaces, dimensional declarations |
-| `.spw/conventions/semantic-capacity.spw` | cache, audit, align, prime, contract, archive |
-| `.spw/conventions/dimension-vocabulary.spw` | spatial/temporal/color/semantic/attention/interactive_medium axes |
-| `.spw/conventions/interaction-microstates.spw` | gestures, phases, scene/key-event contracts |
+These exist because cross-discipline and multi-route work kept getting messy.
+They are optional for a single-route copy pass.
 
-## Runtime architecture
+| Rail | When it actually helps |
+|------|-------------------------|
+| model-guided-refinement | Ambiguous creative/engineering tradeoffs |
+| daily-kernel | One short session with a named discipline pair |
+| experience slices | Durable ownership across HTML/CSS/JS/.spw |
+| semantic-capacity | Deciding cache vs audit vs prime vs archive |
+| dimension-vocabulary | Packing / density / medium aliases drifting |
+| interaction-microstates | Gesture and settle phase confusion |
 
-- Staged bootstrap via `public/js/runtime/module-catalog.js` (`CORE` → `FEATURE` → `ENHANCEMENT`)
-- Root settings canonical in `public/js/kernel/site-settings.js` — no direct localStorage for settings
-- Device context from `shell-disclosure.js` → consumed by `interactive-medium.js`
-- Inspection snapshots: `page-anatomy.js`, `topical-payload.js`, module `__SPW_*__` APIs
+Audits that record hard lessons (read when changing agent rails or boot cost):
 
-## CSS layer order (lowest → highest)
+- `.spw/audits/commit-skill-induction-2026-07/`
+- `.spw/audits/agentic-development-2026-07/`
+- `.spw/audits/build-runtime-performance-2026-07/`
+
+## Runtime (short)
+
+- Catalog: `public/js/runtime/module-catalog.js` (`CORE` → `FEATURE` → `ENHANCEMENT`)
+- Settings only through `site-settings` (not ad-hoc localStorage)
+- Prefer `visible` / `idle` / `interaction` over `immediate` for new modules
+- Device context: shell-disclosure → interactive-medium (do not re-detect viewports)
+
+## CSS layers (low → high)
 
 `reset → tokens → shell → typography → grammar → components → systems → routes → handles → effects → ornament`
 
-Module-added interactive styles live in `systems`; device/register modulation imports **last** within systems (`interactive-medium.css` after `spw-key-events.css`).
+Review **source** files under those folders. Generated `public/css/bundles/*` is
+build output; do not treat it as the place to invent design.
 
-## Default validation
+Portable composition: `compose.css` / `compose.js`. Full site shell: `style.css` / `site.js`.
 
-- `git diff --check`
-- `node --check <file>` for edited JS modules
-- `npm run check:local` for ordinary non-dependency patches
-- `npm run check:runtime` when adding/changing runtime modules or catalog entries
-- targeted `rg` checks for anchors, asset paths, or data attributes
-- file existence checks for new images or `.spw` routes
+## Validation (match the change)
 
-## Network posture
+- Ordinary HTML/CSS/JS: `npm run check:local` (or lighter: `git diff --check`, `node --check`)
+- Catalog / export contracts: `npm run check:runtime` (now also nags IMMEDIATE hygiene)
+- After route or catalog changes agents care about: `npm run manifest`
+  (writes `.agents/state/runtime/route-runtime-manifest.json` — do not trust months-old copies)
+- Dependency work: `npm run check` (includes network audit)
 
-- Prefer local repo evidence first: `rg`, plans, `.spw` conventions, generated manifests, nearby source files.
-- Use `npm run audit` / `npm run check` only for dependency-sensitive patches or when the user asks for external/current information.
+## Network
 
-When a change needs editor support, wire it into `.spw/conventions/index.spw` or `.spw/site.spw` instead of leaving it as prose only.
+Prefer local evidence first (`rg`, plans, `.spw`, nearby source). Reach for the
+web or `npm audit` only when the task needs current external facts or deps changed.
+
+## Feature partials (JS load vs theatrics)
+
+Optional modules and CSS “partials” already split into three knobs—keep them separate:
+
+1. **Presence** — `body[data-spw-features]` + catalog `features:` + `BEHAVIOR_SCOPES` (is it allowed on this route?)
+2. **Schedule** — catalog `MOUNT_WHEN` (when does JS run?)
+3. **Theatrics / relevance** — settings `enhancementLevel`, runtime posture, expressive registers, perspective/referentiality, feature-discovery levels (how loud / how much it matters?)
+
+Code-savvy editors tune (1) in route HTML, (2) in `module-catalog.js`, (3) on `/settings/` and design specimens. Do not invent a parallel theater flag. See `.spw/conventions/feature-partial-theatrics.spw`.
+
+## Restraint (learned the hard way)
+
+When two skills disagree, prefer **reading calm** over **more inspectability**:
+
+- No new `data-spw-*` family without reusing an existing one or marking volatile/local.
+- No new catalog `immediate` enhancement without a cost note (`timingArc` or reclassify).
+- No `PLAN.md` for a single-file fix — use `FIX.md` or just fix it.
+- No empty plan `index.spw` without an owner plan.
+- Prefer one coordinate (cost_class, guild, pack axis) over a new metaphor taxonomy.
+- Do not run full `build:site` for `.spw`-only or single-module work.
+
+Editor wiring (`.spw/conventions/index.spw`, `site.spw`) is for **durable**
+concepts—not every intermediate thought.
