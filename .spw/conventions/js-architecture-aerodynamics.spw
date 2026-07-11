@@ -1,0 +1,24 @@
+# JavaScript Architecture Aerodynamics — ARCHIVED
+#
+# operation: archive
+# The flight/airframe metaphor proved less useful for placement and cost
+# reasoning than cognitive progressive elaboration + runtime ecology.
+
+#>js_architecture_aerodynamics
+#:archive #!javascript #!runtime
+#:operation #!archive
+#:fixity #!cold
+#:layer #!pragmatics
+
+@replacement: ~"./js-architecture-cognition.spw"
+@ecology: ~"./runtime-medium-ecology.spw"
+
+^"archive"{
+  operation = "archive"
+  fixity = "cold"
+  archived_at = `2026-07-10`
+  why = `Airframe/flight language (spar, takeoff, lift, drag, stall) was clever but contrived for agent decisions. Cognitive strata + ecology guilds map more directly to folders, MOUNT_WHEN, attention, and load.`
+  use_instead = @replacement
+  keep_ecology = @ecology
+  do_not = `Do not extend flight metaphors in new .spw or comments. Point to js-architecture-cognition.spw.`
+}[reg=facet]

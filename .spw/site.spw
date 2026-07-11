@@ -63,6 +63,7 @@
 @designer_conversation_plan: ~"../.agents/plans/designer-conversation-canvas/PLAN.md"
 @designer_conversation_model: ~"./conventions/designer-conversation-canvas.spw"
 @typography_packing: ~"./conventions/typography-packing.spw"
+@dimension_vocabulary: ~"./conventions/dimension-vocabulary.spw"
 @relational_attention_media: ~"./conventions/relational-attention-media.spw"
 @relational_attention_media_plan: ~"../.agents/plans/relational-attention-media/PLAN.md"
 @relational_attention_media_cache: ~"../.agents/plans/relational-attention-media/wip.spw"
@@ -98,10 +99,29 @@
 @module_export_uniformity: ~"../.agents/plans/module-export-uniformity/PLAN.md"
 @module_export_audit: ~"./audits/module-export-standalone-2026-07.spw"
 @runtime_medium_ecology: ~"./conventions/runtime-medium-ecology.spw"
+@js_architecture_cognition: ~"./conventions/js-architecture-cognition.spw"
+@metaphor_dimensional_lexicon: ~"./conventions/metaphor-dimensional-lexicon.spw"
+@js_architecture_aerodynamics: ~"./conventions/js-architecture-aerodynamics.spw"  # archive
 @module_export_contract: ~"./conventions/module-export-contract.spw"
 @runtime_module_medium: ~"./surfaces/runtime-module-medium.spw"
 @kernel_rhizosphere: ~"./conventions/kernel-rhizosphere.spw"
 @runtime_kernel_consolidation_audit: ~"./audits/runtime-kernel-consolidation-2026-07.spw"
+@component_philosophy_harmony_audit: ~"./audits/component-philosophy-harmony-2026-07.spw"
+@build_runtime_performance_audit: ~"./audits/build-runtime-performance-2026-07/index.spw"
+@naming_grammar_js_types_audit: ~"./audits/naming-grammar-js-types-2026-07/index.spw"
+@commit_skill_induction_audit: ~"./audits/commit-skill-induction-2026-07/index.spw"
+@agentic_development_audit: ~"./audits/agentic-development-2026-07/index.spw"
+@feature_partial_theatrics: ~"./conventions/feature-partial-theatrics.spw"
+@component_anatomy_device_packing_audit: ~"./audits/component-anatomy-device-packing-2026-07.spw"
+@alignment_shell_lifecycle_sensitivity_audit: ~"./audits/alignment-shell-lifecycle-sensitivity-2026-07/index.spw"
+@css_module_attribute_impact_audit: ~"./audits/css-module-attribute-impact-2026-07/index.spw"
+@page_region_hydration_memory_audit: ~"./audits/page-region-hydration-memory-2026-07/index.spw"
+@audits_index: ~"./audits/index.spw"
+@feature_utilization: ~"./conventions/feature-utilization.spw"
+@recursive_improvement: ~"./conventions/recursive-improvement.spw"
+@component_taxonomy: ~"./conventions/component-taxonomy.spw"
+@component_packing: ~"./conventions/component-packing.spw"
+@region_component_ecology: ~"./conventions/region-component-ecology.spw"
 
 @operational_semantics: ~"./conventions/operational-semantics.spw"
 @measurement_contract: ~"./conventions/measurement-contract.spw"
@@ -124,8 +144,10 @@ surfaces: .{
  rpg_wednesday = .{ path = ~"../play/rpg-wednesday/index.html", role = `gameplay surface, local table state, session registers` }[reg=facet]
  recipes = .{ path = ~"../recipes/index.html", role = `craft domain, social kitchen, hosting grammar, expertise development` }[reg=facet]
  design = .{ path = ~"../design/index.html", role = `design hub, living component specimen, grammar physics, route atlas, builder bridge` }[reg=facet]
- design_components = .{ path = ~"../design/components/index.html", role = `component glossary, specimen cabinet, builder rail, slot anatomy` }[reg=facet]
- settings = .{ path = ~"../settings/index.html", role = `settings workbench, tuning vocabulary, specimen posture links, runtime state` }[reg=facet]
+ design_components = .{ path = ~"../design/components/index.html", role = `component glossary, specimen cabinet, builder rail, slot anatomy, passport technical depth` }[reg=facet]
+ design_composition = .{ path = ~"../design/composition/index.html", role = `pack-local bench, box-model inspect, register/resonance lab refinements` }[reg=facet]
+ design_slots = .{ path = ~"../design/slots/index.html", role = `universal slot contract, dual anatomy with pack regions` }[reg=facet]
+ settings = .{ path = ~"../settings/index.html", role = `settings workbench, tuning vocabulary, specimen posture links, runtime state, pack-local adopter` }[reg=facet]
 }[reg=facet]
 
 frame_patterns: #[
@@ -162,13 +184,19 @@ translations: .{
  relational_attention_media = #[@relational_attention_media, @relational_attention_media_plan, @relational_attention_media_cache, @attention_field, @product_lines][reg=set]
  approach_and_narrative = #[@approach_topography, @product_lines, @wonder_vocabulary][reg=set]
  page_anatomy_vocabulary = #[@page_anatomy_vocabulary, @page_model, @composition_box_model][reg=set]
- site_starter_component_kit = #[@site_starter_component_kit, @composition_box_model, @modular_experience_slices][reg=set]
+ site_starter_component_kit = #[@site_starter_component_kit, @composition_box_model, @component_taxonomy, @modular_experience_slices][reg=set]
  expressive_registers = #[@expressive_registers, @attention_field, @approach_topography, @style_development][reg=set]
+ component_harmony = #[@component_philosophy_harmony_audit, @component_anatomy_device_packing_audit, @component_taxonomy, @component_packing, @composition_box_model, @attention_field, @ornament_contract, @expressive_registers, @region_component_ecology, @naming_structured_values, @data_spw_attribute_governance][reg=set]
  codebase_perusal = #[@codebase_perusal, @spw_maintenance_2026_06, @semantic_capacity, @planning_ecology][reg=set]
  spw_maintenance = #[@spw_maintenance_2026_06, @semantic_capacity, @planning_ecology][reg=set]
  public_routes = #[@surfaces, @surface_registry][reg=set]
  language_evolution = #[@language, @language_v04, @spw_language_v04_plan, @spw_language_v04_plan_index][reg=set]
- runtime_medium = #[@runtime_medium_ecology, @module_export_contract, @module_export_audit, @runtime_module_medium, @module_export_uniformity][reg=set]
+ runtime_medium = #[@runtime_medium_ecology, @js_architecture_cognition, @module_export_contract, @module_export_audit, @runtime_module_medium, @module_export_uniformity][reg=set]
+ js_architecture = #[@js_architecture_cognition, @runtime_medium_ecology, @metaphor_dimensional_lexicon, @kernel_rhizosphere, @runtime_kernel_consolidation_audit, @runtime_module_medium][reg=set]
+ metaphor_and_performance = #[@metaphor_dimensional_lexicon, @js_architecture_cognition, @component_philosophy_harmony_audit, @build_runtime_performance_audit, @dimension_vocabulary, @expressive_registers, @alignment_shell_lifecycle_sensitivity_audit, @component_anatomy_device_packing_audit, @css_module_attribute_impact_audit, @page_region_hydration_memory_audit][reg=set]
+ naming_grammar_js_types = #[@naming_grammar_js_types_audit, @naming_structured_values, @module_export_contract, @module_export_audit, @language_v04, @js_architecture_cognition, @build_runtime_performance_audit][reg=set]
+ commit_skill_induction = #[@commit_skill_induction_audit, @agent_optimization, @plan_maintenance, @naming_grammar_js_types_audit, @build_runtime_performance_audit][reg=set]
+ agentic_development = #[@agentic_development_audit, @agentic_contracts, @agent_optimization, @commit_skill_induction_audit, @naming_grammar_js_types_audit, @build_runtime_performance_audit, @feature_partial_theatrics, @recursive_improvement, @feature_utilization, @audits_index][reg=set]
 }[reg=facet]
 
 integration_contract: .{

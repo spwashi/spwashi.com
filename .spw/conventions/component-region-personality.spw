@@ -28,6 +28,8 @@
 @capture_ecology: ~"./capture-ecology.spw"
 @copy_extract: ~"../../scripts/extract-site-copy.mjs"
 @design_catalog: ~"../../scripts/generate-design-catalog.mjs"
+@harmony_audit: ~"../audits/component-philosophy-harmony-2026-07.spw"
+@component_packing: ~"./component-packing.spw"
 
 operation = "contract"
 fixity = "tending"
@@ -37,6 +39,17 @@ fixity = "tending"
   audience: "Editing team launching a media company; returning readers; models interpreting captured surfaces."
   risk: "If every hub repeats the same hook scaffold, vocabulary, and chip rows, tone collapses into self-description and components stop teaching their own slots."
   rule: "A region earns its voice from anatomy + referentiality + lens state — not from page-local prose that re-explains the site model."
+}
+
+^"harmony_tone_prime"{
+  operation = "prime"
+  fixity = "tending"
+  source = @harmony_audit
+  claim = `Component passport, packing axes, and field physics are technical-tier language. Public and editorial tiers keep creator-first invitation and route reasons.`
+  where_passport_lives = #[`/design/components/`, `/design/composition/`, `/design/slots/`, software curriculum, settings, agent .spw`][reg=set]
+  where_it_does_not = `Home/about/care invitation ledes — no "shell-width axis" or "register diffusion" in public voice.`
+  packing_voice = `When a production card gains pack-local, copy does not need to explain packing; optional inspect readout stays technical tier.`
+  related = @component_packing
 }
 
 ^"audit_evidence"{

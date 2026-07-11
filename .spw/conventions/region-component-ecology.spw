@@ -42,6 +42,30 @@ fixity = "tending"
  status = "active"
 }
 
+^"harmony_prime_2026_07"{
+  operation = "prime"
+  fixity = "tending"
+  source = ~"../audits/component-philosophy-harmony-2026-07.spw"
+  claim = `Region personality + packing + passport must agree on which regions are public invitation vs technical instrument vs packing lab.`
+  region_map = #[
+    `chrome_field — section-handle, floating islands: field-balance + approach; axis shell-width + input-capability; not pack-local`,
+    `editorial_hubs — /, /about/, /topics/, /design/: slot completeness, reason-strips, referentiality public|editorial`,
+    `practice_beds — /design/composition/, /design/components/, math labs: queryable dims, register opt-in, resonance legends`,
+    `production_card_grids — /topics/software/, settings vibe widgets, living-concept hubs: first pack-local adopters`,
+    `sparse_slot_routes — contact, membership, now, many math leaves: dual anatomy repair before packing promotion`
+  ][reg=set]
+  tone = `Public hubs stay invitation-first; design and software curriculum may speak passport/packing language.`
+  lab_refine = #[
+    `/design/slots/ — map slots to pack regions media|body|actions`,
+    `/design/components/ — passport strip as technical depth only`,
+    `/design/composition/ — pack readout + slot-to-region map + intentional missing-slot report landed; register legend remains`
+  ][reg=set]
+  safe_first_patch = `One hub living-concept-card gains complete slots + optional pack-local; no copy rewrite of Objective/Subjective terminals in the same patch.`
+  performance = `Practice beds may carry denser annotate/RO cost; production hubs promote pack-local per family under promotion_budget (harmony performance_audit).`
+  lifecycle = `Editorial hubs stay maturity ≤3 for most cards; practice beds may climb to 6. Chrome field never pack-local.`
+  naming = `Region roles stay page-anatomy nouns; packing axes are passport metadata, not public copy.`
+}[reg=facet]
+
 dispatch: .{
  architecture = @architecture_ecology
  personality = @component_region_personality
@@ -49,4 +73,5 @@ dispatch: .{
  taxonomy = @component_taxonomy
  anatomy = @page_anatomy
  slice = @page_region_slice
+ harmony_audit = ~"../audits/component-philosophy-harmony-2026-07.spw"
 }[reg=facet]

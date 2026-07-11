@@ -23,6 +23,7 @@
 @lifecycles: ~"./lifecycles.spw"
 @settings_state: ~"./settings-state.spw"
 @selector_timing_chunking_musical: ~"./selector-timing-chunking-musical-ontology.spw"
+@build_runtime_performance: ~"../../audits/build-runtime-performance-2026-07/index.spw"
 
 intent: .{
  goal = `Translate the runtime review into inspectable .spw surfaces so ontology drift and lifecycle seams can be studied in an editor.`
@@ -37,6 +38,7 @@ dispatch: .{
  lifecycles = @lifecycles
  settings_state = @settings_state
  runtime = @runtime
+ build_runtime_performance = @build_runtime_performance
  page_metadata = @page_metadata
  component_semantics = @component_semantics
  contextual_ui = @contextual_ui

@@ -1,0 +1,155 @@
+# Feature Utilization
+#
+# How body[data-spw-features] tokens should pack, align with BEHAVIOR_SCOPES +
+# catalog features, and stay reviewable. operation: contract + align
+
+#>feature_utilization
+#:convention #!features #!runtime #!css
+#:operation #!contract
+#:fixity #!tending
+#:layer #!pragmatics
+
+@css_manifest: ~"../../scripts/ts/css-manifest.mts"
+@behavior_scopes: ~"../../public/js/runtime/behavior-scopes.js"
+@module_catalog: ~"../../public/js/runtime/module-catalog.js"
+@feature_partial_theatrics: ~"./feature-partial-theatrics.spw"
+@semantic_capacity: ~"./semantic-capacity.spw"
+@ecology_script: ~"../../scripts/spw-ecology-inventory.mjs"
+
+operation = "contract"
+fixity = "tending"
+
+^"disambiguation"{
+  this_file = `SITE RUNTIME packs: body[data-spw-features] (capability gates)`
+  language = `Spw LANGUAGE features: operators, braces, claims — see ../language/feature-utilization.spw`
+  note = `Token "operators" here means a runtime pack including operator chips, not the Spw operator alphabet.`
+}[reg=facet]
+
+^"thesis"{
+  claim = `Feature tokens are a three-place contract (HTML body, catalog.features, BEHAVIOR_SCOPES) only when they gate CSS/JS partials. Presence-only tokens (operators, navigator, route-discovery, …) are valid catalog.features gates via PRESENCE_FEATURE_KEYS in runtime-contracts — they must not invent empty CSS scopes. Rare one-off tokens on a single route should be audited for pack membership or archive.`
+}[reg=facet]
+
+^"presence_feature_keys"{
+  note = `JS-only body tokens allowed on catalog def.features without a CSS behavior bundle.`
+  tokens = #[`operators`, `navigator`, `route-discovery`, `inspectability`, `themes`, `field-guide`, `promptability`, `topic-discovery`, `prompt-utils`, `collectability`][reg=set]
+  wired_examples = #[
+    `operators → operators + sigil-anatomy modules`
+    `navigator → frame-navigator`
+    `inspectability → semantic-chrome (lab pack gate)`
+    `console → still a CSS BEHAVIOR_SCOPE (not presence-only)`
+  ][reg=set]
+  selector_primary = #[
+    `prompt-utils / topic-discovery — selector demand is wider than body pack tokens; do not features-gate alone`
+    `contextual-ui — selector-primary; route-discovery token is with_routes pack narrative`
+  ][reg=set]
+  contract = `scripts/ts/runtime-contracts.mts PRESENCE_FEATURE_KEYS + BEHAVIOR_SCOPE_KEYS`
+  audit = ~"../audits/js-feature-connectivity-css-vars-2026-07/index.spw"
+}[reg=facet]
+
+^"tiers"{
+  core_presence = .{
+    tokens = #[`operators`, `navigator`, `console`][reg=set]
+    job = `Default shell literacy — almost every public route`
+    css_scope = `console only among these three`
+  }[reg=facet]
+
+  behavior_scopes = .{
+    tokens = #[
+      `console`
+      `feature-discovery`
+      `media-publishing`
+      `metrics`
+      `pretext-lab`
+      `rpg-gameplay`
+      `svg-surfaces`
+    ][reg=set]
+    job = `Generated BEHAVIOR_SCOPES — CSS bundle + matchesFeatures alignment`
+    source = @css_manifest
+  }[reg=facet]
+
+  inspect_lab = .{
+    tokens = #[`inspectability`, `feature-discovery`, `metrics`, `themes`, `field-guide`, `promptability`, `prompt-utils`][reg=set]
+    job = `Design / website / settings lab surfaces; prompt-utils rides with promptability (module mounts by selector, token is presence)`
+  }[reg=facet]
+
+  route_presence = .{
+    tokens = #[`route-discovery`][reg=set]
+    job = `Route-navigation storytelling on hub/topic routes — the with_routes pack member; presence-only, contextual-ui module mounts by selector`
+  }[reg=facet]
+
+  narrative_only = .{
+    tokens = #[
+      `small-kernel`
+      `semantic-lattice`
+      `modular-projections`
+      `portable-seeds`
+      `topic-discovery`
+      `profiles`
+      `collectability`
+      `boundary-tests`
+      `proof-artifacts`
+      `curriculum-simulations`
+      `contact-routing`
+      `blog-interpreter`
+      `plan-registry`
+      `rpg-capture`
+    ][reg=set]
+    job = `Route storytelling / future gates — may lack CSS scopes; prefer promote to BEHAVIOR_SCOPES or demote to data-spw-projection / page-family`
+    risk = `Token soup without utilization`
+  }[reg=facet]
+}[reg=facet]
+
+^"packs"{
+  note = `Author routes with packs, not ad-hoc token lists when possible.`
+  baseline = `operators navigator console`
+  with_routes = `operators navigator console route-discovery`
+  design_lab = `operators navigator console feature-discovery field-guide inspectability themes promptability`
+  media = `operators navigator console svg-surfaces media-publishing`
+  play_rpg = `operators navigator console rpg-gameplay`
+  settings_workbench = `operators navigator console pretext-lab metrics`
+}[reg=facet]
+
+^"utilization_rules"{
+  u1 = `If a token gates CSS, it must appear in BEHAVIOR_SCOPES and catalog.features when modules need it`
+  u1b = `If a token gates JS only, prefer PRESENCE_FEATURE_KEYS + catalog.features over a silent mount() self-gate`
+  u2 = `If a token is narrative-only, prefer page-family / projection / wonder over features when no JS mounts`
+  u3 = `New behavior scope = css-manifest + build:css + body on wanting routes only`
+  u4 = `Session feature lab may +token temporarily; do not ship lab tokens as permanent site defaults`
+  u5 = `Run npm run ecology after feature token changes`
+  u6 = `New catalog modules: prefer non-IMMEDIATE; stamp timingArc when IMMEDIATE; pair features gate when optional`
+  u7 = `CSS progressive enhancement: prefer @supports + @container over route !important; when handles outranks routes, put layout contracts on data attrs in handles (e.g. data-spw-lens-chrome|track)`
+  u8 = `Do not invent body feature tokens for pure layout PE — use page-role, box-model, or component data attrs`
+}[reg=set]
+
+^"css_feature_utilization"{
+  note = `Runtime feature tokens ≠ CSS language features. This facet tracks modern CSS PE usage.`
+  prefer = #[
+    `:where() for additive zero-spec defaults within a layer`
+    `data contracts in the winning layer (handles for mode-switch) instead of route !important`
+    `@supports (container-type) with @supports not (...) media fallback — never both active`
+    `:has() for lens option count (4+) only when grid packing is intentional`
+    `body[data-spw-features~=…] only for BEHAVIOR_SCOPES partials`
+  ][reg=set]
+  audit = ~"../audits/css-specificity-pe-2026-07/index.spw"
+}[reg=facet]
+
+^"probe_2026_07"{
+  dominant = `operators ~146, navigator ~137, console ~135 routes`
+  mid = `metrics 26, route-discovery 20, svg-surfaces 19, inspectability 16`
+  rare = `many single-use narrative tokens on home/curriculum — review for pack membership`
+}[reg=facet]
+
+^"probe_2026_07b"{
+  at = `2026-07-11`
+  method = `npm run ecology — now authored-HTML-only (design/catalog excluded) and tier-classified against this convention's ^tiers`
+  dominant = `operators 146, navigator 137, console 135 (of 146 bodies / 149 authored files)`
+  mid = `metrics 26, route-discovery 20, svg-surfaces 19, inspectability 16, themes 13, promptability 12`
+  rare = `14 single-use narrative tokens; media-publishing 2, prompt-utils 2`
+  drift_closed = `route-discovery and prompt-utils were UNTIERED — registered under route_presence / inspect_lab this pass; ecology now prints an UNTIERED review line so new tokens cannot land silently`
+}[reg=facet]
+
+validation: #[
+  `npm run ecology`
+  `rg 'BEHAVIOR_SCOPES' scripts/ts/css-manifest.mts`
+  `rg 'data-spw-features=' --glob '*.html' | head`
+][reg=set]

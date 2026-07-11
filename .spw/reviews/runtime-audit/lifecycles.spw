@@ -15,6 +15,10 @@
 @semantic_chrome: ~"../../../public/js/interface/semantic-chrome.js"
 @component_semantics: ~"../../../public/js/semantic/component-semantics.js"
 @design_whimsy: ~"../../conventions/design-whimsy.spw"
+@harmony_audit: ~"../../audits/component-philosophy-harmony-2026-07.spw"
+@composition_box_model: ~"../../conventions/composition-box-model.spw"
+@component_packing: ~"../../conventions/component-packing.spw"
+@js_architecture_cognition: ~"../../conventions/js-architecture-cognition.spw"
 
 thesis: .{
  claim = `The runtime advertises a thoughtful lifecycle model, but not every module fully honors it.`
@@ -134,6 +138,25 @@ teardown_contract: .{
  ][reg=set]
 }[reg=facet]
 
+^"route_transition_boundary_2026_07"{
+  operation = "align contract"
+  fixity = "stable"
+  navigation_model = `Routes use full-document navigation (location/anchors), not an in-document SPA router.`
+  consequence = `Normal cross-route teardown belongs to the browser. Do not destroy the runtime on pagehide: that would leave a back-forward-cache restore with a torn-down document and no automatic reboot.`
+  partial_dom_rule = `Modules that observe adopted roots must untrack removed nodes and expose refresh for newly inserted roots; spatial-gravity now follows this rule.`
+  manual_destroy = `window.__SPW_SITE__.destroyRuntime() remains an inspection/test boundary. Restart-safety is incremental and must not be inferred for modules named in lifecycle_risks.`
+}[reg=facet]
+
+^"feature_field_guide_lifecycle_2026_07"{
+  operation = "audit align"
+  fixity = "stable"
+  modules = #[`feature-discovery`, `palette-treat-discovery`, `spatial-gravity`][reg=set]
+  mount = `feature-discovery and palette treats mount at IDLE behind their relevant gates; spatial-gravity mounts VISIBLE.`
+  refresh = `feature-discovery rescans declared species; spatial-gravity drops disconnected roots and adopts new data-spw-gravity roots.`
+  cleanup = `Loader-owned modules return cleanup handles only (no duplicate ctx.addCleanup registration). Feature-ready listeners are bound/unbound with the owning mount. Spatial gravity disconnects IO/RO/MO plus global scroll/resize listeners and restores generated datasets, styles, instrumentation, and readout markup.`
+  event_invariant = `Bus emission is already DOM emission; discovered/ready dispatch once through bus-or-DOM fallback.`
+}[reg=facet]
+
 brand_arrival: .{
  note = `Brand identity has its own lifecycle. The question is not only when is the page interactive but when does the page feel like itself — when does the semantic grammar become legible enough to prime the visitor's curiosity and orientation.`
  thesis = `The site's distinctive voice is carried by semantic enrichment layers that mount in sequence. Until those layers complete, the page can be interactive but not yet coherent as a brand surface.`
@@ -166,6 +189,29 @@ brand_arrival: .{
   `User-driven palette resonance and wonder memory should arrive by interactive at the latest — before the visitor starts exploring.`,
   `The transition from interactive to enhanced should feel like depth becoming available, not like corrections arriving late.`
  ][reg=set]
+}[reg=facet]
+
+^"component_packing_field_lifecycle_prime"{
+  operation = "prime"
+  fixity = "tending"
+  source = @harmony_audit
+  related = #[@composition_box_model, @component_packing][reg=set]
+  claim = `Component packing and field participation climb a maturity ladder without fighting page lifecycle or inventing settle synonyms.`
+  ladder = `authored shell → dual anatomy → queryable → pack-local → field participant → express opt-in → starter extract (harmony lifecycle_development).`
+  timing = #[
+    `pack-local CSS correct by interactive (no JS required for layout)`,
+    `pack-layout/fill mirror may land at hydrated/region-enhanced without geometry change`,
+    `wonder-memory and resonance probe personalize after interactive`,
+    `express is personalizing altitude — never mounting geometry`,
+    `capture-clean = settle request across altitudes`
+  ][reg=set]
+  performance_hooks = #[
+    `composition-box-model DEFAULT_SELECTOR breadth vs pack-local-only mirrors`,
+    `host-level RO for pack-local container resize`,
+    `avoid full-tree content-tone scans on every site-frame`
+  ][reg=set]
+  teardown = `Packing/field modules that add RO or attention listeners must clear them in cleanup (composition-box-model already disconnects document RO).`
+  progressive_elaboration = `Map page states to cognitive stages (prior → self_model → perception → region_model → deep_interpretation → idle_refinement → engaged_work → settle) in @js_architecture_cognition — same sequence, load vocabulary for mount cost.`
 }[reg=facet]
 
 inspection_paths: .{

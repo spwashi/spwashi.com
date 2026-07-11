@@ -16,6 +16,9 @@
 @site_semantics: ~"./site-semantics.spw"
 @css_alignment: ~"../reviews/css-architecture-alignment.spw"
 @cognitive_surface: ~"../philosophy/cognitive-surface.spw"
+@circuit_components: ~"./circuit-components.spw"
+@harmony_audit: ~"../audits/component-philosophy-harmony-2026-07.spw"
+@metaphor_dimensional_lexicon: ~"./metaphor-dimensional-lexicon.spw"
 
 thesis: .{
  claim = `tokens/core.css already registers a vocabulary of expressive scalar channels (--spw-depth, --spw-valence, --spw-resonance, --spw-attention, --spw-field-intensity) but has no grammar that composes them into visual output. They are nouns without verbs.`
@@ -88,6 +91,30 @@ adoption: .{
   `long topic pages that need approach development instead of a flat scroll`
  ][reg=set]
  next = `Wire one demonstration surface, then consider letting runtime state (region profile, wonder memory) drive register weights so the instrument plays itself.`
+}[reg=facet]
+
+^"harmony_prime_2026_07"{
+  operation = "prime"
+  fixity = "tending"
+  source = @harmony_audit
+  physics = `Channels are the single dictionary shared with @circuit_components#physics_dictionary and field wash/ornament reads.`
+  tone = `Registers teach differential salience on labs and feature clusters. Do not sitewide-express every card — ambient decoration fails wonder doctrine.`
+  first_hosts = #[
+    `data-spw-feature clusters with register=resonance on /design/components/ one specimen`,
+    `/design/composition/ pack-local bench + register-warm legend when probe pins`,
+    `long /topics/software/ or math practice-bed section with approach distant→arrival on successive cards`,
+    `never default html[data-spw-express] globally`
+  ][reg=set]
+  lab_refine = #[
+    `register membership legend (operator / role / wonder / charge-key) when resonance-probe pins`,
+    `pair with collection-floor vs resonance-ring ornament specimen`,
+    `console-only wonder entropy; no always-on H(page) chrome`
+  ][reg=set]
+  safe_first_patch = `One specimen on /design/components/ or /design/composition/ with data-spw-register="resonance" and two data-spw-express peers; validate reduced-motion and minimal runtime posture dampen correctly.`
+  performance = `cost_class=paint_composite (seam express-paint-cost). Card-scale hosts only; never express on html/body. Prefer reduced-motion dampen.`
+  lifecycle = `Express after interactive is fine; must not change layout measure of reading columns. Personalizing altitude, not mounting geometry.`
+  naming = `register ≠ lens ≠ form; resonance channel ≠ palette-resonance setting.`
+  noun_verb_room = `Channels are operational nouns (stable ids). Renderings are visual verbs — may be redesigned if still one channel × one verb. Metaphor words for channels (lift, temperature) are lexicon_register projections; see @metaphor_dimensional_lexicon#nouns_and_verbs. Do not rename --spw-* when only the story changes.`
 }[reg=facet]
 
 status: .{

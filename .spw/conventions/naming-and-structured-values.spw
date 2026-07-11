@@ -12,6 +12,11 @@
 @data_spw_attribute_governance: ~"./data-spw-attribute-governance.spw"
 @semantic_capacity: ~"./semantic-capacity.spw"
 @recognizability_review: ~"../reviews/classname-patterns-attribute-grammar-recognizability.spw"
+@harmony_audit: ~"../audits/component-philosophy-harmony-2026-07.spw"
+@component_packing: ~"./component-packing.spw"
+@expressive_registers: ~"./expressive-registers.spw"
+@metaphor_dimensional_lexicon: ~"./metaphor-dimensional-lexicon.spw"
+@naming_grammar_js_types_audit: ~"../audits/naming-grammar-js-types-2026-07/index.spw"
 
 operation = "contract"
 fixity = "stable"
@@ -96,6 +101,22 @@ fixity = "stable"
     `compact`
     `rich`
   ][reg=set]
+  pack_family = #[
+    `data-spw-pack-local`
+    `data-spw-pack-regions`
+    `data-spw-pack-region`
+    `data-spw-pack-layout`
+    `data-spw-pack-fill`
+    `data-spw-pack-readout`
+  ][reg=set]
+  box_family = #[
+    `data-spw-box-model`
+    `data-spw-box-measure`
+    `data-spw-box-presence`
+    `data-spw-box-overflow`
+    `data-spw-box-story`
+    `data-spw-box-settle-phase`
+  ][reg=set]
   content_tones = #[
     `dense`
     `operator-heavy`
@@ -122,6 +143,25 @@ fixity = "stable"
   rule = "Keep strings for copy. Move repeated alternatives, selectable families, and branching semantics into lists, sets, or facets."
   review_note = "When a .spw string starts doing registry work, consider whether the next patch should expose that structure instead of expanding the sentence."
   indexing_rule = "Link this document from the conventions index, the site bridge, and the recognizability review so future reviewers can reach it from claim, implementation, and vocabulary."
+}
+
+^"harmony_disambiguation_prime"{
+  operation = "prime"
+  fixity = "tending"
+  source = @harmony_audit
+  claim = `Packing, field, and settle work must not invent parallel stems for resonance, settle, or density.`
+  resonance = `Channel + resonance-probe = field physics. palette-resonance = settings climate. accent-resonance free text = poetry only.`
+  settle = `Fractal altitudes only: interaction-phase, box-settle-phase, page-arrival/settling, region settling. No data-spw-pack-settle.`
+  density = `typography packing tiers ≠ content-tone ≠ pack-fill. Prefer content-tone writes; content-density is a short-lived read alias.`
+  measure = `box-measure = host width band; text-measure = typography; keep separate.`
+  packing_vs_gravity = `pack-* = inner container packing; gravity-* = outer placement (@component_packing).`
+  register_vs_lens = `register = expressive weight; lens = content filter; form = spatial grammar (@expressive_registers).`
+  passport_bridge = `queryable_component_contract is the public minimum; component_passport extends it for promotion — one ladder, two rungs.`
+  rename_when = #[`module-field salience → field-salience or module-salience`, `stop writing content-density`][reg=set]
+  validation = `rg for new data-spw-* in packing/field patches; map to an existing family or reject (claim component-harmony-005).`
+  dimensional_room = `Operational nouns (stems, cost_class, mount_when, guild ids) stay fixed until align. Lexicon nouns/verbs (ecology, cognition, prairie) reproject via @metaphor_dimensional_lexicon — change the story, not the coordinate, unless a new dimension is real.`
+  performance_naming = `Performance seams use technical verbs + cost_class ids; do not invent parallel "drag/debt/load" stems without mapping to cost_class.`
+  nested_audit = @naming_grammar_js_types_audit
 }
 
 references: .{

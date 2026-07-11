@@ -12,6 +12,9 @@
 @conventions: ~"./conventions/index.spw"
 @site_semantics: ~"./conventions/site-semantics.spw"
 @site: ~"./site.spw"
+@audits: ~"./audits/index.spw"
+@recursive_improvement: ~"./conventions/recursive-improvement.spw"
+@feature_utilization: ~"./conventions/feature-utilization.spw"
 @reviews: ~"./reviews/index.spw"
 @domains: ~"./domains.spw"
 @surfaces: ~"./surfaces.spw"
@@ -43,6 +46,11 @@ dispatch: .{
  domains = @domains
  surfaces = @surfaces
  site = @site
+ audits = @audits
+ recursive_improvement = @recursive_improvement
+ feature_utilization = @feature_utilization
+ language_feature_utilization = ~"./language/feature-utilization.spw"
+ language_recursive_improvement = ~"./language/recursive-improvement.spw"
 }[reg=facet]
 
 invariants: #[

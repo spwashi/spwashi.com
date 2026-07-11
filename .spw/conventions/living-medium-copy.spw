@@ -33,3 +33,19 @@
   referentiality_rule: "Meta-documentation and agent instructions belong in referentiality-tier components (technical, agent) — not in public hero voice. See component-region-personality.spw."
   collectible_rule: "Frame-notes and page-ledes should be copy collectibles with data-spw-copy-unit ids when an editing team will audit or translate them."
 }
+
+^"consideration_physics"{
+  claim: `Workshop and town surfaces teach experimentation through consideration physics — not marketplace ontology alone.`
+  frame: #[
+    `gather — name what can be tried right now (invitation, present tense)`,
+    `elaborate — show where annotations, remixes, and probes land (cauldron, composition lab, inspector)`,
+    `register — name the recurring form when a pattern stabilizes (operator, measure, .spw contract)`,
+    `precipitate — state the condition of arrival under which work becomes a portable edition`
+  ][reg=set]
+  tone_rule: `Merchant, pricing, and fulfillment copy belongs in town exchange stages — not as the lead voice on curriculum routes (/topics/software/spw/#cauldron-workbench, /design/composition/). Lead with gather → elaborate → register; link merchant path as downstream ecology per public-workshop-ecology plan.`
+  runtime_hooks: #[
+    `cauldron + satchel — elaborate and inspect`,
+    `composition lab — register layout decisions as inspectable attrs`,
+    `settings explore-posture=workshop — copy density matches consideration physics depth tier`
+  ][reg=set]
+}

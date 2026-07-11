@@ -1,0 +1,93 @@
+# Recursive Improvement
+#
+# How agents and editors run thoroughness → cache → refine → validate loops
+# without losing memory or inventing parallel systems.
+
+#>recursive_improvement
+#:convention #!agents #!audit #!cache #!scripts
+#:operation #!contract
+#:fixity #!tending
+#:layer #!pragmatics
+
+@semantic_capacity: ~"./semantic-capacity.spw"
+@model_guided_refinement: ~"./model-guided-refinement.spw"
+@audits_index: ~"../audits/index.spw"
+@feature_utilization: ~"./feature-utilization.spw"
+@ecology_script: ~"../../scripts/spw-ecology-inventory.mjs"
+@check_local: ~"../../package.json"
+@css_attr_audit: ~"../audits/css-module-attribute-impact-2026-07/index.spw"
+@page_region_audit: ~"../audits/page-region-hydration-memory-2026-07/index.spw"
+@alignment_audit: ~"../audits/alignment-shell-lifecycle-sensitivity-2026-07/index.spw"
+
+operation = "contract"
+fixity = "tending"
+
+^"thesis"{
+  claim = `Recursive improvement is a closed loop: inventory → thoroughness read → capacity cache → smallest honest patch → validate → re-inventory. Scripts measure; .spw remembers; HTML/CSS/JS change last.`
+}[reg=facet]
+
+^"loop"{
+  step_1_inventory = `npm run ecology (features, scopes, audits, conventions, IMMEDIATE hygiene summary)`
+  step_2_thoroughness = `Open audits/index reading_orders for the domain; compare two sibling patterns (semantic-capacity)`
+  step_3_cache = `Write or update .spw/caches/* or audit claim with operation cache|audit|prime`
+  step_4_refine = `Edit smallest surface: route HTML · shared CSS token · catalog when · convention dispatch`
+  step_5_validate = `check:local or check:runtime / check:css as appropriate; git diff --check`
+  step_6_reinventory = `npm run ecology again; mark cache status completed or next question`
+}[reg=set]
+
+^"thoroughness_tiers"{
+  smoke = `ecology + one route smoke`
+  domain = `one reading_order set + targeted rg`
+  deep = `performance_cascade + page_memory_features + agent_editor`
+  release = `check:local + check:runtime + scoped CSS consideration`
+}[reg=facet]
+
+^"script_architecture"{
+  inventory = @ecology_script
+  census = ~"../../scripts/language-census.mjs"
+  language_ecology = ~"../../scripts/spw-language-ecology.mjs"
+  shared_core = ~"../../scripts/lib/spw-inventory-core.mjs"
+  rule = `New recursive-improvement measurements prefer pure mjs inventory scripts (no registry) for chat-agent loops; promote to ts contracts when CI must fail`
+  collector_rule = `Census dimensions are collector objects ({ name, scan, finish }); a new measurement lands as a new collector plus an npm alias, never a rewrite. Walkers, skip sets, and .spw emitters live in shared_core so inventory scripts cannot drift apart.`
+  json_rule = `Every inventory script exposes --json (census:json, ecology:json, ecology:language:json) as the uncapped machine-readable surface for agent loops; the .spw artifact stays capped for human reading.`
+  do_not = `Do not add npm packages for inventory; do not invent a second audit home outside .spw/audits`
+}[reg=facet]
+
+^"cache_locations"{
+  insights = `.spw/caches/`
+  audits = `.spw/audits/`
+  conventions = `.spw/conventions/` (only after contract operation)
+  plans = `.agents/plans/<slug>/` when multi-route implementation`
+}[reg=facet]
+
+^"active_pass_2026_07"{
+  name = `structure + features + thoroughness + recursive scripts`
+  caches = ~"../caches/recursive-improvement-2026-07.spw"
+  deliverables = #[
+    `audits/index.spw`
+    `feature-utilization.spw`
+    `recursive-improvement.spw`
+    `scripts/spw-ecology-inventory.mjs`
+    `npm run ecology`
+  ][reg=set]
+}[reg=facet]
+
+^"active_pass_2026_07b"{
+  name = `census collectors + shared inventory core + tier classification + caches index`
+  caches = ~"../caches/recursive-improvement-2026-07.spw"
+  deliverables = #[
+    `scripts/lib/spw-inventory-core.mjs (shared walker/skip/emitters)`
+    `scripts/language-census.mjs v2 (collectors, contract leg, stem families, word-boundary homonyms, --json)`
+    `npm run census / census:json`
+    `ecology tier classification vs feature-utilization ^tiers (UNTIERED review line)`
+    `.spw/caches/index.spw`
+  ][reg=set]
+}[reg=facet]
+
+validation: #[
+  `npm run ecology`
+  `npm run census`
+  `test -f .spw/audits/index.spw`
+  `test -f .spw/caches/index.spw`
+  `test -f .spw/conventions/feature-utilization.spw`
+][reg=set]

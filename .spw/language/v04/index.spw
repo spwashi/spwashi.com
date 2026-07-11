@@ -27,6 +27,8 @@ intent: .{
 @roadmap: ~"./roadmap.spw"
 @plan: ~"../../../.agents/plans/spw-language-v04/PLAN.md"
 @operator_atlas: ~"../../../topics/software/spw/index.html#language-evolution-v04"
+@site_grammar_audit: ~"../../audits/naming-grammar-js-types-2026-07/grammar-evolution.spw"
+@naming_grammar_js_types_audit: ~"../../audits/naming-grammar-js-types-2026-07/index.spw"
 
 @profiles_and_validator: ~"./pillars/profiles-and-validator.spw"
 @grammar_unification: ~"./pillars/grammar-unification.spw"
@@ -45,6 +47,8 @@ dispatch: .{
  roadmap = @roadmap
  plan = @plan
  operator_atlas = @operator_atlas
+ site_grammar_audit = @site_grammar_audit
+ naming_grammar_js_types_audit = @naming_grammar_js_types_audit
  profiles_and_validator = @profiles_and_validator
  grammar_unification = @grammar_unification
  operation_fixity_types = @operation_fixity_types

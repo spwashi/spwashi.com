@@ -162,6 +162,8 @@
   selector_rule = "Prefer existing data-spw-* families and shared contract selectors before adding local class-only state."
   inspection_rule = "A component is under-modeled if a developer cannot locate its route, semantic role, CSS projection, runtime writer, and validation surface from the markup plus .spw references."
   counterexample = "A route adds an interactive lab with only visual classes and no data-math-visual/data-spw-feature/status output, so the design catalog and future agents cannot tell what the lab is for."
+  passport_extension = "For reusable promotion, extend these dimensions with the component passport (material, liminality, pack axes, field tokens, register opt-in, CSS owner, specimen, claim) — see conventions/component-taxonomy.spw#component_passport and audits/component-philosophy-harmony-2026-07.spw."
+  packing_axis_note = "When state includes packing, name the owning axis: shell-width | box-width | content | input-capability | settle-state (dimension-vocabulary#breakpoint_ownership)."
 }
 
 ^"stabilized_page_entry_contract"{

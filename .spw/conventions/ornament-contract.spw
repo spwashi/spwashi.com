@@ -18,6 +18,9 @@
 @settings_runtime: ~"../../public/js/kernel/site-settings.js"
 @runtime_audit_seams: ~"../reviews/runtime-audit/seams.spw"
 @runtime_audit_settings: ~"../reviews/runtime-audit/settings-state.spw"
+@harmony_audit: ~"../audits/component-philosophy-harmony-2026-07.spw"
+@expressive_registers: ~"./expressive-registers.spw"
+@circuit_components: ~"./circuit-components.spw"
 
 thesis: .{
  claim = `An ornament is the visual projection layer of the attentional field. It renders semantic state + field state (resonance, collection, deviation, wonder trail) into inspectable, tunable visuals.`
@@ -120,6 +123,22 @@ ornament_classes: .{
   visual_range = `Faint accent on visited or resonant links, stronger when recent.`
   note = `The wonder trail is session-scoped navigation memory, not explicit collection.`
  }[reg=facet]
+}[reg=facet]
+
+^"distinct_marks_prime"{
+  operation = "prime"
+  fixity = "tending"
+  source = @harmony_audit
+  claim = `If collection, resonance, and deviation all only brighten teal, the field model fails the legibility test (claim component-harmony-002).`
+  triad = .{
+    resonance = `soft, decaying coupling ring from --spw-resonance / register rendering`
+    collected = `hard floor mark — persistent, non-pulse, distinct geometry from resonance`
+    deviation = `quieter third glyph near control/settings — not a wonder glow`
+  }[reg=facet]
+  physics = `Maps to @circuit_components#physics_dictionary (current / capacitance residual / settings register).`
+  lab = `/design/components/ or .spw-resonance-lab — one specimen showing all three states side by side`
+  safe_first_patch = `public/css/ornament/ornament.css: separate collected vs resonant selectors; probe on operator-chip with data-spw-collected and focus-driven resonance.`
+  tone = `Ornament projects field; it does not invent new semantics. Calm-at-rest remains default.`
 }[reg=facet]
 
 runtime_exposure_contract: .{

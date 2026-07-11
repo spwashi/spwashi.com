@@ -13,6 +13,8 @@
 @page_state: ~"../../public/js/runtime/page-state.js"
 @dom_contracts: ~"../../public/js/kernel/dom-contracts.js"
 @dom_probes: ~"../../.agents/debugging/dom-probes.md"
+@harmony_audit: ~"../audits/component-philosophy-harmony-2026-07.spw"
+@naming_structured: ~"./naming-and-structured-values.spw"
 
 claim: "data-spw-* attributes are an authoring and runtime language. Authored values must remain legible, inferred values must identify themselves, and interaction state must name whether it is transient, selected, marked, grounded, or collected. Temporal shape, altitude, and register (see rhythm below) make the language learnable dimension by dimension; the settle-declaration-contract in @site_semantics and the reward_contract in @interaction_microstates are its two anchor applications."
 
@@ -53,9 +55,48 @@ region_menu: .{
   state = `Explicit region marking writes data-spw-region-mark. The word charge is reserved for passive attention physics.`
 }[reg=facet]
 
+^"salience_namespace"{
+  claim: `data-spw-salience names three unrelated concepts; gravity overlap ranks must not collide with module field or attention vocabulary.`
+  families: .{
+    gravity_overlap = .{
+      scope = `[data-spw-gravity] opt-in hosts only`,
+      values = #[`background`, `ambient`, `primary`, `focal`][reg=set],
+      consumer = `runtime/spatial-gravity.js — pairwise yield + data-spw-salience-rank`,
+      convention = `@spatial_gravity boundary_overlap`
+    }[reg=facet]
+    module_field = .{
+      scope = `semantic-contract-card and module semantics specimens`,
+      values = #[`near`, `ambient`, `strong`, …][reg=set],
+      consumer = `authored HTML + concept-salience attention mapping`,
+      rename_target = `data-spw-field-salience or data-spw-module-salience when rename window opens`
+    }[reg=facet]
+    viewing_reason = .{
+      scope = `figure/card audience facets — not salience`,
+      attrs = #[`data-spw-svg-persona`, `data-spw-audience`, `data-spw-persona`][reg=set],
+      convention = `@viewing_reason`
+    }[reg=facet]
+  }[reg=facet]
+  rule: `Never opt a card into [data-spw-gravity] while using module-field salience tokens. Agents grep salience against the owning family before editing.`
+}
+
+^"packing_field_lifecycle_prime"{
+  operation = "prime"
+  fixity = "tending"
+  source = @harmony_audit
+  geometry = `Pack-local layout must not depend on JS-written pack-layout for geometry. Mirrors are residue/narration; CSS @container is state that load-bears on container size, not on the mirror attr.`
+  fractal_settle = `box-settle-phase, interaction settle, page-arrival settled, region settling — same temporal shape, different altitudes. Capture-clean requests settle; it is not a new attribute family.`
+  pack_family = `Authored: pack-local, pack-regions, pack-region. Runtime mirror: pack-layout, pack-fill. Lab residue: pack-readout. Do not invent pack-settle or pack-density.`
+  resonance_senses = `See @naming_structured#harmony_disambiguation_prime — channel vs palette vs probe vs free-text accent.`
+  performance = `Bounded selectors for memory and express; pack mirrors only on pack-local hosts; no root-altitude geometry from component packing attrs.`
+  inference = `content-tone may be resolved; prefer data-spw-content-tone-resolved if overwriting risk appears — today JS fills base when absent.`
+}[reg=facet]
+
 validation: #[
   `Hover/focus writes only transient charge state and must settle it on leave, blur, cancel, or reset.`,
   `Click, keyboard, saved spell, and explicit collection paths own persistent ground/collect state.`,
   `Component semantic inference writes data-spw-*-resolved and preserves authored base attributes.`,
-  `Local region state should be readable through lane attributes before global ornament effects are added.`
+  `Local region state should be readable through lane attributes before global ornament effects are added.`,
+  `Gravity salience ranks apply only on data-spw-gravity hosts; module-field and viewing-reason attrs stay separate per salience_namespace.`,
+  `Pack-layout and pack-fill mirrors must not be required for correct packing layout without JS.`,
+  `New packing/field attrs map to existing families or are rejected (harmony claim component-harmony-005).`
 ][reg=set]

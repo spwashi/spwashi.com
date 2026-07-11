@@ -8,53 +8,84 @@
 #:fixity #!tending
 #:layer #!semantics
 
+@index: ~"./index.spw"
+@feature_utilization: ~"../feature-utilization.spw"
+@recursive: ~"../recursive-improvement.spw"
+@plan: ~"../../../.agents/plans/spw-language-v04/PLAN.md"
+
 operation = "prime"
 fixity = "tending"
 
 ^"dimensions"{
- temporal_rhythm = "specification | sedimentation"
- practice_depth = "reading | contract | tending"
- semantic_layer = "semantics | pragmatics"
- collaboration_phase = "initiation"
- memory_tier = "warm"
- priority_horizon = "v0.4.0"
+  temporal_rhythm = "specification | sedimentation"
+  practice_depth = "reading | contract | tending"
+  semantic_layer = "semantics | pragmatics"
+  collaboration_phase = "initiation"
+  memory_tier = "warm"
+  priority_horizon = "v0.4.0"
 }[reg=facet]
 
 ^"thesis"{
- claim = "Spw should become a compiler for meaning: profiles for file shapes, typed refs for indexing, claims with probes for falsification, stems for cross-language projection, registers for multi-sink precipitates."
- risk = "If improvements stay essay-level conventions, agents will keep re-learning dialects per folder."
- method = "Express each improvement as a pillar artifact with dimensions, owner_claim, probes, and upstream bridge before changing the workbench submodule."
+  claim #v04-roadmap-thesis {
+    layer = "semantic"
+    hypothesis = `Spw should become a compiler for meaning: profiles for file shapes, typed refs for indexing, claims with probes for falsification, stems for cross-language projection, registers for multi-sink precipitates.`
+    expression = language[v04]{compiler.for.meaning}<prime>
+    risk = `If improvements stay essay-level conventions, agents will keep re-learning dialects per folder.`
+    method = `Express each improvement as a pillar artifact with dimensions, owner_claim, probes, and upstream bridge before changing the workbench submodule.`
+    *substance = #[`profiles`, `typed refs`, `claims+probes`, `stems`, `registers/precipitates`][reg=set]
+    probe_ref = `rg 'owner_claim' .spw/language/v04/pillars`
+    falsification = `Pillars exist only as prose without claim/probe or priority ordering.`
+    status = "active"
+  }
 }[reg=facet]
 
 ^"owner_claim"{
- claim_id = "spw-language-v04-roadmap-001"
- layer = "semantic"
- hypothesis = "A v0.4 pillar set can guide workbench grammar work without blocking public site copy and inspection."
- spec_ref = ~"../../../.agents/plans/spw-language-v04/PLAN.md"
- impl_ref = ~"./index.spw"
- probe_ref = `rg 'spw_language_v04' .spw/language`
- falsification = `Pillar files exist but the operator atlas and workbench spec do not cite the same priority stack within one release cycle.`
- status = "active"
+  claim #spw-language-v04-roadmap-001 {
+    layer = "semantic"
+    hypothesis = `A v0.4 pillar set can guide workbench grammar work without blocking public site copy and inspection.`
+    expression = pillar[set]{guide.without.block}<site>
+    spec_ref = ~"../../../.agents/plans/spw-language-v04/PLAN.md"
+    impl_ref = ~"./index.spw"
+    probe_ref = `rg 'spw_language_v04' .spw/language`
+    falsification = `Pillar files exist but the operator atlas and workbench spec do not cite the same priority stack within one release cycle.`
+    status = "active"
+  }
 }[reg=facet]
 
 ^"priority_stack"{
- sequence = #[
-  `profiles + validator`,
-  `typed references + indexing`,
-  `claim + probe syntax`,
-  `stem projection to HTML/CSS/JS`,
-  `precipitate projections (indexes/manifests)`,
-  `register serialization (probe/projection)`,
-  `LSP/editor lenses`,
-  `grammar unification + operation/fixity types`,
-  `runtime goals + pipeline`,
-  `core vs experimental namespace`,
-  `submodule bridge`
- ][reg=set]
+  expression = priority[v04]{profiles→refs→claims→stems→precipitates→…}<sequence>
+  ~index = @index
+
+  sequence = ?<
+    profiles + validator,
+    typed references + indexing,
+    claim + probe syntax,
+    stem projection to HTML/CSS/JS,
+    precipitate projections (indexes/manifests),
+    register serialization (probe/projection),
+    LSP/editor lenses,
+    grammar unification + operation/fixity types,
+    runtime goals + pipeline,
+    core vs experimental namespace,
+    submodule bridge
+  >[reg=stream]
+
+  (scene) {
+    near_term = #[`profiles + validator`, `typed references + indexing`, `claim + probe syntax`][reg=set]
+    projection = #[`stem projection`, `precipitate projections`, `register serialization`][reg=set]
+    editor = #[`LSP/editor lenses`][reg=set]
+    upstream = #[`grammar unification`, `core vs experimental`, `submodule bridge`][reg=set]
+  }
+}[reg=facet]
+
+^"utilization_bridge"{
+  ~see = #[@feature_utilization, @recursive][reg=set]
+  !rule = `Roadmap pillars feed language recursive improvement; they do not replace runtime feature packs.`
+  expression = roadmap[v04]{pillars} ↔ loop[language]{ecology.cache.patch}<bridge>
 }[reg=facet]
 
 validation: #[
- `rg '#language-evolution-v04' topics/software/spw/index.html`,
- `test -f .spw/language/v04/index.spw`,
- `rg 'owner_claim' .spw/language/v04/pillars`,
+  `rg '#language-evolution-v04' topics/software/spw/index.html`,
+  `test -f .spw/language/v04/index.spw`,
+  `rg 'owner_claim|claim #spw-language-v04|priority_stack' .spw/language/v04`,
 ][reg=set]

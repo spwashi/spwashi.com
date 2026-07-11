@@ -13,6 +13,7 @@
 @spells_js: ~"../../public/js/runtime/spells.js"
 @layout_css: ~"../../public/css/shell/layout.css"
 @workbench_runtime: ~"../_workbench/docs/runtime/spw/runtime-foundation.spw"
+@viewing_reason: ~"./viewing-reason.spw"
 
 ^"axes"{
   vertical: .{
@@ -85,6 +86,14 @@
   salience: "concept-salience.js writes data-spw-concept-ref, data-spw-vocabulary-collectible, data-spw-learnable-dimension"
   scroll: "scroll-gesture.css — pan-y for figures, horizontal snap rails, smooth scroll with reduced-motion respect"
   print: "print-precipitation.css — condense tiers brief|card|print|full"
+}
+
+^"svg_viewing_reason"{
+  convention: @viewing_reason
+  attrs: #[`data-spw-svg-persona`, `data-spw-svg-persona-active`, `data-spw-svg-persona-match`, `data-spw-svg-environment`][reg=set]
+  lab: `/design/experiments/svg/#svg-persona-lens`
+  query: `?spw-svg-persona=<token>`
+  note: `SVG facet + lens harmony; cross-media alignment with image_interaction and film_scene_composition scene lanes.`
 }
 
 ^"image_interaction"{

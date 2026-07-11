@@ -1,0 +1,262 @@
+# Spw Language Feature Utilization
+#
+# How Spw *language* features (operators, braces, claims, fixity, stems,
+# precipitates, registers) should be used on the site — distinct from HTML
+# body[data-spw-features] runtime packs.
+#
+# operation: contract | align
+# fixity: tending
+
+#>spw_language_feature_utilization
+#:convention #!language #!operators #!braces #!claims
+#:operation #!contract
+#:fixity #!tending
+#:layer #!semantics
+
+@operator_semantics: ~"../conventions/operator-semantics.spw"
+@operator_alignment: ~"../conventions/operator-alignment.spw"
+@operator_site_projection: ~"../conventions/operator-site-projection.spw"
+@semantic_braces: ~"../conventions/semantic-braces.spw"
+@semantic_capacity: ~"../conventions/semantic-capacity.spw"
+@measurement: ~"../conventions/measurement-contract.spw"
+@v04: ~"./v04/index.spw"
+@claim_probe: ~"./v04/pillars/claim-probe-syntax.spw"
+@stem_projection: ~"./v04/pillars/stem-projection.spw"
+@operation_fixity: ~"./v04/pillars/operation-fixity-types.spw"
+@runtime_defs: ~"../../public/js/kernel/shared.js"
+@site_feature_utilization: ~"../conventions/feature-utilization.spw"
+@language_cache: ~"../caches/spw-language-utilization-2026-07.spw"
+
+operation = "contract"
+fixity = "tending"
+
+^"disambiguation"{
+  .ground {
+    baseline = `Two inventories share the English word "features" and must never collapse.`
+  }
+
+  <language_features>{
+    *substance = #[`operators`, `braces`, `scenes`, `modes`, `lenses`, `claims`, `probes`, `stems`, `fixity tiers`, `registers`, `precipitates`, `sigils`][reg=set]
+    expression = language[features]{positional.force.queryable.claims}<inspect>
+    owner = @operator_semantics
+  }[reg=facet]
+
+  <runtime_features>{
+    *substance = `body[data-spw-features] tokens (operators navigator console …)`
+    expression = runtime[packs]{gate.css.js}<presence>
+    owner = @site_feature_utilization
+  }[reg=facet]
+
+  !rule {
+    anti = `Do not conflate Spw operator "operators" with the runtime feature token "operators". The first is language; the second is a page capability pack.`
+  }
+}[reg=facet]
+
+^"thesis"{
+  claim #lang-util-thesis {
+    layer = "semantic"
+    hypothesis = `Utilization of Spw language is measured by whether surfaces use operators and braces as positional force (not mere color), whether expressions are queryable (data-spw-semantic-expression / data-spw-operator), and whether durable claims carry probe_ref.`
+    expression = utilization[language]{force.expression.claim}<inspect>
+    *evidence = `Recursive language improvement walks v04 pillars, not npm package features.`
+    probe_ref = `npm run ecology:language && rg 'probe_ref' .spw/language`
+    falsification = `Operators appear only as hue; claims lack probe_ref; semantic-expression never pairs with operator chips.`
+    status = "active"
+  }
+}[reg=facet]
+
+^"feature_families"{
+  #>operators {
+    ~source = @operator_semantics
+    ~alignment = @operator_alignment
+    ~projection = @operator_site_projection
+    *runtime = `OPERATOR_DEFINITIONS in shared.js; data-spw-operator; operator-chip; sigils`
+
+    teachable {
+      #frame = `#> address / anchor / stage`
+      ?probe = `? inquiry without forced closure`
+      @perspective = `@ control / lens switch / commitment`
+      ~potential = `~ reference / deferred path / memory`
+      ^integration = `^ lift parts into inspectable relation`
+      $substrate = `$ resource / memory / support layer`
+      %normalize = `% objective or subjective measure (see @measurement)`
+    }[reg=facet]
+
+    underused {
+      .ground = `settlement, baseline, return to center of gravity`
+      *value = `substance, material salience, concrete worth`
+      &subject = `binding focus of a relation`
+      <concept> = `conceptual boundary or conduit`
+      (scene) = `staged midprocess observability`
+      [mode] = `select posture without consuming alternatives`
+    }[reg=facet]
+
+    !anti {
+      hue_only = `Do not use operator only as hue; speech/reversibility should remain inspectable`
+      speech_gap = `When a control starts with an operator, expose family + speech + reversibility`
+    }
+  }[reg=facet]
+
+  braces_and_forms {
+    ~source = @semantic_braces
+    expression = root[variant]{behavior}<lens>
+    attrs = #[`data-spw-form`, `data-spw-brace`, `data-spw-semantic-expression`][reg=set]
+
+    {brace} {
+      role = `objective boundary → subjective synthesis`
+      utilization = `objective/subjective on key panels`
+    }
+    <lens> {
+      role = `interpretive conduit / reading filter`
+      utilization = `angle for how the root is taken up`
+    }
+    [mode] {
+      role = `select posture; alternatives remain discoverable`
+      utilization = `square for mode-switch posture`
+    }
+    (scene) {
+      role = `stage where structure becomes observable`
+      utilization = `circle for liminal / midprocess hooks`
+    }
+
+    !rule {
+      teach = `Suffixes must teach a distinction, not decorate`
+      fixity = `root fixed; [variant] stable; {behavior}<lens> tending; residue volatile`
+    }
+  }[reg=facet]
+
+  claims_and_probes {
+    ~source = @claim_probe
+    shape = claim <id> { hypothesis, spec_ref, impl_ref, probe_ref, falsification, status }
+    !probe {
+      desugar = `!probe{ ... } → probe block with profile experimental`
+    }
+    utilization = `Every durable language or runtime contract should have at least one active claim with a runnable probe_ref`
+    status = #[`active`, `confirmed`, `refuted`, `superseded`][reg=set]
+  }[reg=facet]
+
+  fixity_and_operations {
+    ~source = @operation_fixity
+    ops = #[`cache`, `audit`, `align`, `prime`, `contract`, `archive`][reg=set]
+    tiers = #[`fixed`, `stable`, `tending`, `experimental`, `volatile`][reg=set]
+    utilization = `Language artifacts declare operation + fixity; runtime residue stays volatile`
+  }[reg=facet]
+
+  stems_and_precipitates {
+    ~stem = @stem_projection
+    utilization = `One stem projects to HTML/CSS/JS/.spw without renaming per language`
+    $precipitate = `indexes, manifests, catalogs as precipitates of register serialization`
+  }[reg=facet]
+}[reg=facet]
+
+^"probe_2026_07_language"{
+  ~note = `Approx HTML/JS surface counts from site inventory (ecology:language / HTML scan)`
+  ~cache = @language_cache
+
+  %operators_top {
+    kind = "objective"
+    source = "data-spw-operator histogram 2026-07"
+    value = #[`stream`, `address`, `frame`, `potential`, `action`, `probe`, `object`, `select`, `ref`][reg=set]
+    unit = "rank-heavy"
+    reading = `heavy; ground/value/scene/mode lighter`
+  }
+
+  %semantic_expressions {
+    kind = "objective"
+    source = "rg data-spw-semantic-expression HTML"
+    value = ~474
+    unit = "hits"
+  }
+
+  %forms {
+    kind = "objective"
+    source = "data-spw-form inventory"
+    value = `brace dominant; angle/square/circle present; diamond rare`
+    unit = "distribution-prose"
+  }
+
+  %claims_in_spw {
+    kind = "objective"
+    source = "rg claim|hypothesis site .spw (excl workbench bulk)"
+    value = ~200
+    unit = "lines"
+  }
+
+  %probe_ref_density {
+    kind = "hybrid"
+    source = "claim-probe-syntax + ecology:language"
+    value = `claims numerous; probe_ref density is the real utilization metric`
+    unit = "ratio-not-yet-strict"
+    scale = "low-medium-high"
+  }
+
+  gap {
+    expression = force[operator]{chip} without expression[brace]{formula}
+    claim_gap = `Many .spw claims lack probe_ref`
+    html_gap = `Many HTML operators lack paired semantic-expression`
+  }
+}[reg=facet]
+
+^"utilization_rules"{
+  u1 {
+    #frame = `Authored data-spw-operator must map to OPERATOR_DEFINITIONS or an explicit alias in operator-alignment`
+  }
+  u2 {
+    expression = root[variant]{behavior}<lens>
+    rule = `If brace expression changes meaning, set data-spw-semantic-expression`
+  }
+  u3 {
+    claim shape = `New language convention: declare dimensions + owner_claim with probe_ref before expanding vocabulary`
+  }
+  u4 {
+    .ground = `v04 pillar work stays under .spw/language until submodule_bridge promotes it`
+  }
+  u5 {
+    !loop = `Recursive language pass: npm run ecology:language → read v04 priority_stack → cache → smallest stem/projection patch`
+  }
+}[reg=set]
+
+^"packs_language"{
+  ~note = `Language packs for routes — orthogonal to runtime feature packs`
+
+  [reading] {
+    operators = #[`frame`, `ref`, `probe`][reg=set]
+    forms = `{brace objective/subjective} on key panels`
+    expression = pack[reading]{literacy}<skim>
+  }
+
+  [inspect] {
+    operators = #[`frame`, `ref`, `probe`, `integrate`, `stream`, `surface`][reg=set]
+    forms = `semantic-expression on lab clusters`
+    expression = pack[inspect]{query.formula}<lab>
+  }
+
+  [play] {
+    operators = #[`scene`, `mode`, `action`, `probe`][reg=set]
+    forms = `(scene) + [mode] on hooks; liminality named`
+    expression = pack[play]{scene.mode.action}<practice>
+  }
+
+  claim_surface {
+    *substance = `.spw artifacts with owner_claim + validation probes`
+    expression = pack[claim]{owner.probe}<falsify>
+  }
+}[reg=facet]
+
+^"owner_claim"{
+  claim #lang-util-001 {
+    layer = "semantic"
+    hypothesis = `Language feature utilization stays dual-tracked from runtime packs and is measurable via operator histogram, expression pairing, and probe_ref density.`
+    spec_ref = ~"./feature-utilization.spw"
+    impl_ref = ~"../caches/spw-language-utilization-2026-07.spw"
+    probe_ref = `npm run ecology:language; rg 'claim #lang-util' .spw/language`
+    falsification = `A single inventory mixes body feature tokens with operator alphabet without disambiguation.`
+    status = "active"
+  }
+}[reg=facet]
+
+validation: #[
+  `npm run ecology:language`
+  `rg 'data-spw-operator=' --glob '*.html' | head`
+  `rg 'owner_claim|probe_ref|claim #lang-util' .spw/language`
+  `rg '%|expression =|\\(scene\\)|\\[mode\\]|<lens>' .spw/language/feature-utilization.spw`
+][reg=set]

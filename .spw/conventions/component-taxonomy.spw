@@ -18,6 +18,10 @@ fixity = "tending"
 @cognitive_navigation: ~"./cognitive-navigation.spw"
 @expressive_registers: ~"./expressive-registers.spw"
 @operator_semantics: ~"./operator-semantics.spw"
+@component_packing: ~"./component-packing.spw"
+@composition_box_model: ~"./composition-box-model.spw"
+@site_starter_component_kit: ~"./site-starter-component-kit.spw"
+@harmony_audit: ~"../audits/component-philosophy-harmony-2026-07.spw"
 @plan: ~"../../.agents/plans/chrome-navigation-wonder/PLAN.md"
 
 ^"dimensions"{
@@ -68,6 +72,43 @@ fixity = "tending"
  breadcrumb = `Dimensional breadcrumbs should become collectible Spw-expressible surfaces.`
 }[reg=facet]
 
+^"component_passport"{
+  operation = "prime"
+  fixity = "tending"
+  source = @harmony_audit
+  purpose = `One checklist for any reusable unit — collapses taxonomy dimensions, queryable_component_contract, box-model roles, and packing axes into a single agent/editor row.`
+  fields = #[
+    `kind`, `role`, `slots`, `feature`, `material`, `liminality`, `consequence`,
+    `box-model`, `pack axes (shell-width | box-width | content | input-capability)`,
+    `field tokens`, `register opt-in`, `CSS owner`, `JS writer`, `specimen`, `claim`
+  ][reg=set]
+  tone = `Technical referentiality only — public invitation copy stays free of passport jargon (see @component_region_personality referentiality_tiers).`
+  lab = `/design/components/ — add passport strip as technical depth, not hero lede`
+  production_gap = `Class frame grammar is the live lingua franca; passport fields are complete on design specimens and partial on many secondary routes.`
+  safe_first_patch = `Document passport on one new or retouched frame-card; do not mass-annotate every route card in one pass.`
+}[reg=facet]
+
+^"tone_and_referentiality"{
+  operation = "prime"
+  public = `Invite with concrete topic nouns and creator-first voice. Do not open hubs with "component is a machine for attention" outside design/lab routes.`
+  editorial = `Name routes and patterns when the link carries a reason (route-bridge, neighbor rail).`
+  technical = `Passport, slots, operators, packing axes — design hub, settings, software curriculum, agent notes.`
+  anti_pattern = `Repeating Objective/Subjective terminal scaffolds on every hub dilutes region personality.`
+}[reg=facet]
+
+^"harmony_prime"{
+  operation = "prime"
+  fixity = "experimental"
+  claim = `Philosophy (this taxonomy + wonder/cognitive surface) outruns production pack/register/slot adoption; next work is selective promotion, not new metaphors.`
+  physics_dictionary = `Circuit · registers · field describe one channel table — see @expressive_registers and @circuit_components primes; do not invent a fourth scalar family.`
+  packing_adopters = #[`/topics/software/ semantic-contract-card`, `hub living-concept-card`, `/settings/ vibe-widget-grid`][reg=set]
+  resonance_viz = #[`collection vs resonance ornament split`, `field-balance chrome instrument`, `register legend on /design/composition/`][reg=set]
+  related_audit = @harmony_audit
+  performance = `Maturity ladder step 4+ must respect promotion budget — CSS packing first; no sitewide DEFAULT_SELECTOR expansion (@harmony_audit#performance_audit).`
+  lifecycle = `Climb passport maturity one step per patch family; see @harmony_audit#lifecycle_development.`
+  naming = `Passport extends queryable; pack axes use dimension axis names, not new data-spw stems.`
+}[reg=facet]
+
 dispatch: .{
  attention_field = @attention_field
  ornament = @ornament_contract
@@ -75,10 +116,15 @@ dispatch: .{
  cognition = @cognitive_navigation
  expressive_registers = @expressive_registers
  operators = @operator_semantics
+ packing = @component_packing
+ box_model = @composition_box_model
+ starter = @site_starter_component_kit
+ harmony_audit = @harmony_audit
  plan = @plan
 }[reg=facet]
 
 validation: #[
  `rg 'data-spw-wonder-entry|data-spw-approach|syncChromeLocomotionExpression' public/js/runtime/attention`,
- `rg 'component-taxonomy' .spw/conventions`,
+ `rg 'component-taxonomy|component_passport' .spw/conventions`,
+ `rg 'component-philosophy-harmony' .spw`,
 ][reg=set]

@@ -47,11 +47,13 @@
 
 ^"palette_treat_discovery"{
   module: ~"../../public/js/runtime/palette-treat-discovery.js"
+  field_guide: ~"../../public/js/runtime/feature-discovery.js"
   css: ~"../../public/css/systems/palette-treat.css"
   attrs: #[
     `data-spw-palette-treat-active`
     `data-spw-palette-splash`
     `data-spw-palette-treat-probe`
+    `data-spw-palette-treat-depth`
     `data-spw-palette-treat` on `.palette-probe-chip`
   ][reg=set]
   event: `spw:palette-treat`
@@ -64,7 +66,7 @@
     arrows: `ArrowLeft|ArrowRight|ArrowUp|ArrowDown|Home|End move roving tabindex and fire arrow-reward splash`
     reward: `data-spw-palette-splash=arrow-reward + spw:discovery-reward echo for interaction-progression`
   }[reg=facet]
-  note: "Treats are decorative discoverability — probe chips splash, operators echo, palette-depth strengthens briefly. Disabled when reduce-motion, heavy throttling, or freshness-weight < 0.2."
+  note: "Treats are decorative discoverability — probe chips splash, operators echo, palette-depth strengthens briefly. Depth comes from the behavior-gated feature field guide; a route without that guide keeps the baseline treat. Disabled when reduce-motion, heavy throttling, or freshness-weight < 0.2."
 }
 
 ^"composition_depth_ladder"{

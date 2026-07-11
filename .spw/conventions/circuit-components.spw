@@ -1,16 +1,47 @@
 # Circuit Components Convention
+#
+# Metaphor for module roles in the attention field. Prefer the shared physics
+# dictionary below when new scalars are proposed — do not invent a parallel set.
 
-## Metaphor
-Modules and styles mapped as an electrical circuit to specify their systemic roles and how they influence the attention field.
+#>circuit_components
+#:convention #!metaphor #!runtime #!field
+#:operation #!align
+#:fixity #!tending
+#:layer #!pragmatics
 
-## Component Roles
-- **resistor**: Attenuates and slows down propagation (e.g. `haptics.js`).
-- **capacitor**: Stores state or charge, releasing it on trigger (e.g. `wonder-memory.js`).
-- **inductor**: Builds up resonance momentum over time (e.g. `attention-architecture.js`).
-- **transformer**: Transforms signals from one context into another (e.g. `developmental-climate.js`, `canvas-accents.js`).
+@attention_field: ~"./attention-field.spw"
+@expressive_registers: ~"./expressive-registers.spw"
+@ornament_contract: ~"./ornament-contract.spw"
+@harmony_audit: ~"../audits/component-philosophy-harmony-2026-07.spw"
 
-## Physical Mapping
-- **Voltage**: Map to `--charge` state.
-- **Current**: Map to `--spw-resonance`.
-- **Inductance**: Map to `--spw-attention`.
-- **Capacitance**: Map to `--spw-field-balance`.
+^"metaphor"{
+  claim = `Modules and styles map as an electrical circuit to specify systemic roles and how they influence the attention field.`
+  tone = `Editor/agent metaphor for ownership. Public copy should not require visitors to think in ohms.`
+}[reg=facet]
+
+^"component_roles"{
+  resistor = `Attenuates and slows propagation (e.g. haptics.js).`
+  capacitor = `Stores state or charge, releasing on trigger (e.g. wonder-memory.js).`
+  inductor = `Builds resonance momentum over time (e.g. attention-architecture.js).`
+  transformer = `Transforms signals across contexts (e.g. developmental-climate.js, canvas-accents.js).`
+}[reg=facet]
+
+^"physics_dictionary"{
+  operation = "align"
+  purpose = `One table for circuit · expressive registers · ornament reads. Source: @harmony_audit metaphor_ecology.`
+  rows = #[
+    `voltage ~ charge / --spw-field-intensity ~ substrate wash`,
+    `current ~ --spw-resonance ~ coupling ring`,
+    `inductance ~ --spw-attention ~ weight / opacity salience`,
+    `capacitance ~ --field-balance / collection residual ~ memory residual ornament`
+  ][reg=set]
+  rule = `When a new effect needs a scalar, map to an existing channel first. A visual effect with no channel is noise (@expressive_registers rendering invariant).`
+  related = #[@attention_field, @expressive_registers, @ornament_contract][reg=set]
+}[reg=facet]
+
+^"prime"{
+  operation = "prime"
+  fixity = "experimental"
+  claim = `Use circuit roles when classifying runtime modules; use register channels when styling; use ornament when projecting field state. Three layers, one dictionary.`
+  safe_first_patch = `Document one module (wonder-memory = capacitor) against the dictionary in a runtime note or module catalog comment — no new CSS tokens.`
+}[reg=facet]

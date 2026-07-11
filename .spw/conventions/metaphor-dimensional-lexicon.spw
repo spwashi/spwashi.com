@@ -1,0 +1,264 @@
+# Metaphor Dimensional Lexicon
+#
+# Align performance costs with cognitive + ecology models, while keeping higher
+# dimensional room for nouns and verbs to change without rewriting architecture.
+
+#>metaphor_dimensional_lexicon
+#:convention #!semantics #!performance #!metaphor #!cognition #!ecology
+#:operation #!contract
+#:fixity #!tending
+#:layer #!pragmatics
+
+@js_architecture_cognition: ~"./js-architecture-cognition.spw"
+@runtime_medium_ecology: ~"./runtime-medium-ecology.spw"
+@dimension_vocabulary: ~"./dimension-vocabulary.spw"
+@expressive_registers: ~"./expressive-registers.spw"
+@naming_structured: ~"./naming-and-structured-values.spw"
+@harmony_audit: ~"../audits/component-philosophy-harmony-2026-07.spw"
+@build_runtime_performance_audit: ~"../audits/build-runtime-performance-2026-07/index.spw"
+@attention_field: ~"./attention-field.spw"
+@circuit_components: ~"./circuit-components.spw"
+@data_spw_attribute_governance: ~"./data-spw-attribute-governance.spw"
+@cognitive_surface: ~"../philosophy/cognitive-surface.spw"
+
+operation = "contract"
+fixity = "tending"
+
+^"thesis"{
+  claim = `Architecture decisions hang on operational coordinates (cost class, elaboration stage, guild, mount-when, pack axis). Metaphors are projection registers that name those coordinates with nouns and verbs — ecology, cognition, field, circuit, culinary — and may change when a better lexicon appears.`
+  performance_rule = `Every performance seam must declare at least one cost class and one cognitive/ecology coordinate. Surface metaphor words are optional and replaceable.`
+  room_rule = `Do not freeze public or agent vocabulary to one metaphor's nouns/verbs. Freeze the coordinate; reproject the lexicon.`
+  falsification = `A patch invents a new cost idea under three metaphors without a shared coordinate, or renames architecture because a metaphor went stale.`
+}[reg=facet]
+
+^"coordinate_space"{
+  note = `Higher-dimensional room: add axes here before inventing parallel metaphors.`
+  axes: #[
+    .{
+      id = `cost_class`
+      values = #[`working_memory_pressure`, `premature_commitment`, `interference`, `demand_coupled`, `authored_prior_safe`, `paint_composite`][reg=set]
+      owns = `performance audit seams and load_and_cost`
+      mutability = `stable — new values need a claim + evidence`
+    },
+    .{
+      id = `elaboration_stage`
+      values = #[`prior`, `self_model`, `perceptual_gate`, `region_model`, `deep_interpretation`, `idle_refinement`, `engaged_work`, `settle`][reg=set]
+      owns = `MOUNT_WHEN + page-state progressive model`
+      mutability = `stable — maps schedule, not copy`
+    },
+    .{
+      id = `cognitive_stratum`
+      values = #[`substrate`, `orchestration`, `perception`, `interpretation`, `working_set`, `memory`, `affordance`, `specialized_skill`, `media_system`, `metacognition`, `portable_export`][reg=set]
+      owns = `folder placement`
+      mutability = `tending — may refine labels; keep stem map`
+    },
+    .{
+      id = `ecology_guild`
+      values = #[`substrate`, `orientation`, `symbiosis`, `memory`, `inspection`, `expression`, `media`, `literacy`, `field`][reg=set]
+      owns = `export batches, splits, nutrient clustering`
+      mutability = `stable guild ids; display names may soft-change`
+    },
+    .{
+      id = `mount_when`
+      values = #[`immediate`, `visible`, `idle`, `interaction`, `region`, `settled`][reg=set]
+      owns = `catalog scheduling`
+      mutability = `fixed to runtime enum`
+    },
+    .{
+      id = `pack_axis`
+      values = #[`shell_width`, `box_width`, `content`, `input_capability`, `settle_state`][reg=set]
+      owns = `CSS packing decisions`
+      mutability = `stable`
+    },
+    .{
+      id = `express_channel`
+      values = #[`depth`, `valence`, `resonance`, `attention`, `field_intensity`][reg=set]
+      owns = `@property scalars — physics nouns`
+      mutability = `stable physics; display metaphor free`
+    },
+    .{
+      id = `lexicon_register`
+      values = #[`ecology`, `cognition`, `field`, `circuit`, `webpage`, `culinary`, `prairie`, `technical`][reg=set]
+      owns = `which noun/verb set is speaking right now`
+      mutability = `open — new registers allowed if they map to coordinates`
+    }
+  ][reg=set]
+  composition = `A decision is a point (or small region) in this space. Docs may narrate the same point in different lexicon_registers.`
+}[reg=facet]
+
+^"nouns_and_verbs"{
+  definition = `Nouns name stable carriers (channels, strata, cost classes, guilds). Verbs name actions that spend or change them (mount, mirror, diffuse, express, settle, annotate, observe).`
+  channel_pattern = `As in @expressive_registers: channels = operational nouns; renderings = visual verbs; a register reweights which nouns speak — without renaming the channel ids.`
+  mutability: .{
+    operational_nouns = `cost_class, mount_when, guild id, pack_axis, channel token, data-spw stems — change only with align + claim`
+    lexicon_nouns = `rhizosphere, working set, nutrient, canopy, prior, metacognition — soft; may re-lexicon if coordinate map stays`
+    operational_verbs = `mount, writeDataset, emit, observe, annotate, settle — code verbs; rename carefully with API migration`
+    lexicon_verbs = `grow, elaborate, couple, compost, diffuse, tend — prose verbs; free to improve clarity`
+  }[reg=facet]
+  room = `Higher dimensional room means: (1) add a coordinate axis when a new distinction is real; (2) add a lexicon_register when a new metaphor helps a audience; (3) never invent a third parallel stem for the same coordinate under a new noun.`
+  anti_pattern = `Renaming working_memory_pressure to "drag" then to "metabolic debt" in three places without a shared cost_class id.`
+}[reg=facet]
+
+^"performance_coordinate_map"{
+  operation = "align"
+  source = @harmony_audit
+  note = `Each performance_audit seam → cost_class + cognitive/ecology coordinates + preferred lexicon.`
+
+  seams: #[
+    .{
+      id = `composition-default-selector-breadth`
+      cost_class = `working_memory_pressure`
+      stratum = `metacognition`
+      guild = `inspection`
+      stage = `idle_refinement | engaged_work`
+      ecology = `too many leaves sampled each nutrient pulse`
+      cognition = `working set too large for refresh scan`
+      direction = `bound selectors; opt-in hosts; no sitewide .site-frame annotate for packing`
+    },
+    .{
+      id = `pack-local-ro-gap`
+      cost_class = `interference` # stale mirror vs true container size
+      stratum = `metacognition`
+      pack_axis = `box_width`
+      stage = `deep_interpretation+`
+      ecology = `sensor not attached to the plot being tended`
+      cognition = `inspect mirror desynced from perception`
+      direction = `host-level ResizeObserver on pack-local`
+    },
+    .{
+      id = `content-tone-scan`
+      cost_class = `working_memory_pressure`
+      stratum = `interpretation`
+      stage = `idle_refinement`
+      ecology = `re-assay every leaf instead of caching soil reading`
+      cognition = `re-infer content tone without invalidation`
+      direction = `cache until mutation; skip pure stage shells`
+    },
+    .{
+      id = `express-paint-cost`
+      cost_class = `paint_composite`
+      stratum = `working_set | affordance`
+      express_channel = `multi`
+      stage = `engaged_work`
+      ecology = `field wash across whole canopy`
+      cognition = `expression verbs too loud on large working set`
+      direction = `card-scale express only; never html/body`
+    },
+    .{
+      id = `has-resonance-and-pack`
+      cost_class = `paint_composite | working_memory_pressure`
+      stratum = `working_set`
+      stage = `engaged_work`
+      ecology = `neighborhood echo cost scales with population`
+      cognition = `style invalidation on attention events`
+      direction = `operators only; pack :has on pack-regions only`
+    },
+    .{
+      id = `attribute-write-timing`
+      cost_class = `authored_prior_safe | premature_commitment`
+      stratum = `interpretation | metacognition`
+      stage = `self_model → deep_interpretation`
+      ecology = `late nutrient write must not reshape the bed`
+      cognition = `elaboration revises meaning, not geometry`
+      direction = `CSS layout from authored + container; JS attrs narrate`
+    }
+  ][reg=set]
+
+  strengths_as_coordinates: #[
+    `pack-local CSS → cost free on hot path; pack_axis=box_width; stage=prior+`,
+    `register diffusion → demand_coupled; cost avoids O(n²)`,
+    `express opt-in → premature_commitment avoided`,
+    `bounded wonder-memory selector → working_memory_pressure bounded`,
+    `debounce/rAF/IO → demand_coupled perception`
+  ][reg=set]
+}[reg=facet]
+
+^"lexicon_registers"{
+  note = `Same coordinates, different nouns/verbs. Pick register by audience; do not fork coordinates.`
+  ecology = .{
+    nouns = #[`nutrient`, `guild`, `rhizosphere`, `plot`, `canopy`, `compost`, `medium`][reg=set]
+    verbs = #[`grow`, `transport`, `cluster`, `settle`, `compost`, `export`][reg=set]
+    best_for = `module clustering, export batches, long-term growth`
+  }[reg=facet]
+  cognition = .{
+    nouns = #[`prior`, `stratum`, `working_set`, `elaboration`, `load`, `metacognition`][reg=set]
+    verbs = #[`elaborate`, `perceive`, `infer`, `activate`, `mirror`, `settle`][reg=set]
+    best_for = `mount cost, attention fidelity, agent placement`
+  }[reg=facet]
+  field = .{
+    nouns = #[`charge`, `resonance`, `register`, `receptor`, `bias`][reg=set]
+    verbs = #[`emit`, `diffuse`, `decay`, `collect`, `pin`][reg=set]
+    best_for = `attention physics and ornament`
+  }[reg=facet]
+  circuit = .{
+    nouns = #[`resistor`, `capacitor`, `voltage`, `current`][reg=set]
+    verbs = #[`attenuate`, `store`, `release`, `transform`][reg=set]
+    best_for = `module role analogies only — map to express_channel via circuit_components`
+  }[reg=facet]
+  technical = .{
+    nouns = #[`selector`, `observer`, `dataset`, `MOUNT_WHEN`, `DEFAULT_SELECTOR`][reg=set]
+    verbs = #[`mount`, `annotate`, `observe`, `write`, `debounce`][reg=set]
+    best_for = `implementation and performance audit evidence lines`
+  }[reg=facet]
+  rule = `A paragraph may mix technical + one soft register. Mixing three soft registers without coordinates is noise.`
+}[reg=facet]
+
+^"changing_nouns_and_verbs"{
+  operation = "prime"
+  fixity = "experimental"
+  how = #[
+    `1. Identify the coordinate (cost_class, stage, guild, …)`,
+    `2. Propose lexicon_register + new nouns/verbs as aliases, not replacements of ids`,
+    `3. Update one projection table (this file or guild_cognitive_map) — not every prose file`,
+    `4. Keep operational stems (data-spw-*, MODULE_LAYERS, cost_class ids) until an align pass`
+  ][reg=set]
+  when_to_add_dimension = `A real distinction that forces bad renames if squeezed into an existing axis (e.g. paint_composite vs working_memory_pressure).`
+  when_to_add_register = `A new audience (musician, engineer, designer) needs different verbs but same mounts and costs.`
+  when_not = `Do not add dimensions for synonym preference alone; put synonyms under lexicon_registers.`
+}[reg=facet]
+
+^"agent_rules"{
+  performance_patch = `Name cost_class + seam id from performance_coordinate_map (or add a seam with evidence).`
+  metaphor_patch = `If rewriting prose only, change lexicon_register words; leave coordinates and code stems.`
+  architecture_patch = `Place by cognitive_stratum + ecology_guild; schedule by mount_when / elaboration_stage; budget by cost_class.`
+  express_patch = `Change rendering verbs freely if one-channel×one-verb holds; do not rename channel nouns without token migration.`
+}[reg=facet]
+
+^"active_claims"{
+  claim #metaphor-dim-001 {
+    layer = "semantic"
+    hypothesis = "Performance seams remain legible when each is tagged with cost_class and at least one cognitive or ecology coordinate, independent of metaphor nouns."
+    spec_ref = "this convention#performance_coordinate_map"
+    impl_ref = ".spw/audits/component-philosophy-harmony-2026-07.spw#performance_audit"
+    probe_ref = "Read any seam; recover cost_class without relying on ecology or cognition prose."
+    falsification = "A new seam is documented only in metaphor language with no cost_class."
+    status = "active"
+  }
+  claim #metaphor-dim-002 {
+    layer = "agent-editor"
+    hypothesis = "Nouns and verbs can re-lexicon under a new lexicon_register without forcing renames of mount_when, guild ids, or data-spw stems."
+    spec_ref = "this convention#nouns_and_verbs + #changing_nouns_and_verbs"
+    impl_ref = "projection tables in this file + js-architecture-cognition + runtime-medium-ecology"
+    probe_ref = "Replace one ecology display noun in docs; catalog enums and cost_class ids unchanged."
+    falsification = "A metaphor refresh renames MOUNT_WHEN values or invents parallel data-spw stems for the same coordinate."
+    status = "active"
+  }
+}[reg=set]
+
+validation: #[
+  `rg 'cost_class|performance_coordinate_map|lexicon_register' .spw/conventions`,
+  `rg 'composition-default-selector-breadth|express-paint-cost' .spw`,
+  `rg 'metaphor_dimensional_lexicon|metaphor-dimensional-lexicon' .spw`
+][reg=set]
+
+dispatch: .{
+  cognition = @js_architecture_cognition
+  ecology = @runtime_medium_ecology
+  dimensions = @dimension_vocabulary
+  registers = @expressive_registers
+  naming = @naming_structured
+  harmony = @harmony_audit
+  build_runtime_performance = @build_runtime_performance_audit
+  field = @attention_field
+  circuit = @circuit_components
+}[reg=facet]

@@ -1,0 +1,393 @@
+# JavaScript Architecture as Cognitive Ecology
+#
+# How the public/js tree models progressive page understanding — for placement,
+# mount cost, and attention fidelity. Ecology names growth and nutrients;
+# cognition names processing stages and load. One medium, two useful lenses.
+
+#>js_architecture_cognition
+#:convention #!javascript #!runtime #!architecture #!cognition
+#:operation #!contract
+#:fixity #!tending
+#:layer #!pragmatics
+
+@runtime_medium_ecology: ~"./runtime-medium-ecology.spw"
+@kernel_rhizosphere: ~"./kernel-rhizosphere.spw"
+@module_export_contract: ~"./module-export-contract.spw"
+@module_medium_surface: ~"../surfaces/runtime-module-medium.spw"
+@runtime_lifecycles: ~"../reviews/runtime-audit/lifecycles.spw"
+@runtime_kernel_audit: ~"../audits/runtime-kernel-consolidation-2026-07.spw"
+@module_export_audit: ~"../audits/module-export-standalone-2026-07.spw"
+@harmony_audit: ~"../audits/component-philosophy-harmony-2026-07.spw"
+@cognitive_surface: ~"../philosophy/cognitive-surface.spw"
+@attention_field: ~"./attention-field.spw"
+@data_spw_attribute_governance: ~"./data-spw-attribute-governance.spw"
+@module_catalog: ~"../../public/js/runtime/module-catalog.js"
+@module_loader: ~"../../public/js/runtime/module-loader.js"
+@site_entry: ~"../../public/js/site.js"
+@compose_entry: ~"../../public/js/compose.js"
+@js_readme: ~"../../public/js/README.md"
+@decomposition_plan: ~"../../.agents/plans/runtime-module-decomposition/PLAN.md"
+@archived_aero: ~"./js-architecture-aerodynamics.spw"
+@metaphor_dimensional_lexicon: ~"./metaphor-dimensional-lexicon.spw"
+
+operation = "contract"
+fixity = "tending"
+
+^"thesis"{
+  claim = `The JavaScript runtime progressively elaborates a model of the page and of the visitor's attention — the same criterion as @cognitive_surface, applied to architecture: legibility deepens with engagement; past state remains inspectable; mistakes are correctable.`
+  ecology = `Guilds, rhizosphere, nutrients, and growth modes stay primary for clustering and export (@runtime_medium_ecology). Cognition names *what kind of processing* a folder or mount wave is doing, not a second organism story.`
+  falsification = `If agents still dump feature logic into site.js, mount idle polish as IMMEDIATE, or invent parallel storage without kernel contracts, the model failed to guide decisions.`
+  reading_order = @js_readme
+  superseded = `Flight/airframe language in @archived_aero is archived — prefer this file and ecology.`
+}[reg=facet]
+
+^"processing_strata"{
+  note = `Where code lives, named by cognitive job. Prefer these names over flight metaphors when placing modules.`
+
+  authored_prior = .{
+    role = `World model before JS — route HTML data-spw-*, structure, slots`
+    rule = `Must remain legible and layout-correct without the runtime (cognitive surface preflight / brand arrival)`
+  }[reg=facet]
+
+  substrate = .{
+    role = `Shared metabolism — writers, bus, settings, storage, normalize, DOM contracts`
+    folder = `public/js/kernel/`
+    ecology_guild = `substrate / rhizosphere`
+    rule = `Cross-cutting state goes through substrate APIs (dataset tiers, STORAGE_KEYS, bus), not ad hoc forks`
+  }[reg=facet]
+
+  orchestration = .{
+    role = `Control of elaboration order — catalog, loader, page-state, site bootstrap`
+    files = #[@site_entry, @module_catalog, @module_loader, `public/js/runtime/page-state.js`, `public/js/runtime/runtime-helpers.js`][reg=set]
+    ecology = `taproot`
+    rule = `Orchestration schedules guilds; it does not absorb feature logic`
+  }[reg=facet]
+
+  perception = .{
+    role = `What enters awareness — visibility, section focus, medium/device, locomotion handles`
+    folder_examples = #[`runtime/attention/*`, `attention-architecture`, `shell-disclosure`, `navigation-locomotion`, `interactive-medium`, `frame-navigator`, `region-enhancer`][reg=set]
+    ecology_guild = `orientation (+ parts of symbiosis)`
+  }[reg=facet]
+
+  interpretation = .{
+    role = `Assigning meaning — roles, operators, braces, pretext, relationships`
+    folder = `public/js/semantic/`
+    ecology_guild = `expression + literacy + inspection overlap`
+  }[reg=facet]
+
+  working_set = .{
+    role = `Active attention — charge, wonder, collection, experiential loops, reward`
+    examples = #[`charge-field`, `wonder-memory`, `component-collection`, `experiential`, `reward-ui`, `gesture-*`][reg=set]
+    ecology_guild = `symbiosis`
+    related = @attention_field
+  }[reg=facet]
+
+  memory = .{
+    role = `Durable traces — pins, spells, notes, visitation, haptics residual`
+    examples = #[`spells`, `local-notes`, `visitation`, `haptics`, `cauldron`, storage envelopes][reg=set]
+    ecology_guild = `memory / reserve`
+  }[reg=facet]
+
+  affordance = .{
+    role = `Visitor-facing controls and feedback chrome`
+    folder = `public/js/interface/`
+    ecology_guild = `inspection + memory + orientation chrome`
+  }[reg=facet]
+
+  specialized_skill = .{
+    role = `Route- or domain-specific capability (blog, RPG, services, design labs)`
+    folder = `public/js/modules/`
+    ecology_guild = `field / plot`
+    rule = `Lowest cross-route risk; do not hang orchestration on skills`
+  }[reg=facet]
+
+  media_system = .{
+    role = `Image, SVG, canvas media pipelines`
+    folder = `public/js/media/`
+    ecology_guild = `media / fruiting`
+  }[reg=facet]
+
+  portable_export = .{
+    role = `Re-export surface for other sites, console, prompts — not a second runtime`
+    file = @compose_entry
+    ecology = `pollinator`
+  }[reg=facet]
+
+  metacognition = .{
+    role = `Inspection of the model itself — console, state inspector, box-model, observation beats`
+    examples = #[`console`, `state-inspector`, `composition-box-model`, `page-anatomy`, `observation-beats`][reg=set]
+    ecology_guild = `inspection / sensing`
+    rule = `Metacognition may be expensive; keep demand-coupled (IDLE/VISIBLE), not boot-blocking`
+  }[reg=facet]
+}[reg=facet]
+
+^"progressive_elaboration"{
+  definition = `The runtime builds page understanding in stages. Later stages may revise interpretation; they must not rewrite authored priors or invent geometry.`
+  related = #[@runtime_lifecycles, @cognitive_surface][reg=set]
+
+  stages: #[
+    .{
+      id = `prior`
+      page = `HTML/CSS only`
+      mount = `none`
+      fidelity = `Identity, slots, operators authored; layout correct`
+    },
+    .{
+      id = `self_model`
+      page = `booting → interactive`
+      mount = `MOUNT_WHEN.IMMEDIATE core (settings, shell, medium, …)`
+      fidelity = `Visitor preferences + chrome posture present early`
+    },
+    .{
+      id = `perceptual_gate`
+      page = `interactive → hydrated`
+      mount = `VISIBLE features, early enhancement`
+      fidelity = `In-view regions and handles enter the working set`
+    },
+    .{
+      id = `region_model`
+      page = `hydrated → region-enhanced`
+      mount = `REGION layer`
+      fidelity = `Region harmony / roles — may still lag full semantic enrichment (stale prime risk)`
+    },
+    .{
+      id = `deep_interpretation`
+      page = `region-enhanced → enhanced`
+      mount = `remaining enhancement`
+      fidelity = `Semantic chrome, component semantics, full vocabulary — depth becomes available, not late layout correction`
+    },
+    .{
+      id = `idle_refinement`
+      page = `enhanced + idle`
+      mount = `IDLE, SETTLED`
+      fidelity = `Metacognition, layout-assumptions, compost-pass polish`
+    },
+    .{
+      id = `engaged_work`
+      page = `during visit`
+      mount = `INTERACTION / demand`
+      fidelity = `Charge, collect, compare, lab tools — quality of attention, not mere events`
+    },
+    .{
+      id = `settle`
+      page = `settle / capture-clean / reduced-motion still`
+      mount = `n/a — phase request`
+      fidelity = `Canonical still frame; fractal settle altitudes only`
+    }
+  ][reg=set]
+
+  layer_map = .{
+    CORE = `self_model + essential perception seeds`
+    FEATURE = `specialized_skill plots`
+    REGION = `region_model`
+    ENHANCEMENT = `deep_interpretation + metacognition (prefer non-IMMEDIATE)`
+  }[reg=facet]
+
+  mount_when_map = .{
+    immediate = `only what first interaction needs`
+    visible = `perception when in view`
+    idle = `refinement and sensing`
+    interaction = `engaged_work tools`
+    region = `region_model`
+    settled = `late compost after medium settles`
+  }[reg=facet]
+}[reg=facet]
+
+^"load_and_cost"{
+  note = `cost_class coordinates for performance — aligned with @harmony_audit#performance_audit and @metaphor_dimensional_lexicon. Lexicon nouns may change; these ids stay.`
+  working_memory_pressure = .{
+    meaning = `How many hosts re-scanned or re-annotated on each refresh`
+    example = `composition-box-model DEFAULT_SELECTOR over all .site-frame`
+    seams = #[`composition-default-selector-breadth`, `content-tone-scan`][reg=set]
+    rule = `Bound selectors; prefer opt-in hosts (pack-local, feature clusters)`
+  }[reg=facet]
+  premature_commitment = .{
+    meaning = `Mounting capability before the visitor or viewport needs it`
+    example = `labs and reward UI on IMMEDIATE`
+    rule = `If first paint does not need it, lower activation: VISIBLE or IDLE`
+  }[reg=facet]
+  interference = .{
+    meaning = `Duplicate pathways that fight or drift; or mirror desynced from truth`
+    example = `normalizeText forks; pack-local-ro-gap stale pack-layout`
+    seams = #[`pack-local-ro-gap`][reg=set]
+    rule = `One substrate pathway per nutrient family; sensors attach to the host they report`
+  }[reg=facet]
+  demand_coupled = .{
+    meaning = `Cost paid when useful — IO, rAF, INTERACTION, VISIBLE`
+    good = #[`section-handle`, `canvas-accents when intersecting`, `register diffusion`][reg=set]
+    alias_note = `Also called demand_coupled_activation in prose; cost_class id is demand_coupled`
+  }[reg=facet]
+  paint_composite = .{
+    meaning = `Paint/composite/reflow from expression and :has invalidation`
+    seams = #[`express-paint-cost`, `has-resonance-and-pack`][reg=set]
+    rule = `Card-scale express; operator-bounded resonance; never html/body express`
+  }[reg=facet]
+  authored_prior_safe = .{
+    meaning = `Priors stay authored; geometry does not depend on late JS attrs`
+    seams = #[`attribute-write-timing`][reg=set]
+    rule = @data_spw_attribute_governance
+  }[reg=facet]
+  packing_note = `Pack-local layout is pure CSS (zero interpret cost on hot path); JS mirrors are metacognition, not geometry source.`
+  lexicon = `Ecology may say "too many leaves per pulse"; cognition says "working set too large" — same cost_class=working_memory_pressure.`
+}[reg=facet]
+
+^"guild_cognitive_map"{
+  note = `Bridge ecology guilds → cognitive jobs for the same modules.`
+  maps: #[
+    `substrate → metabolism / shared priors writers`,
+    `orientation → place model + navigation`,
+    `symbiosis → visitor–page attention coupling`,
+    `memory → durable engagement traces`,
+    `inspection → metacognition`,
+    `expression → language / operator production`,
+    `media → sensory media pipelines`,
+    `literacy → text measure and narrative instruments`,
+    `field → specialized domain skills`
+  ][reg=set]
+  selection = `Catalog keeps MODULE_LAYERS + MOUNT_WHEN for scheduling. Guild for growth/export batches. Cognitive stratum for "what processing is this?"`
+}[reg=facet]
+
+^"folder_map"{
+  site_js = `orchestration entry`
+  compose_js = `portable export`
+  kernel = `substrate`
+  runtime = `orchestration helpers + perception + working_set processes + loops`
+  interface = `affordance + some metacognition chrome`
+  semantic = `interpretation`
+  modules = `specialized_skill`
+  media = `media_system`
+  typed = `generated substrate bridges — regenerate, do not hand-edit`
+}[reg=facet]
+
+^"direction"{
+  operation = "prime"
+  fixity = "tending"
+  heading = `Raise cognitive fidelity of the page model while lowering load: solid substrate, demand-coupled mounts, uniform exports, selective packing/field participation.`
+  growth: #[
+    .{
+      id = `substrate_integrity`
+      aim = `Finish kernel consolidation — one normalize/storage/route pathway`
+      evidence = @runtime_kernel_audit
+      reduces = `interference`
+    },
+    .{
+      id = `export_legibility`
+      aim = `SPW_MODULE_EXPORT six-pack then compose guild batches`
+      evidence = #[@module_export_contract, @module_export_audit, @module_medium_surface][reg=set]
+      reduces = `opaque modules; aids metacognition for agents`
+    },
+    .{
+      id = `activation_discipline`
+      aim = `IMMEDIATE only for self_model essentials; labs/helpers VISIBLE or IDLE`
+      evidence = @js_readme
+      reduces = `premature_commitment`
+    },
+    .{
+      id = `bounded_mirrors`
+      aim = `Pack/inspect mirrors on opt-in hosts; host ResizeObserver for pack-local; no sitewide frame annotate for packing`
+      evidence = @harmony_audit
+      reduces = `working_memory_pressure`
+    },
+    .{
+      id = `guild_splits`
+      aim = `Decompose fat orchestrators along guild lines`
+      evidence = @decomposition_plan
+      reduces = `cognitive overload of single files`
+    },
+    .{
+      id = `honest_elaboration`
+      aim = `Deep interpretation revises meaning, not layout; authored priors stay`
+      evidence = @runtime_lifecycles
+      supports = `cognitive surface correctability`
+    },
+    .{
+      id = `portable_substrate`
+      aim = `compose.js carries Grade B contracts by guild for starter sites`
+      supports = `reuse without full site model`
+    }
+  ][reg=set]
+  do_not = #[
+    `Mount all enhancement as IMMEDIATE for convenience`,
+    `Put route skills into site.js orchestration`,
+    `Parallel bus/storage without kernel keys`,
+    `Drive geometry from inspect mirrors`,
+    `Reintroduce flight/airframe metaphors for new docs — use ecology + cognition`
+  ][reg=set]
+  next_safe_patches = #[
+    `Assign uncategorized modules to guilds (pwa→substrate, semantic-chrome→inspection, interaction-progression→symbiosis)`,
+    `One Grade B export from priority_1_spw_module_six`,
+    `Host-level RO when first production pack-local lands`,
+    `timingArc/effectScope on new high-impact catalog entries`
+  ][reg=set]
+}[reg=facet]
+
+^"agent_decision_rules"{
+  where = #[
+    `shared writer / normalize / storage → substrate (kernel)`,
+    `catalog-mounted process / lifecycle loop → runtime (name the cognitive job)`,
+    `visible control → interface`,
+    `inference / operators / pretext → semantic`,
+    `one route only → modules`,
+    `image/svg specialty → media`,
+    `portable reuse → compose after Grade B contract`
+  ][reg=set]
+  when_to_mount = `First paint needs it → IMMEDIATE core only. In-view usefulness → VISIBLE. Polish/sensing → IDLE/SETTLED. Gesture tools → INTERACTION.`
+  cost_check = `Name cost_class (and seam id when known). Reject patches that only add load without a coordinate.`
+  metaphor_check = `Ecology + cognition are lexicon_registers over shared coordinates (@metaphor_dimensional_lexicon). Field/circuit for attention physics only — reproject nouns, do not fork stems.`
+}[reg=facet]
+
+^"active_claims"{
+  claim #js-cognition-001 {
+    layer = "agent-editor"
+    hypothesis = "An agent can place a new module by cognitive stratum + ecology guild without reading the full tree."
+    spec_ref = ".spw/conventions/js-architecture-cognition.spw#processing_strata + #agent_decision_rules"
+    impl_ref = "public/js/README.md + module-catalog.js"
+    probe_ref = "New route lab → modules/ + VISIBLE or IDLE; not site.js IMMEDIATE."
+    falsification = "Feature logic lands in site.js or as unscheduled kernel import."
+    status = "active"
+  }
+  claim #js-cognition-002 {
+    layer = "pragmatic"
+    hypothesis = "Boot stays under load budget when IMMEDIATE is reserved for self_model essentials and later stages are demand-coupled."
+    spec_ref = "this convention#progressive_elaboration + #load_and_cost"
+    impl_ref = "site.js + module-loader.js"
+    probe_ref = "Catalog: interaction helpers and labs not IMMEDIATE without timingArc justification."
+    falsification = "Idle-only polish moves to IMMEDIATE without a cost note."
+    status = "active"
+  }
+  claim #js-cognition-003 {
+    layer = "semantic"
+    hypothesis = "Progressive elaboration increases legibility of attention without rewriting authored priors or layout geometry."
+    spec_ref = "this convention#progressive_elaboration + cognitive-surface.spw"
+    impl_ref = "page-state + component-semantics + composition-box-model mirrors"
+    probe_ref = "Disable JS: layout holds. Enable JS: attrs deepen; no CLS from pack-layout alone."
+    falsification = "Geometry depends on JS-written pack-layout or inferred roles overwrite authored data-spw-role."
+    status = "active"
+  }
+}[reg=set]
+
+validation: #[
+  `rg 'js_architecture_cognition|js-architecture-cognition' .spw`,
+  `rg 'js_architecture_aerodynamics|airframe|flight_phases' .spw/conventions --glob '!**/js-architecture-aerodynamics.spw'`,
+  `tree public/js -L 1`,
+  `npm run check:runtime` # when catalog or export contracts change
+][reg=set]
+
+dispatch: .{
+  ecology = @runtime_medium_ecology
+  kernel = @kernel_rhizosphere
+  export_contract = @module_export_contract
+  medium_map = @module_medium_surface
+  lifecycles = @runtime_lifecycles
+  harmony = @harmony_audit
+  cognitive_surface = @cognitive_surface
+  attention_field = @attention_field
+  catalog = @module_catalog
+  loader = @module_loader
+  site = @site_entry
+  compose = @compose_entry
+  readme = @js_readme
+  decomposition = @decomposition_plan
+  archived_aero = @archived_aero
+  metaphor_lexicon = @metaphor_dimensional_lexicon
+}[reg=facet]

@@ -3,6 +3,14 @@
 #>composition_box_model
 #:contract #!runtime
 #:surface #!settings
+#:operation #!contract
+#:fixity #!stable
+
+@component_packing: ~"./component-packing.spw"
+@component_taxonomy: ~"./component-taxonomy.spw"
+@harmony_audit: ~"../audits/component-philosophy-harmony-2026-07.spw"
+@anatomy_packing_audit: ~"../audits/component-anatomy-device-packing-2026-07.spw"
+@design_composition: ~"../../design/composition/index.html"
 
 purpose: .{
  plain = `Make component layout inspectable as part of the site's storytelling and tuning surface.`
@@ -10,12 +18,14 @@ purpose: .{
 }[reg=facet]
 
 attributes: .{
- data_spw_box_model = `component role: stage, fold, control-card, control-group, choice-field, token-card, runtime-step, or local extension.`
+ data_spw_box_model = `component role: stage, fold, control-card, control-group, choice-field, token-card, runtime-step, figure-rail, or local extension.`
  data_spw_composition_flow = `layout flow: stack, grid, flex, inline, or the computed display fallback.`
  data_spw_box_measure = `computed measure band: narrow, compact, comfortable, wide.`
  data_spw_box_presence = `presence state: hidden, waiting, present, overfull.`
  data_spw_box_overflow = `true when scroll size exceeds visible box size.`
  data_spw_box_story = `short narrative-readable summary for console, screenshots, and model hydration.`
+ data_spw_lens_chrome = `mode-switch visual chrome: silent hides decorative aria-label chip (AT still uses aria-label). Lives in handles — not a route override.`
+ data_spw_lens_track = `mode-switch track layout: row = full-width equal-share flex (no phone 2×2). Authored progressive contract.`
 }[reg=facet]
 
 runtime: .{
@@ -32,3 +42,55 @@ settings_surface_rule: #[
 ][reg=set]
 
 storytelling_rule: `A component is not only a box. It is a small stage for attention: what enters, what changes, what can be tuned, and what can be carried forward.`
+
+^"named_variants_prime"{
+  operation = "prime"
+  fixity = "tending"
+  source = #[@harmony_audit, @anatomy_packing_audit][reg=set]
+  figure_rail = `data-spw-box-model="figure-rail" — collapse/narrow/wide rail + surface scale as one container-keyed tier set; stop four independent media rules.`
+  reason_strip = `Already used on research/cards/membership — keep as box-model=reason-strip with composition-flow=grid.`
+  passport_link = `Box-model role is a passport field (@component_taxonomy#component_passport); inferred roles are a fallback, not authorship.`
+}[reg=facet]
+
+^"lab_and_inspect_prime"{
+  operation = "prime"
+  fixity = "experimental"
+  lab = @design_composition
+  refine = #[
+    `missing-slot report for frame-card specimens when debug/inspect is on`,
+    `keep pack-layout/fill readout; pair with register-warm legend when probe pins`,
+    `document DEFAULT_SELECTOR hosts so production pack-local adopters know they will be mirrored`
+  ][reg=set]
+  routes_to_associate = #[`/design/composition/`, `/settings/`, `/topics/software/`, research reason-strips][reg=set]
+  tone = `Inspect narratives teach packing; they stay off public reading mode unless the visitor opts into module-visuals or design lab.`
+}[reg=facet]
+
+^"performance_lifecycle_prime"{
+  operation = "prime"
+  fixity = "tending"
+  source = @harmony_audit
+  performance_seams = #[
+    `DEFAULT_SELECTOR breadth — .site-frame + data-spw-feature refresh cost`,
+    `documentElement RO misses container-only pack-local resize`,
+    `resolveContentTone full text + operator scans per host per refresh`
+  ][reg=set]
+  direction = #[
+    `Mirror pack-layout/fill only on [data-spw-pack-local] (already gated for those attrs)`,
+    `Add host-level RO for pack-local when promoting production`,
+    `Prefer missingOnly / skip story on bulk refresh paths for non-lab routes`,
+    `Do not expand DEFAULT_SELECTOR to all frame-cards for packing alone`
+  ][reg=set]
+  lifecycle = .{
+    authored = `box-model roles and pack-local opt-in work without JS`
+    mirror = `annotate after mount; must not change geometry (attr_governance geometry_rule)`
+    settle = `data-spw-box-settle-phase rhymes with page arrival — fractal settle, not a new stem`
+    teardown = `init cleanup disconnects RO and attention/resize listeners — keep that symmetry when adding host RO`
+  }[reg=facet]
+  naming = .{
+    box_measure = `host inline-size band`
+    content_tone = `authored or inferred content pressure — prefer content-tone over content-density writes`
+    size_context = `hero/panel/grid role inference — distinct from measure band`
+    pack_layout = `stack|split|feature — container packing only`
+  }[reg=facet]
+  claim = `component-harmony-004`
+}[reg=facet]

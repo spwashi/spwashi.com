@@ -11,9 +11,11 @@
 @interaction_progression: ~"../../public/js/runtime/interaction-progression.js"
 @pulse_beat_tuner: ~"../../public/js/runtime/pulse-beat-tuner.js"
 @palette_treat_discovery: ~"../../public/js/runtime/palette-treat-discovery.js"
+@feature_discovery: ~"../../public/js/runtime/feature-discovery.js"
 @interactive_medium: ~"../../public/js/runtime/interactive-medium.js"
 @css_interactive_medium: ~"../../public/css/systems/interactive-medium.css"
 @css_palette_treat: ~"../../public/css/systems/palette-treat.css"
+@css_feature_discovery: ~"../../public/css/systems/feature-discovery.css"
 @brace_gestures: ~"../../public/js/runtime/brace-gestures.js"
 @pinch_scale: ~"../../public/js/runtime/attention/pinch-scale.js"
 @link_copy: ~"../../public/js/semantic/link-copy.js"
@@ -145,6 +147,26 @@
   palette_treats: @palette_treat_discovery — listens to freshness-pulse and discovery; spends @css_palette_treat on probe chips.
 }
 
+^"feature_field_guide"{
+  module: @feature_discovery
+  css: @css_feature_discovery
+  operation: `contract`
+  enrollment: `A data-spw-feature cluster opts in with progression, memory, or traits; JS-owned features may register the same descriptor at idle.`
+  progression: #[`familiarity`, `depth`, `traversal`, `custom function`][reg=set]
+  memory: #[`persistent`, `session`, `none`][reg=set]
+  encounters: #[`novel`, `convergent`, `return`][reg=set]
+  attrs: #[
+    `data-spw-feature-encounter`
+    `data-spw-feature-level`
+    `data-spw-feature-progress`
+    `data-spw-feature-convergent`
+    `data-spw-feature-fresh`
+  ][reg=set]
+  runtime_gate: `body[data-spw-features~=feature-discovery] + catalog features:feature-discovery; CSS is a behavior bundle, not core weight.`
+  event_rule: `Use the shared bus when present because it already dispatches the canonical DOM event; raw CustomEvent is fallback only.`
+  palette_bridge: `palette-treat-discovery registers through window.spwFeatureDiscovery after the idle guide is ready, so the global palette utility does not statically import the guide on every route.`
+}
+
 ^"component_interaction_semantics"{
   module: @component_interaction_semantics
   registry: @component_semantics
@@ -196,6 +218,7 @@ validation: #[
   `pulse-beat-tuner mounts from catalog; prime beats 1/5/9/13 dispatch spw:freshness-pulse and bump ecology-beat-align.`
   `interactionTuner calm|responsive|expressive shifts beatTempo, pulseScale, and freshness weight into CSS tokens.`
   `palette-treat-discovery splashes probe chips on beat-prime, discovery, discover-phase, and resonance change.`
+  `feature-discovery mounts only on feature-discovery behavior routes; its canonical discovered/ready events dispatch once through bus-or-DOM fallback.`
   `Probe rails are keyboard radiogroups; arrow keys fire arrow-reward treats and resonance toolbars rove with arrows.`
   `spw-key-events potentiation threads focus via data-spw-selection-state=potentiated; Enter|Space actualizes scene hosts into data-spw-scene-state=entered.`
   `Escape pops scene stack (data-spw-scene-depth) before clearing selection threads; scene packets include spw_context for LM handoff.`

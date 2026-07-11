@@ -40,6 +40,7 @@ purpose: .{
   horizontal_gravity: `data-spw-horizontal-gravity = trails|balanced|leads — the inline counterpart. Near the right edge → trails (opens toward inline-start); near the left → leads. --spw-horizontal-bias (-1..1).`
   opening: `data-spw-gravity="open" adds data-spw-open-direction=up|down and data-spw-open-anchor=<up|down>-<start|end|center> — the 2D opening for popover-shaped reveals. CSS flips growth (flex-direction) + aligns (align-self) + caps height to room, while DOM order stays put for reading + a11y.`
   performance: `One shared rAF-throttled capture-phase scroll/resize listener (catches inner-container scroll); IntersectionObserver gates measurement to on-screen tracked elements. Response stays in transform/opacity/color/shadow, never layout thrash.`
+  lifecycle: `Mount returns cleanup + refresh. MutationObserver adopts added opt-ins and untracks removed roots; cleanup disconnects IO/RO/MO and global listeners, cancels rAF, and restores generated datasets, styles, instrumentation, and readout markup.`
 }
 
 ^"opportunistic_variant"{
@@ -86,7 +87,7 @@ purpose: .{
 ^"density_and_salience"{
   claim: `Density is how much material occupies a box; salience is how much attention a thing earns. They are orthogonal and both belong to the spatial model.`
   density: `Carried by @typography_packing tiers (compact|balanced|roomy) + @composition_box_model content-tone (light|balanced|dense|operator-heavy|media-dominant). Extent and measure feed density: a squat wide box can afford roomy; an overtall narrow box should compact.`
-  salience: `The lens/persona axis. The same component reads differently depending on the active persona (svg-personas), page context, and charge/attention field. Salience decides which peer wins a boundary contest and which content holds flush vs insets.`
+  salience: `Overlap priority ranks (background|ambient|primary|focal) on [data-spw-gravity] opt-ins. Viewing reason (audience facets, image lens, scene lane) lives in @viewing_reason — orthogonal to overlap salience. Salience decides which peer wins a boundary contest; viewing reason decides how the same figure reads for different audiences.`
   rule: `Raising density should not silently raise salience, and vice versa. A dense panel can be low-salience background; a single sparse chip can be the highest-salience element. Keep the two tunable independently so scale changes readability (density) without hijacking priority (salience).`
 }
 
@@ -102,3 +103,38 @@ purpose: .{
 }
 
 runtime_demo: `/design/composition/ — spatial gravity bench: scroll to watch specimens narrate edge, vertical, extent, and measure live.`
+
+^"adoption_status_2026_07"{
+  operation = "audit"
+  fixity = "tending"
+  claim: `Primitives are implemented and bench-proven; production HTML adoption is near zero except partial reward-ui dock measurement.`
+  production_hosts: #[
+    `design/composition/index.html — gravity bench specimens only`,
+    `public/js/runtime/reward-ui.js — imports measureSpatialGravity for dock positioning (partial bridge, not full data-spw-gravity opt-in)`
+  ][reg=set]
+  mount_gate: .{
+    mechanism = `module-catalog.js schedules spatial-gravity at VISIBLE when [data-spw-gravity] exists in authored HTML; after mount, its MutationObserver adopts later opt-ins.`
+    footgun = `A route with no authored opt-in still cannot schedule the module solely for a future dynamic popover.`
+    direction = `First production adoption should keep one honest authored opt-in or add an existing feature gate only when dynamic-only gravity becomes a real route contract.`
+  }[reg=facet]
+  salience_collision: .{
+    gravity_values = #[`background`, `ambient`, `primary`, `focal`][reg=set]
+    other_uses = #[
+      `topics/software/index.html semantic-contract-card data-spw-salience=near|ambient|strong — module field semantics, not overlap ranks`,
+      `public/js/semantic/concept-salience.js maps data-spw-salience to attention vocabulary`
+    ][reg=set]
+    rule = `Gravity overlap resolution applies only to elements with data-spw-gravity opt-in using the four rank values. Card/module salience keeps data-spw-salience but should migrate toward data-spw-module-salience or data-spw-field-salience in a rename window; until then, never opt cards into [data-spw-gravity] with near/strong tokens.`
+  }[reg=facet]
+  parallel_positioning: #[
+    `positionFloatingChromePopover + syncFloatingChromeState in dom-contracts.js — bespoke rects for chrome roles`,
+    `topic-discovery.js popover placement — getBoundingClientRect flip math, off floating-chrome contract`,
+    `direction: first production adopters should use data-spw-gravity="open" + salience focal instead of private fit logic`
+  ][reg=set]
+  first_route_adopters: #[
+    `topic-discovery popover → data-spw-gravity="open" on popover host + data-spw-salience="focal"`,
+    `region-menu floating panel → gravity open + flush-host seating`,
+    `state-inspector satchel → data-spw-gravity on drag root; bottom-lane clearance via shared API`,
+    `spw-section-handle → edge-gravity top + flush-viewport seating (mobile sticky chip)`
+  ][reg=set]
+  css_layer: `spatial-gravity.css lives in systems layer; room/gravity custom properties publish to opted-in hosts only — do not expect gravity tokens on routes without data-spw-gravity.`
+}

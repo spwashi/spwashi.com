@@ -15,6 +15,10 @@
 @accent_palette_runtime: ~"../../public/js/interface/accent-palette.js"
 @wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
 @cognitive_surface: ~"../philosophy/cognitive-surface.spw"
+@expressive_registers: ~"./expressive-registers.spw"
+@circuit_components: ~"./circuit-components.spw"
+@ornament_contract: ~"./ornament-contract.spw"
+@harmony_audit: ~"../audits/component-philosophy-harmony-2026-07.spw"
 
 thesis: .{
  claim = `Attentional interaction on a page can be modeled as a diffusive field — like hormonal signaling in tissue rather than like explicit wiring.`
@@ -268,3 +272,30 @@ open_questions: #[
  .{ ask = `Can the field model support multi-user superposition — two visitors whose fields overlap on the same page?` },
  .{ ask = `At what bias threshold should the field visibly change ornament state, and should this be tunable per ornament?` }
 ][reg=set]
+
+^"harmony_prime_2026_07"{
+  operation = "prime"
+  fixity = "tending"
+  source = @harmony_audit
+  associate = #[@expressive_registers, @circuit_components, @ornament_contract][reg=set]
+  claim = `Register diffusion is the production approximation; continuous local-hormonal math remains design target. Visualization should teach the approximation, not fake continuous O(n²).`
+  tone = `Care work is seamless adjustment; learning work is resonant pause; architecture work is sedimentation (see practice_and_resonance_rhythms).`
+  viz_primes = #[
+    `field-balance quiet instrument on section-handle or settings satchel (TTL-aligned)`,
+    `collection floor vs transient resonance vs deviation — three distinct ornaments`,
+    `register-warm legend on /design/composition/ when probe pins`,
+    `H(page) entropy console/catalog only — not ambient reading chrome`,
+    `optional --spw-token-harmony for wonder-token match (generalize SVG persona harmony)`
+  ][reg=set]
+  components_to_tune = #[
+    `operator-chip + guide badge — resonance vs collected marks`,
+    `section-handle — field-balance wash already partial; make readable without shouting`,
+    `data-spw-feature clusters — opt-in register=resonance first hosts`,
+    `crossref peers — outline today; optional edge layer later`
+  ][reg=set]
+  routes = #[`/design/composition/`, `/design/components/`, `/settings/`, software curriculum with operator density][reg=set]
+  safe_first_patch = `Ornament CSS: make collected mark non-pulse and distinct from --spw-resonance ring; document in ornament-contract probe.`
+  performance = `Register diffusion stays the production path — never implement full pairwise Jaccard on every interaction without a budgeted lab. Bounded wonder-memory targets; operator :has echo only on operator nodes.`
+  lifecycle = `Field personalization after interactive; authored identity before JS. Decay TTL (~40s) is pulse/residue, not page-state advancement.`
+  naming = `resonance cluster disambiguation in naming-and-structured-values#harmony_disambiguation_prime; do not add data-spw-card-resonance.`
+}[reg=facet]

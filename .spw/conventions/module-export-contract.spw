@@ -8,6 +8,7 @@
 #:layer #!pragmatics
 
 @audit: ~"../audits/module-export-standalone-2026-07.spw"
+@naming_grammar_js_types_audit: ~"../audits/naming-grammar-js-types-2026-07/index.spw"
 @ecology: ~"./runtime-medium-ecology.spw"
 @medium_map: ~"../surfaces/runtime-module-medium.spw"
 @loader: ~"../../public/js/runtime/module-loader.js"
@@ -20,11 +21,18 @@
     `mount — required function (mod, ctx, root?) => cleanup | { cleanup, refresh } | void`
     `refresh — optional`
     `contract — optional SPW_*_CONTRACT reference`
-    `updates — optional; normalized by module-updates-contract`
+    `updates — optional; normalized by module-updates-contract (scope:role:kind:name)`
     `guild — optional runtime-medium guild id`
+    `describes | evaluates — optional portable copy of catalog semantics`
+    `timingArc | timingChunk | effectScope — optional schedule/side-effect mirrors`
   ][reg=set]
 
   compatibility_alias: `export const spwModule = SPW_MODULE_EXPORT — one release tolerance`
+
+  mount_result: `mount may return void, one cleanup function, or { cleanup?, refresh? }. Cleanup owns only state/listeners/observers created by that mount and should be idempotent.`
+  refresh_precedence: `A refresh returned by mount is instance-local and wins. When mount returns no refresh, module-loader attaches SPW_MODULE_EXPORT.refresh so the optional export field is operational rather than documentary.`
+  cleanup_ownership: `A loader-mounted module returns its handle; it does not also register that same handle with ctx.addCleanup, which would run teardown twice.`
+  route_boundary: `Cross-route navigation replaces the document. Partial DOM replacement is handled by module refresh/untracking; pagehide teardown is not used because it breaks BFCache restoration.`
 
   legacy_mount_names: #[
     `export function initX() — catalog mount callback may call directly today`
@@ -48,11 +56,29 @@
   literate_rule: `Every portable export names field, target, gesture, visible result (SPW_COMPOSITION_CONTRACT)`
 }
 
+^"catalog_comprehensiveness"{
+  required_fields = #[`id`, `layer`, `when`, `load`, `mount`][reg=set]
+  hygiene_fields = #[
+    `describes`
+    `evaluates`
+    `updates` (role topology preferred for enhancement flourishes)
+    `timingArc` (required intent for IMMEDIATE enhancement)
+    `timingChunk` (IDLE: idle-residue|idle-collectible|idle-chrome|idle-lab|idle-default)
+    `effectScope`
+    `features` and/or `selector` and/or `route` demand gate
+  ][reg=set]
+  updates_roles = #[`structural`, `flourish`, `inspect`, `residue`, `measure`, `diagnostic`][reg=set]
+  css_parity = `Root attrs/vars declared in updates that drive ornament must have a CSS consumer (runtime-states or effects) or stay inspect-only.`
+  performance = `IDLE chunks order residue before collectible flourishes; skip no-op CSS var writes; prefer VISIBLE/IDLE over IMMEDIATE.`
+}[reg=facet]
+
 ^"inspection_dataset"{
   on_mount: #[
     `data-spw-module-export-shape`
     `data-spw-module-guild`
     `data-spw-module-export-grade`
+    `data-spw-module-updates-*` (contract, topology, flourishes, roles)
+    `html[data-spw-runtime-idle-chunk]` during staggered idle schedule
   ][reg=set]
 }
 
@@ -60,10 +86,14 @@ validation: #[
   `npm run check:runtime warns when catalog import target lacks resolvable mount`,
   `node --check on module-export-contract.js`,
   `describeModuleExport() returns stable JSON for all catalog ids (goal)`
+  `A module-export refresh is preserved by module-loader when mount itself returns no refresh.`
+  `Observer/listener-owning modules return cleanup and remove adopted roots during partial DOM replacement.`
+  `IDLE modules declare timingChunk; IMMEDIATE enhancements declare timingArc + demand gate.`
 ][reg=set]
 
 dispatch: .{
   audit = @audit
   ecology = @ecology
   medium_map = @medium_map
+  convention_emergence = @naming_grammar_js_types_audit
 }[reg=facet]

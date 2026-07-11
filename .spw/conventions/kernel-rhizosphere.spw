@@ -11,6 +11,7 @@
 @storage_topology: ~"./storage-topology.spw"
 @dom_render: ~"../../public/js/kernel/dom-render.js"
 @runtime_medium_ecology: ~"./runtime-medium-ecology.spw"
+@js_architecture_cognition: ~"./js-architecture-cognition.spw"
 @data_spw_attribute_governance: ~"./data-spw-attribute-governance.spw"
 @audit: ~"../audits/runtime-kernel-consolidation-2026-07.spw"
 
@@ -46,4 +47,17 @@ fixity = "tending"
 ^"orchestrator_consistency"{
   pattern: "Orchestrators (attention-architecture, visitation, precipitation-request) use guardCall or writeRuntimeDatasetValues."
   bus_first: "Storage mutations that affect ornament emit bus events (image:visited, visitation:updated)."
+}
+
+^"substrate_cognition_prime"{
+  operation = "prime"
+  fixity = "tending"
+  source = @js_architecture_cognition
+  claim = `Kernel is substrate metabolism: shared writers, storage, normalize, bus. Ecology: rhizosphere. Cognition: processing_strata.substrate — same folder.`
+  direction = #[
+    `Eliminate remaining normalize/storage forks (runtime_kernel_audit remaining)`,
+    `New cross-cutting writers use dataset tiers, never raw html.dataset from features`,
+    `Do not grow site.js orchestration by stuffing substrate logic into the bootstrap`
+  ][reg=set]
+  cost_if_skipped = `Duplicate normalizeText/safeJsonParse is interference — parallel pathways that drift and raise load.`
 }

@@ -8,6 +8,7 @@
 #:layer #!editor_inspectability
 
 @ecology: ~"../conventions/runtime-medium-ecology.spw"
+@cognition: ~"../conventions/js-architecture-cognition.spw"
 @export_contract: ~"../conventions/module-export-contract.spw"
 @audit: ~"../audits/module-export-standalone-2026-07.spw"
 @catalog: ~"../../public/js/runtime/module-catalog.js"
@@ -182,6 +183,30 @@
   ][reg=set]
   priority_2_compose_guild_batches: #[`substrate`, `inspection`, `literacy`][reg=set]
   priority_3_side_effect_exports: #[`prepaint-state`][reg=set]
+}
+
+^"cognitive_roles_prime"{
+  operation = "prime"
+  fixity = "tending"
+  source = @cognition
+  claim = `Guild map owns clustering; cognitive strata own processing job and load. Both should stay assignable per module.`
+  defaults = #[
+    `substrate → substrate metabolism`,
+    `orientation → perception / place model`,
+    `symbiosis → working set / attention coupling`,
+    `memory → memory`,
+    `inspection → metacognition`,
+    `expression → interpretation / language`,
+    `media → media_system`,
+    `literacy → literacy instruments`,
+    `field → specialized_skill`
+  ][reg=set]
+  uncategorized = #[
+    `pwa-update-handler → substrate (service-worker lifecycle)`,
+    `semantic-chrome → metacognition + affordance`,
+    `interaction-progression → working_set (symbiosis)`
+  ][reg=set]
+  direction = `On next catalog touch, stamp timingArc/effectScope; optional cognitive_stratum note for high-impact modules.`
 }
 
 module_count = 92

@@ -1,0 +1,131 @@
+# Recursive Improvement — Spw Language
+#
+# Closed loop for improving Spw language utilization and v0.4 pillars without
+# confusing them with site runtime feature packs.
+
+#>spw_language_recursive_improvement
+#:convention #!language #!agents #!v04
+#:operation #!contract
+#:fixity #!tending
+#:layer #!semantics
+
+@semantic_capacity: ~"../conventions/semantic-capacity.spw"
+@language_index: ~"./index.spw"
+@v04: ~"./v04/index.spw"
+@roadmap: ~"./v04/roadmap.spw"
+@feature_utilization: ~"./feature-utilization.spw"
+@site_recursive: ~"../conventions/recursive-improvement.spw"
+@ecology_language: ~"../../scripts/spw-language-ecology.mjs"
+@language_cache: ~"../caches/spw-language-utilization-2026-07.spw"
+@measurement: ~"../conventions/measurement-contract.spw"
+
+operation = "contract"
+fixity = "tending"
+
+^"thesis"{
+  claim #lang-ri-thesis {
+    layer = "semantic"
+    hypothesis = `Language recursive improvement walks Spw features (operators, braces, claims, fixity, stems) and v04 pillars; site recursive-improvement walks runtime packs and CSS/JS boot — run both when the task spans language and application, but never merge their inventories.`
+    expression = improve[language]{operators.braces.claims.v04}<loop>
+    ~site_peer = @site_recursive
+    *evidence = `Dual ecology scripts: ecology vs ecology:language`
+    probe_ref = `test -f .spw/language/feature-utilization.spw && npm run ecology:language`
+    falsification = `A single inventory or cache treats body[data-spw-features] tokens as Spw operators.`
+    status = "active"
+  }
+}[reg=facet]
+
+^"loop"{
+  expression = loop[language]{inventory.read.cache.patch.validate.promote}<recursive>
+
+  (scene) {
+    step_1 {
+      !action = `npm run ecology:language`
+      *output = `operator histogram + claim/probe density signals`
+    }
+    step_2 {
+      ?probe = `Read .spw/language/v04 priority_stack + feature-utilization probe`
+      ~see = #[@v04, @feature_utilization, @roadmap][reg=set]
+    }
+    step_3 {
+      $cache {
+        path = @language_cache
+        ops = #[`cache`, `audit`, `prime`][reg=set]
+        rule = `Named insight with source, evidence, next question; require probe_ref or mark experimental`
+      }
+    }
+    step_4 {
+      .ground = `Smallest honest patch`
+      targets = #[
+        `data-spw-operator attr`
+        `data-spw-semantic-expression`
+        `pillar claim + probe_ref`
+        `shared.js alias`
+        `operator-site-projection`
+      ][reg=set]
+    }
+    step_5 {
+      %validate {
+        kind = "objective"
+        source = "agent loop"
+        checks = #[
+          `npm run ecology:language`
+          `rg probe_ref .spw/language`
+          `optional operator-lattice skill / workbench validate-spw`
+        ][reg=set]
+      }
+    }
+    step_6 {
+      ^integrate = `Re-inventory; promote only via submodule_bridge when grammar must land upstream`
+    }
+  }
+}[reg=set]
+
+^"thoroughness_tiers"{
+  [smoke] {
+    *do = `ecology:language + one route operator sample`
+    expression = thoroughness[smoke]{sample}<quick>
+  }
+  [pillar] {
+    *do = `one v04 pillar owner_claim + its probe_ref`
+    expression = thoroughness[pillar]{claim.probe}<depth>
+  }
+  [atlas] {
+    *do = `operator-semantics + semantic-braces + operator-site-projection`
+    expression = thoroughness[atlas]{operators.braces.projection}<wide>
+  }
+  [upstream] {
+    *do = `submodule_bridge + workbench docs/specs alignment`
+    expression = thoroughness[upstream]{bridge}<promote>
+  }
+}[reg=facet]
+
+^"what_counts_as_language_improvement"{
+  yes {
+    #>operators = `new/corrected operator family mapping with speech/reversibility`
+    {brace} = `brace expression that teaches a distinction`
+    claim = `claim with falsifiable probe_ref`
+    stem = `stem that unifies HTML/CSS/JS names`
+    v04 = `v04 pillar status change with evidence`
+  }[reg=set]
+
+  no {
+    runtime_token = `adding body data-spw-features tokens alone`
+    polish = `CSS visual polish without operator/brace contract`
+    npm = `npm dependency work`
+  }[reg=set]
+}[reg=facet]
+
+^"next_probes"{
+  ?<
+    Which underused operators (.ground *value (scene) [mode]) land first on play/design practice beds?,
+    Should ecology:language --strict fail when data-spw-operator is outside OPERATOR_DEFINITIONS aliases?,
+    When does a site language pillar promote via submodule_bridge vs stay local?
+  >[reg=stream]
+}[reg=facet]
+
+validation: #[
+  `npm run ecology:language`
+  `test -f .spw/language/feature-utilization.spw`
+  `rg 'claim #lang-ri|expression = loop' .spw/language/recursive-improvement.spw`
+][reg=set]

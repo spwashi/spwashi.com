@@ -1,0 +1,220 @@
+# Feature Partial Theatrics + Subjective Relevance
+#
+# Where module load (JS) and CSS partials meet editor-facing tune contexts.
+# Built on existing architecture — not a new runtime.
+
+#>feature_partial_theatrics
+#:convention #!features #!runtime #!css #!editors
+#:operation #!prime
+#:fixity #!tending
+#:layer #!pragmatics
+
+@behavior_scopes_js: ~"../../public/js/runtime/behavior-scopes.js"
+@css_manifest: ~"../../scripts/ts/css-manifest.mts"
+@module_catalog: ~"../../public/js/runtime/module-catalog.js"
+@runtime_helpers: ~"../../public/js/runtime/runtime-helpers.js"
+@feature_discovery: ~"../../public/js/runtime/feature-discovery.js"
+@site_settings_engine: ~"../../public/js/kernel/site-settings-engine.js"
+@settings_route: ~"../../settings/index.html"
+@query_disposition: ~"./query-disposition.spw"
+@expressive_registers: ~"./expressive-registers.spw"
+@component_region_personality: ~"./component-region-personality.spw"
+@agentic_audit: ~"../audits/agentic-development-2026-07/index.spw"
+@brp_audit: ~"../audits/build-runtime-performance-2026-07/index.spw"
+
+operation = "prime"
+fixity = "tending"
+
+^"thesis"{
+  claim = `Code-savvy editors already have three orthogonal knobs for feature partials: (1) whether the partial is present on the page, (2) how theatrically it plays once present, (3) how subjectively relevant it is to the reader’s job. Place load/CSS relationships into those knobs — do not invent a fourth “theater runtime.”`
+  audience = `Editors who read HTML attributes, settings, and catalog lines; not only end readers.`
+  risk = `Collapsing presence, theatrics, and relevance into one toggle recreates IMMEDIATE enhancement soup and unreadable settings.`
+}[reg=facet]
+
+^"existing_architecture"{
+  note = `What already exists and what job each piece owns.`
+
+  presence_page = .{
+    html = `body[data-spw-features="…"] — space-separated tokens`
+    js = `matchesFeatures(def, activeFeatures) in runtime-helpers; catalog def.features`
+    css = `BEHAVIOR_SCOPES in css-manifest.mts → generated behavior-scopes.js + optional behavior CSS bundles`
+    job = `Whether optional JS/CSS partials are *eligible* on this route at all`
+    editor_tune = `Edit body features on the route (or a route template). Design/settings routes already list feature tokens.`
+  }[reg=facet]
+
+  presence_cluster = .{
+    html = `data-spw-feature="name" on a meaningful cluster (not empty wrappers)`
+    js = `feature-discovery idle module; selectors on catalog defs; scene/feature hosts`
+    job = `Which named capability islands exist in the document`
+    editor_tune = `Annotate or remove clusters in HTML; progression/memory/traits via feature-discovery contract`
+  }[reg=facet]
+
+  schedule = .{
+    catalog = `MODULE_LAYERS + MOUNT_WHEN (immediate|visible|idle|interaction|region|settled)`
+    timing_arc = `def.timingArc names boot/visible/enhance posture beyond raw when (required hygiene for IMMEDIATE)`
+    site = `NON_CORE_DEFS share visible/interaction/idle pipelines`
+    job = `When eligible JS runs relative to attention and boot cost`
+    editor_tune = `Catalog lines (code-savvy). check:runtime mountHygiene reports IMMEDIATE pressure + timingArc fill.`
+    pass_2026_07 = `IMMEDIATE ~55→~43; all IMMEDIATE have timingArc; presence features wire operators+navigator`
+  }[reg=facet]
+
+  theatrics_global = .{
+    settings = `enhancementLevel minimal|balanced|rich → html[data-spw-enhancement-level] + --spw-enhancement-factor`
+    also = `semanticDensity, fieldResonance, wonderMemory, grain, developmentalClimate, runtimePosture (minimal|precision|resonant|theatrical)`
+    css = `grain, floating-chrome, semantic-resonance, coloring-depth consume these root attrs`
+    job = `How loud the whole visit’s enhancement feels — climate, not feature identity`
+    editor_tune = `/settings/ presets + form; query disposition for shareable lab setups`
+  }[reg=facet]
+
+  theatrics_local = .{
+    registers = `data-spw-register + data-spw-express + approach (expressive-registers) — intensity without changing content`
+    lens_form = `mode-switch (content filter) vs data-spw-form-options (spatial grammar) — orthogonal`
+    copy_depth = `data-spw-copy-depth + runtime-posture coupling`
+    job = `Local showmanship on a cluster or reading strip`
+    editor_tune = `HTML on design/composition specimens; settings semantic emphasis map`
+  }[reg=facet]
+
+  subjective_relevance = .{
+    perspective = `data-spw-perspective=objective|subjective on braces and hooks`
+    measure_kind = `data-spw-measure-kind=subjective|objective on annotations (designer conversation canvas)`
+    wonder = `body data-spw-wonder + wonder-memory settings — attentional relevance trail`
+    feature_discovery = `novel|convergent|return encounters + progression/memory contracts — relevance of a *capability* over time`
+    referentiality = `public|editorial|technical tiers (component-region-personality) — who the partial is for`
+    job = `Whether this partial matters *to this reader’s purpose*, not only whether it is on`
+    editor_tune = `Settings attention relations + semantic density; markup perspective/referentiality; discovery contracts on feature hosts`
+  }[reg=facet]
+
+  shareable_lab = .{
+    query = `query-disposition: spw-palette, physics, density, posture as reproducible setups`
+    job = `Editors hand a URL that freezes theatrics without forking the route file`
+  }[reg=facet]
+}[reg=facet]
+
+^"placement_map"{
+  note = `Where to put a new partial so editors can tune without spelunking.`
+
+  rule_1_presence = `If the partial is optional per route family, declare catalog features: + BEHAVIOR_SCOPES entry + body token on routes that want it. Editors toggle by editing body[data-spw-features] or a settings “feature pack” later.`
+
+  rule_2_schedule = `If the partial is heavy or theatrical, never default IMMEDIATE. Prefer idle/visible/interaction. Editors who edit catalog can retime; readers use enhancementLevel to calm globally.`
+
+  rule_3_theatrics_css = `Put theatrical CSS under systems/ or effects/ keyed to html[data-spw-enhancement-level] and/or html[data-spw-runtime-posture] and/or [data-spw-feature="x"][data-spw-feature-level]. Prefer tokens (--spw-enhancement-factor, register channels) over new booleans.`
+
+  rule_4_subjective = `Mark subjective partials with perspective/measure-kind/referentiality=technical|editorial. Do not force subjective ornament when enhancementLevel=minimal.`
+
+  rule_5_partial_host = `Host partials on [data-spw-feature] islands. feature-discovery then owns encounter memory; CSS can read data-spw-feature-level / progress for staged theatrics.`
+
+  rule_6_editor_surface = `Expose code-savvy controls on /settings/ (already has enhancement, density, climate, posture language) and /design/* specimens — not new floating admin chrome.`
+}[reg=facet]
+
+^"editor_contexts"{
+  settings = .{
+    path = `/settings/`
+    already = `enhancementLevel, semanticDensity, field/wonder, presets Builder vs Inspector, storage guide, state readout, #feature-scopes inspect panel`
+    fit = `Global theatrics + subjective density; “low theatrics” copy already present`
+    gap = `Feature scopes panel is inspect-only; optional later: design-route passport strip linking catalog when/features (s4)`
+  }[reg=facet]
+
+  design_labs = .{
+    paths = #[`/design/`, `/design/composition/`, `/design/components/`, `/design/palettes/`][reg=set]
+    fit = `Local registers, pack-local, feature contracts, palette probes — tune partials in situ`
+    gap = `Link catalog when/features next to specimen in a small technical strip (passport row)`
+  }[reg=facet]
+
+  about_plans_website = .{
+    paths = #[`/about/plans/`, `/about/website/`][reg=set]
+    fit = `Explain contracts to code-savvy editors; not live knobs`
+  }[reg=facet]
+
+  query_lab = .{
+    convention = @query_disposition
+    fit = `Share a theatrical setup without editing HTML; pairs with settings engine query application`
+  }[reg=facet]
+
+  markup_authoring = .{
+    fit = `Body features + data-spw-feature contracts + perspective/referentiality — primary authoring surface for partial relevance`
+  }[reg=facet]
+}[reg=facet]
+
+^"js_css_relationship"{
+  contract = `One feature token should mean the same thing in three places when optional: catalog.features, BEHAVIOR_SCOPES key, body[data-spw-features]. CSS may also always-import a quiet base; loud partials stay scoped.`
+  check = `npm run check:runtime fails unknown features vs BEHAVIOR_SCOPES; mountHygiene reports IMMEDIATE pressure`
+  theatrics_not_load = `enhancementLevel scales intensity of already-mounted partials; it should not be the only gate for shipping heavy modules (use features + MOUNT_WHEN)`
+  discovery = `feature-discovery is a meta-partial: gated by features:feature-discovery, styles encounter theatrics on [data-spw-feature-*] tokens`
+}[reg=facet]
+
+^"do_not"{
+  d1 = `Do not invent data-spw-theater=on next to enhancement-level`
+  d2 = `Do not put subjective relevance only in JS with no markup/settings surface`
+  d3 = `Do not load every partial IMMEDIATE and ask enhancementLevel to “hide” cost — cost already paid`
+  d4 = `Do not mix lens (what content) with register (how intense) or features (whether eligible)`
+  d5 = `Do not require public readers to understand BEHAVIOR_SCOPES; keep that technical-tier on settings/design`
+}[reg=set]
+
+^"first_implementation_slices"{
+  s1 = `Settings technical readout: list active body features vs known BEHAVIOR_SCOPE_KEYS (inspect only, no new storage) — landed: /settings/#feature-scopes + buildFeatureScopeSnapshot in site-settings-ui.js`
+  s2 = `CSS: map feature-discovery level/progress tokens under html[data-spw-enhancement-level] so rich visits stage more ornament than minimal — landed: systems/feature-discovery.css --spw-feature-theatrics`
+  s3 = `Catalog: stamp timingArc on IMMEDIATE enhancement still missing it; reclass theatrical partials to idle/visible`
+  s4 = `Design composition: one specimen with register + feature-discovery traits + posture coupling documented in frame-note — landed: /design/composition/#partial-theatrics-lab`
+  s5 = `Optional query keys for enhancementLevel / runtimePosture already via settings engine — document in query-disposition examples; orchestration recipes use existing module-visuals|module-audit|module-delay|module-only`
+  s6 = `Learnable orchestration ornaments under module-visuals: feature island rings, loading-ecology phase chip, module-effect pulse — landed: components/runtime-states.css (uses real site.js loader, not app.js)`
+  s7 = `Session feature lab + embeddable partial-theatrics panel: presence toggle via sessionStorage ops + reload; theatrics via enhancementLevel; orchestration via query recipes — landed: runtime/feature-lab.js + /settings/#partial-theatrics-lab`
+  s8 = `Query link composer near feature hubs + state satchel: build/copy/apply/cauldron-offer share URLs — landed: runtime/query-link-composer.js, components/query-composer.css, settings + design/composition hubs, state-inspector expand`
+  s9 = `Catalog hygiene: cauldron/spells/guide-badge/haptics/experiential/navigation-spells → IDLE + timingArc; module-effects/loading-ecology stamped immediate-orchestration; query-link-composer module registered idle`
+}[reg=set]
+
+^"integration_spells_cauldron_collectibles"{
+  query_composer = `Offers cauldron:offer + spell:capture with type query-setup; discovery toast for learning cadence`
+  feature_gating = `Composer mounts when selector hosts exist (hubs + satchel); session feature lab still owns presence; body features gate catalog matchesFeatures`
+  floating_chrome = `Compact composer in state satchel expands; chrome role query-composer maps to bottom-right-satchel`
+  collectibles = `Composer host may carry data-spw-guide-badge=collect; feature-discovery rings when module-visuals on`
+}[reg=facet]
+
+^"component_diversity_copy_lens"{
+  note = `2026-07 diversity + semantic copy chunk`
+  css_chunk = `systems/semantic-copy-lens.css — lens-sensitive copy, kind rhythm for hook/lens/metric, collection-fresh pulse`
+  dedupe = `semantic-variants.css genome block kept once; copy-lens lives in systems chapter`
+  collection = `achievements hooked|lens-keen|measured|kind-spectrum reward underused kinds`
+  routes = `composition lens read/inspect/reuse; play lens play/memory/making; design/services/settings metric strips + copy-depth tone`
+}[reg=facet]
+
+^"architecture_correction"{
+  note = `Subagent research that cites public/js/app.js and a flat dynamic-import list is obsolete. Canonical orchestration is public/js/site.js + module-catalog.js + module-loader.js (MOUNT_WHEN, features gates, spw:module-lifecycle) with loading-ecology.js and module-effects.js for learnable root tokens.`
+}[reg=facet]
+
+^"active_claims"{
+  claim #fpt-001 {
+    layer = "pragmatic"
+    hypothesis = "Editors can retune feature theatrics by changing enhancementLevel/runtimePosture without editing catalog, if partial CSS spends those root tokens."
+    spec_ref = "this convention#theatrics_global + #rule_3_theatrics_css"
+    impl_ref = "site-settings-engine + grain/semantic-resonance CSS + feature partial CSS"
+    probe_ref = "On a design route with feature-discovery enabled, switch minimal→rich and observe partial ornament intensity change without reload of modules."
+    falsification = "Theatrics only change when modules remount or body features change."
+    status = "active"
+  }
+  claim #fpt-002 {
+    layer = "agent-editor"
+    hypothesis = "Optional partials remain editable when presence is body features + catalog.features + BEHAVIOR_SCOPES, not ad-hoc import lists."
+    spec_ref = "this convention#presence_page + #js_css_relationship"
+    impl_ref = "module-catalog + css-manifest + matchesFeatures"
+    probe_ref = "check:runtime errors on unknown features token; removing body token unmounts gated module on next load."
+    falsification = "A partial loads without features alignment or only via hard-coded site.js imports."
+    status = "active"
+  }
+}[reg=set]
+
+validation: #[
+  `rg 'matchesFeatures|BEHAVIOR_SCOPE' public/js`,
+  `rg 'enhancementLevel|data-spw-enhancement-level' public/js public/css settings`,
+  `rg 'data-spw-runtime-posture' public/css/components`,
+  `npm run check:runtime`
+][reg=set]
+
+dispatch: .{
+  settings = @settings_route
+  catalog = @module_catalog
+  scopes = @behavior_scopes_js
+  discovery = @feature_discovery
+  query = @query_disposition
+  registers = @expressive_registers
+  agentic = @agentic_audit
+}[reg=facet]

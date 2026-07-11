@@ -17,6 +17,11 @@ fixity = "stable"
 @spec_alignment: ~"../_workbench/docs/specs/spw/spec-alignment.spw"
 @v04: ~"./v04/index.spw"
 @plan: ~"../../.agents/plans/spw-language-v04/PLAN.md"
+@feature_utilization: ~"./feature-utilization.spw"
+@recursive_improvement: ~"./recursive-improvement.spw"
+@utilization_cache: ~"../caches/spw-language-utilization-2026-07.spw"
+@operator_semantics: ~"../conventions/operator-semantics.spw"
+@semantic_braces: ~"../conventions/semantic-braces.spw"
 
 dispatch: .{
  mount = @mount
@@ -25,12 +30,34 @@ dispatch: .{
  spec_alignment = @spec_alignment
  v04 = @v04
  plan = @plan
+ feature_utilization = @feature_utilization
+ recursive_improvement = @recursive_improvement
+ utilization_cache = @utilization_cache
+ operator_semantics = @operator_semantics
+ semantic_braces = @semantic_braces
 }[reg=facet]
 
-reading_order: ?< @plan, @v04, @reference_conventions, @spec_alignment, @workbench >[reg=stream]
+reading_order: ?<
+  @feature_utilization,
+  @plan,
+  @v04,
+  @recursive_improvement,
+  @utilization_cache,
+  @operator_semantics,
+  @semantic_braces,
+  @reference_conventions,
+  @spec_alignment,
+  @workbench
+>[reg=stream]
+
+^"expression"{
+  inventory = language[index]{propose.inspect.bridge}<site>
+  loop = improve[language]{ecology.read.cache.patch.validate}<recursive>
+}[reg=facet]
 
 invariants: #[
- `Site language artifacts propose; workbench canon proves.`,
- `v0.4 pillars stay inspectable before the submodule pin moves.`,
- `Promote landed grammar into workbench docs/specs and lib/spw-v0.4.0/.`
+  `Site language artifacts propose; workbench canon proves.`,
+  `v0.4 pillars stay inspectable before the submodule pin moves.`,
+  `Promote landed grammar into workbench docs/specs and lib/spw-v0.4.0/.`,
+  `Language feature utilization stays dual-tracked from body[data-spw-features] packs.`,
 ][reg=set]

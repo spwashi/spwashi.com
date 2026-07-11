@@ -1,0 +1,105 @@
+# Viewing Reason
+#
+# Cross-media contract for who is looking and why — audience facets, active
+# lenses, and geometry-first copy. Unifies SVG persona, image lens, scene lane,
+# and card audience without collapsing them into one attribute.
+
+#>viewing_reason
+#:convention #!media #!svg #!copy #!attention
+#:layer #!pragmatics
+#:operation #!contract
+
+@svg_tunability: ~"../../public/js/media/svg-tunability.js"
+@svg_surfaces_css: ~"../../public/css/systems/svg-surfaces.css"
+@hypermedia_2d: ~"./hypermedia-2d.spw"
+@relational_attention_media: ~"./relational-attention-media.spw"
+@data_spw_attribute_governance: ~"./data-spw-attribute-governance.spw"
+@spatial_gravity: ~"./spatial-gravity.spw"
+@audit: ~"../audits/viewing-reason-cross-media-2026-07.spw"
+@svg_depth_wip: ~"../../.agents/plans/svg-aesthetic-depth-pass/wip.spw"
+
+operation = "contract"
+fixity = "tending"
+
+purpose: .{
+  plain = `Name who is looking and what they need from a figure without repeating audience lists in title, desc, or aria-label prose.`
+  distinction = `Viewing reason is the lens/persona axis — why this surface is being read. It is orthogonal to spatial salience (@spatial_gravity overlap ranks) and semantic salience (module field values on cards).`
+}[reg=facet]
+
+^"namespaces"{
+  claim: `Three audience namespaces already exist; do not merge them. Each answers a different altitude.`
+  families: .{
+    page_persona = .{
+      attr = `data-spw-persona`
+      values = #[`viewer`, `doodler`, `scribe`][reg=set]
+      altitude = `page or delimiter register — how the reader is holding the whole surface (load-symphony, delimiter styling)`
+    }[reg=facet]
+    svg_persona = .{
+      attr = `data-spw-svg-persona`
+      form = `space-separated audience facet tokens on the SVG host`
+      altitude = `figure — who benefits from this diagram, icon, or illustration`
+      runtime = `applySvgPersonaLens in @svg_tunability; query ?spw-svg-persona=<token>`
+      writes = #[`html[data-spw-svg-persona-active]`, `host[data-spw-svg-persona-match]`, `host[data-spw-svg-persona-active]`][reg=set]
+    }[reg=facet]
+    card_audience = .{
+      attr = `data-spw-audience`
+      altitude = `card or chrome island — disclosure tone, inline register, comedic timing`
+      consumers = #[`page-universe.js`, `floating-chrome descriptors`][reg=set]
+    }[reg=facet]
+    image_lens = .{
+      attrs = #[`data-spw-image-lens-active`, `data-spw-lens-chip`, `data-spw-image-lens-capacity`][reg=set]
+      altitude = `image study — capacity-selected lens (see @hypermedia_2d image_interaction and effect_interpretation)`
+    }[reg=facet]
+    scene_lane = .{
+      attrs = #[`data-spw-scene-lane`, `data-spw-scene-focus-lane`][reg=set]
+      altitude = `scene bed — which beat the reader is practicing (see @hypermedia_2d film_scene_composition)`
+    }[reg=facet]
+  }[reg=facet]
+  rule: `Promote viewing-reason as the umbrella concept in .spw and plans; keep the per-medium attribute names until a breaking rename window opens. New surfaces pick the family that matches their host altitude.`
+}
+
+^"host_contract"{
+  svg_hosts: #[
+    `Prefer <figure class="spw-svg-figure" data-spw-svg-persona="…"> wrapping inline or referenced SVG`,
+    `Bare <svg> with data-spw-svg-persona is valid markup but must be added to SVG_HOST_SELECTOR in @svg_tunability or lens harmony stays inert`,
+    `.spw-svg-surface[data-spw-svg-host] remains for cinematic/tunability hosts`
+  ][reg=set]
+  geometry_copy: #[
+    `title, desc, and aria-label stay geometry-first — name structure, nodes, and seams`,
+    `audience facet lives on the host attribute; compact register renders via CSS, not prose repetition`,
+    `include rendering-model as a facet token when capture/handoff is part of the viewing reason`,
+    `role-specific seams belong in visible diagram labels, rails, or spec-pills — not duplicated in figcaption body copy`
+  ][reg=set]
+  register_css: .{
+    intent = `figcaption ::before carries a compact "audiences · …" register when a figcaption exists`
+    fix = `attr() reads the element carrying the attribute — mirror data-spw-svg-persona onto figcaption or use a figure-level custom property; see @audit P0 register fix`
+  }[reg=facet]
+}
+
+^"lens_harmony"{
+  claim: `Facet lists audiences; lens selects one active viewing reason. Harmony recedes non-matching hosts and lifts matching ones without rewriting prose.`
+  selection: #[
+    `[data-spw-svg-persona-select] chips on /design/experiments/svg/`,
+    `?spw-svg-persona=<token> query persistence`,
+    `bus event svg:persona-selected — emitted by @svg_tunability; consumers should couple charge or wonder, not duplicate lens state`
+  ][reg=set]
+  capture: `html[data-spw-capture-mode="clean"] suppresses the audiences register and pointer overlays so screenshots stay geometry-first.`
+}
+
+^"cross_media_alignment"{
+  claim: `When the same viewing-environment distinction repeats outside SVG, compare before promoting a wider data-spw-viewing-reason family.`
+  candidates: #[
+    `image study lens chips (@hypermedia_2d image_interaction)`,
+    `scene lane focus (@hypermedia_2d film_scene_composition)`,
+    `data-spw-svg-environment studio|proof|poster|model (@svg_depth_wip)`,
+    `card data-spw-audience for disclosure register`
+  ][reg=set]
+  do_not_promote_until: `At least two media families share the same facet-plus-lens shape with falsifiable cross-route tests.`
+}
+
+validation: #[
+  `Every SVG host with data-spw-svg-persona uses geometry-first title/desc/aria — rg "data-spw-svg-persona" routes and check for persona list repetition in aria-label`,
+  `Lens selection writes html[data-spw-svg-persona-active] and host match attrs — inspect on /design/experiments/svg/#svg-persona-lens`,
+  `Viewing reason attrs are authored base keys per @data_spw_attribute_governance — runtime mirror keys use -resolved suffix when needed`,
+  `Do not overload data-spw-salience for viewing reason; gravity salience ranks are background|ambient|primary|focal only on [data-spw-gravity] opt-ins`
+][reg=set]

@@ -6,10 +6,24 @@
 #:conventions #!style #!narrative #!art #!storytelling
 #:layer #!pragmatics
 
+@harmony_audit: ~"../audits/component-philosophy-harmony-2026-07.spw"
+@expressive_registers: ~"./expressive-registers.spw"
+@wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
+
 ^"thesis"{
   claim: "The site's visual presentation is a composable narrative stage where CSS layers function as atmospheric strata that pace, contextualize, and project the story of Spwashi's software and art."
   grounding: "Instead of arbitrary decoration, visual elements (accents, animations, color temperature, and grain) map directly onto semantic states: operator resonance, brace charging, spirit cycle phases, and curiosity levels."
   vision: "A story is told through the progressive enhancement of structure. As a reader navigates, the visual environment shifts dynamically to reflect the cognitive and emotional resonance of the material."
+}
+
+^"harmony_prime"{
+  operation = "prime"
+  fixity = "tending"
+  source = @harmony_audit
+  claim = `Atmospheric strata must stay additive (effects/ornament) and wonder-safe: structural revelation over ambient spectacle (@wonder_doctrine).`
+  channel_rule = `Affect layers read expressive register channels and field ornaments — they do not invent a parallel emotion token set (@expressive_registers).`
+  lab = `/design/composition/ and /design/components/ refine atmosphere with inspectable state; public hubs keep invitation tone while ornaments project quietly.`
+  safe_first_patch = `When adding a canvas accent or grain step, bind it to an existing wonder/charge/register state or document why it is static climate.`
 }
 
 ^"architectural_strata"{

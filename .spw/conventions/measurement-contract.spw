@@ -7,6 +7,8 @@
 #>measurement_contract
 #:convention #!measurement #!operators
 #:layer #!pragmatics
+#:operation #!contract
+#:fixity #!stable
 
 @operator_site_projection: ~"./operator-site-projection.spw#measure_operator"
 @attention_field: ~"./attention-field.spw"
@@ -14,56 +16,115 @@
 @workbench_claims: ~"../_workbench/.spw/harness/claim-protocol.spw"
 @designer_conversation: ~"./designer-conversation-canvas.spw"
 @pretext_measurement_bus: ~"../../public/js/semantic/pretext-measurement-bus.js"
+@language_utilization: ~"../language/feature-utilization.spw"
+
+operation = "contract"
+fixity = "stable"
 
 ^"core_distinction"{
-  objective: .{
-    definition: "Measurements produced by instrumentation, plugins, runtime counters, or deterministic calculation."
-    capture: "Workbench plugins, performance observers, math libraries, audit scripts."
-    data_attributes: #[`data-spw-measure-kind="objective"`, `data-spw-measure-source`, `data-spw-measure-scale`, `data-spw-measure-unit`][reg=set]
-    examples: "divergence at a point, approximation error, layout shift, repaint cost, parse time"
+  expression = measure[%]{objective|subjective|hybrid}<kind>
+
+  %objective {
+    kind = "objective"
+    definition = `Measurements produced by instrumentation, plugins, runtime counters, or deterministic calculation.`
+    *capture = `Workbench plugins, performance observers, math libraries, audit scripts.`
+    attrs = #[
+      `data-spw-measure-kind="objective"`
+      `data-spw-measure-source`
+      `data-spw-measure-scale`
+      `data-spw-measure-unit`
+    ][reg=set]
+    examples = #[
+      `% divergence at a point`
+      `% approximation error`
+      `% layout shift`
+      `% repaint cost`
+      `% parse time`
+    ][reg=set]
   }[reg=facet]
 
-  subjective: .{
-    definition: "Measurements produced by practitioner judgment, felt state, or annotated evaluation."
-    capture: "Annotation layers, cauldron captures, wonder notes, charge annotations, explicit % judgments during practice or review."
-    data_attributes: #[`data-spw-measure-kind="subjective"`, `data-spw-measure-source` (usually includes practitioner/context), `data-spw-measure-scale`][reg=set]
-    examples: "felt resonance intensity, wonder quality of a frame, perceived stability of an approximation, deviation salience"
+  %subjective {
+    kind = "subjective"
+    definition = `Measurements produced by practitioner judgment, felt state, or annotated evaluation.`
+    *capture = `Annotation layers, cauldron captures, wonder notes, charge annotations, explicit % judgments during practice or review.`
+    attrs = #[
+      `data-spw-measure-kind="subjective"`
+      `data-spw-measure-source` (usually includes practitioner/context)
+      `data-spw-measure-scale`
+    ][reg=set]
+    examples = #[
+      `% felt resonance intensity`
+      `% wonder quality of a frame`
+      `% perceived stability of an approximation`
+      `% deviation salience`
+    ][reg=set]
   }[reg=facet]
-}
+
+  %hybrid {
+    kind = "hybrid"
+    definition = `Instrumented value interpreted through a learning or design claim; must name the join.`
+    *rule = `Name instrument side + judgment side in source or adjacent claim.`
+  }[reg=facet]
+}[reg=facet]
 
 ^"integration_rules"{
-  both_kinds_must_be_queryable: "Objective and subjective measures of the same underlying phenomenon should be discoverable together (via design catalog, state inspector, or future query surfaces) while remaining distinguishable by kind."
-  field_participation: "Both kinds of measures should be able to contribute to the attention field when they represent attentional or resonance phenomena."
-  export_together: "Proof artifacts, tending notes, and slice exports should be able to carry mixed objective + subjective % measures without loss of provenance."
-}
+  both_kinds_must_be_queryable {
+    !rule = `Objective and subjective measures of the same underlying phenomenon should be discoverable together (design catalog, state inspector, query surfaces) while remaining distinguishable by kind.`
+    expression = measure[pair]{objective+subjective}<compare>
+  }
+  field_participation {
+    ~attention = @attention_field
+    rule = `Both kinds may contribute to the attention field when they represent attentional or resonance phenomena.`
+  }
+  export_together {
+    $substrate = `Proof artifacts, tending notes, and slice exports carry mixed objective + subjective % measures without loss of provenance.`
+  }
+}[reg=facet]
 
 ^"workbench_responsibilities"{
-  objective_capture: "Provide plugins and instrumentation surfaces that can emit well-formed objective % measures with full source and unit information."
-  subjective_capture: "Provide annotation, cauldron, and claim surfaces that allow practitioners to record subjective judgments as first-class % measures (with kind, source/context, and scale)."
-  cross_kind_comparison: "Support side-by-side viewing and analysis of objective and subjective measures of related phenomena."
-}
+  %objective_capture {
+    !action = `Emit well-formed objective % measures with full source and unit information.`
+  }
+  %subjective_capture {
+    !action = `Annotation, cauldron, and claim surfaces record subjective judgments as first-class % measures (kind, source/context, scale).`
+  }
+  %cross_kind_comparison {
+    ?probe = `Side-by-side viewing of objective and subjective measures of related phenomena.`
+  }
+}[reg=facet]
+
+^"geometry"{
+  ~from = @operator_site_projection
+  sigil = `%`
+  leftRole = `raw-measure`
+  rightRole = `scaled-comparison`
+  flow = `measurement-to-scale`
+  overload = `objective-or-subjective-measure`
+  chargeRole = `ordinal-charge`
+  !anti = `Do not overload % merely to borrow visual style; use semantic accent if no measurement is carried.`
+}[reg=facet]
 
 ^"claims"{
-  measurement_kind_is_declared: {
-    claim_id: "measurement-kind-001"
-    layer: "pragmatic"
-    hypothesis: "Every visible or exported measurement that participates in the % / measure pattern must declare its kind (subjective or objective) via data-spw-measure-kind."
-    spec_ref: ".spw/conventions/measurement-contract.spw"
-    impl_ref: "Any element or artifact carrying measurement data (labs, ornaments, proof cards, exports)"
-    probe_ref: "Design catalog or direct inspection can distinguish subjective from objective measures on any surface that uses them."
-    falsification: "A numeric or scaled value appears in a measurement context without a declared kind."
-    status: "active"
+  claim #measurement-kind-001 {
+    layer = "pragmatic"
+    hypothesis = `Every visible or exported measurement that participates in the % / measure pattern must declare its kind (subjective, objective, or hybrid) via data-spw-measure-kind.`
+    expression = measure[%]{kind.declared}<inspect>
+    spec_ref = ".spw/conventions/measurement-contract.spw"
+    impl_ref = "Any element or artifact carrying measurement data (labs, ornaments, proof cards, exports)"
+    probe_ref = "Design catalog or direct inspection can distinguish subjective from objective measures on any surface that uses them."
+    falsification = "A numeric or scaled value appears in a measurement context without a declared kind."
+    status = "active"
   }
 
-  subjective_measures_are_capturable: {
-    claim_id: "measurement-subjective-capture-001"
-    layer: "semantic"
-    hypothesis: "Practitioner subjective judgments about attention, wonder, resonance, or stability must be capturable as durable, queryable % measures using workbench tooling."
-    spec_ref: ".spw/conventions/measurement-contract.spw + operator-site-projection.spw#measure_operator"
-    impl_ref: "annotation layers, cauldron, claim protocol surfaces"
-    probe_ref: "A human can record a subjective % judgment during practice or review; it appears with proper kind, source, and scale alongside objective measurements."
-    falsification: "Important subjective evaluations remain only in prose or private notes and cannot be captured or compared using the measurement machinery."
-    status: "active"
+  claim #measurement-subjective-capture-001 {
+    layer = "semantic"
+    hypothesis = `Practitioner subjective judgments about attention, wonder, resonance, or stability must be capturable as durable, queryable % measures using workbench tooling.`
+    expression = measure[%]{subjective.capturable}<practice>
+    spec_ref = ".spw/conventions/measurement-contract.spw + operator-site-projection.spw#measure_operator"
+    impl_ref = "annotation layers, cauldron, claim protocol surfaces"
+    probe_ref = "A human can record a subjective % judgment during practice or review; it appears with proper kind, source, and scale alongside objective measurements."
+    falsification = "Important subjective evaluations remain only in prose or private notes and cannot be captured or compared using the measurement machinery."
+    status = "active"
   }
 }[reg=facet]
 
@@ -71,4 +132,5 @@ validation: #[
   `Any new measurement surface must declare data-spw-measure-kind on relevant elements.`
   `Workbench plugins and annotation surfaces must be able to produce well-formed measures of both kinds.`
   `Design catalog and state inspection surfaces can surface and filter by measure kind.`
+  `rg 'claim #measurement|%objective|%subjective' .spw/conventions/measurement-contract.spw`
 ][reg=set]

@@ -20,6 +20,9 @@
 @site_source_layout: ~"../../.agents/plans/site-source-layout/PLAN.md"
 @model_guided_refinement: ~"./model-guided-refinement.spw"
 @composition_box_model: ~"./composition-box-model.spw"
+@component_taxonomy: ~"./component-taxonomy.spw"
+@component_packing: ~"./component-packing.spw"
+@harmony_audit: ~"../audits/component-philosophy-harmony-2026-07.spw"
 
 ^"thesis"{
   operation = "contract"
@@ -102,6 +105,27 @@
   }
 }
 
+^"promotion_prime_2026_07"{
+  operation = "prime"
+  fixity = "tending"
+  source = @harmony_audit
+  claim = `Starter extraction quality tracks the component passport and packing-axis honesty, not visual polish alone.`
+  promotion_checklist = #[
+    `slot anatomy header→footer`,
+    `kind + role + feature when reusable`,
+    `CSS owner in components/ (not route-only)`,
+    `declare pack axis: shell | box | content | input`,
+    `specimen on /design/components/ or composition lab`,
+    `optional progressive JS through compose.js only when needed`,
+    `no Spwashi shell/ornament/route identity required for the portable unit`
+  ][reg=set]
+  tone = `Portable kits carry structure and grammar; they do not carry creator identity or wonder lore by default.`
+  lab = #[@design_components, @design_composition][reg=set]
+  packing = @component_packing
+  passport = @component_taxonomy
+  safe_first_patch = `When extracting a specimen, run starter:inventory --check and fill passport fields in the design note before copying files out of tree.`
+}[reg=facet]
+
 ^"dispatch"{
   @plan: @plan
   @compose_css: @compose_css
@@ -112,4 +136,7 @@
   @site_source_layout: @site_source_layout
   @model_guided_refinement: @model_guided_refinement
   @composition_box_model: @composition_box_model
+  @component_taxonomy: @component_taxonomy
+  @component_packing: @component_packing
+  @harmony_audit: @harmony_audit
 }

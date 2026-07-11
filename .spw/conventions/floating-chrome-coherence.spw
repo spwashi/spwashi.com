@@ -11,7 +11,10 @@
 @dom_contracts: ~"../../public/js/kernel/dom-contracts.js"
 @navigation_locomotion: ~"../../public/js/runtime/navigation-locomotion.js"
 @attention_field: ~"./attention-field.spw"
+@spatial_gravity: ~"./spatial-gravity.spw"
+@viewing_reason: ~"./viewing-reason.spw"
 @floating_chrome_plan: ~"../../.agents/plans/floating-chrome-stack/FIX.md"
+@topic_discovery: ~"../../public/js/interface/topic-discovery.js"
 
 operation = "align"
 fixity = "tending"
@@ -47,4 +50,47 @@ fixity = "tending"
     `direct dataset toggles bypassing writeRuntimeDatasetValues in satchel`
     `occlusion pairs when multiple chrome roles open`
   ][reg=set]
+}
+
+^"anatomy_and_tiers"{
+  pipeline: #[
+    `annotateFloatingChromeElement → slot/tier descriptors via createFloatingChromeDescriptor`,
+    `syncFloatingChromeState after locomotion settle (120ms)`,
+    `writeRuntimeDatasetValues for bottom-lane clearance — not ad-hoc dataset writes`
+  ][reg=set]
+  tier_naming: .{
+    satchel = `interface/state-inspector.js — floating debug satchel; chrome-role state-inspector; not a drawer`,
+    drawer_misname = `runtime state blocks are inline inspect surfaces — do not call the satchel a drawer in copy or data-spw-chrome-slot`,
+    reward_dock = `reward-ui.js — partial @spatial_gravity bridge via measureSpatialGravity; full data-spw-gravity opt-in pending`
+  }[reg=facet]
+}
+
+^"gravity_integration_2026_07"{
+  claim: `Floating chrome and spatial gravity are parallel positioning vocabularies; convergence means popovers and satchel use gravity open/yield instead of bespoke rects.`
+  off_contract: #[
+    `@topic_discovery popover — private getBoundingClientRect flip math`,
+    `competing bottom-lane writers on /topics/software/spw/ and collection routes`
+  ][reg=set]
+  target_contract: .{
+    popover = `data-spw-gravity="open" + data-spw-salience="focal" + max-block-size: var(--spw-room-below|above) per @spatial_gravity applied_patterns.popover`,
+    satchel = `data-spw-floating-chrome + data-spw-gravity on drag root; syncFloatingChromeState runs after gravity room capture`,
+    section_handle = `data-spw-floating-chrome chrome-role section-handle; edge-y top; defers to scroll-margin anchor anatomy from component anatomy audit`
+  }[reg=facet]
+  chrome_posture: .{
+    attr = `data-spw-chrome-posture`,
+    gap = `Not yet authored per page family — routes with dense bottom chrome (spw curriculum, collection) contend for the same lane`,
+    direction = `Declare posture on body for page families: reading | inspect | workshop | play — projects bottom clearance budget and which chrome roles may cohabit`
+  }[reg=facet]
+  bottom_clearance_api: `Single writeRuntimeDatasetValues path for --spw-bottom-chrome-clearance (or equivalent) consumed by main scroll padding and anchored targets — replaces per-module clearance guesses.`
+}
+
+^"topic_popover_placement"{
+  seam: `Topic discovery popover is the highest-traffic floater still off the floating-chrome + gravity contract.`
+  observed: `@topic_discovery positions via target and popover getBoundingClientRect without data-spw-floating-chrome descriptor or data-spw-gravity open attrs.`
+  direction: #[
+    `Wrap popover host with createFloatingChromeDescriptor + data-spw-gravity="open"`,
+    `Remove private flip math once CSS open-anchor handles vertical room`,
+    `On open, syncFloatingChromeState + gravity overlap test against satchel and reward dock`
+  ][reg=set]
+  validation: `Topic filter on a long route: popover opens toward room, narrates yield if satchel overlaps, inspectable in state inspector.`
 }

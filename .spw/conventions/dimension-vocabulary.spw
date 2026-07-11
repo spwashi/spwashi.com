@@ -12,6 +12,11 @@
 @typography_packing: ~"./typography-packing.spw"
 @loading_ecology: ~"./site-semantics.spw#loading-ecology-contract"
 @substrate_ecology: ~"../../public/css/systems/substrate-ecology.css"
+@component_packing: ~"./component-packing.spw"
+@anatomy_packing_audit: ~"../audits/component-anatomy-device-packing-2026-07.spw"
+@harmony_audit: ~"../audits/component-philosophy-harmony-2026-07.spw"
+@metaphor_dimensional_lexicon: ~"./metaphor-dimensional-lexicon.spw"
+@js_architecture_cognition: ~"./js-architecture-cognition.spw"
 
 ^"axes"{
   spatial: .{
@@ -112,6 +117,46 @@
     tiers = #[`brief`, `card`, `print`, `full`][reg=set]
     attrs = #[`data-spw-condense-tier`, `data-spw-precipitation-mode`, `data-spw-print-ready`][reg=set]
   }
+
+  breakpoint_ownership: .{
+    operation = "prime"
+    fixity = "tending"
+    source = #[@anatomy_packing_audit, @harmony_audit, @component_packing][reg=set]
+    claim = `Component packing decisions must declare which width/input axis owns them — stop re-testing the same condition under three local names.`
+    shell_width = `viewport media — page chrome, header, shell gutters; not a card's internal pad/gap/region layout`
+    box_width = `container query / pack-local — the component's own packing, collapse, scale, figure-rail tiers`
+    content = `item count / content-tone — density orthogonal to width (sparse|balanced|full)`
+    input_capability = `pointer/hover device mode — hit-size and hover affordances only; coarse promotes pack hit-size band`
+    settle_state = `interaction phase settle — canonical still frame for capture, reduced-motion, screenshots`
+    authoring_rule = `New component CSS headers should name the axis per decision cluster. Prefer box-width for card internals.`
+    performance_note = `Box-width packing via @container is free of JS. Do not re-test shell-width media for the same card decision. Input-capability must not duplicate hit-size rules already owned by packing tier.`
+    lifecycle_note = `settle-state axis owns capture still frames and reduced-motion settled variants — same fractal settle as box-settle-phase / interaction settle, not a new packing mode name.`
+    naming_note = `shell-width | box-width | content | input-capability | settle-state are axis names for authoring comments and passport pack-axes — not necessarily new data-spw-* attributes.`
+  }[reg=facet]
+
+  performance_cost: .{
+    operation = "align"
+    source = #[@harmony_audit, @metaphor_dimensional_lexicon, @js_architecture_cognition][reg=set]
+    claim = `Performance is a first-class coordinate axis, not a metaphor family.`
+    cost_class = #[
+      `working_memory_pressure`,
+      `premature_commitment`,
+      `interference`,
+      `demand_coupled`,
+      `authored_prior_safe`,
+      `paint_composite`
+    ][reg=set]
+    rule = `CSS/JS patches that change refresh cost or mount timing declare cost_class. Soft ecology/cognition nouns are optional projections.`
+    room = `New cost distinctions become new cost_class values with a claim — not new metaphor essays alone.`
+  }[reg=facet]
+
+  lexicon_register: .{
+    operation = "prime"
+    source = @metaphor_dimensional_lexicon
+    claim = `Higher dimensional room for nouns/verbs: lexicon_register projects the same axes (spatial, temporal, cost, guild, stage) into audience-facing language without forking stems.`
+    registers = #[`ecology`, `cognition`, `field`, `circuit`, `webpage`, `culinary`, `prairie`, `technical`][reg=set]
+    rule = `Add a register when an audience needs different verbs; add an axis when the distinction is operational.`
+  }[reg=facet]
 }
 
 ^"file_structure"{

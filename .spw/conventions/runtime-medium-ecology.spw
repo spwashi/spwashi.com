@@ -17,10 +17,14 @@
 @decomposition_plan: ~"../../.agents/plans/runtime-module-decomposition/PLAN.md"
 @kernel_rhizosphere: ~"./kernel-rhizosphere.spw"
 @runtime_kernel_audit: ~"../audits/runtime-kernel-consolidation-2026-07.spw"
+@js_architecture_cognition: ~"./js-architecture-cognition.spw"
+@metaphor_dimensional_lexicon: ~"./metaphor-dimensional-lexicon.spw"
+@js_architecture_aerodynamics: ~"./js-architecture-aerodynamics.spw"  # archived pointer
 
 ^"thesis"{
   claim: "The site's JavaScript runtime is a living medium — not a bag of files. Nutrients (state contracts, events, attrs) are minded fractally: declared at the leaf (module updates), pooled in guilds (behavior clusters), transported by rhizosphere (kernel), and expressed in canopy (chrome/navigation). Growth can be in-place (one module adopts SPW_MODULE_EXPORT) or holistic (compose + catalog + .spw stay aligned)."
   falsification: "If agents still invent parallel export shapes, duplicate storage, or ungated document-wide modules after this contract, the metaphor failed to compress decisions."
+  cognitive_companion: "Ecology names growth, guilds, and nutrients. Cognition (@js_architecture_cognition) names processing strata and progressive elaboration. Coordinates (guild ids, cost_class, mount_when) are shared; soft nouns/verbs may re-lexicon (@metaphor_dimensional_lexicon). One medium, multiple lexicon_registers — not parallel architectures."
 }
 
 ^"medium_anatomy"{
@@ -112,9 +116,30 @@
   selection_rule: "Catalog keeps layer/when for scheduling; guild is for documentation, compose batches, and split planning."
 }
 
+^"cognition_bridge"{
+  operation = "align"
+  fixity = "tending"
+  source = @js_architecture_cognition
+  guild_to_cognition = #[
+    `substrate → metabolism / shared writers`,
+    `orientation → place model + navigation`,
+    `symbiosis → visitor–page attention coupling`,
+    `memory → durable engagement traces`,
+    `inspection → metacognition`,
+    `expression → language / operator production`,
+    `media → sensory media pipelines`,
+    `literacy → text measure instruments`,
+    `field → specialized domain skills`
+  ][reg=set]
+  when_to_use = `Guild for export batches and splits; cognition for "what processing is this module doing?" and mount/load cost; ecology remains the growth medium story.`
+}[reg=facet]
+
 dispatch: .{
   audit = @audit
   export_contract = @module_export_contract
   medium_map = @module_medium_surface
   decomposition = @decomposition_plan
+  cognition = @js_architecture_cognition
+  metaphor_lexicon = @metaphor_dimensional_lexicon
+  archived_aero = @js_architecture_aerodynamics
 }[reg=facet]
