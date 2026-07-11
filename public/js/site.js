@@ -53,6 +53,7 @@ import {
   whenDocumentReady,
   whenWindowLoaded,
 } from './runtime/runtime-helpers.js';
+import { applyFeatureLabToBody } from './runtime/feature-lab.js';
 import {
   DISPLAY_LAYERS,
   HYDRATION_STATES,
@@ -136,6 +137,16 @@ import { createModuleLoader } from './runtime/module-loader.js';
  * - evaluates?: explicit dimensions (inferred if absent)
  * - load(): Promise<module>
  * - mount(mod, ctx, root?): cleanup fn | { cleanup?, refresh? } | void
+ *   The loader owns returned handles. A module must not also add the same
+ *   cleanup to ctx.addCleanup. Export-level refresh is used only when mount
+ *   does not return an instance-local refresh.
+ *
+ * Route boundary
+ * - Public routes use full-document navigation; browser teardown owns normal
+ *   cross-route cleanup.
+ * - Do not destroy on pagehide: BFCache can restore the same document.
+ * - Modules that adopt dynamic roots should untrack removals and expose refresh
+ *   for partial DOM replacement or explicit runtime inspection.
  *
  * The intent is a semantically meaningful lifecycle where module timing, load behavior, and effects are:
  * - Clearly described in terms of the Spw structures they touch.
@@ -408,6 +419,10 @@ function createRuntimeContext() {
   const bus = createBus();
   const registry = createRegistry();
 
+  // Session feature lab rewrites body features before gating catalog mounts.
+  // Authored tokens stay on data-spw-features-authored for clear lab reverts.
+  const featureLab = applyFeatureLabToBody(BODY);
+
   const ctx = {
     version: 'site-runtime-v0.2',
     bus,
@@ -417,6 +432,7 @@ function createRuntimeContext() {
     main: ROOT_MAIN,
     route: SITE_SURFACE,
     now: () => performance.now(),
+    featureLab,
     features: parseFeatureList(BODY?.dataset?.spwFeatures),
     routeFamily: parseFeatureList(BODY?.dataset?.spwRouteFamily),
     debug: parseFeatureList(HTML?.dataset?.spwDebug || BODY?.dataset?.spwDebug),
@@ -490,7 +506,23 @@ function createRuntimeContext() {
   };
 
   ctx.destroy = () => {
-    ctx.registry.cleanupAll();
+    ctx.registry.cleanupAll((record, stage) => {
+      record.status = stage;
+      record.stage = stage;
+      record.stageAt = Math.round(performance.now());
+      record.lifecycle ||= [];
+      record.lifecycle.push({ stage, at: record.stageAt, note: 'runtime destroy' });
+      ctx.bus.emit('spw:module-lifecycle', {
+        id: record.id,
+        baseId: record.baseId,
+        layer: record.layer,
+        stage,
+        at: record.stageAt,
+        note: 'runtime destroy',
+        route: ctx.route,
+        root: record.root || null,
+      });
+    });
     ctx.disconnectObservers();
     ctx.clearTimers();
     for (const fn of ctx.cleanupStack.splice(0)) {
@@ -515,6 +547,14 @@ const MODULE_DEFS = [
   ...CORE_DEFS,
   ...FEATURE_DEFS,
   ...REGION_DEFS,
+  ...ENHANCEMENT_DEFS,
+];
+
+// Non-core timing stages are semantic schedules, not layer-specific privileges.
+// Run feature + enhancement definitions through the same visible/interaction/
+// idle pipeline so a valid catalog timing cannot become unreachable.
+const NON_CORE_DEFS = [
+  ...FEATURE_DEFS,
   ...ENHANCEMENT_DEFS,
 ];
 
@@ -861,8 +901,8 @@ async function bootSite() {
   );
   progressHydration(HYDRATION_STATES.ACTIVATING);
   await Promise.all([
-    prefetchRuntimeResources(runtimeCtx, FEATURE_DEFS, MOUNT_WHEN.VISIBLE, 'modulepreload'),
-    prefetchRuntimeResources(runtimeCtx, ENHANCEMENT_DEFS, MOUNT_WHEN.IDLE, 'prefetch'),
+    prefetchRuntimeResources(runtimeCtx, NON_CORE_DEFS, MOUNT_WHEN.VISIBLE, 'modulepreload'),
+    prefetchRuntimeResources(runtimeCtx, NON_CORE_DEFS, MOUNT_WHEN.IDLE, 'prefetch'),
   ]);
   performance.mark('spw:immediate-layer-complete');
   performance.measure('spw:immediate-layer', 'spw:boot-start', 'spw:immediate-layer-complete');
@@ -877,8 +917,8 @@ async function bootSite() {
 
   scheduleRegionEnrichment(normalized.pageMeta, runtimeCtx);
 
-  await mountVisibleFeatures(FEATURE_DEFS, runtimeCtx);
-  await mountInteractionFeatures(FEATURE_DEFS, runtimeCtx);
+  await mountVisibleFeatures(NON_CORE_DEFS, runtimeCtx);
+  await mountInteractionFeatures(NON_CORE_DEFS, runtimeCtx);
 
   progressHydration(HYDRATION_STATES.READY);
   setPageState(PAGE_STATES.HYDRATED);
@@ -893,7 +933,7 @@ async function bootSite() {
   performance.mark('spw:region-enhanced');
   runtimeCtx.bus.emit('spw:page-region-enhanced', { route: runtimeCtx.route });
 
-  queueIdleEnhancements(ENHANCEMENT_DEFS, runtimeCtx);
+  queueIdleEnhancements(NON_CORE_DEFS, runtimeCtx);
 
   whenWindowLoaded().then(() => {
     if (!runtimeCtx) return;

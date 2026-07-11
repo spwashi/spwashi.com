@@ -29,6 +29,20 @@ const DATASET_KEYS = Object.freeze({
 const HISTORY_LIMIT = 12;
 const SOURCE_LIMIT = 3;
 
+// Reflow attribution: a counted shift whose start lands within this window
+// *after* a module mount is read as purposeful (a component arriving into
+// place), not incidental instability. The ring stays short — only the last
+// few mounts can plausibly own a shift, so older mounts fall off cheaply.
+const MOUNT_ATTRIBUTION_WINDOW_MS = 500;
+const MOUNT_RING_LIMIT = 16;
+
+const REFLOW_CLASS = Object.freeze({
+  STABLE: 'stable',
+  INPUT: 'input',
+  MOUNT: 'mount',
+  INCIDENTAL: 'incidental',
+});
+
 const roundValue = (value = 0) => {
   const numeric = Number(value);
   if (!Number.isFinite(numeric)) return 0;
@@ -67,6 +81,13 @@ const describeOutcome = (detail = {}) => {
     };
   }
 
+  if (detail.reflowClass === REFLOW_CLASS.MOUNT && detail.count > 0) {
+    return {
+      outcome: 'purposeful',
+      summary: 'reflow attributed to an arriving component',
+    };
+  }
+
   if (!detail.count && !detail.totalValue) {
     return {
       outcome: 'stable',
@@ -94,6 +115,62 @@ const describeOutcome = (detail = {}) => {
   };
 };
 
+// Correlate a counted shift batch with the module that owns it. `recentMounts`
+// is a small ring of { id, baseId, layer, root, mountedAt } records; `now`
+// anchors the comparison when a batch carries no usable startTime.
+//
+// Two signals combine: a mount is only a candidate if the shift falls within
+// its post-mount window, and among candidates the one whose `root` actually
+// contains a shifted node wins over the merely most-recent one. Containment is
+// the honest owner; recency is the fallback when no root/source is available.
+const attributeReflow = (summary, recentMounts = [], now = 0, sourceNodes = []) => {
+  if (!summary.countedEntries.length) {
+    return {
+      reflowClass: summary.recentInputCount ? REFLOW_CLASS.INPUT : REFLOW_CLASS.STABLE,
+      attributedTo: null,
+      withinMs: null,
+      by: null,
+    };
+  }
+
+  const anchor = summary.countedEntries.reduce(
+    (max, entry) => Math.max(max, entry.startTime || 0),
+    0,
+  ) || now;
+
+  const nodes = sourceNodes.filter((node) => node && node.nodeType === 1);
+
+  let recent = null;
+  let contained = null;
+  for (const mount of recentMounts) {
+    if (!Number.isFinite(mount.mountedAt)) continue;
+    const withinMs = anchor - mount.mountedAt;
+    // Allow a small negative slack: the shift can be observed a frame before
+    // the mount timestamp settles.
+    if (withinMs < -60 || withinMs > MOUNT_ATTRIBUTION_WINDOW_MS) continue;
+
+    const candidate = { mount, withinMs: Math.round(withinMs) };
+    if (!recent || mount.mountedAt > recent.mount.mountedAt) recent = candidate;
+
+    if (mount.root && mount.root.isConnected && nodes.some((node) => mount.root.contains(node))) {
+      // Prefer the most-recent *containing* mount — it is the honest owner.
+      if (!contained || mount.mountedAt > contained.mount.mountedAt) contained = candidate;
+    }
+  }
+
+  const best = contained || recent;
+  if (best) {
+    return {
+      reflowClass: REFLOW_CLASS.MOUNT,
+      attributedTo: best.mount,
+      withinMs: best.withinMs,
+      by: contained ? 'containment' : 'recency',
+    };
+  }
+
+  return { reflowClass: REFLOW_CLASS.INCIDENTAL, attributedTo: null, withinMs: null, by: null };
+};
+
 const createAuditDetail = (ctx, state, extras = {}) => ({
   state,
   route: getRouteLabel(ctx),
@@ -116,6 +193,10 @@ const createAuditDetail = (ctx, state, extras = {}) => ({
   sources: extras.sources ?? [],
   latestEntry: extras.latestEntry ?? null,
   hadRecentInput: Boolean(extras.hadRecentInput),
+  reflowClass: extras.reflowClass ?? REFLOW_CLASS.STABLE,
+  attributedTo: extras.attributedTo ?? null,
+  attributedWithinMs: extras.attributedWithinMs ?? null,
+  attributedBy: extras.attributedBy ?? null,
   error: extras.error ?? '',
 });
 
@@ -220,14 +301,28 @@ const summarizeBatch = (entries = []) => {
   };
 };
 
-const buildAuditDetail = (ctx, entries, state, history) => {
+const buildAuditDetail = (ctx, entries, state, history, recentMounts = [], now = 0, sourceNodes = []) => {
   const summary = summarizeBatch(entries);
+  const attribution = attributeReflow(summary, recentMounts, now, sourceNodes);
   const batchValue = summary.batchValue;
   const totalValue = roundValue(history.totalValue + batchValue);
   const count = history.count + summary.countedEntries.length;
   const recentInputCount = history.recentInputCount + summary.recentInputCount;
   const latestEntry = summary.entries[summary.entries.length - 1] || null;
-  const outcome = describeOutcome({ state, count, totalValue, recentInputCount });
+  const outcome = describeOutcome({
+    state,
+    count,
+    totalValue,
+    recentInputCount,
+    reflowClass: attribution.reflowClass,
+  });
+  const attributedTo = attribution.attributedTo
+    ? {
+      id: attribution.attributedTo.id,
+      baseId: attribution.attributedTo.baseId,
+      layer: attribution.attributedTo.layer,
+    }
+    : null;
 
   return createAuditDetail(ctx, state, {
     outcome: outcome.outcome,
@@ -243,6 +338,10 @@ const buildAuditDetail = (ctx, entries, state, history) => {
     sources: summary.sources,
     latestEntry,
     hadRecentInput: summary.entries.some((entry) => entry.hadRecentInput),
+    reflowClass: attribution.reflowClass,
+    attributedTo,
+    attributedWithinMs: attribution.withinMs,
+    attributedBy: attribution.by,
   });
 };
 
@@ -260,6 +359,31 @@ export function initSpwLayoutShiftAudit(ctx = {}) {
     recentInputCount: 0,
   };
   const entries = [];
+
+  // Always-on ring of recent module mounts, used to attribute counted shifts
+  // to the component that just arrived. Kept independent of the debug window
+  // below so attribution works in production with negligible cost.
+  const recentMounts = [];
+  const rememberMount = (mount) => {
+    if (!Number.isFinite(mount?.mountedAt)) return;
+    recentMounts.push(mount);
+    if (recentMounts.length > MOUNT_RING_LIMIT) {
+      recentMounts.splice(0, recentMounts.length - MOUNT_RING_LIMIT);
+    }
+  };
+  const rememberMountFromEvent = (detail = {}, mountedAt) => {
+    rememberMount({
+      id: detail.id || detail.baseId || 'unknown',
+      baseId: detail.baseId || detail.id || 'unknown',
+      layer: detail.layer || '',
+      // The mounted module's root element (when it has one) lets attribution
+      // prefer the module whose DOM actually contains the shifted node, rather
+      // than guessing by mount recency alone.
+      root: detail.root && detail.root.nodeType === 1 ? detail.root : null,
+      mountedAt: Number.isFinite(mountedAt) ? mountedAt : (ctx.now?.() || performance.now()),
+    });
+  };
+
   const auditApi = {
     get history() {
       return [...entries];
@@ -370,8 +494,28 @@ export function initSpwLayoutShiftAudit(ctx = {}) {
           loadMs: rec.loadMs != null ? roundValueLocal(rec.loadMs) : null,
           initial: true,
         });
+        rememberMount({
+          id: rec.id || rec.baseId || 'unknown',
+          baseId: rec.baseId || rec.id || 'unknown',
+          layer: rec.layer || '',
+          root: rec.root && rec.root.nodeType === 1 ? rec.root : null,
+          mountedAt: rec.mountedAt,
+        });
       }
     }
+  }
+
+  // Persistent (audit-lifetime) subscription that keeps the attribution ring
+  // fresh for modules mounting at any point — including idle/interaction layers
+  // that arrive well after the 5s debug window has closed.
+  let ringCleanup = null;
+  if (ctx?.bus && typeof ctx.bus.on === 'function') {
+    const off = ctx.bus.on('spw:module-mounted', (detail) => rememberMountFromEvent(detail || {}));
+    ringCleanup = () => { try { off && off(); } catch {} };
+  } else {
+    const handler = (ev) => rememberMountFromEvent(ev && ev.detail ? ev.detail : {});
+    document.addEventListener('spw:module-mounted', handler, false);
+    ringCleanup = () => { try { document.removeEventListener('spw:module-mounted', handler, false); } catch {} };
   }
 
   // Live subscription for modules that mount during the 5s window
@@ -512,12 +656,36 @@ export function initSpwLayoutShiftAudit(ctx = {}) {
     const nextState = batchEntries.some((entry) => !entry.hadRecentInput && entry.value > 0)
       ? AUDIT_STATE.SHIFTED
       : AUDIT_STATE.OBSERVING;
-    const detail = buildAuditDetail(ctx, batchEntries, nextState, history);
+    const now = ctx.now?.() || performance.now();
+    // Live shifted nodes stay local to attribution — they are never placed on
+    // the emitted detail, which keeps `spw:layout-shift` serializable.
+    const sourceNodes = [];
+    for (const entry of batchEntries) {
+      if (entry?.hadRecentInput) continue;
+      for (const source of entry?.sources || []) {
+        if (source?.node?.nodeType === 1) sourceNodes.push(source.node);
+      }
+    }
+    const detail = buildAuditDetail(ctx, batchEntries, nextState, history, recentMounts, now, sourceNodes);
     history.totalValue = detail.totalValue;
     history.count = detail.count;
     history.recentInputCount = detail.recentInputCount;
     entries.push(detail);
     if (entries.length > HISTORY_LIMIT) entries.splice(0, entries.length - HISTORY_LIMIT);
+
+    // Enrich the component model: attribute this shift's cost back onto the
+    // arriving module's registry record so tuning/inspection surfaces can read
+    // per-component reflow as a first-class signal, and mark it settled.
+    if (detail.attributedTo?.id && detail.batchValue > 0 && typeof ctx.registry?.get === 'function') {
+      const record = ctx.registry.get(detail.attributedTo.id);
+      if (record) {
+        record.reflowValue = roundValue((record.reflowValue || 0) + detail.batchValue);
+        record.reflowClass = detail.reflowClass;
+        record.reflowWithinMs = detail.attributedWithinMs;
+        record.reflowAttributedBy = detail.attributedBy;
+        if (record.settledAt == null) record.settledAt = Math.round(now);
+      }
+    }
 
     syncState(detail);
     return emit(detail, detail.batchValue > 0 ? 'warn' : 'info');
@@ -543,6 +711,12 @@ export function initSpwLayoutShiftAudit(ctx = {}) {
     if (typeof flushAndStopDebugCollectors === 'function') {
       try { flushAndStopDebugCollectors(); } catch {}
     }
+
+    if (typeof ringCleanup === 'function') {
+      try { ringCleanup(); } catch {}
+      ringCleanup = null;
+    }
+    recentMounts.length = 0;
   };
 
   const supported = globalThis.PerformanceObserver?.supportedEntryTypes?.includes?.('layout-shift');

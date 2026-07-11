@@ -23,7 +23,7 @@ export const SPW_RUNTIME_HELPERS_CONTRACT = Object.freeze({
   portableUse:
     'Use this module when a page shell needs to read runtime policy, normalize mount handles, or share registry helpers without importing the whole bootstrap.',
   featureGating:
-    'Module defs may declare features (string or string[]) that must be present on body[data-spw-features] before scheduling.',
+    'Module defs may declare features (string or string[]) that must be present on body[data-spw-features] before scheduling. Tokens may be CSS BEHAVIOR_SCOPES or presence-only keys (operators, navigator, route-discovery, …) validated by runtime-contracts.',
 });
 
 export function safeQuery(selector, root = document) {
@@ -295,13 +295,15 @@ export function createRegistry() {
     return [...records.values()];
   }
 
-  function cleanupAll() {
+  function cleanupAll(onLifecycle) {
     for (const record of records.values()) {
+      onLifecycle?.(record, 'unmounting');
       try {
         record.cleanup?.();
       } catch (error) {
         console.warn(`[runtime-helpers] cleanup failed for ${record.id}`, error);
       }
+      onLifecycle?.(record, 'unmounted');
     }
     records.clear();
   }

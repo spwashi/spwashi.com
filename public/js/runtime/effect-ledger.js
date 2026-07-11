@@ -9,6 +9,9 @@
  *
  * Interaction-cache stratum: remembered to make return visits feel earned,
  * never load-bearing. Clearing the ledger loses nothing but the residue.
+ *
+ * Flourish projection: count/last/charge land on <html> so ornament CSS can
+ * read precipitated residue without inspecting localStorage.
  */
 
 import { bus } from '/public/js/kernel/bus.js';
@@ -23,24 +26,52 @@ import {
 
 const LEDGER_KEY = STORAGE_KEYS.EFFECT_LEDGER;
 const MAX_EFFECTS = 60;
+const PULSE_MS = 720;
 
 export const EFFECT_LEDGER_CONTRACT = Object.freeze({
   storageKey: LEDGER_KEY,
   maxEffects: MAX_EFFECTS,
+  timingChunk: 'idle-residue',
   sources: Object.freeze({
     reward: 'spw:discovery-reward',
     cast: 'spell:cast',
     decomposed: 'spell:decomposed',
+    collection: 'spw:collection-achievement',
+    rewardUi: 'spw:reward-unlocked',
   }),
   attributes: Object.freeze({
-    /* G1 bundle on <html>: data-spw-effects="count:12 last:spell-cauldron-literacy" */
+    /* G1 bundle on <html>: data-spw-effects="count:12 last:spell-cast" */
     state: 'data-spw-effects',
+    count: 'data-spw-effect-ledger-count',
+    last: 'data-spw-effect-ledger-last',
+    pulse: 'data-spw-effect-pulse',
+    charge: 'data-spw-effect-charge',
+  }),
+  cssVars: Object.freeze({
+    count: '--spw-effect-count',
+    charge: '--spw-effect-charge',
+    pulse: '--spw-effect-pulse',
   }),
   events: Object.freeze({
     recorded: 'effect:recorded',
     cleared: 'effect:ledger-cleared',
   }),
+  /** Catalog-aligned updates topology for flourish/residue consumers. */
+  updates: Object.freeze([
+    'html:flourish:data-spw-effects',
+    'html:flourish:data-spw-effect-pulse',
+    'html:flourish:data-spw-effect-charge',
+    'html:residue:data-spw-effect-ledger-count',
+    'html:residue:data-spw-effect-ledger-last',
+    'html:flourish:--spw-effect-count',
+    'html:flourish:--spw-effect-charge',
+    'html:flourish:--spw-effect-pulse',
+    'residue:event:effect:recorded',
+    'residue:event:effect:ledger-cleared',
+  ]),
 });
+
+let pulseTimer = 0;
 
 function readLedger() {
   return readJson(LEDGER_KEY, [], { requireArray: true });
@@ -50,21 +81,60 @@ function writeLedger(entries) {
   return writeJson(LEDGER_KEY, entries.slice(0, MAX_EFFECTS));
 }
 
-function projectLedgerState(entries) {
+function chargeFromCount(count = 0) {
+  if (!count) return 0;
+  // Soft log curve so large ledgers do not peg ornament intensity.
+  return Math.min(1, 0.18 + Math.log10(count + 1) * 0.42);
+}
+
+function projectLedgerState(entries, options = {}) {
   const root = document.documentElement;
   if (!root) return;
 
+  const count = entries.length;
   const last = entries[0]?.kind || '';
+  const charge = chargeFromCount(count);
+  const chargeToken = count ? charge.toFixed(3) : null;
+  const pulse = Boolean(options.pulse && last);
+  const countValue = count ? String(count) : '';
+
   writeRuntimeDatasetValues(root, {
-    spwEffects: [`count:${entries.length}`, last ? `last:${last}` : '']
-      .filter(Boolean)
-      .join(' '),
-    spwEffectLedgerCount: entries.length ? String(entries.length) : null,
+    spwEffects: count
+      ? [`count:${count}`, last ? `last:${last}` : ''].filter(Boolean).join(' ')
+      : null,
+    spwEffectLedgerCount: count ? String(count) : null,
     spwEffectLedgerLast: last || null,
+    spwEffectCharge: chargeToken,
+    spwEffectPulse: pulse ? last : null,
   }, {
     source: 'effect-ledger',
-    reason: 'ledger-projection',
+    reason: options.reason || 'ledger-projection',
   });
+
+  // Flourish CSS vars — string-literal names for style-property contract;
+  // skip no-op writes to limit style recalc pressure.
+  if (root.style.getPropertyValue('--spw-effect-count').trim() !== countValue) {
+    if (countValue) root.style.setProperty('--spw-effect-count', countValue);
+    else root.style.removeProperty('--spw-effect-count');
+  }
+  if (root.style.getPropertyValue('--spw-effect-charge').trim() !== (chargeToken || '')) {
+    if (chargeToken) root.style.setProperty('--spw-effect-charge', chargeToken);
+    else root.style.removeProperty('--spw-effect-charge');
+  }
+
+  if (pulse) {
+    if (root.style.getPropertyValue('--spw-effect-pulse').trim() !== '1') {
+      root.style.setProperty('--spw-effect-pulse', '1');
+    }
+    if (pulseTimer) window.clearTimeout(pulseTimer);
+    pulseTimer = window.setTimeout(() => {
+      pulseTimer = 0;
+      if (root.dataset.spwEffectPulse === last) {
+        delete root.dataset.spwEffectPulse;
+      }
+      root.style.removeProperty('--spw-effect-pulse');
+    }, PULSE_MS);
+  }
 }
 
 /**
@@ -83,16 +153,23 @@ function record(kind, detail = {}) {
   const entries = [entry, ...readLedger()];
   if (!writeLedger(entries)) return entry;
 
-  projectLedgerState(entries);
+  projectLedgerState(entries, { pulse: true, reason: 'ledger-record' });
   bus.emit(EFFECT_LEDGER_CONTRACT.events.recorded, entry);
   return entry;
+}
+
+function normalizeKindFromDetail(fallback, detail = {}) {
+  return detail.rewardKind || detail.kind || detail.id || detail.name || fallback;
 }
 
 export function initEffectLedger() {
   const unsubs = [];
 
   const onReward = guardCall(
-    (event) => record(event?.detail?.rewardKind || 'discovery-reward', event?.detail || {}),
+    (event) => record(
+      normalizeKindFromDetail('discovery-reward', event?.detail || {}),
+      event?.detail || {},
+    ),
     'effect-ledger:reward',
     { silent: true },
   );
@@ -119,18 +196,55 @@ export function initEffectLedger() {
     { silent: true },
   )));
 
+  // Optional flourish sources — no-op when no producer emits them.
+  unsubs.push(bus.on('spw:collection-achievement', guardCall(
+    (event) => record(
+      normalizeKindFromDetail('collection-achievement', event?.detail || {}),
+      {
+        label: event?.detail?.label || 'Collection achievement',
+        summary: event?.detail?.summary || 'A collectible diversity threshold was crossed.',
+        ...event?.detail,
+      },
+    ),
+    'effect-ledger:collection',
+    { silent: true },
+  )));
+
+  unsubs.push(bus.on('spw:reward-unlocked', guardCall(
+    (event) => record(
+      normalizeKindFromDetail('reward-unlocked', event?.detail || {}),
+      event?.detail || {},
+    ),
+    'effect-ledger:reward-ui',
+    { silent: true },
+  )));
+
   runCriticalPath('effect-ledger:project', () => projectLedgerState(readLedger()), null);
 
   window.spwEffects = {
     list: () => readLedger(),
+    contract: () => EFFECT_LEDGER_CONTRACT,
     clear() {
       writeLedger([]);
-      projectLedgerState([]);
+      projectLedgerState([], { reason: 'ledger-clear' });
       bus.emit(EFFECT_LEDGER_CONTRACT.events.cleared, {});
     },
   };
 
-  return () => unsubs.forEach((fn) => {
-    runCriticalPath('effect-ledger:teardown', () => fn(), null);
-  });
+  return () => {
+    if (pulseTimer) {
+      window.clearTimeout(pulseTimer);
+      pulseTimer = 0;
+    }
+    unsubs.forEach((fn) => {
+      runCriticalPath('effect-ledger:teardown', () => fn(), null);
+    });
+    const root = document.documentElement;
+    if (root) {
+      root.style.removeProperty('--spw-effect-count');
+      root.style.removeProperty('--spw-effect-charge');
+      root.style.removeProperty('--spw-effect-pulse');
+    }
+    delete window.spwEffects;
+  };
 }

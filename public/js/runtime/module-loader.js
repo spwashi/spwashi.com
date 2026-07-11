@@ -32,6 +32,8 @@ export const MODULE_TIMING_STAGES = Object.freeze([
   'mounted',
   'observed',
   'settled',
+  'unmounting',
+  'unmounted',
   'failed',
 ]);
 
@@ -40,17 +42,21 @@ export const SPW_MODULE_LOADER_CONTRACT = Object.freeze({
   portableUse:
     'Use createModuleLoader() when a page shell needs staged module mounting without inlining the bootstrap.',
   featureGating:
-    'shouldScheduleDefinition() honors module def.features against ctx.features (body[data-spw-features]).',
+    'shouldScheduleDefinition() honors module def.features against ctx.features (body[data-spw-features]). Gates may be CSS BEHAVIOR_SCOPES or presence-only tokens (operators, navigator, …).',
   immediateScheduling:
     'Immediate definitions within a layer mount concurrently after any site-settings core seed; call sites may run independent non-core layers together.',
   timingArc:
     'Module definitions may name timingArc to explain the intended scheduling posture beyond raw mount timing.',
+  timingChunk:
+    'Optional timingChunk (idle-residue|idle-collectible|idle-chrome|idle-lab|idle-default) staggers IDLE mounts so residue/ledger land before collectible flourishes.',
   effectScope:
     'Module definitions may name effectScope tokens to make global state, storage, observer, media, or local DOM side effects auditable.',
   updatesContract:
-    'Module updates accept flat strings or kind:name objects; runtime normalizes them into attrs, css vars, aria, classes, and events for inspection.',
+    'Module updates accept flat strings or scope:role:kind:name tokens; roles (structural|flourish|inspect|residue|measure|diagnostic) power flourish topology inspection.',
   moduleExportFallback:
     'Definitions may keep explicit mount adapters; definitions without one fall back to SPW_MODULE_EXPORT, spwModule, default.mount, or init* exports.',
+  lifecycleEvent:
+    'spw:module-lifecycle emits scheduled, loading, mounted, observed, settled, unmounting, unmounted, and failed so modules can respond through ctx.bus without polling registry state.',
 });
 
 export function createModuleLoader(config = {}) {
@@ -121,7 +127,20 @@ export function createModuleLoader(config = {}) {
 
     const resolved = resolveModuleMount(mod);
     if (!resolved?.fn) return undefined;
-    return resolved.fn(ctx, root);
+    const result = resolved.fn(ctx, root);
+    // Canonical module exports may declare refresh beside mount. Preserve a
+    // mount-returned refresh when present; otherwise attach the export-level
+    // refresh promised by module-export-contract.js.
+    // Catalog adapters (def.mount) already return full handles and skip this path.
+    if (typeof resolved.surface?.refresh !== 'function') return result;
+    return Promise.resolve(result).then((mounted) => {
+      const handle = normalizeMountHandle(mounted);
+      const exportRefresh = (nextCtx) => resolved.surface.refresh(nextCtx, root);
+      return {
+        cleanup: handle.cleanup,
+        refresh: handle.refresh || exportRefresh,
+      };
+    });
   }
 
   function flushRuntimeTokenUpdate(ctx) {
@@ -159,6 +178,21 @@ function pushModuleLifecycleStage(record, stage, detail = {}) {
   record.stageAt = at;
   if (normalizedStage === 'observed') record.observedAt = at;
   if (normalizedStage === 'settled') record.settledAt = at;
+  return record;
+}
+
+function emitModuleLifecycle(ctx, record, stage, detail = {}) {
+  pushModuleLifecycleStage(record, stage, detail);
+  ctx?.bus?.emit?.('spw:module-lifecycle', {
+    id: record?.id || null,
+    baseId: record?.baseId || null,
+    layer: record?.layer || null,
+    stage: record?.stage || stage,
+    at: record?.stageAt || Math.round(performance.now()),
+    note: detail.note || '',
+    route: ctx?.route || null,
+    root: record?.root || null,
+  });
   return record;
 }
 
@@ -873,6 +907,7 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
     durationMs: null,
     error: null,
   });
+  emitModuleLifecycle(ctx, record, 'scheduled', { at: scheduledAt, note: effectiveWhen });
   performance.mark(`spw:module:${def.id}:scheduled`);
 
   try {
@@ -892,7 +927,7 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
       effectScope,
       status: 'loading',
     });
-    pushModuleLifecycleStage(record, 'loading', { at: loadStartedAt, note: reason });
+    emitModuleLifecycle(ctx, record, 'loading', { at: loadStartedAt, note: reason });
     recordModuleAudit(ctx, {
       id: recordId,
       baseId: def.id,
@@ -944,11 +979,11 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
       durationMs: mountEndedAt - startedAt,
       error: null,
     });
-    pushModuleLifecycleStage(record, 'mounted', {
+    emitModuleLifecycle(ctx, record, 'mounted', {
       at: mountEndedAt,
       note: `${Math.round(record.loadMs)}ms load / ${Math.round(record.mountMs)}ms mount`,
     });
-    pushModuleLifecycleStage(record, 'observed', {
+    emitModuleLifecycle(ctx, record, 'observed', {
       at: Math.round(performance.now()),
       note: 'runtime summary written',
     });
@@ -1039,7 +1074,7 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
       durationMs: null,
       error,
     });
-    pushModuleLifecycleStage(record, 'failed', {
+    emitModuleLifecycle(ctx, record, 'failed', {
       at: failedAt,
       note: error?.message || String(error),
     });
@@ -1253,6 +1288,65 @@ async function mountRegionLayer(defs, ctx) {
   });
 }
 
+/** Stagger IDLE mounts so residue/ledger listeners exist before collectible flourishes. */
+const IDLE_CHUNK_ORDER = Object.freeze([
+  'idle-residue',
+  'idle-collectible',
+  'idle-chrome',
+  'idle-lab',
+  'idle-default',
+]);
+
+function inferIdleTimingChunk(def) {
+  const explicit = normalizeRuntimeToken(def?.timingChunk || '');
+  if (explicit && IDLE_CHUNK_ORDER.includes(explicit)) return explicit;
+
+  const arc = normalizeRuntimeToken(def?.timingArc || '');
+  if (/ledger|residue|memory|spell$/.test(arc) || arc === 'enhance-ledger' || arc === 'enhance-spell') {
+    return 'idle-residue';
+  }
+  if (/collect|reward|discover|guide|haptic|cauldron/.test(arc) || /collect|reward|discover/.test(def?.id || '')) {
+    return 'idle-collectible';
+  }
+  if (/navigator|shell|chrome|logo|nav/.test(arc) || /navigator|logo|shell/.test(def?.id || '')) {
+    return 'idle-chrome';
+  }
+  if (/lab|debug|metacognition|topic|learning|palette/.test(arc) || /lab|debug|topic|palette|pronunciation|query/.test(def?.id || '')) {
+    return 'idle-lab';
+  }
+  return 'idle-default';
+}
+
+function groupIdleDefsByChunk(idleDefs) {
+  const groups = new Map(IDLE_CHUNK_ORDER.map((chunk) => [chunk, []]));
+  idleDefs.forEach((def) => {
+    const chunk = inferIdleTimingChunk(def);
+    const bucket = groups.get(chunk) || groups.get('idle-default');
+    bucket.push(def);
+  });
+  return IDLE_CHUNK_ORDER
+    .map((chunk) => ({ chunk, defs: groups.get(chunk) || [] }))
+    .filter((entry) => entry.defs.length);
+}
+
+async function mountIdleDefinitionBatch(idleDefs, ctx) {
+  beginMountBatch();
+  try {
+    await Promise.all(idleDefs.map(async (def) => {
+      const roots = getRoots(def);
+      if (!roots.length || def.rootMode === 'single') {
+        return mountDefinition(def, ctx, null, 0);
+      }
+      return Promise.all(roots.map((root, index) => {
+        annotateModuleTrigger(root, def, ctx, mountWhen.IDLE, 'triggered');
+        return mountDefinition(def, ctx, root, index);
+      }));
+    }));
+  } finally {
+    endMountBatch(ctx);
+  }
+}
+
 function queueIdleEnhancements(defs, ctx) {
   const idleDefs = defs.filter((def) => shouldScheduleDefinition(def, ctx, mountWhen.IDLE));
   const hasSettled = defs.some((def) => shouldScheduleDefinition(def, ctx, mountWhen.SETTLED));
@@ -1280,22 +1374,30 @@ function queueIdleEnhancements(defs, ctx) {
       });
     }
 
-    beginMountBatch();
-    try {
-      await Promise.all(idleDefs.map(async (def) => {
-        const roots = getRoots(def);
-        if (!roots.length || def.rootMode === 'single') {
-          return mountDefinition(def, ctx, null, 0);
-        }
-        return Promise.all(roots.map((root, index) => {
-          annotateModuleTrigger(root, def, ctx, mountWhen.IDLE, 'triggered');
-          return mountDefinition(def, ctx, root, index);
-        }));
-      }));
-    } finally {
-      endMountBatch(ctx);
+    const chunks = groupIdleDefsByChunk(idleDefs);
+    writeDatasetValue(html, 'spwRuntimeIdleChunks', chunks.map((entry) => entry.chunk).join(' '));
+
+    for (const [index, entry] of chunks.entries()) {
+      writeDatasetValue(html, 'spwRuntimeIdleChunk', entry.chunk);
+      performance.mark(`spw:idle-chunk:${entry.chunk}:start`);
+      await mountIdleDefinitionBatch(entry.defs, ctx);
+      performance.mark(`spw:idle-chunk:${entry.chunk}:end`);
+      performance.measure(
+        `spw:idle-chunk:${entry.chunk}`,
+        `spw:idle-chunk:${entry.chunk}:start`,
+        `spw:idle-chunk:${entry.chunk}:end`,
+      );
+
+      // Yield between chunks so residue listeners can attach before collectible flourishes fire.
+      if (index < chunks.length - 1) {
+        await new Promise((resolve) => {
+          const yieldHandle = onIdle(() => resolve(), 180);
+          ctx.addTimer(yieldHandle);
+        });
+      }
     }
 
+    writeDatasetValue(html, 'spwRuntimeIdleChunk', null);
     finalizeEnhancement();
   });
 
@@ -1337,7 +1439,7 @@ function refreshRuntime(ctx) {
   for (const record of ctx.registry.values()) {
     try {
       if (record.status === 'mounted' && record.stage !== 'settled') {
-        pushModuleLifecycleStage(record, 'settled', {
+        emitModuleLifecycle(ctx, record, 'settled', {
           at: settledAt,
           note: 'runtime refresh completed',
         });
@@ -1385,6 +1487,7 @@ function refreshRuntime(ctx) {
   return {
     normalizeModuleTimingStage,
     pushModuleLifecycleStage,
+    emitModuleLifecycle,
     summarizeModuleLifecycle,
     snapshotModuleTimingStages,
     findModuleDefinition,

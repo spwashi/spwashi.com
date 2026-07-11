@@ -85,9 +85,18 @@ function readLoopPhase(target) {
   return phaseFromLoopState(host.dataset.spwLoopState);
 }
 
+// 'settle' is the top of the phase ladder and the ecology drives it shortly
+// after load, so strongestPhase(currentPhase='settle', …) would pin every later
+// hover/focus/gesture at 'settle' and silently swallow its microinteraction.
+// 'settle' is a *resting* terminal, not a live peak: a fresh interaction is
+// allowed to begin a new arc from it, which keeps the interaction-reward
+// contract (no silent absorption) after the page has settled.
+const RESTING_PHASES = new Set(['idle', 'settle']);
+
 function bumpPhase(html, candidate, detail = {}) {
   if (!candidate) return;
-  writePhase(html, strongestPhase(currentPhase, candidate), detail);
+  const baseline = RESTING_PHASES.has(currentPhase) ? 'idle' : currentPhase;
+  writePhase(html, strongestPhase(baseline, candidate), detail);
 }
 
 export function initInteractionProgression(root = document) {

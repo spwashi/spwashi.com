@@ -58,6 +58,12 @@ export const ACHIEVEMENTS = Object.freeze([
   { id: 'collector-v', label: 'Collector V', test: (s) => s.distinctKinds >= 5 },
   { id: 'collector-x', label: 'Collector X', test: (s) => s.distinctKinds >= 10 },
   { id: 'wayfarer', label: 'Wayfarer', test: (s) => s.routesSeen >= 4 },
+  // Kind-spectrum achievements reward underused component kinds (hook/lens/metric)
+  // so diversity is not only card/frame/panel monoculture.
+  { id: 'hooked', label: 'Hooked', test: (s) => s.kindSet.has('hook') },
+  { id: 'lens-keen', label: 'Lens Keen', test: (s) => s.kindSet.has('lens') },
+  { id: 'measured', label: 'Measured', test: (s) => s.kindSet.has('metric') },
+  { id: 'kind-spectrum', label: 'Kind Spectrum', test: (s) => s.distinctKinds >= 6 },
 ]);
 
 function getStore() {
@@ -113,9 +119,11 @@ function tierRank(tier) {
 }
 
 function deriveState(collection) {
-  const distinctKinds = Object.keys(collection.kinds).length;
+  const kindNames = Object.keys(collection.kinds);
+  const distinctKinds = kindNames.length;
   return {
     distinctKinds,
+    kindSet: new Set(kindNames),
     routesSeen: collection.routes.length,
     maxTier: collection.maxTier,
     maxTierRank: tierRank(collection.maxTier),

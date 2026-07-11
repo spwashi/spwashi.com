@@ -127,6 +127,20 @@ function readDisplayFlow(style) {
   return FLOW_BY_DISPLAY[display] || display;
 }
 
+/**
+ * Site frames and panels are vertical stages. Even when CSS uses display:grid
+ * for stacking/gaps, packing them as composition-flow=grid activates multi-column
+ * auto-fit rules meant for inner card grids — never mirror that onto stages.
+ */
+function resolveCompositionFlow(el, style) {
+  if (el.matches?.('.site-frame, .frame-panel, .mode-panel, .site-hero')) {
+    const authored = normalizeToken(el.getAttribute('data-spw-composition-flow') || '');
+    if (authored && authored !== 'grid' && authored !== 'inline-grid') return authored;
+    return 'stack';
+  }
+  return readDisplayFlow(style);
+}
+
 function readBoxModel(el) {
   const style = getComputedStyle(el);
   const rect = el.getBoundingClientRect();
@@ -143,7 +157,7 @@ function readBoxModel(el) {
 
   return {
     display: style.display,
-    flow: readDisplayFlow(style),
+    flow: resolveCompositionFlow(el, style),
     inlineSize: Math.round(rect.width),
     blockSize: Math.round(rect.height),
     contentInline: Math.round(contentInline),

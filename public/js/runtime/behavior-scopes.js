@@ -6,6 +6,7 @@
 
 export const BEHAVIOR_SCOPE_KEYS = Object.freeze([
   'console',
+  'feature-discovery',
   'media-publishing',
   'metrics',
   'pretext-lab',
@@ -15,6 +16,7 @@ export const BEHAVIOR_SCOPE_KEYS = Object.freeze([
 
 export const BEHAVIOR_SCOPE_BUNDLES = Object.freeze({
   'console': '/public/css/bundles/behaviors/console.css',
+  'feature-discovery': '/public/css/bundles/behaviors/feature-discovery.css',
   'media-publishing': '/public/css/bundles/behaviors/media-publishing.css',
   'metrics': '/public/css/bundles/behaviors/metrics.css',
   'pretext-lab': '/public/css/bundles/behaviors/pretext-lab.css',

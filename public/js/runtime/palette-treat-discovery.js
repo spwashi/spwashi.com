@@ -8,6 +8,18 @@
 
 import { readMicrointeractionPulseMs } from './pulse-beat-tuner.js';
 
+// The palette probes are now one feature in the generic field guide, not a
+// bespoke reward mechanism. It declares its contract here; the engine owns
+// encounter classification, memory, and the "depth" progression (tier ×
+// attentional arc) that used to live inline in this module.
+const PALETTE_FEATURE = Object.freeze({
+  species: 'palette-probe',
+  label: 'Palette probes',
+  traits: ['escalating-reward', 'resonance', 'keyboard-navigable'],
+  progression: 'depth',
+  memory: 'persistent',
+});
+
 const TREAT_EVENT = 'spw:palette-treat';
 const COOLDOWN_MS = 360;
 const ARROW_COOLDOWN_MS = 110;
@@ -38,6 +50,66 @@ let treatTimer = null;
 let lastTreatAt = 0;
 let lastResonance = '';
 let suppressFocusReward = false;
+let paletteFeatureRegistered = false;
+let featureReadyBound = false;
+const attributeSnapshots = new Map();
+
+function snapshotAttributes(element, names) {
+  if (!(element instanceof Element)) return;
+  let snapshot = attributeSnapshots.get(element);
+  if (!snapshot) {
+    snapshot = new Map();
+    attributeSnapshots.set(element, snapshot);
+  }
+  names.forEach((name) => {
+    if (!snapshot.has(name)) snapshot.set(name, element.getAttribute(name));
+  });
+}
+
+function restoreEnhancedAttributes() {
+  attributeSnapshots.forEach((snapshot, element) => {
+    snapshot.forEach((value, name) => {
+      if (value == null) element.removeAttribute(name);
+      else element.setAttribute(name, value);
+    });
+  });
+  attributeSnapshots.clear();
+}
+
+const featureGuide = () => (typeof window !== 'undefined' ? window.spwFeatureDiscovery : null);
+
+function registerPaletteFeature() {
+  if (paletteFeatureRegistered) return true;
+  const guide = featureGuide();
+  if (!guide?.register) return false;
+  guide.register(PALETTE_FEATURE);
+  paletteFeatureRegistered = true;
+  return true;
+}
+
+function discoverPaletteFeature(detail) {
+  registerPaletteFeature();
+  return featureGuide()?.discover?.(PALETTE_FEATURE.species, detail) || null;
+}
+
+function onFeatureDiscoveryReady() {
+  featureReadyBound = false;
+  registerPaletteFeature();
+}
+
+function bindFeatureDiscoveryReady() {
+  if (featureReadyBound || typeof document === 'undefined') return;
+  featureReadyBound = true;
+  // The generic guide is behavior-gated and mounts at idle. Palette treats can
+  // remain useful everywhere without pulling that engine into every route.
+  document.addEventListener('spw:feature-discovery-ready', onFeatureDiscoveryReady, { once: true });
+}
+
+function unbindFeatureDiscoveryReady() {
+  if (!featureReadyBound || typeof document === 'undefined') return;
+  document.removeEventListener('spw:feature-discovery-ready', onFeatureDiscoveryReady);
+  featureReadyBound = false;
+}
 
 function isTreatEnabled(html) {
   if (html.dataset.spwReduceMotion === 'on') return false;
@@ -100,7 +172,7 @@ function markProbeChips(root, probeIndex) {
   root.querySelectorAll(SHELL_SWATCH_SELECTOR).forEach(markGroup);
 }
 
-function emitArrowReward(root, html, probeIndex, detail = {}) {
+function emitArrowReward(root, probeIndex, detail = {}) {
   root.dispatchEvent(new CustomEvent('spw:discovery-reward', {
     detail: {
       source: 'arrow-reward',
@@ -122,17 +194,24 @@ function splashTreat(html, source, probeIndex, detail = {}) {
   lastTreatAt = now;
 
   const root = html.ownerDocument || document;
+  // Record the encounter in the field guide; the engine returns the progression
+  // level (its "depth" model: collection tier × attentional arc) which drives the
+  // treat's escalation. Progression/memory/convergence live in the engine now;
+  // the treat visuals below stay palette-specific.
+  const discovered = discoverPaletteFeature({ source, variant: probeIndex, trigger: source });
+  const depth = discovered ? discovered.level : 0;
   html.dataset.spwPaletteSplash = source;
   html.dataset.spwPaletteTreatActive = 'on';
   html.dataset.spwPaletteTreatProbe = String(probeIndex);
+  html.dataset.spwPaletteTreatDepth = String(depth);
   markProbeChips(root, probeIndex);
 
   root.dispatchEvent(new CustomEvent(TREAT_EVENT, {
-    detail: { source, probe: probeIndex, ...detail },
+    detail: { source, probe: probeIndex, depth, ...detail },
     bubbles: true,
   }));
 
-  if (arrowReward) emitArrowReward(root, html, probeIndex, detail);
+  if (arrowReward) emitArrowReward(root, probeIndex, detail);
 
   if (treatTimer) window.clearTimeout(treatTimer);
   const duration = Math.round(readMicrointeractionPulseMs(root) * (arrowReward ? 1.04 : 1.18));
@@ -140,6 +219,7 @@ function splashTreat(html, source, probeIndex, detail = {}) {
     delete html.dataset.spwPaletteSplash;
     delete html.dataset.spwPaletteTreatActive;
     delete html.dataset.spwPaletteTreatProbe;
+    delete html.dataset.spwPaletteTreatDepth;
     clearChipTreats(root);
   }, duration);
 }
@@ -167,12 +247,13 @@ function syncRailFocus(rail, activeIndex) {
   }
 }
 
-function enhanceProbeRail(rail, html) {
+function enhanceProbeRail(rail, html, signal) {
   if (!(rail instanceof HTMLElement) || rail.dataset.spwPaletteProbeRail === 'ready') return;
 
   const chips = listRailChips(rail);
   if (chips.length < 2) return;
 
+  snapshotAttributes(rail, ['data-spw-palette-probe-rail', 'role', 'aria-orientation', 'aria-label']);
   rail.dataset.spwPaletteProbeRail = 'ready';
   rail.setAttribute('role', 'radiogroup');
   rail.setAttribute('aria-orientation', 'horizontal');
@@ -182,6 +263,7 @@ function enhanceProbeRail(rail, html) {
 
   const activeIndex = readActiveProbeIndex(html);
   chips.forEach((chip, index) => {
+    snapshotAttributes(chip, ['role', 'data-spw-palette-probe-index', 'aria-label', 'aria-checked', 'tabindex']);
     const probeIndex = index + 1;
     chip.setAttribute('role', 'radio');
     chip.dataset.spwPaletteProbeIndex = String(probeIndex);
@@ -243,17 +325,18 @@ function enhanceProbeRail(rail, html) {
     splashTreat(html, 'arrow-reward', probeIndex, { input: 'keyboard', key: event.key });
   };
 
-  rail.addEventListener('focusin', onRailFocus);
-  rail.addEventListener('keydown', onRailKeydown);
+  rail.addEventListener('focusin', onRailFocus, { signal });
+  rail.addEventListener('keydown', onRailKeydown, { signal });
 }
 
-function enhanceResonanceToolbar(toolbar, html) {
+function enhanceResonanceToolbar(toolbar, html, signal) {
   if (!(toolbar instanceof HTMLElement) || toolbar.dataset.spwPaletteProbeToolbar === 'ready') return;
 
   const controls = [...toolbar.querySelectorAll(RESONANCE_CONTROL_SELECTOR)]
     .filter((node) => node instanceof HTMLElement);
   if (controls.length < 2) return;
 
+  snapshotAttributes(toolbar, ['data-spw-palette-probe-toolbar', 'role', 'aria-label']);
   toolbar.dataset.spwPaletteProbeToolbar = 'ready';
   toolbar.setAttribute('role', 'toolbar');
   if (!toolbar.hasAttribute('aria-label')) {
@@ -302,15 +385,15 @@ function enhanceResonanceToolbar(toolbar, html) {
     });
   };
 
-  toolbar.addEventListener('keydown', onToolbarKeydown);
+  toolbar.addEventListener('keydown', onToolbarKeydown, { signal });
 }
 
-function enhanceKeyboardSurfaces(root, html) {
-  root.querySelectorAll(PROBE_SWATCH_SELECTOR).forEach((rail) => enhanceProbeRail(rail, html));
-  root.querySelectorAll(SHELL_SWATCH_SELECTOR).forEach((rail) => enhanceProbeRail(rail, html));
+function enhanceKeyboardSurfaces(root, html, signal) {
+  root.querySelectorAll(PROBE_SWATCH_SELECTOR).forEach((rail) => enhanceProbeRail(rail, html, signal));
+  root.querySelectorAll(SHELL_SWATCH_SELECTOR).forEach((rail) => enhanceProbeRail(rail, html, signal));
   root.querySelectorAll(RESONANCE_TOOLBAR_SELECTOR).forEach((toolbar) => {
     if (toolbar.querySelector(RESONANCE_CONTROL_SELECTOR)) {
-      enhanceResonanceToolbar(toolbar, html);
+      enhanceResonanceToolbar(toolbar, html, signal);
     }
   });
 }
@@ -325,6 +408,11 @@ function syncRailsToResonance(root, html) {
 export function initPaletteTreatDiscovery(root = document) {
   if (initialized) return () => {};
   initialized = true;
+
+  // Declare the palette-probe feature to the field guide. Registration is
+  // order-independent: the depth progression reads the root tokens directly, so
+  // it resolves whether or not the discovery engine has mounted yet.
+  if (!registerPaletteFeature()) bindFeatureDiscoveryReady();
 
   const html = root.documentElement;
   const controller = new AbortController();
@@ -371,7 +459,7 @@ export function initPaletteTreatDiscovery(root = document) {
     });
   };
 
-  const refreshKeyboardSurfaces = () => enhanceKeyboardSurfaces(root, html);
+  const refreshKeyboardSurfaces = () => enhanceKeyboardSurfaces(root, html, signal);
 
   lastResonance = String(html.dataset.spwPaletteResonance || '');
   refreshKeyboardSurfaces();
@@ -399,7 +487,13 @@ export function initPaletteTreatDiscovery(root = document) {
     delete html.dataset.spwPaletteSplash;
     delete html.dataset.spwPaletteTreatActive;
     delete html.dataset.spwPaletteTreatProbe;
+    delete html.dataset.spwPaletteTreatDepth;
     clearChipTreats(root);
+    restoreEnhancedAttributes();
+    unbindFeatureDiscoveryReady();
+    paletteFeatureRegistered = false;
+    lastResonance = '';
+    suppressFocusReward = false;
     initialized = false;
   }, { once: true });
 

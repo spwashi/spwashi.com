@@ -9,7 +9,18 @@ import { describeModuleUpdates, normalizeModuleUpdates } from './module-updates-
 
 export const SPW_MODULE_EXPORT_SHAPE = Object.freeze({
   required: Object.freeze(['mount']),
-  optional: Object.freeze(['id', 'refresh', 'contract', 'updates', 'guild', 'describes']),
+  optional: Object.freeze([
+    'id',
+    'refresh',
+    'contract',
+    'updates',
+    'guild',
+    'describes',
+    'evaluates',
+    'timingArc',
+    'timingChunk',
+    'effectScope',
+  ]),
   aliases: Object.freeze(['spwModule']),
 });
 
@@ -23,6 +34,16 @@ export const SPW_MODULE_EXPORT_CONTRACT = Object.freeze({
   ]),
   portableUse:
     'Export SPW_MODULE_EXPORT with mount(); re-export spwModule as alias during migration. Catalog and compose resolve the same mount path.',
+  mountResult:
+    'mount() returns void, a cleanup function, or { cleanup?, refresh? }. A mount-returned refresh wins over the export-level refresh.',
+  cleanupOwnership:
+    'Loader-mounted modules return their handle and do not register that same cleanup with ctx.addCleanup.',
+  routeBoundary:
+    'Routes replace the document; partial DOM replacement uses refresh/untracking. Do not tear down on pagehide because BFCache may restore the same document.',
+  catalogParity:
+    'Prefer catalog fields (when, features, timingArc, timingChunk, effectScope, updates with role: topology) as the schedule contract; SPW_MODULE_EXPORT mirrors mount + optional updates/describes for portable compose.',
+  updatesTopology:
+    'updates may use scope:role:kind:name (html:flourish:--token). Roles: structural|flourish|inspect|residue|measure|diagnostic.',
   datasetFields: Object.freeze({
     shape: 'data-spw-module-export-shape',
     guild: 'data-spw-module-guild',
@@ -73,12 +94,30 @@ export function describeModuleExport(mod, meta = {}) {
     hasContract: Boolean(exportSurface?.contract || meta.contract),
     updates,
     updatesDescribe,
+    flourishes: updatesDescribe.flourishes || [],
+    topology: updatesDescribe.topology || '',
     describes: exportSurface?.describes || meta.describes || null,
+    evaluates: exportSurface?.evaluates || meta.evaluates || null,
+    timingArc: exportSurface?.timingArc || meta.timingArc || null,
+    timingChunk: exportSurface?.timingChunk || meta.timingChunk || null,
+    effectScope: exportSurface?.effectScope || meta.effectScope || null,
   };
 }
 
 export function createModuleExport(definition = {}) {
-  const { id, mount, refresh, contract, updates, guild, describes } = definition;
+  const {
+    id,
+    mount,
+    refresh,
+    contract,
+    updates,
+    guild,
+    describes,
+    evaluates,
+    timingArc,
+    timingChunk,
+    effectScope,
+  } = definition;
   if (!isFn(mount)) {
     throw new Error('[module-export-contract] createModuleExport requires mount function.');
   }
@@ -91,6 +130,10 @@ export function createModuleExport(definition = {}) {
     updates: normalizeModuleUpdates(updates),
     guild: guild || null,
     describes: describes || null,
+    evaluates: evaluates || null,
+    timingArc: timingArc || null,
+    timingChunk: timingChunk || null,
+    effectScope: effectScope || null,
   });
 
   return Object.freeze({

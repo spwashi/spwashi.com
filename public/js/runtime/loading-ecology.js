@@ -55,6 +55,7 @@ export const DIMENSION_VOCABULARY = Object.freeze({
   ecologyDimensions: Object.freeze([
     'fetch',
     'measure',
+    'align',
     'settle',
     'personalize',
     'localize',
@@ -103,6 +104,12 @@ const ecology = {
   diversityKinds: 0,
   lastTrope: '',
   lastGenre: '',
+  // Alignment memory: the layout-shift audit classifies each counted reflow as
+  // purposeful (a component arriving into place) or incidental drift. We keep
+  // the last classification so the ecology can narrate settling honestly.
+  aligned: false,
+  incidentalReflow: false,
+  lastReflowClass: '',
 };
 
 function readSalienceDirection(html) {
@@ -178,6 +185,7 @@ function collectDimensions(html, body) {
   const dimensions = [];
   if (ecology.prefetched) dimensions.push('fetch');
   if (ecology.measured) dimensions.push('measure');
+  if (ecology.aligned) dimensions.push('align');
   if (html.dataset.spwPageSettling === 'true' || html.dataset.spwLoadingEcologyPhase === ECOLOGY_PHASES.SETTLING) {
     dimensions.push('settle');
   }
@@ -203,6 +211,8 @@ function inferPrecipitatedTrope(html) {
   const deviationCount = Number.parseInt(html.dataset.spwDeviationCount || '0', 10) || 0;
   if (deviationCount > 0 || readPersonalizationActive(html)) return 'ruleset-settle';
   if (readThemingActive(html)) return 'theme-shift';
+  if (ecology.incidentalReflow) return 'alignment-drift';
+  if (ecology.aligned && ecology.measured) return 'alignment-settle';
   if (ecology.measured) return 'typography-flow';
   if (ecology.diversityTier === 'rich' || ecology.diversityTier === 'teeming') return 'gestalt-rebalance';
   if (ecology.prefetched) return 'spacing-tune';
@@ -387,6 +397,18 @@ function onModuleMounted(detail = {}, ctx) {
   syncEcology(ctx, detail.baseId || detail.id || 'module-mounted');
 }
 
+function onLayoutShift(detail = {}, ctx) {
+  const reflowClass = detail.reflowClass || '';
+  if (!reflowClass || reflowClass === 'stable' || reflowClass === 'input') return;
+  ecology.lastReflowClass = reflowClass;
+  if (reflowClass === 'mount') {
+    ecology.aligned = true;
+  } else if (reflowClass === 'incidental' && (detail.batchValue || 0) > 0) {
+    ecology.incidentalReflow = true;
+  }
+  syncEcology(ctx, 'layout-shift');
+}
+
 function onRuntimeConnection(detail = {}, ctx) {
   syncEcology(ctx, 'runtime-connection');
 }
@@ -409,6 +431,7 @@ export function initLoadingEcology(ctx) {
       ctx.bus.on('spw:runtime-connection', (detail) => onRuntimeConnection(detail, ctx)),
       ctx.bus.on('spw:regions-profiled', (detail) => onRegionsProfiled(detail, ctx)),
       ctx.bus.on('spw:module-mounted', (detail) => onModuleMounted(detail, ctx)),
+      ctx.bus.on('spw:layout-shift', (detail) => onLayoutShift(detail, ctx)),
     );
   }
 
@@ -448,6 +471,9 @@ export function initLoadingEcology(ctx) {
     ecology.diversityKinds = 0;
     ecology.lastTrope = '';
     ecology.lastGenre = '';
+    ecology.aligned = false;
+    ecology.incidentalReflow = false;
+    ecology.lastReflowClass = '';
     const html = document.documentElement;
     if (html?.dataset) {
       delete html.dataset.spwLoadingEcologyPhase;

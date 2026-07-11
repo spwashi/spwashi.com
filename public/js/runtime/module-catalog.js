@@ -39,6 +39,7 @@ export const CORE_DEFS = [
     ],
     timingArc: 'boot-core',
     effectScope: 'root-state storage settings',
+    evaluates: 'root color palette wonder density saturation reward display',
     load: () => import('../kernel/site-settings.js'),
     mount: (mod) => {
       const fn = mod?.applySiteSettings;
@@ -128,6 +129,7 @@ export const FEATURE_DEFS = [
     describes: 'blog[input.interpret] summary[tone|lens|questions]',
     updates: ['data-blog-state', 'data-blog-lens', 'data-blog-tone', 'data-count', 'data-spw-charge-key'],
     evaluates: 'blog interpretation writing workflow attention-register',
+    timingArc: 'visible-feature',
     load: () => import('../modules/blog/interpreter.js'),
     mount: (mod, ctx, root) => {
       const fn = mod?.initBlogInterpreter;
@@ -145,6 +147,7 @@ export const FEATURE_DEFS = [
     describes: 'blog[specimen] demo[theme|operator|observer|audio|filter]',
     updates: ['data-panel-open', 'data-theme', '--io-ratio'],
     evaluates: 'blog specimens interaction demos visual filters',
+    timingArc: 'visible-feature',
     load: () => import('../modules/blog/specimens.js'),
     mount: (mod) => {
       const fn = mod?.initBlogSpecimens;
@@ -161,6 +164,8 @@ export const FEATURE_DEFS = [
     describes: 'attention-register[charge|remove|clear] blog terms',
     updates: ['data-attn-register', 'data-attn-active', 'data-theme', 'aria-pressed'],
     evaluates: 'attention charge register blog semantics local interaction',
+    timingArc: 'feature-route',
+    effectScope: 'local-dom bus',
     load: () => import('../modules/blog/attn-register.js'),
     mount: (mod) => {
       const fn = mod?.initAttnRegister;
@@ -177,6 +182,8 @@ export const FEATURE_DEFS = [
     describes: 'seed-card[template|field|copy|screenshot] generator',
     updates: ['data-spw-region-flow', 'data-spw-state', 'data-state', 'data-filled', '--card-charge'],
     evaluates: 'seed generation card authoring screenshot utility',
+    timingArc: 'feature-route',
+    effectScope: 'local-dom storage',
     load: () => import('../modules/cards/seed-card.js'),
     mount: (mod) => {
       const fn = mod?.initSeedCards;
@@ -193,6 +200,8 @@ export const FEATURE_DEFS = [
     describes: 'payment-card[method|amount|enabled] support routing',
     updates: ['data-spw-region-flow', 'data-spw-touch', 'data-method', 'data-amount'],
     evaluates: 'payment settings support routes local storage',
+    timingArc: 'feature-route',
+    effectScope: 'local-dom storage',
     load: () => import('../modules/cards/payment-card.js'),
     mount: (mod) => {
       const fn = mod?.initPaymentCards;
@@ -209,6 +218,8 @@ export const FEATURE_DEFS = [
     describes: 'services[configure|score|tier] offer visualization',
     updates: ['data-svc-state', 'data-svc-tier', 'data-svc-price-shift', 'data-svc-focus', '--svc-score'],
     evaluates: 'services offer fit pricing dimensions grounding',
+    timingArc: 'feature-route',
+    effectScope: 'local-dom',
     load: () => import('../modules/services/configurator.js'),
     mount: (mod) => {
       const fn = mod?.initServicesConfigurators;
@@ -226,6 +237,8 @@ export const FEATURE_DEFS = [
     describes: 'rpg-wednesday[mode|evidence|local-kit] gameplay helpers',
     updates: ['data-rpg-hydrated', 'data-rpg-gameplay-kit', 'data-spw-evidence-hydrated', 'data-spw-card-state'],
     evaluates: 'rpg gameplay local state evidence capture play surface',
+    timingArc: 'feature-route',
+    effectScope: 'local-dom storage',
     load: () => import('../modules/rpg-wednesday/index.js'),
     mount: (mod) => {
       const fn = mod?.initRpgWednesday;
@@ -240,7 +253,14 @@ export const FEATURE_DEFS = [
     route: 'settings',
     selector: '[data-spw-surface="settings"], main',
     describes: 'settings[form|preset|deviation-register] local defaults UI',
-    evaluates: 'settings defaults presets local-storage deviations',
+    evaluates: 'settings form presets deviation-register local defaults',
+    timingArc: 'feature-route',
+    effectScope: 'form storage root-state',
+    updates: [
+      'html:structural:data-spw-settings-ready',
+      'html:inspect:data-spw-deviation-state',
+      'html:inspect:data-spw-deviation-count',
+    ],
     load: () => import('../kernel/site-settings.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initSiteSettingsPage;
@@ -257,6 +277,8 @@ export const FEATURE_DEFS = [
     describes: 'settings[payment-methods] support option controls',
     updates: ['data-spw-region-flow'],
     evaluates: 'payment settings support defaults',
+    timingArc: 'feature-route',
+    effectScope: 'local-dom storage',
     load: () => import('../modules/cards/payment-card.js'),
     mount: (mod) => {
       const fn = mod?.initPaymentSettings;
@@ -273,6 +295,8 @@ export const FEATURE_DEFS = [
     describes: 'home[section-index] filter[current|match] navigation',
     updates: ['data-home-section-filtered', 'data-home-section-match', 'data-home-section-current', 'aria-current'],
     evaluates: 'homepage navigation filtering section discovery',
+    timingArc: 'feature-route',
+    effectScope: 'local-dom',
     load: () => import('../modules/home/section-index.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initHomeSectionIndex;
@@ -290,6 +314,7 @@ export const FEATURE_DEFS = [
     describes: 'promo-wonder-cycle[daily|weekly] feed card rotation',
     updates: ['data-spw-cadence', 'data-spw-presentation', 'data-spw-promotion-kind', 'data-spw-region-flow'],
     evaluates: 'promo cadence wonder marketing media-publishing',
+    timingArc: 'visible-media',
     load: () => import('../typed/promo-wonder-cycle.js'),
     mount: (mod) => {
       const fn = mod?.initPromoWonderCycle;
@@ -307,6 +332,7 @@ export const FEATURE_DEFS = [
     describes: 'media-publishing[focus|collection] feed rendering',
     updates: ['data-spw-component-kind', 'data-spw-copy-unit', 'data-spw-locale', 'data-spw-cadence'],
     evaluates: 'media publishing feed localization website surface',
+    timingArc: 'visible-media',
     load: () => import('../typed/media-publishing.js'),
     mount: (mod) => {
       const fn = mod?.initMediaPublishing;
@@ -323,6 +349,8 @@ export const FEATURE_DEFS = [
     rootMode: 'each',
     describes: 'media-cauldron[prime.select.generate] attention[self+local+global] artifact[prompt-pack]',
     updates: ['data-media-cauldron-state', 'data-media-cauldron-output', 'data-spw-attention-self-relation', 'data-spw-attention-local-relation', 'data-spw-attention-global-relation'],
+    timingArc: 'visible-lab',
+    evaluates: 'media cauldron attention relations prompt-pack generation',
     load: () => import('../modules/media/cauldron.js'),
     mount: (mod, ctx, root) => {
       const fn = mod?.initMediaCauldron;
@@ -338,6 +366,8 @@ export const FEATURE_DEFS = [
     describes: 'brace-pivot[setting-cycle] inline defaults control',
     updates: ['data-spw-pivot-value', 'data-spw-pivot-active'],
     evaluates: 'settings defaults brace interaction',
+    timingArc: 'immediate-settings',
+    effectScope: 'local-dom root-state',
     load: () => import('./brace-pivots.js'),
     mount: (mod) => {
       const fn = mod?.initBracePivots;
@@ -348,12 +378,14 @@ export const FEATURE_DEFS = [
   {
     id: 'narrative-instrumentation',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.VISIBLE,
     selector: '[data-spw-narrative-mode="on"]',
     rootMode: 'single',
     describes: 'narrative[instrument.copy.tokens] resonance drawer',
     updates: ['data-spw-resonance-token', 'data-spw-resonance-probe', 'data-spw-resonant', 'data-spw-narrative-token'],
     evaluates: 'narrative copy semantics operator resonance',
+    timingArc: 'visible-semantics',
+    effectScope: 'local-dom bus',
     load: () => import('../semantic/narrative-instrumentation.js'),
     mount: (mod) => {
       const fn = mod?.initNarrativeInstrumentation;
@@ -370,6 +402,8 @@ export const FEATURE_DEFS = [
     describes: 'brace[gesture|inspect|semantic-expansion] physics',
     updates: ['data-spw-brace-nesting', 'data-spw-handle-kind', 'data-spw-resolved-operator', 'data-spw-last-gesture', 'data-spw-pinned'],
     evaluates: 'gesture semantics brace inspectability spell capture',
+    timingArc: 'immediate-gesture',
+    effectScope: 'element-state listeners bus',
     load: () => import('./brace-gestures.js'),
     mount: (mod) => {
       const fn = mod?.initBraceGestures;
@@ -386,6 +420,8 @@ export const FEATURE_DEFS = [
     describes: 'region-menu[inspect|mark|focus] semantic popover',
     updates: ['data-spw-region-menu', 'data-spw-region-menu-target', 'data-spw-inspect-semantic-focus-root', 'data-spw-region-mark'],
     evaluates: 'semantics navigation interaction region-menu',
+    timingArc: 'immediate-inspect',
+    effectScope: 'popover listeners',
     load: () => import('./region-menu.js'),
     mount: (mod) => {
       const fn = mod?.initSpwRegionMenu;
@@ -401,6 +437,12 @@ export const FEATURE_DEFS = [
     rootMode: 'single',
     describes: 'pronunciation[operator|sigil] learning hints',
     evaluates: 'semantics learning interaction',
+    timingArc: 'enhance-learning',
+    timingChunk: 'idle-lab',
+    updates: [
+      'inspect:data-spw-pronunciation-hint',
+      'flourish:data-spw-operator-speech',
+    ],
     load: () => import('../interface/pronunciation.js'),
     mount: (mod) => {
       const fn = mod?.initPronunciationHints;
@@ -412,9 +454,14 @@ export const FEATURE_DEFS = [
     id: 'sigil-anatomy',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
+    features: ['operators'],
+    selector: '.frame-sigil, .operator-chip, .syntax-token, .spw-delimiter, [data-spw-operator], [data-spw-sigil]',
+    rootMode: 'single',
     describes: 'sigil-anatomy[hydrate] raw fused text -> sigil/operand elements',
     updates: ['data-spw-sigil-anatomy', 'data-spw-op'],
     evaluates: 'operator-grammar anatomy hydration capture-legibility',
+    timingArc: 'immediate-grammar',
+    effectScope: 'element-state',
     load: () => import('./sigil-anatomy.js'),
     mount: (mod) => {
       const fn = mod?.initSigilAnatomy;
@@ -426,10 +473,26 @@ export const FEATURE_DEFS = [
   {
     id: 'effect-ledger',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IMMEDIATE,
-    describes: 'effect-ledger[record|list|clear] precipitated literacy residue',
-    updates: ['data-spw-effects'],
-    evaluates: 'named-effects recognition precipitation press-rung-1',
+    when: MOUNT_WHEN.IDLE,
+    selector: 'html',
+    rootMode: 'single',
+    describes: 'effect-ledger[record|list|clear] precipitated literacy residue + flourish charge',
+    updates: [
+      'html:flourish:data-spw-effects',
+      'html:flourish:data-spw-effect-pulse',
+      'html:flourish:data-spw-effect-charge',
+      'html:residue:data-spw-effect-ledger-count',
+      'html:residue:data-spw-effect-ledger-last',
+      'html:flourish:--spw-effect-count',
+      'html:flourish:--spw-effect-charge',
+      'html:flourish:--spw-effect-pulse',
+      'residue:event:effect:recorded',
+      'residue:event:effect:ledger-cleared',
+    ],
+    evaluates: 'named-effects recognition precipitation press-rung-1 flourish-residue',
+    timingArc: 'enhance-ledger',
+    timingChunk: 'idle-residue',
+    effectScope: 'root-state storage bus flourish',
     load: () => import('./effect-ledger.js'),
     mount: (mod) => {
       const fn = mod?.initEffectLedger;
@@ -441,11 +504,20 @@ export const FEATURE_DEFS = [
   {
     id: 'cauldron',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.IDLE,
     features: ['console'],
     describes: 'cauldron[gather|mix|garden] force[operator] emergence[composition]',
-    updates: ['data-spw-cauldron', 'data-spw-cauldron-state', 'data-spw-cauldron-ingredient', 'data-spw-ingredient-phase', 'data-spw-semantic-expression'],
+    updates: [
+      'html:residue:data-spw-cauldron',
+      'flourish:data-spw-cauldron-state',
+      'structural:data-spw-cauldron-ingredient',
+      'structural:data-spw-ingredient-phase',
+      'structural:data-spw-semantic-expression',
+    ],
     evaluates: 'semantics composition learning attention-field emergence',
+    timingArc: 'enhance-collectible',
+    timingChunk: 'idle-collectible',
+    effectScope: 'storage bus floating-chrome root-state',
     load: () => import('../interface/composition.js'),
     mount: (mod) => {
       const fn = mod?.initCauldron || mod?.initCompositionSpell;
@@ -460,11 +532,13 @@ export const FEATURE_DEFS = [
   {
     id: 'local-notes',
     layer: MODULE_LAYERS.FEATURE,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.VISIBLE,
     selector: '[data-spw-local-note-entry], [data-spw-local-notes-root], [data-local-note-preview]',
     describes: 'local-notes[draft|register|preview] browser memory',
     updates: ['data-local-note-count', 'data-local-note-preview', 'data-local-note-status', 'data-local-note-latest-time'],
     evaluates: 'local memory notes privacy browser storage',
+    timingArc: 'visible-memory',
+    effectScope: 'local-dom storage',
     load: () => import('../interface/local-notes.js'),
     mount: (mod) => {
       const fn = mod?.initSpwLocalNotes;
@@ -475,12 +549,14 @@ export const FEATURE_DEFS = [
   {
     id: 'boonhonk-mixer',
     layer: MODULE_LAYERS.FEATURE,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.VISIBLE,
     selector: '[data-boonhonk-mixer]',
     rootMode: 'single',
     describes: 'boonhonk-mixer[operator-blend|memory-state] widget',
     updates: ['data-bhm-state', 'data-bhm-disposition', 'data-bhm-memory-state', 'data-spw-selection', '--boon'],
     evaluates: 'operator blending widget color memory',
+    timingArc: 'visible-widget',
+    effectScope: 'local-dom',
     load: () => import('../modules/widgets/boonhonk-mixer.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initBoonhonkMixers;
@@ -496,6 +572,8 @@ export const FEATURE_DEFS = [
     selector: '#pretext-input, .pretext-lab-grid',
     describes: 'pretext[layout|sandbox|projection] lab[observe|resize|inspect]',
     updates: ['data-spw-flow', 'data-text-wrap', 'data-text-mode'],
+    timingArc: 'visible-lab',
+    evaluates: 'pretext layout sandbox projection observe resize inspect',
     load: () => import('../semantic/pretext-lab.js'),
     mount: (mod) => {
       const fn = mod?.initPretextLab;
@@ -512,6 +590,8 @@ export const FEATURE_DEFS = [
     rootMode: 'each',
     describes: 'pretext[measure.classify.signal] text[wrap-volatility.width-class] css[projection-vars]',
     updates: ['data-text-wrap', 'data-text-measure', 'data-text-width-class', 'data-spw-pretext-width-class', '--pretext-canonical-width', '--pretext-projected-width'],
+    timingArc: 'visible-lab',
+    evaluates: 'pretext measure classify wrap-volatility width-class projection',
     load: () => import('../semantic/pretext-physics.js'),
     mount: (mod, ctx, root) => {
       const fn = mod?.initPretextPhysics;
@@ -534,6 +614,8 @@ export const FEATURE_DEFS = [
     selector: '#typography-measurement-preview',
     describes: 'settings[typography.measure.preview] pretext[bus.telemetry] designer[conversation.handoff]',
     updates: ['data-spw-typography-measure-state', 'data-spw-pretext-line-count', 'data-text-wrap', 'data-spw-measure-kind'],
+    timingArc: 'visible-lab',
+    evaluates: 'typography measure preview pretext bus designer conversation',
     load: () => import('../modules/design/typography-measurement-preview.js'),
     mount: (mod, ctx, root) => {
       const fn = mod?.initTypographyMeasurementPreview;
@@ -549,6 +631,8 @@ export const FEATURE_DEFS = [
     selector: 'main',
     describes: 'frame[text.measure] site-frame[line-count.height.wrap] bus[pretext-measurement]',
     updates: ['data-spw-frame-line-count', 'data-spw-frame-wrap', 'data-spw-measure-kind', 'data-spw-measure-source'],
+    timingArc: 'visible-metrics',
+    evaluates: 'frame text measure line-count wrap height pretext bus',
     load: () => import('./frame-metrics.js'),
     mount: (mod, ctx, root) => {
       const fn = mod?.initFrameMetrics;
@@ -615,6 +699,9 @@ export const ENHANCEMENT_DEFS = [
       'data-spw-embedded-tuning-dimensions',
       'data-spw-hypermedia-extension',
     ],
+    timingArc: 'immediate-tuning',
+    effectScope: 'root-state local-dom',
+    evaluates: 'embedded tuning surfaces discoverability hypermedia extension',
     load: () => import('./tuning-discovery.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initTuningDiscovery;
@@ -629,8 +716,15 @@ export const ENHANCEMENT_DEFS = [
     selector: 'main [id].site-frame, main [data-spw-region-role], main [data-spw-feature]',
     rootMode: 'single',
     describes: 'desktop region index from main semantics + html[data-spw-page-region-rail], refreshed through dom-sync teardown',
-    updates: ['data-spw-page-region-rail', 'data-spw-region-active', 'data-spw-region-role', 'data-spw-feature'],
+    updates: [
+      'html:structural:data-spw-page-region-rail',
+      'structural:data-spw-region-active',
+      'structural:data-spw-region-role',
+      'structural:data-spw-feature',
+    ],
     evaluates: 'navigation region-discoverability component-discovery theme-readability',
+    timingArc: 'immediate-navigation',
+    effectScope: 'floating-chrome root-state',
     load: () => import('./page-region-rail.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initPageRegionRail;
@@ -655,6 +749,7 @@ export const ENHANCEMENT_DEFS = [
     ],
     timingArc: 'immediate-gesture',
     effectScope: 'root-state frame-state timers bus',
+    evaluates: 'charge discharge field intensity consequence-live gesture',
     load: () => import('./charge-field.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initChargeField;
@@ -670,6 +765,8 @@ export const ENHANCEMENT_DEFS = [
     rootMode: 'single',
     describes: 'slot anatomy rails + data-spw-gesture-hint from gesture contracts',
     updates: ['data-spw-gesture-hint', 'data-spw-slot-label', 'data-spw-gesture-anatomy'],
+    timingArc: 'visible-gesture',
+    evaluates: 'gesture hint slot anatomy contract rails',
     load: () => import('./gesture-anatomy.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initGestureAnatomy;
@@ -680,7 +777,7 @@ export const ENHANCEMENT_DEFS = [
   {
     id: 'learnability-ledger',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.IDLE,
     selector: '[data-spw-feature], [data-spw-box-model], [data-spw-gesture-contract], [data-spw-slot]',
     rootMode: 'single',
     describes: 'metacognitive posture accounting, layout-contract audit, feature learnability resonance',
@@ -690,6 +787,10 @@ export const ENHANCEMENT_DEFS = [
       'data-spw-layout-contract',
       'data-spw-learnability-tier',
     ],
+    timingArc: 'enhance-metacognition',
+    timingChunk: 'idle-lab',
+    effectScope: 'root-state element-state',
+    evaluates: 'learnability posture layout-contract feature resonance tiers',
     load: () => import('./learnability-ledger.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initLearnabilityLedger;
@@ -705,18 +806,46 @@ export const ENHANCEMENT_DEFS = [
     rootMode: 'single',
     describes: 'collection[component-kinds] achievement[diversity] persistent[cross-session] reward[fresh-pulse]',
     updates: [
-      'data-spw-collection-kinds',
-      'data-spw-collection-total',
-      'data-spw-collection-tier',
-      'data-spw-collection-achievements',
-      'data-spw-collection-fresh',
+      'html:residue:data-spw-collection-kinds',
+      'html:residue:data-spw-collection-total',
+      'html:residue:data-spw-collection-tier',
+      'html:residue:data-spw-collection-achievements',
+      'html:flourish:data-spw-collection-fresh',
     ],
     evaluates: 'discovered component diversity, achievement unlocks, collectible memory',
     timingArc: 'enhance-collection',
+    timingChunk: 'idle-collectible',
     effectScope: 'root-state storage bus',
     load: () => import('./component-collection.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initComponentCollection;
+      if (!isFn(fn)) return;
+      return fn(ctx);
+    },
+  },
+  {
+    id: 'feature-discovery',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IDLE,
+    selector: '[data-spw-feature]',
+    features: ['feature-discovery'],
+    rootMode: 'single',
+    describes: 'field-guide[features] progression[local-contract] memory[local-contract] encounter[novel|convergent|return]',
+    updates: [
+      'html:residue:data-spw-feature-discovery-init',
+      'flourish:data-spw-feature-encounter',
+      'flourish:data-spw-feature-level',
+      'residue:data-spw-feature-progress',
+      'flourish:data-spw-feature-convergent',
+      'flourish:data-spw-feature-fresh',
+    ],
+    evaluates: 'feature discovery, per-feature progression + memory contracts, convergent-trait recognition',
+    timingArc: 'enhance-collection',
+    timingChunk: 'idle-collectible',
+    effectScope: 'element-state storage observer bus global-api',
+    load: () => import('./feature-discovery.js'),
+    mount: (mod, ctx) => {
+      const fn = mod?.initFeatureDiscovery;
       if (!isFn(fn)) return;
       return fn(ctx);
     },
@@ -729,13 +858,14 @@ export const ENHANCEMENT_DEFS = [
     rootMode: 'single',
     describes: 'reward[toasts.dock.settings] collection[component-kinds] capture-aware[clean] physical[charge-pulse]',
     updates: [
-      'data-spw-reward-ui-init',
-      'data-spw-reward-easter-egg',
-      'data-spw-reward-tier',
-      'data-spw-reward-reveal',
+      'html:residue:data-spw-reward-ui-init',
+      'html:flourish:data-spw-reward-easter-egg',
+      'html:flourish:data-spw-reward-tier',
+      'html:flourish:data-spw-reward-reveal',
     ],
     evaluates: 'achievement feedback, collection dock, settling reveal, reward tunability',
     timingArc: 'enhance-reward',
+    timingChunk: 'idle-collectible',
     effectScope: 'root-state floating-chrome toast bus',
     load: () => import('./reward-ui.js'),
     mount: (mod, ctx) => {
@@ -748,19 +878,20 @@ export const ENHANCEMENT_DEFS = [
     id: 'frame-navigator',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IDLE,
+    features: ['navigator'],
     selector: '.site-frame',
     rootMode: 'single',
     describes: 'surface-map[frames|routes] keyboard-spells[g|traverse|filter] navigator chrome',
     updates: ['data-spw-nav-state', 'data-spw-nav-label'],
     evaluates: 'frame traversal, route index, surface-map filter, keyboard navigation',
     timingArc: 'enhance-navigator',
+    timingChunk: 'idle-chrome',
     effectScope: 'floating-chrome listeners bus root-state',
     load: () => import('./frame-navigator.js'),
-    // Opt-in via the page's `navigator` feature (a body feature, not a CSS
-    // behavior scope, so it can't use the catalog `features` field). The module
-    // also self-gates on the navigatorDisplay setting at runtime.
-    mount: (mod, ctx) => {
-      if (!ctx?.features?.has?.('navigator')) return;
+    // Presence gate: body[data-spw-features~="navigator"] via catalog features
+    // (PRESENCE_FEATURE_KEYS in runtime-contracts — not a CSS behavior scope).
+    // Module also self-gates on navigatorDisplay at runtime.
+    mount: (mod) => {
       const fn = mod?.initFrameNavigator;
       if (!isFn(fn)) return;
       return fn();
@@ -769,10 +900,14 @@ export const ENHANCEMENT_DEFS = [
   {
     id: 'observation-beats',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.IDLE,
     debugOnly: true,  // Enhanced gating via shouldScheduleDefinition + ctx.debug
     describes: 'beat[window] qa[observation] lifecycle[page+region+component+cauldron] consequence[traceable]',
     updates: ['data-spw-active-beat', 'data-spw-active-beat-state', 'data-spw-last-beat-id', 'data-spw-module-consequence'],
+    timingArc: 'enhance-debug',
+    timingChunk: 'idle-lab',
+    effectScope: 'root-state bus',
+    evaluates: 'qa observation beats lifecycle consequence trace debug',
     load: () => import('./observation-beats.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initObservationBeats;
@@ -789,6 +924,11 @@ export const ENHANCEMENT_DEFS = [
     rootMode: 'single',
     describes: 'svg[filters.defs] shared visual treatment',
     evaluates: 'svg surfaces filters texture visual enhancement',
+    timingArc: 'visible-media',
+    updates: [
+      'structural:data-spw-svg-filters-ready',
+      'html:structural:data-spw-svg-filter-defs',
+    ],
     load: () => import('../media/svg-filters.js'),
     mount: (mod) => {
       const fn = mod?.initSpwSvgFilters;
@@ -799,13 +939,15 @@ export const ENHANCEMENT_DEFS = [
   {
     id: 'svg-tunability',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.VISIBLE,
     features: ['svg-surfaces'],
     selector: '[data-spw-svg-host], .spw-svg-figure[data-spw-svg-pointer], [data-spw-svg-workbench]',
     rootMode: 'single',
     describes: 'svg[tune|pointer|query|workbench] responsive diagram controls',
     updates: ['data-spw-svg-pointer-state', 'data-spw-svg-device', 'data-spw-svg-environment', 'data-spw-svg-environment-reason', 'data-spw-svg-persona-active', 'data-spw-svg-persona-match', 'data-spw-svg-node-state', 'data-spw-svg-focus-node', '--spw-svg-pointer-x', '--spw-svg-pointer-intensity', '--spw-svg-persona-harmony'],
     evaluates: 'svg tunability pointer query device responsiveness',
+    timingArc: 'visible-media',
+    effectScope: 'svg element-state css-vars',
     load: () => import('../media/svg-tunability.js'),
     mount: (mod) => {
       const fn = mod?.initSpwSvgTunability;
@@ -821,11 +963,11 @@ export const ENHANCEMENT_DEFS = [
     rootMode: 'single',
     describes: 'canvas-accent[wave|vortex|lattice] background resonance',
     updates: [
-      '--spw-accent-strength',
-      '--spw-accent-color-1',
-      '--spw-accent-color-2',
-      '--field-balance',
-      'data-spw-wonder-memory-state',
+      'html:flourish:--spw-accent-strength',
+      'html:flourish:--spw-accent-color-1',
+      'html:flourish:--spw-accent-color-2',
+      'html:flourish:--field-balance',
+      'html:flourish:data-spw-wonder-memory-state',
     ],
     evaluates: 'visual accents canvas resonance reduced-motion',
     timingArc: 'immediate-visual',
@@ -864,6 +1006,8 @@ export const ENHANCEMENT_DEFS = [
     describes: 'logo[state|scroll|charge] shell identity runtime',
     updates: ['data-logo-state', 'data-logo-scroll', 'data-spw-kind', 'data-spw-touch', '--logo-charge'],
     evaluates: 'brand identity shell logo motion',
+    timingArc: 'enhance-shell',
+    timingChunk: 'idle-chrome',
     load: () => import('../interface/logo-runtime.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initSpwLogoRuntime || mod?.initLogoRuntime;
@@ -879,6 +1023,16 @@ export const ENHANCEMENT_DEFS = [
     rootMode: 'single',
     describes: 'topic[context|popover|navigation] discovery',
     evaluates: 'topic semantics navigation popover bus',
+    timingArc: 'enhance-topic',
+    timingChunk: 'idle-lab',
+    effectScope: 'popover listeners bus',
+    // Body token topic-discovery is pack narrative; selector is the demand gate
+    // (many topic pages omit the feature token but still host .spw-topic).
+    updates: [
+      'inspect:data-spw-topic-discovery',
+      'structural:data-spw-topic-context',
+      'flourish:data-spw-topic-popover',
+    ],
     load: () => import('../interface/topic-discovery.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initSpwTopicDiscovery || mod?.initTopicDiscovery;
@@ -907,6 +1061,8 @@ export const ENHANCEMENT_DEFS = [
       'data-spw-interaction-contract-resolved',
     ],
     evaluates: 'component ontology interaction-vocabulary lifecycle physics copy-depth',
+    timingArc: 'immediate-semantics',
+    effectScope: 'element-state',
     load: () => import('../semantic/component-semantics.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initSpwComponentSemantics;
@@ -923,6 +1079,8 @@ export const ENHANCEMENT_DEFS = [
     describes: 'box-model[presence|measure|story|pack] composition[flow]',
     updates: ['data-spw-box-model', 'data-spw-box-presence', 'data-spw-box-measure', 'data-spw-box-story', 'data-spw-composition-flow', 'data-spw-box-settle-phase', 'data-spw-size-context', 'data-spw-content-tone', 'data-spw-pack-layout', 'data-spw-pack-fill'],
     evaluates: 'layout semantics spacing-semantics state storytelling',
+    timingArc: 'immediate-layout',
+    effectScope: 'element-state css-vars',
     load: () => import('./composition-box-model.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initSpwCompositionBoxModel;
@@ -933,12 +1091,39 @@ export const ENHANCEMENT_DEFS = [
   {
     id: 'spatial-gravity',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.VISIBLE,
     selector: '[data-spw-gravity]',
     rootMode: 'single',
     describes: 'spatial-gravity[room|edge|gravity|salience] two-axis positioning + overlap resolution',
-    updates: ['data-spw-edge-gravity', 'data-spw-edge-x', 'data-spw-edge-y', 'data-spw-vertical-gravity', 'data-spw-horizontal-gravity', 'data-spw-extent', 'data-spw-measure-band', 'data-spw-space-variant', 'data-spw-open-direction', 'data-spw-open-anchor', 'data-spw-salience-rank', 'data-spw-yielded', 'data-spw-yield-reason', '--spw-room-below', '--spw-proximity-top', '--spw-edge-proximity', '--spw-vertical-bias', '--spw-horizontal-bias'],
+    updates: [
+      'attr:data-spw-edge-gravity',
+      'attr:data-spw-edge-x',
+      'attr:data-spw-edge-y',
+      'attr:data-spw-vertical-gravity',
+      'attr:data-spw-horizontal-gravity',
+      'attr:data-spw-extent',
+      'attr:data-spw-measure-band',
+      'attr:data-spw-space-variant',
+      'attr:data-spw-open-direction',
+      'attr:data-spw-open-anchor',
+      'attr:data-spw-salience-rank',
+      'attr:data-spw-yielded',
+      'attr:data-spw-yield-reason',
+      'css-var:--spw-room-above',
+      'css-var:--spw-room-below',
+      'css-var:--spw-room-left',
+      'css-var:--spw-room-right',
+      'css-var:--spw-proximity-top',
+      'css-var:--spw-proximity-bottom',
+      'css-var:--spw-proximity-left',
+      'css-var:--spw-proximity-right',
+      'css-var:--spw-edge-proximity',
+      'css-var:--spw-vertical-bias',
+      'css-var:--spw-horizontal-bias',
+    ],
     evaluates: 'viewport geometry room measurement two-axis gravity salience overlap variant selection',
+    timingArc: 'visible-geometry',
+    effectScope: 'element-state css-vars observers document-scroll resize field-guide',
     load: () => import('./spatial-gravity.js'),
     mount: (mod) => {
       const fn = mod?.initSpwSpatialGravity;
@@ -955,6 +1140,8 @@ export const ENHANCEMENT_DEFS = [
     describes: 'crossref[semantics] resonance[peer|source]',
     updates: ['data-spw-crossref', 'data-spw-crossref-source', 'data-spw-semantic-cluster', 'data-spw-vocab'],
     evaluates: 'semantics navigation interaction resonance',
+    timingArc: 'immediate-semantics',
+    effectScope: 'element-state bus',
     load: () => import('../semantic/semantic-crossrefs.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initSpwSemanticCrossrefs;
@@ -971,6 +1158,7 @@ export const ENHANCEMENT_DEFS = [
     describes: 'page-anatomy[vocabulary]{focus.pin.reference}',
     updates: ['data-spw-anatomy-ready', 'data-spw-anatomy-focus', 'data-spw-anatomy-vocabulary', 'data-spw-anatomy-pinned'],
     evaluates: 'semantics interaction timing reference-document',
+    timingArc: 'visible-anatomy',
     load: () => import('./page-anatomy.js'),
     mount: (mod) => {
       const fn = mod?.initPageAnatomy;
@@ -987,6 +1175,7 @@ export const ENHANCEMENT_DEFS = [
     describes: 'ingredient-lab[lens|status] local mode controls',
     updates: ['data-spw-ingredient-enhanced', 'data-spw-ingredient-mode', 'data-spw-ingredient-status'],
     evaluates: 'ingredient lab learning mode controls',
+    timingArc: 'visible-lab',
     load: () => import('./ingredient-lab.js'),
     mount: (mod) => {
       const fn = mod?.initIngredientLabs;
@@ -997,16 +1186,49 @@ export const ENHANCEMENT_DEFS = [
   {
     id: 'guide-badge',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.IDLE,
     selector: '.operator-chip, .frame-sigil, .frame-card-sigil, .spec-pill, [data-spw-guide-badge]',
     rootMode: 'single',
     describes: 'guide[badge|collect] operator[resonance]',
-    updates: ['data-spw-guide-badge', 'data-spw-collected'],
+    updates: [
+      'flourish:data-spw-guide-badge',
+      'residue:data-spw-collected',
+    ],
+    evaluates: 'collectible operator resonance guide badges',
+    timingArc: 'enhance-collectible',
+    timingChunk: 'idle-collectible',
+    effectScope: 'element-state storage listeners',
     load: () => import('../interface/guide-badge.js'),
     mount: (mod) => {
       const fn = mod?.initGuideBadges;
       if (!isFn(fn)) return;
       return fn(document);
+    },
+  },
+  {
+    id: 'query-link-composer',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IDLE,
+    selector: '[data-spw-query-composer], [data-spw-feature="query-composer"], [data-spw-feature="settings-partial-theatrics-lab"], [data-spw-feature="composition-partial-lab"]',
+    rootMode: 'single',
+    describes: 'query[share-setup] composer[instruments] cauldron[offer] feature-hub[embed]',
+    updates: [
+      'structural:data-spw-query-composer',
+      'inspect:data-spw-query-composer-search',
+      'structural:data-spw-query-composer-href',
+      'flourish:data-spw-query-composer-expanded',
+    ],
+    evaluates: 'shareable lab setups module-visuals settings-parity cauldron spells',
+    timingArc: 'enhance-lab',
+    timingChunk: 'idle-lab',
+    effectScope: 'local-dom bus clipboard navigation',
+    load: () => import('./query-link-composer.js'),
+    mount: (mod, ctx) => {
+      const fn = mod?.initQueryLinkComposer || mod?.bindQueryComposers;
+      if (!isFn(fn)) return;
+      if (mod?.initQueryLinkComposer) return fn(ctx);
+      const binding = fn(document);
+      return binding?.cleanup;
     },
   },
   {
@@ -1016,7 +1238,11 @@ export const ENHANCEMENT_DEFS = [
     selector: 'body',
     rootMode: 'single',
     describes: 'page-wide discovery notice layer for runtime rewards, with dismissal storage and escape/listener teardown',
-    updates: ['data-spw-discovery-notice-stack', 'data-spw-discovery-notice-modal', 'data-spw-feature-learning'],
+    updates: [
+      'html:flourish:data-spw-discovery-notice-stack',
+      'html:flourish:data-spw-discovery-notice-modal',
+      'html:flourish:data-spw-feature-learning',
+    ],
     evaluates: 'feedback discoverability reward-cadence floating-chrome',
     timingArc: 'immediate-feedback',
     effectScope: 'floating-chrome storage listeners',
@@ -1034,7 +1260,14 @@ export const ENHANCEMENT_DEFS = [
     selector: 'body',
     rootMode: 'single',
     describes: 'state[satchel]{inspect.modify.serialize.feedback}',
-    updates: ['data-spw-state-inspector', 'data-spw-state-serialization-dimensions', 'data-spw-debug-mode', 'data-spw-module-visuals', 'data-spw-show-semantic-metadata', 'data-spw-feature-learning'],
+    updates: [
+      'html:inspect:data-spw-state-inspector',
+      'html:inspect:data-spw-state-serialization-dimensions',
+      'html:inspect:data-spw-debug-mode',
+      'html:flourish:data-spw-module-visuals',
+      'html:inspect:data-spw-show-semantic-metadata',
+      'html:inspect:data-spw-feature-learning',
+    ],
     evaluates: 'state accessibility layering interaction learnability',
     timingArc: 'immediate-inspection',
     effectScope: 'floating-chrome root-state local-controls',
@@ -1052,7 +1285,15 @@ export const ENHANCEMENT_DEFS = [
     selector: '[data-spw-image-reward], [data-spw-image-discovery]',
     rootMode: 'single',
     describes: 'image[discovery]{reward.notice.cadence.production}',
-    updates: ['data-spw-image-discovery-state', 'data-spw-image-discovered', 'data-spw-discovery-cadence', 'data-spw-discovery-motion', 'data-spw-discovery-production'],
+    updates: [
+      'flourish:data-spw-image-discovery-state',
+      'residue:data-spw-image-discovered',
+      'flourish:data-spw-discovery-cadence',
+      'flourish:data-spw-discovery-motion',
+      'structural:data-spw-discovery-production',
+    ],
+    timingArc: 'visible-reward',
+    evaluates: 'image discovery reward cadence motion production',
     load: () => import('../interface/image-discovery-rewards.js'),
     mount: (mod) => {
       const fn = mod?.initImageDiscoveryRewards;
@@ -1064,11 +1305,18 @@ export const ENHANCEMENT_DEFS = [
     id: 'semantic-chrome',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
+    features: ['inspectability'],
     selector: '[data-spw-kind], [data-spw-role], [data-spw-slot]',
     rootMode: 'single',
     describes: 'semantic-chrome[seam|label|metadata] component overlays',
-    updates: ['data-spw-generated', 'data-spw-semantic-tagged', 'data-spw-semantic-seam'],
+    updates: [
+      'structural:data-spw-generated',
+      'inspect:data-spw-semantic-tagged',
+      'inspect:data-spw-semantic-seam',
+    ],
     evaluates: 'semantic chrome component labels inspectability',
+    timingArc: 'immediate-inspect',
+    effectScope: 'element-state',
     load: () => import('../interface/semantic-chrome.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initSpwSemanticChrome;
@@ -1083,10 +1331,17 @@ export const ENHANCEMENT_DEFS = [
     selector: 'main, .site-header',
     rootMode: 'single',
     describes: 'contextual-ui[module-inference|route-discovery|nav-fit]',
-    updates: ['data-spw-module', 'data-spw-route-discovery', 'data-spw-route-menu-state', 'data-spw-nav-fit'],
+    updates: [
+      'structural:data-spw-module',
+      'html:structural:data-spw-route-discovery',
+      'structural:data-spw-route-menu-state',
+      'html:structural:data-spw-nav-fit',
+    ],
     evaluates: 'route discovery contextual navigation inferred modules',
     timingArc: 'immediate-context',
     effectScope: 'header-dom route-menu nav-fit',
+    // route-discovery body token is presence storytelling; module stays selector-gated
+    // so hub routes without the token still get nav-fit inference.
     load: () => import('../interface/contextual-ui.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initSpwContextualUi;
@@ -1104,6 +1359,8 @@ export const ENHANCEMENT_DEFS = [
     describes: 'console[frame|mode|bus|layout] diagnostics[screenshot]',
     updates: ['data-spw-console-state'],
     evaluates: 'debuggability layout-shift interaction frame-state',
+    timingArc: 'immediate-diagnostics',
+    effectScope: 'floating-chrome bus root-state',
     load: () => import('../interface/console.js'),
     mount: (mod) => {
       const fn = mod?.initSpwConsole;
@@ -1114,12 +1371,14 @@ export const ENHANCEMENT_DEFS = [
   {
     id: 'design-experiments',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.VISIBLE,
     selector: '[data-design-experiments-root]',
     rootMode: 'single',
     describes: 'design-experiments[rule|material|ecology|token] live lab',
     updates: ['data-design-material-mode', 'data-design-ecology', 'data-spw-design-ecology', 'data-design-meter-value'],
     evaluates: 'design lab material ecology tokens settings bundles',
+    timingArc: 'visible-lab',
+    effectScope: 'local-dom',
     load: () => import('../modules/design/experiments.js'),
     mount: (mod) => {
       const fn = mod?.initDesignExperiments;
@@ -1130,12 +1389,14 @@ export const ENHANCEMENT_DEFS = [
   {
     id: 'design-review-surfaces',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.VISIBLE,
     selector: 'body[data-spw-page-role="asset-review"], body[data-spw-page-role="token-review"], body[data-spw-page-role="design-lab"]',
     rootMode: 'single',
     describes: 'design-review[asset|token|lab] constellation surfaces',
     updates: ['data-review-key', 'data-spw-svg-tune-motion'],
     evaluates: 'design review asset token lab navigation',
+    timingArc: 'visible-lab',
+    effectScope: 'local-dom',
     load: () => import('../modules/design/review-surfaces.js'),
     mount: (mod) => {
       const fn = mod?.initDesignReviewSurfaces;
@@ -1193,6 +1454,7 @@ export const ENHANCEMENT_DEFS = [
     ],
     timingArc: 'immediate-attention',
     effectScope: 'root-state section-state listeners css-vars',
+    evaluates: 'section handle resonance reading-groove scroll-cadence attention field',
     load: () => import('./attention-architecture.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initSpwAttentionArchitecture;
@@ -1203,12 +1465,14 @@ export const ENHANCEMENT_DEFS = [
   {
     id: 'annotation-layer',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.VISIBLE,
     selector: '[data-spw-annotation-handle], [data-spw-header-annotation]',
     rootMode: 'single',
     describes: 'annotation-layer[handle|region-match|active-section]',
     updates: ['data-spw-annotation', 'data-spw-annotation-state', 'data-spw-annotation-match', 'data-spw-annotation-source'],
     evaluates: 'annotation region matching section locomotion',
+    timingArc: 'visible-annotation',
+    effectScope: 'local-dom listeners',
     load: () => import('./annotation-layer.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initSpwAnnotationLayer;
@@ -1224,14 +1488,15 @@ export const ENHANCEMENT_DEFS = [
     rootMode: 'single',
     describes: 'module[effects]{root-state.surface}',
     updates: [
-      'data-spw-module-effects-active',
-      'data-spw-module-effect-pulse',
-      'data-spw-runtime-enhancement-active',
-      'data-spw-runtime-feature-active',
-      'data-spw-runtime-layer-pulse',
+      'html:flourish:data-spw-module-effects-active',
+      'html:flourish:data-spw-module-effect-pulse',
+      'html:flourish:data-spw-runtime-enhancement-active',
+      'html:flourish:data-spw-runtime-feature-active',
+      'html:flourish:data-spw-runtime-layer-pulse',
     ],
     effectScope: 'root-state css-vars ornament',
     evaluates: 'runtime module side effects ornament pulse',
+    timingArc: 'immediate-orchestration',
     load: () => import('./module-effects.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initModuleEffects;
@@ -1247,17 +1512,18 @@ export const ENHANCEMENT_DEFS = [
     rootMode: 'single',
     describes: 'ecology[loading|measure|settle]{prefetch.personalize.genre}',
     updates: [
-      'data-spw-loading-ecology-phase',
-      'data-spw-loading-ecology-salience',
-      'data-spw-loading-ecology-rhythm',
-      'data-spw-loading-ecology-twinkle',
-      'data-spw-loading-ecology-trope',
-      'data-spw-loading-ecology-genre',
-      'data-spw-loading-ecology-dimensions',
-      'data-spw-loading-ecology-measure-kind',
+      'html:structural:data-spw-loading-ecology-phase',
+      'html:flourish:data-spw-loading-ecology-salience',
+      'html:flourish:data-spw-loading-ecology-rhythm',
+      'html:flourish:data-spw-loading-ecology-twinkle',
+      'html:flourish:data-spw-loading-ecology-trope',
+      'html:structural:data-spw-loading-ecology-genre',
+      'html:inspect:data-spw-loading-ecology-dimensions',
+      'html:measure:data-spw-loading-ecology-measure-kind',
     ],
     effectScope: 'root-state css-vars ornament measurement',
     evaluates: 'loading measurement settling ecology salience rhythm trope genre packing dimensions',
+    timingArc: 'immediate-orchestration',
     load: () => import('./loading-ecology.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initLoadingEcology;
@@ -1279,6 +1545,7 @@ export const ENHANCEMENT_DEFS = [
     ],
     effectScope: 'root-state css-vars',
     evaluates: 'multi-pass hydration workbench runtime phase narration',
+    timingArc: 'immediate-orchestration',
     load: () => import('./hydration-passes.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initHydrationPasses;
@@ -1294,12 +1561,13 @@ export const ENHANCEMENT_DEFS = [
     rootMode: 'single',
     describes: 'settings[tuning] spell[momentum] replayable-climate',
     updates: [
-      'data-spw-settings-momentum',
-      'data-spw-spell-momentum',
-      'data-spw-settings-tuning-phase',
+      'html:flourish:data-spw-settings-momentum',
+      'html:flourish:data-spw-spell-momentum',
+      'html:structural:data-spw-settings-tuning-phase',
     ],
     effectScope: 'root-state bus ornament',
     evaluates: 'settings tuning spell momentum pulse',
+    timingArc: 'immediate-orchestration',
     load: () => import('./settings-momentum.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initSettingsMomentum;
@@ -1310,7 +1578,7 @@ export const ENHANCEMENT_DEFS = [
   {
     id: 'image-utilization',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.VISIBLE,
     selector: 'main, [data-spw-image-surface], [data-spw-image-reward], [data-spw-image-discovery]',
     rootMode: 'single',
     describes: 'image[distribution|utilization] performance lazy-priority',
@@ -1319,6 +1587,8 @@ export const ENHANCEMENT_DEFS = [
       'data-spw-image-distribution',
     ],
     evaluates: 'image lazy loading decode priority distribution metadata',
+    timingArc: 'visible-media',
+    effectScope: 'media element-state',
     load: () => import('../semantic/image-utilization.js'),
     mount: (mod) => {
       const fn = mod?.initImageUtilization;
@@ -1329,7 +1599,7 @@ export const ENHANCEMENT_DEFS = [
   {
     id: 'image-interaction',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.VISIBLE,
     selector: '.topic-photo-card, .image-study, [data-spw-image-reward], [data-spw-image-discovery], .frame-card-media, [data-spw-image-surface]',
     rootMode: 'single',
     describes: 'image[interaction]{prime|inspect|discover|lens} gesture-contract',
@@ -1343,6 +1613,8 @@ export const ENHANCEMENT_DEFS = [
       'data-spw-discovery-motion',
     ],
     evaluates: 'image hover focus hold swipe lens discovered interaction states',
+    timingArc: 'visible-media',
+    effectScope: 'media listeners element-state',
     load: () => import('../semantic/image-interaction.js'),
     mount: (mod) => {
       const fn = mod?.initImageInteraction;
@@ -1367,6 +1639,7 @@ export const ENHANCEMENT_DEFS = [
       'data-spw-sigil',
     ],
     evaluates: 'operator sigil lens capacity chips visual cue tokens interaction state readouts',
+    timingArc: 'visible-media',
     load: () => import('../semantic/effect-interpretation.js'),
     mount: (mod) => {
       const fn = mod?.initEffectInterpretation;
@@ -1382,12 +1655,13 @@ export const ENHANCEMENT_DEFS = [
     rootMode: 'single',
     describes: 'rhythm[beat|freshness]{13-cycle|prime} settings-tuned pulse cadence',
     updates: [
-      'data-spw-beat',
-      'data-spw-playing',
-      'data-spw-freshness-pulse',
+      'html:structural:data-spw-beat',
+      'html:structural:data-spw-playing',
+      'html:flourish:data-spw-freshness-pulse',
     ],
     effectScope: 'root-state css-vars bus',
     evaluates: 'interaction-tuner beat-interval freshness-weight microinteraction-pulse-duration',
+    timingArc: 'immediate-rhythm',
     load: () => import('./pulse-beat-tuner.js'),
     mount: (mod) => {
       const fn = mod?.initPulseBeatTuner;
@@ -1416,6 +1690,8 @@ export const ENHANCEMENT_DEFS = [
       'data-spw-key-events-ready',
     ],
     evaluates: 'keyboard scene-enter scene-exit reveal-framing wonder-block-staging LM-interpretable context stack',
+    timingArc: 'immediate-keyboard',
+    effectScope: 'root-state listeners bus',
     load: () => import('./spw-key-events.js'),
     mount: (mod) => {
       const fn = mod?.initSpwKeyEvents;
@@ -1438,6 +1714,7 @@ export const ENHANCEMENT_DEFS = [
       'data-spw-scene-local-state',
     ],
     evaluates: 'scene lanes radiogroup image lens localStorage scene-memory strip',
+    timingArc: 'visible-scene',
     load: () => import('./scene-interaction.js'),
     mount: (mod) => {
       const fn = mod?.initSceneInteraction;
@@ -1454,6 +1731,8 @@ export const ENHANCEMENT_DEFS = [
     describes: 'topical[payload]{topics|lore|handles|scene|image}',
     updates: ['data-spw-topical-payload-ready'],
     evaluates: 'topics lore prompt-host scene-interpret semantic-expression image handles LM handoff',
+    timingArc: 'immediate-payload',
+    effectScope: 'root-state',
     load: () => import('./topical-payload.js'),
     mount: (mod) => {
       const fn = mod?.initTopicalPayload;
@@ -1464,21 +1743,24 @@ export const ENHANCEMENT_DEFS = [
   {
     id: 'palette-treat-discovery',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.IDLE,
     selector: '.palette-probe, .spw-shell-resonance-utility, html',
     rootMode: 'single',
     describes: 'palette[treat|splash] probe-chip discovery resonance echo',
     updates: [
-      'data-spw-palette-treat-active',
-      'data-spw-palette-splash',
-      'data-spw-palette-treat-probe',
-      'data-spw-palette-treat',
-      'data-spw-palette-probe-rail',
-      'data-spw-palette-probe-index',
-      'data-spw-palette-probe-toolbar',
+      'html:flourish:data-spw-palette-treat-active',
+      'html:flourish:data-spw-palette-splash',
+      'flourish:data-spw-palette-treat-probe',
+      'flourish:data-spw-palette-treat-depth',
+      'flourish:data-spw-palette-treat',
+      'structural:data-spw-palette-probe-rail',
+      'structural:data-spw-palette-probe-index',
+      'structural:data-spw-palette-probe-toolbar',
     ],
     effectScope: 'root-state probe-chips operators bus keyboard',
     evaluates: 'freshness-pulse discovery-reward discover-phase palette-resonance arrow-reward probe keyboard-rail',
+    timingArc: 'enhance-discovery',
+    timingChunk: 'idle-lab',
     load: () => import('./palette-treat-discovery.js'),
     mount: (mod) => {
       const fn = mod?.initPaletteTreatDiscovery;
@@ -1495,6 +1777,8 @@ export const ENHANCEMENT_DEFS = [
     describes: 'interaction[phase]{idle|approach|prime|charge|inspect|discover|settle}',
     updates: ['data-spw-interaction-phase', 'data-spw-microinteraction-pulse'],
     evaluates: 'gesture loop pinch swipe hover tap image ecology interaction-vocabulary',
+    timingArc: 'immediate-gesture',
+    effectScope: 'root-state',
     load: () => import('./interaction-progression.js'),
     mount: (mod) => {
       const fn = mod?.initInteractionProgression;
@@ -1517,6 +1801,7 @@ export const ENHANCEMENT_DEFS = [
       'data-spw-salience-weight',
     ],
     evaluates: 'conceptual salience vocabulary collectibility dimension refs',
+    timingArc: 'visible-semantics',
     load: () => import('../semantic/concept-salience.js'),
     mount: (mod) => {
       const fn = mod?.initConceptSalience;
@@ -1539,6 +1824,8 @@ export const ENHANCEMENT_DEFS = [
       'data-spw-query-condense',
     ],
     evaluates: 'condensation print screenshot precipitation from modular query',
+    timingArc: 'immediate-print',
+    effectScope: 'root-state',
     load: () => import('./precipitation-request.js'),
     mount: (mod) => {
       const fn = mod?.initPrecipitationRequest;
@@ -1560,6 +1847,7 @@ export const ENHANCEMENT_DEFS = [
       'data-spw-query-variant',
     ],
     evaluates: 'mode-switch variant selection query priming semantic weight',
+    timingArc: 'visible-variant',
     load: () => import('./variant-selection.js'),
     mount: (mod) => {
       const fn = mod?.initVariantSelection;
@@ -1575,11 +1863,11 @@ export const ENHANCEMENT_DEFS = [
     rootMode: 'single',
     describes: 'navigation[locomotion] transition[section-travel] spell[cast] chrome[sync]',
     updates: [
-      'data-spw-navigation-locomotion',
-      'data-spw-navigation-transition',
-      'data-spw-navigation-section',
-      'data-spw-spell-momentum',
-      'data-spw-bottom-lane-nav',
+      'html:structural:data-spw-navigation-locomotion',
+      'html:structural:data-spw-navigation-transition',
+      'html:structural:data-spw-navigation-section',
+      'html:flourish:data-spw-spell-momentum',
+      'html:structural:data-spw-bottom-lane-nav',
     ],
     evaluates: 'navigation transitions spells floating-chrome section-locomotion',
     timingArc: 'immediate-navigation',
@@ -1594,7 +1882,7 @@ export const ENHANCEMENT_DEFS = [
   {
     id: 'navigation-spells',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.IDLE,
     selector: 'header nav a[href], .site-header nav a[href], body > header nav a[href], .site-footer__nav a[href], .spw-route-menu-link[href], .operator-chip[href], .frame-sigil[href]',
     rootMode: 'single',
     describes: 'navigation[spell|grounding] route[replay]',
@@ -1606,6 +1894,9 @@ export const ENHANCEMENT_DEFS = [
       'data-spw-operator-geometry',
       'data-spw-ground-key',
     ],
+    evaluates: 'nav spell grounding route replay',
+    timingArc: 'enhance-spell',
+    timingChunk: 'idle-residue',
     effectScope: 'target-dom gesture-memory listeners',
     load: () => import('./navigation-spells.js'),
     mount: (mod) => {
@@ -1623,6 +1914,8 @@ export const ENHANCEMENT_DEFS = [
     describes: 'markup[bare-spw]{delimiter.operator.wrap}',
     updates: ['data-spw-bare-spw-enhanced', 'data-spw-form', 'data-spw-delimiter', 'data-spw-perspective'],
     evaluates: 'bare Spw prose delimiter and inline operator discoverability',
+    timingArc: 'immediate-grammar',
+    effectScope: 'element-state',
     load: () => import('../semantic/bare-spw-markup.js'),
     mount: (mod) => {
       const fn = mod?.initBareSpwMarkup;
@@ -1634,6 +1927,7 @@ export const ENHANCEMENT_DEFS = [
     id: 'operators',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
+    features: ['operators'],
     selector: '.frame-sigil, .frame-card-sigil, .frame-panel-sigil, .syntax-token, .operator-chip, .spec-pill, .header-sigil, .site-footer__brand, .spw-delimiter, [data-spw-charge-key], a[data-spw-operator], button[data-spw-operator], [data-spw-sigil]',
     rootMode: 'single',
     describes: 'operators[sigil.detect.annotate.transition] grammar projection with page-region payload handoff',
@@ -1659,6 +1953,8 @@ export const ENHANCEMENT_DEFS = [
       'data-spw-sigil-region',
     ],
     evaluates: 'operator grammar accessibility semantic projection geometry transition page-region-payload',
+    timingArc: 'immediate-grammar',
+    effectScope: 'element-state geometry',
     load: () => import('../semantic/operators.js'),
     mount: (mod) => {
       const fn = mod?.initSpwOperators;
@@ -1669,11 +1965,21 @@ export const ENHANCEMENT_DEFS = [
   {
     id: 'haptics',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.IDLE,
     selector: '[data-spw-groundable=\"true\"], [data-spw-living-term], [data-spw-concept], [data-spw-cauldron-candidate], .spw-living-term, .operator-chip, .syntax-token, .frame-sigil',
     rootMode: 'single',
     describes: 'grounding[collection|resonance] spell[grounded|checkpoint]',
-    updates: ['data-spw-grounded', 'data-spw-collected', 'data-spw-prime-state', 'data-spw-collection-strength', 'data-spw-grounded-wonder'],
+    updates: [
+      'residue:data-spw-grounded',
+      'residue:data-spw-collected',
+      'flourish:data-spw-prime-state',
+      'flourish:data-spw-collection-strength',
+      'residue:data-spw-grounded-wonder',
+    ],
+    evaluates: 'collectible grounding resonance checkpoint',
+    timingArc: 'enhance-collectible',
+    timingChunk: 'idle-collectible',
+    effectScope: 'element-state storage bus',
     load: () => import('../interface/haptics.js'),
     mount: (mod) => {
       const fn = mod?.initSpwHaptics;
@@ -1690,6 +1996,7 @@ export const ENHANCEMENT_DEFS = [
     describes: 'local-memory-controls[reset|status] browser storage actions',
     updates: ['data-spw-local-memory-controls-init', 'data-spw-memory-status-timer'],
     evaluates: 'local storage reset privacy settings',
+    timingArc: 'visible-memory',
     load: () => import('../interface/local-memory-controls.js'),
     mount: (mod) => {
       const fn = mod?.initSpwLocalMemoryControls;
@@ -1704,8 +2011,17 @@ export const ENHANCEMENT_DEFS = [
     selector: '[data-spw-promptability="visible"], [data-spw-prompt-host]',
     rootMode: 'single',
     describes: 'prompt-utils[copy|serialize|wonder-block] prompt surfaces',
-    updates: ['data-spw-instrumentation', 'data-spw-prompt-copy-bound', 'data-spw-wonder-block-state', 'data-prompt-preview-target'],
+    updates: [
+      'structural:data-spw-instrumentation',
+      'structural:data-spw-prompt-copy-bound',
+      'flourish:data-spw-wonder-block-state',
+      'structural:data-prompt-preview-target',
+    ],
     evaluates: 'prompt serialization copy utilities wonder blocks',
+    timingArc: 'visible-lab',
+    effectScope: 'local-dom clipboard',
+    // promptability body token is pack-level; selector is the demand gate so
+    // routes with prompt hosts outside design-lab packs still mount.
     load: () => import('../interface/prompt-utils.js'),
     mount: (mod) => {
       const fn = mod?.initSpwPromptUtils;
@@ -1716,11 +2032,20 @@ export const ENHANCEMENT_DEFS = [
   {
     id: 'experiential',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.IDLE,
     selector: 'header, main',
     rootMode: 'single',
     describes: 'gesture[tap|hold|swipe] spell[cauldron] learning[intuition]',
-    updates: ['data-spw-interaction-hint', 'data-spw-learning-note', 'data-spw-visual-anchor', 'data-spw-sample-kind'],
+    updates: [
+      'flourish:data-spw-interaction-hint',
+      'inspect:data-spw-learning-note',
+      'structural:data-spw-visual-anchor',
+      'structural:data-spw-sample-kind',
+    ],
+    evaluates: 'gesture learning cauldron intuition',
+    timingArc: 'enhance-spell',
+    effectScope: 'listeners root-state bus',
+    timingChunk: 'idle-residue',
     load: () => import('./experiential.js'),
     mount: (mod) => {
       const fn = mod?.initSpwExperiential;
@@ -1731,11 +2056,19 @@ export const ENHANCEMENT_DEFS = [
   {
     id: 'spells',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.IDLE,
     selector: '.spell-board-content, header',
     rootMode: 'single',
     describes: 'spell[checkpoint|replay] grounding[serialization]',
-    updates: ['data-spw-spell', 'data-spw-grounded', 'data-spw-checkpoint'],
+    updates: [
+      'residue:data-spw-spell',
+      'residue:data-spw-grounded',
+      'residue:data-spw-checkpoint',
+    ],
+    evaluates: 'checkpoint replay grounding spell path',
+    timingArc: 'enhance-spell',
+    effectScope: 'storage bus root-state',
+    timingChunk: 'idle-residue',
     load: () => import('./spells.js'),
     mount: (mod) => {
       const fn = mod?.initSpwSpells;
@@ -1750,8 +2083,16 @@ export const ENHANCEMENT_DEFS = [
     selector: '[data-spw-kind], [data-spw-role], [data-spw-slot]',
     rootMode: 'single',
     describes: 'guide[threshold|reason] subtle component guidance',
-    updates: ['data-spw-guided', 'data-spw-guide-reason', 'data-spw-guide-previous-liminality', 'data-spw-liminality'],
+    updates: [
+      'flourish:data-spw-guided',
+      'inspect:data-spw-guide-reason',
+      'structural:data-spw-guide-previous-liminality',
+      'structural:data-spw-liminality',
+    ],
     evaluates: 'component guidance grounded state threshold cues',
+    timingArc: 'enhance-guide',
+    timingChunk: 'idle-collectible',
+    effectScope: 'element-state root-state',
     load: () => import('../interface/guide.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initSpwGuide;
@@ -1767,14 +2108,14 @@ export const ENHANCEMENT_DEFS = [
     rootMode: 'single',
     describes: 'late layout alignment pass: module assumptions, compromises, refinements after runtime settle',
     updates: [
-      'data-spw-layout-assumptions-active',
-      'data-spw-layout-assumptions-pass',
-      'data-spw-layout-assumptions-compromises',
-      'data-spw-layout-assumptions-refinements',
-      'data-spw-layout-correction',
-      'data-spw-layout-assumption-correction',
-      'data-spw-bottom-lane-handle',
-      '--spw-bottom-chrome-clearance',
+      'html:structural:data-spw-layout-assumptions-active',
+      'html:inspect:data-spw-layout-assumptions-pass',
+      'html:inspect:data-spw-layout-assumptions-compromises',
+      'html:inspect:data-spw-layout-assumptions-refinements',
+      'html:structural:data-spw-layout-correction',
+      'html:structural:data-spw-layout-assumption-correction',
+      'html:structural:data-spw-bottom-lane-handle',
+      'html:structural:--spw-bottom-chrome-clearance',
     ],
     evaluates: 'layout alignment floating-chrome bottom-lane clearance module-settle',
     timingArc: 'after-all-settled',
@@ -1817,5 +2158,8 @@ export {
   normalizeModuleUpdates,
   readModuleUpdatesFromTarget,
   summarizeModuleUpdates,
+  summarizeModuleUpdatesTopology,
+  groupModuleUpdatesByRole,
+  listModuleUpdatesByRole,
   validateModuleUpdateToken,
 } from './module-updates-contract.js';

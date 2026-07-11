@@ -56,11 +56,115 @@ const isElement = (value) => Boolean(value) && value.nodeType === 1;
 const tracked = new Set();
 const onScreen = new Set();
 const elementState = new Map();
+const elementSnapshots = new Map();
+const readoutSnapshots = new Map();
 let intersectionObserver = null;
 let resizeObserver = null;
 let mutationObserver = null;
 let rafId = 0;
 let listenersBound = false;
+
+const GENERATED_DATASET_KEYS = Object.freeze([
+  'spwMeasureBand',
+  'spwExtent',
+  'spwVerticalGravity',
+  'spwHorizontalGravity',
+  'spwEdgeGravity',
+  'spwEdgeX',
+  'spwEdgeY',
+  'spwSpaceVariant',
+  'spwOpenDirection',
+  'spwOpenAnchor',
+  'spwSalienceRank',
+  'spwYielded',
+  'spwYieldReason',
+]);
+
+const GENERATED_STYLE_PROPERTIES = Object.freeze([
+  '--spw-room-above',
+  '--spw-room-below',
+  '--spw-room-left',
+  '--spw-room-right',
+  '--spw-proximity-top',
+  '--spw-proximity-bottom',
+  '--spw-proximity-left',
+  '--spw-proximity-right',
+  '--spw-edge-proximity',
+  '--spw-vertical-bias',
+  '--spw-horizontal-bias',
+]);
+
+function writeGeneratedStyle(el, property, value) {
+  switch (property) {
+    case '--spw-room-above': return writeStyleValue(el, '--spw-room-above', value);
+    case '--spw-room-below': return writeStyleValue(el, '--spw-room-below', value);
+    case '--spw-room-left': return writeStyleValue(el, '--spw-room-left', value);
+    case '--spw-room-right': return writeStyleValue(el, '--spw-room-right', value);
+    case '--spw-proximity-top': return writeStyleValue(el, '--spw-proximity-top', value);
+    case '--spw-proximity-bottom': return writeStyleValue(el, '--spw-proximity-bottom', value);
+    case '--spw-proximity-left': return writeStyleValue(el, '--spw-proximity-left', value);
+    case '--spw-proximity-right': return writeStyleValue(el, '--spw-proximity-right', value);
+    case '--spw-edge-proximity': return writeStyleValue(el, '--spw-edge-proximity', value);
+    case '--spw-vertical-bias': return writeStyleValue(el, '--spw-vertical-bias', value);
+    case '--spw-horizontal-bias': return writeStyleValue(el, '--spw-horizontal-bias', value);
+    default: return false;
+  }
+}
+
+/* ─── Feature-discovery registration (the spatial-gravity bench as a species) ──
+   The bench is a second feature in the field guide, declaring traversal
+   progression and *session* memory — deliberately unlike the palette probe's
+   named "depth"/persistent contract.
+   Progression = distinct vertical-gravity poles traversed this visit (pull up,
+   rest, pull down); session memory means it re-opens fresh each visit. */
+const BENCH_SPECIES = 'spatial-gravity-bench';
+const BENCH_SELECTOR = `[data-spw-feature="${BENCH_SPECIES}"]`;
+const benchPolesSeen = new Set();
+const BENCH_FEATURE = Object.freeze({
+  species: BENCH_SPECIES,
+  label: 'Spatial gravity bench',
+  // 'escalating-reward' is shared with the palette probe though the two evolved
+  // it independently — meeting the second one registers as convergent evolution.
+  traits: ['spatial-aware', 'traversal', 'measured-room', 'escalating-reward'],
+  memory: 'session',
+  maxLevel: 3,
+  progression: 'traversal',
+});
+
+const featureGuide = () => (typeof window !== 'undefined' ? window.spwFeatureDiscovery : null);
+
+let benchRegistered = false;
+const registerBenchFeature = () => {
+  if (benchRegistered) return;
+  const fd = featureGuide();
+  if (fd?.register) { fd.register(BENCH_FEATURE); benchRegistered = true; }
+};
+let featureReadyBound = false;
+const onFeatureDiscoveryReady = () => {
+  featureReadyBound = false;
+  registerBenchFeature();
+};
+const bindFeatureDiscoveryReady = () => {
+  if (benchRegistered || featureReadyBound || typeof document === 'undefined') return;
+  featureReadyBound = true;
+  document.addEventListener('spw:feature-discovery-ready', onFeatureDiscoveryReady, { once: true });
+};
+const unbindFeatureDiscoveryReady = () => {
+  if (!featureReadyBound || typeof document === 'undefined') return;
+  document.removeEventListener('spw:feature-discovery-ready', onFeatureDiscoveryReady);
+  featureReadyBound = false;
+};
+
+// Feed a traversed gravity pole to the field guide when a bench specimen first
+// shows it this visit — the bench's progression counts distinct poles.
+const noteBenchTraversal = (el, verticalGravity) => {
+  if (!verticalGravity || benchPolesSeen.has(verticalGravity)) return;
+  const bench = el.closest?.(BENCH_SELECTOR);
+  if (!bench) return;
+  benchPolesSeen.add(verticalGravity);
+  registerBenchFeature();
+  featureGuide()?.discover?.(BENCH_SPECIES, { variant: verticalGravity, element: bench, trigger: 'traversal' });
+};
 
 /* Salience is the attention axis (orthogonal to density). When two tracked
    elements contend for the same pixels, the higher-salience one holds and the
@@ -171,6 +275,10 @@ const measureElement = (el) => {
     spwSpaceVariant: `${measureBand}-${extent}-${s.vertical.gravity}`,
   });
 
+  // If this element lives in the discovery bench, a newly-shown vertical pole is
+  // a bit of traversal the field guide should record.
+  noteBenchTraversal(el, s.vertical.gravity);
+
   if (el.dataset.spwGravity === 'open') {
     // Expandable content grows toward the roomier side so it stays on-screen.
     writeDatasetValues(el, { spwOpenDirection: s.openVertical, spwOpenAnchor: s.openAnchor });
@@ -199,6 +307,7 @@ const measureElement = (el) => {
   // it narrate its own gravity as you scroll — interaction clarifies concept.
   const readout = el.querySelector?.('[data-spw-gravity-readout]');
   if (readout) {
+    if (!readoutSnapshots.has(readout)) readoutSnapshots.set(readout, readout.innerHTML);
     readout.innerHTML =
       `<span>edge <b>${s.edge}</b></span>`
       + `<span>vertical <b>${s.vertical.gravity}</b></span>`
@@ -287,6 +396,11 @@ const ensureMutationObserver = () => {
   mutationObserver = new MutationObserver((records) => {
     let found = false;
     for (const record of records) {
+      record.removedNodes.forEach((node) => {
+        if (!isElement(node)) return;
+        if (node.matches?.(GRAVITY_SELECTOR)) untrackElement(node);
+        node.querySelectorAll?.(GRAVITY_SELECTOR).forEach(untrackElement);
+      });
       record.addedNodes.forEach((node) => {
         if (!isElement(node)) return;
         if (node.matches?.(GRAVITY_SELECTOR)) { trackElement(node); found = true; }
@@ -312,9 +426,63 @@ const bindListeners = () => {
   window.visualViewport?.addEventListener?.('resize', scheduleMeasure, { passive: true });
 };
 
+const unbindListeners = () => {
+  if (!listenersBound || typeof window === 'undefined') return;
+  document.removeEventListener('scroll', scheduleMeasure, { capture: true });
+  window.removeEventListener('resize', scheduleMeasure);
+  window.visualViewport?.removeEventListener?.('resize', scheduleMeasure);
+  listenersBound = false;
+};
+
+function restoreElement(el) {
+  if (!isElement(el)) return;
+  removeDatasetValues(el, GENERATED_DATASET_KEYS);
+  GENERATED_STYLE_PROPERTIES.forEach((property) => writeGeneratedStyle(el, property, null));
+
+  const snapshot = elementSnapshots.get(el);
+  if (snapshot) {
+    Object.entries(snapshot.datasets).forEach(([key, value]) => {
+      if (value != null) el.dataset[key] = value;
+    });
+    Object.entries(snapshot.styles).forEach(([property, value]) => {
+      if (value) writeGeneratedStyle(el, property, value);
+    });
+    if (snapshot.instrumentation == null) delete el.dataset.spwInstrumentation;
+    else el.dataset.spwInstrumentation = snapshot.instrumentation;
+    if (snapshot.debugSource == null) delete el.dataset.spwDebugSource;
+    else el.dataset.spwDebugSource = snapshot.debugSource;
+  }
+  elementSnapshots.delete(el);
+
+  el.querySelectorAll?.('[data-spw-gravity-readout]').forEach((readout) => {
+    if (!readoutSnapshots.has(readout)) return;
+    readout.innerHTML = readoutSnapshots.get(readout);
+    readoutSnapshots.delete(readout);
+  });
+}
+
+function untrackElement(el) {
+  if (!isElement(el) || !tracked.has(el)) return;
+  intersectionObserver?.unobserve?.(el);
+  resizeObserver?.unobserve?.(el);
+  tracked.delete(el);
+  onScreen.delete(el);
+  elementState.delete(el);
+  restoreElement(el);
+}
+
 const trackElement = (el) => {
   if (!isElement(el) || tracked.has(el)) return;
   tracked.add(el);
+  elementSnapshots.set(el, {
+    datasets: Object.fromEntries(GENERATED_DATASET_KEYS.map((key) => [key, el.dataset[key] ?? null])),
+    styles: Object.fromEntries(GENERATED_STYLE_PROPERTIES.map((property) => [
+      property,
+      el.style.getPropertyValue(property) || null,
+    ])),
+    instrumentation: el.dataset.spwInstrumentation ?? null,
+    debugSource: el.dataset.spwDebugSource ?? null,
+  });
   markInstrumented(el, 'spw-spatial-gravity', { tags: ['gravity', el.dataset.spwGravity || 'track'] });
 
   // Measure once at track time so the component reports a state immediately
@@ -335,15 +503,46 @@ export function initSpwSpatialGravity(root = document, options = {}) {
   const scope = options.root || root;
   const elements = [...(scope?.querySelectorAll?.(GRAVITY_SELECTOR) || [])];
   if (isElement(scope) && scope.matches?.(GRAVITY_SELECTOR)) elements.unshift(scope);
-  if (!elements.length) return [];
+  if (!elements.length) return { cleanup() {}, refresh() {} };
 
   bindListeners();
   ensureMutationObserver();
+  registerBenchFeature(); // no-op until the discovery engine is present
+  bindFeatureDiscoveryReady();
   elements.forEach(trackElement);
   scheduleMeasure();
 
   logger.debug('tracking spatial gravity', { count: elements.length });
-  return elements;
+  const refresh = () => {
+    [...tracked].filter((el) => !el.isConnected).forEach(untrackElement);
+    const next = [...(scope?.querySelectorAll?.(GRAVITY_SELECTOR) || [])];
+    if (isElement(scope) && scope.matches?.(GRAVITY_SELECTOR)) next.unshift(scope);
+    next.forEach(trackElement);
+    scheduleMeasure();
+    return next;
+  };
+
+  const cleanup = () => {
+    if (rafId) window.cancelAnimationFrame?.(rafId);
+    rafId = 0;
+    intersectionObserver?.disconnect();
+    resizeObserver?.disconnect();
+    mutationObserver?.disconnect();
+    intersectionObserver = null;
+    resizeObserver = null;
+    mutationObserver = null;
+    unbindListeners();
+    unbindFeatureDiscoveryReady();
+    [...tracked].forEach(untrackElement);
+    tracked.clear();
+    onScreen.clear();
+    elementState.clear();
+    readoutSnapshots.clear();
+    benchPolesSeen.clear();
+    benchRegistered = false;
+  };
+
+  return { cleanup, refresh };
 }
 
 export function measureSpatialGravity(target) {
@@ -387,4 +586,6 @@ export const SPW_SPATIAL_GRAVITY_CONTRACT = Object.freeze({
   ]),
   performanceRule:
     'One shared rAF-throttled scroll/resize listener; IntersectionObserver gates measurement to on-screen tracked elements. Visible response should stay in transform, opacity, and color.',
+  lifecycleRule:
+    'Mount returns { cleanup, refresh }; removed roots untrack immediately, cleanup disconnects observers/listeners and restores generated DOM state, and refresh adopts new opt-in roots.',
 });

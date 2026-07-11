@@ -276,6 +276,19 @@ export {
 } from './runtime/behavior-scopes.js';
 
 export {
+  QUERY_COMPOSER_INSTRUMENTS,
+  QUERY_COMPOSER_SELECTOR,
+  SPW_QUERY_COMPOSER_CONTRACT,
+  bindQueryComposers,
+  buildQueryComposerHref,
+  buildQueryComposerSearch,
+  createQueryComposerElement,
+  hydrateQueryComposer,
+  initQueryLinkComposer,
+  syncQueryComposer,
+} from './runtime/query-link-composer.js';
+
+export {
   GESTURE_SPELL_SEEDS,
   GESTURE_VOCABULARY,
   SPW_GESTURE_CONTRACT,

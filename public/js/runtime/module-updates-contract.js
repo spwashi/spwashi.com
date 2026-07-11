@@ -25,6 +25,20 @@ export const MODULE_UPDATE_SCOPES = Object.freeze([
   'frame',
 ]);
 
+/**
+ * Topology roles — why a module writes a surface, not only what kind it is.
+ * Flourishes are ornamental residue (pulses, ledger halos, reward chrome);
+ * structural is identity/layout grammar; residue is precipitated memory.
+ */
+export const MODULE_UPDATE_ROLES = Object.freeze([
+  'structural',
+  'flourish',
+  'inspect',
+  'residue',
+  'measure',
+  'diagnostic',
+]);
+
 export const MODULE_UPDATE_KIND_LABELS = Object.freeze({
   attr: 'attrs',
   'css-var': 'css vars',
@@ -33,6 +47,15 @@ export const MODULE_UPDATE_KIND_LABELS = Object.freeze({
   event: 'events',
   selector: 'selectors',
   property: 'properties',
+});
+
+export const MODULE_UPDATE_ROLE_LABELS = Object.freeze({
+  structural: 'structure',
+  flourish: 'flourishes',
+  inspect: 'inspect',
+  residue: 'residue',
+  measure: 'measure',
+  diagnostic: 'diagnostics',
 });
 
 const KIND_ALIASES = Object.freeze({
@@ -50,6 +73,24 @@ const KIND_ALIASES = Object.freeze({
   selector: 'selector',
 });
 
+const ROLE_ALIASES = Object.freeze({
+  structural: 'structural',
+  structure: 'structural',
+  flourish: 'flourish',
+  flourishes: 'flourish',
+  ornament: 'flourish',
+  pulse: 'flourish',
+  inspect: 'inspect',
+  inspection: 'inspect',
+  residue: 'residue',
+  memory: 'residue',
+  measure: 'measure',
+  metric: 'measure',
+  diagnostic: 'diagnostic',
+  diagnostics: 'diagnostic',
+  debug: 'diagnostic',
+});
+
 const DATASET_SEPARATOR = '|';
 const LIST_SEPARATOR = ' ';
 
@@ -62,9 +103,19 @@ function normalizeKind(value = '') {
   return KIND_ALIASES[token] || (MODULE_UPDATE_KINDS.includes(token) ? token : 'attr');
 }
 
+function normalizeRole(value = '') {
+  const token = cleanToken(value).toLowerCase();
+  if (!token) return null;
+  return ROLE_ALIASES[token] || (MODULE_UPDATE_ROLES.includes(token) ? token : null);
+}
+
 function isKnownKindToken(value = '') {
   const token = cleanToken(value).toLowerCase();
   return KIND_ALIASES[token] != null || MODULE_UPDATE_KINDS.includes(token);
+}
+
+function isKnownRoleToken(value = '') {
+  return Boolean(normalizeRole(value));
 }
 
 function inferKindFromName(name = '') {
@@ -80,7 +131,8 @@ function inferKindFromName(name = '') {
 
 function moduleUpdateKey(entry) {
   const scope = entry?.scope ? `${entry.scope}:` : '';
-  return `${scope}${entry.kind}:${entry.name}`;
+  const role = entry?.role ? `${entry.role}:` : '';
+  return `${scope}${role}${entry.kind}:${entry.name}`;
 }
 
 function parseStructuredUpdate(entry) {
@@ -89,19 +141,44 @@ function parseStructuredUpdate(entry) {
   if (!name) return null;
   const kind = entry.kind ? normalizeKind(entry.kind) : inferKindFromName(name);
   const scope = cleanToken(entry.scope || entry.surface || entry.owner || '') || null;
-  return { kind, name, scope, raw: name };
+  const role = normalizeRole(entry.role || entry.topology || entry.purpose || '') || null;
+  return { kind, name, scope, role, raw: name };
 }
 
-function parseStringUpdate(entry = '', allowScope = true) {
+/**
+ * Parse string update tokens.
+ * Order of prefixes (each optional, left-to-right):
+ *   scope:  html|root|body|document|frame
+ *   role:   structural|flourish|inspect|residue|measure|diagnostic
+ *   kind:   attr|css-var|aria|class|event|selector|property
+ * Examples:
+ *   data-spw-effects
+ *   html:data-spw-effects
+ *   flourish:data-spw-effects
+ *   html:flourish:--spw-effect-charge
+ *   residue:event:effect:recorded
+ */
+function parseStringUpdate(entry = '', options = {}) {
+  const allowScope = options.allowScope !== false;
+  const allowRole = options.allowRole !== false;
   const raw = cleanToken(entry);
   if (!raw) return null;
 
   if (allowScope) {
     const scopeMatch = raw.match(/^([a-z]+):(.+)$/i);
     if (scopeMatch && MODULE_UPDATE_SCOPES.includes(scopeMatch[1].toLowerCase())) {
-      const inner = parseStringUpdate(scopeMatch[2], false);
+      const inner = parseStringUpdate(scopeMatch[2], { allowScope: false, allowRole });
       if (!inner) return null;
       return { ...inner, scope: scopeMatch[1].toLowerCase(), raw };
+    }
+  }
+
+  if (allowRole) {
+    const roleMatch = raw.match(/^([a-z]+):(.+)$/i);
+    if (roleMatch && isKnownRoleToken(roleMatch[1])) {
+      const inner = parseStringUpdate(roleMatch[2], { allowScope: false, allowRole: false });
+      if (!inner) return null;
+      return { ...inner, role: normalizeRole(roleMatch[1]), raw };
     }
   }
 
@@ -110,15 +187,15 @@ function parseStringUpdate(entry = '', allowScope = true) {
     const kind = normalizeKind(explicit[1]);
     const name = cleanToken(explicit[2]);
     if (!name) return null;
-    return { kind, name, scope: null, raw };
+    return { kind, name, scope: null, role: null, raw };
   }
 
   const kind = inferKindFromName(raw);
-  return { kind, name: raw, scope: null, raw };
+  return { kind, name: raw, scope: null, role: null, raw };
 }
 
 export function classifyModuleUpdate(entry) {
-  if (typeof entry === 'string') return parseStringUpdate(entry);
+  if (typeof entry === 'string') return parseStringUpdate(entry, { allowScope: true, allowRole: true });
   return parseStructuredUpdate(entry);
 }
 
@@ -155,6 +232,40 @@ export function groupModuleUpdatesByKind(updates) {
     grouped[entry.kind].push(entry.name);
   });
   return grouped;
+}
+
+export function groupModuleUpdatesByRole(updates) {
+  const grouped = Object.fromEntries(MODULE_UPDATE_ROLES.map((role) => [role, []]));
+  grouped.unspecified = [];
+  normalizeModuleUpdates(updates).forEach((entry) => {
+    const role = entry.role || 'unspecified';
+    if (!grouped[role]) grouped[role] = [];
+    grouped[role].push(entry.name);
+  });
+  return grouped;
+}
+
+export function listModuleUpdatesByRole(updates, role = 'flourish') {
+  const wanted = normalizeRole(role);
+  if (!wanted) return [];
+  return normalizeModuleUpdates(updates)
+    .filter((entry) => entry.role === wanted)
+    .map((entry) => entry.name);
+}
+
+/**
+ * Compact topology summary: kinds + roles for inspectors and flourish CSS.
+ * Example: "attr:3|css-var:2|role:flourish:4|role:residue:1"
+ */
+export function summarizeModuleUpdatesTopology(updates, options = {}) {
+  const { separator = '|' } = options;
+  const kindPart = summarizeModuleUpdates(updates, { separator });
+  const byRole = groupModuleUpdatesByRole(updates);
+  const rolePart = MODULE_UPDATE_ROLES
+    .filter((role) => byRole[role]?.length)
+    .map((role) => `role:${role}:${byRole[role].length}`)
+    .join(separator);
+  return [kindPart, rolePart].filter(Boolean).join(separator);
 }
 
 export function summarizeModuleUpdates(updates, options = {}) {
@@ -211,16 +322,23 @@ export function listModuleUpdateNames(updates, kind = null) {
 export function describeModuleUpdates(updates) {
   const normalized = normalizeModuleUpdates(updates);
   const grouped = groupModuleUpdatesByKind(updates);
+  const byRole = groupModuleUpdatesByRole(updates);
   const kinds = MODULE_UPDATE_KINDS.filter((kind) => grouped[kind]?.length);
+  const roles = MODULE_UPDATE_ROLES.filter((role) => byRole[role]?.length);
   const scopes = [...new Set(normalized.map((entry) => entry.scope).filter(Boolean))];
+  const flourishes = listModuleUpdatesByRole(updates, 'flourish');
 
   return {
     count: normalized.length,
     kinds,
+    roles,
     scopes,
     grouped,
+    byRole,
+    flourishes,
     items: normalized,
     summary: summarizeModuleUpdates(updates),
+    topology: summarizeModuleUpdatesTopology(updates),
     spell: formatModuleUpdatesSpell(updates),
     readable: formatModuleUpdatesReadable(updates),
     brief: formatModuleUpdatesBrief(updates),
@@ -231,9 +349,12 @@ export function validateModuleUpdateToken(token = '') {
   const parsed = classifyModuleUpdate(token);
   if (!parsed) return { valid: false, reason: 'empty-token' };
 
-  const { kind, name, scope } = parsed;
+  const { kind, name, scope, role } = parsed;
   if (scope && !MODULE_UPDATE_SCOPES.includes(scope)) {
     return { valid: false, reason: 'scope-shape', parsed };
+  }
+  if (role && !MODULE_UPDATE_ROLES.includes(role)) {
+    return { valid: false, reason: 'role-shape', parsed };
   }
   if (kind === 'attr' && !/^(data-[a-z0-9-]+|aria-[a-z0-9-]+|[a-z][a-z0-9-]*)$/.test(name)) {
     return { valid: false, reason: 'attr-shape', parsed };
@@ -325,10 +446,13 @@ export function readModuleUpdatesFromTarget(target) {
 export const SPW_MODULE_UPDATES_CONTRACT = Object.freeze({
   kinds: MODULE_UPDATE_KINDS,
   scopes: MODULE_UPDATE_SCOPES,
+  roles: MODULE_UPDATE_ROLES,
   kindLabels: MODULE_UPDATE_KIND_LABELS,
+  roleLabels: MODULE_UPDATE_ROLE_LABELS,
   aliases: KIND_ALIASES,
+  roleAliases: ROLE_ALIASES,
   portableUse:
-    'Declare module updates as flat strings or kind:name objects; normalizeModuleUpdates() groups attrs, css vars, aria, classes, events, selectors, and properties for inspection.',
+    'Declare module updates as flat strings or objects; optional scope: and role: prefixes (html:flourish:--token). normalizeModuleUpdates() groups by kind and topology role for inspect + flourish CSS.',
   stringForms: Object.freeze([
     'data-spw-example',
     '--spw-example-token',
@@ -339,16 +463,22 @@ export const SPW_MODULE_UPDATES_CONTRACT = Object.freeze({
     'css-var:--spw-example-token',
     'html:data-spw-example',
     'root:--spw-example-token',
+    'flourish:data-spw-effects',
+    'html:flourish:--spw-effect-charge',
+    'residue:event:effect:recorded',
   ]),
   datasetFields: Object.freeze({
     all: 'data-spw-module-updates',
     contract: 'data-spw-module-updates-contract',
+    topology: 'data-spw-module-updates-topology',
     attrs: 'data-spw-module-updates-attrs',
     cssVars: 'data-spw-module-updates-vars',
     aria: 'data-spw-module-updates-aria',
     classes: 'data-spw-module-updates-classes',
     events: 'data-spw-module-updates-events',
     kinds: 'data-spw-module-updates-kinds',
+    roles: 'data-spw-module-updates-roles',
+    flourishes: 'data-spw-module-updates-flourishes',
     scopes: 'data-spw-module-updates-scopes',
     count: 'data-spw-module-updates-count',
     spell: 'data-spw-module-updates-spell',
@@ -367,7 +497,10 @@ export function annotateModuleUpdatesTarget(target, updates) {
   let changed = false;
   changed = writeDatasetValue(target, 'spwModuleUpdates', listModuleUpdateNames(updates), { separator: LIST_SEPARATOR }) || changed;
   changed = writeDatasetValue(target, 'spwModuleUpdatesContract', contract.summary, { separator: DATASET_SEPARATOR }) || changed;
+  changed = writeDatasetValue(target, 'spwModuleUpdatesTopology', contract.topology || null, { separator: DATASET_SEPARATOR }) || changed;
   changed = writeDatasetValue(target, 'spwModuleUpdatesKinds', contract.kinds.join(' '), { separator: LIST_SEPARATOR }) || changed;
+  changed = writeDatasetValue(target, 'spwModuleUpdatesRoles', contract.roles.join(' ') || null, { separator: LIST_SEPARATOR }) || changed;
+  changed = writeDatasetValue(target, 'spwModuleUpdatesFlourishes', contract.flourishes.join(' ') || null, { separator: LIST_SEPARATOR }) || changed;
   changed = writeDatasetValue(target, 'spwModuleUpdatesCount', String(contract.count)) || changed;
   changed = writeDatasetValue(target, 'spwModuleUpdatesSpell', contract.spell || null) || changed;
   changed = writeDatasetValue(target, 'spwModuleUpdatesReadable', contract.readable || null) || changed;
