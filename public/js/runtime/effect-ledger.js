@@ -241,6 +241,18 @@ export function initEffectLedger() {
     });
     const root = document.documentElement;
     if (root) {
+      // Clear both flourish CSS vars and dataset tokens so teardown is symmetric
+      // with projectLedgerState (vars alone left residue attrs on remount).
+      writeRuntimeDatasetValues(root, {
+        spwEffects: null,
+        spwEffectLedgerCount: null,
+        spwEffectLedgerLast: null,
+        spwEffectCharge: null,
+        spwEffectPulse: null,
+      }, {
+        source: 'effect-ledger',
+        reason: 'ledger-teardown',
+      });
       root.style.removeProperty('--spw-effect-count');
       root.style.removeProperty('--spw-effect-charge');
       root.style.removeProperty('--spw-effect-pulse');

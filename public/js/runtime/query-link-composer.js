@@ -556,6 +556,10 @@ export function createQueryComposerElement(options = {}) {
 export function initQueryLinkComposer(ctx) {
   const root = ctx?.body || document;
   const binding = bindQueryComposers(root);
-  ctx?.addCleanup?.(binding.cleanup);
-  return binding.cleanup;
+  // Return a mount handle only — the catalog/module-loader owns teardown.
+  // Do not also ctx.addCleanup here (would double-run cleanup on destroy).
+  return {
+    cleanup: binding.cleanup,
+    refresh: binding.refresh,
+  };
 }

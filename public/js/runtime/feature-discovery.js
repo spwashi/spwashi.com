@@ -481,7 +481,13 @@ export function initFeatureDiscovery(ctx = {}) {
     reset() {
       persistent = emptyStore();
       sessionRecords.clear();
-      if (store) { try { store.removeItem(STORAGE_KEY); } catch {} }
+      if (store) {
+        try {
+          store.removeItem(STORAGE_KEY);
+        } catch {
+          // Privacy mode / disabled storage — in-memory guide already cleared.
+        }
+      }
       elementsBySpecies.forEach((elements) => elements.forEach(restoreElementTokens));
     },
     contract: SPW_FEATURE_DISCOVERY_CONTRACT,

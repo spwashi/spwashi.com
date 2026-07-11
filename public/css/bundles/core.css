@@ -837,6 +837,43 @@ html[data-spw-reduce-motion="on"] *::after {
   initial-value: 0;
 }
 
+/* Effect ledger precipitation — effect-ledger.js writes; ornament/runtime-states spend. */
+@property --spw-effect-count {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --spw-effect-charge {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --spw-effect-pulse {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --spw-section-progress {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --spw-section-step {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --spw-runtime-avg-module-ms {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
 /* Runtime module layer influence tokens — driven by data-spw-active-layers on root.
    These allow CSS to react to which parts of the JS runtime are currently live,
    supporting smoother transitions, attentional modulation, and "computational"
@@ -1540,6 +1577,20 @@ html[data-spw-reduce-motion="on"] *::after {
   --spw-ecology-field-resonance: 0;
   --spw-ecology-twinkle-duration: 760ms;
   --spw-ecology-readiness-ring-strength: 0;
+
+  /* Effect ledger flourishes — JS may override on html; CSS consumes for ornament. */
+  --spw-effect-count: 0;
+  --spw-effect-charge: 0;
+  --spw-effect-pulse: 0;
+
+  /* Section locomotion progress (attention-architecture writes on section nodes). */
+  --spw-section-progress: 0;
+  --spw-section-step: 0;
+
+  /* Runtime load diagnostics — module-loader; inspect/module-visuals may surface. */
+  --spw-runtime-avg-module-ms: 0;
+  --spw-runtime-feature-intensity: 0.22;
+  --spw-runtime-layer-count: 0;
 
   --utility-shift-duration: var(--duration-deliberate);
   --utility-shift-ease: var(--ease-settle);
@@ -9122,6 +9173,8 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
   opacity: 0.9;
   transform: scaleX(var(--spw-section-progress, 0));
   transform-origin: left center;
+  /* section-step (0–1 within current section) softens opacity as you enter. */
+  opacity: calc(0.55 + (var(--spw-section-step, 0) * 0.45));
   transition:
     transform 180ms var(--ease-settle, ease),
     opacity 180ms var(--ease-settle, ease);
@@ -11941,14 +11994,20 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
     justify-content: flex-start;
   }
 
-  :where(.mode-switch[aria-label]) {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(7.25rem, 1fr));
+  /* Soft PE for mode-switch inside narrow containers.
+     Canonical track/chrome lives in handles/state-semantics (lens-track, lens-chrome).
+     These :where() rules only reinforce flex equal-share when handles media
+     queries have not already applied; they never reintroduce 2-col grid. */
+  :where(.mode-switch[aria-label]:not([data-spw-lens-track="row"])) {
+    display: flex;
+    flex-flow: row wrap;
     gap: calc(var(--spw-control-gap, 0.24rem) + 0.14rem);
+    width: 100%;
+    min-inline-size: 0;
   }
 
-  :where(.mode-switch[aria-label])::before {
-    grid-column: 1 / -1;
+  :where(.mode-switch[aria-label]:not([data-spw-lens-chrome~="silent"]))::before {
+    flex: 1 1 100%;
     max-inline-size: none;
     overflow: visible;
     text-overflow: clip;
@@ -11957,12 +12016,13 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
   }
 
   :where(
-    .frame-topline > .mode-switch > *,
+    .frame-topline > .mode-switch:not([data-spw-lens-track="row"]) > .frame-sigil,
     .frame-topline > .frame-operators > *
   ) {
-    flex: 1 1 min(100%, 8rem);
+    flex: 1 1 0;
     justify-content: center;
-    min-inline-size: 0;
+    min-inline-size: min(100%, 4.25rem);
+    white-space: nowrap;
   }
 }
 
@@ -18123,33 +18183,55 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   width: 100%;
 }
 
-/* Composition flow: wire authored layout intent without duplicating grid class lists. */
-:where([data-spw-composition-flow="grid"]:not(
-  .frame-grid,
-  .plans-grid,
-  .contact-grid,
-  .gallery-overlays,
-  .compare-sets,
-  .spec-grid,
-  .directory-grid,
-  .ref-grid,
-  .settings-state-grid,
-  .settings-navigator-grid,
-  .settings-structures-grid,
-  .settings-quickstart-grid,
-  .vibe-widget-grid,
-  .spw-principle-grid,
-  .pwa-status-grid,
-  .spw-amount-grid,
-  .spw-character-card-grid,
-  .spw-wisdom-deck,
-  .spw-reason-strip,
-  .spw-role-hooks,
-  .spw-route-bridge__links,
-  .spw-resonance-lab,
-  .spw-learning-game,
-  .spw-semantic-emphasis-map
-)) {
+/* Composition flow — progressive, authored-first layout intent.
+   --------------------------------------------------------------------------
+   Cluster A: packing grids (auto-fit) for content clusters only.
+   Cluster B: stack as single-column grid for non-stage hosts.
+   Cluster C: stages (.site-frame / panels) force flex column — never masonry.
+   Never apply multi-column auto-fit to stages: box-model may mirror computed
+   display onto data-spw-composition-flow, and a stage that is only
+   `display:grid` for vertical stacking must not pack its children.
+   Authored flow works without JS; annotation is enhancement.
+   -------------------------------------------------------------------------- */
+
+/* Cluster A — multi-column packing (exclude stages + known grid hosts) */
+:where(
+  [data-spw-composition-flow="grid"]:not(
+    :is(
+      .site-frame,
+      .frame-panel,
+      .mode-panel,
+      [data-spw-kind="frame"],
+      [data-spw-box-model="stage"]
+    ),
+    :is(
+      .frame-grid,
+      .plans-grid,
+      .contact-grid,
+      .gallery-overlays,
+      .compare-sets,
+      .spec-grid,
+      .directory-grid,
+      .ref-grid,
+      .settings-state-grid,
+      .settings-navigator-grid,
+      .settings-structures-grid,
+      .settings-quickstart-grid,
+      .vibe-widget-grid,
+      .spw-principle-grid,
+      .pwa-status-grid,
+      .spw-amount-grid,
+      .spw-character-card-grid,
+      .spw-wisdom-deck,
+      .spw-reason-strip,
+      .spw-role-hooks,
+      .spw-route-bridge__links,
+      .spw-resonance-lab,
+      .spw-learning-game,
+      .spw-semantic-emphasis-map
+    )
+  )
+) {
   display: grid;
   gap: var(--spw-grid-gap-active, var(--component-gap));
   align-items: stretch;
@@ -18157,17 +18239,41 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--spw-grid-min-active, 15rem)), 1fr));
 }
 
-:where([data-spw-composition-flow="stack"]:not(
-  .spw-narration,
-  .spw-route-bridge,
-  .spw-settings-cluster,
-  .settings-form
-)) {
+/* Cluster B — non-stage stack hosts */
+:where(
+  [data-spw-composition-flow="stack"]:not(
+    :is(
+      .site-frame,
+      .frame-panel,
+      .mode-panel,
+      [data-spw-kind="frame"],
+      [data-spw-box-model="stage"],
+      .spw-narration,
+      .spw-route-bridge,
+      .spw-settings-cluster,
+      .settings-form
+    )
+  )
+) {
   display: grid;
   gap: var(--component-gap-tight, 0.45rem);
   align-content: start;
   min-width: 0;
   grid-template-columns: minmax(0, 1fr);
+}
+
+/* Cluster C — stages stay single-column flex even if display:grid is used for gap. */
+:where(
+  .site-frame[data-spw-composition-flow="stack"],
+  .frame-panel[data-spw-composition-flow="stack"],
+  .mode-panel[data-spw-composition-flow="stack"],
+  [data-spw-kind="frame"][data-spw-composition-flow="stack"],
+  [data-spw-box-model="stage"][data-spw-composition-flow="stack"]
+) {
+  display: flex;
+  flex-direction: column;
+  align-content: stretch;
+  grid-template-columns: none;
 }
 
 :where([data-spw-composition-flow="inline-wrap"]:not(.spw-copy-motif-strip)) {
@@ -22273,6 +22379,58 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
   --spw-site-rhythm-tempo: min(calc(var(--spw-site-rhythm-tempo, 1) * 1.08), 3.2);
 }
 
+/* Effect ledger flourishes — precipitated residue as soft ornament knobs.
+   Defaults live in tokens/core.css; effect-ledger.js overrides on html when residue lands. */
+:where(html[data-spw-effects]) {
+  --spw-effect-surface: 1;
+  --spw-effect-ledger-scale: calc(1 + (min(var(--spw-effect-count), 24) * 0.004));
+  --spw-site-rhythm-density: max(
+    var(--spw-site-rhythm-density, 0.5),
+    calc(0.48 + (var(--spw-effect-charge) * 0.28))
+  );
+}
+
+:where(html[data-spw-effect-pulse]) {
+  --spw-effect-pulse-active: max(var(--spw-effect-pulse), 1);
+  --spw-microinteraction-pulse-intensity: max(
+    var(--spw-microinteraction-pulse-intensity, 1),
+    calc(1 + (max(var(--spw-effect-charge), 0.18) * 0.22 * var(--spw-effect-pulse-active, 1)))
+  );
+  --spw-site-rhythm-tempo: min(
+    calc(var(--spw-site-rhythm-tempo, 1) * (1 + (max(var(--spw-effect-charge), 0.12) * 0.1))),
+    3.2
+  );
+}
+
+:where(html[data-spw-module-visuals="on"][data-spw-effect-pulse]) {
+  --spw-effect-pulse-ring:
+    inset 0 0 0 1px color-mix(in srgb, var(--op-object-color, #c9862a) calc(18% + (var(--spw-effect-charge) * 16%)), transparent);
+  outline: 1px solid color-mix(in srgb, var(--op-object-color, #c9862a) calc(16% + (var(--spw-effect-charge) * 14%)), transparent);
+  outline-offset: -1px;
+  transition: outline-color 420ms var(--ease-smooth, ease);
+}
+
+/* Runtime load diagnostic — module-loader writes avg mount ms; inspect surfaces may read it. */
+:where(html[data-spw-module-visuals="on"]) {
+  --spw-runtime-load-bias: clamp(
+    0,
+    calc(var(--spw-runtime-avg-module-ms) / 120),
+    1
+  );
+}
+
+:where(html[data-spw-module-visuals="on"][data-spw-runtime-stage="ready"]) {
+  --spw-site-rhythm-density: max(
+    var(--spw-site-rhythm-density, 0.5),
+    calc(0.42 + (var(--spw-runtime-load-bias) * 0.18))
+  );
+}
+
+:where(html[data-spw-reduce-motion="on"][data-spw-effect-pulse]) {
+  --spw-effect-pulse-active: 0;
+  --spw-microinteraction-pulse-intensity: 1;
+}
+
 :where(html[data-spw-runtime-enhancement-active="true"]) {
   --spw-runtime-enhancement-intensity: max(var(--spw-runtime-enhancement-intensity, 0.32), 0.72);
 }
@@ -22534,21 +22692,31 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
 
   :where(.frame-topline > .mode-switch, [data-spw-slot="actions"] > .mode-switch) {
     width: 100%;
-    justify-content: flex-start;
+    justify-content: stretch;
   }
 
-  :where(.mode-switch[aria-label]) {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(7.25rem, 1fr));
+  /* Soft PE only — handles/state-semantics owns track/chrome contracts. */
+  :where(.mode-switch[aria-label]:not([data-spw-lens-track="row"])) {
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
+    min-inline-size: 0;
   }
 
-  :where(.mode-switch[aria-label])::before {
-    grid-column: 1 / -1;
+  :where(.mode-switch[aria-label]:not([data-spw-lens-chrome~="silent"]))::before {
+    flex: 1 1 100%;
     max-inline-size: none;
     overflow: visible;
     text-overflow: clip;
     white-space: normal;
     text-wrap: balance;
+  }
+
+  :where(.mode-switch:not([data-spw-lens-track="row"])[aria-label] > .frame-sigil) {
+    flex: 1 1 0;
+    min-inline-size: min(100%, 4.25rem);
+    white-space: nowrap;
+    justify-content: center;
   }
 
   :where(.site-hero--split-figure) > [data-spw-slot="body"] {
@@ -22724,6 +22892,90 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
   [data-spw-module-updates-kinds~="css-var"]
 ) {
   outline-color: color-mix(in srgb, var(--op-object-color, #c9a227) 36%, transparent);
+}
+
+/* Updates topology roles — flourish residue vs structural identity */
+:where(html[data-spw-debug-mode="on"], [data-spw-module-visuals="on"]) :where(
+  [data-spw-module-updates-roles~="flourish"]
+) {
+  --spw-module-updates-role-accent: var(--op-object-color, #c9862a);
+  box-shadow:
+    var(--spw-local-shadow, none),
+    0 0 0 1px color-mix(in srgb, var(--spw-module-updates-role-accent) 22%, transparent);
+}
+
+:where(html[data-spw-debug-mode="on"], [data-spw-module-visuals="on"]) :where(
+  [data-spw-module-updates-roles~="residue"]
+) {
+  --spw-module-updates-role-accent: var(--op-ref-color, #1d57a3);
+}
+
+:where(html[data-spw-debug-mode="on"], [data-spw-module-visuals="on"]) :where(
+  [data-spw-module-updates-flourishes]
+)::after {
+  content: "flourish · " attr(data-spw-module-updates-flourishes);
+  position: absolute;
+  inset-block-start: 0.2rem;
+  inset-inline-end: 0.2rem;
+  max-inline-size: min(18rem, 70vw);
+  padding: 0.1rem 0.35rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--op-object-color, #c9862a) 30%, transparent);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 90%, var(--op-object-color, #c9862a) 10%);
+  color: color-mix(in srgb, var(--ink, #111) 78%, var(--op-object-color, #c9862a) 22%);
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.54rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+  opacity: 0.88;
+}
+
+/* Idle chunk schedule — teach residue → collectible → chrome → lab ordering */
+:where(html[data-spw-module-visuals="on"][data-spw-runtime-idle-chunk]) {
+  --spw-idle-chunk-accent: var(--op-action-color, #006666);
+}
+
+:where(html[data-spw-module-visuals="on"][data-spw-runtime-idle-chunk="idle-residue"]) {
+  --spw-idle-chunk-accent: var(--op-ref-color, #1d57a3);
+}
+
+:where(html[data-spw-module-visuals="on"][data-spw-runtime-idle-chunk="idle-collectible"]) {
+  --spw-idle-chunk-accent: var(--op-object-color, #c9862a);
+}
+
+:where(html[data-spw-module-visuals="on"][data-spw-runtime-idle-chunk="idle-chrome"]) {
+  --spw-idle-chunk-accent: var(--op-frame-color, #1a9999);
+}
+
+:where(html[data-spw-module-visuals="on"][data-spw-runtime-idle-chunk="idle-lab"]) {
+  --spw-idle-chunk-accent: var(--op-probe-color, #6a3fb8);
+}
+
+:where(html[data-spw-module-visuals="on"][data-spw-runtime-idle-chunk])::after {
+  content: "idle · " attr(data-spw-runtime-idle-chunk);
+  position: fixed;
+  inset-block-end: 0.55rem;
+  inset-inline-start: 0.55rem;
+  z-index: 40;
+  padding: 0.28rem 0.48rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--spw-idle-chunk-accent) 34%, transparent);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 90%, var(--spw-idle-chunk-accent) 10%);
+  color: color-mix(in srgb, var(--ink, #111) 80%, var(--spw-idle-chunk-accent) 20%);
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+:where(html[data-spw-reduce-motion="on"][data-spw-runtime-idle-chunk])::after {
+  opacity: 0.72;
 }
 
 :where(html[data-spw-debug-mode="on"], [data-spw-debug~="layout"]) :where(
@@ -31379,7 +31631,7 @@ html[data-spw-debug-mode="on"] :where(.spw-component-tag, .spw-guide-chip)[data-
    --------------------------------------------------------------------------
    Reads as: the mode-switch and pressed-state contracts; routes speak through -intent variables only
    Was: handles/operators.css §8–9 (split 2026-07-03, rule order preserved verbatim)
-   Genome — states sensed: aria-current, aria-label, aria-pressed, data-set-mode, data-spw-allocation, data-spw-annotation-match, data-spw-bookmarked, data-spw-cauldron, data-spw-cauldron-mirror, data-spw-charge, data-spw-debug-mode, data-spw-form, data-spw-gesture, data-spw-ingredient-primed
+   Genome — states sensed: aria-current, aria-label, aria-pressed, data-set-mode, data-spw-allocation, data-spw-annotation-match, data-spw-bookmarked, data-spw-cauldron, data-spw-cauldron-mirror, data-spw-charge, data-spw-debug-mode, data-spw-form, data-spw-gesture, data-spw-ingredient-primed, data-spw-lens-chrome, data-spw-lens-track, data-spw-lens-feedback
    Genome — custom properties defined: 29; intent hooks consumed: --mode-switch-active-bg-intent, --mode-switch-active-border-intent, --mode-switch-active-ink-intent, --mode-switch-active-lift-intent, --mode-switch-active-shadow-intent, --mode-switch-active-weight-intent, --mode-switch-border-width-intent, --mode-switch-focus-shadow-intent, --mode-switch-hover-bg-intent, --mode-switch-hover-border-intent, --mode-switch-hover-ink-intent, --mode-switch-hover-lift-intent, --mode-switch-hover-shadow-intent, --mode-switch-idle-bg-intent, --mode-switch-idle-border-intent, --mode-switch-idle-ink-intent, --mode-switch-idle-shadow-intent, --mode-switch-idle-weight-intent, --mode-switch-pressed-animation-intent
    Probe: toggle me wholesale in DevTools > Sources, or set
    html[data-spw-debug-layers="on"] to see layer owners breathe.
@@ -31502,6 +31754,20 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   opacity: 0.92;
 }
 
+/* --------------------------------------------------------------------------
+   Mode-switch clusters (handles layer — outranks routes)
+   --------------------------------------------------------------------------
+   Layout and chrome live here so routes never need !important escapes.
+   Routes set palette via --mode-switch-*-intent and opt into chrome/track:
+
+     data-spw-lens-chrome="silent"  — AT keeps aria-label; visual label chip off
+     data-spw-lens-track="row"      — full-width equal-share flex track (no 2×2)
+
+   Progressive enhancement: labeled chrome only when aria-label is present;
+   silent/row are pure attribute contracts (no JS).
+   -------------------------------------------------------------------------- */
+
+/* Cluster A — track layout (flex-first; grid only as a narrow 4+ fallback) */
 .mode-switch {
   --spw-lens-cascade-color: var(--active-op-color, var(--teal));
   --spw-lens-track-bg: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.9)) 88%, var(--spw-lens-cascade-color) 12%);
@@ -31521,6 +31787,7 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   isolation: isolate;
 }
 
+/* Cluster B — labeled chrome (default when aria-label is authored) */
 .mode-switch[aria-label]::before {
   content: attr(aria-label);
   flex: 0 0 auto;
@@ -31560,24 +31827,61 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   white-space: nowrap;
 }
 
-/* Narrow viewports: unwrap the lens label and give pills a stable 2×2 grid. */
+/* Cluster C — silent chrome (specificity must beat Cluster B) */
+.mode-switch[data-spw-lens-chrome~="silent"]::before,
+.mode-switch[data-spw-lens-chrome~="silent"][aria-label]::before,
+.mode-switch[data-spw-lens-chrome~="silent"]::after,
+.mode-switch[data-spw-lens-chrome~="silent"][data-spw-lens-feedback]::after {
+  content: none;
+  display: none;
+}
+
+/* Cluster D — dedicated full-row track (composition hub, standalone lens rows) */
+.mode-switch[data-spw-lens-track="row"] {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: stretch;
+  width: 100%;
+  max-inline-size: 100%;
+  min-inline-size: 0;
+  margin: 0;
+  box-sizing: border-box;
+  grid-template-columns: none;
+}
+
+.mode-switch[data-spw-lens-track="row"] > .frame-sigil {
+  flex: 1 1 0;
+  min-inline-size: 0;
+  max-inline-size: none;
+  padding-inline: 0.55rem;
+  white-space: nowrap;
+  overflow: visible;
+  text-overflow: clip;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Cluster E — tablet / narrow shells: flex equal-share, not 2×2 masonry.
+   A rigid 2×2 grid clipped 3-button lenses (read|inspect|reuse). */
 @media (max-width: 56rem) {
-  .mode-switch[aria-label] {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(7.25rem, 1fr));
+  .mode-switch[aria-label]:not([data-spw-lens-track="row"]) {
+    display: flex;
+    flex-flow: row wrap;
     align-items: stretch;
     width: 100%;
+    max-inline-size: 100%;
+    min-inline-size: 0;
+    box-sizing: border-box;
     gap: calc(var(--spw-control-gap, 0.24rem) + 0.14rem);
   }
 
-  .mode-switch[data-spw-lens-feedback]::after {
-    grid-column: 1 / -1;
+  .mode-switch[data-spw-lens-feedback]:not([data-spw-lens-chrome~="silent"])::after {
+    flex: 1 1 100%;
     max-inline-size: 100%;
   }
 
-  .mode-switch[aria-label]::before {
-    grid-column: 1 / -1;
-    flex: none;
+  .mode-switch[aria-label]:not([data-spw-lens-chrome~="silent"])::before {
+    flex: 1 1 100%;
     width: 100%;
     max-inline-size: none;
     overflow: visible;
@@ -31586,13 +31890,78 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
     text-wrap: balance;
   }
 
-  .mode-switch .frame-sigil {
-    flex: 1 1 auto;
+  .mode-switch:not([data-spw-lens-track="row"]) .frame-sigil {
+    flex: 1 1 0;
     inline-size: auto;
     width: auto;
-    min-inline-size: 0;
+    min-inline-size: min(100%, 4.25rem);
     font-size: clamp(0.72rem, 2.7vw, calc(var(--text-size-chip, 0.84rem) - 0.04rem));
     padding-inline: calc(var(--spw-control-padding-inline, 0.72rem) - 0.2rem);
+    white-space: nowrap;
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* Inside a frame topline: occupy a full second row so chips don't steal width. */
+  .frame-topline > .mode-switch,
+  .frame-heading > .mode-switch {
+    flex: 1 1 100%;
+    width: 100%;
+    margin-inline-start: 0;
+  }
+}
+
+/* Cluster F — phone density; 2×2 only for labeled multi-option tracks (not row) */
+@media (max-width: 32rem) {
+  .mode-switch .frame-sigil {
+    min-inline-size: 0;
+    min-block-size: max(2.15rem, var(--touch-target-compact, 2.15rem));
+    padding-inline: 0.4rem;
+    font-size: clamp(0.68rem, 3.2vw, 0.8rem);
+  }
+
+  .mode-switch[data-spw-lens-track="row"] > .frame-sigil {
+    font-size: clamp(0.72rem, 2.8vw, 0.84rem);
+    padding-inline: 0.4rem;
+  }
+
+  /* 4+ lens options: 2×2 only when the track is narrow and not a forced row. */
+  .mode-switch[aria-label]:has(> .frame-sigil:nth-child(4)):not([data-spw-lens-track="row"]) {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mode-switch[aria-label]:has(> .frame-sigil:nth-child(4)):not([data-spw-lens-track="row"])::before,
+  .mode-switch[aria-label]:has(> .frame-sigil:nth-child(4)):not([data-spw-lens-track="row"])[data-spw-lens-feedback]::after {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Progressive: honor container width when the parent establishes a container. */
+@supports (container-type: inline-size) {
+  @container (max-width: 38rem) {
+    .mode-switch[aria-label]:not([data-spw-lens-track="row"]) {
+      display: flex;
+      flex-flow: row wrap;
+      width: 100%;
+      min-inline-size: 0;
+    }
+
+    .mode-switch[aria-label]:not([data-spw-lens-chrome~="silent"])::before {
+      flex: 1 1 100%;
+      max-inline-size: none;
+      overflow: visible;
+      text-overflow: clip;
+      white-space: normal;
+      text-wrap: balance;
+    }
+
+    .mode-switch:not([data-spw-lens-track="row"]) > .frame-sigil {
+      flex: 1 1 0;
+      min-inline-size: min(100%, 4.25rem);
+      white-space: nowrap;
+      justify-content: center;
+    }
   }
 }
 

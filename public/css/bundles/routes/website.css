@@ -593,6 +593,231 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="website"]) {
     transform: none !important;
   }
 }
+
+/* ==========================================================================
+   14. Composition reference (/design/composition/) — sizing & alignment
+   ==========================================================================
+   Lens chrome/track live on the mode-switch via data-spw-lens-chrome|track
+   (handles/state-semantics — no route !important). This block only owns
+   stage geometry: topline rows, hero packing, copy auto-fit.
+   ========================================================================== */
+
+:where(body[data-spw-page-role="composition-reference"] #composition-bundles.site-frame) {
+  /* Keep the default flex stage — do NOT use display:grid here.
+     Box-model annotates computed display onto data-spw-composition-flow; grid
+     on a stage was activating multi-column auto-fit packing of children. */
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+  gap: clamp(0.85rem, 1.6vw, 1.25rem);
+  padding-block: clamp(1rem, 2vw, 1.35rem);
+  padding-inline: clamp(0.95rem, 2.2vw, 1.45rem);
+  min-inline-size: 0;
+  width: 100%;
+  max-inline-size: 100%;
+  /* Container queries for hero packing when supported (PE fallback: media). */
+  container-type: inline-size;
+  container-name: composition-hub;
+}
+
+/* Topline is two rows: meta (sigil + pills) then full-width lens track.
+   Lens track layout is data-spw-lens-track="row" on the mode-switch. */
+:where(body[data-spw-page-role="composition-reference"] #composition-bundles > .composition-topline) {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.5rem;
+  width: 100%;
+  min-inline-size: 0;
+  position: relative;
+  z-index: 2;
+}
+
+:where(body[data-spw-page-role="composition-reference"] .composition-topline__meta) {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  gap: 0.4rem 0.5rem;
+  width: 100%;
+  min-inline-size: 0;
+}
+
+:where(body[data-spw-page-role="composition-reference"] .composition-topline__meta > .frame-sigil) {
+  flex: 0 1 auto;
+  min-inline-size: 0;
+}
+
+:where(body[data-spw-page-role="composition-reference"] .composition-topline__meta > .spec-strip) {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  margin-inline-start: 0;
+}
+
+/* Hero: stacked by default; side-by-side only when both columns can breathe */
+:where(body[data-spw-page-role="composition-reference"] .composition-hero) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(0.85rem, 2vw, 1.25rem);
+  align-items: start;
+  width: 100%;
+  min-inline-size: 0;
+}
+
+:where(body[data-spw-page-role="composition-reference"] #composition-hook.hook-call) {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0.85rem 0.95rem;
+  border: 1px solid color-mix(in srgb, var(--website-accent, var(--teal, #008080)) 22%, var(--website-line, rgba(14, 18, 20, 0.12)));
+  border-radius: var(--website-radius-md, var(--shape-component, 8px));
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--website-accent, var(--teal, #008080)) 6%, var(--website-surface-strong, #fff)),
+      color-mix(in srgb, var(--website-surface-panel, #fff) 96%, transparent)
+    );
+  box-shadow: 0 1px 0 color-mix(in srgb, #fff 40%, transparent) inset;
+  min-inline-size: min(100%, 16rem);
+  max-inline-size: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+:where(body[data-spw-page-role="composition-reference"] #composition-hook .hook-lede) {
+  margin: 0;
+  font-size: clamp(1.02rem, 0.92rem + 0.45vw, 1.18rem);
+  font-weight: 650;
+  line-height: 1.4;
+  text-wrap: pretty;
+  max-inline-size: none;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+:where(body[data-spw-page-role="composition-reference"] #composition-hook .hook-sub) {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--website-ink-soft, var(--ink-soft, rgba(14, 18, 20, 0.72)));
+  max-inline-size: none;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+:where(body[data-spw-page-role="composition-reference"] #composition-hook .hook-sub + .hook-sub) {
+  margin-block-start: 0.15rem;
+}
+
+:where(body[data-spw-page-role="composition-reference"] .composition-hero__title) {
+  display: grid;
+  gap: 0.55rem;
+  min-inline-size: 0;
+  width: 100%;
+  align-content: start;
+}
+
+:where(body[data-spw-page-role="composition-reference"] .composition-hero__title > .page-kicker) {
+  display: inline-flex;
+  width: fit-content;
+  max-inline-size: 100%;
+  min-block-size: 1.7rem;
+  margin: 0;
+  aspect-ratio: auto;
+  border-radius: 999px;
+}
+
+:where(body[data-spw-page-role="composition-reference"] #composition-title) {
+  margin: 0;
+  max-inline-size: min(28ch, 100%);
+  font-size: clamp(1.55rem, 1.15rem + 1.8vw, 2.15rem);
+  line-height: 1.14;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+/* Copy layers: auto-fit so hidden lens/depth cards don't leave empty tracks */
+:where(body[data-spw-page-role="composition-reference"] .composition-copy-stack) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16.5rem), 1fr));
+  gap: 0.65rem;
+  width: 100%;
+  min-inline-size: 0;
+  align-items: stretch;
+}
+
+:where(
+  body[data-spw-page-role="composition-reference"] .composition-copy-stack > [data-spw-copy-lens],
+  body[data-spw-page-role="composition-reference"] .composition-copy-stack > [data-spw-copy-depth]
+) {
+  margin-block: 0;
+  min-inline-size: 0;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+:where(body[data-spw-page-role="composition-reference"] .composition-copy-stack code) {
+  font-size: 0.88em;
+  padding: 0.08em 0.28em;
+  border-radius: 0.28rem;
+  white-space: nowrap;
+}
+
+:where(body[data-spw-page-role="composition-reference"] .spw-metric-grid) {
+  margin-block: 0.15rem 0.25rem;
+  width: 100%;
+}
+
+:where(body[data-spw-page-role="composition-reference"] .frame-panel) {
+  min-inline-size: 0;
+  width: 100%;
+}
+
+:where(body[data-spw-page-role="composition-reference"] .spw-partial-lab-stack) {
+  display: grid;
+  gap: 0.75rem;
+  min-inline-size: 0;
+  width: 100%;
+}
+
+/* Side-by-side when the hub has room for two ≥18rem columns.
+   Prefer container queries; fall back to viewport when unsupported. */
+@supports (container-type: inline-size) {
+  @container composition-hub (min-width: 56rem) {
+    :where(.composition-hero) {
+      grid-template-columns: minmax(18rem, 0.95fr) minmax(18rem, 1.15fr);
+      column-gap: clamp(1rem, 2.5vw, 1.75rem);
+      align-items: start;
+    }
+  }
+
+  @container composition-hub (max-width: 40rem) {
+    :where(#composition-title) {
+      max-inline-size: none;
+    }
+  }
+}
+
+@supports not (container-type: inline-size) {
+  @media (min-width: 56rem) {
+    :where(body[data-spw-page-role="composition-reference"] .composition-hero) {
+      grid-template-columns: minmax(18rem, 0.95fr) minmax(18rem, 1.15fr);
+      column-gap: clamp(1rem, 2.5vw, 1.75rem);
+      align-items: start;
+    }
+  }
+
+  @media (max-width: 40rem) {
+    :where(body[data-spw-page-role="composition-reference"] #composition-title) {
+      max-inline-size: none;
+    }
+  }
+}
 }
 
 /* /public/css/routes/surfaces/design.css */
