@@ -914,14 +914,20 @@
     justify-content: flex-start;
   }
 
-  :where(.mode-switch[aria-label]) {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(7.25rem, 1fr));
+  /* Soft PE for mode-switch inside narrow containers.
+     Canonical track/chrome lives in handles/state-semantics (lens-track, lens-chrome).
+     These :where() rules only reinforce flex equal-share when handles media
+     queries have not already applied; they never reintroduce 2-col grid. */
+  :where(.mode-switch[aria-label]:not([data-spw-lens-track="row"])) {
+    display: flex;
+    flex-flow: row wrap;
     gap: calc(var(--spw-control-gap, 0.24rem) + 0.14rem);
+    width: 100%;
+    min-inline-size: 0;
   }
 
-  :where(.mode-switch[aria-label])::before {
-    grid-column: 1 / -1;
+  :where(.mode-switch[aria-label]:not([data-spw-lens-chrome~="silent"]))::before {
+    flex: 1 1 100%;
     max-inline-size: none;
     overflow: visible;
     text-overflow: clip;
@@ -930,12 +936,13 @@
   }
 
   :where(
-    .frame-topline > .mode-switch > *,
+    .frame-topline > .mode-switch:not([data-spw-lens-track="row"]) > .frame-sigil,
     .frame-topline > .frame-operators > *
   ) {
-    flex: 1 1 min(100%, 8rem);
+    flex: 1 1 0;
     justify-content: center;
-    min-inline-size: 0;
+    min-inline-size: min(100%, 4.25rem);
+    white-space: nowrap;
   }
 }
 

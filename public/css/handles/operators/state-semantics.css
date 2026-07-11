@@ -3,7 +3,7 @@
    --------------------------------------------------------------------------
    Reads as: the mode-switch and pressed-state contracts; routes speak through -intent variables only
    Was: handles/operators.css §8–9 (split 2026-07-03, rule order preserved verbatim)
-   Genome — states sensed: aria-current, aria-label, aria-pressed, data-set-mode, data-spw-allocation, data-spw-annotation-match, data-spw-bookmarked, data-spw-cauldron, data-spw-cauldron-mirror, data-spw-charge, data-spw-debug-mode, data-spw-form, data-spw-gesture, data-spw-ingredient-primed
+   Genome — states sensed: aria-current, aria-label, aria-pressed, data-set-mode, data-spw-allocation, data-spw-annotation-match, data-spw-bookmarked, data-spw-cauldron, data-spw-cauldron-mirror, data-spw-charge, data-spw-debug-mode, data-spw-form, data-spw-gesture, data-spw-ingredient-primed, data-spw-lens-chrome, data-spw-lens-track, data-spw-lens-feedback
    Genome — custom properties defined: 29; intent hooks consumed: --mode-switch-active-bg-intent, --mode-switch-active-border-intent, --mode-switch-active-ink-intent, --mode-switch-active-lift-intent, --mode-switch-active-shadow-intent, --mode-switch-active-weight-intent, --mode-switch-border-width-intent, --mode-switch-focus-shadow-intent, --mode-switch-hover-bg-intent, --mode-switch-hover-border-intent, --mode-switch-hover-ink-intent, --mode-switch-hover-lift-intent, --mode-switch-hover-shadow-intent, --mode-switch-idle-bg-intent, --mode-switch-idle-border-intent, --mode-switch-idle-ink-intent, --mode-switch-idle-shadow-intent, --mode-switch-idle-weight-intent, --mode-switch-pressed-animation-intent
    Probe: toggle me wholesale in DevTools > Sources, or set
    html[data-spw-debug-layers="on"] to see layer owners breathe.
@@ -126,6 +126,20 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   opacity: 0.92;
 }
 
+/* --------------------------------------------------------------------------
+   Mode-switch clusters (handles layer — outranks routes)
+   --------------------------------------------------------------------------
+   Layout and chrome live here so routes never need !important escapes.
+   Routes set palette via --mode-switch-*-intent and opt into chrome/track:
+
+     data-spw-lens-chrome="silent"  — AT keeps aria-label; visual label chip off
+     data-spw-lens-track="row"      — full-width equal-share flex track (no 2×2)
+
+   Progressive enhancement: labeled chrome only when aria-label is present;
+   silent/row are pure attribute contracts (no JS).
+   -------------------------------------------------------------------------- */
+
+/* Cluster A — track layout (flex-first; grid only as a narrow 4+ fallback) */
 .mode-switch {
   --spw-lens-cascade-color: var(--active-op-color, var(--teal));
   --spw-lens-track-bg: color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.9)) 88%, var(--spw-lens-cascade-color) 12%);
@@ -145,6 +159,7 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   isolation: isolate;
 }
 
+/* Cluster B — labeled chrome (default when aria-label is authored) */
 .mode-switch[aria-label]::before {
   content: attr(aria-label);
   flex: 0 0 auto;
@@ -184,24 +199,61 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   white-space: nowrap;
 }
 
-/* Narrow viewports: unwrap the lens label and give pills a stable 2×2 grid. */
+/* Cluster C — silent chrome (specificity must beat Cluster B) */
+.mode-switch[data-spw-lens-chrome~="silent"]::before,
+.mode-switch[data-spw-lens-chrome~="silent"][aria-label]::before,
+.mode-switch[data-spw-lens-chrome~="silent"]::after,
+.mode-switch[data-spw-lens-chrome~="silent"][data-spw-lens-feedback]::after {
+  content: none;
+  display: none;
+}
+
+/* Cluster D — dedicated full-row track (composition hub, standalone lens rows) */
+.mode-switch[data-spw-lens-track="row"] {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: stretch;
+  width: 100%;
+  max-inline-size: 100%;
+  min-inline-size: 0;
+  margin: 0;
+  box-sizing: border-box;
+  grid-template-columns: none;
+}
+
+.mode-switch[data-spw-lens-track="row"] > .frame-sigil {
+  flex: 1 1 0;
+  min-inline-size: 0;
+  max-inline-size: none;
+  padding-inline: 0.55rem;
+  white-space: nowrap;
+  overflow: visible;
+  text-overflow: clip;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Cluster E — tablet / narrow shells: flex equal-share, not 2×2 masonry.
+   A rigid 2×2 grid clipped 3-button lenses (read|inspect|reuse). */
 @media (max-width: 56rem) {
-  .mode-switch[aria-label] {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(7.25rem, 1fr));
+  .mode-switch[aria-label]:not([data-spw-lens-track="row"]) {
+    display: flex;
+    flex-flow: row wrap;
     align-items: stretch;
     width: 100%;
+    max-inline-size: 100%;
+    min-inline-size: 0;
+    box-sizing: border-box;
     gap: calc(var(--spw-control-gap, 0.24rem) + 0.14rem);
   }
 
-  .mode-switch[data-spw-lens-feedback]::after {
-    grid-column: 1 / -1;
+  .mode-switch[data-spw-lens-feedback]:not([data-spw-lens-chrome~="silent"])::after {
+    flex: 1 1 100%;
     max-inline-size: 100%;
   }
 
-  .mode-switch[aria-label]::before {
-    grid-column: 1 / -1;
-    flex: none;
+  .mode-switch[aria-label]:not([data-spw-lens-chrome~="silent"])::before {
+    flex: 1 1 100%;
     width: 100%;
     max-inline-size: none;
     overflow: visible;
@@ -210,13 +262,78 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
     text-wrap: balance;
   }
 
-  .mode-switch .frame-sigil {
-    flex: 1 1 auto;
+  .mode-switch:not([data-spw-lens-track="row"]) .frame-sigil {
+    flex: 1 1 0;
     inline-size: auto;
     width: auto;
-    min-inline-size: 0;
+    min-inline-size: min(100%, 4.25rem);
     font-size: clamp(0.72rem, 2.7vw, calc(var(--text-size-chip, 0.84rem) - 0.04rem));
     padding-inline: calc(var(--spw-control-padding-inline, 0.72rem) - 0.2rem);
+    white-space: nowrap;
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* Inside a frame topline: occupy a full second row so chips don't steal width. */
+  .frame-topline > .mode-switch,
+  .frame-heading > .mode-switch {
+    flex: 1 1 100%;
+    width: 100%;
+    margin-inline-start: 0;
+  }
+}
+
+/* Cluster F — phone density; 2×2 only for labeled multi-option tracks (not row) */
+@media (max-width: 32rem) {
+  .mode-switch .frame-sigil {
+    min-inline-size: 0;
+    min-block-size: max(2.15rem, var(--touch-target-compact, 2.15rem));
+    padding-inline: 0.4rem;
+    font-size: clamp(0.68rem, 3.2vw, 0.8rem);
+  }
+
+  .mode-switch[data-spw-lens-track="row"] > .frame-sigil {
+    font-size: clamp(0.72rem, 2.8vw, 0.84rem);
+    padding-inline: 0.4rem;
+  }
+
+  /* 4+ lens options: 2×2 only when the track is narrow and not a forced row. */
+  .mode-switch[aria-label]:has(> .frame-sigil:nth-child(4)):not([data-spw-lens-track="row"]) {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mode-switch[aria-label]:has(> .frame-sigil:nth-child(4)):not([data-spw-lens-track="row"])::before,
+  .mode-switch[aria-label]:has(> .frame-sigil:nth-child(4)):not([data-spw-lens-track="row"])[data-spw-lens-feedback]::after {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Progressive: honor container width when the parent establishes a container. */
+@supports (container-type: inline-size) {
+  @container (max-width: 38rem) {
+    .mode-switch[aria-label]:not([data-spw-lens-track="row"]) {
+      display: flex;
+      flex-flow: row wrap;
+      width: 100%;
+      min-inline-size: 0;
+    }
+
+    .mode-switch[aria-label]:not([data-spw-lens-chrome~="silent"])::before {
+      flex: 1 1 100%;
+      max-inline-size: none;
+      overflow: visible;
+      text-overflow: clip;
+      white-space: normal;
+      text-wrap: balance;
+    }
+
+    .mode-switch:not([data-spw-lens-track="row"]) > .frame-sigil {
+      flex: 1 1 0;
+      min-inline-size: min(100%, 4.25rem);
+      white-space: nowrap;
+      justify-content: center;
+    }
   }
 }
 

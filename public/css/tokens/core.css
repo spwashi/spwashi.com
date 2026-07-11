@@ -240,6 +240,43 @@
   initial-value: 0;
 }
 
+/* Effect ledger precipitation — effect-ledger.js writes; ornament/runtime-states spend. */
+@property --spw-effect-count {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --spw-effect-charge {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --spw-effect-pulse {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --spw-section-progress {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --spw-section-step {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --spw-runtime-avg-module-ms {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
 /* Runtime module layer influence tokens — driven by data-spw-active-layers on root.
    These allow CSS to react to which parts of the JS runtime are currently live,
    supporting smoother transitions, attentional modulation, and "computational"
@@ -943,6 +980,20 @@
   --spw-ecology-field-resonance: 0;
   --spw-ecology-twinkle-duration: 760ms;
   --spw-ecology-readiness-ring-strength: 0;
+
+  /* Effect ledger flourishes — JS may override on html; CSS consumes for ornament. */
+  --spw-effect-count: 0;
+  --spw-effect-charge: 0;
+  --spw-effect-pulse: 0;
+
+  /* Section locomotion progress (attention-architecture writes on section nodes). */
+  --spw-section-progress: 0;
+  --spw-section-step: 0;
+
+  /* Runtime load diagnostics — module-loader; inspect/module-visuals may surface. */
+  --spw-runtime-avg-module-ms: 0;
+  --spw-runtime-feature-intensity: 0.22;
+  --spw-runtime-layer-count: 0;
 
   --utility-shift-duration: var(--duration-deliberate);
   --utility-shift-ease: var(--ease-settle);

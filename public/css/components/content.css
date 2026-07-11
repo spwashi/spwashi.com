@@ -188,33 +188,55 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   width: 100%;
 }
 
-/* Composition flow: wire authored layout intent without duplicating grid class lists. */
-:where([data-spw-composition-flow="grid"]:not(
-  .frame-grid,
-  .plans-grid,
-  .contact-grid,
-  .gallery-overlays,
-  .compare-sets,
-  .spec-grid,
-  .directory-grid,
-  .ref-grid,
-  .settings-state-grid,
-  .settings-navigator-grid,
-  .settings-structures-grid,
-  .settings-quickstart-grid,
-  .vibe-widget-grid,
-  .spw-principle-grid,
-  .pwa-status-grid,
-  .spw-amount-grid,
-  .spw-character-card-grid,
-  .spw-wisdom-deck,
-  .spw-reason-strip,
-  .spw-role-hooks,
-  .spw-route-bridge__links,
-  .spw-resonance-lab,
-  .spw-learning-game,
-  .spw-semantic-emphasis-map
-)) {
+/* Composition flow — progressive, authored-first layout intent.
+   --------------------------------------------------------------------------
+   Cluster A: packing grids (auto-fit) for content clusters only.
+   Cluster B: stack as single-column grid for non-stage hosts.
+   Cluster C: stages (.site-frame / panels) force flex column — never masonry.
+   Never apply multi-column auto-fit to stages: box-model may mirror computed
+   display onto data-spw-composition-flow, and a stage that is only
+   `display:grid` for vertical stacking must not pack its children.
+   Authored flow works without JS; annotation is enhancement.
+   -------------------------------------------------------------------------- */
+
+/* Cluster A — multi-column packing (exclude stages + known grid hosts) */
+:where(
+  [data-spw-composition-flow="grid"]:not(
+    :is(
+      .site-frame,
+      .frame-panel,
+      .mode-panel,
+      [data-spw-kind="frame"],
+      [data-spw-box-model="stage"]
+    ),
+    :is(
+      .frame-grid,
+      .plans-grid,
+      .contact-grid,
+      .gallery-overlays,
+      .compare-sets,
+      .spec-grid,
+      .directory-grid,
+      .ref-grid,
+      .settings-state-grid,
+      .settings-navigator-grid,
+      .settings-structures-grid,
+      .settings-quickstart-grid,
+      .vibe-widget-grid,
+      .spw-principle-grid,
+      .pwa-status-grid,
+      .spw-amount-grid,
+      .spw-character-card-grid,
+      .spw-wisdom-deck,
+      .spw-reason-strip,
+      .spw-role-hooks,
+      .spw-route-bridge__links,
+      .spw-resonance-lab,
+      .spw-learning-game,
+      .spw-semantic-emphasis-map
+    )
+  )
+) {
   display: grid;
   gap: var(--spw-grid-gap-active, var(--component-gap));
   align-items: stretch;
@@ -222,17 +244,41 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--spw-grid-min-active, 15rem)), 1fr));
 }
 
-:where([data-spw-composition-flow="stack"]:not(
-  .spw-narration,
-  .spw-route-bridge,
-  .spw-settings-cluster,
-  .settings-form
-)) {
+/* Cluster B — non-stage stack hosts */
+:where(
+  [data-spw-composition-flow="stack"]:not(
+    :is(
+      .site-frame,
+      .frame-panel,
+      .mode-panel,
+      [data-spw-kind="frame"],
+      [data-spw-box-model="stage"],
+      .spw-narration,
+      .spw-route-bridge,
+      .spw-settings-cluster,
+      .settings-form
+    )
+  )
+) {
   display: grid;
   gap: var(--component-gap-tight, 0.45rem);
   align-content: start;
   min-width: 0;
   grid-template-columns: minmax(0, 1fr);
+}
+
+/* Cluster C — stages stay single-column flex even if display:grid is used for gap. */
+:where(
+  .site-frame[data-spw-composition-flow="stack"],
+  .frame-panel[data-spw-composition-flow="stack"],
+  .mode-panel[data-spw-composition-flow="stack"],
+  [data-spw-kind="frame"][data-spw-composition-flow="stack"],
+  [data-spw-box-model="stage"][data-spw-composition-flow="stack"]
+) {
+  display: flex;
+  flex-direction: column;
+  align-content: stretch;
+  grid-template-columns: none;
 }
 
 :where([data-spw-composition-flow="inline-wrap"]:not(.spw-copy-motif-strip)) {

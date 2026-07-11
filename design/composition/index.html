@@ -12,7 +12,7 @@
 </head>
 <body
     data-spw-surface="website"
-    data-spw-features="operators navigator console"
+    data-spw-features="operators navigator console feature-discovery"
     data-spw-route-family="design documentation composition"
     data-spw-context="analysis"
     data-spw-wonder="composition portability theming spellcasting browser"
@@ -20,7 +20,8 @@
     data-spw-page-modes="reading inspect reuse"
     data-spw-page-role="composition-reference"
     data-spw-layout="reading"
-    data-spw-related-routes="/design/|/design/runtime/|/design/components/|/design/experiments/css/|/about/website/|/topics/software/spw/|/play/">
+    data-spw-register="editorial"
+    data-spw-related-routes="/design/|/design/runtime/|/design/components/|/design/experiments/css/|/about/website/|/topics/software/spw/|/play/|/settings/">
 <a class="skip-link" href="#main-content">Skip to content</a>
 
 <spw-site-header
@@ -31,32 +32,178 @@
 ></spw-site-header>
 
 <main id="main-content" tabindex="-1" aria-labelledby="composition-title">
-    <article class="site-frame" id="composition-bundles" data-spw-kind="frame" data-spw-role="reference" data-spw-context="analysis" data-spw-wonder="composition portability theming spellcasting browser">
-        <div class="frame-topline">
-            <a class="frame-sigil" href="#composition-bundles">#&gt;composition_bundles</a>
-            <div class="spec-strip">
-                <span class="spec-pill">standalone CSS</span>
-                <span class="spec-pill">portable JS</span>
-                <span class="spec-pill">docs-ready</span>
+    <article
+        class="site-frame"
+        id="composition-bundles"
+        data-spw-kind="frame"
+        data-spw-role="reference"
+        data-spw-context="analysis"
+        data-spw-wonder="composition portability theming spellcasting browser"
+        data-spw-feature="composition-hub"
+        data-spw-composition-flow="stack"
+        data-spw-inspect-mode-group="composition-lens"
+    >
+        <div class="frame-topline composition-topline">
+            <div class="composition-topline__meta">
+                <a class="frame-sigil" href="#composition-bundles">#&gt;composition_bundles</a>
+                <div class="spec-strip">
+                    <span class="spec-pill">standalone CSS</span>
+                    <span class="spec-pill">portable JS</span>
+                    <span class="spec-pill">docs-ready</span>
+                </div>
+            </div>
+            <div
+                class="mode-switch composition-topline__lens"
+                role="group"
+                aria-label="Composition lens"
+                data-spw-kind="lens"
+                data-spw-role="control"
+                data-spw-lens-chrome="silent"
+                data-spw-lens-track="row"
+            >
+                <button type="button" class="frame-sigil" data-mode-group="composition-lens" data-set-mode="read" aria-pressed="true">read</button>
+                <button type="button" class="frame-sigil" data-mode-group="composition-lens" data-set-mode="inspect" aria-pressed="false">inspect</button>
+                <button type="button" class="frame-sigil" data-mode-group="composition-lens" data-set-mode="reuse" aria-pressed="false">reuse</button>
             </div>
         </div>
 
-        <p class="page-kicker">Design / Composition / Reuse</p>
-        <h1 id="composition-title">Standalone bundles should teach composition, theming, and browser behavior without carrying the whole site.</h1>
+        <div class="composition-hero" data-spw-feature="composition-hero">
+            <section
+                class="hook-call"
+                id="composition-hook"
+                data-spw-kind="hook"
+                data-spw-role="call"
+                data-spw-liminality="entry"
+                data-spw-affordance="orient"
+                aria-label="Composition entry hook"
+            >
+                <p class="hook-lede spw-playable-hook">Take one contract home — not the whole site shell.</p>
+                <p class="hook-sub">
+                    <span data-spw-perspective="objective">Objective:</span> CSS and JS bundles that stay inspectable.
+                </p>
+                <p class="hook-sub">
+                    <span data-spw-perspective="subjective">Subjective:</span> enough wonder left that reuse still feels like browser craft.
+                </p>
+            </section>
 
-        <p>
-            These entries are meant for documentation, prototypes, vendor-facing experiments, and external review by
-            humans or models. They keep the aesthetic and behavior contracts visible while avoiding the complete
-            route shell.
-        </p>
+            <div class="composition-hero__title">
+                <p class="page-kicker">Design / Composition / Reuse</p>
+                <h1 id="composition-title">Standalone bundles should teach composition, theming, and browser behavior without carrying the whole site.</h1>
+            </div>
+        </div>
 
-        <section class="frame-panel" aria-labelledby="browser-wonder-title" data-spw-kind="panel" data-spw-role="principle" data-spw-wonder="browser literate extensible">
+        <div class="composition-copy-stack" data-spw-feature="composition-copy-layers" aria-label="Copy layers by lens and depth">
+            <p data-spw-copy-lens="default read" data-spw-copy-label="default">
+                These entries are for documentation, prototypes, vendor-facing experiments, and external review.
+                They keep aesthetic and behavior contracts visible without shipping the full route shell.
+            </p>
+            <p data-spw-copy-lens="inspect" data-spw-copy-label="inspect lens">
+                Inspect for attributes, feature hosts, and catalog timing — not for decorative chrome.
+                Prefer idle mounts and query setups over forcing every partial onto the critical path.
+            </p>
+            <p data-spw-copy-depth="technical" data-spw-copy-label="technical">
+                Catalog <code>when</code> and <code>features</code> stay the source of schedule and presence; query links only share a lab posture.
+            </p>
+            <p data-spw-copy-lens="reuse" data-spw-copy-label="reuse lens">
+                Reuse means copy a disposition: tokens, grammar, and small inspectable gestures.
+                Leave ornament and route shell behind so the host page keeps its own weather.
+            </p>
+            <p data-spw-copy-depth="rich" data-spw-copy-label="rich">
+                Treat scripts as spells: small repeatable gestures that change the document in inspectable ways.
+            </p>
+            <p data-spw-copy-depth="entry" data-spw-copy-label="entry">
+                Start with compose.css + compose.js. Add site.js only when you need the full staged runtime.
+            </p>
+        </div>
+
+        <div class="spw-metric-grid" data-spw-kind="metric" data-spw-role="schema" aria-label="Composition diversity metrics">
+            <p><strong>kinds in play</strong> frame · hook · lens · panel · metric · card</p>
+            <p><strong>copy layers</strong> default · inspect · reuse · entry · technical</p>
+            <p><strong>share path</strong> query composer · cauldron offer</p>
+        </div>
+
+        <section class="frame-panel" aria-labelledby="browser-wonder-title" data-spw-kind="panel" data-spw-role="principle" data-spw-wonder="browser literate extensible" data-spw-component-variant="ambient">
             <h2 id="browser-wonder-title">Browser wonder</h2>
-            <p>
+            <p data-mode-group="composition-lens" data-mode-panel="read">
                 A browser is an unusually generous runtime: markup can stay readable, stylesheets can express a
                 worldview, and scripts can add behavior without owning the whole document. The portable bundle should
                 preserve that wonder by making extension points legible in the source.
             </p>
+            <p data-mode-group="composition-lens" data-mode-panel="inspect" hidden>
+                Wonder here is operational: data attributes, feature gates, and mount timing should remain auditable
+                after the bundle leaves this site.
+            </p>
+            <p data-mode-group="composition-lens" data-mode-panel="reuse" hidden>
+                When you fork a bundle, keep the contracts and drop the chrome — wonder survives as readable structure,
+                not as a copied theme lock-in.
+            </p>
+        </section>
+
+        <section
+            class="frame-panel"
+            aria-labelledby="partial-lab-title"
+            data-site-feature-lab-panel
+            data-site-settings-scope
+            data-spw-box-model="control-card"
+            data-spw-feature="composition-partial-lab"
+            data-spw-kind="panel"
+            data-spw-role="lab"
+            data-spw-wonder="orchestration presence theatrics"
+            id="partial-theatrics-lab"
+        >
+            <p class="page-kicker">Specimen · feature partial theatrics</p>
+            <h2 id="partial-lab-title">Tune presence, schedule, and theatrics in situ</h2>
+            <p class="frame-note">
+                This route already declares <code>feature-discovery</code> on the body.
+                Clusters with <code>data-spw-feature</code> get field-guide ornaments when that module mounts.
+                Enhancement climate (live) changes how loud those ornaments feel;
+                session feature lab (reload) changes whether optional modules are eligible;
+                orchestration queries make mounts and loading ecology phases visible.
+                Catalog timing stays in code — never force theatrical partials to <code>IMMEDIATE</code>.
+            </p>
+            <div class="spw-partial-lab-stack">
+                <section
+                    class="spw-query-composer"
+                    data-spw-query-composer
+                    data-spw-feature="query-composer"
+                    data-spw-box-model="control-card"
+                    data-spw-query-composer-label="composition share setup"
+                    data-spw-collectability="medium"
+                >
+                    <p class="spw-query-composer__kicker">Share setup · query</p>
+                    <h3 class="spw-query-composer__title">Link for this specimen</h3>
+                    <p class="spw-query-composer__note">
+                        Prefer a URL over forking the page. Offer to cauldron when the setup should join the spell path.
+                    </p>
+                    <div data-spw-query-composer-fields class="spw-query-composer__fields"></div>
+                    <code class="spw-query-composer__preview" data-spw-query-composer-preview>…</code>
+                    <div class="spw-query-composer__actions vibe-widget-actions" data-spw-query-composer-actions>
+                        <button type="button" class="operator-chip" data-spw-query-composer-copy>Copy link</button>
+                        <button type="button" class="operator-chip" data-spw-query-composer-apply>Apply setup</button>
+                        <button type="button" class="operator-chip" data-spw-query-composer-cauldron>Offer to cauldron</button>
+                    </div>
+                </section>
+                <div class="vibe-widget-actions" role="group" aria-label="Enhancement climate">
+                    <button class="operator-chip" type="button" data-site-setting-set="enhancementLevel:minimal">Minimal theatrics</button>
+                    <button class="operator-chip" type="button" data-site-setting-set="enhancementLevel:balanced">Balanced</button>
+                    <button class="operator-chip" type="button" data-site-setting-set="enhancementLevel:rich">Rich theatrics</button>
+                </div>
+                <div class="vibe-widget-meta">
+                    <span class="spec-pill">enhancement: <span data-settings-state="enhancementLevel">minimal</span></span>
+                    <span class="spec-pill">lab: <span data-site-feature-lab-status>authored</span></span>
+                    <span class="spec-pill">ops: <code data-site-feature-lab-ops>none</code></span>
+                </div>
+                <div
+                    class="vibe-widget-actions settings-feature-lab-toggles"
+                    role="group"
+                    aria-label="Session feature tokens"
+                    data-site-feature-lab-toggles
+                ></div>
+                <div class="vibe-widget-actions">
+                    <button class="operator-chip" type="button" data-site-feature-lab-clear>Clear session lab + reload</button>
+                    <a class="operator-chip" href="/settings/#partial-theatrics-lab">Full lab on settings</a>
+                </div>
+            </div>
         </section>
 
         <section class="frame-panel" aria-labelledby="css-bundle-title" data-spw-kind="panel" data-spw-role="bundle">
@@ -203,23 +350,28 @@ const record = createLoopRecord('preview', 'operator');</code></pre>
                 <code>runtime/spatial-gravity.js</code> measures the live rectangle and writes the variant.
             </p>
 
-            <div class="spatial-gravity-bench">
+            <div class="spatial-gravity-bench"
+                 data-spw-feature="spatial-gravity-bench"
+                 data-spw-feature-traits="spatial-aware traversal measured-room escalating-reward"
+                 data-spw-feature-progression="traversal"
+                 data-spw-feature-memory="session"
+                 data-spw-feature-max-level="3">
                 <article class="frame-card spatial-gravity-specimen" data-spw-gravity data-spw-kind="card" data-spw-role="specimen">
-                    <h3>Specimen A — edge + vertical gravity</h3>
-                    <p>As this card approaches the top or bottom of the frame, its vertical gravity flips: content should
+                    <h3 data-spw-slot="header">Specimen A — edge + vertical gravity</h3>
+                    <p data-spw-slot="body">As this card approaches the top or bottom of the frame, its vertical gravity flips: content should
                         grow toward whichever side has room.</p>
-                    <p class="spatial-gravity-status" data-spw-gravity-readout aria-live="polite"></p>
+                    <p class="spatial-gravity-status" data-spw-gravity-readout data-spw-slot="footer"></p>
                 </article>
 
                 <article class="frame-card spatial-gravity-specimen" data-spw-gravity="open" data-spw-kind="card" data-spw-role="specimen">
-                    <div class="spatial-gravity-reveal" data-spw-gravity-reveal>
+                    <div class="spatial-gravity-reveal" data-spw-gravity-reveal data-spw-slot="body">
                         <strong>Opportunistic reveal</strong>
                         <p>This block sits above or below its header depending on measured room — it opens toward the
                             roomier side rather than off the nearest edge.</p>
                     </div>
-                    <header>
+                    <header data-spw-slot="header">
                         <h3>Specimen B — opportunistic opening</h3>
-                        <p class="spatial-gravity-status" data-spw-gravity-readout aria-live="polite"></p>
+                        <p class="spatial-gravity-status" data-spw-gravity-readout></p>
                     </header>
                 </article>
             </div>
@@ -235,22 +387,26 @@ const record = createLoopRecord('preview', 'operator');</code></pre>
             <div class="pack-demo-resizer">
                 <article class="frame-card pack-card" data-spw-pack-local data-spw-kind="card" data-spw-role="specimen">
                     <div data-spw-pack-regions>
-                        <div class="pack-card__media" data-spw-pack-region="media" aria-hidden="true">
+                        <div class="pack-card__media" data-spw-pack-region="media" data-spw-slot="figure" aria-hidden="true">
                             <span class="pack-card__thumb">media</span>
                         </div>
-                        <div class="pack-card__body" data-spw-pack-region="body">
+                        <div class="pack-card__body" data-spw-pack-region="body" data-spw-slot="body">
                             <h4>Adaptive card</h4>
                             <p>Regions reflow by this card's own inline size. Narrow the container and watch the media,
                                 body, and actions restack.</p>
                             <p class="spatial-gravity-status"><span data-spw-pack-readout>resize to see the variant</span></p>
                         </div>
-                        <div class="pack-card__actions" data-spw-pack-region="actions">
-                            <button type="button" class="operator-chip">open</button>
-                            <button type="button" class="operator-chip">save</button>
+                        <div class="pack-card__actions" data-spw-pack-region="actions" data-spw-slot="actions">
+                            <a class="operator-chip" href="#literate-extension-title">inspect contract</a>
+                            <a class="operator-chip" href="/design/components/">compare components</a>
                         </div>
                     </div>
                 </article>
             </div>
+            <p class="frame-note">
+                <strong>Slot report:</strong> this compact specimen maps figure → media, body → body, and actions → actions.
+                Header and footer are intentionally absent rather than silently inferred.
+            </p>
 
             <h3 class="spatial-gravity-subhead">Boundary overlap resolves by salience</h3>
             <p>
@@ -261,13 +417,13 @@ const record = createLoopRecord('preview', 'operator');</code></pre>
             <div class="spatial-gravity-overlap">
                 <article class="frame-card spatial-gravity-contender spatial-gravity-contender--ambient"
                          data-spw-gravity data-spw-salience="ambient" data-spw-kind="card" data-spw-role="specimen">
-                    <h4>Ambient card</h4>
-                    <p>Lower salience — yields the contested space.</p>
+                    <h4 data-spw-slot="header">Ambient card</h4>
+                    <p data-spw-slot="body">Lower salience — yields the contested space.</p>
                 </article>
                 <article class="frame-card spatial-gravity-contender spatial-gravity-contender--focal"
                          data-spw-gravity data-spw-salience="focal" data-spw-kind="card" data-spw-role="specimen">
-                    <h4>Focal card</h4>
-                    <p>Higher salience — holds the space.</p>
+                    <h4 data-spw-slot="header">Focal card</h4>
+                    <p data-spw-slot="body">Higher salience — holds the space.</p>
                 </article>
             </div>
         </section>

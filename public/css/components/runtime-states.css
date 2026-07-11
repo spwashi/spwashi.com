@@ -131,6 +131,79 @@
   opacity: 0.72;
 }
 
+/* Feature partial presence — learnable islands when orchestration is visible.
+   Outline only (no layout shift). Session feature-lab mutes use the same rail. */
+:where(html[data-spw-module-visuals="on"]) :where([data-spw-feature]) {
+  --spw-feature-island-ring:
+    0 0 0 1px color-mix(in srgb, var(--op-topic-color, #2f6f5e) 28%, transparent);
+  box-shadow: var(--spw-feature-island-ring), var(--spw-local-shadow, var(--component-shadow, none));
+  transition:
+    box-shadow var(--duration-base, 220ms) var(--ease-smooth, ease),
+    opacity var(--duration-base, 220ms) var(--ease-smooth, ease);
+}
+
+:where(html[data-spw-module-visuals="on"]) :where([data-spw-feature][data-spw-feature-encounter]) {
+  --spw-feature-island-ring:
+    0 0 0 1px color-mix(in srgb, var(--active-op-color, #008080) 38%, transparent),
+    0 0 12px color-mix(in srgb, var(--active-op-color, #008080) 10%, transparent);
+}
+
+/* Session feature lab: show that body features were rewritten this visit.
+   Prefer html::after so we do not fight body::after grain/debug overlays. */
+:where(body[data-spw-feature-lab="session"]) {
+  --spw-feature-lab-cue: 1;
+}
+
+:where(html[data-spw-module-visuals="on"]:has(body[data-spw-feature-lab="session"]))::after {
+  content: "feature lab active";
+  position: fixed;
+  inset-block-end: 0.65rem;
+  inset-inline-end: 0.65rem;
+  z-index: 40;
+  max-inline-size: min(28ch, calc(100vw - 1.5rem));
+  padding: 0.35rem 0.55rem;
+  border: 1px solid color-mix(in srgb, var(--op-probe-color, #7a4fb5) 36%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-strong, #fff) 92%, var(--op-probe-color, #7a4fb5) 8%);
+  color: color-mix(in srgb, var(--ink, #111) 82%, var(--op-probe-color, #7a4fb5) 18%);
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+  pointer-events: none;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+/* Mount pulse: brief learnable flash when a module writes effect tokens. */
+:where(html[data-spw-module-visuals="on"][data-spw-module-effect-pulse]) {
+  --spw-module-effect-pulse-ring:
+    inset 0 0 0 2px color-mix(in srgb, var(--op-action-color, #006666) 22%, transparent);
+  outline: 2px solid color-mix(in srgb, var(--op-action-color, #006666) 28%, transparent);
+  outline-offset: -2px;
+  transition: outline-color 320ms var(--ease-smooth, ease);
+}
+
+/* Ecology phase label for inspect postures — teaches reflow as a sequence.
+   html::before keeps body free for grain texture. */
+:where(
+  html[data-spw-module-visuals="on"][data-spw-loading-ecology-phase]:not([data-spw-loading-ecology-phase="settled"])
+)::before {
+  content: "load · " attr(data-spw-loading-ecology-phase);
+  position: fixed;
+  inset-block-start: 0.55rem;
+  inset-inline-start: 0.55rem;
+  z-index: 40;
+  padding: 0.3rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--op-action-color, #006666) 30%, transparent);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 90%, var(--op-action-color, #006666) 10%);
+  color: color-mix(in srgb, var(--ink, #111) 80%, var(--op-action-color, #006666) 20%);
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  pointer-events: none;
+}
+
 
 /* ==========================================================================
    Reading-quiet inspect overlays (public routes, non-debug)
@@ -771,6 +844,58 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
   --spw-site-rhythm-tempo: min(calc(var(--spw-site-rhythm-tempo, 1) * 1.08), 3.2);
 }
 
+/* Effect ledger flourishes — precipitated residue as soft ornament knobs.
+   Defaults live in tokens/core.css; effect-ledger.js overrides on html when residue lands. */
+:where(html[data-spw-effects]) {
+  --spw-effect-surface: 1;
+  --spw-effect-ledger-scale: calc(1 + (min(var(--spw-effect-count), 24) * 0.004));
+  --spw-site-rhythm-density: max(
+    var(--spw-site-rhythm-density, 0.5),
+    calc(0.48 + (var(--spw-effect-charge) * 0.28))
+  );
+}
+
+:where(html[data-spw-effect-pulse]) {
+  --spw-effect-pulse-active: max(var(--spw-effect-pulse), 1);
+  --spw-microinteraction-pulse-intensity: max(
+    var(--spw-microinteraction-pulse-intensity, 1),
+    calc(1 + (max(var(--spw-effect-charge), 0.18) * 0.22 * var(--spw-effect-pulse-active, 1)))
+  );
+  --spw-site-rhythm-tempo: min(
+    calc(var(--spw-site-rhythm-tempo, 1) * (1 + (max(var(--spw-effect-charge), 0.12) * 0.1))),
+    3.2
+  );
+}
+
+:where(html[data-spw-module-visuals="on"][data-spw-effect-pulse]) {
+  --spw-effect-pulse-ring:
+    inset 0 0 0 1px color-mix(in srgb, var(--op-object-color, #c9862a) calc(18% + (var(--spw-effect-charge) * 16%)), transparent);
+  outline: 1px solid color-mix(in srgb, var(--op-object-color, #c9862a) calc(16% + (var(--spw-effect-charge) * 14%)), transparent);
+  outline-offset: -1px;
+  transition: outline-color 420ms var(--ease-smooth, ease);
+}
+
+/* Runtime load diagnostic — module-loader writes avg mount ms; inspect surfaces may read it. */
+:where(html[data-spw-module-visuals="on"]) {
+  --spw-runtime-load-bias: clamp(
+    0,
+    calc(var(--spw-runtime-avg-module-ms) / 120),
+    1
+  );
+}
+
+:where(html[data-spw-module-visuals="on"][data-spw-runtime-stage="ready"]) {
+  --spw-site-rhythm-density: max(
+    var(--spw-site-rhythm-density, 0.5),
+    calc(0.42 + (var(--spw-runtime-load-bias) * 0.18))
+  );
+}
+
+:where(html[data-spw-reduce-motion="on"][data-spw-effect-pulse]) {
+  --spw-effect-pulse-active: 0;
+  --spw-microinteraction-pulse-intensity: 1;
+}
+
 :where(html[data-spw-runtime-enhancement-active="true"]) {
   --spw-runtime-enhancement-intensity: max(var(--spw-runtime-enhancement-intensity, 0.32), 0.72);
 }
@@ -1032,21 +1157,31 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
 
   :where(.frame-topline > .mode-switch, [data-spw-slot="actions"] > .mode-switch) {
     width: 100%;
-    justify-content: flex-start;
+    justify-content: stretch;
   }
 
-  :where(.mode-switch[aria-label]) {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(7.25rem, 1fr));
+  /* Soft PE only — handles/state-semantics owns track/chrome contracts. */
+  :where(.mode-switch[aria-label]:not([data-spw-lens-track="row"])) {
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
+    min-inline-size: 0;
   }
 
-  :where(.mode-switch[aria-label])::before {
-    grid-column: 1 / -1;
+  :where(.mode-switch[aria-label]:not([data-spw-lens-chrome~="silent"]))::before {
+    flex: 1 1 100%;
     max-inline-size: none;
     overflow: visible;
     text-overflow: clip;
     white-space: normal;
     text-wrap: balance;
+  }
+
+  :where(.mode-switch:not([data-spw-lens-track="row"])[aria-label] > .frame-sigil) {
+    flex: 1 1 0;
+    min-inline-size: min(100%, 4.25rem);
+    white-space: nowrap;
+    justify-content: center;
   }
 
   :where(.site-hero--split-figure) > [data-spw-slot="body"] {
@@ -1222,6 +1357,90 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
   [data-spw-module-updates-kinds~="css-var"]
 ) {
   outline-color: color-mix(in srgb, var(--op-object-color, #c9a227) 36%, transparent);
+}
+
+/* Updates topology roles — flourish residue vs structural identity */
+:where(html[data-spw-debug-mode="on"], [data-spw-module-visuals="on"]) :where(
+  [data-spw-module-updates-roles~="flourish"]
+) {
+  --spw-module-updates-role-accent: var(--op-object-color, #c9862a);
+  box-shadow:
+    var(--spw-local-shadow, none),
+    0 0 0 1px color-mix(in srgb, var(--spw-module-updates-role-accent) 22%, transparent);
+}
+
+:where(html[data-spw-debug-mode="on"], [data-spw-module-visuals="on"]) :where(
+  [data-spw-module-updates-roles~="residue"]
+) {
+  --spw-module-updates-role-accent: var(--op-ref-color, #1d57a3);
+}
+
+:where(html[data-spw-debug-mode="on"], [data-spw-module-visuals="on"]) :where(
+  [data-spw-module-updates-flourishes]
+)::after {
+  content: "flourish · " attr(data-spw-module-updates-flourishes);
+  position: absolute;
+  inset-block-start: 0.2rem;
+  inset-inline-end: 0.2rem;
+  max-inline-size: min(18rem, 70vw);
+  padding: 0.1rem 0.35rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--op-object-color, #c9862a) 30%, transparent);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 90%, var(--op-object-color, #c9862a) 10%);
+  color: color-mix(in srgb, var(--ink, #111) 78%, var(--op-object-color, #c9862a) 22%);
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.54rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+  opacity: 0.88;
+}
+
+/* Idle chunk schedule — teach residue → collectible → chrome → lab ordering */
+:where(html[data-spw-module-visuals="on"][data-spw-runtime-idle-chunk]) {
+  --spw-idle-chunk-accent: var(--op-action-color, #006666);
+}
+
+:where(html[data-spw-module-visuals="on"][data-spw-runtime-idle-chunk="idle-residue"]) {
+  --spw-idle-chunk-accent: var(--op-ref-color, #1d57a3);
+}
+
+:where(html[data-spw-module-visuals="on"][data-spw-runtime-idle-chunk="idle-collectible"]) {
+  --spw-idle-chunk-accent: var(--op-object-color, #c9862a);
+}
+
+:where(html[data-spw-module-visuals="on"][data-spw-runtime-idle-chunk="idle-chrome"]) {
+  --spw-idle-chunk-accent: var(--op-frame-color, #1a9999);
+}
+
+:where(html[data-spw-module-visuals="on"][data-spw-runtime-idle-chunk="idle-lab"]) {
+  --spw-idle-chunk-accent: var(--op-probe-color, #6a3fb8);
+}
+
+:where(html[data-spw-module-visuals="on"][data-spw-runtime-idle-chunk])::after {
+  content: "idle · " attr(data-spw-runtime-idle-chunk);
+  position: fixed;
+  inset-block-end: 0.55rem;
+  inset-inline-start: 0.55rem;
+  z-index: 40;
+  padding: 0.28rem 0.48rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--spw-idle-chunk-accent) 34%, transparent);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 90%, var(--spw-idle-chunk-accent) 10%);
+  color: color-mix(in srgb, var(--ink, #111) 80%, var(--spw-idle-chunk-accent) 20%);
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+:where(html[data-spw-reduce-motion="on"][data-spw-runtime-idle-chunk])::after {
+  opacity: 0.72;
 }
 
 :where(html[data-spw-debug-mode="on"], [data-spw-debug~="layout"]) :where(
