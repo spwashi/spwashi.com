@@ -1,0 +1,131 @@
+# Spw Language Utilization — Insight Cache (2026-07)
+#
+# operation: cache
+# Language-feature findings (not site data-spw-features packs).
+
+#>cache_spw_language_utilization_2026_07
+#:cache #!language #!operators #!v04
+#:operation #!cache
+#:fixity #!tending
+
+@language_utilization: ~"../language/feature-utilization.spw"
+@language_recursive: ~"../language/recursive-improvement.spw"
+@v04: ~"../language/v04/index.spw"
+@measurement: ~"../conventions/measurement-contract.spw"
+@semantic_braces: ~"../conventions/semantic-braces.spw"
+
+operation = "cache"
+fixity = "tending"
+
+^"insights"{
+  insight #lang-001 {
+    claim #lang-001 {
+      layer = "semantic"
+      hypothesis = `Site "feature utilization" work was application packs (body tokens); Spw language utilization is operators/braces/claims/v04 — must stay dual-tracked.`
+      expression = inventory[dual]{language|runtime}<disambiguate>
+      *evidence = `conventions/feature-utilization.spw vs language/feature-utilization.spw`
+      probe_ref = `rg 'disambiguation' .spw/language/feature-utilization.spw .spw/conventions/feature-utilization.spw`
+      falsification = `One file owns both inventories without named split.`
+      status = "confirmed"
+    }
+  }
+
+  insight #lang-002 {
+    claim #lang-002 {
+      layer = "pragmatic"
+      hypothesis = `Operator surface is hot on stream/address/frame/probe/action; ground/value/scene/mode are under-taught relative to the original set.`
+      expression = operators[taught]{heavy.stream.frame.probe}<skew>
+      *evidence = `ecology:language / data-spw-operator histogram 2026-07`
+      underused = #[`.ground`, `*value`, `(scene)`, `[mode]`, `&subject`, `<concept>`][reg=set]
+      next = `Practice beds and hooks should exercise scene/mode/ground when liminality matters`
+      probe_ref = `npm run ecology:language`
+      falsification = `Histogram shows ground/scene/mode in the top tier on public routes.`
+      status = "active"
+    }
+  }
+
+  insight #lang-003 {
+    claim #lang-003 {
+      layer = "semantic"
+      hypothesis = `~474 semantic-expression hits but many operator chips lack expression pairing — utilization gap between force (operator) and formula (brace expression).`
+      expression = force[operator]{chip} without formula[brace]{expression}
+      *evidence = `HTML inventory`
+      next = `Prefer data-spw-semantic-expression on clusters that change by variant/behavior/lens`
+      probe_ref = `rg 'data-spw-semantic-expression' --glob '*.html' | wc -l; rg 'data-spw-operator=' --glob '*.html' | wc -l`
+      falsification = `Most operator chips on lab routes also carry semantic-expression when variant/behavior/lens changes meaning.`
+      status = "active"
+    }
+
+    %expression_hits {
+      kind = "objective"
+      source = "HTML inventory 2026-07"
+      value = ~474
+      unit = "hits"
+    }
+  }
+
+  insight #lang-004 {
+    claim #lang-004 {
+      layer = "pragmatic"
+      hypothesis = `v04 pillars already define recursive language improvement; site needed language-specific ecology script + utilization contract.`
+      expression = loop[language]{ecology.utilization.v04}<landed>
+      *evidence = `language/v04/index.spw priority_stack; claim-probe-syntax; ecology:language`
+      probe_ref = `test -f scripts/spw-language-ecology.mjs && rg 'priority_stack' .spw/language/v04/index.spw`
+      status = "confirmed"
+    }
+  }
+
+  insight #lang-005 {
+    claim #lang-005 {
+      layer = "semantic"
+      hypothesis = `Claims in .spw are numerous; probe_ref density is the real utilization metric for falsifiable language.`
+      expression = claim[density]{probe_ref}<falsify>
+      *evidence = `claim-probe-syntax owner_claim; rg owner_claim .spw`
+      next = `When caching language insights, require probe_ref or mark experimental`
+      probe_ref = `rg 'probe_ref' .spw/language .spw/caches/spw-language-utilization-2026-07.spw`
+      falsification = `New language caches ship without probe_ref and without experimental fixity.`
+      status = "active"
+    }
+
+    %probe_ref_rule {
+      kind = "subjective"
+      source = "language utilization judgment"
+      value = `density matters more than claim count`
+      scale = "0-1"
+      unit = "confidence-prose"
+    }
+  }
+}[reg=set]
+
+^"next_questions"{
+  ?<
+    Which underused operators (.ground *value (scene) [mode]) should appear on play/design practice beds first?,
+    Should ecology:language --strict fail when data-spw-operator values are outside OPERATOR_DEFINITIONS aliases?,
+    When does a site language pillar promote via submodule_bridge vs stay local?
+  >[reg=stream]
+}[reg=set]
+
+^"operator_exercise_prime"{
+  ~note = `Safe first patches that raise underused operators without new families`
+  (scene) {
+    where = `play / design practice beds / hooks`
+    expression = practice[bed]{scene.mode.ground}<liminal>
+  }
+  [mode] {
+    where = `mode-switch already present — name [mode] in .spw + data-spw-form when posture is the lesson`
+  }
+  %measure {
+    where = `labs already using setMeasuredValue — declare data-spw-measure-kind`
+    ~see = @measurement
+  }
+  <lens> {
+    where = `semantic-expression clusters — finish root[variant]{behavior}<lens> when lens changes uptake`
+    ~see = @semantic_braces
+  }
+}[reg=facet]
+
+validation: #[
+  `rg 'claim #lang-00' .spw/caches/spw-language-utilization-2026-07.spw`
+  `rg 'probe_ref' .spw/caches/spw-language-utilization-2026-07.spw`
+  `npm run ecology:language`
+][reg=set]

@@ -1,0 +1,542 @@
+# Component philosophy, composability, and resonance harmony (2026-07)
+#
+# operation: audit + cache
+# fixity: tending
+# method: cross-read conventions, design labs, CSS component layer, packing/resonance
+#         adoption, and metaphor ecology; grade theory vs production; prime next work
+
+#>component_philosophy_harmony_2026_07
+#:audit #!components #!composability #!resonance #!harmony
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+@component_taxonomy: ~"../conventions/component-taxonomy.spw"
+@component_packing: ~"../conventions/component-packing.spw"
+@composition_box_model: ~"../conventions/composition-box-model.spw"
+@site_starter_component_kit: ~"../conventions/site-starter-component-kit.spw"
+@attention_field: ~"../conventions/attention-field.spw"
+@ornament_contract: ~"../conventions/ornament-contract.spw"
+@expressive_registers: ~"../conventions/expressive-registers.spw"
+@circuit_components: ~"../conventions/circuit-components.spw"
+@dimension_vocabulary: ~"../conventions/dimension-vocabulary.spw"
+@region_component_ecology: ~"../conventions/region-component-ecology.spw"
+@component_region_personality: ~"../conventions/component-region-personality.spw"
+@site_semantics: ~"../conventions/site-semantics.spw"
+@wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
+@cognitive_surface: ~"../philosophy/cognitive-surface.spw"
+@spatial_grammar: ~"../philosophy/spatial-grammar.spw"
+@composable_art: ~"../conventions/composable-art-system.spw"
+@component_anatomy_device_packing: ~"./component-anatomy-device-packing-2026-07.spw"
+@css_foundation: ~"../../public/css/components/foundation.css"
+@css_wonder: ~"../../public/css/effects/wonder.css"
+@css_registers: ~"../../public/css/systems/registers.css"
+@css_packing: ~"../../public/css/systems/component-packing.css"
+@design_components: ~"../../design/components/index.html"
+@design_composition: ~"../../design/composition/index.html"
+@design_slots: ~"../../design/slots/index.html"
+@runtime_lifecycles: ~"../reviews/runtime-audit/lifecycles.spw"
+@naming_structured: ~"../conventions/naming-and-structured-values.spw"
+@attr_governance: ~"../conventions/data-spw-attribute-governance.spw"
+@composition_js: ~"../../public/js/runtime/composition-box-model.js"
+@registers_css: ~"../../public/css/systems/registers.css"
+@packing_css: ~"../../public/css/systems/component-packing.css"
+@js_architecture_cognition: ~"../conventions/js-architecture-cognition.spw"
+@metaphor_dimensional_lexicon: ~"../conventions/metaphor-dimensional-lexicon.spw"
+@build_runtime_performance_audit: ~"./build-runtime-performance-2026-07/index.spw"
+
+audit_run: .{
+  at = `2026-07-09`
+  extended = `2026-07-10 — performance, lifecycle development, naming`
+  source = `agent evaluation: component philosophy, design, composability, primitives, metaphors, harmony, resonance visualization; performance/lifecycle/naming pass against runtime + CSS`
+  scope = `public component CSS/JS, design lab routes, .spw contracts for packing/field/ornament/registers, composition-box-model refresh path, page/region/box settle arcs`
+  posture = `cache findings + grade theory vs production; primes live on linked conventions`
+}[reg=facet]
+
+^"thesis"{
+  claim = `Components here are projection of a field model into HTML/CSS/JS — not a widget library. Philosophy and lab contracts are stronger than production adoption of pack-local, slots, and expressive registers.`
+  achievement = `Falsifiable wonder/cognitive tests, layered cascade-as-narrative, portable compose boundary, operator resonance that is structural rather than decorative.`
+  debt = `Many public routes still ship beautiful static composition that only partially participates in the cognitive medium (pack/registers/slots uneven).`
+}[reg=facet]
+
+^"grades"{
+  philosophy = `A — rigorous, testable, consistent across taxonomy/wonder/cognitive surface`
+  design_structure = `A- — layer order, materials, slots docs, living labs`
+  composability_theory = `A — compose.css boundary, queryable contract, packing axes`
+  composability_production = `B- — class frames dominate; pack-local lab-only; slots concentrated on hubs`
+  primitive_clarity = `A- — strong alphabet; synonymy across circuit/field/registers`
+  metaphor_harmony = `B+ — powerful set; needs one physics dictionary`
+  resonance_visualization = `B — operator echo excellent; full field story partial`
+}[reg=facet]
+
+^"philosophy_summary"{
+  component_def = `stable interaction pattern between operator forces and attentional field state`
+  design_hub_voice = `A component is a small machine for arranging attention.`
+  stage_rule = `A component is a small stage for attention: what enters, changes, can be tuned, carried forward.`
+  wonder_rule = `Wonder is structural revelation under engagement, not ambient spectacle.`
+  cognitive_rule = `Surface changes in legibility with attention quality, not only appearance.`
+  promotion_rule = `Starter kit: slots + semantic state + CSS ownership + optional JS + specimen + validation before extraction.`
+}[reg=facet]
+
+^"primitives_alphabet"{
+  structural = #[`.site-frame`, `.frame-card`, `.frame-panel`, `.mode-panel`, `.operator-chip`, `.frame-sigil`, `.spec-pill`][reg=set]
+  slots = `header -> meta -> body -> figure -> actions -> footer`
+  identity = #[`data-spw-surface`, `data-spw-features`, `data-spw-page-family`, `data-spw-page-modes`, `data-spw-page-role`, `data-spw-context`, `data-spw-wonder`][reg=set]
+  anatomy = #[`data-spw-kind`, `data-spw-role`, `data-spw-slot`, `data-spw-feature`, `data-spw-anatomy`][reg=set]
+  field = #[`data-spw-wonder-state`, `data-spw-resonance-probe`, `data-spw-collected`, `data-spw-charge`, `--field-balance`][reg=set]
+  composition = #[`data-spw-box-model`, `data-spw-composition-flow`, `data-spw-pack-local`, `data-spw-pack-layout`, `data-spw-pack-fill`][reg=set]
+  expression = #[`data-spw-register`, `data-spw-express`, `data-spw-approach`, `--spw-depth`, `--spw-valence`, `--spw-resonance`, `--spw-attention`, `--spw-field-intensity`][reg=set]
+  materials = #[`glass .frame-card`, `matte .mode-panel`, `code --surface-code`][reg=set]
+}[reg=facet]
+
+^"adoption_evidence_2026_07"{
+  slots = `Concentrated on hubs (home, topics/software, about, topics) and sparse on many secondary routes; class frame grammar (~500+ frame-family hits) remains production lingua franca.`
+  pack_local = `Authored only on design/composition lab — CSS complete, production gap confirmed in @component_packing.`
+  box_model = `Authored on research, settings-adjacent, cards/membership reason strips; not universal on frame-cards.`
+  registers = `Opt-in systems/registers.css; sample on design/composition; long topic pages largely unexpressed.`
+  resonance_live = #[
+    `operator :has() echo + resonance-probe pin`,
+    `wonder-memory colors + field-balance into chrome/ornament`,
+    `semantic-cluster accents + crossref peers`,
+    `SVG persona harmony`,
+    `spw-resonance-lab pedagogical axes`
+  ][reg=set]
+}[reg=facet]
+
+^"metaphor_ecology"{
+  primary = `webpage anatomy first (masthead, hero, card, footer) — literal before decorative metaphor`
+  secondary_vocabularies = #[`restaurant`, `garden`, `culinary mise/soup for teaching slots`][reg=set]
+  field_stack = #[`attention field / register diffusion`, `expressive registers channels`, `circuit resistor/capacitor/inductor`][reg=set]
+  cascade_story = `CSS layers as geological strata + narrative stage (composable art system)`
+  harmony_risk = `circuit + field + registers name one physics with three dictionaries; authors invent a fourth`
+  physics_dictionary_target = #[
+    `voltage ~ charge / field-intensity ~ wash`,
+    `current ~ resonance ~ coupling ring`,
+    `inductance ~ attention ~ weight/opacity`,
+    `capacitance ~ field-balance ~ memory residual`
+  ][reg=set]
+}[reg=facet]
+
+^"component_passport"{
+  purpose = `One checklist for any reusable unit — collapses taxonomy, queryable contract, box-model, packing axes.`
+  fields = #[
+    `kind`, `role`, `slots`, `feature`, `material`, `liminality`, `consequence`,
+    `box-model`, `pack axes (shell-width | box-width | content | input-capability)`,
+    `field tokens`, `register opt-in`, `CSS owner`, `JS writer`, `specimen`, `claim`
+  ][reg=set]
+  owner = @component_taxonomy
+  related = #[@site_semantics, @composition_box_model, @site_starter_component_kit][reg=set]
+}[reg=facet]
+
+^"packing_direction_targets"{
+  note = `Regions and components that need more specific tuning or packing direction before the next leaf invents its own breakpoints.`
+  first_route_adopters = #[
+    .{
+      host = `semantic-contract-card grid`
+      route = `/topics/software/`
+      why = `high reuse, narrow/wide shell variance`
+      axes = `box-width pack-local + shell-width only for page chrome`
+    },
+    .{
+      host = `living-concept-card`
+      routes = #[`/topics/`, hub cards][reg=set]
+      why = `figure+body+actions match pack regions media|body|actions`
+      axes = `box-width pack-local`
+    },
+    .{
+      host = `settings vibe-widget-grid`
+      route = `/settings/`
+      why = `already in composition-box-model DEFAULT_SELECTOR`
+      axes = `box-width + content-tone density`
+    }
+  ][reg=set]
+  figure_rail = .{
+    host = `spw-svg-figure with register rail`
+    routes = #[`design/experiments/svg`, topic SVG hosts][reg=set]
+    direction = `named data-spw-box-model=figure-rail keyed to container width (see @component_anatomy_device_packing)`
+  }[reg=facet]
+  secondary_sparse_slots = #[
+    `contact`, `membership`, `now`, `cards`, many math topic leaves`
+  ][reg=set]
+  dual_anatomy_repair = `frame-card hosts should carry data-spw-slot on existing regions; composition inspect reports missing slots in design/debug modes`
+}[reg=facet]
+
+^"region_tuning_map"{
+  chrome_field = .{
+    components = #[`section-handle`, `floating chrome islands`, `header nav`][reg=set]
+    tune = `field-balance wash, approach distant|approaching|arrival, wonder-entry — not pack-local`
+    axis = `shell-width + input-capability`
+  }[reg=facet]
+  editorial_hubs = .{
+    routes = #[`/`, `/about/`, `/topics/`, `/design/`][reg=set]
+    tune = `slot completeness, reason-strips box-model, referentiality public vs technical`
+  }[reg=facet]
+  practice_beds = .{
+    routes = #[`/topics/math/* labs`, `/design/composition/`, `/design/components/`][reg=set]
+    tune = `queryable dimensions, register opt-in on feature clusters, resonance legend experiments`
+  }[reg=facet]
+  capture_settled = .{
+    components = `any interactive surface with motion/pointer`
+    tune = `capture-clean resolves to settle phase (interaction microstates), not only hide-chrome lists`
+  }[reg=facet]
+}[reg=facet]
+
+^"lab_experiment_refinements"{
+  composition_lab = .{
+    route = `/design/composition/`
+    keep = `resizable pack-local card + layout/fill readout`
+    add = #[
+      `register diffusion legend when operator probe pins (which registers warm)`,
+      `optional field-balance micro-meter tied to wonder-memory TTL`,
+      `missing-slot report for specimen frame-cards in inspect mode`
+    ][reg=set]
+  }[reg=facet]
+  components_glossary = .{
+    route = `/design/components/`
+    keep = `live density/operator saturation tuning + mise/soup teaching`
+    add = #[
+      `component passport table as technical referentiality strip`,
+      `one specimen with data-spw-register=resonance + data-spw-express on peers`,
+      `link to packing adopters list for production promotion`
+    ][reg=set]
+  }[reg=facet]
+  slots_lab = .{
+    route = `/design/slots/`
+    refine = `pair each slot with material + packing region name (media|body|actions) so dual anatomy is taught as one map`
+  }[reg=facet]
+  resonance_lab = .{
+    surfaces = #[`.spw-resonance-lab`, semantic-learning.css axes][reg=set]
+    refine = `distinguish collection floor ornament vs transient resonance ring in the same specimen`
+  }[reg=facet]
+  persona_harmony_generalize = `pattern of --spw-svg-persona-harmony → optional --spw-token-harmony when body wonder tokens match section wonder tokens (editorial clusters, one mechanism two media)`
+}[reg=facet]
+
+^"resonance_visualization_primes"{
+  wonder_safe_rule = `Prefer structural revelation over more glow; pass wonder doctrine tests before shipping.`
+  candidates = #[
+    `field-balance quiet chrome instrument on section handle or settings satchel`,
+    `collection vs resonance vs deviation as three distinct ornaments`,
+    `register membership legend on composition lab`,
+    `crossref peer edges (optional SVG/CSS) for neighborhood graph`,
+    `pack-local readout on first production adopters`,
+    `wonder entropy H(page) console/catalog only — never always-on reading UI`,
+    `data-spw-register=resonance on data-spw-feature hosts first, not sitewide express`
+  ][reg=set]
+}[reg=facet]
+
+^"performance_audit"{
+  operation = "audit"
+  fixity = "tending"
+  at = `2026-07-10`
+  aligned = `2026-07-10 — cost_class + cognition/ecology coordinates via @metaphor_dimensional_lexicon`
+  thesis = `The hot path is healthy when layout stays in pure CSS and JS only mirrors inspectable state. Risk appears when DEFAULT_SELECTOR and full-tree annotate scale with every frame, or when expressive effects go sitewide.`
+  metaphor_rule = `Document seams in technical verbs; tag cost_class. Ecology/cognition nouns are optional projections — full map in @metaphor_dimensional_lexicon#performance_coordinate_map.`
+
+  strengths: #[
+    .{ tech = `pack-local pure @container`, cost_class = `authored_prior_safe`, note = `zero interpret cost on layout hot path` },
+    .{ tech = `register diffusion O(tokens)`, cost_class = `demand_coupled`, note = `not O(n²) field` },
+    .{ tech = `express opt-in`, cost_class = `premature_commitment avoided` },
+    .{ tech = `bounded wonder-memory selector`, cost_class = `working_memory_pressure bounded` },
+    .{ tech = `debounce 48ms + passive resize`, cost_class = `demand_coupled` },
+    .{ tech = `section-handle / groove rAF + IO`, cost_class = `demand_coupled` },
+    .{ tech = `canvas-accents RAF if intersecting`, cost_class = `demand_coupled` }
+  ][reg=set]
+
+  seams: #[
+    .{
+      id = `composition-default-selector-breadth`
+      cost_class = `working_memory_pressure`
+      stratum = `metacognition`
+      guild = `inspection`
+      seam = `DEFAULT_SELECTOR includes every .site-frame and [data-spw-feature] plus settings widgets.`
+      cost = `annotateCompositionBoxes maps all matches on each refresh; resolveContentTone walks textContent + querySelectorAll for operators/media per host.`
+      risk = `Promoting pack-local by expanding DEFAULT_SELECTOR to all frame-cards multiplies dataset writes and DOM queries on resize/attention events.`
+      direction = `Keep CSS @container for layout. Mirror pack-layout/fill only for [data-spw-pack-local]. Prefer observing pack-local hosts (or feature-gated roots) instead of widening DEFAULT_SELECTOR sitewide.`
+      evidence = @composition_js
+    },
+    .{
+      id = `pack-local-ro-gap`
+      cost_class = `interference`
+      stratum = `metacognition`
+      pack_axis = `box_width`
+      seam = `ResizeObserver observes documentElement, not each pack-local card's container box.`
+      cost = `Container-only resize may change @container layout without updating data-spw-pack-layout until window resize or attention event.`
+      risk = `Inspect/readout lies; settle/charge bridges that read pack-fill get stale values.`
+      direction = `When first production pack-local lands, observe each pack-local host (or packing root) with RO; window resize as fallback only.`
+    },
+    .{
+      id = `content-tone-scan`
+      cost_class = `working_memory_pressure`
+      stratum = `interpretation`
+      seam = `resolveContentTone re-scans operators/media and full text length every annotate.`
+      cost = `O(hosts × subtree) on refresh path.`
+      risk = `Acceptable on settings/lab counts; not if annotate runs on every site-frame after idle enhancements.`
+      direction = `Cache tone until childList mutation; missingOnly when authored; skip pure stage shells without pack-local.`
+    },
+    .{
+      id = `express-paint-cost`
+      cost_class = `paint_composite`
+      stratum = `working_set`
+      seam = `[data-spw-express] transitions transform, box-shadow, font-weight, opacity (@registers_css).`
+      cost = `Composite + paint on channel changes; font-weight can reflow text.`
+      risk = `Sitewide express or large register containers thrash reading measure.`
+      direction = `Never default express on html/body. Card-scale hosts. Reduced-motion / minimal posture dampen.`
+    },
+    .{
+      id = `has-resonance-and-pack`
+      cost_class = `paint_composite`
+      stratum = `working_set`
+      seam = `:has() operator echo and pack :has(nth-child(6)) are CSS-only but not free on large DOMs.`
+      cost = `Style invalidation when operators hover/focus or pack children mutate.`
+      risk = `Watch long topic pages with hundreds of chips.`
+      direction = `Resonance on operators only; pack :has on pack-regions only.`
+    },
+    .{
+      id = `attribute-write-timing`
+      cost_class = `authored_prior_safe`
+      stratum = `interpretation`
+      seam = `Post-mount dataset enrichment arrives after first paint (@runtime_lifecycles delayed_truth).`
+      cost = `CLS risk if CSS load-bears on JS-only attrs for geometry.`
+      risk = `Violates attr_governance geometry_rule if packing/presence drive root geometry.`
+      direction = `Authored pack-local + slots layout with zero JS. JS attrs narrate + optional density polish only.`
+    }
+  ][reg=set]
+
+  performance_defaults: #[
+    `Pure CSS owns layout packing; JS owns inspect mirror and optional density narration`,
+    `Debounce / rAF all multi-host refresh; no per-mousemove annotate`,
+    `Opt-in field/register/pack before sitewide promotion`,
+    `Bounded selectors for memory and express participants`,
+    `Prefer register diffusion over pairwise semantic distance`,
+    `Capture and reduced-motion resolve to settle — freeze motion, do not add new observers`,
+    `Tag new seams with cost_class (+ stratum or guild) before metaphor prose`
+  ][reg=set]
+
+  promotion_budget: .{
+    pack_local_n = `First production batch: one grid family (tens of cards max), not all site-frames`
+    mirror_scope = `annotate pack-layout only for pack-local matches; do not require full snapshotCompositionBox story on every card`
+    lab_only = `pack readout textContent, register legend, missing-slot report — design routes only`
+    cost_classes = #[`working_memory_pressure`, `interference`][reg=set]
+  }[reg=facet]
+  lexicon = @metaphor_dimensional_lexicon
+  nested_build_runtime = @build_runtime_performance_audit
+}[reg=facet]
+
+^"lifecycle_development"{
+  operation = "prime"
+  fixity = "tending"
+  at = `2026-07-10`
+  related = @runtime_lifecycles
+
+  nested_arcs: .{
+    page = `booting → interactive → hydrated → region-enhanced → enhanced (html[data-spw-page-state])`
+    region = `queued → primed → hydrating → interactive → enhanced → settling`
+    ecology_temporal = `discovering → prefetching → measuring → mounting → settling → personalizing → settled`
+    interaction = `idle → approach → prime → charge → inspect → discover → settle`
+    box_settle = `data-spw-box-settle-phase: settled | background | step-1..3 | entering | returning | restored`
+    liminality = `entry → threshold → settled → nested → projected → deep`
+  }[reg=facet]
+
+  fractal_rule = `Same shapes at every altitude (attr_governance rhythm). Box settle rhymes with page arrival; do not invent a fourth settle vocabulary for pack-local.`
+
+  component_maturity_ladder: #[
+    .{ step = 1, name = `authored shell`, means = `class frame + kind/role; readable without JS` },
+    .{ step = 2, name = `dual anatomy`, means = `data-spw-slot on existing regions; debug can label` },
+    .{ step = 3, name = `queryable`, means = `feature + consequence; passport row started` },
+    .{ step = 4, name = `pack-local`, means = `container packing; CSS-first; optional JS mirror` },
+    .{ step = 5, name = `field participant`, means = `charge/wonder/collect tokens; ornament-ready` },
+    .{ step = 6, name = `express opt-in`, means = `register + express on feature cluster only` },
+    .{ step = 7, name = `starter extract`, means = `compose boundary + specimen + validation` }
+  ][reg=set]
+
+  mount_considerations: #[
+    `Pack-local CSS must be correct by interactive; JS mirror may arrive at hydrated/region-enhanced without layout change`,
+    `Do not gate figure/body visibility on data-spw-pack-layout — that attr is a mirror, not a source of truth`,
+    `Wonder-memory / resonance probe should not block first paint; they personalize after interactive`,
+    `Region profiles primed before component-semantics can be stale — avoid role-derived geometry until enrichment or accept brand_arrival intermediate state (@runtime_lifecycles)`,
+    `Capture-clean requests settle phase on interactive components (freeze motion) rather than only hide chrome`,
+    `destroyRuntime / module cleanup must drop RO, attention listeners, and managed wonder datasets (composition-box-model cleanup already disconnects RO)`
+  ][reg=set]
+
+  development_order: .{
+    rule = `Climb the maturity ladder one step per patch family when possible.`
+    anti_pattern = `Express + pack-local + new passport fields + ornament triad in one PR on every hub card.`
+    safe_sequence = `slots on one family → pack-local CSS → mirror inspect → collected/resonance ornament → register specimen on lab → promote express to one production feature`
+  }[reg=facet]
+
+  brand_and_care: #[
+    `Authored data-spw-* should feel intentional before JS (brand arrival at booting→interactive)`,
+    `User palette / wonder settings by interactive at latest`,
+    `Enhanced should feel like depth becoming available, not late corrections of layout`
+  ][reg=set]
+}[reg=facet]
+
+^"naming_considerations"{
+  operation = "audit"
+  fixity = "tending"
+  at = `2026-07-10`
+  related = #[@naming_structured, @attr_governance][reg=set]
+
+  strong_families: #[
+    `pack-*: pack-local | pack-regions | pack-region | pack-layout | pack-fill | pack-readout`,
+    `box-*: box-model | box-measure | box-presence | box-overflow | box-story | box-settle-phase`,
+    `slot anatomy: header meta body figure actions footer`,
+    `register / express / approach as expressive instrument (≠ lens ≠ form)`
+  ][reg=set]
+
+  collisions_and_synonyms: #[
+    .{
+      cluster = `resonance`
+      senses = #[
+        `operator echo / --spw-resonance channel`,
+        `data-spw-palette-resonance (settings climate)`,
+        `data-spw-resonance-probe (pin)`,
+        `wonder type resonance`,
+        `accent-resonance free text on images`
+      ][reg=set]
+      rule = `Channel + probe are field physics. Palette-resonance is settings climate. Free-text accent-resonance is authored poetry — do not drive layout from it.`
+    },
+    .{
+      cluster = `settle`
+      senses = #[
+        `interaction-phase settle`,
+        `box-settle-phase`,
+        `page settling / page-arrival settled`,
+        `region settling`,
+        `capture-clean as settle request`
+      ][reg=set]
+      rule = `One word, fractal altitudes. Prefer existing attrs; do not add data-spw-pack-settle.`
+    },
+    .{
+      cluster = `density / tone / occupancy`
+      senses = #[
+        `typography packing compact|balanced|roomy`,
+        `content-tone light|balanced|dense|operator-heavy|…`,
+        `pack-fill sparse|balanced|full`,
+        `content-density alias in JS → content-tone`
+      ][reg=set]
+      rule = `Width packing ≠ content tone ≠ pack-fill. Author content-tone; mirror pack-fill; density tiers are typography/pack occupancy.`
+    },
+    .{
+      cluster = `measure`
+      senses = #[
+        `box-measure narrow|compact|comfortable|wide`,
+        `text-measure / pretext measure`,
+        `readable ch measure tokens`
+      ][reg=set]
+      rule = `box-measure is host inline-size band; text-measure is typography; do not overload one attr for both.`
+    },
+    .{
+      cluster = `salience`
+      senses = `gravity overlap ranks vs module-field salience vs viewing-reason personas`
+      rule = `@attr_governance#salience_namespace — never mix on one host`
+    },
+    .{
+      cluster = `passport vs queryable`
+      senses = `queryable_component_contract dimensions vs component_passport fields`
+      rule = `Queryable is the public minimum; passport extends for promotion. Prefer "passport extends queryable" in docs, not two competing checklists without a bridge.`
+    }
+  ][reg=set]
+
+  naming_primes: #[
+    `Prefer pack-* for container packing; keep gravity-* for outer placement`,
+    `Prefer *-resolved for inference; never overwrite authored base keys`,
+    `Prefer resonance-key for stable handles over scraping copy`,
+    `figure-rail is a box-model role value, not a new data-spw-figure-rail attr unless CSS needs a selector family`,
+    `Avoid new stems for circuit metaphors in HTML — map in .spw only`,
+    `Class stems stay structural (frame-card); state stays data-spw-*`
+  ][reg=set]
+
+  rename_when_window_opens: #[
+    `module-field data-spw-salience → data-spw-field-salience or data-spw-module-salience`,
+    `retire content-density writes in favor of content-tone only (keep read alias briefly)`
+  ][reg=set]
+}[reg=facet]
+
+^"improvement_priority"{
+  p1_align = `component passport + circuit↔channel physics dictionary (no HTML required) — largely landed in .spw`
+  p2_implement = `pack-local on three production card families + collection/resonance ornament distinction`
+  p3_visualize = `field-balance + register legend on one design lab only, then promote`
+  p4_contract = `capture-clean = settle variant; shell/box/input axis headers on new component CSS`
+  p5_performance = `pack-local host RO + narrow annotate scope; never widen DEFAULT_SELECTOR to all frames for packing`
+  p6_naming = `document resonance/settle/density disambiguation in naming + attr governance; content-tone only writes`
+}[reg=facet]
+
+^"active_claims"{
+  claim #component-harmony-001 {
+    layer = "pragmatic"
+    hypothesis = "Production frame-cards can adopt data-spw-pack-local without layout thrash when CSS @container owns width and JS only mirrors layout/fill for inspectability."
+    spec_ref = ".spw/conventions/component-packing.spw + this audit#packing_direction_targets"
+    impl_ref = "public/css/systems/component-packing.css + composition-box-model.js + one of topics/software|settings|hub cards"
+    probe_ref = "Resize a pack-local card across 26rem/44rem thresholds; data-spw-pack-layout tracks stack|split|feature."
+    falsification = "Pack-local adoption requires viewport media or breaks in split-layout rails."
+    status = "active"
+  }
+  claim #component-harmony-002 {
+    layer = "semantic"
+    hypothesis = "Visitors and agents can distinguish collected floor marks from transient resonance rings without reading docs."
+    spec_ref = ".spw/conventions/ornament-contract.spw + this audit#resonance_visualization_primes"
+    impl_ref = "public/css/ornament/ornament.css + wonder.css + guide badge / operator chip states"
+    probe_ref = "Collect one chip, hover a matching operator elsewhere; visuals differ (persistent vs decaying)."
+    falsification = "Both states only brighten teal the same way."
+    status = "active"
+  }
+  claim #component-harmony-003 {
+    layer = "agent-editor"
+    hypothesis = "A reusable component is under-specified if it lacks a passport row (kind/role/slots/feature/CSS owner/specimen)."
+    spec_ref = ".spw/conventions/site-semantics.spw#queryable_component_contract + this audit#component_passport"
+    impl_ref = "design/components glossary + component-taxonomy passport"
+    probe_ref = "Pick a new card PR; passport fields filled or explicitly deferred."
+    falsification = "Promoted reusable card with only visual classes and route-local CSS."
+    status = "active"
+  }
+  claim #component-harmony-004 {
+    layer = "pragmatic"
+    hypothesis = "Pack-local promotion stays within a performance budget when layout is CSS-only and JS mirrors only pack-local hosts (not every .site-frame) with host-level ResizeObserver."
+    spec_ref = "this audit#performance_audit + component-packing.spw performance_defaults"
+    impl_ref = "public/js/runtime/composition-box-model.js DEFAULT_SELECTOR + RO scope"
+    probe_ref = "On a production pack-local grid, resize a split-layout column without window resize; pack-layout updates; Performance panel shows no full-document annotate storm."
+    falsification = "DEFAULT_SELECTOR expands to all site-frames solely to support packing mirrors, or container resize never updates pack-layout."
+    status = "active"
+  }
+  claim #component-harmony-005 {
+    layer = "semantic"
+    hypothesis = "Authors and agents can disambiguate resonance, settle, and density clusters without inventing parallel attributes."
+    spec_ref = "this audit#naming_considerations + data-spw-attribute-governance.spw"
+    impl_ref = "naming-and-structured-values.spw + convention primes"
+    probe_ref = "rg for new data-spw-* introduced for packing/field work; each maps to an existing family or is rejected."
+    falsification = "A patch adds data-spw-pack-settle or data-spw-card-resonance that duplicates existing settle/resonance attrs."
+    status = "active"
+  }
+}[reg=set]
+
+^"validation"{
+  commands = #[
+    `rg 'data-spw-pack-local' --glob '!**/node_modules/**' --glob '!**/.spw/_workbench/**'`,
+    `rg -c 'data-spw-slot=' --glob '**/index.html' | sort -t: -k2 -nr | head`,
+    `rg 'component_philosophy_harmony|component-philosophy-harmony|performance_audit|lifecycle_development|naming_considerations' .spw`,
+    `rg 'data-spw-register|data-spw-express' design public --glob '!**/node_modules/**' | head`,
+    `rg 'DEFAULT_SELECTOR|scheduleCompositionRefresh|ResizeObserver' public/js/runtime/composition-box-model.js`,
+    `rg 'data-spw-content-density|data-spw-content-tone' public/js/runtime/composition-box-model.js`
+  ][reg=set]
+}[reg=facet]
+
+dispatch: .{
+  taxonomy = @component_taxonomy
+  packing = @component_packing
+  box_model = @composition_box_model
+  starter = @site_starter_component_kit
+  field = @attention_field
+  ornament = @ornament_contract
+  registers = @expressive_registers
+  circuit = @circuit_components
+  dimensions = @dimension_vocabulary
+  region_ecology = @region_component_ecology
+  anatomy_packing_audit = @component_anatomy_device_packing
+  runtime_lifecycles = @runtime_lifecycles
+  naming = @naming_structured
+  attr_governance = @attr_governance
+  design_components = @design_components
+  design_composition = @design_composition
+  design_slots = @design_slots
+}[reg=facet]

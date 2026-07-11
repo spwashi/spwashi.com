@@ -1,0 +1,47 @@
+# TypeScript feature usage for agents
+
+#>agentic_development_typescript
+#:audit #!typescript #!agents
+#:operation #!audit
+#:fixity #!tending
+
+@index: ~"./index.spw"
+@skill: ~"../../../.agents/skills/spw-typescript-affordances/SKILL.md"
+@ngjt_types: ~"../naming-grammar-js-types-2026-07/type-usage.spw"
+
+^"dual_track"{
+  public_ts = `7 files → public/js/typed/ (bus, feeds, dom-contracts, media-publishing, …)`
+  scripts_ts = `21 .mts → scripts/typed/ (build, css-*, site-contracts, runtime-contracts, check-*)`
+  public_js = `~196 hand ESM modules — dominant agent edit surface`
+  skill_rule = `Do not introduce a TS build path for route code just because types would be nice`
+}[reg=facet]
+
+^"features_agents_actually_use"{
+  site_contracts_types = `REQUIRED_BODY_DATA_KEYS, ManifestRoute, RuntimeDefinition — agent validation spine`
+  runtime_contracts = `catalog export-shape / updates contract checking`
+  css_contracts = `layer import ownership, generated checks`
+  build_topology = `as const path sets for deploy graph`
+  public_bus_ts = `richest public/ts typing (event shapes)`
+  plain_js_discipline = `Object.freeze contracts, closed string sets, normalize* — TS-inspired without TS`
+}[reg=facet]
+
+^"features_underused"{
+  u1 = `Shared TypeScript interface for SPW_MODULE_EXPORT / ModuleDef`
+  u2 = `JSDoc typedefs on large runtime modules (catalog optional)`
+  u3 = `.d.ts only 2 files — consumers rarely import types`
+  u4 = `satisfies / strict public route typing — intentionally absent`
+}[reg=set]
+
+^"agent_guidance"{
+  when_ts = #[
+    `Editing check/build contracts`,
+    `New validation rule for routes/modules`,
+    `Kernel-adjacent portable contracts in public/ts`
+  ][reg=set]
+  when_js = #[
+    `Route modules, interface chrome, most runtime processes`,
+    `Catalog mount wrappers`,
+    `Quick progressive enhancement`
+  ][reg=set]
+  cost = `Triple typecheck (~14s sample) is agent loop cost — scope builds (BRP)`
+}[reg=facet]

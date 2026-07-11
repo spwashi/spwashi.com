@@ -1,0 +1,62 @@
+# Hygiene roadmap — TypeScript, features, bundling
+#
+# User-open direction (2026-07-10): more TS and/or feature/bundling hygiene.
+
+#>agentic_development_hygiene_roadmap
+#:audit #!hygiene #!typescript #!css #!runtime
+#:operation #!prime
+#:fixity #!tending
+
+@index: ~"./index.spw"
+@brp: ~"../build-runtime-performance-2026-07/index.spw"
+@csi: ~"../commit-skill-induction-2026-07/mitigations.spw"
+
+^"landed_slice_2026_07_10"{
+  manifest_default = `ROUTE_MANIFEST_OUTPUT → .agents/state/runtime/route-runtime-manifest.json (was TMPDIR; caused stale agent cache)`
+  manifest_catalog = `collectRuntimeDefinitionsFromSource reads module-catalog.js + export const *_DEFS (was site.js only — empty runtimeDefinitions after extraction)`
+  runtime_hygiene = `runtime-contracts recommends ENHANCEMENT+IMMEDIATE without timingArc; warns ungated IMMEDIATE enhancement/feature (~88 recommendations, 4 warnings on sample)`
+  ts_types = `VALID_MOUNT_WHEN + VALID_MODULE_LAYERS + CatalogHygieneHints on site-contracts/types.mts`
+  skill = `spw-typescript-affordances expanded with high-value TS table + feature/bundle hygiene`
+  npm = `manifest:tmp override for old TMPDIR behavior`
+  probe = `npm run manifest → routes=144, core=5, feature=27, enh=61; npm run check:runtime passes`
+}[reg=facet]
+
+^"tracks"{
+  track_a_typescript = .{
+    next = #[
+      `Export ModuleDef-ish type shared by runtime-contracts parse + future catalog JSDoc`,
+      `Optional public/ts for module-export-contract field names only`,
+      `JSDoc on composition-box-model DEFAULT_SELECTOR + pack-local opts`
+    ][reg=set]
+    avoid = `Wholesale public/js → TS conversion`
+  }[reg=facet]
+  track_b_feature_hygiene = .{
+    next = #[
+      `Reclassify worst ENHANCEMENT+IMMEDIATE to VISIBLE/IDLE (BRP shortlist)`,
+      `Promote INTERACTION for gesture labs`,
+      `Optional: fail CI on new IMMEDIATE enhancement without timingArc (after warning burn-in)`
+    ][reg=set]
+    landed = `recommendation/warning gates in check:runtime`
+  }[reg=facet]
+  track_c_bundling_hygiene = .{
+    next = #[
+      `Document review-source-not-bundles in PR template or AGENTS validation`,
+      `Prefer route/behavior bundles for new CSS; watch core.css growth`,
+      `Optional: check that agents run build:css only when CSS sources change`
+    ][reg=set]
+    existing = `css-contracts + check:generated already own layer import integrity`
+  }[reg=facet]
+}[reg=facet]
+
+^"recommended_order"{
+  step1 = `Regenerate manifest (npm run build:tools && npm run manifest) after this path change`
+  step2 = `Use check:runtime recommendations to drive reclassification PRs one guild at a time`
+  step3 = `Grow scripts/ts types when adding new validation rules`
+  step4 = `Only then consider public/ts for one high-churn kernel contract`
+}[reg=facet]
+
+^"editor_theatrics_placement"{
+  convention = ~"../../conventions/feature-partial-theatrics.spw"
+  claim = `Place JS/CSS partial load into presence (body features + catalog) and theatrics into settings enhancement/posture + local registers — editors already sit on /settings/ and /design/*.`
+  first_slices = `settings features readout; CSS under enhancement-level for discovery tokens; design specimen passport row`
+}[reg=facet]

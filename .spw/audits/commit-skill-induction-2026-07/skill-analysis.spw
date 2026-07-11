@@ -1,0 +1,117 @@
+# Skill inventory and phrasing analysis leaf
+
+#>commit_skill_induction_skills
+#:audit #!skills #!agents
+#:operation #!audit
+#:fixity #!tending
+
+@index: ~"./index.spw"
+@readme: ~"../../../.agents/skills/README.md"
+@workflow: ~"../../../.agents/skills/_shared/site-workflow.md"
+
+^"inventory"{
+  site_skills = #[
+    `spw-craft-quality`, `spw-css-dom-lab`, `spw-feature-planning`, `spw-fix-planning`,
+    `spw-interactive-medium`, `spw-math-algorithm-radar`, `spw-ontology-workbench`,
+    `spw-operator-lattice`, `spw-plan-maintenance`, `spw-privacy-engineering`,
+    `spw-research-rigor`, `spw-semantics-rigor`, `spw-typescript-affordances`,
+    `spw-ui-containment-audit`, `patch-consolidator`, `image-optimize`, `image-naming-magic`
+  ][reg=set]
+  shared = #[`site-workflow.md`, `site-vs-workbench.md`][reg=set]
+  rails_in_workflow = #[
+    `model-guided-refinement`, `daily-kernel`, `modular-experience-slices`,
+    `spw-surface-normalization`, `semantic-capacity`, `dimension-vocabulary`,
+    `interaction-microstates`, `agent-optimization`
+  ][reg=set]
+}[reg=facet]
+
+^"phrasing_forces"{
+  note = `Default instructions that agents obey under ambiguity.`
+
+  force_inspectability = .{
+    phrases = #[
+      `Update .spw when introducing concepts…`,
+      `wire through conventions/index.spw or site.spw`,
+      `Is the concept inspectable in Spw serialize output?`,
+      `editor inspectability affordance`
+    ][reg=set]
+    skills = #[`spw-semantics-rigor`, `spw-craft-quality`, `site-workflow`, `agent-optimization`][reg=set]
+    healthy = `Durable concepts become recoverable`
+    risk = `Every patch wants a convention + dispatch entry + validation line`
+  }[reg=facet]
+
+  force_cross_language_stem = .{
+    phrases = #[
+      `one concept should map consistently across HTML/CSS/JS/.spw`,
+      `Trace cross-language stems`
+    ][reg=set]
+    skills = #[`spw-semantics-rigor`, `model-guided-refinement`][reg=set]
+    healthy = `Reduces silent drift between layers`
+    risk = `New concepts arrive as four-file landings even when one layer would suffice`
+  }[reg=facet]
+
+  force_plan_before_large = .{
+    phrases = #[
+      `write site-local planning files under .agents/plans/<slug>/`,
+      `Predict affected routes, shared layers, runtime modules…`
+    ][reg=set]
+    skills = #[`spw-feature-planning`, `spw-fix-planning`][reg=set]
+    healthy = `Cross-route work gets a map`
+    risk = `Slug proliferation; plans outlive features; index.spw machinery grows`
+  }[reg=facet]
+
+  force_plan_maintenance = .{
+    phrases = #[
+      `Sweep .agents/plans/…`,
+      `Refresh cross-references…`,
+      `Update or create .spw notes when planning layer introduces a reusable semantic family`
+    ][reg=set]
+    skills = #[`spw-plan-maintenance`][reg=set]
+    healthy = `Stale plans get archived (when followed)`
+    risk = `Maintenance that generates more index surfaces than it archives; recursive optimization`
+    self_aware = `Skill already warns about overgrowth and virtual IA first — under-enforced in practice`
+  }[reg=facet]
+
+  force_smallest_surface = .{
+    phrases = #[
+      `Patch the smallest honest surface`,
+      `Find the smallest public slice`
+    ][reg=set]
+    skills = #[`site-workflow`, `spw-craft-quality`, `spw-css-dom-lab`][reg=set]
+    healthy = `Correct default for craft`
+    risk = `Competes with inspectability/plan forces; agents satisfy both by small code + large .spw`
+  }[reg=facet]
+
+  force_lab_then_promote = .{
+    phrases = #[
+      `If the pattern survives, fold into shared tokens, systems CSS, runtime module, .spw contract`
+    ][reg=set]
+    skills = #[`spw-css-dom-lab`][reg=set]
+    healthy = `Experiments can graduate`
+    risk = `Premature promotion of lab patterns into IMMEDIATE runtime + global CSS`
+  }[reg=facet]
+
+  force_interactive_medium = .{
+    phrases = #[
+      `entertainment and interactive medium`,
+      `scene beds, keyboard scenes… LM-handoff serialization`
+    ][reg=set]
+    skills = #[`spw-interactive-medium`][reg=set]
+    healthy = `Clear product lane for play routes`
+    risk = `Parallel runtime stack + tokens + serialization even on reading-first routes`
+  }[reg=facet]
+
+  force_check_local = .{
+    phrases = #[`npm run check:local`, `prefer local repo evidence`][reg=set]
+    skills = #[`site-workflow`, `README skills`][reg=set]
+    healthy = `Reduces network/audit thrash — clear win`
+    risk = `Low; build:site still overused when agents ignore scoped scripts`
+  }[reg=facet]
+}[reg=facet]
+
+^"coverage_gaps"{
+  g1 = `No skill whose primary job is performance budget / IMMEDIATE reclassification`
+  g2 = `No skill whose primary job is archive-first or attr retirement`
+  g3 = `Semantics rigor lists “prefer one name” but checklist still ends with write .spw`
+  g4 = `Feature planning does not require stating what will NOT be built or which metaphor not to invent`
+}[reg=set]

@@ -1,0 +1,69 @@
+# File-level taste and reusability leaf
+
+#>naming_grammar_js_types_taste
+#:audit #!javascript #!reusability
+#:operation #!audit
+#:fixity #!tending
+
+@index: ~"./index.spw"
+@export_audit: ~"../module-export-standalone-2026-07.spw"
+@starter: ~"../../conventions/site-starter-component-kit.spw"
+@compose: ~"../../../public/js/compose.js"
+@cognition: ~"../../conventions/js-architecture-cognition.spw"
+
+^"folder_weights"{
+  kernel_js = 23
+  runtime_js = 73
+  interface_js = 31
+  semantic_js = 28
+  modules_js = 28
+  media_js = 4
+  typed_js = 7
+  reading = `runtime/ is the largest plot — orchestration + perception + working_set + metacognition mixed; good power, hard first-read`
+  taste = `Prefer new leaf files under clear stratum over growing site.js or mega runtime files`
+}[reg=facet]
+
+^"standalone_grades"{
+  source = @export_audit
+  A_node_portable = 15
+  B_contract_export = 23
+  C_browser_module = 147
+  D_side_effect = 4
+  note = `Standalone = portable import, not node file.js. Most site value is intentionally C.`
+}[reg=facet]
+
+^"reusability_ladders"{
+  site_only = `route modules/, ornament-coupled interface, full site.js fuselage`
+  site_compose = `compose.js Grade A/B helpers without boot`
+  other_static_site = `compose + tokens CSS + component packing — starter kit boundary`
+  node_tooling = `Grade A leaves + scripts/ts — not browser modules`
+}[reg=facet]
+
+^"file_taste_heuristics"{
+  prefer = #[
+    `One cognitive job per file when possible`,
+    `CONTRACT export near top after imports`,
+    `Absolute /public/js imports for browser graph`,
+    `Cleanup symmetry for observers/listeners`,
+    `describes/updates honesty in catalog`
+  ][reg=set]
+  avoid = #[
+    `New side-effect-only modules without export`,
+    `Growing site-settings-engine without split plan`,
+    `DEFAULT_SELECTOR sitewide for inspect mirrors`,
+    `Copying route module into kernel for convenience`
+  ][reg=set]
+}[reg=facet]
+
+^"heavy_files_watch"{
+  module_catalog = `~1.8k LOC — definition registry; OK if not logic dump`
+  site_settings_engine = `~1.3k LOC — substrate; split cold paths`
+  site_js = `~1k LOC orchestrator — keep thin`
+  image_metaphysics = `large media system — media_system stratum`
+}[reg=facet]
+
+^"css_taste_bridge"{
+  layers = `reset→…→ornament cascade as literature`
+  chapters = `operators/ and shell/chrome chapter files with Reads-as/Genome`
+  bundles = `route/behavior css-build outputs — reusability via compose.css not style.css`
+}[reg=facet]

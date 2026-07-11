@@ -1,0 +1,58 @@
+# Spw feature usage for agents
+
+#>agentic_development_spw
+#:audit #!spw #!agents
+#:operation #!audit
+#:fixity #!tending
+
+@index: ~"./index.spw"
+@semantic_capacity: ~"../../conventions/semantic-capacity.spw"
+@site: ~"../../site.spw"
+@language_census: ~"../language-census.spw"
+
+^"inventory"{
+  site_spw = `~151 files under .spw/ excluding workbench`
+  plan_spw = `~284 under .agents/plans`
+  conventions = `~73`
+  audits_nested = `build-runtime-performance, naming-grammar-js-types, commit-skill-induction, agentic-development, plus flat audits`
+  language_v04 = `12 pillars + roadmap`
+  public_exposure = `/about/plans/, design catalog spw count (~157 in build sample)`
+}[reg=facet]
+
+^"features_agents_use"{
+  f1 = `@refs + dispatch blocks — concept → path routing`
+  f2 = `operation + fixity — cache/audit/align/prime/contract/archive`
+  f3 = `claim { hypothesis, probe_ref, falsification, status }`
+  f4 = `nested audit folders with index + leaves`
+  f5 = `coordinate tables (cost_class, guild, stratum) vs lexicon prose`
+  f6 = `validation: #[ rg, npm run … ] lines as agent checklists`
+  f7 = `semantic-capacity ops as work-type selector`
+}[reg=facet]
+
+^"features_weakly_used"{
+  w1 = `Full attribute registration (census: 626 unregistered)`
+  w2 = `Parser-validated Spw (site does not fail CI on .spw parse)`
+  w3 = `Typed refs / profiles (v0.4 pillars primed, not enforced)`
+  w4 = `Archive operation underused vs cache/audit/prime`
+  w5 = `Worktable .spw in plans often mechanical index.spw`
+}[reg=set]
+
+^"agent_edit_patterns"{
+  prefer = #[
+    `Nested audits for multi-axis topics`,
+    `Prime skill/AGENTS text rather than only new conventions when stop-rules needed`,
+    `Link leaves from site.spw / conventions/index`,
+    `One cost_class or coordinate id per performance claim`
+  ][reg=set]
+  anti = #[
+    `New metaphor family without coordinate map`,
+    `Plan index.spw without owner PLAN content`,
+    `Duplicate thesis across three conventions without archive`
+  ][reg=set]
+}[reg=facet]
+
+^"relationship_to_html_css_ts"{
+  html = `Spw names contracts that HTML instantiates (slots, features, page model)`
+  css = `Spw names layers and projection; CSS implements selectors`
+  ts = `Spw does not replace site-contracts types — dual channel for meaning vs enforcement`
+}[reg=facet]

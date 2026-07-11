@@ -1,0 +1,87 @@
+# Feature Wiring + Module Timing — Insight Cache (2026-07)
+#
+# operation: cache
+# Catalog / contract findings from the feature-wiring and timing pass.
+
+#>cache_feature_wiring_timing_2026_07
+#:cache #!features #!runtime #!catalog
+#:operation #!cache
+#:fixity #!tending
+
+@module_catalog: ~"../../public/js/runtime/module-catalog.js"
+@runtime_contracts: ~"../../scripts/ts/runtime-contracts.mts"
+@feature_utilization: ~"../conventions/feature-utilization.spw"
+@feature_theatrics: ~"../conventions/feature-partial-theatrics.spw"
+@brp_runtime: ~"../audits/build-runtime-performance-2026-07/runtime.spw"
+
+operation = "cache"
+fixity = "tending"
+
+^"insights"{
+  insight #fwt-001 {
+    claim #fwt-001 {
+      layer = "pragmatic"
+      hypothesis = `Presence-only body tokens (operators, navigator, …) must be first-class catalog.features gates without inventing empty CSS BEHAVIOR_SCOPES.`
+      expression = features[presence|behavior]{gate.js}<catalog>
+      *evidence = `PRESENCE_FEATURE_KEYS in runtime-contracts; operators + frame-navigator wired`
+      probe_ref = `rg 'PRESENCE_FEATURE_KEYS|features: \\['operators'\\]|features: \\['navigator'\\]' scripts/ts/runtime-contracts.mts public/js/runtime/module-catalog.js`
+      status = "confirmed"
+    }
+  }
+
+  insight #fwt-002 {
+    claim #fwt-002 {
+      layer = "pragmatic"
+      hypothesis = `IMMEDIATE hygiene is timingArc completeness + reclass of non-critical enhancement, not zero IMMEDIATE.`
+      expression = schedule[immediate]{timingArc.reclass}<hygiene>
+      *evidence = `Census ~55 IMMEDIATE / ~40 missing arc → ~43 IMMEDIATE / 0 missing arc; VISIBLE+IDLE grew`
+      reclass = #[
+        `svg-tunability, narrative-instrumentation, image-*, design-*, annotation-layer, local-notes, boonhonk-mixer → VISIBLE`
+        `learnability-ledger, effect-ledger, observation-beats → IDLE`
+      ][reg=set]
+      probe_ref = `npm run ecology; npm run check:runtime`
+      status = "confirmed"
+    }
+  }
+
+  insight #fwt-003 {
+    claim #fwt-003 {
+      layer = "semantic"
+      hypothesis = `Silent mount() self-gates (e.g. navigator check inside mount) hide feature wiring from ecology and check:runtime — prefer catalog features.`
+      expression = gate[features]{schedule}<before-load>
+      next = `Audit remaining mount()-only feature checks for catalog promotion`
+      probe_ref = `rg 'features\\?\\.has|ctx\\?\\.features' public/js/runtime/module-catalog.js`
+      status = "active"
+    }
+  }
+}[reg=set]
+
+^"timing_arc_families"{
+  boot = #[`boot-core`, `boot-feedback`, `boot-shell`, `boot-medium`, `boot-frame`][reg=set]
+  immediate = #[`immediate-grammar`, `immediate-gesture`, `immediate-semantics`, `immediate-orchestration`, `immediate-diagnostics`, `immediate-attention`, `feature-route`, …][reg=set]
+  visible = #[`visible-media`, `visible-lab`, `visible-semantics`, `visible-memory`, …][reg=set]
+  enhance = #[`enhance-collectible`, `enhance-navigator`, `enhance-metacognition`, `enhance-ledger`, …][reg=set]
+}[reg=facet]
+
+^"follow_up_timing_chunk_updates_2026_07"{
+  idle_chunks = #[`idle-residue`, `idle-collectible`, `idle-chrome`, `idle-lab`, `idle-default`][reg=set]
+  effect_ledger = `selector html; flourish+residue updates; charge/pulse CSS vars; chunk idle-residue before collectibles`
+  updates_roles = #[`structural`, `flourish`, `inspect`, `residue`, `measure`, `diagnostic`][reg=set]
+  utility = `listModuleUpdatesByRole / summarizeModuleUpdatesTopology / data-spw-module-updates-flourishes`
+}[reg=facet]
+
+^"comprehensiveness_pass_2026_07_11"{
+  catalog = `All 95 defs have timingArc, evaluates, updates; all IDLE have timingChunk`
+  contracts = `runtime-contracts parses timingChunk; recommends role topology + evaluates; mountHygiene reports idleChunk + rolefulUpdates`
+  export_surface = `SPW_MODULE_EXPORT optional evaluates/timingArc/timingChunk/effectScope; describeModuleExport.topology`
+  css_parity = `runtime-states: idle-chunk pill + flourish role outlines under module-visuals/debug`
+  performance = `effect-ledger skips no-op CSS var writes`
+}[reg=facet]
+
+validation: #[
+  `npm run check:runtime`
+  `npm run ecology`
+  `node --check public/js/runtime/module-catalog.js`
+  `node --check public/js/runtime/module-updates-contract.js`
+  `node --check public/js/runtime/effect-ledger.js`
+][reg=set]

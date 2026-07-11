@@ -1,0 +1,291 @@
+# Page vs Region · Hydration & Transitions · Application Memory Tropes
+#
+# Optimization ownership, generalizable transition/hydration contracts, and
+# memory-shaped opportunities for spells and limited-time modules/features.
+#
+# operation: audit | prime
+# fixity: tending
+# date: 2026-07-10
+
+#>page_region_hydration_memory_2026_07
+#:audit #!runtime #!hydration #!navigation #!memory #!spells
+#:operation #!audit
+#:layer #!pragmatics
+
+@page_state: ~"../../../public/js/runtime/page-state.js"
+@region_profiler: ~"../../../public/js/runtime/region-profiler.js"
+@region_enhancer: ~"../../../public/js/runtime/region-enhancer.js"
+@region_rail: ~"../../../public/js/runtime/page-region-rail.js"
+@hydration: ~"../../../public/js/kernel/hydration.js"
+@hydration_passes: ~"../../../public/js/runtime/hydration-passes.js"
+@route_utils: ~"../../../public/js/kernel/route-utils.js"
+@route_transit: ~"../../conventions/route-transit-memory.spw"
+@navigation_locomotion: ~"../../../public/js/runtime/navigation-locomotion.js"
+@visitation: ~"../../conventions/visitation-memory.spw"
+@storage_topology: ~"../../conventions/storage-topology.spw"
+@feature_discovery: ~"../../../public/js/runtime/feature-discovery.js"
+@spells: ~"../../../public/js/runtime/spells.js"
+@wonder_memory: ~"../../../public/js/interface/wonder-memory.js"
+@site_js: ~"../../../public/js/site.js"
+@module_catalog: ~"../../../public/js/runtime/module-catalog.js"
+@css_attr_audit: ~"../css-module-attribute-impact-2026-07/index.spw"
+@alignment_audit: ~"../alignment-shell-lifecycle-sensitivity-2026-07/index.spw"
+@feature_partial_theatrics: ~"../../conventions/feature-partial-theatrics.spw"
+
+audit_run: .{
+  at = `2026-07-10`
+  scope = `page vs region optimization; hydration + transition generalizability; memory tropes for spells and limited-time modules`
+  method = `contracts + catalog REGION layer + storage topology + discovery/spells memory models`
+  posture = `placement map + opportunity prime; light next slices`
+}[reg=facet]
+
+^"thesis"{
+  claim = `Page optimizes shared shell, boot, and arrival; region optimizes local harmony and deferred cost. Hydration and transitions are already multi-surface contracts — generalize by reusing them, not inventing SPA routers. Application memory already has substrate/memory/discovery guilds; limited-time modules should ride session/TTL memory + feature gates + idle mount, scripted as spells that expire, not as permanent IMMEDIATE features.`
+}[reg=facet]
+
+# =============================================================================
+# 1. Page vs region optimization
+# =============================================================================
+
+^"page_vs_region"{
+  page_owns: #[
+    `html/body authored contract (surface, features, layout, page-modes, related-routes)`
+    `boot order: hydration static → core → immediate feature/enhancement → interactive`
+    `page-state arrival (entering→settled) and presence (foreground|background)`
+    `settings substrate + prepaint FOUC attrs`
+    `shell-disclosure + floating chrome lanes (global competition)`
+    `query disposition and runtime posture (lab/share)`
+    `route identity (pathname/search/hash) and related-route lists`
+  ][reg=set]
+
+  region_owns: #[
+    `primeRegions / applyRegionProfile — kind role context tempo harmony density genome`
+    `REGION_DEFS (region-enhancer) when=REGION rootMode=each on REGION_SELECTOR`
+    `data-spw-enhanced, motion-family, harmony, density, region-genome (local CSS spend)`
+    `page-region-rail + region-menu (navigation of regions, not routes)`
+    `diversity summary → component-collection (kinds across surfaces)`
+    `scheduleRegionEnrichment double-rAF after metadata (deferred, not blocking first paint)`
+  ][reg=set]
+
+  optimization_rules: .{
+    r1 = `Page-level cost only for what every region needs (settings, shell, shift audit, ecology narrative)`
+    r2 = `Region-level cost for what only visible/profiled clusters need (enhancer, local observers, pack-local labs)`
+    r3 = `Feature tokens gate page eligibility; [data-spw-feature] + IO gate region/idle partials`
+    r4 = `Do not re-profile entire page on every scroll — refreshRegionProfiles on named reasons`
+  }[reg=facet]
+
+  strengths: #[
+    `Clear layer split: CORE/FEATURE page-scoped; REGION each-root; ENHANCEMENT mix with when`
+    `Region enhancer is small and attr-bound — good template for limited local modules`
+    `Diversity/collection rewards multi-kind pages without forcing every module page-wide`
+  ][reg=set]
+
+  gaps: #[
+    `PR1: only one REGION_DEFS entry today — underused as a generalization layer for limited-time region modules`
+    `PR2: many ENHANCEMENT modules use selector=body and act page-global though they could be region/IO`
+    `PR3: page “ready” still precedes region idle settle (see css-module-attribute audit M3)`
+    `PR4: region enrichment runs twice in boot path (interactive and pre-region) — intentional but easy to thrash profiles`
+  ][reg=set]
+
+  severity = `medium`
+  next = `Grow REGION_DEFS for region-scoped experiments; demote body-selector enhancement to visible/region when possible`
+}[reg=facet]
+
+# =============================================================================
+# 2. Data hydration generalizability
+# =============================================================================
+
+^"hydration_generalizability"{
+  public_contract = @{
+    states = `static | activating | ready` (body/html data-spw-hydration)
+    passes = `lex → semantic → pragmatic` (hydration-passes; workbench-aligned)
+    display = `reader | editor | inspect`
+    capture = `default | clean`
+  }
+
+  semantic_map: .{
+    lex_static = `authored HTML + CSS first paint; no spell surface required`
+    semantic_activating = `annotation, measure, packing projection, operator/sigil`
+    pragmatic_ready = `interactive spells, settings momentum, grounded replay`
+  }[reg=facet]
+
+  route_hydration = @{
+    hydrateRouteContext = `pathname, segments, leaf, depth — for component state`
+    related_routes = `parseRouteList(body data-spw-related-routes)`
+    claim = `Clusters hydrate route context once per mount; project leaf/depth only when family needs it`
+  }
+
+  data_patterns: #[
+    `JSON hydration UI contract data-spw-hydration=loading|ready|error + skeletons (controls.css)`
+    `settings localStorage substrate → prepaint → setDatasetEntries`
+    `feature-discovery / collection / visitation storage guilds`
+    `query disposition as shareable hydration of lab conditions`
+  ][reg=set]
+
+  strengths: #[
+    `Monotone hydration order (cannot go ready→static) protects CSS from thrash`
+    `Pass names match cognitive stack (lex/semantic/pragmatic) — teachable`
+    `Route context API is portable without SPA framework`
+  ][reg=set]
+
+  gaps: #[
+    `H1: async JSON hydration pattern is CSS-ready but sparsely used for real feeds`
+    `H2: no standard “region hydration” state distinct from page hydration — regions use REGION_STATES only`
+    `H3: hydrateRouteContext underused on feature clusters (related-routes often static only)`
+    `H4: Save-Data / reduced-data gated in canPrefetchRoute but not universally applied to idle module prefetch`
+  ][reg=set]
+
+  generalizability_rule = `Any new data surface should declare: (a) static HTML fallback, (b) hydration state attr, (c) page vs region mount when, (d) storage guild if remembered.`
+  severity = `medium`
+}[reg=facet]
+
+# =============================================================================
+# 3. Page transition generalizability
+# =============================================================================
+
+^"transition_generalizability"{
+  layers: .{
+    route_prime = `primeRouteTransition → prefetch link + html[data-spw-route-primed] (intent, not every hover)`
+    section_locomotion = `navigation-locomotion: traveling|settled; spell momentum; section travel spells`
+    page_arrival = `PAGE_ARRIVAL entering|returning|restored|settled + evidence-based settle`
+    shell_menu = `shell-disclosure phases resting→…→settling`
+    wonder = `wonder-memory field balance on liminality + familiarity`
+  }[reg=facet]
+
+  strengths: #[
+    `Transitions are attribute + event contracts, not router lock-in`
+    `Section travel already casts spell tokens — precedent for scripted locomotion`
+    `Prefetch respects connection when canPrefetchRoute is used`
+  ][reg=set]
+
+  gaps: #[
+    `T1: full document navigation still hard-reloads — no generalized soft transition between routes (by design for static site; optional View Transitions later)`
+    `T2: route-primed CSS hooks exist; few ornament rules fully spend them`
+    `T3: page arrival and section locomotion both use “settled” — readers conflate (document in lifecycle map)`
+    `T4: spell momentum from locomotion clears quickly; no durable “in transit” memory for limited-time nav features`
+  ][reg=set]
+
+  generalizability_rule = `New transition behaviors: write named phase attrs + bus event; CSS spends tokens; optional spell cast; never require client router for static routes.`
+  severity = `low-medium (static multi-page is intentional)`
+}[reg=facet]
+
+# =============================================================================
+# 4. Application memory tropes → spells & limited-time modules
+# =============================================================================
+
+^"memory_tropes"{
+  note = `Tropes already in the ecology — use these shapes for limited-time features.`
+
+  tropes: .{
+    substrate = .{
+      keys = `site-settings, prepaint`
+      spell_use = `climate is ambient memory; not seasonal unless profiled`
+      limited = `avoid — permanent preference`
+    }[reg=facet]
+
+    trail = .{
+      keys = `visitation, related-routes, path memory, route-primed`
+      spell_use = `#>section.* travel; restore last region; “you were here” ornament`
+      limited = `seasonal trail markers: visit-burst only during event window`
+    }[reg=facet]
+
+    field_guide = .{
+      keys = `feature-discovery (persistent|session|none), component-collection`
+      spell_use = `novel|convergent|return encounters; depth progression`
+      limited = `data-spw-feature-memory=session for event features; expire species from storage after TTL`
+    }[reg=facet]
+
+    checkpoint = .{
+      keys = `spw-checkpoint:*, grounded registry, pins`
+      spell_use = `spells surface: cast / checkpoint / reset working set`
+      limited = `event checkpoint packs with expiresAt in bundle JSON`
+    }[reg=facet]
+
+    cauldron = .{
+      keys = `spw-cauldron`
+      spell_use = `query-setup offer, ingredient prime, garden phases`
+      limited = `time-boxed ingredients (festival palette, RPG week seed)`
+    }[reg=facet]
+
+    wonder = .{
+      keys = `wonderMemory settings + path tokens; ttlMs nearby 28s / sitewide 96s`
+      spell_use = `short-lived field echo — already TTL-shaped`
+      limited = `boost wonder TTL during campaign; decay after`
+    }[reg=facet]
+
+    dismiss = .{
+      keys = `discovery-dismissals, feature-learning toasts`
+      spell_use = `“don’t show again this season”`
+      limited = `dismissal keys namespaced by event id`
+    }[reg=facet]
+  }[reg=facet]
+
+  limited_time_module_pattern: .{
+    presence = `body features include event token OR session feature-lab +token (reload)`
+    schedule = `MOUNT_WHEN idle|visible|region — never default IMMEDIATE for campaign chrome`
+    memory = `feature-memory=session or storage envelope { id, expiresAt, payload }`
+    script = `spell:cast / spell:capture with kind=limited-module; cauldron:offer for shareable setup`
+    css = `spend html[data-spw-event=…] or [data-spw-feature="event-…"] under enhancement-level`
+    end = `idle module checks expiresAt → unmount + clear session keys; do not leave root attrs`
+  }[reg=facet]
+
+  opportunities: #[
+    `O1: Seasonal feature species in feature-discovery with session memory + novel encounter once per visit`
+    `O2: Spell scripts as short programs: on enter cast checkpoint; on expire cast reset; on share offer cauldron query-setup`
+    `O3: REGION_DEFS entry for event-only region enhancer (e.g. festival hero) rootMode=each on [data-spw-event-region]`
+    `O4: Transit memory: store last section id per route for returning arrival contour`
+    `O5: Limited module registry in storage-topology guild memory with TTL read helpers`
+    `O6: Wonder TTL profiles as campaign knobs (query + settings) without new theater flag`
+  ][reg=set]
+}[reg=facet]
+
+# =============================================================================
+# Scoreboard + slices
+# =============================================================================
+
+^"scoreboard"{
+  page_region_split = 4
+  region_layer_utilization = 2
+  hydration_contract = 4
+  hydration_data_adoption = 2
+  transition_contracts = 4
+  transition_css_spend = 2
+  memory_topology = 4
+  limited_time_module_pattern = 2
+}[reg=facet]
+
+^"priority_slices"{
+  s1 = `Document page vs region decision table in module-catalog header + AGENTS (when to use REGION vs ENHANCEMENT body)`
+  s2 = `STORAGE_KEYS + readJson TTL helper for limited modules (expiresAt); topology guild memory`
+  s3 = `feature-discovery: document session memory as default for event features; optional purgeExpiredSpecies()`
+  s4 = `REGION_DEFS template for [data-spw-event-region] limited enhancers`
+  s5 = `Returning arrival: remember last section hash per route (sessionStorage) → page-state contour`
+  s6 = `Spend route-primed + locomotion attrs more in ornament (generalize transition CSS)`
+  s7 = `Spell script hooks: kind=limited-module with start/end timestamps in checkpoint payload`
+}[reg=set]
+
+^"do_not"{
+  d1 = `Do not SPA-route the whole site for “transitions” — attribute+event contracts are the general form`
+  d2 = `Do not put limited-time features in CORE or IMMEDIATE without features gate`
+  d3 = `Do not merge feature-discovery into component-collection storage (parallel field guides by design)`
+  d4 = `Do not use site-settings for seasonal flags — that becomes permanent preference residue`
+}[reg=set]
+
+validation: #[
+  `rg 'REGION_DEFS|mountRegionLayer|scheduleRegionEnrichment' public/js`
+  `rg 'HYDRATION_STATES|HYDRATION_PASSES' public/js/kernel/hydration.js`
+  `rg 'primeRouteTransition|canPrefetchRoute' public/js`
+  `rg 'STORAGE_TOPOLOGY|FEATURE_DISCOVERY|CHECKPOINT' public/js/kernel/storage-utils.js`
+  `rg 'feature-memory|session' public/js/runtime/feature-discovery.js`
+  `rg 'PAGE_ARRIVAL|navigation-locomotion' public/js/runtime`
+][reg=set]
+
+dispatch: .{
+  page = @page_state
+  region = @region_enhancer
+  hydration = @hydration
+  transit = @route_transit
+  memory = @storage_topology
+  discovery = @feature_discovery
+  spells = @spells
+}[reg=facet]

@@ -1,0 +1,71 @@
+# Broader type usage audit leaf
+
+#>naming_grammar_js_types_types
+#:audit #!typescript #!types
+#:operation #!audit
+#:fixity #!tending
+
+@index: ~"./index.spw"
+@agents_md: ~"../../../Agents.md"
+@tsconfig_root: ~"../../../tsconfig.json"
+@tsconfig_runtime: ~"../../../tsconfig.runtime.json"
+@tsconfig_scripts: ~"../../../tsconfig.scripts.json"
+@skill: ~"../../../.agents/skills/spw-typescript-affordances/SKILL.md"
+
+^"policy"{
+  site_rule = `Framework-free public JS; TypeScript is local build affordance, not a client framework`
+  agents = `Type where it helps (scripts, contracts, generated typed/); do not force public/js wholesale conversion`
+  dual_track = `scripts/ts → scripts/typed (Node build control) · public/ts → public/js/typed (browser modules)`
+}[reg=facet]
+
+^"inventory_2026_07_10"{
+  public_ts = 7
+  public_ts_files = #[
+    `bus.ts`, `feed-utils.ts`, `json-feeds.ts`, `kernel-dom-contracts.ts`,
+    `media-publishing.ts`, `promo-wonder-cycle.ts`, `runtime-environment.ts`
+  ][reg=set]
+  public_js_typed_out = 7
+  scripts_mts = 21
+  scripts_mjs_out = 21
+  public_js_dts = 2
+  public_js_hand = `~190+ plain .js modules (dominant)`
+  tsconfig_projects = 3
+}[reg=facet]
+
+^"where_types_pay"{
+  high_value = #[
+    `dom-contracts / dataset writers — prevent attr sprawl`,
+    `bus event shapes — cross-module nutrients`,
+    `build topology / css-build / runtime-contracts — CI correctness`,
+    `feed/json loaders — data edges`,
+    `module-updates-contract / export shapes — emerging convention`
+  ][reg=set]
+  low_value = #[
+    `route-local UI modules with short life`,
+    `one-off design experiments`,
+    `pure presentational CSS companions`
+  ][reg=set]
+}[reg=facet]
+
+^"gaps_and_diversity"{
+  gap1 = `Most catalog modules untyped — OK under policy; contracts lag in .d.ts (only 2)`
+  gap2 = `SPW_MODULE_EXPORT not yet a shared TypeScript interface consumed by catalog`
+  gap3 = `Runtime ctx type not universal — mount(ctx) is structural duck typing`
+  gap4 = `language-census / design catalog are JS generators — types optional`
+  diversity = `Three tsconfigs diversify concerns (site typecheck, scripts, runtime) without monorepo packages`
+  risk = `Triple typecheck wall time (see build-runtime-performance) — type diversity has build cost`
+}[reg=facet]
+
+^"emergence_path"{
+  step1 = `Keep public/ts for kernel-adjacent portable contracts only`
+  step2 = `Add .d.ts or public/ts for SPW_MODULE_EXPORT + ModuleDef if export migration continues`
+  step3 = `scripts/ts remains home for build/check correctness`
+  step4 = `Avoid migrating interface/ and modules/ to TS for taste alone`
+  cost_class = `premature_commitment` # if forced full TS
+}[reg=facet]
+
+^"taste"{
+  good = `Typed outputs are generated and gitignored or checked via fix-typed-imports — source of truth is .ts/.mts`
+  good2 = `Plain JS stays greppable and hand-editable for content-adjacent modules`
+  friction = `Mental dual map: is the canonical file .js or .ts for a given concern? Prefer one owner surface per module family`
+}[reg=facet]

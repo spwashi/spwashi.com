@@ -1,0 +1,77 @@
+# Mitigations leaf — skill and process corrections
+
+#>commit_skill_induction_mitigations
+#:audit #!skills #!process
+#:operation #!prime
+#:fixity #!tending
+
+@index: ~"./index.spw"
+@pain: ~"./induction-pain.spw"
+@semantic_capacity: ~"../../conventions/semantic-capacity.spw"
+@metaphor: ~"../../conventions/metaphor-dimensional-lexicon.spw"
+
+^"already_helping"{
+  a1 = `semantic-capacity ops include archive`
+  a2 = `metaphor-dimensional-lexicon separates coordinates from nouns/verbs`
+  a3 = `BRP + NGJT audits give cost_class and export funnel metrics`
+  a4 = `plan-maintenance recursive-overgrowth section`
+  a5 = `component-region-personality tone tiers (public vs technical)`
+  a6 = `reading-quiet route policy commits`
+}[reg=set]
+
+^"skill_text_primes"{
+  operation = "prime"
+  note = `Suggested phrasing patches — implement in SKILL.md when editing skills; not applied in this audit pass.`
+
+  semantics_rigor = #[
+    `Before new data-spw-*: name cost_class and existing family; prefer reuse`,
+    `Full-trace requirement: JS contract OR explicit “volatile/local only” label`,
+    `Stop: do not invent parallel stems for settle/resonance/density`
+  ][reg=set]
+
+  feature_planning = #[
+    `State non-goals and metaphors NOT to introduce`,
+    `Prefer one coordinate row over new taxonomy`,
+    `Plan only if multi-route OR shared layer OR dependency — not for single-route copy`
+  ][reg=set]
+
+  plan_maintenance = #[
+    `Archive quota: close or archive ≥N artifacts per sweep that creates index noise`,
+    `Do not generate index.spw for empty or template-only folders without owner PLAN`,
+    `Success metric: next census smaller nonstandard set`
+  ][reg=set]
+
+  craft_and_lab = #[
+    `Promotion to shared runtime requires MOUNT_WHEN ≠ IMMEDIATE unless CORE identity`,
+    `Lab patterns stay route-local until second consumer exists`
+  ][reg=set]
+
+  interactive_medium = #[
+    `Default off for editorial reading routes; feature-gate entertainment stacks`,
+    `Serialization for LM only when route opts into practice-bed`
+  ][reg=set]
+
+  site_workflow = #[
+    `Inspectability is optional for one-off copy; required for reusable contracts`,
+    `Prefer VISIBLE/IDLE for new catalog modules; IMMEDIATE needs cost_class note in PR/plan`,
+    `Do not run full build:site for .spw-only or single-module work`
+  ][reg=set]
+
+  new_skill_gap = `Consider spw-performance-budget or fold BRP defaults into craft-quality + feature-planning`
+}[reg=facet]
+
+^"architecture_stop_rules"{
+  r1 = `No new lexicon_register without mapping table to existing coordinates`
+  r2 = `No new data-spw family without: owner module, CSS consumer OR explicit inspect-only, .spw one-liner, retirement path`
+  r3 = `No new PLAN.md for single-file fixes — FIX.md only`
+  r4 = `Catalog IMMEDIATE additions require bootstrap budget note (BRP)`
+  r5 = `Generated bundles: commit separately or ignore noise in review notes`
+}[reg=set]
+
+^"success_metrics"{
+  m1 = `language-census full_trace ↑ or unregistered ↓ quarter over quarter`
+  m2 = `IMMEDIATE count ↓ or INTERACTION > 0 with real gesture modules`
+  m3 = `PLAN.md active set stable or declining after archive sweeps`
+  m4 = `Share of commits with pure meta subjects ↓ relative to public route subjects`
+  m5 = `Agent sessions cite cost_class / non-goals in plans`
+}[reg=set]

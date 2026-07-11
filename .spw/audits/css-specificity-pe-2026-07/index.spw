@@ -1,0 +1,88 @@
+# CSS Specificity, Selector Reclustering, Feature Utilization & PE (2026-07-11)
+#
+# operation: audit + align (partial land)
+# Follow-up to component-device-sizing and composition layout fixes.
+
+#>css_specificity_pe_2026_07
+#:audit #!css #!specificity #!progressive-enhancement #!features
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+@device_sizing: ~"../component-device-sizing-2026-07/index.spw"
+@feature_utilization: ~"../../conventions/feature-utilization.spw"
+@state_semantics: ~"../../../public/css/handles/operators/state-semantics.css"
+@content_css: ~"../../../public/css/components/content.css"
+@website_surface: ~"../../../public/css/routes/surfaces/website.css"
+@composition_page: ~"../../../design/composition/index.html"
+@layer_map: ~"../../../public/css/style-core.css"
+
+operation = "audit"
+fixity = "tending"
+
+^"layer_truth"{
+  order = `reset → tokens → shell → typography → grammar → components → systems → routes → handles → effects → ornament`
+  claim = `handles outranks routes. Route-layer :where() cannot override handle mode-switch layout without !important or a handles-layer data contract.`
+  consequence = `Composition website.css !important on mode-switch was a layer-order escape, not a specificity failure of :where alone.`
+}[reg=facet]
+
+^"findings"{
+  f1_mode_switch_contract {
+    severity = "high"
+    claim = `Mode-switch layout chrome belonged in handles as an authored data contract, not route !important.`
+    landed = #[
+      `data-spw-lens-chrome="silent" — AT keeps aria-label; visual ::before/::after off`
+      `data-spw-lens-track="row" — full-width equal-share flex; never 2×2`
+      `Clusters A–F in state-semantics.css (track, labeled, silent, row, tablet, phone+container)`
+      `composition mode-switch opts into silent+row; website.css drops !important lens rules`
+      `syntax + runtime-states container PE :not() excludes silent/row`
+    ][reg=set]
+  }
+
+  f2_composition_flow_recluster {
+    severity = "medium"
+    claim = `content.css packing rule was a long flat :not() list; stages needed clearer clusters.`
+    landed = #[
+      `Cluster A packing grid / B non-stage stack / C stage flex-column`
+      `Exclude [data-spw-kind=frame] and [data-spw-box-model=stage] from multi-col packing`
+      `:is() groups for stage vs known-grid-host readability`
+    ][reg=set]
+  }
+
+  f3_css_feature_pe {
+    severity = "medium"
+    claim = `@supports + container queries underused relative to :where inventory; media+container double-application risk.`
+    landed = #[
+      `composition-hub container-type + @container for hero dual-col`
+      `@supports not (container-type) viewport media fallback only`
+      `state-semantics @supports container PE for narrow mode-switch tracks`
+    ][reg=set]
+    residual = `Many @container rules still unguarded by @supports; benign in modern browsers but not explicit PE`
+  }
+
+  f4_important_budget {
+    severity = "low"
+    claim = `!important outside ornament remains for a11y motion, capture mode, print, and residual chrome positioning — acceptable when layer order cannot express the intent.`
+    residual = `syntax .spw-suggestion-chip still !important-heavy; revisit as component-layer tokens if it collides`
+  }
+
+  f5_feature_token_css {
+    severity = "info"
+    claim = `BEHAVIOR_SCOPES still gate css bundles (svg-surfaces, rpg, media, metrics, feature-discovery). Presence-only tokens must not invent empty CSS scopes.`
+    pointer = @feature_utilization
+  }
+}[reg=facet]
+
+^"selector_clusters"{
+  mode_switch = #[`A track`, `B labeled chrome`, `C silent chrome`, `D row track`, `E tablet flex`, `F phone+container`][reg=set]
+  composition_flow = #[`A packing grid`, `B non-stage stack`, `C stage flex`][reg=set]
+  rule = `Name clusters in file comments; prefer data contracts over route specificity races`
+}[reg=facet]
+
+^"validate"{
+  checks = #[
+    `rg data-spw-lens-chrome|data-spw-lens-track design/composition public/css`
+    `rg "!important" public/css/routes/surfaces/website.css  # composition lens block should be 0`
+    `git diff --check`
+  ][reg=set]
+}

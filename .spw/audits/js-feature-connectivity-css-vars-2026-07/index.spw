@@ -1,0 +1,127 @@
+# JS Feature Connectivity + CSS Variable Audit (2026-07-11)
+#
+# operation: audit
+# Dual inventory: body[data-spw-features] ↔ catalog ↔ BEHAVIOR_SCOPES,
+# and JS-written --spw-* custom properties ↔ token defaults ↔ CSS consumers.
+
+#>audit_js_feature_connectivity_css_vars_2026_07
+#:audit #!features #!css #!runtime
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+@feature_utilization: ~"../../conventions/feature-utilization.spw"
+@behavior_scopes: ~"../../../public/js/runtime/behavior-scopes.js"
+@module_catalog: ~"../../../public/js/runtime/module-catalog.js"
+@runtime_contracts: ~"../../../scripts/ts/runtime-contracts.mts"
+@tokens_core: ~"../../../public/css/tokens/core.css"
+@runtime_states: ~"../../../public/css/components/runtime-states.css"
+
+operation = "audit"
+fixity = "tending"
+
+^"method"{
+  body = `Walk route HTML data-spw-features tokens (counts per token)`
+  catalog = `Parse module-catalog.js features: arrays`
+  scopes = `BEHAVIOR_SCOPE_KEYS from behavior-scopes.js`
+  presence = `PRESENCE_FEATURE_KEYS in runtime-contracts`
+  css_vars = `setProperty('--spw-*') in public/js vs non-bundle public/css consumers + tokens/core defaults`
+}[reg=facet]
+
+^"feature_connectivity_matrix"{
+  note = `Counts approximate site HTML inventory 2026-07-11 (includes nested routes).`
+
+  fully_wired = #[
+    `console — body ~271, BEHAVIOR_SCOPE, catalog cauldron/console/media-cauldron`
+    `metrics — body ~52, BEHAVIOR_SCOPE, frame-metrics`
+    `svg-surfaces — body ~40, BEHAVIOR_SCOPE, svg-filters + svg-tunability`
+    `rpg-gameplay — body ~16, BEHAVIOR_SCOPE, rpg-wednesday`
+    `pretext-lab — body ~6, BEHAVIOR_SCOPE, pretext-lab/physics/typography-preview`
+    `feature-discovery — body ~5, BEHAVIOR_SCOPE, feature-discovery module`
+    `media-publishing — body ~4, BEHAVIOR_SCOPE, promo + media-publishing`
+    `operators — body ~293, PRESENCE, operators + sigil-anatomy`
+    `navigator — body ~275, PRESENCE, frame-navigator`
+  ][reg=set]
+
+  presence_pack_no_catalog_features = #[
+    `route-discovery (~40) — contextual-ui mounts by selector; token is pack narrative (with_routes)`
+    `inspectability (~33) — semantic-chrome now features-gated (landed)`
+    `themes (~28) — CSS/settings-facing pack token; no dedicated catalog module`
+    `field-guide (~19) — editorial pack; no dedicated catalog module`
+    `promptability (~26) — prompt-utils selector-gated; dual-gating by features would break non-lab prompt hosts`
+  ][reg=set]
+
+  body_orphan_narrative = #[
+    `prompt-utils, plan-registry, profiles, collectability, blog-interpreter, contact-routing, boundary-tests, proof-artifacts, curriculum-simulations, small-kernel, semantic-lattice, modular-projections, portable-seeds, topic-discovery, rpg-capture, catalog`
+  ][reg=set]
+  body_orphan_rule = `Prefer page-family / projection / wonder over inventing BEHAVIOR_SCOPES. Promote to presence+catalog only when a real mount gate is needed.`
+}[reg=facet]
+
+^"landed_wiring_2026_07_11"{
+  semantic_chrome = `features: ['inspectability'] — lab/design inspect packs only; performance win on public reading routes`
+  presence_keys_extended = #[`topic-discovery`, `prompt-utils`, `collectability`][reg=set]
+  catalog_comments = `contextual-ui, prompt-utils, topic-discovery document selector-vs-token demand rules`
+  anti = `Do not features-gate prompt-utils or topic-discovery by body token alone — selector coverage is wider than pack tokens`
+}[reg=facet]
+
+^"css_variable_refinement"{
+  focus_family = #[
+    `effect ledger: --spw-effect-count|charge|pulse`
+    `runtime load: --spw-runtime-avg-module-ms|enhancement-intensity|feature-intensity|layer-count`
+    `section: --spw-section-progress|step`
+    `rhythm: --spw-site-rhythm-tempo|density, --spw-freshness-weight`
+    `charge-field rewards: curiosity|relationship|architecture|nuance`
+  ][reg=set]
+
+  landed = #[
+    `tokens/core.css @property + :root defaults for effect ledger, section progress/step, runtime avg-module-ms`
+    `runtime-states consumes effect tokens from defaults (less fallback soup)`
+    `runtime-states uses --spw-runtime-avg-module-ms under module-visuals for load-bias density`
+    `section-context handle uses --spw-section-step for progress bar opacity`
+  ][reg=set]
+
+  already_sound = #[
+    `charge-field rewards: tokens @property + wonder.css defaults + consumers`
+    `runtime enhancement/feature intensity: foundation + ornament + runtime-states`
+    `bottom-chrome-clearance: floating-chrome + layout-assumptions CSS`
+  ][reg=set]
+
+  residual = #[
+    `Many image/pretext/popup preset vars are host-local writes with host CSS — not global token orphans`
+    `attention-architecture 39 updates still bare-attr heavy (role topology later)`
+  ][reg=set]
+}[reg=facet]
+
+^"claims"{
+  claim #feat-css-001 {
+    layer = "pragmatic"
+    hypothesis = `Inspect-oriented modules that only serve design/lab packs should dual-gate on inspectability (or equivalent presence) + selector, not mount on every public reading route.`
+    evidence = `semantic-chrome features:inspectability landed; public routes drop IMMEDIATE chrome seams`
+    probe_ref = `rg "features: \\['inspectability'\\]" public/js/runtime/module-catalog.js; body features counts for inspectability`
+    status = "confirmed"
+  }
+
+  claim #feat-css-002 {
+    layer = "pragmatic"
+    hypothesis = `JS-written --spw-* flourish/diagnostic vars need tokens-layer defaults and at least one non-bundle CSS consumer so style-property contracts and progressive enhancement agree.`
+    evidence = `effect ledger + section-step + avg-module-ms defaults and consumers`
+    probe_ref = `rg -F -- '--spw-effect-charge' public/css/tokens/core.css public/css/components/runtime-states.css`
+    status = "confirmed"
+  }
+
+  claim #feat-css-003 {
+    layer = "semantic"
+    hypothesis = `Body feature tokens without catalog.features or BEHAVIOR_SCOPES are valid narrative pack members only when documented; they must not silently imply a CSS bundle or JS mount.`
+    evidence = `feature-utilization tiers + this audit body_orphan_narrative`
+    probe_ref = `npm run ecology; this audit matrix`
+    status = "active"
+  }
+}[reg=set]
+
+validation: #[
+  `npm run check:runtime`
+  `rg "features: \\['inspectability'\\]" public/js/runtime/module-catalog.js`
+  `rg -F -- '--spw-effect-count' public/css/tokens/core.css`
+  `rg -F -- '--spw-section-step' public/css/shell/chrome/section-context.css`
+  `rg -F -- '--spw-runtime-avg-module-ms' public/css/tokens/core.css public/css/components/runtime-states.css`
+][reg=set]

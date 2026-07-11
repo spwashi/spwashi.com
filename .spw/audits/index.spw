@@ -1,0 +1,132 @@
+# Audits Index
+#
+# Registry of site-local audits (outside .spw/_workbench). Use this as the
+# thoroughness entrypoint before starting a recursive improvement pass.
+
+#>spw_audits_index
+#:index #!audit
+#:layer #!pragmatics
+#:operation #!align
+#:fixity #!tending
+
+@site: ~"../site.spw"
+@semantic_capacity: ~"../conventions/semantic-capacity.spw"
+@recursive_improvement: ~"../conventions/recursive-improvement.spw"
+@feature_utilization: ~"../conventions/feature-utilization.spw"
+@language_utilization: ~"../language/feature-utilization.spw"
+@language_recursive: ~"../language/recursive-improvement.spw"
+
+operation = "align"
+fixity = "tending"
+
+^"registry"{
+  .ground {
+    note = `Nested folders use index.spw; flat audits are single files.`
+  }
+
+  refs {
+    agentic = ~"./agentic-development-2026-07/index.spw"
+    alignment_shell_lifecycle = ~"./alignment-shell-lifecycle-sensitivity-2026-07/index.spw"
+    build_runtime_performance = ~"./build-runtime-performance-2026-07/index.spw"
+    commit_skill_induction = ~"./commit-skill-induction-2026-07/index.spw"
+    component_anatomy_device_packing = ~"./component-anatomy-device-packing-2026-07.spw"
+    component_philosophy_harmony = ~"./component-philosophy-harmony-2026-07.spw"
+    css_module_attribute_impact = ~"./css-module-attribute-impact-2026-07/index.spw"
+    language_census = ~"./language-census.spw"
+    js_feature_connectivity_css_vars = ~"./js-feature-connectivity-css-vars-2026-07/index.spw"
+    component_device_sizing = ~"./component-device-sizing-2026-07/index.spw"
+    css_specificity_pe = ~"./css-specificity-pe-2026-07/index.spw"
+    module_export_standalone = ~"./module-export-standalone-2026-07.spw"
+    naming_grammar_js_types = ~"./naming-grammar-js-types-2026-07/index.spw"
+    page_region_hydration_memory = ~"./page-region-hydration-memory-2026-07/index.spw"
+    runtime_kernel_consolidation = ~"./runtime-kernel-consolidation-2026-07.spw"
+    viewing_reason_cross_media = ~"./viewing-reason-cross-media-2026-07.spw"
+  }[reg=facet]
+}[reg=facet]
+
+^"reading_orders"{
+  expression = audit[order]{cascade.theme}<thorough>
+
+  performance_cascade = ?<
+    @build_runtime_performance,
+    @css_module_attribute_impact,
+    @alignment_shell_lifecycle
+  >[reg=stream]
+
+  page_memory_features = ?<
+    @page_region_hydration_memory,
+    @feature_utilization,
+    @css_module_attribute_impact
+  >[reg=stream]
+
+  agent_editor = ?<
+    @agentic,
+    @commit_skill_induction,
+    @naming_grammar_js_types
+  >[reg=stream]
+
+  layout_device = ?<
+    @component_device_sizing,
+    @css_specificity_pe,
+    @component_anatomy_device_packing,
+    @component_philosophy_harmony,
+    @alignment_shell_lifecycle
+  >[reg=stream]
+
+  language_operators = ?<
+    @language_utilization,
+    @language_recursive,
+    @language_census,
+    @naming_grammar_js_types
+  >[reg=stream]
+
+  feature_css_runtime = ?<
+    @js_feature_connectivity_css_vars,
+    @css_module_attribute_impact,
+    @feature_utilization,
+    @build_runtime_performance
+  >[reg=stream]
+}[reg=facet]
+
+^"thoroughness_minimum"{
+  before_broad_refactor {
+    *do = `Read performance_cascade + layout_device`
+    expression = thoroughness[refactor]{performance.layout}<gate>
+  }
+  before_feature_work {
+    *do = `Read page_memory_features + run npm run ecology`
+    expression = thoroughness[features]{page.memory.ecology}<gate>
+  }
+  before_agent_ops {
+    *do = `Read agent_editor + recursive_improvement`
+    expression = thoroughness[agents]{editor.recursive}<gate>
+  }
+  before_language_work {
+    *do = `Read language_operators + npm run ecology:language`
+    expression = thoroughness[language]{operators.claims.v04}<gate>
+    ~see = @language_utilization
+  }
+  $cache_rule {
+    rule = `New audit insights → semantic capacity cache or audits/index registry before HTML/CSS/JS sprawl`
+  }
+}[reg=facet]
+
+^"owner_claim"{
+  claim #audits-index-001 {
+    layer = "pragmatic"
+    hypothesis = `Thoroughness entrypoints are named reading orders (streams), not a flat file dump; language work uses a separate order from runtime feature packs.`
+    expression = audit[index]{reading_orders}<thorough>
+    spec_ref = ".spw/audits/index.spw"
+    impl_ref = "registry + reading_orders facets"
+    probe_ref = `rg 'reading_orders|language_operators' .spw/audits/index.spw`
+    falsification = `New audits land without registry entry or language pass skips ecology:language.`
+    status = "active"
+  }
+}[reg=facet]
+
+validation: #[
+  `find .spw/audits -name '*.spw' | wc -l`
+  `rg 'registry|reading_orders|language_operators' .spw/audits/index.spw`
+  `npm run ecology`
+  `npm run ecology:language`
+][reg=set]

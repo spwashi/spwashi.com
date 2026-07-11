@@ -1,0 +1,54 @@
+# Grammar evolution leaf
+
+#>naming_grammar_js_types_grammar
+#:audit #!grammar #!language
+#:operation #!audit
+#:fixity #!tending
+
+@index: ~"./index.spw"
+@v04: ~"../../language/v04/index.spw"
+@roadmap: ~"../../language/v04/roadmap.spw"
+@site_semantics: ~"../../conventions/site-semantics.spw"
+@operator_semantics: ~"../../conventions/operator-semantics.spw"
+@semantic_capacity: ~"../../conventions/semantic-capacity.spw"
+
+^"two_grammars"{
+  spw_language = `Plain-text Spw (.spw files, workbench parser path) — evolving toward v0.4 compiler-for-meaning`
+  site_projection = `HTML data-spw-* + CSS tokens + JS contracts as living projection of operators, liminality, field`
+  rule = `Site must remain legible if Spw parser is unavailable; .spw is inspection + agent rails`
+}[reg=facet]
+
+^"v04_pillar_completeness"{
+  pillars = 12
+  files = #[
+    `profiles-and-validator`, `typed-references-indexing`, `claim-probe-syntax`,
+    `stem-projection`, `precipitate-projections`, `register-serialization`,
+    `lsp-editor-lenses`, `grammar-unification`, `operation-fixity-types`,
+    `runtime-goals-pipeline`, `core-experimental-namespace`, `submodule-bridge`
+  ][reg=set]
+  status = `prime artifacts complete; upstream workbench implementation phased`
+  site_adoption = #[
+    `operation + fixity on many conventions (semantic-capacity ops)`,
+    `claim { hypothesis, probe, falsification } pattern in audits`,
+    `stem thinking in operator colors / data-spw families`,
+    `registers as expressive + lexicon_register (dimensional room)`
+  ][reg=set]
+  gap = `Validator profiles not enforced on site .spw; typed refs not global; LSP optional workbench`
+}[reg=facet]
+
+^"evolution_direction"{
+  priority_stack = @roadmap
+  site_next = #[
+    `Keep claim+probe in new audits (already habit)`,
+    `Stem projection: one concept → html attr + css token + js contract name table when introducing families`,
+    `operation/fixity on every new convention`,
+    `Do not wait for parser — site grammar is projection-first`
+  ][reg=set]
+  diversity = `Semantic operations (cache, audit, align, prime, contract, archive) diversify .spw jobs; good completeness of *ops*, uneven completeness of *enforcement*`
+}[reg=facet]
+
+^"operator_grammar"{
+  elemental = `frame probe object ref action topic stream surface — stable site palette`
+  braces = `objective/subjective forms; charge accumulation`
+  risk = `Public copy over-teaching operators outside design/software routes`
+}[reg=facet]

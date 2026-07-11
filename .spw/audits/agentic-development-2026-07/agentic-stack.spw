@@ -1,0 +1,51 @@
+# Agentic stack — surfaces agents use
+
+#>agentic_development_stack
+#:audit #!agents
+#:operation #!audit
+#:fixity #!tending
+
+@index: ~"./index.spw"
+@contracts_plan: ~"../../../.agents/plans/agentic-dev-contracts/PLAN.md"
+@optimization_plan: ~"../../../.agents/plans/agent-optimization/PLAN.md"
+
+^"layers"{
+  skills = `.agents/skills/* + _shared/site-workflow.md — edit order, rails, validation`
+  plans = `.agents/plans/ (~174 PLAN.md) — ownership, WIP, FIX`
+  state_cache = `.agents/state/runtime/route-runtime-manifest.json (+ poll-review, register-bus notes)`
+  public_editor = `/about/plans/ (~1067-line hand surface), /design/catalog (generated)`
+  validation = `check:local, check:runtime, check, check:css, check:generated, manifest`
+  spw_dispatch = `.spw/site.spw + conventions/index.spw — concept → file routing`
+  debugging = `.agents/debugging/`
+  memory = `.agents/MEMORY.md, project notes`
+}[reg=facet]
+
+^"cache_families"{
+  source = @contracts_plan
+  landed = #[
+    `route-runtime-manifest (exists; STALE sample: generatedAt 2026-04-17, routeCount 77, import paths like ./spw-*.js pre-refactor)`,
+    `npm run check / check:local entrypoints`,
+    `design catalog on build:site`,
+    `language-census.spw (generated artifact)`
+  ][reg=set]
+  proposed_not_landed = #[
+    `plans-index.json`,
+    `skills-index.json`,
+    `last-local-check.json`
+  ][reg=set]
+  rule = `Cache expensive rediscovery; name sources + invalidation; never replace authored truth`
+}[reg=facet]
+
+^"agent_questions"{
+  q1 = `What is this route? → body data-spw-* or manifest routes[]`
+  q2 = `Did I break contracts? → check-site / check:local / check:runtime`
+  q3 = `Which module mounts? → catalog + features gate + manifest runtimeDefinitions`
+  q4 = `Which skill/plan owns this? → skills README + plans ecology (manual; census weak)`
+  q5 = `What does this concept mean? → .spw conventions / audits`
+}[reg=facet]
+
+^"feature_usage_summary"{
+  heavily_used = #[`route HTML metadata`, `data-spw-* greps`, `check:local`, `.spw audits/conventions`, `module-catalog`][reg=set]
+  underused = #[`fresh manifest`, `INTERACTION mount`, `plans-index cache`, `skill index cache`, `last-check memo`][reg=set]
+  overused = #[`full build:site for small edits`, `new data-spw without family`, `new PLAN.md for single-file work`][reg=set]
+}[reg=facet]

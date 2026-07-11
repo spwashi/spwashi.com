@@ -1,0 +1,107 @@
+# Naming, grammar evolution, JS conventions, taste/reusability, categories, types
+#
+# Nested Spw audit cache — 2026-07
+# operation: audit | fixity: tending
+
+#>naming_grammar_js_types_2026_07
+#:audit #!naming #!grammar #!javascript #!types #!taxonomy
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+@naming: ~"./naming.spw"
+@grammar: ~"./grammar-evolution.spw"
+@js_conventions: ~"./js-convention-emergence.spw"
+@taste: ~"./file-taste-reusability.spw"
+@categories: ~"./category-completeness.spw"
+@types: ~"./type-usage.spw"
+
+@naming_structured: ~"../../conventions/naming-and-structured-values.spw"
+@metaphor_lexicon: ~"../../conventions/metaphor-dimensional-lexicon.spw"
+@module_export_contract: ~"../../conventions/module-export-contract.spw"
+@module_export_audit: ~"../module-export-standalone-2026-07.spw"
+@language_census: ~"../language-census.spw"
+@js_architecture_cognition: ~"../../conventions/js-architecture-cognition.spw"
+@runtime_medium: ~"../../conventions/runtime-medium-ecology.spw"
+@language_v04: ~"../../language/v04/index.spw"
+@build_runtime_perf: ~"../build-runtime-performance-2026-07/index.spw"
+@harmony: ~"../component-philosophy-harmony-2026-07.spw"
+
+audit_run: .{
+  at = `2026-07-10`
+  method = `catalog/metadata census; export-grade cross-read; language-census totals; folder counts; ts/mts inventory; v0.4 pillar list; naming conventions`
+  posture = `nested cache + primes; no renames in this pass`
+}[reg=facet]
+
+^"thesis"{
+  claim = `The site has strong *coordinate* systems (data-spw stems, MODULE_LAYERS, guilds, cost_class, v0.4 pillars) and uneven *adoption*: export uniformity, attribute full-trace, timingArc/effectScope, and TypeScript remain sparse by design and by debt.`
+  emergence = `JS conventions crystallize as SPW_*_CONTRACT + catalog describes/updates + compose portable surface — not as a framework. Grammar evolution is site .spw + v0.4 pillars ahead of workbench parser.`
+  diversity = `Categories exist (guilds, strata, mount_when, lexicon_registers) but some slots are empty (INTERACTION=0) or under-stamped (timingArc ~19/93).`
+}[reg=facet]
+
+^"grades"{
+  naming_stems = `B+ — clear frame-/spw-/data-spw families; homonym pressure on settle/charge/resonance`
+  attribute_trace = `C — language-census: 216/1208 full js+css+spw trace; 626 unregistered in .spw`
+  grammar_v04 = `B — pillar set complete as primes; not yet compiler/validator landed upstream`
+  js_export_convention = `C+ — contract written; ~4 SPW_MODULE_EXPORT vs ~106 init* and 93 catalog`
+  file_taste = `B — readable chapters, absolute /public/js imports consistent; runtime/ overweight`
+  reusability = `B- — Grade A~15 / B~23 / C~147 (export audit); compose gap on Grade B`
+  category_completeness = `B — 9 guilds + strata; 3 uncategorized; INTERACTION unused; metadata partial`
+  type_usage = `B — intentional dual track: scripts/ts rich, public/ts thin, public/js plain ESM dominant`
+  overall = `B- — coordinates good; sedimentation of conventions mid-flight`
+}[reg=facet]
+
+^"nested_dispatch"{
+  naming = @naming
+  grammar = @grammar
+  js_conventions = @js_conventions
+  taste = @taste
+  categories = @categories
+  types = @types
+}[reg=facet]
+
+^"priority"{
+  p1 = `Raise attribute full-trace on high-traffic families (page, charge, wonder, module) — census 626 gap`
+  p2 = `SPW_MODULE_EXPORT six-pack (export_migration_queue) then compose guild batches`
+  p3 = `Stamp timingArc + effectScope on remaining high-impact catalog modules (19/26 → majority)`
+  p4 = `Assign uncategorized guild modules; fill INTERACTION when gesture tools reclassify`
+  p5 = `Homonym disambiguation in docs only — no mass renames; map via metaphor lexicon`
+  p6 = `Type: grow public/ts only where contracts pay (dom-contracts, bus, feeds) — not wholesale TS conversion`
+}[reg=facet]
+
+^"active_claims"{
+  claim #ngjt-001 {
+    layer = "semantic"
+    hypothesis = "Attribute families with full JS contract + CSS projection + .spw convention stay learnable; unregistered attrs accumulate homonym debt."
+    spec_ref = "language-census.spw + data-spw-attribute-governance.spw"
+    impl_ref = "scripts/language-census.mjs + conventions"
+    probe_ref = "attrs_full_trace_js_css_spw rises after governance passes on page/charge/module stems."
+    falsification = "Full-trace count stagnates while new data-spw-* keep landing without .spw or contract."
+    status = "active"
+  }
+  claim #ngjt-002 {
+    layer = "pragmatic"
+    hypothesis = "Catalog modules remain mountable via init* legacy while SPW_MODULE_EXPORT adoption stays optional; agent placement improves only when grade B+ modules enter compose."
+    spec_ref = "module-export-contract.spw + this audit#js-convention-emergence"
+    impl_ref = "module-loader resolver + compose.js"
+    probe_ref = "SPW_MODULE_EXPORT file count and compose re-exports increase without breaking check:runtime."
+    falsification = "Resolver drops init* before majority export migration."
+    status = "active"
+  }
+  claim #ngjt-003 {
+    layer = "agent-editor"
+    hypothesis = "Category diversity (guild + stratum + mount_when + cost_class) is complete enough to place modules; empty INTERACTION and thin timingArc are the main completeness holes."
+    spec_ref = "this audit#category-completeness + build-runtime-performance runtime census"
+    impl_ref = "module-catalog.js + runtime-module-medium.spw"
+    probe_ref = "INTERACTION > 0 for at least one lab tool; timingArc coverage > 50% of catalog."
+    falsification = "New modules invent parallel category systems instead of filling empty slots."
+    status = "active"
+  }
+}[reg=set]
+
+validation: #[
+  `rg 'naming_grammar_js_types|naming-grammar-js-types' .spw`,
+  `rg -l 'SPW_MODULE_EXPORT' public/js --glob '*.js' | wc -l`,
+  `node -e` # catalog timingArc counts when needed
+  `test -f .spw/language/v04/pillars/stem-projection.spw`
+][reg=set]

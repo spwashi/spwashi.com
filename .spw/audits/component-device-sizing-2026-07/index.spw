@@ -1,0 +1,150 @@
+# Component + Device Sizing Audit (2026-07-11)
+#
+# operation: audit
+# Follow-up to composition layout bugs and component-anatomy-device-packing.
+# Focus: packing axes, mode-switch, composition-flow stages, device breakpoints.
+
+#>component_device_sizing_2026_07
+#:audit #!layout #!components #!responsive #!packing
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+@anatomy_packing: ~"../component-anatomy-device-packing-2026-07.spw"
+@composition_page: ~"../../../design/composition/index.html"
+@composition_box_model: ~"../../../public/js/runtime/composition-box-model.js"
+@content_css: ~"../../../public/css/components/content.css"
+@mode_switch: ~"../../../public/css/handles/operators/state-semantics.css"
+@adaptive: ~"../../../public/css/handles/operators/adaptive.css"
+@layout: ~"../../../public/css/shell/layout.css"
+@website_surface: ~"../../../public/css/routes/surfaces/website.css"
+
+operation = "audit"
+fixity = "tending"
+
+^"method"{
+  probe_routes = #[`/design/composition/`, `/`, `/topics/software/`, `/play/`, `/settings/`][reg=set]
+  device_bands = #[
+    `phone ≤32rem (≈512px)`
+    `phablet ≤40rem`
+    `tablet ≤56rem (mode-switch threshold)`
+    `desktop ≥56rem / ≥72rem shell`
+  ][reg=set]
+  axes = #[`shell-width (viewport media)`, `box-width (container)`, `input-capability (pointer/hover)`][reg=set]
+}[reg=facet]
+
+^"findings"{
+  f1_stage_grid_packing {
+    severity = "high"
+    claim = `Site stages (.site-frame) annotated data-spw-composition-flow=grid were packed as multi-column auto-fit of *children* — broke composition topline/hero into masonry.`
+    evidence = `composition-box-model mirrors computed display; content.css multi-col rule lacked .site-frame exclusion`
+    landed = #[
+      `content.css excludes .site-frame/.frame-panel/.mode-panel from multi-col packing`
+      `composition-box-model resolveCompositionFlow forces stack on stages`
+      `composition frame authors data-spw-composition-flow=stack + flex column`
+      `stack stages force flex-column even if display:grid used for gaps`
+    ][reg=set]
+    residual = `Inner grids that *should* pack multi-col still use .frame-grid or explicit pack classes — verify settings/home panels`
+  }
+
+  f2_mode_switch_clip {
+    severity = "high"
+    claim = `At ≤56rem, mode-switch[aria-label] used a rigid 2×2 CSS grid; 3-button lenses (read|inspect|reuse) + ::before label clipped labels (e.g. only "ead" visible).`
+    evidence = `state-semantics.css + syntax/runtime-states container mirrors; composition screenshot 2026-07-11`
+    landed = #[
+      `≤56rem: flex equal-share row wrap for 2–3 button lenses`
+      `frame-topline > .mode-switch: flex-basis 100% (second row)`
+      `≤32rem: touch min-height; 2×2 only when ≥4 .frame-sigil children`
+      `composition-topline: dedicated meta row + full-width lens track`
+      `data-spw-lens-chrome=silent + data-spw-lens-track=row in handles (no route !important)`
+    ][reg=set]
+    residual = `4-button home/software lenses still use 2×2 on phone — intentional; verify touch targets ≥2.15rem`
+    follow_up = ~"../css-specificity-pe-2026-07/index.spw"
+  }
+
+  f3_breakpoint_fragmentation {
+    severity = "medium"
+    claim = `Device response still splits shell/box/input axes without a single decision table (see anatomy packing audit).`
+    evidence = `720px / 56rem / 38rem container / 32rem / touch-target re-asserts`
+    direction = `Publish --spw-shell-band + --spw-box-band tokens; mode-switch keys shell-width; packing keys box-width; hit-size keys input-capability`
+  }
+
+  f4_copy_layer_cards {
+    severity = "low"
+    claim = `Copy lens/depth cards on composition now auto-fit; other routes may still stack full-width cards without equal tracks.`
+    evidence = `website.css composition-copy-stack; semantic-copy-lens global is display block only`
+    direction = `Optional shared .spw-copy-layer-grid utility if more docs routes need two-up cards`
+  }
+
+  f5_overflow_clip_stages {
+    severity = "medium"
+    claim = `.site-frame { overflow: clip } clips absolute/overflowing handles (mode-switch residual, popovers).`
+    evidence = `frames.css base; composition forced overflow:visible`
+    residual = `Do not globally remove clip (containment for accents). Prefer second-row mode-switch; overflow:visible only on known crowded stages.`
+  }
+}[reg=facet]
+
+^"device_matrix"{
+  note = `Expected behavior after 2026-07-11 landing`
+
+  phone {
+    shell = `≤32rem`
+    mode_switch = `equal flex pills; ≥4 options → 2×2; touch min 2.15rem`
+    composition = `stacked hero; full-width lens row; copy auto-fit 1 col`
+    packing = `stages stay stack; no multi-col child masonry`
+  }
+
+  tablet {
+    shell = `32–56rem`
+    mode_switch = `flex equal-share; topline lens full second row`
+    composition = `stacked hero until 56rem; then dual column min 18rem each`
+  }
+
+  desktop {
+    shell = `≥56rem`
+    mode_switch = `inline flex track beside meta when space allows (composition keeps full-width lens row)`
+    composition = `hero 2-col; copy auto-fit 2+ cards`
+  }
+}[reg=facet]
+
+^"component_spot_checks"{
+  components = #[
+    `frame-topline + mode-switch (home, play, software, composition, film scene beds)`
+    `hook-call + page-kicker + h1 measure`
+    `spec-strip + operator-chip wrap`
+    `spw-metric-grid auto-fit`
+    `frame-panel nesting under stack stages`
+    `query-composer / vibe-widget control cards (settings, composition lab)`
+  ][reg=set]
+  probe = `Resize 360 / 768 / 1024 / 1280; hard-reload; confirm no clipped lens labels and no one-word-per-line hooks`
+}[reg=facet]
+
+^"claims"{
+  claim #cds-001 {
+    layer = "pragmatic"
+    hypothesis = `Stage elements must never inherit multi-column composition-flow packing meant for inner card grids.`
+    probe_ref = `rg 'site-frame' public/css/components/content.css; rg 'resolveCompositionFlow' public/js/runtime/composition-box-model.js`
+    status = "confirmed"
+  }
+
+  claim #cds-002 {
+    layer = "pragmatic"
+    hypothesis = `Mode switches with 2–3 options remain a single horizontal equal-share track down to phone widths; 4+ may use 2×2 only at ≤32rem.`
+    probe_ref = `rg 'mode-switch\\[aria-label\\]' public/css/handles/operators/state-semantics.css`
+    status = "confirmed"
+  }
+
+  claim #cds-003 {
+    layer = "semantic"
+    hypothesis = `Shell-width, box-width, and input-capability remain distinct axes; new responsive rules must name which axis they key.`
+    probe_ref = `this audit + component-anatomy-device-packing breakpoint_source_of_truth`
+    status = "active"
+  }
+}[reg=set]
+
+validation: #[
+  `Hard-reload /design/composition/ at 360, 768, 1100px — lens shows read|inspect|reuse fully`
+  `rg 'resolveCompositionFlow|site-frame' public/js/runtime/composition-box-model.js public/css/components/content.css`
+  `rg 'frame-topline > .mode-switch' public/css/handles/operators/state-semantics.css`
+  `Spot-check / topics/software/ and /play/ mode-switch at 768px`
+][reg=set]

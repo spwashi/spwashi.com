@@ -1,0 +1,72 @@
+# JavaScript convention emergence leaf
+
+#>naming_grammar_js_types_js_conventions
+#:audit #!javascript #!conventions
+#:operation #!audit
+#:fixity #!tending
+
+@index: ~"./index.spw"
+@export_contract: ~"../../conventions/module-export-contract.spw"
+@export_audit: ~"../module-export-standalone-2026-07.spw"
+@cognition: ~"../../conventions/js-architecture-cognition.spw"
+@ecology: ~"../../conventions/runtime-medium-ecology.spw"
+@loader: ~"../../../public/js/runtime/module-loader.js"
+@compose: ~"../../../public/js/compose.js"
+
+^"emerging_conventions"{
+  note = `Sedimented practices — not all fully adopted.`
+  c1_catalog = `Every progressive feature declares id, layer, when, load, mount in module-catalog.js`
+  c2_describes_updates = `describes + updates nearly universal (93 describes, 89 updates); timingArc 19; effectScope 26`
+  c3_init_export = `export function initX / async initX — ~106 files; primary mount shape today`
+  c4_spw_module_export = `SPW_MODULE_EXPORT frozen object — ~4 files; target shape per contract`
+  c5_spw_contract = `SPW_*_CONTRACT Object.freeze — common on kernel/runtime helpers`
+  c6_absolute_imports = `from '/public/js/…' site-relative ESM — ~338 import sites; consistent, Node-hostile without resolver`
+  c7_dom_contracts = `writeDatasetValue / writeDatasetValues with tiers — substrate convention`
+  c8_bus_first = `bus.emit for cross-module nutrients; DOM aliases legacy-mapped`
+  c9_compose = `compose.js portable surface + SPW_COMPOSITION_CONTRACT literacy`
+  c10_cleanup = `mount returns cleanup | {cleanup,refresh} | void — normalizeMountHandle`
+}[reg=facet]
+
+^"adoption_funnel"{
+  catalog_modules = 93
+  init_style = 106
+  spw_module_export_files = 4
+  grade_B_contractish = 23 # export audit
+  compose_covered_B = 20
+  meaning = `Convention emergence is mid-funnel: catalog+init mature; unified export + compose lag`
+  cost_class = `interference` # dual mount shapes until migration completes
+}[reg=facet]
+
+^"resolver_order"{
+  source = @export_contract
+  order = ?<
+    `SPW_MODULE_EXPORT.mount`,
+    `spwModule.mount`,
+    `default.mount`,
+    `init* by catalog wrapper`,
+    `audit skip export-shape-missing`
+  >[reg=stream]
+  rule = `Do not remove init* step until majority migration`
+}[reg=facet]
+
+^"taste_signals"{
+  good = #[
+    `Frozen contracts document field/target/gesture/result`,
+    `Catalog describes strings are semi-literate spells`,
+    `Feature/enhancement split teaches progressive enhancement`
+  ][reg=set]
+  friction = #[
+    `Two true export dialects (init vs SPW_MODULE_EXPORT)`,
+    `Absolute imports block naive Node reuse (Grade A still limited)`,
+    `side-effect D-grade modules (prepaint-state, some tools)`
+  ][reg=set]
+}[reg=facet]
+
+^"direction"{
+  sequence = #[
+    `priority_1 six-pack SPW_MODULE_EXPORT`,
+    `compose guild batches substrate/inspection/literacy`,
+    `raise timingArc/effectScope on CORE + high effectScope modules`,
+    `document Grade A absolute-import policy (browser ESM first)`
+  ][reg=set]
+}[reg=facet]

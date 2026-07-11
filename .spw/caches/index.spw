@@ -1,0 +1,31 @@
+# Caches Index
+#
+# Registry of insight caches (operation: cache). Caches hold reusable
+# judgments between recursive-improvement passes so the next pass does not
+# re-derive them from chat alone.
+
+#>spw_caches_index
+#:index #!cache
+#:layer #!pragmatics
+#:operation #!align
+
+@recursive_improvement: ~"../conventions/recursive-improvement.spw"
+@audits_index: ~"../audits/index.spw"
+
+operation = "align"
+fixity = "tending"
+
+^"registry"{
+  recursive_improvement_2026_07 = ~"./recursive-improvement-2026-07.spw"
+}[reg=facet]
+
+^"cache_rules"{
+  r1 = `One cache file per pass-family; append insights with stable ids (#ri-001…) and update status in place — never fork a parallel cache for the same family.`
+  r2 = `Caches hold judgments; scripts hold measurements. Machine-readable inventories are stdout (npm run census:json / ecology:json), not committed files.`
+  r3 = `Promote settled insights to .spw/conventions via a contract operation and mark the insight landed with a ref to the convention.`
+}[reg=facet]
+
+validation: #[
+  `find .spw/caches -name '*.spw' | wc -l`
+  `rg 'insight #' .spw/caches`
+][reg=set]

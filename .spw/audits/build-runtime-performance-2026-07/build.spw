@@ -1,0 +1,114 @@
+# Build pipeline performance leaf
+#
+# Nested under build-runtime-performance-2026-07
+
+#>build_runtime_performance_build
+#:audit #!build #!performance
+#:operation #!audit
+#:fixity #!tending
+
+@index: ~"./index.spw"
+@package: ~"../../../package.json"
+@css_build: ~"../../../scripts/css-build.mjs"
+@site_build: ~"../../../scripts/build.mjs"
+@check_site: ~"../../../scripts/check-site.mjs"
+@metaphor: ~"../../conventions/metaphor-dimensional-lexicon.spw"
+
+^"pipeline"{
+  graph = #[
+    `typecheck — tsc --noEmit + tsconfig.scripts + tsconfig.runtime`,
+    `build:tools — tsc -p tsconfig.scripts.json → scripts/typed/`,
+    `build:runtime — tsc -p tsconfig.runtime.json + fix-typed-imports`,
+    `build:css — css-build.mjs route/behavior bundles + behavior-scopes`,
+    `build:site — build.mjs → dist/ static deploy`,
+    `check:local — typecheck + tools + runtime + css + check-site + check-generated (no npm audit)`
+  ][reg=set]
+  deploy = `.github/workflows/deploy.yml runs npm run build → dist/ GitHub Pages`
+  no_runtime_npm_deps = `devDependencies only: typescript, vite, postcss, @types/node — good for payload`
+}[reg=facet]
+
+^"sample_timings_2026_07_10"{
+  note = `Local sample (developer machine). Directional only.`
+  typecheck_real_s = `14.16`
+  build_tools_real_s = `2.97`
+  build_runtime_real_s = `3.47`
+  build_css_real_s = `7.24`
+  build_site_real_s = `281.75` # includes dist copy 916 files + sitemap + design catalog regenerate
+  catalog_in_site = `1160 attributes · 2473 tokens · 183 css · 157 spw · 297 html · 230 js scanned — dominant wall inside build:site`
+  observation = `On this sample: build:site ≫ typecheck ≫ css-build ≫ runtime/tools. Full npm run build pays typecheck+runtime+css+site. Local agent loops should almost never run full build:site for .spw-only or single-module work.`
+  cost_class = `premature_commitment` # full publish graph vs incremental edit
+}[reg=facet]
+
+^"css_generation"{
+  source_files = `~165 CSS files under public/css`
+  bundles = `route bundles (home ~84 KiB, website ~80 KiB, topics ~42 KiB, …) + behavior bundles (svg-surfaces, pretext-lab, …)`
+  strength = `Route-scoped bundles avoid shipping every route surface to every page when HTML links the right entry`
+  risk = `css-build regenerates many bundles; core + multi-route touch pays wide fanout`
+  cost_class = `working_memory_pressure` # build-worker width, not browser
+  direction = `Keep route bundles; prefer check modes; avoid full css-build in tight edit loops when only JS typed outputs change`
+}[reg=facet]
+
+^"js_generation"{
+  public_js_tree = `~3.2M public/js (source + typed outputs)`
+  entry_sizes = .{
+    site_js = `~37 KiB site.js (orchestrator shell; catalog is separate dynamic graph)`
+    compose_js = `~7 KiB portable entry`
+    catalog = `~1.8k LOC module-catalog.js — large definition surface, not all loaded at once`
+    settings_engine = `~1.3k LOC site-settings-engine.js — heavy substrate module`
+  }[reg=facet]
+  strength = `Dynamic import per catalog def — transport cache friendly when deferred`
+  risk = `IMMEDIATE width still pulls many chunks before interactive`
+}[reg=facet]
+
+^"check_and_ci"{
+  check_local = `Right default for non-dep patches — no registry audit`
+  check_full = `Includes npm audit — network; use before dep landings only`
+  plans_index = `plans:index:check mechanical; cheap vs typecheck`
+  direction = #[
+    `CI: cache tsc incremental / node_modules; shard typecheck if wall grows`,
+    `Local: prefer npm run build:runtime or build:css alone when scope is known`,
+    `Do not require full build:site for pure .spw contract caches`
+  ][reg=set]
+}[reg=facet]
+
+^"seams"{
+  .{
+    id = `triple-typecheck`
+    cost_class = `premature_commitment`
+    seam = `typecheck runs three tsc projects serially on every check:local`
+    direction = `Document which project a patch needs; optional composite project references if TS graph allows`
+  }
+  .{
+    id = `css-bundle-fanout`
+    cost_class = `working_memory_pressure`
+    seam = `css-build walks many route/behavior outputs even for single-route CSS edits`
+    direction = `Incremental bundle targets when tooling allows; else accept fanout as publish hygiene`
+  }
+  .{
+    id = `dist-weight`
+    cost_class = `working_memory_pressure`
+    seam = `dist/ can be large (sample ~104M with assets) — deploy artifact size ≠ main-thread JS`
+    direction = `Track JS/CSS text budgets separately from image binaries in dist`
+  }
+  .{
+    id = `design-catalog-in-build`
+    cost_class = `premature_commitment`
+    seam = `build:site regenerates full design catalog every deploy (~catalog scan of whole tree); sample dominated build:site wall (~277s of ~282s reported in log as write window)`
+    direction = `Keep catalog on publish; for local HTML/JS iteration use build:runtime/css only; consider catalog --check or cached skip when inputs unchanged`
+  }
+  .{
+    id = `core-css-bundle-size`
+    cost_class = `working_memory_pressure`
+    seam = `public/css/bundles/core.css ~1.5 MiB generated; style-core has ~98 @imports`
+    direction = `Route bundles already split heavy routes; watch core growth; prefer feature CSS in behavior/route bundles`
+  }
+}[reg=set]
+
+^"defaults"{
+  for_agents = #[
+    `Pure .spw / HTML copy: no build required; optional check:local before landing multi-surface work`,
+    `JS runtime modules: node --check + check:runtime; build:runtime if typed outputs`,
+    `CSS: build:css or check:css; avoid full typecheck if only CSS`,
+    `Deps: full check including audit`
+  ][reg=set]
+}[reg=facet]

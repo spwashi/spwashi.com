@@ -1,0 +1,60 @@
+# Category completeness and diversity leaf
+
+#>naming_grammar_js_types_categories
+#:audit #!taxonomy #!diversity
+#:operation #!audit
+#:fixity #!tending
+
+@index: ~"./index.spw"
+@ecology: ~"../../conventions/runtime-medium-ecology.spw"
+@medium_map: ~"../../surfaces/runtime-module-medium.spw"
+@cognition: ~"../../conventions/js-architecture-cognition.spw"
+@metaphor: ~"../../conventions/metaphor-dimensional-lexicon.spw"
+@brp_runtime: ~"../build-runtime-performance-2026-07/runtime.spw"
+@dimension_vocab: ~"../../conventions/dimension-vocabulary.spw"
+
+^"category_systems"{
+  note = `Orthogonal category spaces — diversity is multi-axis, not one enum.`
+  systems: #[
+    .{ id = `MODULE_LAYERS`, values = #[`core`, `feature`, `region`, `enhancement`][reg=set], completeness = `used` },
+    .{ id = `MOUNT_WHEN`, values = #[`immediate`, `visible`, `idle`, `interaction`, `region`, `settled`][reg=set], completeness = `interaction empty (0)` },
+    .{ id = `ecology_guild`, values = 9, completeness = `3 uncategorized watch modules` },
+    .{ id = `cognitive_stratum`, values = 11, completeness = `mapped; not stamped on catalog yet` },
+    .{ id = `cost_class`, values = 6, completeness = `used in performance audits` },
+    .{ id = `lexicon_register`, values = 8, completeness = `open room for nouns/verbs` },
+    .{ id = `express_channel`, values = 5, completeness = `tokens present` },
+    .{ id = `pack_axis`, values = 5, completeness = `named in dimension vocab` },
+    .{ id = `semantic_operation`, values = #[`cache`, `audit`, `align`, `prime`, `contract`, `archive`][reg=set], completeness = `used in .spw` },
+    .{ id = `fixity`, values = #[`fixed`, `stable`, `tending`, `experimental`, `volatile`, `cold`][reg=set], completeness = `used` }
+  ][reg=set]
+}[reg=facet]
+
+^"diversity_scores"{
+  mount_when_distribution = `IMMEDIATE 63 · VISIBLE 21 · IDLE 7 · SETTLED 1 · REGION 1 · INTERACTION 0 — skew to premature commitment`
+  layer_distribution = `ENHANCEMENT 67 · FEATURE 20 · CORE 5 · REGION 1 — enhancement-heavy`
+  guild_coverage = `Most modules assigned in runtime-module-medium; uncategorized: pwa-update-handler, semantic-chrome, interaction-progression`
+  metadata_diversity = `describes 93/93 · updates 89/93 · timingArc 19/93 · effectScope 26/93 — describes rich, timing poor`
+}[reg=facet]
+
+^"completeness_holes"{
+  h1 = `MOUNT_WHEN.INTERACTION unused — gesture labs could fill`
+  h2 = `timingArc/effectScope minority — agent cost prediction weak`
+  h3 = `cognitive_stratum not on catalog — placement requires dual lookup`
+  h4 = `guild not on SPW_MODULE_EXPORT for most modules`
+  h5 = `language-census unregistered attrs — semantic category sprawl`
+  h6 = `express opt-in rare in production routes — channel diversity theoretical`
+}[reg=set]
+
+^"diversity_strengths"{
+  s1 = `Multiple orthogonal axes prevent single-taxonomy collapse`
+  s2 = `Semantic operations diversify .spw work products`
+  s3 = `Page anatomy vocabularies (webpage/restaurant/garden) diversify copy without forking DOM`
+  s4 = `Elemental operators diversify visual grammar`
+}[reg=set]
+
+^"direction"{
+  fill_empty_slots = `Prefer INTERACTION reclass over new when-enum`
+  stamp_metadata = `timingArc + effectScope on CORE and observer-heavy modules first`
+  optional_catalog_fields = `guild + cognitive_stratum as soft describes suffix or future fields — do not break loader`
+  avoid = `Inventing category system #11 for the same placement decision`
+}[reg=facet]

@@ -1,0 +1,77 @@
+# Commit history leaf
+
+#>commit_skill_induction_history
+#:audit #!git #!history
+#:operation #!audit
+#:fixity #!tending
+
+@index: ~"./index.spw"
+
+^"volume"{
+  since_2026_04 = 638
+  by_month = .{
+    `2026-04` = 331
+    `2026-05` = 173
+    `2026-06` = 106
+    `2026-07` = 28 # partial month / slower cadence
+  }[reg=facet]
+  plans = `~174 PLAN.md · ~187 plan index.spw (mechanical ecology)`
+  theme_rate = `~302/638 commits since 2026-04 match inspect|data-spw|semantic|contract|ecology|plan|.spw|skill (subject grep) — ~47% meta/semantic themed`
+}[reg=facet]
+
+^"epochs"{
+  note = `Rough narrative eras from subjects — not hard boundaries.`
+  runtime_extraction = #[
+    `b43e55cf Extract staged runtime into composable loader and module catalog`,
+    `ee8bca00 Improve runtime batching, cascade settling, and split site-settings`,
+    `a6cdf035 Extract kernel rhizosphere modules…`
+  ][reg=set]
+  chrome_spell_cauldron = #[
+    `cauldron / spell path / floating chrome / satchel sequence`,
+    `bd0d7951 Teach the cauldron to unmix… (55k+/5k- lines — outlier)`
+  ][reg=set]
+  plan_ecology_wave = #[
+    `34ace20f Add plan-directory index.spw… (+4.7k)`,
+    `1e58c345 Customize plan .spw from PLAN/FIX (+6.5k)`,
+    `be8fdccf Strengthen Spw indexing across plan .spw (+7.3k, 263 files)`
+  ][reg=set]
+  language_export_wave = #[
+    `0f09cea7 Spw v0.4 artifacts`,
+    `a754f327 ^seed module-export audit`,
+    `7649834c module-export-uniformity merge`,
+    `009acd60 language census + ecology dispatch (+4.9k)`
+  ][reg=set]
+  medium_and_gravity = #[
+    `eb95fdd5 interactive-medium runtime (+23k)`,
+    `spatial-gravity multi-commit stack`,
+    `8c8c22af SVG depth pass (49 files)`
+  ][reg=set]
+  calm_corrections = #[
+    `reading-quiet overlays / suppress promos on inspect labs`,
+    `home hero hierarchy calms`,
+    `dc23cec8 prevent component semantics backfill onto body/html`
+  ][reg=set]
+}[reg=facet]
+
+^"churn_hotspots"{
+  note = `Files with high aggregate numstat weight since 2026-06 (sample).`
+  generated_or_bundled = #[`public/css/bundles/core.css`, `route bundles`, `image-resources.json`][reg=set]
+  runtime_core = #[`module-catalog.js`, `module-loader.js`, `site.js`, `site-settings*`, `attention-architecture.js`][reg=set]
+  experiments = #[`design/experiments/load-symphony/css/*`][reg=set]
+  ecology_scripts = #[`scripts/maintain-plan-directory-indexes.mjs`][reg=set]
+  implication = `Generated CSS and plan indexes dominate diff noise; agents re-touching catalogs amplify review cost.`
+}[reg=facet]
+
+^"healthy_patterns"{
+  h1 = `Kernel extraction and consumer hardening commits are surgical and debt-reducing`
+  h2 = `Parallel immediate mount / batching commits match performance intent`
+  h3 = `Reading-quiet / promo-downgrade commits show product pushback against inspect sprawl`
+  h4 = `Worktree merges (&[tag]) show intentional multi-track landing, not only drive-by edits`
+}[reg=set]
+
+^"risk_patterns"{
+  r1 = `Plan .spw mass-customization commits change hundreds of files without runtime behavior`
+  r2 = `Mega-features (cauldron unmix, interactive-medium) land as single narrative commits — hard to reverse skill-induced extras`
+  r3 = `Repeated “Refine X” / “Refresh ecology” subjects without stated retirement of prior surface`
+  r4 = `CSS bundle regeneration commits interleave with design work — review signal diluted`
+}[reg=set]

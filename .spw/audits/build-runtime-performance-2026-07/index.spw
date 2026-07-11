@@ -1,0 +1,103 @@
+# Build + Runtime Performance Audit (2026-07)
+#
+# Nested Spw cache: index dispatches to build / runtime / coordinates leaves.
+# operation: audit | fixity: tending
+
+#>build_runtime_performance_2026_07
+#:audit #!performance #!build #!runtime
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+@build: ~"./build.spw"
+@runtime: ~"./runtime.spw"
+@coordinates: ~"./coordinates.spw"
+@metaphor_lexicon: ~"../../conventions/metaphor-dimensional-lexicon.spw"
+@js_architecture_cognition: ~"../../conventions/js-architecture-cognition.spw"
+@runtime_medium_ecology: ~"../../conventions/runtime-medium-ecology.spw"
+@harmony_audit: ~"../component-philosophy-harmony-2026-07.spw"
+@runtime_bootstrap_plan: ~"../../../.agents/plans/runtime-bootstrap-performance/PLAN.md"
+@runtime_load_instrumentation: ~"../../../.agents/plans/runtime-load-instrumentation/PLAN.md"
+@module_catalog: ~"../../../public/js/runtime/module-catalog.js"
+@module_loader: ~"../../../public/js/runtime/module-loader.js"
+@site_js: ~"../../../public/js/site.js"
+@package_json: ~"../../../package.json"
+
+audit_run: .{
+  at = `2026-07-10`
+  method = `catalog mount census; observer construction count; pipeline timing samples; plan + code cross-read`
+  host = `local developer machine — timings are directional samples, not CI SLOs`
+  posture = `cache evidence + cost_class coordinates; primes for reclassification and build hygiene`
+}[reg=facet]
+
+^"thesis"{
+  claim = `Build cost is dominated by TypeScript multi-project typecheck and CSS/site generation width; runtime cost is dominated by immediate-layer *width* (61 IMMEDIATE defs after two safe reclassifications) and observer/mirror sprawl after parallel mount was already landed.`
+  progress = `Phase 1 parallel immediate mounts are in module-loader (site-settings first, then Promise.all). The remaining budget is reclassification + bounded metacognition, not another orchestration rewrite.`
+  lexicon = `Use cost_class + elaboration_stage from @metaphor_lexicon; ecology/cognition nouns are optional projections.`
+}[reg=facet]
+
+^"grades"{
+  build_pipeline = `B- — clear scripts, route CSS bundles, no heavy runtime deps; typecheck triple-pass is medium pole; full build:site+catalog is the local long pole`
+  runtime_architecture = `A- — staged layers, marks/measures, parallel immediate, policy gates`
+  runtime_immediate_budget = `C+ — 61 IMMEDIATE / 94 definitions; spatial-gravity moved to VISIBLE and palette-treat-discovery to IDLE, while many ENHANCEMENT remain self_model-stage`
+  observer_federation = `C — ~52 Intersection/Resize/Mutation constructions across ~40 files`
+  inspectability = `A — spw:* marks, timings plans, data-spw-runtime surfaces`
+  overall = `B — instrumented and staged; width of early activation is the open debt`
+}[reg=facet]
+
+^"nested_dispatch"{
+  build = @build
+  runtime = @runtime
+  coordinates = @coordinates
+  related_harmony_performance = @harmony_audit
+  bootstrap_plan = @runtime_bootstrap_plan
+}[reg=facet]
+
+^"priority"{
+  p1 = `Reclassify ENHANCEMENT IMMEDIATE → VISIBLE/IDLE when not required for first reading posture (bootstrap plan Phase 2)`
+  p2 = `Bound composition-box-model / content-tone refresh (harmony seams; cost_class working_memory_pressure)`
+  p3 = `Observer federation for attention/region/visible — share IO roots where safe`
+  p4 = `Build: avoid full build:site for agent loops; cache typecheck in CI; catalog incremental/skip when inputs unchanged`
+  p5 = `site-settings-engine cold paths behind IDLE/UI split without losing first-paint settings datasets`
+  p6 = `Watch core.css bundle growth (~1.5 MiB sample); keep new surface CSS in route/behavior bundles`
+}[reg=facet]
+
+^"validation"{
+  commands = #[
+    `rg -o 'when: MOUNT_WHEN\\.(IMMEDIATE|VISIBLE|IDLE|INTERACTION|REGION|SETTLED)' public/js/runtime/module-catalog.js | sort | uniq -c`,
+    `rg -c 'new IntersectionObserver|new ResizeObserver|new MutationObserver' public/js --glob '*.js'`,
+    `npm run typecheck` # sample wall time,
+    `npm run build:runtime && npm run build:css`,
+    `rg 'build_runtime_performance|build-runtime-performance' .spw`
+  ][reg=set]
+}[reg=facet]
+
+^"active_claims"{
+  claim #brp-001 {
+    layer = "pragmatic"
+    hypothesis = "Immediate-layer wall time is driven more by eligible module *count* and mount work than by serial import scheduling, now that mountImmediateLayer parallelizes non-settings defs."
+    spec_ref = "this audit#runtime.spw + module-loader mountImmediateLayer"
+    impl_ref = "public/js/runtime/module-loader.js#mountImmediateLayer + site.js boot"
+    probe_ref = "Performance panel: spw:immediate-layer:core|feature|enhancement:parallel measures; compare eligible count vs duration."
+    falsification = "Parallel batch still serializes all mounts, or settings is not ordered before parallel wave."
+    status = "active"
+  }
+  claim #brp-002 {
+    layer = "pragmatic"
+    hypothesis = "Typecheck (three tsc projects) is the dominant local build wall time vs build:runtime or css-build alone."
+    spec_ref = "this audit#build.spw"
+    impl_ref = "package.json typecheck / build scripts"
+    probe_ref = "time npm run typecheck vs build:runtime vs build:css on same machine."
+    falsification = "css-build or build:site consistently exceeds typecheck wall time on a warm machine without content scale change."
+    status = "active"
+  }
+  claim #brp-003 {
+    layer = "semantic"
+    hypothesis = "Performance work remains legible when seams use cost_class coordinates shared with metaphor-dimensional-lexicon and harmony performance_audit."
+    spec_ref = "coordinates.spw + metaphor-dimensional-lexicon.spw"
+    impl_ref = "nested audit leaves"
+    probe_ref = "Every new BRP seam names cost_class; optional ecology/cognition prose only."
+    falsification = "New performance notes only in metaphor language without cost_class."
+    status = "active"
+  }
+}[reg=set]

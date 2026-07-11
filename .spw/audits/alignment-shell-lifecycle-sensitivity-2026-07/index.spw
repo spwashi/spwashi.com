@@ -1,0 +1,293 @@
+# Alignment · Shell · Lifecycle · Sensitivity · Dimensional Tunability
+#
+# Audit of six cross-cutting rails that decide whether the site feels learnable
+# or opaque under load, resize, and device change.
+#
+# operation: audit
+# fixity: tending
+# date: 2026-07-10
+
+#>alignment_shell_lifecycle_sensitivity_2026_07
+#:audit #!runtime #!css #!shell #!lifecycle #!responsive #!dimensions
+#:operation #!audit
+#:layer #!pragmatics
+
+@layout_assumptions: ~"../../../public/js/runtime/layout-assumptions.js"
+@layout_shift_audit: ~"../../../public/js/runtime/layout-shift-audit.js"
+@loading_ecology: ~"../../../public/js/runtime/loading-ecology.js"
+@shell_disclosure: ~"../../../public/js/runtime/shell-disclosure.js"
+@floating_chrome: ~"../../../public/css/components/floating-chrome.css"
+@dom_contracts: ~"../../../public/js/kernel/dom-contracts.js"
+@page_state: ~"../../../public/js/runtime/page-state.js"
+@module_catalog: ~"../../../public/js/runtime/module-catalog.js"
+@module_loader: ~"../../../public/js/runtime/module-loader.js"
+@hydration_passes: ~"../../../public/js/runtime/hydration-passes.js"
+@composition_box: ~"../../../public/js/runtime/composition-box-model.js"
+@dimensions_css: ~"../../../public/css/tokens/dimensions.css"
+@dimension_vocabulary: ~"../../conventions/dimension-vocabulary.spw"
+@device_packing_audit: ~"../component-anatomy-device-packing-2026-07.spw"
+@feature_partial_theatrics: ~"../../conventions/feature-partial-theatrics.spw"
+@settings_profiles: ~"../../../public/js/kernel/site-settings-profiles.js"
+
+audit_run: .{
+  at = `2026-07-10`
+  scope = `alignment logic, shell logic, lifecycle arcs, content-sensitivity, device-sensitivity, dimensional tunability`
+  method = `read contracts + catalog + CSS tokens; probe IMMEDIATE hygiene; cross-check existing packing/device audit`
+  posture = `findings with severity and next slices — not a rewrite plan`
+}[reg=facet]
+
+^"executive"{
+  claim = `Six rails already exist with real contracts. The friction is ownership collision and incomplete timingArc hygiene, not missing systems.`
+  strength = `Page settle is evidence-based; reflow is classified mount|input|incidental; shell has pressure topologies; packing ladder is named; TUNING_LEXICON links presentation to content.`
+  weakness = `Device response still splits viewport/container/pointer without a single declaration per decision; 40 IMMEDIATE modules still lack timingArc; shell-disclosure is large and dual-owns chrome pressure with floating-chrome sync.`
+}[reg=facet]
+
+# =============================================================================
+# 1. Alignment logic
+# =============================================================================
+
+^"alignment_logic"{
+  job = `Decide whether layout changes are purposeful arrivals or drift, and correct chrome competition after settle.`
+
+  owners: .{
+    classify_reflow = @layout_shift_audit
+    narrate_ecology = @loading_ecology
+    late_correct = @layout_assumptions
+    box_presence = @composition_box
+  }[reg=facet]
+
+  contracts: #[
+    `layout-shift-audit: REFLOW_CLASS stable|input|mount|incidental; mount attribution window 500ms`
+    `loading-ecology: incidentalReflow → alignment-drift trope; purposeful mounts feed settle narrative`
+    `layout-assumptions: SETTLED mount; bottom-lane overlap, clearance drift, chrome crowded`
+    `composition-box-model: data-spw-box-presence overfull|fit; pack-layout/fill for content tone`
+  ][reg=set]
+
+  strengths: #[
+    `Purposeful vs incidental reflow is a first-class signal (not CLS alone)`
+    `Late alignment pass runs after settle — correct order for correction`
+    `Floating chrome sync feeds bottom-lane clearance tokens CSS can spend`
+  ][reg=set]
+
+  gaps: #[
+    `G1: alignment language is split across three modules with weak shared enum export for CSS/console readers`
+    `G2: box-presence (content fit) and reflow class (temporal shift) rarely compose into one inspector story`
+    `G3: layout-assumptions corrections are token-heavy; few routes document which compromise was accepted`
+  ][reg=set]
+
+  severity = `medium`
+  next = `Export a single SPW_ALIGNMENT_CONTRACT from layout-shift + assumptions + ecology reflow class; surface in state satchel or module-visuals`
+}[reg=facet]
+
+# =============================================================================
+# 2. Shell logic
+# =============================================================================
+
+^"shell_logic"{
+  job = `Header/nav disclosure, pressure, topology, and floating chrome lanes without crushing content.`
+
+  owners: .{
+    disclosure = @shell_disclosure
+    chrome_contract = @dom_contracts
+    chrome_css = @floating_chrome
+  }[reg=facet]
+
+  contracts: #[
+    `shell-disclosure: modes inline|toggle; phases resting→approach→contact→projecting→settling`
+    `pressures calm|tight|compressed|crowded; topologies ribbon|stacked|drawer|screen`
+    `CORE immediate timingArc boot-shell; updates menu-mode nav-fit shell-tune-surface attention-posture`
+    `FLOATING_CHROME_CONTRACT: roles, slots, tiers, bottom-lane measure, collapse under competition`
+  ][reg=set]
+
+  strengths: #[
+    `Shell has a real physics model (pressure + topology + scroll bands), not a single hamburger flag`
+    `Floating chrome owns z-index/lane policy; features annotate roles instead of inventing z-index`
+    `Query composer and state satchel participate as chrome roles (query-composer, state-inspector)`
+  ][reg=set]
+
+  gaps: #[
+    `G4: shell-disclosure.js is very large; menu settle, weather, and tune surfaces are hard to reason about in isolation`
+    `G5: dual writers — shell-disclosure and floating-chrome both call syncFloatingChromeState; race under rapid open/close is possible`
+    `G6: midBreakpoint 980 vs layout-assumptions mobile 720 vs SVG media 700/719 — shell breakpoints not in dimension-vocabulary`
+  ][reg=set]
+
+  severity = `medium-high on G6 (breakpoint drift); medium on G4–G5`
+  next = `Register shell breakpoints in dimensions.css; add chrome competition event single-writer rule`
+}[reg=facet]
+
+# =============================================================================
+# 3. Lifecycle arcs
+# =============================================================================
+
+^"lifecycle_arcs"{
+  job = `Make boot → interactive → hydrated → region → idle → settled a teachable sequence.`
+
+  stacked_arcs: .{
+    page = `PAGE_STATES booting|interactive|hydrated|region-enhanced|enhanced + PAGE_ARRIVAL entering→settled (evidence-declared)`
+    hydration = `lex → semantic → pragmatic (hydration-passes / kernel hydration)`
+    ecology = `discovering|prefetching|measuring|mounting|settling|personalizing|settled`
+    module = `MODULE_TIMING_STAGES scheduled|loading|mounted|observed|settled|… + optional timingArc`
+    component = `lifecycle beats approach|gather|commit|release|settle (interaction-semantics genome)`
+    shell_menu = `resting|approach|contact|projecting|settling`
+  }[reg=facet]
+
+  strengths: #[
+    `Settled is evidence-based (module-mounted, regions-profiled, pretext-measurement, etc.) with route confirm option`
+    `Multiple arcs share “settle” language — good for cross-surface CSS tokens`
+    `Catalog timingArc + MOUNT_WHEN already gate theatrical partials when filled in`
+  ][reg=set]
+
+  gaps: #[
+    `G7: six settle vocabularies can desync (page vs ecology vs module vs shell vs component beat vs loading-ecology)`
+    `G8: probe 2026-07-10 — ~55 IMMEDIATE / ~40 without timingArc; feature-wiring pass 2026-07 — ~43 IMMEDIATE / 0 without timingArc; presence features wired`
+    `G9: site.js marks spwRuntimeStage ready before window load and idle queue drain — “ready” ≠ ecology settled`
+    `G10: component lifecycle beats are inferred/CSS-tokenized; few routes author data-spw-lifecycle-beat explicitly`
+  ][reg=set]
+
+  severity = `high for G8 (cost and opacity); medium for G7/G9`
+  next = `Stamp timingArc on remaining IMMEDIATE enhancement; document arc map in one console helper; optional html[data-spw-lifecycle-arc] summary`
+}[reg=facet]
+
+# =============================================================================
+# 4. Content-sensitivity
+# =============================================================================
+
+^"content_sensitivity"{
+  job = `Let packing, copy, and presence respond to what is in the box — not only to viewport.`
+
+  owners: #[
+    `composition-box-model (overfull, pack-fill, content-tone)`
+    `coloring-depth + semantic-copy-lens (copy-depth, copy-lens)`
+    `region-profiler diversity (kind field, tier)`
+    `component-collection (cross-session kind memory)`
+    `pretext measurement bus (text measure)`
+  ][reg=set]
+
+  strengths: #[
+    `Box presence and pack-fill give content-responsive layout without a second framework`
+    `Copy-depth and copy-lens hide/show layers by density, posture, and active lens`
+    `Diversity tiers reward surfaces that are not monoculture card/frame only`
+  ][reg=set]
+
+  gaps: #[
+    `G11: content-tone and pack-layout are under-authored on many routes (inferred late or never)`
+    `G12: overfull detection is inspect-oriented; public readers rarely get a calm reflow of packing tier from overfull alone`
+    `G13: TUNING_LEXICON contentLink is excellent for settings UX but not projected onto route frame-notes automatically`
+  ][reg=set]
+
+  severity = `medium`
+  next = `When box-presence=overfull, optionally promote packing occupancy token once; audit top hubs for content-tone attrs`
+}[reg=facet]
+
+# =============================================================================
+# 5. Device-sensitivity
+# =============================================================================
+
+^"device_sensitivity"{
+  job = `Pointer capability, viewport shell width, and container box width each own different decisions.`
+
+  prior_audit = @device_packing_audit
+
+  three_axes: .{
+    shell_width = `viewport media (720px shell-disclosure, 72rem layout atlas, SVG 700/719)`
+    box_width = `container queries (e.g. 30rem in svg-surfaces)`
+    input_capability = `pointer:coarse|fine, hover, touch-target tokens, image-metaphysics fine|coarse`
+  }[reg=facet]
+
+  strengths: #[
+    `Tokens --touch-target-min / compact exist`
+    `Image and SVG surfaces already branch on pointer type`
+    `Shell pressure responds to measured nav fit, not only CSS media`
+  ][reg=set]
+
+  gaps: #[
+    `G14: same decision re-derived at leaf (touch min-height) instead of packing-tier hit-size (open from device-packing audit)`
+    `G15: breakpoint numbers are magic and inconsistent across shell/SVG/layout-assumptions`
+    `G16: layout-assumptions mobile query couples max-width AND coarse pointer — desktop narrow fine-pointer treated like phone for some corrections`
+  ][reg=set]
+
+  severity = `high for G14–G15 (repeat of device-packing audit; still open)`
+  next = `Promote shell-width / box-width / input-capability into dimensions.css named constants; packing tier owns --pack-hit-min`
+}[reg=facet]
+
+# =============================================================================
+# 6. Dimensional tunability
+# =============================================================================
+
+^"dimensional_tunability"{
+  job = `One vocabulary for spatial, temporal, color, semantic, attention, interaction axes across HTML/CSS/JS/settings/query.`
+
+  sources: .{
+    convention = @dimension_vocabulary
+    css = @dimensions_css
+    ecology_js = `loading-ecology DIMENSION_VOCABULARY (must stay aligned with CSS)`
+    settings = @settings_profiles
+    query = `settings-query-parity + instrumentation query disposition`
+  }[reg=facet]
+
+  strengths: #[
+    `axes named: spatial packing, temporal ecology/position, color layers, semantic variant, layout posture, attention, interaction phases`
+    `alias routing dense→compact soft→roomy reduces drift`
+    `TUNING_LEXICON maps atmosphere/lighting/resonance/memory/vocabulary to settings keys with contentLink`
+    `enhancementLevel / semanticDensity / paletteResonance / wonderMemory form a calm public default`
+  ][reg=set]
+
+  gaps: #[
+    `G17: packing aliases still live in multiple places (dimensions.css, loading-ecology, componentDensity soft/dense/roomy vs pack compact/balanced/roomy)`
+    `G18: dimensionalBreadcrumbs and attention self-relation are settings-rich but weakly coupled to visual spend outside inspect modes`
+    `G19: query parity covers layout/enhancement/palette but not full TUNING_LEXICON set; composers add module-* but not all dimensional knobs`
+    `G20: no single “active dimension snapshot” on html for screenshots (partial via runtime-posture + ecology-dimensions)`
+  ][reg=set]
+
+  severity = `medium`
+  next = `Single derivePackingFromSettings used by ecology + CSS prepaint; extend query composer with packing + density instruments`
+}[reg=facet]
+
+# =============================================================================
+# Cross-cuts and scoreboard
+# =============================================================================
+
+^"scoreboard"{
+  note = `Health of each rail (0–5) as of this audit.`
+  alignment = 4
+  shell = 3
+  lifecycle = 3
+  content_sensitivity = 3
+  device_sensitivity = 2
+  dimensional_tunability = 4
+  note2 = `Device-sensitivity lowest because breakpoint/pointer ownership remains the oldest open seam.`
+}[reg=facet]
+
+^"priority_slices"{
+  p1 = `Device axis vocabulary + packing hit-size (close G14–G16 with device-packing audit)`
+  p2 = `timingArc stamp / reclass remaining IMMEDIATE enhancement (G8) — continues feature-partial-theatrics s3/s9`
+  p3 = `Unified alignment contract export + satchel readout (G1–G2)`
+  p4 = `Shell breakpoint constants in dimensions.css (G6/G15)`
+  p5 = `html lifecycle summary attr for page+ecology+module stage (G7/G9)`
+  p6 = `Query composer + parity: packing/density instruments (G19–G20)`
+}[reg=set]
+
+^"do_not"{
+  d1 = `Do not invent a seventh lifecycle — map UI language onto existing settle arcs`
+  d2 = `Do not fix CLS by forcing IMMEDIATE loads; classify reflow and retarget MOUNT_WHEN`
+  d3 = `Do not merge pointer-capability rules into viewport media only — keep three axes`
+  d4 = `Do not put dimensional tunability only in settings without query/share parity for lab work`
+}[reg=set]
+
+validation: #[
+  `rg 'REFLOW_CLASS|incidentalReflow|layout-assumptions' public/js`
+  `rg 'PRESSURES|TOPOLOGIES|syncFloatingChromeState' public/js/runtime/shell-disclosure.js public/js/kernel/dom-contracts.js`
+  `rg 'PAGE_ARRIVAL|timingArc|ECOLOGY_PHASES' public/js`
+  `rg 'pointer: coarse|container|touch-target' public/css public/js`
+  `rg 'DIMENSION_VOCABULARY|--spw-pack-tier|TUNING_LEXICON' public`
+  `npm run check:runtime`
+][reg=set]
+
+dispatch: .{
+  alignment = @layout_assumptions
+  shell = @shell_disclosure
+  lifecycle = @page_state
+  dimensions = @dimension_vocabulary
+  device = @device_packing_audit
+  theatrics = @feature_partial_theatrics
+}[reg=facet]

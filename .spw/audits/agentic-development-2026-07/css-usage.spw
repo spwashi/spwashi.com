@@ -1,0 +1,49 @@
+# CSS feature usage for agents
+
+#>agentic_development_css
+#:audit #!css #!agents
+#:operation #!audit
+#:fixity #!tending
+
+@index: ~"./index.spw"
+@css_readme: ~"../../../public/css/README.md"
+
+^"architecture_features"{
+  layers = `reset → tokens → shell → typography → grammar → components → systems → routes → handles → effects → ornament`
+  entrypoints = `style.css (full site) · compose.css (portable) · style-core chapter imports`
+  imports = `style-core ~99 @import lines; style.css ~37`
+  bundles = `css-build produces route + behavior bundles; core.css ~1.5MiB sample`
+  agent_use = `Layer folder tells ownership; compose vs style is starter boundary`
+}[reg=facet]
+
+^"data_spw_projection"{
+  selectors = `~12k data-spw- hits in public/css (attribute selectors / references)`
+  meaning = `CSS is a primary consumer of HTML agent-facing attributes — not only visual chrome`
+  patterns = #[
+    `[data-spw-operator=…]`,
+    `[data-spw-hydration=…]`,
+    `html[data-spw-color-mode]`,
+    `pack-local / gravity / register express`
+  ][reg=set]
+}[reg=facet]
+
+^"agent_literacy_features"{
+  chapter_banners = `~35 files with Reads as: / Genome: / debug layer markers — operators codex + shell chrome chapters`
+  debug_layers = `html[data-spw-debug-layers=on] + --spw-debug-layer-owner`
+  container_has = `~342 @container / :has() / @supports hits — packing + resonance rely on modern CSS agents must not "simplify" away`
+  agent_use = `Prefer editing layer-correct file; use Genome lines as state contracts`
+}[reg=facet]
+
+^"gaps"{
+  g1 = `Generated bundle churn hides agent diffs — review source layer files`
+  g2 = `Not all CSS chapters have Genome; inconsistent for agent navigation`
+  g3 = `Route CSS can still override shared without documenting passport/pack axis`
+}[reg=set]
+
+^"agent_edit_patterns"{
+  prefer = #[
+    `tokens/core or dimensions before components before routes`,
+    `declare pack axis / cost in comments when adding breakpoints`,
+    `no !important outside ornament`
+  ][reg=set]
+}[reg=facet]

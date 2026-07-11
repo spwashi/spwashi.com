@@ -16,6 +16,7 @@
 @compose_entry: ~"../../public/js/compose.js"
 @module_catalog: ~"../../public/js/runtime/module-catalog.js"
 @plan: ~"../../.agents/plans/module-export-uniformity/PLAN.md"
+@naming_grammar_js_types_audit: ~"./naming-grammar-js-types-2026-07/index.spw"
 
 audit_run: .{
   at = `2026-07-07`
@@ -24,6 +25,7 @@ audit_run: .{
   syntax_pass = 192
   syntax_fail = 0
   runtime_contract = `npm run check:runtime — 92 catalog modules, passed`
+  related_2026_07_10 = @naming_grammar_js_types_audit
 }[reg=facet]
 
 ^"standalone_grades"{

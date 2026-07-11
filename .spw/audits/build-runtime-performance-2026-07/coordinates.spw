@@ -1,0 +1,76 @@
+# Performance coordinates leaf
+#
+# Maps build/runtime seams onto cost_class + cognitive/ecology axes.
+# Higher-dimensional room: lexicon may change; these ids stay.
+
+#>build_runtime_performance_coordinates
+#:audit #!performance #!semantics
+#:operation #!align
+#:fixity #!tending
+
+@index: ~"./index.spw"
+@metaphor: ~"../../conventions/metaphor-dimensional-lexicon.spw"
+@cognition: ~"../../conventions/js-architecture-cognition.spw"
+@harmony: ~"../component-philosophy-harmony-2026-07.spw"
+@build: ~"./build.spw"
+@runtime: ~"./runtime.spw"
+
+^"shared_cost_classes"{
+  source = @metaphor
+  values = #[
+    `working_memory_pressure`,
+    `premature_commitment`,
+    `interference`,
+    `demand_coupled`,
+    `authored_prior_safe`,
+    `paint_composite`
+  ][reg=set]
+  build_note = `On the build machine, working_memory_pressure ≈ fanout/CPU width; premature_commitment ≈ always-on full pipeline. Same ids, different altitude (CI vs browser).`
+}[reg=facet]
+
+^"seam_table"{
+  note = `Union of build.spw seams, runtime.spw seams, and harmony performance_audit seams used by this audit.`
+  rows: #[
+    .{ id = `triple-typecheck`, cost_class = `premature_commitment`, altitude = `build`, stage = `n/a` },
+    .{ id = `css-bundle-fanout`, cost_class = `working_memory_pressure`, altitude = `build` },
+    .{ id = `dist-weight`, cost_class = `working_memory_pressure`, altitude = `build/deploy` },
+    .{ id = `design-catalog-in-build`, cost_class = `premature_commitment`, altitude = `build` },
+    .{ id = `core-css-bundle-size`, cost_class = `working_memory_pressure`, altitude = `build/runtime-css` },
+    .{ id = `immediate-width`, cost_class = `premature_commitment`, altitude = `runtime`, stratum = `orchestration` },
+    .{ id = `observer-fragmentation`, cost_class = `working_memory_pressure`, altitude = `runtime`, stratum = `perception` },
+    .{ id = `settings-engine-weight`, cost_class = `premature_commitment`, altitude = `runtime`, stratum = `substrate` },
+    .{ id = `metacognition-on-boot`, cost_class = `working_memory_pressure`, altitude = `runtime`, stratum = `metacognition` },
+    .{ id = `express-and-has-invalidation`, cost_class = `paint_composite`, altitude = `runtime`, stratum = `working_set` },
+    .{ id = `elaboration-geometry`, cost_class = `authored_prior_safe`, altitude = `runtime`, stratum = `interpretation` },
+    .{ id = `interaction-when-empty`, cost_class = `premature_commitment`, altitude = `runtime`, stratum = `engaged_work` },
+    .{ id = `composition-default-selector-breadth`, cost_class = `working_memory_pressure`, altitude = `runtime`, source = @harmony },
+    .{ id = `pack-local-ro-gap`, cost_class = `interference`, altitude = `runtime`, source = @harmony },
+    .{ id = `content-tone-scan`, cost_class = `working_memory_pressure`, altitude = `runtime`, source = @harmony },
+    .{ id = `express-paint-cost`, cost_class = `paint_composite`, altitude = `runtime`, source = @harmony },
+    .{ id = `has-resonance-and-pack`, cost_class = `paint_composite`, altitude = `runtime`, source = @harmony },
+    .{ id = `attribute-write-timing`, cost_class = `authored_prior_safe`, altitude = `runtime`, source = @harmony }
+  ][reg=set]
+}[reg=facet]
+
+^"lexicon_projections"{
+  rule = `Optional — never replace cost_class ids.`
+  ecology = .{
+    immediate_width = `too many shoots at germination`
+    observer_fragmentation = `many fine roots instead of shared mycorrhiza for attention`
+    triple_typecheck = `three full soil assays before any planting`
+  }[reg=facet]
+  cognition = .{
+    immediate_width = `self_model stage overloaded`
+    metacognition_on_boot = `inspecting the model before the model is needed`
+    elaboration_geometry = `inference must not rewrite priors' layout`
+  }[reg=facet]
+  technical = .{
+    always = `Prefer technical verbs in implementation PRs: reclassify MOUNT_WHEN, federate IntersectionObserver, bound DEFAULT_SELECTOR`
+  }[reg=facet]
+}[reg=facet]
+
+^"room_for_nouns_verbs"{
+  claim = `Build vs runtime altitudes share cost_class but may use different lexicon_register verbs (compile vs mount vs paint).`
+  add_dimension_when = `A cost is real but cannot map to the six cost_classes (e.g. network RTT for deploy) — then extend cost_class with a claim, do not invent a one-off metaphor stem.`
+  add_register_when = `CI engineers need "compile fanout" language while browser work keeps "working set" — same id, two registers.`
+}[reg=facet]

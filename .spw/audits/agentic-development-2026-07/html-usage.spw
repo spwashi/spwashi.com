@@ -1,0 +1,78 @@
+# HTML feature usage for agents
+
+#>agentic_development_html
+#:audit #!html #!agents
+#:operation #!audit
+#:fixity #!tending
+
+@index: ~"./index.spw"
+@site_contracts: ~"../../../scripts/ts/site-contracts/types.mts"
+
+^"required_body_contract"{
+  source = @site_contracts
+  keys = #[
+    `data-spw-surface`,
+    `data-spw-features`,
+    `data-spw-route-family`,
+    `data-spw-context`,
+    `data-spw-wonder`,
+    `data-spw-page-family`,
+    `data-spw-page-modes`,
+    `data-spw-page-role`
+  ][reg=set]
+  optional_common = #[`data-spw-page-seed`, `data-spw-layout`, `data-spw-related-routes`][reg=set]
+  enforcement = `check-site / site-contracts — missing required keys → route errors`
+  agent_use = `Primary route identity for agents and manifest generation`
+}[reg=facet]
+
+^"density_census"{
+  routes_with_page_seed_or_features = `~146 index.html`
+  top_attrs_sitewide = #[
+    `data-spw-role (~1915)`,
+    `data-spw-kind (~1797)`,
+    `data-spw-operator (~1636)`,
+    `data-spw-context (~1508)`,
+    `data-spw-seed (~1213)`,
+    `data-spw-consequence / locality / promptability / collectability (~1050–1070)`
+  ][reg=set]
+  structural = .{
+    slots = `~609 data-spw-slot=`
+    features = `~223 data-spw-feature=`
+    operators = `~1532 data-spw-operator=`
+  }[reg=facet]
+  body_key_counts_sample = .{
+    home = `~111 unique data-spw-* keys referenced on page`
+    about = 70
+    software = 65
+    settings = 69
+    design_components = 63
+  }[reg=facet]
+  note = `High body key counts include nested elements, not only body attributes`
+}[reg=facet]
+
+^"features_gate"{
+  attr = `data-spw-features` on body — space-separated feature family tokens
+  runtime = `module-catalog features: [...] gates ENHANCEMENT modules (console, svg-surfaces, pretext-lab, rpg-gameplay, media-publishing, metrics…)`
+  agent_use = `Predict which optional runtime modules may mount without reading all JS`
+  distinction = `data-spw-features (body gate) ≠ data-spw-feature (cluster name on a host)`
+}[reg=facet]
+
+^"agent_edit_patterns"{
+  prefer = #[
+    `Patch route index.html for copy/structure/slots`,
+    `Preserve required body keys`,
+    `Add data-spw-feature only on meaningful clusters`,
+    `Root-relative /public/css/style.css + /public/js/site.js`
+  ][reg=set]
+  anti = #[
+    `Empty wrappers only for attributes`,
+    `New body metadata families without contract update`,
+    `Breaking required keys without updating REQUIRED_BODY_DATA_KEYS`
+  ][reg=set]
+}[reg=facet]
+
+^"gaps"{
+  g1 = `Manifest may list fewer routes than live tree — agents trusting stale cache under-discover`
+  g2 = `Semantic card attrs (promptability, collectability) dense on some templates — copy/template drift risk`
+  g3 = `page-seed useful for agents but not in REQUIRED_BODY_DATA_KEYS`
+}[reg=set]

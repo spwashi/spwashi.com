@@ -1,0 +1,119 @@
+# Induction pain leaf — skill/architecture phrasing → long-term outcomes
+#
+# Each case: force → evidence in history/code → pain → cost_class
+
+#>commit_skill_induction_pain
+#:audit #!induction #!architecture
+#:operation #!audit
+#:fixity #!tending
+
+@index: ~"./index.spw"
+@history: ~"./commit-history.spw"
+@skills: ~"./skill-analysis.spw"
+@brp: ~"../build-runtime-performance-2026-07/index.spw"
+@ngjt: ~"../naming-grammar-js-types-2026-07/index.spw"
+@language_census: ~"../language-census.spw"
+
+^"cases"{
+  case_plan_ecology_inflation = .{
+    force = `plan-before-large + plan-maintenance index refresh + “wire .spw dispatch”`
+    evidence = #[
+      `~174 PLAN.md · ~187 index.spw`,
+      `commits 34ace20f / 1e58c345 / be8fdccf (thousands of lines, hundreds of files)`,
+      `scripts/maintain-plan-directory-indexes.mjs high churn`
+    ][reg=set]
+    pain = `Agent and human time spent regenerating ecology rather than shipping routes; review noise; false sense of progress`
+    cost_class = `premature_commitment`
+    not_only_skills = `Product desire for a public plans surface also drives volume`
+  }[reg=facet]
+
+  case_attribute_and_metacognition_sprawl = .{
+    force = `cross-language stem + inspectable serialize checklist + “update .spw when concept matters”`
+    evidence = #[
+      `language-census: 1208 attrs, 216 full-trace, 626 unregistered`,
+      `IMMEDIATE 63, observers ~52`,
+      `composition-box-model DEFAULT_SELECTOR breadth`,
+      `dc23cec8 fix: semantics backfilling body/html — symptom of inference pressure`
+    ][reg=set]
+    pain = `Main-thread width, homonyms (settle/resonance), hard onboarding, catalog design rebuild cost`
+    cost_class = `working_memory_pressure`
+  }[reg=facet]
+
+  case_immediate_enhancement_default = .{
+    force = `Runtime architecture docs list staged layers but skills rarely forbid IMMEDIATE; “fold into runtime module” lab graduation`
+    evidence = #[
+      `MOUNT_WHEN.IMMEDIATE 63 vs INTERACTION 0`,
+      `ENHANCEMENT 67 — many self_model-stage`,
+      `interactive-medium + gravity + svg passes land as wide enhancement surfaces`
+    ][reg=set]
+    pain = `Boot cost; reclassification debt (BRP p1)`
+    cost_class = `premature_commitment`
+  }[reg=facet]
+
+  case_parallel_metaphor_systems = .{
+    force = `semantics rigor + research/ontology skills + new conventions per insight cache`
+    evidence = #[
+      `ecology + cognition + field + circuit + packing + gravity + registers`,
+      `aerodynamics convention introduced then archived as contrived`,
+      `salience_namespace collisions in attr governance`
+    ][reg=set]
+    pain = `Agents invent fourth taxonomies; dual vocabulary maintenance; metaphor-dimensional-lexicon needed as correction`
+    cost_class = `interference`
+  }[reg=facet]
+
+  case_smallest_plus_inspectable = .{
+    force = `“Smallest honest surface” AND full inspectability rails simultaneously`
+    evidence = #[
+      `Commits that are “docs: structure more spw” / “make spw parseable” without public UX`,
+      `Mega commits mixing product + contracts (cauldron unmix, chrome-navigation)`
+    ][reg=set]
+    pain = `Diffs that are hard to review; skill satisfied formally (small HTML) while large .spw/runtime attaches`
+    cost_class = `interference`
+  }[reg=facet]
+
+  case_generated_bundle_noise = .{
+    force = `CSS architecture craft + catalog/check skills encourage regenerate artifacts in-tree`
+    evidence = #[
+      `core.css ~1.5MiB bundle high numstat weight`,
+      `route bundle regenerations interleaved with design commits`
+    ][reg=set]
+    pain = `Human review cannot see signal; agents re-open huge diffs`
+    cost_class = `working_memory_pressure`
+  }[reg=facet]
+
+  case_meta_track_competition = .{
+    force = `agent-optimization as first-class track + plan-maintenance recursive optimization`
+    evidence = #[
+      `~47% commits themed meta/semantic since 2026-04 (subject grep)`,
+      `agent-optimization PLAN grows as contribution log of many orthogonal landings`
+    ][reg=set]
+    pain = `Editor environment quality rises while front-door reading calm needed corrective commits (reading-quiet, home hierarchy)`
+    cost_class = `premature_commitment` # meta work scheduled as if product-critical
+  }[reg=facet]
+}[reg=facet]
+
+^"counterexamples_good_induction"{
+  g1 = `check:local / network posture reduced harmful npm audit thrash`
+  g2 = `site-settings as single settings writer — skill and AGENTS agree; fewer storage forks`
+  g3 = `kernel rhizosphere extraction — architecture skill + performance plan aligned`
+  g4 = `patch-consolidator exists to reverse mixed diffs — underused relative to need`
+  g5 = `plan-maintenance overgrowth warnings — correct text, weak enforcement`
+  g6 = `reading-quiet / promo suppress commits — product correction against inspect sprawl`
+}[reg=set]
+
+^"architecture_phrases_in_AGENTS"{
+  note = `Not only skills — AGENTS.md restates rails that agents load every session.`
+  high_pressure = #[
+    `Update .spw when reusable semantic family introduced`,
+    `Add plan when multi-route or shared layer`,
+    `Page shell metadata families list (many data-spw on body)`,
+    `Wonder/ornament/spell as first-class`
+  ][reg=set]
+  balancing = #[
+    `Patch smallest honest surface`,
+    `Prefer check:local`,
+    `Do not introduce npm packages without plan`,
+    `Creator identity first`
+  ][reg=set]
+  gap = `AGENTS.md lists many positive affordances; few explicit “do not add IMMEDIATE” or “do not add attr without retirement” rules`
+}[reg=facet]

@@ -1,6 +1,7 @@
-# Language Census — generated 2026-07-07
+# Language Census — generated 2026-07-11
 #
-# GENERATED ARTIFACT — do not hand-edit. Regenerate: node scripts/language-census.mjs
+# GENERATED ARTIFACT — do not hand-edit. Regenerate: npm run census
+# (npm run census:json emits the full uncapped report for agent loops.)
 # Measures the trace rule from data-spw-attribute-governance.spw (rhythm.trace_rule):
 # every attribute family should appear in a JS contract, a convention, and the inspector.
 
@@ -9,54 +10,138 @@
 #:operation observe
 
 @generator: ~"../../scripts/language-census.mjs"
+@inventory_core: ~"../../scripts/lib/spw-inventory-core.mjs"
 @governance: ~"../conventions/data-spw-attribute-governance.spw"
+@recursive_improvement: ~"../conventions/recursive-improvement.spw"
+@audits_index: ~"./index.spw"
+@reclustering_plan: ~"../../.agents/plans/language-reclustering/index.spw"
+@homonym_plan: ~"../../.agents/plans/homonym-renaming/index.spw"
 
-totals: .{
-  attributes = 1208
-  attrs_full_trace_js_css_spw = 216
-  attrs_unregistered_in_spw = 626
-  attrs_js_only = 183
-  attrs_css_only = 218
-  events_total = 178
-  events_broadcast_spw = 71
-  events_bus_local = 107
+operation = "observe"
+fixity = "tending"
+
+audit_run: .{
+  at = `2026-07-11`
+  method = `collector scan of js/css/html/spw surfaces; word-boundary homonyms; SPW_*_CONTRACT block enumeration`
+  generator_version = 2
+  files_scanned = `js:199 css:143 html:149 spw:170`
 }[reg=facet]
 
-suffix_taxonomy: .{
-  state = 60
-  mode = 28
-  label = 21
+^"dimensions"{
+  practice_depth = "observation"
+  semantic_layer = "pragmatics"
+  memory_tier = "hot"
+}[reg=facet]
+
+^"totals"{
+  attributes = 1312
+  attrs_full_trace_js_css_spw = 251
+  attrs_unregistered_in_spw = 725
+  attrs_js_only = 241
+  attrs_css_only = 222
+  attrs_contract_enumerated = 128
+  attrs_contract_and_convention = 74
+  contract_objects = 28
+  stem_families = 416
+  events_total = 185
+  events_broadcast_spw = 77
+  events_bus_local = 108
+}[reg=facet]
+
+^"suffix_taxonomy"{
+  state = 64
+  mode = 29
+  count = 22
+  label = 22
+  active = 22
   phase = 20
-  active = 20
-  count = 19
-  kind = 18
+  kind = 19
   role = 16
+  posture = 14
   source = 13
-  posture = 13
-  resolved = 12
+  resolved = 13
   tier = 11
   surface = 10
   context = 10
-  action = 9
+  action = 10
   status = 9
 }[reg=facet]
 
-homonym_spread: .{
-  settle = "js:49 css:56"
-  prime = "js:40 css:16"
-  charge = "js:48 css:39"
-  ground = "js:48 css:120"
-  arc = "js:68 css:33"
-  phase = "js:62 css:37"
-  harmony = "js:8 css:4"
-  tempo = "js:17 css:9"
-  climate = "js:20 css:11"
-  spell = "js:51 css:17"
+^"stem_families"{
+  page = "members:35 full:6 unreg:15 contract:1"
+  svg = "members:33 full:8 unreg:24 contract:16"
+  module = "members:32 full:4 unreg:22 contract:19"
+  cauldron = "members:26 full:5 unreg:17 contract:0"
+  query = "members:26 full:1 unreg:20 contract:2"
+  image = "members:24 full:3 unreg:18 contract:0"
+  sigil = "members:23 full:5 unreg:7 contract:0"
+  interaction = "members:19 full:5 unreg:6 contract:0"
+  discovery = "members:19 full:0 unreg:19 contract:0"
+  state = "members:18 full:3 unreg:13 contract:0"
+  region = "members:18 full:5 unreg:8 contract:4"
+  layout = "members:17 full:4 unreg:11 contract:6"
+  operator = "members:15 full:5 unreg:5 contract:0"
+  feature = "members:15 full:6 unreg:5 contract:10"
+  effect = "members:15 full:0 unreg:15 contract:0"
+  semantic = "members:14 full:4 unreg:2 contract:0"
+  runtime = "members:14 full:0 unreg:11 contract:0"
+  handle = "members:14 full:2 unreg:11 contract:0"
+  component = "members:14 full:5 unreg:3 contract:0"
+  route = "members:14 full:0 unreg:9 contract:0"
+  scene = "members:14 full:5 unreg:5 contract:0"
+  chrome = "members:14 full:1 unreg:2 contract:0"
+  palette = "members:13 full:6 unreg:5 contract:0"
+  shell = "members:13 full:1 unreg:11 contract:0"
 }[reg=facet]
+
+^"homonym_spread"{
+  settle = "js:50f/356x css:58f/446x"
+  prime = "js:43f/237x css:16f/84x"
+  charge = "js:47f/423x css:41f/404x"
+  ground = "js:41f/208x css:24f/100x"
+  arc = "js:47f/132x css:23f/107x"
+  phase = "js:58f/596x css:37f/390x"
+  harmony = "js:9f/32x css:5f/12x"
+  tempo = "js:16f/60x css:9f/55x"
+  climate = "js:17f/197x css:12f/516x"
+  spell = "js:53f/473x css:17f/355x"
+}[reg=facet]
+
+contract_objects: #[
+  `SPW_COMPOSITION_CONTRACT — public/js/compose.js`,
+  `SPW_DOM_RENDER_CONTRACT — public/js/kernel/dom-render.js`,
+  `SPW_HYDRATION_CONTRACT — public/js/kernel/hydration.js`,
+  `SPW_INSTRUMENTATION_CONTRACT — public/js/kernel/instrumentation.js`,
+  `SPW_SVG_TUNABILITY_CONTRACT — public/js/media/svg-tunability.js`,
+  `SPW_BEHAVIOR_SCOPES_CONTRACT — public/js/runtime/behavior-scopes.js`,
+  `SPW_COMPONENT_COLLECTION_CONTRACT — public/js/runtime/component-collection.js`,
+  `SPW_COMPOSITION_BOX_MODEL_CONTRACT — public/js/runtime/composition-box-model.js`,
+  `SPW_FEATURE_DISCOVERY_CONTRACT — public/js/runtime/feature-discovery.js`,
+  `SPW_FEATURE_LAB_CONTRACT — public/js/runtime/feature-lab.js`,
+  `SPW_GESTURE_CONTRACT — public/js/runtime/gesture-contract.js`,
+  `SPW_HYDRATION_PASSES_CONTRACT — public/js/runtime/hydration-passes.js`,
+  `SPW_LAYOUT_ASSUMPTIONS_CONTRACT — public/js/runtime/layout-assumptions.js`,
+  `SPW_LOADING_ECOLOGY_CONTRACT — public/js/runtime/loading-ecology.js`,
+  `SPW_MODULE_EXPORT_CONTRACT — public/js/runtime/module-export-contract.js`,
+  `SPW_MODULE_LOADER_CONTRACT — public/js/runtime/module-loader.js`,
+  `SPW_MODULE_UPDATES_CONTRACT — public/js/runtime/module-updates-contract.js`,
+  `SPW_NAVIGATION_LOCOMOTION_CONTRACT — public/js/runtime/navigation-locomotion.js`,
+  `SPW_PAGE_HOOK_CONTRACT — public/js/runtime/page-hooks.js`,
+  `SPW_PAGE_STATE_CONTRACT — public/js/runtime/page-state.js`,
+  `SPW_QUERY_COMPOSER_CONTRACT — public/js/runtime/query-link-composer.js`,
+  `SPW_REGION_PROFILER_CONTRACT — public/js/runtime/region-profiler.js`,
+  `SPW_RUNTIME_HELPERS_CONTRACT — public/js/runtime/runtime-helpers.js`,
+  `SPW_SETTINGS_MOMENTUM_CONTRACT — public/js/runtime/settings-momentum.js`,
+  `SPW_SPATIAL_GRAVITY_CONTRACT — public/js/runtime/spatial-gravity.js`,
+  `SPW_NARRATIVE_INSTRUMENTATION_CONTRACT — public/js/semantic/narrative-instrumentation.js`,
+  `SPW_PRETEXT_MEASUREMENT_BUS_CONTRACT — public/js/semantic/pretext-measurement-bus.js`,
+  `SPW_ROLE_INFERENCE_CONTRACT — public/js/semantic/role-inference.js`
+][reg=set]
 
 attrs_css_only_never_written_by_js: #[
   `data-spw-accent-concept`,
   `data-spw-active-layers`,
+  `data-spw-active-lens-mode`,
   `data-spw-allocation`,
   `data-spw-anatomy-state`,
   `data-spw-author-surface`,
@@ -102,60 +187,59 @@ attrs_css_only_never_written_by_js: #[
   `data-spw-content`,
   `data-spw-context-match`,
   `data-spw-controls-open`,
-  `data-spw-copied`,
-  `… +170 more`
+  `… +174 more`
 ][reg=set]
 
 attrs_js_only_never_spent_or_registered: #[
+  `data-spw-active-beat`,
+  `data-spw-active-beat-reason`,
+  `data-spw-active-beat-state`,
+  `data-spw-active-sigil`,
+  `data-spw-active-sigil-operator`,
+  `data-spw-active-sigil-page`,
+  `data-spw-active-sigil-region`,
+  `data-spw-age`,
+  `data-spw-alignment-hint`,
+  `data-spw-attention-panel-close`,
+  `data-spw-attention-panel-global`,
+  `data-spw-attention-panel-local`,
+  `data-spw-attention-panel-self`,
+  `data-spw-attention-panel-summary`,
   `data-spw-attention-posture`,
   `data-spw-attention-posture-label`,
-  `data-spw-effect-legend-host`,
-  `data-spw-effect-legend-ready`,
-  `data-spw-effect-readout`,
-  `data-spw-effect-state`,
-  `data-spw-effect-state-value`,
-  `data-spw-enhance`,
-  `data-spw-enhanced`,
-  `data-spw-evidence-hydrated`,
-  `data-spw-example`,
-  `data-spw-expression`,
-  `data-spw-field-root`,
-  `data-spw-frame-line-count`,
-  `data-spw-frame-wrap`,
-  `data-spw-functional-application`,
-  `data-spw-garden-on-path`,
-  `data-spw-gesture-anatomy`,
-  `data-spw-gesture-priority`,
-  `data-spw-gesture-trace`,
-  `data-spw-ground-key`,
-  `data-spw-grounded-wonder`,
-  `data-spw-guide-previous-liminality`,
-  `data-spw-guide-reason`,
-  `data-spw-handle-count`,
-  `data-spw-handle-current`,
-  `data-spw-handle-index`,
-  `data-spw-handle-kind`,
-  `data-spw-handle-origin`,
-  `data-spw-handle-source`,
-  `data-spw-handle-target`,
-  `data-spw-header-annotation`,
-  `data-spw-hook`,
-  `data-spw-hydration-pass-state`,
-  `data-spw-hypermedia-capability`,
-  `data-spw-id`,
-  `data-spw-image-managed`,
-  `data-spw-implementation-mutations`,
-  `data-spw-importance`,
-  `data-spw-ingredient-enhanced`,
-  `data-spw-ingredient-mode-set`,
-  `data-spw-ingredient-state`,
-  `data-spw-ingredient-status`,
-  `data-spw-inspect-semantic-focus-count`,
-  `data-spw-inspect-semantic-focus-root`,
-  `data-spw-interaction-hint`,
-  `data-spw-keep-user-select-none`,
-  `data-spw-key-events-ready`,
-  `… +135 more`
+  `data-spw-author-mode`,
+  `data-spw-bare-spw-enhanced`,
+  `data-spw-bookmarks-root`,
+  `data-spw-bottom-lane-handle`,
+  `data-spw-brace-nesting`,
+  `data-spw-brace-physics`,
+  `data-spw-breadcrumb-action`,
+  `data-spw-breadcrumb-selector`,
+  `data-spw-cadence-day`,
+  `data-spw-cast-form`,
+  `data-spw-cauldron-chip-count`,
+  `data-spw-cauldron-chip-phase`,
+  `data-spw-cauldron-remove`,
+  `data-spw-checkpoint`,
+  `data-spw-collected-kind`,
+  `data-spw-collection-action`,
+  `data-spw-composition-stability-resolved`,
+  `data-spw-confidence`,
+  `data-spw-context-features`,
+  `data-spw-context-resolved`,
+  `data-spw-delimiter`,
+  `data-spw-design-ecology`,
+  `data-spw-developmental-author-label`,
+  `data-spw-developmental-label`,
+  `data-spw-developmental-menu`,
+  `data-spw-discovery-credits`,
+  `data-spw-discovery-notice`,
+  `data-spw-discovery-notice-modal`,
+  `data-spw-discovery-notice-module`,
+  `data-spw-discovery-notice-stack`,
+  `data-spw-effect-axis`,
+  `data-spw-effect-charge`,
+  `… +193 more`
 ][reg=set]
 
 events_emitted_never_heard: #[
@@ -207,7 +291,7 @@ events_emitted_never_heard: #[
   `spw:core-refresh`,
   `spw:discovery-notice-shown`,
   `spw:hash-target`,
-  `… +23 more`
+  `… +27 more`
 ][reg=set]
 
 events_heard_never_emitted: #[
@@ -234,7 +318,9 @@ events_heard_never_emitted: #[
   `spell:momentum`,
   `spirit:peak`,
   `spw:beat:request`,
+  `spw:collection-achievement`,
   `spw:development-shifted`,
+  `spw:feature-discovery-ready`,
   `spw:freshness-pulse`,
   `spw:interaction-phase`,
   `spw:layout-assumptions-updated`,
@@ -247,6 +333,7 @@ events_heard_never_emitted: #[
   `spw:page-transition-state`,
   `spw:pretext-measurement`,
   `spw:qa:enter-screenshot`,
+  `spw:reward-unlocked`,
   `spw:section-locomotion-state`,
   `spw:semantic-snapshot`,
   `spw:settings-change`,
@@ -297,10 +384,11 @@ bus_local_event_domains: #[
   `spirit`,
   `state-inspector`,
   `stream`,
+  `svg`,
   `topic`,
   `topical`,
   `universe`,
   `visitation`
 ][reg=set]
 
-note "css-only attributes are either authored-HTML-driven (fine) or dead selectors; js-only attributes are unspent state or narration missing its convention registration. Both lists are the census's working surface — each entry either gains its missing trace legs or gets retired via the homonym-renaming / language-reclustering plans."
+note "css-only attributes are either authored-HTML-driven (fine) or dead selectors; js-only attributes are unspent state or narration missing its convention registration. Both lists are the census's working surface — each entry either gains its missing trace legs or gets retired via the homonym-renaming / language-reclustering plans. attrs_contract_and_convention is the honest trace-rule floor: enumerated in a frozen JS contract AND registered in .spw."

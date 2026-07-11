@@ -1,0 +1,298 @@
+# Initial CSS Layer Load · Module Load · Attribute Impact
+#
+# How first paint CSS arrives, how JS modules stage on top of it, and which
+# attributes written later re-enter the cascade (and at what cost).
+#
+# operation: audit
+# fixity: tending
+# date: 2026-07-10
+
+#>css_module_attribute_impact_2026_07
+#:audit #!css #!runtime #!performance #!cascade
+#:operation #!audit
+#:layer #!pragmatics
+
+@style_core: ~"../../../public/css/style-core.css"
+@style_full: ~"../../../public/css/style.css"
+@css_manifest: ~"../../../scripts/ts/css-manifest.mts"
+@css_scopes: ~"../../../scripts/ts/css-scopes.mts"
+@css_contracts: ~"../../../scripts/ts/css-contracts.mts"
+@prepaint: ~"../../../public/js/runtime/prepaint-state.js"
+@site_js: ~"../../../public/js/site.js"
+@module_catalog: ~"../../../public/js/runtime/module-catalog.js"
+@module_loader: ~"../../../public/js/runtime/module-loader.js"
+@site_settings_engine: ~"../../../public/js/kernel/site-settings-engine.js"
+@behavior_scopes: ~"../../../public/js/runtime/behavior-scopes.js"
+@loading_ecology: ~"../../../public/js/runtime/loading-ecology.js"
+@alignment_audit: ~"../alignment-shell-lifecycle-sensitivity-2026-07/index.spw"
+@brp_audit: ~"../build-runtime-performance-2026-07/index.spw"
+@feature_partial_theatrics: ~"../../conventions/feature-partial-theatrics.spw"
+
+audit_run: .{
+  at = `2026-07-10`
+  scope = `initial CSS @layer load; scoped vs full stylesheet modes; module mount phases; post-mount attribute/CSS-var impact`
+  method = `read style-core/style/css-manifest/css-scopes; site.js boot; catalog updates fields; prepaint + settings dataset writers; probe mount when counts`
+  posture = `timeline + ownership + gaps; not a rewrite`
+}[reg=facet]
+
+^"thesis"{
+  claim = `First paint is (1) authored body attrs + (2) CSS layers/bundles + (3) prepaint settings datasets. Modules then write more html/body attrs and CSS variables; CSS that keys off those attrs is a second cascade wave. Cost and opacity rise when modules write root attrs IMMEDIATE without timingArc, or when full style.css ships all route personalities on every page.`
+}[reg=facet]
+
+# =============================================================================
+# Timeline (canonical boot)
+# =============================================================================
+
+^"timeline"{
+  t0_html = `Parse <head> stylesheets + body data-spw-* authored truth (surface, features, layout, hydration=static, page-modes, …).`
+
+  t1_css = .{
+    full = `link style.css → @import style-core (@layer order) + optional systems/routes in style.css`
+    scoped = `build rewrite (css-scopes applyScopedStylesheets): core bundle + route bundle(s) + behavior bundles matching body features`
+    layer_order = `reset → tokens → shell → typography → grammar → components → systems → routes → handles → effects → ornament`
+    contract = `EXPECTED_LAYER_ORDER enforced by css-contracts; never reorder casually`
+  }[reg=facet]
+
+  t2_prepaint = .{
+    script = @prepaint
+    when = `inline/sync before main modules when wired; sets html.dataset spwColorMode, theme, enhancement, density, climate, grain, …`
+    stage = `data-spw-runtime-stage=preflight`
+    purpose = `reduce FOUC; CSS tokens already spend these attrs on first paint`
+  }[reg=facet]
+
+  t3_module_boot = .{
+    entry = `site.js type=module`
+    stage = `spwRuntimeStage=boot; PAGE_STATES.BOOTING; feature lab may rewrite body features`
+    core = `mountImmediateLayer(CORE) — site-settings, shell-disclosure, interactive-medium, …`
+    parallel = `FEATURE + ENHANCEMENT immediate in parallel`
+    hydrate = `ACTIVATING → prefetch visible/idle → INTERACTIVE → visible+interaction mounts → HYDRATED`
+    region = `REGION layer → REGION_ENHANCED`
+    idle = `queueIdleEnhancements`
+    ready_mark = `spwRuntimeStage=ready often BEFORE window load and before idle settle (known gap)`
+  }[reg=facet]
+
+  t4_attribute_wave = .{
+    settings = `site-settings setDatasetEntries → dozens of html[data-spw-*] + body entries + CSS vars (--spw-enhancement-factor, etc.)`
+    modules = `catalog updates[] claim attrs; loader/lifecycle write mount/effect/ecology tokens`
+    css_spend = `selectors on html/body attrs + custom properties re-resolve; ornament/effects respond`
+    reflow_risk = `late DOM inject + root attr thrash → layout-shift-audit classifies mount vs incidental`
+  }[reg=facet]
+}[reg=facet]
+
+# =============================================================================
+# 1. Initial CSS layer load
+# =============================================================================
+
+^"css_layer_load"{
+  layer_manifest = `style-core.css line 1: @layer reset, tokens, shell, typography, grammar, components, systems, routes, handles, effects, ornament;`
+
+  layer_jobs: .{
+    reset = `user-agent neutralization`
+    tokens = `core + dimensions vocabulary; first paint design physics`
+    shell = `layout chrome modes hydration capture`
+    typography = `type scale, context, typesetting`
+    grammar = `brace/operator structure`
+    components = `foundation cards frames controls floating-chrome runtime-states`
+    systems = `packing posture ecology coloring-depth semantic-copy-lens surfaces`
+    routes = `surface personality (home, settings, play, …)`
+    handles = `operators metrics logo section rail — after routes so chrome wins over route skin`
+    effects = `material grain wonder cinematic — additive`
+    ornament = `highest; !important only here by convention`
+  }[reg=facet]
+
+  load_modes: .{
+    full = .{
+      href = `/public/css/style.css`
+      cost = `all route personalities + optional systems imported even if unused`
+      source_probe = `~132 html still link style.css; scoped mode rare in source`
+    }[reg=facet]
+    scoped = .{
+      flag = `body data-spw-stylesheet-mode=scoped`
+      rewrite = `applyScopedStylesheets at build: core + ROUTE_SCOPES[surface] + BEHAVIOR_SCOPES∩features + extra-styles`
+      markers = `data-spw-css-scope=core|route:…|behavior:…`
+      gap = `home declares scoped but many routes do not; source tree often still full until build passes`
+    }[reg=facet]
+  }[reg=facet]
+
+  external = `Google fonts (JetBrains Mono, Newsreader) in style-core — network on first paint; display=swap`
+
+  strengths: #[
+    `Explicit layer order is contractual and CI-checked`
+    `Scoped mode correctly separates core / route / behavior cost`
+    `Behavior scopes align keys with body features + JS matchesFeatures`
+  ][reg=set]
+
+  gaps: #[
+    `C1: full style.css remains default for most authored routes → large unused CSS`
+    `C2: behavior CSS also appears in style.css systems imports (feature-discovery, svg, …) — scoped pages may double-load if both full and behavior paths used inconsistently`
+    `C3: fonts block/compete with first paint; no self-host strategy in core path`
+    `C4: style.css still lists every route surface — scoped is opt-in, not default`
+  ][reg=set]
+
+  severity = `high for C1/C4 on performance; medium for C2`
+}[reg=facet]
+
+# =============================================================================
+# 2. Module load
+# =============================================================================
+
+^"module_load"{
+  orchestration = @site_js
+  catalog = @module_catalog
+  loader = @module_loader
+
+  probe_2026_07_10: .{
+    by_when = .{
+      immediate = 55
+      visible = 22
+      idle = 16
+      settled = 1
+    }[reg=facet]
+    modules_with_updates = `90 / 94 claim updates[] attrs`
+  }[reg=facet]
+
+  phases: .{
+    core_immediate = `settings apply, shell-disclosure, interactive-medium, site-core-minimal — boot-shell / boot-core arcs`
+    feature_immediate = `route-selected features (settings-page, cards, rpg, …) — many still missing timingArc`
+    enhancement_immediate = `layout-shift-audit, tuning-discovery, semantics, chrome — high root-attr writers`
+    visible = `IO / near-viewport partials`
+    interaction = `pointer/keyboard gated`
+    idle = `collection, discovery, spells, cauldron, query-composer, …`
+    settled = `layout-assumptions late alignment`
+  }[reg=facet]
+
+  gates: #[
+    `body[data-spw-features] + matchesFeatures`
+    `selector presence (hasSelector / getRoots)`
+    `route family matchesRoute`
+    `connection / prefetch posture`
+    `query module-only | module-skip | module-timing | runtime-timing`
+  ][reg=set]
+
+  strengths: #[
+    `Staged MOUNT_WHEN is real; not a single app.js import soup`
+    `updates[] + effectScope + timingArc make impact auditable when filled`
+    `spw:module-lifecycle + loading-ecology phases make load learnable under module-visuals`
+  ][reg=set]
+
+  gaps: #[
+    `M1: 55 IMMEDIATE is still a large boot tax; ~40 lack timingArc (see alignment audit G8)`
+    `M2: FEATURE+ENHANCEMENT immediate run in parallel after core — contention with first interaction`
+    `M3: ready stage before idle/settled confuses “done” signals for CSS that keys on runtime-stage`
+    `M4: modules with selector=body|html mount widely; document-wide enhancement is hard to feature-gate`
+  ][reg=set]
+
+  severity = `high for M1/M3`
+}[reg=facet]
+
+# =============================================================================
+# 3. Subsequent attribute impact
+# =============================================================================
+
+^"attribute_impact"{
+  writers: .{
+    authored_html = `body/html data-spw-* in source — primary semantic truth`
+    prepaint = `settings subset before modules`
+    site_settings = `setDatasetEntries full settings surface + CSS variables`
+    module_catalog = `declared updates[] per def`
+    runtime_helpers = `page-state, ecology, chrome, collection, module-effects, feature-discovery, …`
+    query_disposition = `html data-spw-module-visuals, runtime-timing, posture, … from URL`
+  }[reg=facet]
+
+  high_impact_families: #[
+    `data-spw-enhancement-level / --spw-enhancement-factor → grain, floating-chrome, feature-discovery theatrics, transitions`
+    `data-spw-semantic-density → copy-depth visibility, metadata chrome`
+    `data-spw-color-mode / theme-pack / palette-resonance → token recolor sitewide`
+    `data-spw-runtime-posture / module-visuals → inspect rails, box-model, feature islands`
+    `data-spw-loading-ecology-phase → tempo, readiness rings, position phase tokens`
+    `data-spw-page-state / page-arrival / settle → arrival choreography CSS`
+    `data-spw-menu-* / floating-chrome-* → shell pressure, bottom lanes, z-index competition`
+    `data-spw-feature-* / collection-* → discovery ornaments, achievement pulse`
+    `data-spw-active-lens-mode → semantic-copy-lens show/hide`
+  ][reg=set]
+
+  cascade_reentry = `Each root attr write can invalidate style for :where(html[…]) rules. Batching in module-loader mount batches + settings setDatasetEntries helps; uncoordinated single-key writes from many modules do not.`
+
+  strengths: #[
+    `Catalog updates[] is a machine-readable impact map for most modules`
+    `writeDatasetValue / writeRuntimeDatasetValues centralize mutator source tags for debug`
+    `CSS layer ornament/effects are designed to spend runtime attrs without fighting components`
+  ][reg=set]
+
+  gaps: #[
+    `A1: no single “attr impact budget” — many modules may write overlapping root keys`
+    `A2: catalog updates often list attrs but do not declare html vs body vs element scope`
+    `A3: CSS consumers of root attrs are spread across components/systems/effects/ornament — hard to know which layer first spends a new attr`
+    `A4: prepaint and settings can write the same keys twice (intentional refresh) — can thrash if not equal`
+    `A5: feature-gated CSS behavior bundles load with features, but JS may mount later idle — CSS ready before JS (usually good) or JS without CSS if feature token missing from BEHAVIOR_SCOPES`
+  ][reg=set]
+
+  severity = `medium-high for A1/A3; medium for A2/A5`
+}[reg=facet]
+
+# =============================================================================
+# Cross-impact matrix (condensed)
+# =============================================================================
+
+^"impact_matrix"{
+  note = `When X loads/writes, Y is affected.`
+
+  css_first_paint = `layers + prepaint attrs → tokens/shell/components resolve without JS`
+  settings_immediate = `re-applies prepaint + more; enhancement/density change ornament and copy-depth display`
+  shell_immediate = `menu-mode nav-fit → shell CSS adaptive; may reflow header`
+  layout_shift_immediate = `observes; writes shift datasets; does not restyle much until diagnostics on`
+  ecology_immediate = `phase attrs → tempo/readiness; CSS systems/effects spend`
+  idle_discovery_spells = `feature-level, collected, grounded → ornaments; low layout if well-scoped`
+  settled_assumptions = `bottom-lane clearance vars → floating chrome geometry`
+
+  risk_order = `root theme/density/enhancement writes > shell menu open > module DOM inject > idle ornament attrs`
+}[reg=facet]
+
+# =============================================================================
+# Scoreboard + slices
+# =============================================================================
+
+^"scoreboard"{
+  css_layer_contract = 5
+  css_scoped_adoption = 2
+  module_staging_model = 4
+  module_immediate_hygiene = 2
+  attribute_traceability = 3
+  attribute_budget = 2
+  note = `Layer order is excellent; shipping full CSS and IMMEDIATE attr writers remain the cost centers.`
+}[reg=facet]
+
+^"priority_slices"{
+  s1 = `Default more routes to data-spw-stylesheet-mode=scoped (or build default scoped); measure core vs full transfer size`
+  s2 = `Catalog hygiene: timingArc + demote non-critical IMMEDIATE enhancement writers of root attrs`
+  s3 = `Attr impact registry: extend updates[] with scope=html|body|element; generate design-catalog section`
+  s4 = `Defer non-critical root attr writers until idle/settled when they only feed ornament`
+  s5 = `Document first-paint attr allowlist (prepaint set) vs post-boot set for FOUC-sensitive CSS`
+  s6 = `Ensure every BEHAVIOR_SCOPES key used by modules has matching features token (and reverse)`
+}[reg=set]
+
+^"do_not"{
+  d1 = `Do not reorder @layer without updating EXPECTED_LAYER_ORDER and css-contracts`
+  d2 = `Do not hide FOUC by loading more IMMEDIATE CSS+JS — widen prepaint allowlist carefully`
+  d3 = `Do not write root attrs from leaf feature modules without updates[] declaration`
+  d4 = `Do not treat spwRuntimeStage=ready as ecology settled`
+}[reg=set]
+
+validation: #[
+  `head -1 public/css/style-core.css  # @layer order`
+  `rg 'EXPECTED_LAYER_ORDER|BEHAVIOR_SCOPES|ROUTE_SCOPES' scripts/ts/css-manifest.mts`
+  `rg 'applyScopedStylesheets|stylesheet-mode' scripts`
+  `rg 'spwRuntimeStage|mountImmediateLayer|queueIdle' public/js/site.js`
+  `rg 'setDatasetEntries|spwEnhancementLevel' public/js/kernel/site-settings-engine.js`
+  `npm run check:css  # or check:runtime for mountHygiene`
+][reg=set]
+
+dispatch: .{
+  css = @style_core
+  scopes = @css_scopes
+  boot = @site_js
+  catalog = @module_catalog
+  prepaint = @prepaint
+  alignment = @alignment_audit
+  theatrics = @feature_partial_theatrics
+}[reg=facet]

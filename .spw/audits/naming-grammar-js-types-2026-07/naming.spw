@@ -1,0 +1,64 @@
+# Naming leaf
+
+#>naming_grammar_js_types_naming
+#:audit #!naming
+#:operation #!audit
+#:fixity #!tending
+
+@index: ~"./index.spw"
+@naming_structured: ~"../../conventions/naming-and-structured-values.spw"
+@attr_gov: ~"../../conventions/data-spw-attribute-governance.spw"
+@language_census: ~"../language-census.spw"
+@metaphor: ~"../../conventions/metaphor-dimensional-lexicon.spw"
+@recognizability: ~"../../reviews/classname-patterns-attribute-grammar-recognizability.spw"
+
+^"stem_families"{
+  html_class = #[`site-frame`, `frame-*`, `operator-chip`, `spec-*`, `spw-*`, `mode-panel`][reg=set]
+  data_spw = `hierarchical tokens: data-spw-<family>-… with first-token density (sample): surface, page, menu, operator, image, component, charge, shell, slot, module…`
+  js = #[`init*`, `SPW_*_CONTRACT`, `MODULE_LAYERS`, `MOUNT_WHEN`, catalog `id` kebab-case`][reg=set]
+  css = `layer folders + Reads-as/Genome chapter banners on split codices`
+  spw = `#>snake_id · #:tags · operation/fixity · @refs`
+  rule = @naming_structured
+}[reg=facet]
+
+^"census_pressure"{
+  source = @language_census
+  attributes = 1208
+  full_trace_js_css_spw = 216
+  unregistered_in_spw = 626
+  js_only = 183
+  css_only = 218
+  events_total = 178
+  cost_class = `working_memory_pressure` # agent reparse cost
+  direction = `Prioritize full-trace for high-first-token families: page, charge, wonder, module, pack, operator`
+}[reg=facet]
+
+^"homonym_clusters"{
+  note = `Same surface word, multiple altitudes — disambiguate via coordinates, not mass rename.`
+  settle = `interaction / box / page / region / capture`
+  resonance = `channel / probe / palette / free-text accent`
+  charge = `physics token vs UI language`
+  density = `typography packing vs content-tone vs pack-fill`
+  salience = `gravity ranks vs module-field vs personas`
+  map = @metaphor
+}[reg=facet]
+
+^"suffix_taxonomy"{
+  source = @language_census
+  top = #[`state`, `mode`, `label`, `phase`, `active`, `count`, `kind`, `role`, `source`, `posture`, `resolved`, `tier`][reg=set]
+  strength = `Suffixes teach temporal shape (state/phase/posture) when used consistently`
+  risk = `mode vs state vs posture near-synonyms without altitude`
+}[reg=facet]
+
+^"taste"{
+  good = #[
+    `kebab catalog ids match URL-ish mental model`,
+    `data-spw- prefix namespaces site semantics`,
+    `SPW_ upper contracts readable in greps`
+  ][reg=set]
+  friction = #[
+    `626 attrs without .spw registration`,
+    `parallel content-density / content-tone`,
+    `feature vs features (body gate vs cluster name) — documented but easy to conflate`
+  ][reg=set]
+}[reg=facet]

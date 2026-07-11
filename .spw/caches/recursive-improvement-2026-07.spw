@@ -1,0 +1,88 @@
+# Recursive Improvement Pass — Insight Cache (2026-07)
+#
+# operation: cache
+# Holds reusable findings from structure / feature / thoroughness / script work
+# so the next pass does not re-derive from chat alone.
+
+#>cache_recursive_improvement_2026_07
+#:cache #!agents #!features #!scripts
+#:operation #!cache
+#:fixity #!tending
+
+@recursive_improvement: ~"../conventions/recursive-improvement.spw"
+@feature_utilization: ~"../conventions/feature-utilization.spw"
+@audits_index: ~"../audits/index.spw"
+@caches_index: ~"./index.spw"
+@ecology: ~"../../scripts/spw-ecology-inventory.mjs"
+@census: ~"../../scripts/language-census.mjs"
+@inventory_core: ~"../../scripts/lib/spw-inventory-core.mjs"
+
+operation = "cache"
+fixity = "tending"
+
+^"insights"{
+  insight #ri-001 {
+    claim = `.spw needs an audits index + reading_orders; conventions/index was lagging recent rails`
+    evidence = `74 conventions; 33 audit files; no audits/index before this pass`
+    next = `Keep audits/index updated when adding audits`
+    status = "landed"
+  }
+  insight #ri-002 {
+    claim = `Feature tokens are dominated by operators/navigator/console; BEHAVIOR_SCOPES is a small aligned set; many single-use tokens are narrative`
+    evidence = `ecology inventory + feature-utilization probe_2026_07 + probe_2026_07b (tier classification automated; UNTIERED gap closed for route-discovery / prompt-utils)`
+    next = `narrative_only demotions (u2: page-family / projection instead of features) remain a human-gated route-HTML pass; candidates are the 14 single-use tokens`
+    status = "active"
+  }
+  insight #ri-003 {
+    claim = `Recursive improvement needs a zero-dep inventory script callable without build:tools for agent loops`
+    evidence = `scripts/spw-ecology-inventory.mjs + npm run ecology`
+    status = "landed"
+  }
+  insight #ri-004 {
+    claim = `Thoroughness is multi-audit: CSS cascade, page/region memory, alignment/device — reading_orders in audits/index`
+    evidence = `three 2026-07 audits + reading_orders`
+    status = "landed"
+  }
+  insight #ri-005 {
+    claim = `Limited-time modules should use session memory + idle/region, not site-settings (page-region audit O*)`
+    evidence = `page-region-hydration-memory-2026-07`
+    next = `TTL storage helper slice still open`
+    status = "active"
+  }
+  insight #ri-006 {
+    claim = `The census counted its own artifact as .spw registration — every listed attribute self-registered on the next run. Generated artifacts must be excluded from the surface they measure.`
+    evidence = `census v2 excludes OUT from the spw surface; attrs_unregistered_in_spw corrected 638 → 719`
+    status = "landed"
+  }
+  insight #ri-007 {
+    claim = `Substring homonym matching inflated spread badly: ground counted background, arc counted search. Homonym severity ranking is only honest with word-boundary stems + hit counts.`
+    evidence = `ground css 120f → 24f, arc js 68f → 47f after \\b<stem>[a-z]* matching (census v2 homonym_spread, Nf/Mx format)`
+    status = "landed"
+  }
+  insight #ri-008 {
+    claim = `The trace_rule contract leg is now measured: SPW_*_CONTRACT blocks enumerate attributes directly. attrs_contract_and_convention (72) is the honest trace floor, well under the surface-presence proxy (250 js+css+spw).`
+    evidence = `census v2 contract collector: 28 contract objects, 124 attrs enumerated; top stem families page:35 svg:33 module:29 carry most of the gap`
+    next = `Governance passes on top stem families raise both legs together; recheck via npm run census`
+    status = "active"
+  }
+  insight #ri-009 {
+    claim = `Inventory scripts converge on scripts/lib/spw-inventory-core.mjs (walker, skip sets, .spw emitters) with census dimensions as { name, scan, finish } collectors — a new measurement is a new collector + npm alias, never a rewrite.`
+    evidence = `language-census.mjs v2 + spw-ecology-inventory.mjs on shared core; npm run census / census:json added`
+    next = `Migrate spw-language-ecology.mjs onto the shared core (still carries its own walker)`
+    status = "active"
+  }
+}[reg=set]
+
+^"next_questions"{
+  q1 = `Which rare feature tokens on home/curriculum should become BEHAVIOR_SCOPES vs page-family?`
+  q2 = `Should ecology inventory fail CI on unknown features vs BEHAVIOR_SCOPES (hard gate)?`
+  q3 = `When to auto-generate audits/index from filesystem?`
+  q4 = `Should ecology --strict also fail on UNTIERED tokens once the tier registry has settled?`
+  q5 = `Which of the 14 narrative_only single-use tokens demote to page-family/projection (u2)? Needs the human eye on route intent.`
+}[reg=set]
+
+validation: #[
+  `npm run ecology`
+  `npm run census`
+  `rg 'insight #' .spw/caches/recursive-improvement-2026-07.spw`
+][reg=set]

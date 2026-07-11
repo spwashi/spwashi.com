@@ -1,0 +1,75 @@
+# Gaps and directions — agentic feature matrix
+
+#>agentic_development_gaps
+#:audit #!agents #!direction
+#:operation #!prime
+#:fixity #!tending
+
+@index: ~"./index.spw"
+@csi: ~"../commit-skill-induction-2026-07/mitigations.spw"
+@brp: ~"../build-runtime-performance-2026-07/index.spw"
+
+^"feature_matrix"{
+  note = `R = required for healthy agent loop · O = optional · X = avoid by default`
+
+  html = .{
+    required_body_keys = `R`
+    data_spw_features_gate = `R for optional runtime`
+    data_spw_feature_cluster = `O — when cluster is real`
+    slots = `O → R when promoting reusable cards`
+    dense_card_semantics = `O — do not copy-paste full template on every card`
+    page_seed = `O strong for agents`
+  }[reg=facet]
+
+  css = .{
+    layer_correct_file = `R`
+    data_spw_selectors = `R when projecting state`
+    chapter_genome = `O`
+    compose_vs_style = `R for starter/portability decisions`
+    generated_bundles_in_diff = `X for review focus — check source`
+  }[reg=facet]
+
+  typescript = .{
+    site_contracts_runtime_contracts = `R when changing validation`
+    public_ts_kernel_contracts = `O`
+    route_module_ts = `X`
+    triple_typecheck_always = `O — scope when possible`
+  }[reg=facet]
+
+  spw = .{
+    convention_for_reusable_contract = `R`
+    nested_audit_for_multi_axis = `O strong`
+    plan_md_multi_route = `R`
+    plan_md_single_file = `X — FIX.md`
+    claim_probe = `O strong for audits`
+    archive_op = `R when superseding`
+  }[reg=facet]
+
+  agentic_cache = .{
+    route_runtime_manifest = `R — must be fresh`
+    plans_index_json = `O missing`
+    skills_index_json = `O missing`
+    last_local_check = `O missing`
+  }[reg=facet]
+}[reg=facet]
+
+^"staleness"{
+  manifest = `Sample .agents/state/runtime/route-runtime-manifest.json generatedAt 2026-04-17; routeCount 77 vs ~146 seeded routes — agents must run npm run manifest before trusting`
+  design_catalog = `Regenerated on build:site — expensive; not for every agent turn`
+  language_census = `Generated 2026-07-07 — regenerate after attr waves`
+}[reg=facet]
+
+^"direction"{
+  d1 = `Make manifest regeneration part of check:local or document pre-check ritual`
+  d2 = `Land lightweight plans-index / skills-index under .agents/state if census repeats (agentic-dev-contracts)`
+  d3 = `Publish feature matrix in skills README (link this audit)`
+  d4 = `Align CSI stop-rules so agent features do not force IMMEDIATE/attr growth`
+  d5 = `Keep HTML required keys stable; expand only with site-contracts type + check update together`
+}[reg=set]
+
+^"success_metrics"{
+  m1 = `manifest generatedAt within last content change window before agent route work`
+  m2 = `Agents cite manifest or site-contracts instead of full-repo attr greps for route identity`
+  m3 = `New catalog modules declare features gate + non-IMMEDIATE by default`
+  m4 = `Spw archive rate visible in maintenance sweeps`
+}[reg=set]

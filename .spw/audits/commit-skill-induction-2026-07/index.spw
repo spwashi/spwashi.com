@@ -1,0 +1,89 @@
+# Commit history + skill induction analysis (2026-07)
+#
+# Nested Spw: where skill phrasing or architecture guidance may have shaped
+# long-term codebase pain — and what already mitigates it.
+
+#>commit_skill_induction_2026_07
+#:audit #!agents #!skills #!history #!architecture
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+@commit_history: ~"./commit-history.spw"
+@skill_analysis: ~"./skill-analysis.spw"
+@induction_pain: ~"./induction-pain.spw"
+@mitigations: ~"./mitigations.spw"
+
+@skills_readme: ~"../../../.agents/skills/README.md"
+@site_workflow: ~"../../../.agents/skills/_shared/site-workflow.md"
+@agent_optimization: ~"../../../.agents/plans/agent-optimization/PLAN.md"
+@ngjt: ~"../naming-grammar-js-types-2026-07/index.spw"
+@brp: ~"../build-runtime-performance-2026-07/index.spw"
+@harmony: ~"../component-philosophy-harmony-2026-07.spw"
+@metaphor: ~"../../conventions/metaphor-dimensional-lexicon.spw"
+@semantic_capacity: ~"../../conventions/semantic-capacity.spw"
+
+audit_run: .{
+  at = `2026-07-10`
+  method = `git log census (2026-04→07), plan/skill inventory, skill SKILL.md phrasing cross-read against runtime/attr/plan outcomes`
+  posture = `hypotheses not blame; skill text is one force among human taste, product ambition, and tooling`
+  scope = `site skills under .agents/skills + AGENTS.md rails; commit subjects since 2026-04`
+}[reg=facet]
+
+^"thesis"{
+  claim = `Agent skills and AGENTS.md rails successfully optimized for *inspectability, planning ecology, and semantic completeness* — and that success is also a primary generator of long-term weight: attribute sprawl, IMMEDIATE-module width, plan/.spw inflation, and meta-work competing with product surfaces.`
+  not_claim = `Skills are not the sole cause; many large landings are intentional product (RPG, cauldron, curriculum). Skills amplify “document + contract + cross-wire every concept” as the default resolution path.`
+  useful_frame = `Induction = when a well-meant default (write .spw, stamp data-spw, wire dispatch, keep inspectable) is applied at high frequency without a matching *retirement/archive budget*.`
+}[reg=facet]
+
+^"grades"{
+  commit_hygiene = `B- — many reviewable commits; also multi-kLOC merges and generated-bundle churn`
+  skill_clarity = `A- — skills are readable and rail-aware`
+  skill_restraint = `C+ — weak stop-conditions for meta-surface growth`
+  architecture_from_rails = `B — staged runtime, check:local, kernel extraction are skill-aligned wins`
+  long_term_pain = `C — attr census, IMMEDIATE width, 174 PLAN.md, plan index.spw mass generation`
+  overall = `B- — high-leverage agent environment; needs explicit anti-induction rules`
+}[reg=facet]
+
+^"nested_dispatch"{
+  history = @commit_history
+  skills = @skill_analysis
+  pain = @induction_pain
+  mitigations = @mitigations
+}[reg=facet]
+
+^"priority"{
+  p1 = `Add skill stop-conditions: when NOT to add data-spw / .spw / plan / IMMEDIATE module`
+  p2 = `Plan maintenance must archive more than it generates; cap new index.spw without owner content`
+  p3 = `Semantics rigor: full-trace budget before new families (link language-census)`
+  p4 = `Feature planning: default one coordinate table row, not a new metaphor family`
+  p5 = `Runtime skills: default VISIBLE/IDLE; IMMEDIATE requires cost_class justification`
+}[reg=facet]
+
+^"active_claims"{
+  claim #csi-001 {
+    layer = "agent-editor"
+    hypothesis = "Skills that mandate .spw wiring and inspectability without archive quotas increase plan/.spw file count faster than public route quality."
+    spec_ref = "this audit#induction-pain + agent-optimization/PLAN.md"
+    impl_ref = ".agents/plans count + commits be8fdccf/1e58c345/34ace20f"
+    probe_ref = "New agent sessions create fewer orphan index.spw and more archive notes when stop-conditions land in skills."
+    falsification = "Plan/spw growth continues at same rate after stop-conditions without product reason."
+    status = "active"
+  }
+  claim #csi-002 {
+    layer = "pragmatic"
+    hypothesis = "Phrases that treat every concept as needing data-spw + JS writer + CSS projection correlate with IMMEDIATE enhancement growth and observer fragmentation."
+    spec_ref = "spw-semantics-rigor cross-language stem + this audit#induction-pain"
+    impl_ref = "module-catalog IMMEDIATE=63; ~52 observers; language-census 1208 attrs"
+    probe_ref = "New modules default VISIBLE/IDLE in skill text; IMMEDIATE rate drops on non-core additions."
+    falsification = "IMMEDIATE count keeps rising for metacognition modules after skill update."
+    status = "active"
+  }
+}[reg=set]
+
+validation: #[
+  `rg 'commit_skill_induction|commit-skill-induction' .spw`,
+  `find .agents/plans -name PLAN.md | wc -l`,
+  `rg -o 'when: MOUNT_WHEN.IMMEDIATE' public/js/runtime/module-catalog.js | wc -l`,
+  `git log --oneline --since=2026-04-01 | wc -l`
+][reg=set]

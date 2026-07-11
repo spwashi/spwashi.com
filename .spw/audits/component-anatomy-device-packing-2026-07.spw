@@ -21,6 +21,8 @@
 @css_gesture_anatomy: ~"../../public/css/components/gesture-anatomy.css"
 @css_capture: ~"../../public/css/modes/capture.css"
 @svg_tunability: ~"../../public/js/media/svg-tunability.js"
+@harmony_audit: ~"./component-philosophy-harmony-2026-07.spw"
+@component_packing: ~"../conventions/component-packing.spw"
 
 audit_run: .{
   at = `2026-07-08`
@@ -104,4 +106,5 @@ audit_run: .{
     `settle-state — interaction phase; owns the canonical still frame that capture, reduced-motion, and screenshots all want`
   ][reg=set]
   next: `Promote the strongest of these (breakpoint_source_of_truth axes + touch_target_packing hit-size band) from observation into @dimension_vocabulary and @typography_packing before the next component ships its own copy of the same four decisions.`
+  related_harmony: `Broader philosophy/composability/resonance grades and production packing targets live in @harmony_audit; packing promotion path also in @component_packing#packing_prime_2026_07.`
 }

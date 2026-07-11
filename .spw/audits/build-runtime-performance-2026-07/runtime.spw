@@ -1,0 +1,178 @@
+# Runtime performance leaf
+#
+# Nested under build-runtime-performance-2026-07
+
+#>build_runtime_performance_runtime
+#:audit #!runtime #!performance
+#:operation #!audit
+#:fixity #!tending
+
+@index: ~"./index.spw"
+@catalog: ~"../../../public/js/runtime/module-catalog.js"
+@loader: ~"../../../public/js/runtime/module-loader.js"
+@site: ~"../../../public/js/site.js"
+@cognition: ~"../../conventions/js-architecture-cognition.spw"
+@harmony: ~"../component-philosophy-harmony-2026-07.spw"
+@bootstrap_plan: ~"../../../.agents/plans/runtime-bootstrap-performance/PLAN.md"
+@lifecycles: ~"../../reviews/runtime-audit/lifecycles.spw"
+
+^"catalog_census_2026_07_10"{
+  mount_when = .{
+    IMMEDIATE = 61
+    VISIBLE = 22
+    IDLE = 9
+    SETTLED = 1
+    REGION = 1
+    INTERACTION = 0
+  }[reg=facet]
+  layers = .{
+    CORE = 5
+    ENHANCEMENT = 68
+    FEATURE = 20
+    REGION = 1
+  }[reg=facet]
+  note = `Counts from when: / layer: lines in module-catalog.js after the feature-discovery pass (94 definitions). FEATURE modules often IMMEDIATE with route gates — eligible set is smaller than 61 on a given page, but still wide on hubs.`
+  cost_class = `premature_commitment`
+  stage = `self_model` # too much of ENHANCEMENT claims this stage
+}[reg=facet]
+
+^"catalog_census_2026_07_feature_wiring_pass"{
+  mount_when = .{
+    IMMEDIATE = 43
+    VISIBLE = 31
+    IDLE = 19
+    SETTLED = 1
+    REGION = 1
+    INTERACTION = 0
+  }[reg=facet]
+  timing_arc = `all IMMEDIATE defs have timingArc (was ~40 missing)`
+  feature_wiring = `PRESENCE_FEATURE_KEYS; operators + navigator catalog.features; console remains CSS scope`
+  reclass = `image/svg/lab/annotation/notes/widgets → VISIBLE; metacognition/ledger/debug → IDLE`
+  cost_class = `premature_commitment`
+  residual = `~43 IMMEDIATE still includes grammar/semantics/orchestration — further cuts need route-local proof`
+  @cache = ~"../../caches/feature-wiring-timing-2026-07.spw"
+}[reg=facet]
+
+^"what_landed"{
+  parallel_immediate = .{
+    impl = `mountImmediateLayer: site-settings serial, then Promise.all remaining eligible`
+    marks = #[`spw:immediate-layer:<label>:parallel`, `spw:immediate-layer-parallel`][reg=set]
+    site_boot = `CORE immediate ordered; FEATURE + ENHANCEMENT immediate waves Promise.all after core`
+    claim = `brp-001`
+  }[reg=facet]
+  instrumentation = .{
+    plan = @bootstrap_plan
+    marks = `spw:boot-*, spw:module:<id>:load|mount, spw:page-interactive, spw:site-ready`
+    surfaces = `data-spw-runtime-*, module registry, timings() direction in runtime-load-instrumentation`
+  }[reg=facet]
+  progressive = `VISIBLE IntersectionObserver mounts; IDLE/SETTLED compost; REGION layer present`
+  reclassification_2026_07_10 = .{
+    spatial_gravity = `IMMEDIATE → VISIBLE; its authored selector exists on one bench route and geometry can arrive within the shared 240px visible margin`
+    palette_treat_discovery = `IMMEDIATE → IDLE; keyboard/treat semantics are progressive and no longer pull feature-discovery into every route`
+    feature_discovery = `IDLE + features:feature-discovery; CSS moved from core to a behavior bundle`
+    result = `61 IMMEDIATE / 22 VISIBLE / 9 IDLE across 94 definitions; core bundle no longer carries feature-discovery.css`
+  }[reg=facet]
+}[reg=facet]
+
+^"remaining_runtime_seams"{
+  .{
+    id = `immediate-width`
+    cost_class = `premature_commitment`
+    stratum = `orchestration`
+    evidence = `61 IMMEDIATE defs after two safe reclassifications; many ENHANCEMENT remain (canvas-accents, composition-box-model, semantic-crossrefs, attention-architecture, …)`
+    direction = `Reclassify to VISIBLE/IDLE when first reading posture does not need them; keep CORE thin`
+    ecology = `too many shoots at germination`
+    cognition = `self_model overloaded with deep_interpretation and metacognition`
+  }
+  .{
+    id = `observer-fragmentation`
+    cost_class = `working_memory_pressure`
+    stratum = `perception`
+    evidence = `~52 new IntersectionObserver|ResizeObserver|MutationObserver constructions across public/js (~40 files)`
+    direction = `Federate attention/region/visible IO where root is shared; keep module-local RO for true host boxes (pack-local)`
+    related = `harmony pack-local-ro-gap needs *host* RO — federation must not erase per-card measure`
+  }
+  .{
+    id = `settings-engine-weight`
+    cost_class = `premature_commitment`
+    stratum = `substrate`
+    evidence = `site-settings.js thin entry; site-settings-engine.js ~1335 LOC CORE IMMEDIATE`
+    direction = `First-paint datasets stay; cold UI/discovery/image visit subsystems IDLE or split (bootstrap plan Phase 2)`
+  }
+  .{
+    id = `metacognition-on-boot`
+    cost_class = `working_memory_pressure`
+    stratum = `metacognition`
+    evidence = `composition-box-model DEFAULT_SELECTOR breadth; state-inspector / console often early`
+    direction = `harmony performance_audit; lab-only readouts; IDLE for pure inspectors when policy allows`
+    seams = #[`composition-default-selector-breadth`, `content-tone-scan`][reg=set]
+  }
+  .{
+    id = `express-and-has-invalidation`
+    cost_class = `paint_composite`
+    stratum = `working_set`
+    evidence = `data-spw-express transitions; operator :has resonance`
+    direction = `card-scale express; operator-only resonance; never html/body express`
+    seams = #[`express-paint-cost`, `has-resonance-and-pack`][reg=set]
+  }
+  .{
+    id = `elaboration-geometry`
+    cost_class = `authored_prior_safe`
+    stratum = `interpretation`
+    evidence = `post-mount attrs after first paint`
+    direction = `geometry from authored HTML + CSS containers; JS narrates`
+    seams = #[`attribute-write-timing`][reg=set]
+  }
+  .{
+    id = `interaction-when-empty`
+    cost_class = `premature_commitment`
+    stratum = `engaged_work`
+    evidence = `MOUNT_WHEN.INTERACTION count 0 in catalog census`
+    direction = `Move pure gesture/lab tools to INTERACTION when safe — unused schedule slot`
+  }
+}[reg=set]
+
+^"immediate_candidates_reclassify"{
+  note = `Heuristic shortlist from ids that appear IMMEDIATE and are enhancement/metacognition-shaped — validate per route gate before moving.`
+  toward_visible = #[
+    `canvas-accents`,
+    `image-utilization`,
+    `image-interaction`,
+    `svg-tunability`,
+    `guide-badge`,
+    `discovery-notices`
+  ][reg=set]
+  toward_idle = #[
+    `composition-box-model` # keep pack-local RO if opted hosts exist
+    `state-inspector`,
+    `console` # if not required for policy
+    `layout-shift-audit`,
+    `observation-beats`,
+    `design-experiments`,
+    `design-review-surfaces`,
+    `tuning-discovery`
+  ][reg=set]
+  keep_immediate_coreish = #[
+    `site-settings`,
+    `shell-disclosure`,
+    `interactive-medium`,
+    `site-core-minimal`,
+    `pwa-update-handler` # toast lifecycle
+  ][reg=set]
+  feature_route_gated = #[
+    `rpg-wednesday`, `seed-cards`, `payment-cards`, `services-configurators`, `settings-page`, `home-section-index`
+  ][reg=set]
+  note_feature = `FEATURE+IMMEDIATE is OK when selector/route gates keep eligibility sparse — audit per page, not global ban`
+}[reg=facet]
+
+^"defaults"{
+  boot = #[
+    `CORE ordered; non-core immediate parallel after settings`,
+    `Prefer VISIBLE for in-view polish; IDLE for sensing; INTERACTION for gesture labs`,
+    `Policy: spw-runtime-timing quiet|defer|eager remains the operator throttle`
+  ][reg=set]
+  after_interactive = #[
+    `Deep interpretation and metacognition should feel like depth, not layout repair (@lifecycles brand arrival)`,
+    `Capture/reduced-motion → settle; do not add observers`
+  ][reg=set]
+}[reg=facet]

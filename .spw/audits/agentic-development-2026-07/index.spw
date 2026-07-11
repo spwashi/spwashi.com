@@ -1,0 +1,106 @@
+# Agentic development audit — HTML / CSS / TypeScript / Spw feature usage
+#
+# Nested Spw cache: how agents are meant to work, and which language features
+# they actually lean on. 2026-07.
+
+#>agentic_development_2026_07
+#:audit #!agents #!html #!css #!typescript #!spw
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+@stack: ~"./agentic-stack.spw"
+@html: ~"./html-usage.spw"
+@css: ~"./css-usage.spw"
+@typescript: ~"./typescript-usage.spw"
+@spw: ~"./spw-usage.spw"
+@gaps: ~"./gaps-and-directions.spw"
+@hygiene: ~"./hygiene-roadmap.spw"
+
+@agentic_contracts: ~"../../../.agents/plans/agentic-dev-contracts/PLAN.md"
+@agent_optimization: ~"../../../.agents/plans/agent-optimization/PLAN.md"
+@site_workflow: ~"../../../.agents/skills/_shared/site-workflow.md"
+@csi: ~"../commit-skill-induction-2026-07/index.spw"
+@ngjt: ~"../naming-grammar-js-types-2026-07/index.spw"
+@brp: ~"../build-runtime-performance-2026-07/index.spw"
+@site_contracts: ~"../../../scripts/ts/site-contracts/types.mts"
+
+audit_run: .{
+  at = `2026-07-10`
+  method = `inventory agent surfaces; census HTML data-spw density; CSS layer/agent markers; TS track inventory; Spw ecology counts; cross-read agentic-dev-contracts`
+  posture = `usage audit + completeness gaps; primes for cache refresh and restraint`
+}[reg=facet]
+
+^"thesis"{
+  claim = `Agentic development is a first-class product of this repo: skills, plans, generated manifests, check scripts, dense HTML metadata, CSS data-spw projection, dual TypeScript tracks, and .spw coordinates. Feature *usage* is uneven — HTML body contracts and data-spw-* are heavily used; TS is thin by design on the public site; Spw is rich for agents but incomplete on attribute full-trace; the route-runtime manifest can go stale relative to live routes.`
+  agent_loop = `clarify goal → smallest surface → optional plan/.spw → edit HTML/CSS/JS → check:local / check:runtime → optional plan-maintenance`
+  success = `Agents answer "what is this route?" and "did I break it?" cheaply (agentic-dev-contracts goal)`
+  tension = `Inspectability features agents use well also create weight (CSI induction audit)`
+}[reg=facet]
+
+^"grades"{
+  agentic_stack = `A- — skills, plans, checks, public /about/plans/, state/runtime exist`
+  cache_freshness = `C — route-runtime-manifest generatedAt sample 2026-04-17 vs ~146 live routes / 77 in stale manifest`
+  html_agent_features = `A — required body keys enforced; dense role/kind/operator/slot usage`
+  css_agent_features = `B+ — layer architecture + massive [data-spw-*] projection; chapter genomes partial`
+  typescript_agent_features = `B — scripts/ts powers checks; public/ts sparse; skill correctly restrains`
+  spw_agent_features = `B — 151 site .spw + 284 plan .spw; coordinates strong; full-trace weak`
+  overall = `B+ for agent affordances; C+ for cache hygiene and selective feature use`
+}[reg=facet]
+
+^"nested_dispatch"{
+  stack = @stack
+  html = @html
+  css = @css
+  typescript = @typescript
+  spw = @spw
+  gaps = @gaps
+  hygiene = @hygiene
+}[reg=facet]
+
+^"priority"{
+  p1 = `Regenerate and schedule route-runtime-manifest; treat stale cache as bug`
+  p2 = `Document agent feature matrix: which HTML/CSS/TS/Spw features are required vs optional`
+  p3 = `Prefer manifest + site-contracts over re-grepping body attrs every session`
+  p4 = `TS: grow only check/contract surfaces; keep public route JS plain`
+  p5 = `Spw: full-trace high-traffic attrs; archive low-value plan spw`
+  p6 = `Skill stop-conditions (CSI) so agent feature use does not force IMMEDIATE/attr sprawl`
+}[reg=facet]
+
+^"active_claims"{
+  claim #ad-001 {
+    layer = "agent-editor"
+    hypothesis = "A fresh route-runtime-manifest answers route identity and module eligibility without re-parsing all HTML."
+    spec_ref = "agentic-dev-contracts/PLAN.md + scripts/ts/site-contracts"
+    impl_ref = ".agents/state/runtime/route-runtime-manifest.json + npm run manifest"
+    probe_ref = "generatedAt is newer than last route HTML change; routeCount matches tracked routes."
+    falsification = "Agents re-rg all index.html for body metadata because manifest is months stale."
+    status = "active"
+  }
+  claim #ad-002 {
+    layer = "pragmatic"
+    hypothesis = "REQUIRED_BODY_DATA_KEYS plus data-spw-features gating are the primary HTML features agents and runtime share."
+    spec_ref = "site-contracts/types.mts REQUIRED_BODY_DATA_KEYS"
+    impl_ref = "check-site.mjs + module-catalog features: gates"
+    probe_ref = "check-site fails on missing surface/features/route-family/context/wonder/page-* keys."
+    falsification = "Routes ship without required keys while check:local still passes."
+    status = "active"
+  }
+  claim #ad-003 {
+    layer = "semantic"
+    hypothesis = "Spw and TypeScript serve different agent jobs: Spw for meaning coordinates; TS for build/check shapes — not interchangeable."
+    spec_ref = "spw-typescript-affordances + semantic-capacity + this audit"
+    impl_ref = "public/ts (7) vs scripts/ts (21) vs .spw (151 site)"
+    probe_ref = "New agent work picks TS only for contracts/checks; Spw for durable concepts."
+    falsification = "Agents convert route modules to TS or put check logic only in .spw prose."
+    status = "active"
+  }
+}[reg=set]
+
+validation: #[
+  `npm run manifest`,
+  `npm run check:local` # ordinary patches
+  `npm run check:runtime` # catalog
+  `rg 'agentic_development_2026_07|agentic-development-2026-07' .spw`,
+  `test -f .agents/state/runtime/route-runtime-manifest.json`
+][reg=set]

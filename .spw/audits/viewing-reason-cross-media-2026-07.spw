@@ -1,0 +1,94 @@
+# Viewing Reason Cross-Media Audit (2026-07)
+#
+# operation: audit
+# fixity: tending
+# method: census SVG persona markup, runtime host selector, CSS register, bus consumers
+
+#>viewing_reason_cross_media_2026_07
+#:audit #!svg #!media #!copy
+#:operation #!audit
+#:layer #!pragmatics
+
+@viewing_reason: ~"../conventions/viewing-reason.spw"
+@svg_tunability: ~"../../public/js/media/svg-tunability.js"
+@svg_surfaces_css: ~"../../public/css/systems/svg-surfaces.css"
+@hypermedia_2d: ~"../conventions/hypermedia-2d.spw"
+@svg_depth_wip: ~"../../.agents/plans/svg-aesthetic-depth-pass/wip.spw"
+@component_anatomy_audit: ~"./component-anatomy-device-packing-2026-07.spw"
+@component_harmony_audit: ~"./component-philosophy-harmony-2026-07.spw"
+
+audit_run: .{
+  at = `2026-07-09`
+  scope = `SVG persona facet adoption, lens harmony wiring, and cross-media viewing-reason namespace collisions`
+  posture = `evidence + P0 fixes — observations from five-track architecture review`
+  origin = `svg aesthetic depth pass landed facet markup and lens runtime; production routes adopted facets faster than shared contracts`
+}[reg=facet]
+
+^"evidence_persona_adoption"{
+  claim: `data-spw-svg-persona is authored on many production routes; active lens switching remains lab-only.`
+  routes_with_facet: #[
+    `care/index.html — care-model, social-care-routing figures`,
+    `about/index.html, about/website/index.html — disposition and field-guide diagrams`,
+    `blog/index.html — bare <svg> hero with persona facet`,
+    `recipes/** — composition wheel, handoff, synesthesia figures`,
+    `topics/site-design/, topics/software/schedulers/, topics/craft/svg/, topics/math/**`
+  ][reg=set]
+  lab_only_lens: #[
+    `design/experiments/svg/index.html#svg-persona-lens — [data-spw-svg-persona-select] chips`,
+    `?spw-svg-persona=<token> query hook in @svg_tunability`
+  ][reg=set]
+  bus_gap: `svg:persona-selected is emitted by applySvgPersonaLens but has no downstream listeners for charge, wonder, or ornament coupling as of audit date.`
+}
+
+^"risk_register_attr_target"{
+  seam: `Compact audiences register is inert on most figures.`
+  observed: `public/css/systems/svg-surfaces.css uses .spw-svg-figure[data-spw-svg-persona] > figcaption::before { content: "audiences · " attr(data-spw-svg-persona) } — attr() reads figcaption attributes, but data-spw-svg-persona lives on the parent figure.`
+  friction: `Authors added the facet correctly; the register silently renders "audiences · " with no tokens. Figures without figcaption never show a register at all.`
+  direction: `P0 — mirror facet to figcaption[data-spw-svg-persona] on mount, set --spw-svg-persona-facet on figure from JS, or move ::before to figure::before. Pick one path and document in @viewing_reason host_contract.register_css.`
+  validation: `Open any route with figcaption under .spw-svg-figure[data-spw-svg-persona]; register should list facet tokens.`
+}
+
+^"risk_host_selector_gap"{
+  seam: `Lens harmony skips bare <svg> hosts even when facet is present.`
+  observed: `SVG_HOST_SELECTOR in @svg_tunability = [data-spw-svg-host], .spw-svg-figure, .spw-svg-surface[data-spw-svg-host] — blog hero and schedulers cinematic-host <svg> carry data-spw-svg-persona but are not matched unless class includes spw-svg-figure.`
+  friction: `Facet markup reads as adopted; pointer lift, persona-match, and environment tuning do not run on those hosts.`
+  direction: `P0 — extend selector with svg[data-spw-svg-persona] or normalize hosts to figure.spw-svg-figure per @viewing_reason host_contract.`
+  validation: `blog/index.html hero should gain data-spw-svg-persona-match when ?spw-svg-persona=reader is active.`
+}
+
+^"risk_namespace_parallel"{
+  seam: `Three audience namespaces lack a single dispatch entry for agents.`
+  observed: #[
+    `data-spw-persona — page register (viewer|doodler|scribe)`,
+    `data-spw-svg-persona — figure facet lists`,
+    `data-spw-audience — card/chrome disclosure`
+  ][reg=set]
+  friction: `Authors and agents grep one name and miss the others; @spatial_gravity density_and_salience salience bullet conflates lens persona with overlap salience.`
+  direction: `Contracted in @viewing_reason — umbrella concept, distinct attrs, explicit orthogonality to gravity salience ranks.`
+}
+
+^"risk_geometry_copy_drift"{
+  seam: `Some routes still repeat facet tokens in aria-label when facet is present.`
+  direction: `Audit pass should strip persona lists from aria-label/title/desc when data-spw-svg-persona carries them; keep geometry-first seams in visible SVG text.`
+  pattern_consideration: #[
+    `image study figcaption lens pill (@hypermedia_2d)`,
+    `scene lane mode-switch (@hypermedia_2d film_scene_composition)`,
+    `card audience disclosure tone`
+  ][reg=set]
+}
+
+^"p0_fix_queue"{
+  priority: #[
+    `Fix audiences register attr() target (CSS or runtime mirror)`,
+    `Close SVG_HOST_SELECTOR gap for bare <svg data-spw-svg-persona>`,
+    `Add at least one svg:persona-selected consumer (charge-field or wonder-memory) with cross-route test`,
+    `Wire @viewing_reason into conventions/index.spw dispatch`
+  ][reg=set]
+  do_not_block_on: `Promoting a unified data-spw-viewing-reason attr — wait for second media family per @viewing_reason cross_media_alignment`
+}
+
+^"cross_links"{
+  related_audits: #[@component_anatomy_audit, @component_harmony_audit][reg=set]
+  related_wip: #[@svg_depth_wip][reg=set]
+  expansion_prime: `If image lens and SVG persona lens share query persistence (?spw-viewing-reason=), document in @hypermedia_2d before renaming query keys.`
+}
