@@ -1,0 +1,121 @@
+# Appendix: Fashion (1526–2026)
+#
+# operation: cache + audit
+# fixity: tending
+
+#>appendix_fashion_history_500y
+#:audit #!appendix #!history #!fashion #!expression
+#:operation #!cache
+#:layer #!pragmatics
+
+@appendices_index: ~"./index.spw"
+@expressive_registers: ~"../../conventions/expressive-registers.spw"
+@coloring_depth: ~"../../conventions/coloring-depth.spw"
+@approach_topography: ~"../../surfaces/approach-topography.spw"
+@component_region_personality: ~"../../conventions/component-region-personality.spw"
+@semantic_capacity: ~"../../conventions/semantic-capacity.spw"
+
+audit_run: .{
+  at = `2026-07-09`
+  scope = `Fashion history and discourse — nested w500→w5`
+  index = @appendices_index
+  posture = `Editorial/technical tier — palette/register register justification`
+}[reg=facet]
+
+^"thesis"{
+  claim: `Fashion is the discipline of differential salience on the body and in public space: silhouette, texture, season, code, subculture signal. It exports register, collection, silhouette, palette, and trend — words the site already uses for expressive channels and wonder memory.`
+  site_rule: `Fashion metaphors → expressive_registers + palette resonance + region personality motifs — not framework or CS vocabulary in public voice.`
+  site_registers = #[`field (resonance)`, `prairie/approach`, `culinary (textile craft crossover)`][reg=set]
+}
+
+^"timeline"{
+  w500: .{
+    span = `1526–2026`
+    developments: #[
+      `Sumptuary laws — dress as regulation`,
+      `Court ateliers — bespoke as power`,
+      `Global textile trade routes (silk, cotton, wool)`,
+      `Tailoring guilds — fit as craft`
+    ][reg=set]
+    metaphor_residue = #[`couture`, `sumptuary`, `silhouette`, `wardrobe`][reg=set]
+  }[reg=facet]
+  w200: .{
+    span = `1826–2026`
+    developments: #[
+      `Industrial textile mills`,
+      `Sewing machine revolution`,
+      `Department store — fashion as retail season`,
+      `Charles Worth — haute couture house model (1858)`
+    ][reg=set]
+    metaphor_residue = #[`collection`, `season`, `ready-made`][reg=set]
+  }[reg=facet]
+  w100: .{
+    span = `1926–2026`
+    developments: #[
+      `Chanel/modernist simplicity; surrealist dress`,
+      `Prêt-à-porter rises post-WWII`,
+      `Synthetic fibers (nylon, polyester)`,
+      `Youthquake 60s; punk as anti-fashion system`,
+      `Supermodel + branding era 80s–90s`
+    ][reg=set]
+    metaphor_residue = #[`prêt-à-porter`, `pret-a-porter`, `look`, `capsule collection`][reg=set]
+    spw_bridge = `palette resonance cycle + operator color chips`
+  }[reg=facet]
+  w50: .{
+    span = `1976–2026`
+    developments: #[
+      `Fast fashion supply chain (Zara model)`,
+      `Luxury conglomerates (LVMH, etc.)`,
+      `Streetwear ↔ high fashion collaboration`,
+      `Sustainability + labor critique enters mainstream`
+    ][reg=set]
+    metaphor_residue = #[`fast fashion`, `drop`, `collab`, `haul`][reg=set]
+    spw_bridge = `motif_rule — small repeated route motifs vs identical copy`
+  }[reg=facet]
+  w20: .{
+    span = `2006–2026`
+    developments: #[
+      `Instagram as runway`,
+      `Influencer economy`,
+      `Resale platforms (thredUP, Depop discourse)`,
+      `Body inclusivity + size diversity campaigns`
+    ][reg=set]
+    metaphor_residue = #[`influencer`, `resale`, `fit check`][reg=set]
+    spw_bridge = `data-spw-copy-motifs + collectible copy-units`
+  }[reg=facet]
+  w15: .{
+    span = `2011–2026`
+    developments: #[
+      `Direct-to-consumer brands`,
+      `See-now-buy-now runway experiments`,
+      `Gender-fluid fashion in mass market`,
+      `Digital fashion / skins (gaming crossover)`
+    ][reg=set]
+    metaphor_residue = #[`DTC`, `digital fashion`, `skin`][reg=set]
+  }[reg=facet]
+  w5: .{
+    span = `2021–2026`
+    developments: #[
+      `AI design assistance + trend forecasting`,
+      `Regenerative materials marketing`,
+      `On-demand micro-batch production`,
+      `Archive/reissue culture (nostalgia cycles)`
+    ][reg=set]
+    metaphor_residue = #[`regenerative`, `archive drop`, `AI lookbook`][reg=set]
+    spw_bridge = `daily-kernel discipline pairs (fashion + software) — prime only`
+  }[reg=facet]
+}
+
+^"site_implications"{
+  expression: #[`registers = viewpoint weighting — not trend chasing`, `palette resonance = bias tuner not brand worship`, `approach phases = arrival grammar`][reg=set]
+  copy: #[`region personality motifs per hub`, `avoid fast-fashion urgency on curriculum routes`][reg=set]
+  do_not_import: #[`haul culture`, `drop FOMO`, `unpaid influencer tone on care routes`][reg=set]
+}
+
+^"cross_links"{
+  index = @appendices_index
+  registers = @expressive_registers
+  depth = @coloring_depth
+  topography = @approach_topography
+  personality = @component_region_personality
+}

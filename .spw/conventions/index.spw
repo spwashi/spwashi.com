@@ -86,10 +86,21 @@
 @floating_chrome_coherence: ~"./floating-chrome-coherence.spw"
 @viewing_reason: ~"./viewing-reason.spw"
 @viewing_reason_audit: ~"../audits/viewing-reason-cross-media-2026-07.spw"
+@page_component_census_audit: ~"../audits/page-component-census-2026-07.spw"
+@spacing_sheet_census_audit: ~"../audits/spacing-sheet-census-2026-07.spw"
+@page_spacing_crossref_audit: ~"../audits/page-spacing-crossref-2026-07.spw"
+@javascript_module_census_audit: ~"../audits/javascript-module-census-2026-07.spw"
+@page_spacing_runtime_synthesis_audit: ~"../audits/page-spacing-runtime-synthesis-2026-07.spw"
+@internal_external_vocabulary_clusters_audit: ~"../audits/internal-external-vocabulary-clusters-2026-07.spw"
+@vocabulary_metaphor_growth_synthesis_audit: ~"../audits/vocabulary-metaphor-growth-synthesis-2026-07.spw"
+@metaphor_primitive_research_branching_audit: ~"../audits/metaphor-primitive-research-branching-2026-07.spw"
+@appendices_index: ~"../audits/appendices/index.spw"
+@working_tree_index: ~"../audits/working-tree-index-2026-07.spw"
 @runtime_kernel_consolidation_audit: ~"../audits/runtime-kernel-consolidation-2026-07.spw"
 @build_runtime_performance_audit: ~"../audits/build-runtime-performance-2026-07/index.spw"
 @naming_grammar_js_types_audit: ~"../audits/naming-grammar-js-types-2026-07/index.spw"
 @commit_skill_induction_audit: ~"../audits/commit-skill-induction-2026-07/index.spw"
+@commit_history_deep_audit: ~"../audits/commit-history-deep-2026-07/index.spw"
 @agentic_development_audit: ~"../audits/agentic-development-2026-07/index.spw"
 @feature_partial_theatrics: ~"./feature-partial-theatrics.spw"
 @feature_utilization: ~"./feature-utilization.spw"
@@ -172,10 +183,21 @@ dispatch: .{
  component_packing = @component_packing
  viewing_reason = @viewing_reason
  viewing_reason_audit = @viewing_reason_audit
+ page_component_census = @page_component_census_audit
+ spacing_sheet_census = @spacing_sheet_census_audit
+ page_spacing_crossref = @page_spacing_crossref_audit
+ javascript_module_census = @javascript_module_census_audit
+ page_spacing_runtime_synthesis = @page_spacing_runtime_synthesis_audit
+ internal_external_vocabulary_clusters = @internal_external_vocabulary_clusters_audit
+ vocabulary_metaphor_growth_synthesis = @vocabulary_metaphor_growth_synthesis_audit
+ metaphor_primitive_research_branching = @metaphor_primitive_research_branching_audit
+ appendices_index = @appendices_index
+ working_tree_index = @working_tree_index
  runtime_kernel_audit = @runtime_kernel_consolidation_audit
  build_runtime_performance_audit = @build_runtime_performance_audit
  naming_grammar_js_types_audit = @naming_grammar_js_types_audit
  commit_skill_induction_audit = @commit_skill_induction_audit
+ commit_history_deep_audit = @commit_history_deep_audit
  agentic_development_audit = @agentic_development_audit
  feature_partial_theatrics = @feature_partial_theatrics
 }[reg=facet]

@@ -1,0 +1,157 @@
+# Page · Spacing · Runtime Synthesis (2026-07)
+#
+# operation: audit + align
+# fixity: tending
+# method: triangulate page-component, spacing-sheet, and javascript-module censuses
+
+#>page_spacing_runtime_synthesis_2026_07
+#:audit #!synthesis #!crossref #!routes #!css #!runtime
+#:operation #!audit
+#:layer #!pragmatics
+
+@page_component_census: ~"./page-component-census-2026-07.spw"
+@spacing_sheet_census: ~"./spacing-sheet-census-2026-07.spw"
+@javascript_module_census: ~"./javascript-module-census-2026-07.spw"
+@page_spacing_crossref: ~"./page-spacing-crossref-2026-07.spw"
+@component_philosophy_harmony: ~"./component-philosophy-harmony-2026-07.spw"
+@component_packing: ~"../conventions/component-packing.spw"
+@spatial_gravity: ~"../conventions/spatial-gravity.spw"
+@floating_chrome_coherence: ~"../conventions/floating-chrome-coherence.spw"
+@viewing_reason: ~"../conventions/viewing-reason.spw"
+@css_manifest: ~"../../scripts/typed/css-manifest.mjs"
+@module_catalog: ~"../../public/js/runtime/module-catalog.js"
+@vocabulary_metaphor_growth_synthesis: ~"./vocabulary-metaphor-growth-synthesis-2026-07.spw"
+
+audit_run: .{
+  at = `2026-07-09`
+  scope = `149 routes × 143 CSS sheets × 95 catalog modules — unified mismatch matrix and promotion DAG`
+  posture = `synthesis pass after three censuses; supersedes pairwise reading of page-spacing-crossref alone for implementation planning`
+}[reg=facet]
+
+^"thesis"{
+  claim: `The site is HTML-rich and CSS-verbose but runtime-thin on production routes: frames and cards are authored everywhere; pack-local, gravity, and several visible-gated modules almost never co-schedule with the components they were built to narrate.`
+  grades: .{
+    html_component_grammar = `A- — site-frame universal, kind attrs dense`
+    css_spacing_tokens = `B- — shell/components tokenized; routes literal-heavy`
+    runtime_adoption = `C+ — 95 modules exist; production uses a fraction of spatial/pack/anatomy stack`
+    cross_layer_alignment = `B- — same seam repeated three ways without a single promotion owner`
+  }[reg=facet]
+}
+
+^"triple_axis_model"{
+  claim: `Every promotion should name all three axes: box (HTML), sheet (CSS), mount (JS).`
+  axes: .{
+    box = `Authored components + data-spw-* on route HTML (@page_component_census)`
+    sheet = `Route/system CSS spacing + layout (@spacing_sheet_census)`
+    mount = `Catalog module selector + when + features (@javascript_module_census)`
+  }[reg=facet]
+  rule: `Fixing one axis without the other two recreates the same bug under a new name — e.g. pack-local HTML without component-packing.css container + composition-box-model mirror + pack tier tokens.`
+}
+
+^"unified_mismatch_matrix"{
+  rows: #[
+    `.{ id = pack_local ; html = 1 route ; css = systems/component-packing.css only ; js = composition-box-model immediate ; gap = frame-cards on 60+ routes lack data-spw-pack-local ; fix = recipes/rpg cards first }`,
+    `.{ id = spatial_gravity ; html = 1 route ; css = systems/spatial-gravity.css ; js = spatial-gravity visible-gated ; gap = topic-discovery still bespoke rects ; fix = popover + region-menu per @floating_chrome_coherence }`,
+    `.{ id = svg_persona ; html = 30 svg hosts ; css = svg-surfaces + svg-personas ; js = svg-tunability feature-gated, selector gap ; gap = register attr() + host selector ; fix = @viewing_reason P0 }`,
+    `.{ id = living_concept ; html = home only (32) ; css = home-panels.css magic-heavy ; js = charge-field + haptics idle ; gap = ecology not on topic hubs ; fix = topics hub pilot }`,
+    `.{ id = semantic_contract ; html = software hub (26 cards) ; css = topics.css zero token var ; js = component-semantics immediate on kind/role/slot ; gap = cards styled by route literals not pack tiers ; fix = topics.css container + semantic grid }`,
+    `.{ id = vibe_widget ; html = settings 109, home 35 ; css = settings-forms + controls ; js = tuning-discovery immediate, settings-page ; gap = widget spacing not aligned to pack projection ; fix = settings-notes token pass + box-model already dense }`,
+    `.{ id = scene_bed ; html = 4 film routes ; css = film-scene-composition.css ; js = scene-interaction visible ; gap = aligned — use as reference specimen }`,
+    `.{ id = box_model ; html = 17 routes ; css = composition-box-model convention ; js = composition-box-model immediate ; gap = partial — settings/home strong, topic leaves weak }`,
+    `.{ id = topic_discovery ; html = 15 topic routes ; css = chrome.css + floating-chrome ; js = topic-discovery idle ; gap = popover off gravity/chrome contract }`
+  ][reg=set]
+}
+
+^"surface_synthesis_profiles"{
+  home: .{
+    html = `15 frames, 32 living-concept, 35 vibe-widget, 16 box-model`
+    css = `home.css + home-panels.css — 87 combined magic rem, 0 route token var`
+    js = `charge-field, component-semantics, composition-box-model, feature attrs on 20 clusters — immediate/idle mix`
+    seam = `richest component ecology, loosest route spacing tokens, runtime writes pack/box attrs settings-engine projects`
+    promotion = `home.css token pass + living-concept-card pack-local pilot`
+  }[reg=facet]
+  settings: .{
+    html = `109 vibe-widget, 51 box-model`
+    css = `5 settings route sheets; notes.css 20 magic rem`
+    js = `settings-page, tuning-discovery, composition-box-model, page-anatomy — anatomy-densest production route`
+    seam = `runtime inspection ahead of CSS spacing tokenization`
+    promotion = `settings-notes → --spw-pack-gap-active; already wins on runtime narratability`
+  }[reg=facet]
+  topics_software: .{
+    html = `semantic-contract-card grid, mode-switch curriculum`
+    css = `topics.css — 43 magic rem, shared with all topics`
+    js = `component-semantics, semantic-crossrefs, operators (feature), variant-selection visible`
+    seam = `software-specific layout competes in shared topics.css`
+    promotion = `scoped topics/software register sheet OR BEM scope + pack-local on contract cards`
+  }[reg=facet]
+  recipes_rpg: .{
+    html = `highest frame-card density (19.5/page recipes, 15.5 rpg)`
+    css = `recipes.css low magic; rpg-wednesday.css 51 magic rem`
+    js = `rpg-wednesday feature pack immediate on main; reward-ui idle on frames`
+    seam = `cards styled well in components/ but rpg route adds literals; runtime reward-ui idle on broad frame selector`
+    promotion = `pack-local on frame-card + rpg-wednesday.css token pass`
+  }[reg=facet]
+  design_composition: .{
+    html = `only pack-local + gravity adopter`
+    css = `design-experiments + systems/component-packing + spatial-gravity`
+    js = `composition-box-model + spatial-gravity visible — reference bench`
+    role = `canonical triple-axis specimen — validate promotions here before hub rollout`
+  }[reg=facet]
+}
+
+^"scheduling_contention"{
+  claim: `Multiple immediate modules compete on every long route.`
+  always_on: #[
+    `43 immediate catalog modules — includes component-semantics, region-menu, charge-field, brace-physics, state-inspector (body), attention-architecture (main)`
+  ][reg=set]
+  idle_broad: #[
+    `reward-ui, component-collection, learnability-ledger — share wide frame/panel/card selector`,
+    `haptics, experiential, topic-discovery — idle on header/main/body/topic selectors`
+  ][reg=set]
+  direction: `Use @javascript_module_census dataset_write_hotspots + @spacing_sheet_census shell chrome tokens to profile scroll/resize cost before adding mounts.`
+}
+
+^"promotion_dag"{
+  claim: `Ordered promotions that touch all three axes.`
+  wave_1_reference: #[
+    `design/composition — keep as triple-axis proof; document in site-starter-component-kit`
+  ][reg=set]
+  wave_2_hubs: #[
+    `home — living-concept + home.css tokens`,
+    `settings — settings-notes tokens (runtime already strong)`,
+    `topics/software — semantic-contract-card + topics.css container`
+  ][reg=set]
+  wave_3_card_dense: #[
+    `recipes + rpg-wednesday — pack-local frame-card`,
+    `craft/math — svg-tunability selector + feature gate alignment`
+  ][reg=set]
+  wave_4_chrome: #[
+    `topic-discovery → gravity + floating-chrome`,
+    `spatial-gravity ungate or html-capable schedule`,
+    `data-spw-chrome-posture per page family`
+  ][reg=set]
+  validation: #[
+    `Read page_spacing_cascade + page_spacing_runtime_cascade in @audits_index`,
+    `npm run check:local`,
+    `npm run check:runtime`
+  ][reg=set]
+}
+
+^"reading_order"{
+  pass_1 = @page_component_census
+  pass_2 = @spacing_sheet_census
+  pass_3 = @javascript_module_census
+  pass_4 = `this synthesis`
+  pairwise = @page_spacing_crossref
+  philosophy = @component_philosophy_harmony
+  copy_metaphor = @vocabulary_metaphor_growth_synthesis
+}
+
+^"artifact_lineage"{
+  spawned = `2026-07-09 from user request: page audit → spacing audit → JS module audit → synthesis`
+  updates = #[
+    `@page_component_census — runtime_adoption + module_cross_links sections`,
+    `@spacing_sheet_census — runtime_dataset_coupling section`,
+    `@page_spacing_crossref — superseded for planning by this synthesis; kept for page↔CSS-only queries`
+  ][reg=set]
+}

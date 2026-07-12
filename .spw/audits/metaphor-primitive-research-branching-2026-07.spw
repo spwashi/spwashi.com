@@ -1,0 +1,379 @@
+# Metaphor Primitive Research & Branching Audit (2026-07)
+#
+# operation: audit + prime
+# fixity: tending
+# method: lexicon_register census across navigation, interaction, rendering primitives;
+#         discipline-branch inventory; research/creativity clustering assistance
+
+#>metaphor_primitive_research_branching_2026_07
+#:audit #!metaphor #!research #!navigation #!interaction #!rendering
+#:operation #!audit
+#:layer #!pragmatics
+
+@metaphor_dimensional_lexicon: ~"../conventions/metaphor-dimensional-lexicon.spw"
+@expressive_registers: ~"../conventions/expressive-registers.spw"
+@attention_field: ~"../conventions/attention-field.spw"
+@charge_cycle: ~"../conventions/charge-cycle.spw"
+@circuit_components: ~"../conventions/circuit-components.spw"
+@runtime_medium_ecology: ~"../conventions/runtime-medium-ecology.spw"
+@js_architecture_cognition: ~"../conventions/js-architecture-cognition.spw"
+@electromagnetic_containers: ~"../conventions/electromagnetic-containers.spw"
+@semantic_capacity: ~"../conventions/semantic-capacity.spw"
+@vocabulary_metaphor_growth_synthesis: ~"./vocabulary-metaphor-growth-synthesis-2026-07.spw"
+@javascript_module_census: ~"./javascript-module-census-2026-07.spw"
+@page_spacing_runtime_synthesis: ~"./page-spacing-runtime-synthesis-2026-07.spw"
+@component_philosophy_harmony: ~"./component-philosophy-harmony-2026-07.spw"
+@appendices_index: ~"./appendices/index.spw"
+@appendix_technolinguistics: ~"./appendices/technolinguistics-web-history-2007-2026.spw"
+@appendix_edpsych_materials: ~"./appendices/edpsych-materials-science-history-500y.spw"
+@appendix_computer_science: ~"./appendices/computer-science-history-500y.spw"
+@appendix_manufacturing: ~"./appendices/manufacturing-history-500y.spw"
+@appendix_fashion: ~"./appendices/fashion-history-500y.spw"
+@appendix_film: ~"./appendices/film-history-500y.spw"
+@appendix_print: ~"./appendices/print-history-500y.spw"
+
+audit_run: .{
+  at = `2026-07-09`
+  scope = `Ecology · cognition · field metaphor presence in navigation, interaction, and rendering primitives; discipline branches to consider; research/creativity branching clusters`
+  method = `Regex census on public/js + public/css + route HTML; module-catalog describes/updates cross-read; convention coordinate map`
+  posture = `Prime research forks — clustering assistance for agents; complements @vocabulary_metaphor_growth_synthesis copy plane`
+}[reg=facet]
+
+^"thesis"{
+  claim: `Field metaphor owns the felt interaction stack (charge, resonance, attention, registers). Ecology owns growth narration (loading-ecology, substrate/card-ecology CSS, guild exports). Cognition owns mount scheduling and elaboration language (catalog enhancement, page-state) but is thin in public rendering primitives. Navigation is field-native in shell chrome but locomotion-spell-native in travel — a coordinate split, not a bug.`
+  one_line: `Field = physics of attention; ecology = growth of medium; cognition = cost of elaboration — declare which register is speaking per primitive family before mixing prose.`
+  falsification: `A new primitive invents a fourth parallel stem (e.g. "momentum-field-guild") without mapping to cost_class, guild id, or express_channel.`
+}
+
+^"presence_summary"{
+  html_adoption: .{
+    charge_family = 177
+    resonance_probe = 16
+    register_express_approach = `3 register + 4 express + 4 approach — design/composition only among source routes`
+    loading_ecology = `0 authored HTML — loading-ecology.js writes html datasets at runtime`
+    module_guild = `catalog/export surfaces only`
+  }[reg=facet]
+  css_primitive_families: .{
+    navigation = `shell chrome, section-handle, frame-navigator styling — field + resonance bias dominant; ecology nouns rare`
+    interaction = `charge-cycle, wonder, operators, semantic-resonance — field dominant; ecology via card-ecology + runtime-states`
+    rendering = `registers.css (field channels), substrate-ecology.css + card-ecology.css (ecology), wonder/ornament (field) — cognition ≈0 in CSS layer`
+  }[reg=facet]
+  js_primitive_families: .{
+    navigation = #[`shell-disclosure`, `navigation-locomotion`, `frame-navigator`, `attention/section-handle`][reg=set]
+    interaction = #[`charge-field`, `attention-architecture`, `spells`, `experiential`, `haptics`, `wonder-memory`][reg=set]
+    rendering = #[`accent-palette`, `canvas-accents`, `palette-treat-discovery`, `composition.js express hooks`][reg=set]
+    ecology_runtime = #[`loading-ecology`, `module-export-contract guild`, `site-settings-engine climate.ecology`][reg=set]
+    cognition_runtime = #[`module-catalog-enhancement MOUNT_WHEN`, `page-state`, `page-anatomy`, `module-loader schedule`][reg=set]
+  }[reg=facet]
+  imbalance: #[
+    `Rendering primitives contracted in .spw (registers, approach) but barely adopted in route HTML`,
+    `Ecology CSS exists; ecology JS narrates load — visitors never see ecology vocabulary unless settings inspect`,
+    `Cognition vocabulary concentrated in catalog describes — not surfaced in navigation chrome labels`,
+    `Navigation locomotion uses spell/section tokens; shell uses field/resonance — teach both as one coordinate (travel vs posture)`
+  ][reg=set]
+}
+
+^"primitive_matrix"{
+  note = `Rows = primitive families. Columns = dominant lexicon_register + key carriers.`
+
+  navigation: .{
+    primary_register = `field`
+    secondary = `cognition (posture, pointer capability) — not ecology`
+    modules: #[
+      .{ id = `shell-disclosure` ; register = `field` ; carriers = #[`stacked-field`, `pointer-field`, `cycle-resonance`, `explore-posture field`][reg=set] ; guild = `orientation/canopy` }[reg=facet],
+      .{ id = `navigation-locomotion` ; register = `technical + spell` ; carriers = #[`data-spw-navigation-locomotion`, `data-spw-spell-momentum`, `#>section.*`][reg=set] ; note = `travel coordinate — avoid ecology nouns here` }[reg=facet],
+      .{ id = `frame-navigator` ; register = `technical` ; carriers = #[`data-spw-nav-state`, keyboard spells`][reg=set] ; gap = `JetBrains metaphor in comments only — no field/ecology contract` }[reg=facet],
+      .{ id = `attention/section-handle` ; register = `field` ; carriers = #[`--field-balance`, `data-spw-resonance-probe echo`, `data-spw-cauldron-resonance`][reg=set] ; guild = `orientation + symbiosis` }[reg=facet]
+    ][reg=set]
+    css = #[`shell/chrome/*`, `chrome.css`, `section-context.css`, `floating-chrome.css`][reg=set]
+    research_fork = `Align locomotion spell tokens with field-posture datasets — one travel narrative, two lexicon registers max`
+  }[reg=facet]
+
+  interaction: .{
+    primary_register = `field`
+    secondary = `ecology on cauldron/garden paths; cognition on mount_when only in catalog`
+    modules: #[
+      .{ id = `charge-field` ; register = `field` ; carriers = #[`data-spw-charge-*`, `PHASE_INTENSITY`, `OPERATOR_DISCHARGE`][reg=set] ; convention = @charge_cycle }[reg=facet],
+      .{ id = `attention-architecture` ; register = `field` ; contract_metaphor = `attention-field` ; subprimitives = #[`resonance-probe`, `reading-groove`, `scroll-cadence`, `pinch-scale`][reg=set] }[reg=facet],
+      .{ id = `wonder-memory` ; register = `field` ; circuit_role = `capacitor` ; convention = @circuit_components }[reg=facet],
+      .{ id = `spells` ; register = `technical + memory` ; carriers = #[`data-spw-grounded`, `data-spw-checkpoint`][reg=set] ; ecology = `memory guild only` }[reg=facet],
+      .{ id = `loading-ecology` ; register = `ecology` ; carriers = #[`data-spw-loading-ecology-*`][reg=set] ; gap = `strong runtime, no public specimen copy` }[reg=facet]
+    ][reg=set]
+    css = #[`charge-cycle.css`, `wonder.css`, `semantic-resonance.css`, `operators/*`, `card-ecology.css`][reg=set]
+    research_fork = `Cauldron ↔ section-handle resonance bridge — already wired; document as field+ecology symbiosis specimen`
+  }[reg=facet]
+
+  rendering: .{
+    primary_register = `field`
+    secondary = `ecology in substrate/card layers; prairie/approach as valence channel`
+    css_systems: #[
+      .{ file = `registers.css` ; register = `field` ; channels = #[`depth`, `valence`, `resonance`, `attention`, `field-intensity`][reg=set] ; adoption = `design/composition + load-symphony experiments` }[reg=facet],
+      .{ file = `substrate-ecology.css` ; register = `ecology` ; note = `medium growth visual — not navigation` }[reg=facet],
+      .{ file = `card-ecology.css` ; register = `ecology` ; note = `card plot metaphor — pairs with pack-local wave` }[reg=facet],
+      .{ file = `pretext-physics.css` ; register = `technical + measurement` ; discipline = `typography/measurement physics branch` }[reg=facet],
+      .{ file = `wonder.css + ornament.css` ; register = `field` ; mechanism = `resonance :has(), register diffusion` }[reg=facet]
+    ][reg=set]
+    research_fork = `Pilot data-spw-register + data-spw-express on 2 public hubs — field rendering without new stems`
+  }[reg=facet]
+}
+
+^"discipline_branches"{
+  note = `Branches to consider when priming research — map to lexicon_register + cost_class before new nouns.`
+
+  physics: .{
+    electromagnetism = .{
+      status = `landed`
+      site_carriers = #[`charge-cycle`, `circuit-components`, `electromagnetic-containers`, `--spw-field-intensity`][reg=set]
+      open_questions = #[`register diffusion legend`, `capacitor/inductor labeling in catalog UI`][reg=set]
+    }[reg=facet]
+    diffusion_transport = .{
+      status = `contracted`
+      site_carriers = #[`attention-field Jaccard model`, `register diffusion approximation`, `svg pointer-field`][reg=set]
+      open_questions = #[`when to implement true semantic distance vs stay O(tokens)`][reg=set]
+    }[reg=facet]
+    mechanics_kinematics = .{
+      status = `partial`
+      site_carriers = #[`navigation-locomotion`, `spell-momentum`, `spatial-gravity overlap`][reg=set]
+      open_questions = #[`unify travel phase machine with charge phase machine vocabulary`][reg=set]
+    }[reg=facet]
+    thermodynamics_climate = .{
+      status = `landed in settings`
+      site_carriers = #[`site-settings-engine ecology modifiers`, `developmental-climate`, `grain atmosphere bias`][reg=set]
+      open_questions = #[`surface climate copy without merchant lead`][reg=set]
+    }[reg=facet]
+    optics_imaging = .{
+      status = `partial`
+      site_carriers = #[`viewing_reason`, `image-lens`, `hypermedia-2d`][reg=set]
+      open_questions = #[`lens disambiguation: viewing_reason vs expressive register vs mode-switch lens`][reg=set]
+    }[reg=facet]
+    acoustics_rhythm = .{
+      status = `experimental`
+      site_carriers = #[`loading-ecology rhythm/twinkle`, `load-symphony movements`, `play rhythm bias CSS`][reg=set]
+      open_questions = #[`musician register for scene beds — prime only`][reg=set]
+    }[reg=facet]
+    fluid_flow = .{
+      status = `metaphor only`
+      site_carriers = #[`canvas accent flow`, `wash rendering`, `stream operator`][reg=set]
+      open_questions = #[`avoid fourth "flow" stem — map to express_channel or operator stream`][reg=set]
+    }[reg=facet]
+  }[reg=facet]
+
+  biology_ecology: .{
+    medium_ecology = .{
+      status = `landed`
+      site_carriers = @runtime_medium_ecology
+      open_questions = #[`guild labels in settings inspect`, `compose pollinator exports by guild`][reg=set]
+    }[reg=facet]
+    hormonal_signaling = .{
+      status = `design target`
+      site_carriers = @attention_field
+      open_questions = #[`receptor affinity table for operator families`][reg=set]
+    }[reg=facet]
+    card_plot_substrate = .{
+      status = `css landed`
+      site_carriers = #[`card-ecology.css`, `substrate-ecology.css`][reg=set]
+      open_questions = #[`pair with pack-local HTML wave`][reg=set]
+    }[reg=facet]
+  }[reg=facet]
+
+  cognitive_science: .{
+    progressive_elaboration = .{
+      status = `landed`
+      site_carriers = @js_architecture_cognition
+      open_questions = #[`surface MOUNT_WHEN as elaboration_stage in settings runtime map`][reg=set]
+    }[reg=facet]
+    working_memory_load = .{
+      status = `landed via cost_class`
+      site_carriers = @metaphor_dimensional_lexicon
+      open_questions = #[`selector breadth seam — composition-default-selector-breadth`][reg=set]
+    }[reg=facet]
+    attention_perception = .{
+      status = `landed`
+      site_carriers = #[`perception stratum modules`, `section visibility`, `device mode`][reg=set]
+      open_questions = #[`pinch-scale + reading-groove public teachability`][reg=set]
+    }[reg=facet]
+  }[reg=facet]
+
+  measurement_information: .{
+    typography_measurement = .{
+      status = `landed`
+      site_carriers = #[`pretext-physics.js`, `typography-measurement-preview`][reg=set]
+      discipline = `measurement + signal processing`
+      open_questions = #[`honest telemetry without full pretext mount on light routes`][reg=set]
+    }[reg=facet]
+    graph_topology = .{
+      status = `partial`
+      site_carriers = #[`operator lattice`, `frame-navigator route graph`, `topic discovery`][reg=set]
+      open_questions = #[`graph register for curriculum routes — prime only`][reg=set]
+    }[reg=facet]
+  }[reg=facet]
+
+  do_not_fork_yet: #[
+    `Quantum metaphor — no coordinate gap justifies it`,
+    `Parallel "momentum" physics stem — use mechanics_kinematics + spell-momentum`,
+    `New "energy" CSS token — map to --spw-field-intensity or charge intensity first`
+  ][reg=set]
+}
+
+^"research_branching_clusters"{
+  note = `Each cluster = one research spine. Pick one spine per daily-kernel or audit cache — do not open all at once.`
+
+  cluster_a_field_rendering: .{
+    question = `Can expressive registers make hub cards feel distinct without new data-spw stems?`
+    hypothesis = `data-spw-register + data-spw-express on existing frame-card hosts projects field channels already declared in tokens/core.css`
+    surfaces = #[`/design/composition/` (existing), `/topics/`, `/` home living-concept-card grid][reg=set]
+    disciplines = #[`electromagnetism`, `optics_imaging`][reg=set]
+    validation = `rg 'data-spw-register|data-spw-express' --glob '**/index.html' | wc -l`
+    stop_rule = `If pilot needs new @property channels, stop — use existing five channels only`
+  }[reg=facet]
+
+  cluster_b_navigation_posture: .{
+    question = `Can locomotion and shell-disclosure share one travel/posture coordinate table?`
+    hypothesis = `spell-momentum + navigation-locomotion phases map to elaboration_stage settle/travel without ecology nouns`
+    surfaces = #[`navigation-locomotion.js`, `shell-disclosure.js`, `attention/shared.js`][reg=set]
+    disciplines = #[`mechanics_kinematics`, `cognitive_science.perception`][reg=set]
+    validation = `rg 'spwNavigationLocomotion|spwSpellMomentum|explore-posture' public/js`
+    stop_rule = `Do not rename spell tokens — add coordinate alias table in .spw only first`
+  }[reg=facet]
+
+  cluster_c_ecology_visibility: .{
+    question = `Should loading-ecology and guild growth be legible to editors without agent tier leakage?`
+    hypothesis = `Settings inspect + runtime-states.css can show ecology phase/genre at editorial referentiality`
+    surfaces = #[`settings/index.html`, `runtime-states.css`, `loading-ecology.js`][reg=set]
+    disciplines = #[`biology_ecology.medium_ecology`][reg=set]
+    validation = `rg 'data-spw-loading-ecology' settings/ public/css/components/runtime-states.css`
+    stop_rule = `No ecology nouns in public hero copy — specimen blocks only`
+  }[reg=facet]
+
+  cluster_d_cognition_cost_surface: .{
+    question = `Can mount_when and cost_class appear in design/runtime map without new modules?`
+    hypothesis = `module-catalog describes already carry cognition+ecology; state-inspector can project elaboration_stage + guild`
+    surfaces = #[`/design/runtime/`, `state-inspector`, `module-catalog-enhancement.js`][reg=set]
+    disciplines = #[`cognitive_science.working_memory_load`][reg=set]
+    validation = `rg 'MOUNT_WHEN|elaboration_stage|cost_class' public/js/runtime design/runtime`
+    stop_rule = `Do not add visitor-facing "working set" prose on curriculum routes`
+  }[reg=facet]
+
+  cluster_e_diffusion_legend: .{
+    question = `Can register diffusion become inspectable when resonance probe pins an operator?`
+    hypothesis = `ornament legend driven by html[data-spw-resonance-probe] + existing wonder.css :has() paths`
+    surfaces = #[`wonder.css`, `ornament.css`, `attention/resonance-probe.js`][reg=set]
+    disciplines = #[`diffusion_transport`, `electromagnetism`][reg=set]
+    validation = `rg 'resonance-probe|register diffusion' public/css .spw/conventions`
+    stop_rule = `If paint_composite cost rises on large pages, bound to operators only per harmony audit`
+  }[reg=facet]
+
+  cluster_f_acoustic_scene: .{
+    question = `Do film/scene beds need an acoustic register distinct from loading-ecology rhythm?`
+    hypothesis = `loading-ecology rhythm dimension + load-symphony movements are enough to prime musician register — no new runtime`
+    surfaces = #[`design/experiments/load-symphony/`, `play/`, `hypermedia-2d film_scene_composition`][reg=set]
+    disciplines = #[`acoustics_rhythm`][reg=set]
+    validation = `rg 'rhythm|twinkle|load-symphony' public/js/runtime/loading-ecology.js design/experiments`
+    stop_rule = `Prime .spw cache only — no new npm deps or audio engine`
+  }[reg=facet]
+
+  cluster_g_measurement_typography: .{
+    question = `Can pretext-physics telemetry decouple for light routes?`
+    hypothesis = `pretext-measurement-bus publish path suffices for typography audits without 1476-line mount`
+    surfaces = #[`pretext-physics.js`, `pretext-measurement-bus.js`, `topics/software/parsers/`][reg=set]
+    disciplines = #[`measurement_information.typography_measurement`][reg=set]
+    validation = `rg 'pretext-measurement-bus|pretext-physics' public/js @javascript_module_census`
+    stop_rule = `Do not split pretext-physics until export contract proves two mounts`
+  }[reg=facet]
+}
+
+^"clustering_assistance"{
+  note = `Agent routing table — given a task keyword, pick cluster + registers + smallest surface.`
+
+  routing: #[
+    `.{ keyword = navigation|chrome|menu|locomotion ; cluster = cluster_b_navigation_posture ; registers = field + technical ; avoid = ecology nouns in travel copy }`,
+    `.{ keyword = charge|discharge|operator hover ; cluster = cluster_e_diffusion_legend ; registers = field ; conventions = charge_cycle, attention_field }`,
+    `.{ keyword = register|express|approach|wash ; cluster = cluster_a_field_rendering ; registers = field ; css = registers.css }`,
+    `.{ keyword = guild|nutrient|loading|ecology ; cluster = cluster_c_ecology_visibility ; registers = ecology ; internal_tier = editorial specimen }`,
+    `.{ keyword = mount|cost|idle|immediate ; cluster = cluster_d_cognition_cost_surface ; registers = cognition + technical }`,
+    `.{ keyword = scene|film|rhythm|music ; cluster = cluster_f_acoustic_scene ; registers = consideration_physics + acoustics ; fixity = experimental }`,
+    `.{ keyword = measure|typography|pretext ; cluster = cluster_g_measurement_typography ; registers = technical }`,
+    `.{ keyword = copy|voice|stem ; cluster = @vocabulary_metaphor_growth_synthesis ; not this audit }`
+  ][reg=set]
+
+  three_axis_join: .{
+    material = @page_spacing_runtime_synthesis
+    copy = @vocabulary_metaphor_growth_synthesis
+    metaphor_primitives = `this audit`
+    rule = `Layout patch → material. Copy patch → vocabulary synthesis. Nav/interaction/render patch → this audit clustering table.`
+  }[reg=facet]
+
+  guild_quick_map: .{
+    orientation = `navigation primitives — shell, locomotion, frame-navigator, section-handle`
+    symbiosis = `interaction field coupling — attention-architecture, wonder-memory, experiential`
+    expression = `operators, braces, charge-field discharge kinds`
+    inspection = `state-inspector, console, runtime map — cognition labels`
+    media = `svg pointer-field, image lens, canvas accents — optics branch`
+    substrate = `kernel, settings-engine — thermodynamics + ecology modifiers`
+  }[reg=facet]
+}
+
+^"promotion_queue"{
+  p0_prime: #[
+    `Add clustering_assistance.routing to copy_ecology or metaphor_dimensional_lexicon dispatch — one pointer only`,
+    `Document cluster_b coordinate alias table in navigation-locomotion or attention/shared contract comment`,
+    `settings specimen for loading-ecology datasets (cluster_c)`
+  ][reg=set]
+  p1_research: #[
+    `cluster_a — register/express pilot on topics + home (2 routes)`,
+    `cluster_e — ornament legend sketch in design/experiments before ornament.css`,
+    `cluster_d — elaboration_stage column on design/runtime map`
+  ][reg=set]
+  p2_creativity: #[
+    `cluster_f — musician register prime in semantic-capacity cache`,
+    `cluster_g — pretext measurement leaflet`,
+    `graph register prime for topic atlas — do not implement graph layout yet`
+  ][reg=set]
+  do_not_build: #[
+    `Unified data-spw-metaphor-register attr — use lexicon_register in .spw + copy-motifs`,
+    `O(n²) semantic distance field — stay register diffusion`,
+    `Public "guild" or "rhizosphere" chrome labels`
+  ][reg=set]
+  validation: #[
+    `rg 'cluster_|primitive_matrix|discipline_branches' .spw/audits/metaphor-primitive-research-branching-2026-07.spw`,
+    `rg 'data-spw-register' --glob '**/index.html'`,
+    `rg 'attention-field|loading-ecology|charge-field' public/js/runtime/module-catalog-enhancement.js`
+  ][reg=set]
+}
+
+^"cross_links"{
+  vocabulary = @vocabulary_metaphor_growth_synthesis
+  material = @page_spacing_runtime_synthesis
+  runtime = @javascript_module_census
+  harmony = @component_philosophy_harmony
+  lexicon = @metaphor_dimensional_lexicon
+  capacity = @semantic_capacity
+}
+
+^"appendix"{
+  index = @appendices_index
+  technolinguistics_history = @appendix_technolinguistics
+  edpsych_materials_history = @appendix_edpsych_materials
+  computer_science_history = @appendix_computer_science
+  manufacturing_history = @appendix_manufacturing
+  fashion_history = @appendix_fashion
+  film_history = @appendix_film
+  print_history = @appendix_print
+  when_to_read = `Choosing lexicon_register for copy/metaphor work; era context by discipline; localization or curriculum voice patches`
+  rule = `Appendices live in .spw/audits/appendices/ — editorial/technical tier, not public hero voice`
+}
+
+^"reading_order"{
+  start = `this audit — primitive + discipline + cluster routing`
+  appendices = @appendices_index
+  appendix_technolinguistics = @appendix_technolinguistics
+  appendix_edpsych_materials = @appendix_edpsych_materials
+  appendix_computer_science = @appendix_computer_science
+  appendix_manufacturing = @appendix_manufacturing
+  appendix_fashion = @appendix_fashion
+  appendix_film = @appendix_film
+  appendix_print = @appendix_print
+  copy_plane = @vocabulary_metaphor_growth_synthesis
+  performance = @component_philosophy_harmony
+  conventions = #[@metaphor_dimensional_lexicon, @expressive_registers, @attention_field, @runtime_medium_ecology, @js_architecture_cognition][reg=set]
+}

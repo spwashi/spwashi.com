@@ -1,0 +1,73 @@
+# Commit volume & cadence (origin → 2026-07)
+
+#>commit_history_deep_volume
+#:audit #!git #!history
+#:operation #!audit
+
+@index: ~"./index.spw"
+
+^"totals"{
+  commits = 679
+  span = `2024-01-11 → 2026-07-09 (HEAD at audit)`
+  authors: .{
+    `Spwashi` = 679
+    note = `Single-author repository in git shortlog`
+  }[reg=facet]
+  gap = .{
+    from = `2024-02-18`
+    to = `2026-04-05`
+    commits = 0
+    read = `Repo dormant or history rewritten between genesis and Spw renaissance`
+  }[reg=facet]
+}
+
+^"by_year"{
+  years: .{
+    `2024` = 30
+    `2025` = 0
+    `2026` = 649
+  }[reg=facet]
+  rule = `2026 dominates; 2024 is genesis-only footprint (~4.4% of commits).`
+}
+
+^"by_month"{
+  monthly: #[
+    `.{ month = 2024-01 ; commits = 25 ; note = genesis burst — index, CNAME, lore.land about }`,
+    `.{ month = 2024-02 ; commits = 5 ; note = relocating/renaming/opening — last activity before gap }`,
+    `.{ month = 2026-04 ; commits = 331 ; note = Spw renaissance — highest density month }`,
+    `.{ month = 2026-05 ; commits = 180 ; note = surface ecology, semantics, cauldron wave }`,
+    `.{ month = 2026-06 ; commits = 99 ; note = runtime extraction, chrome, plan ecology }`,
+    `.{ month = 2026-07 ; commits = 39 ; note = partial month; language v04, worktree merges, audits }`
+  ][reg=set]
+  cadence: .{
+    peak = `2026-04 (331)`
+    post_peak_decay = `~47% May, ~27% June, ~12% July (partial) — expected after initial renaissance`
+    genesis = `2024-01 only meaningful pre-gap month`
+  }[reg=facet]
+}
+
+^"path_commit_counts"{
+  note = `git log --oneline -- <path> | wc -l at audit time`
+  spw = 169
+  agents = 246
+  public = `majority of numstat churn — see theme_churn`
+  implication = `.agents/` commit count exceeds `.spw/` — plan ecology slightly ahead of convention surface in commit frequency`
+}
+
+^"churn_totals"{
+  note = `Aggregate numstat add+del across all history`
+  by_extension_order: #[`css`, `html`, `js`, `spw`, `md`, `mjs`, `json`][reg=set]
+  spw_lines = 59768
+  agents_lines = 60284
+  top_level_public = 550513
+  top_level_agents = 60284
+  top_level_spw = 29837
+}
+
+^"validation"{
+  probes: #[
+    `git rev-list --count HEAD`,
+    `git log --format='%ad' --date=format:'%Y-%m' | sort | uniq -c`,
+    `git shortlog -sn`
+  ][reg=set]
+}

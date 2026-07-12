@@ -1,0 +1,121 @@
+# Appendix: Print (1526–2026)
+#
+# operation: cache + audit
+# fixity: tending
+
+#>appendix_print_history_500y
+#:audit #!appendix #!history #!print #!typography
+#:operation #!cache
+#:layer #!pragmatics
+
+@appendices_index: ~"./index.spw"
+@typography_packing: ~"../../conventions/typography-packing.spw"
+
+@semantic_braces: ~"../../conventions/semantic-braces.spw"
+@language_index: ~"../../language/index.spw"
+@semantic_capacity: ~"../../conventions/semantic-capacity.spw"
+
+audit_run: .{
+  at = `2026-07-09`
+  scope = `Print history and typographic craft — nested w500→w5`
+  index = @appendices_index
+  posture = `Editorial/technical tier — typography/grammar register justification`
+}[reg=facet]
+
+^"thesis"{
+  claim: `Print is the discipline of repeatable readable matter: type, ink, press, page, edition, proof. The site's Spw language, brace grammar, pretext-physics, and pack tiers inherit five centuries of argument about what belongs on a page and in what order.`
+  site_rule: `Print metaphors → typography_packing + grammar CSS + language operators — "edition" and "proof" are editorial tier words unless on print/topic routes.`
+  site_registers = #[`technical`, `literacy (pretext)`, `webpage (document ethics)`][reg=set]
+}
+
+^"timeline"{
+  w500: .{
+    span = `1526–2026`
+    developments: #[
+      `Gutenberg movable type (c. 1450s) — reproducible uniform text`,
+      `Aldine italic + octavo — portable book form`,
+      `Print as Reformation/Counter-Reformation media`,
+      `Copernicus on press — knowledge circulation accelerates`
+    ][reg=set]
+    metaphor_residue = #[`edition`, `imprint`, `folio`, `galley`][reg=set]
+    spw_bridge = `Spw operators as printable grammar — language/index`
+  }[reg=facet]
+  w200: .{
+    span = `1826–2026`
+    developments: #[
+      `Industrial press — steam power`,
+      `Lithography — image + text plate`,
+      `Mass newspaper + serial fiction`,
+      `Arts and Crafts response — humanist typography (Morris)`
+    ][reg=set]
+    metaphor_residue = #[`broadsheet`, `serial`, `plate`, `impression`][reg=set]
+  }[reg=facet]
+  w100: .{
+    span = `1926–2026`
+    developments: #[
+      `Offset lithography dominance`,
+      `Phototypesetting`,
+      `International Typographic Style (Swiss)`,
+      `Desktop publishing (1980s) — author owns layout`,
+      `PDF as portable page (1993)`
+    ][reg=set]
+    metaphor_residue = #[`leading`, `kerning`, `grid system`, `PDF`, `DTP`][reg=set]
+    spw_bridge = `typography-packing tiers + dimensions.css real-estate tokens`
+  }[reg=facet]
+  w50: .{
+    span = `1976–2026`
+    developments: #[
+      `Laser printer + PostScript`,
+      `Web as hypertext publishing`,
+      `OpenType + unicode normalization`,
+      `Print-on-demand — batch of one`
+    ][reg=set]
+    metaphor_residue = #[`PostScript`, `webfont`, `POD`, `hypertext`][reg=set]
+    spw_bridge = `pretext-physics + typography-measurement-preview`
+  }[reg=facet]
+  w20: .{
+    span = `2006–2026`
+    developments: #[
+      `@font-face era — web typography parity push`,
+      `Responsive typography discourse`,
+      `E-book saturation + audiobook parallel`,
+      `Letterpress revival as craft market`
+    ][reg=set]
+    metaphor_residue = #[`responsive type`, `variable font`, `e-ink`][reg=set]
+    spw_bridge = `reading layout + blog-frames surfaces`
+  }[reg=facet]
+  w15: .{
+    span = `2011–2026`
+    developments: #[
+      `Variable fonts (OpenType 1.8)`,
+      `Static site renaissance`,
+      `Print design tools → web (Figma era crossover)`,
+      `Accessibility typography (WCAG rhythm)`
+    ][reg=set]
+    metaphor_residue = #[`variable font`, `Figma handoff`, `WCAG`][reg=set]
+  }[reg=facet]
+  w5: .{
+    span = `2021–2026`
+    developments: #[
+      `AI layout + copy assistance`,
+      `Fine press + zine culture persistence`,
+      `Honest measurement telemetry (browser layout APIs)`,
+      `Edition thinking in versioned static deploys`
+    ][reg=set]
+    metaphor_residue = #[`AI layout`, `zine`, `edition hash`][reg=set]
+    spw_bridge = `cluster_g measurement typography + build pipeline dist/`
+  }[reg=facet]
+}
+
+^"site_implications"{
+  typography: #[`pack tiers = rhythm not decoration`, `pretext = honest measure`, `brace grammar = visible structure`][reg=set]
+  language: #[`operators project to chips — print tradition of marginalia`, `proof = inspect pass not marketing claim`][reg=set]
+  do_not_import: #[`DTP nostalgia in hero`, `font trend name-dropping`, `PDF-think on interactive routes`][reg=set]
+}
+
+^"cross_links"{
+  index = @appendices_index
+  typography = @typography_packing
+  braces = @semantic_braces
+  language = @language_index
+}

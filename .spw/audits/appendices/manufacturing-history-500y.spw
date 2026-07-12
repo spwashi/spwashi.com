@@ -1,0 +1,121 @@
+# Appendix: Manufacturing (1526–2026)
+#
+# operation: cache + audit
+# fixity: tending
+
+#>appendix_manufacturing_history_500y
+#:audit #!appendix #!history #!manufacturing #!craft
+#:operation #!cache
+#:layer #!pragmatics
+
+@appendices_index: ~"./index.spw"
+@component_packing: ~"../../conventions/component-packing.spw"
+@composition_box_model: ~"../../conventions/composition-box-model.spw"
+@dimension_vocabulary: ~"../../conventions/dimension-vocabulary.spw"
+@appendix_edpsych_materials: ~"./edpsych-materials-science-history-500y.spw"
+@semantic_capacity: ~"../../conventions/semantic-capacity.spw"
+
+audit_run: .{
+  at = `2026-07-09`
+  scope = `Manufacturing research and practice — nested w500→w5`
+  index = @appendices_index
+  posture = `Editorial/technical tier — pack/composition register justification`
+}[reg=facet]
+
+^"thesis"{
+  claim: `Manufacturing history is the story of tolerances becoming inspectable: craft skill → interchangeable parts → assembly line → lean → digital twin. The web borrows its nouns constantly — pipeline, fixture, tolerance, batch, rework — often without naming which axis owns the decision.`
+  site_rule: `Manufacturing metaphors map to pack_axis, composition-box-model, and route craft surfaces — not public SaaS onboarding voice.`
+  site_registers = #[`technical`, `ecology (batch/guild)`, `consideration_physics`][reg=set]
+}
+
+^"timeline"{
+  w500: .{
+    span = `1526–2026`
+    developments: #[
+      `Guild craft — apprenticeship, journeyman, master`,
+      `Renaissance instrument makers — precision culture`,
+      `Early interchangeable parts experiments (Honoré Blanc, etc.)`,
+      `Agricola metallurgy — ore to artifact chain`
+    ][reg=set]
+    metaphor_residue = #[`guild`, `tolerance`, `fit`, `workshop`][reg=set]
+  }[reg=facet]
+  w200: .{
+    span = `1826–2026`
+    developments: #[
+      `Industrial Revolution — factory system`,
+      `Bessemer steel — structural scale`,
+      `American system of manufactures — interchangeable parts`,
+      `Sewing machine, bicycle — precision at volume`
+    ][reg=set]
+    metaphor_residue = #[`assembly`, `interchangeable`, `factory`, `throughput`][reg=set]
+  }[reg=facet]
+  w100: .{
+    span = `1926–2026`
+    developments: #[
+      `Taylor scientific management — time/motion`,
+      `Ford assembly line (1913 legacy into era)`,
+      `Toyota Production System seeds — JIT, jidoka`,
+      `CNC programming (1950s→)`,
+      `CAD emergence`
+    ][reg=set]
+    metaphor_residue = #[`lean`, `kanban`, `bottleneck`, `WIP`, `fixture`][reg=set]
+    spw_bridge = `composition lab + craft routes — workshop posture`
+  }[reg=facet]
+  w50: .{
+    span = `1976–2026`
+    developments: #[
+      `Lean/TPS global diffusion`,
+      `Robotics on line — programmable automation`,
+      `Six Sigma quality discourse`,
+      `Supply chain globalization + ERP systems`,
+      `DFM/DFA — design for manufacture`
+    ][reg=set]
+    metaphor_residue = #[`Six Sigma`, `ERP`, `supply chain`, `DFM`][reg=set]
+    spw_bridge = `pack tiers + container queries — box-width axis`
+  }[reg=facet]
+  w20: .{
+    span = `2006–2026`
+    developments: #[
+      `Additive manufacturing (3D print) mainstream`,
+      `Industry 4.0 — cyber-physical systems`,
+      `Maker movement + Fab Lab network`,
+      `Reshoring/nearshoring discourse post-disruption`
+    ][reg=set]
+    metaphor_residue = #[`additive`, `digital twin`, `maker`, `Fab`][reg=set]
+    spw_bridge = `design/composition pack-local pilot`
+  }[reg=facet]
+  w15: .{
+    span = `2011–2026`
+    developments: #[
+      `Distributed manufacturing (on-demand print)`,
+      `Sustainable manufacturing metrics`,
+      `Mass customization narratives`,
+      `Open hardware adjacent to open source`
+    ][reg=set]
+    metaphor_residue = #[`on-demand`, `circular`, `custom batch`][reg=set]
+  }[reg=facet]
+  w5: .{
+    span = `2021–2026`
+    developments: #[
+      `AI for process optimization`,
+      `Green steel / low-carbon materials targets`,
+      `Microfactory + desktop production tools`,
+      `Inspection-first quality (vision systems)`
+    ][reg=set]
+    metaphor_residue = #[`vision inspect`, `carbon accounting`, `microfactory`][reg=set]
+    spw_bridge = `inspect surfaces + audit validation rg lines`
+  }[reg=facet]
+}
+
+^"site_implications"{
+  packing: #[`shell-width vs box-width — @dimension_vocabulary`, `pack-local = opt-in plot`, `tolerance = token not magic rem`][reg=set]
+  craft_routes: #[`/craft/`, `/design/composition/`, `town exchange — merchant downstream`][reg=set]
+  cross_appendix: @appendix_edpsych_materials materials_timeline.w200
+}
+
+^"cross_links"{
+  index = @appendices_index
+  packing = @component_packing
+  composition = @composition_box_model
+  dimensions = @dimension_vocabulary
+}

@@ -1,0 +1,122 @@
+# Appendix: Film (1526–2026)
+#
+# operation: cache + audit
+# fixity: tending
+
+#>appendix_film_history_500y
+#:audit #!appendix #!history #!film #!hypermedia
+#:operation #!cache
+#:layer #!pragmatics
+
+@appendices_index: ~"./index.spw"
+@hypermedia_2d: ~"../../conventions/hypermedia-2d.spw"
+@viewing_reason: ~"../../conventions/viewing-reason.spw"
+@charge_cycle: ~"../../conventions/charge-cycle.spw"
+@design_whimsy: ~"../../conventions/design-whimsy.spw"
+@semantic_capacity: ~"../../conventions/semantic-capacity.spw"
+
+audit_run: .{
+  at = `2026-07-09`
+  scope = `Film history and craft discourse — nested w500→w5`
+  index = @appendices_index
+  posture = `Editorial/technical tier — scene/hypermedia register justification`
+}[reg=facet]
+
+^"thesis"{
+  claim: `Film is temporal composition: shot, cut, beat, reel, sequence, credits. The site treats pages as scene beds and modules as timing arcs — film vocabulary is already latent in load-symphony, discovery credits, and scene-lane attrs.`
+  site_rule: `Film metaphors → hypermedia_2d + viewing_reason + timing_vocabulary — declare scene-lane or beat, not "cinematic" alone.`
+  site_registers = #[`field`, `consideration_physics`, `acoustics_rhythm (load-symphony)`][reg=set]
+}
+
+^"timeline"{
+  w500: .{
+    span = `1526–2026`
+    developments: #[
+      `Linear perspective (Alberti) — framed composition`,
+      `Camera obscura — projected image`,
+      `Magic lantern — sequential spectacle`,
+      `Muybridge locomotion studies — time sliced`
+    ][reg=set]
+    metaphor_residue = #[`frame`, `projection`, `sequence`, `reel`][reg=set]
+  }[reg=facet]
+  w200: .{
+    span = `1826–2026`
+    developments: #[
+      `Photography chemical era`,
+      `Persistence of vision toys (zoetrope, praxinoscope)`,
+      `Early cinema pioneers (Lumière, Méliès)`,
+      `Silent era grammar — intertitle, montage experiments`
+    ][reg=set]
+    metaphor_residue = #[`cut`, `montage`, `intertitle`, `exposure`][reg=set]
+  }[reg=facet]
+  w100: .{
+    span = `1926–2026`
+    developments: #[
+      `Hollywood studio system + continuity editing`,
+      `Sound film (1927+) — sync as constraint`,
+      `Color processes (Technicolor era)`,
+      `Auteur theory; French New Wave`,
+      `Blockbuster + VFX era (Jaws, Star Wars legacy)`
+    ][reg=set]
+    metaphor_residue = #[`continuity`, `sync`, `blockbuster`, `VFX`][reg=set]
+    spw_bridge = `timing_vocabulary in @design_whimsy — brace-settle, threshold-cross`
+  }[reg=facet]
+  w50: .{
+    span = `1976–2026`
+    developments: #[
+      `Home video (VHS) — reproducible viewing`,
+      `CGI mainstream (Pixar, Jurassic Park)`,
+      `Independent film + Sundance culture`,
+      `Digital cameras — reduced material cost`
+    ][reg=set]
+    metaphor_residue = #[`director's cut`, `CGI`, `indie`][reg=set]
+    spw_bridge = `play/film routes + scene beds`
+  }[reg=facet]
+  w20: .{
+    span = `2006–2026`
+    developments: #[
+      `Digital projection dominance`,
+      `MCU/franchise continuity models`,
+      `Streaming replaces rental for many audiences`,
+      `YouTube as training ground for short-form grammar`
+    ][reg=set]
+    metaphor_residue = #[`MCU`, `streaming`, `binge`, `short-form`][reg=set]
+    spw_bridge = `discovery credits roll — film credits surface in site-semantics`
+  }[reg=facet]
+  w15: .{
+    span = `2011–2026`
+    developments: #[
+      `Peak TV discourse — long-form serial`,
+      `Creator economy on platforms`,
+      `Virtual production (LED volume) seeds`,
+      `Intimacy coordinators + labor visibility`
+    ][reg=set]
+    metaphor_residue = #[`peak TV`, `creator`, `volume stage`][reg=set]
+    spw_bridge = `data-spw-scene-lane + viewing_reason`
+  }[reg=facet]
+  w5: .{
+    span = `2021–2026`
+    developments: #[
+      `Generative video tools`,
+      `Virtual production mainstream (Mandalorian era diffusion)`,
+      `Theatrical vs streaming release hybrids`,
+      `Interactive/forking narratives (Bandersnatch legacy discourse)`
+    ][reg=set]
+    metaphor_residue = #[`gen-video`, `virtual production`, `forking narrative`][reg=set]
+    spw_bridge = `interactive-medium + cluster_f acoustic scene prime`
+  }[reg=facet]
+}
+
+^"site_implications"{
+  hypermedia: #[`scene-lane = beat under practice`, `credits = ephemeral chrome teaching state change`, `timing arcs = module mount choreography`][reg=set]
+  viewing: #[`persona/lens = audience facet — @viewing_reason`, `do not collapse lens with mode-switch`][reg=set]
+  do_not_import: #[`blockbuster hype on curriculum`, `franchise continuity inside operator grammar`][reg=set]
+}
+
+^"cross_links"{
+  index = @appendices_index
+  hypermedia = @hypermedia_2d
+  viewing = @viewing_reason
+  charge = @charge_cycle
+  timing = @design_whimsy
+}

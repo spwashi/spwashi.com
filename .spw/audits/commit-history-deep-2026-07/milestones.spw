@@ -1,0 +1,95 @@
+# Infrastructure & mega-commit milestones
+
+#>commit_history_deep_milestones
+#:audit #!git #!history
+#:operation #!audit
+
+@index: ~"./index.spw"
+@epochs: ~"./epochs-from-origin.spw"
+
+^"first_touch"{
+  note = `git log --reverse --diff-filter=A or first path commit`
+
+  genesis: #[
+    `2024-01-11 618b0a05 — created index.html`,
+    `2024-01-11 f23e7098 — Create CNAME (GitHub Pages)`,
+    `2024-01-17 — about page for lore.land`
+  ][reg=set]
+
+  renaissance: #[
+    `2026-04-06 c769e8b6 — chore(site): prepare content for refresh`,
+    `2026-04-06 — feat(site): add spec-style Spw syntax surface`,
+    `2026-04-06 — .spw/ first commits (spec-style Spw surface)`,
+    `2026-04-17 154c28d3 — Add live reload and route contract checks (Agents.md era)`,
+    `2026-04-18 3c80b753 — #[site] local build, templating, scoped catalog pipeline`,
+    `2026-04-18 — #[build] sitemap generation`
+  ][reg=set]
+
+  runtime: #[
+    `public/js/site.js — early 2026-04`,
+    `public/js/runtime/module-catalog.js — 2026-04+ catalog era`,
+    `scripts/build.mjs — 2026-04-18 build pipeline`,
+    `vite.config.ts — dev server era 2026-04+`
+  ][reg=set]
+}
+
+^"mega_commits"{
+  note = `Commits with >8000 lines aggregate numstat churn — bisect hazards.`
+
+  rows: #[
+    `.{ churn ≈ 143091 ; hash = ae7f9365 ; subject = .[runtime] — organize JS and CSS trees ; era = e4 }`,
+    `.{ churn ≈ 59532 ; hash = bd0d7951 ; subject = Teach the cauldron to unmix… ; era = e3/e4 }`,
+    `.{ churn ≈ 49996 ; hash = 1c2bf2da ; subject = Add scoped CSS delivery and align runtime with premium feature gates ; era = e4 }`,
+    `.{ churn ≈ 27293 ; hash = eb95fdd5 ; subject = Add interactive-medium runtime and feature-forward topic copy ; era = e3 }`,
+    `.{ churn ≈ 24302 ; hash = dcfc2dee ; subject = feat(surface-ecology): deepen semantic surfaces… ; era = e3 }`,
+    `.{ churn ≈ 19031 ; hash = 5fb50e83 ; subject = refactor(css): deepen Spw surface tokens… ; era = e3 }`,
+    `.{ churn ≈ 9685 ; hash = 9dc84a6b ; subject = Expand semantic metadata across site routes ; era = e3 }`,
+    `.{ churn ≈ 8866 ; hash = 07b795a9 ; subject = feat: Spw cognitive runtime — bus, lattice, haptics… ; era = e3 }`,
+    `.{ churn ≈ 8586 ; hash = b8c329c3 ; subject = feat(website, grammar, settings): formalize publishing surface semantics… ; era = e3 }`
+  ][reg=set]
+
+  rule = `Mega-commits are product+refactor landings — prefer worktree + merge pattern (e5) for future >10k churn.`
+}
+
+^"plan_ecology_waves"{
+  note = `From commit-skill-induction + numstat — plan index mass landings`
+
+  commits: #[
+    `34ace20f Add plan-directory index.spw… (+4.7k)`,
+    `1e58c345 Customize plan .spw from PLAN/FIX (+6.5k)`,
+    `be8fdccf Strengthen Spw indexing across plan .spw (+7.3k, 263 files)`
+  ][reg=set]
+  inventory ≈ `174 PLAN.md · ~187 plan index.spw at skill-induction audit`
+}
+
+^"worktree_merge_cadence"{
+  note = `2026-07 &[tag] merge commits — multi-track landing pattern`
+
+  examples: #[
+    `7649834c &[module-export] Merge module-export-uniformity worktree`,
+    `7b2ef9b7 &[spw-language] Merge spw-language-v04 worktree`,
+    `a24fabb1 &[plan-ecology] Merge plan-wip-index-conventions worktree`,
+    `b3cda6a5 Merge workshop ecology surfaces from abstract-launching-quasar worktree`
+  ][reg=set]
+  read = `Preferred shape for large features post-e4 — isolates review tracks`
+}
+
+^"infrastructure_milestones"{
+  timeline: #[
+    `CNAME + static HTML — e0`,
+    `Spw operators + .spw — e2`,
+    `Build pipeline + Agents.md + package.json — e2`,
+    `Module catalog + layered CSS — e4`,
+    `Kernel rhizosphere + export contract — e4/e5`,
+    `Language v04 + ecology dispatch — e5`,
+    `.spw audit censuses (working-tree-index) — e5 pending land`
+  ][reg=set]
+}
+
+^"validation"{
+  probes: #[
+    `git log --numstat --pretty=format:'@@@%h@@@%s@@@' | awk …`,
+    `git log --reverse --oneline -- .spw/ | head -3`,
+    `git log --grep='worktree' --oneline`
+  ][reg=set]
+}

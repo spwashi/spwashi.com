@@ -1,0 +1,224 @@
+# Internal / External Vocabulary Cluster Audit (2026-07)
+#
+# operation: audit
+# fixity: tending
+# method: HTML prose census + .spw convention inventory + referentiality/metaphor coordinate cross-read
+
+#>internal_external_vocabulary_clusters_2026_07
+#:audit #!copy #!semantics #!vocabulary #!metaphor
+#:operation #!audit
+#:layer #!pragmatics
+
+@component_region_personality: ~"../conventions/component-region-personality.spw"
+@copy_ecology: ~"../conventions/copy-ecology.spw"
+@living_medium_copy: ~"../conventions/living-medium-copy.spw"
+@coloring_depth: ~"../conventions/coloring-depth.spw"
+@expressive_registers: ~"../conventions/expressive-registers.spw"
+@metaphor_dimensional_lexicon: ~"../conventions/metaphor-dimensional-lexicon.spw"
+@semantic_capacity: ~"../conventions/semantic-capacity.spw"
+@naming_structured_values: ~"../conventions/naming-and-structured-values.spw"
+@product_lines: ~"../surfaces/product-lines.spw"
+@harmony_audit: ~"./component-philosophy-harmony-2026-07.spw"
+@vocabulary_metaphor_growth_synthesis: ~"./vocabulary-metaphor-growth-synthesis-2026-07.spw"
+
+audit_run: .{
+  at = `2026-07-09`
+  scope = `149 source routes + 76 conventions + 12 audits; internal vs external vocabulary clusters, metaphor register health, semantic growth capacity`
+  method = `prose term census, data-spw-copy-depth / data-spw-vocabulary / data-spw-register adoption, .spw layer counts, cross-read @metaphor_dimensional_lexicon coordinates`
+  posture = `three-pass audit: vocabulary clusters → metaphor development → growth capacity — synthesis in @vocabulary_metaphor_growth_synthesis`
+}[reg=facet]
+
+^"internal_external_frame"{
+  claim: `Internal vocabulary speaks to editors, agents, and inspect surfaces; external vocabulary speaks to readers, collaborators, and product-line audiences. The same coordinate may project through both — but stems must not leak across the boundary without a referentiality tier.`
+  external: .{
+    audience = `readers, hosts, collaborators, product-line doors (@product_lines audience_register)`
+    tiers = #[`public`, `editorial`][reg=set]
+    attrs = #[`data-spw-referentiality="public|editorial"`, `data-spw-copy-depth entry|normal|rich|genre`, `data-spw-vocabulary webpage|reference-document|garden|restaurant|culinary`, `data-spw-copy-motifs`][reg=set]
+    surfaces = `route hooks, ledes, recipes, care, play, town — creator-first invitation`
+  }[reg=facet]
+  internal: .{
+    audience = `editing team, agents, settings inspect, design labs, .spw readers`
+    tiers = #[`technical`, `agent`][reg=set]
+    attrs = #[`data-spw-referentiality="technical|agent"`, `data-spw-copy-depth="technical"`, `data-spw-anatomy`, `data-spw-semantic-expression`, `data-spw-feature on labs`][reg=set]
+    surfaces = `AGENTS.md, design/components, composition bench, settings technical blocks, .spw conventions/audits`
+  }[reg=facet]
+  transit: .{
+    definition = `Copy that explains why the next surface exists — editorial tier, not agent tier`
+    evidence = `index.html "internal transit" lede (1 route); should stay editorial, never agent-anatomy voice`
+    rule = `Transit copy names the next door; it does not name file paths, validation commands, or scaffold labels`
+  }[reg=facet]
+  boundary_rule: `Passport language (shell-width, pack-local, register diffusion, component passport) is internal — @component_region_personality harmony_tone_prime. Zero occurrences in public HTML census — good. Keep it in labs and .spw.`
+}
+
+^"external_clusters"{
+  claim: `External clusters are region personality + copy-depth + motif families — not a single site-wide meta voice.`
+  vocabulary_families_adopted: .{
+    webpage = 7
+    reference_document = 5
+    garden = 2
+    restaurant = 2
+    note = `data-spw-vocabulary on anatomy anchors — partial adoption on home, about/website, site-design`
+  }[reg=facet]
+  copy_depth_adopted: .{
+    normal = 91
+    genre = 11
+    entry = 5
+    rich = 5
+    technical = 2
+    note = `Recipes + settings lead genre/normal depth; technical depth rare outside labs`
+  }[reg=facet]
+  expressive_register_adopted: .{
+    editorial = 1
+    depth = 2
+    gap = `data-spw-register barely authored — expressive_registers convention ahead of HTML`
+  }[reg=facet]
+  overworked_stems: #[
+    `.{ stem = atlas ; count ≈ 633 ; risk = route titles + operator atlas + metaphor collapse ; direction = reserve atlas for topics/software spw atlas + design atlas routes }`,
+    `.{ stem = inspectable ; count ≈ 141 ; risk = self-description scaffold ; direction = replace with concrete route reason }`,
+    `.{ stem = legible ; count ≈ 118 ; risk = template drift ; direction = motif-specific synonyms per @component_region_personality audit }`,
+    `.{ stem = proof card ; count ≈ 147 ; risk = product-line jargon in public hubs ; direction = editorial tier only with glossary link }`,
+    `.{ stem = threshold ; count ≈ 280 ; risk = liminality word without data-spw-liminality ; direction = pair copy with liminality attr or drop }`
+  ][reg=set]
+  template_drift: #[
+    `Objective terminal / Subjective terminal — 8+8 occurrences; @component_region_personality perspective_pair_component says ≤1 per landing`,
+    `Return here when — 3 occurrences; tour-guide opener cluster`,
+    `Operational entry — 1 (home); migrate to agent-anatomy or delete`
+  ][reg=set]
+  external_gap: `data-spw-referentiality has 0 HTML adoptions — tiers exist only in .spw. Promotion: add referentiality on hook, agent-anatomy, and technical specimens first.`
+}
+
+^"internal_clusters"{
+  claim: `Internal clusters live in .spw coordinates, inspector vocabulary, and compact Spw expression — not in hub hero voice.`
+  spw_layer: .{
+    conventions = 76
+    audits = 12
+    growth_rate = `audits index + page/spacing/runtime/vocabulary cascades added 2026-07-09`
+    operational_diversity = `@semantic_capacity — convention vs audit vs surface vs plan vs index file types`
+  }[reg=facet]
+  coordinate_stems_internal: #[
+    `cost_class, elaboration_stage, cognitive_stratum, ecology_guild, mount_when, pack_axis, express_channel, lexicon_register`,
+    `operation + fixity on every durable .spw add (cache|audit|align|prime|contract|archive)`,
+    `data-spw-* stems in @data_spw_attribute_governance rhythm (state|arc|pulse|residue)`
+  ][reg=set]
+  module_vocabulary_internal: #[
+    `catalog describes/evaluates strings — 95 modules; portable copy not yet uniform (@javascript_module_census export debt)`,
+    `state-inspector reads dataset families — bridge between internal and external when reader enables inspect posture`
+  ][reg=set]
+  agent_vocabulary: #[
+    `AGENTS.md layer order, feature gating, attention architecture`,
+    `design catalog attr index`,
+    `check:local, check:runtime, rg validation lines in audits`
+  ][reg=set]
+  internal_adoption_win: `Technical passport terms (shell-width, register diffusion, component passport) stay out of public HTML — boundary holding.`
+}
+
+^"cluster_collision_seams"{
+  claim: `Collisions happen when internal stems, external stems, and metaphor registers speak at the same altitude without a tier attribute.`
+  seams: #[
+    `.{ seam = meta_scaffold_on_hubs ; evidence = legible + inspectable + proof card density ; fix = referentiality public + copy-unit ids ; owner = component-region-personality plan }`,
+    `.{ seam = atlas_overload ; evidence = 633 atlas mentions ; fix = name route-native motifs (data-spw-copy-motifs underused) ; owner = living-medium-copy motif_rule }`,
+    `.{ seam = perspective_pair_template ; evidence = 7 hubs verbatim terminals ; fix = perspective-pair component template ; owner = hook-region-anatomy }`,
+    `.{ seam = metaphor_without_coordinate ; evidence = ecology + field + culinary + webpage on same route family ; fix = declare lexicon_register per section in .spw cache ; owner = @metaphor_dimensional_lexicon }`,
+    `.{ seam = copy_depth_without_referentiality ; evidence = 114 copy-depth attrs, 0 referentiality ; fix = pair depth with tier on same element }`
+  ][reg=set]
+}
+
+^"metaphor_development"{
+  operation = "audit"
+  source = @metaphor_dimensional_lexicon
+  grade = `B+ metaphor harmony per @harmony_audit — powerful set; needs one physics dictionary (now tending via coordinate_space)`
+  registers_inventory: .{
+    ecology = `nutrient, guild, rhizosphere, plot, canopy — module clustering, export batches`
+    cognition = `prior, stratum, working_set, elaboration, mount cost`
+    field = `charge, resonance, register, receptor — attention physics (@expressive_registers channels)`
+    circuit = `resistor, capacitor — map to express_channel only`
+    technical = `selector, observer, dataset, MOUNT_WHEN — implementation evidence`
+    culinary = `mise-en-place, reduction, fermentation — recipes register (external cluster)`
+    webpage = `approach, arrival, return — approach_topography + data-spw-approach`
+  }[reg=facet]
+  development_rules: #[
+    `Add lexicon_register when a new audience needs different verbs — same coordinates`,
+    `Add coordinate axis when a distinction is real (paint_composite vs working_memory_pressure)`,
+    `Do not add dimensions for synonym preference — synonyms live under registers`,
+    `Performance seams must name cost_class — @metaphor_dimensional_lexicon#performance_coordinate_map`
+  ][reg=set]
+  active_development: #[
+    `consideration_physics — @living_medium_copy; external gather→elaborate→register; downplays merchant-lead on curriculum routes`,
+    `viewing_reason — cross-media audience facet; separates lens from overlap salience`,
+    `pack/gravity spatial metaphor — coordinate to pack_axis + mount_when; prose may say "room" or "plot"`
+  ][reg=set]
+  metaphor_debt: #[
+    `Hub copy mixes soft registers without lexicon_register declaration`,
+    `expressive_registers "register" collides with product-lines "register" and librarian audience — teach lens vs taxonomy in copy_ecology`,
+    `Three soft registers in one paragraph without coordinates = noise per @metaphor_dimensional_lexicon rule`
+  ][reg=set]
+  prime_next: `Musician + animator registers for promo-wonder-cycle and film scene beds — compare @semantic_capacity creative_expansion_prime before new nouns.`
+}
+
+^"growth_capacity"{
+  operation = "audit"
+  source = @semantic_capacity
+  claim: `.spw can absorb more meaning if each addition declares operation, fixity, evidence, pattern_consideration, expansion_prime, and validation.`
+  current_capacity: .{
+    conventions = 76
+    audits = 12
+    reading_orders = `audits/index.spw — 6+ cascades including page_spacing_runtime and vocabulary_metaphor`
+    dispatch_wiring = `conventions/index.spw — growing dispatch facet; index must stay navigable`
+  }[reg=facet]
+  absorption_signals: #[
+    `Audit cascades reuse insight_cache_shape — high value per @semantic_capacity diff_value_rules`,
+    `Coordinate-first metaphor — nouns may change without stem migration`,
+    `copy-unit + copy-depth — external collectibles ready for localization`,
+    `Leaflet precipitation — byproducts without full plans`
+  ][reg=set]
+  saturation_signals: #[
+    `Overworked external stems (atlas, legible, inspectable) — vocabulary not growing distinctly, repeating`,
+    `referentiality tier contract not in HTML — convention ahead of production`,
+    `Template symmetry (objective/subjective) — scaffold replacing region personality`,
+    `Low motif adoption — data-spw-copy-motifs sparse vs motif_rule in living-medium-copy`
+  ][reg=set]
+  promotion_ladder: .{
+    one_signal = `note in working plan`
+    two_signals = `leaflet or audit cache entry`
+    three_signals_cross_surface = `convention section or owner-plan contract`
+    landed = `archive with replacement pointer`
+  }[reg=facet]
+  growth_budget_2026_07: #[
+    `Wire data-spw-referentiality on 5 pilot routes (home, topics, services, about, settings)`,
+    `Retire Objective terminal verbatim on 7 hubs → perspective-pair component`,
+    `Add lexicon_register field to new audit caches when mixing ecology+cognition prose`,
+    `Cap new convention files — prefer extending existing conventions with operation=align sections`
+  ][reg=set]
+  falsification: `New .spw files add evocative language but agents cannot tell internal vs external tier, lexicon_register, or validation path.`
+}
+
+^"promotion_queue"{
+  p0_vocabulary: #[
+    `Add data-spw-referentiality to hook, technical, and agent-anatomy clusters`,
+    `Migrate home Operational entry to agent tier or delete`,
+    `Perspective-pair template — rg 'Objective terminal' → 0 on hubs`
+  ][reg=set]
+  p1_metaphor: #[
+    `Declare lexicon_register on hub sections in route HTML or feature roots`,
+    `Extend metaphor-dimensional-lexicon with consideration_physics + viewing_reason register aliases`,
+    `Disambiguate expressive register vs librarian register in copy_ecology dispatch note`
+  ][reg=set]
+  p2_capacity: #[
+    `Leaflet template for weekly vocabulary byproducts`,
+    `copy-unit manifest from extract-site-copy.mjs for editorial review`,
+    `Audit index cap — fold small audits into synthesis artifacts when >15 flat files`
+  ][reg=set]
+  validation: #[
+    `rg 'data-spw-referentiality' --glob '**/index.html'`,
+    `rg 'Objective terminal|Operational entry' **/*.html`,
+    `rg 'operation =|fixity =' .spw/audits/*.spw | wc -l`
+  ][reg=set]
+}
+
+^"cross_links"{
+  synthesis = @vocabulary_metaphor_growth_synthesis
+  copy = @copy_ecology
+  metaphor = @metaphor_dimensional_lexicon
+  capacity = @semantic_capacity
+  harmony = @harmony_audit
+}

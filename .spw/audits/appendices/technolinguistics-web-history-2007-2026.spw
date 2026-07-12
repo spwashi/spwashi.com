@@ -1,0 +1,303 @@
+# Appendix: Web Development History & Technolinguistic Culture (2007–2026)
+#
+# operation: cache + audit
+# fixity: tending
+# role: cultural appendix for metaphor/register research — not a timeline page for the public site
+
+#>appendix_technolinguistics_web_history_2007_2026
+#:audit #!appendix #!history #!copy #!culture #!technolinguistics
+#:operation #!cache
+#:layer #!pragmatics
+
+@appendices_index: ~"./index.spw"
+@metaphor_primitive_research_branching: ~"../metaphor-primitive-research-branching-2026-07.spw"
+@vocabulary_metaphor_growth_synthesis: ~"../vocabulary-metaphor-growth-synthesis-2026-07.spw"
+@metaphor_dimensional_lexicon: ~"../../conventions/metaphor-dimensional-lexicon.spw"
+@expressive_registers: ~"../../conventions/expressive-registers.spw"
+@semantic_capacity: ~"../../conventions/semantic-capacity.spw"
+@copy_localization: ~"../../conventions/copy-localization.spw"
+@component_region_personality: ~"../../conventions/component-region-personality.spw"
+
+audit_run: .{
+  at = `2026-07-09`
+  scope = `Technolinguistic cultural impacts on web authoring metaphors since 2007 — appendix to @metaphor_primitive_research_branching`
+  method = `era synthesis from platform history, framework vocabulary, and design-discourse shifts; mapped to spw lexicon_register coordinates`
+  posture = `Editorial/technical tier — informs register choice and copy localization; not public hero copy`
+}[reg=facet]
+
+^"thesis"{
+  claim: `Web development since 2007 did not only change stacks — it changed the nouns and verbs developers, designers, and readers share. Technolinguistics (the vocabulary platforms export into culture) repeatedly colonized everyday speech: "app," "cloud," "feed," "responsive," "component," "hydrate," "agent." Each wave left metaphor debt: words that feel universal but encode a specific era's constraints.`
+  site_rule: `spwashi.com should freeze coordinates (cost_class, mount_when, express_channel, referentiality tier) and treat era-specific framework nouns as replaceable lexicon_registers — per @metaphor_dimensional_lexicon room_rule.`
+  falsification: `Public copy starts naming React/Next/Tailwind concepts as if they were permanent site semantics, or internal .spw mixes three era metaphors in one paragraph without a register declaration.`
+}
+
+^"technolinguistics_frame"{
+  definition: `Technolinguistics = the study of how technology exports controlled vocabulary into culture, and how that vocabulary reshapes what feels "natural" to build, read, and maintain.`
+  three_layers: .{
+    platform = `Browser/OS/network words that became universal: tab, cookie, cache, scroll, notification, install`
+    framework = `Toolchain words that feel technical but go stale fast: hydration, suspense, island, edge function, design token`
+    discourse = `Conference/blog/Twitter-era words that steer taste: Web 2.0, mobile-first, JAMstack, vibe coding, agentic`
+  }[reg=facet]
+  cultural_impact_axes: #[
+    `who counts as a builder (developer vs designer vs creator vs agent operator)`,
+    `what "fast" means (latency vs time-to-ship vs cognitive load)`,
+    `what "native" means (OS app vs PWA vs hand-authored HTML)`,
+    `what "semantic" means (SEO vs accessibility vs design tokens vs Spw operators)`,
+    `what "open" means (source vs interoperable vs inspectable vs local-first)`
+  ][reg=set]
+  spw_mapping: `Era nouns → lexicon_register aliases. Era invariants → coordinate axes. See era_table below.`
+}
+
+^"era_table"{
+  note = `Granular phases since 2007. Each row: dominant technolinguistics, cultural impact, metaphor residue on the web, spw register implication.`
+
+  phases: #[
+    .{
+      years = `2007–2009`
+      platform = #[`iPhone SDK`, `HTML5 draft energy`, `ES3→ES5`, `jQuery`, `GitHub growth`][reg=set]
+      technolinguistics = #[`Web 2.0`, `AJAX`, `folksonomy`, `the social graph`, `app store`, `touch`, `offline? (not yet)`][reg=set]
+      cultural_impact = #[
+        `The web re-learned itself as interactive, not documentary — "page" started to mean surface that answers back`,
+        `"App" split psychology: small installable unit vs open URL — tension still unresolved in PWA discourse`,
+        `Developers borrowed social vocabulary (friend, feed, follow) into data models — graph thinking enters consumer UX`,
+        `jQuery made DOM manipulation feel like plumbing — "chain" and "plugin" as folk engineering`
+      ][reg=set]
+      residue = #[`$.`, `plugin`, `widget`, `wall`, `timeline`][reg=set]
+      spw_register = `webpage + technical — prairie/approach channels not yet culturally available; field metaphors still pre-mobile-attention`
+    },
+    .{
+      years = `2010–2012`
+      platform = #[`responsive images debate`, `Node/npm`, `CoffeeScript→CS→JS`, `Media queries`, `Android scale`][reg=set]
+      technolinguistics = #[`responsive`, `mobile-first`, `breakpoint`, `viewport`, `the cloud`, `SaaS`, `bootstrap (framework and metaphor)`][reg=set]
+      cultural_impact = #[
+        `Ethan Marcotte's "responsive" turned layout into moral language — sites that weren't responsive read as negligent`,
+        `"Mobile-first" inverted design hierarchy; thumb reach became a public design virtue`,
+        `"Cloud" abstracted infrastructure into weather — ownership and locality became harder to discuss honestly`,
+        `npm made dependency a casual verb — supply chain risk was not yet cultural vocabulary`
+      ][reg=set]
+      residue = #[`breakpoint`, `viewport`, `cloud`, `SaaS`, `grid (layout aspiration)`][reg=set]
+      spw_register = `technical + cognition — shell-width vs box-width axis born from this era's layout fights (@dimension_vocabulary lineage)`
+    },
+    .{
+      years = `2013–2015`
+      platform = #[`React public`, `Web Components spec`, `Flexbox/Grid maturation`, `ES6 modules`, `npm scripts`][reg=set]
+      technolinguistics = #[`component`, `SPA`, `virtual DOM`, `unidirectional data flow`, `shadow DOM`, `isomorphic`, `full stack`][reg=set]
+      cultural_impact = #[
+        `"Component" became the universal noun — pages decomposed into reusable capsules; design systems begin as component catalogs`,
+        `SPA reframed navigation as state transition — URL as implementation detail briefly fashionable`,
+        `"Full stack" collapsed role boundaries — one person expected to speak backend and frontend dialects`,
+        `Shadow DOM introduced honest talk about encapsulation — but "shadow" also made inspectability feel transgressive`
+      ][reg=set]
+      residue = #[`component`, `props`, `state`, `hydrate (seeded)`, `bundle`, `tree-shaking (later)`][reg=set]
+      spw_register = `technical + circuit — module roles (resistor/capacitor) align with component-era ownership metaphors`
+    },
+    .{
+      years = `2016–2018`
+      platform = #[`PWA checklist`, `webpack/babel default`, `design tokens (Salesforce/Material)`, `GraphQL hype`, `CSS Grid shipped`][reg=set]
+      technolinguistics = #[`JAMstack`, `serverless`, `design system`, `atomic design`, `utility-first (pre-Tailwind peak)`, `progressive enhancement (defensive reuse)`][reg=set]
+      cultural_impact = #[
+        `JAMstack promised speed via architecture words — "static" became premium, "dynamic" suspicious`,
+        `"Serverless" hid servers from speech — ops literacy dropped for many frontend authors`,
+        `Design tokens turned visual decisions into API-like nouns — design/dev shared dictionary, also shared drift`,
+        `Progressive enhancement re-armed as cultural counter-movement against JS-only SPAs — "works without" as ethics`
+      ][reg=set]
+      residue = #[`token`, `primitive`, `variant`, `slot`, `headless`, `Jamstack`][reg=set]
+      spw_register = `ecology + technical — token layers mirror nutrient fractal; spwashi hand-authored HTML is a deliberate post-JAMstack stance`
+    },
+    .{
+      years = `2019–2021`
+      platform = #[`COVID remote delivery`, `Tailwind dominance`, `Next.js app router discourse`, `Web Vitals`, `esbuild/snowpack experiments`][reg=set]
+      technolinguistics = #[`utility-first`, `LCP/CLS/INP`, `content mesh`, `edge`, `streaming SSR`, `dark mode (product language)`][reg=set]
+      cultural_impact = #[
+        `Utility-first CSS made class strings read as prose — authors think in abbreviated design language`,
+        `Core Web Vitals turned performance into SEO morality — "good" measurable in lighthouse dialect`,
+        `Remote work accelerated async docs and video — "readable repo" competed with "watch the stream"`,
+        `"Edge" revived geography in speech after cloud erased it — latency as cultural anxiety returns`
+      ][reg=set]
+      residue = #[`utility`, `vitals`, `edge`, `streaming`, `prefers-color-scheme`][reg=set]
+      spw_register = `field + cognition — attention/performance vocabulary (charge, resonance) answers vitals-era measurement culture`
+    },
+    .{
+      years = `2022–2024`
+      platform = #[`LLM assistants in IDE`, `Astro islands`, `React Server Components discourse`, `MCP (2024)`, `CSS nesting baseline`][reg=set]
+      technolinguistics = #[`copilot`, `prompt`, `hallucination`, `agent`, `islands`, `server component`, `vibe coding`, `context window`][reg=set]
+      cultural_impact = #[
+        `"Prompt" became a production verb — authorship blurred between human intent and model completion`,
+        `"Hallucination" imported clinical doubt into engineering — trust became conversational, not proof-based`,
+        `Islands/server-component wars = architecture as identity — teams defined by what they refuse to ship to the client`,
+        `MCP/agent vocabulary colonized integration speech — "tool" means model-callable surface, not hand tool`
+      ][reg=set]
+      residue = #[`prompt`, `agent`, `context`, `tool (MCP)`, `grounding`, `trace`][reg=set]
+      spw_register = `agent + technical — referentiality tier split (public/editorial vs agent) is a direct response to this wave`
+    },
+    .{
+      years = `2025–2026`
+      platform = #[`agent harnesses`, `local-first nostalgia`, `typed build pipelines on static sites`, `design catalog introspection`][reg=set]
+      technolinguistics = #[`agentic`, `harness`, `ecology (repo/agent)`, `audit`, `contract`, `slice`, `semantic capacity`][reg=set]
+      cultural_impact = #[
+        `"Agentic" risks replacing craft verbs with delegation verbs — maintainers must reassert inspectability`,
+        `Audit/contract/ecology words enter JS repos — maintenance discourse becomes organic metaphor (nutrient, guild)`,
+        `Local-first and hand-authored routes re-valued as trust anchors against model-generated sprawl`,
+        `Technolinguistic fatigue: teams want coordinates, not another framework religion`
+      ][reg=set]
+      residue = #[`agent`, `audit`, `ecology`, `contract`, `grounding`, `claim`][reg=set]
+      spw_register = `ecology + cognition + agent — spwashi .spw operation discipline (cache/audit/align/prime/contract/archive) is explicit technolinguistic counter-vocabulary`
+    }
+  ][reg=set]
+}
+
+^"cultural_impact_deep_granularity"{
+  note = `Cross-era technolinguistic forces that still steer navigation, interaction, and rendering metaphors on spwashi.com.`
+
+  borrowed_domestic_metaphors: .{
+    claim = `The web's oldest technolinguistics are household words — page, link, bookmark, window, scroll, home, refresh. They trained non-developers to think in document navigation while the stack became an application platform.`
+    impact = #[
+      `Navigation primitives still say "frame" and "spell" — domestic + game dialect resisting pure app vocabulary`,
+      `Section-handle and locomotion preserve scroll/document ethics inside enhanced chrome`,
+      `"Home" route semantics carry 1990s information architecture forward`
+    ][reg=set]
+    spw_stance = `Keep document ethics in coordinates; do not rename "route" to "screen" in public copy without referentiality justification.`
+  }[reg=facet]
+
+  militarized_security_dialect: .{
+    claim = `Firewall, sandbox, attack surface, vector, payload — security technolinguistics turned collaboration language paranoid.`
+    impact = #[
+      `Third-party embeds read as "risk" before "relation"`,
+      `"Sanitize" and "escape" enter template discourse`,
+      `Developers over-identify with threat models — affects what feels safe to expose in HTML inspect surfaces`
+    ][reg=set]
+    spw_stance = `Prefer inspection, boundary, referentiality tier over war metaphors in public voice; agent tier may cite validation commands.`
+  }[reg=facet]
+
+  economic_platform_dialect: .{
+    claim = `App store, subscription, creator, funnel, conversion, engagement — product technolinguistics colonized art and education sites.`
+    impact = #[
+      `Curriculum routes pressured to sound like SaaS onboarding`,
+      `"Engagement" replaces attention, wonder, or care as the success noun`,
+      `Merchant-lead copy fights consideration_physics gather→elaborate→register on workshop routes`
+    ][reg=set]
+    spw_stance = `@living_medium_copy consideration_physics — editorial lead, merchant downstream; see @vocabulary_metaphor_growth_synthesis wave_b_voice.`
+  }[reg=facet]
+
+  organic_metaphor_revival: .{
+    claim = `2018–2026 maintenance discourse revived garden/ecology/compost/rhizome vocabulary against burnout and dependency churn.`
+    impact = #[
+      `npm "ecosystem" literalized into repo-level guild metaphors`,
+      `Growth vs saturation arguments easier in organic register`,
+      `Risk: evocative ecology nouns leak into public copy as faux-warmth`
+    ][reg=set]
+    spw_stance = `Ecology register internal/editorial specimen; public uses region personality + motifs — @internal_external_vocabulary_clusters boundary_rule.`
+  }[reg=facet]
+
+  electrical_physics_popular_science: .{
+    claim = `Charge, field, resonance, circuit — physics technolinguistics from electronics and attention research became UX-native.`
+    impact = #[
+      `Hover/focus reads as coupling, not just highlight`,
+      `Palette "resonance" and charge-cycle phases feel intuitive to long-time visitors`,
+      `Circuit metaphor helps module ownership without visitor-facing ohms`
+    ][reg=set]
+    spw_stance = `Field register owns interaction primitives; circuit register is editor/agent only — @circuit_components tone rule.`
+  }[reg=facet]
+
+  measurement_as_moral_language: .{
+    claim = `Lighthouse, Web Vitals, "performance culture," a11y scores — measurement technolinguistics turned qualitative craft into pass/fail dialect.`
+    impact = #[
+      `Authors justify tokens and bundles with metrics before reader experience`,
+      `Risk of optimizing catalogs over voices`,
+      `Honest typography telemetry (pretext-physics) inherits the same moral frame`
+    ][reg=set]
+    spw_stance = `cost_class + falsification paths in audits — measurement serves claims, not identity; cluster_g in @metaphor_primitive_research_branching.`
+  }[reg=facet]
+
+  localization_and_cultural_seams: .{
+    claim = `English technolinguistics are not universal — temperature/warmth, direction metaphors, and agricultural registers carry cultural load.`
+    impact = #[
+      `"Responsive" and "mobile-first" embed Western device-history`,
+      `Culinary and hospitality registers on spwashi routes are intentional cultural media, not generic metaphor`,
+      `Future translation must separate coordinate ids from lexicon nouns`
+    ][reg=set]
+    spw_stance = `@copy_localization culturally local metaphors seam; freeze stems, translate registers.`
+  }[reg=facet]
+}
+
+^"framework_vocabulary_churn"{
+  note = `High-churn technolinguistics since 2007 that should NOT become spwashi fixed stems.`
+
+  ephemeral_nouns: #[
+    `hydration, suspense, island, server component, edge function`,
+    `utility-first, atomic, headless, composable (framework sense)`,
+    `copilot, RAG, fine-tune, context window`,
+    `Jamstack (brand-era), Web 2.0 (period brand)`
+  ][reg=set]
+
+  durable_coordinates_underneath: #[
+    `authoring prior vs runtime elaboration`,
+    `paint cost vs working-memory pressure`,
+    `inspectability vs bundle secrecy`,
+    `public vs agent referentiality`,
+    `channel scalars vs rendering verbs`
+  ][reg=set]
+
+  rule: `When a framework noun names a real coordinate, add the coordinate to @metaphor_dimensional_lexicon — keep the framework word as an optional alias in a cache, not in public HTML.`
+}
+
+^"site_implications"{
+  for_navigation: #[
+    `Prefer travel/posture coordinates over era words ("SPA transition", "app shell")`,
+    `Shell "field" vocabulary is culturally legible post-2016 vitals/attention era — keep disambiguated from product "field" (form)`
+  ][reg=set]
+  for_interaction: #[
+    `Charge/resonance dialect predates but rhymes with 2019–2021 performance moralization — use for teachable inspectability, not guilt`,
+    `Resonance probe = conceptual echo of 2007 "Web 2.0" coupling, bounded by operators`
+  ][reg=set]
+  for_rendering: #[
+    `Expressive registers are a post-design-token move — channels as nouns, renderings as verbs, registers as viewpoint`,
+    `Pilot registers on public routes teaches an alternative to utility-class prose strings`
+  ][reg=set]
+  for_copy: #[
+    `Creator-first invitation resists SaaS technolinguistics on curriculum routes`,
+    `Declare lexicon_register when mixing ecology+cognition+field in .spw caches`,
+    `Use this appendix at editorial/technical tier when choosing motifs — not in hero ledes`
+  ][reg=set]
+}
+
+^"research_branching_from_history"{
+  note = `Creativity forks suggested by technolinguistic history — link to @metaphor_primitive_research_branching clusters.`
+
+  branches: #[
+    `.{ topic = post-utility register pilot ; era = 2019–2021 ; cluster = cluster_a_field_rendering ; question = can channels replace class-string thinking on cards? }`,
+    `.{ topic = consideration_physics vs SaaS onboarding ; era = 2016–2024 ; cluster = vocabulary wave_b ; question = workshop copy as counter-technolinguistics }`,
+    `.{ topic = agent tier without delegation erasure ; era = 2022–2026 ; cluster = cluster_d_cognition_cost_surface ; question = show elaboration without "vibe coding" voice }`,
+    `.{ topic = culinary/hospitality as cultural media ; era = cross-cutting ; cluster = vocabulary culinary_metaphor ; question = motifs as translation-ready registers }`,
+    `.{ topic = measurement honesty ; era = 2019–2026 ; cluster = cluster_g_measurement_typography ; question = telemetry without lighthouse moralism }`
+  ][reg=set]
+}
+
+^"promotion_queue"{
+  p0_cache: #[
+    `Link this appendix from metaphor_primitive_research_branching ^"appendix" facet`,
+    `Add technolinguistics row to copy_localization culturally local metaphors examples`
+  ][reg=set]
+  p1_editorial: #[
+    `One "technolinguistics watch" bullet in component-region-personality referentiality notes`,
+    `Motif strip on about/website field guide — era residue words vs coordinate names (editorial specimen)`
+  ][reg=set]
+  do_not_build: #[
+    `Public timeline page of web history — out of scope unless user requests route`,
+    `Framework name-dropping in hero copy (React, Tailwind, etc.)`,
+    `Treating this appendix as fixed history — mark tending; revise when platform discourse shifts`
+  ][reg=set]
+  validation: #[
+    `rg 'era_table|technolinguistics_frame|2007' .spw/audits/appendices/technolinguistics-web-history-2007-2026.spw`,
+    `rg 'technolinguistics_web' .spw/audits/appendices/`
+  ][reg=set]
+}
+
+^"cross_links"{
+  index = @appendices_index
+  parent = @metaphor_primitive_research_branching
+  vocabulary = @vocabulary_metaphor_growth_synthesis
+  lexicon = @metaphor_dimensional_lexicon
+  localization = @copy_localization
+  capacity = @semantic_capacity
+}

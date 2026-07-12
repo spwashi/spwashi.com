@@ -1,0 +1,248 @@
+# Appendices Index (timeline pointers)
+#
+# operation: align
+# fixity: tending
+# role: pointer hub for .spw/audits/appendices/ — nested granularity windows, no public route
+
+#>appendices_index
+#:index #!audit #!history #!timeline #!appendix
+#:operation #!align
+#:layer #!pragmatics
+
+@semantic_capacity: ~"../../conventions/semantic-capacity.spw"
+@metaphor_primitive_research_branching: ~"../metaphor-primitive-research-branching-2026-07.spw"
+@appendix_technolinguistics: ~"./technolinguistics-web-history-2007-2026.spw"
+@appendix_edpsych_materials: ~"./edpsych-materials-science-history-500y.spw"
+@appendix_computer_science: ~"./computer-science-history-500y.spw"
+@appendix_manufacturing: ~"./manufacturing-history-500y.spw"
+@appendix_fashion: ~"./fashion-history-500y.spw"
+@appendix_film: ~"./film-history-500y.spw"
+@appendix_print: ~"./print-history-500y.spw"
+@vocabulary_metaphor_growth_synthesis: ~"../vocabulary-metaphor-growth-synthesis-2026-07.spw"
+@hypermedia_2d: ~"../../conventions/hypermedia-2d.spw"
+@typography_packing: ~"../../conventions/typography-packing.spw"
+@expressive_registers: ~"../../conventions/expressive-registers.spw"
+@component_packing: ~"../../conventions/component-packing.spw"
+@metaphor_dimensional_lexicon: ~"../../conventions/metaphor-dimensional-lexicon.spw"
+@js_architecture_cognition: ~"../../conventions/js-architecture-cognition.spw"
+@electromagnetic_containers: ~"../../conventions/electromagnetic-containers.spw"
+@copy_localization: ~"../../conventions/copy-localization.spw"
+@audits_index: ~"../index.spw"
+@working_tree_index: ~"../working-tree-index-2026-07.spw"
+
+operation = "align"
+fixity = "tending"
+
+^"thesis"{
+  claim: `History appendices are inspectable research coordinates, not published timeline pages. This index names nested time windows, points to appendix facets, and maps disciplines to site registers.`
+  rule: `Read the index first when choosing era context; drill into appendix facets by window id — do not duplicate era prose here.`
+  anchor_year = 2026
+  working_tree = @working_tree_index
+  parent_registry = @audits_index
+}
+
+^"granularity_windows"{
+  note = `Nested windows — each inner window is a refinement of its parent. Ids are stable pointers into appendix era_table facets.`
+
+  windows: #[
+    .{ id = `w500` ; span = `1526–2026` ; label = `500 years` ; granularity = `epoch` ; parent = null }[reg=facet],
+    .{ id = `w200` ; span = `1826–2026` ; label = `200 years` ; granularity = `period` ; parent = `w500` }[reg=facet],
+    .{ id = `w100` ; span = `1926–2026` ; label = `100 years` ; granularity = `generation` ; parent = `w200` }[reg=facet],
+    .{ id = `w50` ; span = `1976–2026` ; label = `50 years` ; granularity = `field-formation` ; parent = `w100` }[reg=facet],
+    .{ id = `w20` ; span = `2006–2026` ; label = `20 years` ; granularity = `platform-research` ; parent = `w50` }[reg=facet],
+    .{ id = `w15` ; span = `2011–2026` ; label = `15 years` ; granularity = `discourse-wave` ; parent = `w20` }[reg=facet],
+    .{ id = `w5` ; span = `2021–2026` ; label = `5 years` ; granularity = `current-research` ; parent = `w15` }[reg=facet],
+    .{ id = `w_web` ; span = `2007–2026` ; label = `web technolinguistics` ; granularity = `specialized` ; parent = `w20` ; note = `Overlaps w20/w15/w5 — framework vocabulary, not full discipline history` }[reg=facet]
+  ][reg=set]
+
+  drill_rule: `w500 → w200 → w100 → w50 → w20 → w15 → w5. w_web is a lateral branch under w20 for @appendix_technolinguistics only.`
+}
+
+^"appendix_registry"{
+  appendices: #[
+    .{
+      id = `technolinguistics_web`
+      file = @appendix_technolinguistics
+      disciplines = #[`web authoring`, `technolinguistics`, `platform discourse`][reg=set]
+      windows = #[`w_web`, `w20`, `w15`, `w5`][reg=set]
+      entry_facets = #[`technolinguistics_frame`, `era_table`, `cultural_impact_deep_granularity`, `framework_vocabulary_churn`][reg=set]
+      site_registers = #[`technical`, `field`, `agent`][reg=set]
+      parent_audit = @metaphor_primitive_research_branching
+    }[reg=facet],
+    .{
+      id = `edpsych_materials`
+      file = @appendix_edpsych_materials
+      disciplines = #[`educational psychology`, `learning sciences`, `materials science`, `solid-state physics (applied)`][reg=set]
+      windows = #[`w500`, `w200`, `w100`, `w50`, `w20`, `w15`, `w5`][reg=set]
+      entry_facets = #[`edpsych_timeline`, `materials_timeline`, `cross_discipline_resonance`, `site_implications`][reg=set]
+      site_registers = #[`cognition`, `field`, `circuit`, `technical`][reg=set]
+      parent_audit = @metaphor_primitive_research_branching
+    }[reg=facet],
+    .{
+      id = `computer_science`
+      file = @appendix_computer_science
+      disciplines = #[`computer science`, `software engineering`, `systems`][reg=set]
+      windows = #[`w500`, `w200`, `w100`, `w50`, `w20`, `w15`, `w5`][reg=set]
+      entry_facets = #[`timeline`, `site_implications`][reg=set]
+      site_registers = #[`technical`, `cognition`, `ecology`][reg=set]
+      parent_audit = @metaphor_primitive_research_branching
+    }[reg=facet],
+    .{
+      id = `manufacturing`
+      file = @appendix_manufacturing
+      disciplines = #[`manufacturing`, `industrial craft`, `lean production`][reg=set]
+      windows = #[`w500`, `w200`, `w100`, `w50`, `w20`, `w15`, `w5`][reg=set]
+      entry_facets = #[`timeline`, `site_implications`][reg=set]
+      site_registers = #[`technical`, `consideration_physics`, `ecology`][reg=set]
+      parent_audit = @metaphor_primitive_research_branching
+    }[reg=facet],
+    .{
+      id = `fashion`
+      file = @appendix_fashion
+      disciplines = #[`fashion`, `textile culture`, `expression design`][reg=set]
+      windows = #[`w500`, `w200`, `w100`, `w50`, `w20`, `w15`, `w5`][reg=set]
+      entry_facets = #[`timeline`, `site_implications`][reg=set]
+      site_registers = #[`field`, `prairie`, `culinary`][reg=set]
+      parent_audit = @metaphor_primitive_research_branching
+    }[reg=facet],
+    .{
+      id = `film`
+      file = @appendix_film
+      disciplines = #[`film`, `cinema`, `temporal media`, `hypermedia`][reg=set]
+      windows = #[`w500`, `w200`, `w100`, `w50`, `w20`, `w15`, `w5`][reg=set]
+      entry_facets = #[`timeline`, `site_implications`][reg=set]
+      site_registers = #[`field`, `consideration_physics`, `acoustics_rhythm`][reg=set]
+      parent_audit = @metaphor_primitive_research_branching
+    }[reg=facet],
+    .{
+      id = `print`
+      file = @appendix_print
+      disciplines = #[`print`, `typography`, `publishing`, `editorial craft`][reg=set]
+      windows = #[`w500`, `w200`, `w100`, `w50`, `w20`, `w15`, `w5`][reg=set]
+      entry_facets = #[`timeline`, `site_implications`][reg=set]
+      site_registers = #[`technical`, `literacy`, `webpage`][reg=set]
+      parent_audit = @metaphor_primitive_research_branching
+    }[reg=facet]
+  ][reg=set]
+}
+
+^"pointer_index"{
+  note = `Lookup table — keyword → appendix id → window id → facet name.`
+
+  by_keyword: #[
+    `.{ kw = web|framework|responsive|agent|JAMstack ; appendix = technolinguistics_web ; window = w_web ; facet = era_table }`,
+    `.{ kw = technolinguistics|platform vocabulary ; appendix = technolinguistics_web ; window = w_web ; facet = technolinguistics_frame }`,
+    `.{ kw = SaaS|merchant|onboarding dialect ; appendix = technolinguistics_web ; window = w15 ; facet = cultural_impact_deep_granularity.economic_platform_dialect }`,
+    `.{ kw = Piaget|Vygotsky|ZPD|constructivism ; appendix = edpsych_materials ; window = w100 ; facet = edpsych_timeline.w100 }`,
+    `.{ kw = cognitive load|elaboration|working memory ; appendix = edpsych_materials ; window = w50 ; facet = edpsych_timeline.w50 }`,
+    `.{ kw = embodied|affordance|situated ; appendix = edpsych_materials ; window = w50 ; facet = edpsych_timeline.w50 }`,
+    `.{ kw = growth mindset|MOOC|learning analytics ; appendix = edpsych_materials ; window = w15 ; facet = edpsych_timeline.w15 }`,
+    `.{ kw = AI tutor|spacing|retrieval practice ; appendix = edpsych_materials ; window = w5 ; facet = edpsych_timeline.w5 }`,
+    `.{ kw = steel|semiconductor|polymer|graphene ; appendix = edpsych_materials ; window = w100 ; facet = materials_timeline.w100 }`,
+    `.{ kw = composite|biomaterial|nanomaterial ; appendix = edpsych_materials ; window = w50 ; facet = materials_timeline.w50 }`,
+    `.{ kw = additive|metamaterial|perovskite ; appendix = edpsych_materials ; window = w20 ; facet = materials_timeline.w20 }`,
+    `.{ kw = solid-state battery|sustainable material|ML materials ; appendix = edpsych_materials ; window = w5 ; facet = materials_timeline.w5 }`,
+    `.{ kw = charge|conception|potential|kinetic|manifest ; appendix = edpsych_materials ; window = w200 ; facet = cross_discipline_resonance.charge_states }`,
+    `.{ kw = MOUNT_WHEN|elaboration_stage ; appendix = edpsych_materials ; window = w50 ; facet = site_implications.cognition_runtime }`,
+    `.{ kw = algorithm|compiler|git|module|agent|MCP ; appendix = computer_science ; window = w50 ; facet = timeline.w50 }`,
+    `.{ kw = LLM|copilot|grounding|trace ; appendix = computer_science ; window = w5 ; facet = timeline.w5 }`,
+    `.{ kw = lean|kanban|tolerance|assembly|additive|DFM ; appendix = manufacturing ; window = w100 ; facet = timeline.w100 }`,
+    `.{ kw = maker|Industry 4.0|microfactory ; appendix = manufacturing ; window = w20 ; facet = timeline.w20 }`,
+    `.{ kw = couture|silhouette|palette|collection|fast fashion ; appendix = fashion ; window = w100 ; facet = timeline.w100 }`,
+    `.{ kw = motif|resale|register|approach ; appendix = fashion ; window = w20 ; facet = site_implications }`,
+    `.{ kw = cut|montage|scene|reel|credits|streaming ; appendix = film ; window = w100 ; facet = timeline.w100 }`,
+    `.{ kw = scene-lane|virtual production|timing arc ; appendix = film ; window = w5 ; facet = site_implications }`,
+    `.{ kw = Gutenberg|typography|kerning|variable font|edition ; appendix = print ; window = w500 ; facet = timeline.w500 }`,
+    `.{ kw = pretext|brace|operator|proof|imprint ; appendix = print ; window = w50 ; facet = site_implications }`
+  ][reg=set]
+
+  by_discipline: .{
+    computer_science = @appendix_computer_science
+    manufacturing = @appendix_manufacturing
+    fashion = @appendix_fashion
+    film = @appendix_film
+    print = @appendix_print
+    edpsych_materials = @appendix_edpsych_materials
+    technolinguistics_web = @appendix_technolinguistics
+  }[reg=facet]
+
+  by_site_register: .{
+    cognition = .{ appendices = #[`edpsych_materials`, `computer_science`][reg=set] ; windows = #[`w50`, `w20`, `w5`][reg=set] ; convention = @js_architecture_cognition }[reg=facet]
+    field = .{ appendices = #[`edpsych_materials`, `fashion`, `film`][reg=set] ; windows = #[`w100`, `w50`][reg=set] ; also = `technolinguistics_web/w_web` ; convention = @metaphor_dimensional_lexicon }[reg=facet]
+    circuit = .{ appendix = `edpsych_materials` ; windows = #[`w100`, `w50`][reg=set] ; convention = @electromagnetic_containers }[reg=facet]
+    technical = .{ appendices = #[`technolinguistics_web`, `computer_science`, `print`, `manufacturing`][reg=set] ; windows = #[`w_web`, `w50`, `w5`][reg=set] }[reg=facet]
+    literacy = .{ appendix = `print` ; windows = #[`w100`, `w50`][reg=set] ; convention = @typography_packing }[reg=facet]
+    hypermedia = .{ appendix = `film` ; windows = #[`w20`, `w5`][reg=set] ; convention = @hypermedia_2d }[reg=facet]
+    expression = .{ appendix = `fashion` ; windows = #[`w50`, `w20`][reg=set] ; convention = @expressive_registers }[reg=facet]
+    packing = .{ appendix = `manufacturing` ; windows = #[`w100`, `w50`][reg=set] ; convention = @component_packing }[reg=facet]
+    localization = .{ appendix = `technolinguistics_web` ; facet = `cultural_impact_deep_granularity.localization_and_cultural_seams` ; convention = @copy_localization }[reg=facet]
+  }[reg=facet]
+}
+
+^"reading_orders"{
+  metaphor_research = ?<
+    @metaphor_primitive_research_branching,
+    `this index`,
+    @appendix_edpsych_materials,
+    @appendix_technolinguistics,
+    @vocabulary_metaphor_growth_synthesis
+  >[reg=stream]
+
+  discipline_history_full = ?<
+    `this index`,
+    @appendix_edpsych_materials,
+    @appendix_computer_science,
+    @appendix_manufacturing,
+    @appendix_fashion,
+    @appendix_film,
+    @appendix_print
+  >[reg=stream]
+
+  craft_media_disciplines = ?<
+    `this index`,
+    @appendix_manufacturing,
+    @appendix_fashion,
+    @appendix_film,
+    @appendix_print
+  >[reg=stream]
+
+  systems_disciplines = ?<
+    `this index`,
+    @appendix_computer_science,
+    @appendix_edpsych_materials,
+    @appendix_technolinguistics
+  >[reg=stream]
+
+  web_culture_only = ?<
+    `this index`,
+    @appendix_technolinguistics
+  >[reg=stream]
+}
+
+^"owner_claim"{
+  claim_id = "appendices-index-001"
+  hypothesis = `Nested window ids stay stable; new appendices register in appendices/index.spw before era prose spreads into conventions.`
+  probe_ref = `rg 'granularity_windows|appendix_registry|pointer_index' .spw/audits/appendices/index.spw`
+  falsification = `A new history appendix lands without appendices/index.spw registry entry and pointer_index rows.`
+  status = "active"
+}
+
+validation: #[
+  `rg 'w500|w5|w_web' .spw/audits/appendices/index.spw`,
+  `rg 'appendices_index|appendices/' .spw/audits/index.spw`,
+  `find .spw/audits/appendices -name '*.spw' | wc -l`
+][reg=set]
+
+dispatch: .{
+  working_tree = @working_tree_index
+  audits = @audits_index
+  technolinguistics = @appendix_technolinguistics
+  edpsych_materials = @appendix_edpsych_materials
+  computer_science = @appendix_computer_science
+  manufacturing = @appendix_manufacturing
+  fashion = @appendix_fashion
+  film = @appendix_film
+  print = @appendix_print
+  metaphor_research = @metaphor_primitive_research_branching
+  vocabulary = @vocabulary_metaphor_growth_synthesis
+}[reg=facet]

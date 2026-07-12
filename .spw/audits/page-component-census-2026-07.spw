@@ -1,0 +1,169 @@
+# Page-by-Page Component Census (2026-07)
+#
+# operation: audit
+# fixity: tending
+# method: static HTML census across 149 source routes (excludes dist/, dist-vite/)
+
+#>page_component_census_2026_07
+#:audit #!components #!routes #!html
+#:operation #!audit
+#:layer #!pragmatics
+
+@component_taxonomy: ~"../conventions/component-taxonomy.spw"
+@site_starter_component_kit: ~"../conventions/site-starter-component-kit.spw"
+@composition_box_model: ~"../conventions/composition-box-model.spw"
+@component_packing: ~"../conventions/component-packing.spw"
+@spatial_gravity: ~"../conventions/spatial-gravity.spw"
+@viewing_reason: ~"../conventions/viewing-reason.spw"
+@component_philosophy_harmony: ~"./component-philosophy-harmony-2026-07.spw"
+@css_manifest: ~"../../scripts/typed/css-manifest.mjs"
+@spacing_sheet_census: ~"./spacing-sheet-census-2026-07.spw"
+@javascript_module_census: ~"./javascript-module-census-2026-07.spw"
+@page_spacing_crossref: ~"./page-spacing-crossref-2026-07.spw"
+@page_spacing_runtime_synthesis: ~"./page-spacing-runtime-synthesis-2026-07.spw"
+@vocabulary_metaphor_growth_synthesis: ~"./vocabulary-metaphor-growth-synthesis-2026-07.spw"
+
+audit_run: .{
+  at = `2026-07-09`
+  extended = `2026-07-09 — runtime module selector coverage joined`
+  scope = `149 index.html routes under repo root; excludes dist/, dist-vite/, .agents/, design/catalog/`
+  method = `regex census: site-frame, frame-card, living-concept-card, mode-switch, vibe-widget, semantic-contract-card, operator-chip, SVG hosts, pack-local, gravity, box-model, data-spw-feature, gutter-rail; cross-check catalog selectors from @javascript_module_census`
+  posture = `inventory + anomaly flags; pass 1 of 3 — synthesis in @page_spacing_runtime_synthesis`
+}[reg=facet]
+
+^"sitewide_totals"{
+  pages = 149
+  data_spw_kind: .{
+    frame = 2239
+    panel = 1342
+    card = 1138
+    surface = 371
+    shell = 288
+    lens = 54
+    hook = 36
+    note = `kind counts are element-level, not page-level — a long hub may carry hundreds of frame/panel kinds`
+  }[reg=facet]
+  adoption_gaps: .{
+    pack_local_routes = #[`/design/composition/`][reg=set]
+    gravity_routes = #[`/design/composition/`][reg=set]
+    gutter_rail_routes = #[`/design/`][reg=set]
+    living_concept_card_hub = `/` only (32 instances on home)
+  }[reg=facet]
+  thesis: `Frame grammar is universal; cognitive-medium opt-ins (pack-local, gravity, gutter-rail, living-concept-card ecology) remain lab- or hub-concentrated.`
+}
+
+^"route_families"{
+  claim: `Component density clusters by route family, not by individual leaf pages.`
+  heavy_frame_families: #[
+    `.{ family = topics/math ; pages = 15 ; frame_density = 5.6 ; card_density = 3.5 ; note = frame-card + vibe-widget heavy; spw-svg-figure on most leaves }`,
+    `.{ family = topics/software ; pages = 36 ; frame_density = 4.7 ; card_density = 0.9 ; note = semantic-contract-card grid on hub; mode_group on operator atlas leaves }`,
+    `.{ family = play/rpg-wednesday ; pages = 8 ; frame_density = 7.5 ; card_density = 15.5 ; note = frame-card dominant; box_model on 2 routes }`,
+    `.{ family = recipes ; pages = 4 ; frame_density = 6.5 ; card_density = 19.5 ; note = frame-card + box_model; spw-svg-figure on index + technique leaves }`,
+    `.{ family = design/experiments ; pages = 8 ; frame_density = 4.6 ; card_density = 10 ; note = labs; box_model on 6 routes; SVG hosts on svg + load-symphony }`
+  ][reg=set]
+  hub_profiles: .{
+    home = .{ route = `/` ; frames = 15 ; living_concept = 32 ; vibe_widget = 35 ; box_model = 16 ; layout = wide ; features = small-kernel topic-discovery svg-surfaces }[reg=facet]
+    settings = .{ route = `/settings/` ; frames = 13 ; vibe_widget = 109 ; box_model = 51 ; layout = wide ; note = anatomy inspection densest production route }[reg=facet]
+    topics_hub = .{ route = `/topics/` ; frames = 9 ; frame_card = 36 ; layout = atlas ; vibe_widget = 17 }[reg=facet]
+    design_hub = .{ route = `/design/` ; frames = 13 ; gutter_rail = 1 ; layout = split ; operator_chip = 176 ; note = atlas rail only hub with gutter-rail }[reg=facet]
+    software_hub = .{ route = `/topics/software/` ; frames = 17 ; semantic_contract_card = 26 ; mode_panel = 42 ; note = curriculum + semantic-fields specimen grid }[reg=facet]
+    town = .{ route = `/town/` ; frames = 11 ; frame_card = 12 ; layout = atlas }[reg=facet]
+  }[reg=facet]
+}
+
+^"component_families_by_surface"{
+  frame_grammar: #[
+    `site-frame — universal section container; avg ~4–6 per curriculum leaf, 15–17 on hubs`,
+    `frame-card — card specimens; dense on recipes, rpg-wednesday, design/components, about/website`,
+    `living-concept-card — home-only ecology today; expandable to topic hubs per @component_philosophy_harmony`,
+    `semantic-contract-card — /topics/software/ hub + field specimens; encodes module semantics grid`
+  ][reg=set]
+  interaction_clusters: #[
+    `mode-switch + mode-panel — software curriculum, film scene beds, home mode groups`,
+    `vibe-widget — settings (109), home (35), services hub (17), software leaves (27 total)`,
+    `operator-chip — all families; design hub (176) and experiments (303) are chip-dense atlases`
+  ][reg=set]
+  media_hosts: #[
+    `spw-svg-figure — math (15), craft/svg (4), recipes (6), care (2), design experiments (7)`,
+    `bare svg[data-spw-svg-persona] — blog hero, topics hub, software/browser (4), schedulers — see @viewing_reason audit`,
+    `image-study / frame-card-media — craft hub, topics leaves with data-spw-slot figure`
+  ][reg=set]
+  inspectable_opt_ins: #[
+    `data-spw-box-model — settings (51), home (16), recipes (13), design/experiments (6); absent on most topic leaves`,
+    `data-spw-feature — home (20), settings (26), rpg-wednesday (21); names functional clusters`,
+    `data-spw-pack-local + data-spw-gravity — /design/composition/ only`
+  ][reg=set]
+}
+
+^"anomalies"{
+  no_site_frame: #[
+    `/design/catalog/`, `/design/catalog/assets/`, `/design/catalog/tokens/`,
+    `/design/experiments/css/controls/`, `/design/experiments/svg/handoff/`
+  ][reg=set]
+  note_no_frame: `Catalog and handoff routes are tooling surfaces — exempt from frame grammar or need explicit shell kind.`
+  layout_posture: .{
+    split = #[`/design/`, catalog tooling routes][reg=set]
+    atlas = #[`/topics/`, `/topics/math/`, `/town/`, load-symphony beds][reg=set]
+    wide = #[`/`, `/settings/`][reg=set]
+  }[reg=facet]
+  card_without_mode: #[
+    `about/domains/* — frames only, no frame-card; intentional land-register stubs`,
+    `topics/knowledge-bases/* — frame-forward reading rooms`,
+    `services hub — vibe-widget without frame-card`
+  ][reg=set]
+}
+
+^"promotion_queue"{
+  p1_component: #[
+    `semantic-contract-card pattern → other topic hubs (craft, film) for inspectable field grids`,
+    `data-spw-box-model on topic leaves that already use mode-switch (software, film)`,
+    `living-concept-card ecology beyond home — topics hub candidate`,
+    `gutter-rail on split-layout curriculum routes (software hub, settings) not only design hub`
+  ][reg=set]
+  p1_medium: #[
+    `pack-local on semantic-contract-card + living-concept-card before generic frame-card migration`,
+    `gravity open on topic-discovery + region-menu before new popover math`,
+    `normalize bare svg hosts per @viewing_reason`
+  ][reg=set]
+  validation: `node census script or rg 'data-spw-pack-local|data-spw-gravity|spw-gutter-rail' --glob '**/index.html' --glob '!dist/**'`
+}
+
+^"runtime_selector_coverage"{
+  claim: `Static HTML opt-in attrs vs catalog mount selectors (@javascript_module_census).`
+  html_counts_on_149_routes: .{
+    pack_local = 1
+    gravity = 1
+    box_model = 17
+    svg_hosts = 30
+    spw_topic = 15
+    data_spw_feature = 52
+    gesture_contract = 23
+    media_cauldron = 7
+    scene_bed = 4
+    anatomy = 7
+  }[reg=facet]
+  mount_gates_waiting_on_html: #[
+    `spatial-gravity — needs data-spw-gravity on popover/overlay hosts, not only composition bench`,
+    `composition-box-model — 17 box-model routes but 1 pack-local; mirror attrs without container opt-in`,
+    `page-anatomy — 7 anatomy routes vs 1131-line visible module`,
+    `scene-interaction — 4 scene beds aligned; reference specimen`,
+    `svg-tunability — 30 svg hosts; feature gate + selector gap on bare <svg>`
+  ][reg=set]
+}
+
+^"vocabulary_cluster_notes"{
+  claim: `Component grammar is ahead of referentiality tier adoption — see @vocabulary_metaphor_growth_synthesis.`
+  external_drift: #[`atlas`, `inspectable`, `legible`, `proof card`, `threshold` — high-frequency meta stems on frame-heavy routes][reg=set]
+  internal_boundary: `passport/spatial-metaphor terms absent from HTML — correct per @component_region_personality`
+  copy_depth_on_routes: `91 normal + 11 genre — pairs with living-concept and recipe regions; referentiality attr still 0`
+}
+
+^"cross_links"{
+  spacing_owner = @spacing_sheet_census
+  runtime_owner = @javascript_module_census
+  page_sheet_map = @page_spacing_crossref
+  synthesis = @page_spacing_runtime_synthesis
+  vocabulary = @vocabulary_metaphor_growth_synthesis
+  harmony = @component_philosophy_harmony
+  packing = @component_packing
+}

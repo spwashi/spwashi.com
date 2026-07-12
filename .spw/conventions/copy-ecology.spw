@@ -19,6 +19,10 @@
 @hook_region_plan: ~"../../.agents/plans/hook-region-anatomy/PLAN.md"
 @audience_onboarding_plan: ~"../../.agents/plans/audience-onboarding-copy/PLAN.md"
 @copy_localization_plan: ~"../../.agents/plans/copy-localization/PLAN.md"
+@metaphor_dimensional_lexicon: ~"./metaphor-dimensional-lexicon.spw"
+@internal_external_vocabulary_clusters: ~"../audits/internal-external-vocabulary-clusters-2026-07.spw"
+@vocabulary_metaphor_growth_synthesis: ~"../audits/vocabulary-metaphor-growth-synthesis-2026-07.spw"
+@metaphor_primitive_research_branching: ~"../audits/metaphor-primitive-research-branching-2026-07.spw"
 
 operation = "align"
 fixity = "tending"
@@ -36,9 +40,11 @@ fixity = "tending"
   `component-region-personality — referentiality, templates, voice surgery, copy-units`
  ][reg=set]
  satellite_plans: #[`hook-region-anatomy`, `audience-onboarding-copy`, `copy-localization`][reg=set]
- conventions: #[`living-medium-copy`, `copy-localization`, `coloring-depth`, `component-region-personality`][reg=set]
+ conventions: #[`living-medium-copy`, `copy-localization`, `coloring-depth`, `component-region-personality`, `metaphor-dimensional-lexicon`][reg=set]
+ audits: #[`internal-external-vocabulary-clusters-2026-07`, `vocabulary-metaphor-growth-synthesis-2026-07`, `metaphor-primitive-research-branching-2026-07`][reg=set]
+ register_disambiguation: `expressive_registers "register" = depth/valence channel; product-lines audience_register = offer taxonomy; viewing_reason = cross-media lens/persona axis — see @metaphor_dimensional_lexicon lexicon_registers.viewing_reason`
  conflict_rule: "Public route copy contracts beat plan prose; data-spw-copy-unit ids beat raw English strings."
- first_read: "component-region-personality for voice/templates; semantic-copy-depth for depth tiers."
+ first_read: "component-region-personality for voice/templates; semantic-copy-depth for depth tiers; vocabulary_metaphor_growth_synthesis for cluster audit + promotion waves."
 }
 
 ^"owner_claim"{
@@ -56,4 +62,8 @@ dispatch: .{
  living_medium = @living_medium_copy
  localization = @copy_localization
  depth = @coloring_depth
+ metaphor = @metaphor_dimensional_lexicon
+ vocabulary_clusters = @internal_external_vocabulary_clusters
+ vocabulary_synthesis = @vocabulary_metaphor_growth_synthesis
+ primitive_research = @metaphor_primitive_research_branching
 }[reg=facet]

@@ -1,0 +1,232 @@
+# JavaScript Module Census (2026-07)
+#
+# operation: audit
+# fixity: tending
+# method: catalog DEF parse + public/js file census (excludes public/js/typed generated)
+
+#>javascript_module_census_2026_07
+#:audit #!javascript #!runtime #!modules
+#:operation #!audit
+#:layer #!pragmatics
+
+@module_catalog: ~"../../public/js/runtime/module-catalog.js"
+@module_export_contract: ~"../conventions/module-export-contract.spw"
+@module_export_audit: ~"./module-export-standalone-2026-07.spw"
+@runtime_medium_ecology: ~"../conventions/runtime-medium-ecology.spw"
+@runtime_module_medium: ~"../surfaces/runtime-module-medium.spw"
+@page_component_census: ~"./page-component-census-2026-07.spw"
+@spacing_sheet_census: ~"./spacing-sheet-census-2026-07.spw"
+@page_spacing_runtime_synthesis: ~"./page-spacing-runtime-synthesis-2026-07.spw"
+@vocabulary_metaphor_growth_synthesis: ~"./vocabulary-metaphor-growth-synthesis-2026-07.spw"
+@site_js: ~"../../public/js/site.js"
+@module_loader: ~"../../public/js/runtime/module-loader.js"
+@dom_contracts: ~"../../public/js/kernel/dom-contracts.js"
+
+audit_run: .{
+  at = `2026-07-09`
+  scope = `95 catalog modules + 198 source files under public/js/ (typed/ excluded from line census)`
+  method = `parse module-catalog-{core,feature,region,enhancement}.js load paths; per-mount-file export shape, line count, writeDataset density; HTML selector coverage counts on 149 routes`
+  posture = `module-by-module inventory through catalog; support files classified by guild, not treated as orphans`
+}[reg=facet]
+
+^"catalog_overview"{
+  modules = 95
+  by_layer: .{
+    core = 5
+    feature = 20
+    enhancement = 69
+    region = 1
+  }[reg=facet]
+  by_when: .{
+    immediate = 43
+    visible = 31
+    idle = 19
+    region = 1
+    settled = 1
+  }[reg=facet]
+  selector_gated = 88
+  feature_gated = 17
+  thesis: `Runtime is catalog-first: almost every mount is selector- or feature-gated; only five core modules always load. Enhancement layer carries most cognitive-medium behavior.`
+}
+
+^"file_guild_totals"{
+  claim: `198 files / ~82k lines across six guilds plus site bootstrap.`
+  guilds: .{
+    runtime = .{ files = 82 ; lines ≈ 32253 ; role = `catalog defs, loader, enhancement mounts, attention subfolder` }[reg=facet]
+    interface = .{ files = 31 ; lines ≈ 12689 ; role = `satchel, cauldron, haptics, contextual UI, console` }[reg=facet]
+    kernel = .{ files = 23 ; lines ≈ 12057 ; role = `settings, dom-contracts, bus, hydration, shared resolver` }[reg=facet]
+    semantic = .{ files = 28 ; lines ≈ 8491 ; role = `component semantics, operators, pretext, image interaction` }[reg=facet]
+    modules = .{ files = 28 ; lines ≈ 14217 ; role = `route feature packs: blog, rpg, design, cards, services` }[reg=facet]
+    media = .{ files = 4 ; lines ≈ 2314 ; role = `svg-tunability, image-metaphysics, image-store, svg-filters` }[reg=facet]
+    bootstrap = .{ files = 2 ; site_js ≈ 1075 ; compose ≈ 325 ; role = `staged bootstrap + portable compose surface` }[reg=facet]
+  }[reg=facet]
+  support_rule: `Files not listed as catalog load targets are support/infrastructure when imported by a mount, site.js, or route-local import(). Only a small set are truly ad-hoc route scripts.`
+}
+
+^"export_shape_debt"{
+  claim: `Catalog mount uniformity lags @module_export_contract target.`
+  on_mount_files: .{
+    spw_module_alias = 6
+    init_named_export = 84
+    spw_module_export_literal = 0
+    note = `spwModule alias on: state-inspector, page-anatomy, spw-key-events, scene-interaction, interactive-medium, topical-payload`
+  }[reg=facet]
+  debt: #[
+    `Most mounts still expose initSpw* — loader resolves via catalog wrapper; compose portability incomplete`,
+    `writeDataset-heavy modules (brace-physics, region-menu, page-anatomy) lack SPW_MODULE_EXPORT.updates mirrors`,
+    `Support files (dom-contracts, site-settings-engine) are not catalog modules but own most canonical dataset writes`
+  ][reg=set]
+  validation = `npm run check:runtime ; rg 'SPW_MODULE_EXPORT|export const spwModule' public/js`
+}
+
+^"feature_gated_modules"{
+  claim: `17 modules require body[data-spw-features~="…"] in addition to selector match.`
+  gates: #[
+    `operators — sigil-anatomy, operators`,
+    `console — cauldron, media-cauldron, console`,
+    `svg-surfaces — svg-tunability, svg-filters`,
+    `navigator — frame-navigator`,
+    `metrics — frame-metrics`,
+    `pretext-lab — pretext-lab, pretext-physics, typography-measurement-preview`,
+    `media-publishing — promo-wonder-cycle, media-publishing`,
+    `feature-discovery — feature-discovery`,
+    `inspectability — semantic-chrome`,
+    `rpg-gameplay — rpg-wednesday`
+  ][reg=set]
+  friction: `A route may carry HTML selectors for a module but never schedule it because data-spw-features omits the gate — especially svg-surfaces on topic leaves with SVG hosts.`
+}
+
+^"heavy_modules"{
+  claim: `Largest mount files are core shell + idle experiential + feature labs.`
+  by_lines: #[
+    `shell-disclosure (core, 2284) — header/nav disclosure state`,
+    `experiential (enhancement/idle, 2169) — header+main experiential layer`,
+    `pretext-physics (feature/visible, 1476) — live pretext flow`,
+    `cauldron → interface/composition.js (idle, 1242)`,
+    `design-experiments (visible, 1229)`,
+    `state-inspector (immediate/body, 1190)`,
+    `haptics (idle, 1167)`,
+    `rpg-wednesday/index (feature/main, 1163)`,
+    `brace-physics → brace-gestures (immediate, 1132)`,
+    `page-anatomy (visible, 1131)`
+  ][reg=set]
+}
+
+^"dataset_write_hotspots"{
+  claim: `Modules that write html/body datasets most often — CSS and ornament read these.`
+  high_write: #[
+    `brace-physics / brace-gestures — 63 writeDataset calls`,
+    `region-menu — 39`,
+    `spw-key-events — 31`,
+    `contextual-ui — 28`,
+    `page-anatomy — 26`,
+    `svg-tunability — 20`,
+    `shell-disclosure — 14`,
+    `component-semantics — 11`,
+    `loading-ecology — 11`
+  ][reg=set]
+  rule: `Dataset writes on html/body must stay altitude-guarded per @data_spw_attribute_governance — component vocabulary on root is field projection only.`
+}
+
+^"mount_gate_vs_html"{
+  claim: `Catalog selectors and static HTML diverge on the same axes as component/spacing audits.`
+  mismatches: #[
+    `spatial-gravity — selector [data-spw-gravity], when visible; HTML on 1/149 routes (/design/composition/)`,
+    `composition-box-model — includes [data-spw-pack-local]; HTML pack-local 1 route, box-model 17 routes`,
+    `svg-tunability — requires svg-surfaces feature + host selector; 30 routes have svg hosts but many omit feature or use bare <svg>`,
+    `page-anatomy — 7 routes carry data-spw-anatomy; module when visible`,
+    `scene-interaction — 4 routes with .spw-scene-bed; module when visible`,
+    `topic-discovery — 15 routes with .spw-topic; module when idle on body selector .spw-topic`
+  ][reg=set]
+  immediate_html_roots: #[
+    `state-inspector, discovery-notices, console, layout-shift-audit — selector body`,
+    `loading-ecology, hydration-passes, settings-momentum, module-effects, pulse-beat-tuner, spw-key-events, interaction-progression, precipitation-request, topical-payload — selector html`
+  ][reg=set]
+}
+
+^"catalog_by_guild"{
+  core: #[
+    `site-settings → kernel/site-settings.js`,
+    `pwa-update-handler, shell-disclosure, interactive-medium, site-core-minimal → runtime/*`
+  ][reg=set]
+  feature_route_packs: #[
+    `blog-interpreter, blog-specimens, attn-register`,
+    `seed-cards, payment-cards, services-configurators`,
+    `rpg-wednesday, home-section-index`,
+    `promo-wonder-cycle, media-publishing, media-cauldron (typed/)`,
+    `boonhonk-mixer, pretext-lab, pretext-physics, typography-measurement-preview, frame-metrics`
+  ][reg=set]
+  enhancement_families: .{
+    attention = #[`attention-architecture`, `charge-field`, `gesture-anatomy`, `guide-badge`, `haptics`, `navigation-locomotion`, `navigation-spells`, `region-menu`, `page-region-rail`][reg=set]
+    anatomy = #[`component-semantics`, `composition-box-model`, `page-anatomy`, `sigil-anatomy`, `layout-shift-audit`, `learnability-ledger`][reg=set]
+    media = #[`svg-tunability`, `svg-filters`, `image-metaphysics`, `image-utilization`, `image-interaction`, `image-discovery-rewards`, `effect-interpretation`, `canvas-accents`][reg=set]
+    spatial = #[`spatial-gravity`, `variant-selection`, `layout-assumptions`][reg=set]
+    workshop = #[`cauldron`, `console`, `state-inspector`, `tuning-discovery`, `design-experiments`, `design-review-surfaces`, `query-link-composer`][reg=set]
+    discovery = #[`topic-discovery`, `feature-discovery`, `discovery-notices`, `palette-treat-discovery`, `prompt-utils`][reg=set]
+  }[reg=facet]
+  region: #[`region-enhancer — broad frame/panel/card/slot selector, when region`][reg=set]
+}
+
+^"support_and_infrastructure"{
+  claim: `Not catalog-mounted ≠ dead code. Three support tiers.`
+  tiers: .{
+    bootstrap = #[`site.js`, `module-loader.js`, `module-catalog*.js`, `gate.js`, `page-hooks.js`, `behavior-scopes.js`][reg=set]
+    kernel_shared = #[`dom-contracts.js`, `site-settings-engine.js`, `site-settings-ui.js`, `bus.js`, `shared.js`, `hydration.js`][reg=set]
+    submodule_trees = #[
+      `interface/cauldron/* → imported by composition.js`,
+      `runtime/attention/* → imported by attention-architecture.js`,
+      `modules/rpg-wednesday/* → imported by index.js`,
+      `semantic/* helpers → imported by mount files`
+    ][reg=set]
+  }[reg=facet]
+}
+
+^"adhoc_route_modules"{
+  claim: `Small set of route-local scripts bypass catalog scheduling — intentional but easy to miss.`
+  modules: #[
+    `modules/services/care-intake.js — inline import on /services/care/`,
+    `modules/tools/budgeting.js — /tools/budgeting/`,
+    `modules/math/diagrams.js — topic math labs + sw.js precache`,
+    `modules/effects/electromagnetic-containers.js — effect partial`,
+    `modules/profile/builder.js, tool.js — /tools/profile/`
+  ][reg=set]
+  direction: `Promote to catalog feature defs when the route pack stabilizes; until then document in route HTML import block.`
+}
+
+^"promotion_queue"{
+  p1_runtime: #[
+    `Ungate or html-capable spatial-gravity scheduling`,
+    `Extend svg-tunability selector for bare svg[data-spw-svg-persona]`,
+    `Migrate topic-discovery popover to dom-contracts + gravity per floating-chrome-coherence`,
+    `SPW_MODULE_EXPORT on top-5 writeDataset mounts (brace-gestures, region-menu, page-anatomy)`
+  ][reg=set]
+  p2_runtime: #[
+    `Catalog-register adhoc route modules (care-intake, budgeting, math/diagrams)`,
+    `Audit feature gates on SVG-heavy topic routes — ensure svg-surfaces in data-spw-features`,
+    `Reduce immediate html/body module contention — batch discovery-notices + state-inspector + console settle order`
+  ][reg=set]
+  validation: #[
+    `node -e "import { listModuleCatalogIndex } from './public/js/runtime/module-catalog.js'"`,
+    `npm run check:runtime`,
+    `rg 'data-spw-features' topics/math topics/craft recipes --glob '**/index.html'`
+  ][reg=set]
+}
+
+^"vocabulary_internal_bridge"{
+  claim: `Module describes/evaluates strings are internal vocabulary — should stay technical tier unless surfaced through copy-depth technical.`
+  bridges: #[
+    `state-inspector — makes internal dataset vocabulary legible to editors`,
+    `concept-salience — maps data-spw-salience to attention vocabulary (namespace collision documented in spatial-gravity)`,
+    `component-semantics — mirrors data-spw-kind/role/slot for inspect`,
+    `feature-discovery + learnability-ledger — internal feature names → reader-facing discovery when feature-gated`
+  ][reg=set]
+  growth: `Export uniformity (SPW_MODULE_EXPORT) is internal-cluster growth capacity — 84 init-only mounts per @module_export_contract`
+}
+
+^"cross_links"{
+  pages = @page_component_census
+  spacing = @spacing_sheet_census
+  synthesis = @page_spacing_runtime_synthesis
+  vocabulary = @vocabulary_metaphor_growth_synthesis
+  export_contract = @module_export_contract
+}

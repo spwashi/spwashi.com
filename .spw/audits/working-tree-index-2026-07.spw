@@ -1,0 +1,200 @@
+# Working Tree Index — .spw Audit Session (2026-07)
+#
+# operation: align + cache
+# fixity: tending
+# role: index pending/working-tree .spw audit changes until landed in git
+
+#>working_tree_index_2026_07
+#:index #!audit #!working_tree #!session
+#:operation #!align
+#:layer #!pragmatics
+
+@audits_index: ~"./index.spw"
+@appendices_index: ~"./appendices/index.spw"
+@page_spacing_runtime_synthesis: ~"./page-spacing-runtime-synthesis-2026-07.spw"
+@vocabulary_metaphor_growth_synthesis: ~"./vocabulary-metaphor-growth-synthesis-2026-07.spw"
+@metaphor_primitive_research_branching: ~"./metaphor-primitive-research-branching-2026-07.spw"
+@commit_history_deep: ~"./commit-history-deep-2026-07/index.spw"
+@semantic_capacity: ~"../conventions/semantic-capacity.spw"
+@recursive_improvement: ~"../conventions/recursive-improvement.spw"
+@conventions_index: ~"../conventions/index.spw"
+
+audit_run: .{
+  at = `2026-07-09`
+  scope = `Map working-tree .spw audit artifacts to registry keys, reading orders, and convention bridges`
+  posture = `Archive or fold into audits/index after commit; until then this is the session entrypoint for pending work`
+  probe = `git status --short .spw/`
+}[reg=facet]
+
+^"thesis"{
+  claim: `Large audit sessions produce many .spw files before commit. Without a working-tree index, agents re-discover files via git status or rg. This index names clusters, registry keys, reading orders, and wiring status for the 2026-07 material + vocabulary + appendix pass.`
+  rule: `New untracked audit → add a row here + audits/index registry (or appendices/index) before editing HTML/CSS/JS.`
+  landing: `After commit, run archive pass: merge cluster summaries into audits/index ^"registry_groups" if still useful, then mark this file cold or delete with replacement pointer.`
+}
+
+^"clusters"{
+  material_census: .{
+    theme = `HTML + CSS + JS material axis`
+    reading_order = `page_spacing_runtime_cascade`
+    synthesis = @page_spacing_runtime_synthesis
+    members = #[
+      .{ key = `page_component_census` ; path = `page-component-census-2026-07.spw` ; pass = 1 }[reg=facet],
+      .{ key = `spacing_sheet_census` ; path = `spacing-sheet-census-2026-07.spw` ; pass = 2 }[reg=facet],
+      .{ key = `javascript_module_census` ; path = `javascript-module-census-2026-07.spw` ; pass = 3 }[reg=facet],
+      .{ key = `page_spacing_crossref` ; path = `page-spacing-crossref-2026-07.spw` ; pairwise }[reg=facet],
+      .{ key = `page_spacing_runtime_synthesis` ; path = `page-spacing-runtime-synthesis-2026-07.spw` ; pass = 4 }[reg=facet]
+    ][reg=set]
+  }[reg=facet]
+
+  vocabulary_metaphor: .{
+    theme = `Internal/external copy + metaphor growth`
+    reading_order = `vocabulary_metaphor_cascade`
+    synthesis = @vocabulary_metaphor_growth_synthesis
+    members = #[
+      .{ key = `internal_external_vocabulary_clusters` ; path = `internal-external-vocabulary-clusters-2026-07.spw` }[reg=facet],
+      .{ key = `vocabulary_metaphor_growth_synthesis` ; path = `vocabulary-metaphor-growth-synthesis-2026-07.spw` }[reg=facet]
+    ][reg=set]
+  }[reg=facet]
+
+  metaphor_primitive_research: .{
+    theme = `Nav/interaction/rendering primitives + discipline history`
+    reading_order = `metaphor_primitive_research_cascade`
+    hub = @metaphor_primitive_research_branching
+    members = #[
+      .{ key = `metaphor_primitive_research_branching` ; path = `metaphor-primitive-research-branching-2026-07.spw` }[reg=facet]
+    ][reg=set]
+    appendices_order = `appendices_history_cascade`
+    appendices_hub = @appendices_index
+  }[reg=facet]
+
+  appendices: .{
+    theme = `History appendices — nested w500→w5 + w_web`
+    hub = @appendices_index
+    folder = `appendices/`
+    count = 8
+    members = #[
+      `index.spw`,
+      `technolinguistics-web-history-2007-2026.spw`,
+      `edpsych-materials-science-history-500y.spw`,
+      `computer-science-history-500y.spw`,
+      `manufacturing-history-500y.spw`,
+      `fashion-history-500y.spw`,
+      `film-history-500y.spw`,
+      `print-history-500y.spw`
+    ][reg=set]
+  }[reg=facet]
+
+  commit_history_deep: .{
+    theme = `Full git history from origin — epochs, cadence, churn, milestones`
+    reading_order = `commit_history_deep`
+    hub = @commit_history_deep
+    folder = `commit-history-deep-2026-07/`
+    count = 5
+    complements = `commit-skill-induction-2026-07 — 2026-04→ skill/induction lens`
+    members = #[
+      `index.spw`,
+      `epochs-from-origin.spw`,
+      `volume-cadence.spw`,
+      `theme-churn.spw`,
+      `milestones.spw`
+    ][reg=set]
+  }[reg=facet]
+
+  convention_bridges: .{
+    theme = `Convention files modified to wire audits`
+    members = #[
+      .{ path = `conventions/index.spw` ; wires = `audit dispatch + appendices_index` }[reg=facet],
+      .{ path = `conventions/copy-ecology.spw` ; wires = `vocabulary + primitive_research audits` }[reg=facet],
+      .{ path = `conventions/copy-localization.spw` ; wires = `technolinguistics_seams + appendices` }[reg=facet],
+      .{ path = `conventions/metaphor-dimensional-lexicon.spw` ; wires = `registers + vocabulary synthesis + primitive research` }[reg=facet]
+    ][reg=set]
+  }[reg=facet]
+}
+
+^"registry_map"{
+  note = `Flat audits/index.spw registry keys → path. Appendices resolve through appendices_index dispatch.`
+
+  flat_audits: #[
+    `page_component_census → ./page-component-census-2026-07.spw`,
+    `spacing_sheet_census → ./spacing-sheet-census-2026-07.spw`,
+    `javascript_module_census → ./javascript-module-census-2026-07.spw`,
+    `page_spacing_crossref → ./page-spacing-crossref-2026-07.spw`,
+    `page_spacing_runtime_synthesis → ./page-spacing-runtime-synthesis-2026-07.spw`,
+    `internal_external_vocabulary_clusters → ./internal-external-vocabulary-clusters-2026-07.spw`,
+    `vocabulary_metaphor_growth_synthesis → ./vocabulary-metaphor-growth-synthesis-2026-07.spw`,
+    `metaphor_primitive_research_branching → ./metaphor-primitive-research-branching-2026-07.spw`,
+    `working_tree_index → ./working-tree-index-2026-07.spw`,
+    `appendices_index → ./appendices/index.spw`,
+    `commit_history_deep → ./commit-history-deep-2026-07/index.spw`
+  ][reg=set]
+
+  nested_appendices: #[
+    `appendix_technolinguistics_web_history → ./appendices/technolinguistics-web-history-2007-2026.spw`,
+    `appendix_edpsych_materials_science → ./appendices/edpsych-materials-science-history-500y.spw`,
+    `appendix_computer_science → ./appendices/computer-science-history-500y.spw`,
+    `appendix_manufacturing → ./appendices/manufacturing-history-500y.spw`,
+    `appendix_fashion → ./appendices/fashion-history-500y.spw`,
+    `appendix_film → ./appendices/film-history-500y.spw`,
+    `appendix_print → ./appendices/print-history-500y.spw`
+  ][reg=set]
+}
+
+^"reading_order_index"{
+  orders: #[
+    .{ id = `page_spacing_cascade` ; files = 4 ; ends = `component_philosophy_harmony` }[reg=facet],
+    .{ id = `page_spacing_runtime_cascade` ; files = 5 ; ends = `component_philosophy_harmony` }[reg=facet],
+    .{ id = `vocabulary_metaphor_cascade` ; files = 4 }[reg=facet],
+    .{ id = `metaphor_primitive_research_cascade` ; files = 6 ; via = @audits_index }[reg=facet],
+    .{ id = `appendices_history_cascade` ; files = 8 ; via = @appendices_index }[reg=facet],
+    .{ id = `commit_history_deep` ; files = 5 ; via = @commit_history_deep }[reg=facet]
+  ][reg=set]
+  entry = `audits/index.spw#reading_orders — this file names session scope only`
+}
+
+^"wiring_checklist"{
+  audits_index: #[`registry refs`, `registry_groups`, `reading_orders`, `thoroughness_minimum`][reg=set]
+  appendices_index: #[`appendix_registry`, `pointer_index`, `by_discipline`, `dispatch`][reg=set]
+  conventions_index: #[`page_component_census`, `spacing_*`, `javascript_module_census`, `vocabulary_*`, `metaphor_primitive_*`, `appendices_index`, `commit_history_deep_audit`][reg=set]
+  cross_audit_links: #[
+    `page-component-census → vocabulary_metaphor_growth_synthesis`,
+    `spacing-sheet-census → vocabulary_crossref`,
+    `javascript-module-census → vocabulary_internal_bridge`,
+    `page-spacing-runtime-synthesis → vocabulary_metaphor_growth_synthesis`,
+    `vocabulary-metaphor-growth-synthesis → metaphor_primitive + appendices planes`
+  ][reg=set]
+}
+
+^"landing_checklist"{
+  before_commit: #[
+    `git status --short .spw/ — all session files tracked or intentionally gitignored`,
+    `rg 'working_tree_index|registry_groups' .spw/audits/index.spw`,
+    `find .spw/audits/appendices -name '*.spw' | wc -l` # expect 8
+    `git diff --check`,
+    `npm run check:local` # no HTML/CSS/JS in this session — still validates diff hygiene
+  ][reg=set]
+  after_commit: #[
+    `Archive or update working-tree-index status to cold`,
+    `Fold registry_groups into audits/index if clusters remain teachable`
+  ][reg=set]
+}
+
+^"owner_claim"{
+  claim_id = "working-tree-index-2026-07-001"
+  hypothesis = `Agents locate pending audit work via working-tree-index before git status grep.`
+  probe_ref = `rg 'working_tree_index|material_census|appendices' .spw/audits/working-tree-index-2026-07.spw`
+  falsification = `New session audit file exists without row in registry_map or appendices/index registry.`
+  status = "active"
+}
+
+validation: #[
+  `git status --short .spw/`,
+  `rg 'registry_map|clusters' .spw/audits/working-tree-index-2026-07.spw`,
+  `rg 'working_tree_index' .spw/audits/index.spw`
+][reg=set]
+
+dispatch: .{
+  audits = @audits_index
+  appendices = @appendices_index
+  conventions = @conventions_index
+  capacity = @semantic_capacity
+}[reg=facet]

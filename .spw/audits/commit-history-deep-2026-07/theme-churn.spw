@@ -1,0 +1,122 @@
+# Commit themes & churn hotspots (origin → 2026-07)
+
+#>commit_history_deep_theme_churn
+#:audit #!git #!history
+#:operation #!audit
+
+@index: ~"./index.spw"
+@commit_skill_induction: ~"../commit-skill-induction-2026-07/index.spw"
+
+^"subject_taxonomy"{
+  note = `Leading token frequency in subjects (approximate).`
+
+  operator_spw_tags: .{
+    `&[` = 47
+    `#[` = 34
+    `.[` = 23
+    `^[` = 6
+    read = `Spw commit tag grammar becomes dominant subject shape after e2`
+  }[reg=facet]
+
+  conventional_commits: .{
+    `feat:` ≈ 15
+    `feat(site):` = 5
+    `fix:` = 7
+    `refactor(css):` = 4
+    `docs:` = 5
+    read = `Minority vs &[ tagged commits — agent/human hybrid convention`
+  }[reg=facet]
+
+  verb_stems_top: #[`Add (79)`, `Refine (40)`, `Improve (28)`, `Clarify (16)`, `Tighten (12)`, `Extract (9)`, `Expand (7)`, `Deepen (6)`, `Consolidate (6)`][reg=set]
+
+  semantic_meta_rate: .{
+    estimate = `~47% of 2026-04+ commits match inspect|semantic|contract|ecology|plan|.spw|skill (per commit-skill-induction)`
+    source = @commit_skill_induction
+  }[reg=facet]
+}
+
+^"directory_churn"{
+  note = `Top-level aggregate line churn (numstat add+del, all history).`
+
+  order: #[
+    `public — 550513`,
+    `.agents — 60284`,
+    `design — 52215`,
+    `topics — 34417`,
+    `.spw — 29837`,
+    `scripts — 19809`,
+    `about — 14998`,
+    `settings — 14144`,
+    `index.html (root) — 11986`,
+    `play — 6288`,
+    `recipes — 5456`,
+    `AGENTS.md — 579`
+  ][reg=set]
+
+  implication: #[
+    `public/css bundles dominate noise — review signal diluted when regenerated`,
+    `.agents churn ≈ .spw churn — plan/skill ecology matches convention growth`,
+    `design/experiments/load-symphony is a churn archipelago — isolate from route reviews`
+  ][reg=set]
+}
+
+^"file_hotspots"{
+  note = `Highest aggregate churn files (all history).`
+
+  generated_or_bundle: #[
+    `public/css/bundles/core.css — 49264 (37 touches)`,
+    `design/experiments/load-symphony/css/movement-1-2-reading.css — 30399`,
+    `design/experiments/load-symphony/css/movement-4-atmosphere.css — 8746`
+  ][reg=set]
+
+  runtime_core: #[
+    `public/js/site.js — 17608 (104 touches)`,
+    `public/js/kernel/site-settings.js — 7430`,
+    `public/js/runtime/module-catalog.js — 4676`,
+    `public/js/site-settings.js — 8748 (legacy path era)`
+  ][reg=set]
+
+  route_html: #[
+    `settings/index.html — 14144`,
+    `index.html — 11986`,
+    `about/index.html — 6648`,
+    `topics/software/index.html — 3409`
+  ][reg=set]
+
+  legacy_css_migration: #[
+    `public/css/spw-components.css — 11822`,
+    `public/css/spw-surfaces.css — 9546`,
+    `public/css/style.css — 9462`,
+    `public/css/shell/chrome.css — 10574`
+  ][reg=set]
+
+  ecology_scripts: #[
+    `scripts/maintain-plan-directory-indexes.mjs — high touch in 2026-06 plan waves`
+  ][reg=set]
+}
+
+^"healthy_vs_risk"{
+  healthy: #[
+    `Kernel extraction commits — small narrative, debt down`,
+    `Reading-quiet / promo-downgrade — product pushback`,
+    `Worktree merges (&[tag]) — intentional multi-track landings`,
+    `check:local / build pipeline commits — validation infrastructure`
+  ][reg=set]
+
+  risk: #[
+    `Single-commit +100k churn (runtime tree organize) — hard to bisect`,
+    `Plan .spw mass customization — hundreds of files, no runtime behavior`,
+    `Bundle regeneration interleaved with design — obscures semantic diffs`,
+    `Repeated Refine/Refresh without archive pointer — semantic debt (see skill-induction)`
+  ][reg=set]
+
+  skill_induction_bridge = @commit_skill_induction
+}
+
+^"validation"{
+  probes: #[
+    `git log --numstat --pretty=format: | awk … top files`,
+    `git log --format='%s' | head`,
+    `rg 'churn_hotspots|healthy_patterns' .spw/audits/commit-skill-induction-2026-07/`
+  ][reg=set]
+}

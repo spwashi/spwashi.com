@@ -22,12 +22,14 @@
 @harmony: ~"../component-philosophy-harmony-2026-07.spw"
 @metaphor: ~"../../conventions/metaphor-dimensional-lexicon.spw"
 @semantic_capacity: ~"../../conventions/semantic-capacity.spw"
+@commit_history_deep: ~"../commit-history-deep-2026-07/index.spw"
 
 audit_run: .{
   at = `2026-07-10`
   method = `git log census (2026-04→07), plan/skill inventory, skill SKILL.md phrasing cross-read against runtime/attr/plan outcomes`
   posture = `hypotheses not blame; skill text is one force among human taste, product ambition, and tooling`
   scope = `site skills under .agents/skills + AGENTS.md rails; commit subjects since 2026-04`
+  complements = @commit_history_deep
 }[reg=facet]
 
 ^"thesis"{
@@ -47,9 +49,15 @@ audit_run: .{
 
 ^"nested_dispatch"{
   history = @commit_history
+  deep_history = @commit_history_deep
   skills = @skill_analysis
   pain = @induction_pain
   mitigations = @mitigations
+}[reg=facet]
+
+^"cross_links"{
+  deep_from_origin = @commit_history_deep
+  note = `Read commit_history_deep epochs + volume before this audit — skill/induction lens applies to 2026-04→ only`
 }[reg=facet]
 
 ^"priority"{

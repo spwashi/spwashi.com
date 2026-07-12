@@ -1,0 +1,114 @@
+# Page ↔ Spacing Cross-Reference (2026-07)
+#
+# operation: audit + align
+# fixity: tending
+# method: join page-component census, spacing-sheet census, and css-manifest ROUTE_SCOPES
+
+#>page_spacing_crossref_2026_07
+#:audit #!crossref #!routes #!css #!components
+#:operation #!audit
+#:layer #!pragmatics
+
+@page_component_census: ~"./page-component-census-2026-07.spw"
+@spacing_sheet_census: ~"./spacing-sheet-census-2026-07.spw"
+@javascript_module_census: ~"./javascript-module-census-2026-07.spw"
+@page_spacing_runtime_synthesis: ~"./page-spacing-runtime-synthesis-2026-07.spw"
+@css_manifest: ~"../../scripts/typed/css-manifest.mjs"
+@component_anatomy_device_packing: ~"./component-anatomy-device-packing-2026-07.spw"
+@component_philosophy_harmony: ~"./component-philosophy-harmony-2026-07.spw"
+@dimension_vocabulary: ~"../conventions/dimension-vocabulary.spw"
+@typography_packing: ~"../conventions/typography-packing.spw"
+@component_packing: ~"../conventions/component-packing.spw"
+
+audit_run: .{
+  at = `2026-07-09`
+  scope = `Join 149-page component inventory with 31 route CSS sheets and ROUTE_SCOPES in css-manifest.mjs`
+  posture = `mismatch matrix — where component density and spacing ownership diverge`
+}[reg=facet]
+
+^"routing_model"{
+  claim: `body[data-spw-surface] selects ROUTE_SCOPES route personality sheets; behaviors add feature-gated systems CSS.`
+  scoped_mode: `data-spw-stylesheet-mode=scoped loads bundles/core.css + route bundle — route spacing edits must land in the sheet that builds into that bundle.`
+  surfaces_without_route_sheet: #[`care`, `cards`, `coordination`, `curriculum`, `membership`, `now`, `offline`, `privacy`, `research`, `town`, `newyear`, `tools`, `tools-character-sheet`, `tools-midjourney`, `tools-profile`][reg=set]
+  note: `15 surfaces rely on shared components/shell only — spacing gaps on these routes are entirely component-layer + token projections.`
+}
+
+^"surface_crossref_matrix"{
+  claim: `Each major surface maps: components used → route CSS → spacing load → promotion target.`
+  rows: #[
+    `.{ surface = home ; route_css = home.css + home-panels.css ; components = living-concept-card, vibe-widget, frame-card, box-model ; spacing_load = high magic, zero token var on route sheets ; gap = home panels use literal rem while html projects pack tiers ; fix = tokenize to --spw-real-estate-* }`,
+    `.{ surface = settings ; route_css = settings.css + forms + notes + runtime + cues ; components = vibe-widget (109), box-model (51) ; spacing_load = settings-notes.css 20 magic rem ; gap = widget grid spacing in components + route notes diverge ; fix = unify via typography-packing + settings-runtime cues }`,
+    `.{ surface = topics ; route_css = topics.css ; components = frame-card atlas grid, vibe-widget ; spacing_load = 43 magic rem, 3 container ; gap = atlas layout uses route literals; cards do not use pack-local ; fix = container-query card grid + topics.css token pass }`,
+    `.{ surface = software ; route_css = topics.css (shared) ; components = semantic-contract-card, mode-switch, mode_panel ; spacing_load = inherited from topics.css ; gap = curriculum-specific spacing not isolated — software hub spacing competes with craft/film topic styling ; fix = split software register sheet or BEM scope under topics.css }`,
+    `.{ surface = website ; route_css = website.css + design.css ; components = frame-card (about/website), design hub operators ; spacing_load = design.css highest site magic (77 rem) ; gap = design specimens need route ornament but reuse patterns should move to systems ; fix = extract reusable specimen spacing to design-experiments.css systems bridge }`,
+    `.{ surface = blog ; route_css = blog.css + frames + layouts + motion ; components = site-frame dense (17), few cards ; spacing_load = blog-layouts 20 magic rem ; gap = frame-forward blog vs card-forward recipes — intentional ; fix = scroll-margin + frame gap token only }`,
+    `.{ surface = recipes ; route_css = recipes.css ; components = frame-card dense (19.5/page), box-model, svg ; spacing_load = recipes.css low (5 magic) ; win = card spacing mostly from components/cards.css ; promote = pack-local on recipe cards }`,
+    `.{ surface = play ; route_css = play.css ; components = session frames ; spacing_load = low ; note = rpg-wednesday adds second sheet }`,
+    `.{ surface = rpg-wednesday ; route_css = play.css + rpg-wednesday.css ; components = frame-card extreme (15.5/page) ; spacing_load = rpg-wednesday 51 magic rem ; gap = card grid literals ; fix = card-ecology + pack tiers }`,
+    `.{ surface = craft ; route_css = craft.css ; components = image-study, spw-svg-figure ; spacing_load = 29 magic rem ; gap = figure+photo cards need figure-rail packing model from anatomy audit }`,
+    `.{ surface = town ; route_css = none ; components = frame-card ; spacing_load = components only ; gap = atlas layout without town.css — spacing entirely inherited ; fix = optional town.css only if atlas gaps diverge from topics }`,
+    `.{ surface = services ; route_css = services.css ; components = vibe-widget hub ; spacing_load = low ; widgets = care-intake.css, services-configurator.css per-route link }`
+  ][reg=set]
+}
+
+^"component_to_sheet_ownership"{
+  claim: `When editing a component family, prefer the owning sheet before the route sheet.`
+  map: .{
+    site_frame = #[`components/frames.css`, `components/page-anatomy.css`, `shell/layout.css`][reg=set]
+    frame_card = #[`components/cards.css`, `components/card-ecology.css`, `components/frames.css`][reg=set]
+    living_concept_card = #[`components/card-ecology.css`, `routes/surfaces/home-panels.css`][reg=set]
+    vibe_widget = #[`components/controls.css`, `routes/surfaces/settings-forms.css`][reg=set]
+    semantic_contract_card = #[`components/semantic-variants.css`, `routes/surfaces/topics.css`][reg=set]
+    mode_switch = #[`components/frame-controls.css`, `components/controls.css`][reg=set]
+    spw_svg_figure = #[`systems/svg-surfaces.css`, `systems/svg-personas.css`][reg=set]
+    image_study = #[`systems/image-interaction.css`, `systems/image-utilization.css`][reg=set]
+    pack_local = #[`systems/component-packing.css`, `public/js/runtime/composition-box-model.js`][reg=set]
+    gutter_rail = #[`shell/layout.css`, `handles/page-region-rail.css`][reg=set]
+  }[reg=facet]
+  rule: `If a spacing bug appears on one route only, check route sheet magic rem first. If it appears on every card instance, fix components/ or systems/ and let routes inherit.`
+}
+
+^"mismatch_seams"{
+  seam_dense_components_loose_route_tokens: #[
+    `home — 60 card-class elements/page, route sheets 0 token var`,
+    `topics + software — semantic-contract-card grid, topics.css 0 token var`,
+    `rpg-wednesday — highest card density, 51 magic rem on route sheet`
+  ][reg=set]
+  seam_loose_components_tight_route: #[
+    `design hub — 0 frame-card, design.css 77 magic rem (atlas operator layout is route-ornamented)`
+  ][reg=set]
+  seam_no_route_sheet_dense_page: #[
+    `town — 11 frames + 12 cards, no ROUTE_SCOPES entry`,
+    `curriculum — 12 frames + 13 cards, no route sheet`
+  ][reg=set]
+  seam_feature_sheet_without_surface: #[
+    `tools-budgeting — surface key maps to tools-budgeting-surface.css but tools hub uses surface=tools`,
+    `website surface pulls design.css — about/website and design hub share spacing file`
+  ][reg=set]
+}
+
+^"unified_promotion_plan"{
+  claim: `Component promotion and spacing tokenization should land together per route family.`
+  pairs: #[
+    `home: living-concept-card ecology + home.css token pass`,
+    `topics/software: semantic-contract-card + topics.css container grid + optional pack-local`,
+    `settings: vibe-widget anatomy + settings-notes token pass`,
+    `recipes/rpg: frame-card + pack-local + card-ecology spacing`,
+    `craft/math: spw-svg-figure + svg-surfaces container bands (not route literals)`,
+    `design/composition: already pairs pack-local + gravity — use as reference specimen for crossref validation`
+  ][reg=set]
+  validation: #[
+    `Read @page_component_census promotion_queue before editing route CSS`,
+    `Read @spacing_sheet_census high_magic_sheets before adding literal rem`,
+    `After route fix: npm run check:local ; rg data-spw-pack-local routes`
+  ][reg=set]
+}
+
+^"reading_order"{
+  pass_1 = @page_component_census
+  pass_2 = @spacing_sheet_census
+  pass_3 = @javascript_module_census
+  pass_4 = @page_spacing_runtime_synthesis
+  pairwise = `this file — page↔CSS-only queries; full triple-axis planning uses synthesis`
+  related = #[@component_anatomy_device_packing, @component_philosophy_harmony, @component_packing][reg=set]
+}

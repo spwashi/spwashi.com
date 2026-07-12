@@ -15,13 +15,33 @@
 @feature_utilization: ~"../conventions/feature-utilization.spw"
 @language_utilization: ~"../language/feature-utilization.spw"
 @language_recursive: ~"../language/recursive-improvement.spw"
+@page_component_census: ~"./page-component-census-2026-07.spw"
+@spacing_sheet_census: ~"./spacing-sheet-census-2026-07.spw"
+@javascript_module_census: ~"./javascript-module-census-2026-07.spw"
+@page_spacing_crossref: ~"./page-spacing-crossref-2026-07.spw"
+@page_spacing_runtime_synthesis: ~"./page-spacing-runtime-synthesis-2026-07.spw"
+@internal_external_vocabulary_clusters: ~"./internal-external-vocabulary-clusters-2026-07.spw"
+@vocabulary_metaphor_growth_synthesis: ~"./vocabulary-metaphor-growth-synthesis-2026-07.spw"
+@metaphor_primitive_research_branching: ~"./metaphor-primitive-research-branching-2026-07.spw"
+@appendices_index: ~"./appendices/index.spw"
+@appendix_technolinguistics_web_history: ~"./appendices/technolinguistics-web-history-2007-2026.spw"
+@appendix_edpsych_materials_science: ~"./appendices/edpsych-materials-science-history-500y.spw"
+@appendix_computer_science: ~"./appendices/computer-science-history-500y.spw"
+@appendix_manufacturing: ~"./appendices/manufacturing-history-500y.spw"
+@appendix_fashion: ~"./appendices/fashion-history-500y.spw"
+@appendix_film: ~"./appendices/film-history-500y.spw"
+@appendix_print: ~"./appendices/print-history-500y.spw"
+@component_anatomy_device_packing: ~"./component-anatomy-device-packing-2026-07.spw"
+@component_philosophy_harmony: ~"./component-philosophy-harmony-2026-07.spw"
+@working_tree_index: ~"./working-tree-index-2026-07.spw"
+@commit_history_deep: ~"./commit-history-deep-2026-07/index.spw"
 
 operation = "align"
 fixity = "tending"
 
 ^"registry"{
   .ground {
-    note = `Nested folders use index.spw; flat audits are single files.`
+    note = `Nested folders use index.spw; flat audits are single files. History appendices live under appendices/ with timeline pointers in appendices/index.spw.`
   }
 
   refs {
@@ -29,6 +49,7 @@ fixity = "tending"
     alignment_shell_lifecycle = ~"./alignment-shell-lifecycle-sensitivity-2026-07/index.spw"
     build_runtime_performance = ~"./build-runtime-performance-2026-07/index.spw"
     commit_skill_induction = ~"./commit-skill-induction-2026-07/index.spw"
+    commit_history_deep = ~"./commit-history-deep-2026-07/index.spw"
     component_anatomy_device_packing = ~"./component-anatomy-device-packing-2026-07.spw"
     component_philosophy_harmony = ~"./component-philosophy-harmony-2026-07.spw"
     css_module_attribute_impact = ~"./css-module-attribute-impact-2026-07/index.spw"
@@ -41,8 +62,68 @@ fixity = "tending"
     page_region_hydration_memory = ~"./page-region-hydration-memory-2026-07/index.spw"
     runtime_kernel_consolidation = ~"./runtime-kernel-consolidation-2026-07.spw"
     viewing_reason_cross_media = ~"./viewing-reason-cross-media-2026-07.spw"
+    page_component_census = ~"./page-component-census-2026-07.spw"
+    spacing_sheet_census = ~"./spacing-sheet-census-2026-07.spw"
+    page_spacing_crossref = ~"./page-spacing-crossref-2026-07.spw"
+    javascript_module_census = ~"./javascript-module-census-2026-07.spw"
+    page_spacing_runtime_synthesis = ~"./page-spacing-runtime-synthesis-2026-07.spw"
+    internal_external_vocabulary_clusters = ~"./internal-external-vocabulary-clusters-2026-07.spw"
+    vocabulary_metaphor_growth_synthesis = ~"./vocabulary-metaphor-growth-synthesis-2026-07.spw"
+    metaphor_primitive_research_branching = ~"./metaphor-primitive-research-branching-2026-07.spw"
+    appendices_index = ~"./appendices/index.spw"
+    appendix_technolinguistics_web_history = ~"./appendices/technolinguistics-web-history-2007-2026.spw"
+    appendix_edpsych_materials_science = ~"./appendices/edpsych-materials-science-history-500y.spw"
+    appendix_computer_science = ~"./appendices/computer-science-history-500y.spw"
+    appendix_manufacturing = ~"./appendices/manufacturing-history-500y.spw"
+    appendix_fashion = ~"./appendices/fashion-history-500y.spw"
+    appendix_film = ~"./appendices/film-history-500y.spw"
+    appendix_print = ~"./appendices/print-history-500y.spw"
+    working_tree_index = ~"./working-tree-index-2026-07.spw"
   }[reg=facet]
 }[reg=facet]
+
+^"registry_groups"{
+  note = `Thematic clusters — resolve flat refs.registry keys; appendices members live in @appendices_index.`
+
+  session_2026_07_material: .{
+    reading_order = `page_spacing_runtime_cascade`
+    keys = #[`page_component_census`, `spacing_sheet_census`, `javascript_module_census`, `page_spacing_crossref`, `page_spacing_runtime_synthesis`][reg=set]
+    synthesis = @page_spacing_runtime_synthesis
+  }[reg=facet]
+
+  session_2026_07_vocabulary: .{
+    reading_order = `vocabulary_metaphor_cascade`
+    keys = #[`internal_external_vocabulary_clusters`, `vocabulary_metaphor_growth_synthesis`][reg=set]
+    synthesis = @vocabulary_metaphor_growth_synthesis
+  }[reg=facet]
+
+  session_2026_07_metaphor_research: .{
+    reading_order = `metaphor_primitive_research_cascade`
+    keys = #[`metaphor_primitive_research_branching`, `appendices_index`][reg=set]
+    hub = @metaphor_primitive_research_branching
+    appendices = @appendices_index
+  }[reg=facet]
+
+  appendices_folder: .{
+    reading_order = `appendices_history_cascade`
+    hub = @appendices_index
+    keys = #[`appendices_index`, `appendix_technolinguistics_web_history`, `appendix_edpsych_materials_science`, `appendix_computer_science`, `appendix_manufacturing`, `appendix_fashion`, `appendix_film`, `appendix_print`][reg=set]
+    path = `appendices/`
+  }[reg=facet]
+
+  working_tree: .{
+    index = @working_tree_index
+    probe = `git status --short .spw/`
+    rule = `Pending session files → working_tree_index registry_map before sprawl`
+  }[reg=facet]
+
+  commit_history_deep: .{
+    reading_order = `commit_history_deep`
+    hub = @commit_history_deep
+    keys = #[`commit_history_deep`, `commit_skill_induction`][reg=set]
+    complements = `commit-skill-induction — skill/induction lens on 2026-04→ only`
+  }[reg=facet]
+}
 
 ^"reading_orders"{
   expression = audit[order]{cascade.theme}<thorough>
@@ -60,9 +141,16 @@ fixity = "tending"
   >[reg=stream]
 
   agent_editor = ?<
+    @commit_history_deep,
     @agentic,
     @commit_skill_induction,
     @naming_grammar_js_types
+  >[reg=stream]
+
+  commit_history_deep = ?<
+    @commit_history_deep,
+    @commit_skill_induction,
+    @working_tree_index
   >[reg=stream]
 
   layout_device = ?<
@@ -71,6 +159,58 @@ fixity = "tending"
     @component_anatomy_device_packing,
     @component_philosophy_harmony,
     @alignment_shell_lifecycle
+  >[reg=stream]
+
+  page_spacing_cascade = ?<
+    @page_component_census,
+    @spacing_sheet_census,
+    @page_spacing_crossref,
+    @component_anatomy_device_packing,
+    @component_philosophy_harmony
+  >[reg=stream]
+
+  page_spacing_runtime_cascade = ?<
+    @page_component_census,
+    @spacing_sheet_census,
+    @javascript_module_census,
+    @page_spacing_runtime_synthesis,
+    @component_philosophy_harmony
+  >[reg=stream]
+
+  vocabulary_metaphor_cascade = ?<
+    @internal_external_vocabulary_clusters,
+    @vocabulary_metaphor_growth_synthesis,
+    @page_spacing_runtime_synthesis,
+    @component_philosophy_harmony
+  >[reg=stream]
+
+  metaphor_primitive_research_cascade = ?<
+    @working_tree_index,
+    @metaphor_primitive_research_branching,
+    @appendices_index,
+    @vocabulary_metaphor_growth_synthesis,
+    @javascript_module_census,
+    @component_philosophy_harmony
+  >[reg=stream]
+
+  session_2026_07_full = ?<
+    @working_tree_index,
+    @commit_history_deep,
+    @page_spacing_runtime_synthesis,
+    @vocabulary_metaphor_growth_synthesis,
+    @metaphor_primitive_research_branching,
+    @appendices_index
+  >[reg=stream]
+
+  appendices_history_cascade = ?<
+    @appendices_index,
+    @appendix_edpsych_materials_science,
+    @appendix_computer_science,
+    @appendix_manufacturing,
+    @appendix_fashion,
+    @appendix_film,
+    @appendix_print,
+    @appendix_technolinguistics_web_history
   >[reg=stream]
 
   language_operators = ?<
@@ -90,8 +230,8 @@ fixity = "tending"
 
 ^"thoroughness_minimum"{
   before_broad_refactor {
-    *do = `Read performance_cascade + layout_device`
-    expression = thoroughness[refactor]{performance.layout}<gate>
+    *do = `Read performance_cascade + layout_device + page_spacing_runtime_cascade`
+    expression = thoroughness[refactor]{performance.layout.page_spacing.runtime}<gate>
   }
   before_feature_work {
     *do = `Read page_memory_features + run npm run ecology`
@@ -101,10 +241,26 @@ fixity = "tending"
     *do = `Read agent_editor + recursive_improvement`
     expression = thoroughness[agents]{editor.recursive}<gate>
   }
+  before_history_orientation {
+    *do = `Read commit_history_deep — epochs + volume before skill-induction lens`
+    expression = thoroughness[history]{git.epochs.cadence}<gate>
+  }
   before_language_work {
     *do = `Read language_operators + npm run ecology:language`
     expression = thoroughness[language]{operators.claims.v04}<gate>
     ~see = @language_utilization
+  }
+  before_copy_work {
+    *do = `Read vocabulary_metaphor_cascade`
+    expression = thoroughness[copy]{vocabulary.metaphor.growth}<gate>
+  }
+  before_nav_interaction_research {
+    *do = `Read metaphor_primitive_research_cascade`
+    expression = thoroughness[research]{navigation.interaction.rendering}<gate>
+  }
+  before_audit_session_land {
+    *do = `Read @working_tree_index + registry_groups; git status --short .spw/`
+    expression = thoroughness[audit]{working_tree.registry}<gate>
   }
   $cache_rule {
     rule = `New audit insights → semantic capacity cache or audits/index registry before HTML/CSS/JS sprawl`
@@ -119,14 +275,16 @@ fixity = "tending"
     spec_ref = ".spw/audits/index.spw"
     impl_ref = "registry + reading_orders facets"
     probe_ref = `rg 'reading_orders|language_operators' .spw/audits/index.spw`
-    falsification = `New audits land without registry entry or language pass skips ecology:language.`
+    falsification = `New audits land without registry entry, working_tree_index row, or language pass skips ecology:language.`
     status = "active"
   }
 }[reg=facet]
 
 validation: #[
   `find .spw/audits -name '*.spw' | wc -l`
-  `rg 'registry|reading_orders|language_operators' .spw/audits/index.spw`
+  `rg 'registry_groups|working_tree_index|reading_orders' .spw/audits/index.spw`
+  `rg 'registry_map|clusters' .spw/audits/working-tree-index-2026-07.spw`
+  `git status --short .spw/`
   `npm run ecology`
   `npm run ecology:language`
 ][reg=set]

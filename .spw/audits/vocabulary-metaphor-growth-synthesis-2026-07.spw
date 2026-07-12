@@ -1,0 +1,129 @@
+# Vocabulary · Metaphor · Growth Synthesis (2026-07)
+#
+# operation: audit + align
+# fixity: tending
+# method: join internal/external vocabulary audit with page/spacing/runtime censuses and semantic capacity contracts
+
+#>vocabulary_metaphor_growth_synthesis_2026_07
+#:audit #!synthesis #!copy #!semantics #!metaphor
+#:operation #!audit
+#:layer #!pragmatics
+
+@vocabulary_clusters: ~"./internal-external-vocabulary-clusters-2026-07.spw"
+@page_component_census: ~"./page-component-census-2026-07.spw"
+@spacing_sheet_census: ~"./spacing-sheet-census-2026-07.spw"
+@javascript_module_census: ~"./javascript-module-census-2026-07.spw"
+@page_spacing_runtime_synthesis: ~"./page-spacing-runtime-synthesis-2026-07.spw"
+@metaphor_dimensional_lexicon: ~"../conventions/metaphor-dimensional-lexicon.spw"
+@semantic_capacity: ~"../conventions/semantic-capacity.spw"
+@component_region_personality: ~"../conventions/component-region-personality.spw"
+@copy_ecology: ~"../conventions/copy-ecology.spw"
+@metaphor_primitive_research_branching: ~"./metaphor-primitive-research-branching-2026-07.spw"
+
+audit_run: .{
+  at = `2026-07-09`
+  scope = `Unify vocabulary cluster audit, metaphor development, and growth capacity with material censuses (HTML/CSS/JS)`
+  posture = `Synthesis for copy/metaphor workstreams — complements @page_spacing_runtime_synthesis for layout/runtime workstreams`
+}[reg=facet]
+
+^"thesis"{
+  claim: `The site has strong internal semantic infrastructure (.spw coordinates, copy-depth ladder, metaphor lexicon) and weak external differentiation (repeated stems, missing referentiality attrs). Growth capacity is high in .spw and labs; saturation is showing in public hub prose, not in convention count.`
+  one_line: `Teach the boundary: external = region personality + motifs; internal = coordinates + inspect; metaphor = projection register between them.`
+}
+
+^"four_plane_model"{
+  planes: .{
+    external_copy = `HTML voice — @vocabulary_clusters external_clusters`
+    internal_copy = `.spw + agent + technical specimens — @vocabulary_clusters internal_clusters`
+    material = `page + spacing + runtime — @page_spacing_runtime_synthesis`
+    metaphor = `lexicon_register projections — @metaphor_dimensional_lexicon`
+    primitives = `navigation · interaction · rendering — @metaphor_primitive_research_branching`
+  }[reg=facet]
+  rule: `A copy patch touches external_copy + metaphor minimum. A runtime patch touches material + internal_copy minimum. A nav/interaction/render patch touches primitives + metaphor minimum. A convention patch touches internal_copy + growth_capacity minimum.`
+}
+
+^"cross_census_matrix"{
+  rows: #[
+    `.{ topic = referentiality ; html = 0 data-spw-referentiality ; spw = 4 tiers contracted ; js = state-inspector reads tiers indirectly ; action = pilot 5 routes }`,
+    `.{ topic = copy_depth ; html = 114 attrs ; css = coloring-depth.css ; js = concept-salience, narrative-instrumentation ; action = pair with referentiality }`,
+    `.{ topic = region_vocabulary ; html = 16 data-spw-vocabulary ; spw = region_personality examples ; css = registers.css ; action = motifs per route family }`,
+    `.{ topic = passport_terms ; html = 0 shell-width/passport ; spw = harmony_tone_prime ; labs = design/composition ; action = keep boundary }`,
+    `.{ topic = spatial_metaphor ; html = 1 pack-local ; css = component-packing ; js = composition-box-model ; spw = pack_axis coordinate ; action = wave 2 hubs }`,
+    `.{ topic = field_metaphor ; html = resonance in prose ≈ high ; css = wonder.css + registers ; js = charge-field, attention-architecture ; action = declare field register on sections }`,
+    `.{ topic = culinary_metaphor ; html = recipes genre depth ; css = recipes.css low magic ; js = recipe-semantics ; action = external cluster reference specimen }`,
+    `.{ topic = consideration_physics ; html = town/spw workshop copy ; spw = living-medium-copy ; action = editorial lead not merchant lead on curriculum }`
+  ][reg=set]
+}
+
+^"metaphor_development_synthesis"{
+  stable_coordinates: #[`pack_axis`, `mount_when`, `cost_class`, `express_channel`, `referentiality tier`, `copy_depth tier`][reg=set]
+  open_registers: #[`consideration_physics`, `viewing_reason`, `culinary`, `ecology`, `cognition`, `field`][reg=set]
+  freeze_stems: #[`data-spw-*`, `MOUNT_WHEN`, `data-spw-referentiality values`, `data-spw-copy-depth tiers`][reg=set]
+  development_path: #[
+    `1. Tag new prose with lexicon_register in .spw cache or data-spw-copy-motifs on body`,
+    `2. Retire overworked external stems per route family synonym table`,
+    `3. Add register aliases to metaphor-dimensional-lexicon — not new data-spw stems`,
+    `4. Use daily-kernel when metaphor work crosses discipline (copy + CSS + runtime)`
+  ][reg=set]
+}
+
+^"growth_capacity_synthesis"{
+  healthy: #[
+    `76 conventions with operation discipline`,
+    `Audit cascades + synthesis artifacts reduce re-read cost`,
+    `Coordinate-first metaphor allows re-lexicon without API churn`,
+    `Triple-axis + four-plane models give agents selection rules`
+  ][reg=set]
+  constrained: #[
+    `Public HTML vocabulary not keeping pace with .spw — adoption gap`,
+    `~114 copy-depth without referentiality — half-wired ladder`,
+    `Template drift consumes reader attention — negative semantic capacity`,
+    `dispatch index growth — need synthesis files vs flat audit sprawl`
+  ][reg=set]
+  capacity_rule: `Before adding a convention file, check: operation declared? sibling pattern compared? internal/external tier named? validation rg one-liner? If no, leaflet instead.`
+  merge_targets: .{
+    vocabulary_work = @component_region_personality
+    metaphor_work = @metaphor_dimensional_lexicon
+    growth_work = @semantic_capacity
+    copy_routing = @copy_ecology
+  }[reg=facet]
+}
+
+^"unified_promotion_waves"{
+  wave_a_boundary: #[
+    `referentiality attrs on pilots`,
+    `retire Objective terminal + Operational entry`,
+    `keep passport terms in labs`
+  ][reg=set]
+  wave_b_voice: #[
+    `motif strips per hub (data-spw-copy-motifs)`,
+    `perspective-pair component`,
+    `consideration_physics copy on spw/town/design curriculum`
+  ][reg=set]
+  wave_c_material: #[
+    `from @page_spacing_runtime_synthesis — pack-local + token pass where copy already promises inspectability`
+  ][reg=set]
+  wave_d_metaphor: #[
+    `lexicon_register on sections`,
+    `musician/animator register prime for film + promo surfaces`,
+    `field vs librarian "register" disambiguation in about/website field guide`
+  ][reg=set]
+}
+
+^"reading_order"{
+  vocabulary = @vocabulary_clusters
+  material = @page_spacing_runtime_synthesis
+  copy_conventions = #[@component_region_personality, @copy_ecology, @living_medium_copy, @coloring_depth][reg=set]
+  metaphor = @metaphor_dimensional_lexicon
+  capacity = @semantic_capacity
+  this = `synthesis — start here for copy/metaphor/growth planning`
+}
+
+^"artifact_lineage"{
+  spawned = `2026-07-09 — internal/external vocabulary + metaphor development + growth capacity`
+  complements = @page_spacing_runtime_synthesis
+  updates = #[
+    `@internal_external_vocabulary_clusters — three-pass source audit`,
+    `future: component-region-personality audit_evidence refresh when referentiality lands in HTML`
+  ][reg=set]
+}

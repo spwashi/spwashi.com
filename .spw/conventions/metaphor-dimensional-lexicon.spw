@@ -20,6 +20,10 @@
 @circuit_components: ~"./circuit-components.spw"
 @data_spw_attribute_governance: ~"./data-spw-attribute-governance.spw"
 @cognitive_surface: ~"../philosophy/cognitive-surface.spw"
+@vocabulary_metaphor_growth_synthesis: ~"../audits/vocabulary-metaphor-growth-synthesis-2026-07.spw"
+@metaphor_primitive_research_branching: ~"../audits/metaphor-primitive-research-branching-2026-07.spw"
+@viewing_reason: ~"./viewing-reason.spw"
+@living_medium_copy: ~"./living-medium-copy.spw"
 
 operation = "contract"
 fixity = "tending"
@@ -78,7 +82,7 @@ fixity = "tending"
     },
     .{
       id = `lexicon_register`
-      values = #[`ecology`, `cognition`, `field`, `circuit`, `webpage`, `culinary`, `prairie`, `technical`][reg=set]
+      values = #[`ecology`, `cognition`, `field`, `circuit`, `webpage`, `culinary`, `prairie`, `technical`, `consideration_physics`, `viewing_reason`][reg=set]
       owns = `which noun/verb set is speaking right now`
       mutability = `open — new registers allowed if they map to coordinates`
     }
@@ -200,6 +204,19 @@ fixity = "tending"
     verbs = #[`mount`, `annotate`, `observe`, `write`, `debounce`][reg=set]
     best_for = `implementation and performance audit evidence lines`
   }[reg=facet]
+  consideration_physics = .{
+    nouns = #[`gather`, `elaborate`, `register`, `precipitate`, `workshop`, `cauldron`][reg=set]
+    verbs = #[`gather`, `elaborate`, `register`, `precipitate`, `try`, `annotate`][reg=set]
+    best_for = `workshop/town/curriculum external copy — editorial invitation before merchant lead`
+    source = @living_medium_copy
+  }[reg=facet]
+  viewing_reason = .{
+    nouns = #[`persona`, `lens`, `facet`, `audience`, `lane`][reg=set]
+    verbs = #[`look`, `read`, `practice`, `focus`, `disclose`][reg=set]
+    best_for = `cross-media audience axis — SVG persona, image lens, scene lane, card audience`
+    source = @viewing_reason
+    note = `Distinct from expressive_registers depth/valence channel and product-lines audience_register`
+  }[reg=facet]
   rule = `A paragraph may mix technical + one soft register. Mixing three soft registers without coordinates is noise.`
 }[reg=facet]
 
@@ -261,4 +278,8 @@ dispatch: .{
   build_runtime_performance = @build_runtime_performance_audit
   field = @attention_field
   circuit = @circuit_components
+  vocabulary_synthesis = @vocabulary_metaphor_growth_synthesis
+  primitive_research = @metaphor_primitive_research_branching
+  viewing_reason = @viewing_reason
+  living_medium = @living_medium_copy
 }[reg=facet]

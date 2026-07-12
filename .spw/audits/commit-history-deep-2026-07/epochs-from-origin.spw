@@ -1,0 +1,109 @@
+# Epochs from repository origin
+
+#>commit_history_deep_epochs
+#:audit #!git #!history
+#:operation #!audit
+
+@index: ~"./index.spw"
+@milestones: ~"./milestones.spw"
+
+^"epoch_table"{
+  note = `Six eras — boundaries from subject + path signals, not git tags.`
+
+  e0_genesis: .{
+    id = `e0_genesis`
+    span = `2024-01-11 — 2024-02-18`
+    commits ≈ 30
+    character = `Static personal site bootstrap — index.html, CNAME, lore.land about, minimal pages`
+    subjects = #[`created index.html`, `scaffolding`, `domains`, `relocating`, `preparing`][reg=set]
+    stack = `Hand HTML, early CSS, no public/js runtime, no .spw`
+    site_registers = `webpage document ethics only`
+    leaves = `Genesis layer — no Spw operators, no build pipeline`
+  }[reg=facet]
+
+  e1_gap: .{
+    id = `e1_gap`
+    span = `2024-02-19 — 2026-04-05`
+    commits = 0
+    character = `Archival silence in this clone`
+    read = `Do not infer missing features; next era is full renaissance`
+  }[reg=facet]
+
+  e2_spw_renaissance: .{
+    id = `e2_spw_renaissance`
+    span = `2026-04-06 — 2026-04-30`
+    commits ≈ 331
+    character = `Spw syntax, frame grammar, operator atlas, workbench bridge, &[ tag commits begin`
+    signals = #[
+      `feat(site): add spec-style Spw syntax surface`,
+      `#[spw] — publish operator atlas pages`,
+      `&[operators] — formalize interaction semantics`,
+      `.spw/ first commits 2026-04-06`
+    ][reg=set]
+    infrastructure = #[`Agents.md`, `package.json`, `chore(site): prepare content for refresh`][reg=set]
+    site_registers = `operators + grammar + frame — foundation for all later runtime`
+  }[reg=facet]
+
+  e3_surface_ecology: .{
+    id = `e3_surface_ecology`
+    span = `2026-05-01 — 2026-05-31`
+    commits ≈ 180
+    character = `Semantic surfaces, cauldron/spell paths, material/grain, topic/recipe expansion, RPG assets`
+    signals = #[
+      `&[recipe-*]`, `&[page-universe]`, `&[interactivity, spine]`,
+      `feat(semantics,ux): semantic accent + attentional navigation + cauldron`,
+      `dcfc2dee surface-ecology deep semantic surfaces (+19k churn)`
+    ][reg=set]
+    risk = `Mega-feature landings; inspect sprawl begins`
+  }[reg=facet]
+
+  e4_runtime_kernel: .{
+    id = `e4_runtime_kernel`
+    span = `2026-06-01 — 2026-06-30`
+    commits ≈ 99
+    character = `JS/CSS tree organization, module catalog, kernel rhizosphere, batching, build pipeline hardening`
+    signals = #[
+      `ae7f9365 .[runtime] — organize JS and CSS trees (+143k churn — largest commit)`,
+      `1c2bf2da scoped CSS delivery + premium feature gates`,
+      `Extract kernel / site-settings split / module-loader`,
+      `plan .spw index mass customization waves`
+    ][reg=set]
+    healthy = `Surgical extractions debt-reducing — aligns with commit-skill-induction healthy_patterns`
+  }[reg=facet]
+
+  e5_language_agent_ecology: .{
+    id = `e5_language_agent_ecology`
+    span = `2026-07-01 — present`
+    commits ≈ 39
+    character = `Spw language v04, module-export uniformity, ecology dispatch, worktree merge cadence, audit censuses`
+    signals = #[
+      `&[spw-language] Merge spw-language-v04 worktree`,
+      `&[module-export] Merge module-export-uniformity`,
+      `&[ecology] Land language census…`,
+      `Merge workshop ecology surfaces from worktree`
+    ][reg=set]
+    posture = `Slower commit rate; more merge-shaped landings; .spw audit session (working-tree-index)`
+  }[reg=facet]
+}
+
+^"narrative_arcs"{
+  arcs: #[
+    `Document site → Spw language site (e0→e2)`,
+    `Frame grammar → semantic surfaces + spells (e2→e3)`,
+    `Monolith JS/CSS → catalog + kernel (e3→e4)`,
+    `Product features → agent ecology + language claims (e4→e5)`
+  ][reg=set]
+}
+
+^"cross_epoch_invariants"{
+  preserved: #[
+    `Directory routing (index.html per route) — genesis through present`,
+    `GitHub Pages deploy mental model — CNAME from day one`,
+    `Creator-first copy direction — strengthened in e2+`
+  ][reg=set]
+  replaced: #[
+    `Monolithic spw-* CSS filenames → layered public/css/ tree (e4)`,
+    `Ad hoc JS → module catalog + MOUNT_WHEN (e4)`,
+    `Implicit semantics → data-spw contracts + .spw audits (e5)`
+  ][reg=set]
+}

@@ -1,0 +1,123 @@
+# Appendix: Computer Science (1526–2026)
+#
+# operation: cache + audit
+# fixity: tending
+
+#>appendix_computer_science_history_500y
+#:audit #!appendix #!history #!computer_science #!runtime
+#:operation #!cache
+#:layer #!pragmatics
+
+@appendices_index: ~"./index.spw"
+@metaphor_primitive_research_branching: ~"../metaphor-primitive-research-branching-2026-07.spw"
+@js_architecture_cognition: ~"../../conventions/js-architecture-cognition.spw"
+@runtime_medium_ecology: ~"../../conventions/runtime-medium-ecology.spw"
+@module_export_contract: ~"../../conventions/module-export-contract.spw"
+@metaphor_dimensional_lexicon: ~"../../conventions/metaphor-dimensional-lexicon.spw"
+@semantic_capacity: ~"../../conventions/semantic-capacity.spw"
+
+audit_run: .{
+  at = `2026-07-09`
+  scope = `Computer science research and practice — nested w500→w5`
+  index = @appendices_index
+  posture = `Editorial/technical tier — runtime and agent register justification`
+}[reg=facet]
+
+^"thesis"{
+  claim: `Computer science exported the site's deepest operational nouns: algorithm, abstraction, interface, module, state machine, cache, protocol. The discipline's history is a stack of compressions — problems become data structures, data structures become APIs, APIs become metaphors that go stale.`
+  site_rule: `Freeze mount_when, guild ids, cost_class, and data-spw stems; treat CS era words (SPA, serverless, microservice) as replaceable aliases in .spw caches.`
+  site_registers = #[`technical`, `cognition`, `ecology`][reg=set]
+}
+
+^"timeline"{
+  w500: .{
+    span = `1526–2026`
+    developments: #[
+      `Leibniz binary arithmetic + universal calculus dream`,
+      `Babbage/Lovelace — algorithm as sequence controlling machine`,
+      `Boolean algebra — logic as algebra`,
+      `Jacquard punch card — program stored on medium (manufacturing crossover)`
+    ][reg=set]
+    metaphor_residue = #[`algorithm`, `bit`, `punch card`, `automaton`][reg=set]
+  }[reg=facet]
+  w200: .{
+    span = `1826–2026`
+    developments: #[
+      `Boole, Shannon foreshadow — logic meets circuits`,
+      `Hollerith tabulation — data processing industry`,
+      `Formal logic programs (Frege, Peano lineage)`,
+      `Turing-complete idea before electronic computers`
+    ][reg=set]
+    metaphor_residue = #[`tabulate`, `logic gate`, `computable`][reg=set]
+  }[reg=facet]
+  w100: .{
+    span = `1926–2026`
+    developments: #[
+      `1936 Turing machine; 1945 von Neumann architecture`,
+      `Compilers — human notation to machine (Fortran, Lisp)`,
+      `CS as academic discipline (1960s)`,
+      `Operating systems, time-sharing, networking (ARPANET 1969)`,
+      `Relational model (Codd 1970) — data as declared structure`
+    ][reg=set]
+    metaphor_residue = #[`compiler`, `stack`, `heap`, `pointer`, `packet`, `database`][reg=set]
+    spw_bridge = `MODULE_LAYERS + catalog scheduling — OS process metaphor`
+  }[reg=facet]
+  w50: .{
+    span = `1976–2026`
+    developments: #[
+      `UNIX/C — portable systems language`,
+      `Personal computing, GUI (Xerox→Apple→Windows)`,
+      `OOP mainstream (Smalltalk, C++, Java)`,
+      `Internet + WWW — hypertext as public protocol`,
+      `Open source movement, Linux, git (2005)`
+    ][reg=set]
+    metaphor_residue = #[`object`, `class`, `interface`, `repository`, `fork`][reg=set]
+    spw_bridge = `compose.js pollinator + guild exports`
+  }[reg=facet]
+  w20: .{
+    span = `2006–2026`
+    developments: #[
+      `Mobile compute shift; JavaScript as systems glue`,
+      `Cloud IaaS/PaaS — ops vocabulary changes`,
+      `Distributed systems at product scale (CAP awareness)`,
+      `ML resurgence (deep learning 2012+)`,
+      `Containers + orchestration discourse`
+    ][reg=set]
+    metaphor_residue = #[`cloud`, `container`, `shard`, `tensor`, `pipeline`][reg=set]
+    spw_bridge = `hand-authored static site as deliberate counter-stack`
+  }[reg=facet]
+  w15: .{
+    span = `2011–2026`
+    developments: #[
+      `DevOps + CI/CD as cultural default`,
+      `Microservices hype → modular monolith reconsideration`,
+      `Type systems return to JS (TypeScript)`,
+      `Ethics, fairness, security as CS subfields in public discourse`
+    ][reg=set]
+    metaphor_residue = #[`microservice`, `deploy`, `typecheck`, `bias (ML)`][reg=set]
+  }[reg=facet]
+  w5: .{
+    span = `2021–2026`
+    developments: #[
+      `LLM-assisted programming — authorship shift`,
+      `Agent harnesses, tool protocols (MCP)`,
+      `Local-first, inspectable repos vs generated sprawl`,
+      `Formal methods interest revival for critical paths`
+    ][reg=set]
+    metaphor_residue = #[`agent`, `prompt`, `grounding`, `trace`][reg=set]
+    spw_bridge = `referentiality tiers + audit operation discipline`
+  }[reg=facet]
+}
+
+^"site_implications"{
+  runtime: #[`catalog = orchestration stratum`, `kernel = substrate`, `mount_when = elaboration_stage`, `guild = ecology clustering`][reg=set]
+  do_not_import: #[`microservice diagram in public hero`, `framework religion in copy`, `O(n) claims without cost_class`][reg=set]
+  research_branches: #[`cluster_d cognition cost surface`, `module export audit`, `agent tier boundaries`][reg=set]
+}
+
+^"cross_links"{
+  index = @appendices_index
+  cognition = @js_architecture_cognition
+  ecology = @runtime_medium_ecology
+  export = @module_export_contract
+}

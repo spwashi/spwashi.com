@@ -1,0 +1,176 @@
+# Sheet-by-Sheet Spacing Census (2026-07)
+#
+# operation: audit
+# fixity: tending
+# method: CSS file census — spacing token var() vs literal rem/px; layer + breakpoint counts
+
+#>spacing_sheet_census_2026_07
+#:audit #!css #!spacing #!layout
+#:operation #!audit
+#:layer #!pragmatics
+
+@dimension_vocabulary: ~"../conventions/dimension-vocabulary.spw"
+@typography_packing: ~"../conventions/typography-packing.spw"
+@component_packing: ~"../conventions/component-packing.spw"
+@css_instruction: ~"../conventions/css-instruction.spw"
+@component_anatomy_device_packing: ~"./component-anatomy-device-packing-2026-07.spw"
+@tokens_core: ~"../../public/css/tokens/core.css"
+@tokens_dimensions: ~"../../public/css/tokens/dimensions.css"
+@shell_layout: ~"../../public/css/shell/layout.css"
+@style_core: ~"../../public/css/style-core.css"
+@page_component_census: ~"./page-component-census-2026-07.spw"
+@javascript_module_census: ~"./javascript-module-census-2026-07.spw"
+@page_spacing_crossref: ~"./page-spacing-crossref-2026-07.spw"
+@page_spacing_runtime_synthesis: ~"./page-spacing-runtime-synthesis-2026-07.spw"
+@vocabulary_metaphor_growth_synthesis: ~"./vocabulary-metaphor-growth-synthesis-2026-07.spw"
+
+audit_run: .{
+  at = `2026-07-09`
+  extended = `2026-07-09 — runtime dataset→CSS coupling notes`
+  scope = `143 CSS files under public/css/ excluding bundles/`
+  method = `per-file count: var(--page|pack|attention|spw|gap|gutter|section|stack|shell|card|frame*) spacing refs vs literal gap/padding/margin rem|px; @media and @container counts`
+  posture = `sheet ownership map for spacing decisions; pass 2 of 3 — synthesis in @page_spacing_runtime_synthesis`
+}[reg=facet]
+
+^"layer_summary"{
+  sheets = 143
+  by_layer: .{
+    routes = .{ sheets = 31 ; token_var = 38 ; magic_rem = 520 ; container = 9 ; media = 90 ; note = highest magic-to-token ratio — route-local spacing dominates }[reg=facet]
+    shell = .{ sheets = 6 ; token_var = 419 ; magic_rem = 223 ; media = 48 ; note = chrome owns flush seating + header clearance tokens }[reg=facet]
+    components = .{ sheets = 27 ; token_var = 388 ; magic_rem = 295 ; container = 6 ; media = 44 }[reg=facet]
+    systems = .{ sheets = 33 ; token_var = 293 ; magic_rem = 151 ; container = 6 ; media = 34 }[reg=facet]
+    handles = .{ sheets = 15 ; token_var = 57 ; magic_rem = 147 ; media = 31 }[reg=facet]
+    tokens = .{ sheets = 2 ; token_var = 123 ; magic_rem = 0 ; note = source of truth for --page-stack-gap, --page-section-gap, pack tiers via dimensions.css }[reg=facet]
+  }[reg=facet]
+  thesis: `Shared layers (shell, components, tokens) spend spacing tokens; routes layer re-derives literal rem most often.`
+}
+
+^"token_source_of_truth"{
+  vertical_rhythm: #[
+    `--page-section-gap — section succession (dimensions.css → --spw-real-estate-section)`,
+    `--page-stack-gap — intra-section stack (dimensions.css → --spw-real-estate-block)`,
+    `--attention-rail-gap — split layout gutter (shell/layout.css)`
+  ][reg=set]
+  component_packing: #[
+    `--pack-tier-compact|balanced|roomy-pad/gap — typography-packing tiers`,
+    `--spw-pack-pad-active / --spw-pack-gap-active — html packing-state projection`,
+    `--component-gap, --component-gap-tight, --component-gap-loose — card internals`
+  ][reg=set]
+  axis_rule: `Shell-width spacing → viewport tokens on html/body. Box-width spacing → container queries + pack tiers on card hosts. Do not fix route magic rem by copying tokens into routes without declaring axis ownership per @dimension_vocabulary.`
+}
+
+^"high_magic_sheets"{
+  claim: `Sheets with ≥40 literal spacing declarations are the highest drift risk.`
+  route_surfaces: #[
+    `routes/surfaces/design.css — 77 magic rem, 6 token var, 6 media, 1 container`,
+    `routes/surfaces/home.css — 59 magic rem, 0 token var, 15 media, 1 container`,
+    `routes/surfaces/rpg-wednesday.css — 51 magic rem, 0 token var`,
+    `routes/surfaces/topics.css — 43 magic rem, 0 token var, 9 media, 3 container`,
+    `routes/surfaces/craft.css — 29 magic rem, 0 token var`,
+    `routes/surfaces/home-panels.css — 28 magic rem, 0 token var, 7 media`,
+    `routes/surfaces/website.css — 21 magic rem, 6 token var`,
+    `routes/surfaces/blog-layouts.css — 20 magic rem, 0 token var`,
+    `routes/surfaces/settings-notes.css — 20 magic rem, 0 token var`
+  ][reg=set]
+  shell_chrome: #[
+    `shell/chrome/adaptive.css — 67 magic rem, 13 token var, 11 media`,
+    `shell/chrome/footer.css — 46 magic rem, 27 token var`,
+    `shell/chrome/navigation.css — 35 magic rem, 176 token var — token-heavy chrome counterexample`,
+    `shell/chrome/header.css — 30 magic rem, 72 token var`,
+    `shell/chrome/section-context.css — 29 magic rem, 38 token var, 11 media`
+  ][reg=set]
+  shared_components: #[
+    `components/content.css — 41 magic rem, 47 token var — mixed; candidate for token publish pass`,
+    `components/cards/profile-card.css — 42 magic rem, 8 token var`,
+    `components/cards/payment-card.css — 28 magic rem, 41 token var`,
+    `grammar/syntax.css — 45 magic rem, 20 token var, 4 container`
+  ][reg=set]
+  handles: #[
+    `handles/operators/spell-breadcrumbs.css — 57 magic rem, 0 token var — breadcrumb lane needs pack-tier routing`
+  ][reg=set]
+}
+
+^"zero_token_route_sheets"{
+  claim: `Many route sheets spend spacing without var(--page|pack|spw*) — they inherit shell gap but do not participate in packing projection.`
+  sheets: #[
+    `home.css, home-panels.css, topics.css, craft.css, rpg-wednesday.css, blog-layouts.css, settings-notes.css, about.css, plans-cards.css, play.css, recipes.css, tools-budgeting-surface.css, care-intake.css, services-configurator.css, boonhonk-mixer.css`
+  ][reg=set]
+  friction: `A settings tweak to --page-section-gap propagates through shell and dimensions projections but may not move route-local panel gaps authored as literal rem in these files.`
+  direction: `Route spacing should read --spw-real-estate-section/block or --spw-pack-gap-active unless the decision is truly route-ornament (one-off specimen layout).`
+}
+
+^"breakpoint_seams"{
+  echo = @component_anatomy_device_packing#breakpoint_source_of_truth
+  observed_in_routes: #[
+    `home.css — 15 @media blocks for spacing/layout`,
+    `topics.css — 9 media + 3 container`,
+    `adaptive.css — 11 media for chrome reflow`,
+    `section-context.css — 11 media for handle visibility`
+  ][reg=set]
+  direction: `When touching a high-magic route sheet, name which axis owns each breakpoint: shell-width vs box-width vs input-capability. Prefer @container for card-internal spacing already inside a sized host.`
+}
+
+^"systems_spacing_owners"{
+  packing_gravity: #[
+    `systems/component-packing.css — container @container 26rem/44rem; no route duplication`,
+    `systems/spatial-gravity.css — room custom properties; not spacing-tier`,
+    `components/typography-packing.css — density tiers; should feed route cards before literals`
+  ][reg=set]
+  media_systems: #[
+    `systems/svg-surfaces.css — figure+rail packing (see anatomy audit)`,
+    `systems/film-scene-composition.css — scene bed lanes`,
+    `systems/layout-postures.css — explore-posture spacing bias`
+  ][reg=set]
+}
+
+^"promotion_queue"{
+  p1_sheet: #[
+    `home.css + home-panels.css — tokenize section/stack gaps to --spw-real-estate-*`,
+    `topics.css — align topic grid gaps with pack-tier projection on atlas layout`,
+    `design.css — highest magic load; split specimen spacing into systems where reusable`,
+    `spell-breadcrumbs.css — route spacing through pack tiers or attention-rail tokens`
+  ][reg=set]
+  p2_sheet: #[
+    `profile-card.css + payment-card.css — publish --spw-card-resolved-pad for pseudo-elements`,
+    `rpg-wednesday.css + craft.css — card-dense families per @page_component_census`
+  ][reg=set]
+  validation: `rg 'gap:|padding:|margin:' public/css/routes/surfaces/home.css | wc -l ; compare var( count`
+}
+
+^"runtime_dataset_coupling"{
+  claim: `JS modules write html/body datasets that CSS spacing and layout layers read — sheet edits must respect mount write hotspots.`
+  writers: #[
+    `site-settings-engine + dimensions.css — data-spw-packing-state, pack-occupancy → --spw-pack-pad-active, --spw-pack-gap-active`,
+    `composition-box-model — data-spw-pack-layout, data-spw-box-model on opted-in hosts`,
+    `loading-ecology + hydration-passes — data-spw-hydration*, page arrival arcs`,
+    `layout-assumptions (settled) — bottom chrome clearance ornament reads`,
+    `shell-disclosure + navigation — --shell-header-height consumers in svg-surfaces scroll-margin`
+  ][reg=set]
+  css_readers: #[
+    `tokens/dimensions.css — pack tier projection`,
+    `components/typography-packing.css — density tiers`,
+    `systems/component-packing.css — data-spw-pack-layout variants`,
+    `systems/layout-postures.css — explore-posture spacing bias`,
+    `ornament/layout-assumptions.css — chrome clearance`
+  ][reg=set]
+  seam: `Route sheets with high magic rem often ignore pack projection attrs that @javascript_module_census immediate modules write — home.css and topics.css prime examples.`
+  direction: `When tokenizing a route sheet, grep CSS for data-spw-pack and confirm composition-box-model / settings-engine already project on that route per @page_spacing_runtime_synthesis.`
+}
+
+^"vocabulary_crossref"{
+  claim: `Route sheets with high magic rem often pair with routes whose external copy promises inspectability — token work should not outpace voice differentiation.`
+  external_stems: #[`inspectable`, `legible`, `atlas` — overworked per @vocabulary_metaphor_growth_synthesis][reg=set]
+  seam: `home.css + topics.css high magic rem correlate with repeated external stems on those hubs — material drift and copy saturation share a promotion wave.`
+  direction: `When tokenizing route sheets, read @vocabulary_metaphor_growth_synthesis wave_c_material + wave_b_voice before renaming spacing alone.`
+  synthesis = @vocabulary_metaphor_growth_synthesis
+}
+
+^"cross_links"{
+  page_inventory = @page_component_census
+  runtime_inventory = @javascript_module_census
+  crossref = @page_spacing_crossref
+  synthesis = @page_spacing_runtime_synthesis
+  vocabulary = @vocabulary_metaphor_growth_synthesis
+  anatomy = @component_anatomy_device_packing
+  packing_convention = @component_packing
+}

@@ -118,12 +118,25 @@
 }
 
 ^"timed_feed_bridge"{
- rule: "JSON-fed timed surfaces should be localization-ready before additional locales are published."
- required_fields: [
-  "sourceLocale on the feed",
-  "localization metadata that names the copy-unit family",
-  "complete title, summary, href, and CTA fields on each rendered card",
-  "data-spw-copy-unit, data-spw-locale, and data-spw-cadence on generated card HTML"
- ]
- see: ~"../philosophy/timing-data-localization.spw"
+  rule: "JSON-fed timed surfaces should be localization-ready before additional locales are published."
+  required_fields: [
+   "sourceLocale on the feed",
+   "localization metadata that names the copy-unit family",
+   "complete title, summary, href, and CTA fields on each rendered card",
+   "data-spw-copy-unit, data-spw-locale, and data-spw-cadence on generated card HTML"
+  ]
+  see: ~"../philosophy/timing-data-localization.spw"
+}
+
+^"technolinguistics_seams"{
+  note: `English framework and platform words (responsive, component, cloud, utility, agent) carry era-specific cultural load — not neutral globally.`
+  appendices_index: ~"../audits/appendices/index.spw"
+  history_appendix: ~"../audits/appendices/technolinguistics-web-history-2007-2026.spw"
+  policy: `Freeze coordinate stems (data-spw-*, operator ids); translate or restate lexicon_register nouns per locale; pair SaaS-era words with glosses on curriculum routes.`
+  examples: #[
+    `warm/cool valence — not temperature moralism in all cultures`,
+    `mobile-first — Western device-history; restate as reading-posture where needed`,
+    `ecology/garden — internal register; public uses region motifs`,
+    `charge/resonance — field physics register; gloss on first use if translated`
+  ][reg=set]
 }

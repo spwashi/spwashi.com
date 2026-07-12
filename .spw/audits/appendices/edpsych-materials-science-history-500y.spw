@@ -1,0 +1,350 @@
+# Appendix: Educational Psychology & Materials Science (1526–2026)
+#
+# operation: cache + audit
+# fixity: tending
+# role: parallel cultural/research appendix — nested granularity w500→w5
+
+#>appendix_edpsych_materials_science_history_500y
+#:audit #!appendix #!history #!cognition #!materials
+#:operation #!cache
+#:layer #!pragmatics
+
+@appendices_index: ~"./index.spw"
+@metaphor_primitive_research_branching: ~"../metaphor-primitive-research-branching-2026-07.spw"
+@appendix_technolinguistics: ~"./technolinguistics-web-history-2007-2026.spw"
+@metaphor_dimensional_lexicon: ~"../../conventions/metaphor-dimensional-lexicon.spw"
+@js_architecture_cognition: ~"../../conventions/js-architecture-cognition.spw"
+@electromagnetic_containers: ~"../../conventions/electromagnetic-containers.spw"
+@circuit_components: ~"../../conventions/circuit-components.spw"
+@cognitive_surface: ~"../../philosophy/cognitive-surface.spw"
+@attention_field: ~"../../conventions/attention-field.spw"
+@expressive_registers: ~"../../conventions/expressive-registers.spw"
+@semantic_capacity: ~"../../conventions/semantic-capacity.spw"
+
+audit_run: .{
+  at = `2026-07-09`
+  scope = `Educational psychology and materials science research developments — 500 years with nested windows at 200, 100, 50, 20, 15, 5 years`
+  method = `epoch synthesis anchored to @appendices_index granularity_windows; cross-read site cognition/material contracts`
+  posture = `Editorial/technical tier — research branching and register justification; not curriculum route copy`
+  index = @appendices_index
+}[reg=facet]
+
+^"thesis"{
+  claim: `Educational psychology and materials science evolved on parallel tracks: one asks how minds elaborate understanding under instruction; the other asks how matter holds, transforms, and fails under load. Both export metaphors into design — charge states, scaffolding, stress, fatigue, annealing. spwashi.com can borrow their registers only when coordinates are named first.`
+  parallel_to = @appendix_technolinguistics
+  site_rule: `Ed-psych insights → cognition register + elaboration_stage. Materials insights → field/circuit register + material surface tokens — never mixed in one public paragraph without lexicon_register.`
+  falsification: `Public copy cites Dweck or graphene as authority without editorial specimen tier, or .spw treats "scaffolding" as a data-spw stem.`
+}
+
+^"edpsych_timeline"{
+  note = `Educational psychology & learning sciences — window facets match @appendices_index window ids.`
+
+  w500: .{
+    span = `1526–2026`
+    granularity = `epoch`
+    developments: #[
+      `.{ era = Renaissance–Enlightenment ; figures = Comenius (Orbis Pictus 1658), Locke (tabula rasa), Rousseau (natural education) ; impact = instruction as ordered visibility — pictures + sequence }`,
+      `.{ era = 18th–19th c. reform ; figures = Pestalozzi (object lessons), Froebel (kindergarten), Herbart (interest + apperception) ; impact = child as developing whole — not miniature adult }`,
+      `.{ era = Laboratory psychology birth ; figures = Wundt (1879), James, Dewey (experience + reflection) ; impact = learning measurable; school as social laboratory }`,
+      `.{ era = Scientific pedagogy ; figures = Montessori (prepared environment), Thorndike (law of effect) ; impact = environment design precedes lesson text }`
+    ][reg=set]
+    metaphor_residue = #[`tabula rasa`, `kindergarten`, `object lesson`, `prepared environment`][reg=set]
+    spw_register = `cognition (prior → elaboration) + consideration_physics gather→elaborate`
+  }[reg=facet]
+
+  w200: .{
+    span = `1826–2026`
+    granularity = `period`
+    developments: #[
+      `.{ wave = Behaviorism ; figures = Watson, Thorndike, Skinner ; impact = stimulus–response vocabulary enters schooling; drill + reinforcement }`,
+      `.{ wave = Progressive education ; figures = Dewey, Kilpatrick (project method) ; impact = learning by doing — workshop routes echo this }`,
+      `.{ wave = Gestalt + early cognitive ; figures = Köhler, Lewin (field theory in social psych) ; impact = whole-perception challenges atomized drill }`,
+      `.{ wave = Measurement movement ; figures = Thorndike scaling, early IQ testing ; impact = sort + track language — equity tensions begin }`
+    ][reg=set]
+    metaphor_residue = #[`reinforcement`, `transfer of training`, `readiness`, `field (social)`][reg=set]
+    spw_register = `field (Lewin) seeds attention-field neighborhood talk — distinct from EM field later`
+  }[reg=facet]
+
+  w100: .{
+    span = `1926–2026`
+    granularity = `generation`
+    developments: #[
+      `.{ decade = 1930s ; figures = Vygotsky (ZPD, scaffolding), Piaget (stages) ; impact = development as socially mediated construction }`,
+      `.{ decade = 1950s–60s ; figures = Bruner (discovery), Ausubel (meaningful learning), Bloom (taxonomy) ; impact = structure of knowledge becomes curriculum design language }`,
+      `.{ decade = 1960s–70s ; figures = Bandura (observational learning), Gagné (conditions of learning) ; impact = modeling + phased instruction }`,
+      `.{ decade = 1970s–80s ; figures = Flavell (metacognition), Gardner (multiple intelligences) ; impact = "think about thinking" enters teacher education }`,
+      `.{ decade = 1980s–90s ; figures = Brown, Collins, Duguid (situated cognition), Lave & Wenger (communities of practice) ; impact = learning is participation in authentic contexts — RPG/town routes }`
+    ][reg=set]
+    metaphor_residue = #[`scaffolding`, `ZPD`, `schema`, `metacognition`, `situated`, `community of practice`][reg=set]
+    spw_register = `cognition stratum map in @js_architecture_cognition — interpretation vs working_set`
+  }[reg=facet]
+
+  w50: .{
+    span = `1976–2026`
+    granularity = `field-formation`
+    developments: #[
+      `.{ year ≈ 1978 ; topic = Cognitive load theory ; figures = Sweller ; impact = intrinsic/extraneous/germane load — UI clutter as cognitive material }`,
+      `.{ year ≈ 1979 ; topic = Gibson affordances → HCI ; figures = Gibson, Norman (later) ; impact = perception–action coupling in design }`,
+      `.{ year ≈ 1986 ; topic = Self-regulated learning ; figures = Zimmerman ; impact = learner agency loops — settings + spells echo }`,
+      `.{ year ≈ 1991 ; topic = Situated learning canonical ; figures = Lave & Wenger ; impact = legitimate peripheral participation — inspect surfaces as apprenticeship }`,
+      `.{ year ≈ 1995–2005 ; topic = Multimedia learning ; figures = Mayer (coherence, signaling, redundancy) ; impact = split attention rules for HTML/CSS/JS layering }`,
+      `.{ year ≈ 2000s ; topic = Learning sciences institutionalize ; figures = HPL (How People Learn), Sawyer ; impact = interdisciplinary evidence standards for education }`,
+      `.{ year ≈ 2006 ; topic = Cognitive neuroscience in education discourse ; impact = "brain-based learning" pop science — caution: oversold }`
+    ][reg=set]
+    metaphor_residue = #[`cognitive load`, `affordance`, `signaling`, `dual coding`, `transfer`][reg=set]
+    spw_register = `cost_class working_memory_pressure + elaboration_stage gates`
+  }[reg=facet]
+
+  w20: .{
+    span = `2006–2026`
+    granularity = `platform-research`
+    developments: #[
+      `.{ year ≈ 2006–2012 ; topic = MOOCs + open courseware ; impact = scale vs cohort intimacy — inspectable HTML as trust anchor }`,
+      `.{ year ≈ 2008 ; topic = Hattie visible learning meta-analysis ; impact = effect-size vocabulary in school reform }`,
+      `.{ year ≈ 2012 ; topic = MOOC completion debates ; impact = engagement metrics vs learning evidence }`,
+      `.{ year ≈ 2015–2018 ; topic = Mindset replication debates ; figures = Dweck, later critique ; impact = grit/mindset as moral language — technolinguistic parallel }`,
+      `.{ year ≈ 2016–2020 ; topic = Learning analytics + LRS ; impact = trace vocabulary — rhymes with agent audit trails }`,
+      `.{ year ≈ 2018–2022 ; topic = Embodied / enactive cognition in HCI ; impact = scroll, pinch, locomotion as cognitive instruments }`,
+      `.{ year ≈ 2020–2024 ; topic = Cognitive load in complex UIs ; impact = mount_when scheduling as compassionate elaboration }`
+    ][reg=set]
+    metaphor_residue = #[`visible learning`, `mindset`, `grit`, `analytics trace`, `embodied`][reg=set]
+    spw_register = `MOUNT_WHEN + page-state — @javascript_module_census cognition bridge`
+  }[reg=facet]
+
+  w15: .{
+    span = `2011–2026`
+    granularity = `discourse-wave`
+    developments: #[
+      `.{ year ≈ 2011–2013 ; topic = MOOC peak discourse ; impact = "completion" as success noun }`,
+      `.{ year ≈ 2013–2016 ; topic = Maker / constructionist revival ; figures = Papert lineage ; impact = workshop + composition lab posture }`,
+      `.{ year ≈ 2015–2018 ; topic = Growth mindset in K-12 policy ; impact = praise language changes — copy sensitivity }`,
+      `.{ year ≈ 2017–2020 ; topic = Desirable difficulties ; figures = Bjork ; impact = spacing + interleaving evidence mainstream }`,
+      `.{ year ≈ 2019–2023 ; topic = UDL + accessibility as learning design ; impact = multiple means — parallel route families }`,
+      `.{ year ≈ 2020–2023 ; topic = Remote instruction research surge ; impact = async readability + cognitive load of video }`
+    ][reg=set]
+    metaphor_residue = #[`maker`, `UDL`, `spacing`, `interleaving`, `desirable difficulty`][reg=set]
+    spw_register = `consideration_physics + curriculum routes — merchant voice downstream`
+  }[reg=facet]
+
+  w5: .{
+    span = `2021–2026`
+    granularity = `current-research`
+    developments: #[
+      `.{ topic = Retrieval practice + spacing at scale ; impact = wonder-memory TTL as design parameter not moral score }`,
+      `.{ topic = AI tutoring + dialogic learning ; impact = agent tier copy must not replace learner elaboration }`,
+      `.{ topic = Explainability + learner control ; impact = inspect surfaces, settings, state blocks as epistemic tools }`,
+      `.{ topic = Multimodal generative tools in classrooms ; impact = provenance + referentiality tiers urgent }`,
+      `.{ topic = Attention fragmentation research ; impact = section-handle, reading-groove as humane navigation }`,
+      `.{ topic = Equity in analytics ; impact = resist engagement-only metrics — align with attention-field collecting floor }`
+    ][reg=set]
+    metaphor_residue = #[`tutor`, `hallucination (borrowed from ML)`, `provenance`, `spacing`][reg=set]
+    spw_register = `agent + cognition — referentiality boundary per @internal_external_vocabulary_clusters`
+  }[reg=facet]
+}
+
+^"materials_timeline"{
+  note = `Materials science & applied solid-state — parallel window facets.`
+
+  w500: .{
+    span = `1526–2026`
+    granularity = `epoch`
+    developments: #[
+      `.{ era = Early modern metallurgy ; texts = Agricola De Re Metallica (1556) ; impact = ore→ingot craft knowledge systematized }`,
+      `.{ era = Scientific Revolution ; figures = Boyle, Hooke (elasticity) ; impact = stress–strain intuition enters engineering }`,
+      `.{ era = Industrial chemistry ; figures = Lavoisier, Dalton ; impact = composition determines properties — foreshadows band structure }`,
+      `.{ era = Mechanization ; impact = repeatable tolerances — interchangeability metaphors for component contracts }`
+    ][reg=set]
+    metaphor_residue = #[`temper`, `anneal`, `alloy`, `strain`, `fatigue`][reg=set]
+    spw_register = `technical + circuit — material role analogies only`
+  }[reg=facet]
+
+  w200: .{
+    span = `1826–2026`
+    granularity = `period`
+    developments: #[
+      `.{ year ≈ 1856 ; topic = Bessemer steel process ; impact = cheap structural steel — architecture scale jumps }`,
+      `.{ year ≈ 1869 ; topic = Periodic table maturity ; impact = compositional reasoning universal }`,
+      `.{ year ≈ 1900s ; topic = Age hardening, alloys ; impact = heat treatment vocabulary }`,
+      `.{ year ≈ 1920s–40s ; topic = Polymer emergence ; Bakelite, nylon ; impact = moldable matter — "plastic" as cultural word }`,
+      `.{ year ≈ 1947 ; topic = Transistor (Bell Labs) ; impact = solid-state device era — seeds semiconductor materials science }`
+    ][reg=set]
+    metaphor_residue = #[`steel`, `polymer`, `plastic`, `crystal`, `phase`][reg=set]
+    spw_register = `glass/matte/code surfaces — @material.css lineage`
+  }[reg=facet]
+
+  w100: .{
+    span = `1926–2026`
+    granularity = `generation`
+    developments: #[
+      `.{ decade = 1930s–50s ; topic = Solid-state physics ; figures = Bloch, Brillouin ; impact = electrons in periodic lattices — band gaps }`,
+      `.{ decade = 1950s–70s ; topic = Semiconductor industry ; impact = purity + defect control as product }`,
+      `.{ decade = 1960s–80s ; topic = Composite materials ; impact = fiber + matrix — layered UI grammar echo }`,
+      `.{ decade = 1970s–90s ; topic = Biomaterials ; impact = biocompatibility — living medium copy resonance }`,
+      `.{ decade = 1980s–90s ; topic = Scanning probe microscopies ; impact = surfaces visible at atomic scale — inspect culture }`
+    ][reg=set]
+    metaphor_residue = #[`band gap`, `dopant`, `composite`, `matrix`, `interface`][reg=set]
+    spw_register = `electromagnetic_containers conception→manifest charge states`
+  }[reg=facet]
+
+  w50: .{
+    span = `1976–2026`
+    granularity = `field-formation`
+    developments: #[
+      `.{ year ≈ 1985 ; topic = Buckyball / fullerenes ; impact = low-dimensional carbon structures imagined }`,
+      `.{ year ≈ 1980s–90s ; topic = High-temperature superconductors ; impact = phase transition hope cycles }`,
+      `.{ year ≈ 1990s ; topic = Giant magnetoresistance → spintronics ; impact = information in material state }`,
+      `.{ year ≈ 2000s ; topic = Lab-on-chip, MEMS ; impact = micro-scale material devices }`,
+      `.{ year ≈ 2000s ; topic = Sustainable materials discourse ; impact = life-cycle assessment vocabulary }`
+    ][reg=set]
+    metaphor_residue = #[`nanotube`, `thin film`, `spin`, `LCA`, `MEMS`][reg=set]
+    spw_register = `pack_axis + material tunability — settings material posture`
+  }[reg=facet]
+
+  w20: .{
+    span = `2006–2026`
+    granularity = `platform-research`
+    developments: #[
+      `.{ year ≈ 2004 ; topic = Graphene isolation ; impact = 2D materials field explodes }`,
+      `.{ year ≈ 2000s–10s ; topic = Metamaterials, negative index ; impact = structure→property by design }`,
+      `.{ year ≈ 2010s ; topic = Additive manufacturing mainstream ; impact = layerwise build — 3D print as public metaphor }`,
+      `.{ year ≈ 2012–2018 ; topic = Perovskite solar cells ; impact = rapid efficiency gains — hype cycle pattern }`,
+      `.{ year ≈ 2015–2020 ; topic = Topological materials ; impact = robust edge states — fault-tolerant metaphor risk }`,
+      `.{ year ≈ 2018–2022 ; topic = Solid-state batteries research surge ; impact = electrolyte interface as bottleneck narrative }`
+    ][reg=set]
+    metaphor_residue = #[`graphene`, `metamaterial`, `perovskite`, `additive`, `interface resistance`][reg=set]
+    spw_register = `field + technical — svg/canvas accent materials`
+  }[reg=facet]
+
+  w15: .{
+    span = `2011–2026`
+    granularity = `discourse-wave`
+    developments: #[
+      `.{ topic = Materials genome / accelerated discovery ; impact = ML+DFT pipelines — "inverse design" discourse }`,
+      `.{ topic = Bio-inspired materials ; impact = nacre, gecko adhesion — ornamental grammar }`,
+      `.{ topic = Circular economy materials ; impact = recycle-friendly composition as constraint }`,
+      `.{ topic = Perovskite stability engineering ; impact = degradation as time metaphor in UX }`,
+      `.{ topic = Quantum dots in displays ; impact = grain + color science public awareness }`
+    ][reg=set]
+    metaphor_residue = #[`high-throughput`, `circular`, `degradation`, `bio-inspired`][reg=set]
+    spw_register = `ecology compost/degrade language — internal only`
+  }[reg=facet]
+
+  w5: .{
+    span = `2021–2026`
+    granularity = `current-research`
+    developments: #[
+      `.{ topic = Solid-state battery pilot lines ; impact = interface engineering as product story }`,
+      `.{ topic = Sustainable polymers + green chemistry targets ; impact = material choice as ethics }`,
+      `.{ topic = ML interatomic potentials ; impact = simulation speed changes R&D rhythm }`,
+      `.{ topic = 2D heterostructures (Moire materials) ; impact = twist angle as tuning parameter — settings tuner rhyme }`,
+      `.{ topic = Self-healing materials ; impact = recovery metaphors for spell/checkpoint surfaces }`,
+      `.{ topic = Architected metamaterials for impact absorption ; impact = lattice microstructure → macro behavior }`
+    ][reg=set]
+    metaphor_residue = #[`heterostructure`, `moiré`, `self-healing`, `architected`][reg=set]
+    spw_register = `charge-cycle recovery + wonder-memory capacitor — bounded, inspectable`
+  }[reg=facet]
+}
+
+^"cross_discipline_resonance"{
+  note = `Where ed-psych and materials science export the same metaphor — declare coordinate to avoid register collision.`
+
+  charge_states: .{
+    edpsych = `Curiosity arming → preview → charged understanding → discharge into application (Bjork desirable difficulties)`
+    materials = `Conception → potential → kinetic → manifest (@electromagnetic_containers)`
+    shared_coordinate = `phase machine with bounded decay — @charge_cycle`
+    rule = `One charge vocabulary on site; do not fork "potential" into separate education vs materials attrs`
+  }[reg=facet]
+
+  scaffolding_and_support: .{
+    edpsych = `Vygotsky scaffolding — temporary support withdrawn as competence grows`
+    materials = `Scaffold structures in construction / sacrificial layers in microfabrication`
+    shared_coordinate = `pack_axis settle_state + composition lab register`
+    rule = `Public copy uses "support" or "guide" — scaffold is editorial gloss unless technical tier`
+  }[reg=facet]
+
+  stress_fatigue_load: .{
+    edpsych = `Cognitive load, attention fatigue, desirable difficulty`
+    materials = `Yield stress, fatigue life, fracture toughness`
+    shared_coordinate = `cost_class working_memory_pressure | interference`
+    rule = `Performance audit names cost_class — not "fatigue" alone without channel`
+  }[reg=facet]
+
+  annealing_and_spacing: .{
+    edpsych = `Spacing effects, interleaving, sleep consolidation discourse`
+    materials = `Annealing relieves internal stress; grain growth`
+    shared_coordinate = `time-based decay τ — wonder-memory TTL, charge discharging`
+    rule = `Temporal decay is the shared physics; "annealing" stays materials register in .spw`
+  }[reg=facet]
+
+  interfaces: .{
+    edpsych = `Transfer of learning across contexts — boundary conditions`
+    materials = `Grain boundaries, heterointerfaces dominate failure`
+    shared_coordinate = `route transit memory, register diffusion across regions`
+    rule = `Interface problems are seam audits — @page_spacing_runtime_synthesis promotion DAG`
+  }[reg=facet]
+}
+
+^"site_implications"{
+  cognition_runtime: #[
+    `elaboration_stage axis ↔ progressive module mount — @js_architecture_cognition`,
+    `cognitive load ↔ selector breadth + express paint cost — @component_philosophy_harmony`,
+    `affordance ↔ data-spw-operator + gesture contracts — not decorative buttons`,
+    `spacing/retrieval ↔ wonder-memory TTL tuning — parameter not grade`
+  ][reg=set]
+  material_rendering: #[
+    `conception→manifest ↔ electromagnetic container charge states`,
+    `glass/matte/code ↔ phase-separated surfaces — material.css`,
+    `grain + atmosphere ↔ texture tokens — not literal materials science lesson on home`,
+    `2D heterostructure "tuning" ↔ settings palette resonance — metaphor alias only`
+  ][reg=set]
+  curriculum_copy: #[
+    `Workshop routes: Papert constructionism + consideration_physics — not MOOC completion framing`,
+    `Topics/software: cognitive load aware reading layout — Mayer coherence on long pages`,
+    `Design/composition: materials inspectability + pedagogical elaboration — dual register specimen`
+  ][reg=set]
+  do_not_import: #[
+    `IQ, grit scores, effect-size leaderboard copy on public hubs`,
+    `Graphene hype as brand voice`,
+    `"Brain-based" neuromyth vocabulary`
+  ][reg=set]
+}
+
+^"research_branching_from_history"{
+  branches: #[
+    `.{ window = w50 ; topic = cognitive load budget on navigator ; cluster = @metaphor_primitive_research_branching cluster_d ; evidence = Mayer + Sweller }`,
+    `.{ window = w20 ; topic = embodied locomotion research ; cluster = cluster_b_navigation_posture ; evidence = Gibson affordance }`,
+    `.{ window = w5 ; topic = AI tutor inspectability ; cluster = vocabulary wave_a_boundary ; evidence = explainability literature }`,
+    `.{ window = w20 ; topic = material tunability UI ; cluster = cluster_a_field_rendering ; evidence = expressive registers wash/lift }`,
+    `.{ window = w5 ; topic = self-healing checkpoint metaphor ; cluster = spells/charge-cycle ; evidence = bounded recovery only }`
+  ][reg=set]
+}
+
+^"promotion_queue"{
+  p0: #[
+    `Register appendix in @appendices_index — done at creation`,
+    `Cross-link from @appendix_technolinguistics parallel_to field`
+  ][reg=set]
+  p1: #[
+    `design/runtime map — elaboration_stage column cites w50 edpsych row`,
+    `settings specimen block: charge states ↔ conception/manifest (editorial)`
+  ][reg=set]
+  do_not_build: #[
+    `Public 500-year timeline route`,
+    `Quiz widgets on Piaget stages`,
+    `Materials science lesson unless topic route explicitly requests it`
+  ][reg=set]
+  validation: #[
+    `rg 'edpsych_timeline|materials_timeline|w500|w5' .spw/audits/appendices/edpsych-materials-science-history-500y.spw`,
+    `rg 'edpsych_materials' .spw/audits/appendices/index.spw`
+  ][reg=set]
+}
+
+^"cross_links"{
+  index = @appendices_index
+  parent = @metaphor_primitive_research_branching
+  parallel = @appendix_technolinguistics
+  cognition = @js_architecture_cognition
+  materials = @electromagnetic_containers
+  charge = @attention_field
+  capacity = @semantic_capacity
+}

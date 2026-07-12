@@ -1,0 +1,95 @@
+# Commit History Deep Audit (origin → 2026-07)
+#
+# operation: audit
+# fixity: tending
+# method: full git log census from first commit; complements commit-skill-induction (2026-04→)
+
+#>commit_history_deep_2026_07
+#:audit #!git #!history #!ecology
+#:operation #!audit
+#:layer #!pragmatics
+
+@epochs: ~"./epochs-from-origin.spw"
+@volume_cadence: ~"./volume-cadence.spw"
+@theme_churn: ~"./theme-churn.spw"
+@milestones: ~"./milestones.spw"
+@commit_skill_induction: ~"../commit-skill-induction-2026-07/index.spw"
+@working_tree_index: ~"../working-tree-index-2026-07.spw"
+@audits_index: ~"../index.spw"
+@semantic_capacity: ~"../../conventions/semantic-capacity.spw"
+@recursive_improvement: ~"../../conventions/recursive-improvement.spw"
+
+audit_run: .{
+  at = `2026-07-09`
+  scope = `679 commits from 2024-01-11 (created index.html) through HEAD`
+  method = `git log --reverse, monthly cadence, numstat churn aggregation, subject taxonomy, milestone subjects`
+  posture = `Deep history for agent orientation — not blame; pairs with @commit_skill_induction for skill-induced patterns since 2026-04`
+  probe = `git rev-list --count HEAD ; git log --reverse --oneline | head -1`
+}[reg=facet]
+
+^"thesis"{
+  claim: `The repository has two distinct lives: a short 2024 genesis (30 commits, static personal site) and a 2026 Spwashi renaissance (649 commits, semantic runtime + ecology). Almost all churn, .spw surface, and agent infrastructure post-date 2026-04-06. History is front-loaded in April 2026, then steadier semantic waves.`
+  gap_note: `No commits between 2024-02-18 and 2026-04-06 — treat as archival silence, not missing history in this clone.`
+  complements: `commit-skill-induction-2026-07 — skill/induction lens on 2026-04→ only`
+  falsification: `git rev-list --count HEAD diverges from volume_cadence.total without updating this audit.`
+}
+
+^"reading_orders"{
+  deep_from_origin = ?<
+    `this index`,
+    @volume_cadence,
+    @epochs,
+    @milestones,
+    @theme_churn
+  >[reg=stream]
+
+  agent_orientation = ?<
+    @epochs,
+    @commit_skill_induction,
+    @theme_churn
+  >[reg=stream]
+
+  pre_land_refactor = ?<
+    @theme_churn,
+    @milestones,
+    @working_tree_index
+  >[reg=stream]
+}
+
+^"nested_dispatch"{
+  epochs = @epochs
+  volume = @volume_cadence
+  themes = @theme_churn
+  milestones = @milestones
+  skill_induction = @commit_skill_induction
+}
+
+^"registry_keys"{
+  audits_index = `commit_history_deep`
+  path = `commit-history-deep-2026-07/index.spw`
+  leaves = #[`epochs-from-origin`, `volume-cadence`, `theme-churn`, `milestones`][reg=set]
+}
+
+^"promotion_queue"{
+  p0: #[
+    `Wired: audits/index registry + reading_order commit_history_deep`,
+    `Wired: conventions/index dispatch + working-tree-index cluster`,
+    `Wired: commit-skill-induction cross-link`
+  ][reg=set]
+  p1: #[
+    `After major epoch shift, append milestones.spw row — do not rewrite epochs prose`,
+    `Regenerate volume_cadence.monthly via git log --date=format:%Y-%m`
+  ][reg=set]
+  validation: #[
+    `git rev-list --count HEAD`,
+    `rg 'commit_history_deep|epochs-from-origin' .spw/audits`,
+    `find .spw/audits/commit-history-deep-2026-07 -name '*.spw' | wc -l` # expect 5
+  ][reg=set]
+}
+
+^"cross_links"{
+  skill_induction = @commit_skill_induction
+  working_tree = @working_tree_index
+  audits = @audits_index
+  capacity = @semantic_capacity
+}
