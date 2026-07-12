@@ -1,3 +1,4 @@
+# Review 2026-07-12 — rework around measured navigation cost; more routes are not automatically a better catalog.
 # Plan Index — catalog-demo-splits
 #
 # The design catalog should remain the canonical inventory, but its long sections need dedicated review pages for faster lookup and less scrolling. The CSS and SVG experiment routes…
@@ -26,6 +27,22 @@ intent: .{
  bucket = "active_backlog"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `The design catalog should remain the canonical inventory, but its long sections need dedicated review pages for faster…`
+ concepts = #[
+  `its`,
+  `review`,
+  `pages`,
+  `catalog-demo-splits`,
+  `design`,
+ ][reg=set]
+ surfaces = #[
+  `design/index.html`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -35,6 +52,26 @@ intent: .{
 dispatch: .{
  plan = @plan
  index = @index
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `rework`
+ note = `rework around measured navigation cost`
+ rescope = `required`
+ status = `active`
+}[reg=facet]
+
+^"absorbs"{
+ reviewed = `2026-07-12`
+ plans = #[
+  `review-surfaces-babbling`,
+ ][reg=set]
+ rule = `Absorbed by 2026-07-12 review; see each source review_disposition and archive/2026-07-12-review-execution.md.`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -74,4 +111,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

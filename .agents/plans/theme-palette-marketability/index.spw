@@ -1,3 +1,4 @@
+# Review 2026-07-12 — merge dark/light completeness into site-color-tuning and authored families into settings-theme-packs.
 # Plan Index — theme-palette-marketability
 #
 # The theme issue is not one stray token. The route-level topic and website surfaces were authored as stable light papers and never finished with matching dark/auto variable sets.…
@@ -26,6 +27,24 @@ intent: .{
  bucket = "fix_queue"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `The theme issue is not one stray token. The route-level topic and website surfaces were authored as stable light papers…`
+ concepts = #[
+  `theme-palette-marketability`,
+  `theme`,
+  `issue`,
+  `one`,
+  `stray`,
+ ][reg=set]
+ surfaces = #[
+  `topics/site-design/index.html`,
+  `about/website/index.html`,
+  `settings/index.html`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -41,6 +60,16 @@ dispatch: .{
  settings_index_html = @settings_index_html
 }[reg=facet]
 
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `merge`
+ merged_into = #[
+  `site-color-tuning`,
+ ][reg=set]
+ retain = `authored families move to settings theme packs`
+ status = `superseded`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-theme_palette_marketability-001"
  layer = "pragmatic"
@@ -49,7 +78,7 @@ dispatch: .{
  impl_ref = ~"../../../topics/site-design/index.html"
  probe_ref = `rg 'theme-palette-marketability' .agents/plans/theme-palette-marketability`
  falsification = `The listed failure mode returns after the planned fix lands.`
- status = "active"
+ status = "superseded"
 }[reg=facet]
 
 editor_prompts: #[
@@ -62,4 +91,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

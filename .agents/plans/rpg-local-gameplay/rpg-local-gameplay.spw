@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the distilled gameplay contract; local registers and canon promotion must remain reversible.
 ^"operational_hooks"{
  selectors = #[ `public/css/style.css`, `.agents/plans/rpg-session-notes/PLAN.md`, `.agents/plans/rpg-local-gameplay/rpg-local-gameplay.spw`, ][reg=set]
  probe_ref = `node --check public/js/rpg-wednesday.js`

@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as a bounded destination-marketing owner with one clear offer, proof, and next action.
 # Plan Index — lore-land-marketing
 #
 # The site should make lore.land feel like a current, important destination rather than a stray external link buried in a register. The end state is a tighter internal path: the…
@@ -26,6 +27,25 @@ intent: .{
  bucket = "active_backlog"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `The site should make lore.land feel like a current, important destination rather than a stray external link buried in a…`
+ concepts = #[
+  `lore`,
+  `land`,
+  `destination`,
+  `homepage`,
+  `lore-land-marketing`,
+ ][reg=set]
+ surfaces = #[
+  `data/media-focus.json`,
+  `about/domains/lore.land/`,
+  `about/index.html`,
+  `about/domains/lore.land/index.html`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -47,6 +67,10 @@ dispatch: .{
  about_domains_lore_land_index_html = @about_domains_lore_land_index_html
  style = @style
  illustrations = @illustrations
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -84,4 +108,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

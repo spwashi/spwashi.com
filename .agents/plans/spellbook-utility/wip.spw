@@ -1,3 +1,4 @@
+# Review 2026-07-12 — retain as a concise cache; choose one restore/resume macro before expanding the spell catalog.
 ^"selection_probes"{
  probes = #[ `rg 'spellbook-utility' settings/index.html`, `Hypotheses: a utility-first spellboard will make repeat visits more valuable; checkpoint restore will become the first spell people actually use; pinned working-set replay will make the bookmark registry feel alive instead of archival.`, `test -f settings/index.html`, ][reg=set]
  rule = "Run probes before trusting cached plan_context."

@@ -1,35 +1,59 @@
+# Review 2026-07-12 — keep as the versioned grammar owner; public claims must stay aligned with the language ecology checks.
 # Plan Index — spw-language-v04
 #
 # Readers and agents on spwashi.com can inspect a coherent v0.4 language direction without waiting for the workbench submodule to catch up. Site copy on the Spw operator atlas…
 
 #>plan_spw_language_v04_index
 #:index #!plan
-#:operation #!prime
+#:operation #!contract
 #:layer #!pragmatics
 
-operation = "prime"
-fixity = "tending"
+operation = "contract"
+fixity = "stable"
 
 intent: .{
  goal = `Readers and agents on spwashi.com can inspect a coherent v0.4 language direction without waiting for the workbench submodule to catch up. Site copy on the Spw operator atlas should name the improvement stack in public language; local .spw/language/v04/ should carry the inspectable contracts, claims, dimensions, and submodule bridge.`
  owner = `spw-language-v04`
  kind = `plan`
- bucket = `active_backlog`
+ bucket = `semantic_rails`
  artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
 ^"dimensions"{
  practice_depth = "reading | observation | tending"
- semantic_layer = "pragmatics"
+ semantic_layer = "semantics | pragmatics"
  collaboration_phase = "tending"
- memory_tier = "hot"
- bucket = "active_backlog"
+ memory_tier = "warm"
+ bucket = "semantic_rails"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Land Spw language v04 pillars (profiles, validator, claims) as inspectable upstream-aligned grammar.`
+ concepts = #[
+  `v04-pillar`,
+  `claim-chain`,
+  `profile-validator`,
+  `operator-grammar`,
+  `worktree-merge`,
+ ][reg=set]
+ surfaces = #[
+  `.spw/language/v04/`,
+  `npm run ecology:language`,
+ ][reg=set]
+ fixity_tier = `stable`
+}[reg=facet]
+
+^"plan_refinement"{
+ tone = `Grammar documentation — precise, version-aware.`
+ accuracy = `v04 worktree merged; pillar coverage and validator strictness still tending.`
+ direction = `Close one pillar gap with ecology:language green before new operators.`
+ inspiration = `Language disputes resolve through codex, not ad hoc renames.`
+ alignment = `language-reclustering, spw-metaphysical-language, language-census audit`
 }[reg=facet]
 
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
-@index: ~"./index.spw"
 @plan: ~"./PLAN.md"
 @v04: ~"../../../.spw/language/v04/"
 @topics_software_spw_index_html: ~"../../../topics/software/spw/index.html"
@@ -50,6 +74,19 @@ dispatch: .{
  pillars = @pillars
  spw_language_v04_index_spw = @spw_language_v04_index_spw
  workbench = @workbench
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `plan_ecology_semantics` ; path = `.spw/audits/plan-ecology-semantics-2026-07.spw` }[reg=facet],
+  .{ label = `commit_skill_induction` ; path = `.spw/audits/commit-skill-induction-2026-07/index.spw` }[reg=facet],
+  .{ label = `spw_architecture_ecology` ; path = `.spw/conventions/spw-architecture-ecology.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `self`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -85,6 +122,7 @@ validation: #[
 editor_prompts: #[
  .{ ask = `What does spw-language-v04 own, and what should stay out of scope?`, see = @plan }[reg=facet],
  .{ ask = `Which file should I open first to implement the next slice of spw-language-v04?`, see = @index }[reg=facet],
+ .{ ask = `What is the tone, direction, and alignment for spw-language-v04?`, see = @index#plan_refinement }[reg=facet],
  .{ ask = `What command or check falsifies whether spw-language-v04 still holds?`, see = @plan }[reg=facet],
 ][reg=set]
 

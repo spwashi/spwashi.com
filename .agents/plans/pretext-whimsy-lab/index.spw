@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as a bounded practice bed; honest typography physics and one playful proof are enough.
 # Plan Index — pretext-whimsy-lab
 #
 # The desired end state is a Pretext surface that can move from observatory to playful typographic physics lab without lying about the substrate. The immediate task is to map which…
@@ -26,6 +27,23 @@ intent: .{
  bucket = "active_backlog"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `The desired end state is a Pretext surface that can move from observatory to playful typographic physics lab without…`
+ concepts = #[
+  `pretext`,
+  `typographic`,
+  `which`,
+  `pretext-whimsy-lab`,
+  `desired`,
+ ][reg=set]
+ surfaces = #[
+  `js/semantic/pretext-measurement-bus.js`,
+  `.agents/plans/pretext-whimsy-lab/pretext-whimsy-lab.spw`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -41,6 +59,13 @@ dispatch: .{
  pretext_whimsy_lab = @pretext_whimsy_lab
  plan_designer_conversation_canvas = @plan_designer_conversation_canvas
  pretext_measurement_bus = @pretext_measurement_bus
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+ related_plans = #[
+  `designer-conversation-canvas`,
+ ][reg=set]
 }[reg=facet]
 
 ^"owner_claim"{
@@ -80,4 +105,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

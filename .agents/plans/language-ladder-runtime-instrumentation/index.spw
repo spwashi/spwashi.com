@@ -1,3 +1,4 @@
+# Review 2026-07-12 — rework: separate developer curriculum from runtime observability and prove one teachable progression.
 # Plan Index — Language Ladder + Runtime Instrumentation
 #
 # Make the development experience on spwashi.com feel progressively teachable rather than merely executable. The codebase should help a developer relate to code as a staged…
@@ -25,6 +26,25 @@ intent: .{
  memory_tier = "hot"
  bucket = "active_backlog"
 }[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Make the development experience on spwashi.com feel progressively teachable rather than merely executable. The codebase…`
+ concepts = #[
+  `then`,
+  `runtime`,
+  `experience`,
+  `progressively`,
+  `javascript`,
+ ][reg=set]
+ surfaces = #[
+  `js/site.js`,
+  `js/kernel/instrumentation.js`,
+  `js/runtime/runtime-helpers.js`,
+  `settings/index.html`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
 
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
@@ -57,6 +77,24 @@ dispatch: .{
  readme = @readme
  conventions = @conventions
  spw_site_spw = @spw_site_spw
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `spw-architecture-ecology`
+ related_plans = #[
+  `runtime-module-fluency`,
+  `runtime-load-instrumentation`,
+  `typescript-integration`,
+  `agent-optimization`,
+ ][reg=set]
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `rework`
+ note = `separate developer curriculum from runtime observability`
+ rescope = `required`
+ status = `active`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -103,4 +141,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

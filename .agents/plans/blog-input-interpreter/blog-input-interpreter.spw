@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the local-only editorial contract; remote interpretation and automatic publishing remain out of scope.
 ^"operational_hooks"{
  selectors = #[ `public/js/site.js`, `public/css/style.css`, `.agents/plans/blog-blob-spw/PLAN.md`, `.agents/plans/copy-localization/PLAN.md`, ][reg=set]
  probe_ref = `A pasted draft produces a title, summary, tags, questions, outline, and draft seed.`

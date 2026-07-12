@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the distilled page contract; every operator needs plain-language behavior and accessible interaction.
 ^"operational_hooks"{
  selectors = #[ `topics/software/spw/index.html`, `topics/software/index.html`, `.spw/site.spw`, `.spw/surfaces.spw`, ][reg=set]
  probe_ref = `Hypotheses: a stable page per operator will make the grammar more learnable; repeated page structure will let visitors compare operators; compact route hooks will make the atlas discoverable without bloating the software page.`

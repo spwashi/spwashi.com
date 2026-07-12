@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep only as a bounded route cluster; do not let the RPG bridge substitute for the math learning goal.
 # Plan Index — algorithm-scale-statistics-rpg-bridges
 #
 # Add a small topic cluster for algorithm intuition, scale intuition, and statistical analysis, then connect those routes into RPG Wednesday surfaces where layout, compression,…
@@ -26,6 +27,25 @@ intent: .{
  bucket = "active_backlog"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Add a small topic cluster for algorithm intuition, scale intuition, and statistical analysis, then connect those routes…`
+ concepts = #[
+  `intuition`,
+  `algorithm-scale-statistics-rpg-bridges`,
+  `add`,
+  `small`,
+  `topic`,
+ ][reg=set]
+ surfaces = #[
+  `topics/index.html`,
+  `topics/math/index.html`,
+  `topics/software/index.html`,
+  `play/rpg-wednesday/index.html`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -49,6 +69,10 @@ dispatch: .{
  play_rpg_wednesday_world_index_html = @play_rpg_wednesday_world_index_html
  topics_software_algorithms_index_html = @topics_software_algorithms_index_html
  topics_math_scale_intuition_index_html = @topics_math_scale_intuition_index_html
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -79,4 +103,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

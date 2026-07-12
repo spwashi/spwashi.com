@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the operator semantics owner, coordinated with v04; lineage and behavior precede visual expansion.
 # Plan Index — operator-semantics-refinement
 #
 # The desired end state is a coherent operator system where: 1. Lineage is clear: Users understand how operators evolved from the original set (~ # . ? ! * & @ ^ <> [] {}) to…
@@ -26,6 +27,19 @@ intent: .{
  bucket = "active_backlog"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `The desired end state is a coherent operator system where: 1. Lineage is clear: Users understand how operators evolved…`
+ concepts = #[
+  `operators`,
+  `operator`,
+  `users`,
+  `pairs`,
+  `coherent`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -35,6 +49,10 @@ intent: .{
 dispatch: .{
  plan = @plan
  operator_lineage_discovery = @operator_lineage_discovery
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -77,4 +95,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

@@ -3,19 +3,26 @@
  * Generate plan-specific .spw artifacts with strong Spw indexing features.
  *
  * Usage:
- *   node scripts/maintain-plan-directory-indexes.mjs
  *   node scripts/maintain-plan-directory-indexes.mjs --check
+ *   node scripts/maintain-plan-directory-indexes.mjs --force-generated
+ *
+ * Reviewed plan trees are authored surfaces. The default write path refuses to
+ * replace file-local review decisions; --force-generated is intentionally
+ * destructive and exists only for an explicit, human-reviewed rebuild.
  */
 
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { PLAN_REFINEMENTS } from './plan-refinements-data.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(__dirname, '..');
 const PLANS_ROOT = path.join(REPO_ROOT, '.agents', 'plans');
 const PLANS_INDEX = path.join(PLANS_ROOT, 'index.spw');
 const CHECK = process.argv.includes('--check');
+const FORCE_GENERATED = process.argv.includes('--force-generated');
+const REVIEW_MARKER = /^# Review \d{4}-\d{2}-\d{2} — /;
 
 const ARTIFACT_NAMES = new Set(['PLAN.md', 'FIX.md', 'wip.spw', 'index.spw']);
 const SKIP_DIR_NAMES = new Set(['templates', 'recent-plan-templates']);
@@ -24,13 +31,70 @@ const CONTRACT_RAILS = new Set([
   'model-guided-refinement',
   'modular-experience-slices',
   'spw-surface-normalization',
+  'spw-architecture-ecology',
   'daily-kernel-development',
   'agent-optimization',
   'agentic-dev-contracts',
   'planning-ecology',
   'semantic-capacity',
   'plan-wip-index-conventions',
+  'component-region-personality',
+  'spw-language-v04',
+  'module-export-uniformity',
+  'language-reclustering',
+  'relational-attention-media',
+  'semantic-copy-depth',
 ]);
+
+const COMPLETED_REFERENCE = new Map([
+  ['state-satchel-card-gesture-fixes', { superseded_by: 'card-anatomy-interactions', research: 'component-philosophy-harmony-2026-07', kind: 'plan' }],
+  ['card-anatomy-interactions', { superseded_by: 'rpg-portal-fantasy', research: 'page-component-census-2026-07', kind: 'plan' }],
+  ['overlay-layer-ownership', { superseded_by: null, research: 'css-module-attribute-impact-2026-07', kind: 'fix' }],
+  ['menu-containment-navigation', { superseded_by: null, research: 'chrome-navigation-wonder', kind: 'fix' }],
+  ['mobile-image-effects', { superseded_by: null, research: 'image-metaphysics-aesthetic-pass', kind: 'fix' }],
+  ['runtime-route-css-regressions', { superseded_by: null, research: 'build-runtime-performance-2026-07', kind: 'fix' }],
+]);
+
+const RESEARCH_BRIDGE_BY_BUCKET = {
+  semantic_rails: [
+    { label: 'plan_ecology_semantics', path: '.spw/audits/plan-ecology-semantics-2026-07.spw' },
+    { label: 'commit_skill_induction', path: '.spw/audits/commit-skill-induction-2026-07/index.spw' },
+    { label: 'spw_architecture_ecology', path: '.spw/conventions/spw-architecture-ecology.spw' },
+  ],
+  css_layout_interaction: [
+    { label: 'page_spacing_runtime', path: '.spw/audits/page-spacing-runtime-synthesis-2026-07.spw' },
+    { label: 'vocabulary_metaphor', path: '.spw/audits/vocabulary-metaphor-growth-synthesis-2026-07.spw' },
+  ],
+  runtime_js_validation: [
+    { label: 'javascript_module_census', path: '.spw/audits/javascript-module-census-2026-07.spw' },
+    { label: 'module_export_audit', path: '.spw/audits/module-export-standalone-2026-07.spw' },
+  ],
+  media_image_sensory: [
+    { label: 'vocabulary_metaphor', path: '.spw/audits/vocabulary-metaphor-growth-synthesis-2026-07.spw' },
+    { label: 'metaphor_primitive_research', path: '.spw/audits/metaphor-primitive-research-branching-2026-07.spw' },
+  ],
+  public_route_proof_genre: [
+    { label: 'appendices_index', path: '.spw/audits/appendices/index.spw' },
+    { label: 'metaphor_primitive_research', path: '.spw/audits/metaphor-primitive-research-branching-2026-07.spw' },
+  ],
+  completed_reference: [
+    { label: 'archive_sweep', path: '.agents/plans/archive/2026-07-12-plan-ecology-semantics-architecture.md' },
+    { label: 'commit_history_deep', path: '.spw/audits/commit-history-deep-2026-07/index.spw' },
+  ],
+  archive: [
+    { label: 'archive_readme', path: '.agents/plans/archive/README.md' },
+    { label: 'commit_history_deep', path: '.spw/audits/commit-history-deep-2026-07/index.spw' },
+  ],
+};
+
+const RESEARCH_BRIDGE_BY_SLUG = {
+  'model-guided-refinement': [{ label: 'vocabulary_metaphor', path: '.spw/audits/vocabulary-metaphor-growth-synthesis-2026-07.spw' }],
+  'spw-architecture-ecology': [{ label: 'plan_ecology_semantics', path: '.spw/audits/plan-ecology-semantics-2026-07.spw' }],
+  'agent-optimization': [{ label: 'commit_skill_induction', path: '.spw/audits/commit-skill-induction-2026-07/index.spw' }],
+  'language-reclustering': [{ label: 'language_census', path: '.spw/audits/language-census.spw' }],
+  'copy-localization': [{ label: 'vocabulary_metaphor', path: '.spw/audits/vocabulary-metaphor-growth-synthesis-2026-07.spw' }],
+  'module-export-uniformity': [{ label: 'module_export_audit', path: '.spw/audits/module-export-standalone-2026-07.spw' }],
+};
 
 const CANONICAL_TRACKS = new Set([
   'css-architecture-readability',
@@ -45,12 +109,19 @@ const BUCKETS = {
     'daily-kernel-development',
     'modular-experience-slices',
     'spw-surface-normalization',
+    'spw-architecture-ecology',
     'agent-optimization',
     'agentic-dev-contracts',
     'relational-attention-media',
     'semantic-copy-depth',
     'discovery-powerups',
     'plan-wip-index-conventions',
+    'component-region-personality',
+    'spw-language-v04',
+    'module-export-uniformity',
+    'language-reclustering',
+    'spw-metaphysical-language',
+    'homonym-renaming',
   ]),
   css_layout_interaction: new Set([
     'css-maintainability-refactor',
@@ -181,6 +252,41 @@ function readText(filePath) {
   return fs.existsSync(filePath) ? fs.readFileSync(filePath, 'utf8') : '';
 }
 
+function listPlanSpwFiles(dir = PLANS_ROOT) {
+  const files = [];
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const absPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) files.push(...listPlanSpwFiles(absPath));
+    else if (entry.isFile() && entry.name.endsWith('.spw')) files.push(absPath);
+  }
+  return files;
+}
+
+function guardReviewedPlanTree() {
+  const files = listPlanSpwFiles();
+  const reviewed = files.filter((filePath) => REVIEW_MARKER.test(readText(filePath)));
+  if (!reviewed.length) return false;
+
+  const unreviewed = files.filter((filePath) => !REVIEW_MARKER.test(readText(filePath)));
+  if (CHECK) {
+    if (unreviewed.length) {
+      console.error(`Reviewed plan tree is incomplete: ${unreviewed.length} .spw file(s) lack a first-line review decision.`);
+      process.exit(1);
+    }
+    console.log(`Reviewed plan .spw artifacts OK (${reviewed.length} authored decisions; generation skipped).`);
+    return true;
+  }
+
+  if (!FORCE_GENERATED) {
+    console.error(
+      `Refusing to overwrite ${reviewed.length} reviewed plan .spw file(s). ` +
+      'Read and edit the affected files individually, or pass --force-generated only for an explicit destructive rebuild.',
+    );
+    process.exit(1);
+  }
+  return false;
+}
+
 function sectionText(markdown, heading) {
   const pattern = new RegExp(`^##\\s+${heading.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*$`, 'im');
   const match = pattern.exec(markdown);
@@ -256,6 +362,7 @@ function resolveRepoPath(ref) {
 
 function classifyBucket(slug, relDir, files, kind) {
   if (relDir.startsWith('archive/')) return 'archive';
+  if (COMPLETED_REFERENCE.has(slug)) return 'completed_reference';
   if (kind === 'fix' || (files.includes('FIX.md') && !files.includes('PLAN.md'))) return 'fix_queue';
   if (CANONICAL_TRACKS.has(slug)) return 'canonical_tracks';
   for (const [bucket, slugs] of Object.entries(BUCKETS)) {
@@ -268,9 +375,133 @@ function buildDimensions(meta, bucket) {
   const practice =
     meta.kind === 'fix' ? 'observation | gesture' : meta.refs.length ? 'reading | observation | tending' : 'reading | tending';
   const semantic = CONTRACT_RAILS.has(meta.slug) ? 'semantics | pragmatics' : 'pragmatics';
-  const phase = meta.kind === 'fix' ? 'exchange' : bucket === 'archive' ? 'return' : 'tending';
-  const memory = bucket === 'archive' ? 'cold' : CONTRACT_RAILS.has(meta.slug) ? 'warm' : 'hot';
+  const phase =
+    meta.kind === 'fix' ? 'exchange' : bucket === 'archive' || bucket === 'completed_reference' ? 'return' : 'tending';
+  const memory =
+    bucket === 'archive' || bucket === 'completed_reference'
+      ? 'cold'
+      : CONTRACT_RAILS.has(meta.slug)
+        ? 'warm'
+        : 'hot';
   return { practice_depth: practice, semantic_layer: semantic, collaboration_phase: phase, memory_tier: memory };
+}
+
+function extractConcepts(goal, title, limit = 5) {
+  const text = `${title} ${goal}`.toLowerCase();
+  const stop = new Set(['the', 'and', 'for', 'with', 'this', 'that', 'from', 'into', 'site', 'plan', 'work', 'keep', 'make', 'use', 'when', 'should', 'without', 'through', 'before', 'after', 'more', 'less', 'not', 'are', 'was', 'has', 'have', 'been', 'being', 'will', 'can', 'may', 'also', 'only', 'first', 'next', 'still', 'current', 'active', 'public', 'local', 'shared', 'route', 'routes', 'file', 'files']);
+  const words = text.match(/[a-z][a-z0-9-]{2,}/g) || [];
+  const freq = new Map();
+  for (const word of words) {
+    if (stop.has(word)) continue;
+    freq.set(word, (freq.get(word) || 0) + 1);
+  }
+  return [...freq.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, limit)
+    .map(([word]) => word);
+}
+
+function buildConceptualModel(meta, slug) {
+  const hand = PLAN_REFINEMENTS[slug]?.conceptual;
+  const thesis = hand?.thesis || summarizeGoal(meta.goal || meta.title, 120);
+  const concepts = hand?.concepts?.length ? hand.concepts : extractConcepts(meta.goal, meta.title);
+  const surfaces = hand?.surfaces?.length
+    ? hand.surfaces
+    : meta.refs.slice(0, 4).map((r) => r.replace(/^public\//, ''));
+  const fixityTier = meta.fixity === 'cold' ? 'cold' : CONTRACT_RAILS.has(meta.slug) ? 'stable' : meta.fixity;
+  const lines = [
+    '^"conceptual_model"{',
+    ` thesis = \`${escapeSpwString(thesis)}\``,
+  ];
+  if (concepts.length) {
+    lines.push(' concepts = #[', ...concepts.map((c) => `  \`${c}\`,`), ' ][reg=set]');
+  }
+  if (surfaces.length) {
+    lines.push(' surfaces = #[', ...surfaces.map((s) => `  \`${escapeSpwString(s)}\`,`), ' ][reg=set]');
+  }
+  lines.push(` fixity_tier = \`${fixityTier}\``, '}[reg=facet]', '');
+  return lines.join('\n');
+}
+
+function buildPlanRefinement(slug) {
+  const ref = PLAN_REFINEMENTS[slug]?.refinement;
+  if (!ref) return '';
+  return [
+    '^"plan_refinement"{',
+    ` tone = \`${escapeSpwString(ref.tone)}\``,
+    ` accuracy = \`${escapeSpwString(ref.accuracy)}\``,
+    ` direction = \`${escapeSpwString(ref.direction)}\``,
+    ` inspiration = \`${escapeSpwString(ref.inspiration)}\``,
+    ` alignment = \`${escapeSpwString(ref.alignment)}\``,
+    '}[reg=facet]',
+    '',
+  ].join('\n');
+}
+
+function buildResearchBridge(slug, bucket) {
+  const rows = [...(RESEARCH_BRIDGE_BY_SLUG[slug] || []), ...(RESEARCH_BRIDGE_BY_BUCKET[bucket] || [])];
+  const seen = new Set();
+  const unique = rows.filter((row) => {
+    if (seen.has(row.path)) return false;
+    seen.add(row.path);
+    return true;
+  });
+  if (!unique.length) return '';
+  return [
+    '^"research_bridge"{',
+    ' local_research = #[',
+    ...unique.slice(0, 5).map((row) => `  .{ label = \`${row.label}\` ; path = \`${row.path}\` }[reg=facet],`),
+    ' ][reg=set]',
+    ' rule = `Repo-local audits/appendices/conventions — not external web.`',
+    '}[reg=facet]',
+    '',
+  ].join('\n');
+}
+
+function buildConnectionPoints(meta, slug) {
+  const lines = ['^"connection_points"{'];
+  if (meta.bucket === 'semantic_rails') {
+    lines.push(' owner_rail = `self`');
+  } else if (meta.bucket === 'active_backlog' || meta.bucket === 'css_layout_interaction') {
+    const rail =
+      meta.slug.includes('language') || meta.slug.includes('spw')
+        ? 'spw-architecture-ecology'
+        : meta.slug.includes('css') || meta.slug.includes('shell')
+          ? 'css-architecture-readability'
+          : meta.slug.includes('runtime') || meta.slug.includes('js')
+            ? 'runtime-bootstrap-performance'
+            : 'model-guided-refinement';
+    lines.push(` owner_rail = \`${rail}\``);
+  }
+  if (meta.relatedPlans.length) {
+    lines.push(' related_plans = #[', ...meta.relatedPlans.map((p) => `  \`${p}\`,`), ' ][reg=set]');
+  }
+  const completed = COMPLETED_REFERENCE.get(slug);
+  if (completed?.superseded_by) {
+    lines.push(` superseded_by = \`${completed.superseded_by}\``);
+  }
+  lines.push('}[reg=facet]', '');
+  return lines.join('\n');
+}
+
+function buildArchiveStatus(slug, bucket, meta) {
+  if (bucket !== 'completed_reference' && bucket !== 'archive') return '';
+  const completed = COMPLETED_REFERENCE.get(slug);
+  const status = bucket === 'archive' ? 'archived' : 'completed_reference';
+  const lines = [
+    '^"archive_status"{',
+    ` status = \`${status}\``,
+    ` archive_note = \`.agents/plans/archive/2026-07-12-plan-ecology-semantics-architecture.md\``,
+    ` retain_reason = \`Direct citations preserved — virtual bucket not physical move.\``,
+  ];
+  if (completed?.research) {
+    lines.push(` research_pointer = \`${completed.research}\``);
+  } else if (bucket === 'archive') {
+    lines.push(' research_pointer = `commit-history-deep-2026-07`');
+  }
+  if (meta.kind === 'fix') lines.push(' kind = `fix`');
+  lines.push('}[reg=facet]', '');
+  return lines.join('\n');
 }
 
 function parsePlanArtifact(absDir, slug, files, relDir = '') {
@@ -326,13 +557,14 @@ function parsePlanArtifact(absDir, slug, files, relDir = '') {
   const relatedPlans = extractRelatedPlans(source, slug);
 
   let operation = 'prime';
-  if (kind === 'fix') operation = 'audit';
+  if (COMPLETED_REFERENCE.has(slug)) operation = 'archive';
+  else if (kind === 'fix') operation = 'audit';
   else if (CONTRACT_RAILS.has(slug)) operation = 'contract';
   else if (/cache|insight/i.test(slug)) operation = 'cache';
 
   let fixity = 'tending';
   if (CONTRACT_RAILS.has(slug)) fixity = 'stable';
-  if (relDir.startsWith('archive/')) fixity = 'cold';
+  if (relDir.startsWith('archive/') || COMPLETED_REFERENCE.has(slug)) fixity = 'cold';
 
   const bucket = classifyBucket(slug, relDir, files, kind);
   const dimensions = buildDimensions({ kind, slug, refs }, bucket);
@@ -375,6 +607,9 @@ function buildOwnerClaim(meta, relDir) {
     ? `The listed failure mode returns after the planned fix lands.`
     : `A patch cannot satisfy the public goal while leaving ${implRef} unchanged or untested.`;
 
+  const status =
+    meta.bucket === 'completed_reference' ? 'superseded' : meta.bucket === 'archive' ? 'superseded' : 'active';
+
   return [
     '^"owner_claim"{',
     ` claim_id = "${claimId}"`,
@@ -384,22 +619,30 @@ function buildOwnerClaim(meta, relDir) {
     ` impl_ref = ~"${implRef}"`,
     ` probe_ref = \`${escapeSpwString(probeRef)}\``,
     ` falsification = \`${escapeSpwString(falsification)}\``,
-    ` status = "active"`,
+    ` status = "${status}"`,
     '}[reg=facet]',
   ];
 }
 
 function buildEditorPrompts(meta) {
   const docRef = meta.hasPlan ? '@plan' : '@fix';
-  return [
+  const lines = [
     'editor_prompts: #[',
     ` .{ ask = \`What does ${meta.slug} own, and what should stay out of scope?\`, see = ${docRef} }[reg=facet],`,
     ` .{ ask = \`Which file should I open first to implement the next slice of ${meta.slug}?\`, see = @index }[reg=facet],`,
-    meta.validation.length
-      ? ` .{ ask = \`What command or check falsifies whether ${meta.slug} still holds?\`, see = ${docRef} }[reg=facet],`
-      : null,
-    '][reg=set]',
-  ].filter(Boolean);
+  ];
+  if (PLAN_REFINEMENTS[meta.slug]) {
+    lines.push(
+      ` .{ ask = \`What is the tone, direction, and alignment for ${meta.slug}?\`, see = @index#plan_refinement }[reg=facet],`,
+    );
+  }
+  if (meta.validation.length) {
+    lines.push(
+      ` .{ ask = \`What command or check falsifies whether ${meta.slug} still holds?\`, see = ${docRef} }[reg=facet],`,
+    );
+  }
+  lines.push('][reg=set]');
+  return lines;
 }
 
 function buildDimensionsBlock(meta) {
@@ -441,6 +684,8 @@ function buildIndexContent(slug, relDir, files, meta) {
     '',
     ...buildDimensionsBlock(meta),
     '',
+    buildConceptualModel(meta, slug),
+    buildPlanRefinement(slug),
     `@plans_root: ~"${relUp(relDir, '.agents/plans/index.spw')}"`,
     `@plan_index_convention: ~"${relUp(relDir, '.spw/conventions/plan-index.spw')}"`,
     `@wip_notebook: ~"${relUp(relDir, '.spw/conventions/wip-notebook.spw')}"`,
@@ -493,7 +738,20 @@ function buildIndexContent(slug, relDir, files, meta) {
     dispatch.push(` ${uniqueKey} = ${alias}`);
   }
 
-  lines.push('', 'dispatch: .{', ...dispatch, '}[reg=facet]', '', ...buildOwnerClaim(meta, relDir), '');
+  lines.push('', 'dispatch: .{', ...dispatch, '}[reg=facet]', '');
+
+  const researchBridge = buildResearchBridge(slug, meta.bucket);
+  if (researchBridge) lines.push(researchBridge);
+
+  const connectionPoints = buildConnectionPoints(meta, slug);
+  if (connectionPoints && !connectionPoints.match(/\^"connection_points"\{\s*\}\[reg=facet\]/)) {
+    lines.push(connectionPoints);
+  }
+
+  const archiveStatus = buildArchiveStatus(slug, meta.bucket, meta);
+  if (archiveStatus) lines.push(archiveStatus);
+
+  lines.push(...buildOwnerClaim(meta, relDir), '');
 
   if (meta.nextAction) {
     lines.push('next_action: .{', ` step = \`${escapeSpwString(meta.nextAction)}\``, '}[reg=facet]', '');
@@ -689,6 +947,7 @@ function buildPlansRootIndex(planEntries) {
     'public_route_proof_genre',
     'fix_queue',
     'active_backlog',
+    'completed_reference',
     'archive',
     'templates_tooling',
   ];
@@ -729,6 +988,8 @@ function buildPlansRootIndex(planEntries) {
     '@plan_index_convention: ~"../../.spw/conventions/plan-index.spw"',
     '@wip_notebook: ~"../../.spw/conventions/wip-notebook.spw"',
     '@maintain_script: ~"../../scripts/maintain-plan-directory-indexes.mjs"',
+    '@plan_ecology_semantics: ~"../../.spw/audits/plan-ecology-semantics-2026-07.spw"',
+    '@planning_ecology_convention: ~"../../.spw/conventions/planning-ecology.spw#research_bridge_map"',
     '',
     'reading_order: .{',
     ' sequence = ?< @planning_ecology, @plan_index_convention, @readme >[reg=stream]',
@@ -737,13 +998,14 @@ function buildPlansRootIndex(planEntries) {
     '',
   ];
 
-  const dispatch = ['readme', 'planning_ecology', 'plan_index_convention', 'wip_notebook', 'maintain_script'];
+  const dispatch = ['readme', 'planning_ecology', 'plan_index_convention', 'wip_notebook', 'maintain_script', 'plan_ecology_semantics'];
   const dispatchLines = [
     ' readme = @readme',
     ' planning_ecology = @planning_ecology',
     ' plan_index_convention = @plan_index_convention',
     ' wip_notebook = @wip_notebook',
     ' maintain_script = @maintain_script',
+    ' plan_ecology_semantics = @plan_ecology_semantics',
   ];
 
   for (const bucket of bucketOrder) {
@@ -773,6 +1035,9 @@ function buildPlansRootIndex(planEntries) {
     'editor_prompts: #[',
     ' .{ ask = `Which virtual bucket owns this class of work?`, see = @readme }[reg=facet],',
     ' .{ ask = `What is the smallest plan index to open for a bounded patch?`, see = @plan_index_convention }[reg=facet],',
+    ' .{ ask = `Where is local research for this bucket?`, see = @planning_ecology_convention }[reg=facet],',
+    ' .{ ask = `What landed work is completed_reference?`, see = @plan_ecology_semantics }[reg=facet],',
+    ' .{ ask = `What are tone, direction, and alignment for this plan?`, see = @plan_index_convention#plan_refinement_template }[reg=facet],',
     '][reg=set]',
     '',
     'invariants: #[',
@@ -787,6 +1052,8 @@ function buildPlansRootIndex(planEntries) {
 }
 
 function main() {
+  if (guardReviewedPlanTree()) return;
+
   const planDirs = listPlanDirectories(PLANS_ROOT).sort();
   const planEntries = [];
   let changed = 0;

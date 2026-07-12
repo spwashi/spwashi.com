@@ -24,6 +24,7 @@ Archived plan folders (moved here in ref-safe passes):
 
 Maintenance sweeps:
 
+- `2026-07-12-plan-ecology-semantics-architecture.md` - Plan index.spw semantics pass: `conceptual_model`, `research_bridge`, `connection_points`, `archive_status`; `completed_reference` virtual bucket (6 landings); local research routing to 2026-07 audits/appendices; regenerate via `node scripts/maintain-plan-directory-indexes.mjs`.
 - `2026-06-19-plan-maintenance.md` - Active plan ecology consolidation, completed-reference indexing, and archive policy refresh.
 - `2026-06-19-conversation-audit-redistribution.md` - Redistribution of broad audit prompts into the active owner plans.
 - `2026-06-21-planning-ecology-recursive-maintenance.md` - Recursive plan-tree census, virtual bucket structure, WIP-only cleanup rule, and overgrowth queue.

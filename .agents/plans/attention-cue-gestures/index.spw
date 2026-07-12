@@ -1,3 +1,4 @@
+# Review 2026-07-12 — merge candidate for typography-reading-groove; keep only the canonical-settings and touch-safety requirements.
 # Plan Index — Attention Cue Gestures
 #
 # Extend the reading-groove behavior to more editorial and hybrid pages. - Keep the effect browser-local and reversible through canonical settings. - Add a touch gesture for text…
@@ -14,7 +15,7 @@ intent: .{
  goal = `Extend the reading-groove behavior to more editorial and hybrid pages. - Keep the effect browser-local and reversible through canonical settings. - Add a touch gesture for text scaling that writes through the existing fontSizeScale setting.`
  owner = `attention-cue-gestures`
  kind = `plan`
- bucket = `active_backlog`
+ bucket = `merged`
  artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
@@ -23,8 +24,27 @@ intent: .{
  semantic_layer = "pragmatics"
  collaboration_phase = "tending"
  memory_tier = "hot"
- bucket = "active_backlog"
+ bucket = "merged"
 }[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Extend the reading-groove behavior to more editorial and hybrid pages. - Keep the effect browser-local and reversible…`
+ concepts = #[
+  `attention`,
+  `cue`,
+  `gestures`,
+  `extend`,
+  `reading-groove`,
+ ][reg=set]
+ surfaces = #[
+  `js/kernel/site-settings.js`,
+  `js/site.js`,
+  `settings/index.html`,
+  `play/index.html`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
 
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
@@ -45,6 +65,20 @@ dispatch: .{
  attention_field = @attention_field
 }[reg=facet]
 
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `merge`
+ merged_into = #[
+  `typography-reading-groove`,
+ ][reg=set]
+ retain = `canonical-settings and touch-safety requirements`
+ status = `superseded`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-attention_cue_gestures-001"
  layer = "pragmatic"
@@ -53,7 +87,7 @@ dispatch: .{
  impl_ref = ~"../../../public/js/kernel/site-settings.js"
  probe_ref = `rg 'attention-cue-gestures' .agents/plans/attention-cue-gestures`
  falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/kernel/site-settings.js unchanged or untested.`
- status = "active"
+ status = "superseded"
 }[reg=facet]
 
 editor_prompts: #[
@@ -66,4 +100,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

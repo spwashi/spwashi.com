@@ -45,6 +45,14 @@
 @runtime_module_medium: ~"../surfaces/runtime-module-medium.spw"
 @spw_architecture_ecology: ~"./spw-architecture-ecology.spw"
 @spw_architecture_ecology_plan: ~"../../.agents/plans/spw-architecture-ecology/PLAN.md"
+@agent_ecology: ~"./agent-ecology.spw"
+@plan_ecology_semantics_audit: ~"../audits/plan-ecology-semantics-2026-07.spw"
+@commit_history_deep: ~"../audits/commit-history-deep-2026-07/index.spw"
+@commit_skill_induction: ~"../audits/commit-skill-induction-2026-07/index.spw"
+@appendices_index: ~"../audits/appendices/index.spw"
+@vocabulary_metaphor_synthesis: ~"../audits/vocabulary-metaphor-growth-synthesis-2026-07.spw"
+@metaphor_primitive_research: ~"../audits/metaphor-primitive-research-branching-2026-07.spw"
+@plan_maintenance_sweep_2026_07_12: ~"../../.agents/plans/archive/2026-07-12-plan-ecology-semantics-architecture.md"
 
 dispatch: .{
  agents = @agents
@@ -86,6 +94,14 @@ dispatch: .{
  runtime_module_medium = @runtime_module_medium
  spw_architecture_ecology = @spw_architecture_ecology
  spw_architecture_ecology_plan = @spw_architecture_ecology_plan
+ agent_ecology = @agent_ecology
+ plan_ecology_semantics_audit = @plan_ecology_semantics_audit
+ commit_history_deep = @commit_history_deep
+ commit_skill_induction = @commit_skill_induction
+ appendices_index = @appendices_index
+ vocabulary_metaphor_synthesis = @vocabulary_metaphor_synthesis
+ metaphor_primitive_research = @metaphor_primitive_research
+ plan_maintenance_sweep_2026_07_12 = @plan_maintenance_sweep_2026_07_12
 }[reg=facet]
 
 roles: #[
@@ -132,15 +148,39 @@ archive_policy: .{
   canonical = `Stable starting tracks used before broad or ambiguous work.`
   semantic_rail = `Cross-layer meaning tracks that coordinate HTML, CSS, JS, .spw, validation, and editor surfaces.`
   active_backlog = `Tactical route, runtime, CSS, image, and interaction work that is still current.`
-  completed_reference = `Landed or superseded plan content that remains in place because other files cite it directly.`
-  archive = `Historical notes under .agents/plans/archive/ that should be used as reference only.`
-  rule = `Physically move a completed plan into archive only in a ref-safe pass that updates all direct citations. Otherwise index it as a completed_reference.`
+  completed_reference = `Landed or superseded plan content that remains in place because other files cite it directly. Virtual bucket — not a physical move.`
+  archive = `Historical notes under .agents/plans/archive/ and archive/ plan folders — reference only.`
+  research_pointer_rule = `When archiving by index, wire archive_status.research_pointer to a local audit, appendix, or convention rail that absorbed the insight.`
+  rule = `Physically move a completed plan into archive only in a ref-safe pass that updates all direct citations. Otherwise index it as completed_reference with archive_status in index.spw.`
 }[reg=facet]
 
+^"research_bridge_map"{
+  note = `Default local research routing by virtual bucket — plan indexes may override with plan-specific rows.`
+
+  by_bucket: .{
+    semantic_rails = #[@plan_ecology_semantics_audit, @commit_skill_induction, @spw_architecture_ecology][reg=set]
+    css_layout_interaction = #[@vocabulary_metaphor_synthesis, `page-spacing-runtime-synthesis-2026-07`][reg=set]
+    runtime_js_validation = #[`javascript-module-census-2026-07`, `module-export-standalone-2026-07`][reg=set]
+    media_image_sensory = #[@vocabulary_metaphor_synthesis, @metaphor_primitive_research][reg=set]
+    public_route_proof_genre = #[@appendices_index, @metaphor_primitive_research][reg=set]
+    completed_reference = #[@plan_maintenance_sweep_2026_07_12, @commit_history_deep][reg=set]
+  }[reg=facet]
+
+  by_rail: .{
+    `model-guided-refinement` = #[@vocabulary_metaphor_synthesis, `model-guided-refinement.spw`][reg=set]
+    `spw-architecture-ecology` = #[@plan_ecology_semantics_audit, @spw_architecture_ecology][reg=set]
+    `agent-optimization` = #[@commit_skill_induction, @plan_ecology_semantics_audit][reg=set]
+    `language-reclustering` = #[`language-census.spw`, `spw-language-v04`][reg=set]
+    `copy-localization` = #[@vocabulary_metaphor_synthesis, @appendices_index][reg=set]
+  }[reg=facet]
+}
+
 tree_optimization: .{
-  observation = `As of 2026-06-30 the active plan tree has 173 top-level active folders, 160 PLAN.md files, 50 wip.spw files, 13 total FIX.md files, and 11 true FIX-only tactical queues.`
-  latest_archive = @plan_maintenance_sweep_2026_06_30
-  virtual_buckets = `Semantic rails, CSS/layout/interaction, runtime/JS/validation, media/image/sensory material, public route/proof/genre systems, templates/tooling, and fix queue.`
+  observation = `As of 2026-07-12: 183 active top-level folders, 174 PLAN.md, 187 index.spw, 13 FIX.md; virtual buckets add completed_reference for landed work retained in place.`
+  latest_archive = @plan_maintenance_sweep_2026_07_12
+  prior_archive = @plan_maintenance_sweep_2026_06_30
+  virtual_buckets = `Canonical tracks, semantic rails, CSS/layout/interaction, runtime/JS/validation, media/image/sensory, public route/proof/genre, fix queue, active backlog, completed_reference, archive, templates/tooling.`
+  semantics_pass = @plan_ecology_semantics_audit
   recursive_rule = `A maintenance pass succeeds when it reduces the cost of the next maintenance pass: fewer hidden WIPs, clearer owner surfaces, fewer stale links, and better archive records.`
   wip_rule = `A WIP-only folder should be revived with PLAN.md, merged into an owner plan, or archived by index note the next time it is touched.`
   plan_index_rule = `Every plan directory with PLAN.md, FIX.md, wip.spw, or named .spw artifacts should expose index.spw. Regenerate with scripts/maintain-plan-directory-indexes.mjs during plan-ecology sweeps.`

@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the chrome owner, narrowed to header, section handle, breadcrumbs, and footer behavior.
 # Plan Index — Chrome, Navigation, and Metaphysical Wonder (2026 review)
 #
 # Improve the primary navigation (header via <spw-site-header>), section handles, breadcrumbs, and footer so they are genuinely pleasant on mobile, encourage…
@@ -26,10 +27,34 @@ intent: .{
  bucket = "css_layout_interaction"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Chrome participates in the attention field — mobile-first pleasure, wonder, operators as forces not admin paint.`
+ concepts = #[
+  `section-handle`,
+  `attention-field`,
+  `semantic-accent`,
+  `mobile-chrome`,
+  `cognitive-navigation`,
+ ][reg=set]
+ surfaces = #[
+  `public/css/shell/chrome/`,
+  `public/js/runtime/attention/`,
+  `.spw/surfaces/menu-field.spw`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+^"plan_refinement"{
+ tone = `Inviting wayfinding — curiosity without chrome sprawl.`
+ accuracy = `Section handle and resonance landed; full scientifically-social taxonomy is long-horizon.`
+ direction = `One mobile chrome polish pass on header + handle before new menu experiments.`
+ inspiration = `Navigation should feel like entering a workshop, not a settings panel.`
+ alignment = `relational-attention-media, space-menu-arcs-electrical, metaphor-primitive-research`
+}[reg=facet]
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
-@index: ~"./index.spw"
 @plan: ~"./PLAN.md"
 @fix: ~"./FIX.md"
 @plan_space_menu_arcs_electrical: ~"./space-menu-arcs-electrical/index.spw"
@@ -56,6 +81,33 @@ dispatch: .{
  cognitive_navigation = @cognitive_navigation
 }[reg=facet]
 
+^"research_bridge"{
+ local_research = #[
+  .{ label = `page_spacing_runtime` ; path = `.spw/audits/page-spacing-runtime-synthesis-2026-07.spw` }[reg=facet],
+  .{ label = `vocabulary_metaphor` ; path = `.spw/audits/vocabulary-metaphor-growth-synthesis-2026-07.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+ related_plans = #[
+  `space-menu-arcs-electrical`,
+ ][reg=set]
+}[reg=facet]
+
+^"absorbs"{
+ reviewed = `2026-07-12`
+ plans = #[
+  `chrome-distribution-momentum-pass`,
+  `mobile-brace-path-polish`,
+  `shell-harmony-pass`,
+  `shell-semantic-physics`,
+  `space-menu-arcs-electrical`,
+ ][reg=set]
+ rule = `Absorbed by 2026-07-12 review; see each source review_disposition and archive/2026-07-12-review-execution.md.`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-chrome_navigation_wonder-001"
  layer = "pragmatic"
@@ -70,6 +122,7 @@ dispatch: .{
 editor_prompts: #[
  .{ ask = `What does chrome-navigation-wonder own, and what should stay out of scope?`, see = @plan }[reg=facet],
  .{ ask = `Which file should I open first to implement the next slice of chrome-navigation-wonder?`, see = @index }[reg=facet],
+ .{ ask = `What is the tone, direction, and alignment for chrome-navigation-wonder?`, see = @index#plan_refinement }[reg=facet],
 ][reg=set]
 
 invariants: #[

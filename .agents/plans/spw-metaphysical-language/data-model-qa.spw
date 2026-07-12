@@ -1,3 +1,23 @@
+# Review 2026-07-12 — keep as a QA audit; entity claims need current usage, falsification, and an explicit promotion decision.
+^"plan_linkage"{
+ plan = ~"./PLAN.md"
+ index = ~"./index.spw"
+ goal = `Spw already behaves like a language on this site — operators prime attention, braces hold charge, positions carry force — but its description is distributed across conventions, atlas pages, runtime attributes, and memory. This plan makes the language *describable as itself*: every construct named, every sigil's assignment justified by the properties of the glyph, every semantic drift ledgered and arbitrated, and a durable path from "notation on a webpage" to "artifact you can hold, teach with, sell, or install in another industry." Creator identity preserved: "I'm Spwashi. I build software and make art." The language is the art and the software at once; describing it is not paperwork, it is the product line maturing.`
+ owner = `spw-metaphysical-language`
+ bucket = "semantic_rails"
+}[reg=facet]
+
+^"operational_hooks"{
+ selectors = #[ `.spw/_workbench/`, `.spw/conventions/`, ][reg=set]
+ probe_ref = `git diff --check; npm run check after any HTML/CSS/JS touch.`
+ owner_claim = ~"./index.spw#owner_claim"
+}[reg=facet]^"plan_linkage"{
+ plan = ~"./PLAN.md"
+ index = ~"./index.spw"
+ goal = `Spw already behaves like a language on this site — operators prime attention, braces hold charge, positions carry force — but its description is distributed across conventions, atlas pages, runtime attributes, and memory. This plan makes the language *describable as itself*: every construct named, every sigil's assignment justified by the properties of the glyph, every semantic drift ledgered and arbitrated, and a durable path from "notation on a webpage" to "artifact you can hold, teach with, sell, or install in another industry." Creator identity preserved: "I'm Spwashi. I build software and make art." The language is the art and the software at once; describing it is not paperwork, it is the product line maturing.`
+ owner = `spw-metaphysical-language`
+ bucket = "semantic_rails"
+}[reg=facet]
 # Data Model — Improvement & QA Audit
 #
 # The plan's data model made explicit: what entities exist, what shape they

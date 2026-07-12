@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the distilled local asset contract; capture frames must remain useful without external art tools.
 ^"operational_hooks"{
  selectors = #[ `.agents/plans/screenshot-semantics/PLAN.md`, `.agents/plans/rpg-asset-capture-frames/rpg-asset-capture-frames.spw`, ][reg=set]
  probe_ref = `Hypotheses: players can stage a character or item in under a minute; screenshot mode produces a clean frame at mobile and desktop widths; unlockable motifs increase curiosity without blocking utility.`

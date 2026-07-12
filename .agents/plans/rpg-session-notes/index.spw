@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the session-memory owner; private residue, revisitable notes, and promoted canon are distinct states.
 # Plan Index — rpg-session-notes
 #
 # The desired end state is a campaign memory model where private or semi-structured session material can be captured, revisited, and promoted deliberately. A session note should be…
@@ -26,6 +27,23 @@ intent: .{
  bucket = "active_backlog"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `The desired end state is a campaign memory model where private or semi-structured session material can be captured,…`
+ concepts = #[
+  `session`,
+  `what`,
+  `campaign`,
+  `memory`,
+  `note`,
+ ][reg=set]
+ surfaces = #[
+  `.agents/plans/rpg-local-gameplay/PLAN.md`,
+  `.agents/plans/blog-blob-spw/PLAN.md`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -43,6 +61,23 @@ dispatch: .{
  plan_blog_blob_spw = @plan_blog_blob_spw
  agents_plans_rpg_local_gameplay_plan_md = @agents_plans_rpg_local_gameplay_plan_md
  agents_plans_blog_blob_spw_plan_md = @agents_plans_blog_blob_spw_plan_md
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+ related_plans = #[
+  `rpg-local-gameplay`,
+  `blog-blob-spw`,
+ ][reg=set]
+}[reg=facet]
+
+^"absorbs"{
+ reviewed = `2026-07-12`
+ plans = #[
+  `author-rpg-notebooks`,
+  `rpg-seed-metacognition-pass`,
+ ][reg=set]
+ rule = `Absorbed by 2026-07-12 review; see each source review_disposition and archive/2026-07-12-review-execution.md.`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -83,4 +118,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

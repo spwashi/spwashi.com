@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as a runtime authorship contract: interaction state must not overwrite route semantics.
 # Plan Index — CSS-Sensitive Attribute Writes
 #
 # Keep interaction state visually responsive without letting runtime discovery casually rewrite author-owned semantic attributes that CSS uses for route, context, wonder, and…
@@ -26,6 +27,19 @@ intent: .{
  bucket = "active_backlog"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Keep interaction state visually responsive without letting runtime discovery casually rewrite author-owned semantic…`
+ concepts = #[
+  `css-sensitive`,
+  `attribute`,
+  `writes`,
+  `interaction`,
+  `state`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -33,6 +47,10 @@ intent: .{
 
 dispatch: .{
  plan = @plan
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `css-architecture-readability`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -73,4 +91,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

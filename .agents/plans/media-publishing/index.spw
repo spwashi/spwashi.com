@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep only if it produces a real publication artifact; avoid a publishing system before recurring output.
 # Plan Index — media-publishing
 #
 # Create a lightweight publishing layer that can market and reference current site surfaces without introducing a build pipeline. The feature should let a JSON file configure weekly…
@@ -26,6 +27,25 @@ intent: .{
  bucket = "active_backlog"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Create a lightweight publishing layer that can market and reference current site surfaces without introducing a build…`
+ concepts = #[
+  `featured`,
+  `media-publishing`,
+  `create`,
+  `lightweight`,
+  `publishing`,
+ ][reg=set]
+ surfaces = #[
+  `data/media-focus.json`,
+  `js/site.js`,
+  `about/website/index.html`,
+  `css/style.css`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -43,6 +63,10 @@ dispatch: .{
  site = @site
  index = @index
  style = @style
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -80,4 +104,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

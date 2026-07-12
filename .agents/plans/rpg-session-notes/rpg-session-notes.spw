@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the distilled session-note doctrine; promotion must never imply automatic publication.
 ^"operational_hooks"{
  selectors = #[ `.agents/plans/rpg-local-gameplay/PLAN.md`, `.agents/plans/blog-blob-spw/PLAN.md`, ][reg=set]
  probe_ref = `git diff --check`

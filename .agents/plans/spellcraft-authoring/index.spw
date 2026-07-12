@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the spell composition owner; select, compose, name, cast, and decompose must form one usable loop.
 # Plan Index — spellcraft-authoring
 #
 # A visitor (or Spwashi on camera) can *write* a spell, not merely accumulate one: select things on the page, drop them in the cauldron, compose them into a named spell, cast it to…
@@ -26,6 +27,31 @@ intent: .{
  bucket = "public_route_proof_genre"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Spells are writable programs — select, style, cast, decompose — workshop bench not ledger.`
+ concepts = #[
+  `cauldron`,
+  `spellbook`,
+  `decompose`,
+  `op-disposition`,
+  `checkpoint`,
+ ][reg=set]
+ surfaces = #[
+  `public/js/interface/cauldron/`,
+  `public/js/runtime/spells.js`,
+  `play/ spell routes`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+^"plan_refinement"{
+ tone = `Workshop delight — legible verbs, camera-ready demos.`
+ accuracy = `Decompose, disposition, and capture front door landed; literacy precipitation is sibling track.`
+ direction = `Tighten spell edit loop UX before expanding attribute surface area.`
+ inspiration = `Visitors write small page programs they can show a friend.`
+ alignment = `literacy-precipitation-press, modular-experience-slices spellcraft slice`
+}[reg=facet]
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -47,6 +73,29 @@ dispatch: .{
  observation_beats = @observation_beats
  shared = @shared
  sigil_anatomy = @sigil_anatomy
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `appendices_index` ; path = `.spw/audits/appendices/index.spw` }[reg=facet],
+  .{ label = `metaphor_primitive_research` ; path = `.spw/audits/metaphor-primitive-research-branching-2026-07.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"connection_points"{
+ related_plans = #[
+  `literacy-precipitation-press`,
+ ][reg=set]
+}[reg=facet]
+
+^"absorbs"{
+ reviewed = `2026-07-12`
+ plans = #[
+  `spell-cauldron-microinteractions`,
+  `brace-cauldron-primed-collection`,
+ ][reg=set]
+ rule = `Absorbed by 2026-07-12 review; see each source review_disposition and archive/2026-07-12-review-execution.md.`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -74,6 +123,7 @@ validation: #[
 editor_prompts: #[
  .{ ask = `What does spellcraft-authoring own, and what should stay out of scope?`, see = @plan }[reg=facet],
  .{ ask = `Which file should I open first to implement the next slice of spellcraft-authoring?`, see = @index }[reg=facet],
+ .{ ask = `What is the tone, direction, and alignment for spellcraft-authoring?`, see = @index#plan_refinement }[reg=facet],
  .{ ask = `What command or check falsifies whether spellcraft-authoring still holds?`, see = @plan }[reg=facet],
 ][reg=set]
 
@@ -82,4 +132,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

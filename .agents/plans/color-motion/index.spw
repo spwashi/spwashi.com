@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the shared color and motion owner; require visual baselines and reduced-motion proofs per slice.
 # Plan Index — Color And Microinteraction Timing Improvement Plan
 #
 # Improve the site's color coherence, interaction feel, and recognizable behavior without flattening its character. The work should make the palette more intentional, make operator…
@@ -26,6 +27,31 @@ intent: .{
  bucket = "canonical_tracks"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Behavior and personality audit — palette, operator distinction, microinteraction timing as one system.`
+ concepts = #[
+  `operator-saturation`,
+  `microinteraction`,
+  `palette-tuning`,
+  `motion-threshold`,
+  `personality-audit`,
+ ][reg=set]
+ surfaces = #[
+  `public/css/effects/`,
+  `public/css/tokens/core.css`,
+  `settings/`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+^"plan_refinement"{
+ tone = `Motion designer restraint — feel intent, not spectacle.`
+ accuracy = `Tokens and wonder memory exist; full personality audit checklist is open.`
+ direction = `Audit one operator family timing end-to-end before new animation surfaces.`
+ inspiration = `Operators should feel like instruments with temperament.`
+ alignment = `relational-attention-media, settings-theme-packs`
+}[reg=facet]
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -51,6 +77,15 @@ dispatch: .{
  settings = @settings
 }[reg=facet]
 
+^"absorbs"{
+ reviewed = `2026-07-12`
+ plans = #[
+  `cinematic-handles`,
+  `dark-contrast-pass`,
+ ][reg=set]
+ rule = `Absorbed by 2026-07-12 review; see each source review_disposition and archive/2026-07-12-review-execution.md.`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-color_motion-001"
  layer = "pragmatic"
@@ -74,6 +109,7 @@ validation: #[
 editor_prompts: #[
  .{ ask = `What does color-motion own, and what should stay out of scope?`, see = @plan }[reg=facet],
  .{ ask = `Which file should I open first to implement the next slice of color-motion?`, see = @index }[reg=facet],
+ .{ ask = `What is the tone, direction, and alignment for color-motion?`, see = @index#plan_refinement }[reg=facet],
  .{ ask = `What command or check falsifies whether color-motion still holds?`, see = @plan }[reg=facet],
 ][reg=set]
 
@@ -82,4 +118,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

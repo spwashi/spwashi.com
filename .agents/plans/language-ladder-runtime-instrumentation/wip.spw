@@ -1,3 +1,4 @@
+# Review 2026-07-12 — retain as a small handoff cache; do not expand it until curriculum and instrumentation have separate owners.
 # wip — language-ladder-runtime-instrumentation
 #
 #>plan_language_ladder_runtime_instrumentation_wip
@@ -38,4 +39,3 @@ fixity = "tending"
 @tags: [#progressive_enhancement, #module_timing, #instrumentation, #javascript, #typescript, #programming_paradigms]
 
 >>[2026-05-31] note - This track is about making the site itself a clearer learning surface for developers: what a module is, when it runs, how to observe it, and when stronger typing should replace incidental runtime assumptions.
-

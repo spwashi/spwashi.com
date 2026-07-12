@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the distilled card doctrine; editorial utility must not flatten person, role, and character.
 ^"operational_hooks"{
  selectors = #[ `public/js/modules/profile/builder.js`, `public/js/modules/profile/tool.js`, `.agents/plans/blog-blob-spw/PLAN.md`, `.agents/plans/rpg-session-notes/PLAN.md`, ][reg=set]
  probe_ref = `git diff --check`

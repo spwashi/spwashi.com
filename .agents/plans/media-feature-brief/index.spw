@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as a communication brief, not a runtime roadmap; explain shipped proof in public language.
 # Plan Index — media-feature-brief
 #
 # The site has accumulated a PWA shell, Spw operator routes, frame navigation, console affordances, Pretext experiments, and a developing metaphysics of cognitive surfaces. This…
@@ -26,6 +27,22 @@ intent: .{
  bucket = "active_backlog"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `The site has accumulated a PWA shell, Spw operator routes, frame navigation, console affordances, Pretext experiments,…`
+ concepts = #[
+  `media-feature-brief`,
+  `accumulated`,
+  `pwa`,
+  `shell`,
+  `spw`,
+ ][reg=set]
+ surfaces = #[
+  `.agents/plans/media-feature-brief/media-feature-brief.spw`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -37,6 +54,10 @@ dispatch: .{
  plan = @plan
  wip = @wip
  media_feature_brief = @media_feature_brief
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -77,4 +98,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

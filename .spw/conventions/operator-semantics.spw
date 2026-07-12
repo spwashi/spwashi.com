@@ -46,6 +46,15 @@
   }
 
   physics_interpretation: "The original meanings define not what operators do in isolation, but what they do when composed, sequenced, and brought into relationship through interaction."
+
+  workbench_canon: {
+    ~#note: "The .spw-notation sigil layer, per workbench canon. These are structural sigils used to write .spw files, distinct from the semantic operator set above; the two layers overlap only on & and @."
+    "$": "substrate — introspection; the ground a form stands on"
+    "&": "subject — confluence / bound reference (consistent with the operator-set sense above)"
+    "@": "ref — reference/address in notation, as in @name: ~\"path\""
+    "_": "label / escape — a name or literal held out of interpretation"
+    overlap_resolution: "& is stable across both layers (subject in each). @ is the one open decision: in the sigil layer @ is ref/address; in the semantic-operator set @ is 'perspective'. Keep @ layered (notation sigil vs semantic operator) or unify it — resolve this before treating @ as drift to fix. The embedded operator set in shared.js OPERATOR_GEOMETRY and the operator atlas still ships the 'perspective' reading."
+  }
 }
 
 ^"spell_evolution_note"{

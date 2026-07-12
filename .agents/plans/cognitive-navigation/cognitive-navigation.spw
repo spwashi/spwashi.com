@@ -1,3 +1,4 @@
+# Review 2026-07-12 — retain as a conceptual map, but do not promote breadcrumbs, liminality, and spells as one runtime contract.
 ^"operational_hooks"{
  selectors = #[ `.agents/plans/cognitive-navigation/cognitive-navigation.spw`, ][reg=set]
  probe_ref = `Hypotheses: liminality-aware navigation will make cognitive depth legible; Spw breadcrumbs will capture path quality rather than just page history; spell recognition will make expert patterns inductively discoverable.`

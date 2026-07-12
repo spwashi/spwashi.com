@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the read-aloud prose owner; semantic markup must improve both cold reading and static parsing.
 # Plan Index — narration markup and cold-read prose
 #
 # Make prose-heavy surfaces easier to read aloud, easier for crawlers and models to parse, and easier for humans to reuse on other pages or in generator outputs. The site already…
@@ -26,6 +27,23 @@ intent: .{
  bucket = "active_backlog"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Make prose-heavy surfaces easier to read aloud, easier for crawlers and models to parse, and easier for humans to reuse…`
+ concepts = #[
+  `easier`,
+  `narration`,
+  `surfaces`,
+  `text`,
+  `markup`,
+ ][reg=set]
+ surfaces = #[
+  `play/rpg-wednesday/library/index.html`,
+  `design/experiments/css/index.html`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -37,6 +55,10 @@ dispatch: .{
  plan = @plan
  play_rpg_wednesday_library_index_html = @play_rpg_wednesday_library_index_html
  design_experiments_css_index_html = @design_experiments_css_index_html
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -66,4 +88,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

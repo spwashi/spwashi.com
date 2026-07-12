@@ -1,3 +1,4 @@
+# Review 2026-07-12 — rework into one route workshop pilot; embedded workshops, rails, lenses, and posture are too broad together.
 # Plan Index — Explore Anatomy (B → C → D → A)
 #
 # Make page and component anatomy explorable sitewide: embedded route workshops for tinkering, an auto-built region rail for navigation, clearer lens vs form controls, and an…
@@ -26,6 +27,25 @@ intent: .{
  bucket = "active_backlog"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Make page and component anatomy explorable sitewide: embedded route workshops for tinkering, an auto-built region rail…`
+ concepts = #[
+  `explore`,
+  `anatomy`,
+  `page`,
+  `component`,
+  `explorable`,
+ ][reg=set]
+ surfaces = #[
+  `css/components/embedded-workshop.css`,
+  `css/components/frame-controls.css`,
+  `css/handles/page-region-rail.css`,
+  `js/runtime/page-region-rail.js`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -49,6 +69,18 @@ dispatch: .{
  site_settings_engine = @site_settings_engine
  shell_disclosure = @shell_disclosure
  module_catalog = @module_catalog
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `rework`
+ note = `rework into one route workshop pilot`
+ rescope = `required`
+ status = `active`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -88,4 +120,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

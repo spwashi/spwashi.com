@@ -1,3 +1,4 @@
+# Review 2026-07-12 — rework from the actual failure and WCAG behavior; “proposed by another agent” is not a sufficient goal.
 # Plan Index — Gesture & Navigation Interactive Semantics (ARIA Hygiene)
 #
 # Origin: Proposed by another agent session. Captured here for tracking and execution.
@@ -26,6 +27,25 @@ intent: .{
  bucket = "fix_queue"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Origin: Proposed by another agent session. Captured here for tracking and execution.`
+ concepts = #[
+  `gesture`,
+  `navigation`,
+  `interactive`,
+  `semantics`,
+  `aria`,
+ ][reg=set]
+ surfaces = #[
+  `js/runtime/brace-gestures.js`,
+  `js/runtime/navigation-spells.js`,
+  `js/runtime/attention-architecture.js`,
+  `js/runtime/frame-navigator.js`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -41,6 +61,14 @@ dispatch: .{
  navigation_spells = @navigation_spells
  attention_architecture = @attention_architecture
  frame_navigator = @frame_navigator
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `rework`
+ note = `rework from the actual failure and WCAG behavior`
+ rescope = `required`
+ status = `active`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -64,4 +92,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

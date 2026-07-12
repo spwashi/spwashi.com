@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the layout consistency owner; audit shared flow and containers before route-local dimensions.
 # Plan Index — Vertical Rhythm, Component Containers & Layout Motifs Consistency Audit
 #
 # Ensure the site's vertical rhythm (spacing scales, flow, line-heights, component gaps), container primitives (frame-card, mode-panel, site-frame, various cards/panels), and layout…
@@ -26,6 +27,24 @@ intent: .{
  bucket = "css_layout_interaction"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Ensure the site's vertical rhythm (spacing scales, flow, line-heights, component gaps), container primitives…`
+ concepts = #[
+  `vertical`,
+  `rhythm`,
+  `component`,
+  `layout`,
+  `motifs`,
+ ][reg=set]
+ surfaces = #[
+  `css/tokens/core.css`,
+  `css/shell/layout.css`,
+  `.spw/conventions/site-semantics.spw`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -39,6 +58,26 @@ dispatch: .{
  core = @core
  layout = @layout
  site_semantics = @site_semantics
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `page_spacing_runtime` ; path = `.spw/audits/page-spacing-runtime-synthesis-2026-07.spw` }[reg=facet],
+  .{ label = `vocabulary_metaphor` ; path = `.spw/audits/vocabulary-metaphor-growth-synthesis-2026-07.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"absorbs"{
+ reviewed = `2026-07-12`
+ plans = #[
+  `component-rhythm-variety`,
+ ][reg=set]
+ rule = `Absorbed by 2026-07-12 review; see each source review_disposition and archive/2026-07-12-review-execution.md.`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -80,4 +119,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

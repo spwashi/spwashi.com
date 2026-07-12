@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the cross-layer ownership rail; demand a real practice bed and handoff artifact per slice.
 # Plan Index — Modular Experience Slices & Earthy Rhythms of Participation
 #
 # Evolve the file tree and collaboration surfaces *of this repository* so that stable "experience slices" (operator grammar, attention/resonance field, cauldron/composition,…
@@ -26,6 +27,31 @@ intent: .{
  bucket = "semantic_rails"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Own cross-layer features as slices — HTML, CSS, JS, .spw, validation, practice bed — tended over seasons like garden beds.`
+ concepts = #[
+  `experience-slice`,
+  `practice-bed`,
+  `handoff-artifact`,
+  `slice-contract`,
+  `volleyball-pilot`,
+ ][reg=set]
+ surfaces = #[
+  `.spw/slices/`,
+  `.spw/reviews/modular-experience-slices-volleyball.spw`,
+  `topics/math/ practice routes`,
+ ][reg=set]
+ fixity_tier = `stable`
+}[reg=facet]
+
+^"plan_refinement"{
+ tone = `Collaborative and earthy — sedimentation is a feature, not neglect.`
+ accuracy = `Two slices exist; many slice-worthy plans lack contracts.`
+ direction = `Promote spellcraft or attention-resonance-field as the next slice with full contract.`
+ inspiration = `Long-lived participation rhythms, not one-shot refactors.`
+ alignment = `model-guided-refinement, spw-architecture-ecology promotion protocol`
+}[reg=facet]
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -49,6 +75,19 @@ dispatch: .{
  topics_math_numerical_methods_index_html = @topics_math_numerical_methods_index_html
  attention_architecture = @attention_architecture
  wonder = @wonder
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `plan_ecology_semantics` ; path = `.spw/audits/plan-ecology-semantics-2026-07.spw` }[reg=facet],
+  .{ label = `commit_skill_induction` ; path = `.spw/audits/commit-skill-induction-2026-07/index.spw` }[reg=facet],
+  .{ label = `spw_architecture_ecology` ; path = `.spw/conventions/spw-architecture-ecology.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `self`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -86,6 +125,7 @@ validation: #[
 editor_prompts: #[
  .{ ask = `What does modular-experience-slices own, and what should stay out of scope?`, see = @plan }[reg=facet],
  .{ ask = `Which file should I open first to implement the next slice of modular-experience-slices?`, see = @index }[reg=facet],
+ .{ ask = `What is the tone, direction, and alignment for modular-experience-slices?`, see = @index#plan_refinement }[reg=facet],
  .{ ask = `What command or check falsifies whether modular-experience-slices still holds?`, see = @plan }[reg=facet],
 ][reg=set]
 
@@ -94,4 +134,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

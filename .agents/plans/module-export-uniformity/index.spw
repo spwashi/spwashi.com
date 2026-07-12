@@ -1,38 +1,57 @@
+# Review 2026-07-12 — keep as the module export contract owner; predictable shape must improve mounting and standalone use.
 # Plan Index — module-export-uniformity
 #
 # Every runtime module should expose a predictable export surface for catalog mounting, compose portability, and inspection — without forcing browser modules to pretend they are…
 
 #>plan_module_export_uniformity_index
 #:index #!plan
-#:operation #!prime
+#:operation #!contract
 #:layer #!pragmatics
 
-operation = "prime"
-fixity = "tending"
+operation = "contract"
+fixity = "stable"
 
 intent: .{
  goal = `Every runtime module should expose a predictable export surface for catalog mounting, compose portability, and inspection — without forcing browser modules to pretend they are Node scripts. The codebase should read like one living medium: nutrients (state contracts) flow through guilds (behavior clusters), roots (kernel) and canopy (chrome) stay distinct, and growth can happen in-place (incremental refactors) or holistically (compose/catalog alignment).`
  owner = `module-export-uniformity`
  kind = `plan`
- bucket = `active_backlog`
+ bucket = `semantic_rails`
  artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
 ^"dimensions"{
  practice_depth = "reading | observation | tending"
- semantic_layer = "pragmatics"
+ semantic_layer = "semantics | pragmatics"
  collaboration_phase = "tending"
- memory_tier = "hot"
- bucket = "active_backlog"
+ memory_tier = "warm"
+ bucket = "semantic_rails"
 }[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Every runtime module should expose a predictable export surface for catalog mounting, compose portability, and…`
+ concepts = #[
+  `catalog`,
+  `compose`,
+  `module-export-uniformity`,
+  `every`,
+  `runtime`,
+ ][reg=set]
+ surfaces = #[
+  `.spw/audits/module-export-standalone-2026-07.spw`,
+  `.spw/conventions/runtime-medium-ecology.spw`,
+  `.spw/surfaces/runtime-module-medium.spw`,
+  `.spw/conventions/module-export-contract.spw`,
+ ][reg=set]
+ fixity_tier = `stable`
+}[reg=facet]
+
 
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
-@index: ~"./index.spw"
 @plan: ~"./PLAN.md"
-@plan_runtime_module_decomposition: ~"../runtime-module-decomposition/index.spw"
-@plan_javascript_standalone_utility: ~"../javascript-standalone-utility/index.spw"
+@plan_runtime_module_decomposition: ~"./runtime-module-decomposition/index.spw"
+@plan_javascript_standalone_utility: ~"./javascript-standalone-utility/index.spw"
 @module_export_standalone_2026_07: ~"../../../.spw/audits/module-export-standalone-2026-07.spw"
 @runtime_medium_ecology: ~"../../../.spw/conventions/runtime-medium-ecology.spw"
 @runtime_module_medium: ~"../../../.spw/surfaces/runtime-module-medium.spw"
@@ -48,6 +67,24 @@ dispatch: .{
  runtime_module_medium = @runtime_module_medium
  spw_conventions_module_export_contract_spw = @spw_conventions_module_export_contract_spw
  public_js_runtime_module_export_contract_js = @public_js_runtime_module_export_contract_js
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `module_export_audit` ; path = `.spw/audits/module-export-standalone-2026-07.spw` }[reg=facet],
+  .{ label = `plan_ecology_semantics` ; path = `.spw/audits/plan-ecology-semantics-2026-07.spw` }[reg=facet],
+  .{ label = `commit_skill_induction` ; path = `.spw/audits/commit-skill-induction-2026-07/index.spw` }[reg=facet],
+  .{ label = `spw_architecture_ecology` ; path = `.spw/conventions/spw-architecture-ecology.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `self`
+ related_plans = #[
+  `runtime-module-decomposition`,
+  `javascript-standalone-utility`,
+ ][reg=set]
 }[reg=facet]
 
 ^"owner_claim"{

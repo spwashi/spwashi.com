@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as motion vocabulary research; tokens must earn adoption from existing transitions rather than metaphor alone.
 ^"operational_hooks"{
  selectors = #[ `.agents/plans/cinematic-handles/cinematic-handles.spw`, ][reg=set]
  probe_ref = `Hypotheses: named timing tokens will make motion decisions auditable and consistent; token-level reduced-motion overrides will produce more complete safety than per-rule approaches; layer depth vocabulary will make z-stacking decisions semantically legible.`

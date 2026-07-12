@@ -1,64 +1,113 @@
+# Review 2026-07-12 — keep as a copy/semantics rail; creator voice and region role must precede runtime instrumentation.
 # Plan Index — Component Region Personality
 #
-# Meaningful component real estate, region voice, referentiality tiers, copy
-# collectibility, linking contour, and screenshot literacy for media-team surfaces.
+# Develop meaningful component real estate and region personality across spwashi.com so public copy relates to a growing component ecology — not repeated meta-documentation.…
 
 #>plan_component_region_personality_index
 #:index #!plan
-#:operation #!prime
+#:operation #!contract
 #:layer #!pragmatics
 
-operation = "prime"
-fixity = "tending"
+operation = "contract"
+fixity = "stable"
 
 intent: .{
- goal = `Develop meaningful component real estate and region personality so public copy serves a component ecology — meta-doc lives in referential components, links flow attention into tunable surfaces, and named copy supports editing-team + i18n workflow.`
+ goal = `Develop meaningful component real estate and region personality across spwashi.com so public copy relates to a growing component ecology — not repeated meta-documentation. Editing-team surfaces should stay inspiration-ready for a media launch; screenshots should remain interpretable by humans and models; copy should be named for later translation.`
  owner = `component-region-personality`
  kind = `plan`
  bucket = `semantic_rails`
- artifact_shape = `PLAN.md | index.spw | ../.spw/conventions/component-region-personality.spw`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
 ^"dimensions"{
- practice_depth = "reading | tending | build"
- semantic_layer = "pragmatics | semantics"
- collaboration_phase = "tending | exchange"
- memory_tier = "hot"
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "semantics | pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "warm"
  bucket = "semantic_rails"
 }[reg=facet]
 
-@plans_root: ~"../index.spw"
+^"conceptual_model"{
+ thesis = `Public HTML copy and referentiality templates — how regions speak as persons, not anonymous containers.`
+ concepts = #[
+  `referentiality`,
+  `region-personality`,
+  `copy-template`,
+  `express-register`,
+  `frame-grammar`,
+ ][reg=set]
+ surfaces = #[
+  `.spw/conventions/component-region-personality.spw`,
+  `route HTML frame clusters`,
+ ][reg=set]
+ fixity_tier = `stable`
+}[reg=facet]
+
+^"plan_refinement"{
+ tone = `Creator-first voice — Spwashi leads; the site is the surface.`
+ accuracy = `Convention exists; referentiality pilots are route-local (e.g. design/composition).`
+ direction = `Ship one referentiality template on a non-design route with copy-depth alignment.`
+ inspiration = `Regions should feel inhabited, not templated.`
+ alignment = `semantic-copy-depth, vocabulary-metaphor-growth-synthesis`
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
-@convention: ~"../../../.spw/conventions/component-region-personality.spw"
-@semantic_copy_depth: ~"../semantic-copy-depth/index.spw"
-@copy_localization: ~"../../../.spw/conventions/copy-localization.spw"
-@page_model: ~"../../../.spw/surfaces/page-model.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
+@component_region_personality: ~"../../../.spw/conventions/component-region-personality.spw"
+@site: ~"../../../.spw/site.spw"
+@spw_conventions_index_spw: ~"../../../.spw/conventions/index.spw"
+@topics_index_html: ~"../../../topics/index.html"
+@about_index_html: ~"../../../about/index.html"
+@design_index_html: ~"../../../design/index.html"
+@design_components_index_html: ~"../../../design/components/index.html"
+@website: ~"../../../about/website/"
 
 dispatch: .{
  plan = @plan
- convention = @convention
+ component_region_personality = @component_region_personality
+ site = @site
+ spw_conventions_index_spw = @spw_conventions_index_spw
+ topics_index_html = @topics_index_html
+ about_index_html = @about_index_html
+ design_index_html = @design_index_html
+ design_components_index_html = @design_components_index_html
+ website = @website
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `plan_ecology_semantics` ; path = `.spw/audits/plan-ecology-semantics-2026-07.spw` }[reg=facet],
+  .{ label = `commit_skill_induction` ; path = `.spw/audits/commit-skill-induction-2026-07/index.spw` }[reg=facet],
+  .{ label = `spw_architecture_ecology` ; path = `.spw/conventions/spw-architecture-ecology.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `self`
 }[reg=facet]
 
 ^"owner_claim"{
  claim_id = "plan-component_region_personality-001"
  layer = "pragmatic"
- hypothesis = `Region personality and referentiality tiers reduce mechanical copy while component ecology, linking contour, and copy-unit naming make surfaces workable for a media editing team and screenshot/model literacy.`
+ hypothesis = `Develop meaningful component real estate and region personality across spwashi.com so public copy relates to a growing component ecology — not repeated meta-documentation. Editing-team surfaces should stay inspiration-ready for a media launch; screenshots should remain interpretable by humans and models; copy should be named for later translation.`
  spec_ref = ~"./PLAN.md"
- impl_ref = ~"../../../.spw/conventions/component-region-personality.spw#edit_waves"
- probe_ref = `rg 'component-region-personality|Objective terminal|data-spw-copy-unit' .spw .agents/plans/component-region-personality **/*.html`
- falsification = `Hub routes still carry verbatim Objective terminal labels and home Operational entry after wave 1.`
+ impl_ref = ~"../../../.spw/conventions/component-region-personality.spw"
+ probe_ref = `rg 'component-region-personality' .agents/plans/component-region-personality`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../.spw/conventions/component-region-personality.spw unchanged or untested.`
  status = "active"
 }[reg=facet]
 
 editor_prompts: #[
- .{ ask = `Which referentiality tier should this copy use?`, see = @convention }[reg=facet],
- .{ ask = `What is the next edit wave and which files does it touch?`, see = @plan }[reg=facet],
- .{ ask = `How do copy-unit ids relate to localization?`, see = @copy_localization }[reg=facet],
+ .{ ask = `What does component-region-personality own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of component-region-personality?`, see = @index }[reg=facet],
+ .{ ask = `What is the tone, direction, and alignment for component-region-personality?`, see = @index#plan_refinement }[reg=facet],
 ][reg=set]
 
 invariants: #[
- `PLAN.md sequences waves; convention holds durable contracts.`,
- `Wave 1 voice surgery precedes linking contour redistribution.`,
- `Promote partials to modular-experience-slices when stable.`,
+ `Owner intent: Develop meaningful component real estate and region personality across spwashi.com so public copy relates to a growing component ecology —…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]

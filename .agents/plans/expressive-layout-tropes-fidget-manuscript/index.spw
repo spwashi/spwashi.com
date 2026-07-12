@@ -1,3 +1,4 @@
+# Review 2026-07-12 — treat as an idea cache, not an executable plan; choose one tactile interaction before further taxonomy.
 # Plan Index — Expressive Layout Tropes, Fidget Toys, and Magic Manuscript Layering
 #
 # Make this site interactive enough for game developers to imagine 1000 fidget toys for the next generation of office work (tactile, tunable, generative, physics-y…
@@ -26,6 +27,25 @@ intent: .{
  bucket = "public_route_proof_genre"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Make this site interactive enough for game developers to imagine 1000 fidget toys for the next generation of office…`
+ concepts = #[
+  `fidget`,
+  `toys`,
+  `magic`,
+  `manuscript`,
+  `enough`,
+ ][reg=set]
+ surfaces = #[
+  `js/runtime/layout-shift-audit.js`,
+  `js/kernel/instrumentation.js`,
+  `settings/index.html`,
+  `css/shell/layout.css`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -45,6 +65,21 @@ dispatch: .{
  attention_architecture = @attention_architecture
 }[reg=facet]
 
+^"research_bridge"{
+ local_research = #[
+  .{ label = `appendices_index` ; path = `.spw/audits/appendices/index.spw` }[reg=facet],
+  .{ label = `metaphor_primitive_research` ; path = `.spw/audits/metaphor-primitive-research-branching-2026-07.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `idea_cache`
+ note = `treat as idea cache; choose one tactile interaction before further taxonomy`
+ status = `superseded`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-expressive_layout_tropes_fidget_manuscript-001"
  layer = "pragmatic"
@@ -53,7 +88,7 @@ dispatch: .{
  impl_ref = ~"../../../public/js/runtime/layout-shift-audit.js"
  probe_ref = `rg 'expressive-layout-tropes-fidget-manuscript' .agents/plans/expressive-layout-tropes-fidget-manuscript`
  falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/runtime/layout-shift-audit.js unchanged or untested.`
- status = "active"
+ status = "superseded"
 }[reg=facet]
 
 editor_prompts: #[
@@ -66,4 +101,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

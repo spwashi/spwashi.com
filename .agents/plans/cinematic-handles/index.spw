@@ -1,3 +1,4 @@
+# Review 2026-07-12 — merge implementation ownership into color-motion; retain this file only as research on semantic timing.
 # Plan Index — cinematic-handles
 #
 # The desired end state is a motion system where every transition has a name derived from the site's own vocabulary, every reveal has a quality that matches its semantic role, and…
@@ -14,7 +15,7 @@ intent: .{
  goal = `The desired end state is a motion system where every transition has a name derived from the site's own vocabulary, every reveal has a quality that matches its semantic role, and every motion has a reduced-motion safe contract. Instead of anonymous milliseconds and bezier curves, transitions carry names like "boon-settle," "pivot-arc," or "threshold-cross" — names that connect motion to meaning and make timing decisions auditable, not incidental. The wider aim includes layers and lighting as an attention model: depth should feel like depth (not just z-index), and surfaces should carry ambient lighting states that shift as attention moves. Together these give the site a cinematic quality — the sense that spatial and temporal transitions are authored rather than defaulted. The taste note is earned motion + semantic depth: every animation should be the right animation for that semantic state, authored from the site's own grammar rather than borrowed from a design trend.`
  owner = `cinematic-handles`
  kind = `plan`
- bucket = `active_backlog`
+ bucket = `merged`
  artifact_shape = `PLAN.md | wip.spw | cinematic-handles.spw | index.spw`
 }[reg=facet]
 
@@ -23,8 +24,24 @@ intent: .{
  semantic_layer = "pragmatics"
  collaboration_phase = "tending"
  memory_tier = "hot"
- bucket = "active_backlog"
+ bucket = "merged"
 }[reg=facet]
+
+^"conceptual_model"{
+ thesis = `The desired end state is a motion system where every transition has a name derived from the site's own vocabulary,…`
+ concepts = #[
+  `motion`,
+  `every`,
+  `semantic`,
+  `depth`,
+  `state`,
+ ][reg=set]
+ surfaces = #[
+  `.agents/plans/cinematic-handles/cinematic-handles.spw`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
 
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
@@ -39,6 +56,20 @@ dispatch: .{
  cinematic_handles = @cinematic_handles
 }[reg=facet]
 
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `merge`
+ merged_into = #[
+  `color-motion`,
+ ][reg=set]
+ retain = `this file as research on semantic timing only`
+ status = `superseded`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-cinematic_handles-001"
  layer = "pragmatic"
@@ -47,7 +78,7 @@ dispatch: .{
  impl_ref = ~"../../../.agents/plans/cinematic-handles/cinematic-handles.spw"
  probe_ref = `Hypotheses: named timing tokens will make motion decisions auditable and consistent; token-level reduced-motion overrides will produce more complete safety than per-rule approaches; layer depth vocabulary will make z-stacking decisions semantically legible.`
  falsification = `A patch cannot satisfy the public goal while leaving ../../../.agents/plans/cinematic-handles/cinematic-handles.spw unchanged or untested.`
- status = "active"
+ status = "superseded"
 }[reg=facet]
 
 scope: .{
@@ -76,4 +107,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

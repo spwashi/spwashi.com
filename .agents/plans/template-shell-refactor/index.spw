@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the sole repeated-shell owner; directives must make route HTML easier to edit and debug.
 # Plan Index — template-shell-refactor
 #
 # Reduce repeated page chrome in route HTML by improving the HTML-native template renderer and moving repeated shell markup behind explicit directives.
@@ -26,6 +27,22 @@ intent: .{
  bucket = "active_backlog"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Reduce repeated page chrome in route HTML by improving the HTML-native template renderer and moving repeated shell…`
+ concepts = #[
+  `repeated`,
+  `template-shell-refactor`,
+  `reduce`,
+  `page`,
+  `chrome`,
+ ][reg=set]
+ surfaces = #[
+  `scripts/template.mjs`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -35,6 +52,18 @@ intent: .{
 dispatch: .{
  plan = @plan
  template = @template
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `css-architecture-readability`
+}[reg=facet]
+
+^"absorbs"{
+ reviewed = `2026-07-12`
+ plans = #[
+  `editable-page-shell`,
+ ][reg=set]
+ rule = `Absorbed by 2026-07-12 review; see each source review_disposition and archive/2026-07-12-review-execution.md.`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -75,4 +104,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

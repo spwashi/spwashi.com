@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the TypeScript boundary owner; use types where schema and contracts pay for compilation.
 # Plan Index — typescript-integration
 #
 # The desired end state is a site repo where TypeScript sharpens the parts that already behave like schema systems: - the static build/export path - the design catalog that…
@@ -26,6 +27,25 @@ intent: .{
  bucket = "runtime_js_validation"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `The desired end state is a site repo where TypeScript sharpens the parts that already behave like schema systems: - the…`
+ concepts = #[
+  `css`,
+  `typescript-integration`,
+  `desired`,
+  `end`,
+  `state`,
+ ][reg=set]
+ surfaces = #[
+  `scripts/build.mjs`,
+  `scripts/generate-design-catalog.mjs`,
+  `scripts/generate-sitemap.mjs`,
+  `scripts/site-contracts.mjs`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -51,6 +71,22 @@ dispatch: .{
  css_bundle = @css_bundle
  site = @site
  scripts = @scripts
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `javascript_module_census` ; path = `.spw/audits/javascript-module-census-2026-07.spw` }[reg=facet],
+  .{ label = `module_export_audit` ; path = `.spw/audits/module-export-standalone-2026-07.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"absorbs"{
+ reviewed = `2026-07-12`
+ plans = #[
+  `curricularize-codebase-typescript`,
+ ][reg=set]
+ rule = `Absorbed by 2026-07-12 review; see each source review_disposition and archive/2026-07-12-review-execution.md.`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -98,4 +134,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

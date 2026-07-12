@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the measured bootstrap owner; cold-route profiles and mount timing outrank architectural taste.
 # Plan Index — Runtime Bootstrap Performance
 #
 # Reduce main-thread blocking time, serial dynamic import penalties, and observer/listener fragmentation in the shared JS runtime bootstrap (site.js + kernel/runtime modules) while…
@@ -24,6 +25,31 @@ intent: .{
  collaboration_phase = "tending"
  memory_tier = "hot"
  bucket = "runtime_js_validation"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Staged loading with observability — shrink serial work and IMMEDIATE width without losing inspectability.`
+ concepts = #[
+  `MOUNT_WHEN`,
+  `cache-stratum`,
+  `bootstrap-budget`,
+  `module-catalog`,
+  `warm-return`,
+ ][reg=set]
+ surfaces = #[
+  `public/js/runtime/module-catalog.js`,
+  `public/js/kernel/`,
+  `npm run check:runtime`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+^"plan_refinement"{
+ tone = `Performance engineer who keeps the console — measure before claiming.`
+ accuracy = `Kernel extraction and batching wins landed; IMMEDIATE count still high per skill-induction.`
+ direction = `Default new modules VISIBLE/IDLE unless justified; profile one cold route.`
+ inspiration = `Fast return visits should feel remembered, not re-downloaded.`
+ alignment = `agentic-dev-contracts, javascript-module-census, commit-skill-induction`
 }[reg=facet]
 
 @plans_root: ~"../../../.agents/plans/index.spw"
@@ -57,6 +83,31 @@ dispatch: .{
  readme = @readme
 }[reg=facet]
 
+^"research_bridge"{
+ local_research = #[
+  .{ label = `javascript_module_census` ; path = `.spw/audits/javascript-module-census-2026-07.spw` }[reg=facet],
+  .{ label = `module_export_audit` ; path = `.spw/audits/module-export-standalone-2026-07.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"connection_points"{
+ related_plans = #[
+  `agent-optimization`,
+  `runtime-load-instrumentation`,
+  `runtime-module-fluency`,
+  `js-runtime-composability`,
+ ][reg=set]
+}[reg=facet]
+
+^"absorbs"{
+ reviewed = `2026-07-12`
+ plans = #[
+  `symphonic-loading-layered-editions`,
+ ][reg=set]
+ rule = `Absorbed by 2026-07-12 review; see each source review_disposition and archive/2026-07-12-review-execution.md.`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-runtime_bootstrap_performance-001"
  layer = "pragmatic"
@@ -71,6 +122,7 @@ dispatch: .{
 editor_prompts: #[
  .{ ask = `What does runtime-bootstrap-performance own, and what should stay out of scope?`, see = @plan }[reg=facet],
  .{ ask = `Which file should I open first to implement the next slice of runtime-bootstrap-performance?`, see = @index }[reg=facet],
+ .{ ask = `What is the tone, direction, and alignment for runtime-bootstrap-performance?`, see = @index#plan_refinement }[reg=facet],
 ][reg=set]
 
 invariants: #[
@@ -78,4 +130,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

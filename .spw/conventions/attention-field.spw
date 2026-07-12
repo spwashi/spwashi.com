@@ -19,11 +19,13 @@
 @circuit_components: ~"./circuit-components.spw"
 @ornament_contract: ~"./ornament-contract.spw"
 @harmony_audit: ~"../audits/component-philosophy-harmony-2026-07.spw"
+@metaphor_dimensional_lexicon: ~"./metaphor-dimensional-lexicon.spw"
 
 thesis: .{
  claim = `Attentional interaction on a page can be modeled as a diffusive field — like hormonal signaling in tissue rather than like explicit wiring.`
  why_this_model = `The metaphor captures something the click/event model does not: attention has weight, direction, and neighborhood effects. Hovering near a concept for a moment should do something different from navigating directly to it.`
  limitation = `The fully continuous local-hormonal model is O(n²) in components. The register-diffusion model is a tractable approximation that preserves the neighborhood structure.`
+ coordinate = `This field model is the 'field' lexicon_register over @metaphor_dimensional_lexicon#coordinate_space express_channel (charge/resonance/attention/field_intensity). Circuit (@circuit_components) and expressive registers (@expressive_registers) reproject the same coordinate — one physics, three dictionaries.`
 }[reg=facet]
 
 local_hormonal_model: .{

@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep the conceptual/realized distinction, but require explicit cues before heuristic classification.
 ^"operational_hooks"{
  selectors = #[ `settings/index.html`, `public/js/site.js`, `public/css/style.css`, `.agents/plans/brace-literacy-guides/brace-literacy-guides.spw`, ][reg=set]
  probe_ref = `Hypotheses: brace-role metadata can drive clearer CSS without rewriting page HTML; local page metadata + persisted traces can improve smart grouping without bespoke route code`

@@ -1,3 +1,4 @@
+# Review 2026-07-12 — merge into vertical-rhythm-container-audit; component specificity is the validation lens, not a separate track.
 # Plan Index — Component Rhythm Variety
 #
 # Make shared components feel more specific and scannable by tightening vertical rhythm, differentiating frame/card roles more clearly, and sharpening copy toward concrete outputs.
@@ -14,7 +15,7 @@ intent: .{
  goal = `Make shared components feel more specific and scannable by tightening vertical rhythm, differentiating frame/card roles more clearly, and sharpening copy toward concrete outputs.`
  owner = `component-rhythm-variety`
  kind = `plan`
- bucket = `active_backlog`
+ bucket = `merged`
  artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
@@ -23,8 +24,25 @@ intent: .{
  semantic_layer = "pragmatics"
  collaboration_phase = "tending"
  memory_tier = "hot"
- bucket = "active_backlog"
+ bucket = "merged"
 }[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Make shared components feel more specific and scannable by tightening vertical rhythm, differentiating frame/card roles…`
+ concepts = #[
+  `rhythm`,
+  `component`,
+  `variety`,
+  `components`,
+  `feel`,
+ ][reg=set]
+ surfaces = #[
+  `css/components/frames.css`,
+  `css/components/cards.css`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
 
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
@@ -39,6 +57,20 @@ dispatch: .{
  cards = @cards
 }[reg=facet]
 
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `merge`
+ merged_into = #[
+  `vertical-rhythm-container-audit`,
+ ][reg=set]
+ retain = `component specificity as validation lens`
+ status = `superseded`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-component_rhythm_variety-001"
  layer = "pragmatic"
@@ -47,7 +79,7 @@ dispatch: .{
  impl_ref = ~"../../../public/css/components/frames.css"
  probe_ref = `rg 'component-rhythm-variety' .agents/plans/component-rhythm-variety`
  falsification = `A patch cannot satisfy the public goal while leaving ../../../public/css/components/frames.css unchanged or untested.`
- status = "active"
+ status = "superseded"
 }[reg=facet]
 
 editor_prompts: #[
@@ -60,4 +92,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

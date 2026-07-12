@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the small readable-state owner; projections summarize canonical state and never become storage.
 # Plan Index — state-block-projections
 #
 # The site should expose more of its live state through its own notation instead of explaining interaction only in prose. Small code-like state blocks should summarize what a…
@@ -26,6 +27,23 @@ intent: .{
  bucket = "active_backlog"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `The site should expose more of its live state through its own notation instead of explaining interaction only in prose.…`
+ concepts = #[
+  `state`,
+  `its`,
+  `blocks`,
+  `component`,
+  `surfaces`,
+ ][reg=set]
+ surfaces = #[
+  `js/site.js`,
+  `.agents/plans/state-block-projections/state-block-projections.spw`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -39,6 +57,10 @@ dispatch: .{
  wip = @wip
  state_block_projections = @state_block_projections
  site = @site
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -78,4 +100,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

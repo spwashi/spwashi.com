@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as a closeable dead-control audit; remove or wire flags instead of documenting no-op settings.
 # Plan Index — settings-theme-wiring
 #
 # The storage/apply pipeline is coherent, but many data-spw-* flags have no CSS or JS consumers.
@@ -25,6 +26,24 @@ intent: .{
  memory_tier = "hot"
  bucket = "fix_queue"
 }[reg=facet]
+
+^"conceptual_model"{
+ thesis = `The storage/apply pipeline is coherent, but many data-spw-* flags have no CSS or JS consumers.`
+ concepts = #[
+  `settings-theme-wiring`,
+  `storage`,
+  `apply`,
+  `pipeline`,
+  `coherent`,
+ ][reg=set]
+ surfaces = #[
+  `js/site.js`,
+  `settings/index.html`,
+  `.agents/plans/archive/spw-css-architecture/`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
 
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
@@ -62,4 +81,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

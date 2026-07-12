@@ -1,81 +1,130 @@
+# Review 2026-07-12 — keep as a meta rail only if it shrinks discovery cost; this audit rejects further generated index expansion.
 # Plan Index — Spw Architecture Ecology
 #
-# .spw layer topology, promotion protocol, ecology coordinators, owner registry,
-# component templates, site.spw slimness, language ecology, slices, precipitates.
+# Strengthen the site's .spw layer as an inspectable ecology: explicit topology, typed relational design, promotion protocol, ecology coordinators, owner registry,…
 
 #>plan_spw_architecture_ecology_index
 #:index #!plan
 #:operation #!contract
-#:layer #!editor_inspectability
+#:layer #!pragmatics
 
 operation = "contract"
-fixity = "tending"
+fixity = "stable"
 
 intent: .{
- goal = `Strengthen the .spw layer as an inspectable ecology: coordinators, owner registry, promotion protocol, component-template surface, slimmer site.spw, review graduation, language alignment, slice promotion, convention hygiene, and precipitated indexes for agents and editors.`
+ goal = `Make the .spw ecology easier to navigate by clarifying durable owners, promotion, and typed relations while removing or cooling surfaces that merely repeat another source.`
  owner = `spw-architecture-ecology`
  kind = `plan`
  bucket = `semantic_rails`
- artifact_shape = `PLAN.md | index.spw | ../../../.spw/conventions/spw-architecture-ecology.spw`
+ artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
 ^"dimensions"{
- practice_depth = "reading | observation | tending | contract"
- temporal_rhythm = "sedimentation | return"
- semantic_layer = "semantics | pragmatics | editor_inspectability"
- collaboration_phase = "tending | exchange"
- memory_tier = "hot"
+ practice_depth = "reading | observation | tending"
+ semantic_layer = "semantics | pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "warm"
  bucket = "semantic_rails"
 }[reg=facet]
 
-@plans_root: ~"../index.spw"
+^"conceptual_model"{
+ thesis = `Make the .spw layer an explicit relational ecology — typed edges, topology, promotion, coordinators, owner registry — so editors do not reconstruct meaning from file names.`
+ concepts = #[
+  `typed-relation`,
+  `ecology-coordinator`,
+  `promotion-protocol`,
+  `owner-registry`,
+  `precipitate`,
+  `site-hub-slimness`,
+ ][reg=set]
+ surfaces = #[
+  `.spw/graph.spw`,
+  `.spw/conventions/spw-architecture-ecology.spw`,
+  `.spw/conventions/agent-ecology.spw`,
+  `scripts/maintain-plan-directory-indexes.mjs`,
+ ][reg=set]
+ fixity_tier = `stable`
+}[reg=facet]
+
+^"plan_refinement"{
+ tone = `Architectural memo — thin dispatch, no essay duplication of PLAN.md.`
+ accuracy = `Typed relations exist, but the 279-file review shows that generated indexes and copied owner claims increased discovery cost.`
+ direction = `Use reviewed dispositions to consolidate owners and cool stale WIPs before adding coordinators, registries, or site.spw references.`
+ inspiration = `Editors route by concept name, not folder archaeology.`
+ alignment = `spw-surface-normalization, plan-ecology-semantics audit, agent-optimization`
+}[reg=facet]
+
+@plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
-@convention: ~"../../../.spw/conventions/spw-architecture-ecology.spw"
-@planning_ecology: ~"../../../.spw/conventions/planning-ecology.spw"
-@semantic_capacity: ~"../../../.spw/conventions/semantic-capacity.spw"
-@surface_normalization: ~"../spw-surface-normalization/index.spw"
-@agent_optimization: ~"../agent-optimization/index.spw"
-@agentic_contracts: ~"../agentic-dev-contracts/index.spw"
-@modular_slices: ~"../modular-experience-slices/index.spw"
-@language_v04: ~"../spw-language-v04/index.spw"
-@metaphysical_language: ~"../spw-metaphysical-language/index.spw"
-@component_region_personality: ~"../component-region-personality/index.spw"
 @plan: ~"./PLAN.md"
+@spw_architecture_ecology: ~"../../../.spw/conventions/spw-architecture-ecology.spw"
+@graph: ~"../../../.spw/graph.spw"
+@site: ~"../../../.spw/site.spw"
+@spw_conventions_index_spw: ~"../../../.spw/conventions/index.spw"
+@conventions: ~"../../../.spw/conventions/"
+@maintain_plan_directory_indexes: ~"../../../scripts/maintain-plan-directory-indexes.mjs"
+@design_components_index_html: ~"../../../design/components/index.html"
+@spw_slices_index_spw: ~"../../../.spw/slices/index.spw"
 
 dispatch: .{
  plan = @plan
- convention = @convention
- planning_ecology = @planning_ecology
- semantic_capacity = @semantic_capacity
- surface_normalization = @surface_normalization
- agent_optimization = @agent_optimization
- agentic_contracts = @agentic_contracts
- modular_slices = @modular_slices
- language_v04 = @language_v04
- metaphysical_language = @metaphysical_language
- component_region_personality = @component_region_personality
+ spw_architecture_ecology = @spw_architecture_ecology
+ graph = @graph
+ site = @site
+ spw_conventions_index_spw = @spw_conventions_index_spw
+ conventions = @conventions
+ maintain_plan_directory_indexes = @maintain_plan_directory_indexes
+ design_components_index_html = @design_components_index_html
+ spw_slices_index_spw = @spw_slices_index_spw
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `plan_ecology_semantics` ; path = `.spw/audits/plan-ecology-semantics-2026-07.spw` }[reg=facet],
+  .{ label = `commit_skill_induction` ; path = `.spw/audits/commit-skill-induction-2026-07/index.spw` }[reg=facet],
+  .{ label = `spw_architecture_ecology` ; path = `.spw/conventions/spw-architecture-ecology.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `self`
 }[reg=facet]
 
 ^"owner_claim"{
  claim_id = "plan-spw_architecture_ecology-001"
  layer = "pragmatic"
- hypothesis = `Explicit ecology coordinators, owner-registry, promotion protocol, and precipitates reduce discovery cost across 182 plans and 54 conventions without replacing hand-authored routes.`
+ hypothesis = `Strengthen the site's .spw layer as an inspectable ecology: explicit topology, typed relational design, promotion protocol, ecology coordinators, owner registry, component-template surface, slimmer site.spw, review graduation metadata, language-ecology alignment, slice promotion, convention hygiene, and precipitated agent/editor indexes — so agents and editors can route work without reconstructing meaning from file names or re-scanning 182 plan folders.`
  spec_ref = ~"./PLAN.md"
- impl_ref = ~"../../../.spw/conventions/spw-architecture-ecology.spw#edit_waves"
- probe_ref = `rg 'spw-architecture-ecology|ecology_coordinators|owner-registry' .spw .agents/plans/spw-architecture-ecology`
- falsification = `Wave A complete but conventions/index.spw has no ecology dispatch and no *-ecology.spw coordinator files exist.`
+ impl_ref = ~"../../../.spw/conventions/spw-architecture-ecology.spw"
+ probe_ref = `rg 'spw-architecture-ecology' .agents/plans/spw-architecture-ecology`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../.spw/conventions/spw-architecture-ecology.spw unchanged or untested.`
  status = "active"
 }[reg=facet]
 
+scope: .{
+ in = #[
+  `In scope`,
+  `Ecology coordinator convention files (copy, region-component, language, interaction, capture, agent)`,
+  `Relational graph contract: typed nodes, bounded edge vocabulary, navigable owners, consequences, evidence, and lifecycle`,
+  `owner-registry.spw`,
+ ][reg=set]
+ out = #[
+  `Physical merge/move of 182 plan folders (index notes only until ref-safe pass)`,
+  `Upstream spw-workbench changes`,
+  `Client-side plan browser runtime`,
+ ][reg=set]
+}[reg=facet]
+
 editor_prompts: #[
- .{ ask = `What is the .spw topology and promotion protocol?`, see = @convention }[reg=facet],
- .{ ask = `Which wave should run next and what files does it touch?`, see = @plan }[reg=facet],
- .{ ask = `How does this relate to surface-normalization and component-region-personality?`, see = @convention#thesis }[reg=facet],
+ .{ ask = `What does spw-architecture-ecology own, and what should stay out of scope?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first to implement the next slice of spw-architecture-ecology?`, see = @index }[reg=facet],
+ .{ ask = `What is the tone, direction, and alignment for spw-architecture-ecology?`, see = @index#plan_refinement }[reg=facet],
 ][reg=set]
 
 invariants: #[
- `PLAN.md sequences waves A–I; convention holds durable contracts.`,
- `Wave A coordinators before site.spw ref pruning.`,
- `Promote slice and language work through owner-registry entries.`,
+ `Owner intent: Strengthen the site's .spw layer as an inspectable ecology: explicit topology, typed relational design, promotion protocol, ecology…`,
+ `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
+ `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]

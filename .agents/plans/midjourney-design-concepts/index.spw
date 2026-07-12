@@ -1,3 +1,4 @@
+# Review 2026-07-12 — rework as a reference-assignment workflow; external concept images are inputs, not implementation authority.
 # Plan Index — Midjourney-Inspired Focused Design Concepts Plan
 #
 # Use Midjourney as an inspiration and concept-sketching tool for focused UX directions, then translate the best ideas into repo-native CSS, HTML semantics, image treatments,…
@@ -24,6 +25,31 @@ intent: .{
  collaboration_phase = "tending"
  memory_tier = "hot"
  bucket = "canonical_tracks"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `UX concept studies and asset promotion — inspiration workflow with explicit promotion rules.`
+ concepts = #[
+  `concept-study`,
+  `asset-promotion`,
+  `animation-reference`,
+  `unsorted-pipeline`,
+  `design-experiments`,
+ ][reg=set]
+ surfaces = #[
+  `design/experiments/`,
+  `public/images/`,
+  `00.unsorted/`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+^"plan_refinement"{
+ tone = `Sketchbook energy — studies stay studies until promoted.`
+ accuracy = `Workflow documented; not every study has a promotion path.`
+ direction = `Promote one study asset with image-naming-magic conventions.`
+ inspiration = `Visual curiosity feeds the public site, not just the experiments folder.`
+ alignment = `style-image-cohesion, unsorted-image-rollout`
 }[reg=facet]
 
 @plans_root: ~"../../../.agents/plans/index.spw"
@@ -53,6 +79,20 @@ dispatch: .{
  home = @home
 }[reg=facet]
 
+^"connection_points"{
+ related_plans = #[
+  `color-motion`,
+ ][reg=set]
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `rework`
+ note = `rework as a reference-assignment workflow`
+ rescope = `required`
+ status = `active`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-midjourney_design_concepts-001"
  layer = "pragmatic"
@@ -73,6 +113,7 @@ validation: #[
 editor_prompts: #[
  .{ ask = `What does midjourney-design-concepts own, and what should stay out of scope?`, see = @plan }[reg=facet],
  .{ ask = `Which file should I open first to implement the next slice of midjourney-design-concepts?`, see = @index }[reg=facet],
+ .{ ask = `What is the tone, direction, and alignment for midjourney-design-concepts?`, see = @index#plan_refinement }[reg=facet],
  .{ ask = `What command or check falsifies whether midjourney-design-concepts still holds?`, see = @plan }[reg=facet],
 ][reg=set]
 
@@ -81,4 +122,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

@@ -1,3 +1,4 @@
+# Review 2026-07-12 — merge into color-motion or site-color-tuning; retain only the specific dark-card regression checks.
 # Plan Index — Dark Contrast Pass
 #
 # Improve dark-mode legibility across shared cards and the settings route without flattening the material system or introducing new visual noise.
@@ -14,7 +15,7 @@ intent: .{
  goal = `Improve dark-mode legibility across shared cards and the settings route without flattening the material system or introducing new visual noise.`
  owner = `dark-contrast-pass`
  kind = `plan`
- bucket = `active_backlog`
+ bucket = `merged`
  artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
@@ -23,8 +24,26 @@ intent: .{
  semantic_layer = "pragmatics"
  collaboration_phase = "tending"
  memory_tier = "hot"
- bucket = "active_backlog"
+ bucket = "merged"
 }[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Improve dark-mode legibility across shared cards and the settings route without flattening the material system or…`
+ concepts = #[
+  `dark`,
+  `contrast`,
+  `pass`,
+  `improve`,
+  `dark-mode`,
+ ][reg=set]
+ surfaces = #[
+  `css/components/surfaces.css`,
+  `css/routes/surfaces/settings.css`,
+  `css/routes/surfaces/settings-notes.css`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
 
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
@@ -41,6 +60,21 @@ dispatch: .{
  settings_notes = @settings_notes
 }[reg=facet]
 
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `merge`
+ merged_into = #[
+  `color-motion`,
+  `site-color-tuning`,
+ ][reg=set]
+ retain = `specific dark-card regression checks`
+ status = `superseded`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-dark_contrast_pass-001"
  layer = "pragmatic"
@@ -49,7 +83,7 @@ dispatch: .{
  impl_ref = ~"../../../public/css/components/surfaces.css"
  probe_ref = `git diff --check`
  falsification = `A patch cannot satisfy the public goal while leaving ../../../public/css/components/surfaces.css unchanged or untested.`
- status = "active"
+ status = "superseded"
 }[reg=facet]
 
 scope: .{
@@ -76,4 +110,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

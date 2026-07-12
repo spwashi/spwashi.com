@@ -1,3 +1,4 @@
+# Review 2026-07-12 — merge into image treatment and palette composition; local prose relation is the retained requirement.
 # Plan Index — palette-resonance
 #
 # The desired end state is a site where image interactions feel less generic and more anchored to what the image is doing in the surrounding prose. Instead of a fixed accent…
@@ -14,7 +15,7 @@ intent: .{
  goal = `The desired end state is a site where image interactions feel less generic and more anchored to what the image is doing in the surrounding prose. Instead of a fixed accent palette, important figures should be able to resonate with their own colors, lean toward parser/math/play/software neighborhoods, and accept image-specific override knobs directly in HTML. The taste note is semantic atmosphere: the canvas should feel like a visual consequence of the image and its anchors, not an ornamental layer pasted on top.`
  owner = `palette-resonance`
  kind = `plan`
- bucket = `active_backlog`
+ bucket = `merged`
  artifact_shape = `PLAN.md | wip.spw | index.spw`
 }[reg=facet]
 
@@ -23,8 +24,27 @@ intent: .{
  semantic_layer = "pragmatics"
  collaboration_phase = "tending"
  memory_tier = "hot"
- bucket = "active_backlog"
+ bucket = "merged"
 }[reg=facet]
+
+^"conceptual_model"{
+ thesis = `The desired end state is a site where image interactions feel less generic and more anchored to what the image is doing…`
+ concepts = #[
+  `image`,
+  `feel`,
+  `palette-resonance`,
+  `desired`,
+  `end`,
+ ][reg=set]
+ surfaces = #[
+  `topics/software/index.html`,
+  `topics/software/parsers/index.html`,
+  `topics/math/index.html`,
+  `.agents/plans/palette-resonance/PLAN.md`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
 
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
@@ -43,6 +63,21 @@ dispatch: .{
  topics_math_index_html = @topics_math_index_html
 }[reg=facet]
 
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `merge`
+ merged_into = #[
+  `image-metaphysics-aesthetic-pass`,
+  `palette-semantics-improvements`,
+ ][reg=set]
+ retain = `local prose relation`
+ status = `superseded`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-palette_resonance-001"
  layer = "pragmatic"
@@ -51,7 +86,7 @@ dispatch: .{
  impl_ref = ~"../../../topics/software/index.html"
  probe_ref = `Hypotheses: palette-driven accents will make image interactions feel more image-specific; small semantic/path biases will make route heroes feel better tied to their surrounding copy.`
  falsification = `A patch cannot satisfy the public goal while leaving ../../../topics/software/index.html unchanged or untested.`
- status = "active"
+ status = "superseded"
 }[reg=facet]
 
 scope: .{
@@ -80,4 +115,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

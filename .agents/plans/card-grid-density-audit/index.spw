@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as a bounded containment audit and fold successful rules into shared card/grid CSS.
 # Plan Index — card-grid-density-audit
 #
 # Make card spacing and grid measure more granular without scattering route-local inline grid styles or over-collapsing layouts on tablet and narrow-landscape widths.
@@ -26,6 +27,25 @@ intent: .{
  bucket = "css_layout_interaction"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Make card spacing and grid measure more granular without scattering route-local inline grid styles or over-collapsing…`
+ concepts = #[
+  `grid`,
+  `card-grid-density-audit`,
+  `card`,
+  `spacing`,
+  `measure`,
+ ][reg=set]
+ surfaces = #[
+  `topics/software/renderers/index.html`,
+  `topics/software/geometry/index.html`,
+  `topics/software/lattices/index.html`,
+  `design/components/index.html`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -43,6 +63,29 @@ dispatch: .{
  topics_software_geometry_index_html = @topics_software_geometry_index_html
  topics_software_lattices_index_html = @topics_software_lattices_index_html
  design_components_index_html = @design_components_index_html
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `page_spacing_runtime` ; path = `.spw/audits/page-spacing-runtime-synthesis-2026-07.spw` }[reg=facet],
+  .{ label = `vocabulary_metaphor` ; path = `.spw/audits/vocabulary-metaphor-growth-synthesis-2026-07.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+ related_plans = #[
+  `component-box-model-responsive-audit`,
+ ][reg=set]
+}[reg=facet]
+
+^"absorbs"{
+ reviewed = `2026-07-12`
+ plans = #[
+  `component-box-model-responsive-audit`,
+ ][reg=set]
+ rule = `Absorbed by 2026-07-12 review; see each source review_disposition and archive/2026-07-12-review-execution.md.`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -80,4 +123,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

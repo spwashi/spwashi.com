@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the shared card-family owner; lenses may vary while substrate and identity boundaries stay stable.
 # Plan Index — profile-character-card-development
 #
 # The desired end state is a card model that can describe a person, a role, a character, or a recurring campaign figure without pretending those are the same thing. The site already…
@@ -26,6 +27,25 @@ intent: .{
  bucket = "active_backlog"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `The desired end state is a card model that can describe a person, a role, a character, or a recurring campaign figure…`
+ concepts = #[
+  `card`,
+  `character`,
+  `identity`,
+  `one`,
+  `help`,
+ ][reg=set]
+ surfaces = #[
+  `js/modules/profile/builder.js`,
+  `js/modules/profile/tool.js`,
+  `.agents/plans/blog-blob-spw/PLAN.md`,
+  `.agents/plans/rpg-session-notes/PLAN.md`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -47,6 +67,14 @@ dispatch: .{
  tool = @tool
  agents_plans_blog_blob_spw_plan_md = @agents_plans_blog_blob_spw_plan_md
  agents_plans_rpg_session_notes_plan_md = @agents_plans_rpg_session_notes_plan_md
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+ related_plans = #[
+  `blog-blob-spw`,
+  `rpg-session-notes`,
+ ][reg=set]
 }[reg=facet]
 
 ^"owner_claim"{
@@ -89,4 +117,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

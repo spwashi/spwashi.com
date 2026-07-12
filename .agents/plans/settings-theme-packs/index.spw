@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the authored theme-family owner; packs must write canonical settings and have complete consumers.
 # Plan Index — settings-theme-packs
 #
 # Make the existing palette chooser surfaces act on canonical runtime state, and expand the site with authored theme families that each have distinct light and dark variants.
@@ -26,6 +27,25 @@ intent: .{
  bucket = "active_backlog"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Make the existing palette chooser surfaces act on canonical runtime state, and expand the site with authored theme…`
+ concepts = #[
+  `settings-theme-packs`,
+  `existing`,
+  `palette`,
+  `chooser`,
+  `surfaces`,
+ ][reg=set]
+ surfaces = #[
+  `settings/index.html`,
+  `design/index.html`,
+  `design/palettes/index.html`,
+  `.spw/reviews/runtime-audit/settings-state.spw`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -41,6 +61,10 @@ dispatch: .{
  design_index_html = @design_index_html
  design_palettes_index_html = @design_palettes_index_html
  settings_state = @settings_state
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -64,4 +88,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

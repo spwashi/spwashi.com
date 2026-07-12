@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as patch evidence; the runtime bridge is concrete, but its new metadata must not become a parallel state family.
 ^"operational_hooks"{
  selectors = #[ `public/js/runtime/brace-gestures.js`, `public/js/interface/composition.js`, `.spw/conventions/semantic-braces.spw`, `topics/software/spw/index.html`, ][reg=set]
  owner_claim = ~"./index.spw#owner_claim"

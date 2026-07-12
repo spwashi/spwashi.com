@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the token-level color owner; light/dark material coherence precedes route-specific accents.
 # Plan Index — site-color-tuning
 #
 # The desired end state is a site whose light and dark themes feel deliberately composed at the token level, with shared cards, materials, and image chrome responding consistently…
@@ -26,6 +27,19 @@ intent: .{
  bucket = "media_image_sensory"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `The desired end state is a site whose light and dark themes feel deliberately composed at the token level, with shared…`
+ concepts = #[
+  `feel`,
+  `site-color-tuning`,
+  `desired`,
+  `end`,
+  `state`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -35,6 +49,23 @@ intent: .{
 dispatch: .{
  plan = @plan
  wip = @wip
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `vocabulary_metaphor` ; path = `.spw/audits/vocabulary-metaphor-growth-synthesis-2026-07.spw` }[reg=facet],
+  .{ label = `metaphor_primitive_research` ; path = `.spw/audits/metaphor-primitive-research-branching-2026-07.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"absorbs"{
+ reviewed = `2026-07-12`
+ plans = #[
+  `dark-contrast-pass`,
+  `theme-palette-marketability`,
+ ][reg=set]
+ rule = `Absorbed by 2026-07-12 review; see each source review_disposition and archive/2026-07-12-review-execution.md.`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -74,4 +105,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

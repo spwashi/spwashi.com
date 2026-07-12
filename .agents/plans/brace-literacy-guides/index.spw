@@ -1,3 +1,4 @@
+# Review 2026-07-12 — merge candidate for minimal-brace-disclosure and semantic HTML work; avoid another settings-backed lore layer.
 # Plan Index — brace-literacy-guides
 #
 # The site should explain more of itself through its own interaction grammar. Brace forms need clearer differentiation between conceptual and realized surfaces, substrate needs to…
@@ -14,7 +15,7 @@ intent: .{
  goal = `The site should explain more of itself through its own interaction grammar. Brace forms need clearer differentiation between conceptual and realized surfaces, substrate needs to read as a first-class distinction, and phrasing cues should help people parse what is idea, what is artifact, and what is guidance. The quality bar here is clarity and expressiveness: richer semantics, better salience, and settings that actually help people read the system rather than just decorate it. This branch also needs to avoid the shallow-accumulation problem from recent fast edits. New smart/localStorage behavior should be heuristic but legible, grounded in page metadata and existing component semantics, not a parallel lore layer.`
  owner = `brace-literacy-guides`
  kind = `plan`
- bucket = `active_backlog`
+ bucket = `merged`
  artifact_shape = `PLAN.md | wip.spw | brace-literacy-guides.spw | index.spw`
 }[reg=facet]
 
@@ -23,8 +24,27 @@ intent: .{
  semantic_layer = "pragmatics"
  collaboration_phase = "tending"
  memory_tier = "hot"
- bucket = "active_backlog"
+ bucket = "merged"
 }[reg=facet]
+
+^"conceptual_model"{
+ thesis = `The site should explain more of itself through its own interaction grammar. Brace forms need clearer differentiation…`
+ concepts = #[
+  `what`,
+  `needs`,
+  `read`,
+  `help`,
+  `people`,
+ ][reg=set]
+ surfaces = #[
+  `settings/index.html`,
+  `js/site.js`,
+  `css/style.css`,
+  `.agents/plans/brace-literacy-guides/brace-literacy-guides.spw`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
 
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
@@ -45,6 +65,21 @@ dispatch: .{
  style = @style
 }[reg=facet]
 
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `merge`
+ merged_into = #[
+  `minimal-brace-disclosure`,
+  `semantic-html-normalization`,
+ ][reg=set]
+ retain = `avoid another settings-backed lore layer`
+ status = `superseded`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-brace_literacy_guides-001"
  layer = "pragmatic"
@@ -53,7 +88,7 @@ dispatch: .{
  impl_ref = ~"../../../settings/index.html"
  probe_ref = `Hypotheses: brace-role metadata can drive clearer CSS without rewriting page HTML; local page metadata + persisted traces can improve smart grouping without bespoke route code`
  falsification = `A patch cannot satisfy the public goal while leaving ../../../settings/index.html unchanged or untested.`
- status = "active"
+ status = "superseded"
 }[reg=facet]
 
 scope: .{
@@ -85,4 +120,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

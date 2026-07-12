@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep; creator-first audience entrances are distinct from services pricing and general voice cleanup.
 # Plan Index — audience-onboarding-copy
 #
 # Make the home, about, services, topics, and tools surfaces read like a credible invitation into a decentralized team: one that can onboard developers, illustrators, authors, and a…
@@ -26,6 +27,24 @@ intent: .{
  bucket = "active_backlog"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Make the home, about, services, topics, and tools surfaces read like a credible invitation into a decentralized team:…`
+ concepts = #[
+  `audience-onboarding-copy`,
+  `home`,
+  `about`,
+  `services`,
+  `topics`,
+ ][reg=set]
+ surfaces = #[
+  `about/index.html`,
+  `topics/index.html`,
+  `.agents/plans/audience-onboarding-copy/PLAN.md`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -37,6 +56,18 @@ dispatch: .{
  plan = @plan
  about_index_html = @about_index_html
  topics_index_html = @topics_index_html
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"absorbs"{
+ reviewed = `2026-07-12`
+ plans = #[
+  `learning-science-community-pass`,
+ ][reg=set]
+ rule = `Absorbed by 2026-07-12 review; see each source review_disposition and archive/2026-07-12-review-execution.md.`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -76,4 +107,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

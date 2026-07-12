@@ -1,3 +1,4 @@
+# Review 2026-07-12 — rework from the actual palette failure; a slug and broad “depth” language do not define a plan.
 # Plan Index — Improve Palette Semantics, Discoverability, Playful/Functional Depth
 #
 # Slug: palette-semantics-improvements
@@ -26,6 +27,25 @@ intent: .{
  bucket = "media_image_sensory"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Slug: palette-semantics-improvements`
+ concepts = #[
+  `improve`,
+  `palette`,
+  `semantics`,
+  `discoverability`,
+  `playful`,
+ ][reg=set]
+ surfaces = #[
+  `.spw/conventions/site-semantics.spw`,
+  `design/palettes/index.html`,
+  `css/tokens/core.css`,
+  `settings/index.html`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -51,6 +71,30 @@ dispatch: .{
  operator_semantics = @operator_semantics
 }[reg=facet]
 
+^"research_bridge"{
+ local_research = #[
+  .{ label = `vocabulary_metaphor` ; path = `.spw/audits/vocabulary-metaphor-growth-synthesis-2026-07.spw` }[reg=facet],
+  .{ label = `metaphor_primitive_research` ; path = `.spw/audits/metaphor-primitive-research-branching-2026-07.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `rework`
+ note = `rework from the actual palette failure`
+ rescope = `required`
+ status = `active`
+}[reg=facet]
+
+^"absorbs"{
+ reviewed = `2026-07-12`
+ plans = #[
+  `palette-resonance`,
+ ][reg=set]
+ rule = `Absorbed by 2026-07-12 review; see each source review_disposition and archive/2026-07-12-review-execution.md.`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-palette_semantics_improvements-001"
  layer = "pragmatic"
@@ -72,4 +116,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

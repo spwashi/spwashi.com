@@ -1,3 +1,4 @@
+# Review 2026-07-12 — planning evidence; use the drift ledger, but route grammar, show, and public workshop work to separate owners.
 # wip — spw-metaphysical-language
 #
 # Spw already behaves like a language on this site — operators prime attention, braces hold charge, positions carry force — but its description is distributed…
@@ -24,7 +25,7 @@ fixity = "tending"
  goal = `Spw already behaves like a language on this site — operators prime attention, braces hold charge, positions carry force — but its description is distributed across conventions, atlas pages, runtime attributes, and memory. This plan makes the language *describable as itself*: every construct named, every sigil's assignment justified by the properties of the glyph, every semantic drift ledgered and arbitrated, and a durable path from "notation on a webpage" to "artifact you can hold, teach with, sell, or install in another industry." Creator identity preserved: "I'm Spwashi. I build software and make art." The language is the art and the software at once; describing it is not paperwork, it is the product line maturing.`
  owner = `spw-metaphysical-language`
  operation = "prime"
- bucket = "active_backlog"
+ bucket = "semantic_rails"
  validation = #[ `git diff --check; npm run check after any HTML/CSS/JS touch.`, `Codex completeness probe: every data-spw-operator value and every sigil in`, `Drift-ledger probe: each ledger row has claim_id, evidence refs, and status.`, `Bridge probe: rg confirms codex entries cite (not restate) owner`, `Print pilot probe: operator-deck print stylesheet renders one legible card`, `Industry pilot probe: each load-bearing brief names an existing route or`, ][reg=set]
  hot_files = #[ `.spw/_workbench/`, `.spw/conventions/`, ][reg=set]
 }[reg=facet]

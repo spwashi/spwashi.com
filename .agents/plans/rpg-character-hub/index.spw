@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the cast route owner; character development and stable reference cards are the concrete goal.
 # Plan Index — RPG Character Hub
 #
 # Turn the existing /play/rpg-wednesday/cast/ route into the practical character-development hub for RPG Wednesday.
@@ -26,6 +27,23 @@ intent: .{
  bucket = "active_backlog"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Turn the existing /play/rpg-wednesday/cast/ route into the practical character-development hub for RPG Wednesday.`
+ concepts = #[
+  `rpg`,
+  `hub`,
+  `character`,
+  `turn`,
+  `existing`,
+ ][reg=set]
+ surfaces = #[
+  `play/rpg-wednesday/cast/index.html`,
+  `play/rpg-wednesday/index.html`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -37,6 +55,10 @@ dispatch: .{
  plan = @plan
  play_rpg_wednesday_cast_index_html = @play_rpg_wednesday_cast_index_html
  play_rpg_wednesday_index_html = @play_rpg_wednesday_index_html
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -67,4 +89,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

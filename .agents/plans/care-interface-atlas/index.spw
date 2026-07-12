@@ -1,3 +1,4 @@
+# Review 2026-07-12 — rework before implementation: safety boundary, audience, and non-clinical scope need a focused public proof.
 # Plan Index — Care Interface Atlas
 #
 # Make Spwashi more useful for engineers and other analytical processors who have tried therapy, run into translation barriers, and need non-clinical language, cards, community…
@@ -26,6 +27,24 @@ intent: .{
  bucket = "public_route_proof_genre"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Make Spwashi more useful for engineers and other analytical processors who have tried therapy, run into translation…`
+ concepts = #[
+  `care`,
+  `interface`,
+  `atlas`,
+  `spwashi`,
+  `useful`,
+ ][reg=set]
+ surfaces = #[
+  `topics/mental-health/index.html`,
+  `.spw/site.spw`,
+  `.spw/surfaces.spw`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -39,6 +58,22 @@ dispatch: .{
  index = @index
  site = @site
  surfaces = @surfaces
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `appendices_index` ; path = `.spw/audits/appendices/index.spw` }[reg=facet],
+  .{ label = `metaphor_primitive_research` ; path = `.spw/audits/metaphor-primitive-research-branching-2026-07.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `rework`
+ note = `safety boundary, audience, and non-clinical scope need a focused public proof`
+ rescope = `required`
+ status = `active`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -69,4 +104,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

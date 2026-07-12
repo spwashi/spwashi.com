@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the capability boundary; distinguish measured text behavior from decorative simulation.
 ^"operational_hooks"{
  selectors = #[ `public/js/semantic/pretext-measurement-bus.js`, `.agents/plans/pretext-whimsy-lab/pretext-whimsy-lab.spw`, ][reg=set]
  probe_ref = `Hypotheses: Pretext's line and height outputs are enough to support a bounded family of playful, inspectable physical projections; separating observatory and whimsy runtimes will preserve clarity; mobile-first containment and truthful telemetry will keep the lab teachable.`

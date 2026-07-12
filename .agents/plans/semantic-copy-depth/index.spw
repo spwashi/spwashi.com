@@ -1,14 +1,15 @@
+# Review 2026-07-12 — keep as the copy-register owner; authored base prose stays complete and optional density remains progressive.
 # Plan Index — Semantic Copy Depth
 #
 # Let readers tune how much copy is visible without splitting the site into separate versions. The base page should remain readable and crawlable; optional layers should reveal…
 
 #>plan_semantic_copy_depth_index
 #:index #!plan
-#:operation #!prime
+#:operation #!contract
 #:layer #!pragmatics
 
-operation = "prime"
-fixity = "tending"
+operation = "contract"
+fixity = "stable"
 
 intent: .{
  goal = `Let readers tune how much copy is visible without splitting the site into separate versions. The base page should remain readable and crawlable; optional layers should reveal theory, genre, culinary vocabulary, and route bridges when semantic density or runtime posture asks for more depth. This plan now also covers the entry/normal/dense distinction that route-register and inspect surfaces need to stay legible.`
@@ -20,10 +21,34 @@ intent: .{
 
 ^"dimensions"{
  practice_depth = "reading | tending"
- semantic_layer = "pragmatics"
+ semantic_layer = "semantics | pragmatics"
  collaboration_phase = "tending"
- memory_tier = "hot"
+ memory_tier = "warm"
  bucket = "semantic_rails"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Formalize entry/normal/dense/technical copy depth as a teachable register alongside semantic layers.`
+ concepts = #[
+  `copy-depth`,
+  `register`,
+  `entry-normal-dense`,
+  `referentiality`,
+  `reading-calm`,
+ ][reg=set]
+ surfaces = #[
+  `.spw/conventions/copy-ecology.spw`,
+  `data-spw-copy-depth on routes`,
+ ][reg=set]
+ fixity_tier = `stable`
+}[reg=facet]
+
+^"plan_refinement"{
+ tone = `Editorial — respect reading calm on public routes.`
+ accuracy = `copy-depth pilots on design/composition; site-wide register is uneven.`
+ direction = `Align one high-traffic route to a single depth policy before expanding attributes.`
+ inspiration = `Readers should feel led, not lectured.`
+ alignment = `vocabulary-metaphor-growth-synthesis, component-region-personality`
 }[reg=facet]
 
 @plans_root: ~"../../../.agents/plans/index.spw"
@@ -33,6 +58,19 @@ intent: .{
 
 dispatch: .{
  plan = @plan
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `plan_ecology_semantics` ; path = `.spw/audits/plan-ecology-semantics-2026-07.spw` }[reg=facet],
+  .{ label = `commit_skill_induction` ; path = `.spw/audits/commit-skill-induction-2026-07/index.spw` }[reg=facet],
+  .{ label = `spw_architecture_ecology` ; path = `.spw/conventions/spw-architecture-ecology.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `self`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -49,6 +87,7 @@ dispatch: .{
 editor_prompts: #[
  .{ ask = `What does semantic-copy-depth own, and what should stay out of scope?`, see = @plan }[reg=facet],
  .{ ask = `Which file should I open first to implement the next slice of semantic-copy-depth?`, see = @index }[reg=facet],
+ .{ ask = `What is the tone, direction, and alignment for semantic-copy-depth?`, see = @index#plan_refinement }[reg=facet],
 ][reg=set]
 
 invariants: #[
@@ -56,4 +95,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

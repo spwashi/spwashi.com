@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep; this plan owns executable checks and invalidatable caches, not the broader planning ecology.
 # Plan Index — agentic-dev-contracts
 #
 # The desired end state is a repo where an agent can answer two basic questions cheaply: "what is this route?" and "did I break the site contract?" The first answer should come from…
@@ -26,6 +27,31 @@ intent: .{
  bucket = "semantic_rails"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Cheap falsification: route manifest, check posture, generated caches with explicit invalidation.`
+ concepts = #[
+  `route-manifest`,
+  `check-local`,
+  `invalidation`,
+  `agentic-cache`,
+  `manifest-contract`,
+ ][reg=set]
+ surfaces = #[
+  `scripts/`,
+  `package.json check scripts`,
+  `.agents/state/`,
+ ][reg=set]
+ fixity_tier = `stable`
+}[reg=facet]
+
+^"plan_refinement"{
+ tone = `Engineering checklist — commands over opinions.`
+ accuracy = `check:local and runtime contracts largely landed; precipitated indexes partial.`
+ direction = `Wire plans-index.json invalidation before expanding agentic caches.`
+ inspiration = `Did I break it? should be one command away.`
+ alignment = `agent-optimization, runtime-bootstrap-performance`
+}[reg=facet]
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -36,7 +62,8 @@ intent: .{
 @public_js_site_js: ~"../../../public/js/site.js"
 @spw_site_spw: ~"../../../.spw/site.spw"
 @index: ~"../../../.spw/conventions/index.spw"
-@route_runtime_manifest: ~"../../../.agents/state/runtime/route-runtime-manifest.json"
+@agentic_development_2026_07: ~"../../../.spw/audits/agentic-development-2026-07/"
+@ts: ~"../../../scripts/ts"
 
 dispatch: .{
  plan = @plan
@@ -46,7 +73,21 @@ dispatch: .{
  public_js_site_js = @public_js_site_js
  spw_site_spw = @spw_site_spw
  index = @index
- route_runtime_manifest = @route_runtime_manifest
+ agentic_development_2026_07 = @agentic_development_2026_07
+ ts = @ts
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `plan_ecology_semantics` ; path = `.spw/audits/plan-ecology-semantics-2026-07.spw` }[reg=facet],
+  .{ label = `commit_skill_induction` ; path = `.spw/audits/commit-skill-induction-2026-07/index.spw` }[reg=facet],
+  .{ label = `spw_architecture_ecology` ; path = `.spw/conventions/spw-architecture-ecology.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `self`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -83,6 +124,7 @@ validation: #[
 editor_prompts: #[
  .{ ask = `What does agentic-dev-contracts own, and what should stay out of scope?`, see = @plan }[reg=facet],
  .{ ask = `Which file should I open first to implement the next slice of agentic-dev-contracts?`, see = @index }[reg=facet],
+ .{ ask = `What is the tone, direction, and alignment for agentic-dev-contracts?`, see = @index#plan_refinement }[reg=facet],
  .{ ask = `What command or check falsifies whether agentic-dev-contracts still holds?`, see = @plan }[reg=facet],
 ][reg=set]
 
@@ -91,4 +133,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

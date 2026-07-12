@@ -1,3 +1,4 @@
+# Review 2026-07-12 — merge into JS surface ecology; naming cleanup follows ownership evidence, not aesthetic preference.
 # Plan Index — JS Taxonomy Cleanup
 #
 # Remove the spw- prefix from the JavaScript source tree, keep the runtime naming semantically legible by folder, and consolidate obvious shared primitives into their owning layer.
@@ -26,6 +27,25 @@ intent: .{
  bucket = "runtime_js_validation"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Remove the spw- prefix from the JavaScript source tree, keep the runtime naming semantically legible by folder, and…`
+ concepts = #[
+  `taxonomy`,
+  `cleanup`,
+  `remove`,
+  `spw-`,
+  `prefix`,
+ ][reg=set]
+ surfaces = #[
+  `js/`,
+  `ts/`,
+  `js/kernel/`,
+  `js/interface/`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -51,6 +71,24 @@ dispatch: .{
  modules = @modules
 }[reg=facet]
 
+^"research_bridge"{
+ local_research = #[
+  .{ label = `javascript_module_census` ; path = `.spw/audits/javascript-module-census-2026-07.spw` }[reg=facet],
+  .{ label = `module_export_audit` ; path = `.spw/audits/module-export-standalone-2026-07.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `merge`
+ merged_into = #[
+  `js-surface-ecology`,
+ ][reg=set]
+ retain = `naming cleanup follows ownership evidence`
+ status = `superseded`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-js_taxonomy_cleanup-001"
  layer = "pragmatic"
@@ -59,7 +97,7 @@ dispatch: .{
  impl_ref = ~"../../../public/js/"
  probe_ref = `node --check on touched JS files`
  falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/ unchanged or untested.`
- status = "active"
+ status = "superseded"
 }[reg=facet]
 
 scope: .{
@@ -87,4 +125,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

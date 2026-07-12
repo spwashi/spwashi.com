@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as a semantic gate: rename only after an echo-versus-homonym verdict and cross-language trace.
 # Plan Index — homonym-renaming
 #
 # Every load-bearing word means one shape. A reader who sees settle anywhere in the codebase can trust it means "approaching/at rest at the end of an arc" — at page, region, or…
@@ -14,7 +15,7 @@ intent: .{
  goal = `Every load-bearing word means one shape. A reader who sees settle anywhere in the codebase can trust it means "approaching/at rest at the end of an arc" — at page, region, or component altitude — and never "a speed," "a plan operation," or an unrelated animation. Renames are few, arbitrated, and land with compatibility aliases; the metaphor families keep their expressive power because their geometry stays clean.`
  owner = `homonym-renaming`
  kind = `plan`
- bucket = `active_backlog`
+ bucket = `semantic_rails`
  artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
@@ -23,8 +24,24 @@ intent: .{
  semantic_layer = "pragmatics"
  collaboration_phase = "tending"
  memory_tier = "hot"
- bucket = "active_backlog"
+ bucket = "semantic_rails"
 }[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Every load-bearing word means one shape. A reader who sees settle anywhere in the codebase can trust it means…`
+ concepts = #[
+  `means`,
+  `their`,
+  `homonym-renaming`,
+  `every`,
+  `load-bearing`,
+ ][reg=set]
+ surfaces = #[
+  `scripts/language-census.mjs`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
 
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
@@ -35,6 +52,19 @@ intent: .{
 dispatch: .{
  plan = @plan
  language_census = @language_census
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `plan_ecology_semantics` ; path = `.spw/audits/plan-ecology-semantics-2026-07.spw` }[reg=facet],
+  .{ label = `commit_skill_induction` ; path = `.spw/audits/commit-skill-induction-2026-07/index.spw` }[reg=facet],
+  .{ label = `spw_architecture_ecology` ; path = `.spw/conventions/spw-architecture-ecology.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `self`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -66,4 +96,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

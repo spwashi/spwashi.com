@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the canonical settings owner; every control needs a consumer, default, and reversible projection.
 # Plan Index — runtime-settings
 #
 # Create a discoverable /settings/ page where visitors can quiet or hide the surface map, quiet or hide the console, and disable scroll-driven viewport activation. Taste note: this…
@@ -26,6 +27,25 @@ intent: .{
  bucket = "runtime_js_validation"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Create a discoverable /settings/ page where visitors can quiet or hide the surface map, quiet or hide the console, and…`
+ concepts = #[
+  `settings`,
+  `quiet`,
+  `hide`,
+  `runtime-settings`,
+  `create`,
+ ][reg=set]
+ surfaces = #[
+  `settings/index.html`,
+  `js/site.js`,
+  `css/style.css`,
+  `js/kernel/site-settings-profiles.js`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -49,6 +69,23 @@ dispatch: .{
  site_settings_engine = @site_settings_engine
  site_settings_ui = @site_settings_ui
  reward_ui = @reward_ui
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `javascript_module_census` ; path = `.spw/audits/javascript-module-census-2026-07.spw` }[reg=facet],
+  .{ label = `module_export_audit` ; path = `.spw/audits/module-export-standalone-2026-07.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"absorbs"{
+ reviewed = `2026-07-12`
+ plans = #[
+  `settings-discoverability-consolidation`,
+  `settings-widgets-low-friction`,
+ ][reg=set]
+ rule = `Absorbed by 2026-07-12 review; see each source review_disposition and archive/2026-07-12-review-execution.md.`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -87,4 +124,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

@@ -1,3 +1,4 @@
+# Review 2026-07-12 — rework into public proof and audience entrances; “operating system” overstates a portfolio/content pass.
 # Plan Index — Skill-Folio Operating System
 #
 # Update spwashi.com into a clearer public surface for skill development, artifact processing, visual systems, and community-rooted creative practice.
@@ -26,6 +27,25 @@ intent: .{
  bucket = "active_backlog"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Update spwashi.com into a clearer public surface for skill development, artifact processing, visual systems, and…`
+ concepts = #[
+  `skill-folio`,
+  `operating`,
+  `system`,
+  `update`,
+  `spwashi`,
+ ][reg=set]
+ surfaces = #[
+  `design/folios/index.html`,
+  `.spw/site.spw`,
+  `.spw/surfaces/product-lines.spw`,
+  `.agents/plans/skill-folio-operating-system/wip.spw`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -41,6 +61,18 @@ dispatch: .{
  index = @index
  site = @site
  product_lines = @product_lines
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `rework`
+ note = `rework into public proof and audience entrances`
+ rescope = `required`
+ status = `active`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -64,4 +96,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

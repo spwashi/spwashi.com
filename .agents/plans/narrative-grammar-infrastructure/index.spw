@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep only the explicit authored instrumentation boundary; ordinary prose must not be guessed into narrative state.
 # Plan Index — Narrative Grammar Infrastructure
 #
 # Make narrative instrumentation useful across routes without letting the runtime guess too aggressively from ordinary prose.
@@ -26,6 +27,22 @@ intent: .{
  bucket = "active_backlog"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Make narrative instrumentation useful across routes without letting the runtime guess too aggressively from ordinary…`
+ concepts = #[
+  `narrative`,
+  `grammar`,
+  `infrastructure`,
+  `instrumentation`,
+  `useful`,
+ ][reg=set]
+ surfaces = #[
+  `js/semantic/narrative-instrumentation.js`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -35,6 +52,10 @@ intent: .{
 dispatch: .{
  plan = @plan
  narrative_instrumentation = @narrative_instrumentation
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -58,4 +79,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

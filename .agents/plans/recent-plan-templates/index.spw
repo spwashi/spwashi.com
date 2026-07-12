@@ -1,3 +1,4 @@
+# Review 2026-07-12 — tooling index, not backlog; templates remain examples and may be removed when unused.
 # recent-plan-templates
 # Starter templates for the most recently introduced planning concepts.
 
@@ -18,3 +19,10 @@ dispatch: .{
 }[reg=facet]
 
 note: "These templates are starting points for new planning artifacts, not canonical semantics."
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `tooling`
+ note = `tooling index, not backlog; templates are examples`
+ status = `reference`
+}[reg=facet]

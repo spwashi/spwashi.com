@@ -1,3 +1,4 @@
+# Review 2026-07-12 — merge community entrances into audience-onboarding and pedagogy into learning-science-enhancement.
 # Plan Index — Learning Science Community Pass
 #
 # Improve core site copy and route markup so the site serves Spwashi's community more directly across three needs: - education: help people enter difficult material with clearer…
@@ -14,7 +15,7 @@ intent: .{
  goal = `Improve core site copy and route markup so the site serves Spwashi's community more directly across three needs: - education: help people enter difficult material with clearer scaffolds - stabilization: help people find smaller next steps, safer boundaries, and better re-entry - play: protect experimentation, wonder, and artifact-making as real learning modes`
  owner = `learning-science-community-pass`
  kind = `plan`
- bucket = `active_backlog`
+ bucket = `merged`
  artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
@@ -23,8 +24,27 @@ intent: .{
  semantic_layer = "pragmatics"
  collaboration_phase = "tending"
  memory_tier = "hot"
- bucket = "active_backlog"
+ bucket = "merged"
 }[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Improve core site copy and route markup so the site serves Spwashi's community more directly across three needs: -…`
+ concepts = #[
+  `learning`,
+  `community`,
+  `help`,
+  `people`,
+  `science`,
+ ][reg=set]
+ surfaces = #[
+  `about/index.html`,
+  `topics/index.html`,
+  `topics/pedagogy/index.html`,
+  `play/index.html`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
 
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
@@ -45,6 +65,20 @@ dispatch: .{
  workbench = @workbench
 }[reg=facet]
 
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `merge`
+ merged_into = #[
+  `audience-onboarding-copy`,
+  `learning-science-enhancement`,
+ ][reg=set]
+ status = `superseded`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-learning_science_community_pass-001"
  layer = "pragmatic"
@@ -53,7 +87,7 @@ dispatch: .{
  impl_ref = ~"../../../about/index.html"
  probe_ref = `git diff --check`
  falsification = `A patch cannot satisfy the public goal while leaving ../../../about/index.html unchanged or untested.`
- status = "active"
+ status = "superseded"
 }[reg=facet]
 
 validation: #[
@@ -73,4 +107,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

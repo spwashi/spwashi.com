@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as a human routing surface; generated conceptual claims must not replace per-plan disposition.
 # Plans Root Index
 #
 # Virtual-bucket dispatch across .agents/plans/.
@@ -11,8 +12,8 @@ operation = "align"
 fixity = "stable"
 
 intent: .{
- goal = `Route agents and editors through plan folders by virtual bucket, operation, and owner_claim instead of directory name alone.`
- scope = `Active plan ecology under .agents/plans/; excludes recent-plan-templates tooling.`
+ goal = `Route agents and editors through plan folders by reviewed disposition first, then by durable owner and virtual bucket. Generated owner claims and bucket labels are supporting metadata, not a substitute for reading the file-local review decision.`
+ scope = `All 279 .spw files under .agents/plans/, including historical WIPs, semantic notes, archives, and explicitly labeled tooling templates.`
 }[reg=facet]
 
 ^"dimensions"{
@@ -22,15 +23,26 @@ intent: .{
  memory_tier = "hot | warm"
 }[reg=facet]
 
+^"review_sweep_2026_07_12"{
+ reviewed_files = 279
+ marker = `# Review 2026-07-12`
+ precedence = `The reviewed disposition is current when it conflicts with older generated status, bucket, conceptual_model, owner_claim, or WIP cache metadata.`
+ decisions = `keep owner | keep evidence | merge | rework | completed reference | archive journal | tooling template`
+ next_rule = `Execute from a retained owner. Merge or archive candidates do not regain active status merely because a generator still lists them in active_backlog.`
+ regeneration_rule = `Do not regenerate these decisions. Re-read the affected file and edit its disposition deliberately.`
+}[reg=facet]
+
 @readme: ~"./README.md"
 @planning_ecology: ~"../../.spw/conventions/planning-ecology.spw"
 @plan_index_convention: ~"../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../.spw/conventions/wip-notebook.spw"
 @maintain_script: ~"../../scripts/maintain-plan-directory-indexes.mjs"
+@plan_ecology_semantics: ~"../../.spw/audits/plan-ecology-semantics-2026-07.spw"
+@planning_ecology_convention: ~"../../.spw/conventions/planning-ecology.spw#research_bridge_map"
 
 reading_order: .{
  sequence = ?< @planning_ecology, @plan_index_convention, @readme >[reg=stream]
- rule = `Read ecology + convention, then bucket dispatch, then a plan index.spw.`
+ rule = `Read the file-local review first, then the owner plan or semantic note; use bucket dispatch only for navigation.`
 }[reg=facet]
 
 ^"canonical_tracks"{
@@ -50,40 +62,49 @@ reading_order: .{
 @plan_reference_assignment_template: ~"./reference-assignment-template/index.spw"
 ^"semantic_rails"{
  label = "semantic rails"
- count = 12
+ count = 17
  members = #[
   `agent-optimization`,
   `agentic-dev-contracts`,
   `component-region-personality`,
-  `spw-architecture-ecology`,
   `daily-kernel-development`,
   `discovery-powerups`,
+  `homonym-renaming`,
+  `language-reclustering`,
   `model-guided-refinement`,
   `modular-experience-slices`,
+  `module-export-uniformity`,
   `plan-wip-index-conventions`,
   `relational-attention-media`,
   `semantic-copy-depth`,
+  `spw-architecture-ecology`,
+  `spw-language-v04`,
+  `spw-metaphysical-language`,
   `spw-surface-normalization`,
  ][reg=set]
 }[reg=facet]
 
 @plan_agent_optimization: ~"./agent-optimization/index.spw"
 @plan_agentic_dev_contracts: ~"./agentic-dev-contracts/index.spw"
+@plan_component_region_personality: ~"./component-region-personality/index.spw"
 @plan_daily_kernel_development: ~"./daily-kernel-development/index.spw"
 @plan_discovery_powerups: ~"./discovery-powerups/index.spw"
+@plan_homonym_renaming: ~"./homonym-renaming/index.spw"
+@plan_language_reclustering: ~"./language-reclustering/index.spw"
 @plan_model_guided_refinement: ~"./model-guided-refinement/index.spw"
 @plan_modular_experience_slices: ~"./modular-experience-slices/index.spw"
+@plan_module_export_uniformity: ~"./module-export-uniformity/index.spw"
 @plan_plan_wip_index_conventions: ~"./plan-wip-index-conventions/index.spw"
 @plan_relational_attention_media: ~"./relational-attention-media/index.spw"
 @plan_semantic_copy_depth: ~"./semantic-copy-depth/index.spw"
-@plan_component_region_personality: ~"./component-region-personality/index.spw"
 @plan_spw_architecture_ecology: ~"./spw-architecture-ecology/index.spw"
+@plan_spw_language_v04: ~"./spw-language-v04/index.spw"
+@plan_spw_metaphysical_language: ~"./spw-metaphysical-language/index.spw"
 @plan_spw_surface_normalization: ~"./spw-surface-normalization/index.spw"
 ^"css_layout_interaction"{
  label = "css layout interaction"
- count = 14
+ count = 13
  members = #[
-  `card-anatomy-interactions`,
   `card-grid-density-audit`,
   `chrome-navigation-wonder`,
   `component-box-model-responsive-audit`,
@@ -100,7 +121,6 @@ reading_order: .{
  ][reg=set]
 }[reg=facet]
 
-@plan_card_anatomy_interactions: ~"./card-anatomy-interactions/index.spw"
 @plan_card_grid_density_audit: ~"./card-grid-density-audit/index.spw"
 @plan_chrome_navigation_wonder: ~"./chrome-navigation-wonder/index.spw"
 @plan_component_box_model_responsive_audit: ~"./component-box-model-responsive-audit/index.spw"
@@ -195,17 +215,13 @@ reading_order: .{
 @plan_webpage_trope_vocabulary: ~"./webpage-trope-vocabulary/index.spw"
 ^"fix_queue"{
  label = "fix queue"
- count = 11
+ count = 7
  members = #[
   `attention-shell-contrast`,
   `chrome-copy-collision`,
   `component-semantics-document-host`,
   `floating-chrome-stack`,
   `gesture-aria-hygiene`,
-  `menu-containment-navigation`,
-  `mobile-image-effects`,
-  `overlay-layer-ownership`,
-  `runtime-route-css-regressions`,
   `settings-theme-wiring`,
   `theme-palette-marketability`,
  ][reg=set]
@@ -216,15 +232,11 @@ reading_order: .{
 @plan_component_semantics_document_host: ~"./component-semantics-document-host/index.spw"
 @plan_floating_chrome_stack: ~"./floating-chrome-stack/index.spw"
 @plan_gesture_aria_hygiene: ~"./gesture-aria-hygiene/index.spw"
-@plan_menu_containment_navigation: ~"./menu-containment-navigation/index.spw"
-@plan_mobile_image_effects: ~"./mobile-image-effects/index.spw"
-@plan_overlay_layer_ownership: ~"./overlay-layer-ownership/index.spw"
-@plan_runtime_route_css_regressions: ~"./runtime-route-css-regressions/index.spw"
 @plan_settings_theme_wiring: ~"./settings-theme-wiring/index.spw"
 @plan_theme_palette_marketability: ~"./theme-palette-marketability/index.spw"
 ^"active_backlog"{
  label = "active backlog"
- count = 113
+ count = 107
  members = #[
   `algorithm-scale-statistics-rpg-bridges`,
   `attention-cue-gestures`,
@@ -260,12 +272,10 @@ reading_order: .{
   `funding-proof-cards`,
   `gesture-inspectability-metaphysics`,
   `hero-image-whimsy`,
-  `homonym-renaming`,
   `instrumentation-legibility`,
   `interaction-grammar`,
   `js-runtime-composability`,
   `language-ladder-runtime-instrumentation`,
-  `language-reclustering`,
   `learning-science-community-pass`,
   `learning-science-enhancement`,
   `living-learning-surface`,
@@ -279,7 +289,6 @@ reading_order: .{
   `minimal-brace-disclosure`,
   `mobile-brace-path-polish`,
   `mobile-runtime-foundation`,
-  `module-export-uniformity`,
   `narration-markup-cold-reads`,
   `narrative-grammar-infrastructure`,
   `nutrition-crop-language`,
@@ -320,11 +329,8 @@ reading_order: .{
   `spell-cauldron-microinteractions`,
   `spell-cognition-familiarity`,
   `spellbook-utility`,
-  `spw-language-v04`,
-  `spw-metaphysical-language`,
   `spw-operator-pages`,
   `state-block-projections`,
-  `state-satchel-card-gesture-fixes`,
   `story-prompt-surface-pass`,
   `svg-aesthetic-depth-pass`,
   `svg-handoff-copy-alignment`,
@@ -376,12 +382,10 @@ reading_order: .{
 @plan_funding_proof_cards: ~"./funding-proof-cards/index.spw"
 @plan_gesture_inspectability_metaphysics: ~"./gesture-inspectability-metaphysics/index.spw"
 @plan_hero_image_whimsy: ~"./hero-image-whimsy/index.spw"
-@plan_homonym_renaming: ~"./homonym-renaming/index.spw"
 @plan_instrumentation_legibility: ~"./instrumentation-legibility/index.spw"
 @plan_interaction_grammar: ~"./interaction-grammar/index.spw"
 @plan_js_runtime_composability: ~"./js-runtime-composability/index.spw"
 @plan_language_ladder_runtime_instrumentation: ~"./language-ladder-runtime-instrumentation/index.spw"
-@plan_language_reclustering: ~"./language-reclustering/index.spw"
 @plan_learning_science_community_pass: ~"./learning-science-community-pass/index.spw"
 @plan_learning_science_enhancement: ~"./learning-science-enhancement/index.spw"
 @plan_living_learning_surface: ~"./living-learning-surface/index.spw"
@@ -395,7 +399,6 @@ reading_order: .{
 @plan_minimal_brace_disclosure: ~"./minimal-brace-disclosure/index.spw"
 @plan_mobile_brace_path_polish: ~"./mobile-brace-path-polish/index.spw"
 @plan_mobile_runtime_foundation: ~"./mobile-runtime-foundation/index.spw"
-@plan_module_export_uniformity: ~"./module-export-uniformity/index.spw"
 @plan_narration_markup_cold_reads: ~"./narration-markup-cold-reads/index.spw"
 @plan_narrative_grammar_infrastructure: ~"./narrative-grammar-infrastructure/index.spw"
 @plan_nutrition_crop_language: ~"./nutrition-crop-language/index.spw"
@@ -436,11 +439,8 @@ reading_order: .{
 @plan_spell_cauldron_microinteractions: ~"./spell-cauldron-microinteractions/index.spw"
 @plan_spell_cognition_familiarity: ~"./spell-cognition-familiarity/index.spw"
 @plan_spellbook_utility: ~"./spellbook-utility/index.spw"
-@plan_spw_language_v04: ~"./spw-language-v04/index.spw"
-@plan_spw_metaphysical_language: ~"./spw-metaphysical-language/index.spw"
 @plan_spw_operator_pages: ~"./spw-operator-pages/index.spw"
 @plan_state_block_projections: ~"./state-block-projections/index.spw"
-@plan_state_satchel_card_gesture_fixes: ~"./state-satchel-card-gesture-fixes/index.spw"
 @plan_story_prompt_surface_pass: ~"./story-prompt-surface-pass/index.spw"
 @plan_svg_aesthetic_depth_pass: ~"./svg-aesthetic-depth-pass/index.spw"
 @plan_svg_handoff_copy_alignment: ~"./svg-handoff-copy-alignment/index.spw"
@@ -455,6 +455,25 @@ reading_order: .{
 @plan_vibe_setting_widgets: ~"./vibe-setting-widgets/index.spw"
 @plan_voice_grounding_pass: ~"./voice-grounding-pass/index.spw"
 @plan_wonder_memory: ~"./wonder-memory/index.spw"
+^"completed_reference"{
+ label = "completed reference"
+ count = 6
+ members = #[
+  `card-anatomy-interactions`,
+  `menu-containment-navigation`,
+  `mobile-image-effects`,
+  `overlay-layer-ownership`,
+  `runtime-route-css-regressions`,
+  `state-satchel-card-gesture-fixes`,
+ ][reg=set]
+}[reg=facet]
+
+@plan_card_anatomy_interactions: ~"./card-anatomy-interactions/index.spw"
+@plan_menu_containment_navigation: ~"./menu-containment-navigation/index.spw"
+@plan_mobile_image_effects: ~"./mobile-image-effects/index.spw"
+@plan_overlay_layer_ownership: ~"./overlay-layer-ownership/index.spw"
+@plan_runtime_route_css_regressions: ~"./runtime-route-css-regressions/index.spw"
+@plan_state_satchel_card_gesture_fixes: ~"./state-satchel-card-gesture-fixes/index.spw"
 ^"archive"{
  label = "archive"
  count = 2
@@ -472,23 +491,28 @@ dispatch: .{
  plan_index_convention = @plan_index_convention
  wip_notebook = @wip_notebook
  maintain_script = @maintain_script
+ plan_ecology_semantics = @plan_ecology_semantics
  plan_color_motion = @plan_color_motion
  plan_css_architecture_readability = @plan_css_architecture_readability
  plan_midjourney_design_concepts = @plan_midjourney_design_concepts
  plan_reference_assignment_template = @plan_reference_assignment_template
  plan_agent_optimization = @plan_agent_optimization
  plan_agentic_dev_contracts = @plan_agentic_dev_contracts
+ plan_component_region_personality = @plan_component_region_personality
  plan_daily_kernel_development = @plan_daily_kernel_development
  plan_discovery_powerups = @plan_discovery_powerups
+ plan_homonym_renaming = @plan_homonym_renaming
+ plan_language_reclustering = @plan_language_reclustering
  plan_model_guided_refinement = @plan_model_guided_refinement
  plan_modular_experience_slices = @plan_modular_experience_slices
+ plan_module_export_uniformity = @plan_module_export_uniformity
  plan_plan_wip_index_conventions = @plan_plan_wip_index_conventions
  plan_relational_attention_media = @plan_relational_attention_media
  plan_semantic_copy_depth = @plan_semantic_copy_depth
- plan_component_region_personality = @plan_component_region_personality
  plan_spw_architecture_ecology = @plan_spw_architecture_ecology
+ plan_spw_language_v04 = @plan_spw_language_v04
+ plan_spw_metaphysical_language = @plan_spw_metaphysical_language
  plan_spw_surface_normalization = @plan_spw_surface_normalization
- plan_card_anatomy_interactions = @plan_card_anatomy_interactions
  plan_card_grid_density_audit = @plan_card_grid_density_audit
  plan_chrome_navigation_wonder = @plan_chrome_navigation_wonder
  plan_component_box_model_responsive_audit = @plan_component_box_model_responsive_audit
@@ -536,10 +560,6 @@ dispatch: .{
  plan_component_semantics_document_host = @plan_component_semantics_document_host
  plan_floating_chrome_stack = @plan_floating_chrome_stack
  plan_gesture_aria_hygiene = @plan_gesture_aria_hygiene
- plan_menu_containment_navigation = @plan_menu_containment_navigation
- plan_mobile_image_effects = @plan_mobile_image_effects
- plan_overlay_layer_ownership = @plan_overlay_layer_ownership
- plan_runtime_route_css_regressions = @plan_runtime_route_css_regressions
  plan_settings_theme_wiring = @plan_settings_theme_wiring
  plan_theme_palette_marketability = @plan_theme_palette_marketability
  plan_algorithm_scale_statistics_rpg_bridges = @plan_algorithm_scale_statistics_rpg_bridges
@@ -576,12 +596,10 @@ dispatch: .{
  plan_funding_proof_cards = @plan_funding_proof_cards
  plan_gesture_inspectability_metaphysics = @plan_gesture_inspectability_metaphysics
  plan_hero_image_whimsy = @plan_hero_image_whimsy
- plan_homonym_renaming = @plan_homonym_renaming
  plan_instrumentation_legibility = @plan_instrumentation_legibility
  plan_interaction_grammar = @plan_interaction_grammar
  plan_js_runtime_composability = @plan_js_runtime_composability
  plan_language_ladder_runtime_instrumentation = @plan_language_ladder_runtime_instrumentation
- plan_language_reclustering = @plan_language_reclustering
  plan_learning_science_community_pass = @plan_learning_science_community_pass
  plan_learning_science_enhancement = @plan_learning_science_enhancement
  plan_living_learning_surface = @plan_living_learning_surface
@@ -595,7 +613,6 @@ dispatch: .{
  plan_minimal_brace_disclosure = @plan_minimal_brace_disclosure
  plan_mobile_brace_path_polish = @plan_mobile_brace_path_polish
  plan_mobile_runtime_foundation = @plan_mobile_runtime_foundation
- plan_module_export_uniformity = @plan_module_export_uniformity
  plan_narration_markup_cold_reads = @plan_narration_markup_cold_reads
  plan_narrative_grammar_infrastructure = @plan_narrative_grammar_infrastructure
  plan_nutrition_crop_language = @plan_nutrition_crop_language
@@ -636,11 +653,8 @@ dispatch: .{
  plan_spell_cauldron_microinteractions = @plan_spell_cauldron_microinteractions
  plan_spell_cognition_familiarity = @plan_spell_cognition_familiarity
  plan_spellbook_utility = @plan_spellbook_utility
- plan_spw_language_v04 = @plan_spw_language_v04
- plan_spw_metaphysical_language = @plan_spw_metaphysical_language
  plan_spw_operator_pages = @plan_spw_operator_pages
  plan_state_block_projections = @plan_state_block_projections
- plan_state_satchel_card_gesture_fixes = @plan_state_satchel_card_gesture_fixes
  plan_story_prompt_surface_pass = @plan_story_prompt_surface_pass
  plan_svg_aesthetic_depth_pass = @plan_svg_aesthetic_depth_pass
  plan_svg_handoff_copy_alignment = @plan_svg_handoff_copy_alignment
@@ -655,6 +669,12 @@ dispatch: .{
  plan_vibe_setting_widgets = @plan_vibe_setting_widgets
  plan_voice_grounding_pass = @plan_voice_grounding_pass
  plan_wonder_memory = @plan_wonder_memory
+ plan_card_anatomy_interactions = @plan_card_anatomy_interactions
+ plan_menu_containment_navigation = @plan_menu_containment_navigation
+ plan_mobile_image_effects = @plan_mobile_image_effects
+ plan_overlay_layer_ownership = @plan_overlay_layer_ownership
+ plan_runtime_route_css_regressions = @plan_runtime_route_css_regressions
+ plan_state_satchel_card_gesture_fixes = @plan_state_satchel_card_gesture_fixes
  plan_css_semantic_modules = @plan_css_semantic_modules
  plan_spw_css_architecture = @plan_spw_css_architecture
 }[reg=facet]
@@ -662,6 +682,9 @@ dispatch: .{
 editor_prompts: #[
  .{ ask = `Which virtual bucket owns this class of work?`, see = @readme }[reg=facet],
  .{ ask = `What is the smallest plan index to open for a bounded patch?`, see = @plan_index_convention }[reg=facet],
+ .{ ask = `Where is local research for this bucket?`, see = @planning_ecology_convention }[reg=facet],
+ .{ ask = `What landed work is completed_reference?`, see = @plan_ecology_semantics }[reg=facet],
+ .{ ask = `What are tone, direction, and alignment for this plan?`, see = @plan_index_convention#plan_refinement_template }[reg=facet],
 ][reg=set]
 
 invariants: #[
@@ -669,4 +692,3 @@ invariants: #[
  `Virtual buckets mirror .agents/plans/README.md before physical folder moves.`
  `Regenerate this root index with scripts/maintain-plan-directory-indexes.mjs.`
 ][reg=set]
-

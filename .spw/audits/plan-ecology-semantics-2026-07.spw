@@ -1,0 +1,134 @@
+# Plan Ecology Semantics Audit (2026-07)
+#
+# operation: audit + align
+# fixity: tending
+# role: Strengthen plan .spw architecture — standalone value, cross-links, archive routing
+
+#>plan_ecology_semantics_2026_07
+#:audit #!plans #!agents #!ecology
+#:operation #!audit
+#:layer #!editor_inspectability
+
+@planning_ecology: ~"../conventions/planning-ecology.spw"
+@plan_index_convention: ~"../conventions/plan-index.spw"
+@spw_architecture_ecology: ~"../conventions/spw-architecture-ecology.spw"
+@agent_ecology: ~"../conventions/agent-ecology.spw"
+@plans_root: ~"../../.agents/plans/index.spw"
+@commit_skill_induction: ~"./commit-skill-induction-2026-07/index.spw"
+@commit_history_deep: ~"./commit-history-deep-2026-07/index.spw"
+@appendices_index: ~"./appendices/index.spw"
+@vocabulary_metaphor_synthesis: ~"./vocabulary-metaphor-growth-synthesis-2026-07.spw"
+@metaphor_primitive_research: ~"./metaphor-primitive-research-branching-2026-07.spw"
+@archive_sweep: ~"../../.agents/plans/archive/2026-07-12-plan-ecology-semantics-architecture.md"
+@maintain_script: ~"../../scripts/maintain-plan-directory-indexes.mjs"
+
+audit_run: .{
+  at = `2026-07-12`
+  scope = `Plan index.spw semantics, virtual buckets, research bridges, completed_reference archival`
+  method = `Census + convention contract update + maintain-script regeneration + archive index notes`
+  posture = `Reduce plan-tree discovery cost without physical moves; archive by virtual bucket first`
+  probe = `find .agents/plans -name index.spw | wc -l ; rg 'conceptual_model|research_bridge' .agents/plans -l | wc -l`
+}[reg=facet]
+
+^"thesis"{
+  claim: `187 plan index.spw files route by slug alone; agents re-read PLAN.md for context. Adding conceptual_model, research_bridge, connection_points, and completed_reference virtual bucket makes each index standalone and wires outdated work to local audits/appendices without breaking citations.`
+  complements: `commit-skill-induction (plan inflation failure mode); spw-architecture-ecology (promotion protocol)`
+  falsification: `Regeneration adds blocks but completed FIX queues still appear in fix_queue bucket without archive_status.`
+}
+
+^"census"{
+  folders ≈ 183
+  plan_md ≈ 174
+  index_spw ≈ 187
+  fix_md = 13
+  virtual_buckets = #[`canonical_tracks`, `semantic_rails`, `css_layout_interaction`, `runtime_js_validation`, `media_image_sensory`, `public_route_proof_genre`, `fix_queue`, `active_backlog`, `completed_reference`, `archive`, `templates_tooling`][reg=set]
+  pain: #[
+    `Owner claims paste full PLAN goal — low standalone skim value`,
+    `No default research_bridge from plans to 2026-07 audits/appendices`,
+    `Completed FIX/plans still listed as active fix_queue`,
+    `Rail plans lack explicit connection_points graph`
+  ][reg=set]
+}
+
+^"semantics_upgrades"{
+  plan_index_convention: #[
+    `conceptual_model_template`,
+    `plan_refinement_template — tone, accuracy, direction, inspiration, alignment`,
+    `research_bridge_template`,
+    `connection_points_template`,
+    `archive_status_template`,
+    `standalone_rule in file_roles`
+  ][reg=set]
+  plan_refinements_data: `scripts/plan-refinements-data.mjs — hand-authored per slug; imported by maintain script`
+  maintain_script: #[
+    `completed_reference bucket (6 retained-in-place landings)`,
+    `buildConceptualModel + buildResearchBridge + buildConnectionPoints + buildArchiveStatus`,
+    `semantic_rails bucket += spw-architecture-ecology, component-region-personality, spw-language-v04, module-export-uniformity`
+  ][reg=set]
+  planning_ecology: #[
+    `research_bridge_map by bucket and rail`,
+    `archive_policy research_pointer_rule`,
+    `tree_optimization census 2026-07-12`
+  ][reg=set]
+}
+
+^"completed_reference"{
+  note = `Virtual archive — folders stay in place; index.spw gets archive_status + cold fixity.`
+
+  members: #[
+    .{ slug = `state-satchel-card-gesture-fixes` ; superseded_by = `card-anatomy-interactions` ; research = `component-philosophy-harmony-2026-07` }[reg=facet],
+    .{ slug = `card-anatomy-interactions` ; superseded_by = `rpg-portal-fantasy` ; research = `page-component-census-2026-07` }[reg=facet],
+    .{ slug = `overlay-layer-ownership` ; kind = fix ; research = `css-module-attribute-impact-2026-07` }[reg=facet],
+    .{ slug = `menu-containment-navigation` ; kind = fix ; research = `chrome-navigation-wonder` }[reg=facet],
+    .{ slug = `mobile-image-effects` ; kind = fix ; research = `image-metaphysics-aesthetic-pass` }[reg=facet],
+    .{ slug = `runtime-route-css-regressions` ; kind = fix ; research = `build-runtime-performance-2026-07` }[reg=facet]
+  ][reg=set]
+}
+
+^"research_routing"{
+  copy_vocabulary: #[@vocabulary_metaphor_synthesis, `internal-external-vocabulary-clusters-2026-07`][reg=set]
+  spacing_material: #[`page-spacing-runtime-synthesis-2026-07`, `spacing-sheet-census-2026-07`][reg=set]
+  nav_interaction: #[@metaphor_primitive_research, `javascript-module-census-2026-07`][reg=set]
+  discipline_history: #[@appendices_index, `technolinguistics-web-history-2007-2026`][reg=set]
+  agent_plan_inflation: #[@commit_skill_induction, @commit_history_deep][reg=set]
+  module_runtime: #[`module-export-standalone-2026-07`, `javascript-module-census-2026-07`][reg=set]
+}
+
+^"reading_orders"{
+  plan_ecology_pass = ?<
+    @planning_ecology,
+    @plan_index_convention,
+    @plans_root,
+    `this audit`,
+    @archive_sweep
+  >[reg=stream]
+
+  rail_before_patch = ?<
+    @spw_architecture_ecology,
+    @agent_ecology,
+    @plan_index_convention,
+    @plans_root
+  >[reg=stream]
+}
+
+^"registry_keys"{
+  audits_index = `plan_ecology_semantics`
+  conventions = #[`planning_ecology`, `plan_index`, `agent_ecology`][reg=set]
+  script = @maintain_script
+}
+
+validation: #[
+  `node scripts/maintain-plan-directory-indexes.mjs`,
+  `rg 'plan_refinement|conceptual_model|research_bridge|completed_reference' .agents/plans/index.spw .spw/conventions/plan-index.spw`,
+  `rg -l 'plan_refinement' .agents/plans | wc -l` # expect hand-refined count from plan-refinements-data.mjs
+  `rg 'completed_reference' scripts/maintain-plan-directory-indexes.mjs`,
+  `git diff --check`
+][reg=set]
+
+dispatch: .{
+  ecology = @planning_ecology
+  convention = @plan_index_convention
+  architecture = @spw_architecture_ecology
+  plans = @plans_root
+  sweep = @archive_sweep
+}[reg=facet]

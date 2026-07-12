@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the distilled media-facing translation surface; update only when proof points change.
 ^"operational_hooks"{
  selectors = #[ `.agents/plans/media-feature-brief/media-feature-brief.spw`, ][reg=set]
  probe_ref = `Confirm the new route and all added links use root-relative paths.`

@@ -1,3 +1,4 @@
+# Review 2026-07-12 — merge into template-shell-refactor; editor friendliness is the acceptance criterion, not a second owner.
 # Plan Index — Editable Page Shell
 #
 # Make high-traffic pages easier for naive models to edit in place by moving repeated head and navigation chrome into HTML-native template directives while preserving hand-authored…
@@ -14,7 +15,7 @@ intent: .{
  goal = `Make high-traffic pages easier for naive models to edit in place by moving repeated head and navigation chrome into HTML-native template directives while preserving hand-authored route content.`
  owner = `editable-page-shell`
  kind = `plan`
- bucket = `active_backlog`
+ bucket = `merged`
  artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
@@ -23,8 +24,26 @@ intent: .{
  semantic_layer = "pragmatics"
  collaboration_phase = "tending"
  memory_tier = "hot"
- bucket = "active_backlog"
+ bucket = "merged"
 }[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Make high-traffic pages easier for naive models to edit in place by moving repeated head and navigation chrome into…`
+ concepts = #[
+  `editable`,
+  `page`,
+  `shell`,
+  `high-traffic`,
+  `pages`,
+ ][reg=set]
+ surfaces = #[
+  `scripts/template.mjs`,
+  `settings/index.html`,
+  `.spw/surfaces/page-model.spw`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
 
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
@@ -41,6 +60,20 @@ dispatch: .{
  page_model = @page_model
 }[reg=facet]
 
+^"connection_points"{
+ owner_rail = `css-architecture-readability`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `merge`
+ merged_into = #[
+  `template-shell-refactor`,
+ ][reg=set]
+ retain = `editor friendliness as acceptance criterion`
+ status = `superseded`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-editable_page_shell-001"
  layer = "pragmatic"
@@ -49,7 +82,7 @@ dispatch: .{
  impl_ref = ~"../../../scripts/template.mjs"
  probe_ref = `node --check scripts/template.mjs`
  falsification = `A patch cannot satisfy the public goal while leaving ../../../scripts/template.mjs unchanged or untested.`
- status = "active"
+ status = "superseded"
 }[reg=facet]
 
 validation: #[
@@ -71,4 +104,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

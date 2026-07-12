@@ -1,20 +1,21 @@
+# Review 2026-07-12 — completed reference; current raster treatment work belongs to image-metaphysics-aesthetic-pass.
 # Plan Index — mobile-image-effects
 #
 # Both failures are on the raster-image treatment path.
 
 #>plan_mobile_image_effects_index
 #:index #!plan
-#:operation #!audit
+#:operation #!archive
 #:layer #!pragmatics
 
-operation = "audit"
-fixity = "tending"
+operation = "archive"
+fixity = "cold"
 
 intent: .{
  goal = `Both failures are on the raster-image treatment path.`
  owner = `mobile-image-effects`
  kind = `fix`
- bucket = `fix_queue`
+ bucket = `completed_reference`
  artifact_shape = `FIX.md | index.spw`
 }[reg=facet]
 
@@ -22,9 +23,27 @@ intent: .{
  practice_depth = "observation | gesture"
  semantic_layer = "pragmatics"
  collaboration_phase = "exchange"
- memory_tier = "hot"
- bucket = "fix_queue"
+ memory_tier = "cold"
+ bucket = "completed_reference"
 }[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Both failures are on the raster-image treatment path.`
+ concepts = #[
+  `mobile-image-effects`,
+  `both`,
+  `failures`,
+  `raster-image`,
+  `treatment`,
+ ][reg=set]
+ surfaces = #[
+  `css/effects/metaphysical-paper.css`,
+  `js/media/image-metaphysics.js`,
+  `.agents/plans/unsorted-image-rollout/wip.spw`,
+ ][reg=set]
+ fixity_tier = `cold`
+}[reg=facet]
+
 
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
@@ -41,6 +60,32 @@ dispatch: .{
  wip = @wip
 }[reg=facet]
 
+^"research_bridge"{
+ local_research = #[
+  .{ label = `archive_sweep` ; path = `.agents/plans/archive/2026-07-12-plan-ecology-semantics-architecture.md` }[reg=facet],
+  .{ label = `commit_history_deep` ; path = `.spw/audits/commit-history-deep-2026-07/index.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"archive_status"{
+ status = `completed_reference`
+ archive_note = `.agents/plans/archive/2026-07-12-plan-ecology-semantics-architecture.md`
+ retain_reason = `Direct citations preserved — virtual bucket not physical move.`
+ research_pointer = `image-metaphysics-aesthetic-pass`
+ kind = `fix`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `completed_reference`
+ note = `current raster work belongs to image-metaphysics-aesthetic-pass`
+ route_to = #[
+  `image-metaphysics-aesthetic-pass`,
+ ][reg=set]
+ status = `superseded`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-mobile_image_effects-001"
  layer = "pragmatic"
@@ -49,7 +94,7 @@ dispatch: .{
  impl_ref = ~"../../../public/css/effects/metaphysical-paper.css"
  probe_ref = `rg 'mobile-image-effects' .agents/plans/mobile-image-effects`
  falsification = `The listed failure mode returns after the planned fix lands.`
- status = "active"
+ status = "superseded"
 }[reg=facet]
 
 editor_prompts: #[
@@ -62,4 +107,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

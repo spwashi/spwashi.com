@@ -10,11 +10,40 @@
     <link rel="stylesheet" href="/public/css/style.css">
     <link rel="stylesheet" href="/public/css/components/cards/profile-card.css">
     <script type="module" src="/public/js/site.js"></script>
+    <script type="application/json" id="profile-default-seed">
+    {
+      "header": { "name": "samwashington", "role": "Software Engineer & Artist", "status": "looking", "sigil": "^", "tagline": "I build software and make art. ~15 years writing code; I make systems learnable." },
+      "badges": [
+        { "cluster": "stack", "value": "C++" },
+        { "cluster": "stack", "value": "TypeScript" },
+        { "cluster": "stack", "value": "JavaScript" },
+        { "cluster": "stack", "value": "full-stack / web" },
+        { "cluster": "domain", "value": "e-commerce" },
+        { "cluster": "domain", "value": "applied learning science" },
+        { "cluster": "domain", "value": "publishing platforms" },
+        { "cluster": "approach", "value": "semantic systems" },
+        { "cluster": "approach", "value": "pedagogy-driven" },
+        { "cluster": "approach", "value": "inspectable by design" },
+        { "cluster": "context", "value": "Digital Applications Developer" },
+        { "cluster": "context", "value": "e-commerce SWE (2020–2025)" },
+        { "cluster": "context", "value": "UIUC — Applied Learning Science" },
+        { "cluster": "role", "value": "full-stack engineer" }
+      ],
+      "sections": [
+        { "heading": "What I bring", "operator": "^", "body": "A full-stack engineer who treats a codebase as learnable material. I turn sprawling systems into named, traceable structure — the way this site maps data-spw-* attributes to CSS clusters to philosophy docs — so other people (and agents) can navigate the work instead of re-deriving it." },
+        { "heading": "Context", "operator": "~", "body": "Started in C++ ~15 years ago wanting to know how transistors worked; went to UIUC in 2014, landed in the Division of General Studies, and declared Applied Learning Science. Left to work and to support my student org, Student Body for Meaningful Education. First role was Digital Applications Developer; then several years as a full-stack e-commerce engineer (2020–2025)." },
+        { "heading": "Currently building", "operator": "!", "body": "The Spw language — precise notation for how belief clusters form and progress — and spwashi.com as its working surface. Earlier explorations live at factshift.com. I'm aiming this toward a novel publishing platform that extends the structure and fire of school-age learning into adulthood. On the art side, a film releasing 2027." },
+        { "heading": "Looking for", "operator": "*", "body": "Engineering work that values semantic clarity and learnability, a path back toward graduate study in learning science, and collaborators building publishing and learning tools." }
+      ],
+      "footer": { "contact": "sam@spwashi.com", "links": [ { "label": "spwashi.com", "href": "https://spwashi.com/" }, { "label": "factshift.com", "href": "https://factshift.com/" } ] }
+    }
+    </script>
     <script type="module">
         import { initSpwProfileTool } from '/public/js/modules/profile/tool.js';
 
         initSpwProfileTool({
             storageKey: 'spw-profile-builder',
+            defaultProfileScriptId: 'profile-default-seed',
         });
     </script>
     <link rel="canonical" href="https://spwashi.com/tools/profile/">

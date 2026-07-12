@@ -1,3 +1,4 @@
+# Review 2026-07-12 — split: care guidance and RPG asset composition are unrelated owners joined by storage, not one coherent plan.
 # Plan Index — Care Stats, Notes, and RPG Atlas
 #
 # Add a practical page about low-cost supports when therapy is inaccessible, then connect that public guidance to two browser-local systems: 1. a reusable local note register that…
@@ -26,6 +27,24 @@ intent: .{
  bucket = "active_backlog"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Add a practical page about low-cost supports when therapy is inaccessible, then connect that public guidance to two…`
+ concepts = #[
+  `rpg`,
+  `care`,
+  `stats`,
+  `notes`,
+  `atlas`,
+ ][reg=set]
+ surfaces = #[
+  `settings/index.html`,
+  `js/site.js`,
+  `play/rpg-wednesday/index.html`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -39,6 +58,18 @@ dispatch: .{
  settings_index_html = @settings_index_html
  site = @site
  play_rpg_wednesday_index_html = @play_rpg_wednesday_index_html
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `split`
+ note = `care guidance and RPG asset composition are unrelated owners`
+ rescope = `required`
+ status = `active`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -71,4 +102,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

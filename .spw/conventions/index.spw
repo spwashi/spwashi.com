@@ -64,6 +64,7 @@
 @component_taxonomy: ~"./component-taxonomy.spw"
 @component_region_personality: ~"./component-region-personality.spw"
 @spw_architecture_ecology: ~"./spw-architecture-ecology.spw"
+@relational_design_graph: ~"../graph.spw"
 @spw_architecture_ecology_plan: ~"../../.agents/plans/spw-architecture-ecology/PLAN.md"
 @chrome_navigation_wonder: ~"../../.agents/plans/chrome-navigation-wonder/PLAN.md"
 @language: ~"../language/index.spw"
@@ -101,6 +102,7 @@
 @naming_grammar_js_types_audit: ~"../audits/naming-grammar-js-types-2026-07/index.spw"
 @commit_skill_induction_audit: ~"../audits/commit-skill-induction-2026-07/index.spw"
 @commit_history_deep_audit: ~"../audits/commit-history-deep-2026-07/index.spw"
+@plan_ecology_semantics_audit: ~"../audits/plan-ecology-semantics-2026-07.spw"
 @agentic_development_audit: ~"../audits/agentic-development-2026-07/index.spw"
 @feature_partial_theatrics: ~"./feature-partial-theatrics.spw"
 @feature_utilization: ~"./feature-utilization.spw"
@@ -155,6 +157,7 @@ dispatch: .{
  component_taxonomy = @component_taxonomy
  component_region_personality = @component_region_personality
  spw_architecture_ecology = @spw_architecture_ecology
+ relational_design_graph = @relational_design_graph
  chrome_navigation_wonder = @chrome_navigation_wonder
  language = @language
  language_v04 = @language_v04
@@ -198,6 +201,7 @@ dispatch: .{
  naming_grammar_js_types_audit = @naming_grammar_js_types_audit
  commit_skill_induction_audit = @commit_skill_induction_audit
  commit_history_deep_audit = @commit_history_deep_audit
+ plan_ecology_semantics_audit = @plan_ecology_semantics_audit
  agentic_development_audit = @agentic_development_audit
  feature_partial_theatrics = @feature_partial_theatrics
 }[reg=facet]

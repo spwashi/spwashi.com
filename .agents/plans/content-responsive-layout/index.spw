@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the content/container adaptation owner; reject viewport abstraction that lacks a real component proof.
 # Plan Index — content-responsive-layout
 #
 # The site should stop depending on a small number of viewport breakpoints and instead let components adapt from their own content measure, card density, and overlay ownership. This…
@@ -26,6 +27,22 @@ intent: .{
  bucket = "active_backlog"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `The site should stop depending on a small number of viewport breakpoints and instead let components adapt from their…`
+ concepts = #[
+  `content`,
+  `measure`,
+  `content-responsive-layout`,
+  `stop`,
+  `depending`,
+ ][reg=set]
+ surfaces = #[
+  `.agents/plans/interaction-loop-contract/`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -37,6 +54,10 @@ dispatch: .{
  plan = @plan
  wip = @wip
  interaction_loop_contract = @interaction_loop_contract
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -76,4 +97,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

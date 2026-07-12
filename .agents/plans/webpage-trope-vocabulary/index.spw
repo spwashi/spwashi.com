@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the literal-website language owner; familiar page terms should precede optional metaphors.
 # Plan Index — Webpage Trope Vocabulary
 #
 # Make the site introduce itself as a literal website and reference document before it asks visitors to understand broader metaphors. The home page should refer to itself as the…
@@ -26,6 +27,25 @@ intent: .{
  bucket = "public_route_proof_genre"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Make the site introduce itself as a literal website and reference document before it asks visitors to understand…`
+ concepts = #[
+  `page`,
+  `introduce`,
+  `itself`,
+  `home`,
+  `webpage`,
+ ][reg=set]
+ surfaces = #[
+  `css/components/page-anatomy.css`,
+  `js/runtime/page-anatomy.js`,
+  `js/runtime/region-menu.js`,
+  `.spw/conventions/page-anatomy-vocabulary.spw`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -43,6 +63,22 @@ dispatch: .{
  public_js_runtime_page_anatomy_js = @public_js_runtime_page_anatomy_js
  region_menu = @region_menu
  page_anatomy_vocabulary = @page_anatomy_vocabulary
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `appendices_index` ; path = `.spw/audits/appendices/index.spw` }[reg=facet],
+  .{ label = `metaphor_primitive_research` ; path = `.spw/audits/metaphor-primitive-research-branching-2026-07.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"absorbs"{
+ reviewed = `2026-07-12`
+ plans = #[
+  `living-medium-copy-pass`,
+ ][reg=set]
+ rule = `Absorbed by 2026-07-12 review; see each source review_disposition and archive/2026-07-12-review-execution.md.`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -84,4 +120,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

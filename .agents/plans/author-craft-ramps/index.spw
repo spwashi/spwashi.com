@@ -1,3 +1,4 @@
+# Review 2026-07-12 — mark as implemented reference; future work must prove the ramp with a real author artifact.
 # Plan Index — author-craft-ramps
 #
 # Build a small /topics/craft/ cluster for a BookTok-adjacent author friend who may not identify as technical but is willing to explore HTML and CSS in fragments. The highest-value…
@@ -14,7 +15,7 @@ intent: .{
  goal = `Build a small /topics/craft/ cluster for a BookTok-adjacent author friend who may not identify as technical but is willing to explore HTML and CSS in fragments. The highest-value first pass should make the web feel like a sensory book object, an illustrator collaboration surface, and a playful file tradition. Taste note: bookish wonder without beige nostalgia — tactile, screenshot-worthy, and useful enough to hand to a creative collaborator.`
  owner = `author-craft-ramps`
  kind = `plan`
- bucket = `active_backlog`
+ bucket = `completed_reference`
  artifact_shape = `PLAN.md | wip.spw | author-craft-ramps.spw | index.spw`
 }[reg=facet]
 
@@ -23,8 +24,27 @@ intent: .{
  semantic_layer = "pragmatics"
  collaboration_phase = "tending"
  memory_tier = "hot"
- bucket = "active_backlog"
+ bucket = "completed_reference"
 }[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Build a small /topics/craft/ cluster for a BookTok-adjacent author friend who may not identify as technical but is…`
+ concepts = #[
+  `author-craft-ramps`,
+  `build`,
+  `small`,
+  `topics`,
+  `craft`,
+ ][reg=set]
+ surfaces = #[
+  `topics/index.html`,
+  `topics/craft/index.html`,
+  `topics/craft/fragments/index.html`,
+  `topics/craft/svg/index.html`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
 
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
@@ -55,6 +75,26 @@ dispatch: .{
  about_website_index_html = @about_website_index_html
 }[reg=facet]
 
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `completed_reference`
+ note = `implemented reference; future work must prove the ramp with a real author artifact`
+ status = `superseded`
+}[reg=facet]
+
+^"absorbs"{
+ reviewed = `2026-07-12`
+ plans = #[
+  `author-rpg-notebooks`,
+  `svg-handoff-copy-alignment`,
+ ][reg=set]
+ rule = `Absorbed by 2026-07-12 review; see each source review_disposition and archive/2026-07-12-review-execution.md.`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-author_craft_ramps-001"
  layer = "pragmatic"
@@ -63,7 +103,7 @@ dispatch: .{
  impl_ref = ~"../../../topics/index.html"
  probe_ref = `Hypotheses: an author can open /topics/craft/, choose a ramp, and understand one concrete next step; a developer friend can see where they could help; screenshots capture prompt cards and motifs without needing runtime context.`
  falsification = `A patch cannot satisfy the public goal while leaving ../../../topics/index.html unchanged or untested.`
- status = "active"
+ status = "superseded"
 }[reg=facet]
 
 scope: .{
@@ -92,4 +132,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

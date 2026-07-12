@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as a bounded lore/copy owner; combinatoric jokes must remain playable, legible, and non-exclusionary.
 # Plan Index — rpg-boonwap-fabric
 #
 # RPG Wednesday and its neighboring public surfaces should make the combinatoric fabric legible enough that players, collaborators, designers, and read-aloud agents can all follow…
@@ -26,6 +27,25 @@ intent: .{
  bucket = "active_backlog"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `RPG Wednesday and its neighboring public surfaces should make the combinatoric fabric legible enough that players,…`
+ concepts = #[
+  `rpg`,
+  `wednesday`,
+  `surfaces`,
+  `legible`,
+  `designers`,
+ ][reg=set]
+ surfaces = #[
+  `play/rpg-wednesday/index.html`,
+  `play/rpg-wednesday/cast/index.html`,
+  `play/rpg-wednesday/sessions/index.html`,
+  `design/components/index.html`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -45,6 +65,10 @@ dispatch: .{
  design_components_index_html = @design_components_index_html
  contact_index_html = @contact_index_html
  topics_index_html = @topics_index_html
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -84,4 +108,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

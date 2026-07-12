@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the public design entry owner; favor shipped specimens over more catalog explanation.
 # Plan Index — design-hub
 #
 # Create a top-level /design/ hub that declares design as a first-class public surface on the site, gives collaborators a shared page for team communication, and exposes real…
@@ -26,6 +27,25 @@ intent: .{
  bucket = "public_route_proof_genre"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Create a top-level /design/ hub that declares design as a first-class public surface on the site, gives collaborators a…`
+ concepts = #[
+  `design`,
+  `hub`,
+  `page`,
+  `existing`,
+  `pretext`,
+ ][reg=set]
+ surfaces = #[
+  `design/index.html`,
+  `about/website/index.html`,
+  `topics/site-design/index.html`,
+  `css/style.css`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -43,6 +63,14 @@ dispatch: .{
  topics_site_design_index_html = @topics_site_design_index_html
  style = @style
  experiments = @experiments
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `appendices_index` ; path = `.spw/audits/appendices/index.spw` }[reg=facet],
+  .{ label = `metaphor_primitive_research` ; path = `.spw/audits/metaphor-primitive-research-branching-2026-07.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -73,4 +101,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

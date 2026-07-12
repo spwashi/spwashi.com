@@ -1,3 +1,4 @@
+# Review 2026-07-12 — completed-reference candidate; route new work through CSS readability and the live ornament contract.
 # Plan Index — css-progressive-ornaments
 #
 # The desired end state is a CSS architecture that keeps the GitHub Pages static deployment simple while making style ownership obvious: base page shell, Spw semantic components,…
@@ -14,7 +15,7 @@ intent: .{
  goal = `The desired end state is a CSS architecture that keeps the GitHub Pages static deployment simple while making style ownership obvious: base page shell, Spw semantic components, runtime chrome, page surfaces, progressive enhancements, and seasonal ornaments should each have a clear home. The first implementation should be a no-behavior split that preserves the existing <link href="/public/css/style.css?v=0.0.2"> contract. The taste note is calm core, summoned delight: seasonal features and ornaments may add wonder, but they must never become required for navigation, readability, accessibility, or layout stability.`
  owner = `css-progressive-ornaments`
  kind = `plan`
- bucket = `active_backlog`
+ bucket = `completed_reference`
  artifact_shape = `PLAN.md | wip.spw | css-progressive-ornaments.spw | index.spw`
 }[reg=facet]
 
@@ -23,8 +24,27 @@ intent: .{
  semantic_layer = "pragmatics"
  collaboration_phase = "tending"
  memory_tier = "hot"
- bucket = "active_backlog"
+ bucket = "completed_reference"
 }[reg=facet]
+
+^"conceptual_model"{
+ thesis = `The desired end state is a CSS architecture that keeps the GitHub Pages static deployment simple while making style…`
+ concepts = #[
+  `css`,
+  `style`,
+  `page`,
+  `seasonal`,
+  `ornaments`,
+ ][reg=set]
+ surfaces = #[
+  `css/style.css`,
+  `topics/software/index.html`,
+  `topics/software/pretext/index.html`,
+  `.spw/conventions/site-semantics.spw`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
 
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
@@ -47,6 +67,20 @@ dispatch: .{
  site_semantics = @site_semantics
 }[reg=facet]
 
+^"connection_points"{
+ owner_rail = `css-architecture-readability`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `completed_reference`
+ note = `route new work through CSS readability and the live ornament contract`
+ route_to = #[
+  `css-architecture-readability`,
+ ][reg=set]
+ status = `superseded`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-css_progressive_ornaments-001"
  layer = "pragmatic"
@@ -55,7 +89,7 @@ dispatch: .{
  impl_ref = ~"../../../public/css/style.css"
  probe_ref = `Hypotheses: a CSS split by responsibility will reduce future edit risk; keeping style.css as the import entrypoint will preserve GitHub Pages simplicity; ornament layers can add seasonal wonder without contaminating layout; progressive enhancement rules will keep experiments reversible.`
  falsification = `A patch cannot satisfy the public goal while leaving ../../../public/css/style.css unchanged or untested.`
- status = "active"
+ status = "superseded"
 }[reg=facet]
 
 scope: .{
@@ -84,4 +118,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

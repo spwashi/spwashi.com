@@ -1,3 +1,4 @@
+# Review 2026-07-12 — merge shell spacing into chrome navigation and arc motion into locomotion; retain the leaflet as a bounded brief.
 # Plan Index — Plan Leaflet: space-menu-arcs-electrical
 #
 # A layered style and interaction refinement pass that addresses space efficiency, mobile menu layout issues, arc/loop lifecycle indicators, and the circuit metaphor for JS module…
@@ -26,6 +27,19 @@ intent: .{
  bucket = "css_layout_interaction"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `A layered style and interaction refinement pass that addresses space efficiency, mobile menu layout issues, arc/loop…`
+ concepts = #[
+  `leaflet`,
+  `space-menu-arcs-electrical`,
+  `layered`,
+  `style`,
+  `interaction`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -33,6 +47,29 @@ intent: .{
 
 dispatch: .{
  plan = @plan
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `page_spacing_runtime` ; path = `.spw/audits/page-spacing-runtime-synthesis-2026-07.spw` }[reg=facet],
+  .{ label = `vocabulary_metaphor` ; path = `.spw/audits/vocabulary-metaphor-growth-synthesis-2026-07.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `merge`
+ merged_into = #[
+  `chrome-navigation-wonder`,
+  `locomotion-collapse-redistribution`,
+ ][reg=set]
+ retain = `the leaflet as a bounded brief`
+ status = `superseded`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -43,7 +80,7 @@ dispatch: .{
  impl_ref = ~"./PLAN.md"
  probe_ref = `rg 'space-menu-arcs-electrical' .agents/plans/space-menu-arcs-electrical`
  falsification = `A patch cannot satisfy the public goal while leaving ./PLAN.md unchanged or untested.`
- status = "active"
+ status = "superseded"
 }[reg=facet]
 
 editor_prompts: #[
@@ -56,4 +93,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

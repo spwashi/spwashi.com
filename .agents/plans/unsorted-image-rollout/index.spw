@@ -1,3 +1,4 @@
+# Review 2026-07-12 — merge into style-image-cohesion and topic-photo-svg-pass; asset classification must precede rollout.
 # Plan Index — unsorted-image-rollout
 #
 # The desired end state is a site where a few top-level routes immediately feel more visual without losing their editorial clarity. Images should not read like loose decoration.…
@@ -26,6 +27,25 @@ intent: .{
  bucket = "media_image_sensory"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `The desired end state is a site where a few top-level routes immediately feel more visual without losing their…`
+ concepts = #[
+  `unsorted-image-rollout`,
+  `desired`,
+  `end`,
+  `state`,
+  `where`,
+ ][reg=set]
+ surfaces = #[
+  `topics/index.html`,
+  `topics/software/index.html`,
+  `.agents/plans/unsorted-image-rollout/PLAN.md`,
+  `.agents/plans/unsorted-image-rollout/wip.spw`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -41,6 +61,25 @@ dispatch: .{
  topics_software_index_html = @topics_software_index_html
 }[reg=facet]
 
+^"research_bridge"{
+ local_research = #[
+  .{ label = `vocabulary_metaphor` ; path = `.spw/audits/vocabulary-metaphor-growth-synthesis-2026-07.spw` }[reg=facet],
+  .{ label = `metaphor_primitive_research` ; path = `.spw/audits/metaphor-primitive-research-branching-2026-07.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `merge`
+ merged_into = #[
+  `style-image-cohesion`,
+  `topic-photo-svg-pass`,
+ ][reg=set]
+ retain = `asset classification must precede rollout`
+ status = `superseded`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-unsorted_image_rollout-001"
  layer = "pragmatic"
@@ -49,7 +88,7 @@ dispatch: .{
  impl_ref = ~"../../../topics/index.html"
  probe_ref = `Run git diff --check.`
  falsification = `A patch cannot satisfy the public goal while leaving ../../../topics/index.html unchanged or untested.`
- status = "active"
+ status = "superseded"
 }[reg=facet]
 
 scope: .{
@@ -79,4 +118,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

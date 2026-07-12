@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the long-form reading owner; fold attention-cue work into accessible typography settings and scroll calm.
 # Plan Index — Typography Reading Groove
 #
 # Make long-form reading surfaces feel more musical and skimmable while scrolling, especially for audiences who are mostly listening and only partially watching the screen.
@@ -26,6 +27,19 @@ intent: .{
  bucket = "active_backlog"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Make long-form reading surfaces feel more musical and skimmable while scrolling, especially for audiences who are…`
+ concepts = #[
+  `reading`,
+  `typography`,
+  `groove`,
+  `long-form`,
+  `surfaces`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -33,6 +47,18 @@ intent: .{
 
 dispatch: .{
  plan = @plan
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"absorbs"{
+ reviewed = `2026-07-12`
+ plans = #[
+  `attention-cue-gestures`,
+ ][reg=set]
+ rule = `Absorbed by 2026-07-12 review; see each source review_disposition and archive/2026-07-12-review-execution.md.`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -70,4 +96,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

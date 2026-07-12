@@ -1,3 +1,4 @@
+# Review 2026-07-12 — implemented reference; active publishing work should move to real posts or a proven blob, not more interpreter scope.
 # Plan Index — blog-input-interpreter
 #
 # Create a framework-free /blog/ route that is useful before there is a full archive. The first version lets a visitor paste draft text, Spw fragments, or wonder notes and receive a…
@@ -14,7 +15,7 @@ intent: .{
  goal = `Create a framework-free /blog/ route that is useful before there is a full archive. The first version lets a visitor paste draft text, Spw fragments, or wonder notes and receive a local interpretation: title suggestion, summary, tags, questions, outline, stats, and a copyable Spw-style draft seed. Taste note: the blog should feel like an editorial workbench and a permission structure for noticing, not a generic feed or an AI demo. The deeper goal is to establish the blog as the public writing pipeline for the site: - Raw input becomes a structured draft. - Spw operators can act as temporary scaffolds for thought without replacing prose. - Wonder stays present as a serious input, not decoration. - Some interpreted drafts should mature into durable blog blobs before they become posts. - Structured drafts can later become hand-written static posts. - The interpreter explains what it inferred instead of pretending to know. - The privacy boundary stays obvious: local interpretation first, no network dependency by default.`
  owner = `blog-input-interpreter`
  kind = `plan`
- bucket = `active_backlog`
+ bucket = `completed_reference`
  artifact_shape = `PLAN.md | wip.spw | blog-input-interpreter.spw | index.spw`
 }[reg=facet]
 
@@ -23,8 +24,27 @@ intent: .{
  semantic_layer = "pragmatics"
  collaboration_phase = "tending"
  memory_tier = "hot"
- bucket = "active_backlog"
+ bucket = "completed_reference"
 }[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Create a framework-free /blog/ route that is useful before there is a full archive. The first version lets a visitor…`
+ concepts = #[
+  `blog`,
+  `draft`,
+  `spw`,
+  `wonder`,
+  `interpretation`,
+ ][reg=set]
+ surfaces = #[
+  `js/site.js`,
+  `css/style.css`,
+  `.agents/plans/blog-blob-spw/PLAN.md`,
+  `.agents/plans/copy-localization/PLAN.md`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
 
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
@@ -51,6 +71,21 @@ dispatch: .{
  agents_plans_copy_localization_plan_md = @agents_plans_copy_localization_plan_md
 }[reg=facet]
 
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+ related_plans = #[
+  `blog-blob-spw`,
+  `copy-localization`,
+ ][reg=set]
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `completed_reference`
+ note = `implemented reference; publishing work moves to real posts or a proven blob`
+ status = `superseded`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-blog_input_interpreter-001"
  layer = "pragmatic"
@@ -59,7 +94,7 @@ dispatch: .{
  impl_ref = ~"../../../public/js/site.js"
  probe_ref = `A pasted draft produces a title, summary, tags, questions, outline, and draft seed.`
  falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/site.js unchanged or untested.`
- status = "active"
+ status = "superseded"
 }[reg=facet]
 
 validation: #[
@@ -88,4 +123,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

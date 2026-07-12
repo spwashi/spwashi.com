@@ -1,3 +1,4 @@
+# Review 2026-07-12 — merge measurable loading work into bootstrap performance; “movements” may guide copy, not scheduling architecture.
 # Plan Index — symphonic-loading-layered-editions
 #
 # A visitor's first seconds should read as movements: structure seats itself silently, reading arrives complete, instruments come online with eased acknowledgment, and atmosphere…
@@ -14,7 +15,7 @@ intent: .{
  goal = `A visitor's first seconds should read as movements: structure seats itself silently, reading arrives complete, instruments come online with eased acknowledgment, and atmosphere settles last. A returning visitor should feel remembered; a visitor on a different device, cache generation, or deploy edition should feel a small, safe stylistic surprise - different ornament weather over an identical city. The taste note is conducted arrival + governed variance: sequencing is intentional (never FOUC), and surprise is confined to layers that cannot move structure or break interaction contracts.`
  owner = `symphonic-loading-layered-editions`
  kind = `plan`
- bucket = `active_backlog`
+ bucket = `merged`
  artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
@@ -23,8 +24,27 @@ intent: .{
  semantic_layer = "pragmatics"
  collaboration_phase = "tending"
  memory_tier = "hot"
- bucket = "active_backlog"
+ bucket = "merged"
 }[reg=facet]
+
+^"conceptual_model"{
+ thesis = `A visitor's first seconds should read as movements: structure seats itself silently, reading arrives complete,…`
+ concepts = #[
+  `visitor`,
+  `structure`,
+  `feel`,
+  `different`,
+  `surprise`,
+ ][reg=set]
+ surfaces = #[
+  `.spw/conventions/site-semantics.spw`,
+  `css/style-core.css`,
+  `scripts/css-bundle.mjs`,
+  `css/modes/hydration.css`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
 
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
@@ -53,6 +73,23 @@ dispatch: .{
  effects = @effects
 }[reg=facet]
 
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+ related_plans = #[
+  `runtime-bootstrap-performance`,
+ ][reg=set]
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `merge`
+ merged_into = #[
+  `runtime-bootstrap-performance`,
+ ][reg=set]
+ retain = `movements may guide copy, not scheduling architecture`
+ status = `superseded`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-symphonic_loading_layered_editions-001"
  layer = "pragmatic"
@@ -61,7 +98,7 @@ dispatch: .{
  impl_ref = ~"../../../.spw/conventions/site-semantics.spw"
  probe_ref = `Lighthouse/DevTools: CLS 0 attributable to movements III/IV; reading complete before atmosphere requests start on a throttled profile.`
  falsification = `A patch cannot satisfy the public goal while leaving ../../../.spw/conventions/site-semantics.spw unchanged or untested.`
- status = "active"
+ status = "superseded"
 }[reg=facet]
 
 validation: #[
@@ -83,4 +120,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

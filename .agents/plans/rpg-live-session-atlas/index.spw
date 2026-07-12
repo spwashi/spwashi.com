@@ -1,3 +1,4 @@
+# Review 2026-07-12 — merge into local gameplay and kit refactor; retain device parity and fast capture as live-session proofs.
 # Plan Index — rpg-live-session-atlas
 #
 # RPG Wednesday should be easier to run live across phone, tablet, and desktop widths while a session is happening on TikTok and Discord. The local kit should support a fast rhythm…
@@ -14,7 +15,7 @@ intent: .{
  goal = `RPG Wednesday should be easier to run live across phone, tablet, and desktop widths while a session is happening on TikTok and Discord. The local kit should support a fast rhythm of: - adding a scene, item, texture, or image reference - putting it in a timeline and namespace - collapsing or collecting it without losing it - moving it around as context changes - screenshotting the resulting cards for later interpretation in external art tools`
  owner = `rpg-live-session-atlas`
  kind = `plan`
- bucket = `active_backlog`
+ bucket = `merged`
  artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
@@ -23,8 +24,21 @@ intent: .{
  semantic_layer = "pragmatics"
  collaboration_phase = "tending"
  memory_tier = "hot"
- bucket = "active_backlog"
+ bucket = "merged"
 }[reg=facet]
+
+^"conceptual_model"{
+ thesis = `RPG Wednesday should be easier to run live across phone, tablet, and desktop widths while a session is happening on…`
+ concepts = #[
+  `rpg-live-session-atlas`,
+  `rpg`,
+  `wednesday`,
+  `easier`,
+  `run`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
 
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
@@ -35,6 +49,20 @@ dispatch: .{
  plan = @plan
 }[reg=facet]
 
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `merge`
+ merged_into = #[
+  `rpg-local-gameplay`,
+ ][reg=set]
+ retain = `device parity and fast capture as live-session proofs`
+ status = `superseded`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-rpg_live_session_atlas-001"
  layer = "pragmatic"
@@ -43,7 +71,7 @@ dispatch: .{
  impl_ref = ~"./PLAN.md"
  probe_ref = `node --check public/js/rpg-wednesday.js`
  falsification = `A patch cannot satisfy the public goal while leaving ./PLAN.md unchanged or untested.`
- status = "active"
+ status = "superseded"
 }[reg=facet]
 
 scope: .{
@@ -73,4 +101,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

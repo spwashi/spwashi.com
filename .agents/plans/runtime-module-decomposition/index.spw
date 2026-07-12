@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep only where persist/project/toggle/emit remove real duplication; do not force modules into a slogan.
 # Plan Index — runtime-module-decomposition
 #
 # A contributor (human or agent) should recognize the same four primitives everywhere: persist, project, toggle, emit. Feature modules (shell-disclosure, experiential, haptics, …)…
@@ -26,10 +27,28 @@ intent: .{
  bucket = "active_backlog"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `A contributor (human or agent) should recognize the same four primitives everywhere: persist, project, toggle, emit.…`
+ concepts = #[
+  `primitives`,
+  `runtime-module-decomposition`,
+  `contributor`,
+  `human`,
+  `agent`,
+ ][reg=set]
+ surfaces = #[
+  `js/kernel/dom-contracts.js`,
+  `js/kernel/bus.js`,
+  `js/interface/state-inspector.js`,
+  `js/runtime/state-inspector.js`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
-@index: ~"./index.spw"
 @plan: ~"./PLAN.md"
 @dom_contracts: ~"../../../public/js/kernel/dom-contracts.js"
 @bus: ~"../../../public/js/kernel/bus.js"
@@ -44,6 +63,10 @@ dispatch: .{
  public_js_interface_state_inspector_js = @public_js_interface_state_inspector_js
  public_js_runtime_state_inspector_js = @public_js_runtime_state_inspector_js
  shared = @shared
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `runtime-bootstrap-performance`
 }[reg=facet]
 
 ^"owner_claim"{

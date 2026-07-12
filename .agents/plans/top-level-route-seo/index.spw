@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the route metadata and shareability owner; semantic markup must support real onboarding copy.
 # Plan Index — Top-Level Route SEO And Onboarding Markup
 #
 # Make the primary public routes easier to discover, read, share, and enter by aligning page metadata, route relationships, accessible hero descriptions, and semantic data-spw-*…
@@ -26,6 +27,19 @@ intent: .{
  bucket = "active_backlog"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Make the primary public routes easier to discover, read, share, and enter by aligning page metadata, route…`
+ concepts = #[
+  `top-level`,
+  `seo`,
+  `onboarding`,
+  `markup`,
+  `primary`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -33,6 +47,10 @@ intent: .{
 
 dispatch: .{
  plan = @plan
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -71,4 +89,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

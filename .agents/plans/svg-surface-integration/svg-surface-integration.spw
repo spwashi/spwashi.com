@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the distilled SVG doctrine; host, interaction, and authorship boundaries must remain explicit.
 ^"operational_hooks"{
  selectors = #[ `.agents/plans/svg-surface-integration/svg-surface-integration.spw`, ][reg=set]
  probe_ref = `Hypotheses: a shared SVG host contract will let illustrations, widgets, and interactive components evolve without splintering the runtime; inline-versus-external rules will keep authoring tractable; mobile-first inspect/invoke semantics will make SVG surfaces teachable rather than gimmicky.`

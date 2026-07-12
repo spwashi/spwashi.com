@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the cauldron lifecycle owner; collection, pruning, persistence, and mirrors must share one state truth.
 # Plan Index — spell-cauldron-lifecycle-memory-gardening + runtime mirrors + CSS state refinement
 #
 # Make the site's "cauldron" (collection/resonance vessel for semantic ingredients) and "spells" (grounded, serializable, replayable interaction units / checkpoints) feel like…
@@ -26,6 +27,25 @@ intent: .{
  bucket = "active_backlog"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Make the site's "cauldron" (collection/resonance vessel for semantic ingredients) and "spells" (grounded, serializable,…`
+ concepts = #[
+  `spell-cauldron-lifecycle-memory-gardening`,
+  `runtime`,
+  `mirrors`,
+  `css`,
+  `state`,
+ ][reg=set]
+ surfaces = #[
+  `.spw/conventions/site-semantics.spw`,
+  `js/interface/composition.js`,
+  `js/runtime/spells.js`,
+  `css/ornament/ornament.css`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -53,6 +73,14 @@ dispatch: .{
  design_composition_index_html = @design_composition_index_html
  site = @site
  spell_cauldron_lifecycle_memory_gardening = @spell_cauldron_lifecycle_memory_gardening
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+ related_plans = #[
+  `agent-optimization`,
+  `spellcraft-authoring`,
+ ][reg=set]
 }[reg=facet]
 
 ^"owner_claim"{
@@ -86,4 +114,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

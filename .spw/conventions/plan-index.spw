@@ -17,10 +17,11 @@ operation = "contract"
 fixity = "stable"
 
 ^"file_roles"{
-  index_spw = "Traversal + selection surface: intent, dimensions, dispatch, owner_claim, editor_prompts, bucket, related_plans."
+  index_spw = "Traversal + selection surface: intent, dimensions, conceptual_model, dispatch, owner_claim, research_bridge, connection_points, editor_prompts, bucket."
   wip_spw = "Hot cache: plan_context, selection_probes, open_questions; pairs with PLAN.md."
   named_spw = "Stable model artifact: plan_linkage + operational_hooks when the plan owns reusable semantics."
   plan_md = "Sequencing source of truth for scope, phases, and validation order."
+  standalone_rule = "A plan index must be readable without opening PLAN.md first: one-sentence thesis, concept nouns, falsification, and at least one research or convention bridge."
 }
 
 ^"required_spw_features"{
@@ -32,10 +33,15 @@ fixity = "stable"
     `#:layer #!pragmatics`
   ][reg=set]
   blocks = #[
-    `intent facet with goal, owner, kind`,
+    `intent facet with goal, owner, kind, bucket`,
     `^"dimensions" facet for practice_depth, semantic_layer, collaboration_phase, memory_tier`,
-    `dispatch with @references and [reg=facet]`,
-    `^"owner_claim" with falsification when validation exists`,
+    `^"conceptual_model" facet — thesis, concepts [reg=set], surfaces [reg=set] when plan owns reusable meaning`,
+    `dispatch with @references and [reg=facet] (≤12 direct refs; overflow → ecology coordinator)`,
+    `^"owner_claim" with probe_ref + falsification`,
+    `^"research_bridge" when audits, appendices, or convention rails apply`,
+    `^"connection_points" — owner_rail, related_plans, superseded_by when archived`,
+    `^"archive_status" when fixity=cold or bucket=completed_reference|archive`,
+    `^"plan_refinement" when rail, canonical, or hand-refined — tone, accuracy, direction, inspiration, alignment`,
     `editor_prompts for first-read routing`,
     `validation [reg=set] when PLAN.md names checks`
   ][reg=set]
@@ -58,6 +64,61 @@ fixity = "stable"
   ][reg=set]
 }
 
+^"conceptual_model_template"{
+  definition = `Standalone conceptual frame — readable without PLAN.md sequencing.`
+  shape: .{
+    thesis = `One sentence: what this plan believes and why it matters.`
+    concepts = #[`2–6 stable nouns the plan owns or coordinates`][reg=set]
+    surfaces = #[`HTML/CSS/JS/.spw routes or conventions touched`][reg=set]
+    fixity_tier = `experimental | tending | stable | cold`
+  }[reg=facet]
+  rule = `Rail plans and semantic_rails bucket members should always expose conceptual_model; active_backlog may omit surfaces until first implementation pass.`
+}
+
+^"plan_refinement_template"{
+  definition = `Human-voiced plan steering — five axes agents and editors read before PLAN.md phases.`
+  axes: .{
+    tone = `How the work should sound and feel in copy, commits, and inspection surfaces — not marketing voice unless the plan owns promo.`
+    accuracy = `What is actually landed vs aspirational; falsifiable scope boundary.`
+    direction = `The next honest move — one primary vector, not a wish list.`
+    inspiration = `What this plan is for — the creative or craft pull that justifies the effort.`
+    alignment = `Which rail, convention, audit, or sibling plan must stay coherent.`
+  }[reg=facet]
+  minimum = `Semantic rails, canonical tracks, and completed_reference carry hand-authored plan_refinement; maintain script preserves PLAN_REFINEMENTS map.`
+  anti_pattern = `Pasting PLAN.md Public Goal into all five fields — each axis must add distinct steering.`
+}
+
+^"research_bridge_template"{
+  definition = `Route plan questions to local audits, appendices, or convention rails — not external web.`
+  shapes: #[
+    `audit ref → .spw/audits/<slug>.spw or nested index`,
+    `appendix ref → .spw/audits/appendices/<discipline>.spw via appendices/index.spw`,
+    `convention ref → .spw/conventions/<rail>.spw`,
+    `commit lens → commit-history-deep or commit-skill-induction when history informs scope`
+  ][reg=set]
+  minimum = `Semantic rails cite ≥1 research_bridge row; completed_reference cites archive sweep + absorbing owner.`
+}
+
+^"connection_points_template"{
+  definition = `Explicit graph edges so agents do not reconstruct plan adjacency from folder names.`
+  fields: .{
+    owner_rail = `semantic_rails plan that coordinates this work when not itself a rail`
+    related_plans = #[`≤6 @plan_<slug> refs`][reg=set]
+    superseded_by = `owner plan slug when status=completed_reference`
+    public_surface = `route or /about/plans/ anchor when human-facing`
+  }[reg=facet]
+}
+
+^"archive_status_template"{
+  when = `fixity=cold | bucket=completed_reference | bucket=archive`
+  fields: .{
+    status = `active | completed_reference | superseded | archived`
+    archive_note = `path under .agents/plans/archive/`
+    retain_reason = `why folder stays in place (direct citations)`
+    research_pointer = `audit or appendix that absorbed the insight`
+  }[reg=facet]
+}
+
 ^"dispatch"{
   wip_notebook = @wip_notebook
   planning_ecology = @planning_ecology
@@ -70,5 +131,7 @@ invariants: #[
   `index.spw routes; PLAN.md sequences.`,
   `Owner claims must name a falsification path.`,
   `Regenerate plan indexes with scripts/maintain-plan-directory-indexes.mjs during ecology sweeps.`,
-  `Promote repeated owner_claim patterns into .spw/slices/ or .spw/conventions/.`
+  `Promote repeated owner_claim patterns into .spw/slices/ or .spw/conventions/.`,
+  `Standalone value: index.spw thesis + conceptual_model before PLAN.md phases.`,
+  `Archive by virtual bucket + archive_status before physical folder moves.`
 ][reg=set]

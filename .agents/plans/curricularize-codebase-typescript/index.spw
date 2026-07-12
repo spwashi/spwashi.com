@@ -1,3 +1,4 @@
+# Review 2026-07-12 — merge TypeScript mechanics into typescript-integration and keep curriculum claims in public learning routes.
 # Plan Index — curricularize-codebase-typescript
 #
 # Make spwashi.com demonstrate the idea "curricularize your codebase": structure should be inspectable, teachable, and credible to experienced engineers while still supporting the…
@@ -26,6 +27,24 @@ intent: .{
  bucket = "runtime_js_validation"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Make spwashi.com demonstrate the idea "curricularize your codebase": structure should be inspectable, teachable, and…`
+ concepts = #[
+  `curricularize-codebase-typescript`,
+  `spwashi`,
+  `com`,
+  `demonstrate`,
+  `idea`,
+ ][reg=set]
+ surfaces = #[
+  `js/typed/`,
+  `scripts/typed/`,
+  `scripts/ts/site-contracts`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -41,6 +60,24 @@ dispatch: .{
  site_contracts = @site_contracts
 }[reg=facet]
 
+^"research_bridge"{
+ local_research = #[
+  .{ label = `javascript_module_census` ; path = `.spw/audits/javascript-module-census-2026-07.spw` }[reg=facet],
+  .{ label = `module_export_audit` ; path = `.spw/audits/module-export-standalone-2026-07.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `merge`
+ merged_into = #[
+  `typescript-integration`,
+ ][reg=set]
+ retain = `curriculum claims move to public learning routes`
+ status = `superseded`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-curricularize_codebase_typescript-001"
  layer = "pragmatic"
@@ -49,7 +86,7 @@ dispatch: .{
  impl_ref = ~"../../../public/js/typed/"
  probe_ref = `npm run build:runtime`
  falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/typed/ unchanged or untested.`
- status = "active"
+ status = "superseded"
 }[reg=facet]
 
 validation: #[
@@ -71,4 +108,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

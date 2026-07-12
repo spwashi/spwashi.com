@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep the feature register and guardrails as evidence; active edits belong in the route-purpose owner.
 ^"selection_probes"{
  probes = #[ `rg 'story-prompt-surface-pass' design/`, `git diff --check`, `test -f design/`, ][reg=set]
  rule = "Run probes before trusting cached plan_context."

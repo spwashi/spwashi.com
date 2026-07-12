@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as a prime, not an implementation plan; the next proof is one hand-authored blob lifecycle.
 # Plan Index — blog-blob-spw
 #
 # The desired end state is a publishing model where not every meaningful writing artifact has to become either "raw note" or "finished article." A blog blob should hold live…
@@ -26,6 +27,23 @@ intent: .{
  bucket = "active_backlog"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `The desired end state is a publishing model where not every meaningful writing artifact has to become either "raw note"…`
+ concepts = #[
+  `blob`,
+  `blog`,
+  `writing`,
+  `note`,
+  `post`,
+ ][reg=set]
+ surfaces = #[
+  `.spw/conventions/copy-localization.spw`,
+  `.agents/plans/blog-input-interpreter/PLAN.md`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -39,6 +57,13 @@ dispatch: .{
  blog_blob_spw = @blog_blob_spw
  plan_blog_input_interpreter = @plan_blog_input_interpreter
  copy_localization = @copy_localization
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `spw-architecture-ecology`
+ related_plans = #[
+  `blog-input-interpreter`,
+ ][reg=set]
 }[reg=facet]
 
 ^"owner_claim"{
@@ -79,4 +104,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

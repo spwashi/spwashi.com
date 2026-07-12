@@ -1,3 +1,4 @@
+# Review 2026-07-12 — retain as a small cache; move live offer copy and cadence decisions into the owner plan.
 ^"selection_probes"{
  probes = #[ `rg 'promo-wonder-cycle' public`, `Confirm day/week selection is deterministic for a given date.`, ][reg=set]
  rule = "Run probes before trusting cached plan_context."

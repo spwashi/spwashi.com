@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as a canonical decision rail; one focus dimension, one fixity tier, and one validation path per patch.
 # Plan Index — Model-Guided Refinement Rails
 #
 # Prepare this codebase for refinement by a model that can read .spw, follow explicit connections, and make competent local changes, but should not be expected to improvise…
@@ -24,6 +25,31 @@ intent: .{
  collaboration_phase = "tending"
  memory_tier = "warm"
  bucket = "semantic_rails"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Turn broad creative ambition into bounded rails: one focus dimension, one fixity tier, one validation path per patch.`
+ concepts = #[
+  `focus-dimension`,
+  `fixity-tier`,
+  `elemental-effect`,
+  `cross-language-trace`,
+  `creative-marketing-engine`,
+ ][reg=set]
+ surfaces = #[
+  `.spw/conventions/model-guided-refinement.spw`,
+  `.spw/conventions/semantic-capacity.spw`,
+  `.spw/surfaces/product-lines.spw`,
+ ][reg=set]
+ fixity_tier = `stable`
+}[reg=facet]
+
+^"plan_refinement"{
+ tone = `Calm instructor, not manifesto — name what to touch and what to leave alone.`
+ accuracy = `Convention + caches exist; full component traces and promo coherence are still open.`
+ direction = `Complete one model-guided trace on a real route before adding new cache families.`
+ inspiration = `Musicians and artists should recognize the site as extendable, not merely documented.`
+ alignment = `daily-kernel-development, semantic-copy-depth, vocabulary-metaphor-growth-synthesis audit`
 }[reg=facet]
 
 @plans_root: ~"../../../.agents/plans/index.spw"
@@ -61,6 +87,20 @@ dispatch: .{
  index = @index
 }[reg=facet]
 
+^"research_bridge"{
+ local_research = #[
+  .{ label = `vocabulary_metaphor` ; path = `.spw/audits/vocabulary-metaphor-growth-synthesis-2026-07.spw` }[reg=facet],
+  .{ label = `plan_ecology_semantics` ; path = `.spw/audits/plan-ecology-semantics-2026-07.spw` }[reg=facet],
+  .{ label = `commit_skill_induction` ; path = `.spw/audits/commit-skill-induction-2026-07/index.spw` }[reg=facet],
+  .{ label = `spw_architecture_ecology` ; path = `.spw/conventions/spw-architecture-ecology.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `self`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-model_guided_refinement-001"
  layer = "pragmatic"
@@ -83,6 +123,7 @@ validation: #[
 editor_prompts: #[
  .{ ask = `What does model-guided-refinement own, and what should stay out of scope?`, see = @plan }[reg=facet],
  .{ ask = `Which file should I open first to implement the next slice of model-guided-refinement?`, see = @index }[reg=facet],
+ .{ ask = `What is the tone, direction, and alignment for model-guided-refinement?`, see = @index#plan_refinement }[reg=facet],
  .{ ask = `What command or check falsifies whether model-guided-refinement still holds?`, see = @plan }[reg=facet],
 ][reg=set]
 
@@ -91,4 +132,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

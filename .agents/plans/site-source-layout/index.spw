@@ -1,3 +1,4 @@
+# Review 2026-07-12 — retain as a long-horizon migration prime; do not move the authored tree without ref-safe evidence and human review.
 # Plan Index — site-source-layout
 #
 # The desired end state is a repo where: - the authored website lives under one obvious source root: site/ - generated deploy output continues to live in dist/ - build/dev/check…
@@ -25,6 +26,25 @@ intent: .{
  memory_tier = "hot"
  bucket = "runtime_js_validation"
 }[reg=facet]
+
+^"conceptual_model"{
+ thesis = `The desired end state is a repo where: - the authored website lives under one obvious source root: site/ - generated…`
+ concepts = #[
+  `repo`,
+  `source`,
+  `root`,
+  `site-source-layout`,
+  `desired`,
+ ][reg=set]
+ surfaces = #[
+  `scripts/`,
+  `.spw/`,
+  `scripts/build.mjs`,
+  `scripts/dev-server.mjs`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
 
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
@@ -59,6 +79,23 @@ dispatch: .{
  generate_sitemap = @generate_sitemap
  generate_design_catalog = @generate_design_catalog
  site_contracts = @site_contracts
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `javascript_module_census` ; path = `.spw/audits/javascript-module-census-2026-07.spw` }[reg=facet],
+  .{ label = `module_export_audit` ; path = `.spw/audits/module-export-standalone-2026-07.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"connection_points"{
+ related_plans = #[
+  `semantic-html-normalization`,
+  `css-maintainability-refactor`,
+  `runtime-module-fluency`,
+  `spw-surface-normalization`,
+ ][reg=set]
 }[reg=facet]
 
 ^"owner_claim"{
@@ -106,4 +143,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

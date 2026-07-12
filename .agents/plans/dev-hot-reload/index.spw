@@ -1,3 +1,4 @@
+# Review 2026-07-12 — completed reference now that Vite owns the loop; preserve the static-site boundary and fallback notes.
 # Plan Index — dev-hot-reload
 #
 # The desired end state is not "make the site depend on a bundler." The desired end state is a faster local editing loop: save a file, see the browser update, and avoid cache…
@@ -14,7 +15,7 @@ intent: .{
  goal = `The desired end state is not "make the site depend on a bundler." The desired end state is a faster local editing loop: save a file, see the browser update, and avoid cache confusion from the service worker while developing. Production should remain a static export that still works from ordinary hosting, and the dev stack should stay legible enough that it does not become the new center of gravity for the project.`
  owner = `dev-hot-reload`
  kind = `plan`
- bucket = `active_backlog`
+ bucket = `completed_reference`
  artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
@@ -23,8 +24,26 @@ intent: .{
  semantic_layer = "pragmatics"
  collaboration_phase = "tending"
  memory_tier = "hot"
- bucket = "active_backlog"
+ bucket = "completed_reference"
 }[reg=facet]
+
+^"conceptual_model"{
+ thesis = `The desired end state is not "make the site depend on a bundler." The desired end state is a faster local editing loop:…`
+ concepts = #[
+  `desired`,
+  `end`,
+  `state`,
+  `dev-hot-reload`,
+  `depend`,
+ ][reg=set]
+ surfaces = #[
+  `scripts/template.mjs`,
+  ``,
+  `.agents/plans/dev-hot-reload/PLAN.md`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
 
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
@@ -39,6 +58,17 @@ dispatch: .{
  public = @public
 }[reg=facet]
 
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `completed_reference`
+ note = `Vite owns the loop; preserve static-site boundary and fallback notes`
+ status = `superseded`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-dev_hot_reload-001"
  layer = "pragmatic"
@@ -47,7 +77,7 @@ dispatch: .{
  impl_ref = ~"../../../scripts/template.mjs"
  probe_ref = `git diff --check`
  falsification = `A patch cannot satisfy the public goal while leaving ../../../scripts/template.mjs unchanged or untested.`
- status = "active"
+ status = "superseded"
 }[reg=facet]
 
 scope: .{
@@ -78,4 +108,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

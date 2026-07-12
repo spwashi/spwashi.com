@@ -1,3 +1,4 @@
+# Review 2026-07-12 — merge into vibe-setting-widgets and runtime-settings; low friction is a UX criterion, not a second registry.
 # Plan Index — Pervasive Low-Friction Interactive Settings Widgets (Palette + Broader Tuning Clusters)
 #
 # Slug: settings-widgets-low-friction
@@ -14,7 +15,7 @@ intent: .{
  goal = `Slug: settings-widgets-low-friction`
  owner = `settings-widgets-low-friction`
  kind = `plan`
- bucket = `active_backlog`
+ bucket = `merged`
  artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
@@ -23,8 +24,27 @@ intent: .{
  semantic_layer = "pragmatics"
  collaboration_phase = "tending"
  memory_tier = "hot"
- bucket = "active_backlog"
+ bucket = "merged"
 }[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Slug: settings-widgets-low-friction`
+ concepts = #[
+  `pervasive`,
+  `low-friction`,
+  `interactive`,
+  `settings`,
+  `widgets`,
+ ][reg=set]
+ surfaces = #[
+  `css/systems/surfaces/tuning.css`,
+  `design/palettes/index.html`,
+  `settings/index.html`,
+  `topics/software/index.html`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
 
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
@@ -51,6 +71,21 @@ dispatch: .{
  about_index_html = @about_index_html
 }[reg=facet]
 
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `merge`
+ merged_into = #[
+  `vibe-setting-widgets`,
+  `runtime-settings`,
+ ][reg=set]
+ retain = `low friction as UX criterion`
+ status = `superseded`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-settings_widgets_low_friction-001"
  layer = "pragmatic"
@@ -59,7 +94,7 @@ dispatch: .{
  impl_ref = ~"../../../public/css/systems/surfaces/tuning.css"
  probe_ref = `rg 'settings-widgets-low-friction' .agents/plans/settings-widgets-low-friction`
  falsification = `A patch cannot satisfy the public goal while leaving ../../../public/css/systems/surfaces/tuning.css unchanged or untested.`
- status = "active"
+ status = "superseded"
 }[reg=facet]
 
 editor_prompts: #[
@@ -72,4 +107,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as a workflow template, not an active plan; every assignment needs a reversible public experiment.
 # Plan Index — Reference Assignment Template
 #
 # Turn site references into small UX improvements or reversible experiments.
@@ -26,6 +27,31 @@ intent: .{
  bucket = "canonical_tracks"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Intern-sized briefs — one UX question, one component, one validation path.`
+ concepts = #[
+  `reference-brief`,
+  `component-specimen`,
+  `validation-path`,
+  `intern-scale`,
+  `design-catalog`,
+ ][reg=set]
+ surfaces = #[
+  `design/catalog/`,
+  `design/components/`,
+  `.agents/plans/reference-assignment-template/`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+^"plan_refinement"{
+ tone = `Mentor brief — kind, bounded, falsifiable.`
+ accuracy = `Template exists; assignments should stay small and closeable.`
+ direction = `Publish one fresh assignment against a live route component.`
+ inspiration = `New contributors ship proof, not plans.`
+ alignment = `site-starter-component-kit, css-architecture-readability`
+}[reg=facet]
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -49,6 +75,7 @@ dispatch: .{
 editor_prompts: #[
  .{ ask = `What does reference-assignment-template own, and what should stay out of scope?`, see = @plan }[reg=facet],
  .{ ask = `Which file should I open first to implement the next slice of reference-assignment-template?`, see = @index }[reg=facet],
+ .{ ask = `What is the tone, direction, and alignment for reference-assignment-template?`, see = @index#plan_refinement }[reg=facet],
 ][reg=set]
 
 invariants: #[
@@ -56,4 +83,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

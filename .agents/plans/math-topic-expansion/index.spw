@@ -1,3 +1,4 @@
+# Review 2026-07-12 — merge route ownership with pure-math and calculus field-guide plans; keep the hub navigation audit.
 # Plan Index — math-topic-expansion
 #
 # The desired end state is a broader, more navigable math/theory cluster that feels like a genuine field guide instead of a thin hub. The new routes should be intuition-first,…
@@ -14,7 +15,7 @@ intent: .{
  goal = `The desired end state is a broader, more navigable math/theory cluster that feels like a genuine field guide instead of a thin hub. The new routes should be intuition-first, cross-linked, and visually legible on static pages, with at least a couple of portable interactive diagrams that do not depend on build tooling or heavyweight runtimes. The taste note is playful clarity: the pages should feel mathematically serious, but still welcoming and fun to explore.`
  owner = `math-topic-expansion`
  kind = `plan`
- bucket = `active_backlog`
+ bucket = `merged`
  artifact_shape = `PLAN.md | wip.spw | index.spw`
 }[reg=facet]
 
@@ -23,8 +24,27 @@ intent: .{
  semantic_layer = "pragmatics"
  collaboration_phase = "tending"
  memory_tier = "hot"
- bucket = "active_backlog"
+ bucket = "merged"
 }[reg=facet]
+
+^"conceptual_model"{
+ thesis = `The desired end state is a broader, more navigable math/theory cluster that feels like a genuine field guide instead of…`
+ concepts = #[
+  `pages`,
+  `math-topic-expansion`,
+  `desired`,
+  `end`,
+  `state`,
+ ][reg=set]
+ surfaces = #[
+  `topics/software/parsers/`,
+  `topics/math/complexity/index.html`,
+  `topics/math/field-theory/index.html`,
+  `topics/math/number-theory/index.html`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
 
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
@@ -53,6 +73,21 @@ dispatch: .{
  topics_index_html = @topics_index_html
 }[reg=facet]
 
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `merge`
+ merged_into = #[
+  `pure-math-routes`,
+  `calculus-trigonometry-field-guides`,
+ ][reg=set]
+ retain = `hub navigation audit`
+ status = `superseded`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-math_topic_expansion-001"
  layer = "pragmatic"
@@ -61,7 +96,7 @@ dispatch: .{
  impl_ref = ~"../../../topics/software/parsers/"
  probe_ref = `Hypotheses: intuition-first routes plus portable interactive SVG diagrams will make the math cluster feel more inhabitable and exploratory; better cross-links will make theory pages easier to traverse as a network.`
  falsification = `A patch cannot satisfy the public goal while leaving ../../../topics/software/parsers/ unchanged or untested.`
- status = "active"
+ status = "superseded"
 }[reg=facet]
 
 scope: .{
@@ -90,4 +125,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

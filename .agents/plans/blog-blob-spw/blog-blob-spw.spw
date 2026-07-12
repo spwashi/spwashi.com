@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as a semantic proposal; require one real blob before promoting this intermediate object to convention.
 ^"operational_hooks"{
  selectors = #[ `.spw/conventions/copy-localization.spw`, `.agents/plans/blog-input-interpreter/PLAN.md`, ][reg=set]
  probe_ref = `git diff --check`

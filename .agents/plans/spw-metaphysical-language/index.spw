@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the research umbrella, while v04 owns grammar and public operator pages own teaching.
 # Plan Index — spw-metaphysical-language
 #
 # Spw already behaves like a language on this site — operators prime attention, braces hold charge, positions carry force — but its description is distributed across conventions,…
@@ -14,8 +15,8 @@ intent: .{
  goal = `Spw already behaves like a language on this site — operators prime attention, braces hold charge, positions carry force — but its description is distributed across conventions, atlas pages, runtime attributes, and memory. This plan makes the language *describable as itself*: every construct named, every sigil's assignment justified by the properties of the glyph, every semantic drift ledgered and arbitrated, and a durable path from "notation on a webpage" to "artifact you can hold, teach with, sell, or install in another industry." Creator identity preserved: "I'm Spwashi. I build software and make art." The language is the art and the software at once; describing it is not paperwork, it is the product line maturing.`
  owner = `spw-metaphysical-language`
  kind = `plan`
- bucket = `active_backlog`
- artifact_shape = `PLAN.md | wip.spw | sigil-physics-research.spw | index.spw`
+ bucket = `semantic_rails`
+ artifact_shape = `PLAN.md | wip.spw | data-model-qa.spw | public-workshop-ecology.spw | sigil-physics-research.spw | index.spw`
 }[reg=facet]
 
 ^"dimensions"{
@@ -23,15 +24,40 @@ intent: .{
  semantic_layer = "pragmatics"
  collaboration_phase = "tending"
  memory_tier = "hot"
- bucket = "active_backlog"
+ bucket = "semantic_rails"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Construct codex, sigil-property alignment, drift ledger — language disputes arbited in .spw.`
+ concepts = #[
+  `construct-codex`,
+  `drift-ledger`,
+  `sigil-property`,
+  `manufacturing-ladder`,
+  `language-ecology`,
+ ][reg=set]
+ surfaces = #[
+  `.spw/language/`,
+  `.agents/plans/spw-metaphysical-language/`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+^"plan_refinement"{
+ tone = `Philology with receipts — every claim points to usage or falsification.`
+ accuracy = `Codex shell tending; full industry integration briefs are aspirational.`
+ direction = `Extend drift ledger with one resolved dispute from recent commits.`
+ inspiration = `Language is a craft material, not a config file.`
+ alignment = `spw-language-v04, appendices computer-science + manufacturing history`
 }[reg=facet]
 
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
-@index: ~"./index.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
+@data_model_qa: ~"./data-model-qa.spw"
+@public_workshop_ecology: ~"./public-workshop-ecology.spw"
 @sigil_physics_research: ~"./sigil-physics-research.spw"
 @workbench: ~"../../../.spw/_workbench/"
 @conventions: ~"../../../.spw/conventions/"
@@ -39,9 +65,24 @@ intent: .{
 dispatch: .{
  plan = @plan
  wip = @wip
+ data_model_qa = @data_model_qa
+ public_workshop_ecology = @public_workshop_ecology
  sigil_physics_research = @sigil_physics_research
  workbench = @workbench
  conventions = @conventions
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `plan_ecology_semantics` ; path = `.spw/audits/plan-ecology-semantics-2026-07.spw` }[reg=facet],
+  .{ label = `commit_skill_induction` ; path = `.spw/audits/commit-skill-induction-2026-07/index.spw` }[reg=facet],
+  .{ label = `spw_architecture_ecology` ; path = `.spw/conventions/spw-architecture-ecology.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `self`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -87,6 +128,7 @@ open_questions: #[
 editor_prompts: #[
  .{ ask = `What does spw-metaphysical-language own, and what should stay out of scope?`, see = @plan }[reg=facet],
  .{ ask = `Which file should I open first to implement the next slice of spw-metaphysical-language?`, see = @index }[reg=facet],
+ .{ ask = `What is the tone, direction, and alignment for spw-metaphysical-language?`, see = @index#plan_refinement }[reg=facet],
  .{ ask = `What command or check falsifies whether spw-metaphysical-language still holds?`, see = @plan }[reg=facet],
 ][reg=set]
 

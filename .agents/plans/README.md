@@ -39,9 +39,36 @@ Use these when a task is broad, cross-disciplinary, or likely to create reusable
 
 Small semantic discoveries do not always need a new plan. Use `.agents/plans/model-guided-refinement/templates/semantic-insight-cache.spw` for a single cache/audit/prime entry when implementation should wait.
 
+## Maintenance Snapshot - 2026-07-12
+
+Plan indexes now expose standalone semantics: `conceptual_model`, `plan_refinement` (tone, accuracy, direction, inspiration, alignment), `research_bridge`, `connection_points`, and `archive_status` (see `.spw/conventions/plan-index.spw`). Hand-refined plans live in `scripts/plan-refinements-data.mjs`. Regenerate with `node scripts/maintain-plan-directory-indexes.mjs`. Local research routes through 2026-07 audits and appendices via `planning-ecology.spw#research_bridge_map`.
+
+**Completed reference** (virtual bucket — folders stay in place): `state-satchel-card-gesture-fixes/`, `card-anatomy-interactions/`, `overlay-layer-ownership/`, `menu-containment-navigation/`, `mobile-image-effects/`, `runtime-route-css-regressions/`.
+
+Dated record: `archive/2026-07-12-plan-ecology-semantics-architecture.md`. Audit: `.spw/audits/plan-ecology-semantics-2026-07.spw`.
+
+### Review Execution - 2026-07-12
+
+Every non-archive `index.spw` carries a first-line `# Review 2026-07-12 —` verdict. Those verdicts
+have been propagated into structured `^"review_disposition"` blocks and executed **additively — no
+folder moves**, so direct citations stay valid. Full ledger: `archive/2026-07-12-review-execution.md`.
+
+- **73 plans reclassified** out of the backlog: **38 merged** into owners, **13 completed/implemented
+  reference**, **13 rework** (kept active but rescoped, `rescope = required`), **7 split**, 1 idea-cache,
+  1 tooling. The remaining ~112 plans held a `keep`/`retain` verdict and stay active owners.
+- **Superseded sources** now set `owner_claim.status = "superseded"` and carry `merged_into`/`route_to`
+  pointers; **merge owners** declare an `^"absorbs"` list. Find merged sources with
+  `grep -rl 'disposition = \`merge\`' .agents/plans --include=index.spw`.
+- **Consolidation hotspots:** `chrome-navigation-wonder` absorbed 5 shell/menu plans;
+  `style-image-cohesion` + `topic-photo-svg-pass` absorbed the loose image passes;
+  `css-architecture-readability` absorbed `css-maintainability-refactor`;
+  `runtime-settings` absorbed the settings-discoverability/low-friction passes.
+- **Do not regenerate:** `maintain-plan-directory-indexes.mjs` is guarded (`guardReviewedPlanTree`)
+  while review markers exist — `--force-generated` would destroy these authored verdicts. Edit by hand.
+
 ## Maintenance Snapshot - 2026-06-30
 
-The active tree is large enough that directory names alone are not a usable interface. The latest census found 173 active top-level plan folders plus `archive/`, 160 active `PLAN.md` files, 50 active `wip.spw` files, 13 total `FIX.md` files, and 11 true `FIX.md`-only tactical queues. The nonstandard folders remain intentional template tooling in `recent-plan-templates/`, revived image/style ownership in `style-image-cohesion/`, and empty local overgrowth in `mobile-density-operator-semantics/`.
+The active tree is large enough that directory names alone are not a usable interface. The prior census found 173 active top-level plan folders plus `archive/`, 160 active `PLAN.md` files, 50 active `wip.spw` files, 13 total `FIX.md` files, and 11 true `FIX.md`-only tactical queues. The nonstandard folders remain intentional template tooling in `recent-plan-templates/`, revived image/style ownership in `style-image-cohesion/`, and empty local overgrowth in `mobile-density-operator-semantics/`.
 
 Use virtual buckets before physical moves:
 

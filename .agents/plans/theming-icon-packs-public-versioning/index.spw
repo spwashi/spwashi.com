@@ -1,3 +1,4 @@
+# Review 2026-07-12 — split before work: themes, icon packs, public versioning, and asset optimization are unrelated contracts.
 # Plan Index — Theming, Icon Packs, Public Folder Versioning, Asset Optimization
 #
 # After the light/dark/smaller/path/larger/style UX and customizable shortcuts work, now is a good time to consider:
@@ -26,6 +27,19 @@ intent: .{
  bucket = "active_backlog"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `After the light/dark/smaller/path/larger/style UX and customizable shortcuts work, now is a good time to consider:`
+ concepts = #[
+  `theming`,
+  `icon`,
+  `packs`,
+  `folder`,
+  `versioning`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -33,6 +47,18 @@ intent: .{
 
 dispatch: .{
  plan = @plan
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `split`
+ note = `themes, icon packs, public versioning, asset optimization are unrelated contracts`
+ rescope = `required`
+ status = `active`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -56,4 +82,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the town-layer owner; visitor utility and story substrate stay separate but cross-linkable.
 # Plan Index — town-atlas-story-kit
 #
 # Create a durable town atlas layer that separates practical visitor utility from story substrate, while keeping both indexable and cross-linkable. The site already has strong…
@@ -26,6 +27,25 @@ intent: .{
  bucket = "public_route_proof_genre"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Create a durable town atlas layer that separates practical visitor utility from story substrate, while keeping both…`
+ concepts = #[
+  `atlas`,
+  `layer`,
+  `practical`,
+  `story`,
+  `while`,
+ ][reg=set]
+ surfaces = #[
+  `play/index.html`,
+  `play/rpg-wednesday/index.html`,
+  `topics/index.html`,
+  `css/style.css`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -43,6 +63,14 @@ dispatch: .{
  topics_index_html = @topics_index_html
  style = @style
  play = @play
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `appendices_index` ; path = `.spw/audits/appendices/index.spw` }[reg=facet],
+  .{ label = `metaphor_primitive_research` ; path = `.spw/audits/metaphor-primitive-research-branching-2026-07.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -73,4 +101,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

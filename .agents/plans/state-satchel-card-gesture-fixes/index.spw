@@ -1,30 +1,50 @@
+# Review 2026-07-12 — completed reference; current card and gesture work belongs to their narrower active owners.
 # Plan Index — State Satchel Stability, Card Layout Robustness, and Touch Gesture Refinement
 #
 # Slug: state-satche l-card-gesture-fixes
 
 #>plan_state_satchel_card_gesture_fixes_index
 #:index #!plan
-#:operation #!prime
+#:operation #!archive
 #:layer #!pragmatics
 
-operation = "prime"
-fixity = "tending"
+operation = "archive"
+fixity = "cold"
 
 intent: .{
  goal = `Slug: state-satche l-card-gesture-fixes`
  owner = `state-satchel-card-gesture-fixes`
  kind = `plan`
- bucket = `active_backlog`
+ bucket = `completed_reference`
  artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
 ^"dimensions"{
  practice_depth = "reading | observation | tending"
  semantic_layer = "pragmatics"
- collaboration_phase = "tending"
- memory_tier = "hot"
- bucket = "active_backlog"
+ collaboration_phase = "return"
+ memory_tier = "cold"
+ bucket = "completed_reference"
 }[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Slug: state-satche l-card-gesture-fixes`
+ concepts = #[
+  `state`,
+  `satchel`,
+  `stability`,
+  `card`,
+  `layout`,
+ ][reg=set]
+ surfaces = #[
+  `js/interface/state-inspector.js`,
+  `css/components/floating-chrome.css`,
+  `js/runtime/brace-gestures.js`,
+  `css/components/runtime-states.css`,
+ ][reg=set]
+ fixity_tier = `cold`
+}[reg=facet]
+
 
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
@@ -53,6 +73,35 @@ dispatch: .{
  tuning = @tuning
 }[reg=facet]
 
+^"research_bridge"{
+ local_research = #[
+  .{ label = `archive_sweep` ; path = `.agents/plans/archive/2026-07-12-plan-ecology-semantics-architecture.md` }[reg=facet],
+  .{ label = `commit_history_deep` ; path = `.spw/audits/commit-history-deep-2026-07/index.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"connection_points"{
+ related_plans = #[
+  `settings-widgets-low-friction`,
+ ][reg=set]
+ superseded_by = `card-anatomy-interactions`
+}[reg=facet]
+
+^"archive_status"{
+ status = `completed_reference`
+ archive_note = `.agents/plans/archive/2026-07-12-plan-ecology-semantics-architecture.md`
+ retain_reason = `Direct citations preserved — virtual bucket not physical move.`
+ research_pointer = `component-philosophy-harmony-2026-07`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `completed_reference`
+ note = `current card/gesture work belongs to narrower active owners`
+ status = `superseded`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-state_satchel_card_gesture_fixes-001"
  layer = "pragmatic"
@@ -61,7 +110,7 @@ dispatch: .{
  impl_ref = ~"../../../public/js/interface/state-inspector.js"
  probe_ref = `rg 'state-satchel-card-gesture-fixes' .agents/plans/state-satchel-card-gesture-fixes`
  falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/interface/state-inspector.js unchanged or untested.`
- status = "active"
+ status = "superseded"
 }[reg=facet]
 
 editor_prompts: #[
@@ -74,4 +123,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

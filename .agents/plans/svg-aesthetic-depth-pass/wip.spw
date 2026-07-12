@@ -1,3 +1,17 @@
+# Review 2026-07-12 — retain the environment capture and lens review as current evidence; do not turn persona prose into architecture.
+^"selection_probes"{
+ probes = #[ `rg 'svg-aesthetic-depth-pass' design/experiments/svg/index.html`, `git diff --check`, `test -f design/experiments/svg/index.html`, ][reg=set]
+ rule = "Run probes before trusting cached plan_context."
+}[reg=facet]
+
+^"plan_context"{
+ goal = `The desired end state is a prompt + architecture brief pair that makes a downstream model start from the site's actual shape: - hand-authored HTML - shell-driven responsive layouts - additive wonder states - SVG host contracts - diagrammatic warmth + inspectable restraint The immediate task is not implementation. It is to make the later analysis phase cheaper to ground, more aesthetically coherent, and more attentive to mobile, tablet, wide, and long-display behavior.`
+ owner = `svg-aesthetic-depth-pass`
+ operation = "prime"
+ bucket = "active_backlog"
+ validation = #[ `git diff --check`, `rg -n "svg-aesthetic-depth-pass|SVG Aesthetic Depth Pass For Opus 4.7" .agents/prompts .agents/plans`, `rg -n "spw-svg-env|data-spw-svg-environment|svg-screenshot-model-packet" design/experiments/svg public/css public/js .agents/plans`, `rg -n "data-spw-svg-persona|persona-specific|rendering-model" design topics recipes about care blog public/js .agents/plans`, ][reg=set]
+ hot_files = #[ `design/experiments/svg/index.html`, `public/css/systems/svg-surfaces.css`, `public/js/media/svg-tunability.js`, `topics/craft/svg/index.html`, `about/index.html`, `.agents/plans/svg-surface-integration/PLAN.md`, ][reg=set]
+}[reg=facet]
 # SVG Aesthetic Depth Pass WIP
 #
 # Plan-local cache for the 2026-07-08 SVG environment and capture slice.

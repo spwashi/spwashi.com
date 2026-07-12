@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as a closeable safe-area regression and remove it from the queue once the overlap probe passes.
 # Plan Index — chrome-copy-collision
 #
 # Keep the section handle on its own safe-area rail and let other floating tools use the raised clearance rail.
@@ -25,6 +26,19 @@ intent: .{
  memory_tier = "hot"
  bucket = "fix_queue"
 }[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Keep the section handle on its own safe-area rail and let other floating tools use the raised clearance rail.`
+ concepts = #[
+  `rail`,
+  `chrome-copy-collision`,
+  `section`,
+  `handle`,
+  `its`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
 
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
@@ -60,4 +74,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

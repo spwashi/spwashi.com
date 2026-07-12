@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as a closeable layering fix; “docked” should graduate to the shell contract after verification.
 # Plan Index — Floating Chrome Stack
 #
 # Add docked as the persistent-but-below-header tier.
@@ -25,6 +26,19 @@ intent: .{
  memory_tier = "hot"
  bucket = "fix_queue"
 }[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Add docked as the persistent-but-below-header tier.`
+ concepts = #[
+  `floating`,
+  `chrome`,
+  `stack`,
+  `add`,
+  `docked`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
 
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
@@ -60,4 +74,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

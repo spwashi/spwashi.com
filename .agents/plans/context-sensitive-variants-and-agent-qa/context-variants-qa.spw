@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as a reversible experiment note until real markup proves a stable variant family.
 ^"operational_hooks"{
  selectors = #[ `public/js/runtime/composition-box-model.js`, `public/css/components/frames.css`, `public/css/components/cards.css`, `public/js/kernel/instrumentation.js`, ][reg=set]
  owner_claim = ~"./index.spw#owner_claim"

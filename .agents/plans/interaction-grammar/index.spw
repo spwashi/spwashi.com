@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the interaction semantics owner; skill, feedback, reversibility, and accessibility are the stable core.
 # Plan Index — interaction-grammar
 #
 # The desired end state is a site interaction system that rewards familiarity: repeated use builds skill and fluency, interactions have a recognizable grammar, and the underlying…
@@ -26,6 +27,22 @@ intent: .{
  bucket = "active_backlog"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `The desired end state is a site interaction system that rewards familiarity: repeated use builds skill and fluency,…`
+ concepts = #[
+  `physics`,
+  `interactions`,
+  `grammar`,
+  `fluency`,
+  `spw`,
+ ][reg=set]
+ surfaces = #[
+  `.agents/plans/interaction-grammar/interaction-grammar.spw`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -37,6 +54,18 @@ dispatch: .{
  plan = @plan
  wip = @wip
  interaction_grammar = @interaction_grammar
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"absorbs"{
+ reviewed = `2026-07-12`
+ plans = #[
+  `gesture-inspectability-metaphysics`,
+ ][reg=set]
+ rule = `Absorbed by 2026-07-12 review; see each source review_disposition and archive/2026-07-12-review-execution.md.`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -76,4 +105,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

@@ -1,3 +1,4 @@
+# Review 2026-07-12 — retain as historical CSS layering doctrine; current source layers supersede its proposed file layout.
 ^"operational_hooks"{
  selectors = #[ `public/css/style.css`, `topics/software/index.html`, `topics/software/pretext/index.html`, `.spw/conventions/site-semantics.spw`, ][reg=set]
  probe_ref = `Hypotheses: a CSS split by responsibility will reduce future edit risk; keeping style.css as the import entrypoint will preserve GitHub Pages simplicity; ornament layers can add seasonal wonder without contaminating layout; progressive enhancement rules will keep experiments reversible.`

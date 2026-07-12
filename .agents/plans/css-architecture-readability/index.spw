@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the canonical CSS maintenance rail; teach ownership with source headers and targeted traces.
 # Plan Index — CSS Architecture Readability Series
 #
 # Make the site's CSS easier to read, inspect, and refactor while improving the developer experience of changing UX behavior. The next series should turn the first debug-label pass…
@@ -26,6 +27,31 @@ intent: .{
  bucket = "canonical_tracks"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `CSS files are instructional artifacts — scope, owner, debug hooks before rules.`
+ concepts = #[
+  `layer-order`,
+  `debug-owner`,
+  `literate-css`,
+  `resonant-pause`,
+  `ux-traceability`,
+ ][reg=set]
+ surfaces = #[
+  `public/css/`,
+  `AGENTS.md CSS layer table`,
+  `.spw/conventions/css-instruction.spw`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+^"plan_refinement"{
+ tone = `Teacher at the whiteboard — name why a rule lives where it does.`
+ accuracy = `Layered tree and bundles landed; per-file instructional headers are uneven.`
+ direction = `Add debug-owner + scope header to one high-churn route CSS file as template.`
+ inspiration = `Future editors read CSS as curriculum, not archaeology.`
+ alignment = `canonical track — start here for CSS ambiguity`
+}[reg=facet]
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -51,6 +77,15 @@ dispatch: .{
  settings_forms = @settings_forms
 }[reg=facet]
 
+^"absorbs"{
+ reviewed = `2026-07-12`
+ plans = #[
+  `css-maintainability-refactor`,
+  `css-progressive-ornaments`,
+ ][reg=set]
+ rule = `Absorbed by 2026-07-12 review; see each source review_disposition and archive/2026-07-12-review-execution.md.`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-css_architecture_readability-001"
  layer = "pragmatic"
@@ -65,6 +100,7 @@ dispatch: .{
 editor_prompts: #[
  .{ ask = `What does css-architecture-readability own, and what should stay out of scope?`, see = @plan }[reg=facet],
  .{ ask = `Which file should I open first to implement the next slice of css-architecture-readability?`, see = @index }[reg=facet],
+ .{ ask = `What is the tone, direction, and alignment for css-architecture-readability?`, see = @index#plan_refinement }[reg=facet],
 ][reg=set]
 
 invariants: #[
@@ -72,4 +108,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

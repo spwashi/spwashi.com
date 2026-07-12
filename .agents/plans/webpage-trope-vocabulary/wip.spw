@@ -1,3 +1,4 @@
+# Review 2026-07-12 — retain as a concise copy cache; promote tested literal labels into the owner plan.
 ^"selection_probes"{
  probes = #[ `rg 'webpage-trope-vocabulary' public/css/components/page-anatomy.css`, `node --check for touched JS modules.`, `test -f public/css/components/page-anatomy.css`, ][reg=set]
  rule = "Run probes before trusting cached plan_context."

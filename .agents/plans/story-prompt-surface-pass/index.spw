@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as a route-purpose copy audit; each hub needs a distinct reason to exist and one next action.
 # Plan Index — story-prompt-surface-pass
 #
 # The desired end state is a site where the design hub, component glossary, recipes hub, blog, and about page each feel like they have a distinct reason to exist. The design pages…
@@ -26,6 +27,25 @@ intent: .{
  bucket = "active_backlog"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `The desired end state is a site where the design hub, component glossary, recipes hub, blog, and about page each feel…`
+ concepts = #[
+  `design`,
+  `hub`,
+  `recipes`,
+  `blog`,
+  `about`,
+ ][reg=set]
+ surfaces = #[
+  `design/`,
+  `design/components/`,
+  `about/`,
+  `js/site.js`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -51,6 +71,10 @@ dispatch: .{
  design_components_index_html = @design_components_index_html
  about_index_html = @about_index_html
  page_model = @page_model
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -92,4 +116,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

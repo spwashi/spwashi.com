@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the page-region owner; region names, navigation, and comparison must work without new runtime lore.
 # Plan Index — Page Region Discoverability
 #
 # Make page regions across the site easier to discover, compare, and move through. A visitor should be able to understand both the local region they are in and the nearby page…
@@ -26,6 +27,25 @@ intent: .{
  bucket = "css_layout_interaction"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Make page regions across the site easier to discover, compare, and move through. A visitor should be able to understand…`
+ concepts = #[
+  `page`,
+  `region`,
+  `discoverability`,
+  `regions`,
+  `across`,
+ ][reg=set]
+ surfaces = #[
+  `js/runtime/page-region-rail.js`,
+  `css/handles/page-region-rail.css`,
+  `.spw/slices/page-region-discoverability/index.spw`,
+  `scripts/image-resource-manifest.mjs`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -43,6 +63,26 @@ dispatch: .{
  index = @index
  image_resource_manifest = @image_resource_manifest
  images = @images
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `page_spacing_runtime` ; path = `.spw/audits/page-spacing-runtime-synthesis-2026-07.spw` }[reg=facet],
+  .{ label = `vocabulary_metaphor` ; path = `.spw/audits/vocabulary-metaphor-growth-synthesis-2026-07.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"absorbs"{
+ reviewed = `2026-07-12`
+ plans = #[
+  `hook-region-anatomy`,
+ ][reg=set]
+ rule = `Absorbed by 2026-07-12 review; see each source review_disposition and archive/2026-07-12-review-execution.md.`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -76,4 +116,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

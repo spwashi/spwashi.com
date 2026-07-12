@@ -1,3 +1,4 @@
+# Review 2026-07-12 — merge into JS runtime composability; standalone usefulness is an acceptance test, not a parallel roadmap.
 # Plan Index — JavaScript Standalone Utility Pass
 #
 # Improve marginal utility of site JavaScript by making a useful behavior available in three contexts: - As a standalone import from public/js/compose.js. - As a console/debug…
@@ -26,6 +27,23 @@ intent: .{
  bucket = "runtime_js_validation"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Improve marginal utility of site JavaScript by making a useful behavior available in three contexts: - As a standalone…`
+ concepts = #[
+  `javascript`,
+  `standalone`,
+  `utility`,
+  `pass`,
+  `improve`,
+ ][reg=set]
+ surfaces = #[
+  `js/compose.js`,
+  `js/runtime/composition-box-model.js`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -39,6 +57,24 @@ dispatch: .{
  composition_box_model = @composition_box_model
 }[reg=facet]
 
+^"research_bridge"{
+ local_research = #[
+  .{ label = `javascript_module_census` ; path = `.spw/audits/javascript-module-census-2026-07.spw` }[reg=facet],
+  .{ label = `module_export_audit` ; path = `.spw/audits/module-export-standalone-2026-07.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `merge`
+ merged_into = #[
+  `js-surface-ecology`,
+ ][reg=set]
+ retain = `standalone usefulness as acceptance test`
+ status = `superseded`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-javascript_standalone_utility-001"
  layer = "pragmatic"
@@ -47,7 +83,7 @@ dispatch: .{
  impl_ref = ~"../../../public/js/compose.js"
  probe_ref = `rg 'javascript-standalone-utility' .agents/plans/javascript-standalone-utility`
  falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/compose.js unchanged or untested.`
- status = "active"
+ status = "superseded"
 }[reg=facet]
 
 editor_prompts: #[
@@ -60,4 +96,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

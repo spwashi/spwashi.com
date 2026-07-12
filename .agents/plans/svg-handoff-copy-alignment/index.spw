@@ -1,3 +1,4 @@
+# Review 2026-07-12 — merge copy into author-craft and asset rules into SVG integration; handoff is the shared acceptance path.
 # Plan Index — svg-handoff-copy-alignment
 #
 # Align the site's public voice around humane, legible engineering: stronger HTML/CSS practice, SVG as a vehicle for character and asset development, and clearer bridges from…
@@ -14,7 +15,7 @@ intent: .{
  goal = `Align the site's public voice around humane, legible engineering: stronger HTML/CSS practice, SVG as a vehicle for character and asset development, and clearer bridges from authored surfaces into model/illustrator handoff.`
  owner = `svg-handoff-copy-alignment`
  kind = `plan`
- bucket = `active_backlog`
+ bucket = `merged`
  artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
@@ -23,8 +24,26 @@ intent: .{
  semantic_layer = "pragmatics"
  collaboration_phase = "tending"
  memory_tier = "hot"
- bucket = "active_backlog"
+ bucket = "merged"
 }[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Align the site's public voice around humane, legible engineering: stronger HTML/CSS practice, SVG as a vehicle for…`
+ concepts = #[
+  `svg-handoff-copy-alignment`,
+  `align`,
+  `voice`,
+  `around`,
+  `humane`,
+ ][reg=set]
+ surfaces = #[
+  `about/index.html`,
+  `about/website/index.html`,
+  `design/experiments/svg/index.html`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
 
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
@@ -41,6 +60,21 @@ dispatch: .{
  design_experiments_svg_index_html = @design_experiments_svg_index_html
 }[reg=facet]
 
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `merge`
+ merged_into = #[
+  `author-craft-ramps`,
+  `svg-surface-integration`,
+ ][reg=set]
+ retain = `handoff as the shared acceptance path`
+ status = `superseded`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-svg_handoff_copy_alignment-001"
  layer = "pragmatic"
@@ -49,7 +83,7 @@ dispatch: .{
  impl_ref = ~"../../../about/index.html"
  probe_ref = `rg 'svg-handoff-copy-alignment' .agents/plans/svg-handoff-copy-alignment`
  falsification = `A patch cannot satisfy the public goal while leaving ../../../about/index.html unchanged or untested.`
- status = "active"
+ status = "superseded"
 }[reg=facet]
 
 editor_prompts: #[
@@ -62,4 +96,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

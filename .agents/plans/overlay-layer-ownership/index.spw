@@ -1,20 +1,21 @@
+# Review 2026-07-12 — completed reference; data-spw-overlay remains an opt-in exception, not a general layout primitive.
 # Plan Index — overlay-layer-ownership
 #
 # Introduce data-spw-overlay as the opt-in marker for direct children that are intentionally edge-pinned or otherwise positioned outside normal flow.
 
 #>plan_overlay_layer_ownership_index
 #:index #!plan
-#:operation #!audit
+#:operation #!archive
 #:layer #!pragmatics
 
-operation = "audit"
-fixity = "tending"
+operation = "archive"
+fixity = "cold"
 
 intent: .{
  goal = `Introduce data-spw-overlay as the opt-in marker for direct children that are intentionally edge-pinned or otherwise positioned outside normal flow.`
  owner = `overlay-layer-ownership`
  kind = `fix`
- bucket = `fix_queue`
+ bucket = `completed_reference`
  artifact_shape = `FIX.md | index.spw`
 }[reg=facet]
 
@@ -22,8 +23,31 @@ intent: .{
  practice_depth = "observation | gesture"
  semantic_layer = "pragmatics"
  collaboration_phase = "exchange"
- memory_tier = "hot"
- bucket = "fix_queue"
+ memory_tier = "cold"
+ bucket = "completed_reference"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `data-spw-overlay marks intentional edge-pinned children — opt-in, not implicit z-index fights.`
+ concepts = #[
+  `data-spw-overlay`,
+  `edge-pinned`,
+  `overlay-contract`,
+  `containment`,
+ ][reg=set]
+ surfaces = #[
+  `public/css/shell/`,
+  `route HTML with floating chrome`,
+ ][reg=set]
+ fixity_tier = `cold`
+}[reg=facet]
+
+^"plan_refinement"{
+ tone = `Past tense, precise — contract landed.`
+ accuracy = `Marker ownership shipped; retained as rationale reference only.`
+ direction = `Do not reopen — cite when adding new floating chrome.`
+ inspiration = `Overlays should declare themselves honestly.`
+ alignment = `floating-chrome-stack, completed_reference archive sweep`
 }[reg=facet]
 
 @plans_root: ~"../../../.agents/plans/index.spw"
@@ -35,6 +59,29 @@ dispatch: .{
  fix = @fix
 }[reg=facet]
 
+^"research_bridge"{
+ local_research = #[
+  .{ label = `archive_sweep` ; path = `.agents/plans/archive/2026-07-12-plan-ecology-semantics-architecture.md` }[reg=facet],
+  .{ label = `commit_history_deep` ; path = `.spw/audits/commit-history-deep-2026-07/index.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"archive_status"{
+ status = `completed_reference`
+ archive_note = `.agents/plans/archive/2026-07-12-plan-ecology-semantics-architecture.md`
+ retain_reason = `Direct citations preserved — virtual bucket not physical move.`
+ research_pointer = `css-module-attribute-impact-2026-07`
+ kind = `fix`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `completed_reference`
+ note = `data-spw-overlay remains an opt-in exception`
+ status = `superseded`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-overlay_layer_ownership-001"
  layer = "pragmatic"
@@ -43,7 +90,7 @@ dispatch: .{
  impl_ref = ~"./PLAN.md"
  probe_ref = `rg 'overlay-layer-ownership' .agents/plans/overlay-layer-ownership`
  falsification = `The listed failure mode returns after the planned fix lands.`
- status = "active"
+ status = "superseded"
 }[reg=facet]
 
 next_action: .{
@@ -53,6 +100,7 @@ next_action: .{
 editor_prompts: #[
  .{ ask = `What does overlay-layer-ownership own, and what should stay out of scope?`, see = @fix }[reg=facet],
  .{ ask = `Which file should I open first to implement the next slice of overlay-layer-ownership?`, see = @index }[reg=facet],
+ .{ ask = `What is the tone, direction, and alignment for overlay-layer-ownership?`, see = @index#plan_refinement }[reg=facet],
 ][reg=set]
 
 invariants: #[
@@ -60,4 +108,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the owner rail, but judge success by fewer active plan surfaces and cheaper orientation.
 # Plan Index — Agent Optimization for spwashi.com
 #
 # Make the full agent operating environment for this repository (.agents/, skills, planning ecology, .spw bridges, public editor surfaces, and validation contracts) itself a…
@@ -11,7 +12,7 @@ operation = "contract"
 fixity = "stable"
 
 intent: .{
- goal = `Make the full agent operating environment for this repository (.agents/, skills, planning ecology, .spw bridges, public editor surfaces, and validation contracts) itself a first-class, low-friction, inspectable surface. The outcome: AI agents, human editors, and future collaborators can answer "how do I work on this site effectively?" and "did my change preserve the intended contracts?" with minimal repeated discovery or tribal knowledge. This work extends and matures the foundation laid by agentic-dev-contracts (route/runtime manifest + unified npm run check) into the broader planning, skills, ontology, and documentation layers that agents actually use when operating on the site. The site should remain hand-authored and human-primary. Agent optimization is an editor/inspectability affordance, not a new runtime or build system.`
+ goal = `Make the full agent operating environment for this repository (.agents/, skills, planning ecology, .spw bridges, public editor surfaces, and validation contracts) itself a first-class, low-friction, inspectable surface. The outcome: AI agents, human editors, and future collaborators can answer "how do I work on this site effectively?" and "did my change preserve the intended contracts?" with minimal repeated discovery or tribal knowledge. Induction audit (2026-07): Nested Spw at .spw/audits/commit-skill-induction-2026-07/ analyzes commit history and skill phrasing for long-term pain (plan inflation, attribute sprawl, IMMEDIATE width, meta-track competition). Success includes stop-conditions and archive quotas, not only more inspectability. This work extends and matures the foundation laid by agentic-dev-contracts (route/runtime manifest + unified npm run check) into the broader planning, skills, ontology, and documentation layers that agents actually use when operating on the site. The site should remain hand-authored and human-primary. Agent optimization is an editor/inspectability affordance, not a new runtime or build system.`
  owner = `agent-optimization`
  kind = `plan`
  bucket = `semantic_rails`
@@ -26,6 +27,32 @@ intent: .{
  bucket = "semantic_rails"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `The agent operating layer itself must be low-friction and inspectable — with archive quotas, not only more .spw.`
+ concepts = #[
+  `skill-discoverability`,
+  `plan-maintenance`,
+  `validation-posture`,
+  `anti-induction`,
+  `public-editor-seam`,
+ ][reg=set]
+ surfaces = #[
+  `.agents/skills/`,
+  `AGENTS.md`,
+  `.spw/site.spw`,
+  `/about/plans/`,
+ ][reg=set]
+ fixity_tier = `stable`
+}[reg=facet]
+
+^"plan_refinement"{
+ tone = `Honest meta-work — celebrate inspectability wins, name inflation costs.`
+ accuracy = `The 2026-07-12 manual sweep reviewed all 279 plan .spw files and found widespread owner overlap, stale WIP state, and generated conceptual filler.`
+ direction = `Consolidate from the reviewed keep/merge/rework/archive decisions; do not run another mass index expansion.`
+ inspiration = `The next agent session should cost less discovery than the last.`
+ alignment = `commit-skill-induction audit, agentic-dev-contracts, spw-plan-maintenance skill`
+}[reg=facet]
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -36,6 +63,7 @@ intent: .{
 @plan_runtime_bootstrap_performance: ~"./runtime-bootstrap-performance/index.spw"
 @plan_modular_experience_slices: ~"./modular-experience-slices/index.spw"
 @plan_state_satchel_card_gesture_fixes: ~"./state-satchel-card-gesture-fixes/index.spw"
+@commit_skill_induction_2026_07: ~"../../../.spw/audits/commit-skill-induction-2026-07/"
 @site: ~"../../../.spw/site.spw"
 @operator_site_projection: ~"../../../.spw/conventions/operator-site-projection.spw"
 @operational_semantics: ~"../../../.spw/conventions/operational-semantics.spw"
@@ -43,7 +71,6 @@ intent: .{
 @experiential: ~"../../../public/js/runtime/experiential.js"
 @shared: ~"../../../public/js/kernel/shared.js"
 @site_semantics: ~"../../../.spw/conventions/site-semantics.spw"
-@instrumentation: ~"../../../public/js/kernel/instrumentation.js"
 
 dispatch: .{
  plan = @plan
@@ -53,6 +80,7 @@ dispatch: .{
  plan_runtime_bootstrap_performance = @plan_runtime_bootstrap_performance
  plan_modular_experience_slices = @plan_modular_experience_slices
  plan_state_satchel_card_gesture_fixes = @plan_state_satchel_card_gesture_fixes
+ commit_skill_induction_2026_07 = @commit_skill_induction_2026_07
  site = @site
  operator_site_projection = @operator_site_projection
  operational_semantics = @operational_semantics
@@ -60,17 +88,37 @@ dispatch: .{
  experiential = @experiential
  shared = @shared
  site_semantics = @site_semantics
- instrumentation = @instrumentation
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `commit_skill_induction` ; path = `.spw/audits/commit-skill-induction-2026-07/index.spw` }[reg=facet],
+  .{ label = `plan_ecology_semantics` ; path = `.spw/audits/plan-ecology-semantics-2026-07.spw` }[reg=facet],
+  .{ label = `spw_architecture_ecology` ; path = `.spw/conventions/spw-architecture-ecology.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `self`
+ related_plans = #[
+  `expressive-layout-tropes-fidget-manuscript`,
+  `spw-surface-normalization`,
+  `agentic-dev-contracts`,
+  `runtime-bootstrap-performance`,
+  `modular-experience-slices`,
+  `state-satchel-card-gesture-fixes`,
+ ][reg=set]
 }[reg=facet]
 
 ^"owner_claim"{
  claim_id = "plan-agent_optimization-001"
  layer = "pragmatic"
- hypothesis = `Make the full agent operating environment for this repository (.agents/, skills, planning ecology, .spw bridges, public editor surfaces, and validation contracts) itself a first-class, low-friction, inspectable surface. The outcome: AI agents, human editors, and future collaborators can answer "how do I work on this site effectively?" and "did my change preserve the intended contracts?" with minimal repeated discovery or tribal knowledge. This work extends and matures the foundation laid by agentic-dev-contracts (route/runtime manifest + unified npm run check) into the broader planning, skills, ontology, and documentation layers that agents actually use when operating on the site. The site should remain hand-authored and human-primary. Agent optimization is an editor/inspectability affordance, not a new runtime or build system.`
+ hypothesis = `Make the full agent operating environment for this repository (.agents/, skills, planning ecology, .spw bridges, public editor surfaces, and validation contracts) itself a first-class, low-friction, inspectable surface. The outcome: AI agents, human editors, and future collaborators can answer "how do I work on this site effectively?" and "did my change preserve the intended contracts?" with minimal repeated discovery or tribal knowledge. Induction audit (2026-07): Nested Spw at .spw/audits/commit-skill-induction-2026-07/ analyzes commit history and skill phrasing for long-term pain (plan inflation, attribute sprawl, IMMEDIATE width, meta-track competition). Success includes stop-conditions and archive quotas, not only more inspectability. This work extends and matures the foundation laid by agentic-dev-contracts (route/runtime manifest + unified npm run check) into the broader planning, skills, ontology, and documentation layers that agents actually use when operating on the site. The site should remain hand-authored and human-primary. Agent optimization is an editor/inspectability affordance, not a new runtime or build system.`
  spec_ref = ~"./PLAN.md"
- impl_ref = ~"../../../.spw/site.spw"
+ impl_ref = ~"../../../.spw/audits/commit-skill-induction-2026-07/"
  probe_ref = `git diff --check`
- falsification = `A patch cannot satisfy the public goal while leaving ../../../.spw/site.spw unchanged or untested.`
+ falsification = `A patch cannot satisfy the public goal while leaving ../../../.spw/audits/commit-skill-induction-2026-07/ unchanged or untested.`
  status = "active"
 }[reg=facet]
 
@@ -86,6 +134,7 @@ validation: #[
 editor_prompts: #[
  .{ ask = `What does agent-optimization own, and what should stay out of scope?`, see = @plan }[reg=facet],
  .{ ask = `Which file should I open first to implement the next slice of agent-optimization?`, see = @index }[reg=facet],
+ .{ ask = `What is the tone, direction, and alignment for agent-optimization?`, see = @index#plan_refinement }[reg=facet],
  .{ ask = `What command or check falsifies whether agent-optimization still holds?`, see = @plan }[reg=facet],
 ][reg=set]
 
@@ -94,4 +143,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

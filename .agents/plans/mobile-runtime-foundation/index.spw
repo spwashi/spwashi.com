@@ -1,3 +1,4 @@
+# Review 2026-07-12 — split the umbrella: retain the semantic mobile doctrine, route concrete runtime work to narrower owners.
 # Plan Index — mobile-runtime-foundation
 #
 # The desired end state is a site runtime that treats mobile and coarse-pointer use as the primary case rather than a degraded desktop fallback. The immediate task is not to ship…
@@ -26,6 +27,22 @@ intent: .{
  bucket = "active_backlog"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `The desired end state is a site runtime that treats mobile and coarse-pointer use as the primary case rather than a…`
+ concepts = #[
+  `rather`,
+  `than`,
+  `surface`,
+  `interaction`,
+  `inspectable`,
+ ][reg=set]
+ surfaces = #[
+  `.agents/plans/mobile-runtime-foundation/mobile-runtime-foundation.spw`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -37,6 +54,18 @@ dispatch: .{
  plan = @plan
  wip = @wip
  mobile_runtime_foundation = @mobile_runtime_foundation
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `runtime-bootstrap-performance`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `split`
+ note = `retain semantic mobile doctrine; route concrete runtime work to narrower owners`
+ rescope = `required`
+ status = `active`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -76,4 +105,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

@@ -1,3 +1,4 @@
+# Review 2026-07-12 — merge with card-grid density and containment audits; run by component family rather than sitewide abstraction.
 # Plan Index — Component, CSS Box Model, and Attribute Timing Responsive Audit
 #
 # Audit and improve the site's core components (frames, cards, operator chips, measure displays, status elements) for consistent box model behavior, proper handling of data-spw-*…
@@ -26,6 +27,24 @@ intent: .{
  bucket = "css_layout_interaction"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Audit and improve the site's core components (frames, cards, operator chips, measure displays, status elements) for…`
+ concepts = #[
+  `css`,
+  `box`,
+  `model`,
+  `responsive`,
+  `audit`,
+ ][reg=set]
+ surfaces = #[
+  `scripts/css-build.mjs`,
+  `css/bundles/core.css`,
+  `css/ornament/relational-state.css`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -41,6 +60,28 @@ dispatch: .{
  relational_state = @relational_state
 }[reg=facet]
 
+^"research_bridge"{
+ local_research = #[
+  .{ label = `page_spacing_runtime` ; path = `.spw/audits/page-spacing-runtime-synthesis-2026-07.spw` }[reg=facet],
+  .{ label = `vocabulary_metaphor` ; path = `.spw/audits/vocabulary-metaphor-growth-synthesis-2026-07.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `merge`
+ merged_into = #[
+  `card-grid-density-audit`,
+ ][reg=set]
+ retain = `run by component family, not sitewide abstraction`
+ status = `superseded`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-component_box_model_responsive_audit-001"
  layer = "pragmatic"
@@ -49,7 +90,7 @@ dispatch: .{
  impl_ref = ~"../../../scripts/css-build.mjs"
  probe_ref = `git diff --check`
  falsification = `A patch cannot satisfy the public goal while leaving ../../../scripts/css-build.mjs unchanged or untested.`
- status = "active"
+ status = "superseded"
 }[reg=facet]
 
 scope: .{
@@ -84,4 +125,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

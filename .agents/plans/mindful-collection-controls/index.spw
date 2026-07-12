@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the undo/clear safety owner; collection must remain reversible and non-coercive.
 # Plan Index — Mindful Collection Controls
 #
 # Make guide-badge collections easier to undo and easier to clear in bulk without turning collection into a sticky reward trap.
@@ -26,6 +27,25 @@ intent: .{
  bucket = "active_backlog"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Make guide-badge collections easier to undo and easier to clear in bulk without turning collection into a sticky reward…`
+ concepts = #[
+  `collection`,
+  `easier`,
+  `mindful`,
+  `controls`,
+  `guide-badge`,
+ ][reg=set]
+ surfaces = #[
+  `settings/index.html`,
+  `.spw/conventions/ornament-contract.spw`,
+  `js/runtime/component-collection.js`,
+  `js/runtime/reward-ui.js`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -43,6 +63,10 @@ dispatch: .{
  component_collection = @component_collection
  reward_ui = @reward_ui
  floating_chrome = @floating_chrome
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -85,4 +109,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

@@ -1,3 +1,4 @@
+# Review 2026-07-12 — merge into runtime-settings; deep links and shortcuts are navigation into one canonical register.
 # Plan Index — settings-discoverability-consolidation
 #
 # Make the settings page easier to enter and scan by adding deep-linkable shortcut paths into the large runtime register, then improve cross-site discoverability with a shared…
@@ -14,7 +15,7 @@ intent: .{
  goal = `Make the settings page easier to enter and scan by adding deep-linkable shortcut paths into the large runtime register, then improve cross-site discoverability with a shared footer surface that reflects the current browser-local atmosphere and links back into the most useful settings slices.`
  owner = `settings-discoverability-consolidation`
  kind = `plan`
- bucket = `active_backlog`
+ bucket = `merged`
  artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
@@ -23,8 +24,25 @@ intent: .{
  semantic_layer = "pragmatics"
  collaboration_phase = "tending"
  memory_tier = "hot"
- bucket = "active_backlog"
+ bucket = "merged"
 }[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Make the settings page easier to enter and scan by adding deep-linkable shortcut paths into the large runtime register,…`
+ concepts = #[
+  `settings`,
+  `settings-discoverability-consolidation`,
+  `page`,
+  `easier`,
+  `enter`,
+ ][reg=set]
+ surfaces = #[
+  `settings/index.html`,
+  `.agents/plans/settings-discoverability-consolidation/PLAN.md`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
 
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
@@ -37,6 +55,20 @@ dispatch: .{
  index = @index
 }[reg=facet]
 
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `merge`
+ merged_into = #[
+  `runtime-settings`,
+ ][reg=set]
+ retain = `deep links and shortcuts as navigation into one register`
+ status = `superseded`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-settings_discoverability_consolidation-001"
  layer = "pragmatic"
@@ -45,7 +77,7 @@ dispatch: .{
  impl_ref = ~"../../../settings/index.html"
  probe_ref = `git diff --check`
  falsification = `A patch cannot satisfy the public goal while leaving ../../../settings/index.html unchanged or untested.`
- status = "active"
+ status = "superseded"
 }[reg=facet]
 
 scope: .{
@@ -73,4 +105,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

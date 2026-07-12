@@ -1,3 +1,4 @@
+# Review 2026-07-12 — rework around one public culinary route proof; “excellence” is too broad without a concrete artifact.
 # Plan Index — Culinary Excellence Enhancement
 #
 # Public goal: Elevate the site's culinary surfaces so "culinary excellence" reads as rigorous craft, precise language, and living metaphor — not only vehicle for other domains.…
@@ -26,6 +27,24 @@ intent: .{
  bucket = "active_backlog"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Public goal: Elevate the site's culinary surfaces so "culinary excellence" reads as rigorous craft, precise language,…`
+ concepts = #[
+  `culinary`,
+  `excellence`,
+  `enhancement`,
+  `goal`,
+  `elevate`,
+ ][reg=set]
+ surfaces = #[
+  `.spw/conventions/site-semantics.spw`,
+  `.spw/site.spw`,
+  `.spw/surfaces.spw`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -39,6 +58,18 @@ dispatch: .{
  site_semantics = @site_semantics
  site = @site
  surfaces = @surfaces
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `rework`
+ note = `rework around one public culinary route proof`
+ rescope = `required`
+ status = `active`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -62,4 +93,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

@@ -1,201 +1,441 @@
-# Concept Graph
+# Relational Design Graph
 #
-# A map of how the site's key concepts relate to each other and where
-# each is developed. Not an index — an account of the relationships.
+# Site-local contract for expressing documentation relationships as typed,
+# navigable, and falsifiable Spw structures instead of prose adjacency.
 
-#>spw_concept_graph
-#:graph #!concepts
-#:layer #!pragmatics
+#>spw_relational_design_graph
+#:convention #!graph #!relations #!documentation
+#:operation #!contract
+#:fixity #!stable
+#:layer #!editor_inspectability
 
-^"roots"{
-  @philosophy: ~"./philosophy/index.spw"
-  @semantics: ~"./conventions/site-semantics.spw"
-  @style: ~"./conventions/style-development.spw"
-  @surfaces: ~"./surfaces.spw"
-  @site: ~"./site.spw"
-  @brace_physics: ~"./_workbench/.spw/registries/brace-physics.spw"
-  @valence: ~"./_workbench/.agents/kb/valence.spw"
-  @precipitates: ~"./_workbench/.spw/runtime/precipitates.spw"
-}
+operation = "contract"
+fixity = "stable"
+
+@site: ~"./site.spw"
+@conventions: ~"./conventions/index.spw"
+@architecture: ~"./conventions/spw-architecture-ecology.spw"
+@architecture_plan: ~"../.agents/plans/spw-architecture-ecology/PLAN.md"
+@semantic_capacity: ~"./conventions/semantic-capacity.spw"
+@planning_ecology: ~"./conventions/planning-ecology.spw"
+@plan_ecology_audit: ~"./audits/plan-ecology-semantics-2026-07.spw"
+@site_semantics: ~"./conventions/site-semantics.spw"
+@operational_semantics: ~"./conventions/operational-semantics.spw"
+@operator_semantics: ~"./conventions/operator-semantics.spw"
+@attention_field: ~"./conventions/attention-field.spw"
+@spatial_grammar: ~"./philosophy/spatial-grammar.spw"
+@wonder: ~"./philosophy/wonder-doctrine.spw"
+@cognitive_surface: ~"./philosophy/cognitive-surface.spw"
+@typed_references: ~"./language/v04/pillars/typed-references-indexing.spw"
+@claim_probes: ~"./language/v04/pillars/claim-probe-syntax.spw"
+
+^"intent"{
+  goal = `Make relationships do editorial work: locate authority, expose dependency, preserve projections, route readers, and connect claims to evidence.`
+  audience = #[`human editors`, `agents`, `language contributors`][reg=set]
+  public_boundary = `This graph documents the site-local authoring ecology. It does not redefine workbench canon or public route behavior.`
+  expression = documentation[route]{node.edge.claim}<relation>
+}[reg=facet]
+
+^"dimensions"{
+  practice_depth = "reading | observation | tending | contract"
+  semantic_layer = "semantics | pragmatics | editor_inspectability"
+  collaboration_phase = "initiation | exchange | tending | succession"
+  memory_tier = "warm"
+}[reg=facet]
+
+^"relational_principles"{
+  identity = `A node is a stable concept stem bound to one navigable owner reference.`
+  direction = `An edge is directional. Its source acts on its target through one declared relation.`
+  consequence = `Every edge states what becomes different for a reader or editor because the relation exists.`
+  evidence = `Durable edges cite an implementation, convention, audit, or probe. Adjacency alone is not evidence.`
+  inverse = `Do not duplicate an edge as depends_on + enables. Declare the canonical direction and name an inverse only when navigation needs it.`
+  locality = `Use a local edge for one document and promote it here only after it routes recurring work across documents.`
+}[reg=facet]
+
+^"node_contract"{
+  shape: .{
+    id = `stable snake_case concept stem`
+    ref = `@alias bound to the concept's owner document`
+    role = `one sentence describing the concept's job in this graph`
+    layer = `grammar | semantics | pragmatics | editor_inspectability`
+    fixity = `fixed | stable | tending | experimental | volatile | cold`
+    status = `active | superseded`
+  }[reg=facet]
+  rule = `A node is not a miniature essay. Meaning stays in its owner document; this graph records identity, role, and relation.`
+}[reg=facet]
+
+^"edge_contract"{
+  shape: .{
+    id = `stable source_relation_target stem`
+    source = `@node alias`
+    relation = `owns | grounds | requires | projects | routes | evidences | tests | supersedes`
+    target = `@node alias`
+    consequence = `observable selection, validation, or editing consequence`
+    evidence = `navigable @reference or precise command`
+    status = `active | proposed | superseded`
+  }[reg=facet]
+  rule = `Source + relation + target form the semantic spine; consequence and evidence keep the edge from becoming decorative metadata.`
+  trace_form = `$^["source"] => $^["target"]`
+}[reg=facet]
+
+^"relation_vocabulary"{
+  owns: .{
+    class = "authority"
+    direction = "owner -> governed concept"
+    consequence = "Names the single surface that arbitrates changes."
+    inverse = "governed_by"
+  }[reg=facet]
+  grounds: .{
+    class = "dependency"
+    direction = "foundation -> dependent concept"
+    consequence = "The target loses coherence if the source invariant changes."
+    inverse = "grounded_in"
+  }[reg=facet]
+  requires: .{
+    class = "dependency"
+    direction = "dependent concept -> prerequisite"
+    consequence = "The source should not be edited or promoted without reading the target."
+    inverse = "required_by"
+  }[reg=facet]
+  projects: .{
+    class = "translation"
+    direction = "source meaning -> receiving layer"
+    consequence = "The target preserves a named part of the source while changing medium or representation."
+    inverse = "projection_of"
+  }[reg=facet]
+  routes: .{
+    class = "navigation"
+    direction = "entry surface -> next owner surface"
+    consequence = "The target is the next bounded read or edit location."
+    inverse = "routed_from"
+  }[reg=facet]
+  evidences: .{
+    class = "evidence"
+    direction = "observation -> claim"
+    consequence = "The target claim gains concrete support but is not automatically proven."
+    inverse = "evidenced_by"
+  }[reg=facet]
+  tests: .{
+    class = "validation"
+    direction = "probe -> claim or contract"
+    consequence = "Failure weakens or falsifies the target."
+    inverse = "tested_by"
+  }[reg=facet]
+  supersedes: .{
+    class = "lifecycle"
+    direction = "replacement -> prior model"
+    consequence = "New work routes through the source; the target remains historical context only."
+    inverse = "superseded_by"
+  }[reg=facet]
+}[reg=facet]
 
 ^"concept_nodes"{
-  ~#note: "The major vocabulary items in play across the site. Each entry names where the concept is developed and how it connects to others."
-
-  brace_physics: {
-    ~#developed_in: "workbench registries/brace-physics.spw"
-    ~#enables: "wonder, cognitive_surface, cinematic_handles, interaction_circuits"
-    ~#site_form: "The physical intuition behind containment, tension, and discharge in the site's visual and interaction grammar."
-  }
-
-  spirit_cycle: {
-    ~#developed_in: "philosophy/spirit-cycle.spw"
-    ~#depends_on: "liminality, brace_physics, charge_bias"
-    ~#enables: "navigation_semantics, screenshot_semantics, cognitive_navigation"
-    ~#site_form: "The five-phase arc (initiation, resistance, transformation, expression, return) that meaningful engagement traces."
-  }
-
-  liminality: {
-    ~#developed_in: "conventions/site-semantics.spw"
-    ~#enables: "spirit_cycle, cognitive_navigation, screenshot_semantics, cinematic_handles"
-    ~#site_form: "The depth axis (entry → threshold → settled → nested → projected → deep) that tracks how far engagement has progressed."
-  }
-
-  wonder: {
-    ~#developed_in: "philosophy/wonder-doctrine.spw"
-    ~#depends_on: "structural_revelation, brace_physics, spatial_grammar"
-    ~#enables: "cognitive_surface, pretext_physics, svg_illustrations"
-    ~#site_form: "Structural revelation through engagement — the moment when the grammar underlying a surface becomes visible."
-  }
-
-  cognitive_surface: {
-    ~#developed_in: "philosophy/cognitive-surface.spw"
-    ~#depends_on: "liminality, wonder, spirit_cycle, spatial_grammar"
-    ~#enables: "screenshot_semantics, cognitive_navigation, practitioner_artist_model"
-    ~#site_form: "A surface that changes in legibility (not just appearance) as engagement deepens, models the visitor's attention, and preserves the record of engagement."
-  }
-
-  spatial_grammar: {
-    ~#developed_in: "philosophy/spatial-grammar.spw"
-    ~#depends_on: "brace_physics, operator_semantics"
-    ~#enables: "wonder, cognitive_surface, multi_language_surfaces, pretext_lab"
-    ~#site_form: "The spatial relationships encoded in Spw's operators: containment, selection, projection, reference, membership, elevation, inquiry."
-  }
-
-  operator_semantics: {
-    ~#developed_in: "conventions/site-semantics.spw"
-    ~#depends_on: "spatial_grammar, valence_pentad"
-    ~#enables: "wonder, interaction_circuits, screenshot_semantics, operator_atlas"
-    ~#site_form: "Every operator token carries an interaction intent before it carries a runtime behavior."
-  }
-
-  valence_pentad: {
-    ~#developed_in: "workbench .agents/kb/valence.spw"
-    ~#depends_on: "brace_physics"
-    ~#enables: "operator_semantics, spirit_cycle, brace_physics_vocabulary"
-    ~#site_form: "The five qualities that characterize any change: boon (growth), bane (friction), bone (stability), bonk (collision), honk (signal)."
-  }
-
-  charge_bias: {
-    ~#developed_in: "conventions/site-semantics.spw"
-    ~#depends_on: "brace_physics, spatial_grammar"
-    ~#enables: "interaction_circuits, cinematic_handles, pretext_physics"
-    ~#site_form: "Charge is stored tendency in a brace; bias is directional preference that changes which projection is salient. Both must be inspectable."
-  }
-
-  alchemistry: {
-    ~#developed_in: "conventions/site-semantics.spw"
-    ~#depends_on: "operator_semantics, spatial_grammar, wonder"
-    ~#enables: "cognitive_surface, practitioner_artist_model"
-    ~#site_form: "Operator-level transformation of attentional material. Wonder belongs where transformation becomes clearer through interaction."
-  }
-
-  screenshot_semantics: {
-    ~#developed_in: ".agents/plans/screenshot-semantics/screenshot-semantics.spw"
-    ~#depends_on: "liminality, priming, journey_tokens, cognitive_surface"
-    ~#enables: "practitioner_artist_model, cognitive_navigation"
-    ~#site_form: "Priming state, selection persistence, and journey tokens that make a screenshot of an addressed state meaningful without runtime context."
-  }
-
-  cognitive_navigation: {
-    ~#developed_in: ".agents/plans/cognitive-navigation/cognitive-navigation.spw"
-    ~#depends_on: "liminality, spirit_cycle, breadcrumbs, spells"
-    ~#enables: "practitioner_artist_model, screenshot_semantics"
-    ~#site_form: "Liminality as a traversable depth axis, Spw breadcrumbs as cognitive path, spells as learnable named sequences, accessibility as canonical cognitive map."
-  }
-
-  interaction_circuits: {
-    ~#developed_in: ".agents/plans/interaction-grammar/interaction-grammar.spw"
-    ~#depends_on: "brace_physics, spatial_grammar, spirit_cycle"
-    ~#enables: "spells, practitioner_artist_model, multi_language_surfaces"
-    ~#site_form: "Progressive familiarity ladder — entry, practiced, fluent, habitual — where depth is available without being required."
-  }
-
-  cinematic_handles: {
-    ~#developed_in: ".agents/plans/cinematic-handles/cinematic-handles.spw"
-    ~#depends_on: "brace_physics, liminality, charge_bias, operator_semantics"
-    ~#enables: "wonder, screenshot_semantics, cognitive_navigation"
-    ~#site_form: "Named timing tokens from Spw vocabulary (brace-settle, pivot-arc, threshold-cross, charge-release, return, project) and layer/lighting depth vocabulary."
-  }
-
-  pretext_physics: {
-    ~#developed_in: ".agents/plans/pretext-whimsy-lab/pretext-whimsy-lab.spw"
-    ~#depends_on: "brace_physics, spatial_grammar, charge_bias, wonder"
-    ~#enables: "wonder, multi_language_surfaces, cognitive_surface"
-    ~#site_form: "Layout-driven physical projections seeded by real line metrics — boon/gravity, bane/pressure, charge/offset, pivot/reorientation."
-  }
-
-  multi_language_surfaces: {
-    ~#developed_in: "philosophy/spatial-grammar.spw"
-    ~#depends_on: "spatial_grammar, wonder, interaction_circuits"
-    ~#enables: "practitioner_artist_model, cognitive_surface"
-    ~#site_form: "Surfaces where Spw provides the spatial frame and the guest language demonstrates its own expressive structure."
-  }
-}
+  creator_identity = .{
+    id = "creator_identity"
+    ref = @site_semantics
+    role = `Keeps Spwashi the person primary and the site a surface for the work.`
+    layer = "semantics"
+    fixity = "fixed"
+    status = "active"
+  }[reg=facet]
+  documentation_ecology = .{
+    id = "documentation_ecology"
+    ref = @architecture
+    role = `Owns topology, promotion, relation hygiene, and routing across the .spw layer.`
+    layer = "editor_inspectability"
+    fixity = "stable"
+    status = "active"
+  }[reg=facet]
+  semantic_capacity = .{
+    id = "semantic_capacity"
+    ref = @semantic_capacity
+    role = `Selects cache, audit, align, prime, contract, or archive before documentation grows.`
+    layer = "pragmatics"
+    fixity = "stable"
+    status = "active"
+  }[reg=facet]
+  concept_graph = .{
+    id = "concept_graph"
+    ref = ~"./graph.spw"
+    role = `Makes cross-document concepts and edges explicit without replacing their owner documents.`
+    layer = "editor_inspectability"
+    fixity = "stable"
+    status = "active"
+  }[reg=facet]
+  typed_references = .{
+    id = "typed_references"
+    ref = @typed_references
+    role = `Defines navigable identity and concept-coupled reference forms.`
+    layer = "grammar"
+    fixity = "stable"
+    status = "active"
+  }[reg=facet]
+  claim_probes = .{
+    id = "claim_probes"
+    ref = @claim_probes
+    role = `Connects durable claims to falsification paths.`
+    layer = "pragmatics"
+    fixity = "stable"
+    status = "active"
+  }[reg=facet]
+  plan_ecology_audit = .{
+    id = "plan_ecology_audit"
+    ref = @plan_ecology_audit
+    role = `Records evidence about plan routing, standalone semantics, connection points, and archive status.`
+    layer = "editor_inspectability"
+    fixity = "tending"
+    status = "active"
+  }[reg=facet]
+  spatial_grammar = .{
+    id = "spatial_grammar"
+    ref = @spatial_grammar
+    role = `Provides the spatial relationships carried by operators and braces.`
+    layer = "semantics"
+    fixity = "stable"
+    status = "active"
+  }[reg=facet]
+  operator_semantics = .{
+    id = "operator_semantics"
+    ref = @operator_semantics
+    role = `Projects spatial acts into readable operator intention and interaction guidance.`
+    layer = "pragmatics"
+    fixity = "stable"
+    status = "active"
+  }[reg=facet]
+  wonder = .{
+    id = "wonder"
+    ref = @wonder
+    role = `Names structural revelation as an earned consequence of engagement.`
+    layer = "semantics"
+    fixity = "stable"
+    status = "active"
+  }[reg=facet]
+  cognitive_surface = .{
+    id = "cognitive_surface"
+    ref = @cognitive_surface
+    role = `Describes a surface whose legibility changes as attention and understanding deepen.`
+    layer = "semantics"
+    fixity = "stable"
+    status = "active"
+  }[reg=facet]
+  attention_field = .{
+    id = "attention_field"
+    ref = @attention_field
+    role = `Projects local, relational, and global attention into inspectable site behavior.`
+    layer = "pragmatics"
+    fixity = "stable"
+    status = "active"
+  }[reg=facet]
+  operational_contracts = .{
+    id = "operational_contracts"
+    ref = @operational_semantics
+    role = `Connects semantic claims to concrete owner surfaces, probes, and falsification.`
+    layer = "editor_inspectability"
+    fixity = "stable"
+    status = "active"
+  }[reg=facet]
+}[reg=facet]
 
 ^"relationship_edges"{
-  ~#note: "Key cross-concept relationships worth stating explicitly."
-  physics_to_grammar: {
-    ~#from: "brace_physics"
-    ~#to: "spatial_grammar"
-    ~#type: "instantiates"
-    ~#note: "Brace physics gives the spatial grammar a physical intuition — the grammar becomes feelable, not just readable."
-  }
-  liminality_tracks_cycle: {
-    ~#from: "liminality"
-    ~#to: "spirit_cycle"
-    ~#type: "tracks"
-    ~#note: "Liminality is the runtime form of the cycle's phases — it tracks where in the arc the current engagement is."
-  }
-  wonder_criterion: {
-    ~#from: "wonder"
-    ~#to: "cognitive_surface"
-    ~#type: "criterion"
-    ~#note: "Wonder is one of the primary criteria for a functioning cognitive surface. Without it, the surface is informational, not cognitive."
-  }
-  grammar_enables_hosting: {
-    ~#from: "spatial_grammar"
-    ~#to: "multi_language_surfaces"
-    ~#type: "enables"
-    ~#note: "The spatial grammar makes it possible to host other languages by providing a neutral spatial register."
-  }
-  charge_names_motion: {
-    ~#from: "charge_bias"
-    ~#to: "cinematic_handles"
-    ~#type: "vocabulary_source"
-    ~#note: "The timing vocabulary for cinematic handles should come from the charge/bias model: charge-decay, brace-settle, pivot-arc are semantic names, not arbitrary labels."
-  }
-  circuits_become_spells: {
-    ~#from: "interaction_circuits"
-    ~#to: "cognitive_navigation"
-    ~#type: "progression"
-    ~#note: "Spells are the fluency tier of interaction circuits — a mastered circuit at habitual level becomes a spell when it can be named and triggered in one gesture."
-  }
-  screenshot_serves_artist: {
-    ~#from: "screenshot_semantics"
-    ~#to: "cognitive_surface"
-    ~#type: "serves"
-    ~#note: "Screenshot semantics exists to serve the practitioner-artist: captures should be cognitive artifacts that communicate the state of developing thinking."
-  }
-  valence_cycle_open: {
-    ~#from: "valence_pentad"
-    ~#to: "spirit_cycle"
-    ~#type: "open_question"
-    ~#note: "The relationship between the five valence qualities and the five spirit cycle phases is not yet resolved — it may be 1:1, many:1, or orthogonal."
-  }
-}
+  creator_identity_grounds_documentation = .{
+    id = "creator_identity_grounds_documentation"
+    source = @site_semantics
+    relation = "grounds"
+    target = @architecture
+    consequence = `Meta-architecture must serve the creator's work and cannot recast Spwashi as the system itself.`
+    evidence = @site_semantics
+    status = "active"
+  }[reg=facet]
+  architecture_owns_concept_graph = .{
+    id = "architecture_owns_concept_graph"
+    source = @architecture
+    relation = "owns"
+    target = ~"./graph.spw"
+    consequence = `Graph schema changes route through the architecture-ecology contract and owner plan.`
+    evidence = @architecture_plan
+    status = "active"
+  }[reg=facet]
+  documentation_requires_semantic_capacity = .{
+    id = "documentation_requires_semantic_capacity"
+    source = @architecture
+    relation = "requires"
+    target = @semantic_capacity
+    consequence = `Every structural expansion declares an operation and fixity before adding nodes, edges, or dispatch.`
+    evidence = @semantic_capacity
+    status = "active"
+  }[reg=facet]
+  typed_references_ground_graph = .{
+    id = "typed_references_ground_graph"
+    source = @typed_references
+    relation = "grounds"
+    target = ~"./graph.spw"
+    consequence = `Owner locations remain navigable references rather than path-shaped prose.`
+    evidence = @typed_references
+    status = "active"
+  }[reg=facet]
+  graph_routes_site_to_owners = .{
+    id = "graph_routes_site_to_owners"
+    source = @site
+    relation = "routes"
+    target = ~"./graph.spw"
+    consequence = `A reader can move from the site hub to one bounded concept relation before opening a leaf convention.`
+    evidence = @site
+    status = "active"
+  }[reg=facet]
+  spatial_grammar_projects_operator_semantics = .{
+    id = "spatial_grammar_projects_operator_semantics"
+    source = @spatial_grammar
+    relation = "projects"
+    target = @operator_semantics
+    consequence = `Operator guidance preserves containment, selection, projection, reference, and perspective as spatial acts.`
+    evidence = @operator_semantics
+    status = "active"
+  }[reg=facet]
+  wonder_grounds_cognitive_surface = .{
+    id = "wonder_grounds_cognitive_surface"
+    source = @wonder
+    relation = "grounds"
+    target = @cognitive_surface
+    consequence = `A cognitive surface must reveal structure through engagement, not only display information attractively.`
+    evidence = @cognitive_surface
+    status = "active"
+  }[reg=facet]
+  operator_semantics_projects_attention = .{
+    id = "operator_semantics_projects_attention"
+    source = @operator_semantics
+    relation = "projects"
+    target = @attention_field
+    consequence = `Focus, hover, and resonance behaviors remain tied to operator meaning instead of generic decoration.`
+    evidence = @attention_field
+    status = "active"
+  }[reg=facet]
+  claim_probes_test_operational_contracts = .{
+    id = "claim_probes_test_operational_contracts"
+    source = @claim_probes
+    relation = "tests"
+    target = @operational_semantics
+    consequence = `An owner claim without a probe or falsification remains tending rather than durable contract evidence.`
+    evidence = @operational_semantics
+    status = "active"
+  }[reg=facet]
+  plan_audit_evidences_documentation_ecology = .{
+    id = "plan_audit_evidences_documentation_ecology"
+    source = @plan_ecology_audit
+    relation = "evidences"
+    target = @architecture
+    consequence = `The architecture contract can distinguish observed routing failures from aspirational topology.`
+    evidence = @plan_ecology_audit
+    status = "active"
+  }[reg=facet]
+  relational_contract_supersedes_prose_graph = .{
+    id = "relational_contract_supersedes_prose_graph"
+    source = ~"./graph.spw#edge_contract"
+    relation = "supersedes"
+    target = ~"./graph.spw#archive_status"
+    consequence = `New relations use first-class facets; legacy comma-separated depends_on and enables strings are historical only.`
+    evidence = `rg '~#(depends_on|enables): "' .spw/graph.spw`
+    status = "active"
+  }[reg=facet]
+}[reg=facet]
 
-^"concept_clusters"{
-  ~#note: "Groupings that tend to be developed and applied together."
-  physics_cluster: "brace_physics, charge_bias, spatial_grammar, pretext_physics"
-  cycle_cluster: "spirit_cycle, liminality, cinematic_handles, screenshot_semantics"
-  cognition_cluster: "cognitive_surface, wonder, alchemistry, practitioner_artist_model"
-  grammar_cluster: "operator_semantics, spatial_grammar, multi_language_surfaces, valence_pentad"
-  navigation_cluster: "cognitive_navigation, interaction_circuits, spells, breadcrumbs"
-}
+^"traversal_patterns"{
+  architecture_read = ?<
+    @site,
+    @architecture,
+    ~"./graph.spw",
+    @conventions
+  >[reg=stream]
+  semantic_read = ?<
+    @spatial_grammar,
+    @operator_semantics,
+    @attention_field
+  >[reg=stream]
+  validation_read = ?<
+    @semantic_capacity,
+    @claim_probes,
+    @operational_semantics
+  >[reg=stream]
+  architecture_confluence = &[@architecture, @semantic_capacity, @typed_references]
+  cognition_confluence = &[@wonder, @cognitive_surface, @attention_field]
+  rule = `Streams encode intentional reading order; confluences encode peers that must be considered together without inventing a false sequence.`
+}[reg=facet]
 
-^"open_graph_questions"{
-  ?["Are there concept nodes missing from this graph that are already developed in the workbench?"]{ #:open }
-  ?["Which relationship edges are the most load-bearing for the site's overall coherence?"]{ #:open }
-  ?["How does the valence pentad fit into the concept graph — is it a foundation or a derived vocabulary?"]{ #:open }
-  ?["What concept, if removed, would cause the most cascading loss of coherence across the other documents?"]{ #:open }
-}
+^"edge_traces"{
+  ownership = $^["documentation_ecology"] => $^["concept_graph"]
+  semantic_projection = $^["spatial_grammar"] => $^["operator_semantics"]
+  evidence_path = $^["plan_ecology_audit"] => $^["documentation_ecology"]
+  rule = `Use an edge trace when the direction itself is the point; keep full consequence and evidence in relationship_edges.`
+}[reg=facet]
+
+^"authoring_patterns"{
+  local_relation = `Keep a one-file relation beside the claim it explains.`
+  promoted_relation = `Promote an edge here after it recurs across owner documents or changes routing, validation, or lifecycle.`
+  projection_relation = `Name the preserved meaning and the receiving layer; do not use projects as a synonym for loosely related.`
+  evidence_relation = `Point to the observation or probe, then state which claim it supports or can falsify.`
+  lifecycle_relation = `Use supersedes with a replacement and retained rationale instead of deleting navigational history.`
+  useful_question = `Ask which edit decision changes if this edge is true. If none, the relation is decorative and should stay local or be removed.`
+}[reg=facet]
+
+^"anti_patterns"{
+  patterns = #[
+    `Comma-separated concept ids stored inside one depends_on or enables string.`
+    `A generic related_to edge with no direction, consequence, or owner.`
+    `The same relation duplicated in forward and inverse forms across node records.`
+    `A path written as prose when a navigable @alias or ~ reference is available.`
+    `A metaphor promoted to relation type before it changes selection, validation, projection, or lifecycle.`
+    `A concept graph that duplicates definitions already owned by conventions or philosophy documents.`
+  ][reg=set]
+}[reg=facet]
+
+^"archive_status"{
+  operation = "archive"
+  status = "superseded"
+  archived_model = `The prior graph encoded owner paths and dependency lists as strings, repeated inverse enables edges, and retained references to plan-local files that no longer exist.`
+  replacement = ~"./graph.spw#edge_contract"
+  retain_reason = `The philosophical concepts remain in their owner documents; only the ambiguous graph representation is retired.`
+}[reg=facet]
+
+^"owner_claim"{
+  claim_id = "relational-design-001"
+  hypothesis = `Typed nodes, bounded relation verbs, navigable references, and consequence-bearing edges reduce the need to reconstruct documentation meaning from file names and prose adjacency.`
+  spec_ref = ~"./graph.spw#edge_contract"
+  impl_ref = ~"./graph.spw#relationship_edges"
+  probe_ref = `rg 'relation = "(owns|grounds|requires|projects|routes|evidences|tests|supersedes)"' .spw/graph.spw`
+  falsification = `Editors still need to open several plans to determine authority, direction, or validation for the relations represented here.`
+  status = "active"
+}[reg=facet]
+
+^"open_seams"{
+  ?["Which recurring cross-document relation still lacks an owner or observable consequence?"]{ #:open }
+  ?["Which active edge can be removed because it no longer changes routing, validation, or editing decisions?"]{ #:open }
+  ?["Should a repeated local relation become a slice contract instead of another global graph edge?"]{ #:open }
+}[reg=facet]
+
+^"validation"{
+  commands = #[
+    `rg '@graph|graph.spw' .spw --glob '!_workbench/**'`
+    `rg '~#(depends_on|enables): "' .spw/graph.spw`
+    `npm run ecology:language`
+    `git diff --check`
+  ][reg=set]
+}[reg=facet]
+
+dispatch: .{
+  site = @site
+  architecture = @architecture
+  conventions = @conventions
+  semantic_capacity = @semantic_capacity
+  planning_ecology = @planning_ecology
+  operator_semantics = @operator_semantics
+  attention_field = @attention_field
+  claim_probes = @claim_probes
+}[reg=facet]
+
+invariants: #[
+  `Relations are directional, typed, and consequential.`
+  `Owner documents retain definitions; the graph retains adjacency and routing.`
+  `References stay navigable instead of path-shaped prose.`
+  `Streams express sequence; sets express peers; facets express named roles.`
+  `No new relation verb enters the vocabulary without an inverse reading and an editorial consequence.`
+  `Archive replaces ambiguous relations instead of silently erasing their rationale.`
+][reg=set]

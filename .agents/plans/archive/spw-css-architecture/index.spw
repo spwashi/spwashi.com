@@ -1,3 +1,4 @@
+# Review 2026-07-12 — archived architecture record; its useful residue is semantic grammar before ornament and surface overrides.
 # Plan Index — spw-css-architecture
 #
 # The site should express Spw grammar visibly and consistently: braces should read as containment and charge, operators should act as meaningful handles for emphasis, selection, and…
@@ -26,6 +27,25 @@ intent: .{
  bucket = "archive"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `The site should express Spw grammar visibly and consistently: braces should read as containment and charge, operators…`
+ concepts = #[
+  `grammar`,
+  `containment`,
+  `spw-css-architecture`,
+  `express`,
+  `spw`,
+ ][reg=set]
+ surfaces = #[
+  `css/style.css`,
+  `js/site.js`,
+  `.spw/reviews/css-architecture-alignment.spw`,
+  `.spw/reviews/modular-experience-slices-volleyball.spw`,
+ ][reg=set]
+ fixity_tier = `cold`
+}[reg=facet]
+
+
 @plans_root: ~"../../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../../.spw/conventions/wip-notebook.spw"
@@ -51,6 +71,27 @@ dispatch: .{
  grammar = @grammar
 }[reg=facet]
 
+^"research_bridge"{
+ local_research = #[
+  .{ label = `archive_readme` ; path = `.agents/plans/archive/README.md` }[reg=facet],
+  .{ label = `commit_history_deep` ; path = `.spw/audits/commit-history-deep-2026-07/index.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"connection_points"{
+ related_plans = #[
+  `modular-experience-slices`,
+ ][reg=set]
+}[reg=facet]
+
+^"archive_status"{
+ status = `archived`
+ archive_note = `.agents/plans/archive/2026-07-12-plan-ecology-semantics-architecture.md`
+ retain_reason = `Direct citations preserved — virtual bucket not physical move.`
+ research_pointer = `commit-history-deep-2026-07`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-spw_css_architecture-001"
  layer = "pragmatic"
@@ -59,7 +100,7 @@ dispatch: .{
  impl_ref = ~"../../../../public/css/style.css"
  probe_ref = `Hypotheses: a contributor can answer "where do brace physics live?", "where do operator colors/states live?", and "where do page-specific overrides live?" without opening multiple unrelated files.`
  falsification = `A patch cannot satisfy the public goal while leaving ../../../../public/css/style.css unchanged or untested.`
- status = "active"
+ status = "superseded"
 }[reg=facet]
 
 scope: .{
@@ -86,4 +127,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

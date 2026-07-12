@@ -1,3 +1,4 @@
+# Review 2026-07-12 — merge into page-region-discoverability; “hook” remains a volatile role, not new universal anatomy.
 # Plan Index — Hook Region Anatomy (Entry Call to Wonder / Action)
 #
 # Add a distinct, top-of-page "hook" region to landing pages as a first-class part of the documented page anatomy. This region serves as a volatile, high-value, configurable call to…
@@ -26,6 +27,25 @@ intent: .{
  bucket = "css_layout_interaction"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Add a distinct, top-of-page "hook" region to landing pages as a first-class part of the documented page anatomy. This…`
+ concepts = #[
+  `hook`,
+  `page`,
+  `region`,
+  `call`,
+  `pages`,
+ ][reg=set]
+ surfaces = #[
+  `js/kernel/dom-contracts.js`,
+  `js/kernel/page-metadata.js`,
+  `css/components/frames.css`,
+  `css/effects/wonder.css`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -53,6 +73,28 @@ dispatch: .{
  about_index_html = @about_index_html
 }[reg=facet]
 
+^"research_bridge"{
+ local_research = #[
+  .{ label = `page_spacing_runtime` ; path = `.spw/audits/page-spacing-runtime-synthesis-2026-07.spw` }[reg=facet],
+  .{ label = `vocabulary_metaphor` ; path = `.spw/audits/vocabulary-metaphor-growth-synthesis-2026-07.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `merge`
+ merged_into = #[
+  `page-region-discoverability`,
+ ][reg=set]
+ retain = `hook remains a volatile role`
+ status = `superseded`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-hook_region_anatomy-001"
  layer = "pragmatic"
@@ -61,7 +103,7 @@ dispatch: .{
  impl_ref = ~"../../../public/js/kernel/dom-contracts.js"
  probe_ref = `Author the plan first (this document).`
  falsification = `A patch cannot satisfy the public goal while leaving ../../../public/js/kernel/dom-contracts.js unchanged or untested.`
- status = "active"
+ status = "superseded"
 }[reg=facet]
 
 validation: #[
@@ -84,4 +126,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

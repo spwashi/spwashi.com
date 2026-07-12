@@ -2,11 +2,12 @@
 
 ## Public Goal
 
-Strengthen the site's `.spw` layer as an inspectable ecology: explicit topology, promotion protocol, ecology coordinators, owner registry, component-template surface, slimmer `site.spw`, review graduation metadata, language-ecology alignment, slice promotion, convention hygiene, and precipitated agent/editor indexes — so agents, editors, and a media-company authoring team can route work without re-scanning 182 plan folders.
+Strengthen the site's `.spw` layer as an inspectable ecology: explicit topology, typed relational design, promotion protocol, ecology coordinators, owner registry, component-template surface, slimmer `site.spw`, review graduation metadata, language-ecology alignment, slice promotion, convention hygiene, and precipitated agent/editor indexes — so agents and editors can route work without reconstructing meaning from file names or re-scanning 182 plan folders.
 
 ## Primary Contract
 
-`.spw/conventions/spw-architecture-ecology.spw`
+- `.spw/conventions/spw-architecture-ecology.spw` — topology, promotion, and ownership
+- `.spw/graph.spw` — typed node/edge vocabulary and live cross-document relations
 
 ## Relationship to Other Tracks
 
@@ -14,6 +15,7 @@ Strengthen the site's `.spw` layer as an inspectable ecology: explicit topology,
 |-------|-------------------|
 | `spw-surface-normalization/` | File shape, dimensions, reference style — **graduates into conventions** via this plan's promotion protocol |
 | `spw-architecture-ecology/` (this plan) | Layer topology, coordinators, registry, precipitates, `site.spw` hub shape |
+| `.spw/graph.spw` | Directional relations, bounded relation verbs, owner references, reading streams, confluences, and claim/probe edges |
 | `component-region-personality/` | Public HTML copy, referentiality, templates **in routes** |
 | `agent-optimization/` | Skills, public editor surfaces, maintenance cadence |
 | `agentic-dev-contracts/` | Manifests, `check`, generated state doctrine |
@@ -24,6 +26,7 @@ Strengthen the site's `.spw` layer as an inspectable ecology: explicit topology,
 **In scope**
 
 - Ecology coordinator convention files (`copy`, `region-component`, `language`, `interaction`, `capture`, `agent`)
+- Relational graph contract: typed nodes, bounded edge vocabulary, navigable owners, consequences, evidence, and lifecycle
 - `owner-registry.spw`
 - `surfaces/component-templates.spw`
 - Review `promotion_status` metadata
@@ -46,9 +49,18 @@ Strengthen the site's `.spw` layer as an inspectable ecology: explicit topology,
 - Hand-authored HTML/CSS/JS remain source of truth; `.spw` and `.agents/state/` project and route.
 - New generated artifacts must declare invalidation (`planning-ecology.spw#agentic_cache_contract`).
 - Coordinator files stay thin dispatch surfaces — no essay duplication of PLAN.md.
+- Relations stay directional and consequential; avoid comma-separated dependency strings and generic `related_to` edges.
 - `site.spw` hub rule: no new per-plan `@` refs after wave H without owner-registry entry.
 
 ## Edit Waves
+
+### Foundation R — Relational design contract (landed 2026-07-12)
+
+- Refactor `.spw/graph.spw` from prose node lists into a stable node/edge contract.
+- Bound relation verbs to `owns`, `grounds`, `requires`, `projects`, `routes`, `evidences`, `tests`, and `supersedes`.
+- Use Spw references, facets, sets, streams, confluences, wonder blocks, and claim/probe fields according to their distinct jobs.
+- Archive the legacy `depends_on` / `enables` string model in place so rationale remains inspectable without remaining active.
+- Route the contract through `.spw/site.spw`, `.spw/conventions/index.spw`, and the architecture convention.
 
 ### Wave A — Ecology coordinator shells
 
@@ -152,6 +164,9 @@ Each slice: `index.spw`, owner plan ref, validation commands, tending-note path.
 ```bash
 rg 'spw-architecture-ecology' .spw .agents/plans
 test -f .spw/conventions/spw-architecture-ecology.spw
+test -f .spw/graph.spw
+rg 'relation = "(owns|grounds|requires|projects|routes|evidences|tests|supersedes)"' .spw/graph.spw
+! rg '~#(depends_on|enables): "' .spw/graph.spw
 # After wave A:
 ls .spw/conventions/*-ecology.spw
 # After wave C:

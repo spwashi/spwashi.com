@@ -1,3 +1,4 @@
+# Review 2026-07-12 — completed reference; retain for CSS build history and route new work to current CSS ownership plans.
 # Plan Index — CSS Semantic Modules
 #
 # Make CSS easier to debug, teach, and refactor by moving from large hand-edited CSS files toward semantic source modules while preserving the current static-site output contract.
@@ -26,6 +27,25 @@ intent: .{
  bucket = "archive"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Make CSS easier to debug, teach, and refactor by moving from large hand-edited CSS files toward semantic source modules…`
+ concepts = #[
+  `css`,
+  `semantic`,
+  `modules`,
+  `easier`,
+  `debug`,
+ ][reg=set]
+ surfaces = #[
+  `css/style.css`,
+  `css/`,
+  `scripts/ts/css-build.mts`,
+  `scripts/ts/css-contracts.mts`,
+ ][reg=set]
+ fixity_tier = `cold`
+}[reg=facet]
+
+
 @plans_root: ~"../../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../../.spw/conventions/wip-notebook.spw"
@@ -53,6 +73,27 @@ dispatch: .{
  tools_budgeting_surface = @tools_budgeting_surface
 }[reg=facet]
 
+^"research_bridge"{
+ local_research = #[
+  .{ label = `archive_readme` ; path = `.agents/plans/archive/README.md` }[reg=facet],
+  .{ label = `commit_history_deep` ; path = `.spw/audits/commit-history-deep-2026-07/index.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"connection_points"{
+ related_plans = #[
+  `spw-css-architecture`,
+ ][reg=set]
+}[reg=facet]
+
+^"archive_status"{
+ status = `archived`
+ archive_note = `.agents/plans/archive/2026-07-12-plan-ecology-semantics-architecture.md`
+ retain_reason = `Direct citations preserved — virtual bucket not physical move.`
+ research_pointer = `commit-history-deep-2026-07`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-css_semantic_modules-001"
  layer = "pragmatic"
@@ -61,7 +102,7 @@ dispatch: .{
  impl_ref = ~"../../../../public/css/style.css"
  probe_ref = `git diff --check`
  falsification = `A patch cannot satisfy the public goal while leaving ../../../../public/css/style.css unchanged or untested.`
- status = "active"
+ status = "superseded"
 }[reg=facet]
 
 validation: #[
@@ -84,4 +125,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

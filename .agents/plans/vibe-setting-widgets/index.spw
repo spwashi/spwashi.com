@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the settings first-screen UX owner; obvious choices and immediate feedback must write canonical state.
 # Plan Index — vibe-setting-widgets
 #
 # The desired end state is a settings route that begins with obvious, high-impact choices and immediate feedback instead of reading like a registry dump. Small reusable widgets…
@@ -26,6 +27,23 @@ intent: .{
  bucket = "active_backlog"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `The desired end state is a settings route that begins with obvious, high-impact choices and immediate feedback instead…`
+ concepts = #[
+  `settings`,
+  `vibe-setting-widgets`,
+  `desired`,
+  `end`,
+  `state`,
+ ][reg=set]
+ surfaces = #[
+  `settings/index.html`,
+  `play/rpg-wednesday/index.html`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -39,6 +57,18 @@ dispatch: .{
  wip = @wip
  settings_index_html = @settings_index_html
  play_rpg_wednesday_index_html = @play_rpg_wednesday_index_html
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"absorbs"{
+ reviewed = `2026-07-12`
+ plans = #[
+  `settings-widgets-low-friction`,
+ ][reg=set]
+ rule = `Absorbed by 2026-07-12 review; see each source review_disposition and archive/2026-07-12-review-execution.md.`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -78,4 +108,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

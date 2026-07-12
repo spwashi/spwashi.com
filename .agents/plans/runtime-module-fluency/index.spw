@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the runtime learnability rail; calm defaults and inspectable practice precede expressive expansion.
 # Plan Index — Runtime Module Fluency
 #
 # Make the site behave like a learnable visual instrument: calm at rest, expressive when practiced, and inspectable when a reader wants to understand which scripts changed behavior…
@@ -26,6 +27,25 @@ intent: .{
  bucket = "runtime_js_validation"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Make the site behave like a learnable visual instrument: calm at rest, expressive when practiced, and inspectable when…`
+ concepts = #[
+  `runtime`,
+  `module`,
+  `fluency`,
+  `behave`,
+  `like`,
+ ][reg=set]
+ surfaces = #[
+  `js/site.js`,
+  `css/components/foundation.css`,
+  `settings/index.html`,
+  `.spw/conventions/query-disposition.spw`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -47,6 +67,21 @@ dispatch: .{
  index = @index
  query_disposition = @query_disposition
  site_semantics = @site_semantics
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `javascript_module_census` ; path = `.spw/audits/javascript-module-census-2026-07.spw` }[reg=facet],
+  .{ label = `module_export_audit` ; path = `.spw/audits/module-export-standalone-2026-07.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"connection_points"{
+ related_plans = #[
+  `css-state-legibility`,
+  `semantic-html-normalization`,
+ ][reg=set]
 }[reg=facet]
 
 ^"owner_claim"{
@@ -89,4 +124,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

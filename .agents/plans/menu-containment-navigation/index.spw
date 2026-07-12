@@ -1,20 +1,21 @@
+# Review 2026-07-12 — completed reference; route future menu containment issues through the chrome owner.
 # Plan Index — Menu Containment And Navigation Fix
 #
 # Add shared containment rules for route bridges and their card links.
 
 #>plan_menu_containment_navigation_index
 #:index #!plan
-#:operation #!audit
+#:operation #!archive
 #:layer #!pragmatics
 
-operation = "audit"
-fixity = "tending"
+operation = "archive"
+fixity = "cold"
 
 intent: .{
  goal = `Add shared containment rules for route bridges and their card links.`
  owner = `menu-containment-navigation`
  kind = `fix`
- bucket = `fix_queue`
+ bucket = `completed_reference`
  artifact_shape = `FIX.md | index.spw`
 }[reg=facet]
 
@@ -22,9 +23,22 @@ intent: .{
  practice_depth = "observation | gesture"
  semantic_layer = "pragmatics"
  collaboration_phase = "exchange"
- memory_tier = "hot"
- bucket = "fix_queue"
+ memory_tier = "cold"
+ bucket = "completed_reference"
 }[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Add shared containment rules for route bridges and their card links.`
+ concepts = #[
+  `containment`,
+  `menu`,
+  `navigation`,
+  `fix`,
+  `add`,
+ ][reg=set]
+ fixity_tier = `cold`
+}[reg=facet]
+
 
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
@@ -35,6 +49,29 @@ dispatch: .{
  fix = @fix
 }[reg=facet]
 
+^"research_bridge"{
+ local_research = #[
+  .{ label = `archive_sweep` ; path = `.agents/plans/archive/2026-07-12-plan-ecology-semantics-architecture.md` }[reg=facet],
+  .{ label = `commit_history_deep` ; path = `.spw/audits/commit-history-deep-2026-07/index.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"archive_status"{
+ status = `completed_reference`
+ archive_note = `.agents/plans/archive/2026-07-12-plan-ecology-semantics-architecture.md`
+ retain_reason = `Direct citations preserved — virtual bucket not physical move.`
+ research_pointer = `chrome-navigation-wonder`
+ kind = `fix`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `completed_reference`
+ note = `route future menu containment through the chrome owner`
+ status = `superseded`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-menu_containment_navigation-001"
  layer = "pragmatic"
@@ -43,7 +80,7 @@ dispatch: .{
  impl_ref = ~"./PLAN.md"
  probe_ref = `rg 'menu-containment-navigation' .agents/plans/menu-containment-navigation`
  falsification = `The listed failure mode returns after the planned fix lands.`
- status = "active"
+ status = "superseded"
 }[reg=facet]
 
 next_action: .{
@@ -60,4 +97,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

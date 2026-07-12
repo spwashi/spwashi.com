@@ -1,3 +1,4 @@
+# Review 2026-07-12 — retain the useful skill-development insight as a cache, not an implementation queue.
 ^"selection_probes"{
  probes = #[ `rg 'skill-folio-operating-system' design/folios/index.html`, `rg 'skill-folio-operating-system' .agents/plans`, `test -f design/folios/index.html`, ][reg=set]
  rule = "Run probes before trusting cached plan_context."

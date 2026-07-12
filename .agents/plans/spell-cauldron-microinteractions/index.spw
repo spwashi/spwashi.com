@@ -1,3 +1,4 @@
+# Review 2026-07-12 — merge microinteraction polish into lifecycle and spellcraft owners; feedback cannot create a second state model.
 # Plan Index — Spell + Cauldron Microinteractions
 #
 # Make the cauldron feel like a working vessel and spells feel like composed, inspectable outputs. text term / card / route / image -> prime -> collect in cauldron -> compose spell…
@@ -14,7 +15,7 @@ intent: .{
  goal = `Make the cauldron feel like a working vessel and spells feel like composed, inspectable outputs. text term / card / route / image -> prime -> collect in cauldron -> compose spell -> publish / copy / route / proof`
  owner = `spell-cauldron-microinteractions`
  kind = `plan`
- bucket = `active_backlog`
+ bucket = `merged`
  artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
@@ -23,8 +24,21 @@ intent: .{
  semantic_layer = "pragmatics"
  collaboration_phase = "tending"
  memory_tier = "hot"
- bucket = "active_backlog"
+ bucket = "merged"
 }[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Make the cauldron feel like a working vessel and spells feel like composed, inspectable outputs. text term / card /…`
+ concepts = #[
+  `cauldron`,
+  `spell`,
+  `feel`,
+  `like`,
+  `microinteractions`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
 
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
@@ -37,6 +51,23 @@ dispatch: .{
  plan_spellcraft_authoring = @plan_spellcraft_authoring
 }[reg=facet]
 
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+ related_plans = #[
+  `spellcraft-authoring`,
+ ][reg=set]
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `merge`
+ merged_into = #[
+  `spellcraft-authoring`,
+ ][reg=set]
+ retain = `feedback cannot create a second state model`
+ status = `superseded`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-spell_cauldron_microinteractions-001"
  layer = "pragmatic"
@@ -45,7 +76,7 @@ dispatch: .{
  impl_ref = ~"./PLAN.md"
  probe_ref = `node --check public/js/interface/composition.js`
  falsification = `A patch cannot satisfy the public goal while leaving ./PLAN.md unchanged or untested.`
- status = "active"
+ status = "superseded"
 }[reg=facet]
 
 validation: #[
@@ -66,4 +97,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

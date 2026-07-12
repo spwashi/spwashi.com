@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the concise audience and collaboration contract; it is more useful than the duplicated WIP cache.
 ^"operational_hooks"{
  selectors = #[ `topics/index.html`, `topics/craft/index.html`, `topics/craft/fragments/index.html`, `topics/craft/svg/index.html`, ][reg=set]
  probe_ref = `Hypotheses: an author can open /topics/craft/, choose a ramp, and understand one concrete next step; a developer friend can see where they could help; screenshots capture prompt cards and motifs without needing runtime context.`

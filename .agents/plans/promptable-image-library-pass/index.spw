@@ -1,3 +1,4 @@
+# Review 2026-07-12 — split shareable prompt URLs from image-library promotion; each needs its own proof and privacy review.
 # Plan Index — promptable-image-library-pass
 #
 # Make promptable links easier to share as memeable URLs and image seeds.
@@ -26,6 +27,25 @@ intent: .{
  bucket = "active_backlog"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Make promptable links easier to share as memeable URLs and image seeds.`
+ concepts = #[
+  `promptable-image-library-pass`,
+  `promptable`,
+  `links`,
+  `easier`,
+  `share`,
+ ][reg=set]
+ surfaces = #[
+  `play/rpg-wednesday/index.html`,
+  `design/index.html`,
+  `design/components/index.html`,
+  `about/index.html`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -43,6 +63,18 @@ dispatch: .{
  design_components_index_html = @design_components_index_html
  about_index_html = @about_index_html
  operator_alignment = @operator_alignment
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `split`
+ note = `split shareable prompt URLs from image-library promotion`
+ rescope = `required`
+ status = `active`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -66,4 +98,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

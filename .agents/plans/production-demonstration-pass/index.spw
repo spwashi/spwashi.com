@@ -1,3 +1,4 @@
+# Review 2026-07-12 — rework into one visible production proof; media, reliability, and semantics should not move as one pass.
 # Plan Index — production-demonstration-pass
 #
 # Make the spwashi.com site a stronger, more legible demonstration of thoughtful modern production practices in three visible areas: - Media: Full use of the existing asset…
@@ -26,6 +27,25 @@ intent: .{
  bucket = "active_backlog"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Make the spwashi.com site a stronger, more legible demonstration of thoughtful modern production practices in three…`
+ concepts = #[
+  `spw`,
+  `production`,
+  `existing`,
+  `spwashi`,
+  `demonstration`,
+ ][reg=set]
+ surfaces = #[
+  `css/effects/`,
+  `css/components/cards.css`,
+  `css/tokens/core.css`,
+  `js/runtime/`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -49,6 +69,18 @@ dispatch: .{
  asset_management = @asset_management
  conventions = @conventions
  images = @images
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `rework`
+ note = `rework into one visible production proof`
+ rescope = `required`
+ status = `active`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -96,4 +128,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

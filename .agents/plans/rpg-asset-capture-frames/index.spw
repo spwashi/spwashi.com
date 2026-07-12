@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the local asset and screenshot-frame owner; privacy and storage limits are non-negotiable.
 # Plan Index — rpg-asset-capture-frames
 #
 # RPG Wednesday should let players upload local character, item, place, and artifact images, then stage those assets inside stable screenshot-friendly frames. The site is not…
@@ -26,6 +27,23 @@ intent: .{
  bucket = "active_backlog"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `RPG Wednesday should let players upload local character, item, place, and artifact images, then stage those assets…`
+ concepts = #[
+  `players`,
+  `note`,
+  `like`,
+  `rpg-asset-capture-frames`,
+  `rpg`,
+ ][reg=set]
+ surfaces = #[
+  `.agents/plans/screenshot-semantics/PLAN.md`,
+  `.agents/plans/rpg-asset-capture-frames/rpg-asset-capture-frames.spw`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -39,6 +57,21 @@ dispatch: .{
  wip = @wip
  rpg_asset_capture_frames = @rpg_asset_capture_frames
  plan_screenshot_semantics = @plan_screenshot_semantics
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+ related_plans = #[
+  `screenshot-semantics`,
+ ][reg=set]
+}[reg=facet]
+
+^"absorbs"{
+ reviewed = `2026-07-12`
+ plans = #[
+  `rpg-seed-metacognition-pass`,
+ ][reg=set]
+ rule = `Absorbed by 2026-07-12 review; see each source review_disposition and archive/2026-07-12-review-execution.md.`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -78,4 +111,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

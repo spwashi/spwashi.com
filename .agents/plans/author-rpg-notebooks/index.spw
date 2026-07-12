@@ -1,3 +1,4 @@
+# Review 2026-07-12 — merge the public guidance into craft and RPG session-note owners; retain privacy as the non-negotiable boundary.
 # Plan Index — Author RPG Notebooks
 #
 # Improve the site’s journaling, note-taking, and character-development affordances for two overlapping audiences: - authors who need a clean bridge from private fragments into…
@@ -14,7 +15,7 @@ intent: .{
  goal = `Improve the site’s journaling, note-taking, and character-development affordances for two overlapping audiences: - authors who need a clean bridge from private fragments into publishable surfaces - RPG players who need a clean bridge from session residue into cast, world, and arc memory The feature should strengthen the existing local-first posture. Private notes stay private by default; public routes teach what should move from scratch material into stable canon.`
  owner = `author-rpg-notebooks`
  kind = `plan`
- bucket = `active_backlog`
+ bucket = `merged`
  artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
@@ -23,8 +24,27 @@ intent: .{
  semantic_layer = "pragmatics"
  collaboration_phase = "tending"
  memory_tier = "hot"
- bucket = "active_backlog"
+ bucket = "merged"
 }[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Improve the site’s journaling, note-taking, and character-development affordances for two overlapping audiences: -…`
+ concepts = #[
+  `private`,
+  `rpg`,
+  `who`,
+  `need`,
+  `clean`,
+ ][reg=set]
+ surfaces = #[
+  `topics/craft/index.html`,
+  `play/rpg-wednesday/index.html`,
+  `play/rpg-wednesday/sessions/index.html`,
+  `.agents/plans/author-rpg-notebooks/PLAN.md`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
 
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
@@ -43,6 +63,21 @@ dispatch: .{
  rpg_local_gameplay = @rpg_local_gameplay
 }[reg=facet]
 
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `merge`
+ merged_into = #[
+  `author-craft-ramps`,
+  `rpg-session-notes`,
+ ][reg=set]
+ retain = `privacy as a non-negotiable boundary`
+ status = `superseded`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-author_rpg_notebooks-001"
  layer = "pragmatic"
@@ -51,7 +86,7 @@ dispatch: .{
  impl_ref = ~"../../../topics/craft/index.html"
  probe_ref = `git diff --check`
  falsification = `A patch cannot satisfy the public goal while leaving ../../../topics/craft/index.html unchanged or untested.`
- status = "active"
+ status = "superseded"
 }[reg=facet]
 
 scope: .{
@@ -81,4 +116,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

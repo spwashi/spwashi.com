@@ -1,14 +1,15 @@
+# Review 2026-07-12 — keep as the attention relation owner; prove self/local/global language on one route before new media machinery.
 # Plan Index — Relational Attention Media
 #
 # Make attention and meditation practical relational dimensions across the site: self relation, local context, and global horizon. Use those dimensions to generate stable, copyable…
 
 #>plan_relational_attention_media_index
 #:index #!plan
-#:operation #!prime
+#:operation #!contract
 #:layer #!pragmatics
 
-operation = "prime"
-fixity = "tending"
+operation = "contract"
+fixity = "stable"
 
 intent: .{
  goal = `Make attention and meditation practical relational dimensions across the site: self relation, local context, and global horizon. Use those dimensions to generate stable, copyable media seeds across prose, lyric, visual, storyboard, audio, and curriculum work. Extend that surface so a generated seed can also become a lightweight canon increment: a proof card, Town Atlas note, or markdown artifact that preserves source ingredient, posture, and next action without needing a remote model call.`
@@ -20,10 +21,35 @@ intent: .{
 
 ^"dimensions"{
  practice_depth = "reading | observation | tending"
- semantic_layer = "pragmatics"
+ semantic_layer = "semantics | pragmatics"
  collaboration_phase = "tending"
- memory_tier = "hot"
+ memory_tier = "warm"
  bucket = "semantic_rails"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Attention is relation (self/local/global) plus local media-seed production — not a single hover effect.`
+ concepts = #[
+  `attention-field`,
+  `resonance-probe`,
+  `media-seed`,
+  `relation-tier`,
+  `genre-bridge`,
+ ][reg=set]
+ surfaces = #[
+  `.spw/conventions/attention-field.spw`,
+  `public/js/attention-architecture.js`,
+  `public/css/effects/wonder.css`,
+ ][reg=set]
+ fixity_tier = `stable`
+}[reg=facet]
+
+^"plan_refinement"{
+ tone = `Phenomenological but falsifiable — name probes, not poetry only.`
+ accuracy = `Resonance probe and section-handle landed; full genre media-seed ladder is partial.`
+ direction = `Extend one route with explicit self/local/global copy + inspect hooks before new attributes.`
+ inspiration = `Attention should feel scientifically playful, not decorative.`
+ alignment = `chrome-navigation-wonder, metaphor-primitive-research audit`
 }[reg=facet]
 
 @plans_root: ~"../../../.agents/plans/index.spw"
@@ -49,6 +75,19 @@ dispatch: .{
  play_index_html = @play_index_html
  home = @home
  relational_attention_media = @relational_attention_media
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `plan_ecology_semantics` ; path = `.spw/audits/plan-ecology-semantics-2026-07.spw` }[reg=facet],
+  .{ label = `commit_skill_induction` ; path = `.spw/audits/commit-skill-induction-2026-07/index.spw` }[reg=facet],
+  .{ label = `spw_architecture_ecology` ; path = `.spw/conventions/spw-architecture-ecology.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `self`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -80,6 +119,7 @@ validation: #[
 editor_prompts: #[
  .{ ask = `What does relational-attention-media own, and what should stay out of scope?`, see = @plan }[reg=facet],
  .{ ask = `Which file should I open first to implement the next slice of relational-attention-media?`, see = @index }[reg=facet],
+ .{ ask = `What is the tone, direction, and alignment for relational-attention-media?`, see = @index#plan_refinement }[reg=facet],
  .{ ask = `What command or check falsifies whether relational-attention-media still holds?`, see = @plan }[reg=facet],
 ][reg=set]
 
@@ -88,4 +128,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

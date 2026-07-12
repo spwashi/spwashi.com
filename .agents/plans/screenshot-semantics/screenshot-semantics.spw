@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the distilled still-capture contract; legibility without animation is the decisive proof.
 ^"operational_hooks"{
  selectors = #[ `.agents/plans/screenshot-semantics/screenshot-semantics.spw`, ][reg=set]
  probe_ref = `Hypotheses: persistent data attributes and CSS-driven selection states will make screenshots legible without runtime context; priming states will be achievable through all input modes; journey tokens will feel like earned marks rather than tracking labels.`

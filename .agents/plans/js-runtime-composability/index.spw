@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the extraction/composition owner; reduce site.js only where a reusable boundary is already visible.
 # Plan Index — JS Runtime Composability
 #
 # Reduce the size and cognitive load of public/js/site.js by extracting the page-state / attention lifecycle contract into a dedicated runtime module, while keeping the runtime…
@@ -26,6 +27,25 @@ intent: .{
  bucket = "active_backlog"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Reduce the size and cognitive load of public/js/site.js by extracting the page-state / attention lifecycle contract…`
+ concepts = #[
+  `runtime`,
+  `composability`,
+  `reduce`,
+  `size`,
+  `cognitive`,
+ ][reg=set]
+ surfaces = #[
+  `js/site.js`,
+  `js/runtime/page-state.js`,
+  `js/README.md`,
+  `scripts/ts/runtime-contracts.mts`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -47,6 +67,10 @@ dispatch: .{
  check_site = @check_site
  lifecycles = @lifecycles
  public_js_runtime_module_catalog_js = @public_js_runtime_module_catalog_js
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `runtime-bootstrap-performance`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -88,4 +112,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

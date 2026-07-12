@@ -1,3 +1,4 @@
+# Review 2026-07-12 — retain as semantic mapping research; current image-treatment contracts supersede its ritual framing.
 ^"operational_hooks"{
  selectors = #[ `public/js/site.js`, `public/css/style.css`, `topics/software/compression/index.html`, `.agents/plans/image-visit-metaphysics/image-visit-metaphysics.spw`, ][reg=set]
  probe_ref = `Hypotheses: semantic treatments will feel more intentional than randomized hover effects; hold-to-visit will create a clearer memory ritual than click toggles; a persistent visited glow will make returnable image surfaces legible across pages.`

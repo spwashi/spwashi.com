@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the topic-atlas visual owner; every image or SVG needs a route role, alt text, and connection.
 # Plan Index — topic-photo-svg-pass
 #
 # Make the topic atlas feel more inhabited. The topic surfaces should stop reading like isolated text stubs and start behaving like a connected field guide with real visual…
@@ -26,6 +27,25 @@ intent: .{
  bucket = "active_backlog"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Make the topic atlas feel more inhabited. The topic surfaces should stop reading like isolated text stubs and start…`
+ concepts = #[
+  `topic`,
+  `like`,
+  `references`,
+  `topic-photo-svg-pass`,
+  `atlas`,
+ ][reg=set]
+ surfaces = #[
+  ``,
+  `topics/index.html`,
+  `topics/architecture/index.html`,
+  `topics/pedagogy/index.html`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -51,6 +71,19 @@ dispatch: .{
  topics_site_design_index_html = @topics_site_design_index_html
  topics_math_index_html = @topics_math_index_html
  images = @images
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"absorbs"{
+ reviewed = `2026-07-12`
+ plans = #[
+  `hero-image-whimsy`,
+  `unsorted-image-rollout`,
+ ][reg=set]
+ rule = `Absorbed by 2026-07-12 review; see each source review_disposition and archive/2026-07-12-review-execution.md.`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -91,4 +124,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

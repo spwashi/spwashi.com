@@ -1,3 +1,4 @@
+# Review 2026-07-12 — split professional evidence from worldbuilding method; connect them through one artifact, not an umbrella architecture.
 # Plan Index — Professional Skill Development & Worldbuilding Architecture
 #
 # We want to reframe the relationship between worldbuilding/character design and professional/technical skill development.
@@ -26,6 +27,24 @@ intent: .{
  bucket = "public_route_proof_genre"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `We want to reframe the relationship between worldbuilding/character design and professional/technical skill development.`
+ concepts = #[
+  `professional`,
+  `skill`,
+  `development`,
+  `worldbuilding`,
+  `architecture`,
+ ][reg=set]
+ surfaces = #[
+  `play/rpg-wednesday/index.html`,
+  `play/rpg-wednesday/library/index.html`,
+  `css/components/cards.css`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -41,6 +60,22 @@ dispatch: .{
  play_rpg_wednesday_index_html = @play_rpg_wednesday_index_html
  play_rpg_wednesday_library_index_html = @play_rpg_wednesday_library_index_html
  cards = @cards
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `appendices_index` ; path = `.spw/audits/appendices/index.spw` }[reg=facet],
+  .{ label = `metaphor_primitive_research` ; path = `.spw/audits/metaphor-primitive-research-branching-2026-07.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `split`
+ note = `split professional evidence from worldbuilding method; connect via one artifact`
+ rescope = `required`
+ status = `active`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -64,4 +99,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

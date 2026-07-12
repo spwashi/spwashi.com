@@ -19,6 +19,7 @@
 @agentic_contracts_plan: ~"../../.agents/plans/agentic-dev-contracts/PLAN.md"
 @wip_index_plan: ~"../../.agents/plans/plan-wip-index-conventions/PLAN.md"
 @maintain_script: ~"../../scripts/maintain-plan-directory-indexes.mjs"
+@plan_ecology_semantics: ~"../audits/plan-ecology-semantics-2026-07.spw"
 
 operation = "align"
 fixity = "tending"
@@ -30,6 +31,7 @@ fixity = "tending"
  precipitates: #[`.agents/state/plans-index.json`, `.agents/state/skills-index.json`][reg=set]
  invalidation_rule: "Regenerate precipitates when plan index, SKILL.md, or owner-registry changes."
  first_read: "planning-ecology.spw for buckets; plans/index.spw for dispatch; agentic-dev-contracts for check/manifest."
+ plan_ecology_pass: @plan_ecology_semantics
 }
 
 ^"owner_claim"{

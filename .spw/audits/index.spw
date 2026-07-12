@@ -35,6 +35,7 @@
 @component_philosophy_harmony: ~"./component-philosophy-harmony-2026-07.spw"
 @working_tree_index: ~"./working-tree-index-2026-07.spw"
 @commit_history_deep: ~"./commit-history-deep-2026-07/index.spw"
+@plan_ecology_semantics: ~"./plan-ecology-semantics-2026-07.spw"
 
 operation = "align"
 fixity = "tending"
@@ -50,6 +51,7 @@ fixity = "tending"
     build_runtime_performance = ~"./build-runtime-performance-2026-07/index.spw"
     commit_skill_induction = ~"./commit-skill-induction-2026-07/index.spw"
     commit_history_deep = ~"./commit-history-deep-2026-07/index.spw"
+    plan_ecology_semantics = ~"./plan-ecology-semantics-2026-07.spw"
     component_anatomy_device_packing = ~"./component-anatomy-device-packing-2026-07.spw"
     component_philosophy_harmony = ~"./component-philosophy-harmony-2026-07.spw"
     css_module_attribute_impact = ~"./css-module-attribute-impact-2026-07/index.spw"
@@ -123,6 +125,13 @@ fixity = "tending"
     keys = #[`commit_history_deep`, `commit_skill_induction`][reg=set]
     complements = `commit-skill-induction — skill/induction lens on 2026-04→ only`
   }[reg=facet]
+
+  plan_ecology: .{
+    reading_order = `plan_ecology_semantics`
+    hub = @plan_ecology_semantics
+    keys = #[`plan_ecology_semantics`, `commit_skill_induction`][reg=set]
+    plans_dispatch = `../../.agents/plans/index.spw`
+  }[reg=facet]
 }
 
 ^"reading_orders"{
@@ -151,6 +160,12 @@ fixity = "tending"
     @commit_history_deep,
     @commit_skill_induction,
     @working_tree_index
+  >[reg=stream]
+
+  plan_ecology_semantics = ?<
+    @plan_ecology_semantics,
+    @commit_skill_induction,
+    @commit_history_deep
   >[reg=stream]
 
   layout_device = ?<
@@ -240,6 +255,10 @@ fixity = "tending"
   before_agent_ops {
     *do = `Read agent_editor + recursive_improvement`
     expression = thoroughness[agents]{editor.recursive}<gate>
+  }
+  before_plan_ecology_work {
+    *do = `Read plan_ecology_semantics + planning-ecology#research_bridge_map`
+    expression = thoroughness[plans]{ecology.semantics.archive}<gate>
   }
   before_history_orientation {
     *do = `Read commit_history_deep — epochs + volume before skill-induction lens`

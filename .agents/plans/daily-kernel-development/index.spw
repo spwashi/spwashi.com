@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as a one-session practice rail; a kernel must end in one output and one validation path.
 # Plan Index — Daily Kernel Development Exercise
 #
 # Create a repeatable "daily kernel" development exercise: a small, tunable practice loop for improving this codebase's semantic capacity, brand physics, regional experience design,…
@@ -26,6 +27,30 @@ intent: .{
  bucket = "semantic_rails"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `One-session kernels pair disciplines without broad rewrites — one focus, one pair, one output, one validation.`
+ concepts = #[
+  `daily-kernel`,
+  `discipline-pair`,
+  `brand-physics`,
+  `semantic-operation`,
+  `validation-path`,
+ ][reg=set]
+ surfaces = #[
+  `.spw/conventions/daily-kernel.spw`,
+  `.agents/plans/daily-kernel-development/`,
+ ][reg=set]
+ fixity_tier = `stable`
+}[reg=facet]
+
+^"plan_refinement"{
+ tone = `Workshop schedule — concrete enough to start today.`
+ accuracy = `Convention contract is stable; kernel audit backlog is open.`
+ direction = `Run one no-code kernel audit and record it before inventing new kernel templates.`
+ inspiration = `Collaborators should see a believable one-session entry ramp.`
+ alignment = `model-guided-refinement, creative-marketing-engine in product-lines.spw`
+}[reg=facet]
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -41,6 +66,19 @@ dispatch: .{
  site = @site
  index = @index
  readme = @readme
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `plan_ecology_semantics` ; path = `.spw/audits/plan-ecology-semantics-2026-07.spw` }[reg=facet],
+  .{ label = `commit_skill_induction` ; path = `.spw/audits/commit-skill-induction-2026-07/index.spw` }[reg=facet],
+  .{ label = `spw_architecture_ecology` ; path = `.spw/conventions/spw-architecture-ecology.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"connection_points"{
+ owner_rail = `self`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -65,6 +103,7 @@ validation: #[
 editor_prompts: #[
  .{ ask = `What does daily-kernel-development own, and what should stay out of scope?`, see = @plan }[reg=facet],
  .{ ask = `Which file should I open first to implement the next slice of daily-kernel-development?`, see = @index }[reg=facet],
+ .{ ask = `What is the tone, direction, and alignment for daily-kernel-development?`, see = @index#plan_refinement }[reg=facet],
  .{ ask = `What command or check falsifies whether daily-kernel-development still holds?`, see = @plan }[reg=facet],
 ][reg=set]
 
@@ -73,4 +112,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

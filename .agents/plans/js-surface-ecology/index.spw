@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the source-tree audit rail; topology must be observed before another rename or move.
 # Plan Index — js-surface-ecology
 #
 # Make the shape of public/js legible before attempting deep refactors. The desired end state is a tree where a new reader can distinguish durable primitives, semantic machinery,…
@@ -26,6 +27,25 @@ intent: .{
  bucket = "runtime_js_validation"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Make the shape of public/js legible before attempting deep refactors. The desired end state is a tree where a new…`
+ concepts = #[
+  `js-surface-ecology`,
+  `shape`,
+  `legible`,
+  `attempting`,
+  `deep`,
+ ][reg=set]
+ surfaces = #[
+  `js`,
+  `js/site.js`,
+  `js/typed/`,
+  `css/style.css`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -43,6 +63,23 @@ dispatch: .{
  typed = @typed
  style = @style
  interface = @interface
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `javascript_module_census` ; path = `.spw/audits/javascript-module-census-2026-07.spw` }[reg=facet],
+  .{ label = `module_export_audit` ; path = `.spw/audits/module-export-standalone-2026-07.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"absorbs"{
+ reviewed = `2026-07-12`
+ plans = #[
+  `javascript-standalone-utility`,
+  `js-taxonomy-cleanup`,
+ ][reg=set]
+ rule = `Absorbed by 2026-07-12 review; see each source review_disposition and archive/2026-07-12-review-execution.md.`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -81,4 +118,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the commercial ladder owner; prices, offers, proof, and CTA destinations must agree.
 # Plan Index — Services Ladder And Topic CTAs
 #
 # Reshape the public services ladder around smaller honest entry points, synchronize pricing language with the configurator and budgeting tool, and add context-specific CTA paths on…
@@ -26,6 +27,23 @@ intent: .{
  bucket = "public_route_proof_genre"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Reshape the public services ladder around smaller honest entry points, synchronize pricing language with the…`
+ concepts = #[
+  `services`,
+  `ladder`,
+  `topic`,
+  `ctas`,
+  `reshape`,
+ ][reg=set]
+ surfaces = #[
+  `js/modules/services/configurator.js`,
+  `js/modules/tools/budgeting.js`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -37,6 +55,14 @@ dispatch: .{
  plan = @plan
  configurator = @configurator
  budgeting = @budgeting
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `appendices_index` ; path = `.spw/audits/appendices/index.spw` }[reg=facet],
+  .{ label = `metaphor_primitive_research` ; path = `.spw/audits/metaphor-primitive-research-branching-2026-07.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -60,4 +86,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

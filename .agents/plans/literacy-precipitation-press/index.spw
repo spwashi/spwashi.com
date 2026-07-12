@@ -1,3 +1,4 @@
+# Review 2026-07-12 — retain as a long-horizon prime, not active backlog, until one bulletin-to-publication proof exists.
 # Plan Index — literacy-precipitation-press
 #
 # North-star lore and staged architecture for spwashi.com as a place where literacy precipitates into physical form: named abilities become tangible items, learning leaves printable…
@@ -26,6 +27,31 @@ intent: .{
  bucket = "public_route_proof_genre"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `Lore ladder: named effects → bulletin → print precipitation → publishing — learnability over novelty.`
+ concepts = #[
+  `precipitation`,
+  `bulletin-board`,
+  `print-surface`,
+  `lore-ladder`,
+  `editorial-rung`,
+ ][reg=set]
+ surfaces = #[
+  `topics/`,
+  `design/`,
+  `public routes with editorial frames`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+^"plan_refinement"{
+ tone = `Publisher patience — each rung earns the next.`
+ accuracy = `North-star documented; full print precipitation chain is not shipped.`
+ direction = `Ship one bulletin-to-route handoff proof before manufacturing metaphor expansion.`
+ inspiration = `Esoteric effects become teachable artifacts.`
+ alignment = `spellcraft-authoring, appendices print + film history`
+}[reg=facet]
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -37,6 +63,14 @@ dispatch: .{
  plan = @plan
  math = @math
  observation_beats = @observation_beats
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `appendices_index` ; path = `.spw/audits/appendices/index.spw` }[reg=facet],
+  .{ label = `metaphor_primitive_research` ; path = `.spw/audits/metaphor-primitive-research-branching-2026-07.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -53,6 +87,7 @@ dispatch: .{
 editor_prompts: #[
  .{ ask = `What does literacy-precipitation-press own, and what should stay out of scope?`, see = @plan }[reg=facet],
  .{ ask = `Which file should I open first to implement the next slice of literacy-precipitation-press?`, see = @index }[reg=facet],
+ .{ ask = `What is the tone, direction, and alignment for literacy-precipitation-press?`, see = @index#plan_refinement }[reg=facet],
 ][reg=set]
 
 invariants: #[
@@ -60,4 +95,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

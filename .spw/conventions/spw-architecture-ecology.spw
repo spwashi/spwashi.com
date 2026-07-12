@@ -28,6 +28,7 @@
 @precipitates_projections: ~"./precipitates-and-projections.spw"
 @wip_notebook: ~"./wip-notebook.spw"
 @site: ~"../site.spw"
+@relational_design: ~"../graph.spw"
 @slices_index: ~"../slices/index.spw"
 @maintain_plan_indexes: ~"../../scripts/maintain-plan-directory-indexes.mjs"
 
@@ -67,6 +68,12 @@ fixity = "tending"
   surfaces: .{
     role = "Models and registries: page-model, component-templates, approach-topography."
     fixity = "stable | tending"
+  }[reg=facet]
+  relations: .{
+    role = "Typed concept adjacency: authority, dependency, projection, navigation, evidence, validation, and lifecycle."
+    location = ".spw/graph.spw"
+    fixity = "stable"
+    not_for = `Repeating definitions already owned by conventions, philosophy, surfaces, or plans.`
   }[reg=facet]
   slices: .{
     role = "Cross-layer ownership: route HTML + CSS + JS + .spw + validation + practice bed."
@@ -113,13 +120,26 @@ fixity = "tending"
  required_on_promotion: #[
   `operation and fixity in header`
   `^"dimensions" facet when human-facing collaboration matters`
+  `^"conceptual_model" thesis + concepts (plan-index.spw template)`
+  `^"research_bridge" to local audits/appendices when scope is cross-disciplinary`
   `owner_claim with probe_ref and falsification when enforceable`
-  `dispatch facet (≤8 direct refs; defer overflow to coordinator)`
+  `dispatch facet (≤12 direct refs; defer overflow to coordinator)`
   `validation commands`
  ][reg=set]
+  plan_index_contract = @plan_index
+  plan_ecology_audit = ~"../audits/plan-ecology-semantics-2026-07.spw"
  anti_pattern: "Copying a PLAN.md paragraph into a convention without shrinking the plan's scope."
  graduation_example: "spw-surface-normalization review rules extract into conventions/surface-normalization-rules.spw; review keeps promotion_metadata only."
 }
+
+^"relational_design"{
+ owner = @relational_design
+ purpose = `Make cross-document relationships directional, navigable, consequential, and falsifiable without turning site.spw into a flat link dump.`
+ vocabulary = #[`owns`, `grounds`, `requires`, `projects`, `routes`, `evidences`, `tests`, `supersedes`][reg=set]
+ promotion_gate = `Promote a local relation into graph.spw only when it recurs across owner documents or changes selection, validation, projection, or lifecycle.`
+ construct_rule = `Use references for owners, facets for edge roles, streams for reading order, sets for peers, confluences for co-required perspectives, and claim/probe fields for falsifiability.`
+ anti_pattern = `Comma-separated depends_on/enables strings or generic related_to edges with no direction or editing consequence.`
+}[reg=facet]
 
 ^"review_promotion_metadata"{
  html_contract: "N/A — applies to .spw/reviews/*.spw headers and facet blocks."
@@ -381,11 +401,11 @@ fixity = "tending"
 ^"owner_claim"{
  claim_id = "convention-spw_architecture_ecology-001"
  layer = "pragmatic"
- hypothesis = `An explicit .spw ecology with coordinators, owner-registry, promotion protocol, and precipitates reduces agent/editor discovery cost while keeping hand-authored routes primary.`
+ hypothesis = `An explicit .spw ecology with a typed relation graph, coordinators, owner-registry, promotion protocol, and precipitates reduces agent/editor discovery cost while keeping hand-authored routes primary.`
  spec_ref = ~"./spw-architecture-ecology.spw"
  impl_ref = ~"../../.agents/plans/spw-architecture-ecology/PLAN.md"
  probe_ref = `rg 'spw-architecture-ecology|ecology_coordinators|owner-registry' .spw .agents/plans/spw-architecture-ecology`
- falsification = `After wave A, conventions/index.spw has no ecology dispatch and site.spw still lists >80 plan-level @ refs without coordinator routing.`
+ falsification = `Agents still reconstruct authority and dependencies from file names, graph edges remain prose strings, or site.spw still lists >80 plan-level @ refs without coordinator routing.`
  status = "active"
 }[reg=facet]
 
@@ -419,6 +439,7 @@ dispatch: .{
  plan = @plan
  planning = @planning_ecology
  semantic_capacity = @semantic_capacity
+ relational_design = @relational_design
  site = @site
  slices = @slices_index
  operational = @operational_semantics

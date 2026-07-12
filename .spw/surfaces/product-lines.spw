@@ -80,12 +80,13 @@ product_lines: .{
    `librarians collect the linked-document graph`
   ][reg=set]
   current_state = .{
-   summary = `Conceptual.`
+   summary = `First sheet published. The shared renderer seeds a real samwashington profile at /tools/profile/ via defaultProfileScriptId.`
    evidence = #[
-    `needs a route`,
-    `needs a first sheet`
+    `route exists at /tools/profile with the shared profile renderer`,
+    `first real sheet authored as an embedded default seed (2026-07-12)`,
+    `character/translation/cast lenses still to be unified per profile-character-card-development`
    ][reg=set]
-   next_step = `Establish the card schema and publish the first sheet.`
+   next_step = `Unify the substrate doctrine (shared_semantics + lens) across /tools/profile, /tools/character-sheet, and /play/rpg-wednesday/cast; add a component passport; consider a dedicated /profile route.`
   }[reg=facet]
  }[reg=facet]
  operator_atlas = .{

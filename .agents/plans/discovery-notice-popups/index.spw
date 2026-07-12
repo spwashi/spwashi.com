@@ -1,3 +1,4 @@
+# Review 2026-07-12 — merge into promo-wonder-cycle; pop-ups need a demonstrated visitor benefit before remaining a feature.
 # Plan Index — Discovery Notice Popups
 #
 # Improve site discoverability with small dismissible pop-ups that surface useful internal pages and offers. - Keep the notices schedule-driven so the surface can change by day or…
@@ -14,7 +15,7 @@ intent: .{
  goal = `Improve site discoverability with small dismissible pop-ups that surface useful internal pages and offers. - Keep the notices schedule-driven so the surface can change by day or week without hand-editing routes.`
  owner = `discovery-notice-popups`
  kind = `plan`
- bucket = `active_backlog`
+ bucket = `merged`
  artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
@@ -23,8 +24,27 @@ intent: .{
  semantic_layer = "pragmatics"
  collaboration_phase = "tending"
  memory_tier = "hot"
- bucket = "active_backlog"
+ bucket = "merged"
 }[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Improve site discoverability with small dismissible pop-ups that surface useful internal pages and offers. - Keep the…`
+ concepts = #[
+  `surface`,
+  `discovery`,
+  `notice`,
+  `popups`,
+  `improve`,
+ ][reg=set]
+ surfaces = #[
+  `data/`,
+  `data/promo-wonder-cycle.json`,
+  `js/site.js`,
+  `js/`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
 
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
@@ -45,6 +65,20 @@ dispatch: .{
  spw = @spw
 }[reg=facet]
 
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `merge`
+ merged_into = #[
+  `promo-wonder-cycle`,
+ ][reg=set]
+ retain = `pop-ups need demonstrated visitor benefit`
+ status = `superseded`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-discovery_notice_popups-001"
  layer = "pragmatic"
@@ -53,7 +87,7 @@ dispatch: .{
  impl_ref = ~"../../../public/data/"
  probe_ref = `git diff --check`
  falsification = `A patch cannot satisfy the public goal while leaving ../../../public/data/ unchanged or untested.`
- status = "active"
+ status = "superseded"
 }[reg=facet]
 
 validation: #[
@@ -74,4 +108,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

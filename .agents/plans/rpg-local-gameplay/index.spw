@@ -1,3 +1,4 @@
+# Review 2026-07-12 — keep as the local-first table-aid owner; scratch state, promotion, and no-network behavior stay explicit.
 # Plan Index — rpg-local-gameplay
 #
 # RPG Wednesday should move from a static campaign index toward a lightweight table aid. The first useful layer is a local gameplay kit that lets a player or GM track the current…
@@ -26,6 +27,24 @@ intent: .{
  bucket = "public_route_proof_genre"
 }[reg=facet]
 
+^"conceptual_model"{
+ thesis = `RPG Wednesday should move from a static campaign index toward a lightweight table aid. The first useful layer is a…`
+ concepts = #[
+  `session`,
+  `rpg`,
+  `table`,
+  `notes`,
+  `seeds`,
+ ][reg=set]
+ surfaces = #[
+  `css/style.css`,
+  `.agents/plans/rpg-session-notes/PLAN.md`,
+  `.agents/plans/rpg-local-gameplay/rpg-local-gameplay.spw`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
@@ -41,6 +60,29 @@ dispatch: .{
  rpg_local_gameplay = @rpg_local_gameplay
  plan_rpg_session_notes = @plan_rpg_session_notes
  style = @style
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `appendices_index` ; path = `.spw/audits/appendices/index.spw` }[reg=facet],
+  .{ label = `metaphor_primitive_research` ; path = `.spw/audits/metaphor-primitive-research-branching-2026-07.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits/appendices/conventions — not external web.`
+}[reg=facet]
+
+^"connection_points"{
+ related_plans = #[
+  `rpg-session-notes`,
+ ][reg=set]
+}[reg=facet]
+
+^"absorbs"{
+ reviewed = `2026-07-12`
+ plans = #[
+  `rpg-live-session-atlas`,
+  `rpg-wednesday-kit-refactor`,
+ ][reg=set]
+ rule = `Absorbed by 2026-07-12 review; see each source review_disposition and archive/2026-07-12-review-execution.md.`
 }[reg=facet]
 
 ^"owner_claim"{
@@ -83,4 +125,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-

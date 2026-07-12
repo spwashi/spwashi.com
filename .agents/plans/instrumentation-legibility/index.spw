@@ -1,3 +1,4 @@
+# Review 2026-07-12 — merge into runtime instrumentation and craft-quality owners; debug metadata must stay quiet by default.
 # Plan Index — Instrumentation Legibility
 #
 # Refine recent developmental-climate and semantic-chrome changes so component instrumentation remains useful to machines and debuggers without crowding the public reading hierarchy.
@@ -14,7 +15,7 @@ intent: .{
  goal = `Refine recent developmental-climate and semantic-chrome changes so component instrumentation remains useful to machines and debuggers without crowding the public reading hierarchy.`
  owner = `instrumentation-legibility`
  kind = `plan`
- bucket = `active_backlog`
+ bucket = `merged`
  artifact_shape = `PLAN.md | index.spw`
 }[reg=facet]
 
@@ -23,8 +24,24 @@ intent: .{
  semantic_layer = "pragmatics"
  collaboration_phase = "tending"
  memory_tier = "hot"
- bucket = "active_backlog"
+ bucket = "merged"
 }[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Refine recent developmental-climate and semantic-chrome changes so component instrumentation remains useful to machines…`
+ concepts = #[
+  `instrumentation`,
+  `legibility`,
+  `refine`,
+  `recent`,
+  `developmental-climate`,
+ ][reg=set]
+ surfaces = #[
+  `.spw/surfaces/page-model.spw`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
 
 @plans_root: ~"../../../.agents/plans/index.spw"
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
@@ -37,6 +54,20 @@ dispatch: .{
  page_model = @page_model
 }[reg=facet]
 
+^"connection_points"{
+ owner_rail = `model-guided-refinement`
+}[reg=facet]
+
+^"review_disposition"{
+ reviewed = `2026-07-12`
+ disposition = `merge`
+ merged_into = #[
+  `runtime-load-instrumentation`,
+ ][reg=set]
+ retain = `debug metadata stays quiet by default`
+ status = `superseded`
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "plan-instrumentation_legibility-001"
  layer = "pragmatic"
@@ -45,7 +76,7 @@ dispatch: .{
  impl_ref = ~"../../../.spw/surfaces/page-model.spw"
  probe_ref = `rg 'instrumentation-legibility' .agents/plans/instrumentation-legibility`
  falsification = `A patch cannot satisfy the public goal while leaving ../../../.spw/surfaces/page-model.spw unchanged or untested.`
- status = "active"
+ status = "superseded"
 }[reg=facet]
 
 scope: .{
@@ -67,4 +98,3 @@ invariants: #[
  `PLAN.md or FIX.md sequences; index.spw routes inspection and selection.`,
  `Promote durable owner_claim patterns to .spw/slices/ or .spw/conventions/.`,
 ][reg=set]
-
