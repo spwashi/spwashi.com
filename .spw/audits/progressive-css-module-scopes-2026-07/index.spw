@@ -1,0 +1,525 @@
+# Progressive Enhancement + Module-Scoped CSS Options (2026-07)
+#
+# operation: audit (notes / directions — no core split land)
+# Aligns CSS payload options with runtime normalize + MGL plan direction.
+
+#>progressive_css_module_scopes_2026_07
+#:audit #!css #!progressive-enhancement #!modules #!payload #!bundles #!runtime
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+@build_runtime: ~"../build-runtime-performance-2026-07/index.spw"
+@build_leaf: ~"../build-runtime-performance-2026-07/build.spw"
+@runtime_leaf: ~"../build-runtime-performance-2026-07/runtime.spw"
+@css_specificity_pe: ~"../css-specificity-pe-2026-07/index.spw"
+@js_feature_connectivity: ~"../js-feature-connectivity-css-vars-2026-07/index.spw"
+@module_granularity: ~"../module-granularity-lifecycle-2026-07/index.spw"
+@module_plan: ~"../module-granularity-lifecycle-2026-07/plan.spw"
+@page_region_hydration: ~"../page-region-hydration-memory-2026-07/index.spw"
+@feature_wiring_cache: ~"../../caches/feature-wiring-timing-2026-07.spw"
+@feature_utilization: ~"../../conventions/feature-utilization.spw"
+@metaphor: ~"../../conventions/metaphor-dimensional-lexicon.spw"
+@css_manifest: ~"../../../scripts/ts/css-manifest.mts"
+@css_scopes: ~"../../../scripts/ts/css-scopes.mts"
+@style_core: ~"../../../public/css/style-core.css"
+@behavior_scopes_runtime: ~"../../../public/js/runtime/behavior-scopes.js"
+@module_catalog_constants: ~"../../../public/js/runtime/module-catalog-constants.js"
+@module_normalize: ~"../../../public/js/runtime/module-catalog-normalize.js"
+@module_loader: ~"../../../public/js/runtime/module-loader.js"
+@payload_report: ~"../../../scripts/css-payload-report.mjs"
+@layout_qa: ~"../layout-qa-measurement-2026-07/index.spw"
+
+operation = "audit"
+fixity = "tending"
+at = `2026-07-12`
+revised = `2026-07-12c — align options with costClass normalize, MGL P0–P3, feature-wiring cache, scoped CSS land`
+
+^"thesis"{
+  claim = `Runtime PE is already costClass- and schedule-shaped (37 IMMEDIATE / 34 VISIBLE / 22 IDLE after normalize). CSS PE is delivery-shaped (scoped core+route+behavior) but core.css remains a single ~1.5 MiB premature_commitment for paint. Align CSS demotions to the same coordinates as catalog reclass — not a parallel PE vocabulary.`
+  posture = `Notes only. Prefer proven pattern: feature-discovery CSS left core → BEHAVIOR_SCOPES (already landed). Next demotions should pair with catalog when/costClass, not invent mount lanes CSS-only.`
+  non_goals = #[
+    `No CSS @layer order migration (MGL plan non-goal)`,
+    `No empty BEHAVIOR_SCOPES for PRESENCE/narrative tokens (fwt-001)`,
+    `No zero-IMMEDIATE fantasy; IMMEDIATE hygiene is reclass + timingArc (fwt-002)`,
+    `No module-scoped CSS sprawl for <15 KiB exclusive sheets (MGL: no catalog sprawl for thin modules)`,
+    `No big-bang style-core rewrite in one commit`
+  ][reg=set]
+  measurement = #[
+    `npm run css:payload[:json]`,
+    `__SPW_SITE__.catalogOptimization() / listModuleCatalogIndex().byCostClass`,
+    `npm run smoke:nav:qa / bench:nav:quick`,
+    `build:css -- --strict-budget`
+  ][reg=set]
+}[reg=facet]
+
+^"runtime_refactors_to_honor"{
+  note = `CSS options must ride these rails, not redefine them.`
+
+  normalize_2026_07_12 = .{
+    structure = `COST_CLASS + inferModuleCostClass + summarizeModuleCatalogOptimization + byCostClass`
+    schedule = `IMMEDIATE 37 · VISIBLE 34 · IDLE 22 · REGION 1 · SETTLED 1 · INTERACTION 0`
+    residual = `23 ENHANCEMENT still IMMEDIATE (orchestration + grammar/gesture/semantics)`
+    probe = `__SPW_SITE__.catalogOptimization()`
+    css_implication = `CSS that only serves paint_composite / idle residue should not stay in always-on core while JS already demoted matching modules to VISIBLE/IDLE`
+  }[reg=facet]
+
+  feature_wiring = .{
+    cache = @feature_wiring_cache
+    presence_vs_behavior = `PRESENCE_FEATURE_KEYS gate catalog without CSS bundles; BEHAVIOR_SCOPES are the only CSS feature keys`
+    golden_path = `feature-discovery: IDLE + features:feature-discovery + CSS moved core → behavior bundle`
+    css_implication = `New behavior keys only when a real CSS payload exists and catalog/body already use the feature token`
+  }[reg=facet]
+
+  parallel_boot = .{
+    loader = `mountImmediateLayer: site-settings serial, then Promise.all; FEATURE+ENHANCEMENT immediate after CORE`
+    marks = `spw:module:* · spw:page-interactive · spw:site-ready · data-spw-runtime-*`
+    css_implication = `Critical CSS must be present before JS PE; deferred CSS may attach at visible/idle/settled — never block CORE mount wave`
+  }[reg=facet]
+
+  mgl_plan = .{
+    plan = @module_plan
+    order = `P0 lifecycle honesty → P1 L3 subfeatures → P1b forks → P2 blobs → P3 tree/types`
+    css_implication = `Module-scoped CSS (o5) waits until L3 catalog children exist for the same id; do not invent public/css/modules/<id> ahead of catalog L3`
+    stop = `Do not open shell/experiential CSS extract as an excuse to ignore P0 stage truth`
+  }[reg=facet]
+
+  region_page = .{
+    audit = @page_region_hydration
+    rule = `Page owns shell/features/hydration; region owns local genome density after double-rAF`
+    css_implication = `Region-only styles prefer containable hosts; page-region-rail may stay critical; region enhancer CSS should not force global core growth`
+  }[reg=facet]
+
+  scoped_css_land = .{
+    delivery = `data-spw-stylesheet-mode=scoped sitewide; template rewrite to core+route+behavior`
+    tooling = `--from-change · smart watch · css:payload · soft budgets`
+    css_implication = `Further splits add bundle kinds under the same resolveScopedStylesheets rail — do not reintroduce style.css as the default path`
+  }[reg=facet]
+}[reg=facet]
+
+^"coordinate_parity"{
+  claim = `One coordinate table for agents. CSS owner is chosen by the same cost_class + schedule stem as catalog defs that consume the styles.`
+
+  table = #[
+    .{
+      cost_class = `premature_commitment`
+      mount_when = `IMMEDIATE (too early) / always-on CSS`
+      css_owner = `core-critical only if first reading chrome; else demote`
+      runtime_pair = `catalogOptimization.reclassCandidates · residual ENHANCEMENT IMMEDIATE`
+    }
+    .{
+      cost_class = `working_memory_pressure`
+      mount_when = `wide IMMEDIATE or large core bundle`
+      css_owner = `core.css size itself; route fanout already fixed`
+      runtime_pair = `observer federation; settings engine weight — parallel tracks`
+    }
+    .{
+      cost_class = `paint_composite`
+      mount_when = `VISIBLE / IDLE enhancement`
+      css_owner = `core-deferred or enhancement CSS (wonder, grain, cinematic, ornament flourishes)`
+      runtime_pair = `canvas-accents VISIBLE; wonder-memory; effect-ledger idle-residue`
+    }
+    .{
+      cost_class = `demand_coupled`
+      mount_when = `features / selector / route / INTERACTION (when P0.4 lands)`
+      css_owner = `BEHAVIOR_SCOPES or ROUTE_SCOPES`
+      runtime_pair = `matchesFeatures + PRESENCE vs BEHAVIOR split (fwt-001)`
+    }
+    .{
+      cost_class = `authored_prior_safe`
+      mount_when = `SETTLED / narrate-only`
+      css_owner = `Prefer HTML+CSS already in critical/route; JS only mirrors`
+      runtime_pair = `layout-assumptions SETTLED; pack-local RO hosts`
+    }
+    .{
+      cost_class = `interference`
+      mount_when = `false stage / dual truth`
+      css_owner = `Do not ship deferred CSS that restyles geometry already measured`
+      runtime_pair = `MGL P0 observed/settled honesty; layout-qa overflowX`
+    }
+  ][reg=set]
+
+  timing_arc_css = .{
+    boot_immediate = `core-critical must cover boot-shell / boot-frame chrome without deferred sheets`
+    visible = `core-deferred ok after first paint; match VISIBLE margin (~240px) discipline — no geometry thrash`
+    idle_chunks = `idle-residue / idle-lab / idle-chrome CSS vars + flourishes (runtime-states module-visuals) prefer deferred`
+    enhance = `collectible / navigator / metacognition flourishes — not first-paint type color`
+  }[reg=facet]
+
+  updates_roles = .{
+    structural = `core-critical (layout, cards, chrome)`
+    flourish_residue = `core-deferred / enhancement (ornament, wonder pulse, grain)`
+    measure_diagnostic = `debug CSS + debugQa; never production core`
+    inspect = `settings/lab routes or enhancement-level high`
+  }[reg=facet]
+}[reg=facet]
+
+^"current_rails"{
+  js_layers = #[`core`, `feature`, `region`, `enhancement`][reg=set]
+  js_when = #[`immediate`, `visible`, `idle`, `interaction`, `region`, `settled`][reg=set]
+  js_cost = #[`premature_commitment`, `working_memory_pressure`, `interference`, `demand_coupled`, `authored_prior_safe`, `paint_composite`][reg=set]
+  css_delivery = .{
+    full = `style.css import graph (~2.1 MiB sources) — inspect / non-scoped fallback`
+    scoped = `scoped → core + route + behavior at template render`
+    route = `ROUTE_SCOPES + ROUTE_SURFACE_ALIASES (software→topics)`
+    behavior = `BEHAVIOR_SCOPES (7) ↔ body features ↔ behavior-scopes.js ↔ catalog.features where demand_coupled`
+  }[reg=facet]
+  landed = #[
+    `costClass normalize + reclass (runtime)`,
+    `feature-discovery CSS demotion golden path`,
+    `sitewide scoped CSS + aliases + payload report + incremental build`,
+    `layout-qa / headless smoke harness for FOUC-adjacent overflow checks`
+  ][reg=set]
+}[reg=facet]
+
+^"payload_snapshot"{
+  core_generated = `~1532 KiB bundles/core.css`
+  core_sources = `~1526 KiB · ~98 style-core imports`
+  by_layer = .{
+    components = `~358 KiB`
+    shell = `~239 KiB`
+    effects = `~234 KiB`
+    handles = `~205 KiB`
+    systems = `~198 KiB`
+    tokens = `~103 KiB`
+    grammar = `~76 KiB`
+    ornament = `~69 KiB`
+    typography = `~31 KiB`
+    reset = `~12 KiB`
+  }[reg=facet]
+  scoped_page_typical = `core ~1.5 MiB + route 5–120 KiB + behaviors — saves ~0.4–0.6 MiB other-route CSS vs full graph`
+  soft_budgets = `core 1.6 MiB · route 120 KiB · behavior 48 KiB`
+  observation = `Route scoping is demand_coupled and landed. Residual CSS premature_commitment is undifferentiated core.`
+}[reg=facet]
+
+^"pe_alignment_matrix"{
+  note = `JS concept → CSS owner. Prefer static HTML links (scoped rewrite) over runtime injection until settled.`
+
+  .{
+    js = `MODULE_LAYERS.CORE + IMMEDIATE + parallel core wave`
+    css_today = `entire style-core → bundles/core.css`
+    css_option = `core-critical subset only (shell, tokens, foundation, reading type)`
+    cost_class = `authored_prior_safe` # when correctly thin
+    risk = `FOUC if critical under-specified`
+  }
+
+  .{
+    js = `FEATURE + features:[] + matchesFeatures() · PRESENCE without CSS`
+    css_today = `7 BEHAVIOR_SCOPES`
+    css_option = `Grow behavior only for real CSS + wired feature tokens (golden: feature-discovery)`
+    cost_class = `demand_coupled`
+    risk = `Empty scopes for narrative tokens (fwt-001)`
+  }
+
+  .{
+    js = `REGION + MOUNT_WHEN.REGION + region enhancer`
+    css_today = `page-region-rail + systems mostly in core`
+    css_option = `Keep rail critical if shell needs it; region-local genomes stay attr-driven CSS already in core tokens/systems — avoid new global sheets`
+    cost_class = `demand_coupled`
+    risk = `Late region CSS shifting layout (interference with pack-local measure)`
+  }
+
+  .{
+    js = `ENHANCEMENT + VISIBLE/IDLE + paint_composite + timingChunk idle-*`
+    css_today = `effects/* + ornament/* in core (~303 KiB)`
+    css_option = `core-deferred linked after interactive/settled OR enhancement-level gate`
+    cost_class = `paint_composite`
+    risk = `Wonder flash; coordinate wonder-memory + reduced-motion`
+  }
+
+  .{
+    js = `INTERACTION lane (still 0 defs — MGL P0.4)`
+    css_today = `none`
+    css_option = `Do not invent interaction CSS gate yet; when INTERACTION lands, CSS must already be present (no click-to-download chrome)`
+    cost_class = `demand_coupled`
+    risk = `Gesture FOUC if CSS deferred until first keydown`
+  }
+
+  .{
+    js = `L3 catalog children (MGL P1) · catalog def id`
+    css_today = `No 1:1 CSS per module id`
+    css_option = `module sheet only if L3 child has exclusive >15–20 KiB CSS; else stay in behavior/route/core-deferred`
+    cost_class = `premature_commitment` # if over-split
+    risk = `Cascade layer ownership; request churn`
+  }
+}[reg=set]
+
+^"options_progressive_enhancement"{
+  o1_status_quo_scoped {
+    summary = `Single core + route + behavior; JS PE continues via catalog`
+    pros = `Shipped; contracts green; matches current loader truth`
+    cons = `Every page pays ~1.5 MiB CSS before VISIBLE/IDLE reclass helps JS`
+    when = `Default between demotion PRs`
+    cost_class = `working_memory_pressure`
+    runtime_pair = `Accept while reclassCandidates still prioritize JS IMMEDIATE width`
+  }
+
+  o2_tiered_core {
+    summary = `core-critical + core-deferred (second stylesheet)`
+    pros = `Largest CSS byte win; same scoped entry; pairs with VISIBLE/IDLE enhancement`
+    cons = `Two CSS requests; FOUC discipline; css-manifest gains a core kind or dual href`
+    when = `After s1 hygiene + smoke baseline; can land before MGL P1`
+    cost_class = `premature_commitment` # if deferred still forced before first paint
+    estimate = `critical ~0.8–0.9 MiB if effects/lab demote`
+    runtime_pair = `Attach deferred at spw:page-interactive or idle chunk — not in CORE parallel wave`
+    attach = #[
+      `preferred: second <link> in scoped rewrite with media or data-spw-css-tier=deferred`,
+      `alt: inject once on page-state settled / enhancement-level ≥ default`,
+      `no-JS: core-critical must still read; full style.css remains escape hatch`
+    ][reg=set]
+  }
+
+  o3_feature_behavior_growth {
+    summary = `Demote style-core files into BEHAVIOR_SCOPES following feature-discovery`
+    pros = `demand_coupled; catalog.features alignment; incremental --from-change rebuilds`
+    cons = `Only valid for wired feature tokens with real CSS`
+    when = `Anytime a sheet is exclusive to a feature pack already on bodies`
+    cost_class = `demand_coupled`
+    runtime_pair = `fwt-001 presence vs behavior; runtime-contracts PRESENCE_FEATURE_KEYS`
+    candidates = #[
+      `handles/metrics.css — BEHAVIOR metrics but still in style-core (ownership bug)`,
+      `effects/debug.css + demos.css — debugQa / enhancement inspect`,
+      `systems/interactive-medium.css — if catalog interactive-medium features gate`,
+      `systems/film-scene-composition + scene-interaction — play/film packs`,
+      `components/embedded-workshop + query-composer — lab routes / website`
+    ][reg=set]
+    anti_candidates = #[
+      `operators / navigator chrome — PRESENCE + IMMEDIATE reading posture`,
+      `tokens/grammar/shell — substrate`
+    ][reg=set]
+  }
+
+  o4_enhancement_level_css {
+    summary = `Gate core-deferred (or flourishes) with html[data-spw-enhancement-level] from site-settings`
+    pros = `Existing root state; PE-native; users who opt down save paint_composite`
+    cons = `Must not hide structural chrome; offline/no-JS path`
+    when = `With or just after o2`
+    cost_class = `paint_composite`
+    runtime_pair = `site-settings-engine enhancementLevel; console idle opacity already reads it`
+  }
+
+  o5_module_scoped_css {
+    summary = `Optional sheet per L3 catalog id, static or inject-on-mount`
+    pros = `Parity with catalog load units after MGL P1`
+    cons = `Request count; layer ownership; thin modules should not get files`
+    when = `After P1 attention/settings L3 exists AND exclusive CSS weight proves out`
+    cost_class = `premature_commitment` # if used as default
+    runtime_pair = `MGL P1.1 attention children; P1.2 settings payload split — CSS follows file split, not ahead`
+    preferred = `Static behavior/route link over inject; inject only enhancement+rare+heavy`
+  }
+
+  o6_media_and_asset_bundles {
+    summary = `Fonts, images, SVG packs, capture packs — not style-core`
+    pros = `dist ≠ CSS main-thread; parallel to o2–o3`
+    cons = `Different skill/tool surface`
+    when = `Always parallel; does not unblock core demotion`
+    cost_class = `working_memory_pressure` # dist weight
+    runtime_pair = `image-* VISIBLE reclass; svg-surfaces behavior already`
+  }
+}[reg=set]
+
+^"core_reduction_directions"{
+  principle = `Demote by demand + cost_class, not by public/css folder name. Pair each demotion with the catalog defs that style it.`
+
+  phase_a_dedupe {
+    id = `metrics-double-ownership`
+    claim = `metrics.css in style-core AND BEHAVIOR_SCOPES — double pay on metrics routes; free payload on non-metrics`
+    direction = `Remove from style-core; keep behavior only (or reverse if frame-metrics is true shell)`
+    cost_class = `interference` # dual ownership truth
+    runtime_pair = `frame-metrics features:metrics`
+    bytes = `small file; large contract clarity`
+  }
+
+  phase_b_debug_and_demos {
+    id = `effects-debug-demos`
+    claim = `debug + demos CSS are diagnostic/flourish`
+    direction = `Out of production core; debugQa / enhancement inspect only`
+    cost_class = `paint_composite`
+    runtime_pair = `layout-shift-audit IDLE; state-inspector IDLE; debug-qa-posture`
+  }
+
+  phase_c_effects_ornament_tier {
+    id = `effects-ornament-deferred`
+    claim = `effects+ornament ~303 KiB — primary o2 payload`
+    direction = `core-deferred; keep material.css glass/matte basics in critical if cards need first paint`
+    cost_class = `paint_composite`
+    runtime_pair = `canvas-accents VISIBLE; wonder-memory; effect-ledger idle-residue; residual ENHANCEMENT IMMEDIATE should not force these into critical`
+    estimate_save = `~200–280 KiB`
+  }
+
+  phase_d_lab_systems {
+    id = `systems-lab-demote`
+    claim = `~165 KiB film/scene/interactive/tuning-lab systems`
+    direction = `behavior or route-family (play, website, design) after usage census on reading routes`
+    cost_class = `demand_coupled`
+    runtime_pair = `VISIBLE lab modules; feature-discovery pattern`
+    validate = `rg + smoke:nav:qa home/topics/settings`
+  }
+
+  phase_e_components_lab {
+    id = `runtime-states-split`
+    claim = `runtime-states ~54 KiB mixes hydration PE with module-visuals/load-bias`
+    direction = `Keep hydration/skeleton structural in critical; move module-visuals / flourish outlines to deferred (matches updates roles)`
+    cost_class = `working_memory_pressure`
+    runtime_pair = `data-spw-hydration contract; module-updates flourish topology under debug`
+    risk = `Do not break static→ready hydration CSS`
+  }
+
+  phase_f_tokens_grammar {
+    id = `tokens-grammar-stay`
+    claim = `tokens ~91 + grammar ~76 definitional`
+    direction = `Stay critical; long-term subset tokens only with tooling`
+    cost_class = `authored_prior_safe`
+    anti = `No budget-theater token deletion`
+  }
+
+  phase_g_shell_chrome {
+    id = `shell-stay-critical`
+    claim = `shell ~239 KiB first-paint truth`
+    direction = `Critical forever; optimize selectors/dead rules, not deferral`
+    cost_class = `authored_prior_safe`
+    runtime_pair = `CORE modules; header/nav always IMMEDIATE posture`
+  }
+}[reg=set]
+
+^"asset_bundle_directions"{
+  css_bundles_today = .{
+    core = `/public/css/bundles/core.css`
+    routes = `/public/css/bundles/routes/<surface>.css`
+    behaviors = `/public/css/bundles/behaviors/<feature>.css`
+    tooling = `filterBundleTargets · --from-change · parallel flatten · soft budgets · css:payload`
+  }[reg=facet]
+
+  proposed_css_bundle_kinds = #[
+    `core-critical — reset, tokens, shell, type base, foundation/cards/frames structural`,
+    `core-deferred — effects/ornament/lab systems (schedule: after interactive/idle)`,
+    `route — ROUTE_SCOPES (demand_coupled surface)`,
+    `behavior — BEHAVIOR_SCOPES (demand_coupled features)`,
+    `module — rare L3 catalog ids only (after MGL P1)`,
+    `compose — portable starter (unchanged)`
+  ][reg=set]
+
+  resolve_scoped_evolution = `resolveScopedStylesheets grows: core-critical always; core-deferred optional attr; route; behaviors; extras — keep data-spw-css-scope labels`
+
+  creation_rules = #[
+    `Owner first: core-critical | core-deferred | route | behavior | module | compose`,
+    `style.css non-core imports stay in ROUTE_SCOPES or BEHAVIOR_SCOPES (css-contracts)`,
+    `New behavior key = CSS files + body feature usage + catalog.features (not PRESENCE-only) + rebuild behavior-scopes.js`,
+    `Stamp cost_class + schedule intent in the PR that moves a sheet (mirror mgl-006)`,
+    `Rebuild with build:css:run -- --from-change <file>`,
+    `Validate FOUC with smoke:nav:qa + layout-qa overflowX — not only byte count`
+  ][reg=set]
+
+  non_css_asset_bundles = #[
+    `fonts — external @import in style-core; self-host subset is privacy/RT track`,
+    `images — image-optimize; dist ≠ CSS budget`,
+    `svg-surfaces behavior already`,
+    `component captures gitignored`,
+    `design catalog publish-only`
+  ][reg=set]
+}[reg=facet]
+
+^"module_scoped_css_pattern"{
+  sketch = `After MGL P1 L3 id exists: either static behavior/route already covers CSS, or one bundle modules/<id>.css linked when def.when allows`
+  preferred = `Static HTML (scoped rewrite) over mount-time inject`
+  injection_only_when = `enhancement + rare + exclusive CSS >15–20 KiB + not geometry-critical`
+  cascade = `Flatten with @layer wrappers like css-bundle route/behavior`
+  contract = `data-spw-css-scope="module:<id>" ; optional data-spw-css-when="visible|idle"`
+  anti = `Do not create module CSS for L4 orchestrators still without L3 children`
+}[reg=facet]
+
+^"decision_tree"{
+  q0 = `Does a catalog def already own this style under features/route/when? Match that owner.`
+  q1 = `First-reading chrome (header/nav/footer/type/cards structure)? → core-critical`
+  q2 = `Wired data-spw-features + BEHAVIOR or new behavior candidate? → behavior (not PRESENCE-only)`
+  q3 = `data-spw-surface personality? → route`
+  q4 = `paint_composite / flourish / wonder / grain / demo? → core-deferred (+ enhancement-level)`
+  q5 = `L3 catalog child with exclusive heavy CSS? → module (late)`
+  q6 = `Font/image/svg binary? → non-CSS asset track`
+  q7 = `Would deferral restyle measured geometry? → keep critical (interference)`
+}[reg=set]
+
+^"recommended_sequence"{
+  note = `Interleave with runtime plan; CSS is not a substitute for IMMEDIATE reclass.`
+
+  s0_baseline {
+    work = `css:payload:json + catalogOptimization snapshot + smoke:nav:qa on home, topics/software, settings, about`
+    runtime = `record IMMEDIATE/VISIBLE/IDLE counts; reclassCandidates list`
+  }
+
+  s1_hygiene {
+    work = `metrics ownership; debug/demos out of production core`
+    runtime = `pairs with IDLE inspect modules; low FOUC risk`
+    mgl = `can land during P0 — does not wait on INTERACTION`
+  }
+
+  s2_behavior_growth {
+    work = `2–4 demotions using feature-discovery template; only demand_coupled packs`
+    runtime = `align catalog.features; run check:runtime + ecology`
+    mgl = `parallel to P0/P1; do not invent scopes for narrative tokens`
+  }
+
+  s3_core_deferred {
+    work = `core-critical + core-deferred flatten; scoped rewrite emits two core links; attach deferred after interactive/settled`
+    runtime = `must not join CORE Promise.all wave; FOUC tests via layout-qa`
+    mgl = `independent of P1 file splits but must not fight shell extract narratives`
+  }
+
+  s4_enhancement_level {
+    work = `optional gate deferred on enhancement-level`
+    runtime = `site-settings root attrs already written`
+  }
+
+  s5_module_css {
+    work = `only after MGL P1 L3 children + proven exclusive CSS weight`
+    runtime = `follows attention/settings decomposition — never ahead`
+  }
+
+  s6_assets_parallel {
+    work = `fonts/images/svg/dist — continuous`
+  }
+
+  anti = #[
+    `Do not minify as substitute for ownership cleanup`,
+    `Do not features-gate operator/navigator chrome`,
+    `Do not invent BEHAVIOR_SCOPES for body_orphan_narrative tokens`,
+    `Do not defer CSS that INTERACTION gestures need on first keypress (when P0.4 lands)`,
+    `Do not change @layer order to "win" demotions`,
+    `Do not require full build:site for CSS demotion validation`
+  ][reg=set]
+}[reg=facet]
+
+^"risks"{
+  fouc = `Deferred CSS must not restyle header/nav geometry (interference with pack-local + layout-qa)`
+  double_load = `metrics dual ownership — fix first`
+  cascade_layers = `Split bundles keep @layer wrappers (existing flatten)`
+  schedule_desync = `CSS deferred while matching JS still IMMEDIATE (or reverse) — reclass together when possible`
+  contract_drift = `css-contracts scope ownership; runtime-contracts features vs BEHAVIOR_SCOPE_KEYS`
+  agent_loops = `build:css:run -- --from-change; avoid full core rebuild for route-only moves`
+  interaction_empty = `INTERACTION count 0 — do not design click-gated CSS downloads yet`
+}[reg=set]
+
+^"validate_when_implementing"{
+  checks = #[
+    `npm run css:payload -- --surface home,software,settings,about,website`,
+    `npm run build:css:check && node scripts/css-contracts.mjs`,
+    `node --test scripts/tests/css-bundle-filter.test.mjs`,
+    `npm run check:runtime`,
+    `npm run smoke:nav:qa -- --routes /,/topics/software/,/settings/,/about/`,
+    `optional: catalogOptimization() before/after for paired JS reclass`,
+    `git diff --check`
+  ][reg=set]
+}
+
+^"related"{
+  build = @build_leaf
+  runtime = @runtime_leaf
+  pe_specificity = @css_specificity_pe
+  features = @js_feature_connectivity
+  feature_wiring = @feature_wiring_cache
+  modules = @module_granularity
+  module_plan = @module_plan
+  region = @page_region_hydration
+  layout_qa = @layout_qa
+  metaphor = @metaphor
+}[reg=facet]

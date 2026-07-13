@@ -13,6 +13,7 @@
 @feature_utilization: ~"../conventions/feature-utilization.spw"
 @feature_theatrics: ~"../conventions/feature-partial-theatrics.spw"
 @brp_runtime: ~"../audits/build-runtime-performance-2026-07/runtime.spw"
+@progressive_css: ~"../audits/progressive-css-module-scopes-2026-07/index.spw"
 
 operation = "cache"
 fixity = "tending"
@@ -85,6 +86,12 @@ fixity = "tending"
   residual_enhancement_immediate = 23
   contracts = `runtime-contracts costClass parse + byWhen hygiene line`
   probe = `npm run check:runtime; __SPW_SITE__.catalogOptimization()`
+}[reg=facet]
+
+^"css_alignment"{
+  pointer = @progressive_css
+  claim = `BEHAVIOR_SCOPES grow only for real CSS + wired features (fwt-001); PRESENCE stays JS-only. Core demotions pair with VISIBLE/IDLE reclass and costClass paint_composite / demand_coupled — see progressive-css coordinate_parity.`
+  golden = `feature-discovery: IDLE + features + CSS core→behavior (already landed)`
 }[reg=facet]
 
 validation: #[

@@ -51,9 +51,15 @@ export const BEHAVIOR_SCOPES: Readonly<Record<string, readonly string[]>> = Obje
   ],
 });
 
-/** Route personality keyed by data-spw-surface. */
+/**
+ * Route personality keyed by data-spw-surface.
+ * Surfaces without files still pay core + behavior bundles only when scoped.
+ */
 export const ROUTE_SCOPES: Readonly<Record<string, readonly string[]>> = Object.freeze({
-  about: ['/public/css/routes/surfaces/about.css'],
+  about: [
+    '/public/css/routes/surfaces/about.css',
+    '/public/css/routes/widgets/boonhonk-mixer.css',
+  ],
   blog: [
     '/public/css/routes/surfaces/blog.css',
     '/public/css/routes/surfaces/blog-frames.css',
@@ -102,12 +108,33 @@ export const ROUTE_SCOPES: Readonly<Record<string, readonly string[]>> = Object.
   ],
   topics: ['/public/css/routes/surfaces/topics.css'],
   town: [],
+  tools: [],
   'tools-budgeting': ['/public/css/routes/surfaces/tools-budgeting-surface.css'],
+  'tools-character-sheet': [],
+  'tools-midjourney': [],
+  'tools-profile': [],
   website: [
     '/public/css/routes/surfaces/website.css',
     '/public/css/routes/surfaces/design.css',
+    '/public/css/routes/surfaces/design-experiments.css',
+    '/public/css/routes/surfaces/review-surfaces.css',
   ],
 });
+
+/**
+ * data-spw-surface values that share another surface's route CSS bundle.
+ * Keeps topic curriculum pages (software) on topics.css without duplicate bundles.
+ */
+export const ROUTE_SURFACE_ALIASES: Readonly<Record<string, string>> = Object.freeze({
+  software: 'topics',
+});
+
+/** Resolve alias → canonical ROUTE_SCOPES key (or the surface itself). */
+export function resolveCanonicalRouteSurface(surface: string): string {
+  const normalized = normalizeSpace(surface);
+  if (!normalized) return '';
+  return ROUTE_SURFACE_ALIASES[normalized] || normalized;
+}
 
 const ROUTE_BUNDLE_SLUGS = Object.freeze(
   Object.fromEntries(
@@ -128,9 +155,10 @@ export const FULL_STYLESHEET_HREF = '/public/css/style.css';
 export const BEHAVIOR_SCOPE_MODULE_HREF = '/public/js/runtime/behavior-scopes.js';
 
 export function routeBundleHref(surface: string): string | null {
-  const files = ROUTE_SCOPES[surface];
+  const canonical = resolveCanonicalRouteSurface(surface);
+  const files = ROUTE_SCOPES[canonical];
   if (!files?.length) return null;
-  const slug = ROUTE_BUNDLE_SLUGS[surface];
+  const slug = ROUTE_BUNDLE_SLUGS[canonical];
   return slug ? `/public/css/bundles/routes/${slug}.css` : null;
 }
 
@@ -187,9 +215,18 @@ export function collectBehaviorFiles(features: Iterable<string>): string[] {
 }
 
 export function collectRouteFiles(surface = ''): string[] {
+  const canonical = resolveCanonicalRouteSurface(surface);
+  if (!canonical) return [];
+  return uniqueFiles(ROUTE_SCOPES[canonical] || []);
+}
+
+/** Whether this surface is known to the route CSS map (including empty + aliases). */
+export function isKnownRouteSurface(surface: string): boolean {
   const normalized = normalizeSpace(surface);
-  if (!normalized) return [];
-  return uniqueFiles(ROUTE_SCOPES[normalized] || []);
+  if (!normalized) return false;
+  if (normalized in ROUTE_SCOPES) return true;
+  const canonical = resolveCanonicalRouteSurface(normalized);
+  return canonical in ROUTE_SCOPES;
 }
 
 export function normalizeSpace(value: unknown): string {
@@ -202,12 +239,13 @@ export function resolveScopedStylesheets(options: {
   extraStyles?: Iterable<string>;
 } = {}): ScopedStylesheet[] {
   const surface = normalizeSpace(options.surface);
+  const canonicalSurface = resolveCanonicalRouteSurface(surface);
   const features = [...(options.features || [])];
   const sheets: ScopedStylesheet[] = [{ href: CORE_BUNDLE_HREF, kind: 'core' }];
 
   const routeHref = surface ? routeBundleHref(surface) : null;
   if (routeHref) {
-    sheets.push({ href: routeHref, kind: 'route', scope: surface });
+    sheets.push({ href: routeHref, kind: 'route', scope: canonicalSurface || surface });
   }
 
   for (const feature of features) {
@@ -224,6 +262,74 @@ export function resolveScopedStylesheets(options: {
   }
 
   return sheets;
+}
+
+export type CssPayloadEstimate = {
+  surface: string;
+  canonicalSurface: string;
+  features: string[];
+  mode: 'full' | 'scoped';
+  sheets: ScopedStylesheet[];
+  bytes: number;
+  hrefs: string[];
+};
+
+/** Estimate linked CSS bytes for a route (bundle files for scoped; style.css for full). */
+export async function estimateCssPayload(options: {
+  surface?: string;
+  features?: Iterable<string>;
+  mode?: 'full' | 'scoped';
+  extraStyles?: Iterable<string>;
+} = {}): Promise<CssPayloadEstimate> {
+  const surface = normalizeSpace(options.surface);
+  const features = [...(options.features || [])];
+  const mode = options.mode === 'full' ? 'full' : 'scoped';
+  const sheets = mode === 'full'
+    ? [{ href: FULL_STYLESHEET_HREF, kind: 'full' as const }]
+    : resolveScopedStylesheets({
+      surface,
+      features,
+      extraStyles: options.extraStyles,
+    });
+
+  let bytes = 0;
+  const hrefs: string[] = [];
+  for (const sheet of sheets) {
+    hrefs.push(sheet.href);
+    try {
+      const absolute = absoluteFromRootHref(sheet.href);
+      const stat = await fs.stat(absolute);
+      bytes += stat.size;
+    } catch {
+      // Missing generated bundle — report 0 for that sheet.
+    }
+  }
+
+  // Full mode: style.css is a thin import graph; approximate with core + all route/behavior bundles.
+  if (mode === 'full') {
+    const all = listBundleTargets();
+    bytes = 0;
+    hrefs.length = 0;
+    for (const target of all) {
+      hrefs.push(target.href);
+      try {
+        const stat = await fs.stat(absoluteFromRootHref(target.href));
+        bytes += stat.size;
+      } catch {
+        /* skip */
+      }
+    }
+  }
+
+  return {
+    surface,
+    canonicalSurface: resolveCanonicalRouteSurface(surface),
+    features,
+    mode,
+    sheets,
+    bytes,
+    hrefs,
+  };
 }
 
 export async function readStyleCoreImports(): Promise<CssImportRef[]> {
@@ -309,12 +415,14 @@ export function filterBundleTargets(
     if (token === 'core' || token === 'routes' || token === 'route' || token === 'behaviors' || token === 'behavior') {
       continue;
     }
-    if (token.startsWith('route:')) explicit.add(token.slice('route:'.length));
+    let name = token;
+    if (token.startsWith('route:')) name = token.slice('route:'.length);
     else if (token.startsWith('behavior:') || token.startsWith('feature:')) {
-      explicit.add(token.replace(/^(?:behavior|feature):/, ''));
-    } else {
-      explicit.add(token);
+      name = token.replace(/^(?:behavior|feature):/, '');
     }
+    explicit.add(name);
+    const canonical = resolveCanonicalRouteSurface(name).toLowerCase();
+    if (canonical) explicit.add(canonical);
   }
 
   return selected.filter((target) => {

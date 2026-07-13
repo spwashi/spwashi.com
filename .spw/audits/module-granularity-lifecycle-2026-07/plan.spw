@@ -29,8 +29,11 @@
     `No rename of public data-spw stems without align pass`,
     `No catalog sprawl for <10KB honest VISIBLE/IDLE modules`,
     `No big-bang runtime/* directory move in one commit`,
-    `No full conversion of public/js to TypeScript`
+    `No full conversion of public/js to TypeScript`,
+    `No module-scoped CSS files ahead of L3 catalog children (see progressive-css-module-scopes o5/s5)`
   ][reg=set]
+  css_payload = ~"../progressive-css-module-scopes-2026-07/index.spw"
+  css_note = `CSS demotions use the same cost_class + when stems as catalog reclass; hygiene (metrics ownership, debug/demos) can land during P0; core-deferred pairs with VISIBLE/IDLE paint_composite; module CSS waits for P1 L3`
 }[reg=facet]
 
 # =============================================================================

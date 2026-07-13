@@ -47,8 +47,22 @@ export function applyScopedStylesheets(source) {
         mode: 'scoped',
     });
     const links = renderStylesheetLinks(sheets);
+    // Prefer replacing the full-site manifest when present.
     const styleLinkPattern = /\s*<link\b[^>]*href=["']\/public\/css\/style\.css["'][^>]*>\s*/i;
-    if (!styleLinkPattern.test(source))
+    if (styleLinkPattern.test(source)) {
+        return source.replace(styleLinkPattern, `\n${links}\n`);
+    }
+    // Reconcile an existing scoped/core block (e.g. spw-site-head first pass missing features).
+    const coreLinkPattern = /\s*<link\b[^>]*href=["']\/public\/css\/bundles\/core\.css["'][^>]*>\s*/i;
+    if (!coreLinkPattern.test(source))
         return source;
-    return source.replace(styleLinkPattern, `\n${links}\n`);
+    const bundleLinkPattern = /\s*<link\b[^>]*href=["']\/public\/css\/bundles\/[^"']+\.css["'][^>]*>\s*/gi;
+    let replaced = false;
+    let output = source.replace(bundleLinkPattern, (match) => {
+        if (replaced)
+            return '';
+        replaced = true;
+        return `\n${links}\n`;
+    });
+    return replaced ? output : source;
 }

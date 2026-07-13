@@ -5,7 +5,11 @@ import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 
 import { renderTemplate } from '../../template.mjs';
-import { CORE_BUNDLE_HREF } from '../css-manifest.mjs';
+import {
+  CORE_BUNDLE_HREF,
+  isKnownRouteSurface,
+  routeBundleHref,
+} from '../css-manifest.mjs';
 import {
   EXPECTED_SITE_SCRIPT_PREFIX,
   EXPECTED_STYLESHEET_PREFIX,
@@ -146,6 +150,26 @@ async function parseRouteFile(absoluteFilePath: string) {
   const hasScopedCore = stylesheets.some((href) => stripQueryHash(href) === CORE_BUNDLE_HREF);
   if (!hasFullStylesheet && !(stylesheetMode === 'scoped' && hasScopedCore)) {
     errors.push(`Missing shared stylesheet ${EXPECTED_STYLESHEET_PREFIX} or scoped core bundle ${CORE_BUNDLE_HREF}`);
+  }
+
+  const surface = normalizeSpace(bodyAttributes?.['data-spw-surface']);
+  if (stylesheetMode === 'scoped' && surface && !isKnownRouteSurface(surface)) {
+    warnings.push(
+      `data-spw-surface="${surface}" is not in ROUTE_SCOPES/ROUTE_SURFACE_ALIASES; `
+      + 'scoped delivery will ship core (+ behaviors) without a route CSS bundle.',
+    );
+  }
+  // Source HTML keeps style.css; template rewrite attaches route bundles at render time.
+  // When rendered output is checked (has core link), require the expected route bundle when one exists.
+  if (hasScopedCore && surface) {
+    const expectedRoute = routeBundleHref(surface);
+    if (expectedRoute && !stylesheets.some((href) => stripQueryHash(href) === expectedRoute)) {
+      // Source pages intentionally link style.css only — only warn when other bundle links are present.
+      const hasAnyBundle = stylesheets.some((href) => stripQueryHash(href).startsWith('/public/css/bundles/'));
+      if (hasAnyBundle) {
+        warnings.push(`Scoped page surface "${surface}" should link ${expectedRoute} (or keep source style.css for template rewrite).`);
+      }
+    }
   }
 
   if (!moduleScripts.some((src) => stripQueryHash(src) === EXPECTED_SITE_SCRIPT_PREFIX)) {

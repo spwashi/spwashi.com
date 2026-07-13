@@ -23,6 +23,7 @@
 @site_js: ~"../../../public/js/site.js"
 @package_json: ~"../../../package.json"
 @module_granularity_lifecycle: ~"../module-granularity-lifecycle-2026-07/index.spw"
+@progressive_css_module_scopes: ~"../progressive-css-module-scopes-2026-07/index.spw"
 
 audit_run: .{
   at = `2026-07-12`
@@ -54,6 +55,7 @@ audit_run: .{
   related_harmony_performance = @harmony_audit
   bootstrap_plan = @runtime_bootstrap_plan
   module_granularity_lifecycle = @module_granularity_lifecycle # L1–L4 + lifecycle plan P0–P3
+  progressive_css_module_scopes = @progressive_css_module_scopes # PE options, core reduction, asset bundles
 }[reg=facet]
 
 ^"priority"{

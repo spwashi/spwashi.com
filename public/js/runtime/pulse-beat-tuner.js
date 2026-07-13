@@ -21,19 +21,39 @@ function readNumber(style, name, fallback) {
   return Number.isFinite(parsed) ? parsed : fallback;
 }
 
+/* Timing tokens are read on hot event paths (every interaction-phase,
+   component-lifecycle, and ecology emit). Each getComputedStyle call forces a
+   style recalculation against the full stylesheet, so memoize briefly instead
+   of resolving per event. */
+const TIMING_CACHE_TTL_MS = 1000;
+let cachedBeatInterval = { value: 0, at: 0 };
+let cachedPulseDuration = { value: 0, at: 0 };
+
 function readBeatIntervalMs(html) {
   if (typeof getComputedStyle !== 'function') return 1300;
+  const now = Date.now();
+  if (cachedBeatInterval.value && now - cachedBeatInterval.at < TIMING_CACHE_TTL_MS) {
+    return cachedBeatInterval.value;
+  }
   const style = getComputedStyle(html);
   const ms = readNumber(style, '--spw-beat-interval-ms', 1300);
-  return Math.max(520, Math.min(2800, Math.round(ms)));
+  const value = Math.max(520, Math.min(2800, Math.round(ms)));
+  cachedBeatInterval = { value, at: now };
+  return value;
 }
 
 function readPulseDurationMs(html) {
   if (typeof getComputedStyle !== 'function') return 280;
+  const now = Date.now();
+  if (cachedPulseDuration.value && now - cachedPulseDuration.at < TIMING_CACHE_TTL_MS) {
+    return cachedPulseDuration.value;
+  }
   const style = getComputedStyle(html);
   const raw = style.getPropertyValue('--spw-microinteraction-pulse-duration').trim();
   const parsed = Number.parseInt(raw, 10);
-  return Number.isFinite(parsed) && parsed > 80 ? parsed : 280;
+  const value = Number.isFinite(parsed) && parsed > 80 ? parsed : 280;
+  cachedPulseDuration = { value, at: now };
+  return value;
 }
 
 function isRhythmEnabled(html) {
@@ -103,7 +123,13 @@ export function initPulseBeatTuner(root = document) {
   const controller = new AbortController();
   const { signal } = controller;
 
-  const refreshRhythm = () => scheduleBeatCycle(html);
+  const refreshRhythm = () => {
+    // Settings/token changes may retune timing tokens; drop the memo so the
+    // next hot-path read resolves fresh values immediately.
+    cachedBeatInterval = { value: 0, at: 0 };
+    cachedPulseDuration = { value: 0, at: 0 };
+    scheduleBeatCycle(html);
+  };
 
   const onInteractionPhase = (event) => {
     const phase = event.detail?.phase;

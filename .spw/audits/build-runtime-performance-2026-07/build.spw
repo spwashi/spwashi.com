@@ -101,7 +101,15 @@
     id = `core-css-bundle-size`
     cost_class = `working_memory_pressure`
     seam = `public/css/bundles/core.css ~1.5 MiB generated; style-core has ~98 @imports`
-    direction = `Route bundles already split heavy routes; watch core growth; prefer feature CSS in behavior/route bundles`
+    direction = `Route bundles already split heavy routes; watch core growth; prefer feature CSS in behavior/route bundles; npm run css:payload`
+    options_audit = ~"../progressive-css-module-scopes-2026-07/index.spw"
+  }
+  .{
+    id = `scoped-css-delivery`
+    cost_class = `working_memory_pressure`
+    seam = `Most routes linked style.css (full import graph ~2.1 MiB sources / all-route CSS); only home was scoped`
+    direction = `data-spw-stylesheet-mode=scoped sitewide; template rewrites to core+route+behavior bundles; ROUTE_SURFACE_ALIASES.software→topics`
+    landed = `2026-07-12 route aliases, orphan CSS ownership, sitewide scoped attribute, css:payload report`
   }
 }[reg=set]
 
@@ -116,8 +124,19 @@
     `CSS agent loop: npm run build:css:fast or build:css -- --only home,settings --skip-core --bundles-only`,
     `CSS single file: npm run build:css:run -- --bundles-only --from-change public/css/routes/surfaces/home.css`,
     `CSS tools already built: npm run build:css:run (skips tsc scripts)`,
-    `CSS core only when style-core imports change: npm run build:css:core`
+    `CSS core only when style-core imports change: npm run build:css:core`,
+    `CSS payload by surface: npm run css:payload (or css:payload:json)`,
+    `Scoped delivery: body data-spw-stylesheet-mode=scoped + data-spw-surface; software aliases to topics bundle`
   ][reg=set]
+}[reg=facet]
+
+^"scoped_delivery_2026_07"{
+  rewrite = `scripts/ts/css-scopes.mts applyScopedStylesheets — style.css → core + route + behavior links at template render`
+  aliases = `ROUTE_SURFACE_ALIASES.software → topics (topic curriculum pages keep topics.css)`
+  ownership = `style.css non-core imports must appear in ROUTE_SCOPES or BEHAVIOR_SCOPES (css-contracts)`
+  orphans_landed = #[`boonhonk-mixer → about`, `design-experiments + review-surfaces → website`][reg=set]
+  payload_note = `Scoped pages still pay ~1.5 MiB core; savings are other-route CSS (~0.4–0.6 MiB) + fewer @import RTs`
+  report = `npm run css:payload`
 }[reg=facet]
 
 ^"css_build_cli_2026_07"{

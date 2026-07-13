@@ -192,11 +192,23 @@ export async function collectCssContractReport() {
             errors.push(`${item.file} is imported by the style manifest but does not exist.`);
         }
     }
+    const scopedRouteAndBehaviorFiles = new Set();
     for (const files of [...Object.values(ROUTE_SCOPES), ...Object.values(BEHAVIOR_SCOPES)]) {
         for (const file of files) {
+            scopedRouteAndBehaviorFiles.add(file);
             if (!importedFiles.has(file)) {
                 errors.push(`${file} is listed in the CSS scope manifest but missing from style.css/style-core.css imports.`);
             }
+        }
+    }
+    // Non-core style.css imports must live in ROUTE_SCOPES or BEHAVIOR_SCOPES so scoped delivery can own them.
+    const styleOnlyImports = parseStyleImports(styleSource)
+        .map((item) => item.file)
+        .filter((file) => file !== '/public/css/style-core.css' && !/^https?:\/\//i.test(file));
+    for (const file of styleOnlyImports) {
+        if (!scopedRouteAndBehaviorFiles.has(file)) {
+            errors.push(`${file} is imported by style.css but not assigned to ROUTE_SCOPES or BEHAVIOR_SCOPES `
+                + '(scoped payload cannot attach it to a surface/feature).');
         }
     }
     for (const target of listBundleTargets()) {

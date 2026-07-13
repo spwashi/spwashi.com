@@ -12,6 +12,8 @@
     "build:css:routes": "npm run build:tools && node scripts/css-build.mjs --bundles-only --skip-core --only routes",
     "build:css:core": "npm run build:tools && node scripts/css-build.mjs --bundles-only --only core",
     "build:css:touched": "npm run build:tools && node scripts/css-build.mjs --bundles-only --from-change",
+    "css:payload": "node scripts/css-payload-report.mjs",
+    "css:payload:json": "node scripts/css-payload-report.mjs --json",
     "build:runtime": "tsc -p tsconfig.runtime.json && node scripts/fix-typed-imports.mjs",
     "build:tools": "tsc -p tsconfig.scripts.json",
     "build:site": "npm run build:tools && node scripts/build.mjs",

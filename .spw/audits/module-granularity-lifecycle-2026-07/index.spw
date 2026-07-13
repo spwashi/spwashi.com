@@ -31,6 +31,7 @@
 @runtime_module_medium: ~"../../surfaces/runtime-module-medium.spw"
 @feature_wiring_cache: ~"../../caches/feature-wiring-timing-2026-07.spw"
 @layout_qa_measurement: ~"../layout-qa-measurement-2026-07/index.spw"
+@progressive_css_module_scopes: ~"../progressive-css-module-scopes-2026-07/index.spw"
 @metaphor: ~"../../conventions/metaphor-dimensional-lexicon.spw"
 @js_cognition: ~"../../conventions/js-architecture-cognition.spw"
 
@@ -73,6 +74,7 @@ audit_run: .{
   related_decomposition = @decomposition_plan
   related_theme_churn = @theme_churn
   related_kernel = @runtime_kernel
+  related_css_pe = @progressive_css_module_scopes # CSS demotions share costClass/schedule with catalog
 }[reg=facet]
 
 ^"reading_order"{

@@ -476,7 +476,10 @@ function renderSiteHead(vars) {
   const scopedStylesheets = stylesheetMode === 'scoped'
     ? resolveRouteStylesheets({
       surface: firstValue(vars.surface, vars.spw_surface),
-      features: splitList(firstValue(vars.features, vars.spw_features)),
+      // data-spw-features is space-separated (same as helpers.splitList / body attrs).
+      features: normalizeContent(firstValue(vars.features, vars.spw_features))
+        .split(/\s+/)
+        .filter(Boolean),
       extraStyles: splitList(vars.extra_styles),
       mode: 'scoped',
     })
@@ -603,9 +606,40 @@ function renderSiteHeader(vars) {
     + '</header>';
 }
 
+function bodyScopeVarsFromDocument(text) {
+  const bodyMatch = text.match(/<body\b([^>]*)>/i);
+  if (!bodyMatch?.[1]) return {};
+  const attrs = parseAttrs(bodyMatch[1]);
+  const surface = normalizeContent(attrs['data-spw-surface']);
+  const features = normalizeContent(attrs['data-spw-features']);
+  const stylesheetMode = normalizeContent(attrs['data-spw-stylesheet-mode']);
+  const extraStyles = normalizeContent(attrs['data-spw-extra-styles']);
+  const vars = {};
+  if (surface) {
+    vars.surface = surface;
+    vars.spw_surface = surface;
+  }
+  if (features) {
+    vars.features = features;
+    vars.spw_features = features;
+  }
+  if (stylesheetMode) {
+    vars.stylesheet_mode = stylesheetMode;
+    vars.site_stylesheet_mode = stylesheetMode;
+  }
+  if (extraStyles) vars.extra_styles = extraStyles;
+  return vars;
+}
+
 async function expandSiteDirectives(text, scopeVars, warnings) {
+  const bodyScope = bodyScopeVarsFromDocument(text);
   let output = text.replace(cloneRegex(SPW_SITE_HEAD_RE), (_match, attrString) => {
-    const vars = mergeScopeVars(scopeVars, parseAttrs(attrString), warnings);
+    // Body data-spw-stylesheet-mode/surface/features drive scoped CSS for spw-site-head pages.
+    const vars = mergeScopeVars(
+      mergeScopeVars(bodyScope, scopeVars, warnings),
+      parseAttrs(attrString),
+      warnings,
+    );
     return renderSiteHead(vars);
   });
 

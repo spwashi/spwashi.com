@@ -9,6 +9,9 @@ import {
   listBundleTargets,
   normalizeCssSourceHref,
   onlyTokensForTargets,
+  resolveCanonicalRouteSurface,
+  resolveScopedStylesheets,
+  routeBundleHref,
   targetsForSourcePaths,
 } from '../typed/css-manifest.mjs';
 
@@ -48,5 +51,26 @@ describe('css-manifest incremental filters', () => {
       coreSourceHrefs: [],
     });
     assert.equal(affected.length, 0);
+  });
+
+  it('software surface aliases to topics route CSS', () => {
+    assert.equal(resolveCanonicalRouteSurface('software'), 'topics');
+    assert.equal(routeBundleHref('software'), '/public/css/bundles/routes/topics.css');
+    const sheets = resolveScopedStylesheets({
+      surface: 'software',
+      features: ['metrics', 'console'],
+    });
+    assert.ok(sheets.some((s) => s.href === '/public/css/bundles/core.css'));
+    assert.ok(sheets.some((s) => s.kind === 'route' && s.scope === 'topics'));
+    assert.ok(sheets.some((s) => s.kind === 'behavior' && s.scope === 'metrics'));
+  });
+
+  it('filterBundleTargets resolves software alias to topics bundle', () => {
+    const filtered = filterBundleTargets(listBundleTargets(), {
+      only: ['software'],
+      skipCore: true,
+    });
+    assert.equal(filtered.length, 1);
+    assert.equal(filtered[0].scope, 'topics');
   });
 });

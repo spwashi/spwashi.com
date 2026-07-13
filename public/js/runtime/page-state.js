@@ -210,11 +210,30 @@ function initFixedViewportCorrection() {
   let pollTimer = 0;
   let pollCount = 0;
   let observer = null;
+  let lastRunAt = 0;
+  let trailing = 0;
+  // The measurement forces style + layout against the full stylesheet, and the
+  // subtree observer below fires on every DOM mutation. Throttle so mutation
+  // storms and scroll cost one measured pass per interval, not one per frame.
+  const MIN_MEASURE_INTERVAL_MS = 120;
+  const runUpdate = () => {
+    lastRunAt = Date.now();
+    updateFixedViewportCorrection();
+  };
   const schedule = () => {
     if (frame) return;
+    const since = Date.now() - lastRunAt;
+    if (since < MIN_MEASURE_INTERVAL_MS) {
+      if (trailing) return;
+      trailing = window.setTimeout(() => {
+        trailing = 0;
+        schedule();
+      }, MIN_MEASURE_INTERVAL_MS - since);
+      return;
+    }
     frame = window.requestAnimationFrame(() => {
       frame = 0;
-      updateFixedViewportCorrection();
+      runUpdate();
     });
   };
   const pollMountedChrome = () => {
@@ -249,6 +268,7 @@ function initFixedViewportCorrection() {
 
   return () => {
     if (frame) window.cancelAnimationFrame(frame);
+    if (trailing) window.clearTimeout(trailing);
     if (pollTimer) window.clearTimeout(pollTimer);
     observer?.disconnect();
     window.removeEventListener('scroll', schedule);
