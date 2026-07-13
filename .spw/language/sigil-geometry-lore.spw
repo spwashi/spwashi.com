@@ -19,6 +19,7 @@
 @viewing_reason: ~"../conventions/viewing-reason.spw"
 @material_css: ~"../../public/css/effects/material.css"
 @language_index: ~"./index.spw"
+@lore_alignment: ~"./lore-alignment.spw"
 
 operation = "audit prime"
 fixity = "tending"
@@ -78,10 +79,10 @@ purpose: .{
     ground = `. — member access as coming home: the dot walks down into the local field`
     integration = `^ — dereference upward: lift the parts until they read as one thing`
     potential = `~ — the destructor that hasn't run yet: a thread tied to a future`
-    action = `@ — at-site, the decorator that does: where attention lands, something happens`
+    perspective = `@ — at-site as lens: user@host, the viewer situated at the subject; the decorator that changes how the next thing is read (see @lore_alignment)`
     probe = `? — the ternary that stayed open: a question holding two panels`
     value = `$ — the register/substrate: what the machine actually holds while you talk`
-    pragma = `! — the side-effect bang: irreversible, so say it loudly`
+    action = `! — the side-effect bang: commit a move and make the consequence observable, so say it loudly`
   }[reg=facet]
   test = `The lore test: a C programmer reading a printed Spw page predicts the interaction correctly; a non-programmer still receives a coherent story. When either reader fails, the sigil's copy or wiring is inaccurate — fix whichever is lying.`
 }[reg=facet]

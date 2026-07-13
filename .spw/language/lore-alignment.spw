@@ -1,0 +1,78 @@
+# Lore Alignment — @ as Lens, Binding Topology, and the Marks of Other Languages
+#
+# Companion to sigil-geometry-lore: aligns Spw's sigils with the lore of other
+# languages (programming, natural, chemical), develops @ as the perspective
+# operator, and models where meaning binds relative to containers — including
+# what a "photon" of meaning would be as it passes through a lens.
+
+#>lore_alignment
+#:language #!sigils #!lore #!perspective #!alignment
+#:operation #!cache #!prime #!audit
+#:fixity #!tending
+
+@sigil_geometry: ~"./sigil-geometry-lore.spw"
+@definitions: ~"../../public/js/kernel/shared.js"
+@operator_semantics: ~"../conventions/operator-semantics.spw"
+@semantic_braces: ~"../conventions/semantic-braces.spw"
+@agents_md: ~"../../AGENTS.md"
+@language_index: ~"./index.spw"
+
+operation = "cache prime audit"
+fixity = "tending"
+
+^"perspective_operator"{
+  canonical = `@ is the lens: viewer@subject. OPERATOR_DEFINITIONS already agrees — @ → perspective, intent situate, 'shift or inspect the viewpoint shaping an observation'. Email ancestry is exact: user@host is a presence at a place, a viewer situated at a subject.`
+  composed = `<>@& reads as: an empty enclosure (a lens not yet filled) situated at the subject. The angle pair supplies the aperture, & supplies what is being seen. Perspective is the only operator whose operands are asymmetric in kind — left side is a seer, right side is a seen.`
+  lens_optics: .{
+    catalyst = `Chemistry gives the cleanest model: a lens is a catalyst. It participates in the reaction of meaning, lowers the activation energy of interpretation, and emerges unchanged. @ never consumes its operands.`
+    refraction = `What passes through the lens bends: the same subject through different viewers yields different projections. The lens does not alter the subject; it alters the path meaning takes to the reader.`
+  }[reg=facet]
+  photon: .{
+    question = `What is the quantum of meaning that passes through @?`
+    candidate = `The smallest claim that survives projection: one sigil expression — a mark plus its operand. Smaller than that (a bare mark) has type but no reference; larger (a brace body) is a field, not a quantum. A photon of meaning is emitted by a source container, passes through the lens, and lands as a changed reading, not a changed subject.`
+    physics_echo = `Photochemistry: a photon absorbed by a molecule excites it without adding matter. A sigil expression absorbed through a perspective excites a container — charges it — without adding content. The site's charge/wonder fields are already this model's instrumentation.`
+    falsifiable = `Test: any interpretation that requires more than one sigil expression to change is not photon-passage, it is a reaction (multiple bonds forming). If a single expression through a lens cannot shift a reading, the lens is inert and should not be written as @.`
+  }[reg=facet]
+}[reg=facet]
+
+^"binding_topology"{
+  question = `Where does an annotation bind — the inside of a container (its content) or the outside (the thing as a whole)?`
+  model: .{
+    prefix_outside = `A prefix mark binds to the container as a whole, from outside: #>house names the house, not the furniture. Forward dispatch is exterior address.`
+    infix_inside = `Content and infix marks bind inside: what sits between braces belongs to the field. Enclosure is interior possession.`
+    postfix_boundary = `A postfix mark binds at the boundary, reflecting on what closed: }_A labels the seam itself. Labeled overlapping braces already exploit this — the label rides the edge, owned by neither pure inside nor outside.`
+    html_exemplar = `HTML is the cleanest existing exemplar: attributes bind inside the tag but outside the content — a third position (the collar) between exterior and interior. data-spw-* lives on the collar: metadata that clothes content without entering it.`
+  }[reg=facet]
+  through_the_lens = `@ composes with topology: viewer@subject binds the viewer to the OUTSIDE of the subject container (you see the house, not from within it), while viewer@{subject} would situate the viewer inside the field. Whether the lens sits before the brace or within it is a real semantic choice, not typography.`
+}[reg=facet]
+
+^"familiar_marks"{
+  hashtag = `#topic in social media is # as vibration: naming a structure so it can be recognized by resonance. Millions of people already read # this way — the lore is pre-installed.`
+  email = `user@host — presence situated at a place. @ as perspective inherits an intuition every reader already has.`
+  url_fragment = `#anchor in a URL is #> as address: knock on a named part of the document. Browsers have taught frame addressing for thirty years.`
+  english = `English punctuates postfix and enclosing: the period settles a finished thought (ground at the boundary), quotes enclose borrowed voice (subjective brace), the colon announces forward (a prefix behavior hiding at a postfix position).`
+  spanish = `Spanish punctuates prefix: ¿ and ¡ announce the mood before the content arrives — exactly forward dispatch. Spanish grammar is the natural-language precedent for sigils that prepare the reader instead of concluding for them.`
+}[reg=facet]
+
+^"lore_of_languages"{
+  claim = `Each language contributes one verified intuition to the sigil table. Alignment means borrowing the intuition, not the syntax.`
+  table: .{
+    html = `enclosure + collar: tags enclose content; attributes bind on the collar. Contributes the third binding position.`
+    css = `@media, @supports — CSS's own @ is literally a conditional viewpoint: 'when seen through this environment, these rules hold.' The cascade is precedence-as-flow; a selector is an address. CSS independently derived @ as lens.`
+    python = `indentation is spacing-as-binding made law (tighter set = inside the block), and the colon is a prefix mark announcing enclosure without a brace. Python proves spacing can carry structure alone.`
+    prolog = `?- is the probe as query posture; unification is binding as mutual constraint (both sides change until they agree). Contributes: binding is not assignment — it is agreement.`
+    perl = `the direct ancestor: Perl calls $ @ % sigils, and each declares the shape of what it binds ($scalar one thing, @array many, %hash mappings). Contributes: a sigil can promise the plurality of its operand. Note Perl's @ is 'many' — a rival lore to @-as-lens worth remembering when expressions mix.`
+    algol_pascal = `begin/end are braces spelled as words, and := makes binding deliberate (distinct from equality). Contributes: enclosure and binding can be pronounceable — the speech channel matters (speech fields in OPERATOR_DEFINITIONS carry this).`
+    c = `covered in @sigil_geometry — address-of, member access, dereference, the side-effect bang.`
+  }[reg=facet]
+  chemistry = `Flow models: operators are bond types. Covalent bonds share a pair (binding as mutual constraint, Prolog-adjacent); ionic bonds transfer (action: something moves and the consequence is observable); catalysis is perspective (present, lowering interpretive activation energy, unconsumed); and reaction arrows are flow fields — OPERATOR_GEOMETRY's flow values (source-to-address, observer-to-potential) are reaction notation already.`
+}[reg=facet]
+
+^"copy_presence_refinement"{
+  rules: .{
+    gloss_lives_in_inspection = `Lore glosses belong in title/speech/hold-to-inspect channels, not body prose. The page should read clean; the lore should be there when a reader leans in.`
+    two_reader_gate = `Copy edits to operator language pass the two-reader lore test (@sigil_geometry): the initiated predict behavior, the uninitiated still get a story.`
+    borrowed_intuitions_first = `When introducing a sigil in copy, lean on the pre-installed lore (hashtag, email, URL anchor) before inventing new metaphor. Familiarity is a material.`
+  }[reg=facet]
+  accuracy_finding = `Two operator namespaces coexist: authored HTML values (data-spw-operator="route|action|stream|object|topic|...") and the detected sigil table (perspective, potential, integration, ground, ...). AGENTS.md's shorthand table reflects the authored set and disagrees with @definitions (@ is perspective in code, 'action' in the doc table). This needs a deliberate align operation — either a mapping table between namespaces or a migration — not a silent edit. Cached here as the next alignment move.`
+}[reg=facet]
