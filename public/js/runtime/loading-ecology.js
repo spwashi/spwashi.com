@@ -87,8 +87,9 @@ export const SPW_LOADING_ECOLOGY_CONTRACT = Object.freeze({
     + 'region diversity, and module mount events to narrate loading as an ecological field.',
 });
 
-const TWINKLE_MS = 680;
-const PHASE_PULSE_MS = 420;
+/** Match --spw-ecology-twinkle-duration / --spw-ecology-phase-pulse-duration tokens. */
+const TWINKLE_MS = 760;
+const PHASE_PULSE_MS = 360;
 
 let initialized = false;
 let cleanupFns = [];

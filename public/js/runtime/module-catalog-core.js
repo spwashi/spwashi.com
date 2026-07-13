@@ -3,13 +3,14 @@
  * load() paths are relative to public/js/runtime/.
  */
 
-import { isFn, MODULE_LAYERS, MOUNT_WHEN } from './module-catalog-constants.js';
+import { COST_CLASS, isFn, MODULE_LAYERS, MOUNT_WHEN } from './module-catalog-constants.js';
 
 export const CORE_DEFS = [
   {
     id: 'site-settings',
     layer: MODULE_LAYERS.CORE,
     when: MOUNT_WHEN.IMMEDIATE,
+    costClass: COST_CLASS.PREMATURE_COMMITMENT,
     describes: 'root[data-spw-color-mode][data-spw-palette-resonance][data-spw-wonder-memory] settings surface',
     updates: [
       'data-spw-color-mode',
@@ -33,6 +34,7 @@ export const CORE_DEFS = [
     id: 'pwa-update-handler',
     layer: MODULE_LAYERS.CORE,
     when: MOUNT_WHEN.IMMEDIATE,
+    costClass: COST_CLASS.PREMATURE_COMMITMENT,
     describes: 'pwa[install|update|offline] notification surface',
     updates: ['data-pwa-toast', 'data-pwa-toast-styles', 'data-spw-pwa-mode'],
     evaluates: 'service-worker lifecycle offline-readiness update-feedback',
@@ -49,6 +51,7 @@ export const CORE_DEFS = [
     id: 'shell-disclosure',
     layer: MODULE_LAYERS.CORE,
     when: MOUNT_WHEN.IMMEDIATE,
+    costClass: COST_CLASS.PREMATURE_COMMITMENT,
     describes: 'shell[nav|weather|attention-posture] disclosure defaults',
     updates: ['data-spw-menu-mode', 'data-spw-nav-fit', 'data-spw-shell-tune-surface', 'data-spw-attention-posture'],
     evaluates: 'chrome defaults viewport pointer attention-posture',
@@ -65,6 +68,7 @@ export const CORE_DEFS = [
     id: 'interactive-medium',
     layer: MODULE_LAYERS.CORE,
     when: MOUNT_WHEN.IMMEDIATE,
+    costClass: COST_CLASS.PREMATURE_COMMITMENT,
     describes: 'medium[register|posture]{device|entertainment|module-tokens}',
     updates: [
       'data-spw-medium-register',
@@ -86,6 +90,7 @@ export const CORE_DEFS = [
     id: 'site-core-minimal',
     layer: MODULE_LAYERS.CORE,
     when: MOUNT_WHEN.IMMEDIATE,
+    costClass: COST_CLASS.PREMATURE_COMMITMENT,
     describes: 'minimal frame/mode/hash runtime defaults',
     updates: ['data-spw-lens-state', 'data-spw-active', 'data-spw-attention', 'data-spw-state-accent'],
     evaluates: 'frame lifecycle mode-switch hash-target calm-defaults',

@@ -36,6 +36,11 @@
 @working_tree_index: ~"./working-tree-index-2026-07.spw"
 @commit_history_deep: ~"./commit-history-deep-2026-07/index.spw"
 @plan_ecology_semantics: ~"./plan-ecology-semantics-2026-07.spw"
+@html_component_audit: ~"./html-component-audit-2026-07.spw"
+@module_impact_audit: ~"./module-impact-audit-2026-07.spw"
+@component_anatomy_theme_module: ~"./component-anatomy-theme-module-2026-07.spw"
+@module_granularity_lifecycle: ~"./module-granularity-lifecycle-2026-07/index.spw"
+@layout_qa_measurement: ~"./layout-qa-measurement-2026-07/index.spw"
 
 operation = "align"
 fixity = "tending"
@@ -49,9 +54,14 @@ fixity = "tending"
     agentic = ~"./agentic-development-2026-07/index.spw"
     alignment_shell_lifecycle = ~"./alignment-shell-lifecycle-sensitivity-2026-07/index.spw"
     build_runtime_performance = ~"./build-runtime-performance-2026-07/index.spw"
+    module_granularity_lifecycle = ~"./module-granularity-lifecycle-2026-07/index.spw"
+    layout_qa_measurement = ~"./layout-qa-measurement-2026-07/index.spw"
     commit_skill_induction = ~"./commit-skill-induction-2026-07/index.spw"
     commit_history_deep = ~"./commit-history-deep-2026-07/index.spw"
     plan_ecology_semantics = ~"./plan-ecology-semantics-2026-07.spw"
+    html_component_audit = ~"./html-component-audit-2026-07.spw"
+    module_impact_audit = ~"./module-impact-audit-2026-07.spw"
+    component_anatomy_theme_module = ~"./component-anatomy-theme-module-2026-07.spw"
     component_anatomy_device_packing = ~"./component-anatomy-device-packing-2026-07.spw"
     component_philosophy_harmony = ~"./component-philosophy-harmony-2026-07.spw"
     css_module_attribute_impact = ~"./css-module-attribute-impact-2026-07/index.spw"
@@ -99,6 +109,19 @@ fixity = "tending"
     synthesis = @vocabulary_metaphor_growth_synthesis
   }[reg=facet]
 
+  session_2026_07_component_module_impact: .{
+    reading_order = `html_component_audit → module_impact_audit → component_anatomy_theme_module → timing/effect token alignment`
+    keys = #[`html_component_audit`, `module_impact_audit`, `component_anatomy_theme_module`, `page_component_census`, `javascript_module_census`][reg=set]
+    note = `2026-07-12: slot anatomy sparse; effectScope complete; pulse durations tokenized; anatomy↔theme↔semantics wired`
+  }[reg=facet]
+
+  session_2026_07_module_lifecycle_granularity: .{
+    reading_order = `brp → module_granularity_lifecycle (lifecycle → granularity → inertia → plan)`
+    keys = #[`build_runtime_performance`, `module_granularity_lifecycle`, `alignment_shell_lifecycle`, `javascript_module_census`, `commit_history_deep`][reg=set]
+    hub = @module_granularity_lifecycle
+    note = `2026-07-12: costClass + plan P0–P3; inertia leaf adds churn/cliché/primitives/types/tree; P1b fork migration`
+  }[reg=facet]
+
   session_2026_07_metaphor_research: .{
     reading_order = `metaphor_primitive_research_cascade`
     keys = #[`metaphor_primitive_research_branching`, `appendices_index`][reg=set]
@@ -139,8 +162,24 @@ fixity = "tending"
 
   performance_cascade = ?<
     @build_runtime_performance,
+    @module_granularity_lifecycle,
+    @layout_qa_measurement,
     @css_module_attribute_impact,
     @alignment_shell_lifecycle
+  >[reg=stream]
+
+  layout_qa_cascade = ?<
+    @layout_qa_measurement,
+    @alignment_shell_lifecycle,
+    @component_anatomy_device_packing,
+    @page_spacing_runtime_synthesis
+  >[reg=stream]
+
+  module_lifecycle_granularity = ?<
+    @module_granularity_lifecycle,
+    @build_runtime_performance,
+    @alignment_shell_lifecycle,
+    @javascript_module_census
   >[reg=stream]
 
   page_memory_features = ?<

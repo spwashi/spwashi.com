@@ -563,9 +563,11 @@
    7. Responsive Adjustments
    ========================================================================== */
 
-@container (max-width: 32rem) {
-  :where(.specimen-index-grid, .fiber-linguistics-grid, .field-notes-grid) {
-    grid-template-columns: 1fr;
+@supports (container-type: inline-size) {
+  @container (max-width: 32rem) {
+    :where(.specimen-index-grid, .fiber-linguistics-grid, .field-notes-grid) {
+      grid-template-columns: 1fr;
+    }
   }
 }
 

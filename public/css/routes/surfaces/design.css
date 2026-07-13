@@ -939,13 +939,15 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-page-seed="page_design_des
   }
 }
 
-@container design-ecology-frame (max-width: 54rem) {
-  :where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-ecology-specimen) {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      "controls"
-      "stage"
-      "readout";
+@supports (container-type: inline-size) {
+  @container design-ecology-frame (max-width: 54rem) {
+    :where(body[data-spw-page-seed="page_design_design_hub"]) :where(.design-ecology-specimen) {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas:
+        "controls"
+        "stage"
+        "readout";
+    }
   }
 }
 

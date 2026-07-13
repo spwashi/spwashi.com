@@ -148,8 +148,6 @@ class BoonhonkMixer {
             this.attachListeners();
             this.refresh();
             this.initialized = true;
-
-            console.log(`[Spw Boonhonk Mixer] Initialized on ${this.container.tagName}`);
         } catch (err) {
             console.warn('[Spw Boonhonk Mixer] Failed to initialize (non-fatal)', err);
         }

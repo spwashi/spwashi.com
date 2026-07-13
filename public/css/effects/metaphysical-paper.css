@@ -925,24 +925,26 @@ html[data-spw-show-semantic-metadata="off"] .spw-image-memory__value {
   }
 }
 
-@container (max-width: 28rem) {
-  .spw-image-helper-strip {
-    gap: 0.3rem;
-    padding-inline: 0.54rem;
-  }
+@supports (container-type: inline-size) {
+  @container (max-width: 28rem) {
+    .spw-image-helper-strip {
+      gap: 0.3rem;
+      padding-inline: 0.54rem;
+    }
 
-  .spw-image-helper {
-    min-width: 0;
-    flex: 1 1 8rem;
-  }
+    .spw-image-helper {
+      min-width: 0;
+      flex: 1 1 8rem;
+    }
 
-  .spw-image-memory {
-    flex: 1 1 100%;
-    max-width: none;
-  }
+    .spw-image-memory {
+      flex: 1 1 100%;
+      max-width: none;
+    }
 
-  .spw-image-memory__value {
-    white-space: normal;
+    .spw-image-memory__value {
+      white-space: normal;
+    }
   }
 }
 

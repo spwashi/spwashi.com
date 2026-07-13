@@ -834,45 +834,43 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
     color-mix(in srgb, var(--component-accent, var(--teal, #008080)) 72%, var(--ink-soft, rgba(14, 18, 20, 0.72)) 28%);
 }
 
-/* Module effect surface — root-level tokens derived from mounted module side effects. */
+/* Module effect surface — root-level tokens derived from mounted module side effects.
+   Pulse window: --spw-module-effect-pulse-duration (module-effects.js). */
 :where(html[data-spw-module-effects-active]) {
   --spw-module-effect-surface: 1;
 }
 
 :where(html[data-spw-module-effect-pulse]) {
   --spw-module-effect-pulse: 1;
-  --spw-site-rhythm-tempo: min(calc(var(--spw-site-rhythm-tempo, 1) * 1.08), 3.2);
+  /* Mount blip: barely audible tempo nudge, not a tempo shift. */
+  --spw-site-rhythm-tempo: 1.035;
+  transition:
+    --spw-site-rhythm-tempo var(--spw-module-effect-pulse-duration, 520ms) var(--ease-settle, ease);
 }
 
 /* Effect ledger flourishes — precipitated residue as soft ornament knobs.
-   Defaults live in tokens/core.css; effect-ledger.js overrides on html when residue lands. */
+   Defaults live in tokens/core.css; effect-ledger.js overrides on html when residue lands.
+   Pulse window: --spw-effect-pulse-duration (effect-ledger.js). */
 :where(html[data-spw-effects]) {
   --spw-effect-surface: 1;
-  --spw-effect-ledger-scale: calc(1 + (min(var(--spw-effect-count), 24) * 0.004));
-  --spw-site-rhythm-density: max(
-    var(--spw-site-rhythm-density, 0.5),
-    calc(0.48 + (var(--spw-effect-charge) * 0.28))
-  );
+  --spw-effect-ledger-scale: calc(1 + (min(var(--spw-effect-count), 24) * 0.0025));
+  --spw-site-rhythm-density: calc(0.5 + (var(--spw-effect-charge) * 0.16));
 }
 
 :where(html[data-spw-effect-pulse]) {
   --spw-effect-pulse-active: max(var(--spw-effect-pulse), 1);
-  --spw-microinteraction-pulse-intensity: max(
-    var(--spw-microinteraction-pulse-intensity, 1),
-    calc(1 + (max(var(--spw-effect-charge), 0.18) * 0.22 * var(--spw-effect-pulse-active, 1)))
-  );
-  --spw-site-rhythm-tempo: min(
-    calc(var(--spw-site-rhythm-tempo, 1) * (1 + (max(var(--spw-effect-charge), 0.12) * 0.1))),
-    3.2
-  );
+  --spw-microinteraction-pulse-intensity:
+    calc(1 + (max(var(--spw-effect-charge), 0.12) * 0.12 * var(--spw-effect-pulse-active, 1)));
+  --spw-site-rhythm-tempo:
+    calc(1 + (max(var(--spw-effect-charge), 0.08) * 0.05));
 }
 
 :where(html[data-spw-module-visuals="on"][data-spw-effect-pulse]) {
   --spw-effect-pulse-ring:
-    inset 0 0 0 1px color-mix(in srgb, var(--op-object-color, #c9862a) calc(18% + (var(--spw-effect-charge) * 16%)), transparent);
-  outline: 1px solid color-mix(in srgb, var(--op-object-color, #c9862a) calc(16% + (var(--spw-effect-charge) * 14%)), transparent);
+    inset 0 0 0 1px color-mix(in srgb, var(--op-object-color, #c9862a) calc(12% + (var(--spw-effect-charge) * 10%)), transparent);
+  outline: 1px solid color-mix(in srgb, var(--op-object-color, #c9862a) calc(10% + (var(--spw-effect-charge) * 8%)), transparent);
   outline-offset: -1px;
-  transition: outline-color 420ms var(--ease-smooth, ease);
+  transition: outline-color var(--spw-effect-pulse-duration, 720ms) var(--ease-settle, ease);
 }
 
 /* Runtime load diagnostic — module-loader writes avg mount ms; inspect surfaces may read it. */
@@ -894,6 +892,23 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
 :where(html[data-spw-reduce-motion="on"][data-spw-effect-pulse]) {
   --spw-effect-pulse-active: 0;
   --spw-microinteraction-pulse-intensity: 1;
+}
+
+:where(html[data-spw-reduce-motion="on"][data-spw-module-effect-pulse]) {
+  --spw-module-effect-pulse: 0;
+  --spw-site-rhythm-tempo: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(html[data-spw-effect-pulse]) {
+    --spw-effect-pulse-active: 0;
+    --spw-microinteraction-pulse-intensity: 1;
+  }
+
+  :where(html[data-spw-module-effect-pulse]) {
+    --spw-module-effect-pulse: 0;
+    --spw-site-rhythm-tempo: 1;
+  }
 }
 
 :where(html[data-spw-runtime-enhancement-active="true"]) {
@@ -1139,64 +1154,66 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
    27. Responsive container behavior
    ========================================================================== */
 
-@container (max-width: 36rem) {
-  :where([data-spw-slot="header"], .frame-topline, .frame-heading) {
-    gap: var(--spw-slot-gap-tight, 0.34rem 0.46rem);
+@supports (container-type: inline-size) {
+  @container (max-width: 36rem) {
+    :where([data-spw-slot="header"], .frame-topline, .frame-heading) {
+      gap: var(--spw-slot-gap-tight, 0.34rem 0.46rem);
+    }
+
+    :where([data-spw-slot="meta"], [data-spw-slot="actions"], .spec-strip, .button-group, .frame-operators) {
+      width: 100%;
+      gap: var(--spw-slot-gap-tight, 0.34rem 0.46rem);
+    }
+
+    :where(.frame-topline > .spw-component-meta, .frame-heading > .spw-component-meta) {
+      width: 100%;
+      margin-inline-start: 0;
+      justify-content: flex-start;
+    }
+
+    :where(.frame-topline > .mode-switch, [data-spw-slot="actions"] > .mode-switch) {
+      width: 100%;
+      justify-content: stretch;
+    }
+
+    /* Soft PE only — handles/state-semantics owns track/chrome contracts. */
+    :where(.mode-switch[aria-label]:not([data-spw-lens-track="row"])) {
+      display: flex;
+      flex-flow: row wrap;
+      width: 100%;
+      min-inline-size: 0;
+    }
+
+    :where(.mode-switch[aria-label]:not([data-spw-lens-chrome~="silent"]))::before {
+      flex: 1 1 100%;
+      max-inline-size: none;
+      overflow: visible;
+      text-overflow: clip;
+      white-space: normal;
+      text-wrap: balance;
+    }
+
+    :where(.mode-switch:not([data-spw-lens-track="row"])[aria-label] > .frame-sigil) {
+      flex: 1 1 0;
+      min-inline-size: min(100%, 4.25rem);
+      white-space: nowrap;
+      justify-content: center;
+    }
+
+    :where(.site-hero--split-figure) > [data-spw-slot="body"] {
+      gap: var(--component-gap);
+    }
+
+    :where(.site-lede, .page-lede) {
+      font-size: clamp(0.96rem, 0.9rem + 0.24vw, 1.08rem);
+      line-height: 1.5;
+    }
   }
 
-  :where([data-spw-slot="meta"], [data-spw-slot="actions"], .spec-strip, .button-group, .frame-operators) {
-    width: 100%;
-    gap: var(--spw-slot-gap-tight, 0.34rem 0.46rem);
-  }
-
-  :where(.frame-topline > .spw-component-meta, .frame-heading > .spw-component-meta) {
-    width: 100%;
-    margin-inline-start: 0;
-    justify-content: flex-start;
-  }
-
-  :where(.frame-topline > .mode-switch, [data-spw-slot="actions"] > .mode-switch) {
-    width: 100%;
-    justify-content: stretch;
-  }
-
-  /* Soft PE only — handles/state-semantics owns track/chrome contracts. */
-  :where(.mode-switch[aria-label]:not([data-spw-lens-track="row"])) {
-    display: flex;
-    flex-flow: row wrap;
-    width: 100%;
-    min-inline-size: 0;
-  }
-
-  :where(.mode-switch[aria-label]:not([data-spw-lens-chrome~="silent"]))::before {
-    flex: 1 1 100%;
-    max-inline-size: none;
-    overflow: visible;
-    text-overflow: clip;
-    white-space: normal;
-    text-wrap: balance;
-  }
-
-  :where(.mode-switch:not([data-spw-lens-track="row"])[aria-label] > .frame-sigil) {
-    flex: 1 1 0;
-    min-inline-size: min(100%, 4.25rem);
-    white-space: nowrap;
-    justify-content: center;
-  }
-
-  :where(.site-hero--split-figure) > [data-spw-slot="body"] {
-    gap: var(--component-gap);
-  }
-
-  :where(.site-lede, .page-lede) {
-    font-size: clamp(0.96rem, 0.9rem + 0.24vw, 1.08rem);
-    line-height: 1.5;
-  }
-}
-
-@container (min-width: 36.01rem) and (max-width: 52rem) {
-  :where(.frame-grid--3up) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  @container (min-width: 36.01rem) and (max-width: 52rem) {
+    :where(.frame-grid--3up) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 }
 

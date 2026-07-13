@@ -1,0 +1,139 @@
+# HTML Component Audit (2026-07-12)
+#
+# operation: audit
+# fixity: tending
+# method: static census across source index.html routes (excludes dist/, dist-vite/, node_modules)
+
+#>html_component_audit_2026_07
+#:audit #!components #!html #!slots #!anatomy
+#:operation #!audit
+#:layer #!pragmatics
+
+@page_component_census: ~"./page-component-census-2026-07.spw"
+@component_taxonomy: ~"../conventions/component-taxonomy.spw"
+@module_impact_audit: ~"./module-impact-audit-2026-07.spw"
+@spacing_hierarchy_pass: ~"../../public/css/shell/layout.css"
+
+audit_run: .{
+  at = `2026-07-12`
+  scope = `155 index.html under repo root (includes workbench templates); public site ~149 routes after tooling exclude`
+  method = `class/attribute regex census: site-frame, frame-*, slots, lede/kicker, kinds, features, accents, forms`
+  posture = `inventory + hierarchy/slot anomalies; complements @page_component_census (2026-07-09)`
+}[reg=facet]
+
+^"sitewide_totals"{
+  routes_scanned = 155
+  site_frame = 774
+  frame_card = 660
+  frame_panel = 1065
+  frame_heading = 596
+  frame_topline = 201
+  frame_body = 83
+  frame_actions = 81
+  operator_chip = 2054
+  vibe_widget = 308
+  mode_panel = 40
+  mode_switch = 21
+  living_concept_card = 8
+  semantic_contract_card = 26
+  data_spw_kind = 1810
+  data_spw_feature = 232
+  data_spw_box_model = 137
+  data_spw_pack_local = 1
+  data_spw_gravity = 7
+  section_handle = 41
+  lede = 38
+  kicker = 133
+  slots: .{
+    header = 141
+    body = 134
+    meta = 107
+    actions = 146
+    figure = 88
+    footer = 4
+  }[reg=facet]
+}[reg=facet]
+
+^"kind_distribution"{
+  frame = 755
+  panel = 458
+  card = 406
+  surface = 125
+  lens = 22
+  hook = 14
+  note = `kind=frame ≈ site-frame count — grammar is consistent; panel/card kinds trail class usage where class-only specimens omit data-spw-kind`
+}[reg=facet]
+
+^"slot_anatomy"{
+  thesis = `Frame grammar is universal; explicit data-spw-slot anatomy is still opt-in and sparse.`
+  framed_routes = 144
+  routes_with_slot_header = 45
+  routes_with_slot_body = 32
+  routes_with_frame_no_slots = 95
+  slots_without_site_frame = 0
+  reading = `About half of framed routes use frame-topline/heading chrome; only ~1/3 encode slot contracts. Footer slots are nearly unused (4).`
+  implication = `Spacing/hierarchy CSS that keys off [data-spw-slot] only reaches the dense hubs (settings, home, software). Class-based .frame-heading/.frame-body remains the honest default surface.`
+}[reg=facet]
+
+^"hierarchy_surfaces"{
+  kicker_routes = 107
+  lede_routes = 34
+  section_handle_routes = 41
+  claim = `Kickers are common page intro chrome; ledes are rarer — visual hierarchy depends more on h1 + first p pairing than on .site-lede.`
+  accent_forms: .{
+    form_brace = 150
+    form_angle = 77
+    form_square = 68
+    form_circle = 33
+    accent_resonance = 83
+    accent_other = 19
+  }[reg=facet]
+}[reg=facet]
+
+^"body_features"{
+  top = #[
+    `operators 148`,
+    `navigator 139`,
+    `console 137`,
+    `metrics 26`,
+    `svg-surfaces 21`,
+    `route-discovery 20`,
+    `inspectability 18`,
+  ][reg=set]
+  note = `Presence-only tokens dominate; lab features stay route-local.`
+}[reg=facet]
+
+^"anomalies"{
+  no_site_frame_public = #[`/design/experiments/svg/handoff/`][reg=set]
+  no_site_frame_tooling = `spw-cli installable-book templates — exempt`
+  frame_no_slots_examples = #[
+    `about/domains/* land registers`,
+    `about/plans, about/website`,
+    `design/accessibility, design/density, design/experiments/css`,
+  ][reg=set]
+  rare_opt_ins = #[
+    `living-concept-card still home-concentrated (8 total)`,
+    `pack-local = 1 route (composition lab)`,
+    `gravity = 7 (lab concentration)`,
+  ][reg=set]
+}[reg=facet]
+
+^"promotion_queue"{
+  p1 = #[
+    `Prefer class anatomy (.frame-heading, .frame-body, .frame-actions) for sitewide hierarchy CSS — already primary after this audit`,
+    `When adding slots, require header+body pair minimum; footer only when actions split from body`,
+  ][reg=set]
+  p2 = #[
+    `section-handle on long curriculum leaves still under-adopted (41/144)`,
+    `lede adoption where first-paragraph is currently styled only by h1+p adjacency`,
+  ][reg=set]
+  do_not = #[
+    `Mass-add data-spw-slot to every domain land page — class hierarchy is enough`,
+    `Invent new component nouns for missing slots`,
+  ][reg=set]
+}[reg=facet]
+
+^"validation"{
+  probe = `python census on index.html; rg 'data-spw-slot|site-frame|frame-heading'`
+  related = #[@page_component_census, @module_impact_audit][reg=set]
+}[reg=facet]

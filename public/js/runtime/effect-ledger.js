@@ -26,12 +26,15 @@ import {
 
 const LEDGER_KEY = STORAGE_KEYS.EFFECT_LEDGER;
 const MAX_EFFECTS = 60;
-const PULSE_MS = 720;
+/** Fallback when --spw-effect-pulse-duration is unavailable (matches --duration-ceremonial). */
+const PULSE_MS_FALLBACK = 720;
 
 export const EFFECT_LEDGER_CONTRACT = Object.freeze({
   storageKey: LEDGER_KEY,
   maxEffects: MAX_EFFECTS,
   timingChunk: 'idle-residue',
+  pulseDurationVar: '--spw-effect-pulse-duration',
+  pulseDurationMs: PULSE_MS_FALLBACK,
   sources: Object.freeze({
     reward: 'spw:discovery-reward',
     cast: 'spell:cast',
@@ -51,6 +54,7 @@ export const EFFECT_LEDGER_CONTRACT = Object.freeze({
     count: '--spw-effect-count',
     charge: '--spw-effect-charge',
     pulse: '--spw-effect-pulse',
+    pulseDuration: '--spw-effect-pulse-duration',
   }),
   events: Object.freeze({
     recorded: 'effect:recorded',
@@ -71,7 +75,36 @@ export const EFFECT_LEDGER_CONTRACT = Object.freeze({
   ]),
 });
 
+function readCssDurationMs(varName, fallbackMs) {
+  try {
+    const root = document.documentElement;
+    if (!root) return fallbackMs;
+    const raw = getComputedStyle(root).getPropertyValue(varName).trim();
+    if (!raw) return fallbackMs;
+    if (raw.endsWith('ms')) {
+      const n = Number.parseFloat(raw);
+      return Number.isFinite(n) && n > 0 ? n : fallbackMs;
+    }
+    if (raw.endsWith('s')) {
+      const n = Number.parseFloat(raw) * 1000;
+      return Number.isFinite(n) && n > 0 ? n : fallbackMs;
+    }
+    const n = Number.parseFloat(raw);
+    return Number.isFinite(n) && n > 0 ? n : fallbackMs;
+  } catch {
+    return fallbackMs;
+  }
+}
+
+function readEffectPulseDurationMs() {
+  return readCssDurationMs(
+    EFFECT_LEDGER_CONTRACT.pulseDurationVar,
+    EFFECT_LEDGER_CONTRACT.pulseDurationMs,
+  );
+}
+
 let pulseTimer = 0;
+let pulseDurationMs = PULSE_MS_FALLBACK;
 
 function readLedger() {
   return readJson(LEDGER_KEY, [], { requireArray: true });
@@ -133,7 +166,7 @@ function projectLedgerState(entries, options = {}) {
         delete root.dataset.spwEffectPulse;
       }
       root.style.removeProperty('--spw-effect-pulse');
-    }, PULSE_MS);
+    }, pulseDurationMs);
   }
 }
 
@@ -164,6 +197,9 @@ function normalizeKindFromDetail(fallback, detail = {}) {
 
 export function initEffectLedger() {
   const unsubs = [];
+  // Resolve the authored duration once per mount. Reading computed style for
+  // every recorded effect would force needless style resolution on the hot path.
+  pulseDurationMs = readEffectPulseDurationMs();
 
   const onReward = guardCall(
     (event) => record(

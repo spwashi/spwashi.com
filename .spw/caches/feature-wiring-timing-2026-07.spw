@@ -78,10 +78,20 @@ fixity = "tending"
   performance = `effect-ledger skips no-op CSS var writes`
 }[reg=facet]
 
+^"normalize_pass_2026_07_12"{
+  structure = `COST_CLASS constants; inferModuleCostClass; normalizeCatalogDefinitions; listModuleCatalogIndex.byCostClass; summarizeModuleCatalogOptimization; __SPW_SITE__.catalogOptimization`
+  schedule = `IMMEDIATE 37 / VISIBLE 34 / IDLE 22 / REGION 1 / SETTLED 1 (from 43/31/19)`
+  reclass = `layout-shift-audit, state-inspector, discovery-notices → IDLE; tuning-discovery, canvas-accents, composition-box-model → VISIBLE`
+  residual_enhancement_immediate = 23
+  contracts = `runtime-contracts costClass parse + byWhen hygiene line`
+  probe = `npm run check:runtime; __SPW_SITE__.catalogOptimization()`
+}[reg=facet]
+
 validation: #[
   `npm run check:runtime`
   `npm run ecology`
   `node --check public/js/runtime/module-catalog.js`
+  `node --check public/js/runtime/module-catalog-normalize.js`
   `node --check public/js/runtime/module-updates-contract.js`
   `node --check public/js/runtime/effect-ledger.js`
 ][reg=set]

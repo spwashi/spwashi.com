@@ -209,7 +209,6 @@ class ServicesConfigurator {
         this.container.appendChild(this.wrapper);
         this.attachListeners();
         this.refresh();
-        console.log('[Spw Services Configurator] Initialized — cinematic tier resolver ready');
     }
 
     buildUI() {

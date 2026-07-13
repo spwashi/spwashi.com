@@ -1,0 +1,185 @@
+# Granularity leaf — L1–L4, domain scorecards, split candidates
+#
+# Nested under module-granularity-lifecycle-2026-07
+
+#>module_granularity_lifecycle_granularity
+#:audit #!catalog #!modules #!decomposition
+#:operation #!audit
+#:fixity #!tending
+
+@index: ~"./index.spw"
+@lifecycle: ~"./lifecycle.spw"
+@inertia: ~"./inertia.spw"
+@decomposition: ~"../../../.agents/plans/runtime-module-decomposition/PLAN.md"
+@medium: ~"../../surfaces/runtime-module-medium.spw"
+@brp_runtime: ~"../build-runtime-performance-2026-07/runtime.spw"
+@catalog: ~"../../../public/js/runtime/module-catalog.js"
+
+^"subclassification_levels"{
+  rule = `Do not conflate levels. Prefer the lowest level that meets the need.`
+
+  L1_schedule = .{
+    name = `schedule subclass`
+    mechanism = `when / timingChunk only`
+    use_when = `same code, different urgency`
+    example = `idle-residue before idle-collectible`
+  }[reg=facet]
+
+  L2_feature = .{
+    name = `feature subclass`
+    mechanism = `features: [] + body data-spw-features`
+    use_when = `optional product surface`
+    example = `svg-surfaces, pretext-lab, operators, console`
+  }[reg=facet]
+
+  L3_catalog = .{
+    name = `catalog submodule`
+    mechanism = `new catalog id + dynamic import`
+    use_when = `different schedule AND independent load budget`
+    example = `image-metaphysics vs image-interaction`
+  }[reg=facet]
+
+  L4_file = .{
+    name = `file submodule`
+    mechanism = `folder split; one catalog id orchestrates`
+    use_when = `reviewability without boot fanout change`
+    example = `attention/* under attention-architecture`
+    debt = `L4 without L3 still loads all children on parent mount`
+  }[reg=facet]
+}[reg=facet]
+
+^"granularity_grades"{
+  A = `atomic — one concern, one load unit, honest schedule`
+  B = `orchestrator — thin catalog id, real work in subfiles`
+  C = `multi-export one file — multiple inits, one transport`
+  D = `multi-concern blob — several products one mount`
+  E = `false thin — catalog small, static import graph huge`
+}[reg=facet]
+
+^"exemplars"{
+  gold_L4 = `attention-architecture → attention/{section-handle,resonance-probe,reading-groove,pinch-scale,scroll-cadence}`
+  gold_L2_L3 = `media/svg/pretext cluster with features gates + VISIBLE when`
+  gold_L1 = `collectible IDLE + timingChunk residue→collectible→chrome→lab`
+  gold_C = `payment-cards + payment-settings share payment-card.js`
+  gold_settled = `layout-assumptions SETTLED only`
+  gold_consumer = `module-effects / loading-ecology on module-mounted`
+}[reg=facet]
+
+^"size_hotspots"{
+  note = `Load target KB/LOC from catalog load() path 2026-07-12 — directional.`
+  rows: #[
+    .{ id = `shell-disclosure`, kb = `93`, loc = `2284`, grade = `D`, when = `immediate` },
+    .{ id = `experiential`, kb = `78`, loc = `2169`, grade = `D`, when = `idle` },
+    .{ id = `cauldron`, kb = `56`, loc = `1242`, grade = `B/C`, when = `idle`, note = `composition.js` },
+    .{ id = `design-experiments`, kb = `49`, loc = `1229`, grade = `D`, when = `visible` },
+    .{ id = `page-anatomy`, kb = `42`, loc = `1131`, grade = `D`, when = `visible` },
+    .{ id = `state-inspector`, kb = `42`, loc = `1190`, grade = `D`, when = `idle` },
+    .{ id = `rpg-wednesday`, kb = `42`, loc = `1163`, grade = `B`, when = `immediate`, note = `route-gated OK` },
+    .{ id = `component-semantics`, kb = `40`, loc = `1098`, grade = `D`, when = `immediate` },
+    .{ id = `site-settings`, kb = `2`, loc = `91`, grade = `E`, when = `immediate`, note = `~6k LOC static graph` },
+    .{ id = `attention-architecture`, kb = `2.6`, loc = `61`, grade = `B`, when = `immediate`, note = `~1.6k LOC under attention/` }
+  ][reg=set]
+}[reg=facet]
+
+^"domain_scorecards"{
+  substrate_core: .{
+    modules = #[`site-settings`, `pwa-update-handler`, `shell-disclosure`, `interactive-medium`, `site-core-minimal`][reg=set]
+    grade = `C+` # settings E + shell D drag the mean
+    next = `settings payload split; shell measure/menu/utilities`
+  }[reg=facet]
+
+  orchestration: .{
+    modules = #[`module-effects`, `loading-ecology`, `hydration-passes`, `settings-momentum`, `pulse-beat-tuner`, `layout-assumptions`][reg=set]
+    grade = `A-`
+    next = `settings-momentum / pulse-beat later schedule; keep effects+ecology as peer models`
+  }[reg=facet]
+
+  navigation_attention: .{
+    modules = #[`attention-architecture`, `page-region-rail`, `navigation-locomotion`, `navigation-spells`, `frame-navigator`, `region-menu`, `region-enhancer`][reg=set]
+    grade = `B+`
+    next = `attention L3 children; region-menu → INTERACTION`
+  }[reg=facet]
+
+  grammar_operators: .{
+    modules = #[`operators`, `sigil-anatomy`, `bare-spw-markup`, `brace-physics`, `brace-pivots`][reg=set]
+    grade = `B`
+    next = `brace-gestures internal split pin vs physics`
+  }[reg=facet]
+
+  semantics_inspect: .{
+    modules = #[`component-semantics`, `semantic-crossrefs`, `composition-box-model`, `page-anatomy`, `state-inspector`, `console`, `layout-shift-audit`, `observation-beats`, `effect-ledger`, `learnability-ledger`, `gesture-anatomy`, `semantic-chrome`][reg=set]
+    grade = `B-`
+    next = `component-semantics schedule/split; anatomy topography vs settings mirror`
+  }[reg=facet]
+
+  media: .{
+    modules = #[`image-metaphysics`, `image-interaction`, `image-utilization`, `image-discovery-rewards`, `svg-filters`, `svg-tunability`, `canvas-accents`, `pretext-lab`, `pretext-physics`, `promo-wonder-cycle`, `media-publishing`, `media-cauldron`][reg=set]
+    grade = `A-`
+    next = `image-metaphysics internal visit-memory split only`
+  }[reg=facet]
+
+  collectibles: .{
+    modules = #[`feature-discovery`, `component-collection`, `reward-ui`, `guide`, `guide-badge`, `haptics`, `spells`, `cauldron`, `discovery-notices`, `palette-treat-discovery`, `experiential`][reg=set]
+    grade = `B` # cluster A, experiential D
+    next = `experiential L3 after primitives`
+  }[reg=facet]
+
+  features_routes: .{
+    grade = `A-`
+    note = `selector/route gates; do not global-ban FEATURE+IMMEDIATE`
+  }[reg=facet]
+
+  keyboard_payload_print: .{
+    modules = #[`spw-key-events`, `topical-payload`, `interaction-progression`, `precipitation-request`][reg=set]
+    grade = `C+`
+    next = `INTERACTION or IDLE; html-root IMMEDIATE is premature_commitment`
+  }[reg=facet]
+}[reg=facet]
+
+^"under_granular"{
+  note = `Split or re-gate — highest ROI. Cross-read @inertia churn_hotspots for commit-pressure context.`
+  rows: #[
+    .{ id = `shell-disclosure`, issue = `size + multi-phase chrome + 29 touches polish accretion`, level = `L3/L4`, plan = `P2`, inertia = `high` },
+    .{ id = `experiential`, issue = `size + multi-surface + spell-trail cliché`, level = `L3`, plan = `P2`, inertia = `high` },
+    .{ id = `site-settings`, issue = `static import fanout`, level = `L3 payload`, plan = `P1`, inertia = `medium` },
+    .{ id = `component-semantics`, issue = `IMMEDIATE multi-annotate`, level = `L1+L3`, plan = `P1` },
+    .{ id = `page-anatomy`, issue = `large VISIBLE multi-probe + inspect cliché`, level = `L3`, plan = `P2` },
+    .{ id = `state-inspector`, issue = `satchel + inspect UI · 20 touches`, level = `L3`, plan = `P2`, inertia = `high` },
+    .{ id = `brace-physics`, issue = `gesture + memory in brace-gestures`, level = `L4`, plan = `P2` },
+    .{ id = `attention-architecture`, issue = `L4 without independent when`, level = `L3`, plan = `P1` },
+    .{ id = `html-root-immediate-set`, issue = `key-events topical progression precipitation`, level = `L1`, plan = `P0` }
+  ][reg=set]
+}[reg=facet]
+
+^"do_not_split"{
+  note = `Already granular enough — avoid catalog sprawl.`
+  pattern = `Most <10KB VISIBLE/IDLE media and collectible ids; pure host enhancers with honest selectors`
+}[reg=facet]
+
+^"proposed_attention_L3"{
+  claim = `mgl-003`
+  parent = `attention-architecture` # may remain thin orchestrator or dissolve
+  children: #[
+    .{ id = `attention-section-handle`, when = `visible|idle`, loc = `~1015` },
+    .{ id = `attention-resonance-probe`, when = `visible`, loc = `~86` },
+    .{ id = `attention-reading-groove`, when = `idle`, loc = `~172` },
+    .{ id = `attention-pinch-scale`, when = `interaction`, loc = `~116` },
+    .{ id = `attention-scroll-cadence`, when = `idle`, loc = `~23` }
+  ][reg=set]
+}[reg=facet]
+
+^"proposed_catalog_fields"{
+  optional_inspect = #[
+    `parent` # soft group for DevTools
+    `listens` # event names for lifecycle audit
+    `emits` # domain events
+  ][reg=set]
+  rule = `Inspect + contracts only until loader policy opts in; schedule remains when/features/selector`
+  cost_class = `required for ENHANCEMENT IMMEDIATE explicit stamp (normalize pass)`
+}[reg=facet]
+
+^"family_file_hygiene"{
+  issue = `ENHANCEMENT-layer defs live in module-catalog-feature.js (brace-physics, region-menu, sigil-anatomy)`
+  direction = `family file = MODULE_LAYERS membership for agent scan`
+  plan_phase = `P3`
+}[reg=facet]

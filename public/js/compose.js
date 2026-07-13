@@ -155,6 +155,33 @@ export {
 } from './runtime/composition-box-model.js';
 
 export {
+  SPW_LAYOUT_QA_CONTRACT,
+  evaluateLookFeel,
+  inspectLayoutTarget,
+  layoutQaRecipes,
+  snapshotLayoutQa,
+  snapshotPacking,
+  snapshotPageSizing,
+  summarizeLayoutQa,
+} from './runtime/layout-qa.js';
+
+export {
+  snapshotLayoutAssumptions,
+  SPW_LAYOUT_ASSUMPTIONS_CONTRACT,
+} from './runtime/layout-assumptions.js';
+
+export {
+  SPW_DEBUG_QA_CONTRACT,
+  SPW_DEBUG_QA_PRESETS,
+  applyDebugQaPostureToRoot,
+  describeDebugQaPosture,
+  hasAgentQa,
+  hasDebugOrQAMode,
+  hasLayoutDebug,
+  readDebugQaPosture,
+} from './runtime/debug-qa-posture.js';
+
+export {
   ATTENTION_ARCHITECTURE_CONTRACT,
   initSpwAttentionArchitecture,
 } from './runtime/attention-architecture.js';
@@ -231,9 +258,12 @@ export {
 } from './media/svg-tunability.js';
 
 export {
+  COST_CLASS,
   MODULE_LAYERS,
   MOUNT_WHEN,
   filterEnhancementDefs,
+  listModuleCatalogIndex,
+  summarizeModuleCatalogOptimization,
 } from './runtime/module-catalog.js';
 
 export {

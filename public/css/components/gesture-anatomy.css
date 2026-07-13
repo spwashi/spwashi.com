@@ -3,7 +3,20 @@
    --------------------------------------------------------------------------
    Slot anatomy rails and gesture-contract learnability — how components
    invite tap, hold, and inspect without rewriting content.
+   Synergy: themes (color-mode, metamaterial, biome, palette), modules
+   (component-semantics resolved contracts, module-effects, settings).
    ========================================================================== */
+
+:root {
+  --gesture-anatomy-opacity: 0.5;
+  --gesture-anatomy-size: 0.56rem;
+  --gesture-anatomy-accent: var(--active-op-color, var(--component-accent, var(--teal, #008080)));
+  --gesture-anatomy-surface: var(--surface-strong, #fff);
+  --gesture-anatomy-ink: var(--ink, #161c1d);
+  --gesture-anatomy-ink-soft: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  --gesture-anatomy-duration: var(--duration-fast, 140ms);
+  --gesture-anatomy-ease: var(--ease-settle, ease);
+}
 
 :where(html[data-spw-cognitive-handles="on"], html[data-spw-tuning-discoverability="revealed"]) {
   --gesture-anatomy-opacity: 0.72;
@@ -13,6 +26,48 @@
 :where(html[data-spw-tuning-discoverability="ambient"]) {
   --gesture-anatomy-opacity: 0.38;
   --gesture-anatomy-size: 0.54rem;
+}
+
+/* Theme / material posture — anatomy chrome spends the same palette as components. */
+:where(html[data-spw-color-mode="dark"]) {
+  --gesture-anatomy-surface: color-mix(in srgb, var(--surface-strong, #1a1e20) 92%, var(--gesture-anatomy-accent) 8%);
+}
+
+:where(html[data-spw-base-metamaterial="matte"]) {
+  --gesture-anatomy-surface: var(--matte-surface, var(--surface-strong, #fff));
+}
+
+:where(html[data-spw-base-metamaterial="glass"]) {
+  --gesture-anatomy-surface: color-mix(in srgb, var(--surface-strong, #fff) 86%, transparent);
+}
+
+:where(html[data-spw-theme-biome="shade-garden"]) {
+  --gesture-anatomy-accent: color-mix(in srgb, var(--active-op-color, #008080) 78%, hsl(28 40% 42%) 22%);
+}
+
+:where(html[data-spw-theme-biome="signal-reef"]) {
+  --gesture-anatomy-accent: color-mix(in srgb, var(--active-op-color, #008080) 72%, var(--blue, #2f69b1) 28%);
+}
+
+:where(html[data-spw-theme-biome="glasshouse"]) {
+  --gesture-anatomy-opacity: calc(var(--gesture-anatomy-opacity, 0.5) * 0.92);
+}
+
+:where(html[data-spw-palette-resonance="high"], html[data-spw-palette-resonance="vivid"]) {
+  --gesture-anatomy-opacity: min(calc(var(--gesture-anatomy-opacity, 0.5) * 1.12), 0.88);
+}
+
+/* Module synergy: when effect ledger / module-effects are active, anatomy reads slightly denser. */
+:where(html[data-spw-gesture-anatomy="active"][data-spw-module-effects-active]) {
+  --gesture-anatomy-opacity: min(calc(var(--gesture-anatomy-opacity, 0.5) * 1.06), 0.86);
+}
+
+:where(html[data-spw-anatomy-theme-link*="semantics"]) {
+  --gesture-anatomy-accent: color-mix(
+    in srgb,
+    var(--active-op-color, var(--teal, #008080)) 88%,
+    var(--op-probe-color, #6a3fb8) 12%
+  );
 }
 
 /* Slot role labels on framed components */
@@ -33,10 +88,12 @@
   html[data-spw-tuning-discoverability="revealed"]
 ) :where(
   .site-frame [data-spw-slot]:not([data-spw-slot=""]),
-  .frame-card [data-spw-slot]:not([data-spw-slot=""])
+  .frame-card [data-spw-slot]:not([data-spw-slot=""]),
+  .vibe-widget [data-spw-slot]:not([data-spw-slot=""])
 ) {
-  outline: 1px dashed color-mix(in srgb, var(--active-op-color) 14%, transparent);
+  outline: 1px dashed color-mix(in srgb, var(--gesture-anatomy-accent) 14%, transparent);
   outline-offset: 3px;
+  transition: outline-color var(--gesture-anatomy-duration) var(--gesture-anatomy-ease);
 }
 
 :where(
@@ -51,11 +108,13 @@
   z-index: 2;
   display: inline-flex;
   align-items: center;
+  max-inline-size: min(100%, 16rem);
+  overflow: hidden;
   padding: 0.08rem 0.34rem;
   border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--active-op-color) 20%, transparent);
-  background: color-mix(in srgb, var(--surface-strong) 90%, var(--active-op-color) 10%);
-  color: color-mix(in srgb, var(--active-op-color) 62%, var(--ink-soft) 38%);
+  border: 1px solid color-mix(in srgb, var(--gesture-anatomy-accent) 20%, transparent);
+  background: color-mix(in srgb, var(--gesture-anatomy-surface) 90%, var(--gesture-anatomy-accent) 10%);
+  color: color-mix(in srgb, var(--gesture-anatomy-accent) 62%, var(--gesture-anatomy-ink-soft) 38%);
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: var(--gesture-anatomy-size, 0.56rem);
   font-weight: 700;
@@ -63,17 +122,24 @@
   line-height: 1;
   opacity: var(--gesture-anatomy-opacity, 0.5);
   pointer-events: none;
+  text-overflow: ellipsis;
   text-transform: uppercase;
+  white-space: nowrap;
+  transition: opacity var(--gesture-anatomy-duration) var(--gesture-anatomy-ease);
 }
 
 /* Vertical anatomy stack rail on multi-slot frames */
 :where(
   html[data-spw-cognitive-handles="on"],
   html[data-spw-tuning-discoverability="revealed"]
-) :where(.site-frame[data-spw-anatomy-stack="true"]) {
+) :where(
+  .site-frame[data-spw-anatomy-stack="true"],
+  .frame-card[data-spw-anatomy-stack="true"],
+  .vibe-widget[data-spw-anatomy-stack="true"]
+) {
   border-inline-start: 3px solid color-mix(
     in srgb,
-    var(--active-op-color) 16%,
+    var(--gesture-anatomy-accent) 16%,
     transparent
   );
   padding-inline-start: 0.35rem;
@@ -85,13 +151,17 @@
   gap: 0.22rem;
   margin-block: 0.2rem 0.45rem;
   padding: 0.38rem 0.48rem;
-  border: 1px dashed color-mix(in srgb, var(--active-op-color) 16%, transparent);
+  border: 1px dashed color-mix(in srgb, var(--gesture-anatomy-accent) 16%, transparent);
   border-radius: calc(var(--shape-component, 6px) - 1px);
-  background: color-mix(in srgb, var(--surface-strong) 94%, var(--active-op-color) 6%);
+  background: color-mix(in srgb, var(--gesture-anatomy-surface) 94%, var(--gesture-anatomy-accent) 6%);
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: 0.58rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
+  transition:
+    border-color var(--gesture-anatomy-duration) var(--gesture-anatomy-ease),
+    background-color var(--gesture-anatomy-duration) var(--gesture-anatomy-ease),
+    opacity var(--gesture-anatomy-duration) var(--gesture-anatomy-ease);
 }
 
 :where(
@@ -107,20 +177,37 @@
   border-style: dotted;
 }
 
+/* Theming posture from component-semantics — rail personality without new chrome. */
+:where([data-spw-anatomy-theming="playful"]) .spw-anatomy-stack-rail {
+  border-style: solid;
+  background: color-mix(in srgb, var(--gesture-anatomy-surface) 88%, var(--op-object-color, #c68a22) 12%);
+}
+
+:where([data-spw-anatomy-theming="technical"], [data-spw-anatomy-theming="neutral"]) .spw-anatomy-stack-rail {
+  border-style: dashed;
+}
+
+:where([data-spw-anatomy-theming="ceremonial"]) .spw-anatomy-stack-rail {
+  border-color: color-mix(in srgb, var(--gesture-anatomy-accent) 28%, transparent);
+  letter-spacing: 0.09em;
+}
+
 :where(.spw-anatomy-stack-rail__item) {
   display: inline-flex;
   align-items: center;
   gap: 0.32rem;
-  color: var(--ink-soft);
+  color: var(--gesture-anatomy-ink-soft);
+  transition: color var(--gesture-anatomy-duration) var(--gesture-anatomy-ease);
 }
 
 :where(.spw-anatomy-stack-rail__item[data-spw-slot-active="true"]) {
-  color: var(--ink);
+  color: var(--gesture-anatomy-ink);
   font-weight: 700;
 }
 
 :where(.spw-anatomy-stack-rail__sigil) {
   opacity: 0.72;
+  color: var(--gesture-anatomy-accent);
 }
 
 /* Gesture contract hints */
@@ -140,13 +227,14 @@
   inset-inline-start: 50%;
   translate: -50% 0;
   display: inline-flex;
-  max-inline-size: 14rem;
+  max-inline-size: min(14rem, 70vw);
+  overflow: hidden;
   padding: 0.16rem 0.42rem;
-  border: 1px solid color-mix(in srgb, var(--active-op-color) 24%, transparent);
+  border: 1px solid color-mix(in srgb, var(--gesture-anatomy-accent) 24%, transparent);
   border-radius: 999px;
-  background: color-mix(in srgb, var(--surface-strong) 92%, var(--active-op-color) 8%);
-  box-shadow: 0 4px 14px rgba(14, 18, 20, 0.08);
-  color: var(--ink);
+  background: color-mix(in srgb, var(--gesture-anatomy-surface) 92%, var(--gesture-anatomy-accent) 8%);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--shadow-color, #111) 10%, transparent);
+  color: var(--gesture-anatomy-ink);
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: 0.58rem;
   letter-spacing: 0.04em;
@@ -154,25 +242,26 @@
   opacity: 0.96;
   pointer-events: none;
   text-align: center;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 :where(.spw-living-term[data-spw-gesture-hint])::after {
   content: attr(data-spw-gesture-hint);
-  right: auto;
-  left: 0;
-  top: calc(100% + 0.12rem);
+  inset-block-end: auto;
+  inset-block-start: calc(100% + 0.12rem);
+  inset-inline-start: 0;
   translate: none;
   font-size: 0.54rem;
   opacity: 0;
-  transition: opacity 140ms var(--ease-mechanical, ease);
+  transition: opacity var(--gesture-anatomy-duration) var(--ease-mechanical, ease);
 }
 
 :where(
   .spw-living-term[data-spw-gesture-hint]:is(:hover, :focus-visible, [data-spw-gesture="charging"], [data-spw-gesture="armed"])
 )::after {
   opacity: 0.88;
-  color: color-mix(in srgb, var(--active-op-color) 70%, var(--ink) 30%);
+  color: color-mix(in srgb, var(--gesture-anatomy-accent) 70%, var(--gesture-anatomy-ink) 30%);
 }
 
 /* Embedded panel swipe rail: lives inside the generated handle to avoid pseudo-element collisions. */
@@ -209,25 +298,57 @@
   [data-spw-gesture="armed"],
   [data-spw-gesture="sustained"]
 ) {
-  --gesture-anatomy-ring: color-mix(in srgb, var(--active-op-color) 28%, transparent);
+  --gesture-anatomy-ring: color-mix(in srgb, var(--gesture-anatomy-accent) 28%, transparent);
+  transition:
+    box-shadow var(--gesture-anatomy-duration) var(--gesture-anatomy-ease),
+    background-image var(--duration-base, 220ms) var(--gesture-anatomy-ease);
 }
 
 :where([data-spw-gesture="charging"]) {
   box-shadow:
     inset 0 0 0 1px var(--gesture-anatomy-ring, transparent),
-    0 0 0 3px color-mix(in srgb, var(--active-op-color) 10%, transparent);
+    0 0 0 2px color-mix(in srgb, var(--gesture-anatomy-accent) 10%, transparent);
 }
 
 :where([data-spw-gesture="armed"]) {
   box-shadow:
-    inset 0 0 0 1px color-mix(in srgb, var(--active-op-color) 34%, transparent),
-    0 0 0 4px color-mix(in srgb, var(--active-op-color) 14%, transparent);
+    inset 0 0 0 1px color-mix(in srgb, var(--gesture-anatomy-accent) 30%, transparent),
+    0 0 0 3px color-mix(in srgb, var(--gesture-anatomy-accent) 12%, transparent);
 }
 
 :where([data-spw-gesture="sustained"]) {
   background-image: linear-gradient(
     118deg,
-    color-mix(in srgb, var(--active-op-color) 7%, transparent),
+    color-mix(in srgb, var(--gesture-anatomy-accent) 6%, transparent),
     transparent 46%
   );
+}
+
+/* Resolved-contract hosts (from component-semantics) get a quieter ready mark. */
+:where([data-spw-gesture-contract-resolved]:not([data-spw-gesture-hint])) {
+  --gesture-anatomy-accent: color-mix(
+    in srgb,
+    var(--active-op-color, var(--teal, #008080)) 90%,
+    var(--op-probe-color, #6a3fb8) 10%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where([data-spw-slot-label])::before,
+  :where(.spw-anatomy-stack-rail),
+  :where(.spw-anatomy-stack-rail__item),
+  :where([data-spw-gesture="charging"], [data-spw-gesture="armed"], [data-spw-gesture="sustained"]),
+  :where(.spw-living-term[data-spw-gesture-hint])::after {
+    transition: none;
+  }
+}
+
+:where(html[data-spw-reduce-motion="on"]) :where(
+  [data-spw-slot-label]::before,
+  .spw-anatomy-stack-rail,
+  [data-spw-gesture="charging"],
+  [data-spw-gesture="armed"],
+  [data-spw-gesture="sustained"]
+) {
+  transition: none;
 }

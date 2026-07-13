@@ -236,24 +236,26 @@
   margin: 0;
 }
 
-@container (max-width: 56rem) {
-  :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) :is(.promo-wonder-cycle__grid, .promo-wonder-cycle__weekly) {
-    grid-template-columns: 1fr;
-    gap: var(--home-gap-md);
-    perspective: none;
-  }
+@supports (container-type: inline-size) {
+  @container (max-width: 56rem) {
+    :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) :is(.promo-wonder-cycle__grid, .promo-wonder-cycle__weekly) {
+      grid-template-columns: 1fr;
+      gap: var(--home-gap-md);
+      perspective: none;
+    }
 
-  :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) :is(.promo-wonder-cycle__grid, .promo-wonder-cycle__weekly) > * {
-    width: 100%;
-    grid-area: auto;
-    justify-self: stretch;
-  }
+    :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) :is(.promo-wonder-cycle__grid, .promo-wonder-cycle__weekly) > * {
+      width: 100%;
+      grid-area: auto;
+      justify-self: stretch;
+    }
 
-  :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) :is(.promo-wonder-cycle__card--promo, .promo-wonder-cycle__card--wonder) {
-    transform: none;
-  }
+    :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) :is(.promo-wonder-cycle__card--promo, .promo-wonder-cycle__card--wonder) {
+      transform: none;
+    }
 
-  :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card:is(:hover, :focus-within) {
-    transform: translateY(-1px);
+    :where([data-spw-feature="promo-wonder-cycle"], #promo-wonder-cycle) .promo-wonder-cycle__card:is(:hover, :focus-within) {
+      transform: translateY(-1px);
+    }
   }
 }

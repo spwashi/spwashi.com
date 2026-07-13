@@ -105,11 +105,14 @@ function syncFooterPosture(settings) {
   const cue = METACOGNITIVE_CUES[stance] || METACOGNITIVE_CUES.witness;
   const processCue = PROCESS_CUES[process] || '';
 
+  // Same-value textContent writes still emit childList mutations, which would
+  // re-trigger the dom-sync observer every frame; only touch nodes that change.
   scope.querySelectorAll('[data-spw-learnability-stance-label]').forEach((node) => {
-    node.textContent = stanceLabel;
+    if (node.textContent !== stanceLabel) node.textContent = stanceLabel;
   });
+  const cueText = processCue ? `${cue} ${processCue}` : cue;
   scope.querySelectorAll('[data-spw-learnability-cue-target], [data-spw-learnability-cue]').forEach((node) => {
-    node.textContent = processCue ? `${cue} ${processCue}` : cue;
+    if (node.textContent !== cueText) node.textContent = cueText;
   });
   scope.querySelectorAll('[data-spw-learnability-posture]').forEach((node) => {
     node.dataset.spwLearnabilityPosture = stance;

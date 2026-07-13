@@ -3,19 +3,29 @@
  * load() paths are relative to public/js/runtime/.
  */
 
-import { isFn, MODULE_LAYERS, MOUNT_WHEN, REGION_SELECTOR } from './module-catalog-constants.js';
+import {
+  COST_CLASS,
+  isFn,
+  MODULE_LAYERS,
+  MOUNT_WHEN,
+  REGION_SELECTOR,
+} from './module-catalog-constants.js';
 
 export const ENHANCEMENT_DEFS = [
   {
     id: 'layout-shift-audit',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.IDLE,
+    costClass: COST_CLASS.WORKING_MEMORY_PRESSURE,
+    // Also filtered from the catalog unless ?debug=layout / log=layout-shift
+    // (site.js filterEnhancementDefs). Idle so QA never contends with first paint.
     selector: 'body',
     rootMode: 'single',
     describes: 'page-wide layout stability observer with explicit cleanup of PerformanceObserver state and root datasets',
     updates: ['data-spw-layout-shift-state', 'data-spw-layout-shift-count', 'data-spw-layout-shift-total', 'data-spw-layout-shift-outcome'],
     evaluates: 'layout stability page-lifecycle diagnostics',
-    timingArc: 'immediate-diagnostics',
+    timingArc: 'enhance-debug',
+    timingChunk: 'idle-lab',
     effectScope: 'root-state performance-observer cleanup',
     load: () => import('./layout-shift-audit.js'),
     mount: (mod, ctx) => {
@@ -27,7 +37,8 @@ export const ENHANCEMENT_DEFS = [
   {
     id: 'tuning-discovery',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.VISIBLE,
+    costClass: COST_CLASS.DEMAND_COUPLED,
     selector: '[data-site-settings-scope], [data-spw-affordance="tune"], [data-spw-feature], .vibe-widget[data-spw-role="control"]',
     rootMode: 'single',
     describes: 'embedded hypermedia extension surfaces for layout, material, and gesture controls + html[data-spw-tuning-discoverability]',
@@ -41,7 +52,7 @@ export const ENHANCEMENT_DEFS = [
       'data-spw-embedded-tuning-dimensions',
       'data-spw-hypermedia-extension',
     ],
-    timingArc: 'immediate-tuning',
+    timingArc: 'visible-tuning',
     effectScope: 'root-state local-dom',
     evaluates: 'embedded tuning surfaces discoverability hypermedia extension',
     load: () => import('./tuning-discovery.js'),
@@ -55,6 +66,7 @@ export const ENHANCEMENT_DEFS = [
     id: 'page-region-rail',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
+    costClass: COST_CLASS.DEMAND_COUPLED,
     selector: 'main [id].site-frame, main [data-spw-region-role], main [data-spw-feature]',
     rootMode: 'single',
     describes: 'desktop region index from main semantics + html[data-spw-page-region-rail], refreshed through dom-sync teardown',
@@ -78,6 +90,7 @@ export const ENHANCEMENT_DEFS = [
     id: 'charge-field',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
+    costClass: COST_CLASS.DEMAND_COUPLED,
     selector: '[data-spw-gesture-contract], .operator-chip, .frame-sigil, .spw-living-term, [data-spw-operator]',
     rootMode: 'single',
     describes: 'charge/discharge field state on html + frame consequence-live projection; clears timers, bus subscriptions, frame state, and CSS custom property on teardown',
@@ -103,12 +116,21 @@ export const ENHANCEMENT_DEFS = [
     id: 'gesture-anatomy',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.VISIBLE,
-    selector: '[data-spw-gesture-contract], [data-spw-slot], .spw-living-term[data-spw-living-term]',
+    selector: '[data-spw-gesture-contract], [data-spw-gesture-contract-resolved], [data-spw-slot], .spw-living-term[data-spw-living-term]',
     rootMode: 'single',
-    describes: 'slot anatomy rails + data-spw-gesture-hint from gesture contracts',
-    updates: ['data-spw-gesture-hint', 'data-spw-slot-label', 'data-spw-gesture-anatomy'],
+    describes: 'slot anatomy rails + gesture-hint from authored/resolved contracts; theme-link projection',
+    updates: [
+      'data-spw-gesture-hint',
+      'data-spw-slot-label',
+      'data-spw-anatomy-stack',
+      'data-spw-anatomy-theming',
+      'html:flourish:data-spw-gesture-anatomy',
+      'html:inspect:data-spw-anatomy-discoverability',
+      'html:inspect:data-spw-anatomy-theme-link',
+    ],
     timingArc: 'visible-gesture',
-    evaluates: 'gesture hint slot anatomy contract rails',
+    evaluates: 'gesture hint slot anatomy contract rails theme-synergy semantics-resolved',
+    effectScope: 'element-state local-dom root-state settings',
     load: () => import('./gesture-anatomy.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initGestureAnatomy;
@@ -271,6 +293,7 @@ export const ENHANCEMENT_DEFS = [
       'structural:data-spw-svg-filters-ready',
       'html:structural:data-spw-svg-filter-defs',
     ],
+    effectScope: 'local-dom root-state',
     load: () => import('../media/svg-filters.js'),
     mount: (mod) => {
       const fn = mod?.initSpwSvgFilters;
@@ -300,7 +323,8 @@ export const ENHANCEMENT_DEFS = [
   {
     id: 'canvas-accents',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.VISIBLE,
+    costClass: COST_CLASS.PAINT_COMPOSITE,
     selector: '[data-spw-accent]',
     rootMode: 'single',
     describes: 'canvas-accent[wave|vortex|lattice] background resonance',
@@ -312,7 +336,7 @@ export const ENHANCEMENT_DEFS = [
       'html:flourish:data-spw-wonder-memory-state',
     ],
     evaluates: 'visual accents canvas resonance reduced-motion',
-    timingArc: 'immediate-visual',
+    timingArc: 'visible-visual',
     effectScope: 'canvas css-vars media-query',
     load: () => import('../interface/canvas-accents.js'),
     mount: (mod) => {
@@ -350,6 +374,7 @@ export const ENHANCEMENT_DEFS = [
     evaluates: 'brand identity shell logo motion',
     timingArc: 'enhance-shell',
     timingChunk: 'idle-chrome',
+    effectScope: 'element-state css-vars',
     load: () => import('../interface/logo-runtime.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initSpwLogoRuntime || mod?.initLogoRuntime;
@@ -386,6 +411,7 @@ export const ENHANCEMENT_DEFS = [
     id: 'component-semantics',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
+    costClass: COST_CLASS.WORKING_MEMORY_PRESSURE,
     selector: '[data-spw-kind], [data-spw-role], [data-spw-slot]',
     rootMode: 'single',
     describes: 'component-semantics[authored|resolved] role interaction lifecycle physics',
@@ -415,13 +441,14 @@ export const ENHANCEMENT_DEFS = [
   {
     id: 'composition-box-model',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.VISIBLE,
+    costClass: COST_CLASS.WORKING_MEMORY_PRESSURE,
     selector: '[data-spw-box-model], [data-spw-composition-flow], [data-spw-pack-local], [data-site-settings-panel], body[data-spw-surface="settings"] .settings-fieldset',
     rootMode: 'single',
     describes: 'box-model[presence|measure|story|pack] composition[flow]',
     updates: ['data-spw-box-model', 'data-spw-box-presence', 'data-spw-box-measure', 'data-spw-box-story', 'data-spw-composition-flow', 'data-spw-box-settle-phase', 'data-spw-size-context', 'data-spw-content-tone', 'data-spw-pack-layout', 'data-spw-pack-fill'],
     evaluates: 'layout semantics spacing-semantics state storytelling',
-    timingArc: 'immediate-layout',
+    timingArc: 'visible-layout',
     effectScope: 'element-state css-vars',
     load: () => import('./composition-box-model.js'),
     mount: (mod, ctx) => {
@@ -477,6 +504,7 @@ export const ENHANCEMENT_DEFS = [
     id: 'semantic-crossrefs',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
+    costClass: COST_CLASS.WORKING_MEMORY_PRESSURE,
     selector: '[data-spw-semantic-cluster], [data-spw-vocab], [data-spw-semantic-expression], [data-spw-topic], .spw-topic',
     rootMode: 'single',
     describes: 'crossref[semantics] resonance[peer|source]',
@@ -501,6 +529,7 @@ export const ENHANCEMENT_DEFS = [
     updates: ['data-spw-anatomy-ready', 'data-spw-anatomy-focus', 'data-spw-anatomy-vocabulary', 'data-spw-anatomy-pinned'],
     evaluates: 'semantics interaction timing reference-document',
     timingArc: 'visible-anatomy',
+    effectScope: 'local-dom element-state',
     load: () => import('./page-anatomy.js'),
     mount: (mod) => {
       const fn = mod?.initPageAnatomy;
@@ -518,6 +547,7 @@ export const ENHANCEMENT_DEFS = [
     updates: ['data-spw-ingredient-enhanced', 'data-spw-ingredient-mode', 'data-spw-ingredient-status'],
     evaluates: 'ingredient lab learning mode controls',
     timingArc: 'visible-lab',
+    effectScope: 'local-dom element-state',
     load: () => import('./ingredient-lab.js'),
     mount: (mod) => {
       const fn = mod?.initIngredientLabs;
@@ -576,7 +606,8 @@ export const ENHANCEMENT_DEFS = [
   {
     id: 'discovery-notices',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.IDLE,
+    costClass: COST_CLASS.DEMAND_COUPLED,
     selector: 'body',
     rootMode: 'single',
     describes: 'page-wide discovery notice layer for runtime rewards, with dismissal storage and escape/listener teardown',
@@ -586,7 +617,8 @@ export const ENHANCEMENT_DEFS = [
       'html:flourish:data-spw-feature-learning',
     ],
     evaluates: 'feedback discoverability reward-cadence floating-chrome',
-    timingArc: 'immediate-feedback',
+    timingArc: 'enhance-feedback',
+    timingChunk: 'idle-chrome',
     effectScope: 'floating-chrome storage listeners',
     load: () => import('../interface/discovery-notices.js'),
     mount: (mod, ctx) => {
@@ -598,7 +630,8 @@ export const ENHANCEMENT_DEFS = [
   {
     id: 'state-inspector',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.IDLE,
+    costClass: COST_CLASS.WORKING_MEMORY_PRESSURE,
     selector: 'body',
     rootMode: 'single',
     describes: 'state[satchel]{inspect.modify.serialize.feedback}',
@@ -611,7 +644,8 @@ export const ENHANCEMENT_DEFS = [
       'html:inspect:data-spw-feature-learning',
     ],
     evaluates: 'state accessibility layering interaction learnability',
-    timingArc: 'immediate-inspection',
+    timingArc: 'enhance-metacognition',
+    timingChunk: 'idle-lab',
     effectScope: 'floating-chrome root-state local-controls',
     load: () => import('../interface/state-inspector.js'),
     mount: (mod) => {
@@ -636,6 +670,7 @@ export const ENHANCEMENT_DEFS = [
     ],
     timingArc: 'visible-reward',
     evaluates: 'image discovery reward cadence motion production',
+    effectScope: 'local-dom flourish residue bus',
     load: () => import('../interface/image-discovery-rewards.js'),
     mount: (mod) => {
       const fn = mod?.initImageDiscoveryRewards;
@@ -647,6 +682,7 @@ export const ENHANCEMENT_DEFS = [
     id: 'semantic-chrome',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
+    costClass: COST_CLASS.DEMAND_COUPLED,
     features: ['inspectability'],
     selector: '[data-spw-kind], [data-spw-role], [data-spw-slot]',
     rootMode: 'single',
@@ -670,6 +706,7 @@ export const ENHANCEMENT_DEFS = [
     id: 'contextual-ui',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
+    costClass: COST_CLASS.DEMAND_COUPLED,
     selector: 'main, .site-header',
     rootMode: 'single',
     describes: 'contextual-ui[module-inference|route-discovery|nav-fit]',
@@ -695,6 +732,7 @@ export const ENHANCEMENT_DEFS = [
     id: 'console',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
+    costClass: COST_CLASS.WORKING_MEMORY_PRESSURE,
     features: ['console'],
     selector: 'body',
     rootMode: 'single',
@@ -750,6 +788,7 @@ export const ENHANCEMENT_DEFS = [
     id: 'attention-architecture',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
+    costClass: COST_CLASS.PAINT_COMPOSITE,
     selector: 'main, .spw-section-handle, [data-spw-operator]',
     rootMode: 'single',
     describes: 'attention[resonance|field-intensity|section-handle|reading-groove] operators',
@@ -826,6 +865,7 @@ export const ENHANCEMENT_DEFS = [
     id: 'module-effects',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
+    costClass: COST_CLASS.PAINT_COMPOSITE,
     selector: 'html',
     rootMode: 'single',
     describes: 'module[effects]{root-state.surface}',
@@ -850,6 +890,7 @@ export const ENHANCEMENT_DEFS = [
     id: 'loading-ecology',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
+    costClass: COST_CLASS.PAINT_COMPOSITE,
     selector: 'html',
     rootMode: 'single',
     describes: 'ecology[loading|measure|settle]{prefetch.personalize.genre}',
@@ -877,6 +918,7 @@ export const ENHANCEMENT_DEFS = [
     id: 'hydration-passes',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
+    costClass: COST_CLASS.PAINT_COMPOSITE,
     selector: 'html',
     rootMode: 'single',
     describes: 'hydration[pass|lex.semantic.pragmatic] workbench-alignment',
@@ -899,6 +941,7 @@ export const ENHANCEMENT_DEFS = [
     id: 'settings-momentum',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
+    costClass: COST_CLASS.PAINT_COMPOSITE,
     selector: 'html',
     rootMode: 'single',
     describes: 'settings[tuning] spell[momentum] replayable-climate',
@@ -982,6 +1025,7 @@ export const ENHANCEMENT_DEFS = [
     ],
     evaluates: 'operator sigil lens capacity chips visual cue tokens interaction state readouts',
     timingArc: 'visible-media',
+    effectScope: 'local-dom element-state',
     load: () => import('../semantic/effect-interpretation.js'),
     mount: (mod) => {
       const fn = mod?.initEffectInterpretation;
@@ -993,6 +1037,7 @@ export const ENHANCEMENT_DEFS = [
     id: 'pulse-beat-tuner',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
+    costClass: COST_CLASS.PAINT_COMPOSITE,
     selector: 'html',
     rootMode: 'single',
     describes: 'rhythm[beat|freshness]{13-cycle|prime} settings-tuned pulse cadence',
@@ -1015,6 +1060,7 @@ export const ENHANCEMENT_DEFS = [
     id: 'spw-key-events',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
+    costClass: COST_CLASS.PREMATURE_COMMITMENT,
     selector: 'html',
     rootMode: 'single',
     describes: 'key[potentiate|actualize]{scene-context|selection-thread}',
@@ -1057,6 +1103,7 @@ export const ENHANCEMENT_DEFS = [
     ],
     evaluates: 'scene lanes radiogroup image lens localStorage scene-memory strip',
     timingArc: 'visible-scene',
+    effectScope: 'local-dom element-state storage',
     load: () => import('./scene-interaction.js'),
     mount: (mod) => {
       const fn = mod?.initSceneInteraction;
@@ -1068,6 +1115,7 @@ export const ENHANCEMENT_DEFS = [
     id: 'topical-payload',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
+    costClass: COST_CLASS.PREMATURE_COMMITMENT,
     selector: 'html',
     rootMode: 'single',
     describes: 'topical[payload]{topics|lore|handles|scene|image}',
@@ -1114,6 +1162,7 @@ export const ENHANCEMENT_DEFS = [
     id: 'interaction-progression',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
+    costClass: COST_CLASS.PREMATURE_COMMITMENT,
     selector: 'html',
     rootMode: 'single',
     describes: 'interaction[phase]{idle|approach|prime|charge|inspect|discover|settle}',
@@ -1144,6 +1193,7 @@ export const ENHANCEMENT_DEFS = [
     ],
     evaluates: 'conceptual salience vocabulary collectibility dimension refs',
     timingArc: 'visible-semantics',
+    effectScope: 'local-dom element-state',
     load: () => import('../semantic/concept-salience.js'),
     mount: (mod) => {
       const fn = mod?.initConceptSalience;
@@ -1155,6 +1205,7 @@ export const ENHANCEMENT_DEFS = [
     id: 'precipitation-request',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
+    costClass: COST_CLASS.PREMATURE_COMMITMENT,
     selector: 'html',
     rootMode: 'single',
     describes: 'precipitation[condense|print|screenshot] query projection',
@@ -1190,6 +1241,7 @@ export const ENHANCEMENT_DEFS = [
     ],
     evaluates: 'mode-switch variant selection query priming semantic weight',
     timingArc: 'visible-variant',
+    effectScope: 'local-dom element-state',
     load: () => import('./variant-selection.js'),
     mount: (mod) => {
       const fn = mod?.initVariantSelection;
@@ -1201,6 +1253,7 @@ export const ENHANCEMENT_DEFS = [
     id: 'navigation-locomotion',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
+    costClass: COST_CLASS.DEMAND_COUPLED,
     selector: 'main',
     rootMode: 'single',
     describes: 'navigation[locomotion] transition[section-travel] spell[cast] chrome[sync]',
@@ -1251,6 +1304,7 @@ export const ENHANCEMENT_DEFS = [
     id: 'bare-spw-markup',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
+    costClass: COST_CLASS.DEMAND_COUPLED,
     selector: '[data-spw-bare-spw="enhance"], .site-footer__summary, [data-spw-material-context~="mutable-markup"]',
     rootMode: 'single',
     describes: 'markup[bare-spw]{delimiter.operator.wrap}',
@@ -1269,6 +1323,7 @@ export const ENHANCEMENT_DEFS = [
     id: 'operators',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
+    costClass: COST_CLASS.DEMAND_COUPLED,
     features: ['operators'],
     selector: '.frame-sigil, .frame-card-sigil, .frame-panel-sigil, .syntax-token, .operator-chip, .spec-pill, .header-sigil, .site-footer__brand, .spw-delimiter, [data-spw-charge-key], a[data-spw-operator], button[data-spw-operator], [data-spw-sigil]',
     rootMode: 'single',
@@ -1339,6 +1394,7 @@ export const ENHANCEMENT_DEFS = [
     updates: ['data-spw-local-memory-controls-init', 'data-spw-memory-status-timer'],
     evaluates: 'local storage reset privacy settings',
     timingArc: 'visible-memory',
+    effectScope: 'local-dom storage',
     load: () => import('../interface/local-memory-controls.js'),
     mount: (mod) => {
       const fn = mod?.initSpwLocalMemoryControls;

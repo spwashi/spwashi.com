@@ -1,0 +1,141 @@
+# Layout QA · Measurement · Packing · Reflow · Page Sizing (2026-07)
+#
+# Dev + agent optimization for layout tests and look-and-feel QA.
+# operation: audit + prime | fixity: tending
+
+#>layout_qa_measurement_2026_07
+#:audit #!layout #!packing #!reflow #!measurement #!qa #!agent
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+@layout_qa: ~"../../../public/js/runtime/layout-qa.js"
+@composition: ~"../../../public/js/runtime/composition-box-model.js"
+@layout_shift: ~"../../../public/js/runtime/layout-shift-audit.js"
+@layout_assumptions: ~"../../../public/js/runtime/layout-assumptions.js"
+@packing_css: ~"../../../public/css/systems/component-packing.css"
+@layout_css: ~"../../../public/css/shell/layout.css"
+@measurement_contract: ~"../../conventions/measurement-contract.spw"
+@component_packing: ~"../../conventions/component-packing.spw"
+@context_qa_plan: ~"../../../.agents/plans/context-sensitive-variants-and-agent-qa/PLAN.md"
+@mgl: ~"../module-granularity-lifecycle-2026-07/index.spw"
+@brp: ~"../build-runtime-performance-2026-07/index.spw"
+@alignment: ~"../alignment-shell-lifecycle-sensitivity-2026-07/index.spw"
+@containment_skill: ~"../../../.agents/skills/spw-ui-containment-audit/SKILL.md"
+
+audit_run: .{
+  at = `2026-07-12`
+  method = `unify existing measure/pack/reflow surfaces behind layout-qa.js; wire DevTools; document agent recipes`
+  posture = `code + recipes landed; structural look-feel checks not pixel CI`
+}[reg=facet]
+
+^"thesis"{
+  claim = `Measurement, packing, reflow, and page sizing already exist as separate modules/CSS. Agents and devs needed one callable report + recipes so layout tests do not require rediscovering four APIs and debug flags.`
+  landed = `public/js/runtime/layout-qa.js · __SPW_SITE__.layoutQa.* · spwCompose.qa.layout* · composition snapshots include packLayout/packFill · help topic "layout"`
+}[reg=facet]
+
+^"surfaces"{
+  measure = `composition-box-model: size-context, content-tone, measure bands, pretext signals`
+  packing = `component-packing.css @container + data-spw-pack-local; JS mirrors pack-layout/fill`
+  reflow = `layout-shift-audit CLS + reflowClass mount|input|incidental; debug-gated full history`
+  page_sizing = `body/main data-spw-layout reading|wide|atlas|split; --page-width* tokens; main rect`
+  late_align = `layout-assumptions SETTLED: bottom-lane, clearance, chrome crowded`
+  unified = @layout_qa
+}[reg=facet]
+
+^"api"{
+  site = #[
+    `__SPW_SITE__.layoutQa.snapshot()`,
+    `__SPW_SITE__.layoutQa.summary()`,
+    `__SPW_SITE__.layoutQa.page()`,
+    `__SPW_SITE__.layoutQa.packing()`,
+    `__SPW_SITE__.layoutQa.inspect(el)`,
+    `__SPW_SITE__.layoutQa.recipes()`
+  ][reg=set]
+  compose = #[
+    `spwCompose.qa.layout()`,
+    `spwCompose.qa.layoutSummary()`,
+    `spwCompose.qa.layoutRecipes()`,
+    `spwCompose.help("layout")`
+  ][reg=set]
+  report_fields = #[`page`, `packing`, `reflow`, `assumptions`, `lookFeel`, `rootDatasets`, `recipes`][reg=set]
+  lookFeel_grade = `pass | warn | fail from overflow, CLS bands, assumptions, page-width heuristics`
+}[reg=facet]
+
+^"agent_layout_test_recipe"{
+  steps = #[
+    `1. Open route under test (home, settings, topics long, design composition bench)`,
+    `2. Optional full CLS: append ?debug=layout&log=layout-shift&log-level=debug`,
+    `3. Wait for interactive + idle (or html[data-spw-page-state=enhanced])`,
+    `4. await __SPW_SITE__.layoutQa.snapshot()`,
+    `5. Assert lookFeel.grade !== 'fail' (or allowlist known warn)`,
+    `6. For packing: packing.packLocalDom + packing.overflowHosts`,
+    `7. For page size: page.layoutVariant, page.main.width, page.measureBand`,
+    `8. For reflow: reflow.totalValue < 0.1 preferred; < 0.25 hard fail band in evaluateLookFeel`,
+    `9. For chrome: assumptions after SETTLED — compromises empty preferred`,
+    `10. Containment bugs: follow @containment_skill (container first, not new dimensions)`
+  ][reg=set]
+  look_feel_qa = #[
+    `Structural only — not visual regression screenshots in CI`,
+    `Use ?qa=screenshot-qa for human/agent vision pass with denser inspect attrs`,
+    `Check coarse pointer + reduced-motion flags in page.*`,
+    `Pack-local cards: resize container not viewport to verify stack|split|feature`
+  ][reg=set]
+}[reg=facet]
+
+^"enhancements_landed"{
+  composition = `snapshotCompositionBox now returns packLocal, packLayout, packFill for inspect/QA`
+  layout_qa_module = `zero-cost until import; no catalog IMMEDIATE`
+  console_help = `spwCompose.help("layout"); announce mentions layoutQa.summary`
+  debug_qa_posture = `public/js/runtime/debug-qa-posture.js — single parse of ?debug/?qa/?log; site.js gates + root datasets; observation-beats + layout-shift share it`
+  root_datasets = `html[data-spw-debug-qa-posture|debug-layout|debug-agent|qa|layout-qa-grade]`
+  site_api = `__SPW_SITE__.debugQa.{posture,read,apply,presets,isLayout,isAgent}`
+  compose_qa = `spwCompose.qa.{layout,layoutSummary,posture,applyPosture,enterLayoutMode,enterAgentMode,enterScreenshotMode}`
+  boot_warm = `when layout|agent posture: warm layout-qa after site-ready and log grade`
+}[reg=facet]
+
+^"debug_qa_wiring"{
+  module = ~"../../../public/js/runtime/debug-qa-posture.js"
+  consumers = #[
+    `site.js shouldActivateLayoutDebugInstrumentation / hasDebugOrQAMode`,
+    `module-loader debugOnly via hasDebugOrQAMode`,
+    `observation-beats isDebugQAEnabled`,
+    `layout-qa report.debugQa field`,
+    `filterEnhancementDefs layout-shift inclusion`
+  ][reg=set]
+  presets = #[`layout`, `layoutInspect`, `agentQa`, `screenshotQa`, `beats`, `cssDebug`][reg=set]
+  agent_recipe = #[
+    `Open with spwCompose.debugPresets["screenshot-qa"] or agentQa`,
+    `__SPW_SITE__.debugQa.posture() → confirm layoutDebug/agentQa`,
+    `await __SPW_SITE__.layoutQa.summary() → grade`,
+    `spwCompose.logs("layout-shift") if CLS detail needed`
+  ][reg=set]
+}[reg=facet]
+
+^"next"{
+  p1 = `Optional: write data-spw-layout-qa-grade on html when ?debug=layout for CSS outline of fails`
+  p2 = `Optional: Playwright note only — no new deps; JSON snapshot is the agent contract`
+  p3 = `Wire packing overflowHosts into state-inspector one-row when inspect posture on`
+  p4 = `Align PACK_LAYOUT_BANDS px with rem tokens if root font-size ≠ 16`
+}[reg=facet]
+
+^"validation"{
+  commands = #[
+    `node --check public/js/runtime/layout-qa.js`,
+    `node --check public/js/runtime/composition-box-model.js`,
+    `node --check public/js/site.js`,
+    `node --check public/js/compose.js`,
+    `node --check public/js/kernel/instrumentation.js`,
+    `git diff --check`,
+    `Browser: __SPW_SITE__.layoutQa.summary() after load`
+  ][reg=set]
+}[reg=facet]
+
+^"related"{
+  mgl = @mgl
+  brp = @brp
+  alignment = @alignment
+  context_plan = @context_qa_plan
+  measurement = @measurement_contract
+  packing = @component_packing
+}[reg=facet]

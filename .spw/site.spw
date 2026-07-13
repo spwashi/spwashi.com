@@ -108,6 +108,7 @@
 @runtime_kernel_consolidation_audit: ~"./audits/runtime-kernel-consolidation-2026-07.spw"
 @component_philosophy_harmony_audit: ~"./audits/component-philosophy-harmony-2026-07.spw"
 @build_runtime_performance_audit: ~"./audits/build-runtime-performance-2026-07/index.spw"
+@module_granularity_lifecycle_audit: ~"./audits/module-granularity-lifecycle-2026-07/index.spw"
 @naming_grammar_js_types_audit: ~"./audits/naming-grammar-js-types-2026-07/index.spw"
 @commit_skill_induction_audit: ~"./audits/commit-skill-induction-2026-07/index.spw"
 @agentic_development_audit: ~"./audits/agentic-development-2026-07/index.spw"
@@ -193,8 +194,8 @@ translations: .{
  public_routes = #[@surfaces, @surface_registry][reg=set]
  language_evolution = #[@language, @language_v04, @spw_language_v04_plan, @spw_language_v04_plan_index][reg=set]
  runtime_medium = #[@runtime_medium_ecology, @js_architecture_cognition, @module_export_contract, @module_export_audit, @runtime_module_medium, @module_export_uniformity][reg=set]
- js_architecture = #[@js_architecture_cognition, @runtime_medium_ecology, @metaphor_dimensional_lexicon, @kernel_rhizosphere, @runtime_kernel_consolidation_audit, @runtime_module_medium][reg=set]
- metaphor_and_performance = #[@metaphor_dimensional_lexicon, @js_architecture_cognition, @component_philosophy_harmony_audit, @build_runtime_performance_audit, @dimension_vocabulary, @expressive_registers, @alignment_shell_lifecycle_sensitivity_audit, @component_anatomy_device_packing_audit, @css_module_attribute_impact_audit, @page_region_hydration_memory_audit][reg=set]
+ js_architecture = #[@js_architecture_cognition, @runtime_medium_ecology, @metaphor_dimensional_lexicon, @kernel_rhizosphere, @runtime_kernel_consolidation_audit, @runtime_module_medium, @module_granularity_lifecycle_audit][reg=set]
+ metaphor_and_performance = #[@metaphor_dimensional_lexicon, @js_architecture_cognition, @component_philosophy_harmony_audit, @build_runtime_performance_audit, @module_granularity_lifecycle_audit, @dimension_vocabulary, @expressive_registers, @alignment_shell_lifecycle_sensitivity_audit, @component_anatomy_device_packing_audit, @css_module_attribute_impact_audit, @page_region_hydration_memory_audit][reg=set]
  naming_grammar_js_types = #[@naming_grammar_js_types_audit, @naming_structured_values, @module_export_contract, @module_export_audit, @language_v04, @js_architecture_cognition, @build_runtime_performance_audit][reg=set]
  commit_skill_induction = #[@commit_skill_induction_audit, @agent_optimization, @plan_maintenance, @naming_grammar_js_types_audit, @build_runtime_performance_audit][reg=set]
  agentic_development = #[@agentic_development_audit, @agentic_contracts, @agent_optimization, @commit_skill_induction_audit, @naming_grammar_js_types_audit, @build_runtime_performance_audit, @feature_partial_theatrics, @recursive_improvement, @feature_utilization, @audits_index][reg=set]

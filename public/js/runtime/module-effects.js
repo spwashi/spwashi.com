@@ -7,8 +7,49 @@ import { writeDatasetValue } from '/public/js/kernel/dom-contracts.js';
 
 let initialized = false;
 let cleanupFns = [];
+let pulseTimer = 0;
 
 const EFFECT_TOKENS = new Set();
+/** Fallback when --spw-module-effect-pulse-duration is unavailable (matches --touch-recover). */
+const MODULE_PULSE_MS_FALLBACK = 520;
+const MODULE_PULSE_DURATION_VAR = '--spw-module-effect-pulse-duration';
+
+export const MODULE_EFFECTS_CONTRACT = Object.freeze({
+  pulseDurationVar: MODULE_PULSE_DURATION_VAR,
+  pulseDurationMs: MODULE_PULSE_MS_FALLBACK,
+  attributes: Object.freeze({
+    active: 'data-spw-module-effects-active',
+    count: 'data-spw-module-effect-count',
+    pulse: 'data-spw-module-effect-pulse',
+  }),
+});
+
+function readCssDurationMs(varName, fallbackMs) {
+  try {
+    const root = document.documentElement;
+    if (!root) return fallbackMs;
+    const raw = getComputedStyle(root).getPropertyValue(varName).trim();
+    if (!raw) return fallbackMs;
+    if (raw.endsWith('ms')) {
+      const n = Number.parseFloat(raw);
+      return Number.isFinite(n) && n > 0 ? n : fallbackMs;
+    }
+    if (raw.endsWith('s')) {
+      const n = Number.parseFloat(raw) * 1000;
+      return Number.isFinite(n) && n > 0 ? n : fallbackMs;
+    }
+    const n = Number.parseFloat(raw);
+    return Number.isFinite(n) && n > 0 ? n : fallbackMs;
+  } catch {
+    return fallbackMs;
+  }
+}
+
+function readModulePulseDurationMs() {
+  return readCssDurationMs(MODULE_PULSE_DURATION_VAR, MODULE_PULSE_MS_FALLBACK);
+}
+
+let pulseDurationMs = MODULE_PULSE_MS_FALLBACK;
 
 function normalizeEffectScope(value = '') {
   return String(value || '')
@@ -29,11 +70,13 @@ function pulseModuleEffect(html, moduleId = '') {
   if (!html || !moduleId) return;
 
   writeDatasetValue(html, 'spwModuleEffectPulse', moduleId);
-  window.setTimeout(() => {
+  if (pulseTimer) window.clearTimeout(pulseTimer);
+  pulseTimer = window.setTimeout(() => {
+    pulseTimer = 0;
     if (html.dataset.spwModuleEffectPulse === moduleId) {
       delete html.dataset.spwModuleEffectPulse;
     }
-  }, 520);
+  }, pulseDurationMs);
 }
 
 function onModuleMounted(detail = {}, html) {
@@ -54,6 +97,8 @@ export function initModuleEffects(ctx) {
 
   const html = document.documentElement;
   const body = document.body;
+  // Theme-independent timing tokens only need one computed-style read per mount.
+  pulseDurationMs = readModulePulseDurationMs();
 
   if (body?.dataset?.spwRuntimeMountedModules) {
     normalizeEffectScope(body.dataset.spwRuntimeLastModuleEffectScope).forEach((token) => {
@@ -70,6 +115,10 @@ export function initModuleEffects(ctx) {
   }
 
   return () => {
+    if (pulseTimer) {
+      window.clearTimeout(pulseTimer);
+      pulseTimer = 0;
+    }
     cleanupFns.forEach((fn) => {
       try {
         fn?.();

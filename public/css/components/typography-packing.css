@@ -116,9 +116,10 @@
 
 :where(.frame-note, .inline-note, .settings-note, .settings-start-note) {
   font-size: var(--text-size-sm, 0.88rem);
-  line-height: var(--site-line-height-tight, 1.35);
-  max-inline-size: var(--pack-tier-balanced-measure);
+  line-height: var(--site-line-height-tight, 1.4);
+  max-inline-size: min(100%, var(--pack-tier-balanced-measure));
   text-wrap: pretty;
+  overflow-wrap: break-word;
   color: color-mix(in srgb, var(--ink, #161c1d) 78%, transparent);
 }
 
@@ -126,17 +127,26 @@
   font-size: var(--text-size-label, 0.74rem);
   letter-spacing: var(--tracking-spec, 0.06em);
   line-height: var(--site-line-height-tight, 1.35);
-  max-inline-size: var(--measure-card, 42ch);
+  max-inline-size: min(100%, var(--measure-card, 42ch));
   text-wrap: balance;
+  overflow-wrap: break-word;
   text-transform: uppercase;
 }
 
 :where(.frame-copy, .settings-prose, .focus-lens-container) {
   --flow-space: var(--spw-flow-space, var(--pack-tier-balanced-flow));
+  min-width: 0;
+  max-inline-size: 100%;
 }
 
 :where(.frame-body > .prose, .frame-body[data-spw-slot="body"]) {
   max-inline-size: min(100%, var(--measure-reading, 68ch));
+  min-width: 0;
+}
+
+/* Body slot: stack body children with the active flow space, not ad-hoc margins. */
+:where(.frame-body, [data-spw-slot="body"].frame-body) {
+  --flow-space: var(--spw-flow-space, var(--pack-tier-balanced-flow));
 }
 
 :where([data-spw-typeset-surface="editorial"] .prose p,

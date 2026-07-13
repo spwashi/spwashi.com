@@ -1,0 +1,83 @@
+# Component Anatomy × Themes × Modules (2026-07-12)
+#
+# operation: audit
+# fixity: tending
+
+#>component_anatomy_theme_module_2026_07
+#:audit #!anatomy #!themes #!modules #!interactivity
+#:operation #!audit
+#:layer #!pragmatics
+
+@html_component_audit: ~"./html-component-audit-2026-07.spw"
+@module_impact_audit: ~"./module-impact-audit-2026-07.spw"
+@gesture_anatomy_js: ~"../../public/js/runtime/gesture-anatomy.js"
+@gesture_anatomy_css: ~"../../public/css/components/gesture-anatomy.css"
+@page_anatomy_css: ~"../../public/css/components/page-anatomy.css"
+@component_semantics: ~"../../public/js/semantic/component-semantics.js"
+@dom_sync_hub: ~"../../public/js/runtime/dom-sync-hub.js"
+
+audit_run: .{
+  at = `2026-07-12`
+  scope = `gesture-anatomy, page-anatomy, component-semantics, theme root attrs, module catalog`
+  method = `code + CSS coupling review; HTML host census; interactivity path walk`
+}[reg=facet]
+
+^"module_graph"{
+  component_semantics = `IMMEDIATE — writes gesture-contract-resolved, theming-posture-resolved on [data-spw-kind|role|slot]`
+  gesture_anatomy = `VISIBLE — reads contracts (prefer resolved), labels slots, stack rails; projects html theme-link`
+  page_anatomy = `VISIBLE — vocabulary anchors, pin/focus; CSS already biome-aware`
+  dom_sync_hub = `settings:changed + mutation filter refresh for anatomy tasks`
+  site_settings = `cognitiveHandles, tuningDiscoverability, metacognitiveStance gate annotation`
+}[reg=facet]
+
+^"html_hosts"{
+  routes_with_slots ≈ 51
+  routes_with_gesture_contract ≈ 22
+  routes_with_page_anatomy ≈ 6
+  claim = `Slot anatomy is the wide base; gesture contracts mid; page vocabulary anchors hub-local.`
+}[reg=facet]
+
+^"gaps_found"{
+  before = #[
+    `gesture-anatomy ignored data-spw-gesture-contract-resolved from component-semantics`,
+    `CSS used raw --active-op-color only — weak color-mode / metamaterial / biome response`,
+    `dom-sync did not watch resolved contract / theming posture / anatomy attrs`,
+    `stack rail active-slot weak on pointerout/focusout`,
+    `page anatomy anchors always assumed light white gradient`,
+  ][reg=set]
+}[reg=facet]
+
+^"refinements_landed"{
+  js = #[
+    `prefer resolved gesture contracts`,
+    `project data-spw-anatomy-theming from theming posture`,
+    `html data-spw-anatomy-theme-link / discoverability for inspectors`,
+    `pointerout + focusin/out stack rail refresh`,
+    `dom-sync ATTRIBUTE_FILTER extended for semantics↔anatomy`,
+  ][reg=set]
+  css = #[
+    `gesture-anatomy token family (--gesture-anatomy-*) with dark/matte/glass/biome/palette`,
+    `module-effects + semantics-linked accent boosts`,
+    `theming posture rail personalities`,
+    `page-anatomy dark/matte/glass + gesture-anatomy bridge`,
+    `tasteful gesture ring scale + reduced-motion`,
+  ][reg=set]
+  catalog = `gesture-anatomy updates/evaluates/effectScope document theme + root inspect surfaces`
+}[reg=facet]
+
+^"synergy_matrix"{
+  theme_color_mode = `gesture labels + page anchors re-surface`
+  theme_metamaterial = `matte solid / glass blur on anchors; gesture surface mix`
+  theme_biome = `accent mix on gesture chrome; overlay wash already in page-anatomy`
+  module_semantics = `resolved contracts drive hints; theming posture drives rail tone`
+  module_effects = `html[data-spw-module-effects-active] slightly densifies anatomy opacity`
+  settings = `cognitive handles + tuning discoverability remain the gate`
+}[reg=facet]
+
+^"validation"{
+  probe = #[
+    `node --check public/js/runtime/gesture-anatomy.js public/js/runtime/dom-sync-hub.js`,
+    `npm run build:css`,
+    `rg 'spwGestureContractResolved|spwAnatomyThemeLink|gesture-anatomy-accent' public/js public/css`,
+  ][reg=set]
+}[reg=facet]

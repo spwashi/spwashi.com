@@ -3,7 +3,13 @@
  * load() paths are relative to public/js/runtime/.
  */
 
-import { isFn, MODULE_LAYERS, MOUNT_WHEN, PRETEXT_LIVE_SELECTOR } from './module-catalog-constants.js';
+import {
+  COST_CLASS,
+  isFn,
+  MODULE_LAYERS,
+  MOUNT_WHEN,
+  PRETEXT_LIVE_SELECTOR,
+} from './module-catalog-constants.js';
 
 export const FEATURE_DEFS = [
   {
@@ -17,6 +23,7 @@ export const FEATURE_DEFS = [
     updates: ['data-blog-state', 'data-blog-lens', 'data-blog-tone', 'data-count', 'data-spw-charge-key'],
     evaluates: 'blog interpretation writing workflow attention-register',
     timingArc: 'visible-feature',
+    effectScope: 'local-dom element-state',
     load: () => import('../modules/blog/interpreter.js'),
     mount: (mod, ctx, root) => {
       const fn = mod?.initBlogInterpreter;
@@ -35,6 +42,7 @@ export const FEATURE_DEFS = [
     updates: ['data-panel-open', 'data-theme', '--io-ratio'],
     evaluates: 'blog specimens interaction demos visual filters',
     timingArc: 'visible-feature',
+    effectScope: 'local-dom element-state css-vars',
     load: () => import('../modules/blog/specimens.js'),
     mount: (mod) => {
       const fn = mod?.initBlogSpecimens;
@@ -202,6 +210,7 @@ export const FEATURE_DEFS = [
     updates: ['data-spw-cadence', 'data-spw-presentation', 'data-spw-promotion-kind', 'data-spw-region-flow'],
     evaluates: 'promo cadence wonder marketing media-publishing',
     timingArc: 'visible-media',
+    effectScope: 'local-dom element-state',
     load: () => import('../typed/promo-wonder-cycle.js'),
     mount: (mod) => {
       const fn = mod?.initPromoWonderCycle;
@@ -220,6 +229,7 @@ export const FEATURE_DEFS = [
     updates: ['data-spw-component-kind', 'data-spw-copy-unit', 'data-spw-locale', 'data-spw-cadence'],
     evaluates: 'media publishing feed localization website surface',
     timingArc: 'visible-media',
+    effectScope: 'local-dom element-state',
     load: () => import('../typed/media-publishing.js'),
     mount: (mod) => {
       const fn = mod?.initMediaPublishing;
@@ -238,6 +248,7 @@ export const FEATURE_DEFS = [
     updates: ['data-media-cauldron-state', 'data-media-cauldron-output', 'data-spw-attention-self-relation', 'data-spw-attention-local-relation', 'data-spw-attention-global-relation'],
     timingArc: 'visible-lab',
     evaluates: 'media cauldron attention relations prompt-pack generation',
+    effectScope: 'local-dom element-state bus',
     load: () => import('../modules/media/cauldron.js'),
     mount: (mod, ctx, root) => {
       const fn = mod?.initMediaCauldron;
@@ -284,6 +295,7 @@ export const FEATURE_DEFS = [
     id: 'brace-physics',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
+    costClass: COST_CLASS.DEMAND_COUPLED,
     selector: '[data-spw-form="brace"], .spw-delimiter, .frame-sigil, [data-spw-semantic-expression]',
     rootMode: 'single',
     describes: 'brace[gesture|inspect|semantic-expansion] physics',
@@ -302,6 +314,7 @@ export const FEATURE_DEFS = [
     id: 'region-menu',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
+    costClass: COST_CLASS.DEMAND_COUPLED,
     selector: '.spw-delimiter, .frame-sigil, .operator-chip, [data-spw-semantic-expression]',
     rootMode: 'single',
     describes: 'region-menu[inspect|mark|focus] semantic popover',
@@ -330,6 +343,7 @@ export const FEATURE_DEFS = [
       'inspect:data-spw-pronunciation-hint',
       'flourish:data-spw-operator-speech',
     ],
+    effectScope: 'element-state flourish',
     load: () => import('../interface/pronunciation.js'),
     mount: (mod) => {
       const fn = mod?.initPronunciationHints;
@@ -341,6 +355,7 @@ export const FEATURE_DEFS = [
     id: 'sigil-anatomy',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
+    costClass: COST_CLASS.DEMAND_COUPLED,
     features: ['operators'],
     selector: '.frame-sigil, .operator-chip, .syntax-token, .spw-delimiter, [data-spw-operator], [data-spw-sigil]',
     rootMode: 'single',
@@ -461,6 +476,7 @@ export const FEATURE_DEFS = [
     updates: ['data-spw-flow', 'data-text-wrap', 'data-text-mode'],
     timingArc: 'visible-lab',
     evaluates: 'pretext layout sandbox projection observe resize inspect',
+    effectScope: 'local-dom css-vars measure',
     load: () => import('../semantic/pretext-lab.js'),
     mount: (mod) => {
       const fn = mod?.initPretextLab;
@@ -479,6 +495,7 @@ export const FEATURE_DEFS = [
     updates: ['data-text-wrap', 'data-text-measure', 'data-text-width-class', 'data-spw-pretext-width-class', '--pretext-canonical-width', '--pretext-projected-width'],
     timingArc: 'visible-lab',
     evaluates: 'pretext measure classify wrap-volatility width-class projection',
+    effectScope: 'local-dom css-vars measure',
     load: () => import('../semantic/pretext-physics.js'),
     mount: (mod, ctx, root) => {
       const fn = mod?.initPretextPhysics;
@@ -503,6 +520,7 @@ export const FEATURE_DEFS = [
     updates: ['data-spw-typography-measure-state', 'data-spw-pretext-line-count', 'data-text-wrap', 'data-spw-measure-kind'],
     timingArc: 'visible-lab',
     evaluates: 'typography measure preview pretext bus designer conversation',
+    effectScope: 'local-dom css-vars measure bus',
     load: () => import('../modules/design/typography-measurement-preview.js'),
     mount: (mod, ctx, root) => {
       const fn = mod?.initTypographyMeasurementPreview;
@@ -520,6 +538,7 @@ export const FEATURE_DEFS = [
     updates: ['data-spw-frame-line-count', 'data-spw-frame-wrap', 'data-spw-measure-kind', 'data-spw-measure-source'],
     timingArc: 'visible-metrics',
     evaluates: 'frame text measure line-count wrap height pretext bus',
+    effectScope: 'element-state measure bus',
     load: () => import('./frame-metrics.js'),
     mount: (mod, ctx, root) => {
       const fn = mod?.initFrameMetrics;

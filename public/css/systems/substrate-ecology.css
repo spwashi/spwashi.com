@@ -359,10 +359,12 @@
   max-width: min(100%, var(--measure-reading, 72ch));
 }
 
-@container (max-width: 42rem) {
-  :where(.spw-context-memo, .spw-experience-memo) {
-    max-width: 100%;
-    font-size: 0.62rem;
+@supports (container-type: inline-size) {
+  @container (max-width: 42rem) {
+    :where(.spw-context-memo, .spw-experience-memo) {
+      max-width: 100%;
+      font-size: 0.62rem;
+    }
   }
 }
 

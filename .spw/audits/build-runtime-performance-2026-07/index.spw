@@ -22,27 +22,29 @@
 @module_loader: ~"../../../public/js/runtime/module-loader.js"
 @site_js: ~"../../../public/js/site.js"
 @package_json: ~"../../../package.json"
+@module_granularity_lifecycle: ~"../module-granularity-lifecycle-2026-07/index.spw"
 
 audit_run: .{
-  at = `2026-07-10`
-  method = `catalog mount census; observer construction count; pipeline timing samples; plan + code cross-read`
+  at = `2026-07-12`
+  method = `catalog mount census via listModuleCatalogIndex; costClass normalize pass; observer construction count; pipeline timing samples; plan + code cross-read`
   host = `local developer machine — timings are directional samples, not CI SLOs`
   posture = `cache evidence + cost_class coordinates; primes for reclassification and build hygiene`
+  note = `2026-07-12 module normalization: COST_CLASS on catalog, summarizeModuleCatalogOptimization, safe reclass 6 ENHANCEMENT IMMEDIATE → VISIBLE/IDLE`
 }[reg=facet]
 
 ^"thesis"{
-  claim = `Build cost is dominated by TypeScript multi-project typecheck and CSS/site generation width; runtime cost is dominated by immediate-layer *width* (61 IMMEDIATE defs after two safe reclassifications) and observer/mirror sprawl after parallel mount was already landed.`
-  progress = `Phase 1 parallel immediate mounts are in module-loader (site-settings first, then Promise.all). The remaining budget is reclassification + bounded metacognition, not another orchestration rewrite.`
-  lexicon = `Use cost_class + elaboration_stage from @metaphor_lexicon; ecology/cognition nouns are optional projections.`
+  claim = `Build cost is dominated by TypeScript multi-project typecheck and CSS/site generation width; runtime cost is dominated by immediate-layer *width* (37 IMMEDIATE / 95 after normalization reclass) and observer/mirror sprawl after parallel mount was already landed.`
+  progress = `Phase 1 parallel immediate mounts are in module-loader (site-settings first, then Promise.all). Feature-wiring + 2026-07-12 normalize cut IMMEDIATE 61→43→37. Remaining budget is residual ENHANCEMENT orchestration + settings substrate, not another orchestration rewrite.`
+  lexicon = `Use cost_class + elaboration_stage from @metaphor_lexicon; ecology/cognition nouns are optional projections. Catalog now stamps/infers costClass for DevTools (__SPW_SITE__.catalogOptimization).`
 }[reg=facet]
 
 ^"grades"{
   build_pipeline = `B- — clear scripts, route CSS bundles, no heavy runtime deps; typecheck triple-pass is medium pole; full build:site+catalog is the local long pole`
-  runtime_architecture = `A- — staged layers, marks/measures, parallel immediate, policy gates`
-  runtime_immediate_budget = `C+ — 61 IMMEDIATE / 94 definitions; spatial-gravity moved to VISIBLE and palette-treat-discovery to IDLE, while many ENHANCEMENT remain self_model-stage`
-  observer_federation = `C — ~52 Intersection/Resize/Mutation constructions across ~40 files`
-  inspectability = `A — spw:* marks, timings plans, data-spw-runtime surfaces`
-  overall = `B — instrumented and staged; width of early activation is the open debt`
+  runtime_architecture = `A- — staged layers, marks/measures, parallel immediate, policy gates, costClass normalize`
+  runtime_immediate_budget = `B- — 37 IMMEDIATE / 95 definitions (23 ENHANCEMENT non-debug); residual html orchestration + grammar/gesture still early`
+  observer_federation = `C — ~53 Intersection/Resize/Mutation constructions across ~41 files`
+  inspectability = `A — spw:* marks, catalogOptimization, listModuleCatalogIndex byCostClass`
+  overall = `B+ — instrumented, staged, cost-class structured; early activation width still open but measurable`
 }[reg=facet]
 
 ^"nested_dispatch"{
@@ -51,6 +53,7 @@ audit_run: .{
   coordinates = @coordinates
   related_harmony_performance = @harmony_audit
   bootstrap_plan = @runtime_bootstrap_plan
+  module_granularity_lifecycle = @module_granularity_lifecycle # L1–L4 + lifecycle plan P0–P3
 }[reg=facet]
 
 ^"priority"{
@@ -64,8 +67,10 @@ audit_run: .{
 
 ^"validation"{
   commands = #[
-    `rg -o 'when: MOUNT_WHEN\\.(IMMEDIATE|VISIBLE|IDLE|INTERACTION|REGION|SETTLED)' public/js/runtime/module-catalog.js | sort | uniq -c`,
+    `node --input-type=module -e 'import { listModuleCatalogIndex } from "./public/js/runtime/module-catalog.js"; console.log(listModuleCatalogIndex())'`,
+    `rg -o 'when: MOUNT_WHEN\\.(IMMEDIATE|VISIBLE|IDLE|INTERACTION|REGION|SETTLED)' public/js/runtime/module-catalog-*.js | sort | uniq -c`,
     `rg -c 'new IntersectionObserver|new ResizeObserver|new MutationObserver' public/js --glob '*.js'`,
+    `npm run check:runtime`,
     `npm run typecheck` # sample wall time,
     `npm run build:runtime && npm run build:css`,
     `rg 'build_runtime_performance|build-runtime-performance' .spw`

@@ -1079,6 +1079,20 @@ const CONSOLE_HELP_TOPICS = Object.freeze({
       'document.documentElement.dataset.spwLogLevel = "debug"',
     ]),
   }),
+  layout: Object.freeze({
+    title: 'Layout / packing / reflow QA',
+    lines: Object.freeze([
+      '?debug=layout&log=layout-shift&log-level=debug',
+      '?qa=screenshot-qa&debug=qa,layout,agent',
+      '__SPW_SITE__.layoutQa.snapshot()',
+      '__SPW_SITE__.layoutQa.summary()',
+      '__SPW_SITE__.layoutQa.page()',
+      '__SPW_SITE__.layoutQa.packing()',
+      'spwCompose.qa.layout()',
+      'spwCompose.qa.layoutSummary()',
+      'spwCompose.logs("layout-shift")',
+    ]),
+  }),
   inspect: Object.freeze({
     title: 'Inspection',
     lines: Object.freeze([
@@ -1254,11 +1268,12 @@ export function announceSpwConsoleSurface(globalObject = globalThis, api, option
     'font-weight:400;color:inherit',
   );
   writer.log('Type %cspwCompose.help()%c for commands.', 'font-family:monospace', '');
-  writer.log('Quick: %cspwCompose.snapshot()%c · %c__SPW_SITE__.listModules()%c',
+  writer.log('Quick: %cspwCompose.snapshot()%c · %c__SPW_SITE__.listModules()%c · %c__SPW_SITE__.layoutQa.summary()%c',
+    'font-family:monospace', '',
     'font-family:monospace', '',
     'font-family:monospace', '');
   if (options.timings) writer.log('Boot timing:', options.timings);
-  if (typeof api?.help === 'function') writer.log('Topics: spwCompose.help("modules" | "logs" | "inspect" | "query")');
+  if (typeof api?.help === 'function') writer.log('Topics: spwCompose.help("modules" | "logs" | "layout" | "inspect" | "query")');
   writer.groupEnd();
   return true;
 }
@@ -1272,15 +1287,18 @@ export function installSpwCompositionConsole(globalObject = globalThis, options 
     ...SPW_QUERY_PRESETS,
   });
   const debugPresets = Object.freeze({
-    layout: queryPresets.layout.href,
-    css: queryPresets.css.href,
-    inspect: queryPresets.inspect.href,
-    screenshot: queryPresets.screenshot.href,
-    // New Screenshot QA Mode — rich semantic visibility + beat-based observation + easy artifact export
+    layout: queryPresets.layout?.href || '?debug=layout&log=layout-shift&log-level=debug',
+    layoutInspect: '?view=inspect&debug=layout&diagnostics=basic&log=layout-shift&log-level=debug&meaning=inspect',
+    css: queryPresets.css?.href || '?debug=css&log-level=debug',
+    inspect: queryPresets.inspect?.href,
+    screenshot: queryPresets.screenshot?.href,
+    agentQa: '?debug=qa,agent,layout&qa=agent&log=layout-shift,observation-beats&log-level=debug',
+    beats: '?debug=beat,qa&log=observation-beats&log-level=debug',
+    // Screenshot QA Mode — rich semantic visibility + beat-based observation + artifact export
     'screenshot-qa': '?qa=screenshot-qa&debug=qa,layout,agent&log=layout-shift,observation-beats,cauldron&log-level=debug&meaning=inspect&physics=screenshot',
-    readable: queryPresets.readable.href,
-    calm: queryPresets.calm.href,
-    puppet: queryPresets.puppet.href,
+    readable: queryPresets.readable?.href,
+    calm: queryPresets.calm?.href,
+    puppet: queryPresets.puppet?.href,
   });
   const helpContext = { controls, debugPresets };
 
@@ -1319,7 +1337,25 @@ export function installSpwCompositionConsole(globalObject = globalThis, options 
     },
     qa: {
       enterScreenshotMode: () => applySpwQueryDisposition(globalObject.document?.documentElement, { search: '?qa=screenshot-qa' }),
+      enterLayoutMode: () => applySpwQueryDisposition(globalObject.document?.documentElement, {
+        search: debugPresets.layout,
+      }),
+      enterAgentMode: () => applySpwQueryDisposition(globalObject.document?.documentElement, {
+        search: debugPresets.agentQa,
+      }),
       capture: (extra) => import('/public/js/runtime/observation-beats.js').then(m => m.captureCurrentBeatArtifact(extra)),
+      /** Packing + reflow + page sizing + look-feel checklist (lazy). */
+      layout: (options = {}) => import('/public/js/runtime/layout-qa.js').then((m) => m.snapshotLayoutQa(options)),
+      layoutSummary: (options = {}) => import('/public/js/runtime/layout-qa.js').then(async (m) => {
+        const report = await m.snapshotLayoutQa(options);
+        return m.summarizeLayoutQa(report);
+      }),
+      layoutRecipes: () => import('/public/js/runtime/layout-qa.js').then((m) => m.layoutQaRecipes()),
+      posture: () => import('/public/js/runtime/debug-qa-posture.js').then((m) => m.describeDebugQaPosture()),
+      applyPosture: () => import('/public/js/runtime/debug-qa-posture.js').then((m) => {
+        const posture = m.applyDebugQaPostureToRoot();
+        return m.describeDebugQaPosture(posture);
+      }),
     },
   });
 

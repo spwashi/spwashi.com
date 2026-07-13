@@ -1,0 +1,440 @@
+# Design inertia · clichés · conveniences · primitives · types · tree
+#
+# Nested under module-granularity-lifecycle-2026-07
+# Complements commit-history-deep theme-churn with runtime/module lens.
+
+#>module_granularity_lifecycle_inertia
+#:audit #!churn #!inertia #!primitives #!types #!architecture
+#:operation #!audit
+#:fixity #!tending
+
+@index: ~"./index.spw"
+@lifecycle: ~"./lifecycle.spw"
+@granularity: ~"./granularity.spw"
+@plan: ~"./plan.spw"
+@kernel_audit: ~"../runtime-kernel-consolidation-2026-07.spw"
+@theme_churn: ~"../commit-history-deep-2026-07/theme-churn.spw"
+@decomposition: ~"../../../.agents/plans/runtime-module-decomposition/PLAN.md"
+@typescript_skill: ~"../../../.agents/skills/spw-typescript-affordances/SKILL.md"
+
+^"method"{
+  at = `2026-07-12`
+  probes = #[
+    `git log --since=2026-01-01 --name-only -- public/js/**/*.js | uniq -c`,
+    `git rev-list --count + first/last for hotspots`,
+    `rg normalize/localStorage/reduced-motion forks`,
+    `rg @typedef density; public/ts inventory`,
+    `find public/js -maxdepth 2 -type d; ls public/js/runtime | wc`
+  ][reg=set]
+  note = `Churn counts are touch-counts not quality. High churn + low ideology = inertia risk.`
+}[reg=facet]
+
+# =============================================================================
+# Design inertia from old commits
+# =============================================================================
+
+^"inertia_definition"{
+  claim = `Design inertia is repeated edit pressure on a file without shrinking its concern set or promoting a reusable primitive — later work then reimplements fundamentals beside it.`
+  signals = #[
+    `Many commits with Refine/Improve/Polish subjects on same surface`,
+    `Feature accretion (header actions, spell path, cauldron) without extraction`,
+    `Kernel already extracted but forks remain (normalize, storage, chrome)`,
+    `Catalog id thin while static graph or sibling folders still fat`
+  ][reg=set]
+}[reg=facet]
+
+^"churn_hotspots_public_js"{
+  note = `Touches since ~2026-01 (name-only uniq). Cross-check @theme_churn for all-history line churn (site.js 104 touches historically).`
+
+  high_inertia_risk: #[
+    .{
+      path = `public/js/runtime/shell-disclosure.js`
+      touches = 29
+      loc = `~2284`
+      pattern = `Mobile menu, nav measure hysteresis, header actions (Cauldron/Attention/Tune), weather/posture, floating chrome competition`
+      ideology_gain = `low per commit — product polish on overloaded owner`
+      later_duplication = `bottom-lane also touched by discovery-notices, satchel, section-handle, frame-navigator, reward-ui`
+      remedy = `L4 measure/menu/utilities then L3; floating-chrome is the shared fundamental (decomposition 0e)`
+      plan = `P2.2 after P2.1`
+    }
+    .{
+      path = `public/js/runtime/experiential.js`
+      touches = 19
+      loc = `~2169`
+      pattern = `Spell path, sample dock, reading-quiet, gesture momentum, inspect overlays — commit subjects span chrome+spell+gesture`
+      ideology_gain = `medium early; later commits refine mobile collapse defaults`
+      later_duplication = `spells.js + navigation-spells + experiential all own trail/spell chrome narratives`
+      remedy = `L3 breadcrumb/dock/memos/learning; spells residual-only for storage/bus`
+      plan = `P2.3`
+    }
+    .{
+      path = `public/js/interface/state-inspector.js`
+      touches = 20
+      loc = `~1190`
+      pattern = `Satchel UX + serialization + page-state awareness + module visuals`
+      ideology_gain = `boundary still muddy (satchel vs inspect)`
+      later_duplication = `page-anatomy / composition inspect stories overlap`
+      remedy = `satchel vs state-block rename/split`
+      plan = `P2.4`
+    }
+    .{
+      path = `public/js/kernel/shared.js`
+      touches = 14
+      loc = `~2000`
+      pattern = `Was kitchen sink; rhizosphere extract (2026-07-08) improved ideology`
+      ideology_gain = `high on extract commits; residual OPERATOR_DEFINITIONS + climate still mixed`
+      later_duplication = `normalize forks still in prompt-utils, console, home/section-index, narrative-instrumentation (@kernel_audit)`
+      remedy = `Continue operator/climate carve; migrate remaining normalizeText forks`
+      plan = `P2.1 + P1 hygiene`
+    }
+    .{
+      path = `public/js/kernel/dom-contracts.js`
+      touches = 22
+      loc = `high`
+      pattern = `Projection + floating chrome + dataset writers — correct gravity well`
+      ideology_gain = `high when contract expands; risk is becoming second shared.js`
+      later_duplication = `modules still raw .dataset in shell (72+ historically cited)`
+      remedy = `projection tiers only; resist feature UI in dom-contracts`
+      plan = `P2.1`
+    }
+    .{
+      path = `public/js/site.js`
+      touches = `~104 all-history`
+      pattern = `Boot orchestrator + DevTools API + layout-debug gates`
+      ideology_gain = `high on loader extract (b43e55cf); later grows console surface`
+      remedy = `Keep thin; push helpers to runtime-helpers / catalog-normalize; avoid new boot features here`
+      plan = `P0 helpers live outside site.js when possible`
+    }
+  ][reg=set]
+
+  healthy_churn: #[
+    .{ path = `module-loader.js`, touches = 11, note = `Composable extract + timing/updates — ideology up` },
+    .{ path = `module-catalog* family split`, note = `Monofile → families + normalize — reviewability up` },
+    .{ path = `attention/*`, touches = `section-handle 12`, note = `L4 split good; still L3 load debt` },
+    .{ path = `kernel text/route/storage extract`, note = `a6cdf035 — fundamentals promoted once` }
+  ][reg=set]
+
+  fundamental_duplication_after_extract: #[
+    `normalizeText/Token local forks (@kernel_audit remaining)`,
+    `safeJsonParse in local-notes / cognitive-surface vs storage-utils`,
+    `prefers-reduced-motion checks scattered (experiential, haptics, shell, page-anatomy, page-state, experiments)`,
+    `IntersectionObserver per-module vs shared attention/region roots (BRP observer-fragmentation)`,
+    `Floating chrome lane math re-touched in multiple polish commits instead of single sync API adoption`
+  ][reg=set]
+}[reg=facet]
+
+^"inertia_anti_patterns"{
+  .{
+    id = `polish-without-extract`
+    example = `shell/experiential commit series: Improve mobile … / Refine floating chrome`
+    cost_class = `working_memory_pressure`
+  }
+  .{
+    id = `feature-on-blob`
+    example = `shell header gains Cauldron + Attention + Tune actions in successive feats`
+    cost_class = `premature_commitment`
+  }
+  .{
+    id = `rename-era-debt`
+    example = `fbabd3c0 Retitle JS tree — ownership better, concern boundaries not automatic`
+    cost_class = `interference`
+  }
+  .{
+    id = `catalog-split-without-payload-split`
+    example = `site-settings thin entry still static-imports UI graph`
+    cost_class = `premature_commitment`
+  }
+}[reg=set]
+
+# =============================================================================
+# Cliche features (over-implemented relative to unique value)
+# =============================================================================
+
+^"cliche_features"{
+  note = `Not "delete" — mark as stabilize / demote schedule / stop accreting unless ideology moves.`
+
+  rows: #[
+    .{
+      id = `discovery-toast-stack`
+      modules = #[`discovery-notices`, `reward-ui`, `feature-discovery`, `image-discovery-rewards`][reg=set]
+      cliche = `Yet another progressive disclosure toast/stack for "you found a thing"`
+      unique_value = `Spw: feature-learning + collectible memory contracts`
+      direction = `One notice lane primitive; modules only supply payload + storage key`
+    }
+    .{
+      id = `inspect-overlay-proliferation`
+      modules = #[`state-inspector`, `page-anatomy`, `composition-box-model`, `semantic-chrome`, `console`, `observation-beats`][reg=set]
+      cliche = `Multiple floating inspect UIs with overlapping page-state awareness`
+      unique_value = `Satchel serialize + module-visuals topology`
+      direction = `Single inspect posture on html; panels as plugins`
+    }
+    .{
+      id = `spell-trail-chrome`
+      modules = #[`experiential`, `spells`, `navigation-spells`][reg=set]
+      cliche = `Breadcrumb/spell path collapse rules re-tuned every mobile pass`
+      unique_value = `Replayable spell outcomes (checkpoints) — not chrome`
+      direction = `Extract trail chrome; spells stay residual storage/bus`
+    }
+    .{
+      id = `settings-everywhere`
+      modules = #[`site-settings*`, `tuning-discovery`, `settings-momentum`, `brace-pivots`, `shell-header-tune`][reg=set]
+      cliche = `Tune affordances accrete in shell, settings page, embedded vibes, momentum ornament`
+      unique_value = `Root dataset as single source of truth`
+      direction = `Cold UI off boot; shell only deep-links to settings`
+    }
+    .{
+      id = `qa-debug-theater`
+      modules = #[`observation-beats`, `layout-shift-audit`, `design-experiments`][reg=set]
+      cliche = `Debug-only modules still shape IMMEDIATE catalogs or heavy VISIBLE labs`
+      unique_value = `CLS mount attribution, beat windows`
+      direction = `Keep debugOnly + IDLE; do not grow boot path`
+    }
+    .{
+      id = `gesture-hint-anatomy-stack`
+      modules = #[`gesture-anatomy`, `charge-field`, `brace-physics`, `interaction-progression`][reg=set]
+      cliche = `Multiple rails teaching the same "gesture has consequence"`
+      unique_value = `charge-field + consequence-live as shared physics`
+      direction = `Anatomy/hints VISIBLE; progression INTERACTION; one charge bus`
+    }
+  ][reg=set]
+}[reg=facet]
+
+# =============================================================================
+# Missing convenience features
+# =============================================================================
+
+^"missing_conveniences"{
+  runtime_dx: #[
+    `onModuleStage / onPagePhase helpers (plan P0.3) — advertised lifecycle unused`,
+    `__SPW_SITE__.catalogOptimization() exists; missing catalogDiff(before,after) for reclass PRs`,
+    `No first-class timings().byCostClass() rollup from registry + costClass`,
+    `refresh() sparse — settings change often needs full remount`,
+    `INTERACTION lane empty — no "arm on first keydown/pointer" helper`,
+    `No module budget warn in quiet policy when eligible IMMEDIATE > N`
+  ][reg=set]
+
+  author_dx: #[
+    `Catalog def scaffold (snippet/script) with field order + costClass infer`,
+    `listens/emits optional fields for lifecycle edges (plan P3.2)`,
+    `parent id for L3 children grouping in DevTools`,
+    `Family-file = layer (ENHANCEMENT defs still in feature family file)`
+  ][reg=set]
+
+  reader_dx: #[
+    `Stable "why is this slow" panel: eligible immediate count + top loadMs from registry`,
+    `Reduced-motion + save-data already partial; no single posture summary chip`,
+    `Spell restore is powerful but trail chrome competes for attention on first visit`
+  ][reg=set]
+
+  agent_dx: #[
+    `Probe recipe: git churn + catalog when + costClass one-liner (this audit validation)`,
+    `Avoid full build:site in loops (BRP) — still not auto-documented on catalog PRs`
+  ][reg=set]
+}[reg=facet]
+
+# =============================================================================
+# Primitive opportunities
+# =============================================================================
+
+^"primitive_opportunities"{
+  note = `Align with @decomposition Phase 0 + @kernel_audit remaining. Prefer one primitive + two adopters.`
+
+  already_landed: #[
+    `text-normalization`, `route-utils`, `storage-utils`, `visited-surfaces-storage`,
+    `module-updates-contract`, `module-export-contract`, `dom-contracts writers`,
+    `module-catalog-normalize costClass`
+  ][reg=set]
+
+  improve_existing: #[
+    .{
+      id = `storage-utils`
+      gap = `safeJsonParse / session vs local / versioned envelope not universal`
+      adopters = `local-notes, cognitive-surface, design experiments tokens`
+    }
+    .{
+      id = `text-normalization`
+      gap = `separator-aware page-metadata normalizeToken; pretext/prompt local forks`
+      adopters = `console, home/section-index, narrative-instrumentation`
+    }
+    .{
+      id = `floating-chrome`
+      gap = `syncFloatingChromeState not enforced; polish commits re-solve bottom lane`
+      adopters = `shell, discovery-notices, satchel, section-handle, reward-ui, region-menu`
+    }
+    .{
+      id = `reduced-motion-posture`
+      gap = `matchMedia scatter`
+      work = `kernel/runtime-posture.js: reducedMotion, saveData, connection → one read`
+    }
+  ][reg=set]
+
+  new_primitives: #[
+    .{
+      id = `observer-federation`
+      work = `shared IntersectionObserver roots for attention/region/visible; pack-local RO stays host-local`
+      cost_class = `working_memory_pressure`
+      plan = `P2 / BRP p3`
+    }
+    .{
+      id = `notice-lane`
+      work = `one stack/modal host; modules register NoticeSpec { id, storageKey, priority }`
+      cost_class = `interference`
+      kills_cliche = `discovery-toast-stack`
+    }
+    .{
+      id = `inspect-posture`
+      work = `html[data-spw-inspect-posture] + plugin registry; satchel/console/anatomy subscribe`
+      cost_class = `working_memory_pressure`
+      kills_cliche = `inspect-overlay-proliferation`
+    }
+    .{
+      id = `mode-switch`
+      work = `generalize lens-modes (decomposition 0c)`
+      adopters = `variant-selection, design experiments, brace panels`
+    }
+    .{
+      id = `module-lifecycle-listen`
+      work = `P0.3 helper — makes stages useful`
+    }
+    .{
+      id = `interaction-arm`
+      work = `first pointer/key arms INTERACTION defs without full IMMEDIATE`
+    }
+  ][reg=set]
+}[reg=facet]
+
+# =============================================================================
+# Type extraction opportunities
+# =============================================================================
+
+^"type_opportunities"{
+  posture = `Follow spw-typescript-affordances: types where contracts pay off; do not convert public site to a TS app. public/ts is thin (bus, feeds, media-publishing, promo, runtime-environment).`
+
+  high_value_extracts: #[
+    .{
+      id = `ModuleDefinition`
+      shape = `id, layer, when, costClass, features?, route?, selector?, timingArc, timingChunk?, effectScope, updates, describes, evaluates, debugOnly?, load, mount`
+      where = `public/ts or scripts + JSDoc typedef re-export; runtime-contracts already parses loosely`
+      gain = `catalog PRs + normalize + ecology share one shape`
+    }
+    .{
+      id = `ModuleLifecycleRecord`
+      shape = `registry record stages, loadMs, mountMs, lifecycle[]`
+      where = `loader + DevTools timings()`
+    }
+    .{
+      id = `ModuleUpdateToken`
+      shape = `scope:role:kind:name from module-updates-contract`
+      where = `already half-specified in contracts.mts — promote to shared .ts + JSDoc`
+    }
+    .{
+      id = `CostClass_MountWhen_ModuleLayer`
+      where = `mirror module-catalog-constants as const enums in TS for scripts`
+    }
+    .{
+      id = `SiteSettings`
+      shape = `settings object + deviation descriptors`
+      where = `engine already large; types prevent profile/UI drift`
+    }
+    .{
+      id = `FloatingChromeState`
+      shape = `lanes, open overlays, bottom inset tokens`
+    }
+    .{
+      id = `NoticeSpec_InspectPlugin`
+      where = `if notice-lane / inspect-posture primitives land`
+    }
+  ][reg=set]
+
+  low_value: #[
+    `Converting every runtime/*.js to .ts`,
+    `Typing route HTML`,
+    `Duplicating catalog defs in a second TS catalog`
+  ][reg=set]
+
+  jsdoc_gap = `Almost no @typedef in public/js (≤2 files) — cheapest win is JSDoc on catalog + loader records without full TS migration`
+}[reg=facet]
+
+# =============================================================================
+# Other useful abstractions
+# =============================================================================
+
+^"other_abstractions"{
+  rows: #[
+    .{
+      id = `guild_or_parent_in_catalog`
+      work = `parent/guild field → DevTools group; soft link to @runtime_module_medium`
+    }
+    .{
+      id = `eligible_set_snapshot`
+      work = `At boot, freeze eligible module ids by when for the route — explainability + budget`
+    }
+    .{
+      id = `mount_reason_enum`
+      work = `describeMountReason already strings; closed set for ecology`
+    }
+    .{
+      id = `effect_scope_taxonomy`
+      work = `normalize effectScope tokens (root-state|storage|observer|…) — partially free text today`
+    }
+    .{
+      id = `dual_emit_bridge`
+      work = `bus.emit always; optional DOM CustomEvent via LEGACY only — reduce dual-path inertia`
+    }
+  ][reg=set]
+}[reg=facet]
+
+# =============================================================================
+# Tree structure improvements
+# =============================================================================
+
+^"tree_structure"{
+  current = .{
+    top = #[`kernel`, `runtime`, `interface`, `semantic`, `media`, `modules/*`, `typed`][reg=set]
+    runtime_flat = `~78 files in public/js/runtime/ (only attention/ subfolder mature)`
+    note = `Ownership retitle (fbabd3c0) was good; runtime/ is still a flat attractor`
+  }[reg=facet]
+
+  problems: #[
+    `runtime/ mixes loader substrate, shell chrome, spells, labs, ledgers, anatomy`,
+    `interface/ vs runtime/ boundary fuzzy (state-inspector, discovery-notices, haptics vs page-anatomy)`,
+    `ENHANCEMENT catalog defs in module-catalog-feature.js (layer ≠ file family)`,
+    `Legacy path ghosts in git history (site-settings.js root era) confuse churn stats`,
+    `typed/ is compile output island — easy to forget contract source is public/ts`
+  ][reg=set]
+
+  proposed_runtime_subfolders: .{
+    rule = `Move files only with catalog load() path updates + check:runtime; prefer after L3 id stability`
+    substrate = #[`module-loader`, `module-catalog*`, `module-export*`, `module-updates*`, `module-effects`, `runtime-helpers`, `gate`, `hydration-passes`, `loading-ecology`][reg=set]
+    shell = #[`shell-disclosure`, `navigation-locomotion`, `page-region-rail`, `frame-navigator`, `attention/`][reg=set]
+    memory = #[`spells`, `pin-registry`, `visitation`, `effect-ledger`, `component-collection`, `feature-discovery`][reg=set]
+    inspect = #[`page-anatomy`, `composition-box-model`, `layout-shift-audit`, `observation-beats`, `learnability-ledger`][reg=set]
+    gesture = #[`brace-*`, `charge-field`, `gesture-*`, `interaction-*`, `pulse-beat-tuner`][reg=set]
+    note = `Do not create empty taxonomy folders before 3+ residents`
+  }[reg=facet]
+
+  interface_boundary: .{
+    rule = `interface/ = floating UI + human chrome that is not schedule substrate`
+    keep = #[`console`, `state-inspector/satchel`, `discovery-notices`, `guide*`, `haptics`, `prompt-utils`, `local-notes`][reg=set]
+    move_or_clarify = `runtime/state-inspector.js ghost path in plans — ensure single satchel owner under interface/`
+  }[reg=facet]
+
+  catalog_tree: .{
+    keep = `module-catalog-{constants,core,feature,region,enhancement,normalize}.js`
+    fix = `layer membership matches family file (P3.1)`
+    optional = `module-catalog/attention.fragment.js only if attention L3 defs dominate enhancement file`
+  }[reg=facet]
+
+  avoid: #[
+    `Big-bang mv of all runtime/* in one commit (bisect poison — see theme-churn risk)`,
+    `Mirroring MODULE_LAYERS as directories (core/feature/enhancement folders) — schedule ≠ ownership`
+  ][reg=set]
+}[reg=facet]
+
+^"plan_hooks"{
+  P0 = `lifecycle helpers + INTERACTION arm — missing conveniences`
+  P1 = `settings payload + attention L3 — breaks false-thin / L4 glue inertia`
+  P1b = `normalize/storage/reduced-motion fork migration — fundamental dedupe (can parallel P1)`
+  P2 = `shell/experiential/satchel — high-churn blobs; primitives first`
+  P3 = `tree subfolders + family file + types/JSDoc ModuleDefinition + medium map`
+}[reg=facet]

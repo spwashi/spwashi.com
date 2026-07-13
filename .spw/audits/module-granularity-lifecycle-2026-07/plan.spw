@@ -1,0 +1,346 @@
+# Phased implementation plan (embedded)
+#
+# Execute in order. Each phase has public goal, surfaces, validation, out-of-scope.
+# operation: prime (plan inside audit) | fixity: tending
+
+#>module_granularity_lifecycle_plan
+#:audit #!plan #!runtime #!catalog
+#:operation #!prime
+#:fixity #!tending
+
+@index: ~"./index.spw"
+@lifecycle: ~"./lifecycle.spw"
+@granularity: ~"./granularity.spw"
+@inertia: ~"./inertia.spw"
+@decomposition: ~"../../../.agents/plans/runtime-module-decomposition/PLAN.md"
+@bootstrap: ~"../../../.agents/plans/runtime-bootstrap-performance/PLAN.md"
+@brp: ~"../build-runtime-performance-2026-07/index.spw"
+@kernel_audit: ~"../runtime-kernel-consolidation-2026-07.spw"
+
+^"execution_rules"{
+  order = `P0 → P1 → P1b → P2 → P3`
+  claim = `mgl-006` # name cost_class + L-level on every split PR
+  inertia = `mgl-007 mgl-008 — no polish-only commits on shell/experiential without extract; migrate forks before re-implementing`
+  stop = `Do not open shell/experiential L3 until P0 stage truth + decomposition Phase 0 primitives exist (@decomposition)`
+  measure = `listModuleCatalogIndex / catalogOptimization / Performance spw:module:* / check:runtime / git touch-count trend on blobs`
+  non_goals = #[
+    `No new runtime npm dependencies`,
+    `No CSS layer order changes`,
+    `No rename of public data-spw stems without align pass`,
+    `No catalog sprawl for <10KB honest VISIBLE/IDLE modules`,
+    `No big-bang runtime/* directory move in one commit`,
+    `No full conversion of public/js to TypeScript`
+  ][reg=set]
+}[reg=facet]
+
+# =============================================================================
+# P0 — Lifecycle honesty + INTERACTION lane
+# =============================================================================
+
+^"phase_P0"{
+  id = `P0`
+  name = `Lifecycle honesty + INTERACTION`
+  claims = #[`mgl-001`, `mgl-002`, `mgl-005`][reg=set]
+  cost_class = `interference` # fix false stage signals first
+  public_goal = `Peers can trust module stages and first-gesture work can use INTERACTION without lying about observed/settled.`
+
+  slices: #[
+    .{
+      id = `P0.1`
+      title = `observed semantics`
+      surfaces = #[`public/js/runtime/module-loader.js`, `SPW_MODULE_LOADER_CONTRACT`][reg=set]
+      work = `Either rename stage to summary_written (or emit alias) OR delay observed until a real observe signal; document contract`
+      acceptance = `Contract text matches code; no silent dual meaning`
+    }
+    .{
+      id = `P0.2`
+      title = `settled after idle wave`
+      surfaces = #[`public/js/runtime/module-loader.js`, `public/js/site.js`][reg=set]
+      work = `After idle finalize (page enhanced), mark mounted modules settled (or emit batch event spw:modules-settled); keep refreshRuntime as re-settle`
+      acceptance = `registry stage settles without requiring refreshRuntime; layout-assumptions still SETTLED-when`
+    }
+    .{
+      id = `P0.3`
+      title = `consumer helper`
+      surfaces = #[`public/js/runtime/runtime-helpers.js` or small `module-lifecycle-listen.js`][reg=set]
+      work = `onModuleStage(bus, { baseId?, stage }, fn) + onPagePhase helper; prefer ctx.bus`
+      acceptance = `At least loading-ecology or module-effects uses helper; node --check + check:runtime`
+    }
+    .{
+      id = `P0.4`
+      title = `INTERACTION first users`
+      surfaces = #[`module-catalog-*.js`][reg=set]
+      work = `Move ≥3 of: region-menu, spw-key-events (or keydown arm), attention-pinch (if still under parent), precipitation-request to INTERACTION or document why not`
+      acceptance = `MOUNT_WHEN.INTERACTION count ≥ 3; smoke first-use UX on home + long editorial`
+    }
+  ][reg=set]
+
+  validation = #[
+    `npm run check:runtime`,
+    `node --check public/js/runtime/module-loader.js`,
+    `rg -n 'observed|settled|INTERACTION' public/js/runtime/module-loader.js public/js/runtime/module-catalog-*.js`,
+    `git diff --check`
+  ][reg=set]
+
+  out_of_scope = `No shell/experiential file splits; no site-settings payload split yet`
+}[reg=facet]
+
+# =============================================================================
+# P1 — Catalog L3 subfeatures (load budget)
+# =============================================================================
+
+^"phase_P1"{
+  id = `P1`
+  name = `Catalog L3 subfeatures`
+  claims = #[`mgl-003`, `mgl-004`][reg=set]
+  cost_class = `premature_commitment`
+  depends_on = `P0.1–P0.2 preferred so children can listen to true stages`
+  public_goal = `Independent dynamic imports for attention children and settings cold paths without rewriting the whole runtime.`
+
+  slices: #[
+    .{
+      id = `P1.1`
+      title = `attention L3 catalog children`
+      surfaces = #[
+        `public/js/runtime/module-catalog-enhancement.js`,
+        `public/js/runtime/attention-architecture.js`,
+        `public/js/runtime/attention/*`
+      ][reg=set]
+      work = `Add catalog ids per @granularity proposed_attention_L3; orchestrator becomes optional thin CORE/IMMEDIATE or dissolves; preserve ATTENTION_ARCHITECTURE_CONTRACT`
+      level = `L3`
+      acceptance = `section-handle not in IMMEDIATE wave by default; pinch INTERACTION; check:runtime; mobile section handle still works when scheduled`
+    }
+    .{
+      id = `P1.2`
+      title = `site-settings payload split`
+      surfaces = #[
+        `public/js/kernel/site-settings.js`,
+        `public/js/kernel/site-settings-engine.js`,
+        `public/js/kernel/site-settings-ui.js`,
+        `module-catalog-core.js`,
+        `settings-page feature def`
+      ][reg=set]
+      work = `First-paint: apply datasets only (no static UI import). UI bind dynamic on settings route / IDLE / explicit init. Align with @bootstrap Phase 2`
+      level = `L3 payload`
+      acceptance = `Network/waterfall: non-settings routes do not fetch site-settings-ui.js on boot; root datasets still applied; settings page binds`
+    }
+    .{
+      id = `P1.3`
+      title = `component-semantics schedule`
+      surfaces = #[`module-catalog-enhancement.js`, `public/js/semantic/component-semantics.js`][reg=set]
+      work = `Prefer VISIBLE for broad annotate; optional IDLE inspect projection; or split resolve vs project if needed`
+      level = `L1 then L3 if still heavy`
+      acceptance = `Not IMMEDIATE without selector gate proof; no regression on authored role/kind`
+    }
+    .{
+      id = `P1.4`
+      title = `html-root IMMEDIATE trim`
+      surfaces = #[`module-catalog-enhancement.js`][reg=set]
+      work = `topical-payload wait medium-ready or VISIBLE; interaction-progression INTERACTION/IDLE; precipitation IDLE/beforeprint`
+      level = `L1`
+      acceptance = `catalogOptimization enhancementImmediate drops; smoke keyboard and print`
+    }
+  ][reg=set]
+
+  validation = #[
+    `npm run check:runtime`,
+    `__SPW_SITE__.catalogOptimization() enhancementImmediateCount trending down`,
+    `Smoke: home, settings, topics long page, mobile section handle`
+  ][reg=set]
+
+  out_of_scope = `Full shell-disclosure rewrite; experiential split; shared.js`
+}[reg=facet]
+
+# =============================================================================
+# P1b — Fundamental fork migration (parallel-friendly with P1)
+# =============================================================================
+
+^"phase_P1b"{
+  id = `P1b`
+  name = `Fundamental fork migration`
+  claims = #[`mgl-008`][reg=set]
+  cost_class = `interference`
+  depends_on = `Can run parallel to P1; blocks "polish on blob" that reimplements these`
+  public_goal = `One primitive per concern; stop re-landing normalize/storage/motion/chrome after kernel extracts.`
+  ref = `@kernel_audit remaining + @inertia fundamental_duplication_after_extract`
+
+  slices: #[
+    .{
+      id = `P1b.1`
+      title = `normalizeText/Token forks`
+      work = `Migrate prompt-utils, pretext-physics, narrative-instrumentation, console, home/section-index, page-metadata (separator-aware) to kernel text-normalization`
+      acceptance = `rg local normalizeText/normalizeToken residual ≤ documented exceptions`
+    }
+    .{
+      id = `P1b.2`
+      title = `storage parse envelope`
+      work = `local-notes + cognitive-surface safeJsonParse → storage-utils; versioned envelope if missing`
+      acceptance = `No duplicate safeParse implementations in interface/semantic for JSON settings`
+    }
+    .{
+      id = `P1b.3`
+      title = `runtime-posture primitive`
+      work = `Single reducedMotion + saveData + connection reader; replace matchMedia scatter in experiential/haptics/shell/page-anatomy/page-state/experiments`
+      acceptance = `One module owns matchMedia posture; others import`
+    }
+    .{
+      id = `P1b.4`
+      title = `floating-chrome adoption`
+      work = `shell, discovery-notices, satchel, section-handle, reward-ui, region-menu call syncFloatingChromeState — no local bottom inset math`
+      acceptance = `rg bottom-lane / inset hacks drop; chrome polish commits only touch leaf CSS tokens`
+    }
+  ][reg=set]
+
+  validation = #[
+    `npm run check:runtime`,
+    `node --check` on edited kernel modules,
+    `rg -n 'normalizeText|safeJsonParse|prefers-reduced-motion' public/js --glob '*.js' | head -40`
+  ][reg=set]
+}[reg=facet]
+
+# =============================================================================
+# P2 — Blob decomposition (after primitives)
+# =============================================================================
+
+^"phase_P2"{
+  id = `P2`
+  name = `Blob decomposition`
+  claims = #[`mgl-007`][reg=set]
+  depends_on = `@decomposition Phase 0 primitives (storage, projection tiers, mode-switch, bus discipline, floating-chrome) + prefer P1b.3–4`
+  cost_class = `working_memory_pressure`
+  public_goal = `shell-disclosure and experiential become thin composers; state satchel boundary clear; image visit memory extractable. End polish-only inertia on these files.`
+
+  slices: #[
+    .{
+      id = `P2.1`
+      title = `Kernel primitives`
+      ref = `@decomposition Phase 0`
+      work = `storage.js, projection tiers, mode-switch, bus LEGACY hygiene, floating-chrome enforcement`
+      acceptance = `Two adopters per primitive before feature splits`
+    }
+    .{
+      id = `P2.2`
+      title = `shell-disclosure L3/L4`
+      work = `shell-measurement / disclosure machine / utilities; catalog id stays until stable then optional L3`
+      level = `L4 then L3`
+    }
+    .{
+      id = `P2.3`
+      title = `experiential L3`
+      work = `breadcrumb-spell, sample-dock, context-memos, operator-learning; IDLE chunks`
+      level = `L3`
+    }
+    .{
+      id = `P2.4`
+      title = `state-inspector → satchel + state-block`
+      work = `per decomposition rename/boundary table`
+      level = `L3`
+    }
+    .{
+      id = `P2.5`
+      title = `image-metaphysics internals`
+      work = `visit-memory + effect-controls after interaction-loop`
+      level = `L4/L3`
+    }
+  ][reg=set]
+
+  validation = #[
+    `npm run check:local`,
+    `npm run check:runtime`,
+    `Per-module node --check`,
+    `update @medium guild lists when ids change`
+  ][reg=set]
+
+  out_of_scope = `kernel/shared.js full carve (Phase 2 of decomposition — after P2.1–P2.3 prove model)`
+}[reg=facet]
+
+# =============================================================================
+# P3 — Hygiene + inspectability
+# =============================================================================
+
+^"phase_P3"{
+  id = `P3`
+  name = `Hygiene · types · tree · inspect abstractions`
+  claims = #[`mgl-009`, `mgl-010`][reg=set]
+  cost_class = `authored_prior_safe`
+  public_goal = `Agents scan ownership folders and typed contracts; cliché multi-inspect/toast paths have a lane primitive when ready.`
+
+  slices: #[
+    .{
+      id = `P3.1`
+      title = `family file = layer`
+      work = `Move ENHANCEMENT defs out of module-catalog-feature.js into enhancement family`
+    }
+    .{
+      id = `P3.2`
+      title = `optional listens/emits/parent fields`
+      work = `Catalog + listModuleCatalogIndex + runtime-contracts recommendations; loader does not require`
+    }
+    .{
+      id = `P3.3`
+      title = `runtime-module-medium refresh`
+      work = `Update medium guild membership after L3 id changes`
+    }
+    .{
+      id = `P3.4`
+      title = `catalogOptimization extensions`
+      work = `orphan parents, glued L4 children, INTERACTION count, stage-consumer coverage if probeable`
+    }
+    .{
+      id = `P3.5`
+      title = `ModuleDefinition types / JSDoc`
+      work = `Shared ModuleDefinition + ModuleLifecycleRecord + CostClass (public/ts or JSDoc); wire runtime-contracts; not full TS rewrite`
+      ref = `@inertia type_opportunities`
+    }
+    .{
+      id = `P3.6`
+      title = `runtime/ ownership subfolders`
+      work = `Incremental moves: substrate | shell | memory | inspect | gesture only when ≥3 residents; update catalog load() paths; never one mega-mv commit`
+      ref = `@inertia tree_structure`
+    }
+    .{
+      id = `P3.7`
+      title = `notice-lane + inspect-posture (optional)`
+      work = `If toast/inspect clichés still accrete after P2, add primitives from @inertia new_primitives`
+    }
+  ][reg=set]
+
+  validation = #[
+    `npm run check:runtime`,
+    `rg module_granularity_lifecycle .spw`,
+    `git log --oneline -- public/js/runtime/shell-disclosure.js | head` # touch rate should fall after P2,
+    `update this audit grades when phases land`
+  ][reg=set]
+}[reg=facet]
+
+^"phase_status"{
+  P0 = `planned`
+  P1 = `planned`
+  P1b = `planned` # fork migration — parallel with P1
+  P2 = `planned` # blocked on decomposition primitives for heavy slices
+  P3 = `planned`
+  note = `Flip to landed with date + commit when a phase completes; keep residual in BRP runtime.spw shortlist; inertia.spw for churn/cliché review`
+}[reg=facet]
+
+^"cross_links"{
+  brp = `@brp — width/budget; this audit owns granularity × lifecycle plan`
+  bootstrap = `@bootstrap — settings cold path overlaps P1.2`
+  decomposition = `@decomposition — P2 owns blob order after primitives`
+  kernel = `@kernel_audit — P1b fork list`
+  inertia = `@inertia — churn, clichés, conveniences, types, tree`
+  alignment = `alignment-shell-lifecycle — page settle rails; do not fight layout-assumptions SETTLED`
+}[reg=facet]
+
+^"definition_of_done_overall"{
+  criteria = #[
+    `INTERACTION lane used (≥3 defs) or explicitly retired with claim falsified`,
+    `observed/settled documented and match emission`,
+    `attention children independently scheduleable`,
+    `non-settings boot does not load settings-ui chunk`,
+    `enhancementImmediate residual tracked in BRP with costClass`,
+    `normalize/storage/reduced-motion/chrome forks closed or allowlisted`,
+    `shell/experiential touch rate drops after extract (no polish-only blob commits)`,
+    `ModuleDefinition type or JSDoc shared; runtime/ subfolders only if incremental`,
+    `check:runtime green; BRP + this audit grades updated`
+  ][reg=set]
+}[reg=facet]

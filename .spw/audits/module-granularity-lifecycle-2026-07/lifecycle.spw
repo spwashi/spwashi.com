@@ -1,0 +1,171 @@
+# Lifecycle leaf — stages, page phases, consumers
+#
+# Nested under module-granularity-lifecycle-2026-07
+
+#>module_granularity_lifecycle_lifecycle
+#:audit #!lifecycle #!runtime #!events
+#:operation #!audit
+#:fixity #!tending
+
+@index: ~"./index.spw"
+@loader: ~"../../../public/js/runtime/module-loader.js"
+@page_state: ~"../../../public/js/runtime/page-state.js"
+@site: ~"../../../public/js/site.js"
+@alignment: ~"../alignment-shell-lifecycle-sensitivity-2026-07/index.spw"
+
+^"module_stages"{
+  source = `MODULE_TIMING_STAGES in @loader`
+  sequence = #[
+    `scheduled`,
+    `loading`,
+    `mounted`,
+    `observed`,
+    `settled`,
+    `failed`,
+    `unmounting`,
+    `unmounted`
+  ][reg=set]
+
+  semantics_today: .{
+    scheduled = `def entered mount path after gates`
+    loading = `before def.load() dynamic import`
+    mounted = `mount() returned; side effects live`
+    observed = `IMMEDIATELY after mounted — registry/summary written — NOT viewport`
+    settled = `mainly refreshRuntime() on already-mounted records — NOT idle-wave complete`
+    failed = `load or mount threw`
+    unmount = `destroy/cleanup path`
+  }[reg=facet]
+
+  bus = .{
+    lifecycle = `spw:module-lifecycle { stage, record fields }`
+    mounted_legacy = `spw:module-mounted` # preferred by current consumers
+    failed = `spw:module-failed`
+  }[reg=facet]
+}[reg=facet]
+
+^"page_phases"{
+  source = `PAGE_STATES + site boot in @page_state / @site`
+  sequence = #[
+    `booting`,
+    `interactive`,
+    `hydrated`,
+    `region-enhanced`,
+    `enhanced`
+  ][reg=set]
+  events = #[
+    `spw:page-boot`,
+    `spw:page-interactive`,
+    `spw:page-hydrated`,
+    `spw:page-region-enhanced`,
+    `spw:page-enhanced`,
+    `spw:page-attention-state`,
+    `spw:page-transition-state`,
+    `spw:page-settle-confirm`
+  ][reg=set]
+  note = `Page plane and module plane are dual; some modules listen via ctx.bus, others document.addEventListener — dual-path risk.`
+}[reg=facet]
+
+^"region_states"{
+  sequence = `PRIMED → HYDRATING → INTERACTIVE|ENHANCED`
+  note = `Per-root for each-mode mounts; region layer uses REGION when`
+}[reg=facet]
+
+^"schedule_lanes"{
+  source = `MOUNT_WHEN`
+  lanes = #[`immediate`, `visible`, `idle`, `interaction`, `region`, `settled`][reg=set]
+  census_2026_07_12 = .{
+    immediate = 37
+    visible = 34
+    idle = 22
+    region = 1
+    settled = 1
+    interaction = 0
+  }[reg=facet]
+  idle_chunks = #[`idle-residue`, `idle-collectible`, `idle-chrome`, `idle-lab`, `idle-default`][reg=set]
+  note = `Idle chunks subclass loadable behavior without new catalog ids (L1).`
+}[reg=facet]
+
+^"consumer_map"{
+  note = `Directional — rg 2026-07-12. Strength: a few good models. Gap: lifecycle stages under-consumed.`
+
+  module_mounted: #[
+    `loading-ecology`,
+    `module-effects`,
+    `layout-shift-audit`,
+    `discovery-notices`,
+    `module-loader wireRuntimeTokens`
+  ][reg=set]
+
+  page_attention_or_transition: #[
+    `experiential`,
+    `spells`,
+    `navigation-locomotion`,
+    `state-inspector`,
+    `reward-ui`,
+    `loading-ecology`
+  ][reg=set]
+
+  page_hydrated: #[`reward-ui`][reg=set]
+  component_lifecycle: #[`pulse-beat-tuner`][reg=set]
+  medium_ready: #[`topical-payload`][reg=set]
+  cauldron: #[`attention-architecture`][reg=set]
+
+  module_lifecycle_stages = `essentially none outside loader/site destroy — contract advertises peer responsiveness that practice does not use`
+}[reg=facet]
+
+^"responsiveness_rubric"{
+  q1 = `Schedule honesty — when matches first needed moment, not convenience`
+  q2 = `Event posture — emits domain events and/or reacts to page/module lifecycle without polling`
+  q3 = `Refresh/unmount — cleanup required; refresh optional for settings/DOM mutation`
+  q4 = `Subfeature eligibility — half the work could wait on later stage or features gate`
+}[reg=facet]
+
+^"lifecycle_gaps"{
+  .{
+    id = `observed-semantics`
+    cost_class = `interference`
+    claim = `mgl-001`
+    severity = `high`
+    direction = `Rename to summary_written OR delay until real observe; document in SPW_MODULE_LOADER_CONTRACT`
+  }
+  .{
+    id = `settled-timing`
+    cost_class = `interference`
+    claim = `mgl-002`
+    severity = `high`
+    direction = `Emit settled after idle finalize / quiet frame; keep refreshRuntime as re-settle`
+  }
+  .{
+    id = `lifecycle-underconsumed`
+    cost_class = `working_memory_pressure`
+    severity = `medium`
+    direction = `Helper onModuleStage / prefer bus; migrate module-mounted-only peers gradually`
+  }
+  .{
+    id = `refresh-sparse`
+    cost_class = `premature_commitment`
+    severity = `medium`
+    direction = `settings, anatomy, operators export refresh when DOM/settings change without remount`
+  }
+  .{
+    id = `dual-bus-dom`
+    cost_class = `interference`
+    severity = `low`
+    direction = `Canonical: ctx.bus first; DOM alias only when LEGACY requires`
+  }
+  .{
+    id = `interaction-empty`
+    cost_class = `premature_commitment`
+    claim = `mgl-005`
+    severity = `medium`
+    direction = `Move first-gesture tools to INTERACTION`
+  }
+}[reg=set]
+
+^"exemplar_consumers"{
+  note = `Copy these postures when adding lifecycle-aware modules.`
+  module_effects = `listens spw:module-mounted + runtime tokens; thin IMMEDIATE orchestrator`
+  loading_ecology = `page attention + module-mounted; narrates arrival`
+  layout_shift_audit = `mount attribution window; IDLE debug`
+  layout_assumptions = `only SETTLED catalog user — post-wave correction`
+}[reg=facet]

@@ -51,6 +51,8 @@ export const SPW_MODULE_LOADER_CONTRACT = Object.freeze({
     'Optional timingChunk (idle-residue|idle-collectible|idle-chrome|idle-lab|idle-default) staggers IDLE mounts so residue/ledger land before collectible flourishes.',
   effectScope:
     'Module definitions may name effectScope tokens to make global state, storage, observer, media, or local DOM side effects auditable.',
+  costClass:
+    'Optional costClass (premature_commitment|working_memory_pressure|interference|demand_coupled|authored_prior_safe|paint_composite) is an optimization coordinate; schedule still uses when/features/selector. See module-catalog-normalize.js.',
   updatesContract:
     'Module updates accept flat strings or scope:role:kind:name tokens; roles (structural|flourish|inspect|residue|measure|diagnostic) power flourish topology inspection.',
   moduleExportFallback:

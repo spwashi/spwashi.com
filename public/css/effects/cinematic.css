@@ -24,24 +24,24 @@
    ========================================================================== */
 
 :root {
-  /* Timing */
+  /* Timing — prefer core ladder + settle eases over custom bounce. */
   --cinematic-arrive-duration:  var(--duration-fast, 140ms);
   --cinematic-dwell-duration:   var(--duration-base, 220ms);
   --cinematic-release-duration: var(--duration-slow, 480ms);
 
-  --cinematic-arrive-ease:  cubic-bezier(0.22, 0, 0.0, 1);
-  --cinematic-dwell-ease:   cubic-bezier(0.32, 0, 0.0, 1);
-  --cinematic-release-ease: cubic-bezier(0.08, 0, 0.0, 1);
+  --cinematic-arrive-ease:  var(--ease-chassis, cubic-bezier(0.22, 0, 0.0, 1));
+  --cinematic-dwell-ease:   var(--ease-mechanical, cubic-bezier(0.32, 0, 0.0, 1));
+  --cinematic-release-ease: var(--ease-release, cubic-bezier(0.18, 0.72, 0.18, 1));
 
-  /* Shared intensity */
-  --cinematic-intensity: 1;
-  --cinematic-depth-scale: 1;
-  --cinematic-outline-scale: 1;
+  /* Shared intensity — default slightly under 1 so ambient loops stay quiet. */
+  --cinematic-intensity: 0.92;
+  --cinematic-depth-scale: 0.96;
+  --cinematic-outline-scale: 0.96;
   --cinematic-wash-scale: 1;
-  --cinematic-glow-scale: 1;
-  --spw-motion-puppet-response: 0.36;
-  --spw-motion-puppet-lag: calc(18ms + (var(--spw-motion-puppet-response) * 90ms));
-  --spw-motion-puppet-lift: calc(var(--spw-motion-puppet-response) * -2px);
+  --cinematic-glow-scale: 0.9;
+  --spw-motion-puppet-response: 0.28;
+  --spw-motion-puppet-lag: calc(16ms + (var(--spw-motion-puppet-response) * 72ms));
+  --spw-motion-puppet-lift: calc(var(--spw-motion-puppet-response) * -1.25px);
 
   /* Developmental climate handoff */
   --cinematic-climate-clarity:        var(--developmental-clarity, 0.64);
@@ -326,13 +326,13 @@
 @keyframes spw-cinematic-sustain-breath {
   0%, 100% {
     filter:
-      drop-shadow(0 0 12px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 24%, transparent))
-      drop-shadow(0 0 4px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 56%, white));
+      drop-shadow(0 0 8px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 18%, transparent))
+      drop-shadow(0 0 2px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 40%, white));
   }
   50% {
     filter:
-      drop-shadow(0 0 24px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 42%, transparent))
-      drop-shadow(0 0 8px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 74%, white));
+      drop-shadow(0 0 14px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 28%, transparent))
+      drop-shadow(0 0 4px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 52%, white));
   }
 }
 
@@ -580,17 +580,17 @@
 }
 
 :where(.op-node--charged[data-spw-charge="active"] circle) {
-  filter: drop-shadow(0 0 8px color-mix(in srgb, var(--active-op-color, #008080) 42%, transparent)) brightness(1.06);
+  filter: drop-shadow(0 0 5px color-mix(in srgb, var(--active-op-color, #008080) 34%, transparent)) brightness(1.04);
 }
 
 :where(.op-node--charged[data-spw-charge="sustained"] circle) {
-  filter: drop-shadow(0 0 14px color-mix(in srgb, var(--active-op-color, #008080) 58%, transparent)) brightness(1.1);
-  animation: spine-sustain 900ms var(--cinematic-dwell-ease) infinite;
+  filter: drop-shadow(0 0 9px color-mix(in srgb, var(--active-op-color, #008080) 44%, transparent)) brightness(1.06);
+  animation: spine-sustain var(--duration-ceremonial, 720ms) var(--cinematic-dwell-ease) infinite;
 }
 
 @keyframes spine-sustain {
-  0%, 100% { filter: drop-shadow(0 0 10px color-mix(in srgb, var(--active-op-color, #008080) 42%, transparent)) brightness(1.06); }
-  50%      { filter: drop-shadow(0 0 18px color-mix(in srgb, var(--active-op-color, #008080) 64%, transparent)) brightness(1.12); }
+  0%, 100% { filter: drop-shadow(0 0 7px color-mix(in srgb, var(--active-op-color, #008080) 32%, transparent)) brightness(1.04); }
+  50%      { filter: drop-shadow(0 0 12px color-mix(in srgb, var(--active-op-color, #008080) 48%, transparent)) brightness(1.07); }
 }
 
 :where(.op-node--frame)     { --active-op-color: var(--op-frame-color, #008080); }
@@ -613,26 +613,26 @@
    ========================================================================== */
 
 :where(.spw-parallel-shimmer, [data-spw-parallel="active"]) {
-  animation: spw-parallel-pulse 1.8s var(--cinematic-dwell-ease) infinite;
+  animation: spw-parallel-pulse calc(2.2s / var(--cinematic-intensity, 1)) var(--cinematic-dwell-ease) infinite;
 }
 
 @keyframes spw-parallel-pulse {
   0%, 100% { box-shadow: 0 0 0 transparent; }
-  50% { box-shadow: 0 0 14px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 40%, transparent); }
+  50% { box-shadow: 0 0 8px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 26%, transparent); }
 }
 
 @keyframes spw-resonance-breathe {
-  0%, 100% { outline-offset: 2px; outline-width: 1.5px; }
-  50%      { outline-offset: 6px; outline-width: 1px; }
+  0%, 100% { outline-offset: 2px; outline-width: 1px; }
+  50%      { outline-offset: 3.5px; outline-width: 1px; }
 }
 
 :where([data-spw-resonance="high"]) {
-  outline: 1.5px solid color-mix(in srgb, var(--resonance-accent, var(--active-op-color, #008080)) 60%, transparent);
-  animation: spw-resonance-breathe 1100ms var(--cinematic-dwell-ease) infinite;
+  outline: 1px solid color-mix(in srgb, var(--resonance-accent, var(--active-op-color, #008080)) 48%, transparent);
+  animation: spw-resonance-breathe calc(1.4s / var(--cinematic-intensity, 1)) var(--cinematic-dwell-ease) infinite;
 }
 
 :where([data-spw-resonance="medium"]) {
-  outline: 1px solid color-mix(in srgb, var(--resonance-accent, var(--active-op-color, #008080)) 35%, transparent);
+  outline: 1px solid color-mix(in srgb, var(--resonance-accent, var(--active-op-color, #008080)) 28%, transparent);
 }
 
 /* ==========================================================================
@@ -641,13 +641,13 @@
 
 @keyframes spw-pop-snap {
   0%   { transform: scale(1); opacity: 1; }
-  40%  { transform: scale(0.88); opacity: 0.9; }
-  70%  { transform: scale(1.06); opacity: 1; }
+  40%  { transform: scale(0.97); opacity: 0.96; }
+  70%  { transform: scale(1.02); opacity: 1; }
   100% { transform: scale(1); }
 }
 
 :where(.spw-pop-snap) {
-  animation: spw-pop-snap 180ms var(--cinematic-dwell-ease) forwards;
+  animation: spw-pop-snap var(--duration-base, 220ms) var(--ease-settle, ease) forwards;
 }
 
 /* ==========================================================================

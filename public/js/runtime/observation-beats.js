@@ -28,6 +28,7 @@ import {
   writeDatasetValue,
   writeDatasetValues,
 } from '/public/js/kernel/dom-contracts.js';
+import { hasAgentQa, readDebugQaPosture } from './debug-qa-posture.js';
 
 const logger = createSpwLogger('observation-beats', {
   namespace: 'observation-beats',
@@ -60,14 +61,7 @@ let lastFlushPayload = null;
 
 function isDebugQAEnabled() {
   if (typeof window === 'undefined') return false;
-  const params = new URLSearchParams(window.location.search);
-  const debug = (params.get('debug') || params.get('spw-debug') || '').toLowerCase();
-  const qa = (params.get('qa') || params.get('spw-qa') || '').toLowerCase();
-  const mode = (params.get('mode') || params.get('spw-mode') || '').toLowerCase();
-
-  return debug.includes('qa') || debug.includes('beat') || debug.includes('agent') ||
-         qa.includes('screenshot') || qa.includes('beat') ||
-         mode.includes('qa') || mode.includes('screenshot-qa');
+  return hasAgentQa(readDebugQaPosture());
 }
 
 function getWindowMs() {

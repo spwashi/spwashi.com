@@ -451,7 +451,8 @@
   align-items: flex-start;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: var(--spw-slot-gap, clamp(0.6rem, 1.6vw, 0.9rem));
+  /* Block gap < inline gap: wrapped meta/actions sit closer under the title. */
+  gap: var(--gap-block-tight, 0.45rem) var(--spw-slot-gap, clamp(0.6rem, 1.6vw, 0.9rem));
   min-width: 0;
 }
 
@@ -459,8 +460,8 @@
   align-items: center;
   min-height: var(--component-header-min-height);
   margin-bottom: 0;
-  padding-bottom: 0.28rem;
-  gap: clamp(0.42rem, 1.2vw, 0.62rem);
+  padding-bottom: 0.32rem;
+  gap: 0.38rem clamp(0.42rem, 1.2vw, 0.62rem);
   border-bottom: 1px solid color-mix(in srgb, var(--component-accent) 16%, transparent);
   box-shadow: inset 0 -1px 0 color-mix(in srgb, var(--component-accent) 6%, transparent);
   transition:
@@ -475,7 +476,9 @@
 :where(.frame-heading > :is(h1, h2, h3)) {
   margin: 0;
   min-width: 0;
-  flex: 1 1 12rem;
+  flex: 1 1 min(100%, 12rem);
+  max-inline-size: 100%;
+  overflow-wrap: break-word;
 }
 
 :where([data-spw-slot="meta"], [data-spw-slot="actions"], .spec-strip, .button-group, .frame-operators) {
@@ -484,11 +487,24 @@
   align-items: center;
   gap: var(--spw-slot-gap-tight, 0.45rem 0.6rem);
   min-width: 0;
+  max-inline-size: 100%;
+}
+
+/* When meta wraps under the title, occupy the full row instead of a right stub. */
+:where(
+  [data-spw-slot="header"] > [data-spw-slot="meta"],
+  .frame-heading > [data-spw-slot="meta"],
+  .frame-topline > [data-spw-slot="meta"],
+  .frame-topline > .spec-strip,
+  .frame-topline > .frame-operators
+) {
+  flex: 1 1 10rem;
+  justify-content: flex-end;
 }
 
 :where([data-spw-slot="figure"]) {
   display: grid;
-  gap: 0.75rem;
+  gap: var(--component-gap-tight, 0.65rem);
   min-width: 0;
 }
 
@@ -496,7 +512,9 @@
 :where([data-spw-slot="caption"]) {
   color: var(--ink-soft, rgba(0, 0, 0, 0.6));
   font-size: 0.88em;
-  max-inline-size: 65ch;
+  max-inline-size: min(100%, 65ch);
+  text-wrap: pretty;
+  overflow-wrap: break-word;
 }
 
 :where([data-spw-slot="footer"]) {

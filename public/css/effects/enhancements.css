@@ -53,16 +53,16 @@
     overflow: hidden;
     transition:
         transform var(--duration-fast, 140ms) var(--ease-mechanical, ease),
-        box-shadow var(--duration-fast, 140ms) var(--ease-mechanical, ease),
+        box-shadow var(--duration-base, 220ms) var(--ease-settle, ease),
         border-color var(--duration-fast, 140ms) var(--ease-mechanical, ease),
-        background-color var(--duration-fast, 140ms) var(--ease-mechanical, ease);
+        background-color var(--duration-base, 220ms) var(--ease-paper, ease);
 }
 
 :where(.motif-card:hover, .capture-preset:hover,
        .motif-card:focus-within, .capture-preset:focus-within) {
-    transform: translateY(-2px);
-    box-shadow: var(--card-shadow-hover, 0 4px 18px rgba(0, 0, 0, 0.09));
-    border-color: var(--card-border-hover, rgba(0, 128, 128, 0.32));
+    transform: translateY(var(--spw-control-hover-lift, -1px));
+    box-shadow: var(--card-shadow-hover, 0 4px 14px rgba(0, 0, 0, 0.07));
+    border-color: var(--card-border-hover, rgba(0, 128, 128, 0.28));
     background: var(--surface-strong, rgba(255, 255, 255, 0.88));
 }
 

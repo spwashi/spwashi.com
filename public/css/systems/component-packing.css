@@ -34,24 +34,26 @@
 [data-spw-pack-region="body"] { grid-area: body; min-inline-size: 0; }
 [data-spw-pack-region="actions"] { grid-area: actions; min-inline-size: 0; }
 
-/* Split: media seats beside body once the card itself is wide enough. */
-@container spw-pack (min-width: 26rem) {
+@supports (container-type: inline-size) {
+  /* Split: media seats beside body once the card itself is wide enough. */
+  @container spw-pack (min-width: 26rem) {
     [data-spw-pack-regions] {
-        grid-template-columns: minmax(7rem, 1fr) minmax(0, 1.7fr);
-        grid-template-areas:
-            "media body"
-            "media actions";
-        align-items: start;
+      grid-template-columns: minmax(7rem, 1fr) minmax(0, 1.7fr);
+      grid-template-areas:
+        "media body"
+        "media actions";
+      align-items: start;
     }
-}
+  }
 
-/* Feature: three lanes when the card has room to spread. */
-@container spw-pack (min-width: 44rem) {
+  /* Feature: three lanes when the card has room to spread. */
+  @container spw-pack (min-width: 44rem) {
     [data-spw-pack-regions] {
-        grid-template-columns: minmax(7rem, 1fr) minmax(0, 2fr) minmax(6rem, auto);
-        grid-template-areas: "media body actions";
-        align-items: center;
+      grid-template-columns: minmax(7rem, 1fr) minmax(0, 2fr) minmax(6rem, auto);
+      grid-template-areas: "media body actions";
+      align-items: center;
     }
+  }
 }
 
 /* Content-count awareness (the other packing axis). A card holding many items

@@ -856,6 +856,26 @@ html[data-spw-reduce-motion="on"] *::after {
   initial-value: 0;
 }
 
+/* Numeric rhythm channels are registered so runtime pulse transitions can
+   interpolate without turning the underlying tokens into paint-heavy effects. */
+@property --spw-site-rhythm-tempo {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+
+@property --spw-site-rhythm-density {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.5;
+}
+
+@property --spw-microinteraction-pulse-intensity {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.88;
+}
+
 @property --spw-section-progress {
   syntax: "<number>";
   inherits: true;
@@ -1496,12 +1516,12 @@ html[data-spw-reduce-motion="on"] *::after {
 
   /* Shared settling field: small offsets/opacities that page-state and components can spend together. */
   --spw-micro-lift-distance: 1px;
-  --spw-micro-press-scale: 0.998;
+  --spw-micro-press-scale: 0.997;
   /* Machined chassis: century-scale handles meant to be inspected, not merely clicked. */
-  --spw-chassis-highlight: inset 0 1px 0 color-mix(in srgb, white 24%, transparent);
-  --spw-chassis-shadow: inset 0 -1px 0 color-mix(in srgb, var(--shadow-color, #111) 7%, transparent);
+  --spw-chassis-highlight: inset 0 1px 0 color-mix(in srgb, white 22%, transparent);
+  --spw-chassis-shadow: inset 0 -1px 0 color-mix(in srgb, var(--shadow-color, #111) 6%, transparent);
   --spw-control-hover-lift: -1px;
-  --spw-control-press-depth: 1px;
+  --spw-control-press-depth: 0.75px;
   --spw-interaction-acknowledge: var(--touch-acknowledge, 90ms) var(--ease-chassis, cubic-bezier(0.22, 0, 0, 1));
   --spw-interaction-commit: var(--touch-commit, 180ms) var(--ease-mechanical, cubic-bezier(0.32, 0, 0, 1));
   --spw-interaction-settle: var(--touch-recover, 520ms) var(--ease-settle, cubic-bezier(0.20, 0.80, 0.20, 1));
@@ -1559,8 +1579,8 @@ html[data-spw-reduce-motion="on"] *::after {
      substrate-ecology, and runtime-states spend during prefetch/measure/settle. */
   --spw-site-rhythm-tempo: 1;
   --spw-site-rhythm-density: 0.5;
-  --spw-microinteraction-pulse-duration: 280ms;
-  --spw-microinteraction-pulse-intensity: 1;
+  --spw-microinteraction-pulse-duration: 260ms;
+  --spw-microinteraction-pulse-intensity: 0.88;
   --spw-beat-interval-ms: 1300;
   --spw-freshness-weight: 0.62;
   --spw-pulse-beat-cadence: 13;
@@ -1582,6 +1602,10 @@ html[data-spw-reduce-motion="on"] *::after {
   --spw-effect-count: 0;
   --spw-effect-charge: 0;
   --spw-effect-pulse: 0;
+  /* Pulse windows: JS reads these for setTimeout; CSS spends them for outline/tempo. */
+  --spw-effect-pulse-duration: var(--duration-ceremonial, 720ms);
+  --spw-module-effect-pulse-duration: var(--touch-recover, 520ms);
+  --spw-ecology-phase-pulse-duration: var(--duration-deliberate, 360ms);
 
   /* Section locomotion progress (attention-architecture writes on section nodes). */
   --spw-section-progress: 0;
@@ -3421,11 +3445,13 @@ html[data-spw-reduce-motion="on"] {
   --shell-footer-font-size: var(--text-size-sm, 0.92rem);
   --shell-footer-opacity: 0.92;
 
-  /* Main page shell */
+  /* Main page shell
+     Top-level stack uses page-stack-gap so section seams read larger than
+     in-section surface-gap (visual hierarchy of page → section → content). */
   --spw-main-display: flex;
   --spw-main-direction: column;
   --spw-main-width: min(var(--page-width), var(--spw-layout-frame-max, var(--page-width)));
-  --spw-main-gap: var(--surface-gap);
+  --spw-main-gap: var(--page-stack-gap);
   --spw-main-padding-inline: var(--page-gutter-inline);
   --spw-main-padding-block-start: clamp(
     calc(var(--spw-rhythm-unit, 1rem) * 1.05),
@@ -3745,8 +3771,30 @@ main :where(section, aside) {
   gap: var(--surface-gap);
 }
 
+/* Nested stacks inside a section use a slightly tighter rhythm so the
+   outer section seam (main gap) stays the strongest page break. */
+main :where(section section, section article, article section) {
+  gap: var(--page-section-gap-tight, var(--surface-gap));
+}
+
 main :where(article > h1:first-child, section > h1:first-child) {
-  margin-bottom: 0.25rem;
+  margin-block-end: var(--space-2xs, 0.25rem);
+}
+
+/* Kicker → title → lede should read as one intro unit, not three stacks. */
+main :where(
+  .page-kicker + :is(h1, h2),
+  .section-kicker + :is(h1, h2),
+  .spec-kicker + :is(h1, h2)
+) {
+  margin-block-start: calc(var(--space-2xs, 0.25rem) * -0.5);
+}
+
+main :where(
+  h1 + :is(.page-lede, .site-lede, .hero-lede, .shell-lede),
+  h2 + :is(.page-lede, .site-lede, .hero-lede, .shell-lede)
+) {
+  margin-block-start: var(--space-2xs, 0.25rem);
 }
 
 main :where(article > p, section > p, aside > p, li, blockquote, figcaption) {
@@ -3815,10 +3863,12 @@ main :where(article > ul, article > ol, section > ul, section > ol) {
 .page-lede,
 .hero-lede,
 .shell-lede {
-  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
-  font-size: clamp(1rem, 1.2rem + 0.2vw, 1.15rem);
-  line-height: 1.72;
-  max-width: min(56ch, 100%);
+  color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 86%, transparent);
+  font-size: clamp(1.02rem, 0.94rem + 0.45vw, 1.18rem);
+  font-weight: 500;
+  line-height: 1.62;
+  max-inline-size: min(52ch, 100%);
+  text-wrap: pretty;
 }
 
 /* Generic page clusters and grids */
@@ -3828,7 +3878,7 @@ main :where(article > ul, article > ol, section > ul, section > ol) {
 .generic-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min-card, 15rem)), 1fr));
-  gap: var(--surface-gap);
+  gap: var(--page-stack-gap, var(--surface-gap));
   min-width: 0;
 }
 
@@ -3843,7 +3893,7 @@ main :where(article > ul, article > ol, section > ul, section > ol) {
 .action-cluster {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem 0.7rem;
+  gap: var(--gap-block-tight, var(--space-xs, 0.5rem)) var(--gap-inline-breath, var(--space-sm, 0.75rem));
   align-items: center;
   min-width: 0;
 }
@@ -10220,8 +10270,9 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
 
 :where(p) {
   margin: 0;
-  max-inline-size: var(--measure-reading, 68ch);
+  max-inline-size: min(100%, var(--measure-reading, 68ch));
   text-wrap: pretty;
+  overflow-wrap: break-word;
   color: var(--ink, #161c1d);
 }
 
@@ -10233,45 +10284,93 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
   margin: 0;
   color: var(--ink-strong, #090b0c);
   font-family: var(--site-sans-font, system-ui, sans-serif);
-  line-height: 1.15;
+  line-height: 1.18;
   letter-spacing: -0.02em;
   text-wrap: balance;
-  /* Ensure headings clear preceding content slightly more than standard flow */
+  overflow-wrap: break-word;
+  /* Ranked air before headings only — avoid margin-block-end so flex/grid
+     stacks that already use gap do not double-space. */
   margin-block-start: calc(var(--flow-space, 1rem) * var(--spw-heading-flow-space-multiplier, 1.5));
 }
 
-:where(h1:first-child, h2:first-child, h3:first-child) {
+:where(h1:first-child, h2:first-child, h3:first-child, h4:first-child) {
   margin-block-start: 0;
 }
 
+/* Ranked air before headings — lower ranks sit closer to prior prose. */
 :where(h1) {
+  --spw-heading-flow-space-multiplier: 1.75;
   font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 800;
   letter-spacing: -0.03em;
+  line-height: 1.12;
   max-inline-size: min(100%, calc(var(--spw-real-estate-inline, var(--measure-reading, 68ch)) * var(--spw-typography-rank-1, 1)));
 }
 :where(h2) {
+  --spw-heading-flow-space-multiplier: 1.55;
   font-size: clamp(1.5rem, 4vw, 2rem);
   font-weight: 700;
+  line-height: 1.16;
   max-inline-size: min(100%, calc(var(--spw-real-estate-inline, var(--measure-reading, 68ch)) * var(--spw-typography-rank-2, 0.88)));
 }
 :where(h3) {
+  --spw-heading-flow-space-multiplier: 1.35;
   font-size: clamp(1.25rem, 3vw, 1.5rem);
   font-weight: 600;
+  line-height: 1.22;
   max-inline-size: min(100%, calc(var(--spw-real-estate-inline, var(--measure-panel, 52ch)) * var(--spw-typography-rank-3, 0.76)));
 }
 :where(h4) {
+  --spw-heading-flow-space-multiplier: 1.2;
   font-size: clamp(1.1rem, 2vw, 1.25rem);
   font-weight: 600;
+  line-height: 1.28;
   max-inline-size: min(100%, calc(var(--spw-real-estate-inline, var(--measure-panel, 52ch)) * var(--spw-typography-rank-4, 0.64)));
 }
-:where(h5) { font-size: 1rem; font-weight: 600; }
+:where(h5) {
+  --spw-heading-flow-space-multiplier: 1.1;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.32;
+}
 :where(h6) {
+  --spw-heading-flow-space-multiplier: 1;
   font-size: 0.85rem;
   font-weight: 700;
+  line-height: 1.35;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+}
+
+/* Title stack: kicker/subtitle should hug the heading above content. */
+:where(
+  .spec-kicker + :is(h1, h2, h3),
+  .page-kicker + :is(h1, h2, h3),
+  .section-kicker + :is(h1, h2, h3),
+  h1 + h2,
+  h2 + h3,
+  h3 + h4
+) {
+  margin-block-start: calc(var(--flow-space, 1rem) * 0.28);
+}
+
+/* In prose/article flow, a heading after body copy needs a clearer break. */
+:where(.prose, article, .frame-copy) :where(
+  p + :is(h2, h3, h4),
+  ul + :is(h2, h3, h4),
+  ol + :is(h2, h3, h4),
+  blockquote + :is(h2, h3, h4)
+) {
+  margin-block-start: calc(var(--flow-space, 1rem) * 1.85);
+}
+
+/* Tighter run-in from heading into following paragraph in prose stacks. */
+:where(.prose, article, .frame-copy) :where(
+  :is(h1, h2, h3, h4) + p,
+  :is(h1, h2, h3, h4) + :is(.site-lede, .page-lede)
+) {
+  margin-block-start: calc(var(--flow-space, 1rem) * 0.55);
 }
 
 /* ==========================================================================
@@ -10288,12 +10387,12 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
 
 :where(ul, ol) {
   margin: 0;
-  padding-inline-start: 1.5rem;
-  max-inline-size: var(--measure-reading, 68ch);
+  padding-inline-start: 1.35rem;
+  max-inline-size: min(100%, var(--measure-reading, 68ch));
 }
 
 :where(blockquote, figcaption, dd, li) {
-  max-inline-size: var(--measure-reading, 68ch);
+  max-inline-size: min(100%, var(--measure-reading, 68ch));
   overflow-wrap: break-word;
 }
 
@@ -10333,6 +10432,16 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
 
 :where(li) {
   margin-block-start: var(--space-2xs, 0.25rem);
+  padding-inline-end: var(--space-2xs, 0.25rem);
+}
+
+:where(li + li) {
+  margin-block-start: var(--gap-block-tight, var(--space-xs, 0.5rem));
+}
+
+:where(li > ul, li > ol) {
+  margin-block-start: var(--space-2xs, 0.25rem);
+  margin-block-end: var(--space-2xs, 0.25rem);
 }
 
 :where(li::marker) {
@@ -13769,7 +13878,8 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
   align-items: flex-start;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: var(--spw-slot-gap, clamp(0.6rem, 1.6vw, 0.9rem));
+  /* Block gap < inline gap: wrapped meta/actions sit closer under the title. */
+  gap: var(--gap-block-tight, 0.45rem) var(--spw-slot-gap, clamp(0.6rem, 1.6vw, 0.9rem));
   min-width: 0;
 }
 
@@ -13777,8 +13887,8 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
   align-items: center;
   min-height: var(--component-header-min-height);
   margin-bottom: 0;
-  padding-bottom: 0.28rem;
-  gap: clamp(0.42rem, 1.2vw, 0.62rem);
+  padding-bottom: 0.32rem;
+  gap: 0.38rem clamp(0.42rem, 1.2vw, 0.62rem);
   border-bottom: 1px solid color-mix(in srgb, var(--component-accent) 16%, transparent);
   box-shadow: inset 0 -1px 0 color-mix(in srgb, var(--component-accent) 6%, transparent);
   transition:
@@ -13793,7 +13903,9 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
 :where(.frame-heading > :is(h1, h2, h3)) {
   margin: 0;
   min-width: 0;
-  flex: 1 1 12rem;
+  flex: 1 1 min(100%, 12rem);
+  max-inline-size: 100%;
+  overflow-wrap: break-word;
 }
 
 :where([data-spw-slot="meta"], [data-spw-slot="actions"], .spec-strip, .button-group, .frame-operators) {
@@ -13802,11 +13914,24 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
   align-items: center;
   gap: var(--spw-slot-gap-tight, 0.45rem 0.6rem);
   min-width: 0;
+  max-inline-size: 100%;
+}
+
+/* When meta wraps under the title, occupy the full row instead of a right stub. */
+:where(
+  [data-spw-slot="header"] > [data-spw-slot="meta"],
+  .frame-heading > [data-spw-slot="meta"],
+  .frame-topline > [data-spw-slot="meta"],
+  .frame-topline > .spec-strip,
+  .frame-topline > .frame-operators
+) {
+  flex: 1 1 10rem;
+  justify-content: flex-end;
 }
 
 :where([data-spw-slot="figure"]) {
   display: grid;
-  gap: 0.75rem;
+  gap: var(--component-gap-tight, 0.65rem);
   min-width: 0;
 }
 
@@ -13814,7 +13939,9 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
 :where([data-spw-slot="caption"]) {
   color: var(--ink-soft, rgba(0, 0, 0, 0.6));
   font-size: 0.88em;
-  max-inline-size: 65ch;
+  max-inline-size: min(100%, 65ch);
+  text-wrap: pretty;
+  overflow-wrap: break-word;
 }
 
 :where([data-spw-slot="footer"]) {
@@ -14520,9 +14647,10 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
 
 :where(.frame-note, .inline-note, .settings-note, .settings-start-note) {
   font-size: var(--text-size-sm, 0.88rem);
-  line-height: var(--site-line-height-tight, 1.35);
-  max-inline-size: var(--pack-tier-balanced-measure);
+  line-height: var(--site-line-height-tight, 1.4);
+  max-inline-size: min(100%, var(--pack-tier-balanced-measure));
   text-wrap: pretty;
+  overflow-wrap: break-word;
   color: color-mix(in srgb, var(--ink, #161c1d) 78%, transparent);
 }
 
@@ -14530,17 +14658,26 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
   font-size: var(--text-size-label, 0.74rem);
   letter-spacing: var(--tracking-spec, 0.06em);
   line-height: var(--site-line-height-tight, 1.35);
-  max-inline-size: var(--measure-card, 42ch);
+  max-inline-size: min(100%, var(--measure-card, 42ch));
   text-wrap: balance;
+  overflow-wrap: break-word;
   text-transform: uppercase;
 }
 
 :where(.frame-copy, .settings-prose, .focus-lens-container) {
   --flow-space: var(--spw-flow-space, var(--pack-tier-balanced-flow));
+  min-width: 0;
+  max-inline-size: 100%;
 }
 
 :where(.frame-body > .prose, .frame-body[data-spw-slot="body"]) {
   max-inline-size: min(100%, var(--measure-reading, 68ch));
+  min-width: 0;
+}
+
+/* Body slot: stack body children with the active flow space, not ad-hoc margins. */
+:where(.frame-body, [data-spw-slot="body"].frame-body) {
+  --flow-space: var(--spw-flow-space, var(--pack-tier-balanced-flow));
 }
 
 :where([data-spw-typeset-surface="editorial"] .prose p,
@@ -17493,7 +17630,7 @@ html[data-spw-font-size-scale="120"] [data-spw-vocab]) {
 .site-frame h1 {
   font-size: clamp(1.55rem, 1.2rem + 2vw, 2.2rem);
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.16;
   letter-spacing: -0.02em;
 }
 
@@ -17507,23 +17644,25 @@ html[data-spw-font-size-scale="120"] [data-spw-vocab]) {
 .site-frame h3 {
   font-size: clamp(0.92rem, 0.85rem + 0.5vw, 1.05rem);
   font-weight: 600;
-  line-height: 1.3;
+  line-height: 1.28;
   letter-spacing: -0.005em;
 }
 
 .site-lede,
 .page-lede {
-  font-size: clamp(1rem, 0.85rem + 0.9vw, 1.25rem);
+  font-size: clamp(1rem, 0.88rem + 0.7vw, 1.2rem);
   font-weight: 500;
   line-height: 1.58;
-  max-inline-size: 48ch;
+  max-inline-size: min(52ch, 100%);
   text-wrap: pretty;
-  color: color-mix(in srgb, var(--ink, #161c1d) 88%, transparent);
+  overflow-wrap: break-word;
+  color: color-mix(in srgb, var(--ink, #161c1d) 86%, transparent);
 }
 
 :where(.site-frame > p:not(.frame-note):not(.inline-note):not(.site-lede):not(.page-lede):not(.spec-kicker):not(.page-kicker)) {
-  max-inline-size: 66ch;
+  max-inline-size: min(66ch, 100%);
   text-wrap: pretty;
+  overflow-wrap: break-word;
 }
 
 :where(
@@ -17549,7 +17688,8 @@ html[data-spw-font-size-scale="120"] [data-spw-vocab]) {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--surface-gap);
+  /* Row gap tighter than column so wrapped meta sits close under the title. */
+  gap: var(--gap-block-tight, var(--space-xs, 0.5rem)) var(--spw-slot-gap, var(--surface-gap));
   min-width: 0;
   z-index: var(--material-layer-overlay, 2);
   transition: transform var(--component-transition-base);
@@ -17567,7 +17707,7 @@ html[data-spw-font-size-scale="120"] [data-spw-vocab]) {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--surface-gap);
+  gap: var(--gap-block-tight, var(--space-xs, 0.5rem)) var(--spw-slot-gap-tight, 0.45rem 0.6rem);
   margin-top: auto;
   padding-top: var(--surface-gap);
   border-top: 1px solid var(--line-quiet, rgba(0, 0, 0, 0.05));
@@ -17575,8 +17715,17 @@ html[data-spw-font-size-scale="120"] [data-spw-vocab]) {
   transition: transform var(--component-transition-base), opacity var(--component-transition-base);
 }
 
+/* Title → first body paragraph: keep the lede glued to the heading. */
 :where(.site-frame > :is(h1, h2, h3, .site-lede, .page-lede) + p) {
-  margin-block-start: calc(-1 * var(--space-3xs, 0.125rem));
+  margin-block-start: 0;
+}
+
+:where(.site-frame > :is(.spec-kicker, .page-kicker) + :is(h1, h2, h3)) {
+  margin-block-start: 0;
+}
+
+:where(.site-frame > :is(h1, h2) + :is(.site-lede, .page-lede)) {
+  margin-block-start: var(--space-3xs, 0.125rem);
 }
 
 :where(.frame-actions:has(> .spw-delimiter:only-child)) {
@@ -18737,10 +18886,12 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
 :where(.ref-terms) {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.28rem;
+  gap: 0.28rem 0.36rem;
   list-style: none;
   padding: 0;
   margin: 0.45rem 0 0;
+  min-width: 0;
+  max-inline-size: 100%;
 }
 
 :where(.ref-terms li) {
@@ -18764,6 +18915,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   justify-content: center;
   gap: 0.28rem;
   min-width: 0;
+  max-inline-size: 100%;
   min-height: var(--component-chip-height);
   padding: 0.18rem 0.62rem;
   border: 1px solid color-mix(in srgb, var(--component-accent) 18%, var(--line, transparent));
@@ -18773,10 +18925,12 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: var(--text-size-xs, 0.78rem);
   font-weight: 650;
-  line-height: 1.1;
+  line-height: 1.15;
   letter-spacing: 0.04em;
   text-decoration: none;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   transition: background var(--component-transition-fast),
   border-color var(--component-transition-fast),
   color var(--component-transition-fast),
@@ -18802,16 +18956,18 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.32rem;
+  gap: 0.28rem 0.38rem;
   min-width: 0;
+  max-inline-size: 100%;
 }
 
 :where(.spw-component-meta, .spw-component-guides) {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.28rem;
+  gap: 0.22rem 0.34rem;
   align-items: center;
   min-width: 0;
+  max-inline-size: 100%;
   color: var(--semantic-metadata-ink, var(--ink-soft));
   font-size: var(--semantic-metadata-font-size, 0.62rem);
   letter-spacing: var(--semantic-metadata-tracking, 0.04em);
@@ -18830,9 +18986,11 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
 }
 
 :where(.frame-copy) {
-  max-inline-size: var(--component-measure-wide);
+  max-inline-size: min(100%, var(--component-measure-wide));
   line-height: 1.62;
   text-wrap: pretty;
+  overflow-wrap: break-word;
+  min-width: 0;
 }
 
 :where(.frame-list) {
@@ -20147,7 +20305,20 @@ html[data-spw-color-mode="dark"] .spw-shell-utility-row .spw-shell-utility-butto
    --------------------------------------------------------------------------
    Slot anatomy rails and gesture-contract learnability — how components
    invite tap, hold, and inspect without rewriting content.
+   Synergy: themes (color-mode, metamaterial, biome, palette), modules
+   (component-semantics resolved contracts, module-effects, settings).
    ========================================================================== */
+
+:root {
+  --gesture-anatomy-opacity: 0.5;
+  --gesture-anatomy-size: 0.56rem;
+  --gesture-anatomy-accent: var(--active-op-color, var(--component-accent, var(--teal, #008080)));
+  --gesture-anatomy-surface: var(--surface-strong, #fff);
+  --gesture-anatomy-ink: var(--ink, #161c1d);
+  --gesture-anatomy-ink-soft: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  --gesture-anatomy-duration: var(--duration-fast, 140ms);
+  --gesture-anatomy-ease: var(--ease-settle, ease);
+}
 
 :where(html[data-spw-cognitive-handles="on"], html[data-spw-tuning-discoverability="revealed"]) {
   --gesture-anatomy-opacity: 0.72;
@@ -20157,6 +20328,48 @@ html[data-spw-color-mode="dark"] .spw-shell-utility-row .spw-shell-utility-butto
 :where(html[data-spw-tuning-discoverability="ambient"]) {
   --gesture-anatomy-opacity: 0.38;
   --gesture-anatomy-size: 0.54rem;
+}
+
+/* Theme / material posture — anatomy chrome spends the same palette as components. */
+:where(html[data-spw-color-mode="dark"]) {
+  --gesture-anatomy-surface: color-mix(in srgb, var(--surface-strong, #1a1e20) 92%, var(--gesture-anatomy-accent) 8%);
+}
+
+:where(html[data-spw-base-metamaterial="matte"]) {
+  --gesture-anatomy-surface: var(--matte-surface, var(--surface-strong, #fff));
+}
+
+:where(html[data-spw-base-metamaterial="glass"]) {
+  --gesture-anatomy-surface: color-mix(in srgb, var(--surface-strong, #fff) 86%, transparent);
+}
+
+:where(html[data-spw-theme-biome="shade-garden"]) {
+  --gesture-anatomy-accent: color-mix(in srgb, var(--active-op-color, #008080) 78%, hsl(28 40% 42%) 22%);
+}
+
+:where(html[data-spw-theme-biome="signal-reef"]) {
+  --gesture-anatomy-accent: color-mix(in srgb, var(--active-op-color, #008080) 72%, var(--blue, #2f69b1) 28%);
+}
+
+:where(html[data-spw-theme-biome="glasshouse"]) {
+  --gesture-anatomy-opacity: calc(var(--gesture-anatomy-opacity, 0.5) * 0.92);
+}
+
+:where(html[data-spw-palette-resonance="high"], html[data-spw-palette-resonance="vivid"]) {
+  --gesture-anatomy-opacity: min(calc(var(--gesture-anatomy-opacity, 0.5) * 1.12), 0.88);
+}
+
+/* Module synergy: when effect ledger / module-effects are active, anatomy reads slightly denser. */
+:where(html[data-spw-gesture-anatomy="active"][data-spw-module-effects-active]) {
+  --gesture-anatomy-opacity: min(calc(var(--gesture-anatomy-opacity, 0.5) * 1.06), 0.86);
+}
+
+:where(html[data-spw-anatomy-theme-link*="semantics"]) {
+  --gesture-anatomy-accent: color-mix(
+    in srgb,
+    var(--active-op-color, var(--teal, #008080)) 88%,
+    var(--op-probe-color, #6a3fb8) 12%
+  );
 }
 
 /* Slot role labels on framed components */
@@ -20177,10 +20390,12 @@ html[data-spw-color-mode="dark"] .spw-shell-utility-row .spw-shell-utility-butto
   html[data-spw-tuning-discoverability="revealed"]
 ) :where(
   .site-frame [data-spw-slot]:not([data-spw-slot=""]),
-  .frame-card [data-spw-slot]:not([data-spw-slot=""])
+  .frame-card [data-spw-slot]:not([data-spw-slot=""]),
+  .vibe-widget [data-spw-slot]:not([data-spw-slot=""])
 ) {
-  outline: 1px dashed color-mix(in srgb, var(--active-op-color) 14%, transparent);
+  outline: 1px dashed color-mix(in srgb, var(--gesture-anatomy-accent) 14%, transparent);
   outline-offset: 3px;
+  transition: outline-color var(--gesture-anatomy-duration) var(--gesture-anatomy-ease);
 }
 
 :where(
@@ -20195,11 +20410,13 @@ html[data-spw-color-mode="dark"] .spw-shell-utility-row .spw-shell-utility-butto
   z-index: 2;
   display: inline-flex;
   align-items: center;
+  max-inline-size: min(100%, 16rem);
+  overflow: hidden;
   padding: 0.08rem 0.34rem;
   border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--active-op-color) 20%, transparent);
-  background: color-mix(in srgb, var(--surface-strong) 90%, var(--active-op-color) 10%);
-  color: color-mix(in srgb, var(--active-op-color) 62%, var(--ink-soft) 38%);
+  border: 1px solid color-mix(in srgb, var(--gesture-anatomy-accent) 20%, transparent);
+  background: color-mix(in srgb, var(--gesture-anatomy-surface) 90%, var(--gesture-anatomy-accent) 10%);
+  color: color-mix(in srgb, var(--gesture-anatomy-accent) 62%, var(--gesture-anatomy-ink-soft) 38%);
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: var(--gesture-anatomy-size, 0.56rem);
   font-weight: 700;
@@ -20207,17 +20424,24 @@ html[data-spw-color-mode="dark"] .spw-shell-utility-row .spw-shell-utility-butto
   line-height: 1;
   opacity: var(--gesture-anatomy-opacity, 0.5);
   pointer-events: none;
+  text-overflow: ellipsis;
   text-transform: uppercase;
+  white-space: nowrap;
+  transition: opacity var(--gesture-anatomy-duration) var(--gesture-anatomy-ease);
 }
 
 /* Vertical anatomy stack rail on multi-slot frames */
 :where(
   html[data-spw-cognitive-handles="on"],
   html[data-spw-tuning-discoverability="revealed"]
-) :where(.site-frame[data-spw-anatomy-stack="true"]) {
+) :where(
+  .site-frame[data-spw-anatomy-stack="true"],
+  .frame-card[data-spw-anatomy-stack="true"],
+  .vibe-widget[data-spw-anatomy-stack="true"]
+) {
   border-inline-start: 3px solid color-mix(
     in srgb,
-    var(--active-op-color) 16%,
+    var(--gesture-anatomy-accent) 16%,
     transparent
   );
   padding-inline-start: 0.35rem;
@@ -20229,13 +20453,17 @@ html[data-spw-color-mode="dark"] .spw-shell-utility-row .spw-shell-utility-butto
   gap: 0.22rem;
   margin-block: 0.2rem 0.45rem;
   padding: 0.38rem 0.48rem;
-  border: 1px dashed color-mix(in srgb, var(--active-op-color) 16%, transparent);
+  border: 1px dashed color-mix(in srgb, var(--gesture-anatomy-accent) 16%, transparent);
   border-radius: calc(var(--shape-component, 6px) - 1px);
-  background: color-mix(in srgb, var(--surface-strong) 94%, var(--active-op-color) 6%);
+  background: color-mix(in srgb, var(--gesture-anatomy-surface) 94%, var(--gesture-anatomy-accent) 6%);
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: 0.58rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
+  transition:
+    border-color var(--gesture-anatomy-duration) var(--gesture-anatomy-ease),
+    background-color var(--gesture-anatomy-duration) var(--gesture-anatomy-ease),
+    opacity var(--gesture-anatomy-duration) var(--gesture-anatomy-ease);
 }
 
 :where(
@@ -20251,20 +20479,37 @@ html[data-spw-color-mode="dark"] .spw-shell-utility-row .spw-shell-utility-butto
   border-style: dotted;
 }
 
+/* Theming posture from component-semantics — rail personality without new chrome. */
+:where([data-spw-anatomy-theming="playful"]) .spw-anatomy-stack-rail {
+  border-style: solid;
+  background: color-mix(in srgb, var(--gesture-anatomy-surface) 88%, var(--op-object-color, #c68a22) 12%);
+}
+
+:where([data-spw-anatomy-theming="technical"], [data-spw-anatomy-theming="neutral"]) .spw-anatomy-stack-rail {
+  border-style: dashed;
+}
+
+:where([data-spw-anatomy-theming="ceremonial"]) .spw-anatomy-stack-rail {
+  border-color: color-mix(in srgb, var(--gesture-anatomy-accent) 28%, transparent);
+  letter-spacing: 0.09em;
+}
+
 :where(.spw-anatomy-stack-rail__item) {
   display: inline-flex;
   align-items: center;
   gap: 0.32rem;
-  color: var(--ink-soft);
+  color: var(--gesture-anatomy-ink-soft);
+  transition: color var(--gesture-anatomy-duration) var(--gesture-anatomy-ease);
 }
 
 :where(.spw-anatomy-stack-rail__item[data-spw-slot-active="true"]) {
-  color: var(--ink);
+  color: var(--gesture-anatomy-ink);
   font-weight: 700;
 }
 
 :where(.spw-anatomy-stack-rail__sigil) {
   opacity: 0.72;
+  color: var(--gesture-anatomy-accent);
 }
 
 /* Gesture contract hints */
@@ -20284,13 +20529,14 @@ html[data-spw-color-mode="dark"] .spw-shell-utility-row .spw-shell-utility-butto
   inset-inline-start: 50%;
   translate: -50% 0;
   display: inline-flex;
-  max-inline-size: 14rem;
+  max-inline-size: min(14rem, 70vw);
+  overflow: hidden;
   padding: 0.16rem 0.42rem;
-  border: 1px solid color-mix(in srgb, var(--active-op-color) 24%, transparent);
+  border: 1px solid color-mix(in srgb, var(--gesture-anatomy-accent) 24%, transparent);
   border-radius: 999px;
-  background: color-mix(in srgb, var(--surface-strong) 92%, var(--active-op-color) 8%);
-  box-shadow: 0 4px 14px rgba(14, 18, 20, 0.08);
-  color: var(--ink);
+  background: color-mix(in srgb, var(--gesture-anatomy-surface) 92%, var(--gesture-anatomy-accent) 8%);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--shadow-color, #111) 10%, transparent);
+  color: var(--gesture-anatomy-ink);
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: 0.58rem;
   letter-spacing: 0.04em;
@@ -20298,25 +20544,26 @@ html[data-spw-color-mode="dark"] .spw-shell-utility-row .spw-shell-utility-butto
   opacity: 0.96;
   pointer-events: none;
   text-align: center;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 :where(.spw-living-term[data-spw-gesture-hint])::after {
   content: attr(data-spw-gesture-hint);
-  right: auto;
-  left: 0;
-  top: calc(100% + 0.12rem);
+  inset-block-end: auto;
+  inset-block-start: calc(100% + 0.12rem);
+  inset-inline-start: 0;
   translate: none;
   font-size: 0.54rem;
   opacity: 0;
-  transition: opacity 140ms var(--ease-mechanical, ease);
+  transition: opacity var(--gesture-anatomy-duration) var(--ease-mechanical, ease);
 }
 
 :where(
   .spw-living-term[data-spw-gesture-hint]:is(:hover, :focus-visible, [data-spw-gesture="charging"], [data-spw-gesture="armed"])
 )::after {
   opacity: 0.88;
-  color: color-mix(in srgb, var(--active-op-color) 70%, var(--ink) 30%);
+  color: color-mix(in srgb, var(--gesture-anatomy-accent) 70%, var(--gesture-anatomy-ink) 30%);
 }
 
 /* Embedded panel swipe rail: lives inside the generated handle to avoid pseudo-element collisions. */
@@ -20353,27 +20600,59 @@ html[data-spw-color-mode="dark"] .spw-shell-utility-row .spw-shell-utility-butto
   [data-spw-gesture="armed"],
   [data-spw-gesture="sustained"]
 ) {
-  --gesture-anatomy-ring: color-mix(in srgb, var(--active-op-color) 28%, transparent);
+  --gesture-anatomy-ring: color-mix(in srgb, var(--gesture-anatomy-accent) 28%, transparent);
+  transition:
+    box-shadow var(--gesture-anatomy-duration) var(--gesture-anatomy-ease),
+    background-image var(--duration-base, 220ms) var(--gesture-anatomy-ease);
 }
 
 :where([data-spw-gesture="charging"]) {
   box-shadow:
     inset 0 0 0 1px var(--gesture-anatomy-ring, transparent),
-    0 0 0 3px color-mix(in srgb, var(--active-op-color) 10%, transparent);
+    0 0 0 2px color-mix(in srgb, var(--gesture-anatomy-accent) 10%, transparent);
 }
 
 :where([data-spw-gesture="armed"]) {
   box-shadow:
-    inset 0 0 0 1px color-mix(in srgb, var(--active-op-color) 34%, transparent),
-    0 0 0 4px color-mix(in srgb, var(--active-op-color) 14%, transparent);
+    inset 0 0 0 1px color-mix(in srgb, var(--gesture-anatomy-accent) 30%, transparent),
+    0 0 0 3px color-mix(in srgb, var(--gesture-anatomy-accent) 12%, transparent);
 }
 
 :where([data-spw-gesture="sustained"]) {
   background-image: linear-gradient(
     118deg,
-    color-mix(in srgb, var(--active-op-color) 7%, transparent),
+    color-mix(in srgb, var(--gesture-anatomy-accent) 6%, transparent),
     transparent 46%
   );
+}
+
+/* Resolved-contract hosts (from component-semantics) get a quieter ready mark. */
+:where([data-spw-gesture-contract-resolved]:not([data-spw-gesture-hint])) {
+  --gesture-anatomy-accent: color-mix(
+    in srgb,
+    var(--active-op-color, var(--teal, #008080)) 90%,
+    var(--op-probe-color, #6a3fb8) 10%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where([data-spw-slot-label])::before,
+  :where(.spw-anatomy-stack-rail),
+  :where(.spw-anatomy-stack-rail__item),
+  :where([data-spw-gesture="charging"], [data-spw-gesture="armed"], [data-spw-gesture="sustained"]),
+  :where(.spw-living-term[data-spw-gesture-hint])::after {
+    transition: none;
+  }
+}
+
+:where(html[data-spw-reduce-motion="on"]) :where(
+  [data-spw-slot-label]::before,
+  .spw-anatomy-stack-rail,
+  [data-spw-gesture="charging"],
+  [data-spw-gesture="armed"],
+  [data-spw-gesture="sustained"]
+) {
+  transition: none;
 }
 }
 
@@ -20554,6 +20833,8 @@ html[data-spw-theme-biome="glasshouse"] {
 .spw-anatomy-anchor,
 :where([data-spw-anatomy][data-spw-vocabulary]:not(section):not(article):not(main):not(body)) {
   --spw-anatomy-color-local: var(--spw-anatomy-color, var(--active-op-color, var(--teal, #008080)));
+  --spw-anatomy-surface-local: var(--surface-strong, #fff);
+  --spw-anatomy-highlight: color-mix(in srgb, white 22%, transparent);
   position: relative;
   display: inline-flex;
   min-width: 0;
@@ -20564,8 +20845,8 @@ html[data-spw-theme-biome="glasshouse"] {
   border: 1px solid color-mix(in srgb, var(--spw-anatomy-color-local) 24%, transparent);
   border-radius: var(--shape-control, 0.78rem);
   background:
-    linear-gradient(180deg, color-mix(in srgb, white 22%, transparent), transparent 70%),
-    color-mix(in srgb, var(--surface-strong, #fff) 94%, var(--spw-anatomy-color-local) 6%);
+    linear-gradient(180deg, var(--spw-anatomy-highlight), transparent 70%),
+    color-mix(in srgb, var(--spw-anatomy-surface-local) 94%, var(--spw-anatomy-color-local) 6%);
   box-shadow:
     inset 0 1px 0 color-mix(in srgb, white 28%, transparent),
     0 0.34rem 1rem color-mix(in srgb, var(--spw-anatomy-color-local) 8%, transparent);
@@ -20578,15 +20859,36 @@ html[data-spw-theme-biome="glasshouse"] {
   text-decoration: none;
   touch-action: manipulation;
   transition:
-    border-color 150ms var(--ease-settle, ease),
-    background-color 150ms var(--ease-settle, ease),
-    box-shadow 150ms var(--ease-settle, ease),
-    transform 150ms var(--ease-settle, ease);
+    border-color var(--duration-fast, 140ms) var(--ease-settle, ease),
+    background-color var(--duration-base, 220ms) var(--ease-settle, ease),
+    box-shadow var(--duration-base, 220ms) var(--ease-settle, ease),
+    transform var(--duration-fast, 140ms) var(--ease-settle, ease);
+}
+
+/* Theme + material synergy for interactive anatomy anchors */
+html[data-spw-color-mode="dark"] :where(.spw-anatomy-anchor, [data-spw-anatomy][data-spw-vocabulary]:not(section):not(article):not(main):not(body)) {
+  --spw-anatomy-surface-local: color-mix(in srgb, var(--surface-strong, #1a1e20) 94%, var(--spw-anatomy-color-local) 6%);
+  --spw-anatomy-highlight: color-mix(in srgb, white 8%, transparent);
+}
+
+html[data-spw-base-metamaterial="matte"] :where(.spw-anatomy-anchor, [data-spw-anatomy][data-spw-vocabulary]:not(section):not(article):not(main):not(body)) {
+  --spw-anatomy-surface-local: var(--matte-surface, var(--surface-strong, #fff));
+  --spw-anatomy-highlight: transparent;
+}
+
+html[data-spw-base-metamaterial="glass"] :where(.spw-anatomy-anchor, [data-spw-anatomy][data-spw-vocabulary]:not(section):not(article):not(main):not(body)) {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+html[data-spw-gesture-anatomy="active"] :where(.spw-anatomy-anchor, [data-spw-anatomy][data-spw-vocabulary]:not(section):not(article):not(main):not(body)) {
+  /* Module bridge: when slot anatomy is live, page anchors share accent language. */
+  border-color: color-mix(in srgb, var(--spw-anatomy-color-local) 28%, transparent);
 }
 
 html[data-spw-anatomy-ready="true"] :where(.spw-anatomy-anchor, [data-spw-anatomy][data-spw-vocabulary]:not(section):not(article):not(main):not(body)) {
-  animation: spw-anatomy-arrive 260ms var(--ease-settle, ease) both;
-  animation-delay: calc(min(var(--spw-anatomy-order, 0), 12) * 22ms);
+  animation: spw-anatomy-arrive var(--duration-base, 220ms) var(--ease-settle, ease) both;
+  animation-delay: calc(min(var(--spw-anatomy-order, 0), 12) * 18ms);
 }
 
 .spw-anatomy-anchor::before,
@@ -22375,45 +22677,43 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
     color-mix(in srgb, var(--component-accent, var(--teal, #008080)) 72%, var(--ink-soft, rgba(14, 18, 20, 0.72)) 28%);
 }
 
-/* Module effect surface — root-level tokens derived from mounted module side effects. */
+/* Module effect surface — root-level tokens derived from mounted module side effects.
+   Pulse window: --spw-module-effect-pulse-duration (module-effects.js). */
 :where(html[data-spw-module-effects-active]) {
   --spw-module-effect-surface: 1;
 }
 
 :where(html[data-spw-module-effect-pulse]) {
   --spw-module-effect-pulse: 1;
-  --spw-site-rhythm-tempo: min(calc(var(--spw-site-rhythm-tempo, 1) * 1.08), 3.2);
+  /* Mount blip: barely audible tempo nudge, not a tempo shift. */
+  --spw-site-rhythm-tempo: 1.035;
+  transition:
+    --spw-site-rhythm-tempo var(--spw-module-effect-pulse-duration, 520ms) var(--ease-settle, ease);
 }
 
 /* Effect ledger flourishes — precipitated residue as soft ornament knobs.
-   Defaults live in tokens/core.css; effect-ledger.js overrides on html when residue lands. */
+   Defaults live in tokens/core.css; effect-ledger.js overrides on html when residue lands.
+   Pulse window: --spw-effect-pulse-duration (effect-ledger.js). */
 :where(html[data-spw-effects]) {
   --spw-effect-surface: 1;
-  --spw-effect-ledger-scale: calc(1 + (min(var(--spw-effect-count), 24) * 0.004));
-  --spw-site-rhythm-density: max(
-    var(--spw-site-rhythm-density, 0.5),
-    calc(0.48 + (var(--spw-effect-charge) * 0.28))
-  );
+  --spw-effect-ledger-scale: calc(1 + (min(var(--spw-effect-count), 24) * 0.0025));
+  --spw-site-rhythm-density: calc(0.5 + (var(--spw-effect-charge) * 0.16));
 }
 
 :where(html[data-spw-effect-pulse]) {
   --spw-effect-pulse-active: max(var(--spw-effect-pulse), 1);
-  --spw-microinteraction-pulse-intensity: max(
-    var(--spw-microinteraction-pulse-intensity, 1),
-    calc(1 + (max(var(--spw-effect-charge), 0.18) * 0.22 * var(--spw-effect-pulse-active, 1)))
-  );
-  --spw-site-rhythm-tempo: min(
-    calc(var(--spw-site-rhythm-tempo, 1) * (1 + (max(var(--spw-effect-charge), 0.12) * 0.1))),
-    3.2
-  );
+  --spw-microinteraction-pulse-intensity:
+    calc(1 + (max(var(--spw-effect-charge), 0.12) * 0.12 * var(--spw-effect-pulse-active, 1)));
+  --spw-site-rhythm-tempo:
+    calc(1 + (max(var(--spw-effect-charge), 0.08) * 0.05));
 }
 
 :where(html[data-spw-module-visuals="on"][data-spw-effect-pulse]) {
   --spw-effect-pulse-ring:
-    inset 0 0 0 1px color-mix(in srgb, var(--op-object-color, #c9862a) calc(18% + (var(--spw-effect-charge) * 16%)), transparent);
-  outline: 1px solid color-mix(in srgb, var(--op-object-color, #c9862a) calc(16% + (var(--spw-effect-charge) * 14%)), transparent);
+    inset 0 0 0 1px color-mix(in srgb, var(--op-object-color, #c9862a) calc(12% + (var(--spw-effect-charge) * 10%)), transparent);
+  outline: 1px solid color-mix(in srgb, var(--op-object-color, #c9862a) calc(10% + (var(--spw-effect-charge) * 8%)), transparent);
   outline-offset: -1px;
-  transition: outline-color 420ms var(--ease-smooth, ease);
+  transition: outline-color var(--spw-effect-pulse-duration, 720ms) var(--ease-settle, ease);
 }
 
 /* Runtime load diagnostic — module-loader writes avg mount ms; inspect surfaces may read it. */
@@ -22435,6 +22735,23 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
 :where(html[data-spw-reduce-motion="on"][data-spw-effect-pulse]) {
   --spw-effect-pulse-active: 0;
   --spw-microinteraction-pulse-intensity: 1;
+}
+
+:where(html[data-spw-reduce-motion="on"][data-spw-module-effect-pulse]) {
+  --spw-module-effect-pulse: 0;
+  --spw-site-rhythm-tempo: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(html[data-spw-effect-pulse]) {
+    --spw-effect-pulse-active: 0;
+    --spw-microinteraction-pulse-intensity: 1;
+  }
+
+  :where(html[data-spw-module-effect-pulse]) {
+    --spw-module-effect-pulse: 0;
+    --spw-site-rhythm-tempo: 1;
+  }
 }
 
 :where(html[data-spw-runtime-enhancement-active="true"]) {
@@ -22680,64 +22997,66 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
    27. Responsive container behavior
    ========================================================================== */
 
-@container (max-width: 36rem) {
-  :where([data-spw-slot="header"], .frame-topline, .frame-heading) {
-    gap: var(--spw-slot-gap-tight, 0.34rem 0.46rem);
+@supports (container-type: inline-size) {
+  @container (max-width: 36rem) {
+    :where([data-spw-slot="header"], .frame-topline, .frame-heading) {
+      gap: var(--spw-slot-gap-tight, 0.34rem 0.46rem);
+    }
+
+    :where([data-spw-slot="meta"], [data-spw-slot="actions"], .spec-strip, .button-group, .frame-operators) {
+      width: 100%;
+      gap: var(--spw-slot-gap-tight, 0.34rem 0.46rem);
+    }
+
+    :where(.frame-topline > .spw-component-meta, .frame-heading > .spw-component-meta) {
+      width: 100%;
+      margin-inline-start: 0;
+      justify-content: flex-start;
+    }
+
+    :where(.frame-topline > .mode-switch, [data-spw-slot="actions"] > .mode-switch) {
+      width: 100%;
+      justify-content: stretch;
+    }
+
+    /* Soft PE only — handles/state-semantics owns track/chrome contracts. */
+    :where(.mode-switch[aria-label]:not([data-spw-lens-track="row"])) {
+      display: flex;
+      flex-flow: row wrap;
+      width: 100%;
+      min-inline-size: 0;
+    }
+
+    :where(.mode-switch[aria-label]:not([data-spw-lens-chrome~="silent"]))::before {
+      flex: 1 1 100%;
+      max-inline-size: none;
+      overflow: visible;
+      text-overflow: clip;
+      white-space: normal;
+      text-wrap: balance;
+    }
+
+    :where(.mode-switch:not([data-spw-lens-track="row"])[aria-label] > .frame-sigil) {
+      flex: 1 1 0;
+      min-inline-size: min(100%, 4.25rem);
+      white-space: nowrap;
+      justify-content: center;
+    }
+
+    :where(.site-hero--split-figure) > [data-spw-slot="body"] {
+      gap: var(--component-gap);
+    }
+
+    :where(.site-lede, .page-lede) {
+      font-size: clamp(0.96rem, 0.9rem + 0.24vw, 1.08rem);
+      line-height: 1.5;
+    }
   }
 
-  :where([data-spw-slot="meta"], [data-spw-slot="actions"], .spec-strip, .button-group, .frame-operators) {
-    width: 100%;
-    gap: var(--spw-slot-gap-tight, 0.34rem 0.46rem);
-  }
-
-  :where(.frame-topline > .spw-component-meta, .frame-heading > .spw-component-meta) {
-    width: 100%;
-    margin-inline-start: 0;
-    justify-content: flex-start;
-  }
-
-  :where(.frame-topline > .mode-switch, [data-spw-slot="actions"] > .mode-switch) {
-    width: 100%;
-    justify-content: stretch;
-  }
-
-  /* Soft PE only — handles/state-semantics owns track/chrome contracts. */
-  :where(.mode-switch[aria-label]:not([data-spw-lens-track="row"])) {
-    display: flex;
-    flex-flow: row wrap;
-    width: 100%;
-    min-inline-size: 0;
-  }
-
-  :where(.mode-switch[aria-label]:not([data-spw-lens-chrome~="silent"]))::before {
-    flex: 1 1 100%;
-    max-inline-size: none;
-    overflow: visible;
-    text-overflow: clip;
-    white-space: normal;
-    text-wrap: balance;
-  }
-
-  :where(.mode-switch:not([data-spw-lens-track="row"])[aria-label] > .frame-sigil) {
-    flex: 1 1 0;
-    min-inline-size: min(100%, 4.25rem);
-    white-space: nowrap;
-    justify-content: center;
-  }
-
-  :where(.site-hero--split-figure) > [data-spw-slot="body"] {
-    gap: var(--component-gap);
-  }
-
-  :where(.site-lede, .page-lede) {
-    font-size: clamp(0.96rem, 0.9rem + 0.24vw, 1.08rem);
-    line-height: 1.5;
-  }
-}
-
-@container (min-width: 36.01rem) and (max-width: 52rem) {
-  :where(.frame-grid--3up) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  @container (min-width: 36.01rem) and (max-width: 52rem) {
+    :where(.frame-grid--3up) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 }
 
@@ -24370,24 +24689,26 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
 [data-spw-pack-region="body"] { grid-area: body; min-inline-size: 0; }
 [data-spw-pack-region="actions"] { grid-area: actions; min-inline-size: 0; }
 
-/* Split: media seats beside body once the card itself is wide enough. */
-@container spw-pack (min-width: 26rem) {
+@supports (container-type: inline-size) {
+  /* Split: media seats beside body once the card itself is wide enough. */
+  @container spw-pack (min-width: 26rem) {
     [data-spw-pack-regions] {
-        grid-template-columns: minmax(7rem, 1fr) minmax(0, 1.7fr);
-        grid-template-areas:
-            "media body"
-            "media actions";
-        align-items: start;
+      grid-template-columns: minmax(7rem, 1fr) minmax(0, 1.7fr);
+      grid-template-areas:
+        "media body"
+        "media actions";
+      align-items: start;
     }
-}
+  }
 
-/* Feature: three lanes when the card has room to spread. */
-@container spw-pack (min-width: 44rem) {
+  /* Feature: three lanes when the card has room to spread. */
+  @container spw-pack (min-width: 44rem) {
     [data-spw-pack-regions] {
-        grid-template-columns: minmax(7rem, 1fr) minmax(0, 2fr) minmax(6rem, auto);
-        grid-template-areas: "media body actions";
-        align-items: center;
+      grid-template-columns: minmax(7rem, 1fr) minmax(0, 2fr) minmax(6rem, auto);
+      grid-template-areas: "media body actions";
+      align-items: center;
     }
+  }
 }
 
 /* Content-count awareness (the other packing axis). A card holding many items
@@ -25519,10 +25840,12 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
   max-width: min(100%, var(--measure-reading, 72ch));
 }
 
-@container (max-width: 42rem) {
-  :where(.spw-context-memo, .spw-experience-memo) {
-    max-width: 100%;
-    font-size: 0.62rem;
+@supports (container-type: inline-size) {
+  @container (max-width: 42rem) {
+    :where(.spw-context-memo, .spw-experience-memo) {
+      max-width: 100%;
+      font-size: 0.62rem;
+    }
   }
 }
 
@@ -35388,16 +35711,16 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
     overflow: hidden;
     transition:
         transform var(--duration-fast, 140ms) var(--ease-mechanical, ease),
-        box-shadow var(--duration-fast, 140ms) var(--ease-mechanical, ease),
+        box-shadow var(--duration-base, 220ms) var(--ease-settle, ease),
         border-color var(--duration-fast, 140ms) var(--ease-mechanical, ease),
-        background-color var(--duration-fast, 140ms) var(--ease-mechanical, ease);
+        background-color var(--duration-base, 220ms) var(--ease-paper, ease);
 }
 
 :where(.motif-card:hover, .capture-preset:hover,
        .motif-card:focus-within, .capture-preset:focus-within) {
-    transform: translateY(-2px);
-    box-shadow: var(--card-shadow-hover, 0 4px 18px rgba(0, 0, 0, 0.09));
-    border-color: var(--card-border-hover, rgba(0, 128, 128, 0.32));
+    transform: translateY(var(--spw-control-hover-lift, -1px));
+    box-shadow: var(--card-shadow-hover, 0 4px 14px rgba(0, 0, 0, 0.07));
+    border-color: var(--card-border-hover, rgba(0, 128, 128, 0.28));
     background: var(--surface-strong, rgba(255, 255, 255, 0.88));
 }
 
@@ -36457,24 +36780,24 @@ html[data-spw-features~="circuit-anatomy"] :where([data-spw-circuit-role="transf
    ========================================================================== */
 
 :root {
-  /* Timing */
+  /* Timing — prefer core ladder + settle eases over custom bounce. */
   --cinematic-arrive-duration:  var(--duration-fast, 140ms);
   --cinematic-dwell-duration:   var(--duration-base, 220ms);
   --cinematic-release-duration: var(--duration-slow, 480ms);
 
-  --cinematic-arrive-ease:  cubic-bezier(0.22, 0, 0.0, 1);
-  --cinematic-dwell-ease:   cubic-bezier(0.32, 0, 0.0, 1);
-  --cinematic-release-ease: cubic-bezier(0.08, 0, 0.0, 1);
+  --cinematic-arrive-ease:  var(--ease-chassis, cubic-bezier(0.22, 0, 0.0, 1));
+  --cinematic-dwell-ease:   var(--ease-mechanical, cubic-bezier(0.32, 0, 0.0, 1));
+  --cinematic-release-ease: var(--ease-release, cubic-bezier(0.18, 0.72, 0.18, 1));
 
-  /* Shared intensity */
-  --cinematic-intensity: 1;
-  --cinematic-depth-scale: 1;
-  --cinematic-outline-scale: 1;
+  /* Shared intensity — default slightly under 1 so ambient loops stay quiet. */
+  --cinematic-intensity: 0.92;
+  --cinematic-depth-scale: 0.96;
+  --cinematic-outline-scale: 0.96;
   --cinematic-wash-scale: 1;
-  --cinematic-glow-scale: 1;
-  --spw-motion-puppet-response: 0.36;
-  --spw-motion-puppet-lag: calc(18ms + (var(--spw-motion-puppet-response) * 90ms));
-  --spw-motion-puppet-lift: calc(var(--spw-motion-puppet-response) * -2px);
+  --cinematic-glow-scale: 0.9;
+  --spw-motion-puppet-response: 0.28;
+  --spw-motion-puppet-lag: calc(16ms + (var(--spw-motion-puppet-response) * 72ms));
+  --spw-motion-puppet-lift: calc(var(--spw-motion-puppet-response) * -1.25px);
 
   /* Developmental climate handoff */
   --cinematic-climate-clarity:        var(--developmental-clarity, 0.64);
@@ -36759,13 +37082,13 @@ html[data-spw-features~="circuit-anatomy"] :where([data-spw-circuit-role="transf
 @keyframes spw-cinematic-sustain-breath {
   0%, 100% {
     filter:
-      drop-shadow(0 0 12px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 24%, transparent))
-      drop-shadow(0 0 4px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 56%, white));
+      drop-shadow(0 0 8px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 18%, transparent))
+      drop-shadow(0 0 2px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 40%, white));
   }
   50% {
     filter:
-      drop-shadow(0 0 24px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 42%, transparent))
-      drop-shadow(0 0 8px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 74%, white));
+      drop-shadow(0 0 14px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 28%, transparent))
+      drop-shadow(0 0 4px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 52%, white));
   }
 }
 
@@ -37013,17 +37336,17 @@ html[data-spw-features~="circuit-anatomy"] :where([data-spw-circuit-role="transf
 }
 
 :where(.op-node--charged[data-spw-charge="active"] circle) {
-  filter: drop-shadow(0 0 8px color-mix(in srgb, var(--active-op-color, #008080) 42%, transparent)) brightness(1.06);
+  filter: drop-shadow(0 0 5px color-mix(in srgb, var(--active-op-color, #008080) 34%, transparent)) brightness(1.04);
 }
 
 :where(.op-node--charged[data-spw-charge="sustained"] circle) {
-  filter: drop-shadow(0 0 14px color-mix(in srgb, var(--active-op-color, #008080) 58%, transparent)) brightness(1.1);
-  animation: spine-sustain 900ms var(--cinematic-dwell-ease) infinite;
+  filter: drop-shadow(0 0 9px color-mix(in srgb, var(--active-op-color, #008080) 44%, transparent)) brightness(1.06);
+  animation: spine-sustain var(--duration-ceremonial, 720ms) var(--cinematic-dwell-ease) infinite;
 }
 
 @keyframes spine-sustain {
-  0%, 100% { filter: drop-shadow(0 0 10px color-mix(in srgb, var(--active-op-color, #008080) 42%, transparent)) brightness(1.06); }
-  50%      { filter: drop-shadow(0 0 18px color-mix(in srgb, var(--active-op-color, #008080) 64%, transparent)) brightness(1.12); }
+  0%, 100% { filter: drop-shadow(0 0 7px color-mix(in srgb, var(--active-op-color, #008080) 32%, transparent)) brightness(1.04); }
+  50%      { filter: drop-shadow(0 0 12px color-mix(in srgb, var(--active-op-color, #008080) 48%, transparent)) brightness(1.07); }
 }
 
 :where(.op-node--frame)     { --active-op-color: var(--op-frame-color, #008080); }
@@ -37046,26 +37369,26 @@ html[data-spw-features~="circuit-anatomy"] :where([data-spw-circuit-role="transf
    ========================================================================== */
 
 :where(.spw-parallel-shimmer, [data-spw-parallel="active"]) {
-  animation: spw-parallel-pulse 1.8s var(--cinematic-dwell-ease) infinite;
+  animation: spw-parallel-pulse calc(2.2s / var(--cinematic-intensity, 1)) var(--cinematic-dwell-ease) infinite;
 }
 
 @keyframes spw-parallel-pulse {
   0%, 100% { box-shadow: 0 0 0 transparent; }
-  50% { box-shadow: 0 0 14px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 40%, transparent); }
+  50% { box-shadow: 0 0 8px color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, #008080)) 26%, transparent); }
 }
 
 @keyframes spw-resonance-breathe {
-  0%, 100% { outline-offset: 2px; outline-width: 1.5px; }
-  50%      { outline-offset: 6px; outline-width: 1px; }
+  0%, 100% { outline-offset: 2px; outline-width: 1px; }
+  50%      { outline-offset: 3.5px; outline-width: 1px; }
 }
 
 :where([data-spw-resonance="high"]) {
-  outline: 1.5px solid color-mix(in srgb, var(--resonance-accent, var(--active-op-color, #008080)) 60%, transparent);
-  animation: spw-resonance-breathe 1100ms var(--cinematic-dwell-ease) infinite;
+  outline: 1px solid color-mix(in srgb, var(--resonance-accent, var(--active-op-color, #008080)) 48%, transparent);
+  animation: spw-resonance-breathe calc(1.4s / var(--cinematic-intensity, 1)) var(--cinematic-dwell-ease) infinite;
 }
 
 :where([data-spw-resonance="medium"]) {
-  outline: 1px solid color-mix(in srgb, var(--resonance-accent, var(--active-op-color, #008080)) 35%, transparent);
+  outline: 1px solid color-mix(in srgb, var(--resonance-accent, var(--active-op-color, #008080)) 28%, transparent);
 }
 
 /* ==========================================================================
@@ -37074,13 +37397,13 @@ html[data-spw-features~="circuit-anatomy"] :where([data-spw-circuit-role="transf
 
 @keyframes spw-pop-snap {
   0%   { transform: scale(1); opacity: 1; }
-  40%  { transform: scale(0.88); opacity: 0.9; }
-  70%  { transform: scale(1.06); opacity: 1; }
+  40%  { transform: scale(0.97); opacity: 0.96; }
+  70%  { transform: scale(1.02); opacity: 1; }
   100% { transform: scale(1); }
 }
 
 :where(.spw-pop-snap) {
-  animation: spw-pop-snap 180ms var(--cinematic-dwell-ease) forwards;
+  animation: spw-pop-snap var(--duration-base, 220ms) var(--ease-settle, ease) forwards;
 }
 
 /* ==========================================================================
@@ -38721,9 +39044,11 @@ html[data-spw-developmental-indicators="on"] :where(
    7. Responsive Adjustments
    ========================================================================== */
 
-@container (max-width: 32rem) {
-  :where(.specimen-index-grid, .fiber-linguistics-grid, .field-notes-grid) {
-    grid-template-columns: 1fr;
+@supports (container-type: inline-size) {
+  @container (max-width: 32rem) {
+    :where(.specimen-index-grid, .fiber-linguistics-grid, .field-notes-grid) {
+      grid-template-columns: 1fr;
+    }
   }
 }
 
@@ -38771,21 +39096,27 @@ html[data-spw-developmental-indicators="on"] :where(
   --spw-architecture-reward: 0;
   --spw-conceptual-nuance: 0;
 
-  --spw-wonder-duration-fast: var(--duration-fast, 120ms);
-  --spw-wonder-duration-base: var(--duration-base, 200ms);
-  --spw-wonder-duration-deliberate: var(--duration-deliberate, 420ms);
+  /* Align with core motion ladder — taste favors settle over bounce. */
+  --spw-wonder-duration-fast: var(--duration-fast, 140ms);
+  --spw-wonder-duration-base: var(--duration-base, 220ms);
+  --spw-wonder-duration-deliberate: var(--duration-deliberate, 360ms);
+  --spw-wonder-duration-slow: var(--duration-slow, 480ms);
 
-  --spw-wonder-ease: var(--cinematic-ease, ease-in-out);
+  --spw-wonder-ease: var(--ease-paper, var(--cinematic-ease, ease-in-out));
   --spw-wonder-ease-settle: var(--ease-settle, ease-out);
   --spw-wonder-ease-mechanical: var(--ease-mechanical, ease);
 
   --spw-wonder-ring:
-    0 0 0 1px color-mix(in srgb, var(--wonder-accent-color) 20%, transparent),
-    0 6px 14px color-mix(in srgb, var(--wonder-accent-color) 8%, transparent);
+    0 0 0 1px color-mix(in srgb, var(--wonder-accent-color) 16%, transparent),
+    0 4px 12px color-mix(in srgb, var(--wonder-accent-color) 6%, transparent);
 
   --spw-delight-ring:
-    0 0 0 1px color-mix(in srgb, var(--delight-color) 22%, transparent),
-    0 6px 14px color-mix(in srgb, var(--delight-color) 8%, transparent);
+    0 0 0 1px color-mix(in srgb, var(--delight-color) 18%, transparent),
+    0 4px 12px color-mix(in srgb, var(--delight-color) 6%, transparent);
+
+  /* Burst/scale taste knobs — keep recognition, avoid carnival. */
+  --spw-delight-burst-scale: 1.035;
+  --spw-delight-burst-glow: 12px;
 }
 
 /* ==========================================================================
@@ -38837,16 +39168,19 @@ html[data-spw-developmental-indicators="on"] :where(
 
 @keyframes spw-delight-burst {
   0% {
-    box-shadow: 0 0 0 0 color-mix(in srgb, var(--delight-color) 60%, transparent);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--delight-color) 42%, transparent);
     transform: scale(1);
   }
 
-  30% {
-    transform: scale(1.12);
+  28% {
+    transform: scale(var(--spw-delight-burst-scale, 1.035));
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--delight-color) 28%, transparent),
+      0 0 var(--spw-delight-burst-glow, 12px) color-mix(in srgb, var(--delight-color) 16%, transparent);
   }
 
   100% {
-    box-shadow: 0 0 20px 10px transparent;
+    box-shadow: 0 0 0 0 transparent;
     transform: scale(1);
   }
 }
@@ -38855,7 +39189,7 @@ html[data-spw-developmental-indicators="on"] :where(
 [data-spw-delight="burst"],
 [data-spw-delight="settled"] {
   z-index: var(--z-floating, var(--layer-floating, 100));
-  animation: spw-delight-burst 0.6s var(--spw-wonder-ease-settle) forwards;
+  animation: spw-delight-burst var(--spw-wonder-duration-slow, 480ms) var(--spw-wonder-ease-settle) forwards;
 }
 
 :where(
@@ -38876,8 +39210,8 @@ html[data-spw-developmental-indicators="on"] :where(
   .mode-panel[data-spw-delight="settled"]
 ) {
   box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--delight-color) 20%, transparent),
-    0 0 18px color-mix(in srgb, var(--delight-color) 14%, transparent);
+    0 0 0 1px color-mix(in srgb, var(--delight-color) 16%, transparent),
+    0 0 12px color-mix(in srgb, var(--delight-color) 9%, transparent);
 }
 
 /* ==========================================================================
@@ -38889,14 +39223,14 @@ html[data-spw-developmental-indicators="on"] :where(
 @keyframes spw-wonder-glow {
   0%,
   100% {
-    filter: drop-shadow(0 0 2px var(--wonder-accent-color));
-    opacity: 0.85;
+    filter: drop-shadow(0 0 1px color-mix(in srgb, var(--wonder-accent-color) 70%, transparent));
+    opacity: 0.9;
   }
 
   50% {
-    filter: drop-shadow(0 0 12px var(--wonder-accent-color));
+    filter: drop-shadow(0 0 6px color-mix(in srgb, var(--wonder-accent-color) 55%, transparent));
     opacity: 1;
-    transform: translateY(-2px);
+    transform: translateY(-1px);
   }
 }
 
@@ -38920,8 +39254,8 @@ html[data-spw-developmental-indicators="on"] :where(
   .math-lens-card[data-spw-wonder-state="resonant"]
 ) {
   box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--wonder-accent-color) 14%, transparent),
-    0 6px 18px color-mix(in srgb, var(--wonder-accent-color) 7%, transparent);
+    0 0 0 1px color-mix(in srgb, var(--wonder-accent-color) 12%, transparent),
+    0 4px 14px color-mix(in srgb, var(--wonder-accent-color) 5%, transparent);
 }
 
 :where(
@@ -39062,7 +39396,7 @@ html[data-spw-interaction-wonder="architecture"] {
   box-shadow:
     var(--spw-local-shadow, none),
     0 0 0 1px color-mix(in srgb, var(--spw-curiosity-color) 10%, transparent),
-    0 0 18px color-mix(in srgb, var(--spw-curiosity-color) calc(var(--spw-curiosity-reward, 0) * 14%), transparent);
+    0 0 10px color-mix(in srgb, var(--spw-curiosity-color) calc(var(--spw-curiosity-reward, 0) * 10%), transparent);
 }
 
 :where(html[data-spw-concept-relation="relationship"]) :where(
@@ -39075,7 +39409,7 @@ html[data-spw-interaction-wonder="architecture"] {
   box-shadow:
     var(--spw-local-shadow, none),
     0 0 0 1px color-mix(in srgb, var(--spw-relationship-color) 10%, transparent),
-    0 0 18px color-mix(in srgb, var(--spw-relationship-color) calc(var(--spw-relationship-reward, 0) * 14%), transparent);
+    0 0 10px color-mix(in srgb, var(--spw-relationship-color) calc(var(--spw-relationship-reward, 0) * 10%), transparent);
 }
 
 :where(html[data-spw-concept-relation="architecture"]) :where(
@@ -39089,7 +39423,7 @@ html[data-spw-interaction-wonder="architecture"] {
   box-shadow:
     var(--spw-local-shadow, none),
     0 0 0 1px color-mix(in srgb, var(--spw-architecture-color) 10%, transparent),
-    0 0 18px color-mix(in srgb, var(--spw-architecture-color) calc(var(--spw-architecture-reward, 0) * 14%), transparent);
+    0 0 10px color-mix(in srgb, var(--spw-architecture-color) calc(var(--spw-architecture-reward, 0) * 10%), transparent);
 }
 
 @supports selector(:has(*)) {
@@ -39225,8 +39559,8 @@ html[data-spw-interaction-wonder="architecture"] {
   .mode-panel[data-spw-charge="sustained"]
 ) {
   box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--spw-operator-color, var(--delight-color)) 16%, transparent),
-    0 8px 18px color-mix(in srgb, var(--spw-operator-color, var(--delight-color)) 6%, transparent);
+    0 0 0 1px color-mix(in srgb, var(--spw-operator-color, var(--delight-color)) 14%, transparent),
+    0 6px 14px color-mix(in srgb, var(--spw-operator-color, var(--delight-color)) 5%, transparent);
 }
 
 /* ==========================================================================
@@ -39357,22 +39691,23 @@ html[data-spw-semantic-density="minimal"] .persona-selector-mount {
 [data-spw-persona="doodler"] [data-spw-delight="burst"]::after {
   content: "✧";
   position: absolute;
-  top: -1em;
+  top: -0.85em;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 1.2em;
-  color: var(--wonder-accent-color);
-  animation: doodler-sparkle 0.6s ease-out forwards;
+  font-size: 0.95em;
+  color: color-mix(in srgb, var(--wonder-accent-color) 82%, transparent);
+  pointer-events: none;
+  animation: doodler-sparkle var(--spw-wonder-duration-slow, 480ms) var(--spw-wonder-ease-settle) forwards;
 }
 
 @keyframes doodler-sparkle {
   0% {
-    transform: translate(-50%, 0) scale(0);
-    opacity: 1;
+    transform: translate(-50%, 0) scale(0.6);
+    opacity: 0.85;
   }
 
   100% {
-    transform: translate(-50%, -1.5em) scale(1.5) rotate(45deg);
+    transform: translate(-50%, -1.1em) scale(1.08) rotate(18deg);
     opacity: 0;
   }
 }
@@ -39486,15 +39821,15 @@ html[data-spw-semantic-density="minimal"] .persona-selector-mount {
 
 .spw-wonder-block[data-spw-wonder-block-state="thinking"] {
   box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--wonder-accent-color) 22%, transparent),
-    0 0 18px color-mix(in srgb, var(--wonder-accent-color) 12%, transparent);
+    0 0 0 1px color-mix(in srgb, var(--wonder-accent-color) 16%, transparent),
+    0 0 10px color-mix(in srgb, var(--wonder-accent-color) 8%, transparent);
 }
 
 .spw-wonder-block[data-spw-wonder-block-state="revealed"],
 .spw-wonder-block[data-spw-wonder-block-state="expanded"] {
   box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--delight-color) 24%, transparent),
-    0 0 20px color-mix(in srgb, var(--delight-color) 14%, transparent);
+    0 0 0 1px color-mix(in srgb, var(--delight-color) 18%, transparent),
+    0 0 12px color-mix(in srgb, var(--delight-color) 9%, transparent);
 }
 
 .wonder-header {
@@ -39673,8 +40008,8 @@ html[data-spw-semantic-density="minimal"] .persona-selector-mount {
   .spw-metaphysics-host[data-spw-wonder-state="accented"]
 ) {
   box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--wonder-accent-color) 20%, transparent),
-    0 0 18px color-mix(in srgb, var(--wonder-accent-color) 12%, transparent);
+    0 0 0 1px color-mix(in srgb, var(--wonder-accent-color) 14%, transparent),
+    0 0 10px color-mix(in srgb, var(--wonder-accent-color) 8%, transparent);
 }
 
 :where(
@@ -39682,8 +40017,8 @@ html[data-spw-semantic-density="minimal"] .persona-selector-mount {
   .spw-metaphysics-host[data-spw-charge="sustained"]
 ) {
   box-shadow:
-    0 0 0 1px color-mix(in srgb, var(--delight-color) 14%, transparent),
-    0 8px 18px color-mix(in srgb, var(--delight-color) 6%, transparent);
+    0 0 0 1px color-mix(in srgb, var(--delight-color) 12%, transparent),
+    0 6px 12px color-mix(in srgb, var(--delight-color) 5%, transparent);
 }
 
 /* ==========================================================================
@@ -39742,12 +40077,12 @@ html[data-spw-active-layers="core"] :where(
   transition: none;
 }
 
-/* Computational modulation: higher layer count = slightly more expressive wonder (architectural hook) */
+/* Computational modulation: higher layer count = slightly more present wonder (still restrained). */
 :root {
-  --spw-wonder-layer-mod: calc(1 + (var(--spw-runtime-layer-count, 2) - 2) * 0.08);
+  --spw-wonder-layer-mod: calc(1 + (var(--spw-runtime-layer-count, 2) - 2) * 0.05);
 }
 [data-spw-wonder-state] {
-  animation-duration: calc(1.8s / var(--spw-wonder-layer-mod, 1));
+  animation-duration: calc(var(--spw-wonder-duration-slow, 480ms) * 2.4 / var(--spw-wonder-layer-mod, 1));
 }
 
 /* ==========================================================================
@@ -39837,12 +40172,13 @@ html[data-spw-active-layers="core"] :where(
       background-color var(--attention-echo-duration, 480ms) var(--ease-settle, ease);
   }
 
+  /* Soft ring — peripheral grammar cue, not a second focus outline. */
   :where([data-spw-operator]:not(:hover):not(:focus-visible))[style*="--spw-resonance"],
   :where([data-spw-operator]) {
     box-shadow:
       var(--spw-local-shadow, none),
       0 0 0 calc(1px * var(--spw-resonance, 0))
-        color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal))) 42%, transparent);
+        color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal))) 32%, transparent);
   }
 }
 
@@ -40815,24 +41151,26 @@ html[data-spw-show-semantic-metadata="off"] .spw-image-memory__value {
   }
 }
 
-@container (max-width: 28rem) {
-  .spw-image-helper-strip {
-    gap: 0.3rem;
-    padding-inline: 0.54rem;
-  }
+@supports (container-type: inline-size) {
+  @container (max-width: 28rem) {
+    .spw-image-helper-strip {
+      gap: 0.3rem;
+      padding-inline: 0.54rem;
+    }
 
-  .spw-image-helper {
-    min-width: 0;
-    flex: 1 1 8rem;
-  }
+    .spw-image-helper {
+      min-width: 0;
+      flex: 1 1 8rem;
+    }
 
-  .spw-image-memory {
-    flex: 1 1 100%;
-    max-width: none;
-  }
+    .spw-image-memory {
+      flex: 1 1 100%;
+      max-width: none;
+    }
 
-  .spw-image-memory__value {
-    white-space: normal;
+    .spw-image-memory__value {
+      white-space: normal;
+    }
   }
 }
 
@@ -42144,41 +42482,38 @@ html[data-spw-narrative-mode="on"] :where([data-spw-narrative-copy])::selection 
    Implements Attentional Cueing and Relational Resonance.
    ========================================================================== */
 
-/* 1. Attentional Cueing (Environmental Dimming) */
+/* 1. Attentional Cueing (Environmental Dimming) — dim, don't mute. */
 :where(main:has(.site-frame[data-spw-attention="focused"])) .site-frame[data-spw-attention="dimmed"] {
-  opacity: 0.45;
-  filter: grayscale(0.4) contrast(0.9);
+  opacity: 0.62;
+  filter: grayscale(0.18) contrast(0.96);
   transition:
-    opacity var(--duration-deliberate) var(--ease-settle),
-    filter var(--duration-deliberate) var(--ease-settle);
+    opacity var(--duration-deliberate, 360ms) var(--ease-settle, ease),
+    filter var(--duration-deliberate, 360ms) var(--ease-settle, ease);
   pointer-events: none; /* Soft lockout to encourage focus */
 }
 
 :where(main:has(.site-frame[data-spw-attention="focused"])) .site-frame[data-spw-attention="dimmed"]:hover {
-  opacity: 0.72;
-  filter: grayscale(0.2) contrast(0.95);
+  opacity: 0.84;
+  filter: grayscale(0.08) contrast(0.98);
   pointer-events: auto;
 }
 
-/* 2. Arrival Pulse (Genetic Animation) */
+/* 2. Arrival Pulse — single soft ring, no scale bounce. */
 :where(.site-frame[data-state~="arrival"]) {
-  animation: spw-arrival-flare 420ms var(--ease-reveal) both;
+  animation: spw-arrival-flare var(--duration-deliberate, 360ms) var(--ease-settle, ease) both;
 }
 
 @keyframes spw-arrival-flare {
   0% {
-    box-shadow: 0 0 0 0px var(--active-op-color);
-    transform: scale(1);
+    box-shadow: 0 0 0 0 transparent;
   }
 
-  40% {
-    box-shadow: 0 0 0 4px color-mix(in srgb, var(--active-op-color) 20%, transparent);
-    transform: scale(1.002);
+  35% {
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--active-op-color, #008080) 16%, transparent);
   }
 
   100% {
-    box-shadow: 0 0 0 0px transparent;
-    transform: scale(1);
+    box-shadow: 0 0 0 0 transparent;
   }
 }
 
@@ -42772,7 +43107,7 @@ html[data-spw-debug-mode="on"][data-spw-layout-assumptions-active="true"]::befor
 
 .spw-ornament-rail > .spw-ornament-node[data-spw-child-active="true"]::before {
   opacity: 1;
-  transform: scale(1.18);
+  transform: scale(1.08);
 }
 
 /* ==========================================================================
@@ -43278,27 +43613,29 @@ html[data-spw-debug-mode="on"][data-spw-layout-assumptions-active="true"]::befor
    14. Responsive adjustments
    ========================================================================== */
 
-@container (max-width: 34rem) {
-  .spw-ornament-rail {
-    max-width: 100%;
-  }
+@supports (container-type: inline-size) {
+  @container (max-width: 34rem) {
+    .spw-ornament-rail {
+      max-width: 100%;
+    }
 
-  .spw-ornament-rail::before,
-  .spw-ornament-rail::after {
-    width: 1.3rem;
-  }
+    .spw-ornament-rail::before,
+    .spw-ornament-rail::after {
+      width: 1.3rem;
+    }
 
-  .spw-spirit-sequence {
-    --ornament-sequence-font-size: 0.84rem;
-    --ornament-sequence-gap: 0.22em;
-  }
+    .spw-spirit-sequence {
+      --ornament-sequence-font-size: 0.84rem;
+      --ornament-sequence-gap: 0.22em;
+    }
 
-  .spw-ornament-meter {
-    grid-template-columns: auto 1fr;
-  }
+    .spw-ornament-meter {
+      grid-template-columns: auto 1fr;
+    }
 
-  .spw-ornament-meter > :last-child {
-    grid-column: 1 / -1;
+    .spw-ornament-meter > :last-child {
+      grid-column: 1 / -1;
+    }
   }
 }
 
@@ -43461,7 +43798,7 @@ html[data-spw-debug-mode="on"][data-spw-layout-assumptions-active="true"]::befor
 
 @keyframes spw-ornament-opacity-pulse {
   0% { opacity: 0; }
-  35% { opacity: 1; }
+  40% { opacity: 0.72; }
   100% { opacity: 0; }
 }
 
@@ -43477,11 +43814,11 @@ html[data-spw-debug-mode="on"][data-spw-layout-assumptions-active="true"]::befor
   border-radius: inherit;
   background: color-mix(
     in srgb,
-    var(--wonder-accent-color, currentColor) 24%,
+    var(--wonder-accent-color, currentColor) 16%,
     transparent
   );
-  animation: spw-ornament-opacity-pulse var(--ornament-duration-deliberate, 320ms)
-    var(--ornament-settle-ease, ease-out) 1;
+  animation: spw-ornament-opacity-pulse var(--ornament-duration-deliberate, var(--duration-deliberate, 360ms))
+    var(--ornament-settle-ease, var(--ease-settle, ease-out)) 1;
 }
 
 :where(.ornament-stable-accent, [data-spw-ornament~='stable-accent']) {
@@ -43605,24 +43942,25 @@ html[data-spw-debug-mode="on"][data-spw-layout-assumptions-active="true"]::befor
   height: 0.18rem;
   border-radius: 999px;
   background: currentColor;
-  opacity: 0.55;
+  opacity: 0.48;
   margin-inline: 0.08rem;
-  animation: spw-site-rhythm-pulse calc(820ms / var(--rhythm-tempo)) var(--ornament-settle-ease) infinite alternate;
+  /* Slower, smaller breath — ambient chrome, not a status LED. */
+  animation: spw-site-rhythm-pulse calc(1100ms / var(--rhythm-tempo, 1)) var(--ornament-settle-ease, ease) infinite alternate;
   animation-play-state: var(--spw-site-rhythm, running);
 }
 
 .spw-site-rhythm[data-spw-site-rhythm="quiet"] .spw-site-rhythm__node,
 [data-spw-ornament="site-rhythm"][data-spw-site-rhythm="quiet"] .spw-site-rhythm__node {
-  animation-duration: calc(1450ms / var(--rhythm-tempo));
-  opacity: 0.38;
+  animation-duration: calc(1680ms / var(--rhythm-tempo, 1));
+  opacity: 0.32;
 }
 
-.spw-site-rhythm__node:nth-child(2) { animation-delay: calc(-120ms / var(--rhythm-tempo)); }
-.spw-site-rhythm__node:nth-child(3) { animation-delay: calc(-260ms / var(--rhythm-tempo)); }
+.spw-site-rhythm__node:nth-child(2) { animation-delay: calc(-160ms / var(--rhythm-tempo, 1)); }
+.spw-site-rhythm__node:nth-child(3) { animation-delay: calc(-320ms / var(--rhythm-tempo, 1)); }
 
 @keyframes spw-site-rhythm-pulse {
-  from { opacity: 0.32; transform: scale(0.82); }
-  to   { opacity: 0.92; transform: scale(1.05); }
+  from { opacity: 0.28; transform: scale(0.92); }
+  to   { opacity: 0.72; transform: scale(1.02); }
 }
 
 /* When the runtime reports high layer activity or recent enhancement work,

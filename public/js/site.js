@@ -41,6 +41,15 @@ import {
   snapshotCompositionBoxes,
 } from './runtime/composition-box-model.js';
 import {
+  applyDebugQaPostureToRoot,
+  describeDebugQaPosture,
+  hasDebugOrQAMode as hasDebugOrQAModeFromPosture,
+  hasLayoutDebug,
+  readDebugQaPosture,
+  SPW_DEBUG_QA_CONTRACT,
+  SPW_DEBUG_QA_PRESETS,
+} from './runtime/debug-qa-posture.js';
+import {
   cancelIdle,
   createRegistry,
   describeRuntimePolicy,
@@ -65,8 +74,10 @@ import {
   ENHANCEMENT_DEFS as ENHANCEMENT_DEFS_BASE,
   FEATURE_DEFS,
   filterEnhancementDefs,
+  listModuleCatalogIndex,
   MOUNT_WHEN,
   REGION_DEFS,
+  summarizeModuleCatalogOptimization,
 } from './runtime/module-catalog.js';
 import {
   collectRelatedRouteSamples,
@@ -331,39 +342,12 @@ function requestServiceWorkerCacheSummary() {
   }
 }
 
-/* Temporary debug-only guard for layout shift instrumentation.
-   The layout-shift-audit module (and its 5s mutation + mount timing collectors)
-   only loads when ?debug=layout or ?log=layout-shift (or spw- aliases).
-   This keeps production free of the observer and extra diagnostics. */
 function shouldActivateLayoutDebugInstrumentation() {
-  try {
-    const search = (typeof window !== 'undefined' && window.location) ? window.location.search : '';
-    const params = new URLSearchParams(String(search || '').replace(/^\?/, ''));
-    const debugRaw = String(params.get('debug') || params.get('spw-debug') || '').toLowerCase();
-    const logRaw = String(params.get('log') || params.get('spw-log') || '').toLowerCase();
-    const debugTokens = debugRaw.split(/[,\s]+/).map((s) => s.trim()).filter(Boolean);
-    const logTokens = logRaw.split(/[,\s]+/).map((s) => s.trim()).filter(Boolean);
-    const wantsLayout = debugTokens.some((t) => t === 'layout' || t === 'layout-shift' || t.includes('layout'));
-    const wantsLogLayout = logTokens.some((t) => t.includes('layout'));
-    return wantsLayout || wantsLogLayout;
-  } catch {
-    return false;
-  }
+  return hasLayoutDebug(readDebugQaPosture());
 }
 
 function hasDebugOrQAMode(ctx) {
-  if (ctx?.debug?.size && [...ctx.debug].some((token) => ['qa', 'agent', 'beat', 'layout', 'debug'].includes(token))) {
-    return true;
-  }
-
-  try {
-    const params = new URLSearchParams(window.location.search);
-    const qa = String(params.get('qa') || params.get('spw-qa') || '').toLowerCase();
-    const mode = String(params.get('mode') || params.get('spw-mode') || '').toLowerCase();
-    return qa.includes('qa') || qa.includes('beat') || qa.includes('screenshot') || mode.includes('qa');
-  } catch {
-    return false;
-  }
+  return hasDebugOrQAModeFromPosture(ctx, readDebugQaPosture());
 }
 
 
@@ -763,6 +747,10 @@ async function bootSite() {
 
   runtimeCtx = createRuntimeContext();
   runtimeCtx.queryDisposition = queryDisposition;
+  // Project debug/qa posture after query disposition so dataset + URL agree.
+  runtimeCtx.debugQa = applyDebugQaPostureToRoot(HTML, readDebugQaPosture());
+  // Refresh debug token set for catalog gates (may have been filled by posture).
+  runtimeCtx.debug = parseFeatureList(HTML?.dataset?.spwDebug || BODY?.dataset?.spwDebug);
   runtimeCtx.addCleanup(wireRuntimeTokens(runtimeCtx));
   performance.mark('spw:boot-start');
   runtimeLogger.info('runtime boot started', { route: runtimeCtx.route }, SPW_LOG_RELATIONSHIPS.LIFECYCLE);
@@ -953,6 +941,24 @@ async function bootSite() {
     timings: runtimeCtx.compose?.controls?.modules?.timings?.() || null,
   });
 
+  // When layout/agent debug is active, warm layout-qa and log a one-line summary.
+  if (runtimeCtx.debugQa?.layoutDebug || runtimeCtx.debugQa?.agentQa) {
+    void import('./runtime/layout-qa.js').then(async (m) => {
+      try {
+        const report = m.snapshotLayoutQa({ ctx: runtimeCtx });
+        const summary = m.summarizeLayoutQa(report);
+        writeDatasetValue(HTML, 'spwLayoutQaGrade', summary.grade);
+        runtimeLogger.info(
+          `layoutQa ${summary.grade}`,
+          { line: summary.line, posture: runtimeCtx.debugQa?.posture },
+          SPW_LOG_RELATIONSHIPS.LIFECYCLE,
+        );
+      } catch (error) {
+        runtimeLogger.debug?.('layoutQa warm failed', { error: String(error) }, SPW_LOG_RELATIONSHIPS.LIFECYCLE);
+      }
+    });
+  }
+
   return runtimeCtx;
 }
 
@@ -971,6 +977,10 @@ window.__SPW_SITE__ = {
   snapshot: () => window.spwCompose?.snapshot?.() || null,
   auditModules: () => [...(runtimeCtx?.moduleAudit || [])],
   listModules: () => listModuleDefinitions(runtimeCtx),
+  /** Static catalog index (when/layer/costClass) without mount state. */
+  catalogIndex: () => listModuleCatalogIndex(MODULE_DEFS),
+  /** BRP-oriented rollup: byCostClass, enhancementImmediate, reclassCandidates. */
+  catalogOptimization: () => summarizeModuleCatalogOptimization(MODULE_DEFS),
   mountModule: (id, options = {}) => mountModuleById(id, runtimeCtx, options),
   snapshotModules: () => snapshotRuntimeModules(runtimeCtx),
   timings: () => runtimeCtx
@@ -996,6 +1006,42 @@ window.__SPW_SITE__ = {
     annotate: (root = document, options = {}) => annotateCompositionBoxes(root, options),
     inspect: (target, options = {}) => snapshotCompositionBox(target, options),
     snapshot: (root = document, options = {}) => snapshotCompositionBoxes(root, options),
+  },
+  /**
+   * Layout / packing / reflow / page-sizing QA for humans + agents.
+   * Lazy-loads layout-qa.js. Prefer ?debug=layout for full CLS history.
+   */
+  layoutQa: {
+    snapshot: (options = {}) => import('./runtime/layout-qa.js').then((m) => m.snapshotLayoutQa({
+      ...options,
+      ctx: runtimeCtx,
+    })),
+    summary: (options = {}) => import('./runtime/layout-qa.js').then(async (m) => {
+      const report = await m.snapshotLayoutQa({ ...options, ctx: runtimeCtx });
+      return m.summarizeLayoutQa(report);
+    }),
+    page: () => import('./runtime/layout-qa.js').then((m) => m.snapshotPageSizing()),
+    packing: (root = document, options = {}) => import('./runtime/layout-qa.js').then((m) => m.snapshotPacking(root, options)),
+    inspect: (target, options = {}) => import('./runtime/layout-qa.js').then((m) => m.inspectLayoutTarget(target, options)),
+    recipes: () => import('./runtime/layout-qa.js').then((m) => m.layoutQaRecipes()),
+    contract: () => import('./runtime/layout-qa.js').then((m) => m.SPW_LAYOUT_QA_CONTRACT),
+  },
+  /** Shared ?debug / ?qa / ?log posture (layout-shift, debugOnly modules, agents). */
+  debugQa: {
+    posture: () => describeDebugQaPosture(runtimeCtx?.debugQa || readDebugQaPosture()),
+    read: () => readDebugQaPosture(),
+    apply: () => {
+      const posture = applyDebugQaPostureToRoot(HTML, readDebugQaPosture());
+      if (runtimeCtx) {
+        runtimeCtx.debugQa = posture;
+        runtimeCtx.debug = parseFeatureList(HTML?.dataset?.spwDebug || BODY?.dataset?.spwDebug);
+      }
+      return describeDebugQaPosture(posture);
+    },
+    presets: SPW_DEBUG_QA_PRESETS,
+    contract: SPW_DEBUG_QA_CONTRACT,
+    isLayout: () => hasLayoutDebug(runtimeCtx?.debugQa || readDebugQaPosture()),
+    isAgent: () => hasDebugOrQAModeFromPosture(runtimeCtx, runtimeCtx?.debugQa || readDebugQaPosture()),
   },
   featureClusters: {
     inspect: (target) => describeFeatureClusterElement(target),

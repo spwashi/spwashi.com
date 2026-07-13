@@ -7,6 +7,7 @@
 
 import { getGroundedRegistry } from '/public/js/interface/haptics.js';
 import { bus } from '/public/js/kernel/bus.js';
+import { isLocalDevelopmentRuntime } from '/public/js/kernel/runtime-environment.js';
 
 export const LATTICE = {
     'software:Schedulers': { parallels: ['software:Pretext', 'software:Browser', 'science:Resonance'], clusters: ['runtime', 'orchestration'] },
@@ -26,7 +27,9 @@ export function initSpwLattice() {
         currentPhaseIndex = (currentPhaseIndex + 1) % PHASES.length;
         updateLatticeSalience();
         bus.emit('lattice:cycled', { phase: PHASES[currentPhaseIndex], index: currentPhaseIndex });
-        console.log(`@ [lattice] phase shifted to: ${PHASES[currentPhaseIndex]}`);
+        if (isLocalDevelopmentRuntime()) {
+            console.debug(`@ [lattice] phase shifted to: ${PHASES[currentPhaseIndex]}`);
+        }
     });
 
     // External trigger (e.g. console command) can also advance the cycle

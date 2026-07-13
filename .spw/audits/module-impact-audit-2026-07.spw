@@ -1,0 +1,142 @@
+# Module Impact Audit (2026-07-12)
+#
+# operation: audit
+# fixity: tending
+# method: catalog MODULE_DEFS cross-checked against 149 public index.html routes
+
+#>module_impact_audit_2026_07
+#:audit #!runtime #!modules #!timing #!effects
+#:operation #!audit
+#:layer #!pragmatics
+
+@javascript_module_census: ~"./javascript-module-census-2026-07.spw"
+@html_component_audit: ~"./html-component-audit-2026-07.spw"
+@feature_wiring_timing: ~"../caches/feature-wiring-timing-2026-07.spw"
+@module_catalog: ~"../../public/js/runtime/module-catalog.js"
+@effect_ledger: ~"../../public/js/runtime/effect-ledger.js"
+@module_effects: ~"../../public/js/runtime/module-effects.js"
+
+audit_run: .{
+  at = `2026-07-12`
+  catalog = `95 MODULE_DEFS (CORE 5 / ENHANCEMENT 62 / FEATURE 27 / REGION 1)`
+  method = `import catalog; schedule/timingArc/timingChunk/effectScope/updates census; selector token HTML hit-count`
+  posture = `impact map + timing/effect hygiene; refinements land in JS/CSS tokens same session`
+}[reg=facet]
+
+^"schedule_health"{
+  IMMEDIATE = 43
+  VISIBLE = 31
+  IDLE = 19
+  REGION = 1
+  SETTLED = 1
+  missing_timing_arc = 0
+  missing_idle_chunk = 0
+  missing_updates = 0
+  missing_evaluates = 0
+  reading = `Timing arc hygiene from 2026-07-11 holds. Remaining debt is effectScope coverage + pulse duration alignment.`
+}[reg=facet]
+
+^"idle_chunks"{
+  idle_lab = 6
+  idle_residue = 4
+  idle_collectible = 7
+  idle_chrome = 2
+  note = `effect-ledger correctly on idle-residue before collectibles`
+}[reg=facet]
+
+^"effect_scope"{
+  covered_before = 74
+  missing_before = 21
+  covered_after = 95
+  missing_after = 0
+  top_tokens = #[
+    `root-state 35`,
+    `bus 25`,
+    `local-dom 17`,
+    `element-state 17`,
+    `listeners 16`,
+    `storage 15`,
+    `css-vars 11`,
+    `floating-chrome 9`,
+  ][reg=set]
+  filled_ids = #[
+    `blog-interpreter`, `blog-specimens`, `promo-wonder-cycle`, `media-publishing`,
+    `media-cauldron`, `pronunciation-hints`, `pretext-lab`, `pretext-physics`,
+    `typography-measurement-preview`, `frame-metrics`, `gesture-anatomy`, `svg-filters`,
+    `logo-runtime`, `page-anatomy`, `ingredient-lab`, `image-discovery-rewards`,
+    `effect-interpretation`, `scene-interaction`, `concept-salience`, `variant-selection`,
+    `local-memory-controls`,
+  ][reg=set]
+  refinement = `Filled effectScope on all 21 using established vocabulary (local-dom, root-state, bus, css-vars, storage, flourish, measure, residue).`
+}[reg=facet]
+
+^"selector_impact"{
+  html_routes = 149
+  body_html_scoped = 22
+  orphan_selectors = 4
+  orphans = #[
+    `home-section-index → [data-home-section-index] (0 hits — dead or renamed)`,
+    `media-cauldron → [data-media-cauldron] (0 hits — feature not on public HTML yet)`,
+    `logo-runtime → .spw-logo (0 hits — logo may be CSS/JS injected only)`,
+    `bare-spw-markup → data-spw-bare-spw (0 hits on first token)`,
+  ][reg=set]
+  high_impact = #[
+    `settings-page, learnability-ledger, feature-discovery, design-review-surfaces, navigation-spells, experiential — nearly all routes`,
+    `component-semantics / semantic-chrome / guide — 147`,
+    `region-enhancer, component-collection, reward-ui, frame-navigator, variant-selection — 145 (site-frame)`,
+  ][reg=set]
+  low_impact_1_route = #[
+    `blog-interpreter`, `payment-cards`, `services-configurators`, `promo-wonder-cycle`,
+    `media-publishing`, `pretext-lab`, `spatial-gravity`, `spells`, `boonhonk-mixer`,
+  ][reg=set]
+  claim = `Most IMMEDIATE modules are sitewide root/frame grammar; VISIBLE/IDLE lab modules stay route-local. Orphans are acceptable for lab readiness but should stay non-IMMEDIATE.`
+}[reg=facet]
+
+^"update_role_topology"{
+  flourish = 34
+  structural = 19
+  inspect = 11
+  residue = 9
+  measure = 1
+  bare_legacy = 334
+  reading = `Roleful updates (flourish/residue/structural/inspect) are present on ledgers and ecology; bulk of catalog still uses bare attribute tokens. Prefer role prefixes on new defs.`
+}[reg=facet]
+
+^"timing_effect_semantics"{
+  misalignments_found = #[
+    `effect-ledger PULSE_MS=720 ≈ --duration-ceremonial (good) but not declared as named CSS token for JS consumers`,
+    `module-effects pulse timeout=520 = --touch-recover but CSS module pulse has no duration token; runtime-states outline transition hardcodes 420ms`,
+    `loading-ecology TWINKLE_MS=680 vs --spw-ecology-twinkle-duration=760ms`,
+    `loading-ecology PHASE_PULSE_MS=420 vs --duration-deliberate=360ms`,
+  ][reg=set]
+  refinement = #[
+    `Add --spw-effect-pulse-duration and --spw-module-effect-pulse-duration tokens`,
+    `JS pulses read computed duration with concrete fallbacks`,
+    `Align ecology twinkle/phase pulse to tokens`,
+    `CSS transitions spend the same tokens; reduce-motion zeros module-effect pulse tempo bump`,
+  ][reg=set]
+}[reg=facet]
+
+^"promotion_queue"{
+  p1 = #[
+    `Complete effectScope coverage`,
+    `Align pulse timings tokens ↔ JS ↔ CSS`,
+  ][reg=set]
+  p2 = #[
+    `Investigate orphan selectors (home-section-index, media-cauldron) — keep VISIBLE/lab or delete`,
+    `Migrate bare updates → roleful prefixes on next touch of each def`,
+  ][reg=set]
+  do_not = #[
+    `Reclass high-impact IMMEDIATE grammar modules to IDLE without boot proof`,
+    `Broaden lab selectors to html just to increase hit counts`,
+  ][reg=set]
+}[reg=facet]
+
+^"validation"{
+  probe = #[
+    `node import public/js/runtime/module-catalog.js`,
+    `node --check public/js/runtime/effect-ledger.js public/js/runtime/module-effects.js public/js/runtime/loading-ecology.js`,
+    `npm run check:runtime`,
+  ][reg=set]
+  related = #[@javascript_module_census, @feature_wiring_timing, @html_component_audit][reg=set]
+}[reg=facet]

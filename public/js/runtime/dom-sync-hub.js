@@ -21,7 +21,11 @@ const ATTRIBUTE_FILTER = Object.freeze([
   'data-spw-region-role',
   'data-spw-role',
   'data-spw-gesture-contract',
+  'data-spw-gesture-contract-resolved',
   'data-spw-interaction-contract',
+  'data-spw-interaction-contract-resolved',
+  'data-spw-theming-posture',
+  'data-spw-theming-posture-resolved',
   'data-spw-slot',
   'data-spw-kind',
   'data-spw-component-kind',
@@ -52,6 +56,8 @@ const ATTRIBUTE_FILTER = Object.freeze([
   'data-site-settings-scope',
   'data-spw-affordance',
   'data-site-settings-panel',
+  'data-spw-anatomy',
+  'data-spw-vocabulary',
 ]);
 
 const tasks = new Map();

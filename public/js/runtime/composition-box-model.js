@@ -292,6 +292,15 @@ export function snapshotCompositionBox(target, options = {}) {
   const settlePhase = resolveSettlePhase(el, options.root || document.documentElement);
 
   const pretext = readPretextSignals(el);
+  const isPackLocal = el.hasAttribute('data-spw-pack-local')
+    || el.dataset?.spwPackLocal === 'true'
+    || el.dataset?.spwPackLocal === '';
+  const packLayout = isPackLocal
+    ? (el.dataset.spwPackLayout || resolvePackLayout(box))
+    : (el.dataset.spwPackLayout || null);
+  const packFill = isPackLocal
+    ? (el.dataset.spwPackFill || resolvePackFill(el))
+    : (el.dataset.spwPackFill || null);
 
   return {
     selector: el.id ? `#${el.id}` : el.dataset.spwFeature ? `[data-spw-feature="${el.dataset.spwFeature}"]` : el.tagName.toLowerCase(),
@@ -304,6 +313,9 @@ export function snapshotCompositionBox(target, options = {}) {
     flow: box.flow,
     box,
     pretext,
+    packLocal: isPackLocal,
+    packLayout,
+    packFill,
     story: describeBox(el, box, role, presence),
     semantics: {
       kind: el.dataset.spwKind || '',

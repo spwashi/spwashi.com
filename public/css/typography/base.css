@@ -44,8 +44,9 @@
 
 :where(p) {
   margin: 0;
-  max-inline-size: var(--measure-reading, 68ch);
+  max-inline-size: min(100%, var(--measure-reading, 68ch));
   text-wrap: pretty;
+  overflow-wrap: break-word;
   color: var(--ink, #161c1d);
 }
 
@@ -57,45 +58,93 @@
   margin: 0;
   color: var(--ink-strong, #090b0c);
   font-family: var(--site-sans-font, system-ui, sans-serif);
-  line-height: 1.15;
+  line-height: 1.18;
   letter-spacing: -0.02em;
   text-wrap: balance;
-  /* Ensure headings clear preceding content slightly more than standard flow */
+  overflow-wrap: break-word;
+  /* Ranked air before headings only — avoid margin-block-end so flex/grid
+     stacks that already use gap do not double-space. */
   margin-block-start: calc(var(--flow-space, 1rem) * var(--spw-heading-flow-space-multiplier, 1.5));
 }
 
-:where(h1:first-child, h2:first-child, h3:first-child) {
+:where(h1:first-child, h2:first-child, h3:first-child, h4:first-child) {
   margin-block-start: 0;
 }
 
+/* Ranked air before headings — lower ranks sit closer to prior prose. */
 :where(h1) {
+  --spw-heading-flow-space-multiplier: 1.75;
   font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 800;
   letter-spacing: -0.03em;
+  line-height: 1.12;
   max-inline-size: min(100%, calc(var(--spw-real-estate-inline, var(--measure-reading, 68ch)) * var(--spw-typography-rank-1, 1)));
 }
 :where(h2) {
+  --spw-heading-flow-space-multiplier: 1.55;
   font-size: clamp(1.5rem, 4vw, 2rem);
   font-weight: 700;
+  line-height: 1.16;
   max-inline-size: min(100%, calc(var(--spw-real-estate-inline, var(--measure-reading, 68ch)) * var(--spw-typography-rank-2, 0.88)));
 }
 :where(h3) {
+  --spw-heading-flow-space-multiplier: 1.35;
   font-size: clamp(1.25rem, 3vw, 1.5rem);
   font-weight: 600;
+  line-height: 1.22;
   max-inline-size: min(100%, calc(var(--spw-real-estate-inline, var(--measure-panel, 52ch)) * var(--spw-typography-rank-3, 0.76)));
 }
 :where(h4) {
+  --spw-heading-flow-space-multiplier: 1.2;
   font-size: clamp(1.1rem, 2vw, 1.25rem);
   font-weight: 600;
+  line-height: 1.28;
   max-inline-size: min(100%, calc(var(--spw-real-estate-inline, var(--measure-panel, 52ch)) * var(--spw-typography-rank-4, 0.64)));
 }
-:where(h5) { font-size: 1rem; font-weight: 600; }
+:where(h5) {
+  --spw-heading-flow-space-multiplier: 1.1;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.32;
+}
 :where(h6) {
+  --spw-heading-flow-space-multiplier: 1;
   font-size: 0.85rem;
   font-weight: 700;
+  line-height: 1.35;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+}
+
+/* Title stack: kicker/subtitle should hug the heading above content. */
+:where(
+  .spec-kicker + :is(h1, h2, h3),
+  .page-kicker + :is(h1, h2, h3),
+  .section-kicker + :is(h1, h2, h3),
+  h1 + h2,
+  h2 + h3,
+  h3 + h4
+) {
+  margin-block-start: calc(var(--flow-space, 1rem) * 0.28);
+}
+
+/* In prose/article flow, a heading after body copy needs a clearer break. */
+:where(.prose, article, .frame-copy) :where(
+  p + :is(h2, h3, h4),
+  ul + :is(h2, h3, h4),
+  ol + :is(h2, h3, h4),
+  blockquote + :is(h2, h3, h4)
+) {
+  margin-block-start: calc(var(--flow-space, 1rem) * 1.85);
+}
+
+/* Tighter run-in from heading into following paragraph in prose stacks. */
+:where(.prose, article, .frame-copy) :where(
+  :is(h1, h2, h3, h4) + p,
+  :is(h1, h2, h3, h4) + :is(.site-lede, .page-lede)
+) {
+  margin-block-start: calc(var(--flow-space, 1rem) * 0.55);
 }
 
 /* ==========================================================================
@@ -112,12 +161,12 @@
 
 :where(ul, ol) {
   margin: 0;
-  padding-inline-start: 1.5rem;
-  max-inline-size: var(--measure-reading, 68ch);
+  padding-inline-start: 1.35rem;
+  max-inline-size: min(100%, var(--measure-reading, 68ch));
 }
 
 :where(blockquote, figcaption, dd, li) {
-  max-inline-size: var(--measure-reading, 68ch);
+  max-inline-size: min(100%, var(--measure-reading, 68ch));
   overflow-wrap: break-word;
 }
 
@@ -157,6 +206,16 @@
 
 :where(li) {
   margin-block-start: var(--space-2xs, 0.25rem);
+  padding-inline-end: var(--space-2xs, 0.25rem);
+}
+
+:where(li + li) {
+  margin-block-start: var(--gap-block-tight, var(--space-xs, 0.5rem));
+}
+
+:where(li > ul, li > ol) {
+  margin-block-start: var(--space-2xs, 0.25rem);
+  margin-block-end: var(--space-2xs, 0.25rem);
 }
 
 :where(li::marker) {

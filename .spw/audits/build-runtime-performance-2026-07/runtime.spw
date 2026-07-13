@@ -53,6 +53,30 @@
   @cache = ~"../../caches/feature-wiring-timing-2026-07.spw"
 }[reg=facet]
 
+^"catalog_census_2026_07_normalize_pass"{
+  at = `2026-07-12`
+  mount_when = .{
+    IMMEDIATE = 37
+    VISIBLE = 34
+    IDLE = 22
+    SETTLED = 1
+    REGION = 1
+    INTERACTION = 0
+  }[reg=facet]
+  structure = `COST_CLASS + inferModuleCostClass + summarizeModuleCatalogOptimization; listModuleCatalogIndex.byCostClass; __SPW_SITE__.catalogOptimization`
+  reclass = #[
+    `layout-shift-audit → IDLE idle-lab`,
+    `state-inspector → IDLE idle-lab`,
+    `discovery-notices → IDLE idle-chrome`,
+    `tuning-discovery → VISIBLE`,
+    `canvas-accents → VISIBLE`,
+    `composition-box-model → VISIBLE`
+  ][reg=set]
+  enhancement_immediate = 23
+  residual = `html orchestration (module-effects, loading-ecology, hydration-passes, settings-momentum, …) + grammar/gesture/semantics still IMMEDIATE`
+  probe = `__SPW_SITE__.catalogOptimization() or listModuleCatalogIndex()`
+}[reg=facet]
+
 ^"what_landed"{
   parallel_immediate = .{
     impl = `mountImmediateLayer: site-settings serial, then Promise.all remaining eligible`
@@ -79,8 +103,8 @@
     id = `immediate-width`
     cost_class = `premature_commitment`
     stratum = `orchestration`
-    evidence = `61 IMMEDIATE defs after two safe reclassifications; many ENHANCEMENT remain (canvas-accents, composition-box-model, semantic-crossrefs, attention-architecture, …)`
-    direction = `Reclassify to VISIBLE/IDLE when first reading posture does not need them; keep CORE thin`
+    evidence = `37 IMMEDIATE / 23 ENHANCEMENT after normalize reclass; residual: module-effects, loading-ecology, hydration-passes, settings-momentum, attention-architecture, component-semantics, semantic-crossrefs, gesture/grammar`
+    direction = `Reclassify residual orchestration/semantics when first reading posture does not need them; use catalogOptimization().reclassCandidates; keep CORE thin`
     ecology = `too many shoots at germination`
     cognition = `self_model overloaded with deep_interpretation and metacognition`
   }
@@ -133,24 +157,31 @@
 }[reg=set]
 
 ^"immediate_candidates_reclassify"{
-  note = `Heuristic shortlist from ids that appear IMMEDIATE and are enhancement/metacognition-shaped — validate per route gate before moving.`
-  toward_visible = #[
-    `canvas-accents`,
-    `image-utilization`,
-    `image-interaction`,
-    `svg-tunability`,
-    `guide-badge`,
-    `discovery-notices`
+  note = `Heuristic shortlist — 2026-07-12 landed subset marked; residual still needs route-local proof. Prefer __SPW_SITE__.catalogOptimization().reclassCandidates.`
+  landed_2026_07_12 = #[
+    `canvas-accents → VISIBLE`,
+    `composition-box-model → VISIBLE`,
+    `tuning-discovery → VISIBLE`,
+    `discovery-notices → IDLE`,
+    `state-inspector → IDLE`,
+    `layout-shift-audit → IDLE`
   ][reg=set]
-  toward_idle = #[
-    `composition-box-model` # keep pack-local RO if opted hosts exist
-    `state-inspector`,
-    `console` # if not required for policy
-    `layout-shift-audit`,
-    `observation-beats`,
-    `design-experiments`,
-    `design-review-surfaces`,
-    `tuning-discovery`
+  already_demand = #[
+    `image-utilization`, `image-interaction`, `svg-tunability`, `guide-badge`,
+    `observation-beats`, `design-experiments`, `design-review-surfaces`
+  ][reg=set]
+  toward_visible_residual = #[
+    `attention-architecture`,
+    `module-effects`,
+    `loading-ecology`,
+    `hydration-passes`,
+    `settings-momentum`,
+    `pulse-beat-tuner`
+  ][reg=set]
+  toward_idle_residual = #[
+    `component-semantics`,
+    `semantic-crossrefs`,
+    `console` # feature-gated; still body-wide when console token present
   ][reg=set]
   keep_immediate_coreish = #[
     `site-settings`,

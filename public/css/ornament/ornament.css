@@ -343,7 +343,7 @@
 
 .spw-ornament-rail > .spw-ornament-node[data-spw-child-active="true"]::before {
   opacity: 1;
-  transform: scale(1.18);
+  transform: scale(1.08);
 }
 
 /* ==========================================================================
@@ -849,27 +849,29 @@
    14. Responsive adjustments
    ========================================================================== */
 
-@container (max-width: 34rem) {
-  .spw-ornament-rail {
-    max-width: 100%;
-  }
+@supports (container-type: inline-size) {
+  @container (max-width: 34rem) {
+    .spw-ornament-rail {
+      max-width: 100%;
+    }
 
-  .spw-ornament-rail::before,
-  .spw-ornament-rail::after {
-    width: 1.3rem;
-  }
+    .spw-ornament-rail::before,
+    .spw-ornament-rail::after {
+      width: 1.3rem;
+    }
 
-  .spw-spirit-sequence {
-    --ornament-sequence-font-size: 0.84rem;
-    --ornament-sequence-gap: 0.22em;
-  }
+    .spw-spirit-sequence {
+      --ornament-sequence-font-size: 0.84rem;
+      --ornament-sequence-gap: 0.22em;
+    }
 
-  .spw-ornament-meter {
-    grid-template-columns: auto 1fr;
-  }
+    .spw-ornament-meter {
+      grid-template-columns: auto 1fr;
+    }
 
-  .spw-ornament-meter > :last-child {
-    grid-column: 1 / -1;
+    .spw-ornament-meter > :last-child {
+      grid-column: 1 / -1;
+    }
   }
 }
 
@@ -1032,7 +1034,7 @@
 
 @keyframes spw-ornament-opacity-pulse {
   0% { opacity: 0; }
-  35% { opacity: 1; }
+  40% { opacity: 0.72; }
   100% { opacity: 0; }
 }
 
@@ -1048,11 +1050,11 @@
   border-radius: inherit;
   background: color-mix(
     in srgb,
-    var(--wonder-accent-color, currentColor) 24%,
+    var(--wonder-accent-color, currentColor) 16%,
     transparent
   );
-  animation: spw-ornament-opacity-pulse var(--ornament-duration-deliberate, 320ms)
-    var(--ornament-settle-ease, ease-out) 1;
+  animation: spw-ornament-opacity-pulse var(--ornament-duration-deliberate, var(--duration-deliberate, 360ms))
+    var(--ornament-settle-ease, var(--ease-settle, ease-out)) 1;
 }
 
 :where(.ornament-stable-accent, [data-spw-ornament~='stable-accent']) {
@@ -1176,24 +1178,25 @@
   height: 0.18rem;
   border-radius: 999px;
   background: currentColor;
-  opacity: 0.55;
+  opacity: 0.48;
   margin-inline: 0.08rem;
-  animation: spw-site-rhythm-pulse calc(820ms / var(--rhythm-tempo)) var(--ornament-settle-ease) infinite alternate;
+  /* Slower, smaller breath — ambient chrome, not a status LED. */
+  animation: spw-site-rhythm-pulse calc(1100ms / var(--rhythm-tempo, 1)) var(--ornament-settle-ease, ease) infinite alternate;
   animation-play-state: var(--spw-site-rhythm, running);
 }
 
 .spw-site-rhythm[data-spw-site-rhythm="quiet"] .spw-site-rhythm__node,
 [data-spw-ornament="site-rhythm"][data-spw-site-rhythm="quiet"] .spw-site-rhythm__node {
-  animation-duration: calc(1450ms / var(--rhythm-tempo));
-  opacity: 0.38;
+  animation-duration: calc(1680ms / var(--rhythm-tempo, 1));
+  opacity: 0.32;
 }
 
-.spw-site-rhythm__node:nth-child(2) { animation-delay: calc(-120ms / var(--rhythm-tempo)); }
-.spw-site-rhythm__node:nth-child(3) { animation-delay: calc(-260ms / var(--rhythm-tempo)); }
+.spw-site-rhythm__node:nth-child(2) { animation-delay: calc(-160ms / var(--rhythm-tempo, 1)); }
+.spw-site-rhythm__node:nth-child(3) { animation-delay: calc(-320ms / var(--rhythm-tempo, 1)); }
 
 @keyframes spw-site-rhythm-pulse {
-  from { opacity: 0.32; transform: scale(0.82); }
-  to   { opacity: 0.92; transform: scale(1.05); }
+  from { opacity: 0.28; transform: scale(0.92); }
+  to   { opacity: 0.72; transform: scale(1.02); }
 }
 
 /* When the runtime reports high layer activity or recent enhancement work,

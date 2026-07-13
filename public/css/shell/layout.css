@@ -152,11 +152,13 @@
   --shell-footer-font-size: var(--text-size-sm, 0.92rem);
   --shell-footer-opacity: 0.92;
 
-  /* Main page shell */
+  /* Main page shell
+     Top-level stack uses page-stack-gap so section seams read larger than
+     in-section surface-gap (visual hierarchy of page → section → content). */
   --spw-main-display: flex;
   --spw-main-direction: column;
   --spw-main-width: min(var(--page-width), var(--spw-layout-frame-max, var(--page-width)));
-  --spw-main-gap: var(--surface-gap);
+  --spw-main-gap: var(--page-stack-gap);
   --spw-main-padding-inline: var(--page-gutter-inline);
   --spw-main-padding-block-start: clamp(
     calc(var(--spw-rhythm-unit, 1rem) * 1.05),
@@ -476,8 +478,30 @@ main :where(section, aside) {
   gap: var(--surface-gap);
 }
 
+/* Nested stacks inside a section use a slightly tighter rhythm so the
+   outer section seam (main gap) stays the strongest page break. */
+main :where(section section, section article, article section) {
+  gap: var(--page-section-gap-tight, var(--surface-gap));
+}
+
 main :where(article > h1:first-child, section > h1:first-child) {
-  margin-bottom: 0.25rem;
+  margin-block-end: var(--space-2xs, 0.25rem);
+}
+
+/* Kicker → title → lede should read as one intro unit, not three stacks. */
+main :where(
+  .page-kicker + :is(h1, h2),
+  .section-kicker + :is(h1, h2),
+  .spec-kicker + :is(h1, h2)
+) {
+  margin-block-start: calc(var(--space-2xs, 0.25rem) * -0.5);
+}
+
+main :where(
+  h1 + :is(.page-lede, .site-lede, .hero-lede, .shell-lede),
+  h2 + :is(.page-lede, .site-lede, .hero-lede, .shell-lede)
+) {
+  margin-block-start: var(--space-2xs, 0.25rem);
 }
 
 main :where(article > p, section > p, aside > p, li, blockquote, figcaption) {
@@ -546,10 +570,12 @@ main :where(article > ul, article > ol, section > ul, section > ol) {
 .page-lede,
 .hero-lede,
 .shell-lede {
-  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
-  font-size: clamp(1rem, 1.2rem + 0.2vw, 1.15rem);
-  line-height: 1.72;
-  max-width: min(56ch, 100%);
+  color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 86%, transparent);
+  font-size: clamp(1.02rem, 0.94rem + 0.45vw, 1.18rem);
+  font-weight: 500;
+  line-height: 1.62;
+  max-inline-size: min(52ch, 100%);
+  text-wrap: pretty;
 }
 
 /* Generic page clusters and grids */
@@ -559,7 +585,7 @@ main :where(article > ul, article > ol, section > ul, section > ol) {
 .generic-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min-card, 15rem)), 1fr));
-  gap: var(--surface-gap);
+  gap: var(--page-stack-gap, var(--surface-gap));
   min-width: 0;
 }
 
@@ -574,7 +600,7 @@ main :where(article > ul, article > ol, section > ul, section > ol) {
 .action-cluster {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem 0.7rem;
+  gap: var(--gap-block-tight, var(--space-xs, 0.5rem)) var(--gap-inline-breath, var(--space-sm, 0.75rem));
   align-items: center;
   min-width: 0;
 }

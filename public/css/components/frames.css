@@ -162,7 +162,7 @@
 .site-frame h1 {
   font-size: clamp(1.55rem, 1.2rem + 2vw, 2.2rem);
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.16;
   letter-spacing: -0.02em;
 }
 
@@ -176,23 +176,25 @@
 .site-frame h3 {
   font-size: clamp(0.92rem, 0.85rem + 0.5vw, 1.05rem);
   font-weight: 600;
-  line-height: 1.3;
+  line-height: 1.28;
   letter-spacing: -0.005em;
 }
 
 .site-lede,
 .page-lede {
-  font-size: clamp(1rem, 0.85rem + 0.9vw, 1.25rem);
+  font-size: clamp(1rem, 0.88rem + 0.7vw, 1.2rem);
   font-weight: 500;
   line-height: 1.58;
-  max-inline-size: 48ch;
+  max-inline-size: min(52ch, 100%);
   text-wrap: pretty;
-  color: color-mix(in srgb, var(--ink, #161c1d) 88%, transparent);
+  overflow-wrap: break-word;
+  color: color-mix(in srgb, var(--ink, #161c1d) 86%, transparent);
 }
 
 :where(.site-frame > p:not(.frame-note):not(.inline-note):not(.site-lede):not(.page-lede):not(.spec-kicker):not(.page-kicker)) {
-  max-inline-size: 66ch;
+  max-inline-size: min(66ch, 100%);
   text-wrap: pretty;
+  overflow-wrap: break-word;
 }
 
 :where(
@@ -218,7 +220,8 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--surface-gap);
+  /* Row gap tighter than column so wrapped meta sits close under the title. */
+  gap: var(--gap-block-tight, var(--space-xs, 0.5rem)) var(--spw-slot-gap, var(--surface-gap));
   min-width: 0;
   z-index: var(--material-layer-overlay, 2);
   transition: transform var(--component-transition-base);
@@ -236,7 +239,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--surface-gap);
+  gap: var(--gap-block-tight, var(--space-xs, 0.5rem)) var(--spw-slot-gap-tight, 0.45rem 0.6rem);
   margin-top: auto;
   padding-top: var(--surface-gap);
   border-top: 1px solid var(--line-quiet, rgba(0, 0, 0, 0.05));
@@ -244,8 +247,17 @@
   transition: transform var(--component-transition-base), opacity var(--component-transition-base);
 }
 
+/* Title → first body paragraph: keep the lede glued to the heading. */
 :where(.site-frame > :is(h1, h2, h3, .site-lede, .page-lede) + p) {
-  margin-block-start: calc(-1 * var(--space-3xs, 0.125rem));
+  margin-block-start: 0;
+}
+
+:where(.site-frame > :is(.spec-kicker, .page-kicker) + :is(h1, h2, h3)) {
+  margin-block-start: 0;
+}
+
+:where(.site-frame > :is(h1, h2) + :is(.site-lede, .page-lede)) {
+  margin-block-start: var(--space-3xs, 0.125rem);
 }
 
 :where(.frame-actions:has(> .spw-delimiter:only-child)) {

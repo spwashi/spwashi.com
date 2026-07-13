@@ -60,8 +60,8 @@ export function syncFeatureLabControls(root = document) {
     const on = activeSet.has(token);
     control.setAttribute('aria-pressed', on ? 'true' : 'false');
     control.dataset.siteFeatureLabState = on ? 'on' : 'off';
-    if (control instanceof HTMLButtonElement && !control.dataset.siteFeatureLabLabelled) {
-      control.dataset.siteFeatureLabLabelled = 'true';
+    if (!control.getAttribute('aria-label')) {
+      control.setAttribute('aria-label', `Feature lab: ${token}`);
     }
   });
 }
@@ -75,6 +75,8 @@ export function ensureFeatureLabToggleStrip(root = document) {
       button.className = 'operator-chip';
       button.setAttribute('data-site-feature-lab-toggle', token);
       button.setAttribute('data-spw-operator', 'select');
+      button.setAttribute('aria-pressed', 'false');
+      button.setAttribute('aria-label', `Feature lab: ${token}`);
       button.textContent = token;
       host.appendChild(button);
     });

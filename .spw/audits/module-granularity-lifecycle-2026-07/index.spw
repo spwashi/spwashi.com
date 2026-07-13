@@ -1,0 +1,185 @@
+# Module Granularity + Lifecycle Responsiveness Audit (2026-07)
+#
+# Nested Spw audit: index dispatches to lifecycle / granularity / plan leaves.
+# operation: audit | fixity: tending
+# Embeds a phased implementation plan — execute plan.spw phases in order.
+
+#>module_granularity_lifecycle_2026_07
+#:audit #!runtime #!catalog #!lifecycle #!granularity #!performance
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+@lifecycle: ~"./lifecycle.spw"
+@granularity: ~"./granularity.spw"
+@inertia: ~"./inertia.spw"
+@plan: ~"./plan.spw"
+@brp: ~"../build-runtime-performance-2026-07/index.spw"
+@theme_churn: ~"../commit-history-deep-2026-07/theme-churn.spw"
+@brp_runtime: ~"../build-runtime-performance-2026-07/runtime.spw"
+@alignment: ~"../alignment-shell-lifecycle-sensitivity-2026-07/index.spw"
+@module_export: ~"../module-export-standalone-2026-07.spw"
+@runtime_kernel: ~"../runtime-kernel-consolidation-2026-07.spw"
+@javascript_module_census: ~"../javascript-module-census-2026-07.spw"
+@module_impact: ~"../module-impact-audit-2026-07.spw"
+@decomposition_plan: ~"../../../.agents/plans/runtime-module-decomposition/PLAN.md"
+@bootstrap_plan: ~"../../../.agents/plans/runtime-bootstrap-performance/PLAN.md"
+@module_catalog: ~"../../../public/js/runtime/module-catalog.js"
+@module_normalize: ~"../../../public/js/runtime/module-catalog-normalize.js"
+@module_loader: ~"../../../public/js/runtime/module-loader.js"
+@page_state: ~"../../../public/js/runtime/page-state.js"
+@runtime_module_medium: ~"../../surfaces/runtime-module-medium.spw"
+@feature_wiring_cache: ~"../../caches/feature-wiring-timing-2026-07.spw"
+@layout_qa_measurement: ~"../layout-qa-measurement-2026-07/index.spw"
+@metaphor: ~"../../conventions/metaphor-dimensional-lexicon.spw"
+@js_cognition: ~"../../conventions/js-architecture-cognition.spw"
+
+audit_run: .{
+  at = `2026-07-12`
+  method = `catalog census; load-path LOC/KB; lifecycle consumer map; domain clustering; git churn since 2026-01 on public/js; kernel-consolidation residual forks; public/ts + JSDoc density; tree layout of public/js`
+  host = `local — sizes and counts directional`
+  posture = `audit evidence + embedded phased plan; inertia/cliché/primitive/type/tree leaf for design history`
+  census = `95 catalog defs · IMMEDIATE 37 · VISIBLE 34 · IDLE 22 · REGION 1 · SETTLED 1 · INTERACTION 0`
+  update = `2026-07-12b — inertia.spw: churn hotspots, cliché features, missing conveniences, primitives, types, tree structure`
+}[reg=facet]
+
+^"thesis"{
+  claim = `The runtime already has staged schedule lanes, idle chunks, costClass coordinates, and rich lifecycle *emission*. Open debt is (1) stage semantics peers can trust, (2) under-consumed lifecycle events, (3) catalog granularity lagging file/payload reality, and (4) *design inertia* — high-churn blobs (shell, experiential, satchel) and fundamental forks that re-land after kernel extracts.`
+  progress = `costClass normalize + reclass; attention L4; media/collect mature; rhizosphere extract (text/route/storage) raised ideology — residual normalize/storage/chrome forks remain.`
+  lexicon = `cost_class; L1–L4 @granularity; stages @lifecycle; phases @plan; inertia signals @inertia.`
+}[reg=facet]
+
+^"grades"{
+  schedule_taxonomy = `A- — lanes + timingChunk strong; INTERACTION empty; residual html IMMEDIATE`
+  file_submodule_structure = `B — attention gold; shell/experiential/settings lag; runtime/ flat attractor`
+  catalog_as_load_unit = `B- — media/collect good; attention L4 without L3; settings false-thin`
+  lifecycle_emission = `A- — stages + marks + page phases exist`
+  lifecycle_consumption = `C+ — module-mounted few consumers; module-lifecycle nearly unused; observed/settled weak semantics`
+  cross_module_responsiveness = `C+ — ecology/effects/CLS good; most mounts fire-and-forget`
+  design_inertia = `C — shell 29 / satchel 20 / experiential 19 touches with polish accretion; healthy exceptions: loader extract, catalog family split, rhizosphere`
+  primitive_maturity = `B- — storage/route/text landed; floating-chrome + observer federation + notice-lane + reduced-motion posture still thin`
+  type_surface = `C+ — public/ts thin; almost no JSDoc @typedef on catalog/loader; contracts.mts is the real type island`
+  tree_clarity = `B- — kernel/interface/semantic/media good; runtime/ ~78 flat files needs substrate|shell|memory|inspect|gesture only after residents exist`
+  overall = `B — classifiable and planned; beat inertia with primitives before more polish on blobs`
+}[reg=facet]
+
+^"nested_dispatch"{
+  lifecycle = @lifecycle
+  granularity = @granularity
+  inertia = @inertia
+  plan = @plan
+  related_brp = @brp
+  related_alignment = @alignment
+  related_decomposition = @decomposition_plan
+  related_theme_churn = @theme_churn
+  related_kernel = @runtime_kernel
+}[reg=facet]
+
+^"reading_order"{
+  cascade = `index → lifecycle → granularity → inertia → plan`
+  execute = `plan.spw P0 → P1 → P1b forks → P2 blobs → P3 tree/types; do not polish shell/experiential without extract`
+}[reg=facet]
+
+^"priority_summary"{
+  p0 = `Lifecycle honesty + INTERACTION + listen helpers (missing conveniences)`
+  p1 = `L3 attention + settings payload (breaks false-thin / L4 glue)`
+  p1b = `Fundamental fork migration: normalize, storage parse, reduced-motion posture, floating-chrome adoption`
+  p2 = `High-churn blobs after primitives: shell, experiential, satchel, image-metaphysics`
+  p3 = `Tree subfolders (careful), family=layer, ModuleDefinition types/JSDoc, notice-lane/inspect-posture if ready`
+}[reg=facet]
+
+^"validation"{
+  commands = #[
+    `node --input-type=module -e 'import { listModuleCatalogIndex, summarizeModuleCatalogOptimization } from "./public/js/runtime/module-catalog.js"; console.log(listModuleCatalogIndex().optimization)'`,
+    `rg -n 'emitModuleLifecycle|MODULE_TIMING_STAGES|spw:module-lifecycle|spw:module-mounted' public/js/runtime/module-loader.js public/js/site.js`,
+    `rg -n "spw:module-lifecycle|spw:module-mounted|spw:page-interactive|spw:page-enhanced" public/js --glob '*.js' | head -60`,
+    `rg -o 'when: MOUNT_WHEN\\.(IMMEDIATE|VISIBLE|IDLE|INTERACTION|REGION|SETTLED)' public/js/runtime/module-catalog-*.js | sort | uniq -c`,
+    `git log --since=2026-01-01 --pretty=format: --name-only -- 'public/js/**/*.js' | sed '/^$/d' | sort | uniq -c | sort -rn | head -25`,
+    `rg -c '@typedef' public/js --glob '*.js' | sort -t: -k2 -nr | head`,
+    `npm run check:runtime`,
+    `rg 'module_granularity_lifecycle|module-granularity-lifecycle' .spw`
+  ][reg=set]
+}[reg=facet]
+
+^"active_claims"{
+  claim #mgl-001 {
+    layer = "semantic"
+    hypothesis = "MODULE_TIMING_STAGES.observed means registry summary written, not viewport observation — peers cannot use it for in-view work."
+    evidence = `module-loader mountDefinition emits observed immediately after mounted with note "runtime summary written"`
+    falsification = "observed is delayed until IntersectionObserver or renamed to summary_written / audited."
+    status = "active"
+    plan_phase = `P0`
+  }
+  claim #mgl-002 {
+    layer = "semantic"
+    hypothesis = "settled is rarely a progressive mount signal because it is emitted mainly from refreshRuntime, not after the idle enhancement wave."
+    evidence = `queueSettledEnhancements mounts SETTLED defs; emitModuleLifecycle settled is in refreshRuntime loop`
+    falsification = "settled fires for all mounted records after idle finalize or first quiet frame with documented contract."
+    status = "active"
+    plan_phase = `P0`
+  }
+  claim #mgl-003 {
+    layer = "pragmatic"
+    hypothesis = "attention-architecture is L4 (files split) but not L3 (catalog load units) — all sub-inits pay IMMEDIATE together."
+    evidence = `attention-architecture.js orchestrates 5 inits; section-handle ~1015 LOC; single catalog id IMMEDIATE`
+    falsification = "Independent catalog ids with distinct MOUNT_WHEN load separate chunks without orchestrator always-on."
+    status = "active"
+    plan_phase = `P1`
+  }
+  claim #mgl-004 {
+    layer = "pragmatic"
+    hypothesis = "site-settings catalog id is false-thin: ~2KB entry static-imports engine+UI+profiles+shared (~6k LOC graph)."
+    evidence = `kernel/site-settings.js re-exports; site-settings-engine/ui/profiles + shared.js sizes`
+    falsification = "First-paint path loads apply datasets only; UI bind is settings-route or IDLE dynamic import."
+    status = "active"
+    plan_phase = `P1`
+  }
+  claim #mgl-005 {
+    layer = "pragmatic"
+    hypothesis = "MOUNT_WHEN.INTERACTION is an unused schedule slot that fits first-gesture tools better than IMMEDIATE html roots."
+    evidence = `catalog census INTERACTION=0; candidates region-menu, spw-key-events, pinch, precipitation-request`
+    falsification = "≥3 catalog defs use INTERACTION with measurable deferral and no broken first-use UX."
+    status = "active"
+    plan_phase = `P0`
+  }
+  claim #mgl-006 {
+    layer = "semantic"
+    hypothesis = "Performance and granularity work stay legible when cost_class + L1–L4 subclassification level are named on every split PR."
+    evidence = `@metaphor cost_class; @granularity levels; BRP coordinates`
+    falsification = "Split PRs only describe metaphor or file moves without cost_class or L-level."
+    status = "active"
+    plan_phase = `all`
+  }
+  claim #mgl-007 {
+    layer = "pragmatic"
+    hypothesis = "shell-disclosure and experiential show design inertia: high touch counts with feature accretion (header actions, spell trail polish) without concern extraction."
+    evidence = `git touches ~29 shell / ~19 experiential since 2026-01; commit subjects Improve/Refine mobile chrome and spell path`
+    falsification = "Concern count drops (measured LOC per concern or L3 ids) after extract; polish commits touch leaf modules only."
+    status = "active"
+    plan_phase = `P2`
+  }
+  claim #mgl-008 {
+    layer = "pragmatic"
+    hypothesis = "After rhizosphere extract, fundamental forks (normalizeText, safeJsonParse, reduced-motion, floating-chrome) still re-implement kernel primitives."
+    evidence = `@kernel_audit remaining; rg reduced-motion and localStorage patterns across modules`
+    falsification = "Closed fork list migrates to storage-utils / text-normalization / runtime-posture / syncFloatingChrome with ≤1 local exception documented."
+    status = "active"
+    plan_phase = `P1b`
+  }
+  claim #mgl-009 {
+    layer = "pragmatic"
+    hypothesis = "public/js/runtime flat ~78-file attractor increases wrong-owner edits; subfolders by ownership (not by MOUNT_WHEN) reduce inertia once ≥3 residents each."
+    evidence = `ls public/js/runtime; only attention/ nested today`
+    falsification = "substrate|shell|memory|inspect|gesture subfolders exist with catalog paths updated and no big-bang bisect poison."
+    status = "active"
+    plan_phase = `P3`
+  }
+  claim #mgl-010 {
+    layer = "semantic"
+    hypothesis = "Shared ModuleDefinition / lifecycle record types (TS or JSDoc) pay off more than converting runtime modules to TypeScript."
+    evidence = `public/ts thin; @typedef nearly absent; runtime-contracts.mts already models modules`
+    falsification = "Shared typedef/ts used by catalog normalize + contracts + DevTools without full TS app migration."
+    status = "active"
+    plan_phase = `P3`
+  }
+}[reg=set]

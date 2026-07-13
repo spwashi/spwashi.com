@@ -68,6 +68,14 @@ const KERNEL_TYPED_SHIMS = new Map([
 ]);
 const TYPED_IMPORT_RE = /(?:import|export)\s+(?:[^'";]*?\s+from\s+)?['"]([^'"]*typed\/[^'"]+)['"]/g;
 const TYPED_SHIM_RE = /export\s+\*\s+from\s+['"]([^'"]+)['"]/;
+const VALID_COST_CLASSES = new Set([
+    'working_memory_pressure',
+    'premature_commitment',
+    'interference',
+    'demand_coupled',
+    'authored_prior_safe',
+    'paint_composite',
+]);
 function relativeRepoPath(absolutePath) {
     return toPosixPath(path.relative(ROOT_DIR, absolutePath));
 }
@@ -302,8 +310,16 @@ function sameList(left, right) {
 function sameMap(left, right) {
     return JSON.stringify(Object.entries(left).sort()) === JSON.stringify(Object.entries(right).sort());
 }
+function parseCostClassProperty(objectLiteral) {
+    // COST_CLASS.WORKING_MEMORY_PRESSURE → working_memory_pressure (ids use underscores).
+    const fromConst = parseConstantProperty(objectLiteral, 'costClass', 'COST_CLASS');
+    if (fromConst)
+        return fromConst.replace(/-/g, '_');
+    return parseQuotedProperty(objectLiteral, 'costClass');
+}
 function parseRuntimeModule(objectLiteral, family, index) {
     return {
+        costClass: parseCostClassProperty(objectLiteral),
         debugOnly: /\bdebugOnly:\s*true\b/.test(objectLiteral),
         describes: parseQuotedProperty(objectLiteral, 'describes'),
         effectScope: parseQuotedProperty(objectLiteral, 'effectScope'),
@@ -555,6 +571,12 @@ function validateModule(module, errors, warnings, recommendations) {
         if (!module.features.length && !module.selectorContract) {
             warnings.push(`${label} is ENHANCEMENT+IMMEDIATE with no features gate and no selector contract; confirm it must run on every page at boot.`);
         }
+        if (!module.costClass) {
+            recommendations.push(`${label} is ENHANCEMENT+IMMEDIATE without explicit costClass; stamp COST_CLASS.* or rely on module-catalog-normalize infer (prefer explicit for budget reviews).`);
+        }
+    }
+    if (module.costClass && !VALID_COST_CLASSES.has(module.costClass)) {
+        errors.push(`${label} costClass "${module.costClass}" is unknown; use COST_CLASS values (premature_commitment|working_memory_pressure|interference|demand_coupled|authored_prior_safe|paint_composite).`);
     }
     if (module.when === 'immediate' && module.layer === 'feature' && !module.routeContract && !module.selectorContract && !module.features.length) {
         warnings.push(`${label} is FEATURE+IMMEDIATE without route, selector, or features gate; feature modules should be demand-coupled.`);
@@ -723,8 +745,14 @@ export async function main() {
     const idleChunked = idleModules.filter((module) => Boolean(module.timingChunk));
     const rolefulModules = report.modules.filter((module) => (module.updates.some((token) => /(?:^|:)(?:structural|flourish|inspect|residue|measure|diagnostic):/.test(token)
         || /^(?:structural|flourish|inspect|residue|measure|diagnostic):/.test(token))));
+    const costClassTagged = report.modules.filter((module) => Boolean(module.costClass));
+    const byWhen = report.modules.reduce((acc, module) => {
+        acc[module.when] = (acc[module.when] || 0) + 1;
+        return acc;
+    }, {});
     console.log(`[runtime] modules=${report.modules.length} ownerDirs=${report.ownerDirectories.length} rootEntrypoints=${report.rootEntrypoints.length} topLevelModuleFiles=${report.topLevelModuleFiles.length} styleWrites=${report.stylePropertyWrites.length} cssCustomProperties=${report.cssCustomProperties.length} typedOutputs=${report.typedOutputs.length} kernelShims=${report.kernelTypedShims.length} behaviorScopes=${report.behaviorScopes.length}`);
-    console.log(`[runtime] mountHygiene enhancementImmediate=${enhancementImmediate.length}/${enhancementModules.length} demandGated=${demandGatedImmediate.length}/${enhancementImmediate.length} timingArc=${enhancementImmediate.filter((module) => Boolean(module.timingArc)).length}/${enhancementImmediate.length} idleChunk=${idleChunked.length}/${idleModules.length} rolefulUpdates=${rolefulModules.length}/${report.modules.length}`);
+    console.log(`[runtime] mountHygiene enhancementImmediate=${enhancementImmediate.length}/${enhancementModules.length} demandGated=${demandGatedImmediate.length}/${enhancementImmediate.length} timingArc=${enhancementImmediate.filter((module) => Boolean(module.timingArc)).length}/${enhancementImmediate.length} idleChunk=${idleChunked.length}/${idleModules.length} rolefulUpdates=${rolefulModules.length}/${report.modules.length} costClass=${costClassTagged.length}/${report.modules.length}`);
+    console.log(`[runtime] schedule byWhen=${Object.entries(byWhen).map(([k, v]) => `${k}:${v}`).join(' ')}`);
     if (report.warnings.length) {
         console.log(`[runtime] warnings=${report.warnings.length}`);
         for (const warning of report.warnings.slice(0, 12)) {
