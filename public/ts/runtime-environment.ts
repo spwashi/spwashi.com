@@ -1,4 +1,5 @@
 const LOCAL_DEV_GLOBAL = '__SPW_LOCAL_DEV__';
+const SERVICE_WORKER_TEST_PARAM = 'spw-sw-test';
 
 const LOCAL_DEV_HOSTS = new Set([
   'localhost',
@@ -41,11 +42,21 @@ function isLocalDevelopmentRuntime(): boolean {
   return readWindowFlag() || readDatasetFlag() || isLocalDevelopmentHost();
 }
 
+function hasLocalServiceWorkerTestOverride(): boolean {
+  if (!isLocalDevelopmentHost()) return false;
+  try {
+    return new URLSearchParams(window.location.search).get(SERVICE_WORKER_TEST_PARAM) === '1';
+  } catch {
+    return false;
+  }
+}
+
 function shouldDisableServiceWorkerInDevelopment(): boolean {
-  return isLocalDevelopmentRuntime();
+  return isLocalDevelopmentRuntime() && !hasLocalServiceWorkerTestOverride();
 }
 
 export {
+  hasLocalServiceWorkerTestOverride,
   isLocalDevelopmentHost,
   isLocalDevelopmentRuntime,
   shouldDisableServiceWorkerInDevelopment,

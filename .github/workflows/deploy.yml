@@ -28,8 +28,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build site
-        run: npm run build
+      - name: Validate source and generated contracts
+        run: npm run check:local
+
+      - name: Build and validate deploy artifact
+        run: npm run build:site:run
 
       - name: Configure Pages
         uses: actions/configure-pages@v5

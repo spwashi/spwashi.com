@@ -4,27 +4,22 @@
  * Handles service worker registration, update detection, contextual install prompts
  * (including iOS Safari hint), and elegant toast notifications.
  *
- * Fully backward-compatible — call `initPwaUpdateHandler()` exactly as before.
- * All existing behavior, messages, bus events, and CSS classes are unchanged.
+ * Call `initPwaUpdateHandler()` from the site runtime. Public surface stays on
+ * `window.spwPwa` (install/update prompts, dismiss, standalone helpers).
  *
- * Major enhancements:
- * • Architecture: ToastManager class encapsulates all toast logic (cleaner, testable, extensible)
- * • Performance: Single <style> injection, cached queries, minimal DOM thrashing
- * • Resilience: Comprehensive try/catch around localStorage, serviceWorker, prompt APIs, and head links
- * • UX polish: Escape key instantly dismisses any toast, subtle hover states, better mobile positioning (safe-area aware)
- * • Accessibility: ARIA role="alert" for updates, live regions, focus management on action buttons, proper labeling
- * • Theming: Uses CSS custom properties (--pwa-toast-bg, --pwa-toast-text) with legacy fallback to #1a9999
- * • Extensibility: window.spwPwa exposed for manual triggers / debugging (showInstallPrompt, showUpdatePrompt, etc.)
- * • Bug fixes: Eliminated duplicate toasts, fixed deferredInstallPrompt race conditions, iOS hint now respects standalone mode across reloads
- * • Code quality: Sectioned with clear comments, consistent error handling, modern JS patterns, detailed JSDoc-style docs
- *
- * To add a new toast type: extend ToastManager.show() and add a new maybeShow* handler.
+ * Behavior notes:
+ * • ToastManager owns toast DOM, styles, Escape dismiss, and safe-area layout
+ * • Install/iOS dismissals are time-bounded (30 days), not permanent
+ * • Updates only apply after explicit reload consent (`SKIP_WAITING`)
+ * • Localhost can force registration with `?spw-sw-test=1`
+ * • Theming uses `--pwa-toast-bg` / `--pwa-toast-text` with theme-color fallback
  */
 import { annotateFloatingChromeElement } from '/public/js/kernel/dom-contracts.js';
 import { shouldDisableServiceWorkerInDevelopment } from '/public/js/kernel/runtime-environment.js';
 
 const APP_THEME_COLOR = '#1a9999';
 const UPDATE_CHECK_INTERVAL = 30 * 60 * 1000;
+const PROMPT_DISMISS_TTL = 30 * 24 * 60 * 60 * 1000;
 const DISMISS_INSTALL_KEY = 'spw-pwa-install-dismissed';
 const DISMISS_IOS_HINT_KEY = 'spw-pwa-ios-hint-dismissed';
 const DEV_RELOAD_GUARD_KEY = 'spw-pwa-dev-reload-guard';
@@ -61,6 +56,28 @@ const isIosSafari = () => {
     return isApple && isSafari;
 };
 
+const promptIsDismissed = (key) => {
+    const raw = storage.get(key);
+    if (!raw) return false;
+
+    // Preserve the old permanent `1` value for one final quiet period, then
+    // allow the prompt to become eligible again instead of hiding it forever.
+    if (raw === '1') {
+        storage.set(key, String(Date.now()));
+        return true;
+    }
+
+    const dismissedAt = Number.parseInt(raw, 10);
+    if (!Number.isFinite(dismissedAt) || Date.now() - dismissedAt >= PROMPT_DISMISS_TTL) {
+        storage.clear(key);
+        return false;
+    }
+
+    return true;
+};
+
+const rememberPromptDismissal = (key) => storage.set(key, String(Date.now()));
+
 // ── ToastManager ───────────────────────────────────────────────────────
 class ToastManager {
     constructor() {
@@ -85,10 +102,13 @@ class ToastManager {
                 right: max(1rem, env(safe-area-inset-right));
                 bottom: max(1rem, env(safe-area-inset-bottom));
                 display: flex;
+                flex-wrap: wrap;
                 align-items: center;
                 gap: 0.9rem;
                 width: min(28rem, calc(100vw - 2rem));
+                max-width: calc(100vw - 2rem);
                 padding: 1rem 1.1rem;
+                box-sizing: border-box;
                 border-radius: 0.8rem;
                 background: var(--pwa-toast-bg, ${APP_THEME_COLOR});
                 color: var(--pwa-toast-text, #ffffff);
@@ -96,11 +116,18 @@ class ToastManager {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 0.9rem;
                 line-height: 1.5;
+                overflow-wrap: anywhere;
                 animation: pwaToastSlideUp 220ms cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            [${TOAST_ATTR}] > span {
+                flex: 1 1 14rem;
+                min-width: 0;
             }
 
             [${TOAST_ATTR}] button {
                 padding: 0.45rem 0.8rem;
+                min-height: var(--touch-target-min, 2.75rem);
                 border-radius: 0.45rem;
                 border: 1px solid rgba(255,255,255,0.35);
                 background: rgba(255,255,255,0.18);
@@ -109,7 +136,7 @@ class ToastManager {
                 font-size: 0.82rem;
                 cursor: pointer;
                 white-space: nowrap;
-                transition: all 0.2s ease;
+                transition: background-color 0.2s ease, transform 0.2s ease;
             }
 
             [${TOAST_ATTR}] button:hover {
@@ -119,6 +146,21 @@ class ToastManager {
 
             [${TOAST_ATTR}] button[data-secondary] {
                 background: transparent;
+            }
+
+            @media (max-width: 30rem) {
+                [${TOAST_ATTR}] > span {
+                    flex-basis: 100%;
+                }
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                [${TOAST_ATTR}],
+                [${TOAST_ATTR}] button {
+                    animation: none;
+                    transition: none;
+                    transform: none;
+                }
             }
         `;
         document.head.appendChild(style);
@@ -152,13 +194,13 @@ class ToastManager {
             reason: `${kind}-toast`,
             stylingAxis: 'pwa-toast',
         });
-        toast.setAttribute('role', kind === 'update' ? 'alert' : 'status');
+        toast.setAttribute('role', 'status');
         toast.setAttribute('aria-live', 'polite');
+        toast.setAttribute('aria-atomic', 'true');
         toast.style.cssText = ''; // styles are now in global <style>
 
         // Message
         const msg = document.createElement('span');
-        msg.style.flex = '1';
         msg.textContent = message;
         toast.appendChild(msg);
 
@@ -186,10 +228,6 @@ class ToastManager {
 
         // Keyboard support (Escape)
         this.attachKeyboardDismiss();
-
-        // Auto-focus first interactive element
-        const firstBtn = toast.querySelector('button');
-        if (firstBtn) firstBtn.focus();
 
         return toast;
     }
@@ -247,6 +285,7 @@ const ensurePwaHeadLinks = () => {
     };
 
     try {
+        ensure('manifest', '/manifest.webmanifest');
         ensure('apple-touch-icon', '/public/images/apple-touch-icon.png');
         ensure('icon', '/favicon.ico', { type: 'image/x-icon', sizes: 'any' });
         ensure('icon', '/public/images/icon-192.png', { sizes: '192x192', type: 'image/png' });
@@ -332,7 +371,7 @@ const maybeShowInstallPrompt = () => {
     if (toastManager.current) return;
 
     // Web install prompt (Android/Chrome/Edge etc.)
-    if (deferredInstallPrompt && !storage.get(DISMISS_INSTALL_KEY)) {
+    if (deferredInstallPrompt && !promptIsDismissed(DISMISS_INSTALL_KEY)) {
         toastManager.show({
             kind: 'install',
             message: 'Add Spwashi to your home screen. Works offline, loads instantly.',
@@ -351,18 +390,18 @@ const maybeShowInstallPrompt = () => {
                 toastManager.remove('install');
             },
             dismissLabel: 'Later',
-            dismiss: () => storage.set(DISMISS_INSTALL_KEY, '1')
+            dismiss: () => rememberPromptDismissal(DISMISS_INSTALL_KEY)
         });
         return;
     }
 
     // iOS Safari hint
-    if (isIosSafari() && !storage.get(DISMISS_IOS_HINT_KEY)) {
+    if (isIosSafari() && !promptIsDismissed(DISMISS_IOS_HINT_KEY)) {
         toastManager.show({
             kind: 'install',
             message: 'Tap Share, then "Add to Home Screen" to install Spwashi.',
             dismissLabel: 'Got it',
-            dismiss: () => storage.set(DISMISS_IOS_HINT_KEY, '1')
+            dismiss: () => rememberPromptDismissal(DISMISS_IOS_HINT_KEY)
         });
     }
 };
@@ -475,7 +514,10 @@ const initPwaUpdateHandler = async () => {
     window.spwPwa = {
         init: initPwaUpdateHandler,
         showInstallPrompt: maybeShowInstallPrompt,
-        showUpdatePrompt: (reg) => maybeShowUpdatePrompt(reg || navigator.serviceWorker?.getRegistration()),
+        showUpdatePrompt: async (reg) => {
+            const registration = reg || await navigator.serviceWorker?.getRegistration?.();
+            return maybeShowUpdatePrompt(registration);
+        },
         dismissAll: () => toastManager.dismiss(),
         isStandalone,
         mode: 'production',

@@ -110,6 +110,7 @@ export const ROUTE_SCOPES = Object.freeze({
  * Keeps topic curriculum pages (software) on topics.css without duplicate bundles.
  */
 export const ROUTE_SURFACE_ALIASES = Object.freeze({
+    folios: 'website',
     software: 'topics',
 });
 /** Resolve alias → canonical ROUTE_SCOPES key (or the surface itself). */
@@ -158,11 +159,13 @@ export function parseStyleImports(source) {
     const importPattern = /@import\s+url\((['"]?)([^'")]+)\1\)\s*(?:layer\(([^)]+)\))?\s*;/g;
     for (const match of source.matchAll(importPattern)) {
         const [, , file, layer] = match;
-        const href = stripQueryHash(file);
+        const normalizedFile = file.trim();
+        const external = /^https?:\/\//i.test(normalizedFile);
+        const href = external ? normalizedFile : stripQueryHash(normalizedFile);
         imports.push({
             file: href,
             layer: layer?.trim() || null,
-            external: /^https?:\/\//i.test(href),
+            external,
         });
     }
     return imports;

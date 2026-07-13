@@ -44,6 +44,7 @@ import {
   isKnownSetting,
   manager,
   normalizeSiteSettings,
+  PWA_PROMPT_DISMISSAL_STORAGE_KEYS,
   presetIsSubsetOfSettings,
   presetMatchesSettings,
   describeSettingsPatch,
@@ -1064,6 +1065,15 @@ const bindPersistenceControls = (root = document) => {
 
   const registryMap = new Map(buildPersistenceRegistries().map((registry) => [registry.id, registry]));
   const sync = () => syncPersistenceReadouts(root);
+  const persistenceKeys = new Set([
+    SITE_SETTINGS_KEY,
+    getPinStorageKey(),
+    CAULDRON_STORAGE_KEY,
+    DISCOVERY_DISMISSALS_STORAGE_KEY,
+    VISITED_IMAGE_STORAGE_KEY,
+    COMPONENT_COLLECTION_STORAGE_KEY,
+    ...Object.values(PWA_PROMPT_DISMISSAL_STORAGE_KEYS),
+  ]);
 
   const handleClick = (event) => {
     const target = event.target instanceof Element ? event.target.closest('[data-site-persistence-reset]') : null;
@@ -1076,16 +1086,7 @@ const bindPersistenceControls = (root = document) => {
   };
 
   const handleStorage = (event) => {
-    if (!event.key) return;
-    const persistenceKeys = [
-      SITE_SETTINGS_KEY,
-      getPinStorageKey(),
-      CAULDRON_STORAGE_KEY,
-      DISCOVERY_DISMISSALS_STORAGE_KEY,
-      VISITED_IMAGE_STORAGE_KEY,
-      COMPONENT_COLLECTION_STORAGE_KEY,
-    ];
-    if (persistenceKeys.includes(event.key)) {
+    if (event.key === null || persistenceKeys.has(event.key)) {
       sync();
     }
   };

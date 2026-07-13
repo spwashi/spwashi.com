@@ -77,6 +77,7 @@ import {
   listModuleCatalogIndex,
   MOUNT_WHEN,
   REGION_DEFS,
+  resolveModuleCatalogSpecifier,
   summarizeModuleCatalogOptimization,
 } from './runtime/module-catalog.js';
 import {
@@ -277,12 +278,7 @@ function extractDynamicImportSpecifier(def) {
 }
 
 function moduleSpecifierToUrl(specifier = '') {
-  if (!specifier || !specifier.startsWith('./')) return '';
-  try {
-    return new URL(specifier, new URL('/public/js/site.js', window.location.origin)).href;
-  } catch {
-    return '';
-  }
+  return resolveModuleCatalogSpecifier(specifier, window.location.origin);
 }
 
 function ensureResourceHint(href, rel = 'modulepreload') {

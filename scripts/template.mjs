@@ -393,6 +393,16 @@ function injectSettingsPreflight(source) {
   return source;
 }
 
+function injectPwaManifestLink(source) {
+  if (!HEAD_CLOSE_RE.test(source)) return source;
+  const manifestLinkPattern = /<link\b(?=[^>]*\brel=["'][^"']*\bmanifest\b[^"']*["'])[^>]*>/i;
+  if (manifestLinkPattern.test(source)) return source;
+  return source.replace(
+    HEAD_CLOSE_RE,
+    '    <link href="/manifest.webmanifest" rel="manifest" />\n</head>',
+  );
+}
+
 function renderAlternateLocaleLinks(vars) {
   return parseKeyedList(vars.alternate_locales || vars.alternates || '')
     .map(({ key, content }) => `    <link rel="alternate" hreflang="${attrEscape(normalizeLocaleCode(key))}" href="${attrEscape(content)}" />`)
@@ -819,7 +829,10 @@ function enhanceHtmlMetadata(source, warnings) {
 export async function renderTemplate(source, { sourceLabel = '<string>' } = {}) {
   const warnings = [];
   if (!shouldProcess(source)) {
-    const output = enhanceHtmlMetadata(applyScopedStylesheets(injectSettingsPreflight(source)), warnings);
+    const output = enhanceHtmlMetadata(
+      injectPwaManifestLink(applyScopedStylesheets(injectSettingsPreflight(source))),
+      warnings,
+    );
     return { output, vars: {}, warnings };
   }
   const { vars, rest } = extractPageVars(source);
@@ -830,7 +843,10 @@ export async function renderTemplate(source, { sourceLabel = '<string>' } = {}) 
   const withPreflight = isOff(firstValue(vars.prepaint, vars.head_prepaint))
     ? substituted
     : injectSettingsPreflight(substituted);
-  const output = enhanceHtmlMetadata(applyScopedStylesheets(withPreflight), warnings);
+  const output = enhanceHtmlMetadata(
+    injectPwaManifestLink(applyScopedStylesheets(withPreflight)),
+    warnings,
+  );
   if (warnings.length) {
     for (const w of warnings) {
       console.warn(`[template] ${sourceLabel}: ${w}`);

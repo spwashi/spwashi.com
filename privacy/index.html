@@ -118,6 +118,17 @@
                 <p>Some tools, such as care, budgeting, RPG Wednesday, and seed cards, keep working data locally.</p>
                 <code>tool-specific localStorage keys</code>
             </article>
+            <article class="frame-panel">
+                <h3>Install prompts and offline files</h3>
+                <p>Choosing “Later” on an install hint stores a local timestamp for up to 30 days. The service worker keeps the offline shell and recently used site files in Cache Storage.</p>
+                <code>spw-pwa-install-dismissed</code><br>
+                <code>spw-pwa-ios-hint-dismissed</code>
+            </article>
+            <article class="frame-panel">
+                <h3>Web fonts</h3>
+                <p>On an online visit, the core stylesheet may request JetBrains Mono and Newsreader from Google Fonts. That font request leaves this browser; offline visits fall back to locally available system fonts.</p>
+                <code>fonts.googleapis.com</code>
+            </article>
         </div>
     </section>
 

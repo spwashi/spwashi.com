@@ -18,9 +18,20 @@ const BROAD_SELECTOR_RE = /^(html|body)$/i;
 const PAINT_SCOPE_RE = /ornament|css-vars|paint|composite|flourish|express|backdrop|media-query/;
 const MEMORY_SCOPE_RE = /observer|document-wide|document-scroll|resize|performance-observer|queryall|measure|metacognition|inspect/;
 const INTERFERENCE_SCOPE_RE = /pack-local|layout-correction|dual|mirror/;
+const MODULE_CATALOG_URL_PATH = '/public/js/runtime/module-catalog.js';
 
 function asToken(value) {
   return String(value || '').trim().toLowerCase();
+}
+
+export function resolveModuleCatalogSpecifier(specifier = '', origin = '') {
+  const normalized = String(specifier || '').trim();
+  if (!normalized || (!normalized.startsWith('./') && !normalized.startsWith('../'))) return '';
+  try {
+    return new URL(normalized, new URL(MODULE_CATALOG_URL_PATH, origin)).href;
+  } catch {
+    return '';
+  }
 }
 
 /**
@@ -219,7 +230,7 @@ function suggestReclass(def) {
 export const MODULE_CATALOG_NORMALIZE_CONTRACT = Object.freeze({
   costClasses: COST_CLASS_VALUES,
   portableUse:
-    'normalizeCatalogDefinition() attaches costClass; summarizeModuleCatalogOptimization() rolls up BRP-oriented counts for DevTools and audits.',
+    'normalizeCatalogDefinition() attaches costClass; summarizeModuleCatalogOptimization() rolls up BRP-oriented counts; resolveModuleCatalogSpecifier() keeps resource probes aligned with catalog-relative imports.',
   scheduleOwns:
     'when / timingArc / timingChunk / features remain the runtime schedule; costClass is budget/inspect only unless a future loader policy opts in.',
 });

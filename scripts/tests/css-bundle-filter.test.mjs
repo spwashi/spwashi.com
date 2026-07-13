@@ -9,6 +9,7 @@ import {
   listBundleTargets,
   normalizeCssSourceHref,
   onlyTokensForTargets,
+  parseStyleImports,
   resolveCanonicalRouteSurface,
   resolveScopedStylesheets,
   routeBundleHref,
@@ -16,6 +17,32 @@ import {
 } from '../typed/css-manifest.mjs';
 
 describe('css-manifest incremental filters', () => {
+  it('parseStyleImports preserves external query and hash components', () => {
+    const imports = parseStyleImports(`
+      @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=Newsreader:wght@300;600&display=swap#latin");
+      @import url('/public/css/tokens/core.css?v=2#tokens') layer(tokens);
+    `);
+
+    assert.deepEqual(imports, [
+      {
+        file: 'https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap',
+        layer: null,
+        external: true,
+      },
+      {
+        file: 'https://fonts.googleapis.com/css2?family=Newsreader:wght@300;600&display=swap#latin',
+        layer: null,
+        external: true,
+      },
+      {
+        file: '/public/css/tokens/core.css',
+        layer: 'tokens',
+        external: false,
+      },
+    ]);
+  });
+
   it('normalizeCssSourceHref accepts repo-relative and root href', () => {
     assert.equal(normalizeCssSourceHref('public/css/routes/surfaces/home.css'), '/public/css/routes/surfaces/home.css');
     assert.equal(normalizeCssSourceHref('/public/css/tokens/core.css'), '/public/css/tokens/core.css');
@@ -63,6 +90,13 @@ describe('css-manifest incremental filters', () => {
     assert.ok(sheets.some((s) => s.href === '/public/css/bundles/core.css'));
     assert.ok(sheets.some((s) => s.kind === 'route' && s.scope === 'topics'));
     assert.ok(sheets.some((s) => s.kind === 'behavior' && s.scope === 'metrics'));
+  });
+
+  it('folios surface aliases to website route CSS', () => {
+    assert.equal(resolveCanonicalRouteSurface('folios'), 'website');
+    assert.equal(routeBundleHref('folios'), '/public/css/bundles/routes/website.css');
+    const sheets = resolveScopedStylesheets({ surface: 'folios' });
+    assert.ok(sheets.some((s) => s.kind === 'route' && s.scope === 'website'));
   });
 
   it('filterBundleTargets resolves software alias to topics bundle', () => {

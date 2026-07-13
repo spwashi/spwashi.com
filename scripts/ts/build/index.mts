@@ -5,6 +5,12 @@ import { promises as fs } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
 import {
+  assertPwaContract,
+  collectOfflineDocumentDependencies,
+  formatPwaContractSummary,
+  injectBuildPrecacheAssets,
+} from '../pwa-contracts.mjs';
+import {
   assertSafeOutputDir,
   checkImageRedundancy,
   copyRepo,
@@ -67,6 +73,17 @@ type AssetManifest = {
   chunks: Record<string, string[]>;
 };
 
+async function prepareServiceWorkerPrecache(outDir: string): Promise<string[]> {
+  const offlinePath = path.join(outDir, 'offline', 'index.html');
+  const workerPath = path.join(outDir, 'sw.js');
+  const offlineHtml = await fs.readFile(offlinePath, 'utf8');
+  const workerSource = await fs.readFile(workerPath, 'utf8');
+  const dependencies = collectOfflineDocumentDependencies(offlineHtml);
+  const output = injectBuildPrecacheAssets(workerSource, dependencies);
+  await fs.writeFile(workerPath, output, 'utf8');
+  return dependencies;
+}
+
 async function hashAndRewritePublicAssets(outDir: string, options: { fingerprintAssets: boolean }): Promise<AssetManifest> {
   const assetMap: Record<string, string> = {};
   const chunkMap = new Map<string, string[]>();
@@ -113,8 +130,11 @@ async function hashAndRewritePublicAssets(outDir: string, options: { fingerprint
     }
   }
 
-  const htmlFiles = (await walkFiles(outDir)).filter((file) => file.endsWith('.html'));
-  for (const file of htmlFiles) {
+  const workerPath = path.join(outDir, 'sw.js');
+  const rewriteTargets = (await walkFiles(outDir)).filter(
+    (file) => file.endsWith('.html') || path.resolve(file) === path.resolve(workerPath),
+  );
+  for (const file of rewriteTargets) {
     const source = await fs.readFile(file, 'utf8');
     let output = source;
     for (const [original, hashed] of Object.entries(assetMap)) {
@@ -174,13 +194,6 @@ export async function main(): Promise<void> {
 
   await writeNoJekyll(options.outDir);
 
-  const assetManifest = await hashAndRewritePublicAssets(options.outDir, options);
-  if (assetManifest.fingerprinted) {
-    logger.info(`[build] fingerprinted ${Object.keys(assetManifest.assets).length} core asset(s)`);
-  } else {
-    logger.info(`[build] preserved ${Object.keys(assetManifest.assets).length} core asset(s) for local caching`);
-  }
-
   if (options.sitemap) {
     logger.info('[build] generating sitemap.xml');
     runNodeScript('scripts/generate-sitemap.mjs', ['--out', path.join(options.outDir, 'sitemap.xml')]);
@@ -194,6 +207,23 @@ export async function main(): Promise<void> {
   } else {
     logger.info('[build] skipping design catalog generation');
   }
+
+  logger.info('[build] preparing service-worker precache from rendered offline dependencies');
+  const offlineDependencies = await prepareServiceWorkerPrecache(options.outDir);
+  logger.info(`[build] service-worker offline dependencies=${offlineDependencies.length}`);
+
+  const assetManifest = await hashAndRewritePublicAssets(options.outDir, options);
+  if (assetManifest.fingerprinted) {
+    logger.info(`[build] fingerprinted ${Object.keys(assetManifest.assets).length} core asset(s)`);
+  } else {
+    logger.info(`[build] preserved ${Object.keys(assetManifest.assets).length} core asset(s) for local caching`);
+  }
+
+  const pwaReport = await assertPwaContract({
+    mode: 'dist',
+    rootDir: options.outDir,
+  });
+  logger.info(formatPwaContractSummary(pwaReport));
 
   const fileCount = await countFiles(options.outDir);
   const ms = Date.now() - startedAt;

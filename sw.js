@@ -8,13 +8,18 @@
  * - Prefer network for HTML, prefer cache for versioned/static assets.
  */
 
-const CACHE_SCHEMA_VERSION = 'v4';
+const CACHE_SCHEMA_VERSION = 'v5';
 const CACHE_NAMESPACE = `spw-${CACHE_SCHEMA_VERSION}`;
 
 const CACHE = {
   core: `${CACHE_NAMESPACE}-core`,
   pages: `${CACHE_NAMESPACE}-pages`,
   assets: `${CACHE_NAMESPACE}-assets`,
+};
+
+const CACHE_LIMITS = {
+  pages: 48,
+  assets: 160,
 };
 
 const LEGACY_CACHE_PREFIXES = [
@@ -30,135 +35,67 @@ const FALLBACK_IMAGE_URL = '/public/images/icon-192.png';
 
 const CORE_ROUTES = [
   '/',
-  '/about',
-  '/about/website/',
+  '/about/',
   '/blog/',
-  '/contact',
   '/settings/',
   '/play/',
-  '/play/rpg-wednesday/',
-  '/play/rpg-wednesday/sessions/',
-  '/play/rpg-wednesday/world/',
-  '/play/rpg-wednesday/cast/',
-  '/play/rpg-wednesday/arcs/',
-  '/topics/',
-  '/topics/architecture/',
   '/topics/craft/',
-  '/topics/craft/fragments/',
-  '/topics/craft/svg/',
-  '/topics/craft/files/',
-  '/topics/pedagogy/',
-  '/design/website/',
-  '/design/experiments/css/',
-  '/design/experiments/svg/',
-  '/topics/math/',
-  '/topics/math/topology/',
-  '/topics/math/symmetry/',
-  '/topics/math/combinatorics/',
-  '/topics/math/number-theory/',
-  '/topics/math/field-theory/',
-  '/topics/math/category-theory/',
-  '/topics/math/complexity/',
   '/topics/software/',
-  '/topics/software/renderers/',
-  '/topics/software/geometry/',
-  '/topics/software/lattices/',
-  '/topics/software/schedulers/',
-  '/topics/software/parsers/',
-  '/topics/software/spw/',
-  '/topics/software/spw/operators/frame/',
-  '/topics/software/spw/operators/layer/',
-  '/topics/software/spw/operators/baseline/',
-  '/topics/software/spw/operators/object/',
-  '/topics/software/spw/operators/ref/',
-  '/topics/software/spw/operators/probe/',
-  '/topics/software/spw/operators/action/',
-  '/topics/software/spw/operators/stream/',
-  '/topics/software/spw/operators/merge/',
-  '/topics/software/spw/operators/binding/',
-  '/topics/software/spw/operators/meta/',
-  '/topics/software/spw/operators/normalize/',
-  '/topics/software/spw/operators/pragma/',
-  '/topics/software/spw/operators/surface/',
-  '/tools/',
-  '/tools/profile/',
-  '/tools/character-sheet/',
-  '/tools/midjourney/',
   OFFLINE_URL,
 ];
 
 const CORE_ASSETS = [
   '/manifest.webmanifest',
-
-  '/public/css/style.css',
-  '/public/css/effects/enhancements.css',
-  '/public/css/routes/surfaces/design-experiments.css',
-
-  '/public/js/site.js',
-  '/public/js/kernel/dom-contracts.js',
-  '/public/js/kernel/dom-render.js',
-  '/public/js/kernel/page-metadata.js',
-  '/public/js/typed/json-feeds.js',
-  '/public/js/typed/media-publishing.js',
-  '/public/js/typed/promo-wonder-cycle.js',
-  '/public/js/typed/feed-utils.js',
-  '/public/js/kernel/site-settings.js',
-  '/public/js/modules/design/experiments.js',
-  '/public/js/interface/palette-resonance.js',
-  '/public/js/modules/math/diagrams.js',
-  '/public/js/semantic/component-semantics.js',
-  '/public/js/interface/contextual-ui.js',
-  '/public/js/interface/semantic-chrome.js',
-  '/public/js/kernel/shared.js',
-  '/public/js/media/image-metaphysics.js',
-  '/public/js/media/svg-filters.js',
-  '/public/js/interface/canvas-accents.js',
-  '/public/js/kernel/bus.js',
-  '/public/js/runtime/interaction-loop.js',
-  '/public/js/runtime/pwa-update-handler.js',
-
+  '/public/css/bundles/core.css',
   '/public/images/apple-touch-icon.png',
   '/public/images/icon-192.png',
   '/public/images/icon-512.png',
   '/public/images/icon-maskable-512.png',
-  '/public/images/routes/about-attention-register-hero.webp',
-  '/public/images/routes/blog-thread-laboratory-hero.webp',
-  '/public/images/routes/blog-thread-laboratory-square.webp',
-  '/public/images/routes/craft-fragment-studio-hero.webp',
-  '/public/images/routes/craft-fragment-studio-square.webp',
-  '/public/images/routes/math-signal-field-square.webp',
-  '/public/images/routes/site-design-resonance-hero.webp',
-  '/public/images/routes/software-parser-weather-square.webp',
-  '/public/images/routes/topics-atlas-register-square.webp',
-  '/public/images/routes/website-field-instrument-hero.webp',
-  '/public/images/routes/website-field-instrument-square.webp',
-  '/public/data/promo-wonder-cycle.json',
   '/favicon.ico',
 ];
 
-const PRECACHE_URLS = [...new Set([...CORE_ROUTES, ...CORE_ASSETS])];
+// A failed required shell must fail installation and leave the current worker
+// in control. Routes and richer assets are useful offline, but they may warm
+// opportunistically without making an otherwise sound update unusable.
+const REQUIRED_PRECACHE_URLS = [
+  OFFLINE_URL,
+  '/manifest.webmanifest',
+  '/public/css/bundles/core.css',
+  '/public/images/apple-touch-icon.png',
+  '/public/images/icon-192.png',
+  '/public/images/icon-512.png',
+  '/public/images/icon-maskable-512.png',
+  '/favicon.ico',
+];
+
+const requiredPrecacheSet = new Set(REQUIRED_PRECACHE_URLS);
+const OPTIONAL_PRECACHE_URLS = [...new Set([...CORE_ROUTES, ...CORE_ASSETS])]
+  .filter((url) => !requiredPrecacheSet.has(url));
+const PRECACHE_URLS = [...REQUIRED_PRECACHE_URLS, ...OPTIONAL_PRECACHE_URLS];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
     (async () => {
       const cache = await caches.open(CACHE.core);
 
-      const results = await Promise.allSettled(
-        PRECACHE_URLS.map((url) => precacheUrl(cache, url))
+      await Promise.all(
+        REQUIRED_PRECACHE_URLS.map((url) => precacheUrl(cache, url))
       );
 
-      const failed = results.filter((result) => result.status === 'rejected');
+      const optionalResults = await Promise.allSettled(
+        OPTIONAL_PRECACHE_URLS.map((url) => precacheUrl(cache, url))
+      );
+
+      const failed = optionalResults.filter((result) => result.status === 'rejected');
       if (failed.length) {
         console.warn(
-          `[SW ${CACHE_SCHEMA_VERSION}] Partial precache failure: ${failed.length}/${PRECACHE_URLS.length}`
+          `[SW ${CACHE_SCHEMA_VERSION}] Optional precache failure: ${failed.length}/${OPTIONAL_PRECACHE_URLS.length}`
         );
       } else {
         console.log(`[SW ${CACHE_SCHEMA_VERSION}] Precache complete`);
       }
 
       await pruneCacheEntries(CACHE.core, PRECACHE_URLS);
-
-      self.skipWaiting();
     })()
   );
 });
@@ -383,6 +320,7 @@ async function staleWhileRevalidate(event, request, cacheName) {
     .then(async (response) => {
       if (isCacheableResponse(response)) {
         await cache.put(cacheKey, response.clone());
+        await trimRuntimeCache(CACHE.assets);
       }
       return response;
     })
@@ -417,8 +355,29 @@ async function cacheResponse(cacheName, request, response) {
   try {
     const cache = await caches.open(cacheName);
     await cache.put(normalizeCacheKey(request), response);
+    await trimRuntimeCache(cacheName);
   } catch (error) {
     console.warn(`[SW ${CACHE_SCHEMA_VERSION}] Cache put failed`, error);
+  }
+}
+
+async function trimRuntimeCache(cacheName) {
+  const limit = cacheName === CACHE.pages
+    ? CACHE_LIMITS.pages
+    : cacheName === CACHE.assets
+      ? CACHE_LIMITS.assets
+      : 0;
+  if (!limit) return;
+
+  try {
+    const cache = await caches.open(cacheName);
+    const requests = await cache.keys();
+    const overflow = requests.length - limit;
+    if (overflow <= 0) return;
+
+    await Promise.all(requests.slice(0, overflow).map((request) => cache.delete(request)));
+  } catch (error) {
+    console.warn(`[SW ${CACHE_SCHEMA_VERSION}] Cache trim failed`, error);
   }
 }
 
@@ -512,6 +471,7 @@ async function prefetchUrls(urls) {
 
   const cache = await caches.open(CACHE.assets);
   const results = await Promise.allSettled(normalized.map((url) => precacheUrl(cache, url)));
+  await trimRuntimeCache(CACHE.assets);
   return {
     requested: normalized.length,
     cached: results.filter((result) => result.status === 'fulfilled').length,

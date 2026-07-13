@@ -1318,7 +1318,7 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
   width: 100%;
   box-sizing: border-box;
   justify-content: flex-start;
-  min-height: 2.28rem;
+  min-height: var(--touch-target-min);
   padding: 0.34rem 0.58rem;
   border: 1px solid var(--spw-shell-mobile-card-border);
   border-radius: calc(var(--shape-control, 0.78rem) - 0.16rem);

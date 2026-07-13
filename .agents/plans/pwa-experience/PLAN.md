@@ -1,6 +1,6 @@
 # Plan: pwa-experience
 
-Improve the site's installability, offline behavior, and update flow without changing the hand-written page structure.
+Improve the site's installability, offline behavior, update flow, and production QA without changing the hand-written page structure.
 
 ## Goal
 
@@ -8,8 +8,8 @@ The desired end state is a static site that behaves like a credible lightweight 
 
 ## Scope
 
-- **In scope**: move service worker control to the site root, normalize route/offline caching for the main site shell, improve install/update prompts, align the manifest with real assets, generate missing install icons, and add a dedicated offline page.
-- **Out of scope**: redesign page layouts or copy, add build tooling, attempt a full offline mirror of every route, or refactor shared site scripts beyond what the PWA flow needs.
+- **In scope**: keep service worker control at the site root, normalize route/offline caching for the main site shell, improve install/update prompts, align the manifest with real assets, validate the fingerprinted production graph, and keep install/offline state inspectable.
+- **Out of scope**: redesign page layouts, attempt a full offline mirror of every route, add a runtime framework, or refactor shared site scripts beyond what the PWA and QA contracts need.
 
 ## Files
 
@@ -18,16 +18,35 @@ The desired end state is a static site that behaves like a credible lightweight 
 [NEW] sw.js
 [NEW] offline/index.html
 [MOD] manifest.webmanifest
-[MOD] public/js/pwa-update-handler.js
+[MOD] public/js/runtime/pwa-update-handler.js
+[MOD] public/js/site.js
+[MOD] public/js/runtime/module-catalog-normalize.js
+[MOD] public/ts/runtime-environment.ts
 [MOD] public/sw.js
+[MOD] scripts/template.mjs
+[MOD] scripts/ts/build/index.mts
+[NEW] scripts/ts/pwa-contracts.mts
+[MOD] scripts/ts/site-contracts/index.mts
+[MOD] package.json
+[MOD] .github/workflows/deploy.yml
+[MOD] privacy/index.html
 [NEW] public/images/apple-touch-icon.png
 [NEW] public/images/icon-192.png
 [NEW] public/images/icon-512.png
 [NEW] public/images/icon-maskable-512.png
 
 Craft guard:
-- `sw.js` and `public/js/pwa-update-handler.js` should stay single-purpose and well under 600 lines.
+- `sw.js` and `public/js/runtime/pwa-update-handler.js` should stay single-purpose and well under 600 lines.
 - No import growth risk is expected; the client script remains a small PWA shell helper.
+
+## QA Reconciliation — 2026-07-13
+
+- **Public outcome**: install metadata is present on every rendered route; a newly installed worker has a complete offline shell; updates wait for explicit reload consent; compact controls meet the shared touch-target floor; and broken static fragments fail local validation.
+- **Semantic fixity tier**: structural. Existing route and runtime names remain stable while validation becomes stricter around them.
+- **Alignment seam**: aliases must resolve authored `data-spw-surface` values to a real route bundle, authored same-page links must resolve to a static or explicitly runtime-owned target, and runtime resource probes must resolve from the module catalog's directory.
+- **Automation seam**: production fingerprinting, generated catalog references, manifest icons, offline dependencies, and worker precache paths are one built-artifact contract. The deploy workflow must run the same offline/local QA gate before publishing; `?spw-sw-test=1` is a localhost-only behavioral-smoke override.
+- **Privacy seam**: install-hint dismissals are time-bounded and disclosed alongside Cache Storage and external font behavior.
+- **Do not touch**: creator identity, route information architecture, full-site visual redesign, or speculative offline mirroring.
 
 ## Commits
 
@@ -57,6 +76,7 @@ none
 - **Hypotheses**: the root worker will control page navigations; the update prompt will only appear when a waiting worker exists; install affordances will appear only when the browser can install or when iOS needs a manual hint.
 - **Negative controls**: directory routing, existing HTML content, and shared stylesheet usage remain unchanged.
 - **Demo sequence**: load `/`, confirm worker registration, reload into a controlled session, simulate offline navigation to a cached route and to an uncached route, and confirm update/install prompts behave sanely.
+- **Automated gates**: `npm run check:local`, the built-artifact PWA contract, `npm run build`, targeted static-fragment checks, edited-JavaScript syntax checks, and `git diff --check`.
 
 ## Spw Artifact
 

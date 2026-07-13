@@ -17,6 +17,16 @@ export const ROOT_DIR = path.resolve(__dirname, '..', '..', '..');
 export const ROUTE_MANIFEST_OUTPUT = process.env.SPW_ROUTE_MANIFEST_OUTPUT
     || path.join(ROOT_DIR, '.agents/state/runtime/route-runtime-manifest.json');
 const DEFAULT_SYNTAX_CHECK_CONCURRENCY = Math.min(8, Math.max(1, availableParallelism()));
+const RUNTIME_FRAGMENT_TARGETS = new Map([
+    [
+        '/play/rpg-wednesday/',
+        {
+            feature: 'rpg-gameplay',
+            owner: 'public/js/modules/rpg-wednesday/index.js',
+            targets: new Set(['rpgw-state-curator', 'rpg-kit-notes', 'rpg-kit-brief']),
+        },
+    ],
+]);
 function relativeRepoPath(absolutePath) {
     return toPosixPath(path.relative(ROOT_DIR, absolutePath));
 }
@@ -26,6 +36,49 @@ function shouldIgnoreRepoPath(relativePath) {
 function repoPathFromRootRelative(rootRelativePath) {
     const cleanPath = stripQueryHash(rootRelativePath).replace(/^\/+/, '');
     return path.join(ROOT_DIR, cleanPath);
+}
+function decodeFragment(value) {
+    try {
+        return decodeURIComponent(value);
+    }
+    catch {
+        return value;
+    }
+}
+export function collectLocalFragmentIssues(html, route, features) {
+    const ids = new Set();
+    const idPattern = /<[a-z][^>]*\sid\s*=\s*(?:"([^"]+)"|'([^']+)'|([^\s>]+))[^>]*>/gi;
+    for (const match of html.matchAll(idPattern)) {
+        const id = match[1] || match[2] || match[3] || '';
+        if (id)
+            ids.add(id);
+    }
+    const runtimeOwnership = RUNTIME_FRAGMENT_TARGETS.get(route);
+    const runtimeTargets = runtimeOwnership && features.includes(runtimeOwnership.feature)
+        ? runtimeOwnership.targets
+        : new Set();
+    const issues = new Set();
+    for (const anchor of collectTagAttributes(html, 'a')) {
+        const href = anchor.href || '';
+        const hashIndex = href.indexOf('#');
+        if (hashIndex < 0)
+            continue;
+        const routePart = href.slice(0, hashIndex);
+        const rawFragment = href.slice(hashIndex + 1);
+        if (!rawFragment || rawFragment.startsWith(':~:text='))
+            continue;
+        if (routePart && routePart !== '.' && routePart !== './') {
+            if (!routePart.startsWith('/'))
+                continue;
+            if (normalizeInternalRoute(stripQueryHash(routePart)) !== route)
+                continue;
+        }
+        const fragment = decodeFragment(rawFragment);
+        if (ids.has(fragment) || runtimeTargets.has(fragment))
+            continue;
+        issues.add(`Same-page fragment #${fragment} has no static target.`);
+    }
+    return [...issues];
 }
 async function walkForRouteFiles(directoryPath, results = []) {
     const entries = await fs.readdir(directoryPath, { withFileTypes: true });
@@ -83,6 +136,8 @@ async function parseRouteFile(absoluteFilePath) {
         .map((attrs) => attrs.href);
     const errors = [];
     const warnings = [];
+    const route = routePathFromFile(relativeFilePath);
+    const features = splitList(bodyAttributes?.['data-spw-features']);
     if (!bodyAttributes) {
         errors.push('Missing <body> element.');
     }
@@ -98,7 +153,7 @@ async function parseRouteFile(absoluteFilePath) {
     }
     const surface = normalizeSpace(bodyAttributes?.['data-spw-surface']);
     if (stylesheetMode === 'scoped' && surface && !isKnownRouteSurface(surface)) {
-        warnings.push(`data-spw-surface="${surface}" is not in ROUTE_SCOPES/ROUTE_SURFACE_ALIASES; `
+        errors.push(`data-spw-surface="${surface}" is not in ROUTE_SCOPES/ROUTE_SURFACE_ALIASES; `
             + 'scoped delivery will ship core (+ behaviors) without a route CSS bundle.');
     }
     // Source HTML keeps style.css; template rewrite attaches route bundles at render time.
@@ -113,9 +168,13 @@ async function parseRouteFile(absoluteFilePath) {
             }
         }
     }
-    if (!moduleScripts.some((src) => stripQueryHash(src) === EXPECTED_SITE_SCRIPT_PREFIX)) {
+    if (route !== '/offline/' && !moduleScripts.some((src) => stripQueryHash(src) === EXPECTED_SITE_SCRIPT_PREFIX)) {
         errors.push(`Missing shared runtime script ${EXPECTED_SITE_SCRIPT_PREFIX}`);
     }
+    if (stripQueryHash(manifestHref || '') !== '/manifest.webmanifest') {
+        errors.push('Missing shared web app manifest /manifest.webmanifest');
+    }
+    errors.push(...collectLocalFragmentIssues(html, route, features));
     const requiredHeadAssets = [...stylesheets, ...moduleScripts];
     if (manifestHref)
         requiredHeadAssets.push(manifestHref);
@@ -148,7 +207,7 @@ async function parseRouteFile(absoluteFilePath) {
         },
         context: bodyAttributes?.['data-spw-context'] || null,
         errors,
-        features: splitList(bodyAttributes?.['data-spw-features']),
+        features,
         file: relativeFilePath,
         layout: bodyAttributes?.['data-spw-layout'] || null,
         pageFamily: bodyAttributes?.['data-spw-page-family'] || null,
@@ -156,7 +215,7 @@ async function parseRouteFile(absoluteFilePath) {
         pageRole: bodyAttributes?.['data-spw-page-role'] || null,
         pageSeed: bodyAttributes?.['data-spw-page-seed'] || null,
         relatedRoutes: splitPipeList(bodyAttributes?.['data-spw-related-routes']).map(normalizeInternalRoute),
-        route: routePathFromFile(relativeFilePath),
+        route,
         routeFamily: bodyAttributes?.['data-spw-route-family'] || null,
         spec: {
             featureEnabled: splitList(bodyAttributes?.['data-spw-features']).includes('specs'),
@@ -328,6 +387,15 @@ async function collectSyntaxCheckTargets() {
     }
     catch {
         // Optional helper script; ignore if absent.
+    }
+    for (const workerPath of [path.join(ROOT_DIR, 'sw.js'), path.join(ROOT_DIR, 'public/sw.js')]) {
+        try {
+            await fs.access(workerPath);
+            targets.push(workerPath);
+        }
+        catch {
+            // Compatibility worker is optional; the root worker is checked when present.
+        }
     }
     return targets.sort();
 }

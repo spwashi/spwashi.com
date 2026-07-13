@@ -34,6 +34,7 @@ export {
   MODULE_CATALOG_NORMALIZE_CONTRACT,
   normalizeCatalogDefinition,
   normalizeCatalogDefinitions,
+  resolveModuleCatalogSpecifier,
   summarizeModuleCatalogOptimization,
 } from './module-catalog-normalize.js';
 

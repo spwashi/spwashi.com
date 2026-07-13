@@ -92,6 +92,11 @@ import {
   buildQueryString,
 } from './site-settings-profiles.js';
 
+const PWA_PROMPT_DISMISSAL_STORAGE_KEYS = Object.freeze({
+  install: 'spw-pwa-install-dismissed',
+  iosHint: 'spw-pwa-ios-hint-dismissed',
+});
+
 const QUERY_SETTING_ALIASES = Object.freeze({
   lighting: 'colorTuner',
   color: 'colorTuner',
@@ -297,6 +302,46 @@ const safeParseStorageJson = (key, fallback) => {
   }
 };
 
+const normalizeStorageTimestamp = (value) => {
+  if (!value || value === true || value === 1) return '';
+
+  const numeric = typeof value === 'number'
+    ? value
+    : /^\d{10,13}$/.test(String(value))
+      ? Number(value)
+      : Number.NaN;
+  const date = new Date(Number.isFinite(numeric)
+    ? (numeric < 1e12 ? numeric * 1000 : numeric)
+    : value);
+
+  return Number.isNaN(date.getTime()) ? '' : date.toISOString();
+};
+
+const readStorageMarker = (key) => {
+  try {
+    const raw = localStorage.getItem(key);
+    if (raw === null) return { active: false, timestamp: '' };
+
+    let value = raw;
+    try {
+      value = JSON.parse(raw);
+    } catch {
+      // Existing markers are plain strings; future writers may store timestamped JSON.
+    }
+
+    const timestampValue = value && typeof value === 'object'
+      ? value.dismissedAt || value.timestamp || value.updatedAt
+      : value;
+
+    return {
+      active: true,
+      timestamp: normalizeStorageTimestamp(timestampValue),
+    };
+  } catch {
+    return { active: false, timestamp: '' };
+  }
+};
+
 const formatStorageTimestamp = (value) => {
   if (!value) return 'not recorded';
   try {
@@ -366,6 +411,46 @@ const buildPersistenceRegistries = () => ([
     },
     clear() {
       resetSiteSettings();
+    },
+  },
+  {
+    id: 'pwa-prompts',
+    label: 'PWA prompt dismissals',
+    description: 'Install and iOS home-screen prompt dismissals remembered by this browser.',
+    scope: 'sitewide install prompt preferences',
+    source: 'PWA update handler',
+    storageKey: Object.values(PWA_PROMPT_DISMISSAL_STORAGE_KEYS).join(' / '),
+    read() {
+      const prompts = [
+        {
+          label: 'Install prompt',
+          ...readStorageMarker(PWA_PROMPT_DISMISSAL_STORAGE_KEYS.install),
+        },
+        {
+          label: 'iOS home-screen hint',
+          ...readStorageMarker(PWA_PROMPT_DISMISSAL_STORAGE_KEYS.iosHint),
+        },
+      ];
+      const dismissed = prompts.filter((prompt) => prompt.active);
+      const describePrompt = (prompt) => {
+        if (!prompt.active) return `${prompt.label}: not dismissed`;
+        return `${prompt.label}: dismissed (${formatStorageTimestamp(prompt.timestamp)})`;
+      };
+
+      return {
+        count: dismissed.length,
+        latest: getLatestTimestamp(dismissed, (prompt) => prompt.timestamp),
+        summary: prompts.map(describePrompt).join(' · '),
+      };
+    },
+    clear() {
+      Object.values(PWA_PROMPT_DISMISSAL_STORAGE_KEYS).forEach((key) => {
+        try {
+          localStorage.removeItem(key);
+        } catch {
+          // Storage can be unavailable in private or sandboxed contexts.
+        }
+      });
     },
   },
   {
@@ -1296,6 +1381,7 @@ function scheduleSettingsUiBindings() {
 export {
   manager,
   buildPersistenceRegistries,
+  PWA_PROMPT_DISMISSAL_STORAGE_KEYS,
   humanizeSettingName,
   isKnownSetting,
   getAuthorWorkflowDefinition,

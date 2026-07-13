@@ -2,14 +2,14 @@
   "id": "/",
   "name": "Spwashi",
   "short_name": "Spw",
-  "description": "Local-first systems for language, tooling, and knowledge. Built on Spw grammar.",
+  "description": "I'm Spwashi. I build software and make art. This app keeps the work, tools, and learning surfaces close at hand.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "display_override": ["standalone", "browser"],
   "background_color": "#faf5ed",
   "theme_color": "#1a9999",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "orientation": "portrait-primary",
   "lang": "en-US",
   "categories": ["productivity", "education", "developer"],
@@ -72,7 +72,7 @@
     {
       "name": "About",
       "short_name": "About",
-      "url": "/about"
+      "url": "/about/"
     },
     {
       "name": "Settings",
