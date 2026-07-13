@@ -46,3 +46,38 @@ Other useful commands:
 - `npm run build -- --help`
 - `npm run check`
 - `npm run test:engagement`
+
+## Cloning This As A Starter
+
+The codebase is built to be re-derived, not just read. Two models carry most of
+the transferable value:
+
+**The material model.** Surfaces behave like materials: glass cards, matte
+panels, grain, brace-form containers, and an operator color grammar, all driven
+by tokens in `public/css/tokens/core.css` and composed through CSS layers
+(`reset → tokens → … → ornament`). `public/css/compose.css` and
+`public/js/compose.js` are standalone entrypoints that carry the material
+system without the site shell — `npm run starter:inventory` prints the exact
+boundary between what is portable and what is this site's own identity.
+
+**The metacognitive model.** Pages describe themselves: `data-spw-*` attribute
+families name each component's role, slots, gestures, and learnable dimensions;
+`.spw/` files keep the concepts inspectable beyond any one patch; and the
+runtime narrates its own mounting, attention, and memory so a reader (or an
+agent) can see how the page became meaningful. `npm run catalog` generates a
+cross-reference of every attribute, token, stylesheet, and philosophy doc —
+including orphans — so drift is visible.
+
+Practical starting points:
+
+- `design/composition/` — standalone bundles that teach composition and theming
+- `design/components/` — the component glossary, with copyable recipes and a
+  capture workflow for verifying your adaptation at phone and desktop widths
+- `AGENTS.md` — the working contract for humans and agents editing the system
+- `npm run icons:pwa` — derive the full launcher icon set from one artwork
+- `.agents/plans/` — how work stays traceable across sessions
+
+The same structure that runs this studio site runs lore: RPG Wednesday
+(`/play/rpg-wednesday/`) uses the identical card grammar, session traces, and
+inspection surfaces — a worked example of the starter carrying a world instead
+of a portfolio.
