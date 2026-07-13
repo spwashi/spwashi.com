@@ -1,0 +1,102 @@
+# Sigil Geometry & the Lore of C
+#
+# Behavioral accuracy audit of the operator sigils, plus a prime for Spw as
+# the lore of C-style programming: how sigils keep their meaning after being
+# projected, printed, cropped, and pasted, along the futures of streams,
+# slices, and augmentation.
+
+#>sigil_geometry_lore
+#:language #!sigils #!geometry #!lore #!projection
+#:operation #!audit #!prime
+#:fixity #!tending
+
+@definitions: ~"../../public/js/kernel/shared.js"
+@annotation: ~"../../public/js/semantic/sigil-annotation.js"
+@interactions: ~"../../public/js/semantic/operator-interactions.js"
+@operators_runtime: ~"../../public/js/semantic/operators.js"
+@operator_semantics: ~"../conventions/operator-semantics.spw"
+@semantic_capacity: ~"../conventions/semantic-capacity.spw"
+@viewing_reason: ~"../conventions/viewing-reason.spw"
+@material_css: ~"../../public/css/effects/material.css"
+@language_index: ~"./index.spw"
+
+operation = "audit prime"
+fixity = "tending"
+
+purpose: .{
+  plain = `A sigil is a printed claim about behavior. The runtime is one interpreter of that claim — a reader, a screenshot, a paste into another codebase, and a future agent are others. Accuracy means the claim survives every interpreter it meets.`
+  refinement = `Spw reads C-family punctuation as lore: the same marks that compile also narrate. This document audits where the claims are wired, and primes where the lore goes next.`
+}[reg=facet]
+
+^"behavioral_accuracy_2026_07_13"{
+  method = `Compared OPERATOR_DEFINITIONS claims (intent, interaction, reversibility, speech) against actual wiring in @interactions, @operators_runtime, and attention-architecture.`
+
+  wired: .{
+    probe = `?[name] sigils with href="#..." click through to the matching mode panel (wireProbeSigils) — the claim 'open the question' is a real gesture`
+    ref = `~ sigils get transition + annotation wiring (annotateRefs, wireSigilTransitions)`
+    frame = `#> anchors navigate; focus/hover pins html[data-spw-resonance-probe] so same-operator instances echo across the page (attention architecture)`
+    resonance = `conceptual resonance covers frame, object, probe, ref, action, stream, surface via CSS :has() — geometry-free, survives JS-off`
+  }[reg=facet]
+
+  latent: .{
+    claim = `Most operator interaction strings (value, subject, binding, normalize, scene, mode, direction...) render as title/aria text and dataset metadata without a wired gesture.`
+    rule = `A printed claim may exceed its wiring only when phrased as disposition ('names a structure so it can be recognized') — when a claim names a gesture ('activate', 'open'), either wire it or reword it. Accuracy is a copy discipline as much as a code discipline.`
+  }[reg=facet]
+
+  invariants: .{
+    text_first = `Detection is textual (detectOperator over textContent). A sigil pasted anywhere — another repo, a chat, a print — re-derives its type from its own characters. This is the generalizability contract: no attribute survives a paste, but the prefix does.`
+    derived_not_authored = `Geometry attributes (data-spw-operator-*) are projections from the type table, never hand-authored — any interpreter with the table re-derives identical geometry from bare text.`
+    idempotent = `Annotation passes are change-only and added-node-gated (observeAddedMatches) — re-interpreting a surface is free, so re-annotation after paste/hydration is safe.`
+  }[reg=facet]
+}[reg=facet]
+
+^"positioning_and_orientation"{
+  positional_dispatch = .{
+    prefix = `forward — the sigil reaches into what follows (#>address names the coming field)`
+    postfix = `reflect — the sigil looks back at what came before (play> departs from Play)`
+    infix = `enclose — the sigil holds what it contains (braces, contours)`
+    source = `OP_DISPATCH_BY_POSITION + parseSigilPosition in @definitions; projected as data-spw-sigil-position and data-spw-fixity-tier`
+  }[reg=facet]
+
+  horizontal = `Left/right operand roles are first-class: OPERATOR_GEOMETRY gives every operator a leftRole and rightRole (frame: address-source → named-resonance-field). Horizontal reading is a sentence; the sigil is its verb, and which side an operand sits on is grammatical, not typographic.`
+
+  vertical = `PRIME — a column of sigils reads as a listing: top-to-bottom is execution order, and a vertical rail of operators is a program the eye steps through. Anatomy stack rails already stack slot sigils vertically; extend the same reading to operator rails so vertical placement means sequence while horizontal placement means relation.`
+
+  spacing = `PRIME — spacing is binding strength. Tight set (sigil flush to operand) reads as high-precedence binding; a gap loosens the bind toward commentary. The spacing scale is the mortar of the material system: it should come from tokens, and a future data-spw-bind="tight|loose" could make precedence inspectable.`
+}[reg=facet]
+
+^"materials_metaphor"{
+  brace_bias = `Each operator carries braceBias (objective | subjective | objective-to-subjective). This is the bridge to materials: objective bias belongs on matte panels (settled, archival), subjective bias on glass (live, refracting context), code surfaces hold source claims. A sigil's material placement is part of its meaning.`
+  grain = `Grain reads as execution residue — a surface that has been run. Heavier grain on surfaces whose sigils have fired (charge history) would make interaction history material rather than logged.`
+  print = `On paper (print/screenshot), material collapses to typography: the sigil must carry by position, spacing, and weight alone. Capture mode (data-spw-capture-mode) is the rehearsal for this collapse.`
+}[reg=facet]
+
+^"lore_of_c"{
+  claim = `Spw is the lore of C-style programming: the punctuation that compiles is also the punctuation that narrates. Every operator keeps one foot in C ancestry and one in story.`
+  glosses: .{
+    frame = `#> — address-of, pointed forward: the address of a house you can knock on`
+    ground = `. — member access as coming home: the dot walks down into the local field`
+    integration = `^ — dereference upward: lift the parts until they read as one thing`
+    potential = `~ — the destructor that hasn't run yet: a thread tied to a future`
+    action = `@ — at-site, the decorator that does: where attention lands, something happens`
+    probe = `? — the ternary that stayed open: a question holding two panels`
+    value = `$ — the register/substrate: what the machine actually holds while you talk`
+    pragma = `! — the side-effect bang: irreversible, so say it loudly`
+  }[reg=facet]
+  test = `The lore test: a C programmer reading a printed Spw page predicts the interaction correctly; a non-programmer still receives a coherent story. When either reader fails, the sigil's copy or wiring is inaccurate — fix whichever is lying.`
+}[reg=facet]
+
+^"projection_futures"{
+  printed_cropped_pasted = .{
+    thesis = `After projection the DOM is gone; only marks remain. The text-first invariant makes the mark self-carrying: paste re-derives geometry, print keeps positional dispatch, crop is the risk.`
+    crop_unit = `A crop must keep prefix + operand together — the sigil expression is the atomic crop unit. Capture tooling should treat [data-spw-sigil] spans as uncuttable, the way typography treats a word.`
+  }[reg=facet]
+  streams = `A sigil shown at time t in a stream (video, live session) is a checkpoint claim: scrubbing back to it should re-ground the viewer in that state. Sigils become temporal anchors — the stream's table of contents is its operator sequence.`
+  slices = `Experience slices carry operator subsets. A slice's contract should declare which operators it interprets (its interpretation affordance) so a slice pasted into another context announces what it can and cannot do — behavioral accuracy at the slice boundary.`
+  augmentation = `An augmenting reader (AR overlay, model, agent) reads the geometry channel (data-spw-operator-*, leftRole/rightRole/flow/chargeRole) as a machine-readable spec sheet and offers the wired gesture. The dataset is not decoration; it is the affordance API for interpreters that arrive later.`
+}[reg=facet]
+
+^"inspectable_payload_affordances"{
+  geometry_as_spec_sheet = `OPERATOR_GEOMETRY (leftRole, rightRole, flow, braceBias, geometry, overload, chargeRole) is each sigil's spec sheet. PRIME — hold-to-inspect should surface this table for the touched sigil: inspection is itself the affordance, and the payoff of the metacognitive model.`
+  payload_slots = `Contour expressions already type their payloads by delimiter: ( ) payload, [ ] mode, { } queue (parseContourExpression). Geometry plus contours means a sigil expression declares both its operand roles and its argument shapes — enough for any interpreter to render an honest control.`
+}[reg=facet]

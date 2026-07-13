@@ -21,6 +21,7 @@ fixity = "stable"
 @recursive_improvement: ~"./recursive-improvement.spw"
 @utilization_cache: ~"../caches/spw-language-utilization-2026-07.spw"
 @operator_semantics: ~"../conventions/operator-semantics.spw"
+@sigil_geometry_lore: ~"./sigil-geometry-lore.spw"
 @semantic_braces: ~"../conventions/semantic-braces.spw"
 
 dispatch: .{
@@ -34,6 +35,7 @@ dispatch: .{
  recursive_improvement = @recursive_improvement
  utilization_cache = @utilization_cache
  operator_semantics = @operator_semantics
+ sigil_geometry_lore = @sigil_geometry_lore
  semantic_braces = @semantic_braces
 }[reg=facet]
 
