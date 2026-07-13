@@ -166,7 +166,9 @@ body[data-spw-surface="about"] {
 
 [data-spw-surface="about"] main {
   gap: clamp(1.05rem, 2.3vw, 1.55rem);
-  max-width: min(var(--page-width-wide, 84rem), calc(100vw - (var(--page-gutter-inline, 1rem) * 2)));
+  /* Essay-weighted route: newspaper measure keeps frames close to the prose
+     column instead of leaving a wide interior void at desktop widths. */
+  max-width: min(var(--page-width-newspaper, 68rem), calc(100vw - (var(--page-gutter-inline, 1rem) * 2)));
   margin-top: clamp(0.8rem, 1.5vw, 1.25rem);
 }
 
@@ -174,6 +176,12 @@ body[data-spw-surface="about"] {
 [data-spw-surface="about"] main > nav + section,
 [data-spw-surface="about"] main > section + nav {
   margin-top: clamp(0.1rem, 0.5vw, 0.35rem);
+}
+
+/* At the newspaper measure the hero topline is tighter; let the spec strip
+   claim enough row to keep pills at two-per-line instead of a tall tower. */
+[data-spw-surface="about"] .frame-topline > .spec-strip {
+  flex: 2 1 26rem;
 }
 
 /* ==========================================================================
