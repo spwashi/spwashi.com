@@ -351,24 +351,29 @@ main {
    "newspaper" gives denser reference pages a printable measure; "wide" lets
    key clusters breathe; "atlas" gives a rail for auxiliary content; "split" is
    reading-column + rail for reading routes with navigation context. */
+/* Variant widths min() against the viewport (mirroring the ≥92rem rules
+   below), not --spw-layout-frame-max: that token is the frame-level content
+   measure owned by semantic-variants.css, and folding it in here collapsed
+   every variant to the reading measure — routes then patched around the
+   inert attribute with hard main pins in surface CSS. */
 :where(body[data-spw-layout="reading"]) main,
 main[data-spw-layout="reading"] {
-  --spw-main-width: min(var(--page-width-reading), var(--spw-layout-frame-max, var(--page-width-reading)));
+  --spw-main-width: min(var(--page-width-reading), calc(100vw - (var(--page-gutter-inline) * 2)));
 }
 
 :where(body[data-spw-layout="newspaper"]) main,
 main[data-spw-layout="newspaper"] {
-  --spw-main-width: min(var(--page-width-newspaper), var(--spw-layout-frame-max, var(--page-width-newspaper)));
+  --spw-main-width: min(var(--page-width-newspaper), calc(100vw - (var(--page-gutter-inline) * 2)));
 }
 
 :where(body[data-spw-layout="wide"]) main,
 main[data-spw-layout="wide"] {
-  --spw-main-width: min(var(--page-width-wide), var(--spw-layout-frame-max, var(--page-width-wide)));
+  --spw-main-width: min(var(--page-width-wide), calc(100vw - (var(--page-gutter-inline) * 2)));
 }
 
 :where(body[data-spw-layout="atlas"]) main,
 main[data-spw-layout="atlas"] {
-  --spw-main-width: min(var(--page-width-atlas), var(--spw-layout-frame-max, var(--page-width-atlas)));
+  --spw-main-width: min(var(--page-width-atlas), calc(100vw - (var(--page-gutter-inline) * 2)));
 }
 
 @media (min-width: 92rem) {

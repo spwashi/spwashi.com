@@ -5,6 +5,7 @@
  * on horizontal swipe, discovered sync with reward surfaces.
  */
 
+import { observeAddedMatches } from '/public/js/kernel/dom-contracts.js';
 import { syncEffectInterpretation } from './effect-interpretation.js';
 
 const INTERACTIVE_FIGURE_SELECTOR = [
@@ -298,23 +299,18 @@ export function initImageInteraction(root = document) {
   bindLensChipSelection(root, controller);
   observeDiscovered(figures, controller);
 
-  const domObserver = typeof MutationObserver === 'function'
-    ? new MutationObserver(() => {
-      collectFigures(root).forEach((figure) => {
-        if (!figure.dataset.spwImageInteractionBound) {
-          figure.dataset.spwImageInteractionBound = 'true';
-          bindFigure(figure, controller);
-        }
-        primeFigure(figure);
-      });
-    })
-    : null;
-
-  const observeRoot = root.body || root.documentElement;
-  domObserver?.observe(observeRoot, { childList: true, subtree: true });
+  const disconnect = observeAddedMatches(INTERACTIVE_FIGURE_SELECTOR, () => {
+    collectFigures(root).forEach((figure) => {
+      if (!figure.dataset.spwImageInteractionBound) {
+        figure.dataset.spwImageInteractionBound = 'true';
+        bindFigure(figure, controller);
+      }
+      primeFigure(figure);
+    });
+  }, { root: root.body || root.documentElement });
 
   controller.signal.addEventListener('abort', () => {
-    domObserver?.disconnect();
+    disconnect();
     initialized = false;
   }, { once: true });
 

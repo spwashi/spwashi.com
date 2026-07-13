@@ -4,6 +4,7 @@
  * Component variant selection: mode panels, semantic variants, query override.
  */
 
+import { observeAddedMatches } from '/public/js/kernel/dom-contracts.js';
 import { parseModularQuery } from '/public/js/kernel/query-composer.js';
 import { queryParamsToSettingsPartial } from '/public/js/kernel/settings-query-parity.js';
 
@@ -74,6 +75,10 @@ function syncModeSwitch(group, mode, root) {
 function bindModeSwitches(root, controller) {
   root.querySelectorAll(MODE_BUTTON_SELECTOR).forEach((button) => {
     if (!(button instanceof HTMLElement)) return;
+    // Re-runs per added-node batch; without this guard every pass stacks a
+    // duplicate click listener on every button.
+    if (button.dataset.spwVariantBound === 'true') return;
+    button.dataset.spwVariantBound = 'true';
     button.addEventListener('click', () => {
       const group = button.getAttribute('data-mode-group');
       const mode = button.getAttribute('data-set-mode');
@@ -126,14 +131,15 @@ export function initVariantSelection(root = document) {
       }
     });
 
-  const observer = typeof MutationObserver === 'function'
-    ? new MutationObserver(() => bindModeSwitches(root, controller))
-    : null;
-
-  observer?.observe(root.body || root.documentElement, { childList: true, subtree: true });
+  const disconnect = observeAddedMatches(MODE_BUTTON_SELECTOR, () => bindModeSwitches(root, controller), {
+    root: root.body || root.documentElement,
+  });
 
   controller.signal.addEventListener('abort', () => {
-    observer?.disconnect();
+    disconnect();
+    root.querySelectorAll('[data-spw-variant-bound]').forEach((button) => {
+      if (button instanceof HTMLElement) delete button.dataset.spwVariantBound;
+    });
     initialized = false;
   }, { once: true });
 

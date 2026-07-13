@@ -1186,6 +1186,56 @@ export function writeDatasetValues(el, entries = {}, options = {}) {
   return changed;
 }
 
+/**
+ * Shared added-node observer for annotate-on-mutation modules.
+ *
+ * The naive shape — `new MutationObserver(annotateAll)` with
+ * `{ childList: true, subtree: true }` — couples a module's full-document
+ * pass to every other module's DOM writes, and because observer callbacks
+ * run as microtasks, two such modules reacting to each other can hard-freeze
+ * the renderer without ever yielding to the event loop. This helper gates on
+ * added nodes that actually match the module's selector and coalesces the
+ * callback through requestAnimationFrame so every pass yields.
+ *
+ * @param {string} selector matches the nodes the module annotates
+ * @param {() => void} onRelevant coalesced callback (at most one per frame)
+ * @param {{ root?: Node }} [options]
+ * @returns {() => void} disconnect
+ */
+export function observeAddedMatches(selector, onRelevant, options = {}) {
+  const root = options.root || document.body || document.documentElement;
+  if (typeof MutationObserver !== 'function' || !root || typeof onRelevant !== 'function') {
+    return () => {};
+  }
+
+  let frame = 0;
+  const schedule = () => {
+    if (frame) return;
+    frame = window.requestAnimationFrame(() => {
+      frame = 0;
+      onRelevant();
+    });
+  };
+
+  const observer = new MutationObserver((records) => {
+    const relevant = records.some((record) => Array.from(record.addedNodes).some((node) => (
+      node instanceof HTMLElement
+      && (node.matches?.(selector) || Boolean(node.querySelector?.(selector)))
+    )));
+    if (relevant) schedule();
+  });
+
+  observer.observe(root, { childList: true, subtree: true });
+
+  return () => {
+    observer.disconnect();
+    if (frame) {
+      window.cancelAnimationFrame(frame);
+      frame = 0;
+    }
+  };
+}
+
 export function removeDatasetValues(el, keys = []) {
   if (!el?.dataset || !Array.isArray(keys)) return false;
 

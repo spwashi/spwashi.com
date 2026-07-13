@@ -37,6 +37,8 @@ export const MODULE_TIMING_STAGES = Object.freeze([
   'failed',
 ]);
 
+const DEFAULT_RESOURCE_PROBE_CONCURRENCY = 4;
+
 export const SPW_MODULE_LOADER_CONTRACT = Object.freeze({
   timingStages: MODULE_TIMING_STAGES,
   portableUse:
@@ -45,6 +47,8 @@ export const SPW_MODULE_LOADER_CONTRACT = Object.freeze({
     'shouldScheduleDefinition() honors module def.features against ctx.features (body[data-spw-features]). Gates may be CSS BEHAVIOR_SCOPES or presence-only tokens (operators, navigator, …).',
   immediateScheduling:
     'Immediate definitions within a layer mount concurrently after any site-settings core seed; call sites may run independent non-core layers together.',
+  resourceDiscovery:
+    'Visible and idle CacheStorage probes share a bounded pool; results and resource hints retain catalog order before page-interactive.',
   timingArc:
     'Module definitions may name timingArc to explain the intended scheduling posture beyond raw mount timing.',
   timingChunk:
@@ -72,6 +76,10 @@ export function createModuleLoader(config = {}) {
   const logger = config.logger || null;
   const logRelationships = config.logRelationships || null;
   const timingPolicies = config.timingPolicies || SPW_RUNTIME_HELPERS_CONTRACT.timingPolicies;
+  const resourceProbeConcurrency = Math.max(
+    1,
+    Math.min(8, Number.parseInt(config.resourceProbeConcurrency, 10) || DEFAULT_RESOURCE_PROBE_CONCURRENCY),
+  );
 
   const matchesRoute = config.matchesRoute;
   const resolveFeatureMatch = config.matchesFeatures || ((def, ctx) => matchesFeatures(def, ctx?.features));
@@ -99,6 +107,29 @@ export function createModuleLoader(config = {}) {
 
   let mountBatchDepth = 0;
   let tokenFlushScheduled = false;
+  let activeResourceProbes = 0;
+  const queuedResourceProbes = [];
+
+  function drainResourceProbeQueue() {
+    while (activeResourceProbes < resourceProbeConcurrency && queuedResourceProbes.length) {
+      const job = queuedResourceProbes.shift();
+      activeResourceProbes += 1;
+      Promise.resolve()
+        .then(job.run)
+        .then(job.resolve, job.reject)
+        .finally(() => {
+          activeResourceProbes -= 1;
+          drainResourceProbeQueue();
+        });
+    }
+  }
+
+  function withResourceProbeSlot(run) {
+    return new Promise((resolve, reject) => {
+      queuedResourceProbes.push({ run, resolve, reject });
+      drainResourceProbeQueue();
+    });
+  }
 
   function beginMountBatch() {
     mountBatchDepth += 1;
@@ -760,14 +791,12 @@ function buildRuntimeResourceEntry(def, effectiveWhen, rel) {
 
 async function syncRuntimeResourceEntry(ctx, entry) {
   if (!ctx || !entry?.href) return null;
-  const cached = await isRuntimeResourceCached(entry.href);
-  const next = {
+  const cached = await withResourceProbeSlot(() => isRuntimeResourceCached(entry.href));
+  return {
     ...entry,
     cached,
     status: cached ? 'cached' : entry.status,
   };
-  ctx.resourceReadiness.set(entry.id, next);
-  return next;
 }
 
 async function prefetchRuntimeResources(ctx, defs, expectedWhen, rel) {
@@ -780,10 +809,14 @@ async function prefetchRuntimeResources(ctx, defs, expectedWhen, rel) {
   if (!candidates.length) return [];
 
   const canPrefetch = shouldPrefetchRuntimeResources(ctx);
+  const measureName = `spw:runtime-resource-prefetch:${expectedWhen}`;
+  performance.mark(`${measureName}:start`);
+  const inspected = await Promise.all(
+    candidates.map((entry) => syncRuntimeResourceEntry(ctx, entry)),
+  );
   const warmed = [];
 
-  for (const entry of candidates) {
-    const current = await syncRuntimeResourceEntry(ctx, entry);
+  for (const current of inspected) {
     if (!current) continue;
     if (canPrefetch && !current.cached) {
       const hinted = ensureResourceHint(current.href, rel);
@@ -794,6 +827,9 @@ async function prefetchRuntimeResources(ctx, defs, expectedWhen, rel) {
     ctx.resourceReadiness.set(current.id, current);
     warmed.push(current);
   }
+
+  performance.mark(`${measureName}:complete`);
+  performance.measure(measureName, `${measureName}:start`, `${measureName}:complete`);
 
   writeDatasetValue(html, 'spwConnectionPosture', readConnectionPosture());
   writeDatasetValue(html, 'spwPrefetchMode', canPrefetch ? 'selective' : 'deferred');
@@ -814,6 +850,7 @@ async function prefetchRuntimeResources(ctx, defs, expectedWhen, rel) {
     rel,
     connectionPosture: readConnectionPosture(),
     prefetchMode: html?.dataset?.spwPrefetchMode || 'unknown',
+    probeConcurrency: resourceProbeConcurrency,
     resources: warmed,
   });
 
@@ -1150,38 +1187,73 @@ async function mountImmediateLayer(defs, ctx, options = {}) {
   performance.measure('spw:immediate-layer-parallel', startMark, endMark);
 }
 
+/* Scroll can reveal dozens of visible-mount roots in one IntersectionObserver
+   callback. Mounting them via Promise.all chains their synchronous init work
+   through microtasks — one long main-thread task whose style/layout cost
+   scales with the wave. Drain through a frame-budgeted queue instead so each
+   slice yields back to the event loop (input, paint) before continuing. */
+const VISIBLE_MOUNT_SLICE_BUDGET_MS = 10;
+
+function yieldToNextFrame() {
+  return new Promise((resolve) => {
+    if (typeof window.scheduler?.postTask === 'function') {
+      window.scheduler.postTask(resolve, { priority: 'user-visible' });
+      return;
+    }
+    window.requestAnimationFrame(() => window.setTimeout(resolve, 0));
+  });
+}
+
 async function mountVisibleFeatures(defs, ctx) {
   const visibleDefs = defs.filter((def) => shouldScheduleDefinition(def, ctx, mountWhen.VISIBLE));
   if (!visibleDefs.length) return;
+
+  const queue = [];
+  let draining = false;
+
+  const drainQueue = async () => {
+    if (draining) return;
+    draining = true;
+    performance.mark('spw:visible-layer:drain-start');
+    beginMountBatch();
+    try {
+      while (queue.length) {
+        const sliceStart = performance.now();
+        while (queue.length && performance.now() - sliceStart < VISIBLE_MOUNT_SLICE_BUDGET_MS) {
+          const task = queue.shift();
+          await task();
+        }
+        if (queue.length) await yieldToNextFrame();
+      }
+    } finally {
+      endMountBatch(ctx);
+      draining = false;
+      performance.mark('spw:visible-layer:drain-end');
+      performance.measure('spw:visible-layer:drain', 'spw:visible-layer:drain-start', 'spw:visible-layer:drain-end');
+      if (queue.length) void drainQueue();
+    }
+  };
 
   const observer = new IntersectionObserver(
     (entries) => {
       const intersecting = entries.filter((entry) => entry.isIntersecting);
       if (!intersecting.length) return;
 
-      void (async () => {
-        beginMountBatch();
-        try {
-          await Promise.all(intersecting.map(async (entry) => {
-            const el = entry.target;
+      for (const entry of intersecting) {
+        const el = entry.target;
+        observer.unobserve(el);
 
-            for (const def of visibleDefs) {
-              if (!el.matches(def.selector)) continue;
-              annotateModuleTrigger(el, def, ctx, mountWhen.VISIBLE, 'triggered');
+        for (const def of visibleDefs) {
+          if (!el.matches(def.selector)) continue;
+          annotateModuleTrigger(el, def, ctx, mountWhen.VISIBLE, 'triggered');
 
-              if (def.rootMode === 'single') {
-                await mountDefinition(def, ctx, null, 0);
-              } else {
-                await mountDefinition(def, ctx, el);
-              }
-            }
-
-            observer.unobserve(el);
-          }));
-        } finally {
-          endMountBatch(ctx);
+          queue.push(() => (def.rootMode === 'single'
+            ? mountDefinition(def, ctx, null, 0)
+            : mountDefinition(def, ctx, el)));
         }
-      })();
+      }
+
+      void drainQueue();
     },
     {
       root: null,

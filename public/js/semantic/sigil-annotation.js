@@ -125,18 +125,25 @@ const applySigilParts = (element, op) => {
   }
 };
 
+/* Same-value dataset writes still queue mutation records for any observer
+   with a matching attribute filter; annotation runs on every refresh pass,
+   so write only on change to keep passes silent for settled elements. */
+const writeIfChanged = (element, key, value) => {
+  if (element.dataset[key] !== value) element.dataset[key] = value;
+};
+
 export function applyOperatorMetadata(element, op) {
   if (!(element instanceof HTMLElement) || !op) return;
 
   element.dataset.spwOperator = element.dataset.spwOperator || op.type;
-  element.dataset.spwOperatorIntent = op.intent;
-  element.dataset.spwOperatorInteraction = op.interaction;
-  element.dataset.spwOperatorFamily = op.family;
-  element.dataset.spwOperatorResolved = op.type;
-  element.dataset.spwOperatorPublicLabel = op.label;
-  element.dataset.spwOperatorSpeech = op.speech;
-  element.dataset.spwOperatorReversibility = op.reversibility;
-  element.dataset.spwTransformation = `${op.intent}/${op.speech}`;
+  writeIfChanged(element, 'spwOperatorIntent', op.intent);
+  writeIfChanged(element, 'spwOperatorInteraction', op.interaction);
+  writeIfChanged(element, 'spwOperatorFamily', op.family);
+  writeIfChanged(element, 'spwOperatorResolved', op.type);
+  writeIfChanged(element, 'spwOperatorPublicLabel', op.label);
+  writeIfChanged(element, 'spwOperatorSpeech', op.speech);
+  writeIfChanged(element, 'spwOperatorReversibility', op.reversibility);
+  writeIfChanged(element, 'spwTransformation', `${op.intent}/${op.speech}`);
 
   applySigilParts(element, op);
   applyOperatorGeometry(element, op);

@@ -5,6 +5,8 @@
  * for screenshot-worthy, reference-friendly markup.
  */
 
+import { observeAddedMatches } from '/public/js/kernel/dom-contracts.js';
+
 const TARGET_SELECTOR = [
   '[data-spw-concept]',
   '[data-spw-semantic-expression]',
@@ -113,14 +115,12 @@ export function initConceptSalience(root = document) {
 
   annotateAll();
 
-  const observer = typeof MutationObserver === 'function'
-    ? new MutationObserver(annotateAll)
-    : null;
-
-  observer?.observe(root.body || root.documentElement, { childList: true, subtree: true });
+  const disconnect = observeAddedMatches(TARGET_SELECTOR, annotateAll, {
+    root: root.body || root.documentElement,
+  });
 
   return () => {
-    observer?.disconnect();
+    disconnect();
     initialized = false;
   };
 }

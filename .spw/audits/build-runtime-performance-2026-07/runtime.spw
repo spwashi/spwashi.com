@@ -242,3 +242,30 @@
   ][reg=set]
   verification = `extension tab on 127.0.0.1:4173 (real profile): scroll + screenshots responsive; previously froze renderer at 99% CPU within ~1 minute`
 }[reg=facet]
+
+^"observer_annotator_hardening_2026_07_13"{
+  # Follow-up wave: seeded-profile CDP probes reproduced the remaining hard
+  # freezes (renderer pinned, Runtime.evaluate timeouts) on /research/ and
+  # profile-state-heavy routes after the forced-recalc fixes landed.
+  root_cause = `annotate-on-mutation modules used new MutationObserver(annotateAll) with childList+subtree: every module's DOM writes re-ran every annotator's full-document pass as a microtask, and two such observers reacting to each other never yield — a renderer-level hard freeze independent of pass cost`
+  shared_contract = `kernel/dom-contracts.js observeAddedMatches(selector, onRelevant, {root}) — added-node relevance gate + rAF coalescing; every pass yields to the event loop`
+  converted = #[
+    `semantic/operators.js — full-doc refreshOperatorSemantics per mutation`,
+    `semantic/concept-salience.js — full-doc annotateAll per mutation`,
+    `semantic/image-utilization.js — full-doc image scan per mutation`,
+    `semantic/image-interaction.js — full-doc figure bind per mutation`,
+    `runtime/variant-selection.js — full-doc bindModeSwitches per mutation, plus a real listener leak: no per-button bound guard, so every pass stacked duplicate click handlers`
+  ][reg=set]
+  also = #[
+    `module-loader mountVisibleFeatures — intersection waves mounted all matches through one Promise.all microtask chain (one long task); now a 10ms frame-budgeted drain queue (spw:visible-layer:drain measure)`,
+    `sigil-annotation applyOperatorMetadata — 8 unconditional dataset writes per pass now change-only, so settled elements stay silent for attribute-filtered observers`,
+    `pretext-physics quantize — clamped to >=40px matching pretext-measurement-bus, killing one-char-per-line projections from collapsed hosts`,
+    `shell/layout.css variants — data-spw-layout was inert below 92rem viewports because --spw-layout-frame-max (a frame measure) capped --spw-main-width to <=56rem; variants now min() against the viewport like the >=92rem rules`
+  ][reg=set]
+  verification = `cdp-probe with scripted scroll: /, /about/, /research/, /topics/ (clean + seeded profile) all end responsive with zero unresponsive scroll steps; real-profile extension tab confirms /topics/ interactive; check:runtime + test:engagement pass`
+  residual = #[
+    `remaining childList observers (guide-badge, navigation-spells, bare-spw-markup, haptics, shell-disclosure, scene-interaction, spatial-gravity, palette-treat-discovery, attn-register, layout-shift-audit) are added-node-gated or debug-gated; migrate opportunistically to observeAddedMatches`,
+    `core.css recalc wall still prices every forced read; scoped-delivery work is the lever`,
+    `routes relying on data-spw-layout wide/atlas widen from the collapsed 56rem to their declared width below 92rem viewports — sample captures looked composed (grids are minmax-fluid), but a route-by-route look pass is worth a session`
+  ][reg=set]
+}[reg=facet]

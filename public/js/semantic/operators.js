@@ -1,6 +1,6 @@
 // operators.js — orchestrates sigil annotation and operator interaction wiring.
 
-import { OPERATOR_SIGNAL_SELECTOR } from '/public/js/kernel/dom-contracts.js';
+import { OPERATOR_SIGNAL_SELECTOR, observeAddedMatches } from '/public/js/kernel/dom-contracts.js';
 import {
   detectOperator,
   detectOperatorFromElement,
@@ -56,10 +56,14 @@ const initSpwOperators = () => {
 
   refreshOperatorSemantics(document);
 
-  const observer = new MutationObserver(() => {
+  /* A synchronous full-document refresh per mutation batch couples this
+     module's cost to every other module's DOM writes, and a microtask-paced
+     observer loop can hard-freeze the renderer when a partner observer
+     creates nodes in response to annotation attributes. The shared helper
+     gates on operator-shaped added nodes and coalesces through rAF. */
+  observeAddedMatches(EXTENDED_OPERATOR_SIGNAL_SELECTOR, () => {
     refreshOperatorSemantics(document);
   });
-  observer.observe(document.body, { childList: true, subtree: true });
 };
 
 export { initSpwOperators, refreshOperatorSemantics };

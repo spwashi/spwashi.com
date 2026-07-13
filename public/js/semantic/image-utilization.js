@@ -5,6 +5,8 @@
  * and utilization metadata for CSS performance surfaces.
  */
 
+import { observeAddedMatches } from '/public/js/kernel/dom-contracts.js';
+
 const MAIN_IMAGE_SELECTOR = 'main img, main picture img, [data-spw-image-surface] img, [data-spw-image-reward] img, [data-spw-image-discovery] img';
 const HERO_SELECTOR = '[data-spw-frame="hero"] img, main > .site-frame:first-of-type img, main > article > .site-frame:first-of-type img';
 
@@ -41,21 +43,16 @@ export function initImageUtilization(root = document) {
     annotateImage(img, index, heroImages.has(img));
   });
 
-  const observer = typeof MutationObserver === 'function'
-    ? new MutationObserver(() => {
-      root.querySelectorAll(MAIN_IMAGE_SELECTOR).forEach((img, index) => {
-        if (!img.dataset.spwImageUtilization) {
-          annotateImage(img, index, heroImages.has(img));
-        }
-      });
-    })
-    : null;
-
-  const observeRoot = root.body || root.documentElement;
-  observer?.observe(observeRoot, { childList: true, subtree: true });
+  const disconnect = observeAddedMatches('img', () => {
+    root.querySelectorAll(MAIN_IMAGE_SELECTOR).forEach((img, index) => {
+      if (!img.dataset.spwImageUtilization) {
+        annotateImage(img, index, heroImages.has(img));
+      }
+    });
+  }, { root: root.body || root.documentElement });
 
   return () => {
-    observer?.disconnect();
+    disconnect();
     initialized = false;
   };
 }

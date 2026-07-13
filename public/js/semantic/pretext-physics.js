@@ -1432,8 +1432,14 @@ function widthKey(width, step) {
   return String(quantize(width, step));
 }
 
+/* Same floor pretext-measurement-bus applies: a collapsed host (0/near-0 width)
+   must not reach the layout engine, which projects one-character-per-line
+   columns from degenerate widths. Clamping here keeps widthKey cache keys and
+   measured layouts coherent. */
+const MIN_LAYOUT_WIDTH_PX = 40;
+
 function quantize(value, step) {
-  return Math.round(value / step) * step;
+  return Math.max(MIN_LAYOUT_WIDTH_PX, Math.round(value / step) * step);
 }
 
 function quantizeInfluence(value) {
