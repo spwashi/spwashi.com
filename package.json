@@ -48,6 +48,8 @@
     "dev:legacy:host": "node scripts/dev-server.mjs --host 0.0.0.0",
     "dev:legacy:open": "node scripts/dev-server.mjs --open",
     "dev:open": "npm run build:tools && npm run build:runtime && node scripts/css-build.mjs && node scripts/dev-orchestrator.mjs --open",
+    "icons:pwa": "node scripts/generate-pwa-icons.mjs",
+    "icons:pwa:check": "node scripts/generate-pwa-icons.mjs --check",
     "images:manifest": "node scripts/image-resource-manifest.mjs",
     "manifest": "node scripts/generate-route-runtime-manifest.mjs",
     "manifest:tmp": "SPW_ROUTE_MANIFEST_OUTPUT=\"${TMPDIR:-/tmp}/spwashi-route-runtime-manifest.json\" node scripts/generate-route-runtime-manifest.mjs",

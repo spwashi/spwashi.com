@@ -8,7 +8,7 @@
  * - Prefer network for HTML, prefer cache for versioned/static assets.
  */
 
-const CACHE_SCHEMA_VERSION = 'v3';
+const CACHE_SCHEMA_VERSION = 'v4';
 const CACHE_NAMESPACE = `spw-${CACHE_SCHEMA_VERSION}`;
 
 const CACHE = {
