@@ -101,8 +101,20 @@ an opt-in next layer once a component has a concrete visual regression history.
 ### Snippets And Layout Evidence
 
 `design/components/snippets/` contains minimal, copyable HTML specimens for
-the frame, card, and operator-chip families. Each stays attached to the typed
-fixture registry and is checked for its selector and required slots.
+the frame, card, operator-chip, and tuning-strip families. Each stays attached
+to the typed fixture registry and is checked for its selector and required slots.
+
+The public `/design/components/#component-recipes-capture` section now exposes
+the frame, card, and tuning-strip recipes beside the page/component/template
+capture path. The recipes stay static-first; stateful behavior remains an
+optional host concern rather than a requirement of the portable markup.
+
+The portable `compose.css` entrypoint now follows the modular operator-handle
+split and declares its `systems` layer explicitly, so starter inventory checks
+and isolated template captures resolve the same current CSS graph as the site.
+The responsive browser pass also moved the `frame-grid--2up` / `--3up` packing
+rules into their systems-layer owner; later base-grid rules no longer erase the
+modifier contract and recipe cards now render two-up wide, one-up compact.
 
 `npm run component:screenshots -- --base http://127.0.0.1:4173` captures each
 fixture at phone and desktop viewports into a temporary directory. These are
@@ -128,7 +140,7 @@ from becoming a maintenance burden.
 
 ### Phase 3 - Component Recipes
 
-- Add one or two component recipe snippets for a frame, card, and tuning strip.
+- [x] Add component recipe snippets for a frame, card, and tuning strip.
 - Use the existing slot anatomy and data-spw families.
 - Prefer route docs before adding new generated artifacts.
 
@@ -167,5 +179,5 @@ from becoming a maintenance burden.
 - [x] `.spw` convention wired into dispatch
 - [x] Public `/about/plans/` register card added
 - [ ] First starter example added
-- [ ] Component recipe snippets added
+- [x] Component recipe snippets added and exposed on `/design/components/`
 - [ ] Scaffold candidate evaluated after real use

@@ -51,7 +51,7 @@ intent: .{
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
 @rpg_local_gameplay: ~"./rpg-local-gameplay.spw"
-@plan_rpg_session_notes: ~"./rpg-session-notes/index.spw"
+@plan_rpg_session_notes: ~"../rpg-session-notes/index.spw"
 @style: ~"../../../public/css/style.css"
 
 dispatch: .{

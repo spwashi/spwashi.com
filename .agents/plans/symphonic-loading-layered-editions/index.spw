@@ -50,7 +50,7 @@ intent: .{
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
-@plan_runtime_bootstrap_performance: ~"./runtime-bootstrap-performance/index.spw"
+@plan_runtime_bootstrap_performance: ~"../runtime-bootstrap-performance/index.spw"
 @site_semantics: ~"../../../.spw/conventions/site-semantics.spw"
 @style_core: ~"../../../public/css/style-core.css"
 @css_bundle: ~"../../../scripts/css-bundle.mjs"

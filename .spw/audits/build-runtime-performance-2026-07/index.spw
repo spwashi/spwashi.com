@@ -26,26 +26,26 @@
 @progressive_css_module_scopes: ~"../progressive-css-module-scopes-2026-07/index.spw"
 
 audit_run: .{
-  at = `2026-07-12`
-  method = `catalog mount census via listModuleCatalogIndex; costClass normalize pass; observer construction count; pipeline timing samples; plan + code cross-read`
+  at = `2026-07-13`
+  method = `catalog mount census; bounded CacheStorage probe contract; composite compiler graph review; design-catalog CPU profile; directional before/after samples; plan + code cross-read`
   host = `local developer machine — timings are directional samples, not CI SLOs`
   posture = `cache evidence + cost_class coordinates; primes for reclassification and build hygiene`
-  note = `2026-07-12 module normalization: COST_CLASS on catalog, summarizeModuleCatalogOptimization, safe reclass 6 ENHANCEMENT IMMEDIATE → VISIBLE/IDLE`
+  note = `2026-07-13: settings-momentum moved to IDLE; visible/idle cache probes bounded; composite TS passes deduplicated; catalog line lookup made linear and generated copies excluded`
 }[reg=facet]
 
 ^"thesis"{
-  claim = `Build cost is dominated by TypeScript multi-project typecheck and CSS/site generation width; runtime cost is dominated by immediate-layer *width* (37 IMMEDIATE / 95 after normalization reclass) and observer/mirror sprawl after parallel mount was already landed.`
-  progress = `Phase 1 parallel immediate mounts are in module-loader (site-settings first, then Promise.all). Feature-wiring + 2026-07-12 normalize cut IMMEDIATE 61→43→37. Remaining budget is residual ENHANCEMENT orchestration + settings substrate, not another orchestration rewrite.`
+  claim = `Build cost was dominated by repeated TypeScript projects and a near-quadratic design-catalog line lookup; runtime cost remains immediate-layer width (36 IMMEDIATE / 95) plus cache-probe and observer/mirror work after parallel mounting.`
+  progress = `Parallel immediate mounts remain intact. Feature wiring + normalization + settings-momentum defer cut IMMEDIATE 61→43→37→36; bounded resource probes now stop visible/idle cache discovery from serially extending the pre-interactive path.`
   lexicon = `Use cost_class + elaboration_stage from @metaphor_lexicon; ecology/cognition nouns are optional projections. Catalog now stamps/infers costClass for DevTools (__SPW_SITE__.catalogOptimization).`
 }[reg=facet]
 
 ^"grades"{
-  build_pipeline = `B- — clear scripts, route CSS bundles, no heavy runtime deps; typecheck triple-pass is medium pole; full build:site+catalog is the local long pole`
+  build_pipeline = `A- — composite projects compile once; benchmark leaves do not overlap; design catalog indexes lines once and excludes generated copies`
   runtime_architecture = `A- — staged layers, marks/measures, parallel immediate, policy gates, costClass normalize`
-  runtime_immediate_budget = `B- — 37 IMMEDIATE / 95 definitions (23 ENHANCEMENT non-debug); residual html orchestration + grammar/gesture still early`
+  runtime_immediate_budget = `B — 36 IMMEDIATE / 95 definitions (22 ENHANCEMENT non-debug); residual html orchestration + grammar/gesture still early`
   observer_federation = `C — ~53 Intersection/Resize/Mutation constructions across ~41 files`
   inspectability = `A — spw:* marks, catalogOptimization, listModuleCatalogIndex byCostClass`
-  overall = `B+ — instrumented, staged, cost-class structured; early activation width still open but measurable`
+  overall = `A- — publish/local build poles materially reduced; runtime discovery is bounded and instrumented; early activation and observer width remain open`
 }[reg=facet]
 
 ^"nested_dispatch"{
@@ -62,7 +62,7 @@ audit_run: .{
   p1 = `Reclassify ENHANCEMENT IMMEDIATE → VISIBLE/IDLE when not required for first reading posture (bootstrap plan Phase 2)`
   p2 = `Bound composition-box-model / content-tone refresh (harmony seams; cost_class working_memory_pressure)`
   p3 = `Observer federation for attention/region/visible — share IO roots where safe`
-  p4 = `Build: avoid full build:site for agent loops; cache typecheck in CI; catalog incremental/skip when inputs unchanged`
+  p4 = `Build follow-up: measure repeated full builds after linear catalog landing; consider incremental TS cache only if warm local evidence still justifies it`
   p5 = `site-settings-engine cold paths behind IDLE/UI split without losing first-paint settings datasets`
   p6 = `Watch core.css bundle growth (~1.5 MiB sample); keep new surface CSS in route/behavior bundles`
 }[reg=facet]
@@ -96,7 +96,7 @@ audit_run: .{
     impl_ref = "package.json typecheck / build scripts"
     probe_ref = "time npm run typecheck vs build:runtime vs build:css on same machine."
     falsification = "css-build or build:site consistently exceeds typecheck wall time on a warm machine without content scale change."
-    status = "active"
+    status = "supported"
   }
   claim #brp-003 {
     layer = "semantic"
@@ -106,5 +106,14 @@ audit_run: .{
     probe_ref = "Every new BRP seam names cost_class; optional ecology/cognition prose only."
     falsification = "New performance notes only in metaphor language without cost_class."
     status = "active"
+  }
+  claim #brp-004 {
+    layer = "pragmatic"
+    hypothesis = "Catalog traceability stays complete for authored sources when line numbers use one per-file index and generated Vite/CSS bundle copies are excluded."
+    spec_ref = "this audit#build.spw"
+    impl_ref = "scripts/generate-design-catalog.mjs#createLineLocator + shouldIgnoreRelativePath"
+    probe_ref = "Compare authored catalog attribute/token name sets, reject generated paths, and time a SOURCE_DATE_EPOCH-pinned run."
+    falsification = "Authored token names disappear, recorded line numbers drift, or full catalog wall time remains CPU-bound."
+    status = "supported"
   }
 }[reg=set]

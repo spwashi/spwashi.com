@@ -50,7 +50,7 @@ intent: .{
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
-@plan_spellcraft_authoring: ~"./spellcraft-authoring/index.spw"
+@plan_spellcraft_authoring: ~"../spellcraft-authoring/index.spw"
 @index: ~"../../../settings/index.html"
 
 dispatch: .{

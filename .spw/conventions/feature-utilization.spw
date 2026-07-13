@@ -56,6 +56,7 @@ fixity = "tending"
   behavior_scopes = .{
     tokens = #[
       `console`
+      `demos`
       `feature-discovery`
       `media-publishing`
       `metrics`
@@ -145,7 +146,7 @@ fixity = "tending"
   dominant = `operators 146, navigator 137, console 135 (of 146 bodies / 149 authored files)`
   mid = `metrics 26, route-discovery 20, svg-surfaces 19, inspectability 16, themes 13, promptability 12`
   rare = `14 single-use narrative tokens; media-publishing 2, prompt-utils 2`
-  drift_closed = `route-discovery and prompt-utils were UNTIERED — registered under route_presence / inspect_lab this pass; ecology now prints an UNTIERED review line so new tokens cannot land silently`
+  drift_closed = `route-discovery and prompt-utils were UNTIERED — registered under route_presence / inspect_lab; demos joined behavior_scopes with its demand-coupled CSS demotion; ecology prints an UNTIERED review line so new tokens cannot land silently`
 }[reg=facet]
 
 validation: #[

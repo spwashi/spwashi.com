@@ -41,9 +41,9 @@ Small semantic discoveries do not always need a new plan. Use `.agents/plans/mod
 
 ## Maintenance Snapshot - 2026-07-12
 
-Plan indexes now expose standalone semantics: `conceptual_model`, `plan_refinement` (tone, accuracy, direction, inspiration, alignment), `research_bridge`, `connection_points`, and `archive_status` (see `.spw/conventions/plan-index.spw`). Hand-refined plans live in `scripts/plan-refinements-data.mjs`. Regenerate with `node scripts/maintain-plan-directory-indexes.mjs`. Local research routes through 2026-07 audits and appendices via `planning-ecology.spw#research_bridge_map`.
+Plan indexes now expose standalone semantics: `conceptual_model`, `plan_refinement` (tone, accuracy, direction, inspiration, alignment), `research_bridge`, `connection_points`, and `archive_status` (see `.spw/conventions/plan-index.spw`). Hand-refined plans live in `scripts/plan-refinements-data.mjs`. Validate reviewed indexes with `npm run plans:index:check`; rebuilding them requires an explicit `--force-generated` review. Local research routes through 2026-07 audits and appendices via `planning-ecology.spw#research_bridge_map`.
 
-**Completed reference** (virtual bucket — folders stay in place): `state-satchel-card-gesture-fixes/`, `card-anatomy-interactions/`, `overlay-layer-ownership/`, `menu-containment-navigation/`, `mobile-image-effects/`, `runtime-route-css-regressions/`.
+**Completed / implemented reference:** 13 plans are retained in place for citation safety; see `archive/2026-07-12-review-execution.md` for the full list and routing notes.
 
 Dated record: `archive/2026-07-12-plan-ecology-semantics-architecture.md`. Audit: `.spw/audits/plan-ecology-semantics-2026-07.spw`.
 
@@ -103,24 +103,22 @@ Completed-reference decisions from this sweep live in `archive/2026-06-19-plan-m
 
 Conversation audit redistribution from this sweep lives in `archive/2026-06-19-conversation-audit-redistribution.md`. Treat the broad audit prompts as archived source context and continue work in the assigned owner plans instead of creating parallel "all fronts" plans.
 
-## Active Backlog
+## Reviewed Plan Tree
 
-The rest of `.agents/plans/` is an active backlog of route, CSS, runtime, image, and interaction workstreams. These are not canonical planning tracks, but they are still current unless explicitly moved to `archive/`.
+The plan tree is not a uniformly active backlog. Treat each plan's `index.spw` `review_disposition` and `owner_claim.status` as the source of truth; merged and completed references remain in place for citation safety.
 
-High-signal active examples:
+High-signal active owners:
 
 - `design-hub/PLAN.md`
 - `site-starter-component-kit/PLAN.md` - make compose.css, compose.js, design specimens, and component promotion rules usable for spawning new sites without copying the full Spwashi shell.
-- `css-maintainability-refactor/PLAN.md`
+- `css-architecture-readability/PLAN.md`
 - `site-color-tuning/PLAN.md`
-- `space-menu-arcs-electrical/PLAN.md` - floating UI hierarchy, route menu field projection, arc lifecycle microfeedback, and opt-in circuit anatomy vocabulary.
-- `symphonic-loading-layered-editions/PLAN.md` - conducted load movements over the cascade layer order, impact-gradient variance rules, and cache/deploy edition surprise; carries explicit human-review gates for pacing sensation and bundling feel.
+- `chrome-navigation-wonder/PLAN.md` - shared shell, menu containment, floating chrome, and navigation wonder ownership.
 - `shell-model-vocabulary-consolidation/PLAN.md` - census-then-glossary consolidation of shell/chrome/edge/overlay words and the 1,049-name `data-spw-*` attribute vocabulary; model and grammar choices gate on human review.
 - `spellcraft-authoring/PLAN.md` - consolidated owner of spell/cauldron authorship: write/edit/decompose spells, select and style elements/concepts/artifacts through -intent channels, Stagecraft + G1/G2 attribute refit, live-performance and capture-interpretation constraints. Supersedes the five prior spell/cauldron tracks (each carries a merged-into note).
 - `literacy-precipitation-press/PLAN.md` - north-star lore ladder: named esoteric effects -> bulletin boards -> print precipitation -> publishing surface -> paper manufacturer tuned to learnability and genre; editorial rungs gate on Spwashi.
 - `runtime-bootstrap-performance/PLAN.md` - reduce serial loading, immediate layer width, observer cost, and warm-return friction while preserving staged policy-driven loading, cache-stratum ownership, and full observability.
 - `floating-chrome-stack/FIX.md` - normalize floating chrome roles, tiers, console ownership, and discovery-credit alignment.
-- `component-semantics-document-host/FIX.md` - keep document-host semantics from collapsing into generic component styling.
 - `gesture-aria-hygiene/FIX.md` - keep gesture controls and ARIA state truthful while mobile interaction grammar settles.
 - `attention-shell-contrast/FIX.md` - preserve readable attention shell contrast across route and ornament states.
 - `modular-experience-slices/PLAN.md` - bolder file tree evolution supporting explicit "experience slice" ownership, practice beds, and tending-note handoffs. The first concrete pilot is `math-practice-labs`, with `attention-resonance-field` as the next slice contract candidate.
@@ -133,17 +131,17 @@ High-signal active examples:
 - `daily-kernel-development/PLAN.md` - one-session development exercise for semantic capacity, brand physics, regional sensory design, and cross-discipline ergonomics across engineers, animators, illustrators, designers, musicians, and collaborators.
 - `pretext-whimsy-lab/PLAN.md` - bounded Pretext measurement and projection work, now using a live/static host contract so typography physics stays opt-in and inspectable.
 - `designer-conversation-canvas/PLAN.md` - touchable specimens, named tokens, and Pretext measurement bus for designer handoff on the public site.
-- `professional-skill-development-worldbuilding/PLAN.md` - architecture for treating character sheets, budgeting, RPG Wednesday, Town Library quests, and proof cards as an immersive skill-development operating system with an evidence loop.
 
 Meta / ecology work:
 - `agent-optimization/PLAN.md` - maturing the `.agents/`, skills, `.spw` bridges, and public editor surfaces for lower friction agent and editor operation (follows from the prior active plans review).
 
-Completed/superseded references retained in place:
+Completed/merged references retained in place (full routing ledger: `archive/2026-07-12-review-execution.md`):
 
 - `overlay-layer-ownership/FIX.md` - `data-spw-overlay` is now a documented site contract and remains as rationale.
 - `menu-containment-navigation/FIX.md` - the primary route/menu containment work landed on 2026-06-28; deferred items now route through shell and floating-chrome tracks.
 - `mobile-image-effects/FIX.md` - the mobile raster effect work is superseded by the current `metaphysical-paper.css` and `image-metaphysics.js` locations.
 - `runtime-route-css-regressions/FIX.md` - the missing visitation/bootstrap and route-structure failures have been repaired or superseded by current runtime and route sources.
+- `component-semantics-document-host/FIX.md` - the document-host contract landed and remains available as implementation rationale.
 
 ## Archived Notes
 
@@ -158,7 +156,9 @@ Archived historical notes live in `archive/`. Use them as reference only:
 - `archive/2026-07-02-triage-css-spw-physics.md`
 - `archive/2026-07-02-css-html-audit-alignment-responsive-performance.md`
 - `archive/2026-07-02-clustering-progressive-enhancement-js-composability.md`
+- `archive/2026-07-12-plan-ecology-semantics-architecture.md`
+- `archive/2026-07-12-review-execution.md`
 
-Archived plan folders: `archive/spw-css-architecture/` and `archive/css-semantic-modules/` landed and moved on 2026-07-02 in a ref-safe pass. The modular `public/css/` tree and its intent-variable contracts are their living successors; active selector/state work continues in `css-maintainability-refactor/` and `css-state-legibility/`.
+Archived plan folders: `archive/spw-css-architecture/` and `archive/css-semantic-modules/` landed and moved on 2026-07-02 in a ref-safe pass. The modular `public/css/` tree and its intent-variable contracts are their living successors; active selector/state work continues in `css-architecture-readability/` and `css-state-legibility/`.
 
 Archive candidates should be notes whose intent is already superseded by a canonical track or a landed fix. Keep active backlog items out of `archive/` until the related work clearly lands or is replaced.

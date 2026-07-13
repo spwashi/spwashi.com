@@ -87,7 +87,7 @@ dispatch: .{
  layer = "pragmatic"
  hypothesis = `Introduce data-spw-overlay as the opt-in marker for direct children that are intentionally edge-pinned or otherwise positioned outside normal flow.`
  spec_ref = ~"./FIX.md"
- impl_ref = ~"./PLAN.md"
+ impl_ref = ~"./FIX.md"
  probe_ref = `rg 'overlay-layer-ownership' .agents/plans/overlay-layer-ownership`
  falsification = `The listed failure mode returns after the planned fix lands.`
  status = "superseded"

@@ -33,7 +33,7 @@
 operation = "audit"
 fixity = "tending"
 at = `2026-07-12`
-revised = `2026-07-12c — align options with costClass normalize, MGL P0–P3, feature-wiring cache, scoped CSS land`
+revised = `2026-07-12d — land metrics ownership cleanup + demand-coupled demos scope`
 
 ^"thesis"{
   claim = `Runtime PE is already costClass- and schedule-shaped (37 IMMEDIATE / 34 VISIBLE / 22 IDLE after normalize). CSS PE is delivery-shaped (scoped core+route+behavior) but core.css remains a single ~1.5 MiB premature_commitment for paint. Align CSS demotions to the same coordinates as catalog reclass — not a parallel PE vocabulary.`
@@ -162,19 +162,21 @@ revised = `2026-07-12c — align options with costClass normalize, MGL P0–P3, 
     full = `style.css import graph (~2.1 MiB sources) — inspect / non-scoped fallback`
     scoped = `scoped → core + route + behavior at template render`
     route = `ROUTE_SCOPES + ROUTE_SURFACE_ALIASES (software→topics)`
-    behavior = `BEHAVIOR_SCOPES (7) ↔ body features ↔ behavior-scopes.js ↔ catalog.features where demand_coupled`
+    behavior = `BEHAVIOR_SCOPES (8) ↔ body features ↔ behavior-scopes.js ↔ catalog.features where demand_coupled`
   }[reg=facet]
   landed = #[
     `costClass normalize + reclass (runtime)`,
     `feature-discovery CSS demotion golden path`,
     `sitewide scoped CSS + aliases + payload report + incremental build`,
-    `layout-qa / headless smoke harness for FOUC-adjacent overflow checks`
+    `layout-qa / headless smoke harness for FOUC-adjacent overflow checks`,
+    `s1 hygiene: metrics removed from universal core; demos moved to a selector-censused behavior scope`
   ][reg=set]
 }[reg=facet]
 
 ^"payload_snapshot"{
-  core_generated = `~1532 KiB bundles/core.css`
-  core_sources = `~1526 KiB · ~98 style-core imports`
+  core_generated = `~1516 KiB bundles/core.css after s1 hygiene`
+  core_sources = `~1510 KiB · 96 style-core imports`
+  s1_behaviors = `demos ~16.6 KiB · metrics ~0.8 KiB; loaded only on selector-censused feature routes`
   by_layer = .{
     components = `~358 KiB`
     shell = `~239 KiB`
@@ -205,7 +207,7 @@ revised = `2026-07-12c — align options with costClass normalize, MGL P0–P3, 
 
   .{
     js = `FEATURE + features:[] + matchesFeatures() · PRESENCE without CSS`
-    css_today = `7 BEHAVIOR_SCOPES`
+    css_today = `8 BEHAVIOR_SCOPES`
     css_option = `Grow behavior only for real CSS + wired feature tokens (golden: feature-discovery)`
     cost_class = `demand_coupled`
     risk = `Empty scopes for narrative tokens (fwt-001)`
@@ -323,6 +325,7 @@ revised = `2026-07-12c — align options with costClass normalize, MGL P0–P3, 
 
   phase_a_dedupe {
     id = `metrics-double-ownership`
+    status = `landed 2026-07-12 — behavior scope is the single owner`
     claim = `metrics.css in style-core AND BEHAVIOR_SCOPES — double pay on metrics routes; free payload on non-metrics`
     direction = `Remove from style-core; keep behavior only (or reverse if frame-metrics is true shell)`
     cost_class = `interference` # dual ownership truth
@@ -332,6 +335,7 @@ revised = `2026-07-12c — align options with costClass normalize, MGL P0–P3, 
 
   phase_b_debug_and_demos {
     id = `effects-debug-demos`
+    status = `partial 2026-07-12 — demos landed as demand-coupled behavior; debug remains in core pending debugQa ownership`
     claim = `debug + demos CSS are diagnostic/flourish`
     direction = `Out of production core; debugQa / enhancement inspect only`
     cost_class = `paint_composite`

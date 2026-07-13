@@ -54,7 +54,7 @@ dispatch: .{
  layer = "pragmatic"
  hypothesis = `Keep the section handle on its own safe-area rail and let other floating tools use the raised clearance rail.`
  spec_ref = ~"./FIX.md"
- impl_ref = ~"./PLAN.md"
+ impl_ref = ~"./FIX.md"
  probe_ref = `rg 'chrome-copy-collision' .agents/plans/chrome-copy-collision`
  falsification = `The listed failure mode returns after the planned fix lands.`
  status = "active"

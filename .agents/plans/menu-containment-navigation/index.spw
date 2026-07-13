@@ -77,7 +77,7 @@ dispatch: .{
  layer = "pragmatic"
  hypothesis = `Add shared containment rules for route bridges and their card links.`
  spec_ref = ~"./FIX.md"
- impl_ref = ~"./PLAN.md"
+ impl_ref = ~"./FIX.md"
  probe_ref = `rg 'menu-containment-navigation' .agents/plans/menu-containment-navigation`
  falsification = `The listed failure mode returns after the planned fix lands.`
  status = "superseded"

@@ -54,7 +54,7 @@ dispatch: .{
  layer = "pragmatic"
  hypothesis = `The recent attention/handle pass improved button styling, but it still relies on low-opacity inactive states and low-separation fills. On compact screens that makes the mode strip and the mobile menu button look washed into the surrounding paper.`
  spec_ref = ~"./FIX.md"
- impl_ref = ~"./PLAN.md"
+ impl_ref = ~"./FIX.md"
  probe_ref = `rg 'attention-shell-contrast' .agents/plans/attention-shell-contrast`
  falsification = `The listed failure mode returns after the planned fix lands.`
  status = "active"

@@ -50,7 +50,7 @@ intent: .{
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
 @rpg_asset_capture_frames: ~"./rpg-asset-capture-frames.spw"
-@plan_screenshot_semantics: ~"./screenshot-semantics/index.spw"
+@plan_screenshot_semantics: ~"../screenshot-semantics/index.spw"
 
 dispatch: .{
  plan = @plan

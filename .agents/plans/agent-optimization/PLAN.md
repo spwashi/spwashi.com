@@ -462,3 +462,43 @@ This is a bounded foundation: static contracts and deterministic unit behavior
 are merge gates; browser smoke verifies a small route set. Visual baselines,
 full accessibility automation, and performance budgets remain opt-in future
 work until a concrete regression justifies their maintenance cost.
+
+## Reviewed Plan Reference Integrity - 2026-07-12
+
+Repaired the reviewed plan graph without regenerating authored indexes:
+
+- Corrected sibling plan references to resolve from each owner directory and
+  corrected FIX-only owner fallbacks to point at `FIX.md`.
+- Made `plans:index:check` resolve local references in reviewed plan indexes and
+  report missing targets in deterministic file/line order before generation is skipped.
+- Kept `--force-generated` as the explicit destructive rebuild boundary.
+- Aligned `.agents/plans/README.md` and `/about/plans/` with the July 12 review
+  ledger so merged, implemented, and split references no longer read as active owners.
+
+Next pass: treat a clean `plans:index:check` as the ref-safety gate before adding
+new cross-plan links; do not grow another generated plan census for this check.
+
+## Build Loop And Runtime Bootstrap Closure - 2026-07-13
+
+Closed two measured operating-loop seams without adding another plan or index:
+
+- Composite build/check flows now typecheck each TypeScript project once while
+  keeping the explicit no-emit `typecheck` command exhaustive.
+- The publish design catalog now indexes source line starts once per file and
+  excludes generated Vite and CSS-bundle copies; a 290.92-second baseline fell
+  to a 5.724-second linear full-tree control, then a 1.897-second median across
+  three authored-source runs after the exclusions were applied.
+- The complete publish leaf produced 1,019 files in 5.253 seconds internally
+  (5.911 seconds end to end), versus the prior 281.75-second audit sample.
+- A full non-overlapping benchmark run finished in 16.391 seconds; the earlier
+  audit's comparable stage samples sum to about 306.62 seconds. Both are
+  directional local measurements rather than budgets.
+- Runtime resource discovery uses one bounded CacheStorage-probe pool, and the
+  event-only settings-momentum enhancement moved from immediate to idle; home,
+  settings, and topics/software all reached runtime stage `ready` in headless smoke.
+- Reused `runtime-bootstrap-performance/PLAN.md` and the existing build/runtime
+  audit; no `.spw` dispatch, public plans route, or new census artifact was needed.
+
+Next pass: harden the browser performance harness target/settle lifecycle before
+treating route timing samples as budgets; keep the remaining settings-engine and
+observer-federation work in their existing owner plans.

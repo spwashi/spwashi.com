@@ -56,9 +56,9 @@ intent: .{
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
-@plan_floating_chrome_stack: ~"./floating-chrome-stack/index.spw"
-@plan_navigation_header_disclosure: ~"./navigation-header-disclosure/index.spw"
-@plan_symphonic_loading_layered_editions: ~"./symphonic-loading-layered-editions/index.spw"
+@plan_floating_chrome_stack: ~"../floating-chrome-stack/index.spw"
+@plan_navigation_header_disclosure: ~"../navigation-header-disclosure/index.spw"
+@plan_symphonic_loading_layered_editions: ~"../symphonic-loading-layered-editions/index.spw"
 @readme: ~"../../../public/css/README.md"
 @dom_contracts: ~"../../../public/js/kernel/dom-contracts.js"
 

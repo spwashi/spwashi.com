@@ -50,7 +50,7 @@ intent: .{
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
-@plan_card_anatomy_interactions: ~"./card-anatomy-interactions/index.spw"
+@plan_card_anatomy_interactions: ~"../card-anatomy-interactions/index.spw"
 @semantic_chrome: ~"../../../public/js/interface/semantic-chrome.js"
 @component_semantics: ~"../../../public/js/semantic/component-semantics.js"
 @play_rpg_wednesday_library_index_html: ~"../../../play/rpg-wednesday/library/index.html"

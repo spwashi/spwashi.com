@@ -54,7 +54,7 @@ dispatch: .{
  layer = "pragmatic"
  hypothesis = `Add docked as the persistent-but-below-header tier.`
  spec_ref = ~"./FIX.md"
- impl_ref = ~"./PLAN.md"
+ impl_ref = ~"./FIX.md"
  probe_ref = `rg 'floating-chrome-stack' .agents/plans/floating-chrome-stack`
  falsification = `The listed failure mode returns after the planned fix lands.`
  status = "active"

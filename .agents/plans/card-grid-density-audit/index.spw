@@ -50,7 +50,7 @@ intent: .{
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
-@plan_component_box_model_responsive_audit: ~"./component-box-model-responsive-audit/index.spw"
+@plan_component_box_model_responsive_audit: ~"../component-box-model-responsive-audit/index.spw"
 @topics_software_renderers_index_html: ~"../../../topics/software/renderers/index.html"
 @topics_software_geometry_index_html: ~"../../../topics/software/geometry/index.html"
 @topics_software_lattices_index_html: ~"../../../topics/software/lattices/index.html"

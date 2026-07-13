@@ -57,7 +57,7 @@ intent: .{
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
 @fix: ~"./FIX.md"
-@plan_space_menu_arcs_electrical: ~"./space-menu-arcs-electrical/index.spw"
+@plan_space_menu_arcs_electrical: ~"../space-menu-arcs-electrical/index.spw"
 @menu_field: ~"../../../.spw/surfaces/menu-field.spw"
 @circuit_components: ~"../../../.spw/conventions/circuit-components.spw"
 @component_taxonomy: ~"../../../.spw/conventions/component-taxonomy.spw"

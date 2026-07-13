@@ -56,7 +56,7 @@ intent: .{
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
-@plan_literacy_precipitation_press: ~"./literacy-precipitation-press/index.spw"
+@plan_literacy_precipitation_press: ~"../literacy-precipitation-press/index.spw"
 @spells: ~"../../../public/js/runtime/spells.js"
 @cauldron: ~"../../../public/js/interface/cauldron/"
 @contract: ~"../../../public/js/interface/cauldron/contract.js"

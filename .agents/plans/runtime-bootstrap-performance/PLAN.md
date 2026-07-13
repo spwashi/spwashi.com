@@ -101,6 +101,8 @@ Implementation note: the per-layer mount loop is now concurrent, `site.js` keeps
 
 Implementation note: Phase 2a moved six selector-gated enhancement helpers from `IMMEDIATE` to `VISIBLE`: `gesture-anatomy`, `page-anatomy`, `ingredient-lab`, `image-discovery-rewards`, `local-memory-controls`, and `prompt-utils`. This keeps first-page readability, settings, shell disclosure, console/state surfaces, and core interaction state in the immediate wave while shifting helper, reward, prompt, and route-local lab work into near-viewport scheduling. `eager` and per-module timing overrides still provide the existing QA escape hatch.
 
+2026-07-13 continuation: `settings-momentum` now mounts in the `idle-chrome` chunk because it has no initial synchronization responsibility; it only reacts to future canonical settings events. The same landing bounded the CacheStorage discovery probes awaited before `page-interactive` with one loader-owned concurrency pool (default four) while preserving catalog-order readiness records and resource hints. New `spw:runtime-resource-prefetch:visible|idle` measures make that prefetch span inspectable without adding another public runtime state family.
+
 **Phase 3 — Observer & Listener Consolidation (if measurement justifies it)**
 - Evaluate a thin shared "region/attention observer coordinator" (or lightweight extension to existing attention-architecture primitives).
 - Goal: fewer observer instances and callback thunks while keeping the same `data-spw-*` and bus outputs.
@@ -162,7 +164,8 @@ If a patch introduces a new reusable semantic family or runtime state contract, 
 - [x] Light `spw-plan-maintenance` sweep recorded (indexes + agent-optimization cross-link landed; no new durable semantic family yet so no immediate `.spw` dispatch change required)
 - [x] Phase 1 patch (parallel immediate mounts) implemented; source/runtime validation passed, with `check:local` still reporting the refreshed generated core CSS bundle until that output is staged
 - [x] Phase 2a patch (selected module reclassification) implemented; `site-settings` cold-path split remains future Phase 2b work
-- [ ] Measurement baseline captured (before) and re-captured (after) using existing tooling
+- [x] Phase 2a follow-up landed: event-only settings momentum deferred; cache probes bounded with a forced out-of-order concurrency/order contract test
+- [x] Static before/after census captured (37→36 immediate; 23→22 immediate enhancements) and build evidence recorded in the existing BRP audit; representative route timing remains a follow-up once the browser harness settle/target lifecycle is hardened
 - [ ] .spw bridge added only if a stable new reusable contract emerges
 - [ ] `spw-plan-maintenance` run after significant landings (per its skill contract)
 

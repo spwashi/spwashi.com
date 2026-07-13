@@ -17,11 +17,12 @@
 ^"pipeline"{
   graph = #[
     `typecheck — tsc --noEmit + tsconfig.scripts + tsconfig.runtime`,
+    `build:compile — root noEmit + scripts emit + runtime emit; each project checked once`,
     `build:tools — tsc -p tsconfig.scripts.json → scripts/typed/`,
     `build:runtime — tsc -p tsconfig.runtime.json + fix-typed-imports`,
     `build:css — css-build.mjs route/behavior bundles + behavior-scopes`,
     `build:site — build.mjs → dist/ static deploy`,
-    `check:local — typecheck + tools + runtime + css + check-site + check-generated (no npm audit)`
+    `check:local — build:compile + css + check-site + check-generated + component/module contracts (no npm audit)`
   ][reg=set]
   deploy = `.github/workflows/deploy.yml runs npm run build → dist/ GitHub Pages`
   no_runtime_npm_deps = `devDependencies only: typescript, vite, postcss, @types/node — good for payload`
@@ -71,12 +72,65 @@
   ][reg=set]
 }[reg=facet]
 
+^"check_site_infrastructure_2026_07"{
+  landed_at = `2026-07-12`
+  syntax = `runSyntaxChecks uses a bounded worker pool (default min(8, availableParallelism)) and preserves deterministic failure order; check-site prints phase boundaries before long work`
+  sample = `276 syntax targets · concurrency 8 · full check-site wall 34.72s on the local developer machine; directional, not an SLO`
+  manifest_cache = `check-site remains read-only while comparing the ignored cache to the live semantic manifest; generatedAt + repoRoot are volatile, stale/invalid caches fail with npm run manifest guidance, absent caches warn`
+  local_capture_boundary = `design/components/captures is local review evidence, excluded from build copy, route validation, recursive authored-HTML inventories, and check:watch triggers`
+  watch = `check:watch defaults to check:local; check:watch:full opts into the network-backed audit path`
+  validation = #[
+    `npm run build:tools`,
+    `node --test scripts/tests/infrastructure-contracts.test.mjs`,
+    `npm run manifest`,
+    `node scripts/typed/check-site.mjs`
+  ][reg=set]
+  cost_class = `working_memory_pressure`
+}[reg=facet]
+
+^"composite_build_dedup_2026_07_13"{
+  question = `Can deploy and local-check pipelines preserve the exhaustive TypeScript contract without compiling emitted projects twice?`
+  hypothesis = `The emitting scripts/runtime builds already typecheck their projects, so composite pipelines only need a separate root noEmit pass.`
+  implementation = `build:compile = typecheck:root + build:tools + build:runtime; build/check call direct CSS and site leaves; standalone typecheck/build:css/build:site remain exhaustive convenience commands`
+  structural_delta = `full build tsc processes 6 → 3 (scripts 3→1, runtime 2→1, root stays 1); check:local tsc processes 5 → 3`
+  paired_warm_sample = `legacy pre-site chain 8.595s → deduplicated pre-site chain 7.045s on one local warm sample (17.9%); directional, not an SLO`
+  harness = `bench:build now samples non-overlapping typecheck:root, tools emit, runtime emit, and CSS leaf stages; one 2026-07-13 sample 7.097s`
+  invariant = `npm run typecheck still performs all three noEmit checks when an explicit no-output typecheck is requested`
+  proof = #[
+    `scripts/tests/infrastructure-contracts.test.mjs build graph contract`,
+    `npm run build:compile`,
+    `npm run bench:build -- --json`
+  ][reg=set]
+  cost_class = `premature_commitment`
+}[reg=facet]
+
+^"catalog_linear_scan_2026_07_13"{
+  question = `Why did a three-file design catalog output consume nearly the whole publish build?`
+  evidence = `baseline direct catalog run: 290.92s real / 243.22s user; lineOf rescanned each file from byte zero for every CSS/HTML/JS/.spw match`
+  hypothesis = `One newline-start index per source makes line lookup logarithmic per match instead of rescanning source prefixes.`
+  implementation = `createLineLocator indexes newlines once; dist-vite and public/css/bundles generated copies are excluded from authored-source discovery`
+  after = `linear full-tree control 5.724s; authored-source standalone samples 2.306s / 1.791s / 1.897s, median 1.897s (99.35% below the 290.92s baseline); directional, not an SLO`
+  full_publish_leaf = `npm run build:site:run completed in 5.911s end-to-end / 5.253s internal for 1,019 output files, versus the prior 281.75s directional sample`
+  full_pipeline_sample = `bench:build:full completed the non-overlapping root/tools/runtime/css/site graph in 16.391s; the prior audit stage samples sum to ~306.62s (94.65% directional reduction across different warm states)`
+  payload = `catalog.json 25,568,257 B → 11,356,884 B after generated-copy exclusion; tokens unchanged at 2,508; 11 stale generated-only attribute names left the census`
+  inspect = `SOURCE_DATE_EPOCH=0 node scripts/generate-design-catalog.mjs --out /tmp/spw-catalog --quiet`
+  proof = #[
+    `line-locator + generated-path contracts in scripts/tests/infrastructure-contracts.test.mjs`,
+    `no dist-vite CSS/JS consumers in authored catalog`,
+    `no public/css/bundles files in catalog cssFiles`,
+    `npm run build:site:run`,
+    `npm run bench:build:full -- --json`
+  ][reg=set]
+  cost_class = `working_memory_pressure`
+}[reg=facet]
+
 ^"seams"{
   .{
     id = `triple-typecheck`
     cost_class = `premature_commitment`
-    seam = `typecheck runs three tsc projects serially on every check:local`
-    direction = `Document which project a patch needs; optional composite project references if TS graph allows`
+    seam = `composite pipelines rechecked scripts/runtime with noEmit before compiling the same projects for output`
+    direction = `build:compile owns one root check plus one emitting check per scripts/runtime project; explicit typecheck remains exhaustive`
+    landed = `2026-07-13 package scripts + non-overlapping benchmark graph + infrastructure contract`
   }
   .{
     id = `css-bundle-fanout`
@@ -95,7 +149,8 @@
     id = `design-catalog-in-build`
     cost_class = `premature_commitment`
     seam = `build:site regenerates full design catalog every deploy (~catalog scan of whole tree); sample dominated build:site wall (~277s of ~282s reported in log as write window)`
-    direction = `Keep catalog on publish; for local HTML/JS iteration use build:runtime/css only; consider catalog --check or cached skip when inputs unchanged`
+    direction = `Keep catalog on publish; line lookup is indexed once per file and generated dist-vite/CSS bundle copies stay outside authored discovery`
+    landed = `2026-07-13 linear line locator + generated-copy exclusions; baseline 290.92s → 5.724s full-tree linear control before exclusions`
   }
   .{
     id = `core-css-bundle-size`
@@ -119,7 +174,7 @@
     `JS runtime modules: node --check + check:runtime; build:runtime if typed outputs`,
     `CSS: build:css or check:css; avoid full typecheck if only CSS`,
     `Deps: full check including audit`,
-    `Sample stage walls: npm run bench:build (skip site) or bench:build:full`,
+    `Sample non-overlapping stage walls: npm run bench:build (skip site) or bench:build:full`,
     `Headless route smoke: npm run smoke:nav · with layout/debugQa: npm run smoke:nav:qa`,
     `CSS agent loop: npm run build:css:fast or build:css -- --only home,settings --skip-core --bundles-only`,
     `CSS single file: npm run build:css:run -- --bundles-only --from-change public/css/routes/surfaces/home.css`,
@@ -151,7 +206,7 @@
 
 ^"bench_and_nav_scripts"{
   at = `2026-07-12`
-  build_performance = `scripts/build-performance.mjs — wall times per npm stage; --skip-site default via bench:build; --json for agents`
+  build_performance = `scripts/build-performance.mjs — non-overlapping build leaf wall times; --skip-site default via bench:build; --json for agents; directional single samples, not SLOs`
   harness = `scripts/lib/chrome-headless-harness.mjs — shared Chrome CDP, dev-server spawn, viewport emulation, settle probes`
   headless_nav = `scripts/headless-nav.mjs — route smoke; --require-settled --retries; free port`
   perf_matrix = `scripts/perf-matrix.mjs — pages × viewports; wall/boot/immediate/mainW/horizontal overflow; --warm --quick --json --csv --out --fail-on-overflow-x`

@@ -50,7 +50,7 @@ intent: .{
 @plan: ~"./PLAN.md"
 @wip: ~"./wip.spw"
 @pretext_whimsy_lab: ~"./pretext-whimsy-lab.spw"
-@plan_designer_conversation_canvas: ~"./designer-conversation-canvas/index.spw"
+@plan_designer_conversation_canvas: ~"../designer-conversation-canvas/index.spw"
 @pretext_measurement_bus: ~"../../../public/js/semantic/pretext-measurement-bus.js"
 
 dispatch: .{

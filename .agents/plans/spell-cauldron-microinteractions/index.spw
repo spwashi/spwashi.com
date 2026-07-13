@@ -44,7 +44,7 @@ intent: .{
 @plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
 @wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
 @plan: ~"./PLAN.md"
-@plan_spellcraft_authoring: ~"./spellcraft-authoring/index.spw"
+@plan_spellcraft_authoring: ~"../spellcraft-authoring/index.spw"
 
 dispatch: .{
  plan = @plan
