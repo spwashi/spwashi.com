@@ -299,6 +299,7 @@
                     <a class="operator-chip" href="#demo-rails">#&gt;demo rails</a>
                     <a class="operator-chip" href="#operator-intent-registry">#&gt;operators</a>
                     <a class="operator-chip" href="#component-anatomy-slots">#&gt;anatomy</a>
+                    <a class="operator-chip" href="#component-recipes-capture">#&gt;recipes &amp; capture</a>
                     <a class="operator-chip" href="#markup-model-kit">#&gt;model kit</a>
                     <a class="operator-chip" href="#specimen-builder-rail">@specimen builders</a>
                     <a class="operator-chip" href="#brace-grammar-specimens">#&gt;braces</a>
@@ -1008,6 +1009,118 @@
                             <li><strong>Footer:</strong> Secondary metadata or citation links.</li>
                         </ol>
                     </div>
+                </div>
+            </section>
+
+            <section class="site-frame" id="component-recipes-capture" data-spw-role="reference" data-spw-kind="frame" data-spw-context="making">
+                <header class="frame-heading">
+                    <a class="frame-sigil" href="#component-recipes-capture">#&gt;"component_recipes_capture"</a>
+                    <h2>Copy a recipe, then capture the evidence</h2>
+                </header>
+                <p class="frame-note">These small recipes preserve the slot order and portable CSS boundary without copying the full site shell. Start with the live HTML, adapt its labels and responsibility, then compare it at phone and desktop widths.</p>
+
+                <div class="frame-grid frame-grid--2up">
+                    <article class="frame-card" data-spw-kind="card" data-spw-role="recipe" data-spw-context="making">
+                        <header class="frame-topline" data-spw-slot="header">
+                            <span class="frame-card-sigil">#&gt;site_frame</span>
+                            <span class="spec-pill" data-spw-slot="meta">section recipe</span>
+                        </header>
+                        <div data-spw-slot="body">
+                            <h3>Start a section with named slots</h3>
+                            <p>Use the site-frame recipe for a durable page section with a heading, body, and explicit next action.</p>
+                            <details class="spw-inline-disclosure">
+                                <summary>Copy frame markup</summary>
+                                <div class="code-block-wrapper">
+<pre><code>&lt;!-- Minimal site-frame specimen: retain slots and semantic state when copying. --&gt;
+&lt;section class="site-frame" data-spw-kind="frame" data-spw-role="reference"&gt;
+  &lt;header class="frame-heading" data-spw-slot="header"&gt;
+    &lt;span class="frame-sigil"&gt;#&amp;gt;frame&lt;/span&gt;
+    &lt;h2&gt;Component title&lt;/h2&gt;
+    &lt;span class="spw-component-tag" data-spw-slot="meta"&gt;reference&lt;/span&gt;
+  &lt;/header&gt;
+  &lt;div class="frame-body" data-spw-slot="body"&gt;
+    &lt;p&gt;One clear idea, with enough context to decide the next move.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;footer class="frame-actions" data-spw-slot="actions"&gt;
+    &lt;a class="operator-chip" href="#next" data-spw-operator="action"&gt;! next move&lt;/a&gt;
+  &lt;/footer&gt;
+&lt;/section&gt;</code></pre>
+                                </div>
+                            </details>
+                        </div>
+                        <footer class="frame-actions" data-spw-slot="actions">
+                            <a class="operator-chip" href="/design/components/snippets/site-frame.html" data-spw-operator="frame">#&gt; open frame specimen</a>
+                        </footer>
+                    </article>
+
+                    <article class="frame-card" data-spw-kind="card" data-spw-role="recipe" data-spw-context="making">
+                        <header class="frame-topline" data-spw-slot="header">
+                            <span class="frame-card-sigil">~frame_card</span>
+                            <span class="spec-pill" data-spw-slot="meta">card recipe</span>
+                        </header>
+                        <div data-spw-slot="body">
+                            <h3>Keep one portable thought together</h3>
+                            <p>Use the frame-card recipe for a compact reference, comparison, offer, or artifact that still explains why it exists.</p>
+                            <details class="spw-inline-disclosure">
+                                <summary>Copy card markup</summary>
+                                <div class="code-block-wrapper">
+<pre><code>&lt;!-- Minimal frame-card specimen: use for a compact route, artifact, or comparison. --&gt;
+&lt;article class="frame-card" data-spw-kind="card" data-spw-role="reference"&gt;
+  &lt;span class="frame-card-sigil" data-spw-slot="meta"&gt;~reference&lt;/span&gt;
+  &lt;h3 data-spw-slot="header"&gt;Card title&lt;/h3&gt;
+  &lt;p data-spw-slot="body"&gt;A short reason this card exists and what it offers.&lt;/p&gt;
+  &lt;a class="operator-chip" href="#detail" data-spw-slot="actions" data-spw-operator="frame"&gt;#&amp;gt; inspect&lt;/a&gt;
+&lt;/article&gt;</code></pre>
+                                </div>
+                            </details>
+                        </div>
+                        <footer class="frame-actions" data-spw-slot="actions">
+                            <a class="operator-chip" href="/design/components/snippets/frame-card.html" data-spw-operator="ref">~ open card specimen</a>
+                        </footer>
+                    </article>
+
+                    <article class="frame-card" data-spw-kind="card" data-spw-role="recipe" data-spw-context="making">
+                        <header class="frame-topline" data-spw-slot="header">
+                            <span class="frame-card-sigil">!tuning_strip</span>
+                            <span class="spec-pill" data-spw-slot="meta">control recipe</span>
+                        </header>
+                        <div data-spw-slot="body">
+                            <h3>Group a few related moves</h3>
+                            <p>The portable strip is a wrapping row. Its links work before enhancement; a host can later replace them with real controls when state is necessary.</p>
+                            <details class="spw-inline-disclosure">
+                                <summary>Copy strip markup</summary>
+                                <div class="code-block-wrapper">
+<pre><code>&lt;!-- Minimal tuning-strip specimen: static links work before optional stateful enhancement. --&gt;
+&lt;nav class="tuning-strip" aria-label="Choose a component view" data-spw-kind="panel" data-spw-role="navigation"&gt;
+  &lt;a class="operator-chip" href="#overview" data-spw-operator="frame" aria-current="location" data-site-setting-active="true"&gt;#&amp;gt; overview&lt;/a&gt;
+  &lt;a class="operator-chip" href="#compare" data-spw-operator="probe"&gt;? compare&lt;/a&gt;
+  &lt;a class="operator-chip" href="#apply" data-spw-operator="action"&gt;! apply&lt;/a&gt;
+&lt;/nav&gt;</code></pre>
+                                </div>
+                            </details>
+                        </div>
+                        <nav class="tuning-strip" aria-label="Component recipe destinations" data-spw-slot="actions">
+                            <a class="operator-chip" href="#component-anatomy-slots" data-spw-operator="frame">#&gt; anatomy</a>
+                            <a class="operator-chip" href="#markup-model-kit" data-spw-operator="probe">? adapt</a>
+                            <a class="operator-chip" href="/design/components/snippets/tuning-strip.html" data-spw-operator="action">! open strip specimen</a>
+                        </nav>
+                    </article>
+
+                    <article class="frame-card" data-spw-kind="card" data-spw-role="reference" data-spw-context="analysis">
+                        <header class="frame-topline" data-spw-slot="header">
+                            <span class="frame-card-sigil">^capture_evidence</span>
+                            <span class="spec-pill" data-spw-slot="meta">review path</span>
+                        </header>
+                        <div data-spw-slot="body">
+                            <h3>Review context, component, and template</h3>
+                            <p>Page captures show the surrounding route, component captures isolate packing, and template captures verify that a snippet still works with the portable composition bundle.</p>
+                            <p>Run <code>npm run component:screenshots -- --base &lt;preview-url&gt;</code> for a local review pack. Capture packs are evidence, not permanent pixel baselines; keep a baseline only when a repeatable visual regression makes it useful.</p>
+                        </div>
+                        <footer class="frame-actions" data-spw-slot="actions">
+                            <a class="operator-chip" href="/design/composition/#spatial-gravity-title" data-spw-operator="object">^ inspect capture-ready card</a>
+                            <a class="operator-chip" href="/design/composition/" data-spw-operator="ref">~ portable boundary</a>
+                        </footer>
+                    </article>
                 </div>
             </section>
 

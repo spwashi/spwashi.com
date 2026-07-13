@@ -92,7 +92,6 @@
 @import url('/public/css/handles/operators/metrics-and-cognition.css') layer(handles);
 @import url('/public/css/handles/operators/adaptive.css') layer(handles);
 @import url('/public/css/handles/operators/geometry-projection.css') layer(handles);
-@import url('/public/css/handles/metrics.css') layer(handles);
 @import url('/public/css/handles/phase-controls.css') layer(handles);
 @import url('/public/css/handles/logo.css') layer(handles);
 @import url('/public/css/handles/page-region-rail.css') layer(handles);
@@ -106,7 +105,6 @@
 @import url('/public/css/effects/cinematic.css') layer(effects);
 @import url('/public/css/effects/developmental-climate.css') layer(effects);
 @import url('/public/css/effects/enrichment.css') layer(effects);
-@import url('/public/css/effects/demos.css') layer(effects);
 @import url('/public/css/effects/wonder.css') layer(effects);
 @import url('/public/css/effects/metaphysical-paper.css') layer(effects);
 @import url('/public/css/effects/narrative.css') layer(effects);

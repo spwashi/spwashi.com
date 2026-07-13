@@ -940,7 +940,7 @@ export const ENHANCEMENT_DEFS = [
   {
     id: 'settings-momentum',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.IDLE,
     costClass: COST_CLASS.PAINT_COMPOSITE,
     selector: 'html',
     rootMode: 'single',
@@ -952,7 +952,8 @@ export const ENHANCEMENT_DEFS = [
     ],
     effectScope: 'root-state bus ornament',
     evaluates: 'settings tuning spell momentum pulse',
-    timingArc: 'immediate-orchestration',
+    timingArc: 'idle-settings-momentum',
+    timingChunk: 'idle-chrome',
     load: () => import('./settings-momentum.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initSettingsMomentum;

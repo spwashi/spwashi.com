@@ -13,6 +13,9 @@
 @import url('/public/css/systems/svg-personas.css') layer(systems);
 @import url('/public/css/systems/surfaces/rpg.css') layer(systems);
 
+@import url('/public/css/handles/metrics.css') layer(handles);
+@import url('/public/css/effects/demos.css') layer(effects);
+
 @import url('/public/css/routes/surfaces/home.css') layer(routes);
 @import url('/public/css/routes/surfaces/home-panels.css') layer(routes);
 @import url('/public/css/routes/surfaces/contact.css') layer(routes);

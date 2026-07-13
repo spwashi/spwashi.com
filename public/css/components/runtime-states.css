@@ -1227,10 +1227,6 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
     inset-inline: var(--surface-padding);
   }
 
-  :where(.frame-grid--2up, .frame-grid--3up) {
-    grid-template-columns: 1fr;
-  }
-
   :where(.settings-grid) {
     grid-template-columns: 1fr;
     padding: var(--component-pad-tight);

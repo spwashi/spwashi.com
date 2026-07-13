@@ -8,7 +8,7 @@
  * layer. Keep this file import-only so it stays useful as a standalone bundle.
  * ========================================================================== */
 
-@layer tokens, typography, grammar, components, handles, effects;
+@layer tokens, typography, grammar, components, systems, handles, effects;
 
 @import url('./tokens/core.css') layer(tokens);
 @import url('./tokens/dimensions.css') layer(tokens);
@@ -36,7 +36,16 @@
 @import url('./systems/semantic-copy-lens.css') layer(systems);
 
 @import url('./handles/cognitive-handles.css') layer(handles);
-@import url('./handles/operators.css') layer(handles);
+@import url('./handles/operators/tokens.css') layer(handles);
+@import url('./handles/operators/primitive.css') layer(handles);
+@import url('./handles/operators/sigils-and-chips.css') layer(handles);
+@import url('./handles/operators/attention-states.css') layer(handles);
+@import url('./handles/operators/state-semantics.css') layer(handles);
+@import url('./handles/operators/bias-and-phrases.css') layer(handles);
+@import url('./handles/operators/spell-breadcrumbs.css') layer(handles);
+@import url('./handles/operators/metrics-and-cognition.css') layer(handles);
+@import url('./handles/operators/adaptive.css') layer(handles);
+@import url('./handles/operators/geometry-projection.css') layer(handles);
 @import url('./handles/phase-controls.css') layer(handles);
 
 @import url('./effects/material.css') layer(effects);
