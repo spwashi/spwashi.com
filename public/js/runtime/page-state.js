@@ -165,10 +165,14 @@ function measureFixedViewportCorrection(root = document) {
   const html = document.documentElement;
   const viewportHeight = window.visualViewport?.height || window.innerHeight || 0;
   if (!viewportHeight) return 0;
+  const chrome = Array.from(root.querySelectorAll?.(BOTTOM_FLOATING_CHROME_SELECTOR) || []);
+  // Bail before any computed-style read — each one can force a full style
+  // recalculation, and this measure runs on scroll/mutation schedules.
+  if (!chrome.length) return 0;
   const activeCorrectionY = Number.parseFloat(
     getComputedStyle(html).getPropertyValue('--spw-fixed-viewport-correction-y')
   ) || 0;
-  return Array.from(root.querySelectorAll?.(BOTTOM_FLOATING_CHROME_SELECTOR) || [])
+  return chrome
     .reduce((correction, element) => {
       if (!isVisibleBottomFloatingChrome(element)) return correction;
       const style = getComputedStyle(element);
@@ -215,7 +219,7 @@ function initFixedViewportCorrection() {
   // The measurement forces style + layout against the full stylesheet, and the
   // subtree observer below fires on every DOM mutation. Throttle so mutation
   // storms and scroll cost one measured pass per interval, not one per frame.
-  const MIN_MEASURE_INTERVAL_MS = 120;
+  const MIN_MEASURE_INTERVAL_MS = 240;
   const runUpdate = () => {
     lastRunAt = Date.now();
     updateFixedViewportCorrection();

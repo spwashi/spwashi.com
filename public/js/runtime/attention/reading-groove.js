@@ -81,19 +81,24 @@ export function initReadingGroove(root) {
     visible: new Set(),
   };
 
+  // getBoundingClientRect on every beat forces layout against the full
+  // stylesheet; only measure the visible set the observer maintains, and
+  // resolve indexes through a map instead of O(n) indexOf per candidate.
+  const beatIndexes = new Map(beats.map((beat, index) => [beat, index]));
+
   const resolveLeadIndex = () => {
     const anchorY = Math.min(Math.max(window.innerHeight * 0.38, 120), 320);
-    const candidates = state.visible.size ? Array.from(state.visible) : beats;
+    if (!state.visible.size) return Math.max(0, state.leadIndex);
     let bestIndex = state.leadIndex;
     let bestDistance = Number.POSITIVE_INFINITY;
 
-    candidates.forEach((beat) => {
+    state.visible.forEach((beat) => {
       const rect = beat.getBoundingClientRect();
       const center = rect.top + (rect.height * 0.45);
       const distance = Math.abs(center - anchorY);
       if (distance < bestDistance) {
         bestDistance = distance;
-        bestIndex = beats.indexOf(beat);
+        bestIndex = beatIndexes.get(beat) ?? state.leadIndex;
       }
     });
 
@@ -131,7 +136,9 @@ export function initReadingGroove(root) {
   });
 
   beats.forEach((beat) => observer.observe(beat));
-  update();
+  // Let the IntersectionObserver populate the visible set before the first
+  // resolve; a synchronous full-beats pass at mount stalls the main thread.
+  scheduleUpdate();
 
   const onResize = () => scheduleUpdate();
   const preferenceObserver = new MutationObserver(() => {

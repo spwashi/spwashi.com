@@ -23,37 +23,43 @@ function readNumber(style, name, fallback) {
 
 /* Timing tokens are read on hot event paths (every interaction-phase,
    component-lifecycle, and ecology emit). Each getComputedStyle call forces a
-   style recalculation against the full stylesheet, so memoize briefly instead
-   of resolving per event. */
-const TIMING_CACHE_TTL_MS = 1000;
-let cachedBeatInterval = { value: 0, at: 0 };
-let cachedPulseDuration = { value: 0, at: 0 };
+   style recalculation against the full stylesheet, so cache until a settings
+   or runtime-token change invalidates. */
+let cachedBeatInterval = 0;
+let cachedPulseDuration = 0;
+let invalidationBound = false;
+
+function invalidateTimingCache() {
+  cachedBeatInterval = 0;
+  cachedPulseDuration = 0;
+}
+
+function bindTimingInvalidation() {
+  if (invalidationBound || typeof document === 'undefined') return;
+  invalidationBound = true;
+  ['spw:settings-change', 'spw:settings:changed', 'spw:settings-momentum', 'spw:runtime-tokens-updated']
+    .forEach((type) => document.addEventListener(type, invalidateTimingCache));
+}
 
 function readBeatIntervalMs(html) {
   if (typeof getComputedStyle !== 'function') return 1300;
-  const now = Date.now();
-  if (cachedBeatInterval.value && now - cachedBeatInterval.at < TIMING_CACHE_TTL_MS) {
-    return cachedBeatInterval.value;
-  }
+  if (cachedBeatInterval) return cachedBeatInterval;
+  bindTimingInvalidation();
   const style = getComputedStyle(html);
   const ms = readNumber(style, '--spw-beat-interval-ms', 1300);
-  const value = Math.max(520, Math.min(2800, Math.round(ms)));
-  cachedBeatInterval = { value, at: now };
-  return value;
+  cachedBeatInterval = Math.max(520, Math.min(2800, Math.round(ms)));
+  return cachedBeatInterval;
 }
 
 function readPulseDurationMs(html) {
   if (typeof getComputedStyle !== 'function') return 280;
-  const now = Date.now();
-  if (cachedPulseDuration.value && now - cachedPulseDuration.at < TIMING_CACHE_TTL_MS) {
-    return cachedPulseDuration.value;
-  }
+  if (cachedPulseDuration) return cachedPulseDuration;
+  bindTimingInvalidation();
   const style = getComputedStyle(html);
   const raw = style.getPropertyValue('--spw-microinteraction-pulse-duration').trim();
   const parsed = Number.parseInt(raw, 10);
-  const value = Number.isFinite(parsed) && parsed > 80 ? parsed : 280;
-  cachedPulseDuration = { value, at: now };
-  return value;
+  cachedPulseDuration = Number.isFinite(parsed) && parsed > 80 ? parsed : 280;
+  return cachedPulseDuration;
 }
 
 function isRhythmEnabled(html) {
@@ -124,10 +130,7 @@ export function initPulseBeatTuner(root = document) {
   const { signal } = controller;
 
   const refreshRhythm = () => {
-    // Settings/token changes may retune timing tokens; drop the memo so the
-    // next hot-path read resolves fresh values immediately.
-    cachedBeatInterval = { value: 0, at: 0 };
-    cachedPulseDuration = { value: 0, at: 0 };
+    invalidateTimingCache();
     scheduleBeatCycle(html);
   };
 

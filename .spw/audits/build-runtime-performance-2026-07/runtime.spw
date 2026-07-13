@@ -54,11 +54,11 @@
 }[reg=facet]
 
 ^"catalog_census_2026_07_normalize_pass"{
-  at = `2026-07-12`
+  at = `2026-07-13`
   mount_when = .{
-    IMMEDIATE = 37
+    IMMEDIATE = 36
     VISIBLE = 34
-    IDLE = 22
+    IDLE = 23
     SETTLED = 1
     REGION = 1
     INTERACTION = 0
@@ -72,8 +72,8 @@
     `canvas-accents → VISIBLE`,
     `composition-box-model → VISIBLE`
   ][reg=set]
-  enhancement_immediate = 23
-  residual = `html orchestration (module-effects, loading-ecology, hydration-passes, settings-momentum, …) + grammar/gesture/semantics still IMMEDIATE`
+  enhancement_immediate = 22
+  residual = `html orchestration (module-effects, loading-ecology, hydration-passes, …) + grammar/gesture/semantics still IMMEDIATE`
   probe = `__SPW_SITE__.catalogOptimization() or listModuleCatalogIndex()`
 }[reg=facet]
 
@@ -96,6 +96,20 @@
     feature_discovery = `IDLE + features:feature-discovery; CSS moved from core to a behavior bundle`
     result = `61 IMMEDIATE / 22 VISIBLE / 9 IDLE across 94 definitions; core bundle no longer carries feature-discovery.css`
   }[reg=facet]
+  resource_prefetch_2026_07_13 = .{
+    seam = `site boot awaited serial CacheStorage probes inside each visible/idle prefetch group before page-interactive`
+    implementation = `one loader-owned FIFO probe pool, default concurrency 4 across both groups; Promise.all inspection keeps each catalog result list stable before ordered hint insertion`
+    instrumentation = #[`spw:runtime-resource-prefetch:visible`, `spw:runtime-resource-prefetch:idle`, `spw:runtime-resources-profiled.probeConcurrency`][reg=set]
+    proof = `engagement test forces out-of-order probe completion, observes max concurrency 3 under a test override, and verifies hint/readiness order`
+    cost_class = `working_memory_pressure`
+  }[reg=facet]
+  settings_momentum_2026_07_13 = .{
+    reclass = `settings-momentum IMMEDIATE → IDLE idle-chrome`
+    reason = `module writes no initial state; it only listens for future canonical settings-change events and produces progressive ornament pulses`
+    result = `37→36 IMMEDIATE; 23→22 ENHANCEMENT IMMEDIATE across 95 definitions`
+    escape_hatch = `eager or spw-module-timing=settings-momentum:immediate keeps the existing QA posture`
+    browser_smoke = `home, settings, topics/software reached runtime stage=ready and page=region-enhanced; 3/3 routes passed`
+  }[reg=facet]
 }[reg=facet]
 
 ^"remaining_runtime_seams"{
@@ -103,7 +117,7 @@
     id = `immediate-width`
     cost_class = `premature_commitment`
     stratum = `orchestration`
-    evidence = `37 IMMEDIATE / 23 ENHANCEMENT after normalize reclass; residual: module-effects, loading-ecology, hydration-passes, settings-momentum, attention-architecture, component-semantics, semantic-crossrefs, gesture/grammar`
+    evidence = `36 IMMEDIATE / 22 ENHANCEMENT after settings-momentum defer; residual: module-effects, loading-ecology, hydration-passes, attention-architecture, component-semantics, semantic-crossrefs, gesture/grammar`
     direction = `Reclassify residual orchestration/semantics when first reading posture does not need them; use catalogOptimization().reclassCandidates; keep CORE thin`
     ecology = `too many shoots at germination`
     cognition = `self_model overloaded with deep_interpretation and metacognition`
@@ -166,6 +180,9 @@
     `state-inspector → IDLE`,
     `layout-shift-audit → IDLE`
   ][reg=set]
+  landed_2026_07_13 = #[
+    `settings-momentum → IDLE idle-chrome`
+  ][reg=set]
   already_demand = #[
     `image-utilization`, `image-interaction`, `svg-tunability`, `guide-badge`,
     `observation-beats`, `design-experiments`, `design-review-surfaces`
@@ -175,7 +192,6 @@
     `module-effects`,
     `loading-ecology`,
     `hydration-passes`,
-    `settings-momentum`,
     `pulse-beat-tuner`
   ][reg=set]
   toward_idle_residual = #[
@@ -206,4 +222,23 @@
     `Deep interpretation and metacognition should feel like depth, not layout repair (@lifecycles brand arrival)`,
     `Capture/reduced-motion → settle; do not add observers`
   ][reg=set]
+}[reg=facet]
+
+^"forced_recalc_hot_paths_2026_07_13"{
+  # Live CDP probe (headless, scroll stress on /): main thread saturated for
+  # tens of seconds during VISIBLE mount waves; profile attributed the wall to
+  # forced style recalc against the full core.css bundle on hot event paths.
+  probed_with = `scratchpad cdp-probe.mjs — Debugger.pause live stacks + Profiler samples during scripted scroll`
+  offenders_fixed = #[
+    `pulse-beat-tuner readPulseDurationMs/readBeatIntervalMs — getComputedStyle per interaction-phase/component-lifecycle/ecology emit; now cached until settings/runtime-token change`,
+    `page-state measureFixedViewportCorrection — subtree MutationObserver scheduled a forced-layout pass per mutation frame; now 240ms trailing throttle + no-chrome early bail`,
+    `reading-groove initReadingGroove — synchronous 201-beat getBoundingClientRect pass at mount + O(n^2) indexOf; now deferred to rAF, visible-set only, index map`,
+    `dom-sync-hub tasks — same-value textContent/rail rebuild churn re-triggered the observer every frame (landed via parallel session commit)`
+  ][reg=set]
+  residual = #[
+    `core.css ~1.5MB makes every forced recalc 30-500ms; per-pass cost dominates any remaining measure-on-mutation module (composition-box-model readBoxModel, dom-contracts measureFloatingChromeOcclusion next)`,
+    `mount waves still produce multi-second stalls under scroll stress; batching/staggering VISIBLE mounts is the structural lever`,
+    `pretext-physics layoutWithLines lacks the >=40px width clamp the measurement bus applies — narrow hosts project one-char-per-line columns (seen on home Algorithm labs card)`
+  ][reg=set]
+  verification = `extension tab on 127.0.0.1:4173 (real profile): scroll + screenshots responsive; previously froze renderer at 99% CPU within ~1 minute`
 }[reg=facet]
