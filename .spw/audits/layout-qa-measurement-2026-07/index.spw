@@ -127,7 +127,28 @@ audit_run: .{
     `node --check public/js/compose.js`,
     `node --check public/js/kernel/instrumentation.js`,
     `git diff --check`,
-    `Browser: __SPW_SITE__.layoutQa.summary() after load`
+    `Browser: __SPW_SITE__.layoutQa.summary() after load`,
+    `npm run smoke:nav`,
+    `npm run smoke:nav:qa`,
+    `npm run smoke:nav -- --require-settled --settle-ms 20000`,
+    `npm run bench:nav:quick`,
+    `npm run bench:nav -- --viewports phone,desktop --routes /,/settings/ --json --out /tmp/perf.json`,
+    `npm run bench:nav:ci`,
+    `npm run bench:build`
+  ][reg=set]
+}[reg=facet]
+
+^"harness_robustness"{
+  shared = `scripts/lib/chrome-headless-harness.mjs`
+  improvements = #[
+    `CDP call/event timeouts + clean session close`,
+    `Settle: runtime-stage ready | spw:site-ready mark | boot-to-ready measure | pageState past booting`,
+    `Partial boot: immediate-layer measures present`,
+    `Horizontal overflow only (ovX); bodyOverflowX flag`,
+    `Per-cell retries; matrix --warm cold-start discard`,
+    `Free port pick; SIGINT/SIGTERM kills chrome+dev-server`,
+    `Script resource count/transfer in probe`,
+    `--require-settled / --fail-on-overflow-x for stricter CI`
   ][reg=set]
 }[reg=facet]
 

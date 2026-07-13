@@ -1,0 +1,47 @@
+export const COMPONENT_FIXTURES = Object.freeze([
+    {
+        id: 'site-frame',
+        label: 'Site frame',
+        selector: '.site-frame',
+        specimenRoute: '/design/components/#component-anatomy-slots',
+        cssOwner: 'public/css/components/foundation.css',
+        snippet: 'design/components/snippets/site-frame.html',
+        requiredSlots: ['header', 'body'],
+        states: ['reading', 'inspect', 'dense'],
+        layoutScenarios: ['phone', 'desktop'],
+        captureFlows: ['page', 'component', 'template'],
+        publishTargets: ['design-review', 'starter-kit', 'agent-brief'],
+        captureValue: 'Primary structural vessel — slot anatomy and packing posture.',
+    },
+    {
+        id: 'frame-card',
+        label: 'Frame card',
+        selector: '.frame-card',
+        specimenRoute: '/design/composition/#spatial-gravity',
+        cssOwner: 'public/css/components/cards.css',
+        snippet: 'design/components/snippets/frame-card.html',
+        requiredSlots: ['body'],
+        states: ['ambient', 'focal', 'collected'],
+        layoutScenarios: ['phone', 'desktop'],
+        captureFlows: ['page', 'component', 'template'],
+        publishTargets: ['starter-kit', 'template-pipeline', 'agent-brief'],
+        captureValue: 'Portable card unit — glass surface + slot grammar without shell.',
+    },
+    {
+        id: 'operator-chip',
+        label: 'Operator chip',
+        selector: '.operator-chip',
+        specimenRoute: '/design/components/#component-anatomy-slots',
+        cssOwner: 'public/css/handles/operators/sigils-and-chips.css',
+        snippet: 'design/components/snippets/operator-chip.html',
+        requiredSlots: [],
+        states: ['frame', 'probe', 'action'],
+        layoutScenarios: ['phone', 'desktop'],
+        captureFlows: ['component', 'template'],
+        publishTargets: ['starter-kit', 'template-pipeline', 'agent-brief'],
+        captureValue: 'Operator handle density — small clip more valuable than full page.',
+    },
+]);
+export function getComponentFixture(id) {
+    return COMPONENT_FIXTURES.find((fixture) => fixture.id === id);
+}

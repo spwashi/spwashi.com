@@ -444,3 +444,21 @@ Enhanced the proposed agent/runtime pass without adding another index or cache.
 
 Next pass: use the aggregate census to choose one measured immediate-width
 slice; do not convert the remaining backlog into dozens of repetitive notes.
+
+## Future-Prep Testing - 2026-07-12
+
+Made the existing validation surfaces cumulative rather than aspirational:
+
+- `check:local` now includes the engagement unit suite after its typed runtime
+  outputs are built; `test:engagement` remains runnable on its own.
+- Added pull-request validation with a Node 20 contract job and a Node 22
+  Chrome smoke job across home, settings, and a representative topical route.
+- Hardened the zero-dependency CDP tools so successful runs await teardown and
+  cancel their navigation timeout instead of leaving Chrome/dev-server processes
+  or delayed event-loop timers behind. Chrome candidate resolution now reaches
+  Chromium fallbacks instead of returning the first bare executable name.
+
+This is a bounded foundation: static contracts and deterministic unit behavior
+are merge gates; browser smoke verifies a small route set. Visual baselines,
+full accessibility automation, and performance budgets remain opt-in future
+work until a concrete regression justifies their maintenance cost.

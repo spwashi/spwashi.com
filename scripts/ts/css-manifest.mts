@@ -1,7 +1,8 @@
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-import { splitList, stripQueryHash } from './site-contracts/helpers.mjs';
+import { stripQueryHash } from './site-contracts/helpers.mjs';
 import { toPosixPath } from './shared/build-topology.mjs';
 
 const ROOT_DIR = path.resolve(import.meta.dirname, '..', '..');
@@ -243,18 +244,15 @@ export function absoluteFromRootHref(href: string): string {
   return path.join(ROOT_DIR, href.replace(/^\/+/, ''));
 }
 
-export function listBundleTargets(): Array<{
+export type CssBundleTarget = {
   kind: 'core' | 'route' | 'behavior';
   scope: string;
   href: string;
   files: string[];
-}> {
-  const targets: Array<{
-    kind: 'core' | 'route' | 'behavior';
-    scope: string;
-    href: string;
-    files: string[];
-  }> = [];
+};
+
+export function listBundleTargets(): CssBundleTarget[] {
+  const targets: CssBundleTarget[] = [];
 
   targets.push({
     kind: 'core',
@@ -278,3 +276,151 @@ export function listBundleTargets(): Array<{
 
   return targets;
 }
+
+/**
+ * Select bundle targets for incremental agent/local rebuilds.
+ * Tokens: core | routes | behaviors | route:home | behavior:svg-surfaces | home | console
+ */
+export function filterBundleTargets(
+  targets: CssBundleTarget[],
+  options: {
+    only?: Iterable<string> | null;
+    skipCore?: boolean;
+  } = {},
+): CssBundleTarget[] {
+  let selected = [...targets];
+
+  if (options.skipCore) {
+    selected = selected.filter((target) => target.kind !== 'core');
+  }
+
+  const onlyTokens = [...(options.only || [])]
+    .map((token) => normalizeSpace(token).toLowerCase())
+    .filter(Boolean);
+
+  if (!onlyTokens.length) return selected;
+
+  const wantCore = onlyTokens.some((token) => token === 'core');
+  const wantAllRoutes = onlyTokens.some((token) => token === 'routes' || token === 'route');
+  const wantAllBehaviors = onlyTokens.some((token) => token === 'behaviors' || token === 'behavior');
+
+  const explicit = new Set<string>();
+  for (const token of onlyTokens) {
+    if (token === 'core' || token === 'routes' || token === 'route' || token === 'behaviors' || token === 'behavior') {
+      continue;
+    }
+    if (token.startsWith('route:')) explicit.add(token.slice('route:'.length));
+    else if (token.startsWith('behavior:') || token.startsWith('feature:')) {
+      explicit.add(token.replace(/^(?:behavior|feature):/, ''));
+    } else {
+      explicit.add(token);
+    }
+  }
+
+  return selected.filter((target) => {
+    if (target.kind === 'core') return wantCore && !options.skipCore;
+    if (target.kind === 'route') {
+      return wantAllRoutes || explicit.has(target.scope.toLowerCase());
+    }
+    if (target.kind === 'behavior') {
+      return wantAllBehaviors || explicit.has(target.scope.toLowerCase());
+    }
+    return false;
+  });
+}
+
+/** Normalize a repo-relative path, absolute path, or root href to `/public/css/...` when under CSS tree. */
+export function normalizeCssSourceHref(pathOrHref: string): string {
+  let value = stripQueryHash(String(pathOrHref || '').trim()).replace(/\\/g, '/');
+  if (!value) return '';
+
+  if (value.startsWith('file:')) {
+    try {
+      value = fileURLToPath(value);
+    } catch {
+      /* keep raw */
+    }
+  }
+
+  value = value.replace(/\\/g, '/');
+
+  if (path.isAbsolute(value) || /^[A-Za-z]:\//.test(value)) {
+    const relative = toPosixPath(path.relative(ROOT_DIR, value));
+    if (relative.startsWith('..')) return stripQueryHash(value);
+    value = relative;
+  }
+
+  value = value.replace(/^\.\//, '').replace(/^\/+/, '');
+  if (!value.startsWith('public/') && value.startsWith('css/')) {
+    value = `public/${value}`;
+  }
+  return value ? `/${value}` : '';
+}
+
+export function isGeneratedCssHref(href: string): boolean {
+  const normalized = normalizeCssSourceHref(href);
+  return (
+    normalized.startsWith('/public/css/bundles/')
+    || normalized === BEHAVIOR_SCOPE_MODULE_HREF
+    || normalized.endsWith('.css.map')
+  );
+}
+
+/**
+ * Map source CSS paths to bundle targets for incremental rebuilds.
+ * Pass `coreSourceHrefs` (from style-core @imports) so shared token/shell edits hit core.
+ */
+export function targetsForSourcePaths(
+  pathOrHrefs: Iterable<string>,
+  options: {
+    targets?: CssBundleTarget[];
+    coreSourceHrefs?: Iterable<string> | null;
+  } = {},
+): CssBundleTarget[] {
+  const targets = options.targets || listBundleTargets();
+  const coreFiles = new Set(
+    [...(options.coreSourceHrefs || [])]
+      .map((href) => normalizeCssSourceHref(href))
+      .filter(Boolean),
+  );
+  // Manifests always imply core.
+  coreFiles.add('/public/css/style-core.css');
+  coreFiles.add('/public/css/style.css');
+
+  const matched = new Map<string, CssBundleTarget>();
+
+  for (const raw of pathOrHrefs) {
+    const href = normalizeCssSourceHref(raw);
+    if (!href || isGeneratedCssHref(href)) continue;
+
+    for (const target of targets) {
+      if (target.kind === 'core') {
+        if (coreFiles.has(href)) matched.set(target.href, target);
+        continue;
+      }
+      if (target.files.some((file) => normalizeCssSourceHref(file) === href)) {
+        matched.set(target.href, target);
+      }
+    }
+  }
+
+  return [...matched.values()];
+}
+
+/** Filter tokens for filterBundleTargets from resolved targets (e.g. route:home, core). */
+export function onlyTokensForTargets(targets: Iterable<CssBundleTarget>): string[] {
+  const tokens: string[] = [];
+  for (const target of targets) {
+    if (target.kind === 'core') tokens.push('core');
+    else if (target.kind === 'route') tokens.push(`route:${target.scope}`);
+    else if (target.kind === 'behavior') tokens.push(`behavior:${target.scope}`);
+  }
+  return tokens;
+}
+
+/** Soft budgets (bytes) for agent/publish hygiene — warn only unless --strict-budget. */
+export const CSS_BUNDLE_SOFT_BUDGETS = Object.freeze({
+  core: 1.6 * 1024 * 1024,
+  route: 120 * 1024,
+  behavior: 48 * 1024,
+});

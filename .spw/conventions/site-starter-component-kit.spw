@@ -14,6 +14,12 @@
 @css_readme: ~"../../public/css/README.md"
 @js_readme: ~"../../public/js/README.md"
 @starter_inventory: ~"../../scripts/starter-inventory.mjs"
+@component_contracts: ~"../../scripts/component-contracts.mjs"
+@component_fixtures: ~"../../public/ts/component-fixtures.ts"
+@component_fixture_facade: ~"../../public/js/kernel/component-fixtures.js"
+@component_snippets: ~"../../design/components/snippets/"
+@component_screenshots: ~"../../scripts/component-snapshots.mjs"
+@component_capture_pipeline: ~"./component-capture-pipeline.spw"
 @design_composition: ~"../../design/composition/index.html"
 @design_components: ~"../../design/components/index.html"
 @design_hub: ~"../../design/index.html"
@@ -76,6 +82,32 @@
   rule = "The inventory is an orientation and validation surface, not a generator. Add scaffolding only after repeated use proves what should be generated."
 }
 
+^"component_fixture_contract"{
+  operation = "contract"
+  fixity = "stable"
+  registry = @component_fixtures
+  facade = @component_fixture_facade
+  validator = @component_contracts
+  commands = #["npm run component:check", "npm run test:modules"][reg=set]
+  role = "A typed fixture registry names real hand-authored component specimens, their CSS owner, slot expectations, and test states without introducing a component framework."
+  promotion = "Move a closed data abstraction from public/js into public/ts, compile to public/js/typed, retain a small JS facade, then add Node and fixture-contract tests before runtime consumers depend on it."
+  non_goal = "Do not convert DOM-narrative modules wholesale or add Storybook until visual regression history justifies the cost."
+}
+
+^"component_layout_evidence"{
+  operation = "audit"
+  fixity = "tending"
+  snippets = @component_snippets
+  capture = @component_screenshots
+  pipeline = @component_capture_pipeline
+  command = "npm run component:screenshots"
+  viewports = #["phone", "desktop"][reg=set]
+  flows = #["page", "component", "template"][reg=set]
+  rule = "Capture packs prove page context, component clip, and compose.css isolation; screenshots are review evidence before they become pixel-diff baselines."
+  non_goal = "Do not commit noisy golden images or claim visual regression coverage until a specific component has a stable baseline and owner."
+  output = "design/components/captures/{manifest,pipeline,index.html,captures/*.png} — gitignored by default"
+}
+
 ^"spawn_sequence"{
   step_1 = "Run the inventory and read /design/composition/."
   step_2 = "Choose compose.css plus only the portable JS helpers the host site needs."
@@ -131,6 +163,12 @@
   @compose_css: @compose_css
   @compose_js: @compose_js
   @starter_inventory: @starter_inventory
+  @component_contracts: @component_contracts
+  @component_fixtures: @component_fixtures
+  @component_fixture_facade: @component_fixture_facade
+  @component_snippets: @component_snippets
+  @component_screenshots: @component_screenshots
+  @component_capture_pipeline: @component_capture_pipeline
   @design_composition: @design_composition
   @design_components: @design_components
   @site_source_layout: @site_source_layout

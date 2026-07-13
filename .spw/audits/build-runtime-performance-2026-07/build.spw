@@ -82,7 +82,8 @@
     id = `css-bundle-fanout`
     cost_class = `working_memory_pressure`
     seam = `css-build walks many route/behavior outputs even for single-route CSS edits`
-    direction = `Incremental bundle targets when tooling allows; else accept fanout as publish hygiene`
+    direction = `Use --only routes|behaviors|home|route:home and --skip-core; npm run build:css:fast / build:css:routes; --from-change path for one file; watch is incremental`
+    landed = `2026-07-12 filterBundleTargets + soft budgets + timing; 2026-07-12b --from-change + parallel bundles + smart watch over public/css`
   }
   .{
     id = `dist-weight`
@@ -109,6 +110,40 @@
     `Pure .spw / HTML copy: no build required; optional check:local before landing multi-surface work`,
     `JS runtime modules: node --check + check:runtime; build:runtime if typed outputs`,
     `CSS: build:css or check:css; avoid full typecheck if only CSS`,
-    `Deps: full check including audit`
+    `Deps: full check including audit`,
+    `Sample stage walls: npm run bench:build (skip site) or bench:build:full`,
+    `Headless route smoke: npm run smoke:nav · with layout/debugQa: npm run smoke:nav:qa`,
+    `CSS agent loop: npm run build:css:fast or build:css -- --only home,settings --skip-core --bundles-only`,
+    `CSS single file: npm run build:css:run -- --bundles-only --from-change public/css/routes/surfaces/home.css`,
+    `CSS tools already built: npm run build:css:run (skips tsc scripts)`,
+    `CSS core only when style-core imports change: npm run build:css:core`
   ][reg=set]
+}[reg=facet]
+
+^"css_build_cli_2026_07"{
+  filter = `filterBundleTargets in css-manifest — only/skipCore`
+  from_change = `targetsForSourcePaths + planIncrementalCssRebuild — --from-change public/css/... maps to route:/behavior:/core`
+  parallel = `buildCssBundles concurrency default 6; --concurrency N`
+  watch = `css-build --watch observes public/css (not just src/styles/entries) and rebuilds only affected bundles`
+  budgets = `core 1.6MiB · route 120KiB · behavior 48KiB soft; --strict-budget fails`
+  scripts = #[`build:css`, `build:css:run`, `build:css:fast`, `build:css:routes`, `build:css:core`, `build:css:check`, `build:css:touched`][reg=set]
+  timing = `css-build and css-bundle print wall ms + per-bundle ms; --json for agents`
+}[reg=facet]
+
+^"bench_and_nav_scripts"{
+  at = `2026-07-12`
+  build_performance = `scripts/build-performance.mjs — wall times per npm stage; --skip-site default via bench:build; --json for agents`
+  harness = `scripts/lib/chrome-headless-harness.mjs — shared Chrome CDP, dev-server spawn, viewport emulation, settle probes`
+  headless_nav = `scripts/headless-nav.mjs — route smoke; --require-settled --retries; free port`
+  perf_matrix = `scripts/perf-matrix.mjs — pages × viewports; wall/boot/immediate/mainW/horizontal overflow; --warm --quick --json --csv --out --fail-on-overflow-x`
+  npm = #[`bench:build`, `bench:build:full`, `smoke:nav`, `smoke:nav:qa`, `bench:nav`, `bench:nav:quick`, `bench:nav:qa`, `bench:nav:ci`][reg=set]
+  robustness = #[
+    `Shared CDP timeouts + session cleanup`,
+    `Settle via runtime-stage|boot-to-ready measure|pageState (not __SPW_SITE__ alone)`,
+    `Horizontal overflow only (ovX) — vertical scroll not counted`,
+    `Per-cell retries; optional warm cell for cold Chrome bias`,
+    `SIGINT/SIGTERM kill chrome + dev-server`
+  ][reg=set]
+  cost_class = `premature_commitment` # full bench:build:full
+  note = `Headless needs local Chrome; Node 22+ WebSocket for CDP`
 }[reg=facet]

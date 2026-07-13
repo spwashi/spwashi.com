@@ -1,0 +1,122 @@
+# Component Capture Pipeline
+#
+# Long-term strategy for screenshots, templates, and multi-pipeline renders.
+# operation: contract | fixity: tending
+
+#>component_capture_pipeline
+#:convention #!components #!screenshots #!publishing #!starter
+#:operation #!contract
+#:fixity #!tending
+
+@starter_kit: ~"./site-starter-component-kit.spw"
+@fixtures: ~"../../public/ts/component-fixtures.ts"
+@capture_script: ~"../../scripts/component-snapshots.mjs"
+@harness: ~"../../scripts/lib/chrome-headless-harness.mjs"
+@design_components: ~"../../design/components/index.html"
+@compose_css: ~"../../public/css/compose.css"
+@layout_qa: ~"../audits/layout-qa-measurement-2026-07/index.spw"
+@perf_matrix: ~"../../scripts/perf-matrix.mjs"
+
+^"thesis"{
+  claim = `Screenshot value comes from named capture *flows* (page / component / template) plus a manifest agents can read — not from dumping full-page PNGs into git.`
+  risk = `Pixel baselines without owners create noise; full-page-only captures hide whether the portable unit still works under compose.css.`
+  rule = `Fixtures declare capture value and publish targets; capture packs are review artifacts; baselines are opt-in per fixture later.`
+}[reg=facet]
+
+^"flows"{
+  page: .{
+    source = `live specimen route (design/components, design/composition, …)`
+    value = `Context, surrounding chrome, packing in real layout, agent page briefs`
+    consumers = #[`design review`, `route demos`, `agent page briefs`, `OG/social stills`][reg=set]
+    cost = `Heavier; chrome noise; still essential for “does it belong on a page?”`
+  }[reg=facet]
+
+  component: .{
+    source = `selector clip on specimen after settle`
+    value = `True component passport evidence — anatomy without full page`
+    consumers = #[`starter kit`, `packing QA`, `component:check evidence`, `agent briefs`][reg=set]
+    cost = `Requires stable selector + specimen route`
+  }[reg=facet]
+
+  template: .{
+    source = `snippet HTML + compose.css isolation (no site shell)`
+    value = `Portable unit proof — what a new site actually gets`
+    consumers = #[`starter extraction`, `docs embeds`, `external render tools`, `Midjourney/art refs`][reg=set]
+    cost = `May miss shell-dependent styling — that is intentional signal`
+  }[reg=facet]
+}[reg=facet]
+
+^"publishing_matrix"{
+  note = `Where capture outputs may feed next.`
+
+  rows: #[
+    .{ pipeline = `design-review`, prefers = #[`page`, `component`][reg=set], store = `design/components/captures/ (gitignored pack)` },
+    .{ pipeline = `starter-kit`, prefers = #[`component`, `template`][reg=set], store = `pack + fixture registry + snippets` },
+    .{ pipeline = `template-pipeline`, prefers = #[`template`][reg=set], store = `snippets + compose.css; optional export zip later` },
+    .{ pipeline = `agent-brief`, prefers = #[`component`, `page`][reg=set], store = `manifest.json semantics + alt text` },
+    .{ pipeline = `layout-qa`, prefers = #[`component`][reg=set], store = `structural metrics (perf-matrix/layout-qa), not pixels` },
+    .{ pipeline = `design-catalog`, prefers = #[][reg=set], store = `attributes/tokens only — do not dump PNGs into catalog generator` },
+    .{ pipeline = `external-art`, prefers = #[`template`, `component`][reg=set], store = `clip exports as stills for illustration tools` }
+  ][reg=set]
+}[reg=facet]
+
+^"long_term_handling"{
+  phase_1 = `Fixture registry + multi-flow capture + manifest/gallery (landed tending)`
+  phase_2 = `Optional per-fixture baseline opt-in with owner + fail budget (not default CI)`
+  phase_3 = `Template export pack (snippets + compose subset + captures) for new-site spawn`
+  phase_4 = `Wire selected component clips into public editor docs only when human-curated`
+  never = #[
+    `Commit noisy goldens for every fixture on every PR`,
+    `Treat full-page screenshots as portable component proof`,
+    `Feed uncurated PNGs into design/catalog generator`,
+    `Require Storybook/Playwright until baseline history demands it`
+  ][reg=set]
+}[reg=facet]
+
+^"output_pack"{
+  command = `npm run component:screenshots -- --base <url>`
+  auto_server = `omit --base to spawn dev-server`
+  directory = `design/components/captures/`
+  files = #[`manifest.json`, `pipeline.json`, `index.html`, `captures/*.png`][reg=set]
+  gitignore = `design/components/captures/ — packs are local/CI artifacts by default`
+  value_fields = #[`flow`, `viewport`, `selector`, `snippetHash`, `semantics`, `alt`, `publish[]`][reg=set]
+}[reg=facet]
+
+^"fixture_contract"{
+  registry = @fixtures
+  required = #[`id`, `selector`, `specimenRoute`, `snippet`, `cssOwner`, `layoutScenarios`][reg=set]
+  recommended = #[`captureFlows`, `publishTargets`, `captureValue`][reg=set]
+  validation = `npm run component:check`
+}[reg=facet]
+
+^"relation_to_other_tools"{
+  layout_qa = @layout_qa
+  perf_matrix = @perf_matrix
+  rule = `Screenshots answer “what does it look like?”; layout-qa/perf-matrix answer “is it structured/fast?” — keep both; do not collapse into one pixel metric.`
+}[reg=facet]
+
+^"active_claims"{
+  claim #capture-pipeline-001 {
+    layer = "pragmatic"
+    hypothesis = "A component clip + template isolation pair proves portable value better than a single full-page PNG."
+    probe_ref = "npm run component:screenshots -- --ids frame-card --flows component,template"
+    falsification = "Template capture fails while page capture alone is treated as starter-ready."
+    status = "active"
+  }
+  claim #capture-pipeline-002 {
+    layer = "agent-editor"
+    hypothesis = "manifest.json + alt + semantics lets an agent brief a component without opening the PNG."
+    probe_ref = "Read design/components/captures/manifest.json after a capture run"
+    falsification = "Manifest lacks selector, flow, or publish targets for each image."
+    status = "active"
+  }
+}[reg=set]
+
+^"validation"{
+  commands = #[
+    `npm run component:check`,
+    `npm run component:screenshots -- --ids frame-card --flows component,template --viewports phone`,
+    `test -f design/components/captures/manifest.json`,
+    `test -f design/components/captures/index.html`
+  ][reg=set]
+}[reg=facet]

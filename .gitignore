@@ -7,3 +7,6 @@ dist/
 dist-vite/
 design/catalog/
 node_modules/
+
+# Component capture packs (review evidence; not default goldens)
+design/components/captures/

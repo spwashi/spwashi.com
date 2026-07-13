@@ -75,6 +75,42 @@ A component is ready to travel only when it has:
 - a specimen or explanation on `/design/components/`, `/design/composition/`, or a focused design route
 - a validation path that includes inventory plus local checks
 
+## Component Fixture And TypeScript Promotion (2026-07)
+
+The component kit now prepares a Storybook-esque workflow without importing a
+component framework or adding a package. `public/ts/component-fixtures.ts` is
+the typed registry of real hand-authored specimens; its generated browser
+output is consumed through `public/js/kernel/component-fixtures.js`, keeping
+runtime callers on a stable plain-JS facade. `scripts/component-contracts.mjs`
+checks that every fixture has a live specimen route, declared CSS owner,
+selector, and required slot anatomy. `scripts/tests/component-fixtures.test.mjs`
+then exercises both the JS facade and those contracts with Node's test runner.
+
+Promotion rule for a future JavaScript abstraction:
+
+1. Keep DOM-led behavior in JS unless a closed data contract needs stronger checks.
+2. Move only the data-oriented abstraction to `public/ts/<name>.ts`.
+3. Compile it to `public/js/typed/<name>.js` through `build:runtime`.
+4. Preserve a small `public/js/kernel/<name>.js` re-export facade for JS modules.
+5. Add a Node test plus fixture/contract coverage before a runtime module consumes it.
+
+This is preparation, not a mandate to convert site modules or to build a
+general-purpose Storybook clone. Browser screenshots and visual baselines remain
+an opt-in next layer once a component has a concrete visual regression history.
+
+### Snippets And Layout Evidence
+
+`design/components/snippets/` contains minimal, copyable HTML specimens for
+the frame, card, and operator-chip families. Each stays attached to the typed
+fixture registry and is checked for its selector and required slots.
+
+`npm run component:screenshots -- --base http://127.0.0.1:4173` captures each
+fixture at phone and desktop viewports into a temporary directory. These are
+review artifacts for layout and screenshot selection—not committed golden
+images and not a pixel-diff gate. Introduce visual baselines only after a
+particular specimen has a real, repeatable visual regression to prevent noise
+from becoming a maintenance burden.
+
 ## Patch Sequence
 
 ### Phase 1 - Inventory And Contract
@@ -116,6 +152,9 @@ A component is ready to travel only when it has:
 ## Validation
 
 - `npm run starter:inventory -- --check`
+- `npm run component:check`
+- `npm run component:screenshots -- --base <local-or-preview-url>`
+- `npm run test:modules`
 - `node --check scripts/starter-inventory.mjs`
 - `git diff --check`
 - `npm run check:local` when CSS, JS, route HTML, or build behavior changes
