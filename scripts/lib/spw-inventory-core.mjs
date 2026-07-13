@@ -28,7 +28,10 @@ export const SKIP_DIRS = new Set([
 ]);
 
 /** Generated HTML that must not count as authored surface. */
-export const GENERATED_HTML_PREFIXES = ['design/catalog/'];
+export const GENERATED_HTML_PREFIXES = [
+  'design/catalog/',
+  'design/components/captures/',
+];
 
 export function repoPath(path) {
   return relative(ROOT, path).replaceAll('\\', '/');

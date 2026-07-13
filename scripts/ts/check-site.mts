@@ -3,6 +3,7 @@ import process from 'node:process';
 import {
   buildRouteRuntimeManifest,
   collectManifestIssues,
+  inspectRouteRuntimeManifestCache,
   runGitDiffCheck,
   runSyntaxChecks,
 } from './site-contracts/index.mjs';
@@ -13,23 +14,32 @@ import { collectRuntimeContractReport } from './runtime-contracts.mjs';
 export async function main(): Promise<void> {
   // Validation should not mutate the repo-local agent cache. `npm run manifest`
   // is the explicit refresh command; checks derive the same data in memory.
+  console.log('[check] phase=manifest');
   const manifest = await buildRouteRuntimeManifest();
   const manifestIssues = collectManifestIssues(manifest);
+  const manifestCache = await inspectRouteRuntimeManifestCache(manifest);
+  console.log('[check] phase=syntax');
   const syntaxReport = await runSyntaxChecks();
+  console.log('[check] phase=css');
   const cssReport = await collectCssContractReport();
+  console.log('[check] phase=runtime');
   const runtimeReport = await collectRuntimeContractReport();
+  console.log('[check] phase=json');
   const jsonReport = await collectJsonContractReport();
   const gitDiffResult = runGitDiffCheck();
 
-  console.log('[check] manifest=in-memory (refresh cache with npm run manifest)');
+  console.log(`[check] manifest=in-memory cache=${manifestCache.status}`);
   console.log(`[check] routes=${manifest.routeCount} svgRoutes=${manifest.maps.svgRoutes.length} specRoutes=${manifest.maps.specRoutes.length}`);
-  console.log(`[check] syntax targets=${syntaxReport.targets.length}`);
+  console.log(`[check] syntax targets=${syntaxReport.targets.length} concurrency=${syntaxReport.concurrency}`);
   console.log(`[check] css files=${cssReport.cssFiles.length} imports=${cssReport.imports.length} routeStylesheets=${cssReport.linkedStylesheets.length} sources=${cssReport.sourceFiles.length}`);
   console.log(`[check] runtime modules=${runtimeReport.modules.length} ownerDirs=${runtimeReport.ownerDirectories.length} rootEntrypoints=${runtimeReport.rootEntrypoints.length} typedOutputs=${runtimeReport.typedOutputs.length} kernelShims=${runtimeReport.kernelTypedShims.length}`);
   console.log(`[check] json feeds=${jsonReport.checked} jsonErrors=${jsonReport.errors.length}`);
 
   const warnings = [
     ...manifestIssues.warnings.map((warning) => `[manifest] ${warning}`),
+    ...(manifestCache.status === 'missing'
+      ? ['[manifest-cache] cache absent; run npm run manifest before relying on agent route/runtime summaries']
+      : []),
     ...cssReport.warnings.map((warning) => `[css] ${warning}`),
     ...runtimeReport.warnings.map((warning) => `[runtime] ${warning}`),
   ];
@@ -45,6 +55,13 @@ export async function main(): Promise<void> {
   }
 
   const failures: string[] = [];
+
+  if (manifestCache.status === 'stale' || manifestCache.status === 'invalid') {
+    failures.push(`[manifest-cache] ${manifestCache.status}; run npm run manifest`);
+    for (const detail of manifestCache.details.slice(0, 12)) {
+      console.log(`  manifest-cache: ${detail}`);
+    }
+  }
 
   if (manifestIssues.errors.length) {
     failures.push(`[manifest] ${manifestIssues.errors.length} error(s)`);

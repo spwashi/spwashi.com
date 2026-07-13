@@ -12,8 +12,13 @@ test('component fixtures have stable ids and consumer lookup', () => {
     'site-frame',
     'frame-card',
     'operator-chip',
+    'tuning-strip',
   ]);
   assert.equal(getComponentFixture('frame-card')?.label, 'Frame card');
+  const tuningStrip = getComponentFixture('tuning-strip');
+  assert.equal(tuningStrip?.cssOwner, 'public/css/components/controls.css');
+  assert.equal(tuningStrip?.snippet, 'design/components/snippets/tuning-strip.html');
+  assert.deepEqual(tuningStrip?.captureFlows, ['component', 'template']);
   assert.equal(getComponentFixture('missing'), undefined);
 });
 

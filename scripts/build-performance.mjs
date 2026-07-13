@@ -5,7 +5,7 @@
  * Usage:
  *   node scripts/build-performance.mjs
  *   node scripts/build-performance.mjs --skip-site --json
- *   node scripts/build-performance.mjs --only typecheck,build:runtime
+ *   node scripts/build-performance.mjs --only typecheck:root,build:runtime
  *   npm run bench:build
  *
  * Directional only — not CI SLOs. Aligns with
@@ -20,11 +20,11 @@ import { fileURLToPath } from 'node:url';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 const DEFAULT_STEPS = Object.freeze([
-  { id: 'typecheck', npm: 'typecheck', costClass: 'premature_commitment' },
+  { id: 'typecheck:root', npm: 'typecheck:root', costClass: 'premature_commitment' },
   { id: 'build:tools', npm: 'build:tools', costClass: 'working_memory_pressure' },
   { id: 'build:runtime', npm: 'build:runtime', costClass: 'working_memory_pressure' },
-  { id: 'build:css', npm: 'build:css', costClass: 'working_memory_pressure' },
-  { id: 'build:site', npm: 'build:site', costClass: 'premature_commitment', heavy: true },
+  { id: 'build:css:run', npm: 'build:css:run', costClass: 'working_memory_pressure' },
+  { id: 'build:site:run', npm: 'build:site:run', costClass: 'premature_commitment', heavy: true },
 ]);
 
 function parseArgs(argv) {
@@ -56,15 +56,15 @@ Usage:
   node scripts/build-performance.mjs [options]
 
 Options:
-  --skip-site     Omit build:site (default for agent loops)
-  --only a,b      Run only named steps (typecheck,build:tools,build:runtime,build:css,build:site)
+  --skip-site     Omit build:site:run (default for agent loops)
+  --only a,b      Run only named steps (typecheck:root,build:tools,build:runtime,build:css:run,build:site:run)
   --json          Machine-readable summary on stdout
   -h, --help      This help
 
 Examples:
   npm run bench:build
   npm run bench:build -- --skip-site
-  npm run bench:build -- --only typecheck,build:runtime --json
+  npm run bench:build -- --only typecheck:root,build:runtime --json
 `);
 }
 
@@ -168,6 +168,7 @@ async function main() {
       skipSite: options.skipSite,
       only: options.only ? [...options.only] : null,
     },
+    graph: 'non-overlapping build primitives used by npm run build',
     totalMs,
     totalSec: Number((totalMs / 1000).toFixed(3)),
     ok: results.every((r) => r.ok),
@@ -180,7 +181,7 @@ async function main() {
       code: r.code,
       costClass: r.costClass,
     })),
-    note: 'Directional sample — not a CI SLO. Prefer --skip-site for agent loops.',
+    note: 'Directional sample — not a CI SLO. Stages do not repeat project compilation; prefer --skip-site for agent loops.',
   };
 
   if (options.json) {

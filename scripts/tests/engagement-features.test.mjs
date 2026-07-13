@@ -19,6 +19,8 @@ import {
   pickDaily,
   pickWeekly,
 } from '../../public/js/typed/promo-wonder-cycle.js';
+import { createModuleLoader } from '../../public/js/runtime/module-loader.js';
+import { MODULE_LAYERS, MOUNT_WHEN } from '../../public/js/runtime/module-catalog-constants.js';
 
 const noticeFeed = {
   sourceLocale: 'en',
@@ -123,6 +125,79 @@ const promoFeed = {
 };
 
 const date = new Date('2026-04-13T12:00:00-05:00');
+
+test('runtime resource probes are bounded while resource hints keep catalog order', async () => {
+  const definitions = Array.from({ length: 7 }, (_, index) => ({
+    id: `probe-${index}`,
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.VISIBLE,
+    specifier: `/public/js/probe-${index}.js`,
+  }));
+  const hinted = [];
+  let active = 0;
+  let maxActive = 0;
+
+  const loader = createModuleLoader({
+    moduleDefs: definitions,
+    html: document.documentElement,
+    body: document.body,
+    resourceProbeConcurrency: 3,
+    matchesRoute: () => true,
+    matchesFeatures: () => true,
+    hasSelector: () => true,
+    getRoots: () => [],
+    hasDebugOrQAMode: () => false,
+    readConnectionPosture: () => 'fast',
+    shouldPrefetchRuntimeResources: () => true,
+    extractDynamicImportSpecifier: (definition) => definition.specifier,
+    moduleSpecifierToUrl: (specifier) => specifier,
+    ensureResourceHint: (href) => {
+      hinted.push(href);
+      return true;
+    },
+    isRuntimeResourceCached: async (href) => {
+      const index = Number.parseInt(href.match(/probe-(\d+)/)?.[1] || '0', 10);
+      active += 1;
+      maxActive = Math.max(maxActive, active);
+      await new Promise((resolve) => setTimeout(resolve, (7 - index) * 2));
+      active -= 1;
+      return false;
+    },
+    requestServiceWorkerPrefetch: () => false,
+    requestServiceWorkerCacheSummary: () => false,
+    refreshRegionProfiles: () => {},
+    setPageState: () => {},
+  });
+  const emitted = [];
+  const ctx = {
+    route: '/',
+    features: new Set(),
+    runtimePolicy: {
+      timing: 'normal',
+      timingByModule: new Map(),
+      only: new Set(),
+      skip: new Set(),
+      audit: false,
+    },
+    moduleSkipAuditKeys: new Set(),
+    resourceReadiness: new Map(),
+    bus: { emit: (event, detail) => emitted.push({ event, detail }) },
+  };
+
+  const resources = await loader.prefetchRuntimeResources(
+    ctx,
+    definitions,
+    MOUNT_WHEN.VISIBLE,
+    'modulepreload',
+  );
+  const expectedOrder = definitions.map((definition) => definition.specifier);
+
+  assert.equal(maxActive, 3);
+  assert.deepEqual(hinted, expectedOrder);
+  assert.deepEqual(resources.map((entry) => entry.href), expectedOrder);
+  assert.deepEqual([...ctx.resourceReadiness.values()].map((entry) => entry.href), expectedOrder);
+  assert.equal(emitted.at(-1)?.detail?.probeConcurrency, 3);
+});
 
 test('discovery notice selection stays deterministic', () => {
   const keys = getDateKeys(date);

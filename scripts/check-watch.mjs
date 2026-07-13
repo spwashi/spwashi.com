@@ -17,7 +17,9 @@ const IGNORED_SEGMENTS = new Set([
 const IGNORED_PREFIXES = [
   '.spw/_workbench',
   'design/catalog',
+  'design/components/captures',
 ];
+const CHECK_SCRIPT = process.argv.includes('--full') ? 'check' : 'check:local';
 
 const watcherRegistry = new Map();
 let pendingTimer = null;
@@ -88,10 +90,10 @@ function runCheck() {
   }
 
   running = true;
-  console.log(`[check:watch] running checks after ${lastChange}`);
+  console.log(`[check:watch] running ${CHECK_SCRIPT} after ${lastChange}`);
 
   return new Promise((resolve) => {
-    const child = spawn('npm', ['run', 'check'], {
+    const child = spawn('npm', ['run', CHECK_SCRIPT], {
       stdio: 'inherit',
       env: process.env,
       shell: false,
@@ -125,7 +127,7 @@ function shutdown(code = 0) {
 }
 
 await watchTree(ROOT_DIR);
-console.log('[check:watch] watching for changes');
+console.log(`[check:watch] watching for changes (${CHECK_SCRIPT})`);
 void runCheck();
 
 process.on('SIGINT', () => shutdown(0));

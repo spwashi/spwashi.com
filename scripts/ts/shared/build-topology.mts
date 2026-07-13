@@ -29,6 +29,7 @@ export const BUILD_EXCLUDED_BASENAMES = [
 
 export const BUILD_EXCLUDED_PREFIXES = [
   '.spw/_workbench',
+  'design/components/captures',
   'public/ts',
   'public/images/renders/_raw',
   'public/images/renders/_raw-2x2',
@@ -47,6 +48,7 @@ export const VALIDATION_IGNORED_SEGMENTS = [
 
 export const VALIDATION_IGNORED_PREFIXES = [
   'design/catalog/',
+  'design/components/captures/',
   'design/experiments/load-symphony/',
 ] as const;
 

@@ -1,5 +1,6 @@
-import { spawnSync } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
 import { promises as fs } from 'node:fs';
+import { availableParallelism } from 'node:os';
 import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
@@ -50,6 +51,8 @@ export const ROOT_DIR = path.resolve(__dirname, '..', '..', '..');
 /** Repo-local agent cache by default (was TMPDIR — easy to leave stale). Override with SPW_ROUTE_MANIFEST_OUTPUT. */
 export const ROUTE_MANIFEST_OUTPUT = process.env.SPW_ROUTE_MANIFEST_OUTPUT
   || path.join(ROOT_DIR, '.agents/state/runtime/route-runtime-manifest.json');
+
+const DEFAULT_SYNTAX_CHECK_CONCURRENCY = Math.min(8, Math.max(1, availableParallelism()));
 
 function relativeRepoPath(absolutePath: string): string {
   return toPosixPath(path.relative(ROOT_DIR, absolutePath));
@@ -277,6 +280,103 @@ export async function buildRouteRuntimeManifest() {
   };
 }
 
+type RouteRuntimeManifest = Awaited<ReturnType<typeof buildRouteRuntimeManifest>>;
+type ManifestCacheStatus = {
+  cachePath: string;
+  details: string[];
+  status: 'fresh' | 'invalid' | 'missing' | 'stale';
+};
+
+function canonicalizeJson(value: unknown): unknown {
+  if (Array.isArray(value)) return value.map(canonicalizeJson);
+  if (!value || typeof value !== 'object') return value;
+
+  return Object.fromEntries(
+    Object.entries(value as Record<string, unknown>)
+      .sort(([left], [right]) => left.localeCompare(right))
+      .map(([key, entry]) => [key, canonicalizeJson(entry)]),
+  );
+}
+
+function semanticManifestSnapshot(value: unknown): unknown {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return value;
+  const {
+    generatedAt: _generatedAt,
+    repoRoot: _repoRoot,
+    ...semanticFields
+  } = value as Record<string, unknown>;
+  return canonicalizeJson(semanticFields);
+}
+
+function runtimeDefinitionCount(value: unknown): number {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return 0;
+  return Object.values(value as Record<string, unknown>)
+    .reduce((total: number, definitions) => total + (Array.isArray(definitions) ? definitions.length : 0), 0);
+}
+
+function manifestSummary(value: unknown) {
+  const record = value && typeof value === 'object' && !Array.isArray(value)
+    ? value as Record<string, unknown>
+    : {};
+  const maps = record.maps && typeof record.maps === 'object' && !Array.isArray(record.maps)
+    ? record.maps as Record<string, unknown>
+    : {};
+  return {
+    routeCount: typeof record.routeCount === 'number' ? record.routeCount : 0,
+    runtimeDefinitions: runtimeDefinitionCount(record.runtimeDefinitions),
+    specRoutes: Array.isArray(maps.specRoutes) ? maps.specRoutes.length : 0,
+    surfaces: record.surfaces && typeof record.surfaces === 'object' && !Array.isArray(record.surfaces)
+      ? Object.keys(record.surfaces).length
+      : 0,
+    svgRoutes: Array.isArray(maps.svgRoutes) ? maps.svgRoutes.length : 0,
+  };
+}
+
+export function compareRouteRuntimeManifestSemantics(live: RouteRuntimeManifest, cached: unknown) {
+  const liveSnapshot = semanticManifestSnapshot(live);
+  const cachedSnapshot = semanticManifestSnapshot(cached);
+  const matches = JSON.stringify(liveSnapshot) === JSON.stringify(cachedSnapshot);
+  if (matches) return { details: [], matches };
+
+  const liveSummary = manifestSummary(live);
+  const cachedSummary = manifestSummary(cached);
+  const details = Object.entries(liveSummary)
+    .filter(([key, value]) => cachedSummary[key as keyof typeof cachedSummary] !== value)
+    .map(([key, value]) => `${key} cached=${cachedSummary[key as keyof typeof cachedSummary]} live=${value}`);
+
+  if (!details.length) details.push('route metadata or runtime eligibility changed');
+  return { details, matches };
+}
+
+export async function inspectRouteRuntimeManifestCache(
+  live: RouteRuntimeManifest,
+  cachePath = ROUTE_MANIFEST_OUTPUT,
+): Promise<ManifestCacheStatus> {
+  let source: string;
+  try {
+    source = await fs.readFile(cachePath, 'utf8');
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
+      return { cachePath, details: ['cache is absent'], status: 'missing' };
+    }
+    return { cachePath, details: [String(error)], status: 'invalid' };
+  }
+
+  let cached: unknown;
+  try {
+    cached = JSON.parse(source);
+  } catch (error) {
+    return { cachePath, details: [`cache is not valid JSON: ${String(error)}`], status: 'invalid' };
+  }
+
+  const comparison = compareRouteRuntimeManifestSemantics(live, cached);
+  return {
+    cachePath,
+    details: comparison.details,
+    status: comparison.matches ? 'fresh' : 'stale',
+  };
+}
+
 export async function writeRouteRuntimeManifest(outputPath = ROUTE_MANIFEST_OUTPUT) {
   const manifest = await buildRouteRuntimeManifest();
   await fs.mkdir(path.dirname(outputPath), { recursive: true });
@@ -323,23 +423,55 @@ async function collectSyntaxCheckTargets(): Promise<string[]> {
 
 export async function runSyntaxChecks() {
   const targets = await collectSyntaxCheckTargets();
-  const failures: Array<{ file: string; output: string }> = [];
+  const requestedConcurrency = Number.parseInt(process.env.SPW_SYNTAX_CHECK_CONCURRENCY || '', 10);
+  const concurrency = Number.isFinite(requestedConcurrency) && requestedConcurrency > 0
+    ? Math.min(requestedConcurrency, Math.max(1, targets.length))
+    : Math.min(DEFAULT_SYNTAX_CHECK_CONCURRENCY, Math.max(1, targets.length));
+  const results: Array<{ file: string; output: string } | null> = new Array(targets.length).fill(null);
+  let nextIndex = 0;
 
-  for (const absolutePath of targets) {
-    const result = spawnSync('node', ['--check', absolutePath], {
+  const checkTarget = (absolutePath: string) => new Promise<{ file: string; output: string } | null>((resolve) => {
+    const child = spawn(process.execPath, ['--check', absolutePath], {
       cwd: ROOT_DIR,
-      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'pipe'],
     });
+    let stdout = '';
+    let stderr = '';
+    let settled = false;
+    child.stdout?.setEncoding('utf8');
+    child.stderr?.setEncoding('utf8');
+    child.stdout?.on('data', (chunk) => { stdout += chunk; });
+    child.stderr?.on('data', (chunk) => { stderr += chunk; });
 
-    if (result.status === 0) continue;
+    const finish = (status: number | null, error: unknown = null) => {
+      if (settled) return;
+      settled = true;
+      if (status === 0 && !error) {
+        resolve(null);
+        return;
+      }
+      resolve({
+        file: relativeRepoPath(absolutePath),
+        output: normalizeSpace(`${stdout}\n${stderr}\n${error ? String(error) : ''}`),
+      });
+    };
 
-    failures.push({
-      file: relativeRepoPath(absolutePath),
-      output: normalizeSpace(`${result.stdout || ''}\n${result.stderr || ''}`),
-    });
-  }
+    child.once('error', (error) => finish(null, error));
+    child.once('close', (status) => finish(status));
+  });
 
-  return { failures, targets: targets.map(relativeRepoPath) };
+  const worker = async () => {
+    while (nextIndex < targets.length) {
+      const index = nextIndex;
+      nextIndex += 1;
+      results[index] = await checkTarget(targets[index]);
+    }
+  };
+
+  await Promise.all(Array.from({ length: concurrency }, () => worker()));
+  const failures = results.filter((result): result is { file: string; output: string } => Boolean(result));
+
+  return { concurrency, failures, targets: targets.map(relativeRepoPath) };
 }
 
 export function runGitDiffCheck() {

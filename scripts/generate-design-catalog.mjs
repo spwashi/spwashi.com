@@ -35,6 +35,7 @@ const IGNORED_SEGMENTS = new Set([
   '.idea',
   '00.unsorted',
   'dist',
+  'dist-vite',
   'node_modules',
 ]);
 
@@ -244,13 +245,14 @@ function decodeHtmlAttribute(value) {
   });
 }
 
-function shouldIgnoreRelativePath(relativePath, outputRelativePath = 'design/catalog') {
+export function shouldIgnoreRelativePath(relativePath, outputRelativePath = 'design/catalog') {
   const normalizedPath = toPosix(relativePath).replace(/^\/+/, '');
   if (!normalizedPath) return false;
 
   const segments = normalizedPath.split('/');
   if (segments.some((segment) => IGNORED_SEGMENTS.has(segment))) return true;
   if (normalizedPath === '.spw/_workbench' || normalizedPath.startsWith('.spw/_workbench/')) return true;
+  if (normalizedPath === 'public/css/bundles' || normalizedPath.startsWith('public/css/bundles/')) return true;
 
   if (
     outputRelativePath
@@ -286,14 +288,26 @@ async function walk(dir, options = {}) {
   return files;
 }
 
-function lineOf(text, index) {
-  let line = 1;
+export function createLineLocator(text) {
+  const lineStarts = [0];
 
-  for (let cursor = 0; cursor < index && cursor < text.length; cursor += 1) {
-    if (text.charCodeAt(cursor) === 10) line += 1;
+  for (let cursor = 0; cursor < text.length; cursor += 1) {
+    if (text.charCodeAt(cursor) === 10) lineStarts.push(cursor + 1);
   }
 
-  return line;
+  return (index = 0) => {
+    const target = Math.max(0, Math.min(Number(index) || 0, text.length));
+    let low = 0;
+    let high = lineStarts.length;
+
+    while (low < high) {
+      const middle = (low + high) >>> 1;
+      if (lineStarts[middle] <= target) low = middle + 1;
+      else high = middle;
+    }
+
+    return low;
+  };
 }
 
 function camelSpwToDataAttr(camel) {
@@ -467,6 +481,7 @@ function parseTagAttributes(tagSource) {
 
 function collectHtmlDataSpwAttributes(html) {
   const usages = [];
+  const lineAt = createLineLocator(html);
 
   for (const tag of findStartTags(html)) {
     const attrs = parseTagAttributes(tag.source);
@@ -477,7 +492,7 @@ function collectHtmlDataSpwAttributes(html) {
       usages.push({
         name,
         value: value || null,
-        line: lineOf(html, tag.index),
+        line: lineAt(tag.index),
       });
     }
   }
@@ -487,12 +502,13 @@ function collectHtmlDataSpwAttributes(html) {
 
 function collectJsDataSpwWrites(text) {
   const writes = [];
+  const lineAt = createLineLocator(text);
 
   const dotDatasetRe = /\.dataset\.(spw[A-Za-z0-9]+)\s*=/g;
   for (const match of text.matchAll(dotDatasetRe)) {
     writes.push({
       name: camelSpwToDataAttr(match[1]),
-      line: lineOf(text, match.index),
+      line: lineAt(match.index),
       snippet: match[0],
     });
   }
@@ -501,7 +517,7 @@ function collectJsDataSpwWrites(text) {
   for (const match of text.matchAll(bracketDatasetRe)) {
     writes.push({
       name: camelSpwToDataAttr(match[1]),
-      line: lineOf(text, match.index),
+      line: lineAt(match.index),
       snippet: match[0],
     });
   }
@@ -510,7 +526,7 @@ function collectJsDataSpwWrites(text) {
   for (const match of text.matchAll(setAttributeRe)) {
     writes.push({
       name: match[1],
-      line: lineOf(text, match.index),
+      line: lineAt(match.index),
       snippet: match[0],
     });
   }
@@ -526,6 +542,7 @@ async function parseCss(files, fileToLayer) {
   for (const abs of files) {
     const rel = relRepo(abs);
     const text = await readTextFile(abs);
+    const lineAt = createLineLocator(text);
     const layer = fileToLayer.get(rel) || null;
     const header = extractFileHeaderDoc(text);
     const attrsHere = new Set();
@@ -542,7 +559,7 @@ async function parseCss(files, fileToLayer) {
       entry.cssSelectors.push({
         file: rel,
         layer,
-        line: lineOf(text, match.index),
+        line: lineAt(match.index),
         snippet: match[0],
         value,
       });
@@ -557,7 +574,7 @@ async function parseCss(files, fileToLayer) {
       ensureToken(tokens, name).definitions.push({
         file: rel,
         layer,
-        line: lineOf(text, match.index),
+        line: lineAt(match.index),
       });
     }
 
@@ -572,7 +589,7 @@ async function parseCss(files, fileToLayer) {
       tokenEntry.initialValue = initialMatch ? initialMatch[1].trim() : tokenEntry.initialValue;
       tokenEntry.inherits = inheritsMatch ? inheritsMatch[1] === 'true' : tokenEntry.inherits;
 
-      const atPropLine = lineOf(text, match.index);
+      const atPropLine = lineAt(match.index);
       if (!tokenEntry.definitions.some((definition) => definition.file === rel && definition.line === atPropLine)) {
         tokenEntry.definitions.push({file: rel, layer, line: atPropLine, registered: true});
       }
@@ -638,6 +655,7 @@ async function scanSpwDocs(files, attributes, tokens) {
   for (const abs of files) {
     const rel = relRepo(abs);
     const text = await readTextFile(abs);
+    const lineAt = createLineLocator(text);
     const attrsMentioned = new Set();
     const tokensMentioned = new Set();
 
@@ -647,7 +665,7 @@ async function scanSpwDocs(files, attributes, tokens) {
 
       const entry = attributes.get(name);
       if (entry) {
-        entry.docMentions.push({file: rel, line: lineOf(text, match.index)});
+        entry.docMentions.push({file: rel, line: lineAt(match.index)});
       }
     }
 
@@ -1119,7 +1137,9 @@ async function main() {
   }
 }
 
-main().catch((error) => {
-  console.error(error);
-  process.exit(1);
-});
+if (process.argv[1] && path.resolve(process.argv[1]) === __filename) {
+  main().catch((error) => {
+    console.error(error);
+    process.exit(1);
+  });
+}

@@ -254,12 +254,44 @@ function readText(filePath) {
 
 function listPlanSpwFiles(dir = PLANS_ROOT) {
   const files = [];
-  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+  const entries = fs.readdirSync(dir, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name));
+  for (const entry of entries) {
     const absPath = path.join(dir, entry.name);
     if (entry.isDirectory()) files.push(...listPlanSpwFiles(absPath));
     else if (entry.isFile() && entry.name.endsWith('.spw')) files.push(absPath);
   }
   return files;
+}
+
+function findMissingLocalIndexRefs(files) {
+  const missing = [];
+
+  for (const filePath of files.filter((candidate) => path.basename(candidate) === 'index.spw').sort()) {
+    const content = readText(filePath);
+    for (const match of content.matchAll(/~"((?:\.\/|\.\.\/)[^"]+)"/g)) {
+      const ref = match[1];
+      const targetRef = ref.split(/[?#]/, 1)[0];
+      if (!targetRef) continue;
+
+      const targetPath = path.resolve(path.dirname(filePath), targetRef);
+      if (fs.existsSync(targetPath)) continue;
+
+      missing.push({
+        file: path.relative(REPO_ROOT, filePath),
+        line: content.slice(0, match.index).split('\n').length,
+        ref,
+        target: path.relative(REPO_ROOT, targetPath),
+      });
+    }
+  }
+
+  return missing.sort(
+    (a, b) =>
+      a.file.localeCompare(b.file) ||
+      a.line - b.line ||
+      a.ref.localeCompare(b.ref) ||
+      a.target.localeCompare(b.target),
+  );
 }
 
 function guardReviewedPlanTree() {
@@ -273,7 +305,19 @@ function guardReviewedPlanTree() {
       console.error(`Reviewed plan tree is incomplete: ${unreviewed.length} .spw file(s) lack a first-line review decision.`);
       process.exit(1);
     }
-    console.log(`Reviewed plan .spw artifacts OK (${reviewed.length} authored decisions; generation skipped).`);
+
+    const missingRefs = findMissingLocalIndexRefs(reviewed);
+    if (missingRefs.length) {
+      console.error(`Reviewed plan index references are broken: ${missingRefs.length} local target(s) are missing.`);
+      for (const missing of missingRefs) {
+        console.error(`- ${missing.file}:${missing.line} -> ${missing.ref} (missing ${missing.target})`);
+      }
+      process.exit(1);
+    }
+
+    console.log(
+      `Reviewed plan .spw artifacts OK (${reviewed.length} authored decisions; local index refs resolved; generation skipped).`,
+    );
     return true;
   }
 
@@ -601,7 +645,11 @@ function artifactShape(files) {
 
 function buildOwnerClaim(meta, relDir) {
   const claimId = `plan-${slugToAnchor(meta.slug)}-001`;
-  const implRef = meta.refs[0] ? relUp(relDir, meta.refs[0]) : './PLAN.md';
+  const implRef = meta.refs[0]
+    ? relUp(relDir, meta.refs[0])
+    : meta.hasPlan
+      ? './PLAN.md'
+      : './FIX.md';
   const probeRef = meta.validation[0] || `rg '${meta.slug}' .agents/plans/${meta.slug}`;
   const falsification = meta.kind === 'fix'
     ? `The listed failure mode returns after the planned fix lands.`
@@ -719,9 +767,7 @@ function buildIndexContent(slug, relDir, files, meta) {
       : related;
     const relatedPath = path.join(PLANS_ROOT, relatedRel, 'index.spw');
     if (!fs.existsSync(relatedPath)) continue;
-    const relPath = relDir.includes('/')
-      ? `../${related}/index.spw`
-      : `./${related}/index.spw`;
+    const relPath = `../${related}/index.spw`;
     lines.push(`@${key}: ~"${relPath}"`);
     dispatch.push(` ${key} = @${key}`);
   }
