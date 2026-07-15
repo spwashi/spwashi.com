@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <title>Spwashi • Subject Balance</title>
+    <meta name="description" content="A playable instrument for the subject-selection gesture: take a subject with &amp;, open the forward slot with &amp; &gt;, preview candidates by hover (photon passage), commit by click (bond), and resolve &lt; &amp; &gt; to balance the physics.">
+    <meta name="robots" content="noindex">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <script type="module" src="/public/js/site.js"></script>
+    <style>
+        /* Instrument-local styles. Deliberately inline: this page should stay a
+           self-contained, portable demo (lift the <style> + <script> + stage
+           markup into any document and the instrument still plays). */
+        .balance-stage {
+            display: grid;
+            gap: 1.1rem;
+            justify-items: center;
+            padding: clamp(1.2rem, 3vw, 2rem);
+        }
+
+        .balance-expression {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.45ch;
+            font-family: var(--font-mono, ui-monospace, monospace);
+            font-size: clamp(1.6rem, 4.5vw, 2.6rem);
+            padding: 0.6em 1em;
+            border-radius: 14px;
+            border: 1px solid var(--line, rgba(20, 24, 26, 0.16));
+            background: var(--surface-strong, rgba(255, 255, 255, 0.8));
+            transition: transform 420ms cubic-bezier(0.22, 0.9, 0.3, 1.2), box-shadow 420ms ease;
+            min-height: 2.2em;
+        }
+
+        /* Physics: an open forward valence tilts the expression toward its
+           missing operand; balance levels it. */
+        .balance-stage[data-balance="charged"] .balance-expression,
+        .balance-stage[data-balance="previewing"] .balance-expression {
+            transform: rotate(1.6deg) translateX(0.35ch);
+            box-shadow: 0.4ch 0.25em 18px rgba(26, 153, 153, 0.14);
+        }
+
+        .balance-stage[data-balance="balanced"] .balance-expression {
+            transform: rotate(0deg) translateX(0);
+            box-shadow: 0 2px 10px rgba(20, 24, 26, 0.08);
+            animation: balance-settle 700ms cubic-bezier(0.2, 0.8, 0.3, 1.1);
+        }
+
+        @keyframes balance-settle {
+            0% { transform: rotate(1.6deg) translateX(0.35ch); }
+            55% { transform: rotate(-0.7deg) translateX(-0.15ch); }
+            100% { transform: rotate(0deg) translateX(0); }
+        }
+
+        .balance-expression .slot {
+            min-width: 1.2ch;
+            text-align: center;
+            border-radius: 6px;
+            transition: background 200ms ease, color 200ms ease, opacity 200ms ease;
+        }
+
+        .balance-expression .slot[data-open="true"] {
+            background: color-mix(in srgb, var(--op-topic-color, seagreen) 14%, transparent);
+            animation: slot-pulse 1.3s ease-in-out infinite;
+        }
+
+        @keyframes slot-pulse {
+            50% { background: color-mix(in srgb, var(--op-topic-color, seagreen) 30%, transparent); }
+        }
+
+        .balance-expression .slot[data-preview="true"] { opacity: 0.55; font-style: italic; }
+        .balance-expression .slot--sigil { color: var(--op-object-color, #a06a1f); font-weight: 700; }
+        .balance-expression .slot--angle { color: var(--op-topic-color, seagreen); font-weight: 600; }
+        .balance-expression .slot--angle[hidden] { display: none; }
+
+        .balance-meter {
+            font-family: var(--font-mono, ui-monospace, monospace);
+            font-size: 0.82rem;
+            letter-spacing: 0.06em;
+            color: var(--ink-soft, rgba(20, 24, 26, 0.65));
+        }
+
+        .balance-field {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.55rem;
+            justify-content: center;
+            max-width: 46rem;
+            transition: opacity 300ms ease;
+        }
+
+        .balance-stage[data-balance="idle"] .balance-field { opacity: 0.35; pointer-events: none; }
+
+        .balance-chip {
+            font: inherit;
+            font-family: var(--font-mono, ui-monospace, monospace);
+            font-size: 0.95rem;
+            padding: 0.45em 0.9em;
+            border-radius: 999px;
+            border: 1px solid var(--line, rgba(20, 24, 26, 0.18));
+            background: var(--surface, rgba(255, 255, 255, 0.6));
+            cursor: pointer;
+            transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+        }
+
+        .balance-chip:hover,
+        .balance-chip:focus-visible {
+            border-color: color-mix(in srgb, var(--op-topic-color, seagreen) 55%, transparent);
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--op-topic-color, seagreen) 18%, transparent);
+            transform: translateY(-1px);
+        }
+
+        .balance-chip[data-bound="true"] {
+            border-color: var(--op-topic-color, seagreen);
+            background: color-mix(in srgb, var(--op-topic-color, seagreen) 12%, transparent);
+        }
+
+        .balance-controls { display: flex; gap: 0.6rem; align-items: center; }
+
+        .balance-take {
+            font: inherit;
+            font-family: var(--font-mono, ui-monospace, monospace);
+            font-weight: 700;
+            font-size: 1.2rem;
+            padding: 0.4em 1.1em;
+            border-radius: 10px;
+            border: 1px solid var(--op-object-color, #a06a1f);
+            background: color-mix(in srgb, var(--op-object-color, #a06a1f) 10%, transparent);
+            cursor: pointer;
+        }
+
+        .balance-take[disabled] { opacity: 0.4; cursor: default; }
+
+        .balance-reset {
+            font: inherit;
+            font-family: var(--font-mono, ui-monospace, monospace);
+            padding: 0.4em 0.9em;
+            border-radius: 10px;
+            border: 1px solid var(--line, rgba(20, 24, 26, 0.2));
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .balance-caption {
+            max-width: 52ch;
+            text-align: center;
+            font-size: 0.95rem;
+            color: var(--ink-soft, rgba(20, 24, 26, 0.7));
+            min-height: 2.6em;
+        }
+
+        /* Photon: one quantum of meaning in flight from chip to slot. */
+        .balance-photon {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--op-topic-color, seagreen), transparent 70%);
+            pointer-events: none;
+            opacity: 0;
+            z-index: 40;
+        }
+
+        .balance-photon[data-flying="true"] {
+            opacity: 1;
+            transition: transform 380ms cubic-bezier(0.3, 0.6, 0.4, 1), opacity 380ms ease;
+        }
+    </style>
+</head>
+<body
+    data-spw-surface="website"
+    data-spw-stylesheet-mode="scoped"
+    data-spw-features="operators navigator inspectability"
+    data-spw-route-family="design experiments lab"
+    data-spw-context="play"
+    data-spw-wonder="orientation resonance"
+    data-spw-page-family="lab"
+    data-spw-page-modes="play inspect"
+    data-spw-page-seed="page_design_experiments_subject_balance"
+    data-spw-page-role="instrument"
+    data-spw-layout="reading"
+    data-spw-related-routes="/design/|/design/experiments/spellcraft-bench/|/topics/software/spw/">
+
+<header class="site-header">
+    <nav aria-label="Lab navigation">
+        <a href="/design/">design</a>
+        <a href="/design/components/">components</a>
+        <a href="/topics/software/spw/">spw</a>
+    </nav>
+</header>
+
+<main>
+    <article class="site-frame">
+        <header data-spw-slot="header">
+            <h1>Subject Balance</h1>
+            <p class="frame-note">
+                A playable instrument for one gesture: take a subject with <code>&amp;</code>, open the
+                forward slot (<code>&amp; &gt;</code>), preview a neighbor by hover — a photon of meaning
+                passes without committing — then click to bond. The pair table proposes the balancing
+                left partner and the expression resolves to <code>&lt; &amp; &gt;</code>: valence closed,
+                physics level. See <code>.spw/language/subject-balance-ux.spw</code> for the model.
+            </p>
+        </header>
+
+        <section class="balance-stage" data-spw-feature="subject-balance-instrument" data-balance="idle" aria-label="Subject balance instrument">
+            <p class="balance-expression" aria-live="polite">
+                <span class="slot slot--angle" data-slot="left-angle" hidden>&lt;</span>
+                <span class="slot" data-slot="left" hidden></span>
+                <span class="slot slot--sigil" data-slot="subject">&amp;</span>
+                <span class="slot slot--angle" data-slot="forward" hidden>&gt;</span>
+                <span class="slot" data-slot="right" hidden></span>
+                <span class="slot slot--angle" data-slot="right-angle" hidden>&gt;</span>
+            </p>
+
+            <p class="balance-meter" data-role="meter">valence: closed · charge: 0</p>
+
+            <div class="balance-controls">
+                <button class="balance-take" type="button" data-role="take">&amp; take a subject</button>
+                <button class="balance-reset" type="button" data-role="reset" hidden>. ground</button>
+            </div>
+
+            <div class="balance-field" data-role="field" role="group" aria-label="Concept candidates"></div>
+
+            <p class="balance-caption" data-role="caption">
+                Press <strong>&amp;</strong> to begin: the subject operator takes hold of your attention
+                and opens one forward valence.
+            </p>
+        </section>
+
+        <section class="site-frame" data-spw-kind="frame" data-spw-role="reference">
+            <header class="frame-heading"><h2>The physics being demonstrated</h2></header>
+            <ul>
+                <li><strong>&amp;</strong> alone is a radical: one unpaired valence, so the expression carries charge and tilts toward its missing operand.</li>
+                <li><strong>Hover is photon passage</strong>: a quantum of meaning previews the binding without consuming anything — leave, and nothing changed.</li>
+                <li><strong>Click is a bond</strong>: the right operand commits, and the pair table proposes the left partner that balances it.</li>
+                <li><strong>&lt; &amp; &gt;</strong> is closure: both operands present, enclosure complete, charge grounded — the settle animation is the physics resolving.</li>
+            </ul>
+        </section>
+    </article>
+</main>
+
+<div class="balance-photon" data-role="photon" aria-hidden="true"></div>
+
+<script>
+    (() => {
+        /* Pair table: each concept names the partner that balances it.
+           Kept inline so the instrument stays portable. */
+        const PAIRS = {
+            memory: 'scheduling',
+            scheduling: 'memory',
+            parsing: 'rendering',
+            rendering: 'parsing',
+            stock: 'context',
+            context: 'stock',
+            reduction: 'compression',
+            compression: 'reduction',
+            character: 'scene',
+            scene: 'character',
+            kernel: 'lattice',
+            lattice: 'kernel',
+        };
+
+        const stage = document.querySelector('[data-spw-feature="subject-balance-instrument"]');
+        if (!stage) return;
+
+        const slots = {};
+        stage.querySelectorAll('[data-slot]').forEach((el) => { slots[el.dataset.slot] = el; });
+        const meter = stage.querySelector('[data-role="meter"]');
+        const caption = stage.querySelector('[data-role="caption"]');
+        const takeBtn = stage.querySelector('[data-role="take"]');
+        const resetBtn = stage.querySelector('[data-role="reset"]');
+        const field = stage.querySelector('[data-role="field"]');
+        const photon = document.querySelector('[data-role="photon"]');
+
+        const setState = (state) => { stage.dataset.balance = state; };
+        const say = (html) => { caption.innerHTML = html; };
+        const readMeter = (valence, charge) => {
+            meter.textContent = 'valence: ' + valence + ' · charge: ' + charge;
+        };
+
+        Object.keys(PAIRS).forEach((concept) => {
+            const chip = document.createElement('button');
+            chip.type = 'button';
+            chip.className = 'balance-chip';
+            chip.textContent = concept;
+            chip.dataset.concept = concept;
+            field.append(chip);
+        });
+
+        const flyPhoton = (fromEl, toEl) => {
+            if (!photon || !fromEl || !toEl) return;
+            const a = fromEl.getBoundingClientRect();
+            const b = toEl.getBoundingClientRect();
+            photon.style.transform = 'translate(' + (a.left + a.width / 2) + 'px,' + (a.top + a.height / 2) + 'px)';
+            photon.dataset.flying = 'false';
+            // Two-frame handoff so the transition animates from source to slot.
+            requestAnimationFrame(() => {
+                photon.dataset.flying = 'true';
+                requestAnimationFrame(() => {
+                    photon.style.transform = 'translate(' + (b.left + b.width / 2) + 'px,' + (b.top + b.height / 2) + 'px)';
+                });
+                window.setTimeout(() => { photon.dataset.flying = 'false'; }, 400);
+            });
+        };
+
+        const reset = () => {
+            setState('idle');
+            slots['left-angle'].hidden = true;
+            slots['right-angle'].hidden = true;
+            slots.left.hidden = true;
+            slots.right.hidden = true;
+            slots.forward.hidden = true;
+            slots.forward.dataset.open = 'false';
+            slots.right.dataset.preview = 'false';
+            takeBtn.hidden = false;
+            takeBtn.disabled = false;
+            resetBtn.hidden = true;
+            field.querySelectorAll('.balance-chip').forEach((chip) => { chip.dataset.bound = 'false'; });
+            readMeter('closed', '0');
+            say('Press <strong>&amp;</strong> to begin: the subject operator takes hold of your attention and opens one forward valence.');
+        };
+
+        takeBtn.addEventListener('click', () => {
+            setState('charged');
+            slots.forward.hidden = false;
+            slots.forward.dataset.open = 'true';
+            takeBtn.disabled = true;
+            takeBtn.hidden = true;
+            resetBtn.hidden = false;
+            readMeter('1 open (forward)', '+1');
+            say('<code>&amp; &gt;</code> — one valence points forward. Hover a concept to let a photon of meaning pass; click to bond.');
+        });
+
+        field.addEventListener('mouseover', (event) => {
+            const chip = event.target.closest('.balance-chip');
+            if (!chip || stage.dataset.balance === 'idle' || stage.dataset.balance === 'balanced') return;
+            setState('previewing');
+            slots.right.hidden = false;
+            slots.right.dataset.preview = 'true';
+            slots.right.textContent = chip.dataset.concept;
+            flyPhoton(chip, slots.right);
+            say('Previewing <code>&amp; &gt; ' + chip.dataset.concept + '</code> — nothing has committed. Leave, and the expression forgets.');
+        });
+
+        field.addEventListener('mouseout', (event) => {
+            const chip = event.target.closest('.balance-chip');
+            if (!chip || stage.dataset.balance !== 'previewing') return;
+            setState('charged');
+            slots.right.hidden = true;
+            slots.right.dataset.preview = 'false';
+            say('<code>&amp; &gt;</code> — the valence is still open. Hover previews; click bonds.');
+        });
+
+        field.addEventListener('focusin', (event) => {
+            const chip = event.target.closest('.balance-chip');
+            if (!chip || stage.dataset.balance === 'idle' || stage.dataset.balance === 'balanced') return;
+            setState('previewing');
+            slots.right.hidden = false;
+            slots.right.dataset.preview = 'true';
+            slots.right.textContent = chip.dataset.concept;
+        });
+
+        field.addEventListener('click', (event) => {
+            const chip = event.target.closest('.balance-chip');
+            if (!chip || stage.dataset.balance === 'idle' || stage.dataset.balance === 'balanced') return;
+
+            const right = chip.dataset.concept;
+            const left = PAIRS[right];
+
+            chip.dataset.bound = 'true';
+            slots.right.hidden = false;
+            slots.right.dataset.preview = 'false';
+            slots.right.textContent = right;
+            slots.forward.dataset.open = 'false';
+            flyPhoton(chip, slots.right);
+
+            // Bond first; balance a beat later so the two moves read separately.
+            readMeter('1 bound (forward)', '+1 → resolving');
+            say('Bonded <code>&amp; &gt; ' + right + '</code>. The pair table proposes <strong>' + left + '</strong> to balance the left side…');
+
+            window.setTimeout(() => {
+                slots['left-angle'].hidden = false;
+                slots['right-angle'].hidden = false;
+                slots.left.hidden = false;
+                slots.left.textContent = left;
+                slots.forward.hidden = true;
+                setState('balanced');
+                readMeter('closed (pair)', '0');
+                say('<code>&lt; ' + left + ' &amp; ' + right + ' &gt;</code> — both operands present, enclosure complete, charge grounded. Press <code>.</code> to ground and go again.');
+            }, 650);
+        });
+
+        resetBtn.addEventListener('click', reset);
+        reset();
+    })();
+</script>
+</body>
+</html>

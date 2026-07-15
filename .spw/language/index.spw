@@ -23,6 +23,7 @@ fixity = "stable"
 @operator_semantics: ~"../conventions/operator-semantics.spw"
 @sigil_geometry_lore: ~"./sigil-geometry-lore.spw"
 @lore_alignment: ~"./lore-alignment.spw"
+@subject_balance_ux: ~"./subject-balance-ux.spw"
 @semantic_braces: ~"../conventions/semantic-braces.spw"
 
 dispatch: .{
@@ -38,6 +39,7 @@ dispatch: .{
  operator_semantics = @operator_semantics
  sigil_geometry_lore = @sigil_geometry_lore
  lore_alignment = @lore_alignment
+ subject_balance_ux = @subject_balance_ux
  semantic_braces = @semantic_braces
 }[reg=facet]
 

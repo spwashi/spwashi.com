@@ -1,0 +1,54 @@
+# Subject Balance — the &-first selection gesture
+#
+# UX model: a reader who wants to find or interact with a concept starts by
+# taking a subject (&), opens the forward slot (& >), selects the right
+# neighbor by hover/click, and resolves < & > to balance the physics.
+
+#>subject_balance_ux
+#:language #!sigils #!interaction #!physics #!ux
+#:operation #!prime #!contract
+#:fixity #!tending
+
+@lore_alignment: ~"./lore-alignment.spw"
+@sigil_geometry: ~"./sigil-geometry-lore.spw"
+@demo: ~"../../design/experiments/subject-balance/index.html"
+@interaction_reward: ~"../conventions/interaction-microstates.spw"
+@language_index: ~"./index.spw"
+
+operation = "prime contract"
+fixity = "tending"
+
+purpose: .{
+  plain = `Concept-finding as valence chemistry: & takes a subject and opens one forward bond; hover lets photons of meaning preview the binding without committing; click bonds; balance closes the enclosure.`
+  gate = `Sensation decisions end at proposal + demo. The demo at @demo is the approval artifact — promotion into shared runtime waits for a browser yes.`
+}[reg=facet]
+
+^"gesture_loop"{
+  states: .{
+    idle = `nothing held; the field is dim. The instrument invites & — attention has not yet taken a subject.`
+    charged = `& > — subject taken, one open forward valence. The expression carries +1 charge and tilts toward its missing operand (the tilt IS the readout).`
+    previewing = `hover/focus on a candidate — a photon passes from chip to slot: the right operand renders faint and italic, nothing commits, leaving reverts. Preview must be free or hover becomes a trap.`
+    bound = `click — the bond forms; the right operand commits. Charge remains until balance.`
+    balanced = `< left & right > — the pair table proposes the left partner, the enclosure completes, charge grounds to 0, the expression settles level. Ground (.) resets.`
+  }[reg=facet]
+  two_beat_rule = `Bond and balance are separate beats (the demo separates them by ~650ms): a reader should see the asymmetric state exist before symmetry resolves it, or the physics reads as decoration.`
+}[reg=facet]
+
+^"physics_contract"{
+  valence = `& alone is a radical: one unpaired valence. Every open valence is visible charge — meter text and geometric tilt agree with each other.`
+  photon = `Hover is photon passage (@lore_alignment photon: one sigil expression through a lens changes reading, not subject). Previews consume nothing and leave no residue.`
+  bond = `Click is bond formation: ionic reading (the choice transfers into the expression) with the chip marked bound — the field remembers which bonds exist.`
+  balance = `< & > closes the enclosure. Left and right operands are grammatical positions (OPERATOR_GEOMETRY left/right roles): the balanced form is a topic enclosure holding subject between its context pair.`
+  pair_table = `Balance needs a proposal source. The demo inlines a pair table (memory↔scheduling, parsing↔rendering, stock↔context, ...); the site-scale source is the lattice (semantic/lattice.js parallels). A slice that ships this gesture declares its own pair table — interpretation affordance at the slice boundary.`
+}[reg=facet]
+
+^"promotion_path"{
+  step_1 = `Human plays @demo in browser; approves or tunes the sensation (tilt angle, photon speed, two-beat delay).`
+  step_2 = `On approval: lift the state machine into a runtime module (VISIBLE, feature-gated), swap the inline pair table for lattice parallels, and let & sigils sitewide open the gesture on living terms.`
+  step_3 = `Record the balanced expressions: a resolved < left & right > is a cauldron-grade artifact (a bond the reader made) — collectible per the interaction reward contract.`
+  open_questions = #[
+    `should the left partner be selectable too (two-sided balancing) or always proposed?`,
+    `does < & > ground into the page (anchor/scroll) or into memory (collection)?`,
+    `what does an unbalanced expression left on screen do over time — decay, hum, or wait?`
+  ][reg=set]
+}[reg=facet]
