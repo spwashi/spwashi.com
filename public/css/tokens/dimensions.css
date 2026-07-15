@@ -75,8 +75,16 @@
   --spw-variant-selection-weight: 0;
   --spw-variant-accent: var(--component-accent, var(--active-op-color, var(--teal, #008080)));
 
-  /* Real estate — horizontal measure + vertical stack (hypermedia 2D axes) */
-  --spw-real-estate-inline: var(--measure-reading, 68ch);
+  /* Real estate — hypermedia 2D axes (frame rem ≠ prose ch)
+     frame  : page column (--spw-shell-frame-max)
+     inline : prose measure (ch)
+     block  : stack gap between regions
+     section: stronger section seams */
+  --spw-real-estate-frame: var(--spw-shell-frame-max, var(--page-width-reading, 56rem));
+  --spw-real-estate-inline: min(
+    var(--measure-reading, 68ch),
+    var(--spw-layout-measure, 72ch)
+  );
   --spw-real-estate-block: var(--page-stack-gap, clamp(1rem, 2.3vw, 1.7rem));
   --spw-real-estate-section: var(--page-section-gap, clamp(1.85rem, 4vw, 3.25rem));
   --spw-typography-rank-1: 1;
@@ -287,16 +295,46 @@
   --spw-variant-selection-weight: max(var(--spw-variant-selection-weight, 0), 0.42);
 }
 
-:where(html[data-spw-layout="reading"]) {
-  --spw-real-estate-inline: var(--page-width-reading, 56rem);
+/* Layout attrs own frame (rem), not prose measure (ch). Cap only —
+   shell-frame-max still mins with the settings tuner. */
+:where(
+  html[data-spw-layout="reading"],
+  body[data-spw-layout="reading"]
+) {
+  --spw-shell-frame-cap: var(--page-width-reading);
+  --spw-real-estate-frame: var(--spw-shell-frame-max, var(--page-width-reading));
 }
 
-:where(html[data-spw-layout="wide"], html[data-spw-layout="atlas"]) {
-  --spw-real-estate-inline: var(--page-width-wide, 84rem);
+:where(
+  html[data-spw-layout="newspaper"],
+  body[data-spw-layout="newspaper"]
+) {
+  --spw-shell-frame-cap: var(--page-width-newspaper);
+  --spw-real-estate-frame: var(--spw-shell-frame-max, var(--page-width-newspaper));
 }
 
-:where(html[data-spw-layout="split"]) {
-  --spw-real-estate-inline: min(var(--page-width-wide, 84rem), 100%);
+:where(
+  html[data-spw-layout="wide"],
+  body[data-spw-layout="wide"]
+) {
+  --spw-shell-frame-cap: var(--page-width-wide);
+  --spw-real-estate-frame: var(--spw-shell-frame-max, var(--page-width-wide));
+}
+
+:where(
+  html[data-spw-layout="atlas"],
+  body[data-spw-layout="atlas"]
+) {
+  --spw-shell-frame-cap: var(--page-width-atlas);
+  --spw-real-estate-frame: var(--spw-shell-frame-max, var(--page-width-atlas));
+}
+
+:where(
+  html[data-spw-layout="split"],
+  body[data-spw-layout="split"]
+) {
+  --spw-shell-frame-cap: var(--page-width-wide);
+  --spw-real-estate-frame: var(--spw-shell-frame-max, var(--page-width-wide));
 }
 
 :where(main, [data-spw-page-role="content"]) {

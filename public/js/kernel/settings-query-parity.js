@@ -65,9 +65,10 @@ const PACK_TO_DENSITY = Object.freeze({
   spacious: 'roomy',
 });
 
+/** layoutTuner profile → data-spw-layout (must match page-width-* frame caps). */
 const LAYOUT_TUNER_TO_LAYOUT = Object.freeze({
   reading: 'reading',
-  newspaper: 'wide',
+  newspaper: 'newspaper',
   wide: 'wide',
   atlas: 'atlas',
 });
@@ -202,8 +203,10 @@ export function syncUrlFromSettings(settings = {}, location = globalThis.locatio
 
 export function buildLayoutPostureDatasets(settings = {}) {
   const normalized = settings;
+  const layout = resolveLayoutFromTuner(normalized.layoutTuner);
   return {
-    spwLayout: resolveLayoutFromTuner(normalized.layoutTuner),
+    spwLayout: layout,
+    spwLayoutTuner: normalized.layoutTuner || 'reading',
     spwPackingState: resolvePackingFromDensity(normalized.componentDensity, normalized.spacingTuner),
     spwLayoutPosture: normalized.explorePosture || 'reading',
     spwPackOccupancy: normalized.componentDensity === 'dense'

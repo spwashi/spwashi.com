@@ -1055,7 +1055,14 @@ html[data-spw-reduce-motion="on"] *::after {
   --inset-panel: var(--spw-component-pad-tight);
   --inset-ritual: clamp(1.2rem, 2.4vw, 1.8rem);
 
-  /* -- Spatial Anchors -- */
+  /* -- Spatial Anchors --
+     Three ladders, three units — do not cross them casually:
+       space-* / rhythm     → spacing quantum (rem, derived)
+       measure-*            → prose line length (ch)
+       page-width-*         → page column caps (rem)
+     Frame (page-width) owns main/footer max-width.
+     Measure (ch) owns prose max-inline-size inside frames.
+     Gutter is inset, never subtracted again from max-width. */
   --header-height: 4rem;
   --shell-header-height: var(--header-height);
   --page-width: 72rem;
@@ -1139,6 +1146,7 @@ html[data-spw-reduce-motion="on"] *::after {
   --site-sans-font: var(--font-family-sans);
   --site-display-font: var(--font-family-display);
 
+  /* Prose measure ladder (ch) — line length, not page frame */
   --measure-compact: 32ch;
   --measure-card: 42ch;
   --measure-panel: 52ch;
@@ -2785,8 +2793,10 @@ html[data-spw-semantic-density="rich"] {
   --spw-region-fill-alpha: 0.07;
   --spw-control-contrast-lift: 0.16;
   --spw-spacing-scale: 1;
+  /* Settings layout tuner (site-settings-engine may overwrite).
+     measure = prose (ch); frame-max = column cap (rem); keep units distinct. */
   --spw-layout-measure: 72ch;
-  --spw-layout-frame-max: var(--page-width-reading, 68rem);
+  --spw-layout-frame-max: var(--page-width-reading);
   --spw-layout-column-min: 16rem;
   --spw-interaction-scale: 1;
   --spw-region-frame-line: color-mix(in srgb, var(--active-op-color) calc(var(--spw-region-frame-alpha) * 100%), var(--line));
@@ -3038,8 +3048,16 @@ html[data-spw-reduce-motion="on"] {
   --spw-variant-selection-weight: 0;
   --spw-variant-accent: var(--component-accent, var(--active-op-color, var(--teal, #008080)));
 
-  /* Real estate — horizontal measure + vertical stack (hypermedia 2D axes) */
-  --spw-real-estate-inline: var(--measure-reading, 68ch);
+  /* Real estate — hypermedia 2D axes (frame rem ≠ prose ch)
+     frame  : page column (--spw-shell-frame-max)
+     inline : prose measure (ch)
+     block  : stack gap between regions
+     section: stronger section seams */
+  --spw-real-estate-frame: var(--spw-shell-frame-max, var(--page-width-reading, 56rem));
+  --spw-real-estate-inline: min(
+    var(--measure-reading, 68ch),
+    var(--spw-layout-measure, 72ch)
+  );
   --spw-real-estate-block: var(--page-stack-gap, clamp(1rem, 2.3vw, 1.7rem));
   --spw-real-estate-section: var(--page-section-gap, clamp(1.85rem, 4vw, 3.25rem));
   --spw-typography-rank-1: 1;
@@ -3250,16 +3268,46 @@ html[data-spw-reduce-motion="on"] {
   --spw-variant-selection-weight: max(var(--spw-variant-selection-weight, 0), 0.42);
 }
 
-:where(html[data-spw-layout="reading"]) {
-  --spw-real-estate-inline: var(--page-width-reading, 56rem);
+/* Layout attrs own frame (rem), not prose measure (ch). Cap only —
+   shell-frame-max still mins with the settings tuner. */
+:where(
+  html[data-spw-layout="reading"],
+  body[data-spw-layout="reading"]
+) {
+  --spw-shell-frame-cap: var(--page-width-reading);
+  --spw-real-estate-frame: var(--spw-shell-frame-max, var(--page-width-reading));
 }
 
-:where(html[data-spw-layout="wide"], html[data-spw-layout="atlas"]) {
-  --spw-real-estate-inline: var(--page-width-wide, 84rem);
+:where(
+  html[data-spw-layout="newspaper"],
+  body[data-spw-layout="newspaper"]
+) {
+  --spw-shell-frame-cap: var(--page-width-newspaper);
+  --spw-real-estate-frame: var(--spw-shell-frame-max, var(--page-width-newspaper));
 }
 
-:where(html[data-spw-layout="split"]) {
-  --spw-real-estate-inline: min(var(--page-width-wide, 84rem), 100%);
+:where(
+  html[data-spw-layout="wide"],
+  body[data-spw-layout="wide"]
+) {
+  --spw-shell-frame-cap: var(--page-width-wide);
+  --spw-real-estate-frame: var(--spw-shell-frame-max, var(--page-width-wide));
+}
+
+:where(
+  html[data-spw-layout="atlas"],
+  body[data-spw-layout="atlas"]
+) {
+  --spw-shell-frame-cap: var(--page-width-atlas);
+  --spw-real-estate-frame: var(--spw-shell-frame-max, var(--page-width-atlas));
+}
+
+:where(
+  html[data-spw-layout="split"],
+  body[data-spw-layout="split"]
+) {
+  --spw-shell-frame-cap: var(--page-width-wide);
+  --spw-real-estate-frame: var(--spw-shell-frame-max, var(--page-width-wide));
 }
 
 :where(main, [data-spw-page-role="content"]) {
@@ -3331,11 +3379,36 @@ html[data-spw-reduce-motion="on"] {
   --page-width-reading: 56rem;
   --page-width-newspaper: 68rem;
   --page-width-wide: 84rem;
+  --page-width-atlas: 104rem;
+  /* One page gutter. Body owns safe-area; chrome/main/footer use this only. */
   --page-gutter-inline: var(--page-gutter, clamp(0.75rem, 2.5vw, 1.5rem));
   --page-gutter-block: clamp(
     calc(var(--spw-rhythm-unit, 1rem) * 0.9),
     2.2vw,
     calc(var(--spw-rhythm-unit, 1rem) * 1.8)
+  );
+
+  /*
+    Sizing / layout variable theory (outside-in)
+    --------------------------------------------
+    Units:
+      rem  page-width-* , shell frame, gutters, block rhythm
+      ch   measure-* , --spw-layout-measure (prose line length)
+    Layers:
+      1. body                 safe-area only
+      2. page-gutter-inline   header / main / footer pad (shared content edge)
+      3. spw-shell-frame-cap  route layout variant (data-spw-layout)
+      4. spw-layout-frame-max settings layout tuner (may tighten)
+      5. spw-shell-frame-max  min(cap, tuner, 100%) — spent by main/footer
+      6. measure / layout-measure — spent by prose, not by main max-width
+    Never subtract gutter from max-width; padding already owns it.
+    Prefer 100% of the body content box over 100vw.
+  */
+  --spw-shell-frame-cap: var(--page-width);
+  --spw-shell-frame-max: min(
+    var(--spw-shell-frame-cap),
+    var(--spw-layout-frame-max, var(--page-width)),
+    100%
   );
 
   /* Vertical rhythm */
@@ -3365,15 +3438,21 @@ html[data-spw-reduce-motion="on"] {
     calc(var(--spw-rhythm-unit, 1rem) * 2)
   );
 
-  /* Hypermedia 2D real estate aliases (see tokens/dimensions.css) */
-  --spw-real-estate-inline: var(--page-width-reading, 56rem);
+  /* Hypermedia 2D real estate — frame (rem) vs prose inline (ch).
+     See tokens/dimensions.css and .spw/conventions/page-frame-sizing.spw */
+  --spw-real-estate-frame: var(--spw-shell-frame-max);
+  --spw-real-estate-inline: min(
+    var(--measure-reading, 68ch),
+    var(--spw-layout-measure, 72ch)
+  );
   --spw-real-estate-block: var(--page-stack-gap);
   --spw-real-estate-section: var(--page-section-gap);
 
   /* Header — alias core token so scroll chrome stays aligned sitewide */
   --shell-header-height: var(--header-height, 4rem);
   --shell-header-min-height: 0;
-  --shell-header-pad-inline: clamp(0.85rem, 2vw, 1.2rem);
+  /* Match main/footer content edge (page gutter), not a second inline scale. */
+  --shell-header-pad-inline: var(--page-gutter-inline);
   --shell-header-pad-block: 0.28rem;
   --shell-header-grid-gap: 0.5rem;
 
@@ -3422,11 +3501,14 @@ html[data-spw-reduce-motion="on"] {
     calc(var(--spw-rhythm-unit, 1rem) * 1.1)
   );
 
-  /* Generic reading */
-  --shell-reading-measure: min(var(--measure-reading, 68ch), var(--spw-layout-measure, 72ch));
+  /* Generic reading (ch) — posture bias may tighten without changing frame */
+  --shell-reading-measure: calc(
+    min(var(--measure-reading, 68ch), var(--spw-layout-measure, 72ch))
+    * var(--spw-layout-posture-measure-bias, 1)
+  );
   --shell-reading-measure-tight: var(--measure-panel, 52ch);
   --shell-reading-measure-compact: var(--measure-card, 42ch);
-  --shell-nav-max-width: 74rem;
+  --shell-nav-max-width: min(var(--page-width), 74rem);
 
   /* Generic page hero */
   --shell-hero-pad-inline: clamp(
@@ -3450,7 +3532,7 @@ html[data-spw-reduce-motion="on"] {
      in-section surface-gap (visual hierarchy of page → section → content). */
   --spw-main-display: flex;
   --spw-main-direction: column;
-  --spw-main-width: min(var(--page-width), var(--spw-layout-frame-max, var(--page-width)));
+  --spw-main-width: var(--spw-shell-frame-max);
   --spw-main-gap: var(--page-stack-gap);
   --spw-main-padding-inline: var(--page-gutter-inline);
   --spw-main-padding-block-start: clamp(
@@ -3496,7 +3578,11 @@ html[data-spw-reduce-motion="on"] {
 /* Shell defaults keep raw HTML routes usable before route CSS loads. */
 html {
   min-height: 100%;
-  --spw-scroll-target-top-clearance: calc(var(--shell-header-height) + 1rem);
+  /* Prefer the live sticky-header bottom when shell-disclosure has measured it. */
+  --spw-scroll-target-top-clearance: calc(
+    var(--spw-shell-menu-offset, var(--shell-header-height))
+    + 1rem
+  );
   --spw-scroll-target-bottom-clearance: calc(
     env(safe-area-inset-bottom)
     + var(--spw-bottom-chrome-clearance, 0px)
@@ -3517,7 +3603,10 @@ html {
 
 @media (max-width: 720px) {
   html {
-    --spw-scroll-target-top-clearance: calc(var(--shell-header-height) + 0.75rem);
+    --spw-scroll-target-top-clearance: calc(
+      var(--spw-shell-menu-offset, var(--shell-header-height))
+      + 0.75rem
+    );
     --spw-scroll-target-bottom-clearance: calc(
       env(safe-area-inset-bottom)
       + var(--spw-bottom-chrome-clearance, 0px)
@@ -3528,6 +3617,14 @@ html {
 }
 
 body {
+  /* Re-resolve the derived frame after an authored route cap on body. The
+     settings tuner is inherited from html and may tighten, never widen, it. */
+  --spw-shell-frame-max: min(
+    var(--spw-shell-frame-cap),
+    var(--spw-layout-frame-max, var(--page-width)),
+    100%
+  );
+
   min-height: 100vh;
   min-height: 100dvh;
   display: flex;
@@ -3538,7 +3635,7 @@ body {
     linear-gradient(180deg, var(--bg-field, var(--bg, hsl(42 77% 82%))), var(--bg, hsl(42 77% 82%)));
   text-rendering: optimizeLegibility;
 
-  /* Ensure the body itself respects the safe area to prevent horizontal bleed */
+  /* Outside edge only. Header/main/footer add --page-gutter-inline next. */
   padding-inline: env(safe-area-inset-left) env(safe-area-inset-right);
 
   /* Shell-friendly defaults */
@@ -3608,14 +3705,14 @@ main {
   flex-direction: var(--spw-main-direction);
   gap: var(--spw-main-gap);
 
-  /* Box */
+  /* Box — width 100% of body content box; max-width caps the frame;
+     padding-inline is the only horizontal page gutter. */
+  box-sizing: border-box;
   width: 100%;
   max-width: var(--spw-main-width);
   padding-inline: var(--spw-main-padding-inline);
-  margin:
-    var(--spw-main-padding-block-start)
-    auto
-    var(--spw-main-padding-block-end);
+  margin-block: var(--spw-main-padding-block-start) var(--spw-main-padding-block-end);
+  margin-inline: auto;
 
   /* Interaction */
   touch-action: pan-y;
@@ -3639,47 +3736,43 @@ main {
   contain: style;
 }
 
-/* Layout variants: body[data-spw-layout] / main[data-spw-layout] opt a route into
-   different uses of horizontal space on wide screens. Reading is the default.
-   "newspaper" gives denser reference pages a printable measure; "wide" lets
-   key clusters breathe; "atlas" gives a rail for auxiliary content; "split" is
-   reading-column + rail for reading routes with navigation context. */
-/* Variant widths min() against the viewport (mirroring the ≥92rem rules
-   below), not --spw-layout-frame-max: that token is the frame-level content
-   measure owned by semantic-variants.css, and folding it in here collapsed
-   every variant to the reading measure — routes then patched around the
-   inert attribute with hard main pins in surface CSS. */
-:where(body[data-spw-layout="reading"]) main,
-main[data-spw-layout="reading"] {
-  --spw-main-width: min(var(--page-width-reading), calc(100vw - (var(--page-gutter-inline) * 2)));
+/* Layout variants set --spw-shell-frame-cap only. Spent width is always
+   min(cap, layout-frame-max tuner, 100%) via --spw-shell-frame-max. */
+:where(body[data-spw-layout="reading"], main[data-spw-layout="reading"]) {
+  --spw-shell-frame-cap: var(--page-width-reading);
 }
 
-:where(body[data-spw-layout="newspaper"]) main,
-main[data-spw-layout="newspaper"] {
-  --spw-main-width: min(var(--page-width-newspaper), calc(100vw - (var(--page-gutter-inline) * 2)));
+:where(body[data-spw-layout="newspaper"], main[data-spw-layout="newspaper"]) {
+  --spw-shell-frame-cap: var(--page-width-newspaper);
 }
 
-:where(body[data-spw-layout="wide"]) main,
-main[data-spw-layout="wide"] {
-  --spw-main-width: min(var(--page-width-wide), calc(100vw - (var(--page-gutter-inline) * 2)));
+:where(body[data-spw-layout="wide"], main[data-spw-layout="wide"]) {
+  --spw-shell-frame-cap: var(--page-width-wide);
 }
 
-:where(body[data-spw-layout="atlas"]) main,
-main[data-spw-layout="atlas"] {
-  --spw-main-width: min(var(--page-width-atlas), calc(100vw - (var(--page-gutter-inline) * 2)));
+:where(body[data-spw-layout="atlas"], main[data-spw-layout="atlas"]) {
+  --spw-shell-frame-cap: var(--page-width-atlas);
+}
+
+:where(body[data-spw-layout="split"], main[data-spw-layout="split"]) {
+  /* Split uses wide until the atlas ceiling below. */
+  --spw-shell-frame-cap: var(--page-width-wide);
+}
+
+/* A main-level override has no descendants to inherit through, so re-resolve
+   the derived frame locally as well. Body-level routes already resolve above. */
+:where(main[data-spw-layout]) {
+  --spw-shell-frame-max: min(
+    var(--spw-shell-frame-cap),
+    var(--spw-layout-frame-max, var(--page-width)),
+    100%
+  );
 }
 
 @media (min-width: 92rem) {
-  :where(body[data-spw-layout="wide"]) main,
-  main[data-spw-layout="wide"] {
-    --spw-main-width: min(92rem, calc(100vw - (var(--page-gutter-inline) * 2)));
-  }
-
-  :where(body[data-spw-layout="split"]) main,
-  main[data-spw-layout="split"],
-  :where(body[data-spw-layout="atlas"]) main,
-  main[data-spw-layout="atlas"] {
-    --spw-main-width: min(var(--page-width-atlas), calc(100vw - (var(--page-gutter-inline) * 2)));
+  :where(body[data-spw-layout="split"], main[data-spw-layout="split"]),
+  :where(body[data-spw-layout="atlas"], main[data-spw-layout="atlas"]) {
+    --spw-shell-frame-cap: var(--page-width-atlas);
   }
 }
 
@@ -3689,7 +3782,6 @@ main[data-spw-layout="atlas"] {
   /* Split is the shell-owned reading-column + rail contract. */
   :where(body[data-spw-layout="split"]) main,
   main[data-spw-layout="split"] {
-    --spw-main-width: var(--page-width-wide);
     display: grid;
     grid-template-columns: minmax(0, 1fr) var(--attention-rail-width);
     column-gap: var(--attention-rail-gap);
@@ -3707,9 +3799,13 @@ main[data-spw-layout="atlas"] {
     grid-column: 2;
     grid-row: 1 / span 99;
     position: sticky;
-    top: calc(var(--header-height) + 1rem);
+    top: var(--spw-scroll-target-top-clearance, calc(var(--shell-header-height, 4rem) + 1rem));
     align-self: start;
-    max-height: calc(100dvh - var(--header-height) - 2rem);
+    max-height: calc(
+      100dvh
+      - var(--spw-scroll-target-top-clearance, calc(var(--shell-header-height, 4rem) + 1rem))
+      - 1rem
+    );
     overflow-y: auto;
   }
 }
@@ -4265,19 +4361,25 @@ figure.generic-figure,
 }
 
 @media (max-width: 720px) {
+  :root {
+    /* Slightly tighter block start so header → first section feels continuous. */
+    --spw-main-padding-block-start: clamp(
+      calc(var(--spw-rhythm-unit, 1rem) * 0.85),
+      2.4vw,
+      calc(var(--spw-rhythm-unit, 1rem) * 1.45)
+    );
+  }
+
   .page-intro,
   .page-hero,
   .shell-hero,
   .site-hero {
-    padding-inline: 1rem;
+    /* Stay on the shared hero pad token — do not invent a second gutter. */
+    padding-inline: var(--shell-hero-pad-inline);
   }
 }
 
 @media (max-width: 600px) {
-  main {
-    width: min(calc(100vw - (var(--page-gutter-inline) * 2)), var(--page-width));
-  }
-
   :where(
     .page-panel,
     .generic-panel,
@@ -4292,7 +4394,7 @@ figure.generic-figure,
     .screenshot-frame,
     .media-frame
   ) {
-    padding-inline: 0.95rem;
+    padding-inline: var(--shell-panel-pad-inline);
   }
 }
 
@@ -4511,8 +4613,9 @@ body > header:empty {
 
   padding-top: 0;
   padding-bottom: max(var(--shell-header-pad-block), 0.16rem);
-  padding-left: max(var(--shell-header-pad-inline), env(safe-area-inset-left));
-  padding-right: max(var(--shell-header-pad-inline), env(safe-area-inset-right));
+  /* Body already owns safe-area insets; align content edge with main/footer. */
+  padding-left: var(--shell-header-pad-inline, var(--page-gutter-inline, 1rem));
+  padding-right: var(--shell-header-pad-inline, var(--page-gutter-inline, 1rem));
 
   color: var(--ink, rgba(14, 18, 20, 0.92));
   opacity: var(--spw-header-opacity-local);
@@ -4569,11 +4672,15 @@ body > header:empty {
   --spw-header-opacity-local: 0.97;
 }
 
-@media (pointer: fine) {
-  /* Menu lock is for shell navigation only. */
-  :where(html[data-spw-shell-menu-lock="true"], body[data-spw-shell-menu-lock="true"]) {
-    overflow: hidden;
-  }
+/* Open toggle menus own page scroll on every pointer class. Avoid position:fixed
+   on body — the sticky shell must stay pinned while the route field is open. */
+:where(html[data-spw-shell-menu-lock="true"], body[data-spw-shell-menu-lock="true"]) {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+:where(html[data-spw-shell-menu-lock="true"]) {
+  height: 100%;
 }
 
 :where(.site-header[data-spw-shell-scroll="lifted"], body > header[data-spw-shell-scroll="lifted"]) {
@@ -4778,6 +4885,18 @@ body > header:has(.spw-spell-path) .spw-header-actions {
     0 2px 7px rgba(14, 18, 20, 0.034);
   outline: none;
   transform: translateY(-1px);
+}
+
+.spw-header-action--search {
+  flex: 0 0 auto;
+  inline-size: auto;
+  min-inline-size: var(--touch-target-min, 2.75rem);
+  padding-inline: 0.7rem;
+  color: color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 78%, var(--op-probe-color, #6a3fb8) 22%);
+  font-size: var(--text-size-label, 0.76rem);
+  font-weight: 720;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .spw-header-action--cauldron {
@@ -6721,8 +6840,7 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
   max-height: min(80dvh, 38rem);
   overflow-x: hidden;
   overflow-y: auto;
-  overscroll-behavior-x: contain;
-  overscroll-behavior-y: auto;
+  overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
   touch-action: pan-y pinch-zoom;
   padding: 0.3rem;
@@ -6881,11 +6999,13 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
 
   margin-top: auto;
   min-height: var(--shell-footer-min-height);
+  /* Horizontal: same page gutter as main (body owns safe-area).
+     Bottom: keep safe-area + floating-chrome clearance for end-of-page reach. */
   padding:
     clamp(1rem, 2.1vw, 1.55rem)
-    max(var(--page-gutter-inline), env(safe-area-inset-right))
+    var(--page-gutter-inline, 1rem)
     calc(clamp(1rem, 2.1vw, 1.55rem) + env(safe-area-inset-bottom) + var(--spw-bottom-chrome-clearance, 0px))
-    max(var(--page-gutter-inline), env(safe-area-inset-left));
+    var(--page-gutter-inline, 1rem);
   box-sizing: border-box;
   background:
     linear-gradient(
@@ -6905,7 +7025,8 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
 }
 
 .site-footer__inner {
-  width: min(100%, var(--page-width));
+  /* Share the layout-variant frame cap with main when body sets it. */
+  width: min(100%, var(--spw-shell-frame-max, var(--page-width)));
   margin-inline: auto;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
@@ -9006,7 +9127,10 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
     background: color-mix(in oklab, var(--bg, #111) 52%, transparent);
     backdrop-filter: blur(4px) saturate(0.94);
     -webkit-backdrop-filter: blur(4px) saturate(0.94);
-    pointer-events: none;
+    /* Capture outside taps/scroll so the dimmed page does not activate under the field. */
+    pointer-events: auto;
+    touch-action: none;
+    cursor: default;
   }
 
   .site-header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"]:has(.spw-nav-toggle[aria-expanded="true"]) nav,
@@ -16641,11 +16765,17 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
 }
 
 :where([data-spw-region="read"], [data-spw-region-role="reading"]) {
-  max-inline-size: var(--spw-layout-measure, 72ch);
+  max-inline-size: min(
+    100%,
+    calc(
+      min(var(--measure-reading, 68ch), var(--spw-layout-measure, 72ch))
+      * var(--spw-layout-posture-measure-bias, 1)
+    )
+  );
 }
 
 :where([data-spw-region="wide"], [data-spw-region-role="atlas"]) {
-  max-inline-size: var(--spw-layout-frame-max, var(--page-width-wide, 82rem));
+  max-inline-size: var(--spw-shell-frame-max, var(--spw-layout-frame-max, var(--page-width-wide)));
 }
 
 :where([data-spw-region="cluster"], [data-spw-region-role="settings-cluster"]) {
@@ -21890,6 +22020,241 @@ html:has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) :wher
 }
 }
 
+/* /public/css/components/site-search.css */
+@layer components {
+/* ==========================================================================
+   site-search.css — route probe dialog + page host
+   --------------------------------------------------------------------------
+   Sitewide search over public/data/site-search-index.json.
+   Pairs with public/js/runtime/site-search.js.
+   ========================================================================== */
+
+:root {
+  --spw-site-search-duration: var(--spw-layout-selection-duration, var(--spw-microinteraction-pulse-duration, 280ms));
+}
+
+.spw-site-search {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--z-priority, 2000) + 20);
+  display: grid;
+  place-items: start center;
+  padding:
+    max(4.5rem, calc(var(--spw-shell-menu-offset, 4rem) + 1rem))
+    max(0.75rem, env(safe-area-inset-right))
+    max(1rem, env(safe-area-inset-bottom))
+    max(0.75rem, env(safe-area-inset-left));
+  background: color-mix(in oklab, var(--bg, #111) 48%, transparent);
+  backdrop-filter: blur(5px) saturate(0.94);
+  -webkit-backdrop-filter: blur(5px) saturate(0.94);
+}
+
+.spw-site-search[hidden],
+.spw-site-search[data-spw-site-search="closed"] {
+  display: none;
+}
+
+.spw-site-search__panel {
+  width: min(36rem, 100%);
+  max-height: min(70dvh, 32rem);
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  gap: 0.45rem;
+  padding: 0.7rem;
+  border: 1px solid color-mix(in oklab, var(--line, rgba(14, 18, 20, 0.14)) 78%, var(--op-probe-color, #6a3fb8) 22%);
+  border-radius: var(--shape-floating, 16px);
+  background:
+    linear-gradient(180deg, color-mix(in oklab, var(--op-probe-color, #6a3fb8) 6%, transparent), transparent 8rem),
+    color-mix(in oklab, var(--surface-strong, #fff) 96%, transparent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, #fff 42%, transparent),
+    0 18px 48px color-mix(in oklab, #000 22%, transparent);
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+}
+
+.spw-site-search__header {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: var(--touch-target-min, 2.75rem);
+  padding: 0.28rem 0.42rem;
+  border: 1px solid color-mix(in oklab, var(--line, rgba(14, 18, 20, 0.14)) 84%, transparent);
+  border-radius: var(--shape-control, 0.78rem);
+  background: color-mix(in oklab, var(--surface, #fff) 94%, transparent);
+}
+
+.spw-site-search__op {
+  color: var(--op-probe-color, #4a2180);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-weight: 700;
+}
+
+.spw-site-search__input {
+  min-width: 0;
+  min-height: 2.2rem;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  outline: none;
+}
+
+.spw-site-search__close {
+  min-width: var(--touch-target-min, 2.75rem);
+  min-height: var(--touch-target-min, 2.75rem);
+  border: 0;
+  border-radius: var(--shape-control, 0.78rem);
+  background: transparent;
+  color: inherit;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.spw-site-search__close:is(:hover, :focus-visible) {
+  background: color-mix(in oklab, var(--op-probe-color, #6a3fb8) 12%, transparent);
+  outline: none;
+}
+
+.spw-site-search__status {
+  margin: 0;
+  padding-inline: 0.2rem;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-size: 0.78rem;
+}
+
+.spw-site-search__list {
+  display: grid;
+  gap: 0.22rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+
+.spw-site-search__result {
+  display: grid;
+  gap: 0.12rem;
+  width: 100%;
+  min-height: var(--touch-target-min, 2.75rem);
+  padding: 0.42rem 0.55rem;
+  border: 1px solid transparent;
+  border-radius: var(--shape-control, 0.78rem);
+  color: inherit;
+  text-decoration: none;
+  transition:
+    border-color var(--spw-site-search-duration) var(--ease-settle, ease),
+    background-color var(--spw-site-search-duration) var(--ease-settle, ease);
+}
+
+.spw-site-search__item[data-active="true"] .spw-site-search__result,
+.spw-site-search__result:is(:hover, :focus-visible),
+.spw-site-search__result[aria-selected="true"] {
+  border-color: color-mix(in oklab, var(--op-probe-color, #6a3fb8) 24%, transparent);
+  background: color-mix(in oklab, var(--surface-strong, #fff) 90%, var(--op-probe-color, #6a3fb8) 10%);
+  outline: none;
+}
+
+.spw-site-search__title {
+  font-weight: 650;
+  line-height: 1.25;
+}
+
+.spw-site-search__meta {
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.7rem;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.spw-site-search__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.55rem;
+  padding-inline: 0.2rem;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  font-size: 0.72rem;
+}
+
+.spw-site-search__footer .spw-spell {
+  display: inline-flex;
+  padding: 0.08rem 0.28rem;
+  border: 1px solid color-mix(in oklab, var(--line, rgba(14, 18, 20, 0.14)) 80%, transparent);
+  border-radius: 0.35rem;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.68rem;
+}
+
+/* Page host (topics/search progressive form) */
+.spw-site-search-host .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.spw-site-search-host {
+  display: grid;
+  gap: 0.65rem;
+  margin-block: 0.65rem 0.2rem;
+}
+
+.spw-site-search-host__form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.45rem;
+  align-items: stretch;
+}
+
+.spw-site-search-host__input {
+  min-height: var(--touch-target-min, 2.75rem);
+  padding: 0.45rem 0.7rem;
+  border: 1px solid color-mix(in oklab, var(--line, rgba(14, 18, 20, 0.14)) 82%, transparent);
+  border-radius: var(--shape-control, 0.78rem);
+  background: color-mix(in oklab, var(--surface-strong, #fff) 94%, transparent);
+  color: inherit;
+  font: inherit;
+}
+
+.spw-site-search-host__submit {
+  min-height: var(--touch-target-min, 2.75rem);
+  padding-inline: 0.9rem;
+  border: 1px solid color-mix(in oklab, var(--op-probe-color, #6a3fb8) 28%, transparent);
+  border-radius: var(--shape-control, 0.78rem);
+  background: color-mix(in oklab, var(--op-probe-color, #6a3fb8) 12%, var(--surface-strong, #fff));
+  color: inherit;
+  font: inherit;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+html[data-spw-search-selection-pulse] {
+  --spw-interaction-phase-weight: max(var(--spw-interaction-phase-weight, 0), 0.36);
+}
+
+@media (max-width: 40rem) {
+  .spw-site-search-host__form {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spw-site-search__result {
+    transition: none;
+  }
+}
+}
+
 /* /public/css/components/runtime-states.css */
 @layer components {
 /* ==========================================================================
@@ -24083,7 +24448,12 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
 :root {
   --spw-interaction-phase-weight: 0;
   --spw-microinteraction-pulse-scale: 1;
+  --spw-microinteraction-pulse-duration: 280ms;
+  --spw-microinteraction-pulse-intensity: 1;
   --spw-interaction-phase-tuning: 1;
+  /* Selection arcs share the micro pulse quantum (settings may overwrite). */
+  --spw-layout-selection-duration: var(--spw-microinteraction-pulse-duration, 280ms);
+  --spw-variant-selection-duration: var(--spw-microinteraction-pulse-duration, 280ms);
 }
 
 :where(html[data-spw-enhancement-level="minimal"]) {
@@ -24138,7 +24508,9 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
 }
 
 :where(html[data-spw-microinteraction-pulse]) {
-  --spw-microinteraction-pulse-scale: 1.012;
+  --spw-microinteraction-pulse-scale: calc(
+    1 + (0.012 * var(--spw-microinteraction-pulse-intensity, 1))
+  );
 }
 
 :where(html[data-spw-microinteraction-pulse] :where(
@@ -24147,9 +24519,33 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
   .study-summary
 )) {
   transition:
-    box-shadow 220ms var(--ease-settle, ease),
-    border-color 220ms var(--ease-settle, ease),
-    transform 220ms var(--ease-settle, ease);
+    box-shadow var(--spw-microinteraction-pulse-duration, 280ms) var(--ease-settle, ease),
+    border-color var(--spw-microinteraction-pulse-duration, 280ms) var(--ease-settle, ease),
+    transform var(--spw-microinteraction-pulse-duration, 280ms) var(--ease-settle, ease);
+}
+
+/* Variant selection — weight rise is residue-shaped only while pulse is live. */
+:where([data-spw-variant-selected="true"]) {
+  --spw-variant-selection-weight: 0.72;
+}
+
+:where(html[data-spw-variant-selection-pulse], html[data-spw-variant-selection-weight="raised"]) {
+  --spw-variant-selection-weight: 0.58;
+  --spw-interaction-phase-weight: 0.42;
+}
+
+:where(html[data-spw-layout-selection-pulse]) {
+  --spw-interaction-phase-weight: 0.32;
+}
+
+:where(
+  [data-spw-variant-selected="true"],
+  [data-spw-component-variant-active]
+) {
+  transition:
+    border-color var(--spw-variant-selection-duration, 280ms) var(--ease-settle, ease),
+    box-shadow var(--spw-variant-selection-duration, 280ms) var(--ease-settle, ease),
+    background-color var(--spw-variant-selection-duration, 280ms) var(--ease-settle, ease);
 }
 
 :where(html[data-spw-microinteraction-pulse="prime"] :where([data-spw-image-interaction-state="primed"])) {
@@ -24169,6 +24565,22 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
 
 :where(html[data-spw-reduce-motion="on"]) {
   --spw-microinteraction-pulse-scale: 1;
+}
+
+:where(html[data-spw-reduce-motion="on"] :where(
+  [data-spw-variant-selected="true"],
+  [data-spw-component-variant-active]
+)) {
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(
+    [data-spw-variant-selected="true"],
+    [data-spw-component-variant-active]
+  ) {
+    transition: none;
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -24922,6 +25334,11 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
    layout-postures.css
    --------------------------------------------------------------------------
    Layout tuner + explore posture + packing parity from settings/query surfaces.
+
+   Theory (see .spw/conventions/page-frame-sizing.spw)
+   - Frame (rem): --spw-shell-frame-cap / --spw-shell-frame-max / --spw-real-estate-frame
+   - Measure (ch): --spw-layout-measure / --spw-real-estate-inline / measure bias
+   - Posture bias multiplies measure and grid gap — not page-width rem into prose.
    ========================================================================== */
 
 :root {
@@ -24931,23 +25348,21 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
 }
 
 :where(html[data-spw-layout-tuner="reading"], body[data-spw-layout="reading"]) {
-  --spw-real-estate-inline: var(--page-width-reading, 56rem);
   --spw-layout-posture-measure-bias: 0.92;
 }
 
-:where(html[data-spw-layout-tuner="newspaper"]) {
-  --spw-real-estate-inline: var(--page-width-newspaper, 68rem);
+:where(html[data-spw-layout-tuner="newspaper"], body[data-spw-layout="newspaper"]) {
+  /* Denser prose + slightly tighter grid — newspaper is not “wide”. */
+  --spw-layout-posture-measure-bias: 0.86;
   --spw-layout-posture-grid-bias: 1.08;
   --spw-grid-min-active: min(var(--spw-grid-min-active, 15rem), 11.25rem);
 }
 
 :where(html[data-spw-layout-tuner="wide"], body[data-spw-layout="wide"]) {
-  --spw-real-estate-inline: var(--page-width-wide, 84rem);
   --spw-layout-posture-measure-bias: 1.04;
 }
 
 :where(html[data-spw-layout-tuner="atlas"], body[data-spw-layout="atlas"]) {
-  --spw-real-estate-inline: var(--page-width-atlas, 96rem);
   --spw-layout-posture-measure-bias: 1.12;
   --spw-layout-posture-grid-bias: 1.14;
 }
@@ -24978,8 +25393,35 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
   --spw-pack-tier: roomy;
 }
 
+/* Main column spends the shell frame (rem), not prose measure (ch).
+   Duration tracks layout-selection micro pulse when the tuner changes. */
 :where(main, [data-spw-page-role="content"]) {
-  max-inline-size: min(100%, calc(var(--spw-real-estate-inline, 72rem) * var(--spw-layout-posture-measure-bias, 1)));
+  max-inline-size: min(
+    100%,
+    var(--spw-shell-frame-max, var(--spw-real-estate-frame, var(--page-width)))
+  );
+  transition:
+    max-inline-size var(--spw-layout-selection-duration, 280ms) var(--ease-settle, ease);
+}
+
+:where(
+  main :where(p, .frame-copy, .prose, [data-reading-region]),
+  [data-spw-region="read"],
+  [data-spw-region-role="reading"]
+) {
+  transition:
+    max-inline-size var(--spw-layout-selection-duration, 280ms) var(--ease-settle, ease);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(main, [data-spw-page-role="content"]),
+  :where(
+    main :where(p, .frame-copy, .prose, [data-reading-region]),
+    [data-spw-region="read"],
+    [data-spw-region-role="reading"]
+  ) {
+    transition: none;
+  }
 }
 
 :where(

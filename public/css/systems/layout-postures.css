@@ -2,6 +2,11 @@
    layout-postures.css
    --------------------------------------------------------------------------
    Layout tuner + explore posture + packing parity from settings/query surfaces.
+
+   Theory (see .spw/conventions/page-frame-sizing.spw)
+   - Frame (rem): --spw-shell-frame-cap / --spw-shell-frame-max / --spw-real-estate-frame
+   - Measure (ch): --spw-layout-measure / --spw-real-estate-inline / measure bias
+   - Posture bias multiplies measure and grid gap — not page-width rem into prose.
    ========================================================================== */
 
 :root {
@@ -11,23 +16,21 @@
 }
 
 :where(html[data-spw-layout-tuner="reading"], body[data-spw-layout="reading"]) {
-  --spw-real-estate-inline: var(--page-width-reading, 56rem);
   --spw-layout-posture-measure-bias: 0.92;
 }
 
-:where(html[data-spw-layout-tuner="newspaper"]) {
-  --spw-real-estate-inline: var(--page-width-newspaper, 68rem);
+:where(html[data-spw-layout-tuner="newspaper"], body[data-spw-layout="newspaper"]) {
+  /* Denser prose + slightly tighter grid — newspaper is not “wide”. */
+  --spw-layout-posture-measure-bias: 0.86;
   --spw-layout-posture-grid-bias: 1.08;
   --spw-grid-min-active: min(var(--spw-grid-min-active, 15rem), 11.25rem);
 }
 
 :where(html[data-spw-layout-tuner="wide"], body[data-spw-layout="wide"]) {
-  --spw-real-estate-inline: var(--page-width-wide, 84rem);
   --spw-layout-posture-measure-bias: 1.04;
 }
 
 :where(html[data-spw-layout-tuner="atlas"], body[data-spw-layout="atlas"]) {
-  --spw-real-estate-inline: var(--page-width-atlas, 96rem);
   --spw-layout-posture-measure-bias: 1.12;
   --spw-layout-posture-grid-bias: 1.14;
 }
@@ -58,8 +61,35 @@
   --spw-pack-tier: roomy;
 }
 
+/* Main column spends the shell frame (rem), not prose measure (ch).
+   Duration tracks layout-selection micro pulse when the tuner changes. */
 :where(main, [data-spw-page-role="content"]) {
-  max-inline-size: min(100%, calc(var(--spw-real-estate-inline, 72rem) * var(--spw-layout-posture-measure-bias, 1)));
+  max-inline-size: min(
+    100%,
+    var(--spw-shell-frame-max, var(--spw-real-estate-frame, var(--page-width)))
+  );
+  transition:
+    max-inline-size var(--spw-layout-selection-duration, 280ms) var(--ease-settle, ease);
+}
+
+:where(
+  main :where(p, .frame-copy, .prose, [data-reading-region]),
+  [data-spw-region="read"],
+  [data-spw-region-role="reading"]
+) {
+  transition:
+    max-inline-size var(--spw-layout-selection-duration, 280ms) var(--ease-settle, ease);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(main, [data-spw-page-role="content"]),
+  :where(
+    main :where(p, .frame-copy, .prose, [data-reading-region]),
+    [data-spw-region="read"],
+    [data-spw-region-role="reading"]
+  ) {
+    transition: none;
+  }
 }
 
 :where(

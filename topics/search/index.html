@@ -53,8 +53,17 @@
                 <p class="spec-kicker">Applied Learning Science / Search</p>
                 <h1 id="search-title">Search is a learning surface.</h1>
                 <p class="page-lede">A useful search system is not only a box. It helps you form a query, test a cue, recover a route, gather vocabulary, and compose the next arc with enough integrity to return later.</p>
-                <p class="frame-note">Use this page as a stub map for future search behavior: vocabulary powerups, regional powerups, rediscovery cues, and production conduits that turn curiosity into visible artifacts.</p>
-                <p class="frame-note">Practice rediscovery now: <span class="spw-effect-verb">hold</span> a living term below to gather it into the cauldron; cast a spell from <a href="#spell-ingredients">spell ingredients</a> when a route arc should return; tune <a href="/settings/">wonder memory</a> so neighboring topics pick up the thread; use <a href="/topics/software/spw/">Spw serialize</a> handles when you need a portable prompt packet.</p>
+                <div class="spw-site-search-host" data-spw-feature="site-search" data-spw-site-search-host>
+                    <form class="spw-site-search-host__form" action="/topics/search/" method="get" role="search">
+                        <label class="sr-only" for="site-search-q">Search routes</label>
+                        <input id="site-search-q" class="spw-site-search-host__input" type="search" name="q" placeholder="Search routes, surfaces, wonder…" autocomplete="off" enterkeyhint="search">
+                        <button class="spw-site-search-host__submit" type="submit">Search routes</button>
+                    </form>
+                    <div data-spw-site-search-results>
+                        <p class="frame-note">Without JavaScript, submit opens this page with <code>?q=</code>. With enhancement, <kbd>⌘K</kbd> / <kbd>Ctrl+K</kbd> opens the site search dialog anywhere.</p>
+                    </div>
+                </div>
+                <p class="frame-note">Practice rediscovery: <span class="spw-effect-verb">hold</span> a living term below to gather it into the cauldron; cast a spell from <a href="#spell-ingredients">spell ingredients</a> when a route arc should return; tune <a href="/settings/">wonder memory</a> so neighboring topics pick up the thread; use <a href="/topics/software/spw/">Spw serialize</a> handles when you need a portable prompt packet.</p>
                 <nav class="frame-operators" aria-label="Search handles">
                     <a class="operator-chip" href="#term-powerups" data-spw-operator="probe">? ask better query</a>
                     <a class="operator-chip" href="#term-powerups" data-spw-operator="address">#&gt; anchor vocabulary</a>

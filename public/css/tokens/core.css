@@ -458,7 +458,14 @@
   --inset-panel: var(--spw-component-pad-tight);
   --inset-ritual: clamp(1.2rem, 2.4vw, 1.8rem);
 
-  /* -- Spatial Anchors -- */
+  /* -- Spatial Anchors --
+     Three ladders, three units — do not cross them casually:
+       space-* / rhythm     → spacing quantum (rem, derived)
+       measure-*            → prose line length (ch)
+       page-width-*         → page column caps (rem)
+     Frame (page-width) owns main/footer max-width.
+     Measure (ch) owns prose max-inline-size inside frames.
+     Gutter is inset, never subtracted again from max-width. */
   --header-height: 4rem;
   --shell-header-height: var(--header-height);
   --page-width: 72rem;
@@ -542,6 +549,7 @@
   --site-sans-font: var(--font-family-sans);
   --site-display-font: var(--font-family-display);
 
+  /* Prose measure ladder (ch) — line length, not page frame */
   --measure-compact: 32ch;
   --measure-card: 42ch;
   --measure-panel: 52ch;
@@ -2188,8 +2196,10 @@ html[data-spw-semantic-density="rich"] {
   --spw-region-fill-alpha: 0.07;
   --spw-control-contrast-lift: 0.16;
   --spw-spacing-scale: 1;
+  /* Settings layout tuner (site-settings-engine may overwrite).
+     measure = prose (ch); frame-max = column cap (rem); keep units distinct. */
   --spw-layout-measure: 72ch;
-  --spw-layout-frame-max: var(--page-width-reading, 68rem);
+  --spw-layout-frame-max: var(--page-width-reading);
   --spw-layout-column-min: 16rem;
   --spw-interaction-scale: 1;
   --spw-region-frame-line: color-mix(in srgb, var(--active-op-color) calc(var(--spw-region-frame-alpha) * 100%), var(--line));

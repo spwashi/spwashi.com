@@ -571,10 +571,9 @@ function buildMenuSnapshot(header, nav, navList, state, open, source) {
   const phase = resolveMenuPhase(state, open, source);
   const intent = resolveMenuIntent({ open, phase, pressure });
   const returnPaths = describeReturnPaths(open);
-  const locking = open
-    && state.mode === MODES.TOGGLE
-    && topology === TOPOLOGIES.SCREEN_FIELD
-    && pointer !== 'coarse'
+  // Any open toggle field owns page scroll. Menu panels scroll internally;
+  // the page stays put so drawer/screen fields do not drift under the finger.
+  const locking = open && state.mode === MODES.TOGGLE
     ? 'locked'
     : 'permeable';
 
@@ -685,6 +684,36 @@ function clearHeaderPointerField(header) {
   removeDatasetValues(header, ['spwShellPointer']);
 }
 
+let shellScrollLockTouchBound = false;
+
+function isInsideShellMenuScrollSurface(target) {
+  if (!(target instanceof Element)) return false;
+  return Boolean(
+    target.closest(
+      '.site-header[data-spw-menu="open"] nav, body > header[data-spw-menu="open"] nav, '
+      + '.site-header[data-spw-menu="open"] .spw-route-menu-panel, body > header[data-spw-menu="open"] .spw-route-menu-panel',
+    ),
+  );
+}
+
+function handleShellScrollLockTouchMove(event) {
+  if (document.documentElement.dataset.spwShellMenuLock !== 'true') return;
+  if (event.touches && event.touches.length > 1) return;
+  if (isInsideShellMenuScrollSurface(event.target)) return;
+  event.preventDefault();
+}
+
+function bindShellScrollLockTouchGuard(shouldLock) {
+  if (shouldLock === shellScrollLockTouchBound) return;
+  if (shouldLock) {
+    document.addEventListener('touchmove', handleShellScrollLockTouchMove, { passive: false });
+    shellScrollLockTouchBound = true;
+    return;
+  }
+  document.removeEventListener('touchmove', handleShellScrollLockTouchMove);
+  shellScrollLockTouchBound = false;
+}
+
 function syncShellLock(snapshot) {
   const shouldLock = snapshot.locking === 'locked';
 
@@ -700,6 +729,8 @@ function syncShellLock(snapshot) {
       reason: 'menu-scroll-lock',
     });
   });
+
+  bindShellScrollLockTouchGuard(shouldLock);
 
   syncFloatingChromeState(document, {
     source: 'shell-disclosure',
@@ -2271,6 +2302,7 @@ export function initSpwShellDisclosure(options = {}) {
       removeDatasetValues(toggle, MENU_DATASET_KEYS);
       removeDatasetValues(document.documentElement, ['spwShellMenuLock']);
       removeDatasetValues(document.body, ['spwShellMenuLock']);
+      bindShellScrollLockTouchGuard(false);
       document.documentElement.style.removeProperty('--spw-shell-menu-offset');
     },
     refresh(nextOptions = {}) {

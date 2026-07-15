@@ -1,0 +1,94 @@
+# Page Frame And Sizing Tokens
+#
+# Canonical theory for page column (frame) vs prose line length (measure)
+# vs spacing quantum (rhythm). Spent by shell/layout.css, tokens/core.css,
+# tokens/dimensions.css, systems/layout-postures.css, and settings tuners.
+
+#>page_frame_sizing
+#:convention #!layout #!tokens #!css
+#:layer #!pragmatics
+#:operation #!align
+
+@css_layout: ~"../../public/css/shell/layout.css"
+@css_core: ~"../../public/css/tokens/core.css"
+@css_dimensions: ~"../../public/css/tokens/dimensions.css"
+@css_postures: ~"../../public/css/systems/layout-postures.css"
+@settings_profiles: ~"../../public/js/kernel/site-settings-profiles.js"
+@hypermedia_2d: ~"./hypermedia-2d.spw"
+@dimension_vocabulary: ~"./dimension-vocabulary.spw"
+
+^"unit_ladders"{
+  rhythm: .{
+    unit = `rem (derived)`
+    tokens = #[`--space-*`, `--spw-rhythm-unit`, `--page-gutter`, gaps, pads][reg=set]
+    spend = `spacing between things — never page max-width`
+  }
+  measure: .{
+    unit = `ch`
+    tokens = #[`--measure-*`, `--spw-layout-measure`, `--shell-reading-measure`, `--spw-real-estate-inline`][reg=set]
+    spend = `prose and reading max-inline-size inside a frame`
+  }
+  frame: .{
+    unit = `rem (or % of body content box)`
+    tokens = #[`--page-width-*`, `--spw-shell-frame-cap`, `--spw-layout-frame-max`, `--spw-shell-frame-max`, `--spw-main-width`, `--spw-real-estate-frame`][reg=set]
+    spend = `main/footer column max-width — not line length`
+  }
+  rule = `Do not assign rem page-width to real-estate-inline or ch measure to shell-frame-max.`
+}
+
+^"outside_in"{
+  1_body = `env(safe-area-*) only — device edge`
+  2_gutter = `--page-gutter-inline on header / main / footer — shared content edge`
+  3_frame_cap = `--spw-shell-frame-cap from data-spw-layout (route)`
+  4_frame_tuner = `--spw-layout-frame-max from layoutTuner settings`
+  5_frame_spent = `--spw-shell-frame-max = min(cap, tuner, 100%); re-resolve on body after the authored route cap and on main for local overrides`
+  6_measure = `--spw-layout-measure / --shell-reading-measure for prose (ch)`
+  7_no_double_gutter = `never max-width: 100vw - 2*gutter when padding already owns gutter`
+}
+
+^"owners"{
+  route_layout = `body[data-spw-layout] sets --spw-shell-frame-cap`
+  settings_tuner = `layoutTuner profile writes --spw-layout-measure + --spw-layout-frame-max`
+  shell = `layout.css spends --spw-shell-frame-max on main; footer uses same frame max`
+  postures = `layout-postures.css biases measure/grid; does not reassign rem to prose inline`
+  dimensions = `real-estate-frame ↔ frame; real-estate-inline ↔ measure; block/section ↔ vertical gaps`
+}
+
+^"canonical_page_widths"{
+  reading = `56rem`
+  newspaper = `68rem`
+  default = `72rem (--page-width)`
+  wide = `84rem`
+  atlas = `104rem`
+  note = `Fallbacks in JS/CSS must match these tokens exactly — no 68rem-for-reading or 96rem-for-atlas drift.`
+}
+
+^"selection"{
+  layout_tuner = `settings layoutTuner → data-spw-layout-tuner + data-spw-layout via resolveLayoutFromTuner (newspaper stays newspaper)`
+  layout_pulse = `data-spw-layout-selection-pulse for --spw-layout-selection-duration while measure/frame re-resolve`
+  variant = `spw:variant-selected + data-spw-variant-selection-pulse raise --spw-variant-selection-weight`
+  measure_spend = `region read / prose max-inline-size = measure * posture measure-bias (ch)`
+  frame_spend = `main max-inline-size = shell-frame-max (rem)`
+}
+
+^"timing"{
+  pulse_duration = `--spw-microinteraction-pulse-duration (settings interactionTuner)`
+  pulse_intensity = `--spw-microinteraction-pulse-intensity`
+  layout_selection_duration = `--spw-layout-selection-duration → aliases pulse duration`
+  variant_selection_duration = `--spw-variant-selection-duration → aliases pulse duration`
+  phase_ladder = `idle → approach → prime → charge → inspect → discover → settle; layout selection → approach; variant → prime`
+  @interaction_microstates = ~"./interaction-microstates.spw"
+}
+
+^"do_not"{
+  - `Use 100vw for main frame when body already has safe-area padding`
+  - `Subtract page-gutter from max-width while also padding-inline: gutter`
+  - `Set --spw-real-estate-inline to a page-width rem (breaks typography ch math)`
+  - `Map layoutTuner newspaper → layout wide (loses page-width-newspaper)`
+  - `Invent route-local main max-width in px without going through --spw-main-width / frame-cap`
+  - `Hardcode 220ms for micro pulses when --spw-microinteraction-pulse-duration exists`
+}
+
+next_action: .{
+  step = `When changing layout width, edit frame-cap or layoutTuner profile — not prose measure tokens.`
+}

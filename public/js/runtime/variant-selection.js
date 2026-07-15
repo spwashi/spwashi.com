@@ -2,16 +2,20 @@
  * variant-selection.js
  * ---------------------------------------------------------------------------
  * Component variant selection: mode panels, semantic variants, query override.
+ * Couples selection to measure/frame theory via selection weight + micro pulse.
  */
 
 import { observeAddedMatches } from '/public/js/kernel/dom-contracts.js';
 import { parseModularQuery } from '/public/js/kernel/query-composer.js';
 import { queryParamsToSettingsPartial } from '/public/js/kernel/settings-query-parity.js';
+import { readMicrointeractionPulseMs } from './pulse-beat-tuner.js';
 
 const VARIANT_HOST_SELECTOR = '.site-frame, .frame-card, [data-spw-feature], [data-spw-semantic-variant], [data-spw-content-variant]';
 const MODE_BUTTON_SELECTOR = '.mode-switch [data-set-mode]';
+const VARIANT_EVENT = 'spw:variant-selected';
 
 let initialized = false;
+let selectionPulseTimer = null;
 
 function readQueryVariant() {
   const { params } = parseModularQuery(window.location.search);
@@ -19,12 +23,30 @@ function readQueryVariant() {
   return partial.componentVariant || params.variant || '';
 }
 
-function clearVariantMarks(root) {
-  root.querySelectorAll('[data-spw-variant-selected="true"]').forEach((node) => {
+function clearVariantMarks(scope) {
+  if (!(scope instanceof Element) && !(scope instanceof Document)) return;
+  scope.querySelectorAll('[data-spw-variant-selected="true"]').forEach((node) => {
     delete node.dataset.spwVariantSelected;
   });
-  root.querySelectorAll('[data-spw-component-variant-active]').forEach((node) => {
+  scope.querySelectorAll('[data-spw-component-variant-active]').forEach((node) => {
     delete node.dataset.spwComponentVariantActive;
+    delete node.dataset.spwVariantSelectionSource;
+  });
+}
+
+function clearGroupVariantMarks(root, group) {
+  if (!group) {
+    clearVariantMarks(root);
+    return;
+  }
+  const escaped = CSS.escape(group);
+  root.querySelectorAll(`[data-mode-group="${escaped}"][data-mode-panel]`).forEach((panel) => {
+    delete panel.dataset.spwVariantSelected;
+    const host = panel.closest(VARIANT_HOST_SELECTOR);
+    if (host instanceof HTMLElement) {
+      delete host.dataset.spwComponentVariantActive;
+      delete host.dataset.spwVariantSelectionSource;
+    }
   });
 }
 
@@ -35,6 +57,21 @@ function variantFromPanel(panel) {
     || panel.getAttribute('data-mode-panel')
     || panel.id
     || '';
+}
+
+function pulseRootSelection(html, source, variant) {
+  if (!(html instanceof HTMLElement)) return;
+  html.dataset.spwVariantSelectionSource = source;
+  html.dataset.spwVariantSelectionPulse = variant || source;
+  html.dataset.spwVariantSelectionWeight = 'raised';
+
+  if (selectionPulseTimer) window.clearTimeout(selectionPulseTimer);
+  const pulseMs = readMicrointeractionPulseMs(html.ownerDocument || document);
+  selectionPulseTimer = window.setTimeout(() => {
+    delete html.dataset.spwVariantSelectionPulse;
+    delete html.dataset.spwVariantSelectionWeight;
+    delete html.dataset.spwVariantSelectionSource;
+  }, pulseMs);
 }
 
 function applyVariant(host, variant, source = 'mode') {
@@ -52,7 +89,14 @@ function applyVariant(host, variant, source = 'mode') {
   }
 }
 
-function syncModeSwitch(group, mode, root) {
+function emitVariantSelected(detail) {
+  document.dispatchEvent(new CustomEvent(VARIANT_EVENT, {
+    detail,
+    bubbles: true,
+  }));
+}
+
+function syncModeSwitch(group, mode, root, source = 'mode') {
   const buttons = [...root.querySelectorAll(`.mode-switch [data-mode-group="${CSS.escape(group)}"][data-set-mode]`)];
   const panels = [...root.querySelectorAll(`[data-mode-group="${CSS.escape(group)}"][data-mode-panel]`)];
   if (!buttons.length && !panels.length) return;
@@ -67,7 +111,7 @@ function syncModeSwitch(group, mode, root) {
     panel.hidden = !active;
     if (active) {
       const host = panel.closest(VARIANT_HOST_SELECTOR);
-      if (host) applyVariant(host, variantFromPanel(panel), 'mode');
+      if (host) applyVariant(host, variantFromPanel(panel), source);
     }
   });
 }
@@ -83,12 +127,11 @@ function bindModeSwitches(root, controller) {
       const group = button.getAttribute('data-mode-group');
       const mode = button.getAttribute('data-set-mode');
       if (!group || !mode) return;
-      clearVariantMarks(root);
-      syncModeSwitch(group, mode, root);
-      document.dispatchEvent(new CustomEvent('spw:variant-selected', {
-        detail: { group, variant: mode, source: 'mode-switch' },
-        bubbles: true,
-      }));
+      clearGroupVariantMarks(root, group);
+      syncModeSwitch(group, mode, root, 'mode-switch');
+      const html = root.documentElement || document.documentElement;
+      pulseRootSelection(html, 'mode-switch', mode);
+      emitVariantSelected({ group, variant: mode, source: 'mode-switch' });
     }, { signal: controller.signal });
   });
 }
@@ -107,11 +150,16 @@ function primeFromQuery(root) {
   const group = target.getAttribute('data-mode-group');
   const mode = target.getAttribute('data-mode-panel') || variant;
 
-  clearVariantMarks(root);
-  applyVariant(host, variant, 'query');
-  if (group) syncModeSwitch(group, mode, root);
+  if (group) clearGroupVariantMarks(root, group);
+  else clearVariantMarks(root);
 
-  document.documentElement.dataset.spwQueryVariant = variant;
+  applyVariant(host, variant, 'query');
+  if (group) syncModeSwitch(group, mode, root, 'query');
+
+  const html = root.documentElement || document.documentElement;
+  html.dataset.spwQueryVariant = variant;
+  pulseRootSelection(html, 'query', variant);
+  emitVariantSelected({ group: group || null, variant, source: 'query' });
 }
 
 export function initVariantSelection(root = document) {
@@ -137,6 +185,12 @@ export function initVariantSelection(root = document) {
 
   controller.signal.addEventListener('abort', () => {
     disconnect();
+    if (selectionPulseTimer) window.clearTimeout(selectionPulseTimer);
+    selectionPulseTimer = null;
+    const html = root.documentElement || document.documentElement;
+    delete html.dataset.spwVariantSelectionPulse;
+    delete html.dataset.spwVariantSelectionWeight;
+    delete html.dataset.spwVariantSelectionSource;
     root.querySelectorAll('[data-spw-variant-bound]').forEach((button) => {
       if (button instanceof HTMLElement) delete button.dataset.spwVariantBound;
     });
@@ -145,3 +199,5 @@ export function initVariantSelection(root = document) {
 
   return () => controller.abort();
 }
+
+export { VARIANT_EVENT };

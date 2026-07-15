@@ -1212,7 +1212,10 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
     background: color-mix(in oklab, var(--bg, #111) 52%, transparent);
     backdrop-filter: blur(4px) saturate(0.94);
     -webkit-backdrop-filter: blur(4px) saturate(0.94);
-    pointer-events: none;
+    /* Capture outside taps/scroll so the dimmed page does not activate under the field. */
+    pointer-events: auto;
+    touch-action: none;
+    cursor: default;
   }
 
   .site-header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"]:has(.spw-nav-toggle[aria-expanded="true"]) nav,

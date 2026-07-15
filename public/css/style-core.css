@@ -46,6 +46,7 @@
 @import url('/public/css/components/gesture-anatomy.css') layer(components);
 @import url('/public/css/components/page-anatomy.css') layer(components);
 @import url('/public/css/components/floating-chrome.css') layer(components);
+@import url('/public/css/components/site-search.css') layer(components);
 @import url('/public/css/components/runtime-states.css') layer(components);
 @import url('/public/css/components/query-composer.css') layer(components);
 @import url('/public/css/components/embedded-workshop.css') layer(components);

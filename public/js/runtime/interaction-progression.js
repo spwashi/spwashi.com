@@ -288,10 +288,45 @@ export function initInteractionProgression(root = document) {
     writePhase(html, 'discover', { source: 'swipe-rail', force: true });
   };
 
+  const onVariantSelected = (event) => {
+    const source = event.detail?.source || 'variant';
+    // Selection is a deliberate commit — prime, not a full discover arc.
+    writePhase(html, 'prime', {
+      source: 'variant-selection',
+      variant: event.detail?.variant,
+      selectionSource: source,
+      force: true,
+    });
+  };
+
+  let lastLayoutTuner = html.dataset.spwLayoutTuner || '';
+  const onSettingsLayoutSelection = () => {
+    const nextTuner = html.dataset.spwLayoutTuner || '';
+    if (!nextTuner || nextTuner === lastLayoutTuner) {
+      lastLayoutTuner = nextTuner;
+      return;
+    }
+    lastLayoutTuner = nextTuner;
+    html.dataset.spwLayoutSelectionPulse = nextTuner;
+    writePhase(html, 'approach', {
+      source: 'layout-selection',
+      layoutTuner: nextTuner,
+      force: true,
+    });
+    window.setTimeout(() => {
+      if (html.dataset.spwLayoutSelectionPulse === nextTuner) {
+        delete html.dataset.spwLayoutSelectionPulse;
+      }
+    }, readMicrointeractionPulseMs(html.ownerDocument || document));
+  };
+
   document.addEventListener('spw:image-lens', onImageLens, { signal });
   document.addEventListener('spw:image-swipe', onImageSwipe, { signal });
   document.addEventListener('spw:discovery-reward', onDiscovery, { signal });
   document.addEventListener('spw:loading-ecology', onEcology, { signal });
+  document.addEventListener('spw:variant-selected', onVariantSelected, { signal });
+  document.addEventListener('spw:settings:changed', onSettingsLayoutSelection, { signal });
+  document.addEventListener('spw:settings-change', onSettingsLayoutSelection, { signal });
   document.addEventListener('pointerdown', onPointerDown, { signal, capture: true });
   document.addEventListener('focusin', onFocusIn, { signal, capture: true });
   document.addEventListener('focusout', onFocusOut, { signal, capture: true });

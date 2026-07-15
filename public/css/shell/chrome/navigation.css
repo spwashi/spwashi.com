@@ -1405,8 +1405,7 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
   max-height: min(80dvh, 38rem);
   overflow-x: hidden;
   overflow-y: auto;
-  overscroll-behavior-x: contain;
-  overscroll-behavior-y: auto;
+  overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
   touch-action: pan-y pinch-zoom;
   padding: 0.3rem;

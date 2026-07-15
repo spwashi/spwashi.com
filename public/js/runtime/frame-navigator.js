@@ -267,12 +267,21 @@ class SpwFrameNavigator {
 
         const spellG = document.createElement('span'); spellG.className = 'spw-spell'; spellG.textContent = 'g';
         const spellBrackets = document.createElement('span'); spellBrackets.className = 'spw-spell'; spellBrackets.textContent = '[ ]';
+        const spellSlash = document.createElement('span'); spellSlash.className = 'spw-spell'; spellSlash.textContent = '/';
         const spellEsc = document.createElement('span'); spellEsc.className = 'spw-spell'; spellEsc.textContent = 'esc';
+        const spellSite = document.createElement('button');
+        spellSite.type = 'button';
+        spellSite.className = 'spw-runtime-settings-link';
+        spellSite.setAttribute('data-spw-site-search-open', '');
+        spellSite.textContent = '⌘K site';
 
         spells.append(
             spellG, document.createTextNode(' map '),
             spellBrackets, document.createTextNode(' traverse '),
+            spellSlash, document.createTextNode(' filter '),
             spellEsc, document.createTextNode(' close '),
+            spellSite,
+            document.createTextNode(' · '),
             document.createElement('a') // settings link (created below)
         );
 

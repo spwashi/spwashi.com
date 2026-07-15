@@ -126,11 +126,17 @@
 }
 
 :where([data-spw-region="read"], [data-spw-region-role="reading"]) {
-  max-inline-size: var(--spw-layout-measure, 72ch);
+  max-inline-size: min(
+    100%,
+    calc(
+      min(var(--measure-reading, 68ch), var(--spw-layout-measure, 72ch))
+      * var(--spw-layout-posture-measure-bias, 1)
+    )
+  );
 }
 
 :where([data-spw-region="wide"], [data-spw-region-role="atlas"]) {
-  max-inline-size: var(--spw-layout-frame-max, var(--page-width-wide, 82rem));
+  max-inline-size: var(--spw-shell-frame-max, var(--spw-layout-frame-max, var(--page-width-wide)));
 }
 
 :where([data-spw-region="cluster"], [data-spw-region-role="settings-cluster"]) {

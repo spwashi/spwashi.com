@@ -36,7 +36,28 @@
     `interaction-progression.js — hover/focus/tap/pinch/swipe/ecology/image`
     `brace-gestures.js — data-spw-gesture on local targets`
     `pinch-scale.js — data-spw-pinch-scaling during text scale preview`
+    `variant-selection.js — spw:variant-selected → prime + selection pulse`
+    `layout selection — settings layoutTuner change → approach + layout-selection-pulse`
   ][reg=set]
+  resting: #[`idle`, `settle`][reg=set]
+  resting_rule: `settle and idle do not pin the ladder; a new interaction may start a fresh arc`
+}
+
+^"selection_arcs"{
+  layout: .{
+    attrs: #[`data-spw-layout`, `data-spw-layout-tuner`, `data-spw-layout-selection-pulse`][reg=set]
+    tokens: #[`--spw-layout-selection-duration`, `--spw-layout-measure`, `--spw-shell-frame-max`][reg=set]
+    phase: `approach`
+    owner: `settings-query-parity + interaction-progression`
+  }
+  variant: .{
+    attrs: #[`data-spw-variant-selected`, `data-spw-component-variant-active`, `data-spw-variant-selection-pulse`][reg=set]
+    tokens: #[`--spw-variant-selection-weight`, `--spw-variant-selection-duration`][reg=set]
+    phase: `prime`
+    event: `spw:variant-selected`
+    owner: `variant-selection.js`
+  }
+  measure_vs_frame: `layout selection re-resolves frame (rem) and measure (ch) separately — see page-frame-sizing.spw`
 }
 
 ^"reward_contract"{

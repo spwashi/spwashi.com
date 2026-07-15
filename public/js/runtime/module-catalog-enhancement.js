@@ -262,6 +262,26 @@ export const ENHANCEMENT_DEFS = [
     },
   },
   {
+    id: 'site-search',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IDLE,
+    selector: 'body',
+    rootMode: 'single',
+    describes: 'sitewide route probe dialog over public/data/site-search-index.json; Ctrl/Cmd+K and ?',
+    updates: ['data-spw-site-search', 'data-spw-search-selection-pulse'],
+    evaluates: 'route retrieval, rediscovery, query-to-route navigation',
+    timingArc: 'enhance-search',
+    timingChunk: 'idle-chrome',
+    effectScope: 'floating-chrome listeners fetch root-state',
+    costClass: COST_CLASS.DEMAND_COUPLED,
+    load: () => import('./site-search.js'),
+    mount: (mod, ctx) => {
+      const fn = mod?.initSiteSearch;
+      if (!isFn(fn)) return;
+      return fn(ctx?.root || document);
+    },
+  },
+  {
     id: 'observation-beats',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IDLE,

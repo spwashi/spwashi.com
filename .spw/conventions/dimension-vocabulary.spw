@@ -62,7 +62,11 @@
   layout_posture: .{
     attrs = #[`data-spw-layout`, `data-spw-layout-posture`, `data-spw-explore-posture`, `data-spw-layout-tuner`, `data-spw-query-parity`][reg=set]
     tokens = #[`--spw-layout-posture-weight`, `--spw-layout-posture-measure-bias`, `--spw-layout-posture-grid-bias`][reg=set]
+    frame_tokens = #[`--spw-shell-frame-cap`, `--spw-shell-frame-max`, `--spw-real-estate-frame`][reg=set]
+    measure_tokens = #[`--spw-layout-measure`, `--spw-real-estate-inline`, `--shell-reading-measure`][reg=set]
     css = ~"../../public/css/systems/layout-postures.css"
+    @page_frame_sizing = ~"./page-frame-sizing.spw"
+    rule = `frame = rem page column; measure = ch prose — layout attrs set frame-cap, not real-estate-inline`
   }
 
   attention: .{

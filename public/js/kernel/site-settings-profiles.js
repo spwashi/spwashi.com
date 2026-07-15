@@ -120,11 +120,28 @@ const SPACING_TUNER_PROFILE = Object.freeze({
   roomy: Object.freeze({scale: 1.16})
 });
 
+/* Frame caps use page-width-* (rem). Measures use ch. Never swap units. */
 const LAYOUT_TUNER_PROFILE = Object.freeze({
-  reading: Object.freeze({measure: '72ch', frameMax: 'var(--page-width-reading, 68rem)', columnMin: '16rem'}),
-  newspaper: Object.freeze({measure: '54ch', frameMax: 'var(--page-width-wide, 84rem)', columnMin: '11.25rem'}),
-  wide: Object.freeze({measure: '82ch', frameMax: 'var(--page-width-wide, 82rem)', columnMin: '18rem'}),
-  atlas: Object.freeze({measure: '92ch', frameMax: 'var(--page-width-atlas, 96rem)', columnMin: '20rem'})
+  reading: Object.freeze({
+    measure: '72ch',
+    frameMax: 'var(--page-width-reading)',
+    columnMin: '16rem',
+  }),
+  newspaper: Object.freeze({
+    measure: '54ch',
+    frameMax: 'var(--page-width-newspaper)',
+    columnMin: '11.25rem',
+  }),
+  wide: Object.freeze({
+    measure: '82ch',
+    frameMax: 'var(--page-width-wide)',
+    columnMin: '18rem',
+  }),
+  atlas: Object.freeze({
+    measure: '92ch',
+    frameMax: 'var(--page-width-atlas)',
+    columnMin: '20rem',
+  }),
 });
 
 const INTERACTION_TUNER_PROFILE = Object.freeze({

@@ -139,8 +139,9 @@
 
   padding-top: 0;
   padding-bottom: max(var(--shell-header-pad-block), 0.16rem);
-  padding-left: max(var(--shell-header-pad-inline), env(safe-area-inset-left));
-  padding-right: max(var(--shell-header-pad-inline), env(safe-area-inset-right));
+  /* Body already owns safe-area insets; align content edge with main/footer. */
+  padding-left: var(--shell-header-pad-inline, var(--page-gutter-inline, 1rem));
+  padding-right: var(--shell-header-pad-inline, var(--page-gutter-inline, 1rem));
 
   color: var(--ink, rgba(14, 18, 20, 0.92));
   opacity: var(--spw-header-opacity-local);
@@ -197,11 +198,15 @@
   --spw-header-opacity-local: 0.97;
 }
 
-@media (pointer: fine) {
-  /* Menu lock is for shell navigation only. */
-  :where(html[data-spw-shell-menu-lock="true"], body[data-spw-shell-menu-lock="true"]) {
-    overflow: hidden;
-  }
+/* Open toggle menus own page scroll on every pointer class. Avoid position:fixed
+   on body — the sticky shell must stay pinned while the route field is open. */
+:where(html[data-spw-shell-menu-lock="true"], body[data-spw-shell-menu-lock="true"]) {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+:where(html[data-spw-shell-menu-lock="true"]) {
+  height: 100%;
 }
 
 :where(.site-header[data-spw-shell-scroll="lifted"], body > header[data-spw-shell-scroll="lifted"]) {
@@ -406,6 +411,18 @@ body > header:has(.spw-spell-path) .spw-header-actions {
     0 2px 7px rgba(14, 18, 20, 0.034);
   outline: none;
   transform: translateY(-1px);
+}
+
+.spw-header-action--search {
+  flex: 0 0 auto;
+  inline-size: auto;
+  min-inline-size: var(--touch-target-min, 2.75rem);
+  padding-inline: 0.7rem;
+  color: color-mix(in oklab, var(--ink, rgba(14, 18, 20, 0.92)) 78%, var(--op-probe-color, #6a3fb8) 22%);
+  font-size: var(--text-size-label, 0.76rem);
+  font-weight: 720;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .spw-header-action--cauldron {

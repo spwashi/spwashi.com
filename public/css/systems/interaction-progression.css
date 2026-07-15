@@ -7,7 +7,12 @@
 :root {
   --spw-interaction-phase-weight: 0;
   --spw-microinteraction-pulse-scale: 1;
+  --spw-microinteraction-pulse-duration: 280ms;
+  --spw-microinteraction-pulse-intensity: 1;
   --spw-interaction-phase-tuning: 1;
+  /* Selection arcs share the micro pulse quantum (settings may overwrite). */
+  --spw-layout-selection-duration: var(--spw-microinteraction-pulse-duration, 280ms);
+  --spw-variant-selection-duration: var(--spw-microinteraction-pulse-duration, 280ms);
 }
 
 :where(html[data-spw-enhancement-level="minimal"]) {
@@ -62,7 +67,9 @@
 }
 
 :where(html[data-spw-microinteraction-pulse]) {
-  --spw-microinteraction-pulse-scale: 1.012;
+  --spw-microinteraction-pulse-scale: calc(
+    1 + (0.012 * var(--spw-microinteraction-pulse-intensity, 1))
+  );
 }
 
 :where(html[data-spw-microinteraction-pulse] :where(
@@ -71,9 +78,33 @@
   .study-summary
 )) {
   transition:
-    box-shadow 220ms var(--ease-settle, ease),
-    border-color 220ms var(--ease-settle, ease),
-    transform 220ms var(--ease-settle, ease);
+    box-shadow var(--spw-microinteraction-pulse-duration, 280ms) var(--ease-settle, ease),
+    border-color var(--spw-microinteraction-pulse-duration, 280ms) var(--ease-settle, ease),
+    transform var(--spw-microinteraction-pulse-duration, 280ms) var(--ease-settle, ease);
+}
+
+/* Variant selection — weight rise is residue-shaped only while pulse is live. */
+:where([data-spw-variant-selected="true"]) {
+  --spw-variant-selection-weight: 0.72;
+}
+
+:where(html[data-spw-variant-selection-pulse], html[data-spw-variant-selection-weight="raised"]) {
+  --spw-variant-selection-weight: 0.58;
+  --spw-interaction-phase-weight: 0.42;
+}
+
+:where(html[data-spw-layout-selection-pulse]) {
+  --spw-interaction-phase-weight: 0.32;
+}
+
+:where(
+  [data-spw-variant-selected="true"],
+  [data-spw-component-variant-active]
+) {
+  transition:
+    border-color var(--spw-variant-selection-duration, 280ms) var(--ease-settle, ease),
+    box-shadow var(--spw-variant-selection-duration, 280ms) var(--ease-settle, ease),
+    background-color var(--spw-variant-selection-duration, 280ms) var(--ease-settle, ease);
 }
 
 :where(html[data-spw-microinteraction-pulse="prime"] :where([data-spw-image-interaction-state="primed"])) {
@@ -93,6 +124,22 @@
 
 :where(html[data-spw-reduce-motion="on"]) {
   --spw-microinteraction-pulse-scale: 1;
+}
+
+:where(html[data-spw-reduce-motion="on"] :where(
+  [data-spw-variant-selected="true"],
+  [data-spw-component-variant-active]
+)) {
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(
+    [data-spw-variant-selected="true"],
+    [data-spw-component-variant-active]
+  ) {
+    transition: none;
+  }
 }
 
 /* --------------------------------------------------------------------------

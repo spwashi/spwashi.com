@@ -25,11 +25,13 @@
 
   margin-top: auto;
   min-height: var(--shell-footer-min-height);
+  /* Horizontal: same page gutter as main (body owns safe-area).
+     Bottom: keep safe-area + floating-chrome clearance for end-of-page reach. */
   padding:
     clamp(1rem, 2.1vw, 1.55rem)
-    max(var(--page-gutter-inline), env(safe-area-inset-right))
+    var(--page-gutter-inline, 1rem)
     calc(clamp(1rem, 2.1vw, 1.55rem) + env(safe-area-inset-bottom) + var(--spw-bottom-chrome-clearance, 0px))
-    max(var(--page-gutter-inline), env(safe-area-inset-left));
+    var(--page-gutter-inline, 1rem);
   box-sizing: border-box;
   background:
     linear-gradient(
@@ -49,7 +51,8 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
 }
 
 .site-footer__inner {
-  width: min(100%, var(--page-width));
+  /* Share the layout-variant frame cap with main when body sets it. */
+  width: min(100%, var(--spw-shell-frame-max, var(--page-width)));
   margin-inline: auto;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));

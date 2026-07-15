@@ -163,10 +163,10 @@ body[data-spw-surface="about"] {
 
 [data-spw-surface="about"] main {
   gap: clamp(1.05rem, 2.3vw, 1.55rem);
-  /* Essay-weighted route: newspaper measure keeps frames close to the prose
-     column instead of leaving a wide interior void at desktop widths. */
-  max-width: min(var(--page-width-newspaper, 68rem), calc(100vw - (var(--page-gutter-inline, 1rem) * 2)));
-  margin-top: clamp(0.8rem, 1.5vw, 1.25rem);
+  /* Essay-weighted route: newspaper frame cap; spent width still mins with
+     layout tuner. Gutter lives in padding only. */
+  --spw-shell-frame-cap: var(--page-width-newspaper);
+  margin-block-start: clamp(0.8rem, 1.5vw, 1.25rem);
 }
 
 [data-spw-surface="about"] main > section + section,
