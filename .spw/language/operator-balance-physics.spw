@@ -1,0 +1,66 @@
+# Operator Balance Physics — generalized resolution geometries
+#
+# Generalization of the &-first selection gesture (subject-balance-ux): one
+# gesture loop — take, open valence, preview by photon, commit by bond — with
+# the RESOLUTION move owned by each operator's geometry. Braces resolve too,
+# by containment rather than symmetry.
+
+#>operator_balance_physics
+#:language #!sigils #!physics #!geometry #!interaction
+#:operation #!contract #!prime
+#:fixity #!tending
+
+@subject_balance: ~"./subject-balance-ux.spw"
+@lore_alignment: ~"./lore-alignment.spw"
+@sigil_geometry: ~"./sigil-geometry-lore.spw"
+@definitions: ~"../../public/js/kernel/shared.js"
+@demo: ~"../../design/experiments/subject-balance/index.html"
+@language_index: ~"./index.spw"
+
+operation = "contract prime"
+fixity = "tending"
+
+purpose: .{
+  plain = `The gesture loop is invariant; the physics is not. Every operator answers the same four questions differently: what does taking it hold? which way does its valence open? what does a photon do in passage? and by what move does it resolve?`
+  source_of_truth = `OPERATOR_GEOMETRY in @definitions already carries the static half (leftRole, rightRole, flow, chargeRole); this contract adds the dynamic half — the resolution move — and the demo at @demo makes six of them playable.`
+}[reg=facet]
+
+^"valence_signature"{
+  claim = `Each operator has a valence signature: (arity, direction, elasticity).`
+  axes: .{
+    arity = `how many operands the mark seeks: 1 (&, #>, ~), 1-of-n (?), n (^, braces)`
+    direction = `which way the open valence points: forward (&, #>, ~, ?), upward (^), inward (braces). Direction is rendered physically — the expression tilts, reaches, or opens toward its missing operand, so charge is visible as geometry.`
+    elasticity = `whether resolution discharges the tension (plastic: pair, anchor, collapse, lift, seal) or holds it (elastic: tether). Reversibility fields in @definitions map here: 'returnable' marks resolve plastically but can re-open; ~ is the deliberately elastic case.`
+  }[reg=facet]
+}[reg=facet]
+
+^"resolution_moves"{
+  claim = `Balance is not one thing. Six moves, each with its own conservation law:`
+  moves: .{
+    pair = `& — bilateral symmetry: the missing partner arrives and encloses (< left & right >). Conserves: the subject stays central. Physics: tilt levels with an overshoot settle.`
+    anchor = `#> — gravity: the address lands; no left operand exists or is needed. Conserves: place. Physics: drop and thud — the expression comes home rather than leveling.`
+    collapse = `? — measurement: all candidates are faintly superposed until one choice collapses the field; the unchosen dim. Conserves: the question's shape ( ?[answer] keeps the brackets ). Physics: blur resolves to focus.`
+    lift = `^ — buoyancy: operands accrete mass until they cohere and rise as one. Conserves: the parts remain legible inside the whole. Physics: upward translation with deepening shadow — held, not settled.`
+    tether = `~ — tension: the bond ties off but never settles; the expression breathes. Conserves: the potential itself — resolution would destroy what ~ means. Physics: perpetual small oscillation; ground (.) is the only release, with elastic snapback.`
+    seal = `{ } — pressure: contents bind to the inside one by one, pressure rises, and the closing brace equalizes it. Conserves: interiority — the label rides the seam (binding topology, @lore_alignment). Physics: squeeze then equalize. Arity is unbounded; the reader chooses when to close.`
+  }[reg=facet]
+  brace_note = `Braces generalize by contour slot: { } queue seals by pressure, [ ] mode would resolve by SNAP (content fits the frame or it doesn't — crystalline, near-zero elasticity), ( ) payload by ENCAPSULATION (surface tension: the capsule rounds itself). [ ] and ( ) are primed, not yet in the demo.`
+}[reg=facet]
+
+^"photon_by_operator"{
+  claim = `Preview is always free, but passage differs: through & the photon previews a pairing; toward #> it lights a destination; through ? it leans the superposition without collapsing it; into ^ it weighs a part; along ~ it stretches the thread; into { } it enters the interior and waits. In every case leaving reverts everything — if a preview leaves residue, the mode is broken.`
+}[reg=facet]
+
+^"irreversible_case"{
+  claim = `! (action) is deliberately absent from the demo: its resolution move is DISCHARGE — exothermic and irreversible ('commit a move and make the consequence observable'). A demo ! that fired nothing would lie about the physics; a demo ! that fired something real needs a consequence safe to spend. Primed: wire ! to a genuinely irreversible-but-cheap act (e.g., appending to the session's effect ledger) so the one non-returnable operator is felt, not simulated.`
+}[reg=facet]
+
+^"promotion_path"{
+  engine = `The demo's PROFILES table is the shape of the runtime generalization: a physics profile per operator (valence signature, slots, resolution move, meter language). Promotion = lifting PROFILES beside OPERATOR_GEOMETRY in @definitions so static geometry and dynamic physics live in one table, then letting sigils sitewide open their own profile on living terms.`
+  sensation_gate = `Six resolution animations are six sensation decisions (settle overshoot, anchor thud, collapse blur, lift shadow, tether breathing, seal squeeze). Browser approval of @demo governs promotion, per the sensation gates.`
+  open_questions = #[
+    `does [ ] snap reject a non-fitting operand (shake) — the first resolution move with a failure state?`,
+    `can moves compose — anchor within a sealed field, tether to a lifted whole?`,
+    `is the conservation law per move teachable in one meter line, or does it need the caption?`
+  ][reg=set]
+}[reg=facet]

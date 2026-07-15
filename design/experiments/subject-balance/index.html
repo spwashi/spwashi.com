@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="theme-color" content="#1a9999"/>
-    <title>Spwashi • Subject Balance</title>
-    <meta name="description" content="A playable instrument for the subject-selection gesture: take a subject with &amp;, open the forward slot with &amp; &gt;, preview candidates by hover (photon passage), commit by click (bond), and resolve &lt; &amp; &gt; to balance the physics.">
+    <title>Spwashi • Operator Balance</title>
+    <meta name="description" content="A playable instrument for operator physics: take a mark, open its valence, preview by hover (photon passage), commit by click — and watch each operator resolve by its own geometry: pair, anchor, collapse, lift, tether, seal.">
     <meta name="robots" content="noindex">
     <link rel="manifest" href="/manifest.webmanifest">
     <link rel="stylesheet" href="/public/css/style.css">
     <script type="module" src="/public/js/site.js"></script>
     <style>
-        /* Instrument-local styles. Deliberately inline: this page should stay a
-           self-contained, portable demo (lift the <style> + <script> + stage
-           markup into any document and the instrument still plays). */
+        /* Instrument-local styles. Deliberately inline: the page stays a
+           self-contained, portable demo — lift <style> + <script> + the stage
+           markup into any document and the instrument still plays. */
         .balance-stage {
             display: grid;
             gap: 1.1rem;
@@ -21,38 +21,116 @@
             padding: clamp(1.2rem, 3vw, 2rem);
         }
 
+        .balance-modes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            justify-content: center;
+        }
+
+        .balance-mode {
+            font: inherit;
+            font-family: var(--font-mono, ui-monospace, monospace);
+            font-size: 0.9rem;
+            padding: 0.35em 0.8em;
+            border-radius: 999px;
+            border: 1px solid var(--line, rgba(20, 24, 26, 0.18));
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .balance-mode[aria-pressed="true"] {
+            border-color: var(--op-frame-color, teal);
+            background: color-mix(in srgb, var(--op-frame-color, teal) 12%, transparent);
+            font-weight: 700;
+        }
+
         .balance-expression {
             display: inline-flex;
             align-items: baseline;
             gap: 0.45ch;
             font-family: var(--font-mono, ui-monospace, monospace);
-            font-size: clamp(1.6rem, 4.5vw, 2.6rem);
+            font-size: clamp(1.5rem, 4vw, 2.4rem);
             padding: 0.6em 1em;
             border-radius: 14px;
             border: 1px solid var(--line, rgba(20, 24, 26, 0.16));
             background: var(--surface-strong, rgba(255, 255, 255, 0.8));
-            transition: transform 420ms cubic-bezier(0.22, 0.9, 0.3, 1.2), box-shadow 420ms ease;
+            transition: transform 420ms cubic-bezier(0.22, 0.9, 0.3, 1.2), box-shadow 420ms ease, padding 300ms ease;
             min-height: 2.2em;
         }
 
-        /* Physics: an open forward valence tilts the expression toward its
-           missing operand; balance levels it. */
+        /* --- Shared charge physics: open valence tilts toward the missing operand --- */
         .balance-stage[data-balance="charged"] .balance-expression,
         .balance-stage[data-balance="previewing"] .balance-expression {
             transform: rotate(1.6deg) translateX(0.35ch);
             box-shadow: 0.4ch 0.25em 18px rgba(26, 153, 153, 0.14);
         }
 
-        .balance-stage[data-balance="balanced"] .balance-expression {
-            transform: rotate(0deg) translateX(0);
-            box-shadow: 0 2px 10px rgba(20, 24, 26, 0.08);
-            animation: balance-settle 700ms cubic-bezier(0.2, 0.8, 0.3, 1.1);
+        /* --- Resolution physics, one per mode --- */
+        .balance-stage[data-resolve="pair"][data-balance="resolved"] .balance-expression {
+            animation: resolve-settle 700ms cubic-bezier(0.2, 0.8, 0.3, 1.1);
         }
 
-        @keyframes balance-settle {
+        @keyframes resolve-settle {
             0% { transform: rotate(1.6deg) translateX(0.35ch); }
             55% { transform: rotate(-0.7deg) translateX(-0.15ch); }
             100% { transform: rotate(0deg) translateX(0); }
+        }
+
+        .balance-stage[data-resolve="anchor"][data-balance="resolved"] .balance-expression {
+            animation: resolve-anchor 520ms cubic-bezier(0.3, 0.7, 0.4, 1);
+        }
+
+        @keyframes resolve-anchor {
+            0% { transform: rotate(1.6deg) translateY(-0.4em); box-shadow: 0 14px 26px rgba(20, 24, 26, 0.16); }
+            70% { transform: rotate(0deg) translateY(0.12em); box-shadow: 0 1px 3px rgba(20, 24, 26, 0.18); }
+            100% { transform: translateY(0); box-shadow: 0 2px 8px rgba(20, 24, 26, 0.1); }
+        }
+
+        .balance-stage[data-resolve="collapse"][data-balance="resolved"] .balance-expression {
+            animation: resolve-collapse 460ms ease-out;
+        }
+
+        @keyframes resolve-collapse {
+            0% { filter: blur(2.5px); opacity: 0.55; letter-spacing: 0.35ch; }
+            100% { filter: blur(0); opacity: 1; letter-spacing: normal; }
+        }
+
+        .balance-stage[data-resolve="lift"][data-balance="resolved"] .balance-expression {
+            animation: resolve-lift 640ms cubic-bezier(0.2, 0.9, 0.3, 1.15);
+        }
+
+        @keyframes resolve-lift {
+            0% { transform: translateY(0.35em); box-shadow: 0 1px 2px rgba(20, 24, 26, 0.1); }
+            100% { transform: translateY(-0.18em); box-shadow: 0 16px 30px rgba(20, 24, 26, 0.14); }
+        }
+
+        .balance-stage[data-resolve="lift"][data-balance="resolved"] .balance-expression { transform: translateY(-0.18em); }
+
+        .balance-stage[data-resolve="tether"][data-balance="resolved"] .balance-expression {
+            animation: tether-breathe 2.6s ease-in-out infinite;
+        }
+
+        @keyframes tether-breathe {
+            0%, 100% { transform: rotate(0.9deg) translateX(0.18ch); }
+            50% { transform: rotate(0.3deg) translateX(0.05ch); }
+        }
+
+        .balance-stage[data-resolve="seal"][data-balance="resolved"] .balance-expression {
+            animation: resolve-seal 520ms cubic-bezier(0.3, 0.8, 0.4, 1.1);
+        }
+
+        @keyframes resolve-seal {
+            0% { padding: 0.6em 1.35em; letter-spacing: 0.3ch; }
+            60% { padding: 0.6em 0.85em; letter-spacing: -0.04ch; }
+            100% { padding: 0.6em 1em; letter-spacing: normal; }
+        }
+
+        /* Collapse mode: superposition dims the unchosen field */
+        .balance-stage[data-resolve="collapse"][data-balance="resolved"] .balance-chip:not([data-bound="true"]) {
+            opacity: 0.25;
+            filter: blur(0.6px);
+            transition: opacity 500ms ease, filter 500ms ease;
         }
 
         .balance-expression .slot {
@@ -73,8 +151,7 @@
 
         .balance-expression .slot[data-preview="true"] { opacity: 0.55; font-style: italic; }
         .balance-expression .slot--sigil { color: var(--op-object-color, #a06a1f); font-weight: 700; }
-        .balance-expression .slot--angle { color: var(--op-topic-color, seagreen); font-weight: 600; }
-        .balance-expression .slot--angle[hidden] { display: none; }
+        .balance-expression .slot--mark { color: var(--op-topic-color, seagreen); font-weight: 600; }
 
         .balance-meter {
             font-family: var(--font-mono, ui-monospace, monospace);
@@ -103,7 +180,7 @@
             border: 1px solid var(--line, rgba(20, 24, 26, 0.18));
             background: var(--surface, rgba(255, 255, 255, 0.6));
             cursor: pointer;
-            transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+            transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease, opacity 300ms ease;
         }
 
         .balance-chip:hover,
@@ -118,13 +195,13 @@
             background: color-mix(in srgb, var(--op-topic-color, seagreen) 12%, transparent);
         }
 
-        .balance-controls { display: flex; gap: 0.6rem; align-items: center; }
+        .balance-controls { display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap; justify-content: center; }
 
         .balance-take {
             font: inherit;
             font-family: var(--font-mono, ui-monospace, monospace);
             font-weight: 700;
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             padding: 0.4em 1.1em;
             border-radius: 10px;
             border: 1px solid var(--op-object-color, #a06a1f);
@@ -145,14 +222,13 @@
         }
 
         .balance-caption {
-            max-width: 52ch;
+            max-width: 56ch;
             text-align: center;
             font-size: 0.95rem;
             color: var(--ink-soft, rgba(20, 24, 26, 0.7));
-            min-height: 2.6em;
+            min-height: 3.4em;
         }
 
-        /* Photon: one quantum of meaning in flight from chip to slot. */
         .balance-photon {
             position: fixed;
             width: 10px;
@@ -168,6 +244,10 @@
             opacity: 1;
             transition: transform 380ms cubic-bezier(0.3, 0.6, 0.4, 1), opacity 380ms ease;
         }
+
+        .physics-table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+        .physics-table th, .physics-table td { text-align: left; padding: 0.4em 0.7em; border-bottom: 1px solid var(--line, rgba(20,24,26,0.12)); }
+        .physics-table code { font-weight: 700; }
     </style>
 </head>
 <body
@@ -178,7 +258,7 @@
     data-spw-context="play"
     data-spw-wonder="orientation resonance"
     data-spw-page-family="lab"
-    data-spw-page-modes="play inspect"
+    data-spw-page-modes="play inspect compare"
     data-spw-page-seed="page_design_experiments_subject_balance"
     data-spw-page-role="instrument"
     data-spw-layout="reading"
@@ -195,49 +275,47 @@
 <main>
     <article class="site-frame">
         <header data-spw-slot="header">
-            <h1>Subject Balance</h1>
+            <h1>Operator Balance</h1>
             <p class="frame-note">
-                A playable instrument for one gesture: take a subject with <code>&amp;</code>, open the
-                forward slot (<code>&amp; &gt;</code>), preview a neighbor by hover — a photon of meaning
-                passes without committing — then click to bond. The pair table proposes the balancing
-                left partner and the expression resolves to <code>&lt; &amp; &gt;</code>: valence closed,
-                physics level. See <code>.spw/language/subject-balance-ux.spw</code> for the model.
+                One gesture loop — take a mark, open its valence, preview by hover (a photon passes,
+                nothing commits), commit by click — resolved six different ways, because each operator
+                carries its own geometry. <code>&amp;</code> pairs, <code>#&gt;</code> anchors,
+                <code>?</code> collapses, <code>^</code> lifts, <code>~</code> tethers,
+                <code>{&nbsp;}</code> seals. Model: <code>.spw/language/operator-balance-physics.spw</code>.
             </p>
         </header>
 
-        <section class="balance-stage" data-spw-feature="subject-balance-instrument" data-balance="idle" aria-label="Subject balance instrument">
-            <p class="balance-expression" aria-live="polite">
-                <span class="slot slot--angle" data-slot="left-angle" hidden>&lt;</span>
-                <span class="slot" data-slot="left" hidden></span>
-                <span class="slot slot--sigil" data-slot="subject">&amp;</span>
-                <span class="slot slot--angle" data-slot="forward" hidden>&gt;</span>
-                <span class="slot" data-slot="right" hidden></span>
-                <span class="slot slot--angle" data-slot="right-angle" hidden>&gt;</span>
-            </p>
+        <section class="balance-stage" data-spw-feature="operator-balance-instrument" data-balance="idle" data-resolve="pair" aria-label="Operator balance instrument">
+            <div class="balance-modes" role="group" aria-label="Operator physics profiles" data-role="modes"></div>
 
-            <p class="balance-meter" data-role="meter">valence: closed · charge: 0</p>
+            <p class="balance-expression" data-role="expression" aria-live="polite"></p>
+
+            <p class="balance-meter" data-role="meter"></p>
 
             <div class="balance-controls">
-                <button class="balance-take" type="button" data-role="take">&amp; take a subject</button>
+                <button class="balance-take" type="button" data-role="take"></button>
+                <button class="balance-reset" type="button" data-role="seal" hidden>} seal</button>
                 <button class="balance-reset" type="button" data-role="reset" hidden>. ground</button>
             </div>
 
             <div class="balance-field" data-role="field" role="group" aria-label="Concept candidates"></div>
 
-            <p class="balance-caption" data-role="caption">
-                Press <strong>&amp;</strong> to begin: the subject operator takes hold of your attention
-                and opens one forward valence.
-            </p>
+            <p class="balance-caption" data-role="caption"></p>
         </section>
 
         <section class="site-frame" data-spw-kind="frame" data-spw-role="reference">
-            <header class="frame-heading"><h2>The physics being demonstrated</h2></header>
-            <ul>
-                <li><strong>&amp;</strong> alone is a radical: one unpaired valence, so the expression carries charge and tilts toward its missing operand.</li>
-                <li><strong>Hover is photon passage</strong>: a quantum of meaning previews the binding without consuming anything — leave, and nothing changed.</li>
-                <li><strong>Click is a bond</strong>: the right operand commits, and the pair table proposes the left partner that balances it.</li>
-                <li><strong>&lt; &amp; &gt;</strong> is closure: both operands present, enclosure complete, charge grounded — the settle animation is the physics resolving.</li>
-            </ul>
+            <header class="frame-heading"><h2>Six resolution geometries</h2></header>
+            <table class="physics-table">
+                <thead><tr><th>mark</th><th>valence</th><th>resolves by</th><th>physics</th></tr></thead>
+                <tbody>
+                    <tr><td><code>&amp;</code></td><td>1 forward, pair-seeking</td><td>pair</td><td>bilateral symmetry: the partner arrives, tilt levels, charge grounds</td></tr>
+                    <tr><td><code>#&gt;</code></td><td>1 forward, address-seeking</td><td>anchor</td><td>gravity: the address lands and the expression drops home — no left operand needed</td></tr>
+                    <tr><td><code>?</code></td><td>1 of n, superposed</td><td>collapse</td><td>measurement: every candidate is faintly held until one choice collapses the field</td></tr>
+                    <tr><td><code>^</code></td><td>n upward, accreting</td><td>lift</td><td>buoyancy: parts add mass until they cohere and the whole rises as one</td></tr>
+                    <tr><td><code>~</code></td><td>1 forward, elastic</td><td>tether</td><td>tension: the bond holds but never settles — potential breathes until grounded</td></tr>
+                    <tr><td><code>{ }</code></td><td>n inward, containing</td><td>seal</td><td>pressure: contents bind inside; closing the brace equalizes and the seam holds the label</td></tr>
+                </tbody>
+            </table>
         </section>
     </article>
 </main>
@@ -246,40 +324,117 @@
 
 <script>
     (() => {
-        /* Pair table: each concept names the partner that balances it.
-           Kept inline so the instrument stays portable. */
+        /* Pair table doubles as the concept field; partners feed pair mode. */
         const PAIRS = {
-            memory: 'scheduling',
-            scheduling: 'memory',
-            parsing: 'rendering',
-            rendering: 'parsing',
-            stock: 'context',
-            context: 'stock',
-            reduction: 'compression',
-            compression: 'reduction',
-            character: 'scene',
-            scene: 'character',
-            kernel: 'lattice',
-            lattice: 'kernel',
+            memory: 'scheduling', scheduling: 'memory',
+            parsing: 'rendering', rendering: 'parsing',
+            stock: 'context', context: 'stock',
+            reduction: 'compression', compression: 'reduction',
+            character: 'scene', scene: 'character',
+            kernel: 'lattice', lattice: 'kernel',
         };
 
-        const stage = document.querySelector('[data-spw-feature="subject-balance-instrument"]');
+        /* Physics profiles: everything mode-specific lives here.
+           Each profile is (valence signature, slots, resolution move) — the
+           generalization the instrument demonstrates. */
+        const PROFILES = {
+            pair: {
+                sigil: '&', take: '& take a subject', arity: 1,
+                idle: 'Press <strong>&amp;</strong> to take a subject: one forward valence opens, seeking its pair.',
+                open: '<code>&amp; &gt;</code> — one valence points forward. Hover previews; click bonds; the pair table proposes the balancing left partner.',
+                render: (s) => s.committed.length
+                    ? '&lt; ' + PAIRS[s.committed[0]] + ' <b>&amp;</b> ' + s.committed[0] + ' &gt;'
+                    : '<b>&amp;</b>' + (s.open ? ' <mark>&gt;</mark>' + (s.preview ? ' <i>' + s.preview + '</i>' : '') : ''),
+                meters: { idle: 'valence: closed · charge: 0', open: 'valence: 1 open (forward) · charge: +1', resolved: 'valence: closed (pair) · charge: 0' },
+                done: (s) => '&lt; ' + PAIRS[s.committed[0]] + ' &amp; ' + s.committed[0] + ' &gt; — both operands present, enclosure complete, charge grounded.',
+            },
+            anchor: {
+                sigil: '#>', take: '#> address something', arity: 1,
+                idle: 'Press <strong>#&gt;</strong> to raise an address: the frame operator reaches forward for a place to land.',
+                open: '<code>#&gt;</code> — the address hangs in the air. Hover previews a destination; click drops anchor.',
+                render: (s) => '<b>#&gt;</b>' + (s.committed.length ? s.committed[0] : (s.preview ? '<i>' + s.preview + '</i>' : (s.open ? '<mark>&nbsp;&nbsp;</mark>' : ''))),
+                meters: { idle: 'address: none · charge: 0', open: 'address: seeking · charge: +1', resolved: 'address: anchored · charge: grounded into place' },
+                done: (s) => '<code>#&gt;' + s.committed[0] + '</code> — the address landed. No left operand: a frame balances by anchoring, not pairing.',
+            },
+            collapse: {
+                sigil: '?', take: '? open a question', arity: 1,
+                idle: 'Press <strong>?</strong> to open a question: every candidate is faintly true until you choose.',
+                open: '<code>?[&nbsp;]</code> — the field is superposed. Hover leans the question; click collapses it.',
+                render: (s) => '<b>?</b>[' + (s.committed.length ? s.committed[0] : (s.preview ? '<i>' + s.preview + '</i>' : '<mark>&nbsp;·&nbsp;·&nbsp;·&nbsp;</mark>')) + ']',
+                meters: { idle: 'question: closed · candidates: 0', open: 'question: superposed · candidates: 12', resolved: 'question: collapsed · candidates: 1' },
+                done: (s) => '<code>?[' + s.committed[0] + ']</code> — measured. The rest of the field dims: a probe balances by collapse, and the unchosen fades.',
+            },
+            lift: {
+                sigil: '^', take: '^ start integrating', arity: 2,
+                idle: 'Press <strong>^</strong> to start an integration: it wants at least two parts before it can lift.',
+                open: 'Click parts to add mass. At two or more, the integration coheres and rises as one.',
+                render: (s) => '<b>^</b>{ ' + (s.committed.join(' ') || (s.preview ? '<i>' + s.preview + '</i>' : '<mark>&nbsp;&nbsp;</mark>')) + (s.committed.length === 1 ? ' <mark>&nbsp;&nbsp;</mark>' : '') + ' }',
+                meters: { idle: 'parts: 0 · mass: 0', open: 'parts: gathering · lift: pending', resolved: 'parts: cohered · lifted as one' },
+                done: (s) => '<code>^{ ' + s.committed.join(' ') + ' }</code> — enough mass to cohere: the parts rise as one inspectable whole. Integration balances upward.',
+            },
+            tether: {
+                sigil: '~', take: '~ hold a potential', arity: 1,
+                idle: 'Press <strong>~</strong> to hold a potential: a thread tied to something that has not happened yet.',
+                open: '<code>~</code> — the thread is loose. Hover tests a target; click ties it off.',
+                render: (s) => '<b>~</b>' + (s.committed.length ? s.committed[0] : (s.preview ? '<i>' + s.preview + '</i>' : (s.open ? '<mark>&nbsp;&nbsp;</mark>' : ''))),
+                meters: { idle: 'thread: slack · tension: 0', open: 'thread: reaching · tension: rising', resolved: 'thread: tethered · tension: held (never settles)' },
+                done: (s) => '<code>~' + s.committed[0] + '</code> — tethered, not settled. Potential balances by holding tension: watch it breathe. Ground (.) releases it.',
+            },
+            seal: {
+                sigil: '{', take: '{ open a field', arity: Infinity,
+                idle: 'Press <strong>{</strong> to open a field: contents bind to the inside; the label rides the seam.',
+                open: 'The brace is open — click concepts to put them inside. Pressure rises with each one. Seal (<code>}</code>) when ready.',
+                render: (s) => '<b>{</b> ' + (s.committed.join(' ') || '<mark>&nbsp;&nbsp;</mark>') + (s.preview ? ' <i>' + s.preview + '</i>' : '') + (s.resolved ? ' <b>}</b>' : ''),
+                meters: { idle: 'field: closed · pressure: —', open: 'field: open · pressure: rising', resolved: 'field: sealed · pressure: equalized' },
+                done: (s) => '<code>{ ' + s.committed.join(' ') + ' }</code> — sealed. ' + s.committed.length + ' item(s) bind inside; the closing brace holds the seam. Enclosure balances by pressure, not symmetry.',
+            },
+        };
+
+        const stage = document.querySelector('[data-spw-feature="operator-balance-instrument"]');
         if (!stage) return;
 
-        const slots = {};
-        stage.querySelectorAll('[data-slot]').forEach((el) => { slots[el.dataset.slot] = el; });
+        const expression = stage.querySelector('[data-role="expression"]');
         const meter = stage.querySelector('[data-role="meter"]');
         const caption = stage.querySelector('[data-role="caption"]');
         const takeBtn = stage.querySelector('[data-role="take"]');
+        const sealBtn = stage.querySelector('[data-role="seal"]');
         const resetBtn = stage.querySelector('[data-role="reset"]');
         const field = stage.querySelector('[data-role="field"]');
+        const modes = stage.querySelector('[data-role="modes"]');
         const photon = document.querySelector('[data-role="photon"]');
 
-        const setState = (state) => { stage.dataset.balance = state; };
+        const state = { mode: 'pair', open: false, resolved: false, preview: '', committed: [] };
+        const profile = () => PROFILES[state.mode];
+
+        const renderExpression = () => { expression.innerHTML = profile().render(state); };
         const say = (html) => { caption.innerHTML = html; };
-        const readMeter = (valence, charge) => {
-            meter.textContent = 'valence: ' + valence + ' · charge: ' + charge;
+        const phase = () => (state.resolved ? 'resolved' : state.open ? 'open' : 'idle');
+
+        const sync = () => {
+            stage.dataset.resolve = state.mode;
+            stage.dataset.balance = state.resolved ? 'resolved' : state.preview ? 'previewing' : state.open ? 'charged' : 'idle';
+            meter.textContent = profile().meters[phase()];
+            takeBtn.textContent = profile().take;
+            takeBtn.hidden = state.open || state.resolved;
+            resetBtn.hidden = !(state.open || state.resolved);
+            sealBtn.hidden = !(state.mode === 'seal' && state.open && !state.resolved && state.committed.length > 0);
+            renderExpression();
         };
+
+        Object.keys(PROFILES).forEach((mode, index) => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'balance-mode';
+            btn.textContent = PROFILES[mode].sigil + ' ' + mode;
+            btn.setAttribute('aria-pressed', index === 0 ? 'true' : 'false');
+            btn.addEventListener('click', () => {
+                modes.querySelectorAll('.balance-mode').forEach((b) => b.setAttribute('aria-pressed', 'false'));
+                btn.setAttribute('aria-pressed', 'true');
+                state.mode = mode;
+                reset();
+            });
+            modes.append(btn);
+        });
 
         Object.keys(PAIRS).forEach((concept) => {
             const chip = document.createElement('button');
@@ -290,13 +445,12 @@
             field.append(chip);
         });
 
-        const flyPhoton = (fromEl, toEl) => {
-            if (!photon || !fromEl || !toEl) return;
+        const flyPhoton = (fromEl) => {
+            if (!photon || !fromEl) return;
             const a = fromEl.getBoundingClientRect();
-            const b = toEl.getBoundingClientRect();
+            const b = expression.getBoundingClientRect();
             photon.style.transform = 'translate(' + (a.left + a.width / 2) + 'px,' + (a.top + a.height / 2) + 'px)';
             photon.dataset.flying = 'false';
-            // Two-frame handoff so the transition animates from source to slot.
             requestAnimationFrame(() => {
                 photon.dataset.flying = 'true';
                 requestAnimationFrame(() => {
@@ -307,90 +461,78 @@
         };
 
         const reset = () => {
-            setState('idle');
-            slots['left-angle'].hidden = true;
-            slots['right-angle'].hidden = true;
-            slots.left.hidden = true;
-            slots.right.hidden = true;
-            slots.forward.hidden = true;
-            slots.forward.dataset.open = 'false';
-            slots.right.dataset.preview = 'false';
-            takeBtn.hidden = false;
-            takeBtn.disabled = false;
-            resetBtn.hidden = true;
+            state.open = false;
+            state.resolved = false;
+            state.preview = '';
+            state.committed = [];
             field.querySelectorAll('.balance-chip').forEach((chip) => { chip.dataset.bound = 'false'; });
-            readMeter('closed', '0');
-            say('Press <strong>&amp;</strong> to begin: the subject operator takes hold of your attention and opens one forward valence.');
+            say(profile().idle);
+            sync();
+        };
+
+        const resolve = () => {
+            state.preview = '';
+            state.resolved = true;
+            say(profile().done(state));
+            sync();
         };
 
         takeBtn.addEventListener('click', () => {
-            setState('charged');
-            slots.forward.hidden = false;
-            slots.forward.dataset.open = 'true';
-            takeBtn.disabled = true;
-            takeBtn.hidden = true;
-            resetBtn.hidden = false;
-            readMeter('1 open (forward)', '+1');
-            say('<code>&amp; &gt;</code> — one valence points forward. Hover a concept to let a photon of meaning pass; click to bond.');
+            state.open = true;
+            say(profile().open);
+            sync();
         });
+
+        sealBtn.addEventListener('click', resolve);
 
         field.addEventListener('mouseover', (event) => {
             const chip = event.target.closest('.balance-chip');
-            if (!chip || stage.dataset.balance === 'idle' || stage.dataset.balance === 'balanced') return;
-            setState('previewing');
-            slots.right.hidden = false;
-            slots.right.dataset.preview = 'true';
-            slots.right.textContent = chip.dataset.concept;
-            flyPhoton(chip, slots.right);
-            say('Previewing <code>&amp; &gt; ' + chip.dataset.concept + '</code> — nothing has committed. Leave, and the expression forgets.');
+            if (!chip || !state.open || state.resolved) return;
+            state.preview = chip.dataset.concept;
+            flyPhoton(chip);
+            sync();
         });
 
         field.addEventListener('mouseout', (event) => {
-            const chip = event.target.closest('.balance-chip');
-            if (!chip || stage.dataset.balance !== 'previewing') return;
-            setState('charged');
-            slots.right.hidden = true;
-            slots.right.dataset.preview = 'false';
-            say('<code>&amp; &gt;</code> — the valence is still open. Hover previews; click bonds.');
+            if (!event.target.closest('.balance-chip') || !state.preview) return;
+            state.preview = '';
+            sync();
         });
 
         field.addEventListener('focusin', (event) => {
             const chip = event.target.closest('.balance-chip');
-            if (!chip || stage.dataset.balance === 'idle' || stage.dataset.balance === 'balanced') return;
-            setState('previewing');
-            slots.right.hidden = false;
-            slots.right.dataset.preview = 'true';
-            slots.right.textContent = chip.dataset.concept;
+            if (!chip || !state.open || state.resolved) return;
+            state.preview = chip.dataset.concept;
+            sync();
         });
 
         field.addEventListener('click', (event) => {
             const chip = event.target.closest('.balance-chip');
-            if (!chip || stage.dataset.balance === 'idle' || stage.dataset.balance === 'balanced') return;
-
-            const right = chip.dataset.concept;
-            const left = PAIRS[right];
+            if (!chip || !state.open || state.resolved) return;
+            const concept = chip.dataset.concept;
+            if (state.committed.includes(concept)) return;
 
             chip.dataset.bound = 'true';
-            slots.right.hidden = false;
-            slots.right.dataset.preview = 'false';
-            slots.right.textContent = right;
-            slots.forward.dataset.open = 'false';
-            flyPhoton(chip, slots.right);
+            state.committed.push(concept);
+            state.preview = '';
+            flyPhoton(chip);
 
-            // Bond first; balance a beat later so the two moves read separately.
-            readMeter('1 bound (forward)', '+1 → resolving');
-            say('Bonded <code>&amp; &gt; ' + right + '</code>. The pair table proposes <strong>' + left + '</strong> to balance the left side…');
-
-            window.setTimeout(() => {
-                slots['left-angle'].hidden = false;
-                slots['right-angle'].hidden = false;
-                slots.left.hidden = false;
-                slots.left.textContent = left;
-                slots.forward.hidden = true;
-                setState('balanced');
-                readMeter('closed (pair)', '0');
-                say('<code>&lt; ' + left + ' &amp; ' + right + ' &gt;</code> — both operands present, enclosure complete, charge grounded. Press <code>.</code> to ground and go again.');
-            }, 650);
+            const needed = profile().arity;
+            if (state.committed.length >= needed && needed !== Infinity) {
+                if (state.mode === 'pair') {
+                    // Two-beat rule: bond first, balance a beat later.
+                    sync();
+                    say('Bonded <code>&amp; &gt; ' + concept + '</code>. The pair table proposes <strong>' + PAIRS[concept] + '</strong> to balance the left side…');
+                    window.setTimeout(resolve, 650);
+                } else {
+                    resolve();
+                }
+            } else {
+                say(state.mode === 'seal'
+                    ? 'Inside: <code>' + state.committed.join(' ') + '</code> — pressure rising. Add more, or seal (<code>}</code>).'
+                    : 'Part added: <code>' + state.committed.join(' ') + '</code> — one more and it can lift.');
+                sync();
+            }
         });
 
         resetBtn.addEventListener('click', reset);

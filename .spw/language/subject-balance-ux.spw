@@ -14,6 +14,7 @@
 @demo: ~"../../design/experiments/subject-balance/index.html"
 @interaction_reward: ~"../conventions/interaction-microstates.spw"
 @language_index: ~"./index.spw"
+@generalization: ~"./operator-balance-physics.spw"
 
 operation = "prime contract"
 fixity = "tending"
