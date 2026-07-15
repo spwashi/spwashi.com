@@ -58,6 +58,7 @@ purpose: .{
 ^"promotion_path"{
   engine = `The demo's PROFILES table is the shape of the runtime generalization: a physics profile per operator (valence signature, slots, resolution move, meter language). Promotion = lifting PROFILES beside OPERATOR_GEOMETRY in @definitions so static geometry and dynamic physics live in one table, then letting sigils sitewide open their own profile on living terms.`
   sensation_gate = `Six resolution animations are six sensation decisions (settle overshoot, anchor thud, collapse blur, lift shadow, tether breathing, seal squeeze). Browser approval of @demo governs promotion, per the sensation gates.`
+  soft_sitewide = `effects/living-motions.css spends data-spw-motion on living terms (pair|anchor|collapse|lift|tether|seal|discharge) as discoverable cues — not the full demo engine. site-search-index.json carries motion/geometry per route for structured search.`
   open_questions = #[
     `does [ ] snap reject a non-fitting operand (shake) — the first resolution move with a failure state?`,
     `can moves compose — anchor within a sealed field, tether to a lifted whole?`,

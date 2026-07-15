@@ -1,0 +1,139 @@
+/* ==========================================================================
+   living-motions.css — discoverable Spw balance-physics cues on living terms
+   --------------------------------------------------------------------------
+   Resolution moves from operator-balance-physics.spw:
+     pair | anchor | collapse | lift | tether | seal | discharge
+   Spent on [data-spw-motion] living concepts and brace hosts.
+   Soft, reduced-motion aware — not a full physics engine.
+   ========================================================================== */
+
+:where(
+  .spw-living-term[data-spw-motion],
+  [data-spw-living-term][data-spw-motion],
+  [data-spw-form="brace"][data-spw-motion]
+) {
+  --spw-motion-duration: var(--spw-microinteraction-pulse-duration, 280ms);
+  --spw-motion-ease: var(--ease-settle, cubic-bezier(0.22, 1, 0.36, 1));
+  transition:
+    transform var(--spw-motion-duration) var(--spw-motion-ease),
+    box-shadow var(--spw-motion-duration) var(--spw-motion-ease),
+    border-color var(--spw-motion-duration) var(--spw-motion-ease),
+    filter var(--spw-motion-duration) var(--spw-motion-ease);
+}
+
+/* Collectible affordance cue */
+:where(
+  .spw-living-term[data-spw-cauldron-candidate="true"],
+  [data-spw-living-term][data-spw-cauldron-candidate="true"]
+)::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 0.45rem;
+  inset-inline-end: 0.5rem;
+  width: 0.38rem;
+  height: 0.38rem;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--active-op-color, var(--teal, #008080)) 42%, transparent);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+:where(
+  .spw-living-term[data-spw-cauldron-candidate="true"],
+  [data-spw-living-term][data-spw-cauldron-candidate="true"]
+) {
+  position: relative;
+}
+
+/* pair — bilateral settle overshoot */
+:where([data-spw-motion="pair"]:is(:hover, :focus-visible, [data-spw-gesture="armed"])) {
+  transform: scaleX(1.012);
+  box-shadow:
+    inset 0.2rem 0 0 color-mix(in oklab, var(--op-topic-color, #2d8a6e) 28%, transparent),
+    inset -0.2rem 0 0 color-mix(in oklab, var(--op-topic-color, #2d8a6e) 28%, transparent);
+}
+
+/* anchor — gravity drop */
+:where([data-spw-motion="anchor"]:is(:hover, :focus-visible, [data-spw-gesture="armed"])) {
+  transform: translateY(0.08rem);
+  box-shadow:
+    inset 0 -0.18rem 0 color-mix(in oklab, var(--op-frame-color, #1a9999) 42%, transparent),
+    0 0.35rem 0.7rem color-mix(in oklab, #000 8%, transparent);
+}
+
+/* collapse — blur to focus */
+:where([data-spw-motion="collapse"]:is(:hover, :focus-visible, [data-spw-gesture="charging"])) {
+  filter: saturate(1.05);
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--op-probe-color, #6a3fb8) 22%, transparent),
+    0 0 0 4px color-mix(in oklab, var(--op-probe-color, #6a3fb8) 8%, transparent);
+}
+
+:where([data-spw-motion="collapse"][data-spw-gesture="armed"],
+       [data-spw-motion="collapse"][data-spw-prime-state="primed"]) {
+  filter: none;
+  outline: 1px solid color-mix(in oklab, var(--op-probe-color, #6a3fb8) 34%, transparent);
+}
+
+/* lift — buoyancy */
+:where([data-spw-motion="lift"]:is(:hover, :focus-visible, [data-spw-gesture="armed"])) {
+  transform: translateY(-0.14rem);
+  box-shadow:
+    0 0.55rem 1.1rem color-mix(in oklab, var(--op-object-color, #c48a1a) 16%, transparent),
+    inset 0 1px 0 color-mix(in oklab, #fff 40%, transparent);
+}
+
+/* tether — elastic breathe */
+:where([data-spw-motion="tether"]:is(:hover, :focus-visible, [data-spw-gesture="charging"], [data-spw-gesture="armed"])) {
+  animation: spw-motion-tether 1.1s var(--spw-motion-ease) infinite alternate;
+  box-shadow:
+    inset 0 0 0 1px color-mix(in oklab, var(--op-ref-color, #2f6fed) 26%, transparent);
+}
+
+@keyframes spw-motion-tether {
+  from { transform: translateX(-0.04rem); }
+  to { transform: translateX(0.05rem); }
+}
+
+/* seal — pressure equalize (brace) */
+:where([data-spw-motion="seal"]:is(:hover, :focus-visible, [data-spw-gesture="armed"]),
+       [data-spw-form="brace"][data-spw-motion="seal"]:is(:hover, :focus-visible)) {
+  transform: scale(0.992);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in oklab, var(--op-action-color, #0f6b6b) 30%, transparent),
+    inset 0 0 1.2rem color-mix(in oklab, var(--op-action-color, #0f6b6b) 8%, transparent);
+}
+
+/* discharge — action commit flash */
+:where([data-spw-motion="discharge"]:is(:hover, :focus-visible, [data-spw-gesture="armed"])) {
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--op-action-color, #0f6b6b) 36%, transparent),
+    0 0 1rem color-mix(in oklab, var(--op-action-color, #0f6b6b) 18%, transparent);
+}
+
+/* Geometry label chip for discoverability when cognitive handles are on */
+:where(
+  html[data-spw-cognitive-handles="on"] .spw-living-term[data-spw-geometry],
+  html[data-spw-debug-mode="on"] .spw-living-term[data-spw-geometry]
+)::after {
+  content: attr(data-spw-geometry) " · " attr(data-spw-motion);
+  display: block;
+  margin-block-start: 0.35rem;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.62));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(
+    .spw-living-term[data-spw-motion],
+    [data-spw-living-term][data-spw-motion],
+    [data-spw-form="brace"][data-spw-motion]
+  ) {
+    transition: none;
+    animation: none !important;
+    transform: none !important;
+  }
+}

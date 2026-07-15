@@ -71,6 +71,15 @@
   frame_spend = `main max-inline-size = shell-frame-max (rem)`
 }
 
+^"search_geometry"{
+  index = `public/data/site-search-index.json — nest, kind, sigil, geometry, motion, brace per route`
+  facets = #[`all`, `nest`, `operators`, `places`, `labs`][reg=set]
+  motions = #[`pair`, `anchor`, `collapse`, `lift`, `tether`, `seal`, `discharge`][reg=set]
+  living = `data-spw-motion + data-spw-geometry on .spw-living-term; collectible via cauldron-candidate`
+  brace_physics = `operator-balance-physics.spw resolution moves; soft CSS in effects/living-motions.css`
+  demo = `/design/experiments/subject-balance/`
+}
+
 ^"timing"{
   pulse_duration = `--spw-microinteraction-pulse-duration (settings interactionTuner)`
   pulse_intensity = `--spw-microinteraction-pulse-intensity`

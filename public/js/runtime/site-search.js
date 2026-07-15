@@ -1,14 +1,20 @@
 /**
  * site-search.js
  * ---------------------------------------------------------------------------
- * Sitewide route search over public/data/site-search-index.json.
+ * Structured sitewide route search over public/data/site-search-index.json.
  *
  * Spells:
  *   Ctrl/Cmd+K  → open site search
  *   Escape      → close
+ *   ? (bare)    → open when not typing
  *
- * Progressive hosts: [data-spw-site-search-host] on /topics/search/
- * Global triggers: [data-spw-site-search-open], window.spwSearch.open()
+ * Structure:
+ *   Facets: all | nest | operators | places | labs
+ *   Nest groups by nestRoot (topics/, design/, …)
+ *   Sigil queries (#>, ?, ^, ~, !, &, {) boost geometry matches
+ *
+ * Progressive hosts: [data-spw-site-search-host]
+ * Triggers: [data-spw-site-search-open], window.spwSearch
  */
 
 import {
@@ -22,7 +28,30 @@ const INDEX_HREF = '/public/data/site-search-index.json';
 const ROOT_ATTR = 'data-spw-site-search';
 const OPEN_SELECTOR = '[data-spw-site-search-open]';
 const HOST_SELECTOR = '[data-spw-site-search-host]';
-const MAX_RESULTS = 24;
+const MAX_RESULTS = 28;
+
+const FACETS = Object.freeze([
+  { id: 'all', label: 'All' },
+  { id: 'nest', label: 'Nested' },
+  { id: 'operators', label: 'Operators' },
+  { id: 'places', label: 'Places' },
+  { id: 'labs', label: 'Labs' },
+]);
+
+/** Sigil / motion tokens → filter boosts (balance-physics resolution moves). */
+const SIGIL_ALIASES = Object.freeze({
+  '#>': { motion: 'anchor', operator: 'frame', label: 'frame' },
+  '#': { motion: 'anchor', operator: 'frame', label: 'frame' },
+  '?': { motion: 'collapse', operator: 'wonder', label: 'probe' },
+  '^': { motion: 'lift', operator: 'integration', label: 'object' },
+  '~': { motion: 'tether', operator: 'potential', label: 'ref' },
+  '!': { motion: 'discharge', operator: 'action', label: 'action' },
+  '&': { motion: 'pair', operator: 'subject', label: 'subject' },
+  '{': { motion: 'seal', operator: 'direction', label: 'brace' },
+  '[': { motion: 'snap', operator: null, label: 'mode' },
+  '(': { motion: 'encapsulate', operator: null, label: 'payload' },
+  '.': { motion: 'anchor', operator: 'ground', label: 'ground' },
+});
 
 let initialized = false;
 let indexPromise = null;
@@ -30,11 +59,16 @@ let dialog = null;
 let input = null;
 let list = null;
 let status = null;
+let facetBar = null;
 let lastFocus = null;
 let activeIndex = -1;
 let entries = [];
+let facetsMeta = null;
+let geometryLegend = null;
 let filterText = '';
+let activeFacet = 'all';
 let debounceTimer = 0;
+let flatResults = [];
 
 function tokenize(query = '') {
   return String(query || '')
@@ -44,23 +78,51 @@ function tokenize(query = '') {
     .filter((token) => token.length >= 1);
 }
 
+function extractSigilHints(query = '') {
+  const raw = String(query || '');
+  const hints = [];
+  for (const [sigil, profile] of Object.entries(SIGIL_ALIASES)) {
+    if (raw.includes(sigil)) hints.push({ sigil, ...profile });
+  }
+  return hints;
+}
+
 function hasBoundaryMatch(text, token) {
   if (!text || !token) return false;
   if (text === token) return true;
-  // Prefer word / path segment boundaries so "search" does not inflate "research".
   const escaped = token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   return new RegExp(`(?:^|[^a-z0-9])${escaped}(?:[^a-z0-9]|$)`, 'i').test(text);
 }
 
-function scoreEntry(entry, tokens) {
-  if (!tokens.length) return 0;
+function passesFacet(entry, facet) {
+  if (facet === 'all' || facet === 'nest') return true;
+  if (facet === 'operators') return entry.kind === 'operator' || Boolean(entry.operatorSlug);
+  if (facet === 'places') return entry.kind === 'place' || entry.kind === 'atlas';
+  if (facet === 'labs') return entry.kind === 'lab' || entry.kind === 'play';
+  return true;
+}
+
+function scoreEntry(entry, tokens, sigilHints) {
   let score = 0;
   const title = String(entry.title || '').toLowerCase();
   const route = String(entry.route || '').toLowerCase();
   const haystack = String(entry.haystack || '').toLowerCase();
   const routeSegments = route.split('/').filter(Boolean);
+  const nestLabel = String(entry.nestLabel || '').toLowerCase();
+
+  for (const hint of sigilHints) {
+    if (entry.motion && hint.motion && entry.motion === hint.motion) score += 36;
+    if (entry.operator && hint.operator && entry.operator === hint.operator) score += 32;
+    if (entry.sigil && hint.sigil && entry.sigil === hint.sigil) score += 40;
+    if (hint.label && (title.includes(hint.label) || haystack.includes(hint.label))) score += 8;
+  }
+
+  if (!tokens.length && !sigilHints.length) return score;
 
   for (const token of tokens) {
+    // Skip pure punctuation already handled as sigils
+    if (SIGIL_ALIASES[token] || /^[#?^~!&{[(.]+$/.test(token)) continue;
+
     if (title === token) score += 40;
     else if (title.startsWith(token)) score += 22;
     else if (hasBoundaryMatch(title, token)) score += 16;
@@ -71,26 +133,45 @@ function scoreEntry(entry, tokens) {
     else if (hasBoundaryMatch(route, token)) score += 12;
     else if (route.includes(token)) score += 5;
 
+    if (nestLabel.includes(token)) score += 6;
+    if (entry.motion === token || entry.geometry === token || entry.brace === token) score += 14;
+    if (entry.kind === token) score += 10;
+
     if (hasBoundaryMatch(haystack, token)) score += 5;
     else if (haystack.includes(token)) score += 1;
-    else score -= 8;
+    else if (!sigilHints.length) score -= 8;
   }
 
   if (entry.pageRole === 'topic-register' || entry.pageFamily === 'field-guide') score += 1;
+  if (entry.kind === 'operator') score += 1;
   return score;
 }
 
-function rankEntries(query) {
+function rankEntries(query, facet = activeFacet) {
   const tokens = tokenize(query);
-  if (!tokens.length) {
-    return entries.slice(0, 12).map((entry) => ({ entry, score: 0 }));
+  const sigilHints = extractSigilHints(query);
+  const pool = entries.filter((entry) => passesFacet(entry, facet));
+
+  if (!tokens.length && !sigilHints.length) {
+    const seed = pool.slice(0, facet === 'operators' ? 20 : 14);
+    return seed.map((entry) => ({ entry, score: 0 }));
   }
 
-  return entries
-    .map((entry) => ({ entry, score: scoreEntry(entry, tokens) }))
+  return pool
+    .map((entry) => ({ entry, score: scoreEntry(entry, tokens, sigilHints) }))
     .filter((row) => row.score > 0)
     .sort((a, b) => b.score - a.score || a.entry.route.localeCompare(b.entry.route))
     .slice(0, MAX_RESULTS);
+}
+
+function groupByNest(ranked) {
+  const groups = new Map();
+  for (const row of ranked) {
+    const key = row.entry.nestRoot || 'home';
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(row);
+  }
+  return [...groups.entries()].sort((a, b) => a[0].localeCompare(b[0]));
 }
 
 function loadIndex() {
@@ -100,11 +181,15 @@ function loadIndex() {
       if (!response.ok) throw new Error(`search index ${response.status}`);
       const payload = await response.json();
       entries = Array.isArray(payload?.routes) ? payload.routes : [];
+      facetsMeta = payload?.facets || null;
+      geometryLegend = payload?.geometryLegend || null;
       return entries;
     })
     .catch((error) => {
       console.warn('[site-search] index load failed', error);
       entries = [];
+      facetsMeta = null;
+      geometryLegend = null;
       return entries;
     });
   return indexPromise;
@@ -135,7 +220,7 @@ function ensureDialog() {
   input = document.createElement('input');
   input.className = 'spw-site-search__input';
   input.type = 'search';
-  input.placeholder = 'Search routes, surfaces, wonder…';
+  input.placeholder = 'Routes, nest, sigil (#> ? ^ ~ ! & {)…';
   input.setAttribute('aria-label', 'Search the site');
   input.setAttribute('aria-controls', 'spw-site-search-list');
   input.setAttribute('aria-autocomplete', 'list');
@@ -150,12 +235,33 @@ function ensureDialog() {
 
   header.append(op, input, closeBtn);
 
+  facetBar = document.createElement('div');
+  facetBar.className = 'spw-site-search__facets';
+  facetBar.setAttribute('role', 'tablist');
+  facetBar.setAttribute('aria-label', 'Search structure');
+  FACETS.forEach((facet) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'spw-site-search__facet';
+    button.dataset.facet = facet.id;
+    button.setAttribute('role', 'tab');
+    button.setAttribute('aria-selected', facet.id === activeFacet ? 'true' : 'false');
+    button.textContent = facet.label;
+    button.addEventListener('click', () => {
+      activeFacet = facet.id;
+      syncFacetBar();
+      renderResults();
+      input?.focus();
+    });
+    facetBar.appendChild(button);
+  });
+
   status = document.createElement('p');
   status.className = 'spw-site-search__status';
   status.id = 'spw-site-search-status';
   status.setAttribute('aria-live', 'polite');
 
-  list = document.createElement('ul');
+  list = document.createElement('div');
   list.className = 'spw-site-search__list';
   list.id = 'spw-site-search-list';
   list.setAttribute('role', 'listbox');
@@ -163,9 +269,16 @@ function ensureDialog() {
 
   const footer = document.createElement('div');
   footer.className = 'spw-site-search__footer';
-  footer.innerHTML = '<span class="spw-spell">⌘K</span> open · <span class="spw-spell">esc</span> close · <a href="/topics/search/">search field guide</a>';
+  footer.innerHTML = [
+    '<span class="spw-spell">⌘K</span> open',
+    '<span class="spw-spell">esc</span> close',
+    '<span class="spw-spell">? ^ ~</span> geometry',
+    '<a href="/topics/search/">field guide</a>',
+    '<a href="/topics/software/spw/">operator atlas</a>',
+    '<a href="/design/experiments/subject-balance/">brace physics</a>',
+  ].join(' · ');
 
-  panel.append(header, status, list, footer);
+  panel.append(header, facetBar, status, list, footer);
   dialog.appendChild(panel);
   document.body.appendChild(dialog);
 
@@ -190,6 +303,15 @@ function ensureDialog() {
   return dialog;
 }
 
+function syncFacetBar() {
+  if (!facetBar) return;
+  facetBar.querySelectorAll('.spw-site-search__facet').forEach((button) => {
+    const selected = button.dataset.facet === activeFacet;
+    button.setAttribute('aria-selected', selected ? 'true' : 'false');
+    button.dataset.active = selected ? 'true' : 'false';
+  });
+}
+
 function scheduleRender() {
   if (debounceTimer) window.clearTimeout(debounceTimer);
   debounceTimer = window.setTimeout(() => {
@@ -198,57 +320,116 @@ function scheduleRender() {
   }, 60);
 }
 
+function geometryMeta(entry) {
+  return [
+    entry.sigil,
+    entry.geometry,
+    entry.motion ? `motion:${entry.motion}` : null,
+    entry.brace ? `brace:${entry.brace}` : null,
+  ].filter(Boolean).join(' · ');
+}
+
+function appendResult(container, entry, index) {
+  const item = document.createElement('div');
+  item.className = 'spw-site-search__item';
+  item.setAttribute('role', 'option');
+  item.id = `spw-site-search-option-${index}`;
+
+  const link = document.createElement('a');
+  link.className = 'spw-site-search__result';
+  link.href = entry.route;
+  link.dataset.index = String(index);
+  if (entry.motion) link.dataset.spwMotion = entry.motion;
+  if (entry.geometry) link.dataset.spwGeometry = entry.geometry;
+  if (entry.operator) link.dataset.spwOperator = entry.operator;
+  if (index === activeIndex) {
+    link.setAttribute('aria-selected', 'true');
+    item.dataset.active = 'true';
+  }
+
+  const titleRow = document.createElement('span');
+  titleRow.className = 'spw-site-search__title-row';
+
+  if (entry.sigil) {
+    const sigil = document.createElement('span');
+    sigil.className = 'spw-site-search__sigil';
+    sigil.setAttribute('aria-hidden', 'true');
+    sigil.textContent = entry.sigil;
+    titleRow.appendChild(sigil);
+  }
+
+  const title = document.createElement('span');
+  title.className = 'spw-site-search__title';
+  title.textContent = entry.title;
+  titleRow.appendChild(title);
+
+  const meta = document.createElement('span');
+  meta.className = 'spw-site-search__meta';
+  meta.textContent = [
+    entry.nestLabel || entry.route,
+    entry.kind,
+    entry.surface,
+    geometryMeta(entry),
+    entry.wonder,
+  ].filter(Boolean).join(' · ');
+
+  link.append(titleRow, meta);
+  item.appendChild(link);
+  container.appendChild(item);
+}
+
 function renderResults() {
   if (!list || !status) return;
-  const ranked = rankEntries(filterText);
+  const ranked = rankEntries(filterText, activeFacet);
   list.replaceChildren();
+  flatResults = ranked;
   activeIndex = ranked.length ? 0 : -1;
 
   if (!ranked.length) {
     status.textContent = filterText.trim()
       ? `No routes match “${filterText.trim()}”.`
       : entries.length
-        ? `${entries.length} routes indexed. Type to filter.`
+        ? `${entries.length} routes indexed. Try a nest (topics), kind (operators), or sigil (? ^ ~).`
         : 'Search index unavailable.';
     return;
   }
 
+  const sigilHints = extractSigilHints(filterText);
+  const hintNote = sigilHints.length
+    ? ` · geometry ${sigilHints.map((h) => h.sigil || h.motion).join(' ')}`
+    : '';
+
   status.textContent = filterText.trim()
-    ? `${ranked.length} match${ranked.length === 1 ? '' : 'es'}`
-    : `Showing ${ranked.length} routes`;
+    ? `${ranked.length} match${ranked.length === 1 ? '' : 'es'}${hintNote}`
+    : `Showing ${ranked.length} · facet ${activeFacet}`;
 
-  ranked.forEach(({ entry }, index) => {
-    const item = document.createElement('li');
-    item.className = 'spw-site-search__item';
-    item.setAttribute('role', 'option');
-    item.id = `spw-site-search-option-${index}`;
+  const useNest = activeFacet === 'nest' || (!filterText.trim() && activeFacet === 'all');
+  let index = 0;
 
-    const link = document.createElement('a');
-    link.className = 'spw-site-search__result';
-    link.href = entry.route;
-    link.dataset.index = String(index);
-    if (index === activeIndex) {
-      link.setAttribute('aria-selected', 'true');
-      item.dataset.active = 'true';
-    }
+  if (useNest) {
+    const groups = groupByNest(ranked);
+    groups.forEach(([nestRoot, rows]) => {
+      const group = document.createElement('section');
+      group.className = 'spw-site-search__group';
+      group.setAttribute('aria-label', nestRoot);
 
-    const title = document.createElement('span');
-    title.className = 'spw-site-search__title';
-    title.textContent = entry.title;
+      const heading = document.createElement('h3');
+      heading.className = 'spw-site-search__group-label';
+      heading.textContent = `${nestRoot} · ${rows.length}`;
+      group.appendChild(heading);
 
-    const meta = document.createElement('span');
-    meta.className = 'spw-site-search__meta';
-    meta.textContent = [
-      entry.route,
-      entry.surface,
-      entry.pageRole,
-      entry.wonder,
-    ].filter(Boolean).join(' · ');
-
-    link.append(title, meta);
-    item.appendChild(link);
-    list.appendChild(item);
-  });
+      rows.forEach((row) => {
+        appendResult(group, row.entry, index);
+        index += 1;
+      });
+      list.appendChild(group);
+    });
+  } else {
+    ranked.forEach((row) => {
+      appendResult(list, row.entry, index);
+      index += 1;
+    });
+  }
 
   input?.setAttribute('aria-activedescendant', activeIndex >= 0
     ? `spw-site-search-option-${activeIndex}`
@@ -327,7 +508,7 @@ function pulseOpen() {
   }, ms);
 }
 
-export async function openSearch({ query = '', source = 'api' } = {}) {
+export async function openSearch({ query = '', facet = null, source = 'api' } = {}) {
   ensureDialog();
   await loadIndex();
 
@@ -335,6 +516,8 @@ export async function openSearch({ query = '', source = 'api' } = {}) {
   dialog.hidden = false;
   dialog.setAttribute(ROOT_ATTR, 'open');
   document.documentElement.dataset.spwSiteSearch = 'open';
+  if (facet && FACETS.some((item) => item.id === facet)) activeFacet = facet;
+  syncFacetBar();
   pulseOpen();
   syncFloatingChromeState(document, { source: 'site-search', reason: 'open' });
 
@@ -346,7 +529,14 @@ export async function openSearch({ query = '', source = 'api' } = {}) {
 
   emitSpwAction('@search.open', `Site search (${source})`);
   document.dispatchEvent(new CustomEvent('spw:site-search', {
-    detail: { state: 'open', source, query: filterText },
+    detail: {
+      state: 'open',
+      source,
+      query: filterText,
+      facet: activeFacet,
+      geometryLegend,
+      facets: facetsMeta,
+    },
     bubbles: true,
   }));
 }
@@ -382,6 +572,20 @@ function hydrateHost(host) {
   const form = host.querySelector('form');
   const hostInput = host.querySelector('input[type="search"], input[name="q"]');
   const results = host.querySelector('[data-spw-site-search-results]');
+  const facetLinks = host.querySelectorAll('[data-spw-search-facet]');
+
+  facetLinks.forEach((link) => {
+    link.addEventListener('click', (event) => {
+      const facet = link.getAttribute('data-spw-search-facet');
+      if (!facet) return;
+      event.preventDefault();
+      openSearch({
+        query: hostInput instanceof HTMLInputElement ? hostInput.value : '',
+        facet,
+        source: 'page-facet',
+      });
+    });
+  });
 
   if (form instanceof HTMLFormElement) {
     form.addEventListener('submit', (event) => {
@@ -405,16 +609,22 @@ function hydrateHost(host) {
 
   if (results instanceof HTMLElement) {
     results.hidden = false;
-    results.innerHTML = '<p class="frame-note">Press <kbd>⌘K</kbd> / <kbd>Ctrl+K</kbd> anytime for the site search dialog, or submit the form above.</p>';
+    results.innerHTML = [
+      '<p class="frame-note">',
+      'Structured search: facets for nested places, operators, and labs. ',
+      'Sigils like <code>?[</code>, <code>#&gt;</code>, <code>^</code>, <code>~</code> boost geometry. ',
+      'Press <kbd>⌘K</kbd> / <kbd>Ctrl+K</kbd> anywhere.',
+      '</p>',
+    ].join('');
   }
 
-  // Deep-link ?q= on the search field guide
   if (host.closest('body[data-spw-page-seed="page_topics_search"]')) {
     const params = new URLSearchParams(window.location.search);
     const q = params.get('q') || '';
-    if (q) {
-      if (hostInput instanceof HTMLInputElement) hostInput.value = q;
-      openSearch({ query: q, source: 'query-param' });
+    const facet = params.get('facet') || '';
+    if (q || facet) {
+      if (hostInput instanceof HTMLInputElement && q) hostInput.value = q;
+      openSearch({ query: q, facet: facet || null, source: 'query-param' });
     }
   }
 }
@@ -445,7 +655,6 @@ function onDocumentKeydown(event) {
     return;
   }
 
-  // Bare "?" opens search when not typing (probe the site map).
   if (!mod && event.key === '?' && !isInputFocused() && !isSearchOpen()) {
     event.preventDefault();
     openSearch({ source: 'probe-key' });
@@ -464,7 +673,6 @@ export function initSiteSearch(root = document) {
 
   document.addEventListener('keydown', onDocumentKeydown, { signal: controller.signal });
 
-  // Late-mounted shell triggers
   if (typeof MutationObserver === 'function') {
     const observer = new MutationObserver(() => {
       bindOpeners(root);
@@ -478,6 +686,13 @@ export function initSiteSearch(root = document) {
     open: openSearch,
     close: closeSearch,
     isOpen: isSearchOpen,
+    setFacet: (facet) => {
+      if (FACETS.some((item) => item.id === facet)) {
+        activeFacet = facet;
+        syncFacetBar();
+        renderResults();
+      }
+    },
     reload: () => {
       indexPromise = null;
       return loadIndex();
@@ -491,6 +706,7 @@ export function initSiteSearch(root = document) {
     input = null;
     list = null;
     status = null;
+    facetBar = null;
     delete window.spwSearch;
     initialized = false;
   }, { once: true });

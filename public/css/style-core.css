@@ -99,6 +99,7 @@
 
 /* Effects project semantic state; they must stay additive. */
 @import url('/public/css/effects/material.css') layer(effects);
+@import url('/public/css/effects/living-motions.css') layer(effects);
 @import url('/public/css/effects/enhancements.css') layer(effects);
 @import url('/public/css/effects/grain-texture.css') layer(effects);
 @import url('/public/css/effects/electromagnetic-container.css') layer(effects);
