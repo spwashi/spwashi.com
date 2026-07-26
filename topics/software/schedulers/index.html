@@ -1,44 +1,32 @@
+<spw-page
+    title="Spwashi • Schedulers"
+    description="Cooperative multitasking, priority queues, and scheduler design in the Spw workbench."
+    canonical="https://spwashi.com/topics/software/schedulers/"
+    og_title="Spwashi • Schedulers"
+    og_description="Cooperative multitasking, priority queues, and scheduler design in the Spw workbench."
+    og_image="https://spwashi.com/public/images/assets/illustrations/schedulers.png"
+    og_image_alt="Glowing semi-transparent nodes connected by rhythmic lines of light, representing priority queues."
+    keywords="schedulers, orchestrating, time, cooperative, multitasking, priority, queues, concurrency, scheduler, user, blocking, visible"
+    breadcrumb_label="Schedulers"
+    header_current="Schedulers"
+    header_current_href="/topics/software/schedulers/"
+    header_indicator="software"
+    surface="software"
+    page_family="curriculum"
+    page_role="topic-register"
+    page_modes="reading inspect compare build"
+    wonder="comparison constraint locality"
+    route_family="editorial systems curriculum"
+    context="analysis"
+    features="operators navigator console"
+    related_routes="/|/about/|/topics/software/|/play/|/blog/|/contact/"
+    stylesheet_mode="scoped"
+    extra_styles="/public/css/effects/cinematic.css|/public/css/effects/enrichment.css"
+></spw-page>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta name="theme-color" content="#1a9999"/>
-    <meta name="apple-mobile-web-app-capable" content="yes"/>
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
-    <title>Spwashi • Schedulers</title>
-    <meta name="description" content="Orchestrating time: cooperative multitasking, priority queues, and the geometry of schedulers in the Spw workbench."/>
-        <meta property="og:title" content="Spwashi • Schedulers"/>
-        <meta property="og:description" content="Orchestrating time: cooperative multitasking, priority queues, and the geometry of schedulers in the Spw workbench."/>
-        <meta property="og:image" content="https://spwashi.com/public/images/assets/illustrations/schedulers.png"/>
-        <meta property="og:image:alt" content="Glowing semi-transparent nodes connected by rhythmic lines of light, representing priority queues."/>
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            "itemListElement": [{
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": "https://spwashi.com/"
-            }, {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "Software",
-                "item": "https://spwashi.com/topics/software/"
-            }, {
-                "@type": "ListItem",
-                "position": 3,
-                "name": "Schedulers",
-                "item": "https://spwashi.com/topics/software/schedulers/"
-            }]
-        }
-    </script>
-    <link rel="stylesheet" href="/public/css/style.css">
-    <link rel="stylesheet" href="/public/css/effects/cinematic.css">
-    <link rel="stylesheet" href="/public/css/effects/enrichment.css">
-    <script type="module" src="/public/js/site.js"></script>
+    <spw-site-head></spw-site-head>
     <style>
         .ref-grid {
             display: grid;
@@ -88,96 +76,6 @@
         }
         .ref-links a:hover { color: var(--teal); border-color: var(--teal); }
     </style>
-    <link rel="canonical" href="https://spwashi.com/topics/software/schedulers/">
-    <meta property="og:type" content="website"/>
-    <meta property="og:site_name" content="Spwashi"/>
-    <meta property="og:url" content="https://spwashi.com/topics/software/schedulers/"/>
-    <meta property="og:image:width" content="1200"/>
-    <meta property="og:image:height" content="630"/>
-    <meta name="twitter:card" content="summary_large_image"/>
-    <meta name="twitter:title" content="Spwashi • Schedulers"/>
-    <meta name="twitter:description" content="Orchestrating time: cooperative multitasking, priority queues, and the geometry of schedulers in the Spw workbench."/>
-    <meta name="twitter:image" content="https://spwashi.com/public/images/assets/illustrations/schedulers.png"/>
-    <meta name="twitter:image:alt" content="Glowing semi-transparent nodes connected by rhythmic lines of light, representing priority queues."/>
-            <meta name="keywords" content="schedulers, orchestrating, time, cooperative, multitasking, priority, queues, concurrency, scheduler, user, blocking, visible"/>
-            <script type="application/ld+json" data-spw-generated="page">
-        {
-                "@context": "https://schema.org",
-                "@type": "WebPage",
-                "name": "Spwashi • Schedulers",
-                "description": "Orchestrating time: cooperative multitasking, priority queues, and the geometry of schedulers in the Spw workbench.",
-                "url": "https://spwashi.com/topics/software/schedulers/",
-                "isPartOf": {
-                        "@type": "WebSite",
-                        "name": "Spwashi",
-                        "url": "https://spwashi.com/"
-                },
-                "about": [
-                        "schedulers",
-                        "orchestrating",
-                        "time",
-                        "cooperative",
-                        "multitasking",
-                        "priority",
-                        "queues",
-                        "concurrency"
-                ],
-                "additionalProperty": [
-                        {
-                                "@type": "PropertyValue",
-                                "name": "spwSurface",
-                                "value": "software"
-                        },
-                        {
-                                "@type": "PropertyValue",
-                                "name": "spwPageFamily",
-                                "value": "curriculum"
-                        },
-                        {
-                                "@type": "PropertyValue",
-                                "name": "spwPageRole",
-                                "value": "topic-register"
-                        },
-                        {
-                                "@type": "PropertyValue",
-                                "name": "spwWonder",
-                                "value": "comparison constraint locality"
-                        }
-                ]
-        }
-    </script>
-    <script type="application/ld+json" data-spw-generated="breadcrumbs">
-        {
-                "@context": "https://schema.org",
-                "@type": "BreadcrumbList",
-                "itemListElement": [
-                        {
-                                "@type": "ListItem",
-                                "position": 1,
-                                "name": "Home",
-                                "item": "https://spwashi.com/"
-                        },
-                        {
-                                "@type": "ListItem",
-                                "position": 2,
-                                "name": "Topics",
-                                "item": "https://spwashi.com/topics/"
-                        },
-                        {
-                                "@type": "ListItem",
-                                "position": 3,
-                                "name": "Software",
-                                "item": "https://spwashi.com/topics/software/"
-                        },
-                        {
-                                "@type": "ListItem",
-                                "position": 4,
-                                "name": "Schedulers",
-                                "item": "https://spwashi.com/topics/software/schedulers/"
-                        }
-                ]
-        }
-    </script>
 </head>
 <body data-spw-surface="software"
     data-spw-stylesheet-mode="scoped" data-spw-features="operators navigator console" data-spw-route-family="editorial systems curriculum" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-page-family="curriculum" data-spw-page-modes="reading inspect compare build" data-spw-page-seed="page_topics_topics_software_schedulers" data-spw-page-role="topic-register" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/">
