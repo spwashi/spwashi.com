@@ -22,6 +22,7 @@
 @living_medium_copy: ~"./living-medium-copy.spw"
 @operator_semantics: ~"./operator-semantics.spw"
 @operator_alignment: ~"./operator-alignment.spw"
+@operator_operand_semantics: ~"./operator-operand-semantics.spw"
 @annotation_layer: ~"./annotation-layer.spw"
 @query_disposition: ~"./query-disposition.spw"
 @planning_ecology: ~"./planning-ecology.spw"

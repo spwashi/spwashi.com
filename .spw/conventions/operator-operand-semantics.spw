@@ -1,0 +1,70 @@
+# Operator-Operand Semantics & Expression Physics
+#
+# Formally defines the scripting, inspection, and positional dispatch relationships
+# between Spw operator sigils, operands, container forms, composite sigil pairs,
+# and threshold sequence physics across HTML, CSS, JS runtime, and .spw inspection surfaces.
+
+#>operator_operand_semantics
+#:convention #!operators #!grammar #!runtime #!inspection
+#:layer #!semantics
+#:fixity #!stable
+
+^"thesis"{
+  claim: "Every Spw expression is an operator acting on an operand. Spacing distinguishes unspaced identifier handles from spaced prose payloads, while container delimiters enclose posture, body, scope, and capsule channels."
+  grounding: "The workbench parser recognizes 'sigil + label' as an Identifier/Reference, 'sigil + space + text' as an Operation payload, and 'delimiter + content + delimiter' as a Form container. Runtime inspection attributes (data-spw-op) reflect this exact physics."
+}
+
+^"operand_grammar"{
+  unspaced_handle: .{
+    format: "sigil + identifier"
+    examples: ["#>town_library", "~ask_card", "@author_network", "!pragma", "$support", "%normalize"]
+    workbench_ast: "operatorLabel / Identifier"
+    spacing: "0 spaces"
+    inspection: "operand is exact identifier string"
+  }[reg=facet]
+
+  spaced_prose: .{
+    format: "sigil + space + prose_payload"
+    examples: ["! generate seed", "~ copy seed", "^ proof cards", "? understand system", "$ inspect work"]
+    workbench_ast: "Operation { operator, linePayload: ProseChunk }"
+    spacing: "1 space"
+    inspection: "operand is clean prose string"
+  }[reg=facet]
+
+  container_form: .{
+    format: "delimiter + operand + delimiter"
+    examples: ["[cozy]", "{ flow }", "( workbench )", "< concept >"]
+    workbench_ast: "Form { form, content }"
+    spacing: "enclosed by delimiters"
+    inspection: "operand is content inside delimiters"
+  }[reg=facet]
+}
+
+^"threshold_physics_sequence"{
+  sequence: "~ ? % = $ ! * ^ # ."
+  states: .{
+    latent: "~ potential (superposition defer)"
+    probing: "? wonder (measurement onset)"
+    measured: "% normalize (scalar observation)"
+    bounded: "= binding (bias field constraint)"
+    supported: "$ substrate (resource/memory support)"
+    acting: "! action (kinetic injection)"
+    resolved: "* value (materialization)"
+    integrated: "^ integration (upward emission)"
+    anchored: "# vibration (resonance tag)"
+    grounded: ". ground (bound register handle)"
+  }
+  bundle_token: "threshold:<state>"
+}
+
+^"composite_operator_pairs"{
+  probe_substrate: "?$ inspect substrate / memory / cost"
+  probe_measurement: "?% ask for scalar estimate / metric"
+  probe_perspective: "?@ ask from a specific viewpoint"
+  action_substrate: "!$ charge or allocate resource"
+  action_integration: "!^ publish artifact"
+  action_value: "!* execute materialization"
+  potential_substrate: "~$ hold potential substrate path"
+  potential_perspective: "~@ hold potential viewpoint"
+  ground_substrate: ".$ ground substrate register"
+}

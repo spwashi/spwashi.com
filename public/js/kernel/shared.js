@@ -1494,12 +1494,59 @@ const OP_DISPATCH_BY_POSITION = Object.freeze({
   expression: 'enclose',
 });
 
+const SPW_OPERATOR_THRESHOLD_SEQUENCE = Object.freeze([
+  Object.freeze({ sigil: '~', operator: 'potential', state: 'latent' }),
+  Object.freeze({ sigil: '?', operator: 'wonder', state: 'probing' }),
+  Object.freeze({ sigil: '%', operator: 'normalize', state: 'measured' }),
+  Object.freeze({ sigil: '=', operator: 'binding', state: 'bounded' }),
+  Object.freeze({ sigil: '$', operator: 'substrate', state: 'supported' }),
+  Object.freeze({ sigil: '!', operator: 'action', state: 'acting' }),
+  Object.freeze({ sigil: '*', operator: 'value', state: 'resolved' }),
+  Object.freeze({ sigil: '^', operator: 'integration', state: 'integrated' }),
+  Object.freeze({ sigil: '#', operator: 'vibration', state: 'anchored' }),
+  Object.freeze({ sigil: '.', operator: 'ground', state: 'grounded' }),
+]);
+
+const THRESHOLD_STATE_BY_OPERATOR = Object.freeze(
+  Object.fromEntries(
+    SPW_OPERATOR_THRESHOLD_SEQUENCE.flatMap((entry, index) => [
+      [entry.sigil, { ...entry, index }],
+      [entry.operator, { ...entry, index }],
+    ])
+  )
+);
+
+/**
+ * Get the threshold physics sequence state for an operator or sigil.
+ * @param {string} [sigilOrOperator] e.g. "~", "potential", "!", "action"
+ * @returns {{sigil: string, operator: string, state: string, index: number}|null}
+ */
+const getOperatorThresholdState = (sigilOrOperator = '') => {
+  const definition = getOperatorDefinition(sigilOrOperator);
+  const key = definition?.prefix || definition?.type || normalizeText(sigilOrOperator);
+  return THRESHOLD_STATE_BY_OPERATOR[key] || null;
+};
+
+const COMPOSITE_OPERATOR_PREFIXES = Object.freeze({
+  '?$': Object.freeze({ primary: 'wonder', secondary: 'substrate', physics: 'probe substrate' }),
+  '?%': Object.freeze({ primary: 'wonder', secondary: 'normalize', physics: 'probe measurement' }),
+  '?@': Object.freeze({ primary: 'wonder', secondary: 'perspective', physics: 'probe perspective' }),
+  '!$': Object.freeze({ primary: 'action', secondary: 'substrate', physics: 'charge resource' }),
+  '!^': Object.freeze({ primary: 'action', secondary: 'integration', physics: 'publish artifact' }),
+  '!*': Object.freeze({ primary: 'action', secondary: 'value', physics: 'execute run' }),
+  '~$': Object.freeze({ primary: 'potential', secondary: 'substrate', physics: 'potential substrate' }),
+  '~@': Object.freeze({ primary: 'potential', secondary: 'perspective', physics: 'potential perspective' }),
+  '.$': Object.freeze({ primary: 'ground', secondary: 'substrate', physics: 'ground substrate' }),
+});
+
 const composeOpBundle = (expression = '') => {
   const parts = splitOperatorExpression(expression);
   const tokens = [];
   if (parts.operator) tokens.push(`operator:${parts.operator}`);
   if (parts.operand) tokens.push(`operand:${parts.operand.replace(/\s+/g, '_').slice(0, 48)}`);
   if (parts.position) tokens.push(`position:${parts.position}`);
+  const threshold = getOperatorThresholdState(parts.operator || parts.prefix);
+  if (threshold) tokens.push(`threshold:${threshold.state}`);
   const dispatch = OP_DISPATCH_BY_POSITION[parts.position];
   if (dispatch) tokens.push(`dispatch:${dispatch}`);
   return tokens.join(' ');
@@ -2009,6 +2056,9 @@ export {
   getNavigationType,
   getOperatorDefinition,
   getOperatorGeometry,
+  getOperatorThresholdState,
+  SPW_OPERATOR_THRESHOLD_SEQUENCE,
+  COMPOSITE_OPERATOR_PREFIXES,
   splitOperatorExpression,
   composeOpBundle,
   parseContourExpression,

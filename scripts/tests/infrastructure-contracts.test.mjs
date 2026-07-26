@@ -6,7 +6,13 @@ import test from 'node:test';
 import { MOUNT_WHEN } from '../../public/js/runtime/module-catalog-constants.js';
 import { ENHANCEMENT_DEFS } from '../../public/js/runtime/module-catalog-enhancement.js';
 import { resolveModuleCatalogSpecifier } from '../../public/js/runtime/module-catalog-normalize.js';
-import { composeOpBundle, getOperatorDefinition, splitOperatorExpression } from '../../public/js/kernel/shared.js';
+import {
+  composeOpBundle,
+  getOperatorDefinition,
+  getOperatorThresholdState,
+  splitOperatorExpression,
+  SPW_OPERATOR_THRESHOLD_SEQUENCE,
+} from '../../public/js/kernel/shared.js';
 
 import {
   shouldExcludeBuildPath,
@@ -296,5 +302,14 @@ test('splits operators and operands with canonical positional dispatch', () => {
   assert.match(bundle, /operator:action/);
   assert.match(bundle, /operand:generate_seed/);
   assert.match(bundle, /position:prefix/);
+  assert.match(bundle, /threshold:acting/);
   assert.match(bundle, /dispatch:forward/);
+});
+
+test('maps operator threshold physics sequence states', () => {
+  assert.equal(SPW_OPERATOR_THRESHOLD_SEQUENCE.length, 10);
+  assert.equal(getOperatorThresholdState('~')?.state, 'latent');
+  assert.equal(getOperatorThresholdState('wonder')?.state, 'probing');
+  assert.equal(getOperatorThresholdState('action')?.state, 'acting');
+  assert.equal(getOperatorThresholdState('ground')?.state, 'grounded');
 });
