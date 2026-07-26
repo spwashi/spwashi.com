@@ -195,6 +195,19 @@ function extraStylesheetHrefs(html) {
     .filter((href) => href && !/^\/public\/css\/style\.css(?:[?#].*)?$/i.test(href));
 }
 
+function inlineHeadBlocks(html) {
+  const head = html.match(/<head\b[^>]*>([\s\S]*?)<\/head>/i)?.[1] || '';
+  return [...head.matchAll(/<(style|script)\b([^>]*)>[\s\S]*?<\/\1>/gi)]
+    .filter((match) => (
+      match[1].toLowerCase() === 'style'
+      || (
+        !/\bsrc=["']/i.test(match[2])
+        && !/\btype=["']application\/ld\+json["']/i.test(match[2])
+      )
+    ))
+    .map((match) => match[0].trim());
+}
+
 function titleText(html) {
   const m = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
   return m ? decodeHtmlEntities(m[1].replace(/\s+/g, ' ').trim()) : '';
@@ -314,6 +327,7 @@ function migrateSource(html, filePath) {
   const stylesheetMode = pickBodyAttr(bodyAttrString, 'data-spw-stylesheet-mode') || 'scoped';
   const extraStyles = extraStylesheetHrefs(html).join('|');
   const extraScripts = extraScriptSrcs(html).join('|');
+  const preservedHeadBlocks = inlineHeadBlocks(html);
 
   // When family is inferred (not on body), stamp it onto body so render + CSS see category voice.
   let htmlForBody = html;
@@ -364,7 +378,10 @@ function migrateSource(html, filePath) {
     return { skipped: true, reason: 'no <head>' };
   }
 
-  const newHead = '<head>\n    <spw-site-head></spw-site-head>\n</head>';
+  const retainedHead = preservedHeadBlocks.length
+    ? `\n    ${preservedHeadBlocks.join('\n    ')}`
+    : '';
+  const newHead = `<head>\n    <spw-site-head></spw-site-head>${retainedHead}\n</head>`;
   body = body.replace(headMatch[0], newHead);
 
   // Remove any pre-existing spw-page to avoid duplicates when re-running

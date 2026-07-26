@@ -24,6 +24,9 @@ test('route migration decodes metadata entities before escaping template attribu
   <link rel="stylesheet" href="/public/css/routes/test.css?v=1" />
   <script type="module" src="/public/js/site.js"></script>
   <script type="module" src="/public/js/modules/test.js?v=1"></script>
+  <style>.portable { display: grid; }</style>
+  <script>globalThis.portableBench = true;</script>
+  <script type="application/ld+json">{"name":"generated elsewhere"}</script>
 </head>
 <body data-spw-surface="software" data-spw-page-family="operator-atlas">
   <main><h1>Specimen</h1></main>
@@ -41,6 +44,9 @@ test('route migration decodes metadata entities before escaping template attribu
     assert.match(migrated, /robots="noindex, nofollow"/);
     assert.match(migrated, /extra_styles="\/public\/css\/routes\/test\.css\?v=1"/);
     assert.match(migrated, /extra_scripts="\/public\/js\/modules\/test\.js\?v=1"/);
+    assert.match(migrated, /<style>\.portable \{ display: grid; \}<\/style>/);
+    assert.match(migrated, /<script>globalThis\.portableBench = true;<\/script>/);
+    assert.doesNotMatch(migrated, /generated elsewhere/);
     assert.doesNotMatch(migrated, /&amp;(?:gt|lt|amp);/);
   } finally {
     await rm(dir, { recursive: true, force: true });
