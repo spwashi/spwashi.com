@@ -246,3 +246,29 @@ test('shared partials operator chips align data-spw-operator attributes and sigi
     }
   }
 });
+
+test('operator definitions and aliases resolve all canonical workbench roles', () => {
+  const workbenchRoles = [
+    'probe',
+    'potential',
+    'observer',
+    'merge',
+    'collapse',
+    'integrate',
+    'action',
+    'constraint',
+    'measure',
+    'annotation',
+    'ground_handle',
+    'selector',
+    'intrinsic',
+  ];
+
+  for (const role of workbenchRoles) {
+    const definition = getOperatorDefinition(role);
+    assert.ok(definition, `Workbench role "${role}" failed to resolve to an operator definition`);
+    assert.ok(definition.prefix, `Workbench role "${role}" has no prefix`);
+    assert.ok(definition.role, `Workbench role "${role}" has no role`);
+    assert.ok(definition.physics, `Workbench role "${role}" has no physics field`);
+  }
+});
