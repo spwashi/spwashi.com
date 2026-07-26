@@ -120,6 +120,9 @@ describe('renderTemplate body personality', () => {
   title="Spwashi • #&gt; Frame &amp; &lt;Concept&gt;"
   description="Compare frame &amp; concept."
   canonical="https://spwashi.com/operators/frame/"
+  surface="software"
+  stylesheet_mode="scoped"
+  extra_styles="/public/css/effects/cinematic.css"
 ></spw-page>
 <!doctype html>
 <html lang="en">
@@ -130,5 +133,21 @@ describe('renderTemplate body personality', () => {
     assert.deepEqual(warnings, []);
     assert.match(output, /<title>Spwashi • #&gt; Frame &amp; &lt;Concept&gt;<\/title>/);
     assert.doesNotMatch(output, /&amp;(?:gt|lt|amp);/);
+    assert.equal(
+      output.match(/href="\/public\/css\/effects\/cinematic\.css"/g)?.length,
+      1,
+    );
+  });
+
+  it('preserves an explicit robots directive in the shared head', async () => {
+    const source = `<spw-page title="QA bench" robots="noindex"></spw-page>
+<!doctype html>
+<html lang="en">
+<head><spw-site-head></spw-site-head></head>
+<body><main></main></body>
+</html>`;
+    const { output, warnings } = await renderTemplate(source, { sourceLabel: 'test-robots' });
+    assert.deepEqual(warnings, []);
+    assert.match(output, /<meta name="robots" content="noindex" \/>/);
   });
 });

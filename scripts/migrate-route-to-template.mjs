@@ -249,6 +249,7 @@ function buildSpwPage(meta) {
     ['og_image', meta.ogImage],
     ['og_image_alt', meta.ogImageAlt],
     ['keywords', meta.keywords],
+    ['robots', meta.robots],
     ['breadcrumb_label', meta.breadcrumbLabel],
     ['header_current', meta.headerCurrent],
     ['header_current_href', meta.headerCurrentHref],
@@ -291,6 +292,7 @@ function migrateSource(html, filePath) {
   const ogImage = attr(html, 'og:image');
   const ogImageAlt = attr(html, 'og:image:alt');
   const keywords = attr(html, 'keywords');
+  const robots = attr(html, 'robots');
 
   let pathname = '/';
   try {
@@ -336,6 +338,7 @@ function migrateSource(html, filePath) {
     ogImage,
     ogImageAlt,
     keywords,
+    robots,
     breadcrumbLabel,
     headerCurrent,
     headerCurrentHref,

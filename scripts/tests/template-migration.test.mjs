@@ -18,6 +18,7 @@ test('route migration decodes metadata entities before escaping template attribu
 <head>
   <title>Spwashi • #&gt; Frame &amp; Concept</title>
   <meta name="description" content="Compare &lt;concept&gt; &amp; frame." />
+  <meta name="robots" content="noindex, nofollow" />
   <link rel="canonical" href="https://spwashi.com/test/" />
   <link rel="stylesheet" href="/public/css/style.css" />
   <link rel="stylesheet" href="/public/css/routes/test.css?v=1" />
@@ -37,6 +38,7 @@ test('route migration decodes metadata entities before escaping template attribu
     const migrated = await readFile(file, 'utf8');
     assert.match(migrated, /title="Spwashi • #> Frame &amp; Concept"/);
     assert.match(migrated, /description="Compare &lt;concept> &amp; frame\."/);
+    assert.match(migrated, /robots="noindex, nofollow"/);
     assert.match(migrated, /extra_styles="\/public\/css\/routes\/test\.css\?v=1"/);
     assert.match(migrated, /extra_scripts="\/public\/js\/modules\/test\.js\?v=1"/);
     assert.doesNotMatch(migrated, /&amp;(?:gt|lt|amp);/);

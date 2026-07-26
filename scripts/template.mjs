@@ -671,6 +671,7 @@ function renderSiteHead(vars) {
   const ogImage = firstValue(vars.og_image, 'https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg');
   const ogImageAlt = firstValue(vars.og_image_alt, `${title} illustrated metadata card on Spwashi.`);
   const keywords = firstValue(vars.keywords);
+  const robots = firstValue(vars.robots);
   const locale = normalizeLocaleCode(firstValue(vars.locale, vars.lang, 'en'));
   const sourceLocale = normalizeLocaleCode(firstValue(vars.source_locale, vars.source_lang, locale));
   const alternateLocaleLinks = renderAlternateLocaleLinks(vars);
@@ -707,6 +708,7 @@ function renderSiteHead(vars) {
     '    <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" />',
     '    <meta content="Spwashi" name="apple-mobile-web-app-title" />',
     `    <meta name="description" content="${attrEscape(description)}" />`,
+    robots ? `    <meta name="robots" content="${attrEscape(robots)}" />` : '',
     `    <meta name="spw:locale" content="${attrEscape(locale)}" />`,
     `    <meta name="spw:source-locale" content="${attrEscape(sourceLocale)}" />`,
     '',
@@ -720,7 +722,7 @@ function renderSiteHead(vars) {
     scopedStylesheets
       ? renderStylesheetLinks(scopedStylesheets, '    ')
       : `    <link href="${attrEscape(stylesheetHref)}" rel="stylesheet" />`,
-    extraStyles,
+    scopedStylesheets ? '' : extraStyles,
     '',
     analyticsScript,
     includeSiteScript ? `    <script src="${attrEscape(siteScriptSrc)}" type="module"></script>` : '',
