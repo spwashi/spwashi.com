@@ -336,7 +336,7 @@ export function normalizeMountHandle(result) {
   return { cleanup: null, refresh: null };
 }
 
-const INSPECT_LAB_SURFACES = new Set(['settings', 'website', 'plans']);
+const INSPECT_LAB_SURFACES = new Set(['settings', 'website', 'plans', 'tools-spw-parser']);
 
 export function isInspectLabSurface(root = BODY) {
   return INSPECT_LAB_SURFACES.has(root?.dataset?.spwSurface || '');

@@ -811,7 +811,7 @@ export const ENHANCEMENT_DEFS = [
     costClass: COST_CLASS.PAINT_COMPOSITE,
     selector: 'main, .spw-section-handle, [data-spw-operator]',
     rootMode: 'single',
-    describes: 'attention[resonance|field-intensity|section-handle|reading-groove] operators',
+    describes: 'attention[resonance|field-intensity|section-handle|syntax-wake|reading-groove] operators',
     // Role topology mirrors progressive-css coordinate_parity:
     // structural = section/handle identity; flourish = resonance pulse;
     // measure = progress/step CSS vars; residue = groove/cadence memory.
@@ -858,7 +858,7 @@ export const ENHANCEMENT_DEFS = [
     ],
     timingArc: 'immediate-attention',
     effectScope: 'root-state section-state listeners css-vars',
-    evaluates: 'section handle resonance reading-groove scroll-cadence attention field',
+    evaluates: 'section handle semantic-expression geometry resonance reading-groove scroll-cadence attention field',
     load: () => import('./attention-architecture.js'),
     mount: (mod, ctx) => {
       const fn = mod?.initSpwAttentionArchitecture;
@@ -1331,9 +1331,9 @@ export const ENHANCEMENT_DEFS = [
     costClass: COST_CLASS.DEMAND_COUPLED,
     selector: '[data-spw-bare-spw="enhance"], .site-footer__summary, [data-spw-material-context~="mutable-markup"]',
     rootMode: 'single',
-    describes: 'markup[bare-spw]{delimiter.operator.wrap}',
+    describes: 'markup[bare-spw]{parser-compatible.delimiter.operator.wrap}',
     updates: ['data-spw-bare-spw-enhanced', 'data-spw-form', 'data-spw-delimiter', 'data-spw-perspective'],
-    evaluates: 'bare Spw prose delimiter and inline operator discoverability',
+    evaluates: 'bare Spw prose expression geometry delimiter and inline operator discoverability',
     timingArc: 'immediate-grammar',
     effectScope: 'element-state',
     load: () => import('../semantic/bare-spw-markup.js'),

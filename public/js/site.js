@@ -208,51 +208,71 @@ const runtimeLogger = createSpwLogger('spw-runtime', {
   metaphor: 'boot-sequence',
 });
 
+async function getModuleTimingContract() {
+  if (getModuleTimingContract.mod) return getModuleTimingContract.mod;
+  try {
+    getModuleTimingContract.mod = await import('./kernel/module-timing-contract.js');
+  } catch {
+    getModuleTimingContract.mod = null;
+  }
+  return getModuleTimingContract.mod;
+}
+
 function getSpwPerformanceTimings() {
-  const filter = (entry) => entry && typeof entry.name === 'string' && entry.name.startsWith('spw:');
+  // Sync path for compose.controls.modules.timings(); prefers typed contract when already loaded.
+  const contract = getModuleTimingContract.mod;
+  if (contract?.collectSpwPerformanceTimings) {
+    return contract.collectSpwPerformanceTimings(performance);
+  }
   try {
     const marks = performance.getEntriesByType('mark')
-      .filter(filter)
+      .filter((m) => m && typeof m.name === 'string' && m.name.startsWith('spw:'))
       .map((m) => ({ name: m.name, startTime: Math.round(m.startTime) }));
     const measures = performance.getEntriesByType('measure')
-      .filter(filter)
-      .map((m) => ({ name: m.name, duration: Math.round(m.duration), startTime: Math.round(m.startTime) }));
-
-    const pickDuration = (...names) => {
-      for (const name of names) {
-        const hit = measures.find((m) => m.name === name);
+      .filter((m) => m && typeof m.name === 'string' && m.name.startsWith('spw:'))
+      .map((m) => ({
+        name: m.name,
+        duration: Math.round(m.duration),
+        startTime: Math.round(m.startTime),
+      }));
+    const pick = (...names) => {
+      for (const n of names) {
+        const hit = measures.find((m) => m.name === n);
         if (hit) return hit.duration;
       }
       return null;
     };
-
     const idleChunks = measures
-      .filter((m) => m.name.startsWith('spw:idle-chunk:') && !m.name.endsWith(':start') && !m.name.endsWith(':end'))
+      .filter((m) => m.name.startsWith('spw:idle-chunk:') && !m.name.includes(':start') && !m.name.includes(':end'))
       .map((m) => ({
         chunk: m.name.replace(/^spw:idle-chunk:/, ''),
         duration: m.duration,
       }));
-
     return {
       marks,
       measures,
       summary: {
-        bootToReady: pickDuration('spw:boot-to-ready'),
-        immediateLayer: pickDuration('spw:immediate-layer', 'spw:immediate-layer-parallel'),
-        immediateCore: pickDuration('spw:immediate-layer:core:parallel'),
-        immediateNonCore: pickDuration('spw:immediate-non-core-layers'),
-        settledLayer: pickDuration('spw:settled-layer'),
-        fullBoot: pickDuration('spw:full-boot'),
+        bootToReady: pick('spw:boot-to-ready'),
+        immediateLayer: pick('spw:immediate-layer', 'spw:immediate-layer-parallel'),
+        immediateCore: pick('spw:immediate-layer:core:parallel'),
+        immediateNonCore: pick('spw:immediate-non-core-layers'),
+        settledLayer: pick('spw:settled-layer'),
+        fullBoot: pick('spw:full-boot'),
         idleChunks,
-        idleChunkTotal: idleChunks.reduce((sum, row) => sum + (row.duration || 0), 0),
+        idleChunkTotal: idleChunks.reduce((s, r) => s + (r.duration || 0), 0),
         markCount: marks.length,
         measureCount: measures.length,
+        moduleMeasures: {},
+        layerMeasures: {},
       },
     };
   } catch {
     return { marks: [], measures: [], summary: null };
   }
 }
+
+// Warm the typed timing contract in the background (non-blocking).
+void getModuleTimingContract();
 
 annotateFloatingChrome(document);
 annotatePageHooks(document);

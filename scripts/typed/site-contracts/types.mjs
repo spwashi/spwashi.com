@@ -19,6 +19,24 @@ export const VALID_MOUNT_WHEN = Object.freeze([
     'region',
     'settled',
 ]);
+/** timingArc stems — keep aligned with public/ts/module-timing-contract.ts */
+export const TIMING_ARC_STEMS = Object.freeze([
+    'boot',
+    'immediate',
+    'feature',
+    'visible',
+    'enhance',
+    'idle',
+    'settled',
+    'region',
+]);
+export const STANDARD_IDLE_CHUNKS = Object.freeze([
+    'idle-residue',
+    'idle-collectible',
+    'idle-chrome',
+    'idle-lab',
+    'idle-default',
+]);
 /** Catalog layers accepted by module-catalog / runtime-contracts. */
 export const VALID_MODULE_LAYERS = Object.freeze([
     'core',

@@ -141,6 +141,28 @@ export const VALID_MOUNT_WHEN = Object.freeze([
 
 export type MountWhen = (typeof VALID_MOUNT_WHEN)[number];
 
+/** timingArc stems — keep aligned with public/ts/module-timing-contract.ts */
+export const TIMING_ARC_STEMS = Object.freeze([
+  'boot',
+  'immediate',
+  'feature',
+  'visible',
+  'enhance',
+  'idle',
+  'settled',
+  'region',
+] as const);
+
+export type TimingArcStem = (typeof TIMING_ARC_STEMS)[number];
+
+export const STANDARD_IDLE_CHUNKS = Object.freeze([
+  'idle-residue',
+  'idle-collectible',
+  'idle-chrome',
+  'idle-lab',
+  'idle-default',
+] as const);
+
 /** Catalog layers accepted by module-catalog / runtime-contracts. */
 export const VALID_MODULE_LAYERS = Object.freeze([
   'core',

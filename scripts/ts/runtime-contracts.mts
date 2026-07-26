@@ -14,6 +14,8 @@ import {
   extractRuntimeArrayLiteral,
 } from './site-contracts/helpers.mjs';
 import {
+  STANDARD_IDLE_CHUNKS,
+  TIMING_ARC_STEMS,
   VALID_MODULE_LAYERS,
   VALID_MOUNT_WHEN,
 } from './site-contracts/types.mjs';
@@ -86,6 +88,7 @@ const KERNEL_TYPED_SHIMS = new Map([
   ['bus', 'kernel/bus.js'],
   ['feed-utils', 'kernel/feed-utils.js'],
   ['runtime-environment', 'kernel/runtime-environment.js'],
+  ['module-timing-contract', 'kernel/module-timing-contract.js'],
 ]);
 const TYPED_IMPORT_RE = /(?:import|export)\s+(?:[^'";]*?\s+from\s+)?['"]([^'"]*typed\/[^'"]+)['"]/g;
 const TYPED_SHIM_RE = /export\s+\*\s+from\s+['"]([^'"]+)['"]/;
@@ -101,29 +104,10 @@ const VALID_COST_CLASSES = new Set([
   'paint_composite',
 ]);
 
-/** timingArc stems aligned with feature-wiring-timing cache + progressive-css coordinate_parity. */
-const TIMING_ARC_STEMS = Object.freeze([
-  'boot',
-  'immediate',
-  'feature',
-  'visible',
-  'enhance',
-  'idle',
-  'settled',
-  'region',
-] as const);
-
+/** timingArc stems from site-contracts (aligned with public/ts/module-timing-contract). */
 const TIMING_ARC_STEM_RE = new RegExp(
   `^(?:${TIMING_ARC_STEMS.join('|')})-[a-z0-9]+(?:-[a-z0-9]+)*$`,
 );
-
-const STANDARD_IDLE_CHUNKS = Object.freeze([
-  'idle-residue',
-  'idle-collectible',
-  'idle-chrome',
-  'idle-lab',
-  'idle-default',
-] as const);
 
 type RuntimeContractModule = {
   /** Explicit costClass from catalog when present (optimization coordinate). */

@@ -4,7 +4,7 @@ import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 import { BEHAVIOR_SCOPE_MODULE_HREF, BEHAVIOR_SCOPES, listBehaviorScopeBundles, listBehaviorScopeKeys, } from './css-manifest.mjs';
 import { extractObjectLiterals, extractRuntimeArrayLiteral, } from './site-contracts/helpers.mjs';
-import { VALID_MODULE_LAYERS, VALID_MOUNT_WHEN, } from './site-contracts/types.mjs';
+import { STANDARD_IDLE_CHUNKS, TIMING_ARC_STEMS, VALID_MODULE_LAYERS, VALID_MOUNT_WHEN, } from './site-contracts/types.mjs';
 import { toPosixPath } from './shared/build-topology.mjs';
 import { collectStylePropertyContractReport, } from './style-property-contract.mjs';
 const BEHAVIOR_SCOPE_KEYS = new Set(Object.keys(BEHAVIOR_SCOPES));
@@ -65,6 +65,7 @@ const KERNEL_TYPED_SHIMS = new Map([
     ['bus', 'kernel/bus.js'],
     ['feed-utils', 'kernel/feed-utils.js'],
     ['runtime-environment', 'kernel/runtime-environment.js'],
+    ['module-timing-contract', 'kernel/module-timing-contract.js'],
 ]);
 const TYPED_IMPORT_RE = /(?:import|export)\s+(?:[^'";]*?\s+from\s+)?['"]([^'"]*typed\/[^'"]+)['"]/g;
 const TYPED_SHIM_RE = /export\s+\*\s+from\s+['"]([^'"]+)['"]/;
@@ -76,25 +77,8 @@ const VALID_COST_CLASSES = new Set([
     'authored_prior_safe',
     'paint_composite',
 ]);
-/** timingArc stems aligned with feature-wiring-timing cache + progressive-css coordinate_parity. */
-const TIMING_ARC_STEMS = Object.freeze([
-    'boot',
-    'immediate',
-    'feature',
-    'visible',
-    'enhance',
-    'idle',
-    'settled',
-    'region',
-]);
+/** timingArc stems from site-contracts (aligned with public/ts/module-timing-contract). */
 const TIMING_ARC_STEM_RE = new RegExp(`^(?:${TIMING_ARC_STEMS.join('|')})-[a-z0-9]+(?:-[a-z0-9]+)*$`);
-const STANDARD_IDLE_CHUNKS = Object.freeze([
-    'idle-residue',
-    'idle-collectible',
-    'idle-chrome',
-    'idle-lab',
-    'idle-default',
-]);
 function relativeRepoPath(absolutePath) {
     return toPosixPath(path.relative(ROOT_DIR, absolutePath));
 }

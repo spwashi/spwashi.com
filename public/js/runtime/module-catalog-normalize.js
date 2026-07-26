@@ -11,6 +11,7 @@ import {
   MODULE_LAYERS,
   MOUNT_WHEN,
 } from './module-catalog-constants.js';
+import { summarizeCatalogTiming } from '../kernel/module-timing-contract.js';
 
 const COST_CLASS_SET = new Set(COST_CLASS_VALUES);
 
@@ -181,11 +182,22 @@ export function summarizeModuleCatalogOptimization(defs = []) {
       hint: suggestReclass(d),
     }));
 
+  const timing = summarizeCatalogTiming(normalized);
+
   return {
     count: normalized.length,
     byWhen,
     byLayer,
     byCostClass,
+    byTimingStem: timing.byTimingStem,
+    byIdleChunk: timing.byIdleChunk,
+    timingHygiene: {
+      knownArcCount: timing.knownArcCount,
+      missingArcCount: timing.missingArcCount,
+      idleWithChunk: timing.idleWithChunk,
+      idleWithoutChunk: timing.idleWithoutChunk,
+      nonstandardIdleChunk: timing.nonstandardIdleChunk,
+    },
     enhancementImmediate: enhancementImmediate.map((d) => d.id),
     enhancementImmediateCount: enhancementImmediate.length,
     ungatedEnhancementImmediate: ungatedEnhancementImmediate.map((d) => d.id),
@@ -196,6 +208,7 @@ export function summarizeModuleCatalogOptimization(defs = []) {
       'costClass is an optimization coordinate; when/layer remain the schedule contract.',
       'reclassCandidates are heuristics — validate per route before moving MOUNT_WHEN.',
       'INTERACTION schedule is available but unused when interactionSlotEmpty is true.',
+      'byTimingStem / byIdleChunk come from module-timing-contract (shared with browser timings).',
     ],
   };
 }
