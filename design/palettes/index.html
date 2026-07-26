@@ -1,68 +1,28 @@
+<spw-page
+    title="Spwashi • Palettes &amp; Spectral Families"
+    description="A design hub utility covering the color grammar, data attributes, and test palettes of the Spwashi runtime."
+    canonical="https://spwashi.com/design/palettes/"
+    og_title="Spwashi • Palettes &amp; Spectral Families"
+    og_description="A design hub utility covering the color grammar, data attributes, and test palettes of the Spwashi runtime."
+    breadcrumb_label="Palettes &amp; Spectral Families"
+    header_current="Palettes &amp; Spectral Families"
+    header_current_href="/design/palettes/"
+    header_indicator="website"
+    surface="website"
+    page_family="spec"
+    page_role="design-reference"
+    page_modes="reading inspect compare design"
+    wonder="projection orientation locality"
+    route_family="editorial design systems"
+    layout="wide"
+    features="operators navigator console themes feature-discovery field-guide inspectability promptability"
+    related_routes="/design/|/design/website/|/design/density/|/design/slots/"
+    stylesheet_mode="scoped"
+></spw-page>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta name="theme-color" content="#1a9999"/>
-    <meta name="apple-mobile-web-app-capable" content="yes"/>
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
-    <title>Spwashi • Palettes & Spectral Families</title>
-    <meta name="description" content="A design hub utility covering the color grammar, data attributes, and test palettes of the Spwashi runtime.">
-    
-    <link rel="canonical" href="https://spwashi.com/design/palettes/">
-    <meta property="og:type" content="website"/>
-    <meta property="og:site_name" content="Spwashi"/>
-    <meta property="og:title" content="Spwashi • Palettes & Spectral Families"/>
-    <meta property="og:description" content="A design hub utility covering the color grammar, data attributes, and test palettes of the Spwashi runtime."/>
-    <meta property="og:url" content="https://spwashi.com/design/palettes/"/>
-    
-    <script type="application/ld+json" data-spw-generated="breadcrumbs">
-        {
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            "itemListElement": [
-                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://spwashi.com/" },
-                { "@type": "ListItem", "position": 2, "name": "Design", "item": "https://spwashi.com/design/" },
-                { "@type": "ListItem", "position": 3, "name": "Palettes", "item": "https://spwashi.com/design/palettes/" }
-            ]
-        }
-    </script>
-<script type="module" src="/public/js/site.js"></script>
-
-    <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="any">
-    <link rel="apple-touch-icon" href="/public/images/apple-touch-icon.png">
-    <link rel="manifest" href="/manifest.webmanifest">
-    <link rel="stylesheet" href="/public/css/style.css">
-    
-    <style>
-        /* Page-local structural base for the Spectral Workshop demo (combinatoric pigment swatches).
-           Kept minimal; most alignment, reflow, and variant rules live in routes/surfaces/design.css
-           so they participate in the cascade and are easier to audit against the review criteria
-           (alignment/overflow, space, combinatorial clustering for scannability). */
-        .spectral-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: var(--space-sm);
-            margin-top: var(--space-md);
-        }
-        .spectral-swatch {
-            border-radius: var(--radius-sm);
-            padding: var(--space-md) var(--space-xs);
-            color: white;
-            font-family: var(--font-family-mono);
-            font-size: var(--text-size-xs);
-            font-weight: 500;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.4);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            aspect-ratio: 1;
-            box-shadow: var(--shadow-sm);
-        }
-    </style>
+    <spw-site-head></spw-site-head>
 </head>
 <body
     data-spw-surface="website"

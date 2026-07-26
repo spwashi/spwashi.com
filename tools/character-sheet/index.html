@@ -1,127 +1,29 @@
+<spw-page
+    title="Character Sheet Builder · Spwashi Tools"
+    canonical="https://spwashi.com/tools/character-sheet/"
+    og_title="Character Sheet Builder · Spwashi Tools"
+    og_description="Translate a character sheet into a mentorship-facing junior engineering profile without losing the depth of the world behind it."
+    og_image="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"
+    og_image_alt="Character sheet builder cards and route chips on Spwashi."
+    keywords="character sheet, mentorship, junior engineering, profile builder, local first, worldbuilding, collaboration, rpg"
+    breadcrumb_label="Character Sheet Builder · Spwashi Tools"
+    header_current="Character Sheet Builder · Spwashi Tools"
+    header_current_href="/tools/character-sheet/"
+    header_indicator="tools-character-sheet"
+    surface="tools-character-sheet"
+    page_family="workshop"
+    page_role="mentorship-tool"
+    page_modes="edit translate publish compare"
+    wonder="projection locality consequence"
+    route_family="editorial apprenticeship workshop"
+    features="operators navigator console"
+    related_routes="/|/tools/|/tools/profile/|/tools/midjourney/|/play/|/play/rpg-wednesday/|/services/"
+    stylesheet_mode="scoped"
+></spw-page>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta name="theme-color" content="#1a9999"/>
-    <meta name="apple-mobile-web-app-capable" content="yes"/>
-    <title>Character Sheet Builder · Spwashi Tools</title>
-    <link rel="manifest" href="/manifest.webmanifest">
-    <link rel="stylesheet" href="/public/css/style.css">
-    <link rel="stylesheet" href="/public/css/components/cards/profile-card.css">
-    <script type="module" src="/public/js/site.js"></script>
-    <script type="module">
-        import { initSpwProfileTool } from '/public/js/modules/profile/tool.js';
-
-        initSpwProfileTool({
-            storageKey: 'spw-character-sheet-builder',
-            defaultProfileScriptId: 'character-sheet-default',
-        });
-
-        // Improve value & discoverability of rendered cards for style development.
-        // The button wires the live .profile-card (rendered output) into the Midjourney bench
-        // as a portable style/identity packet. This is the ergonomic bridge for producers/directors.
-        // Also emits for runtime instrumentability (bus + potential trope).
-        document.addEventListener('click', (e) => {
-            const btn = e.target.closest('[data-card-action="style-to-midjourney"]');
-            if (!btn) return;
-            const preview = document.getElementById('profile-preview');
-            const card = preview?.querySelector('.profile-card');
-            if (!card) return;
-
-            const cardText = card.innerText.trim().replace(/\s+/g, ' ').slice(0, 280);
-            const packet = `card-style-packet: ${cardText} | use with palettes + slots for coherent visual canon`;
-
-            // Copy for immediate use in Midjourney prompts or notes
-            navigator.clipboard?.writeText(packet).catch(() => {});
-
-            // Navigate with query combinatorics (style packet as higher-order param)
-            const url = new URL('/tools/midjourney/', window.location.origin);
-            url.searchParams.set('style-packet', encodeURIComponent(packet.slice(0, 180)));
-            url.hash = '#reference-packets';
-
-            // Instrumentability: emit so bus/tropes/console can observe card → style handoff
-            try {
-                const bus = window.__SPW_SITE__?.bus || window.bus;
-                bus?.emit?.('spw:value-updated', {
-                    surface: 'tools-character-sheet',
-                    kind: 'rendered-card-to-style-packet',
-                    packetPreview: packet.slice(0, 120),
-                    timestamp: Date.now(),
-                });
-            } catch (_) {}
-
-            // Small UX: flash the preview as "exported to style work"
-            card.style.transition = 'box-shadow 180ms';
-            card.style.boxShadow = '0 0 0 3px var(--op-topic-color, #2f8f6b)';
-            setTimeout(() => { card.style.boxShadow = ''; }, 650);
-
-            window.location.href = url.toString();
-        }, { capture: true });
-    </script>
-    <link rel="canonical" href="https://spwashi.com/tools/character-sheet/">
-    <meta property="og:type" content="website"/>
-    <meta property="og:site_name" content="Spwashi"/>
-    <meta property="og:title" content="Character Sheet Builder · Spwashi Tools"/>
-    <meta property="og:description" content="Translate a character sheet into a mentorship-facing junior engineering profile without losing the depth of the world behind it."/>
-    <meta property="og:url" content="https://spwashi.com/tools/character-sheet/"/>
-    <meta property="og:image" content="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"/>
-    <meta property="og:image:alt" content="Character sheet builder cards and route chips on Spwashi."/>
-    <meta property="og:image:width" content="1200"/>
-    <meta property="og:image:height" content="630"/>
-    <meta name="twitter:card" content="summary_large_image"/>
-    <meta name="twitter:title" content="Character Sheet Builder · Spwashi Tools"/>
-    <meta name="twitter:description" content="Translate a character sheet into a mentorship-facing junior engineering profile without losing the depth of the world behind it."/>
-    <meta name="twitter:image" content="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"/>
-    <meta name="twitter:image:alt" content="Character sheet builder cards and route chips on Spwashi."/>
-    <meta name="keywords" content="character sheet, mentorship, junior engineering, profile builder, local first, worldbuilding, collaboration, rpg"/>
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "WebPage",
-            "name": "Character Sheet Builder · Spwashi Tools",
-            "description": "Translate a character sheet into a mentorship-facing junior engineering profile without losing the depth of the world behind it.",
-            "url": "https://spwashi.com/tools/character-sheet/",
-            "isPartOf": {
-                "@type": "WebSite",
-                "name": "Spwashi",
-                "url": "https://spwashi.com/"
-            },
-            "about": [
-                "character sheet",
-                "mentorship",
-                "junior engineering",
-                "worldbuilding",
-                "local-first"
-            ]
-        }
-    </script>
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            "itemListElement": [
-                {
-                    "@type": "ListItem",
-                    "position": 1,
-                    "name": "Home",
-                    "item": "https://spwashi.com/"
-                },
-                {
-                    "@type": "ListItem",
-                    "position": 2,
-                    "name": "Tools",
-                    "item": "https://spwashi.com/tools/"
-                },
-                {
-                    "@type": "ListItem",
-                    "position": 3,
-                    "name": "Character Sheet Builder",
-                    "item": "https://spwashi.com/tools/character-sheet/"
-                }
-            ]
-        }
-    </script>
+    <spw-site-head></spw-site-head>
 </head>
 <body data-spw-surface="tools-character-sheet"
     data-spw-stylesheet-mode="scoped" data-spw-features="operators navigator console" data-spw-route-family="editorial apprenticeship workshop" data-spw-context="analysis" data-spw-wonder="projection locality consequence" data-spw-page-family="workshop" data-spw-page-modes="edit translate publish compare" data-spw-page-seed="page_tools_tools_character_sheet" data-spw-page-role="mentorship-tool" data-spw-section-handle-desktop="auto" data-spw-related-routes="/|/tools/|/tools/profile/|/tools/midjourney/|/play/|/play/rpg-wednesday/|/services/">

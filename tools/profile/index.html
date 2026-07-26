@@ -1,139 +1,29 @@
+<spw-page
+    title="Profile Builder · Spwashi Tools"
+    canonical="https://spwashi.com/tools/profile/"
+    og_title="Profile Builder · Spwashi Tools"
+    og_description="Describe what you do in a form that travels."
+    og_image="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"
+    og_image_alt="Profile Builder · Spwashi Tools illustrated metadata card on Spwashi."
+    keywords="profile, builder, local, only, json, extensible, screenshottable, build, identity, skills, context, sections"
+    breadcrumb_label="Profile Builder · Spwashi Tools"
+    header_current="Profile Builder · Spwashi Tools"
+    header_current_href="/tools/profile/"
+    header_indicator="tools-profile"
+    surface="tools-profile"
+    page_family="workshop"
+    page_role="tool-surface"
+    page_modes="edit inspect export compare"
+    wonder="comparison locality consequence"
+    route_family="editorial profile workshop"
+    features="operators navigator console"
+    related_routes="/|/about/|/tools/|/tools/character-sheet/|/tools/midjourney/|/services/|/settings/"
+    stylesheet_mode="scoped"
+></spw-page>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta name="theme-color" content="#1a9999"/>
-    <meta name="apple-mobile-web-app-capable" content="yes"/>
-    <title>Profile Builder · Spwashi Tools</title>
-    <link rel="manifest" href="/manifest.webmanifest">
-    <link rel="stylesheet" href="/public/css/style.css">
-    <link rel="stylesheet" href="/public/css/components/cards/profile-card.css">
-    <script type="module" src="/public/js/site.js"></script>
-    <script type="application/json" id="profile-default-seed">
-    {
-      "header": { "name": "samwashington", "role": "Software Engineer & Artist", "status": "looking", "sigil": "^", "tagline": "I build software and make art. ~15 years writing code; I make systems learnable." },
-      "badges": [
-        { "cluster": "stack", "value": "C++" },
-        { "cluster": "stack", "value": "TypeScript" },
-        { "cluster": "stack", "value": "JavaScript" },
-        { "cluster": "stack", "value": "full-stack / web" },
-        { "cluster": "domain", "value": "e-commerce" },
-        { "cluster": "domain", "value": "applied learning science" },
-        { "cluster": "domain", "value": "publishing platforms" },
-        { "cluster": "approach", "value": "semantic systems" },
-        { "cluster": "approach", "value": "pedagogy-driven" },
-        { "cluster": "approach", "value": "inspectable by design" },
-        { "cluster": "context", "value": "Digital Applications Developer" },
-        { "cluster": "context", "value": "e-commerce SWE (2020–2025)" },
-        { "cluster": "context", "value": "UIUC — Applied Learning Science" },
-        { "cluster": "role", "value": "full-stack engineer" }
-      ],
-      "sections": [
-        { "heading": "What I bring", "operator": "^", "body": "A full-stack engineer who treats a codebase as learnable material. I turn sprawling systems into named, traceable structure — the way this site maps data-spw-* attributes to CSS clusters to philosophy docs — so other people (and agents) can navigate the work instead of re-deriving it." },
-        { "heading": "Context", "operator": "~", "body": "Started in C++ ~15 years ago wanting to know how transistors worked; went to UIUC in 2014, landed in the Division of General Studies, and declared Applied Learning Science. Left to work and to support my student org, Student Body for Meaningful Education. First role was Digital Applications Developer; then several years as a full-stack e-commerce engineer (2020–2025)." },
-        { "heading": "Currently building", "operator": "!", "body": "The Spw language — precise notation for how belief clusters form and progress — and spwashi.com as its working surface. Earlier explorations live at factshift.com. I'm aiming this toward a novel publishing platform that extends the structure and fire of school-age learning into adulthood. On the art side, a film releasing 2027." },
-        { "heading": "Looking for", "operator": "*", "body": "Engineering work that values semantic clarity and learnability, a path back toward graduate study in learning science, and collaborators building publishing and learning tools." }
-      ],
-      "footer": { "contact": "sam@spwashi.com", "links": [ { "label": "spwashi.com", "href": "https://spwashi.com/" }, { "label": "factshift.com", "href": "https://factshift.com/" } ] }
-    }
-    </script>
-    <script type="module">
-        import { initSpwProfileTool } from '/public/js/modules/profile/tool.js';
-
-        initSpwProfileTool({
-            storageKey: 'spw-profile-builder',
-            defaultProfileScriptId: 'profile-default-seed',
-        });
-    </script>
-    <link rel="canonical" href="https://spwashi.com/tools/profile/">
-    <meta property="og:type" content="website"/>
-    <meta property="og:site_name" content="Spwashi"/>
-    <meta property="og:title" content="Profile Builder · Spwashi Tools"/>
-    <meta property="og:description" content="Describe what you do in a form that travels."/>
-    <meta property="og:url" content="https://spwashi.com/tools/profile/"/>
-    <meta property="og:image" content="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"/>
-    <meta property="og:image:alt" content="Profile Builder · Spwashi Tools illustrated metadata card on Spwashi."/>
-    <meta property="og:image:width" content="1200"/>
-    <meta property="og:image:height" content="630"/>
-    <meta name="twitter:card" content="summary_large_image"/>
-    <meta name="twitter:title" content="Profile Builder · Spwashi Tools"/>
-    <meta name="twitter:description" content="Describe what you do in a form that travels."/>
-    <meta name="twitter:image" content="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"/>
-    <meta name="twitter:image:alt" content="Profile Builder · Spwashi Tools illustrated metadata card on Spwashi."/>
-            <meta name="keywords" content="profile, builder, local, only, json, extensible, screenshottable, build, identity, skills, context, sections"/>
-            <script type="application/ld+json" data-spw-generated="page">
-        {
-                "@context": "https://schema.org",
-                "@type": "WebPage",
-                "name": "Profile Builder · Spwashi Tools",
-                "description": "",
-                "url": "https://spwashi.com/tools/profile/",
-                "isPartOf": {
-                        "@type": "WebSite",
-                        "name": "Spwashi",
-                        "url": "https://spwashi.com/"
-                },
-                "about": [
-                        "profile",
-                        "builder",
-                        "local",
-                        "only",
-                        "json",
-                        "extensible",
-                        "screenshottable",
-                        "build"
-                ],
-                "additionalProperty": [
-                        {
-                                "@type": "PropertyValue",
-                                "name": "spwSurface",
-                                "value": "tools-profile"
-                        },
-                        {
-                                "@type": "PropertyValue",
-                                "name": "spwPageFamily",
-                                "value": "workshop"
-                        },
-                        {
-                                "@type": "PropertyValue",
-                                "name": "spwPageRole",
-                                "value": "tool-surface"
-                        },
-                        {
-                                "@type": "PropertyValue",
-                                "name": "spwWonder",
-                                "value": "comparison locality consequence"
-                        }
-                ]
-        }
-    </script>
-    <script type="application/ld+json" data-spw-generated="breadcrumbs">
-        {
-                "@context": "https://schema.org",
-                "@type": "BreadcrumbList",
-                "itemListElement": [
-                        {
-                                "@type": "ListItem",
-                                "position": 1,
-                                "name": "Home",
-                                "item": "https://spwashi.com/"
-                        },
-                        {
-                                "@type": "ListItem",
-                                "position": 2,
-                                "name": "Tools",
-                                "item": "https://spwashi.com/tools/"
-                        },
-                        {
-                                "@type": "ListItem",
-                                "position": 3,
-                                "name": "Profile Builder · Spwashi Tools",
-                                "item": "https://spwashi.com/tools/profile/"
-                        }
-                ]
-        }
-    </script>
+    <spw-site-head></spw-site-head>
 </head>
 <body data-spw-surface="tools-profile"
     data-spw-stylesheet-mode="scoped" data-spw-features="operators navigator console" data-spw-route-family="editorial profile workshop" data-spw-context="analysis" data-spw-wonder="comparison locality consequence" data-spw-page-family="workshop" data-spw-page-modes="edit inspect export compare" data-spw-page-seed="page_tools_tools_profile" data-spw-page-role="tool-surface" data-spw-related-routes="/|/about/|/tools/|/tools/character-sheet/|/tools/midjourney/|/services/|/settings/">
