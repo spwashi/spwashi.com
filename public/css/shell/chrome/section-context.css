@@ -368,6 +368,41 @@ html[data-spw-page-section-direction="back"] .spw-section-handle-shell {
   font-weight: 600;
 }
 
+.spw-section-handle-current-form {
+  flex: 0 1 auto;
+  max-width: 24ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: color-mix(
+    in srgb,
+    var(--active-op-color, var(--teal, #008080)) 58%,
+    var(--ink-soft, rgba(14, 18, 20, 0.68))
+  );
+  font-size: 0.6rem;
+  font-weight: 560;
+  letter-spacing: 0.035em;
+  opacity: 0.62;
+  transform: translateY(0);
+  transition:
+    color 160ms var(--ease-settle, ease),
+    opacity 160ms var(--ease-settle, ease),
+    transform 160ms var(--ease-settle, ease);
+}
+
+.spw-section-handle-current:is(:hover, :focus-visible) .spw-section-handle-current-form {
+  color: color-mix(
+    in srgb,
+    var(--active-op-color, var(--teal, #008080)) 76%,
+    var(--ink, rgba(14, 18, 20, 0.92))
+  );
+  opacity: 0.94;
+}
+
+.spw-section-handle-shell[data-spw-handle-phase="traveling"] .spw-section-handle-current-form {
+  opacity: 0.38;
+  transform: translateX(0.18rem);
+}
+
 .spw-section-handle-progress {
   flex: 0 0 auto;
   color: var(--ink-soft, rgba(14, 18, 20, 0.68));
@@ -613,6 +648,7 @@ body:has(.spw-section-handle-shell[data-spw-handle-enhanced="true"]) > .spw-sect
   .spw-section-handle-progress {
     font-size: 0.58rem;
   }
+
 }
 
 @media (min-width: 520px) and (max-width: 720px) {
@@ -621,6 +657,12 @@ body:has(.spw-section-handle-shell[data-spw-handle-enhanced="true"]) > .spw-sect
          .site-header[data-spw-menu-topology="screen-field"] ul,
          body > header[data-spw-menu-topology="screen-field"] ul) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 420px) {
+  .spw-section-handle-current-form {
+    display: none;
   }
 }
 
@@ -687,7 +729,8 @@ html[data-spw-section-handle="off"] .spw-section-handle-shell {
   .spw-section-handle,
   .spw-section-handle-shell,
   .spw-section-handle-step,
-  .spw-section-handle-current {
+  .spw-section-handle-current,
+  .spw-section-handle-current-form {
     transition: none !important;
     animation: none !important;
   }

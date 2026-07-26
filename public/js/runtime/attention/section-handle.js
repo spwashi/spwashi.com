@@ -4,6 +4,7 @@ import {
 } from '/public/js/kernel/dom-contracts.js';
 import { appendToDocument } from '/public/js/kernel/dom-render.js';
 import { computeLocomotionFieldBalance } from '/public/js/interface/wonder-memory.js';
+import { describeSpwExpression } from '/public/js/semantic/spw-expression-geometry.js';
 import {
   AUTO_HANDLE_MIN_SECTIONS,
   APPROACH_ATTR,
@@ -108,12 +109,29 @@ function getSectionDirection(currentIndex) {
 }
 
 function syncHandleContent(parts, info, activeIndex, sectionCount) {
-  const { opNode, labelNode, currentToken, currentLabel, progressNode, currentLink, prevButton, nextButton } = parts;
+  const {
+    opNode,
+    labelNode,
+    currentToken,
+    currentLabel,
+    currentForm,
+    progressNode,
+    currentLink,
+    prevButton,
+    nextButton,
+  } = parts;
 
   if (opNode) opNode.textContent = info.token || '#>';
   if (labelNode) labelNode.textContent = info.label || 'section';
   if (currentToken) currentToken.textContent = info.token || '#>';
   if (currentLabel) currentLabel.textContent = info.label || 'section';
+  if (currentForm instanceof HTMLElement) {
+    currentForm.textContent = info.syntaxWake || '';
+    currentForm.title = info.syntaxDescription
+      ? `Spw geometry: ${info.syntaxDescription}`
+      : '';
+    currentForm.hidden = !info.syntaxWake;
+  }
   if (progressNode) {
     progressNode.textContent = `${activeIndex + 1} / ${sectionCount}`;
     progressNode.setAttribute('aria-label', `Section ${activeIndex + 1} of ${sectionCount}`);
@@ -250,14 +268,37 @@ function getSectionLabel(section, index = 0) {
   return labelSource.trim().replace(/\s+/g, ' ').slice(0, 80);
 }
 
+function getSectionExpression(section) {
+  if (!(section instanceof HTMLElement)) return '';
+  if (section.dataset.spwSemanticExpression) return section.dataset.spwSemanticExpression;
+  const expressionHost = (
+    section.querySelector(':scope > [data-spw-semantic-expression]')
+    || section.querySelector(':scope > header [data-spw-semantic-expression]')
+    || section.querySelector(':scope > .frame-heading [data-spw-semantic-expression]')
+    || section.querySelector(':scope > .frame-topline [data-spw-semantic-expression]')
+    || section.querySelector('[data-spw-semantic-expression]')
+  );
+  return expressionHost?.getAttribute('data-spw-semantic-expression') || '';
+}
+
 function describeSection(section, index = 0, sections = []) {
   if (!section) return null;
   const id = ensureSectionId(section, index);
   const token = getSectionToken(section);
   const label = getSectionLabel(section, index);
+  const expression = getSectionExpression(section);
+  const syntax = expression ? describeSpwExpression(expression, { maxRootLength: 16 }) : null;
   const prevLabel = index > 0 ? getSectionLabel(sections[index - 1], index - 1) : '';
   const nextLabel = index < sections.length - 1 ? getSectionLabel(sections[index + 1], index + 1) : '';
-  return { id, token, label, prevLabel, nextLabel };
+  return {
+    id,
+    token,
+    label,
+    prevLabel,
+    nextLabel,
+    syntaxWake: syntax?.wake || '',
+    syntaxDescription: syntax?.description || '',
+  };
 }
 
 function collectSections() {
@@ -341,6 +382,7 @@ function createHandleShell(origin) {
       <span class="spw-section-handle-current-token" aria-hidden="true">#&gt;</span>
       <span class="spw-section-handle-current-copy">
         <span class="spw-section-handle-current-label">section</span>
+        <span class="spw-section-handle-current-form" aria-hidden="true" hidden></span>
         <span class="spw-section-handle-progress">1 / 1</span>
       </span>
     </a>
@@ -377,6 +419,7 @@ function getSectionHandleRefs(handle, shell) {
     currentLink: shell.querySelector('.spw-section-handle-current'),
     currentToken: shell.querySelector('.spw-section-handle-current-token'),
     currentLabel: shell.querySelector('.spw-section-handle-current-label'),
+    currentForm: shell.querySelector('.spw-section-handle-current-form'),
     progressNode: shell.querySelector('.spw-section-handle-progress'),
     toggleButton: shell.querySelector('[data-spw-handle-target="toggle"]'),
     topButton: shell.querySelector('[data-spw-handle-target="top"]'),
@@ -555,6 +598,7 @@ function updateSectionHandleState({
       labelNode: refs.labelNode,
       currentToken: refs.currentToken,
       currentLabel: refs.currentLabel,
+      currentForm: refs.currentForm,
       progressNode: refs.progressNode,
       currentLink: refs.currentLink,
       prevButton: refs.prevButton,

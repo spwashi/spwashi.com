@@ -5,7 +5,7 @@
 // gesture physics, and geometry projection can address them consistently.
 
 import { BARE_SPW_CONTAINER_SELECTOR } from '/public/js/kernel/dom-contracts.js';
-import { detectOperator } from '/public/js/kernel/shared.js';
+import { scanSpwExpression } from '/public/js/semantic/spw-expression-geometry.js';
 
 let initialized = false;
 
@@ -40,8 +40,6 @@ const DELIMITER_FORMS = Object.freeze({
   ')': Object.freeze({ form: 'circle', className: 'spw-delimiter--paren', perspective: 'subjective' }),
 });
 
-const BARE_TOKEN_RE = /(#>|#:|#|\.|\^|~|\?|@|\*|&|=|\$|%|!)(?:"[^"]+"|'[^']+'|[^\s,.;:!?[\]{}()<>"']+)|[{}[\]<>()]/g;
-
 const shouldSkipTextNode = (node) => {
   if (!(node instanceof Text)) return true;
   const parent = node.parentElement;
@@ -51,6 +49,16 @@ const shouldSkipTextNode = (node) => {
 };
 
 const createDelimiterSpan = (char) => {
+  if (char === '<>') {
+    const span = document.createElement('span');
+    span.className = 'spw-delimiter spw-delimiter--angle';
+    span.dataset.spwForm = 'angle';
+    span.dataset.spwDelimiter = char;
+    span.dataset.spwBareSpw = 'enhanced';
+    span.setAttribute('aria-hidden', 'true');
+    span.textContent = char;
+    return span;
+  }
   const meta = DELIMITER_FORMS[char];
   if (!meta) return document.createTextNode(char);
 
@@ -65,43 +73,35 @@ const createDelimiterSpan = (char) => {
   return span;
 };
 
-const createSyntaxToken = (text) => {
+const createSyntaxToken = (text, operator = '') => {
   const span = document.createElement('span');
   span.className = 'syntax-token';
   span.textContent = text;
   span.dataset.spwBareSpw = 'enhanced';
 
-  const op = detectOperator(text);
-  if (op) span.dataset.spwOperator = op.type;
+  if (operator) span.dataset.spwOperator = operator;
 
   return span;
 };
 
 const enhanceTextNode = (textNode) => {
   const text = textNode.textContent;
-  if (!text || !BARE_TOKEN_RE.test(text)) return false;
+  if (!text) return false;
 
-  BARE_TOKEN_RE.lastIndex = 0;
+  const geometry = scanSpwExpression(text);
+  const meaningfulTokens = geometry.tokens.filter((token) => token.type !== 'text');
+  if (!meaningfulTokens.length) return false;
   const fragment = document.createDocumentFragment();
-  let lastIndex = 0;
-  let match;
-
-  while ((match = BARE_TOKEN_RE.exec(text)) !== null) {
-    if (match.index > lastIndex) {
-      fragment.appendChild(document.createTextNode(text.slice(lastIndex, match.index)));
+  for (const token of geometry.tokens) {
+    if (token.type === 'text') {
+      fragment.appendChild(document.createTextNode(token.value));
+      continue;
     }
-
-    const token = match[0];
     fragment.appendChild(
-      DELIMITER_FORMS[token]
-        ? createDelimiterSpan(token)
-        : createSyntaxToken(token),
+      token.type === 'boundary'
+        ? createDelimiterSpan(token.value)
+        : createSyntaxToken(token.value, token.operator),
     );
-    lastIndex = match.index + token.length;
-  }
-
-  if (lastIndex < text.length) {
-    fragment.appendChild(document.createTextNode(text.slice(lastIndex)));
   }
 
   textNode.parentNode?.replaceChild(fragment, textNode);
