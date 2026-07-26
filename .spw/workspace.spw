@@ -5,6 +5,26 @@
 #>spw_workspace
 #:workspace
 
+# Canonical roots frame read by the mounted spw CLI (roots, tree, select, doctor).
+# Literal path declarations only. The @alias graph below stays for LSP discovery.
+^"roots"{
+ @spw: ~"."
+ @repo: ~".."
+ @index: ~"./index.spw"
+ @mount: ~"./mount.spw"
+ @site: ~"./site.spw"
+ @domains: ~"./domains.spw"
+ @surfaces: ~"./surfaces"
+ @conventions: ~"./conventions"
+ @language: ~"./language"
+ @philosophy: ~"./philosophy"
+ @reviews: ~"./reviews"
+ @audits: ~"./audits"
+ @caches: ~"./caches"
+ @slices: ~"./slices"
+ @workbench: ~"./_workbench"
+}
+
 @index: ~"./index.spw"
 @mount: ~"./mount.spw"
 @conventions: ~"./conventions/index.spw"

@@ -24,6 +24,21 @@ primitives: .{
   annotation = `Subjective resonance, climate, or wonder judgments captured during review; must not masquerade as objective telemetry.`
 }
 
+operator_lens: .{
+  &subject {
+    role = `The specimen is the binding focus of a review — every claim in a designer conversation names one.`
+    on = `primitives.specimen`
+  }
+  *value {
+    role = `A token is concrete worth, not decoration — material salience that survives rename pressure.`
+    on = `primitives.token`
+  }
+  <concept> {
+    role = `Annotation is a conceptual boundary around subjective judgment — the conduit that keeps taste from leaking into telemetry.`
+    on = `primitives.annotation`
+  }
+}[reg=facet]
+
 routes: .{
   canvas = `/design/#conversation-canvas`
   specimens = `/design/components/`
@@ -41,3 +56,15 @@ runtime: .{
 }
 
 handoff_rule: `A designer review should cite at least one specimen URL, one token name, and one objective measurement when proposing a typography or layout change. Subjective notes are welcome beside measurements, never instead of them.`
+
+owner_claim: .{
+  claim #designer-canvas-001 {
+    layer = "pragmatic"
+    hypothesis = `A review that names &subject (specimen), *value (token), and wraps taste in <concept> (annotation) stays falsifiable — it cannot silently swap subjective read for objective measurement.`
+    spec_ref = ~"./designer-conversation-canvas.spw"
+    impl_ref = @measurement_bus
+    probe_ref = `rg 'data-spw-measure-kind' public/js/kernel/shared.js public/css/handles/operators/state-semantics.css`
+    falsification = `A landed review cites annotation language without data-spw-measure-kind="subjective" alongside a measured value.`
+    status = "active"
+  }
+}[reg=facet]

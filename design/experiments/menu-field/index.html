@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#1a9999"/>
+    <title>Spwashi • Field Disclosure</title>
+    <meta name="description" content="A playable instrument for the menu-field posture cycle: navigation felt as .ground → [mode] → (scene) → &subject → .ground′ — settlement, disclosure, staging, and binding, each with its own timing physics.">
+    <meta name="robots" content="noindex">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <script type="module" src="/public/js/site.js"></script>
+    <style>
+        /* Instrument-local styles. Deliberately inline: the page stays a
+           self-contained, portable demo — lift <style> + <script> + the stage
+           markup into any document and the instrument still plays. */
+        .field-stage {
+            display: grid;
+            gap: 1.1rem;
+            justify-items: center;
+            padding: clamp(1.2rem, 3vw, 2rem);
+        }
+
+        /* --- Posture ribbon: the four sigil-postures, lit in sequence --- */
+        .posture-ribbon {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            justify-content: center;
+            font-family: var(--font-mono, ui-monospace, monospace);
+            font-size: 0.88rem;
+        }
+
+        .posture-pip {
+            padding: 0.3em 0.75em;
+            border-radius: 999px;
+            border: 1px solid var(--line, rgba(20, 24, 26, 0.16));
+            color: var(--ink-soft, rgba(20, 24, 26, 0.55));
+            transition: border-color 260ms ease, color 260ms ease, background 260ms ease, transform 260ms ease;
+        }
+
+        .posture-pip[data-lit="true"] {
+            color: inherit;
+            font-weight: 700;
+            transform: translateY(-1px);
+        }
+
+        .posture-pip[data-posture="ground"][data-lit="true"] {
+            border-color: var(--op-action-color, #0f6b6b);
+            background: color-mix(in srgb, var(--op-action-color, #0f6b6b) 10%, transparent);
+        }
+
+        .posture-pip[data-posture="mode"][data-lit="true"] {
+            border-color: var(--op-object-color, #a06a1f);
+            background: color-mix(in srgb, var(--op-object-color, #a06a1f) 10%, transparent);
+        }
+
+        .posture-pip[data-posture="scene"][data-lit="true"] {
+            border-color: var(--op-probe-color, #7b5bd6);
+            background: color-mix(in srgb, var(--op-probe-color, #7b5bd6) 10%, transparent);
+        }
+
+        .posture-pip[data-posture="subject"][data-lit="true"] {
+            border-color: var(--op-topic-color, seagreen);
+            background: color-mix(in srgb, var(--op-topic-color, seagreen) 12%, transparent);
+        }
+
+        /* --- Expression: the spw reading of the current posture --- */
+        .field-expression {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.45ch;
+            font-family: var(--font-mono, ui-monospace, monospace);
+            font-size: clamp(1.3rem, 3.6vw, 2.1rem);
+            padding: 0.6em 1em;
+            border-radius: 14px;
+            border: 1px solid var(--line, rgba(20, 24, 26, 0.16));
+            background: var(--surface-strong, rgba(255, 255, 255, 0.8));
+            min-height: 2.2em;
+            transition: box-shadow 420ms ease, transform 420ms ease;
+        }
+
+        /* Ground: settled, breathing at rest — the slowest clock on the page. */
+        .field-stage[data-disclosure="ground"] .field-expression {
+            animation: ground-breathe 5.2s ease-in-out infinite;
+        }
+
+        @keyframes ground-breathe {
+            0%, 100% { box-shadow: 0 1px 4px rgba(20, 24, 26, 0.08); }
+            50% { box-shadow: 0 2px 12px rgba(15, 107, 107, 0.14); }
+        }
+
+        /* Mode: disclosure — the expression opens its brackets, options held
+           side by side, none consumed. */
+        .field-stage[data-disclosure="mode"] .field-expression {
+            box-shadow: 0 6px 18px rgba(160, 106, 31, 0.14);
+            transform: translateY(-0.08em);
+        }
+
+        /* Scene: staged observability — a faster flicker clock, nothing committed. */
+        .field-stage[data-disclosure="scene"] .field-expression {
+            animation: scene-stage 1.6s ease-in-out infinite;
+        }
+
+        @keyframes scene-stage {
+            0%, 100% { box-shadow: 0 6px 18px rgba(123, 91, 214, 0.12); }
+            50% { box-shadow: 0 8px 24px rgba(123, 91, 214, 0.22); }
+        }
+
+        /* Subject: decisive bind — one sharp travel beat, then re-settle. */
+        .field-stage[data-disclosure="subject"] .field-expression {
+            animation: subject-bind 760ms cubic-bezier(0.2, 0.85, 0.3, 1.1);
+        }
+
+        @keyframes subject-bind {
+            0% { transform: translateX(0.4ch) rotate(1deg); box-shadow: 0 8px 24px rgba(46, 139, 87, 0.2); }
+            60% { transform: translateX(-0.12ch) rotate(-0.4deg); }
+            100% { transform: translateX(0) rotate(0deg); box-shadow: 0 1px 4px rgba(20, 24, 26, 0.08); }
+        }
+
+        .field-expression .op-ground { color: var(--op-action-color, #0f6b6b); font-weight: 700; }
+        .field-expression .op-mode { color: var(--op-object-color, #a06a1f); font-weight: 700; }
+        .field-expression .op-scene { color: var(--op-probe-color, #7b5bd6); font-weight: 700; }
+        .field-expression .op-subject { color: var(--op-topic-color, seagreen); font-weight: 700; }
+        .field-expression i { opacity: 0.55; }
+
+        .field-meter {
+            font-family: var(--font-mono, ui-monospace, monospace);
+            font-size: 0.82rem;
+            letter-spacing: 0.06em;
+            color: var(--ink-soft, rgba(20, 24, 26, 0.65));
+        }
+
+        /* --- The route field itself --- */
+        .route-field {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.55rem;
+            justify-content: center;
+            max-width: 46rem;
+        }
+
+        .route-chip {
+            font: inherit;
+            font-family: var(--font-mono, ui-monospace, monospace);
+            font-size: 0.95rem;
+            padding: 0.45em 0.9em;
+            border-radius: 999px;
+            border: 1px solid var(--line, rgba(20, 24, 26, 0.18));
+            background: var(--surface, rgba(255, 255, 255, 0.6));
+            cursor: pointer;
+            transition: border-color 200ms ease, box-shadow 200ms ease, transform 320ms cubic-bezier(0.2, 0.8, 0.3, 1.15), opacity 320ms ease;
+        }
+
+        /* Grounded: the field is furled — only the current route holds weight. */
+        .field-stage[data-disclosure="ground"] .route-chip:not([data-here="true"]) {
+            opacity: 0.28;
+            transform: translateY(0.35em) scale(0.94);
+            pointer-events: none;
+        }
+
+        .route-chip[data-here="true"] {
+            border-color: var(--op-action-color, #0f6b6b);
+            background: color-mix(in srgb, var(--op-action-color, #0f6b6b) 10%, transparent);
+            font-weight: 700;
+            cursor: default;
+        }
+
+        /* Disclosed: the field fans open — every pathway present, none consumed. */
+        .field-stage:not([data-disclosure="ground"]) .route-chip:not([data-here="true"]) {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .route-chip:not([data-here="true"]):hover,
+        .route-chip:not([data-here="true"]):focus-visible {
+            border-color: color-mix(in srgb, var(--op-probe-color, #7b5bd6) 60%, transparent);
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--op-probe-color, #7b5bd6) 16%, transparent);
+            transform: translateY(-1px);
+        }
+
+        .route-chip[data-staged="true"] {
+            border-color: var(--op-probe-color, #7b5bd6);
+        }
+
+        .field-controls { display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap; justify-content: center; }
+
+        .field-open {
+            font: inherit;
+            font-family: var(--font-mono, ui-monospace, monospace);
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding: 0.4em 1.1em;
+            border-radius: 10px;
+            border: 1px solid var(--op-object-color, #a06a1f);
+            background: color-mix(in srgb, var(--op-object-color, #a06a1f) 10%, transparent);
+            cursor: pointer;
+        }
+
+        .field-furl {
+            font: inherit;
+            font-family: var(--font-mono, ui-monospace, monospace);
+            padding: 0.4em 0.9em;
+            border-radius: 10px;
+            border: 1px solid var(--line, rgba(20, 24, 26, 0.2));
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .field-caption {
+            max-width: 56ch;
+            text-align: center;
+            font-size: 0.95rem;
+            color: var(--ink-soft, rgba(20, 24, 26, 0.7));
+            min-height: 3.4em;
+        }
+
+        /* --- Trail: each completed cycle leaves a collectible reading --- */
+        .field-trail {
+            display: grid;
+            gap: 0.3rem;
+            justify-items: center;
+            font-family: var(--font-mono, ui-monospace, monospace);
+            font-size: 0.85rem;
+            color: var(--ink-soft, rgba(20, 24, 26, 0.65));
+        }
+
+        .field-trail li {
+            list-style: none;
+            padding: 0.25em 0.7em;
+            border-radius: 8px;
+            border: 1px dashed var(--line, rgba(20, 24, 26, 0.16));
+            animation: trail-arrive 480ms ease-out;
+        }
+
+        @keyframes trail-arrive {
+            0% { opacity: 0; transform: translateY(0.4em); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .posture-table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+        .posture-table th, .posture-table td { text-align: left; padding: 0.4em 0.7em; border-bottom: 1px solid var(--line, rgba(20,24,26,0.12)); }
+        .posture-table code { font-weight: 700; }
+    </style>
+</head>
+<body
+    data-spw-surface="website"
+    data-spw-stylesheet-mode="scoped"
+    data-spw-features="operators navigator inspectability"
+    data-spw-route-family="design experiments lab"
+    data-spw-context="play"
+    data-spw-wonder="orientation locality"
+    data-spw-page-family="lab"
+    data-spw-page-modes="play inspect compare"
+    data-spw-page-seed="page_design_experiments_menu_field"
+    data-spw-page-role="instrument"
+    data-spw-layout="reading"
+    data-spw-related-routes="/design/|/design/experiments/subject-balance/|/topics/software/spw/">
+
+<header class="site-header">
+    <nav aria-label="Lab navigation">
+        <a href="/design/">design</a>
+        <a href="/design/experiments/subject-balance/">subject balance</a>
+        <a href="/topics/software/spw/">spw</a>
+    </nav>
+</header>
+
+<main>
+    <article class="site-frame">
+        <header data-spw-slot="header">
+            <h1>Field Disclosure</h1>
+            <p class="frame-note">
+                The navigation menu played as a posture cycle, not an open/closed toggle.
+                <code>.ground</code> settles on where you are; <code>[mode]</code> discloses the field
+                without consuming any pathway; <code>(scene)</code> stages a route while the choice is
+                still forming; <code>&amp;subject</code> binds one and travels — and arrival is just
+                <code>.ground</code> again, somewhere new. Model: <code>.spw/surfaces/menu-field.spw</code>.
+            </p>
+        </header>
+
+        <section class="field-stage" data-spw-feature="menu-field-instrument" data-disclosure="ground" aria-label="Menu field posture instrument">
+            <div class="posture-ribbon" aria-label="Posture cycle" data-role="ribbon">
+                <span class="posture-pip" data-posture="ground">.ground</span>
+                <span class="posture-pip" data-posture="mode">[mode]</span>
+                <span class="posture-pip" data-posture="scene">(scene)</span>
+                <span class="posture-pip" data-posture="subject">&amp;subject</span>
+            </div>
+
+            <p class="field-expression" data-role="expression" aria-live="polite"></p>
+
+            <p class="field-meter" data-role="meter"></p>
+
+            <div class="field-controls">
+                <button class="field-open" type="button" data-role="open">[ disclose the field</button>
+                <button class="field-furl" type="button" data-role="furl" hidden>. re-ground</button>
+            </div>
+
+            <div class="route-field" data-role="field" role="group" aria-label="Route pathways"></div>
+
+            <p class="field-caption" data-role="caption"></p>
+
+            <ul class="field-trail" data-role="trail" aria-label="Waypoint trail"></ul>
+        </section>
+
+        <section class="site-frame" data-spw-kind="frame" data-spw-role="reference">
+            <header class="frame-heading"><h2>Four postures, four clocks</h2></header>
+            <table class="posture-table">
+                <thead><tr><th>posture</th><th>gesture</th><th>clock</th><th>physics</th></tr></thead>
+                <tbody>
+                    <tr><td><code>.ground</code></td><td>rest</td><td>~5s breathe</td><td>settlement: the field is furled, only the current route holds weight</td></tr>
+                    <tr><td><code>[mode]</code></td><td>press</td><td>one spring beat</td><td>disclosure: pathways fan open side by side — held, not consumed</td></tr>
+                    <tr><td><code>(scene)</code></td><td>hover / focus</td><td>~1.6s flicker</td><td>staging: a route is observed midprocess; the stage light breathes faster than ground ever does</td></tr>
+                    <tr><td><code>&amp;subject</code></td><td>click</td><td>one bind beat</td><td>binding: the route becomes the subject of the transition, travels, and re-grounds — the cycle closes where it began</td></tr>
+                </tbody>
+            </table>
+        </section>
+    </article>
+</main>
+
+<script>
+    (() => {
+        /* Route field: real site routes so the instrument reads as this site's
+           menu rehearsing itself, not a lorem-ipsum widget. */
+        const ROUTES = [
+            { slug: 'home', href: '/' },
+            { slug: 'about', href: '/about/' },
+            { slug: 'design', href: '/design/' },
+            { slug: 'topics', href: '/topics/' },
+            { slug: 'now', href: '/now/' },
+            { slug: 'play', href: '/play/' },
+            { slug: 'blog', href: '/blog/' },
+            { slug: 'research', href: '/research/' },
+        ];
+
+        /* Posture copy: role lines lifted from .spw/surfaces/menu-field.spw so
+           the demo and the spec stay quotable against each other. */
+        const POSTURES = {
+            ground: {
+                meter: 'posture: grounded · field: furled · clock: breathing (~5s)',
+                say: (s) => 'Grounded at <code>.' + s.here.slug + '</code>. Resting posture: current route context, settlement, center of gravity. The field is furled — disclose it to see the pathways.',
+            },
+            mode: {
+                meter: 'posture: oriented · field: disclosed · pathways: held, none consumed',
+                say: () => '<code>menu[field]</code> — the field fans open. Every pathway is present at once; disclosure selects a posture without consuming the alternatives. Hover a route to stage it.',
+            },
+            scene: {
+                meter: 'posture: exploring · staging: live · commitment: none',
+                say: (s) => '<code>(' + s.staged.slug + ')</code> staged — midprocess observability. The route is under the stage light while the choice is still forming. Leave, and nothing happened; click, and it binds.',
+            },
+            subject: {
+                meter: 'posture: waypointed · subject: bound · transition: traveling',
+                say: (s) => '<code>&amp;' + s.bound.slug + '</code> — the route is the binding focus of the transition. One bind beat, then arrival: waypointed resolves into grounded, somewhere new.',
+            },
+        };
+
+        const stage = document.querySelector('[data-spw-feature="menu-field-instrument"]');
+        if (!stage) return;
+
+        const ribbon = stage.querySelector('[data-role="ribbon"]');
+        const expression = stage.querySelector('[data-role="expression"]');
+        const meter = stage.querySelector('[data-role="meter"]');
+        const caption = stage.querySelector('[data-role="caption"]');
+        const openBtn = stage.querySelector('[data-role="open"]');
+        const furlBtn = stage.querySelector('[data-role="furl"]');
+        const field = stage.querySelector('[data-role="field"]');
+        const trail = stage.querySelector('[data-role="trail"]');
+
+        const state = { posture: 'ground', here: ROUTES[0], staged: null, bound: null, cycles: [] };
+
+        const renderExpression = () => {
+            const g = '<span class="op-ground">.</span>' + state.here.slug;
+            if (state.posture === 'ground') {
+                expression.innerHTML = g;
+            } else if (state.posture === 'mode') {
+                expression.innerHTML = g + ' <span class="op-mode">[</span>field<span class="op-mode">]</span>';
+            } else if (state.posture === 'scene') {
+                expression.innerHTML = g + ' <span class="op-mode">[</span>field<span class="op-mode">]</span> <span class="op-scene">(</span><i>' + state.staged.slug + '</i><span class="op-scene">)</span>';
+            } else {
+                expression.innerHTML = '<span class="op-subject">&amp;</span>' + state.bound.slug + ' <i>→</i> <span class="op-ground">.</span>' + state.bound.slug;
+            }
+        };
+
+        const sync = () => {
+            stage.dataset.disclosure = state.posture;
+            ribbon.querySelectorAll('.posture-pip').forEach((pip) => {
+                pip.dataset.lit = String(pip.dataset.posture === state.posture);
+            });
+            meter.textContent = POSTURES[state.posture].meter;
+            caption.innerHTML = POSTURES[state.posture].say(state);
+            openBtn.hidden = state.posture !== 'ground';
+            furlBtn.hidden = state.posture === 'ground' || state.posture === 'subject';
+            field.querySelectorAll('.route-chip').forEach((chip) => {
+                chip.dataset.here = String(chip.dataset.slug === state.here.slug);
+                chip.dataset.staged = String(!!state.staged && chip.dataset.slug === state.staged.slug);
+            });
+            renderExpression();
+        };
+
+        ROUTES.forEach((route) => {
+            const chip = document.createElement('button');
+            chip.type = 'button';
+            chip.className = 'route-chip';
+            chip.textContent = route.href;
+            chip.dataset.slug = route.slug;
+            field.append(chip);
+        });
+
+        const routeOf = (chip) => ROUTES.find((r) => r.slug === chip.dataset.slug);
+
+        openBtn.addEventListener('click', () => {
+            state.posture = 'mode';
+            state.staged = null;
+            sync();
+        });
+
+        furlBtn.addEventListener('click', () => {
+            state.posture = 'ground';
+            state.staged = null;
+            sync();
+        });
+
+        field.addEventListener('mouseover', (event) => {
+            const chip = event.target.closest('.route-chip');
+            if (!chip || chip.dataset.here === 'true') return;
+            if (state.posture !== 'mode' && state.posture !== 'scene') return;
+            state.staged = routeOf(chip);
+            state.posture = 'scene';
+            sync();
+        });
+
+        field.addEventListener('focusin', (event) => {
+            const chip = event.target.closest('.route-chip');
+            if (!chip || chip.dataset.here === 'true') return;
+            if (state.posture !== 'mode' && state.posture !== 'scene') return;
+            state.staged = routeOf(chip);
+            state.posture = 'scene';
+            sync();
+        });
+
+        field.addEventListener('mouseout', (event) => {
+            if (!event.target.closest('.route-chip')) return;
+            if (state.posture !== 'scene') return;
+            state.staged = null;
+            state.posture = 'mode';
+            sync();
+        });
+
+        field.addEventListener('click', (event) => {
+            const chip = event.target.closest('.route-chip');
+            if (!chip || chip.dataset.here === 'true') return;
+            if (state.posture !== 'mode' && state.posture !== 'scene') return;
+
+            const from = state.here;
+            state.bound = routeOf(chip);
+            state.staged = null;
+            state.posture = 'subject';
+            sync();
+
+            /* Two-beat rule (house physics): the bind is seen before the
+               settlement resolves it. Arrival = grounded at the new route. */
+            window.setTimeout(() => {
+                state.here = state.bound;
+                const reading = '.' + from.slug + ' [field] (' + state.here.slug + ') &' + state.here.slug + ' .' + state.here.slug;
+                state.cycles.push(reading);
+                const li = document.createElement('li');
+                li.textContent = reading;
+                trail.append(li);
+                while (trail.children.length > 5) trail.removeChild(trail.firstChild);
+
+                state.bound = null;
+                state.posture = 'ground';
+                sync();
+            }, 820);
+        });
+
+        sync();
+    })();
+</script>
+</body>
+</html>

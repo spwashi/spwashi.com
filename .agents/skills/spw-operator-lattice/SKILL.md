@@ -25,12 +25,22 @@ pages noisier without teaching more.
 
 ## Workflow
 
-1. Query existing usage (`.spw`, `data-spw-operator`, chips).
+1. Query existing usage (`.spw`, `data-spw-operator`, chips) with the mounted
+   `spw` CLI, not raw `rg`, so counts/coupling reflect real refs, not string hits.
 2. Prefer reusing established operators over inventing synonyms.
 3. Change shared definitions/tokens only when the lattice truly shifted.
 4. Keep public copy readable without requiring operator literacy.
 
+## Tooling (mounted `spw` CLI)
+
+```bash
+npm --prefix .spw/_workbench run spw -- analyze .spw --selectors ops:frame,ops:body,boon,bone   # hit densities by operator
+npm --prefix .spw/_workbench run spw -- map .spw --hubs 12                  # hubs / cycles / familiarity strands
+npm --prefix .spw/_workbench run spw -- formula .spw --family field         # named formula catalog, pattern discovery
+```
+
 ## Validation
 
-- `rg` for operator names and chip selectors
+- Mounted `analyze`/`map` above for operator counts and cross-links
+- `rg` only as a fallback for `data-spw-operator` string hits in HTML/JS
 - Spot-check contrast and focus states

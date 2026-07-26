@@ -46,9 +46,20 @@ owners. **Failure:** another mechanical generation pass with no closures.
   `.agents/state/` (see agentic-dev-contracts)—do not hand-regenerate forever.
 - Promote only durable rules into `planning-ecology.spw`.
 
+## Tooling (mounted `spw` CLI)
+
+```bash
+npm --prefix .spw/_workbench run spw:plan:status --                   # cache/status for active or named plan
+npm --prefix .spw/_workbench run spw:plan:check --                    # detect cache drift and stale plan surfaces
+npm --prefix .spw/_workbench run spw -- tree .agents/plans --depth 2  # census: PLAN/FIX/WIP/empty at a glance
+```
+
+`plan:check` catches drift the census would otherwise be done by eye — run it
+before hand-sweeping `.agents/plans/`.
+
 ## Validation
 
-- `git diff --check`
+- `plan:check` above, then `git diff --check`
 - `rg` for moved slugs and dispatch entries
 - Skills README still makes sense
 - Nonstandard folder list shrank or was consciously documented

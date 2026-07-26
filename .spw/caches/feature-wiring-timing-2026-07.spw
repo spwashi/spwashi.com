@@ -92,6 +92,15 @@ fixity = "tending"
   pointer = @progressive_css
   claim = `BEHAVIOR_SCOPES grow only for real CSS + wired features (fwt-001); PRESENCE stays JS-only. Core demotions pair with VISIBLE/IDLE reclass and costClass paint_composite / demand_coupled — see progressive-css coordinate_parity.`
   golden = `feature-discovery: IDLE + features + CSS core→behavior (already landed)`
+  paint_composite_2026_07 = `attention-architecture + operators + hydration-passes role-prefix updates; wonder contain on operator/sigil; section-handle cauldron-resonance flourish CSS`
+}[reg=facet]
+
+^"timing_contract_pass_2026_07"{
+  stems = #[`boot`, `immediate`, `feature`, `visible`, `enhance`, `idle`, `settled`, `region`][reg=set]
+  loader = `settled-layer measure + rAF/timeout yield; idle-chunk dataset plan inspect pill`
+  probe = `PERF_PROBE idleChunks + settledLayer; getSpwPerformanceTimings.summary`
+  contracts = `runtime-contracts timingArc stem hygiene + paint_composite+IMMEDIATE role: recommendation + idleChunks rollup`
+  catalog = `attention/operators/hydration/region role topology; layout-assumptions → settled-layout-assumptions`
 }[reg=facet]
 
 validation: #[
@@ -101,4 +110,6 @@ validation: #[
   `node --check public/js/runtime/module-catalog-normalize.js`
   `node --check public/js/runtime/module-updates-contract.js`
   `node --check public/js/runtime/effect-ledger.js`
+  `node --check public/js/runtime/module-loader.js`
+  `npm run test:headless`
 ][reg=set]

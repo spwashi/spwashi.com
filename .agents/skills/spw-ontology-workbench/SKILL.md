@@ -38,3 +38,20 @@ Cross-discipline one-offs → daily-kernel shape, not a new ontology tree.
 
 - Small review bundles, state-flow notes, registries that replace confusion
 - Archive notes that reduce active load
+
+## Tooling (mounted `spw` CLI)
+
+Prefer the mounted CLI over ad-hoc `rg`/`Read` sweeps of `.spw` — it understands
+selectors, refs, and roots, and stays consumer-relative:
+
+```bash
+npm --prefix .spw/_workbench run spw -- doctor ../..                       # mounted-consumer readiness
+npm --prefix .spw/_workbench run spw -- roots                              # declared workspace roots
+npm --prefix .spw/_workbench run spw -- tree .spw --depth 3                # bounded surface tree
+npm --prefix .spw/_workbench run spw -- select .spw/index.spw --selector navigable --summary
+npm --prefix .spw/_workbench run spw -- query -- --from .spw --skim --selector pathRefs
+```
+
+Use `pulse <file.spw>` for a plan-only edit probe before hand-editing a surface;
+reserve `mutate` for direct multi-file rewrites you've already reasoned through.
+See `.spw/_workbench/docs/runtime/md/mounted-workbench.md`.

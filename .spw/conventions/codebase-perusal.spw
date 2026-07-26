@@ -144,6 +144,18 @@ foliage_rules: #[
  `A good route metaphor should map to a concrete anatomy, gesture, palette, timing, or state contract.`
 ][reg=set]
 
+owner_claim: .{
+ claim #codebase-perusal-001 {
+  layer = "pragmatic"
+  hypothesis = `The perusal trails resolve to live anatomy: each trail's search returns hits against the real tree, so a maintainer forms opinions from present evidence rather than stale metaphor.`
+  spec_ref = ~"./codebase-perusal.spw"
+  impl_ref = #[~"../../public/js", ~"../../public/css"][reg=set]
+  probe_ref = `rg -l "data-spw-page-|data-spw-surface|data-spw-layout" **/index.html && rg -l "data-spw-|spw:" public/js`
+  falsification = `A trail's search returns no hits, meaning the named anatomy has moved or been removed and the trail now misleads.`
+  status = "active"
+ }
+}[reg=facet]
+
 dispatch: .{
  site = @site
  semantic_capacity = @semantic_capacity

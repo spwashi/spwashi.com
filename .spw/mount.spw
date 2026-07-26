@@ -45,6 +45,9 @@ site_bridge: .{
 }[reg=facet]
 
 engage: .{
+ # Canon surface keys track workbench .spw layout after the domains →
+ # surface-archetypes rename (identity-free qualities live upstream;
+ # site @domains remains the deployment identity authority).
  canon_surfaces = #[
   `conventions.selection`,
   `conventions.naming`,
@@ -53,7 +56,7 @@ engage: .{
   `applications.symmetry.ui`,
   `biome.ocean.ux`,
   `surfaces.index`,
-  `surfaces.domains`
+  `surfaces.surface-archetypes`
  ][reg=set]
  local_surfaces = #[site, domains, surfaces, conventions, site_semantics][reg=set]
 }[reg=facet]

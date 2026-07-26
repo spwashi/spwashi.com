@@ -1,10 +1,55 @@
 # Menu Field Surface Convention
+#
+# The navigation menu is a "field disclosure" surface, not a generic
+# utility overlay — its states are named as operator postures, not just prose.
 
-## Metaphor
-The navigation menu is represented as a "field disclosure" surface rather than a generic utility overlay.
+#>menu_field_surface
+#:surface #!navigation #!disclosure
+#:operation #!align
+#:fixity #!stable
 
-## States
-- **grounded**: Resting state showing current route context.
-- **oriented**: Open state revealing primary pathways.
-- **exploring**: Interacting with route links.
-- **waypointed**: Active selection and transition.
+@operator_semantics: ~"../conventions/operator-semantics.spw"
+@language_utilization: ~"../language/feature-utilization.spw"
+
+thesis: `The menu discloses a field of routes; each interaction state is a named
+posture, not a generic open/closed toggle.`
+
+states: .{
+  .ground {
+    role = `Resting state showing current route context — settlement, baseline, return to center of gravity.`
+    attr = `data-spw-grounded (see public/js/interface/haptics.js, guide.js)`
+  }
+
+  [mode] {
+    role = `Open state revealing primary pathways — a posture selected without consuming the alternatives.`
+    where = `oriented`
+  }
+
+  (scene) {
+    role = `Interacting with route links — staged midprocess observability while a choice is still forming.`
+    where = `exploring`
+  }
+
+  &subject {
+    role = `Active selection and transition — the binding focus of the route-change relation.`
+    where = `waypointed`
+  }
+}[reg=facet]
+
+expression = menu[field]{ground.mode.scene.subject}<disclosure>
+
+demo: .{
+  route = ~"../../design/experiments/menu-field/index.html"
+  plays = `The four postures as a playable cycle: rest breathes (~5s), disclosure
+fans the field without consuming a pathway, staging flickers faster than ground,
+binding travels in one beat and re-grounds at the new route. Each completed cycle
+serializes a trail reading: .from [field] (to) &to .to`
+  sensation_gate = `Posture pacing (ground breathe, scene flicker, subject bind beat)
+ends at this demo. Promotion into the shared menu runtime waits on browser approval.`
+}[reg=facet]
+
+validation: #[
+  `rg 'data-spw-grounded' public/js/interface`
+  `rg 'menu_field_surface' .spw/surfaces`
+  `rg 'menu-field-instrument' design/experiments/menu-field`
+][reg=set]

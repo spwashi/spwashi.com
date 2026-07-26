@@ -12,7 +12,9 @@
 @conventions: ~"./conventions/index.spw"
 @site_semantics: ~"./conventions/site-semantics.spw"
 @canon_surfaces: ~"./_workbench/.spw/surfaces/index.spw"
-@canon_domains: ~"./_workbench/.spw/surfaces/domains.spw"
+# Workbench replaced its identity-bound domains surface with identity-free
+# archetypes. The local @domains stays the site domains authority.
+@canon_archetypes: ~"./_workbench/.spw/surfaces/surface-archetypes.spw"
 @literate_ui: ~"./_workbench/.spw/patterns/literate-ui.spw"
 @symmetry_ui: ~"./_workbench/.spw/applications/symmetry/symmetry-ui-design.spw"
 @ocean_ux: ~"./_workbench/.spw/biome/ocean/ux.spw"
@@ -35,7 +37,7 @@ canon_alignment: .{
  software = #[@literate_ui, @symmetry_ui, @ocean_ux][reg=set]
  spw_operator_atlas = #[@literate_ui, @symmetry_ui, @site_semantics][reg=set]
  pretext = #[@literate_ui, @ocean_ux][reg=set]
- domains = #[@canon_domains][reg=set]
+ domains = #[@canon_archetypes, @domains][reg=set]
  site_contract = #[@site, @domains, @conventions, @site_semantics][reg=set]
 }[reg=facet]
 
@@ -51,7 +53,7 @@ dispatch: .{
  conventions = @conventions
  semantics = @site_semantics
  canon_surfaces = @canon_surfaces
- canon_domains = @canon_domains
+ canon_archetypes = @canon_archetypes
 }[reg=facet]
 
 invariants: #[

@@ -199,6 +199,31 @@ Phase 1 status: initial hygiene has landed in the plans indexes, skill README, `
 
 For every patch:
 - `git diff --check`
+
+## Page, Region, Component, And Template Testing - 2026-07-25
+
+Public outcome: visual review packs distinguish whole-page context, owning-region
+layout, precise component anatomy, and portable template behavior without
+duplicating route screenshots for every fixture.
+
+Implementation seams:
+
+- Fixture selectors must identify the intended specimen, not merely the first
+  matching class on a route.
+- `regionSelector` names the stable live section surrounding a component and is
+  required only when a fixture opts into the region flow.
+- Page captures are unique by route and viewport; region/component/template
+  captures remain fixture-owned.
+- Manifests and the gallery expose all four levels. Pixel-diff baselines,
+  Storybook, and new browser dependencies remain out of scope.
+
+Validation:
+
+- `npm run build:runtime`
+- `npm run component:check`
+- `npm run test:components:run`
+- `npm run component:screenshots -- --ids frame-card --viewports phone`
+- `git diff --check`
 - `npm run check` (or the narrower `check:css` / syntax subsets as appropriate)
 - Manual review of `.spw` dispatch and any new models for balance and thinness
 - Spot-check that `/about/plans/` and key READMEs remain coherent (no broken conceptual links)
@@ -502,3 +527,59 @@ Closed two measured operating-loop seams without adding another plan or index:
 Next pass: harden the browser performance harness target/settle lifecycle before
 treating route timing samples as budgets; keep the remaining settings-engine and
 observer-federation work in their existing owner plans.
+
+## Headless Runtime Infrastructure - 2026-07-25
+
+Public outcome: contributors can run one route-smoke command locally and receive
+an honest result whether or not Chrome is available, while CI can require full
+browser execution and runtime readiness.
+
+Implementation seams:
+
+- Keep CDP lifecycle, route-shell fallback, probe normalization, and hard-failure
+  policy in `scripts/lib/chrome-headless-harness.mjs`.
+- Keep `scripts/headless-nav.mjs` responsible for CLI presentation and process
+  orchestration, not duplicate parsing or test policy.
+- Preserve the zero-new-dependency posture and existing runtime performance
+  probes; this pass does not add visual baselines, accessibility tooling, or
+  timing budgets.
+- Label HTTP-only results as degraded because they do not execute JavaScript.
+  `smoke:nav:ci` must require Chrome, runtime settlement, clean console output,
+  and no sampled horizontal overflow.
+
+Validation:
+
+- `npm run test:headless`
+- `node --check scripts/lib/chrome-headless-harness.mjs`
+- `node --check scripts/headless-nav.mjs`
+- `npm run smoke:nav -- --routes /`
+- `npm run check:runtime`
+- `git diff --check`
+
+## Workbench Submodule + Mounted Tooling - 2026-07-25
+
+Public outcome: agents and editors can orient the site `.spw` tree through the
+mounted workbench CLI without treating `_workbench` as consumer canon, and
+pathRefs survive the workbench domains → surface-archetypes rename.
+
+Implementation seams:
+
+- Pin `.spw/_workbench` to current spw-workbench `main` (mounted-consumer roots,
+  doctor, plan:check, archetypes surfaces).
+- Site `workspace.spw` declares a `^"roots"` frame; `.spw/README.md` is the
+  orientation prompt; package scripts wrap doctor/roots/tree/plan checks.
+- `surfaces.spw` and `mount.spw` bridge to `surface-archetypes.spw`; local
+  `@domains` stays the deployment-identity authority.
+- Skill docs (plan-maintenance, ontology-workbench, operator-lattice,
+  semantics-rigor) prefer mounted CLI over ad-hoc `rg` for `.spw` navigation.
+- Caches index lists feature-wiring / language-utilization / recursive-improvement
+  families; re-check pathRefs after every submodule bump.
+
+Validation:
+
+- `npm run spw:doctor`
+- `npm run spw:roots`
+- `npm run spw:tree`
+- `test -f .spw/_workbench/.spw/surfaces/surface-archetypes.spw`
+- `rg 'surfaces\\.domains|canon_domains' .spw --glob '*.spw'` (expect empty)
+- `git diff --check`

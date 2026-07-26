@@ -65,6 +65,19 @@ new axes by default. See `dimension-vocabulary.spw` + `tokens/dimensions.css`.
 - [ ] Full-trace path (JS contract or CSS consumer) or explicitly volatile/local?
 - [ ] Copy still creator-first?
 
+## Tooling (mounted `spw` CLI)
+
+Find every `.spw` occurrence of a drifting name before touching it by hand:
+
+```bash
+npm --prefix .spw/_workbench run spw -- query -- --from .spw --skim --selector pathRefs   # multi-file AST query
+npm --prefix .spw/_workbench run spw -- select <file.spw> --skim                          # single-file check
+npm --prefix .spw/_workbench run spw -- pulse <file.spw>                                  # plan-only edit probe
+```
+
+`pulse` before `mutate`/hand-edit on any shared `.spw` surface — it's the
+plan-only probe, so you see the rewrite before it lands.
+
 ## Good outputs
 
 - Fewer names, clearer owners

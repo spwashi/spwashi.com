@@ -37,4 +37,25 @@ metacognitive_accounting: .{
   overflow: "rich visibility for concepts, features, vocabulary",
 }
 
+operator_lens: .{
+  ~note = "Reading, not renaming — METACOGNITIVE_CUES keys in learnability-ledger.js stay literal; this names which underused operator each posture already embodies."
+
+  .ground {
+    on = "witness"
+    role = "orientation and grounding are literally the settlement/baseline posture."
+  }
+  &subject {
+    on = "composer"
+    role = "gather/compose loops bind their focus around one subject before crystallizing."
+  }
+  (scene) {
+    on = "explorer"
+    role = "scanning routes/wonders is staged midprocess observability — no commitment yet."
+  }
+  <concept> {
+    on = "integrator, overflow"
+    role = "tracing references and holding concepts richly visible are both conceptual-conduit work."
+  }
+}[reg=facet]
+
 validation: ?< hold living term → ledger resonance prime; switch stance in settings → footer posture + cue target update; enable developmental indicators → implicit hosts outlined; verify html keeps head/body after ledger sync >
