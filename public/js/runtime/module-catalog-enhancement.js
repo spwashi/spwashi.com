@@ -751,7 +751,7 @@ export const ENHANCEMENT_DEFS = [
   {
     id: 'console',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.IDLE,
     costClass: COST_CLASS.WORKING_MEMORY_PRESSURE,
     features: ['console'],
     selector: 'body',
@@ -759,7 +759,8 @@ export const ENHANCEMENT_DEFS = [
     describes: 'console[frame|mode|bus|layout] diagnostics[screenshot]',
     updates: ['data-spw-console-state'],
     evaluates: 'debuggability layout-shift interaction frame-state',
-    timingArc: 'immediate-diagnostics',
+    timingArc: 'idle-diagnostics',
+    timingChunk: 'idle-chrome',
     effectScope: 'floating-chrome bus root-state',
     load: () => import('../interface/console.js'),
     mount: (mod) => {

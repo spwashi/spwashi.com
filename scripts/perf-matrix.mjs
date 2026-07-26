@@ -204,11 +204,12 @@ function formatCsv(cells) {
     'bootToReady', 'immediateLayer', 'immediateCore', 'siteSettingsMs', 'shellMs',
     'surface', 'pageState', 'runtimeStage', 'layoutVariant', 'layoutQaGrade', 'layoutShiftTotal',
     'packLocal', 'overflowXFrames', 'bodyOverflowX', 'mainWidth', 'mainHeight',
+    'overflowXDetails',
     'innerWidth', 'innerHeight', 'scripts', 'scriptTransfer',
   ];
   const esc = (v) => {
     if (v == null) return '';
-    const s = String(v);
+    const s = typeof v === 'object' ? JSON.stringify(v) : String(v);
     return /["',\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
   };
   return [

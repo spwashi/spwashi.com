@@ -183,6 +183,9 @@
   landed_2026_07_13 = #[
     `settings-momentum → IDLE idle-chrome`
   ][reg=set]
+  landed_2026_07_26 = #[
+    `console → IDLE idle-chrome`
+  ][reg=set]
   already_demand = #[
     `image-utilization`, `image-interaction`, `svg-tunability`, `guide-badge`,
     `observation-beats`, `design-experiments`, `design-review-surfaces`
@@ -196,8 +199,7 @@
   ][reg=set]
   toward_idle_residual = #[
     `component-semantics`,
-    `semantic-crossrefs`,
-    `console` # feature-gated; still body-wide when console token present
+    `semantic-crossrefs`
   ][reg=set]
   keep_immediate_coreish = #[
     `site-settings`,

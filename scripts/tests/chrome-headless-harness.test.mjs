@@ -165,7 +165,14 @@ test('cellFromProbe surfaces console diagnostics and evaluateHardOk gates', () =
       surface: 'home',
       runtimeStage: 'ready',
       pageState: 'ready',
-      packing: { packLocal: 1, overflowXFrames: 2, bodyOverflowX: false },
+      packing: {
+        packLocal: 1,
+        overflowXFrames: 2,
+        overflowXDetails: [
+          { id: 'wide-frame', clientWidth: 720, scrollWidth: 760, overflowPx: 40 },
+        ],
+        bodyOverflowX: false,
+      },
       navigation: { domContentLoaded: 100, loadEventEnd: 200, duration: 210, transferSize: 12 },
       spw: { bootToReady: 180, immediateLayer: 90 },
       main: { width: 720, height: 900 },
@@ -182,6 +189,9 @@ test('cellFromProbe surfaces console diagnostics and evaluateHardOk gates', () =
   assert.equal(cell.hasConsoleError, true);
   assert.equal(cell.bootToReady, 180);
   assert.equal(cell.overflowXFrames, 2);
+  assert.deepEqual(cell.overflowXDetails, [
+    { id: 'wide-frame', clientWidth: 720, scrollWidth: 760, overflowPx: 40 },
+  ]);
   assert.equal(cell.lastMark, null);
 
   const withMark = cellFromProbe({

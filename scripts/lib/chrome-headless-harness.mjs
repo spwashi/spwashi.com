@@ -537,10 +537,25 @@ export const PERF_PROBE_EXPRESSION = `(() => {
   // Horizontal overflow only (vertical scroll is normal page length).
   const packLocal = document.querySelectorAll('[data-spw-pack-local]').length;
   const frameEls = Array.from(document.querySelectorAll('main .site-frame, main [data-spw-kind="frame"]')).slice(0, 40);
-  let overflowXFrames = 0;
+  const overflowXDetails = [];
   frameEls.forEach((el) => {
-    if (el.scrollWidth > el.clientWidth + 2) overflowXFrames += 1;
+    if (el.scrollWidth <= el.clientWidth + 2) return;
+    const heading = el.querySelector(':scope > :is(h1, h2, h3), :scope > header :is(h1, h2, h3)');
+    overflowXDetails.push({
+      tag: el.tagName.toLowerCase(),
+      id: el.id || null,
+      className: typeof el.className === 'string'
+        ? el.className.trim().split(/\\s+/).filter(Boolean).slice(0, 4).join('.')
+        : null,
+      feature: el.getAttribute('data-spw-feature') || null,
+      kind: el.getAttribute('data-spw-kind') || null,
+      heading: heading?.textContent?.trim().replace(/\\s+/g, ' ').slice(0, 80) || null,
+      clientWidth: el.clientWidth,
+      scrollWidth: el.scrollWidth,
+      overflowPx: el.scrollWidth - el.clientWidth,
+    });
   });
+  const overflowXFrames = overflowXDetails.length;
   let bodyOverflowX = false;
   if (body) bodyOverflowX = body.scrollWidth > body.clientWidth + 2;
 
@@ -598,6 +613,7 @@ export const PERF_PROBE_EXPRESSION = `(() => {
       packLocal,
       frames: frameEls.length,
       overflowXFrames,
+      overflowXDetails: overflowXDetails.slice(0, 12),
       bodyOverflowX,
     },
     navigation: nav ? {
@@ -888,6 +904,7 @@ export function cellFromProbe(row, { route, viewport = null } = {}) {
     idleChunkActive: p.spw?.idleChunkActive ?? null,
     packLocal: p.packing?.packLocal ?? 0,
     overflowXFrames: p.packing?.overflowXFrames ?? 0,
+    overflowXDetails: p.packing?.overflowXDetails ?? [],
     bodyOverflowX: Boolean(p.packing?.bodyOverflowX),
     mainWidth: p.main?.width ?? null,
     mainHeight: p.main?.height ?? null,
