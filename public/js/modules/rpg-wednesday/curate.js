@@ -219,15 +219,15 @@ export const ensureRpgCuratorWidget = () => {
         className: 'frame-operators rpg-curator-widget__routes',
         'aria-label': 'Curator routes'
     }, [
-        createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.language, text: '~ language' }),
-        createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.kit, text: '@ local kit' }),
-        createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.character, text: '@ character lab' }),
-        createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.world, text: '^ world slots' }),
-        createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.ladder, text: '? promotion ladder' }),
-        createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.sessions, text: '@ sessions' }),
-        createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.library, text: '#> library' }),
-        createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.fiber, text: '~ fiber × language' }),
-        createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.settings, text: '? settings' })
+        createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.language, 'data-spw-operator': 'ref', text: '~ language' }),
+        createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.kit, 'data-spw-operator': 'ref', text: '~ local kit' }),
+        createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.character, 'data-spw-operator': 'ref', text: '~ character lab' }),
+        createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.world, 'data-spw-operator': 'object', text: '^ world slots' }),
+        createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.ladder, 'data-spw-operator': 'probe', text: '? promotion ladder' }),
+        createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.sessions, 'data-spw-operator': 'ref', text: '~ sessions' }),
+        createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.library, 'data-spw-operator': 'frame', text: '#> library' }),
+        createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.fiber, 'data-spw-operator': 'ref', text: '~ fiber × language' }),
+        createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.settings, 'data-spw-operator': 'probe', text: '? settings' })
     ]);
 
     registerHost.append(

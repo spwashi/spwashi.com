@@ -77,12 +77,12 @@
 
                     <div class="site-footer__cauldron-actions">
                         <button class="operator-chip" type="button" data-spw-cauldron-action="mix" data-spw-action-tier="primary" data-spw-groundable="false" data-spw-operator="action">! mix extension</button>
-                        <button class="operator-chip" type="button" data-spw-cauldron-action="nourish" data-spw-action-tier="growth" data-spw-groundable="false">~ nourish</button>
-                        <button class="operator-chip" type="button" data-spw-cauldron-action="vision" data-spw-action-tier="growth" data-spw-groundable="false" data-spw-intent="daily-to-prompt">~ vision seed</button>
-                        <button class="operator-chip" type="button" data-spw-cauldron-action="plant" data-spw-action-tier="output" data-spw-groundable="false">^ plant</button>
-                        <button class="operator-chip" type="button" data-spw-cauldron-action="undo" data-spw-action-tier="cleanup" data-spw-groundable="false" disabled>! undo</button>
-                        <button class="operator-chip" type="button" data-spw-cauldron-action="prune" data-spw-action-tier="cleanup" data-spw-groundable="false">! prune</button>
-                        <button class="operator-chip" type="button" data-spw-cauldron-action="clear" data-spw-action-tier="cleanup" data-spw-groundable="false">! clear</button>
+                        <button class="operator-chip" type="button" data-spw-cauldron-action="nourish" data-spw-action-tier="growth" data-spw-groundable="false" data-spw-operator="ref">~ nourish</button>
+                        <button class="operator-chip" type="button" data-spw-cauldron-action="vision" data-spw-action-tier="growth" data-spw-groundable="false" data-spw-intent="daily-to-prompt" data-spw-operator="ref">~ vision seed</button>
+                        <button class="operator-chip" type="button" data-spw-cauldron-action="plant" data-spw-action-tier="output" data-spw-groundable="false" data-spw-operator="object">^ plant</button>
+                        <button class="operator-chip" type="button" data-spw-cauldron-action="undo" data-spw-action-tier="cleanup" data-spw-groundable="false" data-spw-operator="action" disabled>! undo</button>
+                        <button class="operator-chip" type="button" data-spw-cauldron-action="prune" data-spw-action-tier="cleanup" data-spw-groundable="false" data-spw-operator="action">! prune</button>
+                        <button class="operator-chip" type="button" data-spw-cauldron-action="clear" data-spw-action-tier="cleanup" data-spw-groundable="false" data-spw-operator="action">! clear</button>
                     </div>
                     <div class="site-footer__cauldron-output" data-cauldron-output hidden>
                         <div class="site-footer__cauldron-text" data-cauldron-text></div>
@@ -97,8 +97,8 @@
                     <span data-settings-state="wonderMemory">nearby</span>.
                 </p>
                 <div class="site-footer__settings-actions" aria-label="Footer settings quick actions">
-                    <button class="operator-chip" type="button" data-spw-groundable="false" data-preset="hearth" aria-label="Apply the cozy preset">Cozy</button>
-                    <button class="operator-chip" type="button" data-spw-groundable="false" data-preset="access" aria-label="Apply the readable preset">Readable</button>
+                    <button class="operator-chip" type="button" data-spw-groundable="false" data-preset="hearth" data-spw-operator="mode" aria-label="Apply the cozy preset">[cozy]</button>
+                    <button class="operator-chip" type="button" data-spw-groundable="false" data-preset="access" data-spw-operator="mode" aria-label="Apply the readable preset">[readable]</button>
                 </div>
                 <form class="site-footer__note-entry" data-spw-local-note-entry data-local-note-origin="footer">
                     <label class="site-footer__note-label" for="footer-local-note">Local note</label>

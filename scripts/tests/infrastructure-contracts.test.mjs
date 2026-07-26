@@ -6,6 +6,7 @@ import test from 'node:test';
 import { MOUNT_WHEN } from '../../public/js/runtime/module-catalog-constants.js';
 import { ENHANCEMENT_DEFS } from '../../public/js/runtime/module-catalog-enhancement.js';
 import { resolveModuleCatalogSpecifier } from '../../public/js/runtime/module-catalog-normalize.js';
+import { getOperatorDefinition } from '../../public/js/kernel/shared.js';
 
 import {
   shouldExcludeBuildPath,
@@ -224,4 +225,24 @@ test('settings momentum waits until idle because it only reacts to future events
   assert.ok(definition);
   assert.equal(definition.when, MOUNT_WHEN.IDLE);
   assert.equal(definition.timingChunk, 'idle-chrome');
+});
+
+test('shared partials operator chips align data-spw-operator attributes and sigil prefixes', async () => {
+  const cauldronHtml = await readFile(path.join(ROOT, '_partials/media-cauldron.html'), 'utf8');
+  const footerHtml = await readFile(path.join(ROOT, '_partials/site-footer.html'), 'utf8');
+
+  for (const html of [cauldronHtml, footerHtml]) {
+    const chipMatches = html.matchAll(/class="[^"]*operator-chip[^"]*"[^>]*data-spw-operator="([^"]+)"[^>]*>([^<]+)</g);
+    for (const [, opAttr, label] of chipMatches) {
+      const definition = getOperatorDefinition(opAttr);
+      assert.ok(definition, `Unknown operator type alias: ${opAttr}`);
+      const decodedLabel = label.trim().replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&amp;/g, '&');
+      if (/^[^a-zA-Z0-9\s]/.test(decodedLabel)) {
+        assert.ok(
+          decodedLabel.startsWith(definition.prefix),
+          `Chip label "${decodedLabel}" sigil does not match prefix "${definition.prefix}" for operator "${opAttr}"`,
+        );
+      }
+    }
+  }
 });

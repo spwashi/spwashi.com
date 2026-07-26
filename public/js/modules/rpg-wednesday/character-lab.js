@@ -437,9 +437,9 @@ export const initRpgCharacterLab = (section) => {
                         : ''
                 ]),
                 createElement('div', { className: 'rpg-character-card__controls' }, [
-                    createElement('button', { className: 'operator-chip', type: 'button', text: '~ edit' }),
-                    createElement('button', { className: 'operator-chip', type: 'button', text: '@ copy seed' }),
-                    createElement('button', { className: 'operator-chip', type: 'button', text: '! remove' })
+                    createElement('button', { className: 'operator-chip', type: 'button', 'data-spw-operator': 'ref', text: '~ edit' }),
+                    createElement('button', { className: 'operator-chip', type: 'button', 'data-spw-operator': 'action', text: '! copy seed' }),
+                    createElement('button', { className: 'operator-chip', type: 'button', 'data-spw-operator': 'action', text: '! remove' })
                 ])
             ]);
 
@@ -572,11 +572,11 @@ export const initRpgCharacterLab = (section) => {
             className: 'frame-operators rpg-character-lab__routes',
             'aria-label': 'Character development routes'
         }, [
-            createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.curator, text: '~ state curator' }),
-            createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.language, text: '~ language evolution' }),
-            createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.kit, text: '@ local kit' }),
-            createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.cast, text: '~ cast register' }),
-            createElement('a', { className: 'operator-chip', href: '/tools/character-sheet/', text: '^ translation sheet' })
+            createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.curator, 'data-spw-operator': 'ref', text: '~ state curator' }),
+            createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.language, 'data-spw-operator': 'ref', text: '~ language evolution' }),
+            createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.kit, 'data-spw-operator': 'ref', text: '~ local kit' }),
+            createElement('a', { className: 'operator-chip', href: RPG_CURATOR_ROUTES.cast, 'data-spw-operator': 'ref', text: '~ cast register' }),
+            createElement('a', { className: 'operator-chip', href: '/tools/character-sheet/', 'data-spw-operator': 'object', text: '^ translation sheet' })
         ]),
         status
     );
