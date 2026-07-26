@@ -110,6 +110,32 @@ const PATH_FAMILY_HINTS = Object.freeze([
   [/^$/, 'kernel-atlas'], // site root
 ]);
 
+function decodeHtmlEntities(value = '') {
+  const decodeOnce = (input) => input.replace(
+    /&(?:amp|lt|gt|quot|#39|#x27|#(\d+)|#x([0-9a-f]+));/gi,
+    (entity, decimal, hex) => {
+      if (decimal) return String.fromCodePoint(Number(decimal));
+      if (hex) return String.fromCodePoint(Number.parseInt(hex, 16));
+      const named = {
+        '&amp;': '&',
+        '&lt;': '<',
+        '&gt;': '>',
+        '&quot;': '"',
+        '&#39;': "'",
+        '&#x27;': "'",
+      };
+      return named[entity.toLowerCase()] ?? entity;
+    },
+  );
+  let decoded = String(value);
+  for (let depth = 0; depth < 4; depth += 1) {
+    const next = decodeOnce(decoded);
+    if (next === decoded) break;
+    decoded = next;
+  }
+  return decoded;
+}
+
 /**
  * Read a meta content value by name/property.
  * Prefer double-quoted content so apostrophes in copy (I'm, don't) survive;
@@ -140,7 +166,7 @@ function attr(html, name) {
   ];
   for (const re of patterns) {
     const m = html.match(re);
-    if (m?.[1]) return m[1].trim();
+    if (m?.[1]) return decodeHtmlEntities(m[1].trim());
   }
   return '';
 }
@@ -155,9 +181,23 @@ function linkHref(html, rel) {
   return (m?.[1] || m?.[2] || '').trim();
 }
 
+function extraScriptSrcs(html) {
+  return [...html.matchAll(/<script\b([^>]*)\bsrc=["']([^"']+)["'][^>]*>\s*<\/script>/gi)]
+    .filter((match) => !/\btype=["']application\/ld\+json["']/i.test(match[1]))
+    .map((match) => match[2].trim())
+    .filter((src) => src && !/^\/public\/js\/site\.js(?:[?#].*)?$/i.test(src));
+}
+
+function extraStylesheetHrefs(html) {
+  return [...html.matchAll(/<link\b([^>]*)>/gi)]
+    .filter((match) => /\brel=["']stylesheet["']/i.test(match[1]))
+    .map((match) => match[1].match(/\bhref=["']([^"']+)["']/i)?.[1]?.trim())
+    .filter((href) => href && !/^\/public\/css\/style\.css(?:[?#].*)?$/i.test(href));
+}
+
 function titleText(html) {
   const m = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
-  return m ? m[1].replace(/\s+/g, ' ').trim() : '';
+  return m ? decodeHtmlEntities(m[1].replace(/\s+/g, ' ').trim()) : '';
 }
 
 function escapeAttr(value) {
@@ -223,6 +263,8 @@ function buildSpwPage(meta) {
     ['features', meta.features],
     ['related_routes', meta.relatedRoutes],
     ['stylesheet_mode', meta.stylesheetMode || 'scoped'],
+    ['extra_styles', meta.extraStyles],
+    ['extra_scripts', meta.extraScripts],
   ];
   for (const [key, value] of pairs) {
     if (!value) continue;
@@ -268,6 +310,8 @@ function migrateSource(html, filePath) {
   const features = pickBodyAttr(bodyAttrString, 'data-spw-features');
   const relatedRoutes = pickBodyAttr(bodyAttrString, 'data-spw-related-routes');
   const stylesheetMode = pickBodyAttr(bodyAttrString, 'data-spw-stylesheet-mode') || 'scoped';
+  const extraStyles = extraStylesheetHrefs(html).join('|');
+  const extraScripts = extraScriptSrcs(html).join('|');
 
   // When family is inferred (not on body), stamp it onto body so render + CSS see category voice.
   let htmlForBody = html;
@@ -306,6 +350,8 @@ function migrateSource(html, filePath) {
     features,
     relatedRoutes,
     stylesheetMode,
+    extraStyles,
+    extraScripts,
   });
 
   // Strip manual head content → single spw-site-head

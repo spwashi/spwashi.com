@@ -114,4 +114,21 @@ describe('renderTemplate body personality', () => {
     assert.match(output, /data-spw-features="operators navigator"/);
     assert.match(output, /data-spw-wonder="locality consequence"/);
   });
+
+  it('decodes directive attribute entities before escaping generated metadata', async () => {
+    const source = `<spw-page
+  title="Spwashi • #&gt; Frame &amp; &lt;Concept&gt;"
+  description="Compare frame &amp; concept."
+  canonical="https://spwashi.com/operators/frame/"
+></spw-page>
+<!doctype html>
+<html lang="en">
+<head><spw-site-head></spw-site-head></head>
+<body data-spw-surface="software"><main><h1>Frame</h1></main></body>
+</html>`;
+    const { output, warnings } = await renderTemplate(source, { sourceLabel: 'test-entities' });
+    assert.deepEqual(warnings, []);
+    assert.match(output, /<title>Spwashi • #&gt; Frame &amp; &lt;Concept&gt;<\/title>/);
+    assert.doesNotMatch(output, /&amp;(?:gt|lt|amp);/);
+  });
 });

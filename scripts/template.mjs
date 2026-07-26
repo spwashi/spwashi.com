@@ -188,6 +188,25 @@ function attrEscape(value) {
   return htmlEscape(value);
 }
 
+function decodeHtmlEntities(value = '') {
+  return String(value).replace(
+    /&(?:amp|lt|gt|quot|#39|#x27|#(\d+)|#x([0-9a-f]+));/gi,
+    (entity, decimal, hex) => {
+      if (decimal) return String.fromCodePoint(Number(decimal));
+      if (hex) return String.fromCodePoint(Number.parseInt(hex, 16));
+      const named = {
+        '&amp;': '&',
+        '&lt;': '<',
+        '&gt;': '>',
+        '&quot;': '"',
+        '&#39;': "'",
+        '&#x27;': "'",
+      };
+      return named[entity.toLowerCase()] ?? entity;
+    },
+  );
+}
+
 function parseAttrs(attrString) {
   const out = {};
   const attrRe = cloneRegex(ATTR_RE);
@@ -195,7 +214,7 @@ function parseAttrs(attrString) {
   while ((match = attrRe.exec(attrString)) !== null) {
     const name = match[1];
     const value = match[2] ?? match[3] ?? match[4] ?? '';
-    out[name] = value;
+    out[name] = decodeHtmlEntities(value);
   }
   return out;
 }

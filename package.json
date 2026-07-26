@@ -79,7 +79,7 @@
     "test:components": "npm run build:runtime && npm run test:components:run",
     "test:components:run": "node --import ./scripts/tests/setup-dom-globals.mjs --import ./scripts/tests/register-public-imports.mjs --test scripts/tests/component-fixtures.test.mjs",
     "test:modules": "npm run build:tools && npm run build:runtime && npm run test:modules:run",
-    "test:modules:run": "node --import ./scripts/tests/setup-dom-globals.mjs --import ./scripts/tests/register-public-imports.mjs --test scripts/tests/engagement-features.test.mjs scripts/tests/component-fixtures.test.mjs scripts/tests/css-bundle-filter.test.mjs scripts/tests/infrastructure-contracts.test.mjs scripts/tests/chrome-headless-harness.test.mjs scripts/tests/spw-expression-geometry.test.mjs scripts/tests/spw-literal-parser-tool.test.mjs scripts/tests/module-timing-contract.test.mjs",
+    "test:modules:run": "node --import ./scripts/tests/setup-dom-globals.mjs --import ./scripts/tests/register-public-imports.mjs --test scripts/tests/engagement-features.test.mjs scripts/tests/component-fixtures.test.mjs scripts/tests/css-bundle-filter.test.mjs scripts/tests/infrastructure-contracts.test.mjs scripts/tests/chrome-headless-harness.test.mjs scripts/tests/spw-expression-geometry.test.mjs scripts/tests/spw-literal-parser-tool.test.mjs scripts/tests/module-timing-contract.test.mjs scripts/tests/template-migration.test.mjs",
     "test:headless": "node --test scripts/tests/chrome-headless-harness.test.mjs",
     "test:timing": "npm run build:runtime && node --test scripts/tests/module-timing-contract.test.mjs",
     "sitemap": "node scripts/generate-sitemap.mjs",
