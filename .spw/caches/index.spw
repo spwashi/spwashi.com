@@ -29,6 +29,19 @@ fixity = "tending"
   r2 = `Caches hold judgments; scripts hold measurements. Machine-readable inventories are stdout (npm run census:json / ecology:json), not committed files.`
   r3 = `Promote settled insights to .spw/conventions via a contract operation and mark the insight landed with a ref to the convention.`
   r4 = `After a workbench submodule bump, re-check pathRefs that point into ./_workbench/.spw (domains → surface-archetypes is the known rename family).`
+  r5 = `Mount engage keys and site.spw workbench aliases must name paths that exist under the pinned submodule (npm run spw:doctor + pathRef walk).`
+}[reg=facet]
+
+^"workbench_align_2026_07"{
+  pin = `submodule at 993c099+ (mounted-consumer tooling, surface-archetypes)`
+  bridge_files = #[
+    `mount.spw engage + orientation_contract`,
+    `workspace.spw boundary + LSP roots`,
+    `domains.spw identity vs archetype`,
+    `surfaces.spw archetype_hints`,
+    `site.spw local_mount vs workbench_mount`
+  ][reg=set]
+  probe = `npm run spw:doctor && npm run spw:roots`
 }[reg=facet]
 
 validation: #[

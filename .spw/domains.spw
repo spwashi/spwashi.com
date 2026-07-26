@@ -4,27 +4,83 @@
 # Status reflects what currently exists, not what is planned.
 
 #>spw_site_domains
-#:registry #!domains
+#:registry #!domains #!identity
+#:operation #!contract
+#:fixity #!stable
 #:layer #!pragmatics
 
 @surfaces: ~"./surfaces.spw"
 @site_semantics: ~"./conventions/site-semantics.spw"
+@language_utilization: ~"./language/feature-utilization.spw"
+@operator_semantics: ~"./conventions/operator-semantics.spw"
+@measurement: ~"./conventions/measurement-contract.spw"
 @canon: ~"./_workbench/.spw/index.spw"
 @naming: ~"./_workbench/.spw/conventions/naming.spw"
 @selection: ~"./_workbench/.spw/conventions/selection.spw"
 @surface_registry: ~"./_workbench/.spw/surfaces/index.spw"
+# Workbench no longer binds surfaces to domain identity; archetypes name
+# function/cadence/evidence without predicting deployment form.
+@surface_archetypes: ~"./_workbench/.spw/surfaces/surface-archetypes.spw"
 @valence_architecture: ~"./_workbench/docs/theory/spw/valence-architecture.spw"
 
+operation = "contract"
+fixity = "stable"
+
+boundary: .{
+  owns = `This file owns *deployment identity* — hostnames, hosting paths, valence for public land-cluster pages.`
+  does_not_own = `Interaction qualities (orienting_hub, installable_book, analytic_engine, …) live in @surface_archetypes.`
+  rule = `When adding a domain, name its identity here and optionally cite one archetype; never invent a parallel domains surface under _workbench.`
+}[reg=facet]
+
+^"operator_lens"{
+  #>identity {
+    on = `active_surfaces keys (hostnames)`
+    role = `Name each domain so it can be found by resonance — identity before quality.`
+  }
+  *value {
+    on = `valence fields`
+    role = `Valence is material worth of the land cluster (+1/−1/0/@/~), not decoration.`
+  }
+  @perspective {
+    on = `archetype citations`
+    role = `Archetype is a viewpoint on interaction quality, not a second hostname registry.`
+  }
+  <concept> {
+    on = `boundary.owns vs does_not_own`
+    role = `Keep identity and archetype as distinct conceptual conduits.`
+  }
+}[reg=facet]
+
+expression = domains[identity]{host.valence.archetype}<publish>
+
+^"owner_claim"{
+  claim #domains-identity-001 {
+    layer = "semantic"
+    hypothesis = `Domain identity (hostname + valence + host path) stays site-owned; workbench surface-archetypes supply optional interaction quality without binding deployment form.`
+    expression = identity[domain]{archetype.optional}<boundary>
+    *evidence = `active_surfaces list hostnames; archetype fields cite orienting_hub / installable_book / … keys from surface-archetypes.spw`
+    probe_ref = `rg 'archetype =' .spw/domains.spw && test -f .spw/_workbench/.spw/surfaces/surface-archetypes.spw && rg 'orienting_hub|installable_book|exploratory_biome' .spw/_workbench/.spw/surfaces/surface-archetypes.spw`
+    falsification = `A domain invents an archetype string missing from surface-archetypes, or a workbench file re-lists hostnames as canon domains.`
+    status = "active"
+  }
+}[reg=facet]
+
+validation: #[
+  `rg 'claim #domains-identity-001|expression = domains' .spw/domains.spw`,
+  `test -f .spw/_workbench/.spw/surfaces/surface-archetypes.spw`,
+  `rg 'boon\\.land|lore\\.land' .spw/domains.spw`,
+][reg=set]
+
 active_surfaces: .{
- `boon.land` = .{ status = `active-skeleton`, role = realm, valence = `+1 arrival/benefit`, hosted = `about/domains/boon.land/` }[reg=facet]
- `bane.land` = .{ status = `active-skeleton`, role = realm, valence = `-1 departure/cost`, hosted = `about/domains/bane.land/` }[reg=facet]
- `bone.land` = .{ status = `active-skeleton`, role = realm, valence = `0 structure/carrier`, hosted = `about/domains/bone.land/` }[reg=facet]
- `bonk.land` = .{ status = `active-skeleton`, role = realm, valence = `@ collision/event`, hosted = `about/domains/bonk.land/` }[reg=facet]
- `honk.land` = .{ status = `active-skeleton`, role = realm, valence = `~ signal/relay`, hosted = `about/domains/honk.land/` }[reg=facet]
- `factshift.com` = .{ status = linked, role = engine, note = `physics engine for narrative under transformation` }[reg=facet]
- `lore.land` = .{ status = linked, role = book, note = `installable-book PWA; home terrain for Boof` }[reg=facet]
- `rskrules.com` = .{ status = linked, role = secondary, note = `secondary domain` }[reg=facet]
- `tealstripesvibes.com` = .{ status = linked, role = secondary }[reg=facet]
+ `boon.land` = .{ status = `active-skeleton`, role = realm, valence = `+1 arrival/benefit`, hosted = `about/domains/boon.land/`, archetype = `exploratory_biome` }[reg=facet]
+ `bane.land` = .{ status = `active-skeleton`, role = realm, valence = `-1 departure/cost`, hosted = `about/domains/bane.land/`, archetype = `exploratory_biome` }[reg=facet]
+ `bone.land` = .{ status = `active-skeleton`, role = realm, valence = `0 structure/carrier`, hosted = `about/domains/bone.land/`, archetype = `exploratory_biome` }[reg=facet]
+ `bonk.land` = .{ status = `active-skeleton`, role = realm, valence = `@ collision/event`, hosted = `about/domains/bonk.land/`, archetype = `exploratory_biome` }[reg=facet]
+ `honk.land` = .{ status = `active-skeleton`, role = realm, valence = `~ signal/relay`, hosted = `about/domains/honk.land/`, archetype = `reflective_feedback` }[reg=facet]
+ `factshift.com` = .{ status = linked, role = engine, note = `physics engine for narrative under transformation`, archetype = `analytic_engine` }[reg=facet]
+ `lore.land` = .{ status = linked, role = book, note = `installable-book PWA; home terrain for Boof`, archetype = `installable_book` }[reg=facet]
+ `rskrules.com` = .{ status = linked, role = secondary, note = `secondary domain`, archetype = `guided_curriculum` }[reg=facet]
+ `tealstripesvibes.com` = .{ status = linked, role = secondary, archetype = `orienting_hub` }[reg=facet]
 }[reg=facet]
 
 workbench_crossrefs: .{
@@ -34,12 +90,14 @@ workbench_crossrefs: .{
  naming = @naming
  selection = @selection
  surface_registry = @surface_registry
+ surface_archetypes = @surface_archetypes
  valence_architecture = @valence_architecture
 }[reg=facet]
 
 translation_contract: .{
  boonhonk_cluster = `The local land-cluster pages stay public-facing and compressed; deeper valence theory lives in the installed workbench.`
  site_registry = `The local surfaces.spw registry keeps route ownership on the site side of the boundary.`
+ archetype_rule = `Identity (this file) + archetype (@surface_archetypes) stay separate; cite both when a domain needs interaction quality without inventing a new registry.`
  citation_rule = `Domain semantics should point to installed canon surfaces when they need deeper explanation.`
 }[reg=facet]
 

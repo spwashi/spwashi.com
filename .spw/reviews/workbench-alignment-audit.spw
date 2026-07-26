@@ -68,6 +68,8 @@ observations: .{
   css_and_runtime_projection = `The CSS architecture alignment work and runtime selector timing/chunking reviews are excellent examples of using Spw semantics to audit and redesign projection layers (CSS as visual grammar, staged loading as performance ontology). These are valuable case studies that the workbench's theory surfaces could reference or generalize.`
 
   domains_to_archetypes_2026_07 = `Workbench retired identity-bound surfaces/domains.spw in favor of surface-archetypes.spw (identity-free function/cadence/evidence qualities). Site keeps @domains as the deployment-identity authority and now bridges via @canon_archetypes + mount engage key surfaces.surface-archetypes. Mounted CLI doctor/roots require consumer-relative invocation (npm run spw:doctor).`
+
+  bridge_refresh_2026_07 = `mount/workspace/site/index now distinguish local_mount vs workbench_mount, engage conventions.cli + claim-protocol + query-composition + brace-physics + precipitates, domains cite optional archetypes, language index points at operators/form-geometry/runtime-foundation theory, submodule-bridge pin ritual runs spw:doctor after bump. PathRef walk: 131 OK / 0 broken.`
 }
 
 # Recommendations (Scoped to Local Repo Use)

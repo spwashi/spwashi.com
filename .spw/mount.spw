@@ -3,12 +3,25 @@
 # Local mount bridge for spwashi.com into the installed spw-workbench canon.
 
 #>spw_mount
-#:mount
+#:mount #!bridge #!submodule
+#:operation #!align
+#:fixity #!stable
+#:layer #!pragmatics
 
+@language_utilization: ~"./language/feature-utilization.spw"
+@operator_semantics: ~"./conventions/operator-semantics.spw"
+@semantic_capacity: ~"./conventions/semantic-capacity.spw"
+@measurement: ~"./conventions/measurement-contract.spw"
 @root: ~"./_workbench"
 @canon: ~"./_workbench/.spw/index.spw"
+@canon_mount: ~"./_workbench/.spw/canon-mount.spw"
 @workbench_workspace: ~"./_workbench/.spw/workspace.spw"
 @workbench_mount: ~"./_workbench/.spw/mount.spw"
+@workbench_submodule: ~"./_workbench/.spw/conventions/submodule.spw"
+@workbench_cli_convention: ~"./_workbench/.spw/conventions/cli.spw"
+@workbench_claim_protocol: ~"./_workbench/.spw/harness/claim-protocol.spw"
+@workbench_surface_archetypes: ~"./_workbench/.spw/surfaces/surface-archetypes.spw"
+@mounted_docs: ~"./_workbench/docs/runtime/md/mounted-workbench.md"
 @spec: ~"./_workbench/lib/spw-v0.3.0/"
 @seed: ~"./_workbench/packages/spw-seed/"
 @runtime: ~"./_workbench/packages/spw-runtime/"
@@ -16,30 +29,38 @@
 @lsp: ~"./_workbench/packages/spw-lsp/"
 @index: ~"./index.spw"
 @workspace: ~"./workspace.spw"
+@orientation: ~"./README.md"
 @conventions: ~"./conventions/index.spw"
 @site_semantics: ~"./conventions/site-semantics.spw"
 @site: ~"./site.spw"
 @domains: ~"./domains.spw"
 @surfaces: ~"./surfaces.spw"
+@caches: ~"./caches/index.spw"
 @software_surface: ~"../topics/software/index.html"
 @pretext_surface: ~"../topics/software/pretext/index.html"
 
 workbench: .{
+ # Pin tracks submodule HEAD (see git submodule status .spw/_workbench).
  version = `0.3.0`
+ pin_note = `993c099+ mounted-consumer roots/doctor; surface-archetypes; plan:check`
  canon = @canon
+ canon_mount = @canon_mount
  workspace = @workbench_workspace
  mount = @workbench_mount
+ submodule_convention = @workbench_submodule
  packages = #[@spec, @seed, @runtime, @cli, @lsp][reg=set]
 }[reg=facet]
 
 site_bridge: .{
  index = @index
  workspace = @workspace
+ orientation = @orientation
  conventions = @conventions
  semantics = @site_semantics
  site = @site
  domains = @domains
  surfaces = @surfaces
+ caches = @caches
  software_surface = @software_surface
  pretext_surface = @pretext_surface
 }[reg=facet]
@@ -48,24 +69,47 @@ engage: .{
  # Canon surface keys track workbench .spw layout after the domains →
  # surface-archetypes rename (identity-free qualities live upstream;
  # site @domains remains the deployment identity authority).
+ # Keys match workbench index/dispatch names, not free prose.
  canon_surfaces = #[
   `conventions.selection`,
   `conventions.naming`,
   `conventions.submodule`,
+  `conventions.cli`,
   `patterns.literate-ui`,
+  `patterns.query-composition`,
   `applications.symmetry.ui`,
   `biome.ocean.ux`,
   `surfaces.index`,
-  `surfaces.surface-archetypes`
+  `surfaces.surface-archetypes`,
+  `harness.claim-protocol`,
+  `registries.brace-physics`,
+  `runtime.precipitates`
  ][reg=set]
- local_surfaces = #[site, domains, surfaces, conventions, site_semantics][reg=set]
+ local_surfaces = #[site, domains, surfaces, conventions, site_semantics, caches, orientation][reg=set]
+ packages = #[`seed`, `runtime`, `cli`, `lsp`, `spec`][reg=set]
+}[reg=facet]
+
+orientation_contract: .{
+  prompt_entry = @orientation
+  first_reads = #[@orientation, @index, @workspace, ~"./mount.spw"][reg=set]
+  command_ladder = #[
+    `npm run spw:doctor`,
+    `npm run spw:roots`,
+    `npm run spw:tree`,
+    `npm run spw -- select .spw/index.spw --selector navigable --summary`
+  ][reg=set]
+  exclude_from_consumer_corpus = @root
+  working_references = #[@mounted_docs, @workbench_submodule][reg=set]
 }[reg=facet]
 
 resolve: .{
  paths = #[
   @canon,
+  @canon_mount,
   @workbench_mount,
   @workbench_workspace,
+  @workbench_surface_archetypes,
+  @workbench_claim_protocol,
   @spec,
   @seed,
   @runtime,
@@ -75,11 +119,69 @@ resolve: .{
   @site_semantics,
   @site,
   @domains,
-  @surfaces
+  @surfaces,
+  @caches,
+  @orientation
  ][reg=set]
 }[reg=facet]
 
 invariants: #[
  `Local mount.spw is a bridge, not a replacement for the imported canon mount.`,
- `Imported package and .spw roots should resolve from here without path guessing.`
+ `Imported package and .spw roots should resolve from here without path guessing.`,
+ `_workbench is infrastructure (prefix rule); indexes and shelves must not enumerate it as consumer content.`,
+ `After submodule bumps, re-resolve pathRefs (archetypes rename is the known family).`
+][reg=set]
+
+^"operator_lens"{
+  ~note = `Underused operators made positional — not hue. Mount is a ~potential path into infrastructure, not a claim of ownership.`
+
+  .ground {
+    on = `site_bridge / orientation_contract`
+    role = `Consumer baseline: README, index, workspace, local mount resolve without workbench folklore.`
+  }
+  ~potential {
+    on = `workbench packages + canon_surfaces`
+    role = `Keep the workbench path available without collapsing consumer authority into it.`
+  }
+  &subject {
+    on = `site_bridge.site / domains / surfaces`
+    role = `Publishing identity and routes stay the binding focus of the mount relation.`
+  }
+  [mode] {
+    on = `engage.canon_surfaces`
+    role = `Select which workbench surfaces are engaged without consuming the whole canon.`
+  }
+  <concept> {
+    on = `boundary between consumer .spw and _workbench`
+    role = `Conceptual conduit: instruments pass through; ownership does not.`
+  }
+}[reg=facet]
+
+expression = mount[bridge]{ground.potential.engage.subject}<consumer>
+
+^"owner_claim"{
+  claim #mount-bridge-001 {
+    layer = "pragmatic"
+    hypothesis = `A healthy mount keeps consumer authority (.spw/* minus _workbench) while engage keys and resolve paths name workbench instruments that actually exist under the pin.`
+    expression = authority[consumer]{engage.instruments}<bridge>
+    spec_ref = @workbench_submodule
+    impl_ref = #[~"./mount.spw", ~"./workspace.spw", ~"./README.md"][reg=set]
+    probe_ref = `npm run spw:doctor && test -f .spw/_workbench/.spw/surfaces/surface-archetypes.spw && rg 'surfaces\\.surface-archetypes|conventions\\.submodule' .spw/mount.spw`
+    falsification = `doctor fails, engage names a missing workbench surface, or pathRefs under ./_workbench break after a pin.`
+    status = "active"
+  }
+}[reg=facet]
+
+%objective {
+  kind = "objective"
+  measure = `Mounted-consumer readiness + path presence`
+  source = `npm run spw:doctor; pathRef walk of ./_workbench refs`
+  attrs = #[`data-spw-measure-kind="objective"`][reg=set]
+}[reg=facet]
+
+validation: #[
+  `npm run spw:doctor`,
+  `test -f .spw/README.md`,
+  `test -f .spw/_workbench/.spw/surfaces/surface-archetypes.spw`,
+  `rg 'claim #mount-bridge-001|expression = mount' .spw/mount.spw`,
 ][reg=set]

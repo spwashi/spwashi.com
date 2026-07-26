@@ -10,9 +10,13 @@
 ^"roots"{
   @selection: ~"../_workbench/.spw/conventions/selection.spw"
   @naming: ~"../_workbench/.spw/conventions/naming.spw"
+  @submodule: ~"../_workbench/.spw/conventions/submodule.spw"
   @brace_physics: ~"../_workbench/.spw/registries/brace-physics.spw"
   @literate_ui: ~"../_workbench/.spw/patterns/literate-ui.spw"
+  @query_composition: ~"../_workbench/.spw/patterns/query-composition.spw"
   @symmetry_ui: ~"../_workbench/.spw/applications/symmetry/symmetry-ui-design.spw"
+  @surface_archetypes: ~"../_workbench/.spw/surfaces/surface-archetypes.spw"
+  @claim_protocol: ~"../_workbench/.spw/harness/claim-protocol.spw"
   @naming_structured_values: ~"./naming-and-structured-values.spw"
 }
 

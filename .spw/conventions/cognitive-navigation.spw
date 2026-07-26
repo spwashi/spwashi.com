@@ -1,6 +1,22 @@
 #>cognitive_navigation_and_handles
-#:conventions #!cognition
+#:conventions #!cognition #!navigation #!geometry
+#:operation #!align
+#:fixity #!stable
 #:layer #!pragmatics
+
+@expression_geometry: ~<runtime>"../../public/js/semantic/spw-expression-geometry.js"
+@section_handle: ~<runtime>"../../public/js/runtime/attention/section-handle.js"
+@section_context: ~<style>"../../public/css/shell/chrome/section-context.css"
+@semantic_navigation_plan: ~<plan>"../../.agents/plans/semantic-navigation-geometry/PLAN.md"
+@literal_parser_tool: ~<route>"../../tools/spw-parser/index.html"
+@literal_parser_runtime: ~<runtime>"../../public/js/modules/tools/spw-literal-parser.js"
+@literal_parser_bundle: ~<runtime>"../../public/js/semantic/spw-workbench-parser.js"
+@literal_parser_build: ~<build>"../../scripts/build-spw-literal-parser.mjs"
+@workbench_form_geometry: ~<theory>"../_workbench/docs/theory/spw/form-geometry.spw"
+@workbench_inline_composites: ~<theory>"../_workbench/docs/theory/spw/inline-composites.spw"
+
+operation = "align"
+fixity = "stable"
 
 ^"thesis"{
   ~#note: "Cognitive navigation makes complex nested structures graspable through visual and interactive affordances."
@@ -320,6 +336,87 @@
   ]
 }
 
+^"semantic_navigation_geometry"{
+  thesis = `Authored data-spw-semantic-expression can leave a quiet syntax wake in page locomotion: section<geometry>handle, never parser spectacle.`
+  expression = authored[expression]{surface.geometry}<locomotion>
+
+  authority: .{
+    authored = `HTML semantic expressions own public meaning.`
+    projection = `@expression_geometry reads a bounded browser-safe subset: operators, paired forms, medial capsules, couples, streams, and quoted material.`
+    parser = `The mounted workbench remains authority for AST, ONF, canonicalization, query, and mutation.`
+    refusal = `The site projection must report partial/unbalanced input and must not silently repair or evaluate it.`
+  }[reg=facet]
+
+  syntax_capacity = #[
+    root[frame]{body}<capsule>,
+    left<channel>right,
+    left<>right,
+    <<ordered stream>>,
+    ?(local_scope),
+    `~<role>"path"`
+  ][reg=set]
+
+  navigation_physics: .{
+    ground = `Section heading, id, and label remain primary orientation.`
+    wake = `Root + form signature appears as secondary mono text in the expanded current-section control.`
+    motion = `Travel dims and shifts the wake; settled state restores it. Reduced motion removes the transition without removing syntax.`
+    density = `The wake is hidden on narrow screens and absent when no authored expression is nearby.`
+    resonance = `Existing operator color and cauldron/attention states color the wake; no parallel wonder flag is introduced.`
+  }[reg=facet]
+
+  implementation = #[@expression_geometry, @section_handle, @section_context][reg=set]
+  plan = @semantic_navigation_plan
+  workbench_basis = #[@workbench_form_geometry, @workbench_inline_composites][reg=set]
+
+  claim #semantic-navigation-geometry-001 {
+    layer = "semantic"
+    hypothesis = `A parser-compatible syntax wake makes page structure more legible and wondrous when it is derived from authored expressions, subordinate to section labels, and absent when geometry is unavailable.`
+    expression = section<syntax>handle
+    spec_ref = ~"./cognitive-navigation.spw"
+    impl_ref = #[@expression_geometry, @section_handle, @section_context][reg=set]
+    probe_ref = `node --import ./scripts/tests/setup-dom-globals.mjs --import ./scripts/tests/register-public-imports.mjs --test scripts/tests/spw-expression-geometry.test.mjs && npm run check:runtime`
+    falsification = `The wake invents meaning, obscures the current section label, treats <> as an ordinary capsule, or claims full parser authority.`
+    status = "active"
+  }
+}[reg=facet]
+
+^"literal_parser_proof"{
+  operation = "contract"
+  fixity = "stable"
+  thesis = `A language people can trust needs a public falsifiable surface: literal source enters the workbench parser and leaves as tokens, AST, diagnostics, reconstruction, and provenance.`
+  expression = source[parser]{tokens.ast.diagnostics.reconstruction}<app>
+
+  authority: .{
+    parser = `@literal_parser_bundle is generated from the mounted spw-workbench packages/spw-seed/src/parser.ts entrypoint.`
+    projection = `@literal_parser_runtime renders parser output without reinterpreting node types or suppressing diagnostics.`
+    navigation = `@expression_geometry remains the small page-locomotion projection; it does not become full parser authority merely because the full parser is available on one tool route.`
+    provenance = `The browser artifact exposes workbench package, version, commit, and source entry.`
+  }[reg=facet]
+
+  evidence = #[literal_source, token_order, source_spans, ast_node_types, diagnostics, exact_reconstruction, parse_duration][reg=set]
+
+  app_loading: .{
+    url = `spw_source and spw_source_name load exact source into /tools/spw-parser/ within the PWA scope.`
+    file = `manifest file_handlers routes .spw text files to the parser tool; launchQueue reads the chosen file locally.`
+    storage = `Source remains URL- or file-owned. The parser tool does not create a second canonical localStorage owner.`
+    honesty = `Link capture and file handling depend on installed-app and operating-system support; ordinary browsers still open the same proof route.`
+  }[reg=facet]
+
+  implementation = #[@literal_parser_tool, @literal_parser_runtime, @literal_parser_bundle, @literal_parser_build][reg=set]
+  plan = @semantic_navigation_plan
+
+  claim #literal-parser-proof-001 {
+    layer = "semantic"
+    hypothesis = `A public tool backed by the actual portable parser makes Spw's structure independently inspectable when it exposes source, tokens, AST, diagnostics, lossless reconstruction, and build provenance together.`
+    expression = proof[parser]{source.tokens.ast.diagnostics}<app>
+    spec_ref = ~"./cognitive-navigation.spw"
+    impl_ref = #[@literal_parser_tool, @literal_parser_runtime, @literal_parser_bundle][reg=set]
+    probe_ref = `npm run build:spw-parser && node --import ./scripts/tests/setup-dom-globals.mjs --import ./scripts/tests/register-public-imports.mjs --test scripts/tests/spw-literal-parser-tool.test.mjs`
+    falsification = `The page fabricates parser-shaped JSON, hides malformed input, loses literal source during token reconstruction, or cannot identify the workbench build it runs.`
+    status = "active"
+  }
+}[reg=facet]
+
 ^"ornamental_reversibility"{
   ~#note: "Wonder is welcome only when the path back out stays obvious."
 
@@ -455,4 +552,7 @@
   @operator_semantics: ~"./operator-semantics.spw"
   @site_semantics: ~"./site-semantics.spw"
   @spatial_grammar: ~"../philosophy/spatial-grammar.spw"
+  @semantic_navigation_plan: @semantic_navigation_plan
+  @expression_geometry: @expression_geometry
+  @workbench_form_geometry: @workbench_form_geometry
 }

@@ -24,6 +24,12 @@
 @stem_projection: ~"./v04/pillars/stem-projection.spw"
 @operation_fixity: ~"./v04/pillars/operation-fixity-types.spw"
 @runtime_defs: ~"../../public/js/kernel/shared.js"
+@expression_geometry: ~"../../public/js/semantic/spw-expression-geometry.js"
+@literal_parser_tool: ~"../../tools/spw-parser/index.html"
+@literal_parser_runtime: ~"../../public/js/modules/tools/spw-literal-parser.js"
+@literal_parser_bundle: ~"../../public/js/semantic/spw-workbench-parser.js"
+@cognitive_navigation: ~"../conventions/cognitive-navigation.spw"
+@semantic_navigation_plan: ~"../../.agents/plans/semantic-navigation-geometry/PLAN.md"
 @site_feature_utilization: ~"../conventions/feature-utilization.spw"
 @language_cache: ~"../caches/spw-language-utilization-2026-07.spw"
 
@@ -124,6 +130,29 @@ fixity = "tending"
     }
   }[reg=facet]
 
+  surface_geometry_projection {
+    ~runtime = @expression_geometry
+    ~navigation = @cognitive_navigation
+    ~plan = @semantic_navigation_plan
+    expression = authored[expression]{scan.forms.operators}<present>
+    supported = #[`operators`, `[] frame`, `{}` body, `()` scope, `<> capsule`, `<> couple`, `<<>> stream`, `quoted opacity`][reg=set]
+    boundary = `Browser projection is surface geometry only; mounted parser owns AST / ONF / canonicalization / evaluation.`
+    utilization = `Use the projection when a visible consequence teaches structure: bare markup wrapping or a quiet navigation syntax wake.`
+    anti = `Do not parse arbitrary prose, infer authored meaning, or promote the projection to language canon.`
+  }[reg=facet]
+
+  literal_parser_proof {
+    ~tool = @literal_parser_tool
+    ~runtime = @literal_parser_runtime
+    ~parser = @literal_parser_bundle
+    expression = literal[source]{tokens.ast.diagnostics.reconstruction}<app>
+    authority = `Generated browser artifact from the mounted workbench parser entrypoint; not a parallel site grammar.`
+    utilization = `Use the public tool when proof requires literal AST semantics, token spans, malformed-source diagnostics, or an exact reconstruction check.`
+    distinction = `Navigation and bare-markup projection remain intentionally small. The full parser is demand-loaded only by the parser tool route.`
+    app_entry = #[`spw_source URL`, `.spw file handler`, `PWA parser shortcut`][reg=set]
+    anti = `Do not replace authored source with AST JSON, claim evaluation from parse success, or hide parser errors behind wonder copy.`
+  }[reg=facet]
+
   claims_and_probes {
     ~source = @claim_probe
     shape = claim <id> { hypothesis, spec_ref, impl_ref, probe_ref, falsification, status }
@@ -162,8 +191,8 @@ fixity = "tending"
 
   %semantic_expressions {
     kind = "objective"
-    source = "rg data-spw-semantic-expression HTML"
-    value = ~474
+    source = "npm run ecology:language (data-spw-semantic-expression HTML census)"
+    value = 504
     unit = "hits"
   }
 
@@ -176,17 +205,18 @@ fixity = "tending"
 
   %claims_in_spw {
     kind = "objective"
-    source = "rg claim|hypothesis site .spw (excl workbench bulk)"
-    value = ~200
-    unit = "lines"
+    source = "npm run ecology:language (site .spw, excluding workbench)"
+    value = 174
+    unit = "owner-claim markers"
   }
 
   %probe_ref_density {
-    kind = "hybrid"
-    source = "claim-probe-syntax + ecology:language"
-    value = `claims numerous; probe_ref density is the real utilization metric`
-    unit = "ratio-not-yet-strict"
-    scale = "low-medium-high"
+    kind = "objective"
+    source = "npm run ecology:language (probe_ref / hypothesis)"
+    value = 0.84
+    unit = "ratio"
+    numerator = 108
+    denominator = 128
   }
 
   gap {
@@ -248,8 +278,27 @@ fixity = "tending"
     hypothesis = `Language feature utilization stays dual-tracked from runtime packs and is measurable via operator histogram, expression pairing, and probe_ref density.`
     spec_ref = ~"./feature-utilization.spw"
     impl_ref = ~"../caches/spw-language-utilization-2026-07.spw"
-    probe_ref = `npm run ecology:language; rg 'claim #lang-util' .spw/language`
+    probe_ref = `npm run ecology:language && rg 'claim #lang-util' .spw/language`
     falsification = `A single inventory mixes body feature tokens with operator alphabet without disambiguation.`
+    status = "active"
+  }
+  claim #lang-util-bridge-001 {
+    layer = "pragmatic"
+    hypothesis = `Bridge surfaces (mount, workspace, domains, surfaces, index, site) participate in language utilization when they declare expression + owner_claim with probe_ref — not only path alias lists.`
+    expression = bridge[site]{expression.claim.probe}<utilize>
+    *evidence = `claim #mount-bridge-001 … #site-convention-use-001 family`
+    probe_ref = `rg 'claim #mount-bridge-001|claim #workspace-roots-001|claim #domains-identity-001|claim #surfaces-routes-001|claim #site-index-001|claim #site-convention-use-001' .spw`
+    falsification = `Bridge files remain prose+@refs only after an align pass that claimed workbench integration.`
+    status = "active"
+  }
+  claim #lang-util-surface-geometry-001 {
+    layer = "semantic"
+    hypothesis = `A bounded expression-geometry reader can project existing language features into public navigation without collapsing site runtime into the full workbench parser.`
+    expression = language[geometry]{authoritative.source.bounded.projection}<navigate>
+    spec_ref = @cognitive_navigation
+    impl_ref = @expression_geometry
+    probe_ref = `node --import ./scripts/tests/setup-dom-globals.mjs --import ./scripts/tests/register-public-imports.mjs --test scripts/tests/spw-expression-geometry.test.mjs`
+    falsification = `The reader evaluates expressions, rewrites source, loses quote opacity, or merges medial capsules, couples, and streams.`
     status = "active"
   }
 }[reg=facet]
@@ -258,5 +307,7 @@ validation: #[
   `npm run ecology:language`
   `rg 'data-spw-operator=' --glob '*.html' | head`
   `rg 'owner_claim|probe_ref|claim #lang-util' .spw/language`
+  `rg 'expression =|claim #mount-bridge|claim #workspace-roots|claim #domains-identity' .spw/mount.spw .spw/workspace.spw .spw/domains.spw`
+  `rg 'surface_geometry_projection|lang-util-surface-geometry-001' .spw/language/feature-utilization.spw`
   `rg '%|expression =|\\(scene\\)|\\[mode\\]|<lens>' .spw/language/feature-utilization.spw`
 ][reg=set]

@@ -23,12 +23,16 @@ fixity = "tending"
 @mount: ~"../../../mount.spw"
 @plan: ~"../../../../.agents/plans/spw-language-v04/PLAN.md"
 @language_v04: ~"../index.spw"
+@surface_archetypes: ~"../../../_workbench/.spw/surfaces/surface-archetypes.spw"
+@submodule_convention: ~"../../../_workbench/.spw/conventions/submodule.spw"
+@mounted_docs: ~"../../../_workbench/docs/runtime/md/mounted-workbench.md"
 
 ^"upstream_layout"{
  docs = #[`docs/specs/spw/v04/PROFILES.md`, `docs/specs/spw/v04/CLAIMS.md`, `docs/specs/spw/v04/STEMS.md`][reg=set]
  lib = #[`lib/spw-v0.4.0/` scaffold next to v0.3.0][reg=set]
  cli = #[`validate-spw --profile`, `precipitate` command family][reg=set]
  branch = `feature/spw-language-v04`
+ mounted_consumer = #[`docs/runtime/md/mounted-workbench.md`, `.spw/conventions/submodule.spw`, `surfaces/surface-archetypes.spw`][reg=set]
 }[reg=facet]
 
 ^"pin_ritual"{
@@ -37,7 +41,10 @@ fixity = "tending"
   `Implement profile validator in spw-cli`,
   `Merge upstream; tag workbench v0.4.0-alpha`,
   `cd .spw/_workbench && git fetch && git checkout <tag>`,
-  `cd repo root && git add .spw/_workbench && git commit`,
+  `cd repo root && git add .spw/_workbench`,
+  `Re-check pathRefs: test -f .spw/_workbench/.spw/surfaces/surface-archetypes.spw`,
+  `npm run spw:doctor && npm run spw:roots`,
+  `git commit pin + any .spw bridge edits`,
   `npm run check:local && validate-spw on .spw/language/v04`
  >[reg=stream]
 }[reg=facet]
@@ -55,5 +62,7 @@ fixity = "tending"
 validation: #[
  `test -f .gitmodules`,
  `test -d .spw/_workbench/.spw`,
+ `test -f .spw/_workbench/.spw/surfaces/surface-archetypes.spw`,
  `rg 'spw-workbench' .gitmodules`,
+ `npm run spw:doctor`,
 ][reg=set]

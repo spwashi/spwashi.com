@@ -48,8 +48,19 @@ serializes a trail reading: .from [field] (to) &to .to`
 ends at this demo. Promotion into the shared menu runtime waits on browser approval.`
 }[reg=facet]
 
+^"owner_claim"{
+  claim #menu-field-001 {
+    layer = "pragmatic"
+    hypothesis = `Menu field states stay falsifiable when each posture maps to an underused operator (.ground [mode] (scene) &subject) and at least one runtime attr or demo serializes the trail.`
+    expression = menu[field]{ground.mode.scene.subject}<disclosure>
+    probe_ref = `rg 'data-spw-grounded' public/js/interface && rg 'expression = menu' .spw/surfaces/menu-field.spw && test -f design/experiments/menu-field/index.html`
+    falsification = `States renarrate open/closed without operators, or demo trail loses .from / &to grammar.`
+    status = "active"
+  }
+}[reg=facet]
+
 validation: #[
   `rg 'data-spw-grounded' public/js/interface`
-  `rg 'menu_field_surface' .spw/surfaces`
+  `rg 'menu_field_surface|claim #menu-field-001' .spw/surfaces`
   `rg 'menu-field-instrument' design/experiments/menu-field`
 ][reg=set]

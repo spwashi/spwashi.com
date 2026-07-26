@@ -3,16 +3,23 @@
 # Root entrypoint for this site-local bridge into the installed Spw workbench.
 
 #>spw_site_index
-#:index #!canon
+#:index #!canon #!bridge
+#:operation #!align
+#:fixity #!stable
 #:layer #!pragmatics
 
+@language_utilization: ~"./language/feature-utilization.spw"
+@operator_semantics: ~"./conventions/operator-semantics.spw"
+@semantic_capacity: ~"./conventions/semantic-capacity.spw"
 @spw: ~"."
+@orientation: ~"./README.md"
 @mount: ~"./mount.spw"
 @workspace: ~"./workspace.spw"
 @conventions: ~"./conventions/index.spw"
 @site_semantics: ~"./conventions/site-semantics.spw"
 @site: ~"./site.spw"
 @audits: ~"./audits/index.spw"
+@caches: ~"./caches/index.spw"
 @recursive_improvement: ~"./conventions/recursive-improvement.spw"
 @feature_utilization: ~"./conventions/feature-utilization.spw"
 @reviews: ~"./reviews/index.spw"
@@ -21,15 +28,20 @@
 @workbench: ~"./_workbench/.spw/index.spw"
 @workbench_mount: ~"./_workbench/.spw/mount.spw"
 @workbench_workspace: ~"./_workbench/.spw/workspace.spw"
+@workbench_surface_archetypes: ~"./_workbench/.spw/surfaces/surface-archetypes.spw"
+@workbench_submodule: ~"./_workbench/.spw/conventions/submodule.spw"
+@mounted_docs: ~"./_workbench/docs/runtime/md/mounted-workbench.md"
 @language: ~"./language/index.spw"
 @language_v04: ~"./language/v04/index.spw"
 
 intent: .{
  goal = `Provide one stable site-local entrypoint that bridges publishing decisions on spwashi.com to the installed spw-workbench canon.`
  stance = `Keep the local bridge thin, site-oriented, and easy to reread before or after a publishing pass.`
+ first_reads = #[@orientation, ~"./index.spw", @workspace, @mount][reg=set]
 }[reg=facet]
 
 dispatch: .{
+ orientation = @orientation
  mount = @mount
  workspace = @workspace
  conventions = @conventions
@@ -37,6 +49,9 @@ dispatch: .{
  workbench = @workbench
  workbench_mount = @workbench_mount
  workbench_workspace = @workbench_workspace
+ workbench_surface_archetypes = @workbench_surface_archetypes
+ workbench_submodule = @workbench_submodule
+ mounted_docs = @mounted_docs
  language = @language
  language_v04 = @language_v04
  about = ~"../about/index.html"
@@ -45,11 +60,12 @@ dispatch: .{
  reviews = @reviews
  domains = @domains
  surfaces = @surfaces
+ caches = @caches
  site = @site
  audits = @audits
  recursive_improvement = @recursive_improvement
- feature_utilization = @feature_utilization
- language_feature_utilization = ~"./language/feature-utilization.spw"
+ runtime_feature_utilization = @feature_utilization
+ language_feature_utilization = @language_utilization
  language_recursive_improvement = ~"./language/recursive-improvement.spw"
 }[reg=facet]
 
@@ -57,5 +73,45 @@ invariants: #[
  `The local .spw directory stays thin and site-oriented.`,
  `Local conventions and surfaces describe the site's own canon boundary.`,
  `Imported canon lives under ./_workbench/.spw and remains the deeper source of truth.`,
- `Site surfaces should cite installed workbench paths that actually exist.`
+ `Site surfaces should cite installed workbench paths that actually exist.`,
+ `Consumer authority: site owns .spw/*; workbench owns only .spw/_workbench.`,
+ `Deployment identity (domains) stays separate from surface archetypes.`
+][reg=set]
+
+^"operator_lens"{
+  .ground {
+    on = `intent.first_reads`
+    role = `Orientation lands first — README, index, workspace, mount — before deep canon.`
+  }
+  ?probe {
+    on = `dispatch + language_feature_utilization`
+    role = `Inquiry path into language and audits without forcing a single reading order.`
+  }
+  ^integration {
+    on = `dispatch clusters (conventions, language, surfaces, caches)`
+    role = `Lift site clusters into one inspectable entrypoint.`
+  }
+  ~potential {
+    on = `workbench_* aliases`
+    role = `Workbench remains a deferred path — available, not the consumer corpus.`
+  }
+}[reg=facet]
+
+expression = index[entry]{orient.dispatch.workbench}<bridge>
+
+^"owner_claim"{
+  claim #site-index-001 {
+    layer = "pragmatic"
+    hypothesis = `The site index is thin: first_reads + dispatch name every durable cluster, and workbench aliases never replace local mount/workspace authority.`
+    expression = entry[thin]{dispatch.authority}<index>
+    probe_ref = `rg 'first_reads|runtime_feature_utilization = @feature_utilization|language_feature_utilization = @language_utilization' .spw/index.spw && test -f .spw/README.md && npm run spw:doctor`
+    falsification = `Index grows into prose essays, omits language/caches, or points @mount at workbench instead of local mount.`
+    status = "active"
+  }
+}[reg=facet]
+
+validation: #[
+  `npm run spw:doctor`,
+  `rg 'claim #site-index-001|expression = index' .spw/index.spw`,
+  `test -f .spw/mount.spw && test -f .spw/workspace.spw`,
 ][reg=set]

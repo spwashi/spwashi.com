@@ -54,6 +54,7 @@
 @charge_cycle: ~"./charge-cycle.spw"
 @wonder_vocabulary: ~"./wonder-vocabulary.spw"
 @page_anatomy_vocabulary: ~"./page-anatomy-vocabulary.spw"
+@page_template_authoring: ~"./page-template-authoring.spw"
 @codebase_perusal: ~"./codebase-perusal.spw"
 @site_starter_component_kit: ~"./site-starter-component-kit.spw"
 @expressive_registers: ~"./expressive-registers.spw"
@@ -62,6 +63,11 @@
 @workbench_selection: ~"../_workbench/.spw/conventions/selection.spw"
 @workbench_naming: ~"../_workbench/.spw/conventions/naming.spw"
 @workbench_submodule: ~"../_workbench/.spw/conventions/submodule.spw"
+@workbench_cli: ~"../_workbench/.spw/conventions/cli.spw"
+@workbench_packaging: ~"../_workbench/.spw/conventions/packaging.spw"
+@workbench_surface_archetypes: ~"../_workbench/.spw/surfaces/surface-archetypes.spw"
+@workbench_claim_protocol: ~"../_workbench/.spw/harness/claim-protocol.spw"
+@workbench_mounted_docs: ~"../_workbench/docs/runtime/md/mounted-workbench.md"
 @component_taxonomy: ~"./component-taxonomy.spw"
 @component_region_personality: ~"./component-region-personality.spw"
 @spw_architecture_ecology: ~"./spw-architecture-ecology.spw"
@@ -140,6 +146,7 @@ dispatch: .{
  daily_kernel = @daily_kernel
  relational_attention_media = @relational_attention_media
  page_anatomy_vocabulary = @page_anatomy_vocabulary
+ page_template_authoring = @page_template_authoring
  codebase_perusal = @codebase_perusal
  site_starter_component_kit = @site_starter_component_kit
  expressive_registers = @expressive_registers
@@ -155,6 +162,11 @@ dispatch: .{
  selection = @workbench_selection
  naming = @workbench_naming
  submodule = @workbench_submodule
+ workbench_cli = @workbench_cli
+ workbench_packaging = @workbench_packaging
+ workbench_surface_archetypes = @workbench_surface_archetypes
+ workbench_claim_protocol = @workbench_claim_protocol
+ workbench_mounted_docs = @workbench_mounted_docs
  component_taxonomy = @component_taxonomy
  component_region_personality = @component_region_personality
  spw_architecture_ecology = @spw_architecture_ecology

@@ -3,7 +3,14 @@
 # Local workspace manifest for the site bridge and installed workbench canon.
 
 #>spw_workspace
-#:workspace
+#:workspace #!manifest
+#:operation #!align
+#:fixity #!stable
+#:layer #!pragmatics
+
+@language_utilization: ~"./language/feature-utilization.spw"
+@operator_semantics: ~"./conventions/operator-semantics.spw"
+@semantic_capacity: ~"./conventions/semantic-capacity.spw"
 
 # Canonical roots frame read by the mounted spw CLI (roots, tree, select, doctor).
 # Literal path declarations only. The @alias graph below stays for LSP discovery.
@@ -36,7 +43,15 @@
 @workbench_index: ~"./_workbench/.spw/index.spw"
 @workbench_mount: ~"./_workbench/.spw/mount.spw"
 @workbench_workspace: ~"./_workbench/.spw/workspace.spw"
+@workbench_canon_mount: ~"./_workbench/.spw/canon-mount.spw"
+@workbench_submodule: ~"./_workbench/.spw/conventions/submodule.spw"
+@workbench_surface_archetypes: ~"./_workbench/.spw/surfaces/surface-archetypes.spw"
+@workbench_claim_protocol: ~"./_workbench/.spw/harness/claim-protocol.spw"
+@workbench_mounted_docs: ~"./_workbench/docs/runtime/md/mounted-workbench.md"
 @workbench_metaphysics_application: ~"./reviews/workbench-metaphysics-application.spw"
+@orientation: ~"./README.md"
+@caches: ~"./caches/index.spw"
+@language: ~"./language/index.spw"
 @planning_ecology: ~"./conventions/planning-ecology.spw"
 @spw: ~"."
 
@@ -44,24 +59,41 @@ settings: .{
  language = spw
  dialect = `v0.3.0`
  profile = `site-bridge`
+ consumer_authority = `This workspace owns site .spw; .spw/_workbench is mounted infrastructure only.`
 }[reg=facet]
 
 lsp: .{
+ # Consumer roots first; workbench paths are instruments, not authoring roots.
  roots = #[
   ~"./",
   @index,
   @mount,
+  @orientation,
   ~"./conventions",
   @conventions,
   @site_semantics,
   @site,
   @domains,
   @surfaces,
+  @language,
+  @caches,
   @workbench,
   @workbench_index,
   @workbench_mount,
-  @workbench_workspace
+  @workbench_workspace,
+  @workbench_surface_archetypes
  ][reg=set]
+}[reg=facet]
+
+boundary: .{
+  consumer_owns = #[@index, @mount, ~"./conventions", ~"./audits", ~"./caches", ~"./reviews", @site, @domains, @surfaces][reg=set]
+  workbench_provides = #[`parser`, `runtime`, `LSP`, `CLI`, `spec library`, `agent tooling`, `surface-archetypes`][reg=set]
+  scan_exclusion = `.spw/_workbench/**`
+  after_submodule_bump = #[
+    `npm run spw:doctor`,
+    `rg '_workbench/' .spw --glob '!**//_workbench/**' --glob '**/*.spw' | head`,
+    `test -f .spw/_workbench/.spw/surfaces/surface-archetypes.spw`
+  ][reg=set]
 }[reg=facet]
 
 kernel: .{
@@ -102,5 +134,45 @@ invariants: #[
  `Workspace discovery should expose both local bridge surfaces and imported canon surfaces.`,
  `Local conventions and surface registries should resolve without needing path folklore.`,
  `Site-local planning remains narrow even when the imported workbench is broad.`,
- `Local .spw files should mark whether a claim is authored, semantic, pragmatic, generated, imported canon, or exploratory metaphor.`
+ `Local .spw files should mark whether a claim is authored, semantic, pragmatic, generated, imported canon, or exploratory metaphor.`,
+ `_workbench must not masquerade as consumer-authored content in roots, shelves, or publish surfaces.`,
+ `Deployment identity lives in domains.spw; interaction qualities cite surface-archetypes.`
+][reg=set]
+
+^"operator_lens"{
+  .ground {
+    on = `kernel.authored`
+    role = `HTML/routes remain the settlement layer; JS and .spw enhance, they do not invent meaning alone.`
+  }
+  $substrate {
+    on = `kernel.generated + memory_locations`
+    role = `Catalogs, manifests, and plans are substrate — rebuildable or warm, never silent truth.`
+  }
+  ^integration {
+    on = `^"roots" + lsp.roots`
+    role = `Lift clusters into inspectable relation so roots/tree/select can address them by sigil.`
+  }
+  (scene) {
+    on = `memory_locations.hot`
+    role = `Active plans stage midprocess work without promoting it to cold contracts.`
+  }
+}[reg=facet]
+
+expression = workspace[roots]{authored.semantic.pragmatic.generated}<kernel>
+
+^"owner_claim"{
+  claim #workspace-roots-001 {
+    layer = "pragmatic"
+    hypothesis = `The ^"roots" frame makes every durable cluster addressable by sigil without enumerating _workbench as consumer content.`
+    expression = roots[sigil]{consumer.first}<address>
+    probe_ref = `npm run spw:roots && rg '@workbench: ~\"\\./_workbench\"' .spw/workspace.spw && rg 'scan_exclusion' .spw/workspace.spw`
+    falsification = `roots omits conventions/language/surfaces, or lists workbench internals as peer consumer roots without infrastructure role.`
+    status = "active"
+  }
+}[reg=facet]
+
+validation: #[
+  `npm run spw:roots`,
+  `rg 'claim #workspace-roots-001|expression = workspace' .spw/workspace.spw`,
+  `rg '@spw:|@conventions:|@language:|@workbench:' .spw/workspace.spw`,
 ][reg=set]

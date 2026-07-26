@@ -5,9 +5,15 @@
 # real canon paths rather than dead local sketches.
 
 #>spw_site_observations
-#:notebook #!open
+#:notebook #!open #!site
+#:operation #!align
+#:fixity #!tending
 #:layer #!pragmatics
 
+@language_utilization: ~"./language/feature-utilization.spw"
+@operator_semantics: ~"./conventions/operator-semantics.spw"
+@semantic_capacity: ~"./conventions/semantic-capacity.spw"
+@measurement: ~"./conventions/measurement-contract.spw"
 @conventions: ~"./conventions/index.spw"
 @site_semantics: ~"./conventions/site-semantics.spw"
 @css_instruction: ~"./conventions/css-instruction.spw"
@@ -23,9 +29,19 @@
 @approach_topography: ~"./surfaces/approach-topography.spw"
 @product_lines: ~"./surfaces/product-lines.spw"
 @attention_field: ~"./conventions/attention-field.spw"
+@cognitive_navigation: ~"./conventions/cognitive-navigation.spw"
+@semantic_navigation_plan: ~"../.agents/plans/semantic-navigation-geometry/PLAN.md"
+@expression_geometry_runtime: ~"../public/js/semantic/spw-expression-geometry.js"
+@literal_parser_tool: ~"../tools/spw-parser/index.html"
+@literal_parser_runtime: ~"../public/js/modules/tools/spw-literal-parser.js"
+@literal_parser_bundle: ~"../public/js/semantic/spw-workbench-parser.js"
+@literal_parser_build: ~"../scripts/build-spw-literal-parser.mjs"
 @ornament_contract: ~"./conventions/ornament-contract.spw"
 @wonder_vocabulary: ~"./conventions/wonder-vocabulary.spw"
 @page_anatomy_vocabulary: ~"./conventions/page-anatomy-vocabulary.spw"
+@page_template_authoring: ~"./conventions/page-template-authoring.spw"
+@template_renderer: ~"../scripts/template.mjs"
+@route_template_migrate: ~"../scripts/migrate-route-to-template.mjs"
 @codebase_perusal: ~"./conventions/codebase-perusal.spw"
 @site_starter_component_kit: ~"./conventions/site-starter-component-kit.spw"
 @expressive_registers: ~"./conventions/expressive-registers.spw"
@@ -86,17 +102,26 @@
 @spw_architecture_ecology_plan: ~"../.agents/plans/spw-architecture-ecology/PLAN.md"
 @modular_experience_slices: ~"../.agents/plans/modular-experience-slices/PLAN.md"
 @slices: ~"./slices/index.spw"
+@local_mount: ~"./mount.spw"
+@local_workspace: ~"./workspace.spw"
 @canon: ~"./_workbench/.spw/index.spw"
-@mount: ~"./_workbench/.spw/mount.spw"
-@workspace: ~"./_workbench/.spw/workspace.spw"
+@workbench_mount: ~"./_workbench/.spw/mount.spw"
+@workbench_workspace: ~"./_workbench/.spw/workspace.spw"
+@workbench_canon_mount: ~"./_workbench/.spw/canon-mount.spw"
 @selection: ~"./_workbench/.spw/conventions/selection.spw"
 @naming: ~"./_workbench/.spw/conventions/naming.spw"
 @submodule: ~"./_workbench/.spw/conventions/submodule.spw"
+@workbench_cli: ~"./_workbench/.spw/conventions/cli.spw"
+@workbench_claim_protocol: ~"./_workbench/.spw/harness/claim-protocol.spw"
 @literate_ui: ~"./_workbench/.spw/patterns/literate-ui.spw"
+@query_composition: ~"./_workbench/.spw/patterns/query-composition.spw"
 @symmetry_ui: ~"./_workbench/.spw/applications/symmetry/symmetry-ui-design.spw"
 @ocean_ux: ~"./_workbench/.spw/biome/ocean/ux.spw"
 @surface_registry: ~"./_workbench/.spw/surfaces/index.spw"
 @surface_archetypes: ~"./_workbench/.spw/surfaces/surface-archetypes.spw"
+@brace_physics: ~"./_workbench/.spw/registries/brace-physics.spw"
+@precipitates_runtime: ~"./_workbench/.spw/runtime/precipitates.spw"
+@mounted_docs: ~"./_workbench/docs/runtime/md/mounted-workbench.md"
 @language: ~"./language/index.spw"
 @language_v04: ~"./language/v04/index.spw"
 @spw_language_v04_plan: ~"../.agents/plans/spw-language-v04/PLAN.md"
@@ -169,7 +194,7 @@ translations: .{
  software_surface = #[@literate_ui, @symmetry_ui, @ocean_ux][reg=set]
  pretext_surface = #[@surface_registry, @selection, @pretext_whimsy_plan, @pretext_whimsy_model][reg=set]
  labels_and_tokens = #[@naming, @selection][reg=set]
- installation = #[@submodule, @mount][reg=set]
+ installation = #[@submodule, @local_mount, @workbench_mount, @mounted_docs][reg=set]
  site_semantics = #[@conventions, @site_semantics][reg=set]
  localization = #[@conventions, @copy_localization, @site_semantics][reg=set]
  timing_and_data = #[@timing_data_localization, @copy_localization, @site_semantics][reg=set]
@@ -179,6 +204,8 @@ translations: .{
  reviews = #[@reviews, @site_semantics][reg=set]
  planning_tracks = #[@interaction_loop_contract, @gesture_state_refinement, @navigation_header_disclosure, @floating_chrome_stack, @semantic_copy_depth, @component_region_personality_plan, @spw_architecture_ecology_plan, @modular_experience_slices][reg=set]
  interaction_model = #[@page_model, @attention_field, @ornament_contract, @site_semantics][reg=set]
+ semantic_navigation_geometry = #[@cognitive_navigation, @semantic_navigation_plan, @expression_geometry_runtime, @attention_field, @semantic_braces][reg=set]
+ literal_parser_proof = #[@literal_parser_tool, @literal_parser_runtime, @literal_parser_bundle, @literal_parser_build, @cognitive_navigation, @language_utilization][reg=set]
  annotation_layer = #[@annotation_layer, @attention_field, @site_semantics][reg=set]
  narrative_instrumentation = #[@narrative_instrumentation, @annotation_layer, @attention_field, @site_semantics][reg=set]
  query_disposition = #[@query_disposition, @style_development, @site_semantics][reg=set]
@@ -191,6 +218,7 @@ translations: .{
  relational_attention_media = #[@relational_attention_media, @relational_attention_media_plan, @relational_attention_media_cache, @attention_field, @product_lines][reg=set]
  approach_and_narrative = #[@approach_topography, @product_lines, @wonder_vocabulary][reg=set]
  page_anatomy_vocabulary = #[@page_anatomy_vocabulary, @page_model, @composition_box_model][reg=set]
+ page_template_authoring = #[@page_template_authoring, @template_renderer, @route_template_migrate, @page_model, @component_region_personality][reg=set]
  site_starter_component_kit = #[@site_starter_component_kit, @composition_box_model, @component_taxonomy, @modular_experience_slices][reg=set]
  expressive_registers = #[@expressive_registers, @attention_field, @approach_topography, @style_development][reg=set]
  component_harmony = #[@component_philosophy_harmony_audit, @component_anatomy_device_packing_audit, @component_taxonomy, @component_packing, @composition_box_model, @attention_field, @ornament_contract, @expressive_registers, @region_component_ecology, @naming_structured_values, @data_spw_attribute_governance][reg=set]
@@ -211,6 +239,36 @@ integration_contract: .{
  imported_role = `The installed spw-workbench supplies canon semantics, naming, selection, and interface patterns.`
  semantic_rule = `Local site semantics translate canon into kind, form, role, liminality, and selection for public components.`
  citation_rule = `When the site cites workbench sources, prefer installed paths under .spw/_workbench/.spw/ that actually exist.`
+ identity_vs_archetype = `domains.spw owns deployment identity; surface-archetypes owns interaction quality without hostnames.`
+ mount_vs_canon = `@local_mount is the site bridge; @workbench_mount / @workbench_workspace are instruments — never reverse the authority order.`
+}[reg=facet]
+
+^"spw_convention_use"{
+  ~source = @language_utilization
+  ~capacity = @semantic_capacity
+  ~operators = @operator_semantics
+  ~measure = @measurement
+
+  thesis = `Bridge and publish surfaces must use Spw as force + expression + claim, not only as path lists and prose.`
+
+  operator_lens: .{
+    .ground { role = `Authored HTML and public routes settle meaning before enhancement.` }
+    ^integration { role = `related_surfaces clusters lift domains into inspectable relation.` }
+    ?probe { role = `owner_claim.probe_ref keeps durable site contracts falsifiable.` }
+    %measure { role = `Objective doctor/path checks pair with subjective review notes when both matter.` }
+  }[reg=facet]
+
+  expression = site[bridge]{ground.integrate.probe}<publish>
+
+  claim #site-convention-use-001 {
+    layer = "semantic"
+    hypothesis = `Site .spw utilization improves when mount/workspace/domains/surfaces/index carry expression + owner_claim with probe_ref, and related_surfaces clusters stay queryable dispatch — not free prose only.`
+    expression = utilization[bridge]{expression.claim.probe}<site>
+    *evidence = `mount-bridge-001, workspace-roots-001, domains-identity-001, surfaces-routes-001, site-index-001`
+    probe_ref = `rg 'claim #mount-bridge-001|claim #workspace-roots-001|claim #domains-identity-001|claim #surfaces-routes-001|claim #site-index-001|claim #site-convention-use-001' .spw && npm run ecology:language 2>/dev/null | tail -5 || rg 'expression =' .spw/mount.spw .spw/workspace.spw .spw/domains.spw .spw/surfaces.spw .spw/index.spw .spw/site.spw`
+    falsification = `Bridge files lose probe_ref claims or operators appear only as commentary without expression lines.`
+    status = "active"
+  }
 }[reg=facet]
 
 dispatch: .{
@@ -225,9 +283,19 @@ dispatch: .{
  approach_topography = @approach_topography
  product_lines = @product_lines
  attention_field = @attention_field
+ cognitive_navigation = @cognitive_navigation
+ semantic_navigation_plan = @semantic_navigation_plan
+ expression_geometry_runtime = @expression_geometry_runtime
+ literal_parser_tool = @literal_parser_tool
+ literal_parser_runtime = @literal_parser_runtime
+ literal_parser_bundle = @literal_parser_bundle
+ literal_parser_build = @literal_parser_build
  ornament_contract = @ornament_contract
  wonder_vocabulary = @wonder_vocabulary
  page_anatomy_vocabulary = @page_anatomy_vocabulary
+ page_template_authoring = @page_template_authoring
+ template_renderer = @template_renderer
+ route_template_migrate = @route_template_migrate
  site_starter_component_kit = @site_starter_component_kit
  expressive_registers = @expressive_registers
  codebase_perusal = @codebase_perusal
@@ -251,6 +319,18 @@ dispatch: .{
  modular_experience_slices = @modular_experience_slices
  slices = @slices
  workbench = @canon
+ workbench_mount = @workbench_mount
+ workbench_workspace = @workbench_workspace
+ workbench_canon_mount = @workbench_canon_mount
+ local_mount = @local_mount
+ local_workspace = @local_workspace
+ surface_archetypes = @surface_archetypes
+ claim_protocol = @workbench_claim_protocol
+ brace_physics = @brace_physics
+ precipitates_runtime = @precipitates_runtime
+ query_composition = @query_composition
+ workbench_cli = @workbench_cli
+ mounted_docs = @mounted_docs
  agents = @agents
  plans = @plans
  agent_contracts = @agentic_contracts

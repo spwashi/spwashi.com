@@ -15,6 +15,11 @@ fixity = "stable"
 @workbench: ~"../_workbench/.spw/index.spw"
 @reference_conventions: ~"../_workbench/docs/specs/spw/reference-conventions.spw"
 @spec_alignment: ~"../_workbench/docs/specs/spw/spec-alignment.spw"
+@claim_protocol: ~"../_workbench/.spw/harness/claim-protocol.spw"
+@operators_theory: ~"../_workbench/docs/theory/spw/operators.spw"
+@semantics_physics: ~"../_workbench/docs/theory/spw/semantics-physics.spw"
+@form_geometry: ~"../_workbench/docs/theory/spw/form-geometry.spw"
+@runtime_foundation: ~"../_workbench/docs/runtime/spw/runtime-foundation.spw"
 @v04: ~"./v04/index.spw"
 @plan: ~"../../.agents/plans/spw-language-v04/PLAN.md"
 @feature_utilization: ~"./feature-utilization.spw"
@@ -32,6 +37,11 @@ dispatch: .{
  workbench = @workbench
  reference_conventions = @reference_conventions
  spec_alignment = @spec_alignment
+ claim_protocol = @claim_protocol
+ operators_theory = @operators_theory
+ semantics_physics = @semantics_physics
+ form_geometry = @form_geometry
+ runtime_foundation = @runtime_foundation
  v04 = @v04
  plan = @plan
  feature_utilization = @feature_utilization
@@ -53,8 +63,12 @@ reading_order: ?<
   @utilization_cache,
   @operator_semantics,
   @semantic_braces,
+  @operators_theory,
+  @form_geometry,
   @reference_conventions,
   @spec_alignment,
+  @claim_protocol,
+  @runtime_foundation,
   @workbench
 >[reg=stream]
 

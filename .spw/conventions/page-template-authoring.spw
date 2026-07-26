@@ -1,0 +1,105 @@
+# Page Template Authoring
+#
+# How public routes declare shell chrome and page-local personality without
+# duplicating head/meta/JSON-LD in every index.html.
+
+#>page_template_authoring
+#:convention #!templates #!routes #!personality
+#:operation #!contract
+#:fixity #!tending
+#:layer #!pragmatics
+
+@page_model: ~"../surfaces/page-model.spw"
+@component_region_personality: ~"./component-region-personality.spw"
+@data_spw_governance: ~"./data-spw-attribute-governance.spw"
+@template: ~"../../scripts/template.mjs"
+@migrate: ~"../../scripts/migrate-route-to-template.mjs"
+@language_utilization: ~"../language/feature-utilization.spw"
+
+operation = "contract"
+fixity = "tending"
+
+^"thesis"{
+  claim = `Route sources stay HTML-native: <spw-page> declares metadata, <spw-site-head|header|footer> expand shared chrome, and body data-spw-* carries page personality. Manual og/json-ld/head stacks are debt.`
+  risk = `Duplicated heads drift; page-family without layout/wonder collapses category voice; migration that overwrites authored body attrs erases personality.`
+  rule = `Prefer spw-page + spw-site-head; fill missing personality from page-family defaults; never overwrite authored data-spw-* on body.`
+}[reg=facet]
+
+^"source_shape"{
+  order = ?<
+    `<spw-page … attrs …></spw-page>`,
+    `<!DOCTYPE html><html lang="…">`,
+    `<head><spw-site-head></spw-site-head></head>`,
+    `<body data-spw-surface data-spw-page-family data-spw-page-role …>`,
+    `skip-link + optional section-handle`,
+    `<spw-site-header …>`,
+    `<main>…</main>`,
+    `<spw-site-footer></spw-site-footer>`
+  >[reg=stream]
+  spw_page_owns = #[`title`, `description`, `canonical`, `og_*`, `keywords`, `breadcrumb_label`, `header_*`, optional personality vars][reg=set]
+  body_owns = #[`data-spw-surface`, `data-spw-page-family`, `data-spw-page-role`, `data-spw-page-modes`, `data-spw-wonder`, `data-spw-route-family`, `data-spw-layout`, `data-spw-features`, `data-spw-related-routes`][reg=set]
+}[reg=facet]
+
+^"normalization"{
+  tokens = `features / wonder / route-family / page-modes: lowercase kebab, space-separated, first-seen order, no duplicates`
+  related_routes = `pipe-separated absolute paths with trailing slash`
+  page_family = `lowercase kebab; keys PAGE_FAMILY_PERSONALITY in template.mjs`
+  canonical = `absolute https://spwashi.com/…/ with trailing slash`
+  missing_only = `Render fills body attrs from spw-page vars + family personality only when body lacks them`
+}[reg=facet]
+
+^"page_family_personality"{
+  note = `Category voice: layout + wonder + modes defaults when a route names data-spw-page-family but omits layout/wonder/modes.`
+  families = #[
+    `field-guide → reading + comparison consequence locality`,
+    `operator-atlas → wide + comparison constraint locality`,
+    `curriculum → wide + compare/build modes`,
+    `atlas → atlas layout + orientation comparison projection`,
+    `playfield / campaign → wide + projection resonance`,
+    `care-interface → wide + translation consequence community`,
+    `runtime-observatory → wide + comparison constraint locality`,
+    `policy → reading + locality consent inspectability`,
+    `observatory → wide + orientation publication locality`,
+    `roadmap → wide + projection constraint consequence`,
+    `toolbench / workshop → wide + projection locality consequence`,
+    `recipe-book → reading + cultivation locality consequence`
+  ][reg=set]
+  authored_wins = `Body data-spw-layout / wonder / modes always override family defaults.`
+}[reg=facet]
+
+^"category_copy_voice"{
+  ~personality = @component_region_personality
+  field_guide = `Topic invitation first; technical passport language stays on design/curriculum leaves.`
+  operator_atlas = `Operator force + speech; specimen frames, not hub marketing.`
+  curriculum = `Learning path + practice; avoid repeating Objective/Subjective terminal scaffolds.`
+  playfield = `Scene entry; live affordances over meta-documentation.`
+  care_interface = `Hospitality + translation; no scaffolding jargon.`
+  toolbench = `Instrument first; clear produce/use loop.`
+}[reg=facet]
+
+^"operator_lens"{
+  #>route { role = `Canonical path + surface identity` }
+  .ground { role = `Authored body personality is settlement; template defaults are fill only` }
+  [mode] { role = `page-modes select reading/inspect/play postures without consuming the page` }
+  (scene) { role = `main regions stage midprocess; hero is entry liminality` }
+  &subject { role = `page-role is the binding public function of the route` }
+}[reg=facet]
+
+expression = route[template]{page.head.header.body}<personality>
+
+^"owner_claim"{
+  claim #page-template-001 {
+    layer = "pragmatic"
+    hypothesis = `Hubs migrated to spw-page + spw-site-head keep body personality while shared head/meta stay dry; family defaults only fill missing layout/wonder/modes.`
+    expression = template[route]{normalize.fill}<personality>
+    probe_ref = `rg -l 'spw-page' --glob '**/index.html' | wc -l; node -e "import {renderTemplate} from './scripts/template.mjs'; const r=await renderTemplate(await (await import('fs/promises')).readFile('settings/index.html','utf8')); console.log(/og:title/.test(r.output), r.warnings.length)"`
+    falsification = `Migrated route loses data-spw-page-family/role or double-renders head tags; defaults overwrite authored wonder.`
+    status = "active"
+  }
+}[reg=facet]
+
+validation: #[
+  `rg 'PAGE_FAMILY_PERSONALITY|buildBodyPersonalityAttrs' scripts/template.mjs`,
+  `node scripts/migrate-route-to-template.mjs --help`,
+  `rg 'claim #page-template-001' .spw/conventions/page-template-authoring.spw`,
+][reg=set]

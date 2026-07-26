@@ -4,9 +4,14 @@
 # workbench canon without collapsing into it.
 
 #>spw_site_surfaces
-#:registry #!surfaces
+#:registry #!surfaces #!routes
+#:operation #!contract
+#:fixity #!stable
 #:layer #!pragmatics
 
+@language_utilization: ~"./language/feature-utilization.spw"
+@operator_semantics: ~"./conventions/operator-semantics.spw"
+@menu_field: ~"./surfaces/menu-field.spw"
 @site: ~"./site.spw"
 @domains: ~"./domains.spw"
 @conventions: ~"./conventions/index.spw"
@@ -39,12 +44,26 @@ canon_alignment: .{
  pretext = #[@literate_ui, @ocean_ux][reg=set]
  domains = #[@canon_archetypes, @domains][reg=set]
  site_contract = #[@site, @domains, @conventions, @site_semantics][reg=set]
+ # Soft map: public route roles → workbench archetypes (identity still local).
+ archetype_hints = .{
+  index = `orienting_hub`
+  about = `orienting_hub`
+  care = `reflective_feedback`
+  website_field_guide = `guided_curriculum`
+  software = `guided_curriculum`
+  spw_operator_atlas = `guided_curriculum`
+  pretext = `exploratory_biome`
+  play = `exploratory_biome`
+  rpg_wednesday = `exploratory_biome`
+  recipes = `guided_curriculum`
+ }[reg=facet]
 }[reg=facet]
 
 integration_contract: .{
  local_role = `This registry names what the public site actually publishes.`
  canon_role = `Installed workbench surfaces remain deeper references and reusable machinery.`
  routing_rule = `Public routes belong here first, then cite canon surfaces that inform them.`
+ archetype_rule = `@canon_archetypes names function/cadence/evidence; @domains names hostnames — do not collapse them.`
 }[reg=facet]
 
 dispatch: .{
@@ -54,10 +73,53 @@ dispatch: .{
  semantics = @site_semantics
  canon_surfaces = @canon_surfaces
  canon_archetypes = @canon_archetypes
+ literate_ui = @literate_ui
+ symmetry_ui = @symmetry_ui
+ ocean_ux = @ocean_ux
 }[reg=facet]
 
 invariants: #[
  `The site publishes routes; the workbench publishes canon and machinery.`,
  `Every public surface should have a readable local description before deeper canon references.`,
- `Surface naming should stay stable enough to support query, selection, and screenshot reuse.`
+ `Surface naming should stay stable enough to support query, selection, and screenshot reuse.`,
+ `Archetype citations are optional quality labels, never a substitute for public_routes paths.`
+][reg=set]
+
+^"operator_lens"{
+  #>route {
+    on = `public_routes paths`
+    role = `Each public surface is an addressable stage — path before metaphor.`
+  }
+  (scene) {
+    on = `play / rpg_wednesday / pretext`
+    role = `Practice beds stage midprocess observability without claiming canon ownership.`
+  }
+  [mode] {
+    on = `archetype_hints`
+    role = `Archetype is a selected posture (orienting_hub, guided_curriculum, …) while alternatives stay listed.`
+  }
+  &subject {
+    on = `integration_contract.local_role`
+    role = `What the site publishes remains the binding subject of this registry.`
+  }
+}[reg=facet]
+
+expression = surfaces[route]{path.role.archetype}<publish>
+
+^"owner_claim"{
+  claim #surfaces-routes-001 {
+    layer = "pragmatic"
+    hypothesis = `Public routes in this registry remain the authority for site URLs; archetype_hints and canon refs inform without relocating path ownership to workbench.`
+    expression = publish[route]{archetype.hint}<local>
+    ~menu = @menu_field
+    probe_ref = `rg 'path = ~\"\\.\\./' .spw/surfaces.spw | head && rg 'archetype_hints|claim #surfaces-routes-001' .spw/surfaces.spw && test -f topics/software/spw/index.html`
+    falsification = `A public_routes entry loses its path, or archetype strings replace host/route identity in domains or mount.`
+    status = "active"
+  }
+}[reg=facet]
+
+validation: #[
+  `rg 'claim #surfaces-routes-001|expression = surfaces' .spw/surfaces.spw`,
+  `test -f index.html && test -f topics/software/index.html`,
+  `rg 'orienting_hub|guided_curriculum|exploratory_biome' .spw/surfaces.spw`,
 ][reg=set]
