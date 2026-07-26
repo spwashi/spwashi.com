@@ -15,10 +15,12 @@ import {
 const { normalizeTokenList, normalizePageFamily, normalizeRelatedRoutes } = TEMPLATE_INTERNALS;
 
 describe('page family personality map', () => {
-  it('exports stable family keys with layout/wonder/modes', () => {
+  it('exports stable family keys with spatial and editorial dimensions', () => {
     assert.ok(Object.keys(PAGE_FAMILY_PERSONALITY).length >= 20);
     for (const [family, personality] of Object.entries(PAGE_FAMILY_PERSONALITY)) {
       assert.equal(typeof personality.layout, 'string', `${family}.layout`);
+      assert.equal(typeof personality.density, 'string', `${family}.density`);
+      assert.equal(typeof personality.context, 'string', `${family}.context`);
       assert.equal(typeof personality.wonder, 'string', `${family}.wonder`);
       assert.equal(typeof personality.modes, 'string', `${family}.modes`);
       assert.ok(personality.layout.length > 0);
@@ -54,7 +56,7 @@ describe('token normalization', () => {
 });
 
 describe('renderTemplate body personality', () => {
-  it('fills missing layout/wonder/modes from page-family', async () => {
+  it('fills missing layout/density/context/wonder/modes from page-family', async () => {
     const source = `<spw-page title="T" description="D" canonical="https://spwashi.com/t/" page_family="playfield"></spw-page>
 <!DOCTYPE html>
 <html lang="en">
@@ -66,6 +68,8 @@ describe('renderTemplate body personality', () => {
     const { output, warnings } = await renderTemplate(source, { sourceLabel: 'test-fill' });
     assert.equal(warnings.length, 0);
     assert.match(output, /data-spw-layout="wide"/);
+    assert.match(output, /data-spw-density="balanced"/);
+    assert.match(output, /data-spw-context="play"/);
     assert.match(output, /data-spw-wonder="projection resonance consequence"/);
     assert.match(output, /data-spw-page-modes="read play explore"/);
     assert.match(output, /property="og:title"/);
@@ -73,7 +77,7 @@ describe('renderTemplate body personality', () => {
     assert.doesNotMatch(output, /<spw-page/);
   });
 
-  it('never overwrites authored layout/wonder/modes', async () => {
+  it('never overwrites authored layout/density/context/wonder/modes', async () => {
     const source = `<spw-page
   title="About"
   description="About the practice"
@@ -89,6 +93,8 @@ describe('renderTemplate body personality', () => {
 <body
   data-spw-page-family="kernel-portrait"
   data-spw-layout="newspaper"
+  data-spw-density="compact"
+  data-spw-context="publishing"
   data-spw-wonder="orientation consequence resonance"
   data-spw-page-modes="reading compare navigate"
   data-spw-page-role="kernel-identity-register">
@@ -97,6 +103,10 @@ describe('renderTemplate body personality', () => {
 </html>`;
     const { output } = await renderTemplate(source, { sourceLabel: 'test-authored' });
     assert.match(output, /data-spw-layout="newspaper"/);
+    assert.match(output, /data-spw-density="compact"/);
+    assert.match(output, /data-spw-context="publishing"/);
+    assert.doesNotMatch(output, /data-spw-density="roomy"/);
+    assert.doesNotMatch(output, /data-spw-context="reflection"/);
     assert.doesNotMatch(output, /data-spw-layout="reading"/);
     assert.match(output, /data-spw-wonder="orientation consequence resonance"/);
   });

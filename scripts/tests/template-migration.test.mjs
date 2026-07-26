@@ -28,7 +28,11 @@ test('route migration decodes metadata entities before escaping template attribu
   <script>globalThis.portableBench = true;</script>
   <script type="application/ld+json">{"name":"generated elsewhere"}</script>
 </head>
-<body data-spw-surface="software" data-spw-page-family="operator-atlas">
+<body
+  data-spw-surface="software"
+  data-spw-page-family="operator-atlas"
+  data-spw-context="analysis"
+  data-spw-density="compact">
   <main><h1>Specimen</h1></main>
 </body>
 </html>
@@ -42,6 +46,8 @@ test('route migration decodes metadata entities before escaping template attribu
     assert.match(migrated, /title="Spwashi • #> Frame &amp; Concept"/);
     assert.match(migrated, /description="Compare &lt;concept> &amp; frame\."/);
     assert.match(migrated, /robots="noindex, nofollow"/);
+    assert.match(migrated, /context="analysis"/);
+    assert.match(migrated, /density="compact"/);
     assert.match(migrated, /extra_styles="\/public\/css\/routes\/test\.css\?v=1"/);
     assert.match(migrated, /extra_scripts="\/public\/js\/modules\/test\.js\?v=1"/);
     assert.match(migrated, /<style>\.portable \{ display: grid; \}<\/style>/);

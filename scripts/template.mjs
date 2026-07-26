@@ -82,15 +82,15 @@ const PAGE_JSON_LD_RE = /<script\b(?=[^>]*type=["']application\/ld\+json["'])(?=
 const MAX_INCLUDE_DEPTH = 8;
 
 const PRIMARY_NAV_ITEMS = Object.freeze([
-  { href: '/', label: 'Home', note: 'Route sorter, current context, and nearby entrances.' },
-  { href: '/about/', label: 'About', note: 'Read the method, the kernel, and the route model.' },
-  { href: '/design/', label: 'Design', note: 'Compare CSS, SVG, layout, and inspection surfaces.' },
-  { href: '/topics/', label: 'Topics', note: 'Browse the atlas across software, math, craft, and design.' },
-  { href: '/topics/software/', label: 'Software', note: 'spw-workbench, parsers, renderers, and language tools.' },
-  { href: '/topics/math/', label: 'Math', note: 'Intuition routes for invariants, collapse, and structure.' },
-  { href: '/blog/', label: 'Blog', note: 'Working threads, copy drafts, and public process.' },
-  { href: '/about/domains/lore.land/', label: 'lore.land', note: 'A public bridge from notes into ebooks, lore, and narrative surfaces.' },
-  { href: '/settings/', label: 'Settings', note: 'Tune browser-local reading modes and inspector presets.' },
+  { href: '/', label: 'Home', note: 'Start here and find a nearby route.' },
+  { href: '/about/', label: 'About', note: 'How I work and what guides the site.' },
+  { href: '/design/', label: 'Design', note: 'CSS, SVG, layout, and interaction studies.' },
+  { href: '/topics/', label: 'Topics', note: 'Software, math, craft, design, and related notes.' },
+  { href: '/topics/software/', label: 'Software', note: 'Spw, parsers, renderers, and software practice.' },
+  { href: '/topics/math/', label: 'Math', note: 'Visual routes into mathematical structure.' },
+  { href: '/blog/', label: 'Blog', note: 'Working notes, drafts, and public process.' },
+  { href: '/about/domains/lore.land/', label: 'lore.land', note: 'Long-form stories, ebooks, and narrative work.' },
+  { href: '/settings/', label: 'Settings', note: 'Tune local reading, appearance, and saved state.' },
 ]);
 
 const DERIVED_META_FIELDS = [
@@ -108,52 +108,61 @@ const DERIVED_META_FIELDS = [
 ];
 
 /**
- * Page-family personality defaults (layout / wonder / modes).
+ * Page-family personality defaults (layout / density / context / wonder / modes).
  * Authored body attributes always win; these only fill gaps during render.
  * Keep in sync with .spw/conventions/page-template-authoring.spw
  */
+function personality(layout, density, context, wonder, modes) {
+  return Object.freeze({
+    layout, density, context, wonder, modes,
+  });
+}
+
 const PAGE_FAMILY_PERSONALITY = Object.freeze({
-  'kernel-atlas': Object.freeze({ layout: 'wide', wonder: 'orientation locality consequence', modes: 'reading inspect collect' }),
-  'kernel-portrait': Object.freeze({ layout: 'reading', wonder: 'orientation consequence resonance', modes: 'reading compare navigate' }),
-  'field-guide': Object.freeze({ layout: 'reading', wonder: 'comparison consequence locality', modes: 'read compare practice' }),
-  'operator-atlas': Object.freeze({ layout: 'wide', wonder: 'comparison constraint locality', modes: 'read inspect compare' }),
-  curriculum: Object.freeze({ layout: 'wide', wonder: 'comparison constraint locality', modes: 'read inspect compare build' }),
-  atlas: Object.freeze({ layout: 'atlas', wonder: 'orientation comparison projection', modes: 'navigate compare collect read' }),
-  constellation: Object.freeze({ layout: 'wide', wonder: 'orientation locality consequence', modes: 'read compare navigate' }),
-  campaign: Object.freeze({ layout: 'wide', wonder: 'projection resonance consequence', modes: 'read play explore' }),
-  studio: Object.freeze({ layout: 'wide', wonder: 'texture locality consequence', modes: 'read make compare' }),
-  laboratory: Object.freeze({ layout: 'wide', wonder: 'orientation locality consequence', modes: 'reading inspect compose' }),
-  toolbench: Object.freeze({ layout: 'wide', wonder: 'projection locality consequence', modes: 'inspect build compare use' }),
-  workshop: Object.freeze({ layout: 'wide', wonder: 'projection locality consequence', modes: 'edit inspect export' }),
-  playfield: Object.freeze({ layout: 'wide', wonder: 'projection resonance consequence', modes: 'read play explore' }),
-  'care-interface': Object.freeze({ layout: 'wide', wonder: 'translation consequence community', modes: 'read reflect prepare share' }),
-  coordination: Object.freeze({ layout: 'wide', wonder: 'roles circulation consequence', modes: 'read plan join' }),
-  membership: Object.freeze({ layout: 'wide', wonder: 'belonging consequence locality', modes: 'read join support' }),
-  menu: Object.freeze({ layout: 'wide', wonder: 'projection consequence locality', modes: 'read compare book contact' }),
-  switchboard: Object.freeze({ layout: 'wide', wonder: 'locality consequence resonance', modes: 'navigate contact compare' }),
-  'proof-cards': Object.freeze({ layout: 'wide', wonder: 'locality consequence record', modes: 'read collect support' }),
-  funding: Object.freeze({ layout: 'wide', wonder: 'consequence locality projection', modes: 'read support plan' }),
-  'runtime-observatory': Object.freeze({ layout: 'wide', wonder: 'comparison constraint locality', modes: 'start write tune inspect' }),
-  policy: Object.freeze({ layout: 'reading', wonder: 'locality consent inspectability', modes: 'read inspect reset' }),
-  'kitchen-atlas': Object.freeze({ layout: 'wide', wonder: 'cultivation locality consequence', modes: 'read cook practice' }),
-  'recipe-book': Object.freeze({ layout: 'reading', wonder: 'cultivation locality consequence', modes: 'read cook practice' }),
-  design: Object.freeze({ layout: 'wide', wonder: 'comparison constraint locality', modes: 'inspect compare build' }),
-  'experiment-lab': Object.freeze({ layout: 'wide', wonder: 'projection constraint locality', modes: 'probe compare tune' }),
-  'practice-bed': Object.freeze({ layout: 'wide', wonder: 'projection resonance consequence', modes: 'play practice inspect' }),
-  register: Object.freeze({ layout: 'reading', wonder: 'orientation locality consequence', modes: 'read inspect compare' }),
-  research: Object.freeze({ layout: 'wide', wonder: 'comparison consequence locality', modes: 'read inspect compare' }),
-  seasonal: Object.freeze({ layout: 'wide', wonder: 'orientation belonging projection', modes: 'read celebrate plan' }),
-  fallback: Object.freeze({ layout: 'reading', wonder: 'locality consequence', modes: 'read recover' }),
-  'topic-stub': Object.freeze({ layout: 'reading', wonder: 'orientation locality', modes: 'read navigate' }),
-  topic: Object.freeze({ layout: 'reading', wonder: 'orientation comparison locality', modes: 'read compare navigate' }),
-  'topic-hub': Object.freeze({ layout: 'wide', wonder: 'orientation comparison projection', modes: 'navigate compare read' }),
-  spec: Object.freeze({ layout: 'reading', wonder: 'comparison constraint locality', modes: 'read inspect compare' }),
-  lab: Object.freeze({ layout: 'wide', wonder: 'projection locality consequence', modes: 'probe inspect compose' }),
+  'kernel-atlas': personality('wide', 'balanced', 'orientation', 'orientation locality consequence', 'reading inspect collect'),
+  'kernel-portrait': personality('reading', 'roomy', 'reflection', 'orientation consequence resonance', 'reading compare navigate'),
+  'field-guide': personality('reading', 'roomy', 'reading', 'comparison consequence locality', 'read compare practice'),
+  'operator-atlas': personality('wide', 'compact', 'analysis', 'comparison constraint locality', 'read inspect compare'),
+  curriculum: personality('wide', 'compact', 'analysis', 'comparison constraint locality', 'read inspect compare build'),
+  atlas: personality('atlas', 'compact', 'routing', 'orientation comparison projection', 'navigate compare collect read'),
+  constellation: personality('wide', 'balanced', 'reflection', 'orientation locality consequence', 'read compare navigate'),
+  campaign: personality('wide', 'balanced', 'play', 'projection resonance consequence', 'read play explore'),
+  studio: personality('wide', 'balanced', 'publishing', 'texture locality consequence', 'read make compare'),
+  laboratory: personality('wide', 'balanced', 'publishing', 'orientation locality consequence', 'reading inspect compose'),
+  toolbench: personality('wide', 'compact', 'analysis', 'projection locality consequence', 'inspect build compare use'),
+  workshop: personality('wide', 'compact', 'analysis', 'projection locality consequence', 'edit inspect export'),
+  playfield: personality('wide', 'balanced', 'play', 'projection resonance consequence', 'read play explore'),
+  'care-interface': personality('wide', 'roomy', 'reflection', 'translation consequence community', 'read reflect prepare share'),
+  coordination: personality('wide', 'balanced', 'collaboration', 'roles circulation consequence', 'read plan join'),
+  membership: personality('wide', 'roomy', 'participation', 'belonging consequence locality', 'read join support'),
+  menu: personality('wide', 'balanced', 'action', 'projection consequence locality', 'read compare book contact'),
+  switchboard: personality('wide', 'compact', 'routing', 'locality consequence resonance', 'navigate contact compare'),
+  'proof-cards': personality('wide', 'compact', 'reference', 'locality consequence record', 'read collect support'),
+  funding: personality('wide', 'balanced', 'collaboration', 'consequence locality projection', 'read support plan'),
+  'runtime-observatory': personality('wide', 'compact', 'settings', 'comparison constraint locality', 'start write tune inspect'),
+  policy: personality('reading', 'roomy', 'reference', 'locality consent inspectability', 'read inspect reset'),
+  'kitchen-atlas': personality('wide', 'balanced', 'ritual', 'cultivation locality consequence', 'read cook practice'),
+  'recipe-book': personality('reading', 'roomy', 'ritual', 'cultivation locality consequence', 'read cook practice'),
+  design: personality('wide', 'compact', 'analysis', 'comparison constraint locality', 'inspect compare build'),
+  'experiment-lab': personality('wide', 'compact', 'analysis', 'projection constraint locality', 'probe compare tune'),
+  'practice-bed': personality('wide', 'balanced', 'play', 'projection resonance consequence', 'play practice inspect'),
+  register: personality('reading', 'balanced', 'routing', 'orientation locality consequence', 'read inspect compare'),
+  research: personality('wide', 'roomy', 'analysis', 'comparison consequence locality', 'read inspect compare'),
+  seasonal: personality('wide', 'roomy', 'ritual', 'orientation belonging projection', 'read celebrate plan'),
+  fallback: personality('reading', 'roomy', 'reference', 'locality consequence', 'read recover'),
+  'topic-stub': personality('reading', 'roomy', 'reading', 'orientation locality', 'read navigate'),
+  topic: personality('reading', 'roomy', 'reading', 'orientation comparison locality', 'read compare navigate'),
+  'topic-hub': personality('wide', 'balanced', 'routing', 'orientation comparison projection', 'navigate compare read'),
+  spec: personality('reading', 'compact', 'verification', 'comparison constraint locality', 'read inspect compare'),
+  lab: personality('wide', 'compact', 'analysis', 'projection locality consequence', 'probe inspect compose'),
   // Authored families found on public leaves (keep in sync with route bodies)
-  observatory: Object.freeze({ layout: 'wide', wonder: 'orientation publication locality', modes: 'read inspect publish' }),
-  roadmap: Object.freeze({ layout: 'wide', wonder: 'projection constraint consequence', modes: 'read plan compare' }),
-  glossary: Object.freeze({ layout: 'reading', wonder: 'comparison locality orientation', modes: 'read inspect compare' }),
-  chronicle: Object.freeze({ layout: 'reading', wonder: 'memory consequence locality', modes: 'read compare collect' }),
+  observatory: personality('wide', 'compact', 'analysis', 'orientation publication locality', 'read inspect publish'),
+  roadmap: personality('wide', 'balanced', 'analysis', 'projection constraint consequence', 'read plan compare'),
+  glossary: personality('reading', 'compact', 'reference', 'comparison locality orientation', 'read inspect compare'),
+  chronicle: personality('reading', 'roomy', 'reading', 'memory consequence locality', 'read compare collect'),
+  'folio-archive': personality('wide', 'balanced', 'reference', 'artifact memory locality', 'read inspect study share'),
+  'syntax-atlas': personality('wide', 'compact', 'analysis', 'comparison constraint locality', 'read inspect compose'),
+  'town-library': personality('wide', 'balanced', 'reading', 'memory locality consequence', 'read browse recall'),
 });
 
 /** spw-page var → body data-spw-* attribute (only filled when body lacks the attr). */
@@ -164,6 +173,7 @@ const PAGE_VAR_BODY_ATTRS = Object.freeze([
   ['spw_features', 'data-spw-features'],
   ['route_family', 'data-spw-route-family'],
   ['context', 'data-spw-context'],
+  ['density', 'data-spw-density'],
   ['wonder', 'data-spw-wonder'],
   ['page_family', 'data-spw-page-family'],
   ['page_modes', 'data-spw-page-modes'],
@@ -809,9 +819,9 @@ function renderSiteHeader(vars) {
     + '    </nav>\n\n'
     + '    <div class="spw-header-actions" data-spw-feature="shell-primary-actions" data-spw-semantic-expression="shell[actions]{attention.cauldron.tune.search}">\n'
     + '        <button type="button" class="spw-header-action spw-header-action--search" data-spw-site-search-open data-spw-operator="probe" aria-label="Search routes (Control or Command K)" title="Search routes (Ctrl/⌘K)">Search</button>\n'
-    + '        <a class="spw-header-action spw-header-action--cauldron" href="/play/#media-cauldron" data-spw-operator="action" data-spw-shell-action="open-media-cauldron" aria-label="Open the Media Cauldron">Cauldron</a>\n'
-    + '        <button type="button" class="spw-attention-posture-pill" data-spw-shell-action="preview-attention-posture" data-spw-attention-posture="self-local-global" aria-label="Preview attention posture">\n'
-    + '            <span class="spw-attention-posture-pill__kicker">Attention posture</span>\n'
+    + '        <a class="spw-header-action spw-header-action--cauldron" href="/play/#media-cauldron" data-spw-operator="action" data-spw-shell-action="open-media-cauldron" aria-label="Open saved fragments in the Media Cauldron">Cauldron</a>\n'
+    + '        <button type="button" class="spw-attention-posture-pill" data-spw-shell-action="preview-attention-posture" data-spw-attention-posture="self-local-global" aria-label="Preview attention scope">\n'
+    + '            <span class="spw-attention-posture-pill__kicker">Attention</span>\n'
     + '            <span class="spw-attention-posture-pill__value" data-spw-attention-posture-label>self / local / global</span>\n'
     + '        </button>\n'
     + '    </div>\n\n'
@@ -931,7 +941,7 @@ function buildBodyPersonalityAttrs(vars, existingBodyAttrs = {}) {
     }
   }
 
-  // Personality defaults for layout / wonder / modes when still missing
+  // Personality defaults for layout / density / context / wonder / modes when still missing
   const family = normalizePageFamily(
     next['data-spw-page-family']
     || existingBodyAttrs['data-spw-page-family']
@@ -942,6 +952,12 @@ function buildBodyPersonalityAttrs(vars, existingBodyAttrs = {}) {
   if (personality) {
     if (!has('data-spw-layout') && !next['data-spw-layout'] && personality.layout) {
       next['data-spw-layout'] = personality.layout;
+    }
+    if (!has('data-spw-density') && !next['data-spw-density'] && personality.density) {
+      next['data-spw-density'] = personality.density;
+    }
+    if (!has('data-spw-context') && !next['data-spw-context'] && personality.context) {
+      next['data-spw-context'] = personality.context;
     }
     if (!has('data-spw-wonder') && !next['data-spw-wonder'] && personality.wonder) {
       next['data-spw-wonder'] = personality.wonder;

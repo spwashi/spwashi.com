@@ -273,6 +273,8 @@ function buildSpwPage(meta) {
     ['page_modes', meta.pageModes],
     ['wonder', meta.wonder],
     ['route_family', meta.routeFamily],
+    ['context', meta.context],
+    ['density', meta.density],
     ['layout', meta.layout],
     ['features', meta.features],
     ['related_routes', meta.relatedRoutes],
@@ -321,6 +323,8 @@ function migrateSource(html, filePath) {
   const pageModes = pickBodyAttr(bodyAttrString, 'data-spw-page-modes');
   const wonder = pickBodyAttr(bodyAttrString, 'data-spw-wonder');
   const routeFamily = pickBodyAttr(bodyAttrString, 'data-spw-route-family');
+  const context = pickBodyAttr(bodyAttrString, 'data-spw-context');
+  const density = pickBodyAttr(bodyAttrString, 'data-spw-density');
   const layout = pickBodyAttr(bodyAttrString, 'data-spw-layout');
   const features = pickBodyAttr(bodyAttrString, 'data-spw-features');
   const relatedRoutes = pickBodyAttr(bodyAttrString, 'data-spw-related-routes');
@@ -363,6 +367,8 @@ function migrateSource(html, filePath) {
     pageModes,
     wonder,
     routeFamily,
+    context,
+    density,
     layout,
     features,
     relatedRoutes,

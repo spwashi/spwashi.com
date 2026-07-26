@@ -21,7 +21,7 @@ fixity = "tending"
 
 ^"thesis"{
   claim = `Route sources stay HTML-native: <spw-page> declares metadata, <spw-site-head|header|footer> expand shared chrome, and body data-spw-* carries page personality. Manual og/json-ld/head stacks are debt.`
-  risk = `Duplicated heads drift; page-family without layout/wonder collapses category voice; migration that overwrites authored body attrs erases personality.`
+  risk = `Duplicated heads drift; page-family without layout/density/context/wonder collapses category voice; migration that overwrites authored body attrs erases personality.`
   rule = `Prefer spw-page + spw-site-head; fill missing personality from page-family defaults; never overwrite authored data-spw-* on body.`
 }[reg=facet]
 
@@ -37,7 +37,7 @@ fixity = "tending"
     `<spw-site-footer></spw-site-footer>`
   >[reg=stream]
   spw_page_owns = #[`title`, `description`, `canonical`, `og_*`, `keywords`, `breadcrumb_label`, `header_*`, optional personality vars][reg=set]
-  body_owns = #[`data-spw-surface`, `data-spw-page-family`, `data-spw-page-role`, `data-spw-page-modes`, `data-spw-wonder`, `data-spw-route-family`, `data-spw-layout`, `data-spw-features`, `data-spw-related-routes`][reg=set]
+  body_owns = #[`data-spw-surface`, `data-spw-page-family`, `data-spw-page-role`, `data-spw-page-modes`, `data-spw-wonder`, `data-spw-route-family`, `data-spw-layout`, `data-spw-density`, `data-spw-context`, `data-spw-features`, `data-spw-related-routes`][reg=set]
 }[reg=facet]
 
 ^"normalization"{
@@ -49,22 +49,21 @@ fixity = "tending"
 }[reg=facet]
 
 ^"page_family_personality"{
-  note = `Category voice: layout + wonder + modes defaults when a route names data-spw-page-family but omits layout/wonder/modes.`
+  note = `Category voice: layout + density + context + wonder + modes defaults when a route names data-spw-page-family but omits those dimensions.`
   families = #[
-    `field-guide → reading + comparison consequence locality`,
-    `operator-atlas → wide + comparison constraint locality`,
-    `curriculum → wide + compare/build modes`,
-    `atlas → atlas layout + orientation comparison projection`,
-    `playfield / campaign → wide + projection resonance`,
-    `care-interface → wide + translation consequence community`,
-    `runtime-observatory → wide + comparison constraint locality`,
-    `policy → reading + locality consent inspectability`,
-    `observatory → wide + orientation publication locality`,
-    `roadmap → wide + projection constraint consequence`,
-    `toolbench / workshop → wide + projection locality consequence`,
-    `recipe-book → reading + cultivation locality consequence`
+    `field-guide → reading + roomy + reading context`,
+    `operator-atlas / curriculum / syntax-atlas → wide + compact + analysis context`,
+    `atlas → atlas layout + compact + routing context`,
+    `playfield / campaign → wide + balanced + play context`,
+    `care-interface → wide + roomy + reflection context`,
+    `runtime-observatory → wide + compact + settings context`,
+    `policy → reading + roomy + reference context`,
+    `folio-archive → wide + balanced + reference context`,
+    `toolbench / workshop / experiment-lab → wide + compact + analysis context`,
+    `recipe-book → reading + roomy + ritual context`,
+    `town-library → wide + balanced + reading context`
   ][reg=set]
-  authored_wins = `Body data-spw-layout / wonder / modes always override family defaults.`
+  authored_wins = `Body data-spw-layout / density / context / wonder / modes always override family defaults.`
 }[reg=facet]
 
 ^"category_copy_voice"{
@@ -90,7 +89,7 @@ expression = route[template]{page.head.header.body}<personality>
 ^"owner_claim"{
   claim #page-template-001 {
     layer = "pragmatic"
-    hypothesis = `Hubs migrated to spw-page + spw-site-head keep body personality while shared head/meta stay dry; family defaults only fill missing layout/wonder/modes.`
+    hypothesis = `Routes migrated to spw-page + spw-site-head keep body personality while shared head/meta stay dry; family defaults only fill missing layout/density/context/wonder/modes.`
     expression = template[route]{normalize.fill}<personality>
     probe_ref = `rg -l 'spw-page' --glob '**/index.html' | wc -l; node -e "import {renderTemplate} from './scripts/template.mjs'; const r=await renderTemplate(await (await import('fs/promises')).readFile('settings/index.html','utf8')); console.log(/og:title/.test(r.output), r.warnings.length)"`
     falsification = `Migrated route loses data-spw-page-family/role or double-renders head tags; defaults overwrite authored wonder.`
