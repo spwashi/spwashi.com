@@ -9312,6 +9312,7 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
   max-width: min(40ch, 64vw);
   overflow: hidden;
   text-overflow: ellipsis;
+  transition: opacity 160ms var(--ease-settle, ease), transform 160ms var(--ease-settle, ease), color 160ms var(--ease-settle, ease);
 }
 
 .spw-section-handle:is(:hover, :focus-visible),
@@ -15653,12 +15654,15 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
   inline-size: 100%;
   max-inline-size: 100%;
   min-width: 0;
+  min-inline-size: 0;
+  container-type: inline-size;
 
   /* Typography */
   color: inherit;
   font-weight: inherit;
   text-decoration: none;
   overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 :where(.frame-card, .frame-card > a:first-child) {
@@ -15770,9 +15774,11 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
 }
 
 :where(.frame-card, .frame-card > a:first-child) > :is(strong, h2, h3, h4, h5, h6) {
-  max-inline-size: 30ch;
+  max-inline-size: min(100%, 36ch);
   line-height: 1.22;
   text-wrap: balance;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 /* Light upgrade for .frame-panel used in card-like roles on landing pages.
@@ -16384,7 +16390,29 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
   span:not(.frame-card-sigil):not(.media-card-tag):not(.media-focus-operator):not(.operator-symbol):not(.spec-pill):not(.plan-status)
 ) {
   line-height: 1.46;
-  max-inline-size: 60ch;
+  max-inline-size: min(100%, 60ch);
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Container query responses for cards when rendered inside narrow card containers */
+@container (max-width: 24rem) {
+  :where(.frame-card, .frame-panel, .media-card, .software-card, .operator-card, .plan-card, .ref-card) {
+    --card-rhythm: 0.5rem;
+    --card-internal-gap: 0.35rem;
+    padding: clamp(0.5rem, 3.5cqw, 0.75rem);
+  }
+  :where(.frame-card, .frame-panel) :is(h2, h3, h4) {
+    font-size: clamp(0.92rem, 4.5cqw, 1.1rem);
+  }
+}
+
+@container (max-width: 18rem) {
+  :where(.frame-card, .frame-panel, .media-card, .software-card, .operator-card, .plan-card, .ref-card) {
+    --card-rhythm: 0.38rem;
+    --card-internal-gap: 0.28rem;
+    padding: 0.45rem;
+  }
 }
 }
 
@@ -39286,6 +39314,18 @@ html[data-spw-developmental-indicators="on"] :where(
 
   /* Layering / containment */
   position: relative;
+}
+
+:where(
+  .operator-chip,
+  .spec-pill,
+  .spw-topic,
+  [data-spw-topic],
+  .persona-chip,
+  .spw-component-tag,
+  .spw-guide-chip
+) {
+  contain: layout paint style;
 }
 
 /* ==========================================================================

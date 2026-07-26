@@ -1433,6 +1433,38 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
   --spw-idle-chunk-accent: var(--op-probe-color, #6a3fb8);
 }
 
+:where(html[data-spw-module-visuals="on"][data-spw-runtime-idle-chunk="idle-default"]) {
+  --spw-idle-chunk-accent: var(--ink-soft, #5a646c);
+}
+
+/* Planned idle chunk list (space-separated) — inspect residual ordering under module-visuals. */
+:where(html[data-spw-module-visuals="on"][data-spw-runtime-idle-chunks])::before {
+  content: "idle plan · " attr(data-spw-runtime-idle-chunks);
+  position: fixed;
+  inset-block-end: 3.2rem;
+  inset-inline-end: 0.75rem;
+  z-index: 40;
+  max-inline-size: min(42ch, calc(100vw - 1.5rem));
+  padding: 0.28rem 0.55rem;
+  border: 1px solid color-mix(in srgb, var(--op-action-color, #006666) 28%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface-strong, #fff) 92%, var(--op-action-color, #006666) 8%);
+  color: color-mix(in srgb, var(--ink, #111) 82%, var(--op-action-color, #006666) 18%);
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.25;
+  pointer-events: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+html[data-spw-reduce-motion="on"][data-spw-module-visuals="on"][data-spw-runtime-idle-chunks]::before {
+  content: "idle plan · " attr(data-spw-runtime-idle-chunks);
+}
+
 :where(html[data-spw-module-visuals="on"][data-spw-runtime-idle-chunk])::after {
   content: "idle · " attr(data-spw-runtime-idle-chunk);
   position: fixed;

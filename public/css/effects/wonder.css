@@ -97,6 +97,32 @@
   position: relative;
 }
 
+/* paint_composite alignment: operator/grammar chips isolate paint so
+   flourish resonance (--spw-resonance / data-spw-resonance-probe) does not
+   dirty large layout subtrees (coordinate_parity with operators + attention). */
+:where(
+  .operator-chip,
+  .spec-pill,
+  .spw-topic,
+  [data-spw-topic],
+  .persona-chip,
+  .spw-component-tag,
+  .spw-guide-chip,
+  [data-spw-operator],
+  [data-spw-sigil]
+) {
+  contain: layout paint style;
+}
+
+:where([data-spw-operator]:is(:hover, :focus-visible), [data-spw-sigil]:is(:hover, :focus-visible)) {
+  /* Keep interaction paint local; geometry stays structural (operators catalog). */
+  will-change: box-shadow, filter;
+}
+
+html[data-spw-reduce-motion="on"] :where([data-spw-operator], [data-spw-sigil]) {
+  will-change: auto;
+}
+
 /* ==========================================================================
    2. Delight bursts
    --------------------------------------------------------------------------
