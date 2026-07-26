@@ -5,7 +5,11 @@ import process from 'node:process';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 
-import { renderTemplate } from '../../template.mjs';
+import {
+  getTemplateStats,
+  renderTemplate,
+  resetTemplateStats,
+} from '../../template.mjs';
 import {
   DEFAULT_COPY_CONCURRENCY,
   DEFAULT_COPY_PROGRESS_INTERVAL,
@@ -397,6 +401,8 @@ export async function copyRepo(sourcePaths: string[], options: BuildOptions, log
     skipped: 0,
   };
 
+  resetTemplateStats();
+
   async function worker(): Promise<void> {
     while (nextIndex < sourcePaths.length) {
       const repoPath = sourcePaths[nextIndex];
@@ -422,6 +428,20 @@ export async function copyRepo(sourcePaths: string[], options: BuildOptions, log
 
   const workerCount = Math.min(options.copyConcurrency, Math.max(sourcePaths.length, 1));
   await Promise.all(Array.from({ length: workerCount }, () => worker()));
+
+  const template = getTemplateStats();
+  stats.templateMs = template.renderMs;
+  stats.templatePartialHits = template.partialHits;
+  stats.templatePartialMisses = template.partialMisses;
+  stats.templateIncludes = template.includes;
+
+  if (stats.rendered > 0) {
+    logger.info(
+      `[build] template ms=${template.renderMs} includes=${template.includes}`
+      + ` partialHits=${template.partialHits} partialMisses=${template.partialMisses}`
+      + ` cacheSize=${template.partialCacheSize}`,
+    );
+  }
 
   return stats;
 }

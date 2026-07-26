@@ -230,6 +230,9 @@ export async function main(): Promise<void> {
 
   logger.info(
     `[build] copied=${copyStats.copied} rendered=${copyStats.rendered} symlinked=${copyStats.symlinked} skipped=${copyStats.skipped}`
+    + (copyStats.templateMs != null
+      ? ` templateMs=${copyStats.templateMs} partialHits=${copyStats.templatePartialHits ?? 0}`
+      : '')
   );
   logger.info(`[build] wrote ${fileCount} files to ${relRepo(options.outDir)}/ in ${ms}ms`);
 }

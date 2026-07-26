@@ -27,4 +27,12 @@ export type CopyStats = {
   rendered: number;
   symlinked: number;
   skipped: number;
+  /** Template renderer wall ms (from getTemplateStats). */
+  templateMs?: number;
+  /** Partial cache hits during HTML render. */
+  templatePartialHits?: number;
+  /** Partial cache misses during HTML render. */
+  templatePartialMisses?: number;
+  /** Include expansions during HTML render. */
+  templateIncludes?: number;
 };

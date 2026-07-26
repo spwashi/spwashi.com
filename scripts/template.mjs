@@ -57,6 +57,17 @@ const __dirname = path.dirname(__filename);
 const REPO_ROOT = path.resolve(__dirname, '..');
 const PARTIALS_DIR = path.join(REPO_ROOT, '_partials');
 
+/** mtime-keyed partial body cache — multi-page builds re-read the same chrome partials. */
+const partialCache = new Map();
+const templateStats = {
+  renders: 0,
+  passthrough: 0,
+  includes: 0,
+  partialHits: 0,
+  partialMisses: 0,
+  renderMs: 0,
+};
+
 const SPW_PAGE_RE = /<spw-page\b([^>]*?)(?:\/>|>\s*<\/spw-page>)/i;
 const SPW_INCLUDE_RE = /<spw-include\b([^>]*?)(?:\/>|>\s*<\/spw-include>)/gi;
 const SPW_SITE_HEAD_RE = /<spw-site-head\b([^>]*?)(?:\/>|>\s*<\/spw-site-head>)/gi;
@@ -95,6 +106,73 @@ const DERIVED_META_FIELDS = [
   { attr: 'data-spw-related-routes', metaName: 'spw:related-routes', propertyName: 'spwRelatedRoutes' },
   { attr: 'data-spw-layout', metaName: 'spw:layout', propertyName: 'spwLayout' },
 ];
+
+/**
+ * Page-family personality defaults (layout / wonder / modes).
+ * Authored body attributes always win; these only fill gaps during render.
+ * Keep in sync with .spw/conventions/page-template-authoring.spw
+ */
+const PAGE_FAMILY_PERSONALITY = Object.freeze({
+  'kernel-atlas': Object.freeze({ layout: 'wide', wonder: 'orientation locality consequence', modes: 'reading inspect collect' }),
+  'kernel-portrait': Object.freeze({ layout: 'reading', wonder: 'orientation consequence resonance', modes: 'reading compare navigate' }),
+  'field-guide': Object.freeze({ layout: 'reading', wonder: 'comparison consequence locality', modes: 'read compare practice' }),
+  'operator-atlas': Object.freeze({ layout: 'wide', wonder: 'comparison constraint locality', modes: 'read inspect compare' }),
+  curriculum: Object.freeze({ layout: 'wide', wonder: 'comparison constraint locality', modes: 'read inspect compare build' }),
+  atlas: Object.freeze({ layout: 'atlas', wonder: 'orientation comparison projection', modes: 'navigate compare collect read' }),
+  constellation: Object.freeze({ layout: 'wide', wonder: 'orientation locality consequence', modes: 'read compare navigate' }),
+  campaign: Object.freeze({ layout: 'wide', wonder: 'projection resonance consequence', modes: 'read play explore' }),
+  studio: Object.freeze({ layout: 'wide', wonder: 'texture locality consequence', modes: 'read make compare' }),
+  laboratory: Object.freeze({ layout: 'wide', wonder: 'orientation locality consequence', modes: 'reading inspect compose' }),
+  toolbench: Object.freeze({ layout: 'wide', wonder: 'projection locality consequence', modes: 'inspect build compare use' }),
+  workshop: Object.freeze({ layout: 'wide', wonder: 'projection locality consequence', modes: 'edit inspect export' }),
+  playfield: Object.freeze({ layout: 'wide', wonder: 'projection resonance consequence', modes: 'read play explore' }),
+  'care-interface': Object.freeze({ layout: 'wide', wonder: 'translation consequence community', modes: 'read reflect prepare share' }),
+  coordination: Object.freeze({ layout: 'wide', wonder: 'roles circulation consequence', modes: 'read plan join' }),
+  membership: Object.freeze({ layout: 'wide', wonder: 'belonging consequence locality', modes: 'read join support' }),
+  menu: Object.freeze({ layout: 'wide', wonder: 'projection consequence locality', modes: 'read compare book contact' }),
+  switchboard: Object.freeze({ layout: 'wide', wonder: 'locality consequence resonance', modes: 'navigate contact compare' }),
+  'proof-cards': Object.freeze({ layout: 'wide', wonder: 'locality consequence record', modes: 'read collect support' }),
+  funding: Object.freeze({ layout: 'wide', wonder: 'consequence locality projection', modes: 'read support plan' }),
+  'runtime-observatory': Object.freeze({ layout: 'wide', wonder: 'comparison constraint locality', modes: 'start write tune inspect' }),
+  policy: Object.freeze({ layout: 'reading', wonder: 'locality consent inspectability', modes: 'read inspect reset' }),
+  'kitchen-atlas': Object.freeze({ layout: 'wide', wonder: 'cultivation locality consequence', modes: 'read cook practice' }),
+  'recipe-book': Object.freeze({ layout: 'reading', wonder: 'cultivation locality consequence', modes: 'read cook practice' }),
+  design: Object.freeze({ layout: 'wide', wonder: 'comparison constraint locality', modes: 'inspect compare build' }),
+  'experiment-lab': Object.freeze({ layout: 'wide', wonder: 'projection constraint locality', modes: 'probe compare tune' }),
+  'practice-bed': Object.freeze({ layout: 'wide', wonder: 'projection resonance consequence', modes: 'play practice inspect' }),
+  register: Object.freeze({ layout: 'reading', wonder: 'orientation locality consequence', modes: 'read inspect compare' }),
+  research: Object.freeze({ layout: 'wide', wonder: 'comparison consequence locality', modes: 'read inspect compare' }),
+  seasonal: Object.freeze({ layout: 'wide', wonder: 'orientation belonging projection', modes: 'read celebrate plan' }),
+  fallback: Object.freeze({ layout: 'reading', wonder: 'locality consequence', modes: 'read recover' }),
+  'topic-stub': Object.freeze({ layout: 'reading', wonder: 'orientation locality', modes: 'read navigate' }),
+  topic: Object.freeze({ layout: 'reading', wonder: 'orientation comparison locality', modes: 'read compare navigate' }),
+  'topic-hub': Object.freeze({ layout: 'wide', wonder: 'orientation comparison projection', modes: 'navigate compare read' }),
+  spec: Object.freeze({ layout: 'reading', wonder: 'comparison constraint locality', modes: 'read inspect compare' }),
+  lab: Object.freeze({ layout: 'wide', wonder: 'projection locality consequence', modes: 'probe inspect compose' }),
+  // Authored families found on public leaves (keep in sync with route bodies)
+  observatory: Object.freeze({ layout: 'wide', wonder: 'orientation publication locality', modes: 'read inspect publish' }),
+  roadmap: Object.freeze({ layout: 'wide', wonder: 'projection constraint consequence', modes: 'read plan compare' }),
+  glossary: Object.freeze({ layout: 'reading', wonder: 'comparison locality orientation', modes: 'read inspect compare' }),
+  chronicle: Object.freeze({ layout: 'reading', wonder: 'memory consequence locality', modes: 'read compare collect' }),
+});
+
+/** spw-page var → body data-spw-* attribute (only filled when body lacks the attr). */
+const PAGE_VAR_BODY_ATTRS = Object.freeze([
+  ['surface', 'data-spw-surface'],
+  ['spw_surface', 'data-spw-surface'],
+  ['features', 'data-spw-features'],
+  ['spw_features', 'data-spw-features'],
+  ['route_family', 'data-spw-route-family'],
+  ['context', 'data-spw-context'],
+  ['wonder', 'data-spw-wonder'],
+  ['page_family', 'data-spw-page-family'],
+  ['page_modes', 'data-spw-page-modes'],
+  ['page_role', 'data-spw-page-role'],
+  ['page_seed', 'data-spw-page-seed'],
+  ['related_routes', 'data-spw-related-routes'],
+  ['layout', 'data-spw-layout'],
+  ['stylesheet_mode', 'data-spw-stylesheet-mode'],
+]);
 
 function cloneRegex(pattern) {
   return new RegExp(pattern.source, pattern.flags);
@@ -142,6 +220,50 @@ function resolvePartialPath(name) {
   return abs;
 }
 
+/**
+ * Read a partial with mtime cache so multi-route builds reuse chrome HTML.
+ * @param {string} partialPath absolute path under _partials/
+ */
+async function readPartialCached(partialPath) {
+  let st;
+  try {
+    st = await fs.stat(partialPath);
+  } catch (err) {
+    if (err.code === 'ENOENT') {
+      partialCache.delete(partialPath);
+      throw err;
+    }
+    throw err;
+  }
+  const mtimeMs = st.mtimeMs;
+  const cached = partialCache.get(partialPath);
+  if (cached && cached.mtimeMs === mtimeMs) {
+    templateStats.partialHits += 1;
+    return cached.body;
+  }
+  const body = await fs.readFile(partialPath, 'utf8');
+  partialCache.set(partialPath, { mtimeMs, body });
+  templateStats.partialMisses += 1;
+  return body;
+}
+
+export function clearTemplatePartialCache() {
+  partialCache.clear();
+}
+
+export function getTemplateStats() {
+  return { ...templateStats, partialCacheSize: partialCache.size };
+}
+
+export function resetTemplateStats() {
+  templateStats.renders = 0;
+  templateStats.passthrough = 0;
+  templateStats.includes = 0;
+  templateStats.partialHits = 0;
+  templateStats.partialMisses = 0;
+  templateStats.renderMs = 0;
+}
+
 async function expandIncludes(text, scopeVars, depth, seen, warnings) {
   if (depth > MAX_INCLUDE_DEPTH) {
     throw new Error(`[template] include depth exceeded ${MAX_INCLUDE_DEPTH} (cycle?)`);
@@ -168,9 +290,10 @@ async function expandIncludes(text, scopeVars, depth, seen, warnings) {
     if (seen.has(partialPath)) {
       throw new Error(`[template] include cycle at ${path.relative(REPO_ROOT, partialPath)}`);
     }
+    templateStats.includes += 1;
     let partial;
     try {
-      partial = await fs.readFile(partialPath, 'utf8');
+      partial = await readPartialCached(partialPath);
     } catch (err) {
       if (err.code === 'ENOENT') {
         warnings.push(`missing partial: ${path.relative(REPO_ROOT, partialPath)}`);
@@ -257,6 +380,65 @@ function splitList(value = '') {
     .filter(Boolean);
 }
 
+/**
+ * Space/pipe/comma token lists for wonder, features, route-family, modes.
+ * Lowercases, collapses whitespace, dedupes preserving first-seen order.
+ */
+function normalizeTokenList(value = '', { separator = ' ' } = {}) {
+  const seen = new Set();
+  const out = [];
+  for (const raw of String(value || '').split(/[\s|,]+/)) {
+    const token = normalizeContent(raw).toLowerCase();
+    if (!token || seen.has(token)) continue;
+    // Prefer kebab-case for multi-word tokens already using hyphens
+    const normalized = token.replace(/_+/g, '-');
+    if (seen.has(normalized)) continue;
+    seen.add(token);
+    seen.add(normalized);
+    out.push(normalized);
+  }
+  return out.join(separator);
+}
+
+/**
+ * Related routes: site paths get a trailing slash; absolute external URLs pass through.
+ * Pipe-separated; first-seen order; empty segments dropped.
+ */
+function normalizeRelatedRoutes(value = '') {
+  return String(value || '')
+    .split('|')
+    .map((item) => {
+      const raw = normalizeContent(item);
+      if (!raw) return '';
+      if (/^https?:\/\//i.test(raw)) {
+        try {
+          const url = new URL(raw);
+          // External hosts keep full origin; site host normalizes to path-only.
+          if (url.hostname === 'spwashi.com' || url.hostname === 'www.spwashi.com') {
+            return ensureTrailingSlash(url.pathname || '/');
+          }
+          return url.href;
+        } catch {
+          return raw;
+        }
+      }
+      return normalizeUrlPath(raw);
+    })
+    .filter(Boolean)
+    .filter((pathValue, index, all) => all.indexOf(pathValue) === index)
+    .join('|');
+}
+
+function ensureTrailingSlash(pathname = '/') {
+  const pathValue = pathname || '/';
+  if (pathValue === '/') return '/';
+  return pathValue.endsWith('/') ? pathValue : `${pathValue}/`;
+}
+
+function normalizePageFamily(value = '') {
+  return normalizeContent(value).toLowerCase().replace(/[_\s]+/g, '-');
+}
+
 function splitLines(value = '') {
   return String(value)
     .split('|')
@@ -282,9 +464,11 @@ function normalizeUrlPath(value = '') {
   if (!normalized) return '';
 
   try {
-    return new URL(normalized, 'https://spwashi.com').pathname.replace(/\/+$/, '/') || '/';
+    const pathname = new URL(normalized, 'https://spwashi.com').pathname || '/';
+    return ensureTrailingSlash(pathname.replace(/\/{2,}/g, '/'));
   } catch {
-    return normalized.replace(/\/+$/, '/') || '/';
+    const pathValue = normalized.startsWith('/') ? normalized : `/${normalized}`;
+    return ensureTrailingSlash(pathValue.replace(/\/{2,}/g, '/'));
   }
 }
 
@@ -683,14 +867,120 @@ function mergeHtmlAttributes(existingAttrs, nextAttrs) {
     .join('');
 }
 
+/**
+ * Resolve page-family personality defaults (layout / wonder / modes).
+ * Exported for migration tooling and contracts.
+ */
+export { PAGE_FAMILY_PERSONALITY };
+
+export function resolvePageFamilyPersonality(pageFamily = '') {
+  const family = normalizePageFamily(pageFamily);
+  if (!family) return null;
+  return PAGE_FAMILY_PERSONALITY[family] || null;
+}
+
+export function listPageFamilyPersonalities() {
+  return { ...PAGE_FAMILY_PERSONALITY };
+}
+
+/**
+ * Build body data-spw-* fills from spw-page vars + page-family personality.
+ * Never overwrites an authored body attribute (missingOnly).
+ */
+function buildBodyPersonalityAttrs(vars, existingBodyAttrs = {}) {
+  const next = {};
+  const has = (attr) => Boolean(normalizeContent(existingBodyAttrs[attr]));
+
+  for (const [varName, attr] of PAGE_VAR_BODY_ATTRS) {
+    if (has(attr)) continue;
+    const raw = firstValue(vars[varName]);
+    if (!raw) continue;
+    if (attr === 'data-spw-related-routes') next[attr] = normalizeRelatedRoutes(raw);
+    else if (
+      attr === 'data-spw-features'
+      || attr === 'data-spw-wonder'
+      || attr === 'data-spw-route-family'
+      || attr === 'data-spw-page-modes'
+    ) {
+      next[attr] = normalizeTokenList(raw);
+    } else if (attr === 'data-spw-page-family') {
+      next[attr] = normalizePageFamily(raw);
+    } else {
+      next[attr] = normalizeContent(raw);
+    }
+  }
+
+  // Personality defaults for layout / wonder / modes when still missing
+  const family = normalizePageFamily(
+    next['data-spw-page-family']
+    || existingBodyAttrs['data-spw-page-family']
+    || vars.page_family
+    || '',
+  );
+  const personality = resolvePageFamilyPersonality(family);
+  if (personality) {
+    if (!has('data-spw-layout') && !next['data-spw-layout'] && personality.layout) {
+      next['data-spw-layout'] = personality.layout;
+    }
+    if (!has('data-spw-wonder') && !next['data-spw-wonder'] && personality.wonder) {
+      next['data-spw-wonder'] = personality.wonder;
+    }
+    if (!has('data-spw-page-modes') && !next['data-spw-page-modes'] && personality.modes) {
+      next['data-spw-page-modes'] = personality.modes;
+    }
+  }
+
+  // Default scoped stylesheets for templated public routes when unspecified
+  if (!has('data-spw-stylesheet-mode') && !next['data-spw-stylesheet-mode']) {
+    const mode = firstValue(vars.stylesheet_mode, vars.site_stylesheet_mode);
+    if (mode) next['data-spw-stylesheet-mode'] = normalizeContent(mode);
+  }
+
+  return next;
+}
+
+function normalizeExistingBodySemanticAttrs(existingBodyAttrs = {}) {
+  const next = {};
+  for (const [attr, value] of Object.entries(existingBodyAttrs)) {
+    if (!attr.startsWith('data-spw-')) continue;
+    const raw = normalizeContent(value);
+    if (!raw) continue;
+    if (attr === 'data-spw-related-routes') next[attr] = normalizeRelatedRoutes(raw);
+    else if (
+      attr === 'data-spw-features'
+      || attr === 'data-spw-wonder'
+      || attr === 'data-spw-route-family'
+      || attr === 'data-spw-page-modes'
+    ) {
+      next[attr] = normalizeTokenList(raw);
+    } else if (attr === 'data-spw-page-family') {
+      next[attr] = normalizePageFamily(raw);
+    }
+  }
+  return next;
+}
+
 function applyPageDocumentAttributes(source, vars) {
   if (!/<html\b/i.test(source)) return source;
 
+  let output = source;
   const lang = normalizeLocaleCode(firstValue(vars.lang, vars.locale));
   const dir = firstValue(vars.dir, vars.text_direction);
-  if (!lang && !dir) return source;
+  if (lang || dir) {
+    output = output.replace(HTML_OPEN_RE, (_match, attrs) => `<html${mergeHtmlAttributes(attrs || '', { lang, dir })}>`);
+  }
 
-  return source.replace(HTML_OPEN_RE, (_match, attrs) => `<html${mergeHtmlAttributes(attrs || '', { lang, dir })}>`);
+  if (BODY_OPEN_RE.test(output)) {
+    output = output.replace(BODY_OPEN_RE, (_match, attrs) => {
+      const existing = parseAttrs(attrs || '');
+      const normalizedExisting = normalizeExistingBodySemanticAttrs(existing);
+      const fills = buildBodyPersonalityAttrs(vars, { ...existing, ...normalizedExisting });
+      const merged = { ...normalizedExisting, ...fills };
+      return `<body${mergeHtmlAttributes(attrs || '', merged)}>`;
+    });
+  }
+
+  return output;
 }
 
 function parseDocumentSemanticMeta(source) {
@@ -824,19 +1114,47 @@ function enhanceHtmlMetadata(source, warnings) {
 
 /**
  * Render a template source string to HTML.
- * Returns `{ output, vars, warnings }`. If the source is not a template,
- * `output === source` unchanged.
+ * Returns `{ output, vars, warnings, ms }`. If the source is not a template,
+ * `output === source` unchanged (still may inject scoped CSS / PWA / preflight).
  */
 export async function renderTemplate(source, { sourceLabel = '<string>' } = {}) {
+  const started = performance.now();
   const warnings = [];
   if (!shouldProcess(source)) {
+    templateStats.passthrough += 1;
     const output = enhanceHtmlMetadata(
       injectPwaManifestLink(applyScopedStylesheets(injectSettingsPreflight(source))),
       warnings,
     );
-    return { output, vars: {}, warnings };
+    const ms = Math.round(performance.now() - started);
+    templateStats.renderMs += ms;
+    return { output, vars: {}, warnings, ms };
   }
-  const { vars, rest } = extractPageVars(source);
+  templateStats.renders += 1;
+  const { vars: rawVars, rest } = extractPageVars(source);
+  // Normalize common spw-page vars once so head/header/body share the same tokens
+  const vars = { ...rawVars };
+  if (vars.page_family) vars.page_family = normalizePageFamily(vars.page_family);
+  if (vars.features || vars.spw_features) {
+    const features = normalizeTokenList(firstValue(vars.features, vars.spw_features));
+    vars.features = features;
+    vars.spw_features = features;
+  }
+  if (vars.wonder) vars.wonder = normalizeTokenList(vars.wonder);
+  if (vars.route_family) vars.route_family = normalizeTokenList(vars.route_family);
+  if (vars.page_modes) vars.page_modes = normalizeTokenList(vars.page_modes);
+  if (vars.related_routes) vars.related_routes = normalizeRelatedRoutes(vars.related_routes);
+  if (vars.canonical) {
+    try {
+      const url = new URL(vars.canonical, 'https://spwashi.com');
+      if (url.pathname && !url.pathname.endsWith('/')) {
+        url.pathname = `${url.pathname}/`;
+      }
+      vars.canonical = url.href;
+    } catch {
+      // leave canonical as authored
+    }
+  }
   const expanded = await expandIncludes(rest, vars, 0, new Set(), warnings);
   const withSiteDirectives = await expandSiteDirectives(expanded, vars, warnings);
   const withPageAttrs = applyPageDocumentAttributes(withSiteDirectives, vars);
@@ -853,7 +1171,9 @@ export async function renderTemplate(source, { sourceLabel = '<string>' } = {}) 
       console.warn(`[template] ${sourceLabel}: ${w}`);
     }
   }
-  return { output, vars, warnings };
+  const ms = Math.round(performance.now() - started);
+  templateStats.renderMs += ms;
+  return { output, vars, warnings, ms };
 }
 
 export async function renderTemplateFile(absPath) {
@@ -869,4 +1189,10 @@ export const TEMPLATE_INTERNALS = {
   SPW_SITE_HEADER_RE,
   SPW_SITE_FOOTER_RE,
   VAR_RE,
+  PAGE_FAMILY_PERSONALITY,
+  PAGE_VAR_BODY_ATTRS,
+  normalizeTokenList,
+  normalizeRelatedRoutes,
+  normalizePageFamily,
+  normalizeUrlPath,
 };
