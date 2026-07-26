@@ -1,111 +1,31 @@
+<spw-page
+    title="Spwashi • Trigonometry: Rotation, Projection, and Reuse"
+    description="Intuition-first field notes on sine, cosine, tangent, and unit-circle identities, with a portable interactive trigonometry diagram."
+    canonical="https://spwashi.com/topics/math/trigonometry/"
+    og_title="Spwashi • Trigonometry: Rotation, Projection, and Reuse"
+    og_description="Intuition-first field notes on sine, cosine, tangent, and unit-circle identities, with a portable interactive trigonometry diagram."
+    og_image="https://spwashi.com/public/images/routes/math-signal-field-og.jpg"
+    og_image_alt="A math signal field with glowing arcs, axes, and projection-like marks."
+    keywords="trigonometry, unit circle, sine, cosine, tangent, identities, phase, projection, math intuition"
+    breadcrumb_label="Trigonometry: Rotation, Projection, and Reuse"
+    header_current="Trigonometry: Rotation, Projection, and Reuse"
+    header_current_href="/topics/math/trigonometry/"
+    header_indicator="topics"
+    surface="topics"
+    page_family="field-guide"
+    page_role="trigonometry-register"
+    page_modes="reading inspect compare build"
+    wonder="rotation projection recurrence"
+    route_family="editorial math field-guide"
+    features="operators navigator console"
+    related_routes="/topics/math/|/topics/math/symmetry/|/topics/math/calculus/|/topics/math/differential-equations/|/topics/math/statistical-analysis/|/topics/software/geometry/|/topics/software/renderers/|/play/rpg-wednesday/world/|/play/rpg-wednesday/arcs/"
+    stylesheet_mode="scoped"
+    extra_scripts="/public/js/modules/math/diagrams.js?v=0.0.1"
+></spw-page>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta name="theme-color" content="#1a9999"/>
-    <meta name="apple-mobile-web-app-capable" content="yes"/>
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-    <meta name="apple-mobile-web-app-title" content="Spwashi"/>
-    <title>Spwashi • Trigonometry: Rotation, Projection, and Reuse</title>
-    <meta name="description" content="Intuition-first field notes on sine, cosine, tangent, and unit-circle identities, with a portable interactive trigonometry diagram.">
-    <link rel="stylesheet" href="/public/css/style.css">
-    <script type="module" src="/public/js/site.js"></script>
-    <script type="module" src="/public/js/modules/math/diagrams.js?v=0.0.1"></script>
-    <link rel="canonical" href="https://spwashi.com/topics/math/trigonometry/">
-    <meta property="og:type" content="website"/>
-    <meta property="og:site_name" content="Spwashi"/>
-    <meta property="og:title" content="Spwashi • Trigonometry: Rotation, Projection, and Reuse"/>
-    <meta property="og:description" content="Intuition-first field notes on sine, cosine, tangent, and unit-circle identities, with a portable interactive trigonometry diagram."/>
-    <meta property="og:url" content="https://spwashi.com/topics/math/trigonometry/"/>
-    <meta property="og:image" content="https://spwashi.com/public/images/routes/math-signal-field-og.jpg"/>
-    <meta property="og:image:alt" content="A math signal field with glowing arcs, axes, and projection-like marks."/>
-    <meta property="og:image:width" content="1200"/>
-    <meta property="og:image:height" content="630"/>
-    <meta name="twitter:card" content="summary_large_image"/>
-    <meta name="twitter:title" content="Spwashi • Trigonometry: Rotation, Projection, and Reuse"/>
-    <meta name="twitter:description" content="Intuition-first field notes on sine, cosine, tangent, and unit-circle identities, with a portable interactive trigonometry diagram."/>
-    <meta name="twitter:image" content="https://spwashi.com/public/images/routes/math-signal-field-og.jpg"/>
-    <meta name="twitter:image:alt" content="A math signal field with glowing arcs, axes, and projection-like marks."/>
-    <meta name="keywords" content="trigonometry, unit circle, sine, cosine, tangent, identities, phase, projection, math intuition"/>
-    <script type="application/ld+json" data-spw-generated="page">
-        {
-                "@context": "https://schema.org",
-                "@type": "WebPage",
-                "name": "Spwashi • Trigonometry: Rotation, Projection, and Reuse",
-                "description": "Intuition-first field notes on sine, cosine, tangent, and unit-circle identities, with a portable interactive trigonometry diagram.",
-                "url": "https://spwashi.com/topics/math/trigonometry/",
-                "isPartOf": {
-                        "@type": "WebSite",
-                        "name": "Spwashi",
-                        "url": "https://spwashi.com/"
-                },
-                "about": [
-                        "trigonometry",
-                        "unit circle",
-                        "sine",
-                        "cosine",
-                        "tangent",
-                        "identities",
-                        "phase",
-                        "projection"
-                ],
-                "additionalProperty": [
-                        {
-                                "@type": "PropertyValue",
-                                "name": "spwSurface",
-                                "value": "topics"
-                        },
-                        {
-                                "@type": "PropertyValue",
-                                "name": "spwPageFamily",
-                                "value": "field-guide"
-                        },
-                        {
-                                "@type": "PropertyValue",
-                                "name": "spwPageRole",
-                                "value": "trigonometry-register"
-                        },
-                        {
-                                "@type": "PropertyValue",
-                                "name": "spwWonder",
-                                "value": "rotation projection recurrence"
-                        }
-                ]
-        }
-    </script>
-    <script type="application/ld+json" data-spw-generated="breadcrumbs">
-        {
-                "@context": "https://schema.org",
-                "@type": "BreadcrumbList",
-                "itemListElement": [
-                        {
-                                "@type": "ListItem",
-                                "position": 1,
-                                "name": "Home",
-                                "item": "https://spwashi.com/"
-                        },
-                        {
-                                "@type": "ListItem",
-                                "position": 2,
-                                "name": "Topics",
-                                "item": "https://spwashi.com/topics/"
-                        },
-                        {
-                                "@type": "ListItem",
-                                "position": 3,
-                                "name": "Math",
-                                "item": "https://spwashi.com/topics/math/"
-                        },
-                        {
-                                "@type": "ListItem",
-                                "position": 4,
-                                "name": "Trigonometry",
-                                "item": "https://spwashi.com/topics/math/trigonometry/"
-                        }
-                ]
-        }
-    </script>
+    <spw-site-head></spw-site-head>
 </head>
 <body data-spw-surface="topics"
     data-spw-stylesheet-mode="scoped" data-spw-features="operators navigator console" data-spw-route-family="editorial math field-guide" data-spw-context="analysis" data-spw-wonder="rotation projection recurrence" data-spw-page-family="field-guide" data-spw-page-modes="reading inspect compare build" data-spw-page-seed="page_topics_topics_math_trigonometry" data-spw-page-role="trigonometry-register" data-spw-related-routes="/topics/math/|/topics/math/symmetry/|/topics/math/calculus/|/topics/math/differential-equations/|/topics/math/statistical-analysis/|/topics/software/geometry/|/topics/software/renderers/|/play/rpg-wednesday/world/|/play/rpg-wednesday/arcs/">
