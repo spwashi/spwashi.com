@@ -140,6 +140,41 @@
     border-color: var(--active-op-color, #008080);
 }
 
+/* Proof tools use explicit dark controls so theme-level surface mixes cannot
+   collapse foreground and background contrast on hover. */
+:where(
+    body[data-spw-surface="tools-spw-parser"] .literal-parser-samples button,
+    body[data-spw-surface="tools-spw-parser"] .literal-parser-file-action,
+    body[data-spw-surface="tools-spw-parser"] .literal-parser-actions .operator-chip
+) {
+    background: #15302d;
+    color: #e7f5ef;
+}
+
+:where(
+    body[data-spw-surface="tools-spw-parser"] .literal-parser-samples button:hover,
+    body[data-spw-surface="tools-spw-parser"] .literal-parser-samples button:focus-visible,
+    body[data-spw-surface="tools-spw-parser"] .literal-parser-file-action:hover,
+    body[data-spw-surface="tools-spw-parser"] .literal-parser-file-action:focus-within,
+    body[data-spw-surface="tools-spw-parser"] .literal-parser-actions .operator-chip:hover,
+    body[data-spw-surface="tools-spw-parser"] .literal-parser-actions .operator-chip:focus-visible
+) {
+    border-color: #7dd1c2;
+    background: #234842;
+    color: #ffffff;
+}
+
+:where(
+    body[data-spw-surface="tools-spw-parser"] .literal-parser-editor h3,
+    body[data-spw-surface="tools-spw-parser"] .literal-parser-editor .frame-note
+) {
+    color: #122420;
+}
+
+:where(body[data-spw-surface="tools-spw-parser"] .literal-parser-editor .frame-note) {
+    background: #f7f3ec;
+}
+
 /* ==========================================================================
    5. Spec Tokens
    ========================================================================== */

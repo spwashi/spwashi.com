@@ -99,6 +99,18 @@ describe('css-manifest incremental filters', () => {
     assert.ok(sheets.some((s) => s.kind === 'route' && s.scope === 'website'));
   });
 
+  it('literal parser tool owns a route-scoped proof bundle', () => {
+    assert.equal(
+      routeBundleHref('tools-spw-parser'),
+      '/public/css/bundles/routes/tools-spw-parser.css',
+    );
+    const sheets = resolveScopedStylesheets({
+      surface: 'tools-spw-parser',
+      features: ['console'],
+    });
+    assert.ok(sheets.some((s) => s.kind === 'route' && s.scope === 'tools-spw-parser'));
+  });
+
   it('filterBundleTargets resolves software alias to topics bundle', () => {
     const filtered = filterBundleTargets(listBundleTargets(), {
       only: ['software'],

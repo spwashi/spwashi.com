@@ -182,6 +182,7 @@ test('source PWA contract keeps manifest, icons, routes, assets, and offline she
     '/manifest.webmanifest',
     '/public/css/bundles/core.css',
     '/public/images/apple-touch-icon.png',
+    '/public/js/site.js',
   ]);
 });
 

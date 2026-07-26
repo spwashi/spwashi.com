@@ -8,7 +8,7 @@
  * - Prefer network for HTML, prefer cache for versioned/static assets.
  */
 
-const CACHE_SCHEMA_VERSION = 'v5';
+const CACHE_SCHEMA_VERSION = 'v6';
 const CACHE_NAMESPACE = `spw-${CACHE_SCHEMA_VERSION}`;
 
 const CACHE = {
@@ -47,6 +47,7 @@ const CORE_ROUTES = [
 const CORE_ASSETS = [
   '/manifest.webmanifest',
   '/public/css/bundles/core.css',
+  '/public/js/site.js',
   '/public/images/apple-touch-icon.png',
   '/public/images/icon-192.png',
   '/public/images/icon-512.png',
@@ -61,6 +62,7 @@ const REQUIRED_PRECACHE_URLS = [
   OFFLINE_URL,
   '/manifest.webmanifest',
   '/public/css/bundles/core.css',
+  '/public/js/site.js',
   '/public/images/apple-touch-icon.png',
   '/public/images/icon-192.png',
   '/public/images/icon-512.png',

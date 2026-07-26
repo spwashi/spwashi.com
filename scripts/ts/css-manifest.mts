@@ -116,6 +116,7 @@ export const ROUTE_SCOPES: Readonly<Record<string, readonly string[]>> = Object.
   'tools-character-sheet': [],
   'tools-midjourney': [],
   'tools-profile': [],
+  'tools-spw-parser': ['/public/css/routes/surfaces/tools-spw-parser.css'],
   website: [
     '/public/css/routes/surfaces/website.css',
     '/public/css/routes/surfaces/design.css',

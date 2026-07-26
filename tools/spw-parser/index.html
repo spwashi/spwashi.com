@@ -1,0 +1,245 @@
+<spw-page
+    title="Literal Spw Parser · Spwashi Tools"
+    description="Edit real Spw source and inspect the workbench parser"
+    canonical="https://spwashi.com/tools/spw-parser/"
+    og_title="Literal Spw Parser · Spwashi Tools"
+    og_description="Proof that Spw parses: real source, real tokens, a real AST, and visible diagnostics in the browser."
+    og_image="https://spwashi.com/public/images/assets/illustrations/home-og-card.jpg"
+    og_image_alt="Literal Spw Parser tool on Spwashi."
+    keywords="Spw parser, AST, tokens, diagnostics, language workbench, browser parser, local-first"
+    breadcrumb_label="Literal Spw Parser · Spwashi Tools"
+    header_current="Literal Spw Parser · Spwashi Tools"
+    header_current_href="/tools/spw-parser/"
+    header_indicator="tools-spw-parser"
+    surface="tools-spw-parser"
+    page_family="toolbench"
+    page_role="parser-proof"
+    page_modes="edit inspect compare load"
+    wonder="literal structure consequence"
+    route_family="toolbench language proof"
+    layout="atlas"
+    features="operators navigator console"
+    related_routes="/tools/|/topics/software/spw/|/topics/software/parsers/|https://github.com/spwashi/spw-workbench"
+    stylesheet_mode="scoped"
+></spw-page>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <spw-site-head></spw-site-head>
+</head>
+<body data-spw-surface="tools-spw-parser"
+    data-spw-stylesheet-mode="scoped"
+    data-spw-features="operators navigator console"
+    data-spw-route-family="toolbench language proof"
+    data-spw-context="analysis"
+    data-spw-wonder="literal structure consequence"
+    data-spw-page-family="toolbench"
+    data-spw-page-modes="edit inspect compare load"
+    data-spw-page-seed="page_tools_spw_parser"
+    data-spw-page-role="parser-proof"
+    data-spw-layout="atlas"
+    data-spw-section-handle-desktop="auto"
+    data-spw-related-routes="/tools/|/topics/software/spw/|/topics/software/parsers/|https://github.com/spwashi/spw-workbench">
+    <a class="skip-link" href="#main-content">Skip to parser</a>
+
+    <spw-site-header
+        current="Spw Parser"
+        current_href="/tools/spw-parser/"
+        indicator="probe"
+        seed="page_tools_spw_parser__site_header"
+        related_routes="/tools/|/topics/software/spw/|/topics/software/parsers/|https://github.com/spwashi/spw-workbench"
+        context_relevance="Spw parser AST tokens diagnostics workbench proof"
+        nav_items="Home:/|Tools:/tools/|Spw:/topics/software/spw/|Parsers:/topics/software/parsers/|Settings:/settings/"
+    ></spw-site-header>
+
+    <main id="main-content" tabindex="-1" aria-labelledby="parser-title"
+        data-spw-kind="surface"
+        data-spw-role="reference"
+        data-spw-context="analysis"
+        data-spw-seed="page_tools_spw_parser__main">
+        <article>
+            <section class="site-frame site-hero" id="parser-proof"
+                data-spw-kind="frame"
+                data-spw-role="orientation"
+                data-spw-form="brace"
+                data-spw-context="analysis"
+                data-spw-wonder="literal structure consequence"
+                data-spw-affordance="orient"
+                data-spw-liminality="entry"
+                data-spw-category-family="workshop"
+                data-spw-locality="high"
+                data-spw-consequence="framing"
+                data-spw-promptability="visible"
+                data-spw-collectability="high"
+                data-spw-seed="page_tools_spw_parser__hero"
+                data-spw-semantic-expression="proof[parser]{source.tokens.ast.diagnostics}">
+                <div class="frame-topline">
+                    <a class="frame-sigil" href="#literal-parser">#&gt;literal_parser</a>
+                    <div class="spec-strip">
+                        <span class="spec-pill" data-cluster="tool">real parser</span>
+                        <span class="spec-pill" data-cluster="tool">browser-local</span>
+                        <span class="spec-pill" data-cluster="tool">lossless check</span>
+                    </div>
+                </div>
+                <h1 id="parser-title">Literal Spw Parser</h1>
+                <p class="site-lede">This is the parser, running in your browser. Change the source and watch Spw become tokens, an abstract syntax tree, diagnostics, and an exact reconstruction.</p>
+                <p>This tool ships the portable parser kernel from <a href="https://github.com/spwashi/spw-workbench">spw-workbench</a>. The public page does not imitate a parse or infer braces with display-only rules: the same parser package used by the CLI and language tooling produces the result below.</p>
+                <nav class="frame-operators" aria-label="Parser proof routes">
+                    <a class="operator-chip" href="#literal-parser" data-spw-operator="action">@ parse source</a>
+                    <a class="operator-chip" href="#proof-output" data-spw-operator="object">^ inspect AST</a>
+                    <a class="operator-chip" href="#app-loading" data-spw-operator="route">#&gt; load in app</a>
+                    <a class="operator-chip" href="https://github.com/spwashi/spw-workbench/tree/main/packages/spw-seed/src/parser" data-spw-operator="ref">~ parser source</a>
+                </nav>
+            </section>
+
+            <section class="site-frame literal-parser" id="literal-parser"
+                data-parser-tool
+                data-spw-feature="spw-literal-parser"
+                data-spw-kind="frame"
+                data-spw-role="reference"
+                data-spw-form="square"
+                data-spw-context="analysis"
+                data-spw-wonder="literal structure consequence"
+                data-spw-affordance="act"
+                data-spw-liminality="threshold"
+                data-spw-category-family="workshop"
+                data-spw-locality="high"
+                data-spw-consequence="memory"
+                data-spw-promptability="visible"
+                data-spw-collectability="high"
+                data-spw-seed="page_tools_spw_parser__tool"
+                data-spw-semantic-expression="literal_parser[source]{tokens.ast.diagnostics.reconstruction}">
+                <header class="frame-heading">
+                    <a class="frame-sigil" href="#literal-parser">@parse</a>
+                    <div>
+                        <h2>Source → evidence</h2>
+                        <p class="frame-note">Parser build: <strong data-parser-provenance>spw-workbench</strong></p>
+                    </div>
+                </header>
+
+                <div class="literal-parser-samples" aria-label="Parser samples">
+                    <span>Try:</span>
+                    <button type="button" data-parser-sample="proof">minimal proof</button>
+                    <button type="button" data-parser-sample="contract">contract</button>
+                    <button type="button" data-parser-sample="navigation">navigation</button>
+                    <button type="button" data-parser-sample="diagnostic">diagnostic</button>
+                </div>
+
+                <div class="literal-parser-workspace">
+                    <section class="literal-parser-editor" aria-labelledby="parser-source-title">
+                        <header>
+                            <div>
+                                <h3 id="parser-source-title">Literal source</h3>
+                                <span class="literal-parser-source-name" data-parser-source-name>editable literal</span>
+                            </div>
+                            <label class="literal-parser-file-action">
+                                <span>Open .spw file</span>
+                                <input type="file" accept=".spw,text/plain" data-parser-file>
+                            </label>
+                        </header>
+                        <textarea data-parser-source aria-label="Literal Spw source" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="parser-live-status">^[literal_parser]{
+  source = "Spw stays readable."
+  proof = #[tokens, ast, diagnostics]
+  ~&lt;authority&gt;"spw-workbench"
+}</textarea>
+                        <p class="frame-note" id="parser-live-status" data-parser-status aria-live="polite">Waiting for the parser.</p>
+                    </section>
+
+                    <aside class="literal-parser-metrics" aria-label="Parse proof">
+                        <div>
+                            <span>parse</span>
+                            <output data-parser-metric="parse">—</output>
+                        </div>
+                        <div>
+                            <span>tokens</span>
+                            <output data-parser-metric="tokens">—</output>
+                        </div>
+                        <div>
+                            <span>AST nodes</span>
+                            <output data-parser-metric="nodes">—</output>
+                        </div>
+                        <div>
+                            <span>tree depth</span>
+                            <output data-parser-metric="depth">—</output>
+                        </div>
+                        <div>
+                            <span>reconstruction</span>
+                            <output data-parser-metric="reconstruction">—</output>
+                        </div>
+                        <div>
+                            <span>parser time</span>
+                            <output data-parser-metric="time">—</output>
+                        </div>
+                    </aside>
+                </div>
+
+                <div class="literal-parser-actions" id="app-loading">
+                    <a class="operator-chip" href="/tools/spw-parser/#literal-parser" data-parser-app-link>@ load source into app</a>
+                    <button class="operator-chip" type="button" data-parser-install>Install Spw app</button>
+                    <p>The first action creates an app-safe URL containing this exact source. The installed Spw app opens that URL at this parser; registered <code>.spw</code> files can open here directly on supporting systems.</p>
+                </div>
+
+                <noscript>
+                    <p class="inline-note">JavaScript is required to run the parser. The source remains readable without it.</p>
+                </noscript>
+
+                <div class="literal-parser-output" id="proof-output">
+                    <details open>
+                        <summary><span>Tokens</span><small>lexer order + source positions</small></summary>
+                        <ol class="literal-parser-token-list" data-parser-tokens></ol>
+                    </details>
+                    <details open>
+                        <summary><span>AST</span><small>parser-owned node types + spans</small></summary>
+                        <pre class="literal-parser-ast" data-parser-ast aria-label="Abstract syntax tree">null</pre>
+                    </details>
+                    <details open>
+                        <summary><span>Diagnostics</span><small>errors and warnings are not hidden</small></summary>
+                        <ul class="literal-parser-diagnostics" data-parser-diagnostics aria-live="polite"></ul>
+                    </details>
+                </div>
+            </section>
+
+            <section class="site-frame" id="what-this-proves"
+                data-spw-kind="frame"
+                data-spw-role="reference"
+                data-spw-form="brace"
+                data-spw-context="analysis"
+                data-spw-wonder="literal structure consequence"
+                data-spw-affordance="inspect"
+                data-spw-liminality="entry"
+                data-spw-category-family="register"
+                data-spw-locality="medium"
+                data-spw-consequence="memory"
+                data-spw-promptability="ambient"
+                data-spw-collectability="medium"
+                data-spw-seed="page_tools_spw_parser__claims"
+                data-spw-semantic-expression="proof[boundary]{works.claims.not_claimed}">
+                <header class="frame-heading">
+                    <a class="frame-sigil" href="#what-this-proves">^proof_boundary</a>
+                    <h2>What this proves</h2>
+                </header>
+                <div class="frame-grid frame-grid--dense">
+                    <article class="frame-panel">
+                        <h3>Literal structure</h3>
+                        <p>Source positions, token kinds, and AST spans remain inspectable. When the parser emits diagnostics they stay visible; permissive input remains accepted exactly as the parser reports.</p>
+                    </article>
+                    <article class="frame-panel">
+                        <h3>Portable kernel</h3>
+                        <p>The parser has no DOM dependency. This page imports a browser bundle generated from the mounted workbench parser entrypoint.</p>
+                    </article>
+                    <article class="frame-panel">
+                        <h3>Lossless evidence</h3>
+                        <p>The token stream is concatenated and compared with the original source. “Exact” means every emitted token reconstructs the literal input.</p>
+                    </article>
+                    <article class="frame-panel">
+                        <h3>Honest boundary</h3>
+                        <p>This proves parsing and source geometry. It does not claim evaluation, canonical normalization, runtime effects, or semantic correctness for every possible program.</p>
+                    </article>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <spw-site-footer></spw-site-footer>
+</body>
+</html>

@@ -305,6 +305,9 @@ test('discovery notices suppress scheduled promos on inspect-lab surfaces', () =
   const suppressed = buildVisibleNotices(noticeFeed, date, {}, '/settings/');
   assert.equal(suppressed.visible.length, 0);
 
+  document.body.dataset.spwSurface = 'tools-spw-parser';
+  assert.equal(shouldSuppressScheduledNotices(), true);
+
   document.body.dataset.spwSurface = 'topics';
   assert.equal(shouldSuppressScheduledNotices(), false);
 

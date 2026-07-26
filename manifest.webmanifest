@@ -7,9 +7,20 @@
   "scope": "/",
   "display": "standalone",
   "display_override": ["standalone", "browser"],
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
+  "file_handlers": [
+    {
+      "action": "/tools/spw-parser/",
+      "accept": {
+        "text/plain": [".spw"]
+      }
+    }
+  ],
   "background_color": "#faf5ed",
   "theme_color": "#1a9999",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "orientation": "portrait-primary",
   "lang": "en-US",
   "categories": ["productivity", "education", "developer"],
@@ -48,6 +59,11 @@
       "name": "Spw Operators",
       "short_name": "Operators",
       "url": "/topics/software/spw/"
+    },
+    {
+      "name": "Literal Spw Parser",
+      "short_name": "Parser",
+      "url": "/tools/spw-parser/?spw_source=proof%5Bparser%5D%7Bliteral.ast.lossless%7D#literal-parser"
     },
     {
       "name": "Blog",
