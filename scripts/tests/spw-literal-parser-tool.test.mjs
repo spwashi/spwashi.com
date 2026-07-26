@@ -44,4 +44,31 @@ describe('literal Spw parser proof', () => {
     assert.equal(url.searchParams.get('spw_source_name'), 'proof.spw');
     assert.equal(url.hash, '#literal-parser');
   });
+
+  it('parses site operator chip expressions through the canonical workbench parser', () => {
+    const chipExpressions = [
+      '! mix extension',
+      '! generate seed',
+      '! undo',
+      '! prune',
+      '! clear',
+      '! save note',
+      '~ nourish',
+      '~ vision seed',
+      '~ copy seed',
+      '~ markdown',
+      '^ plant',
+      '^ proof card',
+      '#> town note',
+      '= tune posture',
+      '[cozy]',
+      '[readable]',
+    ];
+
+    for (const expr of chipExpressions) {
+      const parsed = parseLiteralSource(expr);
+      assert.equal(parsed.output.success, true, `Workbench parser failed on chip expression "${expr}"`);
+      assert.equal(parsed.output.errors.length, 0, `Workbench parser returned errors for "${expr}"`);
+    }
+  });
 });
