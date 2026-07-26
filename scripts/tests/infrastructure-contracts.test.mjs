@@ -94,6 +94,17 @@ test('composite build pipelines compile each TypeScript project once', async () 
   assert.ok(scripts.typecheck.includes('tsconfig.runtime.json --noEmit'));
 });
 
+test('mounted workbench CLI scripts keep consumer-relative doctor/roots paths', async () => {
+  const packageJson = JSON.parse(await readFile(path.join(ROOT, 'package.json'), 'utf8'));
+  const scripts = packageJson.scripts;
+
+  assert.equal(scripts.spw, 'npm --prefix .spw/_workbench run spw --');
+  assert.match(scripts['spw:doctor'], /doctor \.\.\/\.\./);
+  assert.match(scripts['spw:roots'], /roots \.\.\/\.\./);
+  assert.ok(scripts['spw:plan:check']);
+  assert.ok(scripts['spw:plan:status']);
+});
+
 test('PWA build precache injection is deterministic and parseable', () => {
   const worker = `
 const OFFLINE_URL = '/offline/';

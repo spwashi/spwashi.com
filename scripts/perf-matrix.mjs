@@ -10,15 +10,16 @@
  *   node scripts/perf-matrix.mjs --require-settled --fail-on-overflow-x
  */
 
-import { mkdtemp, rm, writeFile } from 'node:fs/promises';
-import { tmpdir } from 'node:os';
-import path from 'node:path';
+import { rm, writeFile } from 'node:fs/promises';
 import process from 'node:process';
 
 import {
   DEFAULT_ROUTES,
   VIEWPORTS,
   cellFromProbe,
+  closePageTarget,
+  createChromeProfileDir,
+  evaluateHardOk,
   installShutdown,
   killProcessTree,
   navigateAndProbe,
@@ -42,6 +43,7 @@ function parseArgs(argv) {
     csv: false,
     debugLayout: false,
     debugQa: false,
+    failOnConsoleError: false,
     failOnOverflowX: false,
     help: false,
     json: false,
@@ -68,6 +70,7 @@ function parseArgs(argv) {
     else if (arg === '--debug-qa' || arg === '--agent-qa') options.debugQa = true;
     else if (arg === '--require-settled') options.requireSettled = true;
     else if (arg === '--fail-on-overflow-x') options.failOnOverflowX = true;
+    else if (arg === '--fail-on-console-error') options.failOnConsoleError = true;
     else if (arg === '--base' && argv[i + 1]) options.base = argv[++i];
     else if (arg.startsWith('--base=')) options.base = arg.slice(7);
     else if (arg === '--chrome' && argv[i + 1]) options.chrome = argv[++i];
@@ -109,6 +112,7 @@ Options:
   --debug-layout/--debug-qa
   --require-settled       Fail if runtime never reaches ready
   --fail-on-overflow-x    Fail if any horizontal frame overflow sampled
+  --fail-on-console-error Fail if page logs console.error / exceptions
   --retries N             Per-cell retries (default 1)
   --settle-ms / --timeout-ms
   --json / --csv / --out PATH
@@ -213,13 +217,6 @@ function formatCsv(cells) {
   ].join('\n');
 }
 
-function evaluateHardOk(cell, options) {
-  if (!cell.ok) return false;
-  if (options.requireSettled && !cell.settled) return false;
-  if (options.failOnOverflowX && (cell.overflowXFrames > 0 || cell.bodyOverflowX)) return false;
-  return true;
-}
-
 async function main() {
   const options = parseArgs(process.argv.slice(2));
   if (options.help) {
@@ -265,7 +262,7 @@ async function main() {
       + `${options.warm ? ' (warm)' : ''}\n`,
     );
 
-    userDataDir = await mkdtemp(path.join(tmpdir(), 'spw-perf-'));
+    userDataDir = await createChromeProfileDir('spw-perf-');
     chromeChild = await openChrome(chromePath, userDataDir, debugPort);
 
     // Optional warm cell — discarded from primary rollup when --warm
@@ -284,6 +281,7 @@ async function main() {
         });
       } finally {
         session.close();
+        await closePageTarget(debugPort, target);
       }
     }
 
@@ -309,10 +307,11 @@ async function main() {
           cell.hardOk = evaluateHardOk(cell, options);
           cells.push(cell);
           process.stderr.write(
-            `  ${cell.hardOk ? 'ok' : 'FAIL'} ${cell.wallMs}ms set=${cell.settled ? 'y' : 'n'} boot=${cell.bootToReady ?? '-'} imm=${cell.immediateLayer ?? '-'} mainW=${cell.mainWidth ?? '-'} ovX=${cell.overflowXFrames} scripts=${cell.scripts ?? '-'}\n`,
+            `  ${cell.hardOk ? 'ok' : 'FAIL'} ${cell.wallMs}ms set=${cell.settled ? 'y' : 'n'} boot=${cell.bootToReady ?? '-'} imm=${cell.immediateLayer ?? '-'} mainW=${cell.mainWidth ?? '-'} ovX=${cell.overflowXFrames} scripts=${cell.scripts ?? '-'} cerr=${cell.consoleErrorCount || 0}\n`,
           );
         } finally {
           session.close();
+          await closePageTarget(debugPort, target);
         }
       }
     }
@@ -326,6 +325,7 @@ async function main() {
       settleMs: options.settleMs,
       requireSettled: options.requireSettled,
       failOnOverflowX: options.failOnOverflowX,
+      failOnConsoleError: options.failOnConsoleError,
       warm: options.warm,
       debugLayout: options.debugLayout,
       debugQa: options.debugQa,

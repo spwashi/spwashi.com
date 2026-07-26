@@ -1,16 +1,20 @@
 /**
- * Shared Chrome headless + CDP helpers for smoke:nav / bench:nav.
+ * Shared Chrome headless + CDP helpers for smoke:nav / bench:nav / component captures.
  * Zero npm deps — Node 22+ WebSocket + system Chrome.
  */
 
 import { spawn } from 'node:child_process';
 import { createServer } from 'node:http';
-import { access } from 'node:fs/promises';
+import { access, mkdir, mkdtemp } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
 import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
+
+/** Cap collected browser console/exception diagnostics per navigation. */
+export const BROWSER_DIAGNOSTIC_LIMIT = 24;
 
 export const CHROME_CANDIDATES = Object.freeze([
   process.env.CHROME_PATH,
@@ -285,6 +289,39 @@ export class CdpSession {
   }
 }
 
+/**
+ * Chrome user-data directory with OS tmp first, repo-local `.tmp/` fallback
+ * (sandbox / restricted tmp environments).
+ * @param {string} [prefix='spw-chrome-']
+ * @returns {Promise<string>}
+ */
+export async function createChromeProfileDir(prefix = 'spw-chrome-') {
+  try {
+    return await mkdtemp(path.join(tmpdir(), prefix));
+  } catch {
+    const localTmp = path.join(ROOT, '.tmp');
+    await mkdir(localTmp, { recursive: true });
+    return mkdtemp(path.join(localTmp, prefix));
+  }
+}
+
+/**
+ * Close a CDP page target so Chrome does not accumulate tabs across cells.
+ * @param {number|string} debugPort
+ * @param {{ id?: string, targetId?: string }|string|null} target
+ */
+export async function closePageTarget(debugPort, target) {
+  const targetId = typeof target === 'string'
+    ? target
+    : (target?.id || target?.targetId);
+  if (!targetId || debugPort == null) return;
+  try {
+    await fetch(`http://127.0.0.1:${debugPort}/json/close/${targetId}`, { method: 'PUT' });
+  } catch {
+    // ignore — process kill cleans up remaining targets
+  }
+}
+
 export async function openChrome(chromePath, userDataDir, port) {
   const args = [
     '--headless=new',
@@ -297,6 +334,15 @@ export async function openChrome(chromePath, userDataDir, port) {
     '--disable-translate',
     '--mute-audio',
     '--disable-dev-shm-usage',
+    // Keep timers/rAF alive in headless — background throttling stalls boot settle.
+    '--disable-background-timer-throttling',
+    '--disable-backgrounding-occluded-windows',
+    '--disable-renderer-backgrounding',
+    '--no-sandbox',
+    '--disable-setuid-sandbox',
+    '--disable-crash-reporter',
+    '--disable-breakpad',
+    '--disable-software-rasterizer',
     `--remote-debugging-port=${port}`,
     `--user-data-dir=${userDataDir}`,
     'about:blank',
@@ -330,6 +376,33 @@ export async function newPageTarget(debugPort) {
   return page;
 }
 
+/**
+ * Format a CDP console/exception payload into a short diagnostic string.
+ * Exported for unit tests.
+ */
+export function formatBrowserDiagnostic(kind, payload) {
+  if (kind === 'console') {
+    const type = payload?.type || 'log';
+    const text = (payload?.args || [])
+      .map((a) => a?.value ?? a?.description ?? a?.unserializableValue ?? '')
+      .filter(Boolean)
+      .join(' ')
+      .trim();
+    return `[${type}] ${text || '(empty console message)'}`.slice(0, 400);
+  }
+  if (kind === 'exception') {
+    const details = payload?.exceptionDetails || payload;
+    const text = details?.exception?.description || details?.text || 'Uncaught exception';
+    return `[exception] ${String(text).slice(0, 400)}`;
+  }
+  return String(payload || '').slice(0, 400);
+}
+
+function pushDiagnostic(list, entry) {
+  if (list.length >= BROWSER_DIAGNOSTIC_LIMIT) return;
+  list.push(entry);
+}
+
 export function withDebugQuery(pathname, { debugLayout = false, debugQa = false } = {}) {
   const url = new URL(pathname.startsWith('/') ? pathname : `/${pathname}`, 'http://local.invalid');
   if (debugQa) {
@@ -343,6 +416,67 @@ export function withDebugQuery(pathname, { debugLayout = false, debugQa = false 
     url.searchParams.set('log-level', 'debug');
   }
   return `${url.pathname}${url.search}`;
+}
+
+/**
+ * Lightweight document-shell probe for environments where Chrome/CDP is unavailable.
+ * This is intentionally not presented as runtime coverage: it only verifies that the
+ * server returned a minimally usable authored document.
+ */
+export function inspectHtmlShell(html, { status = 200 } = {}) {
+  const source = String(html || '');
+  const surfaceMatch = source.match(/data-spw-surface=["']([^"']+)["']/i);
+  const result = {
+    status,
+    hasTitle: /<title(?:\s[^>]*)?>\s*[^<\s][^<]*<\/title>/i.test(source),
+    hasH1: /<h1(?:\s[^>]*)?>/i.test(source),
+    hasMain: /<main(?:\s[^>]*)?>/i.test(source),
+    surface: surfaceMatch?.[1] || null,
+  };
+  return {
+    ...result,
+    ok: status >= 200
+      && status < 400
+      && result.hasTitle
+      && result.hasH1
+      && result.hasMain
+      && Boolean(result.surface),
+  };
+}
+
+/**
+ * Probe route document shells without a browser. Callers must label this as a
+ * degraded mode because JavaScript execution and runtime readiness are not tested.
+ */
+export async function probeHttpRoutes({
+  base,
+  routes,
+  queryOptions = {},
+  fetchImpl = fetch,
+} = {}) {
+  const results = [];
+  for (const route of routes || []) {
+    const pathWithQuery = withDebugQuery(route, queryOptions);
+    const url = new URL(pathWithQuery, `${String(base).replace(/\/$/, '')}/`).href;
+    try {
+      const response = await fetchImpl(url);
+      const html = await response.text();
+      results.push({
+        route: pathWithQuery,
+        url,
+        ...inspectHtmlShell(html, { status: response.status }),
+      });
+    } catch (error) {
+      results.push({
+        route: pathWithQuery,
+        url,
+        status: 0,
+        ok: false,
+        error: error instanceof Error ? error.message : String(error),
+      });
+    }
+  }
+  return results;
 }
 
 export async function applyViewport(session, viewport) {
@@ -397,6 +531,8 @@ export const PERF_PROBE_EXPRESSION = `(() => {
     return null;
   };
   const hasMark = (name) => marks.some((m) => m.name === name);
+  const lastMark = marks.length ? marks[marks.length - 1] : null;
+  const recentMarks = marks.slice(-8).map((m) => m.name);
 
   // Horizontal overflow only (vertical scroll is normal page length).
   const packLocal = document.querySelectorAll('[data-spw-pack-local]').length;
@@ -409,12 +545,24 @@ export const PERF_PROBE_EXPRESSION = `(() => {
   if (body) bodyOverflowX = body.scrollWidth > body.clientWidth + 2;
 
   let site = null;
+  let moduleStages = null;
   try {
     site = window.__SPW_SITE__ ? {
       hasLayoutQa: typeof window.__SPW_SITE__.layoutQa?.snapshot === 'function',
       hasDebugQa: typeof window.__SPW_SITE__.debugQa?.posture === 'function',
       listModules: typeof window.__SPW_SITE__.listModules === 'function',
     } : null;
+    const records = window.spwCompose?.controls?.modules?.records?.()
+      || window.__SPW_SITE__?.compose?.controls?.modules?.records?.()
+      || null;
+    if (Array.isArray(records)) {
+      const counts = Object.create(null);
+      for (const r of records) {
+        const stage = r?.stage || r?.status || 'unknown';
+        counts[stage] = (counts[stage] || 0) + 1;
+      }
+      moduleStages = counts;
+    }
   } catch (e) {
     site = { error: String(e) };
   }
@@ -466,11 +614,22 @@ export const PERF_PROBE_EXPRESSION = `(() => {
       immediateLayer: pick('spw:immediate-layer', 'spw:immediate-layer-parallel'),
       immediateCore: pick('spw:immediate-layer:core:parallel'),
       immediateNonCore: pick('spw:immediate-non-core-layers'),
+      settledLayer: pick('spw:settled-layer'),
       fullBoot: pick('spw:full-boot'),
       siteSettings: pick('spw:module:site-settings'),
       shellDisclosure: pick('spw:module:shell-disclosure'),
       hasSiteReadyMark: hasMark('spw:site-ready'),
       hasBootStartMark: hasMark('spw:boot-start'),
+      lastMark: lastMark ? lastMark.name : null,
+      recentMarks,
+      moduleStages,
+      idleChunks: Object.fromEntries(
+        measures
+          .filter((m) => String(m.name || '').startsWith('spw:idle-chunk:') && !String(m.name).includes(':start') && !String(m.name).includes(':end'))
+          .map((m) => [String(m.name).replace(/^spw:idle-chunk:/, ''), m.duration]),
+      ),
+      idleChunkActive: html?.dataset?.spwRuntimeIdleChunk || null,
+      idleChunksPlanned: html?.dataset?.spwRuntimeIdleChunks || null,
     },
     resources: {
       total: resources.length,
@@ -483,12 +642,12 @@ export const PERF_PROBE_EXPRESSION = `(() => {
   };
 })()`;
 
-export async function evaluateProbe(session, expression = PERF_PROBE_EXPRESSION) {
+export async function evaluateProbe(session, expression = PERF_PROBE_EXPRESSION, timeoutMs = 10000) {
   const { result, exceptionDetails } = await session.send('Runtime.evaluate', {
     expression,
     returnByValue: true,
     awaitPromise: true,
-  });
+  }, timeoutMs);
   if (exceptionDetails) {
     throw new Error(exceptionDetails.text || 'Runtime.evaluate failed');
   }
@@ -529,9 +688,18 @@ export async function navigateAndProbe(session, {
   settleMs = 10000,
   timeoutMs = 45000,
   retries = 1,
+  logBrowser = true,
+  /** Extra settle budget when boot is clearly progressing but not yet ready. */
+  partialGraceMs = 8000,
 } = {}) {
   let lastError;
+  // Runtime.evaluate can briefly queue behind first-paint work even when a short
+  // settle budget is requested. Keep its call budget independent enough to
+  // avoid turning a fast smoke request into a false CDP failure.
+  const probeTimeoutMs = Math.min(8000, Math.max(3000, Math.floor(settleMs / 2)));
   for (let attempt = 0; attempt <= retries; attempt += 1) {
+    const diagnostics = [];
+    const offs = [];
     try {
       await session.send('Page.enable');
       await session.send('Runtime.enable');
@@ -540,34 +708,66 @@ export async function navigateAndProbe(session, {
       } catch {
         // optional
       }
+      // Prefer an active target so headless does not throttle rAF / timers.
+      try {
+        await session.send('Page.bringToFront');
+      } catch {
+        // optional on older Chrome
+      }
+      try {
+        await session.send('Emulation.setFocusEmulationEnabled', { enabled: true });
+      } catch {
+        // optional
+      }
+
+      offs.push(session.on('Runtime.consoleAPICalled', (params) => {
+        if (params?.type !== 'error' && params?.type !== 'warning') return;
+        const entry = formatBrowserDiagnostic('console', params);
+        pushDiagnostic(diagnostics, entry);
+        if (logBrowser) process.stderr.write(`  [browser:${params.type}] ${entry.replace(/^\[[^\]]+\]\s*/, '')}\n`);
+      }));
+      offs.push(session.on('Runtime.exceptionThrown', (params) => {
+        const entry = formatBrowserDiagnostic('exception', params);
+        pushDiagnostic(diagnostics, entry);
+        if (logBrowser) process.stderr.write(`  [browser:exception] ${entry.replace(/^\[exception\]\s*/, '')}\n`);
+      }));
 
       if (viewport) await applyViewport(session, viewport);
 
       const loadWait = session.once('Page.loadEventFired', timeoutMs).then(() => 'load').catch(() => 'timeout');
 
       const navStart = performance.now();
-      const navResult = await session.send('Page.navigate', { url });
+      const navResult = await session.send('Page.navigate', { url }, timeoutMs);
       if (navResult?.errorText) {
         throw new Error(`navigate failed: ${navResult.errorText}`);
       }
 
       const loadOutcome = await loadWait;
 
-      const deadline = Date.now() + Math.max(settleMs, 2000);
-      let probe = await evaluateProbe(session);
+      const baseDeadline = Date.now() + Math.max(settleMs, 2000);
+      let deadline = baseDeadline;
+      let probe = await evaluateProbe(session, PERF_PROBE_EXPRESSION, probeTimeoutMs);
+      let sawPartial = isBootPartial(probe);
       while (Date.now() < deadline && !isRuntimeSettled(probe)) {
         await sleep(250);
-        probe = await evaluateProbe(session);
+        probe = await evaluateProbe(session, PERF_PROBE_EXPRESSION, probeTimeoutMs);
+        if (!sawPartial && isBootPartial(probe)) {
+          sawPartial = true;
+          // Boot is progressing; allow a modest grace window beyond settleMs.
+          deadline = Math.max(deadline, Date.now() + Math.max(0, partialGraceMs));
+        }
       }
       if (isRuntimeSettled(probe)) {
-        await sleep(Math.min(1000, Math.max(300, Math.floor(settleMs / 8))));
-        probe = await evaluateProbe(session);
+        await sleep(Math.min(800, Math.max(200, Math.floor(settleMs / 10))));
+        probe = await evaluateProbe(session, PERF_PROBE_EXPRESSION, probeTimeoutMs);
       }
 
       const wallMs = Math.round(performance.now() - navStart);
       const settled = isRuntimeSettled(probe);
       const partial = isBootPartial(probe);
       const ok = isSoftOk(probe);
+      const consoleErrors = diagnostics.filter((d) => d.startsWith('[error]') || d.startsWith('[exception]'));
+      const consoleWarnings = diagnostics.filter((d) => d.startsWith('[warning]'));
 
       return {
         url,
@@ -578,10 +778,22 @@ export async function navigateAndProbe(session, {
         loadOutcome,
         attempt: attempt + 1,
         probe,
+        diagnostics,
+        consoleErrors,
+        consoleWarnings,
+        hasConsoleError: consoleErrors.length > 0,
       };
     } catch (error) {
       lastError = error;
       if (attempt < retries) await sleep(400);
+    } finally {
+      for (const off of offs) {
+        try {
+          off();
+        } catch {
+          // ignore
+        }
+      }
     }
   }
   throw lastError || new Error('navigateAndProbe failed');
@@ -639,6 +851,9 @@ export function pickViewports(names, { quick = false, fallback = ['phone', 'tabl
 
 export function cellFromProbe(row, { route, viewport = null } = {}) {
   const p = row.probe || {};
+  const consoleErrors = Array.isArray(row.consoleErrors) ? row.consoleErrors : [];
+  const consoleWarnings = Array.isArray(row.consoleWarnings) ? row.consoleWarnings : [];
+  const diagnostics = Array.isArray(row.diagnostics) ? row.diagnostics : [];
   return {
     route: route || (p.href ? new URL(p.href).pathname + new URL(p.href).search : row.url),
     viewport: viewport?.id || 'default',
@@ -660,12 +875,17 @@ export function cellFromProbe(row, { route, viewport = null } = {}) {
     immediateCore: p.spw?.immediateCore ?? null,
     siteSettingsMs: p.spw?.siteSettings ?? null,
     shellMs: p.spw?.shellDisclosure ?? null,
+    settledLayerMs: p.spw?.settledLayer ?? null,
     surface: p.surface,
     pageState: p.pageState,
     runtimeStage: p.runtimeStage,
     layoutVariant: p.layoutVariant,
     layoutQaGrade: p.layoutQaGrade,
     layoutShiftTotal: p.layoutShiftTotal,
+    lastMark: p.spw?.lastMark ?? null,
+    moduleStages: p.spw?.moduleStages ?? null,
+    idleChunks: p.spw?.idleChunks ?? null,
+    idleChunkActive: p.spw?.idleChunkActive ?? null,
     packLocal: p.packing?.packLocal ?? 0,
     overflowXFrames: p.packing?.overflowXFrames ?? 0,
     bodyOverflowX: Boolean(p.packing?.bodyOverflowX),
@@ -675,6 +895,25 @@ export function cellFromProbe(row, { route, viewport = null } = {}) {
     innerHeight: p.viewport?.innerHeight ?? null,
     scripts: p.resources?.scripts ?? null,
     scriptTransfer: p.resources?.scriptTransfer ?? null,
+    consoleErrorCount: consoleErrors.length,
+    consoleWarningCount: consoleWarnings.length,
+    hasConsoleError: Boolean(row.hasConsoleError) || consoleErrors.length > 0,
+    diagnostics: diagnostics.length ? diagnostics : undefined,
+    consoleErrors: consoleErrors.length ? consoleErrors : undefined,
+    consoleWarnings: consoleWarnings.length ? consoleWarnings : undefined,
     probe: p,
   };
+}
+
+/**
+ * Shared hard-ok policy for smoke/bench cells.
+ * @param {{ ok?: boolean, settled?: boolean, hasConsoleError?: boolean, bodyOverflowX?: boolean, overflowXFrames?: number }} cell
+ * @param {{ requireSettled?: boolean, failOnConsoleError?: boolean, failOnOverflowX?: boolean }} [options]
+ */
+export function evaluateHardOk(cell, options = {}) {
+  if (!cell?.ok) return false;
+  if (options.requireSettled && !cell.settled) return false;
+  if (options.failOnConsoleError && cell.hasConsoleError) return false;
+  if (options.failOnOverflowX && (cell.bodyOverflowX || (cell.overflowXFrames || 0) > 0)) return false;
+  return true;
 }
