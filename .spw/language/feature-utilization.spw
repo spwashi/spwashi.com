@@ -206,7 +206,7 @@ fixity = "tending"
   %claims_in_spw {
     kind = "objective"
     source = "npm run ecology:language (site .spw, excluding workbench)"
-    value = 174
+    value = 177
     unit = "owner-claim markers"
   }
 
@@ -215,8 +215,8 @@ fixity = "tending"
     source = "npm run ecology:language (probe_ref / hypothesis)"
     value = 0.84
     unit = "ratio"
-    numerator = 108
-    denominator = 128
+    numerator = 109
+    denominator = 129
   }
 
   gap {
