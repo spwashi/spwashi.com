@@ -32,9 +32,19 @@ async function exists(filePath) {
   }
 }
 
-function selectorClass(selector) {
-  const match = /^\.([a-z0-9_-]+)$/i.exec(selector);
-  return match ? match[1] : null;
+function selectorNeedle(selector) {
+  const parts = String(selector || '').trim().split(/\s+/);
+  const terminal = parts.at(-1) || '';
+  const match = /^([.#])([a-z0-9_-]+)$/i.exec(terminal);
+  return match ? { marker: match[1], name: match[2] } : null;
+}
+
+function sourceHasSelector(source, selector) {
+  const needle = selectorNeedle(selector);
+  if (!needle) return false;
+  return needle.marker === '#'
+    ? source.includes(`id="${needle.name}"`)
+    : source.includes(needle.name);
 }
 
 export async function collectComponentContractReport() {
@@ -62,14 +72,25 @@ export async function collectComponentContractReport() {
     }
 
     const [routeText, cssText, snippetText] = await Promise.all([fileText(routeFile), fileText(cssFile), fileText(snippetFile)]);
-    const className = selectorClass(fixture.selector);
-    if (!className) {
-      errors.push(`${fixture.id}: selector must be a single class selector`);
+    if (!selectorNeedle(fixture.selector)) {
+      errors.push(`${fixture.id}: selector must end in a class or id selector`);
       continue;
     }
-    if (!routeText.includes(className)) errors.push(`${fixture.id}: specimen route lacks ${fixture.selector}`);
-    if (!cssText.includes(fixture.selector)) errors.push(`${fixture.id}: CSS owner lacks ${fixture.selector}`);
-    if (!snippetText.includes(className)) errors.push(`${fixture.id}: snippet lacks ${fixture.selector}`);
+    if (!sourceHasSelector(routeText, fixture.selector)) errors.push(`${fixture.id}: specimen route lacks ${fixture.selector}`);
+    const componentNeedle = selectorNeedle(fixture.selector);
+    if (componentNeedle.marker === '.' && !cssText.includes(`.${componentNeedle.name}`)) {
+      errors.push(`${fixture.id}: CSS owner lacks .${componentNeedle.name}`);
+    }
+    if (!sourceHasSelector(snippetText, `.${fixture.id}`) && !sourceHasSelector(snippetText, fixture.selector)) {
+      errors.push(`${fixture.id}: snippet lacks component selector`);
+    }
+    if (fixture.captureFlows?.includes('region')) {
+      if (!fixture.regionSelector) {
+        errors.push(`${fixture.id}: region flow requires regionSelector`);
+      } else if (!sourceHasSelector(routeText, fixture.regionSelector)) {
+        errors.push(`${fixture.id}: specimen route lacks region ${fixture.regionSelector}`);
+      }
+    }
     if (!fixture.layoutScenarios.every((scenario) => ['phone', 'desktop'].includes(scenario))) {
       errors.push(`${fixture.id}: layout scenarios must use phone and/or desktop`);
     }

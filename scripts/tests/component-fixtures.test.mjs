@@ -18,7 +18,13 @@ test('component fixtures have stable ids and consumer lookup', () => {
   const tuningStrip = getComponentFixture('tuning-strip');
   assert.equal(tuningStrip?.cssOwner, 'public/css/components/controls.css');
   assert.equal(tuningStrip?.snippet, 'design/components/snippets/tuning-strip.html');
-  assert.deepEqual(tuningStrip?.captureFlows, ['component', 'template']);
+  assert.equal(tuningStrip?.regionSelector, '#structural-vocabulary');
+  assert.deepEqual(tuningStrip?.captureFlows, ['region', 'component', 'template']);
+  assert.ok(
+    COMPONENT_FIXTURES
+      .filter((fixture) => fixture.captureFlows?.includes('region'))
+      .every((fixture) => fixture.regionSelector),
+  );
   assert.equal(getComponentFixture('missing'), undefined);
 });
 

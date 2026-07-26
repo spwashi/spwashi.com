@@ -18,7 +18,7 @@
 @perf_matrix: ~"../../scripts/perf-matrix.mjs"
 
 ^"thesis"{
-  claim = `Screenshot value comes from named capture *flows* (page / component / template) plus a manifest agents can read — not from dumping full-page PNGs into git.`
+  claim = `Screenshot value comes from named capture *flows* (page / region / component / template) plus a manifest agents can read — not from dumping full-page PNGs into git.`
   risk = `Pixel baselines without owners create noise; full-page-only captures hide whether the portable unit still works under compose.css.`
   rule = `Fixtures declare capture value and publish targets; capture packs are review artifacts; baselines are opt-in per fixture later.`
 }[reg=facet]
@@ -29,6 +29,13 @@
     value = `Context, surrounding chrome, packing in real layout, agent page briefs`
     consumers = #[`design review`, `route demos`, `agent page briefs`, `OG/social stills`][reg=set]
     cost = `Heavier; chrome noise; still essential for “does it belong on a page?”`
+  }[reg=facet]
+
+  region: .{
+    source = `stable owning-section selector on the live specimen route`
+    value = `Hierarchy, surrounding spacing, responsive packing, and component ownership`
+    consumers = #[`design review`, `layout QA`, `agent briefs`][reg=set]
+    cost = `Requires a stable regionSelector; tall regions may capture only the visible viewport slice`
   }[reg=facet]
 
   component: .{
@@ -85,6 +92,7 @@
 ^"fixture_contract"{
   registry = @fixtures
   required = #[`id`, `selector`, `specimenRoute`, `snippet`, `cssOwner`, `layoutScenarios`][reg=set]
+  conditional = `regionSelector is required when captureFlows includes region`
   recommended = #[`captureFlows`, `publishTargets`, `captureValue`][reg=set]
   validation = `npm run component:check`
 }[reg=facet]

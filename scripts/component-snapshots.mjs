@@ -4,6 +4,7 @@
  *
  * Flows (long-term handling strategy):
  *   page     — live specimen route full-viewport capture (context + chrome)
+ *   region   — clipped owning section around a specimen (layout/packing evidence)
  *   component— clipped selector on specimen (review evidence, starter kit)
  *   template — isolated snippet under compose.css (portable unit, no site shell)
  *
@@ -17,17 +18,19 @@
  */
 
 import { createHash } from 'node:crypto';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
-import { tmpdir } from 'node:os';
+import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
-import { mkdtemp, rm } from 'node:fs/promises';
 
 import { COMPONENT_FIXTURES } from '../public/js/kernel/component-fixtures.js';
 import {
   VIEWPORTS,
   CdpSession,
+  applyViewport,
+  closePageTarget,
+  createChromeProfileDir,
+  evaluateProbe,
   installShutdown,
   killProcessTree,
   navigateAndProbe,
@@ -38,13 +41,11 @@ import {
   resolveChrome,
   spawnDevServer,
   waitForHttp,
-  applyViewport,
-  evaluateProbe,
   ROOT,
 } from './lib/chrome-headless-harness.mjs';
 
-const FLOWS = Object.freeze(['page', 'component', 'template']);
-const DEFAULT_FLOWS = Object.freeze(['page', 'component', 'template']);
+const FLOWS = Object.freeze(['page', 'region', 'component', 'template']);
+const DEFAULT_FLOWS = Object.freeze(['page', 'region', 'component', 'template']);
 const DEFAULT_VIEWPORTS = Object.freeze(['phone', 'desktop']);
 
 function parseArgs(argv) {
@@ -94,6 +95,7 @@ function printHelp() {
 
 Flows:
   page       Full specimen route (context value for agents / design review)
+  region     Owning section around the component (packing and hierarchy evidence)
   component  Clipped selector on specimen (starter kit evidence)
   template   Isolated snippet + compose.css (portable unit without shell)
 
@@ -106,7 +108,7 @@ Options:
   --base URL         Server base (optional: auto-spawn dev-server)
   --out PATH         Review pack directory (default design/components/captures)
   --ids a,b          Fixture ids
-  --flows a,b        page,component,template (default all)
+  --flows a,b        page,region,component,template (default all)
   --viewports a,b    phone,desktop,… (default phone,desktop)
   --settle-ms N      Wait for specimen ready (default 8000)
   --json             Emit manifest JSON to stdout
@@ -126,25 +128,35 @@ function captureQuery(url) {
 }
 
 async function screenshotPage(session, filePath) {
-  const { data } = await session.send('Page.captureScreenshot', {
-    format: 'png',
-    fromSurface: true,
-    captureBeyondViewport: false,
-  });
-  await writeFile(filePath, Buffer.from(data, 'base64'));
+  try {
+    const { data } = await session.send('Page.captureScreenshot', {
+      format: 'png',
+      fromSurface: false,
+      captureBeyondViewport: false,
+    }, 10000);
+    await writeFile(filePath, Buffer.from(data, 'base64'));
+  } catch {
+    const { data } = await session.send('Page.captureScreenshot', {
+      format: 'png',
+    }, 10000);
+    await writeFile(filePath, Buffer.from(data, 'base64'));
+  }
 }
 
 async function measureSelector(session, selector) {
   const { result, exceptionDetails } = await session.send('Runtime.evaluate', {
-    expression: `(() => {
+    expression: `(async () => {
       const el = document.querySelector(${JSON.stringify(selector)});
       if (!el) return null;
-      el.scrollIntoView({ block: 'center', inline: 'nearest' });
+      el.scrollIntoView({ behavior: 'instant', block: 'center', inline: 'nearest' });
+      await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
       const r = el.getBoundingClientRect();
       const ds = el.dataset || {};
       return {
-        x: r.x,
-        y: r.y,
+        x: r.left + window.scrollX,
+        y: r.top + window.scrollY,
+        viewportX: r.left,
+        viewportY: r.top,
         width: r.width,
         height: r.height,
         top: r.top,
@@ -165,22 +177,72 @@ async function measureSelector(session, selector) {
   return result?.value || null;
 }
 
-async function screenshotClip(session, filePath, box, padding = 12) {
+async function screenshotClip(session, filePath, box, viewport, padding = 12) {
   const dpr = 1;
+  const vpW = viewport?.width || 1280;
+  const vpH = viewport?.height || 900;
   const x = Math.max(0, Math.floor(box.x - padding));
   const y = Math.max(0, Math.floor(box.y - padding));
-  const width = Math.max(1, Math.ceil(box.width + padding * 2));
-  const height = Math.max(1, Math.ceil(box.height + padding * 2));
-  const { data } = await session.send('Page.captureScreenshot', {
-    format: 'png',
-    fromSurface: true,
-    clip: {
-      x, y, width, height, scale: dpr,
-    },
-    captureBeyondViewport: true,
-  });
-  await writeFile(filePath, Buffer.from(data, 'base64'));
-  return { x, y, width, height };
+  const width = Math.max(2, Math.min(vpW, Math.ceil(box.width + padding * 2)));
+  // Keep region artifacts reviewable without asking Chrome for an unbounded page slice.
+  const height = Math.max(2, Math.min(vpH * 2, Math.ceil(box.height + padding * 2)));
+
+  try {
+    const res = await session.send('Page.captureScreenshot', {
+      format: 'png',
+      fromSurface: true,
+      clip: {
+        x, y, width, height, scale: dpr,
+      },
+      captureBeyondViewport: true,
+    }, 10000);
+    if (res?.data) {
+      await writeFile(filePath, Buffer.from(res.data, 'base64'));
+      return { x, y, width, height };
+    }
+  } catch {
+    // Mobile headless can reject document-coordinate clips while the page is busy.
+  }
+
+  try {
+    const viewportX = Math.max(0, Math.floor((box.viewportX ?? 0) - padding));
+    const viewportY = Math.max(0, Math.floor((box.viewportY ?? 0) - padding));
+    const viewportWidth = Math.max(2, Math.min(vpW - viewportX, width));
+    const viewportHeight = Math.max(2, Math.min(vpH - viewportY, height));
+    const res = await session.send('Page.captureScreenshot', {
+      format: 'png',
+      fromSurface: false,
+      clip: {
+        x: viewportX,
+        y: viewportY,
+        width: viewportWidth,
+        height: viewportHeight,
+        scale: dpr,
+      },
+      captureBeyondViewport: false,
+    }, 10000);
+    if (res?.data) {
+      await writeFile(filePath, Buffer.from(res.data, 'base64'));
+      return {
+        x: viewportX,
+        y: viewportY,
+        width: viewportWidth,
+        height: viewportHeight,
+        coordinateSpace: 'viewport',
+      };
+    }
+  } catch {
+    // A labeled viewport fallback is preferable to silently omitting the artifact.
+  }
+
+  await screenshotPage(session, filePath);
+  return {
+    x: 0,
+    y: 0,
+    width: vpW,
+    height: vpH,
+    fallback: 'viewport',
+  };
 }
 
 async function renderTemplateDocument(session, base, snippetHtml, viewport) {
@@ -255,11 +317,12 @@ function galleryHtml(manifest) {
 <body>
   <header>
     <h1>Component capture pack</h1>
-    <p class="meta">Generated ${manifest.at || ''} · ${manifest.captures?.length || 0} images · strategy: page / component / template</p>
+    <p class="meta">Generated ${manifest.at || ''} · ${manifest.captures?.length || 0} images · strategy: page / region / component / template</p>
     <p class="meta">Pipeline sources: specimen routes, fixture registry, compose.css isolation. Review evidence — not pixel CI unless opted in.</p>
     <div class="filters" role="group" aria-label="Filter by flow">
       <button type="button" data-filter="all" aria-pressed="true">all</button>
       <button type="button" data-filter="page">page</button>
+      <button type="button" data-filter="region">region</button>
       <button type="button" data-filter="component">component</button>
       <button type="button" data-filter="template">template</button>
     </div>
@@ -324,6 +387,7 @@ async function main() {
 
   const captures = [];
   const errors = [];
+  const capturedPages = new Set();
 
   try {
     if (!base) {
@@ -338,38 +402,38 @@ async function main() {
     process.stderr.write(`[component:screenshots] base ${base}\n`);
     process.stderr.write(`[component:screenshots] out ${options.out}\n`);
 
-    userDataDir = await mkdtemp(path.join(tmpdir(), 'spw-comp-cap-'));
+    userDataDir = await createChromeProfileDir('spw-comp-cap-');
     chromeChild = await openChrome(chromePath, userDataDir, debugPort);
 
-    for (const fixture of fixtures) {
-      let snippetText = '';
-      try {
-        snippetText = await readFile(path.join(ROOT, fixture.snippet), 'utf8');
-      } catch {
-        errors.push(`${fixture.id}: cannot read snippet ${fixture.snippet}`);
-        continue;
-      }
-      const snippetHash = sha8(snippetText);
+    const target = await newPageTarget(debugPort);
+    const session = new CdpSession(target.webSocketDebuggerUrl);
+    await session.open();
 
-      const fixtureFlows = Array.isArray(fixture.captureFlows) && fixture.captureFlows.length
-        ? fixture.captureFlows
-        : FLOWS;
-      const activeFlows = options.flows.filter((f) => fixtureFlows.includes(f));
-      if (!activeFlows.length) continue;
-
-      for (const viewport of viewports) {
-        if (fixture.layoutScenarios?.length && !fixture.layoutScenarios.includes(viewport.id)) {
-          // Allow only declared scenarios when present
+    try {
+      for (const fixture of fixtures) {
+        let snippetText = '';
+        try {
+          snippetText = await readFile(path.join(ROOT, fixture.snippet), 'utf8');
+        } catch {
+          errors.push(`${fixture.id}: cannot read snippet ${fixture.snippet}`);
           continue;
         }
+        const snippetHash = sha8(snippetText);
 
-        const target = await newPageTarget(debugPort);
-        const session = new CdpSession(target.webSocketDebuggerUrl);
-        await session.open();
+        const fixtureFlows = Array.isArray(fixture.captureFlows) && fixture.captureFlows.length
+          ? fixture.captureFlows
+          : FLOWS;
+        const activeFlows = options.flows.filter((f) => fixtureFlows.includes(f));
+        if (!activeFlows.length) continue;
 
-        try {
-          // --- page + component flows share specimen navigation ---
-          if (activeFlows.includes('page') || activeFlows.includes('component')) {
+        for (const viewport of viewports) {
+          if (fixture.layoutScenarios?.length && !fixture.layoutScenarios.includes(viewport.id)) {
+            // Allow only declared scenarios when present
+            continue;
+          }
+
+          // --- page + region + component flows share specimen navigation ---
+          if (activeFlows.includes('page') || activeFlows.includes('region') || activeFlows.includes('component')) {
             const specimenUrl = captureQuery(new URL(fixture.specimenRoute, `${base}/`).href);
             process.stderr.write(`[component:screenshots] ${fixture.id} ${viewport.id} specimen\n`);
             await navigateAndProbe(session, {
@@ -381,102 +445,155 @@ async function main() {
             });
 
             if (activeFlows.includes('page')) {
-              const file = `captures/${fixture.id}--${viewport.id}--page.png`;
-              const abs = path.join(options.out, file);
-              await screenshotPage(session, abs);
-              captures.push({
-                fixtureId: fixture.id,
-                label: fixture.label,
-                flow: 'page',
-                viewport: viewport.id,
-                width: viewport.width,
-                height: viewport.height,
-                file,
-                abs,
-                source: 'specimen-route',
-                specimenRoute: fixture.specimenRoute,
-                selector: fixture.selector,
-                snippet: fixture.snippet,
-                snippetHash,
-                alt: `${fixture.label} on ${fixture.specimenRoute} at ${viewport.id} (full page context)`,
-                publish: ['design-review', 'agent-brief', 'page-pipeline'],
-              });
-              process.stderr.write(`  page -> ${file}\n`);
+              try {
+                const pageKey = `${new URL(fixture.specimenRoute, `${base}/`).pathname}|${viewport.id}`;
+                if (!capturedPages.has(pageKey)) {
+                  capturedPages.add(pageKey);
+                  const routeId = new URL(fixture.specimenRoute, `${base}/`).pathname
+                    .replace(/^\/|\/$/g, '')
+                    .replaceAll('/', '--') || 'home';
+                  const file = `captures/page--${routeId}--${viewport.id}.png`;
+                  const abs = path.join(options.out, file);
+                  await screenshotPage(session, abs);
+                  captures.push({
+                    fixtureId: null,
+                    label: `${fixture.specimenRoute} page`,
+                    flow: 'page',
+                    viewport: viewport.id,
+                    width: viewport.width,
+                    height: viewport.height,
+                    file,
+                    abs,
+                    source: 'specimen-route',
+                    specimenRoute: fixture.specimenRoute,
+                    alt: `${fixture.specimenRoute} at ${viewport.id} (full page context)`,
+                    publish: ['design-review', 'agent-brief', 'page-pipeline'],
+                  });
+                  process.stderr.write(`  page -> ${file}\n`);
+                }
+              } catch (err) {
+                errors.push(`${fixture.id}@${viewport.id} page capture failed: ${err.message}`);
+              }
+            }
+
+            if (activeFlows.includes('region')) {
+              try {
+                const box = await measureSelector(session, fixture.regionSelector);
+                if (!box || box.width < 2 || box.height < 2) {
+                  errors.push(`${fixture.id}@${viewport.id}: region ${fixture.regionSelector} not found or empty`);
+                } else {
+                  const file = `captures/${fixture.id}--${viewport.id}--region.png`;
+                  const abs = path.join(options.out, file);
+                  const clip = await screenshotClip(session, abs, box, viewport, 20);
+                  captures.push({
+                    fixtureId: fixture.id,
+                    label: fixture.label,
+                    flow: 'region',
+                    viewport: viewport.id,
+                    width: viewport.width,
+                    height: viewport.height,
+                    file,
+                    abs,
+                    source: 'specimen-region',
+                    specimenRoute: fixture.specimenRoute,
+                    selector: fixture.regionSelector,
+                    componentSelector: fixture.selector,
+                    snippet: fixture.snippet,
+                    snippetHash,
+                    clip,
+                    semantics: box.semantics,
+                    textPreview: box.text,
+                    alt: `${fixture.label} owning region (${fixture.regionSelector}) at ${viewport.id}`,
+                    publish: ['design-review', 'layout-qa', 'agent-brief'],
+                  });
+                  process.stderr.write(`  region -> ${file} (${clip.width}×${clip.height})\n`);
+                }
+              } catch (err) {
+                errors.push(`${fixture.id}@${viewport.id} region capture failed: ${err.message}`);
+              }
             }
 
             if (activeFlows.includes('component')) {
-              const box = await measureSelector(session, fixture.selector);
-              if (!box || box.width < 2 || box.height < 2) {
-                errors.push(`${fixture.id}@${viewport.id}: selector ${fixture.selector} not found or empty on specimen`);
-              } else {
-                const file = `captures/${fixture.id}--${viewport.id}--component.png`;
-                const abs = path.join(options.out, file);
-                const clip = await screenshotClip(session, abs, box);
-                captures.push({
-                  fixtureId: fixture.id,
-                  label: fixture.label,
-                  flow: 'component',
-                  viewport: viewport.id,
-                  width: viewport.width,
-                  height: viewport.height,
-                  file,
-                  abs,
-                  source: 'specimen-clip',
-                  specimenRoute: fixture.specimenRoute,
-                  selector: fixture.selector,
-                  snippet: fixture.snippet,
-                  snippetHash,
-                  clip,
-                  semantics: box.semantics,
-                  textPreview: box.text,
-                  alt: `${fixture.label} component clip (${fixture.selector}) at ${viewport.id}`,
-                  publish: ['starter-kit', 'design-review', 'component-pipeline', 'agent-brief'],
-                });
-                process.stderr.write(`  component -> ${file} (${clip.width}×${clip.height})\n`);
+              try {
+                const box = await measureSelector(session, fixture.selector);
+                if (!box || box.width < 2 || box.height < 2) {
+                  errors.push(`${fixture.id}@${viewport.id}: selector ${fixture.selector} not found or empty on specimen`);
+                } else {
+                  const file = `captures/${fixture.id}--${viewport.id}--component.png`;
+                  const abs = path.join(options.out, file);
+                  const clip = await screenshotClip(session, abs, box, viewport);
+                  captures.push({
+                    fixtureId: fixture.id,
+                    label: fixture.label,
+                    flow: 'component',
+                    viewport: viewport.id,
+                    width: viewport.width,
+                    height: viewport.height,
+                    file,
+                    abs,
+                    source: 'specimen-clip',
+                    specimenRoute: fixture.specimenRoute,
+                    selector: fixture.selector,
+                    snippet: fixture.snippet,
+                    snippetHash,
+                    clip,
+                    semantics: box.semantics,
+                    textPreview: box.text,
+                    alt: `${fixture.label} component clip (${fixture.selector}) at ${viewport.id}`,
+                    publish: ['starter-kit', 'design-review', 'component-pipeline', 'agent-brief'],
+                  });
+                  process.stderr.write(`  component -> ${file} (${clip.width}×${clip.height})\n`);
+                }
+              } catch (err) {
+                errors.push(`${fixture.id}@${viewport.id} component capture failed: ${err.message}`);
               }
             }
           }
 
           // --- template isolation (compose.css only) ---
           if (activeFlows.includes('template')) {
-            process.stderr.write(`[component:screenshots] ${fixture.id} ${viewport.id} template\n`);
-            await renderTemplateDocument(session, base, snippetText, viewport);
-            // Prefer clip to host; fall back to page
-            let box = await measureSelector(session, fixture.selector);
-            if (!box) box = await measureSelector(session, '[data-spw-capture-host="template"]');
-            const file = `captures/${fixture.id}--${viewport.id}--template.png`;
-            const abs = path.join(options.out, file);
-            let clip = null;
-            if (box && box.width >= 2) {
-              clip = await screenshotClip(session, abs, box, 16);
-            } else {
-              await screenshotPage(session, abs);
+            try {
+              process.stderr.write(`[component:screenshots] ${fixture.id} ${viewport.id} template\n`);
+              await renderTemplateDocument(session, base, snippetText, viewport);
+              // Prefer clip to host; fall back to page
+              let box = await measureSelector(session, fixture.selector);
+              if (!box) box = await measureSelector(session, '[data-spw-capture-host="template"]');
+              const file = `captures/${fixture.id}--${viewport.id}--template.png`;
+              const abs = path.join(options.out, file);
+              let clip = null;
+              if (box && box.width >= 2) {
+                clip = await screenshotClip(session, abs, box, viewport, 16);
+              } else {
+                await screenshotPage(session, abs);
+              }
+              captures.push({
+                fixtureId: fixture.id,
+                label: fixture.label,
+                flow: 'template',
+                viewport: viewport.id,
+                width: viewport.width,
+                height: viewport.height,
+                file,
+                abs,
+                source: 'snippet-isolation',
+                specimenRoute: null,
+                selector: fixture.selector,
+                snippet: fixture.snippet,
+                snippetHash,
+                clip,
+                semantics: box?.semantics || null,
+                alt: `${fixture.label} isolated template (compose.css) at ${viewport.id}`,
+                publish: ['starter-kit', 'template-pipeline', 'portable-export', 'agent-brief'],
+              });
+              process.stderr.write(`  template -> ${file}\n`);
+            } catch (err) {
+              errors.push(`${fixture.id}@${viewport.id} template capture failed: ${err.message}`);
             }
-            captures.push({
-              fixtureId: fixture.id,
-              label: fixture.label,
-              flow: 'template',
-              viewport: viewport.id,
-              width: viewport.width,
-              height: viewport.height,
-              file,
-              abs,
-              source: 'snippet-isolation',
-              specimenRoute: null,
-              selector: fixture.selector,
-              snippet: fixture.snippet,
-              snippetHash,
-              clip,
-              semantics: box?.semantics || null,
-              alt: `${fixture.label} isolated template (compose.css) at ${viewport.id}`,
-              publish: ['starter-kit', 'template-pipeline', 'portable-export', 'agent-brief'],
-            });
-            process.stderr.write(`  template -> ${file}\n`);
           }
-        } finally {
-          session.close();
         }
       }
+    } finally {
+      session.close();
     }
 
     const manifest = {
@@ -485,12 +602,14 @@ async function main() {
       strategy: {
         flows: {
           page: 'Live specimen route full viewport — page publishing / context for agents',
+          region: 'Owning live section clip — hierarchy, spacing, and packing evidence',
           component: 'Clipped selector on specimen — component passport evidence',
           template: 'Snippet + compose.css isolation — portable template publishing',
         },
         longTerm: [
           'Fixtures own capture intent; screenshots are evidence until baseline-opt-in',
           'Page flow feeds design review and route-level briefs',
+          'Region flow connects page hierarchy to component anatomy and packing',
           'Component flow feeds starter kit and packing QA',
           'Template flow feeds portable export and other pipeline sources (catalog, Midjourney refs, docs)',
           'Do not commit noisy goldens by default; publish packs to design/components/captures/ (gitignored) or CI artifacts',
@@ -508,6 +627,7 @@ async function main() {
         id: f.id,
         label: f.label,
         selector: f.selector,
+        regionSelector: f.regionSelector || null,
         specimenRoute: f.specimenRoute,
         snippet: f.snippet,
         cssOwner: f.cssOwner,
@@ -539,6 +659,7 @@ async function main() {
         capturesDir: 'captures/',
         publishHints: {
           page: 'route review, OG/social stills, agent page briefs',
+          region: 'section hierarchy, layout QA, component ownership',
           component: 'starter kit evidence, packing review, passport cards',
           template: 'portable export, docs embeds, external render tools',
         },

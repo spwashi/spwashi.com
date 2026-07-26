@@ -1,9 +1,11 @@
-export type ComponentCaptureFlow = 'page' | 'component' | 'template';
+export type ComponentCaptureFlow = 'page' | 'region' | 'component' | 'template';
 
 export type ComponentFixture = Readonly<{
   id: string;
   label: string;
   selector: string;
+  /** Stable page region that owns the specimen in its live route. */
+  regionSelector?: string;
   specimenRoute: string;
   cssOwner: string;
   snippet: string;
@@ -22,7 +24,7 @@ export const COMPONENT_FIXTURES = Object.freeze([
   {
     id: 'site-frame',
     label: 'Site frame',
-    selector: '.site-frame',
+    selector: '#component-anatomy-slots',
     specimenRoute: '/design/components/#component-anatomy-slots',
     cssOwner: 'public/css/components/foundation.css',
     snippet: 'design/components/snippets/site-frame.html',
@@ -37,41 +39,44 @@ export const COMPONENT_FIXTURES = Object.freeze([
     id: 'frame-card',
     label: 'Frame card',
     selector: '.frame-card',
-    specimenRoute: '/design/composition/#spatial-gravity-title',
+    regionSelector: '#entry-loops',
+    specimenRoute: '/',
     cssOwner: 'public/css/components/cards.css',
     snippet: 'design/components/snippets/frame-card.html',
     requiredSlots: ['body'],
     states: ['ambient', 'focal', 'collected'],
     layoutScenarios: ['phone', 'desktop'],
-    captureFlows: ['page', 'component', 'template'],
+    captureFlows: ['page', 'region', 'component', 'template'],
     publishTargets: ['starter-kit', 'template-pipeline', 'agent-brief'],
     captureValue: 'Portable card unit — glass surface + slot grammar without shell.',
   },
   {
     id: 'operator-chip',
     label: 'Operator chip',
-    selector: '.operator-chip',
+    selector: '#component-anatomy-slots .operator-chip',
+    regionSelector: '#component-anatomy-slots',
     specimenRoute: '/design/components/#component-anatomy-slots',
     cssOwner: 'public/css/handles/operators/sigils-and-chips.css',
     snippet: 'design/components/snippets/operator-chip.html',
     requiredSlots: [],
     states: ['frame', 'probe', 'action'],
     layoutScenarios: ['phone', 'desktop'],
-    captureFlows: ['component', 'template'],
+    captureFlows: ['region', 'component', 'template'],
     publishTargets: ['starter-kit', 'template-pipeline', 'agent-brief'],
     captureValue: 'Operator handle density — small clip more valuable than full page.',
   },
   {
     id: 'tuning-strip',
     label: 'Tuning strip',
-    selector: '.tuning-strip',
-    specimenRoute: '/design/components/#component-recipes-capture',
+    selector: '#structural-vocabulary .tuning-strip',
+    regionSelector: '#structural-vocabulary',
+    specimenRoute: '/design/components/#structural-vocabulary',
     cssOwner: 'public/css/components/controls.css',
     snippet: 'design/components/snippets/tuning-strip.html',
     requiredSlots: [],
     states: ['compact', 'wrapped'],
     layoutScenarios: ['phone', 'desktop'],
-    captureFlows: ['component', 'template'],
+    captureFlows: ['region', 'component', 'template'],
     publishTargets: ['starter-kit', 'template-pipeline', 'agent-brief'],
     captureValue: 'Compact control grouping — wrapping and label clarity matter more than route context.',
   },
