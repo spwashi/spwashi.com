@@ -6,7 +6,7 @@ import test from 'node:test';
 import { MOUNT_WHEN } from '../../public/js/runtime/module-catalog-constants.js';
 import { ENHANCEMENT_DEFS } from '../../public/js/runtime/module-catalog-enhancement.js';
 import { resolveModuleCatalogSpecifier } from '../../public/js/runtime/module-catalog-normalize.js';
-import { getOperatorDefinition } from '../../public/js/kernel/shared.js';
+import { composeOpBundle, getOperatorDefinition, splitOperatorExpression } from '../../public/js/kernel/shared.js';
 
 import {
   shouldExcludeBuildPath,
@@ -271,4 +271,30 @@ test('operator definitions and aliases resolve all canonical workbench roles', (
     assert.ok(definition.role, `Workbench role "${role}" has no role`);
     assert.ok(definition.physics, `Workbench role "${role}" has no physics field`);
   }
+});
+
+test('splits operators and operands with canonical positional dispatch', () => {
+  const unspacedHandle = splitOperatorExpression('#>town_library');
+  assert.equal(unspacedHandle.operator, 'frame');
+  assert.equal(unspacedHandle.prefix, '#>');
+  assert.equal(unspacedHandle.operand, 'town_library');
+  assert.equal(unspacedHandle.position, 'prefix');
+
+  const proseAction = splitOperatorExpression('! generate seed');
+  assert.equal(proseAction.operator, 'action');
+  assert.equal(proseAction.prefix, '!');
+  assert.equal(proseAction.operand, 'generate seed');
+  assert.equal(proseAction.position, 'prefix');
+
+  const modeLens = splitOperatorExpression('[cozy]');
+  assert.equal(modeLens.operator, 'mode');
+  assert.equal(modeLens.prefix, '[');
+  assert.equal(modeLens.operand, 'cozy');
+  assert.equal(modeLens.position, 'prefix');
+
+  const bundle = composeOpBundle('! generate seed');
+  assert.match(bundle, /operator:action/);
+  assert.match(bundle, /operand:generate_seed/);
+  assert.match(bundle, /position:prefix/);
+  assert.match(bundle, /dispatch:forward/);
 });

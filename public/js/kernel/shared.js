@@ -1381,10 +1381,12 @@ const splitOperatorExpression = (expression = '') => {
   const normalized = normalizeText(expression);
   const definition = detectOperator(normalized);
   if (definition) {
+    const rawOperand = normalized.slice(definition.prefix.length).trim();
+    const cleanOperand = rawOperand.replace(/^[\[{(<]+|[\]})>]+$/g, '').trim();
     return {
       operator: definition.type,
       prefix: definition.prefix || '',
-      operand: normalized.replace(definition.pattern, '').trim(),
+      operand: cleanOperand || rawOperand,
       position: 'prefix',
     };
   }
