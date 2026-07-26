@@ -1196,11 +1196,26 @@ const VISIBLE_MOUNT_SLICE_BUDGET_MS = 10;
 
 function yieldToNextFrame() {
   return new Promise((resolve) => {
+    let settled = false;
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      resolve();
+    };
+    // Headless / background: rAF and scheduler may stall; always arm a timeout.
+    window.setTimeout(finish, 48);
     if (typeof window.scheduler?.postTask === 'function') {
-      window.scheduler.postTask(resolve, { priority: 'user-visible' });
+      try {
+        window.scheduler.postTask(finish, { priority: 'user-visible' });
+        return;
+      } catch {
+        // fall through to rAF
+      }
+    }
+    if (typeof window.requestAnimationFrame === 'function') {
+      window.requestAnimationFrame(() => window.setTimeout(finish, 0));
       return;
     }
-    window.requestAnimationFrame(() => window.setTimeout(resolve, 0));
   });
 }
 
@@ -1487,17 +1502,37 @@ function queueSettledEnhancements(defs, ctx) {
   if (!settledDefs.length) return;
 
   const run = async () => {
+    // Double-rAF yields a paint; headless/background tabs may never fire rAF,
+    // so pair with a short timeout so SETTLED modules still mount.
     await new Promise((resolve) => {
-      globalThis.requestAnimationFrame(() => {
-        globalThis.requestAnimationFrame(resolve);
+      let settled = false;
+      const finish = () => {
+        if (settled) return;
+        settled = true;
+        resolve();
+      };
+      const timeout = window.setTimeout(finish, 200);
+      ctx.addTimer?.(timeout);
+      const raf = globalThis.requestAnimationFrame
+        ? globalThis.requestAnimationFrame.bind(globalThis)
+        : (cb) => window.setTimeout(cb, 16);
+      raf(() => {
+        raf(finish);
       });
     });
 
+    performance.mark('spw:settled-layer:start');
     beginMountBatch();
     try {
       await Promise.all(settledDefs.map((def) => mountDefinition(def, ctx, null, 0)));
     } finally {
       endMountBatch(ctx);
+    }
+    performance.mark('spw:settled-layer:end');
+    try {
+      performance.measure('spw:settled-layer', 'spw:settled-layer:start', 'spw:settled-layer:end');
+    } catch {
+      // measure requires both marks; ignore if navigation cleared them
     }
 
     ctx.bus.emit('spw:layout-assumptions-ready', { route: ctx.route });

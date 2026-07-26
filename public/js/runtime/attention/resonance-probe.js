@@ -22,6 +22,13 @@ export function initResonanceProbe(root) {
     );
   }
 
+  let rafId = 0;
+
+  function scheduleApply() {
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(apply);
+  }
+
   function apply() {
     const key = probeFocus || probeHover;
     const nextLogKey = key || 'cleared';
@@ -40,14 +47,14 @@ export function initResonanceProbe(root) {
     const target = event.target.closest?.(PROBE_TARGET_SELECTOR);
     if (!target) return;
     probeFocus = readResonanceKey(target);
-    apply();
+    scheduleApply();
   }
 
   function onFocusOut(event) {
     const next = event.relatedTarget?.closest?.(PROBE_TARGET_SELECTOR);
     if (!next) {
       probeFocus = null;
-      apply();
+      scheduleApply();
     }
   }
 
@@ -58,7 +65,7 @@ export function initResonanceProbe(root) {
     clearTimeout(hoverTimer);
     hoverTimer = window.setTimeout(() => {
       probeHover = readResonanceKey(target);
-      apply();
+      scheduleApply();
     }, HOVER_DELAY);
   }
 
@@ -68,7 +75,7 @@ export function initResonanceProbe(root) {
     if (target.contains(event.relatedTarget)) return;
     clearTimeout(hoverTimer);
     probeHover = null;
-    apply();
+    scheduleApply();
   }
 
   root.addEventListener('focusin', onFocusIn);
@@ -77,6 +84,7 @@ export function initResonanceProbe(root) {
   root.addEventListener('mouseout', onMouseLeave);
 
   return () => {
+    if (rafId) cancelAnimationFrame(rafId);
     clearTimeout(hoverTimer);
     root.removeEventListener('focusin', onFocusIn);
     root.removeEventListener('focusout', onFocusOut);

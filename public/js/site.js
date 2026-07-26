@@ -211,16 +211,46 @@ const runtimeLogger = createSpwLogger('spw-runtime', {
 function getSpwPerformanceTimings() {
   const filter = (entry) => entry && typeof entry.name === 'string' && entry.name.startsWith('spw:');
   try {
+    const marks = performance.getEntriesByType('mark')
+      .filter(filter)
+      .map((m) => ({ name: m.name, startTime: Math.round(m.startTime) }));
+    const measures = performance.getEntriesByType('measure')
+      .filter(filter)
+      .map((m) => ({ name: m.name, duration: Math.round(m.duration), startTime: Math.round(m.startTime) }));
+
+    const pickDuration = (...names) => {
+      for (const name of names) {
+        const hit = measures.find((m) => m.name === name);
+        if (hit) return hit.duration;
+      }
+      return null;
+    };
+
+    const idleChunks = measures
+      .filter((m) => m.name.startsWith('spw:idle-chunk:') && !m.name.endsWith(':start') && !m.name.endsWith(':end'))
+      .map((m) => ({
+        chunk: m.name.replace(/^spw:idle-chunk:/, ''),
+        duration: m.duration,
+      }));
+
     return {
-      marks: performance.getEntriesByType('mark')
-        .filter(filter)
-        .map((m) => ({ name: m.name, startTime: Math.round(m.startTime) })),
-      measures: performance.getEntriesByType('measure')
-        .filter(filter)
-        .map((m) => ({ name: m.name, duration: Math.round(m.duration), startTime: Math.round(m.startTime) })),
+      marks,
+      measures,
+      summary: {
+        bootToReady: pickDuration('spw:boot-to-ready'),
+        immediateLayer: pickDuration('spw:immediate-layer', 'spw:immediate-layer-parallel'),
+        immediateCore: pickDuration('spw:immediate-layer:core:parallel'),
+        immediateNonCore: pickDuration('spw:immediate-non-core-layers'),
+        settledLayer: pickDuration('spw:settled-layer'),
+        fullBoot: pickDuration('spw:full-boot'),
+        idleChunks,
+        idleChunkTotal: idleChunks.reduce((sum, row) => sum + (row.duration || 0), 0),
+        markCount: marks.length,
+        measureCount: measures.length,
+      },
     };
   } catch {
-    return { marks: [], measures: [] };
+    return { marks: [], measures: [], summary: null };
   }
 }
 
@@ -709,16 +739,25 @@ function scheduleRegionEnrichment(pageMeta, ctx) {
   if (regionEnrichmentPromise) return regionEnrichmentPromise;
 
   regionEnrichmentPromise = new Promise((resolve) => {
+    let settled = false;
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      enrichRegionMetadata(pageMeta, { body: ctx.body || BODY });
+      if (!ctx.regions.length) {
+        primeRegions(ctx);
+      }
+      refreshRegionProfiles(ctx, 'region-metadata-enrichment');
+      resolve();
+    };
+
     requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        enrichRegionMetadata(pageMeta, { body: ctx.body || BODY });
-        if (!ctx.regions.length) {
-          primeRegions(ctx);
-        }
-        refreshRegionProfiles(ctx, 'region-metadata-enrichment');
-        resolve();
-      });
+      requestAnimationFrame(finish);
     });
+
+    // Fallback: if rAF never fires (headless Chrome, background tab, etc),
+    // resolve after 200ms so the boot sequence completes.
+    setTimeout(finish, 200);
   });
 
   return regionEnrichmentPromise;

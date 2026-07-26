@@ -101,6 +101,30 @@ const VALID_COST_CLASSES = new Set([
   'paint_composite',
 ]);
 
+/** timingArc stems aligned with feature-wiring-timing cache + progressive-css coordinate_parity. */
+const TIMING_ARC_STEMS = Object.freeze([
+  'boot',
+  'immediate',
+  'feature',
+  'visible',
+  'enhance',
+  'idle',
+  'settled',
+  'region',
+] as const);
+
+const TIMING_ARC_STEM_RE = new RegExp(
+  `^(?:${TIMING_ARC_STEMS.join('|')})-[a-z0-9]+(?:-[a-z0-9]+)*$`,
+);
+
+const STANDARD_IDLE_CHUNKS = Object.freeze([
+  'idle-residue',
+  'idle-collectible',
+  'idle-chrome',
+  'idle-lab',
+  'idle-default',
+] as const);
+
 type RuntimeContractModule = {
   /** Explicit costClass from catalog when present (optimization coordinate). */
   costClass: string | null;
@@ -625,7 +649,16 @@ function validateModule(
     const timingTokens = splitContractTokens(module.timingArc);
     if (timingTokens.length !== 1 || !CONTRACT_TOKEN_RE.test(timingTokens[0])) {
       errors.push(`${label} timingArc must be a single lowercase kebab-case token.`);
+    } else if (!TIMING_ARC_STEM_RE.test(timingTokens[0])) {
+      recommendations.push(
+        `${label} timingArc "${timingTokens[0]}" should use a known stem `
+        + `(${TIMING_ARC_STEMS.join('|')}-*) so schedule family and CSS coordinate_parity stay aligned.`,
+      );
     }
+  } else if (module.layer !== 'core' && !module.debugOnly) {
+    recommendations.push(
+      `${label} is missing timingArc; stamp boot-|immediate-|feature-|visible-|enhance-|idle-|settled-* for mount hygiene.`,
+    );
   }
 
   if (module.timingChunk) {
@@ -634,16 +667,39 @@ function validateModule(
       errors.push(`${label} timingChunk must be a single lowercase kebab-case token.`);
     } else if (
       module.when === 'idle'
-      && !['idle-residue', 'idle-collectible', 'idle-chrome', 'idle-lab', 'idle-default'].includes(chunkTokens[0])
+      && !(STANDARD_IDLE_CHUNKS as readonly string[]).includes(chunkTokens[0])
     ) {
       recommendations.push(
-        `${label} timingChunk "${chunkTokens[0]}" is nonstandard; prefer idle-residue|idle-collectible|idle-chrome|idle-lab|idle-default.`,
+        `${label} timingChunk "${chunkTokens[0]}" is nonstandard; prefer ${STANDARD_IDLE_CHUNKS.join('|')}.`,
+      );
+    } else if (module.when !== 'idle' && module.timingChunk) {
+      recommendations.push(
+        `${label} declares timingChunk but when=${module.when}; idle chunks only order IDLE residue-before-flourish mounts.`,
       );
     }
   } else if (module.when === 'idle' && module.layer !== 'core') {
     recommendations.push(
       `${label} is IDLE without timingChunk; loader will infer from timingArc, but explicit chunk documents residue-before-flourish order.`,
     );
+  }
+
+  // Coordinate parity: paint_composite + IMMEDIATE should declare roleful flourishes so CSS
+  // can keep structural chrome vs deferred ornament distinct (progressive-css table).
+  if (
+    module.costClass === 'paint_composite'
+    && module.when === 'immediate'
+    && module.layer === 'enhancement'
+    && module.updates.length >= 3
+  ) {
+    const roleful = module.updates.filter((token) => (
+      /(?:^|:)(?:structural|flourish|inspect|residue|measure|diagnostic):/.test(token)
+      || /^(?:structural|flourish|inspect|residue|measure|diagnostic):/.test(token)
+    ));
+    if (roleful.length === 0) {
+      recommendations.push(
+        `${label} is paint_composite+IMMEDIATE without role: updates; prefix structural/flourish/measure so CSS owners stay aligned.`,
+      );
+    }
   }
 
   for (const token of splitContractTokens(module.effectScope)) {
@@ -943,10 +999,29 @@ export async function main(): Promise<void> {
     acc[module.when] = (acc[module.when] || 0) + 1;
     return acc;
   }, {});
+  const byTimingStem = report.modules.reduce<Record<string, number>>((acc, module) => {
+    if (!module.timingArc) {
+      acc.missing = (acc.missing || 0) + 1;
+      return acc;
+    }
+    const stem = TIMING_ARC_STEMS.find((candidate) => module.timingArc?.startsWith(`${candidate}-`)) || 'other';
+    acc[stem] = (acc[stem] || 0) + 1;
+    return acc;
+  }, {});
+  const byIdleChunk = idleModules.reduce<Record<string, number>>((acc, module) => {
+    const chunk = module.timingChunk || 'inferred';
+    acc[chunk] = (acc[chunk] || 0) + 1;
+    return acc;
+  }, {});
+  const paintCompositeImmediate = enhancementImmediate.filter((module) => module.costClass === 'paint_composite');
 
   console.log(`[runtime] modules=${report.modules.length} ownerDirs=${report.ownerDirectories.length} rootEntrypoints=${report.rootEntrypoints.length} topLevelModuleFiles=${report.topLevelModuleFiles.length} styleWrites=${report.stylePropertyWrites.length} cssCustomProperties=${report.cssCustomProperties.length} typedOutputs=${report.typedOutputs.length} kernelShims=${report.kernelTypedShims.length} behaviorScopes=${report.behaviorScopes.length}`);
-  console.log(`[runtime] mountHygiene enhancementImmediate=${enhancementImmediate.length}/${enhancementModules.length} demandGated=${demandGatedImmediate.length}/${enhancementImmediate.length} timingArc=${enhancementImmediate.filter((module) => Boolean(module.timingArc)).length}/${enhancementImmediate.length} idleChunk=${idleChunked.length}/${idleModules.length} rolefulUpdates=${rolefulModules.length}/${report.modules.length} costClass=${costClassTagged.length}/${report.modules.length}`);
+  console.log(`[runtime] mountHygiene enhancementImmediate=${enhancementImmediate.length}/${enhancementModules.length} demandGated=${demandGatedImmediate.length}/${enhancementImmediate.length} timingArc=${enhancementImmediate.filter((module) => Boolean(module.timingArc)).length}/${enhancementImmediate.length} idleChunk=${idleChunked.length}/${idleModules.length} rolefulUpdates=${rolefulModules.length}/${report.modules.length} costClass=${costClassTagged.length}/${report.modules.length} paintCompositeImmediate=${paintCompositeImmediate.length}`);
   console.log(`[runtime] schedule byWhen=${Object.entries(byWhen).map(([k, v]) => `${k}:${v}`).join(' ')}`);
+  console.log(`[runtime] timingArc stems=${Object.entries(byTimingStem).map(([k, v]) => `${k}:${v}`).join(' ')}`);
+  if (idleModules.length) {
+    console.log(`[runtime] idleChunks ${Object.entries(byIdleChunk).map(([k, v]) => `${k}:${v}`).join(' ')}`);
+  }
 
   if (report.warnings.length) {
     console.log(`[runtime] warnings=${report.warnings.length}`);

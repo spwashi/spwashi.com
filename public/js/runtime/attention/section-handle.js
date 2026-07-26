@@ -147,8 +147,10 @@ function announceSectionTravel(liveRegion, label) {
 function getSectionHeading(section) {
   if (!(section instanceof HTMLElement)) return null;
   return (
-    section.querySelector(':scope > h1, :scope > h2, :scope > h3')
+    section.querySelector(':scope > h1, :scope > h2, :scope > h3, :scope > h4')
+    || section.querySelector(':scope > header :is(h1, h2, h3, h4)')
     || section.querySelector(':scope > .frame-heading :is(h1, h2, h3)')
+    || section.querySelector(':scope > .section-title')
     || section.querySelector(':scope > .frame-topline .frame-sigil')
     || section.querySelector(':scope > .page-kicker')
     || section.querySelector(':scope > [data-spw-label]')

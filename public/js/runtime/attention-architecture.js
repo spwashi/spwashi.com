@@ -20,6 +20,8 @@ export { ATTENTION_ARCHITECTURE_CONTRACT };
 export function initSpwAttentionArchitecture(ctx) {
   const root = (ctx && ctx.root) || document;
   const cleanups = [];
+  let activeNudgeTimer = 0;
+  let rafId = 0;
 
   const safeInit = (factory, name) => {
     const cleanup = guardCall(factory, `attention:${name}`, { silent: true })();
@@ -38,12 +40,18 @@ export function initSpwAttentionArchitecture(ctx) {
     if (bus && typeof bus.on === 'function') {
       const nudge = (event, mode = 'inspect') => {
         const resonance = event?.detail?.action || mode;
-        root.querySelectorAll('.spw-section-handle, .spw-section-handle-shell').forEach((h) => {
-          h.setAttribute('data-spw-cauldron-resonance', resonance);
-          setTimeout(() => {
-            if (h?.getAttribute('data-spw-cauldron-resonance') === resonance) {
-              h.removeAttribute('data-spw-cauldron-resonance');
-            }
+        if (rafId) cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(() => {
+          root.querySelectorAll('.spw-section-handle, .spw-section-handle-shell').forEach((h) => {
+            h.setAttribute('data-spw-cauldron-resonance', resonance);
+          });
+          if (activeNudgeTimer) clearTimeout(activeNudgeTimer);
+          activeNudgeTimer = window.setTimeout(() => {
+            root.querySelectorAll('.spw-section-handle, .spw-section-handle-shell').forEach((h) => {
+              if (h?.getAttribute('data-spw-cauldron-resonance') === resonance) {
+                h.removeAttribute('data-spw-cauldron-resonance');
+              }
+            });
           }, 1400);
         });
       };
@@ -54,7 +62,11 @@ export function initSpwAttentionArchitecture(ctx) {
   } catch (_) {}
 
   return () => {
-    busUnsubs.forEach((off) => off());
+    if (rafId) cancelAnimationFrame(rafId);
+    if (activeNudgeTimer) clearTimeout(activeNudgeTimer);
+    busUnsubs.forEach((off) => {
+      try { typeof off === 'function' && off(); } catch (_) {}
+    });
     for (const cleanup of cleanups) {
       try { cleanup && cleanup(); } catch (_) {}
     }
