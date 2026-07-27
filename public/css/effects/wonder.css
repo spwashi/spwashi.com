@@ -119,6 +119,37 @@
   will-change: box-shadow, filter;
 }
 
+/* ==========================================================================
+   Interaction Phase Semantics
+   --------------------------------------------------------------------------
+   Drives visual feedback when JS sets data-spw-interaction-phase on
+   interactable elements (approach, prime, charge, inspect, discover, settle).
+   ========================================================================== */
+
+:where([data-spw-interaction-phase="approach"]) {
+  transform: translateY(-1px);
+  transition: transform var(--spw-wonder-duration-fast) var(--spw-wonder-ease-settle);
+}
+
+:where([data-spw-interaction-phase="inspect"]) {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--active-op-color, var(--teal)) 35%, transparent);
+  transition: box-shadow var(--spw-wonder-duration-base) var(--spw-wonder-ease);
+}
+
+:where([data-spw-interaction-phase="charge"]) {
+  transform: scale(0.985);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--amber, #ffbf00) 45%, transparent);
+  transition: transform var(--spw-wonder-duration-fast) var(--spw-wonder-ease),
+              box-shadow var(--spw-wonder-duration-fast) var(--spw-wonder-ease);
+}
+
+:where([data-spw-interaction-phase="settle"]) {
+  transform: translateY(0);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 20%, transparent);
+  transition: transform var(--spw-wonder-duration-base) var(--spw-wonder-ease-settle),
+              box-shadow var(--spw-wonder-duration-base) var(--spw-wonder-ease-settle);
+}
+
 html[data-spw-reduce-motion="on"] :where([data-spw-operator], [data-spw-sigil]) {
   will-change: auto;
 }

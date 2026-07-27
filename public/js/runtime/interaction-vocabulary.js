@@ -5,6 +5,12 @@
  * Shared by interaction-progression, learnability surfaces, and inspection.
  */
 
+import {
+  composeOpBundle,
+  getOperatorThresholdState,
+  splitOperatorExpression,
+} from '/public/js/kernel/shared.js';
+
 export const INTERACTION_PHASES = Object.freeze([
   'idle',
   'approach',
@@ -96,6 +102,7 @@ export function phaseFromGestureContract(contract = '', verb = '') {
   return phase;
 }
 
+
 export function strongestPhase(current = 'idle', candidate = '') {
   if (!candidate || candidate === current) return current;
   const order = INTERACTION_PHASES;
@@ -104,4 +111,29 @@ export function strongestPhase(current = 'idle', candidate = '') {
   if (candidateIndex < 0) return current;
   if (currentIndex < 0) return candidate;
   return candidateIndex > currentIndex ? candidate : current;
+}
+
+export function resolveInteractionSemantics(element) {
+  if (!element || typeof element !== 'object') return null;
+
+  const text = (element.textContent || '').trim();
+  const split = splitOperatorExpression(text);
+  const operator = element.dataset?.spwOperator || split.operator || '';
+  const threshold = getOperatorThresholdState(operator || split.prefix);
+  const bundle = composeOpBundle(text);
+  const context = element.dataset?.spwInteractionContext || 'idle';
+  const reversibility = element.dataset?.spwOperatorReversibility || 'revisable';
+  const dispatch = split.position === 'postfix' ? 'reflect' : (split.position === 'infix' ? 'enclose' : 'forward');
+
+  return {
+    operator,
+    prefix: split.prefix || '',
+    operand: split.operand || '',
+    position: split.position || 'prefix',
+    thresholdState: threshold?.state || 'latent',
+    context,
+    reversibility,
+    dispatch,
+    bundle,
+  };
 }
