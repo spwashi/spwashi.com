@@ -85,18 +85,18 @@
                 </div>
 
                 <nav class="frame-operators" aria-label="Town atlas sections">
-                    <a class="operator-chip" href="#page-job">#&gt; page job</a>
-                    <a class="operator-chip" href="#town-library">#&gt; library</a>
-                    <a class="operator-chip" href="#town-guides">#&gt; guides</a>
-                    <a class="operator-chip" href="#town-districts">#&gt; districts</a>
-                    <a class="operator-chip" href="#town-factions">#&gt; factions</a>
-                    <a class="operator-chip" href="#town-objects">#&gt; objects</a>
-                    <a class="operator-chip" href="#town-sessions">#&gt; sessions</a>
-                    <a class="operator-chip" href="#town-market">#&gt; market</a>
-                    <a class="operator-chip" href="/play/rpg-wednesday/">~ RPG Wednesday</a>
-                    <a class="operator-chip" href="/play/rpg-wednesday/library/">^ town library</a>
-                    <a class="operator-chip" href="/cards/">^ proof cards</a>
-                    <a class="operator-chip" href="/services/">@ services</a>
+                    <a class="operator-chip" href="#page-job" data-spw-operator="frame" data-spw-action="address">#&gt;page_job</a>
+                    <a class="operator-chip" href="#town-library" data-spw-operator="frame" data-spw-action="address">#&gt;library</a>
+                    <a class="operator-chip" href="#town-guides" data-spw-operator="frame" data-spw-action="address">#&gt;guides</a>
+                    <a class="operator-chip" href="#town-districts" data-spw-operator="frame" data-spw-action="address">#&gt;districts</a>
+                    <a class="operator-chip" href="#town-factions" data-spw-operator="frame" data-spw-action="address">#&gt;factions</a>
+                    <a class="operator-chip" href="#town-objects" data-spw-operator="frame" data-spw-action="address">#&gt;objects</a>
+                    <a class="operator-chip" href="#town-sessions" data-spw-operator="frame" data-spw-action="address">#&gt;sessions</a>
+                    <a class="operator-chip" href="#town-market" data-spw-operator="frame" data-spw-action="address">#&gt;market</a>
+                    <a class="operator-chip" href="/play/rpg-wednesday/" data-spw-operator="potential" data-spw-action="explore">~rpg_wednesday</a>
+                    <a class="operator-chip" href="/play/rpg-wednesday/library/" data-spw-operator="integration" data-spw-action="publish">^town_library</a>
+                    <a class="operator-chip" href="/cards/" data-spw-operator="integration">^proof_cards</a>
+                    <a class="operator-chip" href="/services/" data-spw-operator="perspective" data-spw-action="enter">@services</a>
                 </nav>
             </section>
 
@@ -234,13 +234,13 @@
                         <p class="frame-note">civic archive</p>
                         <h3>Library</h3>
                         <p>The practical learning interface for quests, guides, and portfolio artifacts. In story terms, it is the town's memory engine: the place where unstable material becomes inspectable record.</p>
-                        <p><a class="operator-chip" href="/play/rpg-wednesday/library/">Open the Town Library</a></p>
+                        <p><a class="operator-chip" href="/play/rpg-wednesday/library/" data-spw-operator="potential">~town_library</a></p>
                     </article>
                     <article class="frame-panel" id="town-guides">
                         <p class="frame-note">learning interfaces</p>
                         <h3>Guides</h3>
                         <p>Recurring characters that teach by function: Grounding Rod, Cask, and Avalanche Evan are good examples because they each carry a clear job and a clear lesson path.</p>
-                        <p><a class="operator-chip" href="/play/rpg-wednesday/library/#guide-cards">Review guide cards</a></p>
+                        <p><a class="operator-chip" href="/play/rpg-wednesday/library/#guide-cards" data-spw-operator="potential">~review_guide_cards</a></p>
                     </article>
                     <article class="frame-panel" id="town-districts">
                         <p class="frame-note">recurring districts</p>
@@ -257,19 +257,19 @@
                         <p class="frame-note">objects and artifacts</p>
                         <h3>Objects</h3>
                         <p>Proof cards, sealed objects, recipes, screenshots, and artifacts all belong here when they become town memory rather than one-off material. Recipes and pies matter here because culinary science, homegrown food, and preserved ingredients are part of how a town remembers time. A pie is useful worldbuilding because it can carry weather, season, scarcity, hospitality, and a character's level of care in one object.</p>
-                        <p><a class="operator-chip" href="/cards/">Open proof cards</a></p>
+                        <p><a class="operator-chip" href="/cards/" data-spw-operator="integration">^proof_cards</a></p>
                     </article>
                     <article class="frame-panel" id="town-food">
                         <p class="frame-note">gardens and kitchens</p>
                         <h3>Gardens and kitchens</h3>
                         <p>Use this panel for homegrown practice, cooking intuition, garden prompts, and the small scientific questions that make a meal or crop feel repeatable instead of mystical. That includes pie crust texture, fermentation, soil moisture, seed timing, and the way a recipe becomes easier to trust when you can repeat it by feel and measurement.</p>
-                        <p><a class="operator-chip" href="/recipes/">Open recipes</a> <a class="operator-chip" href="/topics/nutrition/">~ nutrition</a></p>
+                        <p><a class="operator-chip" href="/recipes/" data-spw-operator="potential">~recipes</a> <a class="operator-chip" href="/topics/nutrition/" data-spw-operator="potential" data-spw-action="explore">~nutrition</a></p>
                     </article>
                     <article class="frame-panel" id="town-sessions">
                         <p class="frame-note">dated source of truth</p>
                         <h3>Sessions</h3>
                         <p>RPG Wednesday logs are the time axis. Use dated sessions when the page needs actual events before interpretation.</p>
-                        <p><a class="operator-chip" href="/play/rpg-wednesday/sessions/">Open session logs</a></p>
+                        <p><a class="operator-chip" href="/play/rpg-wednesday/sessions/" data-spw-operator="potential">~session_logs</a></p>
                     </article>
                 </div>
             </section>
@@ -311,13 +311,13 @@
                         <h3>The operator deck</h3>
                         <p>One card per Spw sigil: the glyph, its motion, its geometry, and its symmetry partner. It is being worked toward at the <a href="/topics/software/spw/#cauldron-workbench">cauldron workbench</a> on the operator atlas, where its condition of arrival is posted in the open.</p>
                         <p class="frame-note">This stall is a stub held open on purpose: the deck earns its merchant by being elaborated, and print editions will carry their provenance with them like everything else in the library.</p>
-                        <p><a class="operator-chip" href="/topics/software/spw/#cauldron-workbench">~ visit the workbench</a> <a class="operator-chip" href="/topics/software/spw/">^ operator atlas</a></p>
+                        <p><a class="operator-chip" href="/topics/software/spw/#cauldron-workbench" data-spw-operator="potential">~visit_the_workbench</a> <a class="operator-chip" href="/topics/software/spw/" data-spw-operator="integration" data-spw-action="publish">^operator_atlas</a></p>
                     </article>
                     <article class="frame-panel" id="stall-become-merchant">
                         <p class="frame-note">standing invitation</p>
                         <h3>Become a merchant</h3>
                         <p>Merchants here are community members — illustrators, painters, librarians, gardeners, engineers. The path is the same for everyone: experiment with a mounted technology, elaborate it until it precipitates, and the precipitate is yours to sell. Pricing and fulfillment stay with you; the town contributes the stall, the provenance, and the readers.</p>
-                        <p><a class="operator-chip" href="/contact/">@ start the conversation</a> <a class="operator-chip" href="/services/">@ services</a> <a class="operator-chip" href="/cards/">^ proof cards</a></p>
+                        <p><a class="operator-chip" href="/contact/" data-spw-operator="perspective">!start[conversation]</a> <a class="operator-chip" href="/services/" data-spw-operator="perspective" data-spw-action="enter">@services</a> <a class="operator-chip" href="/cards/" data-spw-operator="integration">^proof_cards</a></p>
                     </article>
                 </div>
             </section>
@@ -333,14 +333,14 @@
                         <h3>Why visit a real library</h3>
                         <p>An actual library gives a scene more than research. It gives maps, local history, archives, zines, cookbooks, field guides, magazines, seed catalogs, and the feeling that a place has already been paying attention longer than the current story has. That is useful when a character needs a specific texture, a regional detail, or a fact that cannot safely be guessed from the internet.</p>
                         <p class="frame-note">Use the visit to extend a character, check a setting detail, or find the kind of object that would plausibly exist in that world.</p>
-                        <p><a class="operator-chip" href="/research/">Open research</a></p>
+                        <p><a class="operator-chip" href="/research/" data-spw-operator="potential">~research</a></p>
                     </article>
                     <article class="frame-panel">
                         <p class="frame-note">new media pivots</p>
                         <h3>Pivoting a literary universe</h3>
                         <p>A literary universe becomes easier to adapt when it can move into other media without losing its core logic. The same canon can turn into a comic, audio drama, animation, zine, recipe card, short video, worksheet, or game prompt if the world already knows how to hold scene, voice, and object clearly.</p>
                         <p class="frame-note">This is a good place to think about authorship, audience, and how much of the world should remain implied instead of rendered.</p>
-                        <p><a class="operator-chip" href="/play/">Open play</a> <a class="operator-chip" href="/topics/craft/">~ craft</a> <a class="operator-chip" href="/about/domains/lore.land/">&gt; lore.land</a></p>
+                        <p><a class="operator-chip" href="/play/" data-spw-operator="potential">~play</a> <a class="operator-chip" href="/topics/craft/" data-spw-operator="potential" data-spw-action="explore">~craft</a> <a class="operator-chip" href="/about/domains/lore.land/" data-spw-operator="concept-edge" data-spw-action="show">&gt;lore_land</a></p>
                     </article>
                 </div>
             </section>

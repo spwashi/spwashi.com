@@ -68,12 +68,12 @@
                 <p class="frame-note">What follows is a set of practices that help before or alongside therapy, and a thinking aid at the bottom for people who've decided they'd like to look into therapy and want to arrive at a first conversation already knowing what to say.</p>
 
                 <nav class="frame-operators" aria-label="Care sections">
-                    <a class="operator-chip" href="/care/">#&gt; care interface</a>
-                    <a class="operator-chip" href="#practices">^ practices</a>
-                    <a class="operator-chip" href="#journaling">^ journaling</a>
-                    <a class="operator-chip" href="/topics/mental-health/">~ mental health topic</a>
-                    <a class="operator-chip" href="#intake">@ care intake</a>
-                    <a class="operator-chip" href="/services/ecosystem/">~ community</a>
+                    <a class="operator-chip" href="/care/" data-spw-operator="frame" data-spw-action="address">#&gt;care_interface</a>
+                    <a class="operator-chip" href="#practices" data-spw-operator="integration" data-spw-action="publish">^practices</a>
+                    <a class="operator-chip" href="#journaling" data-spw-operator="integration" data-spw-action="publish">^journaling</a>
+                    <a class="operator-chip" href="/topics/mental-health/" data-spw-operator="potential" data-spw-action="explore">~mental_health_topic</a>
+                    <a class="operator-chip" href="#intake" data-spw-operator="perspective" data-spw-action="enter">@care_intake</a>
+                    <a class="operator-chip" href="/services/ecosystem/" data-spw-operator="potential" data-spw-action="explore">~community</a>
                 </nav>
             </section>
 
@@ -255,8 +255,8 @@
                     </div>
 
                     <div class="care-form-actions">
-                        <button class="operator-chip" data-care-generate disabled>@ generate care profile</button>
-                        <button class="operator-chip" data-care-reset style="opacity: 0.68;">~ clear</button>
+                        <button class="operator-chip" data-care-generate disabled data-spw-operator="perspective">!generate[care_profile]</button>
+                        <button class="operator-chip" data-care-reset style="opacity: 0.68;" data-spw-operator="potential">!clear</button>
                     </div>
 
                     <div data-care-output hidden></div>

@@ -76,13 +76,13 @@
                     </article>
 
                     <div class="site-footer__cauldron-actions">
-                        <button class="operator-chip" type="button" data-spw-cauldron-action="mix" data-spw-action-tier="primary" data-spw-groundable="false" data-spw-operator="action">! mix extension</button>
-                        <button class="operator-chip" type="button" data-spw-cauldron-action="nourish" data-spw-action-tier="growth" data-spw-groundable="false" data-spw-operator="ref">~ nourish</button>
-                        <button class="operator-chip" type="button" data-spw-cauldron-action="vision" data-spw-action-tier="growth" data-spw-groundable="false" data-spw-intent="daily-to-prompt" data-spw-operator="ref">~ vision seed</button>
-                        <button class="operator-chip" type="button" data-spw-cauldron-action="plant" data-spw-action-tier="output" data-spw-groundable="false" data-spw-operator="object">^ plant</button>
-                        <button class="operator-chip" type="button" data-spw-cauldron-action="undo" data-spw-action-tier="cleanup" data-spw-groundable="false" data-spw-operator="action" disabled>! undo</button>
-                        <button class="operator-chip" type="button" data-spw-cauldron-action="prune" data-spw-action-tier="cleanup" data-spw-groundable="false" data-spw-operator="action">! prune</button>
-                        <button class="operator-chip" type="button" data-spw-cauldron-action="clear" data-spw-action-tier="cleanup" data-spw-groundable="false" data-spw-operator="action">! clear</button>
+                        <button class="operator-chip" type="button" data-spw-cauldron-action="mix" data-spw-action-tier="primary" data-spw-groundable="false" data-spw-operator="action">!mix[extension]</button>
+                        <button class="operator-chip" type="button" data-spw-cauldron-action="nourish" data-spw-action-tier="growth" data-spw-groundable="false" data-spw-operator="potential" data-spw-action="explore">~nourish</button>
+                        <button class="operator-chip" type="button" data-spw-cauldron-action="vision" data-spw-action-tier="growth" data-spw-groundable="false" data-spw-intent="daily-to-prompt" data-spw-operator="potential" data-spw-action="explore">~vision_seed</button>
+                        <button class="operator-chip" type="button" data-spw-cauldron-action="plant" data-spw-action-tier="output" data-spw-groundable="false" data-spw-operator="integration">^plant</button>
+                        <button class="operator-chip" type="button" data-spw-cauldron-action="undo" data-spw-action-tier="cleanup" data-spw-groundable="false" data-spw-operator="action" disabled>!undo</button>
+                        <button class="operator-chip" type="button" data-spw-cauldron-action="prune" data-spw-action-tier="cleanup" data-spw-groundable="false" data-spw-operator="action">!prune</button>
+                        <button class="operator-chip" type="button" data-spw-cauldron-action="clear" data-spw-action-tier="cleanup" data-spw-groundable="false" data-spw-operator="action">!clear</button>
                     </div>
                     <div class="site-footer__cauldron-output" data-cauldron-output hidden>
                         <div class="site-footer__cauldron-text" data-cauldron-text></div>
@@ -104,7 +104,7 @@
                     <label class="site-footer__note-label" for="footer-local-note">Local note</label>
                     <div class="site-footer__note-row">
                         <input class="site-footer__note-input" id="footer-local-note" type="text" data-local-note-input placeholder="Leave a note for later">
-                        <button class="operator-chip" type="submit" data-spw-groundable="false" data-spw-operator="action">! save note</button>
+                        <button class="operator-chip" type="submit" data-spw-groundable="false" data-spw-operator="action" data-spw-action="apply">!save[note]</button>
                     </div>
                     <input type="hidden" value="footer" data-local-note-context>
                     <p class="site-footer__note-preview">Latest: <span data-local-note-preview>No local note yet.</span> · <span data-local-note-count>0</span> saved · <span data-local-note-latest-time>not saved yet</span></p>

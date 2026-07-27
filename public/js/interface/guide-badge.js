@@ -34,6 +34,11 @@ import {
   createSpwLogger,
   markInstrumented,
 } from '/public/js/kernel/instrumentation.js';
+import {
+  composeOpBundle,
+  getOperatorThresholdState,
+  splitOperatorExpression,
+} from '/public/js/kernel/shared.js';
 
 const COLLECTION_KEY = 'spw-badge-collection';
 
@@ -320,6 +325,24 @@ function attachAmbient(element) {
     if (element.dataset.spwInteractionContext !== 'inspecting'
       && element.dataset.spwInteractionContext !== 'collecting') {
       setContext(element, 'browsing');
+    }
+
+    const text = (element.textContent || '').trim();
+    if (text) {
+      if (!element.dataset.spwOp) {
+        element.dataset.spwOp = composeOpBundle(text);
+      }
+      const split = splitOperatorExpression(text);
+      const threshold = getOperatorThresholdState(split.operator || split.prefix);
+      if (split.operator && !element.hasAttribute('title')) {
+        const opLabel = split.prefix || split.operator;
+        const operandLabel = split.operand ? ` → ${split.operand}` : '';
+        const stateLabel = threshold ? ` [${threshold.state}]` : '';
+        element.setAttribute(
+          'title',
+          `Spw AST: ${opLabel}${operandLabel}${stateLabel} | Verbatim copyable`
+        );
+      }
     }
   };
 

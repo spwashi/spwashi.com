@@ -86,17 +86,17 @@
             <h3>Sigil anatomy (raw vs hydrated)</h3>
             <p>Chips below are authored as fused text; with JS the sigil-anatomy module wraps <code>.spw-sigil</code>/<code>.spw-operand</code> with spacing preserved (inspect to compare raw source vs hydrated DOM — zero layout shift is the contract). Without JS the fused text is the reading.</p>
             <p>
-                <a class="operator-chip" href="/now/" data-spw-operator="substrate">$ now</a>
-                <a class="operator-chip" href="/topics/" data-spw-operator="value">* topics</a>
-                <button class="operator-chip" type="button" data-spw-operator="ground">.orientation</button>
+                <a class="operator-chip" href="/now/" data-spw-operator="substrate" data-spw-action="support">$now</a>
+                <a class="operator-chip" href="/topics/" data-spw-operator="value" data-spw-action="materialize">*topics</a>
+                <button class="operator-chip" type="button" data-spw-operator="ground" data-spw-action="ground">.orientation</button>
             </p>
             <h3>Disposition physics (container determines payload)</h3>
             <p>The same chip under each disposition. Charge pulls inward, discharge radiates, reference points (dotted), dereference resolves (solid).</p>
             <p>
-                <span data-spw-op-disposition="charge"><button class="operator-chip" type="button" data-spw-operator="substrate">$ in a charging vessel</button></span>
-                <button class="operator-chip" type="button" data-spw-operator="action" data-spw-op-disposition="discharge">! discharging cast</button>
-                <button class="operator-chip" type="button" data-spw-operator="binding" data-spw-op-disposition="reference">= minted reference</button>
-                <button class="operator-chip" type="button" data-spw-operator="ref" data-spw-op-disposition="dereference">~ resolved dereference</button>
+                <span data-spw-op-disposition="charge"><button class="operator-chip" type="button" data-spw-operator="substrate" data-spw-action="support">$in_a_charging_vessel</button></span>
+                <button class="operator-chip" type="button" data-spw-operator="action" data-spw-op-disposition="discharge" data-spw-action="apply">!discharge[cast]</button>
+                <button class="operator-chip" type="button" data-spw-operator="binding" data-spw-op-disposition="reference" data-spw-action="configure">=minted_reference</button>
+                <button class="operator-chip" type="button" data-spw-operator="potential" data-spw-op-disposition="dereference" data-spw-action="explore">~resolved_dereference</button>
             </p>
         </section>
 
@@ -140,9 +140,9 @@
             <h2 id="bench-ledger">3. Effect ledger residue</h2>
             <p>With JS: the buttons below seed and read <code>window.spwEffects</code>; the <code>&lt;html&gt;</code> element carries <code>data-spw-effects="count:n last:kind"</code>. Without JS this section stays prose — the ledger is residue, never load-bearing.</p>
             <p>
-                <button class="operator-chip" type="button" data-bench-action="seed-effect" data-spw-operator="action">! seed one effect</button>
-                <button class="operator-chip" type="button" data-bench-action="list-effects" data-spw-operator="probe">? list to console</button>
-                <button class="operator-chip" type="button" data-bench-action="clear-effects" data-spw-operator="binding">= clear ledger</button>
+                <button class="operator-chip" type="button" data-bench-action="seed-effect" data-spw-operator="action" data-spw-action="apply">!seed[one_effect]</button>
+                <button class="operator-chip" type="button" data-bench-action="list-effects" data-spw-operator="wonder" data-spw-action="inspect">? list to console</button>
+                <button class="operator-chip" type="button" data-bench-action="clear-effects" data-spw-operator="binding">=clear[ledger]</button>
             </p>
             <output data-bench-ledger-readout aria-live="polite"></output>
         </section>

@@ -73,11 +73,11 @@
                 </div>
             </div>
             <nav class="frame-operators" aria-label="Membership actions">
-                <a class="operator-chip" href="#levels">^ levels</a>
-                <a class="operator-chip" href="#roles">#&gt; roles</a>
-                <a class="operator-chip" href="/cards/#card-types">^ membership card</a>
-                <a class="operator-chip" href="/coordination/">@ coordinate</a>
-                <a class="operator-chip" href="/contact/?subject=membership">@ contact</a>
+                <a class="operator-chip" href="#levels" data-spw-operator="integration" data-spw-action="publish">^levels</a>
+                <a class="operator-chip" href="#roles" data-spw-operator="frame" data-spw-action="address">#&gt;roles</a>
+                <a class="operator-chip" href="/cards/#card-types" data-spw-operator="integration" data-spw-action="publish">^membership_card</a>
+                <a class="operator-chip" href="/coordination/" data-spw-operator="perspective" data-spw-action="enter">@coordinate</a>
+                <a class="operator-chip" href="/contact/?subject=membership" data-spw-operator="perspective" data-spw-action="enter">@contact</a>
             </nav>
         </section>
 
@@ -152,9 +152,9 @@
             </div>
             <p class="frame-note">There is no separate games catalog yet. <a href="/play/">Play</a> and <a href="/tools/">tools</a> are where table logic, local records, and prompt benches currently meet. Games may arrive later as bounded surfaces — not as a generic app grid.</p>
             <nav class="frame-operators" aria-label="Returning member routes">
-                <a class="operator-chip" href="/#integration-atlas">#&gt; integration atlas</a>
-                <a class="operator-chip" href="/now/">$ current substrate</a>
-                <a class="operator-chip" href="/coordination/">@ coordinate</a>
+                <a class="operator-chip" href="/#integration-atlas" data-spw-operator="frame" data-spw-action="address">#&gt;integration_atlas</a>
+                <a class="operator-chip" href="/now/" data-spw-operator="substrate" data-spw-action="support">$current_substrate</a>
+                <a class="operator-chip" href="/coordination/" data-spw-operator="perspective" data-spw-action="enter">@coordinate</a>
             </nav>
         </section>
 
@@ -169,7 +169,7 @@
                 <li>Name what you need.</li>
                 <li>Decide whether you want to be public, private, or semi-visible.</li>
             </ol>
-            <p><a class="operator-chip" href="/contact/?subject=membership-card">@ start membership card</a></p>
+            <p><a class="operator-chip" href="/contact/?subject=membership-card" data-spw-operator="perspective">!start[membership_card]</a></p>
         </section>
 
         <aside class="spw-route-bridge" aria-labelledby="membership-routes-title">

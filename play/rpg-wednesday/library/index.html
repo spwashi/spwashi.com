@@ -87,11 +87,11 @@
                             </div>
                         </div>
                         <nav class="frame-operators" aria-label="Town library quick starts" data-spw-feature="library-quick-starts">
-                            <a class="operator-chip" href="#starter-quests" data-spw-operator="action" data-spw-sigil="!starter_quests">! start a first quest</a>
-                            <a class="operator-chip" href="#guide-cards" data-spw-operator="ref" data-spw-sigil="~guide_cards">~ meet the guides</a>
-                            <a class="operator-chip" href="#college-wonder-path" data-spw-operator="probe" data-spw-sigil="?college_wonder_path">? college wonder path</a>
-                        <a class="operator-chip" href="#garden" data-spw-operator="object" data-spw-sigil="^garden">^ plant a seed</a>
-                        <a class="operator-chip" href="/tools/character-sheet/" data-spw-operator="action" data-spw-sigil="!character_sheet">! make a character sheet</a>
+                            <a class="operator-chip" href="#starter-quests" data-spw-operator="action" data-spw-sigil="!starter_quests">!start[first_quest]</a>
+                            <a class="operator-chip" href="#guide-cards" data-spw-operator="potential" data-spw-sigil="~guide_cards" data-spw-action="explore">~meet_the_guides</a>
+                            <a class="operator-chip" href="#college-wonder-path" data-spw-operator="wonder" data-spw-sigil="?college_wonder_path" data-spw-action="inspect">? college wonder path</a>
+                        <a class="operator-chip" href="#garden" data-spw-operator="integration" data-spw-sigil="^garden">!plant[seed]</a>
+                        <a class="operator-chip" href="/tools/character-sheet/" data-spw-operator="action" data-spw-sigil="!character_sheet">!make[character_sheet]</a>
                     </nav>
                         <div class="spw-reason-strip" aria-label="Library reasons" data-spw-feature="library-reason-strip">
                             <div>
@@ -123,8 +123,8 @@
                 <div class="frame-panel" data-spw-feature="curriculum-entry" data-spw-semantic-expression="prompt[direct]{curriculum.prime}">
                     <strong>Curriculum entry</strong>
                     <p class="frame-note">Prime operators, boundary tests, and measures from the living learning surface.</p>
-                    <a class="operator-chip" href="/curriculum/" data-spw-operator="frame">#&gt; curriculum</a>
-                    <a class="operator-chip" href="/curriculum/#memory-buffers" data-spw-operator="probe">? memory &amp; buffers</a>
+                    <a class="operator-chip" href="/curriculum/" data-spw-operator="frame" data-spw-action="address">#&gt;curriculum</a>
+                    <a class="operator-chip" href="/curriculum/#memory-buffers" data-spw-operator="wonder" data-spw-action="inspect">? memory & buffers</a>
                 </div>
                 <article class="frame-panel"><h3>East Ramp</h3><p>Accessible entry that moves you from first contact to a small, primed artifact (operator handle, study route, or measure) you can actually carry.</p><p class="frame-note">Purpose: clear wayfinding into the curriculum surfaces and the operator system without requiring prior jargon.</p></article>
                 <article class="frame-panel"><h3>West Ramp</h3><p>Quieter learning: reflection, identity cards, private drafts, and secret paths.</p><p class="frame-note">Purpose: self-direction and choosing what not to publish.</p></article>
@@ -158,7 +158,7 @@
                     <span><b>College skill:</b> systems thinking, risk management, electrical metaphor, self-regulation.</span>
                     <span><b>Portfolio output:</b> one-page system diagram.</span>
                     <div class="frame-card-actions" data-spw-slot="actions">
-                        <a class="operator-chip" href="#garden" data-spw-operator="object" data-spw-intent="tend-daily" data-spw-target="^grounding_rod">^ tend this guide</a>
+                        <a class="operator-chip" href="#garden" data-spw-operator="integration" data-spw-intent="tend-daily" data-spw-target="^grounding_rod" data-spw-action="publish">^tend_this_guide</a>
                     </div>
                 </article>
                 <details class="spw-card-reason">
@@ -218,8 +218,8 @@
                     <span><b>Core move:</b> Map household liquidity / gig volatility to RAM, cache, swap, and leaks. Perform the boundary test.</span>
                     <span><b>Artifact:</b> Memory-leak audit memo or proof card.</span>
                     <div class="frame-card-actions" data-spw-slot="actions">
-                        <a class="operator-chip" href="/curriculum/#memory-buffers" data-spw-operator="frame">#&gt; enter the Memory module</a>
-                        <a class="operator-chip" href="/curriculum/" data-spw-operator="frame">#&gt; full curriculum surface</a>
+                        <a class="operator-chip" href="/curriculum/#memory-buffers" data-spw-operator="frame">#&gt;enter_the_memory_module</a>
+                        <a class="operator-chip" href="/curriculum/" data-spw-operator="frame" data-spw-action="address">#&gt;full_curriculum_surface</a>
                     </div>
                 </article>
                 <article class="frame-card" data-spw-kind="card" data-spw-role="quest" data-spw-operator="frame" data-spw-context="education" data-spw-category-family="curriculum">
@@ -227,7 +227,7 @@
                     <strong>Remaining modules (stubs)</strong>
                     <span>Systems &amp; OS (RPG scheduler governance), Networking &amp; Markets (packet routing game), Algorithms &amp; Incentives, Data Structures &amp; Credential Records, Security &amp; Externalities + cross-cutting stabilizing vs. novel thread.</span>
                     <div class="frame-card-actions" data-spw-slot="actions">
-                        <a class="operator-chip" href="/curriculum/#modules-stub" data-spw-operator="frame">#&gt; see the map</a>
+                        <a class="operator-chip" href="/curriculum/#modules-stub" data-spw-operator="frame" data-spw-action="address">#&gt;site_map</a>
                     </div>
                 </article>
             </div>
@@ -319,12 +319,12 @@
             <header class="frame-heading"><a class="frame-sigil" href="#next-builds" data-spw-operator="frame" data-spw-sigil="#&gt;next_builds">#&gt;next_builds</a><h2>What should become a route later?</h2></header>
             <p class="inline-note">These are candidates, not promises. Promote one only when the hub proves a visitor needs a dedicated place for it.</p>
             <nav class="frame-operators" aria-label="Future route candidates">
-                <a class="operator-chip" href="/play/rpg-wednesday/cast/" data-spw-operator="ref" data-spw-sigil="~cast_register">~ characters via cast</a>
-                <a class="operator-chip" href="/tools/character-sheet/" data-spw-operator="action" data-spw-sigil="!character_card">! build a character card</a>
-                <a class="operator-chip" href="/play/rpg-wednesday/world/" data-spw-operator="object" data-spw-sigil="^archive_world">^ archive via world</a>
-                <a class="operator-chip" href="/topics/pedagogy/" data-spw-operator="probe" data-spw-sigil="?pedagogy_context">? pedagogy context</a>
-                <a class="operator-chip" href="/topics/software/" data-spw-operator="frame" data-spw-sigil="#&gt;systems_context">#&gt; systems context</a>
-                <a class="operator-chip" href="/play/rpg-wednesday/" data-spw-operator="stream" data-spw-sigil="*rpg_wednesday">* back to RPG Wednesday</a>
+                <a class="operator-chip" href="/play/rpg-wednesday/cast/" data-spw-operator="potential" data-spw-sigil="~cast_register" data-spw-action="explore">~characters_via_cast</a>
+                <a class="operator-chip" href="/tools/character-sheet/" data-spw-operator="action" data-spw-sigil="!character_card" data-spw-action="apply">!build[character_card]</a>
+                <a class="operator-chip" href="/play/rpg-wednesday/world/" data-spw-operator="integration" data-spw-sigil="^archive_world" data-spw-action="publish">^archive_via_world</a>
+                <a class="operator-chip" href="/topics/pedagogy/" data-spw-operator="wonder" data-spw-sigil="?pedagogy_context" data-spw-action="inspect">? pedagogy context</a>
+                <a class="operator-chip" href="/topics/software/" data-spw-operator="frame" data-spw-sigil="#&gt;systems_context" data-spw-action="address">#&gt;systems_context</a>
+                <a class="operator-chip" href="/play/rpg-wednesday/" data-spw-operator="value" data-spw-sigil="*rpg_wednesday" data-spw-action="materialize">*back_to_rpg_wednesday</a>
             </nav>
         </section>
     </article>

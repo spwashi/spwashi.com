@@ -80,9 +80,9 @@
                         <p>Change the light level and theme family using the root settings controls. The components below respond instantly via <code>data-site-setting-set</code>.</p>
                         
                         <div class="theme-handle-test theme-handle-test--modes" data-spw-locality="global-controls" data-spw-component-locality="palette-modes">
-                            <button class="operator-chip" type="button" data-site-setting-set="colorMode:light" data-spw-operator="action">Light Mode</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="colorMode:dark" data-spw-operator="action">Dark Mode</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="colorMode:auto" data-spw-operator="action">Adaptive Mode</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="colorMode:light" data-spw-operator="action" data-spw-action="apply">[light_mode]</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="colorMode:dark" data-spw-operator="action" data-spw-action="apply">[dark_mode]</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="colorMode:auto" data-spw-operator="action" data-spw-action="apply">[adaptive_mode]</button>
                         </div>
                         <div class="theme-pack-chooser" role="group" aria-label="Palette lab theme pack variants" data-spw-locality="theme-packs">
                             <button class="theme-pack-swatch" type="button" data-site-setting-set="themePack:neutral-paper" data-theme-pack-preview="neutral-paper">
@@ -153,14 +153,14 @@
                         <h3>Palette Resonance Dials</h3>
                         <p>The <code>data-spw-palette-resonance</code> attribute biases the active accent tokens (like <code>--active-op-color</code>).</p>
                         <div class="theme-handle-test theme-handle-test--dials" data-spw-locality="resonance-dials" data-spw-component-locality="palette-resonance">
-                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:route" data-spw-operator="select">Context-led</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:craft" data-spw-operator="select">Craft-led</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:software" data-spw-operator="select">Software-led</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:math" data-spw-operator="select">Math-led</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:route" data-spw-operator="mode">[ Context-led</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:craft" data-spw-operator="mode">[ Craft-led</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:software" data-spw-operator="mode">[ Software-led</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:math" data-spw-operator="mode">[ Math-led</button>
                         </div>
                         <p class="frame-note" style="margin-top: 1rem;">Current theme pack: <strong data-settings-state="themePack">neutral paper</strong>.</p>
                         <p class="frame-note" style="margin-top: 1rem;">This affects how operators glow and how the "resonance" probe identifies conceptual links.</p>
-                        <button type="button" class="operator-chip" data-spw-copy-current-query data-spw-operator="action">copy this look as query</button>
+                        <button type="button" class="operator-chip" data-spw-copy-current-query data-spw-operator="action">!copy[look_as_query]</button>
                         <span class="frame-note spw-query-copy-status" data-spw-query-copy-status aria-live="polite"></span>
                     </article>
                 </div>
@@ -581,10 +581,10 @@
                             <h3 class="vibe-widget-title">Choose a resonance bias</h3>
                         </div>
                         <div class="vibe-widget-actions" role="group" aria-label="Spectral Workshop resonance mode toggles" data-spw-slot="actions">
-                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:route" data-spw-operator="select">Context-led</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:craft" data-spw-operator="select">Craft-led</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:software" data-spw-operator="select">Software-led</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:math" data-spw-operator="select">Math-led</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:route" data-spw-operator="mode">[ Context-led</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:craft" data-spw-operator="mode">[ Craft-led</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:software" data-spw-operator="mode">[ Software-led</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:math" data-spw-operator="mode">[ Math-led</button>
                         </div>
                         <p class="vibe-widget-status" data-status="info">Current: <strong data-settings-state="paletteResonance">route</strong>. This also updates the four probe swatches below.</p>
                     </article>
@@ -610,7 +610,7 @@
                         </div>
                         <div class="palette-probe-paths">
                             <span class="spec-pill">Driven by <code>--spw-palette-probe-*</code> and <code>--spw-palette-depth-*</code></span>
-                            <a class="operator-chip" href="/settings/#dimensional-resonance" data-spw-operator="frame">full dials in settings</a>
+                            <a class="operator-chip" href="/settings/#dimensional-resonance" data-spw-operator="frame" data-spw-action="address">#&gt;full_dials_in_settings</a>
                         </div>
                     </article>
 
@@ -619,12 +619,12 @@
                         <h3 style="margin-top:0;">Operator cluster (live)</h3>
                         <p class="frame-note">These chips inherit the current resonance personality. Their borders, text, and focus rings shift with the mode.</p>
                         <div class="operator-cluster-demo" data-spw-semantic-cluster="combinatoric-operators" data-spw-locality="live-resonance">
-                            <a class="operator-chip" href="#" data-spw-operator="frame" aria-label="Example frame operator under current palette resonance">#&gt;frame</a>
-                            <a class="operator-chip" href="#" data-spw-operator="object" aria-label="Example object operator under current palette resonance">^object</a>
-                            <a class="operator-chip" href="#" data-spw-operator="probe" aria-label="Example probe operator under current palette resonance">?probe</a>
-                            <a class="operator-chip" href="#" data-spw-operator="ref" aria-label="Example ref operator under current palette resonance">~ref</a>
-                            <a class="operator-chip" href="#" data-spw-operator="action" aria-label="Example action operator under current palette resonance">!action</a>
-                            <a class="operator-chip" href="#" data-spw-operator="topic" aria-label="Example topic operator under current palette resonance">&lt;topic</a>
+                            <a class="operator-chip" href="#" data-spw-operator="frame" aria-label="Example frame operator under current palette resonance" data-spw-action="address">#&gt;frame</a>
+                            <a class="operator-chip" href="#" data-spw-operator="integration" aria-label="Example object operator under current palette resonance" data-spw-action="publish">^object</a>
+                            <a class="operator-chip" href="#" data-spw-operator="wonder" aria-label="Example probe operator under current palette resonance" data-spw-action="inspect">? probe</a>
+                            <a class="operator-chip" href="#" data-spw-operator="potential" aria-label="Example ref operator under current palette resonance" data-spw-action="explore">~ref</a>
+                            <a class="operator-chip" href="#" data-spw-operator="action" aria-label="Example action operator under current palette resonance" data-spw-action="apply">!action</a>
+                            <a class="operator-chip" href="#" data-spw-operator="concept" aria-label="Example topic operator under current palette resonance" data-spw-action="swoop">&lt; topic</a>
                         </div>
                         <nav class="frame-note" style="margin-top:0.6rem;">
                             <a href="/design/palettes/#spectral-resonance-mapping">See the four mode descriptions</a>
@@ -654,15 +654,15 @@
                             <input type="text" value="/design/" style="width:100%; margin-top:0.2rem; font-family:var(--font-family-mono); font-size:0.85rem; padding:0.3rem 0.4rem; border:1px solid var(--line); border-radius:4px; background:var(--surface); color:var(--ink);" id="seed-owner">
                         </label>
                     </div>
-                    <button type="button" class="operator-chip" data-spw-generate-seed-markup data-spw-operator="action">Generate seed markup</button>
+                    <button type="button" class="operator-chip" data-spw-generate-seed-markup data-spw-operator="action">!generate[seed_markup]</button>
                     <pre id="seed-output" class="seed-output" aria-live="polite"></pre>
                     <p class="frame-note" style="margin-top:0.4rem;">Copy the attributes onto a frame-panel or image-study. Then test the result on the owner route before proposing a shared token.</p>
                 </article>
 
                 <p class="frame-note" style="margin-top: var(--space-sm);">
-                    <a class="operator-chip" href="/design/catalog/" data-spw-operator="frame">Open the full design catalog</a>
+                    <a class="operator-chip" href="/design/catalog/" data-spw-operator="frame">#&gt;design_catalog</a>
                     <span aria-hidden="true"> · </span>
-                    <a class="operator-chip" href="/settings/" data-spw-operator="frame">Open settings (all dials + lab views)</a>
+                    <a class="operator-chip" href="/settings/" data-spw-operator="frame">#&gt;settings</a>
                 </p>
             </section>
 

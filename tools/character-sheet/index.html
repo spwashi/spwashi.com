@@ -68,14 +68,14 @@
                 <p>This is the kind of profile a careful family might still be annotating in the margins generations from now. The character gives the depth. The translation gives it reach. Prime a pressure or a bond into the cauldron and it becomes a traceable ingredient in your own imaginative memory garden.</p>
                 <p class="frame-note">The strongest version is a living site: character notes, worldbuilding, engineering experiments, and recurring updates that show rhythm over time instead of a single frozen application artifact. Pair this with the <a href="/tools/budgeting/">Savings Regimen</a> when you want to fund the arcs you discover here, then turn the results into a proof card, session note, or portfolio artifact.</p>
                 <nav class="frame-operators" aria-label="Character sheet routes">
-                    <a class="operator-chip" href="/play/rpg-wednesday/character/">character development</a>
-                    <a class="operator-chip" href="#translation-map">~ translation map</a>
-                    <a class="operator-chip" href="#notebook-loop">@ notebook loop</a>
-                    <a class="operator-chip" href="#builder-form">^ build the card</a>
-                    <a class="operator-chip" href="#publishing-routes">@ publishing routes</a>
-                    <a class="operator-chip" href="/tools/profile/">profile builder</a>
-                    <a class="operator-chip" href="/tools/midjourney/">midjourney bench</a>
-                    <a class="operator-chip" href="/play/rpg-wednesday/">rpg wednesday</a>
+                    <a class="operator-chip" href="/play/rpg-wednesday/character/" data-spw-operator="potential" data-spw-action="explore">~character_development</a>
+                    <a class="operator-chip" href="#translation-map" data-spw-operator="potential" data-spw-action="explore">~translation_map</a>
+                    <a class="operator-chip" href="#notebook-loop" data-spw-operator="perspective" data-spw-action="enter">@notebook_loop</a>
+                    <a class="operator-chip" href="#builder-form" data-spw-operator="integration" data-spw-action="publish">!build[card]</a>
+                    <a class="operator-chip" href="#publishing-routes" data-spw-operator="perspective" data-spw-action="enter">@publishing_routes</a>
+                    <a class="operator-chip" href="/tools/profile/" data-spw-operator="integration" data-spw-action="publish">^profile_builder</a>
+                    <a class="operator-chip" href="/tools/midjourney/" data-spw-operator="integration" data-spw-action="publish">^midjourney_bench</a>
+                    <a class="operator-chip" href="/play/rpg-wednesday/" data-spw-operator="potential" data-spw-action="explore">~rpg_wednesday</a>
                 </nav>
             </section>
 
@@ -160,11 +160,11 @@
                 <p class="frame-note">On mobile, keep the preview close, work one panel at a time, and let the shorter fields carry the first pass. The builder should feel usable with one thumb, not like a desktop form squeezed into a phone.</p>
                 <p class="inline-note" data-spw-intent="daily-to-prompt">A strong character often begins with something ordinary: a line from a real journal, a small daily observation, the quality of light or tiredness on a particular Tuesday. Those fragments can be tended here into pressure, then carried as a prompt packet to the <a href="/tools/midjourney/">Midjourney bench</a>, where they grow into an image that can return to the Library or the character as a living visual artifact. The daily life stays legible; the metareality gains a new usable thing.</p>
                 <nav class="profile-builder-nav" aria-label="Character sheet builder sections">
-                    <a class="operator-chip" href="#builder-preview">preview</a>
-                    <a class="operator-chip" href="#builder-panel-identity">identity</a>
-                    <a class="operator-chip" href="#builder-panel-signals">signals</a>
-                    <a class="operator-chip" href="#builder-panel-sections">beats</a>
-                    <a class="operator-chip" href="#builder-panel-contact">links</a>
+                    <a class="operator-chip" href="#builder-preview" data-spw-operator="frame" data-spw-action="address">#&gt;preview</a>
+                    <a class="operator-chip" href="#builder-panel-identity" data-spw-operator="frame" data-spw-action="address">#&gt;identity</a>
+                    <a class="operator-chip" href="#builder-panel-signals" data-spw-operator="frame" data-spw-action="address">#&gt;signals</a>
+                    <a class="operator-chip" href="#builder-panel-sections" data-spw-operator="frame" data-spw-action="address">#&gt;beats</a>
+                    <a class="operator-chip" href="#builder-panel-contact" data-spw-operator="frame" data-spw-action="address">#&gt;links</a>
                 </nav>
                 <p class="inline-note" style="font-size:0.8em; margin-top:0.25rem;">
                     The panels below are compositional slots. Each can be opened/closed independently. On narrow screens they stack cleanly; the preview is the composed result. Hierarchy is signaled by the taxonomy (primary pressure, secondary collaborator handle, tertiary share intent).
@@ -424,9 +424,7 @@
                             <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_tools_tools_character_sheet__panel_preview">
                                 <div id="profile-preview"></div>
                                 <div class="profile-preview-actions" style="margin-top:0.5rem; display:flex; gap:0.5rem; flex-wrap:wrap;">
-                                    <button type="button" class="operator-chip" data-card-action="style-to-midjourney" title="Send this card's tropes + current visual identity as a style/identity packet to the Midjourney bench (improves discoverability of rendered cards for style development)">
-                                        ~ develop style in Midjourney
-                                    </button>
+                                    <button type="button" class="operator-chip" data-card-action="style-to-midjourney" title="Send this card's tropes + current visual identity as a style/identity packet to the Midjourney bench (improves discoverability of rendered cards for style development)" data-spw-operator="potential" data-spw-action="explore">~develop_style_in_midjourney</button>
                                     <span class="frame-note" style="font-size:0.8em; opacity:0.7;">The rendered card is the stable visual contract. Use it with palettes and slots to keep a director/producer's style coherent across images and UI.</span>
                                 </div>
                             </div>

@@ -179,15 +179,15 @@
                     <div data-spw-query-composer-fields class="spw-query-composer__fields"></div>
                     <code class="spw-query-composer__preview" data-spw-query-composer-preview>…</code>
                     <div class="spw-query-composer__actions vibe-widget-actions" data-spw-query-composer-actions>
-                        <button type="button" class="operator-chip" data-spw-query-composer-copy>Copy link</button>
-                        <button type="button" class="operator-chip" data-spw-query-composer-apply>Apply setup</button>
-                        <button type="button" class="operator-chip" data-spw-query-composer-cauldron>Offer to cauldron</button>
+                        <button type="button" class="operator-chip" data-spw-query-composer-copy data-spw-operator="potential">~copy_link</button>
+                        <button type="button" class="operator-chip" data-spw-query-composer-apply data-spw-operator="potential">!apply[setup]</button>
+                        <button type="button" class="operator-chip" data-spw-query-composer-cauldron data-spw-operator="potential" data-spw-action="explore">~offer_to_cauldron</button>
                     </div>
                 </section>
                 <div class="vibe-widget-actions" role="group" aria-label="Enhancement climate">
-                    <button class="operator-chip" type="button" data-site-setting-set="enhancementLevel:minimal">Minimal theatrics</button>
-                    <button class="operator-chip" type="button" data-site-setting-set="enhancementLevel:balanced">Balanced</button>
-                    <button class="operator-chip" type="button" data-site-setting-set="enhancementLevel:rich">Rich theatrics</button>
+                    <button class="operator-chip" type="button" data-site-setting-set="enhancementLevel:minimal" data-spw-operator="potential" data-spw-action="explore">~minimal_theatrics</button>
+                    <button class="operator-chip" type="button" data-site-setting-set="enhancementLevel:balanced" data-spw-operator="potential" data-spw-action="explore">~balanced</button>
+                    <button class="operator-chip" type="button" data-site-setting-set="enhancementLevel:rich" data-spw-operator="potential" data-spw-action="explore">~rich_theatrics</button>
                 </div>
                 <div class="vibe-widget-meta">
                     <span class="spec-pill">enhancement: <span data-settings-state="enhancementLevel">minimal</span></span>
@@ -201,8 +201,8 @@
                     data-site-feature-lab-toggles
                 ></div>
                 <div class="vibe-widget-actions">
-                    <button class="operator-chip" type="button" data-site-feature-lab-clear>Clear session lab + reload</button>
-                    <a class="operator-chip" href="/settings/#partial-theatrics-lab">Full lab on settings</a>
+                    <button class="operator-chip" type="button" data-site-feature-lab-clear data-spw-operator="potential">!clear[session_lab_reload]</button>
+                    <a class="operator-chip" href="/settings/#partial-theatrics-lab" data-spw-operator="potential" data-spw-action="explore">~full_lab_on_settings</a>
                 </div>
             </div>
         </section>
@@ -398,8 +398,8 @@ const record = createLoopRecord('preview', 'operator');</code></pre>
                             <p class="spatial-gravity-status"><span data-spw-pack-readout>resize to see the variant</span></p>
                         </div>
                         <div class="pack-card__actions" data-spw-pack-region="actions" data-spw-slot="actions">
-                            <a class="operator-chip" href="#literate-extension-title">inspect contract</a>
-                            <a class="operator-chip" href="/design/components/">compare components</a>
+                            <a class="operator-chip" href="#literate-extension-title" data-spw-operator="frame">#&gt;inspect_contract</a>
+                            <a class="operator-chip" href="/design/components/" data-spw-operator="potential" data-spw-action="explore">~components</a>
                         </div>
                     </div>
                 </article>

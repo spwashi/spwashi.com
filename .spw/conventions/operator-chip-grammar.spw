@@ -1,0 +1,84 @@
+# Operator Chip Grammar Contract
+#
+# Formally documents the grammar contract for operator chips in HTML, grounded in the
+# workbench parser at packages/spw-seed/src/grammar/expressions.ts. This convention
+# ensures strict adjacency between operator sigil and operand identifier, as well as
+# particle container syntax for actions and bindings.
+
+#>operator_chip_grammar
+#:convention #!operators #!grammar #!audit #!parts_of_speech
+#:layer #!semantics
+#:fixity #!stable
+
+^"thesis"{
+  claim: "The workbench parser enforces strict adjacency between operator sigils and operand identifiers. Actions with targets use particle container brackets !verb[target], bindings use =verb[target], and non-action operators take tight-bound noun identifiers."
+  grounding: "The operatorLabel rule is parsed only when operatorToken.span.end.offset === current(stream).span.start.offset (zero bytes between sigil and identifier)."
+}
+
+^"grammar_rules"{
+  tight_binding: .{
+    rule: "Operator sigil must be directly adjacent to the operand identifier."
+    operators: ["~", "^", "@", "*", "!", "=", "$", "%", ".", "&", ">", "#>"]
+    examples: ["~design_hub", "!generate[seed]", "#>town_library", "@services"]
+  }[reg=facet]
+
+  action_containers: .{
+    rule: "Actions operating on targets use bracket container syntax !verb[target]."
+    examples: ["!generate[seed]", "!mix[extension]", "!save[note]", "!reset[curriculum]", "!cast[spell]"]
+  }[reg=facet]
+
+  binding_containers: .{
+    rule: "Binding operators targeting variables use bracket container syntax =verb[target]."
+    examples: ["=tune[posture]", "=clear[ledger]"]
+  }[reg=facet]
+
+  spaced_prose: .{
+    rule: "Specific operators allow a space followed by an inline prose payload."
+    operators: ["#", "?"]
+    examples: ["# annotation text", "? boundary test"]
+    note: "These are the INLINE_PAYLOAD_OPERATORS."
+  }[reg=facet]
+  
+  string_subject: .{
+    rule: "The ^ and ? operators can accept a quoted string subject."
+    operators: ["^", "?"]
+    examples: ["^\"setup\""]
+  }[reg=facet]
+
+  container: .{
+    rule: "Operators can be followed by container forms like frames, bodies, or scopes."
+    examples: ["![frame]{body}", "~potential[items]", "[light_mode]"]
+  }[reg=facet]
+}
+
+^"parts_of_speech_alignment"{
+  !_action: "Imperative verb or !verb[target] container."
+  ~_potential: "Noun concept (e.g., ~software_thesis, ~spell_ingredients)."
+  @_perspective: "Location / perspective route (e.g., @services, @intake)."
+  #>_frame: "Structural frame address (e.g., #>town_library, #>site_guide)."
+  ^_integration: "Artifact or result (e.g., ^proof_card, ^character_card)."
+  *_value: "Concrete value or topic (e.g., *rpg_wednesday, *math)."
+  $_substrate: "Resource, state, or budget (e.g., $substrate, $current_sprint)."
+  %_measure: "Metric or ratio (e.g., %memory_cost, %compression)."
+  =_binding: "Constraint or stroke profile (e.g., =tune[posture])."
+  ._ground: "Foundation or craft (e.g., .craft, .recipes)."
+}
+
+^"identifier_rules"{
+  valid_characters: "[a-z0-9_\\[\\]]"
+  style: "Multi-word concepts joined with underscores or bracketed into target containers !verb[target]. Lowercase only."
+}
+
+^"html_encoding"{
+  rule: "In HTML source, specific sigils and characters must be encoded or restructured."
+  examples: .{
+    hash_anchor: "#> appears as #&gt; in HTML source"
+    ampersand: "& in operands is not valid — use _and_ or restructure"
+  }
+}
+
+^"audit"{
+  script: "scripts/audit-operator-chip-grammar.mjs"
+  execution: "node scripts/audit-operator-chip-grammar.mjs"
+  trigger: "Should be run after any HTML changes that touch operator chips."
+}

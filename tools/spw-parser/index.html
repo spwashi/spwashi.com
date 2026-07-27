@@ -85,10 +85,10 @@
                 <p class="site-lede">This is the parser, running in your browser. Change the source and watch Spw become tokens, an abstract syntax tree, diagnostics, and an exact reconstruction.</p>
                 <p>This tool ships the portable parser kernel from <a href="https://github.com/spwashi/spw-workbench">spw-workbench</a>. The public page does not imitate a parse or infer braces with display-only rules: the same parser package used by the CLI and language tooling produces the result below.</p>
                 <nav class="frame-operators" aria-label="Parser proof routes">
-                    <a class="operator-chip" href="#literal-parser" data-spw-operator="action">@ parse source</a>
-                    <a class="operator-chip" href="#proof-output" data-spw-operator="object">^ inspect AST</a>
-                    <a class="operator-chip" href="#app-loading" data-spw-operator="route">#&gt; load in app</a>
-                    <a class="operator-chip" href="https://github.com/spwashi/spw-workbench/tree/main/packages/spw-seed/src/parser" data-spw-operator="ref">~ parser source</a>
+                    <a class="operator-chip" href="#literal-parser" data-spw-operator="perspective" data-spw-action="enter">@parse_source</a>
+                    <a class="operator-chip" href="#proof-output" data-spw-operator="integration">!inspect[ast]</a>
+                    <a class="operator-chip" href="#app-loading" data-spw-operator="frame">#&gt;load_in_app</a>
+                    <a class="operator-chip" href="https://github.com/spwashi/spw-workbench/tree/main/packages/spw-seed/src/parser" data-spw-operator="potential" data-spw-action="explore">~parser_source</a>
                 </nav>
             </section>
 
@@ -174,8 +174,8 @@
                 </div>
 
                 <div class="literal-parser-actions" id="app-loading">
-                    <a class="operator-chip" href="/tools/spw-parser/#literal-parser" data-parser-app-link>@ load source into app</a>
-                    <button class="operator-chip" type="button" data-parser-install>Install Spw app</button>
+                    <a class="operator-chip" href="/tools/spw-parser/#literal-parser" data-parser-app-link data-spw-operator="perspective">!load[source_into_app]</a>
+                    <button class="operator-chip" type="button" data-parser-install data-spw-operator="potential" data-spw-action="explore">~install_spw_app</button>
                     <p>The first action creates an app-safe URL containing this exact source. The installed Spw app opens that URL at this parser; registered <code>.spw</code> files can open here directly on supporting systems.</p>
                 </div>
 

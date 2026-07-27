@@ -199,11 +199,11 @@
                 </figure>
 
                 <nav class="frame-operators" aria-label="Blog routes">
-                    <a class="operator-chip" href="#blog-input-interpreter" data-spw-form="angle" data-spw-operator="action">! interpret</a>
-                    <a class="operator-chip" href="#operator-reference" data-spw-form="angle" data-spw-operator="probe">? operators</a>
-                    <a class="operator-chip" href="#specimen-index" data-spw-form="angle" data-spw-operator="merge">* specimens</a>
-                    <a class="operator-chip" href="#fiber-linguistics" data-spw-form="angle" data-spw-operator="stream">~ resonance</a>
-                    <a class="operator-chip" href="#recording-cues" data-spw-form="angle" data-spw-operator="ref">~ recording</a>
+                    <a class="operator-chip" href="#blog-input-interpreter" data-spw-form="angle" data-spw-operator="action" data-spw-action="apply">!interpret</a>
+                    <a class="operator-chip" href="#operator-reference" data-spw-form="angle" data-spw-operator="wonder" data-spw-action="inspect">? operators</a>
+                    <a class="operator-chip" href="#specimen-index" data-spw-form="angle" data-spw-operator="value" data-spw-action="materialize">*specimens</a>
+                    <a class="operator-chip" href="#fiber-linguistics" data-spw-form="angle" data-spw-operator="potential" data-spw-action="explore">~resonance</a>
+                    <a class="operator-chip" href="#recording-cues" data-spw-form="angle" data-spw-operator="potential" data-spw-action="explore">~recording</a>
                 </nav>
             </section>
 
@@ -311,9 +311,9 @@
                                 <h3>Trace</h3>
                                 <p class="frame-note">Let recent paths stay quiet or echo across the route.</p>
                                 <div class="demo-control-row">
-                                    <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:off">Quiet</button>
-                                    <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:nearby">Nearby</button>
-                                    <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:sitewide">Immersive</button>
+                                    <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:off" data-spw-operator="potential" data-spw-action="explore">~quiet</button>
+                                    <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:nearby" data-spw-operator="potential" data-spw-action="explore">~nearby</button>
+                                    <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:sitewide" data-spw-operator="potential" data-spw-action="explore">~immersive</button>
                                 </div>
                             </section>
 
@@ -321,17 +321,17 @@
                                 <h3>Guides</h3>
                                 <p class="frame-note">Make the semantic scaffolding visible when you need to inspect the cut.</p>
                                 <div class="demo-control-row">
-                                    <button class="operator-chip" type="button" data-site-setting-set="showSemanticMetadata:off">Quiet chrome</button>
-                                    <button class="operator-chip" type="button" data-site-setting-set="showSemanticMetadata:on">Show chrome</button>
+                                    <button class="operator-chip" type="button" data-site-setting-set="showSemanticMetadata:off" data-spw-operator="potential" data-spw-action="explore">~quiet_chrome</button>
+                                    <button class="operator-chip" type="button" data-site-setting-set="showSemanticMetadata:on" data-spw-operator="potential" data-spw-action="explore">~show_chrome</button>
                                 </div>
                             </section>
                         </div>
 
                         <nav class="frame-operators" aria-label="Recording cue routes">
-                            <a class="operator-chip" href="#field-notes" data-spw-operator="stream">* field notes</a>
-                            <a class="operator-chip" href="#operator-reference" data-spw-operator="probe">? operators</a>
-                            <a class="operator-chip" href="/design/#promptability-studio" data-spw-operator="frame"># design studio</a>
-                            <a class="operator-chip" href="/about/#typography-register" data-spw-operator="object">^ typography</a>
+                            <a class="operator-chip" href="#field-notes" data-spw-operator="value" data-spw-action="materialize">*field_notes</a>
+                            <a class="operator-chip" href="#operator-reference" data-spw-operator="wonder" data-spw-action="inspect">? operators</a>
+                            <a class="operator-chip" href="/design/#promptability-studio" data-spw-operator="vibration" data-spw-action="anchor"># design studio</a>
+                            <a class="operator-chip" href="/about/#typography-register" data-spw-operator="integration" data-spw-action="publish">^typography</a>
                         </nav>
                     </div>
                 </div>
@@ -638,9 +638,9 @@
                             <textarea id="blog-draft-input" class="blog-input-textarea" rows="14" data-blog-input aria-describedby="blog-input-help blog-input-status" aria-invalid="false" placeholder="Paste a paragraph, Spw fragment, rough note, question, metaphor, or post draft here."></textarea>
                         </label>
                         <div class="blog-input-actions">
-                            <button class="operator-chip" type="submit">@ interpret input</button>
-                            <button class="operator-chip" type="button" data-blog-sample>~ load sample</button>
-                            <button class="operator-chip" type="button" data-blog-clear>! clear</button>
+                            <button class="operator-chip" type="submit" data-spw-operator="perspective" data-spw-action="enter">!interpret[input]</button>
+                            <button class="operator-chip" type="button" data-blog-sample data-spw-operator="potential">~load_sample</button>
+                            <button class="operator-chip" type="button" data-blog-clear data-spw-operator="action">!clear</button>
                             <span class="blog-input-status" id="blog-input-status" data-blog-status role="status" aria-live="polite">Waiting for input.</span>
                         </div>
                     </form>
@@ -822,7 +822,7 @@
                             <option value="square">square</option>
                         </select>
                     </div>
-                    <button class="operator-chip demo-audio-btn" id="audio-toggle" type="button" aria-pressed="false">~ emit tone</button>
+                    <button class="operator-chip demo-audio-btn" id="audio-toggle" type="button" aria-pressed="false" data-spw-operator="potential" data-spw-action="explore">!emit[tone]</button>
                     <svg class="demo-audio-waveform" id="audio-waveform" viewBox="0 0 300 60" aria-hidden="true" preserveAspectRatio="none">
                         <path id="audio-wave-path" d="" stroke="var(--blog-accent,hsl(192,62%,44%))" stroke-width="2" fill="none"/>
                     </svg>
@@ -846,7 +846,7 @@
                 <div class="specimen-demo demo-canvas-wrap" id="canvas-demo">
                     <canvas id="weave-canvas" width="520" height="200" aria-label="Woven field canvas. Click or press Enter to add charge nodes." aria-describedby="canvas-note" role="button" tabindex="0"></canvas>
                     <p class="frame-note demo-canvas-note" id="canvas-note">Click canvas or press Enter to drop a node. Nodes accumulate.</p>
-                    <button class="operator-chip demo-canvas-clear" type="button" id="canvas-clear">! clear</button>
+                    <button class="operator-chip demo-canvas-clear" type="button" id="canvas-clear" data-spw-operator="action">!clear</button>
                 </div>
             </section>
 
