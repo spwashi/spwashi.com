@@ -136,7 +136,7 @@ reading_order: .{
 @plan_vertical_rhythm_container_audit: ~"./vertical-rhythm-container-audit/index.spw"
 ^"runtime_js_validation"{
  label = "runtime js validation"
- count = 10
+ count = 11
  members = #[
   `curricularize-codebase-typescript`,
   `javascript-standalone-utility`,
@@ -145,6 +145,7 @@ reading_order: .{
   `runtime-bootstrap-performance`,
   `runtime-load-instrumentation`,
   `runtime-module-fluency`,
+  `runtime-plane-consolidation`,
   `runtime-settings`,
   `site-source-layout`,
   `typescript-integration`,
@@ -158,6 +159,7 @@ reading_order: .{
 @plan_runtime_bootstrap_performance: ~"./runtime-bootstrap-performance/index.spw"
 @plan_runtime_load_instrumentation: ~"./runtime-load-instrumentation/index.spw"
 @plan_runtime_module_fluency: ~"./runtime-module-fluency/index.spw"
+@plan_runtime_plane_consolidation: ~"./runtime-plane-consolidation/index.spw"
 @plan_runtime_settings: ~"./runtime-settings/index.spw"
 @plan_site_source_layout: ~"./site-source-layout/index.spw"
 @plan_typescript_integration: ~"./typescript-integration/index.spw"
@@ -533,6 +535,7 @@ dispatch: .{
  plan_runtime_bootstrap_performance = @plan_runtime_bootstrap_performance
  plan_runtime_load_instrumentation = @plan_runtime_load_instrumentation
  plan_runtime_module_fluency = @plan_runtime_module_fluency
+ plan_runtime_plane_consolidation = @plan_runtime_plane_consolidation
  plan_runtime_settings = @plan_runtime_settings
  plan_site_source_layout = @plan_site_source_layout
  plan_typescript_integration = @plan_typescript_integration

@@ -1,0 +1,1463 @@
+# Review 2026-07-26 — module anatomy; promote the adoption ledger to .spw/audits once a phase has landed and held.
+# Module Anatomy — Runtime Plane Consolidation
+#
+# Structural description of the load-bearing runtime modules: data structures,
+# algorithms, effect surfaces, and authority boundaries.
+#
+# Notation (workbench lattice — docs/learn/cheat-sheet.md)
+#   $  select / address    — the surface a block addresses
+#   %  measure             — measured mass, cost, cardinality
+#   !  action / inject     — writes, side effects, mutations
+#   ?  wonder / probe      — the command that re-verifies a claim
+#   ~  potential / path    — deferred, lazy, or referenced
+#   &  confluence / merge  — subscription and join points
+#   ^  integrate / frame   — composition and containment
+#   =  config / bias       — declared policy and authority verdict
+#   .  ground / facet      — a grounded record
+#   #  annotation          — tags, invariants, resonance
+#
+#   []   frame / selection      — a chosen set of concerns
+#   {}   body / material        — the substance of a block
+#   ()   scope / hold           — a signature or tuple
+#   <>   capsule / shell        — a type or role shell
+#   <<>> stream                 — an ordered flow (algorithm trace, write order)
+#
+# Every ?probe is a literal command. Every %measure is dated 2026-07-26 against
+# the working tree. Blocks are uniform so `spw query` can select across them.
+
+#>runtime_plane_module_anatomy
+#:audit #!javascript #!runtime #!modules #!anatomy
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@index: ~"./index.spw"
+@census: ~"../../../.spw/audits/javascript-module-census-2026-07.spw"
+@export_contract_spw: ~"../../../.spw/conventions/module-export-contract.spw"
+@graph: ~"../../../.spw/graph.spw"
+
+operation = "audit"
+fixity = "tending"
+
+^"reading_contract"[#method]{
+ block_shape: .{
+   identity            = `(id, guild, layer, mount) — addressing tuple`
+   mass                = `%{} — measured size, graph position, line count`
+   dimensional_texture = `%{} — fixity, semantic depth, state lifetime, coupling density`
+   expression          = `bare Spw expression naming the module's job`
+   structures          = `$[] — data structures with form, cardinality, lifetime`
+   state_machines      = `$[] — formal state transitions with triggers and guard conditions`
+   data_flows          = `$[] — input => transformation => DOM projection => event dispatches`
+   algorithms          = `!<<>> — ordered traces with cost and hot-path flag`
+   effects             = `&{} — !writes, %reads, ~defers, &joins`
+   probes              = `?[] — literal re-verification commands`
+   authority           = `={} — owns, leaks, resolves`
+ }[reg=facet]
+ query_form: `spw query --from .agents/plans/runtime-plane-consolidation -s algorithms.hot`
+ law = `Structure carries the claim. Prose only where structure would lie.`
+}[reg=facet]
+
+# ===========================================================================
+^["I. CONTRACT OWNERS"]{ role: <authority> ; law: `one decision, one implementation` }
+# ===========================================================================
+
+^"kernel_dom_contracts"[#kernel #contract #eager]{
+ @self: ~"../../../public/js/kernel/dom-contracts.js"
+
+ identity( id: $kernel.dom_contracts ; guild: #kernel ; layer: #shared ; mount: ~static )
+
+ %mass{ lines: 1477 ; bytes: 48514 ; eager: #yes ; graph_rank: 5 }
+
+ %dimensional_texture{
+  fixity_tier: "contractual"
+  semantic_depth: "grounded"
+  state_lifetime: "stateless"
+  coupling_density: "high (547 guarded writes, 5 federated observers)"
+  resonance_rank: 1  # direct guard over full-document style invalidations
+ }[reg=facet]
+
+ expression: $dom[write|observe|token]{change-only}<authority>
+
+ $structures[
+  .{
+    id: DATASET_WRITE
+    form: (el, key, value, options<{allowEmpty, missingOnly}>) => bool<changed>
+    invariant: `returns false without touching the DOM when el.dataset[key] === next`
+    cardinality: %{ call_sites: 547 }
+    lifetime: ~stateless
+  }[reg=facet]
+  .{
+    id: STYLE_WRITE
+    form: (el, property, value, options<{allowEmpty}>) => bool<changed>
+    invariant: `compares getPropertyValue before setProperty; removes on null`
+    cardinality: %{ call_sites: 71 }
+    lifetime: ~stateless
+  }[reg=facet]
+  .{
+    id: DATASET_SERIALIZER
+    form: (value<Set|Array|primitive>, options<{allowEmpty, separator}>) => string|null
+    note: `recursive over Array/Set; filters empties; null collapses to removal`
+    lifetime: ~stateless
+  }[reg=facet]
+  .{
+    id: TOPOGRAPHY_TOKEN
+    form: (value) => kebab<lowercased, non-alnum collapsed, edges trimmed>
+    derives: [axisToken, buildAxisGenome]
+    lifetime: ~stateless
+  }[reg=facet]
+ ]
+
+ $state_machines[
+  .{
+    id: WRITE_GUARD_STATE_MACHINE
+    states: <enum>[UNCHECKED => SERIALIZED => COMPARED => DOM_WRITTEN | SHORT_CIRCUITED]
+    transitions: <<
+      (el, key, value) => *serialize(value)
+        => ?equal(el.dataset[key], serialized) => SHORT_CIRCUITED<returns false>
+        | !assign(el.dataset[key], serialized) => DOM_WRITTEN<returns true>
+    >>
+  }[reg=facet]
+  .{
+    id: OBSERVE_ADDED_MATCHES_COALESCE
+    states: <enum>[IDLE => MUTATION_RECORDED => RAF_SCHEDULED => CALLBACK_EXECUTED => RELEASED]
+    transitions: <<
+      &mutation(addedNodes) => ?any(node.matches(selector))
+        => ?rafPending => &coalesce
+        | ~requestAnimationFrame => !onRelevant(matchedNodes) => !release
+    >>
+  }[reg=facet]
+ ]
+
+ $data_flows[
+  .{
+    id: CHANGE_ONLY_DATASET_FLOW
+    pipeline: << input(el, key, rawValue) => *serializeDatasetValue => %read(el.dataset[key]) => ?diff => !write(el.dataset[key]) => *return(changed) >>
+  }[reg=facet]
+ ]
+
+ !algorithms{
+  write_guard: <<
+    ?exists(el.dataset && key) => *serialize(value) => ?equal(current, next)
+      => &short-circuit<false> | !assign => *return<true>
+  >>
+  observe_added_matches: <<
+    &mutation(childList, subtree) => ?any(addedNodes matches selector)
+      => ~rAF-coalesce(frame) => !onRelevant() => *release(frame)
+  >>
+  cost: .{ write_guard: O(1) ; observe: O(records × addedNodes) ; hot: #yes }[reg=facet]
+  hazard_prevented: `two modules reacting through naive subtree observers hard-freeze the renderer — observer callbacks run as microtasks and never yield (docblock :1189)`
+ }
+
+ &effects{
+  !writes: << dataset[*] ; style[*] ; data-spw-component-kind ; data-spw-kind >>
+  %reads: << el.dataset ; el.style.getPropertyValue >>
+  ~defers: << requestAnimationFrame >>
+  &joins: << MutationObserver(root, {childList, subtree}) >>
+ }
+
+ ?probes[
+  `rg -c 'writeDatasetValue' public/js`
+  `rg -cE '\.dataset\.[A-Za-z]+\s*=' public/js`
+  `rg -c 'observeAddedMatches' public/js`
+ ]
+
+ =authority{
+  owns: `how a property is written, and how added nodes are observed`
+  leaks: [
+    `:12 imports detectOperator from kernel/shared.js — 69 KB, largest eager module, for one function`
+    `guard adopted 547x against 1382 raw writes — optional in practice`
+    `observeAddedMatches has 5 call sites against 31 MutationObserver constructions`
+    `holds four unrelated vocabularies: write contract, observer helper, topography tokens, feature-cluster description`
+  ]
+  resolves: <<
+    ^phase(1) !cut(shared.js edge) => ^phase(3) !codemod(modules/, interface/)
+      => ^phase(6) !split(topography, feature-cluster)
+  >>
+ }
+
+ #invariant: `If a plane can write a property without passing through here, this is documentation, not a contract.`
+}[reg=facet]
+
+^"kernel_dom_render"[#kernel #contract]{
+ @self: ~"../../../public/js/kernel/dom-render.js"
+
+ identity( id: $kernel.dom_render ; guild: #kernel ; layer: #shared ; mount: ~lazy )
+
+ %mass{ lines: 402 ; bytes: 10644 ; eager: #no ; importers: 13 }
+
+ expression: $render[element|template|hydrate]{escaped|trusted}<authority>
+
+ $structures[
+  .{
+    id: ELEMENT_PROPS
+    form: {className, text, html, trusted, dataset<{k:v}>, ...domProps}
+    dispatch: <<
+      ?key(className) => !assign(element.className)
+      | ?key(text) => !assign(textContent)
+      | ?key(html) => ?trusted => !assign(innerHTML) | !downgrade(textContent) & !report
+      | ?key(dataset) => !each(delete on empty | assign)
+      | ?key in element => !assign(property)
+      | *else => !setAttribute
+    >>
+    guard: `html without trusted:true reports an error and falls back to cleanText`
+  }[reg=facet]
+  .{
+    id: HYDRATION_STATE
+    form: <enum>[loading | ready | error]
+    projection: `data-spw-hydration + aria-label + data-spw-hydration-error`
+  }[reg=facet]
+  .{
+    id: TEMPLATE_HOLE
+    form: `{{ name }}` matched by /\{\{\s*([a-zA-Z][a-zA-Z0-9_-]*)\s*\}\}/g
+    policy: =escape-by-default ; unknown-key: !report & *preserve-literal
+  }[reg=facet]
+  .{
+    id: FEED_LOADER
+    form: (url, fallback, options) => loader<{(), getLastError, reset}>
+    lifetime: ~memoized-per-loader
+    failure: *falls-back-to(fallbackValue) & !retains(lastError)
+  }[reg=facet]
+ ]
+
+ !algorithms{
+  hydrate_host: <<
+    !setState(loading) => ~await load() => ~await render(data, host)
+      => !clearChildren => *append(Node | Array | string)
+      => !setState(ready)
+      | &catch => !setState(error, message) => !onError(error, host)
+  >>
+  run_safe: << ~await task() => *ok{value} | &catch => !report => *ok:false{fallback} >>
+  cost: .{ hydrate: O(children) ; interpolate: O(template) ; hot: #no }[reg=facet]
+ }
+
+ &effects{
+  !writes: << element.* ; data-spw-hydration ; data-spw-hydration-error ; aria-label >>
+  &joins: << bus.emit('render:error') >>
+  ~defers: << DOMContentLoaded when appending before body exists >>
+ }
+
+ ?probes[
+  `rg -c 'document.createElement' public/js`
+  `rg -c '\.innerHTML' public/js`
+  `rg -n "innerHTML = ." public/js --type js  # then filter template-literal interpolation by eye`
+ ]
+
+ =authority{
+  owns: `how markup is constructed, escaped, and hydrated`
+  leaks: [
+    `13 importers against 450 document.createElement and 94 innerHTML`
+    `6 innerHTML sites interpolate unescaped ${}: tuning-discovery:158, shell-disclosure:1469, gesture-anatomy:178, experiential:1938, payment-card:119, seed-card:412`
+    `experiential.js carries private escapeHtml + escapeAttribute copies`
+    `setTrustedHtml is exported with no trust check — a legitimate-looking bypass of the el() guard`
+  ]
+  risk_reading: `all six interpolations carry internal data today — a consistency defect, not an injection defect, but the contract is not the path of least resistance, which is how it stays that way`
+  resolves: << !retire(private escape copies) => !route(6 sites through interpolateTemplate) => ?narrow(setTrustedHtml) >>
+ }
+
+ #invariant: `Escaping has exactly one implementation, or it has none.`
+}[reg=facet]
+
+^"runtime_dom_sync_hub"[#runtime #contract #federation]{
+ @self: ~"../../../public/js/runtime/dom-sync-hub.js"
+
+ identity( id: $runtime.dom_sync_hub ; guild: #runtime ; layer: #shared ; mount: ~lazy )
+
+ %mass{ lines: 164 ; observers_owned: 1 ; tasks_registered: 5 }
+
+ expression: $observation[federate]{one-observer.one-frame.ordered-batch}<authority>
+
+ $structures[
+  .{
+    id: TASK_REGISTRY
+    form: Map<id, () => void>
+    order: <<
+      component-kind-mirror => page-region-rail => tuning-discovery
+        => gesture-anatomy => learnability-ledger => *trailing(unordered)
+    >>
+    note: `TASK_ORDER is explicit; unlisted tasks run after, in insertion order`
+  }[reg=facet]
+  .{
+    id: ATTRIBUTE_FILTER
+    form: <frozen>[43 × data-spw-* | data-site-settings-*]
+    standing: `a de facto registry of every reactive attribute on the site`
+    promote_when: `phase 3 lands — this belongs in a named .spw surface`
+  }[reg=facet]
+  .{
+    id: BATCH_STATE
+    form: (observer, rafId, pendingTasks<Set|null>, settingsBound, attachedCtx)
+    scope: =module-singleton
+    hazard: `correct for one document; untestable in isolation; unsafe under a second runtime context`
+  }[reg=facet]
+ ]
+
+ !algorithms{
+  schedule: <<
+    ?scope('all') => !clear(pending)
+      | !add(pending, scope)
+      => ?rafId => &coalesce
+      | !rAF(flush)
+  >>
+  flush: << *drain(pending | all) => ^order(TASK_ORDER) => !guardCall(each) >>
+  teardown: << !delete(task) => ?empty(tasks) => !disconnect & !cancelAF & !unbindSettings >>
+  cost: .{ per_frame: O(tasks) ; per_mutation: O(1) amortized ; hot: #yes }[reg=facet]
+ }
+
+ &effects{
+  &joins: <<
+    MutationObserver(document.body, {childList, subtree, attributes, attributeFilter[43]})
+    ; document.on('spw:settings:changed')
+    ; document.on('spw:settings-change')
+  >>
+  ~defers: << requestAnimationFrame >>
+ }
+
+ ?probes[
+  `rg -l 'registerDomSyncTask' public/js`
+  `rg -c 'new MutationObserver' public/js`
+ ]
+
+ =authority{
+  owns: `how many MutationObservers the site runs, and in what order their reactions fire`
+  quality: `the correct federation primitive — single observer, single frame, explicit ordering, guardCall-wrapped bodies; validated by 5 production tasks`
+  leaks: [
+    `5 registered tasks against 31 observers — 26 remain independent`
+    `12 of those watch documentElement attributes, so every root dataset write broadcasts to a dozen callbacks, each scheduling its own rAF`
+    `module-singleton batch state`
+  ]
+  resolves: << ^phase(3) !migrate(26 observers => hub | observeAddedMatches) => !promote(ATTRIBUTE_FILTER) >>
+ }
+
+ #invariant: `A module that needs to react to DOM change registers a task; it does not construct an observer.`
+}[reg=facet]
+
+^"runtime_module_export_contract"[#runtime #contract #dead]{
+ @self: ~"../../../public/js/runtime/module-export-contract.js"
+
+ identity( id: $runtime.module_export_contract ; guild: #runtime ; layer: #shared ; mount: ~static )
+
+ %mass{ lines: 148 ; adopters: 0 ; bypassed_by: 95 }
+
+ expression: $module[declare]{mount.refresh.contract}<authority>?unadopted
+
+ $structures[
+  .{
+    id: EXPORT_SHAPE
+    form: {
+      required: (mount)
+      optional: (id, refresh, contract, updates, guild, describes, evaluates, timingArc, timingChunk, effectScope)
+      aliases: (spwModule)
+    }
+  }[reg=facet]
+  .{
+    id: RESOLVER_CHAIN
+    form: <<
+      mod.SPW_MODULE_EXPORT.mount
+        => mod.spwModule.mount
+        => mod.default.mount
+        => *first(/^init[A-Z]/ export)
+        => *null
+    >>
+    invocation: `resolved.fn(ctx, root)`
+    return: <shape>[void | cleanup<fn> | {cleanup?, refresh?}]
+  }[reg=facet]
+  .{
+    id: ADAPTER_CENSUS
+    form: <histogram>{
+      `fn()`                              : 38
+      `fn(ctx)`                           : 31
+      `fn(document)`                      : 11
+      `fn(main||document)`                : 3
+      `fn(root)`                          : 2
+      `bespoke`                           : 8
+    }
+    deletable_today: 69   # fn() ignores extra args; fn(ctx) is exactly the resolver call
+    needs_signature_work: 19
+  }[reg=facet]
+ ]
+
+ !algorithms{
+  mount_resolution: <<
+    ?def.mount => !def.mount(mod, ctx, root)
+      | *resolveModuleMount(mod) => ?fn => !fn(ctx, root)
+        => ?surface.refresh => ^merge{cleanup, refresh: mount-returned | export-level}
+  >>
+  precedence: `a mount-returned refresh wins over the export-level refresh`
+  cost: .{ per_mount: O(1) ; hot: #no }[reg=facet]
+ }
+
+ =authority{
+  owns: `how a module declares its mount, so the catalog need not know its shape`
+  status: #dead-infrastructure
+  leaks: [
+    `SPW_MODULE_EXPORT declarations across the codebase: 0`
+    `createModuleExport call sites: 1 — interface/state-inspector.js:1187 via the spwModule alias`
+    `95 of 96 catalog definitions hand-write a mount: adapter instead`
+  ]
+  root_cause: `module init signatures were never normalized. Because ~19 take document where the contract passes ctx, the catalog grew a per-module adapter; once every def had one the contract became unreachable. It did not fail on its merits — nothing forced the signature.`
+  resolves: <<
+    ^phase(1) !delete(69 no-op adapters)
+      => !normalize(19 signatures => (ctx, root))
+      => !delete(remaining adapters)
+      => =retain(def.mount as explicit override)
+  >>
+ }
+
+ ?probes[
+  `rg -c 'SPW_MODULE_EXPORT\s*=' public/js`
+  `rg -A4 "mount: .mod" public/js/runtime/module-catalog-*.js | rg "return fn" | sort | uniq -c`
+ ]
+
+ #invariant: `A contract every call site works around is a comment. Either the adapters go, or this file does.`
+}[reg=facet]
+
+^"runtime_module_updates_contract"[#runtime #contract #declared-data]{
+ @self: ~"../../../public/js/runtime/module-updates-contract.js"
+
+ identity( id: $runtime.module_updates ; guild: #runtime ; layer: #shared ; mount: ~static )
+
+ %mass{ lines: 480 ; bytes: 18072 ; eager: #yes ; declarations_parsed: 495 }
+
+ expression: $module[declare-effects]{scope:role:kind:name}<authority>
+
+ $structures[
+  .{
+    id: UPDATE_TOKEN
+    form: <parsed>{ kind, name, scope, role, raw }
+    grammar: `[scope:][role:][kind:]name`
+    scope: <enum>[html | root | body | *null]
+    role:  <enum>[structural | flourish | inspect | residue | measure | diagnostic | *unspecified]
+    kind:  <inferred>[attr | css-var | aria | class | event | selector | property]
+    inference: <<
+      ?prefix('--') => css-var
+        | ?prefix('aria-') => aria
+        | ?prefix('.') => class
+        | ?contains('spw:') => event
+        | *else => attr
+    >>
+  }[reg=facet]
+  .{
+    id: UPDATE_DESCRIPTION
+    form: {
+      count, kinds[], roles[], scopes[]
+      grouped: {attr[], css-var[], aria[], class[], event[], selector[], property[]}
+      byRole:  {structural[], flourish[], inspect[], residue[], measure[], diagnostic[], unspecified[]}
+      flourishes[], items[], summary, topology, spell, readable, brief
+    }
+    topology_form: `attr:a,b|css-var:--c|aria:d|role:structural:2|role:flourish:1`
+    spell_form: `{updates:attr:a+b|css-var:--c}`
+  }[reg=facet]
+  .{
+    id: CONFLICT_INDEX
+    form: findModuleUpdateConflicts(defs[]) => collisions<{name, modules[]}>
+    purpose: `detect two modules declaring a write to the same attribute`
+  }[reg=facet]
+ ]
+
+ !algorithms{
+  normalize: << *split(raw) => *classify(scope, role, kind) => ^facet{kind,name,scope,role,raw} >>
+  project: << normalize => ^group(byKind, byRole) => *format(summary, topology, spell, readable) >>
+  cost: .{ per_def: O(updates) ; memoizable: #yes ; hot: #no }[reg=facet]
+ }
+
+ .recent_change{
+  at: 2026-07-26 ; state: ~uncommitted
+  what: `all three catalogs migrated from flat strings to scope:role: prefixed tokens`
+  verified: %{ enhancement: 363 ; feature: 111 ; core: 21 ; delta_vs_HEAD: 0 }
+  verdict: =sound & =complete
+  action: `commit separately from the unmount API`
+ }
+
+ =authority{
+  owns: `what a module declares it writes, and with what intent`
+  standing: `the one place in the runtime where module metadata is declared data rather than inferred vocabulary — the natural replacement for inferModuleDimensions`
+  leaks: [ `role is now declared but nothing consumes it for scheduling, budgeting, or flourish suppression` ]
+  resolves: <<
+    ^phase(5) !consume(role => idle chunking, flourish suppression)
+      => !replace(inferModuleDimensions => derivation over declared updates)
+  >>
+ }
+
+ #invariant: `Declared effects outrank inferred effects. Prefer reading this contract over regexing an id.`
+}[reg=facet]
+
+^"semantic_spw_expression_geometry"[#semantic #contract #new]{
+ @self: ~"../../../public/js/semantic/spw-expression-geometry.js"
+
+ identity( id: $semantic.expression_geometry ; guild: #semantic ; layer: #shared ; mount: ~lazy )
+
+ %mass{ lines: 244 ; adopters: 2 ; competitors: 4 ; landed: 2026-07-26 }
+
+ expression: $spw[expression]{scan.describe}<authority>@browser-safe-subset
+
+ $structures[
+  .{
+    id: DECLARED_SUBSET
+    form: <capsule>[
+      operator sigils
+      ; bounds( [] {} () <> )
+      ; streams( <<>> )
+      ; couples( <> )
+      ; quoted spans<{delimiters must not leak}>
+    ]
+    source: SPW_EXPRESSION_GEOMETRY_CONTRACT
+  }[reg=facet]
+  .{
+    id: SCAN_RESULT
+    form: scanSpwExpression(source) => tokens<{kind, bounds, depth}>[]
+  }[reg=facet]
+ ]
+
+ &competing_readers[
+  .{ at: `kernel/shared.js:1380` ; fn: splitOperatorExpression ; consumers: [sigil-anatomy, interaction-vocabulary, guide-badge, cauldron/storage] }[reg=facet]
+  .{ at: `semantic/link-copy.js:33` ; fn: parseSpwExpression ; consumers: [link-copy internal] }[reg=facet]
+  .{ at: `site.js:714` ; fn: <inline regex> ; reads: <noun then optional frame, body, scope bounds> ; consumers: [snapshotProjectionEquations] }[reg=facet]
+  .{ at: `runtime/spells.js:151` ; fn: <inline regex> ; reads: <leading sigil from a 16-alternative alternation, defaulting to tilde> ; consumers: [spells internal] }[reg=facet]
+  .{ at: `runtime/experiential.js` ; fn: OPERATOR_INFO + inferOperatorInfoFromText ; note: `a third operator vocabulary` }[reg=facet]
+ ]
+
+ ~orphan_sibling{
+  @at: ~"../../../public/js/modules/tools/spw-literal-parser.js"
+  %mass{ lines: 316 }
+  status: `pinned portable artifact generated from the mounted workbench parser`
+  importers: 0 ; in_catalog: #no
+  reading: `portability landed for the /tools/spw-parser/ proof page. The runtime never adopted it, so each plane kept its own slice. This is the mechanism behind the bloat, not a coincidence.`
+ }
+
+ %authored_graph{
+  files_referencing_expression: 26
+  operator_chips_in_html: 2107
+  reading: `the graph is large, consistent, and already authored. Nothing is missing except a single owner.`
+ }
+
+ =authority{
+  owns: `how an authored data-spw-semantic-expression is read in the browser`
+  leaks: [ `2 adopters against 4 competing readers and 3 operator vocabularies` ]
+  resolves: <<
+    ^phase(4) !elect(single reader)
+      => !retire(splitOperatorExpression, link-copy.parseSpwExpression, site.js:714, spells.js:151, OPERATOR_INFO)
+      => ?settle(generation direction: workbench => site | site => pinned artifact)
+      => !pass(operator-chip semantics correctness)
+  >>
+ }
+
+ ?probes[
+  `rg -l 'spw-expression-geometry' public/js`
+  `rg -l 'data-spw-semantic-expression' public/js`
+  `grep -rohE 'class="[^"]*operator-chip[^"]*"' --include='*.html' . | wc -l`
+ ]
+
+ #invariant: `One reader over the authored expression graph is the precondition for a navigation layer that does not need reimplementing — not a side effect of one.`
+}[reg=facet]
+
+^"kernel_bus"[#kernel #contract #strongest]{
+ @self: ~"../../../public/ts/bus.ts"
+ ~projected: ~"../../../public/js/typed/bus.js"
+
+ identity( id: $kernel.bus ; guild: #kernel ; layer: #shared ; mount: ~static )
+
+ %mass{ lines: 569 ; projected_bytes: 13757 ; eager: #yes ; event_names_emitted: 86 }
+
+ expression: $event[emit|listen|record]{charge.legacy.history}<authority>
+
+ $structures[
+  .{
+    id: ENRICHED_DETAIL
+    form: <frozen>{ ...detail, _name: `spw:<n>`, _event: n, _ts, _source }
+    source_derivation: `n.includes(':') ? n.split(':')[0] : 'spw'`
+  }[reg=facet]
+  .{
+    id: HISTORY_RING
+    form: SpwHistoryRecord[]<bounded>
+    limit: %{ default: 100 ; min: 10 ; max: 1000 }
+    eviction: `slice(-maxHistory) on overflow`
+    tunable_by: `settings:changed { busHistorySize }`
+  }[reg=facet]
+  .{
+    id: CHARGE_MAP
+    form: WeakMap<HTMLElement|SVGElement, number<0..1>>
+    projection: << !style.setProperty('--charge', n) & !dataset.spwCharge = *state(n) >>
+    state_ladder: <<
+      n <= 0    => *null
+      n <= 0.30 => charging
+      n <= 0.70 => active
+      n <= 0.94 => sustained
+      *else     => manifest
+    >>
+    hazard: `both writes are unguarded — no change check — on the pointermove-driven brace:moved path`
+  }[reg=facet]
+  .{
+    id: LEGACY_MAP
+    form: <frozen>{canonical => legacyDomName}
+    cardinality: 24
+    consequence: `mapped names dispatch twice per emit — canonical + legacy, both bubbles+composed on document`
+  }[reg=facet]
+  .{
+    id: EVENT_FAMILIES
+    form: <enum>[brace | frame | operator | development | spirit | settings | field | spell | lattice | rhythm | stream]
+  }[reg=facet]
+ ]
+
+ !algorithms{
+  emit: <<
+    *normalize(name) => ?nonempty => *resolve(source, element)
+      => ^freeze(enriched) => !record(history) => &notifyAny
+      => !dispatch(`spw:<name>`, {bubbles, composed})
+      => ?legacy => !dispatch(legacyName)
+      => ?element => !applyCharge
+  >>
+  cost: .{
+    per_emit: `1 CustomEvent + 1 for mapped names = O(tree depth) × (1|2)`
+    hot: #yes
+    hot_paths: [`brace:moved (pointermove)`, `rhythm:pulse`, `field:charged`]
+  }[reg=facet]
+ }
+
+ &effects{
+  !writes: << element.style['--charge'] ; element.dataset.spwCharge >>
+  &joins: << document.on('spw:settings:changed') @import-time >>
+  ~defers: << none — emit is synchronous >>
+ }
+
+ =authority{
+  owns: `how every custom event is emitted, named, recorded, and charged`
+  quality: `strongest single piece of architecture in the runtime — one emit path, typed, introspectable, with an explicit migration bridge`
+  leaks: [
+    `charge writes bypass the write guard, on the pointermove path`
+    `double dispatch for 24 mapped names — two full-tree dispatches per emit`
+    `86 distinct event names, most from a single call site — family vocabulary broader than its use`
+    `constructor subscribes at import time and touches document; unimportable in Node without setup-dom-globals`
+  ]
+  resolves: <<
+    ^phase(3) !route(charge => writeStyleValue, writeDatasetValue)
+      => ?count(legacy consumers) => =make(legacy dispatch opt-out per family)
+      => !defer(constructor subscription to first use)
+  >>
+ }
+
+ #invariant: `The bus is the only emit path. Nothing it writes to the DOM should skip the write contract.`
+}[reg=facet]
+
+# ===========================================================================
+^["II. ORCHESTRATION"]{ role: <sequencer> ; law: `sequence the runtime; do not also define it` }
+# ===========================================================================
+
+^"site_bootstrap"[#bootstrap #orchestrator #eager]{
+ @self: ~"../../../public/js/site.js"
+
+ identity( id: $bootstrap.site ; guild: #bootstrap ; layer: #entry ; mount: ~module-script )
+
+ %mass{ lines: 1175 ; bytes: 42890 ; eager_graph: %{ modules: 38 ; raw_kb: 631.4 ; gzip_kb: 159.3 } }
+
+ expression: $runtime[boot]{core>feature>region>idle>settled}<orchestrator>@staged
+
+ $structures[
+  .{
+    id: RUNTIME_CONTEXT
+    form: {
+      version, bus<facade>, registry<Map>
+      html, body, main, route, now()
+      featureLab, features[], routeFamily[], debug[]
+      runtimePolicy{timing, only<Set>, skip<Set>, timingByModule<Map>, audit, visuals, delay}
+      moduleAudit[]<bounded:160>, moduleSkipAuditKeys<Set>
+      resourceHints[], resourceReadiness<Map>
+      observers<Set>, timers<Set>, pageAttentionTimers<Set>, cleanupStack[], regions[]
+      addCleanup(), addTimer(), clearTimers(), addObserver(), disconnectObservers(), destroy()
+    }
+    lifetime: ~one-per-document
+    teardown: << registry.cleanupAll => disconnectObservers => clearTimers => *drain(cleanupStack) >>
+  }[reg=facet]
+  .{
+    id: PAGE_LIFECYCLE
+    form: <<booting => interactive => hydrated => region-enhanced => enhanced>>
+    projection: `html[data-spw-page-state]`
+  }[reg=facet]
+  .{
+    id: DUAL_PUBLIC_SURFACE
+    form: ( compose.controls.* , window.__SPW_SITE__.* )
+    overlap: `~10 surfaces restated verbatim — timings, discovery, gestures, routes, samples, composition, featureClusters`
+    hazard: `two public APIs maintained by hand`
+  }[reg=facet]
+ ]
+
+ !algorithms{
+  boot: <<
+    ~whenDocumentReady => %mark(document-ready) => !initHydration(STATIC)
+      => !aria-busy(true) => *normalizeDocumentMetadata{deferRegions}
+      => *applySpwQueryDisposition => ~import(precipitation-request)
+      => ^createRuntimeContext => =applyDebugQaPosture => !wireRuntimeTokens
+      => %mark(boot-start)
+      => &parallel( ~import(state-orchestrator) , ~import(page-hooks) )
+      => !installComposeConsole => !setPageState(BOOTING)
+      => !bindGlobalInteractions => !annotateDeepLinks
+      => !mountImmediateLayer(CORE)
+      => &parallel( !mountImmediateLayer(FEATURE) , !mountImmediateLayer(ENHANCEMENT) )
+      => !progressHydration(ACTIVATING)
+      => &parallel( ~prefetch(VISIBLE, modulepreload) , ~prefetch(IDLE, prefetch) )
+      => !primeRegions => !refreshRegionProfiles
+      => !schedulePageArrival => !setPageState(INTERACTIVE)
+      => ~scheduleRegionEnrichment
+      => !mountVisibleFeatures => !mountInteractionFeatures
+      => !progressHydration(READY) => !setPageState(HYDRATED) => !aria-busy(false)
+      => ~await regionEnrichment => !mountRegionLayer => !setPageState(REGION_ENHANCED)
+      => !queueIdleEnhancements
+      => ~whenWindowLoaded => %measure(full-boot) => !refreshRuntime
+  >>
+  region_enrichment: <<
+    ~rAF => ~rAF => !enrich | ~timeout(200) => !enrich
+  >>
+  headless_guard: `every rAF wait is paired with a timeout because rAF may never fire in headless or background tabs`
+  cost: .{ serial_awaits: 7 ; parallel_joins: 3 ; hot: #yes }[reg=facet]
+ }
+
+ &effects{
+  !writes: <<
+    html[data-spw-runtime-timing|posture|policy|module-audit|module-visuals|load-posture|load-timing|connection-posture|prefetch-mode|runtime-stage|deep-link-count]
+    ; body[aria-busy]
+    ; element[data-spw-deep-link|deep-link-label]
+  >>
+  &joins: << bus('spw:page-boot'|'page-interactive'|'page-hydrated'|'page-region-enhanced') >>
+  %reads: << performance.now, performance.getEntriesByType >>
+ }
+
+ =authority{
+  owns: `the boot sequence and the public inspection surface`
+  quality: `the 85-line header is the best architecture doc in the repo — lifecycle, module contract, route boundary, load instrumentation, BFCache rule`
+  leaks: [
+    `:714 hand-rolls a Spw projection regex instead of using the expression reader`
+    `ctx.routeFamily parsed at :467, consumed by nothing`
+    `extractDynamicImportSpecifier reads def.load.toString() and regexes the import specifier — breaks under any bundler or minifier`
+    `resource-hint helpers (connection posture, prefetch eligibility, service worker messaging) are orchestration concerns living in the entry file`
+    `window.__SPW_SITE__ restates the compose control tree by hand`
+  ]
+  blocking_for: ^phase(1)
+  resolves: <<
+    ^phase(1) !replace(extractDynamicImportSpecifier => build-emitted specifier map)
+      => !derive(__SPW_SITE__ from compose tree)
+      => ^phase(2) !consume(routeFamily)
+      => ^phase(4) !route(:714 => expression geometry)
+  >>
+ }
+
+ #invariant: `The entry file may sequence the runtime; it should not also define the runtime's helpers.`
+}[reg=facet]
+
+^"runtime_module_loader"[#runtime #orchestrator #eager]{
+ @self: ~"../../../public/js/runtime/module-loader.js"
+
+ identity( id: $runtime.module_loader ; guild: #runtime ; layer: #shared ; mount: ~static )
+
+ %mass{ lines: 1628 ; bytes: 61539 ; eager: #yes ; injected_hooks: 20 }
+
+ expression: $module[schedule|mount|observe|settle]{lifecycle+audit}<orchestrator>
+
+ $structures[
+  .{
+    id: MODULE_RECORD
+    form: {
+      id<defId::rootKey>, baseId, layer, evaluates
+      requestedWhen, effectiveWhen, reason, describes
+      updates[], updatesSummary, updatesDescribe
+      timingArc, effectScope[]
+      status<enum>, stage<enum>, stageAt
+      lifecycle: <<{stage, at, note}>>
+      cleanup<fn|null>, refresh<fn|null>, root<HTMLElement|null>
+      mountedAt, observedAt, settledAt, loadMs, mountMs, durationMs, error
+    }
+    keyed_by: `makeRecordId(def, root, index)`
+    lifetime: ~one-per-def-per-root
+    defect: `never removed — registry.remove() exists at runtime-helpers.js:290 and is called nowhere`
+  }[reg=facet]
+  .{
+    id: TIMING_STAGE
+    form: <<scheduled => loading => mounted => observed => settled>>
+    branches: <<mounted => unmounting => unmounted>> | <<* => failed>>
+    projection: `data-spw-module-lifecycle-stage` + bus('spw:module-lifecycle')
+  }[reg=facet]
+  .{
+    id: MOUNT_WHEN
+    form: <enum>[immediate | visible | interaction | region | idle | settled | manual]
+    policy_remap: <<
+      eager  => (idle|visible|interaction) *=> immediate
+      defer  => immediate *=> (selector ? visible : idle)   # core, region exempt
+      quiet  => * *=> idle                                   # core, region exempt
+      manual => * *=> manual                                 # core exempt
+    >>
+    override: `ctx.runtimePolicy.timingByModule.get(def.id)` wins over all
+  }[reg=facet]
+  .{
+    id: RESOURCE_PROBE_POOL
+    form: (activeProbes, queuedProbes[], concurrency<1..8, default 4>)
+    algorithm: << !enqueue => ?slot => !run => &settle => *drain >>
+  }[reg=facet]
+  .{
+    id: IDLE_CHUNK_ORDER
+    form: <<idle-residue => idle-collectible => idle-chrome => idle-lab => idle-default>>
+    inference: <<
+      ?explicit(def.timingChunk) => *use
+        | ?arc(/ledger|residue|memory|spell$/) => idle-residue
+        | ?arc(/collect|reward|discover|guide|haptic|cauldron/) => idle-collectible
+        | ?arc(/navigator|shell|chrome|logo|nav/) => idle-chrome
+        | ?arc(/lab|debug|metacognition|topic|learning|palette/) => idle-lab
+        | *else => idle-default
+    >>
+    purpose: `residue and ledger listeners attach before collectible flourishes fire`
+  }[reg=facet]
+  .{
+    id: MOUNT_BATCH
+    form: (depth<int>, tokenFlushScheduled<bool>)
+    effect: `token writes coalesce to one microtask per batch instead of one per mount`
+  }[reg=facet]
+ ]
+
+ !algorithms{
+  should_schedule: <<
+    *normalize(def.id) => *getEffectiveMountWhen
+      => &all( ?route , ?selector , ?features , ?only , !skip , ?when , ?debugOnly )
+      => *allow | !audit(reason, deduped by moduleSkipAuditKeys)
+  >>
+  mount_definition: <<
+    *makeRecordId => ?registry.has => &short-circuit
+      => !register(record) => &emit(scheduled) => %mark(scheduled)
+      => !setRegionState(HYDRATING) => %mark(start)
+      => !annotate(root, loading) => &emit(loading) => !audit(loading)
+      => ~await def.load() => %measure(load)
+      => ~await mountModuleDefinition => %measure(mount)
+      => *normalizeMountHandle => !assign(record, mounted)
+      => &emit(mounted) => &emit(observed) => !annotate(root, record)
+      => !syncRuntimeModuleSummary => ~scheduleRuntimeTokenUpdate
+      => %measure(total) => !setRegionState(INTERACTIVE|ENHANCED) => &emit('module-mounted')
+      | &catch => !assign(record, failed) => &emit(failed) => !setRegionState(QUEUED)
+  >>
+  visible_drain: <<
+    &intersect => !unobserve => !enqueue(matching defs)
+      => *slice(budget 10ms) => ~yieldToNextFrame => *repeat until empty
+  >>
+  yield_to_next_frame: <<
+    !timeout(48) &always-armed
+      => ?scheduler.postTask('user-visible') | ?rAF => !timeout(0)
+  >>
+  idle_stagger: <<
+    ~onIdle => ?policy.delay => ~timeout
+      => *groupByChunk => ^each( %mark => !mountBatch => %measure => ~onIdle(180) )
+      => !finalize(ENHANCED) => ~queueSettled
+  >>
+  cost: .{
+    should_schedule: `O(defs) per pass × ~8 passes; each does an uncached document.querySelector`
+    measured_boot_queries: 650
+    hot: #yes
+  }[reg=facet]
+ }
+
+ &effects{
+  !writes: <<
+    html[data-spw-runtime-mount-batch|active-layers|site-rhythm|runtime-last-module*|runtime-mounted-modules|runtime-failed-modules|runtime-module-count|runtime-module-lifecycle*|runtime-idle-chunk*|connection-posture|prefetch-mode|prefetch-count|cached-module-count|service-worker-*]
+    ; html.style[--spw-runtime-enhancement-intensity|feature-intensity|layer-count|avg-module-ms|--spw-site-rhythm-tempo|density]
+    ; body[13 keys mirrored from html]
+    ; root[data-spw-module-*|data-spw-module-trigger-*]
+  >>
+  &joins: <<
+    bus('spw:module-lifecycle'|'module-mounted'|'module-failed'|'runtime-tokens-updated'|'runtime-resources-profiled'|'runtime-connection'|'runtime-refresh'|'page-enhanced'|'layout-assumptions-ready')
+    ; IntersectionObserver(visible, rootMargin 240px)
+    ; IntersectionObserver(region, rootMargin 160px)
+    ; window.on(pointerdown|keydown|touchstart) @once @passive
+    ; navigator.serviceWorker.on(message)
+  >>
+ }
+
+ =authority{
+  owns: `when a module mounts, on what root, and what the runtime records about it`
+  quality: [
+    `mountVisibleFeatures :1222 — frame-budgeted drain with a documented rationale: scroll can reveal dozens of roots in one callback, and Promise.all would chain their synchronous init into one long task`
+    `IDLE_CHUNK_ORDER — ordering with a stated causal reason`
+    `yieldToNextFrame — always arms a timeout before trying scheduler.postTask or rAF`
+  ]
+  leaks: [
+    `2 of 6 stage mounters use the frame-budgeted pattern; the rest Promise.all the whole set`
+    `inferModuleDimensions :506 regexes def.id + def.selector + def.layer — /nav|route|link|hash|frame/ becomes 'routing'. Keyword matching on identifier strings presented as semantic inference, while the declared updates: contract sits unused for this purpose`
+    `syncRuntimeModuleSummary writes ~13 dataset keys to html and repeats all 13 to body on every mount`
+    `selector probes uncached across ~8 filter passes`
+    `uncommitted unmount sets status without registry.remove; mountDefinition early-returns on registry.has :979, so unmount is one-way`
+  ]
+  resolves: <<
+    ^phase(0) !registry.remove & !test(mount => unmount => mount)
+      => ^phase(2) !cache(selector probes) & !consume(routeFamily) & !consume(route manifest)
+      => ^phase(5) !replace(inferModuleDimensions => declared updates roles)
+      => !generalize(frame-budgeted drain => interaction, idle)
+  >>
+ }
+
+ ?probes[
+  `rg -n 'registry.remove' public/js`
+  `rg -n 'routeFamily' public/js/runtime/`
+ ]
+
+ #invariant: `Scheduling reads declared data. Where it reads an identifier string instead, it is guessing.`
+}[reg=facet]
+
+^"runtime_module_catalog"[#runtime #registry #declaration]{
+ @self: ~"../../../public/js/runtime/module-catalog.js"
+ ~parts: [
+   ~"../../../public/js/runtime/module-catalog-core.js"
+   ~"../../../public/js/runtime/module-catalog-feature.js"
+   ~"../../../public/js/runtime/module-catalog-enhancement.js"
+   ~"../../../public/js/runtime/module-catalog-region.js"
+   ~"../../../public/js/runtime/module-catalog-normalize.js"
+   ~"../../../public/js/runtime/module-catalog-constants.js"
+ ]
+
+ identity( id: $runtime.module_catalog ; guild: #runtime ; layer: #declaration ; mount: ~static )
+
+ %mass{ lines: 2709 ; defs: 96 ; adapter_lines: ~350 }
+
+ expression: $catalog[declare]{id.layer.when.route.selector.features.updates.arc.scope}<registry>
+
+ $structures[
+  .{
+    id: MODULE_DEF
+    form: {
+      id, layer<enum>, when<enum>, costClass?
+      route?<string|string[]>, selector?, features?, rootMode?<single|each>
+      describes, evaluates, updates[], timingArc, timingChunk?, effectScope
+      debugOnly?
+      load: () => ~import(path)
+      mount?: (mod, ctx, root) => handle      # 95/96 present, 69 deletable
+    }
+  }[reg=facet]
+  .{
+    id: COMPOSITION
+    form: <histogram>{ core: 5 ; feature: 27 ; enhancement: 63 ; region: 1 }
+  }[reg=facet]
+  .{
+    id: GATING_REALITY
+    form: <histogram>{ with_route: 13 ; with_features: 17 ; with_selector: 91 ; with_routeFamily: 0 }
+    consequence: `83 of 96 modules are considered on every route; the selector probe does the route filter's job, uncached, ~8× per boot`
+  }[reg=facet]
+ ]
+
+ =authority{
+  owns: `the declared schedule and declared effects of every module`
+  leaks: [
+    `95 of 96 defs carry a hand-written mount adapter; 69 are no-ops over resolveModuleMount`
+    `~350 of 2709 lines are adapter boilerplate`
+    `no def declares routeFamily, because nothing would read it`
+  ]
+  resolves: <<
+    ^phase(1) !delete(no-op adapters) => %expect{ enhancement: -315 ; feature: -135 ; core: -25 }
+      => ^phase(2) !declare(routeFamily) & !emit(per-surface def set from route manifest)
+  >>
+ }
+
+ #invariant: `The catalog is a declaration, not an adapter layer. Every line of it should be data.`
+}[reg=facet]
+
+# ===========================================================================
+^["III. THE SPATIAL PAIR"]{ role: <model> ; law: `a model that reads no geometry is a naming convention` }
+# ===========================================================================
+
+^"runtime_region_profiler"[#runtime #model #ungrounded]{
+ @self: ~"../../../public/js/runtime/region-profiler.js"
+
+ identity( id: $runtime.region_profiler ; guild: #runtime ; layer: #shared ; mount: ~static )
+
+ %mass{ lines: 494 ; bytes: 17080 ; eager: #yes ; attributes_written: 29 }
+
+ %dimensional_texture{
+  fixity_tier: "tending"
+  semantic_depth: "label-derived (target: geometry-grounded)"
+  state_lifetime: "document-singleton"
+  coupling_density: "high (feeds CSS tokens and region scheduling)"
+  resonance_rank: 1
+ }[reg=facet]
+
+ expression: $region[profile]{harmony.tempo.density.attention}<vocabulary>@label-derived?ungrounded
+
+ $structures[
+  .{
+    id: REGION_PROFILE
+    form: { el, key, kind, role, context, surface, harmony, tempo, density, attentionalWeight, genome, diversity, semanticDepth }
+    inputs: <authored>[data-spw-kind, data-spw-role, data-spw-context, classList]
+    geometry_inputs: <none>
+  }[reg=facet]
+  .{
+    id: HARMONY_TABLE
+    form: <<
+      role=routing     => indexed
+      role=schema      => structured
+      role=reference   => measured
+      role=control     => responsive
+      role=orientation => anchored
+      context=publishing => editorial
+      kind=card        => modular
+      *else            => ambient
+    >>
+    reading: `a rename of role`
+  }[reg=facet]
+  .{
+    id: TEMPO_TABLE
+    form: <<
+      harmony=indexed    => snap
+      harmony=structured => deliberate
+      harmony=responsive => fast
+      harmony=editorial  => settle
+      harmony=anchored   => base
+      *else              => base
+    >>
+    reading: `a rename of harmony, which is a rename of role`
+  }[reg=facet]
+  .{
+    id: DENSITY_TABLE
+    form: << kind=card => compact ; kind=panel => medium ; role=reference => reading ; role=schema => dense ; *else => medium >>
+    reading: `a rename of kind`
+  }[reg=facet]
+  .{
+    id: ATTENTION_TABLE
+    form: <<
+      ?authored(data-spw-attentional-weight) => *use
+        | class(site-hero)        => 1.25
+        | kind=hook               => 1.20
+        | role=schema|routing     => 1.15
+        | role=orientation        => 1.10
+        | kind=card|panel         => 0.95
+        | *else                   => 1.00
+    >>
+    reading: `a constant table over kind and role`
+  }[reg=facet]
+ ]
+
+ $state_machines[
+  .{
+    id: REGION_PROFILER_DERIVATION_STATE
+    states: <enum>[UNINITIALIZED => AUTHORED_ATTRS_READ => SYNONYM_RESOLVED => PROJECTION_WRITTEN]
+    phase_5_target: <enum>[UNINITIALIZED => GEOMETRY_READ => STABILITY_COMPUTED => GROUNDED_DERIVATION_WRITTEN]
+  }[reg=facet]
+ ]
+
+ $data_flows[
+  .{
+    id: REGION_PROFILE_SYNONYM_FLOW
+    pipeline: << %read(data-spw-role, data-spw-kind) => *lookup(HARMONY) => *lookup(TEMPO) => *lookup(DENSITY) => !write(29 dataset attributes) >>
+    phase_5_bridge: << %read(spatial_gravity.extent, spatial_gravity.salienceRank, composition_box.presence) => *derive(groundedHarmony, groundedTempo, groundedDensity) => !write(29 dataset attributes) >>
+  }[reg=facet]
+ ]
+
+ !algorithms{
+  profile: << *read(authored attrs) => *lookup(HARMONY) => *lookup(TEMPO) => *lookup(DENSITY) => *lookup(ATTENTION) => !write(29 attrs) >>
+  measurement_calls: %{ getBoundingClientRect: 0 ; getComputedStyle: 0 }
+  cost: .{ per_region: O(1) lookups ; hot: #no }[reg=facet]
+ }
+
+ &effects{
+  !writes: <<
+    spwHarmony ; spwHarmonyField ; spwTempo ; spwTempoField ; spwPageTempo
+    ; spwDensity ; spwAttentionalWeight
+    ; spwCompositionStability(+Field,+Source) ; spwResolvedCompositionStability(+Field,+Source)
+    ; spwGradientBoundary(+Field) ; spwPackOccupancy(+Field)
+    ; spwRegionGenome ; spwRegionDiversity ; spwRegionSemanticDepth
+    ; spwRegionKindCount ; spwRegionKindField ; spwRegionKey ; spwRegionState
+    ; spwSpaceMotion ; spwKind ; spwRole ; spwContext ; spwSurface
+  >>
+  %reads: <none — no geometry is read>
+ }
+
+ =authority{
+  owns: `the region vocabulary that CSS tokens and region scheduling consume`
+  diagnosis: `the chain is <<authored attribute => synonym => synonym => CSS token>>. It is tautological: it cannot report anything about the layout the author did not already type. This is why the layout beats do not resolve visual or spatial relationships — there is no spatial input.`
+  resolves: <<
+    ^phase(5) ?probe(which geometry signals predict felt beats)
+      => &join(spatial_gravity.measurements, composition_box_model.boxes)
+      => !replace(4 synonym tables => geometry-reading derivations)
+      => =retain(authored attribute as override, not sole source)
+  >>
+  success_criterion: `the profiler reports something about a page the author did not type; if it cannot, it is still a synonym table`
+ }
+
+ #invariant: `A spatial model that reads no geometry is a naming convention.`
+}[reg=facet]
+
+^"runtime_spatial_gravity"[#runtime #model #measured #unconsumed]{
+ @self: ~"../../../public/js/runtime/spatial-gravity.js"
+
+ identity( id: $runtime.spatial_gravity ; guild: #runtime ; layer: #shared ; mount: ~lazy )
+
+ %mass{ lines: 591 ; attributes_written: 13 ; consumed_by_region_profiler: #no }
+
+ %dimensional_texture{
+  fixity_tier: "contractual"
+  semantic_depth: "grounded"
+  state_lifetime: "document-singleton"
+  coupling_density: "moderate (viewport readings => dataset writes)"
+  resonance_rank: 2
+ }[reg=facet]
+
+ expression: $space[measure]{edge.extent.band.salience}<measurement>@unconsumed
+
+ $structures[
+  .{
+    id: GRAVITY_READING
+    form: { edgeGravity, edgeX, edgeY, verticalGravity, horizontalGravity, extent, measureBand, salienceRank, spaceVariant, openAnchor, openDirection, yielded, yieldReason }
+    inputs: <measured>[getBoundingClientRect, viewport, visualViewport]
+  }[reg=facet]
+ ]
+
+ $data_flows[
+  .{
+    id: GEOMETRY_MEASUREMENT_FLOW
+    pipeline: << &scroll|resize => %getBoundingClientRect => *classifyExtent & *calculateSalience => !write(spwEdgeGravity, spwExtent, spwSalienceRank) >>
+  }[reg=facet]
+ ]
+
+ !algorithms{
+  measure_cycle: << &scroll|resize|visualViewport => ~scheduleMeasure => %rect => *classify => !write >>
+  cost: .{ per_cycle: `O(observed elements) rect reads` ; hot: #yes ; shares_read_phase: #no }[reg=facet]
+ }
+
+ &effects{
+  %reads: << getBoundingClientRect ; window.inner* ; visualViewport >>
+  &joins: << document.on('scroll', {passive, capture}) ; window.on('resize') ; visualViewport.on('resize') ; MutationObserver >>
+  !writes: << spwEdgeGravity ; spwEdgeX ; spwEdgeY ; spwVerticalGravity ; spwHorizontalGravity ; spwExtent ; spwMeasureBand ; spwSalienceRank ; spwSpaceVariant ; spwOpenAnchor ; spwOpenDirection ; spwYielded ; spwYieldReason >>
+ }
+
+ =authority{
+  owns: `actual measured geometry of elements in the viewport`
+  standing: `this module does the thing region_profiler only names — it measures`
+  leaks: [
+    `its measurements feed CSS and open-direction logic but never reach region_profiler`
+    `runs its own measure schedule independent of the other 10 scroll listeners`
+  ]
+  resolves: <<
+    ^phase(3) &join(shared viewport read phase)
+      => ^phase(5) !expose(stable measurement read for region_profiler)
+      => ?probe(edge gravity | measure band | occupancy — which predicts the felt beat) &before !wire
+  >>
+ }
+
+ #the_bridge: `The missing grounded theory is the edge between this module and region_profiler — not new vocabulary in either.`
+}[reg=facet]
+
+^"runtime_composition_box_model"[#runtime #model #measured #eager]{
+ @self: ~"../../../public/js/runtime/composition-box-model.js"
+
+ identity( id: $runtime.composition_box_model ; guild: #runtime ; layer: #shared ; mount: ~static )
+
+ %mass{ lines: 430 ; bytes: 17613 ; eager: #yes }
+
+ expression: $box[measure|story]{presence.flow.settle-phase.pack}<measurement>
+
+ $structures[
+  .{
+    id: BOX_READING
+    form: { boxModel, boxPresence, boxMeasure, boxStory, compositionFlow, boxSettlePhase, sizeContext, contentTone, packLayout, packFill }
+    inputs: <measured>[getBoundingClientRect, ~pretext-measurement-bus(text layout)]
+  }[reg=facet]
+ ]
+
+ &effects{
+  !writes: << spwBoxModel ; spwBoxPresence ; spwBoxMeasure ; spwBoxStory ; spwCompositionFlow ; spwBoxSettlePhase ; spwSizeContext ; spwContentTone ; spwPackLayout ; spwPackFill >>
+  ~defers: << ~"../../../public/js/semantic/pretext-measurement-bus.js" >>
+ }
+
+ =authority{
+  owns: `per-element box measurement and its narrative projection`
+  leaks: [
+    `eager at 17.6 KB while its consumers are inspection surfaces`
+    `measures independently of spatial_gravity — two measurement passes, no shared read phase`
+  ]
+  resolves: << ^phase(3) &join(shared read phase) => ^phase(5) &join(the bridge) >>
+ }
+}[reg=facet]
+
+# ===========================================================================
+^["IV. OVERLOADED"]{ role: <god-module> ; law: `one export should not hide nine concerns` }
+# ===========================================================================
+
+^"runtime_shell_disclosure"[#runtime #overloaded #immediate]{
+ @self: ~"../../../public/js/runtime/shell-disclosure.js"
+
+ identity( id: $runtime.shell_disclosure ; guild: #runtime ; layer: #core ; mount: ~immediate@every-page )
+
+ %mass{
+   lines: 1461 ; was: 2315 ; rank: <still-large> ; extracted: #[ shell/scroll-lock shell/attention-posture-panel shell/utility-row ]
+   exports: 1 ; top_level_decls: 92
+   addEventListener: 31 ; observers: 1 ; constant_tables: 24 ; module_state: `1 let`
+ }
+
+ %dimensional_texture{
+  fixity_tier: "transient-overload"
+  semantic_depth: "label-derived"
+  state_lifetime: "document-singleton"
+  coupling_density: "extreme (9 orthogonal concerns, 31 DOM listeners, 24 tables)"
+  resonance_rank: 0  # blocks first reading posture optimization
+ }[reg=facet]
+
+ =declared: `shell[nav|weather|attention-posture] disclosure defaults`
+ expression: $shell[nav|menu|scroll|tune|posture|focus]{state-machine + control-panel}<overloaded>
+
+ ^concerns_held[
+  .{ id: device_context      ; fns: (getViewportTier, getPointerMode, getHoverMode, syncDeviceContext) ; verdict: !delegate<interactive-medium already owns register resolution as a core module> }[reg=facet]
+  .{ id: scroll_model        ; fns: (getScrollY, resolveScrollBand, resolveScrollDirection, writeScrollDatasets, syncScrollState) ; verdict: &join<shared read phase> ; note: `one of 11 independent scroll loops` }[reg=facet]
+  .{ id: nav_fit             ; fns: (readNavContentWidth, computeNavRatio, countPrimaryRoutes, countOverflowRoutes, resolveMenuMode, resolveShellLayout, resolveShellEndSlot, resolveShellTuneSurface, syncShellChromeLayout) ; verdict: =keep<the genuine core> }[reg=facet]
+  .{ id: menu_state_machine  ; fns: (resolveMenuPressure, resolveMenuTopology, resolveMenuPhase, resolveMenuIntent, resolveMenuClarity, collectChangedAxes, buildMenuSnapshot, writeMenuDatasets, applyMenuState, emitMenuState, syncDisclosure, scheduleRestingPhase, dispatchActionForSnapshot) ; axes: <6>[MODES, PHASES, PRESSURES, TOPOLOGIES, INTENTS, CLARITIES] ; verdict: =keep<the genuine core> }[reg=facet]
+  .{ id: scroll_lock         ; fns: (syncShellOffset, isInsideShellMenuScrollSurface, handleShellScrollLockTouchMove, bindShellScrollLockTouchGuard, syncShellLock) ; verdict: !extract<reusable by any overlay> }[reg=facet]
+  .{ id: pointer_field       ; fns: (syncHeaderPointerField, clearHeaderPointerField) ; verdict: !extract }[reg=facet]
+  .{ id: settings_panel      ; fns: (cycleSettingValue, getCurrentFontScale, getCurrentColorMode, getCurrentBaseMaterial, getCurrentHighContrast, getNextFontScale, syncHeaderActions, syncThemeUtility, syncTuningLexiconStrip, upgradeUtilityRow, ensureUtilityRow, syncUtilityRow, describeExplorePostureFeedback) ; owns: <6 cycles>[FONT_SCALE_STEPS, COLOR_MODE_STEPS, THEME_PACK_CYCLE, COLOR_TUNER_CYCLE, EXPLORE_POSTURE_CYCLE, TUNING_LEXICON_SHELL_ORDER] ; verdict: !extract<idle sibling — not needed for first reading posture> }[reg=facet]
+  .{ id: posture_panel       ; fns: (getAttentionRelationLabel, getCurrentAttentionPosture, ensureAttentionPosturePanel, syncAttentionPosturePanel, setAttentionPosturePanelOpen) ; verdict: !extract<idle sibling> }[reg=facet]
+  .{ id: disclosure_a11y     ; fns: (FOCUSABLE_SELECTOR, getFocusableMenuElements, focusFirstMenuTarget, focusCurrentMenuTarget, describeToggleState, describeToggleMeta, buildToggleAria, syncToggleCopy, setToolsDisclosureOpen) ; verdict: !extract<generic — reusable by region-menu and the posture panel> }[reg=facet]
+ ]
+
+ $structures[
+  .{
+    id: MENU_SNAPSHOT
+    form: <6-axis>{ mode, phase, pressure, topology, intent, clarity }
+    derivation: << %navRatio => *resolveMode => *resolvePressure => *resolveTopology => *resolvePhase => *resolveIntent => *resolveClarity >>
+    diffing: `collectChangedAxes(prev, next) => changed[]`
+    projection: `MENU_DATASET_KEYS => writeMenuDatasets`
+  }[reg=facet]
+  .{
+    id: SETTING_CYCLES
+    form: <6-cycle-set>{
+      FONT_SCALE_STEPS: ['70', '80', '90', '100', '110', '120']
+      COLOR_MODE_STEPS: ['auto', 'dark', 'light']
+      EXPLORE_POSTURE_CYCLE: ['reading', 'field', 'workshop']
+      THEME_PACK_CYCLE: ['classic', 'vibrant', 'editorial']
+      COLOR_TUNER_CYCLE: ['soft', 'balanced', 'guarded']
+      TUNING_LEXICON_SHELL_ORDER: ['font', 'color', 'theme', 'posture']
+    }
+    note: `a settings UI embedded directly inside the shell disclosure module`
+  }[reg=facet]
+ ]
+
+ $state_machines[
+  .{
+    id: SIX_AXIS_MENU_STATE_MACHINE
+    axes: .{
+      mode:     <enum>[inline | overlay | compact | drawer]
+      phase:    <enum>[resting | entering | active | exiting | suppressed]
+      pressure: <enum>[nominal | ambient | high | critical]
+      topology: <enum>[expanded | grouped | stacked | minimal]
+      intent:   <enum>[reading | navigating | tuning | inspecting]
+      clarity:  <enum>[crisp | subtle | masked]
+    }[reg=facet]
+    transitions: <<
+      (navRatio, scrollY, userToggle) => *buildMenuSnapshot
+        => *collectChangedAxes => ?changed => !writeMenuDatasets => &emit('spw:shell-menu-state')
+    >>
+  }[reg=facet]
+  .{
+    id: SCROLL_LOCK_TOUCH_GUARD
+    states: <enum>[UNLOCKED => LOCKED_BEHIND_OVERLAY => TOUCH_MOVE_CHECKED => RELEASED]
+    transitions: <<
+      setToolsDisclosureOpen(true) => !lockScrollBody & !recordOffset
+        => &touchmove(overlay) => ?isInsideScrollable => *allow | !preventDefault
+        => setToolsDisclosureOpen(false) => !unlockScrollBody & !restoreOffset
+    >>
+  }[reg=facet]
+ ]
+
+ $data_flows[
+  .{
+    id: DISCLOSURE_RESIZE_LAYOUT_FLOW
+    pipeline: << %readNavContentWidth => *computeNavRatio => *resolveShellLayout => !syncShellChromeLayout => !writeMenuDatasets >>
+  }[reg=facet]
+ ]
+
+ !algorithms{
+  sync_disclosure: <<
+    %readNavContentWidth => *computeNavRatio => ^buildMenuSnapshot
+      => *collectChangedAxes => ?changed => !writeMenuDatasets
+      => !syncShellChromeLayout => !syncToggleCopy => &emitMenuState
+      => ~scheduleRestingPhase
+  >>
+  cost: .{ per_resize: `layout read + 6 resolutions + N dataset writes` ; hot: #yes }[reg=facet]
+ }
+
+ =authority{
+  diagnosis: `nine concerns behind one export, mounted IMMEDIATE on every page — a shell layout resolver plus a menu state machine plus a settings control panel plus a scroll lock plus a focus manager. The unreasonable quality is structural, not stylistic: no part reads without the other eight.`
+  defects: [
+    `:1469 unescaped \${} interpolation into innerHTML`
+    `31 listeners bound in one init with hand-rolled teardown`
+    `duplicates device-register resolution that interactive-medium already owns`
+    `runs its own scroll measure loop rather than joining a shared read phase`
+  ]
+  resolves: <<
+    ^phase(6) !extract(disclosure_a11y, scroll_lock, settings_panel, posture_panel)
+      => !delegate(device_context => interactive-medium)
+      => &join(scroll_model => shared read phase)
+      => *remainder(nav_fit + menu_state_machine) %expect{ lines: under-600 ; mount: ~immediate }
+  >>
+  sequencing: `decompose AFTER phase 3. Extracting now would duplicate the write and observe paths this plan is consolidating — moving complexity sideways, which is exactly what runtime-module-decomposition warns against.`
+ }
+
+ #invariant: `A module mounted IMMEDIATE on every page should hold one concern. This holds nine.`
+}[reg=facet]
+
+^"runtime_experiential"[#runtime #overloaded #uncoupled]{
+ @self: ~"../../../public/js/runtime/experiential.js"
+
+ identity( id: $runtime.experiential ; guild: #runtime ; layer: #enhancement ; mount: ~immediate )
+
+ %mass{
+   lines: 1758 ; was: 2168 ; exports: 1 ; extracted: #[ bookmark-registry contextual-memos operator-info operator-learning qa-beat-gestures ]
+   addEventListener: 41 ; bus_on: 3 ; observers: 0
+   innerHTML: 6 ; createElement: 6 ; storage_sites: 3
+ }
+
+ %dimensional_texture{
+  fixity_tier: "transient-overload"
+  semantic_depth: "mixed (breadcrumbs, gestures, learning)"
+  state_lifetime: "localStorage + document"
+  coupling_density: "high (6 uncoupled features, 41 DOM listeners)"
+  resonance_rank: 2
+ }[reg=facet]
+
+ =declared: `adaptive breadcrumbs, contextual memos, progressive operator learning, literate bookmarks`
+ expression: $experience[breadcrumb|sample|memo|learning|bookmark|beat]{six-uncoupled-features}<overloaded>
+
+ ^concerns_held[
+  .{
+    id: spell_breadcrumbs
+    fns: (initSpellBreadcrumbs, renderBreadcrumbSpell, renderBreadcrumbLink, renderBreadcrumbButton, renderRouteSorterChip, renderBreadcrumbNearbyRoutes, collectRelatedBreadcrumbRoutes, parseRelatedRouteList, describeBreadcrumbRoute, describeBreadcrumbSummary, describeBreadcrumbGuide, describeBreadcrumbMeaning, resolveBreadcrumbDeepLinkState, resolveSpellPathExpandedDefault, syncBreadcrumbViewportPreference, syncSpellPathSurfaceDatasets, renderSpellPathInteractionHint, describeSpellPathInteractionHint, onBreadcrumbKeydown, onBreadcrumbAction, syncSpellPathHash, navigateSpellPathTarget)
+    owns: BREADCRUMB_ROUTE_REGISTRY
+    mass: <largest-cluster>
+    verdict: !split<own def, own gate>
+  }[reg=facet]
+  .{
+    id: sample_dock
+    fns: (initSampleDock, ensureHeaderTraceHost, collectSampleItems, describePageSample, describeFeatureSample, describeRouteSample, renderSampleDock, renderSamplePreview, renderSampleChip, summarizeSampleInventory, describeLearnerConfidence, selectSampleIndex, pinSampleIndex, clearSamplePin, cycleSampleIndex, getSampleIndexFromEvent, finishSampleGesture, onSampleDockPointerOver, onSampleDockPointerOut, onSampleDockFocusIn, onSampleDockFocusOut, onSampleDockPointerDown, onSampleDockClick, onSampleDockKeydown)
+    gesture_surface: <complete>[pointer, focus, keyboard]
+    verdict: !split<own def> & =reclass<~idle — not first reading posture>
+  }[reg=facet]
+  .{ id: contextual_memos  ; fns: (initContextualMemos, onSemanticGestureEvent, presentContextMemo, findRoomyMemoTarget, ensureLocalMemo, memoTextForEvent, memoForCharge, memoForActivate, memoForArmed, memoForCommitted) ; verdict: !split }[reg=facet]
+  .{ id: operator_learning ; fns: (initOperatorLearning, onOperatorLearn, learningMemo, inferOperatorInfoFromText) ; owns: OPERATOR_INFO ; note: `a third operator vocabulary alongside shared.js and the workbench` ; verdict: !fold<into the single expression reader, phase 4> }[reg=facet]
+  .{ id: bookmark_registry ; fns: (initBookmarkRegistry, groupPins) ; verdict: !split }[reg=facet]
+  .{ id: qa_beat_gestures  ; fns: (initQABeatGestures) ; note: `debug surface inside a reader-facing module` ; verdict: !split & =reclass<debugOnly> }[reg=facet]
+  .{ id: gesture_svg       ; fns: (GESTURE_SVGS, renderGestureAnchor, renderGardenTraceOnSpellPath) ; verdict: !route<through dom-render el()> }[reg=facet]
+  .{ id: semantic_inference; fns: (resolveSemanticMeta, extractSigil, normalizeAffordances, inferTargetKind, inferWonder, inferContext, applyFieldAttrs) ; verdict: !fold<phase 4> }[reg=facet]
+  .{ id: private_utilities ; fns: (escapeHtml, escapeAttribute, slugify, humanizePathPart, titleFromPath, stripWhitespace, safeDate, ensureStableId) ; duplicates: [~"../../../public/js/kernel/dom-render.js", ~"../../../public/js/kernel/text-normalization.js"] ; verdict: !delete }[reg=facet]
+ ]
+
+ &effects{
+  &joins: << bus.on × 3 ; document/window listeners × 41 ; SHELL_MENU_INTENT_EVENT ; SHELL_MENU_STATE_EVENT ; HEADER_TRACE_CHANGE_EVENT >>
+  !writes: << localStorage × 3 ; innerHTML × 6 ; breadcrumb + sample-dock dataset surfaces >>
+ }
+
+ =authority{
+  diagnosis: `six independent reader-facing features plus a debug surface plus a private copy of the escaping layer, behind one export and 41 listeners. Unlike shell_disclosure these concerns are not even coupled — breadcrumbs, sample dock, memos, learning, bookmarks, and beats share almost nothing but the file.`
+  defects: [
+    `:1938 unescaped \${} interpolation into innerHTML`
+    `private escapeHtml/escapeAttribute rather than dom-render's`
+    `OPERATOR_INFO is a third operator vocabulary`
+    `41 listeners in one init; no AbortController`
+  ]
+  resolves: <<
+    ^phase(4) !fold(operator_learning, semantic_inference => expression reader)
+      => !split(6 feature seams => 6 defs with own when/selector/features)
+      => =reclass(sample_dock => ~idle , qa_beat_gestures => debugOnly)
+      => !delete(private_utilities)
+      => !route(gesture_svg => dom-render)
+  >>
+  sequencing: `can split earlier than shell_disclosure — the seams are clean and the features are independent, so it pairs with phase 4 when the operator vocabulary consolidates anyway.`
+ }
+
+ #invariant: `Six features that share no state should not share a mount, a gate, or a teardown.`
+}[reg=facet]
+
+# ===========================================================================
+^["V. PAYLOAD ANCHOR"]{ role: <barrel> ; law: `no barrel in the eager graph` }
+# ===========================================================================
+
+^"kernel_shared"[#kernel #barrel #eager]{
+ @self: ~"../../../public/js/kernel/shared.js"
+
+ identity( id: $kernel.shared ; guild: #kernel ; layer: #shared ; mount: ~static )
+
+ %mass{ lines: 2103 ; bytes: 69219 ; rank: <largest-eager-module> ; importers: 11 }
+
+ expression: $kernel[operator|action|workflow|bus-reexport]{barrel}<payload-anchor>
+
+ $structures[
+  .{ id: OPERATOR_LEXICON ; form: (getOperatorDefinition, getOperatorGeometry, getOperatorAffordances, detectOperator, detectOperatorFromElement) }[reg=facet]
+  .{ id: EXPRESSION_SPLIT ; form: (splitOperatorExpression, composeOpBundle) ; note: `a competing expression reader — phase 4 retires this` }[reg=facet]
+  .{ id: ACTION_EMIT      ; form: (emitSpwAction) }[reg=facet]
+  .{ id: AUTHOR_WORKFLOW  ; form: (AUTHOR_WORKFLOW_DEFINITIONS, AUTHOR_WORKFLOW_MODES) }[reg=facet]
+  .{ id: BUS_REEXPORT     ; form: `export { bus }` ; note: `a re-export of a module that already has a canonical path` }[reg=facet]
+ ]
+
+ =shape{
+  kind: <barrel>
+  export_form: `two grouped export { } blocks at :2017 and :2019`
+  consequence: `nothing tree-shakes, even under a bundler`
+ }
+
+ &critical_edge{
+  from: ~"../../../public/js/kernel/dom-contracts.js"
+  at: `:12`
+  imports: (detectOperator)
+  cost: %{ kb: 69 ; pages: <all> ; eager: #yes }
+  verdict: `the single highest-value cut in the tree — one import, 69 KB, every page`
+ }
+
+ =authority{
+  leaks: [
+    `dom-contracts.js:12 drags all 69 KB into the eager graph for one function`
+    `10 further importers each pull the whole barrel for one or two symbols`
+    `holds a competing Spw expression reader that phase 4 must retire`
+    `mixes four unrelated vocabularies: operator semantics, action emission, author workflow, bus re-export`
+  ]
+  resolves: <<
+    ^phase(1) !split(operators, actions, author-workflow) & !drop(bus re-export)
+      => ^phase(4) !retire(splitOperatorExpression => expression geometry)
+  >>
+ }
+
+ #invariant: `A file this large should never be reachable from a one-symbol import.`
+}[reg=facet]
+
+# ===========================================================================
+^["VI. CROSS-CUTTING"]{ role: <thesis> }
+# ===========================================================================
+
+^"anatomy_thesis"[#thesis]{
+ claim: `The tree has excellent primitives and no enforcement. Every contract in section I is correct, validated somewhere in production, and optional everywhere else.`
+
+ %adoption_ledger[
+  .{ contract: writeDatasetValue          ; correct: #yes ; adopters: 547 ; bypasses: 1382 }[reg=facet]
+  .{ contract: dom_render.el              ; correct: #yes ; adopters: 13   ; bypasses: 544  }[reg=facet]
+  .{ contract: dom_sync_hub               ; correct: #yes ; adopters: 5    ; bypasses: 26   }[reg=facet]
+  .{ contract: module_export_contract     ; correct: #yes ; adopters: 0    ; bypasses: 95   }[reg=facet]
+  .{ contract: spw_expression_geometry    ; correct: #yes ; adopters: 2    ; bypasses: 4    }[reg=facet]
+ ]
+
+ =mechanism{
+  form: <<
+    !land(contract as addition) => ?force(existing call sites) => *no
+      => &survive(pre-existing adapter | local copy)
+      => ~drift => *local copy becomes convention
+      => *contract becomes exception
+  >>
+  reading: `each contract landed as an addition rather than a migration`
+ }
+
+ ^consequence_map{
+  payload:        << barrel imports & no bundling => %{ eager: 631 KB ; dist: 3.4 MB } >>
+  recalc:         << unguarded writes × 352 root-rooted CSS selectors => forced recalc against a 1.5 MiB sheet >>
+  freeze_risk:    << 26 independent observers => the exact microtask hazard dom-contracts documents at :1189 >>
+  ungrounded:     << synonym tables & no measured input => layout beats that cannot resolve spatial relationships >>
+  bloat:          << no single expression reader => 4 parsers & 3 operator vocabularies & 2107 unowned chips >>
+  overload:       << no gate on module scope => 2 modules holding 15 concerns >>
+ }
+
+ =correction{
+  law: `adoption before decomposition`
+  reason: `splitting shell_disclosure or experiential before phase 3 would duplicate the write and observe paths currently being consolidated — moving complexity sideways, which runtime-module-decomposition explicitly warns against`
+ }
+}[reg=facet]
+
+invariants: #[
+ `Every %measure in this file is dated 2026-07-26 against the working tree; re-probe before trusting.`,
+ `A contract every call site works around is a comment.`,
+ `Decompose into shared primitives, never alongside them.`,
+ `A spatial model that reads no geometry is a naming convention.`,
+ `Declared effects outrank inferred effects.`,
+][reg=set]

@@ -1,0 +1,471 @@
+# Review 2026-08-11 — phase 0 landed; phase 6 file extracts partial; re-probe payload/write counts before phase 1.
+# wip — runtime-plane-consolidation
+#
+# Hot tending memory for the JS architecture review.
+# Canonical contracts exist in every plane; almost nothing routes through them.
+
+#>plan_runtime_plane_consolidation_wip
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+@plan: ~"./PLAN.md"
+@index: ~"./index.spw"
+@plans_root: ~"../../../.agents/plans/index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+@insight_cache_template: ~"../model-guided-refinement/templates/semantic-insight-cache.spw"
+
+@site: ~"../../../public/js/site.js"
+@module_loader: ~"../../../public/js/runtime/module-loader.js"
+@dom_contracts: ~"../../../public/js/kernel/dom-contracts.js"
+@dom_render: ~"../../../public/js/kernel/dom-render.js"
+@dom_sync_hub: ~"../../../public/js/runtime/dom-sync-hub.js"
+@module_export_contract: ~"../../../public/js/runtime/module-export-contract.js"
+@region_profiler: ~"../../../public/js/runtime/region-profiler.js"
+@spatial_gravity: ~"../../../public/js/runtime/spatial-gravity.js"
+@expression_geometry: ~"../../../public/js/semantic/spw-expression-geometry.js"
+@shared: ~"../../../public/js/kernel/shared.js"
+@bus: ~"../../../public/ts/bus.ts"
+@build: ~"../../../scripts/build.mjs"
+@route_manifest: ~"../../../.agents/state/runtime/route-runtime-manifest.json"
+
+@plan_bootstrap_performance: ~"../runtime-bootstrap-performance/index.spw"
+@plan_module_export_uniformity: ~"../module-export-uniformity/index.spw"
+@plan_module_decomposition: ~"../runtime-module-decomposition/index.spw"
+@plan_css_sensitive_writes: ~"../css-sensitive-attribute-writes/index.spw"
+@plan_css_architecture: ~"../css-architecture-readability/index.spw"
+@plan_navigation_geometry: ~"../semantic-navigation-geometry/PLAN.md"
+
+@modules: ~"./modules.spw"
+@shell_disclosure: ~"../../../public/js/runtime/shell-disclosure.js"
+@experiential: ~"../../../public/js/runtime/experiential.js"
+
+operation = "audit"
+fixity = "tending"
+
+^"selection_probes"{
+ probes = #[
+  `git status --short  # expect 5 modified files from the exhausted-quota run`,
+  `rg -c 'writeDatasetValue' public/js  # guarded writes`,
+  `rg -cE '\.dataset\.[A-Za-z]+\s*=' public/js  # raw writes, expect ~2.5x guarded`,
+  `rg -c 'new MutationObserver' public/js  # expect 31`,
+  `rg -l 'registerDomSyncTask' public/js  # expect 5 task registrations`,
+  `rg -n 'routeFamily' public/js/runtime/  # expect zero — parsed but dead`,
+  `rg -l 'spw-expression-geometry' public/js  # expect 2 adopters`,
+  `node scripts/... eager-graph probe  # expect 38 modules / 631 KB raw / 159 KB gzip`,
+ ][reg=set]
+ rule = "Numbers below were measured 2026-07-26 against the working tree, not HEAD. Re-probe before trusting them after any landing."
+}[reg=facet]
+
+^"plan_context"{
+ goal = `Make the runtime's canonical contracts the default path rather than one option among several. Four decisions — how to write a property, how to observe the DOM, how to parse a Spw expression, how to declare a mount — each have an owner in the repo and each are bypassed by most call sites. The cost shows up as a 631 KB eager graph, forced style recalc against a 1.5 MiB stylesheet, a spatial vocabulary that cannot report anything the author did not type, and ~350 lines of catalog boilerplate the export contract was built to delete.`
+ owner = `runtime-plane-consolidation`
+ operation = "audit"
+ bucket = "runtime_js_validation"
+ source = "chat review 2026-07-26 + working-tree measurement"
+ validation = #[
+  `Hypotheses: contract adoption reduces boot payload and recalc without changing the staged lifecycle or spw:* observability.`,
+  `Negative controls: module timings, discovery snapshots, debug/qa posture, and PWA prefetch messaging must survive every phase.`,
+  `Demo sequence: cold content-rich route (/topics/software/), then /, then /settings/, comparing bench:nav:quick before/after.`,
+ ][reg=set]
+ hot_files = #[
+  `public/js/runtime/module-loader.js`,
+  `public/js/kernel/dom-contracts.js`,
+  `public/js/kernel/shared.js`,
+  `public/js/runtime/region-profiler.js`,
+  `public/js/runtime/module-catalog-*.js`,
+  `scripts/build.mjs`,
+ ][reg=set]
+}[reg=facet]
+
+# ---------------------------------------------------------------------------
+# Evidence — measured 2026-07-26, working tree (not HEAD)
+# ---------------------------------------------------------------------------
+
+^"evidence_payload"{
+ claim = `The eager graph and the built payload are the largest unforced costs.`
+ eager_graph = `38 modules, 631.4 KB raw, 159.3 KB gzip, blocking before first mount`
+ dist_payload = `dist/public/js — 210 unbundled unminified ES modules, 3.4 MB`
+ build_gap = `scripts/build.mjs has no minify or bundle step; files are content-hashed source`
+ worst_single_edge = `kernel/dom-contracts.js:12 imports detectOperator from kernel/shared.js — 69 KB, largest file in the graph, for one function`
+ tree_shake_blocker = `shared.js exports via two grouped export { } blocks; nothing tree-shakes even with a bundler`
+ verified_by = `node probe over the static import graph; ls -la dist/public/js; head -c 300 dist/public/js/site.*.js`
+}[reg=facet]
+
+^"evidence_scheduling"{
+ claim = `Route gating barely exists; the selector probe is doing the route filter's job, uncached.`
+ defs_total = "96"
+ defs_with_route = "13"
+ defs_with_selector = "91"
+ dead_field = `ctx.routeFamily parsed at site.js:467, consumed nowhere — absent from module-loader.js, module-catalog-normalize.js, runtime-helpers.js`
+ probe_cost = `hasSelector -> safeQuery -> uncached document.querySelector per def per pass; ~8 passes per boot (immediate x3, prefetch x2, visible, interaction, region, idle, settled) = ~650+ querySelector calls`
+ unused_asset = `.agents/state/runtime/route-runtime-manifest.json — 832 KB with routes/surfaces/runtimeDefinitions, read only by scripts/typed/site-contracts/index.mjs, never at runtime`
+ implication = `83 of 96 modules are considered on every route. The data to precompute a per-surface set already exists at build time.`
+}[reg=facet]
+
+^"evidence_property_writes"{
+ claim = `The change-only write contract exists and is bypassed roughly 3:1.`
+ contract = `writeDatasetValue at kernel/dom-contracts.js:1103 reads, compares, returns false without touching the DOM when equal — correct`
+ by_plane = #[
+  `runtime   raw=529  guarded=405`,
+  `interface raw=331  guarded=28`,
+  `modules   raw=197  guarded=0`,
+  `semantic  raw=152  guarded=61`,
+  `kernel    raw=80   guarded=13`,
+  `media     raw=84   guarded=20`,
+ ][reg=set]
+ totals = `1382 raw vs 547 guarded; style 151 raw setProperty vs 71 writeStyleValue`
+ hot_path_leak = `public/ts/bus.ts #applyCharge and setCharge write --charge and dataset.spwCharge unguarded, on the pointermove path`
+ why_it_matters = `352 core.css selectors descend from html[…]/:root[…]; a redundant html dataset write invalidates style for the document against a 1.5 MiB sheet`
+}[reg=facet]
+
+^"evidence_observation"{
+ claim = `Observer federation exists with 5 adopters; 26 observers remain independent.`
+ observers_total = "31"
+ observers_on_documentelement_attributes = "12"
+ dom_sync_hub_tasks = "5"
+ observe_added_matches_sites = "5"
+ documented_hazard = `kernel/dom-contracts.js:1189 docblock — two modules reacting to each other via naive subtree observers hard-freeze the renderer because callbacks run as microtasks`
+ measurement_fragmentation = `11 scroll listeners, each with its own rAF/throttle; 69 getBoundingClientRect + 64 getComputedStyle tree-wide; no shared read phase`
+ specific_defect = `interface/semantic-chrome.js:719 registers scroll in capture phase without passive`
+ listener_hygiene = `820 addEventListener vs 331 removeEventListener; 26 AbortController/signal uses; bus.on already accepts signal`
+}[reg=facet]
+
+^"evidence_boilerplate"{
+ claim = `The module export contract is dead infrastructure; 95 of 96 defs hand-write the adapter it was built to remove.`
+ resolver = `module-export-contract.js resolveModuleMount: SPW_MODULE_EXPORT.mount -> spwModule.mount -> default.mount -> init* export, then fn(ctx, root)`
+ adoption = `SPW_MODULE_EXPORT declarations: 0. createModuleExport call sites: 1 (interface/state-inspector.js:1187 via the spwModule alias).`
+ adapter_shapes = #[
+  `38x  return fn()          — ignores ctx entirely`,
+  `31x  return fn(ctx)       — exactly what the fallback already does`,
+  `11x  return fn(document)`,
+  `3x   return fn(document.querySelector('main') || document)`,
+  `2x   return fn(root)`,
+  `remainder bespoke`,
+ ][reg=set]
+ deletable_today = `69 of 93 with zero module changes — the init* fallback resolves them and the fn() group ignores extra args harmlessly`
+ blocker = `~19 take document where the contract passes ctx. That inconsistent init signature is the actual reason the adapters exist; nobody normalized it, so the contract sat unused and every def paid 5 lines.`
+}[reg=facet]
+
+^"evidence_parsing"{
+ claim = `The canonical reader landed 2026-07-26 with 2 adopters; the four legacy parsers were never retired. This is the bloat.`
+ canonical = `semantic/spw-expression-geometry.js — 244 lines, landed via semantic-navigation-geometry (closed 2026-07-26)`
+ canonical_adopters = #[ `semantic/bare-spw-markup.js`, `runtime/attention/section-handle.js` ][reg=set]
+ legacy_parsers = #[
+  `kernel/shared.js:1380 splitOperatorExpression`,
+  `semantic/link-copy.js:33 parseSpwExpression`,
+  `site.js:714 inline projection regex ^([^\[\{\(]+)(?:\[…\])?(?:\{…\})?(?:\(…\))?`,
+  `runtime/spells.js:151 inline operator-prefix regex`,
+ ][reg=set]
+ orphan_artifact = `modules/tools/spw-literal-parser.js — 316 lines, the pinned portable parser, zero importers in public/js, not in the module catalog`
+ authored_graph = `26 files reference data-spw-semantic-expression; 2107 operator chips across the HTML`
+ reading = `The graph is large, consistent, and already authored. Nothing is missing except a single owner. Portability landed for the tool page; the runtime never adopted it, so each plane kept its slice.`
+}[reg=facet]
+
+^"evidence_spatial_model"{
+ claim = `The spatial vocabulary is a synonym chain over authored labels. It reads no geometry, so it cannot resolve spatial relationships.`
+ derivation_chain = `authored attribute -> synonym -> synonym -> CSS token`
+ region_profiler = #[
+  `inferRegionHarmony — synonym table over role (routing->indexed, schema->structured, …)`,
+  `inferRegionTempo — synonym table over harmony (indexed->snap, structured->deliberate, …)`,
+  `inferRegionDensity — synonym table over kind (card->compact, panel->medium, …)`,
+  `inferRegionAttentionalWeight — magic-number table over kind/role/classList (site-hero->1.25, hook->1.2, …)`,
+ ][reg=set]
+ same_shape_elsewhere = `runtime/module-loader.js:506 inferModuleDimensions — regexes over def.id + def.selector + def.layer; /nav|route|link|hash|frame/ -> 'routing'`
+ the_orphan_half = `runtime/spatial-gravity.js DOES measure geometry — spwEdgeGravity, spwEdgeX/Y, spwExtent, spwMeasureBand, spwSalienceRank — and composition-box-model.js measures boxes. Neither feeds region-profiler.`
+ diagnosis = `Two disconnected spatial systems: label-derived (feeds CSS tokens + scheduling) and measurement-derived (feeds almost nothing). The missing grounded theory is the bridge, not new vocabulary.`
+ success_criterion = `The model can report something about a page the author did not type. If it cannot, it is still a synonym table.`
+}[reg=facet]
+
+^"evidence_css_coupling"{
+ claim = `The JS write problem and the CSS core problem are one problem.`
+ core_bundle = `dist/public/css/bundles/core.css — 1546 KiB, 5429 selector blocks`
+ selector_shape = #[
+  `2753 contain [data-spw-*]`,
+  `3198 use :where()`,
+  `352 descend from html[…] or :root[…]`,
+  `101 use :has()`,
+  `1814 unique custom property declarations`,
+  `189 @media blocks, 60 @keyframes`,
+ ][reg=set]
+ payload_report = `npm run css:payload — core dominates ~1.5 MiB; route scoping recovers only 0.4–0.6 MiB`
+ coupling = `352 root-rooted selectors x 1382 mostly-unguarded dataset writes. The JS half (change-only writes) is the cheaper half of the fix.`
+}[reg=facet]
+
+^"evidence_duplication"{
+ claim = `Long files are a symptom of re-implementation, not of size.`
+ twin_inspectors = `interface/state-inspector.js (1189) + runtime/state-inspector.js (929) = 2118 lines, entry points initStateInspector / initSpwStateInspector`
+ duplicated_basenames = #[ `bus.js`, `shared.js`, `contract.js`, `feed-utils.js`, `component-fixtures.js`, `runtime-environment.js`, `module-timing-contract.js` ][reg=set]
+ catalog_bulk = `module-catalog-enhancement.js — 1555 lines / 61 KB = 63 defs x ~20 lines, ~5 of which is the deletable mount adapter`
+ reading = `Collapsing the re-implementation tail removes more lines than splitting files would. Split after extracting shared primitives, per runtime-module-decomposition.`
+}[reg=facet]
+
+^"evidence_overload"{
+ claim = `Two modules hold fifteen concerns between them. Full anatomy in @modules.`
+ shell_disclosure = .{
+  mass = `2315 lines — largest file in the tree; 1 export; 92 top-level declarations; 31 addEventListener; 24 constant tables; 1 module-level let`
+  layer = `core / IMMEDIATE — mounts on every page`
+  concerns = #[
+   `device context (duplicates interactive-medium register resolution)`,
+   `scroll model (one of 11 independent scroll loops)`,
+   `nav-fit + layout resolution (the genuine core)`,
+   `menu state machine (6 orthogonal axes: MODES, PHASES, PRESSURES, TOPOLOGIES, INTENTS, CLARITIES)`,
+   `scroll lock + offset`,
+   `pointer field`,
+   `settings control panel (owns 6 constant cycles)`,
+   `attention posture panel`,
+   `focus + disclosure a11y`,
+  ][reg=set]
+  defect = `:1469 unescaped ${} interpolation into innerHTML`
+  reading = `A shell layout resolver plus a menu state machine plus a settings control panel plus a scroll lock plus a focus manager. The "unreasonable" quality is structural, not stylistic: no part reads without the other eight.`
+ }[reg=facet]
+ experiential = .{
+  mass = `2168 lines; 1 export; 102 top-level declarations; 41 addEventListener; 6 innerHTML; 3 storage sites`
+  concerns = #[
+   `spell breadcrumbs / spell-path (largest cluster, owns BREADCRUMB_ROUTE_REGISTRY)`,
+   `sample dock (complete pointer/focus/keyboard gesture surface, 8 handlers)`,
+   `contextual memos`,
+   `operator learning (owns OPERATOR_INFO — a third operator vocabulary)`,
+   `bookmark registry`,
+   `QA beat gestures (debug surface inside a reader-facing module)`,
+   `gesture SVG rendering`,
+   `semantic inference`,
+   `private escapeHtml + escapeAttribute + slugify + titleFromPath (duplicate dom-render and text-normalization)`,
+  ][reg=set]
+  defect = `:1938 unescaped ${} interpolation into innerHTML`
+  reading = `Unlike shell-disclosure these concerns are not even coupled. Breadcrumbs, sample dock, memos, learning, bookmarks, and beats share almost nothing but the file.`
+ }[reg=facet]
+}[reg=facet]
+
+# ---------------------------------------------------------------------------
+# In-flight work found in the tree
+# ---------------------------------------------------------------------------
+
+^"inflight_state"{
+ source = `2026-08-11 hygiene: plan reality + commit splits. Phase 0 complete; phase 6 file extracts partial.`
+ landed_phase_0_a = `updates: role annotation across all three catalogs — separate commit`
+ landed_phase_0_b = `unmountModuleById / unmountAllModules with registry.remove, normalized logger, scheduleRuntimeTokenUpdate only; round-trip test; site.js + __SPW_SITE__ wiring — separate commit`
+ landed_phase_6_partial = `shell: scroll-lock, attention-posture-panel, utility-row (~2315→1461). experiential: bookmark-registry, contextual-memos, operator-info, operator-learning, qa-beat-gestures (~2168→1758). Import-time only — still one catalog mount each.`
+ adjacent_landed = `interactive-medium medium-token cache; page-state single style+rect for bottom floating chrome`
+ not_started = `phase_1 payload/boilerplate; phase_2 route-scoped scheduling (routeFamily still dead); phases 3-5, 7; phase_6 catalog splits and remaining parent bulk`
+}[reg=facet]
+
+^"inflight_defects"{
+ blocking = `none for phase 0 — registry.remove landed; remount round-trip covered`
+ residual_phase_6 = `parents still own breadcrumbs/sample-dock and shell menu/nav-fit; no independent catalog gates; private escape + OPERATOR_INFO still in experiential tree`
+ residual_scheduling = `ctx.routeFamily parsed at site.js, still unused by shouldScheduleDefinition`
+ residual_payload = `shared.js still dragged by dom-contracts for detectOperator; mount adapters still hand-written`
+}[reg=facet]
+
+# ---------------------------------------------------------------------------
+# Phase ladder
+# ---------------------------------------------------------------------------
+
+^"phase_0"{
+ name = "land the in-flight work correctly"
+ status = "landed"
+ landed_at = "2026-08-11"
+ gate = "none — mechanical"
+ steps = #[
+  `call ctx.registry.remove(record.id) in unmountModuleRecord`,
+  `drop the duplicate updateRuntimeStateTokens call`,
+  `normalize the unmount logger call to (message, detail, relation)`,
+  `add mount -> unmount -> mount round-trip test`,
+  `commit the updates: role pass separately from the unmount API`,
+ ][reg=set]
+ validation = `npm run check:runtime && npm run test:modules:run`
+}[reg=facet]
+
+^"phase_1"{
+ name = "payload and boilerplate"
+ gate = "none — no felt pacing change"
+ steps = #[
+  `split kernel/shared.js so dom-contracts.js stops dragging 69 KB for detectOperator`,
+  `add minify + bundle to scripts/build.mjs, preserving content-hash naming and the modulepreload/prefetch hint path`,
+  `delete the 69 no-op mount adapters; let resolveModuleMount's init* fallback resolve them`,
+  `normalize the ~19 fn(document) adapters to (ctx, root), then delete those too`,
+  `re-measure the eager graph; record before/after in this file`,
+ ][reg=set]
+ validation = `npm run check:local && npm run bench:build && npm run smoke:nav:ci`
+ expected_delta = `eager graph well below 631 KB raw; dist JS well below 3.4 MB; module-catalog-*.js down ~350 lines`
+}[reg=facet]
+
+^"phase_2"{
+ name = "route-scoped scheduling"
+ gate = "browser demo — measured boot delta on a cold content-rich route"
+ steps = #[
+  `consume route-runtime-manifest.json at build time to emit a per-surface module set`,
+  `make shouldScheduleDefinition honor ctx.routeFamily (already parsed, currently dead)`,
+  `cache selector probe results per boot so the ~8 filter passes share one querySelector per def`,
+ ][reg=set]
+ target = `83 always-considered modules become route-scoped; ~650 boot querySelector calls collapse toward ~90`
+ answers = `the "route-level configuration per route or family" ask that was never started`
+}[reg=facet]
+
+^"phase_3"{
+ name = "write and observe consolidation"
+ gate = "browser demo — changes interaction latency and settle timing"
+ steps = #[
+  `route unguarded writes through writeDatasetValue/writeStyleValue, starting with modules/ (197 raw, 0 guarded)`,
+  `guard the bus charge path — #applyCharge and setCharge on the pointermove path`,
+  `migrate the 26 non-hub MutationObservers onto dom-sync-hub / observeAddedMatches`,
+  `add a shared viewport read phase for the 11 scroll listeners`,
+  `fix semantic-chrome.js:719 capture-phase non-passive scroll`,
+  `adopt per-mount AbortController on ctx to close the 820/331 listener gap`,
+ ][reg=set]
+}[reg=facet]
+
+^"phase_4"{
+ name = "one expression reader"
+ gate = "browser demo — chip rendering and section-handle wake are visible"
+ steps = #[
+  `make spw-expression-geometry.js the single reader for the authored expression graph`,
+  `retire splitOperatorExpression, link-copy parseSpwExpression, site.js:714 regex, spells.js:151 regex behind it`,
+  `decide the relationship between the site reader and the pinned modules/tools/spw-literal-parser.js artifact — one generated from the other, not maintained in parallel`,
+  `operator-chip semantics correctness pass — scope here or split once the reader is single`,
+ ][reg=set]
+ outcome = `With one reader over 2107 chips and 26 consumer files the navigation layer becomes derivable. This is the precondition for "navigation that doesn't need reimplementing", not a side effect of it.`
+}[reg=facet]
+
+^"phase_5"{
+ name = "ground the spatial model"
+ gate = "proposal + browser demo — this is the layout-beat behavior change"
+ steps = #[
+  `feed spatial-gravity measurements (edge gravity, extent, measure band, salience rank) and composition-box-model boxes into region-profiler as inputs`,
+  `replace the synonym tables with geometry-reading derivations; keep the authored attribute as an override, not the sole source`,
+  `do the same for inferModuleDimensions, or delete it and derive from the now-role-annotated updates: contract, which is real declared data`,
+ ][reg=set]
+ success_criterion = `the model reports something about a page the author did not type`
+}[reg=facet]
+
+^"phase_6"{
+ name = "decompose the overloaded modules"
+ status = "partial"
+ landed_at = "2026-08-11 file extracts"
+ gate = "browser demo before catalog/gating changes that alter when panels appear"
+ anatomy = ~"./modules.spw"
+ subjects = .{
+  shell_disclosure = `was 2315 / now ~1461; extracted shell/scroll-lock, attention-posture-panel, utility-row; remainder nav-fit + menu + a11y`
+  experiential = `was 2168 / now ~1758; extracted bookmark-registry, contextual-memos, operator-info, operator-learning, qa-beat-gestures; remainder breadcrumbs + sample dock`
+ }[reg=facet]
+ steps = #[
+  `shell-disclosure: extract scroll-lock, attention-posture-panel, utility-row — done (import-time)`,
+  `shell-disclosure: extract disclosure-a11y; delegate device context to interactive-medium`,
+  `shell-disclosure: catalog/idle gates for non-first-paint panels; remainder nav-fit + menu under ~600 lines`,
+  `experiential: extract five feature modules — done (import-time)`,
+  `experiential: extract breadcrumbs + sample dock; own when/selector/features per feature`,
+  `experiential: most should not be IMMEDIATE — sample dock and QA beats are idle or debug-gated work`,
+  `experiential: delete private escapeHtml/escapeAttribute; fold OPERATOR_INFO into phase_4 reader`,
+ ][reg=set]
+ sequencing = `file extracts are safe checkpoints. Catalog splits for experiential pair with phase_4. Further shell extract after phase_3.`
+}[reg=facet]
+
+^"phase_7"{
+ name = "css core decomposition"
+ gate = "coordinate with css-architecture-readability"
+ steps = #[
+  `land phase_3 first — it removes the redundant invalidation`,
+  `decompose the 352 root-attribute-rooted selector families`,
+ ][reg=set]
+ boundary = `css-architecture-readability owns literate CSS ownership; this phase owns only the JS↔CSS write coupling`
+}[reg=facet]
+
+# ---------------------------------------------------------------------------
+# Judgment, risk, and what not to do
+# ---------------------------------------------------------------------------
+
+^"pattern_consideration"{
+ rule = "Compare against the sibling pattern before promoting anything here into a convention."
+ siblings = #[
+  `dom-sync-hub — the correct observer federation shape, already proven with 5 tasks`,
+  `mountVisibleFeatures frame-budgeted drain — the correct wave-handling shape, proven once`,
+  `IDLE_CHUNK_ORDER — the correct stagger shape, proven once`,
+  `writeDatasetValue — the correct write shape, proven 547 times and bypassed 1382`,
+ ][reg=set]
+ reading = `Every primitive this plan needs already exists and has been validated in at least one place. This is an adoption plan, not a design plan. Resist inventing a new primitive when the tree already holds a working one.`
+}[reg=facet]
+
+^"risk_model"{
+ hard_failures = #[
+  `bundling breaks the extractDynamicImportSpecifier regex in site.js, killing modulepreload/prefetch hints`,
+  `deleting mount adapters where a module quietly depends on receiving document instead of ctx`,
+  `route-scoped precompute drifts from the live catalog and silently stops mounting a module`,
+ ][reg=set]
+ soft_failures = #[
+  `guarded writes suppress a write some module depended on firing redundantly`,
+  `observer federation reorders effects that happened to work in their old order`,
+  `grounded spatial derivation produces vocabulary that reads worse than the synonym tables did`,
+ ][reg=set]
+ recoveries = #[
+  `keep def.mount honored as an explicit override — resolveModuleMount is a fallback, not a replacement`,
+  `keep the runtime policy escape hatches (only/skip/timingByModule) working through every phase`,
+  `phase 5 is reversible: authored attribute stays as override`,
+ ][reg=set]
+ non_negotiables = #[
+  `staged lifecycle and MOUNT_WHEN semantics survive`,
+  `spw:* marks/measures, module audit, and discovery snapshots survive`,
+  `progressive enhancement — no-JS pages stay readable`,
+  `no felt-pacing change lands without a browser demo first`,
+ ][reg=set]
+}[reg=facet]
+
+^"do_not"{
+ entries = #[
+  `Do not split long files for line count. Collapse the re-implementation tail first; the file shrinks as a consequence.`,
+  `Do not add spatial vocabulary in phase 5. The problem is missing measurement input, not missing words.`,
+  `Do not promote anything in this file to .spw/conventions/ until a phase has landed and held.`,
+  `Do not merge the two state-inspectors here — that is runtime-module-decomposition's call.`,
+  `Do not treat the updates: role annotation as unfinished. It is complete and correct; it just needs a separate commit.`,
+ ][reg=set]
+}[reg=facet]
+
+^"expansion_prime"{
+ smallest_safe_direction = `Phase 0 + Phase 1 as one mechanical pass. Nothing in them touches pacing, and they clear the ground for every later phase.`
+ second_step = `Phase 2, because the route-scoping ask is already open and the build-time manifest already exists.`
+ do_not_promote_until = `A phase has landed and the measured delta has been recorded here. Until then this file is evidence, not contract.`
+}[reg=facet]
+
+^"open"{
+ questions = #[
+  `Does the bundler need to preserve per-module URLs for the resource-hint path, or should extractDynamicImportSpecifier be replaced by a build-emitted map?`,
+  `Should the site expression reader be generated from the workbench parser, or should the pinned artifact be generated from the site reader?`,
+  `Which geometry signals actually predict the layout beats the reader feels — edge gravity, measure band, or occupancy? Phase 5 needs one probe before it needs an implementation.`,
+  `Is operator-chip semantics its own plan, or a phase-4 sub-slice?`,
+ ][reg=set]
+}[reg=facet]
+
+^"stream"{
+ entries = #[
+  `[2026-07-26] observe — reviewed the full public/js surface: 216 files, 88146 lines. Four canonical contracts exist; all four are bypassed by most call sites.`,
+  `[2026-07-26] observe — found 5 uncommitted files from the exhausted-quota run. updates: role pass is sound; unmount API has a blocking remount defect.`,
+  `[2026-07-26] measure — eager graph 38 modules / 631.4 KB raw / 159.3 KB gzip. dist JS 210 modules / 3.4 MB, no minify or bundle step in scripts/build.mjs.`,
+  `[2026-07-26] measure — 1382 raw dataset writes vs 547 guarded; modules/ is 197 raw and 0 guarded. 31 MutationObservers, 12 on documentElement attributes, 5 federated.`,
+  `[2026-07-26] measure — 95 of 96 catalog defs hand-write a mount adapter; 0 SPW_MODULE_EXPORT declarations; 69 adapters deletable today.`,
+  `[2026-07-26] measure — core.css 1546 KiB, 5429 selector blocks, 352 rooted at html[…]/:root[…]. Confirms the JS write path and the CSS core are one problem.`,
+  `[2026-07-26] diagnose — region-profiler derives harmony/tempo/density/attentionalWeight by synonym table over authored role/kind, reading no geometry. spatial-gravity measures geometry and feeds nothing. That gap is the missing grounded theory.`,
+  `[2026-07-26] diagnose — spw-expression-geometry.js landed today with 2 adopters while 4 legacy parsers still serve 26 files and 2107 chips. Portability landed for the tool page; the runtime never adopted it.`,
+  `[2026-07-26] decide — sequence as 7 phases; phases 0-1 mechanical and landable together, 2-6 each gated on a browser demo per the sensation review gate.`,
+  `[2026-08-11] land — phase 0 complete: updates: roles commit + unmount API with registry.remove, normalized logger, round-trip test.`,
+  `[2026-08-11] land — phase 6 partial file extracts: shell ~2315→1461 (scroll-lock, attention-posture, utility-row); experiential ~2168→1758 (five feature modules). Import-time only.`,
+  `[2026-08-11] land — adjacent measure hygiene: interactive-medium token cache; page-state single style+rect for bottom chrome.`,
+  `[2026-08-11] hygiene — plan docs aligned to working tree; commit splits by concern; wired into plans root index. routeFamily still dead; payload work still open.`,
+ ][reg=set]
+}[reg=facet]
+
+^"cache"{
+ status = "tending"
+ base_ref = "main@5a676ac0"
+ working_tree = "phase 0 + phase 6 partial + adjacent measure + css chrome hygiene commits"
+ files_hot = "public/js/runtime/module-loader.js public/js/kernel/dom-contracts.js public/js/kernel/shared.js public/js/runtime/region-profiler.js public/js/runtime/module-catalog-*.js scripts/build.mjs public/js/runtime/shell-disclosure.js public/js/runtime/experiential.js"
+ next_phase = "1"
+ open_count = "phase1 payload; phase2 route-scope; phase3 write/observe; phase4 reader; phase5 spatial; phase6 remainder; phase7 css"
+ last_stream = "2026-08-11 hygiene"
+ taste_debt = "Phase 5 risks producing correct-but-worse-reading vocabulary. Probe which geometry signals predict felt layout beats before implementing. Phase 6 catalog splits must not change felt chrome timing without a demo."
+}[reg=facet]
+
+invariants: #[
+ `Every number in this file was measured against the working tree on 2026-07-26; re-probe after any landing.`,
+ `This is an adoption plan. Every primitive it needs already exists and works somewhere in the tree.`,
+ `Phases 2 and later end at proposal plus browser demo; the human approves sensation before implementation.`,
+ `wip.spw is hot memory — promote landed meaning into PLAN.md or a named .spw artifact, not here.`,
+][reg=set]

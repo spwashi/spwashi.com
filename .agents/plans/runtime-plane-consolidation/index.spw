@@ -1,0 +1,170 @@
+# Review 2026-08-11 — phase 0 landed; phase 6 file extracts partial; keep active until contract-adoption phases land and counts re-probed.
+# Plan Index — Runtime Plane Consolidation
+#
+# Make the runtime's canonical contracts the default path rather than one option
+# among several, so the JS planes stop re-growing local copies of decisions that
+# already have an owner.
+
+#>plan_runtime_plane_consolidation_index
+#:index #!plan
+#:operation #!prime
+#:fixity #!tending
+#:layer #!pragmatics
+
+operation = "prime"
+fixity = "tending"
+
+intent: .{
+ goal = `Four decisions are re-implemented across the JS planes today — how to write a property, how to observe the DOM, how to parse a Spw expression, how to declare a mount. Each has a canonical implementation in the repo; each is bypassed by the majority of call sites. The cost surfaces as a 631 KB eager graph, forced style recalculation against a 1.5 MiB stylesheet, a spatial vocabulary that cannot report anything the author did not type, ~350 lines of catalog boilerplate, and two modules holding fifteen concerns between them. Make the contracts the default path without losing the staged lifecycle, the spw:* observability, or the runtime-as-instrument character.`
+ owner = `runtime-plane-consolidation`
+ kind = `plan`
+ bucket = `runtime_js_validation`
+ artifact_shape = `PLAN.md | index.spw | wip.spw | modules.spw`
+}[reg=facet]
+
+^"dimensions"{
+ practice_depth = "reading | measurement | tending"
+ semantic_layer = "pragmatics"
+ collaboration_phase = "tending"
+ memory_tier = "hot"
+ bucket = "runtime_js_validation"
+}[reg=facet]
+
+^"conceptual_model"{
+ thesis = `Adoption before decomposition. Every primitive this plan needs already exists and works somewhere in the tree; nothing forced the call sites through it.`
+ concepts = #[
+  `contract-adoption`,
+  `route-scoped-scheduling`,
+  `write-guard`,
+  `observer-federation`,
+  `single-reader`,
+  `grounded-spatial-model`,
+  `concern-per-module`,
+ ][reg=set]
+ surfaces = #[
+  `public/js/kernel/dom-contracts.js`,
+  `public/js/runtime/module-loader.js`,
+  `public/js/runtime/region-profiler.js`,
+  `public/js/semantic/spw-expression-geometry.js`,
+  `scripts/build.mjs`,
+  `npm run check:local`,
+ ][reg=set]
+ fixity_tier = `tending`
+}[reg=facet]
+
+^"plan_refinement"{
+ tone = `Adoption auditor. Every claim carries a count; every count carries a probe.`
+ accuracy = `Measured 2026-07-26; phase 0 + phase 6 file extracts landed 2026-08-11. Re-probe payload/write counts before trusting 2026-07-26 numbers for phase 1.`
+ direction = `Phase 0 landed. Phase 1 next mechanical. Phases 2-5 gated on browser demo. Phase 6 partial (import-time extracts); catalog splits wait on phases 3-4.`
+ inspiration = `The tree already knows how to do this correctly — it just does it in five places out of a hundred.`
+ alignment = `runtime-bootstrap-performance, module-export-uniformity, runtime-module-decomposition, css-sensitive-attribute-writes, semantic-navigation-geometry`
+}[reg=facet]
+
+@plan: ~"./PLAN.md"
+@wip: ~"./wip.spw"
+@modules: ~"./modules.spw"
+@plans_root: ~"../../../.agents/plans/index.spw"
+@plan_index_convention: ~"../../../.spw/conventions/plan-index.spw"
+@wip_notebook: ~"../../../.spw/conventions/wip-notebook.spw"
+
+@plan_bootstrap_performance: ~"../runtime-bootstrap-performance/index.spw"
+@plan_module_export_uniformity: ~"../module-export-uniformity/index.spw"
+@plan_module_decomposition: ~"../runtime-module-decomposition/index.spw"
+@plan_css_sensitive_writes: ~"../css-sensitive-attribute-writes/index.spw"
+@plan_css_architecture: ~"../css-architecture-readability/index.spw"
+@plan_navigation_geometry: ~"../semantic-navigation-geometry/PLAN.md"
+@plan_js_runtime_composability: ~"../js-runtime-composability/index.spw"
+
+@site: ~"../../../public/js/site.js"
+@module_loader: ~"../../../public/js/runtime/module-loader.js"
+@dom_contracts: ~"../../../public/js/kernel/dom-contracts.js"
+@dom_sync_hub: ~"../../../public/js/runtime/dom-sync-hub.js"
+@module_export_contract: ~"../../../public/js/runtime/module-export-contract.js"
+@region_profiler: ~"../../../public/js/runtime/region-profiler.js"
+@spatial_gravity: ~"../../../public/js/runtime/spatial-gravity.js"
+@expression_geometry: ~"../../../public/js/semantic/spw-expression-geometry.js"
+@shell_disclosure: ~"../../../public/js/runtime/shell-disclosure.js"
+@experiential: ~"../../../public/js/runtime/experiential.js"
+@shared: ~"../../../public/js/kernel/shared.js"
+@build: ~"../../../scripts/build.mjs"
+@route_manifest: ~"../../../.agents/state/runtime/route-runtime-manifest.json"
+
+dispatch: .{
+ plan = @plan
+ wip = @wip
+ modules = @modules
+ plan_bootstrap_performance = @plan_bootstrap_performance
+ plan_module_export_uniformity = @plan_module_export_uniformity
+ plan_module_decomposition = @plan_module_decomposition
+ plan_css_sensitive_writes = @plan_css_sensitive_writes
+ plan_navigation_geometry = @plan_navigation_geometry
+ site = @site
+ module_loader = @module_loader
+ dom_contracts = @dom_contracts
+ region_profiler = @region_profiler
+ expression_geometry = @expression_geometry
+ shell_disclosure = @shell_disclosure
+ experiential = @experiential
+ build = @build
+}[reg=facet]
+
+^"research_bridge"{
+ local_research = #[
+  .{ label = `javascript_module_census` ; path = `.spw/audits/javascript-module-census-2026-07.spw` }[reg=facet],
+  .{ label = `module_export_audit` ; path = `.spw/audits/module-export-standalone-2026-07.spw` }[reg=facet],
+  .{ label = `module_anatomy` ; path = `.agents/plans/runtime-plane-consolidation/modules.spw` }[reg=facet],
+ ][reg=set]
+ rule = `Repo-local audits and this plan's own measurement pass — not external web.`
+}[reg=facet]
+
+^"connection_points"{
+ related_plans = #[
+  `runtime-bootstrap-performance`,
+  `module-export-uniformity`,
+  `runtime-module-decomposition`,
+  `css-sensitive-attribute-writes`,
+  `css-architecture-readability`,
+  `semantic-navigation-geometry`,
+ ][reg=set]
+ boundary = `This plan is the cross-plane adoption pass those owners each assumed would happen. It does not take their scope: bootstrap-performance keeps boot timing, module-decomposition keeps file splits, css-architecture-readability keeps literate CSS ownership.`
+}[reg=facet]
+
+^"phase_ladder"{
+ phases = #[
+  .{ n = 0 ; name = `land the in-flight work correctly` ; gate = `none` ; status = `landed` }[reg=facet],
+  .{ n = 1 ; name = `payload and boilerplate` ; gate = `none — no felt pacing change` ; status = `next` }[reg=facet],
+  .{ n = 2 ; name = `route-scoped scheduling` ; gate = `browser demo` ; status = `open` }[reg=facet],
+  .{ n = 3 ; name = `write and observe consolidation` ; gate = `browser demo` ; status = `open` }[reg=facet],
+  .{ n = 4 ; name = `one expression reader` ; gate = `browser demo` ; status = `open` }[reg=facet],
+  .{ n = 5 ; name = `ground the spatial model` ; gate = `proposal + browser demo` ; status = `open` }[reg=facet],
+  .{ n = 6 ; name = `decompose the overloaded modules` ; gate = `browser demo before catalog timing changes` ; status = `partial` }[reg=facet],
+  .{ n = 7 ; name = `css core decomposition` ; gate = `coordinate with css-architecture-readability` ; status = `open` }[reg=facet],
+ ][reg=set]
+ rule = `Phase 0 landed. Phase 1 is next mechanical. Everything from 2 onward ends at proposal plus browser demo; the human approves sensation before implementation. Phase 6 file extracts may land as checkpoints without gating changes.`
+}[reg=facet]
+
+^"owner_claim"{
+ claim_id = "plan-runtime_plane_consolidation-001"
+ layer = "pragmatic"
+ hypothesis = `The runtime's canonical contracts — writeDatasetValue, dom-render el(), dom-sync-hub, module-export-contract, spw-expression-geometry — are correct and validated but optional, and making them the default path removes more lines, payload, and recalc than any decomposition or rewrite would.`
+ spec_ref = ~"./PLAN.md"
+ impl_ref = ~"../../../public/js/runtime/module-loader.js"
+ probe_ref = `rg -c 'writeDatasetValue' public/js && rg -cE '\.dataset\.[A-Za-z]+\s*=' public/js`
+ falsification = `A patch cannot satisfy the public goal while leaving public/js/runtime/module-loader.js and public/js/kernel/dom-contracts.js unchanged. If the canonical contracts remain optional after a phase lands, that phase did not do its job.`
+ status = "active"
+}[reg=facet]
+
+editor_prompts: #[
+ .{ ask = `What does runtime-plane-consolidation own, and what belongs to the other runtime plans?`, see = @plan }[reg=facet],
+ .{ ask = `Which file should I open first?`, see = @wip }[reg=facet],
+ .{ ask = `What does this module actually hold, and where does its authority leak?`, see = @modules }[reg=facet],
+ .{ ask = `Why are shell-disclosure and experiential unreasonable, and what is the split?`, see = @modules }[reg=facet],
+ .{ ask = `What is measured versus assumed in this plan?`, see = @wip }[reg=facet],
+][reg=set]
+
+invariants: #[
+ `Owner intent: make the canonical contracts the default path, not one option among several.`,
+ `PLAN.md sequences work; index.spw routes inspection; wip.spw holds measurement; modules.spw holds anatomy.`,
+ `Adoption before decomposition — splitting before consolidating moves complexity sideways.`,
+ `Every count re-probes before it is trusted; measurements are dated 2026-07-26.`,
+][reg=set]
