@@ -1,28 +1,51 @@
 /**
  * Catalog normalization + optimization summaries.
  *
- * Keeps schedule fields (when / timingArc / timingChunk) as source of truth
- * and attaches costClass so agents can budget without re-deriving from prose.
+ * Schedule fields (when / timingArc / timingChunk) stay the runtime contract.
+ * cost = { commitment, spend, copy? } is the budget/inspect model.
+ * costClass remains a derived alias for older audits.
  */
 
 import {
   COST_CLASS,
   COST_CLASS_VALUES,
+  COST_COMMITMENT,
+  COST_COMMITMENT_VALUES,
+  COST_COPY,
+  COST_COPY_VALUES,
+  COST_SPEND,
+  COST_SPEND_VALUES,
   MODULE_LAYERS,
   MOUNT_WHEN,
+  costClassFromModel,
+  costModelFromClass,
+  describeModuleCost,
 } from './module-catalog-constants.js';
 import { summarizeCatalogTiming } from '../kernel/module-timing-contract.js';
 
 const COST_CLASS_SET = new Set(COST_CLASS_VALUES);
+const COMMITMENT_SET = new Set(COST_COMMITMENT_VALUES);
+const SPEND_SET = new Set(COST_SPEND_VALUES);
+const COPY_SET = new Set(COST_COPY_VALUES);
 
 const BROAD_SELECTOR_RE = /^(html|body)$/i;
 const PAINT_SCOPE_RE = /ornament|css-vars|paint|composite|flourish|express|backdrop|media-query/;
 const MEMORY_SCOPE_RE = /observer|document-wide|document-scroll|resize|performance-observer|queryall|measure|metacognition|inspect/;
 const INTERFERENCE_SCOPE_RE = /pack-local|layout-correction|dual|mirror/;
+const RESIDUE_SCOPE_RE = /storage|settings|pins|checkpoint|collection|visitation|cauldron|haptics/;
+const LISTEN_SCOPE_RE = /listeners|observer|viewport|document-scroll|resize/;
+const PIN_ID_RE = /spell|checkpoint|pin-registry|haptics/;
+const KEEP_ID_RE = /site-settings|visitation|collection|local-notes|local-memory/;
 const MODULE_CATALOG_URL_PATH = '/public/js/runtime/module-catalog.js';
 
 function asToken(value) {
   return String(value || '').trim().toLowerCase();
+}
+
+function updatesText(def = {}) {
+  const updates = def.updates;
+  if (Array.isArray(updates)) return updates.join(' ');
+  return String(updates || '');
 }
 
 export function resolveModuleCatalogSpecifier(specifier = '', origin = '') {
@@ -35,11 +58,28 @@ export function resolveModuleCatalogSpecifier(specifier = '', origin = '') {
   }
 }
 
-/**
- * Infer a primary cost class when a def omits costClass.
- * Explicit costClass on the def always wins (see normalizeCatalogDefinition).
- */
-export function inferModuleCostClass(def = {}) {
+function inferCommitment(def = {}) {
+  const scope = asToken(def.effectScope);
+  const id = asToken(def.id);
+  const updates = asToken(updatesText(def));
+  const when = asToken(def.when);
+
+  if (when === MOUNT_WHEN.SETTLED && !RESIDUE_SCOPE_RE.test(`${scope} ${updates}`)) {
+    return COST_COMMITMENT.AUTHORED;
+  }
+  if (RESIDUE_SCOPE_RE.test(`${scope} ${id}`) || /\bresidue:/.test(updates)) {
+    return COST_COMMITMENT.RESIDUE;
+  }
+  if (LISTEN_SCOPE_RE.test(scope) && !/root-state|css-vars/.test(scope)) {
+    return COST_COMMITMENT.LISTEN;
+  }
+  if (MEMORY_SCOPE_RE.test(scope) && !/root-state/.test(scope)) {
+    return COST_COMMITMENT.LISTEN;
+  }
+  return COST_COMMITMENT.PROJECT;
+}
+
+function inferSpend(def = {}, commitment) {
   const when = asToken(def.when);
   const layer = asToken(def.layer);
   const scope = asToken(def.effectScope);
@@ -50,85 +90,123 @@ export function inferModuleCostClass(def = {}) {
   const hasRoute = Boolean(def.route);
   const debugOnly = Boolean(def.debugOnly);
 
-  if (def.costClass && COST_CLASS_SET.has(asToken(def.costClass))) {
-    return asToken(def.costClass);
-  }
-
   if (INTERFERENCE_SCOPE_RE.test(scope) || /layout-assumptions|spatial-gravity/.test(id)) {
-    return COST_CLASS.INTERFERENCE;
+    return COST_SPEND.FIGHT;
   }
-
-  if (PAINT_SCOPE_RE.test(scope) || /canvas-accents|module-effects|pulse-beat/.test(id)) {
-    if (when === MOUNT_WHEN.IMMEDIATE && layer === MODULE_LAYERS.ENHANCEMENT && !hasFeatures) {
-      return COST_CLASS.PAINT_COMPOSITE;
-    }
-  }
-
   if (
-    MEMORY_SCOPE_RE.test(scope)
-    || /composition-box|state-inspector|layout-shift|component-semantics|semantic-crossrefs|content-tone/.test(id)
-    || /metacognition|inspection|diagnostics|layout/.test(arc)
+    (PAINT_SCOPE_RE.test(scope) || /canvas-accents|module-effects|pulse-beat/.test(id))
+    && when === MOUNT_WHEN.IMMEDIATE
+    && layer === MODULE_LAYERS.ENHANCEMENT
+    && !hasFeatures
   ) {
-    if (when === MOUNT_WHEN.IMMEDIATE || when === MOUNT_WHEN.SETTLED) {
-      return COST_CLASS.WORKING_MEMORY_PRESSURE;
-    }
+    return COST_SPEND.PAINT;
   }
-
-  // Demand-coupled postures: late schedule or explicit gates.
+  if (
+    (MEMORY_SCOPE_RE.test(scope)
+      || /composition-box|state-inspector|layout-shift|component-semantics|semantic-crossrefs|content-tone/.test(id)
+      || /metacognition|inspection|diagnostics|layout/.test(arc))
+    && (when === MOUNT_WHEN.IMMEDIATE || when === MOUNT_WHEN.SETTLED)
+  ) {
+    return COST_SPEND.WIDE;
+  }
   if (
     when === MOUNT_WHEN.VISIBLE
     || when === MOUNT_WHEN.IDLE
     || when === MOUNT_WHEN.INTERACTION
     || when === MOUNT_WHEN.REGION
+    || debugOnly
+    || (layer === MODULE_LAYERS.FEATURE && (hasRoute || hasFeatures || selector))
+    || (layer === MODULE_LAYERS.ENHANCEMENT && hasFeatures)
   ) {
-    return COST_CLASS.DEMAND_COUPLED;
+    return COST_SPEND.NONE;
   }
-
-  if (debugOnly) {
-    return COST_CLASS.DEMAND_COUPLED;
-  }
-
-  if (layer === MODULE_LAYERS.FEATURE && (hasRoute || hasFeatures || selector)) {
-    return COST_CLASS.DEMAND_COUPLED;
-  }
-
-  if (layer === MODULE_LAYERS.ENHANCEMENT && hasFeatures) {
-    return COST_CLASS.DEMAND_COUPLED;
-  }
-
-  if (layer === MODULE_LAYERS.CORE) {
-    // Core immediate is intentional substrate, not "wrong" — still premature
-    // relative to reading content, which is the right budget label.
-    return COST_CLASS.PREMATURE_COMMITMENT;
-  }
-
   if (when === MOUNT_WHEN.IMMEDIATE) {
-    if (BROAD_SELECTOR_RE.test(selector) || selector === '' || selector === 'html' || selector === 'body') {
-      return COST_CLASS.PREMATURE_COMMITMENT;
-    }
-    // Selector-gated enhancement immediate: still early, but demand-shaped.
     if (selector && !BROAD_SELECTOR_RE.test(selector.split(',')[0].trim())) {
-      return COST_CLASS.DEMAND_COUPLED;
+      return COST_SPEND.NONE;
     }
-    return COST_CLASS.PREMATURE_COMMITMENT;
+    return COST_SPEND.EARLY;
   }
+  if (commitment === COST_COMMITMENT.AUTHORED) return COST_SPEND.NONE;
+  return COST_SPEND.NONE;
+}
 
-  if (when === MOUNT_WHEN.SETTLED) {
-    return COST_CLASS.AUTHORED_PRIOR_SAFE;
-  }
+function inferCopy(def = {}, commitment) {
+  if (commitment !== COST_COMMITMENT.RESIDUE) return null;
+  const id = asToken(def.id);
+  const scope = asToken(def.effectScope);
+  if (PIN_ID_RE.test(`${id} ${scope}`)) return COST_COPY.PIN;
+  if (KEEP_ID_RE.test(`${id} ${scope}`)) return COST_COPY.KEEP;
+  return COST_COPY.FOLLOW;
+}
 
-  return COST_CLASS.DEMAND_COUPLED;
+function readExplicitCost(def = {}) {
+  const raw = def.cost;
+  if (!raw || typeof raw !== 'object') return null;
+  const commitment = asToken(raw.commitment);
+  const spend = asToken(raw.spend);
+  const copy = raw.copy == null || raw.copy === '' ? null : asToken(raw.copy);
+  if (!COMMITMENT_SET.has(commitment) || !SPEND_SET.has(spend)) return null;
+  if (copy && !COPY_SET.has(copy)) return null;
+  return {
+    commitment,
+    spend,
+    copy: commitment === COST_COMMITMENT.RESIDUE ? (copy || COST_COPY.FOLLOW) : null,
+  };
 }
 
 /**
- * Attach resolved costClass (and preserve explicit overrides).
- * Does not mutate the source def object.
+ * Resolve { commitment, spend, copy } for a catalog def.
+ * Explicit def.cost wins; explicit costClass still expands; otherwise infer.
+ */
+export function inferModuleCost(def = {}) {
+  const explicit = readExplicitCost(def);
+  if (explicit) return explicit;
+
+  if (def.costClass && COST_CLASS_SET.has(asToken(def.costClass))) {
+    const fromClass = costModelFromClass(def.costClass);
+    return {
+      ...fromClass,
+      copy: inferCopy(def, fromClass.commitment) || fromClass.copy,
+    };
+  }
+
+  const commitment = inferCommitment(def);
+  const spend = inferSpend(def, commitment);
+  return {
+    commitment,
+    spend,
+    copy: inferCopy(def, commitment),
+  };
+}
+
+/**
+ * Infer a legacy costClass token. Prefer inferModuleCost() for new work.
+ */
+export function inferModuleCostClass(def = {}) {
+  if (def.costClass && COST_CLASS_SET.has(asToken(def.costClass))) {
+    return asToken(def.costClass);
+  }
+  return costClassFromModel(inferModuleCost(def));
+}
+
+/**
+ * Attach resolved cost + derived costClass. Does not mutate the source def.
  */
 export function normalizeCatalogDefinition(def) {
   if (!def || typeof def !== 'object') return def;
-  const costClass = inferModuleCostClass(def);
-  if (def.costClass === costClass) return def;
-  return { ...def, costClass };
+  const cost = inferModuleCost(def);
+  const costClass = costClassFromModel(cost);
+  const described = describeModuleCost(cost);
+  if (
+    def.costClass === costClass
+    && def.cost?.commitment === cost.commitment
+    && def.cost?.spend === cost.spend
+    && def.cost?.copy === cost.copy
+    && def.costLabel === described
+  ) {
+    return def;
+  }
+  return { ...def, cost, costClass, costLabel: described };
 }
 
 export function normalizeCatalogDefinitions(defs = []) {
@@ -152,6 +230,9 @@ export function summarizeModuleCatalogOptimization(defs = []) {
   const byWhen = countBy(normalized, (d) => d.when);
   const byLayer = countBy(normalized, (d) => d.layer);
   const byCostClass = countBy(normalized, (d) => d.costClass || inferModuleCostClass(d));
+  const byCommitment = countBy(normalized, (d) => d.cost?.commitment);
+  const bySpend = countBy(normalized, (d) => d.cost?.spend);
+  const byCopy = countBy(normalized.filter((d) => d.cost?.copy), (d) => d.cost.copy);
 
   const enhancementImmediate = normalized.filter(
     (d) => d.layer === MODULE_LAYERS.ENHANCEMENT && d.when === MOUNT_WHEN.IMMEDIATE && !d.debugOnly,
@@ -166,17 +247,15 @@ export function summarizeModuleCatalogOptimization(defs = []) {
 
   const reclassCandidates = ungatedEnhancementImmediate
     .filter((d) => {
-      const cost = d.costClass || inferModuleCostClass(d);
-      return (
-        cost === COST_CLASS.PREMATURE_COMMITMENT
-        || cost === COST_CLASS.WORKING_MEMORY_PRESSURE
-        || cost === COST_CLASS.PAINT_COMPOSITE
-      );
+      const spend = d.cost?.spend || inferModuleCost(d).spend;
+      return spend === COST_SPEND.EARLY || spend === COST_SPEND.WIDE || spend === COST_SPEND.PAINT;
     })
     .map((d) => ({
       id: d.id,
       when: d.when,
+      cost: d.cost || inferModuleCost(d),
       costClass: d.costClass || inferModuleCostClass(d),
+      costLabel: d.costLabel || describeModuleCost(d.cost || inferModuleCost(d)),
       timingArc: d.timingArc || null,
       selector: d.selector || null,
       hint: suggestReclass(d),
@@ -189,6 +268,9 @@ export function summarizeModuleCatalogOptimization(defs = []) {
     byWhen,
     byLayer,
     byCostClass,
+    byCommitment,
+    bySpend,
+    byCopy,
     byTimingStem: timing.byTimingStem,
     byIdleChunk: timing.byIdleChunk,
     timingHygiene: {
@@ -205,16 +287,16 @@ export function summarizeModuleCatalogOptimization(defs = []) {
     reclassCandidates,
     interactionSlotEmpty: (byWhen[MOUNT_WHEN.INTERACTION] || 0) === 0,
     notes: [
-      'costClass is an optimization coordinate; when/layer remain the schedule contract.',
-      'reclassCandidates are heuristics — validate per route before moving MOUNT_WHEN.',
-      'INTERACTION schedule is available but unused when interactionSlotEmpty is true.',
-      'byTimingStem / byIdleChunk come from module-timing-contract (shared with browser timings).',
+      'cost is { commitment, spend, copy? }: remain / how the act hurts / resident printing.',
+      'costClass is a derived alias (early→premature_commitment, wide→working_memory_pressure, …).',
+      'when / layer remain the schedule contract. INTERACTION is unused when interactionSlotEmpty.',
+      'byTimingStem / byIdleChunk come from module-timing-contract.',
     ],
   };
 }
 
 function suggestReclass(def) {
-  const cost = def.costClass || inferModuleCostClass(def);
+  const cost = def.cost || inferModuleCost(def);
   const id = asToken(def.id);
   const scope = asToken(def.effectScope);
   const arc = asToken(def.timingArc);
@@ -222,13 +304,13 @@ function suggestReclass(def) {
   if (def.debugOnly || /layout-shift|observation-beats|debug/.test(id)) {
     return { toward: MOUNT_WHEN.IDLE, timingChunk: 'idle-lab', reason: 'debug/diagnostics' };
   }
-  if (cost === COST_CLASS.WORKING_MEMORY_PRESSURE || /inspect|metacognition|ledger|composition|semantics/.test(`${id} ${arc}`)) {
+  if (cost.spend === COST_SPEND.WIDE || /inspect|metacognition|ledger|composition|semantics/.test(`${id} ${arc}`)) {
     if (/composition|box-model|canvas|visual|accent/.test(`${id} ${arc}`)) {
       return { toward: MOUNT_WHEN.VISIBLE, reason: 'measure/visual when hosts are near viewport' };
     }
     return { toward: MOUNT_WHEN.IDLE, timingChunk: 'idle-lab', reason: 'metacognition after interactive' };
   }
-  if (cost === COST_CLASS.PAINT_COMPOSITE || /accent|ornament|visual/.test(`${id} ${scope}`)) {
+  if (cost.spend === COST_SPEND.PAINT || /accent|ornament|visual/.test(`${id} ${scope}`)) {
     return { toward: MOUNT_WHEN.VISIBLE, reason: 'paint polish when in view' };
   }
   if (/feedback|notice|discovery|tuning/.test(id)) {
@@ -241,9 +323,14 @@ function suggestReclass(def) {
 }
 
 export const MODULE_CATALOG_NORMALIZE_CONTRACT = Object.freeze({
+  commitments: COST_COMMITMENT_VALUES,
+  spends: COST_SPEND_VALUES,
+  copies: COST_COPY_VALUES,
   costClasses: COST_CLASS_VALUES,
   portableUse:
-    'normalizeCatalogDefinition() attaches costClass; summarizeModuleCatalogOptimization() rolls up BRP-oriented counts; resolveModuleCatalogSpecifier() keeps resource probes aligned with catalog-relative imports.',
+    'inferModuleCost() returns { commitment, spend, copy? }. costClassFromModel() keeps older audits working. summarizeModuleCatalogOptimization() rolls up both views.',
+  process:
+    'enter=when, act=spend, leave=cleanup handle, remain=commitment. copy only at residue.',
   scheduleOwns:
-    'when / timingArc / timingChunk / features remain the runtime schedule; costClass is budget/inspect only unless a future loader policy opts in.',
+    'when / timingArc / timingChunk / features remain the runtime schedule; cost is budget/inspect only unless a future loader policy opts in.',
 });

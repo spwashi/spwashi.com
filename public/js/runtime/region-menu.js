@@ -12,6 +12,7 @@ import {
   parseSemanticBraceExpression,
 } from '/public/js/semantic/semantic-braces.js';
 import { normalizeText, normalizeToken } from '/public/js/semantic/semantic-utils.js';
+import { detectOperatorFromElement, getOperatorGeometry } from '/public/js/kernel/operator-detection.js';
 
 const TARGET_SELECTOR = [
   '.spw-delimiter',
@@ -361,6 +362,10 @@ function openMenu(target) {
   activeIndex = Math.max(0, activeMatches.indexOf(target));
 
   setRegionFocus(target, semantic);
+  const geometry = getOperatorGeometry(detectOperatorFromElement(target)?.type || target.dataset.spwOperator || '');
+  writeDatasetValue(target, 'spwGeometryFlow', geometry?.flow || null);
+  writeDatasetValue(target, 'spwGeometryLeft', geometry?.leftRole || null);
+  writeDatasetValue(target, 'spwGeometryRight', geometry?.rightRole || null);
 
   const menu = ensureMenu();
   menu.dataset.spwPopupPosture = readPopupPosture();
@@ -570,8 +575,13 @@ function buildMenuContent(target, semantic, frame) {
 function buildChromeMeta(target) {
   const role = target.dataset.spwChromeRole || target.dataset.spwKind || target.dataset.spwFeature || 'semantic region';
   const material = target.dataset.spwMetamaterial || 'shell';
-  const operator = target.dataset.spwOperator ? `${target.dataset.spwOperator} operator` : 'region actions';
-  return `${humanizeRegionToken(role)} · ${humanizeRegionToken(material)} · ${operator}`;
+  const detected = detectOperatorFromElement(target);
+  const operator = detected
+    ? `${detected.prefix} ${detected.type}`
+    : (target.dataset.spwOperator ? `${target.dataset.spwOperator} operator` : 'region actions');
+  const geometry = getOperatorGeometry(detected?.type || target.dataset.spwOperator || '');
+  const flow = geometry?.flow ? ` · ${geometry.flow}` : '';
+  return `${humanizeRegionToken(role)} · ${humanizeRegionToken(material)} · ${operator}${flow}`;
 }
 
 function humanizeRegionToken(value) {
@@ -595,7 +605,7 @@ function captureSpell(target, semantic) {
 function buildSuggestions(semantic, target) {
   const suggestions = [];
   const family = semantic.family;
-  const operator = target.dataset.spwOperator || 'frame';
+  const operator = detectOperatorFromElement(target)?.type || target.dataset.spwOperator || 'frame';
 
   if (family) {
     const lens = getLensSerializationContext(target).mode;
@@ -633,7 +643,7 @@ function resolveSemantic(target) {
 }
 
 function inferExpressionFromText(text) {
-  const cleaned = normalizeText(text).replace(/^#>|^\^|^~|^\?|^@|^\*|^>|^\$|^%|^\./, '');
+  const cleaned = normalizeText(text).replace(/^(#>:|#:|#>|#|\^|~|\?|@|\*|>|<|\$|%|\.|!|&|=|\[|\{|\()/, '');
   if (!cleaned) return '';
   if (/[\[{<]/.test(cleaned)) return cleaned;
   return cleaned.replace(/^"+|"+$/g, '');
@@ -657,7 +667,7 @@ function readableTarget(target) {
 
 function buildSummary(semantic, target, frame) {
   const parts = [];
-  const operator = target.dataset.spwOperator || 'region';
+  const operator = detectOperatorFromElement(target)?.type || target.dataset.spwOperator || 'region';
   const lensContext = getLensSerializationContext(target);
   const feature = target.dataset.spwFeature || frame?.dataset?.spwFeature || '';
   const frameName =
@@ -838,7 +848,7 @@ function buildSeed(target, semantic, frame) {
     || frame?.dataset?.spwRole
     || 'region'
   );
-  const operator = target.dataset.spwOperator || 'frame';
+  const operator = detectOperatorFromElement(target)?.type || target.dataset.spwOperator || 'frame';
   const expression = serializeSemanticForLens(target, semantic);
   const lensContext = getLensSerializationContext(target);
   const lensPrefix = lensContext.mode ? `<${lensContext.mode}> ` : '';

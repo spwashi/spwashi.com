@@ -259,9 +259,15 @@ export {
 
 export {
   COST_CLASS,
+  COST_COMMITMENT,
+  COST_COPY,
+  COST_SPEND,
   MODULE_LAYERS,
   MOUNT_WHEN,
+  costClassFromModel,
+  describeModuleCost,
   filterEnhancementDefs,
+  inferModuleCost,
   listModuleCatalogIndex,
   summarizeModuleCatalogOptimization,
 } from './runtime/module-catalog.js';

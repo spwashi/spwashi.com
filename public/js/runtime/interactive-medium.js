@@ -9,6 +9,12 @@
 import { writeDatasetValues } from '/public/js/kernel/dom-contracts.js';
 import { projectFeatureRouteContext } from '/public/js/kernel/feature-route-context.js';
 import { presenceToken as normalizeToken } from '/public/js/kernel/text-normalization.js';
+import {
+  PAGE_FAMILY_SETS,
+  PLAY_SURFACES,
+  readPageCategory,
+  tokenListIncludes,
+} from '/public/js/runtime/page-category.js';
 
 export const MEDIUM_REGISTERS = Object.freeze({
   SCENE: 'scene',
@@ -30,10 +36,10 @@ const SCENE_HANDLE_SELECTOR = '[data-spw-scene-interpret]';
 const PROMPT_HOST_SELECTOR = '[data-spw-prompt-host]';
 const WONDER_SELECTOR = '.spw-wonder-block[data-spw-reveal-source]';
 
-const PLAY_SURFACES = new Set(['play', 'rpg-wednesday', 'rpg']);
-const PLAY_FAMILIES = new Set(['campaign']);
-const SCENE_PAGE_FAMILIES = new Set(['practice-bed']);
-const WORKSHOP_PAGE_FAMILIES = new Set(['workshop', 'laboratory']);
+const PLAY_SURFACE_SET = new Set(PLAY_SURFACES);
+const PLAY_FAMILIES = new Set(PAGE_FAMILY_SETS.play);
+const SCENE_PAGE_FAMILIES = new Set(PAGE_FAMILY_SETS.scene);
+const WORKSHOP_PAGE_FAMILIES = new Set(PAGE_FAMILY_SETS.workshop);
 
 const DEVICE_ATTRS = Object.freeze([
   'data-spw-viewport-tier',
@@ -69,10 +75,7 @@ const TOKEN_INVALIDATION_EVENTS = Object.freeze([
   'spw:runtime-tokens-updated',
 ]);
 
-function tokenIncludes(haystack = '', needle = '') {
-  const tokens = normalizeToken(haystack).split(/\s+/).filter(Boolean);
-  return tokens.includes(normalizeToken(needle));
-}
+const tokenIncludes = tokenListIncludes;
 
 function readBody() {
   return document.body instanceof HTMLElement ? document.body : null;
@@ -172,7 +175,7 @@ function hasPlayRegister(body) {
   const pageFamily = normalizeToken(body.dataset.spwPageFamily || '');
   const pageModes = normalizeToken(body.dataset.spwPageModes || '');
   return (
-    PLAY_SURFACES.has(surface)
+    PLAY_SURFACE_SET.has(surface)
     || PLAY_FAMILIES.has(pageFamily)
     || tokenIncludes(pageModes, 'play')
     || normalizeToken(body.dataset.spwContext || '') === 'play'

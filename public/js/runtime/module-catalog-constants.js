@@ -1,15 +1,17 @@
 /**
- * Shared catalog constants (layers + mount when + cost class).
+ * Shared catalog constants (layers + mount when + cost).
  * Definition families live in module-catalog-*.js for reviewability.
  *
  * Preferred definition field order (normalize / review scan):
- *   id, layer, when, costClass?, features?, route?, selector?, rootMode?,
+ *   id, layer, when, cost?, costClass?, features?, route?, selector?, rootMode?,
  *   debugOnly?, describes, updates, evaluates, timingArc, timingChunk?,
  *   effectScope, load, mount
  *
- * costClass ids align with .spw/conventions/metaphor-dimensional-lexicon.spw
- * and audits/build-runtime-performance coordinates — operational stems, not
- * metaphor prose.
+ * A module is one reversible process:
+ *   enter (when) → act (spend) → leave (cleanup) → remain (commitment)
+ *
+ * cost = { commitment, spend, copy? }. costClass is a derived alias for
+ * older audits and build-performance steps — do not treat it as a kind of module.
  */
 
 export const MODULE_LAYERS = Object.freeze({
@@ -29,33 +31,114 @@ export const MOUNT_WHEN = Object.freeze({
 });
 
 /**
- * Performance cost class — primary optimization coordinate per catalog def.
- * Prefer explicit costClass on defs; inferModuleCostClass() fills gaps.
+ * How much survives unmount — irreversibility of the scene.
+ * authored: HTML/CSS owns it. listen: handlers; cleanup restores.
+ * project: live attrs/vars; unmount should clear. residue: storage/memory.
+ */
+export const COST_COMMITMENT = Object.freeze({
+  AUTHORED: 'authored',
+  LISTEN: 'listen',
+  PROJECT: 'project',
+  RESIDUE: 'residue',
+});
+
+/**
+ * How the act hurts if mistimed. none is not a failure — it is a clean spend.
+ */
+export const COST_SPEND = Object.freeze({
+  NONE: 'none',
+  EARLY: 'early',
+  WIDE: 'wide',
+  FIGHT: 'fight',
+  PAINT: 'paint',
+});
+
+/**
+ * Only meaningful at commitment=residue: may the resident printing be replaced.
+ * follow = take the current issue; keep = stay with the shelf copy; pin = this printing.
+ */
+export const COST_COPY = Object.freeze({
+  FOLLOW: 'follow',
+  KEEP: 'keep',
+  PIN: 'pin',
+});
+
+export const COST_COMMITMENT_VALUES = Object.freeze(Object.values(COST_COMMITMENT));
+export const COST_SPEND_VALUES = Object.freeze(Object.values(COST_SPEND));
+export const COST_COPY_VALUES = Object.freeze(Object.values(COST_COPY));
+
+/**
+ * Legacy single-token aliases derived from { commitment, spend }.
+ * Keep until audits and build-performance.mjs stop reading the old ids.
  */
 export const COST_CLASS = Object.freeze({
-  /** Always-on or boot-width work that could often wait (schedule debt). */
+  /** spend=early — paid before the visitor or viewport needed it. */
   PREMATURE_COMMITMENT: 'premature_commitment',
-  /** Concurrent scans, observers, queryAll breadth, metacognition mirrors. */
+  /** spend=wide — too many hosts scanned or mirrored. */
   WORKING_MEMORY_PRESSURE: 'working_memory_pressure',
-  /** Stale measure/mirror vs true layout (pack-local RO gaps, dual truth). */
+  /** spend=fight — two writers or a stale mirror. */
   INTERFERENCE: 'interference',
-  /** Correctly gated by selector / features / route / interaction / idle. */
+  /** spend=none, commitment≠authored — demand-shaped activation. */
   DEMAND_COUPLED: 'demand_coupled',
-  /** Geometry/meaning from authored HTML+CSS; JS narrates rather than invents. */
+  /** commitment=authored — JS narrates; geometry is already in HTML/CSS. */
   AUTHORED_PRIOR_SAFE: 'authored_prior_safe',
-  /** Paint/composite thrash: express, :has resonance, ornament, heavy blur. */
+  /** spend=paint — composite/reflow/:has. */
   PAINT_COMPOSITE: 'paint_composite',
 });
 
 export const COST_CLASS_VALUES = Object.freeze(Object.values(COST_CLASS));
+
+export function costClassFromModel(cost = {}) {
+  const commitment = cost.commitment;
+  const spend = cost.spend;
+  if (commitment === COST_COMMITMENT.AUTHORED) return COST_CLASS.AUTHORED_PRIOR_SAFE;
+  if (spend === COST_SPEND.FIGHT) return COST_CLASS.INTERFERENCE;
+  if (spend === COST_SPEND.PAINT) return COST_CLASS.PAINT_COMPOSITE;
+  if (spend === COST_SPEND.WIDE) return COST_CLASS.WORKING_MEMORY_PRESSURE;
+  if (spend === COST_SPEND.EARLY) return COST_CLASS.PREMATURE_COMMITMENT;
+  return COST_CLASS.DEMAND_COUPLED;
+}
+
+export function costModelFromClass(costClass = '') {
+  const token = String(costClass || '').trim();
+  if (token === COST_CLASS.AUTHORED_PRIOR_SAFE) {
+    return { commitment: COST_COMMITMENT.AUTHORED, spend: COST_SPEND.NONE, copy: null };
+  }
+  if (token === COST_CLASS.INTERFERENCE) {
+    return { commitment: COST_COMMITMENT.PROJECT, spend: COST_SPEND.FIGHT, copy: null };
+  }
+  if (token === COST_CLASS.PAINT_COMPOSITE) {
+    return { commitment: COST_COMMITMENT.PROJECT, spend: COST_SPEND.PAINT, copy: null };
+  }
+  if (token === COST_CLASS.WORKING_MEMORY_PRESSURE) {
+    return { commitment: COST_COMMITMENT.LISTEN, spend: COST_SPEND.WIDE, copy: null };
+  }
+  if (token === COST_CLASS.PREMATURE_COMMITMENT) {
+    return { commitment: COST_COMMITMENT.PROJECT, spend: COST_SPEND.EARLY, copy: null };
+  }
+  return { commitment: COST_COMMITMENT.PROJECT, spend: COST_SPEND.NONE, copy: null };
+}
+
+export function describeModuleCost(cost = {}) {
+  const commitment = cost.commitment || COST_COMMITMENT.PROJECT;
+  const spend = cost.spend || COST_SPEND.NONE;
+  const copy = commitment === COST_COMMITMENT.RESIDUE ? (cost.copy || COST_COPY.FOLLOW) : null;
+  return copy ? `${commitment}/${spend} ${copy}` : `${commitment}/${spend}`;
+}
 
 /** Documented field order for agents reviewing or adding catalog defs. */
 export const CATALOG_DEF_FIELD_ORDER = Object.freeze([
   'id',
   'layer',
   'when',
+  'cost',
   'costClass',
   'features',
+  'pageFamily',
+  'pageRole',
+  'pageModes',
+  'pageContext',
+  'pageSurface',
   'route',
   'selector',
   'rootMode',

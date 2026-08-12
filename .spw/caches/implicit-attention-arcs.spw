@@ -1,0 +1,47 @@
+# Implicit attentional arcs
+#
+# How unspoken attention (no click) explains page load timing and app state.
+# Cache — names the axis already written as html[data-spw-attention-arc].
+
+#>implicit_attention_arcs
+#:cache #!attention #!runtime #!load
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@page_state: ~"../../public/js/runtime/page-state.js"
+@module_loader: ~"../../public/js/runtime/module-loader.js"
+@attention_field: ~"../conventions/attention-field.spw"
+@page_category: ~"../../public/js/runtime/page-category.js"
+
+operation = "cache"
+fixity = "tending"
+
+^"claim"{
+  text: "Load timing and application state are easier to read when they share one implicit arc. Arrival evidence (entering/settled) is what happened. The arc is why the runtime is allowed to spend."
+}
+
+^"arcs"{
+  approach = "Booting / entering. IMMEDIATE core only. Application state: booting. σ₀ reading."
+  enter = "First interactive. IMMEDIATE remainder + VISIBLE start. State: interactive."
+  dwell = "Settled reading. VISIBLE/IDLE, section handle, groove. State: hydrated/enhanced."
+  echo = "Settled with wonder-memory nearby|sitewide. Same schedule as dwell; flourishes may ride residue. No new click."
+  return = "returning|restored. Promote literacy VISIBLE; do not replay approach spend."
+  rest = "Background tab. Do not start new paint; ATTENTION_PHASE_SHIFT -2."
+}
+
+^"writers"{
+  attr = `html[data-spw-attention-arc]`
+  owner = `setPageState + setPageAttentionState in page-state.js`
+  schedule = `getEffectiveMountWhen reads the arc: pronunciation-hints only promote after dwell|echo|return`
+  reason = `describeMountReason appends arc:… so audit rows explain timing as attention, not only when=`
+  snapshot = `snapshotPageState().attentionArc · describePageStateSnapshot includes arc:`
+}
+
+^"not"{
+  items = #[
+    `Not a second state machine`
+    `Not a replacement for PAGE_ARRIVAL or MOUNT_WHEN`
+    `Not an explicit collect/inspect gesture (those are field contexts)`
+  ][reg=set]
+}

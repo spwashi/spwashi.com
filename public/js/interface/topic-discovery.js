@@ -38,9 +38,29 @@ let activeIndex = -1;
 let longPressTimer = null;
 let popoverEl = null;
 
+function escapeHtml(value = '') {
+    return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+}
+
 function getTopicText(el) {
     // Strip the pseudo-element content (< >) from the visible text
     return (el.dataset.spwTopic || el.textContent || '').trim().toLowerCase();
+}
+
+function wrapTopicLabel(el, text) {
+    const form = el.dataset.spwForm
+        || el.closest('[data-spw-form]')?.dataset.spwForm
+        || '';
+    const operator = el.dataset.spwOperator
+        || el.closest('[data-spw-operator]')?.dataset.spwOperator
+        || '';
+    if (form === 'square' || operator === 'mode') return `[${text}]`;
+    if (form === 'brace' || operator === 'direction') return `{${text}}`;
+    if (form === 'circle' || operator === 'scene') return `(${text})`;
+    return `<${text}>`;
 }
 
 function getAllTopics() {
@@ -171,7 +191,7 @@ function showPopover(el) {
     const operators = [...new Set(occurrences.map(o => o.operator).filter(Boolean))];
 
     let html = `<div class="spw-topic-popover-header">
-        <span class="spw-topic-popover-sigil">&lt;${text}&gt;</span>
+        <span class="spw-topic-popover-sigil">${escapeHtml(wrapTopicLabel(el, text))}</span>
         <span class="spw-topic-popover-count">${occurrences.length} occurrence${occurrences.length !== 1 ? 's' : ''}</span>
         <button type="button" class="spw-popover-dismiss" aria-label="Close topic context">×</button>
     </div>`;

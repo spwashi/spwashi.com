@@ -17,6 +17,14 @@ export const SPW_LITERAL_PARSER_SAMPLES = Object.freeze({
   @emits=#[label, syntax_wake]
 }`,
   diagnostic: 'proof § unsupported_character',
+  /** Open combinatorics: same stem, different containers and binding seats. */
+  beans: `<beans>
+[beans]
+{beans}
+(beans)
+beans.<
+<beans>#
+beans.[stew]`,
 });
 
 function countAstNodes(value, depth = 0, census = { total: 0, maxDepth: 0, types: new Map() }) {
@@ -149,13 +157,28 @@ function setMetric(root, name, value, tone = '') {
   else delete output.dataset.tone;
 }
 
+function resolveNamedSample(name = '') {
+  const key = String(name || '')
+    .trim()
+    .replace(/\.spw$/i, '');
+  if (!key || !Object.hasOwn(SPW_LITERAL_PARSER_SAMPLES, key)) return null;
+  return {
+    source: SPW_LITERAL_PARSER_SAMPLES[key],
+    name: `${key}.spw`,
+  };
+}
+
 function readLaunchSource() {
   const params = new URLSearchParams(window.location.search);
   const source = params.get(SOURCE_PARAM);
-  return {
-    source: source === null ? '' : source.slice(0, MAX_FILE_BYTES),
-    name: (params.get(NAME_PARAM) || '').slice(0, 120),
-  };
+  const name = (params.get(NAME_PARAM) || params.get('spw_sample') || '').slice(0, 120);
+  if (source !== null) {
+    return {
+      source: source.slice(0, MAX_FILE_BYTES),
+      name,
+    };
+  }
+  return resolveNamedSample(name) || { source: '', name };
 }
 
 function setAppLink(link, source, name) {

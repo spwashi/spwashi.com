@@ -38,19 +38,27 @@ const FACETS = Object.freeze([
   { id: 'labs', label: 'Labs' },
 ]);
 
-/** Sigil / motion tokens → filter boosts (balance-physics resolution moves). */
+/** Longer prefixes first so `#>` wins over `#`. Matches operator-detection.js. */
 const SIGIL_ALIASES = Object.freeze({
   '#>': { motion: 'anchor', operator: 'frame', label: 'frame' },
-  '#': { motion: 'anchor', operator: 'frame', label: 'frame' },
+  '#:': { motion: 'anchor', operator: 'layer', label: 'layer' },
+  '#': { motion: 'anchor', operator: 'vibration', label: 'tone' },
   '?': { motion: 'collapse', operator: 'wonder', label: 'probe' },
-  '^': { motion: 'lift', operator: 'integration', label: 'object' },
-  '~': { motion: 'tether', operator: 'potential', label: 'ref' },
+  '^': { motion: 'lift', operator: 'integration', label: 'integration' },
+  '~': { motion: 'tether', operator: 'potential', label: 'potential' },
   '!': { motion: 'discharge', operator: 'action', label: 'action' },
+  '@': { motion: 'situate', operator: 'perspective', label: 'perspective' },
   '&': { motion: 'pair', operator: 'subject', label: 'subject' },
-  '{': { motion: 'seal', operator: 'direction', label: 'brace' },
-  '[': { motion: 'snap', operator: null, label: 'mode' },
-  '(': { motion: 'encapsulate', operator: null, label: 'payload' },
+  '*': { motion: 'lift', operator: 'value', label: 'value' },
+  '$': { motion: 'anchor', operator: 'substrate', label: 'substrate' },
+  '%': { motion: 'collapse', operator: 'normalize', label: 'normalize' },
+  '=': { motion: 'pair', operator: 'binding', label: 'binding' },
+  '{': { motion: 'seal', operator: 'direction', label: 'direction' },
+  '[': { motion: 'snap', operator: 'mode', label: 'mode' },
+  '(': { motion: 'encapsulate', operator: 'scene', label: 'scene' },
   '.': { motion: 'anchor', operator: 'ground', label: 'ground' },
+  '<': { motion: 'pair', operator: 'concept', label: 'concept' },
+  '>': { motion: 'pair', operator: 'concept-edge', label: 'projection' },
 });
 
 let initialized = false;
@@ -110,10 +118,15 @@ function scoreEntry(entry, tokens, sigilHints) {
   const routeSegments = route.split('/').filter(Boolean);
   const nestLabel = String(entry.nestLabel || '').toLowerCase();
 
+  const handleHay = Array.isArray(entry.handles) ? entry.handles.join(' ').toLowerCase() : '';
+  const operatorHay = Array.isArray(entry.operators) ? entry.operators.join(' ') : '';
+
   for (const hint of sigilHints) {
     if (entry.motion && hint.motion && entry.motion === hint.motion) score += 36;
     if (entry.operator && hint.operator && entry.operator === hint.operator) score += 32;
     if (entry.sigil && hint.sigil && entry.sigil === hint.sigil) score += 40;
+    if (hint.operator && operatorHay.includes(hint.operator)) score += 24;
+    if (hint.sigil && handleHay.includes(hint.sigil.toLowerCase())) score += 28;
     if (hint.label && (title.includes(hint.label) || haystack.includes(hint.label))) score += 8;
   }
 
@@ -121,7 +134,7 @@ function scoreEntry(entry, tokens, sigilHints) {
 
   for (const token of tokens) {
     // Skip pure punctuation already handled as sigils
-    if (SIGIL_ALIASES[token] || /^[#?^~!&{[(.]+$/.test(token)) continue;
+    if (SIGIL_ALIASES[token] || /^[#?^~!&{[(.$@%*=><:]+$/.test(token)) continue;
 
     if (title === token) score += 40;
     else if (title.startsWith(token)) score += 22;

@@ -63,6 +63,42 @@ export const ATTENTION_PHASE_SHIFT = Object.freeze({
   [PAGE_PRESENCE.BACKGROUND]: -2,
 });
 
+/**
+ * Implicit attentional arc — why the page is loading or holding state
+ * without an authored click. Distinct from PAGE_ATTENTION_PHASES (arrival
+ * evidence): this names the *story* of attention for schedule + CSS.
+ * approach = arriving; enter = first interactive; dwell = settled reading;
+ * echo = settled with carried wonder; return = revisit/BFCache; rest = background.
+ */
+export const ATTENTION_ARCS = Object.freeze({
+  APPROACH: 'approach',
+  ENTER: 'enter',
+  DWELL: 'dwell',
+  ECHO: 'echo',
+  RETURN: 'return',
+  REST: 'rest',
+});
+
+export function resolveImplicitAttentionArc(html = document.documentElement, detail = {}) {
+  const presence = detail.presence || html?.dataset?.spwPagePresence || PAGE_PRESENCE.FOREGROUND;
+  const arrival = detail.arrival || html?.dataset?.spwPageArrival || PAGE_ARRIVAL.ENTERING;
+  const pageState = html?.dataset?.spwPageState || PAGE_STATES.BOOTING;
+  const wonderMemory = html?.dataset?.spwWonderMemory || '';
+
+  if (presence === PAGE_PRESENCE.BACKGROUND) return ATTENTION_ARCS.REST;
+  if (arrival === PAGE_ARRIVAL.RETURNING || arrival === PAGE_ARRIVAL.RESTORED) {
+    return ATTENTION_ARCS.RETURN;
+  }
+  if (arrival === PAGE_ARRIVAL.SETTLED) {
+    if (wonderMemory === 'nearby' || wonderMemory === 'sitewide') return ATTENTION_ARCS.ECHO;
+    return ATTENTION_ARCS.DWELL;
+  }
+  if (pageState === PAGE_STATES.BOOTING || arrival === PAGE_ARRIVAL.ENTERING) {
+    return ATTENTION_ARCS.APPROACH;
+  }
+  return ATTENTION_ARCS.ENTER;
+}
+
 export const PAGE_ATTENTION_EVENT = 'spw:page-attention-state';
 export const PAGE_TRANSITION_EVENT = 'spw:page-transition-state';
 export const PAGE_SETTLE_CONFIRM_EVENT = 'spw:page-settle-confirm';
@@ -359,6 +395,7 @@ function initFixedViewportCorrection() {
 
 export function setPageState(state, root = document.documentElement) {
   writeDatasetValue(root, 'spwPageState', state);
+  writeDatasetValue(root, 'spwAttentionArc', resolveImplicitAttentionArc(root));
 }
 
 const derivePageTransitionState = (detail = {}) => {
@@ -411,6 +448,10 @@ export const setPageAttentionState = (ctx, detail = {}) => {
         ? 'settled'
         : transition.phase
   );
+  writeDatasetValue(html, 'spwAttentionArc', resolveImplicitAttentionArc(html, {
+    presence: transition.presence,
+    arrival: transition.arrival,
+  }));
 
   const payload = {
     ...transition,
@@ -745,6 +786,7 @@ export function snapshotPageState(root = document.documentElement, body = docume
     settleConfirmation: htmlDataset.spwPageSettleConfirmation || '',
     settleContour: bodyDataset.spwSettleContour || '',
     attentionContext: htmlDataset.spwAttentionContext || '',
+    attentionArc: htmlDataset.spwAttentionArc || '',
     harmonyField: htmlDataset.spwHarmonyField || '',
     tempoField: htmlDataset.spwTempoField || '',
     pageTempo: htmlDataset.spwPageTempo || '',
@@ -766,6 +808,7 @@ export function describePageStateSnapshot(snapshot) {
 
   if (snapshot.transition) parts.push(`transition:${snapshot.transition}`);
   if (snapshot.attentionContext) parts.push(`attention:${snapshot.attentionContext}`);
+  if (snapshot.attentionArc) parts.push(`arc:${snapshot.attentionArc}`);
 
   return parts.join(' · ');
 }
@@ -782,6 +825,7 @@ export function clearPageState(root = document.documentElement, body = document.
     delete root.dataset.spwLayoutSettlePhase;
     delete root.dataset.spwPageSettleConfirmation;
     delete root.dataset.spwAttentionContext;
+    delete root.dataset.spwAttentionArc;
     delete root.dataset.spwHarmonyField;
     delete root.dataset.spwTempoField;
     delete root.dataset.spwPageTempo;
@@ -795,6 +839,7 @@ export function clearPageState(root = document.documentElement, body = document.
     delete body.dataset.spwPageTransition;
     delete body.dataset.spwPageTransitionPhase;
     delete body.dataset.spwAttentionContext;
+    delete body.dataset.spwAttentionArc;
     delete body.dataset.spwHarmonyField;
     delete body.dataset.spwTempoField;
   }

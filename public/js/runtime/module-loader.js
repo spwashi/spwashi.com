@@ -25,6 +25,13 @@ import {
   safeQueryAll,
   SPW_RUNTIME_HELPERS_CONTRACT,
 } from './runtime-helpers.js';
+import {
+  describePageCategory,
+  isLiteracyPage,
+  isOrientationOnlyPage,
+  matchesPageCategory,
+  readPageCategory,
+} from './page-category.js';
 
 export const MODULE_TIMING_STAGES = Object.freeze([
   'scheduled',
@@ -45,6 +52,8 @@ export const SPW_MODULE_LOADER_CONTRACT = Object.freeze({
     'Use createModuleLoader() when a page shell needs staged module mounting without inlining the bootstrap.',
   featureGating:
     'shouldScheduleDefinition() honors module def.features against ctx.features (body[data-spw-features]). Gates may be CSS BEHAVIOR_SCOPES or presence-only tokens (operators, navigator, …).',
+  pageCategory:
+    'Optional def.pageFamily / pageRole / pageModes / pageContext / pageSurface match authored body data-spw-* category. Absent fields do not filter. Modes match any listed token. getEffectiveMountWhen may defer broad IMMEDIATE enhancements on orientation-only atlases and promote literacy modules on teaching pages.',
   immediateScheduling:
     'Immediate definitions within a layer mount concurrently after any site-settings core seed; call sites may run independent non-core layers together.',
   resourceDiscovery:
@@ -55,8 +64,8 @@ export const SPW_MODULE_LOADER_CONTRACT = Object.freeze({
     'Optional timingChunk (idle-residue|idle-collectible|idle-chrome|idle-lab|idle-default) staggers IDLE mounts so residue/ledger land before collectible flourishes.',
   effectScope:
     'Module definitions may name effectScope tokens to make global state, storage, observer, media, or local DOM side effects auditable.',
-  costClass:
-    'Optional costClass (premature_commitment|working_memory_pressure|interference|demand_coupled|authored_prior_safe|paint_composite) is an optimization coordinate; schedule still uses when/features/selector. See module-catalog-normalize.js.',
+  cost:
+    'Optional cost { commitment, spend, copy? }. enter=when, act=spend, leave=cleanup, remain=commitment. costClass remains a derived alias. Schedule still uses when/features/selector.',
   updatesContract:
     'Module updates accept flat strings or scope:role:kind:name tokens; roles (structural|flourish|inspect|residue|measure|diagnostic) power flourish topology inspection.',
   moduleExportFallback:
@@ -524,11 +533,36 @@ function makeRecordId(def, root = null, index = 0) {
   return `${def.id}::${String(rootId)}`;
 }
 
+function resolvePageCategory(ctx) {
+  return ctx?.pageCategory || readPageCategory(ctx?.body);
+}
+
 function getEffectiveMountWhen(def, ctx) {
   const baseWhen = def.when || mountWhen.IMMEDIATE;
   const moduleOverride = ctx.runtimePolicy.timingByModule.get(def.id);
   if (moduleOverride) return moduleOverride;
 
+  const category = resolvePageCategory(ctx);
+  const categoryWhen = resolveCategoryMountWhen(def, baseWhen, category, ctx);
+  if (categoryWhen) return applyTimingPolicy(def, ctx, categoryWhen);
+
+  return applyTimingPolicy(def, ctx, baseWhen);
+}
+
+function resolveCategoryMountWhen(def, baseWhen, category, ctx) {
+  if (isOrientationOnlyPage(category) && def.layer === moduleLayers.ENHANCEMENT && baseWhen === mountWhen.IMMEDIATE) {
+    const selector = String(def.selector || '');
+    const broad = !selector || /html|body|\.frame-sigil|\.operator-chip|\.spw-delimiter/.test(selector);
+    if (broad && def.id !== 'sigil-anatomy') return mountWhen.VISIBLE;
+  }
+  if (isLiteracyPage(category) && def.id === 'pronunciation-hints' && baseWhen === mountWhen.IDLE) {
+    const arc = ctx?.html?.dataset?.spwAttentionArc || '';
+    if (arc === 'dwell' || arc === 'echo' || arc === 'return') return mountWhen.VISIBLE;
+  }
+  return null;
+}
+
+function applyTimingPolicy(def, ctx, baseWhen) {
   switch (ctx.runtimePolicy.timing) {
     case 'eager':
       if (baseWhen === mountWhen.IDLE || baseWhen === mountWhen.VISIBLE || baseWhen === mountWhen.INTERACTION) {
@@ -549,7 +583,25 @@ function getEffectiveMountWhen(def, ctx) {
   }
 }
 
+function describeMountConsequence(def) {
+  const cost = def.cost || {};
+  const commitment = cost.commitment || 'project';
+  const spend = cost.spend || 'none';
+  const updatesSummary = summarizeModuleUpdates(def.updates);
+  const remain = commitment === 'authored'
+    ? 'geometry-stays-authored'
+    : commitment === 'residue'
+      ? 'leaves-residue'
+      : commitment === 'listen'
+        ? 'handlers-only'
+        : 'projects-state';
+  return `${remain} spend:${spend}${updatesSummary ? ` updates:{${updatesSummary}}` : ''}`;
+}
+
 function describeMountReason(def, ctx, root = null, effectiveWhen = getEffectiveMountWhen(def, ctx)) {
+  const category = describePageCategory(resolvePageCategory(ctx));
+  const arc = ctx?.html?.dataset?.spwAttentionArc || '';
+  const cost = def.cost ? `${def.cost.commitment || 'project'}/${def.cost.spend || 'none'}` : '';
   // Prefer explicit, semantically meaningful description when provided by the module author.
   if (def.describes) {
     const base = def.reason || `${effectiveWhen} ${def.layer}`;
@@ -559,7 +611,10 @@ function describeMountReason(def, ctx, root = null, effectiveWhen = getEffective
     const effects = def.effectScope
       ? ` effects:[${summarizeModuleIntentValue(def.effectScope)}]`
       : '';
-    return `${base} ${def.describes}${updates}${timing}${effects}`;
+    const page = category ? ` page:{${category}}` : '';
+    const attention = arc ? ` arc:${arc}` : '';
+    const budget = cost ? ` cost:${cost}` : '';
+    return `${base} ${def.describes}${updates}${timing}${effects}${page}${attention}${budget}`;
   }
 
   const routeReason = def.route
@@ -606,6 +661,7 @@ function shouldScheduleDefinition(def, ctx, expectedWhen = null) {
   const routeMatch = matchesRoute(def);
   const selectorMatch = hasSelector(def);
   const featureMatch = resolveFeatureMatch(def, ctx);
+  const categoryMatch = matchesPageCategory(def, resolvePageCategory(ctx));
   const onlyMatch = !ctx.runtimePolicy.only.size || ctx.runtimePolicy.only.has(id);
   const skipMatch = ctx.runtimePolicy.skip.has(id);
   const whenMatch = expectedWhen ? effectiveWhen === expectedWhen : effectiveWhen !== 'manual';
@@ -615,13 +671,14 @@ function shouldScheduleDefinition(def, ctx, expectedWhen = null) {
   const debugActive = hasDebugOrQAMode(ctx);
   const debugMatch = !debugOnly || debugActive;
 
-  const allowed = routeMatch && selectorMatch && featureMatch && onlyMatch && !skipMatch && whenMatch && debugMatch;
+  const allowed = routeMatch && selectorMatch && featureMatch && categoryMatch && onlyMatch && !skipMatch && whenMatch && debugMatch;
 
   if (!allowed && ctx.runtimePolicy.audit) {
     const reason = [
       routeMatch ? '' : 'route-mismatch',
       selectorMatch ? '' : 'selector-missing',
       featureMatch ? '' : 'feature-mismatch',
+      categoryMatch ? '' : 'page-category-mismatch',
       onlyMatch ? '' : 'outside-module-only',
       skipMatch ? 'module-skip' : '',
       whenMatch ? '' : `waiting-for-${effectiveWhen}`,
@@ -991,6 +1048,7 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
     requestedWhen: def.when || mountWhen.IMMEDIATE,
     effectiveWhen,
     reason,
+    consequence: describeMountConsequence(def),
     describes: def.describes || null,
     updates: normalizeModuleUpdates(def.updates),
     updatesSummary: summarizeModuleUpdates(def.updates),

@@ -22,6 +22,8 @@ import {
   PAGE_ATTENTION_EVENT,
   PAGE_PRESENCE,
   PAGE_STATES,
+  ATTENTION_ARCS,
+  resolveImplicitAttentionArc,
   PAGE_TRANSITION_EVENT,
   SPW_PAGE_STATE_CONTRACT,
   annotateFloatingChrome,
@@ -107,6 +109,7 @@ import {
   refreshRegionProfiles,
 } from './runtime/region-profiler.js';
 import { createModuleLoader } from './runtime/module-loader.js';
+import { describePageCategory, readPageCategory } from './runtime/page-category.js';
 /**
  * site.js
  * --------------------------------------------------------------------------
@@ -475,6 +478,7 @@ function createRuntimeContext() {
     featureLab,
     features: parseFeatureList(BODY?.dataset?.spwFeatures),
     routeFamily: parseFeatureList(BODY?.dataset?.spwRouteFamily),
+    pageCategory: readPageCategory(BODY),
     debug: parseFeatureList(HTML?.dataset?.spwDebug || BODY?.dataset?.spwDebug),
     runtimePolicy: readRuntimePolicy(),
     moduleAudit: [],
@@ -503,6 +507,7 @@ function createRuntimeContext() {
   const loadPosture = inferRuntimePosture(ctx.runtimePolicy);
   writeDatasetValue(HTML, 'spwLoadPosture', loadPosture);
   writeDatasetValue(HTML, 'spwLoadTiming', ctx.runtimePolicy.timing);
+  writeDatasetValue(HTML, 'spwLoadCategory', describePageCategory(ctx.pageCategory) || null);
   writeDatasetValue(HTML, 'spwConnectionPosture', readConnectionPosture());
   writeDatasetValue(HTML, 'spwPrefetchMode', shouldPrefetchRuntimeResources(ctx) ? 'eligible' : 'conservative');
 
@@ -848,6 +853,8 @@ async function bootSite() {
         states: PAGE_STATES,
         presence: PAGE_PRESENCE,
         arrival: PAGE_ARRIVAL,
+        arcs: ATTENTION_ARCS,
+        resolveArc: resolveImplicitAttentionArc,
         events: {
           attention: PAGE_ATTENTION_EVENT,
           transition: PAGE_TRANSITION_EVENT,

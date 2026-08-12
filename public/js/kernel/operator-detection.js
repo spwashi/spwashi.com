@@ -583,25 +583,23 @@ export function getOperatorDefinition(type = '') {
 export function detectOperatorFromElement(element) {
   if (!isElement(element)) return null;
 
-  const explicitType = normalizeToken(
-    element.dataset.spwOperator
-    || element.closest?.('[data-spw-operator]')?.dataset?.spwOperator
-    || ''
-  );
-
-  if (explicitType) {
-    const explicitDefinition = getOperatorDefinition(explicitType);
-    if (explicitDefinition) return explicitDefinition;
-  }
-
   const text = (
     element.dataset.spwSigil
     || element.querySelector?.('.frame-sigil, .frame-card-sigil, .operator-card-token')?.textContent
     || element.textContent
     || ''
   );
+  const fromText = detectOperator(text);
+  if (fromText) return fromText;
 
-  return detectOperator(text);
+  const explicitType = normalizeToken(
+    element.dataset.spwOperator
+    || element.closest?.('[data-spw-operator]')?.dataset?.spwOperator
+    || ''
+  );
+
+  if (explicitType) return getOperatorDefinition(explicitType);
+  return null;
 }
 
 export function describeOperator(value = '') {
