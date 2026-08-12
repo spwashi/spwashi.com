@@ -132,8 +132,8 @@ dispatch: .{
 ^"phase_ladder"{
  phases = #[
   .{ n = 0 ; name = `land the in-flight work correctly` ; gate = `none` ; status = `landed` }[reg=facet],
-  .{ n = 1 ; name = `payload and boilerplate` ; gate = `none — no felt pacing change` ; status = `next` }[reg=facet],
-  .{ n = 2 ; name = `route-scoped scheduling` ; gate = `browser demo` ; status = `open` }[reg=facet],
+  .{ n = 1 ; name = `payload and boilerplate` ; gate = `none — no felt pacing change` ; status = `landed` }[reg=facet],
+  .{ n = 2 ; name = `route-scoped scheduling` ; gate = `browser demo` ; status = `next` }[reg=facet],
   .{ n = 3 ; name = `write and observe consolidation` ; gate = `browser demo` ; status = `open` }[reg=facet],
   .{ n = 4 ; name = `one expression reader` ; gate = `browser demo` ; status = `open` }[reg=facet],
   .{ n = 5 ; name = `ground the spatial model` ; gate = `proposal + browser demo` ; status = `open` }[reg=facet],

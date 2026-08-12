@@ -128,15 +128,17 @@ Phases 0–1 are mechanical: they change no felt pacing and can land as one revi
 
 Validation: `npm run check:runtime`, `npm run test:modules:run`.
 
-### Phase 1 — Payload and boilerplate (no felt change)
+### Phase 1 — Payload and boilerplate (no felt change) ✅ (bundle deferred)
 
-- Split `kernel/shared.js` so `dom-contracts.js` no longer drags 69 KB for `detectOperator`. Either move the operator detection into its own module or invert the dependency.
-- Add minify + bundle to `scripts/build.mjs`. 3.4 MB unminified across 210 module requests is the single largest unforced cost. Preserve the content-hash naming and the `modulepreload`/`prefetch` hint path in `module-loader.js`.
-- Delete the 69 no-op `mount:` adapters (`fn()` / `fn(ctx)` shapes) and let `resolveModuleMount`'s `init*` fallback resolve them.
-- Normalize the ~19 `fn(document)` / `fn(main||document)` adapters to the canonical `(ctx, root)` signature, then delete those adapters too.
-- Re-measure the eager graph; record before/after in `wip.spw`.
+- [x] Split operator registry/detection into `kernel/operator-detection.js`; `dom-contracts` imports it instead of `shared.js`. Eager graph no longer includes `shared.js`.
+- [x] Per-file minify of `dist/public/js` via rolldown in `scripts/build.mjs` (`--skip-minify` to opt out). Preserves module URLs and `import()` strings for resource hints + fingerprint of `site.js`. Measured ~3.17 MiB → ~1.68 MiB (55.7%).
+- [ ] Full eager-graph **bundle** deferred: rolldown bundling of `site.js` hits missing-export / resolve issues; path-preserving minify lands first without changing request topology.
+- [x] Delete no-op `mount:` adapters; 88 of 96 defs now rely on `resolveModuleMount` (`init*` / export contract). 8 bespoke adapters remain (site-settings, blog-interpreter, payment-settings, cauldron, pretext-physics, logo-runtime, topic-discovery, query-link-composer).
+- [x] Normalize document/root inits to `(ctx, root)` and drop those adapters.
+- [x] Runtime contracts accept mount-less catalog defs when the load target has a resolvable `init*` / `SPW_MODULE_EXPORT`.
+- [x] Re-measure eager graph: **33 modules / 502.6 KB raw** (was 38 / 631.4 KB on 2026-07-26).
 
-Validation: `npm run check:local`, `npm run bench:build`, `npm run smoke:nav:ci`.
+Validation: `npm run check:runtime`, `npm run test:engagement:run`, local `node scripts/build.mjs --local`.
 
 ### Phase 2 — Route-scoped scheduling
 

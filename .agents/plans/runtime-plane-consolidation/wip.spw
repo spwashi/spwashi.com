@@ -278,16 +278,24 @@ fixity = "tending"
 
 ^"phase_1"{
  name = "payload and boilerplate"
+ status = "landed"
+ landed_at = "2026-08-11"
  gate = "none — no felt pacing change"
  steps = #[
-  `split kernel/shared.js so dom-contracts.js stops dragging 69 KB for detectOperator`,
-  `add minify + bundle to scripts/build.mjs, preserving content-hash naming and the modulepreload/prefetch hint path`,
-  `delete the 69 no-op mount adapters; let resolveModuleMount's init* fallback resolve them`,
-  `normalize the ~19 fn(document) adapters to (ctx, root), then delete those too`,
-  `re-measure the eager graph; record before/after in this file`,
+  `split operator-detection.js; dom-contracts imports it — shared.js out of eager graph`,
+  `per-file rolldown minify in build.mjs (--skip-minify); full site.js bundle deferred`,
+  `delete 88 mount adapters; 8 bespoke remain; document/root inits normalized to (ctx, root)`,
+  `runtime-contracts accept mount-less defs when load target has init*/export mount`,
+  `re-measure eager graph: 33 modules / 502.6 KB raw (was 38 / 631.4 KB)`,
  ][reg=set]
- validation = `npm run check:local && npm run bench:build && npm run smoke:nav:ci`
- expected_delta = `eager graph well below 631 KB raw; dist JS well below 3.4 MB; module-catalog-*.js down ~350 lines`
+ validation = `npm run check:runtime && npm run test:engagement:run && node scripts/build.mjs --local`
+ measured = .{
+  eager_graph_before = `38 modules / 631.4 KB raw (2026-07-26)`
+  eager_graph_after = `33 modules / 502.6 KB raw (2026-08-11)`
+  dist_js_minify = `3166564 → 1763165 bytes (55.7%) in 507ms, 225 modules`
+  mount_adapters = `96 → 8 remaining`
+  deferred = `eager-graph bundle of site.js`
+ }[reg=facet]
 }[reg=facet]
 
 ^"phase_2"{
@@ -449,6 +457,7 @@ fixity = "tending"
   `[2026-08-11] land — phase 6 partial file extracts: shell ~2315→1461 (scroll-lock, attention-posture, utility-row); experiential ~2168→1758 (five feature modules). Import-time only.`,
   `[2026-08-11] land — adjacent measure hygiene: interactive-medium token cache; page-state single style+rect for bottom chrome.`,
   `[2026-08-11] hygiene — plan docs aligned to working tree; commit splits by concern; wired into plans root index. routeFamily still dead; payload work still open.`,
+  `[2026-08-11] land — phase 1: operator-detection.js split (shared out of eager graph); 88 mount adapters deleted; dist JS minify 55.7%; eager graph 38→33 modules / 631→503 KB. Bundle deferred.`,
  ][reg=set]
 }[reg=facet]
 
@@ -457,9 +466,9 @@ fixity = "tending"
  base_ref = "main@5a676ac0"
  working_tree = "phase 0 + phase 6 partial + adjacent measure + css chrome hygiene commits"
  files_hot = "public/js/runtime/module-loader.js public/js/kernel/dom-contracts.js public/js/kernel/shared.js public/js/runtime/region-profiler.js public/js/runtime/module-catalog-*.js scripts/build.mjs public/js/runtime/shell-disclosure.js public/js/runtime/experiential.js"
- next_phase = "1"
- open_count = "phase1 payload; phase2 route-scope; phase3 write/observe; phase4 reader; phase5 spatial; phase6 remainder; phase7 css"
- last_stream = "2026-08-11 hygiene"
+ next_phase = "2"
+ open_count = "phase1 bundle deferred; phase2 route-scope; phase3 write/observe; phase4 reader; phase5 spatial; phase6 remainder; phase7 css"
+ last_stream = "2026-08-11 phase1"
  taste_debt = "Phase 5 risks producing correct-but-worse-reading vocabulary. Probe which geometry signals predict felt layout beats before implementing. Phase 6 catalog splits must not change felt chrome timing without a demo."
 }[reg=facet]
 
