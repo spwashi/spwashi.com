@@ -9,8 +9,8 @@
  * - currentDevelopmentalClimate: orient / anchor / weave / rehearse / offer
  *
  * The manager normalizes persisted settings, applies datasets and CSS custom
- * properties to the document, exposes derived modifiers, and binds settings
- * controls anywhere on the site.
+ * properties to the document, and exposes derived modifiers. Form bindings
+ * stay in site-settings-ui.js and load only when a settings scope exists.
  */
 
 import { bus } from '/public/js/kernel/bus.js';
@@ -1355,6 +1355,7 @@ const setClearContrastMatte = (active = true) => {
 };
 
 
+let settingsUiModule = null;
 let settingsUiLoadPromise = null;
 
 const SETTINGS_UI_BINDING_SELECTOR = [
@@ -1369,13 +1370,73 @@ const SETTINGS_UI_BINDING_SELECTOR = [
   '[data-site-persistence-list]',
 ].join(', ');
 
+function loadSettingsUi() {
+  settingsUiLoadPromise ??= import('./site-settings-ui.js').then((mod) => {
+    settingsUiModule = mod;
+    return mod;
+  });
+  return settingsUiLoadPromise;
+}
+
+function callSettingsUi(method, args) {
+  if (settingsUiModule?.[method]) {
+    return settingsUiModule[method](...args);
+  }
+  return loadSettingsUi().then((mod) => mod[method](...args));
+}
+
 function scheduleSettingsUiBindings() {
   if (manager._initialized) return;
-  if (!document.querySelector(SETTINGS_UI_BINDING_SELECTOR)) return;
-  settingsUiLoadPromise ??= import('./site-settings-ui.js').then((mod) => {
+  if (typeof document === 'undefined' || !document.querySelector(SETTINGS_UI_BINDING_SELECTOR)) return;
+  loadSettingsUi().then((mod) => {
     mod.initSiteSettingsBindings(manager);
   });
 }
+
+function installSiteSettingsConsole() {
+  if (typeof window === 'undefined' || window.spwSettings) return;
+  window.spwSettings = {
+    get: getSiteSettings,
+    getModifiers: getSiteSettingModifiers,
+    getValue: getSettingValue,
+    save: saveSiteSettings,
+    reset: resetSiteSettings,
+    resetOne: resetSingleSetting,
+    apply: applySiteSettings,
+    validateSetting,
+    validatePartialSettings,
+    sanitizePartialSettings,
+    bindSettingsScope: (...args) => callSettingsUi('bindSettingsScope', args),
+    bindSettingsField: (...args) => callSettingsUi('bindSettingsField', args),
+    bindStandaloneSettingTriggers: (...args) => callSettingsUi('bindStandaloneSettingTriggers', args),
+    bindSettingsReadouts: (...args) => callSettingsUi('bindSettingsReadouts', args),
+    bindDeviationControls: (...args) => callSettingsUi('bindDeviationControls', args),
+    listDeviations: getSiteSettingDeviations,
+    describeDeviation,
+    setBaseMetamaterial,
+    setHighContrast,
+    setFontSizeScale,
+    setClearContrastMatte,
+    presets: PRESETS,
+    presetLabels: PRESET_LABELS,
+    presetDescriptions: PRESET_DESCRIPTIONS,
+    queryRecipes: SETTINGS_QUERY_RECIPES,
+    buildSettingsQueryHref,
+    buildSettingsQuerySearch,
+    buildSettingsShareHref,
+    recipes: UX_RECIPES,
+    applyRecipe: (...args) => callSettingsUi('applyUxRecipe', args),
+    findActivePreset,
+    authorWorkflows: AUTHOR_WORKFLOW_DEFINITIONS,
+    developmentalClimates: DEVELOPMENTAL_CLIMATES,
+    syncUx: (...args) => callSettingsUi('syncSettingsUx', args),
+    describePreset: (name) => manager.describePreset(name),
+    initBindings: (...args) => callSettingsUi('initSiteSettingsBindings', args),
+    manager,
+  };
+}
+
+installSiteSettingsConsole();
 
 
 export {

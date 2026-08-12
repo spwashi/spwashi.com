@@ -313,3 +313,20 @@ test('maps operator threshold physics sequence states', () => {
   assert.equal(getOperatorThresholdState('action')?.state, 'acting');
   assert.equal(getOperatorThresholdState('ground')?.state, 'grounded');
 });
+
+test('settings apply stays off the UI module graph', async () => {
+  const [barrel, coreCatalog, featureCatalog, engine] = await Promise.all([
+    readFile(path.join(ROOT, 'public/js/kernel/site-settings.js'), 'utf8'),
+    readFile(path.join(ROOT, 'public/js/runtime/module-catalog-core.js'), 'utf8'),
+    readFile(path.join(ROOT, 'public/js/runtime/module-catalog-feature.js'), 'utf8'),
+    readFile(path.join(ROOT, 'public/js/kernel/site-settings-engine.js'), 'utf8'),
+  ]);
+
+  assert.doesNotMatch(barrel, /import\s+[^;]*site-settings-ui/);
+  assert.doesNotMatch(barrel, /export\s+\*\s+from\s+['"]\.\/site-settings-ui/);
+  assert.match(coreCatalog, /id:\s*'site-settings'[\s\S]*import\('\.\.\/kernel\/site-settings-engine\.js'\)/);
+  assert.match(featureCatalog, /id:\s*'settings-page'[\s\S]*import\('\.\.\/kernel\/site-settings-ui\.js'\)/);
+  assert.match(featureCatalog, /initSiteSettingsPage/);
+  assert.match(engine, /import\('\.\/site-settings-ui\.js'\)/);
+  assert.match(engine, /function scheduleSettingsUiBindings/);
+});

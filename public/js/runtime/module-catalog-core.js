@@ -23,7 +23,7 @@ export const CORE_DEFS = [
     timingArc: 'boot-core',
     effectScope: 'root-state storage settings',
     evaluates: 'root color palette wonder density saturation reward display',
-    load: () => import('../kernel/site-settings.js'),
+    load: () => import('../kernel/site-settings-engine.js'),
     mount: (mod) => {
       const fn = mod?.applySiteSettings;
       if (!isFn(fn)) return;

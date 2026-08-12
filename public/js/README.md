@@ -32,7 +32,7 @@ If you are trying to learn the runtime, read in this order:
 4. `public/js/kernel/dom-contracts.js` for shared selector and dataset helpers.
 5. `public/js/semantic/role-inference.js` for canonical region collection and role inference.
 6. `public/js/kernel/shared.js` for the canonical operator registry and shared semantics.
-7. `public/js/kernel/site-settings.js` (+ `site-settings-engine.js`, `site-settings-profiles.js`, lazy `site-settings-ui.js`) for root settings state.
+7. `public/js/kernel/site-settings.js` (profiles + engine re-export). CORE mounts `site-settings-engine.js` to apply root datasets. `site-settings-ui.js` loads only when a settings form/scope exists or the settings route mounts.
 8. `public/js/runtime/page-state.js` for the page lifecycle and attention contract.
 9. `public/js/runtime/page-hooks.js` for page-unique hooks and generalizable handles.
 10. `public/js/runtime/` for mounted processes, lifecycles, and page-state producers.

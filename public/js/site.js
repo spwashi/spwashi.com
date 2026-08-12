@@ -34,7 +34,17 @@ import {
   setPageAttentionState,
   snapshotPageState,
 } from './runtime/page-state.js';
-import { annotatePageHooks, describePageHook } from './runtime/page-hooks.js';
+import {
+  annotatePageHooks,
+  describePageHook,
+  focusPageHook,
+  listPageHooks,
+  pulsePageHook,
+  resolvePageHook,
+  snapshotPageHooks,
+  PAGE_HOOK_STATES,
+  SPW_PAGE_HOOK_CONTRACT,
+} from './runtime/page-hooks.js';
 import {
   annotateCompositionBoxes,
   snapshotCompositionBox,
@@ -799,8 +809,10 @@ async function bootSite() {
     source: 'site-runtime',
     scope: 'document',
   });
-  const { applyPrecipitationRequest } = await import('./runtime/precipitation-request.js');
-  applyPrecipitationRequest(document);
+  if (/(?:^|[?&])(?:condense|precipitate|screenshot)=/.test(window.location.search)) {
+    const { applyPrecipitationRequest } = await import('./runtime/precipitation-request.js');
+    applyPrecipitationRequest(document);
+  }
 
   runtimeCtx = createRuntimeContext();
   runtimeCtx.queryDisposition = queryDisposition;
@@ -811,13 +823,17 @@ async function bootSite() {
   runtimeCtx.addCleanup(wireRuntimeTokens(runtimeCtx));
   performance.mark('spw:boot-start');
   runtimeLogger.info('runtime boot started', { route: runtimeCtx.route }, SPW_LOG_RELATIONSHIPS.LIFECYCLE);
-  const [
-    { orchestrator: frameState, bindGlobalInteractions },
-    pageHooks,
-  ] = await Promise.all([
-    import('./runtime/state-orchestrator.js'),
-    import('./runtime/page-hooks.js'),
-  ]);
+  setPageState(PAGE_STATES.BOOTING);
+  writeDatasetValue(document.documentElement, 'spwRuntimeStage', 'boot');
+  runtimeCtx.addCleanup(initPageAttentionLifecycle(runtimeCtx));
+  runtimeCtx.addCleanup(initRuntimeResourceAwareness(runtimeCtx));
+  runtimeCtx.bus.emit('spw:page-boot', { route: runtimeCtx.route });
+
+  // Settings/shell first; compose console and frame bindings overlap with that
+  // parse instead of blocking dataset apply.
+  const orchestratorReady = import('./runtime/state-orchestrator.js');
+  await mountImmediateLayer(CORE_DEFS, runtimeCtx, { label: 'core' });
+  const { orchestrator: frameState, bindGlobalInteractions } = await orchestratorReady;
 
   const composeApi = installSpwCompositionConsole(window, {
     namespace: 'site-runtime',
@@ -845,15 +861,15 @@ async function bootSite() {
         snapshot: snapshotPageState,
       },
       pageHooks: {
-        annotate: pageHooks.annotatePageHooks,
+        annotate: annotatePageHooks,
         describe: describePageHook,
-        focus: pageHooks.focusPageHook,
-        contract: pageHooks.SPW_PAGE_HOOK_CONTRACT,
-        list: pageHooks.listPageHooks,
-        pulse: pageHooks.pulsePageHook,
-        resolve: pageHooks.resolvePageHook,
-        snapshot: pageHooks.snapshotPageHooks,
-        states: pageHooks.PAGE_HOOK_STATES,
+        focus: focusPageHook,
+        contract: SPW_PAGE_HOOK_CONTRACT,
+        list: listPageHooks,
+        pulse: pulsePageHook,
+        resolve: resolvePageHook,
+        snapshot: snapshotPageHooks,
+        states: PAGE_HOOK_STATES,
       },
       frameState: {
         ...frameState,
@@ -923,18 +939,11 @@ async function bootSite() {
     },
   });
   runtimeCtx.compose = composeApi;
-  setPageState(PAGE_STATES.BOOTING);
-  writeDatasetValue(document.documentElement, 'spwRuntimeStage', 'boot');
-  runtimeCtx.addCleanup(initPageAttentionLifecycle(runtimeCtx));
-  runtimeCtx.addCleanup(initRuntimeResourceAwareness(runtimeCtx));
-
-  runtimeCtx.bus.emit('spw:page-boot', { route: runtimeCtx.route });
 
   // Initialize relational state and global interactions
   bindGlobalInteractions();
   annotateDeepLinkTargets(document);
 
-  await mountImmediateLayer(CORE_DEFS, runtimeCtx, { label: 'core' });
   performance.mark('spw:immediate-non-core-layers-start');
   await Promise.all([
     mountImmediateLayer(FEATURE_DEFS, runtimeCtx, { label: 'feature' }),
