@@ -36,6 +36,33 @@ export const PAGE_ARRIVAL = Object.freeze({
   SETTLED: 'settled',
 });
 
+/**
+ * The phase axis carried on PAGE_ATTENTION_EVENT and projected as
+ * html[data-spw-attention-context]: the arrival arc, plus `background` when the
+ * page is not the visitor's foreground.
+ */
+export const PAGE_ATTENTION_PHASES = Object.freeze([
+  PAGE_ARRIVAL.ENTERING,
+  PAGE_ARRIVAL.RETURNING,
+  PAGE_ARRIVAL.RESTORED,
+  PAGE_ARRIVAL.SETTLED,
+  PAGE_PRESENCE.BACKGROUND,
+]);
+
+/**
+ * How far a consumer may push a reveal at each phase, in ladder steps. Reward
+ * salience and feature-discovery depth both ride this so an easter egg and a
+ * feature hint agree about when the reader has room for more: quiet during
+ * arrival, quietest in the background, one step louder once settled.
+ */
+export const ATTENTION_PHASE_SHIFT = Object.freeze({
+  [PAGE_ARRIVAL.ENTERING]: -1,
+  [PAGE_ARRIVAL.RETURNING]: 0,
+  [PAGE_ARRIVAL.RESTORED]: 0,
+  [PAGE_ARRIVAL.SETTLED]: 1,
+  [PAGE_PRESENCE.BACKGROUND]: -2,
+});
+
 export const PAGE_ATTENTION_EVENT = 'spw:page-attention-state';
 export const PAGE_TRANSITION_EVENT = 'spw:page-transition-state';
 export const PAGE_SETTLE_CONFIRM_EVENT = 'spw:page-settle-confirm';

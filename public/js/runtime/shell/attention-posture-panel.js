@@ -97,10 +97,10 @@ export function ensureAttentionPosturePanel(header, pill) {
   panel.setAttribute('role', 'dialog');
   panel.setAttribute('aria-label', 'Attention posture preview');
   panel.dataset.spwFeature = 'attention-posture-preview';
-  panel.dataset.spwChromeIsland = 'attention-posture-preview';
   panel.dataset.spwPopupState = 'closed';
   annotateFloatingChromeElement(panel, {
-    role: 'persona-tooltip',
+    role: 'attention-posture-panel',
+    island: 'attention-posture-preview',
     tier: 'header',
     mutator: 'shell-disclosure',
     reason: 'attention-posture-preview',

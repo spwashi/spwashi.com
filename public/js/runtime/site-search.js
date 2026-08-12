@@ -285,7 +285,10 @@ function ensureDialog() {
   annotateFloatingChromeElement(dialog, {
     role: 'site-search',
     island: 'search-dialog',
+    tier: 'drawer',
+    mutator: 'site-search',
     reason: 'site-search-open',
+    stylingAxis: 'site-search',
   });
 
   closeBtn.addEventListener('click', () => closeSearch());

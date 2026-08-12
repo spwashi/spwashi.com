@@ -576,10 +576,10 @@ function ensureParallelNavigator() {
   nav.id = PARALLEL_NAV_ID;
   nav.className = 'spw-parallel-nav';
   nav.setAttribute('aria-label', 'Parallel page anatomy');
-  nav.dataset.spwChromeIsland = 'parallel-navigator';
   nav.dataset.spwDismissible = 'false';
   annotateFloatingChromeElement(nav, {
     role: 'parallel-navigator',
+    island: 'parallel-navigator',
     tier: 'docked',
     mutator: 'page-anatomy',
     reason: 'parallel-copy-navigation',

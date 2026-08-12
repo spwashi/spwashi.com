@@ -33,6 +33,7 @@ import { annotateFloatingChromeElement } from '/public/js/kernel/dom-contracts.j
 import { el, clearChildren } from '/public/js/kernel/dom-render.js';
 import { getSiteSettings } from '/public/js/kernel/site-settings.js';
 import { ACHIEVEMENTS } from '/public/js/runtime/component-collection.js';
+import { ATTENTION_PHASE_SHIFT, PAGE_STATES } from '/public/js/runtime/page-state.js';
 import { measureSpatialGravity } from '/public/js/runtime/spatial-gravity.js';
 
 const TOAST_LINGER_MS = 4200;
@@ -49,13 +50,6 @@ const ACHIEVEMENT_LABEL = new Map(ACHIEVEMENTS.map((a) => [a.id, a.label]));
 // and only breathes once the reader is dwelling on a settled page.
 const SALIENCE_LEVELS = Object.freeze(['subtle', 'notable', 'vivid']);
 const SALIENCE_RANK = Object.freeze({ subtle: 0, notable: 1, vivid: 2 });
-const ATTENTION_SALIENCE_SHIFT = Object.freeze({
-  entering: -1,
-  returning: 0,
-  restored: 0,
-  settled: 1,
-  background: -2,
-});
 
 function clampSalience(rank) {
   return SALIENCE_LEVELS[Math.max(0, Math.min(SALIENCE_LEVELS.length - 1, rank))];
@@ -116,7 +110,7 @@ export function initRewardUI(ctx = {}) {
   // single level the easter-egg presentation reads from.
   const resolveSalience = (rare) => {
     const base = SALIENCE_RANK[readPageBaseSalience()] ?? 1;
-    const attnShift = ATTENTION_SALIENCE_SHIFT[attentionPhase] ?? 0;
+    const attnShift = ATTENTION_PHASE_SHIFT[attentionPhase] ?? 0;
     return clampSalience(base + (rare ? 1 : 0) + attnShift);
   };
 
@@ -432,7 +426,12 @@ export function initRewardUI(ctx = {}) {
   document.addEventListener('spw:settings-change', applyDisplay);
 
   // If the page is already past hydration when we mount (IDLE), treat as settled.
-  if (html.dataset.spwPageState === 'present' || document.readyState === 'complete') {
+  const PAST_HYDRATION = new Set([
+    PAGE_STATES.HYDRATED,
+    PAGE_STATES.REGION_ENHANCED,
+    PAGE_STATES.ENHANCED,
+  ]);
+  if (PAST_HYDRATION.has(html.dataset.spwPageState) || document.readyState === 'complete') {
     markSettled();
   }
 

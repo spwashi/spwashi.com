@@ -219,14 +219,33 @@ export const FLOATING_CHROME_CONTRACT = Object.freeze({
     'surface-map',
     'surface-map-panel',
     'state-inspector',
-    'state-satchel',
     'pwa-status',
     'persona-tooltip',
     'persona-burst',
+    'attention-posture-panel',
     'pronunciation-hint',
     'collection-dock',
     'collection-toast-stack',
+    'site-search',
+    /*
+     * `debug` has no producer by design. It is the opt-in role for chrome that
+     * should disappear in the reader display layer (modes/display-layers.css).
+     * Reader is the default layer, so opting in hides the element site-wide.
+     */
+    'debug',
+  ]),
+  /*
+   * Islands name the persistent surface a piece of chrome belongs to, which is
+   * a different axis from role (what it is) and tier (how high it paints).
+   * Several islands host chrome under more than one role.
+   */
+  islands: Object.freeze([
+    'state-satchel',
     'query-composer',
+    'region-menu-popover',
+    'parallel-navigator',
+    'attention-posture-preview',
+    'search-dialog',
   ]),
   portableUse:
     'Use annotateFloatingChromeElement(...) when a runtime-created element floats above normal document flow and CSS needs a readable layer tier.',
@@ -239,7 +258,6 @@ const FLOATING_CHROME_DOCKED_ROLES = Object.freeze([
   'section-handle',
   'section-handle-shell',
   'state-inspector',
-  'state-satchel',
   'collection-dock',
 ]);
 
@@ -249,7 +267,6 @@ const FLOATING_CHROME_ROLE_SLOTS = Object.freeze({
   'section-handle': 'bottom-left-travel',
   'section-handle-shell': 'bottom-left-travel',
   'state-inspector': 'bottom-right-satchel',
-  'state-satchel': 'bottom-right-satchel',
   'cauldron-chip': 'bottom-right-satchel',
   'surface-map': 'right-middle',
   'surface-map-panel': 'right-middle',
@@ -264,11 +281,12 @@ const FLOATING_CHROME_ROLE_SLOTS = Object.freeze({
   'pwa-status': 'toast',
   'persona-tooltip': 'popover',
   'persona-burst': 'toast',
+  'attention-posture-panel': 'popover',
   'pronunciation-hint': 'popover',
   'discovery-modal': 'modal',
   'collection-dock': 'bottom-center',
   'collection-toast-stack': 'toast',
-  'query-composer': 'bottom-right-satchel',
+  'site-search': 'sheet',
 });
 
 export const FEATURE_CLUSTER_CONTRACT = Object.freeze({
@@ -339,6 +357,7 @@ export function createFloatingChromeDescriptor(options = {}) {
     role = '',
     tier = '',
     slot = '',
+    island = '',
     mutator = '',
     reason = '',
     stylingAxis = 'floating-chrome',
@@ -353,6 +372,7 @@ export function createFloatingChromeDescriptor(options = {}) {
     spwChromeRole: role || null,
     spwChromeTier: tier || null,
     spwChromeSlot: resolvedSlot || null,
+    spwChromeIsland: island || null,
     spwRuntimeMutator: mutator || null,
     spwRuntimeMutationReason: reason || null,
     spwRuntimeStylingAxis: stylingAxis || null,
@@ -364,6 +384,7 @@ export function createFloatingChromeDescriptor(options = {}) {
     role,
     tier,
     slot: resolvedSlot,
+    island,
     mutator,
     reason,
     stylingAxis,

@@ -393,12 +393,12 @@ function ensureMenu() {
   menu.className = 'spw-region-menu';
   menu.setAttribute('role', 'menu');
   menu.setAttribute('aria-label', 'Spw region menu');
-  menu.dataset.spwChromeIsland = 'region-menu-popover';
   menu.dataset.spwMetamaterial = 'shell';
   menu.dataset.spwDismissible = 'true';
   menu.dataset.spwPopupPosture = readPopupPosture();
   annotateFloatingChromeElement(menu, {
     role: 'region-menu-popover',
+    island: 'region-menu-popover',
     tier: 'popover',
     mutator: 'region-menu',
     reason: 'semantic-region-actions',

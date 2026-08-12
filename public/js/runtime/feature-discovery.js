@@ -32,6 +32,7 @@
  */
 
 import { STORAGE_KEYS } from '/public/js/kernel/storage-utils.js';
+import { ATTENTION_PHASE_SHIFT } from '/public/js/runtime/page-state.js';
 
 const STORAGE_KEY = STORAGE_KEYS.FEATURE_DISCOVERY;
 const FRESH_PULSE_MS = 2400;
@@ -41,9 +42,8 @@ const DEFAULT_MAX_LEVEL = 3;
 // progression rides the collection tier). Duplicated as a literal rather than
 // imported so this module has no hard dependency on the collection engine.
 const TIER_RANK = Object.freeze({ singular: 0, paired: 1, varied: 2, rich: 3, teeming: 4 });
-// Where the reader sits in the attentional arc nudges "depth" (mirrors the
-// salience convention in reward-ui): a settled reader can be shown more.
-const ATTENTION_SHIFT = Object.freeze({ entering: -1, returning: 0, restored: 0, settled: 1, background: -2 });
+// Where the reader sits in the attentional arc nudges "depth": a settled reader
+// can be shown more. Shared with reward-ui salience via the arc's owner.
 
 export const SPW_FEATURE_DISCOVERY_CONTRACT = Object.freeze({
   selector: '[data-spw-feature]',
@@ -92,7 +92,7 @@ const PROGRESSION_MODELS = Object.freeze({
     const tier = String(html.dataset.spwCollectionTier || 'singular').trim().toLowerCase();
     const attention = String(html.dataset.spwAttentionContext || 'settled').trim().toLowerCase();
     const base = TIER_RANK[tier] ?? 0;
-    const shift = ATTENTION_SHIFT[attention] ?? 0;
+    const shift = ATTENTION_PHASE_SHIFT[attention] ?? 0;
     return Math.max(0, base + shift);
   },
   // Escalates with how many distinct sub-states have been traversed this visit

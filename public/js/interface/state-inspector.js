@@ -654,10 +654,10 @@ function createInspector() {
   root.setAttribute(ROOT_ATTR, '');
   root.dataset.spwStateInspector = 'closed';
   root.dataset.spwStateSerialization = 'route runtime accessibility layering interaction';
-  root.dataset.spwChromeIsland = 'state-satchel';
   root.dataset.spwDismissible = 'panel';
   annotateFloatingChromeElement(root, {
     role: 'state-inspector',
+    island: 'state-satchel',
     tier: 'drawer',
     mutator: 'state-inspector',
     reason: 'state-inspection-controls',
