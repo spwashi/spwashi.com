@@ -1,0 +1,64 @@
+# Comparison Differentials
+#
+# Inline literacy for compositional distinction: two placements on a range,
+# a readable delta, and AST-addressable handles. Not a blend.
+
+#>comparison_differentials
+#:convention #!comparison #!literacy #!registers
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@measurement_contract: ~"./measurement-contract.spw"
+@expressive_registers: ~"./expressive-registers.spw"
+@coloring_depth: ~"./coloring-depth.spw"
+@semantic_braces: ~"./semantic-braces.spw"
+@operator_detection: ~"../../public/js/kernel/operator-detection.js"
+@css: ~"../../public/css/systems/comparison.css"
+
+operation = "prime"
+fixity = "experimental"
+
+^"thesis"{
+  claim: "A comparison is two placements plus a differential, not a metaphor-blend. Subjective range and register placement should stay inspectable in the sentence that uses them."
+  public_job: "Let a reader see how two marks sit on one axis, and let a parser or editor retune a pole without rewriting the surrounding prose."
+  refuse: "Do not collapse the poles into one noun. Do not invent a new lens or form for this. Register stays expressive weight; lens stays content filter; form stays spatial grammar."
+}
+
+^"model"{
+  axis = "The named dimension under comparison: energy, binding, scale, felt-load. Carried as data-spw-compare."
+  range = "A bounded scale. Subjective = practitioner judgment. Objective = instrumented. Hybrid = both, and must name the join via data-spw-compare-kind + data-spw-measure-kind on poles."
+  placement = "Where a pole sits on that range. Named rungs low|mid|high, or --spw-place 0..1. This is a coordinate, not a verdict."
+  register = "data-spw-register on the compare host re-weights how loudly depth, valence, resonance, and attention speak. It does not move the placements."
+  differential = "The readable delta between poles. Default mark is ~ (potential: hold both without collapsing). % when the delta itself is a measure. Do not use !."
+  handle = "Each pole is an AST handle: prefix + operand as chip text, data-spw-operator matching the sigil, optional data-spw-topic. detectOperatorFromElement prefers the visible prefix."
+}[reg=facet]
+
+^"html_contract"{
+  host: `span.spw-compare[data-spw-compare][data-spw-compare-kind][data-spw-register?]`
+  expression: `data-spw-semantic-expression="compare[axis]{left.right}"`
+  pole: `a.operator-chip.spw-compare__pole[data-spw-place][data-spw-measure-kind][data-spw-operator]`
+  diff: `span.spw-compare__diff` with inspectable sigil text
+  rail: `span.spw-compare__rail` optional, aria-hidden; ticks inherit data-spw-place from poles`
+  dual_read: "Without CSS/JS the sentence still names both poles and the joining sigil."
+}
+
+^"ast_rewrite"{
+  rule: "A handle rewrite may change operand, place, or measure-kind. It must not silently merge poles or drop the axis name."
+  examples = #[
+    `*0.3Wh[low]{objective} ~ *415TWh[high]{objective}`
+    `<beans>[mid]{concept} ~ beans.<[high]{concept-edge}`
+    `%felt_load[mid]{subjective} ~ %repaint_ms[high]{objective}`
+  ][reg=set]
+  editor: "Future AST tools should select .spw-compare__pole, mutate data-spw-place / chip text, and leave the host axis intact."
+}
+
+^"literacy"{
+  teach: "The interesting object is the distinction, not the winner. A query can be cheap and a fleet expensive on the same axis."
+  specimen_home: "/topics/software/spw/#concept-form-lab and /design/composition/#compare-differentials"
+}
+
+dispatch: .{
+  @measurement: @measurement_contract
+  @registers: @expressive_registers
+}

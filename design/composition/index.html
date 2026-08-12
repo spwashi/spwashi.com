@@ -268,6 +268,33 @@
 &lt;/section&gt;</code></pre>
         </section>
 
+        <section class="frame-panel" id="compare-differentials" aria-labelledby="compare-differentials-title" data-spw-kind="panel" data-spw-role="compare-demo" data-spw-register="attention">
+            <h2 id="compare-differentials-title">Inline comparison differentials</h2>
+            <p>
+                A register says how loudly a channel speaks. A comparison says where two marks sit on one range.
+                Keep both poles as handles so an editor can retune place or measure-kind without rewriting the sentence.
+            </p>
+            <p>
+                Felt load versus measured cost
+                <span class="spw-compare" data-spw-compare="energy" data-spw-compare-kind="hybrid" data-spw-register="attention" data-spw-semantic-expression="compare[energy]{query.fleet}">
+                    <span class="spw-compare__axis">energy</span>
+                    <span class="spw-compare__rail" aria-hidden="true">
+                        <i class="spw-compare__tick" data-spw-place="low"></i>
+                        <i class="spw-compare__tick" data-spw-place="high"></i>
+                    </span>
+                    <a class="operator-chip spw-compare__pole" href="/topics/software/spw/#concept-form-lab" data-spw-place="low" data-spw-measure-kind="objective" data-spw-operator="value">*0.3Wh</a>
+                    <span class="spw-compare__diff" data-spw-operator="potential">~</span>
+                    <a class="operator-chip spw-compare__pole" href="/topics/software/spw/#concept-form-lab" data-spw-place="high" data-spw-measure-kind="objective" data-spw-operator="value">*fleet</a>
+                </span>
+            </p>
+            <pre><code>&lt;span class="spw-compare" data-spw-compare="energy" data-spw-compare-kind="hybrid" data-spw-register="attention"&gt;
+  &lt;a class="operator-chip" data-spw-place="low" data-spw-measure-kind="objective" data-spw-operator="value"&gt;*0.3Wh&lt;/a&gt;
+  &lt;span data-spw-operator="potential"&gt;~&lt;/span&gt;
+  &lt;a class="operator-chip" data-spw-place="high" data-spw-measure-kind="objective" data-spw-operator="value"&gt;*fleet&lt;/a&gt;
+&lt;/span&gt;</code></pre>
+            <p class="frame-note">Contract: <code>.spw/conventions/comparison-differentials.spw</code>. Atlas specimen: <a href="/topics/software/spw/#compare-differentials">concept-form lab</a>.</p>
+        </section>
+
         <section class="frame-panel" aria-labelledby="console-instrumentation-title" data-spw-kind="panel" data-spw-role="instrumentation">
             <h2 id="console-instrumentation-title">Console instrumentability</h2>
             <p>
