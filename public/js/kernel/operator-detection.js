@@ -357,7 +357,12 @@ const OPERATOR_TYPE_ALIASES = Object.freeze({
   support: 'substrate',
   configuration: 'binding',
   config: 'binding',
-  measure: 'normalize'
+  measure: 'normalize',
+  /* Inline prose links to another surface, authored as data-spw-operator="route"
+     (46 handles across 7 routes). Same failure the 2026-07-03 pass fixed: the
+     value resolved to null, so these fell back to generic while their
+     siblings in the same sentence resolved and picked up operator treatment. */
+  route: 'concept-edge'
 });
 
 const OPERATOR_PREFIXES = Object.freeze(

@@ -1782,13 +1782,22 @@
   --angle-close-color: color-mix(in srgb, var(--op-topic-color, hsl(192 62% 32%)) 38%, transparent);
 }
 
+/*
+ * The mark is grammar first, decoration second.
+ *
+ * This rule used to change five channels at once (family, size, colour,
+ * background, border) while drawing the actual operator at 0.34 opacity, so
+ * `<software>` read as bare prose in a screenshot and the size break knocked
+ * every marked term off the baseline. Horizontal padding pushed trailing
+ * punctuation off the word, which is what produced lines starting with an
+ * orphaned comma. Keep one tint, keep the operator legible, sit on the
+ * baseline, and let punctuation stay attached.
+ */
 :where(.spw-topic, [data-spw-topic]) {
   display: inline;
   min-width: 0;
-  padding: 0 0.18em 0.05em;
+  padding: 0;
   border: 0;
-  border-bottom: 1px solid var(--op-topic-border, hsla(192, 62%, 32%, 0.3));
-  border-radius: 0.22rem;
   background:
     linear-gradient(
       180deg,
@@ -1797,7 +1806,8 @@
     );
   color: var(--op-topic-color, hsl(192 62% 32%));
   font-family: var(--grammar-mono-font);
-  font-size: 0.89em;
+  /* Optical match for the mono face, not a size step the baseline can feel. */
+  font-size: 0.96em;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   -webkit-box-decoration-break: clone;
@@ -1812,15 +1822,20 @@
     outline-offset var(--grammar-duration-fast) var(--grammar-ease-mechanical);
 }
 
+/*
+ * The angle brackets are the concept operator, so they have to survive a
+ * screenshot: a reader (or a model transcribing the capture) should be able to
+ * read `<software>` back as Spw. 0.34 did not survive downscaling.
+ */
 :where(.spw-topic, [data-spw-topic])::before {
   content: "<";
-  opacity: 0.34;
+  opacity: 0.62;
   font-weight: 400;
 }
 
 :where(.spw-topic, [data-spw-topic])::after {
   content: ">";
-  opacity: 0.34;
+  opacity: 0.62;
   font-weight: 400;
 }
 

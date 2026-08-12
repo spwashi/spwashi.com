@@ -166,6 +166,23 @@
   text-decoration-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 30%, transparent);
   text-decoration-thickness: 1px;
   text-underline-offset: var(--handle-underline-offset, 0.16em);
+  /*
+   * "never changes layout" has to be true to be worth saying. The inline
+   * handle rule in primitive.css pads 0.24rem on both sides, which detaches
+   * trailing punctuation from the word it belongs to -- prose reads
+   * "let <software> , <math>" and a wrap can strand the comma at the start
+   * of the next line. It also lifts the term off the text baseline, which is
+   * what gives a marked sentence its ransom-note texture.
+   *
+   * That rule carries :not() x5, so it outranks this one on specificity.
+   * Retune the tokens it reads instead of escalating selectors: in running
+   * copy a handle is a word, so it takes word spacing and sits in the line.
+   * The dotted seam alone carries the reference.
+   */
+  --handle-pad-inline-inline: 0;
+  --handle-pad-block-inline: 0;
+  --handle-baseline-offset: 0;
+  vertical-align: baseline;
 }
 
 :where([data-spw-fixity-tier="volatile"]) {

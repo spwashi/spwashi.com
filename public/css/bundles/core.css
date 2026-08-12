@@ -10375,6 +10375,27 @@ body > header[data-spw-menu-mode="inline"] .spw-route-menu-panel {
 :where(body[data-spw-display-layer="editor"], body[data-spw-display-layer="inspect"]) .site-header nav a:not(.operator-chip)[data-spw-nav-tokenized="true"]::before {
   display: inline-flex;
 }
+
+/* Expert seats stay quiet in the default reading posture.
+   Workshop, field, inspect, and editor layers reveal them. */
+:where(
+  html:not([data-spw-explore-posture="workshop"]):not([data-spw-explore-posture="field"]),
+  html[data-spw-explore-posture="reading"]
+) :where(body[data-spw-display-layer="reader"])
+  :where(
+    .operator-chip[data-spw-audience~="expert"]:not([data-spw-audience~="reader"]),
+    [data-spw-audience~="expert"][data-spw-promptability="latent"]:not([data-spw-audience~="reader"])
+  ) {
+  display: none;
+}
+
+:where(html[data-spw-explore-posture="workshop"], html[data-spw-explore-posture="field"])
+  [data-spw-semantic-lens="brief"],
+:where(body[data-spw-display-layer="inspect"], body[data-spw-display-layer="editor"])
+  [data-spw-semantic-lens="crawl"] {
+  outline: 1px dashed color-mix(in srgb, var(--op-probe-color, #6a3fb8) 35%, transparent);
+  outline-offset: 0.2rem;
+}
 }
 
 /* /public/css/modes/hydration.css */
@@ -13211,13 +13232,22 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
   --angle-close-color: color-mix(in srgb, var(--op-topic-color, hsl(192 62% 32%)) 38%, transparent);
 }
 
+/*
+ * The mark is grammar first, decoration second.
+ *
+ * This rule used to change five channels at once (family, size, colour,
+ * background, border) while drawing the actual operator at 0.34 opacity, so
+ * `<software>` read as bare prose in a screenshot and the size break knocked
+ * every marked term off the baseline. Horizontal padding pushed trailing
+ * punctuation off the word, which is what produced lines starting with an
+ * orphaned comma. Keep one tint, keep the operator legible, sit on the
+ * baseline, and let punctuation stay attached.
+ */
 :where(.spw-topic, [data-spw-topic]) {
   display: inline;
   min-width: 0;
-  padding: 0 0.18em 0.05em;
+  padding: 0;
   border: 0;
-  border-bottom: 1px solid var(--op-topic-border, hsla(192, 62%, 32%, 0.3));
-  border-radius: 0.22rem;
   background:
     linear-gradient(
       180deg,
@@ -13226,7 +13256,8 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
     );
   color: var(--op-topic-color, hsl(192 62% 32%));
   font-family: var(--grammar-mono-font);
-  font-size: 0.89em;
+  /* Optical match for the mono face, not a size step the baseline can feel. */
+  font-size: 0.96em;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   -webkit-box-decoration-break: clone;
@@ -13241,15 +13272,20 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
     outline-offset var(--grammar-duration-fast) var(--grammar-ease-mechanical);
 }
 
+/*
+ * The angle brackets are the concept operator, so they have to survive a
+ * screenshot: a reader (or a model transcribing the capture) should be able to
+ * read `<software>` back as Spw. 0.34 did not survive downscaling.
+ */
 :where(.spw-topic, [data-spw-topic])::before {
   content: "<";
-  opacity: 0.34;
+  opacity: 0.62;
   font-weight: 400;
 }
 
 :where(.spw-topic, [data-spw-topic])::after {
   content: ">";
-  opacity: 0.34;
+  opacity: 0.62;
   font-weight: 400;
 }
 
@@ -28795,6 +28831,105 @@ html[data-spw-reduce-motion="on"][data-spw-module-visuals="on"][data-spw-runtime
 }
 }
 
+/* /public/css/systems/comparison.css */
+@layer systems {
+/* ==========================================================================
+   comparison.css — inline comparison differentials (systems layer)
+   --------------------------------------------------------------------------
+   Two placements on one range, a joining sigil, optional rail ticks.
+   See .spw/conventions/comparison-differentials.spw
+   Opt-in: nothing styles until .spw-compare / [data-spw-compare] is present.
+   ========================================================================== */
+
+:where(.spw-compare, [data-spw-compare]) {
+  --spw-compare-gap: 0.35em;
+  --spw-compare-rail: color-mix(in srgb, var(--line, currentColor) 42%, transparent);
+  --spw-place: 0.5;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spw-compare-gap);
+  vertical-align: baseline;
+  max-width: 100%;
+  padding: 0.12em 0.4em 0.2em;
+  border-radius: 0.65em;
+  background: color-mix(in srgb, var(--matte-surface, var(--card-bg, transparent)) 72%, transparent);
+}
+
+:where(.spw-compare[data-spw-compare-kind="subjective"]) {
+  --spw-compare-rail: color-mix(in srgb, var(--op-probe-color, #7a4bb5) 38%, transparent);
+}
+
+:where(.spw-compare[data-spw-compare-kind="objective"]) {
+  --spw-compare-rail: color-mix(in srgb, var(--op-frame-color, #178282) 38%, transparent);
+}
+
+:where(.spw-compare[data-spw-compare-kind="hybrid"]) {
+  --spw-compare-rail: color-mix(in srgb, var(--op-object-color, #c68a22) 36%, transparent);
+}
+
+:where(.spw-compare__rail) {
+  position: relative;
+  display: block;
+  flex: 1 1 4.5rem;
+  min-width: 3.5rem;
+  height: 0.7rem;
+  pointer-events: none;
+}
+
+:where(.spw-compare__rail)::before {
+  content: "";
+  position: absolute;
+  left: 0.15rem;
+  right: 0.15rem;
+  top: 50%;
+  height: 1px;
+  background: var(--spw-compare-rail);
+}
+
+:where(.spw-compare__tick) {
+  position: absolute;
+  top: 50%;
+  width: 0.42rem;
+  height: 0.42rem;
+  margin: -0.21rem 0 0 -0.21rem;
+  border-radius: 50%;
+  left: calc(0.2rem + (100% - 0.4rem) * var(--spw-place, 0.5));
+  background: var(--spw-operator-color, var(--ink, currentColor));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--spw-compare-rail) 70%, transparent);
+}
+
+:where([data-spw-place="low"]) { --spw-place: 0.12; }
+:where([data-spw-place="mid"]) { --spw-place: 0.5; }
+:where([data-spw-place="high"]) { --spw-place: 0.88; }
+
+:where(.spw-compare__pole[data-spw-measure-kind="subjective"]) {
+  --spw-operator-color: var(--op-probe-color, #7a4bb5);
+}
+
+:where(.spw-compare__pole[data-spw-measure-kind="objective"]) {
+  --spw-operator-color: var(--op-frame-color, #178282);
+}
+
+:where(.spw-compare__diff) {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.82;
+}
+
+:where(.spw-compare__axis) {
+  font-size: 0.78em;
+  letter-spacing: 0.02em;
+  color: var(--ink-soft, inherit);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.spw-compare__tick) {
+    transition: none;
+  }
+}
+}
+
 /* /public/css/systems/surfaces/base.css */
 @layer systems {
 /* ==========================================================================
@@ -33973,6 +34108,23 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
   text-decoration-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 30%, transparent);
   text-decoration-thickness: 1px;
   text-underline-offset: var(--handle-underline-offset, 0.16em);
+  /*
+   * "never changes layout" has to be true to be worth saying. The inline
+   * handle rule in primitive.css pads 0.24rem on both sides, which detaches
+   * trailing punctuation from the word it belongs to -- prose reads
+   * "let <software> , <math>" and a wrap can strand the comma at the start
+   * of the next line. It also lifts the term off the text baseline, which is
+   * what gives a marked sentence its ransom-note texture.
+   *
+   * That rule carries :not() x5, so it outranks this one on specificity.
+   * Retune the tokens it reads instead of escalating selectors: in running
+   * copy a handle is a word, so it takes word spacing and sits in the line.
+   * The dotted seam alone carries the reference.
+   */
+  --handle-pad-inline-inline: 0;
+  --handle-pad-block-inline: 0;
+  --handle-baseline-offset: 0;
+  vertical-align: baseline;
 }
 
 :where([data-spw-fixity-tier="volatile"]) {
