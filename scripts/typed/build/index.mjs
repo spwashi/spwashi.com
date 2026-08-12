@@ -3,6 +3,7 @@ import process from 'node:process';
 import { createHash } from 'node:crypto';
 import { promises as fs } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import { build as rolldownBuild } from 'rolldown';
 import { assertPwaContract, collectOfflineDocumentDependencies, formatPwaContractSummary, injectBuildPrecacheAssets, } from '../pwa-contracts.mjs';
 import { assertSafeOutputDir, checkImageRedundancy, copyRepo, countFiles, createLogger, listSourceRepoPaths, logDuplicateImages, parseArgs, printHelp, rmrf, runNodeScript, writeNoJekyll, ROOT_DIR, } from './ops.mjs';
 function relRepo(absPath) {
@@ -40,6 +41,62 @@ async function prepareServiceWorkerPrecache(outDir) {
     const output = injectBuildPrecacheAssets(workerSource, dependencies);
     await fs.writeFile(workerPath, output, 'utf8');
     return dependencies;
+}
+/**
+ * Per-file minify of dist/public/js. Keeps each module path and import()
+ * specifier intact so modulepreload/prefetch (extractDynamicImportSpecifier)
+ * and content-hash of site.js continue to work. Full eager-graph bundling is
+ * deferred until root-relative resolve + missing-export issues are closed.
+ */
+async function minifyPublicJsModules(outDir, logger) {
+    const jsRoot = path.join(outDir, 'public/js');
+    const allFiles = await walkFiles(jsRoot);
+    const jsFiles = allFiles.filter((file) => file.endsWith('.js'));
+    const startedAt = Date.now();
+    let beforeBytes = 0;
+    let afterBytes = 0;
+    const concurrency = 8;
+    let cursor = 0;
+    async function minifyOne(filePath) {
+        const source = await fs.readFile(filePath);
+        beforeBytes += source.length;
+        const tmpDir = await fs.mkdtemp(path.join(outDir, '.minify-'));
+        try {
+            await rolldownBuild({
+                input: filePath,
+                output: {
+                    dir: tmpDir,
+                    format: 'es',
+                    minify: true,
+                    entryFileNames: 'out.js',
+                    sourcemap: false,
+                },
+                // Externalize every non-entry import so relative and /public/ paths stay.
+                external: (id) => id !== filePath && !id.startsWith('\0'),
+            });
+            const minified = await fs.readFile(path.join(tmpDir, 'out.js'));
+            afterBytes += minified.length;
+            await fs.writeFile(filePath, minified);
+        }
+        finally {
+            await rmrf(tmpDir);
+        }
+    }
+    async function worker() {
+        while (cursor < jsFiles.length) {
+            const index = cursor;
+            cursor += 1;
+            const filePath = jsFiles[index];
+            if (!filePath)
+                return;
+            await minifyOne(filePath);
+        }
+    }
+    await Promise.all(Array.from({ length: Math.min(concurrency, jsFiles.length) }, () => worker()));
+    const ms = Date.now() - startedAt;
+    logger.info(`[build] minified ${jsFiles.length} js modules: ${beforeBytes} → ${afterBytes} bytes `
+        + `(${beforeBytes ? ((afterBytes / beforeBytes) * 100).toFixed(1) : '0'}%) in ${ms}ms`);
+    return { files: jsFiles.length, beforeBytes, afterBytes, ms };
 }
 async function hashAndRewritePublicAssets(outDir, options) {
     const assetMap = {};
@@ -148,6 +205,13 @@ export async function main() {
     }
     else {
         logger.info('[build] skipping design catalog generation');
+    }
+    if (options.minifyJs) {
+        logger.info('[build] minifying public/js modules (per-file, path-preserving)');
+        await minifyPublicJsModules(options.outDir, logger);
+    }
+    else {
+        logger.info('[build] skipping public/js minify');
     }
     logger.info('[build] preparing service-worker precache from rendered offline dependencies');
     const offlineDependencies = await prepareServiceWorkerPrecache(options.outDir);
