@@ -499,7 +499,10 @@ const trackElement = (el) => {
   ensureResizeObserver()?.observe(el);
 };
 
-export function initSpwSpatialGravity(root = document, options = {}) {
+export function initSpwSpatialGravity(ctx, root, options = {}) {
+  if (!(root instanceof Node)) {
+    root = document;
+  }
   const scope = options.root || root;
   const elements = [...(scope?.querySelectorAll?.(GRAVITY_SELECTOR) || [])];
   if (isElement(scope) && scope.matches?.(GRAVITY_SELECTOR)) elements.unshift(scope);

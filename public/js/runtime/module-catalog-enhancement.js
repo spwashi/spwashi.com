@@ -33,11 +33,6 @@ export const ENHANCEMENT_DEFS = [
     timingChunk: 'idle-lab',
     effectScope: 'root-state performance-observer cleanup',
     load: () => import('./layout-shift-audit.js'),
-    mount: (mod, ctx) => {
-      const fn = mod?.initSpwLayoutShiftAudit;
-      if (!isFn(fn)) return;
-      return fn(ctx);
-    },
   },
   {
     id: 'tuning-discovery',
@@ -61,11 +56,6 @@ export const ENHANCEMENT_DEFS = [
     effectScope: 'root-state local-dom',
     evaluates: 'embedded tuning surfaces discoverability hypermedia extension',
     load: () => import('./tuning-discovery.js'),
-    mount: (mod, ctx) => {
-      const fn = mod?.initTuningDiscovery;
-      if (!isFn(fn)) return;
-      return fn(ctx);
-    },
   },
   {
     id: 'page-region-rail',
@@ -85,11 +75,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'immediate-navigation',
     effectScope: 'floating-chrome root-state',
     load: () => import('./page-region-rail.js'),
-    mount: (mod, ctx) => {
-      const fn = mod?.initPageRegionRail;
-      if (!isFn(fn)) return;
-      return fn(ctx);
-    },
   },
   {
     id: 'charge-field',
@@ -111,11 +96,6 @@ export const ENHANCEMENT_DEFS = [
     effectScope: 'root-state frame-state timers bus',
     evaluates: 'charge discharge field intensity consequence-live gesture',
     load: () => import('./charge-field.js'),
-    mount: (mod, ctx) => {
-      const fn = mod?.initChargeField;
-      if (!isFn(fn)) return;
-      return fn(ctx);
-    },
   },
   {
     id: 'gesture-anatomy',
@@ -137,11 +117,6 @@ export const ENHANCEMENT_DEFS = [
     evaluates: 'gesture hint slot anatomy contract rails theme-synergy semantics-resolved',
     effectScope: 'element-state local-dom root-state settings',
     load: () => import('./gesture-anatomy.js'),
-    mount: (mod, ctx) => {
-      const fn = mod?.initGestureAnatomy;
-      if (!isFn(fn)) return;
-      return fn(ctx);
-    },
   },
   {
     id: 'learnability-ledger',
@@ -161,11 +136,6 @@ export const ENHANCEMENT_DEFS = [
     effectScope: 'root-state element-state',
     evaluates: 'learnability posture layout-contract feature resonance tiers',
     load: () => import('./learnability-ledger.js'),
-    mount: (mod, ctx) => {
-      const fn = mod?.initLearnabilityLedger;
-      if (!isFn(fn)) return;
-      return fn(ctx);
-    },
   },
   {
     id: 'component-collection',
@@ -186,11 +156,6 @@ export const ENHANCEMENT_DEFS = [
     timingChunk: 'idle-collectible',
     effectScope: 'root-state storage bus',
     load: () => import('./component-collection.js'),
-    mount: (mod, ctx) => {
-      const fn = mod?.initComponentCollection;
-      if (!isFn(fn)) return;
-      return fn(ctx);
-    },
   },
   {
     id: 'feature-discovery',
@@ -213,11 +178,6 @@ export const ENHANCEMENT_DEFS = [
     timingChunk: 'idle-collectible',
     effectScope: 'element-state storage observer bus global-api',
     load: () => import('./feature-discovery.js'),
-    mount: (mod, ctx) => {
-      const fn = mod?.initFeatureDiscovery;
-      if (!isFn(fn)) return;
-      return fn(ctx);
-    },
   },
   {
     id: 'reward-ui',
@@ -237,11 +197,6 @@ export const ENHANCEMENT_DEFS = [
     timingChunk: 'idle-collectible',
     effectScope: 'root-state floating-chrome toast bus',
     load: () => import('./reward-ui.js'),
-    mount: (mod, ctx) => {
-      const fn = mod?.initRewardUI;
-      if (!isFn(fn)) return;
-      return fn(ctx);
-    },
   },
   {
     id: 'frame-navigator',
@@ -263,11 +218,6 @@ export const ENHANCEMENT_DEFS = [
     // Presence gate: body[data-spw-features~="navigator"] via catalog features
     // (PRESENCE_FEATURE_KEYS in runtime-contracts — not a CSS behavior scope).
     // Module also self-gates on navigatorDisplay at runtime.
-    mount: (mod) => {
-      const fn = mod?.initFrameNavigator;
-      if (!isFn(fn)) return;
-      return fn();
-    },
   },
   {
     id: 'site-search',
@@ -286,11 +236,6 @@ export const ENHANCEMENT_DEFS = [
     effectScope: 'floating-chrome listeners fetch root-state',
     costClass: COST_CLASS.DEMAND_COUPLED,
     load: () => import('./site-search.js'),
-    mount: (mod, ctx) => {
-      const fn = mod?.initSiteSearch;
-      if (!isFn(fn)) return;
-      return fn(ctx?.root || document);
-    },
   },
   {
     id: 'observation-beats',
@@ -309,11 +254,6 @@ export const ENHANCEMENT_DEFS = [
     effectScope: 'root-state bus',
     evaluates: 'qa observation beats lifecycle consequence trace debug',
     load: () => import('./observation-beats.js'),
-    mount: (mod, ctx) => {
-      const fn = mod?.initObservationBeats;
-      if (!isFn(fn)) return;
-      return fn(ctx);
-    },
   },
   {
     id: 'svg-filters',
@@ -331,11 +271,6 @@ export const ENHANCEMENT_DEFS = [
     ],
     effectScope: 'local-dom root-state',
     load: () => import('../media/svg-filters.js'),
-    mount: (mod) => {
-      const fn = mod?.initSpwSvgFilters;
-      if (!isFn(fn)) return;
-      return fn();
-    },
   },
   {
     id: 'svg-tunability',
@@ -362,11 +297,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'visible-media',
     effectScope: 'svg element-state css-vars',
     load: () => import('../media/svg-tunability.js'),
-    mount: (mod) => {
-      const fn = mod?.initSpwSvgTunability;
-      if (!isFn(fn)) return;
-      return fn(document);
-    },
   },
   {
     id: 'canvas-accents',
@@ -387,11 +317,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'visible-visual',
     effectScope: 'canvas css-vars media-query',
     load: () => import('../interface/canvas-accents.js'),
-    mount: (mod) => {
-      const fn = mod?.initSpwCanvasAccents;
-      if (!isFn(fn)) return;
-      return fn(document.querySelector('main') || document);
-    },
   },
   {
     id: 'image-metaphysics',
@@ -411,11 +336,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'visible-media',
     effectScope: 'target-dom gesture-memory listeners',
     load: () => import('../media/image-metaphysics.js'),
-    mount: (mod) => {
-      const fn = mod?.initSpwImageMetaphysics;
-      if (!isFn(fn)) return;
-      return fn();
-    },
   },
   {
     id: 'logo-runtime',
@@ -492,11 +412,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'immediate-semantics',
     effectScope: 'element-state',
     load: () => import('../semantic/component-semantics.js'),
-    mount: (mod, ctx) => {
-      const fn = mod?.initSpwComponentSemantics;
-      if (!isFn(fn)) return;
-      return fn(ctx);
-    },
   },
   {
     id: 'composition-box-model',
@@ -522,11 +437,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'visible-layout',
     effectScope: 'element-state css-vars',
     load: () => import('./composition-box-model.js'),
-    mount: (mod, ctx) => {
-      const fn = mod?.initSpwCompositionBoxModel;
-      if (!isFn(fn)) return;
-      return fn(ctx);
-    },
   },
   {
     id: 'spatial-gravity',
@@ -565,11 +475,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'visible-geometry',
     effectScope: 'element-state css-vars observers document-scroll resize field-guide',
     load: () => import('./spatial-gravity.js'),
-    mount: (mod) => {
-      const fn = mod?.initSpwSpatialGravity;
-      if (!isFn(fn)) return;
-      return fn(document);
-    },
   },
   {
     id: 'semantic-crossrefs',
@@ -589,11 +494,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'immediate-semantics',
     effectScope: 'element-state bus',
     load: () => import('../semantic/semantic-crossrefs.js'),
-    mount: (mod, ctx) => {
-      const fn = mod?.initSpwSemanticCrossrefs;
-      if (!isFn(fn)) return;
-      return fn(ctx);
-    },
   },
   {
     id: 'page-anatomy',
@@ -612,11 +512,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'visible-anatomy',
     effectScope: 'local-dom element-state',
     load: () => import('./page-anatomy.js'),
-    mount: (mod) => {
-      const fn = mod?.initPageAnatomy;
-      if (!isFn(fn)) return;
-      return fn(document);
-    },
   },
   {
     id: 'ingredient-lab',
@@ -634,11 +529,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'visible-lab',
     effectScope: 'local-dom element-state',
     load: () => import('./ingredient-lab.js'),
-    mount: (mod) => {
-      const fn = mod?.initIngredientLabs;
-      if (!isFn(fn)) return;
-      return fn(document);
-    },
   },
   {
     id: 'guide-badge',
@@ -656,11 +546,6 @@ export const ENHANCEMENT_DEFS = [
     timingChunk: 'idle-collectible',
     effectScope: 'element-state storage listeners',
     load: () => import('../interface/guide-badge.js'),
-    mount: (mod) => {
-      const fn = mod?.initGuideBadges;
-      if (!isFn(fn)) return;
-      return fn(document);
-    },
   },
   {
     id: 'query-link-composer',
@@ -706,11 +591,6 @@ export const ENHANCEMENT_DEFS = [
     timingChunk: 'idle-chrome',
     effectScope: 'floating-chrome storage listeners',
     load: () => import('../interface/discovery-notices.js'),
-    mount: (mod, ctx) => {
-      const fn = mod?.initSpwDiscoveryNotices;
-      if (!isFn(fn)) return;
-      return fn(ctx);
-    },
   },
   {
     id: 'state-inspector',
@@ -733,11 +613,6 @@ export const ENHANCEMENT_DEFS = [
     timingChunk: 'idle-lab',
     effectScope: 'floating-chrome root-state local-controls',
     load: () => import('../interface/state-inspector.js'),
-    mount: (mod) => {
-      const fn = mod?.initStateInspector;
-      if (!isFn(fn)) return;
-      return fn();
-    },
   },
   {
     id: 'image-discovery-rewards',
@@ -757,11 +632,6 @@ export const ENHANCEMENT_DEFS = [
     evaluates: 'image discovery reward cadence motion production',
     effectScope: 'local-dom flourish residue bus',
     load: () => import('../interface/image-discovery-rewards.js'),
-    mount: (mod) => {
-      const fn = mod?.initImageDiscoveryRewards;
-      if (!isFn(fn)) return;
-      return fn(document);
-    },
   },
   {
     id: 'semantic-chrome',
@@ -781,11 +651,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'immediate-inspect',
     effectScope: 'element-state',
     load: () => import('../interface/semantic-chrome.js'),
-    mount: (mod, ctx) => {
-      const fn = mod?.initSpwSemanticChrome;
-      if (!isFn(fn)) return;
-      return fn(ctx);
-    },
   },
   {
     id: 'contextual-ui',
@@ -807,11 +672,6 @@ export const ENHANCEMENT_DEFS = [
     // route-discovery body token is presence storytelling; module stays selector-gated
     // so hub routes without the token still get nav-fit inference.
     load: () => import('../interface/contextual-ui.js'),
-    mount: (mod, ctx) => {
-      const fn = mod?.initSpwContextualUi;
-      if (!isFn(fn)) return;
-      return fn(ctx);
-    },
   },
   {
     id: 'console',
@@ -830,11 +690,6 @@ export const ENHANCEMENT_DEFS = [
     timingChunk: 'idle-chrome',
     effectScope: 'floating-chrome bus root-state',
     load: () => import('../interface/console.js'),
-    mount: (mod) => {
-      const fn = mod?.initSpwConsole;
-      if (!isFn(fn)) return;
-      return fn();
-    },
   },
   {
     id: 'design-experiments',
@@ -853,11 +708,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'visible-lab',
     effectScope: 'local-dom',
     load: () => import('../modules/design/experiments.js'),
-    mount: (mod) => {
-      const fn = mod?.initDesignExperiments;
-      if (!isFn(fn)) return;
-      return fn(document);
-    },
   },
   {
     id: 'design-review-surfaces',
@@ -874,11 +724,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'visible-lab',
     effectScope: 'local-dom',
     load: () => import('../modules/design/review-surfaces.js'),
-    mount: (mod) => {
-      const fn = mod?.initDesignReviewSurfaces;
-      if (!isFn(fn)) return;
-      return fn(document);
-    },
   },
   {
     id: 'attention-architecture',
@@ -936,11 +781,6 @@ export const ENHANCEMENT_DEFS = [
     effectScope: 'root-state section-state listeners css-vars',
     evaluates: 'section handle semantic-expression geometry resonance reading-groove scroll-cadence attention field',
     load: () => import('./attention-architecture.js'),
-    mount: (mod, ctx) => {
-      const fn = mod?.initSpwAttentionArchitecture;
-      if (!isFn(fn)) return;
-      return fn(ctx);
-    },
   },
   {
     id: 'annotation-layer',
@@ -959,11 +799,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'visible-annotation',
     effectScope: 'local-dom listeners',
     load: () => import('./annotation-layer.js'),
-    mount: (mod, ctx) => {
-      const fn = mod?.initSpwAnnotationLayer;
-      if (!isFn(fn)) return;
-      return fn(ctx);
-    },
   },
   {
     id: 'module-effects',
@@ -984,11 +819,6 @@ export const ENHANCEMENT_DEFS = [
     evaluates: 'runtime module side effects ornament pulse',
     timingArc: 'immediate-orchestration',
     load: () => import('./module-effects.js'),
-    mount: (mod, ctx) => {
-      const fn = mod?.initModuleEffects;
-      if (!isFn(fn)) return;
-      return fn(ctx);
-    },
   },
   {
     id: 'loading-ecology',
@@ -1012,11 +842,6 @@ export const ENHANCEMENT_DEFS = [
     evaluates: 'loading measurement settling ecology salience rhythm trope genre packing dimensions',
     timingArc: 'immediate-orchestration',
     load: () => import('./loading-ecology.js'),
-    mount: (mod, ctx) => {
-      const fn = mod?.initLoadingEcology;
-      if (!isFn(fn)) return;
-      return fn(ctx);
-    },
   },
   {
     id: 'hydration-passes',
@@ -1035,11 +860,6 @@ export const ENHANCEMENT_DEFS = [
     evaluates: 'multi-pass hydration workbench runtime phase narration',
     timingArc: 'immediate-orchestration',
     load: () => import('./hydration-passes.js'),
-    mount: (mod, ctx) => {
-      const fn = mod?.initHydrationPasses;
-      if (!isFn(fn)) return;
-      return fn(ctx);
-    },
   },
   {
     id: 'settings-momentum',
@@ -1059,11 +879,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'idle-settings-momentum',
     timingChunk: 'idle-chrome',
     load: () => import('./settings-momentum.js'),
-    mount: (mod, ctx) => {
-      const fn = mod?.initSettingsMomentum;
-      if (!isFn(fn)) return;
-      return fn(ctx);
-    },
   },
   {
     id: 'image-utilization',
@@ -1080,11 +895,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'visible-media',
     effectScope: 'media element-state',
     load: () => import('../semantic/image-utilization.js'),
-    mount: (mod) => {
-      const fn = mod?.initImageUtilization;
-      if (!isFn(fn)) return;
-      return fn();
-    },
   },
   {
     id: 'image-interaction',
@@ -1106,11 +916,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'visible-media',
     effectScope: 'media listeners element-state',
     load: () => import('../semantic/image-interaction.js'),
-    mount: (mod) => {
-      const fn = mod?.initImageInteraction;
-      if (!isFn(fn)) return;
-      return fn();
-    },
   },
   {
     id: 'effect-interpretation',
@@ -1132,11 +937,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'visible-media',
     effectScope: 'local-dom element-state',
     load: () => import('../semantic/effect-interpretation.js'),
-    mount: (mod) => {
-      const fn = mod?.initEffectInterpretation;
-      if (!isFn(fn)) return;
-      return fn();
-    },
   },
   {
     id: 'pulse-beat-tuner',
@@ -1155,11 +955,6 @@ export const ENHANCEMENT_DEFS = [
     evaluates: 'interaction-tuner beat-interval freshness-weight microinteraction-pulse-duration',
     timingArc: 'immediate-rhythm',
     load: () => import('./pulse-beat-tuner.js'),
-    mount: (mod) => {
-      const fn = mod?.initPulseBeatTuner;
-      if (!isFn(fn)) return;
-      return fn();
-    },
   },
   {
     id: 'spw-key-events',
@@ -1186,11 +981,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'immediate-keyboard',
     effectScope: 'root-state listeners bus',
     load: () => import('./spw-key-events.js'),
-    mount: (mod) => {
-      const fn = mod?.initSpwKeyEvents;
-      if (!isFn(fn)) return;
-      return fn();
-    },
   },
   {
     id: 'scene-interaction',
@@ -1210,11 +1000,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'visible-scene',
     effectScope: 'local-dom element-state storage',
     load: () => import('./scene-interaction.js'),
-    mount: (mod) => {
-      const fn = mod?.initSceneInteraction;
-      if (!isFn(fn)) return;
-      return fn();
-    },
   },
   {
     id: 'topical-payload',
@@ -1231,11 +1016,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'immediate-payload',
     effectScope: 'root-state',
     load: () => import('./topical-payload.js'),
-    mount: (mod) => {
-      const fn = mod?.initTopicalPayload;
-      if (!isFn(fn)) return;
-      return fn();
-    },
   },
   {
     id: 'palette-treat-discovery',
@@ -1259,11 +1039,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'enhance-discovery',
     timingChunk: 'idle-lab',
     load: () => import('./palette-treat-discovery.js'),
-    mount: (mod) => {
-      const fn = mod?.initPaletteTreatDiscovery;
-      if (!isFn(fn)) return;
-      return fn();
-    },
   },
   {
     id: 'interaction-progression',
@@ -1281,11 +1056,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'immediate-gesture',
     effectScope: 'root-state',
     load: () => import('./interaction-progression.js'),
-    mount: (mod) => {
-      const fn = mod?.initInteractionProgression;
-      if (!isFn(fn)) return;
-      return fn();
-    },
   },
   {
     id: 'concept-salience',
@@ -1305,11 +1075,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'visible-semantics',
     effectScope: 'local-dom element-state',
     load: () => import('../semantic/concept-salience.js'),
-    mount: (mod) => {
-      const fn = mod?.initConceptSalience;
-      if (!isFn(fn)) return;
-      return fn();
-    },
   },
   {
     id: 'precipitation-request',
@@ -1330,11 +1095,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'immediate-print',
     effectScope: 'root-state',
     load: () => import('./precipitation-request.js'),
-    mount: (mod) => {
-      const fn = mod?.initPrecipitationRequest;
-      if (!isFn(fn)) return;
-      return fn();
-    },
   },
   {
     id: 'variant-selection',
@@ -1353,11 +1113,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'visible-variant',
     effectScope: 'local-dom element-state',
     load: () => import('./variant-selection.js'),
-    mount: (mod) => {
-      const fn = mod?.initVariantSelection;
-      if (!isFn(fn)) return;
-      return fn();
-    },
   },
   {
     id: 'navigation-locomotion',
@@ -1378,11 +1133,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'immediate-navigation',
     effectScope: 'root-state listeners bus floating-chrome',
     load: () => import('./navigation-locomotion.js'),
-    mount: (mod, ctx) => {
-      const fn = mod?.initNavigationLocomotion;
-      if (!isFn(fn)) return;
-      return fn(ctx);
-    },
   },
   {
     id: 'navigation-spells',
@@ -1404,11 +1154,6 @@ export const ENHANCEMENT_DEFS = [
     timingChunk: 'idle-residue',
     effectScope: 'target-dom gesture-memory listeners',
     load: () => import('./navigation-spells.js'),
-    mount: (mod) => {
-      const fn = mod?.initSpwNavigationSpells;
-      if (!isFn(fn)) return;
-      return fn();
-    },
   },
   {
     id: 'bare-spw-markup',
@@ -1428,11 +1173,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'immediate-grammar',
     effectScope: 'element-state',
     load: () => import('../semantic/bare-spw-markup.js'),
-    mount: (mod) => {
-      const fn = mod?.initBareSpwMarkup;
-      if (!isFn(fn)) return;
-      return fn();
-    },
   },
   {
     id: 'operators',
@@ -1470,11 +1210,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'immediate-grammar',
     effectScope: 'element-state geometry',
     load: () => import('../semantic/operators.js'),
-    mount: (mod) => {
-      const fn = mod?.initSpwOperators;
-      if (!isFn(fn)) return;
-      return fn();
-    },
   },
   {
     id: 'haptics',
@@ -1495,11 +1230,6 @@ export const ENHANCEMENT_DEFS = [
     timingChunk: 'idle-collectible',
     effectScope: 'element-state storage bus',
     load: () => import('../interface/haptics.js'),
-    mount: (mod) => {
-      const fn = mod?.initSpwHaptics;
-      if (!isFn(fn)) return;
-      return fn();
-    },
   },
   {
     id: 'local-memory-controls',
@@ -1516,11 +1246,6 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'visible-memory',
     effectScope: 'local-dom storage',
     load: () => import('../interface/local-memory-controls.js'),
-    mount: (mod) => {
-      const fn = mod?.initSpwLocalMemoryControls;
-      if (!isFn(fn)) return;
-      return fn();
-    },
   },
   {
     id: 'prompt-utils',
@@ -1541,11 +1266,6 @@ export const ENHANCEMENT_DEFS = [
     // promptability body token is pack-level; selector is the demand gate so
     // routes with prompt hosts outside design-lab packs still mount.
     load: () => import('../interface/prompt-utils.js'),
-    mount: (mod) => {
-      const fn = mod?.initSpwPromptUtils;
-      if (!isFn(fn)) return;
-      return fn();
-    },
   },
   {
     id: 'experiential',
@@ -1565,11 +1285,6 @@ export const ENHANCEMENT_DEFS = [
     effectScope: 'listeners root-state bus',
     timingChunk: 'idle-residue',
     load: () => import('./experiential.js'),
-    mount: (mod) => {
-      const fn = mod?.initSpwExperiential;
-      if (!isFn(fn)) return;
-      return fn();
-    },
   },
   {
     id: 'spells',
@@ -1588,11 +1303,6 @@ export const ENHANCEMENT_DEFS = [
     effectScope: 'storage bus root-state',
     timingChunk: 'idle-residue',
     load: () => import('./spells.js'),
-    mount: (mod) => {
-      const fn = mod?.initSpwSpells;
-      if (!isFn(fn)) return;
-      return fn();
-    },
   },
   {
     id: 'guide',
@@ -1612,11 +1322,6 @@ export const ENHANCEMENT_DEFS = [
     timingChunk: 'idle-collectible',
     effectScope: 'element-state root-state',
     load: () => import('../interface/guide.js'),
-    mount: (mod, ctx) => {
-      const fn = mod?.initSpwGuide;
-      if (!isFn(fn)) return;
-      return fn(ctx);
-    },
   },
   {
     id: 'layout-assumptions',
@@ -1639,10 +1344,5 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'settled-layout-assumptions',
     effectScope: 'root-state layout-correction observers floating-chrome',
     load: () => import('./layout-assumptions.js'),
-    mount: (mod, ctx) => {
-      const fn = mod?.initLayoutAssumptions;
-      if (!isFn(fn)) return;
-      return fn(ctx);
-    },
   },
 ];

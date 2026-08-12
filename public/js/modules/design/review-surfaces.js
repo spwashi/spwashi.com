@@ -257,7 +257,10 @@ function initRailInteractions(rail, links, chips, fallbackKey) {
   };
 }
 
-export function initDesignReviewSurfaces(root = document) {
+export function initDesignReviewSurfaces(ctx, root) {
+  if (!(root instanceof Node)) {
+    root = document;
+  }
   const body = root.body || document.body;
   const profile = REVIEW_PROFILES[body?.dataset?.spwPageRole];
 

@@ -221,7 +221,10 @@ function attachHoldBehavior(card) {
 }
 
 // ── Init ──────────────────────────────────────────────────────────────────────
-export function initPaymentCards(root = document) {
+export function initPaymentCards(ctx, root) {
+  if (!(root instanceof Node)) {
+    root = document;
+  }
     root.querySelectorAll('[data-payment-card]').forEach(card => {
         const body = card.querySelector('[data-spw-region="body"]');
         if (!body) return;

@@ -650,7 +650,10 @@ class BoonhonkMixer {
 // ── Public initializer ────────────────────────────────────────────────────────
 const instances = [];
 
-export function initBoonhonkMixers(root = document) {
+export function initBoonhonkMixers(ctx, root) {
+  if (!(root instanceof Node)) {
+    root = document;
+  }
     root.querySelectorAll('[data-boonhonk-mixer]').forEach(container => {
         if (container._boonhonkInstance) return; // idempotent
 

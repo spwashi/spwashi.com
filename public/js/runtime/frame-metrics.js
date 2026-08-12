@@ -120,7 +120,10 @@ const updateAll = async (tracked, handleCache) => {
     }));
 };
 
-export async function initFrameMetrics(root = document) {
+export async function initFrameMetrics(ctx, root) {
+  if (!(root instanceof Node)) {
+    root = document;
+  }
     if (initialized) {
         return cleanupCurrent || (() => {});
     }

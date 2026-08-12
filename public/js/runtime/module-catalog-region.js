@@ -24,10 +24,5 @@ export const REGION_DEFS = [
     timingArc: 'region-hydration',
     effectScope: 'region-state css-vars bus',
     load: () => import('./region-enhancer.js'),
-    mount: (mod, ctx, root) => {
-      const fn = mod?.initRegionEnhancer;
-      if (!isFn(fn)) return;
-      return fn(ctx, root);
-    },
   },
 ];

@@ -1132,7 +1132,10 @@ function resolveRoots(root = document) {
   return Array.from(root.querySelectorAll(ROOT_SELECTOR));
 }
 
-export function initDesignExperiments(root = document) {
+export function initDesignExperiments(ctx, root) {
+  if (!(root instanceof Node)) {
+    root = document;
+  }
   const roots = resolveRoots(root);
   if (!roots.length) return undefined;
 

@@ -242,7 +242,10 @@ function createChip(term) {
   return chip;
 }
 
-export function initAttnRegister(root = document, options = {}) {
+export function initAttnRegister(ctx, root, options = {}) {
+  if (!(root instanceof Node)) {
+    root = (typeof document !== 'undefined' && document.querySelector('main')) || document;
+  }
   const config = createAttnRegisterConfig(options);
   const rootEl = getRootElement(root);
   const body = getSurfaceBody();

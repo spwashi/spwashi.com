@@ -54,11 +54,6 @@ export const FEATURE_DEFS = [
     timingArc: 'visible-feature',
     effectScope: 'local-dom element-state css-vars',
     load: () => import('../modules/blog/specimens.js'),
-    mount: (mod) => {
-      const fn = mod?.initBlogSpecimens;
-      if (!isFn(fn)) return;
-      return fn(document.querySelector('main') || document);
-    },
   },
   {
     id: 'attn-register',
@@ -77,11 +72,6 @@ export const FEATURE_DEFS = [
     timingArc: 'feature-route',
     effectScope: 'local-dom bus',
     load: () => import('../modules/blog/attn-register.js'),
-    mount: (mod) => {
-      const fn = mod?.initAttnRegister;
-      if (!isFn(fn)) return;
-      return fn(document.querySelector('main') || document);
-    },
   },
   {
     id: 'seed-cards',
@@ -101,11 +91,6 @@ export const FEATURE_DEFS = [
     timingArc: 'feature-route',
     effectScope: 'local-dom storage',
     load: () => import('../modules/cards/seed-card.js'),
-    mount: (mod) => {
-      const fn = mod?.initSeedCards;
-      if (!isFn(fn)) return;
-      return fn();
-    },
   },
   {
     id: 'payment-cards',
@@ -124,11 +109,6 @@ export const FEATURE_DEFS = [
     timingArc: 'feature-route',
     effectScope: 'local-dom storage',
     load: () => import('../modules/cards/payment-card.js'),
-    mount: (mod) => {
-      const fn = mod?.initPaymentCards;
-      if (!isFn(fn)) return;
-      return fn(document);
-    },
   },
   {
     id: 'services-configurators',
@@ -148,11 +128,6 @@ export const FEATURE_DEFS = [
     timingArc: 'feature-route',
     effectScope: 'local-dom',
     load: () => import('../modules/services/configurator.js'),
-    mount: (mod) => {
-      const fn = mod?.initServicesConfigurators;
-      if (!isFn(fn)) return;
-      return fn(document);
-    },
   },
   {
     id: 'rpg-wednesday',
@@ -172,11 +147,6 @@ export const FEATURE_DEFS = [
     timingArc: 'feature-route',
     effectScope: 'local-dom storage',
     load: () => import('../modules/rpg-wednesday/index.js'),
-    mount: (mod) => {
-      const fn = mod?.initRpgWednesday;
-      if (!isFn(fn)) return;
-      return fn();
-    },
   },
   {
     id: 'settings-page',
@@ -194,11 +164,6 @@ export const FEATURE_DEFS = [
       'html:inspect:data-spw-deviation-count',
     ],
     load: () => import('../kernel/site-settings.js'),
-    mount: (mod, ctx) => {
-      const fn = mod?.initSiteSettingsPage;
-      if (!isFn(fn)) return;
-      return fn(ctx);
-    },
   },
   {
     id: 'payment-settings',
@@ -235,11 +200,6 @@ export const FEATURE_DEFS = [
     timingArc: 'feature-route',
     effectScope: 'local-dom',
     load: () => import('../modules/home/section-index.js'),
-    mount: (mod, ctx) => {
-      const fn = mod?.initHomeSectionIndex;
-      if (!isFn(fn)) return;
-      return fn(ctx);
-    },
   },
   {
     id: 'promo-wonder-cycle',
@@ -259,11 +219,6 @@ export const FEATURE_DEFS = [
     timingArc: 'visible-media',
     effectScope: 'local-dom element-state',
     load: () => import('../typed/promo-wonder-cycle.js'),
-    mount: (mod) => {
-      const fn = mod?.initPromoWonderCycle;
-      if (!isFn(fn)) return;
-      return fn();
-    },
   },
   {
     id: 'media-publishing',
@@ -283,11 +238,6 @@ export const FEATURE_DEFS = [
     timingArc: 'visible-media',
     effectScope: 'local-dom element-state',
     load: () => import('../typed/media-publishing.js'),
-    mount: (mod) => {
-      const fn = mod?.initMediaPublishing;
-      if (!isFn(fn)) return;
-      return fn();
-    },
   },
   {
     id: 'media-cauldron',
@@ -308,11 +258,6 @@ export const FEATURE_DEFS = [
     evaluates: 'media cauldron attention relations prompt-pack generation',
     effectScope: 'local-dom element-state bus',
     load: () => import('../modules/media/cauldron.js'),
-    mount: (mod, ctx, root) => {
-      const fn = mod?.initMediaCauldron;
-      if (!isFn(fn)) return;
-      return fn(root, ctx);
-    },
   },
   {
     id: 'brace-pivots',
@@ -328,11 +273,6 @@ export const FEATURE_DEFS = [
     timingArc: 'immediate-settings',
     effectScope: 'local-dom root-state',
     load: () => import('./brace-pivots.js'),
-    mount: (mod) => {
-      const fn = mod?.initBracePivots;
-      if (!isFn(fn)) return;
-      return fn();
-    },
   },
   {
     id: 'narrative-instrumentation',
@@ -351,11 +291,6 @@ export const FEATURE_DEFS = [
     timingArc: 'visible-semantics',
     effectScope: 'local-dom bus',
     load: () => import('../semantic/narrative-instrumentation.js'),
-    mount: (mod) => {
-      const fn = mod?.initNarrativeInstrumentation;
-      if (!isFn(fn)) return;
-      return fn();
-    },
   },
   {
     id: 'brace-physics',
@@ -376,11 +311,6 @@ export const FEATURE_DEFS = [
     timingArc: 'immediate-gesture',
     effectScope: 'element-state listeners bus',
     load: () => import('./brace-gestures.js'),
-    mount: (mod) => {
-      const fn = mod?.initBraceGestures;
-      if (!isFn(fn)) return;
-      return fn();
-    },
   },
   {
     id: 'region-menu',
@@ -400,11 +330,6 @@ export const FEATURE_DEFS = [
     timingArc: 'immediate-inspect',
     effectScope: 'popover listeners',
     load: () => import('./region-menu.js'),
-    mount: (mod) => {
-      const fn = mod?.initSpwRegionMenu;
-      if (!isFn(fn)) return;
-      return fn(document);
-    },
   },
   {
     id: 'pronunciation-hints',
@@ -422,11 +347,6 @@ export const FEATURE_DEFS = [
     ],
     effectScope: 'element-state flourish',
     load: () => import('../interface/pronunciation.js'),
-    mount: (mod) => {
-      const fn = mod?.initPronunciationHints;
-      if (!isFn(fn)) return;
-      return fn();
-    },
   },
   {
     id: 'sigil-anatomy',
@@ -445,12 +365,6 @@ export const FEATURE_DEFS = [
     timingArc: 'immediate-grammar',
     effectScope: 'element-state',
     load: () => import('./sigil-anatomy.js'),
-    mount: (mod) => {
-      const fn = mod?.initSigilAnatomy;
-      if (!isFn(fn)) return;
-      const cleanup = fn();
-      return { cleanup: isFn(cleanup) ? cleanup : null };
-    },
   },
   {
     id: 'effect-ledger',
@@ -476,12 +390,6 @@ export const FEATURE_DEFS = [
     timingChunk: 'idle-residue',
     effectScope: 'root-state storage bus flourish',
     load: () => import('./effect-ledger.js'),
-    mount: (mod) => {
-      const fn = mod?.initEffectLedger;
-      if (!isFn(fn)) return;
-      const cleanup = fn();
-      return { cleanup: isFn(cleanup) ? cleanup : null };
-    },
   },
   {
     id: 'cauldron',
@@ -527,11 +435,6 @@ export const FEATURE_DEFS = [
     timingArc: 'visible-memory',
     effectScope: 'local-dom storage',
     load: () => import('../interface/local-notes.js'),
-    mount: (mod) => {
-      const fn = mod?.initSpwLocalNotes;
-      if (!isFn(fn)) return;
-      return fn();
-    },
   },
   {
     id: 'boonhonk-mixer',
@@ -551,11 +454,6 @@ export const FEATURE_DEFS = [
     timingArc: 'visible-widget',
     effectScope: 'local-dom',
     load: () => import('../modules/widgets/boonhonk-mixer.js'),
-    mount: (mod, ctx) => {
-      const fn = mod?.initBoonhonkMixers;
-      if (!isFn(fn)) return;
-      return fn(ctx?.root || document);
-    },
   },
   {
     id: 'pretext-lab',
@@ -573,11 +471,6 @@ export const FEATURE_DEFS = [
     evaluates: 'pretext layout sandbox projection observe resize inspect',
     effectScope: 'local-dom css-vars measure',
     load: () => import('../semantic/pretext-lab.js'),
-    mount: (mod) => {
-      const fn = mod?.initPretextLab;
-      if (!isFn(fn)) return;
-      return fn();
-    },
   },
   {
     id: 'pretext-physics',
@@ -629,11 +522,6 @@ export const FEATURE_DEFS = [
     evaluates: 'typography measure preview pretext bus designer conversation',
     effectScope: 'local-dom css-vars measure bus',
     load: () => import('../modules/design/typography-measurement-preview.js'),
-    mount: (mod, ctx, root) => {
-      const fn = mod?.initTypographyMeasurementPreview;
-      if (!isFn(fn)) return;
-      return fn(root);
-    },
   },
   {
     id: 'frame-metrics',
@@ -652,10 +540,5 @@ export const FEATURE_DEFS = [
     evaluates: 'frame text measure line-count wrap height pretext bus',
     effectScope: 'element-state measure bus',
     load: () => import('./frame-metrics.js'),
-    mount: (mod, ctx, root) => {
-      const fn = mod?.initFrameMetrics;
-      if (!isFn(fn)) return;
-      return fn(root);
-    },
   },
 ];

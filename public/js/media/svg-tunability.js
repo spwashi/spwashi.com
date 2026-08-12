@@ -976,7 +976,10 @@ function initPersonaLens(root = globalThis.document) {
   syncPersonaSelectChips(root, active);
 }
 
-export function initSpwSvgTunability(root = globalThis.document, options = {}) {
+export function initSpwSvgTunability(ctx, root, options = {}) {
+  if (!(root instanceof Node)) {
+    root = globalThis.document;
+  }
   const hosts = getHosts(root);
   applySvgQueryTunability(root, options);
   applySvgPersonaQuery(root, options);

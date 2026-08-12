@@ -463,7 +463,10 @@ function attachCollectionControl(element) {
   };
 }
 
-export function initGuideBadges(root = document) {
+export function initGuideBadges(ctx, root) {
+  if (!(root instanceof Node)) {
+    root = document;
+  }
   const cleanups = [];
   const seen = new WeakSet();
 

@@ -45,11 +45,6 @@ export const CORE_DEFS = [
     timingArc: 'boot-feedback',
     effectScope: 'service-worker root-state toast',
     load: () => import('./pwa-update-handler.js'),
-    mount: (mod) => {
-      const fn = mod?.initPwaUpdateHandler;
-      if (!isFn(fn)) return;
-      return fn();
-    },
   },
   {
     id: 'shell-disclosure',
@@ -67,11 +62,6 @@ export const CORE_DEFS = [
     timingArc: 'boot-shell',
     effectScope: 'root-state chrome listeners viewport',
     load: () => import('./shell-disclosure.js'),
-    mount: (mod, ctx) => {
-      const fn = mod?.initSpwShellDisclosure;
-      if (!isFn(fn)) return;
-      return fn(ctx);
-    },
   },
   {
     id: 'interactive-medium',
@@ -89,11 +79,6 @@ export const CORE_DEFS = [
     timingArc: 'boot-medium',
     effectScope: 'root-state css-vars entertainment-routes',
     load: () => import('./interactive-medium.js'),
-    mount: (mod) => {
-      const fn = mod?.initInteractiveMedium;
-      if (!isFn(fn)) return;
-      return fn();
-    },
   },
   {
     id: 'site-core-minimal',
@@ -111,10 +96,5 @@ export const CORE_DEFS = [
     timingArc: 'boot-frame',
     effectScope: 'frame-state hash listeners bus',
     load: () => import('./site-core-minimal.js'),
-    mount: (mod, ctx) => {
-      const fn = mod?.initMinimalSiteCore;
-      if (!isFn(fn)) return;
-      return fn(ctx);
-    },
   },
 ];

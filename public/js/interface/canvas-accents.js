@@ -44,7 +44,10 @@ export function getCanvasAccentInstance(container) {
     return INSTANCE_MAP.get(container) || null;
 }
 
-export function initSpwCanvasAccents(root = document) {
+export function initSpwCanvasAccents(ctx, root) {
+  if (!(root instanceof Node)) {
+    root = (typeof document !== 'undefined' && document.querySelector('main')) || document;
+  }
     ensureSharedListeners();
     const created = [];
     const accents = root.querySelectorAll('[data-spw-accent]');

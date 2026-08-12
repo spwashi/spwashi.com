@@ -17,7 +17,10 @@
  * - initBlogSpecimens(root?, options?)
  */
 
-export function initBlogSpecimens(root = document, options = {}) {
+export function initBlogSpecimens(ctx, root, options = {}) {
+  if (!(root instanceof Node)) {
+    root = (typeof document !== 'undefined' && document.querySelector('main')) || document;
+  }
   const rootEl = root instanceof Element ? root : document;
   const html = document.documentElement;
   const body = document.body;

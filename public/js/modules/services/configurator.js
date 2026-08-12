@@ -754,7 +754,10 @@ class ServicesConfigurator {
 }
 
 // ── Public initializer ────────────────────────────────────────────────────────
-export function initServicesConfigurators(root = document) {
+export function initServicesConfigurators(ctx, root) {
+  if (!(root instanceof Node)) {
+    root = document;
+  }
     root.querySelectorAll('[data-services-configurator]').forEach(container => {
         if (container._svcInstance) return;
         const instance = new ServicesConfigurator(container);

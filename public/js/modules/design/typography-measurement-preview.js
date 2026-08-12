@@ -106,7 +106,10 @@ async function refreshPreview(root) {
   }
 }
 
-export async function initTypographyMeasurementPreview(root = document) {
+export async function initTypographyMeasurementPreview(ctx, root) {
+  if (!(root instanceof Node)) {
+    root = document;
+  }
   if (initialized) return cleanup;
 
   const panel = root.querySelector(ROOT_SELECTOR);

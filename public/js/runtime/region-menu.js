@@ -89,7 +89,10 @@ export function toggleRegionMenuForElement(element) {
   return openRegionMenuForElement(element);
 }
 
-export function initSpwRegionMenu(root = document) {
+export function initSpwRegionMenu(ctx, root) {
+  if (!(root instanceof Node)) {
+    root = document;
+  }
   const doc = root?.nodeType === Node.DOCUMENT_NODE ? root : document;
   const body = doc.body;
   if (!body || body.dataset.spwRegionMenuInit === '1') return;

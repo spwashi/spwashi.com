@@ -661,7 +661,10 @@ function onDocumentKeydown(event) {
   }
 }
 
-export function initSiteSearch(root = document) {
+export function initSiteSearch(ctx, root) {
+  if (!(root instanceof Node)) {
+    root = document;
+  }
   if (initialized) return () => {};
   initialized = true;
 

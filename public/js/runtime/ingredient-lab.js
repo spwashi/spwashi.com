@@ -74,7 +74,10 @@ function enhanceLab(lab) {
   };
 }
 
-export function initIngredientLabs(root = document) {
+export function initIngredientLabs(ctx, root) {
+  if (!(root instanceof Node)) {
+    root = document;
+  }
   const labs = [...root.querySelectorAll(LAB_SELECTOR)];
   const cleanups = labs.map(enhanceLab).filter(Boolean);
   return () => cleanups.forEach((cleanup) => cleanup());

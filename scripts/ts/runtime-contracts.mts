@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
@@ -595,6 +596,34 @@ function importPathToAbsolute(importPath: string): string {
   return path.resolve(path.dirname(MODULE_CATALOG_PATH), importPath);
 }
 
+const INIT_EXPORT_SOURCE_RE = /\bexport\s+(?:async\s+)?function\s+init[A-Z]\w*|\bexport\s+const\s+init[A-Z]\w*\s*=|\bexport\s+\{[^}]*\binit[A-Z]\w*|\bSPW_MODULE_EXPORT\b|\bspwModule\b|\bexport\s+default\s*\{[^}]*\bmount\b/;
+
+/**
+ * True when resolveModuleMount can find a mount on this module source, or on a
+ * same-directory `export * from` re-export (site-settings barrel pattern).
+ */
+function moduleSourceHasResolvableMount(moduleSource: string, absolutePath: string, depth = 0): boolean {
+  if (INIT_EXPORT_SOURCE_RE.test(moduleSource)) return true;
+  if (depth >= 2) return false;
+
+  const starExports = [...moduleSource.matchAll(/\bexport\s+\*\s+from\s+['"]([^'"]+)['"]/g)];
+  for (const match of starExports) {
+    const spec = match[1];
+    if (!spec) continue;
+    const resolved = path.resolve(path.dirname(absolutePath), spec);
+    const candidates = [resolved, `${resolved}.js`, path.join(resolved, 'index.js')];
+    for (const candidate of candidates) {
+      try {
+        const nested = readFileSync(candidate, 'utf8');
+        if (moduleSourceHasResolvableMount(nested, candidate, depth + 1)) return true;
+      } catch {
+        // try next candidate
+      }
+    }
+  }
+  return false;
+}
+
 function getImportOwnerDirectory(importPath: string): string | null {
   if (!importPath.startsWith('./') && !importPath.startsWith('../')) return null;
   const absoluteImport = importPathToAbsolute(importPath);
@@ -700,8 +729,29 @@ function validateModule(
     errors.push(`${label} is missing a load() contract.`);
   }
 
+  // Catalog mount adapters are optional when resolveModuleMount can find
+  // SPW_MODULE_EXPORT / spwModule / default.mount / init* on the loaded module.
   if (!/\bmount:\s*\(/.test(module.objectLiteral)) {
-    errors.push(`${label} is missing a mount() contract.`);
+    if (module.importPath) {
+      const absoluteImport = importPathToAbsolute(module.importPath);
+      let moduleSource = '';
+      try {
+        moduleSource = readFileSync(absoluteImport, 'utf8');
+      } catch {
+        errors.push(`${label} is missing a mount() adapter and its load path is unreadable.`);
+        moduleSource = '';
+      }
+      if (moduleSource) {
+        const hasInitExport = moduleSourceHasResolvableMount(moduleSource, absoluteImport);
+        if (!hasInitExport) {
+          errors.push(
+            `${label} is missing a mount() adapter and ${module.importPath} has no init*/SPW_MODULE_EXPORT mount for resolveModuleMount.`,
+          );
+        }
+      }
+    } else {
+      errors.push(`${label} is missing a mount() contract.`);
+    }
   }
 
   if (module.importPath) {

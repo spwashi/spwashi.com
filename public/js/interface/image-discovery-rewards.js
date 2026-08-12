@@ -100,7 +100,10 @@ function primeFigure(figure) {
   }
 }
 
-export function initImageDiscoveryRewards(root = document) {
+export function initImageDiscoveryRewards(ctx, root) {
+  if (!(root instanceof Node)) {
+    root = document;
+  }
   const figures = [...root.querySelectorAll(FIGURE_SELECTOR)]
     .filter((figure) => figure instanceof HTMLElement);
   if (!figures.length) return () => {};

@@ -204,7 +204,10 @@ const writeOutput = (root, value) => {
   output.dispatchEvent(new Event('input', { bubbles: true }));
 };
 
-export function initMediaCauldron(root = document) {
+export function initMediaCauldron(ctx, root) {
+  if (!(root instanceof Node)) {
+    root = document;
+  }
   const cauldron = root.matches?.('[data-media-cauldron]') ? root : root.querySelector?.('[data-media-cauldron]');
   if (!(cauldron instanceof HTMLElement)) return null;
 

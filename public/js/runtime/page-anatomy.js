@@ -993,7 +993,10 @@ function resolvePopupPosture(dataset = document.documentElement.dataset) {
   return 'calm';
 }
 
-export function initPageAnatomy(root = document) {
+export function initPageAnatomy(ctx, root) {
+  if (!(root instanceof Node)) {
+    root = document;
+  }
   const targets = getAnatomyTargets(root);
   if (!targets.length) return () => {};
 
