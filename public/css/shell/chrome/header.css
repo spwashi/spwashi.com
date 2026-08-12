@@ -144,6 +144,27 @@
   padding-right: var(--shell-header-pad-inline, var(--page-gutter-inline, 1rem));
 
   color: var(--ink, rgba(14, 18, 20, 0.92));
+
+  /* Paint lives on .header-surface, not here. `backdrop-filter` establishes a
+     containing block for `position: fixed` descendants, which trapped the
+     disclosure menu (navigation.css) inside the header box instead of the
+     viewport. The header keeps layout and its sticky stacking context only. */
+
+  transition: border-color 160ms var(--shell-ease);
+}
+
+/* The header's painted surface: base gradient, elevation, and backdrop blur.
+   `z-index: -1` places it above the header's own (now empty) background box and
+   below in-flow header content, so it never washes over the nav. It cannot
+   escape the header — .site-header establishes a stacking context via
+   `position: sticky` + `z-index`. The pointer-field ::before and brace-rail
+   ::after are unaffected; both still paint above content as positioned
+   descendants. */
+:where(.site-header, body > header) > .header-surface {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
   opacity: var(--spw-header-opacity-local);
   background:
     linear-gradient(
@@ -161,8 +182,7 @@
   transition:
     background 160ms var(--shell-ease),
     box-shadow 160ms var(--shell-ease),
-    opacity 120ms var(--shell-ease),
-    border-color 160ms var(--shell-ease);
+    opacity 120ms var(--shell-ease);
 }
 
 :where(.site-header, body > header) {
@@ -209,14 +229,18 @@
   height: 100%;
 }
 
-:where(.site-header[data-spw-shell-scroll="lifted"], body > header[data-spw-shell-scroll="lifted"]) {
+:where(.site-header[data-spw-shell-scroll="lifted"], body > header[data-spw-shell-scroll="lifted"]) > .header-surface {
   box-shadow:
     inset 0 -1px 0 color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 90%, transparent),
     var(--spw-elevation-shell-shadow-lifted, 0 6px 18px rgba(0, 0, 0, 0.06));
 }
 
+/* The opacity token stays on the header so it cascades to .header-surface. */
 :where(.site-header[data-spw-shell-scroll="deep"], body > header[data-spw-shell-scroll="deep"]) {
   --spw-header-opacity-local: 0.99;
+}
+
+:where(.site-header[data-spw-shell-scroll="deep"], body > header[data-spw-shell-scroll="deep"]) > .header-surface {
   box-shadow:
     inset 0 -1px 0 color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 90%, transparent),
     var(--spw-elevation-shell-shadow-deep, 0 10px 28px rgba(0, 0, 0, 0.08));

@@ -806,6 +806,7 @@ function renderSiteHeader(vars) {
   }).join('\n');
 
   return `<header ${attrs}>\n`
+    + '    <div class="header-surface" aria-hidden="true" data-spw-layout-owner="header-surface"></div>\n'
     + '    <div class="header-brand">\n'
     + '        <a aria-label="Spwashi home" class="header-sigil" href="/" data-spw-operator="frame" data-spw-sigil="#&gt;spwashi" data-spw-semantic-expression="identity[brand]{route.home}">#&gt;spwashi</a>\n'
     + (annotation
