@@ -170,6 +170,55 @@
             <p class="frame-note">If a later reader only needs one next action: open the spec, pick Track B if you write, Track A if you draw systems, or the assets guide if you have a still. The <a href="/about/domains/lore.land/">lore.land</a> surface is where long-form narrative from those scenes can become public without pretending the vault and the game are the same room.</p>
         </section>
 
+        <section class="site-frame" id="spween-scene" data-spw-kind="frame" data-spw-role="reference">
+            <div class="frame-topline">
+                <a class="frame-sigil" href="#spween-scene" data-spw-operator="scene">(spween_scene</a>
+                <span class="frame-kind">cheat-sheet</span>
+            </div>
+            <h2>Spween <code>.scene</code> marks</h2>
+            <p>Track B is handwritten text. The Descent compiles it to executor teeth; the no-cheat board re-runs the same teeth. This is Dregg’s grammar, not Spw. A site <code>(scene)</code> can later project onto <code>$scene</code> — it is not this file format.</p>
+            <pre><code>---
+id: salt-vault
+title: The Salt Vault
+tags: [descent]
+---
+=== entrance
+The vault door hangs open.
+* [Force it] { strength &gt;= 5 }
+  ~ noise += 1
+  -&gt; hall
+* [Pick the lock] { gold &gt;= "$price" }
+  ~ gold -= 10
+  -&gt; hall
+=== hall
+* [Take the crown] { hands &lt; 1 }
+  ~ hands = 1
+  -&gt; END</code></pre>
+            <div class="frame-grid">
+                <article class="frame-panel">
+                    <h3>Rooms</h3>
+                    <p><code>=== name</code> is a room. Prose under it is what the runner sees. <code>-&gt; hall</code> or <code>-&gt; END</code> is the exit.</p>
+                </article>
+                <article class="frame-panel">
+                    <h3>Gates</h3>
+                    <p><code>{ strength &gt;= 5 }</code> is a condition. <code>var op value</code>, membership, <code>!</code>, AND (<code>&amp;&amp;</code> or comma), OR (<code>||</code>). A <code>$</code> on the right is another slot, not Spw substrate.</p>
+                </article>
+                <article class="frame-panel">
+                    <h3>Effects</h3>
+                    <p><code>~ gold -= 10</code> mutates a slot. Assign, add, subtract, or <code>call("name", args)</code>. Budget is sixteen slots.</p>
+                </article>
+                <article class="frame-panel">
+                    <h3>Win and publish</h3>
+                    <p>A declared win condition is what the board re-executes. Hand-authored publish (<code>/gallery publish-scene</code>) is still the open seam. Until it exists, a <code>.scene</code> file is a draft, not a board entry.</p>
+                </article>
+            </div>
+            <nav class="frame-operators" aria-label="Spween next">
+                <a class="operator-chip" href="#dregg-contribution" data-spw-operator="potential">~dregg_tracks</a>
+                <a class="operator-chip" href="https://github.com/emberian/dregg/blob/main/docs/CONTENT-AND-ASSET-SPEC.md" data-spw-operator="potential">~content_spec</a>
+                <a class="operator-chip" href="/about/domains/lore.land/" data-spw-operator="concept-edge">&gt;lore.land</a>
+            </nav>
+        </section>
+
         <section class="site-frame" id="knowledge-base-references" data-spw-kind="frame" data-spw-role="reference">
             <div class="frame-topline">
                 <a class="frame-sigil" href="#knowledge-base-references">~refs</a>
@@ -211,6 +260,7 @@
                 <a class="operator-chip" data-spw-operator="frame" href="/services/systems/#curricularize" data-spw-action="address">#&gt;systems_offer</a>
                 <a class="operator-chip" data-spw-operator="frame" href="/topics/software/spw/" data-spw-action="address">#&gt;spw_operator_atlas</a>
                 <a class="operator-chip" data-spw-operator="frame" href="#dregg-contribution" data-spw-action="address">#&gt;dregg_tracks</a>
+                <a class="operator-chip" data-spw-operator="scene" href="#spween-scene" data-spw-action="address">(spween_scene</a>
                 <a class="operator-chip" data-spw-operator="potential" href="https://github.com/emberian/dregg/blob/main/docs/CONTENT-AND-ASSET-SPEC.md" data-spw-action="explore">~content_spec</a>
             </div>
         </section>

@@ -1179,9 +1179,24 @@ body[data-spw-surface="topics"] #topics-register > .topic-photo-card img {
   }
 }
 
-@media (min-width: 86rem) {
-  body[data-spw-surface="topics"] #topics-register.site-hero--split-figure[data-spw-image-hero="true"] {
-    grid-template-columns: minmax(34rem, 1fr) minmax(18rem, 26rem);
+/*
+ * Split the register against its own width, not the window's.
+ *
+ * This was a viewport media query (min-width: 86rem) setting
+ * `minmax(34rem, 1fr) minmax(18rem, 26rem)`. At 1920px the query fires, but
+ * the register only ever gets ~842px because it sits inside the main column,
+ * and 34rem + 18rem + gap is a 852.8px floor that no amount of shrinking can
+ * satisfy. The tracks overflowed by ~62px and `overflow-x: clip` silently ate
+ * the right edge of the figure caption -- "Start with the broad fiel".
+ *
+ * A container query asks the question the layout actually depends on, and
+ * minmax(0, 1fr) lets the text column yield instead of forcing an overflow.
+ */
+@supports (container-type: inline-size) {
+  @container (min-width: 52rem) {
+    body[data-spw-surface="topics"] #topics-register.site-hero--split-figure[data-spw-image-hero="true"] {
+      grid-template-columns: minmax(0, 1fr) minmax(15rem, 18rem);
+    }
   }
 }
 
