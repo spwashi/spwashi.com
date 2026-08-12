@@ -108,10 +108,18 @@
    2. Base component ownership
    ========================================================================== */
 
-/* Shared registry: add only route-portable component nouns. */
+/* Shared registry: add only route-portable component nouns.
+
+   The shell header is excluded for the same reason `body` and `main` are below:
+   it is chrome, not a component. It carries data-spw-kind="shell", so without
+   the exclusion it inherited component-local layering — `z-index:
+   var(--component-layer-base)` (0) plus `isolation: isolate` — from the
+   `components` layer, which lands AFTER `shell` in the master layer order. That
+   silently overrode the header's own stacking and made every open-menu raise
+   unwinnable until it was escalated to a literal in the `ornament` layer. */
 :where(
-  [data-spw-component-kind],
-  [data-spw-kind],
+  [data-spw-component-kind]:not(.site-header),
+  [data-spw-kind]:not(.site-header),
   .site-frame,
   .frame-card,
   .media-card,
@@ -150,9 +158,12 @@
   isolation: isolate;
 }
 
+/* `container-type` implies `contain: layout`, which establishes a containing
+   block for `position: fixed` descendants — the shell header must not, or the
+   disclosure menu is positioned against the header box instead of the viewport. */
 :where(
-  [data-spw-component-kind]:not(body):not(main),
-  [data-spw-kind]:not(body):not(main),
+  [data-spw-component-kind]:not(body):not(main):not(.site-header),
+  [data-spw-kind]:not(body):not(main):not(.site-header),
   .site-frame,
   .frame-card,
   .media-card,
@@ -376,10 +387,17 @@
 }
 
 /* Lift ordinary flow content above generated rails, seams, and debug labels.
-   Floating chrome keeps its own geometry contract and must opt out here. */
+   Floating chrome keeps its own geometry contract and must opt out here.
+
+   The shell header opts out as a parent: it carries both data-spw-kind and a
+   runtime-mirrored data-spw-component-kind, so without the exclusion every
+   header child — the disclosure nav and .header-surface included — was forced
+   to `position: relative; z-index: 1` from the `components` layer. That
+   overrode the nav's own `position: fixed` menu topologies and inverted the
+   surface's `z-index: -1`. */
 :where(
-  [data-spw-component-kind] > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
-  [data-spw-kind] > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
+  [data-spw-component-kind]:not(.site-header) > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
+  [data-spw-kind]:not(.site-header) > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
   .site-frame > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
   .frame-card > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
   .media-card > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
@@ -1004,8 +1022,16 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
   --component-module-rail-end: color-mix(in srgb, var(--op-object-color, var(--component-accent)) 20%, transparent);
 }
 
-/* Region profiler + deferred enrichment: reserve outline budget before harmony rails activate. */
-:where([data-spw-region-state]) {
+/* Region profiler + deferred enrichment: reserve outline budget before harmony rails activate.
+
+   `body` and the shell header are excluded. The region profiler writes
+   data-spw-region-state onto <body> as well as onto in-page regions, so without
+   the exclusion `contain: layout` applied to the body box — establishing a
+   containing block for EVERY `position: fixed` descendant in the document.
+   Console, state-inspector, discovery toasts, region-menu and site-search all
+   append themselves to document.body, so all of them were being contained by
+   the full-height body box instead of the viewport. */
+:where([data-spw-region-state]:not(body):not(.site-header)) {
   contain: layout style;
   min-width: 0;
   outline: var(--spw-layout-shift-guard, 1px) solid transparent;

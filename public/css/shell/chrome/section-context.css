@@ -785,7 +785,7 @@ body > nav.spw-section-handle-shell {
   }
 }
 
-:where(.site-header, body > header) {
+:where(.site-header, body > header) > .header-surface {
   background:
     linear-gradient(180deg, color-mix(in srgb, var(--spw-shell-nav-polish-surface) 98%, transparent), var(--spw-shell-nav-polish-surface-soft));
   box-shadow:
@@ -894,10 +894,15 @@ body > nav.spw-section-handle-shell {
 }
 
 @media (max-width: 720px) {
-  .site-header[data-spw-menu-mode="toggle"] nav,
-  body > header[data-spw-menu-mode="toggle"] nav {
+  /* In-header nav geometry. Screen-field is excluded throughout this file: it
+     is a viewport-anchored sheet owned end-to-end by shell/chrome/navigation.css
+     (its own position, insets, padding, surface and max-height), so any
+     in-header geometry applied here fights it. */
+  .site-header[data-spw-menu-mode="toggle"]:not([data-spw-menu-topology="screen-field"]) nav,
+  body > header[data-spw-menu-mode="toggle"]:not([data-spw-menu-topology="screen-field"]) nav {
     position: relative;
-    z-index: 2020;
+    /* Orders the nav within the header's stacking context only. */
+    z-index: var(--spw-local-layer-overlay);
     grid-column: 1 / -1;
     justify-self: stretch;
     width: 100%;
@@ -1066,24 +1071,33 @@ body > header[data-spw-menu-mode="inline"] .spw-route-menu-panel {
 }
 
 @media (max-width: 720px) {
+  /* Drawer-field topology's open state; same drawer tier as the overlay-active
+     raise in shell/chrome/adaptive.css, reached through a different attribute. */
   .site-header[data-spw-menu-mode="toggle"][data-spw-menu="open"],
   body > header[data-spw-menu-mode="toggle"][data-spw-menu="open"] {
     position: relative;
-    z-index: 2020;
+    z-index: var(--z-drawer);
     grid-template-rows: auto 0;
   }
 
+  /* Drawer-field geometry only. The overlay-active branches below must exclude
+     screen-field, which navigation.css anchors to the viewport bottom with
+     `inset-block-end`. Overriding `position` and `inset-block-start` here
+     without resetting `inset-block-end` leaves both block insets resolved, so
+     the nav's height is derived from the insets (~12px) instead of its
+     content, collapsing the menu. */
   .site-header[data-spw-menu-mode="toggle"][data-spw-menu-topology="drawer-field"][data-spw-menu="open"] nav,
   body > header[data-spw-menu-mode="toggle"][data-spw-menu-topology="drawer-field"][data-spw-menu="open"] nav,
-  .site-header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"]:has(.spw-nav-toggle[aria-expanded="true"]) nav,
-  body > header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"]:has(.spw-nav-toggle[aria-expanded="true"]) nav {
+  .site-header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"]:not([data-spw-menu-topology="screen-field"]):has(.spw-nav-toggle[aria-expanded="true"]) nav,
+  body > header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"]:not([data-spw-menu-topology="screen-field"]):has(.spw-nav-toggle[aria-expanded="true"]) nav {
     position: absolute;
     inset-block-start: calc(100% + 0.38rem);
     inset-inline: max(0.72rem, env(safe-area-inset-left)) max(0.72rem, env(safe-area-inset-right));
     grid-area: auto;
     grid-column: auto;
     justify-self: stretch;
-    z-index: 2020;
+    /* Local order within the raised header, not a page-level rank. */
+    z-index: var(--spw-local-layer-overlay);
     width: auto;
     inline-size: auto;
     max-width: none;

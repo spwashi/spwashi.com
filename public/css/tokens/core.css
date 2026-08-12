@@ -820,7 +820,30 @@
   --layer-drawer: calc(var(--layer-priority) + 20);
   --layer-modal: calc(var(--layer-priority) + 30);
 
-  /* Canonical z-index aliases for runtime-created chrome. */
+  /* Canonical z-index aliases for runtime-created chrome.
+     ------------------------------------------------------------------
+     Stacking contract — one scale, defined here and nowhere else:
+
+     1. `--layer-*` above is canonical; every `--z-*` below is an alias.
+        Do not redeclare either family in another file or layer.
+     2. Runtime chrome is placed by `data-spw-chrome-tier` (8 values, written
+        by annotateFloatingChromeElement in kernel/dom-contracts.js) resolved
+        through `--spw-floating-tier-z` in components/floating-chrome.css.
+     3. `--component-layer-*`, `--material-layer-*` and `--spw-local-layer-*`
+        are the 0/1/2 LOCAL stack, for ordering inside a single component or
+        stacking context. Never use them for page-level rank, and never use
+        the global scale for within-component order.
+     4. Overlays live at `document.body`. Anything setting `backdrop-filter`,
+        `transform`, `filter`, `will-change`, or `contain: layout|paint`
+        creates a stacking context AND a containing block for
+        `position: fixed`, trapping every descendant regardless of z-index.
+        `.site-header` paints through `.header-surface` for exactly this
+        reason; `main` sets `container-type: inline-size` (shell/layout.css),
+        which implies `contain: layout` — a fixed overlay authored inside
+        route content would be trapped by it.
+     5. A raw numeric z-index is a bug. Use a token.
+     ------------------------------------------------------------------ */
+  --z-base: var(--layer-ground);
   --z-ground: var(--layer-ground);
   --z-substrate: var(--layer-substrate);
   --z-content: var(--layer-content);

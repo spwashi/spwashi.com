@@ -507,7 +507,10 @@
 
 .spw-attention-posture-panel {
   position: absolute;
-  z-index: calc(var(--spw-shell-z-index, 80) + 4);
+  /* Was calc(var(--spw-shell-z-index, 80) + 4) — --spw-shell-z-index is defined
+     nowhere, so this always resolved to 84, a value outside every token family.
+     The panel is positioned inside the header, so its rank is local-stack. */
+  z-index: var(--spw-local-layer-overlay);
   inset-block-start: calc(100% + 0.42rem);
   inset-inline-end: 0;
   display: grid;

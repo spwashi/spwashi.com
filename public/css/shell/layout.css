@@ -222,12 +222,9 @@
   --shell-ease: var(--ease-mechanical, ease);
   --shell-settle-ease: var(--ease-settle, ease);
 
-  /* Z layers */
-  --z-base: var(--layer-ground, 1);
-  --z-surface: var(--layer-surface, 20);
-  --z-floating: var(--layer-floating, 100);
-  --z-header: var(--layer-header, 1000);
-  --z-priority: var(--layer-priority, 2000);
+  /* Z layers are defined once, in tokens/core.css. This block used to redeclare
+     five of them on :root; because `shell` follows `tokens` in the master layer
+     order it silently outranked the canonical definitions. */
 }
 
 /* ==========================================================================

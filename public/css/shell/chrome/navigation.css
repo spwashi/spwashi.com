@@ -935,8 +935,11 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
   box-shadow: none;
 }
 
-:where(.site-header[data-spw-shell-tune-surface="strip"] .spw-attention-posture-panel,
-       body > header[data-spw-shell-tune-surface="strip"] .spw-attention-posture-panel) {
+/* Deliberately not wrapped in :where(). The base rule in header.css is a bare
+   class (0,1,0); flattening this contextual override to 0,0,0 made its
+   `position: fixed` dead code, so the strip variant never applied. */
+.site-header[data-spw-shell-tune-surface="strip"] .spw-attention-posture-panel,
+body > header[data-spw-shell-tune-surface="strip"] .spw-attention-posture-panel {
   position: fixed;
   inset-block-start: calc(var(--spw-shell-menu-offset, var(--shell-header-height, 4rem)) + 0.55rem);
   inset-inline: var(--page-gutter-inline, 1rem);

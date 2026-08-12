@@ -1417,7 +1417,30 @@ html[data-spw-reduce-motion="on"] *::after {
   --layer-drawer: calc(var(--layer-priority) + 20);
   --layer-modal: calc(var(--layer-priority) + 30);
 
-  /* Canonical z-index aliases for runtime-created chrome. */
+  /* Canonical z-index aliases for runtime-created chrome.
+     ------------------------------------------------------------------
+     Stacking contract — one scale, defined here and nowhere else:
+
+     1. `--layer-*` above is canonical; every `--z-*` below is an alias.
+        Do not redeclare either family in another file or layer.
+     2. Runtime chrome is placed by `data-spw-chrome-tier` (8 values, written
+        by annotateFloatingChromeElement in kernel/dom-contracts.js) resolved
+        through `--spw-floating-tier-z` in components/floating-chrome.css.
+     3. `--component-layer-*`, `--material-layer-*` and `--spw-local-layer-*`
+        are the 0/1/2 LOCAL stack, for ordering inside a single component or
+        stacking context. Never use them for page-level rank, and never use
+        the global scale for within-component order.
+     4. Overlays live at `document.body`. Anything setting `backdrop-filter`,
+        `transform`, `filter`, `will-change`, or `contain: layout|paint`
+        creates a stacking context AND a containing block for
+        `position: fixed`, trapping every descendant regardless of z-index.
+        `.site-header` paints through `.header-surface` for exactly this
+        reason; `main` sets `container-type: inline-size` (shell/layout.css),
+        which implies `contain: layout` — a fixed overlay authored inside
+        route content would be trapped by it.
+     5. A raw numeric z-index is a bug. Use a token.
+     ------------------------------------------------------------------ */
+  --z-base: var(--layer-ground);
   --z-ground: var(--layer-ground);
   --z-substrate: var(--layer-substrate);
   --z-content: var(--layer-content);
@@ -3563,12 +3586,9 @@ html[data-spw-reduce-motion="on"] {
   --shell-ease: var(--ease-mechanical, ease);
   --shell-settle-ease: var(--ease-settle, ease);
 
-  /* Z layers */
-  --z-base: var(--layer-ground, 1);
-  --z-surface: var(--layer-surface, 20);
-  --z-floating: var(--layer-floating, 100);
-  --z-header: var(--layer-header, 1000);
-  --z-priority: var(--layer-priority, 2000);
+  /* Z layers are defined once, in tokens/core.css. This block used to redeclare
+     five of them on :root; because `shell` follows `tokens` in the master layer
+     order it silently outranked the canonical definitions. */
 }
 
 /* ==========================================================================
@@ -4618,6 +4638,27 @@ body > header:empty {
   padding-right: var(--shell-header-pad-inline, var(--page-gutter-inline, 1rem));
 
   color: var(--ink, rgba(14, 18, 20, 0.92));
+
+  /* Paint lives on .header-surface, not here. `backdrop-filter` establishes a
+     containing block for `position: fixed` descendants, which trapped the
+     disclosure menu (navigation.css) inside the header box instead of the
+     viewport. The header keeps layout and its sticky stacking context only. */
+
+  transition: border-color 160ms var(--shell-ease);
+}
+
+/* The header's painted surface: base gradient, elevation, and backdrop blur.
+   `z-index: -1` places it above the header's own (now empty) background box and
+   below in-flow header content, so it never washes over the nav. It cannot
+   escape the header — .site-header establishes a stacking context via
+   `position: sticky` + `z-index`. The pointer-field ::before and brace-rail
+   ::after are unaffected; both still paint above content as positioned
+   descendants. */
+:where(.site-header, body > header) > .header-surface {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
   opacity: var(--spw-header-opacity-local);
   background:
     linear-gradient(
@@ -4635,8 +4676,7 @@ body > header:empty {
   transition:
     background 160ms var(--shell-ease),
     box-shadow 160ms var(--shell-ease),
-    opacity 120ms var(--shell-ease),
-    border-color 160ms var(--shell-ease);
+    opacity 120ms var(--shell-ease);
 }
 
 :where(.site-header, body > header) {
@@ -4683,14 +4723,18 @@ body > header:empty {
   height: 100%;
 }
 
-:where(.site-header[data-spw-shell-scroll="lifted"], body > header[data-spw-shell-scroll="lifted"]) {
+:where(.site-header[data-spw-shell-scroll="lifted"], body > header[data-spw-shell-scroll="lifted"]) > .header-surface {
   box-shadow:
     inset 0 -1px 0 color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 90%, transparent),
     var(--spw-elevation-shell-shadow-lifted, 0 6px 18px rgba(0, 0, 0, 0.06));
 }
 
+/* The opacity token stays on the header so it cascades to .header-surface. */
 :where(.site-header[data-spw-shell-scroll="deep"], body > header[data-spw-shell-scroll="deep"]) {
   --spw-header-opacity-local: 0.99;
+}
+
+:where(.site-header[data-spw-shell-scroll="deep"], body > header[data-spw-shell-scroll="deep"]) > .header-surface {
   box-shadow:
     inset 0 -1px 0 color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 90%, transparent),
     var(--spw-elevation-shell-shadow-deep, 0 10px 28px rgba(0, 0, 0, 0.08));
@@ -4957,7 +5001,10 @@ body > header:empty {
 
 .spw-attention-posture-panel {
   position: absolute;
-  z-index: calc(var(--spw-shell-z-index, 80) + 4);
+  /* Was calc(var(--spw-shell-z-index, 80) + 4) — --spw-shell-z-index is defined
+     nowhere, so this always resolved to 84, a value outside every token family.
+     The panel is positioned inside the header, so its rank is local-stack. */
+  z-index: var(--spw-local-layer-overlay);
   inset-block-start: calc(100% + 0.42rem);
   inset-inline-end: 0;
   display: grid;
@@ -6347,8 +6394,11 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
   box-shadow: none;
 }
 
-:where(.site-header[data-spw-shell-tune-surface="strip"] .spw-attention-posture-panel,
-       body > header[data-spw-shell-tune-surface="strip"] .spw-attention-posture-panel) {
+/* Deliberately not wrapped in :where(). The base rule in header.css is a bare
+   class (0,1,0); flattening this contextual override to 0,0,0 made its
+   `position: fixed` dead code, so the strip variant never applied. */
+.site-header[data-spw-shell-tune-surface="strip"] .spw-attention-posture-panel,
+body > header[data-spw-shell-tune-surface="strip"] .spw-attention-posture-panel {
   position: fixed;
   inset-block-start: calc(var(--spw-shell-menu-offset, var(--shell-header-height, 4rem)) + 0.55rem);
   inset-inline: var(--page-gutter-inline, 1rem);
@@ -9075,10 +9125,14 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
 }
 
 @media (max-width: 720px) {
+  /* Sole authority for the open-menu raise. The header establishes a stacking
+     context (sticky/relative + z-index), so the menu inside it can never
+     outrank anything the header does not — raising the header is the only
+     lever, and it belongs to one rule in the shell layer at the drawer tier. */
   .site-header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"]:has(.spw-nav-toggle[aria-expanded="true"]),
   body > header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"]:has(.spw-nav-toggle[aria-expanded="true"]) {
     position: relative;
-    z-index: 2020;
+    z-index: var(--z-drawer);
   }
 
   html:has(.site-header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"] .spw-nav-toggle[aria-expanded="true"])::after,
@@ -9096,9 +9150,12 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
     cursor: default;
   }
 
+  /* Within the raised header's stacking context this only orders the nav
+     against its header siblings, so it is a local-stack value, not a global
+     one. The page-level rank is owned by the header rule above. */
   .site-header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"]:has(.spw-nav-toggle[aria-expanded="true"]) nav,
   body > header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"]:has(.spw-nav-toggle[aria-expanded="true"]) nav {
-    z-index: 2020;
+    z-index: var(--spw-local-layer-overlay);
   }
 
   html:has(.site-header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"] .spw-nav-toggle[aria-expanded="true"]) .spw-state-inspector[data-spw-state-inspector="closed"]:not([data-spw-satchel-positioned="user"]),
@@ -9161,6 +9218,9 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
 @media (prefers-reduced-motion: reduce) {
   :where(.site-header, body > header) {
     --spw-shell-pointer-opacity: 0.22;
+  }
+
+  :where(.site-header, body > header) > .header-surface {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }
@@ -9962,7 +10022,7 @@ body > nav.spw-section-handle-shell {
   }
 }
 
-:where(.site-header, body > header) {
+:where(.site-header, body > header) > .header-surface {
   background:
     linear-gradient(180deg, color-mix(in srgb, var(--spw-shell-nav-polish-surface) 98%, transparent), var(--spw-shell-nav-polish-surface-soft));
   box-shadow:
@@ -10071,10 +10131,15 @@ body > nav.spw-section-handle-shell {
 }
 
 @media (max-width: 720px) {
-  .site-header[data-spw-menu-mode="toggle"] nav,
-  body > header[data-spw-menu-mode="toggle"] nav {
+  /* In-header nav geometry. Screen-field is excluded throughout this file: it
+     is a viewport-anchored sheet owned end-to-end by shell/chrome/navigation.css
+     (its own position, insets, padding, surface and max-height), so any
+     in-header geometry applied here fights it. */
+  .site-header[data-spw-menu-mode="toggle"]:not([data-spw-menu-topology="screen-field"]) nav,
+  body > header[data-spw-menu-mode="toggle"]:not([data-spw-menu-topology="screen-field"]) nav {
     position: relative;
-    z-index: 2020;
+    /* Orders the nav within the header's stacking context only. */
+    z-index: var(--spw-local-layer-overlay);
     grid-column: 1 / -1;
     justify-self: stretch;
     width: 100%;
@@ -10243,24 +10308,33 @@ body > header[data-spw-menu-mode="inline"] .spw-route-menu-panel {
 }
 
 @media (max-width: 720px) {
+  /* Drawer-field topology's open state; same drawer tier as the overlay-active
+     raise in shell/chrome/adaptive.css, reached through a different attribute. */
   .site-header[data-spw-menu-mode="toggle"][data-spw-menu="open"],
   body > header[data-spw-menu-mode="toggle"][data-spw-menu="open"] {
     position: relative;
-    z-index: 2020;
+    z-index: var(--z-drawer);
     grid-template-rows: auto 0;
   }
 
+  /* Drawer-field geometry only. The overlay-active branches below must exclude
+     screen-field, which navigation.css anchors to the viewport bottom with
+     `inset-block-end`. Overriding `position` and `inset-block-start` here
+     without resetting `inset-block-end` leaves both block insets resolved, so
+     the nav's height is derived from the insets (~12px) instead of its
+     content, collapsing the menu. */
   .site-header[data-spw-menu-mode="toggle"][data-spw-menu-topology="drawer-field"][data-spw-menu="open"] nav,
   body > header[data-spw-menu-mode="toggle"][data-spw-menu-topology="drawer-field"][data-spw-menu="open"] nav,
-  .site-header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"]:has(.spw-nav-toggle[aria-expanded="true"]) nav,
-  body > header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"]:has(.spw-nav-toggle[aria-expanded="true"]) nav {
+  .site-header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"]:not([data-spw-menu-topology="screen-field"]):has(.spw-nav-toggle[aria-expanded="true"]) nav,
+  body > header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"]:not([data-spw-menu-topology="screen-field"]):has(.spw-nav-toggle[aria-expanded="true"]) nav {
     position: absolute;
     inset-block-start: calc(100% + 0.38rem);
     inset-inline: max(0.72rem, env(safe-area-inset-left)) max(0.72rem, env(safe-area-inset-right));
     grid-area: auto;
     grid-column: auto;
     justify-self: stretch;
-    z-index: 2020;
+    /* Local order within the raised header, not a page-level rank. */
+    z-index: var(--spw-local-layer-overlay);
     width: auto;
     inline-size: auto;
     max-width: none;
@@ -10278,6 +10352,11 @@ body > header[data-spw-menu-mode="inline"] .spw-route-menu-panel {
    display-layers.css
    --------------------------------------------------------------------------
    Reader/editor/inspect presentation-layer visibility rules.
+
+   [data-spw-chrome-role="debug"] is an opt-in role declared in
+   FLOATING_CHROME_CONTRACT.roles with no producer. Reader is the default
+   display layer, so annotating chrome with it hides that chrome site-wide
+   until the visitor switches layers.
    ========================================================================== */
 
 :where(body[data-spw-display-layer="reader"]) .spw-nav-toggle-meta,
@@ -13696,10 +13775,18 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
    2. Base component ownership
    ========================================================================== */
 
-/* Shared registry: add only route-portable component nouns. */
+/* Shared registry: add only route-portable component nouns.
+
+   The shell header is excluded for the same reason `body` and `main` are below:
+   it is chrome, not a component. It carries data-spw-kind="shell", so without
+   the exclusion it inherited component-local layering — `z-index:
+   var(--component-layer-base)` (0) plus `isolation: isolate` — from the
+   `components` layer, which lands AFTER `shell` in the master layer order. That
+   silently overrode the header's own stacking and made every open-menu raise
+   unwinnable until it was escalated to a literal in the `ornament` layer. */
 :where(
-  [data-spw-component-kind],
-  [data-spw-kind],
+  [data-spw-component-kind]:not(.site-header),
+  [data-spw-kind]:not(.site-header),
   .site-frame,
   .frame-card,
   .media-card,
@@ -13738,9 +13825,12 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
   isolation: isolate;
 }
 
+/* `container-type` implies `contain: layout`, which establishes a containing
+   block for `position: fixed` descendants — the shell header must not, or the
+   disclosure menu is positioned against the header box instead of the viewport. */
 :where(
-  [data-spw-component-kind]:not(body):not(main),
-  [data-spw-kind]:not(body):not(main),
+  [data-spw-component-kind]:not(body):not(main):not(.site-header),
+  [data-spw-kind]:not(body):not(main):not(.site-header),
   .site-frame,
   .frame-card,
   .media-card,
@@ -13964,10 +14054,17 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
 }
 
 /* Lift ordinary flow content above generated rails, seams, and debug labels.
-   Floating chrome keeps its own geometry contract and must opt out here. */
+   Floating chrome keeps its own geometry contract and must opt out here.
+
+   The shell header opts out as a parent: it carries both data-spw-kind and a
+   runtime-mirrored data-spw-component-kind, so without the exclusion every
+   header child — the disclosure nav and .header-surface included — was forced
+   to `position: relative; z-index: 1` from the `components` layer. That
+   overrode the nav's own `position: fixed` menu topologies and inverted the
+   surface's `z-index: -1`. */
 :where(
-  [data-spw-component-kind] > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
-  [data-spw-kind] > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
+  [data-spw-component-kind]:not(.site-header) > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
+  [data-spw-kind]:not(.site-header) > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
   .site-frame > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
   .frame-card > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
   .media-card > :not([data-spw-floating-chrome="true"], .skip-link, .spw-section-handle, .spw-section-handle-shell),
@@ -14592,8 +14689,16 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
   --component-module-rail-end: color-mix(in srgb, var(--op-object-color, var(--component-accent)) 20%, transparent);
 }
 
-/* Region profiler + deferred enrichment: reserve outline budget before harmony rails activate. */
-:where([data-spw-region-state]) {
+/* Region profiler + deferred enrichment: reserve outline budget before harmony rails activate.
+
+   `body` and the shell header are excluded. The region profiler writes
+   data-spw-region-state onto <body> as well as onto in-page regions, so without
+   the exclusion `contain: layout` applied to the body box — establishing a
+   containing block for EVERY `position: fixed` descendant in the document.
+   Console, state-inspector, discovery toasts, region-menu and site-search all
+   append themselves to document.body, so all of them were being contained by
+   the full-height body box instead of the viewport. */
+:where([data-spw-region-state]:not(body):not(.site-header)) {
   contain: layout style;
   min-width: 0;
   outline: var(--spw-layout-shift-guard, 1px) solid transparent;
@@ -46241,19 +46346,10 @@ html[data-spw-debug-mode="on"][data-spw-layout-assumptions-active="true"]::befor
   text-decoration-color: color-mix(in srgb, var(--rpg-accent, var(--active-op-color, #4bcedd)) 44%, transparent);
 }
 
-/* Final visual layer: mobile route scrims must sit behind the active drawer. */
-@media (max-width: 720px) {
-  .site-header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"]:has(.spw-nav-toggle[aria-expanded="true"]),
-  body > header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"]:has(.spw-nav-toggle[aria-expanded="true"]) {
-    position: relative;
-    z-index: 2020;
-  }
-
-  .site-header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"]:has(.spw-nav-toggle[aria-expanded="true"]) nav,
-  body > header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"]:has(.spw-nav-toggle[aria-expanded="true"]) nav {
-    z-index: 2020;
-  }
-}
+/* The open-menu raise used to be duplicated here. It is owned by the shell
+   layer (shell/chrome/adaptive.css) — ornament is the last layer in the master
+   order, so a copy here silently outranked shell and made ornament the
+   authority on primary layout, which this file's own contract forbids. */
 
 /* Topics register: keep brace grammar at the card edge instead of as a layout rail. */
 body[data-spw-surface="topics"] #topics-register.site-frame[data-spw-form="brace"]::before,

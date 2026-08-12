@@ -2,6 +2,11 @@
    display-layers.css
    --------------------------------------------------------------------------
    Reader/editor/inspect presentation-layer visibility rules.
+
+   [data-spw-chrome-role="debug"] is an opt-in role declared in
+   FLOATING_CHROME_CONTRACT.roles with no producer. Reader is the default
+   display layer, so annotating chrome with it hides that chrome site-wide
+   until the visitor switches layers.
    ========================================================================== */
 
 :where(body[data-spw-display-layer="reader"]) .spw-nav-toggle-meta,

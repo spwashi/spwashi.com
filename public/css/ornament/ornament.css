@@ -1247,19 +1247,10 @@
   text-decoration-color: color-mix(in srgb, var(--rpg-accent, var(--active-op-color, #4bcedd)) 44%, transparent);
 }
 
-/* Final visual layer: mobile route scrims must sit behind the active drawer. */
-@media (max-width: 720px) {
-  .site-header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"]:has(.spw-nav-toggle[aria-expanded="true"]),
-  body > header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"]:has(.spw-nav-toggle[aria-expanded="true"]) {
-    position: relative;
-    z-index: 2020;
-  }
-
-  .site-header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"]:has(.spw-nav-toggle[aria-expanded="true"]) nav,
-  body > header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"]:has(.spw-nav-toggle[aria-expanded="true"]) nav {
-    z-index: 2020;
-  }
-}
+/* The open-menu raise used to be duplicated here. It is owned by the shell
+   layer (shell/chrome/adaptive.css) — ornament is the last layer in the master
+   order, so a copy here silently outranked shell and made ornament the
+   authority on primary layout, which this file's own contract forbids. */
 
 /* Topics register: keep brace grammar at the card edge instead of as a layout rail. */
 body[data-spw-surface="topics"] #topics-register.site-frame[data-spw-form="brace"]::before,

@@ -1193,10 +1193,14 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
 }
 
 @media (max-width: 720px) {
+  /* Sole authority for the open-menu raise. The header establishes a stacking
+     context (sticky/relative + z-index), so the menu inside it can never
+     outrank anything the header does not — raising the header is the only
+     lever, and it belongs to one rule in the shell layer at the drawer tier. */
   .site-header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"]:has(.spw-nav-toggle[aria-expanded="true"]),
   body > header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"]:has(.spw-nav-toggle[aria-expanded="true"]) {
     position: relative;
-    z-index: 2020;
+    z-index: var(--z-drawer);
   }
 
   html:has(.site-header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"] .spw-nav-toggle[aria-expanded="true"])::after,
@@ -1214,9 +1218,12 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
     cursor: default;
   }
 
+  /* Within the raised header's stacking context this only orders the nav
+     against its header siblings, so it is a local-stack value, not a global
+     one. The page-level rank is owned by the header rule above. */
   .site-header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"]:has(.spw-nav-toggle[aria-expanded="true"]) nav,
   body > header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"]:has(.spw-nav-toggle[aria-expanded="true"]) nav {
-    z-index: 2020;
+    z-index: var(--spw-local-layer-overlay);
   }
 
   html:has(.site-header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"] .spw-nav-toggle[aria-expanded="true"]) .spw-state-inspector[data-spw-state-inspector="closed"]:not([data-spw-satchel-positioned="user"]),
@@ -1279,6 +1286,9 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
 @media (prefers-reduced-motion: reduce) {
   :where(.site-header, body > header) {
     --spw-shell-pointer-opacity: 0.22;
+  }
+
+  :where(.site-header, body > header) > .header-surface {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }
