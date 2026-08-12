@@ -165,13 +165,25 @@ for (const file of walk(ROOT)) {
     if (!declared) continue;
 
     const resolved = resolveType(declared);
-    if (resolved !== detected.type) {
-      findings.push({
-        kind: 'mismatch', rel, line, text,
-        sigil: detected.prefix, expected: detected.type, declared,
-        ...(resolved === declared ? {} : { resolvedTo: resolved }),
-      });
-    }
+    if (resolved === detected.type) continue;
+
+    /*
+     * A compound expression carries more than one operator -- `$sticker>$scene`
+     * is two substrates joined by a projection. The chip's declared type may
+     * name the relation rather than the leading prefix, and that is the more
+     * informative claim, so accept any operator actually present in the text.
+     * Single-mark chips get no such latitude: that is where `~` drifts into
+     * `action` and the mark stops meaning anything.
+     */
+    const marks = REGISTRY.filter(([prefix]) => text.includes(prefix));
+    const isCompound = marks.length > 1;
+    if (isCompound && marks.some(([, type]) => type === resolved)) continue;
+
+    findings.push({
+      kind: 'mismatch', rel, line, text,
+      sigil: detected.prefix, expected: detected.type, declared,
+      ...(resolved === declared ? {} : { resolvedTo: resolved }),
+    });
   }
 }
 
