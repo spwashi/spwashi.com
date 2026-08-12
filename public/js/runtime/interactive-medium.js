@@ -58,6 +58,16 @@ let hostObserver = null;
 let routeObserver = null;
 let activeRoot = document;
 let handleSync = null;
+let handleRegisterChange = null;
+
+/* Settings and runtime-token writes can redefine the medium tokens without
+   touching the device or route attributes, so they invalidate too. */
+const TOKEN_INVALIDATION_EVENTS = Object.freeze([
+  'spw:settings-change',
+  'spw:settings:changed',
+  'spw:settings-momentum',
+  'spw:runtime-tokens-updated',
+]);
 
 function tokenIncludes(haystack = '', needle = '') {
   const tokens = normalizeToken(haystack).split(/\s+/).filter(Boolean);
@@ -72,9 +82,45 @@ function readHtml() {
   return document.documentElement;
 }
 
-function readComputedCSSValue(element, name, fallback = '') {
-  if (!(element instanceof Element) || typeof getComputedStyle !== 'function') return fallback;
-  return getComputedStyle(element).getPropertyValue(name).trim() || fallback;
+const EMPTY_MEDIUM_TOKENS = Object.freeze({
+  packTier: '',
+  variantSelectionWeight: '',
+  touchMin: '',
+  revealStagger: '',
+  accentWeight: '',
+  styleModulator: '',
+});
+
+/* Medium tokens resolve from media queries and root/route attribute selectors,
+   so they only change when the device register, the route, or settings change —
+   never when the host subtree mutates. Each read forces a style recalculation
+   against the full stylesheet, and the host observer in initInteractiveMedium
+   fires on every DOM mutation, so cache until an invalidating signal arrives
+   and resolve all six tokens from one computed-style object rather than six. */
+let cachedMediumTokens = null;
+
+function invalidateMediumTokens() {
+  cachedMediumTokens = null;
+}
+
+function readMediumTokens(element) {
+  if (cachedMediumTokens) return cachedMediumTokens;
+  if (!(element instanceof Element) || typeof getComputedStyle !== 'function') {
+    cachedMediumTokens = EMPTY_MEDIUM_TOKENS;
+    return cachedMediumTokens;
+  }
+
+  const style = getComputedStyle(element);
+  const read = (name) => style.getPropertyValue(name).trim();
+  cachedMediumTokens = {
+    packTier: read('--spw-pack-tier'),
+    variantSelectionWeight: read('--spw-variant-selection-weight'),
+    touchMin: read('--spw-medium-touch-min'),
+    revealStagger: read('--spw-medium-reveal-stagger-step'),
+    accentWeight: read('--spw-medium-accent-weight'),
+    styleModulator: read('--spw-module-style-modulator'),
+  };
+  return cachedMediumTokens;
 }
 
 function countUniqueElements(root, selectors) {
@@ -212,6 +258,7 @@ export function collectInteractiveMedium(root = document) {
   const register = resolveMediumRegister(body, root);
   const posture = resolveInteractionPosture(html);
   const intensity = resolveMediumIntensity(register, hosts, html);
+  const tokens = readMediumTokens(html);
 
   return {
     register,
@@ -227,16 +274,16 @@ export function collectInteractiveMedium(root = document) {
     surface: body?.dataset?.spwSurface || '',
     hosts,
     displayVariants: {
-      packingTier: html?.dataset?.spwPackTier || readComputedCSSValue(html, '--spw-pack-tier'),
+      packingTier: html?.dataset?.spwPackTier || tokens.packTier,
       componentDensity: html?.dataset?.spwComponentDensity || '',
       layoutPosture: html?.dataset?.spwLayoutPosture || html?.dataset?.spwExplorePosture || '',
-      variantSelectionWeight: readComputedCSSValue(html, '--spw-variant-selection-weight'),
+      variantSelectionWeight: tokens.variantSelectionWeight,
     },
     moduleTokens: {
-      touchMin: readComputedCSSValue(html, '--spw-medium-touch-min'),
-      revealStagger: readComputedCSSValue(html, '--spw-medium-reveal-stagger-step'),
-      accentWeight: readComputedCSSValue(html, '--spw-medium-accent-weight'),
-      styleModulator: readComputedCSSValue(html, '--spw-module-style-modulator'),
+      touchMin: tokens.touchMin,
+      revealStagger: tokens.revealStagger,
+      accentWeight: tokens.accentWeight,
+      styleModulator: tokens.styleModulator,
     },
   };
 }
@@ -297,22 +344,29 @@ export function initInteractiveMedium(root = document) {
   publishApi(root);
   activeRoot = root;
   handleSync = () => scheduleSync(root);
+  handleRegisterChange = () => {
+    invalidateMediumTokens();
+    scheduleSync(root);
+  };
 
   const html = readHtml();
   const body = readBody();
   const snapshot = syncInteractiveMedium(root, { force: true });
 
-  window.addEventListener('resize', handleSync, { passive: true });
-  window.addEventListener('orientationchange', handleSync, { passive: true });
+  window.addEventListener('resize', handleRegisterChange, { passive: true });
+  window.addEventListener('orientationchange', handleRegisterChange, { passive: true });
   root.addEventListener('spw:shell-menu-state', handleSync);
-  root.addEventListener('spw:variant-selected', handleSync);
+  root.addEventListener('spw:variant-selected', handleRegisterChange);
   root.addEventListener('spw:scene-enter', handleSync);
   root.addEventListener('spw:scene-exit', handleSync);
   root.addEventListener('spw:scene-lane-focus', handleSync);
   root.addEventListener('spw:scene-bed-ready', handleSync);
+  TOKEN_INVALIDATION_EVENTS.forEach((type) => {
+    document.addEventListener(type, handleRegisterChange);
+  });
 
   if (html instanceof HTMLElement) {
-    deviceObserver = new MutationObserver(handleSync);
+    deviceObserver = new MutationObserver(handleRegisterChange);
     deviceObserver.observe(html, {
       attributes: true,
       attributeFilter: DEVICE_ATTRS,
@@ -320,7 +374,7 @@ export function initInteractiveMedium(root = document) {
   }
 
   if (body instanceof HTMLElement) {
-    routeObserver = new MutationObserver(handleSync);
+    routeObserver = new MutationObserver(handleRegisterChange);
     routeObserver.observe(body, {
       attributes: true,
       attributeFilter: ROUTE_ATTRS,
@@ -347,16 +401,23 @@ function cleanup() {
   if (syncRaf) window.cancelAnimationFrame(syncRaf);
   syncRaf = 0;
   lastSignature = '';
+  invalidateMediumTokens();
 
   if (handleSync) {
-    window.removeEventListener('resize', handleSync);
-    window.removeEventListener('orientationchange', handleSync);
     activeRoot.removeEventListener('spw:shell-menu-state', handleSync);
-    activeRoot.removeEventListener('spw:variant-selected', handleSync);
     activeRoot.removeEventListener('spw:scene-enter', handleSync);
     activeRoot.removeEventListener('spw:scene-exit', handleSync);
     activeRoot.removeEventListener('spw:scene-lane-focus', handleSync);
     activeRoot.removeEventListener('spw:scene-bed-ready', handleSync);
+  }
+
+  if (handleRegisterChange) {
+    window.removeEventListener('resize', handleRegisterChange);
+    window.removeEventListener('orientationchange', handleRegisterChange);
+    activeRoot.removeEventListener('spw:variant-selected', handleRegisterChange);
+    TOKEN_INVALIDATION_EVENTS.forEach((type) => {
+      document.removeEventListener(type, handleRegisterChange);
+    });
   }
 
   deviceObserver?.disconnect();
@@ -366,6 +427,7 @@ function cleanup() {
   hostObserver = null;
   routeObserver = null;
   handleSync = null;
+  handleRegisterChange = null;
 
   const html = readHtml();
   writeDatasetValues(html, {

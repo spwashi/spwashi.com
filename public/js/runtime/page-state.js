@@ -91,6 +91,8 @@ const PAGE_ARRIVAL_STEP_SEQUENCE = Object.freeze([
 ]);
 
 const FLOATING_CHROME_SELECTOR = '.skip-link, .spw-section-handle, .spw-section-handle-shell';
+const CHROME_IDENTITY_ATTRS = new Set(['data-spw-floating-chrome', 'data-spw-chrome-role']);
+
 const BOTTOM_FLOATING_CHROME_SELECTOR = [
   '[data-spw-floating-chrome="true"][data-spw-chrome-role="console"]',
   '[data-spw-floating-chrome="true"][data-spw-chrome-role="parallel-navigator"]',
@@ -150,34 +152,45 @@ export function annotateFloatingChrome(root = document) {
   });
 }
 
-function isVisibleBottomFloatingChrome(element) {
-  if (!(element instanceof HTMLElement)) return false;
-  if (element.hidden || element.getAttribute('aria-hidden') === 'true') return false;
-  if (element.dataset.spwHandleState === 'hidden' || element.dataset.spwHandleShellState === 'hidden') return false;
+/* Returns the one computed-style + rect pair for a visible bottom-floating
+   element, or null when it is hidden. The caller reuses this pair instead of
+   re-reading: every getComputedStyle and getBoundingClientRect on this path can
+   force a full style recalculation against the whole stylesheet, and the
+   measure runs on scroll/mutation schedules. */
+function measureBottomFloatingChrome(element) {
+  if (!(element instanceof HTMLElement)) return null;
+  if (element.hidden || element.getAttribute('aria-hidden') === 'true') return null;
+  if (element.dataset.spwHandleState === 'hidden' || element.dataset.spwHandleShellState === 'hidden') return null;
   const style = getComputedStyle(element);
-  if (style.display === 'none' || style.visibility === 'hidden') return false;
-  if (Number.parseFloat(style.opacity) <= 0.01) return false;
+  if (style.display === 'none' || style.visibility === 'hidden') return null;
+  if (Number.parseFloat(style.opacity) <= 0.01) return null;
   const rect = element.getBoundingClientRect();
-  return rect.width > 0 && rect.height > 0;
+  if (!(rect.width > 0 && rect.height > 0)) return null;
+  return { style, rect };
 }
 
+/* This module is the sole writer of --spw-fixed-viewport-correction-y — CSS only
+   consumes it, through `var(--spw-fixed-viewport-correction-y, 0px)` — so the
+   applied value is tracked here instead of being read back. The writer below
+   sets the token on the root element, and reading computed style off that same
+   root afterwards forces a full recalculation against every html[…]/:root[…]
+   selector family in the stylesheet. */
+let appliedCorrectionY = 0;
+
 function measureFixedViewportCorrection(root = document) {
-  const html = document.documentElement;
   const viewportHeight = window.visualViewport?.height || window.innerHeight || 0;
   if (!viewportHeight) return 0;
   const chrome = Array.from(root.querySelectorAll?.(BOTTOM_FLOATING_CHROME_SELECTOR) || []);
   // Bail before any computed-style read — each one can force a full style
   // recalculation, and this measure runs on scroll/mutation schedules.
   if (!chrome.length) return 0;
-  const activeCorrectionY = Number.parseFloat(
-    getComputedStyle(html).getPropertyValue('--spw-fixed-viewport-correction-y')
-  ) || 0;
+  const activeCorrectionY = appliedCorrectionY;
   return chrome
     .reduce((correction, element) => {
-      if (!isVisibleBottomFloatingChrome(element)) return correction;
-      const style = getComputedStyle(element);
+      const measured = measureBottomFloatingChrome(element);
+      if (!measured) return correction;
+      const { style, rect } = measured;
       if (style.position !== 'fixed') return correction;
-      const rect = element.getBoundingClientRect();
       const bottomInset = Math.max(
         0,
         Number.parseFloat(style.bottom) || Number.parseFloat(style.insetBlockEnd) || 0,
@@ -200,13 +213,20 @@ function updateFixedViewportCorrection() {
 
   const correctionY = measureFixedViewportCorrection(document);
   if (correctionY === 0) {
+    if (appliedCorrectionY === 0) return;
     html.style.removeProperty('--spw-fixed-viewport-correction-y');
     delete html.dataset.spwFixedViewportCorrection;
+    appliedCorrectionY = 0;
     return;
   }
 
-  html.style.setProperty('--spw-fixed-viewport-correction-y', `${Math.round(correctionY)}px`);
+  // Change-only write: this token lands on the root, so a redundant set
+  // invalidates style for the whole document.
+  const nextCorrectionY = Math.round(correctionY);
+  if (nextCorrectionY === appliedCorrectionY) return;
+  html.style.setProperty('--spw-fixed-viewport-correction-y', `${nextCorrectionY}px`);
   html.dataset.spwFixedViewportCorrection = 'on';
+  appliedCorrectionY = nextCorrectionY;
 }
 
 function initFixedViewportCorrection() {
@@ -255,7 +275,30 @@ function initFixedViewportCorrection() {
   window.visualViewport?.addEventListener?.('resize', schedule, { passive: true });
   window.visualViewport?.addEventListener?.('scroll', schedule, { passive: true });
   if (typeof MutationObserver === 'function') {
-    observer = new MutationObserver(schedule);
+    /* attributeFilter constrains attribute records only — childList records
+       still fire for every node added anywhere in the document, which during
+       boot is every module mounting its own DOM. Gate on records that can
+       actually change the correction before scheduling a measure that forces
+       style and layout against the full stylesheet. */
+    const touchesFloatingChrome = (node) => (
+      node instanceof HTMLElement
+      && (node.matches?.(BOTTOM_FLOATING_CHROME_SELECTOR)
+        || Boolean(node.querySelector?.(BOTTOM_FLOATING_CHROME_SELECTOR)))
+    );
+    const isRelevantRecord = (record) => {
+      if (record.type === 'attributes') {
+        // An element gaining or losing chrome identity may not match either
+        // before or after the write, so always admit those two attributes.
+        if (CHROME_IDENTITY_ATTRS.has(record.attributeName)) return true;
+        return record.target instanceof HTMLElement
+          && Boolean(record.target.matches?.(BOTTOM_FLOATING_CHROME_SELECTOR));
+      }
+      return Array.from(record.addedNodes).some(touchesFloatingChrome)
+        || Array.from(record.removedNodes).some(touchesFloatingChrome);
+    };
+    observer = new MutationObserver((records) => {
+      if (records.some(isRelevantRecord)) schedule();
+    });
     observer.observe(document.documentElement, {
       childList: true,
       subtree: true,
@@ -283,6 +326,7 @@ function initFixedViewportCorrection() {
     if (document.documentElement?.dataset) {
       delete document.documentElement.dataset.spwFixedViewportCorrection;
     }
+    appliedCorrectionY = 0;
   };
 }
 
