@@ -458,6 +458,7 @@ fixity = "tending"
   `[2026-08-11] land — adjacent measure hygiene: interactive-medium token cache; page-state single style+rect for bottom chrome.`,
   `[2026-08-11] hygiene — plan docs aligned to working tree; commit splits by concern; wired into plans root index. routeFamily still dead; payload work still open.`,
   `[2026-08-11] land — phase 1: operator-detection.js split (shared out of eager graph); 88 mount adapters deleted; dist JS minify 55.7%; eager graph 38→33 modules / 631→503 KB. Bundle deferred.`,
+  `[2026-08-11] prep — HTML region hygiene before phase 2: every site-frame now has id+kind+role; entry spines declare region-purpose=public-spine; scripts/check-region-hygiene.mjs reports 777 frames / 0 issues. Public routes already on spw-page (captures pack left as generated offline).`,
  ][reg=set]
 }[reg=facet]
 

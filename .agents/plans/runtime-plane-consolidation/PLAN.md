@@ -142,6 +142,14 @@ Validation: `npm run check:runtime`, `npm run test:engagement:run`, local `node 
 
 ### Phase 2 — Route-scoped scheduling
 
+**HTML prep (2026-08-11):** region hygiene landed first so rail/handle/profiler and future route-family gates have stable authored anchors.
+
+- Every `site-frame` carries `id` + `data-spw-kind` + `data-spw-role` (777 frames / 0 issues via `node scripts/check-region-hygiene.mjs`).
+- Entry spines (`site-hero` or `liminality=entry` + `composition-stability=anchored`) declare `data-spw-region-purpose="public-spine"` and usually `data-spw-region-role="entry-spine"`.
+- Public routes remain on `<spw-page>` / `<spw-site-head>` templating; `design/components/captures/` is an offline generated pack (not a public template candidate).
+
+**Still to implement:**
+
 - Consume `.agents/state/runtime/route-runtime-manifest.json` at build time to emit a per-surface module set into the page (or into a small generated module), instead of leaving it a check-only artifact.
 - Make `shouldScheduleDefinition` honor `ctx.routeFamily`, which is already parsed and currently dead.
 - Cache selector probe results per boot so the ~8 filter passes share one `querySelector` per definition.
