@@ -219,11 +219,11 @@
                             <a class="operator-chip" href="#curricular-codebase" data-spw-operator="frame" data-spw-action="address">#&gt;curricularize_codebase</a>
                             <a class="operator-chip" href="#semantic-fields" data-spw-operator="frame" data-spw-action="address">#&gt;semantic_fields</a>
                             <a class="operator-chip" href="/topics/software/spw/" data-spw-operator="wonder" data-spw-action="inspect">? Spw operator atlas</a>
-                            <a class="operator-chip" href="/topics/craft/" data-spw-operator="action" data-spw-action="apply">~author_craft_ramp</a>
+                            <a class="operator-chip" href="/topics/craft/" data-spw-operator="potential" data-spw-action="apply">~author_craft_ramp</a>
                             <a class="operator-chip" href="#spw-syntax-surface" data-spw-operator="concept-edge" data-spw-action="show">&gt;syntax_reference</a>
                             <a class="operator-chip" href="#spw-grammar-surface" data-spw-operator="concept-edge" data-spw-action="show">&gt;grammar_surface</a>
                             <a class="operator-chip" href="#spw-component-surface" data-spw-operator="concept-edge" data-spw-action="show">&gt;component_surface</a>
-                            <a class="operator-chip" href="#interactive-codeblocks" data-spw-operator="action" data-spw-action="apply">~interactive_codeblocks</a>
+                            <a class="operator-chip" href="#interactive-codeblocks" data-spw-operator="potential" data-spw-action="apply">~interactive_codeblocks</a>
                             <a class="operator-chip" href="/topics/software/pretext/" data-spw-operator="wonder" data-spw-action="inspect">? pretext field lab</a>
                             <a class="operator-chip" href="/topics/software/algorithms/" data-spw-operator="value" data-spw-action="materialize">*algorithm_visualization</a>
                             <a class="operator-chip" href="/topics/software/differential-lambda-calculus/" data-spw-operator="value" data-spw-action="materialize">*differential_lambda_calculus</a>
@@ -664,7 +664,7 @@
                 <footer class="frame-actions" data-spw-slot="actions">
                     <nav class="frame-operators" aria-label="Software routes">
                         <a class="operator-chip" aria-current="page" href="/topics/software/" data-spw-operator="frame" data-spw-action="address">#&gt;software_surface</a>
-                        <a class="operator-chip" href="/topics/software/text-editing/" data-spw-operator="action" data-spw-action="apply">~text_editing</a>
+                        <a class="operator-chip" href="/topics/software/text-editing/" data-spw-operator="potential" data-spw-action="apply">~text_editing</a>
                         <a class="operator-chip" href="/topics/software/spw/" data-spw-operator="wonder" data-spw-action="inspect">? operator atlas</a>
                         <a class="operator-chip" href="/topics/software/renderers/" data-spw-operator="concept-edge" data-spw-action="show">&gt;renderers</a>
                         <a class="operator-chip" href="/topics/software/schedulers/" data-spw-operator="integration" data-spw-action="publish">^schedulers</a>
@@ -873,7 +873,7 @@ Files should remain legible.
 
                 <div class="frame-body" data-spw-slot="body">
                     <h2>Grammar as Interface</h2>
-                    <p class="inline-note" data-spw-copy-depth="normal">Spw operator prefixes are not decoration. Each token names what kind of thing follows and how an interface should let someone approach it.</p>
+                    <p class="inline-note" data-spw-copy-depth="normal">Spw prefixes are not decoration. The parser and runtime detect a type from the sigil. Original names, intermediate names, and those runtime types have been variably useful and sometimes disagree — that disagreement shows up in design reviews, tests, and leftover route slugs. Teach the sigil and the current type. Do not treat an old slug as a public alias.</p>
 
                 <div class="mode-panels">
                     <section class="mode-panel" data-mode-group="grammar-lens" data-mode-panel="operators" data-spw-role="schema">
@@ -888,40 +888,40 @@ Files should remain legible.
                                     <td><strong>layer marker</strong> — marks the interpretive role of a frame (<code>!pragmatics</code>, <code>!meaning_time</code>, <code>!ux</code>)</td>
                                 </tr>
                                 <tr>
-                                    <td><a class="frame-sigil" href="/topics/software/spw/operators/baseline/" data-spw-operator="baseline">.member</a></td>
-                                    <td><strong>baseline</strong> — returns attention to a local default, member, or settled lens</td>
+                                    <td><a class="frame-sigil" href="/topics/software/spw/operators/baseline/" data-spw-operator="ground">.member</a></td>
+                                    <td><strong>ground</strong> — settle on a local default, member, or center of gravity</td>
                                 </tr>
                                 <tr>
-                                    <td><a class="frame-sigil" href="/topics/software/spw/operators/object/" data-spw-operator="object">^"name"{ }</a></td>
-                                    <td><strong>object</strong> — holds structured, inspectable content; the body remains legible plain text</td>
+                                    <td><a class="frame-sigil" href="/topics/software/spw/operators/object/" data-spw-operator="integration">^"name"{ }</a></td>
+                                    <td><strong>integration</strong> — lift parts into an inspectable whole; the body stays readable</td>
                                 </tr>
                                 <tr>
-                                    <td><a class="frame-sigil" href="/topics/software/spw/operators/ref/" data-spw-operator="ref">~"path"</a></td>
-                                    <td><strong>reference</strong> — carries a path, named anchor, or literal; points outward without breaking the file</td>
+                                    <td><a class="frame-sigil" href="/topics/software/spw/operators/ref/" data-spw-operator="potential">~"path"</a></td>
+                                    <td><strong>potential</strong> — a potentiating path value; holds a path without collapsing it</td>
                                 </tr>
                                 <tr>
-                                    <td><a class="frame-sigil" href="/topics/software/spw/operators/probe/" data-spw-operator="probe">?[probe]{ }</a></td>
-                                    <td><strong>probe</strong> — stores a question, query, or interactive unit; signals inquiry at the structural level</td>
+                                    <td><a class="frame-sigil" href="/topics/software/spw/operators/probe/" data-spw-operator="wonder">?[probe]{ }</a></td>
+                                    <td><strong>wonder</strong> — open a question or measurement without mutating the source</td>
                                 </tr>
                                 <tr>
                                     <td><a class="frame-sigil" href="/topics/software/spw/operators/action/" data-spw-operator="action">!action(...)</a></td>
-                                    <td><strong>action</strong> — commits a local behavior or projection; the imperative operator</td>
+                                    <td><strong>action</strong> — commit a move and make the consequence observable. Not <code>@</code>.</td>
                                 </tr>
                                 <tr>
-                                    <td><a class="frame-sigil" href="/topics/software/spw/operators/stream/" data-spw-operator="stream">*stream</a></td>
-                                    <td><strong>stream</strong> — connects to dynamic or event-driven content; marks where data flows in</td>
+                                    <td><a class="frame-sigil" href="/topics/software/spw/operators/stream/" data-spw-operator="value">*stream</a></td>
+                                    <td><strong>value</strong> — mark material salience, substance, or concrete worth</td>
                                 </tr>
                                 <tr>
-                                    <td><a class="frame-sigil" href="/topics/software/spw/operators/merge/" data-spw-operator="merge">&amp;merge</a></td>
-                                    <td><strong>merge</strong> — overlays fields so comparison and integration can stay inspectable</td>
+                                    <td><a class="frame-sigil" href="/topics/software/spw/operators/merge/" data-spw-operator="subject">&amp;merge</a></td>
+                                    <td><strong>subject</strong> — name the bound focus of a relation</td>
                                 </tr>
                                 <tr>
                                     <td><a class="frame-sigil" href="/topics/software/spw/operators/binding/" data-spw-operator="binding">=binding</a></td>
                                     <td><strong>binding</strong> — names, pins, or categorizes a local value so it can be reused</td>
                                 </tr>
                                 <tr>
-                                    <td><a class="frame-sigil" href="/topics/software/spw/operators/meta/" data-spw-operator="meta">$meta</a></td>
-                                    <td><strong>meta</strong> — reflects on the medium, trace, or register itself</td>
+                                    <td><a class="frame-sigil" href="/topics/software/spw/operators/meta/" data-spw-operator="substrate">$meta</a></td>
+                                    <td><strong>substrate</strong> — name the support layer: storage, time, money, attention</td>
                                 </tr>
                                 <tr>
                                     <td><a class="frame-sigil" href="/topics/software/spw/operators/normalize/" data-spw-operator="normalize">%normalize</a></td>
@@ -932,8 +932,8 @@ Files should remain legible.
                                     <td><strong>pragma</strong> — encodes a runtime constraint or interpretive hint; metadata about the frame itself</td>
                                 </tr>
                                 <tr>
-                                    <td><a class="frame-sigil" href="/topics/software/spw/operators/surface/" data-spw-operator="surface" data-spw-form="angle">&gt;surface</a></td>
-                                    <td><strong>surface</strong> — a projected or rendered view; the output end of a frame pipeline</td>
+                                    <td><a class="frame-sigil" href="/topics/software/spw/operators/surface/" data-spw-operator="concept-edge" data-spw-form="angle">&gt;surface</a></td>
+                                    <td><strong>concept-edge</strong> — project the same structure onto another room</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -948,7 +948,7 @@ Files should remain legible.
                             </li>
                             <li>
                                 <span class="source-name">Sigil roles</span>
-                                Sigils act as anchors, lenses, and controls. Clicking a <code>#&gt;</code> sigil navigates to a frame; clicking a <code>?[probe]</code> should open an inquiry surface.
+                                A sigil is useful when the runtime can detect it and a reader can inspect the consequence. <code>#&gt;</code> addresses a named handle; <code>?</code> opens a probe; <code>!</code> commits; <code>@</code> situates a viewpoint; <code>&gt;</code> projects.
                             </li>
                             <li>
                                 <span class="source-name">Motion as transition</span>
@@ -1077,7 +1077,7 @@ Files should remain legible.
                     </div>
                     <div class="frame-panel" data-spw-form="circle" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software__panel_3" data-spw-semantic-expression="component[symmetry]{intent.target}">
                         <h3>Prefix / postfix symmetry</h3>
-                        <p>Keyboard flows can choose intent first; touch inspection can choose target first. Equivalent outcomes should leave the same semantic trace.</p>
+                        <p>Keyboard flows can choose intent first; touch inspection can choose target first. Equivalent outcomes should leave the same semantic trace. A wrap like <code>&lt;beans&gt;#</code> and a postfix like <code>beans.&lt;</code> may land in the same conceptual bed and still bind at different collars — tend both as specimens, do not collapse them. Practice that distinction on the <a href="/topics/software/spw/#concept-form-lab">operator atlas</a>.</p>
                     </div>
                     <div class="frame-panel" data-spw-form="circle" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software__panel_4" data-spw-semantic-expression="component[safety]{no-op}">
                         <h3>Graceful no-op</h3>
@@ -1136,7 +1136,7 @@ Files should remain legible.
                 </header>
 
                 <div class="frame-body" data-spw-slot="body">
-                    <p class="inline-note" data-spw-copy-depth="normal">A current reason this matters is <a href="/topics/knowledge-bases/markdown/" data-spw-operator="route">Obsidian</a>, but the broader utility is larger than one company: the same plain-text and projection questions show up across note-taking, editing, plugins, and teaching surfaces.</p>
+                    <p class="inline-note" data-spw-copy-depth="normal">A current reason this matters is <a href="/topics/knowledge-bases/#spw-as-knowledge-base" data-spw-operator="route">Spw as a public knowledge base</a>. The same plain-text and projection questions show up across note-taking, editing, plugins, teaching surfaces, and <a href="/topics/knowledge-bases/#dregg-contribution">named contribution tracks</a> on neighboring systems.</p>
                     <div class="domain-grid" data-spw-feature="software-text-editing-fit" data-spw-role="schema">
                         <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software__panel_7" data-spw-semantic-expression="editing[files]{plain-text}">
                             <h3>Plain text stays</h3>

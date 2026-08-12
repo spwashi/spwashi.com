@@ -47,6 +47,25 @@ fixity = "tending"
  first_read: "component-region-personality for voice/templates; semantic-copy-depth for depth tiers; vocabulary_metaphor_growth_synthesis for cluster audit + promotion waves."
 }
 
+^"embedding_garden"{
+  metaphor = "Spw-native marks are a garden, not a catalog dump. Freshness is usefulness after return, not coverage."
+  plant = "Mark a stem only when it recurs, is taught, or opens a form seat. Prefer data-spw-topic with an explicit slug."
+  label = "Empty data-spw-topic beds get kebab text via node scripts/tend-spw-embeddings.mjs --apply. Do not invent slugs that disagree with visible words."
+  prune = "Do not wrap every noun. Do not stamp data-spw-form on every site-frame. Living terms inspect; topics jump conceptually."
+  compost = "Remove marks that no longer change navigation, parse demand, or reader literacy."
+  harvest = "Open combinatorics go to /topics/software/spw/#concept-form-lab and /tools/spw-parser/?spw_sample=beans."
+  seats = "<stem> conceptual · [stem] variant · {stem} practice · (stem) scene · postfix pairs stay hypotheses"
+  soil_harvest = "Beans open soil work, companion planting, and two microbial stories (rhizobia vs PNSB). Keep those as facts on /recipes/#soil-companions — not as a reason to blend kitchen, parser, and garden into one metaphor."
+  dregg_harvest = "Current attention: Dregg.Net. Cite the existing author spec (docs/CONTENT-AND-ASSET-SPEC.md) and art guide (docs/CONTRIBUTING-ASSETS.md). Public home: /topics/knowledge-bases/#dregg-contribution. Do not invent a parallel contribution taxonomy."
+}[reg=facet]
+
+^"reader_theory"{
+  stance = "Assume a busy reader arrived for this page's subject. Lead with what they can use, observe, or decide."
+  knowledge_base = "Each public page should function as a knowledge base for its domain: definitions, mechanisms, sources, next practice. Marks and forms are handles, not the content."
+  mindfulness = "Name what the reader already knows how to do, then add one distinction that changes the next action. Do not ask them to imagine a blend in order to earn the fact."
+  refuse = "Recursive pleas for phantom metaphor-blends: combinatoric genre sales, atlas-tending hypotheses on non-language pages, and 'wrap this staple so the parser can grow' as a substitute for soil, recipe, or nutrition knowledge."
+}[reg=facet]
+
 ^"owner_claim"{
  claim_id = "ecology-copy-001"
  layer = "pragmatic"

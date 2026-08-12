@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <spw-page
-    title="Spwashi - Privacy and Local State"
-    description="A plain-language privacy and local state guide for spwashi.com: analytics posture, local browser storage, notes, settings, service worker state, and reset paths."
+    title="Spwashi - Privacy, Thresholds, and Integrity"
+    description="Privacy on this site is mindfulness about liminality: what stays in this browser, what becomes public, and when higher-stakes work needs a tighter integrity scope."
     canonical="https://spwashi.com/privacy/"
-    og_title="Spwashi - Privacy and Local State"
-    og_description="A plain-language guide to what spwashi.com stores locally, what leaves the browser, and how to inspect or reset local state."
-    keywords="privacy, local state, local storage, settings, analytics, service worker, browser storage, spwashi"
+    og_title="Spwashi - Privacy, Thresholds, and Integrity"
+    og_description="What this site remembers locally, what can leave the browser, and how integrity scales from a casual visit to client work."
+    keywords="privacy, liminality, integrity, local state, client work, settings, analytics, browser storage, spwashi"
 ></spw-page>
 <html lang="en">
 <head>
@@ -41,35 +41,36 @@
         <div class="frame-topline" data-spw-slot="header">
             <a class="frame-sigil" href="#privacy-overview">#&gt;privacy</a>
             <div class="spec-strip">
-                <span class="spec-pill">no default third-party analytics</span>
-                <span class="spec-pill">local browser state</span>
-                <span class="spec-pill">reset paths</span>
+                <span class="spec-pill">liminal, not absolute</span>
+                <span class="spec-pill">scoped integrity</span>
+                <span class="spec-pill">local unless named</span>
             </div>
         </div>
 
-        <p class="page-kicker">Privacy / Local State / Browser Trust</p>
-        <h1 id="privacy-title">The privacy model should be easy to inspect.</h1>
+        <p class="page-kicker">Privacy / Liminality / Integrity</p>
+        <h1 id="privacy-title">Privacy here is a threshold, not a posture.</h1>
         <p id="privacy-lede" class="page-lede">
-            This page is a plain-language register for privacy, local state, and browser trust. It helps you inspect what stays in the browser, what can be reset, and what a return visit will remember.
+            Most of what this site remembers sits in a liminal place: not yet public, not yet gone. Settings, notes, visits, and drafts stay in this browser so a return can continue. That is ordinary human continuity. It is not a claim that every surface needs the same walls.
         </p>
         <p>
-            Spwashi is mostly a static site with progressive browser features. Some features remember preferences, visits, notes, checkpoints, or drafts in this browser so the surface can feel continuous across visits. Those records are local unless a specific feature says otherwise.
+            Integrity scales with the work. A casual reading visit can keep a theme and a checkpoint. A care note should stay small and local unless sharing is the point. Work with a higher-profile client needs a tighter scope: fewer traces, clearer handoff, and no casual projection of names or artifacts into public rooms.
         </p>
         <div class="spw-reason-strip" aria-label="Privacy reasons" data-spw-feature="privacy-reason-strip">
             <div>
                 <strong>This page exists because</strong>
-                <p>browser trust should be readable instead of hidden in implementation.</p>
+                <p>people need to know what a return visit will remember, and what a client engagement should not leak.</p>
             </div>
             <div>
                 <strong>Use this when</strong>
-                <p>you want to inspect local state, analytics posture, or reset paths before returning.</p>
+                <p>you are deciding how much state a visit, a note, or a commission actually needs.</p>
             </div>
             <div>
                 <strong>What it can produce</strong>
-                <p>a clearer privacy model, cleaner resets, and more confident repeat visits.</p>
+                <p>a realistic scope: local continuity for ordinary use, tighter integrity when the stakes rise.</p>
             </div>
         </div>
         <nav class="frame-operators" aria-label="Privacy shortcuts">
+            <a class="operator-chip" href="#integrity-scopes" data-spw-operator="potential" data-spw-action="explore">~integrity_scopes</a>
             <a class="operator-chip" href="#analytics-posture" data-spw-operator="wonder" data-spw-action="inspect">? analytics</a>
             <a class="operator-chip" href="#local-state" data-spw-operator="integration" data-spw-action="publish">^local_state</a>
             <a class="operator-chip" href="#reset-paths" data-spw-operator="action">!reset[paths]</a>
@@ -84,7 +85,7 @@
             <h2 id="analytics-posture-title">Analytics posture</h2>
         </header>
         <p>
-            Analytics must now be declared explicitly. If no engine is configured, no analytics script is rendered.
+            Counting visitors is optional here, not a default. A page only loads an analytics script if it names an engine. If you do not see that declaration, nothing extra is being counted.
         </p>
         <pre><code>&lt;spw-page
   analytics_engine="custom"
@@ -144,8 +145,34 @@
             <li>Use browser storage tools when you want to clear every local trace for this origin.</li>
         </ul>
         <p class="frame-note">
-            Sensitive working surfaces should say when data stays local. If a future feature sends data off-device, that should be visible in route copy, not hidden in implementation.
+            Sensitive working surfaces should say when something stays local and when it is about to leave. That is enough for most visits. Client work may need a smaller surface than the public site: do not paste names, drafts, or artifacts into a tool just because the tool is convenient.
         </p>
+    </section>
+
+    <section class="site-frame" id="integrity-scopes" aria-labelledby="integrity-scopes-title" data-spw-kind="frame" data-spw-role="orientation" data-spw-liminality="threshold">
+        <header class="frame-heading">
+            <a class="frame-sigil" href="#integrity-scopes">~"integrity_scopes"</a>
+            <h2 id="integrity-scopes-title">Integrity has a scope</h2>
+        </header>
+        <p class="inline-note">The same person can need different walls in the same week. Name the threshold before you treat every note as a secret or every page as a vault.</p>
+        <div class="frame-grid">
+            <article class="frame-panel">
+                <h3>A visit</h3>
+                <p>Theme, density, and a few return handles can stay in this browser. They make the site feel continuous. They are not a dossier.</p>
+            </article>
+            <article class="frame-panel">
+                <h3>A working note</h3>
+                <p>Care cards, drafts, and local notes sit on the threshold between thinking and sharing. Keep them here until a person actually needs them. Share the smallest useful slice.</p>
+            </article>
+            <article class="frame-panel">
+                <h3>A public page</h3>
+                <p>Published routes are meant to be found. Do not put a client’s unpublished work, a private name, or a midprocess artifact on a public route unless that handoff was the job.</p>
+            </article>
+            <article class="frame-panel">
+                <h3>A higher-stakes engagement</h3>
+                <p>Higher-profile clients raise the cost of a leak, a screenshot, or a casual model prompt. Use a narrower channel, fewer copies, and a clearer end of the work. Integrity here is realistic necessity, not a brand of secrecy.</p>
+            </article>
+        </div>
     </section>
 </main>
 

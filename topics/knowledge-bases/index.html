@@ -58,10 +58,12 @@
             </div>
             <h1 id="knowledge-bases-title">Knowledge Bases</h1>
             <p>This hub is for tools and methods that treat notes as working memory rather than as a single final document. The useful distinction is not just "editor" versus "not editor." It is whether the system supports retrieval, cross-reference, staged drafting, and long-lived accumulation in a way that changes how you think and write.</p>
-            <p><a href="https://obsidian.md/about" target="_blank" rel="noopener">Obsidian</a> is one current product example because it keeps local files, links, metadata, and plugins in view. But the category is broader than one company: wiki-like systems, linked-note software, research archives, and other local-first authoring tools belong here too.</p>
-            <p class="frame-note">This site is itself a public knowledge surface: routes carry <code>data-spw-*</code> semantics, the runtime can snapshot <span class="spw-topic" data-spw-topic>topical payloads</span> for handoff, and <a href="/topics/software/spw/">Spw</a> plain text stays readable beside HTML. Compare private notes in your vault with how <a href="/about/website/">this field guide</a> exposes inspectable contracts.</p>
+            <p><a href="/topics/software/spw/">Spw</a> is the knowledge base I actually keep: readable source, named stems, and routes that project the same notes into HTML. Other local-first writing tools exist; they are neighbors, not the substrate this site is built from.</p>
+            <p class="frame-note">This site is itself a public knowledge surface: routes carry <code>data-spw-*</code> semantics, the runtime can snapshot <span class="spw-topic" data-spw-topic="topical-payloads">topical payloads</span> for handoff, and Spw stays readable beside HTML. Compare private notes with how <a href="/about/website/">this field guide</a> exposes inspectable contracts.</p>
             <nav class="frame-operators" aria-label="Knowledge base topic routes">
                 <a class="operator-chip" href="#knowledge-base-value" data-spw-operator="frame" data-spw-action="address">#&gt;value_model</a>
+                <a class="operator-chip" href="#spw-as-knowledge-base" data-spw-operator="frame" data-spw-action="address">#&gt;spw_as_kb</a>
+                <a class="operator-chip" href="#dregg-contribution" data-spw-operator="potential" data-spw-action="explore">~dregg_tracks</a>
                 <a class="operator-chip" href="/topics/knowledge-bases/markdown/" data-spw-operator="potential" data-spw-action="explore">~markdown_knowledge_bases</a>
                 <a class="operator-chip" href="/topics/software/text-editing/" data-spw-operator="potential" data-spw-action="explore">~text_editing</a>
                 <a class="operator-chip" href="/topics/software/#curricular-codebase" data-spw-operator="potential" data-spw-action="explore">~curricular_codebase</a>
@@ -115,6 +117,59 @@
             </div>
         </section>
 
+        <section class="site-frame" id="spw-as-knowledge-base" data-spw-kind="frame" data-spw-role="register">
+            <div class="frame-topline">
+                <a class="frame-sigil" href="#spw-as-knowledge-base">#&gt;spw_as_kb</a>
+                <span class="frame-kind">working memory</span>
+            </div>
+            <h2>Spw as a knowledge base</h2>
+            <p>A knowledge base is useful when a later reader — human or model — can find a claim, follow a link, and tell source from projection. Spw is that layer here: <code>.spw</code> files and route HTML stay dual-readable; operators and topics are retrieval handles; the <a href="/topics/software/spw/">atlas</a> and the <a href="/tools/spw-parser/">literal parser</a> show what the marks actually parse.</p>
+            <p>In spring 2026 I saw a small-team role on a local-first writing tool and <a href="https://x.com/spwashi/status/2060139165434380509">said so in public</a> instead of spraying silent applications. I have since sat with that product’s principles and community: keep the files, put rare features in plugins, teach agents the open formats rather than replacing the notebook with a chat window. The work that remained mine was to make this site a knowledge base that those principles can still recognize.</p>
+            <p>The four months after that declaration were mostly infrastructure that a knowledge base needs in order to stay honest: a page template so routes share a shell, a browser parser that is the same kernel as the workbench, operator names aligned with that parser, a module catalog that can unmount as well as mount, and site search that can find a stem. Copy still has to earn its keep as facts a reader can use, not as a plea to imagine more blends.</p>
+            <div class="frame-grid">
+                <div class="frame-panel">
+                    <h3>What a neighboring product taught</h3>
+                    <p>File-first tools that grew Bases, a CLI, and <a href="https://github.com/kepano/obsidian-skills" target="_blank" rel="noopener">agent skills</a> over Markdown, canvases, and tables are a live experiment in letting models read owned files. The useful lesson is not to copy a vault UI. It is that agents get more powerful when the corpus has a grammar they can be taught, and weaker when they are asked to invent structure inside a blob.</p>
+                </div>
+                <div class="frame-panel">
+                    <h3>What AI changes now</h3>
+                    <p>A language model can traverse named stems, propose a scene, or draft a weight table. It should not become the owner of the files. The constraint I want to keep is the same one a careful notes community already lives by: the human-readable source stays the trust surface; the model is a temporary reader with a receipt, not a second vault.</p>
+                </div>
+                <div class="frame-panel">
+                    <h3>Where attention moved</h3>
+                    <p>Attention is now on <a href="https://www.dregg.net/" target="_blank" rel="noopener">Dregg.Net</a> — verified cells, capabilities, and pre-web hypermedia so an agent can inhabit a world without owning the machine. <a href="https://x.com/DreggNet/status/2086556344337735895">@DreggNet</a> credited a thread of mine on that lineage, and has used art from this practice on their timeline. The honest next question is not “how do I blend Spw into Dregg.” It is which of their already-named tracks I can actually fill.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="site-frame" id="dregg-contribution" data-spw-kind="frame" data-spw-role="reference">
+            <div class="frame-topline">
+                <a class="frame-sigil" href="#dregg-contribution">~dregg_tracks</a>
+                <span class="frame-kind">contribution guide</span>
+            </div>
+            <h2>What Dregg already asks of this practice</h2>
+            <p>The Dregg codebase already has a content-authoring spec written for this name. It is not a metaphor document. It names three tracks, what is built, and what still needs a surface. Read it in the repo: <a href="https://github.com/emberian/dregg/blob/main/docs/CONTENT-AND-ASSET-SPEC.md" target="_blank" rel="noopener">CONTENT-AND-ASSET-SPEC.md</a>. Hand-drawn or generated stills have a shorter sibling: <a href="https://github.com/emberian/dregg/blob/main/docs/CONTRIBUTING-ASSETS.md" target="_blank" rel="noopener">CONTRIBUTING-ASSETS.md</a>.</p>
+            <div class="frame-grid">
+                <div class="frame-panel">
+                    <h3>Track A — deterministic sprites</h3>
+                    <p>The visual pipeline is already live: a committed seed draws traits, then a pure function renders layered SVG. The work they named for me is the weight tables and new sprite kinds — still a <code>render(traits) → SVG</code> with no hidden randomness, so a stranger can re-derive the same image. That is closer to a craft constraint than to a style prompt.</p>
+                </div>
+                <div class="frame-panel">
+                    <h3>Track B — <code>.scene</code> files</h3>
+                    <p>The Descent’s daily run consumes <span class="spw-topic" data-spw-topic="spween">spween</span> text: rooms, gates, effects, a win condition. No Rust required to author. The open seam they named is a publish command that accepts a raw scene so a handwritten universe can hit the no-cheat board. This is the closest track to how I already write branching public pages. Syntax lives in <a href="#spween-scene">the cheat-sheet below</a>.</p>
+                </div>
+                <div class="frame-panel">
+                    <h3>Track C — seasonal tables</h3>
+                    <p>Procgen biomes and monster lists are versioned tables. Appending mid-season re-buckets every seed, so expansion is a season boundary, not a silent edit. The high-leverage text work is thickening the daily template so it actually uses the monsters, loot, and NPCs the tables already model.</p>
+                </div>
+                <div class="frame-panel">
+                    <h3>Hand art, separately</h3>
+                    <p>Procedural sprites stay seed-derived. Hand or Midjourney stills are a new layer: 128×128 board slots, transparent backgrounds, navy palette, one asset per PR. Brand and token art can land immediately; in-game <code>art:</code> handles are designed and not yet wired. Do not block a file on the wiring.</p>
+                </div>
+            </div>
+            <p class="frame-note">If a later reader only needs one next action: open the spec, pick Track B if you write, Track A if you draw systems, or the assets guide if you have a still. The <a href="/about/domains/lore.land/">lore.land</a> surface is where long-form narrative from those scenes can become public without pretending the vault and the game are the same room.</p>
+        </section>
+
         <section class="site-frame" id="knowledge-base-references" data-spw-kind="frame" data-spw-role="reference">
             <div class="frame-topline">
                 <a class="frame-sigil" href="#knowledge-base-references">~refs</a>
@@ -155,6 +210,8 @@
                 <a class="operator-chip" data-spw-operator="frame" href="/topics/software/#curricular-codebase" data-spw-action="address">#&gt;curricular_codebase</a>
                 <a class="operator-chip" data-spw-operator="frame" href="/services/systems/#curricularize" data-spw-action="address">#&gt;systems_offer</a>
                 <a class="operator-chip" data-spw-operator="frame" href="/topics/software/spw/" data-spw-action="address">#&gt;spw_operator_atlas</a>
+                <a class="operator-chip" data-spw-operator="frame" href="#dregg-contribution" data-spw-action="address">#&gt;dregg_tracks</a>
+                <a class="operator-chip" data-spw-operator="potential" href="https://github.com/emberian/dregg/blob/main/docs/CONTENT-AND-ASSET-SPEC.md" data-spw-action="explore">~content_spec</a>
             </div>
         </section>
     </main>

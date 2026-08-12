@@ -247,6 +247,24 @@ Prefer these existing names over inventing parallel state unless the distinction
 | action `@` | teal-dark | `--op-action-color` |
 | topic `<` | sea-green | `--op-topic-color` |
 
+Parser/runtime consequence (author chips against this, not the color nickname):
+
+| Sigil | Type | Use when |
+|-------|------|----------|
+| `#>` | frame | address a named handle |
+| `?` | wonder | open a probe |
+| `^` | integration | lift an inspectable register |
+| `~` | potential | hold a path without collapsing it |
+| `@` | perspective | situate a viewpoint / enter a working posture |
+| `!` | action | commit a move |
+| `>` | concept-edge | project onto another surface |
+| `<` | concept | open a topical boundary |
+| `[` `]` | mode | select a variant |
+| `{` `}` | direction | hold a practice |
+| `(` `)` | scene | stage midprocess |
+
+`data-spw-operator` must match the sigil (aliases: `object`→integration, `ref`→potential, `probe`→wonder, `surface`→concept-edge, `topic`→concept). Do not use `~` as a generic link.
+
 ### Component anatomy
 
 Components follow a slot contract:

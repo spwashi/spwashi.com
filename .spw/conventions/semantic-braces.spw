@@ -23,6 +23,16 @@
   angles: "<> carry lenses, conduits, or interpretive filters; in authored HTML, prefer data attributes or escaped text so markup stays valid."
   discoverability: "A reader should be able to jump from one instance to another by shared root, then narrow by variant or behavior."
   positional_coupling: "Root is stable (stable fixity). [variant] and {behavior} are infix scopes (stable grammar, tending labels). Closing } or acted-through ! are postfix residue (tending copy, volatile runtime phase)."
+  combinatorics_open: "Wrap vs postfix pairs such as <beans> vs beans.< vs <beans># are site practice, not parser law. Prefix binds the container from outside; postfix binds the seam. Similar navigational space is allowed; collapsing the AST seats is not. Demand for new parse forms should come from public specimens on the operator atlas and literal parser."
+}[reg=facet]
+
+^"sigil_consequence"{
+  rule: "A public sigil must match a parser prefix in public/js/kernel/operator-detection.js. data-spw-operator must resolve to that same type (or a declared alias). If the mark cannot be parsed or inspected, do not use it as ornament."
+  geometry: "#> names a handle · ? opens a probe · ^ lifts a register · ~ holds a path · @ situates a viewpoint · ! commits a move · > projects to another surface · < opens a concept · [ selects a mode · { holds a practice · ( stages a scene"
+  inspection: "The chip text is the inspectable value: a reader or runtime should be able to read prefix + operand and know what kind of consequence follows. Tight binding (no space after the sigil) except ? and # inline payloads."
+  refuse: "Do not use ~ as a generic link. Do not pair ! copy with a potential operator. Do not use @ for action or ^ for a mere nickname."
+  audience_seat: "[variant] may name who the surface is for: reader · client · expert. data-spw-audience mirrors that seat as space-separated tokens."
+  lens_seat: "<lens> may name a revealed preference: public · brief · crawl · commission. data-spw-semantic-lens mirrors it. Workshop/inspect postures may surface expert seats; reading posture keeps them quiet."
 }
 
 ^"operational_fixity"{
