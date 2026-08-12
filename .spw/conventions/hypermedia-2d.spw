@@ -14,6 +14,7 @@
 @layout_css: ~"../../public/css/shell/layout.css"
 @workbench_runtime: ~"../_workbench/docs/runtime/spw/runtime-foundation.spw"
 @viewing_reason: ~"./viewing-reason.spw"
+@scenes: ~"../scenes/index.spw"
 
 ^"axes"{
   vertical: .{
@@ -137,6 +138,8 @@
   interaction: "mode-switch lanes per bed; screenshot stage as proof artifact"
   scene_interaction: "scene-interaction.js — lane radiogroup, image lens coupling, localStorage memory strip per mode panel"
   attrs: #[`data-spw-scene-interactive`, `data-spw-scene-lane`, `data-spw-scene-lane-bind`, `data-spw-scene-focus-lane`][reg=set]
+  minds_module = "Site-local .spw/scenes — dialects, ToM scripts, beat rungs, and $ output substrate. Lanes stay attrs; minds stay in the module."
+  @scenes: @scenes
 }
 
 ^"effect_interpretation"{

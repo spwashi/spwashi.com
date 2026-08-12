@@ -102,6 +102,7 @@
 @spw_architecture_ecology_plan: ~"../.agents/plans/spw-architecture-ecology/PLAN.md"
 @modular_experience_slices: ~"../.agents/plans/modular-experience-slices/PLAN.md"
 @slices: ~"./slices/index.spw"
+@scenes: ~"./scenes/index.spw"
 @local_mount: ~"./mount.spw"
 @local_workspace: ~"./workspace.spw"
 @canon: ~"./_workbench/.spw/index.spw"
@@ -318,6 +319,7 @@ dispatch: .{
  spw_architecture_ecology = @spw_architecture_ecology
  modular_experience_slices = @modular_experience_slices
  slices = @slices
+ scenes = @scenes
  workbench = @canon
  workbench_mount = @workbench_mount
  workbench_workspace = @workbench_workspace

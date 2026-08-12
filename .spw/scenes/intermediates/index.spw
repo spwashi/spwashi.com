@@ -1,0 +1,35 @@
+# Scene intermediates
+#
+# Local IR for this folder. Not parser law, not a CMS.
+
+#>scenes_intermediates
+#:index #!scenes #!ir
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@scenes: ~"../index.spw"
+@output_substrate: ~"./output-substrate.spw"
+@semantic_braces: ~"../../conventions/semantic-braces.spw"
+
+operation = "prime"
+fixity = "experimental"
+
+^"forms"{
+  scene = "(stem) — authored situation: place, pressure, visible acts. Public host: data-spw-scene-interpret."
+  mind = "Named seat + dialect + intelligence profile. Character, audience facet, incidental player, or crew."
+  reading = "mind × scene. A compare pole. Fields: noticed, inferred, refused."
+  beat = "A named pressure increment with a live rung: approach|enter|dwell|echo|return|rest."
+  tom_delta = "A thinks B knows X. Revisable. Never silently merged with the scene."
+  output_substrate = "$ — receiving medium. See @output_substrate."
+}
+
+^"binding"{
+  scene_is_paren = "Form ( ) is midprocess. Do not restyle a scene as {practice} or <concept> because the copy is useful."
+  reading_is_compare = "Two readings join with ~. % only when the delta itself is a measure."
+  no_parser_fork = "If a public specimen needs a new parse form, take it to the operator atlas. Do not grow IR here first."
+}
+
+dispatch: .{
+  output_substrate = @output_substrate
+}

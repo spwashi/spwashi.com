@@ -1,0 +1,40 @@
+# Audience theory of mind
+#
+# What the watcher or reader thinks the figures know,
+# and what the work has already shown.
+
+#>scenes_audience_tom
+#:script #!scenes #!tom #!audience
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@scenes: ~"../index.spw"
+@dialects: ~"../dialects/index.spw"
+@viewing_reason: ~"../../conventions/viewing-reason.spw"
+@comparison: ~"../../conventions/comparison-differentials.spw"
+
+operation = "prime"
+fixity = "experimental"
+
+^"job"{
+  claim: "Track dramatic irony and withheld information as placements, not as a vibe."
+  dialect: "audience"
+  unit: "audience_belief[figure]{knows|suspects|cannot_know}"
+}
+
+^"fields"{
+  shown = "What the work has already made visible to this audience facet."
+  withheld = "What a character has that the audience does not, or the reverse."
+  irony = "Audience high / character low on the same fact. Mark as compare, do not resolve."
+  facet = "viewer · doodler · scribe · table — viewing-reason, not a new namespace."
+}
+
+^"moves"{
+  revise = "A beat may move one field. Do not rewrite the whole map because a joke landed."
+  refuse = "Do not let the audience 'know' a backstory that only a player sheet contains."
+}
+
+^"specimen"{
+  library_build: "Audience has seen the town want a library. Audience does not yet have a dated session log. Do not narrate the finished civic building as already known."
+}

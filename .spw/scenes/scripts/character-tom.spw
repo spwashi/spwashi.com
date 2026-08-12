@@ -1,0 +1,42 @@
+# Character theory of mind
+#
+# What a figure thinks other figures know.
+# Intelligence changes inference style, not the scene contents.
+
+#>scenes_character_tom
+#:script #!scenes #!tom #!character
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@scenes: ~"../index.spw"
+@dialects: ~"../dialects/index.spw"
+@audience_tom: ~"./audience-tom.spw"
+@comparison: ~"../../conventions/comparison-differentials.spw"
+
+operation = "prime"
+fixity = "experimental"
+
+^"job"{
+  claim: "Each figure gets a small map of other minds. The map is a reading, not the scene."
+  dialect: "character"
+  unit: "figure_a[figure_b]{knows|wants|will_do}"
+}
+
+^"intelligence"{
+  note: "Profiles change *how* a figure updates, not what the room contains."
+  literal = "Updates only on seen acts and heard words."
+  social = "Updates on gaze, timing, and what was not said."
+  strategic = "Updates on incentives; may overfit a deal."
+  incidental = "A table PC may be vivid and still stay off the canon map."
+}
+
+^"rules"{
+  no_leak = "A character cannot inherit audience irony unless the scene gives them a cue."
+  no_sheet_bleed = "Player-sheet motives are not in-world knowledge until spoken or enacted."
+  compare = "Two figures' maps of the same third mind join with ~. Mid disagreement is useful; do not average it."
+}
+
+^"specimen"{
+  library_build: "'l'n'd'r may treat the library as shared memory work. An incidental trader may treat it as a market. Both readings can be true poles of (library_build)."
+}

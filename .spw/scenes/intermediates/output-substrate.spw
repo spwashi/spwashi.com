@@ -1,0 +1,73 @@
+# Output substrate
+#
+# What $ names when a scene is meant to land as professional media.
+# Intermediate — not a chip target, not a studio CMS.
+
+#>scenes_output_substrate
+#:intermediate #!substrate #!output #!media
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@operator_alignment: ~"../../conventions/operator-alignment.spw"
+@operator_detection: ~"../../../public/js/kernel/operator-detection.js"
+@precipitates: ~"../../conventions/precipitates-and-projections.spw"
+@composable_art: ~"../../conventions/composable-art-system.spw"
+@viewing_reason: ~"../../conventions/viewing-reason.spw"
+@scenes: ~"../index.spw"
+
+operation = "prime"
+fixity = "experimental"
+
+^"split"{
+  chip_target = "!verb[slug] / data-spw-target — the noun a click acts on. Too small for a film or a novel."
+  support_substrate = "$ — the layer that can carry charge: time, money, memory, storage, attention, infrastructure, material surface."
+  output_substrate = "The receiving medium of a projection: what the scene becomes *made of* when it leaves the table. This file."
+  image_attr_drift = "data-spw-substrate on figures often repeats an operator nickname (probe, action, surface). That is visual tagging, not an output definition. Do not treat it as a production medium."
+}
+
+^"definition"{
+  claim: "Before > projects a scene, name the output substrate: the material, timebase, team load, and failure mode of the receiving medium."
+  geometry: "operator-detection: leftRole carried-charge, rightRole support-layer, flow load-to-substrate, overload resource-or-medium."
+  mnemonic: "Name what carries the charge."
+  rule: "$ is not the finished chapter or the locked picture. $ is what can hold them without tearing."
+}
+
+^"fields"{
+  material = "prose page, 24fps picture, still, audio stem, live table, HTML route"
+  grain = "what survives compression: sentence rhythm, shot size, grain, silence"
+  timebase = "reader duration vs runtime vs session clock vs editorial calendar"
+  crew_load = "who must stay in the loop for the substrate to stay honest (writer, editor, color, sound, table)"
+  capacity = "attention, money, storage, turnaround — the $ family already named"
+  failure = "what it looks like when the load exceeds the substrate (unreadable chapter, uncut dailies, orphan still)"
+}
+
+^"examples"{
+  novel = "$prose[page]{reader_time} — carries interior ToM; fails when every mind is narrated at the same volume"
+  film = "$picture[timebase]{crew} — carries blocking and light; fails when a mind is only explained in dialogue"
+  recap = "$session_log[date]{table} — carries what happened; fails when it pretends to be the novel"
+  still = "$sticker[chat]{portable} — carries a handle; fails when asked to be the scene"
+  html = "$route[dual_read]{browser} — carries inspectable marks; fails when a canvas erases the poles"
+}
+
+^"operators"{
+  name = "$film $prose $dailies — reveal the support layer"
+  project = "(library_build) > $prose — travel onto that substrate"
+  precipitate = "^chapter — lock one instance *on* the substrate"
+  measure = "%transformation_cost — what the substrate dropped"
+  hold = "~$prose — the path to the medium, not the book"
+}
+
+^"team_complexity"{
+  text: "A professional work is several substrates in parallel, not one $slug. Picture, dialogue, color, titles, and delivery package each carry a different load. Name the set. Project the scene onto one substrate at a time so a role can accept or refuse."
+  viewing_reason = "Who is looking (persona, lens, audience) is not the substrate. Substrate is what the looking is made of."
+}
+
+^"do_not"{
+  items = #[
+    `Do not use data-spw-target as the output medium`
+    `Do not use image data-spw-substrate=probe as a film definition`
+    `Do not collapse novel and film onto one $media`
+    `Do not invent a CMS for these fields until a specimen scene needs them`
+  ][reg=set]
+}

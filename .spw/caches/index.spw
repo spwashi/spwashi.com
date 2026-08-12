@@ -14,6 +14,8 @@
 @feature_wiring: ~"./feature-wiring-timing-2026-07.spw"
 @language_utilization: ~"./spw-language-utilization-2026-07.spw"
 @recursive_improvement_cache: ~"./recursive-improvement-2026-07.spw"
+@implicit_attention_arcs: ~"./implicit-attention-arcs.spw"
+@morph_shader_handles: ~"./morph-shader-handles.spw"
 
 operation = "align"
 fixity = "tending"
@@ -22,6 +24,8 @@ fixity = "tending"
   recursive_improvement_2026_07 = @recursive_improvement_cache
   feature_wiring_timing_2026_07 = @feature_wiring
   spw_language_utilization_2026_07 = @language_utilization
+  implicit_attention_arcs = @implicit_attention_arcs
+  morph_shader_handles = @morph_shader_handles
 }[reg=facet]
 
 ^"cache_rules"{
@@ -33,7 +37,7 @@ fixity = "tending"
 }[reg=facet]
 
 ^"workbench_align_2026_07"{
-  pin = `submodule at 993c099+ (mounted-consumer tooling, surface-archetypes)`
+  pin = `submodule at 66ed9a2 (CLI/LSP dual-read, lattice, pulse --delta, RuntimeMedium)`
   bridge_files = #[
     `mount.spw engage + orientation_contract`,
     `workspace.spw boundary + LSP roots`,

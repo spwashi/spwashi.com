@@ -1,0 +1,42 @@
+# Scene dialects
+#
+# How a mind is allowed to speak about a scene. Local to this module.
+# Not a Spw language dialect and not workbench canon.
+
+#>scenes_dialects
+#:index #!scenes #!dialect #!tom
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@scenes: ~"../index.spw"
+@viewing_reason: ~"../../conventions/viewing-reason.spw"
+@copy_ecology: ~"../../conventions/copy-ecology.spw"
+
+operation = "prime"
+fixity = "experimental"
+
+^"thesis"{
+  claim: "A dialect here is a permission set: what a mind may notice, infer, and say about `(scene)` without claiming to be the scene."
+  refuse: "Do not invent a new spoken grammar. Do not collapse audience, character, and table-player into one voice. Do not let a vivid dialect promote an incidental PC into canon."
+}
+
+^"seats"{
+  audience = "The person watching or reading. May track irony, withhold, and what the work has already shown. May not invent character knowledge the scene did not earn."
+  character = "A figure inside the scene. May only use what that figure can perceive, remember, or reasonably infer. Intelligence profiles change *how* they infer, not what the scene contains."
+  incidental_player = "A table PC whose reading is local to a session. Useful as a compare pole. Not a canon dialect unless the session log proves recurrence."
+  crew = "A professional media seat (writer, editor, color, sound, table GM). Speaks about substrate load and beat function, not as if they are in the room."
+}
+
+^"rules"{
+  one_seat = "A reading names its dialect. Mixing seats in one paragraph is a compare, not a blend."
+  viewing_reason = "Who is looking (persona, lens, audience facet) is orthogonal to dialect. Dialect is how they are allowed to talk."
+  dual_read = "Public HTML may mark a scene host with data-spw-scene-interpret; dialect lives in the linked script, not as a new CSS skin."
+}
+
+dispatch: .{
+  audience = "audience"
+  character = "character"
+  incidental_player = "incidental_player"
+  crew = "crew"
+}

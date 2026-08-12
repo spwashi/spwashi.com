@@ -1,0 +1,59 @@
+# Specimen: library build
+#
+# First practice stem. The town library going up — civic memory work,
+# not a finished novel and not a Deskar story.
+
+#>scenes_specimen_library_build
+#:specimen #!scenes #!rpg
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@scenes: ~"../index.spw"
+@audience_tom: ~"../scripts/audience-tom.spw"
+@character_tom: ~"../scripts/character-tom.spw"
+@beat: ~"../scripts/beat-progression.spw"
+@projections: ~"../projections/index.spw"
+@rpg_hub: ~"../../../play/rpg-wednesday/index.html"
+@film_beds: ~"../../../topics/film/scene-composition/index.html"
+
+operation = "prime"
+fixity = "experimental"
+
+^"scene"{
+  stem = "(library_build)"
+  place = "Town library floor — materials, roles, and a place that can keep memory."
+  pressure = "Can a group hold shared memory without flattening the people who carry it?"
+  public_host = "/play/rpg-wednesday/#rpgw-library-build data-spw-scene-interpret=rpg-library-harmony"
+}
+
+^"minds"{
+  lndr = "Anchor. Treats the build as harmony and return path."
+  aetheris = "Memory lane. May retell an earlier surprise; do not skip proof."
+  audience = "Has the pitch. Does not yet have a dated public session for the finished civic use."
+  incidental = "Table PCs may walk through. Their deals are poles, not the stem."
+}
+
+^"beats"{
+  approach = "Town wants a place to keep memory."
+  enter = "Materials and roles are on the floor."
+  dwell = "A shared object is named so later sessions can cite it."
+  echo = "A later log points at that object."
+  return = "The log can be read without the original pitch."
+  rest = "The building is usable."
+}
+
+^"projections"{
+  recap = "(library_build)>$session_log — write the dated entry first."
+  still = "(library_build)>$sticker — a handle for chat, not the scene."
+  prose = "(library_build)>$prose — only after a beat has proof; interior ToM of every mind at once is the failure mode."
+  picture = "(library_build)>$picture — blocking and light of the floor; do not cast incidental PCs as the civic subject."
+}
+
+^"do_not"{
+  items = #[
+    `Do not let a trader PC become the library's meaning`
+    `Do not novelize before the session log exists`
+    `Do not treat a Midjourney still as precipitation of the building`
+  ][reg=set]
+}

@@ -1,0 +1,59 @@
+# Scenes module
+#
+# Site-local folder (not a git submodule, not workbench canon).
+# A scene can be held once and read by several minds, then projected
+# or precipitated into a novel chapter or a film beat.
+
+#>spw_scenes
+#:module #!scenes #!tom #!beats
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@viewing_reason: ~"../conventions/viewing-reason.spw"
+@narrative_instrumentation: ~"../conventions/narrative-instrumentation.spw"
+@comparison_differentials: ~"../conventions/comparison-differentials.spw"
+@precipitates: ~"../conventions/precipitates-and-projections.spw"
+@semantic_braces: ~"../conventions/semantic-braces.spw"
+@copy_ecology: ~"../conventions/copy-ecology.spw"
+@morph_shader: ~"../caches/morph-shader-handles.spw"
+@dialects: ~"./dialects/index.spw"
+@caches: ~"./caches/index.spw"
+@references: ~"./references/index.spw"
+@intermediates: ~"./intermediates/index.spw"
+@audience_tom: ~"./scripts/audience-tom.spw"
+@character_tom: ~"./scripts/character-tom.spw"
+@beat_progression: ~"./scripts/beat-progression.spw"
+@projections: ~"./projections/index.spw"
+@library_build: ~"./specimens/library-build.spw"
+@output_substrate: ~"./intermediates/output-substrate.spw"
+
+operation = "prime"
+fixity = "experimental"
+
+^"thesis"{
+  claim: "A scene is a midprocess object `(scene)`. Minds interpret it. Scripts track what each mind thinks the others know, and which beat is live. Projection carries the scene into another room. Precipitation crystallizes one published instance."
+  refuse: "Do not promote a table PC into canon because their reading is vivid. Do not merge audience ToM with character ToM. Do not treat a novelization as the scene itself."
+}
+
+^"objects"{
+  scene = "Authored situation with a stem, a place, and a visible pressure. Form: (stem). Dual-read on public routes via data-spw-scene-interpret."
+  mind = "A reader with a perspective, an intelligence profile, and a dialect. Character, audience facet, or incidental player."
+  reading = "One mind's interpretation of one scene. A compare pole, not the scene."
+  script = "A small machine: audience-tom, character-tom, or beat-progression. Local intermediate, not parser law."
+  projection = "> — the scene travels into novel, film, recap, or sticker without claiming it was always that medium."
+  precipitate = "^ — one stable published instance: chapter, shot list, scene card. Residue stays named."
+}
+
+dispatch: .{
+  dialects = @dialects
+  caches = @caches
+  references = @references
+  intermediates = @intermediates
+  audience_tom = @audience_tom
+  character_tom = @character_tom
+  beat_progression = @beat_progression
+  projections = @projections
+  library_build = @library_build
+  output_substrate = @output_substrate
+}

@@ -1,0 +1,53 @@
+# Scene references
+#
+# What a scene file may cite. Site-local, not workbench canon.
+
+#>scenes_references
+#:index #!scenes #!refs
+#:operation #!align
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@scenes: ~"../index.spw"
+@viewing_reason: ~"../../conventions/viewing-reason.spw"
+@narrative_instrumentation: ~"../../conventions/narrative-instrumentation.spw"
+@comparison_differentials: ~"../../conventions/comparison-differentials.spw"
+@precipitates: ~"../../conventions/precipitates-and-projections.spw"
+@semantic_braces: ~"../../conventions/semantic-braces.spw"
+@hypermedia_2d: ~"../../conventions/hypermedia-2d.spw"
+@copy_ecology: ~"../../conventions/copy-ecology.spw"
+@film_beds: ~"../../../topics/film/scene-composition/index.html"
+@rpg_library: ~"../../../play/rpg-wednesday/index.html"
+@output_substrate: ~"../intermediates/output-substrate.spw"
+
+operation = "align"
+fixity = "experimental"
+
+^"cite"{
+  viewing_reason = "Who is looking. Orthogonal to dialect and to $ substrate."
+  film_beds = "Public practice: mise-en-scene, reduction-beat, fermentation-hold. Lanes are attrs, not this module."
+  comparison = "Two minds or two genres on one scene are .spw-compare poles, not a third scene."
+  rpg_library = "(library_build) is the first specimen stem. Session log is proof; recap is not the novel."
+  precipitates = "> travels; ^ locks one published instance. Residue stays named."
+}
+
+^"do_not_cite_as_owner"{
+  items = #[
+    `Workbench parser IR — scenes use local intermediates`
+    `data-spw-target chip operands — too small for a film or chapter`
+    `image data-spw-substrate=probe — visual tag, not output medium`
+    `Incidental PC sheets — reference as poles, not as canon files`
+  ][reg=set]
+}
+
+dispatch: .{
+  viewing_reason = @viewing_reason
+  narrative = @narrative_instrumentation
+  comparison = @comparison_differentials
+  precipitates = @precipitates
+  braces = @semantic_braces
+  hypermedia = @hypermedia_2d
+  film_beds = @film_beds
+  rpg_library = @rpg_library
+  output_substrate = @output_substrate
+}

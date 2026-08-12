@@ -1,0 +1,49 @@
+# Scene projections
+#
+# The scene travels into another room. Precipitation locks one instance.
+
+#>scenes_projections
+#:index #!scenes #!projection #!precipitate
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@scenes: ~"../index.spw"
+@precipitates: ~"../../conventions/precipitates-and-projections.spw"
+@output_substrate: ~"../intermediates/output-substrate.spw"
+@morph_shader: ~"../../caches/morph-shader-handles.spw"
+@beat: ~"../scripts/beat-progression.spw"
+
+operation = "prime"
+fixity = "experimental"
+
+^"thesis"{
+  claim: "Projection (`>`) carries `(scene)` onto a named $ substrate. Precipitation (`^`) locks one published instance on that substrate. The scene remains the midprocess object."
+  refuse: "Do not treat the novelization as the scene. Do not treat a sticker as the film. Do not invent a CMS for delivery packages."
+}
+
+^"rooms"{
+  novel = "(scene) > $prose then ^chapter — interior ToM can get loud; picture blocking must be earned in sentences."
+  film = "(scene) > $picture then ^shot_list — blocking and light carry; do not explain a mind only in dialogue."
+  recap = "(scene) > $session_log then ^dated_entry — what happened; fails when it pretends to be the novel."
+  sticker = "(scene) > $sticker then ^handle — portable still. Grok Imagine may project the sticker onward to a scene; that is another `>`, not a promotion to canon."
+  route = "(scene) > $route then ^practice_bed — dual-read HTML; film beds already do this."
+}
+
+^"cost"{
+  measure = "%transformation_cost — what the substrate dropped (gesture, silence, a second mind, crew time)."
+  genre_morph = "Two seats of the same stem ([noir] ~ [pastoral]) are a compare through time. Mid is mush; name it."
+}
+
+^"operators"{
+  project = "(library_build)>$prose"
+  precipitate = "^chapter"
+  hold = "~$picture"
+  inspect = "?(scene)"
+}
+
+dispatch: .{
+  output_substrate = @output_substrate
+  precipitates = @precipitates
+  morph = @morph_shader
+}

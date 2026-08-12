@@ -1,0 +1,35 @@
+# Scene caches
+#
+# Local judgments about readings, beats, and ToM deltas.
+# Caches hold reuse; scripts hold the machines.
+
+#>scenes_caches
+#:index #!scenes #!cache
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@scenes: ~"../index.spw"
+@site_caches: ~"../../caches/index.spw"
+@morph_shader: ~"../../caches/morph-shader-handles.spw"
+
+operation = "cache"
+fixity = "experimental"
+
+^"holds"{
+  reading = "One mind × one scene. Keep the dialect, the poles noticed, and what was refused. Do not overwrite the scene stem."
+  beat_state = "Which beat is live (approach|enter|dwell|echo|return|rest) and what proof the last beat left."
+  tom_delta = "What mind A thinks mind B knows, plus the last revision. A compare, not a blend."
+  projection_cost = "What a > projection dropped when it left the table (%transformation_cost)."
+}
+
+^"rules"{
+  r1 = "One cache note per scene stem. Append readings; do not fork a second library_build file because a new mind arrived."
+  r2 = "Incidental-player readings stay marked incidental. A strong cache entry is not canon."
+  r3 = "Promote a settled cache only by precipitating a specimen or public route. Do not grow a studio CMS here."
+}
+
+dispatch: .{
+  morph_shader = @morph_shader
+  site_caches = @site_caches
+}

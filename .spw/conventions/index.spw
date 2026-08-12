@@ -59,6 +59,8 @@
 @codebase_perusal: ~"./codebase-perusal.spw"
 @site_starter_component_kit: ~"./site-starter-component-kit.spw"
 @expressive_registers: ~"./expressive-registers.spw"
+@comparison_differentials: ~"./comparison-differentials.spw"
+@scenes: ~"../scenes/index.spw"
 @slices: ~"../slices/index.spw"
 @composable_art: ~"./composable-art-system.spw"
 @workbench_selection: ~"../_workbench/.spw/conventions/selection.spw"
@@ -151,6 +153,8 @@ dispatch: .{
  codebase_perusal = @codebase_perusal
  site_starter_component_kit = @site_starter_component_kit
  expressive_registers = @expressive_registers
+ comparison_differentials = @comparison_differentials
+ scenes = @scenes
  data_spw_attribute_governance = @data_spw_attribute_governance
  naming_structured_values = @naming_structured_values
  containers = @electromagnetic_containers

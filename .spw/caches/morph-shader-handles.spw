@@ -1,0 +1,77 @@
+# Morph / shader handles
+#
+# How Spw can address stable-diffusion-style morph UIs and shader
+# transforms without becoming a renderer. Cache, not a shipped effect.
+
+#>morph_shader_handles
+#:cache #!media #!comparison #!shaders
+#:operation #!cache
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@comparison_differentials: ~"../conventions/comparison-differentials.spw"
+@expressive_registers: ~"../conventions/expressive-registers.spw"
+@canvas_accents: ~"../../public/js/interface/canvas-accents.js"
+@svg_filters: ~"../../public/js/media/svg-filters.js"
+@image_metaphysics: ~"../../public/js/media/image-metaphysics.js"
+
+operation = "cache"
+fixity = "experimental"
+
+^"claim"{
+  text: "A morph is a comparison played through time. Spw is useful when it names the poles, the mix, the register, and the commit — not when it owns the GPU."
+  refuse: "Do not ship a browser Stable Diffusion. Do not replace dual-read HTML with a canvas that cannot name its endpoints. Accents and SVG filters stay ornament unless a handle makes the transform inspectable."
+}
+
+^"sd_morph_as_spw"{
+  poles: "Two stills, prompts, or identity packets. Each pole is an AST handle (*seed_a, ~ref_b, ^object). Same contract as .spw-compare poles."
+  mix: "data-spw-place or --spw-place 0..1 is t. Named rungs low|mid|high are literacy; the slider writes the scalar."
+  axis: "data-spw-compare names what is interpolating: identity, lighting, material, pose, prompt-stem, genre."
+  kind: "objective = pixel/latent mix from files. subjective = felt continuity. hybrid = a measured mix plus a judged 'still the same person'."
+  differential: "~ holds both frames without committing. % reports mix error or identity drift. ! bakes a still. > projects to a scene (Grok Imagine / video). ? inspects a frame without mutating the source."
+  register: "data-spw-register chooses which channels get loud during the travel: depth for zoom, valence for warm/cool morph, resonance for motif lock, attention for face vs ground."
+}[reg=facet]
+
+^"shader_effects"{
+  note: "CSS/SVG/WebGL filters are renderings. Spw names which rendering is allowed and when."
+  existing: #[
+    `canvas-accents: wave|vortex|crystal|resonance — ambient, not a morph`
+    `svg-filters: doodler-sketch, watercolor-blur, cinematic-aberration — url(#id)`
+    `registers.css: channel × weight already interpolates because channels are @property`
+  ][reg=set]
+  mapping: .{
+    displacement = `~ path: hold a warp field without applying it; ! applies; . returns to rest`
+    color_grade = `register=valence; %normalize scales the grade so comparison stays honest`
+    denoise_or_sigma = `data-spw-place on a *value pole; subjective 'clean enough' is a second pole, not a silent slider`
+    feedback_loop = `{practice} brace around the canvas so residue stays inside the scope`
+    sticker_to_scene = `Grok Imagine as > projection: sticker is the low pole, scene is the high pole, ~ is the interpretive travel`
+  }[reg=facet]
+}
+
+^"genre_morphs"{
+  claim: "A genre morph is not a costume swap. It is the same stem under two generic pressures, with a named mix and a transformation cost."
+  already_on_site: "about#routing[genre]{transformation} — how a thought becomes a page, video, card, diagram, game object, or sign. copy-depth=genre is the theatrical prose layer. Boonhonk is a combinatoric pantry, not a morph."
+  poles: "Genre seats, not faces. [noir] ~ [pastoral], {kitchen} ~ (session), ^card ~ >shot. Form marks the seat; the stem stays the root."
+  mix: "--spw-place is how far the crossing has gone. Mid is the dangerous mush: name it as mid, do not pretend it is a third genre."
+  kind: "subjective = felt genre pressure. objective = measurable residue (what tokens, motifs, or shot rules survived). hybrid = both — this is the useful one."
+  differential: "~ holds the crossing. % is transformation cost (what survived). ! publishes one genre instance. > projects to another room (sticker, scene, recap). . returns to the stem's rest genre."
+  register: "resonance locks the motifs that must survive the travel. valence is tone. attention chooses whether plot, material, or voice leads. depth is how far the reader has entered the new genre."
+  shader_read: "SD/style-transfer is one renderer: prompt-A and prompt-B are poles, CFG/denoise is place. CSS/copy-depth can do a cheaper morph: gate genre prose and accent filters by the same t."
+  refuse: "Do not blend two genres into an unnamed third. Do not treat copy-depth=genre as a visual filter. Do not let a style slider erase the stem."
+  specimens: #[
+    `beans: {stew} ~ (session) — kitchen practice toward playable scene`
+    `lndr: ^portrait ~ >library_shot — character still toward civic projection`
+    `energy: *0.3Wh ~ *fleet — same axis, different genre of claim (receipt vs infrastructure)`
+  ][reg=set]
+}[reg=facet]
+
+^"ui_shape"{
+  dual_read: "Author both endpoints as chips or img[alt] even if a WebGL plane covers them. No-JS readers still see A ~ B."
+  inline: "A morph control can be the same .spw-compare mark: rail = mix, ticks = keyframes, poles = downloadable stills."
+  cost: "Shader/WebGL is an ENHANCEMENT, mount when visible, unload on leave. Feature gate, not core."
+  next_specimen: "A design experiment that lerps two kept images with --spw-place and operator chips — no model weights in-repo. A genre morph can use the same rail with form-marked poles ([noir] ~ [pastoral]) and copy-depth/accent as the cheap renderer."
+}
+
+^"why_not_a_product_page"{
+  text: "Authors who refuse AI still get the grammar: two named stills and a mix is photography, film, and CSS. The SD morph is one renderer behind the same handles."
+}

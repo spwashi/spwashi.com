@@ -1,0 +1,41 @@
+# Beat progression
+#
+# Which pressure increment is live, and what proof it leaves.
+
+#>scenes_beat_progression
+#:script #!scenes #!beats #!attention
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@scenes: ~"../index.spw"
+@attention_arcs: ~"../../caches/implicit-attention-arcs.spw"
+@film_beds: ~"../../conventions/hypermedia-2d.spw"
+@audience_tom: ~"./audience-tom.spw"
+@character_tom: ~"./character-tom.spw"
+
+operation = "prime"
+fixity = "experimental"
+
+^"job"{
+  claim: "A beat is a named increment of pressure, not a timestamp and not a whole act."
+  rungs: "approach | enter | dwell | echo | return | rest — same family as implicit attention arcs, local to the scene."
+}
+
+^"fields"{
+  stem = "The (scene) this beat belongs to."
+  live = "Current rung."
+  proof = "What would have to be visible for this beat to have happened."
+  leftover = "What the next beat is allowed to assume."
+}
+
+^"rules"{
+  one_live = "One live rung per scene host. A mode-switch on a film bed may change lane without skipping the rung."
+  no_skip_proof = "Do not write echo or return until enter left a proof the reader can point at."
+  tom_hook = "A beat may revise one audience-tom field or one character-tom edge. Not both unless the compare is the beat."
+  film_lanes = "context / subplot / question / focus are lanes, not beats. Lanes are where to look; rungs are how far in."
+}
+
+^"specimen"{
+  library_build: "approach = town wants a place to keep memory · enter = materials and roles on the floor · dwell = a shared object is named · echo = a later session cites that object · return = the log can be read · rest = the building is usable without retelling the pitch"
+}
