@@ -57,7 +57,7 @@
 
     <main data-spw-kind="surface" data-spw-role="reference" id="main-content" tabindex="-1">
         <article>
-            <section class="site-frame site-hero" id="structural-vocabulary" data-spw-role="orientation" data-spw-kind="frame" data-spw-promptability="visible">
+            <section class="site-frame site-hero" id="structural-vocabulary" data-spw-role="orientation" data-spw-kind="frame" data-spw-promptability="visible" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
                 <header class="frame-topline" data-spw-slot="header">
                     <a class="frame-sigil" href="/design/">#>design</a>
                     <div class="spec-strip" data-spw-slot="meta">
@@ -387,7 +387,7 @@
                         <h3>.spw-svg-figure</h3>
                         <p>The host wrapper for inline SVGs. Contains a scoped viewBox and exposes data attributes necessary to tie the SVG stroke/flow lines to the page's color resonance (e.g. inheriting the <code>--craft-accent</code> token).</p>
                     </article>
-                    
+
                     <article class="frame-panel">
                         <p class="frame-note">the text renderer output</p>
                         <h3>.pretext-flow</h3>
@@ -1227,7 +1227,7 @@
                     <a class="frame-sigil" href="#data-attribute-decoration">^"data_attribute_decoration"</a>
                     <h2>Data Attribute Distinction</h2>
                 </header>
-                
+
                 <p class="frame-note">We rarely invent new CSS classes for state or variations. Instead, we stack <code>data-spw-*</code> attributes onto the base components defined above. This makes the surface readable to CSS selectors without bloating the HTML with ad-hoc BEM modifiers.</p>
 
                 <div class="frame-grid frame-grid--dense">
@@ -1252,7 +1252,7 @@
   data-spw-affordance="inspect"&gt;</code></pre>
                         </div>
                     </article>
-                    
+
                     <article class="frame-panel" data-spw-metamaterial="field" data-spw-context="signal" data-spw-affordance="tune">
                         <h3>Example 3: Active Input Field</h3>
                         <p>When an area contains active widgets or tests, tagging it with <code>[data-spw-metamaterial="field"]</code> sets high contrast bounds, while <code>[data-spw-affordance="tune"]</code> prepares the component to visibly react to direct manipulation.</p>

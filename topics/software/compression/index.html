@@ -58,7 +58,7 @@
     ></spw-site-header>
     <main data-spw-kind="surface" data-spw-role="reference" data-spw-context="analysis" data-spw-seed="page_topics_topics_software_compression__main_surface" data-spw-wonder="comparison constraint locality" id="main-content" tabindex="-1" aria-labelledby="compression-title">
         <article>
-            <section class="site-frame site-hero" id="compression-hero" data-spw-role="orientation" data-spw-liminality="entry" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="orient" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="framing" data-spw-promptability="latent" data-spw-collectability="some" data-spw-seed="page_topics_topics_software_compression__compression_hero" data-spw-context-relevance="compression dense data structures metamorphic files exploring strategies" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/">
+            <section class="site-frame site-hero" id="compression-hero" data-spw-role="orientation" data-spw-liminality="entry" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="orient" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="framing" data-spw-promptability="latent" data-spw-collectability="some" data-spw-seed="page_topics_topics_software_compression__compression_hero" data-spw-context-relevance="compression dense data structures metamorphic files exploring strategies" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
                 <div class="mode-panels">
                     <section class="mode-panel" data-mode-group="compression-lens" data-mode-panel="orientation" data-spw-role="orientation">
                         <figure
@@ -105,7 +105,7 @@
                 </div>
                 <h2>Entropy and Coding</h2>
                 <p class="inline-note">Information theory defines entropy as the average amount of information produced by a source. Huffman coding turns this into a practical spell: shorter bit-codes for the most common symbols.</p>
-                
+
                 <svg class="spw-svg-surface cinematic-host" data-spw-svg-persona="learner implementer reviewer rendering-model" viewBox="0 0 640 180" role="img" aria-labelledby="comp-title" xmlns="http://www.w3.org/2000/svg">
                     <title id="comp-title">Huffman Tree Projection</title>
                     <defs>
@@ -119,11 +119,11 @@
                     <g transform="translate(320, 20)">
                         <!-- Root -->
                         <circle cx="0" cy="15" r="10" fill="var(--surface)" stroke="var(--ink-soft)" stroke-width="1.2"/>
-                        
+
                         <!-- Level 1 -->
                         <path class="spw-svg-flow" d="M -7 22 L -60 55" stroke="var(--line)" stroke-width="1"/>
                         <path class="spw-svg-flow" d="M 7 22 L 60 55" stroke="var(--line)" stroke-width="1"/>
-                        
+
                         <!-- Level 2 nodes -->
                         <circle cx="-60" cy="65" r="10" fill="var(--surface)" stroke="var(--ink-soft)" stroke-width="1.2"/>
                         <circle cx="60" cy="65" r="18" fill="var(--surface)" stroke="var(--teal)" stroke-width="2" filter="url(#node-glow)"/>
@@ -133,18 +133,18 @@
                         <!-- Level 3 -->
                         <path class="spw-svg-flow" d="M -67 72 L -100 105" stroke="var(--line)" stroke-width="1"/>
                         <path class="spw-svg-flow" d="M -53 72 L -20 105" stroke="var(--line)" stroke-width="1"/>
-                        
+
                         <circle cx="-100" cy="115" r="14" fill="var(--surface)" stroke="var(--teal)" stroke-width="1.5"/>
                         <text x="-100" y="118" text-anchor="middle" font-size="8" fill="var(--ink)">"t"</text>
-                        
+
                         <circle cx="-20" cy="115" r="14" fill="var(--surface)" stroke="var(--teal)" stroke-width="1.5"/>
                         <text x="-20" y="118" text-anchor="middle" font-size="8" fill="var(--ink)">"a"</text>
-                        
+
                         <!-- Labels -->
                         <text x="-35" y="45" font-size="7" fill="var(--ink-soft)">0</text>
                         <text x="35" y="45" font-size="7" fill="var(--ink-soft)">1</text>
                     </g>
-                    
+
                     <text x="10" y="165" font-size="6.5" fill="var(--ink-soft)" font-style="italic">Compression is the art of predicting the crowd. The more frequent the character, the less bit-surface it deserves.</text>
                 </svg>
 
@@ -167,7 +167,7 @@
 ^"compress"{
   source: fetch("/data.spw")
   compressor: new CompressionStream("gzip")
-  
+
   // project the stream into a readable sink
   [sink] = source.body.pipeThrough(compressor)
 }
@@ -197,7 +197,7 @@
                 </div>
                 <h2>Dictionary Methods and LZ77</h2>
                 <p class="inline-note">If entropy coding is about predicting symbols, dictionary methods are about predicting patterns. LZ77 replaces repetitive strings with pointers to earlier occurrences in the sliding window.</p>
-                
+
                 <div class="ref-grid">
                     <div class="ref-card" data-spw-form="square">
                         <span class="ref-card-sigil">lz77</span>

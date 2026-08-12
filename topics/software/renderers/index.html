@@ -43,7 +43,7 @@
     ></spw-site-header>
     <main data-spw-kind="surface" data-spw-role="reference" data-spw-context="analysis" data-spw-seed="page_topics_topics_software_renderers__main_surface" data-spw-wonder="comparison constraint locality" id="main-content" tabindex="-1" aria-labelledby="renderers-title">
         <article>
-            <section class="site-frame site-hero" id="renderers-hero" data-spw-role="orientation" data-spw-liminality="entry" data-spw-accent="flow" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="orient" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="framing" data-spw-promptability="latent" data-spw-collectability="some" data-spw-seed="page_topics_topics_software_renderers__renderers_hero" data-spw-context-relevance="renderers geometry light type staff level exploration rendering" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/">
+            <section class="site-frame site-hero" id="renderers-hero" data-spw-role="orientation" data-spw-liminality="entry" data-spw-accent="flow" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="orient" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="framing" data-spw-promptability="latent" data-spw-collectability="some" data-spw-seed="page_topics_topics_software_renderers__renderers_hero" data-spw-context-relevance="renderers geometry light type staff level exploration rendering" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
                 <div class="frame-topline">
                     <a class="frame-sigil" href="#renderers-hero">#&gt;rendering_engines</a>
                     <div class="spec-strip">
@@ -74,7 +74,7 @@
                 </div>
                 <h2>2D Primitives and Matrix Math</h2>
                 <p class="inline-note">Every visual mark on the web starts with coordinates. Understanding how the browser transforms point <code>(x, y)</code> into a screen position requires a descent into matrix multiplication and the geometry of vector paths.</p>
-                
+
                 <svg class="spw-svg-surface cinematic-host" data-spw-svg-persona="learner implementer reviewer rendering-model" viewBox="0 0 640 180" role="img" aria-labelledby="matrix-title" xmlns="http://www.w3.org/2000/svg">
                     <title id="matrix-title">Matrix Transformation Pipeline</title>
                     <defs>
@@ -83,18 +83,18 @@
                             <feComposite in="SourceGraphic" in2="blur" operator="over"/>
                         </filter>
                     </defs>
-                    
+
                     <!-- Coordinate Space Nodes -->
                     <g class="spw-svg-node" transform="translate(40, 70)">
                         <rect width="90" height="40" rx="4" fill="var(--surface)" stroke="var(--teal)" stroke-width="1.5"/>
                         <text x="45" y="25" text-anchor="middle" font-size="8" fill="var(--teal)">Object Space</text>
                     </g>
-                    
+
                     <g class="spw-svg-node" transform="translate(240, 70)">
                         <rect width="110" height="40" rx="4" fill="var(--surface)" stroke="var(--ink-soft)" stroke-width="1.5"/>
                         <text x="55" y="25" text-anchor="middle" font-size="8" fill="var(--ink)">World Transform</text>
                     </g>
-                    
+
                     <g class="spw-svg-node" transform="translate(480, 70)">
                         <rect width="90" height="40" rx="4" fill="var(--surface)" stroke="var(--op-surface-color)" stroke-width="2"/>
                         <text x="45" y="25" text-anchor="middle" font-size="8" font-weight="bold" fill="var(--ink)">Viewport</text>
@@ -103,11 +103,11 @@
                     <!-- Flow lines -->
                     <path class="spw-svg-flow spw-svg-flow--animated" d="M 130 90 L 240 90" stroke="var(--teal)" fill="none" stroke-width="1.5" stroke-dasharray="5 5"/>
                     <path class="spw-svg-flow spw-svg-flow--animated" d="M 350 90 L 480 90" stroke="var(--teal)" fill="none" stroke-width="1.5" stroke-dasharray="5 5"/>
-                    
+
                     <!-- Matrix Math Floating Note -->
                     <text x="185" y="80" text-anchor="middle" font-size="7" fill="var(--teal)" opacity="0.6">[x, y, 1] × [M]</text>
                     <text x="415" y="80" text-anchor="middle" font-size="7" fill="var(--teal)" opacity="0.6">Clip + Rasterize</text>
-                    
+
                     <text x="10" y="165" font-size="6.5" fill="var(--ink-soft)" font-style="italic">The matrix is the spell: shared state that rotates the world around the observer.</text>
                 </svg>
 
@@ -142,7 +142,7 @@
   translate: [100, 200]
   rotate: deg(45)
   scale: 1.25
-  
+
   [m] = matrix.identity()
       .translate(translate)
       .rotate(rotate)
@@ -163,7 +163,7 @@
                 </div>
                 <h2>Text Shaping and Type Systems</h2>
                 <p class="inline-note">Type is more than a list of glyphs. Text shaping converts a sequence of characters into a sequence of glyphs with precise optical positions, handling ligatures, kerning, and script-specific reordering.</p>
-                
+
                 <div class="frame-grid ref-grid" data-spw-density="soft">
                     <article class="frame-panel ref-card">
                         <span class="ref-card-sigil">shaping</span>
@@ -211,7 +211,7 @@
                 </div>
                 <h2>GPU Accelerated Pipelines</h2>
                 <p class="inline-note">Modern renderers offload rasterization to the GPU. This is a leap from CPU-bound scan-line algorithms to massively parallel fragment shaders. The "cinematic" feel of the modern web is often a function of how effectively we use the graphics pipeline without clogging the memory bus.</p>
-                
+
                 <div class="frame-grid ref-grid" data-spw-density="soft">
                     <article class="frame-panel ref-card" id="rasterization">
                         <span class="ref-card-sigil">shader</span>

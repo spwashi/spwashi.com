@@ -49,7 +49,7 @@
 
     <main data-spw-kind="surface" data-spw-role="reference" id="main-content" tabindex="-1">
         <article>
-            <section class="site-frame site-hero" data-spw-role="orientation" data-spw-kind="frame">
+            <section class="site-frame site-hero" data-spw-role="orientation" data-spw-kind="frame" id="palettes-spectral-families" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
                 <div class="frame-topline">
                     <a class="frame-sigil" href="/design/">#>design</a>
                     <div class="spec-strip">
@@ -78,7 +78,7 @@
                     <article class="frame-panel" data-spw-context="reading" data-spw-component-identity="global-context-tuner" data-spw-compositional-esteem="page-material-basis">
                         <h3>Testing Global Contexts</h3>
                         <p>Change the light level and theme family using the root settings controls. The components below respond instantly via <code>data-site-setting-set</code>.</p>
-                        
+
                         <div class="theme-handle-test theme-handle-test--modes" data-spw-locality="global-controls" data-spw-component-locality="palette-modes">
                             <button class="operator-chip" type="button" data-site-setting-set="colorMode:light" data-spw-operator="action" data-spw-action="apply">[light_mode]</button>
                             <button class="operator-chip" type="button" data-site-setting-set="colorMode:dark" data-spw-operator="action" data-spw-action="apply">[dark_mode]</button>
@@ -148,7 +148,7 @@
                         </div>
                         <p class="frame-note" style="margin-top: 1rem;">Auto mode uses <code>prefers-color-scheme</code> to match your system preference.</p>
                     </article>
-                    
+
                     <article class="frame-panel" data-spw-context="analysis" data-spw-component-identity="resonance-dial" data-spw-compositional-esteem="combinatoric-probe-cluster">
                         <h3>Palette Resonance Dials</h3>
                         <p>The <code>data-spw-palette-resonance</code> attribute biases the active accent tokens (like <code>--active-op-color</code>).</p>
@@ -666,13 +666,13 @@
                 </p>
             </section>
 
-            <section class="site-frame">
+            <section class="site-frame" id="granular-spectral-families" data-spw-kind="frame" data-spw-role="reference">
                 <header class="frame-heading">
                     <a class="frame-sigil" href="#spectral-families">^"spectral_families"</a>
                     <h2>Granular Spectral Families</h2>
                 </header>
                 <p class="frame-note">These are pure pigment tokens from <code>tokens/core.css</code>. They provide stability for textural backgrounds, SVG charts, and specific art direction where theme-agnostic identity is required. (The workshop above demonstrates how resonance modes re-interpret the same underlying hues.)</p>
-                
+
                 <div class="spectral-grid" id="spectral-families" data-spw-feature="spectral-families" data-spw-semantic-cluster="combinatoric-pigments">
                     <figure class="spectral-swatch" data-spw-pigment-token="--pigment-teal-mineral" data-spw-component-identity="pure-pigment" data-spw-compositional-esteem="textural-anchor"><figcaption>teal-mineral</figcaption></figure>
                     <figure class="spectral-swatch" data-spw-pigment-token="--pigment-teal-electric" data-spw-component-identity="pure-pigment" data-spw-compositional-esteem="signal-edge"><figcaption>teal-electric</figcaption></figure>
