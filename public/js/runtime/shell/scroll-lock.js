@@ -66,3 +66,13 @@ export function syncShellLock(snapshot) {
 
   bindShellScrollLockTouchGuard(shouldLock);
 }
+
+/**
+ * Full teardown for callers unmounting the shell: releases any active lock,
+ * restores scroll position, and unbinds the touchmove guard. The guard itself
+ * is private, so unmounting callers must come through here rather than reach
+ * for it directly.
+ */
+export function releaseShellLock() {
+  syncShellLock({ open: false });
+}

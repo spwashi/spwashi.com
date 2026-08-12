@@ -1,6 +1,5 @@
 import { emitSpwAction } from '/public/js/kernel/shared.js';
 import {
-  annotateFloatingChromeElement,
   removeDatasetValues,
   syncFloatingChromeState,
   writeDatasetValues,
@@ -9,33 +8,22 @@ import {
 } from '/public/js/kernel/dom-contracts.js';
 import { PALETTE_RESONANCE_OPTIONS } from '/public/js/interface/palette-resonance.js';
 import {
-  TUNING_LEXICON,
-  describeSettingValue,
-  getSiteSettings,
-} from '/public/js/kernel/site-settings.js';
-import {
   revealTuningSurfaces,
   TUNING_SURFACES_EVENT,
 } from '/public/js/runtime/tuning-discovery.js';
-import { syncShellLock } from './shell/scroll-lock.js';
+import { releaseShellLock, syncShellLock } from './shell/scroll-lock.js';
 import {
   ensureAttentionPosturePanel,
-  getAttentionRelationLabel,
-  getCurrentAttentionPosture,
   setAttentionPosturePanelOpen,
-  syncAttentionPosturePanel,
-  syncHeaderActions,
 } from './shell/attention-posture-panel.js';
 import {
   cycleSettingValue,
   ensureUtilityRow,
   getCurrentBaseMaterial,
-  getCurrentColorMode,
   getCurrentFontScale,
   getCurrentHighContrast,
   getNextFontScale,
   syncUtilityRow,
-  upgradeUtilityRow,
 } from './shell/utility-row.js';
 
 const EVENT_NAMES = Object.freeze({
@@ -601,18 +589,6 @@ function clearHeaderPointerField(header) {
   header.style.removeProperty('--spw-shell-pointer-x');
   header.style.removeProperty('--spw-shell-pointer-y');
   removeDatasetValues(header, ['spwShellPointer']);
-}
-
-let shellScrollLockTouchBound = false;
-
-function isInsideShellMenuScrollSurface(target) {
-  if (!(target instanceof Element)) return false;
-  return Boolean(
-    target.closest(
-      '.site-header[data-spw-menu="open"] nav, body > header[data-spw-menu="open"] nav, '
-      + '.site-header[data-spw-menu="open"] .spw-route-menu-panel, body > header[data-spw-menu="open"] .spw-route-menu-panel',
-    ),
-  );
 }
 
 function setToolsDisclosureOpen(disclosure, open) {
@@ -1448,7 +1424,7 @@ export function initSpwShellDisclosure(options = {}) {
       removeDatasetValues(toggle, MENU_DATASET_KEYS);
       removeDatasetValues(document.documentElement, ['spwShellMenuLock']);
       removeDatasetValues(document.body, ['spwShellMenuLock']);
-      bindShellScrollLockTouchGuard(false);
+      releaseShellLock();
       document.documentElement.style.removeProperty('--spw-shell-menu-offset');
     },
     refresh(nextOptions = {}) {

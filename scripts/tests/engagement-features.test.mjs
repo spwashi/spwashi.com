@@ -440,3 +440,59 @@ test('module loader unmount and remount round-trips correctly', async () => {
   assert.equal(mounts, 2);
   await new Promise((r) => setTimeout(r, 10));
 });
+
+/* Regression: shell-disclosure's cleanup() reached for bindShellScrollLockTouchGuard,
+   which is private to shell/scroll-lock.js, so unmounting the shell threw a
+   ReferenceError. Teardown must go through the exported releaseShellLock(). */
+test('shell scroll lock round-trips and unbinds its touch guard on release', async () => {
+  const { releaseShellLock, syncShellLock } = await import('../../public/js/runtime/shell/scroll-lock.js');
+
+  const makeEl = () => ({
+    dataset: {},
+    style: {
+      _props: {},
+      setProperty(k, v) { this._props[k] = v; },
+      getPropertyValue(k) { return this._props[k] || ''; },
+      removeProperty(k) { delete this._props[k]; },
+    },
+  });
+
+  const previousDocument = globalThis.document;
+  const previousAdd = globalThis.addEventListener;
+  const previousRemove = globalThis.removeEventListener;
+  const previousScrollTo = globalThis.scrollTo;
+
+  const html = makeEl();
+  const body = makeEl();
+  const bound = [];
+
+  globalThis.document = { documentElement: html, body };
+  globalThis.addEventListener = (type, fn) => { bound.push([type, fn]); };
+  globalThis.removeEventListener = (type, fn) => {
+    const i = bound.findIndex(([t, f]) => t === type && f === fn);
+    if (i >= 0) bound.splice(i, 1);
+  };
+  globalThis.scrollTo = () => {};
+
+  try {
+    syncShellLock({ open: true, topology: 'drawer-field' });
+    assert.equal(body.dataset.spwShellScrollLock, 'true', 'body locks while the drawer is open');
+    assert.equal(html.dataset.spwShellScrollLock, 'true', 'root mirrors the lock');
+    assert.equal(bound.length, 1, 'touchmove guard is bound while locked');
+    assert.equal(bound[0][0], 'touchmove');
+
+    releaseShellLock();
+    assert.equal(body.dataset.spwShellScrollLock, undefined, 'lock is cleared on release');
+    assert.equal(body.dataset.spwShellScrollY, undefined, 'stored scroll offset is cleared');
+    assert.equal(bound.length, 0, 'touchmove guard is unbound after release');
+
+    // Releasing twice must stay a no-op rather than throw.
+    releaseShellLock();
+    assert.equal(bound.length, 0);
+  } finally {
+    globalThis.document = previousDocument;
+    globalThis.addEventListener = previousAdd;
+    globalThis.removeEventListener = previousRemove;
+    globalThis.scrollTo = previousScrollTo;
+  }
+});

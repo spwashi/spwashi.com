@@ -16,11 +16,7 @@
 import { getActiveRecentPathMemory } from '/public/js/interface/accent-palette.js';
 import { bus } from '/public/js/kernel/bus.js';
 import { describeFeatureClusterElement } from '/public/js/kernel/dom-contracts.js';
-import {
-  clearPins,
-  getPinStorageKey,
-  readPins,
-} from '/public/js/runtime/pin-registry.js';
+import { escapeAttr as escapeAttribute, escapeHtml } from '/public/js/kernel/dom-render.js';
 import { describeCognitiveState } from '/public/js/runtime/cognitive-state.js';
 import {
   closeRegionMenu,
@@ -28,19 +24,15 @@ import {
   openRegionMenuForElement,
 } from '/public/js/runtime/region-menu.js';
 import {
-  normalizePathname,
   normalizeRouteHref,
   parseRouteList,
 } from '/public/js/kernel/route-utils.js';
 import { isReadingQuietChrome } from '/public/js/runtime/runtime-helpers.js';
-import { OPERATOR_INFO } from './experiential/operator-info.js';
 import { initBookmarkRegistry } from './experiential/bookmark-registry.js';
 import { initContextualMemos } from './experiential/contextual-memos.js';
 import { initOperatorLearning } from './experiential/operator-learning.js';
 import { initQABeatGestures } from './experiential/qa-beat-gestures.js';
 
-const ROOMY_WIDTH_PX = 704;
-const MEMO_TIMEOUT_MS = 2600;
 const SAMPLE_HOLD_MS = 220;
 const SAMPLE_SWIPE_PX = 42;
 const MAX_BREADCRUMB_NEIGHBORS = 3;
@@ -1617,142 +1609,4 @@ function updateCognitiveCopyHooks(surface = document.body?.dataset.spwSurface ||
         : 'Readable mode keeps the page calm while still leaving room for stronger handles when you want them.';
 
   note.innerHTML = `${lead} ${liminality} ${meaning}`;
-}
-
-function applyFieldAttrs(meta) {
-  const root =
-    meta.target.closest('.site-frame')
-    || meta.target.closest('main')
-    || document.body;
-
-  if (!(root instanceof HTMLElement)) return;
-
-  root.dataset.spwInspectFieldWonder = meta.wonder;
-  root.dataset.spwInspectFieldOperator = meta.operator || '';
-  root.dataset.spwInspectFieldContext = meta.context || '';
-}
-
-/* ==========================================================================
-   Semantic resolution helpers
-   ========================================================================== */
-
-function resolveSemanticMeta(target, detail = {}) {
-  const sigil = extractSigil(target);
-  const opInfo =
-    OPERATOR_INFO[detail.operator]
-    || OPERATOR_INFO[sigil]
-    || OPERATOR_INFO[target.dataset.spwOperator]
-    || inferOperatorInfoFromText(target);
-
-  const affordances = normalizeAffordances(detail.affordances, target);
-  const label =
-    target.querySelector?.('.frame-sigil, .frame-card-sigil')?.textContent?.trim()
-    || target.textContent?.trim()
-    || opInfo?.label
-    || 'handle';
-
-  return {
-    target,
-    targetKind: detail.targetKind || inferTargetKind(target),
-    operator: opInfo?.type || detail.operator || target.dataset.spwOperator || '',
-    operatorLabel: opInfo?.label || detail.operator || target.dataset.spwOperator || 'operator',
-    intent: opInfo?.intent || 'make structure inspectable',
-    wonder: detail.wonder || opInfo?.wonder || inferWonder(target),
-    affordances,
-    context: detail.context || inferContext(target),
-    label,
-  };
-}
-
-function extractSigil(target) {
-  const text =
-    target.dataset.spwSigil
-    || target.textContent
-    || '';
-
-  const match = text.trim().match(/^(#>|#:|\.|\^|~|\?|@|\*|&|=|\$|%|!|>)/);
-  return match?.[0] || '';
-}
-
-function inferOperatorInfoFromText(target) {
-  const explicit = target.dataset.spwOperator || target.closest('[data-spw-operator]')?.dataset.spwOperator || '';
-  if (explicit && OPERATOR_INFO[explicit]) {
-    return OPERATOR_INFO[explicit];
-  }
-
-  const sigil = extractSigil(target);
-  return OPERATOR_INFO[sigil] || null;
-}
-
-function normalizeAffordances(detailAffordances, target) {
-  if (Array.isArray(detailAffordances) && detailAffordances.length) {
-    return detailAffordances;
-  }
-
-  const attrs = target.dataset.spwResolvedAffordance || target.dataset.spwAffordance || '';
-  if (attrs) return attrs.split(/\s+/).filter(Boolean);
-
-  const out = [];
-  const opInfo = inferOperatorInfoFromText(target);
-  if (target.matches('a[href], .operator-chip[href], .frame-sigil[href]')) out.push('navigate');
-  if (opInfo?.type === 'probe') out.push('explore');
-  if (opInfo?.type === 'pragma' || opInfo?.type === 'action') out.push('commit');
-  if (target.closest('[data-spw-swappable]') || target.hasAttribute('data-spw-swappable')) out.push('swap');
-  if (target.matches('.site-frame, .frame-card, .frame-panel, .frame-sigil, .frame-card-sigil')) out.push('pin');
-  if (!out.length) out.push('hint');
-  return [...new Set(out)];
-}
-
-function inferTargetKind(target) {
-  if (target.matches('.frame-sigil')) return 'frame-sigil';
-  if (target.matches('.frame-card-sigil')) return 'frame-card-sigil';
-  if (target.matches('.operator-chip')) return 'operator-chip';
-  if (target.matches('.spw-delimiter')) return 'delimiter';
-  if (target.matches('.site-frame')) return 'frame';
-  if (target.matches('.frame-card')) return 'card';
-  return 'handle';
-}
-
-function inferWonder(target) {
-  const opInfo = inferOperatorInfoFromText(target);
-  if (opInfo?.wonder) return opInfo.wonder;
-  if (target.matches('.spw-delimiter')) return 'orientation';
-  if (target.matches('.operator-chip')) return 'inquiry';
-  if (target.matches('.frame-sigil, .frame-card-sigil')) return 'memory';
-  return 'orientation';
-}
-
-function inferContext(target) {
-  return (
-    target.dataset.spwContext
-    || target.closest('[data-spw-context]')?.dataset.spwContext
-    || target.closest('.site-frame')?.dataset.spwRole
-    || document.body?.dataset.spwSurface
-    || 'surface'
-  );
-}
-
-/* ==========================================================================
-   Utilities
-   ========================================================================== */
-
-function safeDate(timestamp) {
-  try {
-    return new Date(timestamp).toLocaleDateString();
-  } catch {
-    return 'unknown-date';
-  }
-}
-
-function escapeHtml(value) {
-  return String(value)
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
-    .replaceAll('"', '&quot;')
-    .replaceAll("'", '&#39;');
-}
-
-function escapeAttribute(value) {
-  return escapeHtml(value);
 }
