@@ -25,3 +25,24 @@
 :where(body[data-spw-display-layer="editor"], body[data-spw-display-layer="inspect"]) .site-header nav a:not(.operator-chip)[data-spw-nav-tokenized="true"]::before {
   display: inline-flex;
 }
+
+/* Expert seats stay quiet in the default reading posture.
+   Workshop, field, inspect, and editor layers reveal them. */
+:where(
+  html:not([data-spw-explore-posture="workshop"]):not([data-spw-explore-posture="field"]),
+  html[data-spw-explore-posture="reading"]
+) :where(body[data-spw-display-layer="reader"])
+  :where(
+    .operator-chip[data-spw-audience~="expert"]:not([data-spw-audience~="reader"]),
+    [data-spw-audience~="expert"][data-spw-promptability="latent"]:not([data-spw-audience~="reader"])
+  ) {
+  display: none;
+}
+
+:where(html[data-spw-explore-posture="workshop"], html[data-spw-explore-posture="field"])
+  [data-spw-semantic-lens="brief"],
+:where(body[data-spw-display-layer="inspect"], body[data-spw-display-layer="editor"])
+  [data-spw-semantic-lens="crawl"] {
+  outline: 1px dashed color-mix(in srgb, var(--op-probe-color, #6a3fb8) 35%, transparent);
+  outline-offset: 0.2rem;
+}

@@ -18,25 +18,70 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const OUTPUT = path.join(ROOT, 'public/data/site-search-index.json');
 
-/** Operator slug → Spw geometry + balance-physics resolution move + sigil. */
+/** Canonical types match public/js/kernel/operator-detection.js. Slug aliases keep old /operators/:slug routes searchable. */
 const OPERATOR_GEOMETRY_INDEX = Object.freeze({
   frame: { type: 'frame', sigil: '#>', geometry: 'anchor', motion: 'anchor', brace: 'objective' },
   layer: { type: 'layer', sigil: '#:', geometry: 'field-plane', motion: 'anchor', brace: 'objective' },
+  vibration: { type: 'vibration', sigil: '#', geometry: 'frequency-anchor', motion: 'anchor', brace: 'objective' },
+  ground: { type: 'ground', sigil: '.', geometry: 'center-of-gravity', motion: 'anchor', brace: 'objective' },
   baseline: { type: 'ground', sigil: '.', geometry: 'center-of-gravity', motion: 'anchor', brace: 'objective' },
+  integration: { type: 'integration', sigil: '^', geometry: 'lift', motion: 'lift', brace: 'objective-to-subjective' },
   object: { type: 'integration', sigil: '^', geometry: 'lift', motion: 'lift', brace: 'objective-to-subjective' },
+  potential: { type: 'potential', sigil: '~', geometry: 'thread', motion: 'tether', brace: 'objective-to-subjective' },
   ref: { type: 'potential', sigil: '~', geometry: 'thread', motion: 'tether', brace: 'objective-to-subjective' },
+  wonder: { type: 'wonder', sigil: '?', geometry: 'aperture', motion: 'collapse', brace: 'subjective' },
   probe: { type: 'wonder', sigil: '?', geometry: 'aperture', motion: 'collapse', brace: 'subjective' },
-  action: { type: 'action', sigil: '!', geometry: 'discharge', motion: 'discharge', brace: 'subjective' },
+  perspective: { type: 'perspective', sigil: '@', geometry: 'coordinate-origin', motion: 'situate', brace: 'subjective-to-objective' },
+  value: { type: 'value', sigil: '*', geometry: 'mass', motion: 'lift', brace: 'objective' },
   stream: { type: 'value', sigil: '*', geometry: 'mass', motion: 'lift', brace: 'objective' },
-  surface: { type: 'surface', sigil: '<>', geometry: 'concept-edge', motion: 'pair', brace: 'balanced' },
+  subject: { type: 'subject', sigil: '&', geometry: 'binding-axis', motion: 'pair', brace: 'balanced' },
+  concept: { type: 'concept', sigil: '<', geometry: 'opening-edge', motion: 'pair', brace: 'balanced' },
+  'concept-edge': { type: 'concept-edge', sigil: '>', geometry: 'closing-edge', motion: 'pair', brace: 'balanced' },
+  surface: { type: 'concept-edge', sigil: '>', geometry: 'closing-edge', motion: 'pair', brace: 'balanced' },
   binding: { type: 'binding', sigil: '=', geometry: 'pin', motion: 'pair', brace: 'objective' },
-  concept: { type: 'subject', sigil: '&', geometry: 'binding-axis', motion: 'pair', brace: 'balanced' },
-  direction: { type: 'direction', sigil: '{', geometry: 'queue', motion: 'seal', brace: 'objective' },
-  meta: { type: 'meta', sigil: '%%', geometry: 'ratio', motion: 'collapse', brace: 'balanced' },
-  merge: { type: 'merge', sigil: '&&', geometry: 'binding-axis', motion: 'pair', brace: 'balanced' },
+  substrate: { type: 'substrate', sigil: '$', geometry: 'support-plane', motion: 'anchor', brace: 'objective' },
   normalize: { type: 'normalize', sigil: '%', geometry: 'ratio', motion: 'collapse', brace: 'balanced' },
-  pragma: { type: 'pragma', sigil: '#!', geometry: 'address', motion: 'anchor', brace: 'objective' },
+  action: { type: 'action', sigil: '!', geometry: 'impulse', motion: 'discharge', brace: 'subjective-to-objective' },
+  pragma: { type: 'action', sigil: '!', geometry: 'impulse', motion: 'discharge', brace: 'subjective-to-objective' },
+  scene: { type: 'scene', sigil: '(', geometry: 'scene-plane', motion: 'encapsulate', brace: 'subjective' },
+  mode: { type: 'mode', sigil: '[', geometry: 'coordinate-choice', motion: 'snap', brace: 'balanced' },
+  direction: { type: 'direction', sigil: '{', geometry: 'brace-container', motion: 'seal', brace: 'objective-to-subjective' },
 });
+
+const HANDLE_PREFIXES = ['#>', '#:', '#', '.', '^', '~', '?', '@', '*', '&', '=', '$', '%', '!', '>', '<', '(', '[', '{'];
+
+function decodeChipText(value = '') {
+  return decodeHtmlEntities(String(value || ''))
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function prefixFromHandle(text = '') {
+  const value = decodeChipText(text);
+  return HANDLE_PREFIXES.find((prefix) => value.startsWith(prefix)) || '';
+}
+
+function harvestRouteHandles(html = '') {
+  const handles = new Set();
+  const operators = new Set();
+  const pattern = /<(a|button|span)([^>]*\bclass=["'][^"']*\b(?:operator-chip|frame-sigil|frame-card-sigil)\b[^"']*["'][^>]*)>([\s\S]*?)<\/\1>/gi;
+  let match;
+  while ((match = pattern.exec(html))) {
+    const text = decodeChipText(match[3]);
+    const prefix = prefixFromHandle(text);
+    if (!text || !prefix) continue;
+    handles.add(text.slice(0, 80));
+    const profile = Object.values(OPERATOR_GEOMETRY_INDEX).find((item) => item.sigil === prefix);
+    if (profile?.type) operators.add(profile.type);
+    const attr = match[2].match(/data-spw-operator=["']([^"']+)["']/);
+    if (attr?.[1]) operators.add(attr[1]);
+  }
+  return {
+    handles: [...handles].slice(0, 48),
+    operators: [...operators],
+  };
+}
 
 function asList(value) {
   if (Array.isArray(value)) return value.map((item) => String(item || '').trim()).filter(Boolean);
@@ -152,7 +197,7 @@ function geometryFromRoute(route, nest) {
   };
 }
 
-function buildSearchEntry(routeRecord) {
+function buildSearchEntry(routeRecord, harvested = { handles: [], operators: [] }) {
   const route = String(routeRecord.route || '').trim();
   if (!route) return null;
 
@@ -189,6 +234,8 @@ function buildSearchEntry(routeRecord) {
     geometry.geometry,
     geometry.motion,
     geometry.brace,
+    harvested.handles.join(' '),
+    harvested.operators.join(' '),
     features.join(' '),
     relatedRoutes.join(' '),
   ]
@@ -218,6 +265,8 @@ function buildSearchEntry(routeRecord) {
     operatorSlug: geometry.operatorSlug,
     geometry: geometry.geometry,
     motion: geometry.motion,
+    handles: harvested.handles,
+    operators: harvested.operators,
     brace: geometry.brace,
     haystack,
   };
@@ -225,10 +274,21 @@ function buildSearchEntry(routeRecord) {
 
 export async function generateSiteSearchIndex() {
   const manifest = await buildRouteRuntimeManifest();
-  const routes = (manifest.routes || [])
-    .map(buildSearchEntry)
-    .filter(Boolean)
-    .sort((a, b) => a.route.localeCompare(b.route));
+  const routes = [];
+  for (const record of manifest.routes || []) {
+    let harvested = { handles: [], operators: [] };
+    if (record.file) {
+      try {
+        const html = await fs.readFile(path.join(ROOT, record.file), 'utf8');
+        harvested = harvestRouteHandles(html);
+      } catch {
+        harvested = { handles: [], operators: [] };
+      }
+    }
+    const entry = buildSearchEntry(record, harvested);
+    if (entry) routes.push(entry);
+  }
+  routes.sort((a, b) => a.route.localeCompare(b.route));
 
   const byNestRoot = {};
   const byKind = {};
