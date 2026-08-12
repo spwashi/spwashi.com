@@ -9,7 +9,7 @@
  * --------------------------------------------------------------------------
  */
 
-import { detectOperator } from '/public/js/kernel/shared.js';
+import { detectOperator } from '/public/js/kernel/operator-detection.js';
 
 export const CORE_COMPONENT_SELECTORS = Object.freeze([
   '.site-frame',
