@@ -448,6 +448,76 @@ async function mountModuleById(id, ctx, options = {}) {
   return records;
 }
 
+async function unmountModuleRecord(record, ctx) {
+  if (!record || record.status !== 'mounted') return false;
+
+  pushModuleLifecycleStage(record, 'unmounting', { note: 'unmounting module' });
+  emitModuleLifecycle(ctx, record, 'unmounting', {
+    at: Math.round(performance.now()),
+    note: 'unmounting module',
+  });
+
+  if (typeof record.cleanup === 'function') {
+    try {
+      await record.cleanup();
+    } catch (err) {
+      logger?.error(
+        `module unmount failed: ${record.id}`,
+        { message: err?.message || String(err) },
+        logRelationships.LIFECYCLE,
+      );
+    }
+  }
+
+  record.cleanup = null;
+  record.refresh = null;
+  record.status = 'unmounted';
+  record.unmountedAt = Math.round(performance.now());
+
+  pushModuleLifecycleStage(record, 'unmounted', { note: 'unmount complete' });
+  emitModuleLifecycle(ctx, record, 'unmounted', {
+    at: record.unmountedAt,
+    note: 'unmount complete',
+  });
+
+  if (record.root) {
+    annotateModuleTarget(record.root, record);
+  }
+
+  ctx.registry.remove(record.id);
+
+  scheduleRuntimeTokenUpdate(ctx);
+  return true;
+}
+
+async function unmountModuleById(id, ctx, options = {}) {
+  if (!ctx || !id) return false;
+  const records = Array.from(ctx.registry.values()).filter(
+    (record) => (record.baseId === id || record.id === id) && record.status === 'mounted'
+  );
+  if (!records.length) return false;
+
+  let unmountedAny = false;
+  for (const record of records) {
+    const ok = await unmountModuleRecord(record, ctx);
+    if (ok) unmountedAny = true;
+  }
+  return unmountedAny;
+}
+
+async function unmountAllModules(ctx) {
+  if (!ctx) return 0;
+  const records = Array.from(ctx.registry.values()).filter(
+    (record) => record.status === 'mounted'
+  );
+  let count = 0;
+  for (const record of records) {
+    const ok = await unmountModuleRecord(record, ctx);
+    if (ok) count += 1;
+  }
+  return count;
+}
+
 function makeRecordId(def, root = null, index = 0) {
   if (!root || root === document.body) return def.id;
   const rootId = root.id || root.getAttribute('data-spw-region-key') || root.getAttribute('data-spw-id') || root.getAttribute('data-spw-kind') || index;
@@ -1609,6 +1679,8 @@ function refreshRuntime(ctx) {
     normalizeModuleUpdates,
     summarizeModuleUpdates,
     mountModuleById,
+    unmountModuleById,
+    unmountAllModules,
     buildLoadDiscoverySnapshot,
     snapshotRuntimeResourceReadiness,
     prefetchRuntimeResources,

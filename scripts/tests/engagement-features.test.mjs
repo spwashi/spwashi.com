@@ -21,6 +21,7 @@ import {
 } from '../../public/js/typed/promo-wonder-cycle.js';
 import { createModuleLoader } from '../../public/js/runtime/module-loader.js';
 import { MODULE_LAYERS, MOUNT_WHEN } from '../../public/js/runtime/module-catalog-constants.js';
+import { createRegistry, readRuntimePolicy } from '../../public/js/runtime/runtime-helpers.js';
 
 const noticeFeed = {
   sourceLocale: 'en',
@@ -373,4 +374,69 @@ test('promo wonder selection remains data driven', () => {
   assert.equal(feedLocale(promoFeed), 'fr');
   assert.equal(daily.promo.title, 'Tuesday promo');
   assert.equal(weekly.promo.title, promoFeed.weekly[weeklyIndex].promo.title);
+});
+
+test('module loader unmount and remount round-trips correctly', async () => {
+  let cleanups = 0;
+  let mounts = 0;
+
+  const testDef = {
+    id: 'test-unmount-remount',
+    layer: MODULE_LAYERS.FEATURE,
+    when: MOUNT_WHEN.IMMEDIATE,
+    load: async () => ({
+      default: {
+        mount: () => {
+          mounts += 1;
+          return () => {
+            cleanups += 1;
+          };
+        },
+      },
+    }),
+  };
+
+  const loader = createModuleLoader({
+    moduleDefs: [testDef],
+    html: document.documentElement,
+    body: document.body,
+    matchesRoute: () => true,
+    matchesFeatures: () => true,
+    hasSelector: () => true,
+    getRoots: () => [],
+    hasDebugOrQAMode: () => false,
+    readConnectionPosture: () => 'fast',
+    shouldPrefetchRuntimeResources: () => true,
+    extractDynamicImportSpecifier: (def) => def.specifier,
+    moduleSpecifierToUrl: (spec) => spec,
+    ensureResourceHint: () => true,
+    isRuntimeResourceCached: async () => false,
+    requestServiceWorkerPrefetch: () => false,
+    requestServiceWorkerCacheSummary: () => false,
+    refreshRegionProfiles: () => {},
+    setPageState: () => {},
+  });
+
+  const ctx = {
+    registry: createRegistry(),
+    runtimePolicy: readRuntimePolicy(),
+    moduleAudit: [],
+    bus: { emit() {} },
+    html: document.documentElement,
+    body: document.body,
+    now: () => performance.now(),
+  };
+
+  const mountedRecord = await loader.mountModuleById('test-unmount-remount', ctx);
+  assert.equal(mountedRecord.status, 'mounted');
+  assert.equal(mounts, 1);
+
+  const unmounted = await loader.unmountModuleById('test-unmount-remount', ctx);
+  assert.equal(unmounted, true);
+  assert.equal(cleanups, 1);
+
+  const remountedRecord = await loader.mountModuleById('test-unmount-remount', ctx);
+  assert.equal(remountedRecord.status, 'mounted');
+  assert.equal(mounts, 2);
+  await new Promise((r) => setTimeout(r, 10));
 });

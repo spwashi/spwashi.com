@@ -618,6 +618,8 @@ const {
   snapshotRuntimeModules,
   snapshotRuntimeAsSpellbook,
   mountModuleById,
+  unmountModuleById,
+  unmountAllModules,
   buildLoadDiscoverySnapshot,
   snapshotRuntimeResourceReadiness,
   prefetchRuntimeResources,
@@ -861,6 +863,8 @@ async function bootSite() {
         audit: () => [...(runtimeCtx?.moduleAudit || [])],
         definitions: () => listModuleDefinitions(runtimeCtx),
         mount: (id, options = {}) => mountModuleById(id, runtimeCtx, options),
+        unmount: (id, options = {}) => unmountModuleById(id, runtimeCtx, options),
+        unmountAll: () => unmountAllModules(runtimeCtx),
         policy: () => runtimeCtx?.runtimePolicy || null,
         records: () => snapshotRuntimeModules(runtimeCtx),
         resources: () => snapshotRuntimeResourceReadiness(runtimeCtx),
@@ -1037,6 +1041,8 @@ window.__SPW_SITE__ = {
   /** BRP-oriented rollup: byCostClass, enhancementImmediate, reclassCandidates. */
   catalogOptimization: () => summarizeModuleCatalogOptimization(MODULE_DEFS),
   mountModule: (id, options = {}) => mountModuleById(id, runtimeCtx, options),
+  unmountModule: (id, options = {}) => unmountModuleById(id, runtimeCtx, options),
+  unmountAllModules: () => unmountAllModules(runtimeCtx),
   snapshotModules: () => snapshotRuntimeModules(runtimeCtx),
   timings: () => runtimeCtx
     ? {

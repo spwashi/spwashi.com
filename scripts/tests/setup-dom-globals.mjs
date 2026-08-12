@@ -9,8 +9,8 @@ const eventTarget = {
 if (!globalThis.document) {
   globalThis.document = {
     ...eventTarget,
-    body: { dataset: {} },
-    documentElement: { dataset: {} },
+    body: { dataset: {}, style: { setProperty() {}, getPropertyValue() { return ''; }, removeProperty() {} } },
+    documentElement: { dataset: {}, style: { setProperty() {}, getPropertyValue() { return ''; }, removeProperty() {} } },
     querySelectorAll() {
       return [];
     },

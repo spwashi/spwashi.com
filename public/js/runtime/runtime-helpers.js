@@ -176,7 +176,8 @@ export function readModuleTimingMap(value = '') {
 }
 
 export function readRuntimePolicy() {
-  const params = new URLSearchParams(window.location.search);
+  const search = typeof window !== 'undefined' && window.location ? window.location.search : '';
+  const params = new URLSearchParams(search);
   const rawTiming =
     params.get('spw-runtime-timing')
     || params.get('runtime-timing')
