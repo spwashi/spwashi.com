@@ -894,12 +894,6 @@ body > nav.spw-section-handle-shell {
 }
 
 @media (max-width: 720px) {
-  .site-header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"]:has(.spw-nav-toggle[aria-expanded="true"]),
-  body > header[data-spw-menu-mode="toggle"][data-spw-menu-overlay="active"]:has(.spw-nav-toggle[aria-expanded="true"]) {
-    position: relative;
-    z-index: 2020;
-  }
-
   .site-header[data-spw-menu-mode="toggle"] nav,
   body > header[data-spw-menu-mode="toggle"] nav {
     position: relative;
@@ -956,12 +950,7 @@ body > header:not([data-spw-shell-disclosure-init]) {
   align-content: center;
 }
 
-.site-header:not([data-spw-shell-disclosure-init]) .spw-header-actions,
-body > header:not([data-spw-shell-disclosure-init]) .spw-header-actions,
-.site-header:not([data-spw-shell-disclosure-init]) .spw-shell-tools-disclosure,
-body > header:not([data-spw-shell-disclosure-init]) .spw-shell-tools-disclosure,
-.site-header:not([data-spw-shell-disclosure-init]) .spw-header-trace,
-body > header:not([data-spw-shell-disclosure-init]) .spw-header-trace {
+:where(.site-header, body > header):not([data-spw-shell-disclosure-init]) :where(.spw-header-actions, .spw-tools-disclosure, .spw-shell-tools-disclosure, .spw-shell-utility-disclosure, .spw-header-trace) {
   display: none;
 }
 

@@ -1147,10 +1147,6 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
 }
 
 @media (max-width: 720px) {
-  .spw-spell-dock {
-    display: none;
-  }
-
   .spw-spell-dock-summary {
     min-height: 1.82rem;
     padding: 0.22rem 0.5rem;

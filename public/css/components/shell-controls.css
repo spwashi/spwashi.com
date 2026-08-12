@@ -5,21 +5,34 @@
    Placement and grid ownership stay in shell/chrome.css.
    ========================================================================== */
 
-.spw-shell-tools-disclosure {
+.spw-shell-tools-disclosure,
+.spw-shell-utility-disclosure {
   position: relative;
   display: none;
   min-width: 0;
   max-inline-size: 100%;
-  border: 1px solid color-mix(in oklab, var(--spw-shell-chrome-accent-local) 10%, var(--line, rgba(14,18,20,0.14)) 90%);
+  border: 1px solid color-mix(in oklab, var(--spw-shell-chrome-accent-local) 12%, var(--line, rgba(14,18,20,0.14)) 88%);
   border-radius: var(--shape-control, 0.78rem);
-  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 94%, var(--spw-shell-chrome-accent-local) 6%);
+  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.82)) 92%, var(--spw-shell-chrome-accent-local) 8%);
+  backdrop-filter: blur(10px) saturate(1.04);
+  -webkit-backdrop-filter: blur(10px) saturate(1.04);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.28),
-    0 1px 4px rgba(14, 18, 20, 0.035);
+    inset 0 1px 0 rgba(255,255,255,0.32),
+    0 2px 6px rgba(14, 18, 20, 0.04);
   overflow: visible;
 }
 
-.spw-shell-tools-summary {
+/* Nested tune surface: disclosure becomes transparent — grid slot owned by navigation.css. */
+:where(.site-header, body > header)[data-spw-shell-tune-surface="nested"] :where(.spw-shell-tools-disclosure, .spw-shell-utility-disclosure) {
+  border: 0;
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: none;
+}
+
+.spw-shell-tools-summary,
+.spw-shell-utility-disclosure__summary {
   display: inline-flex;
   align-items: center;
   gap: 0.34rem;
@@ -71,7 +84,9 @@
 }
 
 .spw-shell-tools-disclosure:is(:hover, :focus-within) .spw-shell-tools-summary__knob,
-.spw-shell-tools-disclosure[open] .spw-shell-tools-summary__knob {
+.spw-shell-tools-disclosure[open] .spw-shell-tools-summary__knob,
+.spw-shell-utility-disclosure:is(:hover, :focus-within) .spw-shell-tools-summary__knob,
+.spw-shell-utility-disclosure[open] .spw-shell-tools-summary__knob {
   transform: rotate(18deg);
   border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 34%, transparent);
   box-shadow:
@@ -80,15 +95,18 @@
     0 2px 6px rgba(14, 18, 20, 0.06);
 }
 
-.spw-shell-tools-disclosure[open] .spw-shell-tools-summary__knob {
+.spw-shell-tools-disclosure[open] .spw-shell-tools-summary__knob,
+.spw-shell-utility-disclosure[open] .spw-shell-tools-summary__knob {
   transform: rotate(132deg);
 }
 
-.spw-shell-tools-summary::-webkit-details-marker {
+.spw-shell-tools-summary::-webkit-details-marker,
+.spw-shell-utility-disclosure__summary::-webkit-details-marker {
   display: none;
 }
 
-.spw-shell-tools-summary::after {
+.spw-shell-tools-summary::after,
+.spw-shell-utility-disclosure__summary::after {
   content: "";
   inline-size: 0.46rem;
   block-size: 0.46rem;
@@ -99,14 +117,17 @@
   transition: transform 140ms var(--shell-ease);
 }
 
-.spw-shell-tools-disclosure[open] > .spw-shell-tools-summary::after {
+.spw-shell-tools-disclosure[open] > .spw-shell-tools-summary::after,
+.spw-shell-utility-disclosure[open] > .spw-shell-utility-disclosure__summary::after {
   transform: translateY(0.08rem) rotate(225deg);
 }
 
 .spw-shell-tools-disclosure:is(:hover, :focus-within),
-.spw-shell-tools-disclosure[open] {
-  border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 20%, transparent);
-  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.78)) 90%, var(--spw-shell-chrome-accent-local) 10%);
+.spw-shell-tools-disclosure[open],
+.spw-shell-utility-disclosure:is(:hover, :focus-within),
+.spw-shell-utility-disclosure[open] {
+  border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 22%, transparent);
+  background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.86)) 88%, var(--spw-shell-chrome-accent-local) 12%);
 }
 
 .spw-shell-utility-row {
@@ -145,7 +166,8 @@
   /* Utility chrome lives in its own scroll lane so condensed menus cannot visually collide with route copy. */
 }
 
-.spw-shell-tools-disclosure[open] > .spw-shell-utility-row {
+.spw-shell-tools-disclosure[open] > .spw-shell-utility-row,
+.spw-shell-utility-disclosure[open] > .spw-shell-utility-row {
   display: flex;
 }
 

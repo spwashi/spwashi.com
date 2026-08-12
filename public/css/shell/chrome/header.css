@@ -365,12 +365,6 @@
   overflow: clip;
 }
 
-.site-header:has(.spw-spell-path) .spw-header-actions,
-body > header:has(.spw-spell-path) .spw-header-actions {
-  min-inline-size: min(14rem, 32vw);
-  overflow: clip;
-}
-
 .spw-header-action,
 .spw-attention-posture-pill {
   appearance: none;
@@ -444,14 +438,6 @@ body > header:has(.spw-spell-path) .spw-header-actions {
   text-overflow: ellipsis;
 }
 
-.site-header:has(.spw-spell-path) .spw-header-action--cauldron,
-body > header:has(.spw-spell-path) .spw-header-action--cauldron {
-  flex: 0 1 5.4rem;
-  min-inline-size: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 .spw-attention-posture-pill {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -465,15 +451,6 @@ body > header:has(.spw-spell-path) .spw-header-action--cauldron {
 
 :where(.site-header:has(.spw-spell-path),
        body > header:has(.spw-spell-path)) .spw-attention-posture-pill {
-  flex: 1 1 8.5rem;
-  min-inline-size: 0;
-  inline-size: auto;
-  max-inline-size: 12.4rem;
-  overflow: hidden;
-}
-
-.site-header:has(.spw-spell-path) .spw-attention-posture-pill,
-body > header:has(.spw-spell-path) .spw-attention-posture-pill {
   flex: 1 1 8.5rem;
   min-inline-size: 0;
   inline-size: auto;

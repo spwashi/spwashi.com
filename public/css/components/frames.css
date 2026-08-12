@@ -215,8 +215,8 @@
 }
 
 /* Slot-based layout */
-.frame-topline,
-.frame-heading {
+:where(.frame-topline,
+.frame-heading) {
   display: flex;
   flex-wrap: wrap;
   align-items: center;

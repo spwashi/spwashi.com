@@ -74,6 +74,8 @@
 ) {
   --component-text: var(--ink-strong, currentColor);
   --component-text-soft: var(--ink-mid, currentColor);
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
 }
 
 :where(
@@ -108,22 +110,6 @@
   color: var(--component-text);
 }
 
-:where(
-  .frame-card,
-  .media-card,
-  .media-focus-card,
-  .software-card,
-  .operator-card,
-  .frame-panel,
-  .mode-panel,
-  .plan-card,
-  .compare-card,
-  .spec-column,
-  .ref-card
-) {
-  grid-template-columns: minmax(0, 1fr);
-  align-items: start;
-}
 
 :where(.mode-panel[hidden]) {
   display: none;

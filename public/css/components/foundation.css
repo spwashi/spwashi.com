@@ -29,7 +29,6 @@
 
   /* Line */
   --component-border: 1px solid var(--line, rgba(0, 128, 128, 0.18));
-  --component-border-strong: 1px solid var(--line-strong, rgba(0, 128, 128, 0.32));
   --component-border-quiet: 1px solid color-mix(in srgb, var(--line, rgba(0, 128, 128, 0.18)) 72%, transparent);
 
   /* Surface */
@@ -37,8 +36,6 @@
   --component-surface-strong: var(--surface-strong, rgba(255, 255, 255, 0.98));
   --component-surface-soft: color-mix(in srgb, var(--component-surface) 86%, transparent);
   --component-surface-matte: color-mix(in srgb, var(--component-surface-strong) 94%, var(--bg, #f7f4ee));
-  --component-surface-elevated:
-    color-mix(in srgb, var(--component-surface-strong) 96%, var(--component-accent) 4%);
 
   /* Shadow */
   --component-shadow: var(--spw-elevation-card-shadow, var(--shadow-base, 0 10px 24px rgba(0, 0, 0, 0.06)));
@@ -51,13 +48,6 @@
      Falls back through active-op-color (runtime) then teal primitive. */
   --component-accent: var(--semantic-accent, var(--active-op-color, var(--teal, #008080)));
   --component-accent-soft: color-mix(in srgb, var(--component-accent) 20%, transparent);
-  --component-accent-strong: color-mix(in srgb, var(--component-accent) 42%, transparent);
-  --component-accent-wash: color-mix(in srgb, var(--component-accent) 8%, transparent);
-
-  /* Semantic accent aliases for component contexts (secondary weight, subtle wash, emphasis) */
-  --component-accent-secondary: var(--semantic-accent-secondary, color-mix(in srgb, var(--component-accent) 72%, var(--ink-soft, var(--component-accent)) 28%));
-  --component-accent-subtle: var(--semantic-accent-subtle, color-mix(in srgb, var(--component-accent) 18%, transparent));
-  --component-accent-emphasis: var(--semantic-accent-emphasis, var(--component-accent));
 
   /* Route accent */
   --component-route-accent: var(--component-accent);
@@ -89,15 +79,11 @@
   /* Pretext */
   --pretext-line-gap: 0.18rem;
   --pretext-line-height: 1.55;
-  --pretext-width: auto;
-  --pretext-canonical-width: auto;
-  --pretext-projected-width: auto;
   --pretext-influence: 0;
   --pretext-direction: 0;
   --pretext-scaffold-opacity: 0.74;
 
   /* Component chrome */
-  --component-rail-width: 3px;
   --component-header-min-height: 1.5rem;
   --component-chip-height: var(--spw-control-min-height, 2rem);
 

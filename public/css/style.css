@@ -25,6 +25,8 @@
 @import url('/public/css/routes/surfaces/website.css') layer(routes);
 @import url('/public/css/routes/surfaces/design.css') layer(routes);
 @import url('/public/css/routes/widgets/boonhonk-mixer.css') layer(routes);
+@import url('/public/css/routes/widgets/care-intake.css') layer(routes);
+@import url('/public/css/routes/widgets/services-configurator.css') layer(routes);
 @import url('/public/css/routes/surfaces/plans.css') layer(routes);
 @import url('/public/css/routes/surfaces/plans-cards.css') layer(routes);
 @import url('/public/css/routes/surfaces/plans-relationships.css') layer(routes);

@@ -882,39 +882,31 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
     "trace trace trace trace";
 }
 
-:where(.site-header[data-spw-shell-tune-surface="knob"] .spw-shell-tools-disclosure,
-       body > header[data-spw-shell-tune-surface="knob"] .spw-shell-tools-disclosure) {
+:where(.site-header, body > header)[data-spw-shell-tune-surface="knob"] :where(.spw-shell-tools-disclosure, .spw-shell-utility-disclosure) {
   display: block;
   grid-area: tune;
   justify-self: end;
   align-self: center;
 }
 
-:where(.site-header[data-spw-shell-tune-surface="nested"] .spw-shell-tools-disclosure,
-       body > header[data-spw-shell-tune-surface="nested"] .spw-shell-tools-disclosure) {
+:where(.site-header, body > header)[data-spw-shell-tune-surface="nested"] :where(.spw-shell-tools-disclosure, .spw-shell-utility-disclosure) {
   display: block;
   grid-area: actions;
   justify-self: end;
   align-self: center;
-  border: 0;
-  background: transparent;
-  box-shadow: none;
   overflow: visible;
 }
 
-:where(.site-header[data-spw-shell-tune-surface="nested"] .spw-shell-tools-summary,
-       body > header[data-spw-shell-tune-surface="nested"] .spw-shell-tools-summary) {
+:where(.site-header, body > header)[data-spw-shell-tune-surface="nested"] :where(.spw-shell-tools-summary, .spw-shell-utility-disclosure__summary) {
   min-block-size: 1.82rem;
   padding-inline: 0.34rem;
 }
 
-:where(.site-header[data-spw-shell-tune-surface="nested"] .spw-shell-tools-summary__label,
-       body > header[data-spw-shell-tune-surface="nested"] .spw-shell-tools-summary__label) {
+:where(.site-header, body > header)[data-spw-shell-tune-surface="nested"] :where(.spw-shell-tools-summary__label, .spw-shell-utility-disclosure__label) {
   display: none;
 }
 
-:where(.site-header[data-spw-shell-tune-surface="strip"] .spw-shell-tools-disclosure,
-       body > header[data-spw-shell-tune-surface="strip"] .spw-shell-tools-disclosure) {
+:where(.site-header, body > header)[data-spw-shell-tune-surface="strip"] :where(.spw-shell-tools-disclosure, .spw-shell-utility-disclosure) {
   display: block;
   grid-area: tools;
   grid-column: 1 / -1;
@@ -923,8 +915,7 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
   overflow: clip;
 }
 
-:where(.site-header[data-spw-shell-tune-surface="knob"] .spw-shell-tools-disclosure[open] > .spw-shell-utility-row,
-       body > header[data-spw-shell-tune-surface="knob"] .spw-shell-tools-disclosure[open] > .spw-shell-utility-row) {
+:where(.site-header, body > header)[data-spw-shell-tune-surface="knob"] :where(.spw-shell-tools-disclosure, .spw-shell-utility-disclosure)[open] > .spw-shell-utility-row {
   position: absolute;
   z-index: calc(var(--z-header, 1000) + 6);
   inset-block-start: calc(100% + 0.38rem);
@@ -937,8 +928,7 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
     0 14px 34px rgba(14, 18, 20, 0.14);
 }
 
-:where(.site-header[data-spw-shell-tune-surface="strip"] .spw-shell-tools-disclosure[open] > .spw-shell-utility-row,
-       body > header[data-spw-shell-tune-surface="strip"] .spw-shell-tools-disclosure[open] > .spw-shell-utility-row) {
+:where(.site-header, body > header)[data-spw-shell-tune-surface="strip"] :where(.spw-shell-tools-disclosure, .spw-shell-utility-disclosure)[open] > .spw-shell-utility-row {
   position: static;
   inline-size: 100%;
   max-inline-size: 100%;

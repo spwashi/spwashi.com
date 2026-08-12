@@ -35,6 +35,8 @@
 @import url('/public/css/components/surfaces.css') layer(components);
 @import url('/public/css/components/signals.css') layer(components);
 @import url('/public/css/components/cards.css') layer(components);
+@import url('/public/css/components/cards/profile-card.css') layer(components);
+@import url('/public/css/components/cards/seed-card.css') layer(components);
 @import url('/public/css/components/semantic-learning.css') layer(components);
 @import url('/public/css/components/semantic-variants.css') layer(components);
 @import url('/public/css/components/semantic-resonance.css') layer(components);
