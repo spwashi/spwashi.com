@@ -14,6 +14,7 @@ import {
 } from './module-updates-contract.js';
 import { resolveModuleMount } from './module-export-contract.js';
 import { REGION_STATES, setRegionState } from './region-profiler.js';
+import { applyFamiliarityGate } from './familiarity-gate.js';
 import {
   matchesFeatures,
   normalizeFeatureRequirements,
@@ -544,9 +545,16 @@ function getEffectiveMountWhen(def, ctx) {
 
   const category = resolvePageCategory(ctx);
   const categoryWhen = resolveCategoryMountWhen(def, baseWhen, category, ctx);
-  if (categoryWhen) return applyTimingPolicy(def, ctx, categoryWhen);
+  const staged = categoryWhen || baseWhen;
 
-  return applyTimingPolicy(def, ctx, baseWhen);
+  // Familiarity may defer an expert surface off a newcomer's first paint. It
+  // only ever demotes, so it is safe to apply before the timing policy - an
+  // eager policy can still pull the module back forward if the reader asked
+  // for eager.
+  const surface = ctx.body?.dataset?.spwSurface || ctx.route || '';
+  const familiarWhen = applyFamiliarityGate(def, mountWhen, staged, surface);
+
+  return applyTimingPolicy(def, ctx, familiarWhen || staged);
 }
 
 function resolveCategoryMountWhen(def, baseWhen, category, ctx) {

@@ -596,6 +596,7 @@ export const ENHANCEMENT_DEFS = [
   },
   {
     id: 'state-inspector',
+    familiarity: 'practiced',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IDLE,
     costClass: COST_CLASS.WORKING_MEMORY_PRESSURE,
@@ -732,6 +733,7 @@ export const ENHANCEMENT_DEFS = [
   },
   {
     id: 'attention-architecture',
+    familiarity: 'familiar',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.IMMEDIATE,
     costClass: COST_CLASS.PAINT_COMPOSITE,
