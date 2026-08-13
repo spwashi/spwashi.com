@@ -20,6 +20,8 @@
 @manifest: ~"../../public/css/style-core.css"
 @payload_report: ~"../../scripts/css-payload-report.mjs"
 @breakpoints: ~"../../scripts/normalize-breakpoints.mjs"
+@image_theming: ~"../../public/css/systems/image-theming.css"
+@paper_motif: ~"../../public/css/systems/paper-motif.css"
 
 operation = "align"
 fixity = "tending"
@@ -57,6 +59,15 @@ fixity = "tending"
   ][reg=set]
   rule: "A sheet belongs in core only if a first paint without it is wrong rather than merely plainer. Ornament, wonder, cinematic and metaphysical-paper dress surfaces that are already legible; they are enhancement by their own descriptions and arrive as if they were structure."
   precedent: "themes/packs.css was pulled from core for exactly this reason and is appended on demand by theme-pack-loader.js. That move is the template; it has not been repeated."
+}
+
+^"theme_reach"{
+  claim: "A theme pack that moves every colour token and stops at the image boundary is a palette with a hole in it. Seven packs shipped that way — grepping themes/packs.css for `filter`, `saturate` or `image` returned nothing — so a `banked-ember` visitor got the same bright warm-paper plate `neutral-paper` shows, burning out of a dim page."
+  contract: "systems/image-theming.css owns the tokens; packs set them. `--spw-image-brightness`, `--spw-image-contrast`, `--spw-image-saturation`, `--spw-image-tint`, `--spw-image-tint-strength`, `--spw-image-edge`. Every default is identity, so a pack that sets nothing changes nothing and an unthemed image looks exactly as it did."
+  tint_rule: "Tint lands through a `color-mix` overlay, never `hue-rotate`. Hue-rotate mangles the warm amber points these renders are built around while leaving the teal fields alone; mixing toward a hue keeps relative warmth intact."
+  materials: "systems/paper-motif.css places the papergami studies as substrate, one motif per `data-spw-page-family`, so variety comes from what a page already declares rather than from rotation. Packs drive its opacity and blend — paper packs multiply, dark packs screen, because multiply against a dark field erases the plate."
+  mobile_rule: "A treatment that switches itself off below a breakpoint has not been made responsive, it has been made desktop-only. The motif changes role on narrow viewports — beside the column becomes beneath it — rather than disappearing."
+  capture_rule: "Both systems go identity under a non-default `data-spw-capture-mode`. A screenshot read by another model should carry the image, not this site's mood applied to it."
 }
 
 ^"breakpoints"{

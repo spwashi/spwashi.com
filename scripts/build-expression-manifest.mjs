@@ -34,11 +34,12 @@
  * share momentum." Two expressions that share a subject, a mode, or a body part
  * are kin, and the graph of that kinship is what the runtime can spend.
  *
- * The kin index is deliberately *not* shipped. Inverting it at build time cost
- * 47KB on top of the manifest's 40KB, to save a single pass over 441 entries —
- * roughly a millisecond of work in exchange for doubling the transfer. The
- * runtime builds it on mount instead. Precomputation is only a win when the
- * computation is the expensive part, and here it is the cheapest part.
+ * The kin index is deliberately *not* shipped. It is derivable from data already
+ * in this file, so emitting it alongside would be duplication that can drift
+ * from its source; the runtime builds it on mount instead. Both that build and
+ * the 47KB it would have added land off the critical path — expression-resonance
+ * mounts at IDLE and imports this manifest dynamically — so the choice is about
+ * having one source of truth, not about speed.
  *
  * Route lists are dropped for the same reason: resonance needs the shape, not
  * the provenance. `npm run reasons` already answers which routes carry what.

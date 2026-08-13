@@ -1,0 +1,95 @@
+# Semantic Expression Consequence
+#
+# 441 authored Spw expressions sat inert in the routes for the site's whole
+# life — valid grammar no runtime had ever read as anything but a string. This
+# names what they became when something finally parsed them, and the rule that
+# keeps the consequence honest: kinship is authored, never inferred.
+
+#>semantic_expression_consequence
+#:convention #!expressions #!runtime #!progressive-enhancement
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@electrostatic_affordances: ~"./electrostatic-affordances.spw"
+@arrival_electrostatics: ~"./arrival-electrostatics.spw"
+@interaction_microstates: ~"./interaction-microstates.spw"
+@attribute_governance: ~"./data-spw-attribute-governance.spw"
+@stylesheet_ecology: ~"./stylesheet-ecology.spw"
+@builder: ~"../../scripts/build-expression-manifest.mjs"
+@runtime: ~"../../public/js/runtime/expression-resonance.js"
+@css: ~"../../public/css/systems/expression-resonance.css"
+@manifest: ~"../../public/js/generated/spw-expressions.js"
+@integrity: ~"../../scripts/spw-integrity.mjs"
+
+operation = "prime"
+fixity = "experimental"
+
+^"thesis"{
+  claim: "`data-spw-semantic-expression` is authored on 441 distinct elements and was read by nothing. The grammar was real — all 441 parse into a container sequence — but a declaration no runtime consults is decoration with good manners."
+  bargain: "The parser lives in the workbench and is not shipped to browsers, so the parse happens at build time and the browser receives structure. The page is complete without any of it; that is what makes this progressive enhancement rather than a dependency."
+  refuse: "Do not parse Spw in the browser. If the runtime needs structure, the build owes it a manifest."
+}
+
+^"kinship"{
+  claim: "Two expressions are kin when they share a subject, a mode, or a body part. That relation is @electrostatic_affordances' inductance made literal — 'kin of the same terminal share momentum' — and it is dense enough to spend: 205 distinct subjects, 292 modes, 501 parts, and 423 of 441 expressions having at least one kin."
+  authored_not_inferred: "The relation comes from what an author wrote, not from similarity scoring. This is the whole reason it can be trusted: touching an element lights the elements a person decided were related."
+  ordering: "Subject binds tightest, then mode, then part. Sharing what a thing *is* is a stronger tie than sharing one of its components."
+  singleton_rule: "A token only one expression carries is a name, not kinship. Singletons are dropped so the index holds only edges that can fire."
+}
+
+^"two_timescales"{
+  resonance: "Transient. Hover or focus lights kin for as long as attention is there, then it settles. Pulse-shaped."
+  salience: "Accumulated. Dwell past 700ms deposits into a persisted per-token store, so tokens a reader actually travels grow warmer across visits. Residue-shaped, banded 0-4."
+  boundary: "@interaction_microstates#reward_contract's rule taken literally: potential display is pulse-shaped, reward display is residue-shaped, and a preview is never promoted into residue without a deliberate landing. Hover previews kinship; it does not bank it."
+  refuse: "Do not deposit salience on hover. A reader who glanced across a page has not earned a warmer surface, and if they had, warmth would stop meaning anything."
+}
+
+^"two_measurements_that_changed_the_design"{
+  rank_dropped: "A `rank` field counting parse-tree container kinds was built as a hypergeometric dimension and removed after measuring: 425 of 441 expressions scored identically and max tree depth was 7 for 438. The grammar builds the same containers for every authored expression, so nothing about the tree discriminates. A constant presented as a dimension is worse than no dimension."
+  kin_index_not_shipped: "The kin index is derivable from data already in the manifest, so shipping it alongside is duplication that can drift from its source. The runtime builds it on mount. Both the 47KB it would have added and the build cost land off the critical path — expression-resonance mounts at IDLE and imports the manifest dynamically — so this is a correctness choice, not a performance one."
+  lesson: "Both were plausible before measurement and wrong after. Measure the dimension before shipping the dimension."
+}
+
+^"parser_discipline"{
+  rule: "Use `parse()`, never `parseExpression()`."
+  why: "The two entry points of the same parser disagree. `parse()` in file context structures the authored noun form into Capsule -> Operation -> ModifierChain -> Frame -> Parameter -> Body. `parseExpression()` truncates the identical text at its leading identifier — `surfaces[route]{path.role.archetype}<publish>` consumes 8 of 45 characters and still reports success. Only 3 of the 441 survive it, the ones that happen to lead with a sigil."
+  consequence: "An earlier draft of @integrity used `parseExpression()` and concluded the site's copy was malformed. It was not; the API was. See .spw/README.md#known-workbench-gaps."
+}
+
+^"authoring_rule"{
+  write: #[
+    `data-spw-semantic-expression on elements whose relation to other elements is worth carrying`,
+    `subject[mode]{parts} — the site's own copy grammar, and a real container sequence`
+  ][reg=set]
+  runtime_writes: #[
+    `data-spw-expression-kin = subject | mode | part`,
+    `data-spw-expression-resonating on the source`,
+    `data-spw-expression-salience = 0..4 (residue)`,
+    `--spw-expression-resonance`
+  ][reg=set]
+  do_not_author: #[
+    `separators outside the grammar — a → arrow cost one expression its parse until it became ~ induction`,
+    `an expression whose only kin is itself; that is a name, and a name wants no runtime`
+  ][reg=set]
+  regenerate: `npm run manifest:expressions after adding or editing any expression`
+}
+
+#>wonder_expression_consequence_1
+?["If kinship is authored, who is accountable when two elements light that should not?"]{
+  #:depth #!experiential ~#lens(inductance)
+  ~#tension: "the relation is trustworthy precisely because a person wrote it, but nobody wrote it *as* a relation — they wrote two expressions months apart that happen to share the token `return`, which 21 expressions carry. Shared vocabulary is not always shared meaning."
+  ~#hypothesis: "part-kinship is weaker than subject-kinship not only in presentation but in truth, and the common tokens are the ones most likely to be coincidence."
+  !probe{ "list the 8 most-shared part tokens and read the expressions carrying each. if a token's members do not feel related when read together, part-kinship needs a stoplist or a frequency ceiling." }
+  $%[token.shareCount, kin.relation, expression.subject]
+}
+
+^"validation"{
+  probe: `npm run manifest:expressions && npm run spw:integrity`
+  probe_field: `__SPW_SITE__ — expression-resonance exposes describeExpressionField() with expressions, onThisPage, kinTokens, salience`
+  falsification: #[
+    `A browser parses an expression at runtime.`,
+    `Salience rises without dwell.`,
+    `An expression is added to a route and the manifest is not regenerated, so it silently has no kin.`
+  ][reg=set]
+}

@@ -56,6 +56,7 @@
 @electrostatic_affordances: ~"./electrostatic-affordances.spw"
 @arrival_electrostatics: ~"./arrival-electrostatics.spw"  # arrival as potential difference; carries the site's first probeable wonders
 @stylesheet_ecology: ~"./stylesheet-ecology.spw"  # a stylesheet is a standalone document; core.css is where the ecology fails
+@semantic_expression_consequence: ~"./semantic-expression-consequence.spw"  # 441 authored expressions parsed at build time; kinship as inductance
 @wonder_vocabulary: ~"./wonder-vocabulary.spw"
 @page_anatomy_vocabulary: ~"./page-anatomy-vocabulary.spw"
 @page_template_authoring: ~"./page-template-authoring.spw"
