@@ -17,6 +17,7 @@
 @implicit_attention_arcs: ~"./implicit-attention-arcs.spw"
 @morph_shader_handles: ~"./morph-shader-handles.spw"
 @css_combinatorics: ~"./css-combinatorics.spw"
+@arrival_perceptibility: ~"./arrival-perceptibility-2026-08.spw"
 
 operation = "align"
 fixity = "tending"
@@ -28,6 +29,7 @@ fixity = "tending"
   implicit_attention_arcs = @implicit_attention_arcs
   morph_shader_handles = @morph_shader_handles
   css_combinatorics = @css_combinatorics
+  arrival_perceptibility_2026_08 = @arrival_perceptibility
 }[reg=facet]
 
 ^"cache_rules"{

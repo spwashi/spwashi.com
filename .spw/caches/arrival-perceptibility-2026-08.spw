@@ -1,0 +1,73 @@
+# Arrival perceptibility
+#
+# Cache — arrival is scheduled but not composed. 58 modules land on home in
+# 17.3s and none of them announce themselves. Names the measured baseline and
+# the axis that is still missing, so the next pass does not re-derive it.
+
+#>arrival_perceptibility_2026_08
+#:cache #!attention #!load #!progressive-enhancement
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@implicit_arcs: ~"./implicit-attention-arcs.spw"
+@feature_wiring: ~"./feature-wiring-timing-2026-07.spw"
+@interaction_microstates: ~"../conventions/interaction-microstates.spw"
+@region_ecology: ~"../conventions/region-component-ecology.spw"
+@folding_organelle: ~"../conventions/folding-chrome-organelle.spw"
+@load_trace: ~"../../public/js/runtime/load-trace.js"
+@familiarity_gate: ~"../../public/js/runtime/familiarity-gate.js"
+@module_loader: ~"../../public/js/runtime/module-loader.js"
+
+operation = "cache"
+fixity = "tending"
+
+^"measured_baseline"{
+  note: "Home page, local build, 2026-08-12, via __SPW_SITE__.loadTrace. Numbers are the point; re-measure rather than trust these after scheduling changes."
+  modules_mounted = 58
+  arrival_span_ms = 17287
+  immediate_tier_span_ms = 4496
+  immediate_count = 20
+  region_enhancers = "12, in a 271ms burst at ~8.4s"
+  catalog_total = 96
+  gates_in_use = #[`IMMEDIATE`, `VISIBLE`, `IDLE`, `SETTLED`, `REGION`][reg=set]
+  gates_on_familiarity_before_this_pass = 0
+}
+
+^"claim"{
+  text: "Arrival is scheduled but not composed. `when=` decides ordering; nothing decides whether a landing is perceptible. 58 silent mounts over 17s is an undifferentiated wash — no feature gets a moment, so the reader cannot appreciate a feature's presence or learn that it exists."
+  restated: "This is @interaction_microstates#reward_contract applied to arrival rather than to interaction: never silent absorption."
+  bar: "As subtle as necessary to be tasteful, as noticeable as necessary to be seen. Both sides fail commonly — skeletons and spinners are noticeable but not tasteful; ordinary progressive enhancement is tasteful but imperceptible. The site currently sits hard on the second failure."
+}
+
+^"landed_this_pass"{
+  familiarity_axis = "runtime/familiarity-gate.js. The ladder (fresh|familiar|practiced|fluent|habitual) already existed in cognitive-state.js and visited surfaces were already persisted; neither was ever spent on scheduling. Now consulted inside getEffectiveMountWhen."
+  familiarity_rule = "Defer-only. May push an expert surface off a newcomer's first paint; may never pull work forward into it. IDLE is the floor, so nothing is withheld and no content sits behind a loyalty wall."
+  load_trace = "runtime/load-trace.js. Joins spw:module-mounted with layout-shift attribution; stepTo() winds back via the loader's existing mountModule/unmountModule. Recording is ambient and trivial; highlight/step are opt-in."
+  shell_chrome_fix = "REGION_ENHANCER_SELECTOR excludes shell chrome. region-enhancer::shell-0 was restyling the site header at ~8.4s — the measured cause of 'the navigation changes as the page loads'. @region_ecology already forbade it (chrome_field is not pack-local)."
+}
+
+^"still_missing"{
+  axis: "Perceptibility. Distinct from scheduling (when) and from eligibility (familiarity, features, selector)."
+  questions: #[
+    `Does a landing get a moment, or does it only get a slot?`,
+    `Which arrivals deserve to be noticed at all — most should stay silent, or the wash just becomes a louder wash`,
+    `Is perceptibility a property of the module, the region it lands in, or the reader's familiarity with it?`,
+    `First-encounter vs return: a feature probably announces once and then stops. That is the same shape as feature-discovery's encounter[novel|convergent|return], which describes encounters without being scheduled by them.`
+  ][reg=set]
+  refuse: "Do not give every module an entrance. Unconstrained announcement is the same failure as unconstrained rotation in @folding_organelle — the constraint is what teaches."
+}
+
+^"debut_placement"{
+  claim: "A module's first encounter should happen where its anatomy justifies it, not on whichever page loads first. Home currently declares 12 feature tokens, the most of any route except /design/."
+  probe: `compare data-spw-features per route against the anatomy each feature's modules actually select for`
+  example: "media-publishing on home gates promo-wonder-cycle, whose element is genuinely present — but it also pulls a 10KB behavior bundle for one card, and that card (daily-keyed promo copy) is not page-aware. Verified: the feature claim is legitimate, the proportionality is not."
+  caution: "First grep for this returned a false negative on the promo element. Check both the source route and dist/ before concluding a feature claim is phantom."
+}
+
+^"validation"{
+  probe: `__SPW_SITE__.loadTrace.summary() on any route; byWhen, deferred, shifted, spanMs`
+  probe_familiarity: `applyFamiliarityGate({familiarity:'practiced'}, MOUNT_WHEN, 'immediate', surface) returns 'idle' when fresh and null once earned`
+  falsification: "A new feature ships with an entrance animation but no encounter memory, so it announces itself on every visit forever."
+  next_smallest: "One feature arriving perceptibly, judged by eye in a browser. This is a taste call and does not want another abstraction in front of it."
+}
