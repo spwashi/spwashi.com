@@ -304,6 +304,21 @@ function syncSatchelRoom(root) {
     const key = node.getAttribute('data-spw-state-toggle');
     node.dataset.spwRoomRelevant = key && key === relevantKey ? 'true' : 'false';
   });
+
+  // The region's authored expression is the most specific true statement about
+  // what this part of the page is. Carrying subject/register/payload lets the
+  // satchel say where it is standing in the author's own words rather than
+  // repeating identical chrome on every route. Attributes only — the panel
+  // stays inspectable and CSS can spend them; no generated copy.
+  const expr = room.expression;
+  if (expr?.subject) root.dataset.spwRoomSubject = expr.subject;
+  else delete root.dataset.spwRoomSubject;
+  if (expr?.register) root.dataset.spwRoomRegister = expr.register;
+  else delete root.dataset.spwRoomRegister;
+  if (expr?.payload?.length) root.dataset.spwRoomAffords = expr.payload.join(' ');
+  else delete root.dataset.spwRoomAffords;
+  if (expr?.geometry?.formSignature) root.dataset.spwRoomForm = expr.geometry.formSignature;
+  else delete root.dataset.spwRoomForm;
 }
 
 function syncPageStateAwareness(root) {
