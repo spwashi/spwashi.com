@@ -494,7 +494,6 @@ function buildMenuSnapshot(header, nav, navList, state, open, source) {
     overflowRouteCount,
     totalRouteCount: primaryRouteCount + overflowRouteCount,
     locking,
-    reversible: true,
     returnPaths,
     returnHint: open ? 'toggle, Escape, route, or hash' : 'toggle or focus',
   };
@@ -521,7 +520,11 @@ function writeMenuDatasets(el, snapshot, role) {
     spwMenuRouteCount: snapshot.totalRouteCount,
     spwMenuOverflowCount: snapshot.overflowRouteCount,
     spwMenuLocking: snapshot.locking,
-    spwMenuReversible: snapshot.reversible ? 'true' : 'false',
+    // spwMenuReversible dropped 2026-08-12: was hardcoded `true` in
+    // buildMenuSnapshot, never actually varied. experiential.js's own
+    // reader (`header.dataset.spwMenuReversible !== 'false'`) already
+    // treats an absent attribute as true, so not writing it changes
+    // nothing observable.
     spwMenuReturnPaths: snapshot.returnPaths.join(' '),
     spwRuntimeMutator: 'shell-disclosure',
     spwRuntimeMutationReason: 'navigation-layout',
