@@ -21,6 +21,8 @@
  * or switching palettes should not re-fetch.
  */
 
+import { invalidateRoomAccent } from './room-signal.js';
+
 const LOADED = new Map();
 
 /**
@@ -45,6 +47,10 @@ export function ensureDeferredStyles(id, href) {
   link.href = href;
   // These restyle opt-in surfaces; they must never hold up first paint.
   link.fetchPriority = 'low';
+  // A deferred sheet lands after callers may already have resolved and cached
+  // computed values from it (room-signal memoizes --component-accent). Its own
+  // cache key cannot see a stylesheet arriving, so invalidate on load.
+  link.addEventListener('load', invalidateRoomAccent, { once: true });
   document.head.append(link);
   LOADED.set(id, link);
   return true;

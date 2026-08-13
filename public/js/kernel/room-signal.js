@@ -18,6 +18,38 @@
  * sync path.
  */
 
+/* getComputedStyle forces a style recalc, and callers sit on paths that fire
+   per section change while scrolling — exactly the hot-path read pattern that
+   makes this codebase stutter. The resolved accent only depends on the region
+   element, the theme pack, and the color mode, so memoize on that triple and
+   re-read only when one of them actually changes. Everything else in readRoom
+   is plain dataset access, which is cheap. */
+let accentMemo = { key: null, value: null };
+
+function readRegionAccent(region) {
+  if (!(region instanceof HTMLElement)) return null;
+
+  const html = document.documentElement;
+  const key = [
+    region.dataset.spwRegion || '',
+    region.dataset.spwRegionRole || '',
+    region.id || '',
+    html.dataset.spwThemePack || '',
+    html.dataset.spwColorMode || '',
+  ].join('|');
+
+  if (accentMemo.key === key) return accentMemo.value;
+
+  const value = getComputedStyle(region).getPropertyValue('--component-accent').trim() || null;
+  accentMemo = { key, value };
+  return value;
+}
+
+/** Drop the cached accent — call when a theme swap should be re-resolved. */
+export function invalidateRoomAccent() {
+  accentMemo = { key: null, value: null };
+}
+
 export function readRoom(referenceEl = null) {
   const html = document.documentElement;
   const body = document.body;
@@ -33,19 +65,11 @@ export function readRoom(referenceEl = null) {
     || (referenceEl?.closest?.('.site-frame[data-spw-region], .site-frame[data-spw-region-role]'))
     || null;
 
-  const regionKind = region?.dataset?.spwRegion || '';
-  const regionRole = region?.dataset?.spwRegionRole || '';
-
-  let accent = '';
-  if (region instanceof HTMLElement) {
-    accent = getComputedStyle(region).getPropertyValue('--component-accent').trim();
-  }
-
   return {
     family,
-    region: regionKind,
-    regionRole,
-    accent: accent || null,
+    region: region?.dataset?.spwRegion || '',
+    regionRole: region?.dataset?.spwRegionRole || '',
+    accent: readRegionAccent(region),
     sectionId: currentSectionId || null,
   };
 }
