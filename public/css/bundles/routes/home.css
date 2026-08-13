@@ -327,27 +327,39 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
   hyphens: none;
 }
 
+/* The thesis line carries the page. It was set in the same mono as body
+   copy at a similar value, so the hero read as one undifferentiated block.
+   Newsreader is loaded site-wide and declared (style-core.css) as the
+   "optical sizing variable serif for editorial typesetting" — the hero is
+   exactly that job, and was the one place not using it. Optical sizing does
+   real work here: at display size the face tightens, so the serif reads as
+   a deliberate voice change rather than a font swap. */
 :where(
   [data-spw-feature="home-kernel-entry"] .home-tagline,
   [data-spw-feature="home-kernel-entry"] [data-spw-textual-role="tagline"]
 ) {
-  max-inline-size: min(36ch, 100%);
+  max-inline-size: min(30ch, 100%);
   margin: 0;
   color: color-mix(in srgb, var(--home-accent-ink) 88%, var(--ink-soft, rgba(27, 31, 35, 0.68)) 12%);
-  font-size: clamp(1.1rem, 0.95rem + 0.8vw, 1.55rem);
-  font-weight: 500;
-  line-height: 1.22;
-  letter-spacing: -0.02em;
+  font-family: var(--site-editorial-font, "Newsreader", Georgia, serif);
+  font-optical-sizing: auto;
+  font-size: clamp(1.35rem, 1.05rem + 1.5vw, 2.1rem);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.16;
+  letter-spacing: -0.012em;
   text-wrap: balance;
 }
 
+/* Inherits the editorial serif from shell/layout.css's shared .page-lede —
+   only the home-specific measure and optical sizing are set here. */
 :where([data-spw-feature="home-kernel-entry"] .page-lede) {
   max-inline-size: var(--home-measure);
   margin: 0;
   color: color-mix(in srgb, var(--ink, #1b1f23) 90%, transparent);
-  font-size: clamp(1rem, 0.92rem + 0.48vw, 1.16rem);
-  font-weight: 500;
-  line-height: 1.58;
+  font-size: clamp(1.12rem, 1rem + 0.6vw, 1.34rem);
+  font-weight: 400;
+  line-height: 1.5;
   text-wrap: pretty;
 }
 
@@ -414,6 +426,23 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
 
 :where([data-spw-feature="home-kernel-entry"] .page-lede) {
   order: 4;
+}
+
+/* Uniform gap flattened the hierarchy: kicker/headline/thesis read as three
+   equally-weighted siblings. Tightening the top of the stack binds them into
+   one masthead unit, then a wider gap before the lede opens the reading
+   register — the same "one breath, then the body" rhythm region-seats.css
+   already applies to ledes at region scale. */
+:where([data-spw-feature="home-kernel-entry"] .home-hero-copy > h1) {
+  margin-block-start: calc(var(--home-gap-lg) * -0.42);
+}
+
+:where([data-spw-feature="home-kernel-entry"] .home-hero-copy > .home-tagline) {
+  margin-block-start: calc(var(--home-gap-lg) * -0.2);
+}
+
+:where([data-spw-feature="home-kernel-entry"] .home-hero-copy > .page-lede) {
+  margin-block-start: calc(var(--home-gap-lg) * 0.28);
 }
 
 :where([data-spw-feature="home-kernel-entry"] .home-hero-note) {

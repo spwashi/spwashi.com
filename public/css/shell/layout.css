@@ -653,14 +653,26 @@ main :where(article > ul, article > ol, section > ul, section > ol) {
   text-transform: uppercase;
 }
 
+/* The lede is the one paragraph on any route that has to change the reader's
+   posture from scanning to reading. It was set in the same mono at nearly the
+   same weight/size as the body notes below it, so it did no work — every route
+   opened flat. Newsreader is loaded site-wide and declared (style-core.css) as
+   the "optical sizing variable serif for editorial typesetting"; the lede is
+   exactly that job and was not using it. Lives here in the shell layer rather
+   than per-route so About/Topics/Design/Services/Play inherit one treatment
+   instead of five near-copies. Routes can still override — shell loads before
+   routes. */
 .page-lede,
 .hero-lede,
 .shell-lede {
-  color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 86%, transparent);
-  font-size: clamp(1.02rem, 0.94rem + 0.45vw, 1.18rem);
-  font-weight: 500;
-  line-height: 1.62;
-  max-inline-size: min(52ch, 100%);
+  color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 88%, transparent);
+  font-family: var(--site-editorial-font, "Newsreader", Georgia, serif);
+  font-optical-sizing: auto;
+  font-size: clamp(1.12rem, 1rem + 0.62vw, 1.38rem);
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.004em;
+  max-inline-size: min(56ch, 100%);
   text-wrap: pretty;
 }
 
