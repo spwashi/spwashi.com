@@ -651,14 +651,18 @@ export function initSpwKeyEvents(root = document) {
 
   publishApi();
 
-  root.addEventListener('focusin', onFocusIn, true);
-  root.addEventListener('keydown', onKeyDown, true);
+  if (root) {
+    root.addEventListener('focusin', onFocusIn, true);
+    root.addEventListener('keydown', onKeyDown, true);
+  }
 
   return () => {
     initialized = false;
     clearRevealTasks();
-    root.removeEventListener('focusin', onFocusIn, true);
-    root.removeEventListener('keydown', onKeyDown, true);
+    if (root) {
+      root.removeEventListener('focusin', onFocusIn, true);
+      root.removeEventListener('keydown', onKeyDown, true);
+    }
     while (sceneStack.length) {
       const exited = sceneStack.pop();
       const host = exited?.id ? document.getElementById(exited.id) : null;
@@ -681,5 +685,6 @@ export function initSpwKeyEvents(root = document) {
 }
 
 export const spwModule = {
-  mount: initSpwKeyEvents,
+  updates: ['attr:data-spw-key-active'],
+  mount: (mod, ctx, root) => initSpwKeyEvents(root),
 };

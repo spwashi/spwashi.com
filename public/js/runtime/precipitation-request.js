@@ -67,3 +67,8 @@ export function initPrecipitationRequest(root = document) {
   window.addEventListener('popstate', onPopState);
   return () => window.removeEventListener('popstate', onPopState);
 }
+
+export const spwModule = {
+  updates: ['attr:data-spw-precipitation-active', 'attr:data-spw-precipitation-mode'],
+  mount: (mod, ctx, root) => initPrecipitationRequest(root),
+};

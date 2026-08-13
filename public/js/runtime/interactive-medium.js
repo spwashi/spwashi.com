@@ -137,11 +137,13 @@ function countUniqueElements(root, selectors) {
 }
 
 export function countInteractiveHosts(root = document) {
-  const sceneBeds = root.querySelectorAll(BED_SELECTOR).length;
-  const sceneHandles = root.querySelectorAll(SCENE_HANDLE_SELECTOR).length;
-  const promptHosts = root.querySelectorAll(PROMPT_HOST_SELECTOR).length;
-  const wonderBlocks = root.querySelectorAll(WONDER_SELECTOR).length;
-  const uniqueHosts = countUniqueElements(root, [
+  const target = typeof root?.querySelectorAll === 'function' ? root : (typeof document !== 'undefined' ? document : null);
+  if (!target) return { sceneBeds: 0, sceneHandles: 0, promptHosts: 0, wonderBlocks: 0, total: 0 };
+  const sceneBeds = target.querySelectorAll(BED_SELECTOR).length;
+  const sceneHandles = target.querySelectorAll(SCENE_HANDLE_SELECTOR).length;
+  const promptHosts = target.querySelectorAll(PROMPT_HOST_SELECTOR).length;
+  const wonderBlocks = target.querySelectorAll(WONDER_SELECTOR).length;
+  const uniqueHosts = countUniqueElements(target, [
     BED_SELECTOR,
     SCENE_HANDLE_SELECTOR,
     PROMPT_HOST_SELECTOR,
@@ -358,12 +360,14 @@ export function initInteractiveMedium(root = document) {
 
   window.addEventListener('resize', handleRegisterChange, { passive: true });
   window.addEventListener('orientationchange', handleRegisterChange, { passive: true });
-  root.addEventListener('spw:shell-menu-state', handleSync);
-  root.addEventListener('spw:variant-selected', handleRegisterChange);
-  root.addEventListener('spw:scene-enter', handleSync);
-  root.addEventListener('spw:scene-exit', handleSync);
-  root.addEventListener('spw:scene-lane-focus', handleSync);
-  root.addEventListener('spw:scene-bed-ready', handleSync);
+  if (root) {
+    root.addEventListener('spw:shell-menu-state', handleSync);
+    root.addEventListener('spw:variant-selected', handleRegisterChange);
+    root.addEventListener('spw:scene-enter', handleSync);
+    root.addEventListener('spw:scene-exit', handleSync);
+    root.addEventListener('spw:scene-lane-focus', handleSync);
+    root.addEventListener('spw:scene-bed-ready', handleSync);
+  }
   TOKEN_INVALIDATION_EVENTS.forEach((type) => {
     document.addEventListener(type, handleRegisterChange);
   });
@@ -406,18 +410,22 @@ function cleanup() {
   lastSignature = '';
   invalidateMediumTokens();
 
-  if (handleSync) {
-    activeRoot.removeEventListener('spw:shell-menu-state', handleSync);
-    activeRoot.removeEventListener('spw:scene-enter', handleSync);
-    activeRoot.removeEventListener('spw:scene-exit', handleSync);
-    activeRoot.removeEventListener('spw:scene-lane-focus', handleSync);
-    activeRoot.removeEventListener('spw:scene-bed-ready', handleSync);
+  if (handleSync && activeRoot) {
+    if (activeRoot) {
+      activeRoot.removeEventListener('spw:shell-menu-state', handleSync);
+      activeRoot.removeEventListener('spw:scene-enter', handleSync);
+      activeRoot.removeEventListener('spw:scene-exit', handleSync);
+      activeRoot.removeEventListener('spw:scene-lane-focus', handleSync);
+      activeRoot.removeEventListener('spw:scene-bed-ready', handleSync);
+    }
   }
 
   if (handleRegisterChange) {
     window.removeEventListener('resize', handleRegisterChange);
     window.removeEventListener('orientationchange', handleRegisterChange);
-    activeRoot.removeEventListener('spw:variant-selected', handleRegisterChange);
+    if (activeRoot) {
+      activeRoot.removeEventListener('spw:variant-selected', handleRegisterChange);
+    }
     TOKEN_INVALIDATION_EVENTS.forEach((type) => {
       document.removeEventListener(type, handleRegisterChange);
     });
@@ -446,5 +454,6 @@ function cleanup() {
 }
 
 export const spwModule = {
-  mount: initInteractiveMedium,
+  updates: ['attr:data-spw-medium-mounted', 'attr:data-spw-medium-target'],
+  mount: (mod, ctx, root) => initInteractiveMedium(root),
 };

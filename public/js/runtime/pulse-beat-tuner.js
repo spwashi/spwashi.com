@@ -125,7 +125,9 @@ export function initPulseBeatTuner(root = document) {
   if (initialized) return () => {};
   initialized = true;
 
-  const html = root.documentElement;
+  const html = root?.documentElement || (root?.nodeType === 1 ? root : typeof document !== 'undefined' ? document.documentElement : null);
+  if (!html) return () => {};
+
   const controller = new AbortController();
   const { signal } = controller;
 
@@ -154,7 +156,7 @@ export function initPulseBeatTuner(root = document) {
   };
 
   const onRuntimeTokens = () => {
-    if (html.dataset.spwSiteRhythm === 'active') refreshRhythm();
+    if (html?.dataset?.spwSiteRhythm === 'active') refreshRhythm();
   };
 
   document.addEventListener('spw:interaction-phase', onInteractionPhase, { signal });
@@ -165,7 +167,7 @@ export function initPulseBeatTuner(root = document) {
   document.addEventListener('spw:settings:changed', refreshRhythm, { signal });
   document.addEventListener('spw:runtime-tokens-updated', onRuntimeTokens, { signal });
 
-  if (typeof MutationObserver === 'function') {
+  if (typeof MutationObserver === 'function' && html && html.nodeType === 1) {
     const observer = new MutationObserver((records) => {
       const relevant = records.some((record) => (
         record.type === 'attributes'
@@ -198,3 +200,8 @@ export function initPulseBeatTuner(root = document) {
 }
 
 export { FRESHNESS_EVENT, BEAT_CADENCE };
+
+export const spwModule = {
+  updates: ['attr:data-spw-beat-cadence', 'attr:data-spw-pulse-freshness'],
+  mount: (mod, ctx, root) => initPulseBeatTuner(root),
+};

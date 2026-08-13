@@ -251,10 +251,13 @@ async function renderTemplateDocument(session, base, snippetHtml, viewport) {
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <base href="${base}/"/>
   <title>Spw component template capture</title>
+  <link rel="stylesheet" href="${base}/public/css/bundles/core.css"/>
+  <link rel="stylesheet" href="${base}/public/css/style.css"/>
   <link rel="stylesheet" href="${base}/public/css/compose.css"/>
   <style>
-    html, body { margin: 0; padding: 0; background: #f4f1ea; color: #1a1a1a; }
+    html, body { margin: 0; padding: 0; }
     body { min-height: 100vh; display: grid; place-items: center; padding: 2rem; box-sizing: border-box; }
     .spw-template-capture-host {
       width: min(100%, 42rem);
@@ -262,7 +265,12 @@ async function renderTemplateDocument(session, base, snippetHtml, viewport) {
     }
   </style>
 </head>
-<body data-spw-capture-flow="template">
+<body
+  data-spw-surface="software"
+  data-spw-features="operators metrics navigator console"
+  data-spw-route-family="systems"
+  data-spw-page-family="spec"
+  data-spw-capture-flow="template">
   <div class="spw-template-capture-host" data-spw-capture-host="template">
     ${snippetHtml}
   </div>
@@ -383,6 +391,7 @@ async function main() {
   ]);
 
   const capturesDir = path.join(options.out, 'captures');
+  await rm(capturesDir, { recursive: true, force: true }).catch(() => {});
   await mkdir(capturesDir, { recursive: true });
 
   const captures = [];

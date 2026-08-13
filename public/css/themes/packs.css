@@ -244,6 +244,28 @@ html[data-spw-color-mode="light"][data-spw-theme-pack="banked-ember"] {
   --material-transmission: 0.16;
 }
 
+/* ==========================================================================
+   Region Ecology & Cognitive Flow Resonance
+   --------------------------------------------------------------------------
+   Components are intermediate forms facilitating digestion through structural forms.
+   The materials implied by CSS resonate with the cognitive flow intended by the copy.
+   The region profiler applies [data-spw-harmony] and [data-spw-tempo] to regions.
+   We tie the material properties to these semantic states so the language of Spw
+   develops a physical reality matching the region ecology.
+   ========================================================================== */
+
+/* Banked ember: ecology base physics */
+html[data-spw-theme-pack="banked-ember"] {
+  --ember-base-seam: var(--line);
+  --ember-base-accent: var(--amber);
+}
+html[data-spw-theme-pack="banked-ember"] :where([data-spw-harmony="responsive"], [data-spw-harmony="modular"]) {
+  --ember-base-seam: color-mix(in oklab, var(--line), var(--amber) 15%);
+}
+html[data-spw-theme-pack="banked-ember"] :where([data-spw-harmony="editorial"]) {
+  --ember-base-accent: color-mix(in oklab, var(--amber), var(--rust) 40%);
+}
+
 /* "Faint luminous cracks that pulse when the life inside stirs."
    The seam only lights where the runtime says charge is actually present —
    --spw-charge-field is written by runtime/charge-field.js, so this reads
@@ -254,13 +276,178 @@ html[data-spw-color-mode="light"][data-spw-theme-pack="banked-ember"] {
 html[data-spw-theme-pack="banked-ember"] :where(.site-frame, .frame-card, .frame-panel) {
   --site-frame-seam-color: color-mix(
     in oklab,
-    var(--line),
-    var(--amber) calc(var(--spw-charge-field, 0) * 62%)
+    var(--ember-base-seam),
+    var(--ember-base-accent) calc(var(--spw-charge-field, 0) * 62%)
   );
   --component-accent: color-mix(
     in oklab,
-    var(--amber) calc(64% - (var(--spw-charge-field, 0) * 22%)),
+    var(--ember-base-accent) calc(64% - (var(--spw-charge-field, 0) * 22%)),
     var(--blue) calc(var(--spw-charge-field, 0) * 36%)
+  );
+  --card-shadow: 0 calc(2px + var(--spw-charge-field, 0) * 10px) calc(8px + var(--spw-charge-field, 0) * 24px) color-mix(in oklab, #000 calc(45% + var(--spw-charge-field, 0) * 35%), transparent);
+}
+
+/* Glass console: ecology base physics */
+html[data-spw-theme-pack="glass-console"] {
+  --glass-base-blur: 10px;
+  --glass-base-surface: rgba(255, 255, 255, 0.08);
+}
+html[data-spw-color-mode="light"][data-spw-theme-pack="glass-console"] {
+  --glass-base-surface: rgba(255, 255, 255, 0.24);
+}
+
+html[data-spw-theme-pack="glass-console"] :where([data-spw-harmony="editorial"]) {
+  --glass-base-blur: 16px;
+  --glass-base-surface: rgba(255, 255, 255, 0.14);
+}
+html[data-spw-color-mode="light"][data-spw-theme-pack="glass-console"] :where([data-spw-harmony="editorial"]) {
+  --glass-base-surface: rgba(255, 255, 255, 0.32);
+}
+
+html[data-spw-theme-pack="glass-console"] :where([data-spw-harmony="structured"], [data-spw-harmony="indexed"]) {
+  --glass-base-blur: 4px;
+  --glass-base-surface: rgba(255, 255, 255, 0.16);
+}
+html[data-spw-color-mode="light"][data-spw-theme-pack="glass-console"] :where([data-spw-harmony="structured"], [data-spw-harmony="indexed"]) {
+  --glass-base-surface: rgba(255, 255, 255, 0.40);
+}
+
+/* Glass console: smooth glass panels that respond to interaction charge by becoming more opaque and reflective. */
+html[data-spw-theme-pack="glass-console"] :where(.site-frame, .frame-card, .frame-panel) {
+  --material-blur: calc(var(--glass-base-blur) + (var(--spw-charge-field, 0) * 8px));
+  --surface-glass: color-mix(
+    in oklab,
+    var(--glass-base-surface),
+    rgba(255, 255, 255, 0.45) calc(var(--spw-charge-field, 0) * 100%)
+  );
+  --component-accent: color-mix(
+    in oklab,
+    var(--teal) calc(100% - (var(--spw-charge-field, 0) * 40%)),
+    var(--blue) calc(var(--spw-charge-field, 0) * 100%)
+  );
+  --card-shadow:
+    0 calc(1px + var(--spw-charge-field, 0) * 6px) calc(4px + var(--spw-charge-field, 0) * 16px) color-mix(in oklab, var(--teal) calc(var(--spw-charge-field, 0) * 25%), rgba(0, 0, 0, 0.08)),
+    0 calc(var(--spw-charge-field, 0) * 12px) calc(var(--spw-charge-field, 0) * 32px) color-mix(in oklab, var(--blue) calc(var(--spw-charge-field, 0) * 15%), transparent);
+}
+
+/* Copper brace: ecology base physics */
+html[data-spw-theme-pack="copper-brace"] {
+  --copper-base-seam: var(--line);
+  --copper-base-accent: var(--teal);
+}
+html[data-spw-theme-pack="copper-brace"] :where([data-spw-harmony="structured"], [data-spw-harmony="indexed"]) {
+  --copper-base-accent: color-mix(in oklab, var(--teal), var(--line-strong) 20%);
+}
+html[data-spw-theme-pack="copper-brace"] :where([data-spw-harmony="responsive"], [data-spw-harmony="modular"]) {
+  --copper-base-seam: color-mix(in oklab, var(--line), var(--amber) 15%);
+}
+
+/* Copper brace: oxidized metal that heats up under interaction charge, burning away the patina to reveal bright copper. */
+html[data-spw-theme-pack="copper-brace"] :where(.site-frame, .frame-card, .frame-panel) {
+  --component-accent: color-mix(
+    in oklab,
+    var(--copper-base-accent) calc(100% - (var(--spw-charge-field, 0) * 80%)),
+    var(--amber) calc(var(--spw-charge-field, 0) * 100%)
+  );
+  --site-frame-seam-color: color-mix(
+    in oklab,
+    var(--copper-base-seam),
+    var(--op-binding-color) calc(var(--spw-charge-field, 0) * 70%)
+  );
+  --card-shadow:
+    0 calc(2px + var(--spw-charge-field, 0) * 4px) calc(6px + var(--spw-charge-field, 0) * 12px) color-mix(in oklab, var(--op-binding-color) calc(5% + var(--spw-charge-field, 0) * 20%), rgba(0, 0, 0, 0.12)),
+    inset 0 -2px calc(var(--spw-charge-field, 0) * 8px) color-mix(in oklab, var(--amber) calc(var(--spw-charge-field, 0) * 12%), transparent);
+}
+
+/* Electric studio: ecology base physics */
+html[data-spw-theme-pack="electric-studio"] {
+  --electric-base-seam: var(--line);
+  --electric-base-accent: var(--blue);
+}
+html[data-spw-theme-pack="electric-studio"] :where([data-spw-harmony="responsive"], [data-spw-harmony="modular"]) {
+  --electric-base-seam: color-mix(in oklab, var(--line-strong), var(--resonance-accent) 25%);
+  --electric-base-accent: color-mix(in oklab, var(--blue) 60%, var(--violet));
+}
+html[data-spw-theme-pack="electric-studio"] :where([data-spw-harmony="editorial"]) {
+  --electric-base-seam: color-mix(in oklab, var(--line), transparent 50%);
+}
+
+/* Electric studio: neon tubes that spark and intensify when charged. */
+html[data-spw-theme-pack="electric-studio"] :where(.site-frame, .frame-card, .frame-panel) {
+  --site-frame-seam-color: color-mix(
+    in oklab,
+    var(--electric-base-seam),
+    var(--resonance-accent) calc(var(--spw-charge-field, 0) * 85%)
+  );
+  --component-accent: color-mix(
+    in oklab,
+    var(--electric-base-accent) calc(100% - (var(--spw-charge-field, 0) * 50%)),
+    var(--violet) calc(var(--spw-charge-field, 0) * 100%)
+  );
+  --card-shadow:
+    0 calc(2px + var(--spw-charge-field, 0) * 6px) calc(8px + var(--spw-charge-field, 0) * 18px) color-mix(in oklab, var(--blue) calc(8% + var(--spw-charge-field, 0) * 25%), rgba(0, 0, 0, 0.08)),
+    0 0 calc(var(--spw-charge-field, 0) * 16px) color-mix(in oklab, var(--violet) calc(var(--spw-charge-field, 0) * 30%), transparent);
+}
+
+/* Ritual vellum: ecology base physics */
+html[data-spw-theme-pack="ritual-vellum"] {
+  --ritual-base-field: var(--bg-field);
+  --ritual-base-ink: var(--ink);
+}
+html[data-spw-theme-pack="ritual-vellum"] :where([data-spw-harmony="editorial"]) {
+  --ritual-base-field: color-mix(in oklab, var(--bg-field), var(--amber) 4%);
+  --ritual-base-ink: color-mix(in oklab, var(--ink), var(--paper) 6%);
+}
+html[data-spw-theme-pack="ritual-vellum"] :where([data-spw-harmony="structured"], [data-spw-harmony="indexed"]) {
+  --ritual-base-field: color-mix(in oklab, var(--bg-field), var(--teal) 3%);
+}
+
+/* Ritual vellum: ancient paper where the page warms and the ink rises as it is touched. */
+html[data-spw-theme-pack="ritual-vellum"] :where(.site-frame, .frame-card, .frame-panel) {
+  --bg-field: color-mix(
+    in oklab,
+    var(--ritual-base-field),
+    var(--amber) calc(var(--spw-charge-field, 0) * 8%)
+  );
+  --ink: color-mix(
+    in oklab,
+    var(--ritual-base-ink),
+    var(--ink-strong) calc(var(--spw-charge-field, 0) * 100%)
+  );
+  --card-shadow: 0 calc(1px + var(--spw-charge-field, 0) * 5px) calc(4px + var(--spw-charge-field, 0) * 15px) color-mix(in oklab, var(--amber) calc(5% + var(--spw-charge-field, 0) * 12%), rgba(0, 0, 0, 0.06));
+}
+
+/* Neutral paper: ecology base physics */
+html[data-spw-theme-pack="neutral-paper"] {
+  --paper-base-shadow: rgba(0, 0, 0, 0.05);
+}
+html[data-spw-theme-pack="neutral-paper"] :where([data-spw-harmony="editorial"]) {
+  --paper-base-shadow: color-mix(in oklab, var(--amber) 4%, rgba(0, 0, 0, 0.04));
+}
+html[data-spw-theme-pack="neutral-paper"] :where([data-spw-harmony="structured"]) {
+  --paper-base-shadow: color-mix(in oklab, var(--teal) 4%, rgba(0, 0, 0, 0.04));
+}
+
+/* Neutral paper: subtle elevation lift that stays clean and documentary. */
+html[data-spw-theme-pack="neutral-paper"] :where(.site-frame, .frame-card, .frame-panel) {
+  --card-shadow: 0 calc(1px + var(--spw-charge-field, 0) * 3px) calc(3px + var(--spw-charge-field, 0) * 10px) color-mix(in oklab, var(--paper-base-shadow), var(--teal) calc(var(--spw-charge-field, 0) * 6%));
+}
+
+/* Oxide ledger: ecology base physics */
+html[data-spw-theme-pack="oxide-ledger"] {
+  --oxide-base-shadow: rgba(19, 30, 28, 0.08);
+}
+html[data-spw-theme-pack="oxide-ledger"] :where([data-spw-harmony="editorial"]) {
+  --oxide-base-shadow: color-mix(in oklab, var(--amber) 8%, rgba(19, 30, 28, 0.06));
+}
+
+/* Oxide ledger: austere matte material that subtly depresses or highlights without deep glow. */
+html[data-spw-theme-pack="oxide-ledger"] :where(.site-frame, .frame-card, .frame-panel) {
+  --card-shadow: 0 calc(1px + var(--spw-charge-field, 0) * 2px) calc(4px + var(--spw-charge-field, 0) * 8px) color-mix(in oklab, var(--oxide-base-shadow), var(--teal) calc(var(--spw-charge-field, 0) * 12%));
+  --site-frame-seam-color: color-mix(
+    in oklab,
+    var(--line),
+    var(--teal) calc(var(--spw-charge-field, 0) * 40%)
   );
 }
 

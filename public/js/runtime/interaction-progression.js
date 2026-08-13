@@ -103,7 +103,8 @@ export function initInteractionProgression(root = document) {
   if (initialized) return () => {};
   initialized = true;
 
-  const html = root.documentElement;
+  const html = document.documentElement;
+  if (!html) return () => {};
   const controller = new AbortController();
   const { signal } = controller;
   const supportsHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -213,19 +214,24 @@ export function initInteractionProgression(root = document) {
     ? new MutationObserver(onLoopOrGestureAttr)
     : null;
 
-  gestureObserver?.observe(root.body || html, {
-    attributes: true,
-    attributeFilter: ['data-spw-gesture', 'data-spw-loop-state'],
-    subtree: true,
-  });
+  const targetNode = root?.body || html;
+  if (gestureObserver && targetNode && targetNode.nodeType === 1) {
+    gestureObserver.observe(targetNode, {
+      attributes: true,
+      attributeFilter: ['data-spw-gesture', 'data-spw-loop-state'],
+      subtree: true,
+    });
+  }
 
   const pinchObserver = typeof MutationObserver === 'function'
     ? new MutationObserver(onPinchAttr)
     : null;
 
-  pinchObserver?.observe(html, { attributes: true, attributeFilter: ['data-spw-pinch-scaling'] });
-  if (root.body) {
-    pinchObserver?.observe(root.body, { attributes: true, attributeFilter: ['data-spw-pinch-scaling'] });
+  if (pinchObserver && html && html.nodeType === 1) {
+    pinchObserver.observe(html, { attributes: true, attributeFilter: ['data-spw-pinch-scaling'] });
+  }
+  if (pinchObserver && root?.body && root.body.nodeType === 1) {
+    pinchObserver.observe(root.body, { attributes: true, attributeFilter: ['data-spw-pinch-scaling'] });
   }
 
   const imageObserver = typeof MutationObserver === 'function'
@@ -241,7 +247,9 @@ export function initInteractionProgression(root = document) {
     : null;
 
   const observeImages = () => {
-    root.querySelectorAll('[data-spw-image-interaction-state]').forEach((node) => {
+    const target = typeof root?.querySelectorAll === 'function' ? root : (typeof document !== 'undefined' ? document : null);
+    if (!target) return;
+    target.querySelectorAll('[data-spw-image-interaction-state]').forEach((node) => {
       imageObserver?.observe(node, { attributes: true, attributeFilter: ['data-spw-image-interaction-state'] });
     });
   };
@@ -299,25 +307,25 @@ export function initInteractionProgression(root = document) {
     });
   };
 
-  let lastLayoutTuner = html.dataset.spwLayoutTuner || '';
+  let lastLayoutTuner = html?.dataset?.spwLayoutTuner || '';
   const onSettingsLayoutSelection = () => {
-    const nextTuner = html.dataset.spwLayoutTuner || '';
+    const nextTuner = html?.dataset?.spwLayoutTuner || '';
     if (!nextTuner || nextTuner === lastLayoutTuner) {
       lastLayoutTuner = nextTuner;
       return;
     }
     lastLayoutTuner = nextTuner;
-    html.dataset.spwLayoutSelectionPulse = nextTuner;
-    writePhase(html, 'approach', {
+    if (html) html.dataset.spwLayoutSelectionPulse = nextTuner;
+    if (html) writePhase(html, 'approach', {
       source: 'layout-selection',
       layoutTuner: nextTuner,
       force: true,
     });
     window.setTimeout(() => {
-      if (html.dataset.spwLayoutSelectionPulse === nextTuner) {
+      if (html?.dataset?.spwLayoutSelectionPulse === nextTuner) {
         delete html.dataset.spwLayoutSelectionPulse;
       }
-    }, readMicrointeractionPulseMs(html.ownerDocument || document));
+    }, readMicrointeractionPulseMs(html?.ownerDocument || document));
   };
 
   document.addEventListener('spw:image-lens', onImageLens, { signal });
@@ -351,3 +359,8 @@ export function initInteractionProgression(root = document) {
 }
 
 export { INTERACTION_PHASES } from './interaction-vocabulary.js';
+
+export const spwModule = {
+  updates: ['attr:data-spw-interaction-phase', 'attr:data-spw-microinteraction-pulse'],
+  mount: (mod, ctx, root) => initInteractionProgression(root),
+};

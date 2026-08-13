@@ -394,5 +394,6 @@ export function initSceneInteraction(root = document) {
 }
 
 export const spwModule = {
-  mount: initSceneInteraction,
+  updates: ['attr:data-spw-scene-active', 'attr:data-spw-scene-phase'],
+  mount: (mod, ctx, root) => initSceneInteraction(root),
 };

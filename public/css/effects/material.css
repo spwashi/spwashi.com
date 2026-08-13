@@ -29,7 +29,7 @@
   --material-duration-deliberate: var(--duration-deliberate, 360ms);
 
   --material-prime-color:   var(--active-op-color, #008080);
-  --material-highlight-inset: inset 0 1px 0 rgba(255, 255, 255, 0.52);
+  --material-highlight-inset: inset 0 1px 0 color-mix(in oklch, white 52%, transparent);
 
   --material-depth-opacity-1: 0.88;
   --material-depth-opacity-2: 0.93;
@@ -39,9 +39,9 @@
   --material-layer-content: var(--spw-local-layer-content, 1);
   --material-layer-overlay: var(--spw-local-layer-overlay, 2);
 
-  --material-blur-frame: var(--material-blur, 12px);
-  --material-blur-card:  calc(var(--material-blur, 12px) * 0.8);
-  --material-blur-soft:  calc(var(--material-blur, 12px) * 0.5);
+  --material-blur-frame: var(--material-blur, 16px);
+  --material-blur-card:  calc(var(--material-blur, 16px) * 0.8);
+  --material-blur-soft:  calc(var(--material-blur, 16px) * 0.5);
 
   /* Interaction Field */
   --interaction-excitement: 0;

@@ -178,3 +178,12 @@ export function initReadingGroove(root) {
     });
   };
 }
+
+export const spwModule = {
+  updates: [
+    'attr:data-spw-reading-groove',
+    'attr:data-spw-reading-beat-state',
+    'attr:data-spw-reading-beat-role'
+  ],
+  mount: (mod, ctx, root) => initReadingGroove(root),
+};

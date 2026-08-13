@@ -331,18 +331,22 @@ export function initTopicalPayload(root = document) {
     bus.on('prompt:serialized', refresh),
   ];
 
-  root.addEventListener('spw:scene-enter', refresh);
-  root.addEventListener('spw:scene-exit', refresh);
-  root.addEventListener('spw:interactive-medium-ready', refresh);
-  root.addEventListener('spw:scene-lane-focus', refresh);
+  if (root) {
+    root.addEventListener('spw:scene-enter', refresh);
+    root.addEventListener('spw:scene-exit', refresh);
+    root.addEventListener('spw:interactive-medium-ready', refresh);
+    root.addEventListener('spw:scene-lane-focus', refresh);
+  }
 
   return () => {
     initialized = false;
     offs.forEach((off) => off?.());
-    root.removeEventListener('spw:scene-enter', refresh);
-    root.removeEventListener('spw:scene-exit', refresh);
-    root.removeEventListener('spw:interactive-medium-ready', refresh);
-    root.removeEventListener('spw:scene-lane-focus', refresh);
+    if (root) {
+      root.removeEventListener('spw:scene-enter', refresh);
+      root.removeEventListener('spw:scene-exit', refresh);
+      root.removeEventListener('spw:interactive-medium-ready', refresh);
+      root.removeEventListener('spw:scene-lane-focus', refresh);
+    }
     writeDatasetValue(document.documentElement, 'spwTopicalPayloadReady', null, {
       source: 'topical-payload',
       reason: 'cleanup',
@@ -353,5 +357,6 @@ export function initTopicalPayload(root = document) {
 }
 
 export const spwModule = {
-  mount: initTopicalPayload,
+  updates: ['attr:data-spw-topic-payload-active'],
+  mount: (mod, ctx, root) => initTopicalPayload(root),
 };

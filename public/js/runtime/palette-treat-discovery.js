@@ -505,3 +505,8 @@ export function initPaletteTreatDiscovery(root = document) {
 }
 
 export { TREAT_EVENT, BEAT_TO_PROBE, RESONANCE_TO_PROBE };
+
+export const spwModule = {
+  updates: ['attr:data-spw-palette-resonance', 'attr:data-spw-discovery-cache'],
+  mount: (mod, ctx, root) => initPaletteTreatDiscovery(root),
+};

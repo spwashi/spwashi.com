@@ -1129,5 +1129,6 @@ export function initPageAnatomy(ctx, root) {
 }
 
 export const spwModule = {
-  mount: initPageAnatomy,
+  updates: ['attr:data-spw-anatomy-ready', 'attr:data-spw-page-serialization'],
+  mount: (mod, ctx, root) => initPageAnatomy(ctx, root),
 };

@@ -115,3 +115,8 @@ export function initPinchTextScale(root) {
     clearPinchState();
   };
 }
+
+export const spwModule = {
+  updates: ['attr:data-spw-font-size-scale', 'attr:data-spw-pinch-active'],
+  mount: (mod, ctx, root) => initPinchTextScale(root),
+};

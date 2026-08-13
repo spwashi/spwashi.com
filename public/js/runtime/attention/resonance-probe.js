@@ -93,3 +93,8 @@ export function initResonanceProbe(root) {
     html.removeAttribute(PROBE_ATTR);
   };
 }
+
+export const spwModule = {
+  updates: ['attr:data-spw-resonance-probe'],
+  mount: (mod, ctx, root) => initResonanceProbe(root),
+};

@@ -201,3 +201,8 @@ export function initVariantSelection(root = document) {
 }
 
 export { VARIANT_EVENT };
+
+export const spwModule = {
+  updates: ['attr:data-spw-query-variant', 'attr:data-spw-variant-selection-pulse'],
+  mount: (mod, ctx, root) => initVariantSelection(root),
+};
