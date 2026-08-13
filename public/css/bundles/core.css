@@ -2505,36 +2505,48 @@ html[data-spw-theme-pack="glass-console"] {
    makes it a material rather than a color swap. See the charge-responsive
    seam block below. */
 html[data-spw-theme-pack="banked-ember"] {
-  /* Corrected twice against the source board rather than its prose. The
-     ground is not near-black and not olive — across every study in the set
-     it is a deep, desaturated teal-green, with warm amber appearing only as
-     lantern points and red-brown only as crack tracery. That two-temperature
-     discipline (cool ground, warm point-source) is the whole reason the
-     ember reads as heat rather than as an orange wash. */
-  --bg: hsl(186 22% 12%);
-  --bg-field: hsl(184 20% 15%);
-  --paper: hsl(185 19% 14%);
-  --paper-warm: hsl(168 16% 17%);
-  --surface: rgba(32, 52, 54, 0.82);
-  --surface-strong: rgba(42, 64, 66, 0.93);
-  --surface-matte: rgba(28, 46, 48, 0.96);
-  --surface-matte-strong: rgba(38, 58, 60, 0.98);
-  --surface-contrast: rgba(48, 70, 72, 0.99);
-  --surface-panel: rgba(34, 54, 56, 0.88);
-  --surface-panel-strong: rgba(44, 66, 68, 0.96);
-  --surface-glass: rgba(96, 132, 130, 0.20);
-  /* Lantern light: the only warm source, and it stays a point, not a field. */
-  --amber: hsl(36 84% 62%);
-  /* Crack tracery — the red-brown vein that organizes every sheet. */
-  --rust: hsl(10 52% 44%);
-  --teal: hsl(172 40% 54%);
-  --blue: hsl(258 34% 62%);
-  --ink-strong: rgba(238, 246, 243, 0.98);
-  --ink: rgba(228, 240, 236, 0.93);
-  --ink-soft: rgba(186, 208, 203, 0.78);
-  --ink-mid: rgba(208, 226, 221, 0.86);
-  --line: rgba(226, 176, 112, 0.16);
-  --line-strong: rgba(232, 162, 92, 0.34);
+  /* ── banked-ember: 7-color spec ──────────────────────────────────────────
+     From the palette study (2026-08-12): three hue families at two values
+     each, plus a single flame. Left column deep, right column pale, and each
+     row is a light/dark pair — which is why the two color modes below trade
+     the same six swatches rather than inventing separate palettes. The flame
+     is the one shared point-source and never becomes a field.
+     Named here once so both modes and any future surface read the same
+     vocabulary instead of re-deriving hex values. */
+  --ember-jade: hsl(182 28% 38%);
+  --ember-brick: hsl(8 58% 36%);
+  --ember-terracotta: hsl(20 60% 46%);
+  --ember-celadon: hsl(162 26% 76%);
+  --ember-wheat: hsl(42 44% 76%);
+  --ember-blush: hsl(22 56% 77%);
+  --ember-flame: hsl(35 90% 62%);
+  /* Copper hairline — the connective rule between swatches in the study. */
+  --ember-copper: hsl(28 46% 56%);
+
+  --bg: hsl(185 22% 20%);
+  --bg-field: hsl(184 21% 24%);
+  --paper: hsl(185 20% 22%);
+  --paper-warm: hsl(170 17% 25%);
+  --surface: rgba(44, 66, 68, 0.82);
+  --surface-strong: rgba(56, 80, 82, 0.93);
+  --surface-matte: rgba(38, 58, 60, 0.96);
+  --surface-matte-strong: rgba(50, 72, 74, 0.98);
+  --surface-contrast: rgba(62, 86, 88, 0.99);
+  --surface-panel: rgba(46, 68, 70, 0.88);
+  --surface-panel-strong: rgba(58, 82, 84, 0.96);
+  --surface-glass: rgba(110, 146, 144, 0.20);
+  /* On the dark ground the pale column carries the type and the deep column
+     carries structure; the flame stays the only warm point-source. */
+  --amber: var(--ember-flame);
+  --rust: var(--ember-terracotta);
+  --teal: hsl(174 38% 56%);
+  --blue: hsl(258 34% 64%);
+  --ink-strong: rgba(240, 247, 244, 0.98);
+  --ink: rgba(230, 241, 237, 0.93);
+  --ink-soft: rgba(190, 211, 206, 0.78);
+  --ink-mid: rgba(211, 228, 223, 0.86);
+  --line: color-mix(in oklab, var(--ember-copper) 22%, transparent);
+  --line-strong: color-mix(in oklab, var(--ember-copper) 44%, transparent);
   --material-blur: 12px;
   --material-transmission: 0.26;
 }
@@ -2546,32 +2558,31 @@ html[data-spw-theme-pack="banked-ember"] {
    substance seen lit from outside vs. from within, which is why this is a
    color-mode variant rather than a seventh pack. */
 html[data-spw-color-mode="light"][data-spw-theme-pack="banked-ember"] {
-  /* The torn-paper studies: celadon and sage, not warm papyrus. Cream is the
-     highlight where sheets overlap, not the ground. Same crack grammar read
-     in reflection instead of emission — shell and paper are one substance,
-     which is why this is a color-mode variant rather than a seventh pack. */
-  --bg: hsl(160 16% 80%);
-  --bg-field: hsl(158 20% 88%);
-  --paper: hsl(156 22% 90%);
-  --paper-warm: hsl(44 24% 91%);
-  --surface: rgba(238, 246, 241, 0.84);
-  --surface-strong: rgba(247, 252, 249, 0.94);
-  --surface-matte: rgba(233, 242, 237, 0.96);
-  --surface-matte-strong: rgba(244, 250, 247, 0.98);
-  --surface-contrast: rgba(250, 254, 252, 0.99);
-  --surface-panel: rgba(236, 245, 240, 0.88);
-  --surface-panel-strong: rgba(246, 251, 248, 0.96);
-  --surface-glass: rgba(252, 255, 253, 0.30);
-  --amber: hsl(38 58% 48%);
-  --rust: hsl(8 46% 40%);
-  --teal: hsl(168 26% 40%);
-  --blue: hsl(252 22% 52%);
-  --ink-strong: rgba(30, 44, 42, 0.98);
-  --ink: rgba(40, 56, 53, 0.92);
-  --ink-soft: rgba(78, 98, 94, 0.76);
-  --ink-mid: rgba(58, 76, 72, 0.85);
-  --line: rgba(88, 62, 46, 0.20);
-  --line-strong: rgba(80, 52, 38, 0.40);
+  /* Same seven swatches, values traded: the pale column becomes the ground
+     and the deep column becomes ink and accent. The flame does not change —
+     a point-source reads as the same fire in either room. */
+  --bg: hsl(162 18% 82%);
+  --bg-field: hsl(160 22% 89%);
+  --paper: hsl(158 24% 91%);
+  --paper-warm: hsl(42 30% 92%);
+  --surface: rgba(240, 247, 243, 0.84);
+  --surface-strong: rgba(248, 252, 250, 0.94);
+  --surface-matte: rgba(235, 244, 239, 0.96);
+  --surface-matte-strong: rgba(246, 251, 248, 0.98);
+  --surface-contrast: rgba(251, 254, 253, 0.99);
+  --surface-panel: rgba(238, 246, 242, 0.88);
+  --surface-panel-strong: rgba(247, 252, 249, 0.96);
+  --surface-glass: rgba(252, 255, 254, 0.30);
+  --amber: color-mix(in oklab, var(--ember-flame) 74%, var(--ember-brick));
+  --rust: var(--ember-brick);
+  --teal: var(--ember-jade);
+  --blue: hsl(252 24% 50%);
+  --ink-strong: rgba(26, 42, 40, 0.98);
+  --ink: rgba(36, 54, 51, 0.92);
+  --ink-soft: rgba(74, 96, 92, 0.76);
+  --ink-mid: rgba(54, 74, 70, 0.85);
+  --line: color-mix(in oklab, var(--ember-brick) 24%, transparent);
+  --line-strong: color-mix(in oklab, var(--ember-brick) 46%, transparent);
   --material-blur: 10px;
   --material-transmission: 0.16;
 }
