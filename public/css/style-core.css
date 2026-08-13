@@ -35,7 +35,9 @@
 @import url('/public/css/components/surfaces.css') layer(components);
 @import url('/public/css/components/signals.css') layer(components);
 @import url('/public/css/components/cards.css') layer(components);
-@import url('/public/css/components/cards/profile-card.css') layer(components);
+/* profile-card.css moved to the tools-profile route bundle 2026-08-12:
+   32KB of card CSS for markup only modules/profile/builder.js generates,
+   on one route, shipped to every visitor via core. */
 @import url('/public/css/components/cards/seed-card.css') layer(components);
 @import url('/public/css/components/semantic-learning.css') layer(components);
 @import url('/public/css/components/semantic-variants.css') layer(components);
