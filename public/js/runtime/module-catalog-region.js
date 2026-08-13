@@ -3,14 +3,14 @@
  * load() paths are relative to public/js/runtime/.
  */
 
-import { isFn, MODULE_LAYERS, MOUNT_WHEN, REGION_SELECTOR } from './module-catalog-constants.js';
+import { isFn, MODULE_LAYERS, MOUNT_WHEN, REGION_ENHANCER_SELECTOR } from './module-catalog-constants.js';
 
 export const REGION_DEFS = [
   {
     id: 'region-enhancer',
     layer: MODULE_LAYERS.REGION,
     when: MOUNT_WHEN.REGION,
-    selector: REGION_SELECTOR,
+    selector: REGION_ENHANCER_SELECTOR,
     rootMode: 'each',
     describes: 'region[profile.harmony.density] enhancement pass',
     updates: [

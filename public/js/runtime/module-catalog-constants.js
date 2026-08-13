@@ -198,6 +198,32 @@ export const REGION_SELECTOR = [
   '[data-spw-slot]',
 ].join(', ');
 
+/**
+ * Region enhancement targets — REGION_SELECTOR minus shell chrome.
+ *
+ * REGION_SELECTOR ends in the catch-alls [data-spw-role] and [data-spw-slot],
+ * which the site header (data-spw-role="routing") and footer components match.
+ * That made shell chrome eligible for the region-hydration pass, so the header
+ * and nav received motion-family / harmony / density / region-genome writes in
+ * the REGION tier — measured at ~8.4s after load on the home page, which is
+ * exactly the "navigation changes as the page loads" complaint.
+ *
+ * region-component-ecology.spw#harmony_prime_2026_07 already draws this line:
+ * chrome_field is "not pack-local" and is governed by shell-width and input
+ * capability rather than by region packing. Chrome should be settled at first
+ * paint, not restyled once content regions hydrate.
+ *
+ * Scoped to this pass only; REGION_SELECTOR itself is shared with
+ * page-region-rail, role-inference, operator-interactions, and page-metadata,
+ * where matching chrome is still correct.
+ */
+const SHELL_CHROME_EXCLUSION = ':not(.site-header, .site-header *, .site-footer, .site-footer *, [data-spw-kind="shell"], [data-spw-floating-chrome="true"], [data-spw-floating-chrome="true"] *)';
+
+export const REGION_ENHANCER_SELECTOR = REGION_SELECTOR
+  .split(', ')
+  .map((entry) => `${entry}${SHELL_CHROME_EXCLUSION}`)
+  .join(', ');
+
 /** Pure predicate so catalog families stay Node-importable without runtime-helpers DOM. */
 export function isFn(value) {
   return typeof value === 'function';
