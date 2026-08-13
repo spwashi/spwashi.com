@@ -16,7 +16,7 @@
     page_modes="reading inspect prompt collect remix publish"
     wonder="orientation locality consequence texture portability"
     route_family="kernel atlas semantic-lattice portable-publishing"
-    layout="wide"
+    layout="newspaper"
     features="small-kernel semantic-lattice modular-projections portable-seeds operators navigator console route-discovery media-publishing svg-surfaces topic-discovery prompt-utils"
     related_routes="/now/|/cards/|/membership/|/research/|/coordination/|/services/|/about/website/|/topics/search/|/topics/site-design/|/topics/software/|/topics/software/spw/|/topics/craft/|/recipes/|/play/|/play/rpg-wednesday/library/|/curriculum/|/tools/|/tools/budgeting/|/tools/character-sheet/|/tools/midjourney/|/design/experiments/svg/|/design/experiments/css/|/settings/|https://texture.website|https://spw.quest"
     stylesheet_mode="scoped"
@@ -40,7 +40,7 @@
     data-spw-page-modes="reading inspect prompt collect remix publish"
     data-spw-page-seed="home_kernel_atlas"
     data-spw-page-role="semantic-portal"
-    data-spw-layout="wide"
+    data-spw-layout="newspaper"
     data-spw-page-zone="funnel"
     data-spw-kernel="stable"
     data-spw-lattice="large"
@@ -113,7 +113,6 @@
         data-spw-swappable="#>,^,?,@"
         data-spw-stateful
         data-spw-inspect="home_frame"
-        data-spw-inspect-mode-group="home-lens"
         data-spw-category-family="nook"
         data-spw-locality="high"
         data-spw-consequence="entry"
@@ -130,46 +129,12 @@
         <header class="frame-topline" data-spw-slot="header">
             <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
             <a class="frame-sigil" href="#home-frame" data-spw-operator="address">#&gt;home_frame</a>
-            <div class="mode-switch" role="group" aria-label="Home lens">
-                <button class="frame-sigil spw-living-term" type="button" data-spw-living-term data-spw-concept="home-lens-surface" data-spw-gesture-contract="tap:toggle-lens hold:prime-semantic-slice" tabindex="0"
-                        data-mode-group="home-lens" data-set-mode="surface"
-                        aria-pressed="true" data-spw-operator="select" data-spw-operator-reversibility="reversible"
-                        data-spw-spell="home.prose" data-spw-semantic-expression="home[prose]{read.first}"
-                        title="tap: prose lens • hold to prime this slice (operators, measures, routes) into your cauldron as working material">.surface
-                </button>
-                <button class="frame-sigil spw-living-term" type="button" data-spw-living-term data-spw-concept="home-lens-syntax" data-spw-gesture-contract="tap:toggle-lens hold:prime-semantic-slice" tabindex="0"
-                        data-mode-group="home-lens" data-set-mode="syntax"
-                        aria-pressed="false" data-spw-operator="select" data-spw-operator-reversibility="reversible"
-                        data-spw-spell="home.grammar" data-spw-semantic-expression="home[grammar]{inspect.structure}"
-                        title="tap: syntax lens • hold to prime structure and operator handles for inspection and reuse">^syntax
-                </button>
-                <button class="frame-sigil spw-living-term" type="button" data-spw-living-term data-spw-concept="home-lens-artifacts" data-spw-gesture-contract="tap:toggle-lens hold:prime-semantic-slice" tabindex="0"
-                        data-mode-group="home-lens" data-set-mode="artifacts"
-                        aria-pressed="false" data-spw-operator="select" data-spw-operator-reversibility="reversible"
-                        data-spw-spell="home.outputs" data-spw-semantic-expression="home[outputs]{show.work}"
-                        title="tap: artifacts lens • hold to prime proof cards, study routes, and curriculum artifacts as carryable material">*artifacts
-                </button>
-                <button class="frame-sigil spw-living-term" type="button" data-spw-living-term data-spw-concept="home-lens-website" data-spw-gesture-contract="tap:toggle-lens hold:prime-semantic-slice" tabindex="0"
-                        data-mode-group="home-lens" data-set-mode="website"
-                        aria-pressed="false" data-spw-operator="select" data-spw-operator-reversibility="reversible"
-                        data-spw-spell="home.system" data-spw-semantic-expression="home[system]{explain.runtime}"
-                        title="tap: system lens • hold to prime the full runtime, operators, and semantic contracts">@website
-                </button>
-            </div>
-            <div class="home-lens-preview" aria-live="polite" data-spw-feature="home-mode-preview">
-                <p data-mode-group="home-lens" data-mode-panel="surface" data-spw-semantic-expression="home[prose]{read.first}&lt;surface&gt;">
-                    Surface lens keeps the first screen oriented around identity, useful routes, and plain-language reasons to keep reading.
-                </p>
-                <p data-mode-group="home-lens" data-mode-panel="syntax" data-spw-semantic-expression="home[grammar]{inspect.structure}&lt;syntax&gt;" hidden>
-                    Syntax lens serializes the same homepage as operators, braces, and structure so the page can be inspected instead of only read.
-                </p>
-                <p data-mode-group="home-lens" data-mode-panel="artifacts" data-spw-semantic-expression="home[outputs]{show.work}&lt;artifacts&gt;" hidden>
-                    Artifacts lens foregrounds public work and reusable outputs, turning the page from introduction into proof surface.
-                </p>
-                <p data-mode-group="home-lens" data-mode-panel="website" data-spw-semantic-expression="home[system]{explain.runtime}&lt;website&gt;" hidden>
-                    Website lens explains settings, runtime, routes, and semantic handles as part of the authored medium.
-                </p>
-            </div>
+            <nav class="spw-compose-field" aria-label="Palette bias" data-spw-feature="palette-compose" data-spw-composition-flow="inline-wrap">
+                <a class="frame-sigil" href="?palette=situate" data-spw-operator="potential" data-spw-facet="situate" title="Ink follows the charged viewpoint">~situate</a>
+                <a class="frame-sigil" href="?palette=hand" data-spw-operator="potential" data-spw-facet="hand" title="Warm material ink">~hand</a>
+                <a class="frame-sigil" href="?palette=lattice" data-spw-operator="potential" data-spw-facet="lattice" title="Cool structural ink">~lattice</a>
+                <a class="frame-sigil" href="?palette=inquiry" data-spw-operator="potential" data-spw-facet="inquiry" title="Asking violet ink">~inquiry</a>
+            </nav>
             <details class="home-copy-inspector spw-garden-tended" data-spw-form="brace" data-spw-feature="home-copy-inspector"
                      data-spw-semantic-expression="home[copy.inspection]{why.reader.takeaway}"
                      data-spw-gesture-contract="tap:inspect hold:prime-to-cauldron double-click:expand-full-wonder">
@@ -200,13 +165,13 @@
             </div>
         </header>
 
-        <div class="home-hero-grid" data-spw-slot="body" data-spw-activates="hero-content">
+        <div class="home-hero-grid" data-spw-slot="body" data-spw-composition-flow="split" data-spw-activates="hero-content">
             <div class="home-hero-copy">
                 <p class="page-kicker" data-spw-semantic-expression="kernel[entry]{orient}">home page entry</p>
                 <h1 id="home-title">
                     I'm Spwashi.
                 </h1>
-                <p class="home-tagline">
+                <p class="home-tagline" data-spw-textual-role="tagline">
                     I build software and make art.
                 </p>
 
@@ -254,7 +219,7 @@
                         <span data-spw-perspective="subjective">Feel:</span> <span class="spw-inline-emphasis" data-spw-inline-tone="lore" data-spw-spatial-affordance="threshold">a readable room</span> with lens switches, living terms, and a memory of what you touched.
                     </p>
                     <p class="hook-invitation">
-                        Hold a living term to prime it, switch the lens to inspect the apparatus, or jump to a quick-start when you already know the next move.
+                        Hold a living term to prime it, charge a palette bias to retune the ink, or jump to a quick-start when you already know the next move.
                     </p>
                 </div>
 
@@ -274,11 +239,11 @@
                     Dive into grammar design with <a class="operator-chip" href="/topics/software/parsers/" data-spw-operator="potential" data-spw-action="explore">~software_parsers</a>.
                 </p>
                 <ul class="spw-copy-motif-strip" aria-label="Home copy motifs" data-spw-vocab="culinary research engineering" data-spw-box-model="motif-strip" data-spw-composition-flow="inline-wrap">
-                    <li>cookbook</li>
-                    <li>magazine</li>
-                    <li>research</li>
-                    <li>prompt</li>
-                    <li>lore</li>
+                    <li data-spw-motif="cookbook" data-spw-discharge-kind="ground" data-spw-operator="frame">cookbook</li>
+                    <li data-spw-motif="magazine" data-spw-discharge-kind="transfer" data-spw-operator="perspective">magazine</li>
+                    <li data-spw-motif="research" data-spw-discharge-kind="release" data-spw-operator="wonder">research</li>
+                    <li data-spw-motif="prompt" data-spw-discharge-kind="project" data-spw-operator="value">prompt</li>
+                    <li data-spw-motif="lore" data-spw-discharge-kind="situate" data-spw-operator="perspective">lore</li>
                 </ul>
 
                 <div class="spw-reason-strip" role="list" aria-label="Home page reasons" data-spw-role="schema" data-spw-box-model="reason-strip" data-spw-composition-flow="grid" data-spw-attention="scan" data-spw-behavior="invite">
@@ -402,7 +367,7 @@
         class="site-frame"
         id="choose-your-entrance"
         data-spw-region-purpose="route-sorter"
-        data-spw-pack="compact"
+        data-spw-pack="fill"
         aria-labelledby="choose-your-entrance-title"
         data-spw-region="wide"
         data-spw-region-role="threshold-sorter"
@@ -785,6 +750,7 @@
         data-spw-promptability="visible"
         data-spw-collectability="medium"
         data-spw-feature="living-concepts"
+        data-spw-pack="fill"
         data-spw-semantic-expression="concepts[atlas]{discover.use.extend}"
         data-spw-box-model="frame-register"
         data-spw-composition-flow="stack"
@@ -804,14 +770,14 @@
             </p>
 
             <div class="frame-grid frame-grid--dense living-concepts-grid" data-spw-box-model="concept-details-grid" data-spw-composition-flow="grid" data-spw-pack="fill dense">
-                <details class="living-concept-card" data-spw-kind="panel" data-concept="attention-posture">
+                <details class="living-concept-card" data-spw-kind="panel" data-spw-pack-local data-concept="attention-posture">
                     <summary>
                         <span class="living-concept-card__name">Attention Posture</span>
                         <span class="living-concept-card__short">self / local / global</span>
                     </summary>
-                    <div class="living-concept-card__body">
-                        <p>How the site names relation to self, immediate context, and wider horizon before generating or revising an artifact.</p>
-                        <p class="frame-operators">
+                    <div class="living-concept-card__body" data-spw-pack-regions>
+                        <p data-spw-pack-region="body">How the site names relation to self, immediate context, and wider horizon before generating or revising an artifact.</p>
+                        <p class="frame-operators" data-spw-pack-region="actions">
                             <a class="operator-chip" href="/settings/#attention-posture-settings" data-spw-operator="binding">=tune[posture]</a>
                             <a class="operator-chip" href="/play/#media-cauldron" data-spw-operator="potential" data-spw-action="explore">~use_in_cauldron</a>
                         </p>
@@ -932,6 +898,7 @@
         data-spw-promptability="visible"
         data-spw-collectability="medium"
         data-spw-feature="home-learning-use-pattern"
+        data-spw-pack="fill"
     >
         <header class="frame-heading" data-spw-slot="header">
             <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
@@ -944,7 +911,7 @@
 
         <div class="frame-body" data-spw-slot="body">
             <p class="inline-note" data-spw-copy-depth="normal">
-                Learning science as a reading habit, not a slogan: one question in, one artifact out, revisit from a neighboring route.
+                A prerequisite is only useful if something is built from it. One question in, one artifact out: a note, a card, or a brief you can hand to a later collaborator.
             </p>
 
             <div class="spw-reason-strip" aria-label="Learning surface reasons" data-spw-role="schema">
@@ -958,7 +925,7 @@
                 </div>
                 <div>
                     <strong>Leave with</strong>
-                    <p>proof cards, route maps, prompts, and recurring habits that make the site easier to revisit.</p>
+                    <p>a proof card, a prompt packet, and a hireable brief: what the concept is, what the depiction tested, what a later illustrator should keep.</p>
                 </div>
             </div>
 
@@ -968,8 +935,8 @@
                     <p>Pick the route that matches your actual pressure now, not the most prestigious topic on the page.</p>
                 </article>
                 <article class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-semantic-expression="learning.step[2]{artifact}">
-                    <h3>2. Turn the visit into a visible artifact.</h3>
-                    <p>Make a card, note, screenshot, route map, or quest so the learning can survive mood drift and time passing.</p>
+                    <h3>2. Separate the concept from a depiction, then keep both.</h3>
+                    <p>Name the idea in words. Test it as an image, card, or scene. The reward is the gap: you can see what the concept still needs before it is real enough to hire for.</p>
                 </article>
                 <article class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-semantic-expression="learning.step[3]{transfer}">
                     <h3>3. Re-enter through a neighbor.</h3>
@@ -1617,7 +1584,7 @@
 
         <div class="frame-body" data-spw-slot="body">
             <p class="frame-note" data-spw-copy-depth="normal">
-                Settings stay in this browser. Route bias, color atmosphere, and wonder memory — tunable without touching the kernel.
+                Settings stay in this browser. Palette bias, color atmosphere, and wonder memory — tunable without touching the kernel.
             </p>
 
             <div class="vibe-widget-grid vibe-widget-grid--compact">
@@ -1629,21 +1596,21 @@
                     <div class="vibe-widget-meta" data-spw-role="schema">
                         <span class="spec-pill">mode: <span data-settings-state="colorMode">auto</span></span>
                         <span class="spec-pill">pack: <span data-settings-state="themePack">neutral paper</span></span>
-                        <span class="spec-pill">palette: <span data-settings-state="paletteResonance">route</span></span>
+                        <span class="spec-pill">palette: <span data-settings-state="paletteResonance">situate</span></span>
                         <span class="spec-pill">memory: <span data-settings-state="wonderMemory">nearby</span></span>
                     </div>
                 </article>
 
                 <article class="vibe-widget" data-spw-kind="card" data-spw-role="control">
                     <div class="vibe-widget-header">
-                        <p class="vibe-widget-kicker">Resonance dimension</p>
-                        <h3 class="vibe-widget-title">Choose a reading bias</h3>
+                        <p class="vibe-widget-kicker">Ink bias</p>
+                        <h3 class="vibe-widget-title">How color answers the viewpoint</h3>
                     </div>
-                    <div class="vibe-widget-actions tuning-strip" role="group" aria-label="Home page dimensional resonance variants" data-spw-slot="actions">
-                        <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:route" data-spw-operator="mode">[ Context-led</button>
-                        <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:craft" data-spw-operator="mode">[ Craft-led</button>
-                        <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:software" data-spw-operator="mode">[ Software-led</button>
-                        <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:math" data-spw-operator="mode">[ Math-led</button>
+                    <div class="vibe-widget-actions tuning-strip" role="group" aria-label="Home page palette bias" data-spw-slot="actions">
+                        <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:situate" data-spw-operator="potential">~situate</button>
+                        <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:hand" data-spw-operator="potential">~hand</button>
+                        <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:lattice" data-spw-operator="potential">~lattice</button>
+                        <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:inquiry" data-spw-operator="potential">~inquiry</button>
                         <a class="operator-chip" href="/design/palettes/#spectral-workshop" data-spw-operator="frame" style="font-size:0.75rem;" data-spw-action="address">#&gt;workshop</a>
                     </div>
                 </article>
@@ -1935,8 +1902,9 @@
         id="reading-layers"
         data-spw-region-purpose="section-hub"
         aria-labelledby="reading-layers-title"
-        data-spw-region="read"
+        data-spw-region="cluster"
         data-spw-region-role="reading-layers"
+        data-spw-pack="fill"
         data-spw-attentional-weight="1.05"
         data-spw-page-zone="funnel"
         data-spw-composition-stability="stable"
@@ -1960,19 +1928,20 @@
         <header class="frame-heading" data-spw-slot="header">
             <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
             <a class="frame-sigil" href="#reading-layers" data-spw-operator="integrate">^"reading_layers"{</a>
-            <h2 id="reading-layers-title">Read the site as prose, grammar, outputs, or system</h2>
+            <h2 id="reading-layers-title">Read the site as prose, grammar, outputs, and system</h2>
             <div class="spw-component-meta" data-spw-slot="meta">
                 <span class="spw-component-tag" data-spw-role="reference" data-spw-stance="entry">layers</span>
             </div>
         </header>
 
         <div class="frame-body" data-spw-slot="body">
-            <div class="mode-panels" data-spw-feature="home-lens-panels">
-                <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="surface" data-spw-form="block"
-                         data-spw-liminality="projected" aria-labelledby="home-surface-title" data-spw-kind="lens">
-                    <h3 id="home-surface-title" class="sr-only">Prose mode</h3>
+            <div class="frame-grid" data-spw-feature="reading-seats" data-spw-composition-flow="grid" data-spw-pack="fill dense">
+                <article class="frame-panel" data-spw-form="block"
+                         data-spw-textual-role="prose" data-spw-discharge-kind="ground" data-spw-operator="frame"
+                         data-spw-liminality="projected" aria-labelledby="home-surface-title" data-spw-kind="seat">
+                    <h3 id="home-surface-title">Prose</h3>
                     <p>
-                        Surface lens keeps the homepage anchored in readable public language before asking you to inspect the machinery.
+                        Prose keeps the homepage anchored in readable public language before asking you to inspect the machinery.
                         Every character in <a href="/topics/software/spw/" class="spw-delimiter spw-delimiter--angle"
                                               data-spw-form="angle" data-spw-operator="concept">&lt;</a><a href="/topics/software/spw/" data-spw-operator="concept">Spw</a><span
                         class="spw-delimiter spw-delimiter--angle" data-spw-form="angle" data-spw-operator="concept">&gt;</span>
@@ -1982,7 +1951,7 @@
                         opens inquiry.
                         A reference <span class="syntax-token" title="ref: reaches without forcing commitment" data-spw-operator="potential">~</span>
                         reaches without binding.
-                        An action <span class="syntax-token" title="action: commits a local behavior" data-spw-operator="act">@</span> commits.
+                        A perspective <span class="syntax-token" title="perspective: charges a viewpoint" data-spw-operator="perspective">@</span> charges.
                         A surface <span class="syntax-token"
                                         title="surface: makes a layer available to perception" data-spw-operator="surface">&gt;</span> projects.
                     </p>
@@ -1994,13 +1963,14 @@
                         somewhere else,
                         or a label inside an SVG.
                     </p>
-                </section>
+                </article>
 
-                <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="syntax" hidden
-                         aria-labelledby="home-syntax-title" data-spw-kind="lens">
-                    <h3 id="home-syntax-title" class="sr-only">Grammar mode</h3>
+                <article class="frame-panel"
+                         data-spw-textual-role="grammar" data-spw-discharge-kind="release" data-spw-operator="wonder"
+                         aria-labelledby="home-syntax-title" data-spw-kind="seat">
+                    <h3 id="home-syntax-title">Grammar</h3>
                     <p class="frame-note" data-spw-copy-depth="normal">
-                        Syntax lens turns the same homepage into an inspectable structure. Operators are vocabulary,
+                        Grammar makes the same homepage inspectable. Operators are vocabulary,
                         braces mark containment by attaching local value and behavioral intent to a stable root,
                         and the lines below show how the copy can become a reusable spell.
                     </p>
@@ -2018,11 +1988,12 @@
   $meta "panel|caption|card|image|route"
   !constraint "stay readable in plain text"
 }</code></pre>
-                </section>
+                </article>
 
-                <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="artifacts" hidden
-                         data-spw-form="square" data-spw-liminality="deep" aria-labelledby="home-artifacts-title" data-spw-kind="lens">
-                    <h3 id="home-artifacts-title" class="sr-only">Outputs mode</h3>
+                <article class="frame-panel"
+                         data-spw-form="square" data-spw-textual-role="outputs" data-spw-discharge-kind="project" data-spw-operator="value"
+                         data-spw-liminality="deep" aria-labelledby="home-artifacts-title" data-spw-kind="seat">
+                    <h3 id="home-artifacts-title">Outputs</h3>
                     <div class="frame-grid" role="list">
                         <article class="frame-card" role="listitem" aria-labelledby="home-card-spw-workbench"
                                  data-spw-category-family="workshop" data-spw-kind="card" data-spw-role="reference">
@@ -2049,13 +2020,14 @@
                             </a>
                         </article>
                     </div>
-                </section>
+                </article>
 
-                <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="website" hidden
-                         aria-labelledby="home-website-title" data-spw-kind="lens">
-                    <h3 id="home-website-title" class="sr-only">System mode</h3>
+                <article class="frame-panel"
+                         data-spw-textual-role="system" data-spw-discharge-kind="situate" data-spw-operator="perspective"
+                         aria-labelledby="home-website-title" data-spw-kind="seat">
+                    <h3 id="home-website-title">System</h3>
                     <p>
-                        Website lens explains the site itself as part of the practice: a field guide, a publishing surface,
+                        The site itself is part of the practice: a field guide, a publishing surface,
                         an observatory for settings and states, and a test for whether a site can stay readable while becoming
                         more semantic, promptable, and cross-referenceable.
                     </p>
@@ -2064,7 +2036,7 @@
                         becomes more valuable
                         when it is also a semantic layer.
                     </p>
-                </section>
+                </article>
             </div>
         </div>
 

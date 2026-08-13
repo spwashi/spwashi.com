@@ -214,6 +214,7 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'enhance-navigator',
     timingChunk: 'idle-chrome',
     effectScope: 'floating-chrome listeners bus root-state',
+    visual: 'inspect',
     load: () => import('./frame-navigator.js'),
     // Presence gate: body[data-spw-features~="navigator"] via catalog features
     // (PRESENCE_FEATURE_KEYS in runtime-contracts — not a CSS behavior scope).
@@ -441,7 +442,7 @@ export const ENHANCEMENT_DEFS = [
   {
     id: 'spatial-gravity',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.VISIBLE,
+    when: MOUNT_WHEN.SETTLED,
     selector: '[data-spw-gravity]',
     rootMode: 'single',
     describes: 'spatial-gravity[room|edge|gravity|salience] two-axis positioning + overlap resolution',
@@ -511,6 +512,7 @@ export const ENHANCEMENT_DEFS = [
     evaluates: 'semantics interaction timing reference-document',
     timingArc: 'visible-anatomy',
     effectScope: 'local-dom element-state',
+    visual: 'inspect',
     load: () => import('./page-anatomy.js'),
   },
   {
@@ -662,13 +664,15 @@ export const ENHANCEMENT_DEFS = [
     describes: 'contextual-ui[module-inference|route-discovery|nav-fit]',
     updates: [
       'structural:data-spw-module',
-      'html:structural:data-spw-route-discovery',
-      'structural:data-spw-route-menu-state',
-      'html:structural:data-spw-nav-fit',
+      'html:inspect:data-spw-route-discovery',
+      'inspect:data-spw-route-menu-state',
+      'html:measure:data-spw-nav-fit',
+      'html:inspect:data-spw-layout-reason',
     ],
     evaluates: 'route discovery contextual navigation inferred modules',
     timingArc: 'immediate-context',
     effectScope: 'header-dom route-menu nav-fit',
+    visual: 'annotate',
     // route-discovery body token is presence storytelling; module stays selector-gated
     // so hub routes without the token still get nav-fit inference.
     load: () => import('../interface/contextual-ui.js'),
@@ -689,6 +693,7 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'idle-diagnostics',
     timingChunk: 'idle-chrome',
     effectScope: 'floating-chrome bus root-state',
+    visual: 'inspect',
     load: () => import('../interface/console.js'),
   },
   {
@@ -1142,17 +1147,18 @@ export const ENHANCEMENT_DEFS = [
     rootMode: 'single',
     describes: 'navigation[spell|grounding] route[replay]',
     updates: [
-      'flourish:data-spw-nav-tokenized',
-      'flourish:data-spw-nav-expression',
+      'inspect:data-spw-nav-tokenized',
+      'inspect:data-spw-nav-expression',
       'structural:data-spw-interaction-contract',
-      'flourish:data-spw-interaction-affordance',
-      'structural:data-spw-operator-geometry',
+      'inspect:data-spw-interaction-affordance',
+      'inspect:data-spw-operator-geometry',
       'residue:data-spw-ground-key',
     ],
     evaluates: 'nav spell grounding route replay',
     timingArc: 'enhance-spell',
     timingChunk: 'idle-residue',
     effectScope: 'target-dom gesture-memory listeners',
+    visual: 'annotate',
     load: () => import('./navigation-spells.js'),
   },
   {

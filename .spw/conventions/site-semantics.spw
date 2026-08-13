@@ -891,7 +891,7 @@ frame #compact-tuning-widget
   placement = "immediately before or inside the content whose reaction demonstrates the setting (text block for semanticDensity, operator list for operatorSaturation, figure/accent area for paletteResonance or wonderMemory)"
   markup = "small .tuning-strip or .vibe-widget--compact containing .operator-chip[data-site-setting-set=\"name:value\"] + optional [data-settings-state] readouts. Uses existing binding + aria-pressed."
   active-state = "data-site-setting-active=\"true\" + aria-pressed (strong resonance-colored treatment via tuning.css compact rules)"
-  vocabulary = "chip labels are the canonical short names (Context-led, Rich, Focused, Vibrant, etc.). Immediate visual effect on adjacent content teaches the meaning faster than prose."
+  vocabulary = "chip labels are the canonical short names (Situate, Hand, Lattice, Inquiry, Rich, Focused, Vibrant, etc.). Immediate visual effect on adjacent content teaches the meaning faster than prose."
   cross-link = "tiny 'related tuning' or 'full settings' chip at end of cluster, pointing to /settings/ anchor or /design/palettes/#spectral-workshop when palette-related"
   note "Compact contextual tuning widgets turn passive settings into an active, learnable vocabulary layer. They are always secondary in visual hierarchy (kicker + one short sentence max + chips). The global effect on the page is intentional — the whole site is the teaching instrument. Documented here so the design catalog and future editors can discover the exact reusable pattern for adding one near any high-impact component. Also supports wrapping/packing and light surrounding copy passes for component diversity and region value when the widget is introduced."
 

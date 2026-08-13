@@ -725,25 +725,8 @@
 
 /* ==========================================================================
    8. Reduced motion
+   --------------------------------------------------------------------------
+   The static-glyph contract for .bhm-* parts lives once, in
+   effects/material.css ("Static Glyph Contract"), merged with the
+   equivalent rules for seed-card and services-configurator.
    ========================================================================== */
-
-@media (prefers-reduced-motion: reduce) {
-  .bhm-polygon,
-  .bhm-spoke,
-  .bhm-center,
-  .bhm-center-label,
-  .bhm-node-dot,
-  .bhm-node-label,
-  .bhm-color-preview,
-  .bhm-val,
-  .bhm-op-chip,
-  .bhm-taste-chip,
-  .bhm-secondary-polygon,
-  .bhm-taste-envelope,
-  .bhm-bias-ring {
-    transition: none !important;
-    animation: none !important;
-    transform: none !important;
-    filter: none !important;
-  }
-}

@@ -5,7 +5,7 @@
  * Preferred definition field order (normalize / review scan):
  *   id, layer, when, cost?, costClass?, features?, route?, selector?, rootMode?,
  *   debugOnly?, describes, updates, evaluates, timingArc, timingChunk?,
- *   effectScope, load, mount
+ *   effectScope, visual?, load, mount
  *
  * A module is one reversible process:
  *   enter (when) → act (spend) → leave (cleanup) → remain (commitment)
@@ -66,6 +66,22 @@ export const COST_COPY = Object.freeze({
 export const COST_COMMITMENT_VALUES = Object.freeze(Object.values(COST_COMMITMENT));
 export const COST_SPEND_VALUES = Object.freeze(Object.values(COST_SPEND));
 export const COST_COPY_VALUES = Object.freeze(Object.values(COST_COPY));
+
+/**
+ * What a mount is allowed to do to first-paint geometry.
+ * authored: HTML/CSS already owns the look; do not restyle.
+ * annotate: may write data-* / ARIA; reader CSS must be a no-op.
+ * inspect: visible only in editor/inspect display layers.
+ * layout: allowed to reflow; screenshots after mount will differ.
+ */
+export const VISUAL_EFFECT = Object.freeze({
+  AUTHORED: 'authored',
+  ANNOTATE: 'annotate',
+  INSPECT: 'inspect',
+  LAYOUT: 'layout',
+});
+
+export const VISUAL_EFFECT_VALUES = Object.freeze(Object.values(VISUAL_EFFECT));
 
 /**
  * Legacy single-token aliases derived from { commitment, spend }.
@@ -149,6 +165,7 @@ export const CATALOG_DEF_FIELD_ORDER = Object.freeze([
   'timingArc',
   'timingChunk',
   'effectScope',
+  'visual',
   'load',
   'mount',
 ]);

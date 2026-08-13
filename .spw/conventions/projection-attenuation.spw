@@ -1,0 +1,46 @@
+# Projection And Attentional Attenuation
+#
+# Runtime-embraced: wonder is a current. Regions and slots are material.
+# Card edges are braces — terminals, not chrome.
+
+#>projection_attenuation
+#:convention #!attention #!projection #!slots
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@attention_field: ~"./attention-field.spw"
+@ornament: ~"./ornament-contract.spw"
+@circuit: ~"./circuit-components.spw"
+@region_ecology: ~"./region-component-ecology.spw"
+@origin: ~"../caches/spw-origin-modality-pivots.spw"
+@css: ~"../../public/css/systems/projection-attenuation.css"
+
+operation = "prime"
+fixity = "experimental"
+
+^"thesis"{
+  claim: "A projection is the same field expressed at another altitude (page → region → slot). Attenuation is how the material of that seat holds or leaks wonder. Card/frame edges are brace terminals, not decoration."
+  wikipedia_join: "A modality pivot is a projection of one lemma. Familiarity is capacitance: return visits leak slower. Exclusive lenses were a broken transformer — they cut the other windings."
+  refuse: "Do not invent a fourth physics table. Spend --spw-field-intensity, --spw-resonance, --spw-attention. Do not require operator chips."
+}
+
+^"altitudes"{
+  page = "html charge-carrier + field-intensity — who is looking, how loud the room is"
+  region = "hook stores, hub conducts, cluster couples, path leaks, read resists"
+  slot = "header latches, body conducts, figure stores, actions spark, footer grounds"
+  edge = "data-spw-form=brace spends projected-field as stroke mix"
+}
+
+^"material"{
+  resistor = "read / footer — attenuates so prose stays quiet"
+  capacitor = "hook / figure / wonder-memory — holds, then releases"
+  inductor = "cluster / resonance :has() — momentum across kin"
+  transformer = "charged `@` + facet — same field, different interpretation"
+}
+
+^"microinteractions"{
+  rule: "Duration = --attention-echo-duration × --spw-wonder-hold. Intensity = field × hold × slot-attenuate."
+  dual_read: "Without runtime field the braces stay grammar-quiet. With field they become terminals."
+  high_contrast: "Flatten hold. Ink stays ink."
+}

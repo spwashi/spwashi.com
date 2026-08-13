@@ -18,6 +18,7 @@
   grid-area: nav;
   display: flex;
   justify-content: center;
+  justify-content: safe center;
   align-items: center;
   width: 100%;
   max-inline-size: min(100%, var(--shell-nav-max-width));
@@ -33,6 +34,7 @@
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   scroll-snap-type: x proximity;
+  scroll-padding-inline: 0.55rem;
   border: 1.5px solid color-mix(in oklab, var(--spw-shell-chrome-line-local) 86%, transparent);
   border-radius: var(--shell-panel-radius-loose);
   background:
@@ -41,17 +43,30 @@
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.36),
     var(--spw-elevation-card-shadow, 0 4px 12px rgba(0,0,0,0.032));
+  /*
+   * Never fade the start. A two-sided mask plus overflow is what ate
+   * "Home / About". Overflow hint is trailing-only, and only when tight.
+   */
+  mask-image: none;
+  -webkit-mask-image: none;
+}
+
+:where(
+  .site-header[data-spw-nav-fit="tight"] nav,
+  .site-header[data-spw-nav-fit="compressed"] nav,
+  body > header[data-spw-nav-fit="tight"] nav,
+  body > header[data-spw-nav-fit="compressed"] nav
+) {
+  justify-content: flex-start;
   mask-image: linear-gradient(
     90deg,
-    transparent,
-    #000 1.1rem,
+    #000 0,
     #000 calc(100% - 1.1rem),
     transparent
   );
   -webkit-mask-image: linear-gradient(
     90deg,
-    transparent,
-    #000 1.1rem,
+    #000 0,
     #000 calc(100% - 1.1rem),
     transparent
   );
@@ -470,10 +485,11 @@
   flex-wrap: nowrap;
   align-items: center;
   justify-content: center;
+  justify-content: safe center;
   gap: calc(var(--shell-nav-gap-block) + 0.08rem) calc(var(--shell-nav-gap-inline) - 0.06rem);
   list-style: none;
   margin: 0;
-  padding: 0.48rem 0;
+  padding: 0.48rem 0.2rem;
   min-width: 0;
   width: max-content;
   min-width: 100%;
@@ -484,6 +500,7 @@
   width: 100%;
   min-width: 0;
   justify-content: center;
+  justify-content: safe center;
 }
 
 :where(.site-header li, body > header li) {
@@ -526,7 +543,7 @@
   text-decoration: none;
   font-size: var(--shell-nav-font-size);
   font-weight: 500;
-  color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 86%, transparent);
+  color: var(--ink, #14181a);
   line-height: var(--spw-control-line-height, 1.04);
   text-align: center;
   text-wrap: nowrap;
@@ -669,20 +686,6 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
     max-inline-size: min(100%, var(--shell-nav-max-width));
     padding: 0.28rem 0.42rem;
     border-radius: calc(var(--shell-panel-radius-loose) - 0.16rem);
-    mask-image: linear-gradient(
-      90deg,
-      transparent,
-      #000 0.85rem,
-      #000 calc(100% - 0.85rem),
-      transparent
-    );
-    -webkit-mask-image: linear-gradient(
-      90deg,
-      transparent,
-      #000 0.85rem,
-      #000 calc(100% - 0.85rem),
-      transparent
-    );
   }
 
   :where(.site-header ul, body > header ul) {
@@ -781,6 +784,24 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
   --shell-nav-font-size: var(--text-size-label, 0.8rem);
   --shell-nav-gap-inline: 0.36rem;
   --shell-nav-padding-inline: 0.64rem;
+}
+
+:where(
+  .site-header[data-spw-nav-fit="tight"] nav,
+  .site-header[data-spw-nav-fit="compressed"] nav,
+  body > header[data-spw-nav-fit="tight"] nav,
+  body > header[data-spw-nav-fit="compressed"] nav
+) {
+  justify-content: flex-start;
+}
+
+:where(
+  .site-header[data-spw-nav-fit="tight"] ul,
+  .site-header[data-spw-nav-fit="compressed"] ul,
+  body > header[data-spw-nav-fit="tight"] ul,
+  body > header[data-spw-nav-fit="compressed"] ul
+) {
+  justify-content: flex-start;
 }
 
 .spw-route-menu-host {

@@ -1,0 +1,90 @@
+# CSS combinatorics audit
+#
+# What the tree already multiplies, what it authors but never spends,
+# and which products are safe to light.
+
+#>css_combinatorics
+#:cache #!css #!combinatorics #!regions #!svg
+#:operation #!audit
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@style_core: ~"../../public/css/style-core.css"
+@page_frame: ~"../conventions/page-frame-sizing.spw"
+@region_ecology: ~"../conventions/region-component-ecology.spw"
+@coloring: ~"../conventions/coloring-depth.spw"
+@svg_surfaces: ~"../../public/css/systems/svg-surfaces.css"
+
+operation = "audit"
+fixity = "experimental"
+
+^"axes_already_live"{
+  layer = "reset → tokens → shell → typography → grammar → components → systems → routes → handles → effects → ornament"
+  html_state = "color-mode × high-contrast × palette-resonance × runtime-posture × capture-mode × page-state"
+  copy = "copy-depth × operator accent"
+  svg = "environment studio|proof|poster|model × persona × pointer × device"
+  cluster = "culinary|programming|learning|genre × runtime-posture"
+}
+
+^"authored_unspent"{
+  items = #[
+    `data-spw-layout-reason is a receipt; media queries spend pocket|fold|broadsheet`,
+    `data-spw-page-family now biases --spw-region-track; more families can join without new wrappers`,
+    `data-spw-region hook|hub|cluster|path|read|wide now have tropes in region-seats.css`,
+    `data-spw-svg-plane is not a CSS contract yet — groups are paint order, not planes`,
+    `culinary cluster resonates with craft; garden/nutrition do not join that product`
+  ][reg=set]
+}
+
+^"open_products"{
+  safe = #[
+    `newspaper × pocket|fold|broadsheet — already in layout.css; spend on family mains`,
+    `page-family × region — biodiversity without new wrappers`,
+    `svg-plane × environment × contrast — Midjourney-readable text and shapes`,
+    `culinary ~ garden — compare, not blend`,
+    `palette-depth tokens × site-frame — intrigue with layered contrast`
+  ][reg=set]
+  refuse = #[
+    `Do not multiply every html data-spw-* into a route sheet`,
+    `Do not collapse pocket/fold/broadsheet into one scale`,
+    `Do not let a wash erase label ink`
+  ][reg=set]
+}
+
+^"contrast_rule"{
+  text: "Each plane may tint. Ink stays ink. High-contrast and proof flatten wash, not type."
+}
+
+^"containment"{
+  claim: "Each chrome and region names who owns width, height, and wrap. Overflow is a scroll owner, not a clip of the first letter."
+  nav: "safe center when the list fits; flex-start + trailing-only fade when tight. Never mask the start."
+  newspaper: "broadsheet pairs sit (`align-items: start`). Reserved frame height is a short estimate, not a stretch target."
+  tags: "component tags keep min-content and nowrap. The heading wraps; the label does not become HRESHOL."
+  satchel: "floating chrome does not wrap anywhere. Labels and launch pills own max-content."
+}
+
+^"likely_path"{
+  product: "layout-reason × region × family × copy-role"
+  spend: "CSS first. Measurement writes receipts. timingArc loads geometry after dwell so wonder on approach is not moved."
+  graduate: "Route #id packing that repeats a trope belongs in region-seats. Route files keep ink, motif, and one-off heroes."
+}
+
+^"operational_differentials"{
+  claim: "A charged `@` is a perspective carrier. A facet is a bias on that carrier. Selector combinatorics are how each operator *reads* the charge — the differential is relative to the operator, not a new global lens."
+  lineage: "Charge various `@` for color interpretation downstream → then bias facets → then let `:has` / html[carrier] × [data-spw-operator] spend the product."
+  refuse: "Do not replace this with home-lens surface|syntax|artifacts|website. That is a content filter. `@website` as a mode button taught leftover alias, not perspective charge."
+  model: .{
+    charge = "`@` (perspective) stores a viewpoint. html[data-spw-charge-carrier] + --spw-charge-field. Color interpretation is a *discharge kind*, not the charge itself."
+    facet = "Bias on the carrier: palette-resonance situate|hand|lattice|inquiry (legacy route|craft|software|math still resolve), copy-depth, explore-posture. Facet does not change which `@` is charged."
+    differential = "Same charge, different operator: `#` grounds, `?` asks, `^` publishes, `~` holds. CSS product is html[carrier][facet] [data-spw-operator=X]."
+    compare = "Reuse comparison-differentials: axis = the charged `@`, poles = two operators (or two places of one operator), join = `~`."
+  }[reg=facet]
+  likely_selectors: #[
+    `html[data-spw-charge-carrier="perspective"] [data-spw-operator]`,
+    `html[data-spw-palette-resonance] [data-spw-operator]`,
+    `:has([data-spw-operator][data-spw-charge="charged"])` ,
+    `html[data-spw-resonance-probe] — already live in wonder.css`
+  ][reg=set]
+  spend_rule: "Author one product per operator family (inquiry, publish, situate, measure). Do not write a matrix of every operator × every facet × every charge phase."
+  motif_register: "Literary chips (cookbook, magazine, research, prompt, lore) reproject discharge kinds. They do not hide each other. See literary-operational-motifs.spw."
+}

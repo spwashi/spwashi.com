@@ -43,12 +43,22 @@ html[data-spw-layout-tuner="newspaper"] :where(h3) {
   font-size: clamp(1.02rem, 0.96rem + 0.2vw, 1.16rem);
 }
 
+/*
+ * Newspaper columns belong to read/narration seats, not every frame-body.
+ * Blind column-count: 2 + balance made a skinny first column of any long
+ * hook or hub. Region-seats.css spends column-width: 32ch when the seat fits.
+ */
 @media (min-width: 64rem) {
-  html[data-spw-layout-tuner="newspaper"] :where(.frame-body, .frame-copy, [data-spw-slot="body"]) {
-    column-count: 2;
+  html[data-spw-layout-tuner="newspaper"] :where(
+    .site-frame[data-spw-region="read"] > .frame-body,
+    .site-frame[data-spw-region-role="reading"] > .frame-body,
+    .spw-narration,
+    [data-spw-textual-role="narration"]
+  ) {
+    column-width: 32ch;
     column-gap: clamp(1rem, 2vw, 1.45rem);
     column-rule: 1px solid color-mix(in srgb, var(--paper-rule, rgba(14, 18, 20, 0.12)) 88%, transparent);
-    column-fill: balance;
+    column-fill: auto;
   }
 
   html[data-spw-layout-tuner="newspaper"] :where(.frame-body, .frame-copy) > :is(h2, h3, figure, .frame-grid, .site-frame, pre, blockquote) {

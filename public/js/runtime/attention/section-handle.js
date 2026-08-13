@@ -367,6 +367,21 @@ function createHandleShell(origin) {
     reason: 'section-handle-shell',
     stylingAxis: 'page-locomotion',
   });
+  // These carry structural handle identity (which section, from where, how
+  // many) rather than visual state, so no CSS selector targets them — per
+  // attention-field.spw#operational_semantics ("observable... without
+  // reverse-engineering CSS"), that identity belongs in the state inspector
+  // instead. Opts into runtime/state-inspector.js's generic dataset reader.
+  shell.dataset.spwInspectDatasets = [
+    'handleAvailability',
+    'handleOrigin',
+    'handleCurrent',
+    'handleIndex',
+    'handleCount',
+    'handleSource',
+    'sectionHandleLabel',
+    'sectionHandleOp',
+  ].join(',');
   shell.dataset.spwHandleOrigin = origin;
   shell.innerHTML = `
     <button type="button" class="spw-section-handle-toggle" data-spw-handle-target="toggle" aria-expanded="false" aria-label="Expand page travel rail">

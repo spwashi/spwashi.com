@@ -124,7 +124,7 @@
   .spec-column > :not([data-spw-overlay], [data-spw-region-flow="popout"], [data-spw-floating-chrome="true"])
 ) {
   position: relative;
-  z-index: 1;
+  z-index: var(--z-content, 1);
   min-width: 0;
 }
 
@@ -432,7 +432,7 @@
 :where(.frame-heading > .frame-sigil[data-spw-operator], .frame-topline > .frame-sigil[data-spw-operator])::after {
   content: attr(data-spw-operator);
   position: absolute;
-  z-index: 1;
+  z-index: var(--z-content, 1);
   inset: calc(100% + 0.22rem) auto auto 0;
   max-inline-size: 18ch;
   padding: 0.12rem 0.34rem;
@@ -496,7 +496,7 @@
 :where(.frame-sigil[data-spw-region-preview="true"], .operator-chip[data-spw-region-preview="true"])::before {
   content: "?";
   position: absolute;
-  z-index: 2;
+  z-index: var(--z-overlay, 2);
   inset: -0.46rem -0.42rem auto auto;
   display: inline-grid;
   place-items: center;
@@ -1089,10 +1089,15 @@
 :where(.spw-component-tag) {
   display: inline-flex;
   align-items: center;
+  flex: 0 1 auto;
   width: fit-content;
+  min-inline-size: min-content;
   max-width: 100%;
   padding: 0.18rem 0.42rem;
-  white-space: normal;
+  overflow: hidden;
+  overflow-wrap: normal;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   border: 1px solid var(--semantic-metadata-line);
   border-radius: var(--shape-element, 0.35rem);
   background: var(--semantic-metadata-bg);
@@ -1100,7 +1105,6 @@
   font-size: var(--semantic-metadata-font-size);
   letter-spacing: var(--semantic-metadata-tracking);
   text-transform: uppercase;
-  text-wrap: pretty;
 }
 
 :where(.spw-component-meta) {
@@ -1109,7 +1113,7 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 0.22rem 0.32rem;
-  min-width: 0;
+  min-width: min-content;
 }
 
 :where(.frame-topline > .spw-component-meta, .frame-heading > .spw-component-meta) {
@@ -1729,7 +1733,8 @@
 
 :where(.frame-topline > .spw-component-meta > .spw-component-tag,
        .frame-heading > .spw-component-meta > .spw-component-tag) {
-  min-inline-size: 10.5ch;
+  flex: 0 0 auto;
+  min-inline-size: min-content;
   max-inline-size: min(100%, 34ch);
   padding-inline: 0.7rem;
 }

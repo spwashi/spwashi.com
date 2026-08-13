@@ -16,6 +16,7 @@
 @recursive_improvement_cache: ~"./recursive-improvement-2026-07.spw"
 @implicit_attention_arcs: ~"./implicit-attention-arcs.spw"
 @morph_shader_handles: ~"./morph-shader-handles.spw"
+@css_combinatorics: ~"./css-combinatorics.spw"
 
 operation = "align"
 fixity = "tending"
@@ -26,6 +27,7 @@ fixity = "tending"
   spw_language_utilization_2026_07 = @language_utilization
   implicit_attention_arcs = @implicit_attention_arcs
   morph_shader_handles = @morph_shader_handles
+  css_combinatorics = @css_combinatorics
 }[reg=facet]
 
 ^"cache_rules"{

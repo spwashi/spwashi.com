@@ -153,10 +153,10 @@
                         <h3>Palette Resonance Dials</h3>
                         <p>The <code>data-spw-palette-resonance</code> attribute biases the active accent tokens (like <code>--active-op-color</code>).</p>
                         <div class="theme-handle-test theme-handle-test--dials" data-spw-locality="resonance-dials" data-spw-component-locality="palette-resonance">
-                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:route" data-spw-operator="mode">[ Context-led</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:craft" data-spw-operator="mode">[ Craft-led</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:software" data-spw-operator="mode">[ Software-led</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:math" data-spw-operator="mode">[ Math-led</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:situate" data-spw-operator="potential">~situate</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:hand" data-spw-operator="potential">~hand</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:lattice" data-spw-operator="potential">~lattice</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:inquiry" data-spw-operator="potential">~inquiry</button>
                         </div>
                         <p class="frame-note" style="margin-top: 1rem;">Current theme pack: <strong data-settings-state="themePack">neutral paper</strong>.</p>
                         <p class="frame-note" style="margin-top: 1rem;">This affects how operators glow and how the "resonance" probe identifies conceptual links.</p>
@@ -541,24 +541,24 @@
                     <a class="frame-sigil" href="#spectral-resonance-mapping">&lt;"spectral_resonance_mapping"</a>
                     <h2>Spectral Resonance Mapping</h2>
                 </header>
-                <p class="frame-note">Resonance modes are semantic biases that shift the site's accent colors toward specific "spectral families." This allows different routes to carry a distinct visual weight.</p>
+                <p class="frame-note">Palette biases are ink facets, not content lenses. They retune how a charged viewpoint answers color. Topic copy stays; the accent family changes.</p>
 
                 <div class="panel-grid">
-                    <article class="frame-panel" data-spw-palette-resonance="route" style="border-top: 4px solid var(--op-ref-color);">
-                        <h4>Route Resonance</h4>
-                        <p>The fallback mode. Accents are tied to the specific route family (e.g. blue for editorial, teal for home).</p>
+                    <article class="frame-panel" data-spw-palette-resonance="situate" style="border-top: 4px solid var(--op-ref-color);">
+                        <h4>Situate</h4>
+                        <p>The unmarked bias. Ink follows the charged viewpoint and the page operator.</p>
                     </article>
-                    <article class="frame-panel" data-spw-palette-resonance="craft" style="border-top: 4px solid var(--op-action-color);">
-                        <h4>Craft Resonance</h4>
-                        <p>Biases towards building and making. Accents use higher saturation teals and ambers.</p>
+                    <article class="frame-panel" data-spw-palette-resonance="hand" style="border-top: 4px solid var(--op-object-color);">
+                        <h4>Hand</h4>
+                        <p>Warm material bias. Amber, pragma, and brass — how a made thing answers color.</p>
                     </article>
-                    <article class="frame-panel" data-spw-palette-resonance="software" style="border-top: 4px solid var(--op-frame-color);">
-                        <h4>Software Resonance</h4>
-                        <p>A technical, high-contrast mode. Accents are anchored in structural teals and diagnostic violets.</p>
+                    <article class="frame-panel" data-spw-palette-resonance="lattice" style="border-top: 4px solid var(--op-frame-color);">
+                        <h4>Lattice</h4>
+                        <p>Cool structural bias. Teal, reference, and topic — how a system answers color.</p>
                     </article>
-                    <article class="frame-panel" data-spw-palette-resonance="math" style="border-top: 4px solid var(--op-probe-color);">
-                        <h4>Math Resonance</h4>
-                        <p>An abstract, inquiry-driven mode. Uses deep violets and contrastive oranges to highlight relations.</p>
+                    <article class="frame-panel" data-spw-palette-resonance="inquiry" style="border-top: 4px solid var(--op-probe-color);">
+                        <h4>Inquiry</h4>
+                        <p>Asking violet bias. Probe, topic, and relation — how a question answers color.</p>
                     </article>
                 </div>
             </section>
@@ -570,7 +570,7 @@
                 </header>
 
                 <p class="frame-note">
-                    This is the live instrument. The four resonance modes are not abstract labels — they are distinct visual personalities that re-color operators, probe bars, accent fields, and canvas tints across the entire surface. Click any button below (or in the hero above). The whole page, including the chips and swatches inside this workshop, will shift. Changing resonance is a combinatoric act: salience, clustering, timing, locality, and flow all update together. This is design as mathematics for experiences as a physical dimension — the same moves (with their material semantics) become the basis for dense interactive semantics in spatial or augmented reality, where a "context-led" probe cluster might drive a room's lighting grammar or a gesture's attentional echo. The page itself is the tunable material; the hooks are exploration instruments for learning science and integrated design.
+                    This is the live instrument. The four palette biases are ink facets, not content lenses — they re-color operators, probe bars, accent fields, and canvas tints across the entire surface. Click any button below (or in the hero above). The whole page, including the chips and swatches inside this workshop, will shift. Changing bias is a combinatoric act: salience, clustering, timing, locality, and flow all update together. A situate probe cluster might drive a room's lighting grammar or a gesture's attentional echo. The page itself is the tunable material.
                 </p>
 
                 <div class="vibe-widget-grid vibe-widget-grid--compact" style="margin-top: var(--space-md);">
@@ -581,12 +581,12 @@
                             <h3 class="vibe-widget-title">Choose a resonance bias</h3>
                         </div>
                         <div class="vibe-widget-actions" role="group" aria-label="Spectral Workshop resonance mode toggles" data-spw-slot="actions">
-                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:route" data-spw-operator="mode">[ Context-led</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:craft" data-spw-operator="mode">[ Craft-led</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:software" data-spw-operator="mode">[ Software-led</button>
-                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:math" data-spw-operator="mode">[ Math-led</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:situate" data-spw-operator="potential">~situate</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:hand" data-spw-operator="potential">~hand</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:lattice" data-spw-operator="potential">~lattice</button>
+                            <button class="operator-chip" type="button" data-site-setting-set="paletteResonance:inquiry" data-spw-operator="potential">~inquiry</button>
                         </div>
-                        <p class="vibe-widget-status" data-status="info">Current: <strong data-settings-state="paletteResonance">route</strong>. This also updates the four probe swatches below.</p>
+                        <p class="vibe-widget-status" data-status="info">Current: <strong data-settings-state="paletteResonance">situate</strong>. This also updates the four probe swatches below.</p>
                     </article>
 
                     <!-- Visible probe swatches (driven by the runtime setting --spw-palette-probe-N) -->
@@ -760,7 +760,7 @@
           const body = document.body;
           const params = {
             themePack: (body?.dataset?.spwThemePack || root?.dataset?.spwThemePack || 'neutral-paper'),
-            paletteResonance: (body?.dataset?.spwPaletteResonance || root?.dataset?.spwPaletteResonance || 'route'),
+            paletteResonance: (body?.dataset?.spwPaletteResonance || root?.dataset?.spwPaletteResonance || 'situate'),
             colorMode: (body?.dataset?.spwColorMode || root?.dataset?.spwColorMode || 'auto'),
           };
           // Only include layout if explicitly set (keeps queries short and focused on aesthetics).

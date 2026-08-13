@@ -794,27 +794,11 @@
 
 /* ==========================================================================
    9. Reduced motion
+   --------------------------------------------------------------------------
+   The static-glyph contract for .svc-* parts lives once, in
+   effects/material.css ("Static Glyph Contract"), merged with the
+   equivalent rules for seed-card and boonhonk-mixer.
    ========================================================================== */
-
-@media (prefers-reduced-motion: reduce) {
-  .svc-polygon,
-  .svc-spoke,
-  .svc-center,
-  .svc-center-tier,
-  .svc-center-price,
-  .svc-node-dot,
-  .svc-node-label,
-  .svc-node-step,
-  .svc-cta,
-  .svc-cta__btn,
-  .svc-readout__bar::before,
-  .svc-legend__chip {
-    transition: none !important;
-    animation: none !important;
-    transform: none !important;
-    filter: none !important;
-  }
-}
 
 /* ==========================================================================
    10. Dark mode

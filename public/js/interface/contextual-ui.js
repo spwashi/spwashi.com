@@ -377,19 +377,27 @@ function computePointerMode() {
   return 'fine';
 }
 
+function layoutReasonForTier(tier = 'regular') {
+  if (tier === 'compact' || tier === 'narrow') return 'pocket';
+  if (tier === 'mid') return 'fold';
+  return 'broadsheet';
+}
+
 function applyDeviceContext() {
   const tier = computeViewportTier(window.innerWidth);
   const pointer = computePointerMode();
   const hover = window.matchMedia('(hover: hover)').matches ? 'hover' : 'touch';
+  const reason = layoutReasonForTier(tier);
 
   writeDatasetValue(HTML, 'spwViewportTier', tier);
   writeDatasetValue(HTML, 'spwPointerMode', pointer);
   writeDatasetValue(HTML, 'spwHoverMode', hover);
   writeDatasetValue(HTML, 'spwDeviceContext', `${tier}-${pointer}`);
+  writeDatasetValue(HTML, 'spwLayoutReason', reason);
   writeDatasetValue(
     HTML,
     'spwLayoutFlow',
-    tier === 'compact' || tier === 'narrow' ? 'vertical-ribbon' : 'column'
+    reason === 'pocket' ? 'vertical-ribbon' : reason === 'fold' ? 'spread' : 'broadsheet'
   );
 }
 
@@ -541,10 +549,41 @@ function createRouteMenu(hostHeader, navList) {
   return host;
 }
 
+function isReaderDisplayLayer() {
+  const layer = document.body?.dataset?.spwDisplayLayer || 'reader';
+  return layer === 'reader';
+}
+
+function markAuthoredNavVisual(header) {
+  if (!(header instanceof HTMLElement)) return;
+  if (!header.dataset.spwNavVisual) {
+    header.dataset.spwNavVisual = 'authored';
+  }
+  const prior = new Set((header.dataset.spwNavAnnotatedBy || '').split(/\s+/).filter(Boolean));
+  prior.add('contextual-ui');
+  header.dataset.spwNavAnnotatedBy = [...prior].join(' ');
+}
+
 function updateRouteMenu() {
   const header = document.querySelector('body > header, .site-header');
   const navList = header?.querySelector('nav > ul');
   if (!header || !navList) return;
+
+  markAuthoredNavVisual(header);
+
+  /*
+   * Nearby is an inspect-layer affordance. Injecting it into the authored
+   * <ul> changes first-paint geometry (overflow, nav-fit, clipped labels).
+   * Reader keeps the template list; inspect/editor may grow a host.
+   */
+  if (isReaderDisplayLayer()) {
+    navList.querySelector(':scope > .spw-route-menu-host')?.remove();
+    header.dataset.spwRouteDiscovery = 'inspect-only';
+    delete header.dataset.spwRouteDiscoveryCount;
+    delete header.dataset.spwRouteDiscoveryLayout;
+    delete header.dataset.spwRouteDiscoveryScope;
+    return;
+  }
 
   const routeDiscoveryEnabled = document.body?.dataset.spwFeatures?.split(/\s+/).includes('route-discovery');
   if (!routeDiscoveryEnabled) {
@@ -617,9 +656,17 @@ function updateHeaderFit() {
   const list = nav?.querySelector('ul');
   if (!header || !nav || !list) return;
 
+  markAuthoredNavVisual(header);
+
+  const host = list.querySelector(':scope > .spw-route-menu-host');
+  const hostWasHidden = host?.hidden;
+  if (host && isReaderDisplayLayer()) host.hidden = true;
+
   const ratio = list.scrollWidth && nav.clientWidth
     ? list.scrollWidth / Math.max(nav.clientWidth, 1)
     : 1;
+
+  if (host && hostWasHidden === false) host.hidden = false;
 
   if (ratio > 1.12) {
     header.dataset.spwNavFit = 'compressed';

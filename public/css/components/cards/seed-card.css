@@ -700,18 +700,6 @@
    12. Reduced motion
    ========================================================================== */
 
-@media (prefers-reduced-motion: reduce) {
-  .seed-card,
-  .seed-card::after,
-  .seed-field,
-  .seed-field-op,
-  .seed-field-label,
-  .seed-output,
-  .seed-action,
-  .seed-pivot-btn {
-    animation: none !important;
-    transition: none !important;
-    transform: none !important;
-    filter: none !important;
-  }
-}
+/* Reduced-motion static-glyph contract for .seed-card and friends now lives
+   once, in effects/material.css ("Static Glyph Contract"), merged with the
+   equivalent rules for services-configurator and boonhonk-mixer. */

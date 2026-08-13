@@ -1,0 +1,96 @@
+/* ==========================================================================
+   electrostatic-affordances.css
+   --------------------------------------------------------------------------
+   Infer discharge from the operator terminal. Regions already channel via
+   projection-attenuation.css. Authors write the electrode; they do not
+   resticker the spark.
+
+   See .spw/conventions/electrostatic-affordances.spw
+   ========================================================================== */
+
+/* Terminal → discharge kind. Same table as charge-field.js OPERATOR_DISCHARGE. */
+:where(
+  [data-spw-operator="wonder"],
+  [data-spw-operator="probe"],
+  [data-spw-operator="action"],
+  [data-spw-operator="normalize"],
+  [data-spw-operator="measure"]
+) {
+  --spw-discharge-kind: release;
+  --spw-discharge-color: var(--op-probe-color, #4a2180);
+}
+
+:where(
+  [data-spw-operator="potential"],
+  [data-spw-operator="ref"],
+  [data-spw-operator="perspective"],
+  [data-spw-operator="subject"],
+  [data-spw-operator="substrate"],
+  [data-spw-operator="meta"],
+  [data-spw-operator="resource"],
+  [data-spw-operator="support"],
+  [data-spw-operator="confluence"]
+) {
+  --spw-discharge-kind: transfer;
+  --spw-discharge-color: var(--op-ref-color, #355f77);
+}
+
+:where(
+  [data-spw-operator="frame"],
+  [data-spw-operator="address"],
+  [data-spw-operator="binding"],
+  [data-spw-operator="vibration"],
+  [data-spw-operator="ground"]
+) {
+  --spw-discharge-kind: ground;
+  --spw-discharge-color: var(--op-frame-color, #008080);
+}
+
+:where(
+  [data-spw-operator="integration"],
+  [data-spw-operator="object"],
+  [data-spw-operator="value"]
+) {
+  --spw-discharge-kind: project;
+  --spw-discharge-color: var(--op-object-color, #a67c00);
+}
+
+/* Latent electrode: operator present, no runtime phase. Quiet terminal. */
+:where([data-spw-operator]:not([data-spw-charge])) {
+  --spw-electrode: latent;
+}
+
+/* Acted electrode — runtime phase is the only charge sticker. */
+:where([data-spw-charge="armed"], [data-spw-charge-phase="arming"]) {
+  --spw-electrode: armed;
+}
+
+:where([data-spw-charge="preview"], [data-spw-charge-phase="preview"]) {
+  --spw-electrode: preview;
+}
+
+:where([data-spw-charge="charged"], [data-spw-charge-phase="charged"]) {
+  --spw-electrode: acted;
+}
+
+/* Channel: placing an acted terminal into a region multiplies hold.
+   Material lives in projection-attenuation.css. This only names the role. */
+:where([data-spw-region="hook"]) { --spw-channel: store; }
+:where([data-spw-region="hub"], [data-spw-region="wide"]) { --spw-channel: conduct; }
+:where([data-spw-region="cluster"]) { --spw-channel: couple; }
+:where([data-spw-region="path"]) { --spw-channel: leak; }
+:where([data-spw-region="read"]) { --spw-channel: resist; }
+
+/* Induction: kin of a charged terminal echo without their own charge attr. */
+:where(
+  [data-spw-region]:has([data-spw-operator][data-spw-charge="charged"]),
+  [data-spw-region]:has([data-spw-operator][data-spw-charge-phase="charged"])
+) {
+  --spw-induced-field: calc(var(--spw-projected-field, var(--spw-charge-field, 0)) * 0.55);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where([data-spw-operator]) {
+    --spw-electrode: latent;
+  }
+}

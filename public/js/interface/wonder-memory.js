@@ -1,5 +1,6 @@
 import {
     getActiveRecentPathMemory,
+    getRecentPathSignalStrength,
     getWonderMemoryMode,
     getWonderMemoryStrength,
     inferAnchorTokens,
@@ -41,6 +42,10 @@ const FAMILIARITY_GROUND = Object.freeze({
     habitual: 0.16,
 });
 
+// Display-facing readout, not the field model's own bias(b) = tanh(β·F(b)).
+// `strength` is expected to already carry both the σ₀ settings multiplier
+// and the applyWonderMemoryState() temporal decay term — this function only
+// folds in the categorical liminality/familiarity terms on top.
 function computeWonderFieldBalance({
     strength = 0,
     signalCount = 0,
@@ -203,6 +208,12 @@ export function applyWonderMemoryState(root = document) {
         return;
     }
 
+    // σ(Δt) = σ₀ · exp(−Δt/τ) — `strength` above is σ₀ (the settings-tunable
+    // base); this folds in how much this specific interaction has decayed
+    // since it happened, so --field-balance fades continuously rather than
+    // holding at full strength until a hard TTL cutoff.
+    const decayedStrength = strength * getRecentPathSignalStrength(recent);
+
     const colors = resolveAccentTokenColors(
         [...recent.tokens, recent.operator],
         getRuntimeAccentColors()
@@ -235,7 +246,7 @@ export function applyWonderMemoryState(root = document) {
     host.style.setProperty('--spw-wonder-memory-color', primary);
     host.style.setProperty('--spw-wonder-memory-alt-color', secondary);
     host.style.setProperty('--field-balance', computeWonderFieldBalance({
-        strength,
+        strength: decayedStrength,
         signalCount: recent.tokens.length,
         liminality: cognitiveState.liminality,
         familiarity: cognitiveState.familiarity,

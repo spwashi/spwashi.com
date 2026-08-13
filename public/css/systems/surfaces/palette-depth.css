@@ -51,17 +51,17 @@ html[data-spw-high-contrast="on"] {
 }
 
 /* Resonance-specific depth bias */
-html[data-spw-palette-resonance="craft"] {
+html:is([data-spw-palette-resonance="hand"], [data-spw-palette-resonance="craft"]) {
   --spw-palette-depth-mid: color-mix(in srgb, var(--spw-palette-probe-2) 52%, var(--spw-palette-probe-3) 48%);
   --spw-palette-depth-wash: color-mix(in srgb, var(--spw-palette-probe-2) 11%, transparent);
 }
 
-html[data-spw-palette-resonance="software"] {
+html:is([data-spw-palette-resonance="lattice"], [data-spw-palette-resonance="software"]) {
   --spw-palette-depth-glow: color-mix(in srgb, var(--spw-palette-probe-3) 22%, transparent);
   --spw-palette-depth-field: color-mix(in srgb, var(--spw-palette-probe-1) 10%, var(--surface-strong) 90%);
 }
 
-html[data-spw-palette-resonance="math"] {
+html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="math"]) {
   --spw-palette-depth-highlight: color-mix(in srgb, var(--spw-palette-probe-4) 20%, #fff 80%);
   --spw-palette-depth-shadow: color-mix(in srgb, var(--spw-palette-probe-3) 48%, #0d1218 52%);
 }

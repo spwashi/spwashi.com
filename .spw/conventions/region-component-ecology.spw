@@ -42,6 +42,42 @@ fixity = "tending"
  status = "active"
 }
 
+^"spw_alignment"{
+  claim: "A region is `(region)` — a midprocess seat. A component is a `^` register that lifts inside that seat. Alignment is `~`: hold both without collapsing them into an island or a blend."
+  rule: "Name the region first (hook, hub, cluster, read). Then seat the component. If a widget cannot name its region, it does not belong on the reader surface."
+  device: "The same newspaper stem under [pocket] ~ [fold] ~ [broadsheet]. Compare the seats; do not invent a fourth layout because a card is vivid."
+  ethos: #[
+    `Dual-read: the grid is visible without JS`,
+    `Sigil consequence: region-role and pack-region must match a parser-true seat`,
+    `No metaphor-blend: kitchen practice and page region stay distinct`,
+    `First paint is the contracted look; annotate may write receipts`
+  ][reg=set]
+}
+
+^"copy_flow"{
+  claim: "Semantic HTML is the copy-flow contract. CSS spends it. JS may improve fit after dwell; it does not invent a second essay."
+  seats: .{
+    lede = `p.page-lede / .site-lede — one breath. Measure, not columns.`
+    narration = `.spw-narration / [data-spw-textual-role=narration] — sustained voice. column-width 32ch only when the region container is wide.`
+    aside = `aside / .spw-route-bridge — companion. Sits; does not become a second column of the same voice.`
+    cluster = `.frame-grid inside [data-spw-region=cluster] — cards fill the seat.`
+    path = `steps share a row when the path seat can hold them.`
+    read = `prose measure; a second column only when 2×32ch fits.`
+  }[reg=facet]
+  refuse: "Do not column-count every .frame-body. A hook greeting is not a broadsheet article."
+  enhancement: "Measurement (container queries, measure-band receipts) and timing (approach/enter/dwell) improve fit. Spatial gravity waits for settle so approach wonder is not repositioned."
+  opportunistic: "Broadsheet newspaper uses auto-fit leftover tracks. Hook, pack=fill, and pack=balanced span. Compact path/cluster sit beside a neighbor when 28rem remains. Do not force a two-column on every later region."
+}
+
+^"family_personality"{
+  claim: "Page-family biases the track and the ink, not the grammar. Topic and family association shine because the same seats pack differently."
+  kernel_atlas = `tighter hub track; teal wash; home pairs on broadsheet`
+  field_guide = `wider read track; violet wash; columns appear sooner`
+  kitchen_atlas = `denser cluster track; amber wash; dashed cluster stays practice, not soil`
+  menu = `compact path track; action ink`
+  rule: "Route CSS may tint. Region CSS must remain reusable. Graduate #id packing into [data-spw-region] tropes."
+}
+
 ^"harmony_prime_2026_07"{
   operation = "prime"
   fixity = "tending"

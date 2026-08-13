@@ -13,6 +13,14 @@
   --spw-cluster-accent: var(--op-object-color, #a67c00);
 }
 
+:where([data-spw-semantic-cluster~="garden"], [data-spw-vocab="garden"]) {
+  --spw-cluster-accent: var(--op-stream-color, #208259);
+}
+
+:where([data-spw-semantic-cluster~="nutrition"], [data-spw-vocab="nutrition"]) {
+  --spw-cluster-accent: var(--op-frame-color, #178282);
+}
+
 :where([data-spw-semantic-cluster~="programming"], [data-spw-vocab="programming"]) {
   --spw-cluster-accent: var(--op-action-color, #005959);
 }
@@ -62,8 +70,8 @@
 }
 
 :where(
-  html[data-spw-palette-resonance="craft"],
-  html[data-spw-palette-resonance="route"][data-spw-developmental-climate="weave"],
+  html:is([data-spw-palette-resonance="hand"], [data-spw-palette-resonance="craft"]),
+  html:is([data-spw-palette-resonance="situate"], [data-spw-palette-resonance="route"])[data-spw-developmental-climate="weave"],
   html[data-spw-developmental-climate="offer"]
 ) :where([data-spw-semantic-cluster~="culinary"], [data-spw-vocab="culinary"]) {
   background:
@@ -73,6 +81,27 @@
       color-mix(in srgb, var(--spw-cluster-accent) 22%, transparent) 48%
     );
   text-decoration-color: color-mix(in srgb, var(--spw-cluster-accent) 52%, transparent);
+}
+
+:where(
+  html:is([data-spw-palette-resonance="hand"], [data-spw-palette-resonance="craft"]),
+  html[data-spw-developmental-climate="weave"]
+) :where([data-spw-semantic-cluster~="garden"], [data-spw-vocab="garden"]) {
+  background:
+    linear-gradient(
+      180deg,
+      transparent 52%,
+      color-mix(in srgb, var(--spw-cluster-accent) 18%, transparent) 52%
+    );
+}
+
+/* Compare, do not blend: culinary and garden may sit in one sentence. */
+:where(.spw-compare) :where([data-spw-semantic-cluster~="culinary"], [data-spw-vocab="culinary"]) {
+  --spw-cluster-accent: var(--op-object-color, #a67c00);
+}
+
+:where(.spw-compare) :where([data-spw-semantic-cluster~="garden"], [data-spw-vocab="garden"]) {
+  --spw-cluster-accent: var(--op-stream-color, #208259);
 }
 
 :where(html[data-spw-runtime-posture="precision"]) :where([data-spw-semantic-cluster~="programming"], [data-spw-vocab="programming"]),

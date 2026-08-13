@@ -53,6 +53,7 @@
 @relational_attention_media: ~"./relational-attention-media.spw"
 @attention_field: ~"./attention-field.spw"  # now carries aligned operational_semantics for cognitive+computational use
 @charge_cycle: ~"./charge-cycle.spw"
+@electrostatic_affordances: ~"./electrostatic-affordances.spw"
 @wonder_vocabulary: ~"./wonder-vocabulary.spw"
 @page_anatomy_vocabulary: ~"./page-anatomy-vocabulary.spw"
 @page_template_authoring: ~"./page-template-authoring.spw"

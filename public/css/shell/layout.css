@@ -64,9 +64,10 @@
     Prefer 100% of the body content box over 100vw.
   */
   --spw-shell-frame-cap: var(--page-width);
+  /* Tuner is optional. Falling back to --page-width kept atlas/wide at 72rem. */
   --spw-shell-frame-max: min(
     var(--spw-shell-frame-cap),
-    var(--spw-layout-frame-max, var(--page-width)),
+    var(--spw-layout-frame-max, 100%),
     100%
   );
 
@@ -273,13 +274,15 @@ html {
 }
 
 body {
-  /* Re-resolve the derived frame after an authored route cap on body. The
-     settings tuner is inherited from html and may tighten, never widen, it. */
+  /* Re-resolve here: --spw-main-width is computed on :root and would
+     otherwise inherit as a stale 72rem even after the route cap changes. */
   --spw-shell-frame-max: min(
     var(--spw-shell-frame-cap),
-    var(--spw-layout-frame-max, var(--page-width)),
+    var(--spw-layout-frame-max, 100%),
     100%
   );
+  --spw-main-width: var(--spw-shell-frame-max);
+  --spw-real-estate-frame: var(--spw-shell-frame-max);
 
   min-height: 100vh;
   min-height: 100dvh;
@@ -400,6 +403,38 @@ main {
 
 :where(body[data-spw-layout="newspaper"], main[data-spw-layout="newspaper"]) {
   --spw-shell-frame-cap: var(--page-width-newspaper);
+  --spw-layout-reason: pocket;
+}
+
+/*
+ * Newspaper stem. Device is a variant, not a scale.
+ * pocket < 720 · fold 720–979 · broadsheet ≥ 980
+ * First-paint CSS spends the reason. html[data-spw-layout-reason] is a receipt.
+ */
+@media (max-width: 719px) {
+  :where(body[data-spw-layout="newspaper"], main[data-spw-layout="newspaper"]) {
+    --spw-layout-reason: pocket;
+    --spw-newspaper-columns: 1;
+  }
+}
+
+@media (min-width: 720px) and (max-width: 979px) {
+  :where(body[data-spw-layout="newspaper"], main[data-spw-layout="newspaper"]) {
+    --spw-layout-reason: fold;
+    --spw-newspaper-columns: 1;
+  }
+}
+
+@media (min-width: 980px) {
+  :where(body[data-spw-layout="newspaper"], main[data-spw-layout="newspaper"]) {
+    --spw-layout-reason: broadsheet;
+    --spw-newspaper-columns: 2;
+    --spw-shell-frame-cap: var(--page-width-atlas);
+  }
+
+  :where(body[data-spw-layout="newspaper"] main) {
+    align-items: start;
+  }
 }
 
 :where(body[data-spw-layout="wide"], main[data-spw-layout="wide"]) {
@@ -420,9 +455,10 @@ main {
 :where(main[data-spw-layout]) {
   --spw-shell-frame-max: min(
     var(--spw-shell-frame-cap),
-    var(--spw-layout-frame-max, var(--page-width)),
+    var(--spw-layout-frame-max, 100%),
     100%
   );
+  --spw-main-width: var(--spw-shell-frame-max);
 }
 
 @media (min-width: 92rem) {

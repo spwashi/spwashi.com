@@ -412,6 +412,102 @@
     font-weight: 700;
     letter-spacing: var(--spw-svg-label-spacing, 0.04em);
     opacity: var(--spw-svg-caption-opacity, 1);
+    paint-order: stroke fill;
+    stroke: color-mix(in srgb, var(--spw-svg-brand-field, var(--surface, #fff)) 82%, transparent);
+    stroke-width: 0.28em;
+}
+
+/*
+ * Semantic planes. A <g data-spw-svg-plane> is a compare seat, not z-order.
+ * Focus recedes sibling planes; labels stay readable. Mid mush is not a plane.
+ */
+[data-spw-features~="svg-surfaces"] .spw-svg-surface [data-spw-svg-plane] {
+    --spw-plane-tint: 0%;
+    transition:
+        opacity var(--duration-base, 200ms) var(--ease-smooth, ease),
+        filter var(--duration-base, 200ms) var(--ease-smooth, ease);
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-surface [data-spw-svg-plane="ground"] {
+    --spw-plane-tint: 6%;
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-surface [data-spw-svg-plane="figure"] {
+    --spw-plane-tint: 10%;
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-surface [data-spw-svg-plane="annotation"] {
+    --spw-plane-tint: 0%;
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-surface [data-spw-svg-plane="liminal"] {
+    --spw-plane-tint: 8%;
+    opacity: 0.88;
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-surface:has([data-spw-svg-plane]:target)
+  [data-spw-svg-plane]:not(:target) {
+    opacity: 0.42;
+    filter: saturate(0.72);
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-plane-focus]
+  .spw-svg-surface [data-spw-svg-plane]:not([data-spw-svg-plane="annotation"]) {
+    opacity: 0.42;
+    filter: saturate(0.72);
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-plane-focus]
+  .spw-svg-surface [data-spw-svg-plane="annotation"],
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-plane-focus="ground"]
+  .spw-svg-surface [data-spw-svg-plane="ground"],
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-plane-focus="figure"]
+  .spw-svg-surface [data-spw-svg-plane="figure"],
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-plane-focus="liminal"]
+  .spw-svg-surface [data-spw-svg-plane="liminal"] {
+    opacity: 1;
+    filter: none;
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-environment="model"] .spw-svg-label,
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-environment="poster"] .spw-svg-label {
+    stroke: color-mix(in srgb, var(--spw-svg-brand-field, #fff) 88%, transparent);
+    stroke-width: 0.34em;
+}
+
+[data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-environment="poster"] .spw-svg-surface {
+    background:
+        radial-gradient(
+            circle at 12% 18%,
+            color-mix(in srgb, var(--op-object-color, #a67c00) 12%, transparent),
+            transparent 36%
+        ),
+        radial-gradient(
+            circle at 86% 78%,
+            color-mix(in srgb, var(--op-probe-color, #4a2180) 8%, transparent),
+            transparent 32%
+        ),
+        linear-gradient(
+            135deg,
+            color-mix(in srgb, var(--spw-svg-brand-accent, var(--active-op-color, #008080)) 10%, transparent),
+            transparent 44%
+        ),
+        var(--spw-svg-brand-field, var(--surface, #ffffff));
+}
+
+html[data-spw-high-contrast="on"] [data-spw-features~="svg-surfaces"] .spw-svg-figure {
+    --spw-svg-node-fill-mix: 4%;
+}
+
+html[data-spw-high-contrast="on"] [data-spw-features~="svg-surfaces"] .spw-svg-figure .spw-svg-surface {
+    filter: none;
+    background: var(--spw-svg-brand-field, var(--surface, #fff));
+}
+
+@media (prefers-reduced-motion: reduce) {
+    [data-spw-features~="svg-surfaces"] .spw-svg-flow--animated {
+        animation: none;
+    }
 }
 
 [data-spw-features~="svg-surfaces"] .spw-svg-note {

@@ -26,9 +26,13 @@ const ARROW_COOLDOWN_MS = 110;
 
 const BEAT_TO_PROBE = Object.freeze({ 1: 1, 5: 2, 9: 3, 13: 4 });
 const RESONANCE_TO_PROBE = Object.freeze({
+  situate: 1,
   route: 1,
+  hand: 2,
   craft: 2,
+  lattice: 3,
   software: 3,
+  inquiry: 4,
   math: 4,
 });
 

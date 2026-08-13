@@ -819,10 +819,10 @@ const SETTING_VALUE_LABELS = Object.freeze({
   }),
   pedagogicalFlavor: Object.freeze({culinary: 'Culinary', garden: 'Garden', studio: 'Studio', runtime: 'Runtime'}),
   paletteResonance: Object.freeze({
-    route: 'Context-led',
-    craft: 'Craft-led',
-    software: 'Software-led',
-    math: 'Math-led'
+    situate: 'Situate',
+    hand: 'Hand',
+    lattice: 'Lattice',
+    inquiry: 'Inquiry'
   }),
   baseMetamaterial: Object.freeze({paper: 'Paper', glass: 'Glass', matte: 'Matte', field: 'Field'}),
   baseAffordance: Object.freeze({read: 'Read', tune: 'Tune', inspect: 'Inspect', orient: 'Orient'}),
@@ -946,9 +946,9 @@ const TUNING_LEXICON = Object.freeze({
     key: 'paletteResonance',
     label: 'Resonance',
     sigil: '◎',
-    metaphor: 'Which discipline colors the field',
+    metaphor: 'How ink answers the charged viewpoint',
     relation: 'bridge',
-    contentLink: 'Topic copy remains; accent bias follows craft, software, math, or route context.',
+    contentLink: 'Topic copy remains; accent bias situates, warms a hand, cools a lattice, or opens inquiry.',
     settingsAnchor: '#appearance-settings',
   }),
   memory: Object.freeze({
@@ -1139,7 +1139,7 @@ const UX_RECIPES = Object.freeze({
     label: 'Make it expressive',
     settings: Object.freeze({
       themePack: 'electric-studio',
-      paletteResonance: 'route',
+      paletteResonance: 'situate',
       operatorSaturation: 'vibrant',
       semanticDensity: 'rich',
       enhancementLevel: 'rich',

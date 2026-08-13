@@ -71,7 +71,7 @@
   electrical: .{
     terms = #[`charge`, `capacity`, `threshold`, `discharge`, `field intensity`, `carrier`][reg=set]
     site_form = "passive hover arming, preview glow, charged priming, discharge echo"
-    css_home = "charge-cycle.css, operators.css charge states, --charge / --spw-charge-field"
+    css_home = "components/charge-cycle.css, handles/operators/*.css charge states (operators.css split 2026-07-03), --charge / --spw-charge-field"
   }[reg=facet]
   mechanical: .{
     terms = #[`brace tension`, `settle`, `pivot`, `latch`, `succession`][reg=set]

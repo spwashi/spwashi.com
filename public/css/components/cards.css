@@ -574,6 +574,7 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
 :where(.spw-reason-strip, .spw-role-hooks) {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  align-items: start;
   gap: var(--component-gap-tight);
   min-width: 0;
   margin-block: var(--component-gap) var(--component-gap-loose);
@@ -585,7 +586,10 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: flex-start;
   gap: var(--spw-list-charge-gap, 0.38rem);
+  width: max-content;
+  max-inline-size: 100%;
   min-width: 0;
   margin: var(--component-gap-tight) 0 0;
   padding: 0;
@@ -597,10 +601,10 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
   align-items: center;
   min-height: 1.9rem;
   padding: 0.18rem 0.62rem;
-  border: 1px solid color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 86%, transparent);
+  border: 1px solid color-mix(in srgb, var(--spw-operator-color, var(--line, rgba(14, 18, 20, 0.14))) 36%, var(--line, rgba(14, 18, 20, 0.14)) 64%);
   border-radius: var(--component-radius-pill, 999px);
-  background: color-mix(in srgb, var(--component-surface-soft) 80%, var(--active-op-color, var(--component-accent)) 10%);
-  color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 70%, var(--active-op-color, var(--component-accent)) 30%);
+  background: color-mix(in srgb, var(--component-surface-soft) 80%, var(--spw-operator-color, var(--active-op-color, var(--component-accent))) 10%);
+  color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 70%, var(--spw-operator-color, var(--active-op-color, var(--component-accent))) 30%);
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: 0.76rem;
   font-weight: 700;

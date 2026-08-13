@@ -1,0 +1,77 @@
+# Literary Operational Motifs
+#
+# Literary forms are a *register* on charge physics, not a competing lens.
+# Freeze the coordinate (discharge kind + operator family). Reproject the
+# lexicon when a better story appears.
+
+#>literary_operational_motifs
+#:convention #!copy #!charge #!operators
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@charge_cycle: ~"./charge-cycle.spw"
+@expressive_registers: ~"./expressive-registers.spw"
+@metaphor_lexicon: ~"./metaphor-dimensional-lexicon.spw"
+@copy_ecology: ~"./copy-ecology.spw"
+@css_combinatorics: ~"../caches/css-combinatorics.spw"
+
+operation = "prime"
+fixity = "experimental"
+
+^"thesis"{
+  claim: "A literary motif names how operational physics *reads*, not which panel to show. Cookbook, magazine, research, prompt, and lore are projections of discharge kinds. They compose with charged `@` and facet bias."
+  refuse: "Do not make lore a mode that hides research. Do not blend kitchen practice into the parser. Do not teach `@website` as a public alias."
+  rule: "Freeze discharge kind + operator family. Reproject motif words. Same product as operational_differentials: html[carrier][facet] [data-spw-operator][data-spw-motif]."
+}
+
+^"coordinates"{
+  ground: .{
+    operators = #[`frame`, `binding`][reg=set]
+    physics = "brace settles; the named place stays"
+    literary = "chronicle, recipe-as-sequence, atlas entry"
+    home_chip = "cookbook"
+    feel = "steps you can return to"
+  }[reg=facet]
+  transfer: .{
+    operators = #[`potential`, `perspective`, `subject`, `substrate`][reg=set]
+    physics = "induction; charge moves without loss of meaning"
+    literary = "correspondence, issue, magazine spread, handed letter"
+    home_chip = "magazine"
+    feel = "a viewpoint passed across a seam"
+  }[reg=facet]
+  release: .{
+    operators = #[`wonder`, `probe`, `action`][reg=set]
+    physics = "capacitor spark; inquiry opens, echo fades"
+    literary = "lyric question, research note, aside"
+    home_chip = "research"
+    feel = "asking leaves a brief field trace"
+  }[reg=facet]
+  project: .{
+    operators = #[`integration`, `object`, `value`][reg=set]
+    physics = "stored tendency becomes outward artifact"
+    literary = "spell, prompt, fable that becomes a tool"
+    home_chip = "prompt"
+    feel = "the sentence can be run"
+  }[reg=facet]
+  situate: .{
+    operators = #[`perspective`][reg=set]
+    physics = "charged `@` is the carrier; color interpretation is one discharge"
+    literary = "lore, voice, character theory of mind"
+    home_chip = "lore"
+    feel = "who is looking, and how ink answers them"
+  }[reg=facet]
+}
+
+^"composition"{
+  product = "`@` charge × facet bias × operator × motif-register"
+  dual_read = "Chips stay readable words without JS. data-spw-motif + data-spw-discharge-kind are inspect receipts."
+  exclusive_is_brittle = "A mode-switch that hides three motifs to show one is a metaphor-blend of UI. Keep all five seats visible; charge changes how they *sound*."
+  color = "Facet (palette-resonance) retunes the operator ink the motif is sitting on. Motif does not pick a hue by itself."
+}
+
+^"html_contract"{
+  chip: `li[data-spw-motif][data-spw-discharge-kind][data-spw-operator]`
+  host: `.spw-copy-motif-strip[data-spw-vocab]`
+  rule: "One motif per chip. Do not put two discharge kinds on one word."
+}

@@ -490,6 +490,16 @@
   --attention-field-decay: 0.65;
   --attention-echo-duration: 480ms;
 
+  /* -- Wonder Memory (attention-field.spw#tunable_parameters) --
+     Same field_resonance_profile cluster as the three above; previously
+     JS-only fallback defaults (accent-palette.js / site-settings-engine.js)
+     with no CSS-level declaration. Values match those JS fallbacks exactly,
+     so this only makes the defaults inspectable/overridable at the CSS
+     layer — no behavior change. */
+  --spw-wonder-memory-strength: 0.56;
+  --spw-wonder-memory-reach: 0.54;
+  --spw-wonder-memory-ttl-ms: 28000; /* τ: signal half-life for the recent-path decay term */
+
   /* -- Grid Thresholds -- */
   --grid-min-compact: calc(var(--spw-rhythm-unit) * 12);
   --grid-min-card: calc(var(--spw-rhythm-unit) * 15);
@@ -2222,7 +2232,7 @@ html[data-spw-semantic-density="rich"] {
   /* Settings layout tuner (site-settings-engine may overwrite).
      measure = prose (ch); frame-max = column cap (rem); keep units distinct. */
   --spw-layout-measure: 72ch;
-  --spw-layout-frame-max: var(--page-width-reading);
+  --spw-layout-frame-max: 100%;
   --spw-layout-column-min: 16rem;
   --spw-interaction-scale: 1;
   --spw-region-frame-line: color-mix(in srgb, var(--active-op-color) calc(var(--spw-region-frame-alpha) * 100%), var(--line));

@@ -1,35 +1,51 @@
-const DEFAULT_PALETTE_RESONANCE = 'route';
+const DEFAULT_PALETTE_RESONANCE = 'situate';
+
+/**
+ * Facet keys name how ink answers a charged viewpoint.
+ * They are not content lenses. Legacy domain names stay aliases.
+ */
+const PALETTE_RESONANCE_ALIASES = Object.freeze({
+  route: 'situate',
+  context: 'situate',
+  'context-led': 'situate',
+  craft: 'hand',
+  'craft-led': 'hand',
+  software: 'lattice',
+  'software-led': 'lattice',
+  math: 'inquiry',
+  'math-led': 'inquiry'
+});
 
 const PALETTE_RESONANCE_TOKENS = Object.freeze({
-  route: Object.freeze([]),
-  craft: Object.freeze(['craft', 'site-design', 'svg', 'fragments', 'website', 'services', 'contact']),
-  software: Object.freeze(['software', 'spw', 'parsers', 'renderers', 'browser', 'compression', 'schedulers', 'lattices']),
-  math: Object.freeze(['math', 'number-theory', 'category-theory', 'field-theory', 'complexity', 'symmetry', 'topology', 'combinatorics'])
+  situate: Object.freeze([]),
+  hand: Object.freeze(['craft', 'site-design', 'svg', 'fragments', 'website', 'services', 'contact']),
+  lattice: Object.freeze(['software', 'spw', 'parsers', 'renderers', 'browser', 'compression', 'schedulers', 'lattices']),
+  inquiry: Object.freeze(['math', 'number-theory', 'category-theory', 'field-theory', 'complexity', 'symmetry', 'topology', 'combinatorics'])
 });
 
 const PALETTE_RESONANCE_SWATCHES = Object.freeze({
-  route: Object.freeze([
+  situate: Object.freeze([
     'var(--active-op-color, #008080)',
     'var(--op-object-color, #c68a22)',
     'var(--op-ref-color, #1d57a3)',
     'var(--op-probe-color, #6a3fb8)'
   ]),
-  craft: Object.freeze([
-    'var(--op-frame-color, #178282)',
+  hand: Object.freeze([
     'var(--op-object-color, #c68a22)',
     'var(--op-pragma-color, #7f4b2e)',
-    'var(--op-topic-color, #2a8c76)'
+    'var(--pigment-brass-warm, hsl(38 64% 42%))',
+    'var(--op-frame-color, #178282)'
   ]),
-  software: Object.freeze([
+  lattice: Object.freeze([
     'var(--teal, #008080)',
-    'var(--op-topic-color, #2a8c76)',
     'var(--op-ref-color, #1d57a3)',
-    'var(--op-probe-color, #6a3fb8)'
-  ]),
-  math: Object.freeze([
     'var(--op-topic-color, #2a8c76)',
-    'var(--op-object-color, #c68a22)',
+    'var(--op-frame-color, #178282)'
+  ]),
+  inquiry: Object.freeze([
     'var(--op-probe-color, #6a3fb8)',
+    'var(--pigment-violet-ink, hsl(268 56% 34%))',
+    'var(--op-topic-color, #2a8c76)',
     'var(--op-ref-color, #1d57a3)'
   ])
 });
@@ -40,8 +56,9 @@ const PALETTE_RESONANCE_OPTIONS = Object.freeze(
 
 const normalizePaletteResonance = (value = '') => {
   const normalized = String(value).trim().toLowerCase();
-  return PALETTE_RESONANCE_OPTIONS.includes(normalized)
-    ? normalized
+  const resolved = PALETTE_RESONANCE_ALIASES[normalized] || normalized;
+  return PALETTE_RESONANCE_OPTIONS.includes(resolved)
+    ? resolved
     : DEFAULT_PALETTE_RESONANCE;
 };
 
@@ -50,7 +67,7 @@ const getPaletteResonanceTokens = (value = DEFAULT_PALETTE_RESONANCE) => (
 );
 
 const getPaletteResonanceSwatches = (value = DEFAULT_PALETTE_RESONANCE) => (
-  [...(PALETTE_RESONANCE_SWATCHES[normalizePaletteResonance(value)] || PALETTE_RESONANCE_SWATCHES.route)]
+  [...(PALETTE_RESONANCE_SWATCHES[normalizePaletteResonance(value)] || PALETTE_RESONANCE_SWATCHES.situate)]
 );
 
 /** Depth probes derived from the primary resonance swatch (shadow + highlight). */
@@ -67,6 +84,7 @@ const getPaletteDepthSwatches = (value = DEFAULT_PALETTE_RESONANCE) => {
 
 export {
   DEFAULT_PALETTE_RESONANCE,
+  PALETTE_RESONANCE_ALIASES,
   PALETTE_RESONANCE_OPTIONS,
   getPaletteDepthSwatches,
   getPaletteResonanceSwatches,

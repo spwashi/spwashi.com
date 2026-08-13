@@ -1,0 +1,31 @@
+# Concept vs depiction vs hire
+#
+# Cached 2026-08-12. Payoff for topic prerequisites and Midjourney in RPG Wednesday.
+
+#>concept_depiction_hire_brief
+#:cache #!payoff #!midjourney #!rpg #!topics
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@product_lines: ~"../../../.spw/surfaces/product-lines.spw"
+@electrostatic: ~"../../../.spw/conventions/electrostatic-affordances.spw"
+@marketing: ~"../../../.spw/conventions/model-guided-refinement.spw"
+
+operation = "cache"
+fixity = "tending"
+
+^"insight"{
+  id = "concept-depiction-hire-brief"
+  claim = "A prerequisite is only worth discovering if it leaves a brief: concept (latent charge), depiction (projected test), hire (transfer to a person when money exists)."
+  evidence = #[
+    `Home learning loop names artifact but not the hire-later brief`,
+    `/tools/midjourney/ already says packets travel to artists; payoff is under-named`,
+    `/play/rpg-wednesday/#image-publishing-loop keeps images; does not say they brief a future illustrator`
+  ][reg=set]
+  payoff = "Tonight the table can see a shape. Later an illustrator inherits subject, light, guardrail, and what must still mean the same after they improve it."
+  refuse = "Do not treat Midjourney as the painting. Do not treat topics as a prerequisite tree with no output substrate."
+  electrostatic = "Concept is latent electrode. Depiction is project discharge. Hiring an illustrator is transfer — same charge, different register."
+  audience = "authors, GMs, and author-ecosystems who will hire when they can afford it"
+  next_action = "Leave with a prompt packet + proof card, not a mood."
+}

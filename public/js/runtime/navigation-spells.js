@@ -352,6 +352,14 @@ function applyNavigationSpellRecord(link, record, url) {
   }
 }
 
+function isShellNavLink(link) {
+  return Boolean(link.closest('body > header nav, .site-header nav'));
+}
+
+function isReaderDisplayLayer() {
+  return (document.body?.dataset?.spwDisplayLayer || 'reader') === 'reader';
+}
+
 function annotateLink(link) {
   if (!(link instanceof HTMLAnchorElement)) return;
   if (link.closest('[data-spw-nav-tokenized="false"]')) return;
@@ -366,7 +374,33 @@ function annotateLink(link) {
   if (url.origin !== window.location.origin) return;
 
   const record = buildNavigationSpellRecord(link, url);
+  const shellReader = isShellNavLink(link) && isReaderDisplayLayer();
+
+  /*
+   * Shell nav first-paint is the contracted look. In the reader layer we
+   * still write inspect datasets, but we do not paint prefixes or operator
+   * geometry — those attrs are what overflowed the authored list after idle.
+   */
+  if (shellReader) {
+    applyNavigationSpellRecord(link, {
+      ...record,
+      isGroundable: false,
+    }, url);
+    link.dataset.spwNavTokenized = 'inspect';
+    delete link.dataset.spwOperatorGeometry;
+    return;
+  }
+
   applyNavigationSpellRecord(link, record, url);
+}
+
+function markHeaderNavAnnotated() {
+  const header = document.querySelector('body > header, .site-header');
+  if (!(header instanceof HTMLElement)) return;
+  if (!header.dataset.spwNavVisual) header.dataset.spwNavVisual = 'authored';
+  const prior = new Set((header.dataset.spwNavAnnotatedBy || '').split(/\s+/).filter(Boolean));
+  prior.add('navigation-spells');
+  header.dataset.spwNavAnnotatedBy = [...prior].join(' ');
 }
 
 function applyTokens(root = document) {
@@ -375,6 +409,7 @@ function applyTokens(root = document) {
   }
 
   root.querySelectorAll?.(TOKEN_SELECTOR).forEach((link) => annotateLink(link));
+  markHeaderNavAnnotated();
 }
 
 function syncSectionLocomotionExpression(detail = {}) {

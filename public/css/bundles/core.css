@@ -1087,6 +1087,16 @@ html[data-spw-reduce-motion="on"] *::after {
   --attention-field-decay: 0.65;
   --attention-echo-duration: 480ms;
 
+  /* -- Wonder Memory (attention-field.spw#tunable_parameters) --
+     Same field_resonance_profile cluster as the three above; previously
+     JS-only fallback defaults (accent-palette.js / site-settings-engine.js)
+     with no CSS-level declaration. Values match those JS fallbacks exactly,
+     so this only makes the defaults inspectable/overridable at the CSS
+     layer — no behavior change. */
+  --spw-wonder-memory-strength: 0.56;
+  --spw-wonder-memory-reach: 0.54;
+  --spw-wonder-memory-ttl-ms: 28000; /* τ: signal half-life for the recent-path decay term */
+
   /* -- Grid Thresholds -- */
   --grid-min-compact: calc(var(--spw-rhythm-unit) * 12);
   --grid-min-card: calc(var(--spw-rhythm-unit) * 15);
@@ -2819,7 +2829,7 @@ html[data-spw-semantic-density="rich"] {
   /* Settings layout tuner (site-settings-engine may overwrite).
      measure = prose (ch); frame-max = column cap (rem); keep units distinct. */
   --spw-layout-measure: 72ch;
-  --spw-layout-frame-max: var(--page-width-reading);
+  --spw-layout-frame-max: 100%;
   --spw-layout-column-min: 16rem;
   --spw-interaction-scale: 1;
   --spw-region-frame-line: color-mix(in srgb, var(--active-op-color) calc(var(--spw-region-frame-alpha) * 100%), var(--line));
@@ -3309,6 +3319,16 @@ html[data-spw-reduce-motion="on"] {
   --spw-real-estate-frame: var(--spw-shell-frame-max, var(--page-width-newspaper));
 }
 
+@media (min-width: 980px) {
+  :where(
+    html[data-spw-layout="newspaper"],
+    body[data-spw-layout="newspaper"]
+  ) {
+    --spw-shell-frame-cap: var(--page-width-atlas);
+    --spw-real-estate-frame: var(--spw-shell-frame-max, var(--page-width-atlas));
+  }
+}
+
 :where(
   html[data-spw-layout="wide"],
   body[data-spw-layout="wide"]
@@ -3428,9 +3448,10 @@ html[data-spw-reduce-motion="on"] {
     Prefer 100% of the body content box over 100vw.
   */
   --spw-shell-frame-cap: var(--page-width);
+  /* Tuner is optional. Falling back to --page-width kept atlas/wide at 72rem. */
   --spw-shell-frame-max: min(
     var(--spw-shell-frame-cap),
-    var(--spw-layout-frame-max, var(--page-width)),
+    var(--spw-layout-frame-max, 100%),
     100%
   );
 
@@ -3637,13 +3658,15 @@ html {
 }
 
 body {
-  /* Re-resolve the derived frame after an authored route cap on body. The
-     settings tuner is inherited from html and may tighten, never widen, it. */
+  /* Re-resolve here: --spw-main-width is computed on :root and would
+     otherwise inherit as a stale 72rem even after the route cap changes. */
   --spw-shell-frame-max: min(
     var(--spw-shell-frame-cap),
-    var(--spw-layout-frame-max, var(--page-width)),
+    var(--spw-layout-frame-max, 100%),
     100%
   );
+  --spw-main-width: var(--spw-shell-frame-max);
+  --spw-real-estate-frame: var(--spw-shell-frame-max);
 
   min-height: 100vh;
   min-height: 100dvh;
@@ -3764,6 +3787,38 @@ main {
 
 :where(body[data-spw-layout="newspaper"], main[data-spw-layout="newspaper"]) {
   --spw-shell-frame-cap: var(--page-width-newspaper);
+  --spw-layout-reason: pocket;
+}
+
+/*
+ * Newspaper stem. Device is a variant, not a scale.
+ * pocket < 720 · fold 720–979 · broadsheet ≥ 980
+ * First-paint CSS spends the reason. html[data-spw-layout-reason] is a receipt.
+ */
+@media (max-width: 719px) {
+  :where(body[data-spw-layout="newspaper"], main[data-spw-layout="newspaper"]) {
+    --spw-layout-reason: pocket;
+    --spw-newspaper-columns: 1;
+  }
+}
+
+@media (min-width: 720px) and (max-width: 979px) {
+  :where(body[data-spw-layout="newspaper"], main[data-spw-layout="newspaper"]) {
+    --spw-layout-reason: fold;
+    --spw-newspaper-columns: 1;
+  }
+}
+
+@media (min-width: 980px) {
+  :where(body[data-spw-layout="newspaper"], main[data-spw-layout="newspaper"]) {
+    --spw-layout-reason: broadsheet;
+    --spw-newspaper-columns: 2;
+    --spw-shell-frame-cap: var(--page-width-atlas);
+  }
+
+  :where(body[data-spw-layout="newspaper"] main) {
+    align-items: start;
+  }
 }
 
 :where(body[data-spw-layout="wide"], main[data-spw-layout="wide"]) {
@@ -3784,9 +3839,10 @@ main {
 :where(main[data-spw-layout]) {
   --spw-shell-frame-max: min(
     var(--spw-shell-frame-cap),
-    var(--spw-layout-frame-max, var(--page-width)),
+    var(--spw-layout-frame-max, 100%),
     100%
   );
+  --spw-main-width: var(--spw-shell-frame-max);
 }
 
 @media (min-width: 92rem) {
@@ -5477,6 +5533,7 @@ body > header:empty {
   grid-area: nav;
   display: flex;
   justify-content: center;
+  justify-content: safe center;
   align-items: center;
   width: 100%;
   max-inline-size: min(100%, var(--shell-nav-max-width));
@@ -5492,6 +5549,7 @@ body > header:empty {
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   scroll-snap-type: x proximity;
+  scroll-padding-inline: 0.55rem;
   border: 1.5px solid color-mix(in oklab, var(--spw-shell-chrome-line-local) 86%, transparent);
   border-radius: var(--shell-panel-radius-loose);
   background:
@@ -5500,17 +5558,30 @@ body > header:empty {
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.36),
     var(--spw-elevation-card-shadow, 0 4px 12px rgba(0,0,0,0.032));
+  /*
+   * Never fade the start. A two-sided mask plus overflow is what ate
+   * "Home / About". Overflow hint is trailing-only, and only when tight.
+   */
+  mask-image: none;
+  -webkit-mask-image: none;
+}
+
+:where(
+  .site-header[data-spw-nav-fit="tight"] nav,
+  .site-header[data-spw-nav-fit="compressed"] nav,
+  body > header[data-spw-nav-fit="tight"] nav,
+  body > header[data-spw-nav-fit="compressed"] nav
+) {
+  justify-content: flex-start;
   mask-image: linear-gradient(
     90deg,
-    transparent,
-    #000 1.1rem,
+    #000 0,
     #000 calc(100% - 1.1rem),
     transparent
   );
   -webkit-mask-image: linear-gradient(
     90deg,
-    transparent,
-    #000 1.1rem,
+    #000 0,
     #000 calc(100% - 1.1rem),
     transparent
   );
@@ -5929,10 +6000,11 @@ body > header:empty {
   flex-wrap: nowrap;
   align-items: center;
   justify-content: center;
+  justify-content: safe center;
   gap: calc(var(--shell-nav-gap-block) + 0.08rem) calc(var(--shell-nav-gap-inline) - 0.06rem);
   list-style: none;
   margin: 0;
-  padding: 0.48rem 0;
+  padding: 0.48rem 0.2rem;
   min-width: 0;
   width: max-content;
   min-width: 100%;
@@ -5943,6 +6015,7 @@ body > header:empty {
   width: 100%;
   min-width: 0;
   justify-content: center;
+  justify-content: safe center;
 }
 
 :where(.site-header li, body > header li) {
@@ -5985,7 +6058,7 @@ body > header:empty {
   text-decoration: none;
   font-size: var(--shell-nav-font-size);
   font-weight: 500;
-  color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 86%, transparent);
+  color: var(--ink, #14181a);
   line-height: var(--spw-control-line-height, 1.04);
   text-align: center;
   text-wrap: nowrap;
@@ -6128,20 +6201,6 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
     max-inline-size: min(100%, var(--shell-nav-max-width));
     padding: 0.28rem 0.42rem;
     border-radius: calc(var(--shell-panel-radius-loose) - 0.16rem);
-    mask-image: linear-gradient(
-      90deg,
-      transparent,
-      #000 0.85rem,
-      #000 calc(100% - 0.85rem),
-      transparent
-    );
-    -webkit-mask-image: linear-gradient(
-      90deg,
-      transparent,
-      #000 0.85rem,
-      #000 calc(100% - 0.85rem),
-      transparent
-    );
   }
 
   :where(.site-header ul, body > header ul) {
@@ -6240,6 +6299,24 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
   --shell-nav-font-size: var(--text-size-label, 0.8rem);
   --shell-nav-gap-inline: 0.36rem;
   --shell-nav-padding-inline: 0.64rem;
+}
+
+:where(
+  .site-header[data-spw-nav-fit="tight"] nav,
+  .site-header[data-spw-nav-fit="compressed"] nav,
+  body > header[data-spw-nav-fit="tight"] nav,
+  body > header[data-spw-nav-fit="compressed"] nav
+) {
+  justify-content: flex-start;
+}
+
+:where(
+  .site-header[data-spw-nav-fit="tight"] ul,
+  .site-header[data-spw-nav-fit="compressed"] ul,
+  body > header[data-spw-nav-fit="tight"] ul,
+  body > header[data-spw-nav-fit="compressed"] ul
+) {
+  justify-content: flex-start;
 }
 
 .spw-route-menu-host {
@@ -10366,9 +10443,55 @@ body > header[data-spw-menu-mode="inline"] .spw-route-menu-panel {
   display: none !important;
 }
 
-:where(body[data-spw-display-layer="reader"]) .site-header nav a:not(.operator-chip)[data-spw-nav-tokenized="true"]::before,
-:where(body[data-spw-display-layer="reader"]) .site-header nav a:not(.operator-chip)[data-spw-nav-tokenized="true"]::after {
+/*
+ * Authored header links keep first-paint geometry.
+ *
+ * navigation-spells writes data-spw-nav-tokenized / data-spw-operator-geometry
+ * on idle. That is an annotate (inspect) effect, not a layout effect. If those
+ * attrs change padding, prefixes, or box-shadow here, screenshots race the
+ * idle callback and agents cannot tell which look is contracted.
+ *
+ * Reader (default) = first paint. Inspect/editor may show prefixes.
+ */
+:where(body[data-spw-display-layer="reader"])
+  :where(.site-header nav a, body > header nav a):not(.operator-chip) {
+  color: var(--ink, #14181a);
+}
+
+:where(body[data-spw-display-layer="reader"])
+  :where(.site-header, body > header)[data-spw-nav-visual="authored"]
+  nav a:not(.operator-chip)[data-spw-nav-tokenized="true"] {
+  gap: var(--spw-shell-link-gap, 0.38rem);
+}
+
+:where(body[data-spw-display-layer="reader"])
+  :where(.site-header nav a, body > header nav a):not(.operator-chip)[data-spw-nav-tokenized="true"]::before,
+:where(body[data-spw-display-layer="reader"])
+  :where(.site-header nav a, body > header nav a):not(.operator-chip)[data-spw-nav-tokenized="true"]::after {
   content: none !important;
+  display: none !important;
+}
+
+:where(body[data-spw-display-layer="reader"])
+  :where(.site-header nav a, body > header nav a)[data-spw-operator-geometry] {
+  --spw-geometry-motion: 0;
+  --spw-geometry-stability: 0;
+}
+
+:where(body[data-spw-display-layer="reader"])
+  :where(.site-header nav a, body > header nav a)[data-spw-operator-geometry]:is(:hover, :focus-visible) {
+  box-shadow: none;
+}
+
+:where(body[data-spw-display-layer="reader"]) .spw-route-menu-host,
+:where(body[data-spw-display-layer="reader"]) .spw-console,
+:where(body[data-spw-display-layer="reader"]) [data-spw-chrome-role="console"],
+:where(body[data-spw-display-layer="reader"]) [data-spw-chrome-role="surface-map"],
+:where(body[data-spw-display-layer="reader"]) [data-spw-chrome-role="surface-map-panel"],
+:where(body[data-spw-display-layer="reader"]) [data-spw-chrome-role="parallel-navigator"],
+:where(body[data-spw-display-layer="reader"]) .spw-parallel-nav,
+:where(body[data-spw-display-layer="reader"]) .spw-surface-map,
+:where(body[data-spw-display-layer="reader"]) [data-spw-surface-map] {
   display: none !important;
 }
 
@@ -11574,7 +11697,7 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
   .spec-column > :not([data-spw-overlay], [data-spw-region-flow="popout"], [data-spw-floating-chrome="true"])
 ) {
   position: relative;
-  z-index: 1;
+  z-index: var(--z-content, 1);
   min-width: 0;
 }
 
@@ -11882,7 +12005,7 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
 :where(.frame-heading > .frame-sigil[data-spw-operator], .frame-topline > .frame-sigil[data-spw-operator])::after {
   content: attr(data-spw-operator);
   position: absolute;
-  z-index: 1;
+  z-index: var(--z-content, 1);
   inset: calc(100% + 0.22rem) auto auto 0;
   max-inline-size: 18ch;
   padding: 0.12rem 0.34rem;
@@ -11946,7 +12069,7 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
 :where(.frame-sigil[data-spw-region-preview="true"], .operator-chip[data-spw-region-preview="true"])::before {
   content: "?";
   position: absolute;
-  z-index: 2;
+  z-index: var(--z-overlay, 2);
   inset: -0.46rem -0.42rem auto auto;
   display: inline-grid;
   place-items: center;
@@ -12539,10 +12662,15 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
 :where(.spw-component-tag) {
   display: inline-flex;
   align-items: center;
+  flex: 0 1 auto;
   width: fit-content;
+  min-inline-size: min-content;
   max-width: 100%;
   padding: 0.18rem 0.42rem;
-  white-space: normal;
+  overflow: hidden;
+  overflow-wrap: normal;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   border: 1px solid var(--semantic-metadata-line);
   border-radius: var(--shape-element, 0.35rem);
   background: var(--semantic-metadata-bg);
@@ -12550,7 +12678,6 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
   font-size: var(--semantic-metadata-font-size);
   letter-spacing: var(--semantic-metadata-tracking);
   text-transform: uppercase;
-  text-wrap: pretty;
 }
 
 :where(.spw-component-meta) {
@@ -12559,7 +12686,7 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
   align-items: center;
   flex-wrap: wrap;
   gap: 0.22rem 0.32rem;
-  min-width: 0;
+  min-width: min-content;
 }
 
 :where(.frame-topline > .spw-component-meta, .frame-heading > .spw-component-meta) {
@@ -13179,7 +13306,8 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
 
 :where(.frame-topline > .spw-component-meta > .spw-component-tag,
        .frame-heading > .spw-component-meta > .spw-component-tag) {
-  min-inline-size: 10.5ch;
+  flex: 0 0 auto;
+  min-inline-size: min-content;
   max-inline-size: min(100%, 34ch);
   padding-inline: 0.7rem;
 }
@@ -16317,6 +16445,7 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
 :where(.spw-reason-strip, .spw-role-hooks) {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  align-items: start;
   gap: var(--component-gap-tight);
   min-width: 0;
   margin-block: var(--component-gap) var(--component-gap-loose);
@@ -16328,7 +16457,10 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: flex-start;
   gap: var(--spw-list-charge-gap, 0.38rem);
+  width: max-content;
+  max-inline-size: 100%;
   min-width: 0;
   margin: var(--component-gap-tight) 0 0;
   padding: 0;
@@ -16340,10 +16472,10 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
   align-items: center;
   min-height: 1.9rem;
   padding: 0.18rem 0.62rem;
-  border: 1px solid color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 86%, transparent);
+  border: 1px solid color-mix(in srgb, var(--spw-operator-color, var(--line, rgba(14, 18, 20, 0.14))) 36%, var(--line, rgba(14, 18, 20, 0.14)) 64%);
   border-radius: var(--component-radius-pill, 999px);
-  background: color-mix(in srgb, var(--component-surface-soft) 80%, var(--active-op-color, var(--component-accent)) 10%);
-  color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 70%, var(--active-op-color, var(--component-accent)) 30%);
+  background: color-mix(in srgb, var(--component-surface-soft) 80%, var(--spw-operator-color, var(--active-op-color, var(--component-accent))) 10%);
+  color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 70%, var(--spw-operator-color, var(--active-op-color, var(--component-accent))) 30%);
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: 0.76rem;
   font-weight: 700;
@@ -18468,21 +18600,9 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
    12. Reduced motion
    ========================================================================== */
 
-@media (prefers-reduced-motion: reduce) {
-  .seed-card,
-  .seed-card::after,
-  .seed-field,
-  .seed-field-op,
-  .seed-field-label,
-  .seed-output,
-  .seed-action,
-  .seed-pivot-btn {
-    animation: none !important;
-    transition: none !important;
-    transform: none !important;
-    filter: none !important;
-  }
-}
+/* Reduced-motion static-glyph contract for .seed-card and friends now lives
+   once, in effects/material.css ("Static Glyph Contract"), merged with the
+   equivalent rules for services-configurator and boonhonk-mixer. */
 }
 
 /* /public/css/components/semantic-learning.css */
@@ -19050,6 +19170,14 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
   --spw-cluster-accent: var(--op-object-color, #a67c00);
 }
 
+:where([data-spw-semantic-cluster~="garden"], [data-spw-vocab="garden"]) {
+  --spw-cluster-accent: var(--op-stream-color, #208259);
+}
+
+:where([data-spw-semantic-cluster~="nutrition"], [data-spw-vocab="nutrition"]) {
+  --spw-cluster-accent: var(--op-frame-color, #178282);
+}
+
 :where([data-spw-semantic-cluster~="programming"], [data-spw-vocab="programming"]) {
   --spw-cluster-accent: var(--op-action-color, #005959);
 }
@@ -19099,8 +19227,8 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
 }
 
 :where(
-  html[data-spw-palette-resonance="craft"],
-  html[data-spw-palette-resonance="route"][data-spw-developmental-climate="weave"],
+  html:is([data-spw-palette-resonance="hand"], [data-spw-palette-resonance="craft"]),
+  html:is([data-spw-palette-resonance="situate"], [data-spw-palette-resonance="route"])[data-spw-developmental-climate="weave"],
   html[data-spw-developmental-climate="offer"]
 ) :where([data-spw-semantic-cluster~="culinary"], [data-spw-vocab="culinary"]) {
   background:
@@ -19110,6 +19238,27 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
       color-mix(in srgb, var(--spw-cluster-accent) 22%, transparent) 48%
     );
   text-decoration-color: color-mix(in srgb, var(--spw-cluster-accent) 52%, transparent);
+}
+
+:where(
+  html:is([data-spw-palette-resonance="hand"], [data-spw-palette-resonance="craft"]),
+  html[data-spw-developmental-climate="weave"]
+) :where([data-spw-semantic-cluster~="garden"], [data-spw-vocab="garden"]) {
+  background:
+    linear-gradient(
+      180deg,
+      transparent 52%,
+      color-mix(in srgb, var(--spw-cluster-accent) 18%, transparent) 52%
+    );
+}
+
+/* Compare, do not blend: culinary and garden may sit in one sentence. */
+:where(.spw-compare) :where([data-spw-semantic-cluster~="culinary"], [data-spw-vocab="culinary"]) {
+  --spw-cluster-accent: var(--op-object-color, #a67c00);
+}
+
+:where(.spw-compare) :where([data-spw-semantic-cluster~="garden"], [data-spw-vocab="garden"]) {
+  --spw-cluster-accent: var(--op-stream-color, #208259);
 }
 
 :where(html[data-spw-runtime-posture="precision"]) :where([data-spw-semantic-cluster~="programming"], [data-spw-vocab="programming"]),
@@ -19735,7 +19884,13 @@ html[data-spw-font-size-scale="120"] [data-spw-vocab]) {
   padding: var(--surface-padding);
   border: var(--component-border);
   border-radius: var(--component-radius);
-  background: color-mix(in srgb, var(--component-surface) 97%, var(--component-accent) 3%);
+  background:
+    radial-gradient(
+      120% 80% at 100% 0%,
+      var(--spw-palette-depth-wash, transparent),
+      transparent 46%
+    ),
+    color-mix(in srgb, var(--component-surface) 97%, var(--component-accent) 3%);
   box-shadow:
     var(--component-frame-shadow),
     var(--spw-chassis-highlight, inset 0 1px 0 color-mix(in srgb, white 18%, transparent)),
@@ -19762,7 +19917,17 @@ html[data-spw-font-size-scale="120"] [data-spw-vocab]) {
    In-page anchor navigation and find-in-page still force these to render. */
 :where(.site-frame:not(.site-hero)) {
   content-visibility: auto;
-  contain-intrinsic-size: auto 480px;
+  contain-intrinsic-size: auto 16rem;
+}
+
+/* Broadsheet pairing: a 480px reserved height stretched the neighbor
+   into an empty card. Sit by content; remember a shorter estimate. */
+:where(body[data-spw-layout="newspaper"] .site-frame:not(.site-hero)) {
+  contain-intrinsic-size: auto 12rem;
+}
+
+html[data-spw-high-contrast="on"] :where(.site-frame) {
+  background: var(--component-surface-strong, var(--surface-strong, #fff));
 }
 
 :where(.site-frame)::before {
@@ -19937,6 +20102,11 @@ html[data-spw-font-size-scale="120"] [data-spw-vocab]) {
   min-width: 0;
   z-index: var(--material-layer-overlay, 2);
   transition: transform var(--component-transition-base);
+}
+
+:where(.frame-topline > .spw-component-meta, .frame-heading > .spw-component-meta) {
+  flex: 0 1 auto;
+  min-inline-size: min-content;
 }
 
 .frame-body {
@@ -23125,9 +23295,10 @@ html[data-spw-theme-biome="glasshouse"] {
   list-style: none;
 }
 
-.spw-anatomy-strip--grid {
+.spw-anatomy-strip--grid,
+.spw-anatomy-key .spw-anatomy-strip {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
 }
 
 .spw-anatomy-anchor,
@@ -23137,8 +23308,10 @@ html[data-spw-theme-biome="glasshouse"] {
   --spw-anatomy-highlight: color-mix(in srgb, white 22%, transparent);
   position: relative;
   display: inline-flex;
-  min-width: 0;
+  min-width: min-content;
   min-height: 2.25rem;
+  overflow-wrap: normal;
+  white-space: nowrap;
   align-items: center;
   gap: 0.42rem;
   padding: 0.34rem 0.58rem;
@@ -23236,6 +23409,8 @@ html[data-spw-anatomy-ready="true"] :where(.spw-anatomy-anchor, [data-spw-anatom
   display: grid;
   gap: 0.5rem;
   margin-block: 0.7rem;
+  justify-self: stretch;
+  min-inline-size: 0;
 }
 
 .spw-anatomy-key__label {
@@ -23466,13 +23641,28 @@ html[data-spw-popup-posture="expressive"] .spw-parallel-nav {
   box-sizing: border-box;
   min-inline-size: 0;
   max-inline-size: calc(100vi - (2 * var(--spw-floating-inline-gutter, 0.75rem)));
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
   text-wrap: pretty;
 }
 
-:where([data-spw-floating-chrome="true"]) :where(button, a, [role="button"], p, li, span) {
+:where([data-spw-floating-chrome="true"]) :where(p, li) {
   min-inline-size: 0;
   max-inline-size: 100%;
+}
+
+:where([data-spw-floating-chrome="true"]) :where(button, a, [role="button"], label, summary) {
+  min-inline-size: max-content;
+  overflow-wrap: normal;
+  text-wrap: nowrap;
+}
+
+:where(
+  [data-spw-floating-chrome="true"][data-spw-chrome-role="state-inspector"],
+  [data-spw-floating-chrome="true"][data-spw-chrome-role="section-handle"],
+  [data-spw-floating-chrome="true"][data-spw-chrome-role="section-handle-shell"]
+) {
+  min-inline-size: max-content;
+  overflow-wrap: normal;
 }
 
 :where([data-spw-floating-chrome="true"][data-spw-chrome-tier="floating"]) {
@@ -24777,6 +24967,7 @@ html[data-spw-debug-mode="on"] :where(
   --state-inspector-accent: var(--op-probe-color, #4a2180);
   color: var(--ink, #111);
   font-family: var(--site-mono-font, monospace);
+  min-inline-size: max-content;
 }
 
 .spw-state-inspector__launch[data-spw-page-state-mirror] {
@@ -24817,7 +25008,10 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
 
 .spw-state-inspector__launch {
   min-block-size: 2.2rem;
+  min-inline-size: max-content;
   padding: 0.38rem 0.68rem;
+  overflow-wrap: normal;
+  white-space: nowrap;
   border: 1px solid color-mix(in srgb, var(--state-inspector-accent) 24%, transparent);
   border-radius: var(--shape-control, 0.78rem);
   background:
@@ -25044,7 +25238,8 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
 
   .spw-state-inspector[data-spw-state-inspector="closed"]:not([data-spw-satchel-positioned="user"]) .spw-state-inspector__launch {
     min-block-size: var(--touch-target-compact, 2.25rem);
-    max-inline-size: min(8.8rem, calc(50vw - 0.7rem));
+    min-inline-size: max-content;
+    max-inline-size: min(14rem, calc(100vw - 1.6rem));
     padding: 0.28rem 0.56rem;
     border-radius: 999px;
     box-shadow:
@@ -25588,19 +25783,10 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
     --spw-ecology-settle-weight: 0;
   }
 
-  :where(*, *::before, *::after) {
-    animation-duration: 1ms !important;
-    animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
-    transition-duration: 1ms !important;
-  }
-}
-
-:where(html[data-spw-reduce-motion="on"]) :where(*, *::before, *::after) {
-  animation-duration: 1ms !important;
-  animation-iteration-count: 1 !important;
-  scroll-behavior: auto !important;
-  transition-duration: 1ms !important;
+  /* The universal animation/transition/scroll-behavior reset lives once,
+     in reset/base.css §12. Because !important resolves earlier-layer-first
+     across @layer boundaries, restating it here (components layer, which
+     loads after reset) had zero effect — reset's copy always won. */
 }
 
 
@@ -28930,6 +29116,491 @@ html[data-spw-reduce-motion="on"][data-spw-module-visuals="on"][data-spw-runtime
 }
 }
 
+/* /public/css/systems/region-seats.css */
+@layer systems {
+/* ==========================================================================
+   region-seats.css — family × region × device-reason
+   --------------------------------------------------------------------------
+   Authored seats CSS actually spends. A region is a seat; a family biases
+   the seat; newspaper reason chooses how seats relate. Dual-read: media
+   queries spend the reason. html[data-spw-layout-reason] is a receipt.
+   See .spw/caches/css-combinatorics.spw
+   ========================================================================== */
+
+:where(main > .site-frame[data-spw-region], main > .site-frame[data-spw-region-role]) {
+  --spw-region-wash: 0%;
+  --spw-region-seam: 16%;
+  --spw-region-track: 16rem;
+  --spw-region-prose: min(100%, var(--shell-reading-measure, 68ch));
+  container-type: inline-size;
+  container-name: spw-region;
+}
+
+:where(.site-frame[data-spw-region="hook"], .site-frame[data-spw-region-role="entry-spine"]) {
+  --spw-region-wash: 5%;
+  --spw-region-seam: 26%;
+}
+
+:where(.site-frame[data-spw-region="hub"]) {
+  --spw-region-wash: 4%;
+  --spw-region-seam: 20%;
+}
+
+:where(.site-frame[data-spw-region="cluster"]) {
+  --spw-region-wash: 3%;
+  --spw-region-seam: 14%;
+  border-style: dashed;
+}
+
+:where(.site-frame[data-spw-region="path"]) {
+  --spw-region-wash: 2%;
+  --spw-region-seam: 18%;
+}
+
+:where(.site-frame[data-spw-region="read"], .site-frame[data-spw-region-role="reading"]) {
+  --spw-region-wash: 0%;
+  --spw-region-seam: 12%;
+}
+
+:where(.site-frame[data-spw-region], .site-frame[data-spw-region-role="entry-spine"]) {
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--component-accent, var(--active-op-color, #008080)) var(--spw-region-wash), transparent),
+      transparent 28%
+    ),
+    color-mix(in srgb, var(--component-surface, var(--surface, #fff)) 97%, var(--component-accent, var(--active-op-color, #008080)) 3%);
+  --site-frame-seam-color: color-mix(
+    in srgb,
+    var(--component-accent, var(--active-op-color, #008080)) var(--spw-region-seam),
+    transparent
+  );
+}
+
+/* Family bias — same seats, different material. */
+:where(body[data-spw-page-family="kernel-atlas"]) {
+  --spw-family-accent: var(--op-frame-color, #178282);
+}
+
+:where(body[data-spw-page-family="field-guide"], body[data-spw-page-family="atlas"]) {
+  --spw-family-accent: var(--op-probe-color, #4a2180);
+}
+
+:where(body[data-spw-page-family="kitchen-atlas"], body[data-spw-page-family="recipe-book"]) {
+  --spw-family-accent: var(--op-object-color, #a67c00);
+}
+
+:where(body[data-spw-page-family="menu"], body[data-spw-page-family="register"]) {
+  --spw-family-accent: var(--op-action-color, #005959);
+}
+
+:where(body[data-spw-page-family]) .site-frame[data-spw-region],
+:where(body[data-spw-page-family]) .site-frame[data-spw-region-role="entry-spine"] {
+  --component-accent: var(--spw-family-accent, var(--component-accent));
+}
+
+/* wide is a hub alias — home and hubs authored it before seats were named. */
+:where(.site-frame[data-spw-region="wide"]) {
+  --spw-region-wash: 4%;
+  --spw-region-seam: 20%;
+}
+
+/*
+ * Each region is an inline-size container. Tropes spend that size.
+ * Dual-read: first paint. html[data-spw-layout-reason] is a receipt.
+ * Copy flow is authored in HTML; these rules only fit it.
+ */
+:where(main > .site-frame[data-spw-region="hub"], main > .site-frame[data-spw-region="wide"]) {
+  container-name: spw-region spw-hub;
+}
+
+:where(main > .site-frame[data-spw-region="path"]) {
+  container-name: spw-region spw-path;
+}
+
+:where(main > .site-frame[data-spw-region="read"], main > .site-frame[data-spw-region-role="reading"]) {
+  container-name: spw-region spw-read;
+}
+
+/* Family personality biases the track, not the grammar. */
+:where(body[data-spw-page-family="kernel-atlas"]) {
+  --spw-region-track: 15rem;
+}
+
+:where(body[data-spw-page-family="field-guide"], body[data-spw-page-family="atlas"]) {
+  --spw-region-track: 16.5rem;
+}
+
+:where(body[data-spw-page-family="kitchen-atlas"], body[data-spw-page-family="recipe-book"]) {
+  --spw-region-track: 14.5rem;
+}
+
+:where(body[data-spw-page-family="menu"], body[data-spw-page-family="register"]) {
+  --spw-region-track: 14rem;
+}
+
+/* Lede / orientation: one breath. Do not columnize a greeting. */
+:where(
+  .site-frame[data-spw-region] :is(.page-lede, .site-lede, .entrance-lede),
+  .site-frame[data-spw-region-role="entry-spine"] :is(.page-lede, .site-lede)
+) {
+  max-inline-size: var(--spw-region-prose);
+}
+
+/* Sustained voice may use width when the seat actually has it. */
+@container spw-region (min-width: 44rem) {
+  :where(
+    .spw-narration,
+    [data-spw-textual-role="narration"],
+    [data-spw-box-model="narration-card"]
+  ) {
+    max-inline-size: none;
+    column-width: 32ch;
+    column-gap: clamp(1.1rem, 2vw, 1.6rem);
+    column-rule: 1px solid color-mix(in srgb, var(--site-frame-seam-color, var(--line)) 70%, transparent);
+    column-fill: auto;
+  }
+
+  :where(.spw-narration__cue, [data-spw-textual-role="cue"]) {
+    column-span: all;
+  }
+}
+
+/* Cluster: fill the seat with cards. */
+:where(
+  .site-frame[data-spw-region="cluster"] .frame-grid,
+  .site-frame[data-spw-region="cluster"] .frame-grid--dense
+) {
+  --spw-grid-min-base: var(--spw-region-track);
+  align-items: start;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--spw-region-track)), 1fr));
+}
+
+/* Hub / wide: two-up internals once the seat can hold two measures. */
+@container spw-hub (min-width: 40rem) {
+  :where(.frame-body) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+    column-gap: clamp(0.85rem, 1.6vw, 1.35rem);
+  }
+
+  :where(.frame-body > :is(
+    .page-lede,
+    .site-lede,
+    .inline-note,
+    .frame-note,
+    .spw-route-bridge,
+    .frame-grid,
+    .frame-grid--dense,
+    .spw-role-hooks,
+    .spw-narration,
+    [data-spw-textual-role="narration"]
+  )) {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Path: steps share a row when there is a path to walk. */
+@container spw-path (min-width: 36rem) {
+  :where(.frame-grid, .frame-grid--dense) {
+    --spw-grid-min-base: 12.5rem;
+    align-items: start;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 12.5rem), 1fr));
+  }
+}
+
+/* Read: prose measure; a second column only when 2×32ch fits. */
+:where(
+  .site-frame[data-spw-region="read"] .frame-body > :is(p, .frame-note, .inline-note),
+  .site-frame[data-spw-region-role="reading"] .frame-body > :is(p, .frame-note, .inline-note)
+) {
+  max-inline-size: var(--spw-region-prose);
+}
+
+@container spw-read (min-width: 52rem) {
+  :where(.frame-body) {
+    column-width: 32ch;
+    column-gap: clamp(1.2rem, 2vw, 1.7rem);
+    column-rule: 1px solid color-mix(in srgb, var(--site-frame-seam-color, var(--line)) 64%, transparent);
+    column-fill: auto;
+  }
+
+  :where(.frame-body > :is(h2, h3, figure, .frame-grid, aside, nav, pre, blockquote)) {
+    column-span: all;
+  }
+}
+
+/* Companion asides sit; they do not become a second essay. */
+:where(.site-frame[data-spw-region] aside, .site-frame[data-spw-region] .spw-route-bridge) {
+  max-inline-size: min(100%, 72ch);
+}
+
+/* Broadsheet: leftover tracks, not a forced two-column. Compact/path/cluster
+   sit beside a neighbor when 28rem remains. Masthead and fill/balanced span. */
+@media (min-width: 980px) {
+  :where(
+    body[data-spw-layout="newspaper"][data-spw-page-family="field-guide"] main,
+    body[data-spw-layout="newspaper"][data-spw-page-family="kitchen-atlas"] main,
+    body[data-spw-layout="newspaper"][data-spw-page-family="kernel-portrait"] main,
+    body[data-spw-layout="newspaper"][data-spw-page-family="kernel-atlas"] main
+  ) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr));
+    align-items: start;
+    grid-auto-flow: dense;
+    column-gap: clamp(1rem, 2vw, 1.6rem);
+  }
+
+  :where(
+    body[data-spw-layout="newspaper"][data-spw-page-family="field-guide"] main > .site-hero,
+    body[data-spw-layout="newspaper"][data-spw-page-family="kitchen-atlas"] main > .site-hero,
+    body[data-spw-layout="newspaper"][data-spw-page-family="kernel-portrait"] main > .site-hero,
+    body[data-spw-layout="newspaper"][data-spw-page-family="kernel-atlas"] main > .site-hero,
+    body[data-spw-layout="newspaper"][data-spw-page-family="field-guide"] main > [data-spw-region-role="entry-spine"],
+    body[data-spw-layout="newspaper"][data-spw-page-family="kitchen-atlas"] main > [data-spw-region-role="entry-spine"],
+    body[data-spw-layout="newspaper"][data-spw-page-family="kernel-portrait"] main > [data-spw-region-role="entry-spine"],
+    body[data-spw-layout="newspaper"][data-spw-page-family="kernel-atlas"] main > [data-spw-region-role="entry-spine"],
+    body[data-spw-layout="newspaper"][data-spw-page-family] main > [data-spw-region="hook"],
+    body[data-spw-layout="newspaper"][data-spw-page-family] main > [data-spw-pack~="balanced"],
+    body[data-spw-layout="newspaper"][data-spw-page-family] main > [data-spw-pack~="fill"]
+  ) {
+    grid-column: 1 / -1;
+  }
+}
+
+html[data-spw-high-contrast="on"] :where(.site-frame[data-spw-region], .site-frame[data-spw-region-role="entry-spine"]) {
+  --spw-region-wash: 0%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.site-frame[data-spw-region], .site-frame[data-spw-region-role]) {
+    transition: none;
+  }
+}
+}
+
+/* /public/css/systems/projection-attenuation.css */
+@layer systems {
+/* ==========================================================================
+   projection-attenuation.css
+   --------------------------------------------------------------------------
+   Wonder is a current. Regions and slots are the material it runs through.
+   Card/frame edges (brace form) are the visible terminals.
+
+   Projection: the same field expressed at page → region → slot.
+   Attenuation: each seat holds or leaks that field at a different rate.
+
+   Opt-in: existing data-spw-region, data-spw-slot, data-spw-form="brace".
+   No new wrappers. Chips are not required. Dual-read: without field
+   intensity the edges stay quiet.
+   See .spw/conventions/projection-attenuation.spw
+   ========================================================================== */
+
+:where(.site-frame, .frame-card, .frame-panel, [data-spw-form="brace"]) {
+  --spw-wonder-hold: 1;
+  --spw-slot-attenuate: 1;
+  --spw-projected-field: calc(
+    var(--spw-field-intensity, var(--spw-charge-field, 0))
+    * var(--spw-wonder-hold)
+    * var(--spw-slot-attenuate)
+  );
+  --spw-projected-echo: calc(
+    var(--attention-echo-duration, 480ms) * var(--spw-wonder-hold)
+  );
+}
+
+/* Region material — how long wonder stays once it arrives. */
+:where(.site-frame[data-spw-region="hook"], .site-frame[data-spw-region-role="entry-spine"]) {
+  --spw-wonder-hold: 1.15;
+}
+
+:where(.site-frame[data-spw-region="hub"], .site-frame[data-spw-region="wide"]) {
+  --spw-wonder-hold: 1;
+}
+
+:where(.site-frame[data-spw-region="cluster"]) {
+  --spw-wonder-hold: 0.85;
+}
+
+:where(.site-frame[data-spw-region="path"]) {
+  --spw-wonder-hold: 0.72;
+}
+
+:where(.site-frame[data-spw-region="read"], .site-frame[data-spw-region-role="reading"]) {
+  --spw-wonder-hold: 0.55;
+}
+
+/* Slot attenuation — header latches, body conducts, figure stores, actions spark. */
+:where([data-spw-slot="header"], [data-spw-slot="meta"]) {
+  --spw-slot-attenuate: 1.1;
+}
+
+:where([data-spw-slot="body"]) {
+  --spw-slot-attenuate: 0.78;
+}
+
+:where([data-spw-slot="figure"]) {
+  --spw-slot-attenuate: 0.92;
+}
+
+:where([data-spw-slot="actions"]) {
+  --spw-slot-attenuate: 1.25;
+}
+
+:where([data-spw-slot="footer"]) {
+  --spw-slot-attenuate: 0.48;
+}
+
+/* Brace edges as terminals. Field raises the stroke; no field stays grammar-quiet. */
+:where([data-spw-form="brace"]) {
+  --brace-open-color: color-mix(
+    in srgb,
+    var(--spw-operator-color, var(--component-accent, var(--active-op-color, #008080)))
+      calc(22% + (var(--spw-projected-field, 0) * 36%)),
+    transparent
+  );
+  --brace-close-color: color-mix(
+    in srgb,
+    var(--spw-operator-color, var(--component-accent, var(--active-op-color, #008080)))
+      calc(16% + (var(--spw-projected-field, 0) * 28%)),
+    transparent
+  );
+}
+
+:where(.site-frame, .frame-card, .frame-panel) {
+  transition:
+    border-color var(--spw-projected-echo, 480ms) var(--ease-settle, ease),
+    box-shadow var(--spw-projected-echo, 480ms) var(--ease-settle, ease),
+    background-color var(--spw-projected-echo, 480ms) var(--ease-settle, ease);
+}
+
+/* Clustered salience: kin in the same region share the projected field. */
+:where(.site-frame[data-spw-region]:has(:is(:hover, :focus-within, [data-spw-charge="charged"], [data-spw-charge="preview"]))) {
+  --spw-field-intensity: max(var(--spw-field-intensity, 0), 0.42);
+}
+
+:where(
+  .site-frame[data-spw-region]:has(:is(:hover, :focus-within, [data-spw-charge="charged"]))
+  [data-spw-operator],
+  .site-frame[data-spw-region]:has(:is(:hover, :focus-within, [data-spw-charge="charged"]))
+  [data-spw-motif]
+) {
+  --spw-resonance: max(var(--spw-resonance, 0), calc(var(--spw-projected-field, 0.42) * 0.8));
+  opacity: calc(0.86 + (var(--spw-resonance, 0) * 0.14));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.site-frame, .frame-card, .frame-panel) {
+    --spw-projected-echo: 1ms;
+  }
+}
+
+html[data-spw-high-contrast="on"] :where(.site-frame, .frame-card, .frame-panel) {
+  --spw-wonder-hold: 0.2;
+}
+}
+
+/* /public/css/systems/electrostatic-affordances.css */
+@layer systems {
+/* ==========================================================================
+   electrostatic-affordances.css
+   --------------------------------------------------------------------------
+   Infer discharge from the operator terminal. Regions already channel via
+   projection-attenuation.css. Authors write the electrode; they do not
+   resticker the spark.
+
+   See .spw/conventions/electrostatic-affordances.spw
+   ========================================================================== */
+
+/* Terminal → discharge kind. Same table as charge-field.js OPERATOR_DISCHARGE. */
+:where(
+  [data-spw-operator="wonder"],
+  [data-spw-operator="probe"],
+  [data-spw-operator="action"],
+  [data-spw-operator="normalize"],
+  [data-spw-operator="measure"]
+) {
+  --spw-discharge-kind: release;
+  --spw-discharge-color: var(--op-probe-color, #4a2180);
+}
+
+:where(
+  [data-spw-operator="potential"],
+  [data-spw-operator="ref"],
+  [data-spw-operator="perspective"],
+  [data-spw-operator="subject"],
+  [data-spw-operator="substrate"],
+  [data-spw-operator="meta"],
+  [data-spw-operator="resource"],
+  [data-spw-operator="support"],
+  [data-spw-operator="confluence"]
+) {
+  --spw-discharge-kind: transfer;
+  --spw-discharge-color: var(--op-ref-color, #355f77);
+}
+
+:where(
+  [data-spw-operator="frame"],
+  [data-spw-operator="address"],
+  [data-spw-operator="binding"],
+  [data-spw-operator="vibration"],
+  [data-spw-operator="ground"]
+) {
+  --spw-discharge-kind: ground;
+  --spw-discharge-color: var(--op-frame-color, #008080);
+}
+
+:where(
+  [data-spw-operator="integration"],
+  [data-spw-operator="object"],
+  [data-spw-operator="value"]
+) {
+  --spw-discharge-kind: project;
+  --spw-discharge-color: var(--op-object-color, #a67c00);
+}
+
+/* Latent electrode: operator present, no runtime phase. Quiet terminal. */
+:where([data-spw-operator]:not([data-spw-charge])) {
+  --spw-electrode: latent;
+}
+
+/* Acted electrode — runtime phase is the only charge sticker. */
+:where([data-spw-charge="armed"], [data-spw-charge-phase="arming"]) {
+  --spw-electrode: armed;
+}
+
+:where([data-spw-charge="preview"], [data-spw-charge-phase="preview"]) {
+  --spw-electrode: preview;
+}
+
+:where([data-spw-charge="charged"], [data-spw-charge-phase="charged"]) {
+  --spw-electrode: acted;
+}
+
+/* Channel: placing an acted terminal into a region multiplies hold.
+   Material lives in projection-attenuation.css. This only names the role. */
+:where([data-spw-region="hook"]) { --spw-channel: store; }
+:where([data-spw-region="hub"], [data-spw-region="wide"]) { --spw-channel: conduct; }
+:where([data-spw-region="cluster"]) { --spw-channel: couple; }
+:where([data-spw-region="path"]) { --spw-channel: leak; }
+:where([data-spw-region="read"]) { --spw-channel: resist; }
+
+/* Induction: kin of a charged terminal echo without their own charge attr. */
+:where(
+  [data-spw-region]:has([data-spw-operator][data-spw-charge="charged"]),
+  [data-spw-region]:has([data-spw-operator][data-spw-charge-phase="charged"])
+) {
+  --spw-induced-field: calc(var(--spw-projected-field, var(--spw-charge-field, 0)) * 0.55);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where([data-spw-operator]) {
+    --spw-electrode: latent;
+  }
+}
+}
+
 /* /public/css/systems/surfaces/base.css */
 @layer systems {
 /* ==========================================================================
@@ -30625,17 +31296,17 @@ html[data-spw-high-contrast="on"] {
 }
 
 /* Resonance-specific depth bias */
-html[data-spw-palette-resonance="craft"] {
+html:is([data-spw-palette-resonance="hand"], [data-spw-palette-resonance="craft"]) {
   --spw-palette-depth-mid: color-mix(in srgb, var(--spw-palette-probe-2) 52%, var(--spw-palette-probe-3) 48%);
   --spw-palette-depth-wash: color-mix(in srgb, var(--spw-palette-probe-2) 11%, transparent);
 }
 
-html[data-spw-palette-resonance="software"] {
+html:is([data-spw-palette-resonance="lattice"], [data-spw-palette-resonance="software"]) {
   --spw-palette-depth-glow: color-mix(in srgb, var(--spw-palette-probe-3) 22%, transparent);
   --spw-palette-depth-field: color-mix(in srgb, var(--spw-palette-probe-1) 10%, var(--surface-strong) 90%);
 }
 
-html[data-spw-palette-resonance="math"] {
+html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="math"]) {
   --spw-palette-depth-highlight: color-mix(in srgb, var(--spw-palette-probe-4) 20%, #fff 80%);
   --spw-palette-depth-shadow: color-mix(in srgb, var(--spw-palette-probe-3) 48%, #0d1218 52%);
 }
@@ -31956,12 +32627,22 @@ html[data-spw-layout-tuner="newspaper"] :where(h3) {
   font-size: clamp(1.02rem, 0.96rem + 0.2vw, 1.16rem);
 }
 
+/*
+ * Newspaper columns belong to read/narration seats, not every frame-body.
+ * Blind column-count: 2 + balance made a skinny first column of any long
+ * hook or hub. Region-seats.css spends column-width: 32ch when the seat fits.
+ */
 @media (min-width: 64rem) {
-  html[data-spw-layout-tuner="newspaper"] :where(.frame-body, .frame-copy, [data-spw-slot="body"]) {
-    column-count: 2;
+  html[data-spw-layout-tuner="newspaper"] :where(
+    .site-frame[data-spw-region="read"] > .frame-body,
+    .site-frame[data-spw-region-role="reading"] > .frame-body,
+    .spw-narration,
+    [data-spw-textual-role="narration"]
+  ) {
+    column-width: 32ch;
     column-gap: clamp(1rem, 2vw, 1.45rem);
     column-rule: 1px solid color-mix(in srgb, var(--paper-rule, rgba(14, 18, 20, 0.12)) 88%, transparent);
-    column-fill: balance;
+    column-fill: auto;
   }
 
   html[data-spw-layout-tuner="newspaper"] :where(.frame-body, .frame-copy) > :is(h2, h3, figure, .frame-grid, .site-frame, pre, blockquote) {
@@ -33969,16 +34650,21 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
 
 .frame-topline .frame-sigil,
 .frame-heading .frame-sigil {
+  --sigil-min-height: 1.62rem;
+  --sigil-padding-block: 0.12rem;
+  --sigil-padding-inline-end: 0.54rem;
+  --sigil-padding-inline-start: 0.62rem;
+  --sigil-border-start-width: 1.5px;
   position: static;
   display: inline-flex;
   inline-size: fit-content;
   width: auto;
   max-width: 100%;
   overflow: visible;
-  min-height: 1.62rem;
-  padding: 0.12rem 0.54rem 0.12rem 0.62rem;
+  min-height: var(--sigil-min-height);
+  padding: var(--sigil-padding-block) var(--sigil-padding-inline-end) var(--sigil-padding-block) var(--sigil-padding-inline-start);
   border: 1px solid color-mix(in srgb, currentColor 16%, transparent);
-  border-inline-start-width: 1.5px;
+  border-inline-start-width: var(--sigil-border-start-width);
   border-radius: var(--shape-control, 0.78rem);
   background: color-mix(in srgb, var(--surface-strong, #fff) 94%, transparent);
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.24);
@@ -33995,6 +34681,17 @@ html[data-spw-show-semantic-metadata="on"] :where(.frame-operators > *, .spec-st
     opacity var(--handle-duration-fast) var(--handle-ease),
     color var(--handle-duration-fast) var(--handle-ease),
     border-color var(--handle-duration-fast) var(--handle-ease);
+}
+
+/* Compact variant for dense rails/legends (page-region-rail, chart legends) —
+   same geometry contract, smaller reveal. Purely additive: nothing consumes
+   this class yet, so it changes no existing rendering. */
+.frame-sigil--compact {
+  --sigil-min-height: 1.3rem;
+  --sigil-padding-block: 0.06rem;
+  --sigil-padding-inline-end: 0.4rem;
+  --sigil-padding-inline-start: 0.46rem;
+  font-size: 0.66rem;
 }
 
 :where(.frame-topline .frame-sigil, .frame-heading .frame-sigil):hover,
@@ -34277,6 +34974,37 @@ html[data-spw-color-mode="dark"] .operator-chip {
   --operator-chip-hover-shadow:
     inset 0 1px 0 rgba(255,255,255,0.08),
     0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 14%, transparent);
+}
+
+/* ==========================================================================
+   5b. Chip composition modifiers
+   --------------------------------------------------------------------------
+   .operator-chip already owns shape (via the shared --spw-control-* tokens)
+   and full interactive/active/dark-mode state (via --operator-chip-*).
+   Route-scoped chips should compose from these two token layers — override
+   --operator-chip-bg/border/ink(-hover/-active) for identity, add these
+   modifiers for shape — instead of re-deriving the pill from scratch.
+   Covers the two shapes the current chip census actually needs beyond the
+   interactive default: a non-interactive display tag, and a denser cell
+   for legend/grid contexts. See the cascade-audit composition proposal
+   for the full migration recipe and per-file mapping.
+   ========================================================================== */
+
+.operator-chip--static {
+  cursor: default;
+}
+
+.operator-chip--static:hover,
+.operator-chip--static:focus-visible {
+  transform: none;
+}
+
+.operator-chip--compact {
+  --spw-control-gap: 0.2rem;
+  --spw-control-min-height: 1.6rem;
+  --spw-control-padding-block: 0.16rem;
+  --spw-control-padding-inline: 0.5rem;
+  font-size: 0.72rem;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -38134,15 +38862,15 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
     border-inline-start: 2px solid color-mix(in srgb, var(--op-action-color, #006b6b) 44%, transparent);
   }
 
-  :where(.spw-page-region-rail[data-spw-palette-resonance="software"] .spw-page-region-rail__link) {
+  :where(.spw-page-region-rail:is([data-spw-palette-resonance="lattice"], [data-spw-palette-resonance="software"]) .spw-page-region-rail__link) {
     --active-op-color: var(--op-frame-color, #0f7f7d);
   }
 
-  :where(.spw-page-region-rail[data-spw-palette-resonance="craft"] .spw-page-region-rail__link) {
+  :where(.spw-page-region-rail:is([data-spw-palette-resonance="hand"], [data-spw-palette-resonance="craft"]) .spw-page-region-rail__link) {
     --active-op-color: color-mix(in srgb, var(--op-action-color, #006b6b) 48%, var(--op-object-color, #b7791f));
   }
 
-  :where(.spw-page-region-rail[data-spw-palette-resonance="math"] .spw-page-region-rail__link) {
+  :where(.spw-page-region-rail:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="math"]) .spw-page-region-rail__link) {
     --active-op-color: color-mix(in srgb, var(--op-probe-color, #7d5bd1) 54%, var(--op-ref-color, #2477b3));
   }
 
@@ -38496,6 +39224,61 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
     z-index: var(--material-layer-overlay);
     border-radius: inherit;
     transition: opacity var(--material-duration-base) var(--material-glide-ease);
+  }
+}
+
+/* ─── Static Glyph Contract (Reduced Motion) ────────────────────────────
+   Precision geometric widget parts (radar polygons, mixer spokes, seed
+   vessels) pin transform/filter to a hard stop under reduced motion,
+   not just a faster duration — a snapping transform can still read as
+   a flash even at 0.01ms. reset/base.css §12 already speeds every
+   animation/transition site-wide; this adds the stronger "don't move
+   at all" contract, once, for the widgets that draw exact geometry.
+   Previously reimplemented independently in seed-card.css,
+   services-configurator.css, and boonhonk-mixer.css. */
+@media (prefers-reduced-motion: reduce) {
+  :where(
+    /* seed-card */
+    .seed-card,
+    .seed-card::after,
+    .seed-field,
+    .seed-field-op,
+    .seed-field-label,
+    .seed-output,
+    .seed-action,
+    .seed-pivot-btn,
+    /* services-configurator */
+    .svc-polygon,
+    .svc-spoke,
+    .svc-center,
+    .svc-center-tier,
+    .svc-center-price,
+    .svc-node-dot,
+    .svc-node-label,
+    .svc-node-step,
+    .svc-cta,
+    .svc-cta__btn,
+    .svc-readout__bar::before,
+    .svc-legend__chip,
+    /* boonhonk-mixer */
+    .bhm-polygon,
+    .bhm-spoke,
+    .bhm-center,
+    .bhm-center-label,
+    .bhm-node-dot,
+    .bhm-node-label,
+    .bhm-color-preview,
+    .bhm-val,
+    .bhm-op-chip,
+    .bhm-taste-chip,
+    .bhm-secondary-polygon,
+    .bhm-taste-envelope,
+    .bhm-bias-ring
+  ) {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+    filter: none !important;
   }
 }
 }
@@ -41133,21 +41916,11 @@ body {
   --climate-outline-strength: 0.44;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  :where(*, *::before, *::after) {
-    transition-duration: 1ms !important;
-    animation-duration: 1ms !important;
-    animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-:where(html[data-spw-reduce-motion="on"]) :where(*, *::before, *::after) {
-  transition-duration: 1ms !important;
-  animation-duration: 1ms !important;
-  animation-iteration-count: 1 !important;
-  scroll-behavior: auto !important;
-}
+/* The universal animation/transition/scroll-behavior reset for reduced
+   motion lives once, in reset/base.css §12. Because !important resolves
+   earlier-layer-first across @layer boundaries, restating it here (effects
+   layer, which loads after reset) had zero effect — reset's copy always
+   won this contest regardless of specificity. */
 }
 
 /* /public/css/effects/enrichment.css */

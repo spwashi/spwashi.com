@@ -1,0 +1,260 @@
+/* ==========================================================================
+   region-seats.css — family × region × device-reason
+   --------------------------------------------------------------------------
+   Authored seats CSS actually spends. A region is a seat; a family biases
+   the seat; newspaper reason chooses how seats relate. Dual-read: media
+   queries spend the reason. html[data-spw-layout-reason] is a receipt.
+   See .spw/caches/css-combinatorics.spw
+   ========================================================================== */
+
+:where(main > .site-frame[data-spw-region], main > .site-frame[data-spw-region-role]) {
+  --spw-region-wash: 0%;
+  --spw-region-seam: 16%;
+  --spw-region-track: 16rem;
+  --spw-region-prose: min(100%, var(--shell-reading-measure, 68ch));
+  container-type: inline-size;
+  container-name: spw-region;
+}
+
+:where(.site-frame[data-spw-region="hook"], .site-frame[data-spw-region-role="entry-spine"]) {
+  --spw-region-wash: 5%;
+  --spw-region-seam: 26%;
+}
+
+:where(.site-frame[data-spw-region="hub"]) {
+  --spw-region-wash: 4%;
+  --spw-region-seam: 20%;
+}
+
+:where(.site-frame[data-spw-region="cluster"]) {
+  --spw-region-wash: 3%;
+  --spw-region-seam: 14%;
+  border-style: dashed;
+}
+
+:where(.site-frame[data-spw-region="path"]) {
+  --spw-region-wash: 2%;
+  --spw-region-seam: 18%;
+}
+
+:where(.site-frame[data-spw-region="read"], .site-frame[data-spw-region-role="reading"]) {
+  --spw-region-wash: 0%;
+  --spw-region-seam: 12%;
+}
+
+:where(.site-frame[data-spw-region], .site-frame[data-spw-region-role="entry-spine"]) {
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--component-accent, var(--active-op-color, #008080)) var(--spw-region-wash), transparent),
+      transparent 28%
+    ),
+    color-mix(in srgb, var(--component-surface, var(--surface, #fff)) 97%, var(--component-accent, var(--active-op-color, #008080)) 3%);
+  --site-frame-seam-color: color-mix(
+    in srgb,
+    var(--component-accent, var(--active-op-color, #008080)) var(--spw-region-seam),
+    transparent
+  );
+}
+
+/* Family bias — same seats, different material. */
+:where(body[data-spw-page-family="kernel-atlas"]) {
+  --spw-family-accent: var(--op-frame-color, #178282);
+}
+
+:where(body[data-spw-page-family="field-guide"], body[data-spw-page-family="atlas"]) {
+  --spw-family-accent: var(--op-probe-color, #4a2180);
+}
+
+:where(body[data-spw-page-family="kitchen-atlas"], body[data-spw-page-family="recipe-book"]) {
+  --spw-family-accent: var(--op-object-color, #a67c00);
+}
+
+:where(body[data-spw-page-family="menu"], body[data-spw-page-family="register"]) {
+  --spw-family-accent: var(--op-action-color, #005959);
+}
+
+:where(body[data-spw-page-family]) .site-frame[data-spw-region],
+:where(body[data-spw-page-family]) .site-frame[data-spw-region-role="entry-spine"] {
+  --component-accent: var(--spw-family-accent, var(--component-accent));
+}
+
+/* wide is a hub alias — home and hubs authored it before seats were named. */
+:where(.site-frame[data-spw-region="wide"]) {
+  --spw-region-wash: 4%;
+  --spw-region-seam: 20%;
+}
+
+/*
+ * Each region is an inline-size container. Tropes spend that size.
+ * Dual-read: first paint. html[data-spw-layout-reason] is a receipt.
+ * Copy flow is authored in HTML; these rules only fit it.
+ */
+:where(main > .site-frame[data-spw-region="hub"], main > .site-frame[data-spw-region="wide"]) {
+  container-name: spw-region spw-hub;
+}
+
+:where(main > .site-frame[data-spw-region="path"]) {
+  container-name: spw-region spw-path;
+}
+
+:where(main > .site-frame[data-spw-region="read"], main > .site-frame[data-spw-region-role="reading"]) {
+  container-name: spw-region spw-read;
+}
+
+/* Family personality biases the track, not the grammar. */
+:where(body[data-spw-page-family="kernel-atlas"]) {
+  --spw-region-track: 15rem;
+}
+
+:where(body[data-spw-page-family="field-guide"], body[data-spw-page-family="atlas"]) {
+  --spw-region-track: 16.5rem;
+}
+
+:where(body[data-spw-page-family="kitchen-atlas"], body[data-spw-page-family="recipe-book"]) {
+  --spw-region-track: 14.5rem;
+}
+
+:where(body[data-spw-page-family="menu"], body[data-spw-page-family="register"]) {
+  --spw-region-track: 14rem;
+}
+
+/* Lede / orientation: one breath. Do not columnize a greeting. */
+:where(
+  .site-frame[data-spw-region] :is(.page-lede, .site-lede, .entrance-lede),
+  .site-frame[data-spw-region-role="entry-spine"] :is(.page-lede, .site-lede)
+) {
+  max-inline-size: var(--spw-region-prose);
+}
+
+/* Sustained voice may use width when the seat actually has it. */
+@container spw-region (min-width: 44rem) {
+  :where(
+    .spw-narration,
+    [data-spw-textual-role="narration"],
+    [data-spw-box-model="narration-card"]
+  ) {
+    max-inline-size: none;
+    column-width: 32ch;
+    column-gap: clamp(1.1rem, 2vw, 1.6rem);
+    column-rule: 1px solid color-mix(in srgb, var(--site-frame-seam-color, var(--line)) 70%, transparent);
+    column-fill: auto;
+  }
+
+  :where(.spw-narration__cue, [data-spw-textual-role="cue"]) {
+    column-span: all;
+  }
+}
+
+/* Cluster: fill the seat with cards. */
+:where(
+  .site-frame[data-spw-region="cluster"] .frame-grid,
+  .site-frame[data-spw-region="cluster"] .frame-grid--dense
+) {
+  --spw-grid-min-base: var(--spw-region-track);
+  align-items: start;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--spw-region-track)), 1fr));
+}
+
+/* Hub / wide: two-up internals once the seat can hold two measures. */
+@container spw-hub (min-width: 40rem) {
+  :where(.frame-body) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+    column-gap: clamp(0.85rem, 1.6vw, 1.35rem);
+  }
+
+  :where(.frame-body > :is(
+    .page-lede,
+    .site-lede,
+    .inline-note,
+    .frame-note,
+    .spw-route-bridge,
+    .frame-grid,
+    .frame-grid--dense,
+    .spw-role-hooks,
+    .spw-narration,
+    [data-spw-textual-role="narration"]
+  )) {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Path: steps share a row when there is a path to walk. */
+@container spw-path (min-width: 36rem) {
+  :where(.frame-grid, .frame-grid--dense) {
+    --spw-grid-min-base: 12.5rem;
+    align-items: start;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 12.5rem), 1fr));
+  }
+}
+
+/* Read: prose measure; a second column only when 2×32ch fits. */
+:where(
+  .site-frame[data-spw-region="read"] .frame-body > :is(p, .frame-note, .inline-note),
+  .site-frame[data-spw-region-role="reading"] .frame-body > :is(p, .frame-note, .inline-note)
+) {
+  max-inline-size: var(--spw-region-prose);
+}
+
+@container spw-read (min-width: 52rem) {
+  :where(.frame-body) {
+    column-width: 32ch;
+    column-gap: clamp(1.2rem, 2vw, 1.7rem);
+    column-rule: 1px solid color-mix(in srgb, var(--site-frame-seam-color, var(--line)) 64%, transparent);
+    column-fill: auto;
+  }
+
+  :where(.frame-body > :is(h2, h3, figure, .frame-grid, aside, nav, pre, blockquote)) {
+    column-span: all;
+  }
+}
+
+/* Companion asides sit; they do not become a second essay. */
+:where(.site-frame[data-spw-region] aside, .site-frame[data-spw-region] .spw-route-bridge) {
+  max-inline-size: min(100%, 72ch);
+}
+
+/* Broadsheet: leftover tracks, not a forced two-column. Compact/path/cluster
+   sit beside a neighbor when 28rem remains. Masthead and fill/balanced span. */
+@media (min-width: 980px) {
+  :where(
+    body[data-spw-layout="newspaper"][data-spw-page-family="field-guide"] main,
+    body[data-spw-layout="newspaper"][data-spw-page-family="kitchen-atlas"] main,
+    body[data-spw-layout="newspaper"][data-spw-page-family="kernel-portrait"] main,
+    body[data-spw-layout="newspaper"][data-spw-page-family="kernel-atlas"] main
+  ) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr));
+    align-items: start;
+    grid-auto-flow: dense;
+    column-gap: clamp(1rem, 2vw, 1.6rem);
+  }
+
+  :where(
+    body[data-spw-layout="newspaper"][data-spw-page-family="field-guide"] main > .site-hero,
+    body[data-spw-layout="newspaper"][data-spw-page-family="kitchen-atlas"] main > .site-hero,
+    body[data-spw-layout="newspaper"][data-spw-page-family="kernel-portrait"] main > .site-hero,
+    body[data-spw-layout="newspaper"][data-spw-page-family="kernel-atlas"] main > .site-hero,
+    body[data-spw-layout="newspaper"][data-spw-page-family="field-guide"] main > [data-spw-region-role="entry-spine"],
+    body[data-spw-layout="newspaper"][data-spw-page-family="kitchen-atlas"] main > [data-spw-region-role="entry-spine"],
+    body[data-spw-layout="newspaper"][data-spw-page-family="kernel-portrait"] main > [data-spw-region-role="entry-spine"],
+    body[data-spw-layout="newspaper"][data-spw-page-family="kernel-atlas"] main > [data-spw-region-role="entry-spine"],
+    body[data-spw-layout="newspaper"][data-spw-page-family] main > [data-spw-region="hook"],
+    body[data-spw-layout="newspaper"][data-spw-page-family] main > [data-spw-pack~="balanced"],
+    body[data-spw-layout="newspaper"][data-spw-page-family] main > [data-spw-pack~="fill"]
+  ) {
+    grid-column: 1 / -1;
+  }
+}
+
+html[data-spw-high-contrast="on"] :where(.site-frame[data-spw-region], .site-frame[data-spw-region-role="entry-spine"]) {
+  --spw-region-wash: 0%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.site-frame[data-spw-region], .site-frame[data-spw-region-role]) {
+    transition: none;
+  }
+}

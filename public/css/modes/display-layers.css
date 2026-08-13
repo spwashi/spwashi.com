@@ -16,9 +16,55 @@
   display: none !important;
 }
 
-:where(body[data-spw-display-layer="reader"]) .site-header nav a:not(.operator-chip)[data-spw-nav-tokenized="true"]::before,
-:where(body[data-spw-display-layer="reader"]) .site-header nav a:not(.operator-chip)[data-spw-nav-tokenized="true"]::after {
+/*
+ * Authored header links keep first-paint geometry.
+ *
+ * navigation-spells writes data-spw-nav-tokenized / data-spw-operator-geometry
+ * on idle. That is an annotate (inspect) effect, not a layout effect. If those
+ * attrs change padding, prefixes, or box-shadow here, screenshots race the
+ * idle callback and agents cannot tell which look is contracted.
+ *
+ * Reader (default) = first paint. Inspect/editor may show prefixes.
+ */
+:where(body[data-spw-display-layer="reader"])
+  :where(.site-header nav a, body > header nav a):not(.operator-chip) {
+  color: var(--ink, #14181a);
+}
+
+:where(body[data-spw-display-layer="reader"])
+  :where(.site-header, body > header)[data-spw-nav-visual="authored"]
+  nav a:not(.operator-chip)[data-spw-nav-tokenized="true"] {
+  gap: var(--spw-shell-link-gap, 0.38rem);
+}
+
+:where(body[data-spw-display-layer="reader"])
+  :where(.site-header nav a, body > header nav a):not(.operator-chip)[data-spw-nav-tokenized="true"]::before,
+:where(body[data-spw-display-layer="reader"])
+  :where(.site-header nav a, body > header nav a):not(.operator-chip)[data-spw-nav-tokenized="true"]::after {
   content: none !important;
+  display: none !important;
+}
+
+:where(body[data-spw-display-layer="reader"])
+  :where(.site-header nav a, body > header nav a)[data-spw-operator-geometry] {
+  --spw-geometry-motion: 0;
+  --spw-geometry-stability: 0;
+}
+
+:where(body[data-spw-display-layer="reader"])
+  :where(.site-header nav a, body > header nav a)[data-spw-operator-geometry]:is(:hover, :focus-visible) {
+  box-shadow: none;
+}
+
+:where(body[data-spw-display-layer="reader"]) .spw-route-menu-host,
+:where(body[data-spw-display-layer="reader"]) .spw-console,
+:where(body[data-spw-display-layer="reader"]) [data-spw-chrome-role="console"],
+:where(body[data-spw-display-layer="reader"]) [data-spw-chrome-role="surface-map"],
+:where(body[data-spw-display-layer="reader"]) [data-spw-chrome-role="surface-map-panel"],
+:where(body[data-spw-display-layer="reader"]) [data-spw-chrome-role="parallel-navigator"],
+:where(body[data-spw-display-layer="reader"]) .spw-parallel-nav,
+:where(body[data-spw-display-layer="reader"]) .spw-surface-map,
+:where(body[data-spw-display-layer="reader"]) [data-spw-surface-map] {
   display: none !important;
 }
 

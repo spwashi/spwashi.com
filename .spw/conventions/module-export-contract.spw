@@ -68,6 +68,9 @@
     `features` and/or `selector` and/or `route` demand gate
   ][reg=set]
   updates_roles = #[`structural`, `flourish`, `inspect`, `residue`, `measure`, `diagnostic`][reg=set]
+  visual = #[`authored`, `annotate`, `inspect`, `layout`][reg=set]
+  visual_rule = `authored chrome (site-header nav, first-paint copy) keeps its look unless visual=layout. annotate may write data-*; reader CSS must be a no-op. inspect is visible only on editor/inspect layers. layout is allowed to reflow and must be named so a screenshot after mount is expected to differ.`
+  authored_header = `header[data-spw-nav-visual=authored] is the contracted menu. After navigation-spells, header[data-spw-nav-annotated-by] names who wrote attrs. Switch body[data-spw-display-layer=inspect] to see prefixes and Nearby.`
   css_parity = `Root attrs/vars declared in updates that drive ornament must have a CSS consumer (runtime-states or effects) or stay inspect-only.`
   performance = `IDLE chunks order residue before collectible flourishes; skip no-op CSS var writes; prefer VISIBLE/IDLE over IMMEDIATE.`
 }[reg=facet]

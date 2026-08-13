@@ -23,7 +23,13 @@
   padding: var(--surface-padding);
   border: var(--component-border);
   border-radius: var(--component-radius);
-  background: color-mix(in srgb, var(--component-surface) 97%, var(--component-accent) 3%);
+  background:
+    radial-gradient(
+      120% 80% at 100% 0%,
+      var(--spw-palette-depth-wash, transparent),
+      transparent 46%
+    ),
+    color-mix(in srgb, var(--component-surface) 97%, var(--component-accent) 3%);
   box-shadow:
     var(--component-frame-shadow),
     var(--spw-chassis-highlight, inset 0 1px 0 color-mix(in srgb, white 18%, transparent)),
@@ -50,7 +56,17 @@
    In-page anchor navigation and find-in-page still force these to render. */
 :where(.site-frame:not(.site-hero)) {
   content-visibility: auto;
-  contain-intrinsic-size: auto 480px;
+  contain-intrinsic-size: auto 16rem;
+}
+
+/* Broadsheet pairing: a 480px reserved height stretched the neighbor
+   into an empty card. Sit by content; remember a shorter estimate. */
+:where(body[data-spw-layout="newspaper"] .site-frame:not(.site-hero)) {
+  contain-intrinsic-size: auto 12rem;
+}
+
+html[data-spw-high-contrast="on"] :where(.site-frame) {
+  background: var(--component-surface-strong, var(--surface-strong, #fff));
 }
 
 :where(.site-frame)::before {
@@ -225,6 +241,11 @@
   min-width: 0;
   z-index: var(--material-layer-overlay, 2);
   transition: transform var(--component-transition-base);
+}
+
+:where(.frame-topline > .spw-component-meta, .frame-heading > .spw-component-meta) {
+  flex: 0 1 auto;
+  min-inline-size: min-content;
 }
 
 .frame-body {

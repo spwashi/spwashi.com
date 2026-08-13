@@ -59,7 +59,7 @@
   event: `spw:palette-treat`
   triggers: #[`spw:freshness-pulse beat-prime`, `spw:discovery-reward`, `spw:interaction-phase discover`, `paletteResonance settings change`, `arrow-reward keyboard`][reg=set]
   beat_probe_map: .{ 1: probe-1, 5: probe-2, 9: probe-3, 13: probe-4 }[reg=facet]
-  resonance_probe_map: .{ route: 1, craft: 2, software: 3, math: 4 }[reg=facet]
+  resonance_probe_map: .{ situate: 1, hand: 2, lattice: 3, inquiry: 4 }[reg=facet]
   keyboard: .{
     probe_rail: `role=radiogroup on .palette-probe-swatches and .spw-shell-resonance-utility`
     resonance_toolbar: `role=toolbar on .palette-probe-actions with paletteResonance chips`

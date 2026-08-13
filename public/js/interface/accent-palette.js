@@ -280,11 +280,27 @@ export function initRecentPathTracker(onChange) {
 
 export const getRecentPathMemory = () => recentPathMemory;
 
-export const isRecentPathActive = (memory = recentPathMemory) => {
-    const ttlMs = getWonderMemoryTtlMs();
-    if (!ttlMs || !memory?.updatedAt) return false;
-    return Date.now() - memory.updatedAt < ttlMs;
+// Below this fraction of original strength, treat the signal as spent.
+// exp(-Δt/τ) never reaches exactly zero, so callers need a floor to know
+// when to stop matching tokens and clear DOM state.
+const RECENT_PATH_SIGNAL_FLOOR = 0.05;
+
+/**
+ * σ(Δt) = σ₀ · exp(−Δt / τ) — the temporal decay term from
+ * .spw/conventions/attention-field.spw#local_hormonal_model, using
+ * --spw-wonder-memory-ttl-ms as τ (signal half-life). Returns the
+ * 0..1 fraction of the memory's original strength still remaining.
+ */
+export const getRecentPathSignalStrength = (memory = recentPathMemory, now = Date.now()) => {
+    const tauMs = getWonderMemoryTtlMs();
+    if (!tauMs || !memory?.updatedAt) return 0;
+    const elapsedMs = Math.max(0, now - memory.updatedAt);
+    return Math.exp(-elapsedMs / tauMs);
 };
+
+export const isRecentPathActive = (memory = recentPathMemory) => (
+    getRecentPathSignalStrength(memory) > RECENT_PATH_SIGNAL_FLOOR
+);
 
 export const getActiveRecentPathMemory = () => (
     isRecentPathActive(recentPathMemory) ? recentPathMemory : null

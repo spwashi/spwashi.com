@@ -313,6 +313,16 @@
   --spw-real-estate-frame: var(--spw-shell-frame-max, var(--page-width-newspaper));
 }
 
+@media (min-width: 980px) {
+  :where(
+    html[data-spw-layout="newspaper"],
+    body[data-spw-layout="newspaper"]
+  ) {
+    --spw-shell-frame-cap: var(--page-width-atlas);
+    --spw-real-estate-frame: var(--spw-shell-frame-max, var(--page-width-atlas));
+  }
+}
+
 :where(
   html[data-spw-layout="wide"],
   body[data-spw-layout="wide"]

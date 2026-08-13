@@ -78,15 +78,15 @@
     border-inline-start: 2px solid color-mix(in srgb, var(--op-action-color, #006b6b) 44%, transparent);
   }
 
-  :where(.spw-page-region-rail[data-spw-palette-resonance="software"] .spw-page-region-rail__link) {
+  :where(.spw-page-region-rail:is([data-spw-palette-resonance="lattice"], [data-spw-palette-resonance="software"]) .spw-page-region-rail__link) {
     --active-op-color: var(--op-frame-color, #0f7f7d);
   }
 
-  :where(.spw-page-region-rail[data-spw-palette-resonance="craft"] .spw-page-region-rail__link) {
+  :where(.spw-page-region-rail:is([data-spw-palette-resonance="hand"], [data-spw-palette-resonance="craft"]) .spw-page-region-rail__link) {
     --active-op-color: color-mix(in srgb, var(--op-action-color, #006b6b) 48%, var(--op-object-color, #b7791f));
   }
 
-  :where(.spw-page-region-rail[data-spw-palette-resonance="math"] .spw-page-region-rail__link) {
+  :where(.spw-page-region-rail:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="math"]) .spw-page-region-rail__link) {
     --active-op-color: color-mix(in srgb, var(--op-probe-color, #7d5bd1) 54%, var(--op-ref-color, #2477b3));
   }
 

@@ -27,16 +27,21 @@
 
 .frame-topline .frame-sigil,
 .frame-heading .frame-sigil {
+  --sigil-min-height: 1.62rem;
+  --sigil-padding-block: 0.12rem;
+  --sigil-padding-inline-end: 0.54rem;
+  --sigil-padding-inline-start: 0.62rem;
+  --sigil-border-start-width: 1.5px;
   position: static;
   display: inline-flex;
   inline-size: fit-content;
   width: auto;
   max-width: 100%;
   overflow: visible;
-  min-height: 1.62rem;
-  padding: 0.12rem 0.54rem 0.12rem 0.62rem;
+  min-height: var(--sigil-min-height);
+  padding: var(--sigil-padding-block) var(--sigil-padding-inline-end) var(--sigil-padding-block) var(--sigil-padding-inline-start);
   border: 1px solid color-mix(in srgb, currentColor 16%, transparent);
-  border-inline-start-width: 1.5px;
+  border-inline-start-width: var(--sigil-border-start-width);
   border-radius: var(--shape-control, 0.78rem);
   background: color-mix(in srgb, var(--surface-strong, #fff) 94%, transparent);
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.24);
@@ -53,6 +58,17 @@
     opacity var(--handle-duration-fast) var(--handle-ease),
     color var(--handle-duration-fast) var(--handle-ease),
     border-color var(--handle-duration-fast) var(--handle-ease);
+}
+
+/* Compact variant for dense rails/legends (page-region-rail, chart legends) —
+   same geometry contract, smaller reveal. Purely additive: nothing consumes
+   this class yet, so it changes no existing rendering. */
+.frame-sigil--compact {
+  --sigil-min-height: 1.3rem;
+  --sigil-padding-block: 0.06rem;
+  --sigil-padding-inline-end: 0.4rem;
+  --sigil-padding-inline-start: 0.46rem;
+  font-size: 0.66rem;
 }
 
 :where(.frame-topline .frame-sigil, .frame-heading .frame-sigil):hover,
@@ -335,6 +351,37 @@ html[data-spw-color-mode="dark"] .operator-chip {
   --operator-chip-hover-shadow:
     inset 0 1px 0 rgba(255,255,255,0.08),
     0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 14%, transparent);
+}
+
+/* ==========================================================================
+   5b. Chip composition modifiers
+   --------------------------------------------------------------------------
+   .operator-chip already owns shape (via the shared --spw-control-* tokens)
+   and full interactive/active/dark-mode state (via --operator-chip-*).
+   Route-scoped chips should compose from these two token layers — override
+   --operator-chip-bg/border/ink(-hover/-active) for identity, add these
+   modifiers for shape — instead of re-deriving the pill from scratch.
+   Covers the two shapes the current chip census actually needs beyond the
+   interactive default: a non-interactive display tag, and a denser cell
+   for legend/grid contexts. See the cascade-audit composition proposal
+   for the full migration recipe and per-file mapping.
+   ========================================================================== */
+
+.operator-chip--static {
+  cursor: default;
+}
+
+.operator-chip--static:hover,
+.operator-chip--static:focus-visible {
+  transform: none;
+}
+
+.operator-chip--compact {
+  --spw-control-gap: 0.2rem;
+  --spw-control-min-height: 1.6rem;
+  --spw-control-padding-block: 0.16rem;
+  --spw-control-padding-inline: 0.5rem;
+  font-size: 0.72rem;
 }
 
 @media (prefers-color-scheme: dark) {

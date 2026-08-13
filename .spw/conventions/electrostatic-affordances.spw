@@ -1,0 +1,72 @@
+# Electrostatic Affordances
+#
+# Charge is a field. Operators are terminals. Regions are material.
+# Do not sticker every element with the implication of its own sigil.
+
+#>electrostatic_affordances
+#:convention #!charge #!operators #!regions
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@charge_cycle: ~"./charge-cycle.spw"
+@projection: ~"./projection-attenuation.spw"
+@attribute_governance: ~"./data-spw-attribute-governance.spw"
+@operator_alignment: ~"./operator-alignment.spw"
+@region_ecology: ~"./region-component-ecology.spw"
+@css: ~"../../public/css/systems/electrostatic-affordances.css"
+
+operation = "prime"
+fixity = "experimental"
+
+^"thesis"{
+  claim: "Spw already names electrostatics. The error is restating the physics on every node. An operator is a terminal. An interaction is how the terminal arms. A region is the material the current runs through. Discharge kind is inferred from the operator; phase is written by runtime; channeling is the region's hold."
+  refuse: "Do not author data-spw-charge, data-spw-discharge-kind, and a hardcoded sigil implication on the same chip. That is three stickers for one terminal."
+  dual_read: "Without JS, the operator still teaches what would happen. With JS, html[data-spw-charge-phase] and --spw-charge-field spend it. The HTML does not pre-announce every phase."
+}
+
+^"three_layers"{
+  terminal = "`[data-spw-operator]` — what kind of electrode this is. `?` sparks, `~` inducts, `#>` grounds, `^` projects, `@` transforms viewpoint."
+  interaction = "Focus, dwell, hold, click. These are how latent charge becomes armed, previewed, or committed. They are events, not attributes."
+  channel = "`[data-spw-region]` + `[data-spw-slot]` — material. Hook stores (capacitor), cluster couples (inductor), read resists, actions spark, footer grounds."
+}
+
+^"latent_to_acted"{
+  latent: "Operator present, phase absent or quiet. The electrode exists. No field yet."
+  armed: "Pointer or focus entered. Runtime may write data-spw-charge=armed. Neighbors of the same operator begin to echo via :has()."
+  preview: "Dwell without commit. The visitor can still leave. Discharge has not happened."
+  acted: "Commit (click, hold-prime, explicit charge). Phase = charged. Then the operator's inferred discharge kind fires: release | transfer | ground | project."
+  channeled: "If the acted handle sits in a region, hold and echo are multiplied by that region's material (--spw-wonder-hold) and slot (--spw-slot-attenuate). The same `?` in a hook lingers; in a read seat it fades."
+}
+
+^"electrostatics"{
+  capacitance = "Hook, figure, wonder-memory. Stores. Familiarity raises capacitance (return visits leak slower)."
+  inductance = "Cluster + :has([data-spw-operator=X]). Kin of the same terminal share momentum."
+  resistance = "Read, footer, prose. Attenuates so the essay stays quiet."
+  grounding = "`#>` / binding. Charge sediments into address or pinned constraint."
+  induction = "`~` / `@`. Charge moves to another register without loss of meaning. Palette facet is a transformer on `@`, not a second charge."
+  field = "--spw-charge-field / --spw-field-intensity on html. One room loudness. Do not author a second field per card."
+}
+
+^"authoring_rule"{
+  write: #[
+    `data-spw-operator on the handle (the terminal)`,
+    `data-spw-region / data-spw-slot on the seat (the material)`,
+    `data-spw-form=brace when the edge is a terminal`
+  ][reg=set]
+  runtime_writes: #[
+    `data-spw-charge / data-spw-charge-phase on the active host`,
+    `html[data-spw-charge-field|intensity|last-discharge|charge-carrier]`,
+    `--spw-charge-field`
+  ][reg=set]
+  do_not_author: #[
+    `data-spw-discharge-kind on a chip that already has an operator`,
+    `data-spw-charge=charged as first paint`,
+    `sigil text that contradicts the operator (do not write @website as a mode)`
+  ][reg=set]
+}
+
+^"hardcoded_sigil"{
+  error: "A visible `#>` that does not address, or an `@` that hides three other seats, taught leftover alias. The sigil is the terminal; the implication is the operator table, not a parallel attribute."
+  fix: "If the mark is on the page, CSS and runtime should be able to infer discharge from it. Motif chips may keep data-spw-motif as a literary register. They should not also restick the discharge kind unless the operator is missing."
+}

@@ -35,7 +35,8 @@ import {
   DEFAULT_PALETTE_RESONANCE,
   PALETTE_RESONANCE_OPTIONS,
   getPaletteDepthSwatches,
-  getPaletteResonanceSwatches
+  getPaletteResonanceSwatches,
+  normalizePaletteResonance
 } from '/public/js/interface/palette-resonance.js';
 import { shouldDisableServiceWorkerInDevelopment } from '/public/js/kernel/runtime-environment.js';
 import {
@@ -197,7 +198,9 @@ const normalizeSiteSettings = (value = {}) => {
   const settings = {...DEFAULT_SITE_SETTINGS};
 
   Object.keys(settings).forEach((key) => {
-    const candidate = value[key];
+    const candidate = key === 'paletteResonance'
+      ? normalizePaletteResonance(value[key])
+      : value[key];
     if (SETTING_OPTIONS[key]?.has(candidate)) settings[key] = candidate;
   });
 
@@ -212,7 +215,8 @@ const validateSetting = (name, value) => {
     return {valid: false, name, value, reason: 'unknown-setting', allowedValues: []};
   }
 
-  const valid = SETTING_OPTIONS[name]?.has(value) || false;
+  const resolved = name === 'paletteResonance' ? normalizePaletteResonance(value) : value;
+  const valid = SETTING_OPTIONS[name]?.has(resolved) || false;
 
   return {
     valid,
@@ -789,7 +793,11 @@ const deriveArchitecturalModifiers = (settings) => {
       controlContrastLift: colorTuner.controlContrastLift,
       spacingScale: spacingTuner.scale,
       layoutMeasure: layoutTuner.measure,
-      layoutFrameMax: layoutTuner.frameMax,
+      /* Default tuner is "reading". That must not shrink an authored
+         newspaper/wide/atlas route to 56rem. Only a user deviation tightens. */
+      layoutFrameMax: settings.layoutTuner === DEFAULT_SITE_SETTINGS.layoutTuner
+        ? '100%'
+        : layoutTuner.frameMax,
       layoutColumnMin: layoutTuner.columnMin,
       interactionScale: interactionTuner.scale,
       pulseIntensity,

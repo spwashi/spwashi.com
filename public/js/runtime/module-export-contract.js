@@ -41,7 +41,7 @@ export const SPW_MODULE_EXPORT_CONTRACT = Object.freeze({
   routeBoundary:
     'Routes replace the document; partial DOM replacement uses refresh/untracking. Do not tear down on pagehide because BFCache may restore the same document.',
   catalogParity:
-    'Prefer catalog fields (when, features, timingArc, timingChunk, effectScope, updates with role: topology) as the schedule contract; SPW_MODULE_EXPORT mirrors mount + optional updates/describes for portable compose.',
+    'Prefer catalog fields (when, features, timingArc, timingChunk, effectScope, visual, updates with role: topology) as the schedule contract; SPW_MODULE_EXPORT mirrors mount + optional updates/describes for portable compose.',
   updatesTopology:
     'updates may use scope:role:kind:name (html:flourish:--token). Roles: structural|flourish|inspect|residue|measure|diagnostic.',
   datasetFields: Object.freeze({

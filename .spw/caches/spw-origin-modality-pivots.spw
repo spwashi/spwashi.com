@@ -1,0 +1,43 @@
+# Spw origin: modality pivots, not an exploded grammar
+#
+# Cached from 2026-08 conversation. The public job predates the operator
+# lattice. Keep this in view when ripping lenses and chips.
+
+#>spw_origin_modality_pivots
+#:cache #!origin #!modality #!familiarity
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@viewing_reason: ~"../conventions/viewing-reason.spw"
+@copy_ecology: ~"../conventions/copy-ecology.spw"
+@charge_cycle: ~"../conventions/charge-cycle.spw"
+@coloring_depth: ~"../conventions/coloring-depth.spw"
+@operational_differentials: ~"./css-combinatorics.spw#operational_differentials"
+
+operation = "cache"
+fixity = "tending"
+
+^"insight"{
+  id = "spw-origin-modality-pivots"
+  claim = "Spw began as a way to improve Wikipedia-like articles: same lemma, modality pivots shaped by the content, experiential depth saturating with audience familiarity. The grammar later exploded into operators, leftover aliases, exclusive lenses, and chip-as-medium."
+  original_axes: .{
+    pivot = "Modality is a content-shaped `@` — who is looking and how this article wants to be held (read, diagram, source, talk). Not a sitewide theme."
+    saturation = "Depth (copy-depth, semantic-density, charge field) should rise with familiarity, not with how many sigils we can print."
+  }[reg=facet]
+  wikipedia_analogue = "article / talk / history / source are modality seats on one lemma. Spw's error was turning those seats into mutually exclusive UI and then into an operator product catalog."
+  recover: #[
+    `Charge `@` for viewpoint; color interpretation is one discharge`,
+    `Facet bias is the content-shaped pivot (this page's material, not a global lens)`,
+    `Selector combinatorics = operational differential relative to each operator`,
+    `Literary motif is a register on discharge physics, not a mode`,
+    `Chips are one rendering. Tokens and attributes are the medium`
+  ][reg=set]
+  refuse: #[
+    `Do not hide three modalities to show one`,
+    `Do not teach leftover slugs as public aliases`,
+    `Do not require operator literacy to get the first saturation rung`
+  ][reg=set]
+  expansion_prime = "A page names its lemma and available modalities as seats. Familiarity (return, collection-strength, wonder-memory) raises --spw-field-intensity / copy-depth. Grammar stays inspectable, not mandatory."
+  do_not_promote_until = "One route (home or a topic leaf) demonstrates modality seats + familiarity saturation without a mode-switch and without chip-only CSS."
+}

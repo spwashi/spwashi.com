@@ -41,7 +41,7 @@
   2_gutter = `--page-gutter-inline on header / main / footer — shared content edge`
   3_frame_cap = `--spw-shell-frame-cap from data-spw-layout (route)`
   4_frame_tuner = `--spw-layout-frame-max from layoutTuner settings`
-  5_frame_spent = `--spw-shell-frame-max = min(cap, tuner, 100%); re-resolve on body after the authored route cap and on main for local overrides`
+  5_frame_spent = `--spw-shell-frame-max = min(cap, tuner-or-100%, 100%); re-resolve on body with --spw-main-width. Tuner may tighten. Do not fall back to --page-width or atlas never spends.`
   6_measure = `--spw-layout-measure / --shell-reading-measure for prose (ch)`
   7_no_double_gutter = `never max-width: 100vw - 2*gutter when padding already owns gutter`
 }
@@ -61,6 +61,19 @@
   wide = `84rem`
   atlas = `104rem`
   note = `Fallbacks in JS/CSS must match these tokens exactly — no 68rem-for-reading or 96rem-for-atlas drift.`
+}
+
+^"device_reasons"{
+  claim: "Introspection and variant selection exist so each device can name why the page relates to itself — not so a column can shrink. Newspaper is the stem; the device is a [variant]."
+  refuse: "Do not blend pocket, fold, and broadsheet into one fluid scale. Mid mush is not a fourth reason."
+  dual_read: "CSS media queries spend the reason on first paint. html[data-spw-layout-reason] is an inspect receipt written by contextual-ui, not the source of the grid."
+  seats: .{
+    pocket = `[pocket] — one column because one hand and one attention. Relates to the grasp. compact|narrow.`
+    fold = `[fold] — two facing seats. Headline faces figure; two frames can sit as a spread. mid.`
+    broadsheet = `[broadsheet] — modules share a row so they can be compared. regular|wide. Frame may spend wide so two measures fit.`
+  }[reg=facet]
+  alignment: "A component packs by its own inline size (`data-spw-pack-local`). A region sits by the device reason. Do not ask a card to restyle because the viewport changed if its container did not."
+  islands: "A floating island that is not seated in a named region is ungrounded `~`. Reader layer keeps inspect islands off; they are not a layout reason."
 }
 
 ^"selection"{

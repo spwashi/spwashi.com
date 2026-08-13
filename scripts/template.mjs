@@ -784,6 +784,7 @@ function renderSiteHeader(vars) {
     'data-spw-role="routing"',
     'data-spw-category-family="portal"',
     'data-spw-template="site-header"',
+    'data-spw-nav-visual="authored"',
     'data-spw-shell-microinteraction="pointer-field"',
     seed ? `data-spw-seed="${attrEscape(seed)}"` : '',
     relatedRoutes ? `data-spw-related-routes="${attrEscape(relatedRoutes)}"` : '',

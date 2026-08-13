@@ -1,0 +1,117 @@
+/* ==========================================================================
+   projection-attenuation.css
+   --------------------------------------------------------------------------
+   Wonder is a current. Regions and slots are the material it runs through.
+   Card/frame edges (brace form) are the visible terminals.
+
+   Projection: the same field expressed at page → region → slot.
+   Attenuation: each seat holds or leaks that field at a different rate.
+
+   Opt-in: existing data-spw-region, data-spw-slot, data-spw-form="brace".
+   No new wrappers. Chips are not required. Dual-read: without field
+   intensity the edges stay quiet.
+   See .spw/conventions/projection-attenuation.spw
+   ========================================================================== */
+
+:where(.site-frame, .frame-card, .frame-panel, [data-spw-form="brace"]) {
+  --spw-wonder-hold: 1;
+  --spw-slot-attenuate: 1;
+  --spw-projected-field: calc(
+    var(--spw-field-intensity, var(--spw-charge-field, 0))
+    * var(--spw-wonder-hold)
+    * var(--spw-slot-attenuate)
+  );
+  --spw-projected-echo: calc(
+    var(--attention-echo-duration, 480ms) * var(--spw-wonder-hold)
+  );
+}
+
+/* Region material — how long wonder stays once it arrives. */
+:where(.site-frame[data-spw-region="hook"], .site-frame[data-spw-region-role="entry-spine"]) {
+  --spw-wonder-hold: 1.15;
+}
+
+:where(.site-frame[data-spw-region="hub"], .site-frame[data-spw-region="wide"]) {
+  --spw-wonder-hold: 1;
+}
+
+:where(.site-frame[data-spw-region="cluster"]) {
+  --spw-wonder-hold: 0.85;
+}
+
+:where(.site-frame[data-spw-region="path"]) {
+  --spw-wonder-hold: 0.72;
+}
+
+:where(.site-frame[data-spw-region="read"], .site-frame[data-spw-region-role="reading"]) {
+  --spw-wonder-hold: 0.55;
+}
+
+/* Slot attenuation — header latches, body conducts, figure stores, actions spark. */
+:where([data-spw-slot="header"], [data-spw-slot="meta"]) {
+  --spw-slot-attenuate: 1.1;
+}
+
+:where([data-spw-slot="body"]) {
+  --spw-slot-attenuate: 0.78;
+}
+
+:where([data-spw-slot="figure"]) {
+  --spw-slot-attenuate: 0.92;
+}
+
+:where([data-spw-slot="actions"]) {
+  --spw-slot-attenuate: 1.25;
+}
+
+:where([data-spw-slot="footer"]) {
+  --spw-slot-attenuate: 0.48;
+}
+
+/* Brace edges as terminals. Field raises the stroke; no field stays grammar-quiet. */
+:where([data-spw-form="brace"]) {
+  --brace-open-color: color-mix(
+    in srgb,
+    var(--spw-operator-color, var(--component-accent, var(--active-op-color, #008080)))
+      calc(22% + (var(--spw-projected-field, 0) * 36%)),
+    transparent
+  );
+  --brace-close-color: color-mix(
+    in srgb,
+    var(--spw-operator-color, var(--component-accent, var(--active-op-color, #008080)))
+      calc(16% + (var(--spw-projected-field, 0) * 28%)),
+    transparent
+  );
+}
+
+:where(.site-frame, .frame-card, .frame-panel) {
+  transition:
+    border-color var(--spw-projected-echo, 480ms) var(--ease-settle, ease),
+    box-shadow var(--spw-projected-echo, 480ms) var(--ease-settle, ease),
+    background-color var(--spw-projected-echo, 480ms) var(--ease-settle, ease);
+}
+
+/* Clustered salience: kin in the same region share the projected field. */
+:where(.site-frame[data-spw-region]:has(:is(:hover, :focus-within, [data-spw-charge="charged"], [data-spw-charge="preview"]))) {
+  --spw-field-intensity: max(var(--spw-field-intensity, 0), 0.42);
+}
+
+:where(
+  .site-frame[data-spw-region]:has(:is(:hover, :focus-within, [data-spw-charge="charged"]))
+  [data-spw-operator],
+  .site-frame[data-spw-region]:has(:is(:hover, :focus-within, [data-spw-charge="charged"]))
+  [data-spw-motif]
+) {
+  --spw-resonance: max(var(--spw-resonance, 0), calc(var(--spw-projected-field, 0.42) * 0.8));
+  opacity: calc(0.86 + (var(--spw-resonance, 0) * 0.14));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.site-frame, .frame-card, .frame-panel) {
+    --spw-projected-echo: 1ms;
+  }
+}
+
+html[data-spw-high-contrast="on"] :where(.site-frame, .frame-card, .frame-panel) {
+  --spw-wonder-hold: 0.2;
+}

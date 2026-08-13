@@ -673,18 +673,8 @@ body {
   --climate-outline-strength: 0.44;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  :where(*, *::before, *::after) {
-    transition-duration: 1ms !important;
-    animation-duration: 1ms !important;
-    animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-:where(html[data-spw-reduce-motion="on"]) :where(*, *::before, *::after) {
-  transition-duration: 1ms !important;
-  animation-duration: 1ms !important;
-  animation-iteration-count: 1 !important;
-  scroll-behavior: auto !important;
-}
+/* The universal animation/transition/scroll-behavior reset for reduced
+   motion lives once, in reset/base.css §12. Because !important resolves
+   earlier-layer-first across @layer boundaries, restating it here (effects
+   layer, which loads after reset) had zero effect — reset's copy always
+   won this contest regardless of specificity. */

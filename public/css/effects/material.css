@@ -312,3 +312,58 @@
     transition: opacity var(--material-duration-base) var(--material-glide-ease);
   }
 }
+
+/* ─── Static Glyph Contract (Reduced Motion) ────────────────────────────
+   Precision geometric widget parts (radar polygons, mixer spokes, seed
+   vessels) pin transform/filter to a hard stop under reduced motion,
+   not just a faster duration — a snapping transform can still read as
+   a flash even at 0.01ms. reset/base.css §12 already speeds every
+   animation/transition site-wide; this adds the stronger "don't move
+   at all" contract, once, for the widgets that draw exact geometry.
+   Previously reimplemented independently in seed-card.css,
+   services-configurator.css, and boonhonk-mixer.css. */
+@media (prefers-reduced-motion: reduce) {
+  :where(
+    /* seed-card */
+    .seed-card,
+    .seed-card::after,
+    .seed-field,
+    .seed-field-op,
+    .seed-field-label,
+    .seed-output,
+    .seed-action,
+    .seed-pivot-btn,
+    /* services-configurator */
+    .svc-polygon,
+    .svc-spoke,
+    .svc-center,
+    .svc-center-tier,
+    .svc-center-price,
+    .svc-node-dot,
+    .svc-node-label,
+    .svc-node-step,
+    .svc-cta,
+    .svc-cta__btn,
+    .svc-readout__bar::before,
+    .svc-legend__chip,
+    /* boonhonk-mixer */
+    .bhm-polygon,
+    .bhm-spoke,
+    .bhm-center,
+    .bhm-center-label,
+    .bhm-node-dot,
+    .bhm-node-label,
+    .bhm-color-preview,
+    .bhm-val,
+    .bhm-op-chip,
+    .bhm-taste-chip,
+    .bhm-secondary-polygon,
+    .bhm-taste-envelope,
+    .bhm-bias-ring
+  ) {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}

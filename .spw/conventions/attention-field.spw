@@ -115,10 +115,11 @@ local_hormonal_model: .{
       layer = "semantic"
       hypothesis = "Signal decay must be consistent with the documented temporal model (τ ≈ 40s) so that wonder memory behaves predictably across sessions."
       spec_ref = ".spw/conventions/attention-field.spw#local_hormonal_model"
-      impl_ref = "public/js/interface/wonder-memory.js TTL and decay logic"
+      impl_ref = "public/js/interface/accent-palette.js#getRecentPathSignalStrength (σ(Δt)=σ₀·exp(−Δt/τ), τ=--spw-wonder-memory-ttl-ms) consumed by wonder-memory.js#applyWonderMemoryState"
       probe_ref = "Perform an action, wait measured time, observe attention/resonance state decay in inspector and visuals."
       falsification = "Attention effects persist far longer or decay far faster than the model without an explicit exception in the projection."
-      status = "active"
+      status = "confirmed"
+      note = "2026-08-12: was a hard TTL cutoff (full strength until Δt<τ, then a step to zero) with no exp() term at all — corrected to real exponential decay. Still event-sampled (recomputed on interaction/settings-change, not on a running timer), so it does not visibly animate between events; the strength value itself now genuinely decays per the formula whenever it's read."
     }
   }[reg=facet]
 

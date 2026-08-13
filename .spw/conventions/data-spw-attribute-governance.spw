@@ -19,7 +19,7 @@
 claim: "data-spw-* attributes are an authoring and runtime language. Authored values must remain legible, inferred values must identify themselves, and interaction state must name whether it is transient, selected, marked, grounded, or collected. Temporal shape, altitude, and register (see rhythm below) make the language learnable dimension by dimension; the settle-declaration-contract in @site_semantics and the reward_contract in @interaction_microstates are its two anchor applications."
 
 states: .{
-  charge = `Transient passive attention. Hover, focus, or nearby preview may arm, preview, charge, and settle it. Charge does not mean saved, chosen, grounded, or collected.`
+  charge = `Transient passive attention. Hover, focus, or nearby preview may arm, preview, charge, and settle it. Charge does not mean saved, chosen, grounded, or collected. Authors write the operator terminal; runtime writes phase. Do not author data-spw-discharge-kind on a handle that already has data-spw-operator — infer it. See electrostatic-affordances.spw.`
   prime = `Current working selected meaning. Prime belongs to the module or region doing the current work and should be cleared or replaced when the working focus changes.`
   mark = `Deliberate local region emphasis. Mark is reviewable UI state and should use data-spw-region-mark for region-menu marking.`
   ground = `Deliberate persistent memory. Grounding means the user or runtime intentionally retained the concept in the page/path registry.`

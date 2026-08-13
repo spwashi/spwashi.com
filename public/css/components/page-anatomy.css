@@ -165,9 +165,10 @@ html[data-spw-theme-biome="glasshouse"] {
   list-style: none;
 }
 
-.spw-anatomy-strip--grid {
+.spw-anatomy-strip--grid,
+.spw-anatomy-key .spw-anatomy-strip {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
 }
 
 .spw-anatomy-anchor,
@@ -177,8 +178,10 @@ html[data-spw-theme-biome="glasshouse"] {
   --spw-anatomy-highlight: color-mix(in srgb, white 22%, transparent);
   position: relative;
   display: inline-flex;
-  min-width: 0;
+  min-width: min-content;
   min-height: 2.25rem;
+  overflow-wrap: normal;
+  white-space: nowrap;
   align-items: center;
   gap: 0.42rem;
   padding: 0.34rem 0.58rem;
@@ -276,6 +279,8 @@ html[data-spw-anatomy-ready="true"] :where(.spw-anatomy-anchor, [data-spw-anatom
   display: grid;
   gap: 0.5rem;
   margin-block: 0.7rem;
+  justify-self: stretch;
+  min-inline-size: 0;
 }
 
 .spw-anatomy-key__label {

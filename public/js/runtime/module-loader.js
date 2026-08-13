@@ -595,7 +595,8 @@ function describeMountConsequence(def) {
       : commitment === 'listen'
         ? 'handlers-only'
         : 'projects-state';
-  return `${remain} spend:${spend}${updatesSummary ? ` updates:{${updatesSummary}}` : ''}`;
+  const visual = def.visual ? ` visual:${def.visual}` : '';
+  return `${remain} spend:${spend}${updatesSummary ? ` updates:{${updatesSummary}}` : ''}${visual}`;
 }
 
 function describeMountReason(def, ctx, root = null, effectiveWhen = getEffectiveMountWhen(def, ctx)) {
