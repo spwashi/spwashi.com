@@ -157,6 +157,31 @@ html:has(body[data-spw-page-family])::before {
     );
 }
 
+/* Cognitive: logic, structure, mapping, memory, concept, ontology */
+:where(html:has(body[data-spw-page-family="memory"]),
+       html:has(body[data-spw-page-family="ontology"]),
+       html:has(body[data-spw-page-family="logic"]),
+       html:has(body[data-spw-page-family="concept"])) {
+  --spw-paper-motif-image:
+    image-set(
+      url('/public/images/assets/illustrations/papergami-cognitive-display.avif') type('image/avif'),
+      url('/public/images/assets/illustrations/papergami-cognitive-display.webp') type('image/webp')
+    );
+}
+
+/* Layout: spatial, interface, placement, wireframe, grid */
+:where(html:has(body[data-spw-page-family="wireframe"]),
+       html:has(body[data-spw-page-family="interface"]),
+       html:has(body[data-spw-page-family="surface"]),
+       html:has(body[data-spw-page-family="canvas"]),
+       html:has(body[data-spw-page-family="grid"])) {
+  --spw-paper-motif-image:
+    image-set(
+      url('/public/images/assets/illustrations/papergami-layout-display.avif') type('image/avif'),
+      url('/public/images/assets/illustrations/papergami-layout-display.webp') type('image/webp')
+    );
+}
+
 /* ── Theme reach ───────────────────────────────────────────────────────── */
 /* The motif is material, so the room's light falls on it like anything else.
    Paper packs multiply (ink sinking into a warm ground); dark packs screen and

@@ -69,7 +69,7 @@
       ]},
       { date: "2026-04-10", name: "papergami-machinery-study", status: "archived-source-and-extracted", images: 11, content: [
         { spirit_name: "papergami-machinery", variants: ["raw", "raw-2x2", "social-card", "study-panels"], formats: ["png", "jpg", "webp"],
-          note: "Longstanding favourite. Five studies (architecture, botanical, collage, cubes, kinetic) extracted to assets/illustrations at thumb+display; the palette is already the site's, so these read as material language rather than illustration." }
+          note: "Longstanding favourite. Seven studies (architecture, botanical, cognitive, collage, cubes, kinetic, layout) extracted to assets/illustrations at thumb, display, hero; the palette is already the site's, so these read as material language rather than illustration." }
       ]},
       { date: "2026-08-13", name: "spw-fluid-study", status: "archived-source-and-extracted", images: 5, content: [
         { spirit_name: "cauldron-spw-fluid", variants: ["1", "2", "3", "4"], formats: ["avif"],

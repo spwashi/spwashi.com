@@ -3,7 +3,7 @@
 
 ^"spirit"{
   whimsy_name: "papergami"
-  description: "Layered translucent vellum planes — some printed with text, some plain — assembled with cubes, discs and spheres into a standing architecture, lit from inside by small amber points. Five studies: architecture, botanical, collage, cubes, kinetic."
+  description: "Layered translucent vellum planes — some printed with text, some plain — assembled with cubes, discs and spheres into a standing architecture, lit from inside by small amber points. Seven studies: architecture, botanical, cognitive, collage, cubes, kinetic, layout."
   visual_qualities: "layered, translucent, printed, warm, matte, interior-lit, geometric, buildable"
 }
 
@@ -22,7 +22,7 @@
   dimensions: { width: 800, height: 800 }
   formats_available: ["avif", "webp"]
   alt_text: "Translucent sheets of printed paper layered with cubes, discs and spheres into a standing structure, warm light glowing between the layers."
-  variants_by_study: ["architecture", "botanical", "collage", "cubes", "kinetic"]
+  variants_by_study: ["architecture", "botanical", "cognitive", "collage", "cubes", "kinetic", "layout"]
 }
 
 ^"optimization"{
