@@ -49,6 +49,19 @@ anything in the target. All 2480 citations currently resolve.
 - `spw lattice` reads only `~#name(body)` unit cells. Plain `~#name:` apposition
   — the form nearly every surface here uses — is invisible to it, so the
   corpus reported zero readings while carrying thousands.
+- **`parseExpression()` and `parse()` disagree.** The authored noun form
+  `subject[mode]{parts}<projection>` — used by every `expression = …`
+  declaration here and by all 441 `data-spw-semantic-expression` values in the
+  routes — becomes a full container sequence under `parse()`
+  (Capsule → Operation → ModifierChain → Frame → Parameter → Body). Under
+  `parseExpression()` the same text truncates at its leading identifier:
+  `surfaces[route]{path.role.archetype}<publish>` consumes 8 of 45 characters
+  and reports success. Only sigil-led expressions (`&` `~` `^` `$` `?`) start an
+  operation there. A consumer reaching for the obvious per-expression API gets a
+  silent truncation, so `npm run spw:integrity` checks with `parse()`.
+
+This site is the use case meant to discover gaps like these; each is recorded
+here with the measurement that found it rather than worked around in silence.
 
 Equivalent long form (same paths):
 

@@ -49,10 +49,35 @@
  * meaningful intermediate form than a raw string, and `spw cite` / `spw follow`
  * do not provide it — they address content hashes, not references.
  *
+ * The second dimension is the Spw embedded in HTML. `data-spw-semantic-expression`
+ * declares an expression on 441 distinct copy elements and nothing had ever fed
+ * one to the actual parser. The workbench ships one — @spwashi/spw-seed — so the
+ * claim is checkable rather than assumed.
+ *
+ * The copy holds up: 440 of 441 parse and structure correctly through `parse()`,
+ * the entry point that reads a surface. The authored noun form
+ * `subject[mode]{parts}<projection>` becomes a real container sequence —
+ * Capsule → Operation → ModifierChain → Frame → Parameter → Body — which is
+ * also the form the site's own `expression = …` declarations use in
+ * index/mount/domains/workspace/surfaces.spw.
+ *
+ * The divergence is between two entry points of the same parser, and it is
+ * worth knowing before trusting either: `parseExpression()` truncates the same
+ * text at its leading identifier, consuming 8 of 45 characters of
+ * `surfaces[route]{path.role.archetype}<publish>` and leaving the frame, body
+ * and modifier unread. Only 3 of the 441 survive it — the ones that happen to
+ * lead with a sigil, since `&`, `~`, `^`, `$` and `?` do start an operation
+ * there. So a consumer reaching for the obvious per-expression API gets a
+ * silent truncation, while the file API is correct. This checks with `parse()`
+ * and reports the gap rather than working around it.
+ *
+ * Runs under the workbench's tsx loader so the parser is importable; that is a
+ * build-step dependency on mounted infrastructure, taken deliberately.
+ *
  * Usage:
- *   node scripts/spw-integrity.mjs           # report, exit 1 on missing-file/anchor
- *   node scripts/spw-integrity.mjs --json
- *   node scripts/spw-integrity.mjs --warn    # never exit non-zero
+ *   npm run spw:integrity                    # report, exit 1 on missing-file/anchor
+ *   npm run spw:integrity -- --json
+ *   npm run spw:integrity -- --warn          # never exit non-zero
  */
 
 import { readFile, stat } from 'node:fs/promises';
@@ -173,6 +198,55 @@ async function checkRef(file, target) {
   return { verdict: 'ok' };
 }
 
+/**
+ * Parse every `data-spw-semantic-expression` in the rendered routes.
+ *
+ * Uses `parse()` in a minimal file context rather than `parseExpression()`,
+ * because the two disagree — see the header. Structure is confirmed by looking
+ * for a Capsule or Operation in the tree: a bare Identifier means the frame and
+ * body went unread, which is a truncation dressed as a success.
+ */
+async function checkExpressions() {
+  let seed;
+  try {
+    seed = await import('../.spw/_workbench/packages/spw-seed/src/index.ts');
+  } catch {
+    return null; // Parser unavailable (no tsx loader); skip rather than fail.
+  }
+
+  const { stdout } = await run('find', [
+    ROOT, '-name', 'index.html',
+    '-not', '-path', '*/node_modules/*', '-not', '-path', '*/dist*',
+    '-not', '-path', '*/.spw/*', '-not', '-path', '*/.git/*',
+  ], { maxBuffer: 16 * 1024 * 1024 });
+
+  const seen = new Map();
+  for (const file of stdout.trim().split('\n').filter(Boolean)) {
+    const source = await readFile(file, 'utf8');
+    for (const match of source.matchAll(/data-spw-semantic-expression="([^"]+)"/g)) {
+      if (!seen.has(match[1])) seen.set(match[1], path.relative(ROOT, file));
+    }
+  }
+
+  const unstructured = [];
+  let structured = 0;
+  let standaloneOk = 0;
+  for (const [expression, file] of seen) {
+    const result = seed.parse(`expression = ${expression}\n`);
+    const kinds = new Set();
+    if (result.ast) seed.walkAST(result.ast, (node) => kinds.add(node.type));
+    const ok = result.success && !(result.errors || []).length
+      && (kinds.has('Capsule') || kinds.has('Operation'));
+    if (ok) structured += 1;
+    else unstructured.push({ expression, file });
+
+    const span = seed.parseExpression(expression)?.ast?.span?.end?.offset ?? 0;
+    if (span >= expression.length) standaloneOk += 1;
+  }
+
+  return { total: seen.size, structured, unstructured, standaloneOk };
+}
+
 async function main() {
   const args = process.argv.slice(2);
   const asJson = args.includes('--json');
@@ -219,6 +293,17 @@ async function main() {
     }
     console.log('');
   };
+
+  const expressions = await checkExpressions();
+  if (expressions) {
+    console.log(`semantic expressions — ${expressions.structured} of ${expressions.total} parse into a container sequence`);
+    console.log(`  parseExpression() standalone consumes only ${expressions.standaloneOk} of them — use parse(), not parseExpression()`);
+    for (const row of expressions.unstructured) {
+      console.log(`  unstructured: ${row.file}`);
+      console.log(`    ${row.expression}`);
+    }
+    console.log('');
+  }
 
   section('missing-file — a rename the citation did not follow', missingFile);
   section('missing-anchor — file is alive, the section it names is not', missingAnchor,
