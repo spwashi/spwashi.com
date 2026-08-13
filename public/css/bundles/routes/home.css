@@ -584,8 +584,11 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
     [data-spw-feature="home-kernel-entry"] .page-kicker,
     [data-spw-feature="home-kernel-entry"] h1,
     [data-spw-feature="home-kernel-entry"] .home-hero-copy > .home-tagline,
-    [data-spw-feature="home-kernel-entry"] [data-spw-feature="home-kernel-entry"]-note,
+    [data-spw-feature="home-kernel-entry"] .page-lede,
     [data-spw-feature="home-kernel-entry"] .home-hero-note,
+    [data-spw-feature="home-kernel-entry"] .home-live-note,
+    [data-spw-feature="home-kernel-entry"] .home-production-note,
+    [data-spw-feature="home-kernel-entry"] .spw-anatomy-key,
     [data-spw-feature="home-kernel-entry"] .spw-playable-hook,
     [data-spw-feature="home-kernel-entry"] .home-hero-skim,
     [data-spw-feature="home-kernel-entry"] .spw-copy-motif-strip
