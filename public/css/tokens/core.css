@@ -1894,6 +1894,69 @@ html[data-spw-theme-pack="glass-console"] {
   --material-transmission: 0.18;
 }
 
+/* banked-ember — derived from a Midjourney study for #bone (2026-08-12):
+   "a thick, irregular shell, more mineral than organic... veined with faint
+   luminous cracks that pulse when the life inside stirs... deep ember reds
+   and golds that seem to hold banked fire, cold jade greens shot through
+   with copper, or near-black shells that drink light until a sudden angle
+   reveals hidden blues and purples."
+
+   The other six packs are all pale; this one starts near-black on purpose —
+   the shell drinks light, and the accents are the fire banked inside it.
+   Bone valence (asset-management.spw: stable, centered, foundational) is the
+   resting state; the ember only shows where charge is present, which is what
+   makes it a material rather than a color swap. See the charge-responsive
+   seam block below. */
+html[data-spw-theme-pack="banked-ember"] {
+  --bg: hsl(28 12% 7%);
+  --bg-field: hsl(26 14% 10%);
+  --paper: hsl(26 13% 11%);
+  --paper-warm: hsl(24 16% 13%);
+  --surface: rgba(34, 27, 23, 0.82);
+  --surface-strong: rgba(42, 33, 28, 0.93);
+  --surface-matte: rgba(30, 24, 21, 0.96);
+  --surface-matte-strong: rgba(38, 30, 26, 0.98);
+  --surface-contrast: rgba(46, 36, 30, 0.99);
+  --surface-panel: rgba(36, 29, 24, 0.88);
+  --surface-panel-strong: rgba(44, 35, 29, 0.96);
+  --surface-glass: rgba(58, 44, 36, 0.22);
+  /* Banked fire: ember and gold read as heat held, not applied. */
+  --amber: hsl(32 78% 56%);
+  --rust: hsl(14 66% 48%);
+  /* Cold jade shot with copper — the counter-temperature that keeps the
+     ember from reading as a single-hue wash. */
+  --teal: hsl(168 42% 46%);
+  --blue: hsl(258 44% 62%);
+  --ink-strong: rgba(248, 238, 226, 0.98);
+  --ink: rgba(242, 230, 216, 0.92);
+  --ink-soft: rgba(214, 194, 176, 0.76);
+  --ink-mid: rgba(226, 208, 190, 0.84);
+  --line: rgba(226, 168, 108, 0.16);
+  --line-strong: rgba(232, 156, 84, 0.34);
+  --material-blur: 12px;
+  --material-transmission: 0.24;
+}
+
+/* "Faint luminous cracks that pulse when the life inside stirs."
+   The seam only lights where the runtime says charge is actually present —
+   --spw-charge-field is written by runtime/charge-field.js, so this reads
+   real interaction state rather than decorating on hover. At rest the shell
+   drinks light (seam stays at --line); as the field rises the crack warms
+   toward gold, and the hidden blue only surfaces at full charge — the
+   "sudden angle reveals hidden blues and purples" behavior. */
+html[data-spw-theme-pack="banked-ember"] :where(.site-frame, .frame-card, .frame-panel) {
+  --site-frame-seam-color: color-mix(
+    in oklab,
+    var(--line),
+    var(--amber) calc(var(--spw-charge-field, 0) * 62%)
+  );
+  --component-accent: color-mix(
+    in oklab,
+    var(--amber) calc(64% - (var(--spw-charge-field, 0) * 22%)),
+    var(--blue) calc(var(--spw-charge-field, 0) * 36%)
+  );
+}
+
 html[data-spw-color-mode="dark"][data-spw-theme-pack="neutral-paper"] {
   --bg: hsl(34 14% 11%);
   --bg-field: hsl(36 12% 14%);

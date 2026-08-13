@@ -21,7 +21,10 @@ const THEME_PACK_OPTIONS = Object.freeze([
   'electric-studio',
   'ritual-vellum',
   'copper-brace',
-  'glass-console'
+  'glass-console',
+  // Dark, ember-lit shell — the only pack that starts near-black. Charge-
+  // responsive seams; see tokens/core.css "banked-ember".
+  'banked-ember'
 ]);
 
 // Icon pack consideration (theming + icon packs plan started per while-working note).
