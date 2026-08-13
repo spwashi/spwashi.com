@@ -1,0 +1,180 @@
+/* ==========================================================================
+   paper-motif.css — the papergami substrate, one motif per page family
+   --------------------------------------------------------------------------
+   The papergami studies are the closest thing this site has to a material
+   language: layered translucent vellum, printed planes, teal-slate volumes and
+   small amber interior lights. Their palette is not merely compatible with the
+   site's tokens, it is the same palette — warm paper ground, --teal, --amber —
+   which is why they read as what the surface is made of rather than as pictures
+   placed on it. They had been sitting in renders/ unused.
+
+   This places them, and places them structurally rather than opportunistically.
+   The site carries a lot of blank space; filling it by cramming content into
+   gaps is the packing instinct that makes a layout feel improvised. A large,
+   quiet material plate is the other answer: it gives the empty region a reason
+   to be empty — it is ground, not a gap.
+
+   Variety comes from what a page already declares. `data-spw-page-family` is
+   authored on every route, so the motif is chosen by what the page IS rather
+   than assigned arbitrarily or rotated at random:
+
+     architecture  spec, runtime-observatory, design, switchboard — built,
+                   structural, load-bearing
+     collage       atlas, register, research — assembled from many fragments
+     cubes         toolbench, laboratory — discrete, modular, countable
+     botanical     recipe-book, seasonal, curriculum — grown, cultivated
+     kinetic       campaign, field-guide — in motion, dispersing
+
+   Motifs are expected to evolve. Adding one is a `--spw-paper-motif-image`
+   block plus a family list; nothing else in the system needs to know. Families
+   with no motif simply have none, which is why the default is empty rather
+   than a fallback image — an unassigned family should read as unassigned.
+
+   Hosted on `html::before` because body's two pseudo-elements are already spent
+   on grain-texture.css (grain field and atmosphere veil), and selected via
+   `:has()` so the family stays authored on body where it belongs and no runtime
+   has to mirror it upward.
+
+   Cost: one 512px AVIF (~28KB) per page, painted on a fixed layer that never
+   scrolls, never reflows, and is skipped entirely when no family matches.
+   ========================================================================== */
+
+html {
+  /* Empty by default: no motif until a family claims one. */
+  --spw-paper-motif-image: none;
+  --spw-paper-motif-opacity: 0.07;
+  --spw-paper-motif-blend: multiply;
+  --spw-paper-motif-size: min(46vw, 620px);
+}
+
+html:has(body[data-spw-page-family])::before {
+  content: '';
+  position: fixed;
+  inset-block-end: 0;
+  inset-inline-end: 0;
+  inline-size: var(--spw-paper-motif-size);
+  aspect-ratio: 1;
+  z-index: 0;
+  pointer-events: none;
+
+  background-image: var(--spw-paper-motif-image);
+  background-size: contain;
+  background-position: bottom right;
+  background-repeat: no-repeat;
+
+  opacity: var(--spw-paper-motif-opacity);
+  mix-blend-mode: var(--spw-paper-motif-blend);
+
+  /* Fade toward the reading column so the plate never competes with text.
+     The motif belongs to the margin; the margin is what it is explaining. */
+  mask-image: radial-gradient(
+    120% 120% at 100% 100%,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.72) 42%,
+    transparent 78%
+  );
+}
+
+/* ── Family → motif ────────────────────────────────────────────────────── */
+
+:where(html:has(body[data-spw-page-family="spec"]),
+       html:has(body[data-spw-page-family="runtime-observatory"]),
+       html:has(body[data-spw-page-family="design"]),
+       html:has(body[data-spw-page-family="switchboard"])) {
+  --spw-paper-motif-image:
+    image-set(
+      url('/public/images/assets/illustrations/papergami-architecture-display.avif') type('image/avif'),
+      url('/public/images/assets/illustrations/papergami-architecture-display.webp') type('image/webp')
+    );
+}
+
+:where(html:has(body[data-spw-page-family="atlas"]),
+       html:has(body[data-spw-page-family="register"]),
+       html:has(body[data-spw-page-family="research"])) {
+  --spw-paper-motif-image:
+    image-set(
+      url('/public/images/assets/illustrations/papergami-collage-display.avif') type('image/avif'),
+      url('/public/images/assets/illustrations/papergami-collage-display.webp') type('image/webp')
+    );
+}
+
+:where(html:has(body[data-spw-page-family="toolbench"]),
+       html:has(body[data-spw-page-family="laboratory"])) {
+  --spw-paper-motif-image:
+    image-set(
+      url('/public/images/assets/illustrations/papergami-cubes-display.avif') type('image/avif'),
+      url('/public/images/assets/illustrations/papergami-cubes-display.webp') type('image/webp')
+    );
+}
+
+:where(html:has(body[data-spw-page-family="recipe-book"]),
+       html:has(body[data-spw-page-family="seasonal"]),
+       html:has(body[data-spw-page-family="curriculum"])) {
+  --spw-paper-motif-image:
+    image-set(
+      url('/public/images/assets/illustrations/papergami-botanical-display.avif') type('image/avif'),
+      url('/public/images/assets/illustrations/papergami-botanical-display.webp') type('image/webp')
+    );
+}
+
+:where(html:has(body[data-spw-page-family="campaign"]),
+       html:has(body[data-spw-page-family="field-guide"])) {
+  --spw-paper-motif-image:
+    image-set(
+      url('/public/images/assets/illustrations/papergami-kinetic-display.avif') type('image/avif'),
+      url('/public/images/assets/illustrations/papergami-kinetic-display.webp') type('image/webp')
+    );
+}
+
+/* ── Theme reach ───────────────────────────────────────────────────────── */
+/* The motif is material, so the room's light falls on it like anything else.
+   Paper packs multiply (ink sinking into a warm ground); dark packs screen and
+   lift, because multiply against a dark field erases the plate entirely. */
+
+html[data-spw-theme-pack="neutral-paper"] { --spw-paper-motif-opacity: 0.08; }
+html[data-spw-theme-pack="ritual-vellum"] {
+  --spw-paper-motif-opacity: 0.11;
+  --spw-paper-motif-blend: multiply;
+}
+html[data-spw-theme-pack="oxide-ledger"] {
+  --spw-paper-motif-opacity: 0.07;
+  --spw-paper-motif-blend: multiply;
+}
+html[data-spw-theme-pack="copper-brace"] { --spw-paper-motif-opacity: 0.09; }
+
+html[data-spw-theme-pack="banked-ember"] {
+  --spw-paper-motif-opacity: 0.16;
+  --spw-paper-motif-blend: screen;
+}
+html[data-spw-theme-pack="glass-console"] {
+  --spw-paper-motif-opacity: 0.13;
+  --spw-paper-motif-blend: screen;
+}
+html[data-spw-theme-pack="electric-studio"] {
+  --spw-paper-motif-opacity: 0.1;
+  --spw-paper-motif-blend: screen;
+}
+
+/* ── Restraint ─────────────────────────────────────────────────────────── */
+
+/* A minimal climate asked for less; a motif plate is exactly the kind of
+   ambient presence that request is about. */
+:where(html[data-spw-enhancement-level="minimal"]) {
+  --spw-paper-motif-image: none;
+}
+
+/* Capture mode: the plate would be read as page content by a model
+   interpreting the screenshot, which is the one thing it is not. */
+:where(body[data-spw-capture-mode]:not([data-spw-capture-mode="default"])) {
+  --spw-paper-motif-opacity: 0;
+}
+
+/* Narrow viewports have no margin for a motif to live in — it would sit under
+   the reading column rather than beside it. */
+@media (max-width: 48rem) {
+  html { --spw-paper-motif-image: none; }
+}
+
+@media print {
+  html { --spw-paper-motif-image: none; }
+}
