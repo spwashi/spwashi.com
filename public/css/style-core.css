@@ -118,7 +118,9 @@
 @import url('/public/css/effects/wonder.css') layer(effects);
 @import url('/public/css/effects/metaphysical-paper.css') layer(effects);
 @import url('/public/css/effects/narrative.css') layer(effects);
-@import url('/public/css/effects/debug.css') layer(effects);
+/* debug.css is loaded on demand by kernel/deferred-styles.js — every rule
+   in it is gated behind data-spw-debug-mode / data-spw-debug, so it is pure
+   weight for ordinary reading. */
 
 @import url('/public/css/ornament/whimsy.css') layer(ornament);
 @import url('/public/css/ornament/relational-state.css') layer(ornament);

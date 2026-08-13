@@ -12,6 +12,7 @@ import {
   writeJson,
 } from '/public/js/kernel/storage-utils.js';
 import { readRoom } from '/public/js/kernel/room-signal.js';
+import { ensureDebugStyles } from '/public/js/kernel/deferred-styles.js';
 
 const ROOT_ATTR = 'data-spw-state-inspector-root';
 const PANEL_ID = 'spw-state-inspector-panel';
@@ -537,6 +538,11 @@ function setToggleState(config, enabled) {
     source: 'state-inspector',
     reason: 'state-toggle',
   });
+
+  // Seam overlays live outside the core bundle; fetch them the first time
+  // someone actually inspects. The attribute is already written above, so the
+  // rules apply the moment the sheet lands.
+  if (config.datasetKey === 'spwDebugMode' && enabled) ensureDebugStyles(true);
 }
 
 function snapshotStateDimensions() {

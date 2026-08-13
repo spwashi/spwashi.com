@@ -92,7 +92,7 @@ import {
   buildSettingsQuerySearch,
   buildQueryString,
 } from './site-settings-profiles.js';
-import { ensureThemePackStyles } from './theme-pack-loader.js';
+import { ensureThemePackStyles } from './deferred-styles.js';
 
 const PWA_PROMPT_DISMISSAL_STORAGE_KEYS = Object.freeze({
   install: 'spw-pwa-install-dismissed',
