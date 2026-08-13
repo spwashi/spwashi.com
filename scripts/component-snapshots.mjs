@@ -187,21 +187,26 @@ async function screenshotClip(session, filePath, box, viewport, padding = 12) {
   // Keep region artifacts reviewable without asking Chrome for an unbounded page slice.
   const height = Math.max(2, Math.min(vpH * 2, Math.ceil(box.height + padding * 2)));
 
-  try {
-    const res = await session.send('Page.captureScreenshot', {
-      format: 'png',
-      fromSurface: true,
-      clip: {
-        x, y, width, height, scale: dpr,
-      },
-      captureBeyondViewport: true,
-    }, 10000);
-    if (res?.data) {
-      await writeFile(filePath, Buffer.from(res.data, 'base64'));
-      return { x, y, width, height };
+  // Chromium crashes when captureBeyondViewport is true and y+height is very large,
+  // because it may attempt to allocate a surface from (0,0) to (x+width, y+height).
+  // Skip the primary document-coordinate clip if y is large.
+  if (y + height < 8000) {
+    try {
+      const res = await session.send('Page.captureScreenshot', {
+        format: 'png',
+        fromSurface: true,
+        clip: {
+          x, y, width, height, scale: dpr,
+        },
+        captureBeyondViewport: true,
+      }, 10000);
+      if (res?.data) {
+        await writeFile(filePath, Buffer.from(res.data, 'base64'));
+        return { x, y, width, height };
+      }
+    } catch (err) {
+      console.error(`[screenshotClip] primary clip failed: ${err.message}`);
     }
-  } catch {
-    // Mobile headless can reject document-coordinate clips while the page is busy.
   }
 
   try {
@@ -256,6 +261,7 @@ async function renderTemplateDocument(session, base, snippetHtml, viewport) {
   <link rel="stylesheet" href="${base}/public/css/bundles/core.css"/>
   <link rel="stylesheet" href="${base}/public/css/style.css"/>
   <link rel="stylesheet" href="${base}/public/css/compose.css"/>
+  <link rel="stylesheet" href="${base}/public/css/themes/packs.css"/>
   <style>
     html, body { margin: 0; padding: 0; }
     body { min-height: 100vh; display: grid; place-items: center; padding: 2rem; box-sizing: border-box; }
@@ -270,7 +276,8 @@ async function renderTemplateDocument(session, base, snippetHtml, viewport) {
   data-spw-features="operators metrics navigator console"
   data-spw-route-family="systems"
   data-spw-page-family="spec"
-  data-spw-capture-flow="template">
+  data-spw-capture-flow="template"
+  data-spw-theme-pack="glass-console">
   <div class="spw-template-capture-host" data-spw-capture-host="template">
     ${snippetHtml}
   </div>
@@ -279,7 +286,8 @@ async function renderTemplateDocument(session, base, snippetHtml, viewport) {
   await applyViewport(session, viewport);
   await session.send('Page.enable');
   await session.send('Runtime.enable');
-  await session.send('Page.navigate', { url: 'about:blank' });
+  await session.send('Page.navigate', { url: `${base}/?template=1` });
+  await new Promise((r) => setTimeout(r, 200));
   // CDP requires frameId for setDocumentContent
   const { frameTree } = await session.send('Page.getFrameTree');
   const frameId = frameTree?.frame?.id;
@@ -397,6 +405,8 @@ async function main() {
   const captures = [];
   const errors = [];
   const capturedPages = new Set();
+  const captureHashes = new Map(); // Hash -> source label
+  const { createHash } = await import('crypto');
 
   try {
     if (!base) {
@@ -479,6 +489,13 @@ async function main() {
                     publish: ['design-review', 'agent-brief', 'page-pipeline'],
                   });
                   process.stderr.write(`  page -> ${file}\n`);
+                  
+                  const fileBuffer = await readFile(abs);
+                  const hash = createHash('md5').update(fileBuffer).digest('hex');
+                  if (captureHashes.has(hash)) {
+                    errors.push(`Collision detected: ${file} is identical to ${captureHashes.get(hash)}`);
+                  }
+                  captureHashes.set(hash, file);
                 }
               } catch (err) {
                 errors.push(`${fixture.id}@${viewport.id} page capture failed: ${err.message}`);
@@ -516,6 +533,13 @@ async function main() {
                     publish: ['design-review', 'layout-qa', 'agent-brief'],
                   });
                   process.stderr.write(`  region -> ${file} (${clip.width}×${clip.height})\n`);
+                  
+                  const fileBuffer = await readFile(abs);
+                  const hash = createHash('md5').update(fileBuffer).digest('hex');
+                  if (captureHashes.has(hash)) {
+                    errors.push(`Collision detected: ${file} is identical to ${captureHashes.get(hash)}`);
+                  }
+                  captureHashes.set(hash, file);
                 }
               } catch (err) {
                 errors.push(`${fixture.id}@${viewport.id} region capture failed: ${err.message}`);
@@ -552,6 +576,13 @@ async function main() {
                     publish: ['starter-kit', 'design-review', 'component-pipeline', 'agent-brief'],
                   });
                   process.stderr.write(`  component -> ${file} (${clip.width}×${clip.height})\n`);
+                  
+                  const fileBuffer = await readFile(abs);
+                  const hash = createHash('md5').update(fileBuffer).digest('hex');
+                  if (captureHashes.has(hash)) {
+                    errors.push(`Collision detected: ${file} is identical to ${captureHashes.get(hash)}`);
+                  }
+                  captureHashes.set(hash, file);
                 }
               } catch (err) {
                 errors.push(`${fixture.id}@${viewport.id} component capture failed: ${err.message}`);
@@ -595,6 +626,13 @@ async function main() {
                 publish: ['starter-kit', 'template-pipeline', 'portable-export', 'agent-brief'],
               });
               process.stderr.write(`  template -> ${file}\n`);
+              
+              const fileBuffer = await readFile(abs);
+              const hash = createHash('md5').update(fileBuffer).digest('hex');
+              if (captureHashes.has(hash)) {
+                errors.push(`Collision detected: ${file} is identical to ${captureHashes.get(hash)}`);
+              }
+              captureHashes.set(hash, file);
             } catch (err) {
               errors.push(`${fixture.id}@${viewport.id} template capture failed: ${err.message}`);
             }
