@@ -324,7 +324,7 @@ html[data-spw-cauldron-resonance-operators] .site-footer__cauldron[data-spw-caul
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   .site-footer__cauldron-phase-rail {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }

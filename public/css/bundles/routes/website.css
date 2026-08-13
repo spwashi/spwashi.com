@@ -554,7 +554,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="website"]) {
    12. Responsive tuning
    ========================================================================== */
 
-@media (max-width: 860px) {
+@media (max-width: 54rem) {
   :where(body[data-spw-surface="website"] #website-field-guide h1) {
     max-width: 100%;
   }
@@ -565,7 +565,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="website"]) {
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 40rem) {
   :where(body[data-spw-surface="website"] article > .site-frame) {
     box-shadow:
       0 6px 14px rgba(0, 0, 0, 0.05),
@@ -1900,7 +1900,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-page-seed="page_design_des
   letter-spacing: 0.03em;
 }
 
-@media (max-width: 42rem) {
+@media (max-width: 40rem) {
   :where(body[data-spw-page-family="design"]) :where(.spw-interaction-demo) {
     grid-template-columns: auto minmax(0, 1fr);
   }
@@ -2076,7 +2076,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-page-seed="page_design_des
   font-size: 0.75rem;
   opacity: 0.82;
 }
-@media (max-width: 560px) {
+@media (max-width: 35rem) {
   :where(body[data-spw-page-seed="page_design_palettes"]) :where(.spectral-grid) {
     grid-template-columns: repeat(auto-fit, minmax(94px, 1fr));
     gap: 0.36rem;
@@ -2178,7 +2178,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-page-seed="page_design_des
   gap: 1rem;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   :where(body[data-spw-page-seed="page_design_folios"]) .folio-lens-switcher .frame-sigil {
     flex: 1 1 calc(50% - 0.35rem);
     min-width: 0;
@@ -3125,7 +3125,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-page-seed="page_design_des
   color: color-mix(in srgb, var(--review-rail-accent) 76%, var(--ink, rgba(14, 18, 20, 0.92)));
 }
 
-@media (max-width: 760px) {
+@media (max-width: 48rem) {
   :where(.spw-review-rail) {
     padding: 0.9rem;
   }

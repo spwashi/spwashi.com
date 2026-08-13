@@ -361,7 +361,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
 }
 
 /* Tighter mobile behavior for dense illustrated card grids (e.g. "Three good first loops") */
-@media (max-width: 640px) {
+@media (max-width: 40rem) {
   :where(.frame-grid--dense) {
     grid-template-columns: 1fr;
     gap: 0.85rem;
@@ -584,7 +584,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   }
 }
 
-@media (max-width: 42rem) {
+@media (max-width: 40rem) {
   :where([data-spw-table="responsive-comparison"]) {
     display: block;
     border: 0;
@@ -696,7 +696,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   line-height: 1.45;
 }
 
-@media (max-width: 36rem) {
+@media (max-width: 35rem) {
   :where(.spw-character-prompt-card) {
     grid-template-columns: 1fr;
   }
@@ -990,7 +990,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   max-inline-size: 72ch;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 56rem) {
   :where(.spw-narration, [data-spw-box-model="narration-card"]) {
     max-inline-size: 68ch;
   }

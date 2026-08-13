@@ -155,13 +155,13 @@
 
 /* ── Responsive & Accessibility ── */
 
-@media (max-width: 480px) {
+@media (max-width: 30rem) {
   :where(.spw-logo-wordmark) {
     display: none;
   }
 }
 
-@media (max-width: 360px) {
+@media (max-width: 22.5rem) {
   :where(.spw-logo-mark) {
     width: 1.1em;
     height: 1.28em;

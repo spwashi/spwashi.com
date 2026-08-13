@@ -327,7 +327,7 @@ html:has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) :wher
   /* resonance: material from global or local for glass/matte clear contrast on ephemeral too */
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   :root {
     --spw-floating-slot-control: clamp(2.8rem, 12vw, 3.15rem);
     --spw-floating-quiet-opacity: 0.74;

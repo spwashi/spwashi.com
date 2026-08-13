@@ -381,7 +381,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 48rem) {
     :where(button, .operator-chip, label) {
         min-height: var(--touch-target-min, 2.75rem);
         display: flex;

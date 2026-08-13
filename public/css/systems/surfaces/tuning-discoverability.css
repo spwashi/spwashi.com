@@ -190,7 +190,7 @@
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--embedded-tuning-accent) 12%, transparent);
 }
 
-@media (max-width: 620px) {
+@media (max-width: 40rem) {
   :where(.spw-embedded-tuning-handle) {
     inset-block-start: auto;
     inset-block-end: max(0.42rem, env(safe-area-inset-bottom));

@@ -240,7 +240,7 @@
   overflow-wrap: anywhere;
 }
 
-@media (max-width: 560px) {
+@media (max-width: 35rem) {
   :where(.spw-route-bridge) {
     gap: 0.68rem;
     margin-block: var(--component-gap-tight, 0.5rem) var(--component-gap, 0.75rem);
@@ -264,7 +264,7 @@
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   :where(.spw-route-bridge__links a) {
     grid-template-columns: 1fr;
   }

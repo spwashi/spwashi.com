@@ -405,7 +405,7 @@
    13. Responsive
    ========================================================================== */
 
-@media (max-width: 820px) {
+@media (max-width: 52rem) {
   :where(body[data-spw-surface="play"]) main { --spw-main-padding-inline: 0.8rem; }
   :where(body[data-spw-surface="play"]) main > article { padding-top: 0.85rem; }
   :where(body[data-spw-surface="play"] .site-hero) { padding: 1rem 1rem 1.2rem; }
@@ -417,7 +417,7 @@
   }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 35rem) {
   :where(body[data-spw-surface="play"] .frame-operators) { gap: 0.4rem; }
   :where(body[data-spw-surface="play"] :is(.operator-chip, .frame-sigil, .syntax-token)) { max-width: 100%; overflow-wrap: anywhere; }
   :where(body[data-spw-surface="play"] .frame-heading) { flex-direction: column; align-items: flex-start; gap: 0.45rem; }
@@ -1367,7 +1367,7 @@
   }
 }
 
-@media (max-width: 820px) {
+@media (max-width: 52rem) {
   :where(body[data-spw-surface="rpg-wednesday"]) main {
     --spw-main-padding-inline: 0.8rem;
   }
@@ -1424,7 +1424,7 @@
 
 }
 
-@media (max-width: 560px) {
+@media (max-width: 35rem) {
   :where(body[data-spw-surface="rpg-wednesday"] .mode-switch button) {
     width: 100%;
     min-width: 0;

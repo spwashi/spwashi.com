@@ -1332,7 +1332,7 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
  * Broadsheet: later regions sit beside each other so they can be compared.
  * The hero stays the masthead and spans. Pocket/fold keep one column.
  */
-@media (min-width: 980px) {
+@media (min-width: 61.25rem) {
   :where(body[data-spw-surface="home"][data-spw-layout="newspaper"] main.home-atlas-flow) {
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr));
     align-items: start;

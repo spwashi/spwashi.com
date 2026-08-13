@@ -373,7 +373,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="topics"]) {
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   :where(body[data-spw-surface="topics"]) {
     --site-header-opacity: 1;
     --topics-ink: rgba(24, 30, 29, 0.98);
@@ -784,7 +784,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="topics"]) {
   color: var(--op-frame-color);
 }
 
-@media (max-width: 719px) {
+@media (max-width: 45rem) {
   :where(body[data-spw-surface="topics"] #learning-postures-diagram .spw-svg-rail) {
     display: flex;
     flex-wrap: wrap;
@@ -1031,7 +1031,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="topics"]) {
   }
 }
 
-@media (max-width: 820px) {
+@media (max-width: 52rem) {
   :where(body[data-spw-surface="topics"]) main {
     --spw-main-padding-inline: 0.8rem;
   }
@@ -1197,7 +1197,7 @@ body[data-spw-surface="topics"] #topics-register > .topic-photo-card img {
   }
 }
 
-@media (min-width: 721px) and (max-width: 92rem) {
+@media (min-width: 45rem) and (max-width: 90rem) {
   body[data-spw-surface="topics"] .spw-discovery-notice-stack {
     width: min(19rem, calc(100vw - 2rem));
     inset-block-end: calc(max(1rem, env(safe-area-inset-bottom)) + 2.8rem);

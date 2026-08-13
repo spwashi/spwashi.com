@@ -501,13 +501,13 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
   opacity: 0.62;
 }
 
-@media (max-width: 560px) {
+@media (max-width: 35rem) {
   .spw-state-inspector__actions {
     grid-template-columns: 1fr;
   }
 }
 
-@media (min-width: 721px) {
+@media (min-width: 45rem) {
   .spw-state-inspector[data-spw-state-inspector="open"][data-spw-satchel-anchor="chrome-rail"] {
     position: fixed;
     inset: auto max(0.85rem, env(safe-area-inset-right)) calc(max(0.85rem, env(safe-area-inset-bottom)) + var(--spw-floating-menu-clearance, 0px)) auto;
@@ -564,7 +564,7 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   html[data-spw-page-state="region-enhanced"] .spw-state-inspector__launch[data-spw-page-state-mirror]::before,
   html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-state-mirror]::before {
     opacity: 0;
@@ -1232,7 +1232,7 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
   }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 48rem) {
   :where(.site-frame) {
     --surface-padding: var(--spw-surface-padding, 0.82rem);
     border-radius: var(--component-radius-tight);
@@ -1275,7 +1275,7 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
   }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 26.25rem) {
   :where(.site-frame, .frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .frame-panel, .mode-panel, .plan-card, .compare-card, .spec-column, .ref-card) {
     --component-pad: 0.68rem;
     --component-gap-tight: 0.42rem;

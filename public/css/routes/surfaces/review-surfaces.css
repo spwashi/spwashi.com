@@ -169,7 +169,7 @@
   color: color-mix(in srgb, var(--review-rail-accent) 76%, var(--ink, rgba(14, 18, 20, 0.92)));
 }
 
-@media (max-width: 760px) {
+@media (max-width: 48rem) {
   :where(.spw-review-rail) {
     padding: 0.9rem;
   }

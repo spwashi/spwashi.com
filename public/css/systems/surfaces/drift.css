@@ -84,7 +84,7 @@
   color: var(--ink);
 }
 
-@media (max-width: 960px) {
+@media (max-width: 61.25rem) {
   :where(.returner-grid) {
     grid-template-columns: 1fr;
   }
@@ -155,7 +155,7 @@
   border-left: 2px solid color-mix(in srgb, var(--active-op-color, #008080) 26%, transparent);
 }
 
-@media (max-width: 960px) {
+@media (max-width: 61.25rem) {
   :where(.gratitude-grid) {
     grid-template-columns: 1fr;
   }

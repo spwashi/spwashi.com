@@ -858,7 +858,7 @@
   --active-op-color: var(--ink-muted, #66706b);
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   .spw-region-menu[data-spw-region-menu-placement="sheet"] {
     max-block-size: min(42dvh, calc(100dvh - var(--spw-bottom-chrome-clearance, 3.1rem) - 5rem));
     border-radius: var(--shape-floating, 1rem) var(--shape-floating, 1rem) var(--shape-medium, 0.85rem) var(--shape-medium, 0.85rem);

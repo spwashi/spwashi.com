@@ -616,7 +616,7 @@ html[data-spw-high-contrast="on"] [data-spw-features~="svg-surfaces"] .spw-svg-f
 }
 
 /* Mobile: rail scrolls horizontally instead of wrapping — keeps SVG full-width */
-@media (max-width: 719px) {
+@media (max-width: 45rem) {
     [data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-companion="rail"] > .spw-svg-rail {
         display: grid;
         grid-auto-flow: column;
@@ -650,7 +650,7 @@ html[data-spw-high-contrast="on"] [data-spw-features~="svg-surfaces"] .spw-svg-f
     }
 }
 
-@media (min-width: 720px) {
+@media (min-width: 45rem) {
     [data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-companion="rail"] {
         grid-template-columns: minmax(0, 1fr) min(20%, 14rem);
         grid-template-areas:
@@ -703,7 +703,7 @@ html[data-spw-high-contrast="on"] [data-spw-features~="svg-surfaces"] .spw-svg-f
 
 /* ─── Responsive & Accessibility ────────────────────────────────────────── */
 
-@media (max-width: 700px) {
+@media (max-width: 45rem) {
     [data-spw-features~="svg-surfaces"] .spw-svg-figure {
         --spw-svg-resolved-radius: var(--shape-component, 8px);
     }

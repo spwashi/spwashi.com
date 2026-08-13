@@ -47,7 +47,7 @@
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   :where(body[data-spw-surface="settings"]) {
     & .settings-scale-group {
       grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr));

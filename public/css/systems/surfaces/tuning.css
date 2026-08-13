@@ -390,7 +390,7 @@
   text-transform: uppercase;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 40rem) {
   :where(:is(.vibe-widget, .palette-probe)-actions, .palette-probe-paths) {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -471,7 +471,7 @@
 }
 
 /* Responsive packing: never let compact strips become awkward vertical stacks on narrow screens */
-@media (max-width: 520px) {
+@media (max-width: 32rem) {
   :where(.vibe-widget--compact) {
     --tuning-strip-gap: 0.32rem;
   }

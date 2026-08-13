@@ -178,37 +178,20 @@ async function measureSelector(session, selector) {
 }
 
 async function screenshotClip(session, filePath, box, viewport, padding = 12) {
-  const dpr = 1;
-  const vpW = viewport?.width || 1280;
+  const dpr = viewport?.deviceScaleFactor || 1;
+  const vpW = viewport?.width || 1440;
   const vpH = viewport?.height || 900;
+
+  // Document coordinate geometry
   const x = Math.max(0, Math.floor(box.x - padding));
   const y = Math.max(0, Math.floor(box.y - padding));
-  const width = Math.max(2, Math.min(vpW, Math.ceil(box.width + padding * 2)));
+  const width = Math.ceil(box.width + padding * 2);
   // Keep region artifacts reviewable without asking Chrome for an unbounded page slice.
   const height = Math.max(2, Math.min(vpH * 2, Math.ceil(box.height + padding * 2)));
 
-  // Chromium crashes when captureBeyondViewport is true and y+height is very large,
-  // because it may attempt to allocate a surface from (0,0) to (x+width, y+height).
-  // Skip the primary document-coordinate clip if y is large.
-  if (y + height < 8000) {
-    try {
-      const res = await session.send('Page.captureScreenshot', {
-        format: 'png',
-        fromSurface: true,
-        clip: {
-          x, y, width, height, scale: dpr,
-        },
-        captureBeyondViewport: true,
-      }, 10000);
-      if (res?.data) {
-        await writeFile(filePath, Buffer.from(res.data, 'base64'));
-        return { x, y, width, height };
-      }
-    } catch (err) {
-      console.error(`[screenshotClip] primary clip failed: ${err.message}`);
-    }
-  }
-
+  // Chromium crashes when captureBeyondViewport is true and y+height is large,
+  // or on some headless Mac versions regardless of height.
+  // We rely entirely on the viewport-relative fallback block.
   try {
     const viewportX = Math.max(0, Math.floor((box.viewportX ?? 0) - padding));
     const viewportY = Math.max(0, Math.floor((box.viewportY ?? 0) - padding));
@@ -283,11 +266,15 @@ async function renderTemplateDocument(session, base, snippetHtml, viewport) {
   </div>
 </body>
 </html>`;
-  await applyViewport(session, viewport);
-  await session.send('Page.enable');
-  await session.send('Runtime.enable');
-  await session.send('Page.navigate', { url: `${base}/?template=1` });
-  await new Promise((r) => setTimeout(r, 200));
+
+  await navigateAndProbe(session, {
+    url: `${base}/?template=1`,
+    viewport,
+    settleMs: 200,
+    timeoutMs: 5000,
+    retries: 1,
+  });
+
   // CDP requires frameId for setDocumentContent
   const { frameTree } = await session.send('Page.getFrameTree');
   const frameId = frameTree?.frame?.id;

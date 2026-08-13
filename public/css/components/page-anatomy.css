@@ -383,7 +383,7 @@ html[data-spw-popup-posture="expressive"] .spw-parallel-nav {
   --spw-overlay-shadow-rest: var(--spw-overlay-shadow-lift);
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   .spw-anatomy-strip {
     gap: 0.34rem;
   }

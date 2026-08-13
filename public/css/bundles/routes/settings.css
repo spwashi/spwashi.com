@@ -169,7 +169,7 @@
   transform: translateY(-1px);
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   :where(body[data-spw-surface="settings"] .settings-hero-actions) {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 10.5rem), 1fr));
@@ -445,7 +445,7 @@
   gap: 0.55rem;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   :where(body[data-spw-surface="settings"] .settings-category-header) {
     flex-wrap: wrap;
     align-items: flex-start;
@@ -1155,7 +1155,7 @@
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   :where(body[data-spw-surface="settings"]) {
     & .settings-scale-group {
       grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr));

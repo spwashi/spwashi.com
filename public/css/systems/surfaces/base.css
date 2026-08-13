@@ -112,7 +112,7 @@
   }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 48rem) {
   :where(.frame-grid--2up, .frame-grid--3up) {
     grid-template-columns: 1fr;
   }

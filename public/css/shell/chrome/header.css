@@ -85,7 +85,7 @@
   --spw-bottom-chrome-clearance: max(var(--spw-bottom-chrome-clearance, 0px), 4.85rem);
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   :root:has([data-spw-state-inspector-root]) {
     --spw-bottom-chrome-clearance: max(var(--spw-bottom-chrome-clearance, 0px), 4.1rem);
   }
@@ -692,7 +692,7 @@
   min-block-size: var(--spw-header-trace-min-block, 2.35rem);
 }
 
-@media (min-width: 721px) {
+@media (min-width: 45rem) {
   :where(.site-header, body > header) .spw-header-trace:has(.spw-spell-path[data-spw-breadcrumb-state="open"]) {
     max-block-size: min(9rem, 26dvh);
     overflow-x: hidden;

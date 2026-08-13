@@ -54,7 +54,7 @@
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   html[data-spw-show-semantic-metadata="on"] .spw-component-guides {
     display: none !important;
   }
@@ -417,7 +417,7 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
   font-size: 0.58rem;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   .spell-capability {
     grid-template-columns: minmax(0, 1fr);
     gap: 0.04rem;
@@ -486,7 +486,7 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
   font-size: 0.64rem;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   :is(.site-header, body > header)[data-spw-menu-mode="toggle"]
     .spw-spell-path[data-spw-breadcrumb-viewport="compact"]
     .spw-spell-path__header {

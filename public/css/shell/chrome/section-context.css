@@ -458,7 +458,7 @@ body:has(.spw-section-handle-shell[data-spw-handle-enhanced="true"]) > .spw-sect
   display: none !important;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   :where(.site-header[data-spw-menu-mode="toggle"], body > header[data-spw-menu-mode="toggle"]) {
     --shell-nav-min-height: 2.5rem;
   }
@@ -651,7 +651,7 @@ body:has(.spw-section-handle-shell[data-spw-handle-enhanced="true"]) > .spw-sect
 
 }
 
-@media (min-width: 520px) and (max-width: 720px) {
+@media (min-width: 32rem) and (max-width: 45rem) {
   :where(.site-header[data-spw-menu-mode="toggle"] ul,
          body > header[data-spw-menu-mode="toggle"] ul,
          .site-header[data-spw-menu-topology="screen-field"] ul,
@@ -660,13 +660,13 @@ body:has(.spw-section-handle-shell[data-spw-handle-enhanced="true"]) > .spw-sect
   }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 26.25rem) {
   .spw-section-handle-current-form {
     display: none;
   }
 }
 
-@media (min-width: 421px) and (max-width: 720px) {
+@media (min-width: 26.25rem) and (max-width: 45rem) {
   .spw-section-handle-current-token {
     display: inline-flex;
     max-width: 7ch;
@@ -701,7 +701,7 @@ html[data-spw-section-handle="off"] .spw-section-handle-shell {
   transform: var(--spw-floating-handle-transform, translateX(-50%)) translateY(8px);
 }
 
-@media (max-width: 540px) {
+@media (max-width: 35rem) {
   :where(.site-header[data-spw-menu-mode="toggle"] ul, body > header[data-spw-menu-mode="toggle"] ul),
   :where(.site-header[data-spw-menu-topology="screen-field"] ul, body > header[data-spw-menu-topology="screen-field"] ul) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -718,7 +718,7 @@ html[data-spw-section-handle="off"] .spw-section-handle-shell {
   }
 }
 
-@media (max-width: 360px) {
+@media (max-width: 22.5rem) {
   :where(.site-header[data-spw-menu-mode="toggle"] ul, body > header[data-spw-menu-mode="toggle"] ul),
   :where(.site-header[data-spw-menu-topology="screen-field"] ul, body > header[data-spw-menu-topology="screen-field"] ul) {
     grid-template-columns: 1fr;
@@ -855,7 +855,7 @@ body > nav.spw-section-handle-shell {
   color: var(--spw-shell-nav-polish-ink);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 56rem) {
   .site-header[data-spw-menu-mode="toggle"],
   body > header[data-spw-menu-mode="toggle"] {
     grid-template-columns: minmax(0, 1fr) auto;
@@ -893,7 +893,7 @@ body > nav.spw-section-handle-shell {
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   /* In-header nav geometry. Screen-field is excluded throughout this file: it
      is a viewport-anchored sheet owned end-to-end by shell/chrome/navigation.css
      (its own position, insets, padding, surface and max-height), so any
@@ -966,7 +966,7 @@ body > header:not([data-spw-shell-disclosure-init]) nav {
   min-block-size: 0;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   .site-header:not([data-spw-shell-disclosure-init]),
   body > header:not([data-spw-shell-disclosure-init]) {
     --spw-shell-grid-columns: minmax(0, 1fr);
@@ -1070,7 +1070,7 @@ body > header[data-spw-menu-mode="inline"] .spw-route-menu-panel {
   margin-top: 0;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   /* Drawer-field topology's open state; same drawer tier as the overlay-active
      raise in shell/chrome/adaptive.css, reached through a different attribute. */
   .site-header[data-spw-menu-mode="toggle"][data-spw-menu="open"],

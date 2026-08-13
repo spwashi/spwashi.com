@@ -218,7 +218,7 @@
 
 /* Broadsheet: leftover tracks, not a forced two-column. Compact/path/cluster
    sit beside a neighbor when 28rem remains. Masthead and fill/balanced span. */
-@media (min-width: 980px) {
+@media (min-width: 61.25rem) {
   :where(
     body[data-spw-layout="newspaper"][data-spw-page-family="field-guide"] main,
     body[data-spw-layout="newspaper"][data-spw-page-family="kitchen-atlas"] main,

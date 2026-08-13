@@ -441,7 +441,7 @@
    9. Responsive & Accessibility Adjustments
    ========================================================================== */
 
-@media (max-width: 768px) {
+@media (max-width: 48rem) {
     :where([data-cognitive-handle])::before {
         opacity: 0.72;
         width: 4px;

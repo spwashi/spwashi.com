@@ -64,7 +64,7 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
    while preserving semantic structure and safe-area padding already present
    on the parent .site-footer. Keeps touch targets comfortable and rhythm
    intact. */
-@media (max-width: 520px) {
+@media (max-width: 32rem) {
   .site-footer__inner {
     grid-template-columns: 1fr;
     gap: var(--component-gap, 0.65rem);
@@ -426,7 +426,7 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   text-underline-offset: 0.18em;
 }
 
-@media (min-width: 760px) {
+@media (min-width: 48rem) {
   .site-footer__nav-links {
     display: grid;
     grid-template-columns: repeat(2, minmax(8rem, 1fr));
@@ -438,7 +438,7 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   .site-footer__inner {
     grid-template-columns: 1fr;
     gap: 0.75rem;

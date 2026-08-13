@@ -551,7 +551,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="website"]) {
    12. Responsive tuning
    ========================================================================== */
 
-@media (max-width: 860px) {
+@media (max-width: 54rem) {
   :where(body[data-spw-surface="website"] #website-field-guide h1) {
     max-width: 100%;
   }
@@ -562,7 +562,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="website"]) {
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 40rem) {
   :where(body[data-spw-surface="website"] article > .site-frame) {
     box-shadow:
       0 6px 14px rgba(0, 0, 0, 0.05),

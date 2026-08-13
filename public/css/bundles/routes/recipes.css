@@ -241,7 +241,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="recipes"]) {
   color: color-mix(in srgb, var(--recipes-ink) 86%, var(--recipes-accent));
 }
 
-@media (min-width: 70rem) {
+@media (min-width: 72rem) {
   :where(body[data-spw-surface="recipes"] #recipe-field .recipe-hero-figure-rail) {
     width: 100%;
     justify-self: stretch;
@@ -273,7 +273,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-surface="recipes"]) {
   }
 }
 
-@media (max-width: 34rem) {
+@media (max-width: 35rem) {
   :where(body[data-spw-surface="recipes"] #recipe-field [data-spw-slot="header"] .spec-strip) {
     grid-template-columns: 1fr;
   }

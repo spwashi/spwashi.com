@@ -132,7 +132,7 @@
   to { opacity: 1; }
 }
 
-@media (max-width: 820px) {
+@media (max-width: 52rem) {
   :where(body[data-spw-surface="services"]) {
     & main {
       --spw-main-padding-inline: 0.8rem;
@@ -145,7 +145,7 @@
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 40rem) {
   :where(body[data-spw-surface="services"]) {
     & #services-frame {
       padding-inline: 0.9rem;
@@ -596,7 +596,7 @@
    8. Responsive
    ========================================================================== */
 
-@media (max-width: 560px) {
+@media (max-width: 35rem) {
   .care-profile-row,
   .care-profile-note-row {
     grid-template-columns: 1fr;
@@ -608,7 +608,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 30rem) {
   .care-chip {
     font-size: 0.74rem;
     padding: 0.2rem 0.6rem;

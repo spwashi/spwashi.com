@@ -441,7 +441,7 @@ body[data-spw-surface="contact"] {
    9. Responsive
    ========================================================================== */
 
-@media (max-width: 760px) {
+@media (max-width: 48rem) {
   [data-spw-surface="contact"] #contact-title {
     max-width: none;
     font-size: 2rem;
@@ -454,7 +454,7 @@ body[data-spw-surface="contact"] {
   }
 }
 
-@media (max-width: 520px) {
+@media (max-width: 32rem) {
   [data-spw-surface="contact"] .frame-card {
     min-height: 0;
   }

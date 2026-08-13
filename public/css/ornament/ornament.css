@@ -1328,7 +1328,7 @@ body[data-spw-surface="topics"] #topics-register .frame-topline .spec-pill {
 }
 
 /* Compact reading clarity: avoid glow + screen overlays reading as a blur scrim. */
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   html[data-spw-scroll-cadence="on"] main > :is(section.site-frame, article > section.site-frame)[data-spw-section-state]::before {
     opacity: 0.16;
     filter: none;

@@ -14,7 +14,7 @@
    4. Responsive
    ========================================================================== */
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   .spw-discovery-notice-stack {
     inset-inline: max(0.75rem, env(safe-area-inset-left)) max(0.75rem, env(safe-area-inset-right));
     /* Keep daily promo toasts above the bottom floating chrome lane. */
@@ -379,7 +379,7 @@
   }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 26.25rem) {
   .spw-header-actions {
     gap: 0.22rem;
     max-inline-size: 6.8rem;
@@ -649,7 +649,7 @@
 }
 
 /* Device optimization for cauldron ingredients (larger comfortable tap targets on narrow viewports) */
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   .cauldron-ingredient {
     min-height: 2.4rem;
     padding: 0.32rem 0.55rem;
@@ -872,7 +872,7 @@
   border-color: color-mix(in srgb, var(--component-accent, #2a6b6b) 38%, transparent);
   color: color-mix(in srgb, var(--ink, #111) 78%, var(--component-accent, #2a6b6b) 22%);
 }
-@media (min-width: 640px) {
+@media (min-width: 40rem) {
   .site-footer__cauldron-actions .operator-chip {
     flex: 0 1 auto;
     min-width: 7.5rem;
@@ -1132,7 +1132,7 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 30rem) {
   :where(.site-header, body > header) .spw-spell-path {
     font-size: var(--text-size-2xs, 0.72rem);
   }
@@ -1146,7 +1146,7 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   .spw-spell-dock-summary {
     min-height: 1.82rem;
     padding: 0.22rem 0.5rem;
@@ -1192,7 +1192,7 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   /* Sole authority for the open-menu raise. The header establishes a stacking
      context (sticky/relative + z-index), so the menu inside it can never
      outrank anything the header does not — raising the header is the only

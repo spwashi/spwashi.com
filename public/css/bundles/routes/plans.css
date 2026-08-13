@@ -684,7 +684,7 @@ body[data-spw-surface="plans"] {
    11. Responsive
    ========================================================================== */
 
-@media (max-width: 760px) {
+@media (max-width: 48rem) {
   [data-spw-surface="plans"] #plans-title {
     max-width: none;
     font-size: 2rem;
@@ -706,7 +706,7 @@ body[data-spw-surface="plans"] {
   }
 }
 
-@media (max-width: 520px) {
+@media (max-width: 32rem) {
   [data-spw-surface="plans"] .plans-grid {
     gap: 0.8rem;
   }

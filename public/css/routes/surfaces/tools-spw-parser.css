@@ -296,7 +296,7 @@
     }
 }
 
-@media (max-width: 58rem) {
+@media (max-width: 56rem) {
   :where(body[data-spw-surface="tools-spw-parser"]) {
       & .literal-parser-workspace,
       & .literal-parser-output {
@@ -309,7 +309,7 @@
   }
 }
 
-@media (max-width: 34rem) {
+@media (max-width: 35rem) {
   :where(body[data-spw-surface="tools-spw-parser"]) {
       & .literal-parser-metrics {
         grid-template-columns: minmax(0, 1fr);

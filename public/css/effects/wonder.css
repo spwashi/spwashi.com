@@ -635,7 +635,7 @@ html[data-spw-semantic-density="minimal"] .persona-selector-mount {
   opacity: 0.6;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 40rem) {
   .persona-selector-frame {
     width: 100%;
     justify-content: space-between;
@@ -888,7 +888,7 @@ html[data-spw-semantic-density="minimal"] .persona-selector-mount {
   opacity: 1;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   .frame-prompt-copy {
     position: static;
     margin-top: 0.2rem;

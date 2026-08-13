@@ -264,7 +264,7 @@
   gap: 0.55rem;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   :where(body[data-spw-surface="settings"] .settings-category-header) {
     flex-wrap: wrap;
     align-items: flex-start;

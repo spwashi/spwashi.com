@@ -718,7 +718,7 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
 }
 
-@media (max-width: 700px) {
+@media (max-width: 45rem) {
   .spw-image-brush-controls {
     display: none;
     grid-template-columns: 1fr;

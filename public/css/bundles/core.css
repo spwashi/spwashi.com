@@ -2523,7 +2523,7 @@ html[data-spw-reduce-motion="on"] {
 }
 
 /* Mobile rhythm */
-@media (max-width: 900px) {
+@media (max-width: 56rem) {
   :root {
     --spw-device-space-scale: 0.97;
     --spw-surface-padding: clamp(
@@ -2539,7 +2539,7 @@ html[data-spw-reduce-motion="on"] {
   }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 48rem) {
   :root {
     --spw-device-space-scale: 0.92;
     --spw-flow-space: calc(var(--spw-rhythm-unit) * 0.88);
@@ -2572,7 +2572,7 @@ html[data-spw-reduce-motion="on"] {
   }
 }
 
-@media (max-width: 760px) and (orientation: landscape), (max-width: 640px) and (max-height: 520px) {
+@media (max-width: 48rem) and (orientation: landscape), (max-width: 40rem) and (max-height: 520px) {
   :root {
     --spw-device-space-scale: 0.86;
     --spw-flow-space: calc(var(--spw-rhythm-unit) * 0.8);
@@ -2593,7 +2593,7 @@ html[data-spw-reduce-motion="on"] {
   }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 26.25rem) {
   :root {
     --spw-device-space-scale: 0.84;
     --spw-flow-space: calc(var(--spw-rhythm-unit) * 0.78);
@@ -2924,7 +2924,7 @@ html[data-spw-reduce-motion="on"] {
   --spw-real-estate-frame: var(--spw-shell-frame-max, var(--page-width-newspaper));
 }
 
-@media (min-width: 980px) {
+@media (min-width: 61.25rem) {
   :where(
     html[data-spw-layout="newspaper"],
     body[data-spw-layout="newspaper"]
@@ -3247,7 +3247,7 @@ html {
   scroll-margin-block-end: var(--spw-scroll-target-bottom-clearance);
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   html {
     --spw-scroll-target-top-clearance: calc(
       var(--spw-shell-menu-offset, var(--shell-header-height))
@@ -3400,21 +3400,21 @@ main {
  * pocket < 720 · fold 720–979 · broadsheet ≥ 980
  * First-paint CSS spends the reason. html[data-spw-layout-reason] is a receipt.
  */
-@media (max-width: 719px) {
+@media (max-width: 45rem) {
   :where(body[data-spw-layout="newspaper"], main[data-spw-layout="newspaper"]) {
     --spw-layout-reason: pocket;
     --spw-newspaper-columns: 1;
   }
 }
 
-@media (min-width: 720px) and (max-width: 979px) {
+@media (min-width: 45rem) and (max-width: 61.25rem) {
   :where(body[data-spw-layout="newspaper"], main[data-spw-layout="newspaper"]) {
     --spw-layout-reason: fold;
     --spw-newspaper-columns: 1;
   }
 }
 
-@media (min-width: 980px) {
+@media (min-width: 61.25rem) {
   :where(body[data-spw-layout="newspaper"], main[data-spw-layout="newspaper"]) {
     --spw-layout-reason: broadsheet;
     --spw-newspaper-columns: 2;
@@ -3450,7 +3450,7 @@ main {
   --spw-main-width: var(--spw-shell-frame-max);
 }
 
-@media (min-width: 92rem) {
+@media (min-width: 90rem) {
   :where(body[data-spw-layout="split"], main[data-spw-layout="split"]),
   :where(body[data-spw-layout="atlas"], main[data-spw-layout="atlas"]) {
     --spw-shell-frame-cap: var(--page-width-atlas);
@@ -4045,7 +4045,7 @@ figure.generic-figure,
    7. Responsive
    ========================================================================== */
 
-@media (max-width: 980px) {
+@media (max-width: 61.25rem) {
   .page-columns,
   .columns-2,
   .columns-3 {
@@ -4053,7 +4053,7 @@ figure.generic-figure,
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   :root {
     /* Slightly tighter block start so header → first section feels continuous. */
     --spw-main-padding-block-start: clamp(
@@ -4091,7 +4091,7 @@ figure.generic-figure,
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 30rem) {
   .index-sigil,
   .row-sigil,
   .file-ext {
@@ -4252,7 +4252,7 @@ body > header:empty {
   --spw-bottom-chrome-clearance: max(var(--spw-bottom-chrome-clearance, 0px), 4.85rem);
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   :root:has([data-spw-state-inspector-root]) {
     --spw-bottom-chrome-clearance: max(var(--spw-bottom-chrome-clearance, 0px), 4.1rem);
   }
@@ -4859,7 +4859,7 @@ body > header:empty {
   min-block-size: var(--spw-header-trace-min-block, 2.35rem);
 }
 
-@media (min-width: 721px) {
+@media (min-width: 45rem) {
   :where(.site-header, body > header) .spw-header-trace:has(.spw-spell-path[data-spw-breadcrumb-state="open"]) {
     max-block-size: min(9rem, 26dvh);
     overflow-x: hidden;
@@ -5209,7 +5209,7 @@ body > header:empty {
      comfortable targets.
    - Nav surface can host .spw-site-rhythm for living momentum without
      competing with link text. */
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   :where(.site-header nav, body > header nav) {
     padding-inline: 0.35rem;
     scroll-snap-type: x mandatory;
@@ -5805,7 +5805,7 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
   text-decoration: none;
 }
 
-@media (min-width: 981px) {
+@media (min-width: 61.25rem) {
   :where(.site-header, body > header) {
     --shell-header-height: 3.1rem;
     --shell-header-pad-block: 0.12rem;
@@ -5900,7 +5900,7 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
   }
 }
 
-@media (min-width: 981px) and (max-width: 1240px) {
+@media (min-width: 61.25rem) and (max-width: 76rem) {
   :where(.site-header[data-spw-menu-mode="inline"] ul, body > header[data-spw-menu-mode="inline"] ul) {
     flex-wrap: wrap;
     justify-content: center;
@@ -5980,7 +5980,7 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
   align-items: start;
 }
 
-@media (min-width: 981px) {
+@media (min-width: 61.25rem) {
   :where(.site-header[data-spw-shell-layout="inline-stacked"], body > header[data-spw-shell-layout="inline-stacked"]) {
     --spw-shell-grid-columns: minmax(0, 1fr) minmax(14rem, 19rem) 0 max-content;
   }
@@ -6013,7 +6013,7 @@ body > header[data-spw-shell-pointer="tracking"] nav a:is(:hover, :focus-visible
     "trace trace trace trace trace";
 }
 
-@media (min-width: 981px) {
+@media (min-width: 61.25rem) {
   .site-header:has(.spw-spell-path),
   body > header:has(.spw-spell-path) {
     --spw-shell-grid-columns: max-content minmax(0, 1fr) minmax(14rem, 19rem) 0 max-content;
@@ -6100,7 +6100,7 @@ body > header[data-spw-shell-tune-surface="strip"] .spw-attention-posture-panel 
   max-inline-size: none;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   :where(.site-header:not([data-spw-shell-layout]), body > header:not([data-spw-shell-layout])) {
     --spw-shell-grid-columns: minmax(0, 1fr);
     --spw-shell-grid-areas:
@@ -6109,7 +6109,7 @@ body > header[data-spw-shell-tune-surface="strip"] .spw-attention-posture-panel 
   }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 26.25rem) {
   :where(.site-header[data-spw-shell-tune-surface="strip"] .spw-shell-tools-summary__label,
          body > header[data-spw-shell-tune-surface="strip"] .spw-shell-tools-summary__label),
   :where(.site-header[data-spw-shell-tune-surface="knob"] .spw-shell-tools-summary__label,
@@ -6637,7 +6637,7 @@ body > header[data-spw-shell-tune-surface="strip"] .spw-attention-posture-panel 
   min-height: 0;
 }
 
-@media (min-width: 721px) and (max-width: 980px) {
+@media (min-width: 45rem) and (max-width: 61.25rem) {
   :where(.site-header[data-spw-shell-layout="inline-tablet"] nav,
          body > header[data-spw-shell-layout="inline-tablet"] nav,
          .site-header[data-spw-shell-layout="inline-stacked"] nav,
@@ -6749,7 +6749,7 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
    while preserving semantic structure and safe-area padding already present
    on the parent .site-footer. Keeps touch targets comfortable and rhythm
    intact. */
-@media (max-width: 520px) {
+@media (max-width: 32rem) {
   .site-footer__inner {
     grid-template-columns: 1fr;
     gap: var(--component-gap, 0.65rem);
@@ -7111,7 +7111,7 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   text-underline-offset: 0.18em;
 }
 
-@media (min-width: 760px) {
+@media (min-width: 48rem) {
   .site-footer__nav-links {
     display: grid;
     grid-template-columns: repeat(2, minmax(8rem, 1fr));
@@ -7123,7 +7123,7 @@ html[data-spw-show-footer="off"] :is(.site-footer, body > footer) {
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   .site-footer__inner {
     grid-template-columns: 1fr;
     gap: 0.75rem;
@@ -7640,7 +7640,7 @@ html[data-spw-base-metamaterial="matte"] .spw-discovery-notice .spw-discovery-no
    4. Responsive
    ========================================================================== */
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   .spw-discovery-notice-stack {
     inset-inline: max(0.75rem, env(safe-area-inset-left)) max(0.75rem, env(safe-area-inset-right));
     /* Keep daily promo toasts above the bottom floating chrome lane. */
@@ -8005,7 +8005,7 @@ html[data-spw-base-metamaterial="matte"] .spw-discovery-notice .spw-discovery-no
   }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 26.25rem) {
   .spw-header-actions {
     gap: 0.22rem;
     max-inline-size: 6.8rem;
@@ -8275,7 +8275,7 @@ html[data-spw-base-metamaterial="matte"] .spw-discovery-notice .spw-discovery-no
 }
 
 /* Device optimization for cauldron ingredients (larger comfortable tap targets on narrow viewports) */
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   .cauldron-ingredient {
     min-height: 2.4rem;
     padding: 0.32rem 0.55rem;
@@ -8498,7 +8498,7 @@ html[data-spw-base-metamaterial="matte"] .spw-discovery-notice .spw-discovery-no
   border-color: color-mix(in srgb, var(--component-accent, #2a6b6b) 38%, transparent);
   color: color-mix(in srgb, var(--ink, #111) 78%, var(--component-accent, #2a6b6b) 22%);
 }
-@media (min-width: 640px) {
+@media (min-width: 40rem) {
   .site-footer__cauldron-actions .operator-chip {
     flex: 0 1 auto;
     min-width: 7.5rem;
@@ -8758,7 +8758,7 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 30rem) {
   :where(.site-header, body > header) .spw-spell-path {
     font-size: var(--text-size-2xs, 0.72rem);
   }
@@ -8772,7 +8772,7 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   .spw-spell-dock-summary {
     min-height: 1.82rem;
     padding: 0.22rem 0.5rem;
@@ -8818,7 +8818,7 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   /* Sole authority for the open-menu raise. The header establishes a stacking
      context (sticky/relative + z-index), so the menu inside it can never
      outrank anything the header does not — raising the header is the only
@@ -9510,7 +9510,7 @@ body:has(.spw-section-handle-shell[data-spw-handle-enhanced="true"]) > .spw-sect
   display: none !important;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   :where(.site-header[data-spw-menu-mode="toggle"], body > header[data-spw-menu-mode="toggle"]) {
     --shell-nav-min-height: 2.5rem;
   }
@@ -9703,7 +9703,7 @@ body:has(.spw-section-handle-shell[data-spw-handle-enhanced="true"]) > .spw-sect
 
 }
 
-@media (min-width: 520px) and (max-width: 720px) {
+@media (min-width: 32rem) and (max-width: 45rem) {
   :where(.site-header[data-spw-menu-mode="toggle"] ul,
          body > header[data-spw-menu-mode="toggle"] ul,
          .site-header[data-spw-menu-topology="screen-field"] ul,
@@ -9712,13 +9712,13 @@ body:has(.spw-section-handle-shell[data-spw-handle-enhanced="true"]) > .spw-sect
   }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 26.25rem) {
   .spw-section-handle-current-form {
     display: none;
   }
 }
 
-@media (min-width: 421px) and (max-width: 720px) {
+@media (min-width: 26.25rem) and (max-width: 45rem) {
   .spw-section-handle-current-token {
     display: inline-flex;
     max-width: 7ch;
@@ -9753,7 +9753,7 @@ html[data-spw-section-handle="off"] .spw-section-handle-shell {
   transform: var(--spw-floating-handle-transform, translateX(-50%)) translateY(8px);
 }
 
-@media (max-width: 540px) {
+@media (max-width: 35rem) {
   :where(.site-header[data-spw-menu-mode="toggle"] ul, body > header[data-spw-menu-mode="toggle"] ul),
   :where(.site-header[data-spw-menu-topology="screen-field"] ul, body > header[data-spw-menu-topology="screen-field"] ul) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -9770,7 +9770,7 @@ html[data-spw-section-handle="off"] .spw-section-handle-shell {
   }
 }
 
-@media (max-width: 360px) {
+@media (max-width: 22.5rem) {
   :where(.site-header[data-spw-menu-mode="toggle"] ul, body > header[data-spw-menu-mode="toggle"] ul),
   :where(.site-header[data-spw-menu-topology="screen-field"] ul, body > header[data-spw-menu-topology="screen-field"] ul) {
     grid-template-columns: 1fr;
@@ -9907,7 +9907,7 @@ body > nav.spw-section-handle-shell {
   color: var(--spw-shell-nav-polish-ink);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 56rem) {
   .site-header[data-spw-menu-mode="toggle"],
   body > header[data-spw-menu-mode="toggle"] {
     grid-template-columns: minmax(0, 1fr) auto;
@@ -9945,7 +9945,7 @@ body > nav.spw-section-handle-shell {
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   /* In-header nav geometry. Screen-field is excluded throughout this file: it
      is a viewport-anchored sheet owned end-to-end by shell/chrome/navigation.css
      (its own position, insets, padding, surface and max-height), so any
@@ -10018,7 +10018,7 @@ body > header:not([data-spw-shell-disclosure-init]) nav {
   min-block-size: 0;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   .site-header:not([data-spw-shell-disclosure-init]),
   body > header:not([data-spw-shell-disclosure-init]) {
     --spw-shell-grid-columns: minmax(0, 1fr);
@@ -10122,7 +10122,7 @@ body > header[data-spw-menu-mode="inline"] .spw-route-menu-panel {
   margin-top: 0;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   /* Drawer-field topology's open state; same drawer tier as the overlay-active
      raise in shell/chrome/adaptive.css, reached through a different attribute. */
   .site-header[data-spw-menu-mode="toggle"][data-spw-menu="open"],
@@ -12169,7 +12169,7 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
   --active-op-color: var(--ink-muted, #66706b);
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   .spw-region-menu[data-spw-region-menu-placement="sheet"] {
     max-block-size: min(42dvh, calc(100dvh - var(--spw-bottom-chrome-clearance, 3.1rem) - 5rem));
     border-radius: var(--shape-floating, 1rem) var(--shape-floating, 1rem) var(--shape-medium, 0.85rem) var(--shape-medium, 0.85rem);
@@ -17101,7 +17101,7 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
    11. Responsive
    ========================================================================== */
 
-@media (max-width: 560px) {
+@media (max-width: 35rem) {
   .seed-field {
     grid-template-columns: 1.6rem 4.7rem 1fr;
     padding-inline: 0.9rem;
@@ -17919,7 +17919,7 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
   overflow-wrap: anywhere;
 }
 
-@media (max-width: 560px) {
+@media (max-width: 35rem) {
   :where(.spw-route-bridge) {
     gap: 0.68rem;
     margin-block: var(--component-gap-tight, 0.5rem) var(--component-gap, 0.75rem);
@@ -17943,7 +17943,7 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   :where(.spw-route-bridge__links a) {
     grid-template-columns: 1fr;
   }
@@ -19445,7 +19445,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
 }
 
 /* Tighter mobile behavior for dense illustrated card grids (e.g. "Three good first loops") */
-@media (max-width: 640px) {
+@media (max-width: 40rem) {
   :where(.frame-grid--dense) {
     grid-template-columns: 1fr;
     gap: 0.85rem;
@@ -19668,7 +19668,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   }
 }
 
-@media (max-width: 42rem) {
+@media (max-width: 40rem) {
   :where([data-spw-table="responsive-comparison"]) {
     display: block;
     border: 0;
@@ -19780,7 +19780,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   line-height: 1.45;
 }
 
-@media (max-width: 36rem) {
+@media (max-width: 35rem) {
   :where(.spw-character-prompt-card) {
     grid-template-columns: 1fr;
   }
@@ -20074,7 +20074,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   max-inline-size: 72ch;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 56rem) {
   :where(.spw-narration, [data-spw-box-model="narration-card"]) {
     max-inline-size: 68ch;
   }
@@ -20515,7 +20515,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   opacity: 0.9;
 }
 
-@media (max-width: 520px) {
+@media (max-width: 32rem) {
   :where(.tuning-strip) {
     --tuning-strip-gap: 0.32rem;
   }
@@ -22028,7 +22028,7 @@ html[data-spw-popup-posture="expressive"] .spw-parallel-nav {
   --spw-overlay-shadow-rest: var(--spw-overlay-shadow-lift);
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   .spw-anatomy-strip {
     gap: 0.34rem;
   }
@@ -22422,7 +22422,7 @@ html:has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) :wher
   /* resonance: material from global or local for glass/matte clear contrast on ephemeral too */
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   :root {
     --spw-floating-slot-control: clamp(2.8rem, 12vw, 3.15rem);
     --spw-floating-quiet-opacity: 0.74;
@@ -23660,13 +23660,13 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
   opacity: 0.62;
 }
 
-@media (max-width: 560px) {
+@media (max-width: 35rem) {
   .spw-state-inspector__actions {
     grid-template-columns: 1fr;
   }
 }
 
-@media (min-width: 721px) {
+@media (min-width: 45rem) {
   .spw-state-inspector[data-spw-state-inspector="open"][data-spw-satchel-anchor="chrome-rail"] {
     position: fixed;
     inset: auto max(0.85rem, env(safe-area-inset-right)) calc(max(0.85rem, env(safe-area-inset-bottom)) + var(--spw-floating-menu-clearance, 0px)) auto;
@@ -23723,7 +23723,7 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   html[data-spw-page-state="region-enhanced"] .spw-state-inspector__launch[data-spw-page-state-mirror]::before,
   html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-state-mirror]::before {
     opacity: 0;
@@ -24391,7 +24391,7 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
   }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 48rem) {
   :where(.site-frame) {
     --surface-padding: var(--spw-surface-padding, 0.82rem);
     border-radius: var(--component-radius-tight);
@@ -24434,7 +24434,7 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
   }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 26.25rem) {
   :where(.site-frame, .frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .frame-panel, .mode-panel, .plan-card, .compare-card, .spec-column, .ref-card) {
     --component-pad: 0.68rem;
     --component-gap-tight: 0.42rem;
@@ -24842,7 +24842,7 @@ html[data-spw-reduce-motion="on"][data-spw-module-visuals="on"][data-spw-runtime
   max-inline-size: 62ch;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   :where(.spw-embedded-workshop .vibe-widget-actions) {
     gap: 0.34rem;
   }
@@ -25797,7 +25797,7 @@ html[data-spw-theme-pack="electric-studio"] {
 
 /* Below the fold of a small phone the plate is mostly mask; shrink it so the
    paint cost tracks what is actually visible. */
-@media (max-width: 26rem) {
+@media (max-width: 26.25rem) {
   html { --spw-paper-motif-size: min(140vw, 420px); }
 }
 
@@ -28294,7 +28294,7 @@ html[data-spw-theme-pack="electric-studio"] {
 
 /* Broadsheet: leftover tracks, not a forced two-column. Compact/path/cluster
    sit beside a neighbor when 28rem remains. Masthead and fill/balanced span. */
-@media (min-width: 980px) {
+@media (min-width: 61.25rem) {
   :where(
     body[data-spw-layout="newspaper"][data-spw-page-family="field-guide"] main,
     body[data-spw-layout="newspaper"][data-spw-page-family="kitchen-atlas"] main,
@@ -28998,7 +28998,7 @@ html[data-spw-high-contrast="on"] :where(.site-frame, .frame-card, .frame-panel)
   }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 48rem) {
   :where(.frame-grid--2up, .frame-grid--3up) {
     grid-template-columns: 1fr;
   }
@@ -29495,7 +29495,7 @@ html[data-spw-high-contrast="on"] :where(.site-frame, .frame-card, .frame-panel)
   color: var(--ink);
 }
 
-@media (max-width: 960px) {
+@media (max-width: 61.25rem) {
   :where(.returner-grid) {
     grid-template-columns: 1fr;
   }
@@ -29566,7 +29566,7 @@ html[data-spw-high-contrast="on"] :where(.site-frame, .frame-card, .frame-panel)
   border-left: 2px solid color-mix(in srgb, var(--active-op-color, #008080) 26%, transparent);
 }
 
-@media (max-width: 960px) {
+@media (max-width: 61.25rem) {
   :where(.gratitude-grid) {
     grid-template-columns: 1fr;
   }
@@ -29967,7 +29967,7 @@ html[data-spw-high-contrast="on"] :where(.site-frame, .frame-card, .frame-panel)
   text-transform: uppercase;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 40rem) {
   :where(:is(.vibe-widget, .palette-probe)-actions, .palette-probe-paths) {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -30048,7 +30048,7 @@ html[data-spw-high-contrast="on"] :where(.site-frame, .frame-card, .frame-panel)
 }
 
 /* Responsive packing: never let compact strips become awkward vertical stacks on narrow screens */
-@media (max-width: 520px) {
+@media (max-width: 32rem) {
   :where(.vibe-widget--compact) {
     --tuning-strip-gap: 0.32rem;
   }
@@ -30254,7 +30254,7 @@ html[data-spw-high-contrast="on"] :where(.site-frame, .frame-card, .frame-panel)
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--embedded-tuning-accent) 12%, transparent);
 }
 
-@media (max-width: 620px) {
+@media (max-width: 40rem) {
   :where(.spw-embedded-tuning-handle) {
     inset-block-start: auto;
     inset-block-end: max(0.42rem, env(safe-area-inset-bottom));
@@ -32640,7 +32640,7 @@ html[data-spw-reading-groove="on"][data-spw-layout-flow="vertical-ribbon"] :wher
    9. Responsive & Accessibility Adjustments
    ========================================================================== */
 
-@media (max-width: 768px) {
+@media (max-width: 48rem) {
     :where([data-cognitive-handle])::before {
         opacity: 0.72;
         width: 4px;
@@ -33043,7 +33043,7 @@ html[data-spw-dimensional-breadcrumbs="on"] .spw-spell-path .spw-spell-meaning {
   display: block;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   .spw-nav {
     inset: auto max(0.55rem, env(safe-area-inset-right)) calc(max(0.8rem, env(safe-area-inset-bottom)) + var(--spw-floating-menu-clearance, 0px) + 3.2rem) auto;
     transform: none;
@@ -33158,7 +33158,7 @@ html[data-spw-dimensional-breadcrumbs="on"] .spw-spell-path .spw-spell-meaning {
   bottom: calc(var(--spw-floating-slot-console, var(--spw-floating-bottom-rail, max(0.6rem, env(safe-area-inset-bottom)))) + var(--spw-floating-menu-clearance, 0px));
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   .spw-console.is-collapsed {
     min-block-size: var(--touch-target-compact, 2.25rem);
     padding: 0;
@@ -33207,7 +33207,7 @@ html[data-spw-dimensional-breadcrumbs="on"] .spw-spell-path .spw-spell-meaning {
   --spw-console-satchel-clearance: 0px;
 }
 
-@media (min-width: 721px) {
+@media (min-width: 45rem) {
   :root:has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) .spw-console.is-collapsed {
     bottom: calc(max(0.6rem, env(safe-area-inset-bottom)) + var(--spw-floating-menu-clearance, 0px));
   }
@@ -33224,7 +33224,7 @@ html[data-spw-dimensional-breadcrumbs="on"] .spw-spell-path .spw-spell-meaning {
   display: none;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   .spw-console.is-collapsed .spw-console-collapsed-bar {
     min-block-size: var(--touch-target-compact, 2.25rem);
     padding: 0.24rem 0.5rem;
@@ -33337,7 +33337,7 @@ html[data-spw-dimensional-breadcrumbs="on"] .spw-spell-path .spw-spell-meaning {
   grid-column: 2;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   :where(html:has(.site-header[data-spw-menu-mode="toggle"][data-spw-menu="open"]),
          html:has(body > header[data-spw-menu-mode="toggle"][data-spw-menu="open"])) .spw-console {
     --spw-floating-menu-clearance: 4.25rem;
@@ -36466,7 +36466,7 @@ body:has([data-spw-gesture="sustained"][data-spw-form="brace"]) [data-spw-cauldr
   animation: spw-breadcrumb-copy-clarify 100ms ease-out;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   :where(.site-header, body > header) .spw-spell-path {
     width: 100%;
     margin-block: 0;
@@ -36907,7 +36907,7 @@ html[data-spw-cognitive-handles="off"] :where(
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   html[data-spw-show-semantic-metadata="on"] .spw-component-guides {
     display: none !important;
   }
@@ -37270,7 +37270,7 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
   font-size: 0.58rem;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   .spell-capability {
     grid-template-columns: minmax(0, 1fr);
     gap: 0.04rem;
@@ -37339,7 +37339,7 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
   font-size: 0.64rem;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   :is(.site-header, body > header)[data-spw-menu-mode="toggle"]
     .spw-spell-path[data-spw-breadcrumb-viewport="compact"]
     .spw-spell-path__header {
@@ -37857,7 +37857,7 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
 
 /* ─── Responsive & Accessibility ────────────────────────────────────────── */
 
-@media (max-width: 640px) {
+@media (max-width: 40rem) {
     :where(.phase-controls) {
         width: 100%;
         margin-left: 0;
@@ -38035,13 +38035,13 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
 
 /* ── Responsive & Accessibility ── */
 
-@media (max-width: 480px) {
+@media (max-width: 30rem) {
   :where(.spw-logo-wordmark) {
     display: none;
   }
 }
 
-@media (max-width: 360px) {
+@media (max-width: 22.5rem) {
   :where(.spw-logo-mark) {
     width: 1.1em;
     height: 1.28em;
@@ -38824,7 +38824,7 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
  * Responsive Breakpoints
  * ========================================================================== */
 
-@media (max-width: 860px) {
+@media (max-width: 54rem) {
     :where(.feature-map, .feature-map--asymmetric, .feature-ladder, .motif-grid, .capture-preset-grid) {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -38834,7 +38834,7 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
     }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 40rem) {
     :where(.feature-map, .feature-map--asymmetric, .feature-ladder, .motif-grid, .capture-preset-grid) {
         grid-template-columns: 1fr;
     }
@@ -42159,7 +42159,7 @@ html[data-spw-semantic-density="minimal"] .persona-selector-mount {
   opacity: 0.6;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 40rem) {
   .persona-selector-frame {
     width: 100%;
     justify-content: space-between;
@@ -42412,7 +42412,7 @@ html[data-spw-semantic-density="minimal"] .persona-selector-mount {
   opacity: 1;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   .frame-prompt-copy {
     position: static;
     margin-top: 0.2rem;
@@ -43462,7 +43462,7 @@ html[data-spw-resonance-probe="surface"] :where(a, button, .operator-chip, .fram
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
 }
 
-@media (max-width: 700px) {
+@media (max-width: 45rem) {
   .spw-image-brush-controls {
     display: none;
     grid-template-columns: 1fr;
@@ -44600,7 +44600,7 @@ html[data-spw-narrative-mode="on"] :where([data-spw-narrative-copy])::selection 
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 48rem) {
     :where(button, .operator-chip, label) {
         min-height: var(--touch-target-min, 2.75rem);
         display: flex;
@@ -46228,7 +46228,7 @@ body[data-spw-surface="topics"] #topics-register .frame-topline .spec-pill {
 }
 
 /* Compact reading clarity: avoid glow + screen overlays reading as a blur scrim. */
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   html[data-spw-scroll-cadence="on"] main > :is(section.site-frame, article > section.site-frame)[data-spw-section-state]::before {
     opacity: 0.16;
     filter: none;

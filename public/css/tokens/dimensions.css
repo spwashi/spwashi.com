@@ -313,7 +313,7 @@
   --spw-real-estate-frame: var(--spw-shell-frame-max, var(--page-width-newspaper));
 }
 
-@media (min-width: 980px) {
+@media (min-width: 61.25rem) {
   :where(
     html[data-spw-layout="newspaper"],
     body[data-spw-layout="newspaper"]

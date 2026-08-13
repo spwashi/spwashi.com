@@ -635,7 +635,7 @@ body[data-spw-surface="about"] {
   color: var(--honk-color);
 }
 
-@media (max-width: 719px) {
+@media (max-width: 45rem) {
   [data-spw-surface="about"] #boonhonk-disposition-diagram .spw-svg-rail {
     display: flex;
     flex-wrap: wrap;
@@ -754,7 +754,7 @@ body[data-spw-surface="about"] {
    14. Responsive
    ========================================================================== */
 
-@media (max-width: 760px) {
+@media (max-width: 48rem) {
   [data-spw-surface="about"] #about-title {
     max-width: none;
     font-size: 2rem;
@@ -770,7 +770,7 @@ body[data-spw-surface="about"] {
   }
 }
 
-@media (max-width: 520px) {
+@media (max-width: 32rem) {
   [data-spw-surface="about"] .frame-panel {
     min-height: 0;
   }

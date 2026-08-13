@@ -673,7 +673,7 @@
   overflow-wrap: anywhere;
 }
 
-@media (max-width: 760px) {
+@media (max-width: 48rem) {
   :where(body[data-spw-surface="blog"]) {
     --blog-panel-pad: 0.85rem;
     --blog-gap-4: 0.82rem;

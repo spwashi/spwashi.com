@@ -32,7 +32,7 @@
   max-inline-size: 62ch;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   :where(.spw-embedded-workshop .vibe-widget-actions) {
     gap: 0.34rem;
   }

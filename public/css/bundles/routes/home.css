@@ -1335,7 +1335,7 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
  * Broadsheet: later regions sit beside each other so they can be compared.
  * The hero stays the masthead and spans. Pocket/fold keep one column.
  */
-@media (min-width: 980px) {
+@media (min-width: 61.25rem) {
   :where(body[data-spw-surface="home"][data-spw-layout="newspaper"] main.home-atlas-flow) {
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr));
     align-items: start;
@@ -2146,7 +2146,7 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
    12. Responsive layout
    ========================================================================== */
 
-@media (max-width: 980px) {
+@media (max-width: 61.25rem) {
   :where([data-spw-feature="home-kernel-entry"] .home-hero-grid) {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -2157,7 +2157,7 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
   }
 }
 
-@media (min-width: 48rem) and (max-width: 71.99rem) {
+@media (min-width: 48rem) and (max-width: 72rem) {
   :where([data-spw-feature="home-kernel-entry"] .home-brand-plate) {
     inline-size: min(100%, 13.25rem);
     padding: 0.58rem;
@@ -2314,7 +2314,7 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
   text-transform: uppercase;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 40rem) {
   :where(#choose-your-entrance .entrance-role-hooks) {
     grid-template-columns: 1fr;
   }
@@ -2340,7 +2340,7 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
   }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 48rem) {
   :where([data-spw-feature="home-kernel-entry"].site-hero),
   :where(#operator-field),
   :where(#climate-tuning),
@@ -2414,7 +2414,7 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
   }
 }
 
-@media (max-width: 520px) {
+@media (max-width: 32rem) {
   :where(body[data-spw-surface="home"] .vibe-widget-grid),
   :where(body[data-spw-surface="home"] .frame-grid) {
     grid-template-columns: 1fr;
