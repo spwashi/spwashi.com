@@ -248,10 +248,48 @@ html[data-spw-theme-pack="electric-studio"] {
   --spw-paper-motif-opacity: 0;
 }
 
-/* Narrow viewports have no margin for a motif to live in — it would sit under
-   the reading column rather than beside it. */
+/* Narrow viewports have no side margin for a plate to sit beside, so the motif
+   changes role rather than switching off. Turning it off was the first
+   instinct and it was wrong: mobile is where most reading happens, and
+   "aesthetics arrive at 768px" is the desktop-first habit that leaves phones
+   looking like a stripped desktop rather than a designed surface.
+ *
+ * Beside the column becomes beneath it. The plate widens past the viewport,
+ * drops to roughly half the opacity, and masks from the bottom edge upward, so
+ * it reads as ground the page is standing on instead of an object competing
+ * with the text for the same space. */
 @media (max-width: 48rem) {
-  html { --spw-paper-motif-image: none; }
+  html {
+    --spw-paper-motif-size: min(128vw, 560px);
+    --spw-paper-motif-opacity: 0.045;
+  }
+
+  html:has(body[data-spw-page-family])::before {
+    inset-inline: -14vw auto;
+    background-position: bottom center;
+    mask-image: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0.5) 34%,
+      transparent 72%
+    );
+  }
+}
+
+/* Dark packs need more presence to survive the halved mobile opacity — screen
+   blending against a dim ground loses more than multiply does against paper. */
+@media (max-width: 48rem) {
+  html[data-spw-theme-pack="banked-ember"],
+  html[data-spw-theme-pack="glass-console"],
+  html[data-spw-theme-pack="electric-studio"] {
+    --spw-paper-motif-opacity: 0.1;
+  }
+}
+
+/* Below the fold of a small phone the plate is mostly mask; shrink it so the
+   paint cost tracks what is actually visible. */
+@media (max-width: 26rem) {
+  html { --spw-paper-motif-size: min(140vw, 420px); }
 }
 
 @media print {
