@@ -34,9 +34,29 @@ const EXPECTED_LAYER_BY_CSS_DIR = new Map([
     ['handles', 'handles'],
     ['effects', 'effects'],
     ['ornament', 'ornament'],
+    // Deferred palettes: token overrides loaded on demand, never in core.
+    ['themes', 'tokens'],
 ]);
 const INTENTIONAL_STANDALONE_CSS = new Set([
     '/public/css/compose.css',
+]);
+/**
+ * Stylesheets deliberately kept out of style-core.css's import graph so the
+ * bundler never pulls them into bundles/core.css. kernel/deferred-styles.js
+ * appends them at runtime once the attribute that gates them is actually set.
+ * Every rule inside must be gated, so absence is inert rather than broken.
+ */
+/**
+ * Component CSS that ships only in a route bundle, never in core. Listed in the
+ * scope manifest (so the route bundle picks it up) but intentionally absent
+ * from style-core.css's imports, because only one route mounts it.
+ */
+const ROUTE_BUNDLE_ONLY_CSS = new Set([
+    '/public/css/components/cards/profile-card.css',
+]);
+const DEFERRED_RUNTIME_CSS = new Set([
+    '/public/css/themes/packs.css',
+    '/public/css/effects/debug.css',
 ]);
 function relativeRepoPath(absolutePath) {
     return toPosixPath(path.relative(ROOT_DIR, absolutePath));
@@ -196,7 +216,7 @@ export async function collectCssContractReport() {
     for (const files of [...Object.values(ROUTE_SCOPES), ...Object.values(BEHAVIOR_SCOPES)]) {
         for (const file of files) {
             scopedRouteAndBehaviorFiles.add(file);
-            if (!importedFiles.has(file)) {
+            if (!importedFiles.has(file) && !ROUTE_BUNDLE_ONLY_CSS.has(file)) {
                 errors.push(`${file} is listed in the CSS scope manifest but missing from style.css/style-core.css imports.`);
             }
         }
@@ -228,7 +248,7 @@ export async function collectCssContractReport() {
         }
     }
     for (const entry of buildPlan) {
-        if (!knownReferences.has(`/${entry.output}`)) {
+        if (!knownReferences.has(`/${entry.output}`) && !DEFERRED_RUNTIME_CSS.has(`/${entry.output}`)) {
             errors.push(`${entry.source} generates ${entry.output}, but that output is not imported or linked.`);
         }
     }
