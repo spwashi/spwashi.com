@@ -527,3 +527,87 @@ html[data-spw-color-mode="dark"][data-spw-theme-pack="copper-brace"] {
     --line-strong: rgba(214, 141, 77, 0.32);
   }
 }
+
+/* ==========================================================================
+   Image treatment per pack
+   --------------------------------------------------------------------------
+   The token contract lives in systems/image-theming.css; these are the values
+   each pack casts onto imagery. Before this, all seven packs rendered every
+   image identically, so a visitor on a dark pack got warm paper-white plates
+   burning out of a dim page.
+
+   Values are tuned to the palette each pack already declares — the tint hue is
+   the pack's own accent, so imagery drifts toward the room rather than toward
+   an arbitrary filter. Paper packs stay near identity because their imagery
+   was lit for paper in the first place; console and ember packs pull harder.
+   ========================================================================== */
+
+/* Paper packs: the renders were made for this light. Barely touch them. */
+html[data-spw-theme-pack="neutral-paper"] {
+  --spw-image-brightness: 1;
+  --spw-image-contrast: 1;
+  --spw-image-saturation: 1;
+  --spw-image-tint: var(--paper-warm, hsl(40 30% 94%));
+  --spw-image-tint-strength: 3%;
+  --spw-image-edge: color-mix(in srgb, var(--line, rgba(58, 48, 36, 0.14)) 55%, transparent);
+}
+
+html[data-spw-theme-pack="ritual-vellum"] {
+  --spw-image-brightness: 1.01;
+  --spw-image-contrast: 0.97;
+  --spw-image-saturation: 0.94;
+  --spw-image-tint: var(--amber, hsl(35 68% 42%));
+  --spw-image-tint-strength: 7%;
+  --spw-image-edge: color-mix(in srgb, var(--amber, #b07a2a) 18%, transparent);
+}
+
+/* Ledger: cooler, flatter, more documentary. */
+html[data-spw-theme-pack="oxide-ledger"] {
+  --spw-image-brightness: 0.94;
+  --spw-image-contrast: 1.06;
+  --spw-image-saturation: 0.82;
+  --spw-image-tint: var(--teal, hsl(184 60% 29%));
+  --spw-image-tint-strength: 9%;
+  --spw-image-edge: color-mix(in srgb, var(--teal, #1c6f76) 22%, transparent);
+}
+
+html[data-spw-theme-pack="copper-brace"] {
+  --spw-image-brightness: 0.96;
+  --spw-image-contrast: 1.04;
+  --spw-image-saturation: 1.05;
+  --spw-image-tint: var(--amber, hsl(28 62% 46%));
+  --spw-image-tint-strength: 10%;
+  --spw-image-edge: color-mix(in srgb, var(--amber, #b0682a) 26%, transparent);
+}
+
+/* Dark packs: this is the case that was actually broken. A bright plate on a
+   dim page reads as a hole punched in the surface, so brightness comes down
+   and the pack's own hue is laid over the top to seat it in the room. */
+html[data-spw-theme-pack="banked-ember"] {
+  --spw-image-brightness: 0.82;
+  --spw-image-contrast: 1.08;
+  --spw-image-saturation: 0.92;
+  --spw-image-tint: var(--amber, hsl(24 70% 38%));
+  --spw-image-tint-strength: 14%;
+  --spw-image-edge: color-mix(in srgb, var(--amber, #a85c1e) 30%, transparent);
+}
+
+html[data-spw-theme-pack="glass-console"] {
+  --spw-image-brightness: 0.86;
+  --spw-image-contrast: 1.12;
+  --spw-image-saturation: 0.88;
+  --spw-image-tint: var(--teal, hsl(188 58% 34%));
+  --spw-image-tint-strength: 12%;
+  --spw-image-edge: color-mix(in srgb, var(--teal, #1f7f8a) 34%, transparent);
+}
+
+/* Electric studio bites hardest: high contrast, low tint, bright edge - the
+   image is a specimen under a lamp rather than a plate in a room. */
+html[data-spw-theme-pack="electric-studio"] {
+  --spw-image-brightness: 0.9;
+  --spw-image-contrast: 1.18;
+  --spw-image-saturation: 1.12;
+  --spw-image-tint: transparent;
+  --spw-image-tint-strength: 0%;
+  --spw-image-edge: color-mix(in srgb, var(--line-strong, #2aa) 46%, transparent);
+}

@@ -20,12 +20,17 @@
      --spw-arrival-potential   0..1, how much charge crossed
      --spw-arrival-dielectric  1 when the seat holds an image
 
-   An image-bearing seat spends longer and softer: dielectric material stores,
-   so its discharge is a slow bloom rather than a spark. That is the one place
+   An image-bearing seat spends longer and slower: dielectric material stores,
+   so its discharge is a long fade rather than a spark. That is the one place
    where images change how arrival feels, and it is deliberate — images are the
    highest-capacitance material on the page.
 
-   Layout safety: outline, box-shadow and opacity only. No transforms on the
+   The form of the mark is taken from the charge-wall render study rather than
+   invented: one hard edge, field grain falling off fast from it, and a single
+   tiny warm nucleus across the boundary. See the rule below for why that
+   replaced the ring-and-bloom the first version drew.
+
+   Layout safety: background, box-shadow and opacity only. No transforms on the
    seat, no properties that create a containing block, nothing that can be
    attributed as a layout shift by layout-shift-audit.
    ========================================================================== */
@@ -39,6 +44,11 @@
      field per card." */
   --spw-arrival-accent: var(--spw-charge-field-color, var(--active-op-color, #008080));
 
+  /* The two fields differ in temperature in the study: cool and granular on the
+     near side of the wall, warm on the far side where the nucleus sits. The
+     accent carries the near field; this carries the far one. */
+  --spw-arrival-nucleus: var(--amber, #d9a441);
+
   /* Presence is the product of what crossed and how loud the room already is,
      so a minimal enhancement climate mutes this without a separate rule. */
   --spw-arrival-presence: calc(
@@ -48,9 +58,23 @@
   position: relative;
 }
 
-/* The wall itself. An inset hairline along the seat's edge, brightest where the
-   potential was highest, riding in and back out over the discharge window.
-   `inset` box-shadow cannot affect layout and cannot escape the seat. */
+/* The wall itself.
+ *
+ * The first version drew a ring around the whole seat with a soft inner bloom.
+ * The charge-wall study (renders/2026-08-13-charge-wall-study, and the sidecar
+ * in assets/illustrations) says that is wrong on three counts, and it is a
+ * better authority than taste because it is what the physics actually looks
+ * like when someone draws it:
+ *
+ *   - the wall is ONE hard edge, not an outline. A boundary that surrounds a
+ *     thing is a border; a boundary between two fields is a side.
+ *   - the charge shows as grain concentrating toward that edge, brightest
+ *     where it meets the wall, not as an even glow across the whole plate.
+ *   - the nucleus on the far side is tiny. A single point, maybe one percent
+ *     of the frame. Everything else is field.
+ *
+ * So: a gradient band on the inline-start edge that falls off fast, plus one
+ * small warm point. Still layout-inert — background and box-shadow only. */
 :where([data-spw-arrival-discharge])::after {
   content: '';
   position: absolute;
@@ -59,41 +83,79 @@
   border-radius: inherit;
   opacity: 0;
 
+  /* The field, densest against the wall and gone within a third of the seat. */
+  background:
+    linear-gradient(
+      to right,
+      color-mix(in srgb, var(--spw-arrival-accent) calc(var(--spw-arrival-presence) * 26%), transparent) 0,
+      color-mix(in srgb, var(--spw-arrival-accent) calc(var(--spw-arrival-presence) * 8%), transparent) 12%,
+      transparent 34%
+    );
+
+  /* The wall: a single hard edge, not a ring. */
   box-shadow:
-    inset 0 0 0 1px
+    inset 1px 0 0 0
       color-mix(
         in srgb,
-        var(--spw-arrival-accent) calc(var(--spw-arrival-presence) * 55%),
-        transparent
-      ),
-    inset 0 0 calc(12px * var(--spw-arrival-presence)) 0
-      color-mix(
-        in srgb,
-        var(--spw-arrival-accent) calc(var(--spw-arrival-presence) * 22%),
+        var(--spw-arrival-accent) calc(var(--spw-arrival-presence) * 62%),
         transparent
       );
 
   animation: spw-arrival-discharge 900ms var(--ease-smooth, cubic-bezier(0.22, 0.61, 0.36, 1)) both;
 }
 
+/* The nucleus. One small warm point on the far side of the wall — the lit thing
+   the field is crossing toward. Deliberately tiny; the study's is about 1% of
+   the frame, and the temptation to make it readable is the temptation to make
+   it a bloom again. */
+:where([data-spw-arrival-discharge])::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 18%;
+  inset-block-start: 50%;
+  inline-size: 3px;
+  block-size: 3px;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  background: color-mix(in srgb, var(--spw-arrival-nucleus) 88%, transparent);
+  box-shadow: 0 0 6px 1px color-mix(in srgb, var(--spw-arrival-nucleus) 42%, transparent);
+  animation: spw-arrival-nucleus 900ms var(--ease-smooth, cubic-bezier(0.22, 0.61, 0.36, 1)) both;
+}
+
+@keyframes spw-arrival-nucleus {
+  0%   { opacity: 0; }
+  30%  { opacity: calc(var(--spw-arrival-presence) * 1); }
+  70%  { opacity: calc(var(--spw-arrival-presence) * 0.55); }
+  100% { opacity: 0; }
+}
+
 /* Dielectric seats hold, so they bloom instead of sparking: longer window,
    lower peak, a slower release. Same energy, spent over more time. */
-:where([data-spw-arrival-discharge][data-spw-arrival-dielectric='held'])::after {
+:where([data-spw-arrival-discharge][data-spw-arrival-dielectric='held'])::after,
+:where([data-spw-arrival-discharge][data-spw-arrival-dielectric='held'])::before {
   animation-duration: 1600ms;
   animation-timing-function: var(--ease-soft, cubic-bezier(0.33, 0, 0.15, 1));
 }
 
-/* Outer shells sit further from the nucleus and read as arrivals from further
-   away — the hairline gives way to a soft edge as the band climbs. */
+/* Outer shells crossed more wall to get here, so the field reaches further in
+   from the edge — the wall itself stays exactly as hard. Widening the falloff
+   is depth; softening the edge would just be the bloom again under a new name. */
 :where([data-spw-arrival-discharge='projected'])::after,
 :where([data-spw-arrival-discharge='settled'])::after {
-  box-shadow:
-    inset 0 0 calc(18px * var(--spw-arrival-presence)) 0
-      color-mix(
-        in srgb,
-        var(--spw-arrival-accent) calc(var(--spw-arrival-presence) * 26%),
-        transparent
-      );
+  background:
+    linear-gradient(
+      to right,
+      color-mix(in srgb, var(--spw-arrival-accent) calc(var(--spw-arrival-presence) * 30%), transparent) 0,
+      color-mix(in srgb, var(--spw-arrival-accent) calc(var(--spw-arrival-presence) * 11%), transparent) 22%,
+      transparent 58%
+    );
+}
+
+/* …and the nucleus sits further across, since there is more field to cross. */
+:where([data-spw-arrival-discharge='projected'])::before,
+:where([data-spw-arrival-discharge='settled'])::before {
+  inset-inline-start: 30%;
 }
 
 @keyframes spw-arrival-discharge {
@@ -107,13 +169,16 @@
    or a minimal climate. This is the second line of that defence, in case a
    discharge attribute survives a soft navigation into one of those states. */
 @media (prefers-reduced-motion: reduce) {
-  :where([data-spw-arrival-discharge])::after {
+  :where([data-spw-arrival-discharge])::after,
+  :where([data-spw-arrival-discharge])::before {
     animation: none;
     opacity: 0;
   }
 }
 
 :where(html[data-spw-arrival-field^='suppressed'] [data-spw-arrival-discharge])::after,
+:where(html[data-spw-arrival-field^='suppressed'] [data-spw-arrival-discharge])::before,
+:where(body[data-spw-capture-mode]:not([data-spw-capture-mode='default']) [data-spw-arrival-discharge])::before,
 :where(body[data-spw-capture-mode]:not([data-spw-capture-mode='default']) [data-spw-arrival-discharge])::after {
   animation: none;
   opacity: 0;

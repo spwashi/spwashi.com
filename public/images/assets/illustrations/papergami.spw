@@ -1,0 +1,44 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "papergami"
+  description: "Layered translucent vellum planes — some printed with text, some plain — assembled with cubes, discs and spheres into a standing architecture, lit from inside by small amber points. Five studies: architecture, botanical, collage, cubes, kinetic."
+  visual_qualities: "layered, translucent, printed, warm, matte, interior-lit, geometric, buildable"
+}
+
+^"thematic_mapping"{
+  operator: "frame"
+  valence: "boon"
+  spirit_phase: "invitation"
+  liminality: "entry"
+  role: "material-language"
+  context: "the site's paper substrate — cognitive layout as folded, stacked, printed material"
+}
+
+^"usage"{
+  surface: "illustrations"
+  role: "material-illustration"
+  dimensions: { width: 800, height: 800 }
+  formats_available: ["avif", "webp"]
+  alt_text: "Translucent sheets of printed paper layered with cubes, discs and spheres into a standing structure, warm light glowing between the layers."
+  variants_by_study: ["architecture", "botanical", "collage", "cubes", "kinetic"]
+}
+
+^"optimization"{
+  optimized_on: "2026-08-13T00:30:00Z"
+  source_render: ~"../../renders/papergami/"
+  variants: [
+    { tier: "thumb", size: "256x256", formats: ["avif", "webp"] },
+    { tier: "display", size: "512x512", formats: ["avif", "webp"] }
+  ]
+  notes: "Hero (1024) is deliberately absent: the masters are 800px and scripts/optimize-image-asset.mjs refuses to upscale, since interpolated detail presented as resolution is worse than a missing tier. Re-render at 1024+ if a hero placement is wanted."
+}
+
+^"discovery"{
+  tags: ["paper", "vellum", "layered", "material", "papergami", "architecture", "substrate"]
+  spirit_name: "papergami"
+  status: "extracted"
+  related_images: ["prism-workbench-card", "boonhonk-attentional-fluid"]
+  notes: "The palette here is already the site's: warm paper ground, teal-slate planes, amber points — the same tokens neutral-paper and ritual-vellum declare. That is why these read as the material language rather than as illustration, and why theme packs now cast their own hue onto imagery (systems/image-theming.css) instead of leaving every pack showing the same warm plate."
+}

@@ -1,0 +1,117 @@
+/* ==========================================================================
+   image-theming.css — themes reach the images
+   --------------------------------------------------------------------------
+   Seven theme packs shipped and not one of them touched an image. Grepping
+   themes/packs.css for `filter`, `saturate` or `image` returned nothing: packs
+   moved every colour token on the page and then handed a visitor of
+   `banked-ember` the same bright warm-paper render that `neutral-paper` shows.
+   A dark pack rendering a paper-white photograph at full brightness is not a
+   theme; it is a palette with a hole in it.
+
+   So this is the contract themes speak through. Packs set the tokens, image
+   surfaces consume them, and neither has to know about the other:
+
+     --spw-image-brightness   how much the pack dims or lifts imagery
+     --spw-image-contrast     paper packs sit flat, console packs bite
+     --spw-image-saturation   how much colour the pack lets through
+     --spw-image-tint         the hue the room casts onto imagery
+     --spw-image-tint-strength  how much of that hue actually lands
+     --spw-image-edge         the frame treatment around an image plate
+
+   Defaults are all identity — brightness 1, tint strength 0 — so a pack that
+   sets nothing changes nothing, and an image without a pack looks exactly as
+   it does today. Every effect here is opt-in from the pack side.
+
+   Grain, not gloss: the tint lands through a `color-mix` overlay on a
+   pseudo-element rather than a `hue-rotate`, because hue-rotate mangles the
+   warm amber points these renders are built around while leaving the teal
+   fields alone. Mixing toward a hue keeps relative warmth intact.
+
+   Layout safety: filter and overlay only, no size or position changes. Images
+   are frequently in cascade layouts where a reflow is a visible jump.
+   ========================================================================== */
+
+:root {
+  --spw-image-brightness: 1;
+  --spw-image-contrast: 1;
+  --spw-image-saturation: 1;
+  --spw-image-tint: transparent;
+  --spw-image-tint-strength: 0%;
+  --spw-image-edge: transparent;
+}
+
+/* The surfaces that count as "an image plate" — figures and the reward /
+   discovery / media-card families, matching what image-utilization.css
+   already treats as image anatomy. */
+:where(
+  figure img,
+  [data-spw-image-surface] img,
+  [data-spw-image-reward] img,
+  [data-spw-image-discovery] img,
+  .topic-photo-card img,
+  .image-study img,
+  .frame-card-media img
+) {
+  filter:
+    brightness(var(--spw-image-brightness))
+    contrast(var(--spw-image-contrast))
+    saturate(var(--spw-image-saturation));
+  transition: filter var(--duration-slow, 420ms) var(--ease-smooth, ease);
+}
+
+/* Tint plate. Sits above the image and below any caption, and is skipped
+   entirely when the pack asked for no tint — a 0% color-mix still costs a
+   composited layer. */
+:where(
+  figure,
+  [data-spw-image-surface],
+  [data-spw-image-reward],
+  [data-spw-image-discovery],
+  .topic-photo-card,
+  .image-study,
+  .frame-card-media
+) {
+  position: relative;
+}
+
+:where(
+  figure,
+  [data-spw-image-surface],
+  [data-spw-image-reward],
+  [data-spw-image-discovery],
+  .topic-photo-card,
+  .image-study,
+  .frame-card-media
+):has(img)::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  border-radius: inherit;
+  background: color-mix(in srgb, var(--spw-image-tint) var(--spw-image-tint-strength), transparent);
+  box-shadow: inset 0 0 0 1px var(--spw-image-edge);
+  transition: background var(--duration-slow, 420ms) var(--ease-smooth, ease);
+}
+
+/* Captions and controls must stay above the tint plate. */
+:where(figure figcaption, .topic-photo-card > :not(img), .image-study > :not(img)) {
+  position: relative;
+  z-index: 2;
+}
+
+/* Reduced motion keeps the treatment but drops the crossfade between packs. */
+@media (prefers-reduced-motion: reduce) {
+  :where(figure img, [data-spw-image-surface] img, .topic-photo-card img, .image-study img) {
+    transition: none;
+  }
+}
+
+/* Capture mode renders imagery untouched: a screenshot read by another model
+   should carry the image, not this site's mood applied to it. */
+:where(body[data-spw-capture-mode]:not([data-spw-capture-mode='default'])) {
+  --spw-image-brightness: 1;
+  --spw-image-contrast: 1;
+  --spw-image-saturation: 1;
+  --spw-image-tint-strength: 0%;
+}

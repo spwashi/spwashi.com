@@ -68,11 +68,14 @@
         { spirit_name: "threshold-poise", variants: ["icon", "display", "large"], formats: ["avif", "webp", "png"] }
       ]},
       { date: "2026-04-10", name: "papergami-machinery-study", status: "archived-source-and-extracted", images: 11, content: [
-        { spirit_name: "papergami-machinery", variants: ["raw", "raw-2x2", "social-card", "study-panels"], formats: ["png", "jpg", "webp"] }
+        { spirit_name: "papergami-machinery", variants: ["raw", "raw-2x2", "social-card", "study-panels"], formats: ["png", "jpg", "webp"],
+          note: "Longstanding favourite. Five studies (architecture, botanical, collage, cubes, kinetic) extracted to assets/illustrations at thumb+display; the palette is already the site's, so these read as material language rather than illustration." }
       ]},
       { date: "2026-08-13", name: "spw-fluid-study", status: "archived-source-and-extracted", images: 5, content: [
         { spirit_name: "cauldron-spw-fluid", variants: ["1", "2", "3", "4"], formats: ["avif"],
           note: "Spw fluid as the substance that maintains narrative consistency. Dark matte vessel, iridescent teal-to-gold fluid cresting the rim in distinct rivulets. Read into the cauldron's fill/overflow states — see shell/chrome/adaptive.css." },
+        { spirit_name: "charge-wall", variants: ["archive", "thumb", "display", "hero"], formats: ["avif", "webp"],
+          note: "Commissioned as a design reference, not decoration — and it changed the code. arrival-electrostatics.css drew a ring with a soft bloom until this showed the boundary is one hard side, the charge is grain concentrating toward it, and the nucleus is about one percent of the frame." },
         { spirit_name: "boonhonk-attentional-fluid", variants: ["archive", "thumb", "display", "hero"], formats: ["avif", "webp"],
           note: "Preferred. Flat contour-bounded teal fields with warm gold nuclei inside rings and vertical threads between them — attention moving through fields separated by walls, with no glow spill. Closest reference the site has to arrival-electrostatics: a bounded ring with a warm centre rather than a bloom. Extracted to assets/illustrations with a .spw sidecar." }
       ]}
@@ -112,7 +115,7 @@
   purpose: `Culinary abstractions and fantastical gardening rhythms — plausible mathematical patterns (waves, spirals, repetition, cycles) rendered as quiet magic for gardeners, chefs, and parents.`
   images: [
     { name: "fermentation-bubble-choir.jpg", spirit: "bubble-choir", valence: "honk", role: "slow-signal" },
-    { name: "dough-tide-fold.jpg", spirit: "dough-tide", valence: "boon", role: "lunar-memory" },
+    { name: "dough-tide-fold.jpg", spirit: "dough-tide", valence: "boon", role: "lunar-memory", standing: "not-preferred" },
     { name: "pollination-golden-spiral.jpg", spirit: "golden-flight", valence: "boon", role: "visible-order" },
     { name: "brassica-twilight-transformation.jpg", spirit: "brassica-veil", valence: "bane-to-boon", role: "hidden-work" },
     { name: "knife-rhythm-lattice.jpg", spirit: "knife-lattice", valence: "bone", role: "repetition-as-grammar" }
