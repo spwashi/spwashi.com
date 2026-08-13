@@ -1,0 +1,110 @@
+# Delegation parcels
+#
+# Work sliced so more than one model can hold a piece at once without colliding.
+# Several sessions commit to main in this tree, so the slicing rule is file
+# ownership: two parcels never name the same file. A parcel states its own
+# verification so whoever takes it can prove it landed without asking.
+#
+# Take a parcel by claiming it in your commit message. Leave it alone if its
+# `blocked_by` is unmet.
+
+#>delegation_parcels_2026_08
+#:cache #!delegation #!parallel
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
+
+@stylesheet_ecology: ~"../conventions/stylesheet-ecology.spw"
+@arrival_electrostatics: ~"../conventions/arrival-electrostatics.spw"
+@component_taxonomy: ~"../conventions/component-taxonomy.spw"
+@payload_report: ~"../../scripts/css-payload-report.mjs"
+@breakpoints: ~"../../scripts/normalize-breakpoints.mjs"
+@integrity: ~"../../scripts/spw-integrity.mjs"
+
+operation = "cache"
+fixity = "tending"
+
+^"rules"{
+  ownership: "A parcel owns its files exclusively. If you need to touch a file another parcel names, stop and re-slice instead of racing."
+  verification: "Every parcel carries a probe that passes or fails without judgement. `node scripts/check-site.mjs` is the floor for all of them."
+  refusal: "Do not widen a parcel because it looked small. Report what you left and why; an honest partial beats a silent sprawl."
+  stash_warning: "Never `git stash` in this tree — concurrent sessions lose work that way."
+}
+
+^"parcel_css_eviction"{
+  goal: "Cut core.css below 1.2MB by moving enhancement sheets out of the core manifest, following the themes/packs.css precedent."
+  owns: #[
+    `public/css/style-core.css`,
+    `public/css/effects/metaphysical-paper.css`,
+    `public/css/effects/wonder.css`,
+    `public/css/effects/cinematic.css`,
+    `public/css/ornament/ornament.css`
+  ][reg=set]
+  why: "core.css is 1614KB on every route. @payload_report already says route scoping only trims the tail. These four sheets total ~153KB and each dresses a surface that is legible without it — their own banners now say `Tier: enhancement`."
+  how: "packs.css is the template: pulled from the manifest, appended on demand by a small loader. Match that shape rather than inventing a second mechanism."
+  probe: `npm run css:payload — core bytes must fall and no route may lose a treatment it needs at first paint`
+  caution: "Ornament and wonder are load-bearing for the site's feel, not for its legibility. Evicting them is correct; making them arrive late and never is not. Confirm each still lands."
+  blocked_by: "nothing"
+}
+
+^"parcel_breakpoint_tiers"{
+  goal: "Collapse the 16 canonical rungs into a handful of semantic tiers, which the safe normalization pass deliberately did not attempt."
+  owns: #[`public/css/tokens/dimensions.css`, `.spw/conventions/stylesheet-ecology.spw#breakpoints`][reg=set]
+  why: "@breakpoints snapped 58 thresholds to 32 without moving anything beyond 5%, so the drift is gone but the ladder is still too long to design along. 155 of 189 queries are still max-width, so mobile is still defined by subtraction."
+  how: "Name the tiers first and get them approved before touching rules. This parcel MOVES LAYOUT — it is not a codemod and must not be run as one."
+  probe: `node scripts/normalize-breakpoints.mjs — dry run should report zero drift before and after`
+  gate: "Human approval on real pages. Do not merge on a green check alone."
+  blocked_by: "nothing, but do not start without the tier names agreed"
+}
+
+^"parcel_capture_pipeline"{
+  goal: "Phase 1 of the component capture plan — mechanical cleanup, no behaviour change."
+  owns: #[
+    `scripts/component-snapshots.mjs`,
+    `scripts/spw-language-ecology.mjs`,
+    `scripts/spw-ecology-inventory.mjs`,
+    `scripts/lib/capture-gallery.mjs`
+  ][reg=set]
+  why: "Duplicate createHash import, four copy-pasted MD5 collision blocks, walkFiles duplicated between two scripts, and a 62-line inline gallery with no site vocabulary."
+  how: "Extract hashCapture(), import walkFiles from lib/spw-inventory-core.mjs, move galleryHtml to scripts/lib/capture-gallery.mjs."
+  probe: `npm run component:check && npm run ecology && node --check scripts/component-snapshots.mjs`
+  caution: "There is an uncommitted change in component-snapshots.mjs from another session that removes the captureBeyondViewport primary path in favour of the viewport fallback. Read it before rebasing over it; it is deliberate, not debris."
+  blocked_by: "nothing"
+}
+
+^"parcel_runtime_purity"{
+  goal: "Sharpen the module contract: useful granularity, coupling only where resonance earns it, purer primitives."
+  owns: #[
+    `public/js/runtime/module-export-contract.js`,
+    `public/js/runtime/module-catalog-normalize.js`,
+    `public/js/kernel/storage-utils.js`
+  ][reg=set]
+  why: "96 catalog modules share one export contract that has grown optional fields faster than it has grown rules about them. Several runtime modules read storage directly rather than through a primitive that treats it as untrusted."
+  how: "Start by counting: which optional contract fields are actually used, and by how many modules. A field two modules use is a coupling, not a contract."
+  probe: `npm run check:runtime`
+  blocked_by: "nothing"
+}
+
+^"parcel_editorial_measure"{
+  goal: "Measure editorial copy at build time and feed it back into typography flow."
+  owns: #[`scripts/measure-editorial.mjs`, `.spw/conventions/copy-ecology.spw`][reg=set]
+  why: "Typography is tuned by eye against copy nobody has measured. Line length, sentence length and paragraph rhythm are all countable before a page ships."
+  how: "The Pretext lab already measures text — use it rather than writing a second measurer. Report per-route measure (characters per line at each tier), not a sitewide average, since the tiers are the point."
+  probe: `node scripts/measure-editorial.mjs — should name routes whose measure falls outside 45-75ch at any breakpoint tier`
+  blocked_by: "parcel_breakpoint_tiers, if tiers are being renamed"
+}
+
+^"open_not_parcelled"{
+  note: "Named so nobody assumes they are covered."
+  items: #[
+    `renders/_raw is 115MB and _raw-2x2 is 18MB, tracked and unoptimized — scripts/optimize-image-asset.mjs exists but this rewrites masters, so it wants a deliberate decision`,
+    `Underline verbosity: data-spw-op-disposition underlines ~109 chips on home, written at runtime. The direction wanted is granular typography (weight, word accent) rather than on/off underlines`,
+    `Arrival as episode: arrival-shells schedules per module, but a TV episode has acts. Reframing arrival around acts rather than modules is a design question, not a refactor`,
+    `Tap targets: operator-chip density on coarse pointers was never measured against WCAG 2.5.8 (24x24)`
+  ][reg=set]
+}
+
+^"validation"{
+  probe: `node scripts/check-site.mjs && npm run spw:integrity`
+  falsification: "Two commits from different sessions touch the same file named by two different parcels — the slicing was wrong and should be redone before more work lands."
+}

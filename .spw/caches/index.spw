@@ -18,6 +18,7 @@
 @morph_shader_handles: ~"./morph-shader-handles.spw"
 @css_combinatorics: ~"./css-combinatorics.spw"
 @arrival_perceptibility: ~"./arrival-perceptibility-2026-08.spw"
+@delegation_parcels: ~"./delegation-parcels-2026-08.spw"
 
 operation = "align"
 fixity = "tending"
@@ -30,6 +31,7 @@ fixity = "tending"
   morph_shader_handles = @morph_shader_handles
   css_combinatorics = @css_combinatorics
   arrival_perceptibility_2026_08 = @arrival_perceptibility
+  delegation_parcels_2026_08 = @delegation_parcels
 }[reg=facet]
 
 ^"cache_rules"{

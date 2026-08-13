@@ -1,9 +1,15 @@
-/**
- * public/css/effects/narrative.css
- * ---------------------------------------------------------------------------
- * Scope: inline tokenized narrative elements, resonance effects, and the
- * floating inspector drawer used by narrative and debug surfaces.
- */
+/* ==========================================================================
+   effects/narrative.css — the narrator's marks
+   --------------------------------------------------------------------------
+   Reads as: inline tokenized narrative elements, resonance effects, and the
+   floating inspector drawer that narrative and debug surfaces share.
+   Genome — states sensed: data-spw-narrative-copy, data-spw-narrative-mode,
+   data-spw-resonance-token, data-spw-resonant
+   Genome — custom properties defined: 6; intent hooks consumed: none
+   Probe: open a narrative surface and toggle data-spw-narrative-mode; inline
+   tokens pick up resonance without the prose reflowing.
+   Tier: enhancement — the prose reads correctly with this file absent.
+   ========================================================================== */
 
 /* Inline grammar tokens */
 .grammar-token {

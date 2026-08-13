@@ -1,11 +1,23 @@
-/*
- * metaphysical-paper.css
- *
- * Semantic ornament for image-bearing surfaces. The goal is not to impose a
- * universal card treatment, but to let image studies, SVG figures, and page
- * artifacts share a readable image ritual: semantic treatment, hold-to-visit,
- * and a persistent visited glow.
- */
+/* ==========================================================================
+   effects/metaphysical-paper.css — the image ritual
+   --------------------------------------------------------------------------
+   Reads as: image-bearing surfaces dressed as paper artifacts — semantic
+   treatment, hold-to-visit, and a persistent visited glow. Not a universal card
+   treatment: image studies, SVG figures and page artifacts share one ritual
+   while keeping their own anatomy.
+   Genome — states sensed: data-spw-image-prominence, data-spw-image-effect,
+   data-spw-image-gesture, data-spw-image-layout, data-spw-image-preview,
+   data-spw-image-resonance, data-spw-image-input, data-spw-hold-state,
+   data-spw-brush-active, data-spw-brush-mode, data-spw-contrast-state,
+   data-spw-controls-open, data-spw-effect, data-spw-effect-stop
+   Genome — custom properties defined: 50; intent hooks consumed: none
+   Probe: open /topics/craft/ or /design/materials/ and hold on a figure; the
+   visited glow persists after release. html[data-spw-debug-layers="on"] shows
+   which layer owns each treatment.
+   Tier: enhancement — 34KB currently shipped in core.css, though every surface
+   it dresses is legible without it. See .spw/conventions/stylesheet-ecology.spw
+   #progressive_enhancement; this is one of the named eviction candidates.
+   ========================================================================== */
 
 .spw-metaphysics-host {
   --spw-image-accent: var(--teal);

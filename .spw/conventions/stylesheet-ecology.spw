@@ -1,0 +1,93 @@
+# Stylesheet Ecology
+#
+# A stylesheet is a standalone document, not a fragment of a bundle. It should
+# be readable, disposable, and probeable on its own — and it should say what it
+# senses. This names the practice the tree already follows, measures where it
+# lapses, and states the one place the ecology genuinely fails: everything
+# arrives at once.
+
+#>stylesheet_ecology
+#:convention #!css #!architecture #!progressive-enhancement
+#:operation #!align
+#:fixity #!tending
+#:layer #!pragmatics
+
+@css_instruction: ~"./css-instruction.spw"
+@component_packing: ~"./component-packing.spw"
+@coloring_depth: ~"./coloring-depth.spw"
+@attribute_governance: ~"./data-spw-attribute-governance.spw"
+@arrival_electrostatics: ~"./arrival-electrostatics.spw"
+@manifest: ~"../../public/css/style-core.css"
+@payload_report: ~"../../scripts/css-payload-report.mjs"
+@breakpoints: ~"../../scripts/normalize-breakpoints.mjs"
+
+operation = "align"
+fixity = "tending"
+
+^"thesis"{
+  claim: "A stylesheet earns its place by being legible alone. Opened cold, it should answer three questions without reference to any other file: what surface am I dressing, what state do I sense, and how would you prove I am doing it. The tree already believes this — 151 of 155 authored sheets open with a banner that answers at least the first — so this convention defends an existing practice rather than importing one."
+  refuse: "Do not let a stylesheet become a fragment that only makes sense once bundled. If a rule cannot be explained without naming three other files, the cluster is in the wrong document."
+}
+
+^"file_form"{
+  banner: "`/* ===` … `=== */` at the head. 151 of 155 files use it; 1 uses a `---` dialect and 3 have neither. The dialect is not decoration — it is how a reader knows the file declares itself rather than starting mid-thought."
+  reads_as: "One line naming the surface and the state it dresses."
+  was: "Provenance when a file was split from another, with the date. Splits lose their reason within a month otherwise."
+  genome: "`Genome — states sensed:` the `data-spw-*` attributes the file selects on, and `custom properties defined:` a count. Only 18 of 155 carry this today; it is the richest form and the least propagated."
+  probe: "How to see the file working — a DevTools toggle, a debug attribute, a route to open. A stylesheet with no probe is a claim with no falsification."
+}
+
+^"linguistic_register"{
+  claim: "CSS here is written as language, not as configuration. Selectors are phrases; a rule cluster is a paragraph; the file is an essay about one surface."
+  nesting: "Nesting groups what belongs together and should be used where a cluster is genuinely about one subject. Currently 10 of 155 files nest — the mechanism is available and mostly unused, so most clusters are held together by adjacency and a comment rather than by structure."
+  pseudo_selectors: "`:where()` for zero-specificity defaults so packs and handles can override without an arms race; `:has()` where a parent's dressing genuinely depends on its contents (@arrival_electrostatics and paper-motif both rely on this). Specificity is a cost, not a tool."
+  naming: "Class names describe the thing, `data-spw-*` describes its state. When a class encodes state it has taken a job that belongs to an attribute — see @attribute_governance."
+}
+
+^"progressive_enhancement"{
+  claim: "This is where the ecology actually fails, and no amount of file hygiene fixes it."
+  measured: "core.css is 1614KB and every visitor downloads it on every route. @payload_report states the finding plainly: 'Core dominates (~1.5 MiB). Route scoping mainly drops other-route CSS (~0.4-0.6 MiB).' Route scoping trims the tail; the trunk is untouched."
+  weight: #[
+    `tokens/core.css 79KB`,
+    `grammar/syntax.css 77KB`,
+    `shell/chrome/navigation.css 60KB`,
+    `components/runtime-states.css 56KB`,
+    `shell/chrome/adaptive.css 51KB`,
+    `ornament/ornament.css 47KB`
+  ][reg=set]
+  rule: "A sheet belongs in core only if a first paint without it is wrong rather than merely plainer. Ornament, wonder, cinematic and metaphysical-paper dress surfaces that are already legible; they are enhancement by their own descriptions and arrive as if they were structure."
+  precedent: "themes/packs.css was pulled from core for exactly this reason and is appended on demand by theme-pack-loader.js. That move is the template; it has not been repeated."
+}
+
+^"breakpoints"{
+  ladder: "Rungs are canonical only where usage already clustered — see @breakpoints. 58 distinct thresholds became 32 by snapping drift (719/720/721, 979/980/981, 760 beside 768 beside 48rem) with no move beyond 5%."
+  units: "rem, so a reader's text-size preference moves the layout with them. px media queries ignore it."
+  posture: "155 of 189 queries were `max-width`. Desktop-first means mobile is whatever survives subtraction, which is why it reads as unfinished. New work states `min-width`."
+  open: "Collapsing 16 rungs to a handful of semantic tiers moves layout and wants eyes on real pages. Not a codemod."
+}
+
+^"audit"{
+  probe_payload: `npm run css:payload — per-route bundle weight and what each route drops`
+  probe_breakpoints: `node scripts/normalize-breakpoints.mjs — dry run; reports drift without writing`
+  probe_banner: `for f in $(find public/css -name '*.css' -not -path '*/bundles/*'); do head -6 "$f" | grep -q '===' || echo "$f"; done`
+  probe_nesting: `find public/css -name '*.css' -not -path '*/bundles/*' -exec grep -l '^\s*&' {} \; | wc -l`
+  falsification: #[
+    `A sheet enters core that the page reads correctly without.`,
+    `A new stylesheet ships with no banner, or a banner with no probe.`,
+    `A width media query is authored in px, or at a threshold off the ladder.`
+  ][reg=set]
+}
+
+#>wonder_stylesheet_ecology_1
+?["Can a stylesheet declare its own arrival tier, or must the manifest decide?"]{
+  #:depth #!computational ~#lens(progressive enhancement)
+  ~#tension: "core membership is decided in style-core.css, a manifest a sheet cannot see. So a file that knows perfectly well it is ornament has no way to say so, and the only record of that judgment is an import line in another document."
+  ~#hypothesis: "the banner is already the right place — a `Tier:` line naming core | route | deferred would let the manifest be generated from the sheets rather than maintained against them."
+  !probe{ "add a Tier line to the six heaviest sheets, then try to generate style-core.css from the banners. if the generated manifest differs from the authored one, each difference is a membership nobody would defend out loud." }
+  $%[sheet.tier, bundle.coreBytes, route.droppedBytes]
+}
+
+^"validation"{
+  probe: `npm run css:payload && node scripts/normalize-breakpoints.mjs`
+  next: "Evict one enhancement sheet from core following the packs.css precedent, and measure. One eviction with a number beats a plan for six."
+}
