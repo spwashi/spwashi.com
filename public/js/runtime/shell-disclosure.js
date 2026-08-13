@@ -6,22 +6,15 @@ import {
   writeDatasetValue,
   writeRuntimeDatasetValues,
 } from '/public/js/kernel/dom-contracts.js';
-import { PALETTE_RESONANCE_OPTIONS } from '/public/js/interface/palette-resonance.js';
-import {
-  revealTuningSurfaces,
-  TUNING_SURFACES_EVENT,
-} from '/public/js/runtime/tuning-discovery.js';
+import { TUNING_SURFACES_EVENT } from '/public/js/runtime/tuning-discovery.js';
 import { releaseShellLock, syncShellLock } from './shell/scroll-lock.js';
 import {
   ensureAttentionPosturePanel,
   setAttentionPosturePanelOpen,
 } from './shell/attention-posture-panel.js';
 import {
-  cycleSettingValue,
   ensureUtilityRow,
-  getCurrentBaseMaterial,
   getCurrentFontScale,
-  getCurrentHighContrast,
   getNextFontScale,
   syncUtilityRow,
 } from './shell/utility-row.js';
@@ -1125,43 +1118,21 @@ export function initSpwShellDisclosure(options = {}) {
     scheduleMeasuredSync('load-layout');
   };
 
+  // 2026-08-12: dropped 8 branches (reveal-tuners, cycle-explore-posture,
+  // cycle-resonance, cycle-theme-pack, cycle-color-tuner, clear-matte,
+  // toggle-cauldron-visibility, open-satchel) alongside the matching buttons
+  // removed from utility-row.js. Three of them (explore-posture, theme-pack,
+  // color-tuner) referenced EXPLORE_POSTURE_CYCLE/THEME_PACK_CYCLE/
+  // COLOR_TUNER_CYCLE — never defined or imported anywhere in this file, so
+  // every click threw a silent ReferenceError inside this handler. State
+  // satchel is the state-inspector launch button, already directly reachable
+  // in floating chrome; cauldron visibility and clear-contrast belong on
+  // /settings/, not a header shortcut. See cascade-audit artifact, Part Five.
   const handleUtilityClick = (event) => {
     const control = event.target.closest('[data-spw-shell-action]');
     if (!(control instanceof HTMLElement)) return;
 
     const action = control.dataset.spwShellAction || '';
-
-    if (action === 'settings') return;
-
-    if (action === 'reveal-tuners') {
-      revealTuningSurfaces();
-      syncUtilityRow(utilityRow);
-      return;
-    }
-
-    if (action === 'cycle-explore-posture') {
-      cycleSettingValue('explorePosture', [...EXPLORE_POSTURE_CYCLE]);
-      syncUtilityRow(utilityRow);
-      return;
-    }
-
-    if (action === 'cycle-resonance') {
-      cycleSettingValue('paletteResonance', [...PALETTE_RESONANCE_OPTIONS]);
-      syncUtilityRow(utilityRow);
-      return;
-    }
-
-    if (action === 'cycle-theme-pack') {
-      cycleSettingValue('themePack', [...THEME_PACK_CYCLE]);
-      syncUtilityRow(utilityRow);
-      return;
-    }
-
-    if (action === 'cycle-color-tuner') {
-      cycleSettingValue('colorTuner', [...COLOR_TUNER_CYCLE]);
-      syncUtilityRow(utilityRow);
-      return;
-    }
 
     if (action === 'color-light' || action === 'color-dark') {
       // Delegated to central data-site-setting-set wiring (see bindStandaloneSettingTriggers + applySettingTrigger).
@@ -1189,66 +1160,6 @@ export function initSpwShellDisclosure(options = {}) {
         window.spwSettings?.save?.({ fontSizeScale: nextScale });
       }
       syncUtilityRow(utilityRow);
-      return;
-    }
-
-    if (action === 'clear-matte') {
-      const isCurrentlyClear = getCurrentBaseMaterial() === 'matte' || getCurrentHighContrast() === 'on';
-      // Use explicit paired setter when available (single save for the material+contrast
-      // intent); falls back to direct save. All paths hit the same kernel contract.
-      if (isCurrentlyClear) {
-        if (window.spwSettings?.setClearContrastMatte) {
-          window.spwSettings.setClearContrastMatte(false);
-        } else if (window.spwSettings?.setBaseMetamaterial && window.spwSettings?.setHighContrast) {
-          window.spwSettings.setBaseMetamaterial('glass');
-          window.spwSettings.setHighContrast('off');
-        } else {
-          window.spwSettings?.save?.({ baseMetamaterial: 'glass', highContrast: 'off' });
-        }
-      } else {
-        if (window.spwSettings?.setClearContrastMatte) {
-          window.spwSettings.setClearContrastMatte(true);
-        } else if (window.spwSettings?.setBaseMetamaterial && window.spwSettings?.setHighContrast) {
-          window.spwSettings.setBaseMetamaterial('matte');
-          window.spwSettings.setHighContrast('on');
-        } else {
-          window.spwSettings?.save?.({ baseMetamaterial: 'matte', highContrast: 'on' });
-        }
-      }
-      syncUtilityRow(utilityRow);
-    }
-
-    if (action === 'toggle-cauldron-visibility') {
-      const curr = (window.spwSettings?.get?.()?.cauldronCandidateVisibility) || 'balanced';
-      const order = ['subtle', 'balanced', 'prominent'];
-      const idx = order.indexOf(curr);
-      const next = order[(idx + 1) % order.length];
-      if (window.spwSettings?.saveSiteSettings) {
-        window.spwSettings.saveSiteSettings({ cauldronCandidateVisibility: next });
-      } else {
-        window.spwSettings?.save?.({ cauldronCandidateVisibility: next });
-      }
-      syncUtilityRow(utilityRow);
-      return;
-    }
-
-    if (action === 'open-satchel') {
-      // Shell utility (with appearance controls like clear-matte, color, font) interacts with
-      // state satchel for observability of modified site appearance and system states.
-      // Uses the launch button as the runtime entrypoint; provides default behavior for
-      // capturing current shell/appearance state into the satchel.
-      const launch = document.querySelector('.spw-state-inspector__launch');
-      if (launch instanceof HTMLElement) {
-        launch.click();
-      } else {
-        const root = document.querySelector('[data-spw-state-inspector-root]');
-        if (root instanceof HTMLElement) {
-          const isOpen = root.dataset.spwStateInspector === 'open';
-          root.dataset.spwStateInspector = isOpen ? 'closed' : 'open';
-          const panel = root.querySelector('#spw-state-inspector-panel');
-          if (panel instanceof HTMLElement) panel.hidden = isOpen;
-        }
-      }
     }
   };
 

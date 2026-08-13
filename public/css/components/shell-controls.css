@@ -276,8 +276,7 @@
 .spw-shell-utility-row[data-spw-color-mode="dark"] [data-spw-utility-cluster="color-mode"],
 .spw-shell-utility-row[data-spw-base-material="matte"] [data-spw-utility-cluster="material-contrast"],
 .spw-shell-utility-row[data-spw-high-contrast="on"] [data-spw-utility-cluster="material-contrast"],
-.spw-shell-utility-row:not([data-spw-font-scale="1"]) [data-spw-utility-cluster="typography-scale"],
-.spw-shell-utility-row[data-spw-cauldron-visibility="prominent"] [data-spw-utility-cluster="cauldron-visibility"] {
+.spw-shell-utility-row:not([data-spw-font-scale="1"]) [data-spw-utility-cluster="typography-scale"] {
   border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 18%, transparent);
   background: color-mix(in oklab, var(--surface-strong, rgba(255,255,255,0.86)) 82%, var(--spw-shell-chrome-accent-local) 8%);
 }
@@ -531,10 +530,4 @@ html[data-spw-color-mode="dark"] .spw-shell-utility-row .spw-shell-utility-butto
   background: color-mix(in oklab, var(--surface-strong, rgba(25, 32, 37, 0.92)) 82%, var(--spw-shell-chrome-accent-local) 18%);
   color: var(--ink, rgba(236, 241, 238, 0.96));
   border-color: color-mix(in oklab, var(--spw-shell-chrome-accent-local) 34%, transparent);
-}
-
-/* Special affordance for the clear-matte action button itself when active. */
-.spw-shell-utility-button[data-spw-shell-action="clear-matte"][aria-pressed="true"] {
-  border-color: color-mix(in oklab, var(--op-action-color, var(--teal)) 32%, transparent);
-  background: color-mix(in oklab, var(--surface-matte-strong, rgba(252, 249, 243, 0.98)) 90%, var(--op-action-color, var(--teal)) 10%);
 }

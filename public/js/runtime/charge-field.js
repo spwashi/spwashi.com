@@ -20,6 +20,7 @@ const OPERATOR_DISCHARGE = Object.freeze({
   frame: 'ground',
   vibration: 'ground',
   address: 'ground',
+  ground: 'ground',
   integration: 'project',
   object: 'project',
   action: 'release',
@@ -34,6 +35,14 @@ const OPERATOR_DISCHARGE = Object.freeze({
   confluence: 'transfer',
   normalize: 'release',
   measure: 'release',
+  // route/stream/surface: real operators (7/19/11 pages), classified under
+  // RELATIONSHIP_OPERATORS below but previously absent here, so any
+  // charge/discharge on them silently fell back to 'release'. electrostatic-
+  // affordances.css independently infers discharge from the operator too —
+  // matching its groups keeps the CSS-only and JS-driven paths honest.
+  route: 'transfer',
+  stream: 'transfer',
+  surface: 'transfer',
 });
 
 const CURIOSITY_OPERATORS = new Set([

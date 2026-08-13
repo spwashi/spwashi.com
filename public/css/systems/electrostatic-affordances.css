@@ -29,7 +29,13 @@
   [data-spw-operator="meta"],
   [data-spw-operator="resource"],
   [data-spw-operator="support"],
-  [data-spw-operator="confluence"]
+  [data-spw-operator="confluence"],
+  /* route/stream/surface: real operators (7/19/11 pages) missing from this
+     table and from charge-field.js's OPERATOR_DISCHARGE alike; both fixed
+     together so the CSS-only and runtime-driven paths agree. */
+  [data-spw-operator="route"],
+  [data-spw-operator="stream"],
+  [data-spw-operator="surface"]
 ) {
   --spw-discharge-kind: transfer;
   --spw-discharge-color: var(--op-ref-color, #355f77);
