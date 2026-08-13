@@ -1,0 +1,182 @@
+# Arrival Electrostatics
+#
+# Perceptibility is a potential difference, not an animation. A page is a
+# nucleus with charged shells; a brace is a wall between fields; images are the
+# dielectric that lets a page hold meaning without spending it. An arrival can
+# only be perceptible where potential exists, which is why most arrivals must
+# stay silent — and why the silence is now derived rather than decided.
+
+#>arrival_electrostatics
+#:convention #!charge #!arrival #!attention #!progressive-enhancement
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@electrostatic_affordances: ~"./electrostatic-affordances.spw"
+@charge_cycle: ~"./charge-cycle.spw"
+@interaction_microstates: ~"./interaction-microstates.spw"
+@region_ecology: ~"./region-component-ecology.spw"
+@folding_organelle: ~"./folding-chrome-organelle.spw"
+@attribute_governance: ~"./data-spw-attribute-governance.spw"
+@arrival_cache: ~"../caches/arrival-perceptibility-2026-08.spw"
+@runtime: ~"../../public/js/runtime/arrival-shells.js"
+@css: ~"../../public/css/systems/arrival-electrostatics.css"
+@measure: ~"../../scripts/page-reasons.mjs"
+@file_physics: ~"../_workbench/.spw/conventions/file-physics.spw"
+@wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
+@ornament_contract: ~"./ornament-contract.spw"
+
+operation = "prime"
+fixity = "experimental"
+
+^"thesis"{
+  claim: "@electrostatic_affordances says charge is a field and operators are terminals. It stops at interaction. Arrival is the other half: a module landing is a charge arriving in a region, and it is perceptible only if there is a potential difference for it to cross. The site had none, so 58 mounts over 17.3s read as one wash."
+  correction: "@arrival_cache named the next step as a taste call — one feature arriving perceptibly, judged by eye. @measure says that is premature. An entrance on a page with no interior is a louder wash, which the cache itself refuses. Potential has to be built before it can be spent."
+  refuse: "Do not author an entrance. Author a wall, and let the entrance be what crossing it looks like."
+}
+
+^"terms"{
+  shell = "`data-spw-liminality` — entry, threshold, deep, projected, settled. Bands around the nucleus. A module arrives into the shell of the seat it lands in, not into a stream."
+  wall = "A brace (`data-spw-form=brace`) or a region that declares its purpose (`data-spw-region-purpose`). The boundary between two fields. Potential exists only across a wall; a page with one band has no interior and nothing to cross."
+  dielectric = "Image-bearing anatomy — figure, `data-spw-image-*`, media cards. Material that stores charge without conducting it. This is the metacognitive part: what lets a page mean something is precisely what refuses to spend it on arrival."
+  potential = "Distance the arrival crosses, normalized over the bands this page actually builds, raised by dielectric in the seat. Below breakdown the dielectric holds and nothing crosses."
+  discharge = "One per shell per arrival, drawn on the wall rather than on the content. Nothing moves, fades, or reflows; the edge of the seat briefly conducts."
+  grounding = "Every discharge sediments into encounter memory and cannot repeat. Ungrounded announcement is the falsification @arrival_cache already named."
+}
+
+^"measured_field"{
+  note: "npm run reasons, 2026-08-12. Re-measure rather than trust these."
+  routes = 153
+  feature_tokens = 31
+  tokens_backed_by_a_catalog_module = 10
+  tokens_backed_by_nothing = 21
+  ambient_tokens = "operators 145 routes, navigator 138, console 137 — declared nearly everywhere, so they differentiate nothing"
+  routes_that_solely_host_any_anatomy = 0
+  flat_routes = "124 of 153 — one liminality band or none"
+  conductive_routes = 28
+  richest = "home: 5 bands, 17 braces + 9 region purposes, 19 dielectric seats"
+}
+
+^"finding"{
+  claim: "No page on this site is the only host of anything. Every feature it hosts, at least one other route hosts too. That is the same defect as the arrival wash, one level up: pages are scheduled into a sitemap but not composed into a field, so no page has a reason to exist that a reader could feel."
+  consequence: "Perceptible arrival is downstream of page differentiation. A page that holds nothing rare has nothing to announce, and giving it an entrance would be announcing sameness."
+  vocabulary: "21 of 31 feature tokens schedule nothing. `route-discovery` is declared on 20 routes and names no module. These are not bugs — a token can be honest vocabulary — but they cannot carry a page's reason, and today they are the only thing distinguishing most routes from each other."
+}
+
+^"authoring_rule"{
+  write: #[
+    `data-spw-liminality on the seats that band a page — this is what gives it an interior`,
+    `data-spw-region-purpose on regions that are a boundary, not merely a box`,
+    `figure / data-spw-image-* where the page should hold rather than spend`
+  ][reg=set]
+  runtime_writes: #[
+    `html[data-spw-arrival-field] = conductive | flat | suppressed:<reason>`,
+    `data-spw-arrival-discharge on the seat, for a bounded window`,
+    `data-spw-arrival-dielectric on seats that held`,
+    `--spw-arrival-potential`
+  ][reg=set]
+  do_not_author: #[
+    `data-spw-arrival-discharge as first paint`,
+    `an entrance on a body-rooted module — a module that changed everything changed nothing and has no seat`,
+    `a second arrival palette; borrow --spw-charge-field per @electrostatic_affordances`
+  ][reg=set]
+}
+
+^"suppression"{
+  rule: "The runtime refuses to discharge under reduced motion, a minimal enhancement climate, or any non-default `data-spw-capture-mode`."
+  capture_reason: "Pages here are screenshotted and read by other models. A transient flourish caught mid-frame is indistinguishable from a rendering artifact in the capture, so it corrupts the read rather than enriching it."
+}
+
+# ── Wonders ────────────────────────────────────────────────────
+#
+# The site already wonders — `npm run wonder` finds 34 questions across
+# assets, graph, and four philosophy surfaces, and @wonder_doctrine is an entire
+# surface about what earns the name. What it lacked was the probeable form. Of
+# those 34, none carried a `!probe{}`, a `#>` anchor, a hypothesis, or a
+# measurement substrate; the workbench canon carries 176 that do. So the site
+# had the doctrine and the questions but no way to settle one, and no address by
+# which another surface could cite one. These four are the first with all of it.
+
+#>wonder_arrival_potential_1
+?["Can a page earn an interior, or does an interior have to be authored?"]{
+  #:depth #!experiential ~#lens(charged shell)
+  ~#tension: "124 of 153 routes are flat. Banding them by hand is 124 authoring decisions; deriving bands from existing structure risks calling every <section> a threshold and flattening the distinction into noise."
+  ~#hypothesis: "liminality is not derivable from layout — a threshold is a claim about what a reader crosses, and nothing in the DOM knows that."
+  !probe{ "take three flat routes and band them by hand. then try to write the rule that would have produced those bands from their existing markup. if the rule needs a judgment the markup does not carry, the hypothesis holds." }
+  $%[route.shellBands, route.wallTotal, route.dielectricTotal]
+}
+
+#>wonder_arrival_potential_2
+?["If no page solely hosts anything, what is a page?"]{
+  #:depth #!mathematical ~#lens(field differentiation)
+  ~#hypothesis: "the site's routes are currently views over one undifferentiated corpus, and the feature vocabulary is decoration on top of that sameness rather than a description of it."
+  !probe{ "npm run reasons — read 'exclusive holdings'. it is empty. now pick the route you would most defend as necessary and ask what it holds that another route could not. if the answer is copy rather than anatomy, the site's differentiation lives entirely in prose." }
+  $%[feature.hostedOnRoutes, route.declaredFeatures, route.exclusive]
+}
+
+#>wonder_arrival_potential_3
+?["What is the runtime's obligation to a reader who cannot see it?"]{
+  #:depth #!educational ~#lens(dielectric)
+  ~#tension: "the discharge suppresses under reduced motion, minimal climate, and capture mode — three populations who get scheduling with no perceptibility at all, which is the exact wash this convention exists to fix."
+  ~#hypothesis: "perceptibility has a non-motion register that has not been designed: weight, order, density, or copy that says what arrived."
+  !probe{ "load home with prefers-reduced-motion. ask what, if anything, told you the page finished becoming itself. whatever you name is the missing register." }
+  $%[html.arrivalField, module.effectiveWhen]
+}
+
+#>wonder_arrival_potential_4
+?["Does a shell that never fills still teach?"]{
+  #:depth #!computational ~#lens(quantized arrival)
+  ~#hypothesis: "electron shells fill before the next opens; this runtime does not enforce that — it permits one discharge per shell but never waits for a shell to complete, so 'shell' is currently a label on a band rather than a stage in a sequence."
+  ~#tension: "enforcing fill-order would mean holding arrivals back, which is scheduling — and @arrival_cache was explicit that perceptibility is a distinct axis from scheduling. Making them the same thing may be the point, or may be the mistake."
+  !probe{ "__SPW_SITE__.loadTrace.steps() on home, grouped by the liminality band of each step's root. do arrivals into outer bands actually follow inner ones, or is the ordering unrelated to depth?" }
+  $%[runtime.stage, module.mountedAt, seat.liminality]
+}
+
+^"doctrine_review"{
+  note: "@wonder_doctrine#wonder_as_design_criterion is the site's own gate for whether an effect earns the name. Running the discharge against it rather than against taste, because the doctrine predates this work and is therefore not tuned to pass it."
+  test_structural = "passes — potential is derived from bands, walls and dielectric that the reader can inspect; `__SPW_SITE__.arrivalField.field()` explains any given silence."
+  test_honest = "passes — remove the walls and the discharge stops; add an image to the seat and it blooms instead of sparking. The complexity is in the material."
+  test_inspectable = "passes — named state (data-spw-arrival-field), named register (grounding store), reproducible via arrivalField.reset()."
+  test_vocabulary = "passes — shells, walls, dielectric and discharge are @electrostatic_affordances and @charge_cycle terms, not imported motion design."
+  test_earned = "FAILS, and deliberately. The doctrine wants depth that prior engagement unlocks; this spends its charge on a first encounter and grounds it away forever after. It is the inverse of earned. See #>wonder_arrival_potential_5 — this is the live disagreement, not an oversight."
+  ambient_check = "passes @wonder_doctrine#ambient_decoration's inversion test: potential rises with distance from the nucleus, so outer bands get more than entry, not less."
+}
+
+^"measurement_substrates"{
+  claim: "A `$%[…]` list is a component contract. It names what a surface must be able to show for its question to be answerable, which is a spec for an inspection component before it is a note in a file."
+  example: "`$%[route.shellBands, route.wallTotal, route.dielectricTotal]` is satisfiable today by @measure; `$%[html.arrivalField, module.effectiveWhen]` by @runtime and the load trace; `$%[seat.liminality]` by nothing yet — no surface joins a mounted module to the band of the seat it landed in."
+  consequence: "Collecting the substrates across all wonders yields the backlog of inspection components the site has implicitly promised. `npm run wonder:measures` prints that list."
+  handles: "A brace is a wall, and a wall a reader can grab is a handle. Serializable regions are the same claim from the other side — a region that can emit its own `$%[…]` is a region whose boundary is addressable. That is the unbuilt half; the ornamented enclosure `npm run wonder` prints is what it should look like when a region prints itself."
+}
+
+#>wonder_arrival_potential_5
+?["Should arrival be spent on a stranger or saved for a regular?"]{
+  #:depth #!experiential ~#lens(earned depth)
+  ~#tension: "@wonder_doctrine#earned_depth says depth must be unlocked by prior engagement. This discharge does the opposite — it fires on first encounter and grounds away forever, so the reader who returns most gets least. Both positions are defensible and the code currently only implements one."
+  ~#hypothesis: "they are answers to different questions: a first encounter needs orientation, a return needs reward, and treating perceptibility as one axis is what forces the choice."
+  !probe{ "reset grounding, load home as a stranger, then load it five times as a regular. name what each visit gave you. if the stranger got orientation and the regular got nothing, the single-axis model is the defect." }
+  $%[surface.familiarity, arrival.grounded, seat.liminality]
+}
+
+#>wonder_arrival_potential_6
+?["Why are there so few ornaments, when the ornament is what makes the region graspable?"]{
+  #:depth #!stylistic ~#lens(wall as handle)
+  ~#tension: "`npm run wonder` prints an enclosure — a corner, a bar, a closing rule — and that ornament is doing real work: it makes a group a group, and its edge is where a reader would grab. The site has @ornament_contract and a whole css/ornament tree, yet regions on the page rarely carry an edge you could take hold of."
+  ~#hypothesis: "ornament was treated as decoration and therefore rationed, when a brace is structural — a wall is a handle, and removing the ornament removed the grip rather than the noise."
+  !probe{ "compare `npm run wonder` output against the same region rendered in the browser. the terminal version has a graspable boundary and the page version does not. ask which one is missing the affordance." }
+  $%[region.ornamentDensity, region.serializable, brace.handleCount]
+}
+
+^"validation"{
+  probe: `npm run reasons`
+  probe_wonder_measures: `npm run wonder:measures — the inspection components this surface has implicitly promised`
+  probe_field: `__SPW_SITE__.arrivalField.field() — conductive | flat | suppressed, with shells, walls, dielectrics`
+  probe_replay: `__SPW_SITE__.arrivalField.reset() then reload — a grounded discharge becomes visible again`
+  probe_wonders: `npm run wonder`
+  falsification: #[
+    `A discharge fires on a route npm run reasons calls flat.`,
+    `A discharge repeats on a second visit to the same surface, meaning grounding did not write.`,
+    `A seat marked for discharge is attributed a layout shift by layout-shift-audit — the treatment is supposed to be layout-inert.`
+  ][reg=set]
+  next: "Judged by eye in a browser on home, which is the only richly conductive route. That call is the human's per @interaction_microstates review posture; this surface's job was to make the silence everywhere else derived rather than decided."
+}

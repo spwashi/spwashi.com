@@ -28020,6 +28020,130 @@ html[data-spw-high-contrast="on"] :where(.site-frame, .frame-card, .frame-panel)
 }
 }
 
+/* /public/css/systems/arrival-electrostatics.css */
+@layer systems {
+/* ==========================================================================
+   arrival-electrostatics.css
+   --------------------------------------------------------------------------
+   The visible half of runtime/arrival-shells.js.
+
+   The bar this has to clear is stated in
+   .spw/caches/arrival-perceptibility-2026-08.spw: "as subtle as necessary to
+   be tasteful, as noticeable as necessary to be seen." Both sides fail
+   commonly — skeletons and spinners are noticeable but not tasteful; ordinary
+   progressive enhancement is tasteful but imperceptible.
+
+   The design decision that keeps it on the tasteful side is that a discharge
+   is drawn on the WALL, not on the content. Nothing about the arriving element
+   moves, fades, scales, or reflows. What changes is the edge of the seat it
+   landed in — the boundary between two fields briefly conducts, then stops.
+   A reader who is looking sees a threshold light up. A reader who is not
+   looking loses nothing, because no text moved under their eyes.
+
+   Two knobs, both written by the runtime from what the page is made of:
+     --spw-arrival-potential   0..1, how much charge crossed
+     --spw-arrival-dielectric  1 when the seat holds an image
+
+   An image-bearing seat spends longer and softer: dielectric material stores,
+   so its discharge is a slow bloom rather than a spark. That is the one place
+   where images change how arrival feels, and it is deliberate — images are the
+   highest-capacitance material on the page.
+
+   Layout safety: outline, box-shadow and opacity only. No transforms on the
+   seat, no properties that create a containing block, nothing that can be
+   attributed as a layout shift by layout-shift-audit.
+   ========================================================================== */
+
+:where([data-spw-arrival-discharge]) {
+  --spw-arrival-potential: 0;
+  --spw-arrival-dielectric: 0;
+
+  /* Borrow the charge field's hue rather than introducing a second palette —
+     electrostatic-affordances.spw: "One room loudness. Do not author a second
+     field per card." */
+  --spw-arrival-accent: var(--spw-charge-field-color, var(--active-op-color, #008080));
+
+  /* Presence is the product of what crossed and how loud the room already is,
+     so a minimal enhancement climate mutes this without a separate rule. */
+  --spw-arrival-presence: calc(
+    var(--spw-arrival-potential) * var(--spw-enhancement-factor, 1)
+  );
+
+  position: relative;
+}
+
+/* The wall itself. An inset hairline along the seat's edge, brightest where the
+   potential was highest, riding in and back out over the discharge window.
+   `inset` box-shadow cannot affect layout and cannot escape the seat. */
+:where([data-spw-arrival-discharge])::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  opacity: 0;
+
+  box-shadow:
+    inset 0 0 0 1px
+      color-mix(
+        in srgb,
+        var(--spw-arrival-accent) calc(var(--spw-arrival-presence) * 55%),
+        transparent
+      ),
+    inset 0 0 calc(12px * var(--spw-arrival-presence)) 0
+      color-mix(
+        in srgb,
+        var(--spw-arrival-accent) calc(var(--spw-arrival-presence) * 22%),
+        transparent
+      );
+
+  animation: spw-arrival-discharge 900ms var(--ease-smooth, cubic-bezier(0.22, 0.61, 0.36, 1)) both;
+}
+
+/* Dielectric seats hold, so they bloom instead of sparking: longer window,
+   lower peak, a slower release. Same energy, spent over more time. */
+:where([data-spw-arrival-discharge][data-spw-arrival-dielectric='held'])::after {
+  animation-duration: 1600ms;
+  animation-timing-function: var(--ease-soft, cubic-bezier(0.33, 0, 0.15, 1));
+}
+
+/* Outer shells sit further from the nucleus and read as arrivals from further
+   away — the hairline gives way to a soft edge as the band climbs. */
+:where([data-spw-arrival-discharge='projected'])::after,
+:where([data-spw-arrival-discharge='settled'])::after {
+  box-shadow:
+    inset 0 0 calc(18px * var(--spw-arrival-presence)) 0
+      color-mix(
+        in srgb,
+        var(--spw-arrival-accent) calc(var(--spw-arrival-presence) * 26%),
+        transparent
+      );
+}
+
+@keyframes spw-arrival-discharge {
+  0%   { opacity: 0; }
+  22%  { opacity: 1; }
+  55%  { opacity: 0.72; }
+  100% { opacity: 0; }
+}
+
+/* The runtime already refuses to discharge under reduced motion, capture mode,
+   or a minimal climate. This is the second line of that defence, in case a
+   discharge attribute survives a soft navigation into one of those states. */
+@media (prefers-reduced-motion: reduce) {
+  :where([data-spw-arrival-discharge])::after {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+:where(html[data-spw-arrival-field^='suppressed'] [data-spw-arrival-discharge])::after,
+:where(body[data-spw-capture-mode]:not([data-spw-capture-mode='default']) [data-spw-arrival-discharge])::after {
+  animation: none;
+  opacity: 0;
+}
+}
+
 /* /public/css/systems/surfaces/base.css */
 @layer systems {
 /* ==========================================================================

@@ -827,6 +827,13 @@ async function bootSite() {
   import('./runtime/load-trace.js')
     .then((m) => m.initLoadTrace(runtimeCtx))
     .catch(() => {});
+  // Same reason, same seat: arrival-shells decides whether a landing is
+  // perceptible, so it must be listening before the first module lands. On the
+  // 124 flat routes it surveys the page, finds no wall, and does nothing
+  // further — the cost of being wired everywhere is one querySelectorAll pass.
+  import('./runtime/arrival-shells.js')
+    .then((m) => runtimeCtx.addCleanup(m.initArrivalShells(runtimeCtx)))
+    .catch(() => {});
   // Project debug/qa posture after query disposition so dataset + URL agree.
   runtimeCtx.debugQa = applyDebugQaPostureToRoot(HTML, readDebugQaPosture());
   // Refresh debug token set for catalog gates (may have been filled by posture).
@@ -1106,6 +1113,17 @@ window.__SPW_SITE__ = {
     highlight: (index, options) => import('./runtime/load-trace.js').then((m) => m.highlightStep(index, options)),
     clear: () => import('./runtime/load-trace.js').then((m) => m.clearLoadTraceHighlight()),
     stepTo: (count) => import('./runtime/load-trace.js').then((m) => m.stepTo(count, window.__SPW_SITE__)),
+  },
+  /**
+   * Why this page's arrivals were or were not perceptible.
+   * field() reports shells, walls, dielectrics and whether the page can
+   * conduct at all; reset() forgets grounding so a discharge can be seen
+   * again on the next load. Pairs with `npm run reasons` for the static half.
+   */
+  arrivalField: {
+    field: () => import('./runtime/arrival-shells.js').then((m) => m.describeArrivalField()),
+    survey: () => import('./runtime/arrival-shells.js').then((m) => m.surveyArrivalField()),
+    reset: (surface) => import('./runtime/arrival-shells.js').then((m) => m.resetArrivalGrounding(surface)),
   },
   layoutQa: {
     snapshot: (options = {}) => import('./runtime/layout-qa.js').then((m) => m.snapshotLayoutQa({

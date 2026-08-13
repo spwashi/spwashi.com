@@ -18,6 +18,11 @@
 @load_trace: ~"../../public/js/runtime/load-trace.js"
 @familiarity_gate: ~"../../public/js/runtime/familiarity-gate.js"
 @module_loader: ~"../../public/js/runtime/module-loader.js"
+@arrival_electrostatics: ~"../conventions/arrival-electrostatics.spw"
+@wonder_doctrine: ~"../philosophy/wonder-doctrine.spw"
+@page_reasons: ~"../../scripts/page-reasons.mjs"
+@wonder_script: ~"../../scripts/wonder.mjs"
+@arrival_shells: ~"../../public/js/runtime/arrival-shells.js"
 
 operation = "cache"
 fixity = "tending"
@@ -65,8 +70,34 @@ fixity = "tending"
   caution: "First grep for this returned a false negative on the promo element. Check both the source route and dist/ before concluding a feature claim is phantom."
 }
 
+^"insight #ri-002"{
+  status: "landed"
+  supersedes: "still_missing.axis — perceptibility is now built, but not where this cache expected it"
+  correction: "next_smallest said one feature arriving perceptibly, judged by eye. Measuring first said that was premature. `npm run reasons`: 153 routes, and 124 of them have one liminality band or none. An entrance on a page with no interior is a louder wash, which refuse already forbids. Potential has to exist before it can be spent, so the pass built the field rather than the flourish."
+  finding: "No route on this site is the sole host of any anatomy. 31 feature tokens: 21 name no catalog module at all, and of the 10 that do, three (operators 145 routes, navigator 138, console 137) are declared nearly everywhere. Page differentiation is carried almost entirely by prose."
+  model: "Arrival perceptibility as electrostatics — shells (liminality bands), walls (braces / region purposes), dielectric (image-bearing seats), potential across a wall, discharge grounded into encounter memory. Promoted to @arrival_electrostatics."
+  landed: #[
+    `scripts/page-reasons.mjs + npm run reasons — per-route charge, shells, walls, dielectric; splits phantom claims into unbacked vocabulary vs unhosted anatomy`,
+    `public/js/runtime/arrival-shells.js — the perceptibility axis; refuses to discharge where no wall exists, so 124 flat routes stay silent by physics rather than by veto`,
+    `public/css/systems/arrival-electrostatics.css — the discharge drawn on the wall, not the content; layout-inert, suppressed under reduced-motion and capture mode`,
+    `.spw/conventions/arrival-electrostatics.spw — the model, reviewed against @wonder_doctrine's own five tests`
+  ][reg=set]
+  doctrine_result: "Passes structural, honest, inspectable and vocabulary. Fails earned — it spends on a stranger and grounds away from the regular, which is the inverse of what the doctrine wants. Left as a live disagreement in wonder_arrival_potential_5 rather than reconciled by fiat."
+}
+
+^"insight #ri-003"{
+  status: "landed"
+  claim: "The site had the doctrine for wondering and none of the apparatus. `npm run wonder` finds 34 questions across assets, graph and four philosophy surfaces; not one carried a `!probe{}`, a `#>` anchor, a hypothesis, or a measurement substrate. The workbench canon carries 176 that do. Questions lived here as prose and therefore could not be cited, run, or closed."
+  landed: "scripts/wonder.mjs — harvests wonders, renders them as ornamented enclosures that preserve the form's contour in a second medium, and resolves each `$%[…]` substrate against the surfaces that actually produce it."
+  substrate_as_contract: "A `$%[…]` list is a component spec: what a region must be able to show for its question to be answerable. 9 of 16 substrates resolve today; the 7 that do not are the inspection components the runtime cannot yet be asked about (seat.liminality, brace.handleCount, region.ornamentDensity, module.mountedAt, runtime.stage, surface.familiarity, route-side joins)."
+  caution: "First resolver matched bare words and reported seat.liminality as satisfied because page-reasons says 'liminality' somewhere. A mention is not a producer — require a producing position or a backlog will report itself complete."
+}
+
 ^"validation"{
   probe: `__SPW_SITE__.loadTrace.summary() on any route; byWhen, deferred, shifted, spanMs`
+  probe_reasons: `npm run reasons — phantom claims, flat pages, exclusive holdings, feature spread`
+  probe_field: `__SPW_SITE__.arrivalField.field() — why this page did or did not conduct`
+  probe_wonder: `npm run wonder && npm run wonder:measures`
   probe_familiarity: `applyFamiliarityGate({familiarity:'practiced'}, MOUNT_WHEN, 'immediate', surface) returns 'idle' when fresh and null once earned`
   falsification: "A new feature ships with an entrance animation but no encounter memory, so it announces itself on every visit forever."
   next_smallest: "One feature arriving perceptibly, judged by eye in a browser. This is a taste call and does not want another abstraction in front of it."

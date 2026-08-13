@@ -54,6 +54,7 @@
 @attention_field: ~"./attention-field.spw"  # now carries aligned operational_semantics for cognitive+computational use
 @charge_cycle: ~"./charge-cycle.spw"
 @electrostatic_affordances: ~"./electrostatic-affordances.spw"
+@arrival_electrostatics: ~"./arrival-electrostatics.spw"  # arrival as potential difference; carries the site's first probeable wonders
 @wonder_vocabulary: ~"./wonder-vocabulary.spw"
 @page_anatomy_vocabulary: ~"./page-anatomy-vocabulary.spw"
 @page_template_authoring: ~"./page-template-authoring.spw"

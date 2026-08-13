@@ -42,6 +42,8 @@
     "bench:nav:ci": "node scripts/perf-matrix.mjs --quick --warm --json",
     "census": "node scripts/language-census.mjs",
     "census:json": "node scripts/language-census.mjs --json",
+    "reasons": "node --import ./scripts/lib/register-public-imports.mjs scripts/page-reasons.mjs",
+    "reasons:json": "node --import ./scripts/lib/register-public-imports.mjs scripts/page-reasons.mjs --json",
     "ecology": "node scripts/spw-ecology-inventory.mjs",
     "ecology:json": "node scripts/spw-ecology-inventory.mjs --json",
     "ecology:strict": "node scripts/spw-ecology-inventory.mjs --strict",
