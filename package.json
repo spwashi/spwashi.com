@@ -75,7 +75,7 @@
     "icons:pwa": "node scripts/generate-pwa-icons.mjs",
     "icons:pwa:check": "node scripts/generate-pwa-icons.mjs --check",
     "images:manifest": "node scripts/image-resource-manifest.mjs",
-    "manifest": "node scripts/generate-route-runtime-manifest.mjs && node scripts/generate-site-search-index.mjs",
+    "manifest": "node scripts/generate-route-runtime-manifest.mjs && node scripts/generate-site-search-index.mjs && npm run manifest:expressions",
     "manifest:tmp": "SPW_ROUTE_MANIFEST_OUTPUT=\"${TMPDIR:-/tmp}/spwashi-route-runtime-manifest.json\" node scripts/generate-route-runtime-manifest.mjs",
     "search:index": "node scripts/generate-site-search-index.mjs",
     "plans:index": "node scripts/maintain-plan-directory-indexes.mjs",
@@ -98,7 +98,8 @@
     "sitemap": "node scripts/generate-sitemap.mjs",
     "typecheck": "tsc --noEmit && tsc -p tsconfig.scripts.json --noEmit && tsc -p tsconfig.runtime.json --noEmit",
     "typecheck:root": "tsc --noEmit",
-    "audit": "npm audit --audit-level=moderate"
+    "audit": "npm audit --audit-level=moderate",
+    "manifest:expressions": "node --import ./.spw/_workbench/node_modules/tsx/dist/loader.mjs scripts/build-expression-manifest.mjs"
   },
   "devDependencies": {
     "@types/node": "^20.19.39",

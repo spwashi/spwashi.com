@@ -52,6 +52,11 @@ const VALID_ROOT_MODES = new Set(['single', 'each']);
 const CONTRACT_TOKEN_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const ALLOWED_ROOT_JS_FILES = new Set(['compose.js', 'site.js']);
 const ALLOWED_JS_OWNER_DIRECTORIES = new Set([
+    // Build output, never hand-edited: parsed artifacts the browser reads so it
+    // does not have to compute them. Kept as its own family precisely so the
+    // authored/generated boundary stays visible in the import path — see
+    // scripts/build-expression-manifest.mjs.
+    'generated',
     'interface',
     'kernel',
     'media',

@@ -75,6 +75,7 @@
 @import url('/public/css/systems/projection-attenuation.css') layer(systems);
 @import url('/public/css/systems/electrostatic-affordances.css') layer(systems);
 @import url('/public/css/systems/arrival-electrostatics.css') layer(systems);
+@import url('/public/css/systems/expression-resonance.css') layer(systems);
 @import url('/public/css/systems/surfaces/base.css') layer(systems);
 @import url('/public/css/systems/surfaces/media.css') layer(systems);
 @import url('/public/css/systems/surfaces/topics.css') layer(systems);

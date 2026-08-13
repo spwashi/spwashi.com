@@ -28144,6 +28144,136 @@ html[data-spw-high-contrast="on"] :where(.site-frame, .frame-card, .frame-panel)
 }
 }
 
+/* /public/css/systems/expression-resonance.css */
+@layer systems {
+/* ==========================================================================
+   expression-resonance.css
+   --------------------------------------------------------------------------
+   The visible half of runtime/expression-resonance.js.
+
+   Authored Spw expressions have been decorative for their whole life: 441
+   data-spw-semantic-expression values that no runtime read. This is what it
+   looks like when they mean something — touching one element reveals every
+   other element on the page that shares its subject, mode, or body part.
+
+   Two timescales, drawn differently on purpose:
+
+     kin        transient. Present only while attention is on a source, gone on
+                leave. Drawn as a tint and an edge, never as motion, because a
+                dozen elements lighting at once must not read as the page
+                twitching.
+     salience   accumulated. Bands 1..4 from how often a reader has actually
+                travelled a token. Warmth that survives the visit.
+
+   The distinction is @interaction_microstates#reward_contract's boundary rule:
+   potential display is pulse-shaped, reward display is residue-shaped, and a
+   preview is never promoted into residue. Here that is literal — kin is a
+   transient attribute, salience is written from a persisted ledger.
+
+   Layout safety: color, box-shadow and outline only. Nothing here changes size,
+   position, or flow, because kin can be scattered anywhere in the document and
+   a relation should never rearrange the page it explains.
+   ========================================================================== */
+
+:where([data-spw-semantic-expression]) {
+  --spw-expression-resonance: 0;
+  /* Borrow the room's charge hue — electrostatic-affordances.spw: one field,
+     not a second palette per component. */
+  --spw-expression-accent: var(--spw-charge-field-color, var(--active-op-color, #008080));
+  --spw-expression-warmth: 0;
+  transition:
+    box-shadow var(--duration-base, 220ms) var(--ease-smooth, ease),
+    color var(--duration-base, 220ms) var(--ease-smooth, ease);
+}
+
+/* ── Kin: transient inductive coupling ─────────────────────────────────── */
+
+:where([data-spw-expression-kin]) {
+  box-shadow:
+    inset 0 0 0 1px
+      color-mix(
+        in srgb,
+        var(--spw-expression-accent) calc(var(--spw-expression-resonance) * 42%),
+        transparent
+      );
+}
+
+/* The element under the pointer is the terminal the field runs from, so it
+   reads as source rather than as one more kin. */
+:where([data-spw-expression-resonating]) {
+  box-shadow:
+    inset 0 0 0 1.5px
+      color-mix(in srgb, var(--spw-expression-accent) 62%, transparent),
+    0 0 0 1px
+      color-mix(in srgb, var(--spw-expression-accent) 22%, transparent);
+}
+
+/* Relation kind is legible without a legend: sharing a subject is a solid
+   coupling, sharing a mode is lighter, sharing a part is the faintest tie. */
+:where([data-spw-expression-kin="mode"]) {
+  --spw-expression-accent: var(--op-probe-color, #7a4fb5);
+}
+:where([data-spw-expression-kin="part"]) {
+  --spw-expression-accent: var(--op-thread-color, var(--active-op-color, #008080));
+}
+
+/* ── Salience: accumulated warmth ──────────────────────────────────────── */
+
+:where([data-spw-expression-salience="1"]) { --spw-expression-warmth: 0.25; }
+:where([data-spw-expression-salience="2"]) { --spw-expression-warmth: 0.5; }
+:where([data-spw-expression-salience="3"]) { --spw-expression-warmth: 0.75; }
+:where([data-spw-expression-salience="4"]) { --spw-expression-warmth: 1; }
+
+/* Warmth sits under the text rather than around it — a token you have
+   travelled often should feel worn in, not decorated. */
+:where([data-spw-expression-salience]) {
+  box-shadow:
+    inset 0 calc(-2px * var(--spw-expression-warmth)) 0 -1px
+      color-mix(
+        in srgb,
+        var(--spw-expression-accent) calc(var(--spw-expression-warmth) * 45%),
+        transparent
+      );
+}
+
+/* A worn token that is also kin shows both: the tie and the history. */
+:where([data-spw-expression-salience][data-spw-expression-kin]) {
+  box-shadow:
+    inset 0 0 0 1px
+      color-mix(
+        in srgb,
+        var(--spw-expression-accent) calc(var(--spw-expression-resonance) * 42%),
+        transparent
+      ),
+    inset 0 calc(-2px * var(--spw-expression-warmth)) 0 -1px
+      color-mix(
+        in srgb,
+        var(--spw-expression-accent) calc(var(--spw-expression-warmth) * 45%),
+        transparent
+      );
+}
+
+/* Minimal climate mutes the whole system rather than each rule separately. */
+:where(html[data-spw-enhancement-level="minimal"] [data-spw-semantic-expression]) {
+  --spw-expression-resonance: 0;
+  --spw-expression-warmth: 0;
+}
+
+/* Capture mode: a relation lit mid-frame reads as a rendering artifact to a
+   model interpreting the screenshot. Same reason arrival-electrostatics
+   suppresses there. */
+:where(body[data-spw-capture-mode]:not([data-spw-capture-mode="default"]) [data-spw-expression-kin]),
+:where(body[data-spw-capture-mode]:not([data-spw-capture-mode="default"]) [data-spw-expression-resonating]) {
+  box-shadow: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where([data-spw-semantic-expression]) {
+    transition: none;
+  }
+}
+}
+
 /* /public/css/systems/surfaces/base.css */
 @layer systems {
 /* ==========================================================================

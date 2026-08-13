@@ -618,6 +618,30 @@ export const ENHANCEMENT_DEFS = [
     load: () => import('../interface/state-inspector.js'),
   },
   {
+    // Authored Spw expressions become inductive: sharing a subject, mode, or
+    // body part relates two elements, and the relation was authored rather than
+    // inferred. Parsing happened at build time (scripts/build-expression-manifest.mjs)
+    // so nothing here ships a parser. IDLE because the page is complete without
+    // it — this reinforces meaning that is already on the page.
+    id: 'expression-resonance',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IDLE,
+    selector: '[data-spw-semantic-expression]',
+    rootMode: 'single',
+    describes: 'expression[kin]{subject.mode.part}<resonance>',
+    updates: [
+      'flourish:data-spw-expression-kin',
+      'flourish:data-spw-expression-resonating',
+      'residue:data-spw-expression-salience',
+      'measure:--spw-expression-resonance',
+    ],
+    evaluates: 'semantic expression kinship resonance salience accumulation',
+    timingArc: 'idle-semantic-reinforcement',
+    timingChunk: 'idle-residue',
+    effectScope: 'local-dom flourish residue storage',
+    load: () => import('./expression-resonance.js'),
+  },
+  {
     id: 'image-discovery-rewards',
     layer: MODULE_LAYERS.ENHANCEMENT,
     when: MOUNT_WHEN.VISIBLE,
