@@ -19,6 +19,37 @@ npm run spw -- analyze .spw/conventions                     # ref/probe densitie
 npm run spw:plan:check                                      # plan cache drift (feature branches)
 ```
 
+## Keep the tree followable
+
+This tree is becoming the upstream for site copy and component architecture, so
+a citation that no longer resolves is a broken copy source rather than untidiness.
+
+```bash
+npm run spw:integrity                                       # every ~"…" citation, path + #anchor
+npm run spw:census                                          # population: lines, refs, frames, roles
+npm run spw:graph                                           # hubs, cycles, familiarity strands
+npm run spw:lattice                                         # ~#name(reading) apposition cells
+npm run wonder                                              # open questions + their probes
+npm run wonder:measures                                     # $%[…] substrates ↔ producers
+```
+
+`spw:integrity` enforces `caches/index.spw#cache_rules` r4, which named the
+rename fragility but had no automation behind it. It delegates *extraction* to
+`spw query --selector pathRefs` — the parser decides what a citation is — and
+only adds *resolution*: does the path exist, and does the `#fragment` name
+anything in the target. All 2480 citations currently resolve.
+
+**Known workbench gaps** (this consumer is a use case the workbench predates):
+
+- Citation targets are emitted as opaque strings. `./foo.spw#bar` arrives
+  unsplit and unclassified, so every consumer re-derives path-vs-fragment and
+  route-vs-file for itself. A *resolved citation* would be a more useful
+  intermediate form; `spw cite` / `spw follow` address content hashes, not
+  references.
+- `spw lattice` reads only `~#name(body)` unit cells. Plain `~#name:` apposition
+  — the form nearly every surface here uses — is invisible to it, so the
+  corpus reported zero readings while carrying thousands.
+
 Equivalent long form (same paths):
 
 ```bash

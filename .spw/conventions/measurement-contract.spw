@@ -10,7 +10,7 @@
 #:operation #!contract
 #:fixity #!stable
 
-@operator_site_projection: ~"./operator-site-projection.spw#measure_operator"
+@operator_site_projection: ~"./operator-site-projection.spw#measure_kind_contract"
 @attention_field: ~"./attention-field.spw"
 @planning_ecology: ~"./planning-ecology.spw#operational_semantics_template"
 @workbench_claims: ~"../_workbench/.spw/harness/claim-protocol.spw"

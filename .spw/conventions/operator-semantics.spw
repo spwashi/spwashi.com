@@ -491,6 +491,6 @@
   @spatial_grammar: ~"../philosophy/spatial-grammar.spw"
   @brace_physics: ~"../_workbench/.spw/registries/brace-physics.spw"
   @operator_geometry_runtime: ~"../../public/js/kernel/shared.js"
-  @operator_geometry_projection: ~"../../public/css/handles/operators.css"
+  @operator_geometry_projection: ~"../../public/css/handles/operators/"
   @operator_atlas: ~"../../topics/software/spw/"
 }

@@ -8,7 +8,7 @@
 @css_instruction: ~"../conventions/css-instruction.spw"
 @tokens_core: ~"../../public/css/tokens/core.css"
 @grammar_syntax: ~"../../public/css/grammar/syntax.css"
-@handles_operators: ~"../../public/css/handles/operators.css"
+@handles_operators: ~"../../public/css/handles/operators/"
 @effects_wonder: ~"../../public/css/effects/wonder.css"
 @ornament: ~"../../public/css/ornament/ornament.css"
 @spw_css_architecture_plan: ~"../../.agents/plans/archive/spw-css-architecture/PLAN.md"

@@ -19,7 +19,7 @@
     tools: [
       "/image-naming-magic [image-path] — interactive visual analysis and name suggestion"
     ]
-    documentation: ~"../assets.spw :: workflow.naming"
+    documentation: ~"../assets.spw#workflow"
   }
 
   optimization: {
@@ -35,7 +35,7 @@
       motifs: { icon: "64x64", display: "256x256", large: "512x512" }
     }
     quality_targets: { thumb: 40, display: 60, hero: 75 }
-    documentation: ~"../assets.spw :: workflow.optimization"
+    documentation: ~"../assets.spw#workflow"
   }
 
   metadata: {

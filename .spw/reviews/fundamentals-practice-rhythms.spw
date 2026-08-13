@@ -11,8 +11,8 @@
 @css_instruction: ~"../conventions/css-instruction.spw"
 @site_semantics: ~"../conventions/site-semantics.spw"
 @design_wonder_hub: ~"../../design/index.html"
-@cauldron: ~"../conventions/ (multiple cauldron/garden references)"
-@spirit_cycle: ~"../conventions/ (spirit cycle phases)"
+@cauldron: ~"../conventions/site-semantics.spw"
+@spirit_cycle: ~"../philosophy/spirit-cycle.spw"
 @slices_plan: ~"../../.agents/plans/modular-experience-slices/PLAN.md"
 @tending_note_template: ~"../../.agents/plans/modular-experience-slices/templates/tending-note.spw"
 
