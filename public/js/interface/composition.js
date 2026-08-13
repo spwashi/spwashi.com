@@ -48,7 +48,7 @@ import {
   syncFloatingChip,
 } from './cauldron/chrome.js';
 import { deriveNumericityQuantifiers, isNumericalConcept, parseNumericalValue } from './cauldron/helpers.js';
-import { escapeHtml, getCauldron, inferOperator, normalizeIngredient } from './cauldron/storage.js';
+import { escapeHtml, getCauldron, inferOperator, normalizeIngredient, readSigilPayload, toSpwExpression } from './cauldron/storage.js';
 import { cauldronTrace, recordGestureTrace, recordPlantedTrail } from './cauldron/trace.js';
 import {
   clearMixOutputState,
@@ -1014,7 +1014,20 @@ function onCapture(event) {
     deepLink: deepLinkState.href || null,
     deepLinkLabel: deepLinkState.label || null,
     semanticExpression: deepLinkState.semanticExpression || expression,
+    // Sigil payload alignment: the node already carried scope/page/family/role/
+    // topic/region and the shell it stood in. Capture kept only `origin`, so a
+    // gathered fragment forgot everything about where it was except the surface
+    // name. Recording it here makes the ingredient expressible in native Spw
+    // (see toSpwExpression) and lets a cast spell honour where it came from.
+    payload: detail.payload || readSigilPayload(sourceElement),
+    // Filled below: the native-Spw rendering and whether it was read naively
+    // (string alone) or integrated against the payload it was taken from.
+    spwExpression: '',
+    spwParse: 'naive',
   };
+  const rendered = toSpwExpression(ingredient);
+  ingredient.spwExpression = rendered.text;
+  ingredient.spwParse = rendered.depth;
 
   // Numericity: if this capture is a number concept (from living-term on rhythm text etc.),
   // enrich it so the cauldron can derive responsive quantifiers automatically.
