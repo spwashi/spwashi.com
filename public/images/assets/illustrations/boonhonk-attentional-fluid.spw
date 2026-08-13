@@ -1,0 +1,44 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "boonhonk-attentional-fluid"
+  description: "Flat contour-bounded fields of deep teal separated by hard edges, with warm gold nuclei seated inside teal rings and thin vertical threads running between them. Fluid as an attentional agent: attention moving through fields that walls divide."
+  visual_qualities: "flat, layered, contour-bounded, matte, nucleated, threaded, no glow spill"
+}
+
+^"thematic_mapping"{
+  operator: "layer"
+  valence: "honk"
+  spirit_phase: "transformation"
+  liminality: "deep"
+  role: "field-illustration"
+  context: "arrival electrostatics, expression resonance, attention fields"
+}
+
+^"usage"{
+  surface: "illustrations"
+  role: "field-reference"
+  dimensions: { width: 1024, height: 1024 }
+  formats_available: ["avif", "webp"]
+  alt_text: "Layered fields of deep teal divided by sharp contours, with pale gold circles held inside teal rings and slender threads connecting them."
+}
+
+^"optimization"{
+  optimized_on: "2026-08-13T00:03:00Z"
+  source_render: ~"../../renders/2026-08-13-spw-fluid-study/boonhonk-attentional-fluid.avif"
+  variants: [
+    { tier: "thumb", size: "256x256", formats: ["avif", "webp"] },
+    { tier: "display", size: "512x512", formats: ["avif", "webp"] },
+    { tier: "hero", size: "1024x1024", formats: ["avif", "webp"] }
+  ]
+  notes: "Tiers and quality follow conventions/asset-management.spw#optimization for the illustrations surface (256/512/1024 at q40/60/75). PNG is omitted deliberately: AVIF and WebP both have universal support in the browsers this site targets, and a PNG tier would outweigh every other variant combined. Master measured at 38dB PSNR against AVIF q70, which is visually transparent for painterly gradient work."
+}
+
+^"discovery"{
+  tags: ["attention", "field", "electrostatics", "teal", "contour", "fluid", "boonhonk"]
+  spirit_name: "boonhonk-attentional-fluid"
+  status: "extracted"
+  related_images: ["cauldron-spw-fluid", "threshold-seal", "signal-atlas"]
+  notes: "Preferred render of the 2026-08-13 study. Closer to what arrival-electrostatics wants than the cauldron glow is: a bounded ring with a warm centre rather than a bloom, and walls that read as walls. Not yet placed on a surface."
+}

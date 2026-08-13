@@ -17,3 +17,7 @@ design/components/captures/
 # Workbench CLI corpus memo (mtime fingerprint cache from spw:census / spw:graph).
 # Caches index r2: machine-readable inventories are stdout, not committed files.
 .spw/gen/
+
+# Midjourney session exports — unpack into public/images/renders/<date>-<study>/ and
+# register the study in .spw/assets.spw; the zip itself is not an asset.
+midjourney_session*.zip

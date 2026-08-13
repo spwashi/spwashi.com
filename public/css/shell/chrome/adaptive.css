@@ -1299,3 +1299,124 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
     transform: none !important;
   }
 }
+
+/* ==========================================================================
+   Cauldron — vessel and fluid
+   --------------------------------------------------------------------------
+   Art direction from the Midjourney study "cauldron dripping Spw fluid, a
+   magical substance that maintains narrative consistency": a dark matte vessel
+   that is itself quiet, holding an iridescent teal-to-gold fluid that crests
+   the rim and runs down in distinct rivulets once the vessel is full.
+
+   The metaphor is load-bearing rather than decorative. MAX_INGREDIENTS is 6, so
+   gathering literally fills the vessel and reaching capacity literally
+   overflows it — `count:N` is already in the data-spw-cauldron-state bundle, so
+   fill needs no new state, only a reading of the state that exists.
+
+   "Maintains narrative consistency" is what the fluid does in the fiction and
+   also what it does here: an ingredient whose capture read its sigil payload
+   (storage.js toSpwExpression, depth `integrated`) knows where it came from and
+   glows; one that only knows its own string stays matte. Luminance tracks
+   groundedness, so the brightest fragments are the ones that can be replayed
+   faithfully.
+
+   Layout-inert: color, shadow and gradient only. A cauldron that reflowed while
+   filling would be unusable while gathering.
+   ========================================================================== */
+
+.site-footer__cauldron {
+  /* The overflow rivulets below are absolutely positioned against this box.
+     The base rule at the top of this file does not establish a containing
+     block, so without this they would escape to the footer and run down the
+     wrong element. */
+  position: relative;
+  /* 0..1 fill, read off the count axis the runtime already writes. */
+  --spw-cauldron-fill: 0;
+  --spw-cauldron-fluid-cool: var(--op-thread-color, #4fb5a8);
+  --spw-cauldron-fluid-warm: var(--op-seed-color, #d9a441);
+}
+
+.site-footer__cauldron[data-spw-cauldron-state~="count:1"] { --spw-cauldron-fill: 0.17; }
+.site-footer__cauldron[data-spw-cauldron-state~="count:2"] { --spw-cauldron-fill: 0.34; }
+.site-footer__cauldron[data-spw-cauldron-state~="count:3"] { --spw-cauldron-fill: 0.5; }
+.site-footer__cauldron[data-spw-cauldron-state~="count:4"] { --spw-cauldron-fill: 0.67; }
+.site-footer__cauldron[data-spw-cauldron-state~="count:5"] { --spw-cauldron-fill: 0.84; }
+.site-footer__cauldron[data-spw-cauldron-state~="count:6"] { --spw-cauldron-fill: 1; }
+
+/* The rim warms as the vessel fills — the interior glow in the study, which is
+   what tells you there is something in there before you look inside. */
+.site-footer__cauldron {
+  box-shadow:
+    inset 0 1px 0 0
+      color-mix(
+        in srgb,
+        var(--spw-cauldron-fluid-warm) calc(var(--spw-cauldron-fill) * 55%),
+        transparent
+      ),
+    inset 0 calc(2px + 6px * var(--spw-cauldron-fill)) calc(10px * var(--spw-cauldron-fill)) calc(-6px)
+      color-mix(
+        in srgb,
+        var(--spw-cauldron-fluid-cool) calc(var(--spw-cauldron-fill) * 30%),
+        transparent
+      );
+  transition: box-shadow var(--duration-slow, 420ms) var(--ease-soft, ease);
+}
+
+/* At capacity the fluid crests and runs. Rivulets are a repeating gradient on
+   the bottom edge rather than elements, so nothing is added to the DOM and
+   nothing can shift. Only the last rung gets them: overflow should mean full. */
+.site-footer__cauldron[data-spw-cauldron-state~="count:6"]::after,
+.site-footer__cauldron[data-spw-cauldron-state~="phase:spell-ready"]::after {
+  content: '';
+  position: absolute;
+  inset-inline: 8%;
+  bottom: -2px;
+  height: 10px;
+  pointer-events: none;
+  border-radius: 0 0 6px 6px;
+  background:
+    repeating-linear-gradient(
+      to right,
+      color-mix(in srgb, var(--spw-cauldron-fluid-cool) 42%, transparent) 0 3px,
+      transparent 3px 11px,
+      color-mix(in srgb, var(--spw-cauldron-fluid-warm) 38%, transparent) 11px 15px,
+      transparent 15px 26px
+    );
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent);
+}
+
+/* Fluid legibility: a fragment that knows its origin is luminous, one that
+   knows only its own text is matte. Groundedness is the light source. */
+.cauldron-ingredient-expr[data-spw-expression-parse="integrated"] {
+  color: color-mix(in srgb, var(--spw-cauldron-fluid-cool) 62%, var(--ink, currentColor));
+  text-shadow: 0 0 8px color-mix(in srgb, var(--spw-cauldron-fluid-cool) 22%, transparent);
+}
+
+.cauldron-ingredient-expr[data-spw-expression-parse="naive"] {
+  opacity: 0.82;
+}
+
+/* Breadcrumb anatomy: three named lanes instead of seven loose chips. The lanes
+   are separated by a hairline rather than by spacing alone, so origin / gesture
+   / reach read as different questions rather than as one longer answer. */
+.cauldron-ingredient-lane {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+  align-items: baseline;
+}
+
+.cauldron-ingredient-lane + .cauldron-ingredient-lane {
+  margin-inline-start: 0.4rem;
+  padding-inline-start: 0.4rem;
+  border-inline-start: 1px solid color-mix(in srgb, var(--line, rgba(14, 18, 20, 0.14)) 40%, transparent);
+}
+
+/* The vessel stays matte so the fluid can be the light: provenance recedes,
+   gesture sits mid, reach reads as an exit and keeps its existing accent. */
+.cauldron-ingredient-lane[data-spw-breadcrumb="origin"] { opacity: 0.62; }
+.cauldron-ingredient-lane[data-spw-breadcrumb="gesture"] { opacity: 0.78; }
+
+@media (prefers-reduced-motion: reduce) {
+  .site-footer__cauldron { transition: none; }
+}

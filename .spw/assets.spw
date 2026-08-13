@@ -69,6 +69,12 @@
       ]},
       { date: "2026-04-10", name: "papergami-machinery-study", status: "archived-source-and-extracted", images: 11, content: [
         { spirit_name: "papergami-machinery", variants: ["raw", "raw-2x2", "social-card", "study-panels"], formats: ["png", "jpg", "webp"] }
+      ]},
+      { date: "2026-08-13", name: "spw-fluid-study", status: "archived-source-and-extracted", images: 5, content: [
+        { spirit_name: "cauldron-spw-fluid", variants: ["1", "2", "3", "4"], formats: ["avif"],
+          note: "Spw fluid as the substance that maintains narrative consistency. Dark matte vessel, iridescent teal-to-gold fluid cresting the rim in distinct rivulets. Read into the cauldron's fill/overflow states — see shell/chrome/adaptive.css." },
+        { spirit_name: "boonhonk-attentional-fluid", variants: ["archive", "thumb", "display", "hero"], formats: ["avif", "webp"],
+          note: "Preferred. Flat contour-bounded teal fields with warm gold nuclei inside rings and vertical threads between them — attention moving through fields separated by walls, with no glow spill. Closest reference the site has to arrival-electrostatics: a bounded ring with a warm centre rather than a bloom. Extracted to assets/illustrations with a .spw sidecar." }
       ]}
     ]
   }

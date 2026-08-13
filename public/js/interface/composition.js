@@ -889,55 +889,72 @@ function renderIngredientsList(ingredients) {
 
   const html = ingredients.map((ing, idx) => {
     const op = ing.operator ? `<span class="cauldron-ingredient-op" data-spw-operator="${ing.operator}">${ing.operator}</span>` : '';
-    const expr = `<span class="cauldron-ingredient-expr" data-spw-expression>${escapeHtml(ing.expression)}</span>`;
+
+    // Show the payload-aligned native form when capture managed to read one -
+    // `~orient[media-field-guide]{about.website.deep}` says where the fragment
+    // was taken from; the bare `~orient` it falls back to does not. The parse
+    // depth rides along so a reader can tell a grounding from a guess, which is
+    // the whole point of storage.js reporting naive vs integrated.
+    const nativeExpression = ing.spwExpression || ing.expression;
+    const parseDepth = ing.spwParse || 'naive';
+    const expr = `<span class="cauldron-ingredient-expr" data-spw-expression data-spw-expression-parse="${parseDepth}" title="${escapeHtml(ing.expression)}">${escapeHtml(nativeExpression)}</span>`;
 
     const phase = computeIngredientPhase(ing);
-    let meta = '';
+
+    // Breadcrumb anatomy. This was seven loose chips in one undifferentiated
+    // row - wonder, origin, age, primed, gesture, link, quantifiers, dimensions -
+    // which is the same wash problem the arrival work found, at component scale:
+    // everything present, nothing legible. They are the same three questions a
+    // reader actually has, so they are grouped as three named lanes and each
+    // lane is omitted entirely when it has nothing to say.
+    //
+    //   origin   where this came from and how long ago
+    //   gesture  what attention created it
+    //   reach    where it still points, and what it models
+    const lanes = { origin: [], gesture: [], reach: [] };
+
     if (ing.wonder) {
-      meta += `<span class="cauldron-ingredient-meta" data-spw-wonder="${ing.wonder}">${ing.wonder}</span>`;
+      lanes.origin.push(`<span class="cauldron-ingredient-meta" data-spw-wonder="${ing.wonder}">${ing.wonder}</span>`);
     }
-    // Surface origin context for better learning / reduced overgeneralization
     const originText = ing.originLabel || ing.origin || ing.context;
     if (originText) {
-      meta += `<span class="cauldron-ingredient-meta cauldron-origin" data-spw-origin="${escapeHtml(originText)}">${escapeHtml(originText)}</span>`;
+      lanes.origin.push(`<span class="cauldron-ingredient-meta cauldron-origin" data-spw-origin="${escapeHtml(originText)}">${escapeHtml(originText)}</span>`);
     }
-    // Lightweight age for memory gardening visibility (CSS can style .decayed etc.)
+    // The liminality shell the fragment stood in, when capture could read it.
+    // A fragment taken at `deep` was earned differently from one at `entry`.
+    if (ing.payload?.liminality) {
+      lanes.origin.push(`<span class="cauldron-ingredient-meta cauldron-shell" data-spw-liminality="${escapeHtml(ing.payload.liminality)}">${escapeHtml(ing.payload.liminality)}</span>`);
+    }
     if (ing.capturedAt) {
       const ageDays = Math.floor((Date.now() - Number(ing.capturedAt)) / (1000 * 60 * 60 * 24));
-      meta += `<span class="cauldron-ingredient-meta cauldron-age" data-spw-age="${ageDays}">${ageDays}d</span>`;
+      lanes.origin.push(`<span class="cauldron-ingredient-meta cauldron-age" data-spw-age="${ageDays}">${ageDays}d</span>`);
     }
-    // Primed containment bridge (additive, inspectable): surfaced only when the
-    // ingredient arrived via charged brace gesture. Gives immediate learning signal
-    // that the cauldron gathered local value from a primed containment form.
+
     if (ing.primedBy) {
       const primedLabel = ing.primedBy === 'brace-containment-charge' ? 'primed' : escapeHtml(ing.primedBy);
-      meta += `<span class="cauldron-ingredient-meta cauldron-primed" data-spw-ingredient-primed="${escapeHtml(ing.primedBy)}">${primedLabel}</span>`;
+      lanes.gesture.push(`<span class="cauldron-ingredient-meta cauldron-primed" data-spw-ingredient-primed="${escapeHtml(ing.primedBy)}">${primedLabel}</span>`);
     }
-    // Traceability for effects (Patch 010): if this ingredient carries gesture history from a living-term or brace, surface a short trace so the user can see exactly which attention created it.
     if (ing.gestureHistory) {
-      meta += `<span class="cauldron-ingredient-meta cauldron-gesture-trace" data-spw-gesture-trace title="Gesture chain that created this ingredient">${escapeHtml(ing.gestureHistory)}</span>`;
+      lanes.gesture.push(`<span class="cauldron-ingredient-meta cauldron-gesture-trace" data-spw-gesture-trace title="Gesture chain that created this ingredient">${escapeHtml(ing.gestureHistory)}</span>`);
     }
 
     if (ing.deepLink) {
       const deepLinkLabel = ing.deepLinkLabel || (String(ing.deepLink).includes('#') ? 'hash anchor' : 'route anchor');
-      meta += `<span class="cauldron-ingredient-meta cauldron-deep-link" data-spw-deep-link="${escapeHtml(ing.deepLink)}">${escapeHtml(deepLinkLabel)}</span>`;
+      lanes.reach.push(`<span class="cauldron-ingredient-meta cauldron-deep-link" data-spw-deep-link="${escapeHtml(ing.deepLink)}">${escapeHtml(deepLinkLabel)}</span>`);
     }
-
-    // Numericity quantifier surfacing (integrated, not brittle): when a numerical ingredient is present,
-    // show its derived quantifiers as first-class options for selection/discovery in spells/navigation.
     if (ing.type === 'numerical' && Array.isArray(ing.quantifiers) && ing.quantifiers.length) {
       const qList = ing.quantifiers.slice(0, 4).map(q => `<span class="cauldron-numericity-quantifier" data-spw-quantifier="${escapeHtml(q)}">${escapeHtml(q)}</span>`).join(' ');
-      meta += `<span class="cauldron-ingredient-meta cauldron-numericity">${qList}</span>`;
+      lanes.reach.push(`<span class="cauldron-ingredient-meta cauldron-numericity">${qList}</span>`);
     }
-
-    // Deeper higher-order dimension / resource modeling wiring (from budgeting macros and similar tools).
-    // When an ingredient carries a dimensions array (higher-order resource model), surface it cleanly
-    // as inspectable meta chips. This makes complex, shareable, query-string-loaded models visible
-    // and traceable inside the cauldron without extra UI.
     if (Array.isArray(ing.dimensions) && ing.dimensions.length) {
       const dimList = ing.dimensions.slice(0, 5).map(d => `<span class="cauldron-dimension-chip" data-spw-dimension="${escapeHtml(d)}">${escapeHtml(d)}</span>`).join(' ');
-      meta += `<span class="cauldron-ingredient-meta cauldron-dimensions" data-higher-order="${ing.higherOrder ? 'true' : 'false'}">${dimList}</span>`;
+      lanes.reach.push(`<span class="cauldron-ingredient-meta cauldron-dimensions" data-higher-order="${ing.higherOrder ? 'true' : 'false'}">${dimList}</span>`);
     }
+
+    const meta = Object.entries(lanes)
+      .filter(([, chips]) => chips.length)
+      .map(([lane, chips]) => `<span class="cauldron-ingredient-lane" data-spw-breadcrumb="${lane}">${chips.join('')}</span>`)
+      .join('');
 
     const title = `${ing.expression}${originText ? ` (from ${originText})` : ''}${ing.deepLink ? ` - ${ing.deepLink}` : ''}`;
 
