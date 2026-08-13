@@ -96,6 +96,7 @@
 @storage_topology: ~"./storage-topology.spw"
 @visitation_memory: ~"./visitation-memory.spw"
 @floating_chrome_coherence: ~"./floating-chrome-coherence.spw"
+@folding_chrome_organelle: ~"./folding-chrome-organelle.spw"
 @viewing_reason: ~"./viewing-reason.spw"
 @viewing_reason_audit: ~"../audits/viewing-reason-cross-media-2026-07.spw"
 @page_component_census_audit: ~"../audits/page-component-census-2026-07.spw"
@@ -201,6 +202,7 @@ dispatch: .{
  caches_recursive = @caches_recursive
  visitation = @visitation_memory
  floating_chrome = @floating_chrome_coherence
+ folding_organelle = @folding_chrome_organelle
  spatial_gravity = @spatial_gravity
  component_packing = @component_packing
  viewing_reason = @viewing_reason

@@ -1,0 +1,109 @@
+# Folding Chrome Organelle
+#
+# Floating chrome as a mounted organelle: it indexes attention, holds a
+# culture, and folds the material it gathers. Rotation, branching, streams,
+# and reduction as one model rather than four features.
+
+#>folding_chrome_organelle
+#:convention #!chrome #!folding #!organelle #!reduction
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@floating_chrome: ~"./floating-chrome-coherence.spw"
+@charge_cycle: ~"./charge-cycle.spw"
+@electrostatic: ~"./electrostatic-affordances.spw"
+@projection: ~"./projection-attenuation.spw"
+@region_ecology: ~"./region-component-ecology.spw"
+@literary_motifs: ~"./literary-operational-motifs.spw"
+@room_signal: ~"../../public/js/kernel/room-signal.js"
+@geometry: ~"../../public/js/semantic/spw-expression-geometry.js"
+@cauldron_contract: ~"../../public/js/interface/cauldron/contract.js"
+
+operation = "prime"
+fixity = "experimental"
+
+^"thesis"{
+  claim: "Floating chrome is an organelle: mounted rather than authored, persistent across routes, and responsible for indexing attention in its host. An organelle that presents identical content everywhere is furniture. One that reads the room, holds what it gathers, and folds that material into denser addressable forms is doing the job."
+  fold_claim: "An article folds like a protein: determined by sequence AND environment, not by environment alone. Today the seat decides the fold entirely (region-seats.css packs the same markup differently per seat and family). The article's own sequence - its expression payload, operator density, brace geometry - does not yet participate."
+  refuse: "Do not add a fourth physics table. Rotation, branching, streams, and reduction are one model; charge is already the energy term and region is already the environment term."
+}
+
+^"structure_levels"{
+  note: "Borrowed for precision, not decoration. Each level already has a site correlate."
+  primary: .{
+    is = "the authored linear sequence"
+    site = "markup order plus the region's data-spw-semantic-expression"
+  }[reg=facet]
+  secondary: .{
+    is = "local recurring motifs"
+    site = "brace and operator geometry per @geometry - the [] {} () <> boundary signature"
+  }[reg=facet]
+  tertiary: .{
+    is = "the fold the whole region takes"
+    site = "region seat x family packing (region-seats.css container queries)"
+  }[reg=facet]
+  quaternary: .{
+    is = "how folded units associate"
+    site = "regions composing a page; chrome gathering across routes"
+  }[reg=facet]
+}
+
+^"rotation"{
+  claim: "A handle has a rotation space, not a boolean. Backbone torsion angles have allowed and forbidden ranges; most conformations never occur. Collapse/expand is a rotation into a branch, not an on/off."
+  implies: #[
+    `An option set declares which rotations are legal from its current state`,
+    `Illegal rotations are visible as unavailable, not hidden - the reader learns the constraint`,
+    `The same handle rotates differently depending on its seat, because the seat is the environment term`
+  ][reg=set]
+  existing_substrate: "charge-cycle phases are already a legal-transition table (neutral -> arming -> preview -> charged). Rotation generalizes that from one axis to several."
+  refuse: "Do not let every handle rotate freely. Unconstrained rotation is noise; the constraint is what teaches."
+}
+
+^"streams_and_channels"{
+  stream: "A sequence that stays ordered as it moves. Operator `stream` already carries this; discharge kind transfer."
+  channel: "The material a stream runs through. @electrostatic already names region channels: hook stores, cluster couples, path leaks, read resists."
+  rule: "A stream crossing a channel is attenuated by that channel, per @projection --spw-slot-attenuate. Chrome carrying gathered material across routes is a stream; the region it surfaces in is the channel."
+}
+
+^"reduction"{
+  claim: "Charged components reduce into denser addressable forms. The chain is not lossy compression - each step stays inspectable and re-expandable, which is what separates reduction from summary."
+  ladder: #[
+    `component - the authored thing in place`,
+    `charge - attention spent on it (@charge_cycle field state)`,
+    `expression - subject[register]{payload}, the author's own statement of what it is`,
+    `snippet - expression plus enough context to re-find the source`,
+    `card - a snippet given a face; screenshottable, shareable`,
+    `blob - several cards folded into one artifact that can be re-expanded`
+  ][reg=set]
+  existing_substrate: "@cauldron_contract already gathers ingredients carrying expression, operator, and wonder, with garden phases gathering -> resonant -> mature -> decayed. It gathers but does not yet reduce."
+  invariant: "Every reduction keeps a handle back to its source. A blob that cannot be unfolded is a dead end, not a fold."
+  literary_join: "Reduction kind should agree with discharge kind per @literary_motifs - a ground discharge reduces toward chronicle/recipe, a project discharge reduces toward spell/prompt."
+}
+
+^"organelle_contract"{
+  mounts: "Chrome is installed into a host it does not own. It must degrade to nothing if unmounted."
+  indexes: "It maintains a navigable index of attention: what was charged, where, and what it reduced to."
+  culture: "It carries convention across routes - the same vocabulary, seats, and phases regardless of which page hosts it."
+  portability: "This whole model belongs to spw-workbench, not to spwashi.com. A site mounting the workbench should get the organelle without inheriting this site's copy or palette."
+}
+
+^"open_questions"{
+  ask: #[
+    `Should sequence influence fold directly, or only bias the seat's existing packing?`,
+    `What is the legal-rotation table for a handle with three or more branches - declared per component, or derived from operator?`,
+    `Does a blob get its own expression, or does it carry the union of its cards' expressions?`,
+    `Where does reduction live - cauldron (gathering) or chrome (indexing)? They are currently separate.`,
+    `Can a fold be screenshot-legible, so a capture records the conformation and not only the content?`
+  ][reg=set]
+}
+
+^"validation"{
+  probe: "Not yet implementable. This convention is a design prime; nothing below the room-signal expression hook has been built."
+  built_so_far: #[
+    `kernel/room-signal.js - environment term (family, region, accent) plus the region's parsed expression`,
+    `runtime/charge-field.js - energy term, phase machine, discharge kinds`,
+    `systems/projection-attenuation.css - channel material per seat and slot`
+  ][reg=set]
+  next_smallest: "Give one handle a declared rotation space and render its illegal branches as visibly unavailable. Everything else in this doc waits on that reading well in a browser."
+}
