@@ -821,6 +821,12 @@ async function bootSite() {
 
   runtimeCtx = createRuntimeContext();
   runtimeCtx.queryDisposition = queryDisposition;
+  // Subscribe before any module mounts, or the trace misses the arrivals it
+  // exists to record. The module itself is a bus handler and an array; the
+  // costly parts of the instrument are opt-in calls on __SPW_SITE__.loadTrace.
+  import('./runtime/load-trace.js')
+    .then((m) => m.initLoadTrace(runtimeCtx))
+    .catch(() => {});
   // Project debug/qa posture after query disposition so dataset + URL agree.
   runtimeCtx.debugQa = applyDebugQaPostureToRoot(HTML, readDebugQaPosture());
   // Refresh debug token set for catalog gates (may have been filled by posture).
@@ -1088,6 +1094,19 @@ window.__SPW_SITE__ = {
    * Layout / packing / reflow / page-sizing QA for humans + agents.
    * Lazy-loads layout-qa.js. Prefer ?debug=layout for full CLS history.
    */
+  /**
+   * Step through this page's arrival and see what each step cost.
+   * loadTrace.summary() for the rollup, .steps() for the sequence,
+   * .highlight(n) to mark what step n touched, .stepTo(n) to wind back.
+   * Recording is ambient and trivial; everything here is opt-in.
+   */
+  loadTrace: {
+    steps: () => import('./runtime/load-trace.js').then((m) => m.getLoadSteps()),
+    summary: () => import('./runtime/load-trace.js').then((m) => m.summarizeLoadTrace()),
+    highlight: (index, options) => import('./runtime/load-trace.js').then((m) => m.highlightStep(index, options)),
+    clear: () => import('./runtime/load-trace.js').then((m) => m.clearLoadTraceHighlight()),
+    stepTo: (count) => import('./runtime/load-trace.js').then((m) => m.stepTo(count, window.__SPW_SITE__)),
+  },
   layoutQa: {
     snapshot: (options = {}) => import('./runtime/layout-qa.js').then((m) => m.snapshotLayoutQa({
       ...options,
