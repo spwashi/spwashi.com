@@ -25586,10 +25586,15 @@ html:has(body[data-spw-page-family])::before {
 
 /* ── Family → motif ────────────────────────────────────────────────────── */
 
+/* Architecture: built, structural, load-bearing, framework, system structures */
 :where(html:has(body[data-spw-page-family="spec"]),
        html:has(body[data-spw-page-family="runtime-observatory"]),
        html:has(body[data-spw-page-family="design"]),
-       html:has(body[data-spw-page-family="switchboard"])) {
+       html:has(body[data-spw-page-family="switchboard"]),
+       html:has(body[data-spw-page-family="observatory"]),
+       html:has(body[data-spw-page-family="coordination"]),
+       html:has(body[data-spw-page-family="policy"]),
+       html:has(body[data-spw-page-family="membership"])) {
   --spw-paper-motif-image:
     image-set(
       url('/public/images/assets/illustrations/papergami-architecture-display.avif') type('image/avif'),
@@ -25597,9 +25602,18 @@ html:has(body[data-spw-page-family])::before {
     );
 }
 
+/* Collage: assembled from fragments, indexes, collections, archives, domains */
 :where(html:has(body[data-spw-page-family="atlas"]),
        html:has(body[data-spw-page-family="register"]),
-       html:has(body[data-spw-page-family="research"])) {
+       html:has(body[data-spw-page-family="research"]),
+       html:has(body[data-spw-page-family="constellation"]),
+       html:has(body[data-spw-page-family="kernel-atlas"]),
+       html:has(body[data-spw-page-family="kitchen-atlas"]),
+       html:has(body[data-spw-page-family="operator-atlas"]),
+       html:has(body[data-spw-page-family="syntax-atlas"]),
+       html:has(body[data-spw-page-family="folio-archive"]),
+       html:has(body[data-spw-page-family="town-library"]),
+       html:has(body[data-spw-page-family="roadmap"])) {
   --spw-paper-motif-image:
     image-set(
       url('/public/images/assets/illustrations/papergami-collage-display.avif') type('image/avif'),
@@ -25607,8 +25621,13 @@ html:has(body[data-spw-page-family])::before {
     );
 }
 
+/* Cubes: discrete, modular, countable, tools, experiments, labs */
 :where(html:has(body[data-spw-page-family="toolbench"]),
-       html:has(body[data-spw-page-family="laboratory"])) {
+       html:has(body[data-spw-page-family="laboratory"]),
+       html:has(body[data-spw-page-family="lab"]),
+       html:has(body[data-spw-page-family="experiment-lab"]),
+       html:has(body[data-spw-page-family="workshop"]),
+       html:has(body[data-spw-page-family="proof-cards"])) {
   --spw-paper-motif-image:
     image-set(
       url('/public/images/assets/illustrations/papergami-cubes-display.avif') type('image/avif'),
@@ -25616,9 +25635,13 @@ html:has(body[data-spw-page-family])::before {
     );
 }
 
+/* Botanical: grown, cultivated, recipes, curriculum, practice, care */
 :where(html:has(body[data-spw-page-family="recipe-book"]),
        html:has(body[data-spw-page-family="seasonal"]),
-       html:has(body[data-spw-page-family="curriculum"])) {
+       html:has(body[data-spw-page-family="curriculum"]),
+       html:has(body[data-spw-page-family="care-interface"]),
+       html:has(body[data-spw-page-family="practice-bed"]),
+       html:has(body[data-spw-page-family="studio"])) {
   --spw-paper-motif-image:
     image-set(
       url('/public/images/assets/illustrations/papergami-botanical-display.avif') type('image/avif'),
@@ -25626,8 +25649,16 @@ html:has(body[data-spw-page-family])::before {
     );
 }
 
+/* Kinetic: in motion, dispersing, campaigns, playfields, guides, hub, topics */
 :where(html:has(body[data-spw-page-family="campaign"]),
-       html:has(body[data-spw-page-family="field-guide"])) {
+       html:has(body[data-spw-page-family="field-guide"]),
+       html:has(body[data-spw-page-family="playfield"]),
+       html:has(body[data-spw-page-family="menu"]),
+       html:has(body[data-spw-page-family="kernel-portrait"]),
+       html:has(body[data-spw-page-family="funding"]),
+       html:has(body[data-spw-page-family="topic"]),
+       html:has(body[data-spw-page-family="topic-hub"]),
+       html:has(body[data-spw-page-family="topic-stub"])) {
   --spw-paper-motif-image:
     image-set(
       url('/public/images/assets/illustrations/papergami-kinetic-display.avif') type('image/avif'),
@@ -25662,6 +25693,29 @@ html[data-spw-theme-pack="glass-console"] {
 html[data-spw-theme-pack="electric-studio"] {
   --spw-paper-motif-opacity: 0.1;
   --spw-paper-motif-blend: screen;
+}
+
+/* ── Field references & specialized motifs ──────────────────────────── */
+
+/* Boonhonk attentional fluid: fluid attentional fields for dynamic & interaction-heavy routes */
+:where(html:has(body[data-spw-context="fluid"]),
+       html:has(body[data-spw-context="resonance"]),
+       html:has(body[data-spw-page-family="playfield"])) {
+  --spw-paper-motif-image:
+    image-set(
+      url('/public/images/assets/illustrations/boonhonk-attentional-fluid-display.avif') type('image/avif'),
+      url('/public/images/assets/illustrations/boonhonk-attentional-fluid-display.webp') type('image/webp')
+    );
+}
+
+/* Charge wall: boundary threshold motif for settings, observatory, & spec routes */
+:where(html:has(body[data-spw-context="electrostatics"]),
+       html:has(body[data-spw-context="boundary"])) {
+  --spw-paper-motif-image:
+    image-set(
+      url('/public/images/assets/illustrations/charge-wall-display.avif') type('image/avif'),
+      url('/public/images/assets/illustrations/charge-wall-display.webp') type('image/webp')
+    );
 }
 
 /* ── Restraint ─────────────────────────────────────────────────────────── */
