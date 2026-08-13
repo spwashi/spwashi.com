@@ -326,6 +326,25 @@ html[data-spw-debug-mode="on"] :where(
   min-inline-size: max-content;
 }
 
+/* Room signal (kernel/room-signal.js): the satchel's own identity is the
+   probe-violet above — this blends in a small wash of the accent from
+   whichever region/family the reader is currently in, so the satchel reads
+   as rooted in the page rather than identical everywhere. Ambient tint, not
+   a species change: capped low enough that probe-violet stays legible. */
+.spw-state-inspector[data-spw-room-family] {
+  --state-inspector-accent: color-mix(
+    in oklab,
+    var(--op-probe-color, #4a2180) 78%,
+    var(--spw-room-accent, var(--op-probe-color, #4a2180)) 22%
+  );
+}
+
+/* The toggle this room's family actually benefits from — see
+   relevantToggleKeyForFamily() in state-inspector.js. */
+[data-spw-state-toggle][data-spw-room-relevant="true"] {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--state-inspector-accent) 42%, transparent);
+}
+
 .spw-state-inspector__launch[data-spw-page-state-mirror] {
   position: relative;
 }

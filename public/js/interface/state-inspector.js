@@ -11,6 +11,7 @@ import {
   STORAGE_KEYS,
   writeJson,
 } from '/public/js/kernel/storage-utils.js';
+import { readRoom } from '/public/js/kernel/room-signal.js';
 
 const ROOT_ATTR = 'data-spw-state-inspector-root';
 const PANEL_ID = 'spw-state-inspector-panel';
@@ -50,6 +51,18 @@ const TOGGLES = [
     inverted: true,
   },
 ];
+
+// Which toggle actually earns its keep depends on the room: a lab/workshop
+// page wants runtime mounts visible; a reading/field-guide page wants
+// learning toasts; an atlas/reference page wants semantic tags. Coarse on
+// purpose — a family-name substring check, not a lookup table to maintain
+// in lockstep with page-template-authoring.spw's full personality set.
+function relevantToggleKeyForFamily(family = '') {
+  if (/lab|workshop|toolbench|studio/.test(family)) return 'mounts';
+  if (/reading|field-guide|topic|glossary/.test(family)) return 'learning';
+  if (/atlas|curriculum|operator|spec/.test(family)) return 'metadata';
+  return '';
+}
 
 function writeSatchelState(root, entries, reason) {
   if (!(root instanceof HTMLElement)) return;
@@ -274,12 +287,31 @@ function formatPageStateLabel() {
   return bits.join(' · ');
 }
 
+function syncSatchelRoom(root) {
+  if (!(root instanceof HTMLElement)) return;
+
+  const room = readRoom(root);
+  if (room.family) root.dataset.spwRoomFamily = room.family;
+  else delete root.dataset.spwRoomFamily;
+  if (room.region) root.dataset.spwRoomRegion = room.region;
+  else delete root.dataset.spwRoomRegion;
+  if (room.accent) root.style.setProperty('--spw-room-accent', room.accent);
+  else root.style.removeProperty('--spw-room-accent');
+
+  const relevantKey = relevantToggleKeyForFamily(room.family);
+  root.querySelectorAll('[data-spw-state-toggle]').forEach((node) => {
+    const key = node.getAttribute('data-spw-state-toggle');
+    node.dataset.spwRoomRelevant = key && key === relevantKey ? 'true' : 'false';
+  });
+}
+
 function syncPageStateAwareness(root) {
   if (!(root instanceof HTMLElement)) return;
   const launch = root.querySelector('.spw-state-inspector__launch');
   const status = root.querySelector('[data-spw-state-inspector-status]');
   const label = formatPageStateLabel();
   root.dataset.spwPageStateMirror = label;
+  syncSatchelRoom(root);
   if (launch instanceof HTMLElement) {
     launch.dataset.spwPageStateMirror = label;
     launch.setAttribute(
