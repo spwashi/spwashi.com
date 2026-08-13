@@ -92,6 +92,7 @@ import {
   buildSettingsQuerySearch,
   buildQueryString,
 } from './site-settings-profiles.js';
+import { ensureThemePackStyles } from './theme-pack-loader.js';
 
 const PWA_PROMPT_DISMISSAL_STORAGE_KEYS = Object.freeze({
   install: 'spw-pwa-install-dismissed',
@@ -1016,6 +1017,12 @@ class SiteSettingsManager {
       const { spwLayout, ...bodyEntries } = datasetEntries;
       setDatasetEntries(this.body, bodyEntries);
     }
+
+    // Theme packs are token overrides in a stylesheet kept out of the core
+    // bundle (themes/packs.css). Fetch it only once a non-default pack is
+    // actually active — the attribute is already on the root above, so the
+    // packs apply the moment the sheet lands.
+    ensureThemePackStyles(normalized.themePack);
 
     const deviationCount = deviations.length;
     if (deviationCount > 0) {
