@@ -2,6 +2,7 @@ import { CAULDRON_KEY } from './contract.js';
 import { deriveNumericityQuantifiers, isNumericalConcept, parseNumericalValue } from './helpers.js';
 import { splitOperatorExpression } from '/public/js/kernel/shared.js';
 import { operatorSpaces } from '/public/js/semantic/operator-spaces.js';
+import { project } from './registers.js';
 
 /* Delegates to the kernel's operator grammar (the old local regex required a
    literal backslash before ^ and ?, so those operators never matched). */
@@ -197,24 +198,40 @@ export function normalizeIngredient(item) {
   const split = splitOperatorExpression(item.expression || item.label || '');
   const op = item.operator || split.prefix;
   const ph = item.phase || item.element || item.payload?.phase || item.payload?.element || inferPhaseState(op);
-  const tang = item.tangibility || inferTangibility(op, ph);
   const fix = item.fixity || item.payload?.fixity || 'tending';
   const bio = item.biome || item.payload?.biome || 'prairie';
 
-  const normalized = {
+  /**
+   * Coordinates first, then the spread, then projections last.
+   *
+   * The spread used to come last, so a stored copy of a derived value beat the
+   * freshly computed one and any drift became permanent. `element`,
+   * `tangibility` and `succession` carry no information their sources do not —
+   * they are views — so they are recomputed here after the spread rather than
+   * restored from it. A stored ingredient from any earlier schema still loads;
+   * it just cannot contradict itself any more.
+   */
+  const carried = {
     expression: item.expression || item.label || '',
     label: item.label || item.expression || '',
     operator: op,
     operand: item.operand || split.operand,
     wonder: item.wonder || '',
     phase: ph,
-    element: ph,
-    tangibility: tang,
     fixity: fix,
     biome: bio,
-    succession: item.succession || computeSuccession({ fixity: fix }),
     capturedAt: item.capturedAt || Date.now(),
     ...item,
+  };
+
+  const normalized = {
+    ...carried,
+    // Coordinates the registers own, re-read after the spread so the stored shape
+    // cannot override them.
+    phase: ph,
+    fixity: fix,
+    biome: bio,
+    ...project(carried),
   };
 
   if (isNumericalConcept(normalized.expression)) {

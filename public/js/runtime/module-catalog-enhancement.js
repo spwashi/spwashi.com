@@ -618,6 +618,28 @@ export const ENHANCEMENT_DEFS = [
     load: () => import('../interface/state-inspector.js'),
   },
   {
+    // A code block that answers about the page it is printed on. No parser is
+    // shipped — a probe expression is read with a regex over three slots — and
+    // every resolver is a querySelectorAll count, so this stays cheap. IDLE
+    // because a page reads correctly with every probe unanswered.
+    id: 'dom-probes',
+    layer: MODULE_LAYERS.ENHANCEMENT,
+    when: MOUNT_WHEN.IDLE,
+    selector: '[data-spw-probe]',
+    rootMode: 'single',
+    describes: 'probe[dom]{subject.frame.body}<answered>',
+    updates: [
+      'inspect:data-spw-probe-state',
+      'inspect:data-spw-probe-result',
+      'residue:data-spw-semantic-expression',
+    ],
+    evaluates: 'page self-inspection, cauldron overlap, arrival field legibility',
+    timingArc: 'idle-inspection',
+    timingChunk: 'idle-lab',
+    effectScope: 'local-dom bus',
+    load: () => import('./dom-probes.js'),
+  },
+  {
     // Authored Spw expressions become inductive: sharing a subject, mode, or
     // body part relates two elements, and the relation was authored rather than
     // inferred. Parsing happened at build time (scripts/build-expression-manifest.mjs)

@@ -1,0 +1,163 @@
+# Cauldron Registers
+#
+# The spaces an ingredient has coordinates in, and the rule each space uses to
+# compose. Read this before changing the ingredient shape, adding a register, or
+# writing anything that compares two ingredients.
+#
+# The distinction this surface exists to hold: a *coordinate* is an independent
+# fact about a fragment; a *projection* is a view computed from one. Storing a
+# projection beside its source lets the two disagree, and a stored disagreement
+# never heals.
+
+#>spw_cauldron_registers
+#:convention #!cauldron #!registers #!coordinates
+#:operation #!contract
+#:fixity #!tending
+#:layer #!semantics
+
+@cauldron_dynamics: ~"./cauldron-dynamics.spw"
+@arrival: ~"./arrival-electrostatics.spw"
+@semantic_expression: ~"./semantic-expression-consequence.spw"
+@implementation: ~"../../public/js/interface/cauldron/registers.js"
+@probes: ~"../../public/js/runtime/dom-probes.js"
+@storage: ~"../../public/js/interface/cauldron/storage.js"
+
+operation = "contract"
+fixity = "tending"
+
+expression = ingredient[registers]{coordinate.projection.composition}<spell>
+
+^"the_finding"{
+  ~#measured(from source, not inferred): "three fields carried no independent information"
+  element: `assigned the identical variable as phase in normalizeIngredient`
+  tangibility: `pure function of phase — inferTangibility switches on phase alone`
+  succession: `pure function of fixity — computeSuccession switches on fixity alone`
+  ~#defect: "the object spread ran last, so a stored copy beat the freshly computed one and drift became permanent"
+  ~#reading: `a flat bag cannot say which of its fields are load-bearing`
+  fix = @implementation
+}
+
+^"contract"{
+  ~#note: "Every register declares four things a raw attribute cannot say about itself."
+  carrier: .{
+    is = `the live data-spw-* register this coordinate reads from`
+    why = `a stored coordinate and a running register become one value addressed twice, not two vocabularies`
+  }[reg=facet]
+  ordering: .{
+    is = `whether distance between two values means anything`
+    ordered = #[`liminality`, `fixity`, `valence`][reg=set]
+    categorical = #[`phase`, `position`, `biome`][reg=set]
+    ~#rule: `never compute a distance in a categorical register — prairie to wetland is a difference, not a distance`
+  }[reg=facet]
+  identity: .{
+    is = `the value that changes nothing when composed`
+    ~#rule: `a register without an identity cannot accumulate`
+  }[reg=facet]
+  compose: .{
+    is = `what two values do when one spell holds both`
+    ~#why: `a cauldron of four fragments is a list until the registers say what the four amount to`
+  }[reg=facet]
+}
+
+^"registers"{
+  phase: .{
+    carrier = `data-spw-phase`
+    kind = categorical
+    identity = `ground`
+    values = #[`radiant`, `fluid`, `membrane`, `plastic`, `lattice`, `ground`][reg=set]
+    compose = `most tangible present`
+    ~#why(not an average): "radiant plus ground is not membrane — the least abstract ingredient is what a reader believes the spell is made of"
+    projects = `tangibility 0..1`
+  }[reg=facet]
+
+  liminality: .{
+    carrier = `data-spw-liminality`
+    kind = ladder
+    identity = `entry`
+    values = #[`entry`, `threshold`, `deep`, `projected`, `settled`][reg=set]
+    compose = `span, lo..hi`
+    ~#why(span, not centroid): "a cauldron drawn entirely from entry is a visit that never went inside, whatever else it holds"
+    ~#measured: `659 elements on the ladder across the routes; 389 entry, 88 threshold, 85 deep, 52 projected, 45 settled`
+  }[reg=facet]
+
+  fixity: .{
+    carrier = `data-spw-fixity`
+    kind = ladder
+    sense = settledness
+    identity = `tending`
+    values = #[`volatile`, `experimental`, `tending`, `stable`, `fixed`][reg=set]
+    compose = `least settled wins`
+    projects = `succession — canopy | cluster | root | spore`
+    ~#disambiguation: "settledness only. Operator position is the position register; one word carried both senses and that collision is why they are separate."
+  }[reg=facet]
+
+  valence: .{
+    carrier = `data-spw-charge`
+    kind = signed
+    identity = 0
+    compose = `sum`
+    ~#reading: `sign is what an operator does to a reader's balance, not whether it is good — ? opens and credits, ! commits and spends, #> carries and does neither`
+    ~#why(the only additive register): "this is where gathering literally adds up, so a spell can report whether a visit accrued or spent without anyone scoring it by hand"
+  }[reg=facet]
+
+  position: .{
+    carrier = `data-spw-operator-position`
+    kind = categorical
+    sense = `operator geometry`
+    identity = `bare`
+    values = #[`prefix`, `infix`, `postfix`, `bare`][reg=set]
+    compose = `single value, or mixed`
+    ~#consequence: "a gathering of all-prefix ingredients cannot form a compound. That is a real finding about a cauldron and the reason this register is separate from fixity."
+  }[reg=facet]
+
+  biome: .{
+    carrier = `data-spw-biome`
+    kind = categorical
+    identity = `prairie`
+    compose = `plurality`
+  }[reg=facet]
+}
+
+^"spell_form"{
+  ~#note: "A composition states its own coordinates in the language, not in a table only one file can read."
+  shape = `spell[phase.fixity]{liminality.biome}<valence>`
+  example = `spell[lattice.experimental]{entry..projected.prairie}<+2>`
+  empty = `spell<0>`
+  ~#reading: `the projection slot carries signed charge, so a screenshot of a spell shows whether the visit credited or spent`
+}
+
+^"probes"{
+  ~#note: "Executable from the page. A code block carrying data-spw-probe answers against the live document."
+  subjects = #[`shells`, `walls`, `expressions`, `kin`, `field`, `gathered`, `overlap`, `spell`][reg=set]
+  cauldron_reactive = #[`gathered`, `overlap`, `spell`][reg=set]
+  ~#why(these three matter): "they read localStorage, so the same snippet on the same page answers differently once a reader has gathered anything — the page describes the visit, not only itself"
+  narrowing = `?spell[valence]{} resolves one register; ?spell[]{} composes all of them`
+  residue = `an answered probe writes data-spw-semantic-expression, so gathering a probe gathers a measurement with a place`
+  built = @probes
+}
+
+#>wonder_cauldron_registers_1
+?["Which registers does a reader actually travel, and which never move?"]{
+  #:depth #!educational ~#lens(arc)
+  ~#tension: "six registers are declared and nothing measures which ones a real gathering varies. A register that never leaves its identity is a coordinate no one is using."
+  ~#hypothesis: "liminality and valence vary per visit; biome and position almost never do, because both are dominated by defaults the markup rarely overrides"
+  !probe{ "gather ten fragments across three routes, compose, and record which registers left their identity value. A register that stayed at identity across all ten is either mis-defaulted or not worth carrying." }
+  $%[ingredient.coordinate, register.identity, gathering.span]
+}
+
+^"extending"{
+  ~#note: "For a model continuing this in the workbench."
+  add_a_register: #[
+    `declare carrier, kind, ordered, identity, read, scalar, compose, reading in CAULDRON_REGISTERS`,
+    `never store what compose can derive — add a projection to project() instead`,
+    `if the register is ordered, define distance() there and nowhere else`,
+    `add it to this surface's registers facet so the contract stays greppable`
+  ][reg=set]
+  ~#antipattern: `adding a sibling field to the ingredient. That is what this surface exists to stop.`
+}
+
+^"validation"{
+  probe: `node --check public/js/interface/cauldron/registers.js && node scripts/check-site.mjs`
+  falsification: "an ingredient field exists that is computable from another field and is persisted anyway"
+  ~#note(scope): "registers.js has no DOM and no parser, so it is testable by direct import rather than through a mounted page"
+}

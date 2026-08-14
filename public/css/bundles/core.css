@@ -29574,6 +29574,145 @@ html[data-spw-high-contrast="on"] :where(.site-frame, .frame-card, .frame-panel)
 }
 }
 
+/* /public/css/systems/probe-legibility.css */
+@layer systems {
+/* ==========================================================================
+   probe-legibility.css
+   --------------------------------------------------------------------------
+   The visible half of runtime/dom-probes.js.
+
+   The routes carry 1,115 <code> blocks and 99 <pre> blocks, and every one of
+   them is inert type — a shape that looks executable and is not. A probe is a
+   code block that answers about the page it is printed on, and this is what
+   that difference looks like.
+
+   The whole system is four states, and the unanswered state is the important
+   one:
+
+     (no state)   the module has not mounted, or JS is off. The probe reads as
+                  an ordinary code block, because it IS one — the expression is
+                  still true, it just has no reply yet. Nothing here styles the
+                  absence as an error.
+     answered     the reply is appended, and the block gains a conductive edge.
+     unknown      the subject has no resolver. Drawn as a question, not a fault:
+                  an unanswerable probe is a finding about the page.
+     failed       the resolver threw. This is the only state drawn as damage.
+
+   The reply arrives through ::after from an attribute, so no layout runs when a
+   probe is answered — the content box was already sized for the expression, and
+   the answer sits inline after it.
+
+   Grammar note: a probe is written `?subject[frame]{body}` and the leading `?`
+   is the aperture operator. It is styled as an operator rather than as
+   punctuation so a screenshot of a probe reads as Spw, which is the point —
+   these are meant to be legible when captured, not only when hovered.
+   ========================================================================== */
+
+:where([data-spw-probe]) {
+  --spw-probe-accent: var(--spw-charge-field-color, var(--active-op-color, #008080));
+  --spw-probe-edge: color-mix(in oklab, var(--spw-probe-accent) 28%, transparent);
+
+  position: relative;
+  /* An unanswered probe still declares itself as one. The dotted underline is
+     the affordance; it does not promise a reply, only that one is possible. */
+  text-decoration: underline dotted color-mix(in oklab, currentColor 32%, transparent);
+  text-underline-offset: 0.28em;
+  cursor: help;
+}
+
+/* --------------------------------------------------------------------------
+   Answered — the reply is the point, so it gets the accent and the expression
+   recedes slightly. Reading order is expression, then answer.
+   -------------------------------------------------------------------------- */
+
+:where([data-spw-probe][data-spw-probe-state='answered']) {
+  text-decoration: none;
+  box-shadow: inset 0 -0.08em 0 var(--spw-probe-edge);
+}
+
+[data-spw-probe][data-spw-probe-state='answered']::after {
+  content: ' → ' attr(data-spw-probe-result);
+  color: var(--spw-probe-accent);
+  font-variant-numeric: tabular-nums;
+  /* The answer is data the page produced, not copy an author wrote. Slightly
+     lighter so a reader can tell which half of the line they are trusting. */
+  opacity: 0.86;
+}
+
+/* --------------------------------------------------------------------------
+   Unknown / failed. Distinguished because they mean different things: unknown
+   is the corpus outrunning the resolvers, failed is a defect.
+   -------------------------------------------------------------------------- */
+
+[data-spw-probe][data-spw-probe-state='unknown']::after {
+  content: ' → ?';
+  opacity: 0.5;
+}
+
+[data-spw-probe][data-spw-probe-state='failed'] {
+  text-decoration-color: var(--color-warning, #b4553a);
+}
+
+/* --------------------------------------------------------------------------
+   Attention. A probe under attention raises its edge; it does not move, because
+   probes sit inline in prose and a shifting baseline is unreadable.
+   -------------------------------------------------------------------------- */
+
+:where([data-spw-probe]):is(:hover, :focus-visible) {
+  --spw-probe-edge: color-mix(in oklab, var(--spw-probe-accent) 54%, transparent);
+  outline: none;
+}
+
+/* --------------------------------------------------------------------------
+   The probe strip — a row of probes presented together, which is how a section
+   states several claims about itself at once.
+   -------------------------------------------------------------------------- */
+
+.probe-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs, 0.5rem) var(--space-sm, 1rem);
+  margin-block-start: var(--space-sm, 1rem);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: var(--font-size-sm, 0.875rem);
+  line-height: 1.7;
+}
+
+/* One probe per line below the ladder breakpoint: an answer that wraps mid
+   expression is worse than a taller strip. */
+@media (width < 40rem) {
+  .probe-strip {
+    display: grid;
+    gap: var(--space-3xs, 0.25rem);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Capture. Under screenshot mode the dotted affordance is noise — nobody is
+   going to hover a picture — but the answer must survive at full contrast.
+   -------------------------------------------------------------------------- */
+
+[data-spw-capture-mode] :where([data-spw-probe]) {
+  text-decoration: none;
+}
+
+[data-spw-capture-mode] [data-spw-probe][data-spw-probe-state='answered']::after {
+  opacity: 1;
+}
+
+@media print {
+  :where([data-spw-probe]) {
+    text-decoration: none;
+  }
+
+  /* In print the reply is the only durable half — the page it described is
+     gone. Keep it, drop the interaction grammar. */
+  [data-spw-probe][data-spw-probe-state='answered']::after {
+    opacity: 1;
+  }
+}
+}
+
 /* /public/css/systems/surfaces/base.css */
 @layer systems {
 /* ==========================================================================
