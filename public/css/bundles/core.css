@@ -26344,17 +26344,17 @@ html[data-spw-theme-pack="electric-studio"] {
    Thresholds use :nth-child(n + N) on the container's own children, so the
    count is structural rather than a class an author has to remember. */
 
-:where(.spw-grid, .card-grid, .page-grid):has(> :nth-child(6)) {
+:where(.spw-grid, .card-grid, .page-grid, .frame-grid, [class*="-grid"]):has(> :nth-child(6)) {
   --spw-canopy: 0.5;
 }
 
-:where(.spw-grid, .card-grid, .page-grid):has(> :nth-child(10)) {
+:where(.spw-grid, .card-grid, .page-grid, .frame-grid, [class*="-grid"]):has(> :nth-child(10)) {
   --spw-canopy: 0.72;
 }
 
 /* A clearing: few things, full light. Stated rather than left to the default,
    because a sparse region should be a decision and not an absence. */
-:where(.spw-grid, .card-grid, .page-grid):not(:has(> :nth-child(4))) {
+:where(.spw-grid, .card-grid, .page-grid, .frame-grid, [class*="-grid"]):not(:has(> :nth-child(4))) {
   --spw-canopy: 0;
 }
 

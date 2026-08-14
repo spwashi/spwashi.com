@@ -15,7 +15,7 @@
 <body
     data-spw-surface="website"
     data-spw-stylesheet-mode="scoped"
-    data-spw-features="operators navigator console themes inspectability promptability svg-surfaces"
+    data-spw-features="operators navigator console themes inspectability"
     data-spw-route-family="editorial design systems"
     data-spw-context="analysis"
     data-spw-wonder="projection orientation locality"
@@ -39,13 +39,18 @@
 ></spw-site-header>
 
 <main data-spw-kind="surface" data-spw-role="reference" id="main-content" tabindex="-1">
-    <article class="catalog-main">
+    <article class="catalog-main site-frame" data-spw-kind="frame" data-spw-liminality="entry">
         <header class="catalog-masthead">
             <h1>Token Review</h1>
             <p class="catalog-masthead__lede">
                 A quicker way to inspect the semantic register that underpins the site. Use this page when the question is not the full graph,
                 but which token family or runtime state should govern the current change.
             </p>
+            <div class="frame-topline" style="margin: 1rem 0;">
+                <a class="operator-chip" href="/design/catalog/#tokens" data-spw-operator="frame">#>tokens</a>
+                <a class="operator-chip" href="/design/experiments/css/#css-token-register" data-spw-operator="ref">~css-tokens</a>
+                <a class="operator-chip" href="/settings/#runtime-preferences" data-spw-operator="probe">?settings</a>
+            </div>
             <nav class="catalog-toc catalog-toc--compact" aria-label="Token review links">
                 <a href="/design/catalog/#tokens">catalog token register</a>
                 <a href="/design/experiments/css/#css-token-register">CSS token lab</a>
@@ -55,17 +60,17 @@
             </nav>
         </header>
 
-        <section class="catalog-section">
+        <section class="catalog-section site-frame" data-spw-kind="frame" data-spw-role="reference" data-spw-liminality="threshold">
             <h2>What this page is for</h2>
             <div class="catalog-entries">
-                <article class="catalog-entry">
+                <article class="catalog-entry frame-card" data-spw-metamaterial="glass" data-spw-role="reference" data-spw-affordance="inspect">
                     <header class="catalog-entry__header">
                         <code class="catalog-entry__name">shared token families</code>
                         <span class="catalog-entry__meta">scan here, confirm elsewhere</span>
                     </header>
                     <p class="catalog-entry__line">The full register lives in the catalog. This page is the faster review surface for tokens that carry shape, line, field, and wonder across routes.</p>
                 </article>
-                <article class="catalog-entry">
+                <article class="catalog-entry frame-card" data-spw-metamaterial="glass" data-spw-role="reference" data-spw-affordance="inspect">
                     <header class="catalog-entry__header">
                         <code class="catalog-entry__name">runtime state</code>
                         <span class="catalog-entry__meta">settings adjacent</span>

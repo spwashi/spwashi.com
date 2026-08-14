@@ -878,7 +878,7 @@ function renderIndexHtml({attrs, cssFiles, tokens, docs, imageAssets, orphans, g
 </head>
 <body
   data-spw-surface="design"
-  data-spw-features="catalog"
+  data-spw-features="console"
   data-spw-route-family="design"
   data-spw-context="analysis"
   data-spw-wonder="traceability"
