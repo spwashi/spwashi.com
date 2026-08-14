@@ -16,3 +16,15 @@
   "SKILL.md": .{ role = `prose — the instructions a model reads` }[reg=facet]
 }[reg=facet]
 # >>> end generated
+
+expression = lab[prime]{experiment.local.rollback}<reversible>
+
+^"value"{
+  standing = underused
+  worth: `Reversibility. An experiment that cannot be rolled back is a commitment in disguise.`
+  measured: .{
+    labs_run_this_session = 0
+    systems_shipped_without_lab = 3
+  }[reg=facet]
+  next: `Lab pages that ship as playable instruments rather than being deleted.`
+}

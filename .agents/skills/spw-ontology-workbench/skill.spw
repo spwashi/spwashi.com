@@ -16,3 +16,18 @@
   "SKILL.md": .{ role = `prose — the instructions a model reads` }[reg=facet]
 }[reg=facet]
 # >>> end generated
+
+expression = ontology[contract]{relation.surface.probe}<durable>
+
+^"value"{
+  standing = proven
+  worth: `Relations that outlive a patch.`
+  measured: .{
+    surfaces = 237
+    citations = 2547
+    citations_resolving = 2547
+    added_this_session = 8
+  }[reg=facet]
+  next: `Precipitates — measurements that render as Spw and become citable corpus rather than JSON nobody can reference.`
+  ~<../../../.spw/conventions/skill-invocation.spw>
+}

@@ -16,3 +16,14 @@
   "SKILL.md": .{ role = `prose — the instructions a model reads` }[reg=facet]
 }[reg=facet]
 # >>> end generated
+
+expression = math[prime]{concept.bed.progression}<learning>
+
+^"value"{
+  standing = underused
+  worth: `Learning routes are the site's actual subject; the work is framed through applied learning science.`
+  measured: .{
+    practice_beds = 0
+  }[reg=facet]
+  next: `Practice beds where the math is the mechanic rather than the illustration.`
+}

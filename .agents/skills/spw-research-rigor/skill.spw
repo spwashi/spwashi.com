@@ -16,3 +16,17 @@
   "SKILL.md": .{ role = `prose — the instructions a model reads` }[reg=facet]
 }[reg=facet]
 # >>> end generated
+
+expression = research[cache]{question.probe.note}<reproducible>
+
+^"value"{
+  standing = proven
+  worth: `Fuzzy questions become reproducible notes instead of opinions that recur every session.`
+  measured: .{
+    wonders = 42
+    wonders_probeable = 12
+    wonders_without_probe = 30
+  }[reg=facet]
+  next: `30 of 42 wonders carry no probe. Settling or probing them is exactly this work.`
+  ~<../../../scripts/wonder.mjs>
+}

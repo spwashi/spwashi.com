@@ -16,3 +16,17 @@
   "SKILL.md": .{ role = `prose — the instructions a model reads` }[reg=facet]
 }[reg=facet]
 # >>> end generated
+
+expression = types[contract]{check.boundary.tool}<where-it-pays>
+
+^"value"{
+  standing = proven
+  worth: `Contracts catch what review misses.`
+  measured: .{
+    scripts_added_this_session = 6
+    scripts_typed = 0
+    contract_blocks_hit = 1
+  }[reg=facet]
+  next: `Six untyped scripts added this session. That is where the next contract pays.`
+  ~<../../../scripts/ts>
+}

@@ -102,9 +102,18 @@ const CLI = [
  */
 const GENERATED = ['.spw/gen/'];
 
+/**
+ * Roots to walk. `.spw` is the corpus; `.agents/skills` carries one `skill.spw`
+ * per skill directory, cited from `.spw/skills/index.spw` but outside the corpus
+ * walk. Adding it here is not tidiness — a schema rename left three stale refs
+ * in those files that resolved from nowhere and were caught by hand. A citation
+ * nothing checks is a citation that rots.
+ */
+const WALK_ROOTS = ['.spw', '.agents/skills'];
+
 /** Ask the parser what the citations are. It knows; a regex does not. */
 async function readPathRefs() {
-  const { stdout } = await run('node', [...CLI, 'query', '--from', '.spw',
+  const { stdout } = await run('node', [...CLI, 'query', '--from', WALK_ROOTS.join(','),
     '--selector', 'pathRefs', '--json', '-n', '10000'], {
     cwd: ROOT,
     maxBuffer: 64 * 1024 * 1024,

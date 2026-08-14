@@ -16,3 +16,16 @@
   "SKILL.md": .{ role = `prose — the instructions a model reads` }[reg=facet]
 }[reg=facet]
 # >>> end generated
+
+expression = plan[prime]{scope.route.layer}<before-code>
+
+^"value"{
+  standing = proven
+  worth: `Stops a one-route idea from quietly becoming a shared-layer rewrite.`
+  measured: .{
+    parcels_written = 5
+    parcels_claimed = 0
+  }[reg=facet]
+  next: `Plans that name their own falsification, so a stale plan is detectable rather than merely old.`
+  ~<../../../.spw/caches/delegation-parcels-2026-08.spw>
+}

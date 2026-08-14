@@ -16,3 +16,15 @@
   "SKILL.md": .{ role = `prose — the instructions a model reads` }[reg=facet]
 }[reg=facet]
 # >>> end generated
+
+expression = fix[audit]{regression.layer.root}<structure>
+
+^"value"{
+  standing = underused
+  worth: `Multi-layer regressions where the obvious fix sits in the wrong layer.`
+  measured: .{
+    invocations_this_session = 0
+    worked_examples = 0
+  }[reg=facet]
+  next: `The first real multi-layer regression should produce a worked example, or this stays theoretical.`
+}

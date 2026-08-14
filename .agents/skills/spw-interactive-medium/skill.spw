@@ -18,3 +18,17 @@
   "references/": .{ role = `reference material the skill cites`, holds = #[`interactive-medium-rails.md`][reg=set] }[reg=facet]
 }[reg=facet]
 # >>> end generated
+
+expression = medium[prime]{scene.device.payload}<played>
+
+^"value"{
+  standing = proven
+  worth: `Play surfaces have live users. RPG Wednesday is played weekly, not demoed.`
+  measured: .{
+    rpg_shells = 5
+    rpg_walls = 2
+    conductive_routes = 32
+  }[reg=facet]
+  next: `The episode framing — arrival schedules per module, but an episode has acts.`
+  ~<../../../.spw/conventions/arrival-electrostatics.spw>
+}

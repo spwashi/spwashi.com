@@ -16,3 +16,17 @@
   "SKILL.md": .{ role = `prose — the instructions a model reads` }[reg=facet]
 }[reg=facet]
 # >>> end generated
+
+expression = lattice[audit]{operator.apposition.link}<corpus>
+
+^"value"{
+  standing = blocked
+  worth: `The tool reports an empty field as though it were a finding.`
+  measured: .{
+    apposition_cells_read = 6
+    surfaces_scanned = 237
+    appositions_present = "thousands"
+  }[reg=facet]
+  next: `Either the corpus adopts ~#name(body) or the tool learns the ~#name: form the tree already uses. Both are one pass.`
+  ~<../../../.spw/skills/semantics-rigor.spw>
+}

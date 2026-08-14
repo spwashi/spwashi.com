@@ -6,7 +6,7 @@
 #:fixity #!tending
 #:layer #!pragmatics
 
-@schema: ~"../_shared/anatomy-schema.spw"
+@schema: ~"../_shared/skill-surface.spw"
 @prose: ~"./SKILL.md"
 @measures: ~"../../../.spw/skills/craft-quality.spw"
 @stylesheet_ecology: ~"../../../.spw/conventions/stylesheet-ecology.spw"
@@ -57,3 +57,18 @@ expression = craft[align]{clarity.hierarchy.weight}<one-slice>
   "SKILL.md": .{ role = `prose — the instructions a model reads` }[reg=facet]
 }[reg=facet]
 # >>> end generated
+
+expression = craft[align]{clarity.hierarchy.weight}<one-slice>
+
+^"value"{
+  standing = blocked
+  worth: `No other single lever moves as much weight as the core bundle.`
+  measured: .{
+    core_kb = 1614
+    top_six_kb = 370
+    important_total = 173
+    important_in_ornament = 13
+  }[reg=facet]
+  next: `One eviction with a number. parcel_css_eviction is written and unclaimed.`
+  ~<../../../.spw/skills/craft-quality.spw>
+}

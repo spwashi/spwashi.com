@@ -20,3 +20,18 @@
   "scripts/": .{ role = `executable helpers the skill invokes`, holds = #[`generate-variants.sh`][reg=set] }[reg=facet]
 }[reg=facet]
 # >>> end generated
+
+expression = image[contract]{tier.format.master}<derive>
+
+^"value"{
+  standing = proven
+  worth: `Raw renders enter the repo at 20x their useful weight.`
+  measured: .{
+    reduced_from_kb = 7680
+    reduced_to_kb = 1024
+    psnr_db = 38
+    untouched_raw_mb = 133
+  }[reg=facet]
+  next: `renders/_raw is 115MB and _raw-2x2 is 18MB — the largest single weight in the repo.`
+  ~<../../../scripts/optimize-image-asset.mjs>
+}

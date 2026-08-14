@@ -18,3 +18,16 @@
   "references/": .{ role = `reference material the skill cites`, holds = #[`naming-lexicon.spw`][reg=set] }[reg=facet]
 }[reg=facet]
 # >>> end generated
+
+expression = naming[align]{render.spirit.placement}<sidecar>
+
+^"value"{
+  standing = proven
+  worth: `An unnamed render is unfindable and gets regenerated. Names are the only handle on the archive.`
+  measured: .{
+    renders_archived = "~200"
+    sidecars_written = 3
+  }[reg=facet]
+  next: `Name the rejected ones too — dough-tide is marked not-preferred and stopped being re-proposed.`
+  ~<../../../.spw/assets.spw>
+}

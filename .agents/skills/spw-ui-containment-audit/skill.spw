@@ -6,7 +6,7 @@
 #:fixity #!tending
 #:layer #!pragmatics
 
-@schema: ~"../_shared/anatomy-schema.spw"
+@schema: ~"../_shared/skill-surface.spw"
 @prose: ~"./SKILL.md"
 @measures: ~"../../../.spw/skills/ui-containment.spw"
 @stylesheet_ecology: ~"../../../.spw/conventions/stylesheet-ecology.spw"
@@ -57,3 +57,20 @@ expression = containment[audit]{overflow.measure.target.packing}<narrow-and-wide
   "SKILL.md": .{ role = `prose — the instructions a model reads` }[reg=facet]
 }[reg=facet]
 # >>> end generated
+
+expression = containment[audit]{overflow.measure.target}<narrow-and-wide>
+
+^"value"{
+  standing = blocked
+  worth: `Mobile aesthetics are a stated release priority and the posture is still desktop-first.`
+  measured: .{
+    width_queries = 189
+    max_width = 155
+    min_width = 43
+    thresholds_before = 58
+    thresholds_after = 32
+    routes_with_viewport = 152
+  }[reg=facet]
+  next: `The mechanical half is unbuilt — overflow and tap-target minima are checkable; only the aesthetic half needs eyes.`
+  ~<../../../.spw/skills/ui-containment.spw>
+}

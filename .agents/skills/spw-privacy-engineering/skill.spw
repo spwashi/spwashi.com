@@ -16,3 +16,16 @@
   "SKILL.md": .{ role = `prose — the instructions a model reads` }[reg=facet]
 }[reg=facet]
 # >>> end generated
+
+expression = privacy[audit]{storage.worker.metadata}<resident>
+
+^"value"{
+  standing = unaudited
+  worth: `Storage keys accumulate silently and persist reader behaviour.`
+  measured: .{
+    keys_added_this_session = 2
+    keys_reviewed = 0
+  }[reg=facet]
+  next: `A storage census that runs with the other probes, so a new key surfaces when it is added.`
+  ~<../../../.spw/conventions/storage-topology.spw>
+}

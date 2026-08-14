@@ -80,8 +80,7 @@
 ^"responsive_sizing_guidance"{
   html_pattern: "Use srcset with size labels in pixels (256w, 512w, 1024w)"
   css_pattern: "Define max-width in CSS; sizes attribute helps browser choose optimal variant"
-  example_html: ~"../references/srcset-example.html"
-  example_css: ~"../references/responsive-image.css"
+  ~#note: "Two example files were cited here — srcset-example.html and responsive-image.css — and never written. The patterns above carry the guidance, so the citations were removed rather than the examples invented."
 }
 
 ^"compression_targets"{

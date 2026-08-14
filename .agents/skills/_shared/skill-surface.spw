@@ -80,10 +80,10 @@ expression = skill[surface]{contents.reference.facet}<extend>
 }
 
 ^"corpus_reach"{
-  ~#note: "Honest limitation."
-  walk_root: "The corpus walk is rooted at .spw, so these files are not enumerated by spw:census or spw:query."
-  reached_by: "Citation — @skills_index pathRefs each one, so spw:integrity resolves them and a reader can follow them."
-  open: "Widen the walk to .agents/skills, or accept citation-only reach. Citation-only is currently sufficient and costs nothing."
+  ~#note: "Settled by being wrong once."
+  walked_by: "spw:integrity walks .spw and .agents/skills. Citation-only reach was tried first and failed inside one commit — a schema rename left three stale refs here that nothing checked."
+  still_outside: "spw:census and spw:query remain rooted at .spw, so these files are cited but not enumerated by the census."
+  rule: "A citation nothing checks is a citation that rots. If a directory holds .spw files, something must walk it."
 }
 
 ^"validation"{

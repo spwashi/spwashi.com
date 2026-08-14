@@ -18,3 +18,17 @@
   "scripts/": .{ role = `executable helpers the skill invokes`, holds = #[`analyze-changes.sh`][reg=set] }[reg=facet]
 }[reg=facet]
 # >>> end generated
+
+expression = patch[align]{ownership.slice.commit}<parallel>
+
+^"value"{
+  standing = proven
+  worth: `More than one agent commits to main here. A mixed tree is where two sessions collide.`
+  measured: .{
+    sessions_concurrent = 2
+    files_held_by_other = 19
+    collisions = 0
+  }[reg=facet]
+  next: `Reverse it — read a working tree and propose the parcel split.`
+  ~<../../../.spw/caches/delegation-parcels-2026-08.spw>
+}

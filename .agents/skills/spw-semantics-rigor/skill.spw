@@ -6,7 +6,7 @@
 #:fixity #!tending
 #:layer #!pragmatics
 
-@schema: ~"../_shared/anatomy-schema.spw"
+@schema: ~"../_shared/skill-surface.spw"
 @prose: ~"./SKILL.md"
 @measures: ~"../../../.spw/skills/semantics-rigor.spw"
 @expression_consequence: ~"../../../.spw/conventions/semantic-expression-consequence.spw"
@@ -59,3 +59,18 @@ expression = semantics[align]{name.attribute.expression}<corpus>
   "SKILL.md": .{ role = `prose — the instructions a model reads` }[reg=facet]
 }[reg=facet]
 # >>> end generated
+
+expression = semantics[align]{name.attribute.expression}<corpus>
+
+^"value"{
+  standing = proven
+  worth: `441 authored expressions now have consequences, so a careless rename costs kinship rather than nothing.`
+  measured: .{
+    expressions = 441
+    expressions_structuring = 441
+    with_kin = 423
+    densest_part_token = 21
+  }[reg=facet]
+  next: `Kinship quality — part-kinship has no frequency ceiling and `return` relates 21 expressions that may share only a word.`
+  ~<../../../.spw/skills/semantics-rigor.spw>
+}

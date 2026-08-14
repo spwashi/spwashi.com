@@ -16,3 +16,16 @@
   "SKILL.md": .{ role = `prose — the instructions a model reads` }[reg=facet]
 }[reg=facet]
 # >>> end generated
+
+expression = plan[archive]{stale.link.census}<smaller>
+
+^"value"{
+  standing = proven
+  worth: `Success is a smaller next census. Nothing else in the tree reduces load on purpose.`
+  measured: .{
+    caches = 8
+    parcels_that_will_go_stale = 5
+  }[reg=facet]
+  next: `Parcels go stale the moment they are claimed. Pruning them is this skill's next job.`
+  ~<../../../.spw/caches/index.spw>
+}
