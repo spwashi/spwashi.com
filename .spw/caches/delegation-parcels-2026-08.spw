@@ -96,18 +96,15 @@ fixity = "tending"
 
 
 ^"parcel_history_reflow"{
-  goal: "Reduce the unpushed sequence to a polished history with churn removed, before pushing."
+  goal: "Rewrite the unpushed sequence so each commit states the settled understanding, with churn squashed and the markup audited against the claim at each step."
   owns: #[`git history ahead of origin`][reg=set]
+  ~#plan: ~"../../.agents/plans/history-reflow/PLAN.md"
+  ~#note: "the plan carries the target sequence, the retrospect items, the per-step HTML probes and the recovery procedure — this parcel only claims the work"
   ~#blocked_by(hard): "a rebase needs a clean tree, and stashing is forbidden here"
   ~#order: "integrate, then reflow, then push"
-  churn_kinds: .{
-    registration = `single-line @ref additions to conventions/index.spw, one per landing`
-    generated = `bundles and generated indexes rewritten by their generators, not authored`
-    revision = `surfaces created and revised again within the same working session`
-  }[reg=facet]
-  ~#caution: "each commit states a measurement; a squashed episode must keep every verify line it absorbs, or the dates the numbers were true on are lost"
-  ~#refuse: "recording commit hashes here — they do not survive the reflow this parcel describes"
-  probe: `git log --oneline @{u}..HEAD && git log --format=%h @{u}..HEAD --name-only | sort | uniq -c | sort -rn`
+  ~#refuse: "commit hashes in this cache — they do not survive the reflow they would describe"
+  ~#law: "count is not the metric; coherence is"
+  probe: `git log --oneline @{u}..HEAD`
   gate: "human, after integration"
 }
 
