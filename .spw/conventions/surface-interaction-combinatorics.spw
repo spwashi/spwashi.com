@@ -1,0 +1,85 @@
+#>surface_interaction_combinatorics
+#:convention #!interaction #!gestures #!combinatorics #!surfaces
+#:operation #!contract
+#:fixity #!stable
+#:layer #!pragmatics
+
+operation = "contract"
+fixity = "stable"
+
+@interaction_microstates: ~"./interaction-microstates.spw"
+@dimension_vocabulary: ~"./dimension-vocabulary.spw"
+@spw_serialization_hydration: ~"./spw-serialization-hydration.spw"
+@arrival_electrostatics: ~"./arrival-electrostatics.spw"
+@attention_field: ~"./attention-field.spw"
+
+^"thesis"{
+  claim: "Surfaces across spwashi.com do not handle input as disjoint event listeners. They orchestrate five combinatoric gesture channels (scroll, tap, drag, hover, swipe) through a shared phase ladder, physical continuum tokens, and non-colliding layout lanes."
+}
+
+^"gesture_channels"{
+  scroll: {
+    channel: "Kinematic Viewport Locomotion"
+    inputs: ["wheel", "touchmove (vertical)", "keyboard (PageUp/Down, Home/End, Arrows)"]
+    states: {
+      bands: "data-spw-scroll-band = 'top' | 'lifted' | 'deep'"
+      directions: "data-spw-scroll-direction = 'up' | 'down' | 'still' (with 8px deadzone)"
+      membrane: "--spw-edge-tension resistance and boundary origin/settling beams"
+      handle: "section-handle visibility (>240px or activeIndex > 0) in --spw-bottom-lane-handle"
+    }
+    isolation: "Prevents layout reflow by batching reads into rAF and scheduling measurement passes."
+  }
+
+  tap_and_focus: {
+    channel: "Discrete Selection & Attention Commitment"
+    inputs: ["click", "pointerdown", "focusin / focus-visible", "keyboard shortcuts"]
+    behaviors: {
+      single_tap: "Lens mode switch, route navigation, or collectible badge capture"
+      double_tap_click: "spwCopyFlash keyframe pulse and clipboard AST export"
+      focus_visible: "Instant operator resonance pin without hover delay"
+      keyboard_tuning: "v/V (density), 1-6 (phase jump), +/- and Shift+Up/Down (tangibility dial)"
+    }
+  }
+
+  drag_and_ingestion: {
+    channel: "Reagent Gathering & State Ingestion"
+    inputs: ["dragstart", "dragover", "drop", "touch long-press + move"]
+    behaviors: {
+      pickup: "Marks element with data-spw-ingredient-primed and elevates z-index"
+      vessel_proximity: "Footer cauldron expands and transitions to 'phase:bubbling'"
+      drop_settle: "Condenses item into persistent satchel / cauldron memory with haptic feedback"
+    }
+  }
+
+  hover_and_dwell: {
+    channel: "Proximity Priming & Resonance Echo"
+    inputs: ["pointerover", "pointermove", "pointerleave"]
+    behaviors: {
+      immediate_approach: "Triggers substrate specular highlight and depth lift"
+      dwell_260ms: "Pins data-spw-resonance-probe, radiating echo glow across sibling operators"
+      decay_leave: "Smoothly relaxes resonance back to idle scaled by --spw-viscosity"
+    }
+  }
+
+  swipe_and_pinch: {
+    channel: "Continuous Multi-Touch Manipulation"
+    inputs: ["touchmove (horizontal)", "pointermove (active pointer)", "gesturechange (pinch)"]
+    behaviors: {
+      horizontal_swipe: "Carousel / tuning strip navigation; touch-action: pan-y prevents vertical scroll contention"
+      pinch_scale: "data-spw-pinch-scaling modulates font measure and reading width in real time"
+    }
+  }
+}
+
+^"combinatoric_matrix"{
+  scroll_x_hover: "Hover probe state is suspended during active rapid scrolling to eliminate visual flicker."
+  scroll_x_bottom_chrome: "Floating section handle, satchel, and console occupy distinct vertical lanes without overlap."
+  drag_x_scroll: "Horizontal/vertical touch dragging locks document scroll lock guard until release."
+  tap_x_focus: "Mouse clicks preserve active visual state without showing jarring keyboard focus rings (:focus:not(:focus-visible))."
+}
+
+^"invariants"{
+  progressive_enhancement: "Every surface remains fully readable, navigable, and usable when JS is disabled."
+  zero_contention: "Touch gestures declare touch-action explicitly; bottom controls never fight for the same inset."
+  batched_measurement: "No gesture handler invokes synchronous getBoundingClientRect or clientWidth reads outside rAF."
+}

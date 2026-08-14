@@ -19,6 +19,7 @@
 @css_combinatorics: ~"./css-combinatorics.spw"
 @arrival_perceptibility: ~"./arrival-perceptibility-2026-08.spw"
 @delegation_parcels: ~"./delegation-parcels-2026-08.spw"
+@precipitate_2026_08_14: ~"./precipitate-2026-08-14.spw"  # probe output lifted into corpus; deltas accrue per run
 
 operation = "align"
 fixity = "tending"
@@ -32,6 +33,7 @@ fixity = "tending"
   css_combinatorics = @css_combinatorics
   arrival_perceptibility_2026_08 = @arrival_perceptibility
   delegation_parcels_2026_08 = @delegation_parcels
+  precipitate_2026_08_14 = @precipitate_2026_08_14
 }[reg=facet]
 
 ^"cache_rules"{

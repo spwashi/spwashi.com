@@ -48,6 +48,8 @@
 @annotation_layer: ~"./conventions/annotation-layer.spw"
 @semantic_braces: ~"./conventions/semantic-braces.spw"
 @html_spw_block_association: ~"./conventions/html-spw-block-association.spw"
+@spw_serialization_hydration: ~"./conventions/spw-serialization-hydration.spw"
+@surface_interaction_combinatorics: ~"./conventions/surface-interaction-combinatorics.spw"
 @narrative_instrumentation: ~"./conventions/narrative-instrumentation.spw"
 @query_disposition: ~"./conventions/query-disposition.spw"
 @composition_box_model: ~"./conventions/composition-box-model.spw"

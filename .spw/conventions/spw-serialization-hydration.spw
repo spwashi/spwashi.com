@@ -1,0 +1,74 @@
+#>spw_serialization_hydration
+#:convention #!serialization #!hydration #!runtime #!contracts
+#:operation #!contract
+#:fixity #!stable
+#:layer #!semantics
+
+operation = "contract"
+fixity = "stable"
+
+@html_spw_block_association: ~"./html-spw-block-association.spw"
+@dimension_vocabulary: ~"./dimension-vocabulary.spw"
+@arrival_electrostatics: ~"./arrival-electrostatics.spw"
+@attention_field: ~"./attention-field.spw"
+@site_semantics: ~"./site-semantics.spw"
+@experiential: ~"../../public/js/runtime/experiential.js"
+
+^"thesis"{
+  claim: "Spw serialization is the lossless two-way bridge between plain-text grammar, static HTML DOM structure, CSS physical fields, and interactive runtime state."
+  triad: #[
+    "1. Static Seed (HTML + CSS): Zero-JS server/static baseline with embedded data-spw-definition and thermodynamic dataset attributes.",
+    "2. Kinetic Hydration (JS Progressive Enhancement): Client-side parsing that binds gesture physics, attentional resonance, and mode switching without virtual DOM diffing overhead.",
+    "3. Spell Replay (Serialization → Outcome): Compact Spw strings that replay camera checkpoints, working sets, and thermodynamic phases."
+  ][reg=set]
+}
+
+^"serialization_grammar"{
+  element_to_spw: #[
+    "handle: #>name",
+    "capsule: subject[mode]{parts}<concept>",
+    "claims: #:key #!value",
+    "physics: #:phase #!lattice #:tangibility #!0.75 #:viscosity #!0.30"
+  ][reg=set]
+
+  example: `
+    #>software_surface[analysis]{plain_text.syntax.grammar.projections}
+    #:fixity #!stable
+    #:phase #!lattice
+    #:tangibility #!0.90
+    #:viscosity #!0.20
+    #:coherence #!0.95
+    #:biome #!lab
+  `
+}
+
+^"hydration_lifecycle"{
+  stages = #[
+    .{
+      stage: "1. Scan & Register",
+      action: "Identify all [data-spw-definition], [data-spw-semantic-expression], and script[type='text/spw'] elements in the root container."
+    },
+    .{
+      stage: "2. AST Mapping",
+      action: "Extract subject, lens mode, component parts, phase, and claim metadata into memory without layout thrashing."
+    },
+    .{
+      stage: "3. Field Alignment",
+      action: "Synchronize data-spw-phase and continuum properties (--spw-tangibility, --spw-viscosity) with CSS custom properties via writeStyleValue."
+    },
+    .{
+      stage: "4. Gesture & Locomotion",
+      action: "Attach zero-latency double-click copy, keyboard shortcut hooks (1-6, v/V, +/-), and cauldron drag/drop affordances."
+    },
+    .{
+      stage: "5. Resonance Inductance",
+      action: "Connect operator chips and living terms to the attentional resonance field via CSS :has() and --spw-resonance."
+    }
+  ][reg=set]
+}
+
+^"invariants"{
+  no_layout_thrashing: "Hydration must never interleave getBoundingClientRect reads with dataset/style writes synchronously; batch all reads into rAF."
+  pure_progressive_enhancement: "If JavaScript fails to load or is disabled, the page remains 100% readable, semantic, and styled."
+  zero_dependency_parsing: "Client-side Spw parsing and serialization must remain zero-dependency, lightweight, and fast (< 1ms per page)."
+}
