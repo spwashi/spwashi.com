@@ -57,6 +57,10 @@
 @arrival_electrostatics: ~"./arrival-electrostatics.spw"  # arrival as potential difference; carries the site's first probeable wonders
 @stylesheet_ecology: ~"./stylesheet-ecology.spw"  # a stylesheet is a standalone document; core.css is where the ecology fails
 @semantic_expression_consequence: ~"./semantic-expression-consequence.spw"  # 441 authored expressions parsed at build time; kinship as inductance
+@depth_perspectives: ~"./depth-perspectives.spw"  # beginner/advanced as projections, not rungs; why the arrows stalled
+@corpus_completion: ~"./corpus-completion.spw"  # authoring completions derived from what the copy already says
+@compound_expressions: ~"./compound-expressions.spw"  # compounds parse today and are unused; declared bonds vs inferred kinship
+@component_biome: ~"./component-biome.spw"  # components as land features; light, canopy, exchange, succession
 @wonder_vocabulary: ~"./wonder-vocabulary.spw"
 @page_anatomy_vocabulary: ~"./page-anatomy-vocabulary.spw"
 @page_template_authoring: ~"./page-template-authoring.spw"

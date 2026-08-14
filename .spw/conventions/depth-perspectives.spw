@@ -1,0 +1,101 @@
+# Depth Perspectives
+#
+# Two versions of the same paragraph, and a way to move between them. The design
+# has been wanted for a while and stalls in the same place every time: the
+# versions do not carry the same information, and "simple" is not one thing.
+# This names why, and what would have to be true for arrows to work.
+
+#>depth_perspectives
+#:convention #!copy #!pedagogy #!perspective
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@expressive_registers: ~"./expressive-registers.spw"
+@semantic_expression: ~"./semantic-expression-consequence.spw"
+@arrival_electrostatics: ~"./arrival-electrostatics.spw"
+@copy_localization: ~"./copy-localization.spw"
+@attribute_governance: ~"./data-spw-attribute-governance.spw"
+@copy_lens_css: ~"../../public/css/systems/semantic-copy-lens.css"
+@familiarity_gate: ~"../../public/js/runtime/familiarity-gate.js"
+@precipitates: ~"../_workbench/.spw/runtime/precipitates.spw"
+
+operation = "prime"
+fixity = "experimental"
+
+expression = topic[perspective]{holds.drops.assumes}<traverse>
+
+^"the_stall"{
+  claim: "Left and right arrows imply a total order. The versions do not have one, so the control promises something the content cannot deliver."
+  not_conserved: "A beginner version is not a subset of an advanced one. It carries analogy, motivation and scaffolding the advanced version drops, and drops precision, edge cases and formalism the advanced version needs. Neither contains the other."
+  simple_is_not_one_thing: "Fewer concepts, more concrete, shorter, less jargon, more motivated — these are different requests that all arrive under the word simple, and they pull apart. A version that is shorter is often less concrete, because concreteness costs words."
+  consequence: "Ranking versions 1..N forces a single axis onto a set that has several, and the ranking is where the disagreement about what simple means gets buried instead of expressed."
+}
+
+^"measured_conflation"{
+  claim: "The attribute that would carry this already mixes two axes."
+  attribute = `data-spw-copy-depth`
+  values_in_use: .{
+    normal = 91
+    genre = 11
+    rich = 5
+    entry = 5
+    technical = 2
+  }[reg=facet]
+  problem: "entry | normal | rich is a depth ladder. genre | technical is a register. They are orthogonal — technical-entry and genre-rich are both coherent and neither is expressible."
+  probe: `grep -rho 'data-spw-copy-depth="[^"]*"' --include=index.html . | sed 's/.*="\(.*\)"/\1/' | sort | uniq -c`
+  status: "Nothing selects between versions today. 114 declarations, all consumed by CSS for styling; no route authors two versions of the same paragraph."
+}
+
+^"three_axes_that_get_confused"{
+  ~#note: "Keeping these apart is most of the design."
+  text_depth: "A property of the writing. How much is unpacked. Authored."
+  text_register: "A property of the writing. Which vocabulary it reaches for — genre, technical, plain. Authored, and independent of depth."
+  reader_familiarity: "A property of the reader, measured — fresh | familiar | practiced | fluent | habitual per @familiarity_gate. Not a property of any version."
+  rule: "Do not let measured familiarity choose the version silently. A fluent reader often wants the beginner version — to teach from, to check an intuition, to remember how it felt. Familiarity may suggest a default; only the reader may set it."
+}
+
+^"projection_not_rank"{
+  claim: "Versions are projections of one concept through different lenses, not rungs on a ladder. @precipitates already defines projection as 'a view of one stage's output through another stage's lens' — the lenses are not ranked there either."
+  consequence: "If each version declares what it holds and what it drops, difference becomes inspectable instead of implied. `holds` and `drops` are the interesting fields; `depth` was never the interesting field."
+  shape: `topic[perspective]{holds.drops.assumes}`
+  kinship: "Two versions share a subject and differ in mode, which makes them kin by subject under @semantic_expression — the conceptual space asked for is the kinship graph that already exists."
+  traversal: "Arrows still work. They traverse a graph rather than a line, and the control has to say which edge it is following — 'more concrete' is a different arrow from 'more precise'."
+}
+
+^"what_would_make_it_buildable"{
+  ~#note: "Not built. This is a prime — the path, not the patch."
+  first: "Split the conflated attribute. Depth and register need separate stems before anything can select on either."
+  second: "Author one concept twice, in one place, with holds/drops declared. One worked example teaches more than a schema."
+  third: "Measure conservation across the pair — what does each carry that the other does not. If the answer is 'the same content, fewer words', the versions are not perspectives and the feature is not needed."
+  fourth: "Only then a control, and it names its edge rather than a direction."
+  refuse: "Do not ship arrows over versions that were written as a ladder. The control would be honest and the content would not."
+}
+
+#>wonder_depth_perspectives_1
+?["Is there a version of a paragraph that every other version can be derived from?"]{
+  #:depth #!educational ~#lens(conservation)
+  ~#tension: "authoring N versions by hand is N times the maintenance and they drift. deriving them from one source assumes a source that contains everything, and the beginner version's analogy is not in the technical one — it was invented for the reader, not extracted from the concept."
+  ~#hypothesis: "no. the union of all versions is larger than any of them, so the source would have to be a structure rather than a text — closer to holds/drops than to prose."
+  !probe{ "take one concept, write it for a newcomer and for someone fluent, then list what each carries that the other does not. if either list is empty the versions are a ladder; if both are full they are perspectives and no single source generates them." }
+  $%[version.holds, version.drops, version.assumes, concept.subject]
+}
+
+#>wonder_depth_perspectives_2
+?["Whose simple is the default?"]{
+  #:depth #!experiential ~#lens(register)
+  ~#tension: "the site's audience now includes mentees being onboarded, a token community, and a table of players — three groups whose simple is different. a single default picks one of them and calls it neutral."
+  ~#hypothesis: "the default belongs to the route rather than the site. a recipe page's simple is concrete; an operator atlas's simple is fewer concepts; they should not share a setting."
+  !probe{ "for three routes with different audiences, write the same sentence at each one's simple. if the three differ in kind rather than in length, the default is route-scoped." }
+  $%[route.audience, version.register, version.holds]
+}
+
+^"validation"{
+  probe: `grep -rho 'data-spw-copy-depth="[^"]*"' --include=index.html . | sort | uniq -c`
+  falsification: #[
+    `Two versions of one concept ship with a depth rank and no holds/drops declaration.`,
+    `Measured familiarity selects a version without the reader choosing it.`,
+    `A control offers direction (more/less) rather than an edge (more concrete / more precise).`
+  ][reg=set]
+  next: "One concept, authored twice, with holds and drops written down. Everything else waits on that."
+}

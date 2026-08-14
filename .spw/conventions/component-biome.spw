@@ -1,0 +1,111 @@
+# Component Biome
+#
+# Components as features of the land rather than instances of a class: arising
+# where conditions allow, developing presence with age, and exchanging with
+# neighbours where the exchange pays. Light comes from the theme, position
+# decides who gets it, and nothing associates in soil this rich.
+
+#>component_biome
+#:convention #!components #!ecology #!css
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@region_ecology: ~"./region-component-ecology.spw"
+@kernel_rhizosphere: ~"./kernel-rhizosphere.spw"
+@stylesheet_ecology: ~"./stylesheet-ecology.spw"
+@compound_expressions: ~"./compound-expressions.spw"
+@arrival_electrostatics: ~"./arrival-electrostatics.spw"
+@electrostatic_affordances: ~"./electrostatic-affordances.spw"
+@component_taxonomy: ~"./component-taxonomy.spw"
+@image_theming: ~"../../public/css/systems/image-theming.css"
+@paper_motif: ~"../../public/css/systems/paper-motif.css"
+@grain: ~"../../public/css/effects/grain-texture.css"
+
+operation = "prime"
+fixity = "experimental"
+
+expression = component[biome]{light.exchange.succession}<land>
+
+^"soil_is_too_rich"{
+  claim: "Mycorrhizal association is conditional. In high-nutrient soil a plant reduces the symbiosis, because the carbon it costs is not worth the phosphorus it returns. The CSS here is high-nutrient soil, which is why no exchange has evolved in it."
+  measured: .{
+    custom_property_declarations = 6430
+    has_selectors = 197
+    container_queries = 42
+    downward_to_upward_ratio = "33:1"
+  }[reg=facet]
+  reading: "6430 declarations flow down by inheritance, free and unlimited, available to everything. 197 `:has()` flow up. Exchange is 3% of the traffic, and it is 3% because nothing needs it — a component that can inherit whatever it wants has no reason to trade."
+  consequence: "Scarcity is the precondition, not the goal. Until some token is not simply available, association cannot pay for itself and components will keep behaving as instances rather than as organisms."
+  probe: `find public/css -name "*.css" -not -path "*/bundles/*" -exec grep -o ":has(" {} \; | wc -l`
+}
+
+^"the_only_upward_channel"{
+  claim: "`:has()` is the sole bidirectional mechanism CSS currently offers. Everything else — inheritance, custom properties, container queries, style queries — reads downward."
+  consequence: "Any exchange model has to be built on it. A region that changes because of what grew in it is a `:has()` selector; there is no second way to say that today."
+  present: #[
+    `@paper_motif — html:has(body[data-spw-page-family]) selects the motif from what the page declares`,
+    `@image_theming — :has(img) gates the tint plate so an empty figure costs no layer`,
+    `@arrival_electrostatics — the wall exists because the seat holds something`
+  ][reg=set]
+  gap: "All three are a parent reading its own children. None is a component contributing something a *sibling* can use, which is what a mycelial network actually does — resources moving between organisms that are not nested."
+}
+
+^"light"{
+  claim: "Theme packs are the light source and already work. What is missing is canopy: every region receives full light regardless of where it sits."
+  present: "Seven packs cast brightness, contrast, saturation and tint. @image_theming carries it to imagery; @paper_motif drives substrate opacity and blend, multiply on paper packs and screen on dark ones because multiply against a dark field erases the plate. @grain holds ambient field memory and an atmosphere veil."
+  missing: "Shade. In a biome the canopy decides the understory, and position is most of what a species has to work with. Here a card in a dense cluster and a card alone in a wide frame receive identical light."
+  shape: "Regional light should attenuate with what sits above and around — density, depth, and the shells @arrival_electrostatics already bands. A deep-band region under a dense cluster is understory and should read as understory."
+  refuse: "Do not add a light token per component. One room loudness, per @electrostatic_affordances — canopy is a property of position, not a setting a card carries."
+}
+
+^"presence_by_age"{
+  claim: "Grass and fungus differ in strategy, not only in appearance. Fast, dense, ruderal colonisers versus slow, networked, persistent ones. A component's presence should follow which it is behaving like."
+  ruderal: "Arrives quickly, fills available space, tolerates disturbance, does not persist. Most cards. Presence should be immediate and cheap."
+  networked: "Slow to establish, connects others, survives disturbance because the network does. The cauldron, the ledger, the expression kinship graph. Presence should accrue and should not reset on navigation."
+  available_signal: "The site already measures age and traversal — ingredient phase runs gathering → resonant → mature → decayed, and expression salience bands 0..4 by dwell. Both are uptake by another name and neither currently changes how a component looks."
+  next: "Let an established component read differently from a new one. That is succession, and the data for it is already stored."
+}
+
+^"exchange"{
+  claim: "Mycorrhizal means bidirectional and costly. A component gives something to get something, and the association forms only where the trade pays."
+  what_a_component_could_give: #[
+    `its measured state — what it has learned about its own contents`,
+    `its declared bonds — @compound_expressions, the authored coupling rather than the inferred one`,
+    `its residue — the ledger entries it produced`
+  ][reg=set]
+  what_it_could_receive: #[
+    `light it would not get from its position alone`,
+    `material from a neighbour's region`,
+    `salience earned by a kin it never hosted`
+  ][reg=set]
+  rule: "The exchange must cost. An association that is free is inheritance wearing a biological word, and the tree already has 6430 of those."
+}
+
+#>wonder_component_biome_1
+?["What would have to become scarce for components to start trading?"]{
+  #:depth #!mathematical ~#lens(nutrient)
+  ~#tension: "every proposal for exchange founders on abundance — a component can already inherit any of 6430 declarations, so there is nothing it needs badly enough to give something up for. inventing scarcity artificially is a game mechanic, not an ecology."
+  ~#hypothesis: "attention is the scarce nutrient and always has been. it is finite per visit, it is already measured (dwell, salience, arrival budget), and components genuinely compete for it — unlike tokens, which do not run out."
+  !probe{ "count what a single page's components collectively demand of a reader against what one visit can supply — arrival discharges, salience deposits, feature encounters. if demand exceeds a visit, scarcity exists already and is simply unpriced." }
+  $%[page.componentCount, visit.dwellTotal, salience.deposits, arrival.discharges]
+}
+
+#>wonder_component_biome_2
+?["Does a region shade its neighbours, or only its children?"]{
+  #:depth #!computational ~#lens(canopy)
+  ~#tension: "`:has()` lets a parent read its descendants, so a container can shade what it contains. nothing lets a sibling shade a sibling, which is what canopy actually does — the tall grass beside you takes your light, not the grass above you, because there is nothing above you."
+  ~#hypothesis: "sibling shading is expressible through the parent — a container that has a dense child can dim its other children — but it costs a selector per relationship and does not generalise, which is why nobody writes it."
+  !probe{ "write sibling attenuation for one real cluster with :has() and count the selectors. if it takes more than three, the mechanism is wrong rather than the idea." }
+  $%[region.density, region.depth, sibling.attenuation]
+}
+
+^"validation"{
+  probe: `find public/css -name "*.css" -not -path "*/bundles/*" -exec grep -o ":has(" {} \; | wc -l`
+  falsification: #[
+    `An exchange is added that costs the giver nothing.`,
+    `A component carries its own light token rather than reading position.`,
+    `Succession is simulated with a timer rather than read from stored age or traversal.`
+  ][reg=set]
+  next: "Price attention on one page — count what its components demand against what a visit supplies. Scarcity has to be shown before exchange can be designed."
+}

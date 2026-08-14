@@ -1,0 +1,115 @@
+# Compound Expressions
+#
+# The grammar already carries compounds, projections and operator-led forms.
+# The corpus uses none of them: 440 of 441 authored expressions are a plain
+# subject[mode]{parts}. The markup does not need enhancing — it needs using, and
+# what it unlocks is a bond that was authored rather than guessed.
+
+#>compound_expressions
+#:convention #!expressions #!electrostatics #!ecology
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!semantics
+
+@semantic_expression: ~"./semantic-expression-consequence.spw"
+@corpus_completion: ~"./corpus-completion.spw"
+@electrostatic_affordances: ~"./electrostatic-affordances.spw"
+@arrival_electrostatics: ~"./arrival-electrostatics.spw"
+@region_ecology: ~"./region-component-ecology.spw"
+@kernel_rhizosphere: ~"./kernel-rhizosphere.spw"
+@operator_semantics: ~"./operator-semantics.spw"
+@manifest: ~"../../public/js/generated/spw-expressions.js"
+@builder: ~"../../scripts/build-expression-manifest.mjs"
+
+operation = "prime"
+fixity = "experimental"
+
+expression = expression[compound]{bond.operand.kind}<declared>
+
+^"measured_disuse"{
+  claim: "Every richer form the grammar offers is unexercised. This is the same shape as the apposition finding — 6 unit cells read across 237 surfaces while thousands of appositions exist in a form the tool cannot see. The site reaches for the simplest legal form and stops."
+  authored = 441
+  compound_operator_joined = 0
+  with_projection = 0
+  operator_led = 1
+  plain_subject_mode_parts = 440
+  probe: `node -e "import('./public/js/generated/spw-expressions.js').then(m=>{const E=Object.keys(m.SPW_EXPRESSION_MANIFEST);console.log(E.length, E.filter(e=>/\}\s*[~&^@]\s*\w/.test(e)).length, E.filter(e=>/<[^>]+>/.test(e)).length)})"`
+}
+
+^"the_grammar_already_holds"{
+  ~#note: "Verified against the parser, not assumed. Structure counts confirm both operands survive."
+  induct_join: .{
+    form = `component[technique]{expand} ~ spell[behavior]{cast}`
+    structures = `Operation 1→2, Frame 1→2, Body 1→2`
+    reads_as = `both operands fully structured — a true compound`
+  }[reg=facet]
+  list_separator: .{
+    form = `component[technique]{expand} ; spell[behavior]{cast}`
+    structures = `Frame 2, Body 2, but Operation stays 1`
+    reads_as = `a sequence separator, not a relational join — the second operand is not an operation`
+  }[reg=facet]
+  also_parse: #[`& subject-join`, `^ project-join`, `@ lens (viewer@subject)`, `#> ground`, `nested bodies`][reg=set]
+  consequence: "Compound expressions are available today. Nothing in the workbench needs to change for the site to start writing them."
+}
+
+^"declared_bond_versus_inferred_kinship"{
+  claim: "This is what compounds are for, and why the ecology needs them."
+  inferred: "@semantic_expression relates expressions that share a subject, mode or part. 423 of 441 have kin that way — but the relation is a coincidence of vocabulary. The part token `return` joins 21 expressions that may share only an English word."
+  declared: "A compound names the bond and its kind. `A ~ B` says these two are coupled by induction; `A & B` says one is the subject of the other; `A ^ B` says one projects into the other. The operator carries the relation type, which inference cannot recover."
+  electrostatic_reading: "@electrostatic_affordances defines inductance as kin of the same terminal sharing momentum. Today the runtime infers the terminal from shared tokens. A compound *is* the terminal — an authored coupling with a discharge kind already attached."
+  rule: "Inferred kinship is a suggestion and should stay weak. Declared bonds are structure and may carry consequence."
+}
+
+^"microbiome"{
+  claim: "An ecology needs typed relations between organisms, not a similarity score over their names. That is the difference between a population and a list."
+  present: #[
+    `@region_ecology — regions as material with personality`,
+    `@kernel_rhizosphere — the substrate metaphor`,
+    `@arrival_electrostatics — shells, walls, dielectric, discharge`,
+    `expression kinship — inferred, weak, untyped`
+  ][reg=set]
+  missing: "Typed edges. Every relation the runtime acts on today is either inferred from vocabulary overlap or hardcoded in a catalog. Neither can be varied by an author, so neither can be selected for."
+  what_a_culture_needs: #[
+    `variation — bonds an author can write differently`,
+    `heredity — bonds that persist in the corpus and are inherited by what cites them`,
+    `selection — a measure that says which bonds earned their keep`
+  ][reg=set]
+  note: "The corpus already has heredity (citations) and a measure (probes). Variation is the missing term, and compounds are how an author introduces it."
+}
+
+^"what_to_write_first"{
+  ~#note: "Not built. A prime names the path."
+  first: "One compound expression, authored on a real element, joining two components that genuinely couple. One is enough to test whether the manifest carries it."
+  second: "@builder splits on the join operator and records both operands plus the bond kind. The parse already structures it; readShape does not yet look."
+  third: "Index parts by subject-mode pair — @corpus_completion needs the same pass, so do them together."
+  fourth: "Let declared bonds outrank inferred kinship in expression-resonance. A bond an author wrote should light before a token two expressions happen to share."
+  refuse: "Do not backfill compounds across the 440. A bond written to satisfy a convention is exactly the coincidence this is meant to replace."
+}
+
+#>wonder_compound_expressions_1
+?["Why does the site always reach for the simplest legal form?"]{
+  #:depth #!stylistic ~#lens(disuse)
+  ~#tension: "440 of 441 expressions are plain, 6 apposition cells exist across 237 surfaces, and no expression carries a projection. Three independent forms, all available, all unused. That is a pattern rather than three oversights."
+  ~#hypothesis: "authoring tools show the simple form. The template emits subject[mode]{parts}, completion offers modes for a subject, and nothing has ever put a compound in front of an author at the moment of writing — so the richer forms are legal, documented, and invisible."
+  !probe{ "check what the page template and any snippet emit produce. if every generated expression is the plain form, disuse is a tooling default rather than a preference, and one changed template moves it." }
+  $%[template.emitted, expression.form, completion.offered]
+}
+
+#>wonder_compound_expressions_2
+?["Can a bond be wrong?"]{
+  #:depth #!mathematical ~#lens(selection)
+  ~#tension: "inferred kinship cannot be wrong, only weak — it reports a fact about vocabulary. a declared bond makes a claim about the world and can therefore be false, which is what makes it worth more and also what makes it a liability."
+  ~#hypothesis: "a bond is falsifiable by its own operator. `A ^ B` claims projection, so if nothing in B ever changes when A does, the projection was never real."
+  !probe{ "for each declared bond, check whether the operator's implied consequence is observable. an induction with no shared movement and a projection with no downstream change are both bonds that were asserted and never held." }
+  $%[bond.kind, bond.operands, bond.observedConsequence]
+}
+
+^"validation"{
+  probe: `npm run manifest:expressions && npm run spw:integrity`
+  falsification: #[
+    `A compound is authored and the manifest records only its first operand.`,
+    `Declared bonds are backfilled to satisfy this surface rather than written where a coupling exists.`,
+    `Inferred kinship outranks a declared bond in the runtime.`
+  ][reg=set]
+  next: "One compound expression on one real element. Everything above is unfalsifiable until there is a single instance to look at."
+}

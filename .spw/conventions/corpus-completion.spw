@@ -1,0 +1,97 @@
+# Corpus Completion
+#
+# Authoring affordances derived from what the site has already written. Type a
+# subject and an operator, and the corpus can say which compound expressions its
+# own copy implies — not from a schema, but from 441 expressions that exist.
+#
+# Four wants arrive separately and are one thing: expressions as localization
+# constants, the CLI associating pivots, a brace selecting relative to a topic to
+# prime autocomplete, and an operator after an identifier revealing implied
+# compounds. All four are queries against authored geometry.
+
+#>corpus_completion
+#:convention #!authoring #!completion #!tooling
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@semantic_expression: ~"./semantic-expression-consequence.spw"
+@depth_perspectives: ~"./depth-perspectives.spw"
+@copy_localization: ~"./copy-localization.spw"
+@operator_semantics: ~"./operator-semantics.spw"
+@manifest: ~"../../public/js/generated/spw-expressions.js"
+@builder: ~"../../scripts/build-expression-manifest.mjs"
+@brace_pivots: ~"../../public/js/runtime/brace-pivots.js"
+
+operation = "prime"
+fixity = "experimental"
+
+expression = corpus[completion]{subject.operator.compound}<implied>
+
+^"it_already_answers"{
+  claim: "The completion corpus exists. @manifest carries subject, mode and parts for 441 authored expressions, and 54 subjects appear in more than two — enough history to complete from."
+  measured: .{
+    subjects_with_history = 54
+    expressions = 441
+    distinct_modes = 292
+    distinct_parts = 501
+  }[reg=facet]
+  worked: #[
+    `component[ → spw-serialization | technique | resonance | hydration | machine | occasion | host | behavior | symmetry | safety | structure`,
+    `cauldron[ → mix | primed | cluster | recipe | mounted`,
+    `spell[ → behavior | projection | trope | anchor | cluster | component | settings | attributes | event`,
+    `return[ → context | practice | wonder | habit | change | proof | depth`
+  ][reg=set]
+  note: "These are not invented completions. Each is the set of modes that subject actually takes in authored copy, which is why they read as this site rather than as a generic vocabulary."
+  probe: `node -e "import('./public/js/generated/spw-expressions.js').then(m=>{const E=Object.entries(m.SPW_EXPRESSION_MANIFEST);const b={};for(const[k,v]of E)(b[v.subject]=b[v.subject]||[]).push(v);console.log(Object.entries(b).filter(([,v])=>v.length>2).length)})"`
+}
+
+^"operator_implied_compounds"{
+  want: "Type an operator after an identifier and see which compound expressions the geometry of existing copy implies."
+  available: "Subject then `[` yields modes. Subject and mode then `{` yields parts. Both are one lookup against the manifest."
+  missing: "The manifest is keyed by subject only. Which parts follow a *given* subject-mode pair is derivable but not indexed, so `component[technique]{` cannot yet narrow further than `component[`."
+  next: "Index parts by subject-mode rather than by subject alone. One pass in @builder; the data is already parsed."
+  refuse: "Do not complete from a schema of allowed values. The point is that the completions are what the site has actually said — a schema would offer words nobody wrote."
+}
+
+^"brace_primed_autocomplete"{
+  want: "Think of a topic, then select a brace relative to it to prime autocomplete."
+  available: "@brace_pivots already makes brace walls interactive — the objective wall cycles semantic density, the subjective wall cycles operator saturation. Brace-as-selector is physical in the runtime and pointed at display settings."
+  gap: "The walls cycle a setting. They do not select a scope to complete within."
+  shape: "The objective wall is shared structure and the subjective wall is situated meaning, per the pivot module's own framing. Completing from the left wall should offer what the corpus shares; from the right, what this route alone has said."
+  note: "That distinction is authored already and unused for authoring."
+}
+
+^"localization_constants_with_tolerance"{
+  want: "Expressions as localization constants, with tolerance."
+  shape: "The expression is the stable key; the rendered copy varies by locale, register or depth. `component[technique]{...}` names the thing; what a reader sees is a projection of it."
+  tolerance: "Variants need not be identical in content — they need to stay within a declared distance. @depth_perspectives already says why: a beginner version is not a subset of an advanced one, so equality is the wrong test and `holds` / `drops` is the right one."
+  consequence: "Tolerance makes the check possible. Two renderings pass if neither drops something the other declares as held; they fail when a variant quietly loses a commitment."
+  refuse: "Do not treat a locale variant as a translation of a string. It is a projection of an expression, and the expression is what must be conserved."
+}
+
+^"cli_pivots"{
+  want: "Spw CLI tooling for associating pivots."
+  available: "`spw snippet` generates and hydrates seed templates for editor emit; `spw formula` catalogues patterns; `spw density` reports selector hit densities. The emit path exists."
+  gap: "None of them read the expression manifest, which is the only surface that knows what this site's copy actually says."
+  next: "A completion product — subject, its modes, its parts, with counts — rendered as Spw so it is corpus rather than JSON. That is the precipitate shape @semantic_expression asks for and would make the CLI the delivery mechanism for all four wants above."
+}
+
+#>wonder_corpus_completion_1
+?["Does completing from the corpus make the corpus more like itself?"]{
+  #:depth #!experiential ~#lens(feedback)
+  ~#tension: "offering the modes a subject already takes makes those modes easier to reuse, which makes them more common, which raises them in the next completion. the loop tightens vocabulary — that is the intent when it converges on the site's voice and a failure when it forecloses a mode nobody has needed yet."
+  ~#hypothesis: "the ranking matters more than the list. showing counts lets an author see they are joining 11 prior uses or starting a second, which is the information that keeps the choice open."
+  !probe{ "record the mode chosen for the next twenty authored expressions against what completion offered. if authors take the top suggestion more than three times in four, the loop is closing rather than assisting." }
+  $%[subject.modeCount, mode.priorUses, author.accepted]
+}
+
+^"validation"{
+  probe: `npm run manifest:expressions && npm run spw:integrity`
+  falsification: #[
+    `A completion offers a value nobody has authored.`,
+    `A locale variant is checked for string equality rather than held/dropped commitments.`,
+    `The manifest is regenerated and completions do not change.`
+  ][reg=set]
+  next: "Index parts by subject-mode pair. Everything above waits on that one pass, and the data is already parsed."
+}
