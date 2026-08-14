@@ -60,6 +60,7 @@
 @depth_perspectives: ~"./depth-perspectives.spw"  # beginner/advanced as projections, not rungs; why the arrows stalled
 @corpus_completion: ~"./corpus-completion.spw"  # authoring completions derived from what the copy already says
 @compound_expressions: ~"./compound-expressions.spw"  # compounds parse today and are unused; declared bonds vs inferred kinship
+@html_spw_block_association: ~"./html-spw-block-association.spw"  # HTML-Spw block association, local AST mapping algorithms, and selection affordances
 @component_biome: ~"./component-biome.spw"  # components as land features; light, canopy, exchange, succession
 @wonder_vocabulary: ~"./wonder-vocabulary.spw"
 @page_anatomy_vocabulary: ~"./page-anatomy-vocabulary.spw"

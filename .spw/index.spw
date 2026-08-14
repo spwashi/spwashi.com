@@ -15,6 +15,7 @@
 @orientation: ~"./README.md"
 @mount: ~"./mount.spw"
 @workspace: ~"./workspace.spw"
+@dimensions: ~"./dimensions.spw"  # corpus indexed by operation × fixity × layer
 @conventions: ~"./conventions/index.spw"
 @site_semantics: ~"./conventions/site-semantics.spw"
 @site: ~"./site.spw"

@@ -7,7 +7,7 @@
 #>skill_invocation
 #:convention #!skills #!agents
 #:operation #!contract
-#:fixity #!tending
+#:fixity #!stable
 #:layer #!pragmatics
 
 @semantic_capacity: ~"./semantic-capacity.spw"
@@ -18,7 +18,7 @@
 @integrity: ~"../../scripts/spw-integrity.mjs"
 
 operation = "contract"
-fixity = "tending"
+fixity = "stable"
 
 ^"lens"{
   claim: "A skill invocation is one of the six operations @semantic_capacity already names — cache, audit, align, prime, contract, archive — and knowing which one you are performing is more useful than knowing which model you are."

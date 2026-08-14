@@ -1,0 +1,59 @@
+#>html_spw_block_association
+#:layer #!pragmatics
+#:operation #!contract
+#:fixity #!stable
+#:wonder #!editorial_convenience
+#:archetype #!living_manuscript
+
+^"thesis"{
+  claim: "Associating Spw blocks with HTML is an editorial wonder: it transforms static documents into living, self-describing manuscripts with zero authoring friction and maximum publishing convenience."
+  grounding: "Authors, artists, and software craftspeople need to express semantic structure without fighting boilerplate. By co-locating plain-text Spw blocks inside or alongside HTML frames, the document becomes simultaneously human-readable, machine-projectable, and tool-inspectable."
+}
+
+^"editorial_convenience_principles"{
+  zero_ceremony: "An author simply drops a `<script type=\"text/spw\">` or `data-spw-definition=\"...\"` directly in a section. The build pipeline harvests it, the runtime activates it, and the reader explores it—no external registration needed."
+  living_manuscript: "The text and its formal specification live together in the same file. Changes to copy immediately resonate with the underlying Spw AST."
+  portable_publishing: "Readers or collaborators can inspect, copy, or prime the embedded Spw definition into their working set with a single tap, bridging public publishing and local tooling."
+}
+
+^"association_modes"{
+  embedded_script: {
+    syntax: "<script type=\"text/spw\" id=\"frame-spec\">#>handle[mode]{terms} #:fixity #!stable</script>"
+    use: "Rich multi-line definitions, local grammars, and embedded schemas residing directly alongside their host DOM node."
+  }
+  attribute_definition: {
+    syntax: "data-spw-definition=\"#>handle[mode]{terms}\""
+    use: "Inline compact definitions on site frames, cards, and interactive controls."
+  }
+  template_block: {
+    syntax: "<template data-spw-block=\"variant\" data-spw-phase=\"lattice\">...</template>"
+    use: "Declarative variant branches, morphogenetic states, and polymorphic UI representations."
+  }
+  reference_bridge: {
+    syntax: "data-spw-ref=\"@handle: ~'.spw/conventions/name.spw'\""
+    use: "Deep links connecting live DOM nodes directly into canonical .spw source documents."
+  }
+}
+
+^"editorial_algorithms"{
+  ast_coordinate_resolver: {
+    purpose: "Maps a mouse click, hover target, or caret selection coordinate to its precise sub-clause in the associated Spw definition (subject, mode, parts, claims)."
+    algorithm: [
+      "1. Locate closest [data-spw-definition], script[type='text/spw'], or [data-spw-ref]",
+      "2. Resolve raw Spw text via cache or embedded script textContent",
+      "3. Parse geometry using spw-expression-geometry or workbench AST",
+      "4. Calculate token offset and map coordinate to active sub-clause",
+      "5. Emit spw:block-selection with { subject, mode, activePart, claim }"
+    ]
+  }
+  publishing_affordances: {
+    inspect_lens: "Hovering or focusing reveals a lightweight translucent HUD with the living Spw definition",
+    copy_spw: "Double-click or 'c' shortcut copies the clean Spw expression to clipboard",
+    prime_cauldron: "Hold/long-press gathers the block's terms and phase into active attention",
+    morph_variant: "Toggling lens modes shifts between embedded template variants seamlessly"
+  }
+  bidirectional_sync: {
+    ui_to_spw: "Mutating DOM state (lens switch, tangibility dial) updates the live Spw block model",
+    spw_to_ui: "Mutating the Spw block emits events that update DOM data attributes and CSS custom properties"
+  }
+}

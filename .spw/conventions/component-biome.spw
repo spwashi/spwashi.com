@@ -1,9 +1,4 @@
 # Component Biome
-#
-# Components as features of the land rather than instances of a class: arising
-# where conditions allow, developing presence with age, and exchanging with
-# neighbours where the exchange pays. Light comes from the theme, position
-# decides who gets it, and nothing associates in soil this rich.
 
 #>component_biome
 #:convention #!components #!ecology #!css
@@ -18,104 +13,118 @@
 @arrival_electrostatics: ~"./arrival-electrostatics.spw"
 @electrostatic_affordances: ~"./electrostatic-affordances.spw"
 @component_taxonomy: ~"./component-taxonomy.spw"
+@operator_spaces: ~"../../public/js/semantic/operator-spaces.js"
+@css: ~"../../public/css/systems/component-biome.css"
 @image_theming: ~"../../public/css/systems/image-theming.css"
 @paper_motif: ~"../../public/css/systems/paper-motif.css"
-@grain: ~"../../public/css/effects/grain-texture.css"
 
 operation = "prime"
 fixity = "experimental"
 
 expression = component[biome]{light.exchange.succession}<land>
 
-^"soil_is_too_rich"{
-  claim: "Mycorrhizal association is conditional. In high-nutrient soil a plant reduces the symbiosis, because the carbon it costs is not worth the phosphorus it returns. The CSS here is high-nutrient soil, which is why no exchange has evolved in it."
-  measured: .{
-    custom_property_declarations = 6430
-    has_selectors = 197
-    container_queries = 42
-    downward_to_upward_ratio = "33:1"
-  }[reg=facet]
-  reading: "6430 declarations flow down by inheritance, free and unlimited, available to everything. 197 `:has()` flow up. Exchange is 3% of the traffic, and it is 3% because nothing needs it — a component that can inherit whatever it wants has no reason to trade."
-  consequence: "Scarcity is the precondition, not the goal. Until some token is not simply available, association cannot pay for itself and components will keep behaving as instances rather than as organisms."
+^"soil"{
+  ~#law(conditional symbiosis): "rich soil, no association"
+  declarations_down = 6430
+  has_selectors_up = 197
+  container_queries = 42
+  ratio = "33:1"
+  ~#reading(inheritance): `free, unlimited, arrives without being asked for`
+  ~#reading(exchange): `3% of traffic, because nothing needs it`
+  &blocked: exchange ^ scarcity
   probe: `find public/css -name "*.css" -not -path "*/bundles/*" -exec grep -o ":has(" {} \; | wc -l`
 }
 
-^"the_only_upward_channel"{
-  claim: "`:has()` is the sole bidirectional mechanism CSS currently offers. Everything else — inheritance, custom properties, container queries, style queries — reads downward."
-  consequence: "Any exchange model has to be built on it. A region that changes because of what grew in it is a `:has()` selector; there is no second way to say that today."
-  present: #[
-    `@paper_motif — html:has(body[data-spw-page-family]) selects the motif from what the page declares`,
-    `@image_theming — :has(img) gates the tint plate so an empty figure costs no layer`,
-    `@arrival_electrostatics — the wall exists because the seat holds something`
-  ][reg=set]
-  gap: "All three are a parent reading its own children. None is a component contributing something a *sibling* can use, which is what a mycelial network actually does — resources moving between organisms that are not nested."
+^"channels"{
+  ~#note(only bidirectional mechanism CSS offers): `:has()`
+  downward: #[`inheritance`, `custom properties`, `container queries`, `style queries`][reg=set]
+  upward: #[`:has()`][reg=set]
+  in_use: .{
+    paper_motif = `html:has(body[data-spw-page-family])`
+    image_theming = `:has(img) gates the tint plate`
+    arrival = `the wall exists because the seat holds something`
+  }[reg=facet]
+  ~#gap(all three): "parent reads its own descendants; none is sibling exchange"
+  ~#reading(mycelial): `resources move between organisms that are not nested`
 }
 
 ^"light"{
-  claim: "Theme packs are the light source and already work. What is missing is canopy: every region receives full light regardless of where it sits."
-  present: "Seven packs cast brightness, contrast, saturation and tint. @image_theming carries it to imagery; @paper_motif drives substrate opacity and blend, multiply on paper packs and screen on dark ones because multiply against a dark field erases the plate. @grain holds ambient field memory and an atmosphere veil."
-  missing: "Shade. In a biome the canopy decides the understory, and position is most of what a species has to work with. Here a card in a dense cluster and a card alone in a wide frame receive identical light."
-  shape: "Regional light should attenuate with what sits above and around — density, depth, and the shells @arrival_electrostatics already bands. A deep-band region under a dense cluster is understory and should read as understory."
-  refuse: "Do not add a light token per component. One room loudness, per @electrostatic_affordances — canopy is a property of position, not a setting a card carries."
+  present: theme[pack]{brightness.contrast.saturation.tint} ~ substrate[motif]{opacity.blend}
+  missing: canopy[position]{density.depth.occlusion}
+  ~#symptom: "a card in a dense cluster and a card alone read identically"
+  ~#now(landed in @css): density ^ shade
+  refuse: `no light token per component — canopy is position, not a setting a card carries`
 }
 
-^"presence_by_age"{
-  claim: "Grass and fungus differ in strategy, not only in appearance. Fast, dense, ruderal colonisers versus slow, networked, persistent ones. A component's presence should follow which it is behaving like."
-  ruderal: "Arrives quickly, fills available space, tolerates disturbance, does not persist. Most cards. Presence should be immediate and cheap."
-  networked: "Slow to establish, connects others, survives disturbance because the network does. The cauldron, the ledger, the expression kinship graph. Presence should accrue and should not reset on navigation."
-  available_signal: "The site already measures age and traversal — ingredient phase runs gathering → resonant → mature → decayed, and expression salience bands 0..4 by dwell. Both are uptake by another name and neither currently changes how a component looks."
-  next: "Let an established component read differently from a new one. That is succession, and the data for it is already stored."
+^"presence"{
+  ruderal: .{ strategy = `fast, dense, tolerates disturbance, does not persist`, most = `cards` }[reg=facet]
+  networked: .{ strategy = `slow, connects others, survives because the network does`, examples = `cauldron, ledger, kinship graph` }[reg=facet]
+  stored_already: #[
+    `ingredient phase — gathering → resonant → mature → decayed`,
+    `expression salience — bands 0..4 by dwell`
+  ][reg=set]
+  ~#reading(both): `uptake under another name`
+  ~#now(landed in @css): succession ^ contour
 }
 
 ^"exchange"{
-  claim: "Mycorrhizal means bidirectional and costly. A component gives something to get something, and the association forms only where the trade pays."
-  what_a_component_could_give: #[
-    `its measured state — what it has learned about its own contents`,
-    `its declared bonds — @compound_expressions, the authored coupling rather than the inferred one`,
-    `its residue — the ledger entries it produced`
-  ][reg=set]
-  what_it_could_receive: #[
-    `light it would not get from its position alone`,
-    `material from a neighbour's region`,
-    `salience earned by a kin it never hosted`
-  ][reg=set]
-  rule: "The exchange must cost. An association that is free is inheritance wearing a biological word, and the tree already has 6430 of those."
+  ~#law(mycorrhizal): "bidirectional and costly, or it is inheritance in a biological word"
+  gives: #[`measured state`, `declared bonds per @compound_expressions`, `residue`][reg=set]
+  receives: #[`light beyond position`, `neighbour material`, `kin salience`][reg=set]
+  refuse: `an association that is free`
 }
 
-^"positioning_orchestration_join"{
-  ~#note: "Extending the concurrent session's positioning-orchestration plan rather than duplicating it."
-  affirm: "The batched MEASURE / PROJECT / AUDIT lifecycle is the right shape and fixes a real defect. Reading bounding rects during rAF and writing attributes in one mutation cycle is exactly what the j/k traversal added this week does not do — it reads offsetWidth over ~199 candidates on every keypress, which is the freeze pattern already recorded for this codebase."
-  supplies: "That plan measures what canopy needs. Density here is currently structural — `:has(> :nth-child(6))` counts children, which is all CSS can see unaided. Real canopy is occlusion, not count."
-  wired: "systems/component-biome.css already reads `--spw-edge-proximity` and `data-spw-extent` with inert fallbacks, so canopy becomes measured the moment the orchestrator projects them, with nothing else changing."
-  divergence: "The plan's frame is a symphony — movements, orchestration, a score. A biome has no score and no conductor; structure emerges from organisms responding to local conditions and exchanging where the exchange pays. Both are coherent, and they imply different architectures: an orchestrator is a central authority that decides for its parts, which is the opposite of components arising and evolving."
-  resolution: "Keep the batching, drop the conducting. A shared MEASURE pass is a soil survey — everyone benefits and nobody is told what to do with it. What each component does with its measured position should stay local, or the ecology is a puppet show."
-  missing_pass: "MEASURE, PROJECT and AUDIT are all forward. There is no RETURN. 18 persistent stores accumulate and only the cauldron prunes — and pruning discards rather than composts, so nothing is fed by what is removed. A biome without decomposers buries itself in its own residue."
+^"decomposers"{
+  ~#missing(guild): "nothing returns nutrients"
+  stores_accumulating = 18
+  stores_gardening = 1
+  ~#note(cauldron): `prune deletes; pruned material feeds nothing`
+  ~#law: "a biome without decomposers buries itself"
+  &landed: gather[cauldron]{items} ~ salience[deposit]{token.kin}
+  ~#reading(that loop): `the first byproduct in the system that feeds something`
+  guilds: .{
+    decomposer = `returns residue to substrate — mostly absent`
+    fixer = `inferred kinship ^ declared bond`
+    commensal = `most enhancement modules`
+    pathogen = `absent, so nothing is selected against`
+  }[reg=facet]
+}
+
+^"orchestration_join"{
+  ~#with: ~"../../public/js/runtime/positioning-orchestration.js"
+  affirm: `batched MEASURE / PROJECT / AUDIT is right and fixes real thrash`
+  supplies: canopy[measured]{occlusion} ^ canopy[structural]{child-count}
+  wired: `--spw-edge-proximity and data-spw-extent already read with inert fallbacks`
+  ~#divergence(symphony vs biome): "a score and a conductor, against organisms responding to local conditions"
+  ~#resolution: "keep the batching, drop the conducting"
+  ~#reading(shared MEASURE): `a soil survey — everyone benefits, nobody is told what to do with it`
+  missing_pass: RETURN
 }
 
 #>wonder_component_biome_1
 ?["What would have to become scarce for components to start trading?"]{
   #:depth #!mathematical ~#lens(nutrient)
-  ~#tension: "every proposal for exchange founders on abundance — a component can already inherit any of 6430 declarations, so there is nothing it needs badly enough to give something up for. inventing scarcity artificially is a game mechanic, not an ecology."
-  ~#hypothesis: "attention is the scarce nutrient and always has been. it is finite per visit, it is already measured (dwell, salience, arrival budget), and components genuinely compete for it — unlike tokens, which do not run out."
-  !probe{ "count what a single page's components collectively demand of a reader against what one visit can supply — arrival discharges, salience deposits, feature encounters. if demand exceeds a visit, scarcity exists already and is simply unpriced." }
+  ~#tension: "abundance defeats every exchange proposal; invented scarcity is a game mechanic"
+  ~#hypothesis: "attention — finite per visit, already measured, genuinely competed for"
+  !probe{ "count what one page's components demand of a reader against what a visit supplies. if demand exceeds supply, scarcity exists and is unpriced." }
   $%[page.componentCount, visit.dwellTotal, salience.deposits, arrival.discharges]
 }
 
 #>wonder_component_biome_2
 ?["Does a region shade its neighbours, or only its children?"]{
   #:depth #!computational ~#lens(canopy)
-  ~#tension: "`:has()` lets a parent read its descendants, so a container can shade what it contains. nothing lets a sibling shade a sibling, which is what canopy actually does — the tall grass beside you takes your light, not the grass above you, because there is nothing above you."
-  ~#hypothesis: "sibling shading is expressible through the parent — a container that has a dense child can dim its other children — but it costs a selector per relationship and does not generalise, which is why nobody writes it."
-  !probe{ "write sibling attenuation for one real cluster with :has() and count the selectors. if it takes more than three, the mechanism is wrong rather than the idea." }
+  ~#tension: ":has() reads descendants; canopy is siblings taking your light"
+  ~#hypothesis: "expressible through the parent, at one selector per relationship, which is why nobody writes it"
+  !probe{ "write sibling attenuation for one real cluster and count the selectors. more than three means the mechanism is wrong, not the idea." }
   $%[region.density, region.depth, sibling.attenuation]
 }
 
 ^"validation"{
   probe: `find public/css -name "*.css" -not -path "*/bundles/*" -exec grep -o ":has(" {} \; | wc -l`
   falsification: #[
-    `An exchange is added that costs the giver nothing.`,
-    `A component carries its own light token rather than reading position.`,
-    `Succession is simulated with a timer rather than read from stored age or traversal.`
+    `an exchange that costs the giver nothing`,
+    `a component carrying its own light token`,
+    `succession simulated with a timer rather than read from stored age`
   ][reg=set]
-  next: "Price attention on one page — count what its components demand against what a visit supplies. Scarcity has to be shown before exchange can be designed."
+  next: attention[price]{demand.supply} ^ scarcity[shown]{}
 }

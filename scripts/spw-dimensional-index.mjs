@@ -1,0 +1,227 @@
+/**
+ * Generate .spw/dimensions.spw — the corpus indexed by its own declared axes.
+ *
+ * Every surface declares #:operation, #:fixity and #:layer, and nothing has ever
+ * indexed by them. The corpus is findable by name and by citation only, so
+ * "which surfaces are experimental", "what is still tending", and "where is the
+ * archive work" are questions the tree can answer and cannot be asked.
+ *
+ * 168 operation declarations, 131 fixity, 751 layer. All of it inert.
+ *
+ * Emits Spw rather than JSON so the index is corpus — citable from a surface,
+ * walkable by spw:integrity, and readable by the same tools as everything else.
+ * A measurement that renders as JSON leaves the ecology it measures.
+ *
+ * Usage:
+ *   node scripts/spw-dimensional-index.mjs          # report
+ *   node scripts/spw-dimensional-index.mjs --write
+ */
+
+import { readFile, readdir, writeFile } from 'node:fs/promises';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const run = promisify(execFile);
+
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const SPW = path.join(ROOT, '.spw');
+const OUT = path.join(SPW, 'dimensions.spw');
+const SKIP = new Set(['_workbench', 'gen', 'node_modules']);
+
+/** Axes a surface declares about itself. Order is the reading order. */
+const AXES = ['operation', 'fixity', 'layer'];
+const INDEXED = ['operation', 'fixity', 'layer', 'freshness'];
+
+/**
+ * Freshness is the axis no surface declares and every surface has. Buckets
+ * rather than dates, because the question is "has this gone quiet" and a
+ * timestamp answers a narrower one.
+ */
+const FRESHNESS = [
+  { name: 'current', days: 7 },
+  { name: 'recent', days: 30 },
+  { name: 'settling', days: 90 },
+  { name: 'quiet', days: 365 },
+  { name: 'dormant', days: Infinity },
+];
+
+const bucketFor = (days) => FRESHNESS.find((b) => days <= b.days)?.name || 'dormant';
+
+/** One git pass for the whole tree; per-file log would be hundreds of spawns. */
+async function readLastTouched() {
+  const touched = new Map();
+  try {
+    const { stdout } = await run('git', ['log', '--format=%at', '--name-only', '--', '.spw'], {
+      cwd: ROOT, maxBuffer: 64 * 1024 * 1024,
+    });
+    let stamp = 0;
+    for (const line of stdout.split('\n')) {
+      if (/^\d{9,}$/.test(line.trim())) { stamp = Number(line.trim()); continue; }
+      const file = line.trim();
+      if (!file.endsWith('.spw')) continue;
+      if (!touched.has(file)) touched.set(file, stamp);
+    }
+  } catch {
+    // No git, or a shallow clone: freshness simply goes unreported.
+  }
+  return touched;
+}
+
+async function collect(dir, out = []) {
+  for (const entry of await readdir(dir, { withFileTypes: true })) {
+    if (SKIP.has(entry.name)) continue;
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) await collect(full, out);
+    else if (entry.name.endsWith('.spw')) out.push(full);
+  }
+  return out;
+}
+
+function readAxes(source) {
+  const found = {};
+  for (const axis of AXES) {
+    // Only the surface's own header block declares its axes; take the first.
+    const match = source.match(new RegExp(`#:${axis}\\s+#!(\\w+)`));
+    if (match) found[axis] = match[1];
+  }
+  const anchor = source.match(/^#>([\w-]+)/m)?.[1] || '';
+  return { ...found, anchor };
+}
+
+async function main() {
+  const write = process.argv.includes('--write');
+  const files = await collect(SPW);
+
+  const touched = await readLastTouched();
+  const now = Date.now() / 1000;
+
+  const surfaces = [];
+  for (const file of files) {
+    const source = await readFile(file, 'utf8');
+    const axes = readAxes(source);
+    if (!axes.anchor) continue;
+    const repoPath = path.relative(ROOT, file);
+    const stamp = touched.get(repoPath) || 0;
+    const days = stamp ? Math.floor((now - stamp) / 86400) : null;
+    surfaces.push({
+      path: path.relative(SPW, file),
+      region: path.dirname(path.relative(SPW, file)).split('/')[0] || '.',
+      days,
+      freshness: days === null ? 'unknown' : bucketFor(days),
+      ...axes,
+    });
+  }
+
+  const byAxis = {};
+  for (const axis of INDEXED) {
+    byAxis[axis] = new Map();
+    for (const surface of surfaces) {
+      const value = surface[axis];
+      if (!value) continue;
+      if (!byAxis[axis].has(value)) byAxis[axis].set(value, []);
+      byAxis[axis].get(value).push(surface);
+    }
+  }
+
+  // Cross-axis: operation × fixity is the pairing semantic-capacity already
+  // states expectations for, so a mismatch there is a real finding rather than
+  // a curiosity — a contract that is still experimental has not been contracted.
+  const crossed = new Map();
+  for (const surface of surfaces) {
+    if (!surface.operation || !surface.fixity) continue;
+    const key = `${surface.operation}:${surface.fixity}`;
+    crossed.set(key, (crossed.get(key) || 0) + 1);
+  }
+
+  const lines = [];
+  lines.push('# Dimensions');
+  lines.push('#');
+  lines.push('# GENERATED by scripts/spw-dimensional-index.mjs — do not edit.');
+  lines.push('# The corpus indexed by the axes every surface already declares.');
+  lines.push('');
+  lines.push('#>spw_dimensions');
+  lines.push('#:index #!dimensions');
+  lines.push('#:operation #!align');
+  lines.push('#:fixity #!stable');
+  lines.push('#:layer #!pragmatics');
+  lines.push('');
+  lines.push('@conventions: ~"./conventions/index.spw"');
+  lines.push('@semantic_capacity: ~"./conventions/semantic-capacity.spw"');
+  lines.push('@caches: ~"./caches/index.spw"');
+  lines.push('');
+  lines.push('operation = "align"');
+  lines.push('fixity = "stable"');
+  lines.push('');
+  lines.push('expression = corpus[dimensions]{operation.fixity.layer}<index>');
+  lines.push('');
+  lines.push(`^"census"{`);
+  lines.push(`  surfaces = ${surfaces.length}`);
+  for (const axis of AXES) {
+    lines.push(`  ${axis}_declared = ${surfaces.filter((s) => s[axis]).length}`);
+  }
+  lines.push('}');
+  lines.push('');
+
+  for (const axis of INDEXED) {
+    const entries = [...byAxis[axis].entries()].sort((a, b) => b[1].length - a[1].length);
+    lines.push(`^"by_${axis}"{`);
+    for (const [value, list] of entries) {
+      lines.push(`  ${value}: .{`);
+      lines.push(`    count = ${list.length}`);
+      lines.push(`    surfaces = #[${list.map((s) => `~"./${s.path}"`).join(' ; ')}][reg=set]`);
+      lines.push(`  }[reg=facet]`);
+    }
+    lines.push('}[reg=facet]');
+    lines.push('');
+  }
+
+  const regions = new Map();
+  for (const surface of surfaces) {
+    if (!regions.has(surface.region)) regions.set(surface.region, []);
+    regions.get(surface.region).push(surface);
+  }
+  lines.push('^"by_region"{');
+  lines.push('  ~#note: "median age per cluster — a quiet region is where relationships have stopped being refreshed"');
+  const regionRows = [...regions.entries()].map(([region, list]) => {
+    const ages = list.map((s) => s.days).filter((d) => d !== null).sort((a, b) => a - b);
+    const median = ages.length ? ages[Math.floor(ages.length / 2)] : null;
+    return { region, count: list.length, median };
+  }).sort((a, b) => (b.median ?? -1) - (a.median ?? -1));
+  for (const row of regionRows) {
+    lines.push(`  ${row.region.replace(/[^\w]/g, '_') || 'root'}: .{ surfaces = ${row.count}, median_days = ${row.median ?? 'unknown'} }[reg=facet]`);
+  }
+  lines.push('}[reg=facet]');
+  lines.push('');
+
+  lines.push('^"operation_x_fixity"{');
+  lines.push('  ~#note(per @semantic_capacity): "each operation states the fixity it expects"');
+  for (const [key, count] of [...crossed.entries()].sort((a, b) => b[1] - a[1])) {
+    lines.push(`  "${key}" = ${count}`);
+  }
+  lines.push('}[reg=facet]');
+  lines.push('');
+  lines.push('^"validation"{');
+  lines.push('  probe: `node scripts/spw-dimensional-index.mjs`');
+  lines.push('  falsification: `a surface declares an axis value this index does not list`');
+  lines.push('}');
+  lines.push('');
+
+  const body = lines.join('\n');
+  console.log(`${surfaces.length} anchored surfaces`);
+  for (const axis of INDEXED) {
+    console.log(`  ${axis.padEnd(10)} ${byAxis[axis].size} distinct, ${surfaces.filter((s) => s[axis]).length} declared`);
+  }
+  if (write) {
+    await writeFile(OUT, body, 'utf8');
+    console.log(`\nwrote ${path.relative(ROOT, OUT)}`);
+  } else {
+    console.log('\nre-run with --write to emit .spw/dimensions.spw');
+  }
+}
+
+main().catch((error) => {
+  console.error('[spw-dimensional-index]', error);
+  process.exitCode = 1;
+});
