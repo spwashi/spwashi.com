@@ -1,0 +1,149 @@
+# Workbench Report
+#
+# What spwashi.com has learned about Spw by using it. Addressed to spw-workbench:
+# every entry is a gap, a defect, or a command this consumer had to build because
+# the CLI did not carry it. Measured on a mounted consumer, not theorised.
+#
+# Read this when asking what a real consumer has to say about the language and
+# its tooling. Each finding states its probe so it can be reproduced or refuted.
+
+#>spw_workbench_report
+#:report #!workbench #!consumer #!feedback
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+@mount: ~"./mount.spw"
+@canon: ~"./_workbench/.spw/index.spw"
+@cli_convention: ~"./_workbench/.spw/conventions/cli.spw"
+@precipitates: ~"./_workbench/.spw/runtime/precipitates.spw"
+@expression_formations: ~"./language/expressions/index.spw"
+@semantic_expression: ~"./conventions/semantic-expression-consequence.spw"
+@integrity: ~"../scripts/spw-integrity.mjs"
+@dimensional_index: ~"../scripts/spw-dimensional-index.mjs"
+@wonder: ~"../scripts/wonder.mjs"
+@precipitate: ~"../scripts/spw-precipitate.mjs"
+
+operation = "audit"
+fixity = "tending"
+
+expression = consumer[report]{defect.gap.built}<upstream>
+
+^"walk_cost"{
+  ~#severity(highest): "one fix dominates every other item here"
+  claim: "`--from .spw` is unusable on a mounted consumer because the walk descends into the mounted workbench and its node_modules."
+  measured: .{
+    consumer_roots_enumerated_ms = 11
+    spw_root_ms = ">120000 (timed out)"
+    files_under_spw = 6553
+    node_modules_dirs = 6
+    spw_files_consumer = 268
+    spw_files_workbench = 551
+  }[reg=facet]
+  ~#reading: `naming the parent costs four orders of magnitude more than naming its children`
+  fix: "exclude node_modules, .git and a mounted _workbench by default; --include-infrastructure to opt back in"
+  ~#consequence: "every consumer script here shells find with -not -path '*_workbench*' rather than using --from"
+  probe: `spw query --from .spw/conventions,.spw/language --selector pathRefs --count` vs `spw query --from .spw --selector pathRefs --count`
+}
+
+^"parse_entry_points_disagree"{
+  claim: "parseExpression truncates where parse structures, and reports success while doing it."
+  example = `surfaces[route]{path.role.archetype}<publish>`
+  parse_result: "Capsule → Operation → ModifierChain → Frame → Parameter → Body"
+  parse_expression_result: "consumes 8 of 45 characters, returns success: true"
+  measured: .{
+    authored_expressions = 461
+    structuring_under_parse = 461
+    surviving_parse_expression = 3
+  }[reg=facet]
+  ~#reading: `only sigil-led forms begin an operation in the standalone entry point`
+  ~#cost: "an early consumer check used parseExpression and concluded the site's copy was malformed. The copy was correct and the API was not."
+  fix: "make parseExpression consume the full expression, or error rather than under-consume"
+}
+
+^"lattice_reads_one_form"{
+  claim: "spw lattice counts ~#name(body) unit cells only, and reports an empty field for a corpus full of appositions."
+  measured: .{
+    cells_reported_before = 6
+    surfaces_scanned = 237
+    plain_apposition_present = "thousands"
+  }[reg=facet]
+  ~#reading: `an empty field presented as a finding is worse than an error`
+  fix: "read ~#name: as a cell, or report the two forms separately so the gap is visible"
+}
+
+^"no_annotation_lint"{
+  claim: "A malformed axis declaration is silently invisible rather than reported."
+  example = `#:operation contract`
+  correct = `#:operation #!contract`
+  found = 4
+  ~#consequence: "four surfaces were absent from every axis query until the sigil was restored"
+  fix: "spw lint — well-formed annotations, known axis values, anchor uniqueness"
+}
+
+^"missing_intermediate_form"{
+  ~#severity(most reusable): "the one addition most likely to stop consumers re-deriving badly"
+  claim: "A citation arrives as an opaque string. Every consumer that wants to follow one re-implements splitting, classification and resolution."
+  wanted: "a resolved citation — target split into path and fragment, classified as file | route | directory | external | malformed, with existence known"
+  ~#note(cite and follow): "address content hashes, not references — a different question"
+  ~#cost: "the first attempt here used a regex and reported 59 false positives on ~\": \" inside prose values. The parser already knew; the regex did not."
+  built = @integrity
+  fix: "spw resolve <root> — or a --resolve flag on query --selector pathRefs"
+}
+
+^"built_because_absent"{
+  ~#note: "Each is a consumer script that would be better as a command."
+  resolve: .{ built = @integrity, does = `resolve every citation to file and anchor, classified` }[reg=facet]
+  axes: .{ built = @dimensional_index, does = `group the corpus by the operation, fixity and layer surfaces declare about themselves` }[reg=facet]
+  wonders: .{ built = @wonder, does = `harvest ?[…]{ !probe{} } and resolve each $%[…] substrate against its producer` }[reg=facet]
+  precipitate: .{ built = @precipitate, does = `lift probe output into a cache with deltas against the prior run` }[reg=facet]
+  ~#reading(the pattern): `census answers what the corpus is; none of these answered what it claims about itself`
+}
+
+^"round_trip"{
+  claim: "The --spw products are readable and not re-ingestible. Nothing here ever piped one back in."
+  ~#reading: `--json is the only composable path, which undercuts the dual-read premise`
+  fix: "make collate products parse as input, so census | query composes"
+  ~#note(this matters upstream): "@precipitates states the invariant that every stage renders its precipitate as valid Spw. Rendering is not the same as being re-readable."
+}
+
+^"instrumentation"{
+  claim: "No timing, no walk counts, no cache-hit reporting. The memo line says fresh and never says what it saved."
+  ~#consequence: "the walk_cost finding took a two-minute timeout to notice; --stats would have shown it in one run"
+  fix: "--stats on collate commands: files walked, files parsed, bytes, cache hits, elapsed"
+}
+
+^"what_landed_well"{
+  ~#note: "Stated so the report is a reading rather than a complaint."
+  form_stdin: .{
+    command = `spw form --stdin`
+    ~#reading = `the only command that said something countable-by-hand was not already known`
+    example = `shallow nesting — good for teaching contours one bound at a time`
+    ~#why = "operator distribution, medial capsules and a learning ladder from a single expression"
+  }[reg=facet]
+  parse_in_file_context: "structures the authored noun form correctly and completely"
+  refactor: "renaming marks by structure rather than by grep is what makes a vocabulary decision cheap to defer"
+}
+
+^"insights_unused"{
+  ~#note: "Read once, never acted on. Recorded because an unused insight costs output width."
+  topo_roles: `hub | source | leaf | orphan — degree already answered what to read next`
+  cyclic_flag: `reports that a cycle exists without saying whether it matters`
+  ~#missing: `node-shape fingerprint — Operation, Frame, Body, Capsule counts for one expression, run perhaps fifteen times here by hand`
+  fix: "spw fingerprint <expression> — how any grammar claim gets verified"
+}
+
+#>wonder_workbench_report_1
+?["What would let a model onboard from the corpus rather than from a README?"]{
+  #:depth #!educational ~#lens(arc)
+  ~#tension: "degree, freshness and operation are all computable and none is composed. A reader is told what exists and never what to read first."
+  ~#hypothesis: "hubs by degree, sorted by staleness, filtered to contract and prime, is an onboarding arc — and every input already exists"
+  !probe{ "compose census degree with git-derived age and the declared operation. if the top rows are what a person would actually hand a newcomer, the arc is computable and unwritten." }
+  $%[surface.degree, surface.age, surface.operation, reader.firstRead]
+}
+
+^"validation"{
+  probe: `npm run spw:integrity && npm run spw:dimensions`
+  falsification: "a finding here no longer reproduces from its stated probe against the pinned submodule"
+  ~#note(pin): "measured against the submodule as mounted; re-run after a bump before carrying anything upstream"
+}

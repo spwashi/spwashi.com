@@ -12,6 +12,7 @@
 @operator_semantics: ~"./conventions/operator-semantics.spw"
 @semantic_capacity: ~"./conventions/semantic-capacity.spw"
 @measurement: ~"./conventions/measurement-contract.spw"
+@report: ~"./workbench-report.spw"  # what this consumer has learned about Spw, addressed upstream
 @root: ~"./_workbench"
 @canon: ~"./_workbench/.spw/index.spw"
 @canon_mount: ~"./_workbench/.spw/canon-mount.spw"
