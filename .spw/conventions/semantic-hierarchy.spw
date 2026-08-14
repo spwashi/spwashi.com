@@ -6,7 +6,7 @@
 #>semantic_hierarchy
 #:convention #!semantics #!structure
 #:layer #!pragmatics
-#:operation contract
+#:operation #!contract
 
 @page_model: ~"../surfaces/page-model.spw"
 @site_semantics: ~"./site-semantics.spw"

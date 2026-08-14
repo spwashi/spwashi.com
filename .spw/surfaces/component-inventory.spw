@@ -1,0 +1,106 @@
+#>component_inventory
+#:layer #!semantics
+#:operation #!contract
+#:fixity #!stable
+#:archetype #!scientifically_social
+
+^"thesis"{
+  claim: "Components on spwashi.com are not arbitrary HTML/CSS boxes—they are stable, scientifically-social interaction patterns between operator forces, thermodynamic phase fields, and attentional real estate."
+  grounding: "Every component adheres to a strict slot contract (header → meta → body → figure → actions → footer), container-relative spatial awareness, and progressive-enhancement JavaScript kinematics."
+}
+
+^"component_species"{
+  site_frame: {
+    selector: ".site-frame, section.site-frame"
+    role: "Primary structural vessel and regional hero container"
+    slots: ["header", "meta", "body", "figure", "actions", "footer"]
+    container: "container: spw-frame / inline-size"
+    interaction_axes: {
+      lens: "mode-switch (.frame-sigil buttons switching content panels)"
+      form: "data-spw-form-options (brace, square, angle, minimal)"
+    }
+    physics: {
+      default_phase: "ground"
+      tangibility: 0.95
+      coherence: 0.90
+      edge_tension: 0.72
+    }
+  }
+
+  frame_card: {
+    selector: ".frame-card, article.frame-card, .spw-card"
+    role: "Discrete portable item, grid tile, and topic entry capsule"
+    slots: ["header", "meta", "body", "actions"]
+    container: "container: spw-card / inline-size; subgrid span 4"
+    materiality: "Glass substrate with oklab depth opacity and ambient specular highlights"
+    physics: {
+      default_phase: "lattice"
+      tangibility: 0.75
+      viscosity: 0.30
+      coherence: 0.80
+    }
+  }
+
+  operator_chip: {
+    selector: ".operator-chip, a.operator-chip, button.operator-chip"
+    role: "Atomic semantic handle, navigation vector, and operator operand"
+    grammar: "Sigil prefix (#>, ?, ^, ~, @, !, <, >) + label"
+    resonance: "Attentional echo glow via :has() and --spw-resonance"
+    gestures: ["click: navigate/toggle", "double-click: copy-spw", "long-press: prime-cauldron"]
+  }
+
+  spw_expression_badge: {
+    selector: ".spw-expression-badge"
+    role: "Live parsed Spw capsule and syntactic token representation"
+    anatomy: [
+      ".spw-expression-subject (stem)",
+      ".spw-expression-mode (amber object lens)",
+      ".spw-expression-part (blue ref term)",
+      ".spw-expression-phase (violet probe field)"
+    ]
+    feedback: "spwCopyFlash on [data-spw-copied-state='flashed']"
+  }
+
+  cauldron_vessel: {
+    selector: ".site-footer__cauldron"
+    role: "Reagent gathering vessel, spell synthesis, and memory garden"
+    phases: ["phase:empty", "phase:primed", "phase:bubbling", "phase:condensed"]
+    resonance: "Bidirectional gathering from operator chips and living terms"
+  }
+
+  floating_chrome: {
+    selector: "[data-spw-floating-chrome='true']"
+    role: "Non-intrusive peripheral controls docked to explicit viewport lanes"
+    lanes: {
+      handle: "--spw-bottom-lane-handle (section context)"
+      console: "--spw-bottom-lane-console (interactive workbench)"
+      satchel: "--spw-bottom-lane-satchel (state inspector)"
+      pager: "--spw-bottom-lane-pager (parallel route navigation)"
+    }
+  }
+
+  gutter_rail: {
+    selector: ".spw-gutter-rail, .spw-page-region-rail"
+    role: "Desktop lateral margin radar and contextual observational aside"
+    layout: "data-spw-layout='split' on >= 72rem viewports"
+  }
+
+  tuning_strip: {
+    selector: ".tuning-strip, .spec-strip, .spec-pill"
+    role: "Compact parameter controller and metadata pill row"
+    postures: ["compact", "wrapped", "interactive"]
+  }
+}
+
+^"component_relationships"{
+  hierarchy: "shell (layout.css) → site_frame (foundation.css) → frame_grid (surfaces.css) → frame_card (cards.css) → operator_chip (sigils-and-chips.css)"
+  inductance: "Focusing an operator-chip induces resonance across all sibling chips sharing the same sigil or operator role."
+  ingestion: "Activating or pinning an item sends an event across the kernel bus to the cauldron vessel."
+  synchronization: "DOM data attributes (data-spw-phase, data-spw-tangibility) synchronize bi-directionally with CSS properties (--spw-tangibility) and Spw AST projections."
+}
+
+^"spatial_and_semantic_frontiers"{
+  container_queries: "Cards dynamically transition between vertical stacked, horizontal inline, and dense tabular layouts strictly via @container rules without JS media listeners."
+  spatial_gravity: "Components sense room on all four sides (--spw-room-above/below/left/right) and open overlays toward available space."
+  thermodynamic_fluidity: "Substrate opacity, transition damping, and boundary sharpness continuously respond to physical parameters (tau, eta, kappa, sigma)."
+}

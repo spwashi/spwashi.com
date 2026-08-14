@@ -154,6 +154,23 @@
     room = `New cost distinctions become new cost_class values with a claim — not new metaphor essays alone.`
   }[reg=facet]
 
+  thermodynamic_continuum: .{
+    operation = "contract"
+    fixity = "stable"
+    claim = `Replaces discrete elemental metaphors with a differentiable, continuous hyperdimensional manifold governed by physical order parameters.`
+    phase_states = #[`radiant`, `fluid`, `plastic`, `lattice`, `ground`, `membrane`][reg=set]
+    dimensions = .{
+      tangibility: `tau in [0.0, 1.0] — substrate density, inertia, opacity, tactile resistance`
+      viscosity: `eta in [0.0, 1.0] — relaxation time, morphogenetic damping, transition duration`
+      coherence: `kappa in [0.0, 1.0] — phase order parameter, symmetry alignment, boundary crispness`
+      edge_tension: `sigma in [0.0, 1.0] — membrane permeability, boundary resistance, enclosure fixity`
+    }
+    attrs = #[`data-spw-phase`, `data-spw-tangibility`, `data-spw-viscosity`, `data-spw-coherence`, `data-spw-fixity`][reg=set]
+    tokens = #[`--spw-tangibility`, `--spw-viscosity`, `--spw-coherence`, `--spw-edge-tension`, `--spw-phase-default`][reg=set]
+    css = ~"../../public/css/systems/paper-motif.css"
+    material_css = ~"../../public/css/effects/material.css"
+  }[reg=facet]
+
   lexicon_register: .{
     operation = "prime"
     source = @metaphor_dimensional_lexicon

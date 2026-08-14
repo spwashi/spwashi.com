@@ -12,6 +12,7 @@
 @menu_field: ~"./menu-field.spw"
 @approach_topography: ~"./approach-topography.spw"
 @runtime_module_medium: ~"./runtime-module-medium.spw"
+@component_inventory: ~"./component-inventory.spw"
 
 dispatch: .{
  registry = @registry
@@ -20,6 +21,7 @@ dispatch: .{
  menu_field = @menu_field
  approach_topography = @approach_topography
  runtime_module_medium = @runtime_module_medium
+ component_inventory = @component_inventory
 }[reg=facet]
 
 invariants: #[

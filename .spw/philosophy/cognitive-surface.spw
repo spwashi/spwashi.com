@@ -5,7 +5,20 @@
 
 #>spw_cognitive_surface
 #:philosophy #!cognition
+#:operation #!prime
+#:fixity #!tending
 #:layer #!pragmatics
+
+@wonder_doctrine: ~"./wonder-doctrine.spw"
+@spirit_cycle: ~"./spirit-cycle.spw"
+@arrival_electrostatics: ~"../conventions/arrival-electrostatics.spw"
+@semantic_expression: ~"../conventions/semantic-expression-consequence.spw"
+@component_biome: ~"../conventions/component-biome.spw"
+
+operation = "prime"
+fixity = "tending"
+
+expression = surface[cognitive]{legibility.attention.record}<traverse>
 
 ^"thesis"{
   claim: "A cognitive surface is one that changes as you engage with it — not in appearance, but in legibility. It models the visitor's attention rather than just their navigation. It has depth that is traversable in both directions. It preserves the record of engagement so that past attention remains visible in the current state. It can be mistaken, revisited, and developed over time."
@@ -111,12 +124,50 @@
   }
 }
 
-^"open_questions"{
-  ?["What is the minimum surface design that qualifies as cognitive rather than interactive?"]{ #:open }
-  ?["How does the cognitive surface model relate to constructivist pedagogy — is the site a learning environment?"]{ #:open }
-  ?["Can a static page (no JavaScript) function as a cognitive surface, or does attentional modeling require a live runtime?"]{ #:open }
-  ?["What would it mean for the site to be 'wrong' — and how should the visitor discover and correct that?"]{ #:open }
-  ?["How does the practitioner-artist model relate to the spirit cycle — does each user session trace a full cycle, or fragments of one?"]{ #:open }
+# Questions kept verbatim; the probes are new. A question authored before the
+# probeable form existed is not improved by rewording it, only by making it
+# answerable.
+
+#>wonder_cognitive_surface_1
+?["What is the minimum surface design that qualifies as cognitive rather than interactive?"]{
+  #:depth #!computational ~#lens(threshold)
+  ~#hypothesis: "persistence is the whole of it — a surface is cognitive at the moment a second visit differs from the first, and everything above that is degree"
+  !probe{ "list what survives a reload today: expression salience bands, arrival grounding, visited surfaces, ingredient phase. remove each in turn and ask at which removal the surface stops modelling attention and starts merely responding." }
+  $%[storage.persisted, visit.second, legibility.delta]
+}
+
+#>wonder_cognitive_surface_2
+?["How does the cognitive surface model relate to constructivist pedagogy — is the site a learning environment?"]{
+  #:depth #!educational ~#lens(pedagogy)
+  ~#tension: "constructivism wants the learner to build the model; a surface that models the learner's attention is doing some of that construction for them"
+  ~#note(not mechanically probeable): "kept open deliberately — this wants a reader, not a script"
+  ~#partial: "@wonder_doctrine#earned_depth is the closest testable proxy: depth that requires prior engagement is scaffolding, and scaffolding is constructivist"
+}
+
+#>wonder_cognitive_surface_3
+?["Can a static page (no JavaScript) function as a cognitive surface, or does attentional modeling require a live runtime?"]{
+  #:depth #!computational ~#lens(progressive enhancement)
+  ~#hypothesis: "no — and the site already demonstrates it. Every mechanism that makes a second visit differ is JS-resident: salience, grounding, phase, visitation."
+  ~#tension: "that answer indicts the progressive-enhancement contract rather than satisfying it. the no-JS page is complete and legible and is NOT cognitive, which means cognition is the enhancement."
+  !probe{ "load any route with JS disabled and ask what a second visit could possibly differ by. if the answer is nothing, cognition is an enhancement tier and should be named as one." }
+  $%[html.arrivalField, storage.persisted, enhancement.tier]
+}
+
+#>wonder_cognitive_surface_4
+?["What would it mean for the site to be 'wrong' — and how should the visitor discover and correct that?"]{
+  #:depth #!experiential ~#lens(falsification)
+  ~#hypothesis: "the site is already wrong in ways it can state — every falsification block in the corpus is a way it could be caught, and none of them is visible to a visitor"
+  !probe{ "count falsification entries across .spw, then count how many are reachable from any rendered route. the gap is the set of wrongnesses only an author can find." }
+  $%[surface.falsifications, route.inspectable, visitor.reachable]
+}
+
+#>wonder_cognitive_surface_5
+?["How does the practitioner-artist model relate to the spirit cycle — does each user session trace a full cycle, or fragments of one?"]{
+  #:depth #!experiential ~#lens(cycle)
+  ~#with: @spirit_cycle
+  ~#hypothesis: "fragments — and the fragment a session gets is chosen by arrival rather than by the reader, which is why most sessions never reach transformation"
+  !probe{ "trace one session's phase attributes against the five spirit-cycle phases. if initiation and return dominate and transformation never fires, arrival is gating the cycle." }
+  $%[session.phases, cycle.reached, arrival.discharges]
 }
 
 ^"cross_references"{

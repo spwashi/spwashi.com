@@ -6,6 +6,8 @@
 
 #>spw_attention_field
 #:model #!field
+#:operation #!prime
+#:fixity #!tending
 #:layer #!pragmatics
 
 @page_model: ~"../surfaces/page-model.spw"
@@ -74,6 +76,23 @@ local_hormonal_model: .{
   specificity = `Tokens that appear on only a few components carry more specificity.`
  }[reg=facet]
 }[reg=facet]
+
+operation = "prime"
+fixity = "tending"
+
+expression = attention[field]{gradient.uptake.scarcity}<spend>
+
+^"as_nutrient"{
+  ~#note: "The field is usually read as a gradient. Read as a nutrient it behaves differently, and the difference is testable."
+  gradient_reading: .{ moves = `from high to low`, conserved = `no`, competed_for = `no` }[reg=facet]
+  nutrient_reading: .{ moves = `by uptake`, conserved = `per visit`, competed_for = `yes` }[reg=facet]
+  ~#reading(why it matters): `a gradient has no budget, so nothing can be overdrawn and no component ever loses`
+  ~#with: ~"./component-biome.spw"
+  &scarce: attention ^ tokens
+  ~#law: "components compete for attention and never for custom properties"
+  probe: `count what one route's components demand of a visit against what a visit supplies`
+  $%[page.componentCount, visit.dwellTotal, salience.deposits, arrival.discharges]
+}
 
 ^"operational_semantics"{
   definition: "The attention field is not only a mathematical model. It is an operational contract that must be queryable, claim-bearing, and useful for both human cognitive work and machine computational work — emergent cognitive+computational communication in action."
@@ -275,6 +294,24 @@ open_questions: #[
  .{ ask = `Can the field model support multi-user superposition — two visitors whose fields overlap on the same page?` },
  .{ ask = `At what bias threshold should the field visibly change ornament state, and should this be tunable per ornament?` }
 ][reg=set]
+
+#>wonder_attention_field_1
+?["Does the field have a budget, or only a shape?"]{
+  #:depth #!mathematical ~#lens(nutrient)
+  ~#tension: "every formalism here describes distribution — where attention is denser and where it thins. none describes exhaustion, so the model cannot say that a page asked for more than a visit had."
+  ~#hypothesis: "a budget exists and is already measured in pieces — dwell, arrival discharges, salience deposits — and has simply never been summed"
+  !probe{ "sum one visit's dwell against the affordances a route offers. if offered exceeds spent by a wide margin, the field is oversubscribed and its distribution is describing a demand nobody can meet." }
+  $%[visit.dwellTotal, route.affordances, field.oversubscribed]
+}
+
+#>wonder_attention_field_2
+?["Where does spent attention go?"]{
+  #:depth #!experiential ~#lens(cycle)
+  ~#tension: "the field model has sources and gradients and no sink. attention arrives, distributes, and the model stops — which is the same missing return pass the biome convention names for residue."
+  ~#hypothesis: "it precipitates: the ledger, salience bands and grounding are all attention that was spent and left a mark, so the sink exists and is unclaimed by this model"
+  !probe{ "for one session, compare what was attended against what persisted afterwards. the ratio is how much of the field settles rather than dissipating." }
+  $%[session.attended, storage.persisted, residue.ratio]
+}
 
 ^"harmony_prime_2026_07"{
   operation = "prime"

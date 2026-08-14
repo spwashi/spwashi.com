@@ -7,7 +7,7 @@
 
 #>language_census
 #:audit #!language #!attributes #!events
-#:operation observe
+#:operation #!observe
 
 @generator: ~"../../scripts/language-census.mjs"
 @inventory_core: ~"../../scripts/lib/spw-inventory-core.mjs"

@@ -56,6 +56,7 @@
 @graph: ~"./graph.spw"
 @surfaces: ~"./surfaces.spw"
 @surfaces_menu_field: ~"./surfaces/menu-field.spw"
+@component_inventory: ~"./surfaces/component-inventory.spw"
 @caches: ~"./caches/index.spw"
 @feature_wiring_cache: ~"./caches/feature-wiring-timing-2026-07.spw"
 @component_capture_pipeline: ~"./conventions/component-capture-pipeline.spw"

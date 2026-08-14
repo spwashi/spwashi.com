@@ -5,7 +5,14 @@
 
 #>spw_wonder_doctrine
 #:philosophy #!wonder
+#:operation #!contract
+#:fixity #!stable
 #:layer #!pragmatics
+
+operation = "contract"
+fixity = "stable"
+
+expression = wonder[doctrine]{structural.honest.earned}<falsify>
 
 ^"thesis"{
   claim: "Wonder is a state of attention, not a property of a surface. A surface earns wonder by becoming more legible under examination — by revealing structure that the visitor could not have predicted but can verify after the fact. Decoration produces surprise; structure produces wonder. The difference is whether the revelation could have been derived."
@@ -87,11 +94,43 @@
   return_wonder: "The settled state is different now — the journey token is evidence that something real happened here."
 }
 
-^"open_questions"{
-  ?["Can wonder be designed, or only enabled? What is the designer's role in a wonder-enabling surface?"]{ #:open }
-  ?["How does wonder relate to confusion — is productive confusion a phase of wonder, or its opposite?"]{ #:open }
-  ?["What is the minimum amount of prior knowledge required for the structural revelation test to be passable?"]{ #:open }
-  ?["Is there a wonder that arrives only from language — from the quality of the written word — independent of interaction?"]{ #:open }
+# Questions kept verbatim. The doctrine's own five tests are the probe surface
+# these were missing — a wonder claim is checkable against them, so the
+# questions become answerable without inventing new machinery.
+
+#>wonder_doctrine_1
+?["Can wonder be designed, or only enabled? What is the designer's role in a wonder-enabling surface?"]{
+  #:depth #!experiential ~#lens(agency)
+  ~#hypothesis: "enabled only — the five tests below all measure the reader's derivation, not the designer's intent, so a surface passes or fails in someone else's head"
+  !probe{ "take a shipped effect and run it against test_structural, test_honest, test_earned, test_inspectable and test_vocabulary. if it passes on the material's properties rather than on the choices made, the designer enabled rather than designed." }
+  $%[effect.testsPassed, effect.materialDerived, designer.choices]
+}
+
+#>wonder_doctrine_2
+?["How does wonder relate to confusion — is productive confusion a phase of wonder, or its opposite?"]{
+  #:depth #!educational ~#lens(resistance)
+  ~#with: ~"./spirit-cycle.spw"
+  ~#hypothesis: "a phase — resistance_wonder already names it, so the doctrine answers this and has not noticed"
+  ~#tension: "confusion that resolves is a phase; confusion that persists is hidden_mechanics under another name, and the two are indistinguishable while you are in them"
+  !probe{ "for a surface a reader found confusing, ask whether the confusion was later explicable. if yes it was resistance; if never, it fails test_structural and was spectacle." }
+  $%[reader.confusion, confusion.resolved, test.structural]
+}
+
+#>wonder_doctrine_3
+?["What is the minimum amount of prior knowledge required for the structural revelation test to be passable?"]{
+  #:depth #!computational ~#lens(threshold)
+  ~#hypothesis: "one operator — a reader who knows a single sigil can derive the rest, because the operator table is self-describing"
+  !probe{ "show the operator atlas to someone who has never seen Spw and ask them to predict a second operator's behaviour from the first. the number of operators needed before prediction succeeds is the threshold." }
+  $%[reader.priorOperators, prediction.correct, revelation.derived]
+}
+
+#>wonder_doctrine_4
+?["Is there a wonder that arrives only from language — from the quality of the written word — independent of interaction?"]{
+  #:depth #!stylistic ~#lens(copy)
+  ~#hypothesis: "yes, and this corpus is the evidence — a surface read cold with no runtime can still reveal structure that was not predictable, which is test_structural passed by prose alone"
+  ~#tension: "if language alone can carry it, most of the interaction machinery is optional for wonder and justified on other grounds"
+  !probe{ "read one convention surface with no tooling and note where structure became visible. if any revelation survives with no runtime, language-only wonder exists." }
+  $%[surface.readCold, revelation.count, runtime.required]
 }
 
 ^"cross_references"{

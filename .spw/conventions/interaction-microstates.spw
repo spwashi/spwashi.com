@@ -5,7 +5,8 @@
 #>interaction_microstates
 #:convention #!interaction #!gesture #!progression
 #:layer #!pragmatics
-#:operation contract
+#:operation #!contract
+#:fixity #!stable
 
 @interaction_vocabulary: ~"../../public/js/runtime/interaction-vocabulary.js"
 @interaction_progression: ~"../../public/js/runtime/interaction-progression.js"
@@ -27,6 +28,22 @@
 @charge_field: ~"../../public/js/runtime/charge-field.js"
 @effect_ledger: ~"../../public/js/runtime/effect-ledger.js"
 @attribute_governance: ~"./data-spw-attribute-governance.spw"
+
+operation = "contract"
+fixity = "stable"
+
+expression = interaction[microstate]{touch.phase.resolution}<never-silent>
+
+^"awareness"{
+  ~#note: "What a component knows about having been touched, as opposed to what it does about it."
+  senses: #[`pointer`, `focus`, `gesture`, `dwell`, `charge phase`][reg=set]
+  remembers: #[`effect ledger`, `expression salience`, `visited surfaces`, `ingredient phase`][reg=set]
+  ~#reading(the gap): `a component senses far more than it remembers, and remembers nothing about who touched it`
+  &asymmetry: sensing ^ remembering
+  ~#law(reward_contract): "never silent absorption"
+  probe: `count interactive affordances on a route against those that produce feedback or reveal an arc`
+  $%[affordance.count, affordance.resolving, interaction.silent]
+}
 
 ^"phase_ladder"{
   html_attr: `data-spw-interaction-phase`
@@ -74,6 +91,24 @@
     `unavailable arcs read as grounded, with the reason inspectable`
   ][reg=set]
   boundary_rule: "Potential display is pulse/charge-shaped (transient, settles on leave); reward display is residue-shaped (durable, ledger-backed) - the temporal shapes in @attribute_governance rhythm. Do not promote a preview into residue without a deliberate landing."
+}
+
+#>wonder_interaction_microstates_1
+?["Is the reward contract actually held, or only stated?"]{
+  #:depth #!computational ~#lens(absorption)
+  ~#tension: "the contract forbids silent absorption and nothing counts silences. an unheld contract reads identically to a held one from inside the surface that declares it."
+  ~#hypothesis: "most affordances resolve, and the exceptions cluster in chrome rather than in content — chrome was built before the contract existed"
+  !probe{ "enumerate every element carrying a gesture contract or an operator, touch each, and record whether anything changed or any arc was revealed. the silent set is the contract's actual violation list." }
+  $%[affordance.count, affordance.resolving, interaction.silent, region.kind]
+}
+
+#>wonder_interaction_microstates_2
+?["Can a component be aware of a reader without remembering them?"]{
+  #:depth #!experiential ~#lens(awareness)
+  ~#tension: "sensing is per-event and remembering is per-reader. the site senses pointer, focus, gesture, dwell and charge, and remembers only aggregate residue — so a component knows it was touched and never knows by whom, which is either a privacy property or an amnesia."
+  ~#hypothesis: "it is a privacy property and should be stated as one, because the same absence read as amnesia invites building the thing that would remove it"
+  !probe{ "for each persisted store, ask whether it distinguishes readers or only counts events. if none distinguishes, the site is structurally incapable of recognising a returning person and that is a design commitment, not a gap." }
+  $%[storage.perReader, storage.perEvent, privacy.boundary]
 }
 
 ^"sigil_payload_transition"{

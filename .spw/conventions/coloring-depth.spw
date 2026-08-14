@@ -6,7 +6,7 @@
 #>coloring_depth
 #:convention #!color #!semantics #!depth
 #:layer #!pragmatics
-#:operation contract
+#:operation #!contract
 
 @css: ~"../../public/css/systems/coloring-depth.css"
 @palette_depth: ~"../../public/css/systems/surfaces/palette-depth.css"
