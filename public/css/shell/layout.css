@@ -377,7 +377,7 @@ main {
   touch-action: pan-y;
 
   /* Layering / containment */
-  container-type: inline-size;
+  container: spw-shell / inline-size;
 }
 
 :where(main > :where(section, article, aside)) {
@@ -677,21 +677,31 @@ main :where(article > ul, article > ol, section > ul, section > ol) {
 }
 
 /* Generic page clusters and grids */
+.spw-grid,
 .page-grid,
 .panel-grid,
 .card-grid,
 .generic-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min-card, 15rem)), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--spw-card-min, var(--grid-min-card, 15rem))), 1fr));
   gap: var(--page-stack-gap, var(--surface-gap));
   min-width: 0;
 }
 
+.spw-grid--wide,
 .panel-grid--wide,
 .card-grid--wide {
   grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min-panel, 17rem)), 1fr));
 }
 
+/* Subgrid coordination for card slots across rows */
+@supports (grid-template-rows: subgrid) {
+  :where(.spw-grid, .card-grid, .page-grid) {
+    grid-auto-rows: auto auto 1fr auto;
+  }
+}
+
+.spw-cluster,
 .page-cluster,
 .generic-cluster,
 .meta-cluster,
@@ -703,6 +713,7 @@ main :where(article > ul, article > ol, section > ul, section > ol) {
   min-width: 0;
 }
 
+.spw-cluster > :is(code, kbd, samp),
 .meta-cluster > :is(code, kbd, samp) {
   flex: 1 1 12rem;
   min-inline-size: 0;
@@ -712,9 +723,10 @@ main :where(article > ul, article > ol, section > ul, section > ol) {
 /* ==========================================================================
    4. Generic surface defaults for common page content
    --------------------------------------------------------------------------
-   This is intentionally broad so a route with sparse markup still looks good.
+   Surface Primitives (spw-panel, spw-prose, callout)
    ========================================================================== */
 
+.spw-panel,
 :where(
   .page-panel,
   .generic-panel,
@@ -739,6 +751,7 @@ main :where(article > ul, article > ol, section > ul, section > ol) {
     transform var(--shell-duration-fast) var(--shell-settle-ease);
 }
 
+.spw-panel:is(:hover, :focus-within),
 :where(
   .page-panel,
   .generic-panel,
@@ -753,22 +766,32 @@ main :where(article > ul, article > ol, section > ul, section > ol) {
   box-shadow: var(--shell-panel-shadow-hover);
 }
 
+.spw-panel--accent,
 .callout-card,
 .note-card {
   border-inline-start: 0.28rem solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 42%, transparent);
 }
 
+.spw-panel--matte,
 .page-panel--matte,
 .generic-panel--matte {
   background: var(--shell-panel-bg-matte);
 }
 
+.spw-panel--soft,
 .page-card--soft,
 .generic-card--soft {
   background: var(--shell-panel-bg-soft);
 }
 
+.spw-prose {
+  max-width: var(--shell-reading-measure);
+  line-height: var(--site-line-height, 1.68);
+  overflow-wrap: break-word;
+}
+
 :where(
+  .spw-panel,
   .page-panel,
   .generic-panel,
   .info-panel,
@@ -782,6 +805,7 @@ main :where(article > ul, article > ol, section > ul, section > ol) {
 }
 
 :where(
+  .spw-panel,
   .page-panel,
   .generic-panel,
   .info-panel,

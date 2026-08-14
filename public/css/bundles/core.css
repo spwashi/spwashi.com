@@ -3366,7 +3366,7 @@ main {
   touch-action: pan-y;
 
   /* Layering / containment */
-  container-type: inline-size;
+  container: spw-shell / inline-size;
 }
 
 :where(main > :where(section, article, aside)) {
@@ -3666,21 +3666,31 @@ main :where(article > ul, article > ol, section > ul, section > ol) {
 }
 
 /* Generic page clusters and grids */
+.spw-grid,
 .page-grid,
 .panel-grid,
 .card-grid,
 .generic-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min-card, 15rem)), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--spw-card-min, var(--grid-min-card, 15rem))), 1fr));
   gap: var(--page-stack-gap, var(--surface-gap));
   min-width: 0;
 }
 
+.spw-grid--wide,
 .panel-grid--wide,
 .card-grid--wide {
   grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min-panel, 17rem)), 1fr));
 }
 
+/* Subgrid coordination for card slots across rows */
+@supports (grid-template-rows: subgrid) {
+  :where(.spw-grid, .card-grid, .page-grid) {
+    grid-auto-rows: auto auto 1fr auto;
+  }
+}
+
+.spw-cluster,
 .page-cluster,
 .generic-cluster,
 .meta-cluster,
@@ -3692,6 +3702,7 @@ main :where(article > ul, article > ol, section > ul, section > ol) {
   min-width: 0;
 }
 
+.spw-cluster > :is(code, kbd, samp),
 .meta-cluster > :is(code, kbd, samp) {
   flex: 1 1 12rem;
   min-inline-size: 0;
@@ -3701,9 +3712,10 @@ main :where(article > ul, article > ol, section > ul, section > ol) {
 /* ==========================================================================
    4. Generic surface defaults for common page content
    --------------------------------------------------------------------------
-   This is intentionally broad so a route with sparse markup still looks good.
+   Surface Primitives (spw-panel, spw-prose, callout)
    ========================================================================== */
 
+.spw-panel,
 :where(
   .page-panel,
   .generic-panel,
@@ -3728,6 +3740,7 @@ main :where(article > ul, article > ol, section > ul, section > ol) {
     transform var(--shell-duration-fast) var(--shell-settle-ease);
 }
 
+.spw-panel:is(:hover, :focus-within),
 :where(
   .page-panel,
   .generic-panel,
@@ -3742,22 +3755,32 @@ main :where(article > ul, article > ol, section > ul, section > ol) {
   box-shadow: var(--shell-panel-shadow-hover);
 }
 
+.spw-panel--accent,
 .callout-card,
 .note-card {
   border-inline-start: 0.28rem solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 42%, transparent);
 }
 
+.spw-panel--matte,
 .page-panel--matte,
 .generic-panel--matte {
   background: var(--shell-panel-bg-matte);
 }
 
+.spw-panel--soft,
 .page-card--soft,
 .generic-card--soft {
   background: var(--shell-panel-bg-soft);
 }
 
+.spw-prose {
+  max-width: var(--shell-reading-measure);
+  line-height: var(--site-line-height, 1.68);
+  overflow-wrap: break-word;
+}
+
 :where(
+  .spw-panel,
   .page-panel,
   .generic-panel,
   .info-panel,
@@ -3771,6 +3794,7 @@ main :where(article > ul, article > ol, section > ul, section > ol) {
 }
 
 :where(
+  .spw-panel,
   .page-panel,
   .generic-panel,
   .info-panel,
@@ -15617,7 +15641,7 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
    10. Frame cards and link cards
    ========================================================================== */
 
-:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .ref-card) {
+:where(.spw-card, .frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .ref-card) {
   /* Debug / inspection */
   --spw-debug-layer-owner: "components";
   --spw-debug-layer-color: #9933cc;
@@ -15626,6 +15650,7 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
 }
 
 :where(
+  .spw-card,
   .frame-card,
   .frame-panel,
   .media-card,
@@ -15641,7 +15666,7 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
   --card-secondary-weight: var(--component-card-detail-weight, 0);
 }
 
-:where(a.frame-card, .frame-card > a:first-child) {
+:where(a.spw-card, a.frame-card, .spw-card > a:first-child, .frame-card > a:first-child) {
   /* Layout */
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -15653,7 +15678,7 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
   max-inline-size: 100%;
   min-width: 0;
   min-inline-size: 0;
-  container-type: inline-size;
+  container: spw-card / inline-size;
 
   /* Typography */
   color: inherit;
@@ -15663,9 +15688,10 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
   word-break: break-word;
 }
 
-:where(.frame-card, .frame-card > a:first-child) {
+:where(.spw-card, .frame-card, .frame-card > a:first-child, .spw-card > a:first-child) {
   /* Layout */
   justify-items: start;
+  container: spw-card / inline-size;
 
   /* Visual */
   background:
@@ -15686,15 +15712,22 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
     transform var(--component-transition-fast);
 }
 
+@supports (grid-template-rows: subgrid) {
+  :where(.spw-card, .frame-card) {
+    grid-row: span 4;
+    grid-template-rows: subgrid;
+  }
+}
+
 @starting-style {
-  :where(.frame-card, .frame-card > a:first-child) {
+  :where(.spw-card, .frame-card, .frame-card > a:first-child, .spw-card > a:first-child) {
     opacity: 0;
     transform: translateY(8px);
   }
 }
 
-:where(.frame-card) {
-  --card-rhythm: clamp(0.58rem, 1.15vw, 0.85rem);
+:where(.spw-card, .frame-card) {
+  --card-rhythm: clamp(0.58rem, 1.8cqi, 0.85rem);
 }
 
 /* Explicit defaults for consistent layout/wrapping/alignment across cards and panels */
@@ -16398,19 +16431,19 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
 }
 
 /* Container query responses for cards when rendered inside narrow card containers */
-@container (max-width: 24rem) {
-  :where(.frame-card, .frame-panel, .media-card, .software-card, .operator-card, .plan-card, .ref-card) {
+@container spw-card (max-width: 24rem) {
+  :where(.spw-card, .frame-card, .frame-panel, .media-card, .software-card, .operator-card, .plan-card, .ref-card) {
     --card-rhythm: 0.5rem;
     --card-internal-gap: 0.35rem;
-    padding: clamp(0.5rem, 3.5cqw, 0.75rem);
+    padding: clamp(0.5rem, 3.5cqi, 0.75rem);
   }
-  :where(.frame-card, .frame-panel) :is(h2, h3, h4) {
-    font-size: clamp(0.92rem, 4.5cqw, 1.1rem);
+  :where(.spw-card, .frame-card, .frame-panel) :is(h2, h3, h4) {
+    font-size: clamp(0.92rem, 4.5cqi, 1.1rem);
   }
 }
 
-@container (max-width: 18rem) {
-  :where(.frame-card, .frame-panel, .media-card, .software-card, .operator-card, .plan-card, .ref-card) {
+@container spw-card (max-width: 18rem) {
+  :where(.spw-card, .frame-card, .frame-panel, .media-card, .software-card, .operator-card, .plan-card, .ref-card) {
     --card-rhythm: 0.38rem;
     --card-internal-gap: 0.28rem;
     padding: 0.45rem;
@@ -18171,7 +18204,7 @@ html[data-spw-font-size-scale="120"] [data-spw-vocab]) {
    storytelling, gardening).
    ========================================================================== */
 
-:where(.frame-card, .frame-panel, .topic-reference-card, .spw-principle-card, .operator-card, .plan-card) {
+:where(.spw-card, .spw-panel, .frame-card, .frame-panel, .topic-reference-card, .spw-principle-card, .operator-card, .plan-card) {
   /* Base card rhythm tokens already provide defaults; spacing attrs make "absent vs present"
      intent explicit for research, inclusive dynamics, and component ecology experiments. */
 }
@@ -18179,8 +18212,8 @@ html[data-spw-font-size-scale="120"] [data-spw-vocab]) {
 /* Explicit spacing states for cards/panels. Supports "make spacing explicit when interactive
    or descriptively absent or truly null". Values align with catalogued data-spw-spacing. */
 :where([data-spw-spacing="interactive"]) {
-  --card-internal-gap: clamp(0.65rem, 1.4vw, 1.05rem);
-  --card-rhythm: clamp(0.72rem, 1.5vw, 1.1rem);
+  --card-internal-gap: clamp(0.65rem, 1.4cqi, 1.05rem);
+  --card-rhythm: clamp(0.72rem, 1.5cqi, 1.1rem);
   padding: var(--spw-component-pad, 0.85rem);
   /* Generous for touch, combinatoric selection, skimming modes, badge tunability play. */
 }
@@ -18199,7 +18232,7 @@ html[data-spw-font-size-scale="120"] [data-spw-vocab]) {
      Use with data-spw-charge="0" or data-spw-card-state="compact" for full traversability. */
 }
 :where([data-spw-spacing="explicit"]) {
-  --card-internal-gap: clamp(0.55rem, 1.1vw, 0.9rem);
+  --card-internal-gap: clamp(0.55rem, 1.1cqi, 0.9rem);
   /* When the space itself is the described/interactive thing (e.g. layout experiments, prefix/postfix
      distinction visible as breathing room between sigil and concept label). */
 }
@@ -18391,9 +18424,9 @@ html[data-spw-font-size-scale="120"] [data-spw-vocab]) {
    12. Site frame
    ========================================================================== */
 
-:where(.site-frame) {
-  --surface-gap: var(--spw-surface-gap, clamp(0.72rem, 1.55vw, 1.14rem));
-  --surface-padding: var(--spw-surface-padding, clamp(0.88rem, 1.85vw, 1.28rem));
+:where(.spw-frame, .site-frame) {
+  --surface-gap: var(--spw-surface-gap, clamp(0.72rem, 1.55cqi, 1.14rem));
+  --surface-padding: var(--spw-surface-padding, clamp(0.88rem, 1.85cqi, 1.28rem));
   --site-frame-seam-color: color-mix(in srgb, var(--component-accent) 18%, transparent);
   --frame-arrival-offset: 0px;
   --frame-arrival-opacity: 1;
@@ -18418,6 +18451,7 @@ html[data-spw-font-size-scale="120"] [data-spw-vocab]) {
     var(--spw-chassis-highlight, inset 0 1px 0 color-mix(in srgb, white 18%, transparent)),
     var(--spw-chassis-shadow, inset 0 -1px 0 color-mix(in srgb, var(--shadow-color, #111) 5%, transparent));
   scroll-margin-top: calc(var(--header-height, 4rem) + 1rem);
+  container: spw-frame / inline-size;
   opacity: var(--frame-arrival-opacity);
   transform: translateY(calc(
     var(--frame-arrival-offset)
@@ -18437,37 +18471,37 @@ html[data-spw-font-size-scale="120"] [data-spw-vocab]) {
    excluded so it always renders eagerly; the `auto` intrinsic size remembers a
    frame's real height after first render, so scroll position stays stable.
    In-page anchor navigation and find-in-page still force these to render. */
-:where(.site-frame:not(.site-hero)) {
+:where(.spw-frame:not(.site-hero):not(.spw-hero), .site-frame:not(.site-hero):not(.spw-hero)) {
   content-visibility: auto;
   contain-intrinsic-size: auto 16rem;
 }
 
 /* Broadsheet pairing: a 480px reserved height stretched the neighbor
    into an empty card. Sit by content; remember a shorter estimate. */
-:where(body[data-spw-layout="newspaper"] .site-frame:not(.site-hero)) {
+:where(body[data-spw-layout="newspaper"] :is(.spw-frame, .site-frame):not(.site-hero):not(.spw-hero)) {
   contain-intrinsic-size: auto 12rem;
 }
 
-html[data-spw-high-contrast="on"] :where(.site-frame) {
+html[data-spw-high-contrast="on"] :where(.spw-frame, .site-frame) {
   background: var(--component-surface-strong, var(--surface-strong, #fff));
 }
 
-:where(.site-frame)::before {
+:where(.spw-frame, .site-frame)::before {
   content: "";
   position: absolute;
   inset: 1rem var(--surface-padding) auto var(--surface-padding);
   height: 1px;
   background: linear-gradient(
       90deg,
-      var(--site-frame-seam-color) 0 clamp(3.5rem, 12vw, 4.5rem),
-      transparent clamp(3.5rem, 12vw, 4.5rem)
+      var(--site-frame-seam-color) 0 clamp(3.5rem, 12cqi, 4.5rem),
+      transparent clamp(3.5rem, 12cqi, 4.5rem)
   );
   pointer-events: none;
   opacity: 0.92;
 }
 
-:where(.site-frame[data-state~="active"]),
-:where(.site-frame[data-spw-active="true"]) {
+:where(.spw-frame[data-state~="active"], .site-frame[data-state~="active"]),
+:where(.spw-frame[data-spw-active="true"], .site-frame[data-spw-active="true"]) {
   border-color: var(--line-strong, color-mix(in srgb, var(--component-accent) 34%, transparent));
   background: var(--component-surface-strong);
   box-shadow:
@@ -18558,22 +18592,22 @@ html[data-spw-high-contrast="on"] :where(.site-frame) {
   overflow-wrap: break-word;
 }
 
-.site-frame h1 {
-  font-size: clamp(1.55rem, 1.2rem + 2vw, 2.2rem);
+:where(.spw-frame, .site-frame) h1 {
+  font-size: clamp(1.55rem, 1.2rem + 2cqi, 2.2rem);
   font-weight: 700;
   line-height: 1.16;
   letter-spacing: -0.02em;
 }
 
-.site-frame h2 {
-  font-size: clamp(1.1rem, 0.9rem + 1.1vw, 1.45rem);
+:where(.spw-frame, .site-frame) h2 {
+  font-size: clamp(1.1rem, 0.9rem + 1.1cqi, 1.45rem);
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: -0.02em;
 }
 
-.site-frame h3 {
-  font-size: clamp(0.92rem, 0.85rem + 0.5vw, 1.05rem);
+:where(.spw-frame, .site-frame) h3 {
+  font-size: clamp(0.92rem, 0.85rem + 0.5cqi, 1.05rem);
   font-weight: 600;
   line-height: 1.28;
   letter-spacing: -0.005em;
@@ -18581,7 +18615,7 @@ html[data-spw-high-contrast="on"] :where(.site-frame) {
 
 .site-lede,
 .page-lede {
-  font-size: clamp(1rem, 0.88rem + 0.7vw, 1.2rem);
+  font-size: clamp(1rem, 0.88rem + 0.7cqi, 1.2rem);
   font-weight: 500;
   line-height: 1.58;
   max-inline-size: min(52ch, 100%);
@@ -18590,24 +18624,24 @@ html[data-spw-high-contrast="on"] :where(.site-frame) {
   color: color-mix(in srgb, var(--ink, #161c1d) 86%, transparent);
 }
 
-:where(.site-frame > p:not(.frame-note):not(.inline-note):not(.site-lede):not(.page-lede):not(.spec-kicker):not(.page-kicker)) {
+:where(:is(.spw-frame, .site-frame) > p:not(.frame-note):not(.inline-note):not(.site-lede):not(.page-lede):not(.spec-kicker):not(.page-kicker)) {
   max-inline-size: min(66ch, 100%);
   text-wrap: pretty;
   overflow-wrap: break-word;
 }
 
 :where(
-  .site-frame > .frame-heading + p,
-  .site-frame > header.frame-heading + p,
-  .site-frame > h1 + p,
-  .site-frame > h2 + p,
-  .site-frame > h3 + p,
-  .site-frame > .spec-kicker + h1 + p,
-  .site-frame > .spec-kicker + h2 + p,
-  .site-frame > .frame-topline + .spec-kicker + h1 + p,
-  .site-frame > .frame-topline + .spec-kicker + h2 + p
+  :is(.spw-frame, .site-frame) > .frame-heading + p,
+  :is(.spw-frame, .site-frame) > header.frame-heading + p,
+  :is(.spw-frame, .site-frame) > h1 + p,
+  :is(.spw-frame, .site-frame) > h2 + p,
+  :is(.spw-frame, .site-frame) > h3 + p,
+  :is(.spw-frame, .site-frame) > .spec-kicker + h1 + p,
+  :is(.spw-frame, .site-frame) > .spec-kicker + h2 + p,
+  :is(.spw-frame, .site-frame) > .frame-topline + .spec-kicker + h1 + p,
+  :is(.spw-frame, .site-frame) > .frame-topline + .spec-kicker + h2 + p
 ):not(.frame-note):not(.inline-note):not(.site-lede):not(.page-lede):not(.spec-kicker):not(.page-kicker) {
-  font-size: clamp(1.01rem, 0.96rem + 0.34vw, 1.12rem);
+  font-size: clamp(1.01rem, 0.96rem + 0.34cqi, 1.12rem);
   font-weight: 500;
   line-height: 1.62;
   color: color-mix(in srgb, var(--ink, #161c1d) 92%, transparent);
@@ -18788,20 +18822,20 @@ html[data-spw-high-contrast="on"] :where(.site-frame) {
       transparent 18% 100%
     ),
     var(--component-surface);
-  --surface-gap: clamp(0.95rem, 1.9vw, 1.32rem);
+  --surface-gap: clamp(0.95rem, 1.9cqi, 1.32rem);
 }
 
-:where(.site-frame[data-spw-role="schema"]) {
+:where(:is(.spw-frame, .site-frame)[data-spw-role="schema"]) {
   background: linear-gradient(
       180deg,
       color-mix(in srgb, var(--component-accent) 6%, transparent),
       transparent 32%
   ),
   var(--component-surface);
-  --surface-gap: clamp(0.82rem, 1.6vw, 1.08rem);
+  --surface-gap: clamp(0.82rem, 1.6cqi, 1.08rem);
 }
 
-:where(.site-frame[data-spw-role="gallery"]) {
+:where(:is(.spw-frame, .site-frame)[data-spw-role="gallery"]) {
   background: radial-gradient(
       circle at top left,
       color-mix(in srgb, var(--component-accent) 8%, transparent),
@@ -18810,7 +18844,7 @@ html[data-spw-high-contrast="on"] :where(.site-frame) {
   var(--component-surface);
 }
 
-:where(.site-frame[data-spw-role="broadcast"]) {
+:where(:is(.spw-frame, .site-frame)[data-spw-role="broadcast"]) {
   background: linear-gradient(
       90deg,
       color-mix(in srgb, var(--component-accent) 10%, transparent),
@@ -18824,40 +18858,39 @@ html[data-spw-high-contrast="on"] :where(.site-frame) {
    14. Hero + heading thresholds
    ========================================================================== */
 
-:where(.site-hero) {
-  gap: var(--spw-hero-gap, clamp(1.1rem, 2vw, 1.5rem));
+:where(.spw-hero, .site-hero) {
+  gap: var(--spw-hero-gap, clamp(1.1rem, 2cqi, 1.5rem));
 }
 
-:where(.site-hero--split-figure) > :where([data-spw-slot="header"], [data-spw-slot="body"], [data-spw-slot="figure"], [data-spw-slot="actions"]) {
+:where(.site-hero--split-figure, .spw-hero--split-figure) > :where([data-spw-slot="header"], [data-spw-slot="body"], [data-spw-slot="figure"], [data-spw-slot="actions"]) {
   min-width: 0;
 }
 
-:where(.site-hero--split-figure) {
+:where(.site-hero--split-figure, .spw-hero--split-figure) {
   display: grid;
   grid-template-columns: 1fr;
   align-items: start;
   align-content: start;
-  container-type: normal;
 }
 
-:where(.site-hero--split-figure) > [data-spw-slot="body"] {
+:where(.site-hero--split-figure, .spw-hero--split-figure) > [data-spw-slot="body"] {
   display: grid;
   gap: var(--spw-surface-gap, var(--space-md, 1rem));
   align-content: start;
 }
 
-:where(.site-hero--split-figure) > [data-spw-slot="figure"] {
+:where(.site-hero--split-figure, .spw-hero--split-figure) > [data-spw-slot="figure"] {
   align-self: start;
 }
 
 @supports (container-type: inline-size) {
-  @container (min-width: 70rem) {
-    :where(.site-hero--split-figure) {
+  @container spw-shell (min-width: 70rem), spw-frame (min-width: 60rem) {
+    :where(.site-hero--split-figure, .spw-hero--split-figure) {
       grid-template-columns: repeat(12, minmax(0, 1fr));
       gap: var(--gap-inline-flow, var(--space-xs, 0.5rem)) var(--gap-block-flow, var(--space-lg, 1.5rem));
     }
 
-    :where(.site-hero--split-figure) > canvas {
+    :where(.site-hero--split-figure, .spw-hero--split-figure) > canvas {
       position: absolute;
       inset: 0;
       width: 100%;
@@ -18865,23 +18898,23 @@ html[data-spw-high-contrast="on"] :where(.site-frame) {
       pointer-events: none;
     }
 
-    :where(.site-hero--split-figure) > [data-spw-slot="header"] {
+    :where(.site-hero--split-figure, .spw-hero--split-figure) > [data-spw-slot="header"] {
       grid-column: 1 / -1;
       grid-row: 1;
     }
 
-    :where(.site-hero--split-figure) > [data-spw-slot="body"] {
+    :where(.site-hero--split-figure, .spw-hero--split-figure) > [data-spw-slot="body"] {
       grid-column: 1 / span 6;
       grid-row: 2;
     }
 
-    :where(.site-hero--split-figure) > [data-spw-slot="figure"] {
+    :where(.site-hero--split-figure, .spw-hero--split-figure) > [data-spw-slot="figure"] {
       grid-column: 8 / -1;
       grid-row: 2;
       width: 100%;
     }
 
-    :where(.site-hero--split-figure) > [data-spw-slot="actions"] {
+    :where(.site-hero--split-figure, .spw-hero--split-figure) > [data-spw-slot="actions"] {
       grid-column: 1 / span 7;
       grid-row: 3;
     }
@@ -18895,14 +18928,14 @@ html[data-spw-high-contrast="on"] :where(.site-frame) {
    Explicit author values win; the rules below are additive and safe.
    ========================================================================== */
 
-:where(.site-frame[data-spw-size-context="narrow-hero"],
-       .site-frame[data-spw-size-context="narrow-panel"]) {
-  --surface-padding: clamp(0.7rem, 2.2vw, 1.05rem);
-  --surface-gap: clamp(0.7rem, 1.6vw, 0.95rem);
+:where(:is(.spw-frame, .site-frame)[data-spw-size-context="narrow-hero"],
+       :is(.spw-frame, .site-frame)[data-spw-size-context="narrow-panel"]) {
+  --surface-padding: clamp(0.7rem, 2.2cqi, 1.05rem);
+  --surface-gap: clamp(0.7rem, 1.6cqi, 0.95rem);
 }
 
-:where(.site-frame[data-spw-content-tone="dense"],
-       .site-frame[data-spw-content-tone="operator-heavy"]) {
+:where(:is(.spw-frame, .site-frame)[data-spw-content-tone="dense"],
+       :is(.spw-frame, .site-frame)[data-spw-content-tone="operator-heavy"]) {
   --surface-gap: calc(var(--surface-gap, 1rem) * 0.82);
 }
 
@@ -19391,8 +19424,9 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   grid-column: 1 / -1;
 }
 
-@media (max-width: 48rem) {
+@container spw-shell (max-width: 48rem), spw-frame (max-width: 48rem) {
   :where(
+    .spw-grid > [data-spw-pack-span="2"],
     .frame-grid > [data-spw-pack-span="2"],
     [data-spw-composition-flow="grid"] > [data-spw-pack-span="2"]
   ) {
@@ -19444,19 +19478,19 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--spw-wisdom-deck-min)), 1fr));
 }
 
-/* Tighter mobile behavior for dense illustrated card grids (e.g. "Three good first loops") */
-@media (max-width: 40rem) {
-  :where(.frame-grid--dense) {
+/* Tighter container behavior for dense illustrated card grids (e.g. "Three good first loops") */
+@container spw-frame (max-width: 40rem), spw-shell (max-width: 40rem) {
+  :where(.spw-grid--dense, .frame-grid--dense) {
     grid-template-columns: 1fr;
     gap: 0.85rem;
   }
 
-  :where(.frame-card--illustrated .frame-card-media) {
+  :where(:is(.spw-card--illustrated, .frame-card--illustrated) :is(.spw-card__media, .frame-card-media)) {
     margin: calc(var(--component-pad) * -0.75);
     margin-bottom: 0.35rem;
   }
 
-  :where(#entry-loops .frame-card--illustrated .frame-card-media) {
+  :where(#entry-loops :is(.spw-card--illustrated, .frame-card--illustrated) :is(.spw-card__media, .frame-card-media)) {
     position: relative;
     max-block-size: 8rem;
     overflow: hidden;
@@ -19668,7 +19702,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   }
 }
 
-@media (max-width: 40rem) {
+@container spw-shell (max-width: 40rem), spw-frame (max-width: 40rem) {
   :where([data-spw-table="responsive-comparison"]) {
     display: block;
     border: 0;

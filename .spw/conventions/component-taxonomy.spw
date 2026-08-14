@@ -33,10 +33,23 @@ fixity = "tending"
 }[reg=facet]
 
 ^"thesis"{
- claim = "A component is a stable interaction pattern between operator forces and field state — not merely a CSS class or a DOM wrapper."
+ claim = "A component is a stable interaction pattern between operator forces and field state — projected through four clean surface primitives."
  operator_layer = "Operators remain the elemental grammar: frame, probe, object, ref, action, surface."
  accent_layer = "Semantic-accent and component-accent tokens project lived surface mood without replacing operator identity."
  ornament_layer = "Ornament is the visual projection of field balance, resonance, and collection strength."
+}[reg=facet]
+
+^"rederived_surface_primitives"{
+  primitives = #[
+    .{ name = `spw-frame`, role = `Top-level section/hero container`, container = `container: spw-frame / inline-size` },
+    .{ name = `spw-card`, role = `Discrete item/grid tile`, container = `container: spw-card / inline-size; subgrid span 4` },
+    .{ name = `spw-panel`, role = `Matte/flat informational callout`, container = `box-model inset` },
+    .{ name = `spw-prose`, role = `Manuscript reading flow`, measure = `capped line-measure min(100%, 65ch)` },
+    .{ name = `spw-grid`, role = `Subgrid-coordinated card matrix`, tracks = `auto auto 1fr auto` },
+    .{ name = `spw-cluster`, role = `Flex-wrap inline token group`, gap = `tight block + breathing inline` }
+  ][reg=set]
+  slot_anatomy = #[`header`, `media`, `body`, `actions`][reg=set]
+  named_containers = #[`spw-shell (main)`, `spw-frame (section)`, `spw-card (article)`][reg=set]
 }[reg=facet]
 
 ^"taxonomic_dimensions"{

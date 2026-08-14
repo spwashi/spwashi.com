@@ -23,7 +23,7 @@
    storytelling, gardening).
    ========================================================================== */
 
-:where(.frame-card, .frame-panel, .topic-reference-card, .spw-principle-card, .operator-card, .plan-card) {
+:where(.spw-card, .spw-panel, .frame-card, .frame-panel, .topic-reference-card, .spw-principle-card, .operator-card, .plan-card) {
   /* Base card rhythm tokens already provide defaults; spacing attrs make "absent vs present"
      intent explicit for research, inclusive dynamics, and component ecology experiments. */
 }
@@ -31,8 +31,8 @@
 /* Explicit spacing states for cards/panels. Supports "make spacing explicit when interactive
    or descriptively absent or truly null". Values align with catalogued data-spw-spacing. */
 :where([data-spw-spacing="interactive"]) {
-  --card-internal-gap: clamp(0.65rem, 1.4vw, 1.05rem);
-  --card-rhythm: clamp(0.72rem, 1.5vw, 1.1rem);
+  --card-internal-gap: clamp(0.65rem, 1.4cqi, 1.05rem);
+  --card-rhythm: clamp(0.72rem, 1.5cqi, 1.1rem);
   padding: var(--spw-component-pad, 0.85rem);
   /* Generous for touch, combinatoric selection, skimming modes, badge tunability play. */
 }
@@ -51,7 +51,7 @@
      Use with data-spw-charge="0" or data-spw-card-state="compact" for full traversability. */
 }
 :where([data-spw-spacing="explicit"]) {
-  --card-internal-gap: clamp(0.55rem, 1.1vw, 0.9rem);
+  --card-internal-gap: clamp(0.55rem, 1.1cqi, 0.9rem);
   /* When the space itself is the described/interactive thing (e.g. layout experiments, prefix/postfix
      distinction visible as breathing room between sigil and concept label). */
 }

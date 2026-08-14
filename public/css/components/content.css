@@ -307,8 +307,9 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   grid-column: 1 / -1;
 }
 
-@media (max-width: 48rem) {
+@container spw-shell (max-width: 48rem), spw-frame (max-width: 48rem) {
   :where(
+    .spw-grid > [data-spw-pack-span="2"],
     .frame-grid > [data-spw-pack-span="2"],
     [data-spw-composition-flow="grid"] > [data-spw-pack-span="2"]
   ) {
@@ -360,19 +361,19 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--spw-wisdom-deck-min)), 1fr));
 }
 
-/* Tighter mobile behavior for dense illustrated card grids (e.g. "Three good first loops") */
-@media (max-width: 40rem) {
-  :where(.frame-grid--dense) {
+/* Tighter container behavior for dense illustrated card grids (e.g. "Three good first loops") */
+@container spw-frame (max-width: 40rem), spw-shell (max-width: 40rem) {
+  :where(.spw-grid--dense, .frame-grid--dense) {
     grid-template-columns: 1fr;
     gap: 0.85rem;
   }
 
-  :where(.frame-card--illustrated .frame-card-media) {
+  :where(:is(.spw-card--illustrated, .frame-card--illustrated) :is(.spw-card__media, .frame-card-media)) {
     margin: calc(var(--component-pad) * -0.75);
     margin-bottom: 0.35rem;
   }
 
-  :where(#entry-loops .frame-card--illustrated .frame-card-media) {
+  :where(#entry-loops :is(.spw-card--illustrated, .frame-card--illustrated) :is(.spw-card__media, .frame-card-media)) {
     position: relative;
     max-block-size: 8rem;
     overflow: hidden;
@@ -584,7 +585,7 @@ html[data-spw-viewport-tier="compact"] :where(.frame-grid, .plans-grid, .contact
   }
 }
 
-@media (max-width: 40rem) {
+@container spw-shell (max-width: 40rem), spw-frame (max-width: 40rem) {
   :where([data-spw-table="responsive-comparison"]) {
     display: block;
     border: 0;

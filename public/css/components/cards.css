@@ -8,7 +8,7 @@
    10. Frame cards and link cards
    ========================================================================== */
 
-:where(.frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .ref-card) {
+:where(.spw-card, .frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .ref-card) {
   /* Debug / inspection */
   --spw-debug-layer-owner: "components";
   --spw-debug-layer-color: #9933cc;
@@ -17,6 +17,7 @@
 }
 
 :where(
+  .spw-card,
   .frame-card,
   .frame-panel,
   .media-card,
@@ -32,7 +33,7 @@
   --card-secondary-weight: var(--component-card-detail-weight, 0);
 }
 
-:where(a.frame-card, .frame-card > a:first-child) {
+:where(a.spw-card, a.frame-card, .spw-card > a:first-child, .frame-card > a:first-child) {
   /* Layout */
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -44,7 +45,7 @@
   max-inline-size: 100%;
   min-width: 0;
   min-inline-size: 0;
-  container-type: inline-size;
+  container: spw-card / inline-size;
 
   /* Typography */
   color: inherit;
@@ -54,9 +55,10 @@
   word-break: break-word;
 }
 
-:where(.frame-card, .frame-card > a:first-child) {
+:where(.spw-card, .frame-card, .frame-card > a:first-child, .spw-card > a:first-child) {
   /* Layout */
   justify-items: start;
+  container: spw-card / inline-size;
 
   /* Visual */
   background:
@@ -77,15 +79,22 @@
     transform var(--component-transition-fast);
 }
 
+@supports (grid-template-rows: subgrid) {
+  :where(.spw-card, .frame-card) {
+    grid-row: span 4;
+    grid-template-rows: subgrid;
+  }
+}
+
 @starting-style {
-  :where(.frame-card, .frame-card > a:first-child) {
+  :where(.spw-card, .frame-card, .frame-card > a:first-child, .spw-card > a:first-child) {
     opacity: 0;
     transform: translateY(8px);
   }
 }
 
-:where(.frame-card) {
-  --card-rhythm: clamp(0.58rem, 1.15vw, 0.85rem);
+:where(.spw-card, .frame-card) {
+  --card-rhythm: clamp(0.58rem, 1.8cqi, 0.85rem);
 }
 
 /* Explicit defaults for consistent layout/wrapping/alignment across cards and panels */
@@ -789,19 +798,19 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
 }
 
 /* Container query responses for cards when rendered inside narrow card containers */
-@container (max-width: 24rem) {
-  :where(.frame-card, .frame-panel, .media-card, .software-card, .operator-card, .plan-card, .ref-card) {
+@container spw-card (max-width: 24rem) {
+  :where(.spw-card, .frame-card, .frame-panel, .media-card, .software-card, .operator-card, .plan-card, .ref-card) {
     --card-rhythm: 0.5rem;
     --card-internal-gap: 0.35rem;
-    padding: clamp(0.5rem, 3.5cqw, 0.75rem);
+    padding: clamp(0.5rem, 3.5cqi, 0.75rem);
   }
-  :where(.frame-card, .frame-panel) :is(h2, h3, h4) {
-    font-size: clamp(0.92rem, 4.5cqw, 1.1rem);
+  :where(.spw-card, .frame-card, .frame-panel) :is(h2, h3, h4) {
+    font-size: clamp(0.92rem, 4.5cqi, 1.1rem);
   }
 }
 
-@container (max-width: 18rem) {
-  :where(.frame-card, .frame-panel, .media-card, .software-card, .operator-card, .plan-card, .ref-card) {
+@container spw-card (max-width: 18rem) {
+  :where(.spw-card, .frame-card, .frame-panel, .media-card, .software-card, .operator-card, .plan-card, .ref-card) {
     --card-rhythm: 0.38rem;
     --card-internal-gap: 0.28rem;
     padding: 0.45rem;
