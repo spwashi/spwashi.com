@@ -825,7 +825,9 @@ const SETTING_VALUE_LABELS = Object.freeze({
     situate: 'Situate',
     hand: 'Hand',
     lattice: 'Lattice',
-    inquiry: 'Inquiry'
+    inquiry: 'Inquiry',
+    ludic: 'Ludic',
+    studio: 'Studio'
   }),
   baseMetamaterial: Object.freeze({paper: 'Paper', glass: 'Glass', matte: 'Matte', field: 'Field'}),
   baseAffordance: Object.freeze({read: 'Read', tune: 'Tune', inspect: 'Inspect', orient: 'Orient'}),

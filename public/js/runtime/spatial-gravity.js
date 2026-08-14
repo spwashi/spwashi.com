@@ -360,10 +360,11 @@ const scheduleMeasure = () => {
 const ensureIntersectionObserver = () => {
   if (intersectionObserver || typeof IntersectionObserver !== 'function') return intersectionObserver;
   intersectionObserver = new IntersectionObserver((entries) => {
+    let needsMeasure = false;
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         onScreen.add(entry.target);
-        measureElement(entry.target);
+        needsMeasure = true;
       } else {
         onScreen.delete(entry.target);
         elementState.delete(entry.target);
@@ -372,6 +373,7 @@ const ensureIntersectionObserver = () => {
         }
       }
     });
+    if (needsMeasure) scheduleMeasure();
   }, { rootMargin: '20% 0px' });
   return intersectionObserver;
 };

@@ -138,6 +138,48 @@
   initial-value: 0;
 }
 
+/* Continuous Gradient of Tangibility: 0.0 (radiant plasma / unconstrained field) -> 1.0 (invariant dense substrate) */
+@property --spw-tangibility {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.5;
+}
+
+/* Viscous relaxation time & morphogenetic damping */
+@property --spw-viscosity {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.3;
+}
+
+/* Phase order parameter / structural coherence: 0 (disordered) -> 1 (crystalline symmetry) */
+@property --spw-coherence {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.5;
+}
+
+/* Edge membrane tension across frame boundaries: 0 (relaxed) -> 1 (taut membrane) */
+@property --spw-edge-tension {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+/* Regional lighting bias / field illumination */
+@property --spw-regional-lighting-bias {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+
+/* Cauldron phase condensate perceptual tint */
+@property --spw-spell-perceptual-tint {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+
 /* Distribution entropy across a page or surface */
 @property --spw-field-entropy {
   syntax: "<number>";
@@ -630,35 +672,35 @@
   --charcoal-light: rgb(26, 32, 35);
   --charcoal-dark: rgb(6, 8, 10);
 
-  /* Page substrate */
-  --bg: hsl(42 62% 84%);
-  --bg-deep: hsl(43 44% 76%);
-  --bg-field: hsl(42 38% 94%);
-  --bg-ritual: hsl(40 48% 89%);
+  /* Page substrate: refined tactile editorial linen ground with luminous atmospheric warmth */
+  --bg: hsl(42 32% 90%);
+  --bg-deep: hsl(42 26% 82%);
+  --bg-field: hsl(44 34% 95%);
+  --bg-ritual: hsl(40 36% 89%);
 
   /* Manuscript substrate */
   --paper-hue: 42;
-  --paper-sat: 38%;
-  --paper-light: 94%;
+  --paper-sat: 34%;
+  --paper-light: 95%;
   --paper: hsl(var(--paper-hue) var(--paper-sat) var(--paper-light));
-  --paper-warm: hsl(39 50% 92%);
-  --paper-cool: hsl(210 24% 94%);
+  --paper-warm: hsl(39 44% 93%);
+  --paper-cool: hsl(210 24% 95%);
   --paper-ink: rgba(var(--charcoal-rgb), 0.92);
   --paper-rule: rgba(var(--charcoal-rgb), 0.12);
 
-  /* Surfaces */
-  --surface: rgba(255, 255, 255, 0.76);
-  --surface-strong: rgba(255, 255, 255, 0.9);
-  --surface-soft: rgba(255, 255, 255, 0.58);
+  /* Surfaces: multi-tier luminance lift above linen ground */
+  --surface: rgba(255, 255, 255, 0.82);
+  --surface-strong: rgba(255, 255, 255, 0.94);
+  --surface-soft: rgba(255, 255, 255, 0.65);
   --surface-code: rgba(18, 23, 27, 0.96);
-  --surface-matte: rgba(247, 244, 238, 0.93);
-  --surface-matte-strong: rgba(252, 249, 243, 0.98);
-  --surface-contrast: rgba(255, 253, 248, 0.98);
-  --surface-contrast-soft: rgba(247, 242, 232, 0.96);
-  --surface-panel: rgba(255, 255, 255, 0.82);
-  --surface-panel-strong: rgba(255, 255, 255, 0.92);
-  --surface-glass: rgba(255, 255, 255, 0.22);
-  --surface-shadowed: rgba(255, 255, 255, 0.68);
+  --surface-matte: rgba(250, 248, 243, 0.96);
+  --surface-matte-strong: rgba(255, 253, 248, 0.99);
+  --surface-contrast: rgba(255, 255, 255, 0.99);
+  --surface-contrast-soft: rgba(248, 244, 236, 0.96);
+  --surface-panel: rgba(255, 255, 255, 0.88);
+  --surface-panel-strong: rgba(255, 255, 255, 0.96);
+  --surface-glass: rgba(255, 255, 255, 0.32);
+  --surface-shadowed: rgba(255, 255, 255, 0.76);
 
   /* Ink */
   --ink-strong: rgba(var(--charcoal-rgb), 0.96);
@@ -712,8 +754,8 @@
   --material-text-on-matte-strong: var(--text-on-matte-strong, var(--ink-on-matte-strong));
   --material-line: var(--line, rgba(14, 18, 20, 0.14));
   --material-line-strong: var(--line-strong, rgba(0, 128, 128, 0.34));
-  --material-shadow-rest: var(--shadow-base, 0 4px 12px rgba(0, 0, 0, 0.06));
-  --material-shadow-lift: var(--shadow-active, 0 8px 28px rgba(0, 0, 0, 0.10));
+  --material-shadow-rest: var(--shadow-base, 0 1px 3px rgba(0, 0, 0, 0.04), 0 6px 18px -3px rgba(0, 0, 0, 0.07));
+  --material-shadow-lift: var(--shadow-active, 0 4px 8px rgba(0, 0, 0, 0.05), 0 12px 32px -4px rgba(0, 0, 0, 0.11));
 
   /* Lines */
   --line-hair: 0.5px;
@@ -748,12 +790,12 @@
   --focus-ring: 0 0 0 3px rgba(0, 128, 128, 0.18);
 
   /* Material properties */
-  --material-blur: 6px;
-  --material-saturation: 1.02;
-  --material-specular: 0.22;
-  --material-transmission: 0.08;
-  --material-shadow-strength: 0.08;
-  --material-glow-strength: 0.08;
+  --material-blur: 8px;
+  --material-saturation: 1.04;
+  --material-specular: 0.28;
+  --material-transmission: 0.10;
+  --material-shadow-strength: 0.10;
+  --material-glow-strength: 0.10;
 
   --phase-paper-weight: 1;
   --phase-glass-weight: 0;
@@ -765,20 +807,20 @@
   /* Depth */
   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
   --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.05);
-  --shadow-base: 0 4px 12px rgba(0, 0, 0, 0.06);
-  --shadow-active: 0 8px 28px rgba(0, 0, 0, 0.10);
-  --shadow-projecting: 0 14px 34px rgba(0, 0, 0, 0.14);
+  --shadow-base: 0 1px 3px rgba(0, 0, 0, 0.04), 0 6px 18px -3px rgba(0, 0, 0, 0.07);
+  --shadow-active: 0 4px 8px rgba(0, 0, 0, 0.05), 0 12px 32px -4px rgba(0, 0, 0, 0.11);
+  --shadow-projecting: 0 8px 16px rgba(0, 0, 0, 0.06), 0 20px 48px -6px rgba(0, 0, 0, 0.15);
 
-  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.05),
-  0 2px 8px rgba(0, 0, 0, 0.03);
-  --card-shadow-hover: 0 4px 18px rgba(0, 0, 0, 0.09),
-  0 2px 6px rgba(0, 0, 0, 0.04);
-  --card-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.52);
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.04),
+    0 6px 18px -3px rgba(0, 0, 0, 0.07);
+  --card-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.06),
+    0 16px 36px -4px rgba(0, 0, 0, 0.12);
+  --card-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.62);
 
   --floating-bg: var(--surface-strong);
   --floating-bg-warm: rgba(255, 251, 242, 0.92);
   --floating-shadow: 0 8px 32px rgba(0, 0, 0, 0.12),
-  0 2px 8px rgba(0, 0, 0, 0.06);
+    0 2px 8px rgba(0, 0, 0, 0.06);
   --floating-shadow-side: 2px 0 20px rgba(0, 0, 0, 0.09);
 
   /* Material elevation shadows (box-shadow stacks). Distinct from @property --spw-depth. */
@@ -822,6 +864,7 @@
   --layer-overlay: 2;
   --layer-surface: 20;
   --layer-floating: 100;
+  --layer-handle: calc(var(--layer-floating) + 50);
   --layer-docked: 900;
   --layer-header: 1000;
   --layer-priority: 2000;
@@ -860,6 +903,7 @@
   --z-overlay: var(--layer-overlay);
   --z-surface: var(--layer-surface);
   --z-floating: var(--layer-floating);
+  --z-handle: var(--layer-handle);
   --z-docked: var(--layer-docked);
   --z-header: var(--layer-header);
   --z-priority: var(--layer-priority);
@@ -1135,14 +1179,33 @@
     --pigment-context-boost: 0.95;
     --active-op-color: var(--pigment-brass-warm);
   }
-  /* Minimalist motif for playful experimentation with material properties (glass/matte depth, ink strength, no ornament).
-     Use on design hub or any surface: data-spw-component-motif="minimal" + enhancement-level=minimal + density=minimal
-     for pure tunable material play without visual noise. Ties to prior material contract and physics-reason for storytellers/engineers.
-     Low boost keeps focus on surface/contrast tokens. */
   html[data-spw-component-motif="minimal"] {
     --pigment-context-boost: 0.7;
     --active-op-color: var(--ink-mid, rgba(var(--charcoal-rgb), 0.68));
   }
+
+  /* Palette resonance dimension modulation */
+  html:is([data-spw-palette-resonance="ludic"], [data-spw-palette-resonance="play"]) {
+    --pigment-context-boost: 1.12;
+    --active-op-color: var(--op-binding-color, hsl(24 48% 34%));
+  }
+  html:is([data-spw-palette-resonance="studio"], [data-spw-palette-resonance="author"]) {
+    --pigment-context-boost: 1.05;
+    --active-op-color: var(--pigment-brass-warm, hsl(38 64% 42%));
+  }
+  html:is([data-spw-palette-resonance="lattice"], [data-spw-palette-resonance="software"]) {
+    --pigment-context-boost: 1.10;
+    --active-op-color: var(--teal);
+  }
+  html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="math"]) {
+    --pigment-context-boost: 1.08;
+    --active-op-color: var(--op-probe-color, hsl(268 36% 42%));
+  }
+  html:is([data-spw-palette-resonance="hand"], [data-spw-palette-resonance="craft"]) {
+    --pigment-context-boost: 1.06;
+    --active-op-color: var(--op-object-color, hsl(36 62% 35%));
+  }
+
   --active-op-border: color-mix(in srgb, var(--active-op-color) 34%, transparent);
   --active-op-bg-soft: color-mix(in srgb, var(--active-op-color) 7%, transparent);
 
@@ -1153,31 +1216,31 @@
   --boon-glow: var(--objective-brace-wash);
   --bane-glow: var(--subjective-brace-wash);
 
-  --op-frame-color: var(--teal);
+  --op-frame-color: hsl(180 74% 28%);
   --op-frame-border: color-mix(in srgb, var(--op-frame-color) 32%, transparent);
   --op-frame-bg-soft: color-mix(in srgb, var(--op-frame-color) 7%, transparent);
 
-  --op-topic-color: hsl(192 48% 32%);
-  --op-topic-border: hsla(192, 48%, 32%, 0.24);
-  --op-topic-bg-soft: rgba(228, 246, 252, 0.72);
+  --op-topic-color: hsl(168 62% 30%);
+  --op-topic-border: hsla(168, 62%, 30%, 0.24);
+  --op-topic-bg-soft: rgba(228, 248, 246, 0.72);
 
-  --op-object-color: hsl(36 62% 35%);
-  --op-object-border: hsla(36, 62%, 35%, 0.22);
+  --op-object-color: hsl(36 82% 38%);
+  --op-object-border: hsla(36, 82%, 38%, 0.22);
   --op-object-bg-soft: rgba(255, 248, 235, 0.72);
 
-  --op-ref-color: hsl(210 48% 38%);
-  --op-ref-border: hsla(210, 48%, 38%, 0.2);
+  --op-ref-color: hsl(214 66% 40%);
+  --op-ref-border: hsla(214, 66%, 40%, 0.2);
   --op-ref-bg-soft: rgba(235, 244, 255, 0.72);
 
-  --op-probe-color: hsl(268 36% 42%);
-  --op-probe-border: hsla(268, 36%, 42%, 0.2);
+  --op-probe-color: hsl(268 54% 44%);
+  --op-probe-border: hsla(268, 54%, 44%, 0.2);
   --op-probe-bg-soft: rgba(245, 238, 255, 0.72);
   /* Balanced for lighting + motif composability (e.g., curriculum or lab motifs under ritual-vellum or electric-studio).
      Uses pigment context for evolutionary semantic readability across conditions. */
   --op-probe-color-balanced: color-mix(in srgb, var(--pigment-violet-ink) calc(100% * var(--pigment-context-boost, 1)), var(--op-probe-color));
 
-  --op-action-color: hsl(180 64% 25%);
-  --op-action-border: hsla(180, 64%, 25%, 0.35);
+  --op-action-color: hsl(176 74% 24%);
+  --op-action-border: hsla(176, 74%, 24%, 0.35);
   --op-action-bg-soft: rgba(230, 248, 248, 0.72);
 
   --op-layer-color: var(--ink-soft);
@@ -1697,29 +1760,29 @@ html[data-spw-component-density="roomy"] {
 
 /* Dark mode */
 html[data-spw-color-mode="dark"] {
-  --bg: hsl(214 18% 10%);
-  --bg-deep: hsl(214 22% 7%);
-  --bg-field: hsl(214 15% 13%);
-  --bg-ritual: hsl(216 14% 15%);
+  --bg: hsl(218 20% 8.5%);
+  --bg-deep: hsl(220 24% 6%);
+  --bg-field: hsl(216 16% 12%);
+  --bg-ritual: hsl(218 18% 13.5%);
 
-  --paper: hsl(214 14% 13%);
-  --paper-warm: hsl(32 12% 15%);
-  --paper-cool: hsl(214 14% 16%);
-  --paper-ink: rgba(228, 235, 232, 0.92);
-  --paper-rule: rgba(228, 235, 232, 0.14);
+  --paper: hsl(216 14% 12.5%);
+  --paper-warm: hsl(32 12% 14.5%);
+  --paper-cool: hsl(214 14% 15.5%);
+  --paper-ink: rgba(232, 238, 236, 0.92);
+  --paper-rule: rgba(232, 238, 236, 0.14);
 
-  --surface: rgba(18, 24, 28, 0.78);
-  --surface-strong: rgba(25, 32, 37, 0.92);
-  --surface-soft: rgba(18, 24, 28, 0.58);
+  --surface: rgba(20, 26, 31, 0.82);
+  --surface-strong: rgba(28, 36, 42, 0.94);
+  --surface-soft: rgba(20, 26, 31, 0.62);
   --surface-code: rgba(10, 14, 17, 0.98);
-  --surface-matte: rgba(24, 30, 35, 0.96);
-  --surface-matte-strong: rgba(31, 38, 44, 0.98);
-  --surface-contrast: rgba(34, 42, 48, 0.98);
-  --surface-contrast-soft: rgba(26, 33, 39, 0.97);
-  --surface-panel: rgba(24, 31, 36, 0.9);
-  --surface-panel-strong: rgba(30, 38, 44, 0.95);
+  --surface-matte: rgba(26, 33, 39, 0.97);
+  --surface-matte-strong: rgba(33, 41, 48, 0.99);
+  --surface-contrast: rgba(36, 45, 52, 0.99);
+  --surface-contrast-soft: rgba(28, 36, 42, 0.97);
+  --surface-panel: rgba(26, 34, 40, 0.92);
+  --surface-panel-strong: rgba(33, 42, 49, 0.96);
   --surface-glass: rgba(255, 255, 255, 0.08);
-  --surface-shadowed: rgba(20, 26, 31, 0.72);
+  --surface-shadowed: rgba(22, 28, 34, 0.76);
 
   --ink-strong: rgba(236, 241, 238, 0.96);
   --ink: rgba(228, 235, 232, 0.92);
@@ -1748,11 +1811,11 @@ html[data-spw-color-mode="dark"] {
 
   --focus-ring: 0 0 0 3px rgba(96, 210, 210, 0.22);
 
-  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.18);
-  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.2);
-  --shadow-base: 0 4px 12px rgba(0, 0, 0, 0.22);
-  --shadow-active: 0 8px 28px rgba(0, 0, 0, 0.32);
-  --shadow-projecting: 0 14px 34px rgba(0, 0, 0, 0.38);
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.28);
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.32);
+  --shadow-base: 0 2px 4px rgba(0, 0, 0, 0.28), 0 8px 24px -4px rgba(0, 0, 0, 0.44);
+  --shadow-active: 0 4px 10px rgba(0, 0, 0, 0.34), 0 16px 38px -4px rgba(0, 0, 0, 0.54);
+  --shadow-projecting: 0 8px 18px rgba(0, 0, 0, 0.38), 0 24px 54px -6px rgba(0, 0, 0, 0.62);
 
   --climate-badge-bg: color-mix(in srgb, var(--climate-accent) 16%, var(--surface-strong));
   --climate-badge-text: color-mix(in srgb, var(--climate-accent) 56%, white);

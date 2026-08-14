@@ -64,18 +64,18 @@
   background:
     linear-gradient(
       180deg,
-      color-mix(in srgb, var(--component-route-accent) 5%, transparent) 0%,
+      color-mix(in srgb, var(--component-route-accent) calc(3% + (4% * (1 - var(--spw-tangibility, 0.5)))), transparent) 0%,
       transparent 22%
     ),
-    color-mix(in srgb, var(--component-surface-strong) 95%, var(--component-route-accent) 5%);
+    color-mix(in srgb, var(--component-surface-strong) calc(88% + (10% * var(--spw-tangibility, 0.5))), var(--component-route-accent) 5%);
   box-shadow: var(--component-shadow);
 
   /* Interaction */
   transition:
     opacity 220ms var(--ease-settle, ease),
-    background var(--component-transition-deliberate),
-    border-color var(--component-transition-base),
-    box-shadow var(--component-transition-deliberate),
+    background calc(var(--component-transition-deliberate) * (0.8 + (0.4 * var(--spw-viscosity, 0.3)))),
+    border-color calc(var(--component-transition-base) * (0.8 + (0.4 * var(--spw-viscosity, 0.3)))),
+    box-shadow calc(var(--component-transition-deliberate) * (0.8 + (0.4 * var(--spw-viscosity, 0.3)))),
     transform var(--component-transition-fast);
 }
 
@@ -97,13 +97,108 @@
   --card-rhythm: clamp(0.58rem, 1.8cqi, 0.85rem);
 }
 
+/* 4-Slot Anatomy: header -> media -> body -> actions */
+:where(.spw-card__header, .frame-card-header, [data-spw-slot="header"]) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xs, 0.35rem);
+  min-inline-size: 0;
+  inline-size: 100%;
+}
+
+:where(.spw-card__media, .frame-card-media, [data-spw-slot="media"], [data-spw-slot="figure"]) {
+  min-inline-size: 0;
+  inline-size: 100%;
+  overflow: hidden;
+  border-radius: var(--component-radius-sm, 6px);
+}
+
+:where(.spw-card__body, .frame-card-body, [data-spw-slot="body"]) {
+  min-inline-size: 0;
+  inline-size: 100%;
+  display: grid;
+  gap: var(--card-rhythm, 0.6rem);
+}
+
+:where(.spw-card__actions, .frame-card-actions, [data-spw-slot="actions"]) {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-xs, 0.38rem);
+  margin-block-start: auto;
+  inline-size: 100%;
+}
+
 /* Explicit defaults for consistent layout/wrapping/alignment across cards and panels */
-:where(.frame-card, .frame-panel, .math-lens-card, .topic-reference-card, .spw-principle-card) {
+:where(.spw-card, .frame-card, .frame-panel, .math-lens-card, .topic-reference-card, .spw-principle-card) {
   --card-internal-gap: 0.45rem;
   display: grid;
   gap: var(--card-internal-gap);
   align-content: start;
   text-align: start;
+}
+
+/* ==========================================================================
+   Environmental Physics & Pretext Text-Variant Extensions
+   ========================================================================== */
+
+/* 1. Punchy / Monument variant: concise, high-impact headline, compact body */
+:where(.spw-card[data-spw-text-variant="punchy"], .spw-card[data-text-density="dense"], .spw-card[data-text-width-class="xs"]) {
+  --card-internal-gap: 0.32rem;
+  --card-rhythm: clamp(0.35rem, 1.2cqi, 0.55rem);
+  padding: clamp(0.65rem, 2cqi, 0.95rem);
+  border-width: 1.5px;
+}
+
+:where(.spw-card[data-spw-text-variant="punchy"] h2, .spw-card[data-spw-text-variant="punchy"] h3, .spw-card[data-spw-text-variant="punchy"] .spw-card__title) {
+  font-size: clamp(1.15rem, 3.5cqi, 1.45rem);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.22;
+}
+
+/* 2. Editorial / Story variant: measured reading rhythm, relaxed leading, warm tint */
+:where(.spw-card[data-spw-text-variant="editorial"], .spw-card[data-text-density="soft"], .spw-card[data-text-kind="prose"]) {
+  --card-internal-gap: 0.65rem;
+  --card-rhythm: clamp(0.7rem, 2.2cqi, 1.1rem);
+  padding: clamp(0.85rem, 2.8cqi, 1.4rem);
+  line-height: 1.64;
+  border-color: color-mix(in srgb, var(--line) 82%, var(--component-accent, var(--teal)) 18%);
+}
+
+:where(.spw-card[data-spw-text-variant="editorial"] p, .spw-card[data-text-kind="prose"] p) {
+  font-size: clamp(0.88rem, 1.9cqi, 0.98rem);
+  color: var(--ink-secondary, rgba(14, 18, 20, 0.78));
+}
+
+/* 3. Matrix / Register variant: dense specification, monospace precision, high containment */
+:where(.spw-card[data-spw-text-variant="matrix"], .spw-card[data-text-kind="operator-dense"]) {
+  --card-internal-gap: 0.28rem;
+  --card-rhythm: clamp(0.3rem, 1cqi, 0.5rem);
+  padding: clamp(0.55rem, 1.8cqi, 0.85rem);
+  background: color-mix(in srgb, var(--surface-code, #14171a) 4%, var(--card-bg, #fff));
+  border: 1px solid color-mix(in srgb, var(--line) 90%, var(--op-frame-color, var(--teal)) 10%);
+}
+
+:where(.spw-card[data-spw-text-variant="matrix"] .spw-card__header) {
+  border-bottom: 1px dashed color-mix(in srgb, var(--line) 60%, transparent);
+  padding-bottom: 0.25rem;
+  margin-bottom: 0.15rem;
+}
+
+/* 4. Ludic / Craft variant: spring physics transitions, playful borders, lively accents */
+:where(.spw-card[data-spw-text-variant="ludic"], :where([data-spw-climate="ludic"]) .spw-card) {
+  --card-internal-gap: 0.5rem;
+  transition:
+    transform calc(var(--duration-base, 200ms) * var(--spw-physics-mass, 1)) cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow calc(var(--duration-base, 200ms) * var(--spw-physics-mass, 1)) ease,
+    border-color var(--spw-control-transition-fast, 120ms ease);
+}
+
+:where(.spw-card[data-spw-text-variant="ludic"]:hover, :where([data-spw-climate="ludic"]) .spw-card:hover) {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--component-accent, var(--teal)) 14%, transparent);
 }
 
 /* Screenshot-utility defaults for reference-style token/spec cards across the site.

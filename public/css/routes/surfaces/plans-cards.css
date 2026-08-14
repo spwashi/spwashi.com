@@ -6,13 +6,13 @@
    5. Plans grid and plan cards
    ========================================================================== */
 
-[data-spw-surface="plans"] .plans-grid {
+[data-spw-surface="plans"] :is(.spw-grid, .plans-grid) {
   display: grid;
   gap: 1rem;
   margin-top: 1.35rem;
 }
 
-[data-spw-surface="plans"] .plan-card {
+[data-spw-surface="plans"] :is(.spw-card, .plan-card) {
   position: relative;
   overflow: hidden;
   border: 1px solid color-mix(in srgb, var(--plans-line) 96%, transparent);
@@ -31,7 +31,7 @@
     background-color var(--duration-fast, 140ms) var(--ease-mechanical, ease);
 }
 
-[data-spw-surface="plans"] .plan-card::before {
+[data-spw-surface="plans"] :is(.spw-card, .plan-card)::before {
   content: "";
   position: absolute;
   inset: 0 auto 0 0;
@@ -40,32 +40,32 @@
   opacity: 0.92;
 }
 
-[data-spw-surface="plans"] .plan-card[data-plan-stage="foundation"]::before {
+[data-spw-surface="plans"] :is(.spw-card, .plan-card)[data-plan-stage="foundation"]::before {
   background: color-mix(in srgb, var(--plans-stage-foundation-ink) 76%, transparent);
 }
 
-[data-spw-surface="plans"] .plan-card[data-plan-stage="active"]::before {
+[data-spw-surface="plans"] :is(.spw-card, .plan-card)[data-plan-stage="active"]::before {
   background: color-mix(in srgb, var(--plans-stage-active-ink) 76%, transparent);
 }
 
-[data-spw-surface="plans"] .plan-card[data-plan-stage="planning"]::before {
+[data-spw-surface="plans"] :is(.spw-card, .plan-card)[data-plan-stage="planning"]::before {
   background: color-mix(in srgb, var(--plans-stage-planning-ink) 76%, transparent);
 }
 
-[data-spw-surface="plans"] .plan-card[data-plan-stage="implemented"]::before {
+[data-spw-surface="plans"] :is(.spw-card, .plan-card)[data-plan-stage="implemented"]::before {
   background: color-mix(in srgb, var(--plans-stage-foundation-ink) 62%, transparent);
 }
 
-[data-spw-surface="plans"] .plan-card[data-plan-stage="merged"]::before {
+[data-spw-surface="plans"] :is(.spw-card, .plan-card)[data-plan-stage="merged"]::before {
   background: color-mix(in srgb, var(--plans-ink-faint) 72%, transparent);
 }
 
-[data-spw-surface="plans"] .plan-card[data-plan-stage="split"]::before {
+[data-spw-surface="plans"] :is(.spw-card, .plan-card)[data-plan-stage="split"]::before {
   background: color-mix(in srgb, var(--plans-accent-3) 66%, transparent);
 }
 
-[data-spw-surface="plans"] .plan-card:hover,
-[data-spw-surface="plans"] .plan-card:focus-within {
+[data-spw-surface="plans"] :is(.spw-card, .plan-card):hover,
+[data-spw-surface="plans"] :is(.spw-card, .plan-card):focus-within {
   border-color: color-mix(in srgb, var(--plans-accent) 20%, transparent);
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--plans-accent) 8%, transparent),
@@ -73,7 +73,7 @@
   transform: translateY(-1px);
 }
 
-[data-spw-surface="plans"] .plan-card > * {
+[data-spw-surface="plans"] :is(.spw-card, .plan-card) > * {
   position: relative;
   z-index: 1;
 }

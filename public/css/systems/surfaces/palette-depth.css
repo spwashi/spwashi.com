@@ -39,6 +39,53 @@
   );
 }
 
+/* ==========================================================================
+   Phase-Field Planes & Cauldron Spell Perceptual Bias
+   --------------------------------------------------------------------------
+   Semantic planes mapped to the thermodynamic / morphogenetic continuum:
+   - Ground Metric Plane (coordinate bounds, mass, invariant frame #>)
+   - Fluid Flux Plane (vector flow, transition potential ~)
+   - Plastic Morphogenetic Plane (adaptive matter, interaction commit @ !)
+   - Crystalline Lattice Plane (order parameter, discrete symmetry ^)
+   - Radiant Plasma Plane (entropy, probability density, wonder ?)
+   - Topological Membrane Plane (interfaces, semantic envelopes < >)
+   ========================================================================== */
+
+/* Cauldron Phase-Condensate Perceptual Tint on <html> */
+html[data-spw-cauldron-phase="radiant"] {
+  --spw-spell-perceptual-tint: var(--op-probe-color, hsl(268 54% 44%));
+  --spw-regional-lighting-bias: 1.15;
+}
+html[data-spw-cauldron-phase="fluid"] {
+  --spw-spell-perceptual-tint: var(--op-ref-color, hsl(214 66% 40%));
+  --spw-regional-lighting-bias: 1.08;
+}
+html[data-spw-cauldron-phase="plastic"] {
+  --spw-spell-perceptual-tint: var(--op-action-color, hsl(176 74% 24%));
+  --spw-regional-lighting-bias: 1.12;
+}
+html[data-spw-cauldron-phase="lattice"] {
+  --spw-spell-perceptual-tint: var(--op-object-color, hsl(36 82% 38%));
+  --spw-regional-lighting-bias: 1.06;
+}
+html[data-spw-cauldron-phase="ground"] {
+  --spw-spell-perceptual-tint: var(--op-frame-color, hsl(180 74% 28%));
+  --spw-regional-lighting-bias: 1.04;
+}
+html[data-spw-cauldron-phase="membrane"] {
+  --spw-spell-perceptual-tint: var(--op-topic-color, hsl(168 62% 30%));
+  --spw-regional-lighting-bias: 1.10;
+}
+
+/* Regional Activation Atmosphere */
+:where(section[data-spw-region], [data-spw-kind="region"], .site-frame):is(:focus-within, [data-state~="active"], [data-spw-active="true"]) {
+  background-image: radial-gradient(
+    circle at var(--mouse-x, 50%) var(--mouse-y, 30%),
+    color-mix(in srgb, var(--spw-spell-perceptual-tint, var(--active-op-color)) calc(9% * var(--spw-regional-lighting-bias, 1)), transparent) 0%,
+    transparent 72%
+  );
+}
+
 html[data-spw-color-tuner="soft"] {
   --palette-depth-strength: 0.72;
   --pigment-lighting-guard: 0.22;
@@ -64,6 +111,18 @@ html:is([data-spw-palette-resonance="lattice"], [data-spw-palette-resonance="sof
 html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="math"]) {
   --spw-palette-depth-highlight: color-mix(in srgb, var(--spw-palette-probe-4) 20%, #fff 80%);
   --spw-palette-depth-shadow: color-mix(in srgb, var(--spw-palette-probe-3) 48%, #0d1218 52%);
+}
+
+html:is([data-spw-palette-resonance="ludic"], [data-spw-palette-resonance="play"]) {
+  --spw-palette-depth-mid: color-mix(in srgb, var(--spw-palette-probe-1) 50%, var(--spw-palette-probe-4) 50%);
+  --spw-palette-depth-wash: color-mix(in srgb, var(--spw-palette-probe-4) 14%, transparent);
+  --spw-palette-depth-glow: color-mix(in srgb, var(--spw-palette-probe-1) 24%, transparent);
+}
+
+html:is([data-spw-palette-resonance="studio"], [data-spw-palette-resonance="author"]) {
+  --spw-palette-depth-highlight: color-mix(in srgb, var(--spw-palette-probe-1) 28%, #fff 72%);
+  --spw-palette-depth-shadow: color-mix(in srgb, var(--spw-palette-probe-4) 42%, #141210 58%);
+  --spw-palette-depth-wash: color-mix(in srgb, var(--spw-palette-probe-1) 12%, transparent);
 }
 
 /* Theme pack atmospheric depth */

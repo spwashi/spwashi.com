@@ -19,6 +19,8 @@ export const CAULDRON_CONTRACT = Object.freeze({
     undo: 'Restore the previous gathering state',
     're-gather': 'Scroll to the cauldron and surface the last tended material',
     decompose: 'Reopen a saved spell as cauldron ingredients for editing',
+    share: 'Share gathering via Web Share API or copy as Spw expression',
+    copy: 'Copy gathering as inspectable Spw expression to clipboard',
   }),
   attributes: Object.freeze({
     host: 'data-spw-cauldron',
@@ -46,6 +48,12 @@ export const CAULDRON_CONTRACT = Object.freeze({
     visibility: 'data-spw-cauldron-visibility',
     chipCount: 'data-spw-cauldron-chip-count',
     chipPhase: 'data-spw-cauldron-chip-phase',
+    fixity: 'data-spw-fixity',
+    phaseState: 'data-spw-phase',
+    tangibility: 'data-spw-tangibility',
+    element: 'data-spw-element',
+    biome: 'data-spw-biome',
+    succession: 'data-spw-succession',
     /* Cross-cutting (shared with spellbook actions; see types/spw.d.ts):
        the vessel writes charge; cast/reset write discharge; checkpoint
        writes reference; restore/decompose write dereference. */
@@ -63,13 +71,8 @@ export const CAULDRON_CONTRACT = Object.freeze({
 });
 
 /* Cauldron state travels as one axis bundle (G1 grammar, 2026-07-03):
-   data-spw-cauldron-state="phase:mixing count:4 garden:tending".
-   Top-down: querySelectorAll('[data-spw-cauldron-state~="phase:mixing"]')
-   finds every vessel surface in that phase. Bottom-up: one glance at an
-   element's dataset tells its whole vessel story. The retired per-axis
-   attributes (-phase, -count, -force-count, ingredient-count) said the
-   same things in four places. */
-export const CAULDRON_STATE_AXES = Object.freeze(['phase', 'count', 'garden', 'resonance', 'collected', 'discoverability']);
+   data-spw-cauldron-state="phase:mixing count:4 garden:tending biome:prairie". */
+export const CAULDRON_STATE_AXES = Object.freeze(['phase', 'count', 'garden', 'resonance', 'collected', 'discoverability', 'biome', 'fixity', 'element', 'phaseState', 'tangibility']);
 
 /**
  * @typedef {Object} CauldronStateParts

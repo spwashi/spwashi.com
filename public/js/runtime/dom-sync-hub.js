@@ -58,6 +58,14 @@ const ATTRIBUTE_FILTER = Object.freeze([
   'data-site-settings-panel',
   'data-spw-anatomy',
   'data-spw-vocabulary',
+  'data-spw-space-variant',
+  'data-spw-vertical-gravity',
+  'data-spw-extent',
+  'data-spw-measure-band',
+  'data-spw-phase',
+  'data-spw-tangibility',
+  'data-spw-fixity',
+  'data-spw-cauldron-phase',
 ]);
 
 const tasks = new Map();

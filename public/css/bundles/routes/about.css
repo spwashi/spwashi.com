@@ -188,7 +188,7 @@ body[data-spw-surface="about"] {
    2. Generic frame tuning
    ========================================================================== */
 
-[data-spw-surface="about"] .site-frame {
+[data-spw-surface="about"] :is(.spw-frame, .site-frame) {
   border-color: color-mix(in srgb, var(--about-line) 96%, transparent);
   border-radius: var(--about-panel-radius);
   background:
@@ -200,7 +200,7 @@ body[data-spw-surface="about"] {
   color: var(--about-ink);
 }
 
-[data-spw-surface="about"] .site-frame:is(:hover, :focus-within) {
+[data-spw-surface="about"] :is(.spw-frame, .site-frame):is(:hover, :focus-within) {
   border-color: color-mix(in srgb, var(--about-accent) 18%, var(--about-line));
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.46),

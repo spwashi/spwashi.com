@@ -46,6 +46,7 @@
     data-spw-related-routes="/|/about/|/topics/craft/|/topics/software/|/play/|/blog/|/settings/|/recipes/mise-en-place/|/recipes/reduction/|/recipes/fermentation/|/topics/math/|/tools/">
 
 <a class="skip-link" href="#main-content">Skip to content</a>
+<spw-include src="section-handle"></spw-include>
 
 <spw-site-header
     current="Recipes"
@@ -62,36 +63,34 @@
       aria-labelledby="recipe-field-title">
 
     <section
-        class="site-frame site-hero site-hero--split-figure"
+        class="spw-frame spw-hero site-frame site-hero site-hero--split-figure"
         id="recipe-field"
         aria-labelledby="recipe-field-title"
         aria-describedby="recipe-field-note"
-        data-spw-kind="frame"
-        data-spw-role="orientation"
         data-spw-form="brace"
-        data-spw-liminality="entry"
+        data-spw-climate="garden"
+        data-spw-phase="plastic"
+        data-spw-tangibility="0.65"
+        data-spw-viscosity="0.60"
+        data-spw-coherence="0.55"
+        data-spw-fixity="stable"
+        data-spw-biome="kitchen"
+        data-spw-definition="recipe[cook]{mise.timing.execution} #:fixity #!stable"
+        data-spw-genome="brace:objective|sigil:*&quot;recipe_field&quot;|climate:garden|mode:cook|wonder:memory"
         data-spw-accent="flow"
         data-spw-accent-palette="warm"
-        data-spw-context="reading"
-        data-spw-wonder="orientation consequence resonance"
-        data-spw-affordance="orient"
-        data-spw-category-family="register"
-        data-spw-locality="high"
-        data-spw-consequence="framing"
-        data-spw-promptability="latent"
-        data-spw-collectability="some"
         data-spw-feature="recipe-field-entry"
-        data-spw-attentional-weight="1.25"
-        data-spw-gradient-boundary="hard"
-        data-spw-composition-stability="anchored"
-        data-spw-seed="page_recipes_recipes__recipe_field"
-        data-spw-context-relevance="recipes culinary culture composition garden research illustration blogging"
-        data-spw-copy-motifs="mise-en-place heat season garden share"
-        data-spw-materiality="kitchen-garden-print-lab"
-        data-spw-region-purpose="public-spine"
-        data-spw-region-role="entry-spine">
+        data-spw-wonder="orientation consequence resonance"
+        data-spw-related-routes="/|/about/|/topics/craft/|/topics/software/|/play/|/blog/|/settings/|/recipes/mise-en-place/">
         <div class="frame-topline" data-spw-slot="header">
+            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
             <a class="frame-sigil" href="#recipe-field">*"recipe_field"</a>
+            <div class="mode-switch" role="group" aria-label="Recipe perspective lens" data-spw-feature="recipe-perspective-lens">
+                <button type="button" class="frame-sigil" data-mode-group="recipe-lens" data-set-mode="cook" aria-pressed="true" data-spw-operator="select">.cook</button>
+                <button type="button" class="frame-sigil" data-mode-group="recipe-lens" data-set-mode="theory" aria-pressed="false" data-spw-operator="select">^theory</button>
+                <button type="button" class="frame-sigil" data-mode-group="recipe-lens" data-set-mode="garden" aria-pressed="false" data-spw-operator="select">~garden</button>
+                <button type="button" class="frame-sigil" data-mode-group="recipe-lens" data-set-mode="hospitality" aria-pressed="false" data-spw-operator="select">@hospitality</button>
+            </div>
             <div class="spec-strip" data-spw-box-model="spec-strip" data-spw-composition-flow="inline-wrap">
                 <span class="spec-pill">culinary culture</span>
                 <span class="spec-pill">composition fundamentals</span>
@@ -103,10 +102,58 @@
         </div>
 
         <div class="recipe-hero-copy" data-spw-slot="body">
-            <p class="page-kicker">recipes • composition • sensory research • SVG • gardening • hosting • public
-                culture</p>
+            <p class="page-kicker">recipes • composition • sensory research • SVG • gardening • hosting • public culture</p>
             <h1 id="recipe-field-title">Recipes as a public kitchen for culture, composition, and shared wonder.</h1>
-            <p class="spw-playable-hook">The kitchen is where abstraction has to smell right.</p>
+            <div
+                class="hook-call"
+                id="recipe-hook"
+                data-spw-kind="hook"
+                data-spw-role="call"
+                data-spw-liminality="entry"
+                aria-label="Recipe entry hook"
+            >
+                <div class="mode-panels" data-spw-feature="recipe-perspective-panels">
+                    <section class="mode-panel" data-mode-group="recipe-lens" data-mode-panel="cook" data-spw-role="orientation" data-spw-kind="lens">
+                        <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="recipe[cook]{mise.timing.execution}">
+                            The kitchen is where abstraction has to smell right.
+                        </p>
+                        <p class="hook-sub">
+                            <span data-spw-perspective="objective">Holds:</span> stepwise execution, pantry inventory, prep readiness, and heat control.
+                            <span data-spw-perspective="subjective">First move:</span> explore <a class="operator-chip" href="/recipes/mise-en-place/" data-spw-operator="route">#&gt;mise_en_place</a> or study <a class="operator-chip" href="/recipes/reduction/" data-spw-operator="action">~reduction</a>.
+                        </p>
+                    </section>
+                    <section class="mode-panel" data-mode-group="recipe-lens" data-mode-panel="theory" data-spw-role="schema" data-spw-kind="lens" hidden>
+                        <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="recipe[theory]{flavor.chemistry.grammar}">
+                            <span class="spw-living-term" data-spw-living-term data-spw-concept="flavor-grammar" tabindex="0">^theory</span>: Cooking as a developable expertise domain and compositional grammar.
+                        </p>
+                        <p class="hook-sub">
+                            <span data-spw-perspective="objective">Holds:</span> acid/fat balance, fermentation curves, and compression algorithms.
+                            <span data-spw-perspective="subjective">First move:</span> inspect <a class="operator-chip" href="/recipes/fermentation/" data-spw-operator="potential">~fermentation</a> or read <a class="operator-chip" href="/topics/craft/" data-spw-operator="concept">&lt;author_craft&gt;</a>.
+                        </p>
+                    </section>
+                    <section class="mode-panel" data-mode-group="recipe-lens" data-mode-panel="garden" data-spw-role="projection" data-spw-kind="lens" hidden>
+                        <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="recipe[garden]{soil.companion.season}">
+                            <span class="spw-living-term" data-spw-living-term data-spw-concept="garden-soil" tabindex="0">~garden</span>: Soil fertility, companion planting, and direct-from-earth flavor profiles.
+                        </p>
+                        <p class="hook-sub">
+                            <span data-spw-perspective="objective">Holds:</span> root length, nitrogen fixing, seasonal harvesting, and botanical drawing.
+                            <span data-spw-perspective="subjective">First move:</span> check garden notes below or visit <a class="operator-chip" href="/topics/craft/svg/" data-spw-operator="integrate">^svg_storytelling</a>.
+                        </p>
+                    </section>
+                    <section class="mode-panel" data-mode-group="recipe-lens" data-mode-panel="hospitality" data-spw-role="scenario" data-spw-kind="lens" hidden>
+                        <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="recipe[hospitality]{service.pacing.room}">
+                            <span class="spw-living-term" data-spw-living-term data-spw-concept="hospitality-service" tabindex="0">@hospitality</span>: Room reading, service pacing, and turning meals into shared culture.
+                        </p>
+                        <p class="hook-sub">
+                            <span data-spw-perspective="objective">Holds:</span> entertainment venue horizon, table repair, and collaborative hosting.
+                            <span data-spw-perspective="subjective">First move:</span> read <a class="operator-chip" href="/about/" data-spw-operator="frame">#&gt;about_spwashi</a> or see <a class="operator-chip" href="/now/" data-spw-operator="action">!current_work</a>.
+                        </p>
+                    </section>
+                </div>
+                <p class="hook-invitation">
+                    Use <kbd>[</kbd> / <kbd>]</kbd> to cycle culinary perspective lenses.
+                </p>
+            </div>
             <ul class="spw-copy-motif-strip" aria-label="Recipes copy motifs" data-spw-box-model="motif-strip" data-spw-composition-flow="inline-wrap">
                 <li>mise en place</li>
                 <li>heat</li>

@@ -68,7 +68,7 @@
   --spw-debug-layer-color: #d23669;
 
   /* Local tokens */
-  --material-depth-opacity: var(--material-depth-opacity-2);
+  --material-depth-opacity: calc(0.72 + (0.26 * var(--spw-tangibility, 0.5)));
   --material-local-surface:
     color-mix(
       in oklab,
@@ -76,8 +76,10 @@
       transparent
     );
   --material-local-background: var(--material-local-surface);
-  --material-local-border-color: var(--material-line);
+  --material-local-border-color: color-mix(in oklab, var(--material-line) calc(100% * var(--spw-coherence, 0.5)), var(--material-prime-color) calc(18% * (1 - var(--spw-coherence, 0.5))));
   --material-local-shadow: var(--material-shadow-rest);
+  --material-local-duration-base: calc(140ms + (240ms * var(--spw-viscosity, 0.3)));
+  --material-local-duration-fast: calc(90ms + (120ms * var(--spw-viscosity, 0.3)));
 
   /* Typography */
   color: var(--material-ink);
@@ -88,34 +90,38 @@
   outline: 1px solid transparent;
   outline-offset: 2px;
   box-shadow:
+    var(--material-highlight-inset),
     var(--material-local-shadow),
     var(--interaction-glow);
 
   /* Interaction */
   transition:
-    transform    var(--material-duration-fast) var(--material-lift-ease),
-    box-shadow   var(--material-duration-base) var(--material-settle-ease),
-    border-color var(--material-duration-base) var(--material-glide-ease),
-    background   var(--material-duration-base) var(--material-glide-ease),
-    color        var(--material-duration-fast) var(--material-glide-ease),
-    outline-color var(--material-duration-fast) var(--material-glide-ease);
+    transform    var(--material-local-duration-fast) var(--material-lift-ease),
+    box-shadow   var(--material-local-duration-base) var(--material-settle-ease),
+    border-color var(--material-local-duration-base) var(--material-glide-ease),
+    background   var(--material-local-duration-base) var(--material-glide-ease),
+    color        var(--material-local-duration-fast) var(--material-glide-ease),
+    outline-color var(--material-local-duration-fast) var(--material-glide-ease);
 
   &:hover {
     --interaction-excitement: 0.08;
-    --material-local-border-color: color-mix(in oklab, var(--material-prime-color) 18%, var(--material-line));
+    --material-local-border-color: color-mix(in oklab, var(--material-prime-color) 24%, var(--material-line));
   }
 
-  &:focus-visible {
+  &:focus-visible,
+  &:focus-within {
     --interaction-excitement: 0.16;
-    --material-local-border-color: color-mix(in oklab, var(--material-prime-color) 30%, var(--material-line));
+    --material-local-border-color: color-mix(in oklab, var(--material-prime-color) 38%, var(--material-line));
     outline-color: color-mix(in oklab, var(--material-prime-color) 28%, transparent);
   }
 
-  &[data-state~="active"] {
+  &[data-state~="active"],
+  &[data-spw-active="true"] {
     --interaction-excitement: 0.24;
-    --material-local-border-color: color-mix(in oklab, var(--material-prime-color) 34%, var(--material-line));
+    --material-local-border-color: color-mix(in oklab, var(--material-prime-color) 44%, var(--material-line));
     --material-local-shadow: var(--material-shadow-lift);
-    --interaction-glow: 0 0 0 1px color-mix(in oklab, var(--material-prime-color) 12%, transparent);
+    --interaction-glow: 0 0 0 1px color-mix(in oklab, var(--material-prime-color) 16%, transparent),
+      0 4px 20px -2px color-mix(in oklab, var(--material-prime-color) calc(14% * var(--spw-regional-lighting-bias, 1)), transparent);
   }
 
   &[data-spw-attention="dimmed"] {

@@ -64,6 +64,7 @@
 @spw_serialization_hydration: ~"./spw-serialization-hydration.spw"  # Spw serialization architecture, two-way projection, and progressive kinetic hydration
 @surface_interaction_combinatorics: ~"./surface-interaction-combinatorics.spw"  # Combinatorics across scroll, tap, drag, hover, and swipe channels
 @component_biome: ~"./component-biome.spw"  # components as land features; light, canopy, exchange, succession
+@material_physics: ~"./material-physics.spw"  # what a surface does with the light canopy delivers
 @wonder_vocabulary: ~"./wonder-vocabulary.spw"
 @page_anatomy_vocabulary: ~"./page-anatomy-vocabulary.spw"
 @page_template_authoring: ~"./page-template-authoring.spw"

@@ -265,12 +265,19 @@ function paintSalience(expression) {
   }
 }
 
+let projectionSeeds = null;
+
+export function getProjectionSeeds() {
+  return projectionSeeds;
+}
+
 export async function initExpressionResonance(ctx = {}) {
   if (typeof document === 'undefined') return () => {};
 
   try {
     const module = await import('/public/js/generated/spw-expressions.js');
     manifest = module.SPW_EXPRESSION_MANIFEST;
+    projectionSeeds = module.SPW_PROJECTION_SEEDS || null;
   } catch {
     // No manifest built — the page keeps working, which is the whole bargain.
     return () => {};

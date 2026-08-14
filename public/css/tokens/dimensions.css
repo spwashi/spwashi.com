@@ -33,6 +33,13 @@
   --spw-pack-pad-active: var(--spw-component-pad, 0.9rem);
   --spw-pack-gap-active: var(--component-gap, 0.9rem);
 
+  /* Fluid container coordinate system (derived from cqi) */
+  --spw-space-fluid: clamp(0.75rem, 2cqi, 1.25rem);
+  --spw-space-fluid-sm: clamp(0.5rem, 1.5cqi, 0.85rem);
+  --spw-space-fluid-lg: clamp(1rem, 3cqi, 1.75rem);
+  --spw-card-pad: clamp(0.75rem, 2.5cqi, 1.2rem);
+  --spw-card-rhythm: clamp(0.5rem, 1.8cqi, 0.85rem);
+
   /* ------------------------------------------------------------------------
      Temporal — positioning phases (salience direction + page ecology)
      ------------------------------------------------------------------------ */
@@ -49,6 +56,16 @@
   --spw-pre-state-fill-mix: 0.08;
   --spw-pre-state-line-mix: 0.18;
   --spw-pre-state-ink-mix: 0.62;
+
+  /* ------------------------------------------------------------------------
+     Thermodynamic Continuum — phase order parameters & substrate physics
+     tau in [0, 1] (tangibility), eta in [0, 1] (viscosity), kappa in [0, 1] (coherence)
+     ------------------------------------------------------------------------ */
+  --spw-tangibility: 0.5;
+  --spw-viscosity: 0.3;
+  --spw-coherence: 0.5;
+  --spw-edge-tension: 0;
+  --spw-phase-default: ground;
 
   /* ------------------------------------------------------------------------
      Color layering — theme-agnostic stack aliases (spend fill/ink/line/rest)

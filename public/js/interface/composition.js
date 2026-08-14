@@ -48,7 +48,7 @@ import {
   syncFloatingChip,
 } from './cauldron/chrome.js';
 import { deriveNumericityQuantifiers, isNumericalConcept, parseNumericalValue } from './cauldron/helpers.js';
-import { escapeHtml, getCauldron, inferOperator, normalizeIngredient, readSigilPayload, toSpwExpression } from './cauldron/storage.js';
+import { broadcastCauldronSync, escapeHtml, getCauldron, inferOperator, normalizeIngredient, readSigilPayload, toSpwExpression } from './cauldron/storage.js';
 import { cauldronTrace, recordGestureTrace, recordPlantedTrail } from './cauldron/trace.js';
 import {
   clearMixOutputState,
@@ -235,6 +235,42 @@ function handleCauldronUIActions(e) {
       } catch (_) {}
       // Navigate to Midjourney bench (it will check for the pending seed on load)
       window.location.href = '/tools/midjourney/#reference-packets';
+    }
+    e.preventDefault();
+  }
+
+  const shareBtn = e.target.closest('[data-spw-cauldron-action="share"]');
+  const copyBtn = e.target.closest('[data-spw-cauldron-action="copy"]');
+  if (shareBtn || copyBtn) {
+    const ingredients = getCauldron();
+    if (ingredients.length) {
+      const expr = ingredients.map((i) => i.expression).join(' + ');
+      const spwSignature = `spell[cauldron]{${expr}}`;
+      const shareData = {
+        title: 'Spw Cauldron Spell',
+        text: `Spw Cauldron Spell: ${spwSignature}\nGathered from: ${window.location.href}`,
+        url: window.location.href,
+      };
+
+      if (shareBtn && typeof navigator.share === 'function') {
+        navigator.share(shareData).catch(() => {
+          if (navigator.clipboard?.writeText) {
+            navigator.clipboard.writeText(spwSignature);
+          }
+        });
+        flashCauldronAction(shareBtn, 'shared');
+      } else if (navigator.clipboard?.writeText) {
+        navigator.clipboard.writeText(spwSignature);
+        const targetBtn = shareBtn || copyBtn;
+        if (targetBtn) flashCauldronAction(targetBtn, 'copied');
+      }
+
+      if (typeof navigator.vibrate === 'function') {
+        try { navigator.vibrate([15, 30, 15]); } catch {}
+      }
+
+      pulseCauldronFeedback('share');
+      announceCauldronStatus(`Shared gathering: ${spwSignature}`);
     }
     e.preventDefault();
   }
@@ -694,6 +730,12 @@ function saveCauldron(cauldron, options = {}) {
   }
 
   localStorage.setItem(CAULDRON_CONTRACT.storageKey, serialized);
+  broadcastCauldronSync();
+
+  if (typeof navigator.vibrate === 'function') {
+    try { navigator.vibrate(12); } catch {}
+  }
+
   syncCauldronState();
   bus.emit('cauldron:updated', {
     count: trimmed.length,

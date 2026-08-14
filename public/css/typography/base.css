@@ -51,13 +51,14 @@
 }
 
 /* ==========================================================================
-   2. Heading Hierarchy
+   2. Heading & Subheading Hierarchy
    ========================================================================== */
 
 :where(h1, h2, h3, h4, h5, h6) {
   margin: 0;
-  color: var(--ink-strong, #090b0c);
+  color: color-mix(in srgb, var(--ink-strong, #090b0c) 94%, var(--active-op-color, var(--teal, #008080)) 6%);
   font-family: var(--site-sans-font, system-ui, sans-serif);
+  font-feature-settings: "kern" 1, "liga" 1, "cv05" 1, "cv11" 1;
   line-height: 1.18;
   letter-spacing: -0.02em;
   text-wrap: balance;
@@ -74,30 +75,33 @@
 /* Ranked air before headings — lower ranks sit closer to prior prose. */
 :where(h1) {
   --spw-heading-flow-space-multiplier: 1.75;
-  font-size: clamp(2rem, 5vw, 3rem);
+  font-size: clamp(2rem, 5vw, 3.15rem);
   font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1.12;
+  letter-spacing: -0.034em;
+  line-height: 1.1;
   max-inline-size: min(100%, calc(var(--spw-real-estate-inline, var(--measure-reading, 68ch)) * var(--spw-typography-rank-1, 1)));
 }
 :where(h2) {
   --spw-heading-flow-space-multiplier: 1.55;
-  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-size: clamp(1.5rem, 4vw, 2.05rem);
   font-weight: 700;
-  line-height: 1.16;
+  letter-spacing: -0.026em;
+  line-height: 1.15;
   max-inline-size: min(100%, calc(var(--spw-real-estate-inline, var(--measure-reading, 68ch)) * var(--spw-typography-rank-2, 0.88)));
 }
 :where(h3) {
   --spw-heading-flow-space-multiplier: 1.35;
-  font-size: clamp(1.25rem, 3vw, 1.5rem);
+  font-size: clamp(1.25rem, 3vw, 1.52rem);
   font-weight: 600;
+  letter-spacing: -0.018em;
   line-height: 1.22;
   max-inline-size: min(100%, calc(var(--spw-real-estate-inline, var(--measure-panel, 52ch)) * var(--spw-typography-rank-3, 0.76)));
 }
 :where(h4) {
   --spw-heading-flow-space-multiplier: 1.2;
-  font-size: clamp(1.1rem, 2vw, 1.25rem);
+  font-size: clamp(1.1rem, 2vw, 1.26rem);
   font-weight: 600;
+  letter-spacing: -0.012em;
   line-height: 1.28;
   max-inline-size: min(100%, calc(var(--spw-real-estate-inline, var(--measure-panel, 52ch)) * var(--spw-typography-rank-4, 0.64)));
 }
@@ -105,16 +109,28 @@
   --spw-heading-flow-space-multiplier: 1.1;
   font-size: 1rem;
   font-weight: 600;
+  letter-spacing: 0;
   line-height: 1.32;
 }
 :where(h6) {
   --spw-heading-flow-space-multiplier: 1;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 700;
   line-height: 1.35;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.065em;
   color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+}
+
+/* Subheadings */
+:where(.subheading, .page-subheading, .site-subheading, .frame-subheading, p.subheading) {
+  font-size: clamp(1.12rem, 1.05rem + 0.25vw, 1.32rem);
+  font-weight: 450;
+  line-height: 1.42;
+  letter-spacing: -0.014em;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.76));
+  max-inline-size: min(100%, var(--measure-reading, 68ch));
+  text-wrap: pretty;
 }
 
 /* Title stack: kicker/subtitle should hug the heading above content. */
@@ -122,11 +138,57 @@
   .spec-kicker + :is(h1, h2, h3),
   .page-kicker + :is(h1, h2, h3),
   .section-kicker + :is(h1, h2, h3),
+  .hero-kicker + :is(h1, h2, h3),
   h1 + h2,
   h2 + h3,
-  h3 + h4
+  h3 + h4,
+  h1 + :is(.subheading, .page-subheading, .site-subheading),
+  h2 + :is(.subheading, .page-subheading, .site-subheading)
 ) {
   margin-block-start: calc(var(--flow-space, 1rem) * 0.28);
+}
+
+/* Ledes / Opening Statements */
+:where(.site-lede, .page-lede, .frame-lede, .plan-thesis) {
+  font-size: clamp(1.12rem, 1.04rem + 0.22vw, 1.28rem);
+  line-height: 1.56;
+  letter-spacing: -0.012em;
+  color: color-mix(in srgb, var(--ink, #161c1d) 92%, var(--ink-soft, rgba(14, 18, 20, 0.68)) 8%);
+  max-inline-size: min(100%, var(--measure-reading, 68ch));
+  text-wrap: pretty;
+}
+
+/* Bylines & Metadata Bars */
+:where(.byline, .site-byline, .author-byline, .entry-byline, .plan-byline, .meta-byline) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-xs, 0.5rem);
+  font-size: var(--text-size-label, 0.76rem);
+  font-weight: 500;
+  letter-spacing: var(--tracking-spec, 0.055em);
+  text-transform: uppercase;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  line-height: 1.4;
+  margin-block-start: calc(var(--flow-space, 1rem) * 0.4);
+}
+
+:where(.byline, .site-byline, .author-byline, .entry-byline, .plan-byline, .meta-byline) :where(a) {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 30%, transparent);
+  text-underline-offset: 0.2em;
+}
+
+:where(.byline, .site-byline, .author-byline, .entry-byline, .plan-byline, .meta-byline) :where(a:is(:hover, :focus-visible)) {
+  color: var(--active-op-color, var(--teal, #008080));
+  text-decoration-color: var(--active-op-color, var(--teal, #008080));
+}
+
+:where(.byline-dot, .meta-dot) {
+  display: inline-block;
+  opacity: 0.45;
+  color: var(--active-op-color, var(--teal, #008080));
 }
 
 /* In prose/article flow, a heading after body copy needs a clearer break. */
@@ -229,31 +291,82 @@
 }
 
 :where(strong, b) {
-  font-weight: 700;
-  color: var(--ink-strong, #090b0c);
+  font-weight: 650;
+  color: color-mix(in srgb, var(--ink-strong, #090b0c) 96%, var(--active-op-color, var(--teal, #008080)) 4%);
+  letter-spacing: -0.01em;
 }
 
 :where(em, i) {
   font-style: italic;
+  color: color-mix(in srgb, var(--ink, #161c1d) 92%, var(--active-op-color, var(--teal, #008080)) 8%);
 }
 
 :where(mark) {
-  background: var(--active-op-bg-soft, rgba(0, 128, 128, 0.12));
+  background: color-mix(in srgb, var(--active-op-bg-soft, rgba(0, 128, 128, 0.12)) 80%, rgba(255, 238, 180, 0.45));
   color: inherit;
-  padding: 0.1em 0.3em;
+  padding: 0.1em 0.35em;
   border-radius: 3px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
 }
 
 :where(del) {
   text-decoration: line-through;
-  opacity: 0.6;
+  opacity: 0.55;
 }
 
+/* Living terms & semantic vocabulary */
+:where(.spw-living-term, [data-spw-living-term]) {
+  font-weight: 600;
+  color: color-mix(in srgb, var(--ink-strong, #090b0c) 88%, var(--active-op-color, var(--teal, #008080)) 12%);
+  border-bottom: 1.5px dashed color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 45%, transparent);
+  cursor: pointer;
+  padding-block-end: 1px;
+  border-radius: 2px;
+  transition:
+    border-color var(--duration-fast, 140ms) var(--ease-mechanical, ease),
+    color var(--duration-fast, 140ms) var(--ease-mechanical, ease),
+    background-color var(--duration-fast, 140ms) var(--ease-mechanical, ease);
+}
+
+:where(.spw-living-term, [data-spw-living-term]):is(:hover, :focus-visible) {
+  color: var(--active-op-color, var(--teal, #008080));
+  border-bottom-color: var(--active-op-color, var(--teal, #008080));
+  border-bottom-style: solid;
+  outline: none;
+}
+
+:where([data-spw-vocab]) {
+  font-weight: 550;
+  color: color-mix(in srgb, var(--ink-strong, #090b0c) 92%, var(--active-op-color, var(--teal, #008080)) 8%);
+}
+
+/* Editorial Links */
 :where(a:any-link) {
   --spw-link-visited-color:
     color-mix(in oklab, var(--ink, #161c1d) 68%, var(--active-op-color, #008080) 32%);
   --spw-link-grounded-color:
     color-mix(in oklab, var(--ink, #161c1d) 82%, var(--active-op-color, #008080) 18%);
+}
+
+:where(p, li, blockquote, dd, figcaption, .frame-copy, .site-lede, .page-lede, .frame-note) a:not(.operator-chip):not(.frame-sigil):not(.frame-card-sigil):not(.badge):not(.tag):not(.pill):not(.cauldron-instruction-link):not(.button) {
+  color: color-mix(in srgb, var(--ink-strong, #090b0c) 84%, var(--active-op-color, var(--teal, #008080)) 16%);
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.24em;
+  text-decoration-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 35%, transparent);
+  text-decoration-skip-ink: auto;
+  border-radius: 2px;
+  transition:
+    color var(--duration-fast, 140ms) var(--ease-mechanical, ease),
+    text-decoration-color var(--duration-fast, 140ms) var(--ease-mechanical, ease),
+    background-color var(--duration-fast, 140ms) var(--ease-mechanical, ease);
+}
+
+:where(p, li, blockquote, dd, figcaption, .frame-copy, .site-lede, .page-lede, .frame-note) a:not(.operator-chip):not(.frame-sigil):not(.frame-card-sigil):not(.badge):not(.tag):not(.pill):not(.cauldron-instruction-link):not(.button):is(:hover, :focus-visible) {
+  color: var(--active-op-color, var(--teal, #008080));
+  text-decoration-color: var(--active-op-color, var(--teal, #008080));
+  text-decoration-thickness: 2px;
 }
 
 :where(a:visited):not(.operator-chip):not(.frame-sigil):not(.frame-card-sigil):not(.header-sigil) {

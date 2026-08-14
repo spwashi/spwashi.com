@@ -86,6 +86,10 @@ html:has(body[data-spw-page-family])::before {
        html:has(body[data-spw-page-family="coordination"]),
        html:has(body[data-spw-page-family="policy"]),
        html:has(body[data-spw-page-family="membership"])) {
+  --spw-tangibility: 0.95;
+  --spw-viscosity: 0.50;
+  --spw-coherence: 0.90;
+  --spw-phase-default: ground;
   --spw-paper-motif-image:
     image-set(
       url('/public/images/assets/illustrations/papergami-architecture-display.avif') type('image/avif'),
@@ -105,6 +109,10 @@ html:has(body[data-spw-page-family])::before {
        html:has(body[data-spw-page-family="folio-archive"]),
        html:has(body[data-spw-page-family="town-library"]),
        html:has(body[data-spw-page-family="roadmap"])) {
+  --spw-tangibility: 0.75;
+  --spw-viscosity: 0.35;
+  --spw-coherence: 0.80;
+  --spw-phase-default: lattice;
   --spw-paper-motif-image:
     image-set(
       url('/public/images/assets/illustrations/papergami-collage-display.avif') type('image/avif'),
@@ -119,6 +127,11 @@ html:has(body[data-spw-page-family])::before {
        html:has(body[data-spw-page-family="experiment-lab"]),
        html:has(body[data-spw-page-family="workshop"]),
        html:has(body[data-spw-page-family="proof-cards"])) {
+  --spw-tangibility: 0.40;
+  --spw-viscosity: 0.15;
+  --spw-coherence: 0.70;
+  --spw-regional-lighting-bias: 1.25;
+  --spw-phase-default: radiant;
   --spw-paper-motif-image:
     image-set(
       url('/public/images/assets/illustrations/papergami-cubes-display.avif') type('image/avif'),
@@ -133,6 +146,10 @@ html:has(body[data-spw-page-family])::before {
        html:has(body[data-spw-page-family="care-interface"]),
        html:has(body[data-spw-page-family="practice-bed"]),
        html:has(body[data-spw-page-family="studio"])) {
+  --spw-tangibility: 0.65;
+  --spw-viscosity: 0.60;
+  --spw-coherence: 0.55;
+  --spw-phase-default: plastic;
   --spw-paper-motif-image:
     image-set(
       url('/public/images/assets/illustrations/papergami-botanical-display.avif') type('image/avif'),
@@ -150,6 +167,10 @@ html:has(body[data-spw-page-family])::before {
        html:has(body[data-spw-page-family="topic"]),
        html:has(body[data-spw-page-family="topic-hub"]),
        html:has(body[data-spw-page-family="topic-stub"])) {
+  --spw-tangibility: 0.35;
+  --spw-viscosity: 0.25;
+  --spw-coherence: 0.60;
+  --spw-phase-default: fluid;
   --spw-paper-motif-image:
     image-set(
       url('/public/images/assets/illustrations/papergami-kinetic-display.avif') type('image/avif'),
@@ -162,6 +183,10 @@ html:has(body[data-spw-page-family])::before {
        html:has(body[data-spw-page-family="ontology"]),
        html:has(body[data-spw-page-family="logic"]),
        html:has(body[data-spw-page-family="concept"])) {
+  --spw-tangibility: 0.50;
+  --spw-viscosity: 0.40;
+  --spw-coherence: 0.85;
+  --spw-phase-default: membrane;
   --spw-paper-motif-image:
     image-set(
       url('/public/images/assets/illustrations/papergami-cognitive-display.avif') type('image/avif'),
@@ -175,6 +200,10 @@ html:has(body[data-spw-page-family])::before {
        html:has(body[data-spw-page-family="surface"]),
        html:has(body[data-spw-page-family="canvas"]),
        html:has(body[data-spw-page-family="grid"])) {
+  --spw-tangibility: 0.85;
+  --spw-viscosity: 0.45;
+  --spw-coherence: 0.88;
+  --spw-phase-default: ground;
   --spw-paper-motif-image:
     image-set(
       url('/public/images/assets/illustrations/papergami-layout-display.avif') type('image/avif'),

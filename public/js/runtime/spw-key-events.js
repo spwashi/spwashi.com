@@ -6,7 +6,8 @@
  */
 
 import { bus } from '/public/js/kernel/bus.js';
-import { writeDatasetValue } from '/public/js/kernel/dom-contracts.js';
+import { writeDatasetValue, writeStyleValue } from '/public/js/kernel/dom-contracts.js';
+import { isInputFocused } from '/public/js/kernel/shared.js';
 import { collapseText as normalizeText } from '/public/js/kernel/text-normalization.js';
 import { readMicrointeractionPulseMs } from './pulse-beat-tuner.js';
 
@@ -509,6 +510,183 @@ function resolveBindingId(key, target) {
   return 'global';
 }
 
+function collectNavigableOperators() {
+  const elements = Array.from(document.querySelectorAll(
+    'a.operator-chip[href], [data-spw-operator], a.spw-topic, span.spw-topic[tabindex], [data-spw-guide-badge]'
+  )).filter((el) => {
+    if (el.closest('[hidden]')) return false;
+    return el.offsetWidth > 0 && el.offsetHeight > 0;
+  });
+  return elements;
+}
+
+function traverseOperators(direction = 1) {
+  const operators = collectNavigableOperators();
+  if (!operators.length) return false;
+
+  const activeIndex = operators.indexOf(document.activeElement);
+  let nextIndex = 0;
+  if (activeIndex >= 0) {
+    nextIndex = (activeIndex + direction + operators.length) % operators.length;
+  } else {
+    nextIndex = direction > 0 ? 0 : operators.length - 1;
+  }
+
+  const nextEl = operators[nextIndex];
+  if (nextEl instanceof HTMLElement) {
+    if (!nextEl.hasAttribute('tabindex') && nextEl.tagName !== 'A' && nextEl.tagName !== 'BUTTON') {
+      nextEl.setAttribute('tabindex', '0');
+    }
+    nextEl.focus({ preventScroll: false });
+    nextEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    potentiateTarget(nextEl, {
+      key: direction > 0 ? 'j' : 'k',
+      binding: 'operator-step',
+      input: 'keyboard',
+    });
+    return true;
+  }
+  return false;
+}
+
+function collectNavigableFrames() {
+  return Array.from(document.querySelectorAll('.spw-frame, .site-frame')).filter((el) => {
+    if (el.closest('[hidden]')) return false;
+    return el.offsetWidth > 0 && el.offsetHeight > 0;
+  });
+}
+
+function traverseFrames(direction = 1) {
+  const frames = collectNavigableFrames();
+  if (!frames.length) return false;
+
+  const scrollY = window.scrollY + 120;
+  let currentIndex = -1;
+  for (let i = 0; i < frames.length; i++) {
+    const rect = frames[i].getBoundingClientRect();
+    const top = rect.top + window.scrollY;
+    if (top <= scrollY && top + rect.height > scrollY) {
+      currentIndex = i;
+      break;
+    }
+  }
+
+  let nextIndex = 0;
+  if (currentIndex >= 0) {
+    nextIndex = (currentIndex + direction + frames.length) % frames.length;
+  } else {
+    nextIndex = direction > 0 ? 0 : frames.length - 1;
+  }
+
+  const nextFrame = frames[nextIndex];
+  if (nextFrame instanceof HTMLElement) {
+    nextFrame.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const focusTarget = nextFrame.querySelector('a.frame-sigil, h1, h2, [data-spw-operator]') || nextFrame;
+    if (focusTarget instanceof HTMLElement) {
+      if (!focusTarget.hasAttribute('tabindex') && focusTarget.tagName !== 'A' && focusTarget.tagName !== 'BUTTON') {
+        focusTarget.setAttribute('tabindex', '-1');
+      }
+      focusTarget.focus({ preventScroll: true });
+    }
+    return true;
+  }
+  return false;
+}
+
+function cycleActiveFrameMode(direction = 1) {
+  const activeFrame = document.activeElement?.closest?.('.spw-frame, .site-frame')
+    || document.querySelector('.spw-frame:hover, .site-frame:hover')
+    || document.querySelector('.spw-frame, .site-frame');
+  if (!activeFrame) return false;
+
+  const modeButtons = Array.from(activeFrame.querySelectorAll('.mode-switch button, [data-set-mode]'));
+  if (modeButtons.length <= 1) return false;
+
+  const activeIndex = modeButtons.findIndex((btn) => btn.getAttribute('aria-pressed') === 'true');
+  let nextIndex = 0;
+  if (activeIndex >= 0) {
+    nextIndex = (activeIndex + direction + modeButtons.length) % modeButtons.length;
+  } else {
+    nextIndex = direction > 0 ? 0 : modeButtons.length - 1;
+  }
+
+  const nextBtn = modeButtons[nextIndex];
+  if (nextBtn instanceof HTMLElement) {
+    nextBtn.click();
+    nextBtn.focus();
+    return true;
+  }
+  return false;
+}
+
+const DENSITY_TIERS = Object.freeze(['minimal', 'normal', 'rich']);
+const PHASE_TIERS = Object.freeze(['radiant', 'fluid', 'plastic', 'lattice', 'ground', 'membrane']);
+
+function cycleSemanticDensity(direction = 1) {
+  const html = document.documentElement;
+  const current = html.dataset.spwSemanticDensity || 'normal';
+  const currentIndex = DENSITY_TIERS.indexOf(current);
+  const nextIndex = (currentIndex + direction + DENSITY_TIERS.length) % DENSITY_TIERS.length;
+  const nextDensity = DENSITY_TIERS[nextIndex];
+
+  writeDatasetValue(html, 'spwSemanticDensity', nextDensity, {
+    source: 'spw-key-events',
+    reason: 'cycle-semantic-density',
+  });
+  bus.emit('settings:density-changed', { density: nextDensity });
+  document.dispatchEvent(new CustomEvent('spw:density-changed', {
+    bubbles: true,
+    detail: { density: nextDensity },
+  }));
+  return true;
+}
+
+function tunePhaseByIndex(index) {
+  if (index < 0 || index >= PHASE_TIERS.length) return false;
+  const phase = PHASE_TIERS[index];
+  const active = document.activeElement?.closest('.spw-frame, .site-frame, [data-spw-feature]') || document.documentElement;
+  writeDatasetValue(active, 'spwPhase', phase, {
+    source: 'spw-key-events',
+    reason: 'tune-phase-by-index',
+  });
+  bus.emit('spw:phase-tuned', { phase, target: active });
+  return true;
+}
+
+function dialTangibilityDelta(delta) {
+  const active = document.activeElement?.closest('.spw-frame, .site-frame, [data-spw-feature]') || document.documentElement;
+  const current = parseFloat(active.dataset.spwTangibility || active.style.getPropertyValue('--spw-tangibility') || '0.5');
+  const next = Math.max(0.05, Math.min(1.0, Math.round((current + delta) * 100) / 100));
+  writeDatasetValue(active, 'spwTangibility', next.toFixed(2), {
+    source: 'spw-key-events',
+    reason: 'dial-tangibility-delta',
+  });
+  writeStyleValue(active, '--spw-tangibility', String(next));
+  bus.emit('spw:tangibility-dialed', { tangibility: next, target: active });
+  return true;
+}
+
+function groundCurrentOperator() {
+  const active = document.activeElement;
+  const target = active?.closest?.('[data-spw-operator], .operator-chip, [data-spw-resonance-key]') || potentiatedElement;
+  if (!target) return false;
+
+  const op = target.getAttribute('data-spw-operator') || target.getAttribute('data-spw-resonance-key') || '';
+  const html = document.documentElement;
+  const isCurrentlyGrounded = html.getAttribute('data-spw-grounded-operator') === op;
+
+  if (isCurrentlyGrounded) {
+    html.removeAttribute('data-spw-grounded-operator');
+    html.removeAttribute('data-spw-grounded');
+    bus.emit('operator:ungrounded', { operator: op });
+  } else if (op) {
+    html.setAttribute('data-spw-grounded-operator', op);
+    html.setAttribute('data-spw-grounded', 'true');
+    bus.emit('operator:grounded', { operator: op });
+  }
+  return true;
+}
+
 function onFocusIn(event) {
   const target = event.target;
   if (!isKeyNavTarget(target)) return;
@@ -525,6 +703,7 @@ function onKeyDown(event) {
   if (event.defaultPrevented) return;
   if (event.metaKey || event.ctrlKey || event.altKey) return;
 
+  const inInput = isInputFocused();
   const target = event.target instanceof HTMLElement ? event.target : null;
 
   if (EXIT_KEYS.has(event.key)) {
@@ -547,6 +726,83 @@ function onKeyDown(event) {
       });
     }
     return;
+  }
+
+  // Handle Spw-native navigation, mode switches, and verbosity when not editing text
+  if (!inInput) {
+    if (event.key === 'v') {
+      if (cycleSemanticDensity(1)) {
+        event.preventDefault();
+        return;
+      }
+    }
+    if (event.key === 'V') {
+      if (cycleSemanticDensity(-1)) {
+        event.preventDefault();
+        return;
+      }
+    }
+    if (event.key >= '1' && event.key <= '6') {
+      const idx = parseInt(event.key, 10) - 1;
+      if (tunePhaseByIndex(idx)) {
+        event.preventDefault();
+        return;
+      }
+    }
+    if (event.key === '+' || event.key === '=' || (event.shiftKey && event.key === 'ArrowUp')) {
+      if (dialTangibilityDelta(0.05)) {
+        event.preventDefault();
+        return;
+      }
+    }
+    if (event.key === '-' || event.key === '_' || (event.shiftKey && event.key === 'ArrowDown')) {
+      if (dialTangibilityDelta(-0.05)) {
+        event.preventDefault();
+        return;
+      }
+    }
+    if (event.key === 'j') {
+      if (traverseOperators(1)) {
+        event.preventDefault();
+        return;
+      }
+    }
+    if (event.key === 'k') {
+      if (traverseOperators(-1)) {
+        event.preventDefault();
+        return;
+      }
+    }
+    if (event.key === '{') {
+      if (traverseFrames(-1)) {
+        event.preventDefault();
+        return;
+      }
+    }
+    if (event.key === '}') {
+      if (traverseFrames(1)) {
+        event.preventDefault();
+        return;
+      }
+    }
+    if (event.key === '[') {
+      if (cycleActiveFrameMode(-1)) {
+        event.preventDefault();
+        return;
+      }
+    }
+    if (event.key === ']') {
+      if (cycleActiveFrameMode(1)) {
+        event.preventDefault();
+        return;
+      }
+    }
+    if (event.key === '.' || event.key === '~') {
+      if (groundCurrentOperator()) {
+        event.preventDefault();
+        return;
+      }
+    }
   }
 
   if (ACTUALIZE_KEYS.has(event.key)) {

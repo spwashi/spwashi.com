@@ -1207,10 +1207,57 @@ html[data-spw-resonance-probe="surface"] :where(a, button, .operator-chip, .fram
       color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal))) 8%, transparent),
       color-mix(in srgb, var(--surface-strong, #fff) 92%, transparent)
     );
+/* ==========================================================================
+   Transferable Spw Interactive Momentum & Genomic Resonance
+   --------------------------------------------------------------------------
+   Supports seamless attentional momentum across intra-site page navigations.
+   When pages share Spw genomics (braces, climate, wonder), arrival resonance
+   reweights custom properties to highlight structural kinship.
+   ========================================================================== */
+
+:root {
+  --spw-transit-momentum: 0;
+  --spw-genomic-resonance: 0;
+}
+
+html[data-spw-transit-momentum="active"] {
+  --spw-transit-momentum: 1;
+}
+
+html[data-spw-genomic-resonance="high"] {
+  --spw-genomic-resonance: 0.85;
+}
+
+html[data-spw-genomic-resonance="medium"] {
+  --spw-genomic-resonance: 0.45;
+}
+
+/* Transferred operator arrival resonance */
+html[data-spw-transit-momentum="active"][data-spw-transferred-operator="frame"] :where([data-spw-operator="frame"]:not(:hover):not(:focus-visible)),
+html[data-spw-transit-momentum="active"][data-spw-transferred-operator="object"] :where([data-spw-operator="object"]:not(:hover):not(:focus-visible)),
+html[data-spw-transit-momentum="active"][data-spw-transferred-operator="probe"] :where([data-spw-operator="probe"]:not(:hover):not(:focus-visible)),
+html[data-spw-transit-momentum="active"][data-spw-transferred-operator="ref"] :where([data-spw-operator="ref"]:not(:hover):not(:focus-visible)),
+html[data-spw-transit-momentum="active"][data-spw-transferred-operator="action"] :where([data-spw-operator="action"]:not(:hover):not(:focus-visible)),
+html[data-spw-transit-momentum="active"][data-spw-transferred-operator="stream"] :where([data-spw-operator="stream"]:not(:hover):not(:focus-visible)),
+html[data-spw-transit-momentum="active"][data-spw-transferred-operator="surface"] :where([data-spw-operator="surface"]:not(:hover):not(:focus-visible)) {
+  --spw-resonance: calc(var(--attention-field-radius, 0.4) * (1 + var(--spw-transit-momentum, 0) * 0.7));
+  border-color: color-mix(
+    in srgb,
+    var(--spw-operator-color, var(--active-op-color, var(--teal))) 24%,
+    var(--line, rgba(14, 18, 20, 0.14))
+  );
+}
+
+/* Shared structural brace/climate resonance when genomics align */
+html[data-spw-transit-momentum="active"] :where([data-spw-form="brace"], .mode-switch, [data-spw-climate]) {
+  box-shadow:
+    0 0 0 calc(1px * var(--spw-genomic-resonance, 0)) color-mix(in srgb, var(--active-op-color, var(--teal)) 20%, transparent),
+    var(--card-shadow, none);
+  transition: box-shadow 0.6s var(--ease-settle, ease-out), border-color 0.6s var(--ease-settle, ease-out);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :where([data-spw-operator]) {
+  :where([data-spw-operator], [data-spw-form="brace"], .mode-switch) {
     transition: none !important;
   }
 }

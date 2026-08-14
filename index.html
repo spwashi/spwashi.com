@@ -84,51 +84,31 @@
     data-spw-wonder="orientation locality consequence texture portability sediment"
 >
     <section
-        class="site-frame site-hero site-hero--split-figure"
+        class="spw-frame spw-hero site-hero site-hero--split-figure"
         id="home-frame"
-        data-spw-region-purpose="public-spine"
-        data-spw-pack="balanced"
         aria-labelledby="home-title"
         aria-describedby="home-frame-note"
-        data-spw-frame="hero"
         data-spw-region="hook"
-        data-spw-region-role="kernel-hero"
-        data-spw-attentional-weight="1.35"
-        data-spw-gradient-boundary="hard"
-        data-spw-composition-stability="anchored"
-        data-spw-composition-stability-source="authored"
-        data-spw-feature="home-kernel-entry"
-        data-spw-page-zone="funnel"
-        data-spw-kind="frame"
-        data-spw-anatomy="home-page-hero"
-        data-spw-role="kernel-entry"
-        data-spw-context="reading"
-        data-spw-context-domains="software craft texture lore website"
-        data-spw-context-actions="orient read inspect"
-        data-spw-wonder="orientation locality consequence texture portability"
-        data-spw-affordance="read"
         data-spw-form="brace"
-        data-spw-form-options="brace,block,angle"
-        data-spw-liminality="entry"
-        data-spw-swappable="#>,^,?,@"
-        data-spw-stateful
-        data-spw-inspect="home_frame"
-        data-spw-category-family="nook"
-        data-spw-locality="high"
-        data-spw-consequence="entry"
-        data-spw-promptability="visible"
-        data-spw-collectability="none"
-        data-spw-seed="home_kernel_hero"
-        data-spw-kernel="entry"
-        data-spw-lattice="visible"
-        data-spw-projection="public-library"
-        data-spw-seed-package=".spw/home-atlas"
-        data-spw-materiality="paper texture svg print web"
+        data-spw-climate="hearth"
+        data-spw-phase="ground"
+        data-spw-tangibility="0.95"
+        data-spw-fixity="stable"
+        data-spw-biome="commons"
+        data-spw-genome="brace:objective|sigil:#&gt;home_frame|climate:hearth|mode:reading|wonder:orientation"
+        data-spw-feature="home-kernel-entry"
+        data-spw-wonder="orientation locality consequence texture portability"
         data-spw-related-routes="/now/|/cards/|/membership/|/research/|/coordination/|/services/|/about/website/|/topics/search/|/topics/software/spw/|/topics/craft/|/play/rpg-wednesday/library/|https://texture.website|https://spw.quest"
     >
         <header class="frame-topline" data-spw-slot="header">
             <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
             <a class="frame-sigil" href="#home-frame" data-spw-operator="address">#&gt;home_frame</a>
+            <div class="mode-switch" role="group" aria-label="Perspective lens" data-spw-feature="home-perspective-lens">
+                <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="reading" aria-pressed="true" data-spw-operator="select">.reading</button>
+                <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="systems" aria-pressed="false" data-spw-operator="select">^systems</button>
+                <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="play" aria-pressed="false" data-spw-operator="select">~play</button>
+                <button class="frame-sigil" type="button" data-mode-group="home-lens" data-set-mode="studio" aria-pressed="false" data-spw-operator="select">@studio</button>
+            </div>
             <nav class="spw-compose-field" aria-label="Palette bias" data-spw-feature="palette-compose" data-spw-composition-flow="inline-wrap">
                 <a class="frame-sigil" href="?palette=situate" data-spw-operator="potential" data-spw-facet="situate" title="Ink follows the charged viewpoint">~situate</a>
                 <a class="frame-sigil" href="?palette=hand" data-spw-operator="potential" data-spw-facet="hand" title="Warm material ink">~hand</a>
@@ -211,15 +191,46 @@
                     role="group"
                     aria-label="A readable surface for practice, operators, and carryable public artifacts"
                 >
-                    <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="surface[readable]{interact}">
-                        Anatomy: <span class="spw-living-term" data-spw-living-term data-spw-concept="surface" tabindex="0" title="tap: inspect • hold to prime this surface as an active workspace">surface</span> for orientation, operators for handles, routes for return.
-                    </p>
-                    <p class="hook-sub">
-                        <span data-spw-perspective="objective">Output:</span> proof cards, study routes, semantic contracts.
-                        <span data-spw-perspective="subjective">Feel:</span> <span class="spw-inline-emphasis" data-spw-inline-tone="lore" data-spw-spatial-affordance="threshold">a readable room</span> with lens switches, living terms, and a memory of what you touched.
-                    </p>
+                    <div class="mode-panels" data-spw-feature="home-perspective-panels">
+                        <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="reading" data-spw-role="orientation" data-spw-kind="lens">
+                            <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="home[reading]{author.craft.return}">
+                                <span class="spw-living-term" data-spw-living-term data-spw-concept="reading" tabindex="0" title="tap: inspect • hold to prime">.reading</span>: Personal study routes, creator records, and craft traditions worth revisiting.
+                            </p>
+                            <p class="hook-sub">
+                                <span data-spw-perspective="objective">Holds:</span> craft notes, essays, culinary theory, and design records.
+                                <span data-spw-perspective="subjective">First move:</span> <a class="operator-chip" href="/topics/craft/" data-spw-operator="concept">&lt;author_craft&gt;</a> or browse <a class="operator-chip" href="/blog/" data-spw-operator="value">*field_dispatches</a>.
+                            </p>
+                        </section>
+                        <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="systems" data-spw-role="schema" data-spw-kind="lens" hidden>
+                            <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="home[systems]{ast.parser.invariants}">
+                                <span class="spw-living-term" data-spw-living-term data-spw-concept="systems" tabindex="0" title="tap: inspect • hold to prime">^systems</span>: Plain-text Spw grammar, compiler passes, and interactive workbench specimens.
+                            </p>
+                            <p class="hook-sub">
+                                <span data-spw-perspective="objective">Holds:</span> syntax proofs, deterministic projections, and AST traversals.
+                                <span data-spw-perspective="subjective">First move:</span> <a class="operator-chip" href="/topics/software/spw/" data-spw-operator="frame">#&gt;operator_atlas</a> or test <a class="operator-chip" href="/topics/software/parsers/" data-spw-operator="potential">~software_parsers</a>.
+                            </p>
+                        </section>
+                        <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="play" data-spw-role="scenario" data-spw-kind="lens" hidden>
+                            <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="home[play]{table.session.character}">
+                                <span class="spw-living-term" data-spw-living-term data-spw-concept="play" tabindex="0" title="tap: inspect • hold to prime">~play</span>: RPG Wednesday weekly sessions, character sheets, and collaborative world lore.
+                            </p>
+                            <p class="hook-sub">
+                                <span data-spw-perspective="objective">Holds:</span> session logs, table rulings, cast notes, and shared dice consequences.
+                                <span data-spw-perspective="subjective">First move:</span> <a class="operator-chip" href="/play/rpg-wednesday/" data-spw-operator="value">*rpg_wednesday</a> or visit <a class="operator-chip" href="/play/rpg-wednesday/library/" data-spw-operator="frame">#&gt;town_library</a>.
+                            </p>
+                        </section>
+                        <section class="mode-panel" data-mode-group="home-lens" data-mode-panel="studio" data-spw-role="projection" data-spw-kind="lens" hidden>
+                            <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="home[studio]{systems.commissions.proof}">
+                                <span class="spw-living-term" data-spw-living-term data-spw-concept="studio" tabindex="0" title="tap: inspect • hold to prime">@studio</span>: Bespoke systems architecture, client consulting, and verified public proofs.
+                            </p>
+                            <p class="hook-sub">
+                                <span data-spw-perspective="objective">Holds:</span> service lanes, proof ledgers, and B2B engagement scopes.
+                                <span data-spw-perspective="subjective">First move:</span> <a class="operator-chip" href="/services/" data-spw-operator="perspective">@studio_services</a> or check <a class="operator-chip" href="/now/" data-spw-operator="action">!current_work</a>.
+                            </p>
+                        </section>
+                    </div>
                     <p class="hook-invitation">
-                        Hold a living term to prime it, charge a palette bias to retune the ink, or jump to a quick-start when you already know the next move.
+                        Use <kbd>[</kbd> / <kbd>]</kbd> to cycle perspective lenses, hold a living term to prime it into active attention, or select an operator chip below.
                     </p>
                 </div>
 
@@ -364,30 +375,12 @@
     </section>
 
     <section
-        class="site-frame"
+        class="spw-frame site-frame"
         id="choose-your-entrance"
-        data-spw-region-purpose="route-sorter"
-        data-spw-pack="fill"
         aria-labelledby="choose-your-entrance-title"
         data-spw-region="wide"
-        data-spw-region-role="threshold-sorter"
-        data-spw-attentional-weight="1.25"
-        data-spw-page-zone="funnel"
-        data-spw-region-genome="harmony-indexed"
-        data-spw-kind="frame"
-        data-spw-role="routing"
-        data-spw-context="orientation"
-        data-spw-affordance="navigate"
-        data-spw-liminality="threshold"
-        data-spw-category-family="register"
-        data-spw-locality="high"
-        data-spw-consequence="entry"
-        data-spw-promptability="visible"
-        data-spw-collectability="medium"
         data-spw-feature="home-entrance-sorter"
         data-spw-form="brace"
-        data-spw-box-model="frame-register"
-        data-spw-composition-flow="stack"
     >
         <header class="frame-heading" data-spw-slot="header">
             <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
@@ -1731,11 +1724,10 @@
                 Four routes if you want component diversity: glossary, live playtest, public kitchen, and texture/support. Returning readers can skip straight to the loop that matches today's material pressure.
             </p>
 
-            <div class="frame-grid frame-grid--dense">
-                <article class="frame-card frame-card--illustrated" aria-labelledby="card-entry-components"
-                         data-spw-form="block" data-spw-category-family="register" data-spw-kind="card" data-spw-role="reference">
+            <div class="spw-grid frame-grid frame-grid--dense">
+                <article class="spw-card frame-card frame-card--illustrated" aria-labelledby="card-entry-components" data-spw-form="block">
                     <a href="/design/components/" id="card-entry-components" data-spw-operator="address">
-                        <figure class="frame-card-media" data-spw-slot="figure">
+                        <figure class="spw-card__media frame-card-media" data-spw-slot="figure">
                             <img
                                 src="/public/images/renders/unsorted-curation/website-threshold-corridor-3.webp"
                                 alt="A corridor-like structural image with luminous paper seams, suitable for a component glossary or onboarding route."
@@ -1751,10 +1743,9 @@
                     </a>
                 </article>
 
-                <article class="frame-card frame-card--illustrated" aria-labelledby="card-entry-rpgw" data-spw-form="block"
-                         data-spw-category-family="encounter" data-spw-kind="card" data-spw-role="reference">
+                <article class="spw-card frame-card frame-card--illustrated" aria-labelledby="card-entry-rpgw" data-spw-form="block">
                     <a href="/play/rpg-wednesday/" id="card-entry-rpgw" data-spw-operator="stream">
-                        <figure class="frame-card-media" data-spw-slot="figure">
+                        <figure class="spw-card__media frame-card-media" data-spw-slot="figure">
                             <img
                                 src="/public/images/renders/unsorted-curation/rpg-wednesday-signal-hype.webp"
                                 alt="An energetic RPG Wednesday signal image with green and amber light, like a social playtest surface gathering momentum."
@@ -1770,10 +1761,9 @@
                     </a>
                 </article>
 
-                <article class="frame-card frame-card--illustrated" aria-labelledby="card-entry-recipes"
-                         data-spw-form="block" data-spw-category-family="register" data-spw-kind="card" data-spw-role="reference">
+                <article class="spw-card frame-card frame-card--illustrated" aria-labelledby="card-entry-recipes" data-spw-form="block">
                     <a href="/recipes/" id="card-entry-recipes" data-spw-operator="ground">
-                        <figure class="frame-card-media" data-spw-slot="figure">
+                        <figure class="spw-card__media frame-card-media" data-spw-slot="figure">
                             <img
                                 src="/public/images/renders/unsorted-curation/library-craft-register.webp"
                                 alt="A warm kitchen-register image suggesting mise en place, hosting grammar, and recipe clusters as public craft."
@@ -1789,11 +1779,9 @@
                     </a>
                 </article>
 
-                <article class="frame-card frame-card--illustrated" aria-labelledby="card-entry-texture"
-                         data-spw-form="block" data-spw-category-family="specimen"
-                         data-spw-seed-package=".spw/texture-portal" data-spw-kind="card" data-spw-role="reference">
+                <article class="spw-card frame-card frame-card--illustrated" aria-labelledby="card-entry-texture" data-spw-form="block">
                     <a href="https://texture.website" id="card-entry-texture" data-spw-operator="surface">
-                        <figure class="frame-card-media" data-spw-slot="figure">
+                        <figure class="spw-card__media frame-card-media" data-spw-slot="figure">
                             <img
                                 src="/public/images/renders/unsorted-curation/library-craft-register.webp"
                                 alt="A warm library-like craft register image suggesting texture, study, publishing material, and sustained independent work."

@@ -94,6 +94,23 @@ fixity = "tending"
   blocked_by: "parcel_breakpoint_tiers, if tiers are being renamed"
 }
 
+
+^"parcel_history_reflow"{
+  goal: "Reduce the unpushed sequence to a polished history with churn removed, before pushing."
+  owns: #[`git history ahead of origin`][reg=set]
+  ~#blocked_by(hard): "a rebase needs a clean tree, and stashing is forbidden here"
+  ~#order: "integrate, then reflow, then push"
+  churn_kinds: .{
+    registration = `single-line @ref additions to conventions/index.spw, one per landing`
+    generated = `bundles and generated indexes rewritten by their generators, not authored`
+    revision = `surfaces created and revised again within the same working session`
+  }[reg=facet]
+  ~#caution: "each commit states a measurement; a squashed episode must keep every verify line it absorbs, or the dates the numbers were true on are lost"
+  ~#refuse: "recording commit hashes here — they do not survive the reflow this parcel describes"
+  probe: `git log --oneline @{u}..HEAD && git log --format=%h @{u}..HEAD --name-only | sort | uniq -c | sort -rn`
+  gate: "human, after integration"
+}
+
 ^"open_not_parcelled"{
   note: "Named so nobody assumes they are covered."
   items: #[

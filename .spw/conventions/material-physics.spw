@@ -1,0 +1,112 @@
+# Material Physics
+
+#>material_physics
+#:convention #!material #!light #!css
+#:operation #!contract
+#:fixity #!tending
+#:layer #!pragmatics
+
+@component_biome: ~"./component-biome.spw"
+@stylesheet_ecology: ~"./stylesheet-ecology.spw"
+@electrostatic_affordances: ~"./electrostatic-affordances.spw"
+@coloring_depth: ~"./coloring-depth.spw"
+@component_taxonomy: ~"./component-taxonomy.spw"
+@tokens: ~"../../public/css/tokens/core.css"
+@cards: ~"../../public/css/components/cards.css"
+@biome_css: ~"../../public/css/systems/component-biome.css"
+
+operation = "contract"
+fixity = "tending"
+
+expression = material[optics]{transmission.specular.shadow}<surface>
+
+^"pairing"{
+  ~#note: "Two halves of one model, authored separately and only now named together."
+  canopy: light[arrival]{density.depth.occlusion}
+  material: light[handling]{transmission.specular.blur}
+  ~#reading(the split): `canopy says how much light reaches a surface; material says what the surface does with it`
+  &incomplete_alone: canopy ^ material
+  ~#law: "a shading model without an optics model dims everything equally, which is fog rather than depth"
+}
+
+^"optics"{
+  ~#note: "Numeric properties rather than named looks, so a material is tuned rather than chosen from a list."
+  transmission = 0.10
+  specular = 0.28
+  saturation = 1.04
+  blur = "8px"
+  shadow_strength = 0.10
+  glow_strength = 0.10
+  ~#reading(transmission): `how much of the ground shows through — the difference between glass and matte is a number`
+  ~#reading(specular): `the highlight a surface returns; paper returns almost none, glass returns most`
+  probe: `grep -rn -- "--material-" public/css/tokens/core.css`
+}
+
+^"states"{
+  ~#note: "Two, not many. A material at rest and a material lifted."
+  rest = `--material-shadow-rest`
+  lift = `--material-shadow-lift`
+  ~#refuse: "a third state invented for a single component — lift is the interaction, rest is everything else"
+  card: .{
+    shadow = `--card-shadow`
+    hover = `--card-shadow-hover`
+    highlight = `--card-highlight`
+    ~#note(highlight is inset) = `specular returned from the top edge, which is what makes a card read as raised rather than as outlined`
+  }[reg=facet]
+}
+
+^"grounds"{
+  ~#note: "Three depths of ground, light and dark aware, so a surface knows what it sits on."
+  deep = `--bg-deep`
+  field = `--bg-field`
+  ritual = `--bg-ritual`
+  ~#reading(ritual): `the ground reserved for surfaces that are doing something, not merely holding something`
+  &themed: grounds ~ theme[pack]{}
+}
+
+^"stacking"{
+  ~#note: "Derived rather than literal, so the ladder cannot drift apart."
+  handle = `--layer-handle: calc(var(--layer-floating) + 50)`
+  ~#caution: "the rest of the ladder is still literal — docked 900, header 1000, priority 2000. A half-derived stack is where z-index drift starts."
+  probe: `grep -n -- "--layer-" public/css/tokens/core.css`
+}
+
+^"integrity"{
+  rule: "A material token earns its place by being consumed. A defined-and-unused token is a claim about the model that nothing tests."
+  measured: .{
+    material_blur_uses = 11
+    card_shadow_hover_uses = 5
+    material_shadow_rest_uses = 4
+    material_specular_uses = 0
+  }[reg=facet]
+  ~#finding: "specular is declared at 0.28 and read by nothing"
+  probe: `for t in material-specular material-transmission material-blur; do echo "$t $(grep -rn "var(--$t" public/css | grep -v bundles | wc -l)"; done`
+}
+
+#>wonder_material_physics_1
+?["Is specular a property of the material or of the light?"]{
+  #:depth #!computational ~#lens(optics)
+  ~#tension: "specular is declared as a material constant at 0.28, but a highlight is what a surface returns from a source — change the light and the same material returns something else. A constant cannot express that."
+  ~#hypothesis: "it belongs to the pair — material specular times canopy light — which is why it currently reads by nothing: there is no expression that needs both, so it has no consumer to be wrong for."
+  !probe{ "multiply specular against canopy attenuation on one card and vary the density around it. if the highlight tracks the neighbourhood rather than the card, specular belongs to the pairing and not to the token block." }
+  $%[material.specular, canopy.attenuation, highlight.returned]
+}
+
+#>wonder_material_physics_2
+?["What is a ground for?"]{
+  #:depth #!stylistic ~#lens(depth)
+  ~#tension: "three grounds are declared — deep, field, ritual — and nothing states which surfaces belong on which. A depth with no assignment rule becomes a palette choice."
+  ~#hypothesis: "ritual is the discriminator: a surface where something is done rather than read. If that holds, assignment follows from page-role and needs no new attribute."
+  !probe{ "list the surfaces that would sit on ritual by that rule and check them against data-spw-page-role. if roles predict the ground, the rule exists and is unwritten." }
+  $%[surface.ground, page.role, region.purpose]
+}
+
+^"validation"{
+  probe: `npm run css:payload && grep -c -- "--material-" public/css/tokens/core.css`
+  falsification: #[
+    `a material token is defined and consumed nowhere`,
+    `a third rest-state is added for one component`,
+    `a stacking value is authored as a literal beside the derived handle`
+  ][reg=set]
+  next: specular[pair]{material.canopy} ^ highlight[returned]{}
+}

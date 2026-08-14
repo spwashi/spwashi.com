@@ -17,6 +17,19 @@ const LENS_MODE_IMPACTS = Object.freeze({
   operators: 'operator-vocabulary',
   principles: 'design-rules',
   workbench: 'implementation-context',
+  reading: 'narrative-flow',
+  play: 'table-lore',
+  studio: 'client-systems',
+  kernel: 'identity-invariants',
+  lattice: 'medium-crossing',
+  hospitality: 'community-horizon',
+  cook: 'recipe-craft',
+  theory: 'flavor-grammar',
+  garden: 'botanical-soil',
+  tactile: 'hand-material',
+  fragments: 'code-specimens',
+  collaboration: 'partner-loop',
+  table: 'session-consequence',
 });
 
 const getDocument = (root = document) => {
@@ -129,18 +142,38 @@ export function writeLensModeState({
   const resolvedPanels = Array.isArray(panels) ? panels : queryModePanels(group, doc);
   const { activeButton, activeIndex, resolvedMode } = resolveLensMode(buttons, mode);
 
-  for (const button of buttons) {
-    const isActive = button.getAttribute('data-set-mode') === resolvedMode;
-    button.setAttribute('aria-pressed', String(isActive));
-    button.dataset.spwLensOptionState = isActive ? 'active' : 'idle';
+  const applyDomUpdates = () => {
+    for (const button of buttons) {
+      const isActive = button.getAttribute('data-set-mode') === resolvedMode;
+      button.setAttribute('aria-pressed', String(isActive));
+      button.dataset.spwLensOptionState = isActive ? 'active' : 'idle';
+    }
+
+    for (const panel of resolvedPanels) {
+      const show = panel.getAttribute('data-mode-panel') === resolvedMode;
+      panel.hidden = !show;
+      panel.dataset.spwLensPanelState = show ? 'active' : 'idle';
+      panel.dataset.spwLensGroup = group;
+      panel.dataset.spwLensMode = resolvedMode;
+    }
+  };
+
+  if (typeof doc.startViewTransition === 'function' && !globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches) {
+    try {
+      doc.startViewTransition(applyDomUpdates);
+    } catch {
+      applyDomUpdates();
+    }
+  } else {
+    applyDomUpdates();
   }
 
-  for (const panel of resolvedPanels) {
-    const show = panel.getAttribute('data-mode-panel') === resolvedMode;
-    panel.hidden = !show;
-    panel.dataset.spwLensPanelState = show ? 'active' : 'idle';
-    panel.dataset.spwLensGroup = group;
-    panel.dataset.spwLensMode = resolvedMode;
+  if (typeof globalThis.navigator?.vibrate === 'function' && !globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches) {
+    try {
+      globalThis.navigator.vibrate(8);
+    } catch {
+      /* optional native haptic */
+    }
   }
 
   const hosts = findLensModeHosts(group, buttons, resolvedPanels);

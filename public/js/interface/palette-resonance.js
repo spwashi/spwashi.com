@@ -13,14 +13,23 @@ const PALETTE_RESONANCE_ALIASES = Object.freeze({
   software: 'lattice',
   'software-led': 'lattice',
   math: 'inquiry',
-  'math-led': 'inquiry'
+  'math-led': 'inquiry',
+  play: 'ludic',
+  'play-led': 'ludic',
+  game: 'ludic',
+  rpg: 'ludic',
+  author: 'studio',
+  manuscript: 'studio',
+  'studio-led': 'studio'
 });
 
 const PALETTE_RESONANCE_TOKENS = Object.freeze({
   situate: Object.freeze([]),
   hand: Object.freeze(['craft', 'site-design', 'svg', 'fragments', 'website', 'services', 'contact']),
   lattice: Object.freeze(['software', 'spw', 'parsers', 'renderers', 'browser', 'compression', 'schedulers', 'lattices']),
-  inquiry: Object.freeze(['math', 'number-theory', 'category-theory', 'field-theory', 'complexity', 'symmetry', 'topology', 'combinatorics'])
+  inquiry: Object.freeze(['math', 'number-theory', 'category-theory', 'field-theory', 'complexity', 'symmetry', 'topology', 'combinatorics']),
+  ludic: Object.freeze(['play', 'rpg-wednesday', 'recipes', 'town', 'lore', 'characters', 'games']),
+  studio: Object.freeze(['studio', 'author', 'fragments', 'svg', 'manuscript', 'folios', 'publishing'])
 });
 
 const PALETTE_RESONANCE_SWATCHES = Object.freeze({
@@ -47,6 +56,18 @@ const PALETTE_RESONANCE_SWATCHES = Object.freeze({
     'var(--pigment-violet-ink, hsl(268 56% 34%))',
     'var(--op-topic-color, #2a8c76)',
     'var(--op-ref-color, #1d57a3)'
+  ]),
+  ludic: Object.freeze([
+    'var(--op-binding-color, #a85822)',
+    'var(--op-object-color, #c68a22)',
+    'var(--op-stream-color, #2a8c68)',
+    'var(--amber, #d9822b)'
+  ]),
+  studio: Object.freeze([
+    'var(--pigment-brass-warm, hsl(38 64% 42%))',
+    'var(--op-action-color, #0e6361)',
+    'var(--op-ref-color, #1d57a3)',
+    'var(--op-pragma-color, #7f4b2e)'
   ])
 });
 
@@ -82,12 +103,27 @@ const getPaletteDepthSwatches = (value = DEFAULT_PALETTE_RESONANCE) => {
   ]);
 };
 
+const PHASE_FIELD_SWATCHES = Object.freeze({
+  radiant: 'var(--op-probe-color, hsl(268 54% 44%))',
+  fluid: 'var(--op-ref-color, hsl(214 66% 40%))',
+  plastic: 'var(--op-action-color, hsl(176 74% 24%))',
+  lattice: 'var(--op-object-color, hsl(36 82% 38%))',
+  ground: 'var(--op-frame-color, hsl(180 74% 28%))',
+  membrane: 'var(--op-topic-color, hsl(168 62% 30%))',
+});
+
+const getPhaseFieldSwatch = (phase = 'ground') => (
+  PHASE_FIELD_SWATCHES[phase] || PHASE_FIELD_SWATCHES.ground
+);
+
 export {
   DEFAULT_PALETTE_RESONANCE,
   PALETTE_RESONANCE_ALIASES,
   PALETTE_RESONANCE_OPTIONS,
+  PHASE_FIELD_SWATCHES,
   getPaletteDepthSwatches,
   getPaletteResonanceSwatches,
   getPaletteResonanceTokens,
+  getPhaseFieldSwatch,
   normalizePaletteResonance
 };

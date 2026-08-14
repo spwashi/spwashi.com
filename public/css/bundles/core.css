@@ -735,6 +735,48 @@ html[data-spw-reduce-motion="on"] *::after {
   initial-value: 0;
 }
 
+/* Continuous Gradient of Tangibility: 0.0 (radiant plasma / unconstrained field) -> 1.0 (invariant dense substrate) */
+@property --spw-tangibility {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.5;
+}
+
+/* Viscous relaxation time & morphogenetic damping */
+@property --spw-viscosity {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.3;
+}
+
+/* Phase order parameter / structural coherence: 0 (disordered) -> 1 (crystalline symmetry) */
+@property --spw-coherence {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.5;
+}
+
+/* Edge membrane tension across frame boundaries: 0 (relaxed) -> 1 (taut membrane) */
+@property --spw-edge-tension {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+/* Regional lighting bias / field illumination */
+@property --spw-regional-lighting-bias {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 1;
+}
+
+/* Cauldron phase condensate perceptual tint */
+@property --spw-spell-perceptual-tint {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+
 /* Distribution entropy across a page or surface */
 @property --spw-field-entropy {
   syntax: "<number>";
@@ -1227,35 +1269,35 @@ html[data-spw-reduce-motion="on"] *::after {
   --charcoal-light: rgb(26, 32, 35);
   --charcoal-dark: rgb(6, 8, 10);
 
-  /* Page substrate */
-  --bg: hsl(42 62% 84%);
-  --bg-deep: hsl(43 44% 76%);
-  --bg-field: hsl(42 38% 94%);
-  --bg-ritual: hsl(40 48% 89%);
+  /* Page substrate: refined tactile editorial linen ground with luminous atmospheric warmth */
+  --bg: hsl(42 32% 90%);
+  --bg-deep: hsl(42 26% 82%);
+  --bg-field: hsl(44 34% 95%);
+  --bg-ritual: hsl(40 36% 89%);
 
   /* Manuscript substrate */
   --paper-hue: 42;
-  --paper-sat: 38%;
-  --paper-light: 94%;
+  --paper-sat: 34%;
+  --paper-light: 95%;
   --paper: hsl(var(--paper-hue) var(--paper-sat) var(--paper-light));
-  --paper-warm: hsl(39 50% 92%);
-  --paper-cool: hsl(210 24% 94%);
+  --paper-warm: hsl(39 44% 93%);
+  --paper-cool: hsl(210 24% 95%);
   --paper-ink: rgba(var(--charcoal-rgb), 0.92);
   --paper-rule: rgba(var(--charcoal-rgb), 0.12);
 
-  /* Surfaces */
-  --surface: rgba(255, 255, 255, 0.76);
-  --surface-strong: rgba(255, 255, 255, 0.9);
-  --surface-soft: rgba(255, 255, 255, 0.58);
+  /* Surfaces: multi-tier luminance lift above linen ground */
+  --surface: rgba(255, 255, 255, 0.82);
+  --surface-strong: rgba(255, 255, 255, 0.94);
+  --surface-soft: rgba(255, 255, 255, 0.65);
   --surface-code: rgba(18, 23, 27, 0.96);
-  --surface-matte: rgba(247, 244, 238, 0.93);
-  --surface-matte-strong: rgba(252, 249, 243, 0.98);
-  --surface-contrast: rgba(255, 253, 248, 0.98);
-  --surface-contrast-soft: rgba(247, 242, 232, 0.96);
-  --surface-panel: rgba(255, 255, 255, 0.82);
-  --surface-panel-strong: rgba(255, 255, 255, 0.92);
-  --surface-glass: rgba(255, 255, 255, 0.22);
-  --surface-shadowed: rgba(255, 255, 255, 0.68);
+  --surface-matte: rgba(250, 248, 243, 0.96);
+  --surface-matte-strong: rgba(255, 253, 248, 0.99);
+  --surface-contrast: rgba(255, 255, 255, 0.99);
+  --surface-contrast-soft: rgba(248, 244, 236, 0.96);
+  --surface-panel: rgba(255, 255, 255, 0.88);
+  --surface-panel-strong: rgba(255, 255, 255, 0.96);
+  --surface-glass: rgba(255, 255, 255, 0.32);
+  --surface-shadowed: rgba(255, 255, 255, 0.76);
 
   /* Ink */
   --ink-strong: rgba(var(--charcoal-rgb), 0.96);
@@ -1309,8 +1351,8 @@ html[data-spw-reduce-motion="on"] *::after {
   --material-text-on-matte-strong: var(--text-on-matte-strong, var(--ink-on-matte-strong));
   --material-line: var(--line, rgba(14, 18, 20, 0.14));
   --material-line-strong: var(--line-strong, rgba(0, 128, 128, 0.34));
-  --material-shadow-rest: var(--shadow-base, 0 4px 12px rgba(0, 0, 0, 0.06));
-  --material-shadow-lift: var(--shadow-active, 0 8px 28px rgba(0, 0, 0, 0.10));
+  --material-shadow-rest: var(--shadow-base, 0 1px 3px rgba(0, 0, 0, 0.04), 0 6px 18px -3px rgba(0, 0, 0, 0.07));
+  --material-shadow-lift: var(--shadow-active, 0 4px 8px rgba(0, 0, 0, 0.05), 0 12px 32px -4px rgba(0, 0, 0, 0.11));
 
   /* Lines */
   --line-hair: 0.5px;
@@ -1345,12 +1387,12 @@ html[data-spw-reduce-motion="on"] *::after {
   --focus-ring: 0 0 0 3px rgba(0, 128, 128, 0.18);
 
   /* Material properties */
-  --material-blur: 6px;
-  --material-saturation: 1.02;
-  --material-specular: 0.22;
-  --material-transmission: 0.08;
-  --material-shadow-strength: 0.08;
-  --material-glow-strength: 0.08;
+  --material-blur: 8px;
+  --material-saturation: 1.04;
+  --material-specular: 0.28;
+  --material-transmission: 0.10;
+  --material-shadow-strength: 0.10;
+  --material-glow-strength: 0.10;
 
   --phase-paper-weight: 1;
   --phase-glass-weight: 0;
@@ -1362,20 +1404,20 @@ html[data-spw-reduce-motion="on"] *::after {
   /* Depth */
   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
   --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.05);
-  --shadow-base: 0 4px 12px rgba(0, 0, 0, 0.06);
-  --shadow-active: 0 8px 28px rgba(0, 0, 0, 0.10);
-  --shadow-projecting: 0 14px 34px rgba(0, 0, 0, 0.14);
+  --shadow-base: 0 1px 3px rgba(0, 0, 0, 0.04), 0 6px 18px -3px rgba(0, 0, 0, 0.07);
+  --shadow-active: 0 4px 8px rgba(0, 0, 0, 0.05), 0 12px 32px -4px rgba(0, 0, 0, 0.11);
+  --shadow-projecting: 0 8px 16px rgba(0, 0, 0, 0.06), 0 20px 48px -6px rgba(0, 0, 0, 0.15);
 
-  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.05),
-  0 2px 8px rgba(0, 0, 0, 0.03);
-  --card-shadow-hover: 0 4px 18px rgba(0, 0, 0, 0.09),
-  0 2px 6px rgba(0, 0, 0, 0.04);
-  --card-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.52);
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.04),
+    0 6px 18px -3px rgba(0, 0, 0, 0.07);
+  --card-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.06),
+    0 16px 36px -4px rgba(0, 0, 0, 0.12);
+  --card-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.62);
 
   --floating-bg: var(--surface-strong);
   --floating-bg-warm: rgba(255, 251, 242, 0.92);
   --floating-shadow: 0 8px 32px rgba(0, 0, 0, 0.12),
-  0 2px 8px rgba(0, 0, 0, 0.06);
+    0 2px 8px rgba(0, 0, 0, 0.06);
   --floating-shadow-side: 2px 0 20px rgba(0, 0, 0, 0.09);
 
   /* Material elevation shadows (box-shadow stacks). Distinct from @property --spw-depth. */
@@ -1419,6 +1461,7 @@ html[data-spw-reduce-motion="on"] *::after {
   --layer-overlay: 2;
   --layer-surface: 20;
   --layer-floating: 100;
+  --layer-handle: calc(var(--layer-floating) + 50);
   --layer-docked: 900;
   --layer-header: 1000;
   --layer-priority: 2000;
@@ -1457,6 +1500,7 @@ html[data-spw-reduce-motion="on"] *::after {
   --z-overlay: var(--layer-overlay);
   --z-surface: var(--layer-surface);
   --z-floating: var(--layer-floating);
+  --z-handle: var(--layer-handle);
   --z-docked: var(--layer-docked);
   --z-header: var(--layer-header);
   --z-priority: var(--layer-priority);
@@ -1769,31 +1813,31 @@ html[data-spw-reduce-motion="on"] *::after {
   --boon-glow: var(--objective-brace-wash);
   --bane-glow: var(--subjective-brace-wash);
 
-  --op-frame-color: var(--teal);
+  --op-frame-color: hsl(180 74% 28%);
   --op-frame-border: color-mix(in srgb, var(--op-frame-color) 32%, transparent);
   --op-frame-bg-soft: color-mix(in srgb, var(--op-frame-color) 7%, transparent);
 
-  --op-topic-color: hsl(192 48% 32%);
-  --op-topic-border: hsla(192, 48%, 32%, 0.24);
-  --op-topic-bg-soft: rgba(228, 246, 252, 0.72);
+  --op-topic-color: hsl(168 62% 30%);
+  --op-topic-border: hsla(168, 62%, 30%, 0.24);
+  --op-topic-bg-soft: rgba(228, 248, 246, 0.72);
 
-  --op-object-color: hsl(36 62% 35%);
-  --op-object-border: hsla(36, 62%, 35%, 0.22);
+  --op-object-color: hsl(36 82% 38%);
+  --op-object-border: hsla(36, 82%, 38%, 0.22);
   --op-object-bg-soft: rgba(255, 248, 235, 0.72);
 
-  --op-ref-color: hsl(210 48% 38%);
-  --op-ref-border: hsla(210, 48%, 38%, 0.2);
+  --op-ref-color: hsl(214 66% 40%);
+  --op-ref-border: hsla(214, 66%, 40%, 0.2);
   --op-ref-bg-soft: rgba(235, 244, 255, 0.72);
 
-  --op-probe-color: hsl(268 36% 42%);
-  --op-probe-border: hsla(268, 36%, 42%, 0.2);
+  --op-probe-color: hsl(268 54% 44%);
+  --op-probe-border: hsla(268, 54%, 44%, 0.2);
   --op-probe-bg-soft: rgba(245, 238, 255, 0.72);
   /* Balanced for lighting + motif composability (e.g., curriculum or lab motifs under ritual-vellum or electric-studio).
      Uses pigment context for evolutionary semantic readability across conditions. */
   --op-probe-color-balanced: color-mix(in srgb, var(--pigment-violet-ink) calc(100% * var(--pigment-context-boost, 1)), var(--op-probe-color));
 
-  --op-action-color: hsl(180 64% 25%);
-  --op-action-border: hsla(180, 64%, 25%, 0.35);
+  --op-action-color: hsl(176 74% 24%);
+  --op-action-border: hsla(176, 74%, 24%, 0.35);
   --op-action-bg-soft: rgba(230, 248, 248, 0.72);
 
   --op-layer-color: var(--ink-soft);
@@ -2313,29 +2357,29 @@ html[data-spw-component-density="roomy"] {
 
 /* Dark mode */
 html[data-spw-color-mode="dark"] {
-  --bg: hsl(214 18% 10%);
-  --bg-deep: hsl(214 22% 7%);
-  --bg-field: hsl(214 15% 13%);
-  --bg-ritual: hsl(216 14% 15%);
+  --bg: hsl(218 20% 8.5%);
+  --bg-deep: hsl(220 24% 6%);
+  --bg-field: hsl(216 16% 12%);
+  --bg-ritual: hsl(218 18% 13.5%);
 
-  --paper: hsl(214 14% 13%);
-  --paper-warm: hsl(32 12% 15%);
-  --paper-cool: hsl(214 14% 16%);
-  --paper-ink: rgba(228, 235, 232, 0.92);
-  --paper-rule: rgba(228, 235, 232, 0.14);
+  --paper: hsl(216 14% 12.5%);
+  --paper-warm: hsl(32 12% 14.5%);
+  --paper-cool: hsl(214 14% 15.5%);
+  --paper-ink: rgba(232, 238, 236, 0.92);
+  --paper-rule: rgba(232, 238, 236, 0.14);
 
-  --surface: rgba(18, 24, 28, 0.78);
-  --surface-strong: rgba(25, 32, 37, 0.92);
-  --surface-soft: rgba(18, 24, 28, 0.58);
+  --surface: rgba(20, 26, 31, 0.82);
+  --surface-strong: rgba(28, 36, 42, 0.94);
+  --surface-soft: rgba(20, 26, 31, 0.62);
   --surface-code: rgba(10, 14, 17, 0.98);
-  --surface-matte: rgba(24, 30, 35, 0.96);
-  --surface-matte-strong: rgba(31, 38, 44, 0.98);
-  --surface-contrast: rgba(34, 42, 48, 0.98);
-  --surface-contrast-soft: rgba(26, 33, 39, 0.97);
-  --surface-panel: rgba(24, 31, 36, 0.9);
-  --surface-panel-strong: rgba(30, 38, 44, 0.95);
+  --surface-matte: rgba(26, 33, 39, 0.97);
+  --surface-matte-strong: rgba(33, 41, 48, 0.99);
+  --surface-contrast: rgba(36, 45, 52, 0.99);
+  --surface-contrast-soft: rgba(28, 36, 42, 0.97);
+  --surface-panel: rgba(26, 34, 40, 0.92);
+  --surface-panel-strong: rgba(33, 42, 49, 0.96);
   --surface-glass: rgba(255, 255, 255, 0.08);
-  --surface-shadowed: rgba(20, 26, 31, 0.72);
+  --surface-shadowed: rgba(22, 28, 34, 0.76);
 
   --ink-strong: rgba(236, 241, 238, 0.96);
   --ink: rgba(228, 235, 232, 0.92);
@@ -2364,11 +2408,11 @@ html[data-spw-color-mode="dark"] {
 
   --focus-ring: 0 0 0 3px rgba(96, 210, 210, 0.22);
 
-  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.18);
-  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.2);
-  --shadow-base: 0 4px 12px rgba(0, 0, 0, 0.22);
-  --shadow-active: 0 8px 28px rgba(0, 0, 0, 0.32);
-  --shadow-projecting: 0 14px 34px rgba(0, 0, 0, 0.38);
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.28);
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.32);
+  --shadow-base: 0 2px 4px rgba(0, 0, 0, 0.28), 0 8px 24px -4px rgba(0, 0, 0, 0.44);
+  --shadow-active: 0 4px 10px rgba(0, 0, 0, 0.34), 0 16px 38px -4px rgba(0, 0, 0, 0.54);
+  --shadow-projecting: 0 8px 18px rgba(0, 0, 0, 0.38), 0 24px 54px -6px rgba(0, 0, 0, 0.62);
 
   --climate-badge-bg: color-mix(in srgb, var(--climate-accent) 16%, var(--surface-strong));
   --climate-badge-text: color-mix(in srgb, var(--climate-accent) 56%, white);
@@ -2686,6 +2730,16 @@ html[data-spw-reduce-motion="on"] {
   --spw-pre-state-fill-mix: 0.08;
   --spw-pre-state-line-mix: 0.18;
   --spw-pre-state-ink-mix: 0.62;
+
+  /* ------------------------------------------------------------------------
+     Thermodynamic Continuum — phase order parameters & substrate physics
+     tau in [0, 1] (tangibility), eta in [0, 1] (viscosity), kappa in [0, 1] (coherence)
+     ------------------------------------------------------------------------ */
+  --spw-tangibility: 0.5;
+  --spw-viscosity: 0.3;
+  --spw-coherence: 0.5;
+  --spw-edge-tension: 0;
+  --spw-phase-default: ground;
 
   /* ------------------------------------------------------------------------
      Color layering — theme-agnostic stack aliases (spend fill/ink/line/rest)
@@ -9124,9 +9178,31 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
    while keeping the fallback semantics intact.
    ========================================================================== */
 
+/* Operator palette resonance for floating section handles */
+:where(.spw-section-handle, .spw-section-handle-shell) {
+  --active-op-color: var(--semantic-accent, var(--spw-shell-chrome-accent, var(--teal, #008080)));
+}
+:where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="?"], [data-spw-handle-op="probe"], [data-spw-operator="probe"]) {
+  --active-op-color: var(--op-probe-color, #7a4fb5);
+}
+:where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="#>"], [data-spw-handle-op="frame"], [data-spw-operator="frame"]) {
+  --active-op-color: var(--op-frame-color, var(--teal, #008080));
+}
+:where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="^"], [data-spw-handle-op="object"], [data-spw-operator="object"]) {
+  --active-op-color: var(--op-object-color, var(--amber, #c07a1e));
+}
+:where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="~"], [data-spw-handle-op="ref"], [data-spw-operator="ref"]) {
+  --active-op-color: var(--op-ref-color, var(--blue, #2d68c4));
+}
+:where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="@"], [data-spw-handle-op="action"], [data-spw-operator="action"]) {
+  --active-op-color: var(--op-action-color, var(--teal-dark, #0d5f5f));
+}
+:where(.spw-section-handle, .spw-section-handle-shell):is([data-spw-handle-op*="<"], [data-spw-handle-op="topic"], [data-spw-operator="topic"]) {
+  --active-op-color: var(--op-topic-color, #227c67);
+}
+
 .spw-section-handle,
 .spw-section-handle-shell {
-  --active-op-color: var(--semantic-accent, var(--spw-shell-chrome-accent, var(--teal, #008080)));
   --spw-handle-direction-glow: 0 0 0 transparent;
   position: fixed;
   left: 50%;
@@ -9137,25 +9213,26 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
     + var(--spw-floating-menu-clearance, 0px)
   );
   transform: var(--spw-floating-handle-transform, translateX(-50%));
-  z-index: var(--spw-floating-tier-z, var(--z-floating, 100));
+  z-index: var(--spw-floating-tier-z, var(--z-handle, var(--layer-handle, 150)));
 
   display: none;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.45rem;
   min-height: var(--touch-target-compact, 2.25rem);
   max-width: var(--spw-floating-handle-max-inline-size, calc(100vw - 2rem));
-  padding: 0.36rem 0.8rem;
+  padding: 0.36rem 0.84rem;
 
   border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--semantic-accent, var(--active-op-color, var(--teal, #008080))) 28%, transparent);
+  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 32%, var(--card-border, rgba(0, 0, 0, 0.12)));
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.22), transparent 62%),
-    color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.94)) 92%, transparent);
-  backdrop-filter: blur(10px) saturate(1.08);
-  -webkit-backdrop-filter: blur(10px) saturate(1.08);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.28), transparent 62%),
+    color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.94)) 93%, var(--active-op-color) 4%);
+  backdrop-filter: blur(14px) saturate(1.15);
+  -webkit-backdrop-filter: blur(14px) saturate(1.15);
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.38) inset,
-    0 6px 18px color-mix(in srgb, var(--semantic-accent, var(--active-op-color, var(--teal, #008080))) 10%, rgba(0, 0, 0, 0.08)),
+    0 1px 0 rgba(255, 255, 255, 0.45) inset,
+    0 8px 24px -4px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 14%, rgba(0, 0, 0, 0.12)),
+    0 2px 6px -1px rgba(0, 0, 0, 0.06),
     var(--spw-handle-direction-glow);
 
   color: var(--ink, rgba(14, 18, 20, 0.92));
@@ -9170,16 +9247,28 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
   opacity: 0;
   pointer-events: none;
   transition:
-    opacity 140ms var(--ease-settle, ease),
-    transform 140ms var(--ease-settle, ease),
-    border-color 140ms var(--ease-settle, ease);
+    opacity 240ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 240ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 240ms ease,
+    box-shadow 240ms ease;
 }
 
 .spw-section-handle[data-spw-handle-state="visible"],
 .spw-section-handle-shell[data-spw-handle-state="visible"] {
-  opacity: 1;
+  opacity: 0.92;
   pointer-events: auto;
   transform: var(--spw-floating-handle-transform, translateX(-50%)) translateY(0);
+}
+
+.spw-section-handle[data-spw-handle-state="visible"]:is(:hover, :focus-visible, :focus-within),
+.spw-section-handle-shell[data-spw-handle-state="visible"]:is(:hover, :focus-visible, :focus-within) {
+  opacity: 1;
+  transform: var(--spw-floating-handle-transform, translateX(-50%)) translateY(-1px) scale(1.015);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.6) inset,
+    0 12px 32px -4px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 22%, rgba(0, 0, 0, 0.16)),
+    0 4px 12px -2px rgba(0, 0, 0, 0.08),
+    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 35%, transparent);
 }
 
 .spw-section-handle[data-spw-handle-state="hidden"],
@@ -9190,21 +9279,20 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
 }
 
 .spw-section-handle .spw-section-handle__op {
-  color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 82%, var(--ink));
+  color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 88%, var(--ink));
   font-weight: 600;
 }
 
 .spw-section-handle .spw-section-handle__label {
-  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  color: var(--ink-soft, rgba(14, 18, 20, 0.72));
   font-weight: 500;
   max-width: min(40ch, 64vw);
   overflow: hidden;
   text-overflow: ellipsis;
-  /* flourish: cauldron/section label settle — pairs attention-architecture measure/flourish roles */
   transition:
-    opacity 160ms var(--ease-settle, ease),
-    transform 160ms var(--ease-settle, ease),
-    color 160ms var(--ease-settle, ease);
+    opacity 180ms var(--ease-settle, ease),
+    transform 180ms var(--ease-settle, ease),
+    color 180ms var(--ease-settle, ease);
 }
 
 /* flourish:data-spw-cauldron-resonance — soft operator echo without layout thrash */
@@ -13741,6 +13829,51 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
     transform: none !important;
   }
 }
+
+/* ==========================================================================
+   19. Semantic Fixity, Phase-Field Continuum & Tangibility Gradients
+   --------------------------------------------------------------------------
+   Linguistic flow and metamorphic snippets grounded in physical phase space:
+   - Fixity tiers (fixed, stable, tending, experimental)
+   - Phase States (ground, fluid, plastic, lattice, radiant, membrane)
+   - Continuous Tangibility Gradients (data-spw-tangibility)
+   - Prairie Succession (spore, root, cluster, canopy)
+   ========================================================================== */
+
+/* Fixity Tiers */
+:where([data-spw-fixity="fixed"]) {
+  --spw-fixity-border: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 42%, var(--ink, #000) 24%);
+  border-inline-start: 2px solid var(--spw-fixity-border);
+}
+
+:where([data-spw-fixity="stable"]) {
+  --spw-fixity-border: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 28%, transparent);
+  border-inline-start: 1.5px solid var(--spw-fixity-border);
+}
+
+:where([data-spw-fixity="tending"]) {
+  --spw-fixity-border: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 32%, transparent);
+  border-inline-start: 1.5px dashed var(--spw-fixity-border);
+}
+
+:where([data-spw-fixity="experimental"]) {
+  --spw-fixity-border: color-mix(in srgb, var(--op-probe-color, #8f5cff) 36%, transparent);
+  border-inline-start: 1.5px dotted var(--spw-fixity-border);
+}
+
+/* Phase-Field Continuum (Ground, Fluid, Plastic, Lattice, Radiant, Membrane) */
+:where([data-spw-phase="ground"], [data-spw-element="earth"])    { --active-op-color: var(--op-frame-color, var(--teal, #008080)); --spw-tangibility: 0.95; }
+:where([data-spw-phase="fluid"], [data-spw-element="water"])     { --active-op-color: var(--op-ref-color, var(--blue, #2d68c4)); --spw-tangibility: 0.35; }
+:where([data-spw-phase="radiant"], [data-spw-element="air"])     { --active-op-color: var(--op-probe-color, #7a4fb5); --spw-tangibility: 0.15; }
+:where([data-spw-phase="plastic"], [data-spw-element="fire"])    { --active-op-color: var(--op-action-color, var(--teal-dark, #0d5f5f)); --spw-tangibility: 0.55; }
+:where([data-spw-phase="lattice"], [data-spw-element="metal"])   { --active-op-color: var(--op-object-color, var(--amber, #c07a1e)); --spw-tangibility: 0.75; }
+:where([data-spw-phase="membrane"], [data-spw-element="wood"])   { --active-op-color: var(--op-topic-color, #227c67); --spw-tangibility: 0.50; }
+
+/* Prairie Succession */
+:where([data-spw-succession="canopy"]) { font-weight: 600; }
+:where([data-spw-succession="cluster"]) { font-weight: 550; }
+:where([data-spw-succession="root"]) { font-weight: 500; }
+:where([data-spw-succession="spore"]) { font-weight: 450; opacity: 0.88; }
 }
 
 /* /public/css/components/foundation.css */
@@ -15851,18 +15984,18 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
   background:
     linear-gradient(
       180deg,
-      color-mix(in srgb, var(--component-route-accent) 5%, transparent) 0%,
+      color-mix(in srgb, var(--component-route-accent) calc(3% + (4% * (1 - var(--spw-tangibility, 0.5)))), transparent) 0%,
       transparent 22%
     ),
-    color-mix(in srgb, var(--component-surface-strong) 95%, var(--component-route-accent) 5%);
+    color-mix(in srgb, var(--component-surface-strong) calc(88% + (10% * var(--spw-tangibility, 0.5))), var(--component-route-accent) 5%);
   box-shadow: var(--component-shadow);
 
   /* Interaction */
   transition:
     opacity 220ms var(--ease-settle, ease),
-    background var(--component-transition-deliberate),
-    border-color var(--component-transition-base),
-    box-shadow var(--component-transition-deliberate),
+    background calc(var(--component-transition-deliberate) * (0.8 + (0.4 * var(--spw-viscosity, 0.3)))),
+    border-color calc(var(--component-transition-base) * (0.8 + (0.4 * var(--spw-viscosity, 0.3)))),
+    box-shadow calc(var(--component-transition-deliberate) * (0.8 + (0.4 * var(--spw-viscosity, 0.3)))),
     transform var(--component-transition-fast);
 }
 
@@ -22652,14 +22785,35 @@ html[data-spw-popup-posture="expressive"] .spw-parallel-nav {
 :where([data-spw-floating-chrome="true"]) {
   --chrome-pad: 0.45rem;
   --chrome-font: 0.82rem;
-  --chrome-gap: 0.35rem;
+  --chrome-gap: 0.38rem;
   font-size: var(--chrome-font);
   padding: var(--chrome-pad);
+  border-radius: var(--shape-control, 0.78rem);
+  backdrop-filter: blur(14px) saturate(1.12);
+  -webkit-backdrop-filter: blur(14px) saturate(1.12);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.35) inset,
+    0 8px 24px -4px rgba(0, 0, 0, 0.12),
+    0 2px 6px -1px rgba(0, 0, 0, 0.06);
+  transition:
+    opacity 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    scale 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 220ms ease;
 }
+
+:where([data-spw-floating-chrome="true"]:is([data-spw-chrome-role="state-inspector"], [data-spw-chrome-role="section-handle"], [data-spw-chrome-role="surface-map"])) {
+  opacity: 0.92;
+}
+
+:where([data-spw-floating-chrome="true"]:is([data-spw-chrome-role="state-inspector"], [data-spw-chrome-role="section-handle"], [data-spw-chrome-role="surface-map"])):is(:hover, :focus-within) {
+  opacity: 1;
+}
+
 :where([data-spw-floating-chrome="true"][data-spw-enhancement-level="minimal"]) {
   --chrome-pad: 0.32rem;
   --chrome-font: 0.76rem;
-  opacity: 0.9;
+  opacity: 0.85;
 }
 
 :root[data-spw-floating-chrome-competition="stacked"] {
@@ -25878,6 +26032,10 @@ html:has(body[data-spw-page-family])::before {
        html:has(body[data-spw-page-family="coordination"]),
        html:has(body[data-spw-page-family="policy"]),
        html:has(body[data-spw-page-family="membership"])) {
+  --spw-tangibility: 0.95;
+  --spw-viscosity: 0.50;
+  --spw-coherence: 0.90;
+  --spw-phase-default: ground;
   --spw-paper-motif-image:
     image-set(
       url('/public/images/assets/illustrations/papergami-architecture-display.avif') type('image/avif'),
@@ -25897,6 +26055,10 @@ html:has(body[data-spw-page-family])::before {
        html:has(body[data-spw-page-family="folio-archive"]),
        html:has(body[data-spw-page-family="town-library"]),
        html:has(body[data-spw-page-family="roadmap"])) {
+  --spw-tangibility: 0.75;
+  --spw-viscosity: 0.35;
+  --spw-coherence: 0.80;
+  --spw-phase-default: lattice;
   --spw-paper-motif-image:
     image-set(
       url('/public/images/assets/illustrations/papergami-collage-display.avif') type('image/avif'),
@@ -25911,6 +26073,11 @@ html:has(body[data-spw-page-family])::before {
        html:has(body[data-spw-page-family="experiment-lab"]),
        html:has(body[data-spw-page-family="workshop"]),
        html:has(body[data-spw-page-family="proof-cards"])) {
+  --spw-tangibility: 0.40;
+  --spw-viscosity: 0.15;
+  --spw-coherence: 0.70;
+  --spw-regional-lighting-bias: 1.25;
+  --spw-phase-default: radiant;
   --spw-paper-motif-image:
     image-set(
       url('/public/images/assets/illustrations/papergami-cubes-display.avif') type('image/avif'),
@@ -25925,6 +26092,10 @@ html:has(body[data-spw-page-family])::before {
        html:has(body[data-spw-page-family="care-interface"]),
        html:has(body[data-spw-page-family="practice-bed"]),
        html:has(body[data-spw-page-family="studio"])) {
+  --spw-tangibility: 0.65;
+  --spw-viscosity: 0.60;
+  --spw-coherence: 0.55;
+  --spw-phase-default: plastic;
   --spw-paper-motif-image:
     image-set(
       url('/public/images/assets/illustrations/papergami-botanical-display.avif') type('image/avif'),
@@ -25942,6 +26113,10 @@ html:has(body[data-spw-page-family])::before {
        html:has(body[data-spw-page-family="topic"]),
        html:has(body[data-spw-page-family="topic-hub"]),
        html:has(body[data-spw-page-family="topic-stub"])) {
+  --spw-tangibility: 0.35;
+  --spw-viscosity: 0.25;
+  --spw-coherence: 0.60;
+  --spw-phase-default: fluid;
   --spw-paper-motif-image:
     image-set(
       url('/public/images/assets/illustrations/papergami-kinetic-display.avif') type('image/avif'),
@@ -25954,6 +26129,10 @@ html:has(body[data-spw-page-family])::before {
        html:has(body[data-spw-page-family="ontology"]),
        html:has(body[data-spw-page-family="logic"]),
        html:has(body[data-spw-page-family="concept"])) {
+  --spw-tangibility: 0.50;
+  --spw-viscosity: 0.40;
+  --spw-coherence: 0.85;
+  --spw-phase-default: membrane;
   --spw-paper-motif-image:
     image-set(
       url('/public/images/assets/illustrations/papergami-cognitive-display.avif') type('image/avif'),
@@ -25967,6 +26146,10 @@ html:has(body[data-spw-page-family])::before {
        html:has(body[data-spw-page-family="surface"]),
        html:has(body[data-spw-page-family="canvas"]),
        html:has(body[data-spw-page-family="grid"])) {
+  --spw-tangibility: 0.85;
+  --spw-viscosity: 0.45;
+  --spw-coherence: 0.88;
+  --spw-phase-default: ground;
   --spw-paper-motif-image:
     image-set(
       url('/public/images/assets/illustrations/papergami-layout-display.avif') type('image/avif'),
@@ -26948,6 +27131,43 @@ html[data-spw-theme-pack="electric-studio"] {
     inset-block-start: 3.5rem;
     inset-inline-start: 30%;
     border-color: color-mix(in srgb, var(--active-op-color, #008080) 40%, var(--line, rgba(14, 18, 20, 0.14)));
+}
+
+/* ─── Edge membrane & page interaction semantics ────────────────────────── */
+
+:where(.site-frame, .frame-card, [data-spw-edge-gravity]) {
+    --spw-edge-tension: 0;
+}
+
+:where(.site-frame, .frame-card, [data-spw-edge-gravity]):hover {
+    --spw-edge-tension: 0.72;
+    border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) calc(var(--spw-edge-tension, 0.72) * 36%), var(--line, rgba(14, 18, 20, 0.14)));
+}
+
+:where(html[data-spw-scroll-band="top"]) body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--active-op-color, #008080) 44%, transparent), transparent);
+    pointer-events: none;
+    z-index: 120;
+    opacity: 0.88;
+}
+
+:where(html[data-spw-scroll-band="deep"]) body::after {
+    content: "";
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--op-object-color, #a67c00) 36%, transparent), transparent);
+    pointer-events: none;
+    z-index: 120;
+    opacity: 0.82;
 }
 }
 
@@ -31037,6 +31257,53 @@ html[data-spw-learnability-resonance] :where(
   );
 }
 
+/* ==========================================================================
+   Phase-Field Planes & Cauldron Spell Perceptual Bias
+   --------------------------------------------------------------------------
+   Semantic planes mapped to the thermodynamic / morphogenetic continuum:
+   - Ground Metric Plane (coordinate bounds, mass, invariant frame #>)
+   - Fluid Flux Plane (vector flow, transition potential ~)
+   - Plastic Morphogenetic Plane (adaptive matter, interaction commit @ !)
+   - Crystalline Lattice Plane (order parameter, discrete symmetry ^)
+   - Radiant Plasma Plane (entropy, probability density, wonder ?)
+   - Topological Membrane Plane (interfaces, semantic envelopes < >)
+   ========================================================================== */
+
+/* Cauldron Phase-Condensate Perceptual Tint on <html> */
+html[data-spw-cauldron-phase="radiant"] {
+  --spw-spell-perceptual-tint: var(--op-probe-color, hsl(268 54% 44%));
+  --spw-regional-lighting-bias: 1.15;
+}
+html[data-spw-cauldron-phase="fluid"] {
+  --spw-spell-perceptual-tint: var(--op-ref-color, hsl(214 66% 40%));
+  --spw-regional-lighting-bias: 1.08;
+}
+html[data-spw-cauldron-phase="plastic"] {
+  --spw-spell-perceptual-tint: var(--op-action-color, hsl(176 74% 24%));
+  --spw-regional-lighting-bias: 1.12;
+}
+html[data-spw-cauldron-phase="lattice"] {
+  --spw-spell-perceptual-tint: var(--op-object-color, hsl(36 82% 38%));
+  --spw-regional-lighting-bias: 1.06;
+}
+html[data-spw-cauldron-phase="ground"] {
+  --spw-spell-perceptual-tint: var(--op-frame-color, hsl(180 74% 28%));
+  --spw-regional-lighting-bias: 1.04;
+}
+html[data-spw-cauldron-phase="membrane"] {
+  --spw-spell-perceptual-tint: var(--op-topic-color, hsl(168 62% 30%));
+  --spw-regional-lighting-bias: 1.10;
+}
+
+/* Regional Activation Atmosphere */
+:where(section[data-spw-region], [data-spw-kind="region"], .site-frame):is(:focus-within, [data-state~="active"], [data-spw-active="true"]) {
+  background-image: radial-gradient(
+    circle at var(--mouse-x, 50%) var(--mouse-y, 30%),
+    color-mix(in srgb, var(--spw-spell-perceptual-tint, var(--active-op-color)) calc(9% * var(--spw-regional-lighting-bias, 1)), transparent) 0%,
+    transparent 72%
+  );
+}
+
 html[data-spw-color-tuner="soft"] {
   --palette-depth-strength: 0.72;
   --pigment-lighting-guard: 0.22;
@@ -35098,6 +35365,76 @@ html[data-spw-debug-mode="on"] :where(.spw-component-tag, .spw-guide-chip)[data-
   background: color-mix(in srgb, var(--surface-strong, #fff) 90%, transparent);
   color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 88%, var(--active-op-color, var(--teal)) 12%);
 }
+
+/* ==========================================================================
+   Spw expression badges & embedded definition component support
+   ========================================================================== */
+
+.spw-expression-badge {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.28em;
+  padding: 0.15rem 0.55rem;
+  border-radius: var(--shape-control, 0.78rem);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 92%, var(--active-op-color, var(--teal, #008080)) 8%);
+  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 22%, transparent);
+  color: var(--ink, rgba(14, 18, 20, 0.92));
+  font-family: var(--font-mono, monospace);
+  font-size: var(--text-size-label, 0.74rem);
+  line-height: 1.2;
+  white-space: nowrap;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.42), var(--shadow-subtle, 0 1px 2px rgba(0, 0, 0, 0.04));
+  transition:
+    border-color var(--duration-fast, 140ms) ease,
+    background var(--duration-fast, 140ms) ease,
+    transform var(--duration-fast, 140ms) ease,
+    box-shadow var(--duration-fast, 140ms) ease;
+}
+
+.spw-expression-badge:is(:hover, :focus-visible) {
+  border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 48%, transparent);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 86%, var(--active-op-color, var(--teal, #008080)) 14%);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 16%, transparent),
+    var(--shadow-base, 0 2px 8px rgba(0, 0, 0, 0.06));
+}
+
+.spw-expression-subject {
+  font-weight: 600;
+  color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 88%, var(--active-op-color, var(--teal, #008080)) 12%);
+}
+
+.spw-expression-mode {
+  color: var(--op-object-color, #a67c00);
+  opacity: 0.88;
+}
+
+.spw-expression-part {
+  color: var(--op-ref-color, #1d57a3);
+}
+
+.spw-expression-phase {
+  color: var(--op-probe-color, #6a3fb8);
+  font-style: italic;
+}
+
+/* Copy flash feedback animation */
+:where([data-spw-copied-state="flashed"]) {
+  outline: 2px solid var(--active-op-color, var(--teal, #008080));
+  outline-offset: 3px;
+  animation: spwCopyFlash 580ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes spwCopyFlash {
+  0% {
+    transform: scale(1.02);
+    box-shadow: 0 0 16px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 45%, transparent);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: none;
+  }
+}
 }
 
 /* /public/css/handles/operators/attention-states.css */
@@ -38747,7 +39084,7 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
   --spw-debug-layer-color: #d23669;
 
   /* Local tokens */
-  --material-depth-opacity: var(--material-depth-opacity-2);
+  --material-depth-opacity: calc(0.72 + (0.26 * var(--spw-tangibility, 0.5)));
   --material-local-surface:
     color-mix(
       in oklab,
@@ -38755,8 +39092,10 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
       transparent
     );
   --material-local-background: var(--material-local-surface);
-  --material-local-border-color: var(--material-line);
+  --material-local-border-color: color-mix(in oklab, var(--material-line) calc(100% * var(--spw-coherence, 0.5)), var(--material-prime-color) calc(18% * (1 - var(--spw-coherence, 0.5))));
   --material-local-shadow: var(--material-shadow-rest);
+  --material-local-duration-base: calc(140ms + (240ms * var(--spw-viscosity, 0.3)));
+  --material-local-duration-fast: calc(90ms + (120ms * var(--spw-viscosity, 0.3)));
 
   /* Typography */
   color: var(--material-ink);
@@ -38767,34 +39106,38 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
   outline: 1px solid transparent;
   outline-offset: 2px;
   box-shadow:
+    var(--material-highlight-inset),
     var(--material-local-shadow),
     var(--interaction-glow);
 
   /* Interaction */
   transition:
-    transform    var(--material-duration-fast) var(--material-lift-ease),
-    box-shadow   var(--material-duration-base) var(--material-settle-ease),
-    border-color var(--material-duration-base) var(--material-glide-ease),
-    background   var(--material-duration-base) var(--material-glide-ease),
-    color        var(--material-duration-fast) var(--material-glide-ease),
-    outline-color var(--material-duration-fast) var(--material-glide-ease);
+    transform    var(--material-local-duration-fast) var(--material-lift-ease),
+    box-shadow   var(--material-local-duration-base) var(--material-settle-ease),
+    border-color var(--material-local-duration-base) var(--material-glide-ease),
+    background   var(--material-local-duration-base) var(--material-glide-ease),
+    color        var(--material-local-duration-fast) var(--material-glide-ease),
+    outline-color var(--material-local-duration-fast) var(--material-glide-ease);
 
   &:hover {
     --interaction-excitement: 0.08;
-    --material-local-border-color: color-mix(in oklab, var(--material-prime-color) 18%, var(--material-line));
+    --material-local-border-color: color-mix(in oklab, var(--material-prime-color) 24%, var(--material-line));
   }
 
-  &:focus-visible {
+  &:focus-visible,
+  &:focus-within {
     --interaction-excitement: 0.16;
-    --material-local-border-color: color-mix(in oklab, var(--material-prime-color) 30%, var(--material-line));
+    --material-local-border-color: color-mix(in oklab, var(--material-prime-color) 38%, var(--material-line));
     outline-color: color-mix(in oklab, var(--material-prime-color) 28%, transparent);
   }
 
-  &[data-state~="active"] {
+  &[data-state~="active"],
+  &[data-spw-active="true"] {
     --interaction-excitement: 0.24;
-    --material-local-border-color: color-mix(in oklab, var(--material-prime-color) 34%, var(--material-line));
+    --material-local-border-color: color-mix(in oklab, var(--material-prime-color) 44%, var(--material-line));
     --material-local-shadow: var(--material-shadow-lift);
-    --interaction-glow: 0 0 0 1px color-mix(in oklab, var(--material-prime-color) 12%, transparent);
+    --interaction-glow: 0 0 0 1px color-mix(in oklab, var(--material-prime-color) 16%, transparent),
+      0 4px 20px -2px color-mix(in oklab, var(--material-prime-color) calc(14% * var(--spw-regional-lighting-bias, 1)), transparent);
   }
 
   &[data-spw-attention="dimmed"] {

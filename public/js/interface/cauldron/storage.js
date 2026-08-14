@@ -8,24 +8,63 @@ export function inferOperator(expression = '') {
   return splitOperatorExpression(expression).prefix;
 }
 
+export function inferPhaseState(operator = '', explicit = '') {
+  if (explicit) {
+    const norm = String(explicit).toLowerCase();
+    if (norm === 'earth') return 'ground';
+    if (norm === 'water') return 'fluid';
+    if (norm === 'air') return 'radiant';
+    if (norm === 'fire') return 'plastic';
+    if (norm === 'metal') return 'lattice';
+    if (norm === 'wood') return 'membrane';
+    return norm;
+  }
+  if (operator === '#>' || operator === 'frame') return 'ground';
+  if (operator === '~' || operator === 'ref') return 'fluid';
+  if (operator === '?' || operator === 'probe') return 'radiant';
+  if (operator === '!' || operator === '@' || operator === 'action') return 'plastic';
+  if (operator === '^' || operator === 'object') return 'lattice';
+  if (operator === '<' || operator === '>' || operator === 'topic' || operator === 'surface') return 'membrane';
+  return 'ground';
+}
+
+export const inferElement = inferPhaseState;
+
+export function inferTangibility(operator = '', phase = '') {
+  const p = phase || inferPhaseState(operator);
+  if (p === 'radiant') return 0.15;
+  if (p === 'fluid') return 0.35;
+  if (p === 'plastic') return 0.55;
+  if (p === 'lattice') return 0.75;
+  if (p === 'ground') return 0.95;
+  if (p === 'membrane') return 0.50;
+  return 0.50;
+}
+
+export function computeSuccession(ingredient) {
+  const fixity = ingredient?.fixity || ingredient?.payload?.fixity || 'tending';
+  if (fixity === 'fixed') return 'canopy';
+  if (fixity === 'stable') return 'cluster';
+  if (fixity === 'tending') return 'root';
+  return 'spore';
+}
+
 /**
  * The sigil payload already on the element a fragment was gathered from.
  *
- * operator-interactions.js writes data-spw-sigil-payload-{scope,page,family,
- * role,topic} and data-spw-sigil-region-* onto whatever the reader is touching,
- * but capture only ever kept `origin` — the bare surface name. So an ingredient
- * remembered *that* it came from /about/website/ and nothing about what it was
- * there: which region held it, what role that page plays, which topic it sat
- * under. Everything needed to say so was already on the node.
- *
  * Reads the nearest payload-bearing ancestor, then fills gaps from the page's
- * own declarations, so a fragment gathered before any sigil transition still
- * carries page-level context. Attribute reads only — no layout, no measurement.
+ * own declarations, capturing fixity, thermodynamic phase, and prairie biome context.
  */
 export function readSigilPayload(element) {
   const body = typeof document !== 'undefined' ? document.body : null;
-  const host = element?.closest?.('[data-spw-sigil-payload-page], [data-spw-sigil-payload-scope]') || null;
+  const host = element?.closest?.('[data-spw-sigil-payload-page], [data-spw-sigil-payload-scope], [data-spw-fixity], [data-spw-element], [data-spw-phase], [data-spw-biome]') || null;
   const from = (node, key) => node?.dataset?.[key] || '';
+
+  const sigil = inferOperator(element?.textContent || '');
+  const explicitFixity = from(host, 'spwFixity') || element?.closest?.('[data-spw-fixity]')?.dataset?.spwFixity || 'tending';
+  const explicitPhase = from(host, 'spwPhase') || from(host, 'spwElement') || element?.closest?.('[data-spw-phase]')?.dataset?.spwPhase || inferPhaseState(sigil);
+  const tangibility = inferTangibility(sigil, explicitPhase);
+  const biome = from(host, 'spwBiome') || element?.closest?.('[data-spw-biome]')?.dataset?.spwBiome || from(host, 'spwRegion') || from(body, 'spwContext') || 'prairie';
 
   const payload = {
     scope: from(host, 'spwSigilPayloadScope'),
@@ -35,11 +74,12 @@ export function readSigilPayload(element) {
     topic: from(host, 'spwSigilPayloadTopic') || from(body, 'spwContext'),
     region: from(host, 'spwSigilRegion')
       || element?.closest?.('[data-spw-region]')?.dataset?.spwRegion || '',
-    // The shell the fragment was standing in when it was taken. Arrival
-    // electrostatics bands a page by liminality; a fragment gathered at `deep`
-    // was earned differently from one picked up at `entry`, and a spell that
-    // forgets which is which cannot honour the difference on replay.
     liminality: element?.closest?.('[data-spw-liminality]')?.dataset?.spwLiminality || '',
+    fixity: explicitFixity,
+    phase: explicitPhase,
+    element: explicitPhase,
+    tangibility,
+    biome,
   };
 
   return Object.values(payload).some(Boolean) ? payload : null;
@@ -47,29 +87,6 @@ export function readSigilPayload(element) {
 
 /**
  * Render an ingredient in native Spw rather than as a bare label.
- *
- * The site's own copy grammar is `subject[mode]{parts}` — see the 50
- * data-spw-semantic-expression declarations on the home page. An ingredient has
- * all three and was displaying none of them: the operator sigil carries the
- * discharge kind, the payload role is the mode it was read under, and family /
- * topic / region are the parts that locate it. Composing them gives a fragment
- * that reads as an expression in the same language as the page it came from.
- *
- *   ~orient[media-field-guide]{about.website.deep}
- *
- * Two parses, and the difference is worth reporting rather than hiding:
- *
- *   naive       the string alone. splitOperatorExpression finds a sigil and a
- *               nucleus; nothing else is known, so the result is whatever the
- *               text happened to say.
- *   integrated  the string read against the context it was taken from. The
- *               payload supplies the mode and the locating parts, so the
- *               expression states where it came from rather than only what it
- *               said.
- *
- * A consumer that cannot tell these apart will treat a guess as a grounding.
- * That was the same mistake spw-integrity.mjs made with a regex before it was
- * moved onto the parser, so the depth travels with the value here.
  */
 export function toSpwExpression(ingredient) {
   if (!ingredient) return { text: '', depth: 'naive' };
@@ -82,39 +99,61 @@ export function toSpwExpression(ingredient) {
   if (!payload) return { text: `${sigil}${nucleus}`, depth: 'naive' };
 
   const mode = payload.role || payload.scope || '';
-  const parts = [payload.family, payload.topic, payload.region, payload.liminality]
+  const parts = [payload.family, payload.topic, payload.region, payload.liminality, payload.phase || payload.element]
     .filter(Boolean)
-    // Distinct parts only — family and topic are frequently the same token, and
-    // `{about.about}` reads as a bug rather than as emphasis.
     .filter((part, index, all) => all.indexOf(part) === index);
 
   const text = `${sigil}${nucleus}`
     + (mode ? `[${mode}]` : '')
     + (parts.length ? `{${parts.join('.')}}` : '');
 
-  // Payload present but empty of anything locating is still only a naive read.
   return { text, depth: mode || parts.length ? 'integrated' : 'naive' };
 }
 
 /**
  * Normalize any stored/captured item into an ingredient.
  * Mirror shape: SpwIngredient in types/spw.d.ts.
- * @param {string | Partial<{expression: string, label: string, operator: string, operand: string, wonder: string, capturedAt: number}> | null} item
- * @returns {{expression: string, label: string, operator?: string, operand?: string, wonder?: string, capturedAt: number} | null}
  */
 export function normalizeIngredient(item) {
   if (!item) return null;
   if (typeof item === 'string') {
     const split = splitOperatorExpression(item);
-    return { expression: item, label: item, operand: split.operand, capturedAt: Date.now() };
+    const op = split.prefix;
+    const ph = inferPhaseState(op);
+    const tang = inferTangibility(op, ph);
+    return {
+      expression: item,
+      label: item,
+      operator: op,
+      operand: split.operand,
+      phase: ph,
+      element: ph,
+      tangibility: tang,
+      fixity: 'tending',
+      biome: 'prairie',
+      succession: 'spore',
+      capturedAt: Date.now(),
+    };
   }
   const split = splitOperatorExpression(item.expression || item.label || '');
+  const op = item.operator || split.prefix;
+  const ph = item.phase || item.element || item.payload?.phase || item.payload?.element || inferPhaseState(op);
+  const tang = item.tangibility || inferTangibility(op, ph);
+  const fix = item.fixity || item.payload?.fixity || 'tending';
+  const bio = item.biome || item.payload?.biome || 'prairie';
+
   const normalized = {
     expression: item.expression || item.label || '',
     label: item.label || item.expression || '',
-    operator: item.operator || split.prefix,
+    operator: op,
     operand: item.operand || split.operand,
     wonder: item.wonder || '',
+    phase: ph,
+    element: ph,
+    tangibility: tang,
+    fixity: fix,
+    biome: bio,
+    succession: item.succession || computeSuccession({ fixity: fix }),
     capturedAt: item.capturedAt || Date.now(),
     ...item,
   };
@@ -138,6 +177,30 @@ export function getCauldron() {
     return raw.map(normalizeIngredient).filter(Boolean);
   } catch {
     return [];
+  }
+}
+
+let cauldronChannel = null;
+try {
+  if (typeof BroadcastChannel !== 'undefined') {
+    cauldronChannel = new BroadcastChannel('spw-cauldron');
+    cauldronChannel.onmessage = (event) => {
+      if (event.data?.type === 'cauldron:sync' && typeof document !== 'undefined') {
+        document.dispatchEvent(new CustomEvent('cauldron:updated', {
+          detail: { ingredients: getCauldron(), source: 'broadcast' },
+        }));
+      }
+    };
+  }
+} catch {
+  /* BroadcastChannel unsupported or restricted */
+}
+
+export function broadcastCauldronSync() {
+  try {
+    cauldronChannel?.postMessage({ type: 'cauldron:sync', timestamp: Date.now() });
+  } catch {
+    /* BroadcastChannel post error */
   }
 }
 

@@ -326,6 +326,25 @@ function inferInspectTarget(el) {
   return normalizeToken(el.dataset.spwInspect || el.id || '');
 }
 
+function inferTextVariant(el, snapshotBase = {}) {
+  if (el.dataset.spwTextVariant) return normalizeToken(el.dataset.spwTextVariant);
+
+  const text = (el.textContent || '').trim();
+  const charCount = text.length;
+  const kind = snapshotBase.kind || '';
+  const climate = document.body?.dataset?.spwClimate || document.documentElement?.dataset?.spwClimate || '';
+
+  if (climate === 'ludic' || el.dataset.spwClimate === 'ludic') return 'ludic';
+
+  if (kind === 'card' || kind === 'panel') {
+    if (charCount > 0 && charCount <= 120) return 'punchy';
+    if (charCount >= 280) return 'editorial';
+    if (snapshotBase.role === 'schema' || snapshotBase.role === 'registry' || el.querySelector('code, pre, .spec-strip')) return 'matrix';
+  }
+
+  return '';
+}
+
 function inferComponentId(el, snapshotBase = {}) {
   if (el.dataset.spwComponentId) return normalizeSlug(el.dataset.spwComponentId);
   if (el.id) return normalizeSlug(el.id);
@@ -717,6 +736,7 @@ function snapshotComponentSemantics(el, options = {}) {
     paletteDepth: interaction.paletteDepth,
     themingPosture: interaction.themingPosture,
     interactionGenome: interaction.interactionGenome,
+    textVariant: inferTextVariant(el, componentBase),
     semanticTagged: 'true',
     semanticVersion: options.semanticVersion || SEMANTIC_REGISTRY_VERSION
   };
@@ -742,6 +762,7 @@ function applySemanticSnapshot(el, snapshot, options = {}) {
   writer(el, 'spwConfigDomain', snapshot.configDomain);
   writer(el, 'spwValueLayer', snapshot.valueLayer);
   writer(el, 'spwStance', snapshot.stance);
+  if (snapshot.textVariant) writer(el, 'spwTextVariant', snapshot.textVariant);
   if (snapshot.compositionStabilitySource === 'authored') {
     writeDatasetValueIfMissing(el, 'spwCompositionStability', snapshot.compositionStability);
     writeDatasetValueIfMissing(el, 'spwCompositionStabilitySource', 'authored');

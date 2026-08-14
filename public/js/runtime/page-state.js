@@ -519,9 +519,22 @@ const readQueryRail = (name) => {
 
 const writePageHandoff = () => {
   try {
+    const docEl = document.documentElement;
+    const body = document.body;
+    const activeOperator = docEl?.dataset?.spwResonanceProbe || docEl?.dataset?.spwGroundedOperator || '';
+    const activeMode = docEl?.dataset?.spwActiveLensMode || '';
+    const activeClimate = body?.dataset?.spwClimate || document.querySelector('[data-spw-climate]')?.dataset?.spwClimate || '';
+    const activeWonder = body?.dataset?.spwWonder || docEl?.dataset?.spwFieldWonder || '';
+    const activeGenome = body?.dataset?.spwGenome || document.querySelector('[data-spw-genome]')?.dataset?.spwGenome || '';
+
     sessionStorage.setItem(PAGE_HANDOFF_KEY, JSON.stringify({
       path: window.location.pathname,
       at: Date.now(),
+      operator: activeOperator,
+      lensMode: activeMode,
+      climate: activeClimate,
+      wonder: activeWonder,
+      genome: activeGenome,
     }));
   } catch {
     /* handoff is residue, never load-bearing */
@@ -550,6 +563,47 @@ const consumePageHandoff = () => {
 export const resolveArrivalKind = () => {
   const handoff = consumePageHandoff();
   if (!handoff) return PAGE_ARRIVAL.ENTERING;
+
+  try {
+    const docEl = document.documentElement;
+    const body = document.body;
+
+    if (handoff.operator) {
+      writeDatasetValue(docEl, 'spwTransferredOperator', handoff.operator);
+      writeDatasetValue(docEl, 'spwTransitMomentum', 'active');
+    }
+    if (handoff.lensMode) {
+      writeDatasetValue(docEl, 'spwTransferredMode', handoff.lensMode);
+    }
+    if (handoff.climate) {
+      writeDatasetValue(docEl, 'spwTransferredClimate', handoff.climate);
+    }
+
+    // Evaluate Spw Genomic Resonance between departure and arrival pages
+    const currentClimate = body?.dataset?.spwClimate || document.querySelector('[data-spw-climate]')?.dataset?.spwClimate || '';
+    const currentWonder = body?.dataset?.spwWonder || docEl?.dataset?.spwFieldWonder || '';
+    const currentGenome = body?.dataset?.spwGenome || document.querySelector('[data-spw-genome]')?.dataset?.spwGenome || '';
+    const currentBrace = document.querySelector('[data-spw-form="brace"]');
+
+    let resonanceMatches = 0;
+    if (handoff.climate && currentClimate && handoff.climate === currentClimate) resonanceMatches += 1;
+    if (handoff.wonder && currentWonder && handoff.wonder.split(' ').some((w) => currentWonder.includes(w))) resonanceMatches += 1;
+    if (handoff.genome && currentGenome) resonanceMatches += 1;
+    if (currentBrace) resonanceMatches += 1;
+
+    const resonanceLevel = resonanceMatches >= 2 ? 'high' : resonanceMatches === 1 ? 'medium' : 'neutral';
+    writeDatasetValue(docEl, 'spwGenomicResonance', resonanceLevel);
+
+    // Schedule decay of arrival momentum so state gracefully settles
+    window.setTimeout(() => {
+      if (docEl.dataset.spwTransitMomentum === 'active') {
+        writeDatasetValue(docEl, 'spwTransitMomentum', 'settled');
+      }
+    }, 2200);
+  } catch {
+    /* non-blocking enhancement */
+  }
+
   return handoff.path === window.location.pathname ? PAGE_ARRIVAL.RESTORED : PAGE_ARRIVAL.RETURNING;
 };
 

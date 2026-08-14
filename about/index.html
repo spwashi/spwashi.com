@@ -73,34 +73,31 @@
       aria-labelledby="about-title">
 
     <section
-        class="site-frame site-hero"
+        class="spw-frame spw-hero site-hero"
         id="about-frame"
         aria-labelledby="about-title"
         aria-describedby="about-orientation-note"
-        data-spw-frame="hero"
-        data-spw-kind="frame"
-        data-spw-role="orientation"
-        data-spw-context="reading"
         data-spw-form="brace"
-        data-spw-liminality="entry" data-spw-wonder="orientation consequence resonance" data-spw-affordance="orient"
-        data-spw-category-family="nook" data-spw-locality="high" data-spw-consequence="framing"
-        data-spw-promptability="visible" data-spw-collectability="some" data-spw-seed="page_about_about__about_frame"
+        data-spw-climate="studio"
+        data-spw-phase="ground"
+        data-spw-tangibility="0.95"
+        data-spw-coherence="0.90"
+        data-spw-fixity="stable"
+        data-spw-biome="sanctuary"
+        data-spw-definition="#>about_frame[reading]{kernel.lattice.hospitality} #:fixity #!stable"
+        data-spw-genome="brace:objective|sigil:#&gt;about_frame|climate:studio|mode:reading|wonder:orientation"
         data-spw-feature="about-identity-entry"
-        data-spw-attentional-weight="1.25"
-        data-spw-gradient-boundary="hard"
-        data-spw-composition-stability="anchored"
-        data-spw-reading-cue="Read as the creator kernel before the rest of the page branches."
-        data-spw-input="creator identity and current practice"
-        data-spw-operation="orient"
-        data-spw-return="a stable place to stand before following routes"
-        data-spw-tone="clear field-guide opening"
-        data-spw-context-relevance="readable practical attention structure local hospitality funding membership records coordination"
-        data-spw-related-routes="/|/now/|/cards/|/membership/|/coordination/|/research/|/about/plans/|/topics/craft/|/topics/software/|/play/|/blog/|/services/|/settings/"
-        data-spw-region-purpose="public-spine"
-        data-spw-region-role="entry-spine">
+        data-spw-wonder="orientation consequence resonance"
+        data-spw-related-routes="/|/now/|/cards/|/membership/|/coordination/|/research/|/about/plans/|/topics/craft/|/topics/software/|/play/|/blog/|/services/|/settings/">
         <header class="frame-topline" data-spw-slot="header">
             <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
             <a class="frame-sigil" href="#about-frame" data-spw-operator="frame" data-spw-sigil="#&gt;about_frame">#&gt;about_frame</a>
+            <div class="mode-switch" role="group" aria-label="About perspective lens" data-spw-feature="about-perspective-lens">
+                <button class="frame-sigil" type="button" data-mode-group="about-lens" data-set-mode="reading" aria-pressed="true" data-spw-operator="select">.reading</button>
+                <button class="frame-sigil" type="button" data-mode-group="about-lens" data-set-mode="kernel" aria-pressed="false" data-spw-operator="select">^kernel</button>
+                <button class="frame-sigil" type="button" data-mode-group="about-lens" data-set-mode="lattice" aria-pressed="false" data-spw-operator="select">~lattice</button>
+                <button class="frame-sigil" type="button" data-mode-group="about-lens" data-set-mode="hospitality" aria-pressed="false" data-spw-operator="select">@hospitality</button>
+            </div>
             <div class="spec-strip">
                 <span class="spec-pill">small stable kernel</span>
                 <span class="spec-pill">large semantic lattice</span>
@@ -144,10 +141,6 @@
         </figure>
 
         <div class="frame-body" data-spw-slot="body">
-            <!-- Hook region: volatile, high-value call to wonder. Placed as the first interactive threshold in the hero body.
-                 Uses brace perspective lightly (objective architecture on one side, subjective lived wondering on the other)
-                 to model the kernel/lattice without expiring copy. Component diversity (operators, living-terms) for narrators,
-                 skimmers, TTS, and multimodal readers. -->
             <section
                 id="about-hook"
                 data-spw-kind="hook"
@@ -161,15 +154,46 @@
                 class="hook-call"
                 aria-label="The stable kernel and the practice of turning attention into structure"
             >
-                <p class="hook-lede">
-                    The kernel is small and stable: <span class="spw-living-term" data-spw-living-term data-spw-concept="creator-identity" tabindex="0">I build software and make art</span>. The lattice is everything I keep learning to carry around that sentence: code, pages, recipes, diagrams, stories, rooms.
-                </p>
-                <p class="hook-sub">
-                    <span data-spw-perspective="objective">Objective terminal:</span> a route structure that lets a thought re-enter cleanly after months or years.
-                    <span data-spw-perspective="subjective">Subjective terminal:</span> moving through code, vegetables, stories, and people until something useful condenses and stops wobbling.
-                </p>
+                <div class="mode-panels" data-spw-feature="about-perspective-panels">
+                    <section class="mode-panel" data-mode-group="about-lens" data-mode-panel="reading" data-spw-role="orientation" data-spw-kind="lens">
+                        <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="about[reading]{person.narrative.return}">
+                            The kernel is small and stable: <span class="spw-living-term" data-spw-living-term data-spw-concept="creator-identity" tabindex="0">I build software and make art</span>. The lattice is everything I keep learning to carry around that sentence.
+                        </p>
+                        <p class="hook-sub">
+                            <span data-spw-perspective="objective">Objective terminal:</span> a route structure that lets a thought re-enter cleanly after months or years.
+                            <span data-spw-perspective="subjective">Subjective terminal:</span> moving through code, vegetables, stories, and people until something useful condenses and stops wobbling.
+                        </p>
+                    </section>
+                    <section class="mode-panel" data-mode-group="about-lens" data-mode-panel="kernel" data-spw-role="schema" data-spw-kind="lens" hidden>
+                        <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="about[kernel]{identity.invariants.cognition}">
+                            <span class="spw-living-term" data-spw-living-term data-spw-concept="kernel" tabindex="0">^kernel</span>: The unchanging identity and metacognitive compass holding all practice together.
+                        </p>
+                        <p class="hook-sub">
+                            <span data-spw-perspective="objective">Holds:</span> core authorship, self-directed research, and persistent memory across tools.
+                            <span data-spw-perspective="subjective">First move:</span> inspect <a class="operator-chip" href="#about-origin-question" data-spw-operator="ref">~origin_question</a> or read <a class="operator-chip" href="/about/website/" data-spw-operator="frame">#&gt;website_guide</a>.
+                        </p>
+                    </section>
+                    <section class="mode-panel" data-mode-group="about-lens" data-mode-panel="lattice" data-spw-role="projection" data-spw-kind="lens" hidden>
+                        <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="about[lattice]{medium.crossing.proofs}">
+                            <span class="spw-living-term" data-spw-living-term data-spw-concept="lattice" tabindex="0">~lattice</span>: Medium crossings that turn one concept into code, print, lore, and physical artifacts.
+                        </p>
+                        <p class="hook-sub">
+                            <span data-spw-perspective="objective">Holds:</span> proof cards, design studies, tactile books, and .spw seed packages.
+                            <span data-spw-perspective="subjective">First move:</span> explore <a class="operator-chip" href="/topics/craft/" data-spw-operator="concept">&lt;craft_ramps&gt;</a> or check <a class="operator-chip" href="/about/plans/" data-spw-operator="frame">#&gt;architecture_atlas</a>.
+                        </p>
+                    </section>
+                    <section class="mode-panel" data-mode-group="about-lens" data-mode-panel="hospitality" data-spw-role="scenario" data-spw-kind="lens" hidden>
+                        <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="about[hospitality]{community.venue.repair}">
+                            <span class="spw-living-term" data-spw-living-term data-spw-concept="hospitality" tabindex="0">@hospitality</span>: A physical horizon where delicious recipes, venue service, and learning meet.
+                        </p>
+                        <p class="hook-sub">
+                            <span data-spw-perspective="objective">Holds:</span> table pacing, room reading, shared dinners, and collaborative spaces.
+                            <span data-spw-perspective="subjective">First move:</span> visit <a class="operator-chip" href="/recipes/" data-spw-operator="action">*public_kitchen</a> or <a class="operator-chip" href="/play/rpg-wednesday/" data-spw-operator="stream">~rpg_wednesday</a>.
+                        </p>
+                    </section>
+                </div>
                 <p class="hook-invitation">
-                    Read this page when you want the current shape of the question that still organizes the work. The tiny odd props are part of the weather, not the thesis.
+                    Use <kbd>[</kbd> / <kbd>]</kbd> to cycle perspective lenses, or hold any living term to prime it into active attention.
                 </p>
             </section>
 

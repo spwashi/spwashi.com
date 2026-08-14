@@ -23,8 +23,8 @@
   --site-body-font: var(--site-editorial-font);
   font-family: var(--site-editorial-font);
   font-optical-sizing: auto;
-  line-height: 1.6;
-  font-size: clamp(1.1rem, 2vw, 1.25rem); /* Fluid type for optimal reading */
+  line-height: 1.62;
+  font-size: clamp(1.1rem, 1.02rem + 0.25vw, 1.26rem); /* Fluid type for optimal reading */
   max-inline-size: 65ch; /* Ideal line length for serifs */
   margin-inline: auto; /* Center structural columns */
   background-color: var(--surface-editorial);
@@ -34,15 +34,25 @@
 :where([data-spw-typeset="editorial"] [data-spw-typeset-surface="editorial"] :is(h1, h2)) {
   font-family: var(--site-editorial-font);
   font-weight: 500;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
   font-variation-settings: "opsz" 36; /* Request display optics for large text */
   text-wrap: balance;
-  margin-block-end: 1rem;
+  margin-block-end: 0.75rem;
 }
 
 :where([data-spw-typeset="editorial"] [data-spw-typeset-surface="editorial"] :is(h3, h4)) {
   font-family: var(--site-editorial-font);
   font-weight: 600;
+  letter-spacing: -0.01em;
+  font-variation-settings: "opsz" 24;
+}
+
+:where([data-spw-typeset="editorial"] [data-spw-typeset-surface="editorial"] :is(.subheading, p.subheading)) {
+  font-family: var(--site-editorial-font);
+  font-size: 1.25em;
+  line-height: 1.45;
+  font-style: italic;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.76));
   font-variation-settings: "opsz" 24;
 }
 
@@ -55,7 +65,7 @@
 
 /* Contextual Spacing */
 :where([data-spw-typeset="editorial"] [data-spw-typeset-surface="editorial"] p + p) {
-  margin-block-start: 1.5em;
+  margin-block-start: 1.4em;
 }
 
 /* ==========================================================================

@@ -351,12 +351,12 @@ class SpwFrameNavigator {
                 this.toggle();
                 return;
             }
-            if (e.key === ']') {
+            if (e.key === '}' || (e.key === ']' && !document.activeElement?.closest?.('.spw-frame, .site-frame')?.querySelector('.mode-switch'))) {
                 e.preventDefault();
                 this.navigateFrames(1);
                 return;
             }
-            if (e.key === '[') {
+            if (e.key === '{' || (e.key === '[' && !document.activeElement?.closest?.('.spw-frame, .site-frame')?.querySelector('.mode-switch'))) {
                 e.preventDefault();
                 this.navigateFrames(-1);
                 return;

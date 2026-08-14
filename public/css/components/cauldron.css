@@ -237,6 +237,21 @@
   animation: cauldron-output-reveal 420ms ease-out 1;
 }
 
+.cauldron-ingredient {
+  transition:
+    transform var(--spw-control-transition-fast, 140ms ease),
+    background-color var(--spw-control-transition-fast, 140ms ease),
+    border-color var(--spw-control-transition-fast, 140ms ease),
+    box-shadow var(--spw-control-transition-fast, 140ms ease);
+}
+
+.cauldron-ingredient:hover,
+.cauldron-ingredient:focus-visible {
+  transform: translateY(-1px) scale(1.02);
+  border-color: color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 36%, transparent);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 12%, transparent);
+}
+
 .cauldron-ingredient.is-cauldron-ingredient-new,
 .cauldron-ingredient[data-spw-cauldron-resonance="arrived"] {
   animation: cauldron-ingredient-arrive 1.2s ease-out 1;

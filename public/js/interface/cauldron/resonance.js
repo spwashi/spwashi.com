@@ -72,10 +72,21 @@ export function syncCollectedSourceMarks(ingredients = []) {
 export function syncOperatorResonance(ingredients = []) {
   const root = document.documentElement;
   const operators = [...new Set(ingredients.map((item) => item.operator).filter(Boolean))];
+  const phases = ingredients.map((item) => item.phase || item.element).filter(Boolean);
+
   if (operators.length) {
     root.dataset.spwCauldronResonanceOperators = operators.join(' ');
   } else {
     delete root.dataset.spwCauldronResonanceOperators;
+  }
+
+  if (phases.length) {
+    const counts = {};
+    phases.forEach((p) => { counts[p] = (counts[p] || 0) + 1; });
+    const dominant = Object.keys(counts).reduce((a, b) => (counts[a] >= counts[b] ? a : b), phases[0]);
+    root.dataset.spwCauldronPhase = dominant;
+  } else {
+    delete root.dataset.spwCauldronPhase;
   }
 }
 

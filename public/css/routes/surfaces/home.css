@@ -56,9 +56,9 @@
   --home-measure: 62ch;
   --home-measure-wide: 74ch;
 
-  --home-transition-fast: var(--duration-fast, 120ms) var(--ease-mechanical, ease);
-  --home-transition-base: var(--duration-base, 180ms) var(--ease-mechanical, ease);
-  --home-transition-slow: var(--duration-deliberate, 260ms) var(--ease-mechanical, ease);
+  --home-transition-fast: calc(var(--duration-fast, 120ms) * (0.8 + (0.4 * var(--spw-viscosity, 0.3)))) var(--ease-mechanical, ease);
+  --home-transition-base: calc(var(--duration-base, 180ms) * (0.8 + (0.4 * var(--spw-viscosity, 0.3)))) var(--ease-mechanical, ease);
+  --home-transition-slow: calc(var(--duration-deliberate, 320ms) * (0.8 + (0.4 * var(--spw-viscosity, 0.3)))) var(--ease-settle, ease);
 
   --home-hero-padding: clamp(0.85rem, 2vw, 1.3rem);
   --home-frame-padding: clamp(0.95rem, 2vw, 1.35rem);
@@ -123,7 +123,7 @@ html[data-spw-color-mode="dark"] body[data-spw-surface="home"] {
       linear-gradient(135deg, color-mix(in oklab, var(--bg-field, #111) 78%, var(--home-accent-blue) 7%), var(--bg, #111));
 }
 
-:where(body[data-spw-surface="home"] main > .site-frame) {
+:where(body[data-spw-surface="home"] main > :is(.spw-frame, .site-frame)) {
   max-inline-size: var(--home-section-max);
   inline-size: min(100%, var(--home-section-max));
   margin-inline: auto;
@@ -134,12 +134,12 @@ html[data-spw-color-mode="dark"] body[data-spw-surface="home"] {
    3. Kernel hero
    ========================================================================== */
 
-:where([data-spw-feature="home-kernel-entry"].site-hero) {
+:where([data-spw-feature="home-kernel-entry"]:is(.spw-hero, .site-hero, .spw-frame, .site-frame)) {
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   align-items: start;
-  gap: clamp(0.9rem, 1.8vw, 1.35rem);
+  gap: clamp(0.9rem, 1.8cqi, 1.35rem);
   padding: var(--home-hero-padding);
   border: var(--home-surface-border);
   border-radius: var(--home-radius-lg);
@@ -164,8 +164,8 @@ html[data-spw-color-mode="dark"] body[data-spw-surface="home"] {
   overflow: clip;
 }
 
-@media (min-width: 72rem) {
-  :where([data-spw-feature="home-kernel-entry"].site-hero--split-figure) {
+@container spw-shell (min-width: 70rem), spw-frame (min-width: 60rem) {
+  :where([data-spw-feature="home-kernel-entry"]:is(.spw-hero--split-figure, .site-hero--split-figure)) {
     grid-template-columns: minmax(0, 1.08fr) minmax(14rem, 17rem);
     grid-template-areas:
       "header figure"
@@ -1405,46 +1405,12 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
 }
 
 /* Region wash/seam live in region-seats.css. Home only spends family ink. */
-:where(body[data-spw-surface="home"] .site-frame[data-spw-region="hook"]) {
+:where(body[data-spw-surface="home"] :is(.spw-frame, .site-frame)[data-spw-region="hook"]) {
   box-shadow: var(--home-shadow-active);
 }
 
-:where(body[data-spw-surface="home"] .site-frame[data-spw-attentional-weight="1.35"]) {
-  --home-region-salience: 1.35;
-}
-
-:where(body[data-spw-surface="home"] .site-frame[data-spw-attentional-weight="1.2"]) {
-  --home-region-salience: 1.2;
-}
-
-:where(body[data-spw-surface="home"] .site-frame[data-spw-attentional-weight="1.25"]) {
-  --home-region-salience: 1.25;
-}
-
-:where(body[data-spw-surface="home"] .site-frame[data-spw-attentional-weight="1.15"]) {
-  --home-region-salience: 1.15;
-}
-
-:where(body[data-spw-surface="home"] .site-frame[data-spw-attentional-weight="1.1"]) {
-  --home-region-salience: 1.1;
-}
-
-:where(body[data-spw-surface="home"] .site-frame[data-spw-attentional-weight="1.05"]) {
-  --home-region-salience: 1.05;
-}
-
-:where(body[data-spw-surface="home"] .site-frame[data-spw-attentional-weight="1"]) {
-  --home-region-salience: 1;
-}
-
-:where(body[data-spw-surface="home"] .site-frame[data-spw-attentional-weight="0.95"]) {
-  --home-region-salience: 0.95;
-  opacity: 0.98;
-}
-
-:where(body[data-spw-surface="home"] .site-frame[data-spw-attentional-weight="0.92"]) {
-  --home-region-salience: 0.92;
-  opacity: 0.97;
+:where(body[data-spw-surface="home"] :is(.spw-frame, .site-frame)) {
+  --home-region-salience: var(--spw-salience, 1);
 }
 
 :where([data-spw-feature="home-entrance-sorter"] .spw-resonance-lab [data-spw-resonance-axis]) {

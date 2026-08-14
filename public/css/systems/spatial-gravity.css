@@ -289,3 +289,40 @@
     inset-inline-start: 30%;
     border-color: color-mix(in srgb, var(--active-op-color, #008080) 40%, var(--line, rgba(14, 18, 20, 0.14)));
 }
+
+/* ─── Edge membrane & page interaction semantics ────────────────────────── */
+
+:where(.site-frame, .frame-card, [data-spw-edge-gravity]) {
+    --spw-edge-tension: 0;
+}
+
+:where(.site-frame, .frame-card, [data-spw-edge-gravity]):hover {
+    --spw-edge-tension: 0.72;
+    border-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) calc(var(--spw-edge-tension, 0.72) * 36%), var(--line, rgba(14, 18, 20, 0.14)));
+}
+
+:where(html[data-spw-scroll-band="top"]) body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--active-op-color, #008080) 44%, transparent), transparent);
+    pointer-events: none;
+    z-index: 120;
+    opacity: 0.88;
+}
+
+:where(html[data-spw-scroll-band="deep"]) body::after {
+    content: "";
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--op-object-color, #a67c00) 36%, transparent), transparent);
+    pointer-events: none;
+    z-index: 120;
+    opacity: 0.82;
+}

@@ -274,14 +274,35 @@
 :where([data-spw-floating-chrome="true"]) {
   --chrome-pad: 0.45rem;
   --chrome-font: 0.82rem;
-  --chrome-gap: 0.35rem;
+  --chrome-gap: 0.38rem;
   font-size: var(--chrome-font);
   padding: var(--chrome-pad);
+  border-radius: var(--shape-control, 0.78rem);
+  backdrop-filter: blur(14px) saturate(1.12);
+  -webkit-backdrop-filter: blur(14px) saturate(1.12);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.35) inset,
+    0 8px 24px -4px rgba(0, 0, 0, 0.12),
+    0 2px 6px -1px rgba(0, 0, 0, 0.06);
+  transition:
+    opacity 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    scale 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 220ms ease;
 }
+
+:where([data-spw-floating-chrome="true"]:is([data-spw-chrome-role="state-inspector"], [data-spw-chrome-role="section-handle"], [data-spw-chrome-role="surface-map"])) {
+  opacity: 0.92;
+}
+
+:where([data-spw-floating-chrome="true"]:is([data-spw-chrome-role="state-inspector"], [data-spw-chrome-role="section-handle"], [data-spw-chrome-role="surface-map"])):is(:hover, :focus-within) {
+  opacity: 1;
+}
+
 :where([data-spw-floating-chrome="true"][data-spw-enhancement-level="minimal"]) {
   --chrome-pad: 0.32rem;
   --chrome-font: 0.76rem;
-  opacity: 0.9;
+  opacity: 0.85;
 }
 
 :root[data-spw-floating-chrome-competition="stacked"] {

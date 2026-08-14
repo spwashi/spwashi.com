@@ -46,9 +46,15 @@
     ></spw-site-header>
     <main data-spw-kind="surface" data-spw-role="reference" data-spw-context="play" data-spw-seed="page_play_play__main_surface" data-spw-wonder="projection resonance consequence" id="main-content" tabindex="-1" aria-labelledby="play-title">
         <article>
-            <section class="site-frame site-hero" id="play-surface" data-spw-frame="hero" data-spw-kind="frame" data-spw-role="orientation" data-spw-context="play" data-spw-wonder="projection resonance consequence" data-spw-affordance="orient" data-spw-liminality="entry" data-spw-category-family="encounter" data-spw-locality="high" data-spw-consequence="framing" data-spw-promptability="latent" data-spw-collectability="some" data-spw-feature="play-surface-entry" data-spw-attentional-weight="1.25" data-spw-gradient-boundary="hard" data-spw-composition-stability="anchored" data-spw-seed="page_play_play__play_surface" data-spw-context-relevance="play campaign active games rpg wednesday session log" data-spw-copy-motifs="session canon recap return tool" data-spw-related-routes="/|/about/|/topics/software/|/blog/|/contact/|/settings/|/play/rpg-wednesday/|/play/rpg-wednesday/library/|/play/rpg-wednesday/sessions/" data-spw-region-purpose="public-spine" data-spw-region-role="entry-spine">
+            <section class="spw-frame spw-hero site-frame site-hero" id="play-surface" data-spw-form="brace" data-spw-climate="ludic" data-spw-phase="fluid" data-spw-tangibility="0.35" data-spw-viscosity="0.25" data-spw-coherence="0.60" data-spw-fixity="tending" data-spw-biome="commons" data-spw-definition="play[orientation]{table.canon.humor} #:fixity #!tending" data-spw-genome="brace:objective|sigil:&gt;play_surface|climate:ludic|mode:play|wonder:projection" data-spw-feature="play-surface-entry" data-spw-wonder="projection resonance consequence" data-spw-related-routes="/|/about/|/topics/software/|/blog/|/contact/|/settings/|/play/rpg-wednesday/|/play/rpg-wednesday/library/|/play/rpg-wednesday/sessions/">
                 <div class="frame-topline" data-spw-slot="header">
                     <a class="frame-sigil" href="#play-surface">&gt;play_surface</a>
+                    <div class="mode-switch" role="group" aria-label="Play perspective lens" data-spw-feature="play-perspective-lens">
+                        <button type="button" class="frame-sigil" data-mode-group="play-lens" data-set-mode="play" aria-pressed="true" data-spw-operator="select">.play</button>
+                        <button type="button" class="frame-sigil" data-mode-group="play-lens" data-set-mode="memory" aria-pressed="false" data-spw-operator="select">*memory</button>
+                        <button type="button" class="frame-sigil" data-mode-group="play-lens" data-set-mode="making" aria-pressed="false" data-spw-operator="select">^making</button>
+                        <button type="button" class="frame-sigil" data-mode-group="play-lens" data-set-mode="table" aria-pressed="false" data-spw-operator="select">@table</button>
+                    </div>
                     <span class="domain-kicker">creative · games · sessions</span>
                 </div>
                 <p class="page-kicker">campaigns • session logs • world notes • creative tools</p>
@@ -62,10 +68,46 @@
                     data-spw-slot="body"
                     aria-label="Play entry hook"
                 >
-                    <p class="hook-lede spw-playable-hook">A session is where a joke becomes evidence.</p>
-                    <p class="hook-sub">
-                        <span data-spw-perspective="objective">Objective:</span> rules, logs, sheets, and world notes that stay readable after the table.
-                        <span data-spw-perspective="subjective">Subjective:</span> pressure that still feels like play, not homework.
+                    <div class="mode-panels" data-spw-feature="play-perspective-panels">
+                        <section class="mode-panel" data-mode-group="play-lens" data-mode-panel="play" data-spw-role="orientation" data-spw-kind="lens">
+                            <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="play[orientation]{table.canon.humor}">
+                                A session is where a joke becomes evidence.
+                            </p>
+                            <p class="hook-sub">
+                                <span data-spw-perspective="objective">Holds:</span> active campaign threads, character sheets, and rules that survive after the table.
+                                <span data-spw-perspective="subjective">First move:</span> <a class="operator-chip" href="/play/rpg-wednesday/" data-spw-operator="value">*rpg_wednesday</a> or browse <a class="operator-chip" href="/town/" data-spw-operator="frame">#&gt;town_atlas</a>.
+                            </p>
+                        </section>
+                        <section class="mode-panel" data-mode-group="play-lens" data-mode-panel="memory" data-spw-role="schema" data-spw-kind="lens" hidden>
+                            <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="play[memory]{recap.cast.sediment}">
+                                <span class="spw-living-term" data-spw-living-term data-spw-concept="session-memory" tabindex="0">*memory</span>: Durable session logs, recurring character pressure, and lore canon.
+                            </p>
+                            <p class="hook-sub">
+                                <span data-spw-perspective="objective">Holds:</span> chronological session recaps, cast dossiers, and world rulings.
+                                <span data-spw-perspective="subjective">First move:</span> read <a class="operator-chip" href="/play/rpg-wednesday/sessions/" data-spw-operator="stream">~session_logs</a> or visit <a class="operator-chip" href="/play/rpg-wednesday/library/" data-spw-operator="frame">#&gt;town_library</a>.
+                            </p>
+                        </section>
+                        <section class="mode-panel" data-mode-group="play-lens" data-mode-panel="making" data-spw-role="projection" data-spw-kind="lens" hidden>
+                            <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="play[making]{card.prompt.tool}">
+                                <span class="spw-living-term" data-spw-living-term data-spw-concept="table-making" tabindex="0">^making</span>: The live tabletop as a studio for character sheets, cards, and prompts.
+                            </p>
+                            <p class="hook-sub">
+                                <span data-spw-perspective="objective">Holds:</span> character-sheet builder, prompt cards, and SVG/CSS visual assets.
+                                <span data-spw-perspective="subjective">First move:</span> open <a class="operator-chip" href="/tools/character-sheet/" data-spw-operator="object">^character_sheet</a> or <a class="operator-chip" href="/tools/midjourney/" data-spw-operator="potential">~prompt_tools</a>.
+                            </p>
+                        </section>
+                        <section class="mode-panel" data-mode-group="play-lens" data-mode-panel="table" data-spw-role="scenario" data-spw-kind="lens" hidden>
+                            <p class="hook-lede spw-playable-hook" data-spw-semantic-expression="play[table]{consequence.risk.recovery}">
+                                <span class="spw-living-term" data-spw-living-term data-spw-concept="table-rhythm" tabindex="0">@table</span>: Shared table space, shared laughter, and real stakes without homework.
+                            </p>
+                            <p class="hook-sub">
+                                <span data-spw-perspective="objective">Holds:</span> mentorship loops, dice consequence, and collaborative storytelling rhythm.
+                                <span data-spw-perspective="subjective">First move:</span> join <a class="operator-chip" href="/play/rpg-wednesday/cast/" data-spw-operator="stream">~cast_roster</a> or check <a class="operator-chip" href="/rpg/" data-spw-operator="route">@rpg_portal</a>.
+                            </p>
+                        </section>
+                    </div>
+                    <p class="hook-invitation">
+                        Use <kbd>[</kbd> / <kbd>]</kbd> to cycle play perspective lenses.
                     </p>
                 </section>
                 <ul class="spw-copy-motif-strip" aria-label="Play copy motifs" data-spw-box-model="motif-strip" data-spw-composition-flow="inline-wrap">
@@ -75,17 +117,6 @@
                     <li>return</li>
                     <li>tool</li>
                 </ul>
-                <div
-                    class="mode-switch"
-                    role="group"
-                    aria-label="Play lens"
-                    data-spw-kind="lens"
-                    data-spw-role="control"
-                >
-                    <button type="button" class="frame-sigil" data-mode-group="play-lens" data-set-mode="play" aria-pressed="true">play</button>
-                    <button type="button" class="frame-sigil" data-mode-group="play-lens" data-set-mode="memory" aria-pressed="false">memory</button>
-                    <button type="button" class="frame-sigil" data-mode-group="play-lens" data-set-mode="making" aria-pressed="false">making</button>
-                </div>
                 <div class="spw-metric-grid" data-spw-kind="metric" data-spw-role="schema" aria-label="Play surface metrics">
                     <p><strong>primary route</strong> RPG Wednesday</p>
                     <p><strong>memory</strong> sessions · cast · world</p>
