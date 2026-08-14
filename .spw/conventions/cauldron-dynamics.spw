@@ -1,0 +1,120 @@
+# Cauldron Dynamics
+
+#>cauldron_dynamics
+#:convention #!cauldron #!gathering #!metabolism
+#:operation #!contract
+#:fixity #!tending
+#:layer #!pragmatics
+
+@component_biome: ~"./component-biome.spw"
+@semantic_expression: ~"./semantic-expression-consequence.spw"
+@interaction_microstates: ~"./interaction-microstates.spw"
+@attention_field: ~"./attention-field.spw"
+@material_physics: ~"./material-physics.spw"
+@storage: ~"../../public/js/interface/cauldron/storage.js"
+@composition: ~"../../public/js/interface/composition.js"
+@resonance: ~"../../public/js/runtime/expression-resonance.js"
+
+operation = "contract"
+fixity = "tending"
+
+expression = cauldron[metabolism]{intake.digestion.return}<compost>
+
+^"metabolism"{
+  ~#note: "Four stages. Each is a real code path, not a metaphor laid over one."
+  intake: capture[fragment]{sigil.payload}<ingredient>
+  digestion: payload[resolve]{nearest.authored}<integrated>
+  absorption: gather[deposit]{token.kin}<salience>
+  return: prune[compost]{token}<substrate>
+  ~#law: "a stage that feeds nothing is storage, not metabolism"
+}
+
+^"intake"{
+  emitters: #[`haptics`, `composition`, `query-link-composer`, `brace-gestures`, `region-menu`, `budgeting`][reg=set]
+  capturable: .{
+    semantic_expression = 494
+    living_term = 85
+    operator = 3023
+  }[reg=facet]
+  ~#reading(operator count): `the largest capture surface is the one nothing gathers from`
+}
+
+^"digestion"{
+  ~#law: "nearest wins"
+  order: #[`runtime sigil payload`, `nearest authored ancestor`, `page`][reg=set]
+  ~#was: "runtime payload then page, which reached past the specific nutrient to swallow a generic one"
+  available_per_element: .{
+    role = 1971
+    kind = 1845
+    context = 1505
+    consequence = 1060
+    slot = 659
+    affordance = 648
+  }[reg=facet]
+  ~#reading(sigil payload): `written on transition, zero in static markup — transient by nature and wrong to prefer`
+}
+
+^"expression_slots"{
+  ~#law: "three slots, three questions"
+  frame: `how it is read — role, and what it affords`
+  body: `where it sits — region and shell, topic when there is no region`
+  projection: `what it leaves behind — its consequence`
+  example: `~orient[reference.inspect]{cluster.deep}<memory>`
+  ~#was: `~orient[reference]{card.analysis.cluster.inspect.deep.fluid}`
+  ~#reading(the dot): `six relations carried by one separator, legible only to whoever knew the order`
+  refuse: "adding a payload field to the rendered line because it resolved. The expression is a reading; the payload keeps the rest."
+}
+
+^"weights"{
+  gather = 3
+  kin_share = 1
+  compost = 1
+  ~#law(lossy): "compost returns less than gathering deposited"
+  ~#law(local): "compost feeds the ground it fell on and shares with no kin"
+  ~#reading(why kin is gated): `recognising a relation is worth more than collecting in isolation, and a fragment that aged out earned no new recognition on its way out`
+  probe: `gather one fragment, prune it, and compare the token before and after`
+}
+
+^"editor_semantics"{
+  ~#note: "What an author writes so a region participates. All of it is authored markup the site already carries."
+  ~#law: "an ingredient is only as rich as the element it was taken from"
+  write: #[
+    `data-spw-role on the element, not only data-spw-page-role on the body`,
+    `data-spw-affordance — what this could do, which becomes the frame's second term`,
+    `data-spw-consequence — what happens, which becomes the projection`,
+    `data-spw-region and data-spw-liminality — the body's two locating parts`
+  ][reg=set]
+  ~#reading(a bare element): `still captures, still resolves to page level, and renders a thinner expression — the gradient is the incentive`
+  do_not_write: #[
+    `data-spw-sigil-payload-* by hand — the runtime owns those and they are transient`,
+    `a region that is capturable and says nothing about itself`
+  ][reg=set]
+}
+
+#>wonder_cauldron_dynamics_1
+?["Should a region be able to refuse capture?"]{
+  #:depth #!experiential ~#lens(consent)
+  ~#tension: "every operator-bearing element is capturable and 3,023 of them exist, so gathering is bounded by what a reader finds rather than by what an author offered. An author who writes a region has no way to say this is not for taking."
+  ~#hypothesis: "refusal is rarely wanted and the absence of it is fine — but it has never been decided, only never implemented"
+  !probe{ "find an element whose capture would be meaningless out of context. if one exists, capture needs a boundary; if none does, the openness is a property rather than an oversight." }
+  $%[element.capturable, element.contextBound, author.refusal]
+}
+
+#>wonder_cauldron_dynamics_2
+?["What is a spell worth once its ingredients have composted?"]{
+  #:depth #!mathematical ~#lens(residue)
+  ~#tension: "a cast spell is serialised from ingredients that later age out and return to substrate. The spell survives, its material does not, and nothing reconciles the two — a replayed spell may reference fragments the cauldron no longer holds."
+  ~#hypothesis: "that is correct and worth keeping: a recipe outliving its ingredients is how a practice becomes transmissible"
+  !probe{ "cast a spell, prune its ingredients, and replay it. what the replay can still resolve is the part that was genuinely portable." }
+  $%[spell.ingredients, cauldron.remaining, replay.resolved]
+}
+
+^"validation"{
+  probe: `npm run spw:integrity`
+  falsification: #[
+    `a metabolic stage that feeds nothing downstream`,
+    `compost that returns as much as gathering deposited`,
+    `a rendered expression carrying a payload field because it resolved rather than because a reader needs it`
+  ][reg=set]
+  next: capture[refusal]{author.boundary} ^ consent[decided]{}
+}

@@ -18,13 +18,13 @@ fixity = "tending"
 expression = probe[output]{measure.delta.trend}<lift>
 
 ^"wonders"{
-    total = 56
-    ~#delta(total): "-97 since 2026-08-14"
-    probeable = 34
+    total = 58
+    ~#delta(total): "-95 since 2026-08-14"
+    probeable = 36
     ~#delta(probeable): "+2 since 2026-08-14"
-    anchored = 35
+    anchored = 37
     ~#delta(anchored): "+2 since 2026-08-14"
-    substrates = 34
+    substrates = 36
     ~#delta(substrates): "+2 since 2026-08-14"
 }
 
@@ -43,13 +43,13 @@ expression = probe[output]{measure.delta.trend}<lift>
 }
 
 ^"corpus"{
-    surfaces = 262
-    ~#delta(surfaces): "+3 since 2026-08-14"
-    with_expression = 23
-    ~#delta(with_expression): "+2 since 2026-08-14"
-    apposition_cells = 65
-    ~#delta(apposition_cells): "+8 since 2026-08-14"
-    lift_uses = 6
+    surfaces = 263
+    ~#delta(surfaces): "+1 since 2026-08-14"
+    with_expression = 24
+    ~#delta(with_expression): "+1 since 2026-08-14"
+    apposition_cells = 82
+    ~#delta(apposition_cells): "+17 since 2026-08-14"
+    lift_uses = 7
     ~#delta(lift_uses): "+1 since 2026-08-14"
 }
 

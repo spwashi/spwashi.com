@@ -65,6 +65,7 @@
 @surface_interaction_combinatorics: ~"./surface-interaction-combinatorics.spw"  # Combinatorics across scroll, tap, drag, hover, and swipe channels
 @component_biome: ~"./component-biome.spw"  # components as land features; light, canopy, exchange, succession
 @material_physics: ~"./material-physics.spw"  # what a surface does with the light canopy delivers
+@cauldron_dynamics: ~"./cauldron-dynamics.spw"  # intake, digestion, absorption, return — and what an editor writes to feed it
 @wonder_vocabulary: ~"./wonder-vocabulary.spw"
 @page_anatomy_vocabulary: ~"./page-anatomy-vocabulary.spw"
 @page_template_authoring: ~"./page-template-authoring.spw"
