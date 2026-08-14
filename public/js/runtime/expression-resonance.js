@@ -194,6 +194,61 @@ function depositSalience(expression) {
   paintSalience(expression);
 }
 
+/**
+ * Bank the expressions a reader gathered into the cauldron.
+ *
+ * Gathering is the strongest signal the site gets. A fragment reaches the
+ * cauldron only after someone crossed a page, recognised something worth
+ * keeping, and took it — navigation, recognition and intent in one act. Dwell
+ * is a proxy for that; gathering is the thing itself.
+ *
+ * So a gathered expression deposits at a higher weight than dwell, and its kin
+ * receive a share. That share is the reward for learning the site rather than
+ * for visiting it: composing from two expressions that turn out to be kin warms
+ * a whole neighbourhood, and a reader who has learned which fragments belong
+ * together sees more of the page remember them.
+ *
+ * Consumes `cauldron:updated`, which already carries the full item list. The
+ * mix itself emits nothing today — `mixIngredients()` builds a functional
+ * payload described as "available for agents/spells" and the call site drops
+ * it. When that byproduct is emitted, this is where it should land.
+ */
+const GATHER_WEIGHT = 3;
+const KIN_SHARE = 1;
+
+export function depositGathered(items = []) {
+  if (!manifest || !Array.isArray(items) || !items.length) return 0;
+  const store = readSalience();
+  let banked = 0;
+
+  for (const item of items) {
+    const expression = item?.semanticExpression || item?.expression;
+    const shape = expression && manifest[expression];
+    if (!shape) continue;
+
+    for (const token of [shape.subject, shape.mode, ...(shape.parts || [])]) {
+      if (!token) continue;
+      store[token] = (store[token] || 0) + GATHER_WEIGHT;
+    }
+    banked += 1;
+
+    // Kin share: the neighbourhood a gathered fragment belongs to warms with it,
+    // so recognising a relation pays more than collecting in isolation.
+    for (const { token } of kinOf(expression)) {
+      if (token) store[token] = (store[token] || 0) + KIN_SHARE;
+    }
+  }
+
+  if (!banked) return 0;
+  try {
+    writeJson(STORAGE_KEY, store);
+  } catch {
+    // Storage optional; a lost deposit costs warmth, not correctness.
+  }
+  for (const expression of elementsByExpression?.keys() || []) paintSalience(expression);
+  return banked;
+}
+
 /** Project accumulated warmth onto the elements carrying a token. */
 function paintSalience(expression) {
   const shape = manifest?.[expression];
@@ -210,7 +265,7 @@ function paintSalience(expression) {
   }
 }
 
-export async function initExpressionResonance() {
+export async function initExpressionResonance(ctx = {}) {
   if (typeof document === 'undefined') return () => {};
 
   try {
@@ -251,7 +306,15 @@ export async function initExpressionResonance() {
   document.addEventListener('focusin', onEnter, { passive: true });
   document.addEventListener('focusout', onLeave, { passive: true });
 
+  // Gathering banks harder than dwell. The cauldron already broadcasts its full
+  // item list, so the loop closes without the mix having to be touched.
+  const bus = ctx.bus || globalThis.__SPW_SITE__?.bus;
+  const offGathered = bus?.on?.('cauldron:updated', (event) => {
+    depositGathered(event?.detail?.items || event?.items || []);
+  }) || null;
+
   cleanup = () => {
+    offGathered?.();
     clearTimeout(dwellTimer);
     clearResonance();
     document.removeEventListener('pointerover', onEnter);
@@ -284,7 +347,7 @@ export const EXPRESSION_RESONANCE_CONTRACT = Object.freeze({
 
 export const SPW_MODULE_EXPORT = Object.freeze({
   id: 'expression-resonance',
-  mount: () => initExpressionResonance(),
+  mount: (ctx) => initExpressionResonance(ctx),
   describes: 'expression[kin]{subject.mode.part}<resonance>',
   updates: [
     'flourish:data-spw-expression-kin',
