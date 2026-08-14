@@ -82,6 +82,16 @@ expression = component[biome]{light.exchange.succession}<land>
   rule: "The exchange must cost. An association that is free is inheritance wearing a biological word, and the tree already has 6430 of those."
 }
 
+^"positioning_orchestration_join"{
+  ~#note: "Extending the concurrent session's positioning-orchestration plan rather than duplicating it."
+  affirm: "The batched MEASURE / PROJECT / AUDIT lifecycle is the right shape and fixes a real defect. Reading bounding rects during rAF and writing attributes in one mutation cycle is exactly what the j/k traversal added this week does not do — it reads offsetWidth over ~199 candidates on every keypress, which is the freeze pattern already recorded for this codebase."
+  supplies: "That plan measures what canopy needs. Density here is currently structural — `:has(> :nth-child(6))` counts children, which is all CSS can see unaided. Real canopy is occlusion, not count."
+  wired: "systems/component-biome.css already reads `--spw-edge-proximity` and `data-spw-extent` with inert fallbacks, so canopy becomes measured the moment the orchestrator projects them, with nothing else changing."
+  divergence: "The plan's frame is a symphony — movements, orchestration, a score. A biome has no score and no conductor; structure emerges from organisms responding to local conditions and exchanging where the exchange pays. Both are coherent, and they imply different architectures: an orchestrator is a central authority that decides for its parts, which is the opposite of components arising and evolving."
+  resolution: "Keep the batching, drop the conducting. A shared MEASURE pass is a soil survey — everyone benefits and nobody is told what to do with it. What each component does with its measured position should stay local, or the ecology is a puppet show."
+  missing_pass: "MEASURE, PROJECT and AUDIT are all forward. There is no RETURN. 18 persistent stores accumulate and only the cauldron prunes — and pruning discards rather than composts, so nothing is fed by what is removed. A biome without decomposers buries itself in its own residue."
+}
+
 #>wonder_component_biome_1
 ?["What would have to become scarce for components to start trading?"]{
   #:depth #!mathematical ~#lens(nutrient)

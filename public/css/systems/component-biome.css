@@ -1,0 +1,185 @@
+/* ==========================================================================
+   systems/component-biome.css — canopy, understory, succession
+   --------------------------------------------------------------------------
+   Reads as: light attenuating by position, and presence accruing with age.
+
+   The theory is in .spw/conventions/component-biome.spw. The measurement that
+   motivates this file: 6430 custom-property declarations flow downward by
+   inheritance and 197 `:has()` selectors flow upward — a 33:1 ratio. Every
+   component receives full light regardless of where it stands, so a card in a
+   dense cluster and a card alone in a wide frame read identically. Density
+   currently arrives as noise. Here it arrives as shade.
+
+   That reframing is the point. The site carries a lot of blank space, and the
+   instinct to fill it produces layouts that feel improvised. Treating density
+   as canopy makes the opposite move: a crowded region reads as understory —
+   cooler, lower contrast, further away — and a sparse one reads as clearing.
+   Neither is a defect to be packed out of existence; they are depths.
+
+   Art direction is taken from the 2026-08-13 render studies rather than from
+   taste. The boonhonk attentional-fluid plate is flat contour-bounded fields
+   with warm nuclei and no glow spill; the charge-wall study is one hard edge
+   with grain falling off it. So: contour over shadow, attenuation over
+   ornament, one warm accent against a cool field, and nothing blooms.
+
+   Genome — states sensed: data-spw-liminality, data-spw-region,
+   data-spw-ingredient-phase, data-spw-expression-salience, .spw-grid, .spw-card
+   Genome — custom properties defined: 6; intent hooks consumed:
+   --spw-enhancement-factor, --spw-image-brightness
+   Probe: put six cards in a grid and one card alone in a frame on the same
+   page; the six should sit back. html[data-spw-debug-layers="on"] shows owners.
+   Tier: enhancement — every surface here is legible with this file absent.
+   ========================================================================== */
+
+:root {
+  /* 0 = full light (clearing), 1 = deepest shade (understory floor). */
+  --spw-canopy: 0;
+  /* Depth's contribution, kept separate to avoid a self-referential cycle. */
+  --spw-canopy-depth: 0;
+  /* Edge occlusion, projected by positioning-orchestration when it lands. */
+  --spw-canopy-edge: 0;
+  /* Presence accrued through age or traversal. 0 = new growth. */
+  --spw-presence: 0;
+
+  --spw-biome-cool: var(--teal, hsl(184 60% 29%));
+  --spw-biome-warm: var(--amber, hsl(35 68% 42%));
+  /* Contour, not shadow — the reference plates have edges, not falloff. */
+  --spw-biome-contour: color-mix(in srgb, var(--line, rgba(58, 48, 36, 0.14)) 70%, transparent);
+  --spw-biome-attenuation: calc(
+    clamp(
+      0,
+      calc(
+        var(--spw-canopy)
+        + var(--spw-canopy-depth)
+        + var(--spw-canopy-edge)
+        /* --spw-edge-proximity arrives 0..1 from the MEASURE pass; absent, the
+           fallback contributes nothing and structural density stands alone. */
+        + calc(var(--spw-edge-proximity, 0) * 0.14)
+      ),
+      1
+    )
+    * var(--spw-enhancement-factor, 1)
+  );
+}
+
+/* ── Canopy ─────────────────────────────────────────────────────────────
+   Density is read upward with `:has()`, the only bidirectional channel CSS
+   offers. A grid holding many cards is closed canopy; its cards sit back.
+   Thresholds use :nth-child(n + N) on the container's own children, so the
+   count is structural rather than a class an author has to remember. */
+
+:where(.spw-grid, .card-grid, .page-grid):has(> :nth-child(6)) {
+  --spw-canopy: 0.5;
+}
+
+:where(.spw-grid, .card-grid, .page-grid):has(> :nth-child(10)) {
+  --spw-canopy: 0.72;
+}
+
+/* A clearing: few things, full light. Stated rather than left to the default,
+   because a sparse region should be a decision and not an absence. */
+:where(.spw-grid, .card-grid, .page-grid):not(:has(> :nth-child(4))) {
+  --spw-canopy: 0;
+}
+
+/* Depth compounds with density — an outer shell under closed canopy is the
+   floor of the stand.
+   Held in a separate token rather than added into --spw-canopy directly: a
+   custom property whose value reads itself is a cycle, and CSS drops both sides
+   of a cycle at computed-value time. It would work on a descendant, where
+   inheritance supplies the value first, and silently blank the canopy wherever
+   one element carried both a grid class and a liminality band. */
+:where([data-spw-liminality="deep"]) { --spw-canopy-depth: 0.12; }
+:where([data-spw-liminality="projected"]),
+:where([data-spw-liminality="settled"]) { --spw-canopy-depth: 0.2; }
+
+/* ── Measured canopy (forward-compatible) ───────────────────────────────
+   The density above is structural: it counts children, which is what CSS can
+   see unaided. Real canopy is not a count — it is how much sky is actually
+   occluded, and that needs measurement.
+   runtime/positioning-orchestration.js is planned to project --spw-edge-proximity
+   and data-spw-extent from a batched MEASURE pass. When it lands, these rules
+   take over from the child count without anything else changing; until then the
+   fallbacks make them inert. A component near a crowded edge is shaded by what
+   is beside it rather than by how many siblings its parent happens to hold. */
+
+:where([data-spw-extent="crowded"]) { --spw-canopy-edge: 0.18; }
+:where([data-spw-extent="contained"]) { --spw-canopy-edge: 0.08; }
+:where([data-spw-extent="open"]) { --spw-canopy-edge: 0; }
+
+/* What shade actually does. Contrast and saturation fall; nothing moves, and
+   nothing is hidden — understory is still legible, it is simply further off. */
+:where(.spw-card, .frame-card, .media-card):where(:not([data-spw-canopy="clearing"])) {
+  filter:
+    saturate(calc(1 - var(--spw-biome-attenuation) * 0.22))
+    contrast(calc(1 - var(--spw-biome-attenuation) * 0.06));
+  transition: filter var(--duration-slow, 420ms) var(--ease-soft, ease);
+}
+
+/* Hover is a gap in the canopy: the thing you are attending to gets its light
+   back. Cheap, reversible, and the only motion in the file. */
+:where(.spw-card, .frame-card, .media-card):hover,
+:where(.spw-card, .frame-card, .media-card):focus-within {
+  --spw-canopy: 0;
+}
+
+/* ── Succession ─────────────────────────────────────────────────────────
+   Presence accrues from data the site already stores: cauldron ingredient
+   phase (gathering → resonant → mature → decayed) and expression salience
+   bands earned by dwell. Neither has ever changed how anything looks. */
+
+:where([data-spw-ingredient-phase="resonant"]) { --spw-presence: 0.35; }
+:where([data-spw-ingredient-phase="mature"])   { --spw-presence: 0.7; }
+:where([data-spw-expression-salience="2"])     { --spw-presence: 0.4; }
+:where([data-spw-expression-salience="3"])     { --spw-presence: 0.65; }
+:where([data-spw-expression-salience="4"])     { --spw-presence: 0.9; }
+
+/* Established growth holds a contour on its leading edge — the boonhonk plate's
+   hard boundary rather than a halo. Inline-start only: a full outline reads as
+   selection, and this is age, not state. */
+:where([data-spw-presence-contour], [data-spw-ingredient-phase], [data-spw-expression-salience]) {
+  box-shadow: inset calc(2px * var(--spw-presence)) 0 0 -1px
+    color-mix(in srgb, var(--spw-biome-warm) calc(var(--spw-presence) * 52%), transparent);
+}
+
+/* Decay is the one thing that recedes rather than accrues. It stays readable —
+   a decayed ingredient is still an ingredient — but it stops holding an edge. */
+:where([data-spw-ingredient-phase="decayed"]) {
+  --spw-presence: 0;
+  opacity: 0.72;
+  box-shadow: none;
+}
+
+/* ── Restraint ──────────────────────────────────────────────────────────── */
+
+/* A minimal climate is a request for less; canopy is exactly the ambient
+   modulation that request is about. */
+:where(html[data-spw-enhancement-level="minimal"]) {
+  --spw-canopy: 0;
+  --spw-canopy-depth: 0;
+  --spw-canopy-edge: 0;
+  --spw-presence: 0;
+}
+
+/* Capture mode renders the stand in flat light. A model reading a screenshot
+   should see the components, not this site's weather. */
+:where(body[data-spw-capture-mode]:not([data-spw-capture-mode="default"])) {
+  --spw-canopy: 0;
+  --spw-canopy-depth: 0;
+  --spw-canopy-edge: 0;
+  --spw-presence: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.spw-card, .frame-card, .media-card) { transition: none; }
+}
+
+/* Narrow viewports have no stand — one column is not a canopy, it is a path.
+   Shading a single-file column would only dim the page. */
+@media (max-width: 45rem) {
+  :root {
+    --spw-canopy: 0;
+    --spw-canopy-depth: 0;
+    --spw-canopy-edge: 0;
+  }
+}

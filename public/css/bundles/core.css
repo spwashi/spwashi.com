@@ -1732,14 +1732,33 @@ html[data-spw-reduce-motion="on"] *::after {
     --pigment-context-boost: 0.95;
     --active-op-color: var(--pigment-brass-warm);
   }
-  /* Minimalist motif for playful experimentation with material properties (glass/matte depth, ink strength, no ornament).
-     Use on design hub or any surface: data-spw-component-motif="minimal" + enhancement-level=minimal + density=minimal
-     for pure tunable material play without visual noise. Ties to prior material contract and physics-reason for storytellers/engineers.
-     Low boost keeps focus on surface/contrast tokens. */
   html[data-spw-component-motif="minimal"] {
     --pigment-context-boost: 0.7;
     --active-op-color: var(--ink-mid, rgba(var(--charcoal-rgb), 0.68));
   }
+
+  /* Palette resonance dimension modulation */
+  html:is([data-spw-palette-resonance="ludic"], [data-spw-palette-resonance="play"]) {
+    --pigment-context-boost: 1.12;
+    --active-op-color: var(--op-binding-color, hsl(24 48% 34%));
+  }
+  html:is([data-spw-palette-resonance="studio"], [data-spw-palette-resonance="author"]) {
+    --pigment-context-boost: 1.05;
+    --active-op-color: var(--pigment-brass-warm, hsl(38 64% 42%));
+  }
+  html:is([data-spw-palette-resonance="lattice"], [data-spw-palette-resonance="software"]) {
+    --pigment-context-boost: 1.10;
+    --active-op-color: var(--teal);
+  }
+  html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="math"]) {
+    --pigment-context-boost: 1.08;
+    --active-op-color: var(--op-probe-color, hsl(268 36% 42%));
+  }
+  html:is([data-spw-palette-resonance="hand"], [data-spw-palette-resonance="craft"]) {
+    --pigment-context-boost: 1.06;
+    --active-op-color: var(--op-object-color, hsl(36 62% 35%));
+  }
+
   --active-op-border: color-mix(in srgb, var(--active-op-color) 34%, transparent);
   --active-op-bg-soft: color-mix(in srgb, var(--active-op-color) 7%, transparent);
 
@@ -2643,6 +2662,13 @@ html[data-spw-reduce-motion="on"] {
   --spw-pack-measure-active: var(--measure-panel, 52ch);
   --spw-pack-pad-active: var(--spw-component-pad, 0.9rem);
   --spw-pack-gap-active: var(--component-gap, 0.9rem);
+
+  /* Fluid container coordinate system (derived from cqi) */
+  --spw-space-fluid: clamp(0.75rem, 2cqi, 1.25rem);
+  --spw-space-fluid-sm: clamp(0.5rem, 1.5cqi, 0.85rem);
+  --spw-space-fluid-lg: clamp(1rem, 3cqi, 1.75rem);
+  --spw-card-pad: clamp(0.75rem, 2.5cqi, 1.2rem);
+  --spw-card-rhythm: clamp(0.5rem, 1.8cqi, 0.85rem);
 
   /* ------------------------------------------------------------------------
      Temporal — positioning phases (salience direction + page ecology)
@@ -10423,13 +10449,14 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
 }
 
 /* ==========================================================================
-   2. Heading Hierarchy
+   2. Heading & Subheading Hierarchy
    ========================================================================== */
 
 :where(h1, h2, h3, h4, h5, h6) {
   margin: 0;
-  color: var(--ink-strong, #090b0c);
+  color: color-mix(in srgb, var(--ink-strong, #090b0c) 94%, var(--active-op-color, var(--teal, #008080)) 6%);
   font-family: var(--site-sans-font, system-ui, sans-serif);
+  font-feature-settings: "kern" 1, "liga" 1, "cv05" 1, "cv11" 1;
   line-height: 1.18;
   letter-spacing: -0.02em;
   text-wrap: balance;
@@ -10446,30 +10473,33 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
 /* Ranked air before headings — lower ranks sit closer to prior prose. */
 :where(h1) {
   --spw-heading-flow-space-multiplier: 1.75;
-  font-size: clamp(2rem, 5vw, 3rem);
+  font-size: clamp(2rem, 5vw, 3.15rem);
   font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1.12;
+  letter-spacing: -0.034em;
+  line-height: 1.1;
   max-inline-size: min(100%, calc(var(--spw-real-estate-inline, var(--measure-reading, 68ch)) * var(--spw-typography-rank-1, 1)));
 }
 :where(h2) {
   --spw-heading-flow-space-multiplier: 1.55;
-  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-size: clamp(1.5rem, 4vw, 2.05rem);
   font-weight: 700;
-  line-height: 1.16;
+  letter-spacing: -0.026em;
+  line-height: 1.15;
   max-inline-size: min(100%, calc(var(--spw-real-estate-inline, var(--measure-reading, 68ch)) * var(--spw-typography-rank-2, 0.88)));
 }
 :where(h3) {
   --spw-heading-flow-space-multiplier: 1.35;
-  font-size: clamp(1.25rem, 3vw, 1.5rem);
+  font-size: clamp(1.25rem, 3vw, 1.52rem);
   font-weight: 600;
+  letter-spacing: -0.018em;
   line-height: 1.22;
   max-inline-size: min(100%, calc(var(--spw-real-estate-inline, var(--measure-panel, 52ch)) * var(--spw-typography-rank-3, 0.76)));
 }
 :where(h4) {
   --spw-heading-flow-space-multiplier: 1.2;
-  font-size: clamp(1.1rem, 2vw, 1.25rem);
+  font-size: clamp(1.1rem, 2vw, 1.26rem);
   font-weight: 600;
+  letter-spacing: -0.012em;
   line-height: 1.28;
   max-inline-size: min(100%, calc(var(--spw-real-estate-inline, var(--measure-panel, 52ch)) * var(--spw-typography-rank-4, 0.64)));
 }
@@ -10477,16 +10507,28 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
   --spw-heading-flow-space-multiplier: 1.1;
   font-size: 1rem;
   font-weight: 600;
+  letter-spacing: 0;
   line-height: 1.32;
 }
 :where(h6) {
   --spw-heading-flow-space-multiplier: 1;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 700;
   line-height: 1.35;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.065em;
   color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+}
+
+/* Subheadings */
+:where(.subheading, .page-subheading, .site-subheading, .frame-subheading, p.subheading) {
+  font-size: clamp(1.12rem, 1.05rem + 0.25vw, 1.32rem);
+  font-weight: 450;
+  line-height: 1.42;
+  letter-spacing: -0.014em;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.76));
+  max-inline-size: min(100%, var(--measure-reading, 68ch));
+  text-wrap: pretty;
 }
 
 /* Title stack: kicker/subtitle should hug the heading above content. */
@@ -10494,11 +10536,57 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
   .spec-kicker + :is(h1, h2, h3),
   .page-kicker + :is(h1, h2, h3),
   .section-kicker + :is(h1, h2, h3),
+  .hero-kicker + :is(h1, h2, h3),
   h1 + h2,
   h2 + h3,
-  h3 + h4
+  h3 + h4,
+  h1 + :is(.subheading, .page-subheading, .site-subheading),
+  h2 + :is(.subheading, .page-subheading, .site-subheading)
 ) {
   margin-block-start: calc(var(--flow-space, 1rem) * 0.28);
+}
+
+/* Ledes / Opening Statements */
+:where(.site-lede, .page-lede, .frame-lede, .plan-thesis) {
+  font-size: clamp(1.12rem, 1.04rem + 0.22vw, 1.28rem);
+  line-height: 1.56;
+  letter-spacing: -0.012em;
+  color: color-mix(in srgb, var(--ink, #161c1d) 92%, var(--ink-soft, rgba(14, 18, 20, 0.68)) 8%);
+  max-inline-size: min(100%, var(--measure-reading, 68ch));
+  text-wrap: pretty;
+}
+
+/* Bylines & Metadata Bars */
+:where(.byline, .site-byline, .author-byline, .entry-byline, .plan-byline, .meta-byline) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-xs, 0.5rem);
+  font-size: var(--text-size-label, 0.76rem);
+  font-weight: 500;
+  letter-spacing: var(--tracking-spec, 0.055em);
+  text-transform: uppercase;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  line-height: 1.4;
+  margin-block-start: calc(var(--flow-space, 1rem) * 0.4);
+}
+
+:where(.byline, .site-byline, .author-byline, .entry-byline, .plan-byline, .meta-byline) :where(a) {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 30%, transparent);
+  text-underline-offset: 0.2em;
+}
+
+:where(.byline, .site-byline, .author-byline, .entry-byline, .plan-byline, .meta-byline) :where(a:is(:hover, :focus-visible)) {
+  color: var(--active-op-color, var(--teal, #008080));
+  text-decoration-color: var(--active-op-color, var(--teal, #008080));
+}
+
+:where(.byline-dot, .meta-dot) {
+  display: inline-block;
+  opacity: 0.45;
+  color: var(--active-op-color, var(--teal, #008080));
 }
 
 /* In prose/article flow, a heading after body copy needs a clearer break. */
@@ -10601,31 +10689,82 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
 }
 
 :where(strong, b) {
-  font-weight: 700;
-  color: var(--ink-strong, #090b0c);
+  font-weight: 650;
+  color: color-mix(in srgb, var(--ink-strong, #090b0c) 96%, var(--active-op-color, var(--teal, #008080)) 4%);
+  letter-spacing: -0.01em;
 }
 
 :where(em, i) {
   font-style: italic;
+  color: color-mix(in srgb, var(--ink, #161c1d) 92%, var(--active-op-color, var(--teal, #008080)) 8%);
 }
 
 :where(mark) {
-  background: var(--active-op-bg-soft, rgba(0, 128, 128, 0.12));
+  background: color-mix(in srgb, var(--active-op-bg-soft, rgba(0, 128, 128, 0.12)) 80%, rgba(255, 238, 180, 0.45));
   color: inherit;
-  padding: 0.1em 0.3em;
+  padding: 0.1em 0.35em;
   border-radius: 3px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
 }
 
 :where(del) {
   text-decoration: line-through;
-  opacity: 0.6;
+  opacity: 0.55;
 }
 
+/* Living terms & semantic vocabulary */
+:where(.spw-living-term, [data-spw-living-term]) {
+  font-weight: 600;
+  color: color-mix(in srgb, var(--ink-strong, #090b0c) 88%, var(--active-op-color, var(--teal, #008080)) 12%);
+  border-bottom: 1.5px dashed color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 45%, transparent);
+  cursor: pointer;
+  padding-block-end: 1px;
+  border-radius: 2px;
+  transition:
+    border-color var(--duration-fast, 140ms) var(--ease-mechanical, ease),
+    color var(--duration-fast, 140ms) var(--ease-mechanical, ease),
+    background-color var(--duration-fast, 140ms) var(--ease-mechanical, ease);
+}
+
+:where(.spw-living-term, [data-spw-living-term]):is(:hover, :focus-visible) {
+  color: var(--active-op-color, var(--teal, #008080));
+  border-bottom-color: var(--active-op-color, var(--teal, #008080));
+  border-bottom-style: solid;
+  outline: none;
+}
+
+:where([data-spw-vocab]) {
+  font-weight: 550;
+  color: color-mix(in srgb, var(--ink-strong, #090b0c) 92%, var(--active-op-color, var(--teal, #008080)) 8%);
+}
+
+/* Editorial Links */
 :where(a:any-link) {
   --spw-link-visited-color:
     color-mix(in oklab, var(--ink, #161c1d) 68%, var(--active-op-color, #008080) 32%);
   --spw-link-grounded-color:
     color-mix(in oklab, var(--ink, #161c1d) 82%, var(--active-op-color, #008080) 18%);
+}
+
+:where(p, li, blockquote, dd, figcaption, .frame-copy, .site-lede, .page-lede, .frame-note) a:not(.operator-chip):not(.frame-sigil):not(.frame-card-sigil):not(.badge):not(.tag):not(.pill):not(.cauldron-instruction-link):not(.button) {
+  color: color-mix(in srgb, var(--ink-strong, #090b0c) 84%, var(--active-op-color, var(--teal, #008080)) 16%);
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.24em;
+  text-decoration-color: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 35%, transparent);
+  text-decoration-skip-ink: auto;
+  border-radius: 2px;
+  transition:
+    color var(--duration-fast, 140ms) var(--ease-mechanical, ease),
+    text-decoration-color var(--duration-fast, 140ms) var(--ease-mechanical, ease),
+    background-color var(--duration-fast, 140ms) var(--ease-mechanical, ease);
+}
+
+:where(p, li, blockquote, dd, figcaption, .frame-copy, .site-lede, .page-lede, .frame-note) a:not(.operator-chip):not(.frame-sigil):not(.frame-card-sigil):not(.badge):not(.tag):not(.pill):not(.cauldron-instruction-link):not(.button):is(:hover, :focus-visible) {
+  color: var(--active-op-color, var(--teal, #008080));
+  text-decoration-color: var(--active-op-color, var(--teal, #008080));
+  text-decoration-thickness: 2px;
 }
 
 :where(a:visited):not(.operator-chip):not(.frame-sigil):not(.frame-card-sigil):not(.header-sigil) {
@@ -11067,8 +11206,8 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
   --site-body-font: var(--site-editorial-font);
   font-family: var(--site-editorial-font);
   font-optical-sizing: auto;
-  line-height: 1.6;
-  font-size: clamp(1.1rem, 2vw, 1.25rem); /* Fluid type for optimal reading */
+  line-height: 1.62;
+  font-size: clamp(1.1rem, 1.02rem + 0.25vw, 1.26rem); /* Fluid type for optimal reading */
   max-inline-size: 65ch; /* Ideal line length for serifs */
   margin-inline: auto; /* Center structural columns */
   background-color: var(--surface-editorial);
@@ -11078,15 +11217,25 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
 :where([data-spw-typeset="editorial"] [data-spw-typeset-surface="editorial"] :is(h1, h2)) {
   font-family: var(--site-editorial-font);
   font-weight: 500;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
   font-variation-settings: "opsz" 36; /* Request display optics for large text */
   text-wrap: balance;
-  margin-block-end: 1rem;
+  margin-block-end: 0.75rem;
 }
 
 :where([data-spw-typeset="editorial"] [data-spw-typeset-surface="editorial"] :is(h3, h4)) {
   font-family: var(--site-editorial-font);
   font-weight: 600;
+  letter-spacing: -0.01em;
+  font-variation-settings: "opsz" 24;
+}
+
+:where([data-spw-typeset="editorial"] [data-spw-typeset-surface="editorial"] :is(.subheading, p.subheading)) {
+  font-family: var(--site-editorial-font);
+  font-size: 1.25em;
+  line-height: 1.45;
+  font-style: italic;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.76));
   font-variation-settings: "opsz" 24;
 }
 
@@ -11099,7 +11248,7 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
 
 /* Contextual Spacing */
 :where([data-spw-typeset="editorial"] [data-spw-typeset-surface="editorial"] p + p) {
-  margin-block-start: 1.5em;
+  margin-block-start: 1.4em;
 }
 
 /* ==========================================================================
@@ -13136,14 +13285,17 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
 :where(.spw-topic, [data-spw-topic]) {
   display: inline;
   min-width: 0;
-  padding: 0;
+  padding-inline: 0.14em;
+  padding-block: 0.02em;
   border: 0;
+  border-radius: 2px;
   background:
     linear-gradient(
       180deg,
-      transparent 0 58%,
-      color-mix(in srgb, var(--op-topic-bg-soft, rgba(228, 246, 252, 0.72)) 72%, transparent) 58% 100%
+      transparent 0 54%,
+      color-mix(in srgb, var(--op-topic-bg-soft, rgba(228, 246, 252, 0.72)) 78%, transparent) 54% 100%
     );
+  box-shadow: inset 0 -0.08em 0 color-mix(in srgb, var(--op-topic-color, hsl(192 62% 32%)) 32%, transparent);
   color: var(--op-topic-color, hsl(192 62% 32%));
   font-family: var(--grammar-mono-font);
   /* Optical match for the mono face, not a size step the baseline can feel. */
@@ -13169,14 +13321,16 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
  */
 :where(.spw-topic, [data-spw-topic])::before {
   content: "<";
-  opacity: 0.62;
-  font-weight: 400;
+  opacity: 0.72;
+  font-weight: 500;
+  font-size: 0.92em;
 }
 
 :where(.spw-topic, [data-spw-topic])::after {
   content: ">";
-  opacity: 0.62;
-  font-weight: 400;
+  opacity: 0.72;
+  font-weight: 500;
+  font-size: 0.92em;
 }
 
 :where(.spw-topic:hover, [data-spw-topic]:hover) {
@@ -15730,13 +15884,108 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
   --card-rhythm: clamp(0.58rem, 1.8cqi, 0.85rem);
 }
 
+/* 4-Slot Anatomy: header -> media -> body -> actions */
+:where(.spw-card__header, .frame-card-header, [data-spw-slot="header"]) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xs, 0.35rem);
+  min-inline-size: 0;
+  inline-size: 100%;
+}
+
+:where(.spw-card__media, .frame-card-media, [data-spw-slot="media"], [data-spw-slot="figure"]) {
+  min-inline-size: 0;
+  inline-size: 100%;
+  overflow: hidden;
+  border-radius: var(--component-radius-sm, 6px);
+}
+
+:where(.spw-card__body, .frame-card-body, [data-spw-slot="body"]) {
+  min-inline-size: 0;
+  inline-size: 100%;
+  display: grid;
+  gap: var(--card-rhythm, 0.6rem);
+}
+
+:where(.spw-card__actions, .frame-card-actions, [data-spw-slot="actions"]) {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-xs, 0.38rem);
+  margin-block-start: auto;
+  inline-size: 100%;
+}
+
 /* Explicit defaults for consistent layout/wrapping/alignment across cards and panels */
-:where(.frame-card, .frame-panel, .math-lens-card, .topic-reference-card, .spw-principle-card) {
+:where(.spw-card, .frame-card, .frame-panel, .math-lens-card, .topic-reference-card, .spw-principle-card) {
   --card-internal-gap: 0.45rem;
   display: grid;
   gap: var(--card-internal-gap);
   align-content: start;
   text-align: start;
+}
+
+/* ==========================================================================
+   Environmental Physics & Pretext Text-Variant Extensions
+   ========================================================================== */
+
+/* 1. Punchy / Monument variant: concise, high-impact headline, compact body */
+:where(.spw-card[data-spw-text-variant="punchy"], .spw-card[data-text-density="dense"], .spw-card[data-text-width-class="xs"]) {
+  --card-internal-gap: 0.32rem;
+  --card-rhythm: clamp(0.35rem, 1.2cqi, 0.55rem);
+  padding: clamp(0.65rem, 2cqi, 0.95rem);
+  border-width: 1.5px;
+}
+
+:where(.spw-card[data-spw-text-variant="punchy"] h2, .spw-card[data-spw-text-variant="punchy"] h3, .spw-card[data-spw-text-variant="punchy"] .spw-card__title) {
+  font-size: clamp(1.15rem, 3.5cqi, 1.45rem);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.22;
+}
+
+/* 2. Editorial / Story variant: measured reading rhythm, relaxed leading, warm tint */
+:where(.spw-card[data-spw-text-variant="editorial"], .spw-card[data-text-density="soft"], .spw-card[data-text-kind="prose"]) {
+  --card-internal-gap: 0.65rem;
+  --card-rhythm: clamp(0.7rem, 2.2cqi, 1.1rem);
+  padding: clamp(0.85rem, 2.8cqi, 1.4rem);
+  line-height: 1.64;
+  border-color: color-mix(in srgb, var(--line) 82%, var(--component-accent, var(--teal)) 18%);
+}
+
+:where(.spw-card[data-spw-text-variant="editorial"] p, .spw-card[data-text-kind="prose"] p) {
+  font-size: clamp(0.88rem, 1.9cqi, 0.98rem);
+  color: var(--ink-secondary, rgba(14, 18, 20, 0.78));
+}
+
+/* 3. Matrix / Register variant: dense specification, monospace precision, high containment */
+:where(.spw-card[data-spw-text-variant="matrix"], .spw-card[data-text-kind="operator-dense"]) {
+  --card-internal-gap: 0.28rem;
+  --card-rhythm: clamp(0.3rem, 1cqi, 0.5rem);
+  padding: clamp(0.55rem, 1.8cqi, 0.85rem);
+  background: color-mix(in srgb, var(--surface-code, #14171a) 4%, var(--card-bg, #fff));
+  border: 1px solid color-mix(in srgb, var(--line) 90%, var(--op-frame-color, var(--teal)) 10%);
+}
+
+:where(.spw-card[data-spw-text-variant="matrix"] .spw-card__header) {
+  border-bottom: 1px dashed color-mix(in srgb, var(--line) 60%, transparent);
+  padding-bottom: 0.25rem;
+  margin-bottom: 0.15rem;
+}
+
+/* 4. Ludic / Craft variant: spring physics transitions, playful borders, lively accents */
+:where(.spw-card[data-spw-text-variant="ludic"], :where([data-spw-climate="ludic"]) .spw-card) {
+  --card-internal-gap: 0.5rem;
+  transition:
+    transform calc(var(--duration-base, 200ms) * var(--spw-physics-mass, 1)) cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow calc(var(--duration-base, 200ms) * var(--spw-physics-mass, 1)) ease,
+    border-color var(--spw-control-transition-fast, 120ms ease);
+}
+
+:where(.spw-card[data-spw-text-variant="ludic"]:hover, :where([data-spw-climate="ludic"]) .spw-card:hover) {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--component-accent, var(--teal)) 14%, transparent);
 }
 
 /* Screenshot-utility defaults for reference-style token/spec cards across the site.
@@ -25840,6 +26089,195 @@ html[data-spw-theme-pack="electric-studio"] {
 }
 }
 
+/* /public/css/systems/component-biome.css */
+@layer systems {
+/* ==========================================================================
+   systems/component-biome.css — canopy, understory, succession
+   --------------------------------------------------------------------------
+   Reads as: light attenuating by position, and presence accruing with age.
+
+   The theory is in .spw/conventions/component-biome.spw. The measurement that
+   motivates this file: 6430 custom-property declarations flow downward by
+   inheritance and 197 `:has()` selectors flow upward — a 33:1 ratio. Every
+   component receives full light regardless of where it stands, so a card in a
+   dense cluster and a card alone in a wide frame read identically. Density
+   currently arrives as noise. Here it arrives as shade.
+
+   That reframing is the point. The site carries a lot of blank space, and the
+   instinct to fill it produces layouts that feel improvised. Treating density
+   as canopy makes the opposite move: a crowded region reads as understory —
+   cooler, lower contrast, further away — and a sparse one reads as clearing.
+   Neither is a defect to be packed out of existence; they are depths.
+
+   Art direction is taken from the 2026-08-13 render studies rather than from
+   taste. The boonhonk attentional-fluid plate is flat contour-bounded fields
+   with warm nuclei and no glow spill; the charge-wall study is one hard edge
+   with grain falling off it. So: contour over shadow, attenuation over
+   ornament, one warm accent against a cool field, and nothing blooms.
+
+   Genome — states sensed: data-spw-liminality, data-spw-region,
+   data-spw-ingredient-phase, data-spw-expression-salience, .spw-grid, .spw-card
+   Genome — custom properties defined: 6; intent hooks consumed:
+   --spw-enhancement-factor, --spw-image-brightness
+   Probe: put six cards in a grid and one card alone in a frame on the same
+   page; the six should sit back. html[data-spw-debug-layers="on"] shows owners.
+   Tier: enhancement — every surface here is legible with this file absent.
+   ========================================================================== */
+
+:root {
+  /* 0 = full light (clearing), 1 = deepest shade (understory floor). */
+  --spw-canopy: 0;
+  /* Depth's contribution, kept separate to avoid a self-referential cycle. */
+  --spw-canopy-depth: 0;
+  /* Edge occlusion, projected by positioning-orchestration when it lands. */
+  --spw-canopy-edge: 0;
+  /* Presence accrued through age or traversal. 0 = new growth. */
+  --spw-presence: 0;
+
+  --spw-biome-cool: var(--teal, hsl(184 60% 29%));
+  --spw-biome-warm: var(--amber, hsl(35 68% 42%));
+  /* Contour, not shadow — the reference plates have edges, not falloff. */
+  --spw-biome-contour: color-mix(in srgb, var(--line, rgba(58, 48, 36, 0.14)) 70%, transparent);
+  --spw-biome-attenuation: calc(
+    clamp(
+      0,
+      calc(
+        var(--spw-canopy)
+        + var(--spw-canopy-depth)
+        + var(--spw-canopy-edge)
+        /* --spw-edge-proximity arrives 0..1 from the MEASURE pass; absent, the
+           fallback contributes nothing and structural density stands alone. */
+        + calc(var(--spw-edge-proximity, 0) * 0.14)
+      ),
+      1
+    )
+    * var(--spw-enhancement-factor, 1)
+  );
+}
+
+/* ── Canopy ─────────────────────────────────────────────────────────────
+   Density is read upward with `:has()`, the only bidirectional channel CSS
+   offers. A grid holding many cards is closed canopy; its cards sit back.
+   Thresholds use :nth-child(n + N) on the container's own children, so the
+   count is structural rather than a class an author has to remember. */
+
+:where(.spw-grid, .card-grid, .page-grid):has(> :nth-child(6)) {
+  --spw-canopy: 0.5;
+}
+
+:where(.spw-grid, .card-grid, .page-grid):has(> :nth-child(10)) {
+  --spw-canopy: 0.72;
+}
+
+/* A clearing: few things, full light. Stated rather than left to the default,
+   because a sparse region should be a decision and not an absence. */
+:where(.spw-grid, .card-grid, .page-grid):not(:has(> :nth-child(4))) {
+  --spw-canopy: 0;
+}
+
+/* Depth compounds with density — an outer shell under closed canopy is the
+   floor of the stand.
+   Held in a separate token rather than added into --spw-canopy directly: a
+   custom property whose value reads itself is a cycle, and CSS drops both sides
+   of a cycle at computed-value time. It would work on a descendant, where
+   inheritance supplies the value first, and silently blank the canopy wherever
+   one element carried both a grid class and a liminality band. */
+:where([data-spw-liminality="deep"]) { --spw-canopy-depth: 0.12; }
+:where([data-spw-liminality="projected"]),
+:where([data-spw-liminality="settled"]) { --spw-canopy-depth: 0.2; }
+
+/* ── Measured canopy (forward-compatible) ───────────────────────────────
+   The density above is structural: it counts children, which is what CSS can
+   see unaided. Real canopy is not a count — it is how much sky is actually
+   occluded, and that needs measurement.
+   runtime/positioning-orchestration.js is planned to project --spw-edge-proximity
+   and data-spw-extent from a batched MEASURE pass. When it lands, these rules
+   take over from the child count without anything else changing; until then the
+   fallbacks make them inert. A component near a crowded edge is shaded by what
+   is beside it rather than by how many siblings its parent happens to hold. */
+
+:where([data-spw-extent="crowded"]) { --spw-canopy-edge: 0.18; }
+:where([data-spw-extent="contained"]) { --spw-canopy-edge: 0.08; }
+:where([data-spw-extent="open"]) { --spw-canopy-edge: 0; }
+
+/* What shade actually does. Contrast and saturation fall; nothing moves, and
+   nothing is hidden — understory is still legible, it is simply further off. */
+:where(.spw-card, .frame-card, .media-card):where(:not([data-spw-canopy="clearing"])) {
+  filter:
+    saturate(calc(1 - var(--spw-biome-attenuation) * 0.22))
+    contrast(calc(1 - var(--spw-biome-attenuation) * 0.06));
+  transition: filter var(--duration-slow, 420ms) var(--ease-soft, ease);
+}
+
+/* Hover is a gap in the canopy: the thing you are attending to gets its light
+   back. Cheap, reversible, and the only motion in the file. */
+:where(.spw-card, .frame-card, .media-card):hover,
+:where(.spw-card, .frame-card, .media-card):focus-within {
+  --spw-canopy: 0;
+}
+
+/* ── Succession ─────────────────────────────────────────────────────────
+   Presence accrues from data the site already stores: cauldron ingredient
+   phase (gathering → resonant → mature → decayed) and expression salience
+   bands earned by dwell. Neither has ever changed how anything looks. */
+
+:where([data-spw-ingredient-phase="resonant"]) { --spw-presence: 0.35; }
+:where([data-spw-ingredient-phase="mature"])   { --spw-presence: 0.7; }
+:where([data-spw-expression-salience="2"])     { --spw-presence: 0.4; }
+:where([data-spw-expression-salience="3"])     { --spw-presence: 0.65; }
+:where([data-spw-expression-salience="4"])     { --spw-presence: 0.9; }
+
+/* Established growth holds a contour on its leading edge — the boonhonk plate's
+   hard boundary rather than a halo. Inline-start only: a full outline reads as
+   selection, and this is age, not state. */
+:where([data-spw-presence-contour], [data-spw-ingredient-phase], [data-spw-expression-salience]) {
+  box-shadow: inset calc(2px * var(--spw-presence)) 0 0 -1px
+    color-mix(in srgb, var(--spw-biome-warm) calc(var(--spw-presence) * 52%), transparent);
+}
+
+/* Decay is the one thing that recedes rather than accrues. It stays readable —
+   a decayed ingredient is still an ingredient — but it stops holding an edge. */
+:where([data-spw-ingredient-phase="decayed"]) {
+  --spw-presence: 0;
+  opacity: 0.72;
+  box-shadow: none;
+}
+
+/* ── Restraint ──────────────────────────────────────────────────────────── */
+
+/* A minimal climate is a request for less; canopy is exactly the ambient
+   modulation that request is about. */
+:where(html[data-spw-enhancement-level="minimal"]) {
+  --spw-canopy: 0;
+  --spw-canopy-depth: 0;
+  --spw-canopy-edge: 0;
+  --spw-presence: 0;
+}
+
+/* Capture mode renders the stand in flat light. A model reading a screenshot
+   should see the components, not this site's weather. */
+:where(body[data-spw-capture-mode]:not([data-spw-capture-mode="default"])) {
+  --spw-canopy: 0;
+  --spw-canopy-depth: 0;
+  --spw-canopy-edge: 0;
+  --spw-presence: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.spw-card, .frame-card, .media-card) { transition: none; }
+}
+
+/* Narrow viewports have no stand — one column is not a canopy, it is a path.
+   Shading a single-file column would only dim the page. */
+@media (max-width: 45rem) {
+  :root {
+    --spw-canopy: 0;
+    --spw-canopy-depth: 0;
+    --spw-canopy-edge: 0;
+  }
+}
+}
+
 /* /public/css/systems/interaction-progression.css */
 @layer systems {
 /* ==========================================================================
@@ -30624,6 +31062,18 @@ html:is([data-spw-palette-resonance="lattice"], [data-spw-palette-resonance="sof
 html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="math"]) {
   --spw-palette-depth-highlight: color-mix(in srgb, var(--spw-palette-probe-4) 20%, #fff 80%);
   --spw-palette-depth-shadow: color-mix(in srgb, var(--spw-palette-probe-3) 48%, #0d1218 52%);
+}
+
+html:is([data-spw-palette-resonance="ludic"], [data-spw-palette-resonance="play"]) {
+  --spw-palette-depth-mid: color-mix(in srgb, var(--spw-palette-probe-1) 50%, var(--spw-palette-probe-4) 50%);
+  --spw-palette-depth-wash: color-mix(in srgb, var(--spw-palette-probe-4) 14%, transparent);
+  --spw-palette-depth-glow: color-mix(in srgb, var(--spw-palette-probe-1) 24%, transparent);
+}
+
+html:is([data-spw-palette-resonance="studio"], [data-spw-palette-resonance="author"]) {
+  --spw-palette-depth-highlight: color-mix(in srgb, var(--spw-palette-probe-1) 28%, #fff 72%);
+  --spw-palette-depth-shadow: color-mix(in srgb, var(--spw-palette-probe-4) 42%, #141210 58%);
+  --spw-palette-depth-wash: color-mix(in srgb, var(--spw-palette-probe-1) 12%, transparent);
 }
 
 /* Theme pack atmospheric depth */
@@ -42765,10 +43215,57 @@ html[data-spw-resonance-probe="surface"] :where(a, button, .operator-chip, .fram
       color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal))) 8%, transparent),
       color-mix(in srgb, var(--surface-strong, #fff) 92%, transparent)
     );
+/* ==========================================================================
+   Transferable Spw Interactive Momentum & Genomic Resonance
+   --------------------------------------------------------------------------
+   Supports seamless attentional momentum across intra-site page navigations.
+   When pages share Spw genomics (braces, climate, wonder), arrival resonance
+   reweights custom properties to highlight structural kinship.
+   ========================================================================== */
+
+:root {
+  --spw-transit-momentum: 0;
+  --spw-genomic-resonance: 0;
+}
+
+html[data-spw-transit-momentum="active"] {
+  --spw-transit-momentum: 1;
+}
+
+html[data-spw-genomic-resonance="high"] {
+  --spw-genomic-resonance: 0.85;
+}
+
+html[data-spw-genomic-resonance="medium"] {
+  --spw-genomic-resonance: 0.45;
+}
+
+/* Transferred operator arrival resonance */
+html[data-spw-transit-momentum="active"][data-spw-transferred-operator="frame"] :where([data-spw-operator="frame"]:not(:hover):not(:focus-visible)),
+html[data-spw-transit-momentum="active"][data-spw-transferred-operator="object"] :where([data-spw-operator="object"]:not(:hover):not(:focus-visible)),
+html[data-spw-transit-momentum="active"][data-spw-transferred-operator="probe"] :where([data-spw-operator="probe"]:not(:hover):not(:focus-visible)),
+html[data-spw-transit-momentum="active"][data-spw-transferred-operator="ref"] :where([data-spw-operator="ref"]:not(:hover):not(:focus-visible)),
+html[data-spw-transit-momentum="active"][data-spw-transferred-operator="action"] :where([data-spw-operator="action"]:not(:hover):not(:focus-visible)),
+html[data-spw-transit-momentum="active"][data-spw-transferred-operator="stream"] :where([data-spw-operator="stream"]:not(:hover):not(:focus-visible)),
+html[data-spw-transit-momentum="active"][data-spw-transferred-operator="surface"] :where([data-spw-operator="surface"]:not(:hover):not(:focus-visible)) {
+  --spw-resonance: calc(var(--attention-field-radius, 0.4) * (1 + var(--spw-transit-momentum, 0) * 0.7));
+  border-color: color-mix(
+    in srgb,
+    var(--spw-operator-color, var(--active-op-color, var(--teal))) 24%,
+    var(--line, rgba(14, 18, 20, 0.14))
+  );
+}
+
+/* Shared structural brace/climate resonance when genomics align */
+html[data-spw-transit-momentum="active"] :where([data-spw-form="brace"], .mode-switch, [data-spw-climate]) {
+  box-shadow:
+    0 0 0 calc(1px * var(--spw-genomic-resonance, 0)) color-mix(in srgb, var(--active-op-color, var(--teal)) 20%, transparent),
+    var(--card-shadow, none);
+  transition: box-shadow 0.6s var(--ease-settle, ease-out), border-color 0.6s var(--ease-settle, ease-out);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :where([data-spw-operator]) {
+  :where([data-spw-operator], [data-spw-form="brace"], .mode-switch) {
     transition: none !important;
   }
 }

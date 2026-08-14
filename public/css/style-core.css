@@ -61,6 +61,7 @@
 @import url('/public/css/systems/image-interaction.css') layer(systems);
 @import url('/public/css/systems/image-theming.css') layer(systems);
 @import url('/public/css/systems/paper-motif.css') layer(systems);
+@import url('/public/css/systems/component-biome.css') layer(systems);
 @import url('/public/css/systems/interaction-progression.css') layer(systems);
 @import url('/public/css/systems/scroll-gesture.css') layer(systems);
 @import url('/public/css/systems/spatial-gravity.css') layer(systems);
