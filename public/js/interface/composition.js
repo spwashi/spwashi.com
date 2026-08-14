@@ -700,13 +700,31 @@ function syncSpellPreview(ingredients, phase) {
   });
 }
 
+/**
+ * Prune, and compost what was pruned.
+ *
+ * Pruning used to delete. In a garden, pruned material becomes mulch and
+ * returns to the soil; here it vanished, so the one place the cauldron modelled
+ * decomposition was the one place nothing was fed. Eighteen stores accumulate
+ * and only this one shrinks, which made shrinking a pure loss.
+ *
+ * Composted ingredients now emit with the event, so their tokens can return to
+ * the substrate at a reduced weight. A fragment that aged out still shaped what
+ * the reader travelled through — the material is gone and the nutrients stay.
+ */
 function pruneStale(days = GARDEN_PRUNE_DAYS) {
   const ingredients = getCauldron();
   const cutoff = Date.now() - (days * 24 * 60 * 60 * 1000);
   const next = ingredients.filter(i => Number(i.capturedAt || 0) >= cutoff);
   if (next.length === ingredients.length) return ingredients; // nothing pruned
+  const composted = ingredients.filter(i => Number(i.capturedAt || 0) < cutoff);
   saveCauldron(next);
-  bus.emit('cauldron:gardened', { action: 'prune', pruned: ingredients.length - next.length, remaining: next.length });
+  bus.emit('cauldron:gardened', {
+    action: 'prune',
+    pruned: composted.length,
+    remaining: next.length,
+    composted,
+  });
   return next;
 }
 

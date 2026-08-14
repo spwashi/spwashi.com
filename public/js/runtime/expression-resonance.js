@@ -215,8 +215,15 @@ function depositSalience(expression) {
  */
 const GATHER_WEIGHT = 3;
 const KIN_SHARE = 1;
+/**
+ * Compost returns less than gathering deposited, because decomposition is lossy
+ * and because a fragment that aged out was, by definition, not returned to. It
+ * is not zero: the reader still travelled that token once, and the substrate
+ * should remember that something passed through even after the material is gone.
+ */
+const COMPOST_WEIGHT = 1;
 
-export function depositGathered(items = []) {
+export function depositGathered(items = [], weight = GATHER_WEIGHT) {
   if (!manifest || !Array.isArray(items) || !items.length) return 0;
   const store = readSalience();
   let banked = 0;
@@ -228,14 +235,20 @@ export function depositGathered(items = []) {
 
     for (const token of [shape.subject, shape.mode, ...(shape.parts || [])]) {
       if (!token) continue;
-      store[token] = (store[token] || 0) + GATHER_WEIGHT;
+      store[token] = (store[token] || 0) + weight;
     }
     banked += 1;
 
     // Kin share: the neighbourhood a gathered fragment belongs to warms with it,
     // so recognising a relation pays more than collecting in isolation.
-    for (const { token } of kinOf(expression)) {
-      if (token) store[token] = (store[token] || 0) + KIN_SHARE;
+    //
+    // Compost does not spread. Decomposition returns material to the ground it
+    // fell on, not to every relation that ground participates in — and a
+    // fragment that aged out earned no new recognition on its way out.
+    if (weight >= GATHER_WEIGHT) {
+      for (const { token } of kinOf(expression)) {
+        if (token) store[token] = (store[token] || 0) + KIN_SHARE;
+      }
     }
   }
 
@@ -320,8 +333,18 @@ export async function initExpressionResonance(ctx = {}) {
     depositGathered(event?.detail?.items || event?.items || []);
   }) || null;
 
+  // Composting: pruned material returns its tokens to the substrate at a
+  // reduced weight. The one place the cauldron shrinks is now also the one
+  // place it feeds something.
+  const offComposted = bus?.on?.('cauldron:gardened', (event) => {
+    const detail = event?.detail || event || {};
+    if (detail.action !== 'prune') return;
+    depositGathered(detail.composted || [], COMPOST_WEIGHT);
+  }) || null;
+
   cleanup = () => {
     offGathered?.();
+    offComposted?.();
     clearTimeout(dwellTimer);
     clearResonance();
     document.removeEventListener('pointerover', onEnter);

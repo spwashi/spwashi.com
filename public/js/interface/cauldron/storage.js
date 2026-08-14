@@ -116,16 +116,34 @@ export function toSpwExpression(ingredient) {
   const payload = ingredient.payload || null;
   if (!payload) return { text: `${sigil}${nucleus}`, depth: 'naive' };
 
-  const mode = payload.role || payload.scope || '';
-  const parts = [payload.family, payload.topic, payload.region, payload.affordance, payload.liminality, payload.phase || payload.element]
+  /**
+   * Three slots, three meanings. The previous form joined six payload values
+   * with dots into one body, where nothing distinguished a region from an
+   * affordance and a reader had to know the order. The grammar already carries
+   * the distinctions:
+   *
+   *   [frame]        how it is read — its role, and what it affords
+   *   {body}         where it sits — region and the shell it stood in
+   *   <projection>   what it leaves behind — its consequence
+   *
+   * Everything else stays on the payload. The expression is a reading, not a
+   * dump of every field capture happened to resolve.
+   */
+  const distinct = (values) => values
     .filter(Boolean)
-    .filter((part, index, all) => all.indexOf(part) === index);
+    .filter((value, index, all) => all.indexOf(value) === index);
+
+  const frame = distinct([payload.role || payload.scope, payload.affordance]);
+  const body = distinct([payload.region, payload.liminality, !payload.region ? payload.topic : '']);
+  const projection = payload.consequence || '';
 
   const text = `${sigil}${nucleus}`
-    + (mode ? `[${mode}]` : '')
-    + (parts.length ? `{${parts.join('.')}}` : '');
+    + (frame.length ? `[${frame.join('.')}]` : '')
+    + (body.length ? `{${body.join('.')}}` : '')
+    + (projection ? `<${projection}>` : '');
 
-  return { text, depth: mode || parts.length ? 'integrated' : 'naive' };
+  const located = frame.length || body.length || projection;
+  return { text, depth: located ? 'integrated' : 'naive' };
 }
 
 /**
