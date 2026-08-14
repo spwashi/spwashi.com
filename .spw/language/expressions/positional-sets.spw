@@ -1,0 +1,64 @@
+# Positional Sets — prefix, infix, postfix
+#
+# Where the operator sits relative to its operand, and what each position leaves
+# unclaimed. Node counts are from parse(); the surprises are the entries.
+
+#>spw_positional_sets
+#:language #!grammar #!position
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!semantics
+
+@formations: ~"./index.spw"
+@containers: ~"./container-formations.spw"
+@operator_spaces: ~"../../../public/js/semantic/operator-spaces.js"
+@operator_semantics: ~"../../conventions/operator-semantics.spw"
+
+operation = "prime"
+fixity = "experimental"
+
+expression = position[set]{prefix.infix.postfix}<claim>
+
+^"prefix"{
+  ~#note: "Operator leads. The operand takes the right role; the left role is never stated, and that unstated role is the niche."
+  ~#reading(stable): "The site's whole authored corpus is effectively this, with the operator omitted."
+
+  ground: .{ form = `#>site{route.surface}`, parse = `Op:1 Fr:0 Bd:1 Md:0`, opens = `address-source`,
+    note = `Grounds without a frame. #> is the only prefix here that takes no [mode] — an address is not read under a mode, it simply holds.` }[reg=facet]
+  probe: .{ form = `?atlas[open]{aperture.edge}`, parse = `Op:2 Fr:1 Bd:1`, opens = `known-edge`,
+    note = `The question is stated and what is already known is not. Two questions share that niche and compete for it.` }[reg=facet]
+  induct: .{ form = `~carry[register]{loss.less}`, parse = `Op:2 Fr:1 Bd:1`, opens = `current-perspective`,
+    note = `Charge moves register without loss. The observer is unstated, so a reader can occupy it.` }[reg=facet]
+  project: .{ form = `^lift[evidence]{parts.whole}`, parse = `Op:2 Fr:1 Bd:1`, opens = `parts-or-evidence`,
+    note = `Implicit made explicit. Geometry is lift.` }[reg=facet]
+  subject: .{ form = `&subject[claim]{binding}`, parse = `Op:2 Fr:1 Bd:1` }[reg=facet]
+  substrate: .{ form = `$ground[material]{grain.tooth}`, parse = `Op:2 Fr:1 Bd:1` }[reg=facet]
+}
+
+^"postfix"{
+  ~#note: "Operator trails. Structurally a MODIFIER, not an operation — this is the surprise."
+  settle: .{ form = `orientation.`, parse = `Op:1 Fr:0 Bd:0 Md:1`, opens = `local-baseline`,
+    note = `A trailing . produces a ModifierChain and no Frame or Body at all. Postfix modifies rather than operates, which is why it can attach to a bare identifier and a prefix cannot.` }[reg=facet]
+}
+
+^"infix"{
+  ~#note: "Operator between two operands. Also resolves as a modifier, and claims BOTH roles — an infix expression opens no niche."
+  lens_bare: .{ form = `viewer@subject`, parse = `Op:1 Fr:0 Bd:0 Md:1`, opens = `(none)`,
+    note = `Both sides claimed, so nothing is left open. The most complete and least extensible position.` }[reg=facet]
+  lens_framed: .{ form = `reader@atlas[route]{path}`, parse = `Op:1 Fr:1 Bd:1 Md:1`,
+    note = `Infix survives containers. The lens sits outside the frame and reads the whole capsule through a viewpoint.` }[reg=facet]
+  ~#reading(exotic): "reader@atlas[route]{path} departs from the stable atlas[route]{path} by naming who is reading. The origin is the plain capsule; the departure is the viewer."
+}
+
+^"structural_findings"{
+  ~#note: "Read off the parse counts rather than the spec."
+  f1: "Prefix operators produce Op:2 — the operator and the capsule are separate operations. #> is the exception at Op:1."
+  f2: "Postfix and infix produce Md:1 and Op:1. They are modifier-shaped; prefix is operation-shaped."
+  f3: "Capsule appears only when a <modifier> is present. Frame and Body do not create one."
+  f4: "Infix claims both roles, so per @operator_spaces it opens no niche and cannot be extended without rewriting."
+}
+
+^"validation"{
+  probe: `npm run spw:integrity`
+  falsification: "A form here reports different node counts than recorded, meaning the grammar moved and this surface did not."
+}

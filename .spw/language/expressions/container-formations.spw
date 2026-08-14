@@ -1,0 +1,81 @@
+# Container Formations — nesting, compounds, modifier chains
+#
+# What holds what. Every count from parse(); joins scale linearly, nesting goes
+# as deep as it is written, and modifier chains multiply capsules.
+
+#>spw_container_formations
+#:language #!grammar #!containers
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!semantics
+
+@formations: ~"./index.spw"
+@positional: ~"./positional-sets.spw"
+@compound_expressions: ~"../../conventions/compound-expressions.spw"
+
+operation = "prime"
+fixity = "experimental"
+
+expression = container[formation]{nest.join.chain}<hold>
+
+^"stable"{
+  ~#note: "The formations to grow from. Boring on purpose; everything exotic below is a departure from one of these."
+  capsule: .{ form = `host[mode]{one.two.three}`, parse = `Op:1 Fr:1 Bd:1 Md:1`,
+    note = `The site's whole corpus. Subject, the mode it is read under, the parts it is made of.` }[reg=facet]
+  projected: .{ form = `surfaces[route]{path.role}<publish>`, parse = `Op:1 Fr:1 Bd:1 Md:1 Cp:1`,
+    note = `Adds where it goes. The only form that produces a Capsule, and zero of 441 authored expressions use it.` }[reg=facet]
+  frame_path: .{ form = `host[a.b.c]{body}`, parse = `Op:1 Fr:1 Bd:1`,
+    note = `A mode may itself be a path. The frame is not restricted to one token.` }[reg=facet]
+}
+
+^"nesting"{
+  ~#note: "Containers hold containers. Depth is not special-cased — Frame and Body counts simply track it."
+  one_deep: .{ form = `outer[mode]{inner[deep]{leaf}}`, parse = `Fr:2 Bd:2` }[reg=facet]
+  three_deep: .{ form = `a[b]{c[d]{e[f]{g}}}`, parse = `Fr:3 Bd:3`,
+    note = `Each level adds exactly one Frame and one Body. No ceiling was found.` }[reg=facet]
+  nest_projected: .{ form = `outer[m]{inner[d]{leaf}}<publish>`, parse = `Fr:2 Bd:2 Cp:1`,
+    note = `A projection applies to the whole nest, not to the innermost leaf.` }[reg=facet]
+}
+
+^"compounds"{
+  ~#note: "Two capsules joined by an operator. Both operands structure fully — this is a real relation, not a list."
+  ~#reading(stable): "Nothing in the corpus is compound. These are all departures."
+  induct_join: .{ form = `a[x]{p} ~ b[y]{q}`, parse = `Op:2 Fr:2 Bd:2 Md:2 Sq:3`,
+    note = `Coupled by induction. The bond kind is the operator, which inference over shared vocabulary cannot recover.` }[reg=facet]
+  project_join: .{ form = `parts[evidence]{raw} ^ whole[inspect]{lift}`, parse = `Op:2 Fr:2 Bd:2`,
+    note = `One projects into the other. Falsifiable: if nothing downstream changes when the source does, the projection was asserted and never held.` }[reg=facet]
+  subject_join: .{ form = `claim[binding]{owner} & proof[probe]{falsify}`, parse = `Op:2 Fr:2 Bd:2` }[reg=facet]
+  triple: .{ form = `a[1]{x} ~ b[2]{y} ~ c[3]{z}`, parse = `Op:3 Fr:3 Bd:3 Sq:4`,
+    note = `Joins scale linearly. Three operands, three of everything.` }[reg=facet]
+  mixed: .{ form = `a[1]{x} ~ b[2]{y} ^ c[3]{z}`, parse = `Op:3 Fr:3 Bd:3`,
+    note = `Bond kinds may differ within one chain. Induction then projection.` }[reg=facet]
+  list_separator: .{ form = `a[x]{p} ; b[y]{q}`, parse = `Op:1 Fr:2 Bd:2`,
+    note = `NOT a compound. Two frames but one Operation — the semicolon separates, it does not relate.` }[reg=facet]
+}
+
+^"exotic"{
+  ~#note: "Verified, unused, and each names the stable formation it departs from."
+  prefixed_compound: .{ form = `?open[edge]{aperture} ~ ^lift[whole]{parts}`, parse = `Op:4 Fr:2 Bd:2 Md:0`,
+    from = `induct_join`,
+    note = `Two prefixed capsules joined. Op:4 — two operators plus two capsules — and ModifierChain drops to zero, so prefixing both sides changes the shape of the join itself.` }[reg=facet]
+  lens_over_compound: .{ form = `reader@atlas[route]{a} ~ writer@folio[craft]{b}`, parse = `Op:2 Fr:2 Bd:2 Md:2`,
+    from = `induct_join`,
+    note = `Two viewpoints, coupled. Reader and writer are different lenses on a related pair.` }[reg=facet]
+  nest_compound: .{ form = `a[b]{c[d]{e}} ~ f[g]{h}`, parse = `Op:2 Fr:3 Bd:3`,
+    from = `three_deep`,
+    note = `A nest may be one operand of a compound. Depth and relation compose.` }[reg=facet]
+  chained_modifiers: .{ form = `a[b]{c[d]{e}}<x><y><z>`, parse = `Fr:2 Bd:2 Cp:3`,
+    from = `projected`,
+    note = `Three modifiers, three Capsules. A projection chain — where it goes, then where that goes.` }[reg=facet]
+  operators_in_body: .{ form = `host[mode]{~carry.^lift.?ask}`, parse = `Op:4 Fr:1 Bd:1`,
+    from = `capsule`,
+    note = `The strangest verified form. Operators live inside a body as parts — the body holds operations rather than names. Op:4 from three inner operators plus the host.` }[reg=facet]
+}
+
+^"validation"{
+  probe: `npm run spw:integrity`
+  falsification: #[
+    `A recorded parse count no longer reproduces.`,
+    `An exotic entry names no stable origin in its from field.`
+  ][reg=set]
+}

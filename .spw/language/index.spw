@@ -16,6 +16,7 @@ fixity = "stable"
 @reference_conventions: ~"../_workbench/docs/specs/spw/reference-conventions.spw"
 @spec_alignment: ~"../_workbench/docs/specs/spw/spec-alignment.spw"
 @claim_protocol: ~"../_workbench/.spw/harness/claim-protocol.spw"
+@expression_formations: ~"./expressions/index.spw"  # parse-verified prefix/infix/postfix, containers, compounds, dynamics
 @operators_theory: ~"../_workbench/docs/theory/spw/operators.spw"
 @semantics_physics: ~"../_workbench/docs/theory/spw/semantics-physics.spw"
 @form_geometry: ~"../_workbench/docs/theory/spw/form-geometry.spw"

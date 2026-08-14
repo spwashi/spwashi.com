@@ -1,0 +1,85 @@
+# Dynamic Categories
+#
+# What kinds of movement the grammar can represent, and which the site actually
+# uses. The categories are read off operator geometry rather than invented —
+# every one names a flow already in OPERATOR_GEOMETRY.
+
+#>spw_dynamic_categories
+#:language #!grammar #!dynamics
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!semantics
+
+@formations: ~"./index.spw"
+@containers: ~"./container-formations.spw"
+@positional: ~"./positional-sets.spw"
+@electrostatic: ~"../../conventions/electrostatic-affordances.spw"
+@component_biome: ~"../../conventions/component-biome.spw"
+@geometry_table: ~"../../../public/js/kernel/operator-detection.js"
+
+operation = "prime"
+fixity = "experimental"
+
+expression = dynamics[category]{flow.geometry.charge}<move>
+
+^"from_the_table"{
+  ~#note: "Each operator declares a flow and a geometry. These are the dynamics the language already knows how to say."
+  anchor: .{ flow = `source-to-address`, geometry = `anchor`, charge = `frame-lock`,
+    dynamic = `fixing — something becomes findable and stops moving` }[reg=facet]
+  field_plane: .{ flow = `source-to-register`, geometry = `field-plane`, charge = `register-charge`,
+    dynamic = `layering — the same thing held at another level without changing what it is` }[reg=facet]
+  frequency: .{ flow = `name-to-field`, geometry = `frequency-anchor`, charge = `resonance-charge`,
+    dynamic = `naming — a word makes a category audible` }[reg=facet]
+  thread: .{ flow = `observer-to-potential`, geometry = `thread`, charge = `latent-charge`,
+    dynamic = `reaching — a line toward something not yet arrived at` }[reg=facet]
+  gravity: .{ flow = `exploration-to-ground`, geometry = `center-of-gravity`, charge = `discharge`,
+    dynamic = `settling — wandering resolves into a baseline` }[reg=facet]
+  lift: .{ flow = `implicit-to-explicit`, geometry = `lift`, charge = `integration-charge`,
+    dynamic = `surfacing — parts become an inspectable whole` }[reg=facet]
+  aperture: .{ flow = `certainty-to-question`, geometry = `aperture`, charge = `(opens)`,
+    dynamic = `opening — a known edge gives way to a question` }[reg=facet]
+}
+
+^"what_the_site_moves"{
+  ~#note: "Which dynamics the corpus actually expresses, measured rather than assumed."
+  measured: .{
+    authored_expressions = 461
+    operator_led = 1
+    compound = 0
+    projected = 0
+  }[reg=facet]
+  reading: "Essentially one dynamic is in use — naming. `subject[mode]{parts}` fixes a subject, reads it under a mode, and lists its parts. Nothing reaches, nothing settles, nothing lifts, and nothing opens."
+  consequence: "A grammar with seven flows expressing one of them is not a language in use; it is a template. The exotic formations in @containers are not decoration — they are the six unused dynamics waiting for a first instance."
+}
+
+^"blend"{
+  ~#note: "Where a knowledge base and a creative practice actually meet, since the two want opposite things from a grammar."
+  knowledge_wants: "Anchor and field-plane. Findable, stable, the same tomorrow, citable from elsewhere. A knowledge base is mostly `#>` and `[mode]`."
+  practice_wants: "Aperture and thread. Open, reaching, provisional, allowed to fail. A creative practice is mostly `?` and `~`."
+  the_blend: "Lift is the joint. `^` takes what practice produced and makes it inspectable — the operation that turns a mess of parts into something a knowledge base can hold. A workspace that never lifts accumulates two disconnected piles."
+  integrity_rule: "Every exotic form should eventually be liftable. If a departure cannot be made inspectable, it stays a private experiment rather than becoming shared vocabulary — which is fine, but should be known."
+  measured_gap: "0 of 461 expressions use ^. The joint between the two halves of this workspace is currently unexpressed."
+}
+
+^"growth_pairs"{
+  ~#note: "Stable formation paired with the exotic departure it can grow into. Pairs, so experimentation always has something to return to."
+  naming_to_opening: .{ stable = `host[mode]{parts}`, exotic = `?host[mode]{parts}`,
+    gains = `an unclaimed known-edge — the expression becomes a question with room for what is already understood` }[reg=facet]
+  naming_to_reaching: .{ stable = `host[mode]{parts}`, exotic = `~host[register]{parts}`,
+    gains = `a thread and an open current-perspective — a reader can occupy the observer role` }[reg=facet]
+  capsule_to_coupled: .{ stable = `a[x]{p}`, exotic = `a[x]{p} ~ b[y]{q}`,
+    gains = `a declared bond with a named kind, which inference over shared tokens cannot recover` }[reg=facet]
+  capsule_to_lifted: .{ stable = `parts[evidence]{raw}`, exotic = `parts[evidence]{raw} ^ whole[inspect]{lift}`,
+    gains = `the blend joint — practice output becomes knowledge-base input, and the claim is falsifiable` }[reg=facet]
+  flat_to_deep: .{ stable = `outer[mode]{leaf}`, exotic = `outer[mode]{inner[deep]{leaf}}`,
+    gains = `containment as meaning rather than as punctuation` }[reg=facet]
+}
+
+^"validation"{
+  probe: `npm run reasons && npm run spw:integrity`
+  falsification: #[
+    `A dynamic is claimed here that OPERATOR_GEOMETRY does not declare.`,
+    `The measured counts are restated rather than re-run.`
+  ][reg=set]
+  next: "One `^` expression, where practice output genuinely becomes inspectable. The blend joint has no instances and is the most load-bearing absence."
+}

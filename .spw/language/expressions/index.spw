@@ -1,0 +1,73 @@
+# Expression Formations
+#
+# A working herbarium of Spw expressions: what the grammar actually holds,
+# pressed and labelled, with the stable formations kept beside the exotic ones
+# so growth has something to grow from.
+#
+# Every form here was run through spw-seed `parse()` and its node counts
+# recorded before it was written down. Nothing is aspirational syntax. Where a
+# form does something structurally surprising — `#>` taking no frame, `.` and
+# `@` resolving as modifiers rather than operations — that surprise is the
+# entry, not a footnote to it.
+#
+# The corpus does not use most of this. 440 of 441 authored expressions are a
+# plain `subject[mode]{parts}`; none is compound, none carries a projection.
+# That is the gap this folder exists to close, and the refusal from
+# @compound_expressions still holds: do not backfill. Grow where a coupling is.
+
+#>spw_expression_formations
+#:index #!language #!grammar #!formations
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!semantics
+
+@language: ~"../index.spw"
+@compound_expressions: ~"../../conventions/compound-expressions.spw"
+@semantic_expression: ~"../../conventions/semantic-expression-consequence.spw"
+@corpus_completion: ~"../../conventions/corpus-completion.spw"
+@operator_semantics: ~"../../conventions/operator-semantics.spw"
+@component_biome: ~"../../conventions/component-biome.spw"
+@operator_spaces: ~"../../../public/js/semantic/operator-spaces.js"
+
+@positional: ~"./positional-sets.spw"
+@containers: ~"./container-formations.spw"
+@dynamics: ~"./dynamic-categories.spw"
+
+operation = "prime"
+fixity = "experimental"
+
+expression = formations[herbarium]{stable.exotic.compound}<grow>
+
+^"method"{
+  ~#note: "How an entry earns its place."
+  verified: "Run through parse() in file context, never parseExpression() — the two disagree and the standalone one truncates at the leading identifier."
+  recorded: "Node counts kept with the form: Operation, Frame, Body, ModifierChain, Capsule, Sequence. Those counts are the fingerprint; a form that parses but structures nothing is not a formation."
+  refuse: "Do not write a form here that has not been parsed. An unverified example in a grammar surface is worse than no example, because it will be copied."
+  probe: `node --import ./.spw/_workbench/node_modules/tsx/dist/loader.mjs -e "import('./.spw/_workbench/packages/spw-seed/src/index.ts').then(m=>{const r=m.parse('expression = <FORM>\n');const c={};m.walkAST(r.ast,n=>c[n.type]=(c[n.type]||0)+1);console.log(r.success,c)})"`
+}
+
+^"registry"{
+  positional = @positional
+  containers = @containers
+  dynamics = @dynamics
+}[reg=facet]
+
+^"fixity_note"{
+  ~#note: "Two senses of the word are live in this repo and neither is wrong."
+  surface_fixity: "fixed | stable | tending | experimental | volatile — how settled a surface is. 127 `#:fixity` declarations use this. Belongs to surfaces."
+  positional_fixity: "prefix | infix | postfix — where an operator sits relative to its operand. Already returned by splitOperatorExpression as `position`, already emitted into data-spw-op by composeOpBundle, and modelled by nothing."
+  resolution: "This folder uses `position` for the second so the word fixity stays with surfaces. If that is later reversed, `spw refactor` renames marks by structure rather than by grep, which is what makes the decision cheap to defer."
+  open: "A third sense may be wanted — how firmly an expression is bound in place, as opposed to how settled its surface is or where its operator sits."
+}
+
+^"integrity"{
+  ~#note: "What keeps a knowledge base and a creative practice from pulling apart."
+  claim: "A knowledge base wants forms that are stable, citable and the same tomorrow. A creative practice wants forms that are strange, provisional and allowed to fail. Housing both is not a compromise — the stable formations are what make the exotic ones legible as departures."
+  rule: "Every exotic entry names the stable formation it departs from. A departure with no origin is noise; with one, it is a variation and can be judged."
+  falsification: "An entry appears here with no parse record, or an exotic form with no named origin."
+}
+
+^"validation"{
+  probe: `npm run spw:integrity`
+  next: "Author one compound on one real element, where a coupling actually is, and see whether the manifest carries both operands."
+}
