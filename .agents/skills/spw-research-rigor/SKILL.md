@@ -7,32 +7,56 @@ description: Turn fuzzy design/runtime questions into a small reproducible note.
 
 Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 
-## Intent
+---
 
-Research notes stop vibes-only arguments. They should not automatically become
-new conventions, modules, or metaphor families.
+## ⚡ 60-Second Quick Strike (Grok)
 
-## Workflow
+* **Objective:** Cut through "vibes-only" debates with clear, falsifiable empirical observations.
+* **Stop Condition:** Research notes must end in either an actionable implementation plan OR an explicit "DO NOT BUILD" decision. Never leave open-ended academic essays.
 
-1. State the question in one plain sentence.
-2. Hypothesis, method, artifacts, validation—separate them.
-3. Semantic-capacity op if `.spw`: cache / audit / align / prime / contract / **archive**.
-4. Cross-discipline → daily-kernel fields only if the session is truly multi-role.
-5. Lightest durable form that still helps next week:
-   - short plan or FIX
-   - nested or single `.spw` audit/review
-   - insight cache
-   - route note if public-facing
-6. Observable claims over taste-only conclusions.
-7. End with next experiment **or** “stop / do not build.”
+---
 
-## Good surfaces
+## 🛡️ Constitutional Guardrails (Claude)
 
-Learnability, menus, theme/palette, image–copy coupling, lifecycle audits,
-audience registers—when someone will act on the result.
+* 🚫 **No Permanent System Sprawl:** A research finding does not automatically earn a new sitewide convention or `.spw` root.
+* 🚫 **Observable Reality Over Pure Theory:** Ground every conclusion in actual browser performance (FID, LCP, CLS), CSS layout metrics, or user interaction evidence.
+* 🚫 **Archive Answered Notes:** Once a question is answered and implemented, archive the research note to prevent cognitive clutter.
 
-## Anti-patterns
+---
 
-- Research that only produces more indexes
-- A new coordinate system for a one-off probe
-- Skipping archive when the question is answered
+## 📐 Structured Research Note Protocol (Codex)
+
+```markdown
+# Research: <Clear Question in One Sentence>
+
+## 1. Hypothesis
+What do we expect will happen? (e.g. "Switching to container queries reduces reflow overhead by 30%").
+
+## 2. Test Method & Dataset
+- Viewport ranges: 360px, 768px, 1440px
+- Tooling: Chrome DevTools Performance / Headless Runner
+
+## 3. Findings & Evidence
+- Concrete measurements, CSS token traces, or AST query outputs.
+
+## 4. Decision Gate
+- [ ] Build & ship via `<plan-slug>`
+- [ ] Reject / Do not build (rationale documented)
+```
+
+---
+
+## 🌌 Tooling & Validation Ladder (Antigravity)
+
+1. **Performance Matrix Probe:**
+   ```bash
+   npm run bench:nav:quick
+   ```
+2. **Ecology & Language Inventory:**
+   ```bash
+   npm run ecology
+   ```
+3. **Local Verification Gate:**
+   ```bash
+   npm run check:local
+   ```

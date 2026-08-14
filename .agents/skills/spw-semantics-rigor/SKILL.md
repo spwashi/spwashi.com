@@ -5,87 +5,69 @@ description: Clean up naming and meaning across copy, data-spw attributes, CSS t
 
 # Spw Semantics Rigor for spwashi.com
 
-Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
+* Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
+* Adjacent measurement surface: [`.spw/skills/semantics-rigor.spw`](file:///Users/spwashi/air/spwashi.com/.spw/skills/semantics-rigor.spw)
 
-## Intent (honest)
+---
 
-This skill grew when every concept felt like it needed HTML + CSS + JS + `.spw`
-alignment. Cross-language stems help **when a name is reused**. They hurt when
-every local label becomes a sitewide family.
+## 1. Spw Invocation Contract
 
-**Use this skill for cleanup and alignment.** Do not use it as a license to invent
-new attributes so the model “looks complete.”
+* **Default Operation:** `align` (or `audit` when measuring cross-layer drift).
+* **Sense (Pre-flight):** `npm run spw:integrity && npm run spw:lattice` (verifies all 2500+ citations and operator cells before renaming).
+* **Probe (Falsification):** `npm run spw:integrity && npm run reasons && npm run spw:lattice`
+* **Precipitate:** Crystallize expression rules in `.spw/conventions/semantic-expression-consequence.spw`; attribute stems in `.spw/conventions/data-spw-attribute-governance.spw`; measurements in `.spw/skills/semantics-rigor.spw`.
 
-## When to use
+---
 
-- Two names mean the same thing in different layers
-- Authored truth is being overwritten by inference
-- Homonyms (settle, resonance, density, salience) are colliding
-- A real reusable contract is missing a home in `.spw`
+## 2. ⚡ 60-Second Quick Strike & Stop Conditions
 
-## When not to use
+* **Purpose:** This skill is for **cleanup, pruning, and alignment**—NOT for inventing new attribute families.
+* **Reuse First:** Always map onto existing `data-spw-*` families before proposing a new stem.
+* **Expression Manifest Flow:** When authoring `data-spw-semantic-expression`, remember the pipeline:
+  `data-spw-semantic-expression` → `npm run manifest:expressions` → `buildKinIndex` → 700ms dwell salience.
+  *If you rename an expression subject without re-running `npm run manifest:expressions`, kin ties vanish silently.*
+* **Stop Condition:** If your semantic pass produces 5 new `.spw` files without resolving an active naming collision or dead code, STOP.
 
-- One-off copy on a single route
-- A volatile experiment that will die in a week
-- “Make it more inspectable” with no reader or agent job
+---
 
-## Workflow
+## 3. 🛡️ Constitutional Guardrails
 
-1. Name the layer you are actually changing (copy / attr / token / JS / `.spw`).
-2. Prefer **reuse**: does an existing `data-spw-*` family already cover it?
-3. If `.spw` is involved, pick an operation: `cache | audit | align | prime | contract | archive`
-   (archive is underused—use it when superseding).
-4. Fixity: fixed / stable / tending / experimental / volatile.
-5. Cross-language stem **only if** the concept already or will shortly appear in more than one layer.
-6. Write or update `.spw` when the name will outlive the patch—not for every intermediate thought.
-7. Wire `site.spw` / conventions index only for durable contracts.
+* 🚫 **No Attribute Proliferation:** Never add a `data-spw-*` attribute to HTML unless there is an active CSS rule, JS consumer, or inspectable `.spw` contract depending on it.
+* 🚫 **No Ad-Hoc Stems:** Do not invent synonyms for existing operators (use canonical `#>`, `?`, `^`, `~`, `@`, `!`, `%`).
+* 🚫 **Preserve Creator Truth:** Never rephrase author copy into mechanical machine-speak. Spwashi is a creator first.
 
-Creator identity still wins: Spwashi = person; site = surface.
+---
 
-## Homonyms (do not invent parallel stems)
+## 4. 📐 Homonym & Disambiguation Matrix
 
-Map via coordinates, not new names:
+When concept names collide across layers, use explicit coordinates rather than inventing parallel names:
 
-- **settle** — interaction / box / page / capture altitudes
-- **resonance** — channel vs probe vs palette vs free-text accent
-- **density** — typography packing vs content-tone vs pack-fill
-- **salience** — gravity ranks vs module-field vs personas
-  See `.spw/conventions/metaphor-dimensional-lexicon.spw` and naming disambiguation.
+| Ambiguous Stem | Meaning 1 (CSS / Layout) | Meaning 2 (JS / Runtime) | Meaning 3 (.spw / Ontology) |
+| :--- | :--- | :--- | :--- |
+| **`region`** | `data-spw-region` (material seat) | `region-enhancer` (module family) | Boundary claim in `.spw` |
+| **`expression`** | `data-spw-semantic-expression` (copy grammar)| `spwExpression` (cauldron render) | `expression = ...` (.spw header) |
+| **`settle`** | Box/layout reflow settle phase | Transition end / event debounce | Cognitive agreement / equilibrium |
+| **`resonance`** | CSS `:has()` operator echo glow | Attention probe focus tracking | Topic/concept relational affinity |
+| **`density`** | Typographic line-height & packing | UI widget spacing mode | Semantic information density |
 
-## Dimension vocabulary
+---
 
-Use when packing/medium/lifecycle **aliases are already drifting**—not to introduce
-new axes by default. See `dimension-vocabulary.spw` + `tokens/dimensions.css`.
+## 5. 🌌 Execution & Validation Ladder
 
-## Drift checklist
-
-- [ ] Existing family covers this?
-- [ ] Token lives in the right CSS layer?
-- [ ] JS writes through `dom-contracts` / `site-settings`?
-- [ ] Full-trace path (JS contract or CSS consumer) or explicitly volatile/local?
-- [ ] Copy still creator-first?
-
-## Tooling (mounted `spw` CLI)
-
-Find every `.spw` occurrence of a drifting name before touching it by hand:
-
-```bash
-npm --prefix .spw/_workbench run spw -- query -- --from .spw --skim --selector pathRefs   # multi-file AST query
-npm --prefix .spw/_workbench run spw -- select <file.spw> --skim                          # single-file check
-npm --prefix .spw/_workbench run spw -- pulse <file.spw>                                  # plan-only edit probe
-```
-
-`pulse` before `mutate`/hand-edit on any shared `.spw` surface — it's the
-plan-only probe, so you see the rewrite before it lands.
-
-## Good outputs
-
-- Fewer names, clearer owners
-- Rename tables with old → new and layers touched
-- Archive notes for dead families
-- Insight cache only when the insight is small and not ready to implement
-
-## Related hard lessons
-
-Language census (many attrs unregistered), commit-skill-induction (inspectability
-overgrowth). Prefer full-trace on high-traffic families over new families.
+1. **Sense:**
+   ```bash
+   npm run spw:integrity && npm run spw:lattice
+   ```
+2. **Rebuild Expression Kinship (if expressions touched):**
+   ```bash
+   npm run manifest:expressions
+   ```
+3. **Plan-Only Edit Probe (preview rewrites before mutating):**
+   ```bash
+   npm --prefix .spw/_workbench run spw -- pulse <file.spw>
+   ```
+4. **Local Verification Pass:**
+   ```bash
+   npm run ecology:language
+   npm run check:local
+   ```

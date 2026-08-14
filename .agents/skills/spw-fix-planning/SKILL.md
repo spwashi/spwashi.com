@@ -7,32 +7,64 @@ description: Structure a multi-layer regression before coding. For obvious one-f
 
 Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 
-## Intent
+---
 
-FIX notes help when the failure mode is unclear or multi-layer. They are not
-required to justify a three-line CSS tweak.
+## ⚡ 60-Second Quick Strike (Grok)
 
-## When to use
+* **Triage Rule:** If the bug is in a single file with an obvious cause, **do not write a FIX.md**. Just fix the file, run `git diff --check`, and verify.
+* **When to Write `FIX.md`:** Only when the regression spans multiple layers (e.g. CSS token + JS state + HTML attribute) or root cause is ambiguous.
+* **Stop Condition:** A `FIX.md` should take under 3 minutes to draft. If it's turning into a research paper, you are avoiding the actual fix.
 
-- Bug spans layers or routes
-- Root cause is unknown
-- You need a durable note for later (lifecycle, settings, agent dispatch)
-- Agent/planning indexes themselves are broken
+---
 
-## When not to use
+## 🛡️ Constitutional Guardrails (Claude)
 
-- Single file, clear cause → edit and validate
-- “Maybe write a plan later” → do not open PLAN.md for a fix
+* 🚫 **No Symptom Band-Aids:** Do not slap `!important`, inline CSS styles, or random `z-index: 9999` onto elements to mask underlying cascade or positioning errors.
+* 🚫 **No Over-Generalizing Fixes:** Scope the fix strictly to the broken surface. Do not rewrite surrounding stable components during a bugfix.
+* 🚫 **No Silent Contract Breaks:** Verify that fixing one route does not break shared component contracts across other routes.
 
-## Workflow
+---
 
-1. Visible failure, routes, how to reproduce.
-2. Symptom vs likely root vs ripple.
-3. Smallest file set that can contain the fix.
-4. If multi-layer or unclear: `.agents/plans/<slug>/FIX.md` (failures, diagnosis, fix, deferred).
-5. `.spw` review only if the bug is really ontology/lifecycle/settings seam—not by default.
+## 📐 The 4-Step Triage Protocol (Codex)
 
-## Validation
+```text
+Step 1: Reproduce   → Record exact route, viewport width, or user interaction that triggers the bug.
+Step 2: Isolate     → Trace the failure to its root layer (HTML markup, CSS cascade, JS state/bus, or .spw contract).
+Step 3: Surgical Fix→ Apply the smallest honest patch to the root file.
+Step 4: Regress Guard→ Run targeted test command and check:local.
+```
 
-- `node --check` / route spot-check / `git diff --check`
-- Agent-layer regressions → `agent-optimization/` + plan-maintenance if indexes broke
+### Minimal `FIX.md` Structure (if needed):
+```markdown
+# Fix: <Regression Summary>
+
+## 1. Symptoms & Reproduction
+- Route: `/topics/software/...`
+- Trigger: Clicking `#>` toggle on narrow mobile viewport.
+
+## 2. Root Cause Analysis
+- Misaligned CSS token in `tokens/core.css` causing overflow in `cards.css`.
+
+## 3. Minimal Patch Plan
+- Touch: `public/css/tokens/core.css`
+
+## 4. Verification
+- `npm run check:local`
+```
+
+---
+
+## 🌌 Tooling & Validation Ladder (Antigravity)
+
+1. **Targeted Syntax Check:**
+   ```bash
+   node --check <touched-file.js>
+   ```
+2. **Whitespace & Diff Sanity:**
+   ```bash
+   git diff --check
+   ```
+3. **Comprehensive Local Validation:**
+   ```bash
+   npm run check:local
+   ```

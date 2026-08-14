@@ -7,40 +7,51 @@ description: Inspect Spw operator usage across .spw, HTML data-spw-*, and route 
 
 Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 
-## Intent
+---
 
-Operators are a real grammar on this site. Overusing chips as decoration made
-pages noisier without teaching more.
+## ⚡ 60-Second Quick Strike (Grok)
 
-## Use when
+* **Grammar, Not Confetti:** Operators are functional linguistic handles—NOT decorative chips to sprinkle on every paragraph.
+* **Stop Condition:** If you are adding operator chips without an active route link, focus handle, or conceptual resonance connection, STOP.
 
-- Auditing operator consistency (frame/probe/object/…)
-- Fixing broken conceptual cross-links
-- Aligning colors/tokens with operator identity
+---
 
-## Avoid
+## 🛡️ Constitutional Guardrails (Claude)
 
-- Adding operator chips to every paragraph “for density”
-- New operator types without shared definitions + tokens
+* 🚫 **No Arbitrary Sigil Invention:** Only use the canonical Spw operator set defined in `public/js/kernel/shared.js` (`OPERATOR_DEFINITIONS`).
+* 🚫 **Respect Color & Contrast Tokens:** Operator chips must use their designated CSS token variables (`--op-frame-color`, `--op-probe-color`, etc.) and maintain readable contrast in both light and dark themes.
+* 🚫 **A11y Labeling:** When displaying symbolic operators like `?>` or `#>label`, ensure screen reader users have appropriate text labels or accessible text representation.
 
-## Workflow
+---
 
-1. Query existing usage (`.spw`, `data-spw-operator`, chips) with the mounted
-   `spw` CLI, not raw `rg`, so counts/coupling reflect real refs, not string hits.
-2. Prefer reusing established operators over inventing synonyms.
-3. Change shared definitions/tokens only when the lattice truly shifted.
-4. Keep public copy readable without requiring operator literacy.
+## 📐 Canonical Operator & Sigil Registry (Codex)
 
-## Tooling (mounted `spw` CLI)
+| Sigil | Type | Purpose / Action | CSS Token |
+| :--- | :--- | :--- | :--- |
+| `#>name` | **Frame** | Named anchor / addressable surface container | `--op-frame-color` |
+| `?[topic]` | **Wonder / Probe**| Open a question, exploration, or inquiry | `--op-probe-color` |
+| `^concept` | **Integration** | Lift an inspectable register or synthesize ideas | `--op-object-color` |
+| `~path` | **Potential / Ref**| Hold an uncollapsed path or reference pointer | `--op-ref-color` |
+| `@posture` | **Perspective** | Situate a viewpoint, role, or working posture | `--op-action-color` |
+| `%measure` | **Measurement** | Subjective or objective quantitative gauge | `--op-measure-color` |
+| `!action` | **Pragma / Action**| Commit a move, execute a transition | `--op-action-color` |
+
+---
+
+## 🌌 Tooling & Validation Ladder (Antigravity)
+
+Use the mounted `spw` CLI to audit lattice connectivity and hit density:
 
 ```bash
-npm --prefix .spw/_workbench run spw -- analyze .spw --selectors ops:frame,ops:body,boon,bone   # hit densities by operator
-npm --prefix .spw/_workbench run spw -- map .spw --hubs 12                  # hubs / cycles / familiarity strands
-npm --prefix .spw/_workbench run spw -- formula .spw --family field         # named formula catalog, pattern discovery
+# 1. Inspect top lattice hubs and connections:
+npm run spw:lattice
+
+# 2. Audit operator hit densities across .spw:
+npm --prefix .spw/_workbench run spw -- analyze .spw --selectors ops:frame,ops:body,boon,bone
+
+# 3. View operator graph hubs:
+npm run spw:graph
+
+# 4. Local verification gate:
+npm run check:local
 ```
-
-## Validation
-
-- Mounted `analyze`/`map` above for operator counts and cross-links
-- `rg` only as a fallback for `data-spw-operator` string hits in HTML/JS
-- Spot-check contrast and focus states

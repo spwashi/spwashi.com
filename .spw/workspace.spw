@@ -28,6 +28,7 @@
  @reviews: ~"./reviews"
  @audits: ~"./audits"
  @caches: ~"./caches"
+ @skills: ~"./skills"
  @slices: ~"./slices"
  @workbench: ~"./_workbench"
 }
@@ -51,6 +52,7 @@
 @workbench_metaphysics_application: ~"./reviews/workbench-metaphysics-application.spw"
 @orientation: ~"./README.md"
 @caches: ~"./caches/index.spw"
+@skills: ~"./skills/index.spw"
 @language: ~"./language/index.spw"
 @planning_ecology: ~"./conventions/planning-ecology.spw"
 @spw: ~"."
@@ -77,6 +79,7 @@ lsp: .{
   @surfaces,
   @language,
   @caches,
+  @skills,
   @workbench,
   @workbench_index,
   @workbench_mount,

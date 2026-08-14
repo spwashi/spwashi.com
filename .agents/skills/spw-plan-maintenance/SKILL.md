@@ -7,64 +7,49 @@ description: After a real multi-surface landing, archive and re-link plans/skill
 
 Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 
-## Intent (honest)
+---
 
-This skill was written to keep the planning ecology navigable. It also generated
-a lot of `index.spw` and dispatch wiring. Maintenance that does not **archive**
-is just compost without a pile limit.
+## ⚡ 60-Second Quick Strike (Grok)
 
-**Success:** the next sweep has fewer hidden WIPs, fewer empty indexes, clearer
-owners. **Failure:** another mechanical generation pass with no closures.
+* **The Golden Rule:** Maintenance that does not **archive** landed or abandoned plans is just compounding bloat.
+* **Success Metric:** The next census has *fewer* active plans, *zero* empty `index.spw` files, and clean link paths.
+* **Stop Condition:** Do not run this skill after small single-file commits. Reserve it for real multi-surface landings.
 
-## When to use
+---
 
-- A landing moved plans, skills, or `.spw` dispatch for real
-- Links are broken after renames
-- A census shows empty folders, WIP-only sludge, or oversized generated artifacts
+## 🛡️ Constitutional Guardrails (Claude)
 
-## When not to use
+* 🚫 **No Zombie Indexes:** Never generate empty `index.spw` files in folders without active `PLAN.md` files.
+* 🚫 **No Unbounded Growth:** Enforce a 1-to-1 archive quota: when landing a new canonical plan, move superseded or finished active plans into `.agents/plans/archive/`.
+* 🚫 **Preserve Link Integrity:** When moving or archiving plans, verify all markdown links in `/about/plans/` and related `.spw` files.
 
-- After every small commit
-- To “complete” indexes for folders with no PLAN.md
-- As a substitute for archiving landed work
+---
 
-## Workflow
+## 📐 Plan Lifecycle & Triage Matrix (Codex)
 
-1. Census first: PLAN / FIX-only / WIP-only / template / empty / huge.
-2. **Archive or close** at least as much as you re-link (quota mindset).
-3. Update dispatch only for durable concepts (`site.spw`, conventions index).
-4. Touch public `/about/plans/` only when human navigation actually broke.
-5. Prefer virtual IA (indexes, archive notes) over mass directory moves.
-6. Record the sweep briefly on `agent-optimization/PLAN.md` if meta-track.
+| Status Category | Criteria | Location | Action |
+| :--- | :--- | :--- | :--- |
+| **Canonical Track** | Evergreen, foundational architecture tracks | `.agents/plans/<track>/` | Keep active and cross-linked |
+| **Active Backlog** | In-progress multi-surface engineering | `.agents/plans/<slug>/` | Complete within milestone |
+| **FIX Queue** | Narrow regression triage | `.agents/plans/<slug>/FIX.md` | Close & delete/archive post-fix |
+| **Landed / Dormant** | Shipped feature or abandoned exploration | `.agents/plans/archive/` | Move to archive, update links |
 
-## Overgrowth (take seriously)
+---
 
-- No new empty `index.spw` without an owner plan.
-- FIX.md-only folders are queues—keep them narrow and closable.
-- Template-only folders are tooling—label them, do not treat as backlog.
-- If you keep re-running the same census, propose a small cache under
-  `.agents/state/` (see agentic-dev-contracts)—do not hand-regenerate forever.
-- Promote only durable rules into `planning-ecology.spw`.
+## 🌌 Tooling & Validation Ladder (Antigravity)
 
-## Tooling (mounted `spw` CLI)
+Use the mounted `spw` CLI to check plan drift and verify link hygiene:
 
 ```bash
-npm --prefix .spw/_workbench run spw:plan:status --                   # cache/status for active or named plan
-npm --prefix .spw/_workbench run spw:plan:check --                    # detect cache drift and stale plan surfaces
-npm --prefix .spw/_workbench run spw -- tree .agents/plans --depth 2  # census: PLAN/FIX/WIP/empty at a glance
+# 1. Check plan status and drift:
+npm --prefix .spw/_workbench run spw:plan:check --
+
+# 2. View plan tree census:
+npm --prefix .spw/_workbench run spw -- tree .agents/plans --depth 2
+
+# 3. Verify markdown & diff hygiene:
+git diff --check
+
+# 4. Full local verification gate:
+npm run check:local
 ```
-
-`plan:check` catches drift the census would otherwise be done by eye — run it
-before hand-sweeping `.agents/plans/`.
-
-## Validation
-
-- `plan:check` above, then `git diff --check`
-- `rg` for moved slugs and dispatch entries
-- Skills README still makes sense
-- Nonstandard folder list shrank or was consciously documented
-
-## Related
-
-Commit-skill-induction audit: plan ecology inflation is a measured failure mode.
-Archive is a first-class semantic-capacity operation.

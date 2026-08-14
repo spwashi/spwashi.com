@@ -1,0 +1,85 @@
+# Skills
+#
+# One surface per skill, adjacent to the skill file rather than inside it.
+# `.agents/skills/*/SKILL.md` holds the instructions a model reads; these hold
+# the measurements those instructions imply, so the numbers can be navigated,
+# cited, and re-run instead of restated in prose.
+#
+# The split exists because a SKILL.md is written for whichever model is holding
+# it, and the roster in use here — Grok, Claude, Codex, Antigravity — is rarely
+# all available at once. A measurement in the corpus survives that; a lens that
+# needs four models in the room does not.
+
+#>spw_skills_index
+#:index #!skills #!agents
+#:operation #!contract
+#:fixity #!tending
+#:layer #!pragmatics
+
+@skill_invocation: ~"../conventions/skill-invocation.spw"
+@semantic_capacity: ~"../conventions/semantic-capacity.spw"
+@delegation_parcels: ~"../caches/delegation-parcels-2026-08.spw"
+@skills_readme: ~"../../.agents/skills/README.md"
+
+@craft_quality: ~"./craft-quality.spw"
+@ui_containment: ~"./ui-containment.spw"
+@semantics_rigor: ~"./semantics-rigor.spw"
+
+operation = "contract"
+fixity = "tending"
+
+^"why_adjacent"{
+  claim: "A skill file that carries its own numbers goes stale silently. Numbers belong in a surface a probe can regenerate; the skill file cites the surface."
+  navigable: "Every measurement here is a `pathRef` or a runnable probe, so `npm run spw:integrity` walks them and `npm run wonder:measures` can tell whether the substrate behind a claim exists."
+  inspectable: "Internal structures are written as facets rather than sentences, so `spw query --selector` can read them without parsing prose."
+  refuse: "Do not copy a number from here into a SKILL.md. Cite the surface; a duplicated number is a number that will disagree with itself."
+}
+
+@skill_surface_schema: ~"../../.agents/skills/_shared/skill-surface.spw"
+@surface_craft_quality: ~"../../.agents/skills/spw-craft-quality/skill.spw"
+@surface_ui_containment: ~"../../.agents/skills/spw-ui-containment-audit/skill.spw"
+@surface_semantics_rigor: ~"../../.agents/skills/spw-semantics-rigor/skill.spw"
+
+^"registry"{
+  ~#note: "Each skill has two surfaces: surface (structure, beside the skill) and measures (numbers, here). Surface is stable; measures drift."
+  craft_quality: .{ measures = @craft_quality, surface = @surface_craft_quality }[reg=facet]
+  ui_containment: .{ measures = @ui_containment, surface = @surface_ui_containment }[reg=facet]
+  semantics_rigor: .{ measures = @semantics_rigor, surface = @surface_semantics_rigor }[reg=facet]
+}[reg=facet]
+
+^"surface_reach"{
+  ~#note: "The corpus walk is rooted at .spw, so skill surfaces under .agents are not enumerated by spw:census or spw:query."
+  reached_by: "Citation — the pathRefs above resolve, so spw:integrity walks them and a reader can follow them."
+  schema = @skill_surface_schema
+  open: "Widen the walk to include .agents/skills, or accept citation-only reach. Citation-only is currently sufficient."
+}
+
+^"invocation_shape"{
+  note: "Stated once here; each surface fills it in. See @skill_invocation for the reasoning."
+  operation = "which of cache | audit | align | prime | contract | archive this invocation performs"
+  sense = "what to measure before acting — read-only, safe to run unprompted"
+  probe = "what proves the change landed"
+  precipitate = "where the finding crystallizes, so the next session inherits it"
+}[reg=facet]
+
+^"coverage"{
+  note: "17 skills documented in @skills_readme; 3 have a measurement surface. The gap is the work, not an oversight."
+  surfaced = 3
+  documented = 17
+  next: "A skill earns a surface when it has been run twice and produced a number worth keeping both times."
+}
+
+#>wonder_skills_1
+?["Is a skill's workflow a probe, or a spell?"]{
+  #:depth #!stylistic ~#lens(sequence)
+  ~#tension: "sense and probe are both read-only questions — you run them to find out. But a skill's workflow is an ordered sequence that changes something and can be replayed, which is what a spell already is here: runtime/spells.js casts grounded operators, the cauldron mixes ingredients into a castable form, and the seed exports OPERATIONAL_SEQUENCES and runOperationalSequence. Calling that a probe borrows a diagnostic word for an effectful thing."
+  ~#hypothesis: "the shape wants three constructs, not two: a probe asks and returns a finding; a spell casts an ordered sequence and leaves residue; a precipitate is what the spell leaves behind. Skills currently collapse all three into 'validation'."
+  ~#note: "spitballed, not designed. The substrate exists on the runtime side and has never been pointed at authoring."
+  !probe{ "take one skill's workflow and write it as an ordered Spw expression sequence rather than a bash list. if the sequence reads as something you would cast rather than something you would ask, the construct is spell and the word probe is wrong for it." }
+  $%[spell.sequence, spell.residue, skill.operation]
+}
+
+^"validation"{
+  probe: `npm run spw:integrity && npm run wonder:measures`
+  falsification: "A surface here states a number that its own probe does not reproduce."
+}

@@ -7,36 +7,51 @@ description: Split mixed working trees into reviewable commits. Use when HTML/CS
 
 Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 
-## Intent
+---
 
-Mixed diffs are normal when exploring. Shipping them as one commit is how review
-and reverts die. This skill is for **shape**, not for inventing more work.
+## ⚡ 60-Second Quick Strike (Grok)
 
-## Workflow
+* **Core Mission:** Break messy working trees into small, atomic, reviewable commits.
+* **Separation Rule:** Never mix public feature changes (HTML/CSS) with agent-internal metadata (`.agents/plans/`, skills, `.spw`) in the same commit unless strictly inseparable.
+* **Stop Condition:** If a single commit touches more than 2 concerns, split it.
 
-1. Group by **concern**, not only file type.
-2. Typical buckets:
-   - copy / routing
-   - design tokens / shared CSS
-   - runtime module + catalog
-   - scene/interactive medium (only if that was the job)
-   - images
-   - `.spw` / plans / skills (meta—keep separate when possible)
-3. Cross-layer only when one idea truly needs all layers.
-4. Leave unrelated user work alone.
-5. Optional: `./scripts/analyze-changes.sh` for a summary.
+---
 
-## Split table
+## 🛡️ Constitutional Guardrails (Claude)
 
-| Theme | Typical files | Split if mixed with |
-|-------|---------------|---------------------|
-| Scene / play medium | interactive-medium, scene-interaction, play routes | unrelated marketing copy |
-| Tokens / dimensions | dimensions.css, packing CSS | single route HTML only |
-| Catalog / runtime | module-catalog, runtime/*.js | unrelated CSS |
-| Skills / plans | `.agents/*` | public feature work |
+* 🚫 **No Accidental Staging:** Never run blind `git add .` or `git commit -a`. Always stage specific files or hunks (`git add -p`).
+* 🚫 **No Broken Commits:** Every staged commit must leave the repository in a clean, buildable state (`git diff --check`).
+* 🚫 **Leave User Work Untouched:** Do not revert or overwrite unrelated human edits in the working tree.
 
-## Outputs
+---
 
-- Suggested commit list with one-line intents
-- Must-land-together notes
-- What to leave out of this PR
+## 📐 Atomic Commit Buckets & Conventional Grammar (Codex)
+
+| Bucket / Theme | Typical File Patterns | Example Commit Message |
+| :--- | :--- | :--- |
+| **Route & Copy** | `<route>/index.html` | `feat(route): refine software topics overview copy` |
+| **Design Tokens & CSS** | `public/css/**/*.css` | `style(tokens): adjust matte surface ink contrast` |
+| **Runtime & JS Modules** | `public/js/**/*.js` | `fix(runtime): debounce navigation observer in shell` |
+| **Typed Build & Scripts** | `scripts/ts/**/*.mts` | `chore(tools): add route manifest validation rule` |
+| **Agent Plans & Skills** | `.agents/**/*.md` | `docs(skills): upgrade agent operating guidelines` |
+
+---
+
+## 🌌 Tooling & Validation Ladder (Antigravity)
+
+1. **Review Working Tree Changes:**
+   ```bash
+   git status --short
+   ```
+2. **Whitespace & Diff Sanity:**
+   ```bash
+   git diff --check
+   ```
+3. **Stage Targeted Concern:**
+   ```bash
+   git add <specific-files>
+   ```
+4. **Local Verification Before Committing:**
+   ```bash
+   npm run check:local
+   ```

@@ -7,38 +7,51 @@ description: Use TypeScript where checks and contracts pay off. Do not convert t
 
 Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 
-## Intent (honest)
+---
 
-It was unclear whether the site should become a TypeScript codebase. What proved
-useful was typing **build and validation**, not rewriting every module.
+## ⚡ 60-Second Quick Strike (Grok)
 
-## Use TypeScript for
+* **Where TS Lives:** Strictly in build tooling (`scripts/ts/`), contract checkers, and portable kernel edges (`public/ts/`).
+* **Where TS Does NOT Live:** Public routes, DOM narratives, and standard progressive modules. Public runtime remains clean, vanilla ES modules.
+* **Stop Condition:** If you find yourself trying to convert route `index.html` scripts into TypeScript, STOP.
 
-| Surface | Why |
-|---------|-----|
-| `scripts/ts/site-contracts/` | Route body keys, manifest shape |
-| `scripts/ts/runtime-contracts.mts` | Catalog mount/feature hygiene |
-| `scripts/ts/css-manifest.mts` | BEHAVIOR_SCOPES / ROUTE_SCOPES |
-| `public/ts/*` (few files) | bus, feeds, dom-contracts—portable edges |
+---
 
-## Prefer plain JS for
+## 🛡️ Constitutional Guardrails (Claude)
 
-- Route modules, most `interface/` and `runtime/` processes
-- Quick progressive enhancement
-- Anything that is mostly DOM narrative
+* 🚫 **No Client-Side Transpilation Bundlers:** The public site serves standard `.js` ES modules directly to the browser.
+* 🚫 **No Runtime npm Types:** Never import `@types/*` into client-facing scripts.
+* 🚫 **Preserve Pure Vanilla JS Ergonomics:** In plain JS runtime files, use `Object.freeze()`, structured constants, and standard JSDoc comments for type hints.
 
-In plain JS: closed string sets, `Object.freeze` contracts, normalize helpers,
-JSDoc at boundaries when it reduces real ambiguity.
+---
 
-## Feature / bundle hygiene (adjacent)
+## 📐 TypeScript Architecture & Compilation Matrix (Codex)
 
-- Catalog `features:` must match CSS behavior scope keys when used as gates.
-- New modules: prefer `visible` / `idle` / `interaction`; `immediate` + enhancement → `timingArc` or reclassify. `npm run check:runtime` reports the aggregate mount-hygiene debt and reserves per-module warnings for ungated or broad-effect cases.
-- Review CSS under layer folders; treat `bundles/*` as generated.
-- Manifest: `npm run manifest` → `.agents/state/runtime/route-runtime-manifest.json`.
+| Target Surface | Source Path | Compiled Output | Build Script | Purpose |
+| :--- | :--- | :--- | :--- | :--- |
+| **Scripts / Tooling** | `scripts/ts/**/*.mts` | `scripts/typed/` | `npm run build:tools` | Type-safe manifest, CSS, & runtime contract checkers |
+| **Typed Kernel Runtime**| `public/ts/**/*.ts` | `public/js/typed/` | `npm run build:runtime` | Portable edges (bus, feeds, core DOM contracts) |
+| **Vanilla Runtime** | `public/js/**/*.js` | Native execution | *(None / direct)* | Standard browser modules, UI controllers, routes |
 
-## Validation
+---
 
-- `npm run build:tools` after `scripts/ts/**` edits
-- `npm run check:runtime` for catalog/contract work
-- `node --check` for plain JS
+## 🌌 Tooling & Validation Ladder (Antigravity)
+
+When modifying TypeScript files:
+
+```bash
+# 1. Typecheck entire codebase:
+npm run typecheck
+
+# 2. Build tooling scripts:
+npm run build:tools
+
+# 3. Build runtime modules:
+npm run build:runtime
+
+# 4. Check runtime catalog hygiene:
+npm run check:runtime
+
+# 5. Full local validation gate:
+npm run check:local
+```

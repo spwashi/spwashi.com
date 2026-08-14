@@ -1,127 +1,84 @@
 # spwashi.com Site Workflow
 
-Notes for working on this site. Written when the stack was still forming and it
-was unclear which rails would matter. Some of them do. Some of them grew weight.
+Core operational guide for agents and editors working across the repository.
 
-## What this repo is
+---
 
-Hand-authored static site. The parts that usually get edited:
+## 1. Grounded Architecture
 
-- route HTML (`…/index.html`)
-- shared CSS under `public/css/`
-- shared JS under `public/js/`
-- optional editor notes under `.spw/` and `.agents/plans/`
+* **Primary Edit Surfaces:**
+  * Route HTML in directory entrypoints (`<route>/index.html`)
+  * Layered CSS under `public/css/`
+  * Progressive vanilla JavaScript under `public/js/`
+  * Optional durable contracts under `.spw/` and `.agents/plans/`
+* **Creator Identity First:**
+  * *"I'm Spwashi. I build software and make art."*
+  * Copy must lead with the human creator. The site is a surface/vessel for the work.
 
-There is also an agent/editor layer (skills, plans, checks, `/about/plans/`).
-It helps when concepts must last. It does not need to grow on every patch.
+---
 
-## Creator identity
+## 2. The Spw Invocation Protocol
 
-Spwashi is a person first: software and art. The site is a surface for the work.
-When unsure, lead with the person, not the system.
+Every skill invocation follows an ordered 4-part lifecycle:
 
-## What I thought I needed vs what I actually need
+1. **Sense (Pre-flight Measurement):** Run the read-only measurement tool before touching files (`npm run css:payload`, `npm run spw:integrity`, `node scripts/normalize-breakpoints.mjs`). If the measurement shows the premise is false, stop.
+2. **Operation & Fixity:** Declare your operation (`cache | audit | align | prime | contract | archive`) and fixity tier (`fixed | stable | tending | experimental | volatile`).
+3. **Spell / Action (Surgical Patch):** Patch the smallest honest surface (HTML → shared CSS → progressive JS).
+4. **Probe & Precipitate:** Run the verification probe, and crystallize findings into an adjacent `.spw/skills/*.spw` surface, a cache, or a plan note so future sessions inherit the insight.
 
-Early on it felt necessary that every idea be inspectable: body metadata,
-`data-spw-*`, a plan, a `.spw` convention, a catalog module, a serialize hook.
-That made the site agent-friendly. It also produced attribute sprawl, boot-time
-width, and a large plan ecology.
+---
 
-**Usually enough:**
+## 3. The Four Agent Disciplines
 
-1. A clear public goal (copy, flow, one interaction, or one layout fix).
-2. The smallest honest surface (HTML → shared CSS → progressive JS).
-3. A local check that matches the change (`check:local`, `check:runtime`, or just `node --check`).
+* ⚡ **Grok:** Anti-bloat, minimum ceremony, ruthless signal-to-noise ratio. Stop when the public outcome is reached.
+* 🛡️ **Claude:** Strict negative bounds, accessible semantic HTML, WCAG AA contrast, and zero-JS reading calm.
+* 📐 **Codex:** Exact file maps, strict CSS layer order, TypeScript boundaries, and deterministic validation outputs.
+* 🌌 **Antigravity:** Proactive tool mastery, mounted CLI inspections, subagent collaboration, and progressive enhancement.
 
-**Sometimes needed:**
+---
 
-- A plan when the work truly spans routes or shared layers.
-- A `.spw` note when a concept will be reused or argued about later.
-- Catalog registration when there is real progressive behavior.
+## 4. Tunability & Runtime Postures
 
-**Rarely needed on day one:**
+The site's runtime is fully tunable across multiple semantic registers via `public/js/kernel/site-settings.js`:
 
-- A new metaphor family or dimension axis.
-- A new `IMMEDIATE` enhancement module “for completeness.”
-- Wiring every dispatch in `site.spw` for a one-off experiment.
+* **`enhancementLevel`** (`subtle` | `balanced` | `rich` | `theatrical`): Modulates motion amplitude, notice verbosity, and decorative field weight.
+* **`authorMode`** (`reader` | `tender` | `cartographer` | `architect`): Changes disclosure depth and inspectable handles.
+* **`baseMetamaterial`** (`glass` | `matte` | `paper` | `canvas`): Global physical rendering substrate (matte provides clear contrast safeguards).
+* **`physicsReason`** (`string`): Modulates spring damping, attentional echoes, and gesture dynamics across interactive cards.
 
-## Default edit order
+---
 
-1. Name the public outcome in plain language.
-2. Prefer HTML/CSS over JS; prefer shared CSS over route-only hacks.
-3. Keep root-relative assets (`/public/css/…`, `/public/js/site.js`).
-4. Stay framework-free unless explicitly asked.
-5. Leave `.spw/_workbench` alone unless the work is genuinely workbench canon.
+## 5. CSS Layer Hierarchy
 
-## Semantic rails (use when stuck, not by default)
+```text
+reset
+  ↓ tokens (core.css, dimensions.css)
+  ↓ shell (layout.css, chrome.css)
+  ↓ typography (type.css)
+  ↓ grammar (syntax.css)
+  ↓ components (cards.css, controls.css, frames.css)
+  ↓ systems (surfaces/*.css)
+  ↓ routes (surfaces/*.css, tools-*.css)
+  ↓ handles (section-handles.css)
+  ↓ effects (material.css, wonder.css)
+  ↓ ornament (ornament.css) [ONLY place where !important is permitted]
+```
 
-These exist because cross-discipline and multi-route work kept getting messy.
-They are optional for a single-route copy pass.
+*Never edit files in `public/css/bundles/*` directly; bundles are generated build artifacts.*
 
-| Rail | When it actually helps |
-|------|-------------------------|
-| model-guided-refinement | Ambiguous creative/engineering tradeoffs |
-| daily-kernel | One short session with a named discipline pair |
-| experience slices | Durable ownership across HTML/CSS/JS/.spw |
-| semantic-capacity | Deciding cache vs audit vs prime vs archive |
-| dimension-vocabulary | Packing / density / medium aliases drifting |
-| interaction-microstates | Gesture and settle phase confusion |
+---
 
-Audits that record hard lessons (read when changing agent rails or boot cost):
+## 6. Exact Validation Recipes
 
-- `.spw/audits/commit-skill-induction-2026-07/`
-- `.spw/audits/agentic-development-2026-07/`
-- `.spw/audits/build-runtime-performance-2026-07/`
-
-## Runtime (short)
-
-- Catalog: `public/js/runtime/module-catalog.js` (`CORE` → `FEATURE` → `ENHANCEMENT`)
-- Settings only through `site-settings` (not ad-hoc localStorage)
-- Prefer `visible` / `idle` / `interaction` over `immediate` for new modules
-- Device context: shell-disclosure → interactive-medium (do not re-detect viewports)
-
-## CSS layers (low → high)
-
-`reset → tokens → shell → typography → grammar → components → systems → routes → handles → effects → ornament`
-
-Review **source** files under those folders. Generated `public/css/bundles/*` is
-build output; do not treat it as the place to invent design.
-
-Portable composition: `compose.css` / `compose.js`. Full site shell: `style.css` / `site.js`.
-
-## Validation (match the change)
-
-- Ordinary HTML/CSS/JS: `npm run check:local` (or lighter: `git diff --check`, `node --check`)
-- Catalog / export contracts: `npm run check:runtime` (now also nags IMMEDIATE hygiene)
-- After route or catalog changes agents care about: `npm run manifest`
-  (writes `.agents/state/runtime/route-runtime-manifest.json` — do not trust months-old copies)
-- Dependency work: `npm run check` (includes network audit)
-
-## Network
-
-Prefer local evidence first (`rg`, plans, `.spw`, nearby source). Reach for the
-web or `npm audit` only when the task needs current external facts or deps changed.
-
-## Feature partials (JS load vs theatrics)
-
-Optional modules and CSS “partials” already split into three knobs—keep them separate:
-
-1. **Presence** — `body[data-spw-features]` + catalog `features:` + `BEHAVIOR_SCOPES` (is it allowed on this route?)
-2. **Schedule** — catalog `MOUNT_WHEN` (when does JS run?)
-3. **Theatrics / relevance** — settings `enhancementLevel`, runtime posture, expressive registers, perspective/referentiality, feature-discovery levels (how loud / how much it matters?)
-
-Code-savvy editors tune (1) in route HTML, (2) in `module-catalog.js`, (3) on `/settings/` and design specimens. Do not invent a parallel theater flag. See `.spw/conventions/feature-partial-theatrics.spw`.
-
-## Restraint (learned the hard way)
-
-When two skills disagree, prefer **reading calm** over **more inspectability**:
-
-- No new `data-spw-*` family without reusing an existing one or marking volatile/local.
-- No new catalog `immediate` enhancement without a cost note (`timingArc` or reclassify).
-- No `PLAN.md` for a single-file fix — use `FIX.md` or just fix it.
-- No empty plan `index.spw` without an owner plan.
-- Prefer one coordinate (cost_class, guild, pack axis) over a new metaphor taxonomy.
-- Do not run full `build:site` for `.spw`-only or single-module work.
-
-Editor wiring (`.spw/conventions/index.spw`, `site.spw`) is for **durable**
-concepts—not every intermediate thought.
+| Change Surface | Command | Expected Output |
+| :--- | :--- | :--- |
+| **Sense: CSS Weight** | `npm run css:payload` | Per-route bundle breakdown |
+| **Sense: AST & Citations** | `npm run spw:integrity` | Verified citations & authored expressions |
+| **Sense: Breakpoints** | `node scripts/normalize-breakpoints.mjs` | Threshold drift report |
+| **Vanilla JS Syntax** | `node --check <file.js>` | Clean return (0 errors) |
+| **CSS Syntax & Hygiene** | `git diff --check` | Clean return (no whitespace/syntax issues) |
+| **Typed Tools (`scripts/ts/`)** | `npm run build:tools` | Successful compile to `scripts/typed/` |
+| **Typed Runtime (`public/ts/`)** | `npm run build:runtime` | Successful compile to `public/js/typed/` |
+| **Runtime Contracts** | `npm run check:runtime` | Catalog and import boundaries verified |
+| **Full Local Verification** | `npm run check:local` | Manifest, syntax, CSS, runtime, PWA, components green |
+| **Route Manifest Refresh** | `npm run manifest` | Updated `.agents/state/runtime/route-runtime-manifest.json` |

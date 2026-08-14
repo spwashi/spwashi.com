@@ -1,0 +1,95 @@
+# Semantics Rigor — measurements
+#
+# Naming drift, attribute homonyms, cross-layer vocabulary. The corpus already
+# answers most of this; the skill's job is to ask it rather than to read.
+
+#>skill_semantics_rigor
+#:skill #!semantics #!vocabulary #!measurement
+#:operation #!align
+#:fixity #!tending
+#:layer #!pragmatics
+
+@skill: ~"../../.agents/skills/spw-semantics-rigor/SKILL.md"
+@invocation: ~"../conventions/skill-invocation.spw"
+@expression_consequence: ~"../conventions/semantic-expression-consequence.spw"
+@attribute_governance: ~"../conventions/data-spw-attribute-governance.spw"
+@integrity: ~"../../scripts/spw-integrity.mjs"
+@reasons: ~"../../scripts/page-reasons.mjs"
+
+operation = "align"
+fixity = "tending"
+
+expression = semantics[align]{name.attribute.expression}<corpus>
+
+^"invocation"{
+  default_operation = "align"
+  sense = `npm run spw:integrity && npm run spw:lattice`
+  probe = `npm run spw:integrity`
+  precipitate = "@expression_consequence for expression rules; @attribute_governance for attribute stems"
+}[reg=facet]
+
+^"field"{
+  ~#note: "The corpus as charge — what is dense, what is empty, where potential sits."
+  surfaces = 236
+  citations = 2537
+  citations_resolving = 2537
+  authored_expressions = 441
+  expressions_structuring = 441
+  apposition_cells = 6
+  apposition_note: "~#name(body) unit cells. 6 across 236 surfaces — the form spw:lattice reads is almost entirely unused, so the corpus reports no readings while carrying thousands of ~#name: appositions it cannot see."
+}
+
+^"expression_field"{
+  ~#reads_as: "authored kinship as inductance — see @expression_consequence"
+  distinct_subjects = 205
+  distinct_modes = 292
+  distinct_parts = 501
+  with_at_least_one_kin = 423
+  of_total = 441
+  densest_parts: #[`return 21`, `scene 12`, `share 9`, `character 9`, `material 8`][reg=set]
+  ~#tension: "a token 21 expressions share may be shared vocabulary rather than shared meaning; part-kinship is the weakest tie and the most common."
+}
+
+^"page_charge"{
+  ~#reads_as: "differentiation as potential — a page with no rare anatomy has nothing to discharge"
+  routes = 153
+  routes_solely_hosting_anything = 0
+  feature_tokens = 31
+  tokens_backed_by_a_module = 10
+  tokens_backed_by_nothing = 21
+  ambient: "operators 145 routes, navigator 138, console 137 — declared nearly everywhere, differentiating nothing"
+  probe: `npm run reasons`
+}
+
+^"flow"{
+  ~#note: "Where a name moves once written, and what has to move with it."
+  authored -> parsed: "data-spw-semantic-expression → scripts/build-expression-manifest.mjs → public/js/generated/spw-expressions.js"
+  parsed -> kin: "manifest → buildKinIndex on mount → data-spw-expression-kin"
+  kin -> residue: "dwell 700ms → spw-expression-salience → data-spw-expression-salience 0..4"
+  rename_cost: "A subject renamed in one expression silently loses its kin in every other. The manifest must be regenerated or the relation is gone with no error."
+  probe_after_rename: `npm run manifest:expressions && npm run spw:integrity`
+}[reg=facet]
+
+^"homonym_watch"{
+  ~#note: "Stems where one word carries two jobs. Each is a rename waiting to be wrong."
+  region: "data-spw-region (material seat) vs data-spw-region-purpose (boundary claim) vs region-enhancer (runtime module family)"
+  expression: "data-spw-semantic-expression (authored copy grammar) vs `expression =` (a .spw surface's own self-description) vs spwExpression (a cauldron ingredient's payload-aligned render)"
+  probe: `npm run spw:analyze`
+}
+
+#>wonder_semantics_rigor_1
+?["Does part-kinship carry meaning, or only vocabulary?"]{
+  #:depth #!mathematical ~#lens(inductance)
+  ~#hypothesis: "the most-shared part tokens are the least meaningful ties — `return` appears in 21 expressions that may have nothing to do with one another beyond the English word."
+  ~#tension: "subject-kinship is trustworthy because a subject names what a thing is. a part names one of its components, and components are reused across unrelated subjects the way `return` is."
+  !probe{ "read the expressions carrying each of the five densest part tokens. if a token's members do not feel related when read together, part-kinship needs a frequency ceiling or a stoplist." }
+  $%[token.shareCount, kin.relation, expression.subject]
+}
+
+^"validation"{
+  probe: `npm run spw:integrity && npm run reasons && npm run spw:lattice`
+  falsification: #[
+    `An expression is renamed without regenerating the manifest, so its kin vanish silently.`,
+    `A number here does not reproduce from its stated probe.`
+  ][reg=set]
+}

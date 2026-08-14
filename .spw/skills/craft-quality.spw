@@ -1,0 +1,86 @@
+# Craft Quality — measurements
+#
+# The numbers behind spw-craft-quality. The skill file says what to do; this
+# says what is currently true, so a pass can start from evidence rather than
+# from a hunch about where the weight is.
+
+#>skill_craft_quality
+#:skill #!craft #!measurement
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+@skill: ~"../../.agents/skills/spw-craft-quality/SKILL.md"
+@invocation: ~"../conventions/skill-invocation.spw"
+@stylesheet_ecology: ~"../conventions/stylesheet-ecology.spw"
+@payload_report: ~"../../scripts/css-payload-report.mjs"
+@parcels: ~"../caches/delegation-parcels-2026-08.spw"
+
+operation = "audit"
+fixity = "tending"
+
+^"invocation"{
+  default_operation = "align"
+  note: "Usually align — making surfaces agree — but a pass that opens a direction rather than settling one is a prime, and should say so."
+  sense = `npm run css:payload`
+  probe = `node scripts/check-site.mjs && git diff --check`
+  precipitate = "@stylesheet_ecology for durable rules; a cache entry for a finding that is not yet a rule"
+}[reg=facet]
+
+^"measured_2026_08_13"{
+  note: "Re-run the probes rather than trusting these. Every one is reproducible from the command in its own row."
+  core_bundle_kb = 1614
+  core_probe = `npm run css:payload`
+  authored_stylesheets = 155
+  stylesheets_with_banner = 151
+  stylesheets_with_genome_line = 18
+  stylesheets_using_nesting = 10
+  nesting_probe = `find public/css -name '*.css' -not -path '*/bundles/*' -exec grep -l '^\s*&' {} \; | wc -l`
+}
+
+^"important_distribution"{
+  claim: "`!important` is not confined to the ornament layer, and any invariant saying so is contradicted by the tree 160 times."
+  total = 173
+  by_layer: .{
+    effects = 35
+    routes = 19
+    components = 18
+    systems = 18
+    grammar = 16
+    handles = 14
+    reset = 13
+    shell = 13
+    ornament = 13
+    modes = 10
+    typography = 4
+  }[reg=facet]
+  probe: `for d in reset tokens shell typography grammar components systems routes handles effects ornament modes; do printf "%-12s %s\n" "$d" "$(find public/css/$d -name '*.css' -exec grep -o '!important' {} \; 2>/dev/null | wc -l)"; done`
+  status: "open — a measurement, not yet a rule"
+}
+
+^"heaviest_core_sheets"{
+  note: "Six sheets carry roughly a third of core. Eviction candidates are named in @parcels#parcel_css_eviction."
+  sheets: #[
+    `tokens/core.css 79KB`,
+    `grammar/syntax.css 77KB`,
+    `shell/chrome/navigation.css 60KB`,
+    `components/runtime-states.css 56KB`,
+    `shell/chrome/adaptive.css 51KB`,
+    `ornament/ornament.css 47KB`
+  ][reg=set]
+  probe: `grep -o "url('[^']*')" public/css/style-core.css | sed "s/url('//;s/')//" | while read u; do f=".$u"; [ -f "$f" ] && printf "%6.0fKB  %s\n" $(stat -f%z "$f" | awk '{print $1/1024}') "$u"; done | sort -rn | head`
+}
+
+#>wonder_craft_quality_1
+?["Why does the effects layer need 35 !important declarations?"]{
+  #:depth #!computational ~#lens(specificity)
+  ~#tension: "effects are described as additive and must stay additive, which is exactly the position that should never need to force. 35 is the largest count in the tree, in the layer with the weakest claim to override anything."
+  ~#hypothesis: "effects are fighting handles and ornament, which sit after them in the cascade order, so the layer order and the intended precedence disagree."
+  !probe{ "for each !important in effects/, find the rule it is beating. if the winner is consistently in a later layer, the layer order is wrong rather than the declarations." }
+  $%[layer.importantCount, layer.cascadeIndex, rule.overriddenBy]
+}
+
+^"validation"{
+  probe: `npm run css:payload && node scripts/check-site.mjs`
+  falsification: "A number in measured_2026_08_13 does not reproduce from its stated probe."
+}

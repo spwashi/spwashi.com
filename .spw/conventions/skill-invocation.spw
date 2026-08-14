@@ -1,0 +1,80 @@
+# Skill Invocation
+#
+# What lens a skill runs under, and what it owes the corpus when it finishes.
+# Skills are documented in .agents/skills/; this surface holds the Spw side of
+# that contract so the skill files can cite it rather than restate it.
+
+#>skill_invocation
+#:convention #!skills #!agents
+#:operation #!contract
+#:fixity #!tending
+#:layer #!pragmatics
+
+@semantic_capacity: ~"./semantic-capacity.spw"
+@recursive_improvement: ~"./recursive-improvement.spw"
+@stylesheet_ecology: ~"./stylesheet-ecology.spw"
+@delegation_parcels: ~"../caches/delegation-parcels-2026-08.spw"
+@skills_readme: ~"../../.agents/skills/README.md"
+@integrity: ~"../../scripts/spw-integrity.mjs"
+
+operation = "contract"
+fixity = "tending"
+
+^"lens"{
+  claim: "A skill invocation is one of the six operations @semantic_capacity already names — cache, audit, align, prime, contract, archive — and knowing which one you are performing is more useful than knowing which model you are."
+  why: "The operations are load-bearing rather than decorative: 156 `#:operation` declarations across the site's own surfaces, and each carries a stated fixity, a good_diff and a bad_diff. They are checkable. A lens that cannot be checked is a mood."
+  roster: "Grok, Claude, Codex and Antigravity are the models actually worked with here, and naming them is useful — a skill file is read by one of them. What does not hold is fixing a discipline to each. Access varies (no subscription to all four at once), behaviour shifts between versions, and the assigned traits are not checkable against anything. A lens that needs four models in the room is unusable by the person holding one."
+  both: "So the roster stays as context and the operation carries the lens. Who is reading is a fact about today; what operation is being performed is a fact about the patch."
+  rule: "Declare the operation before starting. If a task is really two operations, it is really two patches."
+}
+
+^"shape"{
+  claim: "A gate that only runs after the work is half a workflow. Every skill should name what to measure BEFORE it acts, not only what proves it finished."
+  sense: "The measurement that grounds the work. Run it first; if it says the premise is wrong, stop — that is a finding, not a failure."
+  probe: "The check that proves the change landed. Passing it is necessary, never sufficient."
+  precipitate: "Where the finding crystallizes — a cache, a wonder, or a convention. A skill that runs and leaves nothing behind cannot route attention; the next session re-derives it from scratch."
+  refuse: "Do not skip precipitate because the work was small. A one-line finding in a cache is worth more than the same finding rediscovered three times."
+}
+
+^"sense_instruments"{
+  note: "What to reach for before acting, by kind of work. All are read-only and safe to run unprompted."
+  corpus_shape = "npm run spw:census — population, roles, hubs; npm run spw:graph — cycles and strands"
+  citation_health = "npm run spw:integrity — every ~\"…\" citation and every authored expression"
+  page_differentiation = "npm run reasons — what each route hosts that others do not"
+  open_questions = "npm run wonder && npm run wonder:measures — what is asked but unsettled, and which substrates can answer"
+  operator_usage = "npm run spw:lattice — apposition cells; npm run spw:analyze — selector densities"
+  stylesheet_weight = "npm run css:payload — per-route bundle cost"
+  breakpoint_drift = "node scripts/normalize-breakpoints.mjs — dry run reports without writing"
+}
+
+^"measurement_before_invariant"{
+  claim: "A rule asserted without measuring the tree it governs will usually be wrong, and wrong in a way that teaches an agent to distrust the whole document."
+  worked_example: "`!important` is confined to the ornament layer' reads as a reasonable invariant. The tree carries 173 of them across eleven layers, of which 13 are in ornament — effects alone has 35. The rule is contradicted 160 times by the code it governs."
+  what_it_actually_is: "A measurement with an open question attached: why does effects need 35? That is wonder-shaped, not rule-shaped, and it belongs in a cache until someone answers it."
+  probe: `for d in reset tokens shell typography grammar components systems routes handles effects ornament modes; do printf "%-12s %s\n" "$d" "$(find public/css/$d -name '*.css' -exec grep -o '!important' {} \; 2>/dev/null | wc -l)"; done`
+  rule: "Before writing an invariant, run the probe that would falsify it. If you cannot write that probe, you are writing taste, and taste belongs in a cache with your name on it."
+}
+
+^"ownership"{
+  claim: "More than one agent works this tree at once. @delegation_parcels slices work by exclusive file ownership for exactly this reason."
+  rule: "If a file is being edited by another session, do not race it. Put the finding where it belongs in the corpus and let the owner pull it."
+  refuse: "Never `git stash` here — concurrent sessions lose work that way."
+}
+
+#>wonder_skill_invocation_1
+?["Should a skill be able to declare its own operation, or is that always the invoker's call?"]{
+  #:depth #!experiential ~#lens(operation)
+  ~#tension: "spw-craft-quality is plainly an align or contract operation most of the time, but the same skill can be a prime when it opens a direction rather than settling one. Fixing the operation in the skill file would be wrong; leaving it entirely to the invoker means it is usually not declared at all."
+  ~#hypothesis: "the skill declares its default operation and the invoker overrides, the way a module declares `when:` and the loader may defer it."
+  !probe{ "read the last ten commits that used a skill and label each with an operation after the fact. if the label is obvious from the diff, the skill could have declared it; if it needed the commit message, only the invoker knew." }
+  $%[skill.operation, commit.operation, fixity.declared]
+}
+
+^"validation"{
+  probe: `npm run spw:integrity`
+  falsification: #[
+    `A skill file states an invariant with no probe that could falsify it.`,
+    `A skill runs, produces a finding, and records it nowhere.`,
+    `Two sessions edit the same file because neither checked @delegation_parcels.`
+  ][reg=set]
+}

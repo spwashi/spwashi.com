@@ -1,0 +1,86 @@
+# UI Containment — measurements
+#
+# The numbers behind spw-ui-containment-audit: overflow, measure, touch targets,
+# packing. Records what has been measured and, as importantly, what has not —
+# an unmeasured axis stated plainly is worth more than a confident guess.
+
+#>skill_ui_containment
+#:skill #!containment #!responsive #!measurement
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+@skill: ~"../../.agents/skills/spw-ui-containment-audit/SKILL.md"
+@invocation: ~"../conventions/skill-invocation.spw"
+@stylesheet_ecology: ~"../conventions/stylesheet-ecology.spw"
+@breakpoints: ~"../../scripts/normalize-breakpoints.mjs"
+@parcels: ~"../caches/delegation-parcels-2026-08.spw"
+
+operation = "audit"
+fixity = "tending"
+
+^"invocation"{
+  default_operation = "audit"
+  sense = `node scripts/normalize-breakpoints.mjs`
+  probe = "narrow and wide by eye — no script proves containment"
+  precipitate = "@stylesheet_ecology#breakpoints for ladder changes; this surface for new measurements"
+  gate: "Layout-moving changes need eyes on real pages. A green check is not containment evidence."
+}[reg=facet]
+
+^"breakpoint_ladder"{
+  note: "Normalized 2026-08-13. 189 width queries; drift snapped to rungs real usage already chose."
+  distinct_thresholds_before = 58
+  distinct_thresholds_after = 32
+  rewritten = 144
+  unit_only_rewrites = 80
+  largest_move_px = 32
+  max_drift_ratio = 0.05
+  primary_divide = "45rem — 720px carried 41 uses before normalization, the clear de-facto divide"
+  left_alone: #[`340px`, `600px`, `1088px`, `1312px`][reg=set]
+  left_alone_reason: "No rung within 5%. At that distance a threshold is a decision, not drift."
+  probe: `node scripts/normalize-breakpoints.mjs`
+}
+
+^"posture"{
+  claim: "Mobile is still defined by subtraction. Normalizing the ladder made it countable; it did not make it mobile-first."
+  max_width_queries = 155
+  min_width_queries = 43
+  consequence: "Desktop rules are the default and narrow viewports get what survives removal, which is why phones read as a stripped desktop rather than a designed surface."
+  rule: "New work states `min-width`."
+  open: "Collapsing 16 rungs into semantic tiers moves layout — @parcels#parcel_breakpoint_tiers, gated on human approval."
+}
+
+^"pinch_zoom"{
+  claim: "Not blocked. Checked because a blocked viewport is a release-stopper and the source tree looked alarming."
+  built_routes = 152
+  routes_with_viewport_meta = 152
+  content = "width=device-width, initial-scale=1"
+  scalable = "no user-scalable=no, no maximum-scale anywhere"
+  caution: "Grepping the source tree finds only 6 viewport tags, all in workbench presets. The meta is injected by scripts/template.mjs at build. Measure dist/, not source."
+  probe: `grep -rl 'name="viewport"' --include=index.html dist | wc -l`
+}
+
+^"not_measured"{
+  note: "Stated so nobody assumes coverage. Each is a real axis of this skill with no number behind it."
+  tap_targets: "operator-chip density against WCAG 2.5.8 (24x24 CSS px) on coarse pointers. The home page carries 109 chips; whether any fall under the minimum is unknown."
+  measure_per_tier: "characters per line at each breakpoint tier. Typography is currently tuned by eye against copy nobody has counted — the Pretext lab already measures text and should be the engine."
+  overflow_containment: "no inventory of which regions can scroll horizontally at narrow widths."
+  motif_on_mobile: "paper-motif now changes role below 48rem rather than switching off, but the mobile treatment has not been judged on a device."
+}
+
+#>wonder_ui_containment_1
+?["Can containment be proven by anything other than looking?"]{
+  #:depth #!experiential ~#lens(evidence)
+  ~#tension: "every other skill here has a probe that passes or fails. this one's probe is 'narrow and wide by eye', which does not compose, does not run in CI, and does not survive the person who looked."
+  ~#hypothesis: "overflow and tap-target minima are mechanically checkable and only the aesthetic half needs eyes — the skill currently treats the whole thing as taste because the two were never separated."
+  !probe{ "at three viewport widths, walk every route and record elements whose scrollWidth exceeds clientWidth, plus every interactive element under 24x24. if the list is short and true, containment had a mechanical half all along." }
+  $%[element.scrollWidth, element.clientWidth, target.hitArea, viewport.tier]
+}
+
+^"validation"{
+  probe: `node scripts/normalize-breakpoints.mjs && node scripts/check-site.mjs`
+  falsification: #[
+    `A width media query is authored in px, or off the ladder.`,
+    `A treatment switches itself off below a breakpoint instead of changing role.`
+  ][reg=set]
+}

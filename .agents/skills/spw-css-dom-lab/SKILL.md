@@ -7,34 +7,45 @@ description: Small reversible HTML/CSS/DOM experiments. Keep them local until a 
 
 Read first: `../_shared/site-workflow.md`, `../_shared/site-vs-workbench.md`.
 
-## Intent (honest)
+---
 
-Labs were meant to stay cheap. The failure mode was graduating every interesting
-experiment into shared tokens, an IMMEDIATE module, and a convention.
+## ⚡ 60-Second Quick Strike (Grok)
 
-## Workflow
+* **Hypothesis First:** Define a single-sentence hypothesis (feel, learnability, ergonomics) before touching code.
+* **1-Session Rule:** An experiment must live and die in a single session. Either promote it or discard it.
+* **Stop Condition:** Do NOT register a new catalog module or sitewide token for a localized experiment.
 
-1. Name a hypothesis (feel, learnability, ergonomics)—one sentence.
-2. HTML/CSS first; JS only for state, timing, or pointer logic.
-3. Isolate: one selector family or one attribute; reversible.
-4. Test: narrow + wide, coarse pointer, reduced motion.
-5. **Promotion rule:** second real consumer **or** explicit product request—then
-   fold into shared CSS/module/.spw. Otherwise leave route-local or delete.
+---
 
-## Do not
+## 🛡️ Constitutional Guardrails (Claude)
 
-- Register a new catalog `immediate` module for a lab
-- Invent a sitewide `data-spw-*` family for a one-route probe
-- Import lab CSS into the core bundle “just in case”
+* 🚫 **No Core Bundle Pollution:** Never import experimental lab CSS into `style-core.css` or shared tokens "just in case".
+* 🚫 **No Breaking Base Styles:** Experiments must be strictly additive and contained within a single class or element scope.
+* 🚫 **No Immediate Mounts:** If JS is needed for the experiment, mount it on `interaction` or `visible`, never `immediate`.
 
-## Systems-layer note
+---
 
-If modulating interactive modules, consume dimension / medium tokens; do not
-fork viewport detection. Base layout stays in components/routes; systems tails
-modulate.
+## 📐 Experiment Lifecycle & Promotion Gate (Codex)
 
-## Validation
+```text
+Step 1: Sandbox   → Build the probe in a route-local file (e.g. <route>/index.html).
+Step 2: Stress    → Test mobile (360px), desktop (1440px), touch pointer, reduced motion.
+Step 3: Evaluate  → Did the experiment solve the public UX goal?
+Step 4: Promote   → IF AND ONLY IF a second route or feature needs it, extract into shared CSS/JS.
+        Discard   → Otherwise, keep route-local or revert.
+```
 
-- Visual check on the host route
-- `git diff --check`
-- No catalog change unless promotion is intentional
+---
+
+## 🌌 Tooling & Validation Ladder (Antigravity)
+
+1. **Visual Route Inspection:** Verify responsive layout and interactive feel.
+2. **Whitespace & Diff Sanity:**
+   ```bash
+   git diff --check
+   ```
+3. **No Unintended Bundle Creep:** Confirm `public/css/tokens/core.css` and `module-catalog.js` remain clean.
+4. **Local Verification Gate:**
+   ```bash
+   npm run check:local
+   ```

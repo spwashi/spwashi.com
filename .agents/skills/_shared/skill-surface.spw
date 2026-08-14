@@ -1,0 +1,96 @@
+# Skill Surface — the shape a skill directory carries
+#
+# A skill directory holds up to four things, and the split is what keeps any of
+# them trustworthy:
+#
+#   SKILL.md      prose. Rewritten often, by different hands and different models.
+#   skill.spw     contents and references. Mostly generated; hand-authored facets
+#                 survive regeneration. This file.
+#   appendix.spw  the long tail — worked examples, prior findings, the detail that
+#                 would drown the surface but is the reason the surface is right.
+#   references/   material the skill cites. scripts/ — helpers it invokes.
+#
+# Structure that lives inside prose is rewritten with the prose. Structure that
+# lives beside it survives, and can be cited.
+
+#>skill_surface_schema
+#:schema #!skills #!agents
+#:operation #!contract
+#:fixity #!tending
+#:layer #!pragmatics
+
+@invocation: ~"../../../.spw/conventions/skill-invocation.spw"
+@semantic_capacity: ~"../../../.spw/conventions/semantic-capacity.spw"
+@skills_index: ~"../../../.spw/skills/index.spw"
+@parcels: ~"../../../.spw/caches/delegation-parcels-2026-08.spw"
+@generator: ~"../../../scripts/spw-skill-surface.mjs"
+
+operation = "contract"
+fixity = "tending"
+
+expression = skill[surface]{contents.reference.facet}<extend>
+
+^"generated_region"{
+  ~#note: "@generator owns the block between the markers and rewrites it from the directory."
+  holds: #[`#> anchor`, `~#describes from SKILL.md frontmatter`, `@refs to prose, references/, scripts/, measures`, `^"contents" with each entry's role`][reg=set]
+  rule: "Never hand-edit inside the markers; the next refresh discards it. Everything outside is preserved verbatim."
+  probe: `node scripts/spw-skill-surface.mjs`
+}
+
+^"hand_authored"{
+  ~#note: "Below the marker. The generator cannot infer these and will not touch them."
+  operation: "One of cache | audit | align | prime | contract | archive per @semantic_capacity. The default this skill performs; the invoker may override."
+  sense: "What to measure BEFORE acting. Read-only, safe unprompted. If it says the premise is wrong, stop — that is a finding, not a failure."
+  probe: "What proves the change landed. Necessary, never sufficient."
+  precipitate: "Where the finding crystallizes. A skill that leaves nothing behind makes the next session re-derive it."
+  owns: "Files this skill edits — the collision surface for @parcels."
+  refuse: "What this skill must not do, as a rule with a probe behind it."
+  extends: "The seam a variant hooks into without rewriting the skill."
+}[reg=facet]
+
+^"appendix"{
+  ~#note: "Optional. Earned, not created upfront."
+  purpose: "Hold what would drown skill.spw: worked examples with their numbers, findings that shaped a refuse rule, the case that made an extension seam necessary."
+  when: "A skill earns an appendix once a hand-authored facet needs more than two sentences to defend. Before that, the facet is the right size."
+  form: "Same anchor family — #>skill_<id>_appendix — so citations resolve and spw:integrity walks it."
+  refuse: "Do not open an appendix to park material nobody has used. An empty appendix is a zombie meta-artifact; the tree already forbids those."
+}
+
+^"rigor"{
+  ~#note: "The standard the workbench holds itself to, restated for skills because it kept being assumed."
+  r1: "State the operation. A patch that is really two operations is really two patches."
+  r2: "Measure before asserting. An invariant written without running the probe that would falsify it is taste — and taste belongs in a cache with a name on it, not in a rule."
+  r3: "Cite, do not restate. A number copied from a measurement surface is a number that will disagree with itself."
+  r4: "Name what you did not check. An unmeasured axis stated plainly is worth more than a confident guess."
+  r5: "Bound the slice before starting. One route, one layer, one module — the skill that cannot say what it is not touching is not ready to run."
+  r6: "Leave a precipitate. Work that produces no citable residue is work the next session repeats."
+  worked_example: "`!important lives only in the ornament layer` reads as reasonable rigor and is contradicted 160 times by the tree it governs — 173 total, 13 in ornament, 35 in effects alone. r2 would have caught it in one command."
+}
+
+^"extension_path"{
+  steps: #[
+    `Author .agents/skills/<id>/SKILL.md with name and description frontmatter`,
+    `Run node scripts/spw-skill-surface.mjs --write — skill.spw is generated`,
+    `Add hand-authored facets below the marker: operation, sense, probe, precipitate`,
+    `Register the pathRef in .spw/skills/index.spw#registry`,
+    `npm run spw:integrity — the citation must resolve`,
+    `Add .spw/skills/<id>.spw once the skill has produced a number worth keeping twice`,
+    `Add appendix.spw only when a facet outgrows two sentences`
+  ][reg=set]
+}
+
+^"corpus_reach"{
+  ~#note: "Honest limitation."
+  walk_root: "The corpus walk is rooted at .spw, so these files are not enumerated by spw:census or spw:query."
+  reached_by: "Citation — @skills_index pathRefs each one, so spw:integrity resolves them and a reader can follow them."
+  open: "Widen the walk to .agents/skills, or accept citation-only reach. Citation-only is currently sufficient and costs nothing."
+}
+
+^"validation"{
+  probe: `node scripts/spw-skill-surface.mjs && npm run spw:integrity`
+  falsification: #[
+    `A skill.spw states a measurement — those belong in .spw/skills and go stale here.`,
+    `A hand-authored facet sits inside the generated markers and vanishes on refresh.`,
+    `An appendix.spw exists with no facet that needed it.`
+  ][reg=set]
+}
