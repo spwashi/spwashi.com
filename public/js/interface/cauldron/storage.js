@@ -1,6 +1,7 @@
 import { CAULDRON_KEY } from './contract.js';
 import { deriveNumericityQuantifiers, isNumericalConcept, parseNumericalValue } from './helpers.js';
 import { splitOperatorExpression } from '/public/js/kernel/shared.js';
+import { operatorSpaces } from '/public/js/semantic/operator-spaces.js';
 
 /* Delegates to the kernel's operator grammar (the old local regex required a
    literal backslash before ^ and ?, so those operators never matched). */
@@ -66,15 +67,32 @@ export function readSigilPayload(element) {
   const tangibility = inferTangibility(sigil, explicitPhase);
   const biome = from(host, 'spwBiome') || element?.closest?.('[data-spw-biome]')?.dataset?.spwBiome || from(host, 'spwRegion') || from(body, 'spwContext') || 'prairie';
 
+  /**
+   * Nearest wins. The sigil-payload attributes are written at runtime on a
+   * transition and are absent from static markup entirely, so preferring them
+   * and falling back to <body> reached past the specific nutrient to swallow a
+   * generic one: 1,971 per-element data-spw-role values exist across the routes
+   * and capture was taking the single page-level role instead.
+   *
+   * Ordered runtime payload, then nearest authored ancestor, then page. Each
+   * step is more specific than the one after it.
+   */
+  const near = (attr, key) => element?.closest?.(`[${attr}]`)?.dataset?.[key] || '';
+
   const payload = {
-    scope: from(host, 'spwSigilPayloadScope'),
+    scope: from(host, 'spwSigilPayloadScope') || near('data-spw-slot', 'spwSlot'),
     page: from(host, 'spwSigilPayloadPage') || from(body, 'spwSurface'),
-    family: from(host, 'spwSigilPayloadFamily') || from(body, 'spwPageFamily'),
-    role: from(host, 'spwSigilPayloadRole') || from(body, 'spwPageRole'),
-    topic: from(host, 'spwSigilPayloadTopic') || from(body, 'spwContext'),
+    family: from(host, 'spwSigilPayloadFamily') || near('data-spw-kind', 'spwKind') || from(body, 'spwPageFamily'),
+    role: from(host, 'spwSigilPayloadRole') || near('data-spw-role', 'spwRole') || from(body, 'spwPageRole'),
+    topic: from(host, 'spwSigilPayloadTopic') || near('data-spw-context', 'spwContext') || from(body, 'spwContext'),
     region: from(host, 'spwSigilRegion')
       || element?.closest?.('[data-spw-region]')?.dataset?.spwRegion || '',
     liminality: element?.closest?.('[data-spw-liminality]')?.dataset?.spwLiminality || '',
+    // What the source could do, and what happened when it did. Nutritional
+    // content for a spell: an ingredient that remembers its affordance can be
+    // recomposed into something that affords the same.
+    affordance: near('data-spw-affordance', 'spwAffordance'),
+    consequence: near('data-spw-consequence', 'spwConsequence'),
     fixity: explicitFixity,
     phase: explicitPhase,
     element: explicitPhase,
@@ -99,7 +117,7 @@ export function toSpwExpression(ingredient) {
   if (!payload) return { text: `${sigil}${nucleus}`, depth: 'naive' };
 
   const mode = payload.role || payload.scope || '';
-  const parts = [payload.family, payload.topic, payload.region, payload.liminality, payload.phase || payload.element]
+  const parts = [payload.family, payload.topic, payload.region, payload.affordance, payload.liminality, payload.phase || payload.element]
     .filter(Boolean)
     .filter((part, index, all) => all.indexOf(part) === index);
 
@@ -109,6 +127,29 @@ export function toSpwExpression(ingredient) {
 
   return { text, depth: mode || parts.length ? 'integrated' : 'naive' };
 }
+
+/**
+ * What a gathered fragment still has room for.
+ *
+ * Cauldron ingredients are operator-led — capture keeps the sigil, so `~orient`
+ * and `#>address` arrive with a position the kernel can read. Authored page
+ * copy is not: 1 of 461 `data-spw-semantic-expression` values yields an
+ * operator at all, which is why this reads ingredients and not the corpus.
+ *
+ * The open role is the niche — the side the operator affords and the text never
+ * claimed. An ingredient that opens `current-perspective` can still take a
+ * viewer; one that opens nothing is complete and cannot be extended.
+ */
+export function ingredientNiche(ingredient) {
+  const spaces = operatorSpaces(ingredient?.expression || ingredient?.label || '');
+  if (!spaces || !spaces.open.length) return null;
+  return {
+    position: spaces.position,
+    geometry: spaces.geometry,
+    open: spaces.open.map((slot) => slot.role),
+  };
+}
+
 
 /**
  * Normalize any stored/captured item into an ingredient.

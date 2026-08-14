@@ -48,7 +48,7 @@ import {
   syncFloatingChip,
 } from './cauldron/chrome.js';
 import { deriveNumericityQuantifiers, isNumericalConcept, parseNumericalValue } from './cauldron/helpers.js';
-import { broadcastCauldronSync, escapeHtml, getCauldron, inferOperator, normalizeIngredient, readSigilPayload, toSpwExpression } from './cauldron/storage.js';
+import { broadcastCauldronSync, escapeHtml, getCauldron, inferOperator, ingredientNiche, normalizeIngredient, readSigilPayload, toSpwExpression } from './cauldron/storage.js';
 import { cauldronTrace, recordGestureTrace, recordPlantedTrail } from './cauldron/trace.js';
 import {
   clearMixOutputState,
@@ -970,6 +970,12 @@ function renderIngredientsList(ingredients) {
     if (ing.capturedAt) {
       const ageDays = Math.floor((Date.now() - Number(ing.capturedAt)) / (1000 * 60 * 60 * 24));
       lanes.origin.push(`<span class="cauldron-ingredient-meta cauldron-age" data-spw-age="${ageDays}">${ageDays}d</span>`);
+    }
+    // The side the operator affords and the text never claimed — what this
+    // fragment can still accept. Absent when the form is complete.
+    const niche = ingredientNiche(ing);
+    if (niche) {
+      lanes.reach.push(`<span class="cauldron-ingredient-meta cauldron-niche" data-spw-niche="${escapeHtml(niche.open.join(' '))}" data-spw-operator-geometry="${escapeHtml(niche.geometry)}" title="open role — this fragment can still take a ${escapeHtml(niche.open.join(' or '))}">${escapeHtml(niche.open[0])}</span>`);
     }
 
     if (ing.primedBy) {
