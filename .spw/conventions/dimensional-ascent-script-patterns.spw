@@ -1,0 +1,90 @@
+# Dimensional Ascent of Script Patterns
+#
+# How Spw script patterns and navigation expressions generalize from flat
+# 1D text tokens into 2D spatial containers, 3D electrostatic attention fields,
+# and 4D temporal locomotion and replayable spells.
+
+#>dimensional_ascent_script_patterns
+#:convention #!dimensions #!geometry #!navigation #!resonance #!physics
+#:operation #!align
+#:fixity #!stable
+#:layer #!semantics
+
+@site: ~"../site.spw"
+@dimensions: ~"../dimensions.spw"
+@dimension_vocabulary: ~"./dimension-vocabulary.spw"
+@operator_semantics: ~"./operator-semantics.spw"
+@attention_field: ~"./attention-field.spw"
+@expression_geometry: ~"../../public/js/semantic/spw-expression-geometry.js"
+@spatial_gravity: ~"../../public/js/runtime/spatial-gravity.js"
+@region_profiler: ~"../../public/js/runtime/region-profiler.js"
+@navigation_spells: ~"../../public/js/runtime/navigation-spells.js"
+@navigation_locomotion: ~"../../public/js/runtime/navigation-locomotion.js"
+
+operation = "align"
+fixity = "stable"
+
+expression = script[patterns]{point.vector.container.field.locomotion}<ascent>
+
+# ==============================================================================
+# THE DIMENSIONAL LADDER OF SPW SCRIPT PATTERNS
+# ==============================================================================
+
+^"dimensional_ladder"{
+  ~#context: "Spw syntax is not arbitrary punctuation. Each syntax tier corresponds to an exact dimensional order in the browser runtime."
+
+  d0_point: .{
+    order = 0
+    name = "Identity Scalar / Named Handle"
+    syntax = `"name", #>handle`
+    physical_reality = "A single 0D scalar coordinate: an anchor target, a route slug, or an immutable identifier."
+    runtime_projection = "DOM `id`, URL pathname, or dataset key."
+    example = `#>software_surface, "authoring_seed"`
+  }[reg=facet]
+
+  d1_vector: .{
+    order = 1
+    name = "Positional Force / Directional Vector"
+    syntax = `#>address, ?probe, ~potential, ^integrate, @commit, !pragma, >project, <open, =bind, .state, *vibrate, %measure, :type`
+    physical_reality = "A 1D directed force with polarity, argument binding (prefix vs infix vs postfix), and intent."
+    runtime_projection = "Interactive operator chips (`[data-spw-operator]`), CSS `--active-op-color`, and resonance glow."
+    metacognitive_posture = "Tells a reader or language model what force is acting and where attention should push or pull."
+  }[reg=facet]
+
+  d2_topology: .{
+    order = 2
+    name = "Boundary Container / Spatial Topology"
+    syntax = `[] mode/variant, {} direction/practice, () scene/midprocess, <> concept/lens, <<>> stream`
+    physical_reality = "A 2D enclosed territory defining scope, area, packing density, and boundary permeability."
+    runtime_projection = "CSS box models, responsive container queries (`@container`), `.frame-panel`, and measure bands (`compact`, `balanced`, `roomy`)."
+    spatial_subtraction = "Absent explicit author overrides, density and tempo derive directly from measured box bounds (extent ratios, measure bands, edge gravity)."
+  }[reg=facet]
+
+  d3_volumetrics: .{
+    order = 3
+    name = "Electrostatic Field / Memory Volumetrics"
+    syntax = `data-spw-tangibility, data-spw-coherence, data-spw-phase, data-spw-wonder="orientation|memory|resonance|projection"`
+    physical_reality = "A 3D volumetric field of electrostatic charge, dielectric resistance, and persistent wonder memory."
+    runtime_projection = "Dynamic HSL palette resonance, material surfaces (glass vs matte vs code), and diffusive attention fields (`--spw-resonance`)."
+    attention_dynamics = "Hovering or focusing an operator charges matching elements across the whole viewport with inverse-square falloff."
+  }[reg=facet]
+
+  d4_locomotion: .{
+    order = 4
+    name = "Temporal Locomotion / Replayable Spells"
+    syntax = `~ $ ! ^ (composition chain), navigation-locomotion (traveling → settled), session checkpoints`
+    physical_reality = "A 4D spacetime trajectory: time-budgeted state transitions, navigation locomotion momentum, and replayable browser session outcomes."
+    runtime_projection = "Spell serialization, checkpoint restoration, media cauldron harvesting, and multi-year slice co-creation ('Painting Over Years')."
+    replayable_rule = "The value of a 4D spell is its reproducible effect on the browser state, not decorative accumulation."
+  }[reg=facet]
+}
+
+# ==============================================================================
+# GENERALIZATION RULES ACROSS ORDERS
+# ==============================================================================
+
+^"generalization_rules"{
+  invariance_under_projection: "Moving from 1D text to 4D locomotion preserves semantics without changing source truth. The sigil is the 1D vector of the 4D spell."
+  composition_not_flattening: "Do not flatten 2D container boundaries into 1D strings. `beans[stew]{cook}(kitchen)<food>` contains 4 distinct geometric seats for the root stem."
+  reversible_ascent: "Any 4D spell must decompose losslessly back into its 1D operator sequence and 0D target anchors."
+}

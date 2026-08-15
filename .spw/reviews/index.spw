@@ -16,6 +16,7 @@
 @workbench_metaphysics_application: ~"./workbench-metaphysics-application.spw"
 @spw_surface_normalization: ~"./spw-surface-normalization.spw"
 @spw_maintenance_2026_06: ~"./spw-maintenance-2026-06.spw"
+@upstream_workbench_recommendations: ~"./upstream-workbench-recommendations.spw"
 @interaction_loop_contract: ~"../../.agents/plans/interaction-loop-contract/PLAN.md"
 @gesture_state_refinement: ~"../../.agents/plans/gesture-state-refinement/PLAN.md"
 @navigation_header_disclosure: ~"../../.agents/plans/navigation-header-disclosure/PLAN.md"
@@ -25,7 +26,7 @@
 
 intent: .{
  goal = `Keep review surfaces grouped and easy to traverse in an editor.`
- scope = `Runtime, ontology, seams, lifecycle, state-flow, CSS architecture, modular experience slice / team collaboration, shell/header disclosure, gesture refinement, floating chrome, copy depth, spw-workbench alignment, workbench metaphysics application, HTML/CSS structure + timing, classname/grammar/recognizability, naming/structured values, fundamentals practice rhythms, .spw surface normalization/navigability, and .spw maintenance audits that belong to the public site rather than the mounted workbench.`
+ scope = `Runtime, ontology, seams, lifecycle, state-flow, CSS architecture, modular experience slice / team collaboration, shell/header disclosure, gesture refinement, floating chrome, copy depth, spw-workbench alignment, upstream workbench recommendations (performance, CLI shape, intermediate forms, snippets culture), workbench metaphysics application, HTML/CSS structure + timing, classname/grammar/recognizability, naming/structured values, fundamentals practice rhythms, .spw surface normalization/navigability, and .spw maintenance audits that belong to the public site rather than the mounted workbench.`
 }[reg=facet]
 
 dispatch: .{
@@ -34,6 +35,7 @@ dispatch: .{
  css_architecture_alignment = @css_architecture_alignment
  modular_slices_volleyball = @modular_slices_volleyball
  workbench_alignment_audit = @workbench_alignment_audit
+ upstream_workbench_recommendations = @upstream_workbench_recommendations
  html_css_structure_audit = @html_css_structure_audit
  classname_attribute_grammar_recognizability = @classname_attribute_grammar_recognizability
  fundamentals_practice_rhythms = @fundamentals_practice_rhythms

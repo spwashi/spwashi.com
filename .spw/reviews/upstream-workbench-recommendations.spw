@@ -1,0 +1,219 @@
+# Upstream Spw-Workbench Recommendations
+#
+# Synthesized findings, benchmarks, intermediate forms, and cultural practices
+# from spwashi.com (279 surfaces, 3,688 citations, 460+ expressions) addressed to
+# language models and engineers working on the spw-workbench compiler and CLI.
+#
+# This document organizes recommendations across four primary axes:
+# 1. Performance & Traversal Hygiene (walk costs, content-addressed caching, telemetry)
+# 2. CLI Shape & Unix Composability (dual-read piping, resolver, linter, onboarding-arc)
+# 3. Intermediate Forms (fingerprints, resolved citations, expression geometry, precipitates)
+# 4. Culture of Snippets, Scripts, Dialects & Expressions (runnable philosophy, herbarium)
+
+#>upstream_workbench_recommendations
+#:review #!workbench #!compiler #!pragmatics #!developer_experience #!agent_ecology
+#:operation #!align
+#:fixity #!tending
+#:layer #!pragmatics
+
+@site: ~"../site.spw"
+@workbench_report: ~"../workbench-report.spw"
+@workbench_alignment: ~"./workbench-alignment-audit.spw"
+@expression_formations: ~"../language/expressions/index.spw"
+@snippets: ~"../snippets.spw"
+@site_semantics: ~"../conventions/site-semantics.spw"
+@operator_semantics: ~"../conventions/operator-semantics.spw"
+@expression_geometry_runtime: ~"../../public/js/semantic/spw-expression-geometry.js"
+@spatial_gravity_runtime: ~"../../public/js/runtime/spatial-gravity.js"
+@region_profiler_runtime: ~"../../public/js/runtime/region-profiler.js"
+@integrity_script: ~"../../scripts/spw-integrity.mjs"
+@dimensions_script: ~"../../scripts/spw-dimensional-index.mjs"
+@wonder_script: ~"../../scripts/wonder.mjs"
+@precipitate_script: ~"../../scripts/spw-precipitate.mjs"
+
+operation = "align"
+fixity = "tending"
+
+expression = consumer[recommendations]{performance.cli.intermediate.culture}<upstream>
+
+# ==============================================================================
+# 1. PERFORMANCE & TRAVERSAL HYGIENE
+# ==============================================================================
+
+^"performance_and_traversal"{
+  ~#context: "Measured against a 279-surface corpus in an active monorepo environment with submodules and dependencies."
+
+  walk_isolation: .{
+    ~#severity: "dominates all CLI latency"
+    claim: "`--from .spw` must prune infrastructure directories (.git, node_modules, _workbench, dist, build) by default."
+    measured: .{
+      pruned_consumer_walk_ms = 11
+      unpruned_spw_root_ms = ">120000 (timed out)"
+      files_traversed_unpruned = 6553
+      files_traversed_pruned = 279
+      speedup_factor = ">10000x"
+    }[reg=facet]
+    recommendation: "Default file discovery must ignore `.git`, `node_modules`, `_workbench`, `dist`, and `build`. Provide `--include-infrastructure` (or `--all`) to opt into full tree traversal. Respect an optional `.spwignore` file at repo root."
+    probe: `spw query --from .spw/conventions,.spw/language --selector pathRefs --count` vs `spw query --from .spw --selector pathRefs --count`
+  }[reg=facet]
+
+  content_addressed_memoization: .{
+    claim: "Repeated AST parsing across agentic tool loops creates unnecessary CPU churn."
+    recommendation: "Implement an optional content-addressed cache (`.spw-cache` or in-memory LRU) keyed by `sha256(fileContent)`. When unchanged, restore AST/precipitates directly from cache."
+    benefit: "Reduces whole-corpus linting and query passes from ~2500ms to <150ms in continuous pair-programming sessions."
+  }[reg=facet]
+
+  execution_telemetry: .{
+    claim: "Without explicit telemetry, latency regressions and traverse leaks are invisible until hard timeouts occur."
+    recommendation: "Standardize `--stats` flag across all CLI subcommands reporting structured metrics:"
+    schema: `.{ files_walked = 279, files_parsed = 279, bytes_read = 482100, cache_hits = 0, parse_ms = 82, total_ms = 114 }[reg=facet]`
+  }[reg=facet]
+}
+
+# ==============================================================================
+# 2. CLI SHAPE & UNIX COMPOSABILITY
+# ==============================================================================
+
+^"cli_shape_and_composability"{
+  ~#context: "Ergonomics for terminal pipelines and automated language model tool calls."
+
+  dual_read_roundtrip: .{
+    claim: "Every `--spw` precipitate emitted by the CLI must be re-parseable as valid Spw input, enabling Unix pipes."
+    anti_pattern: "Emitting decorative ASCII tables or human-only prose under `--spw` breaks `spw census | spw query`."
+    recommendation: "Ensure `--spw` outputs are valid, lossless Spw documents that parse via stdin. Reserve decorative styling for `--human` (default TTY) and machine data for `--json`."
+    invariant: "`cat file.spw | spw parse --spw | spw query --spw` must round-trip losslessly."
+  }[reg=facet]
+
+  parse_entrypoint_alignment: .{
+    claim: "`parse()` and `parseExpression()` must agree on structured noun expressions."
+    example = `surfaces[route]{path.role.archetype}<publish>`
+    measured: .{
+      structuring_under_parse_file_context = "460 / 460 expressions parse into full AST"
+      surviving_parse_expression_standalone = "3 / 460 expressions survive (457 truncate at leading identifier)"
+    }[reg=facet]
+    recommendation: "Update `parseExpression()` to parse the entire expression into a container/capsule AST or return an explicit unconsumed-tokens error, eliminating the false `success: true` on truncated input."
+  }[reg=facet]
+
+  essential_subcommands: .{
+    ~#note: "Missing commands downstream consumers had to build in userland scripts."
+
+    spw_resolve: .{
+      command = `spw resolve <surface>`
+      does = "Splits and normalizes `@cite: ~\"./path.spw#anchor\"` into `{ source, rawTarget, targetPath, fragment, kind: 'file'|'route'|'directory'|'external'|'malformed', exists: boolean, anchorExists: boolean }`."
+      replaces = "Ad-hoc regex splitters that produce false positives on prose colons `~\"foo: bar\"`."
+    }[reg=facet]
+
+    spw_lint: .{
+      command = `spw lint [paths]`
+      does = "Validates semantic annotations (`#:operation #!align` vs malformed `#:operation align`), verifies anchor uniqueness (`^\"anchor\"` duplicates within a surface), and checks citation validity."
+      replaces = "Silent omission of malformed metadata from dimensional axis queries."
+    }[reg=facet]
+
+    spw_onboarding_arc: .{
+      command = `spw onboarding-arc [--count=10]`
+      does = "Ranks corpus surfaces by graph degree (incoming/outgoing citations), git staleness, and declared operation (`contract` and `prime` prioritized) to generate a deterministic 'what to read first' curriculum for new language models."
+      rationale: "Tells a model where the architectural bedrock is located without reading 279 files alphabetically."
+    }[reg=facet]
+
+    spw_fingerprint: .{
+      command = `spw fingerprint <expression>`
+      does = "Outputs exact structural node counts (`Operation`, `Frame`, `Body`, `Capsule`, `ModifierChain`, `Wake`) without executing runtime evaluation."
+    }[reg=facet]
+
+    spw_summarize: .{
+      command = `spw summarize [--depth=contract|outline]`
+      does = "Extracts top-level headers, anchors, claims, signatures, and relations while eliding large prose bodies, producing a minimal-token context extract for LLM prompt windows."
+    }[reg=facet]
+  }[reg=facet]
+}
+
+# ==============================================================================
+# 3. INTERMEDIATE FORMS TO LEARN & OPTIMIZE
+# ==============================================================================
+
+^"intermediate_forms"{
+  ~#context: "Data representations that bridge plain text Spw, compiler pipelines, runtime JS, and visual layout."
+
+  form_fingerprint: .{
+    definition: "A node-count signature that uniquely identifies an expression's geometric contour."
+    example = `noun[variant]{behavior.role}<scene>`
+    signature = `.{ Operation = 0, Frame = 0, Body = 1, Capsule = 1, ModifierChain = 1, Sequence = 1 }[reg=facet]`
+    use_case: "Instant verification of grammar claims and unit tests without AST tree diffing."
+  }[reg=facet]
+
+  expression_geometry: .{
+    definition: "The 5-tuple runtime representation exported by `spw-expression-geometry.js`."
+    tuple: `[forms, channels, operators, wake, signature]`
+    components: .{
+      forms = "Ordered list of parsed boundary segments: brackets `[]`, braces `{}`, parentheses `()`, angles `<>`, and strings."
+      channels = "Named facet slots (e.g. subject, mode, parts, scene, modifiers)."
+      operators = "Positional sigil operators detected with their target operands and roles."
+      wake = "Trailing structural balance and continuity markers."
+      form_signature = "Normalized grammar shape string (e.g. `capsule.mode.direction.scene`)."
+    }[reg=facet]
+    use_case: "Powers DOM data-attribute hydration, operator chip rendering, and layout band binding."
+  }[reg=facet]
+
+  resolved_citation: .{
+    definition: "Lossless citation AST node with filesystem and fragment verification."
+    schema: `.{ sourcePath: string, raw: string, targetPath: string, fragment: string|null, kind: 'local_spw'|'route'|'script'|'external', exists: boolean, anchorFound: boolean }[reg=facet]`
+    use_case: "Powers `spw-integrity.mjs`, static dependency graphs, and refactoring renames."
+  }[reg=facet]
+
+  substrate_probe: .{
+    definition: "Testable empirical assertion pairing a wonder question with an instruction and observable substrates."
+    syntax = `?["Question"]{ !probe{ "empirical test instruction" } $%[substrate.property, observable.metric] }`
+    use_case: "Turns speculative design ideas into verifiable, regression-tested hypotheses in `.spw` notebooks."
+  }[reg=facet]
+}
+
+# ==============================================================================
+# 4. CULTURE OF SNIPPETS, SCRIPTS, DIALECTS & EXPRESSIONS
+# ==============================================================================
+
+^"culture_and_craft"{
+  ~#context: "Living practices that make Spw an expressive medium for practitioners rather than a sterile schema."
+
+  snippets_as_executable_corpus: .{
+    practice: "Maintaining `snippets.spw` as an auto-harvested collection of living specimens, instructions, shell invocations, and probes across the corpus."
+    rule: "Every snippet carries its owning surface and anchor (`source = ~\"./caches/arrival-perceptibility-2026-08.spw#debut_placement\"`). A snippet is never orphaned; it is an ingredient in a continuous integration pass."
+    learning_value: "Models learning the codebase can inspect `snippets.spw` to see how real practitioners invoke tools, test layout gates, and profile runtime behaviors."
+  }[reg=facet]
+
+  scripts_as_runnable_philosophy: .{
+    practice: "Authoring zero-dependency `.mjs` scripts that act as executable embodiments of `.spw` conventions."
+    inventory: #[
+      `scripts/spw-integrity.mjs`: validates every `@cite` path and anchor across 279 surfaces.
+      `scripts/spw-dimensional-index.mjs`: indexes the corpus along `operation`, `fixity`, and `layer` axes.
+      `scripts/wonder.mjs`: harvests `?["..."]` wonders and traces substrate dependencies.
+      `scripts/spw-precipitate.mjs`: lifts probe outputs into caches with delta diffing.
+    ][reg=set]
+    principle: "Code is a projection of philosophy. When a semantic contract is agreed upon in `.spw`, write a small standalone script to prove and enforce it."
+  }[reg=facet]
+
+  expression_herbarium_and_dialects: .{
+    practice: "Cultivating `language/expressions/index.spw` as a working herbarium where stable and exotic formations are pressed and labeled with verified AST node counts."
+    dialects: .{
+      authored_noun_form = `subject[mode]{parts}<scene>`
+      sigil_led_force_form = `#>frame_handle, ?probe_scope, ~potential_path, @posture_lens, !action_commit`
+      compound_coupling = `surface[route]{path} > projection[css]{bundle}`
+    }[reg=facet]
+    refusal_rule: "Never write an unverified expression example in a convention doc. Run every expression through AST parsing and record its node fingerprint."
+  }[reg=facet]
+
+  metacognitive_physics_and_posture: .{
+    operators_as_forces: "Operators (`#>`, `?`, `~`, `^`, `@`, `!`, `>`, `<`) are positional argument binders and phase markers (liminality), not arbitrary theme hue tags."
+    spells_as_replayable_outcomes: "Spells and operator chips represent lightweight replayable outcomes (restoring checkpoints, navigating perspectives, resuming sets) rather than speculative tokens to hoard."
+    spatial_subtraction_law: "Layout is physical space: absent explicit authored overrides, derive density, tempo, and harmony from real geometry (extent, measure band, edge gravity, salience rank) rather than static synonym dictionaries."
+  }[reg=facet]
+}
+
+# ==============================================================================
+# VALIDATION & FALSIFICATION
+# ==============================================================================
+
+^"validation"{
+  probe: `npm run spw:integrity && npm run test:modules`
+  falsification: "A recommendation here is falsified if upstream implements a command or fix that achieves equal or better developer experience, performance, and composability without regressions."
+  maintenance: "Review against upstream `spw-workbench` release tags after each submodule update."
+}

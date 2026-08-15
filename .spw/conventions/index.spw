@@ -36,6 +36,7 @@
 @designer_conversation_canvas: ~"./designer-conversation-canvas.spw"
 @typography_packing: ~"./typography-packing.spw"
 @dimension_vocabulary: ~"./dimension-vocabulary.spw"
+@dimensional_ascent: ~"./dimensional-ascent-script-patterns.spw"
 @spatial_gravity: ~"./spatial-gravity.spw"
 @component_packing: ~"./component-packing.spw"
 @sigil_identifier_contract: ~"./sigil-identifier-contract.spw"

@@ -158,6 +158,26 @@ product_lines: .{
    next_step = `Move the protocol to another route so it proves it is not route-local ornament.`
   }[reg=facet]
  }[reg=facet]
+ spw_language_medium = .{
+  pitch = `Spw as an expressive plain-text language, zero-framework browser projection engine, and human-agent co-creation medium. Proven across 144+ routes and 279 verified convention surfaces.`
+  feature_shape = `Language hub, live AST parser (/tools/spw-parser/), operator atlas (/topics/software/spw/), and executable knowledge audits (spw-integrity.mjs).`
+  collectible_unit = `A custom DSL sprint, living medium commission, interactive curriculum, or semantic architecture blueprint.`
+  audience_primary = shared
+  audience_bridge = #[
+   `engineers read the zero-framework runtime and compiler pipeline`,
+   `artists read the living medium, physical box models, and generative spaces`,
+   `librarians read the 3600+ citation graph and executable integrity checks`
+  ][reg=set]
+  current_state = .{
+   summary = `Live on-site as the operational backbone; market surface live at /topics/software/spw/#spw-living-medium.`
+   evidence = #[
+    `operator atlas with living medium proof and future horizons`,
+    `literal parser tool with live AST and token reconstruction`,
+    `upstream workbench recommendations review surface`
+   ][reg=set]
+   next_step = `Expand collaborative case studies and upstream CLI tooling integration.`
+  }[reg=facet]
+ }[reg=facet]
 }[reg=facet]
 
 stub_strategy: .{

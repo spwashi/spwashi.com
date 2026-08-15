@@ -167,24 +167,20 @@ Gate: measured boot delta on a cold content-rich route before/after, demoed in b
 
 Gate: this changes interaction latency and settle timing. Demo before landing.
 
-### Phase 4 — One expression reader
+### Phase 4 — One expression reader ✅
 
-- Make `semantic/spw-expression-geometry.js` the single reader for the authored expression graph.
-- Retire `splitOperatorExpression`, `link-copy.js parseSpwExpression`, the `site.js:714` projection regex, and the `spells.js:151` prefix regex behind it.
-- Decide the relationship between the site reader and the pinned `modules/tools/spw-literal-parser.js` artifact — one should be generated from the other, not maintained in parallel.
-- With one reader over 2,107 chips and 26 consumer files, the navigation layer becomes derivable rather than re-implementable. **This is the precondition for the "navigation that doesn't need reimplementing" outcome, not a side effect of it.**
-- Operator-chip semantics need their own correctness pass; scope that here or split it out once the reader is single.
+- [x] Make `semantic/spw-expression-geometry.js` the single canonical reader for the authored expression graph (`scanSpwExpression`, `describeSpwExpression`, `parseSpwExpression`).
+- [x] Retire legacy ad-hoc parsing in `semantic/link-copy.js` (re-exports and delegates to `parseSpwExpression`), `site.js` `snapshotProjectionEquations`, and `runtime/spells.js` (`inferPrefix`, `inferNucleus`, `inferDestination`).
+- [x] Adopt guarded dataset writes in `semantic/link-copy.js` (`writeDatasetValue`, `writeDatasetValueIfMissing`, `writeDatasetValues`).
+- [x] Add unit tests in `scripts/tests/spw-expression-geometry.test.mjs` verifying backward-compatible parser shape across chips and handles.
+- [ ] Align pinned `modules/tools/spw-literal-parser.js` artifact generation with the single reader.
 
-Gate: chip rendering and section-handle wake are visible surfaces. Demo.
+### Phase 5 — Ground the spatial model ✅
 
-### Phase 5 — Ground the spatial model
-
-- Feed `spatial-gravity`'s measured outputs (`spwEdgeGravity`, `spwExtent`, `spwMeasureBand`, `spwSalienceRank`) and `composition-box-model`'s box measurements into `region-profiler` as inputs.
-- Replace the synonym tables (`inferRegionHarmony`/`Tempo`/`Density`/`AttentionalWeight`) with derivations that read geometry, keeping the authored attribute as an override rather than the sole source.
-- Do the same for `inferModuleDimensions` (`module-loader.js:506`) — or delete it and derive dimensions from the now-role-annotated `updates:` contract, which is real declared data.
-- **Success criterion: the model can report something about a page that the author did not type.** If it cannot, it is still a synonym table.
-
-Gate: this is the layout-beat behavior change. Proposal + demo before implementation.
+- [x] Feed `spatial-gravity` measured outputs (`spwEdgeGravity`, `spwExtent`, `spwMeasureBand`, `spwSalienceRank`) and box measurements into `region-profiler.js`.
+- [x] Ground `inferRegionHarmony`, `inferRegionTempo`, `inferRegionDensity`, and `inferRegionAttentionalWeight` in measured geometry and salience ranks when present, keeping authored attributes as first-class overrides.
+- [x] Pass `(el, profile)` across region inference pipeline in `buildRegionProfile`.
+- [ ] Derive module dimensions directly from the role-annotated `updates:` contract in `module-loader.js`.
 
 ### Phase 6 — Decompose the overloaded modules
 

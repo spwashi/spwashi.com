@@ -23,6 +23,7 @@
 @dimensional_index: ~"../scripts/spw-dimensional-index.mjs"
 @wonder: ~"../scripts/wonder.mjs"
 @precipitate: ~"../scripts/spw-precipitate.mjs"
+@recommendations: ~"./reviews/upstream-workbench-recommendations.spw"
 
 operation = "audit"
 fixity = "tending"

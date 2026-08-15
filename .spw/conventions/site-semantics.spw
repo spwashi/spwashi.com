@@ -58,6 +58,24 @@
   navigation_rule: "When a semantic family is expanded, the user should be able to move between same-root instances without losing the root label."
 }
 
+^"expression_geometry_canonical_reader"{
+  rule: "All runtime expression scanning, operator extraction, and boundary parsing MUST resolve through semantic/spw-expression-geometry.js (scanSpwExpression, parseSpwExpression, describeSpwExpression)."
+  anti_pattern: "Do not invent ad-hoc regex splitters for sigils or brackets in route scripts or runtime modules."
+  runtime_authority: "public/js/semantic/spw-expression-geometry.js"
+}
+
+^"spatial_grounding_model"{
+  rule: "Region profiling and attentional weight MUST bridge real geometry (spw-spatial-gravity outputs: spwEdgeGravity, spwExtent, spwMeasureBand, spwSalienceRank) with semantic role inference."
+  subtraction_law: "A spatial model earns its keep by reporting real layout constraints that the author did not manually type, rather than reflecting static synonym lookup tables."
+  override_hierarchy: "Authored data-spw-density / data-spw-tempo / data-spw-harmony attributes act as authoritative overrides; absent overrides derive dynamically from measured viewport geometry."
+}
+
+^"dimensional_ascent_model"{
+  rule: "Spw script patterns generalize across five distinct dimensional orders: 0D identity handles (#>), 1D positional vectors (? ~ ^ @ ! > < = . *), 2D spatial containers ([] {} () <>), 3D electrostatic attention fields and wonder memory, and 4D temporal locomotion trajectories and replayable spells."
+  invariance_principle: "Higher-order projections MUST preserve underlying 1D semantics. A 4D spell decompresses losslessly into its constituent 1D vectors and 0D anchors."
+  citation: "dimensional-ascent-script-patterns.spw"
+}
+
 ^"component_grammar"{
   frame: {
     default_form: "brace"
