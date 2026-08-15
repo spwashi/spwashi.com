@@ -223,3 +223,58 @@
   text-underline-offset: 0.18em;
 }
 
+
+/* ==========================================================================
+   Seam differentiation — the mark says what the operator does
+   --------------------------------------------------------------------------
+   Scoping the seam to prose left 122 elements that all looked identical, which
+   is the generic feeling: a reader learns "this word is marked" and never
+   learns what the mark means. A vocabulary of one carries no information.
+
+   The distinction is already derivable. An operator states what a term does to
+   charge, and electrostatic-roles.css reads that same vocabulary into circuit
+   roles. Here the decoration follows it, so the line style is a reading rather
+   than a palette choice:
+
+     potential    stores and resists change      dotted — latent, not yet spent
+     wonder       opens and holds open           dashed — an interval left open
+     action       commits and spends             solid — a closed circuit
+     integration  joins two into one held thing  double — two lines coupled
+     ground       something to return to         thin, low contrast — the floor
+
+   A reader who never reads this comment still gets the benefit: dotted terms
+   behave alike across the site, and that regularity is learnable by exposure.
+   That is the whole argument for an attention architecture that differentiates
+   — an undifferentiated mark can only be noticed, never understood.
+
+   Decoration only. Nothing here changes weight, size, or flow, so a settled
+   page does not move under a reader.
+   ========================================================================== */
+
+:where(span, strong, em, i, code, kbd, mark, small, time)[data-spw-operator='potential']:not(.operator-chip):not(.frame-sigil) {
+  text-decoration-style: dotted;
+}
+
+:where(span, strong, em, i, code, kbd, mark, small, time)[data-spw-operator='wonder']:not(.operator-chip):not(.frame-sigil),
+:where(span, strong, em, i, code, kbd, mark, small, time)[data-spw-operator='probe']:not(.operator-chip):not(.frame-sigil) {
+  text-decoration-style: dashed;
+}
+
+:where(span, strong, em, i, code, kbd, mark, small, time)[data-spw-operator='action']:not(.operator-chip):not(.frame-sigil) {
+  text-decoration-style: solid;
+  text-decoration-color: color-mix(in srgb, var(--active-op-color, currentColor) 48%, transparent);
+}
+
+:where(span, strong, em, i, code, kbd, mark, small, time)[data-spw-operator='integration']:not(.operator-chip):not(.frame-sigil) {
+  text-decoration-style: double;
+}
+
+:where(span, strong, em, i, code, kbd, mark, small, time):is(
+  [data-spw-operator='ground'],
+  [data-spw-operator='frame'],
+  [data-spw-operator='address'],
+  [data-spw-operator='value']
+):not(.operator-chip):not(.frame-sigil) {
+  text-decoration-style: solid;
+  text-decoration-color: color-mix(in srgb, currentColor 18%, transparent);
+}
