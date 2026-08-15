@@ -21,6 +21,8 @@
     features="operators navigator console route-discovery svg-surfaces"
     related_routes="/|/now/|/cards/|/membership/|/coordination/|/research/|/about/plans/|/about/website/|/topics/craft/|/topics/search/|/topics/software/|/topics/software/spw/|/play/rpg-wednesday/|/play/rpg-wednesday/library/|/curriculum/|/blog/|/tools/|/services/|/settings/|https://spw.quest|https://texture.website|https://trope.wiki"
     stylesheet_mode="scoped"
+    horizon="ambient"
+    micro_world="true"
 ></spw-page>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,6 +31,8 @@
 </head>
 <body
     data-spw-surface="about"
+    data-spw-horizon="ambient"
+    data-spw-micro-world="true"
     data-spw-stylesheet-mode="scoped"
     data-spw-hydration="static"
     data-spw-display-layer="reader"
@@ -71,7 +75,7 @@
       data-spw-region="wide"
       data-spw-seed="page_about_about__main_surface" data-spw-wonder="orientation consequence resonance" tabindex="-1"
       aria-labelledby="about-title">
-
+    <div data-spw-cluster="kernel-identity">
     <section
         class="spw-frame spw-hero site-hero"
         id="about-frame"
@@ -336,146 +340,6 @@
         </footer>
     </section>
 
-    <section
-        class="site-frame spw-embedded-workshop"
-        id="about-tuning"
-        data-spw-region="tuning"
-        aria-labelledby="about-tuning-title"
-        data-site-settings-scope
-        data-spw-feature="embedded-workshop"
-        data-spw-kind="frame"
-        data-spw-role="climate-tuning"
-        data-spw-context="settings"
-        data-spw-affordance="tune"
-        data-spw-liminality="threshold"
-        data-spw-form="brace"
-        data-spw-seed="page_about_about__tuning"
-    >
-        <header class="frame-heading" data-spw-slot="header">
-            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
-            <a class="frame-sigil" href="#about-tuning" data-spw-operator="potential" data-spw-sigil="~about_tuning">~about_tuning</a>
-            <h2 id="about-tuning-title">Tune the kernel read</h2>
-            <div class="spw-component-meta" data-spw-slot="meta">
-                <span class="spw-component-tag" data-spw-role="control" data-spw-stance="entry">tuning</span>
-            </div>
-        </header>
-
-        <div class="frame-body" data-spw-slot="body">
-            <p class="frame-note" data-spw-copy-depth="normal">Settings stay in this browser. Shift resonance carry and explore posture without opening the full observatory.</p>
-
-            <div class="vibe-widget-grid vibe-widget-grid--compact">
-                <article class="vibe-widget" data-spw-kind="card" data-spw-role="control">
-                    <div class="vibe-widget-header">
-                        <p class="vibe-widget-kicker">Current state</p>
-                        <h3 class="vibe-widget-title">Read the active environment</h3>
-                    </div>
-                    <div class="vibe-widget-meta" data-spw-role="schema">
-                        <span class="spec-pill">mode: <span data-settings-state="colorMode">auto</span></span>
-                        <span class="spec-pill">memory: <span data-settings-state="wonderMemory">nearby</span></span>
-                        <span class="spec-pill">explore: <span data-settings-state="explorePosture">reading</span></span>
-                        <span class="spec-pill">field: <span data-charge-field-readout="field">quiet</span></span>
-                        <span class="spec-pill">discharge: <span data-charge-field-readout="discharge">—</span></span>
-                    </div>
-                </article>
-
-                <article class="vibe-widget" data-spw-kind="card" data-spw-role="control">
-                    <div class="vibe-widget-header">
-                        <p class="vibe-widget-kicker">Wonder memory</p>
-                        <h3 class="vibe-widget-title">Control resonance carry</h3>
-                    </div>
-                    <div class="vibe-widget-actions" role="group" aria-label="About wonder memory controls" data-spw-slot="actions">
-                        <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:off" data-spw-operator="mode">[ Focused</button>
-                        <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:nearby" data-spw-operator="mode">[ Connected</button>
-                        <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:sitewide" data-spw-operator="mode">[ Immersive</button>
-                    </div>
-                </article>
-
-                <article class="vibe-widget" data-spw-kind="card" data-spw-role="control">
-                    <div class="vibe-widget-header">
-                        <p class="vibe-widget-kicker">Explore posture</p>
-                        <h3 class="vibe-widget-title">Choose how loudly anatomy answers back</h3>
-                    </div>
-                    <div class="vibe-widget-actions" role="group" aria-label="About explore posture controls" data-spw-slot="actions">
-                        <button class="operator-chip" type="button" data-site-setting-set="explorePosture:reading" data-spw-operator="mode">[ Reading</button>
-                        <button class="operator-chip" type="button" data-site-setting-set="explorePosture:field" data-spw-operator="mode">[ Field</button>
-                        <button class="operator-chip" type="button" data-site-setting-set="explorePosture:workshop" data-spw-operator="mode">[ Workshop</button>
-                    </div>
-                </article>
-            </div>
-        </div>
-
-        <footer class="frame-actions" data-spw-slot="actions">
-            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">}</span>
-        </footer>
-    </section>
-
-    <section
-        class="site-frame"
-        id="about-reentry"
-        data-spw-region="reentry"
-        aria-labelledby="about-reentry-title"
-        data-spw-kind="frame"
-        data-spw-role="re-entry"
-        data-spw-context="reading"
-        data-spw-wonder="change consequence resonance"
-        data-spw-affordance="revisit"
-        data-spw-liminality="threshold"
-        data-spw-category-family="register"
-        data-spw-locality="medium"
-        data-spw-consequence="entry"
-        data-spw-promptability="visible"
-        data-spw-collectability="medium"
-        data-spw-feature="about-reentry"
-        data-spw-reading-cue="Read before deciding whether this page is biography, map, or operating manual."
-        data-spw-input="changed context"
-        data-spw-operation="re-enter"
-        data-spw-return="a reason to revisit the kernel"
-        data-spw-tone="threshold"
-    >
-        <header class="frame-heading" data-spw-slot="header">
-            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
-            <a class="frame-sigil" href="#about-reentry" data-spw-operator="potential" data-spw-sigil="~about_reentry">~about_reentry</a>
-            <h2 id="about-reentry-title">Why come back to the kernel page?</h2>
-            <div class="spw-component-meta" data-spw-slot="meta">
-                <span class="spw-component-tag" data-spw-role="routing" data-spw-stance="threshold">re-entry</span>
-            </div>
-        </header>
-
-        <div class="frame-body" data-spw-slot="body">
-            <div class="returner-grid">
-                <article class="returner-card" data-spw-kind="card" data-spw-role="reference" data-spw-form="brace">
-                    <p class="returner-card-kicker" data-spw-slot="meta">Current pressure</p>
-                    <h3>The identity is stable. The operating question is not.</h3>
-                    <p>Return here when you want to understand what the rest of the site is optimizing for now: route clarity, portable proof, wonder with consequences, and better re-entry paths for real people.</p>
-                </article>
-                <div class="returner-ledger" aria-label="About revisit cues" data-spw-role="schema">
-                    <h3 class="returner-ledger-title">Three useful reasons</h3>
-                    <div class="returner-ledger-item" data-spw-semantic-expression="return[context]{changed}">
-                        <strong>Context changed.</strong>
-                        <p>The about page should explain why a new surface exists before it explains every symbol in it.</p>
-                    </div>
-                    <div class="returner-ledger-item" data-spw-semantic-expression="return[practice]{changed}">
-                        <strong>Practice changed.</strong>
-                        <p>The kernel is shaped by what the site had to survive lately: <span class="spw-living-term" data-spw-living-term data-spw-concept="funding-ask" data-spw-numericity="allocation" tabindex="0">funding asks</span>, study surfaces, and shared language work.</p>
-                    </div>
-                    <div class="returner-ledger-item" data-spw-semantic-expression="return[wonder]{changed}">
-                        <strong>Wonder changed.</strong>
-                        <p>Sometimes the right revisit is not biographical. It is architectural.</p>
-                    </div>
-                </div>
-                <article class="returner-card returner-card--warm" data-spw-kind="card" data-spw-role="reference" data-spw-form="brace">
-                    <p class="returner-card-kicker" data-spw-slot="meta">Reason to wonder</p>
-                    <h3>Good identity pages should help the rest of the site mutate coherently.</h3>
-                    <p>If this page works, it makes the shifts across <a href="/topics/software/" data-spw-operator="route">software</a>, <a href="/topics/search/" data-spw-operator="wonder">search</a>, <a href="/services/" data-spw-operator="situate">services</a>, <a href="/play/" data-spw-operator="potential">play</a>, and the <a href="/about/website/" data-spw-operator="address">website guide</a> feel related instead of random.</p>
-                </article>
-            </div>
-        </div>
-
-        <footer class="frame-actions" data-spw-slot="actions">
-            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">}</span>
-        </footer>
-    </section>
-
     <nav aria-label="Primary"
          class="site-frame"
          id="about-index"
@@ -527,239 +391,6 @@
             <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">}</span>
         </footer>
     </nav>
-
-    <section
-        class="site-frame"
-        id="attention-register"
-        data-spw-region="attention"
-        aria-labelledby="attention-register-title"
-        data-spw-role="reference"
-        data-spw-context="analysis"
-        data-spw-kind="frame" data-spw-wonder="orientation consequence resonance" data-spw-affordance="read"
-        data-spw-liminality="deep" data-spw-category-family="register" data-spw-locality="medium"
-        data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium"
-        data-spw-seed="page_about_about__attention_register"
-        data-spw-reading-cue="Read as a conversion model: attention enters, reusable structure returns."
-        data-spw-input="attention"
-        data-spw-operation="convert"
-        data-spw-return="assets, names, defaults, and decisions"
-        data-spw-tone="analytical"
-        data-spw-context-relevance="readable practical attention structure local hospitality horizon things"
-        data-spw-related-routes="/|/about/plans/|/topics/craft/|/topics/software/|/play/|/play/rpg-wednesday/library/|/curriculum/|/blog/|/services/|/settings/">
-        <header class="frame-heading" data-spw-slot="header">
-            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
-            <a class="frame-sigil" href="#attention-register" data-spw-operator="wonder" data-spw-sigil="?attention_register">?attention_register</a>
-            <h2 id="attention-register-title">Attention Register</h2>
-            <div class="spw-component-meta" data-spw-slot="meta">
-                <span class="spw-component-tag" data-spw-role="analysis" data-spw-stance="entry">register</span>
-            </div>
-        </header>
-
-        <div class="frame-body" data-spw-slot="body">
-            <div class="frame-grid">
-                <article class="frame-panel" data-spw-kind="card" data-spw-role="reference" data-spw-context="reading"
-                         data-spw-category-family="specimen" data-spw-promptability="ambient"
-                         data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory"
-                         data-spw-seed="page_about_about__panel_1" data-spw-semantic-expression="attention[output]{assets}">
-                    <h3>What attention should produce</h3>
-                    <p>
-                        Attention is not just admiration or sensitivity. It should produce assets. After enough attention, I
-                        want stronger naming, better system boundaries, cleaner files, more useful workflows, sharper
-                        editorial judgment, clearer interfaces, and more grounded decisions about what deserves to exist.
-                    </p>
-                </article>
-
-                <article class="frame-panel" data-spw-kind="card" data-spw-role="reference" data-spw-context="reading"
-                         data-spw-category-family="specimen" data-spw-promptability="ambient"
-                         data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory"
-                         data-spw-seed="page_about_about__panel_2" data-spw-semantic-expression="attention[volume]{lattice}">
-                    <h3>Rhythm at scale</h3>
-                    <p>
-                        Ten thousand videos across a few years, counted in <span class="spw-living-term" data-spw-living-term data-spw-concept="200-day-chunk" tabindex="0">200-day chunks</span> and released on the <span class="spw-living-term" data-spw-living-term data-spw-concept="13-step-sequence" tabindex="0">13-step cycle</span>.
-                        The operators have continued to develop inside that cadence, but the January 2023 <span class="spw-living-term" data-spw-living-term data-spw-concept="release-cycle" tabindex="0">rhythm</span> still sets the measure. The sequence functions like a multi-pass process over a persistent execution trace: each 200-day epoch applies further transformations, and the releases serve as commit points in a long-running repository of attention. What compounds is not the raw count. It is the lattice of distinctions, defaults, priorities, and forms that can be carried forward without the original moment having to be reconstructed each time. See <a href="/topics/software/schedulers/" data-spw-operator="integrate">schedulers</a> for the geometry of the release cycle and <a href="/topics/software/spw/" data-spw-operator="address">the Spw operator atlas</a> for how the 13-step sequence and its primitives have evolved inside it.
-                    </p>
-                </article>
-
-                <article class="frame-panel" data-spw-kind="card" data-spw-role="reference" data-spw-context="reading"
-                         data-spw-category-family="specimen" data-spw-promptability="ambient"
-                         data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory"
-                         data-spw-seed="page_about_about__panel_3" data-spw-semantic-expression="attention[practice]{compounding}">
-                    <h3>Compounding through practice</h3>
-                    <p>
-                        Practice matters because attention compounds unevenly. Paying attention to one parser bug helps with
-                        another. Paying attention to one page layout helps with a whole family of surfaces. Paying attention
-                        to one recipe helps with timing, sequencing, hospitality, menu design, and the way vegetables change when they are cut, stacked, roasted, or placed beside a neighbor. The point is not to hoard observations. The point is to convert them into reusable structure.
-                    </p>
-                </article>
-
-                <article class="frame-panel" data-spw-kind="card" data-spw-role="reference" data-spw-context="reading"
-                         data-spw-category-family="specimen" data-spw-promptability="ambient"
-                         data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory"
-                         data-spw-seed="page_about_about__panel_4" data-spw-semantic-expression="attention[action]{conversion}">
-                    <h3>From attention to action</h3>
-                    <p>
-                        My preferred conversion chain is: <strong>notice → name → compare → compress → build → publish →
-                        teach → host</strong>. That is one reason this site includes software pages, craft pages, services,
-                        recipes, play, and public notes. They are different outputs from the same discipline.
-                    </p>
-                </article>
-            </div>
-        </div>
-
-        <footer class="frame-actions" data-spw-slot="actions">
-            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">}</span>
-        </footer>
-    </section>
-
-    <section
-        class="site-frame"
-        id="kernel-lattice-register"
-        data-spw-region="lattice"
-        aria-labelledby="kernel-lattice-register-title"
-        data-spw-role="schema"
-        data-spw-context="architecture"
-        data-spw-kind="frame"
-        data-spw-wonder="orientation consequence projection"
-        data-spw-affordance="inspect"
-        data-spw-liminality="deep"
-        data-spw-category-family="workshop"
-        data-spw-locality="high"
-        data-spw-consequence="architecture"
-        data-spw-promptability="visible"
-        data-spw-collectability="high"
-        data-spw-kernel="small-stable"
-        data-spw-lattice="large-semantic"
-        data-spw-projection="modular"
-        data-spw-seed-package=".spw/about-kernel"
-        data-spw-seed="page_about_about__kernel_lattice_register"
-        data-spw-context-relevance="spw kernel lattice portable seeds projections workbench website texture lore publishing">
-        <header class="frame-heading" data-spw-slot="header">
-            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
-            <a class="frame-sigil" href="#kernel-lattice-register" data-spw-operator="object" data-spw-sigil="^kernel_lattice_register">^kernel_lattice_register</a>
-            <h2 id="kernel-lattice-register-title">Kernel/Lattice Register</h2>
-            <div class="spw-component-meta" data-spw-slot="meta">
-                <span class="spw-component-tag" data-spw-role="schema" data-spw-stance="entry">architecture</span>
-            </div>
-        </header>
-
-        <div class="frame-body" data-spw-slot="body">
-            <p class="inline-note" data-spw-copy-depth="normal">
-                The recent direction is not to make every project equally central. The center should stay small, stable,
-                inspectable, and teachable; the surrounding lattice can stay abundant, strange, visual, and combinatorial.
-            </p>
-            <div class="frame-grid">
-                <article class="frame-panel" data-spw-kind="panel" data-spw-role="kernel"
-                         data-spw-category-family="workshop" data-spw-seed="about_kernel_contract" data-spw-semantic-expression="architecture[kernel]{stable}">
-                    <h3>Kernel</h3>
-                    <p>The kernel holds the durable pieces: Spw operators, route conventions, semantic component patterns,
-                        accessible HTML/CSS rules, portable seed shape, and the small set of names that should not drift
-                        every time the surface gets more imaginative.</p>
-                    <ul class="frame-list">
-                        <li>Spw operator grammar and pronunciation: swoop.</li>
-                        <li>Stable component primitives: frames, cards, chips, figures, registers, prompts.</li>
-                        <li>Route contracts that make pages readable to humans and tools.</li>
-                        <li>Seed package conventions that can travel through <code>.spw</code> folders.</li>
-                    </ul>
-                </article>
-                <article class="frame-panel" data-spw-kind="panel" data-spw-role="lattice"
-                         data-spw-category-family="register" data-spw-seed="about_semantic_lattice" data-spw-semantic-expression="architecture[lattice]{varied}">
-                    <h3>Lattice</h3>
-                    <p>The lattice is where projects cross-pollinate: spw-workbench, spw.quest, texture.website, lore.land,
-                        trope.wiki, factshift.com, RPG Wednesday, image studies, math routes, recipes, and component
-                        experiments. Each should remain local, but not isolated.</p>
-                    <p class="frame-note">The lattice lets a visual motif become a component, a component become a lesson, a
-                        lesson become a route, a route become a printed packet, and a packet become a collectible seed.</p>
-                </article>
-                <article class="frame-panel" data-spw-kind="panel" data-spw-role="projection"
-                         data-spw-category-family="specimen" data-spw-seed="about_modular_projection" data-spw-semantic-expression="architecture[projection]{local}">
-                    <h3>Projection</h3>
-                    <p>A projection is a local view of the same deeper grammar. A homepage can project orientation. An about
-                        page can project identity and method. A lore page can project scene. A texture page can project
-                        material. A workbench can project parser state.</p>
-                </article>
-                <article class="frame-panel" data-spw-kind="panel" data-spw-role="contract"
-                         data-spw-category-family="register" data-spw-seed="about_public_contract" data-spw-semantic-expression="architecture[contract]{public}">
-                    <h3>Public contract</h3>
-                    <p>The public site should help a new reader understand what the work is, help a collaborator find useful
-                        entry points, help a model preserve context, and help future publishing surfaces inherit meaning
-                        without flattening the system into a portfolio blurb.</p>
-                </article>
-            </div>
-        </div>
-
-        <footer class="frame-actions" data-spw-slot="actions">
-            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">}</span>
-        </footer>
-    </section>
-
-    <section
-        class="site-frame"
-        id="portable-seed-register"
-        data-spw-region="seeds"
-        aria-labelledby="portable-seed-register-title"
-        data-spw-role="schema"
-        data-spw-context="publishing"
-        data-spw-kind="frame"
-        data-spw-wonder="collection projection materiality"
-        data-spw-affordance="collect"
-        data-spw-liminality="deep"
-        data-spw-category-family="specimen"
-        data-spw-locality="high"
-        data-spw-consequence="portability"
-        data-spw-promptability="visible"
-        data-spw-collectability="high"
-        data-spw-seed-package=".spw/about-seeds"
-        data-spw-materiality="seed packet print zine card web route"
-        data-spw-seed="page_about_about__portable_seed_register"
-        data-spw-context-relevance="portable seed package prompt image print publishing lore texture workbench">
-        <header class="frame-heading" data-spw-slot="header">
-            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
-            <a class="frame-sigil" href="#portable-seed-register" data-spw-operator="object" data-spw-sigil="^portable_seed_register">^portable_seed_register</a>
-            <h2 id="portable-seed-register-title">Portable Seed Register</h2>
-            <div class="spw-component-meta" data-spw-slot="meta">
-                <span class="spw-component-tag" data-spw-role="publishing" data-spw-stance="projected">seeds</span>
-            </div>
-        </header>
-
-        <div class="frame-body" data-spw-slot="body">
-            <p class="inline-note" data-spw-copy-depth="normal">A Spwashi artifact should be able to travel: as a page section, a code file, a prompt, an
-                SVG, a printed card, a zine fragment, a lore object, or a reusable seed package.</p>
-            <div class="frame-grid">
-                <article class="frame-panel" data-spw-kind="panel" data-spw-role="seed-package"
-                         data-spw-seed="portable_seed_package_shape" data-spw-semantic-expression="seed[package]{travel}">
-                    <h3><code>.spw</code> package</h3>
-                    <p>A portable seed package should carry the smallest useful bundle: name, intent, operators, route
-                        anchors, visual cues, prompt cues, dependencies, and enough notes for another surface to reconstruct
-                        the local meaning.</p>
-                </article>
-                <article class="frame-panel" data-spw-kind="panel" data-spw-role="print-bridge"
-                         data-spw-seed="print_materiality_bridge" data-spw-semantic-expression="seed[print]{hold}">
-                    <h3>Print bridge</h3>
-                    <p>The same seed should be able to become a card, booklet, zine page, sticker, table prop, or Boon
-                        Square. Print is not a nostalgia layer here. It is a way to make digital semantics easier to hold,
-                        gift, annotate, and revisit.</p>
-                </article>
-                <article class="frame-panel" data-spw-kind="panel" data-spw-role="texture"
-                         data-spw-seed="texture_surface_bridge" data-spw-semantic-expression="seed[texture]{feel}">
-                    <h3>Texture surface</h3>
-                    <p><a href="https://texture.website" data-spw-operator="surface">texture.website</a> is the neighboring surface for material cues,
-                        tactile language, style contagion, and interface texture. It should help the kernel avoid becoming
-                        sterile while keeping the aesthetic inspectable.</p>
-                </article>
-                <article class="frame-panel" data-spw-kind="panel" data-spw-role="lore"
-                         data-spw-seed="lore_publication_bridge" data-spw-semantic-expression="seed[lore]{publish}">
-                    <h3>Lore surface</h3>
-                    <p><a href="/about/domains/lore.land/" data-spw-operator="address">lore.land</a> is the narrative and publishing projection: where
-                        scenes, characters, speech bubbles, enchantment, print artifacts, and RPG Wednesday materials can
-                        become public culture instead of isolated notes.</p>
-                </article>
-            </div>
-        </div>
-
-        <footer class="frame-actions" data-spw-slot="actions">
-            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">}</span>
-        </footer>
-    </section>
 
     <section
         class="site-frame"
@@ -879,7 +510,9 @@
             <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">}</span>
         </footer>
     </section>
+    </div>
 
+    <div data-spw-cluster="systems-architecture">
     <section
         class="site-frame"
         id="systems-register"
@@ -1302,6 +935,9 @@
             <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">}</span>
         </footer>
     </section>
+    </div>
+
+    <div data-spw-cluster="creative-domains">
     <section
         class="site-frame"
         id="boonhonk-register"
@@ -1684,7 +1320,382 @@
             <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">}</span>
         </footer>
     </section>
+    </div>
 
+    <div data-spw-cluster="kernel-mechanics">
+    <section
+        class="site-frame"
+        id="attention-register"
+        data-spw-region="attention"
+        aria-labelledby="attention-register-title"
+        data-spw-role="reference"
+        data-spw-context="analysis"
+        data-spw-kind="frame" data-spw-wonder="orientation consequence resonance" data-spw-affordance="read"
+        data-spw-liminality="deep" data-spw-category-family="register" data-spw-locality="medium"
+        data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium"
+        data-spw-seed="page_about_about__attention_register"
+        data-spw-reading-cue="Read as a conversion model: attention enters, reusable structure returns."
+        data-spw-input="attention"
+        data-spw-operation="convert"
+        data-spw-return="assets, names, defaults, and decisions"
+        data-spw-tone="analytical"
+        data-spw-context-relevance="readable practical attention structure local hospitality horizon things"
+        data-spw-related-routes="/|/about/plans/|/topics/craft/|/topics/software/|/play/|/play/rpg-wednesday/library/|/curriculum/|/blog/|/services/|/settings/">
+        <header class="frame-heading" data-spw-slot="header">
+            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
+            <a class="frame-sigil" href="#attention-register" data-spw-operator="wonder" data-spw-sigil="?attention_register">?attention_register</a>
+            <h2 id="attention-register-title">Attention Register</h2>
+            <div class="spw-component-meta" data-spw-slot="meta">
+                <span class="spw-component-tag" data-spw-role="analysis" data-spw-stance="entry">register</span>
+            </div>
+        </header>
+
+        <div class="frame-body" data-spw-slot="body">
+            <div class="frame-grid">
+                <article class="frame-panel" data-spw-kind="card" data-spw-role="reference" data-spw-context="reading"
+                         data-spw-category-family="specimen" data-spw-promptability="ambient"
+                         data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory"
+                         data-spw-seed="page_about_about__panel_1" data-spw-semantic-expression="attention[output]{assets}">
+                    <h3>What attention should produce</h3>
+                    <p>
+                        Attention is not just admiration or sensitivity. It should produce assets. After enough attention, I
+                        want stronger naming, better system boundaries, cleaner files, more useful workflows, sharper
+                        editorial judgment, clearer interfaces, and more grounded decisions about what deserves to exist.
+                    </p>
+                </article>
+
+                <article class="frame-panel" data-spw-kind="card" data-spw-role="reference" data-spw-context="reading"
+                         data-spw-category-family="specimen" data-spw-promptability="ambient"
+                         data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory"
+                         data-spw-seed="page_about_about__panel_2" data-spw-semantic-expression="attention[volume]{lattice}">
+                    <h3>Rhythm at scale</h3>
+                    <p>
+                        Ten thousand videos across a few years, counted in <span class="spw-living-term" data-spw-living-term data-spw-concept="200-day-chunk" tabindex="0">200-day chunks</span> and released on the <span class="spw-living-term" data-spw-living-term data-spw-concept="13-step-sequence" tabindex="0">13-step cycle</span>.
+                        The operators have continued to develop inside that cadence, but the January 2023 <span class="spw-living-term" data-spw-living-term data-spw-concept="release-cycle" tabindex="0">rhythm</span> still sets the measure. The sequence functions like a multi-pass process over a persistent execution trace: each 200-day epoch applies further transformations, and the releases serve as commit points in a long-running repository of attention. What compounds is not the raw count. It is the lattice of distinctions, defaults, priorities, and forms that can be carried forward without the original moment having to be reconstructed each time. See <a href="/topics/software/schedulers/" data-spw-operator="integrate">schedulers</a> for the geometry of the release cycle and <a href="/topics/software/spw/" data-spw-operator="address">the Spw operator atlas</a> for how the 13-step sequence and its primitives have evolved inside it.
+                    </p>
+                </article>
+
+                <article class="frame-panel" data-spw-kind="card" data-spw-role="reference" data-spw-context="reading"
+                         data-spw-category-family="specimen" data-spw-promptability="ambient"
+                         data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory"
+                         data-spw-seed="page_about_about__panel_3" data-spw-semantic-expression="attention[practice]{compounding}">
+                    <h3>Compounding through practice</h3>
+                    <p>
+                        Practice matters because attention compounds unevenly. Paying attention to one parser bug helps with
+                        another. Paying attention to one page layout helps with a whole family of surfaces. Paying attention
+                        to one recipe helps with timing, sequencing, hospitality, menu design, and the way vegetables change when they are cut, stacked, roasted, or placed beside a neighbor. The point is not to hoard observations. The point is to convert them into reusable structure.
+                    </p>
+                </article>
+
+                <article class="frame-panel" data-spw-kind="card" data-spw-role="reference" data-spw-context="reading"
+                         data-spw-category-family="specimen" data-spw-promptability="ambient"
+                         data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory"
+                         data-spw-seed="page_about_about__panel_4" data-spw-semantic-expression="attention[action]{conversion}">
+                    <h3>From attention to action</h3>
+                    <p>
+                        My preferred conversion chain is: <strong>notice → name → compare → compress → build → publish →
+                        teach → host</strong>. That is one reason this site includes software pages, craft pages, services,
+                        recipes, play, and public notes. They are different outputs from the same discipline.
+                    </p>
+                </article>
+            </div>
+        </div>
+
+        <footer class="frame-actions" data-spw-slot="actions">
+            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">}</span>
+        </footer>
+    </section>
+
+    <section
+        class="site-frame"
+        id="kernel-lattice-register"
+        data-spw-region="lattice"
+        aria-labelledby="kernel-lattice-register-title"
+        data-spw-role="schema"
+        data-spw-context="architecture"
+        data-spw-kind="frame"
+        data-spw-wonder="orientation consequence projection"
+        data-spw-affordance="inspect"
+        data-spw-liminality="deep"
+        data-spw-category-family="workshop"
+        data-spw-locality="high"
+        data-spw-consequence="architecture"
+        data-spw-promptability="visible"
+        data-spw-collectability="high"
+        data-spw-kernel="small-stable"
+        data-spw-lattice="large-semantic"
+        data-spw-projection="modular"
+        data-spw-seed-package=".spw/about-kernel"
+        data-spw-seed="page_about_about__kernel_lattice_register"
+        data-spw-context-relevance="spw kernel lattice portable seeds projections workbench website texture lore publishing">
+        <header class="frame-heading" data-spw-slot="header">
+            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
+            <a class="frame-sigil" href="#kernel-lattice-register" data-spw-operator="object" data-spw-sigil="^kernel_lattice_register">^kernel_lattice_register</a>
+            <h2 id="kernel-lattice-register-title">Kernel/Lattice Register</h2>
+            <div class="spw-component-meta" data-spw-slot="meta">
+                <span class="spw-component-tag" data-spw-role="schema" data-spw-stance="entry">architecture</span>
+            </div>
+        </header>
+
+        <div class="frame-body" data-spw-slot="body">
+            <p class="inline-note" data-spw-copy-depth="normal">
+                The recent direction is not to make every project equally central. The center should stay small, stable,
+                inspectable, and teachable; the surrounding lattice can stay abundant, strange, visual, and combinatorial.
+            </p>
+            <div class="frame-grid">
+                <article class="frame-panel" data-spw-kind="panel" data-spw-role="kernel"
+                         data-spw-category-family="workshop" data-spw-seed="about_kernel_contract" data-spw-semantic-expression="architecture[kernel]{stable}">
+                    <h3>Kernel</h3>
+                    <p>The kernel holds the durable pieces: Spw operators, route conventions, semantic component patterns,
+                        accessible HTML/CSS rules, portable seed shape, and the small set of names that should not drift
+                        every time the surface gets more imaginative.</p>
+                    <ul class="frame-list">
+                        <li>Spw operator grammar and pronunciation: swoop.</li>
+                        <li>Stable component primitives: frames, cards, chips, figures, registers, prompts.</li>
+                        <li>Route contracts that make pages readable to humans and tools.</li>
+                        <li>Seed package conventions that can travel through <code>.spw</code> folders.</li>
+                    </ul>
+                </article>
+                <article class="frame-panel" data-spw-kind="panel" data-spw-role="lattice"
+                         data-spw-category-family="register" data-spw-seed="about_semantic_lattice" data-spw-semantic-expression="architecture[lattice]{varied}">
+                    <h3>Lattice</h3>
+                    <p>The lattice is where projects cross-pollinate: spw-workbench, spw.quest, texture.website, lore.land,
+                        trope.wiki, factshift.com, RPG Wednesday, image studies, math routes, recipes, and component
+                        experiments. Each should remain local, but not isolated.</p>
+                    <p class="frame-note">The lattice lets a visual motif become a component, a component become a lesson, a
+                        lesson become a route, a route become a printed packet, and a packet become a collectible seed.</p>
+                </article>
+                <article class="frame-panel" data-spw-kind="panel" data-spw-role="projection"
+                         data-spw-category-family="specimen" data-spw-seed="about_modular_projection" data-spw-semantic-expression="architecture[projection]{local}">
+                    <h3>Projection</h3>
+                    <p>A projection is a local view of the same deeper grammar. A homepage can project orientation. An about
+                        page can project identity and method. A lore page can project scene. A texture page can project
+                        material. A workbench can project parser state.</p>
+                </article>
+                <article class="frame-panel" data-spw-kind="panel" data-spw-role="contract"
+                         data-spw-category-family="register" data-spw-seed="about_public_contract" data-spw-semantic-expression="architecture[contract]{public}">
+                    <h3>Public contract</h3>
+                    <p>The public site should help a new reader understand what the work is, help a collaborator find useful
+                        entry points, help a model preserve context, and help future publishing surfaces inherit meaning
+                        without flattening the system into a portfolio blurb.</p>
+                </article>
+            </div>
+        </div>
+
+        <footer class="frame-actions" data-spw-slot="actions">
+            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">}</span>
+        </footer>
+    </section>
+
+    <section
+        class="site-frame"
+        id="portable-seed-register"
+        data-spw-region="seeds"
+        aria-labelledby="portable-seed-register-title"
+        data-spw-role="schema"
+        data-spw-context="publishing"
+        data-spw-kind="frame"
+        data-spw-wonder="collection projection materiality"
+        data-spw-affordance="collect"
+        data-spw-liminality="deep"
+        data-spw-category-family="specimen"
+        data-spw-locality="high"
+        data-spw-consequence="portability"
+        data-spw-promptability="visible"
+        data-spw-collectability="high"
+        data-spw-seed-package=".spw/about-seeds"
+        data-spw-materiality="seed packet print zine card web route"
+        data-spw-seed="page_about_about__portable_seed_register"
+        data-spw-context-relevance="portable seed package prompt image print publishing lore texture workbench">
+        <header class="frame-heading" data-spw-slot="header">
+            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
+            <a class="frame-sigil" href="#portable-seed-register" data-spw-operator="object" data-spw-sigil="^portable_seed_register">^portable_seed_register</a>
+            <h2 id="portable-seed-register-title">Portable Seed Register</h2>
+            <div class="spw-component-meta" data-spw-slot="meta">
+                <span class="spw-component-tag" data-spw-role="publishing" data-spw-stance="projected">seeds</span>
+            </div>
+        </header>
+
+        <div class="frame-body" data-spw-slot="body">
+            <p class="inline-note" data-spw-copy-depth="normal">A Spwashi artifact should be able to travel: as a page section, a code file, a prompt, an
+                SVG, a printed card, a zine fragment, a lore object, or a reusable seed package.</p>
+            <div class="frame-grid">
+                <article class="frame-panel" data-spw-kind="panel" data-spw-role="seed-package"
+                         data-spw-seed="portable_seed_package_shape" data-spw-semantic-expression="seed[package]{travel}">
+                    <h3><code>.spw</code> package</h3>
+                    <p>A portable seed package should carry the smallest useful bundle: name, intent, operators, route
+                        anchors, visual cues, prompt cues, dependencies, and enough notes for another surface to reconstruct
+                        the local meaning.</p>
+                </article>
+                <article class="frame-panel" data-spw-kind="panel" data-spw-role="print-bridge"
+                         data-spw-seed="print_materiality_bridge" data-spw-semantic-expression="seed[print]{hold}">
+                    <h3>Print bridge</h3>
+                    <p>The same seed should be able to become a card, booklet, zine page, sticker, table prop, or Boon
+                        Square. Print is not a nostalgia layer here. It is a way to make digital semantics easier to hold,
+                        gift, annotate, and revisit.</p>
+                </article>
+                <article class="frame-panel" data-spw-kind="panel" data-spw-role="texture"
+                         data-spw-seed="texture_surface_bridge" data-spw-semantic-expression="seed[texture]{feel}">
+                    <h3>Texture surface</h3>
+                    <p><a href="https://texture.website" data-spw-operator="surface">texture.website</a> is the neighboring surface for material cues,
+                        tactile language, style contagion, and interface texture. It should help the kernel avoid becoming
+                        sterile while keeping the aesthetic inspectable.</p>
+                </article>
+                <article class="frame-panel" data-spw-kind="panel" data-spw-role="lore"
+                         data-spw-seed="lore_publication_bridge" data-spw-semantic-expression="seed[lore]{publish}">
+                    <h3>Lore surface</h3>
+                    <p><a href="/about/domains/lore.land/" data-spw-operator="address">lore.land</a> is the narrative and publishing projection: where
+                        scenes, characters, speech bubbles, enchantment, print artifacts, and RPG Wednesday materials can
+                        become public culture instead of isolated notes.</p>
+                </article>
+            </div>
+        </div>
+
+        <footer class="frame-actions" data-spw-slot="actions">
+            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">}</span>
+        </footer>
+    </section>
+
+    <section
+        class="site-frame spw-embedded-workshop"
+        id="about-tuning"
+        data-spw-region="tuning"
+        aria-labelledby="about-tuning-title"
+        data-site-settings-scope
+        data-spw-feature="embedded-workshop"
+        data-spw-kind="frame"
+        data-spw-role="climate-tuning"
+        data-spw-context="settings"
+        data-spw-affordance="tune"
+        data-spw-liminality="threshold"
+        data-spw-form="brace"
+        data-spw-seed="page_about_about__tuning"
+    >
+        <header class="frame-heading" data-spw-slot="header">
+            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
+            <a class="frame-sigil" href="#about-tuning" data-spw-operator="potential" data-spw-sigil="~about_tuning">~about_tuning</a>
+            <h2 id="about-tuning-title">Tune the kernel read</h2>
+            <div class="spw-component-meta" data-spw-slot="meta">
+                <span class="spw-component-tag" data-spw-role="control" data-spw-stance="entry">tuning</span>
+            </div>
+        </header>
+
+        <div class="frame-body" data-spw-slot="body">
+            <p class="frame-note" data-spw-copy-depth="normal">Settings stay in this browser. Shift resonance carry and explore posture without opening the full observatory.</p>
+
+            <div class="vibe-widget-grid vibe-widget-grid--compact">
+                <article class="vibe-widget" data-spw-kind="card" data-spw-role="control">
+                    <div class="vibe-widget-header">
+                        <p class="vibe-widget-kicker">Current state</p>
+                        <h3 class="vibe-widget-title">Read the active environment</h3>
+                    </div>
+                    <div class="vibe-widget-meta" data-spw-role="schema">
+                        <span class="spec-pill">mode: <span data-settings-state="colorMode">auto</span></span>
+                        <span class="spec-pill">memory: <span data-settings-state="wonderMemory">nearby</span></span>
+                        <span class="spec-pill">explore: <span data-settings-state="explorePosture">reading</span></span>
+                        <span class="spec-pill">field: <span data-charge-field-readout="field">quiet</span></span>
+                        <span class="spec-pill">discharge: <span data-charge-field-readout="discharge">—</span></span>
+                    </div>
+                </article>
+
+                <article class="vibe-widget" data-spw-kind="card" data-spw-role="control">
+                    <div class="vibe-widget-header">
+                        <p class="vibe-widget-kicker">Wonder memory</p>
+                        <h3 class="vibe-widget-title">Control resonance carry</h3>
+                    </div>
+                    <div class="vibe-widget-actions" role="group" aria-label="About wonder memory controls" data-spw-slot="actions">
+                        <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:off" data-spw-operator="mode">[ Focused</button>
+                        <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:nearby" data-spw-operator="mode">[ Connected</button>
+                        <button class="operator-chip" type="button" data-site-setting-set="wonderMemory:sitewide" data-spw-operator="mode">[ Immersive</button>
+                    </div>
+                </article>
+
+                <article class="vibe-widget" data-spw-kind="card" data-spw-role="control">
+                    <div class="vibe-widget-header">
+                        <p class="vibe-widget-kicker">Explore posture</p>
+                        <h3 class="vibe-widget-title">Choose how loudly anatomy answers back</h3>
+                    </div>
+                    <div class="vibe-widget-actions" role="group" aria-label="About explore posture controls" data-spw-slot="actions">
+                        <button class="operator-chip" type="button" data-site-setting-set="explorePosture:reading" data-spw-operator="mode">[ Reading</button>
+                        <button class="operator-chip" type="button" data-site-setting-set="explorePosture:field" data-spw-operator="mode">[ Field</button>
+                        <button class="operator-chip" type="button" data-site-setting-set="explorePosture:workshop" data-spw-operator="mode">[ Workshop</button>
+                    </div>
+                </article>
+            </div>
+        </div>
+
+        <footer class="frame-actions" data-spw-slot="actions">
+            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">}</span>
+        </footer>
+    </section>
+
+    <section
+        class="site-frame"
+        id="about-reentry"
+        data-spw-region="reentry"
+        aria-labelledby="about-reentry-title"
+        data-spw-kind="frame"
+        data-spw-role="re-entry"
+        data-spw-context="reading"
+        data-spw-wonder="change consequence resonance"
+        data-spw-affordance="revisit"
+        data-spw-liminality="threshold"
+        data-spw-category-family="register"
+        data-spw-locality="medium"
+        data-spw-consequence="entry"
+        data-spw-promptability="visible"
+        data-spw-collectability="medium"
+        data-spw-feature="about-reentry"
+        data-spw-reading-cue="Read before deciding whether this page is biography, map, or operating manual."
+        data-spw-input="changed context"
+        data-spw-operation="re-enter"
+        data-spw-return="a reason to revisit the kernel"
+        data-spw-tone="threshold"
+    >
+        <header class="frame-heading" data-spw-slot="header">
+            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
+            <a class="frame-sigil" href="#about-reentry" data-spw-operator="potential" data-spw-sigil="~about_reentry">~about_reentry</a>
+            <h2 id="about-reentry-title">Why come back to the kernel page?</h2>
+            <div class="spw-component-meta" data-spw-slot="meta">
+                <span class="spw-component-tag" data-spw-role="routing" data-spw-stance="threshold">re-entry</span>
+            </div>
+        </header>
+
+        <div class="frame-body" data-spw-slot="body">
+            <div class="returner-grid">
+                <article class="returner-card" data-spw-kind="card" data-spw-role="reference" data-spw-form="brace">
+                    <p class="returner-card-kicker" data-spw-slot="meta">Current pressure</p>
+                    <h3>The identity is stable. The operating question is not.</h3>
+                    <p>Return here when you want to understand what the rest of the site is optimizing for now: route clarity, portable proof, wonder with consequences, and better re-entry paths for real people.</p>
+                </article>
+                <div class="returner-ledger" aria-label="About revisit cues" data-spw-role="schema">
+                    <h3 class="returner-ledger-title">Three useful reasons</h3>
+                    <div class="returner-ledger-item" data-spw-semantic-expression="return[context]{changed}">
+                        <strong>Context changed.</strong>
+                        <p>The about page should explain why a new surface exists before it explains every symbol in it.</p>
+                    </div>
+                    <div class="returner-ledger-item" data-spw-semantic-expression="return[practice]{changed}">
+                        <strong>Practice changed.</strong>
+                        <p>The kernel is shaped by what the site had to survive lately: <span class="spw-living-term" data-spw-living-term data-spw-concept="funding-ask" data-spw-numericity="allocation" tabindex="0">funding asks</span>, study surfaces, and shared language work.</p>
+                    </div>
+                    <div class="returner-ledger-item" data-spw-semantic-expression="return[wonder]{changed}">
+                        <strong>Wonder changed.</strong>
+                        <p>Sometimes the right revisit is not biographical. It is architectural.</p>
+                    </div>
+                </div>
+                <article class="returner-card returner-card--warm" data-spw-kind="card" data-spw-role="reference" data-spw-form="brace">
+                    <p class="returner-card-kicker" data-spw-slot="meta">Reason to wonder</p>
+                    <h3>Good identity pages should help the rest of the site mutate coherently.</h3>
+                    <p>If this page works, it makes the shifts across <a href="/topics/software/" data-spw-operator="route">software</a>, <a href="/topics/search/" data-spw-operator="wonder">search</a>, <a href="/services/" data-spw-operator="situate">services</a>, <a href="/play/" data-spw-operator="potential">play</a>, and the <a href="/about/website/" data-spw-operator="address">website guide</a> feel related instead of random.</p>
+                </article>
+            </div>
+        </div>
+
+        <footer class="frame-actions" data-spw-slot="actions">
+            <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">}</span>
+        </footer>
+    </section>
+    </div>
 </main>
 
 <spw-site-footer></spw-site-footer>

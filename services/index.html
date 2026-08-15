@@ -21,6 +21,8 @@
     features="operators navigator console demos route-discovery"
     related_routes="/|/now/|/cards/|/membership/|/coordination/|/research/|/about/|/care/|/services/creator/|/services/systems/|/services/ecosystem/|/services/care/|/topics/software/|/play/|/tools/|/settings/"
     stylesheet_mode="scoped"
+    horizon="ambient"
+    micro_world="true"
 ></spw-page>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,6 +30,8 @@
     <spw-site-head></spw-site-head>
 </head>
 <body data-spw-surface="services"
+    data-spw-horizon="ambient"
+    data-spw-micro-world="true"
     data-spw-stylesheet-mode="scoped" data-spw-hydration="static" data-spw-display-layer="reader" data-spw-capture-mode="default" data-spw-features="operators navigator console demos route-discovery" data-spw-route-family="editorial service funding membership" data-spw-context="routing" data-spw-wonder="projection consequence locality" data-spw-page-family="menu" data-spw-page-modes="read compare book contact support join" data-spw-page-seed="page_services_services" data-spw-page-role="service-register" data-spw-layout="wide" data-spw-context-relevance="services scope cards creator work systems sprint architecture advisory render credits support local proof cards membership referrals" data-spw-related-routes="/|/now/|/cards/|/membership/|/coordination/|/research/|/about/|/care/|/services/creator/|/services/systems/|/services/ecosystem/|/services/care/|/topics/software/|/play/|/tools/|/settings/">
 <a class="skip-link" href="#main-content">Skip to content</a>
 
@@ -52,6 +56,7 @@
     <main data-spw-kind="surface" data-spw-role="routing" data-spw-context="routing" data-spw-seed="page_services_services__main_surface" data-spw-wonder="projection consequence locality" id="main-content" tabindex="-1" aria-labelledby="services-title">
         <article>
 
+            <div data-spw-cluster="orientation-overview">
             <!-- HERO — services ladder named plainly -->
             <section
                 class="spw-frame spw-hero site-frame site-hero"
@@ -167,6 +172,18 @@
                     <a class="operator-chip" href="#services-card" data-spw-operator="integration" data-spw-action="publish">^services_card</a>
                     <a class="operator-chip" href="#ask-card" data-spw-operator="potential">~ask_card</a>
                     <a class="operator-chip" href="#support" data-spw-operator="substrate">$support</a>
+                </nav>
+                <nav class="page-index" aria-label="Services sections">
+                    <ul>
+                        <li><a href="#three-paths">1. Four Service Paths</a></li>
+                        <li><a href="#pricing">2. Pricing Ladder</a></li>
+                        <li><a href="#configure">3. Configure Engagement</a></li>
+                        <li><a href="#service-proof">4. Proof Artifacts</a></li>
+                        <li><a href="#b2b-share">5. Shareable B2B Summary</a></li>
+                        <li><a href="#learning-demos">6. Public Demos</a></li>
+                        <li><a href="#services-card">7. Offer &amp; Ask Cards</a></li>
+                        <li><a href="#support">8. Direct Support</a></li>
+                    </ul>
                 </nav>
                 </div>
             </section>
@@ -285,149 +302,9 @@
                     <a class="operator-chip" href="/contact/?subject=pitch-deck" data-spw-operator="perspective">@ask_for_pitch_support</a>
                 </nav>
             </section>
+            </div>
 
-            <section
-                class="site-frame"
-                id="learning-demos"
-                data-spw-role="demo-register"
-                data-spw-kind="frame"
-                data-spw-context="routing"
-                data-spw-wonder="projection consequence locality"
-                data-spw-affordance="try"
-                data-spw-liminality="threshold"
-                data-spw-region="demos"
-                data-spw-category-family="register"
-                data-spw-locality="medium"
-                data-spw-consequence="entry"
-                data-spw-promptability="visible"
-                data-spw-collectability="medium"
-                data-spw-feature="services-demo-rail">
-                <header class="frame-heading">
-                    <a class="frame-sigil" href="#learning-demos" data-spw-operator="value" data-spw-sigil="*learning_demos">*learning_demos</a>
-                    <h2>Learn From The Public Proof Before You Commit</h2>
-                </header>
-                <p class="inline-note">A services page should not pressure people who came to learn. These routes are low-pressure demonstrations of the same work: semantic structure, brand tuning, screenshot-ready SVG, grounded browser references, recipes, spell ingredients, and cards that turn vague asks into shareable artifacts.</p>
-
-                <div class="spw-demo-rail" aria-label="Service quick demos">
-                    <article class="spw-demo-card" data-spw-demo-kind="brand" data-spw-operator="surface">
-                        <h3>Brandable SVG Screenshot</h3>
-                        <p>See how a diagram can carry color, copy, call-to-action structure, and screenshot semantics without becoming a throwaway graphic.</p>
-                        <div class="spw-demo-card__actions">
-                            <a class="operator-chip" href="/design/experiments/svg/?spw-svg-palette=signal&amp;spw-svg-pointer=field#svg-brand-screenshot" data-spw-operator="wonder">? open screenshot demo</a>
-                            <a class="operator-chip" href="/design/runtime/#svg-art-runtime" data-spw-operator="potential">~runtime_note</a>
-                        </div>
-                        <span class="spw-demo-card__route">SVG palette + pointer field</span>
-                    </article>
-                    <article class="spw-demo-card" data-spw-demo-kind="scope" data-spw-operator="object">
-                        <h3>Resolve A Service Tier</h3>
-                        <p>The configurator turns time, scope, depth, and tenure into a visible tier instead of a vague pricing guess.</p>
-                        <div class="spw-demo-card__actions">
-                            <a class="operator-chip" href="#configure" data-spw-operator="frame">#&gt;configurator</a>
-                            <a class="operator-chip" href="#pricing" data-spw-operator="frame" data-spw-action="address">#&gt;pricing</a>
-                        </div>
-                        <span class="spw-demo-card__route">local field → service tier</span>
-                    </article>
-                    <article class="spw-demo-card" data-spw-demo-kind="share" data-spw-operator="action">
-                        <h3>Make The Ask Portable</h3>
-                        <p>Proof cards and service cards let a project become discussable before anyone commits to a meeting.</p>
-                        <div class="spw-demo-card__actions">
-                            <a class="operator-chip" href="/cards/" data-spw-operator="integration">^proof_cards</a>
-                            <a class="operator-chip" href="#services-card" data-spw-operator="frame">#&gt;services_card</a>
-                        </div>
-                        <span class="spw-demo-card__route">card → screenshot → handoff</span>
-                    </article>
-                    <article class="spw-demo-card" data-spw-demo-kind="learn" data-spw-operator="ref">
-                        <h3>Stay Grounded In The Browser</h3>
-                        <p>When a demo uses web platform behavior, MDN is the first external reference: useful for authors, developers, illustrators, gardeners, and teammates who want the plain substrate.</p>
-                        <div class="spw-demo-card__actions">
-                            <a class="operator-chip" href="https://developer.mozilla.org/en-US/docs/Web/SVG" target="_blank" rel="noopener" data-spw-operator="potential" data-spw-action="explore">~mdn_svg</a>
-                            <a class="operator-chip" href="https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties" target="_blank" rel="noopener" data-spw-operator="potential" data-spw-action="explore">~mdn_css_variables</a>
-                            <a class="operator-chip" href="/recipes/" data-spw-operator="potential">~recipes</a>
-                        </div>
-                        <span class="spw-demo-card__route">browser resource → practical craft route</span>
-                    </article>
-                </div>
-            </section>
-
-            <section class="site-frame" id="services-reentry" data-spw-role="re-entry" data-spw-kind="frame" data-spw-context="routing" data-spw-wonder="change consequence locality" data-spw-affordance="revisit" data-spw-liminality="threshold" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="entry" data-spw-promptability="visible" data-spw-collectability="medium" data-spw-feature="services-reentry">
-                <header class="frame-heading">
-                    <a class="frame-sigil" href="#services-reentry" data-spw-operator="potential" data-spw-sigil="~services_reentry">~services_reentry</a>
-                    <h2>Use a different door when the situation changed.</h2>
-                </header>
-                <p class="inline-note">Repeat visitors usually do not need more orientation. They need a cleaner handoff between uncertainty and the next honest action.</p>
-                <div class="returner-grid">
-                    <article class="returner-card">
-                        <p class="returner-card-kicker">Need changed</p>
-                        <h3>Come back when the ask got smaller or sharper.</h3>
-                        <p>Maybe you are ready to book. Maybe you only need a referral, a proof card, or a page to send someone before the real conversation starts.</p>
-                        <nav class="returner-chip-row" aria-label="Services re-entry routes">
-                            <a class="operator-chip" href="/services/creator/" data-spw-operator="perspective" data-spw-action="enter">@creator_work</a>
-                            <a class="operator-chip" href="/services/systems/" data-spw-operator="perspective" data-spw-action="enter">@systems_work</a>
-                            <a class="operator-chip" href="/services/ecosystem/" data-spw-operator="perspective" data-spw-action="enter">@ecosystem</a>
-                            <a class="operator-chip" href="/cards/" data-spw-operator="integration">^proof_cards</a>
-                        </nav>
-                    </article>
-                    <div class="returner-ledger" aria-label="Service revisit cues">
-                        <h3 class="returner-ledger-title">Three cleaner re-entry moves</h3>
-                        <div class="returner-ledger-item">
-                            <strong>From vague to scoped.</strong>
-                            <p>Use the configurator when the work is real but the tier is still blurry.</p>
-                        </div>
-                        <div class="returner-ledger-item">
-                            <strong>From solo to connected.</strong>
-                            <p>Use the ecosystem when the right answer is not “hire me alone.”</p>
-                        </div>
-                        <div class="returner-ledger-item">
-                            <strong>From pressure to support.</strong>
-                            <p>Use the care routes when the collaboration problem is partly a language and stability problem.</p>
-                        </div>
-                    </div>
-                    <article class="returner-card returner-card--warm">
-                        <p class="returner-card-kicker">Reason to wonder</p>
-                        <h3>A good services page should reduce fiction.</h3>
-                        <p>The goal is not hype. It is to make the real shape of the work legible fast enough that the right collaboration can begin without theater.</p>
-                    </article>
-                </div>
-            </section>
-
-            <section
-                class="site-frame"
-                id="conversion-paths"
-                data-spw-role="routing"
-                data-spw-form="brace"
-                data-spw-meaning="funding first conversion paths"
-                data-spw-operator="action"
-                data-spw-kind="frame" data-spw-context="routing" data-spw-wonder="projection consequence locality" data-spw-affordance="act" data-spw-liminality="threshold" data-spw-region="conversion" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="entry" data-spw-promptability="visible" data-spw-collectability="medium" data-spw-seed="page_services_services__conversion_paths">
-                <header class="frame-heading">
-                    <a class="frame-sigil" href="#conversion-paths" data-spw-operator="perspective" data-spw-sigil="@conversion_paths">@conversion_paths</a>
-                    <h2>Start With The Practical Path</h2>
-                </header>
-
-                <p class="inline-note">Services are one funding lane inside a wider coordination surface. If you are not ready to commission work, you can still support, refer, join, or turn the need into a card people can share.</p>
-
-                <div class="frame-grid frame-grid--dense">
-                    <article class="frame-panel" data-spw-kind="card" data-spw-role="reference">
-                        <h3>Support the current sprint</h3>
-                        <p>Use the live target page when the goal is short-term stability, visible progress, or a shareable funding ask.</p>
-                        <p><a class="operator-chip" href="/now/" data-spw-operator="substrate">$now</a></p>
-                    </article>
-                    <article class="frame-panel" data-spw-kind="card" data-spw-role="reference">
-                        <h3>Create a proof card</h3>
-                        <p>Use a Local Proof Card for asks, offers, pledges, references, membership signals, or group decisions.</p>
-                        <p><a class="operator-chip" href="/cards/" data-spw-operator="integration">^cards</a></p>
-                    </article>
-                    <article class="frame-panel" data-spw-kind="card" data-spw-role="reference">
-                        <h3>Join the work</h3>
-                        <p>Membership is a coordination layer for observers, reference members, working members, sponsors, and collaborators.</p>
-                        <p><a class="operator-chip" href="/membership/" data-spw-operator="frame">#&gt;membership</a></p>
-                    </article>
-                    <article class="frame-panel" data-spw-kind="card" data-spw-role="reference">
-                        <h3>Community-facing support</h3>
-                        <p>Use Services when the work is mutual aid, food access, library help, housing navigation, appointment support, childcare coordination, transit help, or referral work that reduces friction for a group. Start with the <a href="/services/ecosystem/">ecosystem</a> for introductions and the <a href="/services/care/">care practices</a> page when language or safety needs translation.</p>
-                    </article>
-                </div>
-            </section>
-
+            <div data-spw-cluster="service-offerings">
             <!-- FOUR PATHS — the resting points summarised -->
             <section
                 class="site-frame"
@@ -524,7 +401,9 @@
                     </article>
                 </div>
             </section>
+            </div>
 
+            <div data-spw-cluster="commercial-terms">
             <!-- CONFIGURE — gateway to a tier and then a subpage -->
             <section
                 class="site-frame"
@@ -712,7 +591,153 @@
                 <p>If you're starting a project and don't know how to pace it, you're welcome to borrow the rhythm. Two intentional steps a month is modest and cumulative. I ship on those days whether or not anyone is watching, which means contracts anchored to them have real landmarks.</p>
                 <p class="frame-note"><a href="/services/ecosystem/#cadence">How others can adopt the cadence →</a></p>
             </section>
+            </div>
 
+            <div data-spw-cluster="public-proof-entry">
+            <section
+                class="site-frame"
+                id="learning-demos"
+                data-spw-role="demo-register"
+                data-spw-kind="frame"
+                data-spw-context="routing"
+                data-spw-wonder="projection consequence locality"
+                data-spw-affordance="try"
+                data-spw-liminality="threshold"
+                data-spw-region="demos"
+                data-spw-category-family="register"
+                data-spw-locality="medium"
+                data-spw-consequence="entry"
+                data-spw-promptability="visible"
+                data-spw-collectability="medium"
+                data-spw-feature="services-demo-rail">
+                <header class="frame-heading">
+                    <a class="frame-sigil" href="#learning-demos" data-spw-operator="value" data-spw-sigil="*learning_demos">*learning_demos</a>
+                    <h2>Learn From The Public Proof Before You Commit</h2>
+                </header>
+                <p class="inline-note">A services page should not pressure people who came to learn. These routes are low-pressure demonstrations of the same work: semantic structure, brand tuning, screenshot-ready SVG, grounded browser references, recipes, spell ingredients, and cards that turn vague asks into shareable artifacts.</p>
+
+                <div class="spw-demo-rail" aria-label="Service quick demos">
+                    <article class="spw-demo-card" data-spw-demo-kind="brand" data-spw-operator="surface">
+                        <h3>Brandable SVG Screenshot</h3>
+                        <p>See how a diagram can carry color, copy, call-to-action structure, and screenshot semantics without becoming a throwaway graphic.</p>
+                        <div class="spw-demo-card__actions">
+                            <a class="operator-chip" href="/design/experiments/svg/?spw-svg-palette=signal&amp;spw-svg-pointer=field#svg-brand-screenshot" data-spw-operator="wonder">? open screenshot demo</a>
+                            <a class="operator-chip" href="/design/runtime/#svg-art-runtime" data-spw-operator="potential">~runtime_note</a>
+                        </div>
+                        <span class="spw-demo-card__route">SVG palette + pointer field</span>
+                    </article>
+                    <article class="spw-demo-card" data-spw-demo-kind="scope" data-spw-operator="object">
+                        <h3>Resolve A Service Tier</h3>
+                        <p>The configurator turns time, scope, depth, and tenure into a visible tier instead of a vague pricing guess.</p>
+                        <div class="spw-demo-card__actions">
+                            <a class="operator-chip" href="#configure" data-spw-operator="frame">#&gt;configurator</a>
+                            <a class="operator-chip" href="#pricing" data-spw-operator="frame" data-spw-action="address">#&gt;pricing</a>
+                        </div>
+                        <span class="spw-demo-card__route">local field → service tier</span>
+                    </article>
+                    <article class="spw-demo-card" data-spw-demo-kind="share" data-spw-operator="action">
+                        <h3>Make The Ask Portable</h3>
+                        <p>Proof cards and service cards let a project become discussable before anyone commits to a meeting.</p>
+                        <div class="spw-demo-card__actions">
+                            <a class="operator-chip" href="/cards/" data-spw-operator="integration">^proof_cards</a>
+                            <a class="operator-chip" href="#services-card" data-spw-operator="frame">#&gt;services_card</a>
+                        </div>
+                        <span class="spw-demo-card__route">card → screenshot → handoff</span>
+                    </article>
+                    <article class="spw-demo-card" data-spw-demo-kind="learn" data-spw-operator="ref">
+                        <h3>Stay Grounded In The Browser</h3>
+                        <p>When a demo uses web platform behavior, MDN is the first external reference: useful for authors, developers, illustrators, gardeners, and teammates who want the plain substrate.</p>
+                        <div class="spw-demo-card__actions">
+                            <a class="operator-chip" href="https://developer.mozilla.org/en-US/docs/Web/SVG" target="_blank" rel="noopener" data-spw-operator="potential" data-spw-action="explore">~mdn_svg</a>
+                            <a class="operator-chip" href="https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties" target="_blank" rel="noopener" data-spw-operator="potential" data-spw-action="explore">~mdn_css_variables</a>
+                            <a class="operator-chip" href="/recipes/" data-spw-operator="potential">~recipes</a>
+                        </div>
+                        <span class="spw-demo-card__route">browser resource → practical craft route</span>
+                    </article>
+                </div>
+            </section>
+
+            <section class="site-frame" id="services-reentry" data-spw-role="re-entry" data-spw-kind="frame" data-spw-context="routing" data-spw-wonder="change consequence locality" data-spw-affordance="revisit" data-spw-liminality="threshold" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="entry" data-spw-promptability="visible" data-spw-collectability="medium" data-spw-feature="services-reentry">
+                <header class="frame-heading">
+                    <a class="frame-sigil" href="#services-reentry" data-spw-operator="potential" data-spw-sigil="~services_reentry">~services_reentry</a>
+                    <h2>Use a different door when the situation changed.</h2>
+                </header>
+                <p class="inline-note">Repeat visitors usually do not need more orientation. They need a cleaner handoff between uncertainty and the next honest action.</p>
+                <div class="returner-grid">
+                    <article class="returner-card">
+                        <p class="returner-card-kicker">Need changed</p>
+                        <h3>Come back when the ask got smaller or sharper.</h3>
+                        <p>Maybe you are ready to book. Maybe you only need a referral, a proof card, or a page to send someone before the real conversation starts.</p>
+                        <nav class="returner-chip-row" aria-label="Services re-entry routes">
+                            <a class="operator-chip" href="/services/creator/" data-spw-operator="perspective" data-spw-action="enter">@creator_work</a>
+                            <a class="operator-chip" href="/services/systems/" data-spw-operator="perspective" data-spw-action="enter">@systems_work</a>
+                            <a class="operator-chip" href="/services/ecosystem/" data-spw-operator="perspective" data-spw-action="enter">@ecosystem</a>
+                            <a class="operator-chip" href="/cards/" data-spw-operator="integration">^proof_cards</a>
+                        </nav>
+                    </article>
+                    <div class="returner-ledger" aria-label="Service revisit cues">
+                        <h3 class="returner-ledger-title">Three cleaner re-entry moves</h3>
+                        <div class="returner-ledger-item">
+                            <strong>From vague to scoped.</strong>
+                            <p>Use the configurator when the work is real but the tier is still blurry.</p>
+                        </div>
+                        <div class="returner-ledger-item">
+                            <strong>From solo to connected.</strong>
+                            <p>Use the ecosystem when the right answer is not “hire me alone.”</p>
+                        </div>
+                        <div class="returner-ledger-item">
+                            <strong>From pressure to support.</strong>
+                            <p>Use the care routes when the collaboration problem is partly a language and stability problem.</p>
+                        </div>
+                    </div>
+                    <article class="returner-card returner-card--warm">
+                        <p class="returner-card-kicker">Reason to wonder</p>
+                        <h3>A good services page should reduce fiction.</h3>
+                        <p>The goal is not hype. It is to make the real shape of the work legible fast enough that the right collaboration can begin without theater.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section
+                class="site-frame"
+                id="conversion-paths"
+                data-spw-role="routing"
+                data-spw-form="brace"
+                data-spw-meaning="funding first conversion paths"
+                data-spw-operator="action"
+                data-spw-kind="frame" data-spw-context="routing" data-spw-wonder="projection consequence locality" data-spw-affordance="act" data-spw-liminality="threshold" data-spw-region="conversion" data-spw-category-family="register" data-spw-locality="high" data-spw-consequence="entry" data-spw-promptability="visible" data-spw-collectability="medium" data-spw-seed="page_services_services__conversion_paths">
+                <header class="frame-heading">
+                    <a class="frame-sigil" href="#conversion-paths" data-spw-operator="perspective" data-spw-sigil="@conversion_paths">@conversion_paths</a>
+                    <h2>Start With The Practical Path</h2>
+                </header>
+
+                <p class="inline-note">Services are one funding lane inside a wider coordination surface. If you are not ready to commission work, you can still support, refer, join, or turn the need into a card people can share.</p>
+
+                <div class="frame-grid frame-grid--dense">
+                    <article class="frame-panel" data-spw-kind="card" data-spw-role="reference">
+                        <h3>Support the current sprint</h3>
+                        <p>Use the live target page when the goal is short-term stability, visible progress, or a shareable funding ask.</p>
+                        <p><a class="operator-chip" href="/now/" data-spw-operator="substrate">$now</a></p>
+                    </article>
+                    <article class="frame-panel" data-spw-kind="card" data-spw-role="reference">
+                        <h3>Create a proof card</h3>
+                        <p>Use a Local Proof Card for asks, offers, pledges, references, membership signals, or group decisions.</p>
+                        <p><a class="operator-chip" href="/cards/" data-spw-operator="integration">^cards</a></p>
+                    </article>
+                    <article class="frame-panel" data-spw-kind="card" data-spw-role="reference">
+                        <h3>Join the work</h3>
+                        <p>Membership is a coordination layer for observers, reference members, working members, sponsors, and collaborators.</p>
+                        <p><a class="operator-chip" href="/membership/" data-spw-operator="frame">#&gt;membership</a></p>
+                    </article>
+                    <article class="frame-panel" data-spw-kind="card" data-spw-role="reference">
+                        <h3>Community-facing support</h3>
+                        <p>Use Services when the work is mutual aid, food access, library help, housing navigation, appointment support, childcare coordination, transit help, or referral work that reduces friction for a group. Start with the <a href="/services/ecosystem/">ecosystem</a> for introductions and the <a href="/services/care/">care practices</a> page when language or safety needs translation.</p>
+                    </article>
+                </div>
+            </section>
+            </div>
+
+            <div data-spw-cluster="portable-support">
             <!-- SERVICES CARD — the configurable, screenshottable offer -->
             <section
                 class="site-frame"
@@ -816,6 +841,7 @@
                     </div>
                 </div>
             </section>
+            </div>
 
         </article>
     </main>
