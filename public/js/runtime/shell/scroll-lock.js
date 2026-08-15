@@ -34,10 +34,44 @@ function bindShellScrollLockTouchGuard(shouldLock) {
   }
 }
 
+/**
+ * True once this session has set a lock itself. Anything found locked before
+ * that is a leftover, not a state we own.
+ */
+let lockOwnedThisSession = false;
+
+/**
+ * Clear a lock this session did not set.
+ *
+ * The lock writes `body.style.top = -scrollY` and a dataset flag, and the only
+ * release runs when the shell unmounts. A soft navigation with the drawer open
+ * therefore strands the offset: the next view loads shifted, cannot be scrolled
+ * to the top, and refreshing does not obviously help because the shell can
+ * re-enter the same state. Nothing ran at boot to notice.
+ *
+ * No drawer can legitimately be open before the shell mounts, so a lock present
+ * at that point is always stale and always safe to drop.
+ */
+export function clearStaleShellLock() {
+  const html = document.documentElement;
+  const body = document.body;
+  if (!html || !body || lockOwnedThisSession) return false;
+  if (body.dataset.spwShellScrollLock !== 'true' && html.dataset.spwShellScrollLock !== 'true') return false;
+
+  body.style.removeProperty('top');
+  writeDatasetValue(html, 'spwShellScrollLock', null);
+  writeDatasetValue(body, 'spwShellScrollLock', null);
+  delete body.dataset.spwShellScrollY;
+  return true;
+}
+
 export function syncShellLock(snapshot) {
   const html = document.documentElement;
   const body = document.body;
   if (!html || !body) return;
+
+  // A lock we did not set cannot be trusted to have a matching scroll offset.
+  clearStaleShellLock();
 
   const shouldLock = Boolean(
     snapshot?.open &&
@@ -51,6 +85,7 @@ export function syncShellLock(snapshot) {
       body.style.top = `-${scrollY}px`;
       writeDatasetValue(html, 'spwShellScrollLock', 'true');
       writeDatasetValue(body, 'spwShellScrollLock', 'true');
+      lockOwnedThisSession = true;
     }
   } else if (body.dataset.spwShellScrollLock === 'true') {
     const restoreY = Number.parseInt(body.dataset.spwShellScrollY || '0', 10);
@@ -75,4 +110,5 @@ export function syncShellLock(snapshot) {
  */
 export function releaseShellLock() {
   syncShellLock({ open: false });
+  lockOwnedThisSession = false;
 }
