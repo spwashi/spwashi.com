@@ -1,0 +1,104 @@
+# World Physics
+#
+# Choosing which physics a world runs on, the way a designer chooses which
+# subset of possible mechanics a series will use.
+#
+# Written for anyone building a world — a story, a series, a site, an art
+# direction — who has more available rules than any coherent world can hold.
+# The method is subtraction: a world is defined by what it commits to, and
+# every rule you keep costs you the ones it excludes.
+
+#>spw_world_physics
+#:convention #!worldbuilding #!method #!physics
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!semantics
+
+@registers: ~"./cauldron-registers.spw"
+@material_projection: ~"./material-projection.spw"
+@arrival: ~"./arrival-electrostatics.spw"
+@biome: ~"./component-biome.spw"
+
+operation = "prime"
+fixity = "experimental"
+
+expression = world[physics]{subset.commitment.consequence}<legibility>
+
+^"the_move"{
+  ~#note: "Not 'what could happen here' but 'what always happens here'."
+  claim: "A world is not built by adding possibilities. It is built by choosing a small set of rules that hold everywhere in it, and declining the rest."
+  ~#analogy(mechanics): `a series picks perhaps four mechanics out of hundreds available, and the look and feel follows from that subset rather than from art direction applied afterwards`
+  ~#reading: `the physics is the art direction — style is what a consistent rule set looks like from outside`
+  ~#antipattern: "adding a rule because a scene needs it. A rule introduced once is a special case; a rule that holds everywhere is physics."
+}
+
+^"the_questionnaire"{
+  ~#note: "Four questions per rule. Borrowed from @registers, where each coordinate has to answer the same four before it can compose with anything."
+  carrier: .{
+    asks = `what physically carries this?`
+    ~#why: `a rule with no carrier cannot be observed, and an unobservable rule is a claim about the author rather than about the world`
+    example = `charge needs something charged; grief needs something that remembers`
+  }[reg=facet]
+  ordering: .{
+    asks = `is distance between two values meaningful, or only difference?`
+    ~#why: `this decides whether your world supports gradual change or only category change, and almost every pacing question follows from it`
+    ordered = `more/less — heat, debt, exhaustion, altitude`
+    categorical = `different in kind — element, house, species, tongue`
+    ~#rule: `never compute a distance in a categorical rule; two houses are not two units apart`
+  }[reg=facet]
+  identity: .{
+    asks = `what value of this changes nothing?`
+    ~#why: `a rule with no identity cannot accumulate, so nothing in the world can be spent or saved along it`
+    ~#consequence: `if you cannot name the zero, you do not yet have a quantity — you have a mood`
+  }[reg=facet]
+  composition: .{
+    asks = `when two of these meet, what results?`
+    options = #[`sum`, `strongest wins`, `least settled wins`, `span`, `plurality`, `annihilate`, `refuse to combine`][reg=set]
+    ~#why: `this is the rule readers actually learn, because it is the one they can predict with`
+    ~#note(refusing is a choice): `two things that cannot combine is a physics, and often a more interesting one than a sum`
+  }[reg=facet]
+}
+
+^"worked_example"{
+  ~#note: "This site, stated as a world, so the method is checkable against something real."
+  chosen: #[
+    `charge — signed, sums, identity 0. Some acts credit a reader, some spend`,
+    `liminality — ordered ladder, composes as a span. Distance from arrival is meaningful`,
+    `saturation — a solution holds only so much of one thing before more stops dissolving`,
+    `phase — categorical, six values, composes as most-tangible-present`
+  ][reg=set]
+  declined: #[
+    `time of day — no carrier here, and no consequence would follow from it`,
+    `alignment — categorical with no composition rule anyone could predict with`,
+    `scarcity — would make gathering competitive, which contradicts charge`
+  ][reg=set]
+  ~#reading: `four rules, and the look follows: things settle at different rates because their charge differs, and a page feels crossed because the ladder has distance`
+  ~#test: "a rule earns its place when removing it would change what a reader can predict. If nothing breaks, it was decoration."
+}
+
+^"for_image_work"{
+  ~#note: "Style development grounded in the physics a world needs, rather than in reference-chasing."
+  ~#claim: "A recognisable style is usually a physics commitment held long enough to become visible — how light behaves, what has weight, what edges do when they meet."
+  method: #[
+    `name the two or three physical facts every image must obey`,
+    `state what they do when they meet, before generating anything`,
+    `treat an image that violates them as evidence about the prompt, not as a happy accident to keep`
+  ][reg=set]
+  ~#why(uncanniness is information): "the specific way a model's output feels wrong is a readout of which physics it did not commit to — a face that is almost right usually has inconsistent light, not inconsistent anatomy"
+  ~#reading: `that discrimination comes from making rather than from viewing, which is why it develops in people who generate a lot and stays absent in people who only look`
+}
+
+#>wonder_world_physics_1
+?["Which rules here would a reader miss if they were removed?"]{
+  #:depth #!educational ~#lens(arc)
+  ~#tension: "a world can carry rules nobody predicts with. Those cost consistency work and return nothing, and they are invisible from inside because the author remembers why each one is there."
+  ~#hypothesis: "a rule is load-bearing when a reader can use it to guess right about a scene they have not been shown"
+  !probe{ "state each rule of a world, then describe an unseen scene using only those rules. If someone who knows the world can predict what happens, the set is doing work; if they cannot, the rules are decoration with a vocabulary." }
+  $%[rule.carrier, rule.composition, reader.prediction]
+}
+
+^"validation"{
+  probe: `every rule named in a world states carrier, ordering, identity and composition`
+  falsification: "a rule is introduced for one scene and never governs another"
+  ~#note(honest limit): "this method produces coherence, not interest. A perfectly consistent world with four boring rules is boring on schedule. Choosing which physics is still taste; this only stops the set from contradicting itself."
+}
