@@ -540,6 +540,19 @@ function isMobileBottomLane() {
   return globalThis.matchMedia?.(BOTTOM_LANE_MOBILE_QUERY)?.matches ?? false;
 }
 
+/**
+ * Inline room actually available to floating chrome.
+ *
+ * `innerWidth` ignores the visual viewport, so under pinch-zoom or a virtual
+ * keyboard the lane maths believed it had the full layout width and sized the
+ * chrome for room that was not on screen. This file already reads
+ * `visualViewport` elsewhere; the bottom lane was the one place still asking
+ * the window.
+ */
+function viewportInlinePx() {
+  return Math.max(1, globalThis.visualViewport?.width || globalThis.innerWidth || 360);
+}
+
 function pxToRem(px) {
   const rootStyle = globalThis.getComputedStyle?.(globalThis.document?.documentElement);
   const fontSize = Number.parseFloat(rootStyle?.fontSize) || 16;
@@ -725,11 +738,11 @@ function measureAndApplyBottomLane(doc, html, { competition, occlusion }) {
   if (mobile && (handleMeasure || launchMeasure)) {
     const satchelLanePx = launchMeasure?.width
       ? Math.ceil(launchMeasure.width + 16)
-      : Math.min(184, ((globalThis.innerWidth || 360) * 0.5) - 13);
+      : Math.min(184, ((viewportInlinePx() || 360) * 0.5) - 13);
     const gutterPx = Math.max(BOTTOM_LANE_SLOT_GAP_PX, safeSidePx);
     const leftLaneMaxPx = Math.max(
       152,
-      (globalThis.innerWidth || 360) - satchelLanePx - (gutterPx * 2) - BOTTOM_LANE_SLOT_GAP_PX
+      viewportInlinePx() - satchelLanePx - (gutterPx * 2) - BOTTOM_LANE_SLOT_GAP_PX
     );
 
     vars['--spw-floating-inline-gutter'] = pxToRem(gutterPx);
@@ -744,13 +757,32 @@ function measureAndApplyBottomLane(doc, html, { competition, occlusion }) {
     else laneMode = 'satchel-only';
   } else if (!mobile) {
     const gutterPx = Math.max(BOTTOM_LANE_SLOT_GAP_PX, safeSidePx);
-    const leftSnapMaxPx = Math.max(240, Math.min(420, (globalThis.innerWidth || 1200) * 0.38));
+    const leftSnapMaxPx = Math.max(240, Math.min(420, (viewportInlinePx() || 1200) * 0.38));
+
+    /*
+     * The satchel lane is the satchel's own width, not the handle's budget.
+     *
+     * This branch used to assign `leftSnapMaxPx` to both, which gave the satchel
+     * a max-inline-size of 240-420px regardless of what it contains — and the
+     * error did not stop there. `--spw-floating-left-lane-max` is derived by
+     * subtracting the satchel lane from the viewport, so a satchel lane taken
+     * from the handle's budget also told the left lane it had far less room
+     * than it does. One wrong value mis-sized the satchel and starved the page
+     * navigation beside it.
+     *
+     * `launchMeasure` is resolved above for every viewport, so the measurement
+     * was already available; only the mobile branch was using it.
+     */
+    const satchelLanePx = launchMeasure?.width
+      ? Math.ceil(launchMeasure.width + BOTTOM_LANE_SLOT_GAP_PX)
+      : leftSnapMaxPx;
+
     vars['--spw-floating-inline-gutter'] = pxToRem(gutterPx);
     vars['--spw-floating-handle-inline-start'] = pxToRem(gutterPx);
     vars['--spw-floating-handle-inline-end'] = 'auto';
     vars['--spw-floating-handle-transform'] = 'none';
     vars['--spw-floating-handle-max-inline-size'] = pxToRem(leftSnapMaxPx);
-    vars['--spw-floating-satchel-lane'] = pxToRem(leftSnapMaxPx);
+    vars['--spw-floating-satchel-lane'] = pxToRem(satchelLanePx);
     laneMode = 'desktop-snap';
   }
 
