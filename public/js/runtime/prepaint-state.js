@@ -36,6 +36,7 @@
   const SEMANTIC_DENSITY = new Set(['minimal', 'normal', 'rich']);
   const ENHANCEMENT_LEVEL = new Set(['minimal', 'balanced', 'rich']);
   const OPERATOR_SATURATION = new Set(['muted', 'normal', 'vibrant']);
+  const LEGIBLE_CHANNEL = new Set(['off', 'structural', 'measure', 'residue', 'inspect', 'temporal', 'flourish', 'diagnostic']);
   const BINARY = new Set(['off', 'on']);
   const GRAIN_INTENSITY = new Set(['none', 'subtle', 'moderate', 'rich']);
   const ATTENTION_SELF_RELATION = new Set(['breath', 'inner-weather', 'dimensional-scan']);
@@ -108,6 +109,7 @@
   const semanticDensity = pick(settings.semanticDensity, SEMANTIC_DENSITY, 'minimal');
   const enhancementLevel = pick(settings.enhancementLevel, ENHANCEMENT_LEVEL, 'minimal');
   const operatorSaturation = pick(settings.operatorSaturation, OPERATOR_SATURATION, 'normal');
+  const legibleChannel = pick(settings.legibleChannel, LEGIBLE_CHANNEL, 'off');
   const reduceMotion = pick(settings.reduceMotion, BINARY, 'off');
   const highContrast = pick(settings.highContrast, BINARY, 'off');
   const baseMetamaterial = pick(settings.baseMetamaterial, new Set(['paper', 'glass', 'matte', 'field']), 'glass');
@@ -146,6 +148,9 @@
   html.dataset.spwSemanticDensity = semanticDensity;
   html.dataset.spwEnhancementLevel = enhancementLevel;
   html.dataset.spwOperatorSaturation = operatorSaturation;
+  // The legibility lens is generated from what modules declare they write;
+  // this is the only thing that made it reachable from a browser.
+  html.dataset.spwLegible = legibleChannel;
   html.dataset.spwReduceMotion = reduceMotion;
   html.dataset.spwHighContrast = highContrast;
   html.dataset.spwBaseMetamaterial = baseMetamaterial;
