@@ -122,9 +122,12 @@ export function setRegionState(el, state) {
   writeDatasetValue(el, 'spwRegionState', state);
 }
 
-function inferRegionHarmony(profile) {
+function inferRegionHarmony(el, profile) {
+  if (el?.dataset?.spwHarmony) return el.dataset.spwHarmony;
   const { role, kind, context } = profile;
+  const edgeGravity = el?.dataset?.spwEdgeGravity;
 
+  if (edgeGravity && edgeGravity !== 'none' && (kind === 'rail' || role === 'control')) return 'responsive';
   if (role === 'routing') return 'indexed';
   if (role === 'schema') return 'structured';
   if (role === 'reference') return 'measured';
@@ -135,7 +138,12 @@ function inferRegionHarmony(profile) {
   return 'ambient';
 }
 
-function inferRegionTempo(profile) {
+function inferRegionTempo(el, profile) {
+  if (el?.dataset?.spwTempo) return el.dataset.spwTempo;
+  const salienceRank = el?.dataset?.spwSalienceRank;
+  if (salienceRank === 'hero') return 'deliberate';
+  if (salienceRank === 'whisper') return 'snap';
+
   switch (profile.harmony) {
     case 'indexed': return 'snap';
     case 'structured': return 'deliberate';
@@ -146,7 +154,16 @@ function inferRegionTempo(profile) {
   }
 }
 
-function inferRegionDensity(profile) {
+function inferRegionDensity(el, profile) {
+  if (el?.dataset?.spwDensity) return el.dataset.spwDensity;
+  const measureBand = el?.dataset?.spwMeasureBand;
+  const extent = el?.dataset?.spwExtent;
+
+  if (measureBand === 'compact' || extent === 'squat') return 'compact';
+  if (measureBand === 'wide' || extent === 'overtall') {
+    return profile.role === 'schema' ? 'dense' : 'reading';
+  }
+
   if (profile.kind === 'card') return 'compact';
   if (profile.kind === 'panel') return 'medium';
   if (profile.role === 'reference') return 'reading';
@@ -161,8 +178,14 @@ function normalizeAttentionalWeight(value, fallback = '1') {
 }
 
 function inferRegionAttentionalWeight(el, profile) {
-  if (el.dataset.spwAttentionalWeight) return normalizeAttentionalWeight(el.dataset.spwAttentionalWeight);
-  if (el.classList.contains('site-hero')) return '1.25';
+  if (el?.dataset?.spwAttentionalWeight) return normalizeAttentionalWeight(el.dataset.spwAttentionalWeight);
+  const salienceRank = el?.dataset?.spwSalienceRank;
+  if (salienceRank === 'hero') return '1.35';
+  if (salienceRank === 'prominent') return '1.2';
+  if (salienceRank === 'recessive') return '0.85';
+  if (salienceRank === 'whisper') return '0.7';
+
+  if (el?.classList?.contains?.('site-hero')) return '1.25';
   if (profile.kind === 'hook') return '1.2';
   if (profile.role === 'schema' || profile.role === 'routing') return '1.15';
   if (profile.role === 'orientation') return '1.1';
@@ -288,9 +311,9 @@ export function buildRegionProfile(el, index = 0, options = {}) {
     ),
   };
 
-  profile.harmony = inferRegionHarmony(profile);
-  profile.tempo = inferRegionTempo(profile);
-  profile.density = inferRegionDensity(profile);
+  profile.harmony = inferRegionHarmony(el, profile);
+  profile.tempo = inferRegionTempo(el, profile);
+  profile.density = inferRegionDensity(el, profile);
   profile.attentionalWeight = inferRegionAttentionalWeight(el, profile);
   profile.gradientBoundary = inferRegionGradientBoundary(el, profile);
   profile.resolvedCompositionStability = inferResolvedRegionCompositionStability(el, profile);

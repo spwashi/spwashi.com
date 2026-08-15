@@ -1,12 +1,9 @@
-// link-copy.js
-//
-// Shared Spw-based link copy: expression sigils, readable labels, operator
-// geometry, and interaction semantics for navigable handles.
-
+import { parseSpwExpression } from '/public/js/semantic/spw-expression-geometry.js';
 import {
-  detectOperator,
-  extractOperatorPrefix,
-} from '/public/js/kernel/shared.js';
+  writeDatasetValue,
+  writeDatasetValueIfMissing,
+  writeDatasetValues,
+} from '/public/js/kernel/dom-contracts.js';
 import { applyOperatorGeometry } from '/public/js/semantic/sigil-annotation.js';
 
 const INTERACTION_BY_DESTINATION = Object.freeze({
@@ -30,20 +27,7 @@ const INTERACTION_BY_DESTINATION = Object.freeze({
   }),
 });
 
-export function parseSpwExpression(expression = '') {
-  const text = String(expression || '').trim();
-  const prefix = extractOperatorPrefix(text);
-  const nucleus = prefix ? text.slice(prefix.length) : text;
-  const operator = detectOperator(text);
-
-  return {
-    expression: text,
-    prefix,
-    nucleus,
-    operatorType: operator?.type || '',
-    operator,
-  };
-}
+export { parseSpwExpression };
 
 export function applyOperatorGeometryToElement(element, operatorType = '') {
   if (!(element instanceof HTMLElement) || !operatorType) return;
@@ -61,20 +45,20 @@ export function applyInteractionSemanticsToLink(link, {
 
   const semantics = INTERACTION_BY_DESTINATION[destination] || INTERACTION_BY_DESTINATION.projection;
 
-  link.dataset.spwInteractionContract = link.dataset.spwInteractionContract || semantics.contract;
-  link.dataset.spwInteractionAffordance = link.dataset.spwInteractionAffordance || semantics.affordance;
-  link.dataset.spwInteractionDestination = destination;
-  link.dataset.spwInteractionScope = scope;
-  link.dataset.spwOperatorReversibility = link.dataset.spwOperatorReversibility || semantics.reversibility;
-  link.dataset.spwWonder = link.dataset.spwWonder || semantics.wonder;
+  writeDatasetValueIfMissing(link, 'spwInteractionContract', semantics.contract);
+  writeDatasetValueIfMissing(link, 'spwInteractionAffordance', semantics.affordance);
+  writeDatasetValue(link, 'spwInteractionDestination', destination);
+  writeDatasetValue(link, 'spwInteractionScope', scope);
+  writeDatasetValueIfMissing(link, 'spwOperatorReversibility', semantics.reversibility);
+  writeDatasetValueIfMissing(link, 'spwWonder', semantics.wonder);
 
   if (expression) {
-    link.dataset.spwNavExpression = expression;
-    link.dataset.spwSemanticExpression = link.dataset.spwSemanticExpression || `nav[${scope}]{${destination}}`;
+    writeDatasetValue(link, 'spwNavExpression', expression);
+    writeDatasetValueIfMissing(link, 'spwSemanticExpression', `nav[${scope}]{${destination}}`);
   }
 
   if (operator) {
-    link.dataset.spwOperator = link.dataset.spwOperator || operator;
+    writeDatasetValueIfMissing(link, 'spwOperator', operator);
     applyOperatorGeometryToElement(link, operator);
   }
 
@@ -106,11 +90,11 @@ export function appendSpwExpressionRow(parent, expression = '') {
   row.append(nucleus);
 
   if (parsed.operatorType) {
-    row.dataset.spwOperator = parsed.operatorType;
+    writeDatasetValue(row, 'spwOperator', parsed.operatorType);
     applyOperatorGeometryToElement(row, parsed.operatorType);
   }
 
-  row.dataset.spwNavExpression = parsed.expression;
+  writeDatasetValue(row, 'spwNavExpression', parsed.expression);
   parent.append(row);
   return row;
 }
@@ -119,8 +103,8 @@ export function buildRouteMenuLink(route = {}) {
   const link = document.createElement('a');
   link.href = route.href || '/';
   link.className = 'spw-route-menu-link';
-  link.dataset.spwNavToken = route.token || '';
-  link.dataset.spwRouteMenuLink = 'true';
+  writeDatasetValue(link, 'spwNavToken', route.token || '');
+  writeDatasetValue(link, 'spwRouteMenuLink', 'true');
 
   const copy = document.createElement('span');
   copy.className = 'spw-route-menu-link-copy';

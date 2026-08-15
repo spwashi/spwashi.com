@@ -13,6 +13,7 @@ import { getGroundedCouplings, getGroundedRegistry, getSigilCollection, restoreC
 import { describeCognitiveState } from '/public/js/runtime/cognitive-state.js';
 import { getSiteSettings } from '/public/js/kernel/site-settings.js';
 import { CAULDRON_CONTRACT } from '/public/js/interface/cauldron/contract.js';
+import { parseSpwExpression, describeSpwExpression } from '/public/js/semantic/spw-expression-geometry.js';
 
 const SPELL_ACTION = Object.freeze({
   CAST: 'cast',
@@ -105,13 +106,14 @@ function buildSpellEntry(key, coupling = {}, index = 0, context = {}) {
 
   if (!expression) return null;
 
-  const detected = detectOperator(expression) || getOperatorDefinition(coupling?.substrate || '');
-  const prefix = coupling?.prefix || detected?.prefix || inferPrefix(expression);
+  const parsed = parseSpwExpression(expression);
+  const detected = parsed.operator || detectOperator(expression) || getOperatorDefinition(coupling?.substrate || '');
+  const prefix = coupling?.prefix || detected?.prefix || parsed.prefix || inferPrefix(expression);
   const postfix = coupling?.postfix || inferPostfix(expression, prefix);
-  const nucleus = inferNucleus(expression, prefix, postfix);
-  const operatorType = detected?.type || coupling?.substrate || 'ref';
+  const nucleus = coupling?.nucleus || inferNucleus(expression, prefix, postfix, parsed);
+  const operatorType = detected?.type || parsed.operatorType || coupling?.substrate || 'ref';
   const operatorGeometry = getOperatorGeometry(operatorType) || getOperatorGeometry(prefix);
-  const destination = coupling?.destination || inferDestination(postfix, expression);
+  const destination = coupling?.destination || inferDestination(postfix, expression, parsed);
   const {density = 'medium', physics = 'playful'} = context || {};
 
   const vocabRich = density === 'rich';
@@ -148,7 +150,8 @@ function inferExpressionFromKey(key = '') {
 }
 
 function inferPrefix(expression = '') {
-  return expression.match(/^(#>|#:|#|\.|\^|~|\?|@|\*|&|=|\$|%|!|>|<|\(|\[|\{)/)?.[0] || '~';
+  const parsed = parseSpwExpression(expression);
+  return parsed.prefix || expression.match(/^(#>|#:|#|\.|\^|~|\?|@|\*|&|=|\$|%|!|>|<|\(|\[|\{)/)?.[0] || '~';
 }
 
 function inferPostfix(expression = '', prefix = '') {
@@ -159,10 +162,14 @@ function inferPostfix(expression = '', prefix = '') {
   return '';
 }
 
-function inferNucleus(expression = '', prefix = '', postfix = '') {
+function inferNucleus(expression = '', prefix = '', postfix = '', parsed = null) {
   if (!expression) return '';
   if (prefix === '<' && expression.endsWith('>')) {
     return expression.slice(1, -1);
+  }
+
+  if (parsed?.nucleus && !postfix) {
+    return parsed.nucleus;
   }
 
   let start = prefix ? expression.slice(prefix.length) : expression;
@@ -172,10 +179,10 @@ function inferNucleus(expression = '', prefix = '', postfix = '') {
   return start.trim();
 }
 
-function inferDestination(postfix = '', expression = '') {
-  if (postfix === '{') return 'scope';
-  if (postfix === '>') return 'projection';
-  if (expression.startsWith('<') && expression.endsWith('>')) return 'lens';
+function inferDestination(postfix = '', expression = '', parsed = null) {
+  if (postfix === '{' || parsed?.forms?.includes('body')) return 'scope';
+  if (postfix === '>' || parsed?.channels?.length > 0) return 'projection';
+  if (parsed?.forms?.includes('capsule') || (expression.startsWith('<') && expression.endsWith('>'))) return 'lens';
   return 'settle';
 }
 

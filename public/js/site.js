@@ -61,6 +61,7 @@ import {
   SPW_DEBUG_QA_CONTRACT,
   SPW_DEBUG_QA_PRESETS,
 } from './runtime/debug-qa-posture.js';
+import { describeSpwExpression } from './semantic/spw-expression-geometry.js';
 import {
   cancelIdle,
   createRegistry,
@@ -727,13 +728,19 @@ function snapshotProjectionEquations() {
     .filter(Boolean);
 
   return expressions.map((expression) => {
+    const described = describeSpwExpression(expression);
     const match = expression.match(/^([^\[\{\(]+)(?:\[([^\]]+)\])?(?:\{([^}]+)\})?(?:\(([^)]+)\))?/);
     return {
       expression,
-      noun: match?.[1]?.trim() || expression,
+      noun: described.root || match?.[1]?.trim() || expression,
       variant: match?.[2] || null,
       behavior: match?.[3] || null,
       scene: match?.[4] || null,
+      forms: described.forms,
+      operators: described.operators,
+      balanced: described.balanced,
+      formSignature: described.formSignature,
+      wake: described.wake,
     };
   });
 }

@@ -6,7 +6,7 @@
  * present authored syntax without claiming ONF, evaluation, or canonical form.
  */
 
-import { detectOperator } from '/public/js/kernel/shared.js';
+import { detectOperator } from '/public/js/kernel/operator-detection.js';
 
 const FORM_GLYPHS = Object.freeze({
   frame: '[]',
@@ -26,7 +26,7 @@ const OPEN_BOUNDARIES = Object.freeze({
 });
 
 const CLOSE_BOUNDARIES = new Set([']', '}', ')', '>', '>>']);
-const OPERATOR_SIGILS = Object.freeze(['#>', '#:', '?', '~', '@', '&', '*', '^', '.', '$', '%', '!', '=', '#']);
+const OPERATOR_SIGILS = Object.freeze(['#>', '#:', '?', '~', '@', '&', '*', '^', '.', '$', '%', '!', '=', '>', '#']);
 const QUOTES = new Set(['"', "'", '`']);
 const ROOT_RE = /^\s*([A-Za-z_][A-Za-z0-9_.-]*)/;
 const OPERATOR_SUBJECT_RE = /[A-Za-z_"'([{<]/;
@@ -79,7 +79,7 @@ function operatorToken(value, start, end) {
 }
 
 function canStartOperator(source, index, sigil) {
-  if (sigil === '#>' || sigil === '#:') return true;
+  if (sigil === '#>' || sigil === '#:' || sigil === '>') return true;
   const immediate = source[index + sigil.length] || '';
   if (OPERATOR_SUBJECT_RE.test(immediate)) return true;
   if (sigil !== '?') return false;
@@ -166,7 +166,7 @@ export function scanSpwExpression(source = '') {
       continue;
     }
 
-    if (CLOSE_BOUNDARIES.has(char)) {
+    if (CLOSE_BOUNDARIES.has(char) && (char !== '>' || stack[stack.length - 1]?.close === '>')) {
       flushText(cursor);
       const active = stack[stack.length - 1];
       if (active?.close === char) {
@@ -234,6 +234,24 @@ export function describeSpwExpression(source = '', options = {}) {
     wake,
     formSignature: glyphs.join(''),
     description: `${root ? `${root}; ` : ''}${spokenForms}${geometry.balanced ? '' : '; partial'}`,
+  };
+}
+
+export function parseSpwExpression(expression = '', options = {}) {
+  const text = String(expression || '').trim();
+  const described = describeSpwExpression(text, options);
+  const prefix = described.tokens.find((token) => token.type === 'operator')?.value || '';
+  const nucleus = prefix ? text.slice(prefix.length) : text;
+  const operatorType = described.operators[0] || '';
+  const operator = detectOperator(prefix || text);
+
+  return {
+    ...described,
+    expression: text,
+    prefix,
+    nucleus,
+    operatorType,
+    operator,
   };
 }
 
