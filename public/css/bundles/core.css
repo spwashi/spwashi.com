@@ -5425,6 +5425,36 @@ body > header:empty {
   transform-origin: top center;
 }
 
+/* --------------------------------------------------------------------------
+   Toggle mode is a disclosed menu, not a clipped strip.
+
+   The base nav is a horizontally scrollable row — `display: flex` with
+   `overflow-x: auto` — which is right for the inline mode where it sits in the
+   header as a strip. Toggle mode inherited that layout and only clipped it
+   vertically, so a disclosed mobile menu opened as the same sideways-scrolling
+   row: every destination past the viewport edge sat off-screen behind a
+   horizontal scroll nobody expects a menu to need.
+
+   Clipping is a reveal, not a layout. A disclosed menu is a list, so toggle
+   mode changes the axis rather than only the clip. Inline mode keeps the strip.
+   -------------------------------------------------------------------------- */
+
+:where(.site-header[data-spw-menu-mode="toggle"] nav, body > header[data-spw-menu-mode="toggle"] nav) {
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  /* A menu wraps to its own height; it never scrolls sideways. */
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-snap-type: none;
+  max-block-size: min(70svh, 32rem);
+}
+
+:where(.site-header[data-spw-menu-mode="toggle"] nav, body > header[data-spw-menu-mode="toggle"] nav) > * {
+  inline-size: 100%;
+  scroll-snap-align: none;
+}
+
 :where(.site-header[data-spw-menu-mode="toggle"] nav, body > header[data-spw-menu-mode="toggle"] nav) {
   clip-path: inset(0 0 100% 0 round var(--shape-panel, 0.82rem));
   transition:
@@ -13874,6 +13904,59 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
 :where([data-spw-succession="cluster"]) { font-weight: 550; }
 :where([data-spw-succession="root"]) { font-weight: 500; }
 :where([data-spw-succession="spore"]) { font-weight: 450; opacity: 0.88; }
+
+/* ─── Interactive Brace Actions ({ entry, } projection) ─────────────────── */
+
+.spw-brace-actions {
+  position: absolute;
+  inset-inline: 0.4rem;
+  inset-block-start: 0.4rem;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity var(--duration-fast, 140ms) ease;
+}
+
+:where([data-spw-form="brace"]):is(:hover, :focus-within) > .spw-brace-actions {
+  opacity: 1;
+}
+
+.spw-brace-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 1.6rem;
+  block-size: 1.6rem;
+  border-radius: var(--shape-element, 4px);
+  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 32%, var(--line, rgba(14, 18, 20, 0.14)));
+  background: color-mix(in srgb, var(--surface-strong, #fff) 92%, transparent);
+  color: var(--active-op-color, var(--teal, #008080));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  pointer-events: auto;
+  backdrop-filter: blur(4px);
+  transition:
+    transform var(--duration-instant, 50ms) ease,
+    background-color var(--duration-fast, 140ms) ease,
+    border-color var(--duration-fast, 140ms) ease,
+    box-shadow var(--duration-fast, 140ms) ease;
+}
+
+.spw-brace-action:hover,
+.spw-brace-action:focus-visible {
+  border-color: var(--active-op-color, var(--teal, #008080));
+  background: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 15%, var(--surface-strong, #fff));
+  box-shadow: 0 0 8px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 24%, transparent);
+  transform: scale(1.08);
+}
+
+.spw-brace-action:active {
+  transform: scale(0.96);
+}
 }
 
 /* /public/css/components/foundation.css */
@@ -23410,6 +23493,99 @@ html:has([data-spw-state-inspector-root][data-spw-state-inspector="open"]) :wher
 :where(html[data-spw-reduce-motion="on"]) :where(.spw-reward-dock, .spw-reward-toast) {
   transition: none;
 }
+
+/* ==========================================================================
+   Bottom-lane reduction — one lane, one mode, a stated order of sacrifice
+   --------------------------------------------------------------------------
+   The lane already computes what state it is in and writes it to the root:
+   data-spw-bottom-lane-mode is one of desktop-snap, split, handle-only,
+   satchel-only, crowded, stacked. Three CSS rules read it. So each occupant
+   was left to reduce on its own — the section handle, console and inspector
+   each grew their own media queries, and the collection dock never grew any,
+   which is why it kept its full width into viewports that had no room for it
+   and sat on top of the navigation.
+
+   Independent reduction cannot work here, because the constraint is shared. An
+   occupant deciding alone whether it is cramped is guessing about room that
+   another occupant is also using.
+
+   So the order of sacrifice is stated once, and it is an order of purpose
+   rather than of source order:
+
+     navigation last    the section handle is how a reader leaves. It reduces
+                        only when nothing else can.
+     status next        the console and inspector report state; a glyph still
+                        reports it.
+     collection first   the dock is a reward surface. It is the most reducible
+                        thing in the lane because nothing breaks if it is only
+                        a glyph.
+
+   Reduction is label-then-padding, never the target. Every trigger keeps a
+   44px touch target at every mode — a control that shrinks below the finger
+   that operates it has not reduced, it has broken.
+   ========================================================================== */
+
+:where([data-spw-bottom-lane-mode]) :where(
+  .spw-reward-dock-trigger,
+  .spw-state-inspector__launch,
+  .spw-console-toggle
+) {
+  min-block-size: 2.75rem;
+  min-inline-size: 2.75rem;
+}
+
+/* ---- crowded / stacked: collection reduces to its glyph ---- */
+
+:where([data-spw-bottom-lane-mode='crowded'], [data-spw-bottom-lane-mode='stacked'])
+  :where(.spw-reward-dock-count) {
+  /* Not display:none — the count stays available to assistive tech, and the
+     trigger already carries the same fact in its aria-label. */
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+:where([data-spw-bottom-lane-mode='crowded'], [data-spw-bottom-lane-mode='stacked'])
+  :where(.spw-reward-dock-trigger) {
+  padding-inline: 0.55rem;
+  gap: 0;
+}
+
+/* ---- stacked is the tightest state: status text reduces too ---- */
+
+:where([data-spw-bottom-lane-mode='stacked']) :where(.spw-console-label) {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---- the handle keeps its label until the lane is stacked ---- */
+
+:where([data-spw-bottom-lane-handle='compact']) :where(.spw-section-handle-label) {
+  max-inline-size: 8ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---- satchel-only / handle-only: the sole occupant may use the room ---- */
+
+:where([data-spw-bottom-lane-mode='satchel-only']) :where(.spw-state-inspector__launch),
+:where([data-spw-bottom-lane-mode='handle-only']) :where(.spw-section-handle) {
+  max-inline-size: min(100%, var(--spw-floating-handle-max-inline-size, 26rem));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where([data-spw-bottom-lane-mode]) :where(.spw-reward-dock-trigger) {
+    transition: none;
+  }
+}
 }
 
 /* /public/css/components/site-search.css */
@@ -25418,6 +25594,650 @@ html[data-spw-reduce-motion="on"][data-spw-module-visuals="on"][data-spw-runtime
   :where(.spw-embedded-workshop .operator-chip) {
     font-size: 0.72rem;
   }
+}
+
+/* ==========================================================================
+   Toolmaker Gazette & Specimen Submission Bench
+   ========================================================================== */
+
+:where(.specimen-submission-bench) {
+  display: grid;
+  gap: var(--space-md, 1.25rem);
+  margin-block: var(--space-md, 1.25rem);
+}
+
+:where(.specimen-lens-switch) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem;
+  border-radius: var(--component-radius-loose, 8px);
+  background: color-mix(in srgb, var(--surface-soft, rgba(0, 0, 0, 0.04)) 85%, var(--active-op-color, #008080) 15%);
+}
+
+:where(.specimen-lens-btn) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.38rem 0.75rem;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--ink-soft, rgba(0, 0, 0, 0.7));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.78rem;
+  font-weight: 550;
+  cursor: pointer;
+  transition: all 160ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+:where(.specimen-lens-btn:hover) {
+  color: var(--ink, #111);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 60%, transparent);
+}
+
+:where(.specimen-lens-btn[aria-pressed="true"]) {
+  border-color: color-mix(in srgb, var(--active-op-color, #008080) 32%, var(--line, rgba(0, 0, 0, 0.15)));
+  background: var(--surface-strong, #fff);
+  color: color-mix(in srgb, var(--ink, #111) 75%, var(--active-op-color, #008080) 25%);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+:where(.specimen-draft-grid) {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: var(--space-md, 1.25rem);
+  align-items: start;
+}
+
+@media (max-width: 54rem) {
+  :where(.specimen-draft-grid) {
+    grid-template-columns: 1fr;
+  }
+}
+
+:where(.specimen-form-pane) {
+  display: grid;
+  gap: 0.85rem;
+  padding: 1rem;
+  border: 1px solid color-mix(in srgb, var(--active-op-color, #008080) 20%, var(--line, rgba(14, 18, 20, 0.12)));
+  border-radius: var(--component-radius-loose, 8px);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 96%, var(--active-op-color, #008080) 4%);
+}
+
+:where(.specimen-form-row) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
+  gap: 0.65rem;
+}
+
+:where(.specimen-field) {
+  display: grid;
+  gap: 0.28rem;
+}
+
+:where(.specimen-field label) {
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.74rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft, rgba(0, 0, 0, 0.65));
+}
+
+:where(.spw-input, .spw-select, .spw-textarea) {
+  inline-size: 100%;
+  padding: 0.45rem 0.65rem;
+  border: 1px solid var(--line, rgba(14, 18, 20, 0.18));
+  border-radius: 5px;
+  background: var(--surface-strong, #fff);
+  color: var(--ink, #111);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.82rem;
+  transition: border-color 140ms ease, box-shadow 140ms ease;
+}
+
+:where(.spw-textarea) {
+  resize: vertical;
+  min-block-size: 8rem;
+  line-height: 1.45;
+  tab-size: 2;
+}
+
+:where(.spw-input:focus-visible, .spw-select:focus-visible, .spw-textarea:focus-visible) {
+  outline: 2px solid color-mix(in srgb, var(--active-op-color, #008080) 65%, transparent);
+  outline-offset: 1px;
+  border-color: var(--active-op-color, #008080);
+}
+
+:where(.specimen-preview-pane) {
+  display: grid;
+  gap: 0.75rem;
+  position: sticky;
+  top: 1rem;
+}
+
+:where(.specimen-preview-card.site-frame) {
+  margin: 0;
+  padding: 1rem;
+  border: 1px solid color-mix(in srgb, var(--active-op-color, #008080) 28%, var(--line, rgba(14, 18, 20, 0.15)));
+  border-radius: var(--component-radius-loose, 8px);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--active-op-color, #008080) 6%, transparent), transparent 60%),
+    var(--surface-strong, #fff);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+:where(.specimen-preview-header) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-block-end: 0.65rem;
+  padding-block-end: 0.5rem;
+  border-block-end: 1px dashed var(--line, rgba(14, 18, 20, 0.12));
+}
+
+:where(.specimen-preview-code) {
+  margin: 0;
+  padding: 0.65rem;
+  border-radius: 6px;
+  background: var(--surface-code, #14171a);
+  color: #d1d5db;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.76rem;
+  line-height: 1.4;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+:where(.specimen-actions-row) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+:where(.specimen-action-btn) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.48rem 0.85rem;
+  border: 1px solid color-mix(in srgb, var(--active-op-color, #008080) 35%, var(--line, rgba(0, 0, 0, 0.18)));
+  border-radius: 6px;
+  background: var(--surface-strong, #fff);
+  color: var(--ink, #111);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 140ms ease;
+}
+
+:where(.specimen-action-btn:hover) {
+  background: color-mix(in srgb, var(--active-op-color, #008080) 12%, var(--surface-strong, #fff));
+  border-color: var(--active-op-color, #008080);
+}
+
+:where(.specimen-action-btn--primary) {
+  background: color-mix(in srgb, var(--active-op-color, #008080) 85%, #000);
+  border-color: transparent;
+  color: #fff;
+}
+
+:where(.specimen-action-btn--primary:hover) {
+  background: var(--active-op-color, #008080);
+  color: #fff;
+}
+
+:where(.specimen-status-note) {
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.75rem;
+  color: var(--active-op-color, #008080);
+  opacity: 0;
+  transition: opacity 160ms ease;
+}
+
+:where(.specimen-status-note.is-active) {
+  opacity: 1;
+}
+
+:where(.toolmaker-criteria-strip) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13.5rem), 1fr));
+  gap: 0.75rem;
+  margin-block-start: 1rem;
+}
+
+:where(.toolmaker-criterion-card) {
+  padding: 0.75rem;
+  border: 1px solid var(--line, rgba(14, 18, 20, 0.12));
+  border-radius: var(--component-radius-loose, 8px);
+  background: var(--surface-soft, rgba(0, 0, 0, 0.02));
+}
+
+:where(.toolmaker-criterion-card strong) {
+  display: block;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.8rem;
+  margin-block-end: 0.25rem;
+  color: var(--ink, #111);
+}
+
+:where(.toolmaker-criterion-card p) {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: var(--ink-soft, rgba(0, 0, 0, 0.68));
+}
+}
+
+/* /public/css/components/interactive-expression.css */
+@layer components {
+/* ==========================================================================
+   components/interactive-expression.css
+   --------------------------------------------------------------------------
+   Interactive and editable Spw expressions: delimiter geometry, boundary-aware
+   autocompletion, and differential comparison (<concept>, (scene), [mode], {payload}).
+   ========================================================================== */
+
+:where([data-spw-interactive-expression], .spw-interactive-expression) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.15rem 0.45rem;
+  border: 1px dashed color-mix(in srgb, var(--active-op-color, #008080) 35%, var(--line, rgba(0, 0, 0, 0.15)));
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--surface-soft, rgba(0, 0, 0, 0.03)) 90%, var(--active-op-color, #008080) 10%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.84em;
+  line-height: 1.35;
+  cursor: text;
+  transition: all 140ms ease;
+  user-select: text;
+}
+
+:where([data-spw-interactive-expression]:hover, .spw-interactive-expression:hover) {
+  border-color: var(--active-op-color, #008080);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 80%, var(--active-op-color, #008080) 20%);
+}
+
+:where([data-spw-interactive-expression]:focus, .spw-interactive-expression:focus, [data-spw-interactive-expression][contenteditable="true"]:focus) {
+  outline: 2px solid var(--active-op-color, #008080);
+  outline-offset: 1px;
+  border-style: solid;
+  border-color: var(--active-op-color, #008080);
+  background: var(--surface-strong, #fff);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--active-op-color, #008080) 25%, transparent);
+}
+
+:where([data-spw-interactive-expression][data-spw-edited="true"]) {
+  border-style: solid;
+  border-color: color-mix(in srgb, var(--active-op-color, #008080) 65%, var(--line, rgba(0, 0, 0, 0.2)));
+  background: color-mix(in srgb, var(--surface-strong, #fff) 92%, var(--active-op-color, #008080) 8%);
+}
+
+/* ==========================================================================
+   Expression Differential HUD / Geometry Dock
+   ========================================================================== */
+
+:where(.spw-expression-hud) {
+  position: absolute;
+  z-index: 120;
+  display: grid;
+  gap: 0.55rem;
+  padding: 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--active-op-color, #008080) 35%, var(--line, rgba(0, 0, 0, 0.18)));
+  border-radius: var(--component-radius-loose, 8px);
+  background: var(--surface-strong, rgba(255, 255, 255, 0.98));
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.04);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.76rem;
+  inline-size: max-content;
+  max-inline-size: min(92vw, 24rem);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(4px);
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+:where(.spw-expression-hud.is-visible) {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+:where(.spw-expression-hud__header) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding-block-end: 0.35rem;
+  border-block-end: 1px solid var(--line, rgba(0, 0, 0, 0.1));
+}
+
+:where(.spw-expression-hud__title) {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--active-op-color, #008080);
+}
+
+:where(.spw-expression-hud__forms) {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.4rem;
+}
+
+:where(.spw-form-morph-btn) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.35rem;
+  padding: 0.32rem 0.5rem;
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.12));
+  border-radius: 5px;
+  background: var(--surface-soft, rgba(0, 0, 0, 0.02));
+  color: var(--ink, #111);
+  font-family: inherit;
+  font-size: 0.74rem;
+  cursor: pointer;
+  transition: all 120ms ease;
+}
+
+:where(.spw-form-morph-btn:hover) {
+  border-color: var(--active-op-color, #008080);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 80%, var(--active-op-color, #008080) 20%);
+}
+
+:where(.spw-form-morph-btn.is-active) {
+  border-color: var(--active-op-color, #008080);
+  background: color-mix(in srgb, var(--active-op-color, #008080) 15%, var(--surface-strong, #fff));
+  font-weight: 700;
+}
+
+:where(.spw-form-glyph) {
+  font-weight: 800;
+  color: var(--active-op-color, #008080);
+}
+
+:where(.spw-expression-hud__suggestions) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem;
+  padding-block-start: 0.35rem;
+  border-block-start: 1px dashed var(--line, rgba(0, 0, 0, 0.1));
+}
+
+:where(.spw-suggestion-chip) {
+  padding: 0.2rem 0.45rem;
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.12));
+  border-radius: 4px;
+  background: var(--surface-soft, rgba(0, 0, 0, 0.03));
+  color: var(--ink-soft, rgba(0, 0, 0, 0.7));
+  font-size: 0.72rem;
+  cursor: pointer;
+  transition: all 120ms ease;
+}
+
+:where(.spw-suggestion-chip:hover) {
+  border-color: var(--active-op-color, #008080);
+  color: var(--ink, #111);
+  background: var(--surface-strong, #fff);
+}
+
+:where(.spw-expression-hud__nav-strip) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
+  padding-block-start: 0.4rem;
+  border-block-start: 1px solid var(--line, rgba(0, 0, 0, 0.1));
+}
+
+:where(.spw-hud-nav-link) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--active-op-color, #008080);
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--active-op-color, #008080) 15%, var(--surface-strong, #fff));
+  color: var(--active-op-color, #008080);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 120ms ease;
+}
+
+:where(.spw-hud-nav-link:hover) {
+  background: var(--active-op-color, #008080);
+  color: #fff;
+}
+
+:where(.spw-hud-search-btn) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.15));
+  border-radius: 4px;
+  background: var(--surface-soft, rgba(0, 0, 0, 0.03));
+  color: var(--ink, #111);
+  font-family: inherit;
+  font-size: 0.72rem;
+  cursor: pointer;
+  transition: all 120ms ease;
+}
+
+:where(.spw-hud-search-btn:hover) {
+  border-color: var(--active-op-color, #008080);
+  background: var(--surface-strong, #fff);
+  color: var(--active-op-color, #008080);
+}
+}
+
+/* /public/css/components/spw-hero-kinetic-stage.css */
+@layer components {
+/* ==========================================================================
+   components/spw-hero-kinetic-stage.css
+   --------------------------------------------------------------------------
+   Interactive hero stage demonstrating Spw motion design, boundary physics,
+   operator electrostatics, and payload transformations.
+   ========================================================================== */
+
+:where(.spw-hero-stage) {
+  position: relative;
+  display: grid;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  border: 1px solid color-mix(in srgb, var(--active-op-color, #008080) 30%, var(--line, rgba(0, 0, 0, 0.15)));
+  border-radius: var(--component-radius-loose, 12px);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 96%, var(--active-op-color, #008080) 4%);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+  margin-block: 1.5rem 2rem;
+  overflow: hidden;
+}
+
+:where(.spw-hero-stage__header) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-block-end: 0.75rem;
+  border-block-end: 1px solid var(--line, rgba(0, 0, 0, 0.1));
+}
+
+:where(.spw-hero-stage__title-group) {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+:where(.spw-hero-stage__kicker) {
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--active-op-color, #008080);
+}
+
+:where(.spw-hero-stage__slides-nav) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+:where(.spw-hero-slide-btn) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.15));
+  border-radius: 6px;
+  background: var(--surface-soft, rgba(0, 0, 0, 0.03));
+  color: var(--ink-soft, rgba(0, 0, 0, 0.7));
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.76rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 140ms ease;
+}
+
+:where(.spw-hero-slide-btn:hover) {
+  border-color: var(--active-op-color, #008080);
+  color: var(--ink, #111);
+  background: var(--surface-strong, #fff);
+}
+
+:where(.spw-hero-slide-btn.is-active) {
+  border-color: var(--active-op-color, #008080);
+  background: color-mix(in srgb, var(--active-op-color, #008080) 18%, var(--surface-strong, #fff));
+  color: var(--active-op-color, #008080);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+:where(.spw-hero-stage__viewport) {
+  position: relative;
+  min-height: 220px;
+  display: grid;
+  align-items: center;
+}
+
+:where(.spw-hero-slide) {
+  display: none;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  gap: 1.5rem;
+  animation: spw-slide-fade 220ms ease forwards;
+}
+
+:where(.spw-hero-slide.is-active) {
+  display: grid;
+}
+
+@keyframes spw-slide-fade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 48rem) {
+  :where(.spw-hero-slide) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+:where(.spw-hero-slide__canvas) {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  border: 1px dashed color-mix(in srgb, var(--active-op-color, #008080) 30%, var(--line, rgba(0, 0, 0, 0.15)));
+  border-radius: var(--component-radius-default, 8px);
+  background: var(--surface-soft, rgba(0, 0, 0, 0.02));
+  overflow: hidden;
+}
+
+:where(.spw-kinetic-track) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  width: 100%;
+}
+
+:where(.spw-kinetic-node) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--active-op-color, #008080);
+  border-radius: 6px;
+  background: var(--surface-strong, #fff);
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.88rem;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  cursor: grab;
+  transition: transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 180ms ease;
+  user-select: none;
+}
+
+:where(.spw-kinetic-node:hover) {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--active-op-color, #008080) 25%, transparent);
+}
+
+:where(.spw-hero-slide__theory) {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.6rem;
+}
+
+:where(.spw-hero-slide__theory h3) {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--ink, #111);
+}
+
+:where(.spw-hero-slide__theory p) {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--ink-soft, rgba(0, 0, 0, 0.75));
+}
+
+:where(.spw-hero-stage__footer) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-block-start: 0.75rem;
+  border-block-start: 1px solid var(--line, rgba(0, 0, 0, 0.1));
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.76rem;
 }
 }
 
@@ -29787,6 +30607,59 @@ html[data-spw-high-contrast="on"] :where(.site-frame, .frame-card, .frame-panel)
     transition: none;
   }
 }
+
+/* ==========================================================================
+   Salience as emphasis — typography that follows the reader's own history.
+   --------------------------------------------------------------------------
+   Bands 1..4 are written from a persisted ledger of tokens this reader has
+   actually travelled, and until now nothing in the type responded to them. The
+   bands drove a biome opacity and stopped there.
+
+   The case this serves: someone heard the site read aloud, and later scans it
+   to recall a specific thing. What they need is prosodic anchors — a few words
+   per screen carrying more weight than their neighbours — and the honest source
+   for which words those are is what they already engaged with, not an
+   architecture deciding on their behalf. 13% of prose paragraphs here carry any
+   emphasis at all, and 893 paragraphs run past 35 words with none, so the page
+   currently offers a scanner nothing to land on.
+
+   Contrast rather than weight, deliberately. `font-weight` reflows, and these
+   attributes are written after mount from storage — so weighting 505 elements
+   would shift text under a reader who is mid-scan, which is precisely the
+   slog this is meant to remove. Contrast reads as emphasis when scanning and
+   costs no layout.
+
+   Nothing here fires for a first-time reader. An unvisited page has no bands,
+   so the type is uniform until the reader has given it something to weight.
+   ========================================================================== */
+
+:where([data-spw-expression-salience]) {
+  --spw-salience-ink: var(--spw-expression-accent, currentColor);
+  --spw-salience-lift: 0;
+  color: color-mix(in oklab, currentColor calc(100% - (var(--spw-salience-lift) * 30%)), var(--spw-salience-ink));
+  transition: color var(--duration-slow, 420ms) var(--ease-smooth, ease);
+}
+
+:where([data-spw-expression-salience='1']) { --spw-salience-lift: 0.25; }
+:where([data-spw-expression-salience='2']) { --spw-salience-lift: 0.5; }
+:where([data-spw-expression-salience='3']) { --spw-salience-lift: 0.75; }
+:where([data-spw-expression-salience='4']) { --spw-salience-lift: 1; }
+
+/* Only the top band earns a mark beyond colour — the one a reader is most
+   likely to be hunting for gets something findable in peripheral vision. */
+:where([data-spw-expression-salience='4']) {
+  text-decoration: underline 0.06em color-mix(in oklab, var(--spw-salience-ink) 38%, transparent);
+  text-underline-offset: 0.2em;
+}
+
+/* Capture keeps the emphasis: a screenshot of a page is often the artifact a
+   reader returns to, and stripping the anchors would flatten exactly what made
+   the shot worth taking. */
+@media print {
+  :where([data-spw-expression-salience]) {
+    color: currentColor;
+  }
+}
 }
 
 /* /public/css/systems/probe-legibility.css */
@@ -30169,17 +31042,18 @@ html[data-spw-high-contrast="on"] :where(.site-frame, .frame-card, .frame-panel)
    into a lens, so a reader can make one slice of the data readable and leave
    the rest quiet.
 
-   331 attributes over 6 channels.
+   336 attributes over 7 channels.
 
    Set data-spw-legible on the root to choose a slice:
-     structural  173  layout and meaning — the page is wrong without these
+     structural  176  layout and meaning — the page is wrong without these
      measure      14  a measurement someone can check
      residue      27  what a visit leaves behind and keeps
      inspect      48  an inspection surface, not content
-     flourish     61  decoration — the page is complete without these
+     temporal      1  a timestamp or phase that expires — true only when written
+     flourish     62  decoration — the page is complete without these
      diagnostic    8  for debugging the runtime itself
 
-   Nothing is legible by default. A page that reveals all six channels at once
+   Nothing is legible by default. A page that reveals every channel at once
    is a debug overlay, not a lens, and the point of a lens is that it leaves
    most of the page alone.
    ========================================================================== */
@@ -30189,7 +31063,7 @@ html[data-spw-high-contrast="on"] :where(.site-frame, .frame-card, .frame-panel)
   --spw-lens-ground: color-mix(in oklab, var(--spw-lens-ink) 8%, transparent);
 }
 
-/* ---- structural — layout and meaning — the page is wrong without these (173) ---- */
+/* ---- structural — layout and meaning — the page is wrong without these (176) ---- */
 
 [data-spw-legible="structural"] :where([data-spw-active]),
 [data-spw-legible="structural"] :where([data-spw-address-role]),
@@ -30202,6 +31076,9 @@ html[data-spw-high-contrast="on"] :where(.site-frame, .frame-card, .frame-panel)
 [data-spw-legible="structural"] :where([data-spw-attention-self-relation]),
 [data-spw-legible="structural"] :where([data-spw-bare-spw-enhanced]),
 [data-spw-legible="structural"] :where([data-spw-box-settle-phase]),
+[data-spw-legible="structural"] :where([data-spw-brace-actions]),
+[data-spw-legible="structural"] :where([data-spw-brace-actions-mounted]),
+[data-spw-legible="structural"] :where([data-spw-brace-edge]),
 [data-spw-legible="structural"] :where([data-spw-brace-nesting]),
 [data-spw-legible="structural"] :where([data-spw-cadence]),
 [data-spw-legible="structural"] :where([data-spw-card-state]),
@@ -30479,7 +31356,15 @@ html[data-spw-high-contrast="on"] :where(.site-frame, .frame-card, .frame-panel)
   background-color: var(--spw-lens-ground);
 }
 
-/* ---- flourish — decoration — the page is complete without these (61) ---- */
+/* ---- temporal — a timestamp or phase that expires — true only when written (1) ---- */
+
+[data-spw-legible="temporal"] :where([data-spw-pulse-ts]) {
+  outline: 1px dashed color-mix(in oklab, var(--spw-lens-ink) 38%, transparent);
+  outline-offset: 2px;
+  background-color: var(--spw-lens-ground);
+}
+
+/* ---- flourish — decoration — the page is complete without these (62) ---- */
 
 [data-spw-legible="flourish"] :where([data-spw-active-sigil]),
 [data-spw-legible="flourish"] :where([data-spw-active-sigil-operator]),
@@ -30487,6 +31372,7 @@ html[data-spw-high-contrast="on"] :where(.site-frame, .frame-card, .frame-panel)
 [data-spw-legible="flourish"] :where([data-spw-active-sigil-region]),
 [data-spw-legible="flourish"] :where([data-spw-cauldron-resonance]),
 [data-spw-legible="flourish"] :where([data-spw-cauldron-state]),
+[data-spw-legible="flourish"] :where([data-spw-charge]),
 [data-spw-legible="flourish"] :where([data-spw-charge-carrier]),
 [data-spw-legible="flourish"] :where([data-spw-charge-field]),
 [data-spw-legible="flourish"] :where([data-spw-charge-intensity]),
@@ -30569,6 +31455,381 @@ html[data-spw-high-contrast="on"] :where(.site-frame, .frame-card, .frame-panel)
 /* A lens is a reading aid, never a printed artifact. */
 @media print {
   [data-spw-legible] :where([class]) { outline: none; background-color: transparent; }
+}
+}
+
+/* /public/css/systems/module-potential.css */
+@layer systems {
+/* ==========================================================================
+   module-potential.css
+   --------------------------------------------------------------------------
+   What an unmounted module looks like.
+
+   The loader already computes, per element, which module is waiting on it, why,
+   what it will write, and how far its effects reach — seven attributes' worth
+   of reasoning — and every one of them was drawn only behind
+   `data-spw-module-visuals="on"` or debug mode. A designed invitation was being
+   computed for every reader and shown to none.
+
+   The electrostatic reading the rest of the site uses applies literally here. A
+   module that has not mounted is stored potential at a root; the invitation is
+   the visible potential difference; the reader's gesture closes the circuit;
+   mounting is the discharge. Nothing about that is metaphor-only — the states
+   below are exactly the ones the loader writes.
+
+     waiting      potential is stored, and the root says so
+     triggered    the circuit closed; the module is arriving
+     queued       scheduled by something other than the reader — drawn as
+                  nothing, because a reader cannot accept what they did not
+                  choose, and pretending otherwise teaches a false affordance
+
+   Strength follows the offer, not the module. `data-spw-module-offer` is
+   derived from the channels a module declares it writes, so a module that
+   leaves residue — something a visit keeps — invites more strongly than one
+   that adds flourish. This is the honest ranking: it is computed from what the
+   module actually does, so it cannot flatter itself.
+
+   Everything here is quiet. An invitation that shouts is an advertisement, and
+   the point is that a reader who is not looking for features should not be
+   interrupted by them.
+   ========================================================================== */
+
+:where([data-spw-module-trigger-status='waiting']) {
+  --spw-potential-accent: var(--spw-charge-field-color, var(--active-op-color, #008080));
+  /* Offer strength. Overridden per offer below; this is the floor. */
+  --spw-potential-strength: 0.28;
+  --spw-potential-reveal: 0;
+
+  position: relative;
+}
+
+/* --------------------------------------------------------------------------
+   Offer strength. Derived, not editorial — see the header.
+   -------------------------------------------------------------------------- */
+
+[data-spw-module-offer='residue'] { --spw-potential-strength: 1; }
+[data-spw-module-offer='measure'] { --spw-potential-strength: 0.78; }
+[data-spw-module-offer='structural'] { --spw-potential-strength: 0.55; }
+[data-spw-module-offer='inspect'] { --spw-potential-strength: 0.42; }
+[data-spw-module-offer='temporal'] { --spw-potential-strength: 0.42; }
+[data-spw-module-offer='flourish'] { --spw-potential-strength: 0.22; }
+/* Diagnostics are for the runtime's own health and are never advertised. */
+[data-spw-module-offer='diagnostic'] { --spw-potential-strength: 0; }
+
+/* --------------------------------------------------------------------------
+   The stored charge. An edge that accumulates along one side rather than a
+   badge — a badge says "new feature", an edge says "there is more here", and
+   only the second is true.
+   -------------------------------------------------------------------------- */
+
+[data-spw-module-trigger-status='waiting']::before {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  inline-size: 2px;
+
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    color-mix(in oklab, var(--spw-potential-accent) calc(var(--spw-potential-strength) * 55%), transparent),
+    transparent
+  );
+  opacity: calc(0.35 + (var(--spw-potential-reveal) * 0.65));
+
+  transition: opacity var(--duration-slow, 420ms) var(--ease-smooth, ease);
+  pointer-events: none;
+}
+
+/* Nothing is drawn for an offer of zero. */
+[data-spw-module-offer='diagnostic'][data-spw-module-trigger-status='waiting']::before {
+  content: none;
+}
+
+/* --------------------------------------------------------------------------
+   Approach raises the potential. The reveal is the reward for looking, and it
+   arrives before the module does — so a reader learns that attention here is
+   answered, which is the whole discovery loop.
+   -------------------------------------------------------------------------- */
+
+[data-spw-module-trigger-status='waiting']:is(:hover, :focus-within) {
+  --spw-potential-reveal: 1;
+}
+
+/* --------------------------------------------------------------------------
+   Discharge. One pulse when the circuit closes, then nothing — the module has
+   arrived and the invitation is spent. Deliberately not a lingering state:
+   residue belongs to what the module writes, not to the fact that it loaded.
+   -------------------------------------------------------------------------- */
+
+@keyframes spw-potential-discharge {
+  from {
+    opacity: 0.9;
+    transform: scaleY(1);
+  }
+  to {
+    opacity: 0;
+    transform: scaleY(0.2);
+  }
+}
+
+[data-spw-module-trigger-status='triggered']::before {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  inline-size: 2px;
+  transform-origin: center;
+  background: var(--spw-potential-accent, currentColor);
+  animation: spw-potential-discharge var(--duration-slow, 420ms) var(--ease-smooth, ease) forwards;
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   Queued roots are scheduled by scroll or idle rather than chosen, so they get
+   no invitation. Stated as a rule rather than left implicit, because the
+   temptation to decorate every pending module is exactly what makes a page
+   noisy.
+   -------------------------------------------------------------------------- */
+
+[data-spw-module-trigger-status='queued']::before {
+  content: none;
+}
+
+/* --------------------------------------------------------------------------
+   Reduced motion keeps the potential and drops the discharge animation; the
+   information survives, the movement does not.
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  [data-spw-module-trigger-status='waiting']::before {
+    transition: none;
+  }
+
+  [data-spw-module-trigger-status='triggered']::before {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Capture and print. A screenshot of an invitation is an invitation nobody can
+   accept, so it is dropped rather than frozen mid-offer.
+   -------------------------------------------------------------------------- */
+
+[data-spw-capture-mode] [data-spw-module-trigger-status]::before {
+  content: none;
+}
+
+@media print {
+  [data-spw-module-trigger-status]::before {
+    content: none;
+  }
+}
+}
+
+/* /public/css/systems/electrostatic-roles.css */
+@layer systems {
+/* ==========================================================================
+   electrostatic-roles.css
+   --------------------------------------------------------------------------
+   Rendering what a component does to a circuit.
+
+   `data-spw-electrostatic-role` carries a real vocabulary — channel,
+   transformer, ground, inductor — and no stylesheet had ever selected it. A
+   component declared its electrical role and looked identical to one that
+   declared nothing, which makes the declaration a note to the author rather
+   than information for a reader.
+
+   The four roles are not decorative labels; each names a different relationship
+   to charge, and each has a visual consequence that follows from the physics
+   rather than from a palette:
+
+     channel      conducts. Charge passes through with direction, so the edge
+                  is continuous and oriented — you can see which way it runs.
+     transformer  couples two circuits without connecting them. Drawn as two
+                  edges with a gap: the gap is the point, because a transformer
+                  that touched would be a wire.
+     ground       a reference potential and a sink. It absorbs rather than
+                  returns, so it is the one role drawn with no outward glow —
+                  weight at the base and nothing radiating.
+     inductor     stores in a field and resists change. It lags: its transition
+                  is the slowest here, deliberately, because an inductor that
+                  responded instantly would be a resistor.
+
+   The lag on `inductor` is the one piece of this that is behaviour rather than
+   appearance, and it is the reason the model earns its name — the component
+   feels different to interact with in the way the physics says it should.
+
+   Legible in a still image. These are meant to survive screenshotting, since a
+   tool that cannot show its own role in a capture cannot be shared as a tool.
+
+   Derived, not declared.
+
+   `data-spw-electrostatic-role` is stamped exactly once in the whole corpus,
+   while `data-spw-operator` is stamped over 2,600 times — and the role is a
+   *reading* of the operator rather than a second axis beside it. An operator
+   already says what a thing does to charge:
+
+     potential    stores in a field and resists change      → inductor
+     action       commits and spends; charge passes         → channel
+     wonder       opens and holds a difference open         → channel
+     ground       a reference to return to                  → ground
+     frame        rings a thing and gives it an address     → ground
+     address      the same, by another name                 → ground
+     value        resolves to something held                → ground
+     integration  joins two things into one held thing      → transformer
+     perspective  changes the reference without touching it → transformer
+     mode         the same, at a smaller scale              → transformer
+
+   So the roles below key off the operator the markup already carries, and the
+   explicit attribute is an override for the rare case where a component's
+   electrical behaviour genuinely differs from its operator's. Nobody has to
+   stamp anything for this to render, which is the difference between a model
+   that reads the site and a model the site has to be annotated for.
+   ========================================================================== */
+
+:where([data-spw-electrostatic-role], [data-spw-operator]) {
+  --spw-role-accent: var(--spw-charge-field-color, var(--active-op-color, #008080));
+  --spw-role-edge: color-mix(in oklab, var(--spw-role-accent) 34%, transparent);
+  --spw-role-settle: var(--duration-base, 220ms);
+
+  position: relative;
+  transition:
+    box-shadow var(--spw-role-settle) var(--ease-smooth, ease),
+    border-color var(--spw-role-settle) var(--ease-smooth, ease);
+}
+
+/* --------------------------------------------------------------------------
+   channel — conducts, with direction. A continuous oriented edge.
+   -------------------------------------------------------------------------- */
+
+[data-spw-electrostatic-role='channel'] {
+  border-inline-start: 2px solid var(--spw-role-edge);
+}
+
+[data-spw-electrostatic-role='channel']::before {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: -2px;
+  inline-size: 2px;
+  /* Direction made visible: the gradient runs, so the edge reads as flow
+     rather than as a border that happens to be coloured. */
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--spw-role-accent),
+    transparent
+  );
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   transformer — couples across a gap. Two edges that never meet.
+   -------------------------------------------------------------------------- */
+
+[data-spw-electrostatic-role='transformer'] {
+  box-shadow:
+    inset 2px 0 0 var(--spw-role-edge),
+    inset 6px 0 0 color-mix(in oklab, var(--spw-role-accent) 18%, transparent);
+}
+
+/* --------------------------------------------------------------------------
+   ground — a sink. Weight at the base, and nothing radiating outward.
+   -------------------------------------------------------------------------- */
+
+[data-spw-electrostatic-role='ground'] {
+  border-block-end: 2px solid color-mix(in oklab, var(--spw-role-accent) 46%, transparent);
+  /* No glow, no outward shadow. A sink does not emit, and giving ground the
+     same treatment as the others would say the opposite of what it means. */
+  box-shadow: none;
+}
+
+/* --------------------------------------------------------------------------
+   inductor — stores and resists change. The slowest transition here.
+   -------------------------------------------------------------------------- */
+
+[data-spw-electrostatic-role='inductor'] {
+  --spw-role-settle: var(--duration-slow, 620ms);
+  border: 1px solid var(--spw-role-edge);
+  border-start-start-radius: var(--radius-lg, 12px);
+  border-end-end-radius: var(--radius-lg, 12px);
+}
+
+
+/* --------------------------------------------------------------------------
+   Derived from the operator — timing and hue only.
+
+   2,333 of the elements carrying `data-spw-operator` are links and 417 are
+   buttons. Box treatment on those would put a border on every link on the site,
+   which is the noisy-underline failure again in a new costume. So the derived
+   reading expresses through the two channels that cost no layout and no extra
+   ink: how fast the element settles, and which hue its charge borrows.
+
+   The inductor lag is the part worth having anyway — a `potential` link takes
+   longer to settle under attention than an `action` link, and that difference
+   is felt rather than read. Box treatment stays with the explicit attribute and
+   with block containers, where a border is a shape rather than an interruption.
+   -------------------------------------------------------------------------- */
+
+:where(:not([data-spw-electrostatic-role]))[data-spw-operator='potential'] {
+  --spw-role-settle: var(--duration-slow, 620ms);
+  transition-duration: var(--spw-role-settle);
+}
+
+:where(:not([data-spw-electrostatic-role]))[data-spw-operator='action'],
+:where(:not([data-spw-electrostatic-role]))[data-spw-operator='wonder'],
+:where(:not([data-spw-electrostatic-role]))[data-spw-operator='probe'] {
+  --spw-role-settle: var(--duration-fast, 140ms);
+  transition-duration: var(--spw-role-settle);
+}
+
+/* Block containers may take the full treatment; inline controls never do. */
+:where(article, section, details, .frame-panel, .frame-card):where(:not([data-spw-electrostatic-role]))[data-spw-operator='potential'] {
+  border: 1px solid var(--spw-role-edge);
+  border-start-start-radius: var(--radius-lg, 12px);
+  border-end-end-radius: var(--radius-lg, 12px);
+}
+
+:where(article, section, details, .frame-panel, .frame-card):where(:not([data-spw-electrostatic-role]))[data-spw-operator='integration'] {
+  box-shadow:
+    inset 2px 0 0 var(--spw-role-edge),
+    inset 6px 0 0 color-mix(in oklab, var(--spw-role-accent) 18%, transparent);
+}
+
+/* --------------------------------------------------------------------------
+   Attention raises the field for every role, at each role's own rate — which
+   is where the inductor's lag becomes something a reader can feel rather than
+   read.
+   -------------------------------------------------------------------------- */
+
+:where([data-spw-electrostatic-role], [data-spw-operator]):is(:hover, :focus-within) {
+  --spw-role-edge: color-mix(in oklab, var(--spw-role-accent) 62%, transparent);
+}
+
+/* --------------------------------------------------------------------------
+   A role is worth naming in a capture. Only under capture mode, because a
+   permanent label on every component is an annotation layer, not a design.
+   -------------------------------------------------------------------------- */
+
+[data-spw-capture-mode='study'] [data-spw-electrostatic-role]::after {
+  content: attr(data-spw-electrostatic-role);
+  position: absolute;
+  inset-block-start: 0.2em;
+  inset-inline-end: 0.4em;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: var(--font-size-xs, 0.75rem);
+  color: var(--spw-role-accent);
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where([data-spw-electrostatic-role], [data-spw-operator]) {
+    transition: none;
+  }
 }
 }
 
@@ -32586,8 +33847,14 @@ html[data-spw-theme-pack="glass-console"] {
   --spw-monolith-rim-light: inset 0 1px 0 color-mix(in oklab, #fff 18%, transparent);
 }
 
-/* Micro-world atmospheric lighting layer on body */
-body::before {
+/* Micro-world atmospheric lighting layer.
+
+   Gated on the attribute that was stamped to request it. Previously this hung
+   off bare `body::before`, so the layer painted on all 594 routes while
+   `data-spw-micro-world` — the opt-in — selected nothing at all: the attribute
+   was inert and the effect it named was unconditional. Both halves of that are
+   fixed by the selector, and a route now gets this atmosphere because it asked. */
+body[data-spw-micro-world="true"]::before {
   content: "";
   position: fixed;
   inset: 0;
@@ -36738,10 +38005,26 @@ html[data-spw-debug-mode="on"] :where(.spw-component-tag, .spw-guide-chip)[data-
    These seams help inline semantics remain readable inside prose.
    ========================================================================== */
 
+/*
+ * Scoped to what the seam is actually for.
+ *
+ * The selector previously included `a` and `button`, and measured against the
+ * routes that is 2,890 of the 3,028 elements it matched — 95% of them already
+ * carrying their own affordance treatment. The result was a page that underlined
+ * essentially every line of prose once the runtime settled, which is the
+ * opposite of "help inline semantics remain readable inside prose": a seam that
+ * marks everything marks nothing, and the reader loses the ability to tell an
+ * operator-bearing term from an ordinary link.
+ *
+ * Links and buttons are excluded. What remains is the 85 inline prose
+ * elements the rule was written for, where the seam is rare enough to read as
+ * a signal — and rare enough to serve as a prosodic anchor for someone scanning
+ * to recall something they heard.
+ */
 :where(
   .syntax-token,
   .spw-delimiter,
-  :where(a, button, span, strong, em, i, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator])
+  :where(span, strong, em, i, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator])
 ):not(.operator-chip):not(.frame-sigil):not(.spw-component-tag):not(.spw-guide-chip) {
   text-decoration-line: underline;
   text-decoration-color: color-mix(in srgb, currentColor 28%, transparent);
@@ -36798,6 +38081,62 @@ html[data-spw-debug-mode="on"] :where(.spw-component-tag, .spw-guide-chip)[data-
 :where(i .syntax-token, i .spw-delimiter, i :where(a, button, span, strong, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator])) {
   text-decoration-thickness: 1px;
   text-underline-offset: 0.18em;
+}
+
+
+/* ==========================================================================
+   Seam differentiation — the mark says what the operator does
+   --------------------------------------------------------------------------
+   Scoping the seam to prose left 122 elements that all looked identical, which
+   is the generic feeling: a reader learns "this word is marked" and never
+   learns what the mark means. A vocabulary of one carries no information.
+
+   The distinction is already derivable. An operator states what a term does to
+   charge, and electrostatic-roles.css reads that same vocabulary into circuit
+   roles. Here the decoration follows it, so the line style is a reading rather
+   than a palette choice:
+
+     potential    stores and resists change      dotted — latent, not yet spent
+     wonder       opens and holds open           dashed — an interval left open
+     action       commits and spends             solid — a closed circuit
+     integration  joins two into one held thing  double — two lines coupled
+     ground       something to return to         thin, low contrast — the floor
+
+   A reader who never reads this comment still gets the benefit: dotted terms
+   behave alike across the site, and that regularity is learnable by exposure.
+   That is the whole argument for an attention architecture that differentiates
+   — an undifferentiated mark can only be noticed, never understood.
+
+   Decoration only. Nothing here changes weight, size, or flow, so a settled
+   page does not move under a reader.
+   ========================================================================== */
+
+:where(span, strong, em, i, code, kbd, mark, small, time)[data-spw-operator='potential']:not(.operator-chip):not(.frame-sigil) {
+  text-decoration-style: dotted;
+}
+
+:where(span, strong, em, i, code, kbd, mark, small, time)[data-spw-operator='wonder']:not(.operator-chip):not(.frame-sigil),
+:where(span, strong, em, i, code, kbd, mark, small, time)[data-spw-operator='probe']:not(.operator-chip):not(.frame-sigil) {
+  text-decoration-style: dashed;
+}
+
+:where(span, strong, em, i, code, kbd, mark, small, time)[data-spw-operator='action']:not(.operator-chip):not(.frame-sigil) {
+  text-decoration-style: solid;
+  text-decoration-color: color-mix(in srgb, var(--active-op-color, currentColor) 48%, transparent);
+}
+
+:where(span, strong, em, i, code, kbd, mark, small, time)[data-spw-operator='integration']:not(.operator-chip):not(.frame-sigil) {
+  text-decoration-style: double;
+}
+
+:where(span, strong, em, i, code, kbd, mark, small, time):is(
+  [data-spw-operator='ground'],
+  [data-spw-operator='frame'],
+  [data-spw-operator='address'],
+  [data-spw-operator='value']
+):not(.operator-chip):not(.frame-sigil) {
+  text-decoration-style: solid;
+  text-decoration-color: color-mix(in srgb, currentColor 18%, transparent);
 }
 }
 
@@ -48347,5 +49686,34 @@ body[data-spw-surface="topics"] #topics-register .frame-topline .spec-pill {
     scroll-snap-align: start;
     white-space: nowrap;
   }
+}
+
+/* --------------------------------------------------------------------------
+   Stage, derived from position.
+
+   The three stage rules above are stamped zero times in the corpus and written
+   by no runtime, so an entry/ground/exit vocabulary sits fully styled and never
+   reached. Stamping it on 153 routes would be the wrong repair — the position
+   it describes is already unambiguous in the markup.
+
+   135 of 153 routes open with `.site-frame` inside `<main>`. First is arrival,
+   last is departure, everything between is the body of the visit. That is the
+   same entry → ground → exit reading, available structurally, with no attribute
+   to author and no JavaScript to mount.
+
+   Explicit `data-spw-stage` still wins where a route genuinely differs; these
+   only fill in where nothing was said.
+   -------------------------------------------------------------------------- */
+
+main > :where(.site-frame, .spw-frame):first-of-type:not([data-spw-stage]) {
+  --ornament-stage-opacity: var(--ornament-stage-entry-opacity);
+}
+
+main > :where(.site-frame, .spw-frame):not(:first-of-type):not(:last-of-type):not([data-spw-stage]) {
+  --ornament-stage-opacity: var(--ornament-stage-ground-opacity);
+}
+
+main > :where(.site-frame, .spw-frame):last-of-type:not(:first-of-type):not([data-spw-stage]) {
+  --ornament-stage-opacity: var(--ornament-stage-exit-opacity);
 }
 }
