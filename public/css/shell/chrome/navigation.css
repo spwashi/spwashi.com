@@ -189,6 +189,36 @@
   transform-origin: top center;
 }
 
+/* --------------------------------------------------------------------------
+   Toggle mode is a disclosed menu, not a clipped strip.
+
+   The base nav is a horizontally scrollable row — `display: flex` with
+   `overflow-x: auto` — which is right for the inline mode where it sits in the
+   header as a strip. Toggle mode inherited that layout and only clipped it
+   vertically, so a disclosed mobile menu opened as the same sideways-scrolling
+   row: every destination past the viewport edge sat off-screen behind a
+   horizontal scroll nobody expects a menu to need.
+
+   Clipping is a reveal, not a layout. A disclosed menu is a list, so toggle
+   mode changes the axis rather than only the clip. Inline mode keeps the strip.
+   -------------------------------------------------------------------------- */
+
+:where(.site-header[data-spw-menu-mode="toggle"] nav, body > header[data-spw-menu-mode="toggle"] nav) {
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  /* A menu wraps to its own height; it never scrolls sideways. */
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-snap-type: none;
+  max-block-size: min(70svh, 32rem);
+}
+
+:where(.site-header[data-spw-menu-mode="toggle"] nav, body > header[data-spw-menu-mode="toggle"] nav) > * {
+  inline-size: 100%;
+  scroll-snap-align: none;
+}
+
 :where(.site-header[data-spw-menu-mode="toggle"] nav, body > header[data-spw-menu-mode="toggle"] nav) {
   clip-path: inset(0 0 100% 0 round var(--shape-panel, 0.82rem));
   transition:

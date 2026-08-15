@@ -145,10 +145,26 @@
    These seams help inline semantics remain readable inside prose.
    ========================================================================== */
 
+/*
+ * Scoped to what the seam is actually for.
+ *
+ * The selector previously included `a` and `button`, and measured against the
+ * routes that is 2,890 of the 3,028 elements it matched — 95% of them already
+ * carrying their own affordance treatment. The result was a page that underlined
+ * essentially every line of prose once the runtime settled, which is the
+ * opposite of "help inline semantics remain readable inside prose": a seam that
+ * marks everything marks nothing, and the reader loses the ability to tell an
+ * operator-bearing term from an ordinary link.
+ *
+ * Links and buttons are excluded. What remains is the 85 inline prose
+ * elements the rule was written for, where the seam is rare enough to read as
+ * a signal — and rare enough to serve as a prosodic anchor for someone scanning
+ * to recall something they heard.
+ */
 :where(
   .syntax-token,
   .spw-delimiter,
-  :where(a, button, span, strong, em, i, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator])
+  :where(span, strong, em, i, code, kbd, mark, small, time):where([data-spw-charge-key], [data-spw-inline-form], [data-spw-operator])
 ):not(.operator-chip):not(.frame-sigil):not(.spw-component-tag):not(.spw-guide-chip) {
   text-decoration-line: underline;
   text-decoration-color: color-mix(in srgb, currentColor 28%, transparent);
