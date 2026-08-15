@@ -16142,14 +16142,6 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
    10. Frame cards and link cards
    ========================================================================== */
 
-:where(.spw-card, .frame-card, .media-card, .media-focus-card, .software-card, .operator-card, .plan-card, .ref-card) {
-  /* Debug / inspection */
-  --spw-debug-layer-owner: "components";
-  --spw-debug-layer-color: #9933cc;
-
-  /* Component accent now inherits semantic accent family via foundation bridge for consistent theming */
-}
-
 :where(
   .spw-card,
   .frame-card,
@@ -16162,39 +16154,23 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
   .ref-card,
   .compare-card
 ) {
+  /* Debug & inspection tokens */
+  --spw-debug-layer-owner: "components";
+  --spw-debug-layer-color: #9933cc;
+
+  /* Card detail tokens */
   --card-secondary-opacity: var(--component-card-detail-opacity, 0.86);
   --card-secondary-shift: calc(var(--component-card-detail-shift, 0) * 1px);
   --card-secondary-weight: var(--component-card-detail-weight, 0);
-}
-
-:where(a.spw-card, a.frame-card, .spw-card > a:first-child, .frame-card > a:first-child) {
-  /* Layout */
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  align-content: start;
-  gap: var(--component-gap-tight);
-
-  /* Box */
-  inline-size: 100%;
-  max-inline-size: 100%;
-  min-width: 0;
-  min-inline-size: 0;
-  container: spw-card / inline-size;
-
-  /* Typography */
-  color: inherit;
-  font-weight: inherit;
-  text-decoration: none;
-  overflow-wrap: anywhere;
-  word-break: break-word;
+  --card-rhythm: clamp(0.58rem, 1.8cqi, 0.85rem);
 }
 
 :where(.spw-card, .frame-card, .frame-card > a:first-child, .spw-card > a:first-child) {
-  /* Layout */
+  /* Layout & container query */
   justify-items: start;
   container: spw-card / inline-size;
 
-  /* Visual */
+  /* Visual surface */
   background:
     linear-gradient(
       180deg,
@@ -16204,13 +16180,34 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
     color-mix(in srgb, var(--component-surface-strong) calc(88% + (10% * var(--spw-tangibility, 0.5))), var(--component-route-accent) 5%);
   box-shadow: var(--component-shadow);
 
-  /* Interaction */
+  /* Transitions */
   transition:
     opacity 220ms var(--ease-settle, ease),
     background calc(var(--component-transition-deliberate) * (0.8 + (0.4 * var(--spw-viscosity, 0.3)))),
     border-color calc(var(--component-transition-base) * (0.8 + (0.4 * var(--spw-viscosity, 0.3)))),
     box-shadow calc(var(--component-transition-deliberate) * (0.8 + (0.4 * var(--spw-viscosity, 0.3)))),
     transform var(--component-transition-fast);
+}
+
+:where(a.spw-card, a.frame-card, .spw-card > a:first-child, .frame-card > a:first-child) {
+  /* Anchor card grid layout */
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: start;
+  gap: var(--component-gap-tight);
+
+  /* Box dimensions */
+  inline-size: 100%;
+  max-inline-size: 100%;
+  min-width: 0;
+  min-inline-size: 0;
+
+  /* Typography */
+  color: inherit;
+  font-weight: inherit;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 @supports (grid-template-rows: subgrid) {
@@ -16225,10 +16222,6 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
     opacity: 0;
     transform: translateY(8px);
   }
-}
-
-:where(.spw-card, .frame-card) {
-  --card-rhythm: clamp(0.58rem, 1.8cqi, 0.85rem);
 }
 
 /* 4-Slot Anatomy: header -> media -> body -> actions */
