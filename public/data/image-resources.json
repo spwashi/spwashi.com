@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-06-24T14:44:55.252Z",
+  "generatedAt": "2026-08-15T02:04:53.160Z",
   "sourceRoot": "/public/images/",
-  "count": 260,
+  "count": 354,
   "concepts": [
     "about",
     "algorithm",
@@ -36,7 +36,7 @@
       "path": "/public/images/apple-touch-icon.png",
       "directory": "public/images",
       "format": "png",
-      "bytes": 14410,
+      "bytes": 17526,
       "role": "thumbnail",
       "concepts": [],
       "swapHint": "Use /public/images/apple-touch-icon.png when a thumbnail visual needs a stable tracked asset."
@@ -222,6 +222,138 @@
       "swapHint": "Use /public/images/assets/home/spwashi.png when a home visual needs a stable tracked asset."
     },
     {
+      "id": "boonhonk-attentional-fluid",
+      "title": "Boonhonk Attentional Fluid",
+      "path": "/public/images/assets/illustrations/boonhonk-attentional-fluid-display.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 30254,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/boonhonk-attentional-fluid-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "boonhonk-attentional-fluid",
+      "title": "Boonhonk Attentional Fluid",
+      "path": "/public/images/assets/illustrations/boonhonk-attentional-fluid-display.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 34104,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/boonhonk-attentional-fluid-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "boonhonk-attentional-fluid",
+      "title": "Boonhonk Attentional Fluid",
+      "path": "/public/images/assets/illustrations/boonhonk-attentional-fluid-hero.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 210063,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/boonhonk-attentional-fluid-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "boonhonk-attentional-fluid",
+      "title": "Boonhonk Attentional Fluid",
+      "path": "/public/images/assets/illustrations/boonhonk-attentional-fluid-hero.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 258624,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/boonhonk-attentional-fluid-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "boonhonk-attentional-fluid",
+      "title": "Boonhonk Attentional Fluid",
+      "path": "/public/images/assets/illustrations/boonhonk-attentional-fluid-thumb.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 3156,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/boonhonk-attentional-fluid-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "boonhonk-attentional-fluid",
+      "title": "Boonhonk Attentional Fluid",
+      "path": "/public/images/assets/illustrations/boonhonk-attentional-fluid-thumb.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 4560,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/boonhonk-attentional-fluid-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "charge-wall",
+      "title": "Charge Wall",
+      "path": "/public/images/assets/illustrations/charge-wall-display.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 14431,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/charge-wall-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "charge-wall",
+      "title": "Charge Wall",
+      "path": "/public/images/assets/illustrations/charge-wall-display.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 18432,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/charge-wall-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "charge-wall",
+      "title": "Charge Wall",
+      "path": "/public/images/assets/illustrations/charge-wall-hero.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 157947,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/charge-wall-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "charge-wall",
+      "title": "Charge Wall",
+      "path": "/public/images/assets/illustrations/charge-wall-hero.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 311480,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/charge-wall-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "charge-wall",
+      "title": "Charge Wall",
+      "path": "/public/images/assets/illustrations/charge-wall-thumb.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 1960,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/charge-wall-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "charge-wall",
+      "title": "Charge Wall",
+      "path": "/public/images/assets/illustrations/charge-wall-thumb.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 2316,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/charge-wall-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
       "id": "compression",
       "title": "Compression",
       "path": "/public/images/assets/illustrations/compression.png",
@@ -300,6 +432,454 @@
         "worldbuilding"
       ],
       "swapHint": "Use /public/images/assets/illustrations/lore-land-signal-poster.png when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-architecture",
+      "title": "Papergami Architecture",
+      "path": "/public/images/assets/illustrations/papergami-architecture-display.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 29022,
+      "role": "display",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/papergami-architecture-display.avif when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-architecture",
+      "title": "Papergami Architecture",
+      "path": "/public/images/assets/illustrations/papergami-architecture-display.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 29260,
+      "role": "display",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/papergami-architecture-display.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-architecture",
+      "title": "Papergami Architecture",
+      "path": "/public/images/assets/illustrations/papergami-architecture-thumb.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 3876,
+      "role": "thumbnail",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/papergami-architecture-thumb.avif when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-architecture",
+      "title": "Papergami Architecture",
+      "path": "/public/images/assets/illustrations/papergami-architecture-thumb.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 6228,
+      "role": "thumbnail",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/papergami-architecture-thumb.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-botanical",
+      "title": "Papergami Botanical",
+      "path": "/public/images/assets/illustrations/papergami-botanical-display.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 27446,
+      "role": "display",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/papergami-botanical-display.avif when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-botanical",
+      "title": "Papergami Botanical",
+      "path": "/public/images/assets/illustrations/papergami-botanical-display.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 27800,
+      "role": "display",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/papergami-botanical-display.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-botanical",
+      "title": "Papergami Botanical",
+      "path": "/public/images/assets/illustrations/papergami-botanical-thumb.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 3870,
+      "role": "thumbnail",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/papergami-botanical-thumb.avif when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-botanical",
+      "title": "Papergami Botanical",
+      "path": "/public/images/assets/illustrations/papergami-botanical-thumb.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 6162,
+      "role": "thumbnail",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/papergami-botanical-thumb.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-cognitive",
+      "title": "Papergami Cognitive",
+      "path": "/public/images/assets/illustrations/papergami-cognitive-display.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 35139,
+      "role": "display",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/papergami-cognitive-display.avif when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-cognitive",
+      "title": "Papergami Cognitive",
+      "path": "/public/images/assets/illustrations/papergami-cognitive-display.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 34912,
+      "role": "display",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/papergami-cognitive-display.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-cognitive",
+      "title": "Papergami Cognitive",
+      "path": "/public/images/assets/illustrations/papergami-cognitive-hero.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 191791,
+      "role": "hero",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/papergami-cognitive-hero.avif when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-cognitive",
+      "title": "Papergami Cognitive",
+      "path": "/public/images/assets/illustrations/papergami-cognitive-hero.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 301484,
+      "role": "hero",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/papergami-cognitive-hero.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-cognitive",
+      "title": "Papergami Cognitive",
+      "path": "/public/images/assets/illustrations/papergami-cognitive-thumb.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 4014,
+      "role": "thumbnail",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/papergami-cognitive-thumb.avif when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-cognitive",
+      "title": "Papergami Cognitive",
+      "path": "/public/images/assets/illustrations/papergami-cognitive-thumb.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 6466,
+      "role": "thumbnail",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/papergami-cognitive-thumb.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-collage",
+      "title": "Papergami Collage",
+      "path": "/public/images/assets/illustrations/papergami-collage-display.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 34657,
+      "role": "display",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/papergami-collage-display.avif when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-collage",
+      "title": "Papergami Collage",
+      "path": "/public/images/assets/illustrations/papergami-collage-display.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 35134,
+      "role": "display",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/papergami-collage-display.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-collage",
+      "title": "Papergami Collage",
+      "path": "/public/images/assets/illustrations/papergami-collage-thumb.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 4194,
+      "role": "thumbnail",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/papergami-collage-thumb.avif when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-collage",
+      "title": "Papergami Collage",
+      "path": "/public/images/assets/illustrations/papergami-collage-thumb.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 7086,
+      "role": "thumbnail",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/papergami-collage-thumb.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-cubes",
+      "title": "Papergami Cubes",
+      "path": "/public/images/assets/illustrations/papergami-cubes-display.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 28967,
+      "role": "display",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/papergami-cubes-display.avif when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-cubes",
+      "title": "Papergami Cubes",
+      "path": "/public/images/assets/illustrations/papergami-cubes-display.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 28586,
+      "role": "display",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/papergami-cubes-display.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-cubes",
+      "title": "Papergami Cubes",
+      "path": "/public/images/assets/illustrations/papergami-cubes-thumb.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 4529,
+      "role": "thumbnail",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/papergami-cubes-thumb.avif when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-cubes",
+      "title": "Papergami Cubes",
+      "path": "/public/images/assets/illustrations/papergami-cubes-thumb.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 6790,
+      "role": "thumbnail",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/papergami-cubes-thumb.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-kinetic",
+      "title": "Papergami Kinetic",
+      "path": "/public/images/assets/illustrations/papergami-kinetic-display.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 29315,
+      "role": "display",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/papergami-kinetic-display.avif when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-kinetic",
+      "title": "Papergami Kinetic",
+      "path": "/public/images/assets/illustrations/papergami-kinetic-display.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 29244,
+      "role": "display",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/papergami-kinetic-display.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-kinetic",
+      "title": "Papergami Kinetic",
+      "path": "/public/images/assets/illustrations/papergami-kinetic-thumb.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 4370,
+      "role": "thumbnail",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/papergami-kinetic-thumb.avif when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-kinetic",
+      "title": "Papergami Kinetic",
+      "path": "/public/images/assets/illustrations/papergami-kinetic-thumb.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 6614,
+      "role": "thumbnail",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/papergami-kinetic-thumb.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-layout",
+      "title": "Papergami Layout",
+      "path": "/public/images/assets/illustrations/papergami-layout-display.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 32012,
+      "role": "display",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/papergami-layout-display.avif when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-layout",
+      "title": "Papergami Layout",
+      "path": "/public/images/assets/illustrations/papergami-layout-display.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 31590,
+      "role": "display",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/papergami-layout-display.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-layout",
+      "title": "Papergami Layout",
+      "path": "/public/images/assets/illustrations/papergami-layout-hero.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 171739,
+      "role": "hero",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/papergami-layout-hero.avif when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-layout",
+      "title": "Papergami Layout",
+      "path": "/public/images/assets/illustrations/papergami-layout-hero.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 270188,
+      "role": "hero",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/papergami-layout-hero.webp when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-layout",
+      "title": "Papergami Layout",
+      "path": "/public/images/assets/illustrations/papergami-layout-thumb.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 3848,
+      "role": "thumbnail",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/papergami-layout-thumb.avif when a style-reference / surface visual needs a stable tracked asset."
+    },
+    {
+      "id": "papergami-layout",
+      "title": "Papergami Layout",
+      "path": "/public/images/assets/illustrations/papergami-layout-thumb.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 6174,
+      "role": "thumbnail",
+      "concepts": [
+        "style-reference",
+        "surface"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/papergami-layout-thumb.webp when a style-reference / surface visual needs a stable tracked asset."
     },
     {
       "id": "pretext-physics",
@@ -584,6 +1164,266 @@
       "swapHint": "Use /public/images/home/constellation-studio-1600.webp when a home visual needs a stable tracked asset."
     },
     {
+      "id": "luminous-geometry-study-0",
+      "title": "Luminous Geometry Study 0",
+      "path": "/public/images/home/luminous-geometry-study-0-display.avif",
+      "directory": "public/images/home",
+      "format": "avif",
+      "bytes": 22188,
+      "role": "display",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/home/luminous-geometry-study-0-display.avif when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "luminous-geometry-study-0",
+      "title": "Luminous Geometry Study 0",
+      "path": "/public/images/home/luminous-geometry-study-0-display.png",
+      "directory": "public/images/home",
+      "format": "png",
+      "bytes": 302941,
+      "role": "display",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/home/luminous-geometry-study-0-display.png when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "luminous-geometry-study-0",
+      "title": "Luminous Geometry Study 0",
+      "path": "/public/images/home/luminous-geometry-study-0-display.webp",
+      "directory": "public/images/home",
+      "format": "webp",
+      "bytes": 18808,
+      "role": "display",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/home/luminous-geometry-study-0-display.webp when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "luminous-geometry-study-0",
+      "title": "Luminous Geometry Study 0",
+      "path": "/public/images/home/luminous-geometry-study-0-hero.avif",
+      "directory": "public/images/home",
+      "format": "avif",
+      "bytes": 57075,
+      "role": "hero",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/home/luminous-geometry-study-0-hero.avif when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "luminous-geometry-study-0",
+      "title": "Luminous Geometry Study 0",
+      "path": "/public/images/home/luminous-geometry-study-0-hero.png",
+      "directory": "public/images/home",
+      "format": "png",
+      "bytes": 787288,
+      "role": "hero",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/home/luminous-geometry-study-0-hero.png when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "luminous-geometry-study-0",
+      "title": "Luminous Geometry Study 0",
+      "path": "/public/images/home/luminous-geometry-study-0-hero.webp",
+      "directory": "public/images/home",
+      "format": "webp",
+      "bytes": 44530,
+      "role": "hero",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/home/luminous-geometry-study-0-hero.webp when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "luminous-geometry-study-0",
+      "title": "Luminous Geometry Study 0",
+      "path": "/public/images/home/luminous-geometry-study-0-thumb.avif",
+      "directory": "public/images/home",
+      "format": "avif",
+      "bytes": 4081,
+      "role": "thumbnail",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/home/luminous-geometry-study-0-thumb.avif when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "luminous-geometry-study-0",
+      "title": "Luminous Geometry Study 0",
+      "path": "/public/images/home/luminous-geometry-study-0-thumb.png",
+      "directory": "public/images/home",
+      "format": "png",
+      "bytes": 85389,
+      "role": "thumbnail",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/home/luminous-geometry-study-0-thumb.png when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "luminous-geometry-study-0",
+      "title": "Luminous Geometry Study 0",
+      "path": "/public/images/home/luminous-geometry-study-0-thumb.webp",
+      "directory": "public/images/home",
+      "format": "webp",
+      "bytes": 4560,
+      "role": "thumbnail",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/home/luminous-geometry-study-0-thumb.webp when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "luminous-geometry-study-0",
+      "title": "Luminous Geometry Study 0",
+      "path": "/public/images/home/luminous-geometry-study-0.webp",
+      "directory": "public/images/home",
+      "format": "webp",
+      "bytes": 29260,
+      "role": "image",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/home/luminous-geometry-study-0.webp when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "luminous-geometry-study-1",
+      "title": "Luminous Geometry Study 1",
+      "path": "/public/images/home/luminous-geometry-study-1-display.avif",
+      "directory": "public/images/home",
+      "format": "avif",
+      "bytes": 21283,
+      "role": "display",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/home/luminous-geometry-study-1-display.avif when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "luminous-geometry-study-1",
+      "title": "Luminous Geometry Study 1",
+      "path": "/public/images/home/luminous-geometry-study-1-display.png",
+      "directory": "public/images/home",
+      "format": "png",
+      "bytes": 296834,
+      "role": "display",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/home/luminous-geometry-study-1-display.png when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "luminous-geometry-study-1",
+      "title": "Luminous Geometry Study 1",
+      "path": "/public/images/home/luminous-geometry-study-1-display.webp",
+      "directory": "public/images/home",
+      "format": "webp",
+      "bytes": 17630,
+      "role": "display",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/home/luminous-geometry-study-1-display.webp when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "luminous-geometry-study-1",
+      "title": "Luminous Geometry Study 1",
+      "path": "/public/images/home/luminous-geometry-study-1-hero.avif",
+      "directory": "public/images/home",
+      "format": "avif",
+      "bytes": 55285,
+      "role": "hero",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/home/luminous-geometry-study-1-hero.avif when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "luminous-geometry-study-1",
+      "title": "Luminous Geometry Study 1",
+      "path": "/public/images/home/luminous-geometry-study-1-hero.png",
+      "directory": "public/images/home",
+      "format": "png",
+      "bytes": 770519,
+      "role": "hero",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/home/luminous-geometry-study-1-hero.png when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "luminous-geometry-study-1",
+      "title": "Luminous Geometry Study 1",
+      "path": "/public/images/home/luminous-geometry-study-1-hero.webp",
+      "directory": "public/images/home",
+      "format": "webp",
+      "bytes": 42684,
+      "role": "hero",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/home/luminous-geometry-study-1-hero.webp when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "luminous-geometry-study-1",
+      "title": "Luminous Geometry Study 1",
+      "path": "/public/images/home/luminous-geometry-study-1-thumb.avif",
+      "directory": "public/images/home",
+      "format": "avif",
+      "bytes": 3911,
+      "role": "thumbnail",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/home/luminous-geometry-study-1-thumb.avif when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "luminous-geometry-study-1",
+      "title": "Luminous Geometry Study 1",
+      "path": "/public/images/home/luminous-geometry-study-1-thumb.png",
+      "directory": "public/images/home",
+      "format": "png",
+      "bytes": 83775,
+      "role": "thumbnail",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/home/luminous-geometry-study-1-thumb.png when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "luminous-geometry-study-1",
+      "title": "Luminous Geometry Study 1",
+      "path": "/public/images/home/luminous-geometry-study-1-thumb.webp",
+      "directory": "public/images/home",
+      "format": "webp",
+      "bytes": 4400,
+      "role": "thumbnail",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/home/luminous-geometry-study-1-thumb.webp when a home visual needs a stable tracked asset."
+    },
+    {
+      "id": "luminous-geometry-study-1",
+      "title": "Luminous Geometry Study 1",
+      "path": "/public/images/home/luminous-geometry-study-1.webp",
+      "directory": "public/images/home",
+      "format": "webp",
+      "bytes": 27800,
+      "role": "image",
+      "concepts": [
+        "home"
+      ],
+      "swapHint": "Use /public/images/home/luminous-geometry-study-1.webp when a home visual needs a stable tracked asset."
+    },
+    {
       "id": "papergami-study-0",
       "title": "Papergami Study 0",
       "path": "/public/images/home/papergami-study-0.jpg",
@@ -731,7 +1571,7 @@
       "path": "/public/images/icon-maskable-512.png",
       "directory": "public/images",
       "format": "png",
-      "bytes": 72206,
+      "bytes": 85233,
       "role": "thumbnail",
       "concepts": [],
       "swapHint": "Use /public/images/icon-maskable-512.png when a thumbnail visual needs a stable tracked asset."
@@ -924,6 +1764,237 @@
         "design"
       ],
       "swapHint": "Use /public/images/renders/_raw-2x2/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_a422ce74-c637-4fde-b1b8-255680f9b83f.png when a style-reference / surface / design visual needs a stable tracked asset."
+    },
+    {
+      "id": "self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_29fe83f0-1458-4d40-bef2-02e19fb7b7c0_0",
+      "title": "Self Healing Acrylic And Papyrus Biofilm Useful For Paper Gen 29fe83f0 1458 4d40 Bef2 02e19fb7b7c0 0",
+      "path": "/public/images/renders/_raw/2026-08-12-style/self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_29fe83f0-1458-4d40-bef2-02e19fb7b7c0_0.png",
+      "directory": "public/images/renders/_raw/2026-08-12-style",
+      "format": "png",
+      "bytes": 1742903,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-12-style/self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_29fe83f0-1458-4d40-bef2-02e19fb7b7c0_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_29fe83f0-1458-4d40-bef2-02e19fb7b7c0_1",
+      "title": "Self Healing Acrylic And Papyrus Biofilm Useful For Paper Gen 29fe83f0 1458 4d40 Bef2 02e19fb7b7c0 1",
+      "path": "/public/images/renders/_raw/2026-08-12-style/self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_29fe83f0-1458-4d40-bef2-02e19fb7b7c0_1.png",
+      "directory": "public/images/renders/_raw/2026-08-12-style",
+      "format": "png",
+      "bytes": 1711657,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-12-style/self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_29fe83f0-1458-4d40-bef2-02e19fb7b7c0_1.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_29fe83f0-1458-4d40-bef2-02e19fb7b7c0_2",
+      "title": "Self Healing Acrylic And Papyrus Biofilm Useful For Paper Gen 29fe83f0 1458 4d40 Bef2 02e19fb7b7c0 2",
+      "path": "/public/images/renders/_raw/2026-08-12-style/self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_29fe83f0-1458-4d40-bef2-02e19fb7b7c0_2.png",
+      "directory": "public/images/renders/_raw/2026-08-12-style",
+      "format": "png",
+      "bytes": 2057389,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-12-style/self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_29fe83f0-1458-4d40-bef2-02e19fb7b7c0_2.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_29fe83f0-1458-4d40-bef2-02e19fb7b7c0_3",
+      "title": "Self Healing Acrylic And Papyrus Biofilm Useful For Paper Gen 29fe83f0 1458 4d40 Bef2 02e19fb7b7c0 3",
+      "path": "/public/images/renders/_raw/2026-08-12-style/self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_29fe83f0-1458-4d40-bef2-02e19fb7b7c0_3.png",
+      "directory": "public/images/renders/_raw/2026-08-12-style",
+      "format": "png",
+      "bytes": 1850182,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-12-style/self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_29fe83f0-1458-4d40-bef2-02e19fb7b7c0_3.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_2f90f3ee-0ae3-4b0a-af2c-2aa756dd975e_0",
+      "title": "Self Healing Acrylic And Papyrus Biofilm Useful For Paper Gen 2f90f3ee 0ae3 4b0a Af2c 2aa756dd975e 0",
+      "path": "/public/images/renders/_raw/2026-08-12-style/self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_2f90f3ee-0ae3-4b0a-af2c-2aa756dd975e_0.png",
+      "directory": "public/images/renders/_raw/2026-08-12-style",
+      "format": "png",
+      "bytes": 1591688,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-12-style/self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_2f90f3ee-0ae3-4b0a-af2c-2aa756dd975e_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_2f90f3ee-0ae3-4b0a-af2c-2aa756dd975e_1",
+      "title": "Self Healing Acrylic And Papyrus Biofilm Useful For Paper Gen 2f90f3ee 0ae3 4b0a Af2c 2aa756dd975e 1",
+      "path": "/public/images/renders/_raw/2026-08-12-style/self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_2f90f3ee-0ae3-4b0a-af2c-2aa756dd975e_1.png",
+      "directory": "public/images/renders/_raw/2026-08-12-style",
+      "format": "png",
+      "bytes": 1945783,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-12-style/self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_2f90f3ee-0ae3-4b0a-af2c-2aa756dd975e_1.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_2f90f3ee-0ae3-4b0a-af2c-2aa756dd975e_2",
+      "title": "Self Healing Acrylic And Papyrus Biofilm Useful For Paper Gen 2f90f3ee 0ae3 4b0a Af2c 2aa756dd975e 2",
+      "path": "/public/images/renders/_raw/2026-08-12-style/self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_2f90f3ee-0ae3-4b0a-af2c-2aa756dd975e_2.png",
+      "directory": "public/images/renders/_raw/2026-08-12-style",
+      "format": "png",
+      "bytes": 1510275,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-12-style/self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_2f90f3ee-0ae3-4b0a-af2c-2aa756dd975e_2.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_2f90f3ee-0ae3-4b0a-af2c-2aa756dd975e_3",
+      "title": "Self Healing Acrylic And Papyrus Biofilm Useful For Paper Gen 2f90f3ee 0ae3 4b0a Af2c 2aa756dd975e 3",
+      "path": "/public/images/renders/_raw/2026-08-12-style/self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_2f90f3ee-0ae3-4b0a-af2c-2aa756dd975e_3.png",
+      "directory": "public/images/renders/_raw/2026-08-12-style",
+      "format": "png",
+      "bytes": 1438377,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-12-style/self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_2f90f3ee-0ae3-4b0a-af2c-2aa756dd975e_3.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_e7d51353-fe2c-4a9c-90e5-9bff50398ea8_0",
+      "title": "Self Healing Acrylic And Papyrus Biofilm Useful For Paper Gen E7d51353 Fe2c 4a9c 90e5 9bff50398ea8 0",
+      "path": "/public/images/renders/_raw/2026-08-12-style/self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_e7d51353-fe2c-4a9c-90e5-9bff50398ea8_0.png",
+      "directory": "public/images/renders/_raw/2026-08-12-style",
+      "format": "png",
+      "bytes": 1872207,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-12-style/self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_e7d51353-fe2c-4a9c-90e5-9bff50398ea8_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_e7d51353-fe2c-4a9c-90e5-9bff50398ea8_1",
+      "title": "Self Healing Acrylic And Papyrus Biofilm Useful For Paper Gen E7d51353 Fe2c 4a9c 90e5 9bff50398ea8 1",
+      "path": "/public/images/renders/_raw/2026-08-12-style/self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_e7d51353-fe2c-4a9c-90e5-9bff50398ea8_1.png",
+      "directory": "public/images/renders/_raw/2026-08-12-style",
+      "format": "png",
+      "bytes": 1787256,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-12-style/self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_e7d51353-fe2c-4a9c-90e5-9bff50398ea8_1.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_e7d51353-fe2c-4a9c-90e5-9bff50398ea8_2",
+      "title": "Self Healing Acrylic And Papyrus Biofilm Useful For Paper Gen E7d51353 Fe2c 4a9c 90e5 9bff50398ea8 2",
+      "path": "/public/images/renders/_raw/2026-08-12-style/self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_e7d51353-fe2c-4a9c-90e5-9bff50398ea8_2.png",
+      "directory": "public/images/renders/_raw/2026-08-12-style",
+      "format": "png",
+      "bytes": 1867077,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-12-style/self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_e7d51353-fe2c-4a9c-90e5-9bff50398ea8_2.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_e7d51353-fe2c-4a9c-90e5-9bff50398ea8_3",
+      "title": "Self Healing Acrylic And Papyrus Biofilm Useful For Paper Gen E7d51353 Fe2c 4a9c 90e5 9bff50398ea8 3",
+      "path": "/public/images/renders/_raw/2026-08-12-style/self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_e7d51353-fe2c-4a9c-90e5-9bff50398ea8_3.png",
+      "directory": "public/images/renders/_raw/2026-08-12-style",
+      "format": "png",
+      "bytes": 1704751,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-12-style/self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_e7d51353-fe2c-4a9c-90e5-9bff50398ea8_3.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_eee4d3ae-4174-426f-aa8b-0dbb39560d3c_0",
+      "title": "Self Healing Acrylic And Papyrus Biofilm Useful For Paper Gen Eee4d3ae 4174 426f Aa8b 0dbb39560d3c 0",
+      "path": "/public/images/renders/_raw/2026-08-12-style/self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_eee4d3ae-4174-426f-aa8b-0dbb39560d3c_0.png",
+      "directory": "public/images/renders/_raw/2026-08-12-style",
+      "format": "png",
+      "bytes": 1945508,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-12-style/self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_eee4d3ae-4174-426f-aa8b-0dbb39560d3c_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_eee4d3ae-4174-426f-aa8b-0dbb39560d3c_1",
+      "title": "Self Healing Acrylic And Papyrus Biofilm Useful For Paper Gen Eee4d3ae 4174 426f Aa8b 0dbb39560d3c 1",
+      "path": "/public/images/renders/_raw/2026-08-12-style/self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_eee4d3ae-4174-426f-aa8b-0dbb39560d3c_1.png",
+      "directory": "public/images/renders/_raw/2026-08-12-style",
+      "format": "png",
+      "bytes": 1640015,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-12-style/self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_eee4d3ae-4174-426f-aa8b-0dbb39560d3c_1.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_eee4d3ae-4174-426f-aa8b-0dbb39560d3c_2",
+      "title": "Self Healing Acrylic And Papyrus Biofilm Useful For Paper Gen Eee4d3ae 4174 426f Aa8b 0dbb39560d3c 2",
+      "path": "/public/images/renders/_raw/2026-08-12-style/self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_eee4d3ae-4174-426f-aa8b-0dbb39560d3c_2.png",
+      "directory": "public/images/renders/_raw/2026-08-12-style",
+      "format": "png",
+      "bytes": 2078268,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-12-style/self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_eee4d3ae-4174-426f-aa8b-0dbb39560d3c_2.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_eee4d3ae-4174-426f-aa8b-0dbb39560d3c_3",
+      "title": "Self Healing Acrylic And Papyrus Biofilm Useful For Paper Gen Eee4d3ae 4174 426f Aa8b 0dbb39560d3c 3",
+      "path": "/public/images/renders/_raw/2026-08-12-style/self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_eee4d3ae-4174-426f-aa8b-0dbb39560d3c_3.png",
+      "directory": "public/images/renders/_raw/2026-08-12-style",
+      "format": "png",
+      "bytes": 1784440,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-12-style/self-healing_acrylic_and_papyrus_biofilm_useful_for_paper_gen_eee4d3ae-4174-426f-aa8b-0dbb39560d3c_3.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_colorful_but_cohesive_and_readable_palette_with_3_col_e6171dc4-0c5b-4911-bb0e-b54844bf6b46_0",
+      "title": "Colorful But Cohesive And Readable Palette With 3 Col E6171dc4 0c5b 4911 Bb0e B54844bf6b46 0",
+      "path": "/public/images/renders/_raw/2026-08-12-style/spwashi_colorful_but_cohesive_and_readable_palette_with_3_col_e6171dc4-0c5b-4911-bb0e-b54844bf6b46_0.png",
+      "directory": "public/images/renders/_raw/2026-08-12-style",
+      "format": "png",
+      "bytes": 1582084,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-12-style/spwashi_colorful_but_cohesive_and_readable_palette_with_3_col_e6171dc4-0c5b-4911-bb0e-b54844bf6b46_0.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_colorful_but_cohesive_and_readable_palette_with_7_col_c1122603-bb7e-4f04-a088-8da06453948c_1",
+      "title": "Colorful But Cohesive And Readable Palette With 7 Col C1122603 Bb7e 4f04 A088 8da06453948c 1",
+      "path": "/public/images/renders/_raw/2026-08-12-style/spwashi_colorful_but_cohesive_and_readable_palette_with_7_col_c1122603-bb7e-4f04-a088-8da06453948c_1.png",
+      "directory": "public/images/renders/_raw/2026-08-12-style",
+      "format": "png",
+      "bytes": 1019305,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-12-style/spwashi_colorful_but_cohesive_and_readable_palette_with_7_col_c1122603-bb7e-4f04-a088-8da06453948c_1.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_Imagine_a_large_heavy_ovoid_roughly_the_size_of_a_human_1d0ca44b-29d7-4307-9fb7-f145d4ec7802",
+      "title": "Imagine A Large Heavy Ovoid Roughly The Size Of A Human 1d0ca44b 29d7 4307 9fb7 F145d4ec7802",
+      "path": "/public/images/renders/_raw/2026-08-12-style/spwashi_Imagine_a_large_heavy_ovoid_roughly_the_size_of_a_human_1d0ca44b-29d7-4307-9fb7-f145d4ec7802.png",
+      "directory": "public/images/renders/_raw/2026-08-12-style",
+      "format": "png",
+      "bytes": 1385550,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-12-style/spwashi_Imagine_a_large_heavy_ovoid_roughly_the_size_of_a_human_1d0ca44b-29d7-4307-9fb7-f145d4ec7802.png when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_paper_--raw_--profile_e3yhbyz_--stylize_1000_--weird__e3028404-ffbc-4daf-9a25-ce039dcf6465_1",
+      "title": "Paper Raw Profile E3yhbyz Stylize 1000 Weird E3028404 Ffbc 4daf 9a25 Ce039dcf6465 1",
+      "path": "/public/images/renders/_raw/2026-08-12-style/spwashi_paper_--raw_--profile_e3yhbyz_--stylize_1000_--weird__e3028404-ffbc-4daf-9a25-ce039dcf6465_1.png",
+      "directory": "public/images/renders/_raw/2026-08-12-style",
+      "format": "png",
+      "bytes": 1711717,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-12-style/spwashi_paper_--raw_--profile_e3yhbyz_--stylize_1000_--weird__e3028404-ffbc-4daf-9a25-ce039dcf6465_1.png when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "spwashi_paper_--raw_--profile_e3yhbyz_--stylize_1000_--weird__e3028404-ffbc-4daf-9a25-ce039dcf6465_2",
+      "title": "Paper Raw Profile E3yhbyz Stylize 1000 Weird E3028404 Ffbc 4daf 9a25 Ce039dcf6465 2",
+      "path": "/public/images/renders/_raw/2026-08-12-style/spwashi_paper_--raw_--profile_e3yhbyz_--stylize_1000_--weird__e3028404-ffbc-4daf-9a25-ce039dcf6465_2.png",
+      "directory": "public/images/renders/_raw/2026-08-12-style",
+      "format": "png",
+      "bytes": 1482448,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/_raw/2026-08-12-style/spwashi_paper_--raw_--profile_e3yhbyz_--stylize_1000_--weird__e3028404-ffbc-4daf-9a25-ce039dcf6465_2.png when a render visual needs a stable tracked asset."
     },
     {
       "id": "Brainstorming sketch with robot and text",
@@ -2152,6 +3223,105 @@
       "role": "render",
       "concepts": [],
       "swapHint": "Use /public/images/renders/2026-05-B-rhythms/pollination-golden-spiral.jpg when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "charge-wall-1",
+      "title": "Charge Wall 1",
+      "path": "/public/images/renders/2026-08-13-charge-wall-study/charge-wall-1.avif",
+      "directory": "public/images/renders/2026-08-13-charge-wall-study",
+      "format": "avif",
+      "bytes": 131706,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-08-13-charge-wall-study/charge-wall-1.avif when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "charge-wall-2",
+      "title": "Charge Wall 2",
+      "path": "/public/images/renders/2026-08-13-charge-wall-study/charge-wall-2.avif",
+      "directory": "public/images/renders/2026-08-13-charge-wall-study",
+      "format": "avif",
+      "bytes": 10377,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-08-13-charge-wall-study/charge-wall-2.avif when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "charge-wall-3",
+      "title": "Charge Wall 3",
+      "path": "/public/images/renders/2026-08-13-charge-wall-study/charge-wall-3.avif",
+      "directory": "public/images/renders/2026-08-13-charge-wall-study",
+      "format": "avif",
+      "bytes": 92947,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-08-13-charge-wall-study/charge-wall-3.avif when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "charge-wall-4",
+      "title": "Charge Wall 4",
+      "path": "/public/images/renders/2026-08-13-charge-wall-study/charge-wall-4.avif",
+      "directory": "public/images/renders/2026-08-13-charge-wall-study",
+      "format": "avif",
+      "bytes": 27178,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-08-13-charge-wall-study/charge-wall-4.avif when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "boonhonk-attentional-fluid",
+      "title": "Boonhonk Attentional Fluid",
+      "path": "/public/images/renders/2026-08-13-spw-fluid-study/boonhonk-attentional-fluid.avif",
+      "directory": "public/images/renders/2026-08-13-spw-fluid-study",
+      "format": "avif",
+      "bytes": 179005,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-08-13-spw-fluid-study/boonhonk-attentional-fluid.avif when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "cauldron-spw-fluid-1",
+      "title": "Cauldron Spw Fluid 1",
+      "path": "/public/images/renders/2026-08-13-spw-fluid-study/cauldron-spw-fluid-1.avif",
+      "directory": "public/images/renders/2026-08-13-spw-fluid-study",
+      "format": "avif",
+      "bytes": 57507,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-08-13-spw-fluid-study/cauldron-spw-fluid-1.avif when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "cauldron-spw-fluid-2",
+      "title": "Cauldron Spw Fluid 2",
+      "path": "/public/images/renders/2026-08-13-spw-fluid-study/cauldron-spw-fluid-2.avif",
+      "directory": "public/images/renders/2026-08-13-spw-fluid-study",
+      "format": "avif",
+      "bytes": 84858,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-08-13-spw-fluid-study/cauldron-spw-fluid-2.avif when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "cauldron-spw-fluid-3",
+      "title": "Cauldron Spw Fluid 3",
+      "path": "/public/images/renders/2026-08-13-spw-fluid-study/cauldron-spw-fluid-3.avif",
+      "directory": "public/images/renders/2026-08-13-spw-fluid-study",
+      "format": "avif",
+      "bytes": 84086,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-08-13-spw-fluid-study/cauldron-spw-fluid-3.avif when a render visual needs a stable tracked asset."
+    },
+    {
+      "id": "cauldron-spw-fluid-4",
+      "title": "Cauldron Spw Fluid 4",
+      "path": "/public/images/renders/2026-08-13-spw-fluid-study/cauldron-spw-fluid-4.avif",
+      "directory": "public/images/renders/2026-08-13-spw-fluid-study",
+      "format": "avif",
+      "bytes": 58199,
+      "role": "render",
+      "concepts": [],
+      "swapHint": "Use /public/images/renders/2026-08-13-spw-fluid-study/cauldron-spw-fluid-4.avif when a render visual needs a stable tracked asset."
     },
     {
       "id": "papergami-architecture",
