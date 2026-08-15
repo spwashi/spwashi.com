@@ -18,7 +18,7 @@ const logger = createSpwLogger('spw-layout-assumptions', {
 
 const MOBILE_QUERY = '(max-width: 720px), (pointer: coarse)';
 const OVERLAP_GUTTER_PX = 6;
-const CLEARANCE_TOLERANCE_PX = 14;
+const CLEARANCE_TOLERANCE_PX = 18;
 
 export const LAYOUT_ASSUMPTION_IDS = Object.freeze({
   BOTTOM_LANE_OVERLAP: 'bottom-lane-overlap',

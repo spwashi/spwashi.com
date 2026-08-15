@@ -365,10 +365,10 @@ async function collectModuleUpdateGrammarIssues(): Promise<string[]> {
 }
 
 function parseFeatures(source: string): string[] {
-  const stringMatch = source.match(/features:\s*(['"`])([^'"`]+)\1/);
+  const stringMatch = source.match(/\bfeatures:\s*(['"`])([^'"`]+)\1/);
   if (stringMatch) return [stringMatch[2]];
 
-  const arrayMatch = source.match(/features:\s*\[([\s\S]*?)\]/);
+  const arrayMatch = source.match(/\bfeatures:\s*\[([\s\S]*?)\]/);
   if (!arrayMatch) return [];
 
   return [...arrayMatch[1].matchAll(/(['"`])([^'"`]+)\1/g)].map((item) => item[2]);

@@ -39,7 +39,7 @@ import { createSpwLogger, markInstrumented } from '../kernel/instrumentation.js'
 
 const GRAVITY_SELECTOR = '[data-spw-gravity]';
 
-const MEASURE_BANDS = Object.freeze({ narrow: 340, comfortable: 680 });
+const MEASURE_BANDS = Object.freeze({ compact: 320, balanced: 580, wide: 880 });
 const EDGE_THRESHOLD_RATIO = 0.12;
 const VERTICAL_DEADZONE = 0.15;
 
@@ -183,9 +183,10 @@ const rectsIntersect = (a, b) =>
   a.left < b.right && b.left < a.right && a.top < b.bottom && b.top < a.bottom;
 
 const resolveMeasureBand = (inlineSize) => {
-  if (inlineSize < MEASURE_BANDS.narrow) return 'narrow';
-  if (inlineSize < MEASURE_BANDS.comfortable) return 'comfortable';
-  return 'wide';
+  if (inlineSize < MEASURE_BANDS.compact) return 'compact';
+  if (inlineSize < MEASURE_BANDS.balanced) return 'balanced';
+  if (inlineSize < MEASURE_BANDS.wide) return 'wide';
+  return 'maximal';
 };
 
 const resolveExtent = (blockSize, viewportHeight) => {

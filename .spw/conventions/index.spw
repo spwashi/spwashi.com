@@ -55,6 +55,7 @@
 @charge_cycle: ~"./charge-cycle.spw"
 @electrostatic_affordances: ~"./electrostatic-affordances.spw"
 @arrival_electrostatics: ~"./arrival-electrostatics.spw"  # arrival as potential difference; carries the site's first probeable wonders
+@module_load_contract: ~"./module-load-contract.spw"  # interaction triggers, subfeature granularity, affordance story, and electrostatics
 @stylesheet_ecology: ~"./stylesheet-ecology.spw"  # a stylesheet is a standalone document; core.css is where the ecology fails
 @semantic_expression_consequence: ~"./semantic-expression-consequence.spw"  # 441 authored expressions parsed at build time; kinship as inductance
 @depth_perspectives: ~"./depth-perspectives.spw"  # beginner/advanced as projections, not rungs; why the arrows stalled

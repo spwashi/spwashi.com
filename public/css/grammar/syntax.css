@@ -2302,3 +2302,56 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
 :where([data-spw-succession="cluster"]) { font-weight: 550; }
 :where([data-spw-succession="root"]) { font-weight: 500; }
 :where([data-spw-succession="spore"]) { font-weight: 450; opacity: 0.88; }
+
+/* ─── Interactive Brace Actions ({ entry, } projection) ─────────────────── */
+
+.spw-brace-actions {
+  position: absolute;
+  inset-inline: 0.4rem;
+  inset-block-start: 0.4rem;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity var(--duration-fast, 140ms) ease;
+}
+
+:where([data-spw-form="brace"]):is(:hover, :focus-within) > .spw-brace-actions {
+  opacity: 1;
+}
+
+.spw-brace-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 1.6rem;
+  block-size: 1.6rem;
+  border-radius: var(--shape-element, 4px);
+  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 32%, var(--line, rgba(14, 18, 20, 0.14)));
+  background: color-mix(in srgb, var(--surface-strong, #fff) 92%, transparent);
+  color: var(--active-op-color, var(--teal, #008080));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  pointer-events: auto;
+  backdrop-filter: blur(4px);
+  transition:
+    transform var(--duration-instant, 50ms) ease,
+    background-color var(--duration-fast, 140ms) ease,
+    border-color var(--duration-fast, 140ms) ease,
+    box-shadow var(--duration-fast, 140ms) ease;
+}
+
+.spw-brace-action:hover,
+.spw-brace-action:focus-visible {
+  border-color: var(--active-op-color, var(--teal, #008080));
+  background: color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 15%, var(--surface-strong, #fff));
+  box-shadow: 0 0 8px color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 24%, transparent);
+  transform: scale(1.08);
+}
+
+.spw-brace-action:active {
+  transform: scale(0.96);
+}

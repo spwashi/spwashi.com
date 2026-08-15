@@ -331,7 +331,7 @@ function shouldPrefetchRuntimeResources(ctx) {
   const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection || null;
   if (connection?.saveData) return false;
   const effectiveType = String(connection?.effectiveType || '').toLowerCase();
-  return effectiveType !== 'slow-2g' && effectiveType !== '2g';
+  return effectiveType !== 'slow-2g' && effectiveType !== '2g' && effectiveType !== '3g';
 }
 
 function extractDynamicImportSpecifier(def) {

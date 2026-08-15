@@ -145,6 +145,48 @@ export function describeModuleCost(cost = {}) {
   return copy ? `${commitment}/${spend} ${copy}` : `${commitment}/${spend}`;
 }
 
+/**
+ * Electrostatic role in the living medium (@electrostatic_affordances / @arrival_electrostatics).
+ * An operator is a terminal; a region is the material channel; an image/satchel is a capacitor.
+ */
+export const ELECTROSTATIC_ROLE = Object.freeze({
+  TERMINAL: 'terminal',      // [data-spw-operator] — electrode where potential accumulates
+  CHANNEL: 'channel',        // [data-spw-region], [data-spw-form="brace"] — conducts current through walls
+  CAPACITOR: 'capacitor',    // [data-spw-image-*], wonder memory — stores charge/dielectric hold without leaking
+  TRANSFORMER: 'transformer',// palette shifts, mode switches — pivots energy to another perspective (@)
+  INDUCTOR: 'inductor',      // operator resonance clusters — induces shared momentum across matching tokens
+  GROUND: 'ground',          // #> address handles, settled layout — safely sediments charge into calm fixity
+});
+
+/**
+ * How charge releases or precipitates once an interaction acts.
+ */
+export const DISCHARGE_KIND = Object.freeze({
+  RELEASE: 'release',        // transient spark on click/tap
+  TRANSFER: 'transfer',      // lateral conduction across a brace or section boundary
+  PROJECT: 'project',        // elevation onto an inspection overlay or satchel
+  GROUND: 'ground',          // sedimentation into persistent storage / checkpoint
+  RESONATE: 'resonate',      // harmonic glow across kin operators
+  SETTLE: 'settle',          // geometric stabilization and clearance freeze
+});
+
+/**
+ * Interaction triggers that wake latent terminals into armed, preview, or acted states.
+ */
+export const INTERACTION_TRIGGER = Object.freeze({
+  POINTER_APPROACH: 'pointer-approach', // pointer enters vicinity / hover begins
+  OPERATOR_TOUCH: 'operator-touch',     // click or tap on an operator chip / handle
+  BRACE_INTERACT: 'brace-interact',     // click/drag along a brace boundary
+  SCROLL_BOUNDARY: 'scroll-boundary',   // scroll crosses a section liminality band
+  KEYBOARD_CHORD: 'keyboard-chord',     // key sequence or shortcut (Alt+K, ?, Esc)
+  SPELL_CAST: 'spell-cast',             // casting or restoring a spell/checkpoint
+  IDLE_SETTLE: 'idle-settle',           // double-rAF + font render completion
+});
+
+export const ELECTROSTATIC_ROLE_VALUES = Object.freeze(Object.values(ELECTROSTATIC_ROLE));
+export const DISCHARGE_KIND_VALUES = Object.freeze(Object.values(DISCHARGE_KIND));
+export const INTERACTION_TRIGGER_VALUES = Object.freeze(Object.values(INTERACTION_TRIGGER));
+
 /** Documented field order for agents reviewing or adding catalog defs. */
 export const CATALOG_DEF_FIELD_ORDER = Object.freeze([
   'id',
@@ -153,6 +195,10 @@ export const CATALOG_DEF_FIELD_ORDER = Object.freeze([
   'cost',
   'costClass',
   'features',
+  'subfeatures',
+  'triggers',
+  'affordances',
+  'electrostatics',
   'pageFamily',
   'pageRole',
   'pageModes',

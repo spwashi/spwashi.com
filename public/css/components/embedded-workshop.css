@@ -41,3 +41,241 @@
     font-size: 0.72rem;
   }
 }
+
+/* ==========================================================================
+   Toolmaker Gazette & Specimen Submission Bench
+   ========================================================================== */
+
+:where(.specimen-submission-bench) {
+  display: grid;
+  gap: var(--space-md, 1.25rem);
+  margin-block: var(--space-md, 1.25rem);
+}
+
+:where(.specimen-lens-switch) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem;
+  border-radius: var(--component-radius-loose, 8px);
+  background: color-mix(in srgb, var(--surface-soft, rgba(0, 0, 0, 0.04)) 85%, var(--active-op-color, #008080) 15%);
+}
+
+:where(.specimen-lens-btn) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.38rem 0.75rem;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--ink-soft, rgba(0, 0, 0, 0.7));
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.78rem;
+  font-weight: 550;
+  cursor: pointer;
+  transition: all 160ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+:where(.specimen-lens-btn:hover) {
+  color: var(--ink, #111);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 60%, transparent);
+}
+
+:where(.specimen-lens-btn[aria-pressed="true"]) {
+  border-color: color-mix(in srgb, var(--active-op-color, #008080) 32%, var(--line, rgba(0, 0, 0, 0.15)));
+  background: var(--surface-strong, #fff);
+  color: color-mix(in srgb, var(--ink, #111) 75%, var(--active-op-color, #008080) 25%);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+:where(.specimen-draft-grid) {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: var(--space-md, 1.25rem);
+  align-items: start;
+}
+
+@media (max-width: 54rem) {
+  :where(.specimen-draft-grid) {
+    grid-template-columns: 1fr;
+  }
+}
+
+:where(.specimen-form-pane) {
+  display: grid;
+  gap: 0.85rem;
+  padding: 1rem;
+  border: 1px solid color-mix(in srgb, var(--active-op-color, #008080) 20%, var(--line, rgba(14, 18, 20, 0.12)));
+  border-radius: var(--component-radius-loose, 8px);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 96%, var(--active-op-color, #008080) 4%);
+}
+
+:where(.specimen-form-row) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
+  gap: 0.65rem;
+}
+
+:where(.specimen-field) {
+  display: grid;
+  gap: 0.28rem;
+}
+
+:where(.specimen-field label) {
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.74rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft, rgba(0, 0, 0, 0.65));
+}
+
+:where(.spw-input, .spw-select, .spw-textarea) {
+  inline-size: 100%;
+  padding: 0.45rem 0.65rem;
+  border: 1px solid var(--line, rgba(14, 18, 20, 0.18));
+  border-radius: 5px;
+  background: var(--surface-strong, #fff);
+  color: var(--ink, #111);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.82rem;
+  transition: border-color 140ms ease, box-shadow 140ms ease;
+}
+
+:where(.spw-textarea) {
+  resize: vertical;
+  min-block-size: 8rem;
+  line-height: 1.45;
+  tab-size: 2;
+}
+
+:where(.spw-input:focus-visible, .spw-select:focus-visible, .spw-textarea:focus-visible) {
+  outline: 2px solid color-mix(in srgb, var(--active-op-color, #008080) 65%, transparent);
+  outline-offset: 1px;
+  border-color: var(--active-op-color, #008080);
+}
+
+:where(.specimen-preview-pane) {
+  display: grid;
+  gap: 0.75rem;
+  position: sticky;
+  top: 1rem;
+}
+
+:where(.specimen-preview-card.site-frame) {
+  margin: 0;
+  padding: 1rem;
+  border: 1px solid color-mix(in srgb, var(--active-op-color, #008080) 28%, var(--line, rgba(14, 18, 20, 0.15)));
+  border-radius: var(--component-radius-loose, 8px);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--active-op-color, #008080) 6%, transparent), transparent 60%),
+    var(--surface-strong, #fff);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+:where(.specimen-preview-header) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-block-end: 0.65rem;
+  padding-block-end: 0.5rem;
+  border-block-end: 1px dashed var(--line, rgba(14, 18, 20, 0.12));
+}
+
+:where(.specimen-preview-code) {
+  margin: 0;
+  padding: 0.65rem;
+  border-radius: 6px;
+  background: var(--surface-code, #14171a);
+  color: #d1d5db;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.76rem;
+  line-height: 1.4;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+:where(.specimen-actions-row) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+:where(.specimen-action-btn) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.48rem 0.85rem;
+  border: 1px solid color-mix(in srgb, var(--active-op-color, #008080) 35%, var(--line, rgba(0, 0, 0, 0.18)));
+  border-radius: 6px;
+  background: var(--surface-strong, #fff);
+  color: var(--ink, #111);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 140ms ease;
+}
+
+:where(.specimen-action-btn:hover) {
+  background: color-mix(in srgb, var(--active-op-color, #008080) 12%, var(--surface-strong, #fff));
+  border-color: var(--active-op-color, #008080);
+}
+
+:where(.specimen-action-btn--primary) {
+  background: color-mix(in srgb, var(--active-op-color, #008080) 85%, #000);
+  border-color: transparent;
+  color: #fff;
+}
+
+:where(.specimen-action-btn--primary:hover) {
+  background: var(--active-op-color, #008080);
+  color: #fff;
+}
+
+:where(.specimen-status-note) {
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.75rem;
+  color: var(--active-op-color, #008080);
+  opacity: 0;
+  transition: opacity 160ms ease;
+}
+
+:where(.specimen-status-note.is-active) {
+  opacity: 1;
+}
+
+:where(.toolmaker-criteria-strip) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13.5rem), 1fr));
+  gap: 0.75rem;
+  margin-block-start: 1rem;
+}
+
+:where(.toolmaker-criterion-card) {
+  padding: 0.75rem;
+  border: 1px solid var(--line, rgba(14, 18, 20, 0.12));
+  border-radius: var(--component-radius-loose, 8px);
+  background: var(--surface-soft, rgba(0, 0, 0, 0.02));
+}
+
+:where(.toolmaker-criterion-card strong) {
+  display: block;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.8rem;
+  margin-block-end: 0.25rem;
+  color: var(--ink, #111);
+}
+
+:where(.toolmaker-criterion-card p) {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: var(--ink-soft, rgba(0, 0, 0, 0.68));
+}

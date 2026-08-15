@@ -50,6 +50,7 @@
 @html_spw_block_association: ~"./conventions/html-spw-block-association.spw"
 @spw_serialization_hydration: ~"./conventions/spw-serialization-hydration.spw"
 @surface_interaction_combinatorics: ~"./conventions/surface-interaction-combinatorics.spw"
+@module_load_contract: ~"./conventions/module-load-contract.spw"
 @narrative_instrumentation: ~"./conventions/narrative-instrumentation.spw"
 @query_disposition: ~"./conventions/query-disposition.spw"
 @composition_box_model: ~"./conventions/composition-box-model.spw"

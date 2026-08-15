@@ -326,7 +326,7 @@ export const FEATURE_DEFS = [
   {
     id: 'region-menu',
     layer: MODULE_LAYERS.ENHANCEMENT,
-    when: MOUNT_WHEN.IMMEDIATE,
+    when: MOUNT_WHEN.INTERACTION,
     costClass: COST_CLASS.DEMAND_COUPLED,
     selector: '.spw-delimiter, .frame-sigil, .operator-chip, [data-spw-semantic-expression]',
     rootMode: 'single',
@@ -338,7 +338,7 @@ export const FEATURE_DEFS = [
       'flourish:data-spw-region-mark',
     ],
     evaluates: 'semantics navigation interaction region-menu',
-    timingArc: 'immediate-inspect',
+    timingArc: 'enhance-inspect',
     effectScope: 'popover listeners',
     load: () => import('./region-menu.js'),
     mount: (mod, ctx, el) => mod?.initSpwRegionMenu?.(ctx, el),

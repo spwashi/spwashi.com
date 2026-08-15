@@ -509,3 +509,54 @@ export function annotateModuleUpdatesTarget(target, updates) {
   changed = writeDatasetValue(target, 'spwModuleUpdatesEvents', grouped.event?.join(' ') || null) || changed;
   return changed;
 }
+
+export function normalizeSubfeatures(subfeatures) {
+  if (!subfeatures) return [];
+  const list = Array.isArray(subfeatures) ? subfeatures : String(subfeatures).split(/[\s,]+/);
+  return [...new Set(list.map(cleanToken).filter(Boolean))];
+}
+
+export function normalizeTriggers(triggers) {
+  if (!triggers) return [];
+  const list = Array.isArray(triggers) ? triggers : String(triggers).split(/[\s,]+/);
+  return [...new Set(list.map(cleanToken).filter(Boolean))];
+}
+
+export function normalizeAffordances(affordances) {
+  if (!affordances) return [];
+  const list = Array.isArray(affordances) ? affordances : String(affordances).split(/[\s,]+/);
+  return [...new Set(list.map(cleanToken).filter(Boolean))];
+}
+
+export function normalizeElectrostatics(electrostatics = {}) {
+  if (!electrostatics || typeof electrostatics !== 'object') return null;
+  const role = cleanToken(electrostatics.role || '');
+  const discharge = cleanToken(electrostatics.discharge || '');
+  const dielectric = Boolean(electrostatics.dielectric);
+  const field = cleanToken(electrostatics.field || '');
+  return {
+    role: role || null,
+    discharge: discharge || null,
+    dielectric,
+    field: field || null,
+  };
+}
+
+export function describeModuleAffordanceStory(def) {
+  const id = def?.id || 'anonymous';
+  const subfeatures = normalizeSubfeatures(def?.subfeatures);
+  const triggers = normalizeTriggers(def?.triggers);
+  const affordances = normalizeAffordances(def?.affordances);
+  const electrostatics = normalizeElectrostatics(def?.electrostatics);
+
+  return {
+    id,
+    subfeatures,
+    triggers,
+    affordances,
+    electrostatics,
+    summary: affordances.length
+      ? `${id} awakens on [${triggers.join(', ') || 'default'}] to enable (${affordances.join(', ')}) via <${electrostatics?.role || 'organelle'}>`
+      : `${id} (${def?.describes || 'runtime module'})`,
+  };
+}

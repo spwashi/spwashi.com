@@ -30,22 +30,7 @@ export const CORE_DEFS = [
       return fn();
     },
   },
-  {
-    id: 'pwa-update-handler',
-    layer: MODULE_LAYERS.CORE,
-    when: MOUNT_WHEN.IMMEDIATE,
-    costClass: COST_CLASS.PREMATURE_COMMITMENT,
-    describes: 'pwa[install|update|offline] notification surface',
-    updates: [
-      'flourish:data-pwa-toast',
-      'flourish:data-pwa-toast-styles',
-      'structural:data-spw-pwa-mode',
-    ],
-    evaluates: 'service-worker lifecycle offline-readiness update-feedback',
-    timingArc: 'boot-feedback',
-    effectScope: 'service-worker root-state toast',
-    load: () => import('./pwa-update-handler.js'),
-  },
+
   {
     id: 'shell-disclosure',
     layer: MODULE_LAYERS.CORE,

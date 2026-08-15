@@ -1311,6 +1311,7 @@ async function mountImmediateLayer(defs, ctx, options = {}) {
 
     if (settingsDef) {
       await mountDefinition(settingsDef, ctx, null, 0);
+      await yieldToEventLoop();
     }
     if (parallelDefs.length) {
       await Promise.all(parallelDefs.map((def) => mountDefinition(def, ctx, null, 0)));
@@ -1354,6 +1355,18 @@ function yieldToNextFrame() {
       return;
     }
   });
+}
+
+async function yieldToEventLoop() {
+  if (typeof globalThis.scheduler?.yield === 'function') {
+    try {
+      await globalThis.scheduler.yield();
+      return;
+    } catch {
+      // fall through to frame budget
+    }
+  }
+  return yieldToNextFrame();
 }
 
 async function mountVisibleFeatures(defs, ctx) {
@@ -1730,8 +1743,8 @@ function queueSettledEnhancements(defs, ctx) {
   if (!settledDefs.length) return;
 
   const run = async () => {
-    // Double-rAF yields a paint; headless/background tabs may never fire rAF,
-    // so pair with a short timeout so SETTLED modules still mount.
+    // Multi-barrier settle: wait for web fonts and double-rAF so spatial
+    // measurements only execute once typography has fully rendered and settled.
     await new Promise((resolve) => {
       let settled = false;
       const finish = () => {
@@ -1739,13 +1752,21 @@ function queueSettledEnhancements(defs, ctx) {
         settled = true;
         resolve();
       };
-      const timeout = window.setTimeout(finish, 200);
+      const timeout = window.setTimeout(finish, 320);
       ctx.addTimer?.(timeout);
+
       const raf = globalThis.requestAnimationFrame
         ? globalThis.requestAnimationFrame.bind(globalThis)
         : (cb) => window.setTimeout(cb, 16);
-      raf(() => {
-        raf(finish);
+
+      const fontsReady = typeof document !== 'undefined' && document.fonts?.ready
+        ? document.fonts.ready.catch(() => {})
+        : Promise.resolve();
+
+      fontsReady.then(() => {
+        raf(() => {
+          raf(finish);
+        });
       });
     });
 
