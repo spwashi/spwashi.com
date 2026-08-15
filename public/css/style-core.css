@@ -54,6 +54,8 @@
 @import url('/public/css/components/runtime-states.css') layer(components);
 @import url('/public/css/components/query-composer.css') layer(components);
 @import url('/public/css/components/embedded-workshop.css') layer(components);
+@import url('/public/css/components/interactive-expression.css') layer(components);
+@import url('/public/css/components/spw-hero-kinetic-stage.css') layer(components);
 @import url('/public/css/components/frame-controls.css') layer(components);
 @import url('/public/css/components/charge-cycle.css') layer(components);
 
@@ -83,6 +85,7 @@
 @import url('/public/css/systems/affordance-legibility.css') layer(systems);
 @import url('/public/css/systems/legibility-lens.css') layer(systems);
 @import url('/public/css/systems/module-potential.css') layer(systems);
+@import url('/public/css/systems/electrostatic-roles.css') layer(systems);
 @import url('/public/css/systems/surfaces/base.css') layer(systems);
 @import url('/public/css/systems/surfaces/media.css') layer(systems);
 @import url('/public/css/systems/surfaces/topics.css') layer(systems);

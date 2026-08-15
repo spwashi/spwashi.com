@@ -33,7 +33,15 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const SKIP_DIRS = new Set(['node_modules', '.git', '.spw', 'dist', 'coverage']);
+/**
+ * Build output must not count as markup. `dist-vite/` contains rendered copies of
+ * every route — and a nested worktree of its own — so walking it reported build
+ * artifacts as authored usage and inflated every count several-fold.
+ */
+const SKIP_DIRS = new Set([
+  'node_modules', '.git', '.spw', 'coverage', '.claude',
+  'dist', 'dist-vite', 'build', '.vite', '.next', 'out',
+]);
 
 /**
  * Attributes whose audience is a person or a model, not a stylesheet. Being
