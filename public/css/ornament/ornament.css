@@ -1404,3 +1404,32 @@ body[data-spw-surface="topics"] #topics-register .frame-topline .spec-pill {
     white-space: nowrap;
   }
 }
+
+/* --------------------------------------------------------------------------
+   Stage, derived from position.
+
+   The three stage rules above are stamped zero times in the corpus and written
+   by no runtime, so an entry/ground/exit vocabulary sits fully styled and never
+   reached. Stamping it on 153 routes would be the wrong repair — the position
+   it describes is already unambiguous in the markup.
+
+   135 of 153 routes open with `.site-frame` inside `<main>`. First is arrival,
+   last is departure, everything between is the body of the visit. That is the
+   same entry → ground → exit reading, available structurally, with no attribute
+   to author and no JavaScript to mount.
+
+   Explicit `data-spw-stage` still wins where a route genuinely differs; these
+   only fill in where nothing was said.
+   -------------------------------------------------------------------------- */
+
+main > :where(.site-frame, .spw-frame):first-of-type:not([data-spw-stage]) {
+  --ornament-stage-opacity: var(--ornament-stage-entry-opacity);
+}
+
+main > :where(.site-frame, .spw-frame):not(:first-of-type):not(:last-of-type):not([data-spw-stage]) {
+  --ornament-stage-opacity: var(--ornament-stage-ground-opacity);
+}
+
+main > :where(.site-frame, .spw-frame):last-of-type:not(:first-of-type):not([data-spw-stage]) {
+  --ornament-stage-opacity: var(--ornament-stage-exit-opacity);
+}
