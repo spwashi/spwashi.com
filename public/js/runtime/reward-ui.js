@@ -204,7 +204,12 @@ export function initRewardUI(ctx = {}) {
       }));
     });
 
-    const summary = el('p', { className: 'spw-reward-summary', text: `${kinds.length} kinds · ${latest.tier}` });
+    const summary = el('p', {
+      className: 'spw-reward-summary',
+      text: kinds.length
+        ? `${kinds.length} distinct kinds found so far — a ${latest.tier} field`
+        : 'No component kinds found yet. They accumulate as you move through the site.',
+    });
     const children = [summary, kindsRow, badges];
     const hasState = kinds.length > 0 || latest.achievements.length > 0 || latest.distinctKinds > 0;
 
@@ -226,7 +231,33 @@ export function initRewardUI(ctx = {}) {
 
   const renderDock = () => {
     if (!dock || !dockCount) return;
-    dockCount.textContent = `${latest.distinctKinds} · ${latest.tier}`;
+    /*
+     * Say what the number counts.
+     *
+     * This read `11 · teeming`, which is a count with no noun and an internal
+     * diversity tier shown raw. A visitor has no way to know what 11 counts or
+     * what teeming is a measure of, so the dock reported state without making
+     * any of it usable — and a label nobody can act on is a label that only
+     * takes up room.
+     *
+     * The tier stays, on the element rather than in the text: it already drives
+     * the dock's styling, and it belongs in the description a reader gets when
+     * they ask rather than in the two words they see first.
+     */
+    const kindCount = latest.distinctKinds;
+    dockCount.textContent = kindCount === 1 ? '1 kind found' : `${kindCount} kinds found`;
+    dockTrigger?.setAttribute(
+      'title',
+      kindCount === 0
+        ? 'Component collection — nothing found yet'
+        : `Component collection — ${kindCount} distinct kinds, a ${latest.tier} field`,
+    );
+    dockTrigger?.setAttribute(
+      'aria-label',
+      kindCount === 0
+        ? 'Component collection, nothing found yet'
+        : `Component collection, ${kindCount} kinds found`,
+    );
     dock.dataset.spwRewardTier = latest.tier;
     if (dockExpanded) renderCollectionInto(dockBody);
   };

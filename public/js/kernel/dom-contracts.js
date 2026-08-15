@@ -614,6 +614,24 @@ function findBottomLaneInspector(doc) {
   return doc.querySelector('[data-spw-state-inspector-root]');
 }
 
+/**
+ * The collection dock shares the bottom lane.
+ *
+ * It registers as `collection-dock` floating chrome anchored bottom-center, so
+ * it participates in occlusion and competition by role — but its height never
+ * entered the lane arithmetic, which is why it sat on top of the navigation.
+ * A lane occupant the lane cannot measure is an occupant the lane will cover
+ * something with.
+ */
+function findBottomLaneCollectionDock(doc) {
+  const dock = doc.querySelector('.spw-reward-dock');
+  if (!(dock instanceof globalThis.HTMLElement)) return null;
+  if (dock.hidden || dock.getAttribute('aria-hidden') === 'true') return null;
+  // Pending reveal means it is not painted yet and owes the lane nothing.
+  if (dock.dataset.spwRewardReveal !== 'revealed') return null;
+  return dock;
+}
+
 function findBottomLaneConsole(doc) {
   const consoleNode = doc.querySelector('.spw-console');
   if (!(consoleNode instanceof globalThis.HTMLElement)) return null;
@@ -652,6 +670,7 @@ function measureAndApplyBottomLane(doc, html, { competition, occlusion }) {
     ? inspectorRoot?.querySelector?.('.spw-state-inspector__panel:not([hidden])')
     : null;
   const launchMeasure = measureElementChrome(inspectorLaunch);
+  const dockMeasure = measureElementChrome(findBottomLaneCollectionDock(doc));
   const panelMeasure = measureElementChrome(inspectorPanel);
   const navOpen = mobile && (
     surfaceMapEl?.classList?.contains('is-open')
@@ -696,7 +715,7 @@ function measureAndApplyBottomLane(doc, html, { competition, occlusion }) {
     vars['--spw-floating-slot-console'] = pxToRem(safeBottomPx + menuClearancePx);
   }
 
-  const travelRowHeightPx = Math.max(handleMeasure?.height || 0, launchMeasure?.height || 0, 0);
+  const travelRowHeightPx = Math.max(handleMeasure?.height || 0, launchMeasure?.height || 0, dockMeasure?.height || 0, 0);
   const travelRowBottomPx = tierBottomPx;
 
   vars['--spw-floating-slot-section-handle'] = pxToRem(travelRowBottomPx);
