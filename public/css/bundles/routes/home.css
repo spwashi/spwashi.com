@@ -227,14 +227,10 @@ html[data-spw-color-mode="dark"] body[data-spw-surface="home"] {
 }
 
 :where([data-spw-feature="home-kernel-entry"] .frame-topline) {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  grid-template-areas:
-      "brace identity meta"
-      "compose compose compose"
-      "inspect inspect inspect";
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 0.32rem 0.42rem;
+  gap: 0.35rem 0.55rem;
   min-width: 0;
   padding: 0.24rem 0 0.4rem;
   border-bottom: 1px solid color-mix(in srgb, var(--home-accent-line) 72%, transparent);
@@ -249,28 +245,16 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
 }
 
 :where([data-spw-feature="home-kernel-entry"] .frame-topline > .spw-delimiter) {
-  grid-area: brace;
-  justify-self: start;
-}
-
-:where([data-spw-feature="home-kernel-entry"] .frame-topline > .frame-sigil) {
-  grid-area: identity;
-  justify-self: start;
-}
-
-:where([data-spw-feature="home-kernel-entry"] .frame-topline > .spw-compose-field) {
-  grid-area: compose;
-  justify-self: stretch;
-}
-
-:where([data-spw-feature="home-kernel-entry"] .frame-topline > .home-copy-inspector) {
-  grid-area: inspect;
+  color: var(--home-accent-primary);
+  font-weight: 700;
 }
 
 :where([data-spw-feature="home-kernel-entry"] .frame-topline > .spw-component-meta) {
-  grid-area: meta;
-  justify-self: end;
-  margin-left: 0;
+  margin-left: auto;
+}
+
+:where([data-spw-feature="home-kernel-entry"] .frame-topline > .home-copy-inspector) {
+  flex-basis: 100%;
 }
 
 @media (max-width: 32rem) {
@@ -280,18 +264,8 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
   }
 
   :where([data-spw-feature="home-kernel-entry"] .frame-topline) {
-    grid-template-columns: auto minmax(0, 1fr);
-    grid-template-areas:
-      "brace identity"
-      "meta meta"
-      "compose compose"
-      "inspect inspect";
-    padding: 0.28rem 0 0.48rem;
     gap: 0.38rem 0.42rem;
-  }
-
-  :where([data-spw-feature="home-kernel-entry"] .frame-topline > .spw-component-meta) {
-    justify-self: start;
+    padding: 0.28rem 0 0.48rem;
   }
 
   :where([data-spw-feature="home-kernel-entry"] h1) {
@@ -451,6 +425,13 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
 
 :where([data-spw-feature="home-kernel-entry"] .home-production-note) {
   order: 6;
+}
+
+:where([data-spw-feature="home-kernel-entry"] .spw-anatomy-key) {
+  order: 7;
+}
+
+:where([data-spw-feature="home-kernel-entry"] .home-production-note) {
   margin-block-start: -0.15rem;
   padding: 0.48rem 0.62rem;
   border-inline-start: 0.18rem solid color-mix(in srgb, var(--home-accent-primary) 55%, var(--home-accent-ember) 45%);
@@ -1666,6 +1647,30 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
   :where(body[data-spw-surface="home"] main > .site-frame) {
     max-inline-size: min(100%, 96rem);
     inline-size: min(100%, 96rem);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Content that outgrew its column takes the width.
+
+   The broadsheet gives every section a column of at least 28rem, which suits
+   prose and starves anything with a wide diagram, table or scroller inside it —
+   measured, frames afforded 525px holding content that reaches past 8000px.
+
+   `data-spw-fit-demand="wide"` is written by the fit reporter when content
+   overruns its box by more than a third, and it is deliberately sticky: a frame
+   given the full width stops overflowing, and a demand that cleared itself
+   would hand the width back and start the cycle again. The demand records what
+   a frame has needed, not what it needs this instant.
+
+   So the layout answers a measurement rather than a breakpoint, which is the
+   only way a column can be sized for its contents instead of for its neighbours.
+   -------------------------------------------------------------------------- */
+
+@media (min-width: 61.25rem) {
+  :where(body[data-spw-surface="home"][data-spw-layout="newspaper"] main.home-atlas-flow > [data-spw-cluster] > [data-spw-fit-demand="wide"]),
+  :where(body[data-spw-surface="home"][data-spw-layout="newspaper"] main.home-atlas-flow > [data-spw-fit-demand="wide"]) {
+    grid-column: 1 / -1;
   }
 }
 }
