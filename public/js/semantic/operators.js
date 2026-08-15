@@ -50,20 +50,27 @@ const refreshOperatorSemantics = (root = document) => {
   annotateRefs(root);
 };
 
+let observerDisconnect = null;
+
 const initSpwOperators = () => {
   if (initialized) return;
   initialized = true;
 
   refreshOperatorSemantics(document);
 
-  /* A synchronous full-document refresh per mutation batch couples this
-     module's cost to every other module's DOM writes, and a microtask-paced
-     observer loop can hard-freeze the renderer when a partner observer
-     creates nodes in response to annotation attributes. The shared helper
-     gates on operator-shaped added nodes and coalesces through rAF. */
-  observeAddedMatches(EXTENDED_OPERATOR_SIGNAL_SELECTOR, () => {
+  observerDisconnect = observeAddedMatches(EXTENDED_OPERATOR_SIGNAL_SELECTOR, () => {
     refreshOperatorSemantics(document);
   });
 };
+
+export function unmountSpwOperators() {
+  if (observerDisconnect) {
+    try { observerDisconnect(); } catch (_) {}
+    observerDisconnect = null;
+  }
+  initialized = false;
+}
+
+export const unmount = unmountSpwOperators;
 
 export { initSpwOperators, refreshOperatorSemantics };

@@ -15,13 +15,27 @@ const HINT_CLASS = 'spw-pronunciation-hint';
 let initialized = false;
 let hintEl = null;
 
+let activeUnsubscribes = [];
+
 export function initPronunciationHints() {
   if (initialized) return;
   initialized = true;
 
-  bus.on('brace:charged', onBraceCharged);
-  bus.on('brace:discharged', onBraceDischarged);
+  const u1 = bus.on('brace:charged', onBraceCharged);
+  const u2 = bus.on('brace:discharged', onBraceDischarged);
+  activeUnsubscribes.push(u1, u2);
 }
+
+export function unmountPronunciationHints() {
+  hideHint();
+  for (const un of activeUnsubscribes) {
+    try { if (typeof un === 'function') un(); } catch (_) {}
+  }
+  activeUnsubscribes = [];
+  initialized = false;
+}
+
+export { unmountPronunciationHints as unmount };
 
 function onBraceCharged(event) {
   const { element, operator, targetKind } = event.detail;

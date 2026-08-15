@@ -216,6 +216,8 @@ export const ENHANCEMENT_DEFS = [
     effectScope: 'floating-chrome listeners bus root-state',
     visual: 'inspect',
     load: () => import('./frame-navigator.js'),
+    mount: (mod) => mod?.initFrameNavigator?.(),
+    unmount: (mod) => mod?.unmount?.(),
     // Presence gate: body[data-spw-features~="navigator"] via catalog features
     // (PRESENCE_FEATURE_KEYS in runtime-contracts — not a CSS behavior scope).
     // Module also self-gates on navigatorDisplay at runtime.
@@ -337,6 +339,8 @@ export const ENHANCEMENT_DEFS = [
     timingArc: 'visible-media',
     effectScope: 'target-dom gesture-memory listeners',
     load: () => import('../media/image-metaphysics.js'),
+    mount: (mod) => mod?.initImageMetaphysics?.(),
+    unmount: (mod) => mod?.unmount?.(),
   },
   {
     id: 'logo-runtime',
@@ -362,6 +366,7 @@ export const ENHANCEMENT_DEFS = [
       if (!isFn(fn)) return;
       return fn(ctx);
     },
+    unmount: (mod) => mod?.unmount?.(),
   },
   {
     id: 'topic-discovery',
@@ -742,6 +747,8 @@ export const ENHANCEMENT_DEFS = [
     effectScope: 'floating-chrome bus root-state',
     visual: 'inspect',
     load: () => import('../interface/console.js'),
+    mount: (mod) => mod?.initSpwConsole?.(),
+    unmount: (mod) => mod?.unmount?.(),
   },
   {
     id: 'design-experiments',

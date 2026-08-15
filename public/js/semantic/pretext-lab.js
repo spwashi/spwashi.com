@@ -343,4 +343,8 @@ const initPretextLab = async () => {
     }
 };
 
-export { initPretextLab };
+const unmountPretextLab = () => {
+    initialized = false;
+};
+
+export { initPretextLab, unmountPretextLab as unmount };

@@ -295,3 +295,11 @@ export function initPaymentSettings(container) {
 
     group.addEventListener('change', save);
 }
+
+export function unmountPaymentCards(container) {
+    if (container) {
+        container.innerHTML = '';
+    }
+}
+
+export { unmountPaymentCards as unmount };

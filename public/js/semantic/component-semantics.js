@@ -1110,9 +1110,12 @@ export function initSpwComponentSemantics(options = {}) {
   };
 }
 
+export function unmountComponentSemantics() {}
+
 export {
   applySemanticSnapshot,
   collectSemanticTargets,
   getSemanticRegistry,
-  snapshotComponentSemantics
+  snapshotComponentSemantics,
+  unmountComponentSemantics as unmount
 };

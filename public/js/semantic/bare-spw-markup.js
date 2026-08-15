@@ -142,7 +142,7 @@ const enhanceBareSpwMarkup = (root = document) => {
   scope.querySelectorAll(BARE_SPW_CONTAINER_SELECTOR).forEach(enhanceContainer);
 };
 
-export function initBareSpwMarkup() {
+function initBareSpwMarkupInternal() {
   if (initialized) return () => {};
   initialized = true;
 
@@ -168,3 +168,20 @@ export function initBareSpwMarkup() {
     initialized = false;
   };
 }
+
+let activeBareMarkupCleanup = null;
+
+export function initBareSpwMarkup() {
+  unmountBareSpwMarkup();
+  activeBareMarkupCleanup = initBareSpwMarkupInternal();
+  return activeBareMarkupCleanup;
+}
+
+export function unmountBareSpwMarkup() {
+  if (activeBareMarkupCleanup) {
+    try { activeBareMarkupCleanup(); } catch (_) {}
+    activeBareMarkupCleanup = null;
+  }
+}
+
+export { unmountBareSpwMarkup as unmount };

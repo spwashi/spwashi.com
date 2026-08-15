@@ -26,73 +26,58 @@ export function setLogoState(logo, state, charge) {
   }
 }
 
-/**
- * Bind pointer and scroll behavior to a logo element.
- * @param {HTMLElement} logo
- */
+let activeUnsubscribes = [];
+
 function bindLogo(logo) {
+  const controller = new AbortController();
+  const { signal } = controller;
+
   // Pointer: preview on enter, charged on press, emitting on copy/export, settled on leave
   logo.addEventListener('pointerenter', () => {
     setLogoState(logo, 'preview', 0.3);
-  });
+  }, { signal });
 
   logo.addEventListener('pointerleave', () => {
     setLogoState(logo, 'settled', 0);
-  });
+  }, { signal });
 
   logo.addEventListener('pointerdown', () => {
     setLogoState(logo, 'charged', 0.7);
-  });
+  }, { signal });
 
   logo.addEventListener('pointerup', () => {
-    // Brief emitting flash, then settle
     setLogoState(logo, 'emitting', 1);
     setTimeout(() => {
       setLogoState(logo, 'settled', 0);
-    }, 520);
-  });
+    }, 420);
+  }, { signal });
 
-  logo.addEventListener('pointercancel', () => {
-    setLogoState(logo, 'settled', 0);
-  });
-
-  // Keyboard: respond to Enter/Space like a button
-  logo.addEventListener('keydown', e => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      setLogoState(logo, 'charged', 0.7);
+  const onScroll = () => {
+    if (logo.dataset.logoState === 'charged' || logo.dataset.logoState === 'emitting') return;
+    const scrollY = window.scrollY || 0;
+    const charge = Math.min(1, scrollY / SCROLL_CHARGE_DEPTH);
+    if (charge > 0.05) {
+      setLogoState(logo, 'preview', charge * 0.4);
+    } else {
+      setLogoState(logo, 'settled', 0);
     }
-  });
+  };
+  window.addEventListener('scroll', onScroll, { passive: true, signal });
 
-  logo.addEventListener('keyup', e => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      setLogoState(logo, 'emitting', 1);
-      setTimeout(() => setLogoState(logo, 'settled', 0), 520);
-    }
-  });
-
-  // Scroll: charge arc opacity as page scrolls (scroll down = more structure visible)
-  if (logo.dataset.logoScroll !== undefined || logo.closest('header')) {
-    logo.dataset.logoScroll = '';
-
-    const onScroll = () => {
-      const raw = window.scrollY / SCROLL_CHARGE_DEPTH;
-      const charge = Math.min(raw, 1);
-      logo.style.setProperty('--logo-charge', charge.toFixed(3));
-    };
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll(); // initialize immediately
-  }
-
-  // Bus: emit when relevant site events fire
-  bus.on('copy:succeeded', () => {
+  const u1 = bus.on('wonder:memorized', () => {
     setLogoState(logo, 'emitting', 1);
     setTimeout(() => setLogoState(logo, 'settled', 0), 520);
   });
 
-  bus.on('spell:grounded', () => {
+  const u2 = bus.on('spell:grounded', () => {
     setLogoState(logo, 'emitting', 1);
     setTimeout(() => setLogoState(logo, 'settled', 0), 520);
+  });
+
+  activeUnsubscribes.push(() => {
+    controller.abort();
+    if (typeof u1 === 'function') u1();
+    if (typeof u2 === 'function') u2();
   });
 }
 
@@ -100,10 +85,20 @@ function bindLogo(logo) {
  * Initialize all .spw-logo elements on the page.
  */
 export function initLogoRuntime() {
+  unmountLogoRuntime();
   document.querySelectorAll('.spw-logo').forEach(logo => {
     bindLogo(logo);
   });
 }
+
+export function unmountLogoRuntime() {
+  for (const un of activeUnsubscribes) {
+    try { un(); } catch (_) {}
+  }
+  activeUnsubscribes = [];
+}
+
+export { unmountLogoRuntime as unmount };
 
 /**
  * Build the logo HTML component and insert it.

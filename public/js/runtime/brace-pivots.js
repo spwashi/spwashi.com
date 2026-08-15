@@ -115,29 +115,59 @@ function installPivotAffordance(wall, settingKey, labelMap) {
         setSetting(settingKey, next);
         updateLabel(next);
 
-        // Visual feedback: briefly highlight the wall
+        // Visual feedback: briefly highlight the wall and pulse environmental charge
         wall.dataset.spwPivotActive = 'true';
-        setTimeout(() => delete wall.dataset.spwPivotActive, 320);
+        document.body.dataset.spwCharge = 'pulse';
+        setTimeout(() => {
+            delete wall.dataset.spwPivotActive;
+        }, 320);
+        setTimeout(() => {
+            if (document.body.dataset.spwCharge === 'pulse') {
+                delete document.body.dataset.spwCharge;
+            }
+        }, 480);
     };
 
-    wall.addEventListener('click', activate);
+    const controller = new AbortController();
+    const { signal } = controller;
+
+    wall.addEventListener('click', activate, { signal });
     wall.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
             activate();
         }
-    });
+    }, { signal });
 
     // Listen for external settings changes (e.g. from settings page)
-    bus.on('settings:changed', ({ key, value }) => {
+    const unsub = bus.on('settings:changed', ({ key, value }) => {
         if (key === settingKey) updateLabel(value);
     });
+
+    return () => {
+        controller.abort();
+        if (typeof unsub === 'function') unsub();
+    };
 }
 
+let activeUnbinds = [];
+
 export function initBracePivots() {
+    unmountBracePivots();
     const objectiveWall  = document.querySelector('.spw-objective-wall, .spw-boon-wall');
     const subjectiveWall = document.querySelector('.spw-subjective-wall, .spw-bane-wall');
 
-    installPivotAffordance(objectiveWall,  'semanticDensity',    PIVOT_LABELS.semanticDensity);
-    installPivotAffordance(subjectiveWall, 'operatorSaturation', PIVOT_LABELS.operatorSaturation);
+    const u1 = installPivotAffordance(objectiveWall,  'semanticDensity',    PIVOT_LABELS.semanticDensity);
+    const u2 = installPivotAffordance(subjectiveWall, 'operatorSaturation', PIVOT_LABELS.operatorSaturation);
+    if (u1) activeUnbinds.push(u1);
+    if (u2) activeUnbinds.push(u2);
 }
+
+export function unmountBracePivots() {
+    for (const unbind of activeUnbinds) {
+        try { unbind(); } catch (_) {}
+    }
+    activeUnbinds = [];
+}
+
+export { unmountBracePivots as unmount };

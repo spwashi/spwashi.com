@@ -166,7 +166,7 @@ function clearFrameLiveState(frame) {
   delete frame.dataset.spwConsequenceLive;
 }
 
-export function initChargeField(ctx = null) {
+function createChargeFieldInstance(ctx = null) {
   let activeIntensity = 0;
   let decayTimer = null;
 
@@ -321,10 +321,25 @@ export function initChargeField(ctx = null) {
     RELATION_STYLE_PROPERTIES.forEach((property) => {
       document.documentElement.style.removeProperty(property);
     });
-    document.querySelectorAll(FRAME_SELECTOR).forEach(clearFrameLiveState);
+    ctx?.addCleanup?.(cleanup);
+
+    return { cleanup, syncRoot, syncReadouts };
   };
-
-  ctx?.addCleanup?.(cleanup);
-
-  return { cleanup, syncRoot, syncReadouts };
 }
+
+let lastChargeFieldInstance = null;
+
+export function initChargeField(ctx = null) {
+  unmountChargeField();
+  lastChargeFieldInstance = createChargeFieldInstance(ctx);
+  return lastChargeFieldInstance;
+}
+
+export function unmountChargeField() {
+  if (lastChargeFieldInstance?.cleanup) {
+    try { lastChargeFieldInstance.cleanup(); } catch (_) {}
+    lastChargeFieldInstance = null;
+  }
+}
+
+export { unmountChargeField as unmount };

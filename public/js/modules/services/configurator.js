@@ -770,3 +770,20 @@ export function initServicesConfigurators(ctx, root) {
         resetAll: () => { /* ... */ },
     };
 }
+
+export function unmountServicesConfigurators(ctx, root) {
+    if (!(root instanceof Node)) {
+        root = document;
+    }
+    root.querySelectorAll('[data-services-configurator]').forEach(container => {
+        if (container._svcInstance) {
+            try { container._svcInstance.destroy?.(); } catch (_) {}
+            delete container._svcInstance;
+        }
+    });
+    if (typeof window !== 'undefined' && window.spwServicesConfig) {
+        delete window.spwServicesConfig;
+    }
+}
+
+export { unmountServicesConfigurators as unmount };

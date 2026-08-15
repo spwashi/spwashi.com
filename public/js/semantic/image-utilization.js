@@ -32,7 +32,7 @@ function annotateImage(img, index = 0, isHero = false) {
   }
 }
 
-export function initImageUtilization(root = document) {
+function initImageUtilizationInternal(root = document) {
   if (initialized) return () => {};
   initialized = true;
 
@@ -56,3 +56,20 @@ export function initImageUtilization(root = document) {
     initialized = false;
   };
 }
+
+let activeImageUtilizationCleanup = null;
+
+export function initImageUtilization(root = document) {
+  unmountImageUtilization();
+  activeImageUtilizationCleanup = initImageUtilizationInternal(root);
+  return activeImageUtilizationCleanup;
+}
+
+export function unmountImageUtilization() {
+  if (activeImageUtilizationCleanup) {
+    try { activeImageUtilizationCleanup(); } catch (_) {}
+    activeImageUtilizationCleanup = null;
+  }
+}
+
+export { unmountImageUtilization as unmount };

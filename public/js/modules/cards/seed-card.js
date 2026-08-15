@@ -490,9 +490,26 @@ export class SeedCard {
   }
 }
 
+const activeInstances = new Set();
+
 /** Initialize all .seed-card elements on the page */
 export function initSeedCards() {
   document.querySelectorAll('.seed-card[data-seed-card]').forEach(el => {
-    new SeedCard(el);
+    if (el._seedCardInstance) return;
+    const card = new SeedCard(el);
+    el._seedCardInstance = card;
+    activeInstances.add(card);
   });
 }
+
+export function unmountSeedCards() {
+  document.querySelectorAll('.seed-card[data-seed-card]').forEach(el => {
+    if (el._seedCardInstance) {
+      try { el._seedCardInstance.destroy?.(); } catch (_) {}
+      activeInstances.delete(el._seedCardInstance);
+      delete el._seedCardInstance;
+    }
+  });
+}
+
+export { unmountSeedCards as unmount };

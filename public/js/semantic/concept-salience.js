@@ -103,7 +103,7 @@ function annotateTarget(element) {
   }
 }
 
-export function initConceptSalience(root = document) {
+function initConceptSalienceInternal(root = document) {
   if (initialized) return () => {};
   initialized = true;
 
@@ -124,3 +124,20 @@ export function initConceptSalience(root = document) {
     initialized = false;
   };
 }
+
+let activeSalienceCleanup = null;
+
+export function initConceptSalience(root = document) {
+  unmountConceptSalience();
+  activeSalienceCleanup = initConceptSalienceInternal(root);
+  return activeSalienceCleanup;
+}
+
+export function unmountConceptSalience() {
+  if (activeSalienceCleanup) {
+    try { activeSalienceCleanup(); } catch (_) {}
+    activeSalienceCleanup = null;
+  }
+}
+
+export { unmountConceptSalience as unmount };

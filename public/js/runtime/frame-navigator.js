@@ -647,4 +647,13 @@ const initFrameNavigator = () => {
     }
 };
 
-export { initFrameNavigator };
+const unmountFrameNavigator = () => {
+    if (!navigatorInstance) return;
+    try { navigatorInstance.close(); } catch (_) {}
+    navigatorInstance = null;
+    if (typeof window !== 'undefined' && window.spwNavigator) {
+        delete window.spwNavigator;
+    }
+};
+
+export { initFrameNavigator, unmountFrameNavigator as unmount };

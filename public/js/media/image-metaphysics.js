@@ -937,10 +937,22 @@ export function initSpwImageMetaphysics() {
         scan(document);
     });
 
-    bus.on('settings:changed', () => {
+    let unsub = bus.on('settings:changed', () => {
         document.querySelectorAll('[data-spw-image-managed="true"]').forEach((host) => syncHost(host));
     });
+    activeUnsubscribes.push(unsub);
 }
+
+let activeUnsubscribes = [];
+
+export function unmountImageMetaphysics() {
+    for (const un of activeUnsubscribes) {
+        try { if (typeof un === 'function') un(); } catch (_) {}
+    }
+    activeUnsubscribes = [];
+}
+
+export { unmountImageMetaphysics as unmount };
 
 /* Local image memory for prompts (enhancement for creative resonance + annotation)
    - Associates an image/SVG surface with a prompt string locally (dataset + localStorage).

@@ -109,6 +109,8 @@ export const FEATURE_DEFS = [
     timingArc: 'feature-route',
     effectScope: 'local-dom storage',
     load: () => import('../modules/cards/payment-card.js'),
+    mount: (mod, ctx, el) => mod?.renderPaymentCard?.(el),
+    unmount: (mod, ctx, el) => mod?.unmount?.(el),
   },
   {
     id: 'services-configurators',
@@ -184,10 +186,11 @@ export const FEATURE_DEFS = [
     effectScope: 'local-dom storage',
     load: () => import('../modules/cards/payment-card.js'),
     mount: (mod) => {
-      const fn = mod?.initPaymentSettings;
+      const fn = mod?.renderPaymentSettings || mod?.initPaymentSettings;
       if (!isFn(fn)) return;
       return fn(document.getElementById('payment-settings-container'));
     },
+    unmount: (mod) => mod?.unmount?.(document.getElementById('payment-settings-container')),
   },
   {
     id: 'home-section-index',
@@ -279,6 +282,8 @@ export const FEATURE_DEFS = [
     timingArc: 'immediate-settings',
     effectScope: 'local-dom root-state',
     load: () => import('./brace-pivots.js'),
+    mount: (mod) => mod?.initBracePivots?.(),
+    unmount: (mod) => mod?.unmountBracePivots?.(),
   },
   {
     id: 'narrative-instrumentation',
@@ -336,6 +341,8 @@ export const FEATURE_DEFS = [
     timingArc: 'immediate-inspect',
     effectScope: 'popover listeners',
     load: () => import('./region-menu.js'),
+    mount: (mod, ctx, el) => mod?.initSpwRegionMenu?.(ctx, el),
+    unmount: (mod) => mod?.unmountSpwRegionMenu?.(),
   },
   {
     id: 'pronunciation-hints',
@@ -478,6 +485,8 @@ export const FEATURE_DEFS = [
     evaluates: 'pretext layout sandbox projection observe resize inspect',
     effectScope: 'local-dom css-vars measure',
     load: () => import('../semantic/pretext-lab.js'),
+    mount: (mod) => mod?.initPretextLab?.(),
+    unmount: (mod) => mod?.unmount?.(),
   },
   {
     id: 'pretext-physics',

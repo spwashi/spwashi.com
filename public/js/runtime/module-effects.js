@@ -91,7 +91,7 @@ function onRuntimeTokensUpdated(detail = {}, html) {
   writeDatasetValue(html, 'spwRuntimeLayerPulse', detail.layerCount > 2 ? 'dense' : 'light');
 }
 
-export function initModuleEffects(ctx) {
+function createModuleEffectsInstance(ctx) {
   if (initialized) return () => {};
   initialized = true;
 
@@ -136,3 +136,20 @@ export function initModuleEffects(ctx) {
     initialized = false;
   };
 }
+
+let activeModuleEffectsCleanup = null;
+
+export function initModuleEffects(ctx, root = document) {
+  unmountModuleEffects();
+  activeModuleEffectsCleanup = createModuleEffectsInstance(ctx, root);
+  return activeModuleEffectsCleanup;
+}
+
+export function unmountModuleEffects() {
+  if (activeModuleEffectsCleanup) {
+    try { activeModuleEffectsCleanup(); } catch (_) {}
+    activeModuleEffectsCleanup = null;
+  }
+}
+
+export { unmountModuleEffects as unmount };

@@ -114,6 +114,28 @@ export function initSpwRegionMenu(ctx, root) {
   window.visualViewport?.addEventListener?.('scroll', onViewportChange, { passive: true });
 }
 
+export function unmountSpwRegionMenu() {
+  const body = document.body;
+  if (!body || body.dataset.spwRegionMenuInit !== '1') return;
+  body.dataset.spwRegionMenuInit = '0';
+  body.removeEventListener('click', onClick, true);
+  body.removeEventListener('contextmenu', onContextMenu, true);
+  body.removeEventListener('pointerenter', onPointerEnter, true);
+  body.removeEventListener('pointerleave', onPointerLeave, true);
+  body.removeEventListener('pointerdown', onPointerDown, true);
+  body.removeEventListener('pointermove', onPointerMove, true);
+  body.removeEventListener('pointerup', onPointerUp, true);
+  body.removeEventListener('pointercancel', onPointerCancel, true);
+  body.removeEventListener('keydown', onKeyDown, true);
+  window.removeEventListener('scroll', onViewportChange);
+  window.removeEventListener('resize', onViewportChange);
+  window.visualViewport?.removeEventListener?.('resize', onViewportChange);
+  window.visualViewport?.removeEventListener?.('scroll', onViewportChange);
+  closeMenu({ restoreFocus: false });
+}
+
+export { unmountSpwRegionMenu as unmount };
+
 function onClick(event) {
   const menu = document.getElementById(MENU_ID);
   if (menu?.contains(event.target)) return;

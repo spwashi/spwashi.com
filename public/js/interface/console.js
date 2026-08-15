@@ -752,4 +752,8 @@ const initSpwConsole = () => {
     });
 };
 
-export { initSpwConsole };
+export function unmountSpwConsole() {
+    initialized = false;
+}
+
+export { initSpwConsole, unmountSpwConsole as unmount };
