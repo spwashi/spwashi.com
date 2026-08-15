@@ -62,13 +62,21 @@ const RESOLVERS = {
     };
   },
 
+  /**
+   * Walls are wherever a field ends. Three kinds, and the third is easy to
+   * miss: a `data-spw-cluster` wrapper is a boundary even though it carries no
+   * chrome of its own — grouping two sections is a claim that the gap inside
+   * the group differs from the gap outside it, which is exactly a wall.
+   */
   walls(_frame, _body, doc) {
     const braces = doc.querySelectorAll('[data-spw-form="brace"]').length;
     const purposes = doc.querySelectorAll('[data-spw-region-purpose]').length;
+    const clusters = doc.querySelectorAll('[data-spw-cluster]').length;
+    const total = braces + purposes + clusters;
     return {
-      value: `${braces + purposes}`,
-      reading: braces + purposes > 0
-        ? `${braces} braces and ${purposes} declared purposes — potential can develop across these`
+      value: `${total}`,
+      reading: total > 0
+        ? `${braces} braces, ${purposes} declared purposes, ${clusters} cluster bounds — potential can develop across these`
         : 'no walls, so no potential difference can form',
     };
   },

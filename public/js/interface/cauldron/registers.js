@@ -1,3 +1,5 @@
+import { getOperatorThresholdState } from '/public/js/kernel/shared.js';
+
 /**
  * Cauldron registers — the spaces an ingredient has coordinates in.
  *
@@ -66,25 +68,67 @@ const SUCCESSION_BY_FIXITY = Object.freeze({
 });
 
 /**
- * Valence — signed charge per operator.
+ * Valence — signed charge per operator, keyed by the kernel's canonical
+ * operator *name* rather than by sigil.
  *
  * The sign is about what an operator does to a reader's balance, not about
- * whether it is good: `?` opens something and credits, `!` commits and spends,
- * `#>` carries structure and does neither. This is the one register where
- * gathering literally adds up, which is what lets a spell report whether a
- * visit accrued or spent without anyone scoring it by hand.
+ * whether it is good: `wonder` opens something and credits, `action` commits
+ * and spends, `ground` carries structure and does neither. This is the one
+ * register where gathering literally adds up, which is what lets a spell report
+ * whether a visit accrued or spent without anyone scoring it by hand.
+ *
+ * The markup carries names, overwhelmingly: 2,600+ `data-spw-operator` values
+ * across the routes and not one of them is a sigil. A sigil-keyed table
+ * therefore scored every one of them as zero, which is the quiet failure mode
+ * for an additive register — it composes cleanly and always reports nothing.
+ *
+ * `getOperatorThresholdState` is the kernel's resolver and accepts either form,
+ * so both the authored `~` in a code block and the `data-spw-operator="potential"`
+ * on the element around it land on the same row.
  */
-const OPERATOR_VALENCE = Object.freeze({
-  '#>': 0,     // ground — structure/carrier
-  '^': 1,      // lift — arrival/benefit
-  '~': 0,      // induct — signal/relay, carries without sign
-  '?': 1,      // probe — opens, so it credits
-  '!': -1,     // assert — spends
-  '@': 0,      // lens — relocates rather than charges
-  '&': 1,      // subject — accrues
-  '<': 0,
-  '>': 0,
+const VALENCE_BY_OPERATOR = Object.freeze({
+  potential: 0,     // latent — carries without spending
+  wonder: 1,        // opens a question, so it credits
+  normalize: 0,     // measures; changes the scale, not the balance
+  binding: -1,      // commits, and a commitment costs
+  substrate: 0,     // supports
+  action: -1,       // spends
+  value: 1,         // resolves to something held
+  integration: 1,   // lifts, and what is lifted is kept
+  vibration: 0,     // anchors
+  ground: 0,        // structure/carrier
 });
+
+/**
+ * Four names appear in the markup that the kernel's threshold table does not
+ * know: `frame` (451 uses), `perspective` (149), `address` (112), `mode` (71).
+ * `inferPhaseState` already treats `frame` as a synonym for `#>`, so the site
+ * carries a second operator vocabulary the kernel has never been told about.
+ *
+ * Mapped here rather than silently scored zero, because 783 uses is too many to
+ * lose. The mapping is the site's claim, not the kernel's — if these graduate
+ * into the canonical sequence upstream, this table should shrink to nothing.
+ */
+const SITE_LOCAL_OPERATORS = Object.freeze({
+  frame: 'ground',
+  address: 'ground',
+  perspective: 'normalize',
+  mode: 'normalize',
+});
+
+/**
+ * Resolve any operator spelling — sigil, canonical name, or site-local name —
+ * to a signed valence. Returns 0 for anything unrecognised, which is the
+ * identity, so an unknown operator neither credits nor spends.
+ */
+function valenceOf(operator) {
+  if (!operator) return 0;
+  const raw = String(operator).trim();
+  const local = SITE_LOCAL_OPERATORS[raw];
+  if (local) return VALENCE_BY_OPERATOR[local] ?? 0;
+  const canonical = getOperatorThresholdState(raw)?.operator;
+  return VALENCE_BY_OPERATOR[canonical] ?? 0;
+}
 
 const clamp01 = (n) => Math.min(1, Math.max(0, n));
 const rank = (ladder, value) => ladder.indexOf(value);
@@ -195,7 +239,7 @@ export const CAULDRON_REGISTERS = Object.freeze({
     identity: 0,
     read: (ing) => {
       if (Number.isFinite(ing?.valence)) return ing.valence;
-      return OPERATOR_VALENCE[ing?.operator] ?? 0;
+      return valenceOf(ing?.operator);
     },
     scalar: (value) => clamp01((Number(value) + 1) / 2),
     /** Charge sums. This is the one register where gathering literally adds up. */
