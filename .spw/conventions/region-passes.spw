@@ -1,0 +1,84 @@
+# Region Passes
+#
+# What each zone of a page is for, and therefore what a pass over it should
+# improve. Written because "make the pages better" is not directable and
+# "improve this region for the thing this region is for" is.
+#
+# Position already decides the zone. 135 of 153 routes open with `.site-frame`
+# inside `<main>`, and ornament's entry / ground / exit stage derives from
+# first / middle / last without anything being authored. This surface says what
+# each of those stages owes a reader.
+
+#>spw_region_passes
+#:convention #!editorial #!regions #!passes
+#:operation #!contract
+#:fixity #!tending
+#:layer #!pragmatics
+
+@intergenerational: ~"./intergenerational-literacy.spw"
+@registers: ~"./cauldron-registers.spw"
+@material_projection: ~"./material-projection.spw"
+@world_physics: ~"./world-physics.spw"
+@anatomy_audit: ~"../../scripts/spw-anatomy-audit.mjs"
+
+operation = "contract"
+fixity = "tending"
+
+expression = region[pass]{marketing.editorial.microbiome}<position>
+
+^"the_three_zones"{
+  ~#note: "One page, three obligations, decided by position rather than by attribute."
+
+  hero: .{
+    stage = entry
+    owes = `marketing value — what this is, who it is for, and one way onward`
+    ~#measured(the gap): "data-spw-slot=\"actions\" is declared, styled, and used 154 times across the site, and appears in 3 of 138 heroes. The affordance exists everywhere except where an arriving reader meets it."
+    ~#rule: `a hero without an onward action is a page that answers a question nobody asked yet`
+    ~#refusal(uniform CTA): "auto-filling 135 heroes with the same action would produce the flatness it is meant to fix. The action varies with what kind of page it is, which is an editorial decision per route."
+    probe: `node scripts/spw-anatomy-audit.mjs --region hero`
+  }[reg=facet]
+
+  after_hero: .{
+    stage = `first ground frames`
+    owes = `editorial value — the argument, in the order a reader would actually want it`
+    ~#measured: "13% of prose paragraphs carry any emphasis; 893 run past 35 words with none. A reader scanning to recall something has nothing to land on."
+    ~#rule: `a long paragraph with no emphasized word is unscannable, and unscannable prose is a claim that the reader should have taken notes`
+    ~#note(subvocalization): "emphasis here doubles as prosodic anchoring — the words that would carry stress if this were read aloud are the words a returning listener will hunt for"
+  }[reg=facet]
+
+  everything_after: .{
+    stage = `ground and exit`
+    owes = `microbiome value — the page as knowledge base and cognitive instrument`
+    ~#rule: `this is where a component earns its place by being inspectable, probeable, and gatherable rather than by being persuasive`
+    ~#reading: `marketing at the top, argument in the middle, apparatus below — a reader who scrolls past the argument has already opted into the tooling`
+  }[reg=facet]
+}
+
+^"why_position_and_not_attribute"{
+  claim: "A zone should not need to be declared, because the markup already establishes it."
+  ~#evidence: `135 of 153 routes open with .site-frame in main; data-spw-stage was stamped 0 times and written by no runtime before it was derived from position`
+  ~#consequence: "a new route gets the right obligations by being built the same shape as every other route, and an editor never has to remember to tag a zone"
+  ~#escape_hatch: `explicit data-spw-stage still wins where a route genuinely differs`
+}
+
+^"what_a_pass_is_not"{
+  ~#note: "Stated because each of these is the tempting version."
+  ~#not(bulk generation): "filling every hero from a template produces uniformity, and uniformity is what makes a landing page feel unconsidered"
+  ~#not(more attributes): "54 attributes are already written and read by nothing. A pass that adds vocabulary without adding a consumer has made the audit worse."
+  ~#not(persuasion below the fold): "the apparatus zone is for readers who already stayed. Selling to them again spends the trust that got them there."
+}
+
+#>wonder_region_passes_1
+?["Does the zone a region sits in predict what a reader does there?"]{
+  #:depth #!educational ~#lens(arc)
+  ~#tension: "the three obligations are asserted from position and taste. Nothing yet measures whether readers actually behave differently in a hero, in the frames after it, and in the apparatus below."
+  ~#hypothesis: "gathering concentrates in the apparatus zone and onward navigation concentrates in the hero — if both are flat across zones, position is not carrying what this surface claims"
+  !probe{ "bucket cauldron captures and outbound clicks by which stage their host frame sits in. If the distributions match, the zones are a story about authoring rather than about reading." }
+  $%[frame.stage, capture.count, navigation.count]
+}
+
+^"validation"{
+  probe: `node scripts/spw-anatomy-audit.mjs && node scripts/spw-anatomy-audit.mjs --region hero`
+  falsification: "a pass lands that improves a zone against an obligation belonging to a different zone"
+  ~#note(order): "hero pass first, because 135 routes currently offer an arriving reader no way onward, and that is the cheapest large gap on the site"
+}
