@@ -1,0 +1,204 @@
+/* ==========================================================================
+   components/interactive-expression.css
+   --------------------------------------------------------------------------
+   Interactive and editable Spw expressions: delimiter geometry, boundary-aware
+   autocompletion, and differential comparison (<concept>, (scene), [mode], {payload}).
+   ========================================================================== */
+
+:where([data-spw-interactive-expression], .spw-interactive-expression) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.15rem 0.45rem;
+  border: 1px dashed color-mix(in srgb, var(--active-op-color, #008080) 35%, var(--line, rgba(0, 0, 0, 0.15)));
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--surface-soft, rgba(0, 0, 0, 0.03)) 90%, var(--active-op-color, #008080) 10%);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.84em;
+  line-height: 1.35;
+  cursor: text;
+  transition: all 140ms ease;
+  user-select: text;
+}
+
+:where([data-spw-interactive-expression]:hover, .spw-interactive-expression:hover) {
+  border-color: var(--active-op-color, #008080);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 80%, var(--active-op-color, #008080) 20%);
+}
+
+:where([data-spw-interactive-expression]:focus, .spw-interactive-expression:focus, [data-spw-interactive-expression][contenteditable="true"]:focus) {
+  outline: 2px solid var(--active-op-color, #008080);
+  outline-offset: 1px;
+  border-style: solid;
+  border-color: var(--active-op-color, #008080);
+  background: var(--surface-strong, #fff);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--active-op-color, #008080) 25%, transparent);
+}
+
+:where([data-spw-interactive-expression][data-spw-edited="true"]) {
+  border-style: solid;
+  border-color: color-mix(in srgb, var(--active-op-color, #008080) 65%, var(--line, rgba(0, 0, 0, 0.2)));
+  background: color-mix(in srgb, var(--surface-strong, #fff) 92%, var(--active-op-color, #008080) 8%);
+}
+
+/* ==========================================================================
+   Expression Differential HUD / Geometry Dock
+   ========================================================================== */
+
+:where(.spw-expression-hud) {
+  position: absolute;
+  z-index: 120;
+  display: grid;
+  gap: 0.55rem;
+  padding: 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--active-op-color, #008080) 35%, var(--line, rgba(0, 0, 0, 0.18)));
+  border-radius: var(--component-radius-loose, 8px);
+  background: var(--surface-strong, rgba(255, 255, 255, 0.98));
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.04);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.76rem;
+  inline-size: max-content;
+  max-inline-size: min(92vw, 24rem);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(4px);
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+:where(.spw-expression-hud.is-visible) {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+:where(.spw-expression-hud__header) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding-block-end: 0.35rem;
+  border-block-end: 1px solid var(--line, rgba(0, 0, 0, 0.1));
+}
+
+:where(.spw-expression-hud__title) {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--active-op-color, #008080);
+}
+
+:where(.spw-expression-hud__forms) {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.4rem;
+}
+
+:where(.spw-form-morph-btn) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.35rem;
+  padding: 0.32rem 0.5rem;
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.12));
+  border-radius: 5px;
+  background: var(--surface-soft, rgba(0, 0, 0, 0.02));
+  color: var(--ink, #111);
+  font-family: inherit;
+  font-size: 0.74rem;
+  cursor: pointer;
+  transition: all 120ms ease;
+}
+
+:where(.spw-form-morph-btn:hover) {
+  border-color: var(--active-op-color, #008080);
+  background: color-mix(in srgb, var(--surface-strong, #fff) 80%, var(--active-op-color, #008080) 20%);
+}
+
+:where(.spw-form-morph-btn.is-active) {
+  border-color: var(--active-op-color, #008080);
+  background: color-mix(in srgb, var(--active-op-color, #008080) 15%, var(--surface-strong, #fff));
+  font-weight: 700;
+}
+
+:where(.spw-form-glyph) {
+  font-weight: 800;
+  color: var(--active-op-color, #008080);
+}
+
+:where(.spw-expression-hud__suggestions) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem;
+  padding-block-start: 0.35rem;
+  border-block-start: 1px dashed var(--line, rgba(0, 0, 0, 0.1));
+}
+
+:where(.spw-suggestion-chip) {
+  padding: 0.2rem 0.45rem;
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.12));
+  border-radius: 4px;
+  background: var(--surface-soft, rgba(0, 0, 0, 0.03));
+  color: var(--ink-soft, rgba(0, 0, 0, 0.7));
+  font-size: 0.72rem;
+  cursor: pointer;
+  transition: all 120ms ease;
+}
+
+:where(.spw-suggestion-chip:hover) {
+  border-color: var(--active-op-color, #008080);
+  color: var(--ink, #111);
+  background: var(--surface-strong, #fff);
+}
+
+:where(.spw-expression-hud__nav-strip) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
+  padding-block-start: 0.4rem;
+  border-block-start: 1px solid var(--line, rgba(0, 0, 0, 0.1));
+}
+
+:where(.spw-hud-nav-link) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--active-op-color, #008080);
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--active-op-color, #008080) 15%, var(--surface-strong, #fff));
+  color: var(--active-op-color, #008080);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 120ms ease;
+}
+
+:where(.spw-hud-nav-link:hover) {
+  background: var(--active-op-color, #008080);
+  color: #fff;
+}
+
+:where(.spw-hud-search-btn) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.15));
+  border-radius: 4px;
+  background: var(--surface-soft, rgba(0, 0, 0, 0.03));
+  color: var(--ink, #111);
+  font-family: inherit;
+  font-size: 0.72rem;
+  cursor: pointer;
+  transition: all 120ms ease;
+}
+
+:where(.spw-hud-search-btn:hover) {
+  border-color: var(--active-op-color, #008080);
+  background: var(--surface-strong, #fff);
+  color: var(--active-op-color, #008080);
+}

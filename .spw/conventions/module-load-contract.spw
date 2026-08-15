@@ -1,0 +1,136 @@
+# Module Load Contract & Electrostatic Affordances
+#
+# A module is not a static script file; it is an organelle in a living medium.
+# Modules wake through interaction triggers, arm terminals, conduct charge
+# across boundaries, unlock reader affordances, and ground into persistent memory.
+
+#>module_load_contract
+#:convention #!runtime #!electrostatics #!affordances #!ecology #!subfeatures
+#:operation #!contract
+#:fixity #!settled
+#:layer #!pragmatics
+
+@runtime_medium_ecology: ~"./runtime-medium-ecology.spw"
+@electrostatic_affordances: ~"./electrostatic-affordances.spw"
+@arrival_electrostatics: ~"./arrival-electrostatics.spw"
+@interaction_microstates: ~"./interaction-microstates.spw"
+@attention_field: ~"./attention-field.spw"
+@wonder_vocabulary: ~"./wonder-vocabulary.spw"
+@charge_cycle: ~"./charge-cycle.spw"
+@module_updates_contract: ~"../../public/js/runtime/module-updates-contract.js"
+@module_catalog_constants: ~"../../public/js/runtime/module-catalog-constants.js"
+
+operation = "contract"
+fixity = "settled"
+
+^"thesis"{
+  claim: "The site's JavaScript runtime is a living, magical ecology. Modules do not load as an undifferentiated heap; they awaken in response to interaction, conduct charge through material regions, and unlock concrete subfeature affordances for the reader. Perceptibility is potential difference; action is electrostatic discharge; memory is grounded residue."
+  subfeatures: "Subfeatures are discrete capability units within a module (e.g. section-handle-locomotion, resonance-echo, probe-elevation). They stay dormant until the reader's attention or interaction activates their circuit."
+  affordances: "Every module load changes what the visitor can do. Loading is justified only by the new affordance it brings into existence."
+}
+
+^"electrostatic_organelles"{
+  terminal = "Electrodes ([data-spw-operator], .frame-sigil) where conceptual potential accumulates. Sigils (?, ~, #>, ^, @, !, >, <) define the kind of electrode."
+  channel = "Material walls ([data-spw-form=brace], [data-spw-region-purpose]) that conduct current across regional boundaries."
+  capacitor = "Dielectric containers (image seats, satchel, wonder-memory) that store charge without conducting or leaking it."
+  transformer = "Perspective shifters (mode switches, palette resonance, lens variants) that convert charge into alternative registers without losing semantic fixity."
+  inductor = "Resonance loops (:has([data-spw-operator=X])) where kin tokens across the document share momentum and glow in unison."
+  ground = "Address anchors (#>), settled layout geometry (spatial-gravity), and localStorage checkpoints that permanently discharge energy into calm stability."
+}
+
+^"interaction_to_affordance_story"{
+  act_1_lexical_ground: .{
+    posture = "Zero-JS Authorial Equilibrium"
+    mechanics = "Authored HTML + static CSS tokens establish the climate, gravity, and ground truth. Text is 100% readable without JavaScript. Potential is pre-baked across liminality bands."
+    electrostatics = "Static potential difference exists across walls; zero current flows; no energy is spent prematurely."
+    affordance = "Reading, scanning, native scrolling, baseline semantic orientation."
+  }[reg=facet]
+
+  act_2_attention_and_arming: .{
+    posture = "Reader Enters the Medium (Gaze & Proximity)"
+    trigger = "Pointer approach, cursor dwell, viewport scroll across section boundary."
+    awoken_modules = #[`attention-architecture`, `sigil-anatomy`, `operators`][reg=set]
+    electrostatics = "Latent terminals arm (data-spw-charge=armed). Resonance probe lights matching sigils across the page via CSS :has()."
+    affordance = "Sticky section handle surfaces current conceptual coordinates; matching operators echo softly in peripheral vision."
+  }[reg=facet]
+
+  act_3_touch_and_conduction: .{
+    posture = "Direct Contact (Touch, Click, Drag, Keyboard Chord)"
+    trigger = "Operator tap, brace drag, mode-switch click, Alt+K chord."
+    awoken_modules = #[`charge-field`, `brace-actions`, `variant-selection`, `spw-key-events`][reg=set]
+    electrostatics = "Current conducts along the brace wall. Spark discharge fires (data-spw-last-discharge), setting data-spw-consequence-live."
+    affordance = "Projection edges open; math tokens scrub; hidden midprocess scenes and alternative lenses reveal."
+  }[reg=facet]
+
+  act_4_spells_and_sedimentation: .{
+    posture = "Outcome Replay & Grounded Memory"
+    trigger = "Casting a spell chip, pinning an insight, completing a reading groove."
+    awoken_modules = #[`navigation-locomotion`, `navigation-spells`, `wonder-memory`, `learnability-ledger`][reg=set]
+    electrostatics = "Charge sediments into localStorage and encounter memory. Capacitance of the seat rises for future return visits."
+    affordance = "Replaying small outcomes, restoring saved working sets, gliding seamlessly to bookmarked waypoints."
+  }[reg=facet]
+
+  act_5_calm_settling: .{
+    posture = "Equilibrium Restored (Settled Horizon)"
+    trigger = "Document fonts ready + double-rAF layout freeze."
+    awoken_modules = #[`spatial-gravity`, `layout-assumptions`, `loading-ecology`][reg=set]
+    electrostatics = "Field settles to resting state (V0). Floating chrome clearances lock with hysteresis; transient pulses decay."
+    affordance = "Rock-solid reading measure, zero scroll oscillation, visual tranquility."
+  }[reg=facet]
+}
+
+^"subfeature_granularity_matrix"{
+  charge_field: .{
+    subfeatures = #[`charge-accumulator`, `discharge-router`, `consequence-live-projector`, `resonance-echo`][reg=set]
+    triggers = #[`pointer-approach`, `operator-touch`, `brace-interact`][reg=set]
+    affordances = #[`inspect-charge-potential`, `preview-discharge-kind`, `trigger-consequence-live`][reg=set]
+    role = `channel`
+    discharge = `transfer`
+  }[reg=facet]
+
+  attention_architecture: .{
+    subfeatures = #[`section-handle-locomotion`, `resonance-probe`, `reading-groove`][reg=set]
+    triggers = #[`scroll-boundary`, `pointer-approach`][reg=set]
+    affordances = #[`jump-to-current-section`, `operator-echo-highlight`, `groove-aligned-reading`][reg=set]
+    role = `inductor`
+    discharge = `resonate`
+  }[reg=facet]
+
+  variant_selection: .{
+    subfeatures = #[`mode-switch-pivot`, `semantic-lens-activator`, `content-variant-framer`][reg=set]
+    triggers = #[`operator-touch`, `keyboard-chord`][reg=set]
+    affordances = #[`toggle-lens-state`, `switch-content-layer`, `compare-variants`][reg=set]
+    role = `transformer`
+    discharge = `project`
+  }[reg=facet]
+
+  brace_actions: .{
+    subfeatures = #[`brace-edge-projection`, `interactive-entry`, `delimit-scope`][reg=set]
+    triggers = #[`brace-interact`, `pointer-approach`][reg=set]
+    affordances = #[`open-brace-action-bar`, `inspect-projection-edge`, `fold-unfold-boundary`][reg=set]
+    role = `channel`
+    discharge = `transfer`
+  }[reg=facet]
+
+  navigation_locomotion: .{
+    subfeatures = #[`section-travel`, `spell-momentum`, `bottom-lane-sync`][reg=set]
+    triggers = #[`scroll-boundary`, `operator-touch`, `spell-cast`][reg=set]
+    affordances = #[`smooth-section-glide`, `spell-momentum-cast`, `floating-chrome-adjust`][reg=set]
+    role = `channel`
+    discharge = `transfer`
+  }[reg=facet]
+
+  spatial_gravity: .{
+    subfeatures = #[`measure-band-resolution`, `extent-calibration`, `viewport-gravity-bias`][reg=set]
+    triggers = #[`idle-settle`][reg=set]
+    affordances = #[`read-calm-layout`, `responsive-measure-packing`][reg=set]
+    role = `ground`
+    discharge = `settle`
+  }[reg=facet]
+}
+
+^"authoring_and_runtime_rules"{
+  rule_1 = "Never author an interaction effect without a declared affordance. If a module cannot name what the reader can now do, its activation is an ungrounded cost."
+  rule_2 = "Electrostatics are inferred from the operator and material. Do not author data-spw-charge=charged statically in HTML."
+  rule_3 = "Subfeatures must be fine-grained: a single module may house multiple subfeatures, but they must coordinate through the shared bus and DOM contracts."
+}
