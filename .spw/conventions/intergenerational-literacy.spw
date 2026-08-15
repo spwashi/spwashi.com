@@ -1,0 +1,72 @@
+# Intergenerational Media Literacy
+#
+# The practice's actual subject, written down because it was missing.
+#
+# "media literacy" appeared zero times across the markup and the corpus.
+# "intergenerational" appeared three times: twice inside the same URL-encoded
+# prompt parameter, once in fiction about a library. The stated focus of the
+# work had no surface, which meant every other convention here described method
+# without naming what the method is for.
+
+#>spw_intergenerational_literacy
+#:convention #!literacy #!pedagogy #!purpose
+#:operation #!contract
+#:fixity #!tending
+#:layer #!semantics
+
+@world_physics: ~"./world-physics.spw"
+@dregg_lineage: ~"./dregg-lineage.spw"
+@registers: ~"./cauldron-registers.spw"
+@copy_ecology: ~"./copy-ecology.spw"
+
+operation = "contract"
+fixity = "tending"
+
+expression = literacy[intergenerational]{pointer.medium.transfer}<shared_ground>
+
+^"the_subject"{
+  claim: "Two people can hold the same concept and lose each other anyway, because they are pointing at it through different structures."
+  ~#reading: `the failure is rarely disagreement about the thing. It is a mismatch in what each person takes to be the thing's parts, its relatives, and what would count as being wrong about it.`
+  ~#why(intergenerational specifically): "generations do not differ mainly in values. They differ in which media taught them what a claim looks like, what counts as evidence, and how a form signals its own seriousness."
+  ~#consequence: "so literacy work across generations is not teaching one group the other's medium. It is making the pointer visible on both sides."
+}
+
+^"why_this_site_is_shaped_this_way"{
+  ~#note: "Conventions elsewhere describe method. This is what the method is for."
+  inspectable_surfaces: `a page states its own structure so a reader can check the claim rather than trust the frame — that is a transferable habit, not a site feature`
+  probe_and_falsification: `every claim carries what would show it false, because "how would we know?" is the single most portable literacy move`
+  depth_perspectives: `a concept and its relatives held in one space, so a beginner and an expert reading are the same object at different resolutions rather than two documents`
+  operator_grammar: `a small vocabulary that composes, so the structure of an argument is visible in its notation instead of hidden in its prose`
+  ~#reading: `every one of these is a literacy affordance first and an aesthetic second`
+}
+
+^"why_the_forms_are_plural"{
+  ~#note: "One subject, several media, on purpose."
+  show_and_book: `lore.land is paced like episodes and built like structure, so neither reading nor watching is the lesser way in — a reader and a viewer arrive at the same material without either being remediated`
+  table_play: `RPG Wednesday puts meaning-making in a room with other people, where a figure either survives contact or does not`
+  short_video: `platform mechanics — streaks, duets, stitches — are a constrained vocabulary that generates variety, which is the same shape as a versioned mechanic set (see @dregg_lineage)`
+  static_capture: `screenshots are the lowest-bandwidth durable form, which is why chrome must stay legible under capture`
+  ~#claim: "plural media is the method, not a distribution strategy. A literacy claim you can only make in one medium is a claim about that medium."
+}
+
+^"honest_limits"{
+  ~#note: "Recorded so this does not become a mission statement that outruns the work."
+  ~#not_yet: `nothing here measures whether a reader's comprehension improved. The site measures coverage and encounter, which is contact rather than transfer.`
+  ~#risk(condescension): "framing one generation as needing to be taught the other's medium is the failure mode. The pointer is made visible on both sides or the work is remedial."
+  ~#unearned: `this surface states a purpose. It does not yet state a curriculum, and should not pretend to.`
+}
+
+#>wonder_intergenerational_1
+?["Where does a reader's pointer actually diverge from the author's?"]{
+  #:depth #!educational ~#lens(arc)
+  ~#tension: "the site can show its structure, and still cannot tell where a specific reader's model of a concept stops matching the one on the page. Coverage is measured; divergence is not."
+  ~#hypothesis: "divergence shows up as a prediction failure — a reader who holds a different structure will guess wrong about an unseen case while reporting full confidence"
+  !probe{ "describe a case the page has not shown, and ask a reader to predict what the page would say. Where prediction and confidence come apart, the pointers differ. That gap is the teachable moment and nothing here currently finds it." }
+  $%[concept.parts, reader.prediction, reader.confidence]
+}
+
+^"validation"{
+  probe: `rg -il "media literacy|intergenerational" --glob '!dist*' --glob '!_workbench'`
+  falsification: "the site states this as its subject and no route makes a literacy affordance a reader could use without reading the theory first"
+  ~#note(measured absence): "before this surface, media literacy appeared 0 times in markup and 0 times in the corpus, and intergenerational appeared twice inside one prompt string"
+}
