@@ -80,6 +80,8 @@
 @import url('/public/css/systems/arrival-electrostatics.css') layer(systems);
 @import url('/public/css/systems/expression-resonance.css') layer(systems);
 @import url('/public/css/systems/probe-legibility.css') layer(systems);
+@import url('/public/css/systems/affordance-legibility.css') layer(systems);
+@import url('/public/css/systems/legibility-lens.css') layer(systems);
 @import url('/public/css/systems/surfaces/base.css') layer(systems);
 @import url('/public/css/systems/surfaces/media.css') layer(systems);
 @import url('/public/css/systems/surfaces/topics.css') layer(systems);

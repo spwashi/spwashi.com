@@ -1,0 +1,225 @@
+/* ==========================================================================
+   affordance-legibility.css
+   --------------------------------------------------------------------------
+   Making the declared interaction vocabulary readable.
+
+   441 elements across the routes carry `data-spw-interaction-tap`,
+   `-hold`, `-drag`, `-double-click` and `-keyboard`, and each value is a unique
+   sentence describing what that gesture will do — "prime the held brace as a
+   cauldron ingredient", "inspect without capture". Every one of those sentences
+   was written for a reader and no stylesheet has ever referenced the attributes
+   that hold them. 167 of 375 distinct data-spw-* attributes are unstyled; this
+   closes the cluster where the absence costs the most, because these are the
+   only attributes that describe what a person can *do*.
+
+   The problem this solves is not decoration. A page offers reading lenses that
+   a visitor may never touch, and nothing tells them a lens is there. Wonder
+   needs somewhere to flow: a surface that answers "what happens if I press
+   this" before the press, not after.
+
+   Design rule — quiet first.
+
+   Nothing here is visible at rest. A page with every affordance shouting is
+   worse than one that says nothing, and part of what makes a route feel
+   refreshing is having less on it than expected. The vocabulary surfaces on
+   approach (hover, focus-visible) and stays surfaced only while attention is
+   there. This is the potential/reward boundary: a preview is pulse-shaped and
+   is never promoted into residue.
+
+   Layout rule — the reveal is absolutely positioned and the host gets no size
+   change, because an affordance hint that reflows the page teaches the reader
+   that looking is dangerous.
+   ========================================================================== */
+
+:where([data-spw-interaction-tap],
+       [data-spw-interaction-hold],
+       [data-spw-interaction-drag],
+       [data-spw-interaction-double-click],
+       [data-spw-interaction-keyboard]) {
+  --spw-affordance-accent: var(--spw-charge-field-color, var(--active-op-color, #008080));
+  --spw-affordance-ink: var(--color-text-subtle, #5a5f66);
+  --spw-affordance-ground: var(--color-surface-raised, #ffffff);
+  --spw-affordance-reveal: 0;
+
+  position: relative;
+}
+
+/* --------------------------------------------------------------------------
+   The mark. A single corner tick that says "this element declares a gesture"
+   without saying which — the detail is one step further in, so the resting
+   state stays almost silent.
+   -------------------------------------------------------------------------- */
+
+:where([data-spw-interaction-tap],
+       [data-spw-interaction-hold],
+       [data-spw-interaction-drag],
+       [data-spw-interaction-double-click],
+       [data-spw-interaction-keyboard])::before {
+  content: '';
+  position: absolute;
+  inset-block-start: 0.15em;
+  inset-inline-end: 0.15em;
+  inline-size: 0.32em;
+  block-size: 0.32em;
+  border-radius: 50%;
+  background: var(--spw-affordance-accent);
+  /* Barely present at rest. This is the "less noise" default — a reader who is
+     not looking for affordances should not be told about them. */
+  opacity: calc(0.18 + (var(--spw-affordance-reveal) * 0.7));
+  transform: scale(calc(1 + (var(--spw-affordance-reveal) * 0.35)));
+  transition:
+    opacity var(--duration-base, 220ms) var(--ease-smooth, ease),
+    transform var(--duration-base, 220ms) var(--ease-smooth, ease);
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   The sentence. Revealed only under attention, and only for the gesture that
+   the current input mode can actually perform — a pointer user is not told
+   about the keyboard binding, because an affordance they cannot reach is noise
+   dressed as help.
+   -------------------------------------------------------------------------- */
+
+:where([data-spw-interaction-tap],
+       [data-spw-interaction-hold],
+       [data-spw-interaction-drag],
+       [data-spw-interaction-double-click],
+       [data-spw-interaction-keyboard])::after {
+  position: absolute;
+  inset-block-end: calc(100% + 0.4em);
+  inset-inline-start: 0;
+  z-index: 40;
+
+  max-inline-size: min(32ch, 90vw);
+  padding: 0.35em 0.6em;
+
+  border-radius: var(--radius-sm, 4px);
+  border: 1px solid color-mix(in oklab, var(--spw-affordance-accent) 30%, transparent);
+  background: var(--spw-affordance-ground);
+  color: var(--spw-affordance-ink);
+
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: var(--font-size-xs, 0.75rem);
+  line-height: 1.45;
+  text-align: start;
+  white-space: normal;
+
+  opacity: var(--spw-affordance-reveal);
+  /* Not display:none — a hidden box cannot transition, and the reveal is the
+     part that has to feel unhurried. */
+  visibility: hidden;
+  transition:
+    opacity var(--duration-base, 220ms) var(--ease-smooth, ease),
+    visibility 0s linear var(--duration-base, 220ms);
+  pointer-events: none;
+}
+
+/* Pointer affordances read first; keyboard is substituted under focus below. */
+[data-spw-interaction-tap]::after { content: 'tap — ' attr(data-spw-interaction-tap); }
+[data-spw-interaction-hold]::after { content: 'hold — ' attr(data-spw-interaction-hold); }
+[data-spw-interaction-drag]::after { content: 'drag — ' attr(data-spw-interaction-drag); }
+[data-spw-interaction-double-click]::after { content: 'double-click — ' attr(data-spw-interaction-double-click); }
+
+/* Focus arrives from the keyboard, so under focus the keyboard binding is the
+   relevant sentence even when richer pointer gestures exist. */
+[data-spw-interaction-keyboard]:focus-visible::after {
+  content: 'key — ' attr(data-spw-interaction-keyboard);
+}
+
+/* --------------------------------------------------------------------------
+   Attention opens the reveal. One custom property drives both the mark and the
+   sentence, so they cannot disagree about whether this element is under
+   attention.
+   -------------------------------------------------------------------------- */
+
+:where([data-spw-interaction-tap],
+       [data-spw-interaction-hold],
+       [data-spw-interaction-drag],
+       [data-spw-interaction-double-click],
+       [data-spw-interaction-keyboard]):is(:hover, :focus-visible, :focus-within) {
+  --spw-affordance-reveal: 1;
+}
+
+:where([data-spw-interaction-tap],
+       [data-spw-interaction-hold],
+       [data-spw-interaction-drag],
+       [data-spw-interaction-double-click],
+       [data-spw-interaction-keyboard]):is(:hover, :focus-visible, :focus-within)::after {
+  visibility: visible;
+  transition:
+    opacity var(--duration-base, 220ms) var(--ease-smooth, ease),
+    visibility 0s;
+}
+
+/* --------------------------------------------------------------------------
+   Density. The site already has a semantic-density register; at its quietest
+   the marks go away entirely rather than merely dimming, because "quiet" that
+   still leaves 441 dots on a page is not quiet.
+   -------------------------------------------------------------------------- */
+
+[data-spw-semantic-density='minimal'] :where([data-spw-interaction-tap],
+                                             [data-spw-interaction-hold],
+                                             [data-spw-interaction-drag],
+                                             [data-spw-interaction-double-click],
+                                             [data-spw-interaction-keyboard])::before {
+  content: none;
+}
+
+/* --------------------------------------------------------------------------
+   Touch. Hover does not exist, so a reveal keyed to it would strand the mark
+   with no way to read it. On coarse pointers the mark stays and the sentence
+   waits for focus, which a tap provides.
+   -------------------------------------------------------------------------- */
+
+@media (hover: none) {
+  :where([data-spw-interaction-tap],
+         [data-spw-interaction-hold],
+         [data-spw-interaction-drag])::before {
+    opacity: 0.32;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Reduced motion keeps the information and drops the travel — the reveal is
+   still the reward, it just arrives without scaling.
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  :where([data-spw-interaction-tap],
+         [data-spw-interaction-hold],
+         [data-spw-interaction-drag],
+         [data-spw-interaction-double-click],
+         [data-spw-interaction-keyboard])::before {
+    transform: none;
+    transition: opacity 1ms linear;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Capture and print. A screenshot has no hover, so the marks would be dots with
+   no explanation — drop them. The interpretation workflow reads what is on the
+   page, and an unexplained dot is worse than nothing.
+   -------------------------------------------------------------------------- */
+
+[data-spw-capture-mode] :where([data-spw-interaction-tap],
+                               [data-spw-interaction-hold],
+                               [data-spw-interaction-drag],
+                               [data-spw-interaction-double-click],
+                               [data-spw-interaction-keyboard])::before {
+  content: none;
+}
+
+@media print {
+  :where([data-spw-interaction-tap],
+         [data-spw-interaction-hold],
+         [data-spw-interaction-drag],
+         [data-spw-interaction-double-click],
+         [data-spw-interaction-keyboard])::before,
+  :where([data-spw-interaction-tap],
+         [data-spw-interaction-hold],
+         [data-spw-interaction-drag],
+         [data-spw-interaction-double-click],
+         [data-spw-interaction-keyboard])::after {
+    content: none;
+  }
+}
