@@ -23,7 +23,7 @@
     "build:vite": "npm run build:tools && npm run build:runtime && node scripts/css-build.mjs && vite build",
     "catalog": "node scripts/generate-design-catalog.mjs",
     "check": "npm run audit && npm run check:local",
-    "check:local": "npm run build:compile && node scripts/css-build.mjs && node scripts/check-site.mjs && npm run check:pwa:run && node scripts/check-generated.mjs && npm run component:check && npm run test:modules:run",
+    "check:local": "npm run build:compile && node scripts/css-build.mjs && node scripts/check-site.mjs && npm run check:pwa:run && node scripts/check-generated.mjs && npm run component:check && npm run test:modules:run && node scripts/check-observation-locality.mjs",
     "check:css": "npm run build:tools && node scripts/css-build.mjs && node scripts/css-contracts.mjs && node scripts/css-build.mjs --check && node scripts/check-generated.mjs",
     "check:generated": "npm run build:tools && npm run build:runtime && node scripts/css-build.mjs && node scripts/check-generated.mjs",
     "check:json": "npm run build:tools && npm run build:runtime && node scripts/json-contracts.mjs",
@@ -103,7 +103,8 @@
     "spw:dimensions": "node scripts/spw-dimensional-index.mjs",
     "spw:precipitate": "node scripts/spw-precipitate.mjs",
     "spw:snippets": "node scripts/spw-snippets.mjs",
-    "lens": "node scripts/build-legibility-lens.mjs --write"
+    "lens": "node scripts/build-legibility-lens.mjs --write",
+    "check:observation": "node scripts/check-observation-locality.mjs"
   },
   "devDependencies": {
     "@types/node": "^20.19.39",
