@@ -3,14 +3,15 @@
  *
  * Every catalog entry lists the attributes it writes, tagged with a channel:
  *
- *   structural   183   layout and meaning — the page is wrong without it
- *   flourish      64   decoration — the page is complete without it
+ *   structural   176   layout and meaning — the page is wrong without it
+ *   flourish      62   decoration — the page is complete without it
  *   inspect       48   an inspection surface, not content
- *   residue       29   what a visit leaves behind and keeps
- *   measure       17   a measurement someone can check
+ *   residue       27   what a visit leaves behind and keeps
+ *   measure       14   a measurement someone can check
  *   diagnostic     8   for debugging the runtime itself
+ *   temporal       1   a timestamp or phase that expires
  *
- * 349 declarations over 328 distinct attributes, and no stylesheet has ever
+ * 336 attributes over seven channels, and no stylesheet has ever
  * read the channel. Meanwhile 167 of 375 attributes in the markup are styled by
  * nothing at all. The channel is the missing join: it says which slice of the
  * data is worth making readable, which is a question no single attribute can
@@ -40,13 +41,14 @@ const CATALOG_DIR = path.join(ROOT, 'public/js/runtime');
 const OUT = path.join(ROOT, 'public/css/systems/legibility-lens.css');
 
 /** Channels ordered by how load-bearing they are. Order drives the cascade. */
-const CHANNEL_ORDER = ['structural', 'measure', 'residue', 'inspect', 'flourish', 'diagnostic'];
+const CHANNEL_ORDER = ['structural', 'measure', 'residue', 'inspect', 'temporal', 'flourish', 'diagnostic'];
 
 const CHANNEL_NOTE = {
   structural: 'layout and meaning — the page is wrong without these',
   measure: 'a measurement someone can check',
   residue: 'what a visit leaves behind and keeps',
   inspect: 'an inspection surface, not content',
+  temporal: 'a timestamp or phase that expires — true only when written',
   flourish: 'decoration — the page is complete without these',
   diagnostic: 'for debugging the runtime itself',
 };
@@ -89,7 +91,7 @@ function render(byChannel) {
     lines.push(`     ${c.padEnd(11)} ${String(byChannel.get(c).size).padStart(3)}  ${CHANNEL_NOTE[c] || ''}`);
   }
   lines.push('');
-  lines.push('   Nothing is legible by default. A page that reveals all six channels at once');
+  lines.push('   Nothing is legible by default. A page that reveals every channel at once');
   lines.push('   is a debug overlay, not a lens, and the point of a lens is that it leaves');
   lines.push('   most of the page alone.');
   lines.push('   ========================================================================== */');

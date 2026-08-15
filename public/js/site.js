@@ -643,6 +643,7 @@ const {
   mountImmediateLayer,
   mountVisibleFeatures,
   mountInteractionFeatures,
+  mountInvitedFeatures,
   mountRegionLayer,
   queueIdleEnhancements,
   refreshRuntime,
@@ -995,6 +996,9 @@ async function bootSite() {
 
   await mountVisibleFeatures(NON_CORE_DEFS, runtimeCtx);
   await mountInteractionFeatures(NON_CORE_DEFS, runtimeCtx);
+  // Invitations are written last so a root that is already mounting by another
+  // timing is never also advertised as waiting.
+  await mountInvitedFeatures(NON_CORE_DEFS, runtimeCtx);
 
   progressHydration(HYDRATION_STATES.READY);
   setPageState(PAGE_STATES.HYDRATED);

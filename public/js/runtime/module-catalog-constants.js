@@ -26,6 +26,9 @@ export const MOUNT_WHEN = Object.freeze({
   VISIBLE: 'visible',
   IDLE: 'idle',
   INTERACTION: 'interaction',
+  /* Per-root designed trigger: the root advertises what it holds, and the
+     reader accepts. Discovery is chosen rather than scrolled past. */
+  INVITED: 'invited',
   REGION: 'region',
   SETTLED: 'settled',
 });

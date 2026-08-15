@@ -16,6 +16,7 @@ export const VALID_MOUNT_WHEN = Object.freeze([
     'visible',
     'idle',
     'interaction',
+  'invited',
     'region',
     'settled',
 ]);

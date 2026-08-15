@@ -523,7 +523,8 @@ export const FEATURE_DEFS = [
   {
     id: 'typography-measurement-preview',
     layer: MODULE_LAYERS.FEATURE,
-    when: MOUNT_WHEN.VISIBLE,
+    // a preview nobody asked for is an interruption
+    when: MOUNT_WHEN.INVITED,
     route: 'settings',
     features: ['pretext-lab'],
     selector: '#typography-measurement-preview',
@@ -542,7 +543,8 @@ export const FEATURE_DEFS = [
   {
     id: 'frame-metrics',
     layer: MODULE_LAYERS.FEATURE,
-    when: MOUNT_WHEN.VISIBLE,
+    // a measurement is worth having when someone asks for it
+    when: MOUNT_WHEN.INVITED,
     features: ['metrics'],
     selector: 'main',
     describes: 'frame[text.measure] site-frame[line-count.height.wrap] bus[pretext-measurement]',

@@ -8,17 +8,18 @@
    into a lens, so a reader can make one slice of the data readable and leave
    the rest quiet.
 
-   331 attributes over 6 channels.
+   336 attributes over 7 channels.
 
    Set data-spw-legible on the root to choose a slice:
-     structural  173  layout and meaning — the page is wrong without these
+     structural  176  layout and meaning — the page is wrong without these
      measure      14  a measurement someone can check
      residue      27  what a visit leaves behind and keeps
      inspect      48  an inspection surface, not content
-     flourish     61  decoration — the page is complete without these
+     temporal      1  a timestamp or phase that expires — true only when written
+     flourish     62  decoration — the page is complete without these
      diagnostic    8  for debugging the runtime itself
 
-   Nothing is legible by default. A page that reveals all six channels at once
+   Nothing is legible by default. A page that reveals every channel at once
    is a debug overlay, not a lens, and the point of a lens is that it leaves
    most of the page alone.
    ========================================================================== */
@@ -28,7 +29,7 @@
   --spw-lens-ground: color-mix(in oklab, var(--spw-lens-ink) 8%, transparent);
 }
 
-/* ---- structural — layout and meaning — the page is wrong without these (173) ---- */
+/* ---- structural — layout and meaning — the page is wrong without these (176) ---- */
 
 [data-spw-legible="structural"] :where([data-spw-active]),
 [data-spw-legible="structural"] :where([data-spw-address-role]),
@@ -41,6 +42,9 @@
 [data-spw-legible="structural"] :where([data-spw-attention-self-relation]),
 [data-spw-legible="structural"] :where([data-spw-bare-spw-enhanced]),
 [data-spw-legible="structural"] :where([data-spw-box-settle-phase]),
+[data-spw-legible="structural"] :where([data-spw-brace-actions]),
+[data-spw-legible="structural"] :where([data-spw-brace-actions-mounted]),
+[data-spw-legible="structural"] :where([data-spw-brace-edge]),
 [data-spw-legible="structural"] :where([data-spw-brace-nesting]),
 [data-spw-legible="structural"] :where([data-spw-cadence]),
 [data-spw-legible="structural"] :where([data-spw-card-state]),
@@ -318,7 +322,15 @@
   background-color: var(--spw-lens-ground);
 }
 
-/* ---- flourish — decoration — the page is complete without these (61) ---- */
+/* ---- temporal — a timestamp or phase that expires — true only when written (1) ---- */
+
+[data-spw-legible="temporal"] :where([data-spw-pulse-ts]) {
+  outline: 1px dashed color-mix(in oklab, var(--spw-lens-ink) 38%, transparent);
+  outline-offset: 2px;
+  background-color: var(--spw-lens-ground);
+}
+
+/* ---- flourish — decoration — the page is complete without these (62) ---- */
 
 [data-spw-legible="flourish"] :where([data-spw-active-sigil]),
 [data-spw-legible="flourish"] :where([data-spw-active-sigil-operator]),
@@ -326,6 +338,7 @@
 [data-spw-legible="flourish"] :where([data-spw-active-sigil-region]),
 [data-spw-legible="flourish"] :where([data-spw-cauldron-resonance]),
 [data-spw-legible="flourish"] :where([data-spw-cauldron-state]),
+[data-spw-legible="flourish"] :where([data-spw-charge]),
 [data-spw-legible="flourish"] :where([data-spw-charge-carrier]),
 [data-spw-legible="flourish"] :where([data-spw-charge-field]),
 [data-spw-legible="flourish"] :where([data-spw-charge-intensity]),

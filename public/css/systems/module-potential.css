@@ -1,0 +1,166 @@
+/* ==========================================================================
+   module-potential.css
+   --------------------------------------------------------------------------
+   What an unmounted module looks like.
+
+   The loader already computes, per element, which module is waiting on it, why,
+   what it will write, and how far its effects reach — seven attributes' worth
+   of reasoning — and every one of them was drawn only behind
+   `data-spw-module-visuals="on"` or debug mode. A designed invitation was being
+   computed for every reader and shown to none.
+
+   The electrostatic reading the rest of the site uses applies literally here. A
+   module that has not mounted is stored potential at a root; the invitation is
+   the visible potential difference; the reader's gesture closes the circuit;
+   mounting is the discharge. Nothing about that is metaphor-only — the states
+   below are exactly the ones the loader writes.
+
+     waiting      potential is stored, and the root says so
+     triggered    the circuit closed; the module is arriving
+     queued       scheduled by something other than the reader — drawn as
+                  nothing, because a reader cannot accept what they did not
+                  choose, and pretending otherwise teaches a false affordance
+
+   Strength follows the offer, not the module. `data-spw-module-offer` is
+   derived from the channels a module declares it writes, so a module that
+   leaves residue — something a visit keeps — invites more strongly than one
+   that adds flourish. This is the honest ranking: it is computed from what the
+   module actually does, so it cannot flatter itself.
+
+   Everything here is quiet. An invitation that shouts is an advertisement, and
+   the point is that a reader who is not looking for features should not be
+   interrupted by them.
+   ========================================================================== */
+
+:where([data-spw-module-trigger-status='waiting']) {
+  --spw-potential-accent: var(--spw-charge-field-color, var(--active-op-color, #008080));
+  /* Offer strength. Overridden per offer below; this is the floor. */
+  --spw-potential-strength: 0.28;
+  --spw-potential-reveal: 0;
+
+  position: relative;
+}
+
+/* --------------------------------------------------------------------------
+   Offer strength. Derived, not editorial — see the header.
+   -------------------------------------------------------------------------- */
+
+[data-spw-module-offer='residue'] { --spw-potential-strength: 1; }
+[data-spw-module-offer='measure'] { --spw-potential-strength: 0.78; }
+[data-spw-module-offer='structural'] { --spw-potential-strength: 0.55; }
+[data-spw-module-offer='inspect'] { --spw-potential-strength: 0.42; }
+[data-spw-module-offer='temporal'] { --spw-potential-strength: 0.42; }
+[data-spw-module-offer='flourish'] { --spw-potential-strength: 0.22; }
+/* Diagnostics are for the runtime's own health and are never advertised. */
+[data-spw-module-offer='diagnostic'] { --spw-potential-strength: 0; }
+
+/* --------------------------------------------------------------------------
+   The stored charge. An edge that accumulates along one side rather than a
+   badge — a badge says "new feature", an edge says "there is more here", and
+   only the second is true.
+   -------------------------------------------------------------------------- */
+
+[data-spw-module-trigger-status='waiting']::before {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  inline-size: 2px;
+
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    color-mix(in oklab, var(--spw-potential-accent) calc(var(--spw-potential-strength) * 55%), transparent),
+    transparent
+  );
+  opacity: calc(0.35 + (var(--spw-potential-reveal) * 0.65));
+
+  transition: opacity var(--duration-slow, 420ms) var(--ease-smooth, ease);
+  pointer-events: none;
+}
+
+/* Nothing is drawn for an offer of zero. */
+[data-spw-module-offer='diagnostic'][data-spw-module-trigger-status='waiting']::before {
+  content: none;
+}
+
+/* --------------------------------------------------------------------------
+   Approach raises the potential. The reveal is the reward for looking, and it
+   arrives before the module does — so a reader learns that attention here is
+   answered, which is the whole discovery loop.
+   -------------------------------------------------------------------------- */
+
+[data-spw-module-trigger-status='waiting']:is(:hover, :focus-within) {
+  --spw-potential-reveal: 1;
+}
+
+/* --------------------------------------------------------------------------
+   Discharge. One pulse when the circuit closes, then nothing — the module has
+   arrived and the invitation is spent. Deliberately not a lingering state:
+   residue belongs to what the module writes, not to the fact that it loaded.
+   -------------------------------------------------------------------------- */
+
+@keyframes spw-potential-discharge {
+  from {
+    opacity: 0.9;
+    transform: scaleY(1);
+  }
+  to {
+    opacity: 0;
+    transform: scaleY(0.2);
+  }
+}
+
+[data-spw-module-trigger-status='triggered']::before {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  inline-size: 2px;
+  transform-origin: center;
+  background: var(--spw-potential-accent, currentColor);
+  animation: spw-potential-discharge var(--duration-slow, 420ms) var(--ease-smooth, ease) forwards;
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   Queued roots are scheduled by scroll or idle rather than chosen, so they get
+   no invitation. Stated as a rule rather than left implicit, because the
+   temptation to decorate every pending module is exactly what makes a page
+   noisy.
+   -------------------------------------------------------------------------- */
+
+[data-spw-module-trigger-status='queued']::before {
+  content: none;
+}
+
+/* --------------------------------------------------------------------------
+   Reduced motion keeps the potential and drops the discharge animation; the
+   information survives, the movement does not.
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  [data-spw-module-trigger-status='waiting']::before {
+    transition: none;
+  }
+
+  [data-spw-module-trigger-status='triggered']::before {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Capture and print. A screenshot of an invitation is an invitation nobody can
+   accept, so it is dropped rather than frozen mid-offer.
+   -------------------------------------------------------------------------- */
+
+[data-spw-capture-mode] [data-spw-module-trigger-status]::before {
+  content: none;
+}
+
+@media print {
+  [data-spw-module-trigger-status]::before {
+    content: none;
+  }
+}

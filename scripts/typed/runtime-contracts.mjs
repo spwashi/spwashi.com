@@ -745,6 +745,7 @@ export async function collectRuntimeContractReport() {
     const schedulerRequirements = [
         { timings: ['visible'], call: 'mountVisibleFeatures(NON_CORE_DEFS' },
         { timings: ['interaction'], call: 'mountInteractionFeatures(NON_CORE_DEFS' },
+        { timings: ['invited'], call: 'mountInvitedFeatures(NON_CORE_DEFS' },
         { timings: ['idle', 'settled'], call: 'queueIdleEnhancements(NON_CORE_DEFS' },
     ];
     for (const requirement of schedulerRequirements) {

@@ -1472,6 +1472,97 @@ async function mountInteractionFeatures(defs, ctx) {
   ctx.addCleanup(cleanup);
 }
 
+/**
+ * What a module offers, derived from what it declares it writes.
+ *
+ * `updates:` already tags every attribute with a channel, so a module's worth
+ * to a reader is computable rather than editorial: one that writes `residue`
+ * leaves something a visit keeps, one that writes `measure` leaves a checkable
+ * claim, and one that writes only `flourish` is complete decoration. Ranked so
+ * the strongest claim a module can make is the one it advertises.
+ */
+const OFFER_RANK = ['residue', 'measure', 'structural', 'inspect', 'temporal', 'flourish', 'diagnostic'];
+
+function describeModuleOffer(def) {
+  const channels = new Set(
+    (def.updates || [])
+      .map((entry) => String(entry).split(':')[0])
+      .filter(Boolean)
+  );
+  return OFFER_RANK.find((channel) => channels.has(channel)) || 'flourish';
+}
+
+/**
+ * Invited mounting — a designed trigger, one root at a time.
+ *
+ * Scroll position is not a decision. A module mounted because a root drifted
+ * into the viewport arrives unannounced, gives the reader no way to anticipate
+ * it, and cannot be sought out on purpose; INTERACTION is better only in that
+ * it waits, but it still fires every pending module on the first input
+ * anywhere on the page.
+ *
+ * An invitation is per root and per module. The root advertises what it is
+ * holding before the module exists, and the module arrives because this reader
+ * chose this element. In the electrostatic reading that the rest of the site
+ * uses, an uninvited module is stored potential and accepting is the discharge:
+ * the invitation is the visible potential difference, and the reader closes the
+ * circuit.
+ *
+ * The invitation itself is CSS, driven by attributes written here, so a page
+ * with no JavaScript still shows nothing misleading — an invitation that cannot
+ * be accepted is never drawn, because the attribute that draws it is written by
+ * the runtime that would accept it.
+ */
+async function mountInvitedFeatures(defs, ctx) {
+  const invitedDefs = defs.filter((def) => shouldScheduleDefinition(def, ctx, mountWhen.INVITED));
+  if (!invitedDefs.length) return;
+
+  /** Accepting affects one root and one module, never the whole page. */
+  const accept = async (el, def) => {
+    if (el.dataset.spwModuleTriggerStatus === 'triggered') return;
+    annotateModuleTrigger(el, def, ctx, mountWhen.INVITED, 'triggered');
+    beginMountBatch();
+    try {
+      await (def.rootMode === 'single'
+        ? mountDefinition(def, ctx, null, 0)
+        : mountDefinition(def, ctx, el));
+    } finally {
+      endMountBatch(ctx);
+    }
+  };
+
+  for (const def of invitedDefs) {
+    const offer = describeModuleOffer(def);
+
+    for (const el of getRoots(def)) {
+      if (!(el instanceof HTMLElement)) continue;
+
+      annotateModuleTrigger(el, def, ctx, mountWhen.INVITED, 'waiting');
+      // What the reader stands to gain, so the invitation can be drawn at a
+      // strength that matches the offer rather than uniformly.
+      writeDatasetValue(el, 'spwModuleOffer', offer);
+
+      const onAccept = (event) => {
+        // Keyboard acceptance is deliberate; a stray keydown is not an answer.
+        if (event.type === 'keydown' && event.key !== 'Enter' && event.key !== ' ') return;
+        void accept(el, def);
+        detach();
+      };
+
+      const detach = () => {
+        el.removeEventListener('pointerenter', onAccept);
+        el.removeEventListener('focusin', onAccept);
+        el.removeEventListener('keydown', onAccept);
+      };
+
+      el.addEventListener('pointerenter', onAccept, { passive: true });
+      el.addEventListener('focusin', onAccept, { passive: true });
+      el.addEventListener('keydown', onAccept);
+      ctx.addCleanup(detach);
+    }
+  }
+}
+
 async function mountRegionLayer(defs, ctx) {
   const regionDefs = defs.filter((def) => shouldScheduleDefinition(def, ctx, mountWhen.REGION));
   if (!regionDefs.length || !ctx.regions.length) return;
@@ -1756,6 +1847,7 @@ function refreshRuntime(ctx) {
     mountImmediateLayer,
     mountVisibleFeatures,
     mountInteractionFeatures,
+    mountInvitedFeatures,
     mountRegionLayer,
     queueIdleEnhancements,
     queueSettledEnhancements,
