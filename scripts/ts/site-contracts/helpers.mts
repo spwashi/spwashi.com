@@ -177,6 +177,21 @@ export function extractRuntimeArrayLiteral(source: string, arrayName: string): s
       }
       continue;
     }
+    // Skip comments before string detection: an apostrophe in a prose comment
+    // ("a reader's Spw") would otherwise open a string that never closes and
+    // silently swallow the rest of the catalog family.
+    if (char === '/' && source[index + 1] === '/') {
+        const lineEnd = source.indexOf('\n', index);
+        if (lineEnd < 0) break;
+        index = lineEnd;
+        continue;
+    }
+    if (char === '/' && source[index + 1] === '*') {
+        const blockEnd = source.indexOf('*/', index + 2);
+        if (blockEnd < 0) break;
+        index = blockEnd + 1;
+        continue;
+    }
 
     if (char === '"' || char === "'" || char === '`') {
       inString = true;
