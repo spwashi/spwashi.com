@@ -1,0 +1,100 @@
+# Dregg Lineage
+#
+# Theory this site should carry because Dregg already reasons about it well, and
+# because the overlap is real rather than adjacent.
+#
+# The argument for treating Dregg as a conceptual hub does not depend on what it
+# eventually ships. Its specs already state positions on determinism, verified
+# authorship and expansion under versioning, and those positions are checkable
+# against this site today. That is what makes it useful now.
+#
+# This surface describes topics and transfers only. It does not speak for the
+# Dregg project, claim a partnership, or predict a roadmap.
+
+#>spw_dregg_lineage
+#:convention #!lineage #!topics #!verification
+#:operation #!prime
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@world_physics: ~"./world-physics.spw"
+@registers: ~"./cauldron-registers.spw"
+@material_projection: ~"./material-projection.spw"
+@measurement: ~"./measurement-contract.spw"
+
+operation = "prime"
+fixity = "experimental"
+
+expression = lineage[dregg]{determinism.verification.hypermedia}<topics>
+
+^"why_a_hub_without_a_roadmap"{
+  claim: "A project is useful as a conceptual hub when its stated positions can be checked against your own work before it ships anything."
+  ~#reading: `capability claims expire; positions do not`
+  ~#consequence: "so the site should reference the positions and stay quiet about the capabilities, which also happens to be the honest posture while the broader ecosystem is still unsure what Dregg will do"
+}
+
+^"transfers"{
+  ~#note: "Each is a position Dregg's specs already state, and a place this site fails to hold it."
+
+  seed_determinism: .{
+    theirs = `a committed seed draws traits, then a pure function renders — the same seed must render the same thing`
+    ours = `1,191 data-spw-seed values across the routes`
+    ~#gap: "the site borrowed the vocabulary without the claim. Only three corpus surfaces mention determinism at all, and nothing asserts that a seed renders the same surface twice."
+    ~#probe: `render a seeded surface twice and diff. If the output differs, the attribute names a wish rather than a seed.`
+  }[reg=facet]
+
+  season_boundary: .{
+    theirs = `procgen tables are versioned; appending mid-season re-buckets every existing seed, so expansion is a season boundary rather than a silent edit`
+    ours = `generated artifacts — the expression manifest, image catalog, legibility lens, search index — are regenerated on demand with no version and no boundary`
+    ~#reading: `the strongest idea in the three tracks, and the one this site most clearly violates`
+    ~#consequence: "a regenerated catalog silently re-buckets everything derived from it, which is exactly the failure the season boundary exists to prevent"
+  }[reg=facet]
+
+  verified_authorship: .{
+    theirs = `handwritten scene text compiles to executor teeth, and a no-cheat board re-runs the same teeth — the artifact carries its own verification`
+    ours = `!probe{} and falsification clauses on 94 surfaces`
+    ~#alignment: `the same shape reached independently: an authored claim must compile to something re-runnable by someone who does not trust the author`
+    ~#gap: "ours re-runs by hand. Theirs re-runs by construction."
+  }[reg=facet]
+}
+
+^"topics_worth_referencing"{
+  ~#note: "Public technical lineage behind the project, useful because this site already participates in these traditions without naming them."
+  ~#source: ~"https://github.com/emberian"
+
+  hypermedia: .{
+    why = `dregg is described as a hypermedia ecosystem, and this site is aggressively hypermedia-first — no framework, attributes as state, HTML as the substrate rather than a render target`
+    ~#reading: `the shared position is that the document is the program's surface, not its output`
+  }[reg=facet]
+
+  formal_verification: .{
+    why = `theorem proving and verification are stated interests, and the no-cheat board is that discipline applied to play`
+    ours = `measurement before invariant — the rule this corpus already enforces on itself`
+  }[reg=facet]
+
+  documentation_as_artifact: .{
+    why = `rustdoc and This Week in Rust are both machinery for making a moving body of work legible on a cadence`
+    ours = `generated surfaces and precipitates, same problem at smaller scale`
+    ~#note(cadence): "a weekly digest is a season boundary for attention, which is the same primitive as the versioned table"
+  }[reg=facet]
+
+  simulation_physics: .{
+    why = `computational physics and game engines sit behind the specs, which is why their determinism language is precise rather than decorative`
+    ours = @world_physics
+  }[reg=facet]
+}
+
+#>wonder_dregg_lineage_1
+?["Does a seed on this site render the same surface twice?"]{
+  #:depth #!educational ~#lens(arc)
+  ~#tension: "1,191 seeds are stamped and nothing asserts determinism. If they are not deterministic, the word is borrowed decoration on the site that most loudly claims to mean what it says."
+  ~#hypothesis: "most seeds are labels rather than inputs — they name a surface instead of generating it"
+  !probe{ "pick ten data-spw-seed values, render each surface twice from a cold cache, and diff. Count how many are byte-identical. A seed that does not reproduce is a name." }
+  $%[seed.value, surface.render, render.diff]
+}
+
+^"validation"{
+  probe: `rg 'data-spw-seed' --count && rg -l 'determinis' .spw --glob '!_workbench'`
+  falsification: "a transfer named here is claimed to hold on this site without a probe that would show it failing"
+  ~#note(scope): "positions only. If this surface starts predicting what Dregg will ship, it has changed subject and should be cut back."
+}
