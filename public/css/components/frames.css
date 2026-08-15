@@ -695,3 +695,29 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, .site-frame) {
 }
 
 /* (numericity now lives inside the real cauldron as typed ingredients with derived quantifiers — see composition.js) */
+
+/* ==========================================================================
+   Collapse floor for inline chrome inside narrow grid tracks
+   --------------------------------------------------------------------------
+   A grid track can resolve narrower than the content it holds, and an element
+   whose text cannot wrap then renders one character per line rather than
+   overflowing. That failure is silent — no overflow warning, no console — and
+   it reads as a broken component rather than a tight column.
+
+   These are the elements that carry short unbreakable labels inside tracks
+   sized by their siblings: lens switches, card sigils, consequence notes. A
+   floor lets them overflow their track visibly, which is a legible symptom, in
+   place of folding into a vertical string, which is not.
+
+   `min-inline-size` rather than `min-width` so the floor follows writing mode,
+   and `max-content` capped so nothing claims more room than its text needs.
+   ========================================================================== */
+
+/* Not :where() — a zero-specificity floor loses to every rule that set the
+   width in the first place, which defeats the point of a floor. */
+.mode-switch,
+.frame-card-sigil,
+.frame-sigil,
+.garden-consequence {
+  min-inline-size: min(100%, max-content);
+}

@@ -1207,6 +1207,7 @@ html[data-spw-resonance-probe="surface"] :where(a, button, .operator-chip, .fram
       color-mix(in srgb, var(--spw-operator-color, var(--active-op-color, var(--teal))) 8%, transparent),
       color-mix(in srgb, var(--surface-strong, #fff) 92%, transparent)
     );
+}
 /* ==========================================================================
    Transferable Spw Interactive Momentum & Genomic Resonance
    --------------------------------------------------------------------------
