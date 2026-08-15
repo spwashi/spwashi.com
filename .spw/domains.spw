@@ -76,7 +76,15 @@ active_surfaces: .{
  `bane.land` = .{ status = `active-skeleton`, role = realm, valence = `-1 departure/cost`, hosted = `about/domains/bane.land/`, archetype = `exploratory_biome` }[reg=facet]
  `bone.land` = .{ status = `active-skeleton`, role = realm, valence = `0 structure/carrier`, hosted = `about/domains/bone.land/`, archetype = `exploratory_biome` }[reg=facet]
  `factshift.com` = .{ status = linked, role = engine, note = `physics engine for narrative under transformation`, archetype = `analytic_engine` }[reg=facet]
- `lore.land` = .{ status = linked, role = book, note = `installable-book PWA; home terrain for Boof`, archetype = `installable_book` }[reg=facet]
+ `lore.land` = .{
+   status = linked
+   role = `show-and-book`
+   note = `Thirteen chapters. Meant to feel like a show that is also a book — episodic pacing over durable structure, so neither reading nor watching is the lesser mode.`
+   production = `focused description of the production process`
+   channel = `@lore.land on TikTok`
+   repo = `https://github.com/lore-land/lore.land`
+   archetype = `installable_book`
+ }[reg=facet]
  `tealstripesvibes.com` = .{ status = linked, role = secondary, archetype = `orienting_hub` }[reg=facet]
 }[reg=facet]
 
