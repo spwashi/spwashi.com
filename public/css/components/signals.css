@@ -8,12 +8,16 @@
    8. Operator / route accent mapping
    ========================================================================== */
 
-:where([data-spw-primary-operator="probe"]) {
+:where([data-spw-primary-operator="probe"], [data-spw-primary-operator="wonder"]) {
   --component-route-accent: var(--op-probe-color, var(--component-accent));
 }
 
 :where([data-spw-primary-operator="action"]) {
   --component-route-accent: var(--op-action-color, var(--component-accent));
+}
+
+:where([data-spw-primary-operator="object"], [data-spw-primary-operator="integration"]) {
+  --component-route-accent: var(--op-object-color, var(--component-accent));
 }
 
 :where([data-spw-primary-operator="merge"]) {
@@ -28,12 +32,16 @@
   --component-route-accent: var(--op-frame-color, var(--component-accent));
 }
 
-:where([data-spw-primary-operator="surface"]) {
+:where([data-spw-primary-operator="surface"], [data-spw-primary-operator="concept-edge"]) {
   --component-route-accent: var(--op-surface-color, var(--component-accent));
 }
 
-:where([data-spw-primary-operator="ref"]) {
+:where([data-spw-primary-operator="ref"], [data-spw-primary-operator="potential"]) {
   --component-route-accent: var(--op-ref-color, var(--component-accent));
+}
+
+:where([data-spw-primary-operator="topic"], [data-spw-primary-operator="concept"]) {
+  --component-route-accent: var(--op-topic-color, var(--component-accent));
 }
 
 :where([data-spw-feature]) {

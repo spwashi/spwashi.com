@@ -448,7 +448,49 @@
 [data-spw-features~="svg-surfaces"] .spw-svg-surface:has([data-spw-svg-plane]:target)
   [data-spw-svg-plane]:not(:target) {
     opacity: 0.42;
-    filter: saturate(0.72);
+}
+
+/* ─── Semantic Layer Contracts & Theme Caustics Filters ───────────────── */
+
+:where([data-spw-svg-layer="substrate"], .svg-layer--substrate) {
+    opacity: 0.38;
+    pointer-events: none;
+    transition: opacity var(--duration-base, 200ms) var(--ease-smooth, ease);
+}
+
+:where([data-spw-svg-layer="structure"], .svg-layer--structure) {
+    opacity: 0.88;
+    stroke-width: calc(var(--line-mid, 1.5px) * var(--spw-svg-stroke-scale, 1));
+}
+
+:where([data-spw-svg-layer="content"], .svg-layer--content) {
+    fill: currentColor;
+    opacity: 1;
+}
+
+:where([data-spw-svg-layer="interactive"], .svg-layer--interactive, g[data-spw-operator], g[data-spw-topic], g[role="button"]) {
+    cursor: pointer;
+    pointer-events: all;
+    transition:
+        transform var(--duration-fast, 140ms) var(--ease-mechanical, ease),
+        filter var(--duration-fast, 140ms) var(--ease-mechanical, ease),
+        opacity var(--duration-fast, 140ms) var(--ease-mechanical, ease);
+}
+
+:where(g[data-spw-operator], g[data-spw-topic], g[role="button"]):is(:hover, :focus-visible) {
+    transform: scale(1.04);
+    transform-origin: center;
+    filter: drop-shadow(0 0 6px color-mix(in srgb, var(--active-op-color, #008080) 45%, transparent));
+}
+
+:where(g[data-spw-operator], g[data-spw-topic], g[role="button"]):focus-visible {
+    outline: 2px solid var(--active-op-color, #008080);
+    outline-offset: 2px;
+}
+
+/* Crisp non-scaling strokes across device scale shifts */
+:where(.spw-svg-surface path, .spw-svg-surface circle, .spw-svg-surface rect, .spw-svg-surface line) {
+    vector-effect: non-scaling-stroke;
 }
 
 [data-spw-features~="svg-surfaces"] .spw-svg-figure[data-spw-svg-plane-focus]

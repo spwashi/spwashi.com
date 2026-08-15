@@ -99,3 +99,36 @@
 :where(.spw-embedded-workshop [data-charge-field-readout]) {
   font-variant-numeric: tabular-nums;
 }
+
+/* ─── Environmental Charge Pulse Communication ──────────────────────────── */
+
+:where(body[data-spw-charge="pulse"] .site-frame, [data-spw-charge="pulse"]) {
+  animation: spw-charge-pulse-ripple 480ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes spw-charge-pulse-ripple {
+  0% {
+    box-shadow:
+      var(--spw-monolith-rim-light, inset 0 1px 0 rgba(255, 255, 255, 0.3)),
+      0 0 0 0 color-mix(in srgb, var(--active-op-color, #008080) 48%, transparent),
+      var(--material-local-shadow, 0 4px 12px rgba(0, 0, 0, 0.06));
+  }
+  60% {
+    box-shadow:
+      var(--spw-monolith-rim-light, inset 0 1px 0 rgba(255, 255, 255, 0.3)),
+      0 0 0 8px color-mix(in srgb, var(--active-op-color, #008080) 14%, transparent),
+      var(--material-local-shadow, 0 4px 12px rgba(0, 0, 0, 0.06));
+  }
+  100% {
+    box-shadow:
+      var(--spw-monolith-rim-light, inset 0 1px 0 rgba(255, 255, 255, 0.3)),
+      0 0 0 1px color-mix(in srgb, var(--active-op-color, #008080) 18%, transparent),
+      var(--material-local-shadow, 0 4px 12px rgba(0, 0, 0, 0.06));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(body[data-spw-charge="pulse"] .site-frame, [data-spw-charge="pulse"]) {
+    animation: none !important;
+  }
+}

@@ -33,14 +33,22 @@
 }
 
 @media print {
+  @page {
+    margin: 1.6cm 1.4cm;
+  }
+
   :where(
     .site-header,
     .site-footer,
     .spw-section-handle,
+    .page-index,
     .skip-link,
     [data-spw-floating-chrome="true"],
     .frame-operators,
-    nav.frame-operators
+    nav.frame-operators,
+    .spw-region-menu,
+    .spw-console-host,
+    .palette-probe
   ) {
     display: none !important;
   }
@@ -48,18 +56,23 @@
   :where(html, body) {
     background: white !important;
     color: black !important;
+    font-size: 11pt;
+    line-height: 1.45;
   }
 
-  :where(main, article, .site-frame) {
+  :where(main, article, .site-frame, section[data-spw-cluster]) {
     break-inside: avoid-page;
+    page-break-inside: avoid;
     box-shadow: none !important;
+    border-color: #ccc !important;
   }
 
-  :where(.topic-photo-card, .image-study, [data-spw-image-discovery]) {
+  :where(.topic-photo-card, .image-study, [data-spw-image-discovery], .frame-card) {
     break-inside: avoid;
-    border: 1px solid #ccc !important;
-    box-shadow: none !important;
     page-break-inside: avoid;
+    border: 1px solid #ddd !important;
+    box-shadow: none !important;
+    background: #fafafa !important;
   }
 
   :where(.study-summary) {
@@ -73,5 +86,19 @@
   :where(a[href^="http"]::after) {
     content: " (" attr(href) ")";
     font-size: 0.75em;
+    color: #555;
+  }
+
+  :where(a[href^="/"]:not([href="/"])::after) {
+    content: " [" attr(href) "]";
+    font-size: 0.72em;
+    color: #666;
+    font-family: var(--site-mono-font, monospace);
+  }
+
+  :where(.operator-chip, .spec-pill, code) {
+    border: 1px solid #bbb !important;
+    background: #f4f4f4 !important;
+    color: #111 !important;
   }
 }

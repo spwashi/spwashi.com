@@ -339,6 +339,97 @@ html[data-spw-cauldron-resonance-operators] .site-footer__cauldron[data-spw-caul
   }
 }
 
+/* ─── Region Schema Slot Vessels & Specimen Seed Capture Seals ──────────── */
+
+.site-footer__cauldron-slots {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  margin-block: 0.38rem;
+}
+
+.site-footer__cauldron-slot {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.16rem 0.5rem;
+  border-radius: var(--shape-control, 0.78rem);
+  border: 1px dashed color-mix(in srgb, var(--active-op-color, var(--teal)) 32%, var(--line, rgba(14, 18, 20, 0.14)));
+  background: color-mix(in srgb, var(--surface-strong, #fff) 88%, transparent);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-2xs, 0.72rem);
+  color: var(--ink-muted, rgba(14, 18, 20, 0.58));
+  transition: all 180ms ease;
+}
+
+.site-footer__cauldron-slot[data-spw-slot-state="filled"] {
+  border-style: solid;
+  border-color: var(--active-op-color, var(--teal));
+  background: color-mix(in srgb, var(--active-op-color, var(--teal)) 12%, var(--surface-strong, #fff));
+  color: var(--ink, #161c1d);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--active-op-color, var(--teal)) 24%, transparent);
+}
+
+/* Crystallized Spw Specimen Seal (Pristine Capture / Share Affordance) */
+.spw-specimen-seal {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.85rem 1.15rem;
+  margin-block: 0.6rem;
+  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal)) 42%, var(--line, rgba(14, 18, 20, 0.14)));
+  border-radius: var(--shape-surface, 10px);
+  background:
+    radial-gradient(ellipse at 80% 0%, color-mix(in srgb, var(--spw-palette-probe-1, var(--active-op-color, #008080)) 12%, transparent), transparent 60%),
+    linear-gradient(175deg, color-mix(in srgb, var(--surface-strong, #fff) 95%, var(--active-op-color, #008080) 5%), var(--surface-panel, #f4f8f8));
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, #fff 52%, transparent),
+    0 8px 24px color-mix(in srgb, var(--active-op-color, var(--teal)) 10%, transparent);
+  position: relative;
+  overflow: hidden;
+}
+
+.spw-specimen-seal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.68rem;
+  color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.spw-specimen-seal__code {
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ink, #161c1d);
+  letter-spacing: 0.02em;
+  padding-block: 0.2rem;
+}
+
+.spw-specimen-seal__coordinates {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.64rem;
+  color: color-mix(in srgb, var(--ink, #161c1d) 65%, var(--active-op-color, #008080));
+}
+
+.spw-specimen-seal__watermark {
+  position: absolute;
+  inset-inline-end: 0.75rem;
+  inset-block-end: 0.4rem;
+  font-family: var(--site-mono-font, monospace);
+  font-size: 0.55rem;
+  font-weight: 800;
+  opacity: 0.35;
+  letter-spacing: 0.12em;
+  pointer-events: none;
+}
+
 @media (max-width: 45rem) {
   .site-footer__cauldron-phase-rail {
     grid-template-columns: repeat(2, minmax(0, 1fr));

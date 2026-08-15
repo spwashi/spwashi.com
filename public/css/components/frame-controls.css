@@ -61,3 +61,27 @@
   text-transform: uppercase;
   white-space: nowrap;
 }
+
+/* ─── Variant Selection Panel Transitions ───────────────────────────────── */
+
+:where([data-mode-panel]:not([hidden])) {
+  animation: spw-mode-panel-settle var(--duration-fast, 180ms) var(--ease-mechanical, ease) both;
+}
+
+@keyframes spw-mode-panel-settle {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where([data-mode-panel]:not([hidden])) {
+    animation: none !important;
+    transform: none !important;
+  }
+}

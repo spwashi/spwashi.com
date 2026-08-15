@@ -333,3 +333,157 @@ html[data-spw-theme-pack="glass-console"] {
 :where(.spw-shell-resonance-utility .palette-probe-chip--shell:nth-child(4)) {
   background: var(--spw-palette-probe-4, var(--op-probe-color, #6a3fb8));
 }
+
+/* ==========================================================================
+   Micro-World Scale Perspective & Adventurous Per-Surface Themes
+   --------------------------------------------------------------------------
+   Environmental lighting as if the reader is 1-2rem in scale inside an
+   architectural world. Adds micro-lighting tokens, atmospheric horizons,
+   rim highlights, and curated oklch theme signatures per route surface.
+   ========================================================================== */
+
+:root {
+  --spw-reader-scale-perspective: 1.5rem;
+  --spw-color-mix-base-surface: var(--surface, #ffffff);
+  --spw-color-mix-base-ink: var(--ink, #161c1d);
+  --spw-color-mix-base-line: var(--line, rgba(14, 18, 20, 0.14));
+  --spw-theme-chroma-guard: 1;
+
+  --spw-micro-world-lighting: radial-gradient(
+    ellipse 80% 50% at 50% -10%,
+    color-mix(in oklab, var(--spw-palette-probe-1, var(--active-op-color, #008080)) calc(14% * var(--spw-theme-chroma-guard, 1)), transparent),
+    transparent 70%
+  );
+  --spw-horizon-caustics: linear-gradient(
+    180deg,
+    transparent 85%,
+    color-mix(in oklab, var(--spw-palette-probe-2, var(--op-object-color, #c2872b)) calc(8% * var(--spw-theme-chroma-guard, 1)), transparent)
+  );
+  --spw-monolith-rim-light: inset 0 1px 0 color-mix(in oklab, #fff 42%, transparent);
+}
+
+:where(html[data-spw-color-mode="dark"]) {
+  --spw-color-mix-base-surface: var(--surface-matte, #101618);
+  --spw-color-mix-base-ink: var(--ink, #eef4f6);
+  --spw-color-mix-base-line: var(--line-strong, rgba(255, 255, 255, 0.18));
+  --spw-theme-chroma-guard: 1.18;
+  --spw-monolith-rim-light: inset 0 1px 0 color-mix(in oklab, #fff 18%, transparent);
+}
+
+/* Micro-world atmospheric lighting layer on body */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background: var(--spw-micro-world-lighting), var(--spw-horizon-caustics);
+  opacity: 0.85;
+  transition: opacity 300ms ease;
+}
+
+/* Monolith rim highlights for frames and cards from 1-2rem perspective */
+:where(.site-frame, .frame-card, .software-card, .topic-photo-card, .media-card, .specimen-index-card) {
+  box-shadow:
+    var(--spw-monolith-rim-light),
+    var(--material-local-shadow, var(--shadow-base, 0 4px 12px rgba(0, 0, 0, 0.06))),
+    0 0 1px color-mix(in oklab, var(--active-op-color, #008080) 18%, transparent);
+}
+
+/* Horizon Variants */
+:where([data-spw-horizon="monolith"], body[data-spw-horizon="monolith"] .site-frame) {
+  --spw-monolith-rim-light: inset 0 1.5px 0 color-mix(in oklab, #fff 52%, transparent);
+  box-shadow:
+    var(--spw-monolith-rim-light),
+    0 12px 32px color-mix(in oklab, var(--active-op-color, #008080) 12%, transparent);
+}
+
+:where([data-spw-horizon="caustics"], body[data-spw-horizon="caustics"] .site-frame) {
+  --spw-monolith-rim-light: inset 0 1px 0 color-mix(in oklab, var(--spw-palette-probe-1, #008080) 36%, transparent);
+  box-shadow:
+    var(--spw-monolith-rim-light),
+    0 8px 24px color-mix(in oklab, var(--spw-palette-probe-2, #c2872b) 10%, transparent);
+}
+
+/* Adventurous Surface Themes (Harmonized with route topics and media) */
+
+/* Software Surface: Ocean Teal, Cyber Cyan, & Amber Horizon */
+:where(body[data-spw-surface="software"]) {
+  --active-op-color: oklch(0.52 0.15 195);
+  --spw-palette-probe-1: oklch(0.52 0.15 195);
+  --spw-palette-probe-2: oklch(0.76 0.16 75);
+  --spw-palette-probe-3: oklch(0.58 0.18 210);
+  --spw-palette-probe-4: oklch(0.68 0.20 145);
+}
+
+/* Topics Directory Surface: Emerald Forest & Amethyst Probe */
+:where(body[data-spw-surface="topics"], body[data-spw-route-family~="curriculum"]) {
+  --active-op-color: oklch(0.52 0.16 160);
+  --spw-palette-probe-1: oklch(0.52 0.16 160);
+  --spw-palette-probe-2: oklch(0.78 0.15 85);
+  --spw-palette-probe-3: oklch(0.56 0.18 290);
+  --spw-palette-probe-4: oklch(0.60 0.17 230);
+}
+
+/* Craft Surface: Terracotta, Copper, & Unbleached Linen Glow */
+:where(body[data-spw-surface="craft"], body[data-spw-route-family~="craft"]) {
+  --active-op-color: oklch(0.54 0.15 45);
+  --spw-palette-probe-1: oklch(0.54 0.15 45);
+  --spw-palette-probe-2: oklch(0.72 0.14 65);
+  --spw-palette-probe-3: oklch(0.48 0.12 25);
+  --spw-palette-probe-4: oklch(0.65 0.13 80);
+}
+
+/* Math Surface: Prismatic Spectral Violet & Gold Lattice */
+:where(body[data-spw-surface="math"], body[data-spw-route-family~="math"]) {
+  --active-op-color: oklch(0.48 0.22 300);
+  --spw-palette-probe-1: oklch(0.48 0.22 300);
+  --spw-palette-probe-2: oklch(0.82 0.18 85);
+  --spw-palette-probe-3: oklch(0.58 0.19 250);
+  --spw-palette-probe-4: oklch(0.66 0.21 340);
+}
+
+/* Services Surface: Architectural Indigo & Brass Trim */
+:where(body[data-spw-surface="services"], body[data-spw-route-family~="services"]) {
+  --active-op-color: oklch(0.42 0.16 265);
+  --spw-palette-probe-1: oklch(0.42 0.16 265);
+  --spw-palette-probe-2: oklch(0.74 0.17 80);
+  --spw-palette-probe-3: oklch(0.50 0.15 200);
+  --spw-palette-probe-4: oklch(0.62 0.16 130);
+}
+
+/* About Surface: Cedar Studio Warmth & Paper Crease Matte */
+:where(body[data-spw-surface="about"], body[data-spw-route-family~="editorial"]) {
+  --active-op-color: oklch(0.46 0.12 50);
+  --spw-palette-probe-1: oklch(0.46 0.12 50);
+  --spw-palette-probe-2: oklch(0.80 0.11 80);
+  --spw-palette-probe-3: oklch(0.42 0.10 210);
+  --spw-palette-probe-4: oklch(0.58 0.14 170);
+}
+
+/* Play Surface: Bioluminescent Magenta & Neon Sea-Green */
+:where(body[data-spw-surface="play"], body[data-spw-route-family~="demos"]) {
+  --active-op-color: oklch(0.56 0.24 330);
+  --spw-palette-probe-1: oklch(0.56 0.24 330);
+  --spw-palette-probe-2: oklch(0.62 0.19 180);
+  --spw-palette-probe-3: oklch(0.52 0.22 280);
+  --spw-palette-probe-4: oklch(0.78 0.20 90);
+}
+
+/* Now Surface: Solar Gold & Twilight Blue Current */
+:where(body[data-spw-surface="now"]) {
+  --active-op-color: oklch(0.76 0.19 80);
+  --spw-palette-probe-1: oklch(0.76 0.19 80);
+  --spw-palette-probe-2: oklch(0.38 0.15 250);
+  --spw-palette-probe-3: oklch(0.58 0.17 190);
+  --spw-palette-probe-4: oklch(0.68 0.18 35);
+}
+
+/* Design Surface: Spectral Prism & Mint Glass */
+:where(body[data-spw-surface="design"], body[data-spw-route-family~="lab"]) {
+  --active-op-color: oklch(0.55 0.17 175);
+  --spw-palette-probe-1: oklch(0.55 0.17 175);
+  --spw-palette-probe-2: oklch(0.72 0.18 60);
+  --spw-palette-probe-3: oklch(0.50 0.20 270);
+  --spw-palette-probe-4: oklch(0.64 0.22 320);
+}
