@@ -1,0 +1,119 @@
+# Material Projection
+#
+# How a .spw declaration becomes HTML, and what the runtime does with it once it
+# is there. Written for an agent authoring .spw upstream of the site: read this
+# before inventing an attribute, a channel, or a mount timing.
+#
+# The through-line is that this site models comprehension with semiconductor and
+# solution vocabulary, and the vocabulary is load-bearing rather than poetic. If
+# a term here would not survive a physicist reading it, it is wrong and should
+# be fixed rather than softened.
+
+#>spw_material_projection
+#:convention #!projection #!material #!substrate
+#:operation #!contract
+#:fixity #!tending
+#:layer #!pragmatics
+
+@registers: ~"./cauldron-registers.spw"
+@arrival: ~"./arrival-electrostatics.spw"
+@semantic_expression: ~"./semantic-expression-consequence.spw"
+@biome: ~"./component-biome.spw"
+@material: ~"./material-physics.spw"
+@lens: ~"../../scripts/build-legibility-lens.mjs"
+@inert_audit: ~"../../scripts/spw-inert-audit.mjs"
+@rehearsal: ~"../../public/js/interface/cauldron/rehearsal.js"
+@fluency: ~"../../public/js/interface/cauldron/fluency.js"
+@loader: ~"../../public/js/runtime/module-loader.js"
+
+operation = "contract"
+fixity = "tending"
+
+expression = declaration[spw]{channel.register.dispatch}<html>
+
+^"the_three_verbs"{
+  ~#note: "An attribute is not one kind of thing. Three questions separate them, and conflating any two is where inert markup comes from."
+  dispatched: .{
+    asks = `when does the runtime act on this?`
+    answered_by = `mount timing — immediate | visible | idle | settled | region | interaction | invited`
+    ~#rule: `invited is per root and reader-chosen; visible is scroll position and is not a decision`
+    ~#measured: `81% of 1054 adjacent frame pairs sit at liminality distance 0, so scroll order carries almost no semantic signal`
+  }[reg=facet]
+  charged: .{
+    asks = `does this move a reader's balance?`
+    answered_by = `valence — signed, and the one register that sums`
+    ~#rule: `sign is what an operator does, not whether it is good — wonder opens and credits, action commits and spends, ground carries and does neither`
+  }[reg=facet]
+  channeled: .{
+    asks = `what kind of value does this carry?`
+    answered_by = `the updates: channel a module declares per attribute`
+    channels = #[`structural`, `measure`, `residue`, `inspect`, `temporal`, `flourish`, `diagnostic`][reg=set]
+    ~#rule: `channel is the only thing that answers "is this worth making readable", which no single attribute can answer about itself`
+    built = @lens
+  }[reg=facet]
+}
+
+^"substrate_relation"{
+  ~#note: "A substrate is what a measurement rests on. The relation is not decorative — an unsupported measurement is the failure this notation exists to catch."
+  form = `$%[ subject.facet, subject.facet ]`
+  ~#reading: `naming the substrate is naming what would have to be true for the measurement to mean anything`
+  ~#antipattern: "a probe with no substrate. It reports a number whose conditions nobody stated, which is the corpus equivalent of binding a token to one referent and discarding the structure that gave it meaning."
+  ~#consequence: "when a substrate is absent the reading cannot be falsified, and an unfalsifiable reading is not a measurement"
+}
+
+^"solution_model"{
+  ~#note: "The cauldron is a solution, not a list. This is where the material vocabulary does real work."
+  dissolving: `held < solubility — collecting still teaches, so the runtime stays out of the way`
+  saturated: `held >= solubility — more of this construct adds nothing; rehearsal is what pays`
+  supersaturated: `held >= 1.5x — unstable, and a seed crystallises it. The one state where a prompt is clearly warranted.`
+  precipitate: `excess comes out as a solid and stays readable rather than being discarded`
+  solubility: .{
+    base = 3
+    per_spaced_rehearsal = 2
+    ~#why: "what you have actually learned, you can hold more of — so the way past a limit is to return after time has passed, not to gather harder"
+  }[reg=facet]
+  ~#refusal(scoring the reader): "reinforcement follows the state of the solution. A threshold on a person ranks them and has to be defended every time it fires; a solubility limit is a fact about the mixture."
+  built = @rehearsal
+}
+
+^"runtime_memory"{
+  ~#note: "Which affordances are worth building follows from where state actually survives."
+  persists_across_visits: #[
+    `spw-cauldron — what was gathered`,
+    `spw-expression-salience — how often a token was travelled`,
+    `spw-rehearsal — encounter intervals and spaced counts`
+  ][reg=set]
+  survives_one_page: #[`data-spw-* registers written at mount`, `charge field state`][reg=set]
+  survives_nothing: #[`hover, focus, transient kin highlighting`][reg=set]
+  ~#reading: `an affordance is worth its cost when the layer it writes to outlives the gesture that produced it`
+  ~#rule: "potential display is pulse-shaped, reward display is residue-shaped, and a preview is never promoted into residue"
+  ~#consequence: "a snippet that reads persisted state answers differently on a second visit, which is why gathered, overlap and spell are the probes that matter"
+}
+
+^"authoring_for_projection"{
+  ~#note: "For an agent writing .spw meant to become HTML."
+  before_inventing_an_attribute: #[
+    `check @inert_audit — 54 attributes are already written and read by nothing`,
+    `decide its channel, or it cannot be made legible by any lens`,
+    `decide whether it is dispatched, charged, or channeled — those are different attributes, not one`,
+    `if it names a reading posture rather than an effect, it wants canon and prose, not a selector`
+  ][reg=set]
+  ~#antipattern(the inert pair): "an opt-in attribute guarding an effect that is already unconditional. Both failures hide each other — nobody notices a dead attribute when the thing it should control is on everywhere."
+  ~#measured: `data-spw-micro-world was stamped on 5 routes, selected nothing, and named a layer painting on all 594`
+  ~#rule(projection): "a .spw declaration should state the channel and the register; the attribute name is the least interesting part and the easiest to get back"
+}
+
+#>wonder_material_projection_1
+?["Which of the inert attributes are dead, and which are literary constructs that never got a formal home?"]{
+  #:depth #!educational ~#lens(arc)
+  ~#tension: "54 attributes behind 1727 markup uses read by nothing. Pruning them all treats a construct that was never formalised as though it were rot, and keeping them all treats rot as though it were theory."
+  ~#hypothesis: "the criterion is what the attribute names — a reading posture wants canon, an effect wants a selector or deletion; micro-world is the first case and was mistaken for the second"
+  !probe{ "sort the 54 by whether the name denotes a posture or an effect. If the posture set is coherent enough to state as canon, the split is real; if it is a grab bag, the attributes are just unfinished." }
+  $%[attribute.name, attribute.uses, attribute.channel, corpus.canon]
+}
+
+^"validation"{
+  probe: `node scripts/spw-inert-audit.mjs && node scripts/build-legibility-lens.mjs`
+  falsification: "an attribute is declared with a channel that the lens generator does not know, or an opt-in attribute exists whose effect does not gate on it"
+  ~#note(the guard works): "the lens generator reports channels outside CHANNEL_ORDER rather than dropping them silently, which is how temporal was caught"
+}
