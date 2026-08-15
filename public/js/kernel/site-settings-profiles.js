@@ -435,7 +435,7 @@ const DEFAULT_SITE_SETTINGS = Object.freeze({
   highContrast: 'off',
   fontSize: 'normal',
 
-  colorMode: 'auto',
+  colorMode: 'light',
   colorTuner: 'balanced',
   themePack: 'neutral-paper',
   iconPack: 'text',  // new consideration stub
@@ -627,7 +627,7 @@ const PRESETS = Object.freeze({
     currentDevelopmentalClimate: 'orient',
     navigatorDisplay: 'quiet',
     consoleDisplay: 'hidden',
-    colorMode: 'auto',
+    colorMode: 'light',
     colorTuner: 'balanced',
     themePack: 'neutral-paper',
     pedagogicalFlavor: 'culinary',
