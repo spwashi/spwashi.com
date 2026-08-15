@@ -1,0 +1,94 @@
+# Expression Card
+#
+# One primitive under the surfaces that edit, compile, or display a Spw
+# expression — and the direction three current modules should dissolve toward.
+#
+# Written because the same capability is being rebuilt per feature. An editable
+# expression, a submission form that compiles a block, and a hero stage that
+# drops fragments into the cauldron are three applications of one thing, and
+# each currently carries its own version of it.
+
+#>spw_expression_card
+#:convention #!primitive #!editing #!cards
+#:operation #!contract
+#:fixity #!experimental
+#:layer #!pragmatics
+
+@registers: ~"./cauldron-registers.spw"
+@material_projection: ~"./material-projection.spw"
+@region_passes: ~"./region-passes.spw"
+@interaction_reward: ~"./interaction-microstates.spw"
+
+operation = "contract"
+fixity = "experimental"
+
+expression = card[expression]{slots.edit.serialize}<collectible>
+
+^"the_duplication"{
+  ~#measured: "three modules, three ways to turn parts into an expression"
+  interactive_expression_lab: `uses scanSpwExpression from the kernel, carries its own HUD, reads and writes localStorage`
+  toolmaker_submissions: `carries a local compileSpwBlock, assembles a block from form state`
+  cauldron_registers: `composedExpression builds spell[frame]{body}<projection> from register coordinates`
+  ~#reading: `none of these is wrong; there is simply no named thing for them to be versions of`
+  ~#consequence: "a fix to expression rendering has to be made three times, and a reader learns three notations for one idea"
+}
+
+^"the_primitive"{
+  ~#note: "A Spw expression, presented as a card: slots you can see, edit, capture and keep."
+  slots: .{
+    subject = `the thing under discussion`
+    frame = `[how it is read]`
+    body = `{where it sits}`
+    projection = `<what it leaves behind>`
+    ~#why(slots not string): "an expression edited as text is a text field. Edited as slots, the grammar is visible while editing, which is the literacy claim this site makes everywhere else."
+  }[reg=facet]
+  capabilities: #[
+    `render — parts to expression, one implementation`,
+    `edit — change a slot without retyping the rest`,
+    `serialize — to a string, to an ingredient, to a screenshot`,
+    `collect — an edited card is gatherable, so editing feeds the cauldron`
+  ][reg=set]
+  ~#reading: `a card is the smallest thing that is simultaneously readable, editable, capturable and collectible — which is why it is the right unit rather than a form or a field`
+}
+
+^"dissolution_direction"{
+  ~#note: "What each current module keeps, and what it gives up."
+  interactive_expression_lab: .{
+    keeps = `the editing surface and the HUD — it is closest to the primitive already`
+    becomes = `the implementation of edit and render for everything else`
+    ~#gap: `data-spw-editable="true" is stamped 0 times in markup, so the capability exists and is unreached`
+  }[reg=facet]
+  toolmaker_submissions: .{
+    gives_up = `compileSpwBlock — it is render, spelled locally`
+    keeps = `its presets and its destination, which are genuinely specific`
+    ~#reading: `a submission form is an expression card with a send button, not a separate species`
+  }[reg=facet]
+  hero_kinetic_stage: .{
+    gives_up = `its own cauldron drop path`
+    keeps = `slides and node physics, which are staging rather than semantics`
+  }[reg=facet]
+  ~#rule: `one render, one edit, one serialize. Applications keep their presets, their destinations, and their staging.`
+}
+
+^"why_cards_specifically"{
+  ~#note: "The unit is chosen for what it enables downstream, not for tidiness."
+  screenshottable: `a card survives capture, which is how work on this site actually circulates`
+  brandable: `a shared schema across cards is what makes component design recognisable as one hand`
+  collectible: `an edited expression that can be gathered turns authoring into a cauldron input rather than a dead end`
+  ~#reading: `the same argument the seed and pricing cards already make, applied to the notation itself`
+}
+
+#>wonder_expression_card_1
+?["Does editing an expression teach its grammar?"]{
+  #:depth #!educational ~#lens(arc)
+  ~#tension: "slot-based editing is claimed to make grammar visible. It could as easily make it invisible — four boxes to fill in are four boxes, and a reader may learn the form without learning that it composes."
+  ~#hypothesis: "grammar is learned when a slot left empty changes the reading, not when every slot is required"
+  !probe{ "give someone the card with one slot filled, and ask what the expression currently says. If they can answer, the slots are teaching. If they ask what goes in the others, the card is a form." }
+  $%[card.slots, reader.reading, slot.emptiness]
+}
+
+^"validation"{
+  probe: `rg -l "compileSpwBlock|composedExpression|scanSpwExpression" public/js`
+  falsification: "a fourth module renders an expression from parts without using the shared primitive"
+  ~#note(sequencing): "the modules named here are in flight. This states the direction; it does not authorise rewriting them mid-edit."
+}
