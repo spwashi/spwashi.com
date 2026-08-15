@@ -75,11 +75,8 @@ active_surfaces: .{
  `boon.land` = .{ status = `active-skeleton`, role = realm, valence = `+1 arrival/benefit`, hosted = `about/domains/boon.land/`, archetype = `exploratory_biome` }[reg=facet]
  `bane.land` = .{ status = `active-skeleton`, role = realm, valence = `-1 departure/cost`, hosted = `about/domains/bane.land/`, archetype = `exploratory_biome` }[reg=facet]
  `bone.land` = .{ status = `active-skeleton`, role = realm, valence = `0 structure/carrier`, hosted = `about/domains/bone.land/`, archetype = `exploratory_biome` }[reg=facet]
- `bonk.land` = .{ status = `active-skeleton`, role = realm, valence = `@ collision/event`, hosted = `about/domains/bonk.land/`, archetype = `exploratory_biome` }[reg=facet]
- `honk.land` = .{ status = `active-skeleton`, role = realm, valence = `~ signal/relay`, hosted = `about/domains/honk.land/`, archetype = `reflective_feedback` }[reg=facet]
  `factshift.com` = .{ status = linked, role = engine, note = `physics engine for narrative under transformation`, archetype = `analytic_engine` }[reg=facet]
  `lore.land` = .{ status = linked, role = book, note = `installable-book PWA; home terrain for Boof`, archetype = `installable_book` }[reg=facet]
- `rskrules.com` = .{ status = linked, role = secondary, note = `secondary domain`, archetype = `guided_curriculum` }[reg=facet]
  `tealstripesvibes.com` = .{ status = linked, role = secondary, archetype = `orienting_hub` }[reg=facet]
 }[reg=facet]
 
