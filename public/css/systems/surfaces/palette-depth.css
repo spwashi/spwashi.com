@@ -370,8 +370,14 @@ html[data-spw-theme-pack="glass-console"] {
   --spw-monolith-rim-light: inset 0 1px 0 color-mix(in oklab, #fff 18%, transparent);
 }
 
-/* Micro-world atmospheric lighting layer on body */
-body::before {
+/* Micro-world atmospheric lighting layer.
+
+   Gated on the attribute that was stamped to request it. Previously this hung
+   off bare `body::before`, so the layer painted on all 594 routes while
+   `data-spw-micro-world` — the opt-in — selected nothing at all: the attribute
+   was inert and the effect it named was unconditional. Both halves of that are
+   fixed by the selector, and a route now gets this atmosphere because it asked. */
+body[data-spw-micro-world="true"]::before {
   content: "";
   position: fixed;
   inset: 0;
