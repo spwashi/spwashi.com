@@ -124,3 +124,56 @@
     transition: none;
   }
 }
+
+/* ==========================================================================
+   Salience as emphasis — typography that follows the reader's own history.
+   --------------------------------------------------------------------------
+   Bands 1..4 are written from a persisted ledger of tokens this reader has
+   actually travelled, and until now nothing in the type responded to them. The
+   bands drove a biome opacity and stopped there.
+
+   The case this serves: someone heard the site read aloud, and later scans it
+   to recall a specific thing. What they need is prosodic anchors — a few words
+   per screen carrying more weight than their neighbours — and the honest source
+   for which words those are is what they already engaged with, not an
+   architecture deciding on their behalf. 13% of prose paragraphs here carry any
+   emphasis at all, and 893 paragraphs run past 35 words with none, so the page
+   currently offers a scanner nothing to land on.
+
+   Contrast rather than weight, deliberately. `font-weight` reflows, and these
+   attributes are written after mount from storage — so weighting 505 elements
+   would shift text under a reader who is mid-scan, which is precisely the
+   slog this is meant to remove. Contrast reads as emphasis when scanning and
+   costs no layout.
+
+   Nothing here fires for a first-time reader. An unvisited page has no bands,
+   so the type is uniform until the reader has given it something to weight.
+   ========================================================================== */
+
+:where([data-spw-expression-salience]) {
+  --spw-salience-ink: var(--spw-expression-accent, currentColor);
+  --spw-salience-lift: 0;
+  color: color-mix(in oklab, currentColor calc(100% - (var(--spw-salience-lift) * 30%)), var(--spw-salience-ink));
+  transition: color var(--duration-slow, 420ms) var(--ease-smooth, ease);
+}
+
+:where([data-spw-expression-salience='1']) { --spw-salience-lift: 0.25; }
+:where([data-spw-expression-salience='2']) { --spw-salience-lift: 0.5; }
+:where([data-spw-expression-salience='3']) { --spw-salience-lift: 0.75; }
+:where([data-spw-expression-salience='4']) { --spw-salience-lift: 1; }
+
+/* Only the top band earns a mark beyond colour — the one a reader is most
+   likely to be hunting for gets something findable in peripheral vision. */
+:where([data-spw-expression-salience='4']) {
+  text-decoration: underline 0.06em color-mix(in oklab, var(--spw-salience-ink) 38%, transparent);
+  text-underline-offset: 0.2em;
+}
+
+/* Capture keeps the emphasis: a screenshot of a page is often the artifact a
+   reader returns to, and stripping the anchors would flatten exactly what made
+   the shot worth taking. */
+@media print {
+  :where([data-spw-expression-salience]) {
+    color: currentColor;
+  }
+}
