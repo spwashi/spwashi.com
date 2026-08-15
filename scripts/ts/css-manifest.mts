@@ -136,6 +136,7 @@ export const ROUTE_SCOPES: Readonly<Record<string, readonly string[]>> = Object.
  * Keeps topic curriculum pages (software) on topics.css without duplicate bundles.
  */
 export const ROUTE_SURFACE_ALIASES: Readonly<Record<string, string>> = Object.freeze({
+  design: 'website',
   folios: 'website',
   software: 'topics',
 });

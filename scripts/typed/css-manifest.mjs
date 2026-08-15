@@ -117,6 +117,7 @@ export const ROUTE_SCOPES = Object.freeze({
  * Keeps topic curriculum pages (software) on topics.css without duplicate bundles.
  */
 export const ROUTE_SURFACE_ALIASES = Object.freeze({
+    design: 'website',
     folios: 'website',
     software: 'topics',
 });

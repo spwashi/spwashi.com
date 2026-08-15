@@ -182,6 +182,8 @@ const PAGE_VAR_BODY_ATTRS = Object.freeze([
   ['related_routes', 'data-spw-related-routes'],
   ['layout', 'data-spw-layout'],
   ['stylesheet_mode', 'data-spw-stylesheet-mode'],
+  ['horizon', 'data-spw-horizon'],
+  ['micro_world', 'data-spw-micro-world'],
 ]);
 
 function cloneRegex(pattern) {
