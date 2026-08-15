@@ -82,15 +82,18 @@ const PAGE_JSON_LD_RE = /<script\b(?=[^>]*type=["']application\/ld\+json["'])(?=
 const MAX_INCLUDE_DEPTH = 8;
 
 const PRIMARY_NAV_ITEMS = Object.freeze([
-  { href: '/', label: 'Home', note: 'Start here and find a nearby route.' },
-  { href: '/about/', label: 'About', note: 'How I work and what guides the site.' },
-  { href: '/design/', label: 'Design', note: 'CSS, SVG, layout, and interaction studies.' },
-  { href: '/topics/', label: 'Topics', note: 'Software, math, craft, design, and related notes.' },
-  { href: '/topics/software/', label: 'Software', note: 'Spw, parsers, renderers, and software practice.' },
-  { href: '/topics/math/', label: 'Math', note: 'Visual routes into mathematical structure.' },
-  { href: '/blog/', label: 'Blog', note: 'Working notes, drafts, and public process.' },
-  { href: '/about/domains/lore.land/', label: 'lore.land', note: 'Long-form stories, ebooks, and narrative work.' },
-  { href: '/settings/', label: 'Settings', note: 'Tune local reading, appearance, and saved state.' },
+  { href: '/', label: 'Home', token: '#>home', operator: 'frame', note: 'Start here and find a nearby route.' },
+  { href: '/about/', label: 'About', token: '.about', operator: 'state', note: 'How I work and what guides the site.' },
+  { href: '/design/', label: 'Design', token: '#>design', operator: 'frame', note: 'CSS, SVG, layout, and interaction studies.' },
+  { href: '/topics/', label: 'Topics', token: '<topics>', operator: 'concept', note: 'Software, math, craft, design, and related notes.' },
+  { href: '/topics/software/', label: 'Software', token: '<software>', operator: 'concept', note: 'Spw, parsers, renderers, and software practice.' },
+  { href: '/topics/math/', label: 'Math', token: '<math>', operator: 'concept', note: 'Visual routes into mathematical structure.' },
+  { href: '/play/', label: 'Play', token: '~play', operator: 'potential', note: 'RPG Wednesday, session logs, world notes, and play.' },
+  { href: '/tools/', label: 'Tools', token: '^tools', operator: 'integration', note: 'Local tools for profiles, prompts, budgets, and Spw.' },
+  { href: '/services/', label: 'Services', token: '@services', operator: 'action', note: 'Systems sprints, creator commissions, and advisory.' },
+  { href: '/blog/', label: 'Blog', token: '*blog', operator: 'vibration', note: 'Working notes, drafts, and public process.' },
+  { href: '/about/domains/lore.land/', label: 'lore.land', token: '~lore.land', operator: 'potential', note: 'Long-form stories, ebooks, and narrative work.' },
+  { href: '/settings/', label: 'Settings', token: '=settings', operator: 'binding', note: 'Tune local reading, appearance, and saved state.' },
 ]);
 
 const DERIVED_META_FIELDS = [
@@ -805,7 +808,13 @@ function renderSiteHeader(vars) {
     const noteAttrs = note
       ? ` title="${attrEscape(note)}" data-spw-route-note="${attrEscape(note)}" aria-label="${attrEscape(`${item.label}${isCurrent ? ', current page' : ''}. ${note}`)}"`
       : '';
-    return `            <li><a${aria}${noteAttrs} href="${attrEscape(item.href)}">${htmlEscape(item.label)}</a></li>`;
+    const token = firstValue(item.token, routeInfo?.token);
+    const op = firstValue(item.operator, routeInfo?.operator);
+    const spwAttrs = [
+      op ? ` data-spw-operator="${attrEscape(op)}"` : '',
+      token ? ` data-spw-nav-token="${attrEscape(token)}"` : '',
+    ].join('');
+    return `            <li><a${aria}${noteAttrs}${spwAttrs} href="${attrEscape(item.href)}">${htmlEscape(item.label)}</a></li>`;
   }).join('\n');
 
   return `<header ${attrs}>\n`

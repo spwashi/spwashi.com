@@ -125,21 +125,21 @@
         <nav class="site-footer__nav" aria-labelledby="site-footer-nav-title">
             <p class="site-footer__nav-kicker" id="site-footer-nav-title">Site map</p>
             <div class="site-footer__nav-links">
-                <a href="/now/" data-spw-route-note="Current work, status, and live releases.">Now</a>
-                <a href="/about/" data-spw-route-note="How I work and what guides the site.">About</a>
-                <a href="/design/" data-spw-route-note="CSS, SVG, layout, and interaction studies.">Design</a>
-                <a href="/design/folios/" data-spw-route-note="Art studies, skill prompts, and community artifacts.">Folios</a>
-                <a href="/topics/" data-spw-route-note="Software, math, craft, design, and related notes.">Topics</a>
-                <a href="/topics/software/" data-spw-route-note="Spw, parsers, renderers, and software practice.">Software</a>
-                <a href="/topics/craft/" data-spw-route-note="Material, texture, SVG, and craft study routes.">Craft</a>
-                <a href="/play/" data-spw-route-note="RPG Wednesday, session logs, world notes, and play.">Play</a>
-                <a href="/tools/" data-spw-route-note="Local tools for profiles, prompts, budgets, and Spw.">Tools</a>
-                <a href="/blog/" data-spw-route-note="Working notes, drafts, and public process.">Blog</a>
-                <a href="/contact/" data-spw-route-note="Get in touch about scoped work or collaboration.">Contact</a>
-                <a href="/privacy/" data-spw-route-note="What stays in the browser and what leaves the device.">Privacy</a>
-                <a href="/settings/" data-spw-route-note="Tune local reading, appearance, and saved state.">Settings</a>
+                <a href="/now/" data-spw-operator="action" data-spw-nav-token="@now" data-spw-route-note="Current work, status, and live releases.">Now</a>
+                <a href="/about/" data-spw-operator="state" data-spw-nav-token=".about" data-spw-route-note="How I work and what guides the site.">About</a>
+                <a href="/design/" data-spw-operator="frame" data-spw-nav-token="#&gt;design" data-spw-route-note="CSS, SVG, layout, and interaction studies.">Design</a>
+                <a href="/design/folios/" data-spw-operator="concept-edge" data-spw-nav-token="&gt;folios" data-spw-route-note="Art studies, skill prompts, and community artifacts.">Folios</a>
+                <a href="/topics/" data-spw-operator="concept" data-spw-nav-token="&lt;topics&gt;" data-spw-route-note="Software, math, craft, design, and related notes.">Topics</a>
+                <a href="/topics/software/" data-spw-operator="concept" data-spw-nav-token="&lt;software&gt;" data-spw-route-note="Spw, parsers, renderers, and software practice.">Software</a>
+                <a href="/topics/craft/" data-spw-operator="concept" data-spw-nav-token="&lt;craft&gt;" data-spw-route-note="Material, texture, SVG, and craft study routes.">Craft</a>
+                <a href="/play/" data-spw-operator="potential" data-spw-nav-token="~play" data-spw-route-note="RPG Wednesday, session logs, world notes, and play.">Play</a>
+                <a href="/tools/" data-spw-operator="integration" data-spw-nav-token="^tools" data-spw-route-note="Local tools for profiles, prompts, budgets, and Spw.">Tools</a>
+                <a href="/blog/" data-spw-operator="vibration" data-spw-nav-token="*blog" data-spw-route-note="Working notes, drafts, and public process.">Blog</a>
+                <a href="/contact/" data-spw-operator="action" data-spw-nav-token="@contact" data-spw-route-note="Get in touch about scoped work or collaboration.">Contact</a>
+                <a href="/privacy/" data-spw-operator="state" data-spw-nav-token=".privacy" data-spw-route-note="What stays in the browser and what leaves the device.">Privacy</a>
+                <a href="/settings/" data-spw-operator="binding" data-spw-nav-token="=settings" data-spw-route-note="Tune local reading, appearance, and saved state.">Settings</a>
             </div>
-            <a class="site-footer__return-top" href="#main-content">Return to content</a>
+            <a class="site-footer__return-top" href="#main-content" data-spw-operator="frame" data-spw-nav-token="#&gt;top">Return to content</a>
         </nav>
         <p class="site-footer__legal">© <time datetime="2026">2026</time> spwashi</p>
     </div>
