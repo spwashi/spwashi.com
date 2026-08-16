@@ -1,0 +1,41 @@
+#>asset_metadata
+#:layer #!design
+
+^"spirit"{
+  whimsy_name: "design-papergami-layout-machine"
+  description: "Papergami mechanical structure for cognitive layout and spatial web design, with folded planes and architectural apertures."
+  visual_qualities: "folded paper, geometric, tactile, architectural, cognitive layout"
+}
+
+^"thematic_mapping"{
+  operator: "frame"
+  valence: "bone"
+  spirit_phase: "structure"
+  liminality: "portal"
+  role: "system-specimen"
+  context: "site design, papergami, spatial layout, layout apparatus"
+}
+
+^"usage"{
+  surface: "illustrations"
+  role: "field-reference"
+  dimensions: { width: 1024, height: 1024 }
+  formats_available: ["avif", "webp"]
+  alt_text: "A delicate papergami mechanical apparatus with folded planes and geometric apertures for cognitive layout design."
+}
+
+^"optimization"{
+  optimized_on: "2026-08-15T21:13:58Z"
+  source_render: ~"../../renders/_raw/spwashi_papergami_machinery_for_cognitive_layout_and_web_design_40e653d8-fc96-4a81-b8f1-95b727075e94.png"
+  variants: [
+    { tier: "thumb", size: "256x256", formats: ["avif", "webp"] },
+    { tier: "display", size: "512x512", formats: ["avif", "webp"] },
+    { tier: "hero", size: "1024x1024", formats: ["avif", "webp"] }
+  ]
+}
+
+^"discovery"{
+  tags: ["papergami", "layout", "machine", "structure", "design", "cognitive"]
+  spirit_name: "design-papergami-layout-machine"
+  status: "extracted"
+}

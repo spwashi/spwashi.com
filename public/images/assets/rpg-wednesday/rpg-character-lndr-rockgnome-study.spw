@@ -1,0 +1,43 @@
+#>asset_metadata
+#:layer #!rpg_wednesday
+
+^"spirit"{
+  whimsy_name: "rpg-character-lndr-rockgnome-study"
+  description: "Lndr the grey-teal rockgnome with a warm boonhat at work in the studio, crafting mechanical world lore and table artifacts."
+  visual_qualities: "warm, artisanal, gnomish, mechanical, studio light, tactile tools"
+}
+
+^"thematic_mapping"{
+  operator: "potential"
+  valence: "boon"
+  spirit_phase: "creation"
+  liminality: "threshold"
+  role: "character-portrait"
+  context: "rpg wednesday, table lore, character sheet, collaborative mechanics"
+}
+
+^"usage"{
+  surface: "rpg_wednesday"
+  role: "character-specimen"
+  dimensions: { width: 1024, height: 1024 }
+  formats_available: ["avif", "webp"]
+  alt_text: "Lndr the rockgnome wearing a distinctive boonhat working meticulously with miniature tools in an artisanal studio."
+}
+
+^"optimization"{
+  optimized_on: "2026-08-15T21:13:37Z"
+  source_render: ~"../../renders/_raw/spwashi_lndr_is_a_greyteal_rockgnome_with_a_boonhat_working_on__0564699b-85a8-4418-8682-4fb50c0011cc.png"
+  variants: [
+    { tier: "thumb", size: "320x320", formats: ["avif", "webp"] },
+    { tier: "display", size: "640x640", formats: ["avif", "webp"] },
+    { tier: "hero", size: "1024x1024", formats: ["avif", "webp"] }
+  ]
+  notes: "Tiered AVIF/WebP variants generated using conventions/asset-management.spw#optimization."
+}
+
+^"discovery"{
+  tags: ["rpg", "character", "rockgnome", "boonhat", "artisan", "studio", "lore"]
+  spirit_name: "rpg-character-lndr-rockgnome-study"
+  status: "extracted"
+  related_images: ["boonhonk-machine-prop", "library-craft-register"]
+}

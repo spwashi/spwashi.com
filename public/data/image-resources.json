@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-08-16T02:10:43.829Z",
+  "generatedAt": "2026-08-16T02:14:49.676Z",
   "sourceRoot": "/public/images/",
-  "count": 354,
+  "count": 384,
   "concepts": [
     "about",
     "algorithm",
@@ -222,6 +222,72 @@
       "swapHint": "Use /public/images/assets/home/spwashi.png when a home visual needs a stable tracked asset."
     },
     {
+      "id": "artifact-ovoid-monolith-study",
+      "title": "Artifact Ovoid Monolith Study",
+      "path": "/public/images/assets/illustrations/artifact-ovoid-monolith-study-display.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 17126,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/artifact-ovoid-monolith-study-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "artifact-ovoid-monolith-study",
+      "title": "Artifact Ovoid Monolith Study",
+      "path": "/public/images/assets/illustrations/artifact-ovoid-monolith-study-display.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 16180,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/artifact-ovoid-monolith-study-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "artifact-ovoid-monolith-study",
+      "title": "Artifact Ovoid Monolith Study",
+      "path": "/public/images/assets/illustrations/artifact-ovoid-monolith-study-hero.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 68260,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/artifact-ovoid-monolith-study-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "artifact-ovoid-monolith-study",
+      "title": "Artifact Ovoid Monolith Study",
+      "path": "/public/images/assets/illustrations/artifact-ovoid-monolith-study-hero.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 137254,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/artifact-ovoid-monolith-study-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "artifact-ovoid-monolith-study",
+      "title": "Artifact Ovoid Monolith Study",
+      "path": "/public/images/assets/illustrations/artifact-ovoid-monolith-study-thumb.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 3269,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/artifact-ovoid-monolith-study-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "artifact-ovoid-monolith-study",
+      "title": "Artifact Ovoid Monolith Study",
+      "path": "/public/images/assets/illustrations/artifact-ovoid-monolith-study-thumb.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 3798,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/artifact-ovoid-monolith-study-thumb.webp when a thumbnail visual needs a stable tracked asset."
+    },
+    {
       "id": "boonhonk-attentional-fluid",
       "title": "Boonhonk Attentional Fluid",
       "path": "/public/images/assets/illustrations/boonhonk-attentional-fluid-display.avif",
@@ -365,6 +431,174 @@
       "swapHint": "Use /public/images/assets/illustrations/compression.png when a image visual needs a stable tracked asset."
     },
     {
+      "id": "craft-biofilm-papyrus-substrate",
+      "title": "Craft Biofilm Papyrus Substrate",
+      "path": "/public/images/assets/illustrations/craft-biofilm-papyrus-substrate-display.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 24352,
+      "role": "display",
+      "concepts": [
+        "craft"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/craft-biofilm-papyrus-substrate-display.avif when a craft visual needs a stable tracked asset."
+    },
+    {
+      "id": "craft-biofilm-papyrus-substrate",
+      "title": "Craft Biofilm Papyrus Substrate",
+      "path": "/public/images/assets/illustrations/craft-biofilm-papyrus-substrate-display.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 28948,
+      "role": "display",
+      "concepts": [
+        "craft"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/craft-biofilm-papyrus-substrate-display.webp when a craft visual needs a stable tracked asset."
+    },
+    {
+      "id": "craft-biofilm-papyrus-substrate",
+      "title": "Craft Biofilm Papyrus Substrate",
+      "path": "/public/images/assets/illustrations/craft-biofilm-papyrus-substrate-hero.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 147522,
+      "role": "hero",
+      "concepts": [
+        "craft"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/craft-biofilm-papyrus-substrate-hero.avif when a craft visual needs a stable tracked asset."
+    },
+    {
+      "id": "craft-biofilm-papyrus-substrate",
+      "title": "Craft Biofilm Papyrus Substrate",
+      "path": "/public/images/assets/illustrations/craft-biofilm-papyrus-substrate-hero.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 300734,
+      "role": "hero",
+      "concepts": [
+        "craft"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/craft-biofilm-papyrus-substrate-hero.webp when a craft visual needs a stable tracked asset."
+    },
+    {
+      "id": "craft-biofilm-papyrus-substrate",
+      "title": "Craft Biofilm Papyrus Substrate",
+      "path": "/public/images/assets/illustrations/craft-biofilm-papyrus-substrate-thumb.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 1714,
+      "role": "thumbnail",
+      "concepts": [
+        "craft"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/craft-biofilm-papyrus-substrate-thumb.avif when a craft visual needs a stable tracked asset."
+    },
+    {
+      "id": "craft-biofilm-papyrus-substrate",
+      "title": "Craft Biofilm Papyrus Substrate",
+      "path": "/public/images/assets/illustrations/craft-biofilm-papyrus-substrate-thumb.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 3084,
+      "role": "thumbnail",
+      "concepts": [
+        "craft"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/craft-biofilm-papyrus-substrate-thumb.webp when a craft visual needs a stable tracked asset."
+    },
+    {
+      "id": "design-papergami-layout-machine",
+      "title": "Design Papergami Layout Machine",
+      "path": "/public/images/assets/illustrations/design-papergami-layout-machine-display.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 35139,
+      "role": "display",
+      "concepts": [
+        "style-reference",
+        "surface",
+        "design"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/design-papergami-layout-machine-display.avif when a style-reference / surface / design visual needs a stable tracked asset."
+    },
+    {
+      "id": "design-papergami-layout-machine",
+      "title": "Design Papergami Layout Machine",
+      "path": "/public/images/assets/illustrations/design-papergami-layout-machine-display.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 34912,
+      "role": "display",
+      "concepts": [
+        "style-reference",
+        "surface",
+        "design"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/design-papergami-layout-machine-display.webp when a style-reference / surface / design visual needs a stable tracked asset."
+    },
+    {
+      "id": "design-papergami-layout-machine",
+      "title": "Design Papergami Layout Machine",
+      "path": "/public/images/assets/illustrations/design-papergami-layout-machine-hero.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 191791,
+      "role": "hero",
+      "concepts": [
+        "style-reference",
+        "surface",
+        "design"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/design-papergami-layout-machine-hero.avif when a style-reference / surface / design visual needs a stable tracked asset."
+    },
+    {
+      "id": "design-papergami-layout-machine",
+      "title": "Design Papergami Layout Machine",
+      "path": "/public/images/assets/illustrations/design-papergami-layout-machine-hero.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 301484,
+      "role": "hero",
+      "concepts": [
+        "style-reference",
+        "surface",
+        "design"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/design-papergami-layout-machine-hero.webp when a style-reference / surface / design visual needs a stable tracked asset."
+    },
+    {
+      "id": "design-papergami-layout-machine",
+      "title": "Design Papergami Layout Machine",
+      "path": "/public/images/assets/illustrations/design-papergami-layout-machine-thumb.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 4014,
+      "role": "thumbnail",
+      "concepts": [
+        "style-reference",
+        "surface",
+        "design"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/design-papergami-layout-machine-thumb.avif when a style-reference / surface / design visual needs a stable tracked asset."
+    },
+    {
+      "id": "design-papergami-layout-machine",
+      "title": "Design Papergami Layout Machine",
+      "path": "/public/images/assets/illustrations/design-papergami-layout-machine-thumb.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 6466,
+      "role": "thumbnail",
+      "concepts": [
+        "style-reference",
+        "surface",
+        "design"
+      ],
+      "swapHint": "Use /public/images/assets/illustrations/design-papergami-layout-machine-thumb.webp when a style-reference / surface / design visual needs a stable tracked asset."
+    },
+    {
       "id": "home-og-card",
       "title": "Home Og Card",
       "path": "/public/images/assets/illustrations/home-og-card.jpg",
@@ -432,6 +666,72 @@
         "worldbuilding"
       ],
       "swapHint": "Use /public/images/assets/illustrations/lore-land-signal-poster.png when a library / worldbuilding visual needs a stable tracked asset."
+    },
+    {
+      "id": "material-weathered-copper-moss-study",
+      "title": "Material Weathered Copper Moss Study",
+      "path": "/public/images/assets/illustrations/material-weathered-copper-moss-study-display.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 36756,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/material-weathered-copper-moss-study-display.avif when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "material-weathered-copper-moss-study",
+      "title": "Material Weathered Copper Moss Study",
+      "path": "/public/images/assets/illustrations/material-weathered-copper-moss-study-display.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 37870,
+      "role": "display",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/material-weathered-copper-moss-study-display.webp when a display visual needs a stable tracked asset."
+    },
+    {
+      "id": "material-weathered-copper-moss-study",
+      "title": "Material Weathered Copper Moss Study",
+      "path": "/public/images/assets/illustrations/material-weathered-copper-moss-study-hero.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 164284,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/material-weathered-copper-moss-study-hero.avif when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "material-weathered-copper-moss-study",
+      "title": "Material Weathered Copper Moss Study",
+      "path": "/public/images/assets/illustrations/material-weathered-copper-moss-study-hero.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 282964,
+      "role": "hero",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/material-weathered-copper-moss-study-hero.webp when a hero visual needs a stable tracked asset."
+    },
+    {
+      "id": "material-weathered-copper-moss-study",
+      "title": "Material Weathered Copper Moss Study",
+      "path": "/public/images/assets/illustrations/material-weathered-copper-moss-study-thumb.avif",
+      "directory": "public/images/assets/illustrations",
+      "format": "avif",
+      "bytes": 5340,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/material-weathered-copper-moss-study-thumb.avif when a thumbnail visual needs a stable tracked asset."
+    },
+    {
+      "id": "material-weathered-copper-moss-study",
+      "title": "Material Weathered Copper Moss Study",
+      "path": "/public/images/assets/illustrations/material-weathered-copper-moss-study-thumb.webp",
+      "directory": "public/images/assets/illustrations",
+      "format": "webp",
+      "bytes": 8076,
+      "role": "thumbnail",
+      "concepts": [],
+      "swapHint": "Use /public/images/assets/illustrations/material-weathered-copper-moss-study-thumb.webp when a thumbnail visual needs a stable tracked asset."
     },
     {
       "id": "papergami-architecture",
@@ -946,6 +1246,102 @@
       "role": "image",
       "concepts": [],
       "swapHint": "Use /public/images/assets/motifs/spwashi-alchemy-token.png when a image visual needs a stable tracked asset."
+    },
+    {
+      "id": "rpg-character-lndr-rockgnome-study",
+      "title": "Rpg Character Lndr Rockgnome Study",
+      "path": "/public/images/assets/rpg-wednesday/rpg-character-lndr-rockgnome-study-display.avif",
+      "directory": "public/images/assets/rpg-wednesday",
+      "format": "avif",
+      "bytes": 65920,
+      "role": "display",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/assets/rpg-wednesday/rpg-character-lndr-rockgnome-study-display.avif when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "rpg-character-lndr-rockgnome-study",
+      "title": "Rpg Character Lndr Rockgnome Study",
+      "path": "/public/images/assets/rpg-wednesday/rpg-character-lndr-rockgnome-study-display.webp",
+      "directory": "public/images/assets/rpg-wednesday",
+      "format": "webp",
+      "bytes": 74076,
+      "role": "display",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/assets/rpg-wednesday/rpg-character-lndr-rockgnome-study-display.webp when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "rpg-character-lndr-rockgnome-study",
+      "title": "Rpg Character Lndr Rockgnome Study",
+      "path": "/public/images/assets/rpg-wednesday/rpg-character-lndr-rockgnome-study-hero.avif",
+      "directory": "public/images/assets/rpg-wednesday",
+      "format": "avif",
+      "bytes": 223760,
+      "role": "hero",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/assets/rpg-wednesday/rpg-character-lndr-rockgnome-study-hero.avif when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "rpg-character-lndr-rockgnome-study",
+      "title": "Rpg Character Lndr Rockgnome Study",
+      "path": "/public/images/assets/rpg-wednesday/rpg-character-lndr-rockgnome-study-hero.webp",
+      "directory": "public/images/assets/rpg-wednesday",
+      "format": "webp",
+      "bytes": 366138,
+      "role": "hero",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/assets/rpg-wednesday/rpg-character-lndr-rockgnome-study-hero.webp when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "rpg-character-lndr-rockgnome-study",
+      "title": "Rpg Character Lndr Rockgnome Study",
+      "path": "/public/images/assets/rpg-wednesday/rpg-character-lndr-rockgnome-study-thumb.avif",
+      "directory": "public/images/assets/rpg-wednesday",
+      "format": "avif",
+      "bytes": 6023,
+      "role": "thumbnail",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/assets/rpg-wednesday/rpg-character-lndr-rockgnome-study-thumb.avif when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
+    },
+    {
+      "id": "rpg-character-lndr-rockgnome-study",
+      "title": "Rpg Character Lndr Rockgnome Study",
+      "path": "/public/images/assets/rpg-wednesday/rpg-character-lndr-rockgnome-study-thumb.webp",
+      "directory": "public/images/assets/rpg-wednesday",
+      "format": "webp",
+      "bytes": 13230,
+      "role": "thumbnail",
+      "concepts": [
+        "rpg-wednesday",
+        "session-memory",
+        "character",
+        "rpg"
+      ],
+      "swapHint": "Use /public/images/assets/rpg-wednesday/rpg-character-lndr-rockgnome-study-thumb.webp when a rpg-wednesday / session-memory / character / rpg visual needs a stable tracked asset."
     },
     {
       "id": "scheduler-clockwork",

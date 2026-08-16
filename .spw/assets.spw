@@ -28,8 +28,10 @@
     rpg_wednesday: {
       path: ~"../public/images/assets/rpg-wednesday/"
       purpose: "RPG Wednesday scene, character, and UI renders"
-      status: "ready-for-populating"
-      images: []
+      status: "active"
+      images: [
+        { name: "rpg-character-lndr-rockgnome-study", spirit: "rpg-character-lndr-rockgnome-study", role: "character-portrait" }
+      ]
     }
 
     pretext_lab: {
@@ -46,7 +48,11 @@
       images: [
         { name: "lore-land-signal-poster.png", spirit: "signal-atlas", role: "domain-illustration" },
         { name: "lore-land-og-card.jpg", spirit: "lore-atlas-card", role: "social-preview" },
-        { name: "home-og-card.jpg", spirit: "prism-workbench-card", role: "social-preview" }
+        { name: "home-og-card.jpg", spirit: "prism-workbench-card", role: "social-preview" },
+        { name: "design-papergami-layout-machine", spirit: "design-papergami-layout-machine", role: "system-specimen" },
+        { name: "craft-biofilm-papyrus-substrate", spirit: "craft-biofilm-papyrus-substrate", role: "material-study" },
+        { name: "artifact-ovoid-monolith-study", spirit: "artifact-ovoid-monolith-study", role: "proof-artifact" },
+        { name: "material-weathered-copper-moss-study", spirit: "material-weathered-copper-moss-study", role: "material-study" }
       ]
     }
 
