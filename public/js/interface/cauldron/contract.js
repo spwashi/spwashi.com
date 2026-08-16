@@ -49,8 +49,8 @@ export function setCauldronCapacity(next) {
 }
 
 /**
- * Put capacity and fill on the document element so the rest of the page ecology
- * can respond. `--spw-cauldron-load-ratio` is 0..1 and is the value stylesheets
+ * Put the load on the document element so the rest of the page ecology can
+ * respond. `--spw-cauldron-load-ratio` is 0..1 and is the value stylesheets
  * should read; the discrete `data-spw-cauldron-load` gives selectors something
  * to match on without doing arithmetic.
  *
@@ -67,7 +67,11 @@ export function publishCauldronCapacity(count = 0) {
   const held = Math.max(0, Number(count) || 0);
   const fill = capacity > 0 ? Math.min(1, held / capacity) : 0;
 
-  root.style.setProperty('--spw-cauldron-capacity', String(capacity));
+  /* Only the ratio becomes a custom property, because only the ratio is read by
+     a stylesheet. Capacity itself reaches CSS as the data-spw-cauldron-capacity
+     attribute (selectors can match it) and reaches JS through cauldronCapacity(),
+     so publishing it as a third copy would be a variable nothing consumes —
+     which scripts/check-site.mjs correctly rejects. */
   root.style.setProperty('--spw-cauldron-load-ratio', fill.toFixed(3));
 
   root.dataset.spwCauldronLoad = held === 0
