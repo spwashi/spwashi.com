@@ -117,6 +117,7 @@
       var(--spw-architecture-salience, 0.6)
       * var(--spw-salience-affordance, 1)
       * var(--spw-salience-charge-runtime, 1)
+      * var(--spw-salience-carry, 1)
       - 0.6
     ) * 2.5),
     1
@@ -145,22 +146,31 @@
     var(--spw-elevation-card-shadow, var(--shadow-base, 0 10px 24px rgba(0, 0, 0, 0.06)));
 }
 
-/* ── Concept twinkle ──────────────────────────────────────────────────────
+/* ── Concept twinkle: the cauldron's page-side echo ───────────────────────
    An earned, occasional wiggle — not a blink, and not a loop you notice. The
-   timeline is idle for ~91% of its duration; the motion is a sub-degree
+   timeline is idle for ~95% of its duration; the motion is a sub-degree
    rotation with a fractional-pixel rise. It reads as "alive" in peripheral
    vision and all but disappears when looked at directly.
 
-   NOTHING TWINKLES BY DEFAULT. A concept animates only once something sets
-   data-spw-twinkle="earned" on it, so this is a reward surface rather than
-   ambient decoration.
+   NOTHING TWINKLES BY DEFAULT, and nothing here invents its own bookkeeping.
+   The earned set IS the cauldron. interface/cauldron/resonance.js already walks
+   every ingredient, finds the source elements on the page that produced it, and
+   marks them `data-spw-cauldron-collected="true"` — that mark is the signal
+   this animation reads. Gather a fragment and its source begins to stir;
+   remove it and syncCollectedSourceMarks() deletes the attribute, so the page
+   goes still again on its own. No separate "earned" store, no drift between
+   what the cauldron holds and what the page shows.
 
-   The wave arcs across a cluster instead of firing in unison: --spw-cluster-index
-   offsets each member's phase, so the wiggle travels along the group.
+   The set is self-limiting by construction: MAX_INGREDIENTS is 6, so at most
+   six concepts can ever be moving at once no matter how long someone browses.
 
-   Amplitude rides the same presence field as everything else, so a concept
-   that is also charged, or in a path region, wiggles slightly more. The reward
-   and the architecture share one scale rather than competing for attention. */
+   The wave arcs across the gathering instead of firing in unison —
+   --spw-cluster-index is set per ingredient in capture order, so the wiggle
+   travels along the group in the sequence it was gathered.
+
+   Amplitude rides the same presence field as everything else, so a collected
+   concept that is also charged, or in a path region, wiggles slightly more.
+   The reward and the architecture share one scale rather than competing. */
 @property --spw-twinkle-amplitude {
   syntax: '<number>';
   inherits: true;
@@ -197,7 +207,7 @@
 [data-spw-visited="true"] { --spw-familiarity: 0.34; }
 
 @media (prefers-reduced-motion: no-preference) {
-  :where([data-spw-concept][data-spw-twinkle="earned"]) {
+  :where([data-spw-cauldron-collected="true"]) {
     /* 0.8 at rest, 1.3 when fully fed — then scaled by familiarity, so a
        seen-and-uncharged concept lands near 0.27 and a seen-but-recharged one
        climbs back toward 0.44. */
@@ -218,8 +228,8 @@
      over it or focus inside it — its concepts hold still, so the twinkle never
      competes with the sentence being read. This is the main thing keeping the
      effect from wearing out over repeat visits. */
-  :where(:hover, :focus-within) > :where([data-spw-concept][data-spw-twinkle="earned"]),
-  :where([data-spw-concept][data-spw-twinkle="earned"]):is(:hover, :focus-visible) {
+  :where(:hover, :focus-within) > :where([data-spw-cauldron-collected="true"]),
+  :where([data-spw-cauldron-collected="true"]):is(:hover, :focus-visible) {
     animation-play-state: paused;
     transform: none;
   }
@@ -227,9 +237,69 @@
 
 /* Reduced motion keeps the earned state legible without moving anything. */
 @media (prefers-reduced-motion: reduce) {
-  :where([data-spw-concept][data-spw-twinkle="earned"]) {
+  :where([data-spw-cauldron-collected="true"]) {
     text-decoration: underline dotted
       color-mix(in oklab, var(--component-accent, currentColor) 55%, transparent);
     text-underline-offset: 0.22em;
   }
+}
+
+/* ── Dimension: what the visitor is carrying ──────────────────────────────
+   contract.js#publishCauldronCapacity puts --spw-cauldron-load-ratio (0..1) and
+   data-spw-cauldron-load on the document element every time the gathering
+   changes. Because they live on :root, any page can respond to how full the
+   cauldron is without importing the cauldron or knowing it exists.
+
+   Fill is deliberately weak — at most a 6% lift across the whole page. It
+   should register as the room getting slightly more attentive as you carry
+   more, not as a difficulty setting. Capacity is a stat, so raising it makes
+   the same number of ingredients read as a lighter load, which is the correct
+   feeling: a bigger cauldron should make six things feel manageable. */
+:root {
+  --spw-salience-carry: calc(1 + var(--spw-cauldron-load-ratio, 0) * 0.06);
+}
+
+/* ── The brew: an easter egg with a lesson in it ──────────────────────────
+   Operators map to phases, and there are exactly six of each. Base capacity is
+   also six, so gathering one ingredient of every phase is an exact set — the
+   cauldron holds the whole operator grammar at once and nothing is wasted.
+   computeCauldronBrew() in contract.js names that state `spectrum`.
+
+   The states are expressed through the TIMING of the twinkle rather than new
+   colour or ornament, because timing is what the visitor has actually been
+   watching all along. Nothing announces itself; the rhythm changes and you
+   notice you changed it.
+
+     pure      one phase throughout. The wave collapses to unison — every
+               collected source moves as one body, which is what "pure" should
+               feel like and is immediately legible against the usual arc.
+     spectrum  all six phases. The arc lengthens and the motion opens up: the
+               longest, calmest wave the system can produce. It is the reward
+               for gathering broadly, and it is quieter rather than louder.
+     mixed     the ordinary arc; no override needed. */
+@media (prefers-reduced-motion: no-preference) {
+  /* Pure: phase offset removed, so the gathering breathes together. */
+  :root[data-spw-cauldron-brew="pure"] :where([data-spw-cauldron-collected="true"]) {
+    animation-delay: 0s;
+  }
+
+  /* Spectrum: a slower period and a wider stagger. Six sources spread across
+     ~7.2s of an 18s cycle — the wiggle crosses the page as one long pass
+     instead of a tight ripple, and each source rests longer between turns. */
+  :root[data-spw-cauldron-brew="spectrum"] :where([data-spw-cauldron-collected="true"]) {
+    animation-duration: 18s;
+    animation-delay: calc(var(--spw-cluster-index, 0) * -1200ms);
+    --spw-twinkle-amplitude: calc((0.9 + var(--spw-field-presence, 0) * 0.5) * var(--spw-familiarity, 1));
+  }
+}
+
+/* A full cauldron is the one load state worth marking outside of motion, since
+   it is the moment gathering more starts displacing what you already have.
+   The cue sits on the cauldron chrome only — the page at large stays quiet. */
+:root[data-spw-cauldron-load="full"] :where([data-spw-cauldron]) {
+  --component-border: 1px solid color-mix(
+    in oklab,
+    var(--component-accent, currentColor) 46%,
+    var(--line, transparent)
+  );
 }

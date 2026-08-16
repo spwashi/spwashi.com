@@ -733,6 +733,40 @@
   font-weight: 700;
 }
 
+/* The provenance chip became a real anchor when ingredients gained route
+   provenance — it used to be an inert <span> naming the kind of link it held
+   ("hash anchor") rather than the place. As a link it needs the chip's own
+   colour rather than the user-agent's, and it needs to be reachable and
+   obviously focused, since it is now the way back to where a fragment was
+   gathered. The underline is held back until interaction so a row of six
+   provenance chips does not read as a wall of rules. */
+a.cauldron-ingredient-meta.cauldron-deep-link {
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+}
+
+a.cauldron-ingredient-meta.cauldron-deep-link:is(:hover, :focus-visible) {
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  border-color: color-mix(in srgb, var(--op-ref-color, #4f7fbf) 48%, transparent);
+}
+
+a.cauldron-ingredient-meta.cauldron-deep-link:focus-visible {
+  outline: var(--focus-ring, 2px solid currentColor);
+  outline-offset: 2px;
+}
+
+/* Coarse pointers get a real target. Applied as padding and min-height on the
+   chip alone so the surrounding meta row keeps its density on fine pointers. */
+@media (pointer: coarse) {
+  a.cauldron-ingredient-meta.cauldron-deep-link {
+    min-block-size: 44px;
+    padding-inline: 0.6rem;
+  }
+}
+
 /* Further cauldron UX polish for funding/self-imagination tranche:
    Ingredients carrying character-capacity or budgeting origin get a subtle, inspectable accent.
    This makes the "trace changes and wonder about variants" path from budgeting/character tools
@@ -1330,18 +1364,18 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
      block, so without this they would escape to the footer and run down the
      wrong element. */
   position: relative;
-  /* 0..1 fill, read off the count axis the runtime already writes. */
-  --spw-cauldron-fill: 0;
+  /* 0..1 fill of the vessel.
+     Was a six-step ladder matched off the count axis (count:1 -> 0.17 ...
+     count:6 -> 1), which silently assumed a capacity of exactly six: at any
+     other capacity a full cauldron stopped looking full. The ratio is now
+     computed against the capacity actually in effect and published to :root by
+     contract.js#publishCauldronCapacity, so the liquid level tracks capacity
+     changes for free — a granted seventh slot makes the same six ingredients
+     sit visibly lower in the pot. */
+  --spw-cauldron-fill: var(--spw-cauldron-load-ratio, 0);
   --spw-cauldron-fluid-cool: var(--op-thread-color, #4fb5a8);
   --spw-cauldron-fluid-warm: var(--op-seed-color, #d9a441);
 }
-
-.site-footer__cauldron[data-spw-cauldron-state~="count:1"] { --spw-cauldron-fill: 0.17; }
-.site-footer__cauldron[data-spw-cauldron-state~="count:2"] { --spw-cauldron-fill: 0.34; }
-.site-footer__cauldron[data-spw-cauldron-state~="count:3"] { --spw-cauldron-fill: 0.5; }
-.site-footer__cauldron[data-spw-cauldron-state~="count:4"] { --spw-cauldron-fill: 0.67; }
-.site-footer__cauldron[data-spw-cauldron-state~="count:5"] { --spw-cauldron-fill: 0.84; }
-.site-footer__cauldron[data-spw-cauldron-state~="count:6"] { --spw-cauldron-fill: 1; }
 
 /* The rim warms as the vessel fills — the interior glow in the study, which is
    what tells you there is something in there before you look inside. */
@@ -1364,8 +1398,14 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
 
 /* At capacity the fluid crests and runs. Rivulets are a repeating gradient on
    the bottom edge rather than elements, so nothing is added to the DOM and
-   nothing can shift. Only the last rung gets them: overflow should mean full. */
-.site-footer__cauldron[data-spw-cauldron-state~="count:6"]::after,
+   nothing can shift. Only the last rung gets them: overflow should mean full.
+
+   Keyed to the published load state rather than `count:6`, which was the same
+   hardcoded-capacity assumption as the fill ladder: at a granted capacity of
+   eight, a six-ingredient cauldron was drawing overflow while still having room.
+   `data-spw-cauldron-load="full"` is computed against the capacity in effect, so
+   the fluid crests exactly when there is genuinely nowhere left to put anything. */
+:root[data-spw-cauldron-load="full"] .site-footer__cauldron::after,
 .site-footer__cauldron[data-spw-cauldron-state~="phase:spell-ready"]::after {
   content: '';
   position: absolute;

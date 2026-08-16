@@ -65,6 +65,16 @@ function prefixFromHandle(text = '') {
 function harvestRouteHandles(html = '') {
   const handles = new Set();
   const operators = new Set();
+  /* Frequency, not just presence. A set of operator names says which sigils a
+     page uses at all; counts say which one the page is actually built around,
+     which is what geometry resolution needs to pick a character for the route. */
+  const operatorCounts = new Map();
+  const tally = (type) => {
+    if (!type) return;
+    operators.add(type);
+    operatorCounts.set(type, (operatorCounts.get(type) || 0) + 1);
+  };
+
   const pattern = /<(a|button|span)([^>]*\bclass=["'][^"']*\b(?:operator-chip|frame-sigil|frame-card-sigil)\b[^"']*["'][^>]*)>([\s\S]*?)<\/\1>/gi;
   let match;
   while ((match = pattern.exec(html))) {
@@ -73,13 +83,55 @@ function harvestRouteHandles(html = '') {
     if (!text || !prefix) continue;
     handles.add(text.slice(0, 80));
     const profile = Object.values(OPERATOR_GEOMETRY_INDEX).find((item) => item.sigil === prefix);
-    if (profile?.type) operators.add(profile.type);
+    tally(profile?.type);
     const attr = match[2].match(/data-spw-operator=["']([^"']+)["']/);
-    if (attr?.[1]) operators.add(attr[1]);
+    tally(attr?.[1]);
   }
   return {
     handles: [...handles].slice(0, 48),
     operators: [...operators],
+    operatorCounts,
+  };
+}
+
+/**
+ * Geometry read off what a page is made of, for the 72% of routes whose path
+ * matches none of the special cases in geometryFromRoute.
+ *
+ * Those routes were previously indexed with null geometry, motion, sigil and
+ * brace — searchable by title and text, invisible to any query that groups by
+ * structure. The information was already being collected two functions up: the
+ * operator chips and frame sigils in the page's own markup. This resolves the
+ * operator a route leans on hardest and lets the route inherit its character.
+ *
+ * Ties break toward the operator that appears first, which is document order,
+ * which in practice is the hero's frame sigil — the page's opening claim about
+ * what it is.
+ */
+function geometryFromOperators(operatorCounts) {
+  if (!operatorCounts || !operatorCounts.size) return null;
+
+  let bestType = '';
+  let bestCount = 0;
+  for (const [type, count] of operatorCounts) {
+    if (count > bestCount) {
+      bestType = type;
+      bestCount = count;
+    }
+  }
+  if (!bestType) return null;
+
+  const profile = OPERATOR_GEOMETRY_INDEX[bestType]
+    || Object.values(OPERATOR_GEOMETRY_INDEX).find((item) => item.type === bestType);
+  if (!profile) return null;
+
+  return {
+    operator: profile.type,
+    operatorSlug: bestType,
+    sigil: profile.sigil,
+    geometry: profile.geometry,
+    motion: profile.motion,
+    brace: profile.brace,
   };
 }
 
@@ -212,8 +264,21 @@ function buildSearchEntry(routeRecord, harvested = { handles: [], operators: [] 
   const relatedRoutes = asList(routeRecord.relatedRoutes);
   const layout = String(routeRecord.layout || '').trim();
   const nest = nestFromRoute(route);
-  const geometry = geometryFromRoute(route, nest);
-  const kind = geometry.kind || kindFromRoute(route, nest);
+  const routeGeometry = geometryFromRoute(route, nest);
+  const kind = routeGeometry.kind || kindFromRoute(route, nest);
+
+  /* Path patterns win when they match — they encode intent about what a route
+     is for. Only when they resolve nothing does the route inherit geometry from
+     the operators its own markup leans on. geometrySource records which of the
+     two answered, so a null geometry now means "this page declares no operator
+     at all" rather than "the generator had no rule for this path". */
+  const harvestedGeometry = routeGeometry.geometry
+    ? null
+    : geometryFromOperators(harvested.operatorCounts);
+  const geometry = harvestedGeometry ? { ...routeGeometry, ...harvestedGeometry } : routeGeometry;
+  const geometrySource = routeGeometry.geometry
+    ? 'route'
+    : (harvestedGeometry ? 'harvest' : null);
 
   const haystack = [
     title,
@@ -265,6 +330,7 @@ function buildSearchEntry(routeRecord, harvested = { handles: [], operators: [] 
     operatorSlug: geometry.operatorSlug,
     geometry: geometry.geometry,
     motion: geometry.motion,
+    geometrySource,
     handles: harvested.handles,
     operators: harvested.operators,
     brace: geometry.brace,

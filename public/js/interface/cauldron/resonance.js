@@ -1,4 +1,9 @@
-import { CAULDRON_PHASES, computeIngredientPhase } from './contract.js';
+import {
+  CAULDRON_PHASES,
+  computeCauldronBrew,
+  computeIngredientPhase,
+  publishCauldronCapacity,
+} from './contract.js';
 
 const GARDEN_PHASE_RANK = Object.freeze({
   empty: 0,
@@ -39,13 +44,17 @@ export function syncCollectedSourceMarks(ingredients = []) {
       || '';
     if (!expressions.has(expr)) {
       delete node.dataset.spwCauldronCollected;
+      /* The collected mark is what systems/field-physics.css animates. Clearing
+         the phase offset with it keeps a released source from carrying a stale
+         position in the wave if it is gathered again later. */
+      node.style.removeProperty('--spw-cluster-index');
       if (node.dataset.spwPrimeState === 'collected') {
         node.dataset.spwPrimeState = node.dataset.spwCauldronCandidate ? 'candidate' : '';
       }
     }
   });
 
-  ingredients.forEach((item) => {
+  ingredients.forEach((item, index) => {
     const expr = item.expression;
     if (!expr) return;
     const escaped = CSS.escape(expr);
@@ -65,6 +74,11 @@ export function syncCollectedSourceMarks(ingredients = []) {
       if (node.closest('.cauldron-ingredient, [data-spw-cauldron]')) return;
       node.dataset.spwCauldronCollected = 'true';
       node.dataset.spwPrimeState = 'collected';
+      /* Position in the gathering, not position on the page. field-physics.css
+         turns this into an animation-delay, so the twinkle travels through the
+         collection in the order it was gathered rather than firing at once —
+         the arc reads as one wave crossing the page instead of six blinks. */
+      node.style.setProperty('--spw-cluster-index', String(index));
     });
   });
 }
@@ -87,6 +101,18 @@ export function syncOperatorResonance(ingredients = []) {
     root.dataset.spwCauldronPhase = dominant;
   } else {
     delete root.dataset.spwCauldronPhase;
+  }
+
+  /* Capacity, fill, and brew go on the document element rather than the
+     cauldron host, so the rest of the page can respond to what the visitor is
+     carrying without knowing the cauldron exists. */
+  publishCauldronCapacity(ingredients.length);
+
+  const brew = computeCauldronBrew(ingredients);
+  if (brew === 'empty') {
+    delete root.dataset.spwCauldronBrew;
+  } else {
+    root.dataset.spwCauldronBrew = brew;
   }
 }
 

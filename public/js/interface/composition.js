@@ -33,8 +33,8 @@ import { guardCall } from '/public/js/kernel/dom-render.js';
 import {
   CAULDRON_CONTRACT,
   GARDEN_PRUNE_DAYS,
-  MAX_INGREDIENTS,
   applyCauldronState,
+  cauldronCapacity,
   computeCauldronPhase,
   computeIngredientPhase,
   countPrimeableSources,
@@ -739,7 +739,10 @@ function nourishIngredient(index) {
 
 function saveCauldron(cauldron, options = {}) {
   const { recordUndo = true } = options;
-  const trimmed = cauldron.slice(-MAX_INGREDIENTS);
+  /* Resolved per save rather than read once at import: capacity is a stat that
+     can be granted or reduced while the page is open, and the trim has to
+     honour the value in effect at the moment of the save. */
+  const trimmed = cauldron.slice(-cauldronCapacity());
   const serialized = JSON.stringify(trimmed);
   const existing = localStorage.getItem(CAULDRON_CONTRACT.storageKey);
 
@@ -1004,9 +1007,30 @@ function renderIngredientsList(ingredients) {
       lanes.gesture.push(`<span class="cauldron-ingredient-meta cauldron-gesture-trace" data-spw-gesture-trace title="Gesture chain that created this ingredient">${escapeHtml(ing.gestureHistory)}</span>`);
     }
 
-    if (ing.deepLink) {
-      const deepLinkLabel = ing.deepLinkLabel || (String(ing.deepLink).includes('#') ? 'hash anchor' : 'route anchor');
-      lanes.reach.push(`<span class="cauldron-ingredient-meta cauldron-deep-link" data-spw-deep-link="${escapeHtml(ing.deepLink)}">${escapeHtml(deepLinkLabel)}</span>`);
+    /* Where it came from, as somewhere you can go.
+       This was a <span> labelled "hash anchor" or "route anchor" — it named the
+       KIND of link it held rather than the place, so a gathering of six
+       fragments showed six identical chips and none of them travelled. The
+       provenance route is both the useful label and a real destination, so the
+       chip now says "/design/#slots" and goes there. Falls back to the raw
+       deepLink for any ingredient whose link cannot be normalized. */
+    if (ing.provenance) {
+      const { route, anchor, href } = ing.provenance;
+      const label = anchor ? `${route}#${anchor}` : route;
+      const shown = label.length > 42 ? `${label.slice(0, 41)}…` : label;
+      lanes.reach.push(
+        `<a class="cauldron-ingredient-meta cauldron-deep-link"`
+        + ` href="${escapeHtml(href)}"`
+        + ` data-spw-deep-link="${escapeHtml(href)}"`
+        + ` data-spw-source-route="${escapeHtml(route)}"`
+        + (anchor ? ` data-spw-source-anchor="${escapeHtml(anchor)}"` : '')
+        + ` data-spw-affordance="navigate"`
+        + ` title="Gathered from ${escapeHtml(label)} — open where this fragment came from">`
+        + `${escapeHtml(shown)}</a>`,
+      );
+    } else if (ing.deepLink) {
+      const deepLinkLabel = ing.deepLinkLabel || 'saved link';
+      lanes.reach.push(`<a class="cauldron-ingredient-meta cauldron-deep-link" href="${escapeHtml(ing.deepLink)}" data-spw-deep-link="${escapeHtml(ing.deepLink)}" data-spw-affordance="navigate">${escapeHtml(deepLinkLabel)}</a>`);
     }
     if (ing.type === 'numerical' && Array.isArray(ing.quantifiers) && ing.quantifiers.length) {
       const qList = ing.quantifiers.slice(0, 4).map(q => `<span class="cauldron-numericity-quantifier" data-spw-quantifier="${escapeHtml(q)}">${escapeHtml(q)}</span>`).join(' ');
@@ -1031,7 +1055,8 @@ function renderIngredientsList(ingredients) {
             data-spw-op="${escapeHtml(composeOpBundle(ing.semanticExpression || ing.expression))}"
             data-spw-semantic-expression="${escapeHtml(ing.semanticExpression || ing.expression)}"
             data-spw-ingredient-phase="${phase}"
-            data-spw-source-route="${escapeHtml(ing.origin || ing.context || '')}"
+            data-spw-source-route="${escapeHtml(ing.provenance?.route || '')}"
+            ${ing.provenance?.anchor ? `data-spw-source-anchor="${escapeHtml(ing.provenance.anchor)}"` : ''}
             data-spw-source-element="${escapeHtml(ing.sourceElement || ing.expression)}"
             ${ing.deepLink ? `data-spw-deep-link="${escapeHtml(ing.deepLink)}"` : ''}
             ${ing.deepLinkLabel ? `data-spw-deep-link-label="${escapeHtml(ing.deepLinkLabel)}"` : ''}

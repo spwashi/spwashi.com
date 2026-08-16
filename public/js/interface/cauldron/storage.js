@@ -171,6 +171,53 @@ export function ingredientNiche(ingredient) {
 
 
 /**
+ * A route key in the form public/data/site-search-index.json uses: leading and
+ * trailing slash, no query, no hash. Normalizing here is what lets a gathered
+ * fragment be looked up against the index at all — the two halves have to agree
+ * on what a route is called before they can be joined.
+ *
+ * @param {string} pathname
+ * @returns {string} '' when there is nothing usable to normalize
+ */
+export function normalizeRoute(pathname = '') {
+  const raw = String(pathname || '').split('#')[0].split('?')[0].trim();
+  if (!raw || !raw.startsWith('/')) return '';
+  return raw.endsWith('/') ? raw : `${raw}/`;
+}
+
+/**
+ * Where a fragment was gathered from.
+ *
+ * Capture already resolved a deep link, but it stored it as one opaque href.
+ * That is enough to follow and not enough to reason about: you cannot ask which
+ * routes a gathering spans, group ingredients by origin, or join against the
+ * search index with a string like "/design/?x=1#slots".
+ *
+ * Derived rather than captured, so it back-fills. Every ingredient saved before
+ * this existed still has its deepLink, so reading provenance out of that on load
+ * gives the whole existing cauldron provenance without a migration.
+ *
+ * Deliberately returns null when there is no deep link to read. The alternative
+ * — defaulting to the current location — would silently claim that a fragment
+ * gathered three routes ago came from whatever page you happen to be standing
+ * on now, which is worse than admitting the origin is unknown.
+ *
+ * @param {{deepLink?: string｜null}} ingredient
+ * @returns {{route: string, anchor: string, href: string}|null}
+ */
+export function deriveProvenance(ingredient) {
+  const href = ingredient?.deepLink ? String(ingredient.deepLink) : '';
+  if (!href) return null;
+
+  const hashIndex = href.indexOf('#');
+  const anchor = hashIndex >= 0 ? href.slice(hashIndex + 1) : '';
+  const route = normalizeRoute(hashIndex >= 0 ? href.slice(0, hashIndex) : href);
+  if (!route) return null;
+
+  return { route, anchor, href };
+}
+
+/**
  * Normalize any stored/captured item into an ingredient.
  * Mirror shape: SpwIngredient in types/spw.d.ts.
  */
@@ -233,6 +280,11 @@ export function normalizeIngredient(item) {
     biome: bio,
     ...project(carried),
   };
+
+  /* Derived after the spread for the same reason the registers are: provenance
+     is a reading of deepLink, not an independent fact, so a stored copy must not
+     be able to disagree with the link it came from. */
+  normalized.provenance = deriveProvenance(carried);
 
   if (isNumericalConcept(normalized.expression)) {
     normalized.type = 'numerical';

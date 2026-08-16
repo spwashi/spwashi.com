@@ -2,6 +2,80 @@ export const CAULDRON_KEY = 'spw-cauldron';
 export const MAX_INGREDIENTS = 6;
 export const GARDEN_PRUNE_DAYS = 30;
 
+/* Capacity is a stat, not a constant.
+ *
+ * MAX_INGREDIENTS stays the base value every visitor starts with, but the
+ * effective capacity is resolved at call time from `:root` so it can be raised
+ * or lowered as a designed consequence — earned by a gathering streak, granted
+ * by a route that wants to hold more, reduced by a surface that wants focus.
+ *
+ * Publishing it (rather than keeping it in module scope) is what makes it an
+ * ecology hook instead of a cauldron detail: once capacity and fill are on the
+ * document element, any stylesheet on any page can respond to how much the
+ * visitor is carrying without importing anything or knowing the cauldron
+ * exists. systems/field-physics.css reads the fill ratio as a salience axis.
+ */
+export const CAPACITY_MIN = 1;
+export const CAPACITY_MAX = 12;
+
+/**
+ * Effective capacity right now: the `:root` override when present and sane,
+ * otherwise the base. Clamped so a bad attribute cannot uncap the gathering.
+ * @returns {number}
+ */
+export function cauldronCapacity() {
+  if (typeof document === 'undefined') return MAX_INGREDIENTS;
+  const raw = document.documentElement?.dataset?.spwCauldronCapacity;
+  const parsed = Number.parseInt(raw ?? '', 10);
+  if (!Number.isFinite(parsed)) return MAX_INGREDIENTS;
+  return Math.min(CAPACITY_MAX, Math.max(CAPACITY_MIN, parsed));
+}
+
+/**
+ * Grant or revoke capacity. Passing null restores the base value.
+ * @param {number|null} next
+ * @returns {number} the capacity now in effect
+ */
+export function setCauldronCapacity(next) {
+  if (typeof document === 'undefined') return MAX_INGREDIENTS;
+  const root = document.documentElement;
+  if (next === null || next === undefined) {
+    delete root.dataset.spwCauldronCapacity;
+    return MAX_INGREDIENTS;
+  }
+  const clamped = Math.min(CAPACITY_MAX, Math.max(CAPACITY_MIN, Number(next) || MAX_INGREDIENTS));
+  root.dataset.spwCauldronCapacity = String(clamped);
+  return clamped;
+}
+
+/**
+ * Put capacity and fill on the document element so the rest of the page ecology
+ * can respond. `--spw-cauldron-load-ratio` is 0..1 and is the value stylesheets
+ * should read; the discrete `data-spw-cauldron-load` gives selectors something
+ * to match on without doing arithmetic.
+ *
+ * Named -load-ratio, not -fill, because `--spw-cauldron-fill` was already taken
+ * by shell/chrome/adaptive.css for the vessel's liquid level. That variable now
+ * derives from this one, so the two meanings stay distinct while the drawing
+ * finally tracks the real capacity instead of a hardcoded six-step ladder.
+ * @param {number} count how many ingredients are currently held
+ */
+export function publishCauldronCapacity(count = 0) {
+  if (typeof document === 'undefined') return;
+  const root = document.documentElement;
+  const capacity = cauldronCapacity();
+  const held = Math.max(0, Number(count) || 0);
+  const fill = capacity > 0 ? Math.min(1, held / capacity) : 0;
+
+  root.style.setProperty('--spw-cauldron-capacity', String(capacity));
+  root.style.setProperty('--spw-cauldron-load-ratio', fill.toFixed(3));
+
+  root.dataset.spwCauldronLoad = held === 0
+    ? 'empty'
+    : held >= capacity ? 'full'
+      : fill >= 0.5 ? 'heavy' : 'light';
+}
+
 export const CAULDRON_PHASES = Object.freeze(['empty', 'primed', 'mixing', 'spell-ready']);
 
 export const CAULDRON_CONTRACT = Object.freeze({
@@ -129,6 +203,46 @@ export function computeIngredientPhase(ing) {
   if (days > GARDEN_PRUNE_DAYS) return 'mature';
   if (ing.wonder || ing.operator) return 'resonant';
   return 'gathering';
+}
+
+/* The six thermodynamic phases an ingredient can hold, in the order
+   storage.js#inferPhaseState assigns them from an operator sigil. */
+export const PHASE_SPECTRUM = Object.freeze([
+  'ground', 'fluid', 'radiant', 'plastic', 'lattice', 'membrane',
+]);
+
+/**
+ * What the gathering has become, as opposed to how much of it there is.
+ *
+ * This is the reason to keep playing with a cauldron after the mechanics are
+ * understood. Count tells you the cauldron is working; brew tells you that
+ * WHAT you gathered mattered, which is a different and better feeling.
+ *
+ *   pure      every ingredient shares one phase. Deliberate, narrow, and
+ *             reachable early — the first hint that composition is legible.
+ *   spectrum  all six phases present at once. Base capacity is six and there
+ *             are six phases, so at the default this is an exact set: one of
+ *             each, nothing wasted. Raising capacity makes it reachable more
+ *             loosely, which is itself a reason to want more room.
+ *   mixed     anything else. Not a failure state — the ordinary case.
+ *
+ * Operators map to phases, so a spectrum is really a claim about having
+ * gathered across the whole operator grammar rather than circling one corner
+ * of it. That is the lesson the easter egg is teaching.
+ *
+ * @param {Array<{phase?: string, element?: string}>} ingredients
+ * @returns {'empty'|'pure'|'spectrum'|'mixed'}
+ */
+export function computeCauldronBrew(ingredients = []) {
+  const phases = ingredients
+    .map((item) => item?.phase || item?.element)
+    .filter(Boolean);
+  if (!phases.length) return 'empty';
+
+  const distinct = new Set(phases);
+  if (distinct.size === 1) return 'pure';
+  if (PHASE_SPECTRUM.every((phase) => distinct.has(phase))) return 'spectrum';
+  return 'mixed';
 }
 
 export function computeCauldronPhase(ingredients = []) {
