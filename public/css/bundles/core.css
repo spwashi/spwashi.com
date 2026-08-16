@@ -33435,6 +33435,11 @@ html[data-spw-high-contrast="on"] :where(.site-frame, .frame-card, .frame-panel)
   --theme-pack-preview-dark: linear-gradient(135deg, #141d24 0%, #2b4f69 100%);
 }
 
+:where([data-theme-pack-preview="banked-ember"]) {
+  --theme-pack-preview-light: linear-gradient(135deg, #e4ece7 0%, #b8d4c8 100%);
+  --theme-pack-preview-dark: linear-gradient(135deg, #1c2b2c 0%, #0d1617 100%);
+}
+
 :where(.context-readout) {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 8.5rem), 1fr));
