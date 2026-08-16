@@ -24,6 +24,28 @@
 - If the work improves the agent/editor operating environment itself, use `.agents/plans/agent-optimization/PLAN.md` as the tracking document and invoke `spw-plan-maintenance` for plan, skill, `.spw`, and public editor-surface wiring.
 - For repository-local questions, inspect local files, plans, and `.spw` surfaces before reaching for external web lookups. Use the network only when the user asks for external/current information, dependency installation/audit requires it, or local context cannot answer the question.
 
+## Open first
+
+AGENTS is the always-on gate. Open the matching plan or contract instead of inventing a parallel rule here.
+
+| If the task is… | Open first |
+|---|---|
+| commit / history wording | `.agents/plans/history-reflow/PLAN.md` plus one full recent commit body (`git log -1 --format=%B`) |
+| multi-route / shared layer | `.agents/plans/<slug>/` |
+| agent / editor environment | `.agents/plans/agent-optimization/PLAN.md` and `spw-plan-maintenance` |
+| PWA / service worker | `.agents/plans/pwa-experience/` plus `npm run check:pwa` |
+| skill wrappers vs workbench | `.agents/README.md` |
+
+## Commits
+
+When proposing or writing a commit message:
+
+- Sample a **full recent body**, not just subjects.
+- Subject shape: `symbol[scope] short claim`.
+- Close with **one** `#[episode]{}` that contains `~[scene]{}`, `![change]{}`, and `*[verify]{}`.
+- Full grammar and rebase recipe live in `.agents/plans/history-reflow/PLAN.md`. Do not copy that plan into this file.
+- `npm run check:local` does **not** validate commit grammar.
+
 ## Current Semantic Rails
 
 Use these rails before broad creative, semantic, CSS, JS, or marketing work:
@@ -59,6 +81,8 @@ Default decision rule:
 - For **site runtime** feature packs (`data-spw-features`) or multi-audit work, run `npm run ecology`. Thoroughness: `.spw/audits/index.spw`. Loop: `.spw/conventions/recursive-improvement.spw`.
 - For **Spw language** features (operators, braces, claims, v04 pillars), run `npm run ecology:language`. Entry: `.spw/language/feature-utilization.spw`. Loop: `.spw/language/recursive-improvement.spw`. Do not conflate language operators with the runtime pack token `operators`.
 - For ordinary HTML/CSS/JS/`.spw` work that does not touch dependencies, prefer `npm run check:local`; it runs the local build, CSS/runtime/site contracts, generated-output checks, and `git diff --check` without the network-backed npm audit.
+- When touching `sw.js`, `manifest.webmanifest`, offline routes, or PWA runtime, also run `npm run check:pwa`.
+- When proposing or writing a commit message, read one recent full body and include a closing `#[episode]{}`. Local check scripts do not catch a missing episode.
 - Run `npm run audit` (or `npm run check`, which includes it) before landing changes that touch dependencies: `devDependencies`, `dependencies`, `package-lock.json`, install tooling, or any package resolution surface. A script-only `package.json` edit may use `check:local` plus targeted review unless the dependency graph changes.
 - Agents must not introduce new npm packages (via `npm install`, `npx`, etc.) without an accompanying plan note under `.agents/plans/` (or `agent-optimization/`) and human review. Prefer `npm ci --ignore-scripts` for any temporary installs.
 - Use targeted `rg` checks for anchors, asset paths, and semantic data attributes.
@@ -85,7 +109,8 @@ As of 2026-04, the site publishes through a local build step rather than serving
 | `npm run catalog` | Regenerates the in-tree design catalog at `design/catalog/` (gitignored). |
 | `npm run manifest` | Regenerates the route runtime manifest. |
 | `npm run sitemap` | Generates `dist/sitemap.xml` from tracked route canonicals. |
-| `npm run check:local` | Default offline/local validation for non-dependency patches: type/build steps, CSS/runtime/site contracts, generated checks, and diff hygiene without `npm audit`. |
+| `npm run check:local` | Default offline/local validation for non-dependency patches: type/build steps, CSS/runtime/site contracts, generated checks, and diff hygiene without `npm audit`. Does not validate commit grammar. |
+| `npm run check:pwa` | Service-worker, manifest, offline, and PWA runtime contracts. |
 | `npm run check:runtime` | Validates JS runtime architecture contracts: module definition shape, import ownership, generated typed outputs, and root entrypoint boundaries. |
 | `npm run check` | Full validation for dependency-sensitive or pre-landing sweeps. Includes `npm run audit --audit-level=moderate`, so expect a registry/network call. |
 
