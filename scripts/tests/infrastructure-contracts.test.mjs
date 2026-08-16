@@ -85,20 +85,61 @@ test('composite build pipelines compile each TypeScript project once', async () 
   const packageJson = JSON.parse(await readFile(path.join(ROOT, 'package.json'), 'utf8'));
   const scripts = packageJson.scripts;
 
-  assert.equal(
-    scripts['build:compile'],
-    'npm run typecheck:root && npm run build:tools && npm run build:runtime',
-  );
+  // build:compile and check:local are single orchestrator processes rather than
+  // `npm run` chains, so the contract is asserted against the orchestrators.
+  assert.equal(scripts['build:compile'], 'node scripts/build-compile.mjs');
+  assert.equal(scripts['build:compile:serial'], 'node scripts/build-compile.mjs --serial');
+  assert.equal(scripts['check:local'], 'node scripts/check-local.mjs');
+  assert.equal(scripts['check:local:serial'], 'node scripts/check-local.mjs --serial');
   assert.equal(
     scripts.build,
     'npm run build:compile && node scripts/css-build.mjs && node scripts/build.mjs',
   );
   assert.equal(scripts.check, 'npm run audit && npm run check:local');
-  assert.ok(scripts['check:local'].startsWith('npm run build:compile && node scripts/css-build.mjs'));
-  assert.ok(scripts['check:local'].includes('npm run check:pwa:run'));
   assert.equal(scripts['check:pwa'], 'npm run build:tools && npm run check:pwa:run');
   assert.ok(scripts.typecheck.includes('tsconfig.scripts.json --noEmit'));
   assert.ok(scripts.typecheck.includes('tsconfig.runtime.json --noEmit'));
+
+  // Each TypeScript project is compiled exactly once per compile wave.
+  const compileSource = await readFile(path.join(ROOT, 'scripts/build-compile.mjs'), 'utf8');
+  for (const project of ['--noEmit', 'tsconfig.scripts.json', 'tsconfig.runtime.json']) {
+    assert.equal(
+      compileSource.split(project).length - 1,
+      1,
+      `build-compile.mjs should reference ${project} exactly once`,
+    );
+  }
+  assert.ok(compileSource.includes('fix-typed-imports'));
+
+  // check:local still covers every validator the former npm-run chain ran.
+  const checkLocalSource = await readFile(path.join(ROOT, 'scripts/check-local.mjs'), 'utf8');
+  for (const validator of [
+    'scripts/css-build.mjs',
+    'scripts/check-site.mjs',
+    'scripts/pwa-contracts.mjs',
+    'scripts/check-generated.mjs',
+    'scripts/component-contracts.mjs',
+    'scripts/check-observation-locality.mjs',
+  ]) {
+    assert.ok(checkLocalSource.includes(validator), `check-local.mjs should run ${validator}`);
+  }
+  assert.ok(checkLocalSource.includes('runCompile'), 'check-local.mjs should run the compile wave');
+});
+
+test('check:local module tests match the test:modules script', async () => {
+  const packageJson = JSON.parse(await readFile(path.join(ROOT, 'package.json'), 'utf8'));
+  const checkLocalSource = await readFile(path.join(ROOT, 'scripts/check-local.mjs'), 'utf8');
+
+  // The orchestrator inlines the module test list; keep it identical to
+  // `test:modules:run` so both entry points cover the same suites.
+  const scriptSuites = [...packageJson.scripts['test:modules:run'].matchAll(/scripts\/tests\/[\w.-]+\.test\.mjs/g)]
+    .map((match) => match[0])
+    .sort();
+  const orchestratorSuites = [...checkLocalSource.matchAll(/scripts\/tests\/[\w.-]+\.test\.mjs/g)]
+    .map((match) => match[0])
+    .sort();
+
+  assert.deepEqual(orchestratorSuites, scriptSuites);
 });
 
 test('mounted workbench CLI scripts keep consumer-relative doctor/roots paths', async () => {

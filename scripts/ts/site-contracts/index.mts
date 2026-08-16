@@ -52,7 +52,11 @@ export const ROOT_DIR = path.resolve(__dirname, '..', '..', '..');
 export const ROUTE_MANIFEST_OUTPUT = process.env.SPW_ROUTE_MANIFEST_OUTPUT
   || path.join(ROOT_DIR, '.agents/state/runtime/route-runtime-manifest.json');
 
-const DEFAULT_SYNTAX_CHECK_CONCURRENCY = Math.min(8, Math.max(1, availableParallelism()));
+const DEFAULT_SYNTAX_CHECK_CONCURRENCY = Math.max(2, Math.min(8, availableParallelism()));
+
+const SYNTAX_CHECK_BATCH_SCRIPT = path.join(ROOT_DIR, 'scripts', 'lib', 'syntax-check-batch.mjs');
+/** Files per batch process; ~350 targets over 6 shards keeps each shard well under a second. */
+const SYNTAX_CHECK_BATCH_SIZE = 64;
 
 const RUNTIME_FRAGMENT_TARGETS = new Map([
   [
@@ -493,16 +497,61 @@ async function collectSyntaxCheckTargets(): Promise<string[]> {
   return targets.sort();
 }
 
-export async function runSyntaxChecks() {
-  const targets = await collectSyntaxCheckTargets();
-  const requestedConcurrency = Number.parseInt(process.env.SPW_SYNTAX_CHECK_CONCURRENCY || '', 10);
-  const concurrency = Number.isFinite(requestedConcurrency) && requestedConcurrency > 0
-    ? Math.min(requestedConcurrency, Math.max(1, targets.length))
-    : Math.min(DEFAULT_SYNTAX_CHECK_CONCURRENCY, Math.max(1, targets.length));
-  const results: Array<{ file: string; output: string } | null> = new Array(targets.length).fill(null);
-  let nextIndex = 0;
+type SyntaxFailure = { file: string; output: string };
 
-  const checkTarget = (absolutePath: string) => new Promise<{ file: string; output: string } | null>((resolve) => {
+/**
+ * Parse one shard of targets in a single child process. Resolves `null` when the
+ * batch runner itself could not run (missing script, unsupported flag, crash),
+ * which tells the caller to fall back to per-file `node --check` spawns.
+ */
+function runSyntaxCheckBatch(shard: string[]): Promise<SyntaxFailure[] | null> {
+  return new Promise((resolve) => {
+    const child = spawn(
+      process.execPath,
+      ['--experimental-vm-modules', '--no-warnings', SYNTAX_CHECK_BATCH_SCRIPT],
+      { cwd: ROOT_DIR, stdio: ['pipe', 'pipe', 'pipe'] },
+    );
+    let stdout = '';
+    let stderr = '';
+    let settled = false;
+    child.stdout.setEncoding('utf8');
+    child.stderr.setEncoding('utf8');
+    child.stdout.on('data', (chunk) => { stdout += chunk; });
+    child.stderr.on('data', (chunk) => { stderr += chunk; });
+
+    const finish = (result: SyntaxFailure[] | null) => {
+      if (settled) return;
+      settled = true;
+      resolve(result);
+    };
+
+    child.once('error', () => finish(null));
+    child.once('close', (status) => {
+      if (status !== 0) {
+        console.log(`[check] syntax batch runner unavailable (exit ${status}); falling back to node --check`);
+        if (stderr.trim()) console.log(`  syntax-batch: ${normalizeSpace(stderr)}`);
+        finish(null);
+        return;
+      }
+      try {
+        const parsed = JSON.parse(stdout) as { failures: SyntaxFailure[] };
+        finish(parsed.failures.map((failure) => ({
+          file: relativeRepoPath(failure.file),
+          output: normalizeSpace(failure.output),
+        })));
+      } catch {
+        console.log('[check] syntax batch runner returned unreadable output; falling back to node --check');
+        finish(null);
+      }
+    });
+
+    child.stdin.end(shard.join('\0'));
+  });
+}
+
+/** Canonical single-file `node --check`, used as the fallback path and to render failure detail. */
+function checkSyntaxTargetBySpawn(absolutePath: string): Promise<SyntaxFailure | null> {
+  return new Promise((resolve) => {
     const child = spawn(process.execPath, ['--check', absolutePath], {
       cwd: ROOT_DIR,
       stdio: ['ignore', 'pipe', 'pipe'],
@@ -531,19 +580,62 @@ export async function runSyntaxChecks() {
     child.once('error', (error) => finish(null, error));
     child.once('close', (status) => finish(status));
   });
+}
+
+/** Shard targets across processes so a large tree still spreads over cores. */
+function shardSyntaxTargets(targets: string[], maxShards: number): string[][] {
+  const shardCount = Math.max(1, Math.min(maxShards, Math.ceil(targets.length / SYNTAX_CHECK_BATCH_SIZE)));
+  const shards: string[][] = Array.from({ length: shardCount }, () => []);
+  targets.forEach((target, index) => shards[index % shardCount].push(target));
+  return shards;
+}
+
+export async function runSyntaxChecks() {
+  const targets = await collectSyntaxCheckTargets();
+  const requestedConcurrency = Number.parseInt(process.env.SPW_SYNTAX_CHECK_CONCURRENCY || '', 10);
+  const concurrency = Number.isFinite(requestedConcurrency) && requestedConcurrency > 0
+    ? Math.min(requestedConcurrency, Math.max(1, targets.length))
+    : Math.min(DEFAULT_SYNTAX_CHECK_CONCURRENCY, Math.max(1, targets.length));
+
+  // Batch mode parses in-process with the same V8 parsers `node --check` uses,
+  // trading ~350 process spawns for a handful. `SPW_SYNTAX_CHECK_MODE=spawn`
+  // restores per-file spawns.
+  if (targets.length && process.env.SPW_SYNTAX_CHECK_MODE !== 'spawn') {
+    const shards = shardSyntaxTargets(targets, concurrency);
+    const batched = await Promise.all(shards.map((shard) => runSyntaxCheckBatch(shard)));
+    if (batched.every((result) => result !== null)) {
+      // The batch parser knows *which* files fail but not where — V8 attaches no
+      // position to a module parse error. Re-check just those files through
+      // `node --check` so reported detail (line, caret, snippet) is unchanged.
+      const flagged = batched.flat() as SyntaxFailure[];
+      const detailed = await Promise.all(flagged.map(async (failure) => {
+        const absolutePath = path.join(ROOT_DIR, failure.file);
+        return (await checkSyntaxTargetBySpawn(absolutePath)) ?? failure;
+      }));
+      return {
+        concurrency: shards.length,
+        mode: 'batch' as const,
+        failures: detailed,
+        targets: targets.map(relativeRepoPath),
+      };
+    }
+  }
+
+  const results: Array<SyntaxFailure | null> = new Array(targets.length).fill(null);
+  let nextIndex = 0;
 
   const worker = async () => {
     while (nextIndex < targets.length) {
       const index = nextIndex;
       nextIndex += 1;
-      results[index] = await checkTarget(targets[index]);
+      results[index] = await checkSyntaxTargetBySpawn(targets[index]);
     }
   };
 
   await Promise.all(Array.from({ length: concurrency }, () => worker()));
-  const failures = results.filter((result): result is { file: string; output: string } => Boolean(result));
+  const failures = results.filter((result): result is SyntaxFailure => Boolean(result));
 
-  return { concurrency, failures, targets: targets.map(relativeRepoPath) };
+  return { concurrency, mode: 'spawn' as const, failures, targets: targets.map(relativeRepoPath) };
 }
 
 export function runGitDiffCheck() {

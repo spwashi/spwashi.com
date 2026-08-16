@@ -2,6 +2,8 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "declaration": false,
+    "incremental": true,
+    "tsBuildInfoFile": ".tmp/tsc/runtime.tsbuildinfo",
     "noEmit": false,
     "outDir": "public/js/typed",
     "rootDir": "public/ts",

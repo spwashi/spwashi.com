@@ -21,7 +21,7 @@ export async function main() {
     const gitDiffResult = runGitDiffCheck();
     console.log(`[check] manifest=in-memory cache=${manifestCache.status}`);
     console.log(`[check] routes=${manifest.routeCount} svgRoutes=${manifest.maps.svgRoutes.length} specRoutes=${manifest.maps.specRoutes.length}`);
-    console.log(`[check] syntax targets=${syntaxReport.targets.length} concurrency=${syntaxReport.concurrency}`);
+    console.log(`[check] syntax targets=${syntaxReport.targets.length} mode=${syntaxReport.mode} concurrency=${syntaxReport.concurrency}`);
     console.log(`[check] css files=${cssReport.cssFiles.length} imports=${cssReport.imports.length} routeStylesheets=${cssReport.linkedStylesheets.length} sources=${cssReport.sourceFiles.length}`);
     console.log(`[check] runtime modules=${runtimeReport.modules.length} ownerDirs=${runtimeReport.ownerDirectories.length} rootEntrypoints=${runtimeReport.rootEntrypoints.length} typedOutputs=${runtimeReport.typedOutputs.length} kernelShims=${runtimeReport.kernelTypedShims.length}`);
     console.log(`[check] json feeds=${jsonReport.checked} jsonErrors=${jsonReport.errors.length}`);
