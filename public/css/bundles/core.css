@@ -4149,14 +4149,44 @@ figure.generic-figure,
    7. Responsive
    ========================================================================== */
 
-@media (max-width: 61.25rem) {
-  .page-columns,
-  .columns-2,
-  .columns-3 {
-    grid-template-columns: 1fr;
+/* Large Desktop & Ultra-wide (≥90rem / 1440px and ≥120rem / 1920px) */
+@media (min-width: 90rem) {
+  :root {
+    --page-gutter-inline: clamp(1.25rem, 3vw, 2.5rem);
+    --page-stack-gap-loose: clamp(1.8rem, 2.8vw, 2.8rem);
   }
 }
 
+@media (min-width: 120rem) {
+  :root {
+    --page-gutter-inline: clamp(2rem, 4.5vw, 4.5rem);
+    --page-stack-gap-loose: clamp(2.2rem, 3.5vw, 3.6rem);
+    --shell-wall-width: 14px;
+  }
+  :where(body[data-spw-layout="wide"], main[data-spw-layout="wide"]) {
+    --spw-shell-frame-cap: 96rem;
+  }
+  :where(body[data-spw-layout="atlas"], main[data-spw-layout="atlas"]) {
+    --spw-shell-frame-cap: 116rem;
+  }
+}
+
+/* Tablet & Intermediate Desktop (45rem to 64rem / 720px to 1024px) */
+@media (min-width: 45rem) and (max-width: 64rem) {
+  .page-columns,
+  .columns-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(0.75rem, 1.8vw, 1.25rem);
+  }
+}
+
+@media (max-width: 64rem) {
+  .columns-3 {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  }
+}
+
+/* Mobile (<45rem / 720px) */
 @media (max-width: 45rem) {
   :root {
     /* Slightly tighter block start so header → first section feels continuous. */
@@ -4165,6 +4195,14 @@ figure.generic-figure,
       2.4vw,
       calc(var(--spw-rhythm-unit, 1rem) * 1.45)
     );
+    --page-gutter-inline: clamp(0.65rem, 2.5vw, 1rem);
+  }
+
+  .page-columns,
+  .columns-2,
+  .columns-3 {
+    grid-template-columns: 1fr;
+    gap: clamp(0.65rem, 2vw, 1rem);
   }
 
   .page-intro,
@@ -4174,9 +4212,19 @@ figure.generic-figure,
     /* Stay on the shared hero pad token — do not invent a second gutter. */
     padding-inline: var(--shell-hero-pad-inline);
   }
+
+  /* Universal mobile horizontal overflow & measure containment */
+  :where(table, pre, code, .code-block, .spec-table, .matrix-table, .math-block, .formula-card, .spw-expression-grid) {
+    max-inline-size: 100%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
 }
 
-@media (max-width: 600px) {
+/* Small mobile (≤37.5rem / 600px) */
+@media (max-width: 37.5rem) {
   :where(
     .page-panel,
     .generic-panel,
@@ -4195,6 +4243,7 @@ figure.generic-figure,
   }
 }
 
+/* Compact mobile (≤30rem / 480px) */
 @media (max-width: 30rem) {
   .index-sigil,
   .row-sigil,
@@ -4207,6 +4256,22 @@ figure.generic-figure,
   .index-row,
   .page-row {
     grid-template-columns: 1fr;
+  }
+}
+
+/* Ultra-compact mobile (≤22.5rem / 360px) */
+@media (max-width: 22.5rem) {
+  :root {
+    --page-gutter-inline: 0.5rem;
+    --spw-component-pad: 0.62rem;
+  }
+
+  .operator-chip,
+  .spec-pill,
+  .meta-chip,
+  .info-chip {
+    font-size: 0.65rem;
+    padding-inline: 0.35rem;
   }
 }
 
@@ -17354,7 +17419,15 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
   word-break: break-word;
 }
 
-/* Container query responses for cards when rendered inside narrow card containers */
+/* Container query responses for cards across wide, standard, narrow, and micro containers */
+@container spw-card (min-width: 36rem) {
+  :where(.spw-card, .frame-card, .frame-panel, .media-card, .software-card, .operator-card, .plan-card, .ref-card) {
+    --card-rhythm: 0.82rem;
+    --card-internal-gap: 0.65rem;
+    padding: clamp(1rem, 2.5cqi, 1.4rem);
+  }
+}
+
 @container spw-card (max-width: 24rem) {
   :where(.spw-card, .frame-card, .frame-panel, .media-card, .software-card, .operator-card, .plan-card, .ref-card) {
     --card-rhythm: 0.5rem;
@@ -17371,6 +17444,17 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
     --card-rhythm: 0.38rem;
     --card-internal-gap: 0.28rem;
     padding: 0.45rem;
+  }
+}
+
+@container spw-card (max-width: 14rem) {
+  :where(.spw-card, .frame-card, .frame-panel, .media-card, .software-card, .operator-card, .plan-card, .ref-card) {
+    --card-rhythm: 0.28rem;
+    --card-internal-gap: 0.2rem;
+    padding: 0.35rem;
+  }
+  :where(.spw-card, .frame-card, .frame-panel) :is(h2, h3, h4) {
+    font-size: 0.85rem;
   }
 }
 }

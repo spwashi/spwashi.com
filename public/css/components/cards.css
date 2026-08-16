@@ -1165,7 +1165,15 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
   word-break: break-word;
 }
 
-/* Container query responses for cards when rendered inside narrow card containers */
+/* Container query responses for cards across wide, standard, narrow, and micro containers */
+@container spw-card (min-width: 36rem) {
+  :where(.spw-card, .frame-card, .frame-panel, .media-card, .software-card, .operator-card, .plan-card, .ref-card) {
+    --card-rhythm: 0.82rem;
+    --card-internal-gap: 0.65rem;
+    padding: clamp(1rem, 2.5cqi, 1.4rem);
+  }
+}
+
 @container spw-card (max-width: 24rem) {
   :where(.spw-card, .frame-card, .frame-panel, .media-card, .software-card, .operator-card, .plan-card, .ref-card) {
     --card-rhythm: 0.5rem;
@@ -1182,5 +1190,16 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
     --card-rhythm: 0.38rem;
     --card-internal-gap: 0.28rem;
     padding: 0.45rem;
+  }
+}
+
+@container spw-card (max-width: 14rem) {
+  :where(.spw-card, .frame-card, .frame-panel, .media-card, .software-card, .operator-card, .plan-card, .ref-card) {
+    --card-rhythm: 0.28rem;
+    --card-internal-gap: 0.2rem;
+    padding: 0.35rem;
+  }
+  :where(.spw-card, .frame-card, .frame-panel) :is(h2, h3, h4) {
+    font-size: 0.85rem;
   }
 }
