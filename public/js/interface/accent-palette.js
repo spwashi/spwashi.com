@@ -3,6 +3,7 @@ import {
     getPaletteResonanceTokens
 } from '/public/js/interface/palette-resonance.js';
 import { bus } from '/public/js/kernel/bus.js';
+import { semanticToken } from '/public/js/kernel/text-normalization.js';
 
 /**
  * Spw Accent Palette
@@ -33,13 +34,11 @@ const KNOWN_ROUTE_TOKENS = new Set(['topics', 'about', 'play', 'blog', 'settings
 export const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 
 export const normalizeAccentToken = (value = '') => (
-    String(value)
-        .trim()
-        .toLowerCase()
-        .replace(/^#+>?/, '')
-        .replace(/^[@?!~.^]+/, '')
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/^-+|-+$/g, '')
+    semanticToken(
+        String(value)
+            .replace(/^#+>?/, '')
+            .replace(/^[@?!~.^]+/, '')
+    )
 );
 
 export const parseAccentNumber = (value, fallback, min = -Infinity, max = Infinity) => {
