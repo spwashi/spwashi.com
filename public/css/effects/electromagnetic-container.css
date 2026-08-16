@@ -248,3 +248,79 @@
         opacity: 0.28;
     }
 }
+
+/* ==========================================================================
+   8. Regional Electrostatic Cascades & Intent Attenuation
+   ========================================================================== */
+
+/* Active Intent Responsiveness by Regional Liminality & Climate */
+:where([data-spw-liminality="entry"], [data-spw-region="hero"]) {
+    --active-intent-energy: 1.15;
+    --op-field-attenuation: 1;
+}
+
+:where([data-spw-liminality="threshold"]) {
+    --active-intent-energy: 1.30;
+    --op-field-attenuation: 1.15;
+}
+
+:where([data-spw-liminality="settled"]) {
+    --active-intent-energy: 0.82;
+    --op-field-attenuation: 0.65;
+}
+
+:where([data-spw-climate="ludic"]) {
+    --active-op-color: var(--op-object-color, #c68a22);
+    --conception-color: var(--op-binding-color, #a85822);
+}
+
+:where([data-spw-climate="scholarly"]) {
+    --active-op-color: var(--op-ref-color, #1d57a3);
+    --conception-color: var(--op-probe-color, #6a3fb8);
+}
+
+:where([data-spw-climate="rigorous"]) {
+    --active-op-color: var(--teal, #008080);
+    --conception-color: var(--op-frame-color, #178282);
+}
+
+:where([data-spw-climate="meditative"]) {
+    --active-op-color: var(--op-topic-color, #2a8c76);
+    --conception-color: var(--op-baseline-color, #607373);
+}
+
+/* Regional Electrostatic Cascades Across Sibling Regions */
+@supports selector(:has(*)) {
+    :where(main, body):has([data-spw-region]:is(:hover, :focus-within))
+        :where([data-spw-region]:not(:hover):not(:focus-within)) {
+        --regional-electrostatic-charge: 0.42;
+        --spw-regional-lighting-bias: 0.72;
+        --op-field-attenuation: 0.58;
+        filter: saturate(0.92);
+        transition: filter var(--duration-base, 220ms) ease, opacity var(--duration-base, 220ms) ease;
+    }
+
+    :where([data-spw-region]:is(:hover, :focus-within)) {
+        --regional-electrostatic-charge: 1;
+        --spw-regional-lighting-bias: 1.25;
+        --op-field-attenuation: 1.12;
+    }
+}
+
+/* Cauldron Content Amplification Cascade */
+:where(html:has([data-spw-cauldron][data-cauldron-count]:not([data-cauldron-count="0"])),
+       html[data-spw-cauldron-state="primed"],
+       html[data-spw-cauldron-state="mixing"]) :where([data-container-type], .spw-frame, .frame-card) {
+    --cauldron-field-charge: 1;
+    --charge-wash: color-mix(in srgb, var(--delight-color, #008080) 10%, transparent);
+}
+
+/* Floating Chrome & Session Accumulation State */
+:where(html:has(.spw-state-inspector__panel:not([hidden]))) :where([data-container-type], .site-frame) {
+    --charge-accent: var(--op-frame-color, #008080);
+    outline-color: color-mix(in srgb, var(--active-op-color, #008080) 22%, transparent);
+}
+
+:where(html:not([data-spw-deviation-count="0"])) {
+    --session-accumulation-resonance: 1.15;
+}
