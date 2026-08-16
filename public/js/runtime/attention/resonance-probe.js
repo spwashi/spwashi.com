@@ -14,12 +14,16 @@ export function initResonanceProbe(root) {
   let lastProbeLogKey = '';
   const HOVER_DELAY = 260;
 
-  function readResonanceKey(target) {
-    return (
-      target?.getAttribute?.(RESONANCE_KEY_ATTR)
-      || target?.getAttribute?.('data-spw-operator')
+  function readResonanceState(target) {
+    if (!target) return { key: '', concept: '', ingredient: '' };
+    const key = (
+      target.getAttribute(RESONANCE_KEY_ATTR)
+      || target.getAttribute('data-spw-operator')
       || ''
     );
+    const concept = target.getAttribute('data-spw-concept') || '';
+    const ingredient = target.getAttribute('data-spw-ingredient') || '';
+    return { key, concept, ingredient };
   }
 
   let rafId = 0;
@@ -30,23 +34,41 @@ export function initResonanceProbe(root) {
   }
 
   function apply() {
-    const key = probeFocus || probeHover;
-    const nextLogKey = key || 'cleared';
+    const state = probeFocus || probeHover || { key: '', concept: '', ingredient: '' };
+    const key = state.key;
+    const concept = state.concept;
+    const ingredient = state.ingredient;
+    const nextLogKey = (key || concept || ingredient) ? `${key}:${concept}:${ingredient}` : 'cleared';
     const shouldLog = nextLogKey !== lastProbeLogKey;
     lastProbeLogKey = nextLogKey;
+
     if (key) {
       html.setAttribute(PROBE_ATTR, key);
-      if (shouldLog) logger.debug('resonance probe set', { resonanceKey: key }, SPW_LOG_RELATIONSHIPS.GESTURE);
     } else {
       html.removeAttribute(PROBE_ATTR);
-      if (shouldLog) logger.debug('resonance probe cleared', {}, SPW_LOG_RELATIONSHIPS.GESTURE);
+    }
+
+    if (concept) {
+      html.setAttribute('data-spw-resonance-concept', concept);
+    } else {
+      html.removeAttribute('data-spw-resonance-concept');
+    }
+
+    if (ingredient) {
+      html.setAttribute('data-spw-resonance-ingredient', ingredient);
+    } else {
+      html.removeAttribute('data-spw-resonance-ingredient');
+    }
+
+    if (shouldLog) {
+      logger.debug(key || concept || ingredient ? 'resonance probe set' : 'resonance probe cleared', { key, concept, ingredient }, SPW_LOG_RELATIONSHIPS.GESTURE);
     }
   }
 
   function onFocusIn(event) {
     const target = event.target.closest?.(PROBE_TARGET_SELECTOR);
     if (!target) return;
-    probeFocus = readResonanceKey(target);
+    probeFocus = readResonanceState(target);
     scheduleApply();
   }
 
@@ -64,7 +86,7 @@ export function initResonanceProbe(root) {
     if (target.contains(event.relatedTarget)) return;
     clearTimeout(hoverTimer);
     hoverTimer = window.setTimeout(() => {
-      probeHover = readResonanceKey(target);
+      probeHover = readResonanceState(target);
       scheduleApply();
     }, HOVER_DELAY);
   }
@@ -91,6 +113,8 @@ export function initResonanceProbe(root) {
     root.removeEventListener('mouseover', onMouseEnter);
     root.removeEventListener('mouseout', onMouseLeave);
     html.removeAttribute(PROBE_ATTR);
+    html.removeAttribute('data-spw-resonance-concept');
+    html.removeAttribute('data-spw-resonance-ingredient');
   };
 }
 

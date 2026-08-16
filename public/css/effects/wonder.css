@@ -1208,6 +1208,17 @@ html[data-spw-resonance-probe="surface"] :where(a, button, .operator-chip, .fram
       color-mix(in srgb, var(--surface-strong, #fff) 92%, transparent)
     );
 }
+
+/* Concept & Ingredient Resonance Probes */
+html[data-spw-resonance-concept] :where([data-spw-concept]):not(:hover):not(:focus-visible) {
+  --spw-resonance: 0.75;
+  border-bottom-color: color-mix(in srgb, var(--op-topic-color, #2e9f7f) 64%, transparent);
+}
+
+html[data-spw-resonance-ingredient] :where([data-spw-ingredient]):not(:hover):not(:focus-visible) {
+  --spw-resonance: 0.75;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) 34%, transparent);
+}
 /* ==========================================================================
    Transferable Spw Interactive Momentum & Genomic Resonance
    --------------------------------------------------------------------------

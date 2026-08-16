@@ -30,7 +30,7 @@ export const OPERATOR_SECTION_SELECTOR = [
 ].join(', ');
 export const PROBE_ATTR = 'data-spw-resonance-probe';
 export const RESONANCE_KEY_ATTR = 'data-spw-resonance-key';
-export const PROBE_TARGET_SELECTOR = '[data-spw-resonance-key], [data-spw-operator]';
+export const PROBE_TARGET_SELECTOR = '[data-spw-resonance-key], [data-spw-operator], [data-spw-concept], [data-spw-ingredient]';
 export const HANDLE_STATE_ATTR = 'data-spw-handle-state';
 export const HANDLE_LABEL_ATTR = 'data-spw-section-handle-label';
 export const HANDLE_OP_ATTR = 'data-spw-section-handle-op';

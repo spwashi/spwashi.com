@@ -119,6 +119,8 @@ function syncHandleContent(parts, info, activeIndex, sectionCount) {
     currentLink,
     prevButton,
     nextButton,
+    cauldronNode,
+    cauldronCount,
   } = parts;
 
   if (opNode) opNode.textContent = info.token || '#>';
@@ -131,6 +133,15 @@ function syncHandleContent(parts, info, activeIndex, sectionCount) {
       ? `Spw geometry: ${info.syntaxDescription}`
       : '';
     currentForm.hidden = !info.syntaxWake;
+  }
+  if (cauldronNode instanceof HTMLElement) {
+    if (info.ingredientsCount > 0) {
+      cauldronNode.hidden = false;
+      if (cauldronCount) cauldronCount.textContent = String(info.ingredientsCount);
+      cauldronNode.title = `${info.ingredientsCount} gatherable concept(s): ${info.ingredientNames}`;
+    } else {
+      cauldronNode.hidden = true;
+    }
   }
   if (progressNode) {
     progressNode.textContent = `${activeIndex + 1} / ${sectionCount}`;
@@ -290,12 +301,24 @@ function describeSection(section, index = 0, sections = []) {
   const syntax = expression ? describeSpwExpression(expression, { maxRootLength: 16 }) : null;
   const prevLabel = index > 0 ? getSectionLabel(sections[index - 1], index - 1) : '';
   const nextLabel = index < sections.length - 1 ? getSectionLabel(sections[index + 1], index + 1) : '';
+  const consequence = section.getAttribute('data-spw-consequence') || section.getAttribute('data-spw-role') || '';
+  const operator = section.getAttribute('data-spw-operator') || '';
+  const wonder = section.getAttribute('data-spw-wonder') || '';
+  const ingredients = section.querySelectorAll('[data-spw-ingredient], [data-spw-concept], [data-spw-living-term]');
+  const ingredientsCount = ingredients.length;
+  const ingredientNames = [...new Set(Array.from(ingredients).map((el) => el.getAttribute('data-spw-concept') || el.getAttribute('data-spw-ingredient') || el.textContent.trim()))].filter(Boolean).slice(0, 3).join(', ');
+
   return {
     id,
     token,
     label,
     prevLabel,
     nextLabel,
+    consequence,
+    operator,
+    wonder,
+    ingredientsCount,
+    ingredientNames,
     syntaxWake: syntax?.wake || '',
     syntaxDescription: syntax?.description || '',
   };
@@ -398,6 +421,10 @@ function createHandleShell(origin) {
       <span class="spw-section-handle-current-copy">
         <span class="spw-section-handle-current-label">section</span>
         <span class="spw-section-handle-current-form" aria-hidden="true" hidden></span>
+        <span class="spw-section-handle-cauldron" aria-label="Section ingredients" hidden>
+          <span class="spw-section-handle-cauldron-sigil" aria-hidden="true">⌁</span>
+          <span class="spw-section-handle-cauldron-count">0</span>
+        </span>
         <span class="spw-section-handle-progress">1 / 1</span>
       </span>
     </a>
@@ -435,6 +462,8 @@ function getSectionHandleRefs(handle, shell) {
     currentToken: shell.querySelector('.spw-section-handle-current-token'),
     currentLabel: shell.querySelector('.spw-section-handle-current-label'),
     currentForm: shell.querySelector('.spw-section-handle-current-form'),
+    cauldronNode: shell.querySelector('.spw-section-handle-cauldron'),
+    cauldronCount: shell.querySelector('.spw-section-handle-cauldron-count'),
     progressNode: shell.querySelector('.spw-section-handle-progress'),
     toggleButton: shell.querySelector('[data-spw-handle-target="toggle"]'),
     topButton: shell.querySelector('[data-spw-handle-target="top"]'),
@@ -502,6 +531,19 @@ function syncSectionHandleAttributes(handle, shell, info, activeIndex, sectionCo
     [HANDLE_OP_ATTR]: info.token || '',
     [HANDLE_AVAILABILITY_ATTR]: snapshot.availability.join(' '),
   });
+
+  if (info.consequence) {
+    handle.setAttribute('data-spw-consequence', info.consequence);
+    shell.setAttribute('data-spw-consequence', info.consequence);
+  } else {
+    handle.removeAttribute('data-spw-consequence');
+    shell.removeAttribute('data-spw-consequence');
+  }
+
+  if (info.operator) {
+    handle.setAttribute('data-spw-operator', info.operator);
+    shell.setAttribute('data-spw-operator', info.operator);
+  }
 
   shell.dataset.spwHandleCurrent = info.id;
   shell.dataset.spwHandleIndex = String(activeIndex + 1);
