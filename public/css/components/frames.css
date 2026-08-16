@@ -294,12 +294,13 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, .site-frame) {
   min-block-size: 1.5rem;
 }
 
-[data-spw-slot="header"] { order: -2; }
-[data-spw-slot="meta"] { margin-left: auto; order: -1; }
-[data-spw-slot="body"] { order: 0; flex: 1 1 auto; }
-[data-spw-slot="figure"] { order: 1; }
-[data-spw-slot="actions"] { order: 2; }
-[data-spw-slot="footer"] { order: 3; }
+:where(.site-frame) > [data-spw-slot="header"] { order: -2; }
+:where(.site-frame) > [data-spw-slot="meta"] { order: -1; }
+:where(.site-frame) > [data-spw-slot="body"] { order: 0; }
+:where(.site-frame) > [data-spw-slot="figure"] { order: 1; }
+:where(.site-frame) > [data-spw-slot="actions"] { order: 2; }
+:where(.site-frame) > [data-spw-slot="footer"] { order: 3; }
+:where(.frame-topline, .frame-heading, [data-spw-slot="header"]) > [data-spw-slot="meta"] { margin-left: auto; }
 
 /* Slot interaction */
 :where(.site-frame[data-spw-active="true"]) [data-spw-slot="header"] {

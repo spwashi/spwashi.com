@@ -16225,7 +16225,7 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
 }
 
 /* 4-Slot Anatomy: header -> media -> body -> actions */
-:where(.spw-card__header, .frame-card-header, [data-spw-slot="header"]) {
+:where(.spw-card__header, .frame-card-header, header[data-spw-slot="header"], div[data-spw-slot="header"]) {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -16241,7 +16241,7 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
   border-radius: var(--component-radius-sm, 6px);
 }
 
-:where(.spw-card__body, .frame-card-body, [data-spw-slot="body"]) {
+:where(.spw-card__body, .frame-card-body, div[data-spw-slot="body"], section[data-spw-slot="body"]) {
   min-inline-size: 0;
   inline-size: 100%;
   display: grid;
@@ -18489,9 +18489,9 @@ html[data-spw-cauldron-candidate-visibility="prominent"] [data-spw-region="cauld
 
 :where(.spw-route-bridge__links a) {
   display: grid;
-  grid-template-columns: minmax(0, max-content) minmax(0, 1fr);
-  align-items: start;
-  gap: 0.2rem;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: start;
+  gap: 0.32rem;
   box-sizing: border-box;
   min-width: 0;
   max-width: 100%;
@@ -19299,12 +19299,13 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, .site-frame) {
   min-block-size: 1.5rem;
 }
 
-[data-spw-slot="header"] { order: -2; }
-[data-spw-slot="meta"] { margin-left: auto; order: -1; }
-[data-spw-slot="body"] { order: 0; flex: 1 1 auto; }
-[data-spw-slot="figure"] { order: 1; }
-[data-spw-slot="actions"] { order: 2; }
-[data-spw-slot="footer"] { order: 3; }
+:where(.site-frame) > [data-spw-slot="header"] { order: -2; }
+:where(.site-frame) > [data-spw-slot="meta"] { order: -1; }
+:where(.site-frame) > [data-spw-slot="body"] { order: 0; }
+:where(.site-frame) > [data-spw-slot="figure"] { order: 1; }
+:where(.site-frame) > [data-spw-slot="actions"] { order: 2; }
+:where(.site-frame) > [data-spw-slot="footer"] { order: 3; }
+:where(.frame-topline, .frame-heading, [data-spw-slot="header"]) > [data-spw-slot="meta"] { margin-left: auto; }
 
 /* Slot interaction */
 :where(.site-frame[data-spw-active="true"]) [data-spw-slot="header"] {
