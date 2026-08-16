@@ -2133,19 +2133,24 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
     opacity var(--grammar-duration-fast) var(--grammar-ease-mechanical);
 }
 
+:where(.spw-delimiter--brace) {
+  color: color-mix(in srgb, var(--op-frame-color, var(--teal)) 70%, var(--ink, #111) 30%);
+  --spw-operator-color: var(--op-frame-color, var(--teal));
+}
+
 :where(.spw-delimiter--paren) {
-  color: var(--teal-soft);
-  --spw-operator-color: var(--teal);
+  color: color-mix(in srgb, var(--op-ref-color, #2b6cb0) 70%, var(--ink, #111) 30%);
+  --spw-operator-color: var(--op-ref-color, #2b6cb0);
 }
 
 :where(.spw-delimiter--square) {
-  color: var(--pink-soft);
-  --spw-operator-color: var(--pink);
+  color: color-mix(in srgb, var(--op-object-color, #b7791f) 70%, var(--ink, #111) 30%);
+  --spw-operator-color: var(--op-object-color, #b7791f);
 }
 
 :where(.spw-delimiter--angle) {
-  color: var(--amber-soft);
-  --spw-operator-color: var(--amber);
+  color: color-mix(in srgb, var(--op-topic-color, #2e7d32) 70%, var(--ink, #111) 30%);
+  --spw-operator-color: var(--op-topic-color, #2e7d32);
 }
 
 :where(.spw-delimiter:hover, [data-spw-gesture="charging"].spw-delimiter) {

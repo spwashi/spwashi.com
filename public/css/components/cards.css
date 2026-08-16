@@ -123,6 +123,34 @@
   inline-size: 100%;
 }
 
+:where(.spw-card__footer, .frame-card-footer, [data-spw-slot="footer"]) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xs, 0.35rem);
+  min-inline-size: 0;
+  inline-size: 100%;
+  padding-block-start: 0.3rem;
+  border-block-start: 1px dashed color-mix(in srgb, var(--line, rgba(0, 0, 0, 0.12)) 80%, transparent);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: var(--text-size-2xs, 0.72rem);
+  color: var(--ink-muted, rgba(14, 18, 20, 0.58));
+}
+
+/* Embedded Spw expressions inside cards */
+:where(.spw-card, .frame-card) :where([data-spw-semantic-expression], .spw-embedded-expression) {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.12rem;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.82em;
+  color: color-mix(in srgb, var(--ink, rgba(14, 18, 20, 0.92)) 82%, var(--active-op-color, var(--teal)) 18%);
+  background: color-mix(in srgb, var(--surface-soft, rgba(0, 0, 0, 0.04)) 88%, var(--active-op-color, var(--teal)) 12%);
+  border-radius: 4px;
+  padding: 0.08rem 0.34rem;
+  border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal)) 24%, var(--line, rgba(0, 0, 0, 0.1)));
+}
+
 /* Explicit defaults for consistent layout/wrapping/alignment across cards and panels */
 :where(.spw-card, .frame-card, .frame-panel, .math-lens-card, .topic-reference-card, .spw-principle-card) {
   --card-internal-gap: 0.45rem;
@@ -130,6 +158,41 @@
   gap: var(--card-internal-gap);
   align-content: start;
   text-align: start;
+}
+
+/* ==========================================================================
+   Spw Dialect Extensions
+   ========================================================================== */
+
+/* Canonical Dialect: explicit operator sigils, rigid monospaced alignment, high structure */
+:where([data-spw-dialect="canonical"] .spw-card, .spw-card[data-spw-dialect="canonical"]) {
+  font-feature-settings: "tnum" 1;
+  border-inline-start-width: 2.5px;
+  border-inline-start-color: var(--active-op-color, var(--component-accent, var(--teal)));
+}
+
+/* Inline Dialect: natural typographic flow with soft dotted reference seams */
+:where([data-spw-dialect="inline"] .spw-card, .spw-card[data-spw-dialect="inline"]) {
+  border-radius: var(--component-radius-md, 8px);
+}
+
+/* Systems Dialect: technical matrix contrast, dark-mode code wash, tabular bounds */
+:where([data-spw-dialect="systems"] .spw-card, .spw-card[data-spw-dialect="systems"]) {
+  background: color-mix(in srgb, var(--surface-strong, #fff) 96%, var(--op-frame-color, var(--teal)) 4%);
+  border-color: color-mix(in srgb, var(--line, rgba(0, 0, 0, 0.15)) 75%, var(--op-frame-color, var(--teal)) 25%);
+}
+
+/* Ludic Dialect: spring physics, playful responsive lift, chromatic highlights */
+:where([data-spw-dialect="ludic"] .spw-card, .spw-card[data-spw-dialect="ludic"]) {
+  transition:
+    transform 160ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 160ms ease,
+    border-color 140ms ease;
+}
+
+:where([data-spw-dialect="ludic"] .spw-card:hover, .spw-card[data-spw-dialect="ludic"]:hover) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px color-mix(in srgb, var(--component-accent, var(--teal)) 15%, transparent);
 }
 
 /* ==========================================================================
