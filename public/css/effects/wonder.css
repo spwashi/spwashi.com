@@ -422,22 +422,93 @@ html[data-spw-interaction-wonder="architecture"] {
 
 @supports selector(:has(*)) {
   :where(main, body):has(:where([data-spw-operator="wonder"], [data-spw-operator="probe"]):is(:hover, :focus-visible))
-    :where(main [data-spw-feature], main [data-spw-accent-concept], main [data-spw-visual-cues]) {
+    :where(main [data-spw-feature], main [data-spw-accent-concept], main [data-spw-visual-cues], [data-spw-operator="probe"], [data-spw-operator="wonder"]) {
     --spw-reward-color: var(--spw-curiosity-color);
     --spw-resonance: 0.42;
   }
 
-  :where(main, body):has(:where([data-spw-operator="ref"], [data-spw-operator="route"], [data-spw-operator="stream"]):is(:hover, :focus-visible))
-    :where(main [data-spw-related-routes], main [data-spw-route-link], main [data-spw-feature]) {
+  :where(main, body):has(:where([data-spw-operator="ref"], [data-spw-operator="potential"], [data-spw-operator="route"], [data-spw-operator="stream"]):is(:hover, :focus-visible))
+    :where(main [data-spw-related-routes], main [data-spw-route-link], main [data-spw-feature], [data-spw-operator="ref"], [data-spw-operator="potential"]) {
     --spw-reward-color: var(--spw-relationship-color);
     --spw-resonance: 0.4;
   }
 
-  :where(main, body):has(:where([data-spw-operator="frame"], [data-spw-operator="address"], [data-spw-operator="object"]):is(:hover, :focus-visible))
-    :where(main [data-spw-region-role], main [data-spw-component-kind], main [data-spw-kind]) {
+  :where(main, body):has(:where([data-spw-operator="frame"], [data-spw-operator="address"], [data-spw-operator="object"], [data-spw-operator="integration"]):is(:hover, :focus-visible))
+    :where(main [data-spw-region-role], main [data-spw-component-kind], main [data-spw-kind], [data-spw-operator="frame"], [data-spw-operator="integration"]) {
     --spw-reward-color: var(--spw-architecture-color);
     --spw-resonance: 0.38;
   }
+
+  :where(main, body):has(:where([data-spw-operator="perspective"], [data-spw-operator="action"], [data-spw-operator="commit"]):is(:hover, :focus-visible))
+    :where([data-spw-operator="perspective"], [data-spw-operator="action"], [data-spw-operator="commit"]) {
+    --spw-resonance: 0.45;
+  }
+
+  :where(main, body):has(:where([data-spw-operator="concept"], [data-spw-operator="concept-edge"], [data-spw-operator="topic"]):is(:hover, :focus-visible))
+    :where([data-spw-operator="concept"], [data-spw-operator="concept-edge"], [data-spw-operator="topic"]) {
+    --spw-resonance: 0.36;
+  }
+}
+
+/* ==========================================================================
+   4.1 Resonance Depth Microinteractions
+   --------------------------------------------------------------------------
+   Fine-grained physical presence, elevation, and tactile response across
+   operator families.
+   ========================================================================== */
+
+:where(.operator-chip, [data-spw-operator]):is([data-spw-operator="probe"], [data-spw-operator="wonder"]):is(:hover, :focus-visible) {
+  transform: translateY(-1.5px);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--op-probe-color) 38%, transparent),
+    var(--op-probe-glow);
+}
+
+:where(.operator-chip, [data-spw-operator]):is([data-spw-operator="integration"], [data-spw-operator="object"]):is(:hover, :focus-visible) {
+  transform: translateY(-1.5px) scale(1.015);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--op-object-color) 38%, transparent),
+    var(--op-object-glow);
+}
+
+:where(.operator-chip, [data-spw-operator]):is([data-spw-operator="potential"], [data-spw-operator="ref"]):is(:hover, :focus-visible) {
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--op-ref-color) 38%, transparent),
+    var(--op-ref-glow);
+}
+
+:where(.operator-chip, [data-spw-operator]):is([data-spw-operator="perspective"], [data-spw-operator="action"], [data-spw-operator="commit"]):is(:hover, :focus-visible) {
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--op-action-color) 42%, transparent),
+    var(--op-action-glow);
+}
+
+:where(.operator-chip, [data-spw-operator]):is([data-spw-operator="concept"], [data-spw-operator="concept-edge"], [data-spw-operator="topic"]):is(:hover, :focus-visible) {
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--op-topic-color) 38%, transparent),
+    var(--op-topic-glow);
+}
+
+:where(.operator-chip, [data-spw-operator]):is([data-spw-operator="substrate"], [data-spw-operator="meta"]):is(:hover, :focus-visible) {
+  transform: translateY(-0.5px);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--op-substrate-color) 34%, transparent),
+    var(--op-substrate-glow);
+}
+
+:where(.operator-chip, [data-spw-operator]):is([data-spw-operator="ground"], [data-spw-operator="baseline"]):is(:hover, :focus-visible) {
+  transform: translateY(0);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--op-baseline-color) 30%, transparent),
+    var(--op-baseline-glow);
+}
+
+:where(.operator-chip, [data-spw-operator]):active {
+  transform: scale(0.975);
+  transition-duration: var(--duration-instant, 60ms);
 }
 
 /* ==========================================================================

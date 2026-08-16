@@ -1216,139 +1216,195 @@
   --boon-glow: var(--objective-brace-wash);
   --bane-glow: var(--subjective-brace-wash);
 
+  /* ------------------------------------------------------------------------
+     6.1 Resonance Family (Address, Field & Vibration: #>, #:, #)
+     ------------------------------------------------------------------------ */
   --op-frame-color: hsl(180 74% 28%);
   --op-frame-border: color-mix(in srgb, var(--op-frame-color) 32%, transparent);
   --op-frame-bg-soft: color-mix(in srgb, var(--op-frame-color) 7%, transparent);
+  --op-frame-glow: 0 0 12px color-mix(in srgb, var(--op-frame-color) 22%, transparent);
 
-  --op-topic-color: hsl(168 62% 30%);
-  --op-topic-border: hsla(168, 62%, 30%, 0.24);
-  --op-topic-bg-soft: rgba(228, 248, 246, 0.72);
+  --op-layer-color: var(--ink-soft, rgba(14, 18, 20, 0.68));
+  --op-layer-border: rgba(14, 18, 20, 0.14);
+  --op-layer-bg-soft: rgba(255, 255, 255, 0.5);
+  --op-layer-glow: 0 0 8px color-mix(in srgb, var(--ink-soft) 16%, transparent);
 
-  --op-object-color: hsl(36 82% 38%);
-  --op-object-border: hsla(36, 82%, 38%, 0.22);
-  --op-object-bg-soft: rgba(255, 248, 235, 0.72);
+  --op-vibration-color: var(--op-frame-color);
+  --op-vibration-border: var(--op-frame-border);
+  --op-vibration-bg-soft: var(--op-frame-bg-soft);
+  --op-vibration-glow: var(--op-frame-glow);
+
+  /* ------------------------------------------------------------------------
+     6.2 Inquiry & Possibility Family (Wonder & Potential: ?, ~)
+     ------------------------------------------------------------------------ */
+  --op-probe-color: hsl(268 54% 44%);
+  --op-probe-border: hsla(268, 54%, 44%, 0.2);
+  --op-probe-bg-soft: rgba(245, 238, 255, 0.72);
+  --op-probe-glow: 0 0 14px color-mix(in srgb, var(--op-probe-color) 26%, transparent);
+  --op-probe-color-balanced: color-mix(in srgb, var(--pigment-violet-ink) calc(100% * var(--pigment-context-boost, 1)), var(--op-probe-color));
+
+  --op-wonder-color: var(--op-probe-color);
+  --op-wonder-border: var(--op-probe-border);
+  --op-wonder-bg-soft: var(--op-probe-bg-soft);
+  --op-wonder-glow: var(--op-probe-glow);
 
   --op-ref-color: hsl(214 66% 40%);
   --op-ref-border: hsla(214, 66%, 40%, 0.2);
   --op-ref-bg-soft: rgba(235, 244, 255, 0.72);
+  --op-ref-glow: 0 0 12px color-mix(in srgb, var(--op-ref-color) 24%, transparent);
 
-  --op-probe-color: hsl(268 54% 44%);
-  --op-probe-border: hsla(268, 54%, 44%, 0.2);
-  --op-probe-bg-soft: rgba(245, 238, 255, 0.72);
-  /* Balanced for lighting + motif composability (e.g., curriculum or lab motifs under ritual-vellum or electric-studio).
-     Uses pigment context for evolutionary semantic readability across conditions. */
-  --op-probe-color-balanced: color-mix(in srgb, var(--pigment-violet-ink) calc(100% * var(--pigment-context-boost, 1)), var(--op-probe-color));
+  --op-potential-color: var(--op-ref-color);
+  --op-potential-border: var(--op-ref-border);
+  --op-potential-bg-soft: var(--op-ref-bg-soft);
+  --op-potential-glow: var(--op-ref-glow);
 
-  --op-action-color: hsl(176 74% 24%);
-  --op-action-border: hsla(176, 74%, 24%, 0.35);
-  --op-action-bg-soft: rgba(230, 248, 248, 0.72);
+  /* ------------------------------------------------------------------------
+     6.3 Relational & Integration Family (Synthesis, Blend & Constraint: ^, &, =)
+     ------------------------------------------------------------------------ */
+  --op-object-color: hsl(36 82% 38%);
+  --op-object-border: hsla(36, 82%, 38%, 0.22);
+  --op-object-bg-soft: rgba(255, 248, 235, 0.72);
+  --op-object-glow: 0 0 12px color-mix(in srgb, var(--op-object-color) 24%, transparent);
 
-  --op-layer-color: var(--ink-soft);
-  --op-layer-border: rgba(14, 18, 20, 0.14);
-  --op-layer-bg-soft: rgba(255, 255, 255, 0.5);
-
-  --op-baseline-color: hsl(42 18% 30%);
-  --op-baseline-border: rgba(14, 18, 20, 0.16);
-  --op-baseline-bg-soft: rgba(255, 255, 255, 0.58);
-
-  --op-pragma-color: hsl(0 34% 38%);
-  --op-pragma-border: hsla(0, 34%, 38%, 0.18);
-  --op-pragma-bg-soft: rgba(255, 240, 240, 0.65);
-
-  --op-stream-color: hsl(160 44% 32%);
-  --op-stream-border: hsla(160, 44%, 32%, 0.22);
-  --op-stream-bg-soft: rgba(231, 249, 242, 0.68);
+  --op-integration-color: var(--op-object-color);
+  --op-integration-border: var(--op-object-border);
+  --op-integration-bg-soft: var(--op-object-bg-soft);
+  --op-integration-glow: var(--op-object-glow);
 
   --op-merge-color: hsl(188 42% 34%);
   --op-merge-border: hsla(188, 42%, 34%, 0.22);
   --op-merge-bg-soft: rgba(232, 247, 250, 0.68);
+  --op-merge-glow: 0 0 10px color-mix(in srgb, var(--op-merge-color) 20%, transparent);
+
+  --op-subject-color: var(--op-merge-color);
+  --op-subject-border: var(--op-merge-border);
+  --op-subject-bg-soft: var(--op-merge-bg-soft);
+  --op-subject-glow: var(--op-merge-glow);
 
   --op-binding-color: hsl(24 48% 34%);
   --op-binding-border: hsla(24, 48%, 34%, 0.22);
   --op-binding-bg-soft: rgba(255, 242, 232, 0.68);
+  --op-binding-glow: 0 0 10px color-mix(in srgb, var(--op-binding-color) 20%, transparent);
 
+  /* ------------------------------------------------------------------------
+     6.4 Perspective & Operative Family (Viewpoint & Kinetic Commit: @, !)
+     ------------------------------------------------------------------------ */
+  --op-action-color: hsl(176 74% 24%);
+  --op-action-border: hsla(176, 74%, 24%, 0.35);
+  --op-action-bg-soft: rgba(230, 248, 248, 0.72);
+  --op-action-glow: 0 0 12px color-mix(in srgb, var(--op-action-color) 25%, transparent);
+
+  --op-perspective-color: var(--op-action-color);
+  --op-perspective-border: var(--op-action-border);
+  --op-perspective-bg-soft: var(--op-action-bg-soft);
+  --op-perspective-glow: var(--op-action-glow);
+
+  --op-commit-color: var(--op-action-color);
+  --op-commit-border: var(--op-action-border);
+  --op-commit-bg-soft: var(--op-action-bg-soft);
+  --op-commit-glow: var(--op-action-glow);
+
+  /* ------------------------------------------------------------------------
+     6.5 Conceptual & Morphic Family (Boundaries, Lenses & Staging: <, >, (, [, {)
+     ------------------------------------------------------------------------ */
+  --op-topic-color: hsl(168 62% 30%);
+  --op-topic-border: hsla(168, 62%, 30%, 0.24);
+  --op-topic-bg-soft: rgba(228, 248, 246, 0.72);
+  --op-topic-glow: 0 0 10px color-mix(in srgb, var(--op-topic-color) 22%, transparent);
+
+  --op-concept-color: var(--op-topic-color);
+  --op-concept-border: var(--op-topic-border);
+  --op-concept-bg-soft: var(--op-topic-bg-soft);
+  --op-concept-glow: var(--op-topic-glow);
+
+  --op-surface-color: hsl(180 52% 30%);
+  --op-surface-border: hsla(180, 52%, 30%, 0.24);
+  --op-surface-bg-soft: rgba(230, 248, 248, 0.6);
+  --op-surface-glow: 0 0 10px color-mix(in srgb, var(--op-surface-color) 20%, transparent);
+
+  --op-concept-edge-color: var(--op-surface-color);
+  --op-concept-edge-border: var(--op-surface-border);
+  --op-concept-edge-bg-soft: var(--op-surface-bg-soft);
+  --op-concept-edge-glow: var(--op-surface-glow);
+
+  --op-scene-color: var(--op-surface-color);
+  --op-scene-border: var(--op-surface-border);
+  --op-scene-bg-soft: var(--op-surface-bg-soft);
+  --op-scene-glow: var(--op-surface-glow);
+
+  --op-mode-color: var(--op-probe-color);
+  --op-mode-border: var(--op-probe-border);
+  --op-mode-bg-soft: var(--op-probe-bg-soft);
+  --op-mode-glow: var(--op-probe-glow);
+
+  --op-direction-color: var(--op-frame-color);
+  --op-direction-border: var(--op-frame-border);
+  --op-direction-bg-soft: var(--op-frame-bg-soft);
+  --op-direction-glow: var(--op-frame-glow);
+
+  /* ------------------------------------------------------------------------
+     6.6 Substrate, Flow & Grounding Family (Support, Measure & Base: $, *, ., %, pragma)
+     ------------------------------------------------------------------------ */
   --op-meta-color: hsl(220 34% 36%);
   --op-meta-border: hsla(220, 34%, 36%, 0.2);
   --op-meta-bg-soft: rgba(236, 241, 255, 0.68);
+  --op-meta-glow: 0 0 10px color-mix(in srgb, var(--op-meta-color) 20%, transparent);
 
-  /* Recommended semantic accent for surfaces that want a primary accent
-     without creating yet another local token. Falls back to the active
-     operator color but can be tuned per surface via data attributes or
-     the ornament field model.
+  --op-substrate-color: var(--op-meta-color);
+  --op-substrate-border: var(--op-meta-border);
+  --op-substrate-bg-soft: var(--op-meta-bg-soft);
+  --op-substrate-glow: var(--op-meta-glow);
 
-     Reference logic: semantic → active operator → hard teal fallback.
-     This three-layer fallback is intentional for maximum resilience. */
-  --semantic-accent: var(--active-op-color, var(--teal));
+  --op-stream-color: hsl(160 44% 32%);
+  --op-stream-border: hsla(160, 44%, 32%, 0.22);
+  --op-stream-bg-soft: rgba(231, 249, 242, 0.68);
+  --op-stream-glow: 0 0 10px color-mix(in srgb, var(--op-stream-color) 22%, transparent);
 
-  /* Secondary semantic accent — provides a clear second level of visual
-     weight within the same semantic system. Useful for contrast within
-     cards, sections, or when a surface needs two related but distinct
-     accent voices. */
-  --semantic-accent-secondary: var(--op-topic-color, color-mix(in srgb, var(--semantic-accent) 75%, var(--ink-soft)));
+  --op-value-color: var(--op-stream-color);
+  --op-value-border: var(--op-stream-border);
+  --op-value-bg-soft: var(--op-stream-bg-soft);
+  --op-value-glow: var(--op-stream-glow);
 
-  /* Subtle semantic accent — low-salience version for borders, faint
-     highlights, or background accents. Helps maintain visual hierarchy
-     without competing with the primary semantic accent. */
-  --semantic-accent-subtle: color-mix(in srgb, var(--semantic-accent) 18%, var(--line, transparent));
+  --op-baseline-color: hsl(42 18% 30%);
+  --op-baseline-border: rgba(14, 18, 20, 0.16);
+  --op-baseline-bg-soft: rgba(255, 255, 255, 0.58);
+  --op-baseline-glow: 0 0 8px color-mix(in srgb, var(--op-baseline-color) 16%, transparent);
 
-  /* Emphasis semantic accent — higher salience version for drawing
-     attention within a semantic context (e.g., active states, key
-     calls to action, or highlighted content). */
-  --semantic-accent-emphasis: var(--op-action-color, color-mix(in srgb, var(--semantic-accent) 85%, var(--ink-strong)));
-
-  /* Surface-aware semantic accents (utility for clear contrast on matte)
-     These allow accents that remain legible on the "clear opaque" matte
-     surfaces without local re-mixing. Material and route layers can fall
-     back to these. */
-  --semantic-accent-on-matte: color-mix(in srgb, var(--semantic-accent) 92%, var(--ink-on-matte) 8%);
-  --semantic-accent-on-matte-strong: color-mix(in srgb, var(--semantic-accent) 82%, var(--ink-on-matte-strong) 18%);
+  --op-ground-color: var(--op-baseline-color);
+  --op-ground-border: var(--op-baseline-border);
+  --op-ground-bg-soft: var(--op-baseline-bg-soft);
+  --op-ground-glow: var(--op-baseline-glow);
 
   --op-normalize-color: hsl(95 28% 34%);
   --op-normalize-border: hsla(95, 28%, 34%, 0.2);
   --op-normalize-bg-soft: rgba(239, 248, 230, 0.68);
 
-  --op-surface-color: hsl(180 52% 30%);
-  --op-surface-border: hsla(180, 52%, 30%, 0.24);
-  --op-surface-bg-soft: rgba(230, 248, 248, 0.6);
+  --op-pragma-color: hsl(0 34% 38%);
+  --op-pragma-border: hsla(0, 34%, 38%, 0.18);
+  --op-pragma-bg-soft: rgba(255, 240, 240, 0.65);
 
-  /* Canonical Spw sigil aliases. Older component names remain as CSS
-     compatibility handles while public semantics use the learnable map. */
-  --op-potential-color: var(--op-ref-color);
-  --op-potential-border: var(--op-ref-border);
-  --op-potential-bg-soft: var(--op-ref-bg-soft);
-  --op-vibration-color: var(--op-frame-color);
-  --op-vibration-border: var(--op-frame-border);
-  --op-vibration-bg-soft: var(--op-frame-bg-soft);
-  --op-ground-color: var(--op-baseline-color);
-  --op-ground-border: var(--op-baseline-border);
-  --op-ground-bg-soft: var(--op-baseline-bg-soft);
-  --op-wonder-color: var(--op-probe-color);
-  --op-wonder-border: var(--op-probe-border);
-  --op-wonder-bg-soft: var(--op-probe-bg-soft);
-  --op-value-color: var(--op-stream-color);
-  --op-value-border: var(--op-stream-border);
-  --op-value-bg-soft: var(--op-stream-bg-soft);
-  --op-subject-color: var(--op-merge-color);
-  --op-subject-border: var(--op-merge-border);
-  --op-subject-bg-soft: var(--op-merge-bg-soft);
-  --op-perspective-color: var(--op-action-color);
-  --op-perspective-border: var(--op-action-border);
-  --op-perspective-bg-soft: var(--op-action-bg-soft);
-  --op-integration-color: var(--op-object-color);
-  --op-integration-border: var(--op-object-border);
-  --op-integration-bg-soft: var(--op-object-bg-soft);
-  --op-concept-color: var(--op-topic-color);
-  --op-concept-border: var(--op-topic-border);
-  --op-concept-bg-soft: var(--op-topic-bg-soft);
-  --op-scene-color: var(--op-surface-color);
-  --op-scene-border: var(--op-surface-border);
-  --op-scene-bg-soft: var(--op-surface-bg-soft);
-  --op-mode-color: var(--op-probe-color);
-  --op-mode-border: var(--op-probe-border);
-  --op-mode-bg-soft: var(--op-probe-bg-soft);
-  --op-direction-color: var(--op-frame-color);
-  --op-direction-border: var(--op-frame-border);
-  --op-direction-bg-soft: var(--op-frame-bg-soft);
+  /* ------------------------------------------------------------------------
+     6.7 Semantic Accent Layer
+     ------------------------------------------------------------------------ */
+  /* Recommended semantic accent for surfaces that want a primary accent
+     without creating yet another local token. Falls back to the active
+     operator color but can be tuned per surface via data attributes or
+     the ornament field model. */
+  --semantic-accent: var(--active-op-color, var(--teal));
+
+  /* Secondary semantic accent — provides a clear second level of visual
+     weight within the same semantic system. */
+  --semantic-accent-secondary: var(--op-topic-color, color-mix(in srgb, var(--semantic-accent) 75%, var(--ink-soft)));
+
+  /* Subtle semantic accent — low-salience version for borders, faint highlights. */
+  --semantic-accent-subtle: color-mix(in srgb, var(--semantic-accent) 18%, var(--line, transparent));
+
+  /* Emphasis semantic accent — higher salience version for drawing attention. */
+  --semantic-accent-emphasis: var(--op-action-color, color-mix(in srgb, var(--semantic-accent) 85%, var(--ink-strong)));
+
+  /* Surface-aware semantic accents (utility for clear contrast on matte) */
+  --semantic-accent-on-matte: color-mix(in srgb, var(--semantic-accent) 92%, var(--ink-on-matte) 8%);
+  --semantic-accent-on-matte-strong: color-mix(in srgb, var(--semantic-accent) 82%, var(--ink-on-matte-strong) 18%);
 }
 
 
