@@ -63,16 +63,26 @@
 }
 
 :where(.media-focus-card, .media-card, .topic-reference-card) {
+  /* Layout & Containment */
   position: relative;
+  min-width: 0;
   min-height: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  /* Box Model & Sizing */
   padding: var(--spw-shell-card-pad);
+
+  /* Typography */
+  color: inherit;
+
+  /* Visual Surfaces & Borders */
+  background: var(--spw-shell-panel-bg);
   border: 1px solid var(--spw-shell-line);
   border-radius: var(--shape-surface, 10px);
-  background: var(--spw-shell-panel-bg);
-  color: inherit;
-  box-sizing: border-box;
   box-shadow: var(--spw-shell-card-shadow);
-  overflow: hidden;
+
+  /* Transitions */
   transition: var(--spw-shell-card-transition);
 }
 

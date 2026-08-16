@@ -32,31 +32,45 @@
   --component-arrival-opacity: 1;
   --component-surface-lift: 0px;
 
+  /* Layout & Display */
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   align-content: start;
+  align-items: start;
   gap: var(--component-gap-tight);
+  contain: paint style;
+
+  /* Box Model & Sizing */
   min-width: 0;
   min-height: 100%;
   padding: var(--component-pad);
+  overflow: clip;
+
+  /* Typography */
   color: var(--ink, currentColor);
+
+  /* Visual Surfaces & Borders */
   background: color-mix(in srgb, var(--component-surface-strong) 94%, var(--component-route-accent) 6%);
   border: var(--component-border);
   border-radius: var(--component-radius-tight);
   box-shadow: var(--component-shadow);
   opacity: var(--component-arrival-opacity);
+
+  /* Effects & Transforms */
   transform: translateY(calc(
     var(--component-arrival-offset)
     + var(--spw-component-arrival-bias, 0px)
     - var(--component-surface-lift, 0px)
   ));
-  overflow: clip;
-  contain: paint style;
-  transition: background var(--component-transition-deliberate),
-  border-color var(--component-transition-base),
-  box-shadow var(--component-transition-deliberate),
-  color var(--component-transition-fast),
-  opacity var(--component-transition-fast),
-  transform var(--component-transition-arrival);
+
+  /* Transitions */
+  transition:
+    background var(--component-transition-deliberate),
+    border-color var(--component-transition-base),
+    box-shadow var(--component-transition-deliberate),
+    color var(--component-transition-fast),
+    opacity var(--component-transition-fast),
+    transform var(--component-transition-arrival);
 }
 
 :where(

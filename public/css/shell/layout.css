@@ -1229,9 +1229,9 @@ figure.generic-figure,
     .index-row,
     .page-row
   ) {
-    transition: none !important;
-    animation: none !important;
-    transform: none !important;
+    transition: none;
+    animation: none;
+    transform: none;
   }
 }
 

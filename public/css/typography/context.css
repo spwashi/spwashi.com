@@ -112,11 +112,11 @@
 
 @media (prefers-reduced-motion: reduce) {
   :where([data-spw-rhythm='pulse'] [data-spw-operator]) {
-    animation: none !important;
-    opacity: 1 !important;
+    animation: none;
+    opacity: 1;
   }
   
   :where([data-spw-rhythm='chorus'] [data-spw-operator]) {
-    transition-delay: 0ms !important;
+    transition-delay: 0ms;
   }
 }

@@ -4298,9 +4298,9 @@ figure.generic-figure,
     .index-row,
     .page-row
   ) {
-    transition: none !important;
-    animation: none !important;
-    transform: none !important;
+    transition: none;
+    animation: none;
+    transform: none;
   }
 }
 
@@ -11402,12 +11402,12 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
 
 @media (prefers-reduced-motion: reduce) {
   :where([data-spw-rhythm='pulse'] [data-spw-operator]) {
-    animation: none !important;
-    opacity: 1 !important;
+    animation: none;
+    opacity: 1;
   }
 
   :where([data-spw-rhythm='chorus'] [data-spw-operator]) {
-    transition-delay: 0ms !important;
+    transition-delay: 0ms;
   }
 }
 }
@@ -15562,31 +15562,45 @@ html[data-spw-cauldron-candidate-visibility="subtle"] {
   --component-arrival-opacity: 1;
   --component-surface-lift: 0px;
 
+  /* Layout & Display */
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   align-content: start;
+  align-items: start;
   gap: var(--component-gap-tight);
+  contain: paint style;
+
+  /* Box Model & Sizing */
   min-width: 0;
   min-height: 100%;
   padding: var(--component-pad);
+  overflow: clip;
+
+  /* Typography */
   color: var(--ink, currentColor);
+
+  /* Visual Surfaces & Borders */
   background: color-mix(in srgb, var(--component-surface-strong) 94%, var(--component-route-accent) 6%);
   border: var(--component-border);
   border-radius: var(--component-radius-tight);
   box-shadow: var(--component-shadow);
   opacity: var(--component-arrival-opacity);
+
+  /* Effects & Transforms */
   transform: translateY(calc(
     var(--component-arrival-offset)
     + var(--spw-component-arrival-bias, 0px)
     - var(--component-surface-lift, 0px)
   ));
-  overflow: clip;
-  contain: paint style;
-  transition: background var(--component-transition-deliberate),
-  border-color var(--component-transition-base),
-  box-shadow var(--component-transition-deliberate),
-  color var(--component-transition-fast),
-  opacity var(--component-transition-fast),
-  transform var(--component-transition-arrival);
+
+  /* Transitions */
+  transition:
+    background var(--component-transition-deliberate),
+    border-color var(--component-transition-base),
+    box-shadow var(--component-transition-deliberate),
+    color var(--component-transition-fast),
+    opacity var(--component-transition-fast),
+    transform var(--component-transition-arrival);
 }
 
 :where(
@@ -32339,16 +32353,26 @@ html[data-spw-high-contrast="on"] :where(.site-frame, .frame-card, .frame-panel)
 }
 
 :where(.media-focus-card, .media-card, .topic-reference-card) {
+  /* Layout & Containment */
   position: relative;
+  min-width: 0;
   min-height: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  /* Box Model & Sizing */
   padding: var(--spw-shell-card-pad);
+
+  /* Typography */
+  color: inherit;
+
+  /* Visual Surfaces & Borders */
+  background: var(--spw-shell-panel-bg);
   border: 1px solid var(--spw-shell-line);
   border-radius: var(--shape-surface, 10px);
-  background: var(--spw-shell-panel-bg);
-  color: inherit;
-  box-sizing: border-box;
   box-shadow: var(--spw-shell-card-shadow);
-  overflow: hidden;
+
+  /* Transitions */
   transition: var(--spw-shell-card-transition);
 }
 
@@ -32755,13 +32779,18 @@ html[data-spw-high-contrast="on"] :where(.site-frame, .frame-card, .frame-panel)
 }
 
 :where(.frame-card-media) {
+  /* Layout & Placement */
   position: relative;
+  justify-self: stretch;
+  overflow: clip;
+
+  /* Box Model & Margins */
   margin:
     calc(var(--component-pad, 0.9rem) * -1)
     calc(var(--component-pad, 0.9rem) * -1)
     0;
-  justify-self: stretch;
-  overflow: clip;
+
+  /* Visual Surfaces & Borders */
   border-radius: calc(var(--component-radius-tight, 8px) - 1px) calc(var(--component-radius-tight, 8px) - 1px) 0 0;
   border-bottom: 1px solid color-mix(in srgb, var(--component-accent, #008080) 18%, var(--spw-shell-line, rgba(0, 0, 0, 0.08)));
   background:

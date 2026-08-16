@@ -85,13 +85,18 @@
 }
 
 :where(.frame-card-media) {
+  /* Layout & Placement */
   position: relative;
+  justify-self: stretch;
+  overflow: clip;
+
+  /* Box Model & Margins */
   margin:
     calc(var(--component-pad, 0.9rem) * -1)
     calc(var(--component-pad, 0.9rem) * -1)
     0;
-  justify-self: stretch;
-  overflow: clip;
+
+  /* Visual Surfaces & Borders */
   border-radius: calc(var(--component-radius-tight, 8px) - 1px) calc(var(--component-radius-tight, 8px) - 1px) 0 0;
   border-bottom: 1px solid color-mix(in srgb, var(--component-accent, #008080) 18%, var(--spw-shell-line, rgba(0, 0, 0, 0.08)));
   background:
