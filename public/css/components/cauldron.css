@@ -63,10 +63,11 @@
 }
 
 .site-footer__cauldron-phase-step[data-spw-phase-active="true"] {
-  border-color: color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 34%, var(--footer-panel-line));
+  border-color: color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 52%, var(--footer-panel-line));
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 10%, transparent), transparent 72%),
-    color-mix(in srgb, var(--surface-strong, #fff) 84%, transparent);
+    linear-gradient(180deg, color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 14%, transparent), transparent 72%),
+    color-mix(in srgb, var(--surface-strong, #fff) 88%, transparent);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--component-accent, var(--active-op-color, var(--teal))) 20%, transparent);
 }
 
 .site-footer__cauldron-phase-label {
@@ -76,10 +77,11 @@
   font-size: var(--text-size-2xs, 0.72rem);
   letter-spacing: 0.06em;
   text-transform: uppercase;
+  font-weight: 600;
 }
 
 .site-footer__cauldron-phase-step[data-spw-phase-active="true"] .site-footer__cauldron-phase-label {
-  color: var(--ink, rgba(14, 18, 20, 0.92));
+  color: var(--ink, rgba(14, 18, 20, 0.95));
 }
 
 .site-footer__cauldron[data-spw-cauldron-panel="compact"] .site-footer__cauldron-body,

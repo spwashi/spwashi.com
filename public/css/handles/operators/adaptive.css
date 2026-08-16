@@ -198,15 +198,25 @@
   box-shadow: inset 0 0.5px 0 rgba(255,255,255,0.5);
 }
 
-.spw-living-term {
-  border-bottom: 1px dotted color-mix(in srgb, var(--active-op-color, var(--teal)) 35%, transparent);
-  cursor: default;
+.spw-living-term,
+[data-spw-living-term] {
+  display: inline;
+  border-bottom: 1px dotted color-mix(in srgb, var(--active-op-color, var(--teal)) 45%, transparent);
+  cursor: help;
   position: relative;
-  transition: border-color var(--handle-duration-fast, 140ms) var(--handle-ease);
+  border-radius: 3px;
+  padding: 0.04em 0.2em;
+  margin: -0.04em -0.2em;
+  text-decoration-skip-ink: none;
+  transition:
+    border-color var(--handle-duration-fast, 140ms) var(--handle-ease),
+    background-color var(--handle-duration-fast, 140ms) var(--handle-ease),
+    box-shadow var(--handle-duration-fast, 140ms) var(--handle-ease);
 }
 
 /* Make gestureability easy to discover even when idle — subtle garden marker that only appears on interaction or focus */
-.spw-living-term::after {
+.spw-living-term::after,
+[data-spw-living-term]::after {
   content: "✧";
   position: absolute;
   right: -0.45em; /* tighter to reduce line-box pressure and wrapping artifacts at end of balanced text */
@@ -219,20 +229,41 @@
 }
 
 .spw-living-term:hover::after,
-.spw-living-term:focus-visible::after {
-  opacity: 0.85;
+.spw-living-term:focus-visible::after,
+[data-spw-living-term]:hover::after,
+[data-spw-living-term]:focus-visible::after {
+  opacity: 0.95;
   color: var(--active-op-color, var(--teal));
 }
 
 .spw-living-term:hover,
-.spw-living-term:focus-visible {
+.spw-living-term:focus-visible,
+[data-spw-living-term]:hover,
+[data-spw-living-term]:focus-visible {
   border-bottom-color: var(--active-op-color, var(--teal));
-  background: color-mix(in srgb, var(--active-op-color, var(--teal)) 6%, transparent);
+  background: color-mix(in srgb, var(--active-op-color, var(--teal)) 9%, transparent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--active-op-color, var(--teal)) 14%, transparent);
 }
 
-.spw-living-term[tabindex="0"]:focus-visible {
-  outline: 1px solid var(--active-op-color, var(--teal));
+.spw-living-term[tabindex="0"]:focus-visible,
+[data-spw-living-term][tabindex="0"]:focus-visible {
+  outline: 1.5px solid var(--active-op-color, var(--teal));
   outline-offset: 2px;
+}
+
+.spw-living-term[data-spw-gesture="charging"],
+[data-spw-living-term][data-spw-gesture="charging"] {
+  background: color-mix(in srgb, var(--active-op-color, var(--teal)) 16%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--active-op-color, var(--teal)) 22%, transparent);
+  border-bottom-color: var(--active-op-color, var(--teal));
+}
+
+.spw-living-term[data-spw-gesture="armed"],
+[data-spw-living-term][data-spw-gesture="armed"] {
+  background: color-mix(in srgb, var(--active-op-color, var(--teal)) 26%, transparent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--active-op-color, var(--teal)) 38%, transparent);
+  border-bottom-style: solid;
+  border-bottom-color: var(--active-op-color, var(--teal));
 }
 
 /* Numericity emphasis mode — makes rhythm numbers easy to discover and interact with.
