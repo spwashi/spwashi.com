@@ -113,6 +113,7 @@ fixity = "tending"
  >>[2026-04-17 16:45] decide — Move CSS/JS/manifest into a network-first shell path, stabilize cache namespaces by schema instead of deploy version, and register the worker with `updateViaCache: "none"` so offline stays possible while updates arrive promptly.
  >>[2026-04-17 16:53] observe — The manifest still declares `orientation: any`, which makes the installed Android shell rotate too eagerly for a reading-first site.
  >>[2026-04-17 16:53] decide — Lock the installed shell to `portrait-primary`; wide and landscape exploration can still happen in the normal browser surface without fighting phone orientation preferences.
+ >>[2026-08-16 00:44] implement — Added a service-worker status handshake so the client can inspect the active worker version, cache roles, entry counts, offline URL, and precache posture without changing page structure.
 }
 
 ^["open"]{
@@ -133,7 +134,7 @@ fixity = "tending"
  ~#files_hot: "manifest.webmanifest, public/js/pwa-update-handler.js, sw.js, offline/index.html"
  ~#next_commit: "4"
  ~#open_count: "0"
- ~#last_stream: "2026-04-09 19:51"
+ ~#last_stream: "2026-08-16 00:44"
  ~#taste_debt: ""
 }
 

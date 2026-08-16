@@ -22,6 +22,12 @@ const CACHE_LIMITS = {
   assets: 160,
 };
 
+const CACHE_ROLES = {
+  [CACHE.core]: 'core',
+  [CACHE.pages]: 'pages',
+  [CACHE.assets]: 'assets',
+};
+
 const LEGACY_CACHE_PREFIXES = [
   'spw-core',
   'spw-pages',
@@ -135,6 +141,11 @@ self.addEventListener('message', (event) => {
 
   if (event.data?.type === 'SPW_CACHE_SUMMARY') {
     event.waitUntil(replyWithCacheSummary(event));
+    return;
+  }
+
+  if (event.data?.type === 'SPW_PWA_STATUS') {
+    event.waitUntil(replyWithPwaStatus(event));
     return;
   }
 
@@ -426,18 +437,7 @@ async function pruneCacheEntries(cacheName, allowlistUrls) {
 
 async function replyWithCacheSummary(event) {
   try {
-    const names = await caches.keys();
-    const managed = names.filter(isManagedCacheName);
-    const entries = [];
-
-    for (const name of managed) {
-      const cache = await caches.open(name);
-      const requests = await cache.keys();
-      entries.push({
-        name,
-        count: requests.length,
-      });
-    }
+    const entries = await collectManagedCacheEntries();
 
     event.source?.postMessage?.({
       type: 'SPW_CACHE_SUMMARY_RESULT',
@@ -452,6 +452,48 @@ async function replyWithCacheSummary(event) {
       caches: [],
     });
   }
+}
+
+async function replyWithPwaStatus(event) {
+  try {
+    event.source?.postMessage?.({
+      type: 'SPW_PWA_STATUS_RESULT',
+      status: {
+        version: CACHE_SCHEMA_VERSION,
+        namespace: CACHE_NAMESPACE,
+        offlineUrl: OFFLINE_URL,
+        fallbackImageUrl: FALLBACK_IMAGE_URL,
+        requiredPrecacheCount: REQUIRED_PRECACHE_URLS.length,
+        optionalPrecacheCount: OPTIONAL_PRECACHE_URLS.length,
+        cacheLimits: CACHE_LIMITS,
+        caches: await collectManagedCacheEntries(),
+      },
+    });
+  } catch (error) {
+    event.source?.postMessage?.({
+      type: 'SPW_PWA_STATUS_RESULT',
+      error: error?.message || String(error),
+      status: null,
+    });
+  }
+}
+
+async function collectManagedCacheEntries() {
+  const names = await caches.keys();
+  const managed = names.filter(isManagedCacheName);
+  const entries = [];
+
+  for (const name of managed) {
+    const cache = await caches.open(name);
+    const requests = await cache.keys();
+    entries.push({
+      name,
+      role: CACHE_ROLES[name] || 'legacy',
+      count: requests.length,
+    });
+  }
+
+  return entries;
 }
 
 async function prefetchUrls(urls) {

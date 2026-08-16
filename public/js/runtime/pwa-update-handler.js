@@ -27,6 +27,7 @@ const DEV_RELOAD_GUARD_KEY = 'spw-pwa-dev-reload-guard';
 let deferredInstallPrompt = null;
 let reloadOnControllerChange = false;
 let initialized = false;
+let latestPwaStatus = null;
 
 const TOAST_ATTR = 'data-pwa-toast';
 const noop = () => {};
@@ -364,6 +365,44 @@ const attachUpdateTriggers = (registration) => {
     };
 };
 
+const applyPwaStatus = (status) => {
+    if (!status || typeof status !== 'object') return;
+    latestPwaStatus = status;
+
+    const root = document.documentElement;
+    root.dataset.spwPwaWorkerVersion = String(status.version || 'unknown');
+    root.dataset.spwPwaOfflineUrl = String(status.offlineUrl || '/offline/');
+
+    const caches = Array.isArray(status.caches) ? status.caches : [];
+    const entryCount = caches.reduce((total, entry) => {
+        const count = Number(entry?.count);
+        return total + (Number.isFinite(count) ? count : 0);
+    }, 0);
+    root.dataset.spwPwaCacheCount = String(caches.length);
+    root.dataset.spwPwaCacheEntries = String(entryCount);
+};
+
+const requestPwaStatus = () => {
+    const controller = navigator.serviceWorker?.controller;
+    if (!controller) return false;
+    try {
+        controller.postMessage({ type: 'SPW_PWA_STATUS' });
+        return true;
+    } catch {
+        return false;
+    }
+};
+
+const wirePwaStatusMessages = () => {
+    if (!('serviceWorker' in navigator)) return;
+
+    navigator.serviceWorker.addEventListener('message', (event) => {
+        if (event.data?.type === 'SPW_PWA_STATUS_RESULT') {
+            applyPwaStatus(event.data.status);
+        }
+    });
+};
+
 const maybeShowInstallPrompt = () => {
     if (shouldDisableServiceWorkerInDevelopment()) return;
     if (!initialized) return;
@@ -456,6 +495,8 @@ const initPwaUpdateHandler = async () => {
             init: initPwaUpdateHandler,
             showInstallPrompt: noop,
             showUpdatePrompt: noop,
+            requestStatus: () => false,
+            getStatus: () => latestPwaStatus,
             dismissAll: () => toastManager.dismiss(),
             isStandalone,
             mode: 'development',
@@ -467,6 +508,8 @@ const initPwaUpdateHandler = async () => {
     maybeShowInstallPrompt();
 
     if (!('serviceWorker' in navigator)) return;
+
+    wirePwaStatusMessages();
 
     // Controller change (for skipWaiting)
     navigator.serviceWorker.addEventListener('controllerchange', () => {
@@ -483,6 +526,7 @@ const initPwaUpdateHandler = async () => {
             maybeShowUpdatePrompt(registration);
             maybeShowInstallPrompt();
             attachUpdateTriggers(registration);
+            requestPwaStatus();
 
             // Periodic background update check
             setInterval(() => {
@@ -518,6 +562,8 @@ const initPwaUpdateHandler = async () => {
             const registration = reg || await navigator.serviceWorker?.getRegistration?.();
             return maybeShowUpdatePrompt(registration);
         },
+        requestStatus: requestPwaStatus,
+        getStatus: () => latestPwaStatus,
         dismissAll: () => toastManager.dismiss(),
         isStandalone,
         mode: 'production',
