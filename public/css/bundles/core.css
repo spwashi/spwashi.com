@@ -42440,6 +42440,71 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
   }
 }
 
+/* ==========================================================================
+   6. Atmospheric Lighting & Interactive Posture Immersion
+   ========================================================================== */
+
+/* Reading Posture: Focused diffuse illumination & distraction minimization */
+:where(html[data-spw-interaction-context="reading"], body[data-spw-layout="reading"]) :where(main article, .prose, .focus-lens-container) {
+  text-rendering: optimizeLegibility;
+}
+
+:where(html[data-spw-interaction-context="reading"]) :where(.spec-strip:not(:hover):not(:focus-within), .domain-kicker) {
+  opacity: 0.76;
+  filter: saturate(0.85);
+  transition: opacity var(--duration-base, 220ms) ease, filter var(--duration-base, 220ms) ease;
+}
+
+/* Inspection Posture: Structural lucidity & luminous hairline edges */
+:where(html[data-spw-interaction-context="inspecting"]) :where(.site-frame, .frame-card, .frame-panel, .mode-panel) {
+  --material-local-border-color: color-mix(in oklab, var(--active-op-color, #008080) 38%, var(--line-strong));
+  box-shadow:
+    inset 0 0 0 1px color-mix(in oklab, var(--active-op-color, #008080) 14%, transparent),
+    var(--material-local-shadow);
+}
+
+:where(html[data-spw-interaction-context="inspecting"]) :where(.spw-delimiter, .frame-sigil, .spec-pill) {
+  opacity: 1;
+  filter: saturate(1.15);
+}
+
+/* Collecting Posture: Warm magnetic resonance around saveable fragments */
+:where(html[data-spw-interaction-context="collecting"]) :where(.spw-living-term, [data-spw-guide-badge="collect"], [data-spw-operator]) {
+  box-shadow:
+    var(--spw-local-shadow, none),
+    0 0 0 1.5px color-mix(in srgb, var(--delight-color, #008080) 36%, transparent),
+    0 0 12px color-mix(in srgb, var(--delight-color, #008080) 18%, transparent);
+}
+
+/* Atmospheric Lighting: Ambient top-down specular highlight */
+:where(.site-frame, .frame-card, .mode-panel, .operator-card) {
+  background-image:
+    radial-gradient(
+      ellipse 80% 50% at 50% 0%,
+      color-mix(in srgb, var(--active-op-color, #008080) calc(5% * var(--spw-charge-field, 1)), transparent) 0%,
+      transparent 72%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      transparent 32%
+    );
+}
+
+html[data-spw-color-mode="dark"] :where(.site-frame, .frame-card, .mode-panel, .operator-card) {
+  background-image:
+    radial-gradient(
+      ellipse 80% 50% at 50% 0%,
+      color-mix(in srgb, var(--active-op-color, #008080) calc(8% * var(--spw-charge-field, 1)), transparent) 0%,
+      transparent 76%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.04) 0%,
+      transparent 28%
+    );
+}
+
 /* ─── Static Glyph Contract (Reduced Motion) ────────────────────────────
    Precision geometric widget parts (radar polygons, mixer spokes, seed
    vessels) pin transform/filter to a hard stop under reduced motion,
