@@ -62,27 +62,126 @@
                 <h1>State & Affordance</h1>
 
                 <p class="site-lede">
-                    Affordance attributes define how a component communicates interactivity to the user before they actually commit an action.
+                    Affordance attributes declare what a component invites you to do with it, before you commit to doing it. The attribute is read across the runtime &mdash; haptics, brace gestures, the region rail, and the cauldron all consult it &mdash; but only one value currently changes behavior on its own.
+                </p>
+            </section>
+
+            <section class="site-frame" id="the-field" data-spw-kind="frame" data-spw-role="reference">
+                <header class="frame-heading">
+                    <a class="frame-sigil" href="#the-field">^"the_field"</a>
+                    <h2>Affordance is a force on the presence field</h2>
+                </header>
+
+                <p>
+                    Affordance does not own a look. It states how much presence a component is asking for, and that request is multiplied into a shared field alongside every other module making the same kind of claim &mdash; region, charge, locality, machinability. The field resolves once, at the renderer, and the result is spent on edge definition and lift.
                 </p>
 
                 <div class="frame-grid frame-grid--dense">
-                    <article class="frame-panel" data-spw-affordance="read">
-                        <h3>Affordance: read</h3>
-                        <p>Stable layout with no hover lifts, outlines, or shadow emphasis. Use for components that are purely reference material rather than interaction traps.</p>
+                    <article class="frame-panel" data-spw-kind="panel" data-spw-role="specimen">
+                        <h3>Its own axis</h3>
+                        <p>Affordance writes <code>--spw-salience-affordance</code>, not the shared salience property. That matters: the older feeders all declare <code>--spw-architecture-salience</code> directly, so two of them on one element do not stack &mdash; the cascade picks a winner. A separate axis lets affordance multiply <em>with</em> charge and region on the same element.</p>
                     </article>
-                    <article class="frame-panel" data-spw-affordance="tune">
-                        <h3>Affordance: tune</h3>
-                        <p>Contains active form controls, settings toggles, or direct manipulation sliders. Tells the design system to prepare for local state changes.</p>
+                    <article class="frame-panel" data-spw-kind="panel" data-spw-role="specimen">
+                        <h3>Composition, not paint</h3>
+                        <p>Twelve values, one renderer. Adding a thirteenth value &mdash; or a whole new module &mdash; is a one-line declaration with a default of <code>1</code>. Nothing new gets painted, and no selector has to win a specificity fight to be heard.</p>
                     </article>
-                    <article class="frame-panel" data-spw-affordance="inspect">
-                        <h3>Affordance: inspect</h3>
-                        <p>A component that invites hover. Reveals deeper metadata, traces, or structural guidelines when activated by the pointer or focus.</p>
-                    </article>
-                    <article class="frame-panel" data-spw-affordance="orient">
-                        <h3>Affordance: orient</h3>
-                        <p>Usually reserved for hero or primary navigation features. Anchors the page flow and provides a firm return point for the user.</p>
+                    <article class="frame-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-affordance="tune">
+                        <h3>Where JavaScript still branches</h3>
+                        <p><code>tune</code> keeps a second, older life in the runtime: <code>tuning-discovery.js</code> and <code>module-catalog-enhancement.js</code> select on it, and <code>page-region-rail.js</code> tests for it and writes it back onto rail links so a tunable region earns a sigil. Those tests are exact-match, so a stacked value like <code>read tune</code> registers with the CSS field but <em>not</em> with the rail.</p>
                     </article>
                 </div>
+
+                <p class="frame-note">
+                    This panel carries <code>data-spw-affordance="tune"</code> &mdash; the strongest request in the vocabulary. The panels in the next section each carry their own value, so the section below is not an illustration of the scale. It is the scale.
+                </p>
+            </section>
+
+            <section class="site-frame" id="vocabulary" data-spw-kind="frame" data-spw-role="reference">
+                <header class="frame-heading">
+                    <a class="frame-sigil" href="#vocabulary">~"affordance_vocabulary"</a>
+                    <h2>The twelve values in use</h2>
+                </header>
+
+                <p>Counts are occurrences in the site's HTML. The long tail is not dead weight &mdash; it is where the surface is still deciding what it wants to be.</p>
+
+                <div class="frame-grid frame-grid--dense">
+                    <article class="frame-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-affordance="read">
+                        <h3>read <span class="spec-pill">359</span></h3>
+                        <p>Reference material. The component expects to be taken in, not operated. By far the default across topic and editorial surfaces.</p>
+                    </article>
+                    <article class="frame-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-affordance="orient">
+                        <h3>orient <span class="spec-pill">78</span></h3>
+                        <p>Hero blocks and primary navigation. Anchors page flow and gives the reader a firm return point inside a long scroll.</p>
+                    </article>
+                    <article class="frame-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-affordance="inspect">
+                        <h3>inspect <span class="spec-pill">69</span></h3>
+                        <p>Invites a closer look &mdash; deeper metadata, traces, structural guidelines. Pairs naturally with the console and field-guide features.</p>
+                    </article>
+                    <article class="frame-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-affordance="navigate">
+                        <h3>navigate <span class="spec-pill">58</span></h3>
+                        <p>Moves you somewhere else. <code>navigation-spells.js</code> uses <code>navigate ground replay</code> as its default affordance for links that do not declare one.</p>
+                    </article>
+                    <article class="frame-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-affordance="tune">
+                        <h3>tune <span class="spec-pill">33</span></h3>
+                        <p>Holds live controls. The one value the runtime acts on &mdash; see above.</p>
+                    </article>
+                    <article class="frame-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-affordance="act">
+                        <h3>act <span class="spec-pill">17</span></h3>
+                        <p>Commits something. Distinct from <code>tune</code>: tuning adjusts a value in place, acting takes a step that has a consequence.</p>
+                    </article>
+                    <article class="frame-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-affordance="practice">
+                        <h3>practice <span class="spec-pill">10</span></h3>
+                        <p>Repeatable exercise. The component expects to be run more than once, and expects you to get better at it.</p>
+                    </article>
+                    <article class="frame-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-affordance="revisit">
+                        <h3>revisit <span class="spec-pill">8</span></h3>
+                        <p>Built for return rather than first contact. Assumes you have been here and are coming back with context.</p>
+                    </article>
+                    <article class="frame-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-affordance="reward">
+                        <h3>reward <span class="spec-pill">4</span></h3>
+                        <p>Gives something back for the interaction &mdash; a collectable, an unlock, a acknowledgement that the effort registered.</p>
+                    </article>
+                    <article class="frame-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-affordance="reflect">
+                        <h3>reflect <span class="spec-pill">4</span></h3>
+                        <p>Asks for consideration rather than input. No correct answer to submit.</p>
+                    </article>
+                    <article class="frame-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-affordance="choose">
+                        <h3>choose <span class="spec-pill">4</span></h3>
+                        <p>Presents alternatives that are genuinely exclusive. Picking one forecloses the others.</p>
+                    </article>
+                    <article class="frame-panel" data-spw-kind="panel" data-spw-role="specimen" data-spw-affordance="learn">
+                        <h3>learn <span class="spec-pill">3</span></h3>
+                        <p>Instructional intent. The component is trying to leave you able to do something you could not do before.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="site-frame" id="multi-value" data-spw-kind="frame" data-spw-role="reference">
+                <header class="frame-heading">
+                    <a class="frame-sigil" href="#multi-value">!"multi_value"</a>
+                    <h2>Affordance stacks</h2>
+                </header>
+                <p>
+                    The attribute is space-separated, not single-valued. <code>navigation-spells.js</code> assigns <code>navigate ground replay</code> as a three-part default, and <code>brace-gestures.js</code> trims and splits whatever it finds. A component that both reads and rewards can say so:
+                </p>
+                <p><code>&lt;article data-spw-affordance="read reward"&gt;</code></p>
+                <p class="frame-note">
+                    Because only <code>tune</code> is matched exactly by <code>page-region-rail.js</code>, a stacked value containing <code>tune</code> alongside others will <em>not</em> register as tunable on the region rail. If a component needs the rail, <code>tune</code> must stand alone. That asymmetry is a real edge in the current implementation, not a convention.
+                </p>
+            </section>
+
+            <section class="site-frame" id="neighbors" data-spw-kind="frame" data-spw-role="reference">
+                <header class="frame-heading">
+                    <a class="frame-sigil" href="#neighbors">#&gt;"neighbors"</a>
+                    <h2>Nearby surfaces</h2>
+                </header>
+                <nav class="frame-operators" aria-label="Related design routes">
+                    <a class="operator-chip" href="/design/catalog/#attr-data-spw-affordance" data-spw-operator="wonder" data-spw-action="inspect">?affordance_in_catalog</a>
+                    <a class="operator-chip" href="/design/slots/" data-spw-operator="potential" data-spw-action="explore">~universal_slots</a>
+                    <a class="operator-chip" href="/design/density/" data-spw-operator="potential" data-spw-action="explore">~density_measure</a>
+                    <a class="operator-chip" href="/design/materials/" data-spw-operator="potential" data-spw-action="explore">~metamaterials</a>
+                    <a class="operator-chip" href="/design/interaction-design/" data-spw-operator="potential" data-spw-action="explore">~interaction_design</a>
+                </nav>
             </section>
         </article>
     </main>

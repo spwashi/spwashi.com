@@ -987,6 +987,18 @@
   --spw-architecture-salience: calc(var(--spw-architecture-salience, 0.6) * 1.05);
 }
 
+/* The dimensions above (locality, charge, region, region-role, machinability,
+   physics-reason) accumulate into --spw-architecture-salience and
+   --spw-motion-scale. Nothing in THIS file reads them.
+
+   They are resolved and spent in systems/field-physics.css, which also holds
+   the affordance dimension, the recipe for adding your own, and the concept
+   twinkle. If you are following a dimension to find out what it does, go
+   there — it is the whole system in one file.
+
+   Motion is the exception: --spw-motion-scale folds into --spw-motion-quick /
+   -settle / -expressive in tokens/core.css. */
+
 /* Color/contrast audit across components: ensure material tunability and semantic contrast tokens
    (from tokens/core: --text-on-matte*, --material-ink-matte-strong, --ink-on-*) propagate to component
    foundations (cards, frames, controls) for better legibility on glass/matte/contrast, dark, high-contrast.

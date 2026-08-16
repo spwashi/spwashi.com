@@ -1039,9 +1039,13 @@
   --charge-release-duration: var(--duration-fast);
   --charge-release-ease: var(--ease-mechanical);
 
-  --spw-motion-quick: var(--duration-fast) var(--ease-mechanical);
-  --spw-motion-settle: var(--duration-base) var(--ease-settle);
-  --spw-motion-expressive: var(--duration-deliberate) var(--ease-paper);
+  /* Durations pass through --spw-motion-scale, the second field scalar fed by
+     physics-reason and machinability (see components/foundation.css). Default 1
+     leaves every existing timing byte-identical; a page that declares a physics
+     reason retunes all 16 consumers at once instead of one component at a time. */
+  --spw-motion-quick: calc(var(--duration-fast) * var(--spw-motion-scale, 1)) var(--ease-mechanical);
+  --spw-motion-settle: calc(var(--duration-base) * var(--spw-motion-scale, 1)) var(--ease-settle);
+  --spw-motion-expressive: calc(var(--duration-deliberate) * var(--spw-motion-scale, 1)) var(--ease-paper);
 
   /* Page/region timing aliases. Keep JS-readable values concrete. */
   --spw-page-arrival-step-1-delay: 0ms;

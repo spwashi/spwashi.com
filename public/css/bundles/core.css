@@ -1636,9 +1636,13 @@ html[data-spw-reduce-motion="on"] *::after {
   --charge-release-duration: var(--duration-fast);
   --charge-release-ease: var(--ease-mechanical);
 
-  --spw-motion-quick: var(--duration-fast) var(--ease-mechanical);
-  --spw-motion-settle: var(--duration-base) var(--ease-settle);
-  --spw-motion-expressive: var(--duration-deliberate) var(--ease-paper);
+  /* Durations pass through --spw-motion-scale, the second field scalar fed by
+     physics-reason and machinability (see components/foundation.css). Default 1
+     leaves every existing timing byte-identical; a page that declares a physics
+     reason retunes all 16 consumers at once instead of one component at a time. */
+  --spw-motion-quick: calc(var(--duration-fast) * var(--spw-motion-scale, 1)) var(--ease-mechanical);
+  --spw-motion-settle: calc(var(--duration-base) * var(--spw-motion-scale, 1)) var(--ease-settle);
+  --spw-motion-expressive: calc(var(--duration-deliberate) * var(--spw-motion-scale, 1)) var(--ease-paper);
 
   /* Page/region timing aliases. Keep JS-readable values concrete. */
   --spw-page-arrival-step-1-delay: 0ms;
@@ -15125,6 +15129,18 @@ html[data-spw-color-mode="dark"] :where(.spw-topic-popover, .spw-semantic-popove
 [data-spw-region="path"], [data-spw-region-role="path-node"] {
   --spw-architecture-salience: calc(var(--spw-architecture-salience, 0.6) * 1.05);
 }
+
+/* The dimensions above (locality, charge, region, region-role, machinability,
+   physics-reason) accumulate into --spw-architecture-salience and
+   --spw-motion-scale. Nothing in THIS file reads them.
+
+   They are resolved and spent in systems/field-physics.css, which also holds
+   the affordance dimension, the recipe for adding your own, and the concept
+   twinkle. If you are following a dimension to find out what it does, go
+   there — it is the whole system in one file.
+
+   Motion is the exception: --spw-motion-scale folds into --spw-motion-quick /
+   -settle / -expressive in tokens/core.css. */
 
 /* Color/contrast audit across components: ensure material tunability and semantic contrast tokens
    (from tokens/core: --text-on-matte*, --material-ink-matte-strong, --ink-on-*) propagate to component
@@ -30795,6 +30811,245 @@ html[data-spw-high-contrast="on"] :where(.site-frame, .frame-card, .frame-panel)
 @media (prefers-reduced-motion: reduce) {
   :where([data-spw-operator]) {
     --spw-electrode: latent;
+  }
+}
+}
+
+/* /public/css/systems/field-physics.css */
+@layer systems {
+/* ==========================================================================
+   field-physics.css
+   --------------------------------------------------------------------------
+   THE PRESENCE FIELD — one place to read, one place to change.
+
+   If you are here because you recognised a dimension in the HTML and wondered
+   where it goes: this is where it goes. Everything below is the whole system.
+
+   ── The idea ─────────────────────────────────────────────────────────────
+   Attributes across this site do not paint. They make a claim about how much
+   presence a component is asking for. Those claims multiply together into one
+   number, --spw-field-presence, and that number is spent once, here, on edge
+   definition and depth. Nothing else in the codebase needs to know about it.
+
+   The consequence is that dimensions COMPOSE. A card that is charged, sitting
+   in a path region, asking to be tuned, is more present than any one of those
+   alone — without a single selector having to beat another one.
+
+   ── The dimensions, and where each is declared ───────────────────────────
+     locality          components/foundation.css   sets the baseline (0.6/0.9)
+     charge            components/foundation.css   x1.10 / x1.22
+     region            components/foundation.css   x0.95 (hub) / x1.05 (path)
+     region-role       components/foundation.css   x1.05 (path-node)
+     machinability     components/foundation.css   -> motion axis
+     physics-reason    components/foundation.css   -> motion axis
+     affordance        THIS FILE                   x0.94 .. x1.20
+
+   ── How to add a dimension (the whole recipe) ────────────────────────────
+     1. Pick a name:      --spw-salience-<yours>
+     2. Declare values:   [data-spw-<yours>="calm"] { --spw-salience-<yours>: 0.95; }
+     3. Default is 1:     an element that never mentions it is unaffected.
+     4. Multiply it into --spw-field-presence in the renderer below.
+     5. Add its attribute to the two selector lists.
+   That is the entire change. No new paint, no new file, no specificity fight.
+
+   ── Why affordance gets its own axis, and the older feeders do not ───────
+   The dimensions in foundation.css all write the SAME property
+   (--spw-architecture-salience). Two of them on one element therefore do not
+   stack — the cascade picks one winner and the other is silently lost. They
+   only accumulate down the tree, ancestor to descendant. Any dimension that
+   needs to compose on a single element needs its own axis, as affordance has
+   here. Worth knowing before you add the ninth one.
+
+   ── Safety properties, deliberately ──────────────────────────────────────
+   * Presence is normalised against the 0.6 baseline, so an element with no
+     dimensions resolves to EXACTLY its previous appearance. This file is an
+     identity transform until an attribute opts in.
+   * Presence is spent on borders and shadows only — never on ink, never on
+     page background — so text contrast is untouched and AA holds no matter
+     how many dimensions stack.
+   * clamp() bounds the product, so no pile of multipliers can run away.
+   * Motion is NOT rendered here. --spw-motion-scale folds into
+     --spw-motion-quick / -settle / -expressive in tokens/core.css, which
+     reaches all existing consumers without this file overriding anyone's
+     transition.
+
+   Layer: systems (inferred from path) — after `components`, so the
+   --component-* values tuned here win over component defaults, which is the
+   point. Contracts: .spw#page_architecture_vocabulary,
+   .spw#tunable_material_narrative_surface.
+   ========================================================================== */
+
+/* ── Dimension: affordance ─────────────────────────────────────────────────
+   Twelve values, ~503 elements already carrying one. Ordered by demand on
+   attention: reading asks least, acting asks most.
+
+   `~=` matches inside space-separated stacks (`navigate ground replay`), so a
+   component can hold more than one affordance — and so the exact-match
+   asymmetry that `tune` has in page-region-rail.js does not repeat here. */
+[data-spw-affordance~="read"]     { --spw-salience-affordance: 0.94; }
+[data-spw-affordance~="reflect"]  { --spw-salience-affordance: 0.96; }
+[data-spw-affordance~="revisit"]  { --spw-salience-affordance: 1.02; }
+[data-spw-affordance~="learn"],
+[data-spw-affordance~="practice"] { --spw-salience-affordance: 1.06; }
+[data-spw-affordance~="orient"],
+[data-spw-affordance~="navigate"] { --spw-salience-affordance: 1.08; }
+[data-spw-affordance~="inspect"]  { --spw-salience-affordance: 1.12; }
+[data-spw-affordance~="choose"],
+[data-spw-affordance~="reward"]   { --spw-salience-affordance: 1.16; }
+[data-spw-affordance~="tune"],
+[data-spw-affordance~="act"]      { --spw-salience-affordance: 1.2; }
+
+/* ── Dimension: runtime charge ─────────────────────────────────────────────
+   MIND THE TWO VOCABULARIES. `data-spw-charge` is written from both ends and
+   they do not use the same words:
+
+     authored in HTML   "2" | "3" | "full" | "artifact"   -> foundation.css
+     written by JS      "arming" | "preview" | "charged" | "armed"
+
+   haptics.js drives the second set through an interaction cycle (arming on
+   press, preview for passive charge, charged on completion), and none of those
+   strings match the selectors in foundation.css. The runtime half of the charge
+   system has therefore never reached the field. This block is that missing
+   half; it is a separate axis so it composes with the authored one rather than
+   fighting it for the same property.
+
+   Discharge is the release edge of the same cycle, not a negative charge:
+   `data-spw-discharge-kind` (ground | release | project | situate) says where
+   the accumulated charge goes. It is deliberately NOT given a salience value
+   here — discharge is an event, and animating presence off the back of it
+   belongs with the echo keyframes in components/charge-cycle.css, which
+   already own `spw-discharge-echo`. Adding it here would double the motion. */
+[data-spw-charge~="arming"]  { --spw-salience-charge-runtime: 1.06; }
+[data-spw-charge~="preview"] { --spw-salience-charge-runtime: 1.04; }
+[data-spw-charge~="armed"]   { --spw-salience-charge-runtime: 1.12; }
+[data-spw-charge~="charged"] { --spw-salience-charge-runtime: 1.18; }
+/* Prime is the wind-up before charge accumulates; a touch above rest. */
+[data-spw-charge-state="prime"]  { --spw-salience-charge-runtime: 1.05; }
+[data-spw-charge-state="charge"] { --spw-salience-charge-runtime: 1.14; }
+
+/* ── The renderer ──────────────────────────────────────────────────────────
+   Step 1 of 2: resolve every dimension into one number. */
+:where([data-spw-region], [data-spw-region-role], [data-spw-charge], [data-spw-charge-state], [data-spw-machinability], [data-spw-affordance]) {
+  --spw-field-presence: clamp(
+    0,
+    calc((
+      var(--spw-architecture-salience, 0.6)
+      * var(--spw-salience-affordance, 1)
+      * var(--spw-salience-charge-runtime, 1)
+      - 0.6
+    ) * 2.5),
+    1
+  );
+}
+
+/* Step 2 of 2: spend it. Tuning custom properties rather than `border-color`
+   and `box-shadow` directly is the house idiom — attributes tune variables,
+   components decide whether and where to spend them. At presence 0 every value
+   below resolves to its original definition. */
+:where([data-spw-region], [data-spw-region-role], [data-spw-charge], [data-spw-charge-state], [data-spw-affordance])[data-spw-kind] {
+  /* Tone: the accent bleeds into the edge as presence rises. */
+  --component-border: 1px solid color-mix(
+    in oklab,
+    var(--component-accent, var(--line, currentColor)) calc(var(--spw-field-presence, 0) * 38%),
+    var(--line, transparent)
+  );
+  /* Value: a low, wide, accent-tinted lift layered ON TOP of the existing
+     elevation rather than replacing it — the original default is restated as
+     the second layer so every --component-shadow consumer keeps its depth.
+     At presence 0 the first layer is `0 0 0 transparent`, i.e. a no-op. */
+  --component-shadow:
+    0 calc(var(--spw-field-presence, 0) * 2px)
+      calc(var(--spw-field-presence, 0) * 10px)
+      color-mix(in oklab, var(--component-accent, var(--ink, currentColor)) calc(var(--spw-field-presence, 0) * 14%), transparent),
+    var(--spw-elevation-card-shadow, var(--shadow-base, 0 10px 24px rgba(0, 0, 0, 0.06)));
+}
+
+/* ── Concept twinkle ──────────────────────────────────────────────────────
+   An earned, occasional wiggle — not a blink, and not a loop you notice. The
+   timeline is idle for ~91% of its duration; the motion is a sub-degree
+   rotation with a fractional-pixel rise. It reads as "alive" in peripheral
+   vision and all but disappears when looked at directly.
+
+   NOTHING TWINKLES BY DEFAULT. A concept animates only once something sets
+   data-spw-twinkle="earned" on it, so this is a reward surface rather than
+   ambient decoration.
+
+   The wave arcs across a cluster instead of firing in unison: --spw-cluster-index
+   offsets each member's phase, so the wiggle travels along the group.
+
+   Amplitude rides the same presence field as everything else, so a concept
+   that is also charged, or in a path region, wiggles slightly more. The reward
+   and the architecture share one scale rather than competing for attention. */
+@property --spw-twinkle-amplitude {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 1;
+}
+
+/* Tuned for repeat exposure rather than first impression. The active window is
+   ~5% of a 14s period, so a given concept moves for roughly 0.7s and is then
+   still for over thirteen. Amplitude is sub-degree on purpose: the eye should
+   catch it peripherally and find nothing when it looks straight at it. */
+@keyframes spw-concept-twinkle {
+  0%, 95%, 100% { transform: none; }
+  96.4% { transform: rotate(calc(var(--spw-twinkle-amplitude, 1) * -0.45deg)) translateY(calc(var(--spw-twinkle-amplitude, 1) * -0.5px)); }
+  97.8% { transform: rotate(calc(var(--spw-twinkle-amplitude, 1) * 0.3deg)) translateY(calc(var(--spw-twinkle-amplitude, 1) * -0.2px)); }
+  99%   { transform: rotate(calc(var(--spw-twinkle-amplitude, 1) * -0.1deg)); }
+}
+
+/* ── Dimension: familiarity (habituation and rediscovery) ─────────────────
+   `data-spw-visited="true"` is already written at runtime by haptics.js and
+   image-metaphysics.js; until now no stylesheet read it. It is the site's
+   existing record of "the visitor has already seen this happen."
+
+   Wiring it here makes the whimsy considerate: something you have already met
+   moves less. It does not stop — going silent would read as broken — it drops
+   to roughly a third, which is under the threshold where repetition starts to
+   nag but above the one where it reads as dead.
+
+   Rediscovery is the other half. Familiarity DAMPS amplitude but charge FEEDS
+   presence, and amplitude is built from both. So a concept you have long since
+   seen becomes lively again when it gets charged — by re-engagement, or by
+   whatever else drives data-spw-charge (JS writes it in 13 places). Whimsy is
+   spent on first contact, then re-earned rather than replayed. Time-based
+   decay of the visited flag itself belongs in JS, not here. */
+[data-spw-visited="true"] { --spw-familiarity: 0.34; }
+
+@media (prefers-reduced-motion: no-preference) {
+  :where([data-spw-concept][data-spw-twinkle="earned"]) {
+    /* 0.8 at rest, 1.3 when fully fed — then scaled by familiarity, so a
+       seen-and-uncharged concept lands near 0.27 and a seen-but-recharged one
+       climbs back toward 0.44. */
+    --spw-twinkle-amplitude: calc((0.8 + var(--spw-field-presence, 0) * 0.5) * var(--spw-familiarity, 1));
+    display: inline-block; /* transforms need a box; inline concepts have none */
+    animation: spw-concept-twinkle 14s var(--ease-settle, ease-in-out) infinite;
+    /* 900ms stagger against a 14s period spreads a cluster of ten across most
+       of the cycle, so members arc one after another instead of pulsing as a
+       block. Density of motion stays roughly constant as the earned set grows —
+       the wave gets longer, not busier. */
+    animation-delay: calc(var(--spw-cluster-index, 0) * -900ms);
+    /* Deliberately no will-change: the timeline is idle ~95% of the time, so a
+       permanent layer promotion per earned concept would cost memory for a set
+       that is designed to grow. The compositor handles the brief active window. */
+  }
+
+  /* Reading wins over reward. While a reader is actually in a region — pointer
+     over it or focus inside it — its concepts hold still, so the twinkle never
+     competes with the sentence being read. This is the main thing keeping the
+     effect from wearing out over repeat visits. */
+  :where(:hover, :focus-within) > :where([data-spw-concept][data-spw-twinkle="earned"]),
+  :where([data-spw-concept][data-spw-twinkle="earned"]):is(:hover, :focus-visible) {
+    animation-play-state: paused;
+    transform: none;
+  }
+}
+
+/* Reduced motion keeps the earned state legible without moving anything. */
+@media (prefers-reduced-motion: reduce) {
+  :where([data-spw-concept][data-spw-twinkle="earned"]) {
+    text-decoration: underline dotted
+      color-mix(in oklab, var(--component-accent, currentColor) 55%, transparent);
+    text-underline-offset: 0.22em;
   }
 }
 }
