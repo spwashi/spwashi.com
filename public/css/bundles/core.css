@@ -33251,6 +33251,24 @@ html[data-spw-high-contrast="on"] :where(.site-frame, .frame-card, .frame-panel)
   box-shadow:
     inset 0 1px 0 color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.92)) 18%, transparent),
     0 3px 8px rgba(17, 18, 20, 0.04);
+  cursor: pointer;
+  transition:
+    transform 160ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 160ms ease,
+    border-radius 160ms ease;
+}
+
+:where(.palette-probe-chip:is(:hover, :focus-visible)) {
+  transform: translateY(-2px) scale(1.18);
+  border-radius: 50%;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 6px 16px -2px color-mix(in srgb, var(--active-op-color, #008080) 40%, transparent);
+}
+
+:where(.palette-probe-chip:active) {
+  transform: scale(0.92);
+  transition-duration: 50ms;
 }
 
 :where(.palette-probe-chip:nth-child(1)) { background: var(--spw-palette-probe-1, var(--active-op-color, #008080)); }
@@ -33497,16 +33515,29 @@ html[data-spw-high-contrast="on"] :where(.site-frame, .frame-card, .frame-panel)
   transform: translateY(-0.5px);
 }
 
-:where(.vibe-widget--compact .operator-chip[data-site-setting-active="true"]::after) {
+@keyframes spw-palette-pip-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.35);
+    opacity: 1;
+    box-shadow: 0 0 6px var(--spw-palette-probe-1, var(--active-op-color, #008080));
+  }
+}
+
+:where(.vibe-widget--compact .operator-chip[data-site-setting-active="true"]::after,
+       .tuning-strip .operator-chip[data-site-setting-active="true"]::after) {
   content: "";
   display: inline-block;
-  width: 0.35em;
-  height: 0.35em;
+  width: 0.38em;
+  height: 0.38em;
   border-radius: 50%;
   background: var(--spw-palette-probe-1, var(--active-op-color, #008080));
-  margin-left: 0.35em;
+  margin-left: 0.38em;
   vertical-align: middle;
-  opacity: 0.9;
+  animation: spw-palette-pip-pulse 2.6s infinite ease-in-out;
 }
 
 /* Broad fallback: give every standalone data-site-setting-set operator-chip the strong resonance-colored active treatment.
