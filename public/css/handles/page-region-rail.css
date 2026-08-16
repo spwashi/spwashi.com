@@ -62,6 +62,13 @@
       color 160ms ease;
   }
 
+  :where(.spw-page-region-rail__link[data-spw-operator="frame"]) { --active-op-color: var(--op-frame-color, #008080); }
+  :where(.spw-page-region-rail__link[data-spw-operator="action"]) { --active-op-color: var(--op-action-color, #006b6b); }
+  :where(.spw-page-region-rail__link[data-spw-operator="potential"], .spw-page-region-rail__link[data-spw-operator="ref"]) { --active-op-color: var(--op-ref-color, #2b6cb0); }
+  :where(.spw-page-region-rail__link[data-spw-operator="wonder"], .spw-page-region-rail__link[data-spw-operator="probe"]) { --active-op-color: var(--op-probe-color, #8a4baf); }
+  :where(.spw-page-region-rail__link[data-spw-operator="integration"], .spw-page-region-rail__link[data-spw-operator="object"]) { --active-op-color: var(--op-object-color, #b7791f); }
+  :where(.spw-page-region-rail__link[data-spw-operator="value"], .spw-page-region-rail__link[data-spw-operator="stream"]) { --active-op-color: var(--op-value-color, #b8860b); }
+
   :where(.spw-page-region-rail__link:is(:hover, :focus-visible)) {
     background: color-mix(in srgb, var(--active-op-color, #008080) 8%, transparent);
     color: var(--ink);
@@ -70,6 +77,7 @@
 
   :where(.spw-page-region-rail__link[data-spw-region-active="true"]) {
     background: color-mix(in srgb, var(--active-op-color, #008080) 12%, transparent);
+    border-inline-start: 2px solid var(--active-op-color, #008080);
     color: var(--ink);
     font-weight: 600;
   }
@@ -98,7 +106,8 @@
     font-family: var(--site-mono-font, "JetBrains Mono", monospace);
     font-size: 0.58rem;
     line-height: 1.4;
-    opacity: 0.78;
+    color: var(--active-op-color, inherit);
+    opacity: 0.88;
   }
 
   :where(.spw-page-region-rail__label) {
@@ -110,6 +119,20 @@
 
   :where(.spw-page-region-rail__name) {
     min-width: 0;
+  }
+
+  :where(.spw-page-region-rail__consequence) {
+    display: inline-block;
+    padding: 0.04rem 0.22rem;
+    border-radius: 3px;
+    background: color-mix(in srgb, var(--active-op-color, #008080) 10%, transparent);
+    color: color-mix(in srgb, var(--active-op-color, #008080) 84%, var(--ink, #111) 16%);
+    font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+    font-size: 0.52rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    width: max-content;
   }
 
   :where(.spw-page-region-rail__meta) {

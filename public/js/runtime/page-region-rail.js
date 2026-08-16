@@ -61,6 +61,27 @@ function regionComponentSummary(node) {
   return names.join(' · ');
 }
 
+function regionOperator(node) {
+  return (
+    node.getAttribute('data-spw-operator')
+    || node.querySelector('.frame-sigil, .frame-heading a')?.getAttribute('data-spw-operator')
+    || node.getAttribute('data-spw-role')
+    || 'frame'
+  );
+}
+
+function regionConsequence(node) {
+  return node.getAttribute('data-spw-consequence') || null;
+}
+
+function regionWonder(node) {
+  return node.getAttribute('data-spw-wonder') || null;
+}
+
+function regionLens(node) {
+  return node.getAttribute('data-spw-lens') || node.getAttribute('data-spw-lens-mode') || null;
+}
+
 function collectRegions(root = document) {
   const main = root.querySelector('main');
   if (!main) return [];
@@ -79,6 +100,10 @@ function collectRegions(root = document) {
     sigil: regionSigil(node),
     meta: regionMeta(node),
     componentSummary: regionComponentSummary(node),
+    operator: regionOperator(node),
+    consequence: regionConsequence(node),
+    wonder: regionWonder(node),
+    lens: regionLens(node),
     tune: node.getAttribute('data-spw-affordance') === 'tune',
     element: node,
   }));
@@ -121,6 +146,10 @@ function renderRail(regions) {
     const link = document.createElement('a');
     link.className = 'spw-page-region-rail__link';
     link.href = `#${region.id}`;
+    if (region.operator) link.dataset.spwOperator = region.operator;
+    if (region.consequence) link.dataset.spwConsequence = region.consequence;
+    if (region.wonder) link.dataset.spwWonder = region.wonder;
+    if (region.lens) link.dataset.spwLens = region.lens;
     if (region.tune) link.dataset.spwAffordance = 'tune';
     if (region.meta) link.dataset.spwRegionMeta = region.meta;
     if (region.componentSummary) link.dataset.spwAccentConcept = region.componentSummary;
@@ -137,7 +166,12 @@ function renderRail(regions) {
     name.textContent = region.label;
     label.append(name);
 
-    if (region.meta || region.componentSummary) {
+    if (region.consequence) {
+      const consequenceSpan = document.createElement('span');
+      consequenceSpan.className = 'spw-page-region-rail__consequence';
+      consequenceSpan.textContent = region.consequence;
+      label.append(consequenceSpan);
+    } else if (region.meta || region.componentSummary) {
       const meta = document.createElement('span');
       meta.className = 'spw-page-region-rail__meta';
       meta.textContent = region.componentSummary || region.meta;
@@ -145,7 +179,7 @@ function renderRail(regions) {
     }
 
     link.append(sigil, label);
-    link.title = [region.label, region.meta, region.componentSummary].filter(Boolean).join(' — ');
+    link.title = [region.label, region.consequence, region.meta, region.componentSummary].filter(Boolean).join(' — ');
     item.append(link);
     list.append(item);
   });
@@ -160,7 +194,6 @@ function bindActiveRegion(regions, rail) {
   if (!regions.length || !rail) return () => {};
 
   const links = [...rail.querySelectorAll('.spw-page-region-rail__link')];
-  const linkById = new Map(regions.map((region, index) => [region.id, links[index]]));
 
   const observer = new IntersectionObserver((entries) => {
     const visible = entries
@@ -170,9 +203,20 @@ function bindActiveRegion(regions, rail) {
     if (!visible.length) return;
 
     const id = visible[0].target.id;
+    const activeRegion = regions.find((r) => r.id === id);
+
     links.forEach((link) => {
       link.dataset.spwRegionActive = link.getAttribute('href') === `#${id}` ? 'true' : 'false';
     });
+
+    if (activeRegion) {
+      writeDatasetValues(document.documentElement, {
+        spwActiveRegion: id,
+        spwActiveRegionOperator: activeRegion.operator || null,
+        spwActiveRegionConsequence: activeRegion.consequence || null,
+        spwActiveRegionWonder: activeRegion.wonder || null,
+      });
+    }
   }, {
     root: null,
     rootMargin: '-20% 0px -55% 0px',

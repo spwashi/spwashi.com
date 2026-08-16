@@ -41775,6 +41775,13 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
       color 160ms ease;
   }
 
+  :where(.spw-page-region-rail__link[data-spw-operator="frame"]) { --active-op-color: var(--op-frame-color, #008080); }
+  :where(.spw-page-region-rail__link[data-spw-operator="action"]) { --active-op-color: var(--op-action-color, #006b6b); }
+  :where(.spw-page-region-rail__link[data-spw-operator="potential"], .spw-page-region-rail__link[data-spw-operator="ref"]) { --active-op-color: var(--op-ref-color, #2b6cb0); }
+  :where(.spw-page-region-rail__link[data-spw-operator="wonder"], .spw-page-region-rail__link[data-spw-operator="probe"]) { --active-op-color: var(--op-probe-color, #8a4baf); }
+  :where(.spw-page-region-rail__link[data-spw-operator="integration"], .spw-page-region-rail__link[data-spw-operator="object"]) { --active-op-color: var(--op-object-color, #b7791f); }
+  :where(.spw-page-region-rail__link[data-spw-operator="value"], .spw-page-region-rail__link[data-spw-operator="stream"]) { --active-op-color: var(--op-value-color, #b8860b); }
+
   :where(.spw-page-region-rail__link:is(:hover, :focus-visible)) {
     background: color-mix(in srgb, var(--active-op-color, #008080) 8%, transparent);
     color: var(--ink);
@@ -41783,6 +41790,7 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
 
   :where(.spw-page-region-rail__link[data-spw-region-active="true"]) {
     background: color-mix(in srgb, var(--active-op-color, #008080) 12%, transparent);
+    border-inline-start: 2px solid var(--active-op-color, #008080);
     color: var(--ink);
     font-weight: 600;
   }
@@ -41811,7 +41819,8 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
     font-family: var(--site-mono-font, "JetBrains Mono", monospace);
     font-size: 0.58rem;
     line-height: 1.4;
-    opacity: 0.78;
+    color: var(--active-op-color, inherit);
+    opacity: 0.88;
   }
 
   :where(.spw-page-region-rail__label) {
@@ -41823,6 +41832,20 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
 
   :where(.spw-page-region-rail__name) {
     min-width: 0;
+  }
+
+  :where(.spw-page-region-rail__consequence) {
+    display: inline-block;
+    padding: 0.04rem 0.22rem;
+    border-radius: 3px;
+    background: color-mix(in srgb, var(--active-op-color, #008080) 10%, transparent);
+    color: color-mix(in srgb, var(--active-op-color, #008080) 84%, var(--ink, #111) 16%);
+    font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+    font-size: 0.52rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    width: max-content;
   }
 
   :where(.spw-page-region-rail__meta) {
@@ -46433,6 +46456,106 @@ html[data-spw-transit-momentum="active"] :where([data-spw-form="brace"], .mode-s
     0 0 0 calc(1px * var(--spw-genomic-resonance, 0)) color-mix(in srgb, var(--active-op-color, var(--teal)) 20%, transparent),
     var(--card-shadow, none);
   transition: box-shadow 0.6s var(--ease-settle, ease-out), border-color 0.6s var(--ease-settle, ease-out);
+}
+
+/* ==========================================================================
+   Active Lens Depth & Relevance Gradients
+   --------------------------------------------------------------------------
+   When an active lens is engaged, elements matching the lens gain focal clarity
+   and vivid saturation, while tangential background sections receive a calm
+   atmospheric depth gradient falloff.
+   ========================================================================== */
+
+:root {
+  --spw-lens-relevance: 1;
+  --spw-depth-plane-blur: 0px;
+}
+
+/* Matched lens elements: high clarity, elevated resonance */
+:where([data-spw-active-lens]) :where([data-spw-lens-target="active"], [data-mode-panel][data-spw-lens-active="true"]) {
+  --spw-lens-relevance: 1;
+  --spw-resonance: 0.85;
+  filter: none;
+  opacity: 1;
+}
+
+/* Attenuation for out-of-lens background elements within an inspected frame */
+:where(.site-frame:has(.mode-switch [aria-pressed="true"])) :where([data-mode-panel]:not([data-spw-lens-active="true"]):not(:target)) {
+  --spw-lens-relevance: 0.25;
+}
+
+/* Regional Depth Planes */
+:where([data-spw-depth="surface"]) {
+  --spw-depth-plane-blur: 0px;
+  background: var(--surface-strong, rgba(255, 255, 255, 0.94));
+}
+
+:where([data-spw-depth="middle"]) {
+  --spw-depth-plane-blur: 4px;
+  background: color-mix(in srgb, var(--surface-soft, rgba(0, 0, 0, 0.04)) 90%, var(--active-op-color, var(--teal)) 10%);
+}
+
+:where([data-spw-depth="deep"]) {
+  --spw-depth-plane-blur: 8px;
+  background: color-mix(in srgb, var(--surface-panel-strong, rgba(255, 255, 255, 0.8)) 86%, var(--active-op-color, var(--teal)) 14%);
+  box-shadow: inset 0 2px 14px rgba(0, 0, 0, 0.06);
+}
+
+/* ==========================================================================
+   Spw Consequence Suite
+   --------------------------------------------------------------------------
+   Durable visual and interaction cues that map to specific module consequences
+   (model, framing, entry, memory, prose, record, practice, spell).
+   ========================================================================== */
+
+:where([data-spw-consequence="model"], [data-spw-consequence="framing"]) {
+  --active-consequence-color: var(--op-frame-color, var(--teal));
+  border-inline-start-color: var(--active-consequence-color);
+}
+
+:where([data-spw-consequence="entry"]) {
+  --active-consequence-color: var(--op-topic-color, #2e9f7f);
+  border-inline-start-color: var(--active-consequence-color);
+}
+
+:where([data-spw-consequence="memory"]) {
+  --active-consequence-color: var(--op-ref-color, #2b6cb0);
+  border-inline-start-color: var(--active-consequence-color);
+}
+
+:where([data-spw-consequence="prose"]) {
+  --active-consequence-color: var(--ink, #111);
+}
+
+:where([data-spw-consequence="record"]) {
+  --active-consequence-color: var(--op-object-color, var(--amber));
+  border-inline-start-color: var(--active-consequence-color);
+}
+
+:where([data-spw-consequence="practice"]) {
+  --active-consequence-color: var(--op-action-color, var(--teal-dark, #006b6b));
+  border-inline-start-color: var(--active-consequence-color);
+}
+
+:where([data-spw-consequence="spell"]) {
+  --active-consequence-color: var(--op-probe-color, var(--violet, #8a4baf));
+  border-inline-start-color: var(--active-consequence-color);
+}
+
+:where(.spw-consequence-badge) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.22rem;
+  padding: 0.08rem 0.38rem;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--active-consequence-color, var(--teal)) 12%, transparent);
+  color: color-mix(in srgb, var(--active-consequence-color, var(--teal)) 88%, var(--ink, #111) 12%);
+  border: 1px solid color-mix(in srgb, var(--active-consequence-color, var(--teal)) 24%, transparent);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 @media (prefers-reduced-motion: reduce) {

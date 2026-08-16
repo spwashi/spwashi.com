@@ -1257,6 +1257,106 @@ html[data-spw-transit-momentum="active"] :where([data-spw-form="brace"], .mode-s
   transition: box-shadow 0.6s var(--ease-settle, ease-out), border-color 0.6s var(--ease-settle, ease-out);
 }
 
+/* ==========================================================================
+   Active Lens Depth & Relevance Gradients
+   --------------------------------------------------------------------------
+   When an active lens is engaged, elements matching the lens gain focal clarity
+   and vivid saturation, while tangential background sections receive a calm
+   atmospheric depth gradient falloff.
+   ========================================================================== */
+
+:root {
+  --spw-lens-relevance: 1;
+  --spw-depth-plane-blur: 0px;
+}
+
+/* Matched lens elements: high clarity, elevated resonance */
+:where([data-spw-active-lens]) :where([data-spw-lens-target="active"], [data-mode-panel][data-spw-lens-active="true"]) {
+  --spw-lens-relevance: 1;
+  --spw-resonance: 0.85;
+  filter: none;
+  opacity: 1;
+}
+
+/* Attenuation for out-of-lens background elements within an inspected frame */
+:where(.site-frame:has(.mode-switch [aria-pressed="true"])) :where([data-mode-panel]:not([data-spw-lens-active="true"]):not(:target)) {
+  --spw-lens-relevance: 0.25;
+}
+
+/* Regional Depth Planes */
+:where([data-spw-depth="surface"]) {
+  --spw-depth-plane-blur: 0px;
+  background: var(--surface-strong, rgba(255, 255, 255, 0.94));
+}
+
+:where([data-spw-depth="middle"]) {
+  --spw-depth-plane-blur: 4px;
+  background: color-mix(in srgb, var(--surface-soft, rgba(0, 0, 0, 0.04)) 90%, var(--active-op-color, var(--teal)) 10%);
+}
+
+:where([data-spw-depth="deep"]) {
+  --spw-depth-plane-blur: 8px;
+  background: color-mix(in srgb, var(--surface-panel-strong, rgba(255, 255, 255, 0.8)) 86%, var(--active-op-color, var(--teal)) 14%);
+  box-shadow: inset 0 2px 14px rgba(0, 0, 0, 0.06);
+}
+
+/* ==========================================================================
+   Spw Consequence Suite
+   --------------------------------------------------------------------------
+   Durable visual and interaction cues that map to specific module consequences
+   (model, framing, entry, memory, prose, record, practice, spell).
+   ========================================================================== */
+
+:where([data-spw-consequence="model"], [data-spw-consequence="framing"]) {
+  --active-consequence-color: var(--op-frame-color, var(--teal));
+  border-inline-start-color: var(--active-consequence-color);
+}
+
+:where([data-spw-consequence="entry"]) {
+  --active-consequence-color: var(--op-topic-color, #2e9f7f);
+  border-inline-start-color: var(--active-consequence-color);
+}
+
+:where([data-spw-consequence="memory"]) {
+  --active-consequence-color: var(--op-ref-color, #2b6cb0);
+  border-inline-start-color: var(--active-consequence-color);
+}
+
+:where([data-spw-consequence="prose"]) {
+  --active-consequence-color: var(--ink, #111);
+}
+
+:where([data-spw-consequence="record"]) {
+  --active-consequence-color: var(--op-object-color, var(--amber));
+  border-inline-start-color: var(--active-consequence-color);
+}
+
+:where([data-spw-consequence="practice"]) {
+  --active-consequence-color: var(--op-action-color, var(--teal-dark, #006b6b));
+  border-inline-start-color: var(--active-consequence-color);
+}
+
+:where([data-spw-consequence="spell"]) {
+  --active-consequence-color: var(--op-probe-color, var(--violet, #8a4baf));
+  border-inline-start-color: var(--active-consequence-color);
+}
+
+:where(.spw-consequence-badge) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.22rem;
+  padding: 0.08rem 0.38rem;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--active-consequence-color, var(--teal)) 12%, transparent);
+  color: color-mix(in srgb, var(--active-consequence-color, var(--teal)) 88%, var(--ink, #111) 12%);
+  border: 1px solid color-mix(in srgb, var(--active-consequence-color, var(--teal)) 24%, transparent);
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 @media (prefers-reduced-motion: reduce) {
   :where([data-spw-operator], [data-spw-form="brace"], .mode-switch) {
     transition: none !important;
