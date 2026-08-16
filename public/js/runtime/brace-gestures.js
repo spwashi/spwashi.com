@@ -168,7 +168,7 @@ export function initBraceGestures() {
    ========================================================================== */
 
 function braceTarget(node) {
-  return node?.closest?.('[data-spw-form], .spw-delimiter, .frame-sigil, .frame-card-sigil, .frame-panel-sigil, [data-spw-semantic-expression], .math-lens-card, .topic-reference-card, .spw-principle-card, .gratitude-card, .returner-card') || null;
+  return node?.closest?.('[data-spw-form], .spw-delimiter, .frame-sigil, .frame-card-sigil, .frame-panel-sigil, [data-spw-semantic-expression], .spw-card, .frame-card, .plan-card, .ref-card, .media-card, .math-lens-card, .topic-reference-card, .spw-principle-card, .gratitude-card, .returner-card, [data-spw-card]') || null;
 }
 
 function classifyTarget(el) {
@@ -751,10 +751,38 @@ function onPointerEnter(event) {
   );
 }
 
+function updateCardPointerHyperphysics(el, event) {
+  if (!(el instanceof HTMLElement)) return;
+  const rect = el.getBoundingClientRect();
+  if (rect.width === 0 || rect.height === 0) return;
+  const x = event.clientX - rect.left;
+  const y = event.clientY - rect.top;
+  const px = Math.max(0, Math.min(1, x / rect.width));
+  const py = Math.max(0, Math.min(1, y / rect.height));
+
+  const tiltX = ((px - 0.5) * 8).toFixed(2);
+  const tiltY = ((0.5 - py) * 8).toFixed(2);
+
+  writeStyleValue(el, '--card-pointer-x', `${(px * 100).toFixed(1)}%`);
+  writeStyleValue(el, '--card-pointer-y', `${(py * 100).toFixed(1)}%`);
+  writeStyleValue(el, '--card-tilt-x', `${tiltX}deg`);
+  writeStyleValue(el, '--card-tilt-y', `${tiltY}deg`);
+}
+
+function clearCardPointerHyperphysics(el) {
+  if (!(el instanceof HTMLElement)) return;
+  writeStyleValue(el, '--card-pointer-x', null);
+  writeStyleValue(el, '--card-pointer-y', null);
+  writeStyleValue(el, '--card-tilt-x', null);
+  writeStyleValue(el, '--card-tilt-y', null);
+}
+
 function onPointerLeave(event) {
   const target = braceTarget(event.target);
   if (!target) return;
   if (event.relatedTarget instanceof Node && target.contains(event.relatedTarget)) return;
+
+  clearCardPointerHyperphysics(target);
 
   const state = gestureState.get(target);
   if (state?.dragging) return;
@@ -843,6 +871,10 @@ function onPointerDown(event) {
 function onPointerMove(event) {
   const target = braceTarget(event.target);
   if (!target) return;
+
+  if (!isCoarsePointerEvent(event)) {
+    updateCardPointerHyperphysics(target, event);
+  }
 
   const state = gestureState.get(target);
   if (!state) return;
