@@ -31,6 +31,22 @@ const QUOTES = new Set(['"', "'", '`']);
 const ROOT_RE = /^\s*([A-Za-z_][A-Za-z0-9_.-]*)/;
 const OPERATOR_SUBJECT_RE = /[A-Za-z_"'([{<]/;
 
+export const SPW_DIMENSIONAL_ASCENT = Object.freeze([
+  Object.freeze({ order: 0, label: '0D', role: 'handle', source: 'authored' }),
+  Object.freeze({ order: 1, label: '1D', role: 'vector', source: 'authored' }),
+  Object.freeze({ order: 2, label: '2D', role: 'form', source: 'authored' }),
+  Object.freeze({ order: 3, label: '3D', role: 'field', source: 'contextual' }),
+  Object.freeze({ order: 4, label: '4D', role: 'path', source: 'runtime' }),
+]);
+
+export const SPW_DIMENSIONAL_EDGES = Object.freeze([
+  Object.freeze({ from: 0, to: 1, relation: 'direct' }),
+  Object.freeze({ from: 1, to: 2, relation: 'bound' }),
+  Object.freeze({ from: 2, to: 3, relation: 'situate' }),
+  Object.freeze({ from: 3, to: 4, relation: 'replay' }),
+  Object.freeze({ from: 4, to: 0, relation: 'return' }),
+]);
+
 function pushText(tokens, value, start, end) {
   if (!value) return;
   const previous = tokens[tokens.length - 1];
@@ -255,8 +271,51 @@ export function parseSpwExpression(expression = '', options = {}) {
   };
 }
 
+/**
+ * Report the dimensional evidence available to a public expression surface.
+ *
+ * Authored text can prove identity, operator direction, and paired form. Field
+ * context and replayable paths are projections supplied explicitly by a host
+ * or runtime; they are never inferred from punctuation alone.
+ */
+export function describeSpwDimensionality(source = '', options = {}) {
+  const geometry = describeSpwExpression(source, options);
+  const identity = geometry.root || geometry.tokens
+    .find((token) => token.type === 'text' && token.value.trim())
+    ?.value.trim() || '';
+  const authoredOrders = new Set();
+
+  if (identity) authoredOrders.add(0);
+  if (geometry.operators.length) authoredOrders.add(1);
+  if (geometry.forms.length) authoredOrders.add(2);
+
+  const dimensions = SPW_DIMENSIONAL_ASCENT.map((dimension) => {
+    if (authoredOrders.has(dimension.order)) {
+      return { ...dimension, state: 'authored' };
+    }
+    if (dimension.order === 3 && options.hostContext) {
+      return { ...dimension, state: 'contextual' };
+    }
+    if (dimension.order === 4 && options.runtimePath) {
+      return { ...dimension, state: 'runtime' };
+    }
+    return { ...dimension, state: 'available' };
+  });
+
+  return {
+    identity,
+    dimensions,
+    edges: SPW_DIMENSIONAL_EDGES,
+    authoredOrders: [...authoredOrders],
+    authoredThrough: authoredOrders.size ? Math.max(...authoredOrders) : null,
+    sourceBoundary: '0D-2D authored; 3D-4D contextual',
+  };
+}
+
 export const SPW_EXPRESSION_GEOMETRY_CONTRACT = Object.freeze({
   forms: FORM_GLYPHS,
+  dimensions: SPW_DIMENSIONAL_ASCENT,
+  edges: SPW_DIMENSIONAL_EDGES,
   authority: 'surface-projection',
-  nonGoals: Object.freeze(['ONF', 'evaluation', 'canonicalization', 'mutation']),
+  nonGoals: Object.freeze(['ONF', 'evaluation', 'canonicalization', 'mutation', 'context-inference']),
 });

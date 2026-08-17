@@ -48,20 +48,35 @@ const MEASURE_BANDS = Object.freeze({
    lays the card out. Only written for [data-spw-pack-local] opt-ins. */
 const PACK_LAYOUT_BANDS = Object.freeze({ split: 416, feature: 704 });
 
-const resolvePackLayout = (box) => {
-  // Use the content-box inline size — that is what `container-type: inline-size`
-  // measures, so the mirror matches the @container decision at the boundaries.
-  const width = box.contentInline || box.inlineSize;
+export const resolvePackLayoutForWidth = (inlineSize = 0) => {
+  const width = Number.isFinite(Number(inlineSize)) ? Number(inlineSize) : 0;
   if (width >= PACK_LAYOUT_BANDS.feature) return 'feature';
   if (width >= PACK_LAYOUT_BANDS.split) return 'split';
   return 'stack';
 };
 
-const resolvePackFill = (el) => {
-  const items = el.querySelectorAll?.('[data-spw-pack-region] > *').length || el.children?.length || 0;
-  if (items <= 2) return 'sparse';
-  if (items <= 5) return 'balanced';
+const resolvePackLayout = (box) => {
+  // Use the content-box inline size — that is what `container-type: inline-size`
+  // measures, so the mirror matches the @container decision at the boundaries.
+  return resolvePackLayoutForWidth(box.contentInline || box.inlineSize);
+};
+
+export const resolvePackFillFromCount = (itemCount = 0) => {
+  const count = Math.max(0, Number.parseInt(itemCount, 10) || 0);
+  if (count <= 2) return 'sparse';
+  if (count <= 5) return 'balanced';
   return 'full';
+};
+
+const resolvePackFill = (el) => {
+  const regionItems = el.querySelectorAll?.('[data-spw-pack-region] > *').length || 0;
+  const listItems = el.querySelectorAll?.(
+    ':scope > ol > li, :scope > ul > li, :scope > nav > ol > li, :scope > nav > ul > li',
+  ).length || 0;
+  const directItems = [...(el.children || [])]
+    .filter((child) => !child.hasAttribute?.('data-spw-pack-readout'))
+    .length;
+  return resolvePackFillFromCount(regionItems || listItems || directItems);
 };
 
 const PRESENCE_STATES = Object.freeze({
@@ -417,10 +432,16 @@ export function initSpwCompositionBoxModel(ctx = {}) {
   const resizeObserver = typeof ResizeObserver === 'function'
     ? new ResizeObserver(() => queueRefresh())
     : null;
-  if (resizeObserver && root instanceof Element) {
-    resizeObserver.observe(root);
-  } else if (resizeObserver && root === document) {
-    resizeObserver.observe(document.documentElement);
+  if (resizeObserver) {
+    const resizeTargets = new Set();
+    if (root instanceof Element) resizeTargets.add(root);
+    else if (root === document) resizeTargets.add(document.documentElement);
+
+    if (root instanceof Element && root.matches('[data-spw-pack-local]')) {
+      resizeTargets.add(root);
+    }
+    root.querySelectorAll?.('[data-spw-pack-local]').forEach((host) => resizeTargets.add(host));
+    resizeTargets.forEach((target) => resizeObserver.observe(target));
   }
 
   const cleanup = () => {
@@ -465,6 +486,7 @@ export const SPW_COMPOSITION_BOX_MODEL_CONTRACT = Object.freeze({
   presence: PRESENCE_STATES,
   sizeContexts: SIZE_CONTEXTS,
   contentTones: CONTENT_TONES,
+  packLayoutBands: PACK_LAYOUT_BANDS,
   portableUse:
     'Import snapshotCompositionBox() or annotateCompositionBoxes() to make a static component explain its layout, presence, size context, content tone, and next repair clue.',
 });

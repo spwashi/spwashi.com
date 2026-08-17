@@ -23,6 +23,7 @@ Use these when a task is broad, cross-disciplinary, or likely to create reusable
 - `daily-kernel-development/PLAN.md` — run one-session kernels for engineers, animators, illustrators, designers, musicians, artists, and collaborators without broad rewrites.
 - `spw-surface-normalization/PLAN.md` — keep `.spw` surfaces navigable, dimensional, and reviewable as semantic capacity grows.
 - `modular-experience-slices/PLAN.md` — use slice contracts when ownership spans HTML, CSS, JS, `.spw`, validation, and practice beds.
+- `dimensional-expression-navigation/PLAN.md` — connect 0D handles through 4D replay paths with content-responsive navigation and honest authored/contextual boundaries.
 - `interaction-loop-contract/PLAN.md` — centralize shared interaction-feedback states, refresh reasons, and cancel/eligibility handling.
 - `gesture-state-refinement/PLAN.md` — calm gesture intent on mobile and document the resulting interaction grammar.
 - `navigation-header-disclosure/PLAN.md` — keep header disclosure roles, overlay state, and compact action ownership legible.

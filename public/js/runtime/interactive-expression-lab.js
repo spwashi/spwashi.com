@@ -7,7 +7,10 @@
  * and live cauldron resonance.
  * ========================================================================== */
 
-import { scanSpwExpression, describeSpwExpression } from '/public/js/semantic/spw-expression-geometry.js';
+import {
+  describeSpwDimensionality,
+  describeSpwExpression,
+} from '/public/js/semantic/spw-expression-geometry.js';
 import { writeDatasetValue } from '/public/js/kernel/dom-contracts.js';
 
 const STORAGE_KEY = 'spw-edited-expressions';
@@ -109,6 +112,51 @@ function resolveRouteForExpression(geometry) {
 }
 
 let activeHud = null;
+let activeHudTarget = null;
+let activeHudGeometry = null;
+let hudPositionFrame = 0;
+
+function hideActiveHud(target = null) {
+  if (!activeHud || (target && target !== activeHudTarget)) return;
+  activeHud.classList.remove('is-visible');
+  activeHudTarget = null;
+  activeHudGeometry = null;
+  if (hudPositionFrame) {
+    window.cancelAnimationFrame(hudPositionFrame);
+    hudPositionFrame = 0;
+  }
+}
+
+function syncHudPosition() {
+  hudPositionFrame = 0;
+  if (!activeHud?.classList.contains('is-visible') || !activeHudTarget?.isConnected) return;
+
+  const targetRect = activeHudTarget.getBoundingClientRect();
+  const hudRect = activeHud.getBoundingClientRect();
+  const viewport = window.visualViewport;
+  const viewportLeft = viewport?.offsetLeft || 0;
+  const viewportTop = viewport?.offsetTop || 0;
+  const viewportWidth = viewport?.width || window.innerWidth;
+  const viewportHeight = viewport?.height || window.innerHeight;
+  const gutter = 12;
+  const minLeft = viewportLeft + gutter;
+  const maxLeft = Math.max(minLeft, viewportLeft + viewportWidth - hudRect.width - gutter);
+  const minTop = viewportTop + gutter;
+  const maxTop = Math.max(minTop, viewportTop + viewportHeight - hudRect.height - gutter);
+  const below = targetRect.bottom + 6;
+  const above = targetRect.top - hudRect.height - 6;
+  const preferredTop = below + hudRect.height <= viewportTop + viewportHeight - gutter
+    ? below
+    : above;
+
+  activeHud.style.left = `${Math.max(minLeft, Math.min(targetRect.left, maxLeft))}px`;
+  activeHud.style.top = `${Math.max(minTop, Math.min(preferredTop, maxTop))}px`;
+}
+
+function scheduleHudPosition() {
+  if (hudPositionFrame || !activeHud?.classList.contains('is-visible') || !activeHudTarget) return;
+  hudPositionFrame = window.requestAnimationFrame(syncHudPosition);
+}
 
 function ensureHud() {
   if (activeHud) return activeHud;
@@ -123,6 +171,43 @@ function ensureHud() {
       <span class="spw-expression-hud__title">Geometry &amp; Boundary Lens</span>
       <span class="spec-pill" data-hud="wake">unbounded</span>
     </div>
+    <ol class="spw-expression-hud__dimensions" aria-label="Expression dimensions from handle to replay path">
+      <li data-hud-dimension="0">
+        <a href="/topics/software/#software-surface">
+          <span class="spw-expression-hud__order">0D</span>
+          <strong>Handle</strong>
+          <small data-hud-dimension-status>in source</small>
+        </a>
+      </li>
+      <li data-hud-dimension="1">
+        <a href="/topics/software/spw/#operator-ring">
+          <span class="spw-expression-hud__order">1D</span>
+          <strong>Vector</strong>
+          <small data-hud-dimension-status>operator</small>
+        </a>
+      </li>
+      <li data-hud-dimension="2">
+        <a href="/topics/software/spw/#concept-form-lab">
+          <span class="spw-expression-hud__order">2D</span>
+          <strong>Form</strong>
+          <small data-hud-dimension-status>boundary</small>
+        </a>
+      </li>
+      <li data-hud-dimension="3">
+        <a href="/topics/software/#semantic-fields">
+          <span class="spw-expression-hud__order">3D</span>
+          <strong>Field</strong>
+          <small data-hud-dimension-status>host context</small>
+        </a>
+      </li>
+      <li data-hud-dimension="4">
+        <a href="/settings/#spell-board">
+          <span class="spw-expression-hud__order">4D</span>
+          <strong>Path</strong>
+          <small data-hud-dimension-status>runtime replay</small>
+        </a>
+      </li>
+    </ol>
     <div class="spw-expression-hud__forms">
       <button type="button" class="spw-form-morph-btn" data-morph="frame" title="Select as Mode/Variant [ ]">
         <span class="spw-form-glyph">[mode]</span>
@@ -143,7 +228,7 @@ function ensureHud() {
     </div>
     <div class="spw-expression-hud__suggestions" data-hud="suggestions"></div>
     <div class="spw-expression-hud__nav-strip" data-hud="nav-strip">
-      <a class="spw-hud-nav-link" data-hud="route-link" href="#" style="display: none;">
+      <a class="spw-hud-nav-link" data-hud="route-link" href="#" hidden>
         <span>➔</span> <span data-hud="route-label">Navigate to Route</span>
       </a>
       <button type="button" class="spw-hud-search-btn" data-hud="search-btn">
@@ -152,7 +237,34 @@ function ensureHud() {
     </div>
   `;
 
+  hud.addEventListener('click', (event) => {
+    const button = event.target.closest?.('.spw-form-morph-btn');
+    if (!button || !activeHudTarget || !activeHudGeometry) return;
+
+    event.preventDefault();
+    const targetForm = button.getAttribute('data-morph');
+    const targetConfig = BOUNDARY_SEMANTICS[targetForm];
+    if (!targetConfig) return;
+
+    const root = activeHudGeometry.root || 'stem';
+    const firstToken = activeHudGeometry.channels[0] || 'token';
+    activeHudTarget.textContent = `${root}${targetConfig.open}${firstToken}${targetConfig.close}`;
+    activeHudTarget.dispatchEvent(new Event('input', { bubbles: true }));
+    activeHudTarget.focus({ preventScroll: true });
+  });
+
+  hud.addEventListener('focusout', () => {
+    window.setTimeout(() => {
+      const focused = document.activeElement;
+      if (!hud.contains(focused) && focused !== activeHudTarget) hideActiveHud();
+    }, 0);
+  });
+
   document.body.appendChild(hud);
+  window.addEventListener('resize', scheduleHudPosition, { passive: true });
+  window.addEventListener('scroll', scheduleHudPosition, { passive: true, capture: true });
+  window.visualViewport?.addEventListener('resize', scheduleHudPosition, { passive: true });
+  window.visualViewport?.addEventListener('scroll', scheduleHudPosition, { passive: true });
   activeHud = hud;
   return hud;
 }
@@ -186,24 +298,50 @@ export function initInteractiveExpressionLab(root = document) {
 
     function positionHud(target) {
       const hud = ensureHud();
-      const rect = target.getBoundingClientRect();
-      const top = window.scrollY + rect.bottom + 6;
-      const left = Math.max(12, Math.min(window.innerWidth - 340, window.scrollX + rect.left));
-
-      hud.style.top = `${top}px`;
-      hud.style.left = `${left}px`;
-      hud.classList.add('is-visible');
-
+      activeHudTarget = target;
       updateHudDisplay(target);
+      hud.classList.add('is-visible');
+      scheduleHudPosition();
     }
 
     function updateHudDisplay(target) {
       if (!activeHud) return;
       const text = target.textContent.trim();
       currentGeometry = describeSpwExpression(text);
+      activeHudGeometry = currentGeometry;
 
       const wakeLabel = activeHud.querySelector('[data-hud="wake"]');
       if (wakeLabel) wakeLabel.textContent = currentGeometry.wake || 'root';
+
+      const hostContext = target.closest('section[id], article[id], main[id], body');
+      const dimensionality = describeSpwDimensionality(text, {
+        hostContext: hostContext?.id || hostContext?.dataset?.spwSurface || 'page',
+        runtimePath: '/settings/#spell-board',
+      });
+      const currentOrder = dimensionality.authoredThrough;
+
+      activeHud.querySelectorAll('[data-hud-dimension]').forEach((item) => {
+        const order = Number(item.getAttribute('data-hud-dimension'));
+        const dimension = dimensionality.dimensions[order];
+        const status = item.querySelector('[data-hud-dimension-status]');
+        const link = item.querySelector('a');
+        const labels = {
+          authored: 'in source',
+          contextual: 'host context',
+          runtime: 'replay path',
+          available: 'next layer',
+        };
+
+        item.dataset.dimensionState = dimension?.state || 'available';
+        if (status) status.textContent = labels[dimension?.state] || labels.available;
+        if (link) {
+          if (order === 0) {
+            link.href = hostContext?.id ? `#${hostContext.id}` : `${location.pathname}${location.search}`;
+          }
+          if (order === currentOrder) link.setAttribute('aria-current', 'step');
+          else link.removeAttribute('aria-current');
+        }
+      });
 
       // Mark active form morph buttons
       activeHud.querySelectorAll('.spw-form-morph-btn').forEach((btn) => {
@@ -242,9 +380,9 @@ export function initInteractiveExpressionLab(root = document) {
         if (matchedRoute) {
           routeLink.href = matchedRoute.href;
           routeLabel.textContent = `Jump to ${matchedRoute.token} (${matchedRoute.href})`;
-          routeLink.style.display = 'inline-flex';
+          routeLink.hidden = false;
         } else {
-          routeLink.style.display = 'none';
+          routeLink.hidden = true;
         }
       }
 
@@ -261,10 +399,6 @@ export function initInteractiveExpressionLab(root = document) {
           }
         };
       }
-    }
-
-    function hideHud() {
-      if (activeHud) activeHud.classList.remove('is-visible');
     }
 
     // Focus & Input Listeners
@@ -297,6 +431,7 @@ export function initInteractiveExpressionLab(root = document) {
       }
       writeStoredExpressions(currentStored);
       updateHudDisplay(el);
+      scheduleHudPosition();
 
       // Emit event for cauldron & wonder memory
       window.dispatchEvent(new CustomEvent('spw:expression-tuned', {
@@ -308,26 +443,9 @@ export function initInteractiveExpressionLab(root = document) {
     el.addEventListener('blur', () => {
       setTimeout(() => {
         if (!document.activeElement?.closest?.('.spw-expression-hud')) {
-          hideHud();
+          hideActiveHud(el);
         }
       }, 200);
-    });
-
-    // Morph Form Click Handling
-    ensureHud().querySelectorAll('.spw-form-morph-btn').forEach((btn) => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetForm = btn.getAttribute('data-morph');
-        const targetConfig = BOUNDARY_SEMANTICS[targetForm];
-        if (!targetConfig || !document.activeElement?.matches?.('[data-spw-interactive-expression], .spw-interactive-expression')) return;
-
-        const targetEl = document.activeElement;
-        const root = currentGeometry.root || 'stem';
-        const firstToken = currentGeometry.channels[0] || 'token';
-
-        targetEl.textContent = `${root}${targetConfig.open}${firstToken}${targetConfig.close}`;
-        targetEl.dispatchEvent(new Event('input', { bubbles: true }));
-      });
     });
   });
 }

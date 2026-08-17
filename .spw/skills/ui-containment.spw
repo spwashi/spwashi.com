@@ -68,6 +68,23 @@ fixity = "tending"
   motif_on_mobile: "paper-motif now changes role below 48rem rather than switching off, but the mobile treatment has not been judged on a device."
 }
 
+^"dimensional_expression_navigation_2026_08_17"{
+  operation = "audit"
+  fixity = "tending"
+  route = "/topics/software/#dimensional-expression-path"
+  claim: "A dimensional path can change topology with its own container while keeping the page itself overflow-free."
+  measured: #[
+    .{ viewport = `320x760`; page_overflow = `0px`; posture = `horizontal snap rail`; track = `259px client / 1093px scroll`; card = `208px × 229px, five equal seats` },
+    .{ viewport = `768x900`; page_overflow = `0px`; posture = `two-column split with full-width return`; track = `682px client / 682px scroll`; card = `four 333px × 185px seats + one 653px × 185px return seat` },
+    .{ viewport = `1280x900`; page_overflow = `0px`; posture = `five-column field`; track = `1159px client / 1159px scroll`; card = `about 221px × 237px, five equal seats` }
+  ][reg=set]
+  finding: "The first wide pass exposed a generic typography rule that capped every ol at 68ch. The alignment pass then exposed inherited li margins and unequal implicit rows. Named-track width, zeroed item margins, and grid-auto-rows: 1fr fixed the component locally; the page never hides overflow."
+  packing_logic: "At 26rem the component spends two columns and lets the return path span both. At 44rem six structural tracks form a balanced 3 + 2. At 64rem the complete five-part field opens in one row."
+  touch_target: "Every destination card exceeds the 44px local target floor in both axes; HUD buttons and links use a 2.75rem minimum block size."
+  unmeasured: "A final physical-device pass and 4K screenshot remain useful aesthetic checks; the mechanical width states above are browser measurements."
+  owner = ".agents/plans/dimensional-expression-navigation/PLAN.md + .spw/slices/dimensional-expression-navigation/index.spw"
+}
+
 #>wonder_ui_containment_1
 ?["Can containment be proven by anything other than looking?"]{
   #:depth #!experiential ~#lens(evidence)

@@ -77,6 +77,15 @@ expression = semantics[align]{name.attribute.expression}<corpus>
   probe: `npm run spw:analyze`
 }
 
+^"variant_edge_alignment_2026_08_17"{
+  operation = "align"
+  fixity = "tending"
+  finding = `Variant selection named only the chosen endpoint, so read → inspect and compare → inspect collapsed into the same event even though they traverse different edges.`
+  repair = `spw:variant-selected now carries previousVariant plus an edge object; authored group defaults establish the departure before query intent lands.`
+  naming = `No new data-spw stem: endpoint state stays in component-variant-active and transition meaning stays in the event payload.`
+  probe = `engagement-features.test.mjs exercises endpoint precedence and edge labeling.`
+}
+
 #>wonder_semantics_rigor_1
 ?["Does part-kinship carry meaning, or only vocabulary?"]{
   #:depth #!mathematical ~#lens(inductance)

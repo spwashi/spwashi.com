@@ -8,6 +8,7 @@
 
 @math_practice_labs: ~"./math-practice-labs/index.spw"
 @page_region_discoverability: ~"./page-region-discoverability/index.spw"
+@dimensional_expression_navigation: ~"./dimensional-expression-navigation/index.spw"
 @modular_experience_slices_plan: ~"../../.agents/plans/modular-experience-slices/PLAN.md"
 @page_model: ~"../surfaces/page-model.spw"
 @semantic_capacity: ~"../conventions/semantic-capacity.spw"
@@ -23,6 +24,7 @@ intent: .{
 dispatch: .{
  math_practice_labs = @math_practice_labs
  page_region_discoverability = @page_region_discoverability
+ dimensional_expression_navigation = @dimensional_expression_navigation
  modular_experience_slices_plan = @modular_experience_slices_plan
  page_model = @page_model
  semantic_capacity = @semantic_capacity

@@ -69,7 +69,8 @@ fixity = "tending"
   dated = `2026-08-17`
   hosts = #[
     `@bench pack-card specimen`,
-    `index.html living-concept-card[data-concept=attention-posture] — the only production pack-local host`
+    `index.html living-concept cards — pack-local`,
+    `/topics/software/#dimensional-expression-path — first production pack-local route component`
   ][reg=set]
   still_viewport = `frame-card / site-frame grids still pack from viewport media + @typography_packing.`
   first = #[
@@ -78,6 +79,18 @@ fixity = "tending"
     `settings vibe-widget-grid — already in composition-box-model DEFAULT_SELECTOR`
   ][reg=set]
   !widen = `Do not add every .site-frame to DEFAULT_SELECTOR just to write pack-layout.`
+}[reg=facet]
+
+^"first_route_adoption_2026_08_17"{
+  operation = "align"
+  fixity = "tending"
+  route = `/topics/software/#dimensional-expression-path`
+  claim = `The dimensional navigator is the first production pack-local route component: CSS selects geometry from component width while composition-box-model can mirror stack|split|feature and sparse|balanced|full when its enhancement policy mounts.`
+  alignment = `Its 26rem and 44rem container edges share PACK_LAYOUT_BANDS; a 64rem refinement remains inside feature posture and opens all five seats.`
+  packing = `Five items use full-width remainders: 2 + 2 + 1 below feature, 3 + 2 at feature, and 5 at the widest refinement.`
+  fill = `Semantic ol/li collections count their list items before direct component children, so a header + nav shell reports the five packed items rather than two wrapper nodes.`
+  observation = `ResizeObserver now watches opted-in pack-local hosts directly, so container-only changes refresh the inspectable mirror without waiting for a viewport event.`
+  invariant = `data-spw-pack-layout remains narration; no geometry is gated on the runtime attribute.`
 }[reg=facet]
 
 validation: #[
