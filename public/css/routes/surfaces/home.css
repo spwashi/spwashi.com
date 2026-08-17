@@ -164,7 +164,8 @@ html[data-spw-color-mode="dark"] body[data-spw-surface="home"] {
   overflow: clip;
 }
 
-@container spw-shell (min-width: 70rem), spw-frame (min-width: 60rem) {
+/* Use the nearest shell/frame inline-size container; query lists are invalid here. */
+@container (min-width: 60rem) {
   :where([data-spw-feature="home-kernel-entry"]:is(.spw-hero--split-figure, .site-hero--split-figure)) {
     grid-template-columns: minmax(0, 1.08fr) minmax(14rem, 17rem);
     grid-template-areas:

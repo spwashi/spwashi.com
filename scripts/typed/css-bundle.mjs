@@ -15,9 +15,9 @@ function normalizeCssBody(source) {
         .join('\n')
         .trim();
 }
-function stripManifestAndImports(source) {
+export function stripManifestAndImports(source) {
     return normalizeCssBody(source
-        .replace(/^@layer\s+[^;]+;\s*/m, '')
+        .replace(/^@layer[ \t]+[^;{}\n]+;[ \t]*(?:\r?\n)?/m, '')
         .replace(/@import\s+url\((['"]?)([^'")]+)\1\)\s*(?:layer\(([^)]+)\))?\s*;/g, ''));
 }
 async function readLocalCss(href) {

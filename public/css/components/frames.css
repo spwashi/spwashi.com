@@ -469,7 +469,8 @@ html[data-spw-high-contrast="on"] :where(.spw-frame, .site-frame) {
 }
 
 @supports (container-type: inline-size) {
-  @container spw-shell (min-width: 70rem), spw-frame (min-width: 60rem) {
+  /* The nearest inline-size container may be the shell or a nested frame. */
+  @container (min-width: 60rem) {
     :where(.site-hero--split-figure, .spw-hero--split-figure) {
       grid-template-columns: repeat(12, minmax(0, 1fr));
       gap: var(--gap-inline-flow, var(--space-xs, 0.5rem)) var(--gap-block-flow, var(--space-lg, 1.5rem));

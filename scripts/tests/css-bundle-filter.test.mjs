@@ -2,6 +2,7 @@
  * Unit checks for incremental CSS bundle selection (no DOM).
  */
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import { describe, it } from 'node:test';
 
 import {
@@ -15,8 +16,32 @@ import {
   routeBundleHref,
   targetsForSourcePaths,
 } from '../typed/css-manifest.mjs';
+import { stripManifestAndImports } from '../typed/css-bundle.mjs';
 
 describe('css-manifest incremental filters', () => {
+  it('bundle flattening strips layer declarations without consuming layer blocks', () => {
+    assert.equal(
+      stripManifestAndImports('@layer reset, tokens, routes;\n.example { color: red; }'),
+      '.example { color: red; }',
+    );
+    assert.equal(
+      stripManifestAndImports('@layer surface {\n  .example { color: red; }\n}'),
+      '@layer surface {\n  .example { color: red; }\n}',
+    );
+  });
+
+  it('authored container queries use one valid nearest-container condition', async () => {
+    const sources = await Promise.all([
+      '../../public/css/components/frames.css',
+      '../../public/css/components/content.css',
+      '../../public/css/routes/surfaces/home.css',
+    ].map((file) => readFile(new URL(file, import.meta.url), 'utf8')));
+
+    for (const source of sources) {
+      assert.doesNotMatch(source, /@container[^\n{]+,\s*[\w-]+\s*\(/u);
+    }
+  });
+
   it('parseStyleImports preserves external query and hash components', () => {
     const imports = parseStyleImports(`
       @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap");
@@ -118,5 +143,28 @@ describe('css-manifest incremental filters', () => {
     });
     assert.equal(filtered.length, 1);
     assert.equal(filtered[0].scope, 'topics');
+  });
+
+  it('play owns the kinetic hero CSS instead of charging every route', () => {
+    const sheets = resolveScopedStylesheets({ surface: 'play' });
+    assert.ok(sheets.some((sheet) => sheet.kind === 'route' && sheet.scope === 'play'));
+    assert.ok(
+      targetsForSourcePaths(['public/css/components/spw-hero-kinetic-stage.css'], {
+        coreSourceHrefs: [],
+      }).some((target) => target.kind === 'route' && target.scope === 'play'),
+    );
+  });
+
+  it('seed-card CSS follows the two route surfaces that host its module', () => {
+    const targets = targetsForSourcePaths(['public/css/components/cards/seed-card.css'], {
+      coreSourceHrefs: [],
+    });
+    assert.deepEqual(
+      targets
+        .filter((target) => target.kind === 'route')
+        .map((target) => target.scope)
+        .sort(),
+      ['newyear', 'services'],
+    );
   });
 });

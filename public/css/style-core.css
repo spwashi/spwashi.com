@@ -38,7 +38,6 @@
 /* profile-card.css moved to the tools-profile route bundle 2026-08-12:
    32KB of card CSS for markup only modules/profile/builder.js generates,
    on one route, shipped to every visitor via core. */
-@import url('/public/css/components/cards/seed-card.css') layer(components);
 @import url('/public/css/components/semantic-learning.css') layer(components);
 @import url('/public/css/components/semantic-variants.css') layer(components);
 @import url('/public/css/components/semantic-resonance.css') layer(components);
@@ -55,7 +54,6 @@
 @import url('/public/css/components/query-composer.css') layer(components);
 @import url('/public/css/components/embedded-workshop.css') layer(components);
 @import url('/public/css/components/interactive-expression.css') layer(components);
-@import url('/public/css/components/spw-hero-kinetic-stage.css') layer(components);
 @import url('/public/css/components/frame-controls.css') layer(components);
 @import url('/public/css/components/charge-cycle.css') layer(components);
 

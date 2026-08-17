@@ -15,7 +15,11 @@
    - Promote reusable table/card/control behavior to component-family CSS.
    ========================================================================== */
 
-gap: 1.5rem;
+@layer surface {
+  :where(body[data-spw-surface="tools-budgeting"]) {
+    & .budget-dashboard {
+      display: grid;
+      gap: 1.5rem;
     }
 
     & .budget-panel {

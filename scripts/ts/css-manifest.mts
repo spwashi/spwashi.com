@@ -80,7 +80,7 @@ export const ROUTE_SCOPES: Readonly<Record<string, readonly string[]>> = Object.
     '/public/css/routes/surfaces/home-panels.css',
   ],
   membership: [],
-  newyear: [],
+  newyear: ['/public/css/components/cards/seed-card.css'],
   now: [],
   offline: [],
   plans: [
@@ -89,7 +89,10 @@ export const ROUTE_SCOPES: Readonly<Record<string, readonly string[]>> = Object.
     '/public/css/routes/surfaces/plans-relationships.css',
     '/public/css/routes/surfaces/plans-responsive.css',
   ],
-  play: ['/public/css/routes/surfaces/play.css'],
+  play: [
+    '/public/css/routes/surfaces/play.css',
+    '/public/css/components/spw-hero-kinetic-stage.css',
+  ],
   privacy: [],
   recipes: ['/public/css/routes/surfaces/recipes.css'],
   research: [],
@@ -98,6 +101,7 @@ export const ROUTE_SCOPES: Readonly<Record<string, readonly string[]>> = Object.
     '/public/css/routes/surfaces/rpg-wednesday.css',
   ],
   services: [
+    '/public/css/components/cards/seed-card.css',
     '/public/css/routes/surfaces/services.css',
     '/public/css/routes/widgets/services-configurator.css',
   ],

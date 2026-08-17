@@ -40,10 +40,10 @@ function normalizeCssBody(source: string): string {
     .trim();
 }
 
-function stripManifestAndImports(source: string): string {
+export function stripManifestAndImports(source: string): string {
   return normalizeCssBody(
     source
-      .replace(/^@layer\s+[^;]+;\s*/m, '')
+      .replace(/^@layer[ \t]+[^;{}\n]+;[ \t]*(?:\r?\n)?/m, '')
       .replace(/@import\s+url\((['"]?)([^'")]+)\1\)\s*(?:layer\(([^)]+)\))?\s*;/g, ''),
   );
 }
