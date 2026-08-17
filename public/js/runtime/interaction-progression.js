@@ -351,6 +351,10 @@ export function initInteractionProgression(root = document) {
     imageObserver?.disconnect();
     domObserver?.disconnect();
     if (pulseTimer) window.clearTimeout(pulseTimer);
+    pulseTimer = null;
+    delete html.dataset.spwInteractionPhase;
+    delete html.dataset.spwMicrointeractionPulse;
+    delete html.dataset.spwLayoutSelectionPulse;
     initialized = false;
     currentPhase = 'idle';
   }, { once: true });

@@ -249,7 +249,6 @@ export function refreshPageRegionRail(root = document) {
 
 export function initPageRegionRail(ctx = null) {
   const unregister = registerDomSyncTask('page-region-rail', () => refreshPageRegionRail(), ctx);
-  ctx?.addCleanup?.(unregister);
 
   const cleanup = () => {
     unregister();
@@ -258,8 +257,6 @@ export function initPageRegionRail(ctx = null) {
     document.querySelector(`[${RAIL_ATTR}]`)?.remove();
     writeDatasetValues(document.documentElement, { spwPageRegionRail: null });
   };
-
-  ctx?.addCleanup?.(cleanup);
 
   return {
     cleanup,

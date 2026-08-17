@@ -31,8 +31,6 @@ const TRACKED_SELECTOR = [
   '[data-spw-gravity]',
   '[data-spw-box-model]',
   '[data-spw-pack-local]',
-  '.site-frame',
-  '.frame-card',
   '.vibe-widget',
   '.spw-section-handle',
   '[data-spw-feature="cauldron"]',
@@ -266,6 +264,16 @@ export function initPositioningOrchestration(ctx) {
     intersectionObserver?.disconnect();
     resizeObserver?.disconnect();
     mutationObserver?.disconnect();
+    for (const el of trackedElements) {
+      writeDatasetValues(el, {
+        spwMeasureBand: null,
+        spwExtent: null,
+        spwVerticalGravity: null,
+        spwSpaceVariant: null,
+      });
+      writeStyleValue(el, '--spw-edge-proximity', null);
+      writeStyleValue(el, '--spw-vertical-bias', null);
+    }
     trackedElements.clear();
     visibleElements.clear();
     elementSnapshots.clear();
@@ -274,7 +282,7 @@ export function initPositioningOrchestration(ctx) {
 }
 
 export const POSITIONING_ORCHESTRATION_CONTRACT = Object.freeze({
-  timingArc: 'immediate-orchestration',
+  timingArc: 'visible-geometry',
   idleChunk: 'idle-lab',
   measureBands: MEASURE_BANDS,
   events: Object.freeze(['positioning:mounted', 'positioning:shifted', 'positioning:settled']),
