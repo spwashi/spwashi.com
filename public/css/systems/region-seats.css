@@ -16,7 +16,11 @@
   container-name: spw-region;
 }
 
-:where(.site-frame[data-spw-region="hook"], .site-frame[data-spw-region-role="entry-spine"]) {
+:where(
+  .site-frame[data-spw-region="hook"],
+  .site-frame[data-spw-region="hero"],
+  .site-frame[data-spw-region-role="entry-spine"]
+) {
   --spw-region-wash: 5%;
   --spw-region-seam: 26%;
 }
@@ -74,6 +78,10 @@
   --spw-family-accent: var(--op-action-color, #005959);
 }
 
+:where(body[data-spw-page-family="curriculum"]) {
+  --spw-family-accent: var(--op-probe-color, #4a2180);
+}
+
 :where(body[data-spw-page-family]) .site-frame[data-spw-region],
 :where(body[data-spw-page-family]) .site-frame[data-spw-region-role="entry-spine"] {
   --component-accent: var(--spw-family-accent, var(--component-accent));
@@ -119,10 +127,15 @@
   --spw-region-track: 14rem;
 }
 
+:where(body[data-spw-page-family="curriculum"]) {
+  --spw-region-track: 16.25rem;
+}
+
 /* Lede / orientation: one breath. Do not columnize a greeting. */
 :where(
   .site-frame[data-spw-region] :is(.page-lede, .site-lede, .entrance-lede),
-  .site-frame[data-spw-region-role="entry-spine"] :is(.page-lede, .site-lede)
+  .site-frame[data-spw-region-role="entry-spine"] :is(.page-lede, .site-lede),
+  .site-frame[data-spw-region="hero"] :is(.page-lede, .site-lede)
 ) {
   max-inline-size: var(--spw-region-prose);
 }
@@ -149,7 +162,9 @@
 /* Cluster: fill the seat with cards. */
 :where(
   .site-frame[data-spw-region="cluster"] .frame-grid,
-  .site-frame[data-spw-region="cluster"] .frame-grid--dense
+  .site-frame[data-spw-region="cluster"] .frame-grid--dense,
+  .site-frame[data-spw-region="cluster"] .semantic-contract-grid,
+  .site-frame[data-spw-region="cluster"] .living-concepts-grid
 ) {
   --spw-grid-min-base: var(--spw-region-track);
   align-items: start;

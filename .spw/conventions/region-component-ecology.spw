@@ -84,9 +84,9 @@ fixity = "tending"
   operation = "audit"
   fixity = "tending"
   dated = `2026-08-17`
-  wide = `data-spw-region is authored on home, settings, care, curriculum, cards, contact, and most hubs. The six tropes are the ones @css spends.`
-  combined = `No production host yet uses a named seat + pack-local + gravity together.`
-  first = `One living-concept or software contract card: complete slots, data-spw-pack-local, sit in a cluster|hub seat. Gravity on a popover or region-menu, not on every card. No copy rewrite in the same patch.`
+  wide = `Flagship routes (home, software, topics, about, care, contact, curriculum, cards, coordination) now sit in hook|hub|cluster|path|read|wide. hero aliases hook in @css for the long tail.`
+  combined = `Home living-concept cards are pack-local. Section handles on those flagship pages opt into gravity + flush-viewport seating.`
+  squeeze = `layout-squeeze.css spends box-measure, pack-occupancy, pack-layout, and space-variant. It does not invent a fourth placement axis.`
 }[reg=facet]
 
 validation: #[

@@ -113,6 +113,11 @@
   --spw-variant-selection-weight: max(var(--spw-variant-selection-weight, 0), 0.72);
 }
 
+:where([data-spw-space-variant^="compact-"], [data-spw-space-variant*="-overtall-"]) {
+  --spw-variant-selection-weight: max(var(--spw-variant-selection-weight, 0), 0.48);
+  --spw-layout-posture-grid-bias: min(var(--spw-layout-posture-grid-bias, 1), 0.92);
+}
+
 :where(html[data-spw-query-parity="synced"]) {
   --spw-pre-state-visibility: max(var(--spw-pre-state-visibility, 0.5), 0.58);
 }

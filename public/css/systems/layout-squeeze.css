@@ -1,0 +1,101 @@
+/* ==========================================================================
+   layout-squeeze.css
+   --------------------------------------------------------------------------
+   Bottom-up packing. Hosts already write box-measure, pack-occupancy,
+   pack-layout, and (when gravity is on) space-variant. These rules spend
+   those receipts: tighten pad/gap, drop columns, and cap measure when the
+   box itself is small or overtall. Top-down seats stay in region-seats.css.
+   ========================================================================== */
+
+:where(
+  .site-frame,
+  .frame-card,
+  .living-concept-card,
+  .semantic-contract-card,
+  [data-spw-pack-local],
+  [data-spw-gravity]
+) {
+  --spw-squeeze: 0;
+  min-inline-size: 0;
+}
+
+/* Box-width from composition-box-model. */
+:where([data-spw-box-measure="narrow"]) {
+  --spw-squeeze: 0.85;
+  --spw-pack-gap: var(--space-xs, 0.5rem);
+  --spw-component-pad: var(--spw-component-pad-tight, 0.65rem);
+}
+
+:where([data-spw-box-measure="compact"]) {
+  --spw-squeeze: 0.55;
+  --spw-pack-gap: var(--space-sm, 0.75rem);
+}
+
+:where([data-spw-box-measure="wide"]) {
+  --spw-squeeze: 0.12;
+}
+
+/* Frame occupancy from region-profiler — not pack-fill. */
+:where(.site-frame[data-spw-pack-occupancy="full"]) {
+  --spw-squeeze: max(var(--spw-squeeze, 0), 0.4);
+}
+
+:where(.site-frame[data-spw-pack-occupancy="sparse"]) {
+  --spw-squeeze: min(var(--spw-squeeze, 0), 0.2);
+}
+
+/* Pack-local layout mirror. CSS @container already laid the grid out. */
+:where([data-spw-pack-local][data-spw-pack-layout="stack"]) {
+  --spw-squeeze: max(var(--spw-squeeze, 0), 0.7);
+}
+
+:where([data-spw-pack-local][data-spw-pack-layout="feature"]) {
+  --spw-squeeze: min(var(--spw-squeeze, 0), 0.18);
+}
+
+/* Gravity space-variant: measure-extent-vertical. */
+:where([data-spw-space-variant^="compact-"]) {
+  --spw-squeeze: max(var(--spw-squeeze, 0), 0.8);
+}
+
+:where([data-spw-extent="overtall"]) {
+  --spw-squeeze: max(var(--spw-squeeze, 0), 0.72);
+  --spw-pack-gap: var(--space-xs, 0.5rem);
+}
+
+:where([data-spw-extent="squat"][data-spw-measure-band="wide"],
+       [data-spw-extent="squat"][data-spw-measure-band="maximal"]) {
+  --spw-squeeze: min(var(--spw-squeeze, 0), 0.15);
+}
+
+/* Spend squeeze: drop extra columns and shorten prose inside a tight host. */
+:where([data-spw-box-measure="narrow"]) .frame-body,
+:where([data-spw-pack-layout="stack"]) [data-spw-pack-regions] {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+:where(
+  .site-frame[data-spw-box-measure="narrow"] .frame-grid,
+  .site-frame[data-spw-box-measure="narrow"] .frame-grid--dense,
+  .site-frame[data-spw-box-measure="narrow"] .semantic-contract-grid,
+  .site-frame[data-spw-box-measure="narrow"] .living-concepts-grid
+) {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+:where(
+  [data-spw-box-measure="narrow"] :is(p, .frame-note, .inline-note, .page-lede, .site-lede),
+  [data-spw-extent="overtall"] :is(p, .frame-note, .inline-note)
+) {
+  max-inline-size: min(100%, var(--measure-compact, 32ch));
+}
+
+:where([data-spw-component-variant-active]) {
+  --spw-squeeze: min(var(--spw-squeeze, 0), 0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.site-frame, [data-spw-pack-local], [data-spw-gravity]) {
+    transition: none;
+  }
+}
