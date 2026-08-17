@@ -2925,6 +2925,7 @@ html[data-spw-reduce-motion="on"] {
   --spw-pack-gap-active: var(--pack-tier-roomy-gap, var(--component-gap-loose, 1.2rem));
 }
 
+/* Frame occupancy from region-profiler. Not data-spw-pack-fill (card-local). */
 :where([data-spw-pack-occupancy="sparse"]) {
   --spw-pack-tier: compact;
   --spw-pack-occupancy-weight: 0.22;
@@ -9870,6 +9871,36 @@ html[data-spw-page-section-direction="back"] .spw-section-handle-shell {
 
 .spw-section-handle-shell[data-spw-handle-shell-state="collapsed"] [data-spw-handle-advanced="true"] {
   display: none;
+}
+
+.spw-section-handle-step[data-spw-region-relation="similar"] {
+  --active-op-color: var(--op-ref-color, #2b6cb0);
+}
+
+.spw-section-handle-step[data-spw-region-relation="contrast"] {
+  --active-op-color: var(--op-object-color, #a67c00);
+}
+
+.spw-section-handle-step[data-spw-region-relation="resonate"] {
+  --active-op-color: var(--op-frame-color, #178282);
+}
+
+.spw-region-kin-label[data-spw-kin-rung="balanced"] {
+  display: none;
+}
+
+@media (min-width: 36rem) {
+  .spw-section-handle-shell[data-spw-handle-shell-state="expanded"] .spw-region-kin-label[data-spw-kin-rung="compact"] {
+    display: none;
+  }
+  .spw-section-handle-shell[data-spw-handle-shell-state="expanded"] .spw-region-kin-label[data-spw-kin-rung="balanced"] {
+    display: inline;
+  }
+}
+
+:where(main .site-frame[data-spw-region-preview="true"]) {
+  outline: 2px dashed color-mix(in srgb, var(--op-frame-color, #178282) 48%, transparent);
+  outline-offset: 4px;
 }
 
 .spw-section-handle-shell[data-spw-handle-shell-state="collapsed"] .spw-section-handle-current {
@@ -27856,10 +27887,11 @@ html[data-spw-theme-pack="electric-studio"] {
     pointer-events: none;
 }
 
-/* Salience as a resting emphasis, independent of density. */
-[data-spw-salience="focal"] { --spw-salience-weight: 1; }
-[data-spw-salience="ambient"] { --spw-salience-weight: 0.5; }
-[data-spw-salience="background"] { --spw-salience-weight: 0.25; opacity: 0.82; }
+/* Overlap rank on gravity hosts only. Field strength is data-spw-field-salience. */
+[data-spw-gravity][data-spw-salience="focal"] { --spw-salience-weight: 1; }
+[data-spw-gravity][data-spw-salience="primary"] { --spw-salience-weight: 0.75; }
+[data-spw-gravity][data-spw-salience="ambient"] { --spw-salience-weight: 0.5; }
+[data-spw-gravity][data-spw-salience="background"] { --spw-salience-weight: 0.25; opacity: 0.82; }
 
 /* ─── Gravity readout (resonance) ───────────────────────────────────────── */
 /*
@@ -28361,6 +28393,11 @@ html[data-spw-theme-pack="electric-studio"] {
 
 :where([data-spw-component-variant-active]) {
   --spw-variant-selection-weight: max(var(--spw-variant-selection-weight, 0), 0.72);
+}
+
+:where([data-spw-space-variant^="compact-"], [data-spw-space-variant*="-overtall-"]) {
+  --spw-variant-selection-weight: max(var(--spw-variant-selection-weight, 0), 0.48);
+  --spw-layout-posture-grid-bias: min(var(--spw-layout-posture-grid-bias, 1), 0.92);
 }
 
 :where(html[data-spw-query-parity="synced"]) {
@@ -29641,7 +29678,11 @@ html[data-spw-theme-pack="electric-studio"] {
   container-name: spw-region;
 }
 
-:where(.site-frame[data-spw-region="hook"], .site-frame[data-spw-region-role="entry-spine"]) {
+:where(
+  .site-frame[data-spw-region="hook"],
+  .site-frame[data-spw-region="hero"],
+  .site-frame[data-spw-region-role="entry-spine"]
+) {
   --spw-region-wash: 5%;
   --spw-region-seam: 26%;
 }
@@ -29699,6 +29740,10 @@ html[data-spw-theme-pack="electric-studio"] {
   --spw-family-accent: var(--op-action-color, #005959);
 }
 
+:where(body[data-spw-page-family="curriculum"]) {
+  --spw-family-accent: var(--op-probe-color, #4a2180);
+}
+
 :where(body[data-spw-page-family]) .site-frame[data-spw-region],
 :where(body[data-spw-page-family]) .site-frame[data-spw-region-role="entry-spine"] {
   --component-accent: var(--spw-family-accent, var(--component-accent));
@@ -29744,10 +29789,15 @@ html[data-spw-theme-pack="electric-studio"] {
   --spw-region-track: 14rem;
 }
 
+:where(body[data-spw-page-family="curriculum"]) {
+  --spw-region-track: 16.25rem;
+}
+
 /* Lede / orientation: one breath. Do not columnize a greeting. */
 :where(
   .site-frame[data-spw-region] :is(.page-lede, .site-lede, .entrance-lede),
-  .site-frame[data-spw-region-role="entry-spine"] :is(.page-lede, .site-lede)
+  .site-frame[data-spw-region-role="entry-spine"] :is(.page-lede, .site-lede),
+  .site-frame[data-spw-region="hero"] :is(.page-lede, .site-lede)
 ) {
   max-inline-size: var(--spw-region-prose);
 }
@@ -29774,7 +29824,9 @@ html[data-spw-theme-pack="electric-studio"] {
 /* Cluster: fill the seat with cards. */
 :where(
   .site-frame[data-spw-region="cluster"] .frame-grid,
-  .site-frame[data-spw-region="cluster"] .frame-grid--dense
+  .site-frame[data-spw-region="cluster"] .frame-grid--dense,
+  .site-frame[data-spw-region="cluster"] .semantic-contract-grid,
+  .site-frame[data-spw-region="cluster"] .living-concepts-grid
 ) {
   --spw-grid-min-base: var(--spw-region-track);
   align-items: start;
@@ -29878,8 +29930,127 @@ html[data-spw-high-contrast="on"] :where(.site-frame[data-spw-region], .site-fra
   --spw-region-wash: 0%;
 }
 
+/* Kin echo: the active region's similar / contrast / resonate neighbors. */
+:where(main .site-frame[data-spw-region-relation~="similar"]) {
+  --spw-region-seam: 22%;
+}
+
+:where(main .site-frame[data-spw-region-relation~="contrast"]) {
+  --spw-region-wash: 6%;
+  border-style: dotted;
+}
+
+:where(main .site-frame[data-spw-region-relation~="resonate"]) {
+  --spw-resonance: calc(var(--attention-field-radius, 0.4) * 1);
+}
+
 @media (prefers-reduced-motion: reduce) {
   :where(.site-frame[data-spw-region], .site-frame[data-spw-region-role]) {
+    transition: none;
+  }
+}
+}
+
+/* /public/css/systems/layout-squeeze.css */
+@layer systems {
+/* ==========================================================================
+   layout-squeeze.css
+   --------------------------------------------------------------------------
+   Bottom-up packing. Hosts already write box-measure, pack-occupancy,
+   pack-layout, and (when gravity is on) space-variant. These rules spend
+   those receipts: tighten pad/gap, drop columns, and cap measure when the
+   box itself is small or overtall. Top-down seats stay in region-seats.css.
+   ========================================================================== */
+
+:where(
+  .site-frame,
+  .frame-card,
+  .living-concept-card,
+  .semantic-contract-card,
+  [data-spw-pack-local],
+  [data-spw-gravity]
+) {
+  --spw-squeeze: 0;
+  min-inline-size: 0;
+}
+
+/* Box-width from composition-box-model. */
+:where([data-spw-box-measure="narrow"]) {
+  --spw-squeeze: 0.85;
+  --spw-pack-gap: var(--space-xs, 0.5rem);
+  --spw-component-pad: var(--spw-component-pad-tight, 0.65rem);
+}
+
+:where([data-spw-box-measure="compact"]) {
+  --spw-squeeze: 0.55;
+  --spw-pack-gap: var(--space-sm, 0.75rem);
+}
+
+:where([data-spw-box-measure="wide"]) {
+  --spw-squeeze: 0.12;
+}
+
+/* Frame occupancy from region-profiler — not pack-fill. */
+:where(.site-frame[data-spw-pack-occupancy="full"]) {
+  --spw-squeeze: max(var(--spw-squeeze, 0), 0.4);
+}
+
+:where(.site-frame[data-spw-pack-occupancy="sparse"]) {
+  --spw-squeeze: min(var(--spw-squeeze, 0), 0.2);
+}
+
+/* Pack-local layout mirror. CSS @container already laid the grid out. */
+:where([data-spw-pack-local][data-spw-pack-layout="stack"]) {
+  --spw-squeeze: max(var(--spw-squeeze, 0), 0.7);
+}
+
+:where([data-spw-pack-local][data-spw-pack-layout="feature"]) {
+  --spw-squeeze: min(var(--spw-squeeze, 0), 0.18);
+}
+
+/* Gravity space-variant: measure-extent-vertical. */
+:where([data-spw-space-variant^="compact-"]) {
+  --spw-squeeze: max(var(--spw-squeeze, 0), 0.8);
+}
+
+:where([data-spw-extent="overtall"]) {
+  --spw-squeeze: max(var(--spw-squeeze, 0), 0.72);
+  --spw-pack-gap: var(--space-xs, 0.5rem);
+}
+
+:where([data-spw-extent="squat"][data-spw-measure-band="wide"],
+       [data-spw-extent="squat"][data-spw-measure-band="maximal"]) {
+  --spw-squeeze: min(var(--spw-squeeze, 0), 0.15);
+}
+
+/* Spend squeeze: drop extra columns and shorten prose inside a tight host. */
+:where([data-spw-box-measure="narrow"]) .frame-body,
+:where([data-spw-pack-layout="stack"]) [data-spw-pack-regions] {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+:where(
+  .site-frame[data-spw-box-measure="narrow"] .frame-grid,
+  .site-frame[data-spw-box-measure="narrow"] .frame-grid--dense,
+  .site-frame[data-spw-box-measure="narrow"] .semantic-contract-grid,
+  .site-frame[data-spw-box-measure="narrow"] .living-concepts-grid
+) {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+:where(
+  [data-spw-box-measure="narrow"] :is(p, .frame-note, .inline-note, .page-lede, .site-lede),
+  [data-spw-extent="overtall"] :is(p, .frame-note, .inline-note)
+) {
+  max-inline-size: min(100%, var(--measure-compact, 32ch));
+}
+
+:where([data-spw-component-variant-active]) {
+  --spw-squeeze: min(var(--spw-squeeze, 0), 0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.site-frame, [data-spw-pack-local], [data-spw-gravity]) {
     transition: none;
   }
 }
@@ -41789,6 +41960,19 @@ html[data-spw-numericity-emphasis="cauldron-first"] .spw-living-term[data-spw-co
     border-inline-start: 2px solid var(--active-op-color, #008080);
     color: var(--ink);
     font-weight: 600;
+  }
+
+  :where(.spw-page-region-rail__link[data-spw-region-relation~="similar"]) {
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--op-ref-color, #2b6cb0) 28%, transparent);
+  }
+
+  :where(.spw-page-region-rail__link[data-spw-region-relation~="contrast"]) {
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--op-object-color, #a67c00) 34%, transparent);
+  }
+
+  :where(.spw-page-region-rail__link[data-spw-region-relation~="resonate"]) {
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--op-frame-color, #178282) 36%, transparent);
+    --spw-resonance: calc(var(--attention-field-radius, 0.4) * 0.85);
   }
 
   :where(.spw-page-region-rail__link[data-spw-affordance="tune"]) {
