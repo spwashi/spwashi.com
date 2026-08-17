@@ -179,6 +179,7 @@ If a patch introduces a new reusable semantic family or runtime state contract, 
 ## Follow-Up & Future Increments
 
 - If the wins are large, consider a lightweight "runtime posture" preset in the settings surface (reader vs. resonant vs. lab) that bakes in good default timing policies.
+- Deploy-time JS graph bundling and parse-time `modulepreload` live in `deploy-module-graph/PLAN.md`. Do not grow this plan with rolldown/chunk work.
 - Long-term: a tiny build-time or catalog-time report of per-route "immediate module cost" (derived from the manifest + static analysis of defs) could live in the design catalog or a private editor surface — only if it proves low-maintenance.
 - Long-term: a cache posture report could distinguish cold boot, warm return, restored posture, restored checkpoint, and debug/audit posture without requiring analytics or network services.
 - Any canvas/SVG/image work that remains immediate for visual reasons can be further optimized inside those modules (e.g., rAF batching, off-main-thread where safe) as separate craft passes.

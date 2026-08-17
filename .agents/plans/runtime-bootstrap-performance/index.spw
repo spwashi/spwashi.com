@@ -60,6 +60,7 @@ intent: .{
 @plan_runtime_load_instrumentation: ~"../runtime-load-instrumentation/index.spw"
 @plan_runtime_module_fluency: ~"../runtime-module-fluency/index.spw"
 @plan_js_runtime_composability: ~"../js-runtime-composability/index.spw"
+@plan_deploy_module_graph: ~"../deploy-module-graph/PLAN.md"
 @site: ~"../../../public/js/site.js"
 @site_settings: ~"../../../public/js/kernel/site-settings.js"
 @site_semantics: ~"../../../.spw/conventions/site-semantics.spw"
