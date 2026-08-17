@@ -1,9 +1,10 @@
 import path from 'node:path';
 import process from 'node:process';
 import { createHash } from 'node:crypto';
+import { gzipSync } from 'node:zlib';
 import { promises as fs } from 'node:fs';
-import { fileURLToPath } from 'node:url';
-import { build as rolldownBuild } from 'rolldown';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { build as rolldownBuild, type OutputChunk } from 'rolldown';
 
 import {
   assertPwaContract,
@@ -73,6 +74,60 @@ type AssetManifest = {
   fingerprinted: boolean;
   assets: Record<string, string>;
   chunks: Record<string, string[]>;
+  boot: RuntimeBootManifest;
+  modulePacks: Record<string, ModulePackManifest>;
+};
+
+type CatalogDefinitionForBuild = {
+  id: string;
+  when?: string;
+  timingChunk?: string;
+  describes?: string;
+  updates?: unknown;
+  load?: unknown;
+};
+
+type SemanticPackPlan = {
+  id: string;
+  chunkName: string;
+  when: string;
+  timingChunk: string | null;
+  moduleIds: string[];
+  describes: string[];
+  updates: string[];
+  entryPaths: string[];
+};
+
+type SemanticModulePlan = {
+  packs: SemanticPackPlan[];
+  chunkNameByEntryPath: Map<string, string>;
+};
+
+type ModulePackManifest = {
+  href: string;
+  when: string;
+  timingChunk: string | null;
+  modules: string[];
+  describes: string[];
+  updates: string[];
+  imports: string[];
+  dynamicImports: string[];
+  bytes: number;
+  gzipBytes: number;
+};
+
+type RuntimeBootManifest = {
+  hrefs: string[];
+  bytes: number;
+  gzipBytes: number;
+};
+
+type RuntimeBundleResult = {
+  boot: RuntimeBootManifest;
+  emittedHrefs: string[];
+  modulePacks: Record<string, ModulePackManifest>;
+  bytes: number;
+  ms: number;
 };
 
 async function prepareServiceWorkerPrecache(outDir: string): Promise<string[]> {
@@ -94,21 +149,142 @@ function toPublicHref(outDir: string, filePath: string): string {
   return `/public/${toPosix(path.relative(path.join(outDir, 'public'), filePath))}`;
 }
 
+function slugifyChunkName(value: string): string {
+  return String(value || '')
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '') || 'module';
+}
+
+function normalizeModuleId(moduleId: string): string {
+  return path.resolve(String(moduleId || '').split('?')[0].split('#')[0]);
+}
+
+function extractCatalogLoadSpecifier(load: unknown): string {
+  if (typeof load !== 'function') return '';
+  const source = Function.prototype.toString.call(load);
+  return source.match(/import\s*\(\s*(['"`])([^'"`]+)\1\s*\)/)?.[2] || '';
+}
+
+function resolveCatalogEntryPath(outDir: string, specifier: string): string {
+  if (specifier.startsWith('/public/js/')) {
+    return path.join(outDir, specifier.slice(1));
+  }
+  return path.resolve(path.join(outDir, 'public/js/runtime'), specifier);
+}
+
+/**
+ * Transport names follow the catalog's existing arrival vocabulary. Broad
+ * demand lanes stay module-addressed so one visible feature cannot pull every
+ * other visible feature into the same response. Immediate, idle, and settled
+ * definitions intentionally share packs because their schedule already spends
+ * them together.
+ */
+export function semanticPackIdForDefinition(definition: CatalogDefinitionForBuild): string {
+  const when = String(definition.when || 'immediate');
+  if (when === 'immediate') return 'foundation';
+  if (when === 'idle' && definition.timingChunk) return String(definition.timingChunk);
+  if (when === 'settled') return 'settled';
+  return `${slugifyChunkName(when)}-${slugifyChunkName(definition.id)}`;
+}
+
+export function createSemanticModulePlan(
+  definitions: CatalogDefinitionForBuild[],
+  outDir: string,
+): SemanticModulePlan {
+  const entriesByPath = new Map<string, CatalogDefinitionForBuild[]>();
+
+  for (const definition of definitions) {
+    if (!definition?.id) continue;
+    const specifier = extractCatalogLoadSpecifier(definition.load);
+    if (!specifier) continue;
+    const entryPath = normalizeModuleId(resolveCatalogEntryPath(outDir, specifier));
+    const entries = entriesByPath.get(entryPath) || [];
+    entries.push(definition);
+    entriesByPath.set(entryPath, entries);
+  }
+
+  const packsById = new Map<string, SemanticPackPlan>();
+  const chunkNameByEntryPath = new Map<string, string>();
+
+  for (const [entryPath, entries] of entriesByPath) {
+    const proposed = [...new Set(entries.map(semanticPackIdForDefinition))];
+    const whens = [...new Set(entries.map((entry) => String(entry.when || 'immediate')))];
+    const packId = proposed.length === 1
+      ? proposed[0]
+      : `${slugifyChunkName(whens.join('-'))}-${entries.map((entry) => slugifyChunkName(entry.id)).join('-')}`;
+    const chunkName = `spw-${slugifyChunkName(packId)}`;
+    const existing = packsById.get(packId) || {
+      id: packId,
+      chunkName,
+      when: whens.length === 1 ? whens[0] : whens.join('|'),
+      timingChunk: entries.every((entry) => entry.timingChunk === entries[0]?.timingChunk)
+        ? (entries[0]?.timingChunk || null)
+        : null,
+      moduleIds: [],
+      describes: [],
+      updates: [],
+      entryPaths: [],
+    };
+
+    existing.entryPaths.push(entryPath);
+    for (const entry of entries) {
+      existing.moduleIds.push(entry.id);
+      if (entry.describes) existing.describes.push(String(entry.describes));
+      const updates = Array.isArray(entry.updates) ? entry.updates : (entry.updates ? [entry.updates] : []);
+      existing.updates.push(...updates.map((value) => String(value)));
+    }
+
+    packsById.set(packId, existing);
+    chunkNameByEntryPath.set(entryPath, chunkName);
+  }
+
+  const packs = [...packsById.values()]
+    .map((pack) => ({
+      ...pack,
+      moduleIds: [...new Set(pack.moduleIds)].sort(),
+      describes: [...new Set(pack.describes)].sort(),
+      updates: [...new Set(pack.updates)].sort(),
+      entryPaths: [...new Set(pack.entryPaths)].sort(),
+    }))
+    .sort((a, b) => a.id.localeCompare(b.id));
+
+  return { packs, chunkNameByEntryPath };
+}
+
+async function loadCatalogDefinitionsForBuild(): Promise<CatalogDefinitionForBuild[]> {
+  const catalogUrl = pathToFileURL(path.join(ROOT_DIR, 'public/js/runtime/module-catalog.js')).href;
+  const catalog = await import(catalogUrl) as { MODULE_DEFS?: CatalogDefinitionForBuild[] };
+  return catalog.MODULE_DEFS || [];
+}
+
+export function collectStaticChunkClosure(chunks: OutputChunk[]): OutputChunk[] {
+  const chunksByFile = new Map(chunks.map((chunk) => [chunk.fileName, chunk]));
+  const entry = chunks.find((chunk) => chunk.isEntry);
+  if (!entry) return [];
+
+  const closure: OutputChunk[] = [];
+  const visited = new Set<string>();
+  const visit = (fileName: string) => {
+    if (visited.has(fileName)) return;
+    visited.add(fileName);
+    const chunk = chunksByFile.get(fileName);
+    if (!chunk) return;
+    closure.push(chunk);
+    chunk.imports.forEach(visit);
+  };
+
+  visit(entry.fileName);
+  return closure;
+}
+
 function createPublicJsResolvePlugin(outDir: string) {
   return {
     name: 'public-js-root',
     resolveId(id: string) {
       if (id.startsWith('/public/js/')) return path.join(outDir, id.slice(1));
       return null;
-    },
-    resolveDynamicImport(specifier: string, importer?: string) {
-      const raw = String(specifier || '');
-      if (raw.startsWith('/public/js/')) return { id: raw, external: true };
-      if (raw.startsWith('.') && importer) {
-        const rel = toPosix(path.relative(outDir, path.resolve(path.dirname(importer), raw)));
-        if (rel.startsWith('public/js/')) return { id: `/${rel}`, external: true };
-      }
-      return { id: raw, external: true };
     },
   };
 }
@@ -121,42 +297,111 @@ function createPublicJsResolvePlugin(outDir: string) {
 async function bundleSiteRuntimeGraph(
   outDir: string,
   logger: BuildLogger,
-): Promise<{ hrefs: string[]; bytes: number; ms: number }> {
+): Promise<RuntimeBundleResult> {
   const jsRoot = path.join(outDir, 'public/js');
   const entry = path.join(jsRoot, 'site.js');
   const tmpDir = await fs.mkdtemp(path.join(outDir, '.bundle-'));
   const startedAt = Date.now();
   try {
-    await rolldownBuild({
+    const definitions = await loadCatalogDefinitionsForBuild();
+    const sharedOptions = {
       input: entry,
       cwd: outDir,
       makeAbsoluteExternalsRelative: false,
+      preserveEntrySignatures: 'allow-extension' as const,
       plugins: [createPublicJsResolvePlugin(outDir)],
+    };
+    const sharedOutput = {
+      format: 'es' as const,
+      minify: true,
+      sourcemap: false,
+      strictExecutionOrder: true,
+      entryFileNames: 'site.js',
+      chunkFileNames: '[name]-[hash].js',
+    };
+
+    // First discover the static closure without manual groups. A catalog target
+    // that is already resident through a static import cannot truthfully be a
+    // deferred pack; assigning it to one would pull that whole pack into boot.
+    const discovery = await rolldownBuild({
+      ...sharedOptions,
+      write: false,
+      output: sharedOutput,
+    });
+    const discoveryChunks = discovery.output.filter((output): output is OutputChunk => output.type === 'chunk');
+    const residentModuleIds = new Set(
+      collectStaticChunkClosure(discoveryChunks)
+        .flatMap((chunk) => chunk.moduleIds)
+        .map(normalizeModuleId),
+    );
+    const deferredDefinitions = definitions.filter((definition) => {
+      const specifier = extractCatalogLoadSpecifier(definition.load);
+      if (!specifier) return false;
+      return !residentModuleIds.has(normalizeModuleId(resolveCatalogEntryPath(outDir, specifier)));
+    });
+    const semanticPlan = createSemanticModulePlan(deferredDefinitions, outDir);
+
+    const result = await rolldownBuild({
+      ...sharedOptions,
       output: {
+        ...sharedOutput,
         dir: tmpDir,
-        format: 'es',
-        minify: true,
-        sourcemap: false,
-        entryFileNames: 'site.js',
-        chunkFileNames: 'boot-[name].js',
+        codeSplitting: {
+          includeDependenciesRecursively: false,
+          groups: [{
+            name(moduleId) {
+              return semanticPlan.chunkNameByEntryPath.get(normalizeModuleId(moduleId)) || null;
+            },
+            entriesAware: false,
+          }],
+        },
       },
     });
-    const emitted = (await walkFiles(tmpDir)).filter((file) => file.endsWith('.js'));
-    const hrefs: string[] = [];
+    const chunks = result.output.filter((output): output is OutputChunk => output.type === 'chunk');
+    const emittedHrefs: string[] = [];
     let bytes = 0;
-    for (const file of emitted) {
-      const target = path.join(jsRoot, path.basename(file));
-      const content = await fs.readFile(file);
+    for (const chunk of chunks) {
+      const target = path.join(jsRoot, path.basename(chunk.fileName));
+      const content = Buffer.from(chunk.code);
       bytes += content.length;
       await fs.writeFile(target, content);
-      hrefs.push(toPublicHref(outDir, target));
+      emittedHrefs.push(toPublicHref(outDir, target));
     }
-    hrefs.sort();
+
+    emittedHrefs.sort();
+    const bootChunks = collectStaticChunkClosure(chunks);
+    const boot: RuntimeBootManifest = {
+      hrefs: bootChunks.map((chunk) => `/public/js/${path.basename(chunk.fileName)}`).sort(),
+      bytes: bootChunks.reduce((total, chunk) => total + Buffer.byteLength(chunk.code), 0),
+      gzipBytes: bootChunks.reduce((total, chunk) => total + gzipSync(chunk.code).length, 0),
+    };
+
+    const chunksByName = new Map(chunks.map((chunk) => [chunk.name, chunk]));
+    const modulePacks: Record<string, ModulePackManifest> = {};
+    for (const pack of semanticPlan.packs) {
+      const chunk = chunksByName.get(pack.chunkName);
+      if (!chunk) continue;
+      modulePacks[pack.id] = {
+        href: `/public/js/${path.basename(chunk.fileName)}`,
+        when: pack.when,
+        timingChunk: pack.timingChunk,
+        modules: pack.moduleIds,
+        describes: pack.describes,
+        updates: pack.updates,
+        imports: chunk.imports.map((value) => `/public/js/${path.basename(value)}`).sort(),
+        dynamicImports: chunk.dynamicImports.map((value) => `/public/js/${path.basename(value)}`).sort(),
+        bytes: Buffer.byteLength(chunk.code),
+        gzipBytes: gzipSync(chunk.code).length,
+      };
+    }
+
     const ms = Date.now() - startedAt;
     logger.info(
-      `[build] bundled site runtime graph: ${hrefs.join(', ') || '(none)'} (${bytes} bytes, ${ms}ms)`,
+      `[build] bundled site runtime graph: boot=${boot.hrefs.join(', ') || '(none)'} `
+      + `packs=${Object.keys(modulePacks).length} chunks=${chunks.length} `
+      + `(${bytes} bytes total, ${boot.bytes} boot, ${ms}ms)`,
     );
-    return { hrefs, bytes, ms };
+    return { boot, emittedHrefs, modulePacks, bytes, ms };
   } finally {
     await rmrf(tmpDir);
   }
@@ -255,7 +500,11 @@ async function minifyPublicJsModules(
   return { files: jsFiles.length, beforeBytes, afterBytes, ms };
 }
 
-async function hashAndRewritePublicAssets(outDir: string, options: { fingerprintAssets: boolean }): Promise<AssetManifest> {
+async function hashAndRewritePublicAssets(
+  outDir: string,
+  options: { fingerprintAssets: boolean },
+  runtimeBundle: Pick<RuntimeBundleResult, 'boot' | 'modulePacks'>,
+): Promise<AssetManifest> {
   const assetMap: Record<string, string> = {};
   const chunkMap = new Map<string, string[]>();
   const rewrites: AssetRewrite[] = [
@@ -342,10 +591,24 @@ async function hashAndRewritePublicAssets(outDir: string, options: { fingerprint
     }
   }
 
+  const resolveAssetHref = (href: string) => assetMap[href] || href;
+  const modulePacks = Object.fromEntries(
+    Object.entries(runtimeBundle.modulePacks).map(([id, pack]) => [id, {
+      ...pack,
+      href: resolveAssetHref(pack.href),
+      imports: pack.imports.map(resolveAssetHref),
+      dynamicImports: pack.dynamicImports.map(resolveAssetHref),
+    }]),
+  );
   const manifest: AssetManifest = {
     fingerprinted: options.fingerprintAssets,
     assets: assetMap,
     chunks: Object.fromEntries([...chunkMap.entries()].map(([chunk, assets]) => [chunk, assets.sort()])),
+    boot: {
+      ...runtimeBundle.boot,
+      hrefs: runtimeBundle.boot.hrefs.map(resolveAssetHref),
+    },
+    modulePacks,
   };
 
   await fs.writeFile(path.join(outDir, 'asset-manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
@@ -405,18 +668,27 @@ export async function main(): Promise<void> {
     logger.info('[build] skipping design catalog generation');
   }
 
-  let bootHrefs: string[] = ['/public/js/site.js'];
+  let runtimeBundle: RuntimeBundleResult = {
+    boot: {
+      hrefs: ['/public/js/site.js'],
+      bytes: 0,
+      gzipBytes: 0,
+    },
+    emittedHrefs: ['/public/js/site.js'],
+    modulePacks: {},
+    bytes: 0,
+    ms: 0,
+  };
   if (options.minifyJs) {
     logger.info('[build] bundling site.js static graph');
-    const bundled = await bundleSiteRuntimeGraph(options.outDir, logger);
-    bootHrefs = bundled.hrefs.length ? bundled.hrefs : bootHrefs;
+    runtimeBundle = await bundleSiteRuntimeGraph(options.outDir, logger);
     logger.info('[build] minifying leftover public/js modules (per-file, path-preserving)');
-    await minifyPublicJsModules(options.outDir, logger, bootHrefs);
+    await minifyPublicJsModules(options.outDir, logger, runtimeBundle.emittedHrefs);
   } else {
     logger.info('[build] skipping public/js bundle and minify');
   }
 
-  const injected = await injectBootModulePreloads(options.outDir, bootHrefs);
+  const injected = await injectBootModulePreloads(options.outDir, runtimeBundle.boot.hrefs);
   if (injected) {
     logger.info(`[build] injected boot modulepreload into ${injected} html file(s)`);
   }
@@ -425,7 +697,7 @@ export async function main(): Promise<void> {
   const offlineDependencies = await prepareServiceWorkerPrecache(options.outDir);
   logger.info(`[build] service-worker offline dependencies=${offlineDependencies.length}`);
 
-  const assetManifest = await hashAndRewritePublicAssets(options.outDir, options);
+  const assetManifest = await hashAndRewritePublicAssets(options.outDir, options, runtimeBundle);
   if (assetManifest.fingerprinted) {
     logger.info(`[build] fingerprinted ${Object.keys(assetManifest.assets).length} core asset(s)`);
   } else {

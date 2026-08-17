@@ -87,7 +87,7 @@ import { MOUNT_WHEN } from './runtime/module-catalog-constants.js';
 import {
   filterEnhancementDefs,
   listModuleCatalogIndex,
-  resolveModuleCatalogSpecifier,
+  resolveRuntimeModuleSpecifier,
   summarizeModuleCatalogOptimization,
 } from './runtime/module-catalog-normalize.js';
 import {
@@ -342,7 +342,7 @@ function extractDynamicImportSpecifier(def) {
 }
 
 function moduleSpecifierToUrl(specifier = '') {
-  return resolveModuleCatalogSpecifier(specifier, window.location.origin);
+  return resolveRuntimeModuleSpecifier(specifier, window.location.origin, import.meta.url);
 }
 
 function ensureResourceHint(href, rel = 'modulepreload') {

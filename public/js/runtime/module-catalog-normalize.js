@@ -62,6 +62,27 @@ export function resolveModuleCatalogSpecifier(specifier = '', origin = '') {
   }
 }
 
+/**
+ * Resolve either an authored catalog import or a semantic deploy-pack import.
+ * Catalog specifiers remain relative to module-catalog.js; generated `spw-*`
+ * chunks are siblings of the production site entry that contains the catalog.
+ */
+export function resolveRuntimeModuleSpecifier(
+  specifier = '',
+  origin = '',
+  runtimeEntryUrl = '',
+) {
+  const normalized = String(specifier || '').trim();
+  if (/^\.\/spw-[^/]+\.js(?:[?#].*)?$/u.test(normalized) && runtimeEntryUrl) {
+    try {
+      return new URL(normalized, runtimeEntryUrl).href;
+    } catch {
+      return '';
+    }
+  }
+  return resolveModuleCatalogSpecifier(normalized, origin);
+}
+
 export function filterEnhancementDefs(defs, includeLayoutAudit = true) {
   if (includeLayoutAudit) return defs;
   return (defs || []).filter((def) => def?.id !== 'layout-shift-audit');

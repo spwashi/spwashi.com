@@ -8,7 +8,7 @@
  * clipboard export, and session feature lab synergy testing.
  * ========================================================================== */
 
-import { writeDatasetValue } from './runtime-helpers.js';
+import { writeDatasetValue } from '/public/js/kernel/dom-contracts.js';
 import { toggleFeatureLabToken } from './feature-lab.js';
 import { composeSurface, sigilFor, sanitizeHandle } from '/public/js/semantic/spw-compose.js';
 
@@ -280,4 +280,3 @@ export function initToolmakerSubmissions(root = document) {
     syncPreview();
   }
 }
-

@@ -235,6 +235,7 @@ function emitModuleLifecycle(ctx, record, stage, detail = {}) {
     note: detail.note || '',
     route: ctx?.route || null,
     root: record?.root || null,
+    transportHref: record?.transportHref || null,
   });
   return record;
 }
@@ -1045,6 +1046,7 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
   const reason = describeMountReason(def, ctx, root, effectiveWhen);
   const evaluates = inferModuleDimensions(def);
   const effectScope = normalizeModuleIntentValue(def.effectScope);
+  const transportHref = moduleSpecifierToUrl(extractDynamicImportSpecifier(def)) || null;
   const scheduledAt = Math.round(performance.now());
 
   if (ctx.registry.has(recordId)) return ctx.registry.get(recordId);
@@ -1063,6 +1065,7 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
     updatesSummary: summarizeModuleUpdates(def.updates),
     updatesDescribe: describeModuleUpdates(def.updates),
     timingArc: def.timingArc || null,
+    transportHref,
     effectScope: effectScope.length ? effectScope : null,
     status: 'idle',
     stage: 'scheduled',
@@ -1114,6 +1117,7 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
       status: 'loading',
       reason,
       timingArc: record.timingArc,
+      transportHref: record.transportHref,
       effectScope: record.effectScope,
     });
     performance.mark(`spw:module:${def.id}:load-start`);
@@ -1196,6 +1200,7 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
       describes: record.describes,
       updates: record.updates,
       timingArc: record.timingArc,
+      transportHref: record.transportHref,
       effectScope: record.effectScope,
       loadMs: Math.round(record.loadMs),
       mountMs: Math.round(record.mountMs),
@@ -1221,6 +1226,7 @@ async function mountDefinition(def, ctx, root = null, index = 0) {
       describes: record.describes,
       updates: record.updates,
       timingArc: record.timingArc,
+      transportHref: record.transportHref,
       effectScope: record.effectScope,
       route: ctx.route,
       root,

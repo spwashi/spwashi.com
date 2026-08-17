@@ -48,12 +48,15 @@ export function getLoadSteps() {
  */
 export function summarizeLoadTrace() {
   const byWhen = new Map();
+  const byTransport = new Map();
   let deferred = 0;
   let shifted = 0;
 
   for (const step of steps) {
     const key = step.effectiveWhen || step.requestedWhen || 'unknown';
     byWhen.set(key, (byWhen.get(key) || 0) + 1);
+    const transport = step.transportHref || 'inline-or-unknown';
+    byTransport.set(transport, (byTransport.get(transport) || 0) + 1);
     if (step.requestedWhen && step.effectiveWhen && step.requestedWhen !== step.effectiveWhen) deferred += 1;
     if (step.shift) shifted += 1;
   }
@@ -61,6 +64,8 @@ export function summarizeLoadTrace() {
   return {
     total: steps.length,
     byWhen: Object.fromEntries(byWhen),
+    byTransport: Object.fromEntries(byTransport),
+    transportCount: byTransport.size,
     deferred,
     shifted,
     spanMs: steps.length ? Math.round(steps[steps.length - 1].at - steps[0].at) : 0,
@@ -147,6 +152,7 @@ export function initLoadTrace(ctx = {}) {
       requestedWhen: d.requestedWhen || '',
       effectiveWhen: d.effectiveWhen || '',
       timingArc: d.timingArc || '',
+      transportHref: d.transportHref || '',
       reason: d.reason || '',
       updates: Array.isArray(d.updates) ? d.updates : [],
       at: now() - started,

@@ -8,7 +8,7 @@
  * ========================================================================== */
 
 import { scanSpwExpression, describeSpwExpression } from '/public/js/semantic/spw-expression-geometry.js';
-import { writeDatasetValue } from './runtime-helpers.js';
+import { writeDatasetValue } from '/public/js/kernel/dom-contracts.js';
 
 const STORAGE_KEY = 'spw-edited-expressions';
 

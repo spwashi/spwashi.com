@@ -5,7 +5,7 @@
  * node physics animations, payload scrubbing, and cauldron drop triggers.
  * ========================================================================== */
 
-import { writeDatasetValue } from './runtime-helpers.js';
+import { writeDatasetValue } from '/public/js/kernel/dom-contracts.js';
 
 export function initSpwHeroKineticStage(root = document) {
   const stages = root.querySelectorAll?.('[data-spw-feature="spw-hero-kinetic-stage"], .spw-hero-stage');

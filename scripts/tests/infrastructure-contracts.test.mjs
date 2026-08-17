@@ -5,7 +5,10 @@ import test from 'node:test';
 
 import { MOUNT_WHEN } from '../../public/js/runtime/module-catalog-constants.js';
 import { ENHANCEMENT_DEFS } from '../../public/js/runtime/module-catalog-enhancement.js';
-import { resolveModuleCatalogSpecifier } from '../../public/js/runtime/module-catalog-normalize.js';
+import {
+  resolveModuleCatalogSpecifier,
+  resolveRuntimeModuleSpecifier,
+} from '../../public/js/runtime/module-catalog-normalize.js';
 import {
   composeOpBundle,
   getOperatorDefinition,
@@ -36,6 +39,10 @@ import {
   createLineLocator,
   shouldIgnoreRelativePath,
 } from '../generate-design-catalog.mjs';
+import {
+  createSemanticModulePlan,
+  semanticPackIdForDefinition,
+} from '../typed/build/index.mjs';
 
 test('component capture packs stay outside public build and authored inventories', () => {
   const captureIndex = 'design/components/captures/index.html';
@@ -223,6 +230,49 @@ test('runtime resource probes resolve from the module catalog directory', () => 
     'https://spwashi.test/public/js/kernel/site-settings-engine.js',
   );
   assert.equal(resolveModuleCatalogSpecifier('/public/css/style.css', 'https://spwashi.test'), '');
+  assert.equal(
+    resolveRuntimeModuleSpecifier(
+      './spw-idle-lab-a1b2c3.js',
+      'https://spwashi.test',
+      'https://spwashi.test/public/js/site.js',
+    ),
+    'https://spwashi.test/public/js/spw-idle-lab-a1b2c3.js',
+  );
+});
+
+test('deploy packs preserve catalog timing language and module addresses', () => {
+  const definitions = [
+    {
+      id: 'shell',
+      when: 'immediate',
+      describes: 'shell surface',
+      updates: ['structural:data-spw-shell'],
+      load: () => import('../../public/js/runtime/shell-disclosure.js'),
+    },
+    {
+      id: 'console',
+      when: 'idle',
+      timingChunk: 'idle-chrome',
+      load: () => import('../../public/js/runtime/console.js'),
+    },
+    {
+      id: 'page-anatomy',
+      when: 'visible',
+      load: () => import('../../public/js/runtime/page-anatomy.js'),
+    },
+  ];
+
+  assert.equal(semanticPackIdForDefinition(definitions[0]), 'foundation');
+  assert.equal(semanticPackIdForDefinition(definitions[1]), 'idle-chrome');
+  assert.equal(semanticPackIdForDefinition(definitions[2]), 'visible-page-anatomy');
+
+  const plan = createSemanticModulePlan(definitions, path.join(ROOT, 'dist-test'));
+  assert.deepEqual(plan.packs.map((pack) => pack.id), [
+    'foundation',
+    'idle-chrome',
+    'visible-page-anatomy',
+  ]);
+  assert.deepEqual(plan.packs[0].moduleIds, ['shell']);
 });
 
 test('source PWA contract keeps manifest, icons, routes, assets, and offline shell aligned', async () => {

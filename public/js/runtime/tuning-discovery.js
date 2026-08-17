@@ -6,8 +6,9 @@ import {
   resolveTuningDiscoverability,
 } from '/public/js/kernel/site-settings.js';
 import { registerDomSyncTask } from '/public/js/runtime/dom-sync-hub.js';
+import { TUNING_SURFACES_EVENT } from '/public/js/runtime/tuning-contract.js';
 
-const EVENT_NAME = 'spw:tuning-surfaces-updated';
+const EVENT_NAME = TUNING_SURFACES_EVENT;
 
 const TUNABLE_SCOPE_SELECTOR = [
   '[data-site-settings-scope]',
@@ -318,4 +319,4 @@ export function initTuningDiscovery(ctx = null) {
   };
 }
 
-export { EVENT_NAME as TUNING_SURFACES_EVENT };
+export { TUNING_SURFACES_EVENT };

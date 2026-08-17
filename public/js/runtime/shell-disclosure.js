@@ -6,7 +6,7 @@ import {
   writeDatasetValue,
   writeRuntimeDatasetValues,
 } from '/public/js/kernel/dom-contracts.js';
-import { TUNING_SURFACES_EVENT } from '/public/js/runtime/tuning-discovery.js';
+import { TUNING_SURFACES_EVENT } from '/public/js/runtime/tuning-contract.js';
 import { releaseShellLock, syncShellLock } from './shell/scroll-lock.js';
 import {
   ensureAttentionPosturePanel,
