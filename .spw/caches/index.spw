@@ -20,6 +20,7 @@
 @arrival_perceptibility: ~"./arrival-perceptibility-2026-08.spw"
 @delegation_parcels: ~"./delegation-parcels-2026-08.spw"
 @precipitate_2026_08_14: ~"./precipitate-2026-08-14.spw"  # probe output lifted into corpus; deltas accrue per run
+@region_ecology_materials: ~"./region-ecology-materials.spw"
 
 operation = "align"
 fixity = "tending"
@@ -34,6 +35,7 @@ fixity = "tending"
   arrival_perceptibility_2026_08 = @arrival_perceptibility
   delegation_parcels_2026_08 = @delegation_parcels
   precipitate_2026_08_14 = @precipitate_2026_08_14
+  region_ecology_materials = @region_ecology_materials
 }[reg=facet]
 
 ^"cache_rules"{

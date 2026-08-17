@@ -1,140 +1,109 @@
 # Spatial Gravity
 #
-# Width/height philosophy, edge + vertical gravity, opportunistic variant
-# selection, flush alignment, boundary overlap, and density/salience.
+# Viewport-relative placement. A host reads leftover room and picks a
+# variant. Outer seat of the layout stack: region names the seat, packing
+# arranges insides, gravity answers where the host sits.
 
 #>spatial_gravity
 #:convention #!layout #!responsive #!components
+#:operation #!contract
+#:fixity #!tending
 #:layer #!pragmatics
 
 @runtime: ~"../../public/js/runtime/spatial-gravity.js"
 @css: ~"../../public/css/systems/spatial-gravity.css"
+@component_packing: ~"./component-packing.spw"
+@region_ecology: ~"./region-component-ecology.spw"
 @composition_box_model: ~"./composition-box-model.spw"
-@dimension_vocabulary: ~"./dimension-vocabulary.spw"
 @typography_packing: ~"./typography-packing.spw"
-@site_semantics: ~"./site-semantics.spw"
-@anatomy_audit: ~"../audits/component-anatomy-device-packing-2026-07.spw"
-@measurement_contract: ~"./measurement-contract.spw"
+@copy_flow: ~"./copy-flow.spw"
+@floating_chrome: ~"./floating-chrome-coherence.spw"
+@viewing_reason: ~"./viewing-reason.spw"
+@dimension_vocabulary: ~"./dimension-vocabulary.spw"
+@measurement: ~"./measurement-contract.spw"
+@bench: ~"../../design/composition/index.html"
 
-purpose: .{
-  plain = `Let a component read where it sits and how much room it has, then choose a variant — instead of hard-coding a breakpoint.`
-  resonance = `Grounds the conceptual #cognitive_gravity_planes (@site_semantics) in real viewport geometry: "down" stops being a metaphor and becomes a measured pull the component answers to. Interacting with a tracked component should clarify how attention, scale, and room shape layout.`
+operation = "contract"
+fixity = "tending"
+
+^"thesis"{
+  claim = `A host with data-spw-gravity reads leftover viewport room and writes a space-variant. Media queries answer shell width. Container queries answer box width. Gravity answers where this host is and which way room remains.`
+  expression = space[gravity]{measure.extent.edge}<variant>
+  !anti = `Do not author a private getBoundingClientRect flip for a new popover. Extend @runtime so every consumer gets the same room tokens.`
 }[reg=facet]
 
-^"two_axes"{
-  claim: `Width and height are independent. measure is the inline band; extent is the block band against the viewport. A component can be wide-but-squat or narrow-but-overtall; the pair, not either alone, says how to pack.`
-  measure: #[`narrow < 340px`, `comfortable < 680px`, `wide`][reg=set]
-  extent: #[`squat < 0.25vh`, `contained <= 1vh`, `tall <= 1.8vh`, `overtall`][reg=set]
-  attrs: .{
-    measure = `data-spw-measure-band`
-    extent = `data-spw-extent`
-    composite = `data-spw-space-variant = <measure>-<extent>-<vertical>`
-  }[reg=facet]
-  rule: `overtall tightens internal rhythm (do not force a long scroll for one component); tall may breathe. Height decisions read extent; width decisions read measure. Do not overload measure to carry both.`
-}
+^"stack"{
+  region = `@region_ecology names the page seat (hook|hub|cluster|path|read|wide).`
+  packing = `@component_packing arranges a card's media|body|actions from the card's inline size.`
+  gravity = `This file places the host against the viewport.`
+  density = `@typography_packing is pad/gap/measure, not placement.`
+  wrap = `@copy_flow wrap (phone/tablet/desktop line counts) is copy analysis. It is not a fourth placement axis.`
+  wait = `Do not reposition on approach. Measure after settle so arrival wonder is not a layout jump.`
+}[reg=facet]
 
-^"gravity"{
-  raw_primitive: `Room on each side, in px: --spw-room-above | -below | -left | -right. This is the composable base — everything else derives from it, and CSS can use it directly (a popover caps its height with max-block-size: var(--spw-room-below), no JS fit math). Per-side proximity --spw-proximity-top|-bottom|-left|-right (0..1) is the normalized form.`
-  edge_gravity: `Two-axis and corner-aware. data-spw-edge-y = top|middle|bottom, data-spw-edge-x = left|center|right, and data-spw-edge-gravity combines them (top-left, bottom, center, …). A component near an edge announces it (per-side glow driven by proximity), never silently clips.`
-  vertical_gravity: `data-spw-vertical-gravity = rises|balanced|falls — which way expandable content grows to stay on-screen. Near the bottom → rises (opens up); near the top → falls. --spw-vertical-bias (-1..1) is the smooth signal.`
-  horizontal_gravity: `data-spw-horizontal-gravity = trails|balanced|leads — the inline counterpart. Near the right edge → trails (opens toward inline-start); near the left → leads. --spw-horizontal-bias (-1..1).`
-  opening: `data-spw-gravity="open" adds data-spw-open-direction=up|down and data-spw-open-anchor=<up|down>-<start|end|center> — the 2D opening for popover-shaped reveals. CSS flips growth (flex-direction) + aligns (align-self) + caps height to room, while DOM order stays put for reading + a11y.`
-  performance: `One shared rAF-throttled capture-phase scroll/resize listener (catches inner-container scroll); IntersectionObserver gates measurement to on-screen tracked elements. Response stays in transform/opacity/color/shadow, never layout thrash.`
-  lifecycle: `Mount returns cleanup + refresh. MutationObserver adopts added opt-ins and untracks removed roots; cleanup disconnects IO/RO/MO and global listeners, cancels rAF, and restores generated datasets, styles, instrumentation, and readout markup.`
-}
-
-^"opportunistic_variant"{
-  claim: `Variant selection is opportunistic when it reads available space at the moment, not a media query guessed in advance. The composite data-spw-space-variant is the single handle a component or its CSS keys off; it changes as the component moves and resizes.`
-  contrast: `Media queries answer "how wide is the shell"; container queries answer "how wide is my box"; spatial gravity answers "where am I and which way is there room". These are the axes named in @anatomy_audit — keep each decision keyed to the axis that actually owns it.`
-}
-
-# --- Extensions requested 2026-07-08: flush, overlap, density/salience, settings ---
-
-^"flush_and_surface_seating"{
-  question: `Which elements should be flush with which edges or surfaces?`
-  principle: `Flushness encodes relationship. An element goes flush to a boundary when it belongs to that boundary's system: shell chrome (header, footer, section handle) seats flush to the viewport edge because it frames everything; a rail seats flush to its figure because it annotates that figure; reading content holds an inset measure because it belongs to the reader, not the frame.`
-  rules: #[
-    `Chrome + navigation: flush to viewport edge (owns the frame).`,
-    `Companion rails, gutters, spines: flush to the host they annotate, inset from the page.`,
-    `Reading + primary content: never flush to the viewport; hold measure so line length stays workable (@typography_packing).`,
-    `Edge-gravity="none" is the resting state — most content should read as unbounded, discovering an edge only when it nears one.`
+^"writes"{
+  opt_in = `data-spw-gravity on the host. data-spw-gravity=open also writes open-direction and open-anchor.`
+  dataset = #[
+    `data-spw-measure-band = compact | balanced | wide | maximal`,
+    `data-spw-extent = squat | contained | tall | overtall`,
+    `data-spw-vertical-gravity = rises | balanced | falls`,
+    `data-spw-horizontal-gravity = trails | balanced | leads`,
+    `data-spw-edge-y = top | middle | bottom`,
+    `data-spw-edge-x = left | center | right`,
+    `data-spw-edge-gravity = top | bottom | left | right | top-left | … | none`,
+    `data-spw-space-variant = <measure>-<extent>-<vertical>`,
+    `data-spw-open-direction / data-spw-open-anchor when open`
   ][reg=set]
-  realized = `data-spw-seating = flush-viewport | flush-host | inset (spatial-gravity.css). Seating is declared, not inferred from ad hoc margins.`
-}
+  room = `--spw-room-above|below|left|right (px). CSS can cap a popover with max-block-size: var(--spw-room-below) and skip JS fit math.`
+  proximity = `--spw-proximity-top|bottom|left|right and --spw-edge-proximity (0..1); --spw-vertical-bias / --spw-horizontal-bias (-1..1).`
+  readout = `[data-spw-gravity-readout] narrates edge, vertical, horizontal, extent, measure. Labs and inspect only.`
+  drift = `The file header in @runtime still says measure-band = narrow|comfortable|wide. resolveMeasureBand writes compact|balanced|wide|maximal. Trust the constants, not the comment.`
+}[reg=facet]
 
-^"boundary_overlap"{
-  question: `What should happen when boundaries overlap?`
-  principle: `Overlap is a contest for the same pixels; resolve it by precedence, not z-index luck. The higher-salience layer holds the space; the other yields (reflow, collapse, or scroll) rather than clipping.`
-  realized: `data-spw-salience = background|ambient|primary|focal ranks priority. runtime/spatial-gravity.js pairwise-tests on-screen tracked rects; the lower-salience overlapper gets data-spw-yielded=true + data-spw-yield-reason=held-by-<winner>, and CSS demotes it (opacity/saturate + a visible reason label). N is small — only opted-in on-screen elements — so pairwise is cheap.`
-  cases: #[
-    `Sticky chrome vs anchored target: target yields via scroll-margin (landed for svg nodes in @anatomy_audit) so arrivals clear the header.`,
-    `Expansion vs viewport edge: expansion yields direction via vertical gravity (opens toward room) rather than overflowing.`,
-    `Rail vs surface at narrow measure: rail collapses to a scroll strip; surface keeps full width (svg-surfaces precedent).`,
-    `Two peers competing: the higher-salience holds; the other demotes (data-spw-yielded).`
-  ][reg=set]
-  rule: `Overlap resolution must be visible and inspectable — a yielded element reads as deliberately grounded (why it yielded), never as a silent clip. Ties to the interaction reward contract: no silent absorption.`
-}
+^"bands"{
+  claim = `Gravity bands are viewport-host geometry. They are not the box-model bands and not the pack-layout rem ladder. Do not force the three ladders onto one number line.`
+  gravity_px = `MEASURE_BANDS in @runtime: compact < 320, balanced < 580, wide < 880, else maximal.`
+  extent = `squat < 0.25vh; contained <= 1vh; tall <= 1.8vh; else overtall. overtall tightens rhythm; do not force a long scroll inside one host.`
+  box_px = `@composition_box_model thresholds: <320 narrow, <640 compact, <960 comfortable, else wide. Card box-width, not the viewport.`
+  pack_rem = `@component_packing @container: stack → split at 26rem (416px @ 16) → feature at 44rem (704px).`
+}[reg=facet]
 
-^"applied_patterns"{
-  claim: `Popovers, overlays, navigation, and variant selection are not separate systems — they are the gravity/seating/salience primitives composed. Building each on the shared substrate keeps behavior consistent and inspectable instead of re-solving positioning per widget.`
-  popover: `A popover is data-spw-gravity="open" reading data-spw-open-anchor (2D: opens up/down toward vertical room, aligns start/end toward inline room) + high salience (holds the contested space while open) + max-block-size: var(--spw-room-below|above) so it never overflows. The anchor's room measurements choose direction and cap size; no per-popover flip or fit logic.`
-  overlay: `A modal/overlay is data-spw-salience="focal" seated flush-viewport (it frames everything beneath). Lower-salience content under it reads as yielded automatically. Dismissal returns salience to the layer beneath — the contest reverses rather than a z-index teardown.`
-  navigation: `Chrome + nav seat flush-viewport (they own the frame). In-page nav targets yield to sticky chrome via scroll-margin so arrivals land clear. A nav that opens a drawer is a popover case: it opens toward room and holds salience while open.`
-  variant_selection: `data-spw-space-variant is the single opportunistic handle a component keys off — it already composes measure + extent + vertical gravity, and changes as the component moves/resizes. Prefer selecting a variant from space-variant over authoring a media query, so the choice tracks real room, not a guessed breakpoint.`
-  rule: `A new floating/positioned UI should reach for these attributes before writing bespoke getBoundingClientRect + flip logic. If a pattern needs geometry the primitives do not expose, extend spatial-gravity.js so every consumer benefits, rather than measuring privately.`
-}
+^"seating_and_overlap"{
+  seating = `data-spw-seating = flush-viewport | flush-host | inset. Chrome owns the frame. Rails sit flush to the host they annotate. Reading copy stays inset.`
+  rest = `edge-gravity=none is the resting state. Most content should not glow an edge until it nears one.`
+  salience = `On [data-spw-gravity] only: data-spw-salience = background | ambient | primary | focal. Pairwise overlap: the lower rank gets data-spw-yielded + data-spw-yield-reason. Visible yield, never a silent clip.`
+  collision = `Software contract cards still use data-spw-salience=near|ambient|strong as field strength. Do not put data-spw-gravity on those cards until they migrate to data-spw-field-salience or data-spw-module-salience.`
+  viewing = `@viewing_reason is the lens (why this figure is being read). Orthogonal to overlap rank.`
+}[reg=facet]
 
-^"density_and_salience"{
-  claim: `Density is how much material occupies a box; salience is how much attention a thing earns. They are orthogonal and both belong to the spatial model.`
-  density: `Carried by @typography_packing tiers (compact|balanced|roomy) + @composition_box_model content-tone (light|balanced|dense|operator-heavy|media-dominant). Extent and measure feed density: a squat wide box can afford roomy; an overtall narrow box should compact.`
-  salience: `Overlap priority ranks (background|ambient|primary|focal) on [data-spw-gravity] opt-ins. Viewing reason (audience facets, image lens, scene lane) lives in @viewing_reason — orthogonal to overlap salience. Salience decides which peer wins a boundary contest; viewing reason decides how the same figure reads for different audiences.`
-  rule: `Raising density should not silently raise salience, and vice versa. A dense panel can be low-salience background; a single sparse chip can be the highest-salience element. Keep the two tunable independently so scale changes readability (density) without hijacking priority (salience).`
-}
+^"patterns"{
+  popover = `data-spw-gravity=open + data-spw-salience=focal + max-block-size: var(--spw-room-below|above). DOM order stays put.`
+  overlay = `salience=focal + seating=flush-viewport. Dismiss reverses the contest; do not teardown via z-index alone.`
+  nav = `Chrome seats flush-viewport. In-page targets yield with scroll-margin. A drawer is a popover.`
+  variant = `Key CSS off data-spw-space-variant, not a guessed media query, when the choice must track real room.`
+}[reg=facet]
 
-^"settings_as_learning_surface"{
-  claim: `Configuration is a teaching instrument, not just a preferences store. Every spatial knob exposed in settings should make its concept legible by letting the reader feel the change.`
-  method: #[
-    `Each setting names the axis it moves (shell-width, box-width, input-capability, density, salience, gravity) so the control teaches the vocabulary.`,
-    `Changes preview live on a specimen (the workbench pattern from the svg lab: move a control → surface responds → the shareable state rebuilds).`,
-    `A tracked component's data-spw-gravity-readout narrates its own state as you scroll — the surface explains itself.`,
-    `Settings persist and carry across routes so the learner sees the same lens applied everywhere (site-settings-engine).`
-  ][reg=set]
-  rule: `A setting that changes something the reader cannot perceive or inspect is a contract violation. Prefer settings whose effect is visible on the current page over settings that only matter elsewhere.`
-}
-
-runtime_demo: `/design/composition/ — spatial gravity bench: scroll to watch specimens narrate edge, vertical, extent, and measure live.`
-
-^"adoption_status_2026_07"{
+^"adoption"{
   operation = "audit"
   fixity = "tending"
-  claim: `Primitives are implemented and bench-proven; production HTML adoption is near zero except partial reward-ui dock measurement.`
-  production_hosts: #[
-    `design/composition/index.html — gravity bench specimens only`,
-    `public/js/runtime/reward-ui.js — imports measureSpatialGravity for dock positioning (partial bridge, not full data-spw-gravity opt-in)`
+  dated = `2026-08-17`
+  hosts = #[
+    `@bench — the only authored data-spw-gravity specimens`,
+    `public/js/runtime/reward-ui.js — measureSpatialGravity for dock position; not a full opt-in`
   ][reg=set]
-  mount_gate: .{
-    mechanism = `module-catalog.js schedules spatial-gravity at VISIBLE when [data-spw-gravity] exists in authored HTML; after mount, its MutationObserver adopts later opt-ins.`
-    footgun = `A route with no authored opt-in still cannot schedule the module solely for a future dynamic popover.`
-    direction = `First production adoption should keep one honest authored opt-in or add an existing feature gate only when dynamic-only gravity becomes a real route contract.`
-  }[reg=facet]
-  salience_collision: .{
-    gravity_values = #[`background`, `ambient`, `primary`, `focal`][reg=set]
-    other_uses = #[
-      `topics/software/index.html semantic-contract-card data-spw-salience=near|ambient|strong — module field semantics, not overlap ranks`,
-      `public/js/semantic/concept-salience.js maps data-spw-salience to attention vocabulary`
-    ][reg=set]
-    rule = `Gravity overlap resolution applies only to elements with data-spw-gravity opt-in using the four rank values. Card/module salience keeps data-spw-salience but should migrate toward data-spw-module-salience or data-spw-field-salience in a rename window; until then, never opt cards into [data-spw-gravity] with near/strong tokens.`
-  }[reg=facet]
-  parallel_positioning: #[
-    `positionFloatingChromePopover + syncFloatingChromeState in dom-contracts.js — bespoke rects for chrome roles`,
-    `topic-discovery.js popover placement — getBoundingClientRect flip math, off floating-chrome contract`,
-    `direction: first production adopters should use data-spw-gravity="open" + salience focal instead of private fit logic`
+  mount = `module-catalog schedules spatial-gravity at VISIBLE when [data-spw-gravity] exists in authored HTML. A route with no authored opt-in cannot schedule gravity for a later dynamic popover.`
+  still_private = #[`topic-discovery.js popover rect flip`, `dom-contracts positionFloatingChromePopover`][reg=set]
+  first = #[
+    `topic-discovery popover → gravity=open + salience=focal`,
+    `region-menu panel → gravity=open + seating=flush-host`,
+    `state-inspector drag root → gravity + shared bottom-lane clearance`,
+    `spw-section-handle → edge-y=top + seating=flush-viewport`
   ][reg=set]
-  first_route_adopters: #[
-    `topic-discovery popover → data-spw-gravity="open" on popover host + data-spw-salience="focal"`,
-    `region-menu floating panel → gravity open + flush-host seating`,
-    `state-inspector satchel → data-spw-gravity on drag root; bottom-lane clearance via shared API`,
-    `spw-section-handle → edge-gravity top + flush-viewport seating (mobile sticky chip)`
-  ][reg=set]
-  css_layer: `spatial-gravity.css lives in systems layer; room/gravity custom properties publish to opted-in hosts only — do not expect gravity tokens on routes without data-spw-gravity.`
-}
+}[reg=facet]
+
+validation: #[
+  `rg 'MEASURE_BANDS|resolveMeasureBand' public/js/runtime/spatial-gravity.js`,
+  `rg 'data-spw-gravity' --glob '*.html'`,
+  `node --check public/js/runtime/spatial-gravity.js`,
+  `Open /design/composition/ and scroll a specimen — readout must name compact|balanced|wide|maximal, not narrow|comfortable`
+][reg=set]

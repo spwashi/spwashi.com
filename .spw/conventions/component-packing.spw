@@ -1,125 +1,88 @@
-# Component-Local Packing
+# Component Packing
 #
-# How a card arranges its own regions by its own size — the container-relative
-# counterpart to spatial-gravity (which is viewport-relative).
+# Container-relative layout. A card arranges its own regions from its own
+# inline size. Inner seat of the layout stack: gravity places the card,
+# packing decides stack|split|feature inside it.
 
 #>component_packing
 #:convention #!layout #!components #!responsive
+#:operation #!contract
+#:fixity #!tending
 #:layer #!pragmatics
 
 @css: ~"../../public/css/systems/component-packing.css"
 @runtime: ~"../../public/js/runtime/composition-box-model.js"
 @spatial_gravity: ~"./spatial-gravity.spw"
+@region_ecology: ~"./region-component-ecology.spw"
 @composition_box_model: ~"./composition-box-model.spw"
 @typography_packing: ~"./typography-packing.spw"
+@copy_flow: ~"./copy-flow.spw"
 @dimension_vocabulary: ~"./dimension-vocabulary.spw"
 @component_taxonomy: ~"./component-taxonomy.spw"
 @harmony_audit: ~"../audits/component-philosophy-harmony-2026-07.spw"
-@anatomy_packing_audit: ~"../audits/component-anatomy-device-packing-2026-07.spw"
+@bench: ~"../../design/composition/index.html"
 
-purpose: .{
-  plain = `Let a card select its internal layout from its own inline size and content, not the viewport.`
-  pairing = `Outer gravity (spatial-gravity) says where a card sits; inner packing says how it arranges itself. Both first-class. A card in a sidebar packs the same way whether that sidebar is on a phone or a wide screen — it reads its container, not the screen.`
+operation = "contract"
+fixity = "tending"
+
+^"thesis"{
+  claim = `A card with data-spw-pack-local is an inline-size container. Its region grid reflows from the card's width, not the viewport. The same card in a rail and in a main column packs the same way.`
+  expression = card[pack]{width.content}<layout>
+  !anti = `Do not add a viewport media query to restyle a card's internal grid. That question belongs to @spatial_gravity (where) or shell-width (chrome).`
 }[reg=facet]
 
-^"why_container_not_viewport"{
-  claim: `Viewport media queries answer "how wide is the screen" — the wrong question for a component that can appear in a wide main column, a narrow rail, or a grid cell. The component-local question is "how wide am I", answered by container queries.`
-  rule: `Prefer a container query for a card's internal layout; reserve viewport media for page-shell chrome. This is the box-width axis from @dimension_vocabulary / the anatomy audit — keep the decision keyed to the axis that owns it.`
-}
+^"stack"{
+  region = `@region_ecology names the page seat. pack-region media|body|actions must match real slots on that seat.`
+  packing = `This file. Width chooses arrangement; content chooses density.`
+  gravity = `@spatial_gravity is outer placement. A card may use both: outer reads viewport room, inner reads container inline-size.`
+  density = `@typography_packing compact|balanced|roomy is pad/gap/measure. It is not pack-layout and not pack-fill.`
+  wrap = `@copy_flow wrap is copy analysis (audit:copy:align / :expr). Do not invent a pack-wrap attribute.`
+  chrome = `chrome_field (section-handle, floating islands) is never pack-local. That restyle was the measured cause of "the nav changes as the page loads."`
+}[reg=facet]
 
 ^"opt_in"{
-  attr: `data-spw-pack-local on the card makes it an inline-size container (container: spw-pack / inline-size).`
-  regions: `A [data-spw-pack-regions] child holds the region grid; regions carry data-spw-pack-region = media | body | actions and reflow by the card's width.`
-}
+  host = `data-spw-pack-local → container: spw-pack / inline-size.`
+  grid = `[data-spw-pack-regions] holds the region grid.`
+  regions = `data-spw-pack-region = media | body | actions.`
+  collision = `data-spw-region=body on a payment strip is a page-region id, not a pack-region. Do not reuse pack-region tokens as page seats.`
+}[reg=facet]
 
-^"two_packing_axes"{
-  width: `Container query selects the layout: stack (default) -> split (media beside body, >=26rem) -> feature (three lanes, >=44rem). Pure CSS, no flash, no JS.`
-  content: `Orthogonal to width. :has(> [data-spw-pack-region] > :nth-child(6)) tightens gap when a card holds many items; @composition_box_model content-tone (dense|operator-heavy|text-long) tunes density from what the card actually contains. A card can be wide but content-dense, or narrow but sparse — both axes apply.`
-  rule: `Width chooses arrangement; content chooses density. Do not overload one to carry the other (echoes the measure/extent split in @spatial_gravity two_axes).`
-}
+^"axes"{
+  width = `Pure CSS @container. stack (default) → split at 26rem → feature at 44rem. PACK_LAYOUT_BANDS in @runtime are 416 / 704 so the JS mirror matches a 16px root.`
+  content = `:has(> [data-spw-pack-region] > :nth-child(6)) tightens gap. data-spw-content-tone dense|operator-heavy|text-long also tunes gap. Orthogonal to width.`
+  fill = `data-spw-pack-fill = sparse | balanced | full (item-count band from @runtime).`
+  box_measure = `@runtime also writes data-spw-box-measure from a different ladder: <320 narrow, <640 compact, <960 comfortable, else wide. That is box-width of any observed host, not pack-layout.`
+  occupancy = `data-spw-pack-occupancy is written by region-profiler on frames. That is a page-region receipt, not this card-local fill band. Keep the names apart.`
+  rule = `Width → arrangement. Content → density. Do not overload one to carry the other.`
+}[reg=facet]
 
-^"inspectability"{
-  claim: `The CSS container query is the behavior; the box model mirrors the resolved variant so the decision is legible, matching the site's measure -> attribute -> CSS philosophy.`
-  writes: #[
-    `data-spw-pack-layout = stack | split | feature (mirrors the @container breakpoints; PACK_LAYOUT_BANDS in composition-box-model.js are the 26rem/44rem equivalents so JS and CSS agree).`,
-    `data-spw-pack-fill = sparse | balanced | full (item count band).`,
-    `[data-spw-pack-readout] child narrates layout + fill + measured px, like the gravity readout — interacting (resizing) clarifies the concept.`
-  ][reg=set]
-  caution = `The px mirror and the rem @container breakpoints must be kept in sync by hand (JS cannot read a container query threshold). If one moves, move the other; the comment in each file names the pair.`
-}
+^"mirror"{
+  writes = `data-spw-pack-layout = stack | split | feature. data-spw-pack-fill = sparse | balanced | full.`
+  when = `JS mirror runs on resize/attention for opted-in cards. CSS already laid the card out. Never gate visibility on pack-layout.`
+  sync = `If the @container rem thresholds move, move PACK_LAYOUT_BANDS in the same patch. JS cannot read a container-query threshold.`
+  readout = `[data-spw-pack-readout] narrates layout + fill + measured px. Labs and inspect only.`
+}[reg=facet]
 
-runtime_demo: `/design/composition/ — a user-resizable card: drag the handle to change the card's own width and watch its regions repack stack -> split -> feature, independent of the viewport.`
-
-^"adoption_status_2026_07"{
+^"adoption"{
   operation = "audit"
   fixity = "tending"
-  claim: `Container-query packing is CSS-complete; data-spw-pack-local is authored only on the composition lab bench, not on production route cards.`
-  production_gap: #[
-    `frame-card / site-frame cards still rely on viewport media and typography-packing tiers`,
-    `no route card yet combines data-spw-pack-local with data-spw-gravity outer positioning`
+  dated = `2026-08-17`
+  hosts = #[
+    `@bench pack-card specimen`,
+    `index.html living-concept-card[data-concept=attention-posture] — the only production pack-local host`
   ][reg=set]
-  runtime_mirror: .{
-    module = `composition-box-model.js writes data-spw-pack-layout and data-spw-pack-fill for [data-spw-pack-local] opt-ins`
-    ro_gap = `ResizeObserver watches documentElement and DEFAULT_SELECTOR hosts — not per-card container resize for pack-local regions unless the card is in the default selector set`
-    direction = `When promoting pack-local to route cards, register each card in composition-box-model DEFAULT_SELECTOR or attach a dedicated pack-local observer`
-  }[reg=facet]
-  measure_band_mismatch: .{
-    packing_px = #[`narrow 320`, `comfortable 640`, `wide 960`][reg=set]
-    gravity_px = #[`narrow 340`, `comfortable 680`][reg=set]
-    rule = `Box-width (container) and viewport (gravity) bands intentionally differ — do not force numeric alignment. Document which axis owns a card decision in @dimension_vocabulary. If a card uses both, outer gravity reads viewport room; inner packing reads container inline-size.`
-  }[reg=facet]
-  settle_charge_bridge: .{
-    gap = `data-spw-interaction-phase settle and charge-cycle field readouts do not yet propagate into pack regions on production routes`
-    direction = `When a card opts into pack-local, let settle phase tighten data-spw-pack-fill and charge preview raise region salience tokens — mirror gravity readout pattern (inspectable narration, no layout thrash)`
-  }[reg=facet]
-  performance_defaults: #[
-    `Pure CSS @container repack — no JS on the hot path for width-axis layout`,
-    `JS mirror runs on resize/attention events only for opted-in cards`,
-    `Prefer pack-local on cards that appear in multiple shell widths (rails, grids, split layout) before sitewide frame-card migration`,
-    `Do not widen composition-box-model DEFAULT_SELECTOR to all .site-frame solely for packing mirrors`,
-    `Observe pack-local hosts (or a packing root) with ResizeObserver so container-only resize updates pack-layout`,
-    `Skip content-tone rescans on pure stage shells; cache tone until subtree mutation when counts grow`
-  ][reg=set]
-  first_route_adopters: #[
-    `semantic-contract-card grid on /topics/software/ — high reuse, narrow/wide shell variance`,
-    `living-concept-card on hub routes — figure+body regions match pack regions media|body|actions`,
+  still_viewport = `frame-card / site-frame grids still pack from viewport media + @typography_packing.`
+  first = #[
+    `/topics/software/ semantic-contract-card grid — reuse + shell-width variance`,
+    `hub living-concept-card when figure+body co-present`,
     `settings vibe-widget-grid — already in composition-box-model DEFAULT_SELECTOR`
   ][reg=set]
-}
+  !widen = `Do not add every .site-frame to DEFAULT_SELECTOR just to write pack-layout.`
+}[reg=facet]
 
-^"packing_prime_2026_07"{
-  operation = "prime"
-  fixity = "tending"
-  source = @harmony_audit
-  tone = `Packing is box-local care work, not spectacle. Prefer silent reflow; use readouts only on labs and opt-in inspect surfaces.`
-  axis_discipline = `shell-width owns chrome; box-width owns card pad/gap/region layout; content owns density; input-capability owns hit-size — see @anatomy_packing_audit variant_axes_summary and @dimension_vocabulary.`
-  associate_routes = #[
-    `/topics/software/ — first production pack-local grid`,
-    `/settings/ — vibe widgets already observed by composition-box-model`,
-    `/design/composition/ — teaching bench now maps figure/body/actions slots to pack regions and names intentionally missing header/footer; register legend remains`,
-    `/design/slots/ — map slots to pack regions media|body|actions`,
-    hub living-concept cards on `/` and `/topics/` when figure+body co-present
-  ][reg=set]
-  components_needing_direction = #[
-    `frame-card / site-frame production cards — still viewport + typography-packing only`,
-    `figure+rail SVG hosts — promote data-spw-box-model=figure-rail (container, not four media rules)`,
-    `secondary routes with sparse data-spw-slot — dual anatomy repair before pack-local`,
-    `any card re-testing touch min-height at leaf — inherit pack hit-size band instead`
-  ][reg=set]
-  settle_bridge = `When pack-local lands on production: settle phase may tighten pack-fill; charge may raise region salience tokens — mirror gravity readout (narrate, no thrash).`
-  safe_first_patch = `One card family on /topics/software/ with data-spw-pack-local + pack regions; validate stack|split|feature at 26rem/44rem; register RO in composition-box-model if not already selected.`
-  lab_refine = @harmony_audit
-  passport = `Packing decisions belong in the component passport pack-axes field (@component_taxonomy#component_passport).`
-  performance = `See @harmony_audit#performance_audit — CSS owns layout; claim component-harmony-004 owns promotion budget.`
-  lifecycle = `Pack CSS by interactive; JS pack-layout mirror may arrive later without changing layout. Never gate visibility on pack-layout.`
-  naming = `pack-* family only for container packing; gravity-* for outer placement; pack-fill ≠ content-tone ≠ typography density.`
-}
-
-^"lifecycle_and_naming_notes"{
-  operation = "prime"
-  fixity = "tending"
-  source = @harmony_audit
-  maturity_gate = `Do not skip dual anatomy (slots) before pack-local on a card family — missing slots make pack-region media|body|actions guesswork.`
-  settle_naming = `Use existing settle altitudes (interaction-phase, box-settle-phase, page-arrival). Do not invent data-spw-pack-settle.`
-  capture = `capture-clean resolves to settled frame for pack regions (no motion, no hover affordance) — settle vocabulary, not a new pack mode.`
-}
+validation: #[
+  `rg 'data-spw-pack-local' --glob '*.html'`,
+  `rg 'PACK_LAYOUT_BANDS|min-width: 26rem|min-width: 44rem' public/js/runtime/composition-box-model.js public/css/systems/component-packing.css`,
+  `node --check public/js/runtime/composition-box-model.js`,
+  `Open /design/composition/ and drag the pack-card — layout must walk stack|split|feature without a viewport resize`
+][reg=set]

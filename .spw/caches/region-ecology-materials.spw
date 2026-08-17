@@ -1,18 +1,37 @@
+# Region Ecology Materials
+#
+# Charge vs harmony. Packs paint; the profiler writes cognitive flow.
+# Do not ask packs.css to become a second region grammar.
+
 #>region_ecology_materials
-#:conventions #!semantics #!layer
+#:cache #!semantics #!regions #!materials
+#:operation #!cache
+#:fixity #!tending
+#:layer #!pragmatics
 
 @semantic_capacity: ~"../conventions/semantic-capacity.spw"
-@region_profiler: ~"../../public/js/runtime/region-profiler.js"
+@region_ecology: ~"../conventions/region-component-ecology.spw"
+@profiler: ~"../../public/js/runtime/region-profiler.js"
 @packs_css: ~"../../public/css/themes/packs.css"
+@syntax: ~"../../public/css/grammar/syntax.css"
+@seats: ~"../../public/css/systems/region-seats.css"
+
+operation = "cache"
+fixity = "tending"
 
 ^"insight_cache"{
   id = "region-ecology-materials"
   operation = "cache"
   fixity = "tending"
-  source = "chat / user interaction and region-profiler.js"
-  claim = "The materials implied by the CSS (e.g. packs.css) should resonate with the cognitive flow intended by the copy (region ecology), using components as intermediate structural forms."
-  evidence = "packs.css provides physical materials that respond to charge fields, while region-profiler.js applies data-spw-harmony (editorial, structured, responsive) and data-spw-tempo to .site-frame elements based on content role."
-  pattern_consideration = "Compare material-charge physics against material-harmony physics. Charge is transient interaction energy; harmony is persistent cognitive flow context."
-  expansion_prime = "Update packs.css to alter material properties (blur, transmission, surface colors) based on the containing region's data-spw-harmony and data-spw-tempo, grounding Spw as a language into a physical reality."
-  validation = "npm run check:local and verify visual rendering in browser smoke."
-}
+  source = `region-profiler.js writes; syntax.css, region-seats.css, and packs.css already spend`
+  claim = `Charge is a pulse (--spw-charge-field). Harmony/tempo are seat climate. Packs may tint seam/accent by harmony; they must not become a second region-seat grammar or restyle chrome.`
+  evidence = #[
+    `@profiler writes data-spw-harmony / data-spw-tempo / data-spw-density on profiled frames`,
+    `@syntax spends .site-frame[data-spw-harmony=indexed|structured|responsive] and tempo snap|fast|deliberate|settle`,
+    `@seats spends the six region tropes and page-family track bias`,
+    `@packs_css already mixes seam/accent for banked-ember, glass-console, copper-brace, electric-studio, ritual-vellum, neutral-paper, oxide-ledger against editorial|structured|indexed|responsive|modular`
+  ][reg=set]
+  pattern_consideration = `Pack × harmony is a climate wash. Seat tropes (hook|hub|cluster|path|read|wide) stay in @seats. Charge stays on the field token. Three spends, one job each.`
+  expansion_prime = `Do not add hook/hub/cluster layout to packs.css. If a pack wash fights a seat trope, fix the pack selector, not the seat.`
+  validation = `rg 'data-spw-harmony' public/css/themes/packs.css public/css/grammar/syntax.css public/css/systems/region-seats.css`
+}[reg=facet]
