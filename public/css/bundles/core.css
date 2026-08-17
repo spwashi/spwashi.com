@@ -25746,7 +25746,11 @@ html[data-spw-reduce-motion="on"][data-spw-module-visuals="on"][data-spw-runtime
 :where([data-spw-interactive-expression], .spw-interactive-expression) {
   display: inline-flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 0.2rem;
+  box-sizing: border-box;
+  min-inline-size: 0;
+  max-inline-size: 100%;
   padding: 0.15rem 0.45rem;
   border: 1px dashed color-mix(in srgb, var(--active-op-color, #008080) 35%, var(--line, rgba(0, 0, 0, 0.15)));
   border-radius: 5px;
@@ -25754,6 +25758,8 @@ html[data-spw-reduce-motion="on"][data-spw-module-visuals="on"][data-spw-runtime
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: 0.84em;
   line-height: 1.35;
+  overflow-wrap: anywhere;
+  vertical-align: middle;
   cursor: text;
   transition: all 140ms ease;
   user-select: text;
@@ -25784,10 +25790,12 @@ html[data-spw-reduce-motion="on"][data-spw-module-visuals="on"][data-spw-runtime
    ========================================================================== */
 
 :where(.spw-expression-hud) {
-  position: absolute;
+  position: fixed;
   z-index: 120;
   display: grid;
   gap: 0.55rem;
+  box-sizing: border-box;
+  min-inline-size: 0;
   padding: 0.75rem;
   border: 1px solid color-mix(in srgb, var(--active-op-color, #008080) 35%, var(--line, rgba(0, 0, 0, 0.18)));
   border-radius: var(--component-radius-loose, 8px);
@@ -25796,8 +25804,13 @@ html[data-spw-reduce-motion="on"][data-spw-module-visuals="on"][data-spw-runtime
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.04);
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   font-size: 0.76rem;
-  inline-size: max-content;
-  max-inline-size: min(92vw, 24rem);
+  inline-size: min(24rem, calc(100vw - 1.5rem));
+  inline-size: min(24rem, calc(100dvw - 1.5rem));
+  max-block-size: calc(100vh - 1.5rem);
+  max-block-size: calc(100dvh - 1.5rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
   opacity: 0;
   pointer-events: none;
   transform: translateY(4px);
@@ -25826,6 +25839,90 @@ html[data-spw-reduce-motion="on"][data-spw-module-visuals="on"][data-spw-runtime
   color: var(--active-op-color, #008080);
 }
 
+:where(.spw-expression-hud__dimensions) {
+  display: grid;
+  gap: 0.25rem;
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+:where(.spw-expression-hud__dimensions > li) {
+  --spw-dimension-color: var(--ink-muted, #5f665f);
+  min-inline-size: 0;
+}
+
+:where(.spw-expression-hud__dimensions > li:nth-child(1)) {
+  --spw-dimension-color: var(--op-frame-color, #007c7c);
+}
+
+:where(.spw-expression-hud__dimensions > li:nth-child(2)) {
+  --spw-dimension-color: var(--op-action-color, #006f67);
+}
+
+:where(.spw-expression-hud__dimensions > li:nth-child(3)) {
+  --spw-dimension-color: var(--op-object-color, #a96400);
+}
+
+:where(.spw-expression-hud__dimensions > li:nth-child(4)) {
+  --spw-dimension-color: var(--op-probe-color, #7650a8);
+}
+
+:where(.spw-expression-hud__dimensions > li:nth-child(5)) {
+  --spw-dimension-color: var(--op-ref-color, #356f9b);
+}
+
+:where(.spw-expression-hud__dimensions a) {
+  display: grid;
+  grid-template-columns: 2.4rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.45rem;
+  min-block-size: 2.75rem;
+  min-inline-size: 0;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--spw-dimension-color) 24%, var(--line, rgba(0, 0, 0, 0.12)));
+  border-radius: var(--component-radius-tight, 5px);
+  background: color-mix(in srgb, var(--spw-dimension-color) 5%, var(--surface-soft, #f7f7f4));
+  color: var(--ink, #111);
+  text-decoration: none;
+}
+
+:where(.spw-expression-hud__dimensions a:hover, .spw-expression-hud__dimensions a:focus-visible) {
+  border-color: var(--spw-dimension-color);
+  background: color-mix(in srgb, var(--spw-dimension-color) 12%, var(--surface-strong, #fff));
+}
+
+:where(.spw-expression-hud__dimensions a:focus-visible) {
+  outline: 2px solid var(--spw-dimension-color);
+  outline-offset: 1px;
+}
+
+:where(.spw-expression-hud__dimensions a[aria-current="step"]) {
+  box-shadow: inset 0.2rem 0 0 var(--spw-dimension-color);
+}
+
+:where(.spw-expression-hud__dimensions [data-dimension-state="available"] a) {
+  color: var(--ink-soft, rgba(0, 0, 0, 0.68));
+}
+
+:where(.spw-expression-hud__dimensions strong) {
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+
+:where(.spw-expression-hud__dimensions small) {
+  color: var(--ink-muted, rgba(0, 0, 0, 0.62));
+  font-size: 0.64rem;
+  text-align: end;
+}
+
+:where(.spw-expression-hud__order) {
+  color: var(--spw-dimension-color);
+  font-weight: 800;
+  letter-spacing: 0.03em;
+}
+
 :where(.spw-expression-hud__forms) {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -25837,6 +25934,8 @@ html[data-spw-reduce-motion="on"][data-spw-module-visuals="on"][data-spw-runtime
   align-items: center;
   justify-content: space-between;
   gap: 0.35rem;
+  min-block-size: 2.75rem;
+  min-inline-size: 0;
   padding: 0.32rem 0.5rem;
   border: 1px solid var(--line, rgba(0, 0, 0, 0.12));
   border-radius: 5px;
@@ -25874,6 +25973,7 @@ html[data-spw-reduce-motion="on"][data-spw-module-visuals="on"][data-spw-runtime
 }
 
 :where(.spw-suggestion-chip) {
+  min-block-size: 2.75rem;
   padding: 0.2rem 0.45rem;
   border: 1px solid var(--line, rgba(0, 0, 0, 0.12));
   border-radius: 4px;
@@ -25904,6 +26004,7 @@ html[data-spw-reduce-motion="on"][data-spw-module-visuals="on"][data-spw-runtime
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
+  min-block-size: 2.75rem;
   padding: 0.25rem 0.5rem;
   border: 1px solid var(--active-op-color, #008080);
   border-radius: 4px;
@@ -25924,6 +26025,7 @@ html[data-spw-reduce-motion="on"][data-spw-module-visuals="on"][data-spw-runtime
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
+  min-block-size: 2.75rem;
   padding: 0.25rem 0.5rem;
   border: 1px solid var(--line, rgba(0, 0, 0, 0.15));
   border-radius: 4px;
@@ -25939,6 +26041,23 @@ html[data-spw-reduce-motion="on"][data-spw-module-visuals="on"][data-spw-runtime
   border-color: var(--active-op-color, #008080);
   background: var(--surface-strong, #fff);
   color: var(--active-op-color, #008080);
+}
+
+@media (max-width: 24rem) {
+  :where(.spw-expression-hud__dimensions a) {
+    grid-template-columns: 2.4rem minmax(0, 1fr);
+  }
+
+  :where(.spw-expression-hud__dimensions small) {
+    grid-column: 2;
+    text-align: start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(.spw-expression-hud) {
+    transition: none;
+  }
 }
 }
 

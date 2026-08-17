@@ -72,6 +72,7 @@ expression = interaction[microstate]{touch.phase.resolution}<never-silent>
     tokens: #[`--spw-variant-selection-weight`, `--spw-variant-selection-duration`][reg=set]
     phase: `prime`
     event: `spw:variant-selected`
+    event_edge: `detail.edge = { from, to, changed, label }; detail.previousVariant preserves the departure endpoint. Query selection lands after authored defaults so the edge stays truthful.`
     owner: `variant-selection.js`
   }
   measure_vs_frame: `layout selection re-resolves frame (rem) and measure (ch) separately — see page-frame-sizing.spw`

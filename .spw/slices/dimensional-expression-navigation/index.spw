@@ -1,0 +1,88 @@
+# Dimensional Expression Navigation Slice
+
+#>dimensional_expression_navigation
+#:slice #!language #!navigation #!responsive
+#:layer #!pragmatics
+
+@plan: ~"../../../.agents/plans/dimensional-expression-navigation/PLAN.md"
+@dimensional_ascent: ~"../../conventions/dimensional-ascent-script-patterns.spw"
+@expression_geometry: ~"../../../public/js/semantic/spw-expression-geometry.js"
+@expression_runtime: ~"../../../public/js/runtime/interactive-expression-lab.js"
+@expression_css: ~"../../../public/css/components/interactive-expression.css"
+@navigator_css: ~"../../../public/css/routes/surfaces/topics.css"
+@software_route: ~"../../../topics/software/index.html"
+@spw_route: ~"../../../topics/software/spw/index.html"
+@settings_route: ~"../../../settings/index.html"
+@containment_measurements: ~"../../skills/ui-containment.spw"
+
+operation = "align"
+fixity = "stable"
+
+intent: .{
+ goal = `Make the relationship between Spw dimensions experiential: each order is a real place a reader can enter, and the path changes posture with available space.`
+ reader_effect = `A newcomer can traverse identity, direction, boundary, context, and replay without memorizing route architecture.`
+ editor_effect = `A maintainer can trace the same dimensional vocabulary through HTML, CSS, JS, tests, and this slice.`
+}[reg=facet]
+
+dimension_contract: #[
+ .{ order = `0D`; role = `handle`; source = `root or address`; destination = `/topics/software/#software-surface` },
+ .{ order = `1D`; role = `vector`; source = `operator`; destination = `/topics/software/spw/#operator-ring` },
+ .{ order = `2D`; role = `form`; source = `paired boundary`; destination = `/topics/software/spw/#concept-form-lab` },
+ .{ order = `3D`; role = `field`; source = `host route or section`; destination = `/topics/software/#semantic-fields` },
+ .{ order = `4D`; role = `path`; source = `runtime consequence`; destination = `/settings/#spell-board` }
+][reg=set]
+
+edge_contract: #[
+ .{ from = `0D handle`; to = `1D vector`; relation = `direct` },
+ .{ from = `1D vector`; to = `2D form`; relation = `bound` },
+ .{ from = `2D form`; to = `3D field`; relation = `situate` },
+ .{ from = `3D field`; to = `4D path`; relation = `replay` },
+ .{ from = `4D path`; to = `0D handle`; relation = `return` }
+][reg=set]
+
+edge_rule = `A dimension names a posture; an edge names the operation that changes posture. Interfaces expose both endpoints and the relation rather than using an unlabeled next arrow.`
+
+source_boundary: .{
+ authored = `Expression text can directly expose 0D identity, 1D operators, and 2D paired forms.`
+ contextual = `3D field and 4D path require the host document or runtime; label them as contextual projections.`
+ falsification = `A UI claims a source string contains field memory or replay history without reading a host or runtime owner.`
+}[reg=facet]
+
+responsive_contract: .{
+ narrow = `Use one-dimensional horizontal travel with scroll snapping, visible overflow intent, and at least 44px targets.`
+ medium = `Use the component's pack-local width: split into 2 + 2 + 1, then use six structural tracks to balance five items as 3 + 2 without a ragged empty third.`
+ wide = `Expose all five dimensions in one row so the complete ascent is simultaneously comparable.`
+ containment = `Every grid/flex descendant owns min-inline-size: 0; long labels wrap; HUD geometry clamps to the visual viewport and can scroll internally.`
+}[reg=facet]
+
+ownership: .{
+ html = `topics/software/index.html owns the durable no-JS navigation sequence and copy.`
+ css = `topics.css owns the single-consumer navigator so it stays out of the shared bundle; interactive-expression.css owns cross-route HUD containment.`
+ js = `spw-expression-geometry.js owns dimensional nodes and edges; composition-box-model.js mirrors pack layout/fill when its enhancement policy mounts; variant-selection.js reports from-to edges; interactive-expression-lab.js owns visible HUD projection and positioning.`
+ spw = `dimensional-ascent-script-patterns.spw owns meaning; this slice owns the public navigation projection.`
+}[reg=facet]
+
+invariants: #[
+ `Every dimensional stop is a working link, not a decorative chip.`,
+ `DOM order remains 0D through 4D at every device size.`,
+ `No horizontal page overflow is introduced; narrow horizontal travel is contained inside the navigator.`,
+ `Reduced motion preserves every state and destination.`,
+ `The site projection remains smaller than the workbench parser and claims no evaluation authority.`
+][reg=set]
+
+practice_beds: .{
+ reading = `Follow the five-stop navigator on /topics/software/.`
+ observation = `Focus an editable expression and inspect authored versus contextual dimensions in the HUD.`
+ gesture = `Morph a paired boundary, then follow the form or field destination.`
+ tending = `Compare navigator containment at 320px, 768px, 1280px, and 1920px.`
+ succession = `Update this slice and its tests before changing dimensional vocabulary or destinations.`
+}[reg=facet]
+
+measurement = @containment_measurements
+
+validation: #[
+ `node --import ./scripts/tests/register-public-imports.mjs --test scripts/tests/spw-expression-geometry.test.mjs`,
+ `npm run ecology:language`,
+ `npm run check:local`,
+ `browser smoke: 320px 768px 1280px 1920px`
+][reg=set]

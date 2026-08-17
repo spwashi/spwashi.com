@@ -1236,3 +1236,232 @@ body[data-spw-surface="topics"] #topics-register > .topic-photo-card img {
     display: none;
   }
 }
+
+/* --------------------------------------------------------------------------
+   Dimensional expression navigation
+   Single-consumer route component: keep this out of the shared core until a
+   second route needs the same five-stop ascent.
+   -------------------------------------------------------------------------- */
+
+body[data-spw-surface="software"] .spw-dimensional-navigator {
+  container: spw-dimensional-nav / inline-size;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: stretch;
+  gap: clamp(0.85rem, 2cqi, 1.4rem);
+  min-inline-size: 0;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--op-frame-color) 8%, transparent), transparent 42%),
+    var(--surface-panel, var(--surface-strong));
+}
+
+body[data-spw-surface="software"] .spw-dimensional-navigator__header {
+  display: grid;
+  gap: 0.35rem;
+  min-inline-size: 0;
+  max-inline-size: 70ch;
+}
+
+body[data-spw-surface="software"] .spw-dimensional-navigator__header > * {
+  min-inline-size: 0;
+  margin: 0;
+}
+
+body[data-spw-surface="software"] .spw-dimensional-navigator > nav {
+  inline-size: 100%;
+  max-inline-size: none;
+  min-inline-size: 0;
+  justify-self: stretch;
+}
+
+body[data-spw-surface="software"] .spw-dimensional-navigator__kicker {
+  color: var(--op-frame-color);
+  font-size: 0.72rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+body[data-spw-surface="software"] .spw-dimensional-navigator__track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: clamp(13rem, 78cqi, 17rem);
+  grid-auto-rows: 1fr;
+  gap: var(--space-sm, 0.75rem);
+  inline-size: 100%;
+  max-inline-size: none;
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0.2rem 0.15rem 0.75rem;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scroll-snap-type: inline mandatory;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  list-style: none;
+}
+
+body[data-spw-surface="software"] .spw-dimensional-navigator__step {
+  --spw-dimension-color: var(--op-frame-color);
+  min-inline-size: 0;
+  margin: 0;
+  scroll-snap-align: start;
+}
+
+body[data-spw-surface="software"] .spw-dimensional-navigator__step:nth-child(2) {
+  --spw-dimension-color: var(--op-action-color);
+}
+
+body[data-spw-surface="software"] .spw-dimensional-navigator__step:nth-child(3) {
+  --spw-dimension-color: var(--op-object-color);
+}
+
+body[data-spw-surface="software"] .spw-dimensional-navigator__step:nth-child(4) {
+  --spw-dimension-color: var(--op-probe-color);
+}
+
+body[data-spw-surface="software"] .spw-dimensional-navigator__step:nth-child(5) {
+  --spw-dimension-color: var(--op-ref-color);
+}
+
+body[data-spw-surface="software"] .spw-dimensional-navigator__step > a {
+  display: grid;
+  grid-template-rows: minmax(1.7rem, auto) minmax(1.5rem, auto) 1fr auto;
+  align-items: start;
+  gap: 0.5rem;
+  box-sizing: border-box;
+  min-block-size: 9.5rem;
+  min-inline-size: 0;
+  block-size: 100%;
+  padding: clamp(0.75rem, 2cqi, 1rem);
+  border: 1px solid color-mix(in srgb, var(--spw-dimension-color) 34%, var(--line-quiet));
+  border-radius: var(--component-radius-default, 0.65rem);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--spw-dimension-color) 10%, transparent), transparent 48%),
+    var(--surface-matte, var(--surface-strong));
+  color: var(--ink-strong, var(--ink));
+  text-decoration: none;
+  transition: border-color 140ms ease, box-shadow 140ms ease, transform 140ms ease;
+}
+
+body[data-spw-surface="software"] .spw-dimensional-navigator__step > a:hover {
+  border-color: var(--spw-dimension-color);
+  box-shadow: 0 0.5rem 1.2rem color-mix(in srgb, var(--spw-dimension-color) 12%, transparent);
+  transform: translateY(-2px);
+}
+
+body[data-spw-surface="software"] .spw-dimensional-navigator__step > a:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--spw-dimension-color) 72%, white);
+  outline-offset: 2px;
+}
+
+body[data-spw-surface="software"] .spw-dimensional-navigator__order {
+  color: var(--spw-dimension-color);
+  font-size: clamp(1.15rem, 4cqi, 1.7rem);
+  font-weight: 850;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+body[data-spw-surface="software"] .spw-dimensional-navigator__step strong {
+  font-size: clamp(0.94rem, 2.4cqi, 1.08rem);
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+body[data-spw-surface="software"] .spw-dimensional-navigator__step p {
+  min-inline-size: 0;
+  margin: 0;
+  color: var(--ink-secondary, var(--ink-soft));
+  font-size: 0.78rem;
+  line-height: 1.48;
+  overflow-wrap: anywhere;
+  text-wrap: pretty;
+}
+
+body[data-spw-surface="software"] .spw-dimensional-navigator__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.45rem;
+  min-inline-size: 0;
+  align-self: end;
+}
+
+body[data-spw-surface="software"] .spw-dimensional-navigator__source,
+body[data-spw-surface="software"] .spw-dimensional-navigator__edge {
+  color: var(--spw-dimension-color);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+body[data-spw-surface="software"] .spw-dimensional-navigator__source {
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+
+body[data-spw-surface="software"] .spw-dimensional-navigator__edge {
+  flex: none;
+  padding: 0.18rem 0.34rem;
+  border: 1px solid color-mix(in srgb, var(--spw-dimension-color) 26%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--spw-dimension-color) 7%, transparent);
+  white-space: nowrap;
+}
+
+/* The pack-local mirror calls these stack (<26rem), split (26–44rem), and
+   feature (>=44rem). CSS remains the geometry authority; the attribute only
+   narrates which component-width edge has been crossed. */
+@container spw-dimensional-nav (min-width: 26rem) {
+  body[data-spw-surface="software"] .spw-dimensional-navigator__track {
+    grid-auto-flow: row;
+    grid-auto-columns: auto;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    overflow-x: visible;
+    padding-block-end: 0;
+    scroll-snap-type: none;
+  }
+
+  body[data-spw-surface="software"] .spw-dimensional-navigator__step:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Five items pack without a ragged empty third: 3 equal seats, then 2 equal
+   seats. Six structural tracks let both rows spend the full component width. */
+@container spw-dimensional-nav (min-width: 44rem) {
+  body[data-spw-surface="software"] .spw-dimensional-navigator__track {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  body[data-spw-surface="software"] .spw-dimensional-navigator__step {
+    grid-column: span 2;
+  }
+
+  body[data-spw-surface="software"] .spw-dimensional-navigator__step:nth-last-child(-n + 2) {
+    grid-column: span 3;
+  }
+}
+
+@container spw-dimensional-nav (min-width: 64rem) {
+  body[data-spw-surface="software"] .spw-dimensional-navigator__track {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  body[data-spw-surface="software"] .spw-dimensional-navigator__step,
+  body[data-spw-surface="software"] .spw-dimensional-navigator__step:nth-last-child(-n + 2) {
+    grid-column: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body[data-spw-surface="software"] .spw-dimensional-navigator__step > a {
+    transition: none;
+  }
+
+  body[data-spw-surface="software"] .spw-dimensional-navigator__step > a:hover {
+    transform: none;
+  }
+}

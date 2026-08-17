@@ -22,6 +22,38 @@ import {
 import { createModuleLoader } from '../../public/js/runtime/module-loader.js';
 import { MODULE_LAYERS, MOUNT_WHEN } from '../../public/js/runtime/module-catalog-constants.js';
 import { createRegistry, readRuntimePolicy } from '../../public/js/runtime/runtime-helpers.js';
+import {
+  resolvePackFillFromCount,
+  resolvePackLayoutForWidth,
+} from '../../public/js/runtime/composition-box-model.js';
+import {
+  buildVariantEdge,
+  resolveVariantChoice,
+} from '../../public/js/runtime/variant-selection.js';
+
+test('component packing resolves width and fill on independent axes', () => {
+  assert.equal(resolvePackLayoutForWidth(415), 'stack');
+  assert.equal(resolvePackLayoutForWidth(416), 'split');
+  assert.equal(resolvePackLayoutForWidth(703), 'split');
+  assert.equal(resolvePackLayoutForWidth(704), 'feature');
+  assert.equal(resolvePackFillFromCount(2), 'sparse');
+  assert.equal(resolvePackFillFromCount(5), 'balanced');
+  assert.equal(resolvePackFillFromCount(6), 'full');
+});
+
+test('variant choice honors explicit intent and names its traversed edge', () => {
+  assert.equal(resolveVariantChoice({ requested: 'inspect', pressed: 'read' }), 'inspect');
+  assert.equal(resolveVariantChoice({ pressed: 'read', visible: 'compare' }), 'read');
+  assert.equal(resolveVariantChoice({ visible: 'compare', fallback: 'build' }), 'compare');
+  assert.equal(resolveVariantChoice({ fallback: 'build' }), 'build');
+  assert.deepEqual(buildVariantEdge('read', 'inspect'), {
+    from: 'read',
+    to: 'inspect',
+    changed: true,
+    label: 'read → inspect',
+  });
+  assert.equal(buildVariantEdge('inspect', 'inspect').changed, false);
+});
 
 const noticeFeed = {
   sourceLocale: 'en',

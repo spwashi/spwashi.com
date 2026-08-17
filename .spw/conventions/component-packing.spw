@@ -115,6 +115,18 @@ runtime_demo: `/design/composition/ — a user-resizable card: drag the handle t
   naming = `pack-* family only for container packing; gravity-* for outer placement; pack-fill ≠ content-tone ≠ typography density.`
 }
 
+^"first_route_adoption_2026_08_17"{
+  operation = "align"
+  fixity = "tending"
+  route = `/topics/software/#dimensional-expression-path`
+  claim = `The dimensional navigator is the first production pack-local route component: CSS selects geometry from component width while composition-box-model can mirror stack|split|feature and sparse|balanced|full when its enhancement policy mounts.`
+  alignment = `Its 26rem and 44rem container edges share PACK_LAYOUT_BANDS; a 64rem refinement remains inside feature posture and opens all five seats.`
+  packing = `Five items use full-width remainders: 2 + 2 + 1 below feature, 3 + 2 at feature, and 5 at the widest refinement.`
+  fill = `Semantic ol/li collections count their list items before direct component children, so a header + nav shell reports the five packed items rather than two wrapper nodes.`
+  observation = `ResizeObserver now watches opted-in pack-local hosts directly, so container-only changes refresh the inspectable mirror without waiting for a viewport event.`
+  invariant = `data-spw-pack-layout remains narration; no geometry is gated on the runtime attribute.`
+}
+
 ^"lifecycle_and_naming_notes"{
   operation = "prime"
   fixity = "tending"

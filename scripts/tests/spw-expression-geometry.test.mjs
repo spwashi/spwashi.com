@@ -2,9 +2,12 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 
 import {
+  describeSpwDimensionality,
   describeSpwExpression,
   parseSpwExpression,
   scanSpwExpression,
+  SPW_DIMENSIONAL_ASCENT,
+  SPW_DIMENSIONAL_EDGES,
 } from '../../public/js/semantic/spw-expression-geometry.js';
 
 test('reads root and paired-boundary geometry without claiming evaluation', () => {
@@ -100,22 +103,46 @@ test('validates navigation tokens across all canonical operator sigils', () => {
   assert.equal(capsule.balanced, true);
 });
 
-test('generalizes script patterns across higher orders of dimension (0D to 4D)', () => {
-  // 0D Point: Scalar handle
-  const d0 = parseSpwExpression('#>handle');
-  assert.equal(d0.operatorType, 'frame');
-  assert.equal(d0.nucleus, 'handle');
-  assert.deepEqual(d0.forms, []);
+test('separates authored 0D-2D evidence from contextual 3D-4D projections', () => {
+  assert.deepEqual(
+    SPW_DIMENSIONAL_ASCENT.map(({ label, role, source }) => ({ label, role, source })),
+    [
+      { label: '0D', role: 'handle', source: 'authored' },
+      { label: '1D', role: 'vector', source: 'authored' },
+      { label: '2D', role: 'form', source: 'authored' },
+      { label: '3D', role: 'field', source: 'contextual' },
+      { label: '4D', role: 'path', source: 'runtime' },
+    ],
+  );
+  assert.deepEqual(
+    SPW_DIMENSIONAL_EDGES.map(({ from, to, relation }) => ({ from, to, relation })),
+    [
+      { from: 0, to: 1, relation: 'direct' },
+      { from: 1, to: 2, relation: 'bound' },
+      { from: 2, to: 3, relation: 'situate' },
+      { from: 3, to: 4, relation: 'replay' },
+      { from: 4, to: 0, relation: 'return' },
+    ],
+  );
 
-  // 1D Vector + 2D Spatial Container: multi-seat expression
-  const d2 = describeSpwExpression('beans[stew]{cook}(kitchen)<food>');
-  assert.equal(d2.root, 'beans');
-  assert.deepEqual(d2.forms, ['frame', 'body', 'scope', 'capsule']);
-  assert.deepEqual(d2.channels, ['food']);
-  assert.equal(d2.formSignature, '[]{}()<>' );
-  assert.equal(d2.balanced, true);
+  const pointVector = describeSpwDimensionality('#>handle');
+  assert.equal(pointVector.identity, 'handle');
+  assert.deepEqual(pointVector.authoredOrders, [0, 1]);
+  assert.equal(pointVector.dimensions[2].state, 'available');
+  assert.equal(pointVector.dimensions[3].state, 'available');
+  assert.equal(pointVector.dimensions[4].state, 'available');
 
-  // Compound pipeline: 1D vector leading into multi-channel boundary
+  const fullProjection = describeSpwDimensionality('beans[stew]{cook}(kitchen)<food>', {
+    hostContext: 'software-field',
+    runtimePath: '/settings/#spell-board',
+  });
+  assert.deepEqual(fullProjection.authoredOrders, [0, 2]);
+  assert.equal(fullProjection.authoredThrough, 2);
+  assert.equal(fullProjection.dimensions[3].state, 'contextual');
+  assert.equal(fullProjection.dimensions[4].state, 'runtime');
+  assert.equal(fullProjection.edges[2].relation, 'situate');
+  assert.equal(fullProjection.sourceBoundary, '0D-2D authored; 3D-4D contextual');
+
   const compound = describeSpwExpression('surface[route]{path} > projection[css]{bundle}');
   assert.ok(compound.tokens.length > 0);
   assert.ok(compound.operators.includes('concept-edge'));
