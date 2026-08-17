@@ -70,7 +70,7 @@ export const CORE_DEFS = [
     layer: MODULE_LAYERS.CORE,
     when: MOUNT_WHEN.IMMEDIATE,
     costClass: COST_CLASS.PREMATURE_COMMITMENT,
-    describes: 'minimal frame/mode/hash runtime defaults',
+    describes: 'frame[lens|hash|attention]{mode-switch.active}',
     updates: [
       'structural:data-spw-lens-state',
       'structural:data-spw-active',
