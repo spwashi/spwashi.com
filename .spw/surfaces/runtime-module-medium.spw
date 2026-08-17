@@ -1,6 +1,6 @@
 # Runtime Module Medium Map
 #
-# Initial guild categorization for 92 catalog modules. operation: align | fixity: tending
+# Guild categorization and transport projection for 105 catalog modules. operation: align | fixity: tending
 # Update when catalog ids change; regenerate via maintain-plan-directory-indexes or manual audit.
 
 #>runtime_module_medium
@@ -12,6 +12,9 @@
 @export_contract: ~"../conventions/module-export-contract.spw"
 @audit: ~"../audits/module-export-standalone-2026-07.spw"
 @catalog: ~"../../public/js/runtime/module-catalog.js"
+@build_graph: ~"../../scripts/ts/build/index.mts"
+@loader: ~"../../public/js/runtime/module-loader.js"
+@load_trace: ~"../../public/js/runtime/load-trace.js"
 
 ^"substrate"{
   guild = `rhizosphere`
@@ -172,6 +175,32 @@
   action = `Assign guild on next catalog touch; pwa→substrate, semantic-chrome→inspection, interaction-progression→symbiosis`
 }
 
+^"transport_projection"{
+  operation = `align`
+  fixity = `tending`
+  claim = `A module is the experiential address; a pack is only the transport carrying one or more addresses.`
+  catalog_to_deploy = #[
+    `immediate → foundation`,
+    `idle + timingChunk → named idle pack`,
+    `settled → settled`,
+    `visible|interaction|invited|region → module-addressed demand pack`
+  ][reg=set]
+  deploy_surface = `dist/asset-manifest.json#modulePacks (generated)`
+  runtime_surface = `module-loader lifecycle records expose transportHref beside baseId, timingArc, describes, and updates`
+  inspection_surface = `loadTrace groups mounted module addresses by the deployed transportHref`
+  experiential_boundary = `arrival-shells may cue the module's local seat; transport chunks never receive page-wide entrance chrome`
+  source_addressability = `Authored public/js modules remain path-preserving in dist; semantic packs optimize delivery without replacing the readable source graph.`
+  validation = #[
+    `Every semantic pack names member modules and timing in asset-manifest.json`,
+    `Only the static boot closure is emitted as modulepreload`,
+    `A visible seed-card loads visible-seed-cards while its host loads the matching services or newyear route CSS bundle`,
+    `Foundation does not statically import visible-tuning-discovery`
+  ][reg=set]
+  source = @build_graph
+  runtime = @loader
+  trace = @load_trace
+}
+
 ^"export_migration_queue"{
   priority_1_spw_module_six: #[
     `state-inspector`
@@ -209,7 +238,7 @@
   direction = `On next catalog touch, stamp timingArc/effectScope; optional cognitive_stratum note for high-impact modules.`
 }
 
-module_count = 92
+module_count = 105
 guild_count = 9
 
 dispatch: .{
