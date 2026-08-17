@@ -1,27 +1,26 @@
 import {
-  classifyWrapVolatility,
   ensurePretextEngine,
   formatMeasurementSummary,
   measureTextLayout,
   publishMeasurement,
+  readDocumentTypography,
   readPretextSignals,
 } from '/public/js/semantic/pretext-measurement-bus.js';
 
-const LINE_HEIGHT = 26;
 const PADDING = 40;
 
 let initialized = false;
 let cleanupCurrent = null;
 
 const getFramePrimaryText = (frame) => {
+    const p = frame.querySelector('p:not(.frame-note):not(.inline-note)');
+    if (p?.textContent.trim().length > 20) return p.textContent.trim();
+
     const h1 = frame.querySelector('h1');
     if (h1) return h1.textContent.trim();
 
     const h2 = frame.querySelector('h2');
     if (h2) return h2.textContent.trim();
-
-    const p = frame.querySelector('p:not(.frame-note):not(.inline-note)');
-    if (p?.textContent.trim().length > 20) return p.textContent.trim();
 
     return '';
 };
@@ -65,10 +64,16 @@ const measureFrame = async (frame, handleCache) => {
     const width = Math.max(40, frameWidth - PADDING);
 
     let entry = handleCache.get(frame);
-    if (!entry || entry.text !== text) {
+    if (!entry || entry.text !== text || entry.width !== width) {
         try {
-            const layout = await measureTextLayout({ text, width, lineHeightPx: LINE_HEIGHT });
-            entry = { text, layout };
+            const typography = readDocumentTypography();
+            const layout = await measureTextLayout({
+                text,
+                width,
+                font: typography.font,
+                lineHeightPx: typography.lineHeightPx,
+            });
+            entry = { text, width, layout };
             handleCache.set(frame, entry);
         } catch {
             return null;
@@ -76,13 +81,12 @@ const measureFrame = async (frame, handleCache) => {
     }
 
     const { layout } = entry;
-    const wrap = layout.wrap || classifyWrapVolatility(layout.lineCount, layout.lineCount);
 
     return {
         lineCount: layout.lineCount,
         height: layout.height,
         width: layout.width,
-        wrap,
+        wrap: layout.wrap,
         measure: 'standard',
         source: 'frame-metrics',
     };

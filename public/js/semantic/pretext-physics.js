@@ -1,15 +1,11 @@
 /**
  * pretext-physics.js
  * ---------------------------------------------------------------------------
- * Pretext Physics Runtime
+ * Lab projection over copy-flow. Not the site's text primitive.
  *
- * Purpose
- * - Make text behavior measurable, inspectable, and semantically responsive.
- * - Give designers a legible API for reading-aware interaction and
- *   microanimation.
- * - Keep runtime bounded, cache-heavy, and root-scoped.
- * - Expose useful internal concepts for later refinement without turning the
- *   module into a public grab-bag.
+ * Sitewide analysis: scripts/page-copy-audit.mjs
+ * Live orchestration: pretext-measurement-bus.js
+ * This module only mounts on [data-spw-pretext-live] inside pretext-lab.
  *
  * Public API
  * - initPretextPhysics(options)

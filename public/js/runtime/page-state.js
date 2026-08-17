@@ -111,7 +111,8 @@ export const PAGE_SETTLE_CONFIRMATIONS = Object.freeze({
   GUARD: 'guard',
 });
 
-/** Settle-worthy evidence: any of these arriving keeps the page in its arc. */
+/** Settle-worthy evidence: any of these arriving keeps the page in its arc.
+ *  spw:pretext-measurement is optional copy-flow telemetry, not a boot requirement. */
 export const PAGE_SETTLE_EVIDENCE_EVENTS = Object.freeze([
   'spw:module-mounted',
   'spw:regions-profiled',

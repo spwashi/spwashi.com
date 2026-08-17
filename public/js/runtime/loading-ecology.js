@@ -83,8 +83,8 @@ export const SPW_LOADING_ECOLOGY_CONTRACT = Object.freeze({
     measureKind: 'data-spw-loading-ecology-measure-kind',
   }),
   portableUse:
-    'Mount early on html. Subscribe to page attention, resource profiling, measurement, '
-    + 'region diversity, and module mount events to narrate loading as an ecological field.',
+    'Mount early on html. Subscribe to page attention, resource profiling, optional copy-flow '
+    + 'measurement, region diversity, and module mount events. pretext-measurement is not required to settle.',
 });
 
 /** Match --spw-ecology-twinkle-duration / --spw-ecology-phase-pulse-duration tokens. */

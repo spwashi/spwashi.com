@@ -219,7 +219,7 @@ export const CATALOG_DEF_FIELD_ORDER = Object.freeze([
   'mount',
 ]);
 
-/** Live pretext hosts that should mount measurement/physics (not static specimens). */
+/** Lab-only live copy-flow hosts. Static specimens and sitewide audits do not mount physics. */
 export const PRETEXT_LIVE_SELECTOR =
   '[data-spw-flow="pretext"][data-spw-pretext-live="true"]:not([data-spw-pretext-static])';
 

@@ -1,10 +1,11 @@
 /**
  * Pretext Measurement Bus
  *
- * Shared typographic measurement layer for live Pretext hosts, frame metrics,
- * composition snapshots, and designer-facing preview surfaces.
+ * Orchestration layer for optional live typographic snapshots.
+ * Sitewide copy analysis lives in scripts/page-copy-audit.mjs (copy-flow).
+ * pretext-physics is a lab projection, not this bus.
  *
- * JS predicts lines; consumers read stable signals and optional bus events.
+ * Wrap is a two-width comparison. Never classify a single layout against itself.
  */
 
 import { loadPretext } from './pretext-utils.js';
@@ -23,7 +24,37 @@ export const MEASURE_KIND = Object.freeze({
 
 const PRETEXT_HOST_SELECTOR = '[data-spw-flow="pretext"]';
 
+/** Same insets as pretext-presets / page-copy audit. */
+export const PRETEXT_REFERENCE_WIDTHS = Object.freeze({
+  phone: 288,
+  tablet: 704,
+  desktop: 1072,
+});
+
 let pretextPromise = null;
+
+export function resolveCompareWidth(width, explicit) {
+  if (Number.isFinite(explicit) && explicit > 0) return Math.max(40, Math.round(explicit));
+  const phone = PRETEXT_REFERENCE_WIDTHS.phone;
+  const desktop = PRETEXT_REFERENCE_WIDTHS.desktop;
+  const resolved = Math.max(40, Math.round(width || phone));
+  return Math.abs(resolved - phone) >= Math.abs(resolved - desktop) ? phone : desktop;
+}
+
+export function preparePretextHandle(engine, text, font, options = { whiteSpace: 'normal' }) {
+  if (typeof engine.prepareWithSegments === 'function') {
+    return engine.prepareWithSegments(text, font, options);
+  }
+  return engine.prepare(text, font);
+}
+
+export function layoutPretextHandle(engine, handle, width, lineHeightPx) {
+  const resolved = Math.max(40, Math.round(width));
+  if (typeof engine.layoutWithLines === 'function') {
+    return engine.layoutWithLines(handle, resolved, lineHeightPx);
+  }
+  return engine.layout(handle, resolved, lineHeightPx);
+}
 
 function toNumber(value = '', fallback = 0) {
   const parsed = Number.parseFloat(String(value));
@@ -135,7 +166,8 @@ export function readDocumentTypography() {
 
 export async function measureTextLayout({
   text = '',
-  width = 320,
+  width = PRETEXT_REFERENCE_WIDTHS.phone,
+  compareWidth,
   font,
   lineHeightPx,
   prepared,
@@ -146,12 +178,16 @@ export async function measureTextLayout({
   const resolvedFont = font || typography.font;
   const resolvedLineHeight = lineHeightPx || typography.lineHeightPx;
   const trimmed = String(text || '').trim();
+  const resolvedWidth = Math.max(40, Math.round(width));
+  const resolvedCompare = resolveCompareWidth(resolvedWidth, compareWidth);
 
   if (!trimmed) {
     return {
       text: '',
-      width: Math.max(40, Math.round(width)),
+      width: resolvedWidth,
+      compareWidth: resolvedCompare,
       lineCount: 0,
+      compareLineCount: 0,
       height: 0,
       wrap: WRAP_VOLATILITY.STABLE,
       lines: [],
@@ -160,21 +196,25 @@ export async function measureTextLayout({
     };
   }
 
-  const handle = prepared || engine.prepare(trimmed, resolvedFont);
-  const layout = engine.layoutWithLines
-    ? engine.layoutWithLines(handle, Math.max(40, Math.round(width)), resolvedLineHeight)
-    : engine.layout(handle, Math.max(40, Math.round(width)), resolvedLineHeight);
+  const handle = prepared || preparePretextHandle(engine, trimmed, resolvedFont);
+  const layout = layoutPretextHandle(engine, handle, resolvedWidth, resolvedLineHeight);
+  const compareLayout = resolvedCompare === resolvedWidth
+    ? layout
+    : layoutPretextHandle(engine, handle, resolvedCompare, resolvedLineHeight);
 
   const lineCount = layout.lineCount ?? layout.lines?.length ?? 0;
+  const compareLineCount = compareLayout.lineCount ?? compareLayout.lines?.length ?? 0;
   const height = layout.height ?? 0;
   const lines = layout.lines || [];
 
   return {
     text: trimmed,
-    width: Math.max(40, Math.round(width)),
+    width: resolvedWidth,
+    compareWidth: resolvedCompare,
     lineCount,
+    compareLineCount,
     height,
-    wrap: classifyWrapVolatility(lineCount, lineCount),
+    wrap: classifyWrapVolatility(compareLineCount, lineCount),
     lines,
     font: resolvedFont,
     lineHeightPx: resolvedLineHeight,
@@ -203,6 +243,7 @@ export const SPW_PRETEXT_MEASUREMENT_BUS_CONTRACT = Object.freeze({
   event: PRETEXT_MEASUREMENT_EVENT,
   hostSelector: PRETEXT_HOST_SELECTOR,
   measureKind: MEASURE_KIND.OBJECTIVE,
+  referenceWidths: PRETEXT_REFERENCE_WIDTHS,
   portableUse:
-    'Import readPretextSignals(), measureTextLayout(), and publishMeasurement() when a surface needs honest typographic telemetry without mounting the full pretext-physics runtime.',
+    'Copy-flow orchestration: measureTextLayout() compares two widths. Sitewide analysis is scripts/page-copy-audit.mjs. pretext-physics stays a lab projection.',
 });

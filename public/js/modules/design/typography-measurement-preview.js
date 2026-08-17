@@ -5,14 +5,13 @@
  */
 
 import {
-  classifyWrapVolatility,
   ensurePretextEngine,
   formatMeasurementSummary,
   measureTextLayout,
   PRETEXT_MEASUREMENT_EVENT,
+  PRETEXT_REFERENCE_WIDTHS,
   publishMeasurement,
   readDocumentTypography,
-  readPretextSignals,
   writePretextMeasurementDataset,
 } from '/public/js/semantic/pretext-measurement-bus.js';
 
@@ -63,36 +62,33 @@ async function refreshPreview(root) {
   const typography = readDocumentTypography();
 
   try {
+    const canonicalWidth = PRETEXT_REFERENCE_WIDTHS.desktop;
     const layout = await measureTextLayout({
       text,
       width,
+      compareWidth: canonicalWidth,
       font: typography.font,
       lineHeightPx: typography.lineHeightPx,
     });
-
-    const liveSignals = readPretextSignals(host);
-    const projectedLineCount = layout.lineCount;
-    const canonicalLineCount = liveSignals?.lineCount || projectedLineCount;
-    const wrap = classifyWrapVolatility(canonicalLineCount, projectedLineCount);
 
     const snapshot = {
       host,
       text,
       widthPx: width,
-      lineCount: projectedLineCount,
-      projectedLineCount,
-      canonicalLineCount,
+      lineCount: layout.lineCount,
+      projectedLineCount: layout.lineCount,
+      canonicalLineCount: layout.compareLineCount,
       heightPx: layout.height,
-      wrap,
-      measure: liveSignals?.measure || 'standard',
-      widthClass: liveSignals?.widthClass || '',
+      wrap: layout.wrap,
+      measure: 'standard',
+      widthClass: '',
       source: 'settings-typography-preview',
       route: '/settings/#typography-settings',
     };
 
     if (host instanceof HTMLElement) {
       writePretextMeasurementDataset(host, snapshot);
-      host.style.setProperty('--pretext-canonical-width', `${width}px`);
+      host.style.setProperty('--pretext-canonical-width', `${canonicalWidth}px`);
       host.style.setProperty('--pretext-projected-width', `${width}px`);
     }
 

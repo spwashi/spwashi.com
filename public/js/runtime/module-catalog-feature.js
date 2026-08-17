@@ -495,7 +495,7 @@ export const FEATURE_DEFS = [
     features: ['pretext-lab'],
     selector: PRETEXT_LIVE_SELECTOR,
     rootMode: 'each',
-    describes: 'pretext[measure.classify.signal] text[wrap-volatility.width-class] css[projection-vars]',
+    describes: 'lab[copy-flow.projection] live-host[wrap.width-class] not-sitewide-physics',
     updates: [
       'measure:data-text-wrap',
       'measure:data-text-measure',
