@@ -35,6 +35,36 @@
    attributed as a layout shift by layout-shift-audit.
    ========================================================================== */
 
+/* Shell depth. Potential rises outward — entry is quiet, settled is charged.
+   Header/footer now author entry/settled so every route has at least one wall. */
+:where([data-spw-liminality="entry"]) { --spw-arrival-shell: 0.12; }
+:where([data-spw-liminality="threshold"]) { --spw-arrival-shell: 0.28; }
+:where([data-spw-liminality="midprocess"], [data-spw-liminality="deep"]) { --spw-arrival-shell: 0.55; }
+:where([data-spw-liminality="projected"]) { --spw-arrival-shell: 0.78; }
+:where([data-spw-liminality="settled"]) { --spw-arrival-shell: 1; }
+
+/* Vertical travel. Forward charges the lower shells; back charges the entry. */
+html[data-spw-page-section-direction="forward"] { --spw-arrival-vertical: 1; }
+html[data-spw-page-section-direction="back"] { --spw-arrival-vertical: -1; }
+
+html[data-spw-page-section-direction="forward"] :where([data-spw-liminality="projected"], [data-spw-liminality="settled"]) {
+  --spw-lifecycle-presence: max(var(--spw-lifecycle-presence, 0.42), 0.62);
+}
+
+html[data-spw-page-section-direction="back"] :where([data-spw-liminality="entry"], [data-spw-liminality="threshold"]) {
+  --spw-lifecycle-presence: max(var(--spw-lifecycle-presence, 0.42), 0.62);
+}
+
+/* Settling grounds the vertical arc. Region settling damps local presence. */
+html[data-spw-interaction-phase="settle"],
+html[data-spw-page-section-phase="idle"] {
+  --spw-arrival-vertical: 0;
+}
+
+:where(.site-frame[data-spw-region-state="settling"], .site-frame[data-spw-region-state="enhanced"]) {
+  --spw-lifecycle-presence: min(var(--spw-lifecycle-presence, 1), 0.78);
+}
+
 :where([data-spw-arrival-discharge]) {
   --spw-arrival-potential: 0;
   --spw-arrival-dielectric: 0;
@@ -49,10 +79,13 @@
      accent carries the near field; this carries the far one. */
   --spw-arrival-nucleus: var(--amber, #d9a441);
 
-  /* Presence is the product of what crossed and how loud the room already is,
-     so a minimal enhancement climate mutes this without a separate rule. */
+  /* Presence = charge × climate × shell depth. Outer shells (settled) spend
+     more than entry, matching the doctrine that potential rises with distance
+     from the nucleus. */
   --spw-arrival-presence: calc(
-    var(--spw-arrival-potential) * var(--spw-enhancement-factor, 1)
+    var(--spw-arrival-potential)
+    * var(--spw-enhancement-factor, 1)
+    * (0.62 + (0.38 * var(--spw-arrival-shell, 0.4)))
   );
 
   position: relative;

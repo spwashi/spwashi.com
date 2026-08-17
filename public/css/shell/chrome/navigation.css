@@ -105,6 +105,7 @@
    it picks up a bit more of the living rhythm without overpowering text. */
 :where(.site-header nav a[data-spw-grounded="true"],
        body > header nav a[data-spw-grounded="true"],
+       .site-footer a[data-spw-grounded="true"],
        .site-header nav a[aria-current="page"],
        body > header nav a[aria-current="page"]) {
   opacity: 0.98;

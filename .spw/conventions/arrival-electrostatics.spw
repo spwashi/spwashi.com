@@ -66,6 +66,7 @@ fixity = "experimental"
 ^"authoring_rule"{
   write: #[
     `data-spw-liminality on the seats that band a page — this is what gives it an interior`,
+    `header is entry and footer is settled so every route has at least one wall`,
     `data-spw-region-purpose on regions that are a boundary, not merely a box`,
     `figure / data-spw-image-* where the page should hold rather than spend`
   ][reg=set]

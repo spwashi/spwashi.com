@@ -1,0 +1,30 @@
+# Arc axes
+#
+# Vertical shells, grounded page links, and topic kin are one field.
+# Settling damps the vertical; it does not invent a fourth animation.
+
+#>arc_axes_2026_08
+#:cache #!arrival #!tokens #!settle
+#:operation #!prime
+#:fixity #!tending
+#:layer #!pragmatics
+
+@arrival_electrostatics: ~"../conventions/arrival-electrostatics.spw"
+@dimension_vocabulary: ~"../conventions/dimension-vocabulary.spw"
+@deploy_module_graph: ~"../../.agents/plans/deploy-module-graph/PLAN.md"
+
+operation = "prime"
+fixity = "tending"
+
+^"insight"{
+  id = "arc-axes-three"
+  claim = "An arc is a potential difference: vertical (section direction × liminality shell), across pages (grounded href), between topics (topic inductance). Settling sets vertical to 0."
+  evidence = #[
+    `html[data-spw-page-section-direction]`,
+    `[data-spw-liminality]`,
+    `a[data-spw-grounded="true"]`,
+    `.spw-topic / [data-spw-topic]`,
+    `--spw-arrival-shell --spw-arrival-vertical --spw-lifecycle-presence`
+  ][reg=set]
+  do_not_author = "a new data-spw-arc family or a fade on arriving content"
+}

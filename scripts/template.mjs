@@ -790,6 +790,7 @@ function renderSiteHeader(vars) {
     'role="banner"',
     'data-spw-kind="shell"',
     'data-spw-role="routing"',
+    'data-spw-liminality="entry"',
     'data-spw-category-family="portal"',
     'data-spw-template="site-header"',
     'data-spw-nav-visual="authored"',
