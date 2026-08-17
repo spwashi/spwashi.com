@@ -56,6 +56,7 @@
     "audit:copy:pretext": "node scripts/page-copy-audit.mjs pretext",
     "audit:copy:align": "node scripts/page-copy-audit.mjs align",
     "audit:copy:expr": "node scripts/page-copy-audit.mjs expr",
+    "audit:copy:variety": "node scripts/page-copy-audit.mjs variety",
     "ecology": "node scripts/spw-ecology-inventory.mjs",
     "ecology:json": "node scripts/spw-ecology-inventory.mjs --json",
     "ecology:strict": "node scripts/spw-ecology-inventory.mjs --strict",

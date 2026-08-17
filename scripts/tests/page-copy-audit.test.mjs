@@ -6,6 +6,7 @@ import {
   classifyPageWrap,
   classifyWrap,
   extractBlocks,
+  classifyExpressionShape,
   extractExpressionHosts,
   kindForTag,
   readSemanticExpression,
@@ -125,7 +126,7 @@ test('inventory audit summarizes without a browser', () => {
 });
 
 test('dispatcher registry names the two starter audits', () => {
-  assert.deepEqual(PAGE_COPY_AUDITS.map((audit) => audit.id), ['inventory', 'pretext', 'align', 'expr']);
+  assert.deepEqual(PAGE_COPY_AUDITS.map((audit) => audit.id), ['inventory', 'variety', 'pretext', 'align', 'expr']);
 });
 
 test('resolveCompareWidth picks the farther reference band', async () => {
@@ -153,6 +154,13 @@ test('resolveCompareWidth picks the farther reference band', async () => {
   });
   assert.equal(fit.chosen.id, 'tight');
   assert.equal(fit.measured.length, 2);
+});
+
+test('classifyExpressionShape names unused richer forms', () => {
+  assert.equal(classifyExpressionShape('copy[hook]{wrap}'), 'plain');
+  assert.equal(classifyExpressionShape('copy[hook]{wrap}<align>'), 'projection');
+  assert.equal(classifyExpressionShape('component[machine]{attention} ~ copy[hook]{wrap}'), 'compound');
+  assert.equal(classifyExpressionShape('?copy[fit]{brace.select}<measure>'), 'operator-led');
 });
 
 test('extractExpressionHosts keys wrap by authored Spw expression', () => {

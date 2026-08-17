@@ -82,6 +82,17 @@ export function extractMainHtml(html) {
   return match ? match[1] : String(html || '');
 }
 
+export function classifyExpressionShape(expression = '') {
+  const value = String(expression || '').trim();
+  if (!value) return 'empty';
+  if (/^[?~@&^#!.]/.test(value)) return 'operator-led';
+  if (/\}\s*[~&^@]/.test(value)) return 'compound';
+  if (/<[^>]+>\s*$/.test(value)) return 'projection';
+  if (value.includes(':') && !value.includes('[')) return 'colon';
+  if (/\[[^\]]*\]/.test(value) && /\{[^}]*\}/.test(value)) return 'plain';
+  return 'other';
+}
+
 export function readSemanticExpression(attrs = '') {
   const match = /data-spw-semantic-expression\s*=\s*"([^"]+)"/i.exec(String(attrs));
   return match ? match[1].trim() : '';

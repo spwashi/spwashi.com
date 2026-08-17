@@ -22,9 +22,11 @@ import { alignAudit } from './lib/page-copy-audits/align.mjs';
 import { exprAudit } from './lib/page-copy-audits/expr.mjs';
 import { inventoryAudit } from './lib/page-copy-audits/inventory.mjs';
 import { pretextAudit } from './lib/page-copy-audits/pretext.mjs';
+import { varietyAudit } from './lib/page-copy-audits/variety.mjs';
 
 export const PAGE_COPY_AUDITS = Object.freeze([
   inventoryAudit,
+  varietyAudit,
   pretextAudit,
   alignAudit,
   exprAudit,
