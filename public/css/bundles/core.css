@@ -735,6 +735,20 @@ html[data-spw-reduce-motion="on"] *::after {
   initial-value: 0;
 }
 
+/* Hydration-arc presence (lex → semantic → pragmatic). Alias of --spw-lifecycle-presence. */
+@property --spw-lifecycle-presence {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.42;
+}
+
+/* Interaction-phase loudness. One room with --spw-field-intensity; climate multiplies via --spw-enhancement-factor. */
+@property --spw-interaction-phase-weight {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
 /* Continuous Gradient of Tangibility: 0.0 (radiant plasma / unconstrained field) -> 1.0 (invariant dense substrate) */
 @property --spw-tangibility {
   syntax: "<number>";
@@ -2780,12 +2794,21 @@ html[data-spw-reduce-motion="on"] {
   --spw-position-phase: anchor;
   --spw-position-bias-y: 0px;
   --spw-position-depth: var(--depth-settled, 10);
+  --spw-interaction-phase-weight: 0;
+  --spw-interaction-phase-tuning: 1;
+  --spw-enhancement-factor: 1;
+  /* Arrival field geometry: shell depth (entry→settled) and vertical travel. */
+  --spw-arrival-shell: 0;
+  --spw-arrival-vertical: 0;
 
   /* ------------------------------------------------------------------------
      Lifecycle — pre-state / empty / hydration visibility
      subtle (0.22) → balanced (0.5) → apparent (0.82)
+     presence is the hydration arc (lex 0.42 → pragmatic 1)
      ------------------------------------------------------------------------ */
   --spw-lifecycle-phase: ready;
+  --spw-lifecycle-presence: 0.42;
+  --spw-hydration-pass-surface: var(--spw-lifecycle-presence);
   --spw-pre-state-visibility: 0.5;
   --spw-pre-state-fill-mix: 0.08;
   --spw-pre-state-line-mix: 0.18;
@@ -3102,11 +3125,9 @@ html[data-spw-reduce-motion="on"] {
   --flow-space: var(--spw-real-estate-block);
 }
 
-:where(html[data-spw-hydration-pass="lex"]) {
-  --spw-real-estate-block: calc(var(--page-stack-gap, 1rem) * 0.94);
-}
-
-:where(html[data-spw-hydration-pass="pragmatic"]) {
+/* Stack gap is authored. Do not shrink it when JS later writes lex —
+   that arrival used to flash --flow-space. Pass attrs stay flourish-only. */
+:where(html[data-spw-hydration="ready"], html[data-spw-hydration-pass="pragmatic"]) {
   --spw-real-estate-block: var(--page-stack-gap, clamp(1rem, 2.3vw, 1.7rem));
 }
 
@@ -5466,6 +5487,7 @@ body > header:empty {
    it picks up a bit more of the living rhythm without overpowering text. */
 :where(.site-header nav a[data-spw-grounded="true"],
        body > header nav a[data-spw-grounded="true"],
+       .site-footer a[data-spw-grounded="true"],
        .site-header nav a[aria-current="page"],
        body > header nav a[aria-current="page"]) {
   opacity: 0.98;
@@ -10666,20 +10688,29 @@ html[data-spw-hydration="ready"] :where(.site-header, body > header, .site-heade
   contain: none;
 }
 
-/* Pass momentum — brief surface echo when lex → semantic → pragmatic advances */
+/* Pass tokens follow authored data-spw-hydration first. The pass attribute is
+   a flourish alias, not a second layout owner. Presence lives in the temporal
+   cluster (--spw-lifecycle-presence); the old surface name is an alias. */
+html[data-spw-hydration="static"],
 html[data-spw-hydration-pass="lex"] {
-  --spw-hydration-pass-surface: 0.42;
+  --spw-lifecycle-presence: 0.42;
+  --spw-hydration-pass-surface: var(--spw-lifecycle-presence);
 }
 
+html[data-spw-hydration="activating"],
 html[data-spw-hydration-pass="semantic"],
 html[data-spw-hydration-pass-momentum="active"] {
-  --spw-hydration-pass-surface: 0.72;
+  --spw-lifecycle-presence: 0.72;
+  --spw-hydration-pass-surface: var(--spw-lifecycle-presence);
 }
 
+html[data-spw-hydration="ready"],
 html[data-spw-hydration-pass="pragmatic"] {
-  --spw-hydration-pass-surface: 1;
+  --spw-lifecycle-presence: 1;
+  --spw-hydration-pass-surface: var(--spw-lifecycle-presence);
 }
 
+html[data-spw-hydration="activating"] :where([data-spw-sigil-role="grammar"], .syntax-token),
 html[data-spw-hydration-pass="semantic"] :where([data-spw-sigil-role="grammar"], .syntax-token) {
   transition:
     color var(--spw-component-arrival-transition, 140ms var(--ease-settle)),
@@ -13664,6 +13695,17 @@ html[data-spw-capture-mode="clean"] .spw-svg-note {
   opacity: 0.72;
   font-weight: 500;
   font-size: 0.92em;
+}
+
+/* Topic inductance — kin of the same terminal share a quieter underline.
+   One room; no second topic palette. */
+:where(main, body):has(:where(.spw-topic, [data-spw-topic]):is(:hover, :focus-visible))
+  :where(.spw-topic, [data-spw-topic]):not(:hover):not(:focus-visible) {
+  box-shadow: inset 0 -0.08em 0 color-mix(
+    in srgb,
+    var(--op-topic-color, hsl(192 62% 32%)) calc(var(--attention-field-radius, 0.4) * 38%),
+    transparent
+  );
 }
 
 :where(.spw-topic:hover, [data-spw-topic]:hover) {
@@ -27069,11 +27111,11 @@ html[data-spw-reduce-motion="on"][data-spw-module-visuals="on"][data-spw-runtime
   contain: var(--spw-image-utilization-contain);
 }
 
-:where(html[data-spw-hydration-pass="lex"]) :where([data-spw-image-utilization="distributed"]) {
+:where(html[data-spw-hydration="static"], html[data-spw-hydration-pass="lex"]) :where([data-spw-image-utilization="distributed"]) {
   opacity: var(--spw-settle-opacity-mid, 0.985);
 }
 
-:where(html[data-spw-hydration-pass="pragmatic"]) :where([data-spw-image-discovered="true"]) {
+:where(html[data-spw-hydration="ready"], html[data-spw-hydration-pass="pragmatic"]) :where([data-spw-image-discovered="true"]) {
   --spw-image-utilization-contain: none;
 }
 
@@ -28043,11 +28085,9 @@ html[data-spw-theme-pack="electric-studio"] {
    ========================================================================== */
 
 :root {
-  --spw-interaction-phase-weight: 0;
   --spw-microinteraction-pulse-scale: 1;
   --spw-microinteraction-pulse-duration: 280ms;
   --spw-microinteraction-pulse-intensity: 1;
-  --spw-interaction-phase-tuning: 1;
   /* Selection arcs share the micro pulse quantum (settings may overwrite). */
   --spw-layout-selection-duration: var(--spw-microinteraction-pulse-duration, 280ms);
   --spw-variant-selection-duration: var(--spw-microinteraction-pulse-duration, 280ms);
@@ -28070,23 +28110,27 @@ html[data-spw-theme-pack="electric-studio"] {
   --spw-interaction-phase-tuning: calc(var(--spw-interaction-phase-tuning, 1) * 1.08);
 }
 
+:where(html:not([data-spw-interaction-phase]), html[data-spw-interaction-phase="idle"]) {
+  --spw-interaction-phase-weight: 0;
+}
+
 :where(html[data-spw-interaction-phase="approach"]) {
-  --spw-interaction-phase-weight: calc(0.28 * var(--spw-interaction-phase-tuning, 1));
+  --spw-interaction-phase-weight: calc(0.28 * var(--spw-interaction-phase-tuning, 1) * var(--spw-enhancement-factor, 1));
   --spw-pre-state-visibility: max(var(--spw-pre-state-visibility, 0.5), 0.62);
 }
 
 :where(html[data-spw-interaction-phase="prime"]) {
-  --spw-interaction-phase-weight: calc(0.46 * var(--spw-interaction-phase-tuning, 1));
+  --spw-interaction-phase-weight: calc(0.46 * var(--spw-interaction-phase-tuning, 1) * var(--spw-enhancement-factor, 1));
   --spw-variant-selection-weight: max(var(--spw-variant-selection-weight, 0), 0.34);
 }
 
 :where(html[data-spw-interaction-phase="charge"]) {
-  --spw-interaction-phase-weight: calc(0.58 * var(--spw-interaction-phase-tuning, 1));
+  --spw-interaction-phase-weight: calc(0.58 * var(--spw-interaction-phase-tuning, 1) * var(--spw-enhancement-factor, 1));
   --spw-ecology-twinkle: max(var(--spw-ecology-twinkle, 0), 0.42);
 }
 
 :where(html[data-spw-interaction-phase="inspect"]) {
-  --spw-interaction-phase-weight: calc(0.72 * var(--spw-interaction-phase-tuning, 1));
+  --spw-interaction-phase-weight: calc(0.72 * var(--spw-interaction-phase-tuning, 1) * var(--spw-enhancement-factor, 1));
   --spw-color-layer-accent-apparent: color-mix(
     in srgb,
     var(--active-op-color, var(--teal, #008080)) 52%,
@@ -28095,12 +28139,12 @@ html[data-spw-theme-pack="electric-studio"] {
 }
 
 :where(html[data-spw-interaction-phase="discover"]) {
-  --spw-interaction-phase-weight: calc(0.86 * var(--spw-interaction-phase-tuning, 1));
+  --spw-interaction-phase-weight: calc(0.86 * var(--spw-interaction-phase-tuning, 1) * var(--spw-enhancement-factor, 1));
   --spw-salience-weight: max(var(--spw-salience-weight, 0.34), 0.72);
 }
 
 :where(html[data-spw-interaction-phase="settle"]) {
-  --spw-interaction-phase-weight: calc(0.34 * var(--spw-interaction-phase-tuning, 1));
+  --spw-interaction-phase-weight: calc(0.34 * var(--spw-interaction-phase-tuning, 1) * var(--spw-enhancement-factor, 1));
   --spw-ecology-settle-weight: max(var(--spw-ecology-settle-weight, 0), 0.88);
 }
 
@@ -31203,6 +31247,36 @@ html[data-spw-high-contrast="on"] :where(.site-frame, .frame-card, .frame-panel)
    attributed as a layout shift by layout-shift-audit.
    ========================================================================== */
 
+/* Shell depth. Potential rises outward — entry is quiet, settled is charged.
+   Header/footer now author entry/settled so every route has at least one wall. */
+:where([data-spw-liminality="entry"]) { --spw-arrival-shell: 0.12; }
+:where([data-spw-liminality="threshold"]) { --spw-arrival-shell: 0.28; }
+:where([data-spw-liminality="midprocess"], [data-spw-liminality="deep"]) { --spw-arrival-shell: 0.55; }
+:where([data-spw-liminality="projected"]) { --spw-arrival-shell: 0.78; }
+:where([data-spw-liminality="settled"]) { --spw-arrival-shell: 1; }
+
+/* Vertical travel. Forward charges the lower shells; back charges the entry. */
+html[data-spw-page-section-direction="forward"] { --spw-arrival-vertical: 1; }
+html[data-spw-page-section-direction="back"] { --spw-arrival-vertical: -1; }
+
+html[data-spw-page-section-direction="forward"] :where([data-spw-liminality="projected"], [data-spw-liminality="settled"]) {
+  --spw-lifecycle-presence: max(var(--spw-lifecycle-presence, 0.42), 0.62);
+}
+
+html[data-spw-page-section-direction="back"] :where([data-spw-liminality="entry"], [data-spw-liminality="threshold"]) {
+  --spw-lifecycle-presence: max(var(--spw-lifecycle-presence, 0.42), 0.62);
+}
+
+/* Settling grounds the vertical arc. Region settling damps local presence. */
+html[data-spw-interaction-phase="settle"],
+html[data-spw-page-section-phase="idle"] {
+  --spw-arrival-vertical: 0;
+}
+
+:where(.site-frame[data-spw-region-state="settling"], .site-frame[data-spw-region-state="enhanced"]) {
+  --spw-lifecycle-presence: min(var(--spw-lifecycle-presence, 1), 0.78);
+}
+
 :where([data-spw-arrival-discharge]) {
   --spw-arrival-potential: 0;
   --spw-arrival-dielectric: 0;
@@ -31217,10 +31291,13 @@ html[data-spw-high-contrast="on"] :where(.site-frame, .frame-card, .frame-panel)
      accent carries the near field; this carries the far one. */
   --spw-arrival-nucleus: var(--amber, #d9a441);
 
-  /* Presence is the product of what crossed and how loud the room already is,
-     so a minimal enhancement climate mutes this without a separate rule. */
+  /* Presence = charge × climate × shell depth. Outer shells (settled) spend
+     more than entry, matching the doctrine that potential rises with distance
+     from the nucleus. */
   --spw-arrival-presence: calc(
-    var(--spw-arrival-potential) * var(--spw-enhancement-factor, 1)
+    var(--spw-arrival-potential)
+    * var(--spw-enhancement-factor, 1)
+    * (0.62 + (0.38 * var(--spw-arrival-shell, 0.4)))
   );
 
   position: relative;
