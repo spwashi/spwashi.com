@@ -1,15 +1,15 @@
 const BRACE_EXPRESSION_LADDER = Object.freeze([
     { id: 'tight', expression: 'copy[hook]{wrap}' },
-    { id: 'fit', expression: 'copy[hook]{wrap.align}' },
-    { id: 'pack', expression: 'copy[hook]{wrap.align.pack}' },
-    { id: 'full', expression: 'copy[hook]{wrap.align.pack.measure}' },
+    { id: 'fit', expression: 'copy[hook]{wrap}<align>' },
+    { id: 'pack', expression: 'copy[hook]{wrap.align}<pack>' },
+    { id: 'full', expression: '?copy[fit]{brace.select}<measure>' },
 ]);
 
 const SAMPLE_TEXTS = {
     hook: `A component is a small machine for arranging attention.`,
     bubble: `Can we know this bubble's height before it lands?`,
     mixed: `AGI 春天到了. بدأت الرحلة — one handle, any width.`,
-    expr: `copy[hook]{wrap.align}`,
+    expr: `copy[hook]{wrap}<align>`,
 };
 
 import { loadPretext } from '/public/js/semantic/pretext-utils.js';

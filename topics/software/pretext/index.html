@@ -174,7 +174,7 @@ const desktop = layoutWithLines(prepared, 1072, 27)
                             <li><span class="source-name">layout</span> again at each width — no extra DOM nodes.</li>
                             <li><span class="source-name">wrap</span> is phone lines minus poster lines.</li>
                         </ul>
-                        <div class="pretext-runtime-sample" data-spw-flow="pretext" data-spw-pretext-live="true" data-spw-pretext-preset="caption-tight" data-spw-pretext-scaffold="true" data-text-kind="caption" data-spw-semantic-expression="copy[hook]{wrap.align}">
+                        <div class="pretext-runtime-sample" data-spw-flow="pretext" data-spw-pretext-live="true" data-spw-pretext-preset="caption-tight" data-spw-pretext-scaffold="true" data-text-kind="caption" data-spw-semantic-expression="copy[hook]{wrap.align}<live>">
                             A component is a small machine for arranging attention.
                         </div>
                     </div>
@@ -185,7 +185,7 @@ const desktop = layoutWithLines(prepared, 1072, 27)
                             <h3 class="vibe-widget-title">Live Sandbox</h3>
                         </div>
                         <p class="frame-note">Drag the handle. The brace below keeps the richest Spw expression that still fits on one line in that width.</p>
-                        <div class="pretext-brace-fit" id="pretext-brace-fit" data-spw-form="brace" data-spw-semantic-expression="copy[hook]{wrap}">
+                        <div class="pretext-brace-fit" id="pretext-brace-fit" data-spw-form="brace" data-spw-semantic-expression="?copy[fit]{brace.select}">
                             <span class="pretext-brace-fit__open" aria-hidden="true">{</span>
                             <code id="pretext-brace-expression" class="pretext-line-text">copy[hook]{wrap}</code>
                             <span class="pretext-brace-fit__close" aria-hidden="true">}</span>
@@ -251,15 +251,15 @@ const desktop = layoutWithLines(prepared, 1072, 27)
                 </header>
                 <p class="inline-note">Three facts. The official playground is still the API catalog.</p>
                 <div class="frame-grid">
-                    <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software_pretext__panel_3" data-spw-semantic-expression="copy[bubble]{height.reserve}">
+                    <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software_pretext__panel_3" data-spw-semantic-expression="copy[bubble]{height.reserve}<paint>">
                         <h3>Height before paint</h3>
                         <p>A chat bubble or HUD can reserve its box from <code>layout.height</code> instead of measuring a hidden node.</p>
                     </div>
-                    <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software_pretext__panel_6" data-spw-semantic-expression="copy[hook]{wrap.align}">
+                    <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software_pretext__panel_6" data-spw-semantic-expression="copy[hook]{wrap.align}<pack>">
                         <h3>Wrap class for packing</h3>
                         <p>Phone vs desktop line counts tell alignment work whether a hook stays one line. <code>npm run audit:copy:align</code> and <code>npm run audit:copy:expr</code> list titles and expression hosts.</p>
                     </div>
-                    <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software_pretext__panel_5" data-spw-semantic-expression="copy[script]{prepare.once}">
+                    <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software_pretext__panel_5" data-spw-semantic-expression="copy[script]{prepare.once}<handle>">
                         <h3>Mixed scripts, one handle</h3>
                         <p>Latin, CJK, and Arabic share <code>prepareWithSegments</code>. Layout does not need a second code path.</p>
                     </div>

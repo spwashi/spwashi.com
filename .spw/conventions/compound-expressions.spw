@@ -29,10 +29,10 @@ expression = expression[compound]{bond.operand.kind}<declared>
 ^"measured_disuse"{
   claim: "Every richer form the grammar offers is unexercised. This is the same shape as the apposition finding — 6 unit cells read across 237 surfaces while thousands of appositions exist in a form the tool cannot see. The site reaches for the simplest legal form and stops."
   authored = 441
-  compound_operator_joined = 0
-  with_projection = 0
-  operator_led = 1
-  plain_subject_mode_parts = 440
+  compound_operator_joined = `was 0 — copy-flow now authors a few ~ joins on software/pretext hosts`
+  with_projection = `was 0 — home hooks, lab toys, and brace ladder now carry <pack> <measure> <entry>`
+  operator_led = `was 1 — brace fit uses ?copy[fit]{brace.select}`
+  plain_subject_mode_parts = `still the default; variety audit tracks the rich-form share`
   probe: `node -e "import('./public/js/generated/spw-expressions.js').then(m=>{const E=Object.keys(m.SPW_EXPRESSION_MANIFEST);console.log(E.length, E.filter(e=>/\}\s*[~&^@]\s*\w/.test(e)).length, E.filter(e=>/<[^>]+>/.test(e)).length)})"`
 }
 

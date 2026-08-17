@@ -44,6 +44,7 @@ fixity = "stable"
   pretext = `npm run audit:copy:pretext`
   align = `npm run audit:copy:align`
   expr = `npm run audit:copy:expr`
+  variety = `npm run audit:copy:variety`
   one_route = `node scripts/page-copy-audit.mjs pretext --route /about/`
   json = `node scripts/page-copy-audit.mjs inventory --json --out /tmp/copy-inventory.json`
 }[reg=facet]
