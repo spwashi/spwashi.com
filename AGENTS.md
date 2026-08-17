@@ -34,6 +34,7 @@ AGENTS is the always-on gate. Open the matching plan or contract instead of inve
 | multi-route / shared layer | `.agents/plans/<slug>/` |
 | agent / editor environment | `.agents/plans/agent-optimization/PLAN.md` and `spw-plan-maintenance` |
 | PWA / service worker | `.agents/plans/pwa-experience/` plus `npm run check:pwa` |
+| page-copy / pretext measure | `.spw/conventions/copy-flow.spw` plus `npm run audit:copy` |
 | skill wrappers vs workbench | `.agents/README.md` |
 
 ## Commits

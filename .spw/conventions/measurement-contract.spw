@@ -16,6 +16,7 @@
 @workbench_claims: ~"../_workbench/.spw/harness/claim-protocol.spw"
 @designer_conversation: ~"./designer-conversation-canvas.spw"
 @pretext_measurement_bus: ~"../../public/js/semantic/pretext-measurement-bus.js"
+@page_copy_audit: ~"./page-copy-audit.spw"
 @comparison_differentials: ~"./comparison-differentials.spw"
 @language_utilization: ~"../language/feature-utilization.spw"
 
@@ -129,9 +130,17 @@ fixity = "stable"
   }
 }[reg=facet]
 
+^"page_copy_audits"{
+  ~from = @page_copy_audit
+  role = `Static analysis leg of copy-flow. Complements the optional live bus without becoming pretext-physics.`
+  runner = `scripts/page-copy-audit.mjs`
+  first_run = `.spw/audits/page-pretext-measurement-2026-08/index.spw`
+}[reg=facet]
+
 validation: #[
   `Any new measurement surface must declare data-spw-measure-kind on relevant elements.`
   `Workbench plugins and annotation surfaces must be able to produce well-formed measures of both kinds.`
   `Design catalog and state inspection surfaces can surface and filter by measure kind.`
   `rg 'claim #measurement|%objective|%subjective' .spw/conventions/measurement-contract.spw`
+  `node scripts/page-copy-audit.mjs list`
 ][reg=set]

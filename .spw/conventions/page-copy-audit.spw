@@ -1,0 +1,76 @@
+# Page Copy Audit
+#
+# How to measure authored route copy without mounting a live text engine
+# on every page. Scripts hold numbers. .spw audits hold judgments.
+
+#>page_copy_audit
+#:convention #!audit #!copy #!measurement #!pretext
+#:operation #!contract
+#:fixity #!stable
+#:layer #!pragmatics
+
+@measurement: ~"./measurement-contract.spw"
+@semantic_capacity: ~"./semantic-capacity.spw"
+@typography_packing: ~"./typography-packing.spw"
+@caches_index: ~"../caches/index.spw"
+@audits_index: ~"../audits/index.spw"
+@pretext_run: ~"../audits/page-pretext-measurement-2026-08/index.spw"
+@runner: ~"../../scripts/page-copy-audit.mjs"
+@lib: ~"../../scripts/lib/page-copy-audit.mjs"
+@pretext_plugin: ~"../../scripts/lib/page-copy-audits/pretext.mjs"
+@inventory_plugin: ~"../../scripts/lib/page-copy-audits/inventory.mjs"
+@pretext_bus: ~"../../public/js/semantic/pretext-measurement-bus.js"
+@copy_flow: ~"./copy-flow.spw"
+
+operation = "contract"
+fixity = "stable"
+
+^"thesis"{
+  claim = `A page-copy audit extracts main-column text from every source HTML route, measures it with a named engine, and writes judgments to .spw/audits. It does not become a runtime host.`
+  split = `scripts hold measurements (stdout / --out JSON). .spw holds judgments. Do not commit JSON inventories.`
+  kind = `objective unless the audit names a hybrid join`
+}[reg=facet]
+
+^"shape"{
+  collect = `listSourceRouteFiles + renderTemplate + extract main h1–h4 / p / li / blockquote / figcaption / dt / dd`
+  measure = `optional engine. pretext uses prepareWithSegments + layoutWithLines at phone 288 / tablet 704 / desktop 1072`
+  classify = `wrap is per-block. volatile ≥4 phone/desktop line delta; responsive ≥2; page wrap is block-share, never summed line-count`
+  judge = `write or update .spw/audits/<slug>/index.spw with claim, evidence, decision, validation`
+}[reg=facet]
+
+^"commands"{
+  list = `npm run audit:copy`
+  inventory = `npm run audit:copy:inventory`
+  pretext = `npm run audit:copy:pretext`
+  align = `npm run audit:copy:align`
+  expr = `npm run audit:copy:expr`
+  one_route = `node scripts/page-copy-audit.mjs pretext --route /about/`
+  json = `node scripts/page-copy-audit.mjs inventory --json --out /tmp/copy-inventory.json`
+}[reg=facet]
+
+^"similar_audit"{
+  when = `A new question about authored copy: heading length, operator-chip text, densest routes, language mix, etc.`
+  steps = #[
+    `1. Add scripts/lib/page-copy-audits/<id>.mjs exporting { id, title, kind, needsBrowser, measure, summarize, print }`
+    `2. Register it in scripts/page-copy-audit.mjs PAGE_COPY_AUDITS`
+    `3. Reuse collectRoutePages / extractBlocks unless the extract set must change`
+    `4. Keep needsBrowser false unless the engine actually needs fonts or Canvas`
+    `5. Write .spw/audits/<id>-<date>/index.spw with the run, claim, and decision`
+    `6. Wire the audit into .spw/audits/index.spw`
+  ][reg=set]
+  !anti = `Do not fork a second route walker or a second wrap classifier. Do not mount data-spw-flow=pretext sitewide to answer an audit question.`
+}[reg=facet]
+
+^"do_not"{
+  live_host = `Copy-flow keeps live data-spw-flow=pretext on the lab and invited frame-metrics. pretext-physics is a lab projection, not the primitive.`
+  commit_json = `Machine inventories stay in /tmp or stdout`
+  sum_wrap = `Do not classify a page volatile because summed body lines differ by 4+. That is true of any real page`
+}[reg=facet]
+
+validation: #[
+  `node --check scripts/lib/page-copy-audit.mjs scripts/page-copy-audit.mjs scripts/measure-page-pretext.mjs`
+  `node --test scripts/tests/page-copy-audit.test.mjs`
+  `node scripts/page-copy-audit.mjs list`
+  `node scripts/page-copy-audit.mjs inventory --route /about/domains/bane.land/`
+  `rg 'page_copy_audit|audit:copy' .spw/conventions/page-copy-audit.spw package.json`
+][reg=set]

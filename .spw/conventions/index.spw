@@ -33,6 +33,8 @@
 @operator_site_projection: ~"./operator-site-projection.spw"
 @operational_semantics: ~"./operational-semantics.spw"
 @measurement_contract: ~"./measurement-contract.spw"
+@page_copy_audit: ~"./page-copy-audit.spw"
+@copy_flow: ~"./copy-flow.spw"
 @designer_conversation_canvas: ~"./designer-conversation-canvas.spw"
 @typography_packing: ~"./typography-packing.spw"
 @dimension_vocabulary: ~"./dimension-vocabulary.spw"
@@ -149,6 +151,8 @@ dispatch: .{
  operator_site_projection = @operator_site_projection
  operational_semantics = @operational_semantics
  measurement = @measurement_contract
+ page_copy_audit = @page_copy_audit
+ copy_flow = @copy_flow
  designer_conversation = @designer_conversation_canvas
  typography_packing = @typography_packing
  annotation_layer = @annotation_layer

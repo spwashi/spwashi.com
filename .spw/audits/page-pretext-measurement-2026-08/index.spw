@@ -1,0 +1,109 @@
+# Page Pretext Measurement (2026-08-17)
+#
+# operation: audit
+# fixity: tending
+# method: extract main copy from every source route, then measure with
+#   @chenglou/pretext at the same phone/tablet/desktop insets as pretext-presets.
+
+#>page_pretext_measurement_2026_08
+#:audit #!pretext #!measurement #!copy #!wrap
+#:operation #!audit
+#:fixity #!tending
+#:layer #!pragmatics
+
+@measurement_contract: ~"../../conventions/measurement-contract.spw"
+@page_copy_audit: ~"../../conventions/page-copy-audit.spw"
+@pretext_bus: ~"../../../public/js/semantic/pretext-measurement-bus.js"
+@pretext_presets: ~"../../../public/js/semantic/pretext-presets.js"
+@measure_script: ~"../../../scripts/measure-page-pretext.mjs"
+@runner: ~"../../../scripts/page-copy-audit.mjs"
+@lib: ~"../../../scripts/lib/page-copy-audit.mjs"
+@pretext_lab: ~"../../../topics/software/pretext/index.html"
+@layout_qa: ~"../layout-qa-measurement-2026-07/index.spw"
+
+operation = "audit"
+fixity = "tending"
+
+audit_run: .{
+  at = `2026-08-17`
+  command = `node scripts/page-copy-audit.mjs pretext --out /tmp/pretext-pages.json`
+  alias = `npm run audit:copy:pretext`
+  scope = `146 source HTML routes (2 deleted catalog files skipped); 7573 main-column blocks; 789733 chars`
+  engine = `@chenglou/pretext prepareWithSegments + layoutWithLines`
+  widths = `phone 288 / tablet 704 / desktop 1072`
+  fonts = `body 16px JetBrains Mono / 27px; heading probe from home display h1 (42px) — heading line counts are an upper bound`
+  errors = 0
+  measure_kind = `objective`
+  tooling = @page_copy_audit
+}[reg=facet]
+
+^"claim"{
+  text = `Site copy is already measurable. Pretext can score every route's main text without mounting pretext-physics sitewide. The useful signal is per-block wrap, not summed page line-count.`
+  restated = `Do not turn this audit into a live host on every page. Keep the script; invite frame-metrics / pretext-lab when someone asks.`
+}[reg=facet]
+
+^"block_wrap"{
+  stable = 3179
+  responsive = 2385
+  volatile = 2009
+  body = .{
+    n = 4133
+    stable = 674
+    responsive = 1587
+    volatile = 1872
+    note = `45% of body paragraphs shift by 4+ lines from phone to desktop. That is expected long prose, not a CSS bug.`
+  }[reg=facet]
+  subheading = .{
+    n = 1401
+    stable = 1385
+    note = `h3/h4 are the most width-stable authored layer.`
+  }[reg=facet]
+}[reg=facet]
+
+^"densest_phone_reading"{
+  note = `Summed body line-count at 288px. These routes are books, not cards.`
+  routes = #[
+    `/play/rpg-wednesday/ 1366L / 39320 chars`
+    `/design/ 1361L / 46628 chars`
+    `/about/ 1063L / 32929 chars`
+    `/recipes/ 1039L / 35868 chars`
+    `/topics/software/spw/ 827L`
+    `/ 826L`
+    `/settings/ 803L`
+  ][reg=set]
+}[reg=facet]
+
+^"longest_single_blocks"{
+  note = `One paragraph, phone 288px, body font. These are the honest reflow units.`
+  about_venue = `/about/ 47L → 12L  I want to manage or own an entertainment venue…`
+  about_question = `/about/ 41L → 11L  The question that still structures the work…`
+  palettes_spell = `/design/palettes/ 33L → 9L`
+  calculus = `/topics/math/calculus/ 32L → 9L`
+  spw_anticipation = `/topics/software/spw/ 32L → 9L`
+}[reg=facet]
+
+^"heading_caveat"{
+  home_display_h1 = `700 42.68px Inter / 41px line-height — line-height is below font-size, so home-probed heading wraps are an upper bound`
+  do_not_claim = `Do not treat 7–10 line phone h1 scores as the live computed size on every topic route.`
+  still_true = `Many h1s are full sentences. Even at a 28px topic size they will wrap 3–5 lines on a 288px measure.`
+}[reg=facet]
+
+^"decision"{
+  build = `Keep the page-copy audit runner. Re-run pretext when a copy pass needs an objective wrap map. Use inventory when Chrome is not required.`
+  do_not_build = `Do not mount pretext-physics or live data-spw-flow=pretext on every route. Copy-flow keeps analysis offline and live measure invited.`
+  next_copy_if_wanted = `Shorten the /about/ 40L+ paragraphs and sentence-length display titles on /design/composition/, /design/experiments/css/, and several /topics/math/* h1s.`
+}[reg=facet]
+
+^"tooling"{
+  contract = @page_copy_audit
+  list = `npm run audit:copy`
+  sibling = `npm run audit:copy:inventory — same extract, no browser`
+  add_similar = `scripts/lib/page-copy-audits/<id>.mjs + register in scripts/page-copy-audit.mjs + new .spw/audits/<slug>`
+}[reg=facet]
+
+validation: #[
+  `node --check scripts/lib/page-copy-audit.mjs scripts/page-copy-audit.mjs scripts/measure-page-pretext.mjs`
+  `node --test scripts/tests/page-copy-audit.test.mjs`
+  `node scripts/page-copy-audit.mjs inventory --route /about/domains/bane.land/`
+  `node scripts/page-copy-audit.mjs pretext --route /about/domains/bane.land/`
+][reg=set]

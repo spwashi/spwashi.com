@@ -14,6 +14,7 @@ description: Find and fix overflow, measure, and packing issues. Structural CSS 
 
 * **Default Operation:** `audit` (or `align` when snapping breakpoint drift).
 * **Sense (Pre-flight):** `node scripts/normalize-breakpoints.mjs` (reports query threshold drift without writing).
+* **Copy wrap (titles / hooks / expressions):** `npm run audit:copy:align` and `npm run audit:copy:expr`. Shared helpers: `scripts/lib/page-copy-audit.mjs`.
 * **Probe (Falsification):** `node scripts/normalize-breakpoints.mjs && node scripts/check-site.mjs`
 * **Precipitate:** Record breakpoint changes in `.spw/conventions/stylesheet-ecology.spw#breakpoints`; record device measurements in `.spw/skills/ui-containment.spw`.
 

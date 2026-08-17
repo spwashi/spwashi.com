@@ -137,7 +137,7 @@
   modules: #[
     `narrative-instrumentation`
     `pretext-lab`
-    `pretext-physics`
+    `pretext-physics`  # lab projection only; copy-flow is the primitive
     `typography-measurement-preview`
     `frame-metrics`
     `precipitation-request`

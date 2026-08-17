@@ -41,6 +41,7 @@
 @component_anatomy_theme_module: ~"./component-anatomy-theme-module-2026-07.spw"
 @module_granularity_lifecycle: ~"./module-granularity-lifecycle-2026-07/index.spw"
 @layout_qa_measurement: ~"./layout-qa-measurement-2026-07/index.spw"
+@page_pretext_measurement: ~"./page-pretext-measurement-2026-08/index.spw"
 @progressive_css_module_scopes: ~"./progressive-css-module-scopes-2026-07/index.spw"
 
 operation = "align"
@@ -57,6 +58,7 @@ fixity = "tending"
     build_runtime_performance = ~"./build-runtime-performance-2026-07/index.spw"
     module_granularity_lifecycle = ~"./module-granularity-lifecycle-2026-07/index.spw"
     layout_qa_measurement = ~"./layout-qa-measurement-2026-07/index.spw"
+    page_pretext_measurement = ~"./page-pretext-measurement-2026-08/index.spw"
     progressive_css_module_scopes = ~"./progressive-css-module-scopes-2026-07/index.spw"
     commit_skill_induction = ~"./commit-skill-induction-2026-07/index.spw"
     commit_history_deep = ~"./commit-history-deep-2026-07/index.spw"
@@ -172,6 +174,7 @@ fixity = "tending"
 
   layout_qa_cascade = ?<
     @layout_qa_measurement,
+    @page_pretext_measurement,
     @alignment_shell_lifecycle,
     @component_anatomy_device_packing,
     @page_spacing_runtime_synthesis
