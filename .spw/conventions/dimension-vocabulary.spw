@@ -41,7 +41,7 @@
     ecology_phases = #[`discovering`, `prefetching`, `measuring`, `mounting`, `settling`, `personalizing`, `settled`][reg=set]
     positioning_phases = #[`approach`, `recall`, `restore`, `anchor`, `dormancy`][reg=set]
     lifecycle = #[`pre`, `loading`, `ready`, `empty`, `default`, `error`][reg=set]
-    tokens = #[`--spw-position-phase`, `--spw-position-bias-y`, `--spw-lifecycle-phase`][reg=set]
+    tokens = #[`--spw-position-phase`, `--spw-position-bias-y`, `--spw-lifecycle-phase`, `--spw-lifecycle-presence`, `--spw-interaction-phase-weight`, `--spw-enhancement-factor`, `--spw-arrival-shell`, `--spw-arrival-vertical`][reg=set]
   }
 
   color: .{

@@ -5,11 +5,9 @@
    ========================================================================== */
 
 :root {
-  --spw-interaction-phase-weight: 0;
   --spw-microinteraction-pulse-scale: 1;
   --spw-microinteraction-pulse-duration: 280ms;
   --spw-microinteraction-pulse-intensity: 1;
-  --spw-interaction-phase-tuning: 1;
   /* Selection arcs share the micro pulse quantum (settings may overwrite). */
   --spw-layout-selection-duration: var(--spw-microinteraction-pulse-duration, 280ms);
   --spw-variant-selection-duration: var(--spw-microinteraction-pulse-duration, 280ms);
@@ -32,23 +30,27 @@
   --spw-interaction-phase-tuning: calc(var(--spw-interaction-phase-tuning, 1) * 1.08);
 }
 
+:where(html:not([data-spw-interaction-phase]), html[data-spw-interaction-phase="idle"]) {
+  --spw-interaction-phase-weight: 0;
+}
+
 :where(html[data-spw-interaction-phase="approach"]) {
-  --spw-interaction-phase-weight: calc(0.28 * var(--spw-interaction-phase-tuning, 1));
+  --spw-interaction-phase-weight: calc(0.28 * var(--spw-interaction-phase-tuning, 1) * var(--spw-enhancement-factor, 1));
   --spw-pre-state-visibility: max(var(--spw-pre-state-visibility, 0.5), 0.62);
 }
 
 :where(html[data-spw-interaction-phase="prime"]) {
-  --spw-interaction-phase-weight: calc(0.46 * var(--spw-interaction-phase-tuning, 1));
+  --spw-interaction-phase-weight: calc(0.46 * var(--spw-interaction-phase-tuning, 1) * var(--spw-enhancement-factor, 1));
   --spw-variant-selection-weight: max(var(--spw-variant-selection-weight, 0), 0.34);
 }
 
 :where(html[data-spw-interaction-phase="charge"]) {
-  --spw-interaction-phase-weight: calc(0.58 * var(--spw-interaction-phase-tuning, 1));
+  --spw-interaction-phase-weight: calc(0.58 * var(--spw-interaction-phase-tuning, 1) * var(--spw-enhancement-factor, 1));
   --spw-ecology-twinkle: max(var(--spw-ecology-twinkle, 0), 0.42);
 }
 
 :where(html[data-spw-interaction-phase="inspect"]) {
-  --spw-interaction-phase-weight: calc(0.72 * var(--spw-interaction-phase-tuning, 1));
+  --spw-interaction-phase-weight: calc(0.72 * var(--spw-interaction-phase-tuning, 1) * var(--spw-enhancement-factor, 1));
   --spw-color-layer-accent-apparent: color-mix(
     in srgb,
     var(--active-op-color, var(--teal, #008080)) 52%,
@@ -57,12 +59,12 @@
 }
 
 :where(html[data-spw-interaction-phase="discover"]) {
-  --spw-interaction-phase-weight: calc(0.86 * var(--spw-interaction-phase-tuning, 1));
+  --spw-interaction-phase-weight: calc(0.86 * var(--spw-interaction-phase-tuning, 1) * var(--spw-enhancement-factor, 1));
   --spw-salience-weight: max(var(--spw-salience-weight, 0.34), 0.72);
 }
 
 :where(html[data-spw-interaction-phase="settle"]) {
-  --spw-interaction-phase-weight: calc(0.34 * var(--spw-interaction-phase-tuning, 1));
+  --spw-interaction-phase-weight: calc(0.34 * var(--spw-interaction-phase-tuning, 1) * var(--spw-enhancement-factor, 1));
   --spw-ecology-settle-weight: max(var(--spw-ecology-settle-weight, 0), 0.88);
 }
 

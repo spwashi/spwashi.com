@@ -30,11 +30,11 @@
   contain: var(--spw-image-utilization-contain);
 }
 
-:where(html[data-spw-hydration-pass="lex"]) :where([data-spw-image-utilization="distributed"]) {
+:where(html[data-spw-hydration="static"], html[data-spw-hydration-pass="lex"]) :where([data-spw-image-utilization="distributed"]) {
   opacity: var(--spw-settle-opacity-mid, 0.985);
 }
 
-:where(html[data-spw-hydration-pass="pragmatic"]) :where([data-spw-image-discovered="true"]) {
+:where(html[data-spw-hydration="ready"], html[data-spw-hydration-pass="pragmatic"]) :where([data-spw-image-discovered="true"]) {
   --spw-image-utilization-contain: none;
 }
 

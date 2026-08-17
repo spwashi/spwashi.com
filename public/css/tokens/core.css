@@ -138,6 +138,20 @@
   initial-value: 0;
 }
 
+/* Hydration-arc presence (lex → semantic → pragmatic). Alias of --spw-lifecycle-presence. */
+@property --spw-lifecycle-presence {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.42;
+}
+
+/* Interaction-phase loudness. One room with --spw-field-intensity; climate multiplies via --spw-enhancement-factor. */
+@property --spw-interaction-phase-weight {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
 /* Continuous Gradient of Tangibility: 0.0 (radiant plasma / unconstrained field) -> 1.0 (invariant dense substrate) */
 @property --spw-tangibility {
   syntax: "<number>";

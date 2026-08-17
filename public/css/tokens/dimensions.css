@@ -46,12 +46,21 @@
   --spw-position-phase: anchor;
   --spw-position-bias-y: 0px;
   --spw-position-depth: var(--depth-settled, 10);
+  --spw-interaction-phase-weight: 0;
+  --spw-interaction-phase-tuning: 1;
+  --spw-enhancement-factor: 1;
+  /* Arrival field geometry: shell depth (entry→settled) and vertical travel. */
+  --spw-arrival-shell: 0;
+  --spw-arrival-vertical: 0;
 
   /* ------------------------------------------------------------------------
      Lifecycle — pre-state / empty / hydration visibility
      subtle (0.22) → balanced (0.5) → apparent (0.82)
+     presence is the hydration arc (lex 0.42 → pragmatic 1)
      ------------------------------------------------------------------------ */
   --spw-lifecycle-phase: ready;
+  --spw-lifecycle-presence: 0.42;
+  --spw-hydration-pass-surface: var(--spw-lifecycle-presence);
   --spw-pre-state-visibility: 0.5;
   --spw-pre-state-fill-mix: 0.08;
   --spw-pre-state-line-mix: 0.18;
@@ -368,11 +377,9 @@
   --flow-space: var(--spw-real-estate-block);
 }
 
-:where(html[data-spw-hydration-pass="lex"]) {
-  --spw-real-estate-block: calc(var(--page-stack-gap, 1rem) * 0.94);
-}
-
-:where(html[data-spw-hydration-pass="pragmatic"]) {
+/* Stack gap is authored. Do not shrink it when JS later writes lex —
+   that arrival used to flash --flow-space. Pass attrs stay flourish-only. */
+:where(html[data-spw-hydration="ready"], html[data-spw-hydration-pass="pragmatic"]) {
   --spw-real-estate-block: var(--page-stack-gap, clamp(1rem, 2.3vw, 1.7rem));
 }
 

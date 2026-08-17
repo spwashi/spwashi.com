@@ -20,20 +20,29 @@ html[data-spw-hydration="ready"] :where(.site-header, body > header, .site-heade
   contain: none;
 }
 
-/* Pass momentum — brief surface echo when lex → semantic → pragmatic advances */
+/* Pass tokens follow authored data-spw-hydration first. The pass attribute is
+   a flourish alias, not a second layout owner. Presence lives in the temporal
+   cluster (--spw-lifecycle-presence); the old surface name is an alias. */
+html[data-spw-hydration="static"],
 html[data-spw-hydration-pass="lex"] {
-  --spw-hydration-pass-surface: 0.42;
+  --spw-lifecycle-presence: 0.42;
+  --spw-hydration-pass-surface: var(--spw-lifecycle-presence);
 }
 
+html[data-spw-hydration="activating"],
 html[data-spw-hydration-pass="semantic"],
 html[data-spw-hydration-pass-momentum="active"] {
-  --spw-hydration-pass-surface: 0.72;
+  --spw-lifecycle-presence: 0.72;
+  --spw-hydration-pass-surface: var(--spw-lifecycle-presence);
 }
 
+html[data-spw-hydration="ready"],
 html[data-spw-hydration-pass="pragmatic"] {
-  --spw-hydration-pass-surface: 1;
+  --spw-lifecycle-presence: 1;
+  --spw-hydration-pass-surface: var(--spw-lifecycle-presence);
 }
 
+html[data-spw-hydration="activating"] :where([data-spw-sigil-role="grammar"], .syntax-token),
 html[data-spw-hydration-pass="semantic"] :where([data-spw-sigil-role="grammar"], .syntax-token) {
   transition:
     color var(--spw-component-arrival-transition, 140ms var(--ease-settle)),
