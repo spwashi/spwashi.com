@@ -691,14 +691,17 @@ function renderSiteHead(vars) {
   const sourceLocale = normalizeLocaleCode(firstValue(vars.source_locale, vars.source_lang, locale));
   const alternateLocaleLinks = renderAlternateLocaleLinks(vars);
   const preconnectLinks = renderPreconnectLinks(firstValue(vars.preconnect, vars.head_preconnect));
-  const modulePreloadLinks = renderModulePreloadLinks(firstValue(vars.modulepreloads, vars.module_preloads, vars.head_modulepreloads));
+  const includeSiteScript = !isOff(firstValue(vars.site_script, vars.head_site_script));
+  const authoredPreloads = splitList(firstValue(vars.modulepreloads, vars.module_preloads, vars.head_modulepreloads));
+  const modulePreloadLinks = renderModulePreloadLinks(
+    [...new Set([...(includeSiteScript ? ['/public/js/site.js'] : []), ...authoredPreloads])].join('|'),
+  );
   const extraStyles = renderExtraStyles(vars.extra_styles);
   const extraScripts = renderExtraScripts(vars.extra_scripts);
   const pageJsonLd = renderPageJsonLd(vars);
   const breadcrumbs = renderBreadcrumbJsonLd(vars);
   const analyticsScript = renderAnalyticsScript(vars);
   const includePrepaint = !isOff(firstValue(vars.prepaint, vars.head_prepaint));
-  const includeSiteScript = !isOff(firstValue(vars.site_script, vars.head_site_script));
   const stylesheetMode = parseStylesheetMode(firstValue(vars.stylesheet_mode, vars.site_stylesheet_mode, 'full'));
   const stylesheetHref = firstValue(vars.stylesheet, vars.site_stylesheet, '/public/css/style.css');
   const siteScriptSrc = firstValue(vars.site_script_src, vars.site_runtime, '/public/js/site.js');

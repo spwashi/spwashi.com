@@ -42,16 +42,111 @@ async function prepareServiceWorkerPrecache(outDir) {
     await fs.writeFile(workerPath, output, 'utf8');
     return dependencies;
 }
+function toPosix(value) {
+    return value.split(path.sep).join('/');
+}
+function toPublicHref(outDir, filePath) {
+    return `/public/${toPosix(path.relative(path.join(outDir, 'public'), filePath))}`;
+}
+function createPublicJsResolvePlugin(outDir) {
+    return {
+        name: 'public-js-root',
+        resolveId(id) {
+            if (id.startsWith('/public/js/'))
+                return path.join(outDir, id.slice(1));
+            return null;
+        },
+        resolveDynamicImport(specifier, importer) {
+            const raw = String(specifier || '');
+            if (raw.startsWith('/public/js/'))
+                return { id: raw, external: true };
+            if (raw.startsWith('.') && importer) {
+                const rel = toPosix(path.relative(outDir, path.resolve(path.dirname(importer), raw)));
+                if (rel.startsWith('public/js/'))
+                    return { id: `/${rel}`, external: true };
+            }
+            return { id: raw, external: true };
+        },
+    };
+}
 /**
- * Per-file minify of dist/public/js. Keeps each module path and import()
- * specifier intact so modulepreload/prefetch (extractDynamicImportSpecifier)
- * and content-hash of site.js continue to work. Full eager-graph bundling is
- * deferred until root-relative resolve + missing-export issues are closed.
+ * Bundle the static site.js graph. Catalog import() targets stay external as
+ * /public/js/… specifiers so extractDynamicImportSpecifier and leftover
+ * per-file minify keep working.
  */
-async function minifyPublicJsModules(outDir, logger) {
+async function bundleSiteRuntimeGraph(outDir, logger) {
     const jsRoot = path.join(outDir, 'public/js');
+    const entry = path.join(jsRoot, 'site.js');
+    const tmpDir = await fs.mkdtemp(path.join(outDir, '.bundle-'));
+    const startedAt = Date.now();
+    try {
+        await rolldownBuild({
+            input: entry,
+            cwd: outDir,
+            makeAbsoluteExternalsRelative: false,
+            plugins: [createPublicJsResolvePlugin(outDir)],
+            output: {
+                dir: tmpDir,
+                format: 'es',
+                minify: true,
+                sourcemap: false,
+                entryFileNames: 'site.js',
+                chunkFileNames: 'boot-[name].js',
+            },
+        });
+        const emitted = (await walkFiles(tmpDir)).filter((file) => file.endsWith('.js'));
+        const hrefs = [];
+        let bytes = 0;
+        for (const file of emitted) {
+            const target = path.join(jsRoot, path.basename(file));
+            const content = await fs.readFile(file);
+            bytes += content.length;
+            await fs.writeFile(target, content);
+            hrefs.push(toPublicHref(outDir, target));
+        }
+        hrefs.sort();
+        const ms = Date.now() - startedAt;
+        logger.info(`[build] bundled site runtime graph: ${hrefs.join(', ') || '(none)'} (${bytes} bytes, ${ms}ms)`);
+        return { hrefs, bytes, ms };
+    }
+    finally {
+        await rmrf(tmpDir);
+    }
+}
+const SITE_SCRIPT_RE = /(<script\b[^>]*\bsrc=["']\/public\/js\/site\.js["'][^>]*>\s*<\/script>)/i;
+async function injectBootModulePreloads(outDir, hrefs) {
+    const extra = hrefs.filter((href) => href !== '/public/js/site.js');
+    if (!extra.length)
+        return 0;
+    const links = extra
+        .map((href) => `    <link href="${href}" rel="modulepreload" data-spw-boot-chunk="true" />`)
+        .join('\n');
+    const files = (await walkFiles(outDir)).filter((file) => file.endsWith('.html'));
+    let changed = 0;
+    for (const file of files) {
+        const source = await fs.readFile(file, 'utf8');
+        if (!SITE_SCRIPT_RE.test(source) || source.includes('data-spw-boot-chunk="true"'))
+            continue;
+        const output = source.replace(SITE_SCRIPT_RE, `${links}\n    $1`);
+        if (output === source)
+            continue;
+        await fs.writeFile(file, output, 'utf8');
+        changed += 1;
+    }
+    return changed;
+}
+/**
+ * Per-file minify of leftover dist/public/js modules (catalog import()
+ * targets and other non-boot files). The static site.js graph is bundled
+ * separately and skipped here.
+ */
+async function minifyPublicJsModules(outDir, logger, skipFiles = []) {
+    const jsRoot = path.join(outDir, 'public/js');
+    const skip = new Set([...skipFiles].map((value) => (value.startsWith('/public/js/')
+        ? path.join(outDir, value.slice(1))
+        : value)));
     const allFiles = await walkFiles(jsRoot);
-    const jsFiles = allFiles.filter((file) => file.endsWith('.js'));
+    const jsFiles = allFiles.filter((file) => file.endsWith('.js') && !skip.has(file));
     const startedAt = Date.now();
     let beforeBytes = 0;
     let afterBytes = 0;
@@ -94,7 +189,7 @@ async function minifyPublicJsModules(outDir, logger) {
     }
     await Promise.all(Array.from({ length: Math.min(concurrency, jsFiles.length) }, () => worker()));
     const ms = Date.now() - startedAt;
-    logger.info(`[build] minified ${jsFiles.length} js modules: ${beforeBytes} → ${afterBytes} bytes `
+    logger.info(`[build] minified ${jsFiles.length} leftover js modules: ${beforeBytes} → ${afterBytes} bytes `
         + `(${beforeBytes ? ((afterBytes / beforeBytes) * 100).toFixed(1) : '0'}%) in ${ms}ms`);
     return { files: jsFiles.length, beforeBytes, afterBytes, ms };
 }
@@ -119,6 +214,24 @@ async function hashAndRewritePublicAssets(outDir, options) {
             chunk: 'site-runtime',
         },
     ];
+    const jsRoot = path.join(outDir, 'public/js');
+    try {
+        const bootFiles = (await fs.readdir(jsRoot)).filter((name) => /^boot-.+\.js$/.test(name));
+        for (const name of bootFiles) {
+            rewrites.push({
+                source: path.join(jsRoot, name),
+                original: `/public/js/${name}`,
+                targetDir: jsRoot,
+                targetBase: name.replace(/\.js$/i, ''),
+                extension: '.js',
+                chunk: 'site-runtime',
+            });
+        }
+    }
+    catch (error) {
+        if (error?.code !== 'ENOENT')
+            throw error;
+    }
     for (const rewrite of rewrites) {
         const chunkEntries = chunkMap.get(rewrite.chunk) || [];
         chunkEntries.push(rewrite.original);
@@ -142,12 +255,19 @@ async function hashAndRewritePublicAssets(outDir, options) {
         }
     }
     const workerPath = path.join(outDir, 'sw.js');
-    const rewriteTargets = (await walkFiles(outDir)).filter((file) => file.endsWith('.html') || path.resolve(file) === path.resolve(workerPath));
+    const rewriteTargets = (await walkFiles(outDir)).filter((file) => (file.endsWith('.html')
+        || file.endsWith('.js')
+        || path.resolve(file) === path.resolve(workerPath)));
     for (const file of rewriteTargets) {
         const source = await fs.readFile(file, 'utf8');
         let output = source;
         for (const [original, hashed] of Object.entries(assetMap)) {
             output = output.replaceAll(original, hashed);
+            const originalBase = path.posix.basename(original);
+            const hashedBase = path.posix.basename(hashed);
+            if (originalBase !== hashedBase) {
+                output = output.replaceAll(`./${originalBase}`, `./${hashedBase}`);
+            }
         }
         if (output !== source) {
             await fs.writeFile(file, output, 'utf8');
@@ -206,12 +326,20 @@ export async function main() {
     else {
         logger.info('[build] skipping design catalog generation');
     }
+    let bootHrefs = ['/public/js/site.js'];
     if (options.minifyJs) {
-        logger.info('[build] minifying public/js modules (per-file, path-preserving)');
-        await minifyPublicJsModules(options.outDir, logger);
+        logger.info('[build] bundling site.js static graph');
+        const bundled = await bundleSiteRuntimeGraph(options.outDir, logger);
+        bootHrefs = bundled.hrefs.length ? bundled.hrefs : bootHrefs;
+        logger.info('[build] minifying leftover public/js modules (per-file, path-preserving)');
+        await minifyPublicJsModules(options.outDir, logger, bootHrefs);
     }
     else {
-        logger.info('[build] skipping public/js minify');
+        logger.info('[build] skipping public/js bundle and minify');
+    }
+    const injected = await injectBootModulePreloads(options.outDir, bootHrefs);
+    if (injected) {
+        logger.info(`[build] injected boot modulepreload into ${injected} html file(s)`);
     }
     logger.info('[build] preparing service-worker precache from rendered offline dependencies');
     const offlineDependencies = await prepareServiceWorkerPrecache(options.outDir);
