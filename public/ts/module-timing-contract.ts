@@ -37,6 +37,7 @@ export type SpwPerformanceSummary = Readonly<{
   immediateLayer: number | null;
   immediateCore: number | null;
   immediateNonCore: number | null;
+  nonCoreCatalog: number | null;
   settledLayer: number | null;
   fullBoot: number | null;
   idleChunks: readonly IdleChunkDuration[];
@@ -115,6 +116,7 @@ export function summarizeSpwPerformanceEntries(
       || measure.name === 'spw:boot-to-ready'
       || measure.name === 'spw:full-boot'
       || measure.name === 'spw:immediate-non-core-layers'
+      || measure.name === 'spw:non-core-catalog'
     ) {
       layerMeasures[measure.name] = measure.duration;
     }
@@ -125,6 +127,7 @@ export function summarizeSpwPerformanceEntries(
     immediateLayer: pickDuration(measures, 'spw:immediate-layer', 'spw:immediate-layer-parallel'),
     immediateCore: pickDuration(measures, 'spw:immediate-layer:core:parallel'),
     immediateNonCore: pickDuration(measures, 'spw:immediate-non-core-layers'),
+    nonCoreCatalog: pickDuration(measures, 'spw:non-core-catalog'),
     settledLayer: pickDuration(measures, 'spw:settled-layer'),
     fullBoot: pickDuration(measures, 'spw:full-boot'),
     idleChunks,

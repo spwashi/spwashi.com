@@ -82,17 +82,14 @@ import {
   initHydration,
   progressHydration,
 } from './kernel/hydration.js';
+import { CORE_DEFS } from './runtime/module-catalog-core.js';
+import { MOUNT_WHEN } from './runtime/module-catalog-constants.js';
 import {
-  CORE_DEFS,
-  ENHANCEMENT_DEFS as ENHANCEMENT_DEFS_BASE,
-  FEATURE_DEFS,
   filterEnhancementDefs,
   listModuleCatalogIndex,
-  MOUNT_WHEN,
-  REGION_DEFS,
   resolveModuleCatalogSpecifier,
   summarizeModuleCatalogOptimization,
-} from './runtime/module-catalog.js';
+} from './runtime/module-catalog-normalize.js';
 import {
   collectRelatedRouteSamples,
   describeComponentSample,
@@ -182,8 +179,10 @@ import { describePageCategory, readPageCategory } from './runtime/page-category.
  * Load instrumentation contract
  * - Phases and per-module costs are recorded with performance.mark/measure using the 'spw:' prefix
  *   (visible in DevTools Performance panel, getEntriesByType, and the timings() surfaces).
- * - Immediate core modules mount first; independent feature/enhancement layers then mount together.
- *   Modules with strict ordering requirements should stay in core or move behind visible/idle scheduling.
+ * - Immediate core modules mount first; feature/region/enhancement catalogs then introduce
+ *   themselves from their /public/js addresses (`spw:non-core-catalog`); independent
+ *   feature/enhancement layers then mount together. Modules with strict ordering
+ *   requirements should stay in core or move behind visible/idle scheduling.
  * - Key transitions and module events are also emitted via the 'spw-runtime' logger (LIFECYCLE relation)
  *   so they respect ?log=spw-runtime&log-level=debug and the shared instrumentation controls.
  * - Existing internal timings (loadMs, durationMs, registry records, moduleAudit, data-spw-runtime-* attrs)
@@ -270,6 +269,7 @@ function getSpwPerformanceTimings() {
         immediateLayer: pick('spw:immediate-layer', 'spw:immediate-layer-parallel'),
         immediateCore: pick('spw:immediate-layer:core:parallel'),
         immediateNonCore: pick('spw:immediate-non-core-layers'),
+        nonCoreCatalog: pick('spw:non-core-catalog'),
         settledLayer: pick('spw:settled-layer'),
         fullBoot: pick('spw:full-boot'),
         idleChunks,
@@ -584,25 +584,41 @@ function createRuntimeContext() {
   return ctx;
 }
 
-const ENHANCEMENT_DEFS = filterEnhancementDefs(
-  ENHANCEMENT_DEFS_BASE,
-  shouldActivateLayoutDebugInstrumentation(),
-);
+const MODULE_DEFS = [...CORE_DEFS];
+const NON_CORE_DEFS = [];
+let FEATURE_DEFS = [];
+let REGION_DEFS = [];
+let ENHANCEMENT_DEFS = [];
 
-const MODULE_DEFS = [
-  ...CORE_DEFS,
-  ...FEATURE_DEFS,
-  ...REGION_DEFS,
-  ...ENHANCEMENT_DEFS,
-];
-
-// Non-core timing stages are semantic schedules, not layer-specific privileges.
-// Run feature + enhancement definitions through the same visible/interaction/
-// idle pipeline so a valid catalog timing cannot become unreachable.
-const NON_CORE_DEFS = [
-  ...FEATURE_DEFS,
-  ...ENHANCEMENT_DEFS,
-];
+async function loadNonCoreCatalog() {
+  if (NON_CORE_DEFS.length) return;
+  performance.mark('spw:non-core-catalog-start');
+  const [featureMod, regionMod, enhancementMod] = await Promise.all([
+    import('./runtime/module-catalog-feature.js'),
+    import('./runtime/module-catalog-region.js'),
+    import('./runtime/module-catalog-enhancement.js'),
+  ]);
+  FEATURE_DEFS = featureMod.FEATURE_DEFS;
+  REGION_DEFS = regionMod.REGION_DEFS;
+  ENHANCEMENT_DEFS = filterEnhancementDefs(
+    enhancementMod.ENHANCEMENT_DEFS,
+    shouldActivateLayoutDebugInstrumentation(),
+  );
+  MODULE_DEFS.length = 0;
+  MODULE_DEFS.push(...CORE_DEFS, ...FEATURE_DEFS, ...REGION_DEFS, ...ENHANCEMENT_DEFS);
+  NON_CORE_DEFS.push(...FEATURE_DEFS, ...ENHANCEMENT_DEFS);
+  performance.mark('spw:non-core-catalog-complete');
+  performance.measure(
+    'spw:non-core-catalog',
+    'spw:non-core-catalog-start',
+    'spw:non-core-catalog-complete',
+  );
+  runtimeLogger.info(
+    'non-core catalog introduced',
+    { families: ['feature', 'region', 'enhancement'], count: MODULE_DEFS.length },
+    SPW_LOG_RELATIONSHIPS.LIFECYCLE,
+  );
+}
 
 const moduleLoader = createModuleLoader({
   moduleDefs: MODULE_DEFS,
@@ -859,6 +875,7 @@ async function bootSite() {
   // parse instead of blocking dataset apply.
   const orchestratorReady = import('./runtime/state-orchestrator.js');
   await mountImmediateLayer(CORE_DEFS, runtimeCtx, { label: 'core' });
+  await loadNonCoreCatalog();
   const { orchestrator: frameState, bindGlobalInteractions } = await orchestratorReady;
 
   const composeApi = installSpwCompositionConsole(window, {

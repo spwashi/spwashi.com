@@ -43,9 +43,10 @@ If you are trying to learn the runtime, read in this order:
 ## Bootstrap Scheduling
 
 The runtime keeps immediate core modules ordered because settings, shell state,
-and minimal page behavior seed later layers. After core, `site.js` mounts
-eligible feature and enhancement immediate layers in parallel through
-`runtime/module-loader.js`. Module definitions that require strict ordering
+and minimal page behavior seed later layers. Feature, region, and enhancement
+catalog families load after that core wave so their definition text is not part
+of the first parse. Then `site.js` mounts eligible feature and enhancement
+immediate layers in parallel through `runtime/module-loader.js`. Module definitions that require strict ordering
 should stay in `CORE_DEFS` or move behind `VISIBLE`, `IDLE`, `INTERACTION`, or
 `REGION` scheduling instead of depending on feature/enhancement array order.
 Interaction helpers, reward affordances, prompt utilities, and route-local labs

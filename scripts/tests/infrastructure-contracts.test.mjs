@@ -218,7 +218,11 @@ test('runtime resource probes resolve from the module catalog directory', () => 
     resolveModuleCatalogSpecifier('../interface/guide.js', 'https://spwashi.test'),
     'https://spwashi.test/public/js/interface/guide.js',
   );
-  assert.equal(resolveModuleCatalogSpecifier('/public/js/site.js', 'https://spwashi.test'), '');
+  assert.equal(
+    resolveModuleCatalogSpecifier('/public/js/kernel/site-settings-engine.js', 'https://spwashi.test'),
+    'https://spwashi.test/public/js/kernel/site-settings-engine.js',
+  );
+  assert.equal(resolveModuleCatalogSpecifier('/public/css/style.css', 'https://spwashi.test'), '');
 });
 
 test('source PWA contract keeps manifest, icons, routes, assets, and offline shell aligned', async () => {

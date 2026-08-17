@@ -50,12 +50,70 @@ function updatesText(def = {}) {
 
 export function resolveModuleCatalogSpecifier(specifier = '', origin = '') {
   const normalized = String(specifier || '').trim();
-  if (!normalized || (!normalized.startsWith('./') && !normalized.startsWith('../'))) return '';
+  if (!normalized) return '';
   try {
+    if (normalized.startsWith('/public/js/')) {
+      return new URL(normalized, origin || 'http://localhost').href;
+    }
+    if (!normalized.startsWith('./') && !normalized.startsWith('../')) return '';
     return new URL(normalized, new URL(MODULE_CATALOG_URL_PATH, origin)).href;
   } catch {
     return '';
   }
+}
+
+export function filterEnhancementDefs(defs, includeLayoutAudit = true) {
+  if (includeLayoutAudit) return defs;
+  return (defs || []).filter((def) => def?.id !== 'layout-shift-audit');
+}
+
+/** Lightweight index for ecology scripts and DevTools without mounting modules. */
+export function listModuleCatalogIndex(defs = []) {
+  const byLayer = Object.create(null);
+  const byWhen = Object.create(null);
+  const byCostClass = Object.create(null);
+  const byCommitment = Object.create(null);
+  const bySpend = Object.create(null);
+  const rows = [];
+  for (const def of defs) {
+    if (!def?.id) continue;
+    const layer = def.layer || 'unknown';
+    const when = def.when || 'immediate';
+    const cost = def.cost || inferModuleCost(def);
+    const costClass = def.costClass || inferModuleCostClass(def);
+    (byLayer[layer] ||= []).push(def.id);
+    (byWhen[when] ||= []).push(def.id);
+    (byCostClass[costClass] ||= []).push(def.id);
+    (byCommitment[cost.commitment] ||= []).push(def.id);
+    (bySpend[cost.spend] ||= []).push(def.id);
+    rows.push({
+      id: def.id,
+      layer,
+      when,
+      cost,
+      costClass,
+      costLabel: def.costLabel || `${cost.commitment}/${cost.spend}`,
+      describes: def.describes || null,
+      timingArc: def.timingArc || null,
+      timingChunk: def.timingChunk || null,
+      features: def.features || null,
+      pageFamily: def.pageFamily || null,
+      pageModes: def.pageModes || null,
+      selector: def.selector || null,
+      debugOnly: Boolean(def.debugOnly),
+      effectScope: def.effectScope || null,
+    });
+  }
+  return {
+    count: rows.length,
+    byLayer,
+    byWhen,
+    byCostClass,
+    byCommitment,
+    bySpend,
+    modules: rows,
+    optimization: summarizeModuleCatalogOptimization(defs),
+  };
 }
 
 function inferCommitment(def = {}) {
@@ -328,7 +386,7 @@ export const MODULE_CATALOG_NORMALIZE_CONTRACT = Object.freeze({
   copies: COST_COPY_VALUES,
   costClasses: COST_CLASS_VALUES,
   portableUse:
-    'inferModuleCost() returns { commitment, spend, copy? }. costClassFromModel() keeps older audits working. summarizeModuleCatalogOptimization() rolls up both views.',
+    'inferModuleCost() returns { commitment, spend, copy? }. costClassFromModel() keeps older audits working. summarizeModuleCatalogOptimization() rolls up both views. listModuleCatalogIndex() includes describes so a module can be recognized by contract or by when/timingArc.',
   process:
     'enter=when, act=spend, leave=cleanup handle, remain=commitment. copy only at residue.',
   scheduleOwns:
