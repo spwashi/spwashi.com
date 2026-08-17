@@ -1,3 +1,10 @@
+const BRACE_EXPRESSION_LADDER = Object.freeze([
+    { id: 'tight', expression: 'copy[hook]{wrap}' },
+    { id: 'fit', expression: 'copy[hook]{wrap.align}' },
+    { id: 'pack', expression: 'copy[hook]{wrap.align.pack}' },
+    { id: 'full', expression: 'copy[hook]{wrap.align.pack.measure}' },
+]);
+
 const SAMPLE_TEXTS = {
     hook: `A component is a small machine for arranging attention.`,
     bubble: `Can we know this bubble's height before it lands?`,
@@ -10,6 +17,7 @@ import { scanSpwExpression } from '/public/js/semantic/spw-expression-geometry.j
 import {
   classifyWrapVolatility,
   publishMeasurement,
+  selectFittingExpression,
   writePretextMeasurementDataset,
 } from '/public/js/semantic/pretext-measurement-bus.js';
 
@@ -41,6 +49,10 @@ const initPretextLab = async () => {
     const modeState = document.querySelector('#pretext-mode-state');
     const widestWidth = document.querySelector('#pretext-widest-width');
     const wrapState = document.querySelector('#pretext-wrap-state');
+    const braceExpression = document.querySelector('#pretext-brace-expression');
+    const braceFitMeta = document.querySelector('#pretext-brace-fit-meta');
+    const braceFitId = document.querySelector('#pretext-brace-fit-id');
+    const braceHost = document.querySelector('#pretext-brace-fit');
     const liveHost = document.querySelector('[data-spw-pretext-live="true"]');
     const presetButtons = Array.from(document.querySelectorAll('[data-pretext-sample]'));
 
@@ -184,6 +196,35 @@ const initPretextLab = async () => {
     let prepared;
     let lastKey = '';
 
+    const updateBraceFit = (availableWidth, lineHeight) => {
+        if (!pretext || !braceExpression) return null;
+        const innerWidth = Math.max(40, Math.round(availableWidth));
+        const fit = selectFittingExpression({
+            engine: pretext,
+            variants: BRACE_EXPRESSION_LADDER,
+            width: innerWidth,
+            font: DEMO_FONT,
+            lineHeightPx: lineHeight,
+            maxLines: 1,
+        });
+        const chosen = fit.chosen;
+        if (chosen) {
+            decorateLineText(braceExpression, chosen.expression);
+            if (braceFitId) braceFitId.textContent = chosen.id;
+            if (braceHost instanceof HTMLElement) {
+                braceHost.dataset.spwSemanticExpression = chosen.expression;
+                braceHost.dataset.spwBraceFit = chosen.id;
+            }
+        }
+        if (braceFitMeta) {
+            const rejected = fit.measured.filter((item) => !item.fits).map((item) => item.id);
+            braceFitMeta.textContent = chosen
+                ? `${innerWidth}px between braces → ${chosen.expression}${rejected.length ? ` · skipped ${rejected.join(', ')}` : ''}`
+                : `${innerWidth}px between braces → no fit`;
+        }
+        return fit;
+    };
+
     const setSandboxWidth = (nextWidth, rerender = true) => {
         if (!sandboxContainer || !sandboxLines) return;
 
@@ -205,6 +246,7 @@ const initPretextLab = async () => {
         const lineHeight = Number(lineHeightInput.value);
         const result = pretext.layoutWithLines(prepared, width, lineHeight);
         renderLines(sandboxLines, result.lines, true);
+        updateBraceFit(width, lineHeight);
     };
 
     const prepareHandle = () => {
@@ -259,6 +301,7 @@ const initPretextLab = async () => {
                 setSandboxWidth(sandboxWidth, false);
                 const sandboxResult = pretext.layoutWithLines(prepared, sandboxWidth, lineHeight);
                 renderLines(sandboxLines, sandboxResult.lines, true);
+                updateBraceFit(sandboxWidth, lineHeight);
             }
             const probe = scanSpwExpression(input.value);
             const expression = (probe.operators?.length || probe.forms?.length)

@@ -56,6 +56,48 @@ export function layoutPretextHandle(engine, handle, width, lineHeightPx) {
   return engine.layout(handle, resolved, lineHeightPx);
 }
 
+/**
+ * Pick the richest expression that still fits in `width` (default: one line).
+ * Variants should be ordered short → long. Used by the lab brace toy and packing.
+ */
+export function selectFittingExpression({
+  engine,
+  variants = [],
+  width,
+  font,
+  lineHeightPx,
+  maxLines = 1,
+} = {}) {
+  const list = (Array.isArray(variants) ? variants : []).filter((item) => item?.expression);
+  if (!list.length || !engine) return { width: Math.max(40, Math.round(width || 40)), chosen: null, measured: [] };
+
+  const resolvedWidth = Math.max(40, Math.round(width));
+  const measured = [];
+  let chosen = null;
+
+  for (const variant of list) {
+    const handle = preparePretextHandle(engine, variant.expression, font);
+    const layout = layoutPretextHandle(engine, handle, resolvedWidth, lineHeightPx);
+    const lines = layout.lines || [];
+    const lineCount = layout.lineCount ?? lines.length ?? 0;
+    const entry = {
+      ...variant,
+      lineCount,
+      height: Math.round(layout.height ?? (lineCount * (lineHeightPx || 0))),
+      maxLineWidth: Math.round(lines.reduce((max, line) => Math.max(max, line.width || 0), 0)),
+      fits: lineCount <= maxLines,
+    };
+    measured.push(entry);
+    if (entry.fits) chosen = entry;
+  }
+
+  return {
+    width: resolvedWidth,
+    chosen: chosen || measured[0] || null,
+    measured,
+  };
+}
+
 function toNumber(value = '', fallback = 0) {
   const parsed = Number.parseFloat(String(value));
   return Number.isFinite(parsed) ? parsed : fallback;

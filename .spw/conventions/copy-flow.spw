@@ -35,7 +35,7 @@ fixity = "tending"
 
 ^"lab"{
   route = `/topics/software/pretext/`
-  job = `Show wrap as a two-width comparison (phone vs poster) on one prepared handle.`
+  job = `Show wrap as a two-width comparison, and pick the richest Spw expression that still fits on one line between braces.`
   not_job = `Do not advertise physics, magic, or sitewide live hosts.`
 }[reg=facet]
 

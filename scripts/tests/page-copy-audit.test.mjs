@@ -129,15 +129,30 @@ test('dispatcher registry names the two starter audits', () => {
 });
 
 test('resolveCompareWidth picks the farther reference band', async () => {
-  const { resolveCompareWidth, PRETEXT_REFERENCE_WIDTHS, preparePretextHandle } = await import('../../public/js/semantic/pretext-measurement-bus.js');
+  const { resolveCompareWidth, PRETEXT_REFERENCE_WIDTHS, preparePretextHandle, selectFittingExpression } = await import('../../public/js/semantic/pretext-measurement-bus.js');
   assert.equal(resolveCompareWidth(900), PRETEXT_REFERENCE_WIDTHS.phone);
   assert.equal(resolveCompareWidth(200), PRETEXT_REFERENCE_WIDTHS.desktop);
   assert.equal(resolveCompareWidth(400, 640), 640);
   const engine = {
     prepareWithSegments(text, font) { return { kind: 'segments', text, font }; },
     prepare() { return { kind: 'plain' }; },
+    layoutWithLines(handle, width) {
+      const lineCount = Math.max(1, Math.ceil((handle.text.length * 8) / width));
+      return { lineCount, lines: [{ width }] };
+    },
   };
   assert.equal(preparePretextHandle(engine, 'hi', '16px sans').kind, 'segments');
+  const fit = selectFittingExpression({
+    engine,
+    width: 160,
+    lineHeightPx: 24,
+    variants: [
+      { id: 'tight', expression: 'copy[hook]{wrap}' },
+      { id: 'full', expression: 'copy[hook]{wrap.align.pack.measure}' },
+    ],
+  });
+  assert.equal(fit.chosen.id, 'tight');
+  assert.equal(fit.measured.length, 2);
 });
 
 test('extractExpressionHosts keys wrap by authored Spw expression', () => {

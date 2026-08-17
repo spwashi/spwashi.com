@@ -155,3 +155,22 @@
   .pretext-line-text .pretext-expr-token[data-spw-expr-token="boundary"]) {
   color: color-mix(in srgb, var(--spw-operator-color, var(--op-frame-color, currentColor)) 82%, currentColor);
 }
+
+:where(.pretext-brace-fit) {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35em;
+  min-width: 0;
+  margin: 0.6rem 0 0.25rem;
+  font-family: var(--site-mono-font, "JetBrains Mono", monospace);
+}
+
+:where(.pretext-brace-fit__open, .pretext-brace-fit__close) {
+  flex: 0 0 auto;
+  opacity: 0.55;
+}
+
+:where(.pretext-brace-fit #pretext-brace-expression) {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}

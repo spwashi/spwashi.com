@@ -164,6 +164,10 @@ const desktop = layoutWithLines(prepared, 1072, 27)
                                 <span class="frame-card-sigil">wrap</span>
                                 <strong id="pretext-wrap-state">awaiting</strong>
                             </div>
+                            <div class="pretext-metric" data-spw-kind="metric" data-spw-role="telemetry" data-spw-liminality="deep" data-spw-meaning="brace fit">
+                                <span class="frame-card-sigil">brace</span>
+                                <strong id="pretext-brace-fit-id">awaiting</strong>
+                            </div>
                         </div>
                         <ul class="source-list">
                             <li><span class="source-name">prepare</span> once, when the string or whitespace mode changes.</li>
@@ -180,7 +184,13 @@ const desktop = layoutWithLines(prepared, 1072, 27)
                             <p class="vibe-widget-kicker">Interactive Ruler</p>
                             <h3 class="vibe-widget-title">Live Sandbox</h3>
                         </div>
-                        <p class="frame-note">Drag the handle or use the arrow keys to re-layout the same handle. Click any line to inspect its segments.</p>
+                        <p class="frame-note">Drag the handle. The brace below keeps the richest Spw expression that still fits on one line in that width.</p>
+                        <div class="pretext-brace-fit" id="pretext-brace-fit" data-spw-form="brace" data-spw-semantic-expression="copy[hook]{wrap}">
+                            <span class="pretext-brace-fit__open" aria-hidden="true">{</span>
+                            <code id="pretext-brace-expression" class="pretext-line-text">copy[hook]{wrap}</code>
+                            <span class="pretext-brace-fit__close" aria-hidden="true">}</span>
+                        </div>
+                        <p class="frame-note" id="pretext-brace-fit-meta">Waiting for measure…</p>
 
                         <div class="pretext-sandbox-area">
                             <div class="pretext-sandbox" id="pretext-sandbox-container">
