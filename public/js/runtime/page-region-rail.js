@@ -1,12 +1,22 @@
 import { REGION_SELECTOR } from '/public/js/kernel/dom-contracts.js';
 import { writeDatasetValues } from '/public/js/kernel/dom-contracts.js';
 import { registerDomSyncTask } from '/public/js/runtime/dom-sync-hub.js';
+import {
+  classifyRegionRelation,
+  kinIds,
+  pickRegionKin,
+} from '/public/js/runtime/region-kin.js';
 
 const RAIL_ATTR = 'data-spw-page-region-rail-root';
 const MIN_REGIONS = 2;
 
 const REGION_SIGILS = Object.freeze({
   hook: '⌁',
+  hub: '▣',
+  cluster: '▦',
+  path: '→',
+  read: '¶',
+  wide: '◫',
   frame: '#>',
   panel: '▣',
   surface: '◫',
@@ -14,6 +24,12 @@ const REGION_SIGILS = Object.freeze({
   metric: '◎',
   card: '▢',
   tune: '~',
+});
+
+const KIN_ROOT_KEYS = Object.freeze({
+  similar: 'spwActiveRegionSimilar',
+  contrast: 'spwActiveRegionContrast',
+  resonate: 'spwActiveRegionResonate',
 });
 
 function readableToken(value = '', fallback = '') {
@@ -34,8 +50,14 @@ function regionLabel(node) {
   return kind;
 }
 
+function regionSeat(node) {
+  return node.getAttribute('data-spw-region') || '';
+}
+
 function regionSigil(node) {
   if (node.getAttribute('data-spw-affordance') === 'tune') return REGION_SIGILS.tune;
+  const seat = regionSeat(node);
+  if (seat && REGION_SIGILS[seat]) return REGION_SIGILS[seat];
   const kind = node.getAttribute('data-spw-kind') || 'frame';
   return REGION_SIGILS[kind] || '·';
 }
@@ -100,13 +122,48 @@ function collectRegions(root = document) {
     sigil: regionSigil(node),
     meta: regionMeta(node),
     componentSummary: regionComponentSummary(node),
+    seat: regionSeat(node),
     operator: regionOperator(node),
+    expression: node.getAttribute('data-spw-semantic-expression')
+      || node.querySelector('[data-spw-semantic-expression]')?.getAttribute('data-spw-semantic-expression')
+      || '',
     consequence: regionConsequence(node),
     wonder: regionWonder(node),
     lens: regionLens(node),
     tune: node.getAttribute('data-spw-affordance') === 'tune',
     element: node,
   }));
+}
+
+function writeActiveKin(active, regions, links) {
+  const kin = pickRegionKin(active, regions);
+  const ids = kinIds(kin);
+  writeDatasetValues(document.documentElement, {
+    [KIN_ROOT_KEYS.similar]: ids.similar || null,
+    [KIN_ROOT_KEYS.contrast]: ids.contrast || null,
+    [KIN_ROOT_KEYS.resonate]: ids.resonate || null,
+  });
+
+  regions.forEach((region) => {
+    if (!(region.element instanceof HTMLElement)) return;
+    const relations = active ? classifyRegionRelation(active, region) : [];
+    if (relations.length) {
+      region.element.dataset.spwRegionRelation = relations.join(' ');
+    } else {
+      delete region.element.dataset.spwRegionRelation;
+    }
+  });
+
+  links.forEach((link) => {
+    const id = (link.getAttribute('href') || '').replace(/^#/, '');
+    const target = regions.find((region) => region.id === id);
+    const relations = active && target ? classifyRegionRelation(active, target) : [];
+    if (relations.length) {
+      link.dataset.spwRegionRelation = relations.join(' ');
+    } else {
+      delete link.dataset.spwRegionRelation;
+    }
+  });
 }
 
 function ensureRailRoot() {
@@ -129,7 +186,12 @@ function renderRail(regions) {
   rail.dataset.spwSemanticDensity = document.documentElement.dataset.spwSemanticDensity || 'normal';
 
   if (regions.length < MIN_REGIONS) {
-    writeDatasetValues(document.documentElement, { spwPageRegionRail: null });
+    writeDatasetValues(document.documentElement, {
+      spwPageRegionRail: null,
+      spwActiveRegionSimilar: null,
+      spwActiveRegionContrast: null,
+      spwActiveRegionResonate: null,
+    });
     rail.hidden = true;
     return null;
   }
@@ -147,6 +209,7 @@ function renderRail(regions) {
     link.className = 'spw-page-region-rail__link';
     link.href = `#${region.id}`;
     if (region.operator) link.dataset.spwOperator = region.operator;
+    if (region.seat) link.dataset.spwRegion = region.seat;
     if (region.consequence) link.dataset.spwConsequence = region.consequence;
     if (region.wonder) link.dataset.spwWonder = region.wonder;
     if (region.lens) link.dataset.spwLens = region.lens;
@@ -212,10 +275,12 @@ function bindActiveRegion(regions, rail) {
     if (activeRegion) {
       writeDatasetValues(document.documentElement, {
         spwActiveRegion: id,
+        spwActiveRegionSeat: activeRegion.seat || null,
         spwActiveRegionOperator: activeRegion.operator || null,
         spwActiveRegionConsequence: activeRegion.consequence || null,
         spwActiveRegionWonder: activeRegion.wonder || null,
       });
+      writeActiveKin(activeRegion, regions, links);
     }
   }, {
     root: null,
@@ -255,7 +320,12 @@ export function initPageRegionRail(ctx = null) {
     activeCleanup();
     activeCleanup = () => {};
     document.querySelector(`[${RAIL_ATTR}]`)?.remove();
-    writeDatasetValues(document.documentElement, { spwPageRegionRail: null });
+    writeDatasetValues(document.documentElement, {
+      spwPageRegionRail: null,
+      spwActiveRegionSimilar: null,
+      spwActiveRegionContrast: null,
+      spwActiveRegionResonate: null,
+    });
   };
 
   return {

@@ -5,6 +5,7 @@ import {
 import { appendToDocument } from '/public/js/kernel/dom-render.js';
 import { computeLocomotionFieldBalance } from '/public/js/interface/wonder-memory.js';
 import { describeSpwExpression } from '/public/js/semantic/spw-expression-geometry.js';
+import { kinIds, nextKinRelation, pickRegionKin } from '/public/js/runtime/region-kin.js';
 import {
   AUTO_HANDLE_MIN_SECTIONS,
   APPROACH_ATTR,
@@ -53,6 +54,9 @@ const EXPLICIT_SECTION_TRAVEL_SOURCES = new Set([
   'arrow-next',
   'home',
   'end',
+  'similar',
+  'contrast',
+  'resonate',
 ]);
 
 function setHandleState(handle, state) {
@@ -302,7 +306,9 @@ function describeSection(section, index = 0, sections = []) {
   const prevLabel = index > 0 ? getSectionLabel(sections[index - 1], index - 1) : '';
   const nextLabel = index < sections.length - 1 ? getSectionLabel(sections[index + 1], index + 1) : '';
   const consequence = section.getAttribute('data-spw-consequence') || section.getAttribute('data-spw-role') || '';
-  const operator = section.getAttribute('data-spw-operator') || '';
+  const operator = section.getAttribute('data-spw-operator')
+    || section.querySelector('.frame-sigil, [data-spw-operator]')?.getAttribute('data-spw-operator')
+    || '';
   const wonder = section.getAttribute('data-spw-wonder') || '';
   const ingredients = section.querySelectorAll('[data-spw-ingredient], [data-spw-concept], [data-spw-living-term]');
   const ingredientsCount = ingredients.length;
@@ -317,6 +323,8 @@ function describeSection(section, index = 0, sections = []) {
     consequence,
     operator,
     wonder,
+    seat: section.getAttribute('data-spw-region') || '',
+    expression: expression || '',
     ingredientsCount,
     ingredientNames,
     syntaxWake: syntax?.wake || '',
@@ -383,6 +391,7 @@ function createHandleShell(origin) {
   shell.className = HANDLE_SHELL_CLASS;
   shell.setAttribute('aria-label', 'Page locomotion');
   shell.setAttribute(HANDLE_ENHANCED_ATTR, 'true');
+  shell.setAttribute('data-spw-gesture-contract', 'tap:travel hold:preview swipe:cycle');
   annotateFloatingChromeElement(shell, {
     role: 'section-handle-shell',
     tier: 'floating',
@@ -434,6 +443,18 @@ function createHandleShell(origin) {
     <button type="button" class="spw-section-handle-step" data-spw-handle-target="bottom" data-spw-handle-advanced="true" aria-label="Jump to bottom of page">
       <span aria-hidden="true">↓</span>
     </button>
+    <button type="button" class="spw-section-handle-step spw-region-kin-particle" data-spw-handle-target="similar" data-spw-handle-advanced="true" data-spw-region-relation="similar" data-spw-operator="potential" data-spw-gesture-contract="tap:travel hold:preview swipe:cycle" aria-label="Explore a similar region">
+      <span class="spw-region-kin-label" data-spw-kin-rung="compact" aria-hidden="true">~</span>
+      <span class="spw-region-kin-label" data-spw-kin-rung="balanced" aria-hidden="true">~similar</span>
+    </button>
+    <button type="button" class="spw-section-handle-step spw-region-kin-particle" data-spw-handle-target="contrast" data-spw-handle-advanced="true" data-spw-region-relation="contrast" data-spw-operator="subject" data-spw-gesture-contract="tap:travel hold:preview swipe:cycle" aria-label="Compare a contrasting region">
+      <span class="spw-region-kin-label" data-spw-kin-rung="compact" aria-hidden="true">&amp;</span>
+      <span class="spw-region-kin-label" data-spw-kin-rung="balanced" aria-hidden="true">&amp;contrast</span>
+    </button>
+    <button type="button" class="spw-section-handle-step spw-region-kin-particle" data-spw-handle-target="resonate" data-spw-handle-advanced="true" data-spw-region-relation="resonate" data-spw-operator="vibration" data-spw-gesture-contract="tap:travel hold:preview swipe:cycle" aria-label="Anchor a resonant region">
+      <span class="spw-region-kin-label" data-spw-kin-rung="compact" aria-hidden="true">#</span>
+      <span class="spw-region-kin-label" data-spw-kin-rung="balanced" aria-hidden="true">#resonate</span>
+    </button>
     <!-- Polite live region for button-driven section travel only (gesture-aria-hygiene/FIX.md) -->
     <span class="spw-section-handle-live" aria-live="polite" aria-atomic="true" hidden></span>
   `;
@@ -470,6 +491,9 @@ function getSectionHandleRefs(handle, shell) {
     prevButton: shell.querySelector('[data-spw-handle-target="prev"]'),
     nextButton: shell.querySelector('[data-spw-handle-target="next"]'),
     bottomButton: shell.querySelector('[data-spw-handle-target="bottom"]'),
+    similarButton: shell.querySelector('[data-spw-handle-target="similar"]'),
+    contrastButton: shell.querySelector('[data-spw-handle-target="contrast"]'),
+    resonateButton: shell.querySelector('[data-spw-handle-target="resonate"]'),
     liveRegion: shell.querySelector('.spw-section-handle-live'),
   };
 }
@@ -513,6 +537,50 @@ function syncSectionHandleAvailability(refs, activeIndex, sectionCount) {
     button.disabled = !enabled;
     button.setAttribute('aria-disabled', enabled ? 'false' : 'true');
   });
+}
+
+function regionKinRecords(sections) {
+  return sections.map((section, index) => {
+    const info = describeSection(section, index, sections);
+    return {
+      id: info?.id || section.id,
+      seat: info?.seat || section.getAttribute('data-spw-region') || '',
+      operator: info?.operator || '',
+      wonder: info?.wonder || '',
+      expression: info?.expression || getSectionExpression(section) || '',
+    };
+  });
+}
+
+function syncRegionKinTravel(refs, sections, activeIndex) {
+  const records = regionKinRecords(sections);
+  const active = records[activeIndex];
+  const ids = kinIds(pickRegionKin(active, records));
+  const buttons = [
+    [refs.similarButton, ids.similar, 'similar'],
+    [refs.contrastButton, ids.contrast, 'contrast'],
+    [refs.resonateButton, ids.resonate, 'resonate'],
+  ];
+  buttons.forEach(([button, id, relation]) => {
+    if (!(button instanceof HTMLButtonElement)) return;
+    const enabled = Boolean(id);
+    button.disabled = !enabled;
+    button.setAttribute('aria-disabled', enabled ? 'false' : 'true');
+    button.dataset.spwRegionTarget = id || '';
+    button.dataset.spwRegionRelation = relation;
+    if (enabled) {
+      const target = sections.find((section, index) => (
+        (section.id || ensureSectionId(section, index)) === id
+      ));
+      const label = target ? getSectionLabel(target) : relation;
+      button.setAttribute('aria-label', `Jump to ${relation} region: ${label}`);
+    }
+  });
+  if (refs.shell instanceof HTMLElement) {
+    refs.shell.dataset.spwRegionSimilar = ids.similar || '';
+    refs.shell.dataset.spwRegionContrast = ids.contrast || '';
+    refs.shell.dataset.spwRegionResonate = ids.resonate || '';
+  }
 }
 
 function syncSectionHandleAttributes(handle, shell, info, activeIndex, sectionCount, snapshot, source) {
@@ -669,6 +737,7 @@ function updateSectionHandleState({
   syncSectionHandleAttributes(handle, shell, info, state.activeIndex, sections.length, snapshot, source);
   syncSectionHandleSections(sections, state.activeIndex);
   syncSectionHandleAvailability(refs, state.activeIndex, sections.length);
+  syncRegionKinTravel(refs, sections, state.activeIndex);
 
   const compactViewport = window.matchMedia?.(HANDLE_COMPACT_QUERY).matches;
   const scrollThreshold = compactViewport
@@ -887,8 +956,103 @@ function createSectionHandleController({
           targetOverride: resolvePageBottomScrollTarget(sections),
         });
         break;
+      case 'similar':
+      case 'contrast':
+      case 'resonate': {
+        if (skipKinClick) break;
+        const kinId = button.dataset.spwRegionTarget || '';
+        const nextIndex = sections.findIndex((section, index) => (
+          (section.id || ensureSectionId(section, index)) === kinId
+        ));
+        if (nextIndex >= 0) {
+          travelSectionHandleToIndex({
+            sections,
+            state,
+            shell,
+            handle,
+            updateActiveState,
+            nextIndex,
+            source: target,
+          });
+        }
+        break;
+      }
       default:
         break;
+    }
+  };
+
+  const clearRegionPreview = () => {
+    document.documentElement.removeAttribute('data-spw-region-preview');
+    document.querySelectorAll('[data-spw-region-preview="true"]').forEach((node) => {
+      delete node.dataset.spwRegionPreview;
+    });
+  };
+
+  const previewRegion = (id) => {
+    clearRegionPreview();
+    if (!id) return;
+    document.documentElement.setAttribute('data-spw-region-preview', id);
+    const target = document.getElementById(id);
+    if (target) target.dataset.spwRegionPreview = 'true';
+  };
+
+  let skipKinClick = false;
+  let holdTimer = 0;
+  const HOLD_MS = 380;
+
+  const handleKinPointerDown = (event) => {
+    const button = event.target.closest?.('[data-spw-region-relation]');
+    if (!(button instanceof HTMLButtonElement) || button.disabled) return;
+    window.clearTimeout(holdTimer);
+    holdTimer = window.setTimeout(() => {
+      skipKinClick = true;
+      previewRegion(button.dataset.spwRegionTarget || '');
+    }, HOLD_MS);
+  };
+
+  const handleKinPointerUp = () => {
+    window.clearTimeout(holdTimer);
+    holdTimer = 0;
+    window.setTimeout(() => {
+      skipKinClick = false;
+      clearRegionPreview();
+    }, 40);
+  };
+
+  let swipeStartX = 0;
+  let swipeArmed = false;
+  const handleShellPointerDown = (event) => {
+    if (event.pointerType === 'mouse' && event.button !== 0) return;
+    swipeStartX = event.clientX || 0;
+    swipeArmed = true;
+  };
+  const handleShellPointerUp = (event) => {
+    if (!swipeArmed) return;
+    swipeArmed = false;
+    const dx = (event.clientX || 0) - swipeStartX;
+    if (Math.abs(dx) < 48) return;
+    const current = shell.dataset.spwRegionKinFocus || 'similar';
+    const next = dx < 0 ? nextKinRelation(current) : (
+      current === 'similar' ? 'resonate' : current === 'resonate' ? 'contrast' : 'similar'
+    );
+    shell.dataset.spwRegionKinFocus = next;
+    const button = refs[`${next}Button`];
+    const kinId = button?.dataset.spwRegionTarget || '';
+    const nextIndex = sections.findIndex((section, index) => (
+      (section.id || ensureSectionId(section, index)) === kinId
+    ));
+    if (nextIndex >= 0) {
+      event.preventDefault();
+      travelSectionHandleToIndex({
+        sections,
+        state,
+        shell,
+        handle,
+        updateActiveState,
+        nextIndex,
+        source: next,
+      });
     }
   };
 
@@ -970,6 +1134,11 @@ function createSectionHandleController({
 
   shell.addEventListener('click', handleButtonClick);
   shell.addEventListener('keydown', handleShellKeydown);
+  shell.addEventListener('pointerdown', handleKinPointerDown);
+  shell.addEventListener('pointerup', handleKinPointerUp);
+  shell.addEventListener('pointercancel', handleKinPointerUp);
+  shell.addEventListener('pointerdown', handleShellPointerDown);
+  shell.addEventListener('pointerup', handleShellPointerUp);
   refs.currentLink?.addEventListener('click', handleCurrentClick);
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onResize, { passive: true });
@@ -982,7 +1151,14 @@ function createSectionHandleController({
   return () => {
     shell.removeEventListener('click', handleButtonClick);
     shell.removeEventListener('keydown', handleShellKeydown);
+    shell.removeEventListener('pointerdown', handleKinPointerDown);
+    shell.removeEventListener('pointerup', handleKinPointerUp);
+    shell.removeEventListener('pointercancel', handleKinPointerUp);
+    shell.removeEventListener('pointerdown', handleShellPointerDown);
+    shell.removeEventListener('pointerup', handleShellPointerUp);
     refs.currentLink?.removeEventListener('click', handleCurrentClick);
+    window.clearTimeout(holdTimer);
+    clearRegionPreview();
     window.removeEventListener('scroll', onScroll);
     window.removeEventListener('resize', onResize);
     window.removeEventListener('orientationchange', onResize);
@@ -1042,6 +1218,10 @@ function describeAvailability(activeIndex, count) {
   const availability = ['current'];
   if (activeIndex > 0) availability.unshift('prev', 'top');
   if (activeIndex < count - 1) availability.push('next', 'bottom');
+  const root = document.documentElement?.dataset || {};
+  if (root.spwActiveRegionSimilar || root.spwRegionSimilar) availability.push('similar');
+  if (root.spwActiveRegionContrast || root.spwRegionContrast) availability.push('contrast');
+  if (root.spwActiveRegionResonate || root.spwRegionResonate) availability.push('resonate');
   return availability;
 }
 

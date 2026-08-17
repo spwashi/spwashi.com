@@ -35,7 +35,7 @@ html_contract: .{
 }[reg=facet]
 
 runtime_contract: .{
- page_region_rail = `Builds a desktop region index from main region semantics and now exposes role/feature/component summaries.`
+ page_region_rail = `Builds a desktop region index from main region semantics and now exposes role/feature/component summaries, seat sigils, and similar/contrast/resonate marks relative to the active region.`
  contextual_ui = `Reads route-discovery and data-spw-related-routes to add nearby routes in the header.`
  section_handle = `Keeps narrow/mobile section awareness independent from the desktop rail, publishes page-section state, and announces explicit control travel without making passive scroll noisy.`
  region_menu = `Allows local region inspection from sigils/operators without requiring the user to know CSS or JS internals.`

@@ -76,8 +76,21 @@ expression = script[patterns]{point.vector.container.field.locomotion}<ascent>
     physical_reality = "A 4D spacetime trajectory: time-budgeted state transitions, navigation locomotion momentum, and replayable browser session outcomes."
     runtime_projection = "Spell serialization, checkpoint restoration, media cauldron harvesting, and multi-year slice co-creation ('Painting Over Years')."
     replayable_rule = "The value of a 4D spell is its reproducible effect on the browser state, not decorative accumulation."
+    region_kin = `similar / contrast / resonate jumps are 4D moves between 2D seats. region-kin.js classifies; the section-handle and page-region-rail travel.`
   }[reg=facet]
-}
+}[reg=facet]
+
+^"region_kin"{
+  claim = `A reader can leave the current region for one that is similar, contrasting, or resonant. The moves are Spw operators, not nicknames.`
+  d0 = `id is the handle the jump targets.`
+  d1 = `~ potential = similar (hold the path). & subject = contrast (compare complements). # vibration = resonate (shared frame/subject). ? stays wonder/probe — it asks, it does not jump.`
+  d2 = `seat complements: hook↔read, hub↔path, cluster↔wide. Labels expand/contract by width (~ / ~similar / region[kin]{similar}<seat>) — Pretext brace-fit without a live engine.`
+  d3 = `resonate when wonder overlaps, operators match, or expression subjects match (workbench-parsed stems from manifest:expressions).`
+  d4 = `tap travels, hold previews, swipe cycles ~ → & → #. The jump is locomotion.`
+  writes = `html[data-spw-active-region-similar|contrast|resonate]; [data-spw-region-relation]; hold writes [data-spw-region-preview].`
+  runtime = ~"../../public/js/runtime/region-kin.js"
+  parser = `npm run manifest:expressions — workbench parser at build time. region-kin reads stems; it does not ship the parser.`
+}[reg=facet]
 
 # ==============================================================================
 # GENERALIZATION RULES ACROSS ORDERS

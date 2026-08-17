@@ -5,7 +5,8 @@
  * until now every one was inert: valid Spw that no runtime had ever read as
  * anything but a string. scripts/build-expression-manifest.mjs parses them with
  * the workbench parser at build time, so this module receives structure without
- * shipping a parser or doing any parsing itself.
+ * shipping a parser or doing any parsing itself. region-kin.js reads the same
+ * subject stems for #resonate jumps; it does not remount this module.
  *
  * The consequence is inductance, which @electrostatic_affordances already
  * names: "Cluster + :has([data-spw-operator=X]). Kin of the same terminal share

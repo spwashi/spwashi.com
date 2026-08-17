@@ -82,6 +82,19 @@
     font-weight: 600;
   }
 
+  :where(.spw-page-region-rail__link[data-spw-region-relation~="similar"]) {
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--op-ref-color, #2b6cb0) 28%, transparent);
+  }
+
+  :where(.spw-page-region-rail__link[data-spw-region-relation~="contrast"]) {
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--op-object-color, #a67c00) 34%, transparent);
+  }
+
+  :where(.spw-page-region-rail__link[data-spw-region-relation~="resonate"]) {
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--op-frame-color, #178282) 36%, transparent);
+    --spw-resonance: calc(var(--attention-field-radius, 0.4) * 0.85);
+  }
+
   :where(.spw-page-region-rail__link[data-spw-affordance="tune"]) {
     border-inline-start: 2px solid color-mix(in srgb, var(--op-action-color, #006b6b) 44%, transparent);
   }

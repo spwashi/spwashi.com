@@ -68,6 +68,7 @@ fixity = "stable"
     visual: "relational highlights, connection indicators, pair grouping"
     interaction: "jump to related element, see related in context"
     example: "reference (~) highlights perspective (@), question (?) reveals action (!)"
+    region_kin = `Same axis at region scale: similar = same seat, contrast = complementary seat/operator, resonate = shared wonder. See dimensional-ascent#region_kin.`
   }
 
   scale_dimension: {
