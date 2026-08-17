@@ -146,3 +146,12 @@
 :where(.pretext-flow-scaffold > span) {
   white-space: nowrap;
 }
+
+:where(.pretext-line-text .pretext-expr-token) {
+  font: inherit;
+}
+
+:where(.pretext-line-text .pretext-expr-token[data-spw-expr-token="operator"],
+  .pretext-line-text .pretext-expr-token[data-spw-expr-token="boundary"]) {
+  color: color-mix(in srgb, var(--spw-operator-color, var(--op-frame-color, currentColor)) 82%, currentColor);
+}

@@ -1,9 +1,9 @@
 <spw-page
     title="Spwashi • Pretext Field Lab"
-    description="Measure text once and project it at multiple widths without DOM reflow."
+    description="Prepare text once, compare wrap at phone and poster widths, and keep sitewide copy analysis offline."
     canonical="https://spwashi.com/topics/software/pretext/"
     og_title="Spwashi • Pretext Field Lab"
-    og_description="Measure text once and project it at multiple widths without DOM reflow."
+    og_description="Prepare text once, compare wrap at phone and poster widths, and keep sitewide copy analysis offline."
     og_image="https://spwashi.com/public/images/assets/illustrations/pretext-physics.png"
     og_image_alt="Glowing monospace characters in symmetrical, fanned-out patterns on a dark background."
     keywords="pretext, field, lab, tasteful, flow, magic, measuring, text, projecting, multiple, widths, dom"
@@ -51,29 +51,31 @@
                         <button class="frame-sigil" type="button" data-mode-group="pretext-lens" data-set-mode="surface" aria-pressed="false">&gt;surface</button>
                     </div>
                 </div>
-                <p class="spec-kicker">External Probe / Text Layout Engine</p>
+                <p class="spec-kicker">Prepare once · layout at any width</p>
                 <h1 id="pretext-title">Pretext Field Lab</h1>
-                <p class="frame-note">This state block is a readable control surface: the sigil shifts the frame's interpretive stance, the braces shift containment, and <code>mode</code> rotates the same lab between orientation, API, and rendered surface.</p>
+                <p class="frame-note">Pretext measures multiline text without putting it in the DOM. The toys below show the three useful facts: a UI hook's wrap, a bubble's height, and mixed-script line breaks.</p>
                 <div class="mode-panels">
                     <section class="mode-panel" data-mode-group="pretext-lens" data-mode-panel="orientation" data-spw-role="orientation">
                         <figure class="frame-panel">
-                            <img src="/public/images/assets/illustrations/pretext-physics.png" alt="Dynamic text physics visualization." loading="lazy" style="border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.4); margin-bottom: 1.5rem;">
+                            <img src="/public/images/assets/illustrations/pretext-physics.png" alt="The same prepared text projected into several measured line fields." loading="lazy" style="border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.4); margin-bottom: 1.5rem;">
                         </figure>
-                        <p>This is a small observatory for Pretext.js: edit one text sample, project it at several widths, and watch line breaks update without DOM measurement APIs.</p>
+                        <p>One prepared handle. Phone, tablet, and poster layouts. Wrap is the line-count jump between the narrow and wide ends. Use that number for packing and HUD alignment; do not remount the engine sitewide.</p>
                     </section>
                     <section class="mode-panel" data-mode-group="pretext-lens" data-mode-panel="api" data-spw-role="schema" hidden>
-                        <pre><code>import { prepare, layout } from '@chenglou/pretext'
+                        <pre><code>import { prepareWithSegments, layoutWithLines } from '@chenglou/pretext'
 
-const prepared = prepare(
+const prepared = prepareWithSegments(
   'Hello, pretext.js — no reflow needed.',
   '16px system-ui'
 )
 
-const { height, lineCount } = layout(prepared, 400, 24)
+const phone = layoutWithLines(prepared, 288, 27)
+const desktop = layoutWithLines(prepared, 1072, 27)
+// wrap = |phone.lineCount - desktop.lineCount|
 </code></pre>
                     </section>
                     <section class="mode-panel" data-mode-group="pretext-lens" data-mode-panel="surface" data-spw-role="projection" hidden>
-                        <p>The lab below renders the lines returned by the library directly into visible surfaces. The useful idea is simple: prepare once, then reuse the handle as widths change.</p>
+                        <p>The observatory is the demo: prepare, layout at three widths, read wrap. The sandbox is the same handle at a dragged width.</p>
                     </section>
                 </div>
                 <div class="frame-operators" aria-label="Pretext routes">
@@ -109,20 +111,18 @@ const { height, lineCount } = layout(prepared, 400, 24)
                     <a class="frame-sigil" href="#pretext-observatory">?["line_break_observatory"]</a>
                     <h2>Line Break Observatory</h2>
                 </header>
-                <p class="inline-note">Edit the text, change the width, and watch the same prepared handle fan out across phone, tablet, and poster views.</p>
+                <p class="inline-note">Start with <strong>hook</strong> — the Software-page line from the phone screenshot. Stable = 0–1 line jump, responsive = 2–3, volatile = 4+.</p>
                 <div class="pretext-lab-grid">
                     <div class="frame-panel pretext-controls-panel" data-spw-role="control" data-spw-meaning="control surface" data-spw-kind="panel" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software_pretext__panel_1">
                         <label class="pretext-field">
                             <span>Probe text</span>
-                            <textarea id="pretext-input" class="pretext-textarea" rows="8">AGI 春天到了. بدأت الرحلة — layout without reflow.
-
-Files can stay legible while surfaces become more deliberate.
-Tabs, hard breaks, and mixed scripts should still feel native.</textarea>
+                            <textarea id="pretext-input" class="pretext-textarea" rows="4">A component is a small machine for arranging attention.</textarea>
                         </label>
                         <div class="pretext-preset-row" aria-label="Preset text probes">
+                            <button class="syntax-token" type="button" data-pretext-sample="hook">hook wrap</button>
+                            <button class="syntax-token" type="button" data-pretext-sample="bubble">bubble height</button>
                             <button class="syntax-token" type="button" data-pretext-sample="mixed">mixed scripts</button>
-                            <button class="syntax-token" type="button" data-pretext-sample="chat">chat bubble</button>
-                            <button class="syntax-token" type="button" data-pretext-sample="notes">notes</button>
+                            <button class="syntax-token" type="button" data-pretext-sample="expr">spw expr</button>
                         </div>
                         <div class="pretext-control-grid">
                             <label class="pretext-field">
@@ -160,14 +160,18 @@ Tabs, hard breaks, and mixed scripts should still feel native.</textarea>
                                 <span class="frame-card-sigil">widest wrap</span>
                                 <strong id="pretext-widest-width">0px</strong>
                             </div>
+                            <div class="pretext-metric" data-spw-kind="metric" data-spw-role="telemetry" data-spw-liminality="deep" data-spw-meaning="wrap class">
+                                <span class="frame-card-sigil">wrap</span>
+                                <strong id="pretext-wrap-state">awaiting</strong>
+                            </div>
                         </div>
                         <ul class="source-list">
-                            <li><span class="source-name">Prepare phase</span> runs when text or whitespace mode changes.</li>
-                            <li><span class="source-name">Layout phase</span> reruns when widths change.</li>
-                            <li><span class="source-name">Rendering</span> shows the actual lines returned by the library.</li>
+                            <li><span class="source-name">prepare</span> once, when the string or whitespace mode changes.</li>
+                            <li><span class="source-name">layout</span> again at each width — no extra DOM nodes.</li>
+                            <li><span class="source-name">wrap</span> is phone lines minus poster lines.</li>
                         </ul>
-                        <div class="pretext-runtime-sample" data-spw-flow="pretext" data-spw-pretext-live="true" data-spw-pretext-preset="caption-tight" data-spw-pretext-scaffold="true" data-text-kind="caption" data-text-wrap="responsive">
-                            Predict this caption before the media settles, then expose whether its wrap stays stable as the panel changes width.
+                        <div class="pretext-runtime-sample" data-spw-flow="pretext" data-spw-pretext-live="true" data-spw-pretext-preset="caption-tight" data-spw-pretext-scaffold="true" data-text-kind="caption" data-spw-semantic-expression="copy[hook]{wrap.align}">
+                            A component is a small machine for arranging attention.
                         </div>
                     </div>
 
@@ -176,11 +180,11 @@ Tabs, hard breaks, and mixed scripts should still feel native.</textarea>
                             <p class="vibe-widget-kicker">Interactive Ruler</p>
                             <h3 class="vibe-widget-title">Live Sandbox</h3>
                         </div>
-                        <p class="frame-note">Drag the handle or use the arrow keys to feel the 0ms reflow. Click any line to inspect its segments.</p>
+                        <p class="frame-note">Drag the handle or use the arrow keys to re-layout the same handle. Click any line to inspect its segments.</p>
 
                         <div class="pretext-sandbox-area">
                             <div class="pretext-sandbox" id="pretext-sandbox-container">
-                                <div class="pretext-sandbox-lines" id="pretext-sandbox-lines" data-spw-flow="pretext" data-spw-pretext-static="true" data-text-kind="prose" data-text-density="soft" data-text-mode="contact" data-text-wrap="volatile"></div>
+                                <div class="pretext-sandbox-lines" id="pretext-sandbox-lines" data-spw-flow="pretext" data-spw-pretext-static="true" data-text-kind="prose" data-text-density="soft" data-text-mode="contact"></div>
                                 <div class="pretext-sandbox-handle" id="pretext-sandbox-handle" role="slider" tabindex="0" aria-label="Resize sandbox" aria-orientation="horizontal" aria-controls="pretext-sandbox-lines" aria-valuemin="100" aria-valuenow="100" aria-valuemax="100" aria-valuetext="100 pixels" title="Drag to resize"></div>
                             </div>
                             <div class="pretext-sandbox-ruler" aria-hidden="true">
@@ -232,29 +236,24 @@ Tabs, hard breaks, and mixed scripts should still feel native.</textarea>
 
             <section class="site-frame" id="pretext-recipes" data-spw-role="reference" data-spw-meaning="use cases" data-spw-kind="frame" data-spw-context="analysis" data-spw-wonder="comparison constraint locality" data-spw-affordance="read" data-spw-liminality="entry" data-spw-category-family="register" data-spw-locality="medium" data-spw-consequence="memory" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-seed="page_topics_topics_software_pretext__pretext_recipes" data-spw-context-relevance="pretext field lab tasteful flow magic measuring text" data-spw-related-routes="/|/about/|/topics/software/|/play/|/blog/|/contact/|/settings/">
                 <header class="frame-heading">
-                    <a class="frame-sigil" href="#pretext-recipes">~"integration_recipes"</a>
-                    <h2>Why Explore It</h2>
+                    <a class="frame-sigil" href="#pretext-recipes">~"what_it_buys"</a>
+                    <h2>What it buys</h2>
                 </header>
-                <p class="inline-note">The demo is small, but the pattern applies to places where layout stability matters before text is on screen.</p>
+                <p class="inline-note">Three facts. The official playground is still the API catalog.</p>
                 <div class="frame-grid">
-                    <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software_pretext__panel_3">
-                        <h3>Chat and stream surfaces</h3>
-                        <p>Predict bubble heights before text lands so scrolling and anchoring feel intentional.</p>
+                    <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software_pretext__panel_3" data-spw-semantic-expression="copy[bubble]{height.reserve}">
+                        <h3>Height before paint</h3>
+                        <p>A chat bubble or HUD can reserve its box from <code>layout.height</code> instead of measuring a hidden node.</p>
                     </div>
-                    <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software_pretext__panel_4">
-                        <h3>Virtualized knowledge lists</h3>
-                        <p>Estimate paragraph heights without creating hidden DOM mirrors for every list item.</p>
+                    <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software_pretext__panel_6" data-spw-semantic-expression="copy[hook]{wrap.align}">
+                        <h3>Wrap class for packing</h3>
+                        <p>Phone vs desktop line counts tell alignment work whether a hook stays one line. <code>npm run audit:copy:align</code> and <code>npm run audit:copy:expr</code> list titles and expression hosts.</p>
                     </div>
-                    <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software_pretext__panel_5">
-                        <h3>Multilingual interfaces</h3>
-                        <p>Use the same API for Latin, CJK, Arabic, Hebrew, Korean, and mixed-script text.</p>
-                    </div>
-                    <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software_pretext__panel_6">
-                        <h3>Responsive probes</h3>
-                        <p>Prepare once, then ask what the same text would do at phone, tablet, or desktop widths.</p>
+                    <div class="frame-panel" data-spw-kind="panel" data-spw-role="reference" data-spw-context="analysis" data-spw-category-family="specimen" data-spw-promptability="ambient" data-spw-collectability="medium" data-spw-locality="medium" data-spw-consequence="memory" data-spw-seed="page_topics_topics_software_pretext__panel_5" data-spw-semantic-expression="copy[script]{prepare.once}">
+                        <h3>Mixed scripts, one handle</h3>
+                        <p>Latin, CJK, and Arabic share <code>prepareWithSegments</code>. Layout does not need a second code path.</p>
                     </div>
                 </div>
-                <p class="inline-note">This page keeps the demo close to the site's software thread. The official playground remains the best place for exhaustive API exploration.</p>
             </section>
         </article>
     </main>

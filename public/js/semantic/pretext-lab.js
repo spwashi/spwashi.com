@@ -1,19 +1,17 @@
 const SAMPLE_TEXTS = {
-    mixed: `AGI 春天到了. بدأت الرحلة — layout without reflow.
-
-Files can stay legible while surfaces become more deliberate.
-Tabs, hard breaks, and mixed scripts should still feel native.`,
-    chat: `Hey — can we predict this bubble height before the stream lands?
-
-Yes. Prepare once, then re-layout it at any width without DOM reflow.`,
-    notes: `# Local-first note
-
-The file remains readable.
-The surface becomes measurable.
-The layout learns to breathe.`
+    hook: `A component is a small machine for arranging attention.`,
+    bubble: `Can we know this bubble's height before it lands?`,
+    mixed: `AGI 春天到了. بدأت الرحلة — one handle, any width.`,
+    expr: `copy[hook]{wrap.align}`,
 };
 
 import { loadPretext } from '/public/js/semantic/pretext-utils.js';
+import { scanSpwExpression } from '/public/js/semantic/spw-expression-geometry.js';
+import {
+  classifyWrapVolatility,
+  publishMeasurement,
+  writePretextMeasurementDataset,
+} from '/public/js/semantic/pretext-measurement-bus.js';
 
 const DEMO_FONT = '16px system-ui';
 const SANDBOX_MIN_WIDTH = 100;
@@ -42,6 +40,8 @@ const initPretextLab = async () => {
     const handleState = document.querySelector('#pretext-handle-state');
     const modeState = document.querySelector('#pretext-mode-state');
     const widestWidth = document.querySelector('#pretext-widest-width');
+    const wrapState = document.querySelector('#pretext-wrap-state');
+    const liveHost = document.querySelector('[data-spw-pretext-live="true"]');
     const presetButtons = Array.from(document.querySelectorAll('[data-pretext-sample]'));
 
     const targets = {
@@ -102,6 +102,25 @@ const initPretextLab = async () => {
         inspectOverlay.hidden = false;
     };
 
+    const decorateLineText = (el, raw) => {
+        const geometry = scanSpwExpression(raw);
+        const hasSpw = (geometry.operators?.length || 0) + (geometry.forms?.length || 0) > 0;
+        if (!hasSpw) {
+            el.textContent = raw || ' ';
+            return;
+        }
+        el.replaceChildren();
+        for (const token of geometry.tokens || []) {
+            const span = document.createElement('span');
+            span.className = 'pretext-expr-token';
+            span.dataset.spwExprToken = token.type || 'text';
+            if (token.operator) span.dataset.spwOperator = token.operator;
+            if (token.form) span.dataset.spwForm = token.form;
+            span.textContent = token.value;
+            el.append(span);
+        }
+    };
+
     const renderLines = (container, lines, isInteractive = false) => {
         if (!container) return;
         container.replaceChildren();
@@ -130,7 +149,7 @@ const initPretextLab = async () => {
 
             const text = document.createElement('code');
             text.className = 'pretext-line-text';
-            text.textContent = line.text || ' ';
+            decorateLineText(text, line.text || ' ');
 
             const width = document.createElement('span');
             width.className = 'pretext-line-width';
@@ -216,29 +235,58 @@ const initPretextLab = async () => {
             const lineHeight = Number(lineHeightInput.value);
             const widths = surfaceWidths(baseWidth);
             let maxWidth = 0;
+            const lineCounts = {};
 
             Object.entries(widths).forEach(([name, width]) => {
                 const result = pretext.layoutWithLines(prepared, width, lineHeight);
                 const { meta, preview } = targets[name];
                 const longest = result.lines.reduce((current, line) => Math.max(current, line.width), 0);
                 maxWidth = Math.max(maxWidth, longest);
+                lineCounts[name] = result.lineCount ?? result.lines.length ?? 0;
 
                 if (meta) {
-                    meta.textContent = `${width}px wide · ${result.lineCount} lines · ${result.height}px tall`;
+                    meta.textContent = `${width}px wide · ${lineCounts[name]} lines · ${result.height}px tall`;
                 }
 
                 renderLines(preview, result.lines);
             });
 
+            const wrap = classifyWrapVolatility(lineCounts.poster || 0, lineCounts.phone || 0);
+            if (wrapState) wrapState.textContent = wrap;
             if (sandboxLines) {
+                sandboxLines.dataset.textWrap = wrap;
                 const sandboxWidth = sandboxLines.getBoundingClientRect().width || baseWidth;
                 setSandboxWidth(sandboxWidth, false);
                 const sandboxResult = pretext.layoutWithLines(prepared, sandboxWidth, lineHeight);
                 renderLines(sandboxLines, sandboxResult.lines, true);
             }
+            const probe = scanSpwExpression(input.value);
+            const expression = (probe.operators?.length || probe.forms?.length)
+                ? String(input.value).trim()
+                : '';
+            if (liveHost instanceof HTMLElement) {
+                writePretextMeasurementDataset(liveHost, {
+                    wrap,
+                    lineCount: lineCounts.phone,
+                    projectedLineCount: lineCounts.poster,
+                    measure: 'standard',
+                    source: 'pretext-lab',
+                });
+                if (expression) liveHost.dataset.spwSemanticExpression = expression;
+            }
+            publishMeasurement({
+                host: liveHost || sandboxLines,
+                wrap,
+                lineCount: lineCounts.phone,
+                projectedLineCount: lineCounts.poster,
+                widthPx: widths.phone,
+                compareWidth: widths.poster,
+                expression,
+                source: 'pretext-lab',
+            });
 
             widestWidth.textContent = `${Math.round(maxWidth)}px`;
-            setStatus('Prepared once. Layout recalculates instantly as widths change.');
+            setStatus(`Prepared once. Wrap is ${wrap} from phone ${lineCounts.phone}L vs poster ${lineCounts.poster}L.`);
         } catch (error) {
             handleState.textContent = 'error';
             const message = error instanceof Error ? error.message : 'Unknown Pretext.js error';
