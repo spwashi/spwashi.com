@@ -27,7 +27,8 @@ const DIMENSION_BY_ATTR = Object.freeze({
   'data-spw-accent-operator': 'semantic',
   'data-spw-image-lens-active': 'semantic',
   'data-spw-wonder': 'attention',
-  'data-spw-salience': 'attention',
+  'data-spw-field-salience': 'attention',
+  'data-spw-salience': 'spatial',
 });
 
 let initialized = false;

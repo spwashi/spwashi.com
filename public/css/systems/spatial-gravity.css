@@ -183,10 +183,11 @@
     pointer-events: none;
 }
 
-/* Salience as a resting emphasis, independent of density. */
-[data-spw-salience="focal"] { --spw-salience-weight: 1; }
-[data-spw-salience="ambient"] { --spw-salience-weight: 0.5; }
-[data-spw-salience="background"] { --spw-salience-weight: 0.25; opacity: 0.82; }
+/* Overlap rank on gravity hosts only. Field strength is data-spw-field-salience. */
+[data-spw-gravity][data-spw-salience="focal"] { --spw-salience-weight: 1; }
+[data-spw-gravity][data-spw-salience="primary"] { --spw-salience-weight: 0.75; }
+[data-spw-gravity][data-spw-salience="ambient"] { --spw-salience-weight: 0.5; }
+[data-spw-gravity][data-spw-salience="background"] { --spw-salience-weight: 0.25; opacity: 0.82; }
 
 /* ─── Gravity readout (resonance) ───────────────────────────────────────── */
 /*

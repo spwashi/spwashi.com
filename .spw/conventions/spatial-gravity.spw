@@ -57,7 +57,6 @@ fixity = "tending"
   room = `--spw-room-above|below|left|right (px). CSS can cap a popover with max-block-size: var(--spw-room-below) and skip JS fit math.`
   proximity = `--spw-proximity-top|bottom|left|right and --spw-edge-proximity (0..1); --spw-vertical-bias / --spw-horizontal-bias (-1..1).`
   readout = `[data-spw-gravity-readout] narrates edge, vertical, horizontal, extent, measure. Labs and inspect only.`
-  drift = `The file header in @runtime still says measure-band = narrow|comfortable|wide. resolveMeasureBand writes compact|balanced|wide|maximal. Trust the constants, not the comment.`
 }[reg=facet]
 
 ^"bands"{
@@ -72,7 +71,7 @@ fixity = "tending"
   seating = `data-spw-seating = flush-viewport | flush-host | inset. Chrome owns the frame. Rails sit flush to the host they annotate. Reading copy stays inset.`
   rest = `edge-gravity=none is the resting state. Most content should not glow an edge until it nears one.`
   salience = `On [data-spw-gravity] only: data-spw-salience = background | ambient | primary | focal. Pairwise overlap: the lower rank gets data-spw-yielded + data-spw-yield-reason. Visible yield, never a silent clip.`
-  collision = `Software contract cards still use data-spw-salience=near|ambient|strong as field strength. Do not put data-spw-gravity on those cards until they migrate to data-spw-field-salience or data-spw-module-salience.`
+  field = `Module field strength is data-spw-field-salience = near | ambient | strong. CSS overlap ranks are scoped to [data-spw-gravity].`
   viewing = `@viewing_reason is the lens (why this figure is being read). Orthogonal to overlap rank.`
 }[reg=facet]
 

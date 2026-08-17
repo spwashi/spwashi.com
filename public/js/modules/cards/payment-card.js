@@ -98,7 +98,7 @@ function buildUrl(method, amount = null) {
 function buildAmountChips(body) {
     const strip = document.createElement('div');
     strip.className = 'payment-card__amounts';
-    strip.setAttribute('data-spw-region', 'amounts');
+    strip.setAttribute('data-spw-slot', 'amounts');
     strip.setAttribute('data-spw-region-flow', 'cluster');
     strip.setAttribute('aria-label', 'Suggested amounts');
 
@@ -226,7 +226,7 @@ export function initPaymentCards(ctx, root) {
     root = document;
   }
     root.querySelectorAll('[data-payment-card]').forEach(card => {
-        const body = card.querySelector('[data-spw-region="body"]');
+        const body = card.querySelector('[data-spw-slot="body"]');
         if (!body) return;
 
         body.setAttribute('data-spw-region-flow', 'stack');

@@ -16,16 +16,21 @@
  *   <div data-spw-gravity="open">     also expose an opening direction
  *
  * Writes (data attributes, for variant selection + inspection):
- *   data-spw-edge-gravity   = top | bottom | left | right | none
- *   data-spw-vertical-gravity = rises | balanced | falls  (where content should grow)
+ *   data-spw-edge-gravity   = top | bottom | left | right | top-left | … | none
+ *   data-spw-edge-x / -y    = left|center|right / top|middle|bottom
+ *   data-spw-vertical-gravity = rises | balanced | falls
+ *   data-spw-horizontal-gravity = trails | balanced | leads
  *   data-spw-extent         = squat | contained | tall | overtall
- *   data-spw-measure-band   = narrow | comfortable | wide
- *   data-spw-space-variant  = <measure>-<extent>-<vertical>  (composite handle)
- *   data-spw-open-direction = up | down  (only when data-spw-gravity="open")
+ *   data-spw-measure-band   = compact | balanced | wide | maximal
+ *   data-spw-space-variant  = <measure>-<extent>-<vertical>
+ *   data-spw-open-direction / data-spw-open-anchor when data-spw-gravity="open"
+ *   data-spw-salience       = background | ambient | primary | focal
+ *     (overlap rank on gravity hosts only; field strength is data-spw-field-salience)
  *
  * Writes (custom properties, for smooth responsiveness):
- *   --spw-edge-proximity     0..1  (1 = touching the nearest edge)
- *   --spw-vertical-bias    -1..1  (<0 room above, >0 room below)
+ *   --spw-room-above|below|left|right  leftover px
+ *   --spw-proximity-top|bottom|left|right and --spw-edge-proximity  0..1
+ *   --spw-vertical-bias / --spw-horizontal-bias  -1..1
  *
  * Performance: one shared scroll/resize listener, rAF-throttled, with an
  * IntersectionObserver gate so only on-screen tracked elements are measured, a

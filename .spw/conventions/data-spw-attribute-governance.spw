@@ -56,19 +56,20 @@ region_menu: .{
 }[reg=facet]
 
 ^"salience_namespace"{
-  claim: `data-spw-salience names three unrelated concepts; gravity overlap ranks must not collide with module field or attention vocabulary.`
+  claim: `Overlap rank and field strength are different attributes. data-spw-salience is gravity overlap. data-spw-field-salience is module field strength.`
   families: .{
     gravity_overlap = .{
       scope = `[data-spw-gravity] opt-in hosts only`,
       values = #[`background`, `ambient`, `primary`, `focal`][reg=set],
       consumer = `runtime/spatial-gravity.js — pairwise yield + data-spw-salience-rank`,
-      convention = `@spatial_gravity boundary_overlap`
+      convention = `@spatial_gravity`
     }[reg=facet]
     module_field = .{
       scope = `semantic-contract-card and module semantics specimens`,
-      values = #[`near`, `ambient`, `strong`, …][reg=set],
+      attr = `data-spw-field-salience`,
+      values = #[`near`, `ambient`, `strong`][reg=set],
       consumer = `authored HTML + concept-salience attention mapping`,
-      rename_target = `data-spw-field-salience or data-spw-module-salience when rename window opens`
+      landed = `2026-08-17 — software contract cards and the specimen snippet`
     }[reg=facet]
     viewing_reason = .{
       scope = `figure/card audience facets — not salience`,
@@ -76,7 +77,7 @@ region_menu: .{
       convention = `@viewing_reason`
     }[reg=facet]
   }[reg=facet]
-  rule: `Never opt a card into [data-spw-gravity] while using module-field salience tokens. Agents grep salience against the owning family before editing.`
+  rule: `Never put data-spw-gravity on a field-salience card. CSS overlap ranks must stay scoped to [data-spw-gravity].`
 }
 
 ^"packing_field_lifecycle_prime"{
@@ -96,7 +97,7 @@ validation: #[
   `Click, keyboard, saved spell, and explicit collection paths own persistent ground/collect state.`,
   `Component semantic inference writes data-spw-*-resolved and preserves authored base attributes.`,
   `Local region state should be readable through lane attributes before global ornament effects are added.`,
-  `Gravity salience ranks apply only on data-spw-gravity hosts; module-field and viewing-reason attrs stay separate per salience_namespace.`,
+  `Gravity overlap ranks apply only on data-spw-gravity hosts; field strength is data-spw-field-salience; viewing-reason stays off both.`,
   `Pack-layout and pack-fill mirrors must not be required for correct packing layout without JS.`,
   `New packing/field attrs map to existing families or are rejected (harmony claim component-harmony-005).`
 ][reg=set]

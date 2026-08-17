@@ -177,6 +177,7 @@
   --spw-pack-gap-active: var(--pack-tier-roomy-gap, var(--component-gap-loose, 1.2rem));
 }
 
+/* Frame occupancy from region-profiler. Not data-spw-pack-fill (card-local). */
 :where([data-spw-pack-occupancy="sparse"]) {
   --spw-pack-tier: compact;
   --spw-pack-occupancy-weight: 0.22;

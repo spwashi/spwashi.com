@@ -52,7 +52,7 @@ fixity = "tending"
 ^"authored_vs_runtime"{
   authored = `data-spw-region / -role / -purpose on the section. These are the contract.`
   drift = `Many routes still use one-off region ids (hero, memory, allocation, types, safety). Those are local labels. They do not light @css tropes. Graduate a repeat offender into the six seats; do not grow a seventh because one page needed a nickname.`
-  pack_collision = `data-spw-region=body on payment/settings strips collides with pack-region=body. Page seats stay on .site-frame. Slot names stay on pack-region or data-spw-slot.`
+  pack_collision = `Page seats stay on .site-frame. Slot names stay on pack-region or data-spw-slot. Payment bodies use data-spw-slot=body — not data-spw-region=body.`
   profiled = `@profiler writes data-spw-harmony, data-spw-tempo, data-spw-density, data-spw-pack-occupancy, data-spw-region-genome, and html-level diversity/tempo fields. Receipts, not a second essay.`
   selected = `REGION_SELECTORS in @selectors include .site-frame and kind/role hosts. Profiler may annotate a frame that never authored data-spw-region. That is a receipt, not a seat.`
   occupancy = `data-spw-pack-occupancy on a frame ≠ data-spw-pack-fill on a pack-local card.`

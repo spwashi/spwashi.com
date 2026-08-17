@@ -129,6 +129,9 @@ fixity = "stable"
     `compare`
     `build`
   ][reg=set]
+  field_salience = #[
+    `data-spw-field-salience`
+  ][reg=set]
   structured_route_values = #[
     `data-spw-region-purpose`
     `data-spw-pack`
@@ -157,7 +160,8 @@ fixity = "stable"
   packing_vs_gravity = `pack-* = inner container packing; gravity-* = outer placement (@component_packing).`
   register_vs_lens = `register = expressive weight; lens = content filter; form = spatial grammar (@expressive_registers).`
   passport_bridge = `queryable_component_contract is the public minimum; component_passport extends it for promotion — one ladder, two rungs.`
-  rename_when = #[`module-field salience → field-salience or module-salience`, `stop writing content-density`][reg=set]
+  rename_when = #[`stop writing content-density`][reg=set]
+  rename_landed = `module-field salience is data-spw-field-salience; gravity overlap keeps data-spw-salience`
   validation = `rg for new data-spw-* in packing/field patches; map to an existing family or reject (claim component-harmony-005).`
   dimensional_room = `Operational nouns (stems, cost_class, mount_when, guild ids) stay fixed until align. Lexicon nouns/verbs (ecology, cognition, prairie) reproject via @metaphor_dimensional_lexicon — change the story, not the coordinate, unless a new dimension is real.`
   performance_naming = `Performance seams use technical verbs + cost_class ids; do not invent parallel "drag/debt/load" stems without mapping to cost_class.`
