@@ -45,6 +45,15 @@
       gap: clamp(1rem, 2vw, 1.4rem);
     }
 
+    & [data-spw-cluster] {
+      min-inline-size: 0;
+    }
+
+    & [data-spw-cluster] + [data-spw-cluster] {
+      padding-block-start: clamp(0.9rem, 1.8vw, 1.3rem);
+      border-block-start: 1px solid color-mix(in srgb, var(--services-line-strong) 62%, var(--services-line));
+    }
+
     & article > .spw-frame {
       overflow: clip;
       border-color: var(--services-line);
@@ -130,6 +139,98 @@
   }
 }
 
+/* Studio-house brochure: the threshold remains a wide cover, while the
+   material below packs into offer, terms, proof, and support spreads. */
+@media (min-width: 61.25rem) {
+  @layer surface {
+    :where(body[data-spw-surface="services"]) {
+      & [data-spw-cluster] {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        align-items: start;
+        gap: clamp(1rem, 2vw, 1.6rem);
+      }
+
+      & [data-spw-cluster] > .spw-frame {
+        min-inline-size: 0;
+        margin-block-start: 0;
+      }
+
+      & [data-spw-cluster="orientation-overview"] > #services-frame,
+      & [data-spw-cluster="commercial-terms"] > #render-queue,
+      & [data-spw-cluster="public-proof-entry"] > #learning-demos {
+        grid-column: 1 / -1;
+      }
+
+      & [data-spw-cluster="orientation-overview"] > #services-tuning,
+      & [data-spw-cluster="commercial-terms"] > :is(#pricing, #cadence),
+      & [data-spw-cluster="public-proof-entry"] > #services-reentry {
+        grid-column: span 5;
+      }
+
+      & [data-spw-cluster="orientation-overview"] > #b2b-share,
+      & [data-spw-cluster="commercial-terms"] > :is(#configure, #custom-quote),
+      & [data-spw-cluster="public-proof-entry"] > #conversion-paths {
+        grid-column: span 7;
+      }
+
+      & [data-spw-cluster="service-offerings"] > #three-paths {
+        grid-column: span 7;
+      }
+
+      & [data-spw-cluster="service-offerings"] > #service-proof {
+        grid-column: span 5;
+      }
+
+      & [data-spw-cluster="portable-support"] > .spw-frame {
+        grid-column: span 4;
+      }
+
+      & #services-frame > .frame-body {
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        align-items: start;
+        inline-size: 100%;
+        max-inline-size: none;
+        column-gap: clamp(1.1rem, 2.6vw, 2rem);
+      }
+
+      & #services-frame > .frame-body > #services-hook,
+      & #services-frame > .frame-body > :is(.frame-operators, .page-index),
+      & #services-frame > .frame-body > figure + p {
+        grid-column: 1 / -1;
+      }
+
+      & #services-frame > .frame-body > :is(
+        h1,
+        #services-description,
+        [data-spw-copy-depth="entry"],
+        [data-spw-copy-depth="normal"],
+        .spw-metric-grid
+      ) {
+        grid-column: 1 / 6;
+      }
+
+      & #services-frame > .frame-body > .image-study {
+        grid-column: 6 / -1;
+        grid-row: 2 / span 5;
+        margin-block: 0;
+      }
+
+      & #services-frame > .frame-body > figure + p + p,
+      & #services-frame > .frame-body > .frame-list + p {
+        grid-column: 1 / 6;
+        max-inline-size: none;
+      }
+
+      & #services-frame > .frame-body > .frame-list,
+      & #services-frame > .frame-body > .frame-list + p + p {
+        grid-column: 6 / -1;
+        max-inline-size: none;
+      }
+    }
+  }
+}
+
 @keyframes services-resolve-pulse {
   from { opacity: 0.85; }
   to { opacity: 1; }
@@ -170,14 +271,36 @@
         max-width: 100%;
       }
 
+      & > .frame-topline {
+        align-items: stretch;
+      }
+
+      & > .frame-topline > .spec-strip {
+        flex: 0 1 auto;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        inline-size: 100%;
+        min-inline-size: 0;
+      }
+
       & .spec-strip {
         gap: 0.34rem 0.42rem;
       }
 
       & .spec-pill {
+        min-inline-size: 0;
+        max-inline-size: 100%;
         min-height: 1.72rem;
         padding: 0.16rem 0.5rem;
         font-size: 0.74rem;
+        white-space: normal;
+        overflow-wrap: anywhere;
+      }
+
+      & #services-hook > p {
+        min-inline-size: 0;
+        max-inline-size: 100%;
+        overflow-wrap: anywhere;
       }
     }
 

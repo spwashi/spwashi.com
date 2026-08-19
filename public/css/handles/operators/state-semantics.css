@@ -320,7 +320,7 @@ html[data-spw-show-semantic-metadata="on"] :where([data-spw-allocation]:is(:hove
   /* Inside a frame topline: occupy a full second row so chips don't steal width. */
   .frame-topline > .mode-switch,
   .frame-heading > .mode-switch {
-    flex: 1 1 100%;
+    flex: 1 0 100%;
     width: 100%;
     margin-inline-start: 0;
   }
@@ -799,4 +799,3 @@ body:has([data-spw-gesture="sustained"][data-spw-form="brace"]) [data-spw-cauldr
   border-style: dashed;
   border-color: color-mix(in srgb, var(--active-op-color, var(--teal)) 32%, var(--cauldron-chip-border));
 }
-

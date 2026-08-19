@@ -344,7 +344,7 @@
   .spw-shell-utility-row {
     flex-wrap: wrap;
     overflow-x: visible;
-    touch-action: pan-y;
+    touch-action: pan-y pinch-zoom;
     scroll-snap-type: none;
     scrollbar-width: auto;
     row-gap: 0.22rem;
@@ -1085,7 +1085,7 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
     flex-wrap: wrap;
     overflow-x: visible;
     gap: 0.18rem;
-    touch-action: pan-y;
+    touch-action: pan-y pinch-zoom;
     scroll-snap-type: none;
     scrollbar-width: auto;
     row-gap: 0.22rem;
@@ -1136,7 +1136,7 @@ html[data-spw-cauldron-candidate-visibility="subtle"] .spw-living-term[data-spw-
     flex-wrap: wrap;
     overflow-x: visible;
     gap: 0.18rem;
-    touch-action: pan-y;
+    touch-action: pan-y pinch-zoom;
     scroll-snap-type: none;
     scrollbar-width: auto;
     row-gap: 0.22rem;

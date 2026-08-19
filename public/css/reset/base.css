@@ -501,7 +501,7 @@ code {
 
 /* Common interactive regions should allow vertical scroll gestures */
 :where(main, article, section, aside, .spw-frame, .mode-panel, .plan-card) {
-  touch-action: pan-y;
+  touch-action: pan-y pinch-zoom;
 }
 
 /* Safer text wrapping for long symbolic strings */

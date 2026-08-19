@@ -31,7 +31,7 @@
   --spw-image-interaction-scale: 1;
   --spw-image-interaction-filter: none;
   position: relative;
-  touch-action: pan-y;
+  touch-action: pan-y pinch-zoom;
   border: 1px solid var(--spw-image-frame-line);
   border-radius: var(--component-radius-tight, 8px);
   background:

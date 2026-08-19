@@ -178,10 +178,63 @@ body[data-spw-surface="about"] {
   margin-top: clamp(0.1rem, 0.5vw, 0.35rem);
 }
 
-/* At the newspaper measure the hero topline is tighter; let the spec strip
-   claim enough row to keep pills at two-per-line instead of a tall tower. */
-[data-spw-surface="about"] .frame-topline > .spec-strip {
-  flex: 2 1 26rem;
+/* The shell owns the outer gutter. At broadsheet width, about owns the
+   internal topology: a wide identity band, a register matrix, then two
+   parallel operating columns. This keeps the memo-like route distinct while
+   allowing the hero's existing wide composition to open honestly. */
+@media (min-width: 61.25rem) {
+  [data-spw-surface="about"] main {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    align-items: start;
+    column-gap: clamp(1rem, 2vw, 1.6rem);
+    row-gap: clamp(1.25rem, 2.4vw, 1.8rem);
+  }
+
+  [data-spw-surface="about"] main > [data-spw-cluster] {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: minmax(18rem, 0.8fr) minmax(0, 1.2fr);
+    align-items: start;
+    gap: clamp(1rem, 2vw, 1.6rem);
+    min-inline-size: 0;
+    margin-block-start: 0;
+  }
+
+  [data-spw-surface="about"] main > [data-spw-cluster] + [data-spw-cluster] {
+    padding-block-start: clamp(0.9rem, 1.8vw, 1.3rem);
+    border-block-start: 1px solid color-mix(in srgb, var(--about-line-accent) 72%, var(--about-line));
+  }
+
+  [data-spw-surface="about"] [data-spw-cluster] > .spw-frame {
+    min-inline-size: 0;
+    inline-size: 100%;
+    max-inline-size: none;
+    margin-block-start: 0;
+  }
+
+  [data-spw-surface="about"] [data-spw-cluster="kernel-identity"] > #about-frame {
+    grid-column: 1 / -1;
+  }
+
+  [data-spw-surface="about"] main > [data-spw-cluster="systems-architecture"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  [data-spw-surface="about"] main > [data-spw-cluster="creative-domains"] {
+    grid-column: 1 / 7;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  [data-spw-surface="about"] main > [data-spw-cluster="kernel-mechanics"] {
+    grid-column: 7 / -1;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* At the newspaper measure the hero topline is tighter; let the spec strip
+     claim enough row to keep pills at two-per-line instead of a tall tower. */
+  [data-spw-surface="about"] .frame-topline > .spec-strip {
+    flex: 2 1 26rem;
+  }
 }
 
 /* ==========================================================================
@@ -341,7 +394,8 @@ body[data-spw-surface="about"] {
 @supports (container-type: inline-size) {
   @container (min-width: 860px) {
     [data-spw-surface="about"] #about-frame {
-      grid-template-columns: minmax(18rem, 0.78fr) minmax(26rem, 1.22fr);
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       column-gap: clamp(2rem, 5vw, 4.25rem);
       row-gap: clamp(0.75rem, 1.4vw, 1rem);
       align-items: start;
@@ -352,20 +406,65 @@ body[data-spw-surface="about"] {
       margin-bottom: clamp(0.35rem, 1vw, 0.7rem);
     }
 
-    [data-spw-surface="about"] #about-frame > [data-spw-textual-role="kicker"],
-    [data-spw-surface="about"] #about-frame > #about-title,
-    [data-spw-surface="about"] #about-frame > [data-spw-textual-role="lede"] {
+    [data-spw-surface="about"] #about-frame > .frame-body {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: minmax(18rem, 0.78fr) minmax(26rem, 1.22fr);
+      grid-auto-flow: dense;
+      inline-size: 100%;
+      max-inline-size: none;
+      column-gap: clamp(2rem, 5vw, 4.25rem);
+      row-gap: clamp(0.75rem, 1.4vw, 1rem);
+      align-items: start;
+    }
+
+    [data-spw-surface="about"] #about-frame > .frame-body > #about-hook,
+    [data-spw-surface="about"] #about-frame > .frame-body > .about-story-map,
+    [data-spw-surface="about"] #about-frame > .frame-body > #about-origin-question,
+    [data-spw-surface="about"] #about-frame > .frame-body > .image-study {
+      grid-column: 1 / -1;
+    }
+
+    [data-spw-surface="about"] #about-frame > .frame-body > :is(.about-story-map, #about-origin-question) {
+      inline-size: 100%;
+      max-inline-size: none;
+    }
+
+    [data-spw-surface="about"] #about-frame > .frame-body > [data-spw-textual-role="kicker"],
+    [data-spw-surface="about"] #about-frame > .frame-body > #about-title,
+    [data-spw-surface="about"] #about-frame > .frame-body > [data-spw-textual-role="lede"] {
       grid-column: 1;
     }
 
-    [data-spw-surface="about"] #about-frame > p:not([data-spw-textual-role="kicker"]):not([data-spw-textual-role="lede"]) {
+    [data-spw-surface="about"] #about-frame > .frame-body > p:not([data-spw-textual-role="kicker"]):not([data-spw-textual-role="lede"]):has(~ .about-story-map) {
       grid-column: 2;
       max-inline-size: var(--measure-panel);
       margin-block: 0;
     }
 
-    [data-spw-surface="about"] #about-frame > p:not([data-spw-textual-role="kicker"]):not([data-spw-textual-role="lede"]) + p:not([data-spw-textual-role="kicker"]):not([data-spw-textual-role="lede"]) {
-      margin-top: 0.8rem;
+    [data-spw-surface="about"] #about-frame > .frame-body > .about-story-map ~ p:not(#about-origin-question) {
+      grid-column: auto;
+      max-inline-size: var(--measure-panel);
+      margin-block: 0;
+    }
+
+    [data-spw-surface="about"] #about-frame > .image-study {
+      grid-column: 2;
+      grid-row: 3;
+      inline-size: min(100%, 34rem);
+      justify-self: end;
+      margin: 0;
+    }
+
+    [data-spw-surface="about"] #about-frame > .frame-actions {
+      grid-column: 1;
+      grid-row: 3;
+      align-self: start;
+      margin-block-start: 0;
+    }
+
+    [data-spw-surface="about"] #about-frame > .spw-brace-actions {
+      grid-column: 1 / -1;
     }
   }
 }
@@ -761,6 +860,42 @@ body[data-spw-surface="about"] {
   [data-spw-surface="about"] #about-title {
     max-width: none;
     font-size: 2rem;
+  }
+
+  [data-spw-surface="about"] #about-frame > .frame-topline {
+    align-items: stretch;
+  }
+
+  [data-spw-surface="about"] #about-frame .mode-switch {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    inline-size: 100%;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+  }
+
+  [data-spw-surface="about"] #about-frame .mode-switch::before {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  [data-spw-surface="about"] #about-frame .mode-switch > .frame-sigil {
+    min-inline-size: 0;
+    max-inline-size: 100%;
+  }
+
+  [data-spw-surface="about"] #about-frame > .frame-topline > .spec-strip {
+    flex: 0 1 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 5.5rem), 1fr));
+    inline-size: 100%;
+    min-inline-size: 0;
+  }
+
+  [data-spw-surface="about"] #about-frame .spec-pill {
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 
   [data-spw-surface="about"] .frame-grid {

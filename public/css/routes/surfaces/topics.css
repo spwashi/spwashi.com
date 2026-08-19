@@ -1247,8 +1247,9 @@ body[data-spw-surface="software"] .spw-dimensional-navigator {
   container: spw-dimensional-nav / inline-size;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
+  align-content: start;
   justify-items: stretch;
-  gap: clamp(0.85rem, 2cqi, 1.4rem);
+  gap: var(--spw-space-fluid, clamp(0.75rem, 2cqi, 1.25rem));
   min-inline-size: 0;
   background:
     linear-gradient(135deg, color-mix(in srgb, var(--op-frame-color) 8%, transparent), transparent 42%),
@@ -1257,9 +1258,9 @@ body[data-spw-surface="software"] .spw-dimensional-navigator {
 
 body[data-spw-surface="software"] .spw-dimensional-navigator__header {
   display: grid;
-  gap: 0.35rem;
+  gap: clamp(0.3rem, 1cqi, 0.5rem);
   min-inline-size: 0;
-  max-inline-size: 70ch;
+  max-inline-size: min(100%, var(--spw-real-estate-inline, 70ch));
 }
 
 body[data-spw-surface="software"] .spw-dimensional-navigator__header > * {
@@ -1287,14 +1288,16 @@ body[data-spw-surface="software"] .spw-dimensional-navigator__track {
   grid-auto-flow: column;
   grid-auto-columns: clamp(13rem, 78cqi, 17rem);
   grid-auto-rows: 1fr;
-  gap: var(--space-sm, 0.75rem);
+  align-items: stretch;
+  gap: var(--spw-card-rhythm, clamp(0.5rem, 1.8cqi, 0.85rem));
   inline-size: 100%;
   max-inline-size: none;
   min-inline-size: 0;
   margin: 0;
-  padding: 0.2rem 0.15rem 0.75rem;
+  padding: 0.15rem 0.1rem var(--spw-space-fluid-sm, clamp(0.5rem, 1.5cqi, 0.85rem));
   overflow-x: auto;
   overscroll-behavior-inline: contain;
+  scroll-padding-inline: 0.1rem;
   scroll-snap-type: inline mandatory;
   scrollbar-gutter: stable;
   scrollbar-width: thin;
@@ -1326,14 +1329,19 @@ body[data-spw-surface="software"] .spw-dimensional-navigator__step:nth-child(5) 
 
 body[data-spw-surface="software"] .spw-dimensional-navigator__step > a {
   display: grid;
-  grid-template-rows: minmax(1.7rem, auto) minmax(1.5rem, auto) 1fr auto;
+  grid-template:
+    "order title" minmax(1.7rem, auto)
+    "body body" 1fr
+    "meta meta" auto
+    / auto minmax(0, 1fr);
+  align-content: start;
   align-items: start;
-  gap: 0.5rem;
+  gap: clamp(0.42rem, 1.4cqi, 0.65rem) clamp(0.5rem, 1.6cqi, 0.75rem);
   box-sizing: border-box;
-  min-block-size: 9.5rem;
+  min-block-size: clamp(8.75rem, 32cqi, 10rem);
   min-inline-size: 0;
   block-size: 100%;
-  padding: clamp(0.75rem, 2cqi, 1rem);
+  padding: var(--spw-card-pad, clamp(0.75rem, 2.5cqi, 1.2rem));
   border: 1px solid color-mix(in srgb, var(--spw-dimension-color) 34%, var(--line-quiet));
   border-radius: var(--component-radius-default, 0.65rem);
   background:
@@ -1356,6 +1364,8 @@ body[data-spw-surface="software"] .spw-dimensional-navigator__step > a:focus-vis
 }
 
 body[data-spw-surface="software"] .spw-dimensional-navigator__order {
+  grid-area: order;
+  align-self: baseline;
   color: var(--spw-dimension-color);
   font-size: clamp(1.15rem, 4cqi, 1.7rem);
   font-weight: 850;
@@ -1364,12 +1374,16 @@ body[data-spw-surface="software"] .spw-dimensional-navigator__order {
 }
 
 body[data-spw-surface="software"] .spw-dimensional-navigator__step strong {
+  grid-area: title;
+  align-self: baseline;
+  min-inline-size: 0;
   font-size: clamp(0.94rem, 2.4cqi, 1.08rem);
   line-height: 1.25;
   text-wrap: balance;
 }
 
 body[data-spw-surface="software"] .spw-dimensional-navigator__step p {
+  grid-area: body;
   min-inline-size: 0;
   margin: 0;
   color: var(--ink-secondary, var(--ink-soft));
@@ -1380,10 +1394,11 @@ body[data-spw-surface="software"] .spw-dimensional-navigator__step p {
 }
 
 body[data-spw-surface="software"] .spw-dimensional-navigator__meta {
-  display: flex;
+  grid-area: meta;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  justify-content: space-between;
-  gap: 0.45rem;
+  gap: 0.4rem 0.55rem;
   min-inline-size: 0;
   align-self: end;
 }
@@ -1403,7 +1418,7 @@ body[data-spw-surface="software"] .spw-dimensional-navigator__source {
 }
 
 body[data-spw-surface="software"] .spw-dimensional-navigator__edge {
-  flex: none;
+  justify-self: end;
   padding: 0.18rem 0.34rem;
   border: 1px solid color-mix(in srgb, var(--spw-dimension-color) 26%, transparent);
   border-radius: 999px;

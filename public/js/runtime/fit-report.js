@@ -244,6 +244,7 @@ export const SPW_MODULE_EXPORT = Object.freeze({
     'diagnostic:data-spw-fit-reason',
     'diagnostic:data-spw-fit-afforded',
     'diagnostic:data-spw-fit-needs',
+    'structural:data-spw-fit-demand',
   ],
   timingArc: 'idle-inspection',
   effectScope: 'local-dom',

@@ -333,7 +333,7 @@ html[data-spw-anatomy-ready="true"] :where(.spw-anatomy-anchor, [data-spw-anatom
   font-family: var(--site-mono-font, "JetBrains Mono", monospace);
   pointer-events: auto;
   transform: translateX(-50%);
-  touch-action: pan-y;
+  touch-action: pan-y pinch-zoom;
 }
 
 .spw-parallel-nav[hidden] {

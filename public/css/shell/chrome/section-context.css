@@ -515,7 +515,7 @@ html[data-spw-page-section-direction="back"] .spw-section-handle-shell {
   display: none;
 }
 
-@media (min-width: 36rem) {
+@media (min-width: 35rem) {
   .spw-section-handle-shell[data-spw-handle-shell-state="expanded"] .spw-region-kin-label[data-spw-kin-rung="compact"] {
     display: none;
   }
@@ -699,7 +699,7 @@ body:has(.spw-section-handle-shell[data-spw-handle-enhanced="true"]) > .spw-sect
     gap: 0.18rem;
     flex-wrap: wrap;
     overflow-x: visible;
-    touch-action: pan-y;
+    touch-action: pan-y pinch-zoom;
     scroll-snap-type: none;
     scrollbar-width: auto;
     row-gap: 0.22rem;

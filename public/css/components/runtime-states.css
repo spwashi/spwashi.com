@@ -1040,7 +1040,7 @@ html[data-spw-page-state="enhanced"] .spw-state-inspector__launch[data-spw-page-
    ========================================================================== */
 
 @supports (container-type: inline-size) {
-  @container (max-width: 36rem) {
+  @container (max-width: 35rem) {
     :where([data-spw-slot="header"], .frame-topline, .frame-heading) {
       gap: var(--spw-slot-gap-tight, 0.34rem 0.46rem);
     }

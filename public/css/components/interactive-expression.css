@@ -55,10 +55,10 @@
   position: fixed;
   z-index: 120;
   display: grid;
-  gap: 0.55rem;
+  gap: var(--spw-card-rhythm, clamp(0.5rem, 1.8cqi, 0.85rem));
   box-sizing: border-box;
   min-inline-size: 0;
-  padding: 0.75rem;
+  padding: var(--spw-card-pad, clamp(0.75rem, 2.5cqi, 1.2rem));
   border: 1px solid color-mix(in srgb, var(--active-op-color, #008080) 35%, var(--line, rgba(0, 0, 0, 0.18)));
   border-radius: var(--component-radius-loose, 8px);
   background: var(--surface-strong, rgba(255, 255, 255, 0.98));
@@ -103,7 +103,7 @@
 
 :where(.spw-expression-hud__dimensions) {
   display: grid;
-  gap: 0.25rem;
+  gap: clamp(0.25rem, 1cqi, 0.4rem);
   min-inline-size: 0;
   margin: 0;
   padding: 0;
@@ -137,12 +137,12 @@
 
 :where(.spw-expression-hud__dimensions a) {
   display: grid;
-  grid-template-columns: 2.4rem minmax(0, 1fr) auto;
+  grid-template-columns: minmax(2.4rem, auto) minmax(0, 1fr) auto;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.35rem 0.55rem;
   min-block-size: 2.75rem;
   min-inline-size: 0;
-  padding: 0.3rem 0.5rem;
+  padding: 0.38rem 0.55rem;
   border: 1px solid color-mix(in srgb, var(--spw-dimension-color) 24%, var(--line, rgba(0, 0, 0, 0.12)));
   border-radius: var(--component-radius-tight, 5px);
   background: color-mix(in srgb, var(--spw-dimension-color) 5%, var(--surface-soft, #f7f7f4));
@@ -174,6 +174,8 @@
 }
 
 :where(.spw-expression-hud__dimensions small) {
+  justify-self: end;
+  max-inline-size: 12ch;
   color: var(--ink-muted, rgba(0, 0, 0, 0.62));
   font-size: 0.64rem;
   text-align: end;
@@ -312,6 +314,8 @@
 
   :where(.spw-expression-hud__dimensions small) {
     grid-column: 2;
+    justify-self: start;
+    max-inline-size: none;
     text-align: start;
   }
 }

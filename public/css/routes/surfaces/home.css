@@ -262,6 +262,7 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
   }
 
   :where([data-spw-feature="home-kernel-entry"] .frame-topline) {
+    flex-wrap: nowrap;
     gap: 0.38rem 0.42rem;
     padding: 0.28rem 0 0.48rem;
   }
@@ -377,6 +378,7 @@ html[data-spw-hydration="ready"] [data-spw-feature="home-kernel-entry"] .frame-t
 
 :where([data-spw-feature="home-kernel-entry"] .home-hero-copy) {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   align-content: start;
   gap: var(--home-gap-lg);
   min-width: 0;
@@ -1393,6 +1395,18 @@ html:is([data-spw-palette-resonance="inquiry"], [data-spw-palette-resonance="mat
     column-gap: clamp(1rem, 2vw, 1.6rem);
     row-gap: clamp(var(--home-gap-lg), 2.2vw, var(--home-gap-xl));
     min-width: 0;
+  }
+
+  :where(body[data-spw-surface="home"][data-spw-layout="newspaper"] main.home-atlas-flow > [data-spw-cluster] > .spw-frame) {
+    inline-size: 100%;
+    max-inline-size: none;
+    margin-block-start: 0;
+  }
+
+  :where(body[data-spw-surface="home"][data-spw-layout="newspaper"] main.home-atlas-flow > [data-spw-cluster] + [data-spw-cluster]) {
+    margin-block-start: 0;
+    padding-block-start: clamp(0.9rem, 1.8vw, 1.3rem);
+    border-block-start: 1px solid color-mix(in srgb, var(--home-accent-line) 72%, transparent);
   }
 
   /* Inside a cluster, the masthead and full-bleed packs still span. */

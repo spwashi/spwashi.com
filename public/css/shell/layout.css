@@ -374,7 +374,7 @@ main {
   margin-inline: auto;
 
   /* Interaction */
-  touch-action: pan-y;
+  touch-action: pan-y pinch-zoom;
 
   /* Layering / containment */
   container: spw-shell / inline-size;
@@ -538,7 +538,7 @@ main > article {
   display: flex;
   flex-direction: column;
   gap: var(--page-section-gap);
-  touch-action: pan-y;
+  touch-action: pan-y pinch-zoom;
 }
 
 /* Gap handles section separation; prevent typography flow from double-spacing */

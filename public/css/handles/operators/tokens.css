@@ -785,7 +785,7 @@ html[data-spw-dimensional-breadcrumbs="on"] .spw-spell-path .spw-spell-meaning {
    badge cycling (topic-discovery.js), so a sideways drag isn't cancelled by
    the browser mid-swipe. */
 :where(.spec-strip, .frame-operators) {
-  touch-action: pan-y;
+  touch-action: pan-y pinch-zoom;
 }
 
 :where([data-spw-operator], .spw-chip, .frame-sigil, .frame-card-sigil) {
@@ -882,4 +882,3 @@ html[data-spw-dimensional-breadcrumbs="on"] .spw-spell-path .spw-spell-meaning {
     line-height: 1.38;
   }
 }
-

@@ -785,7 +785,7 @@
 }
 
 .spw-sample-dock {
-  touch-action: pan-y;
+  touch-action: pan-y pinch-zoom;
 }
 
 .spw-sample-dock-body {

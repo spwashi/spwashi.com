@@ -260,6 +260,10 @@
    ========================================================================== */
 
 :where(body[data-spw-surface="settings"] .settings-fieldset) {
+  box-sizing: border-box;
+  grid-template-columns: minmax(0, 1fr);
+  inline-size: 100%;
+  max-inline-size: 100%;
   border: 1px solid var(--settings-control-line-soft);
   background: var(--settings-control-bg);
   padding: var(--inset-component, 1.2rem);
@@ -336,6 +340,13 @@
 }
 
 :where(body[data-spw-surface="settings"] .settings-option-copy) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+
+:where(body[data-spw-surface="settings"] .settings-option-copy > *) {
   min-inline-size: 0;
   max-inline-size: 100%;
 }
@@ -403,7 +414,11 @@
 }
 
 :where(body[data-spw-surface="settings"] .settings-measure-preview) {
+  box-sizing: border-box;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-inline-size: 0;
+  max-inline-size: 100%;
   gap: var(--space-sm, 0.75rem);
   padding: var(--inset-component, 1rem 1.25rem);
   border: 1px solid var(--settings-control-line-soft);
@@ -413,11 +428,30 @@
 
 :where(body[data-spw-surface="settings"] .settings-measure-preview__width) {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: var(--space-sm, 0.75rem);
   font-family: var(--site-mono-font, 'JetBrains Mono', monospace);
   font-size: var(--text-size-sm, 0.85rem);
+}
+
+:where(body[data-spw-surface="settings"] .settings-measure-preview__width > span:first-child) {
+  grid-column: 1 / -1;
+}
+
+:where(body[data-spw-surface="settings"] .settings-measure-preview__width > input[type="range"]) {
+  inline-size: 100%;
+  min-inline-size: 0;
+}
+
+@media (min-width: 35rem) {
+  :where(body[data-spw-surface="settings"] .settings-measure-preview__width) {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  :where(body[data-spw-surface="settings"] .settings-measure-preview__width > span:first-child) {
+    grid-column: auto;
+  }
 }
 
 :where(body[data-spw-surface="settings"] .settings-measure-preview__sample) {
@@ -442,7 +476,15 @@
   margin: 0;
   padding-left: 1.1rem;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.55rem;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+
+:where(body[data-spw-surface="settings"] .settings-conversation-primitives > li) {
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
 }
 
 @media (max-width: 45rem) {

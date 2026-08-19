@@ -279,7 +279,7 @@
   scroll-snap-type: none;
   mask-image: none;
   -webkit-mask-image: none;
-  touch-action: pan-y;
+  touch-action: pan-y pinch-zoom;
   gap: 0.28rem 0.32rem;
   padding: 0.12rem 0.04rem 0.16rem;
 }
@@ -877,4 +877,3 @@
   font-size: 0.74rem;
   line-height: 1.5;
 }
-

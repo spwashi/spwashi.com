@@ -7,8 +7,6 @@ import {
   readPretextSignals,
 } from '/public/js/semantic/pretext-measurement-bus.js';
 
-const PADDING = 40;
-
 let initialized = false;
 let cleanupCurrent = null;
 
@@ -60,20 +58,35 @@ const measureFrame = async (frame, handleCache) => {
     const text = getFramePrimaryText(frame);
     if (!text) return null;
 
+    const frameStyle = getComputedStyle(frame);
     const frameWidth = frame.getBoundingClientRect().width;
-    const width = Math.max(40, frameWidth - PADDING);
+    const paddingInline = (Number.parseFloat(frameStyle.paddingLeft) || 0)
+        + (Number.parseFloat(frameStyle.paddingRight) || 0);
+    const width = Math.max(40, frameWidth - paddingInline);
+    const typography = readDocumentTypography();
 
     let entry = handleCache.get(frame);
-    if (!entry || entry.text !== text || entry.width !== width) {
+    if (
+        !entry
+        || entry.text !== text
+        || entry.width !== width
+        || entry.font !== typography.font
+        || entry.lineHeightPx !== typography.lineHeightPx
+    ) {
         try {
-            const typography = readDocumentTypography();
             const layout = await measureTextLayout({
                 text,
                 width,
                 font: typography.font,
                 lineHeightPx: typography.lineHeightPx,
             });
-            entry = { text, width, layout };
+            entry = {
+                text,
+                width,
+                font: typography.font,
+                lineHeightPx: typography.lineHeightPx,
+                layout,
+            };
             handleCache.set(frame, entry);
         } catch {
             return null;
@@ -174,6 +187,8 @@ export async function initFrameMetrics(ctx, root) {
     }
 
     document.addEventListener('spw:pretext-measurement', scheduleUpdate, { passive: true });
+    const bus = ctx?.bus || window.__SPW_SITE__?.bus;
+    const offSettings = bus?.on?.('settings:changed', scheduleUpdate) || null;
 
     scheduleUpdate();
 
@@ -191,6 +206,7 @@ export async function initFrameMetrics(ctx, root) {
         }
 
         document.removeEventListener('spw:pretext-measurement', scheduleUpdate);
+        offSettings?.();
         tracked.forEach(({ bar }) => bar.remove());
 
         cleanupCurrent = null;

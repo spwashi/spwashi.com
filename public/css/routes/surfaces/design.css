@@ -1052,7 +1052,7 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-page-seed="page_design_des
     0 12px 28px color-mix(in srgb, var(--op-action-color, #008080) 10%, transparent);
   color: var(--ink, currentColor);
   cursor: pointer;
-  touch-action: pan-y;
+  touch-action: pan-y pinch-zoom;
 }
 
 :where(body[data-spw-page-family="design"]) :where(.spw-interaction-demo:is(:hover, :focus-visible)) {

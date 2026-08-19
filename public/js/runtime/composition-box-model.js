@@ -424,6 +424,8 @@ export function initSpwCompositionBoxModel(ctx = {}) {
 
   const handleAttentionChange = () => queueRefresh();
   const handleResize = () => queueRefresh();
+  const bus = ctx.bus || globalThis.__SPW_SITE__?.bus;
+  const offSettings = bus?.on?.('settings:changed', queueRefresh) || null;
 
   document.addEventListener(PAGE_ATTENTION_EVENT, handleAttentionChange);
   window.addEventListener('resize', handleResize, { passive: true });
@@ -445,6 +447,7 @@ export function initSpwCompositionBoxModel(ctx = {}) {
   }
 
   const cleanup = () => {
+    offSettings?.();
     document.removeEventListener(PAGE_ATTENTION_EVENT, handleAttentionChange);
     window.removeEventListener('resize', handleResize);
     window.visualViewport?.removeEventListener?.('resize', handleResize);

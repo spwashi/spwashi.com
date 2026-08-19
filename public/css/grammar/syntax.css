@@ -296,7 +296,7 @@
 
   /* Interaction */
   scroll-margin-top: calc(var(--header-height, 4rem) + 1rem);
-  touch-action: pan-y;
+  touch-action: pan-y pinch-zoom;
   transition:
     background var(--grammar-duration-deliberate) var(--grammar-ease-mechanical),
     border-color var(--grammar-duration-base) var(--grammar-ease-mechanical),
@@ -904,13 +904,9 @@
       align-items: stretch;
     }
 
-    :where(
-      .frame-topline > .spec-strip,
-      .frame-topline > .mode-switch,
-      .frame-topline > .frame-operators,
-      .frame-topline > .spw-component-meta,
-      .frame-heading > .spw-component-meta
-    ) {
+    .frame-topline > :where(.spec-strip, .mode-switch, .frame-operators, .spw-component-meta),
+    .frame-heading > .spw-component-meta {
+      flex: 1 0 100%;
       width: 100%;
       margin-left: 0;
       margin-inline-start: 0;
@@ -952,6 +948,7 @@
   @container (max-width: 32rem) {
     :where(.frame-topline, .frame-heading) {
       flex-direction: column;
+      flex-wrap: nowrap;
       align-items: stretch;
     }
 
