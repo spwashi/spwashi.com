@@ -566,7 +566,7 @@
                     <div class="ref-card">
                         <span class="ref-card-sigil">CSSOM</span>
                         <h3>CSSOM + Cascade</h3>
-                        <p>Style resolution order: origin → cascade layers → specificity → source order. <code>getComputedStyle</code> returns resolved values (forces style flush). <code>@layer</code> adds an explicit origin tier. <code>@property</code> enables typed custom properties with registered syntax.</p>
+                        <p>Style resolution order: origin → cascade layers → specificity → source order. <code>getComputedStyle</code> returns resolved values (forces style flush). <code>@layer</code> adds an explicit origin tier — which rule wins, not which file is requested. Delivery is a separate schedule. <code>@property</code> enables typed custom properties with registered syntax.</p>
                         <ul class="ref-terms"><li>@layer</li><li>specificity</li><li>@property</li><li>:is() :where()</li><li>custom properties</li></ul>
                         <div class="ref-links">
                             <a href="https://developer.mozilla.org/en-US/docs/Web/API/CSS_Object_Model" data-pfx="mdn:" target="_blank" rel="noopener">CSSOM</a>
