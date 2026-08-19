@@ -3243,8 +3243,7 @@ html[data-spw-reduce-motion="on"] {
    --------------------------------------------------------------------------
    Always-on :root and @property defaults for sheets that may load after
    interactive (wonder, grain, cinematic, ornament). First paint keeps the
-   names so the hook is already complete; spend rules idle-load as opening
-   credits. Cascade stays tokens. Delivery is the only thing that moved.
+   names; spend rules idle-load. Cascade stays tokens. Delivery moved.
    ========================================================================== */
 
 /* from wonder.css */

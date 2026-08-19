@@ -270,6 +270,17 @@ body[data-spw-surface="plans"] {
   color: color-mix(in srgb, var(--plans-ink-soft) 92%, var(--plans-accent));
 }
 
+[data-spw-surface="plans"] #plans-surface > .frame-operators {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.55rem;
+  margin-block-start: 1.1rem;
+}
+
+[data-spw-surface="plans"] #plans-now .plan-card {
+  min-block-size: 11rem;
+}
+
 [data-spw-surface="plans"] #plans-index {
   background:
     linear-gradient(180deg, color-mix(in srgb, var(--plans-surface-matte) 96%, transparent), transparent),
