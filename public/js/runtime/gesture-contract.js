@@ -45,8 +45,18 @@ export const GESTURE_VOCABULARY = Object.freeze({
   }),
   rotate: Object.freeze({
     label: 'Rotate',
-    summary: 'Change the active lens or reading posture.',
-    inputs: 'mode chips, lens controls, scoped left/right lens changes',
+    summary: 'Open a mode seat and sit in a variant without leaving the room.',
+    inputs: '[ opens the option-set, ] sits, mode chips, digits while the seat is open',
+  }),
+  travel: Object.freeze({
+    label: 'Travel',
+    summary: 'Move to another frame while keeping direction bounded.',
+    inputs: '{ previous frame, } next frame',
+  }),
+  stage: Object.freeze({
+    label: 'Stage',
+    summary: 'Enter or leave a scene host in the current frame.',
+    inputs: '( enter, ) leave',
   }),
   project: Object.freeze({
     label: 'Project',

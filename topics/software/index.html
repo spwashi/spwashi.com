@@ -739,7 +739,7 @@
                 <header class="frame-topline" data-spw-slot="header">
                     <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
                     <a class="frame-sigil" href="#spw-syntax-surface" data-spw-operator="address">#&gt;spw_syntax_surface</a>
-                    <div class="mode-switch" role="group" aria-label="Syntax lens" data-spw-operator="mode">
+                    <div class="mode-switch" role="group" aria-label="Syntax lens" data-spw-operator="mode" data-spw-semantic-expression="syntax[mode]{source.syntax.surface.text-editing}">
                         <button class="frame-sigil" type="button" data-mode-group="syntax-lens" data-set-mode="source" aria-pressed="true" data-spw-operator="select">.source</button>
                         <button class="frame-sigil" type="button" data-mode-group="syntax-lens" data-set-mode="syntax" aria-pressed="false" data-spw-operator="select">^syntax</button>
                         <button class="frame-sigil" type="button" data-mode-group="syntax-lens" data-set-mode="surface" aria-pressed="false" data-spw-operator="select">&gt;surface</button>
@@ -977,7 +977,7 @@ Files should remain legible.
                 <header class="frame-topline" data-spw-slot="header">
                     <span class="spw-delimiter spw-delimiter--brace" aria-hidden="true">{</span>
                     <a class="frame-sigil" href="#spw-grammar-surface" data-spw-operator="address">#&gt;spw_grammar_surface</a>
-                    <div class="mode-switch" role="group" aria-label="Grammar lens" data-spw-operator="mode">
+                    <div class="mode-switch" role="group" aria-label="Grammar lens" data-spw-operator="mode" data-spw-semantic-expression="grammar[mode]{operators.principles.workbench}">
                         <button class="frame-sigil" type="button" data-mode-group="grammar-lens" data-set-mode="operators" aria-pressed="true" data-spw-operator="select">.operators</button>
                         <button class="frame-sigil" type="button" data-mode-group="grammar-lens" data-set-mode="principles" aria-pressed="false" data-spw-operator="select">^principles</button>
                         <button class="frame-sigil" type="button" data-mode-group="grammar-lens" data-set-mode="workbench" aria-pressed="false" data-spw-operator="select">~workbench</button>
@@ -1137,7 +1137,7 @@ Files should remain legible.
                 <div class="frame-body" data-spw-slot="body">
                     <p data-spw-textual-role="note" data-spw-copy-depth="normal">This is the smallest useful demonstration: one authored unit can move between source, syntax, and rendered surface.</p>
                     <p class="hook-invitation">Open a projection with <kbd>[</kbd>. Sit with <kbd>]</kbd>.</p>
-                    <div class="demo-controls mode-switch" role="group" aria-label="Interactive codeblock views" data-spw-slot="actions" data-spw-operator="mode">
+                    <div class="demo-controls mode-switch" role="group" aria-label="Interactive codeblock views" data-spw-slot="actions" data-spw-operator="mode" data-spw-semantic-expression="interactive[mode]{markdown.spw.surface}">
                         <button class="frame-sigil" type="button" data-mode-group="syntax-demo" data-set-mode="markdown" aria-pressed="true" data-spw-operator="select">.source</button>
                         <button class="frame-sigil" type="button" data-mode-group="syntax-demo" data-set-mode="spw" aria-pressed="false" data-spw-operator="select">^syntax</button>
                         <button class="frame-sigil" type="button" data-mode-group="syntax-demo" data-set-mode="surface" aria-pressed="false" data-spw-operator="select">&gt;surface</button>

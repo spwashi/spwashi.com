@@ -29,3 +29,12 @@ test('direction and scene wraps stay distinct from mode', () => {
   assert.doesNotMatch(navigator, /e\.key === '\]'/);
   assert.doesNotMatch(navigator, /e\.key === '\['/);
 });
+
+test('wrap keys write interaction context from the focused host', () => {
+  assert.match(keyEvents, /function writeInteractionContext/);
+  assert.match(keyEvents, /function resolveContextSceneHost/);
+  assert.match(keyEvents, /writeInteractionContext\('inspecting'/);
+  assert.match(keyEvents, /writeInteractionContext\('comparing'/);
+  assert.match(keyEvents, /writeInteractionContext\('browsing'/);
+  assert.match(keyEvents, /writeInteractionContext\('reading'/);
+});

@@ -114,15 +114,35 @@ export function strongestPhase(current = 'idle', candidate = '') {
   return candidateIndex > currentIndex ? candidate : current;
 }
 
+const WRAP_CONTEXT = Object.freeze({
+  mode: 'inspecting',
+  scene: 'comparing',
+  direction: 'browsing',
+  ground: 'reading',
+  potential: 'browsing',
+});
+
 export function resolveInteractionSemantics(element) {
   if (!element || typeof element !== 'object') return null;
 
-  const text = (element.textContent || '').trim();
+  const host = element.closest?.('.mode-switch, [data-spw-scene-interpret], .spw-frame, [data-spw-kind="frame"]') || element;
+  const seatOpen = Boolean(host?.closest?.('.mode-switch')?.dataset?.spwModeSeat === 'open'
+    || host?.dataset?.spwModeSeat === 'open');
+  const sceneEntered = host?.dataset?.spwSceneState === 'entered'
+    || Boolean(host?.closest?.('[data-spw-scene-state="entered"]'));
+  const expression = host?.dataset?.spwSemanticExpression || '';
+  const text = expression || (element.textContent || '').trim();
   const split = splitOperatorExpression(text);
-  const operator = element.dataset?.spwOperator || split.operator || '';
+  const operator = seatOpen
+    ? 'mode'
+    : (sceneEntered ? 'scene' : (element.dataset?.spwOperator || host?.dataset?.spwOperator || split.operator || ''));
   const threshold = getOperatorThresholdState(operator || split.prefix);
   const bundle = composeOpBundle(text);
-  const context = element.dataset?.spwInteractionContext || 'idle';
+  const context = element.dataset?.spwInteractionContext
+    || host?.dataset?.spwInteractionContext
+    || document.documentElement?.dataset?.spwInteractionContext
+    || WRAP_CONTEXT[operator]
+    || 'idle';
   const reversibility = element.dataset?.spwOperatorReversibility || 'revisable';
   const dispatch = split.position === 'postfix' ? 'reflect' : (split.position === 'infix' ? 'enclose' : 'forward');
 
@@ -135,6 +155,7 @@ export function resolveInteractionSemantics(element) {
     context,
     reversibility,
     dispatch,
+    expression,
     bundle,
   };
 }

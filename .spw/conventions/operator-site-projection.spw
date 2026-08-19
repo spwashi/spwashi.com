@@ -92,6 +92,45 @@
     failure_mode: `generic price/value marker with no inspectable resource, memory, support, or material layer`
   }[reg=facet]
 
+  mode: .{
+    sigil: `[`
+    canonical_type: `mode`
+    site_aliases: #[`mode`, `select`][reg=set]
+    family: `modal`
+    site_role: `indexed posture lens / option-set / sit in a variant`
+    html_selector: `.mode-switch, [data-spw-operator="mode"], [data-spw-mode-seat]`
+    css_projection: `mode color + [ ] delimiters while data-spw-mode-seat=open`
+    runtime_events: #[`mode:seat-open`, `mode:seat-close`, `spw:mode-change`][reg=set]
+    validation: `[ opens alternatives without committing; ] sits; digits pick an index while the seat is open`
+    failure_mode: `square brackets used as prev/next arrows or as a second frame stepper`
+  }[reg=facet]
+
+  direction: .{
+    sigil: `{`
+    canonical_type: `direction`
+    site_aliases: #[`direction`][reg=set]
+    family: `directional`
+    site_role: `bounded frame travel`
+    html_selector: `.spw-frame, [data-spw-kind="frame"]`
+    css_projection: `brace delimiters on frame toplines`
+    runtime_events: #[`spw:frame-change`, `spw:attention-shifted`][reg=set]
+    validation: `{ } move between frames and set interaction-context to browsing`
+    failure_mode: `{ } and [ ] doing the same step`
+  }[reg=facet]
+
+  scene: .{
+    sigil: `(`
+    canonical_type: `scene`
+    site_aliases: #[`scene`][reg=set]
+    family: `situational`
+    site_role: `staged host enter/leave`
+    html_selector: `[data-spw-scene-interpret], .spw-scene-bed[data-spw-scene-posture], [data-spw-prompt-host]`
+    css_projection: `scene-bed lanes + reveal framing`
+    runtime_events: #[`spw:scene-enter`, `spw:scene-exit`][reg=set]
+    validation: `( enters the nearest authored scene host; ) leaves; context becomes comparing then reading`
+    failure_mode: `first prompt-host on the page instead of the focused frame's scene`
+  }[reg=facet]
+
   measure: .{
     sigil: `%`
     canonical_type: `normalize`

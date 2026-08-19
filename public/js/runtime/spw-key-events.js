@@ -587,6 +587,7 @@ function traverseFrames(direction = 1) {
 
   const nextFrame = frames[nextIndex];
   if (nextFrame instanceof HTMLElement) {
+    writeInteractionContext('browsing', nextFrame);
     nextFrame.scrollIntoView({ behavior: 'smooth', block: 'start' });
     const focusTarget = nextFrame.querySelector('a.frame-sigil, h1, h2, [data-spw-operator]') || nextFrame;
     if (focusTarget instanceof HTMLElement) {
@@ -611,14 +612,52 @@ function hasLocalKeyScope(target) {
   return Boolean(target?.closest?.('[data-spw-key-scope="local"], .rpg-asset-card'));
 }
 
+function resolveFocusedFrame() {
+  const active = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+  return active?.closest?.('.spw-frame, [data-spw-kind="frame"]')
+    || document.querySelector('.spw-frame:hover, [data-spw-kind="frame"]:hover');
+}
+
 function resolveModeSwitch() {
   const active = document.activeElement instanceof HTMLElement ? document.activeElement : null;
   if (active?.closest?.('.mode-switch')) return active.closest('.mode-switch');
-  const frame = active?.closest?.('.spw-frame, [data-spw-kind="frame"]')
-    || document.querySelector('.spw-frame:hover, [data-spw-kind="frame"]:hover');
+  const frame = resolveFocusedFrame();
   return frame?.querySelector?.('.mode-switch')
     || document.querySelector('.mode-switch[data-spw-mode-seat="open"]')
     || document.querySelector('.mode-switch');
+}
+
+function writeInteractionContext(context, host) {
+  const html = document.documentElement;
+  writeDatasetValue(html, 'spwInteractionContext', context, {
+    source: 'spw-key-events',
+    reason: 'wrap-context',
+  });
+  if (host instanceof HTMLElement) {
+    writeDatasetValue(host, 'spwInteractionContext', context, {
+      source: 'spw-key-events',
+      reason: 'wrap-context',
+    });
+  }
+}
+
+function composeModeExpression(switchEl) {
+  const authored = switchEl?.dataset?.spwSemanticExpression || '';
+  if (authored) return authored;
+  const variants = readModeButtons(switchEl)
+    .map((button) => button.getAttribute('data-set-mode'))
+    .filter(Boolean);
+  const body = variants.length ? variants.join('.') : 'open.sit';
+  return `lens[mode]{${body}}`;
+}
+
+function ensureWrapExpression(element, expression) {
+  if (!(element instanceof HTMLElement) || !expression) return;
+  if (element.dataset.spwSemanticExpression) return;
+  writeDatasetValue(element, 'spwSemanticExpression', expression, {
+    source: 'spw-key-events',
+    reason: 'wrap-expression',
+  });
 }
 
 function readOpenModeSwitch() {
@@ -642,6 +681,8 @@ function openModeSeat() {
     switchEl.setAttribute('data-spw-operator', 'mode');
   }
   switchEl.setAttribute('aria-expanded', 'true');
+  ensureWrapExpression(switchEl, composeModeExpression(switchEl));
+  writeInteractionContext('inspecting', switchEl);
 
   const pressed = buttons.find((button) => button.getAttribute('aria-pressed') === 'true') || buttons[0];
   pressed.focus({ preventScroll: true });
@@ -652,10 +693,13 @@ function openModeSeat() {
     binding: 'mode-seat-open',
     group: pressed.getAttribute('data-mode-group') || '',
     variant: pressed.getAttribute('data-set-mode') || '',
+    expression: switchEl.dataset.spwSemanticExpression || '',
+    context: 'inspecting',
     input: 'keyboard',
   };
   lastEventRecord = record;
   bus.emit('mode:seat-open', record);
+  document.dispatchEvent(new CustomEvent('spw:mode-change', { bubbles: true, detail: record }));
   return true;
 }
 
@@ -672,6 +716,7 @@ function closeModeSeat({ commit = true, switchEl = readOpenModeSwitch() } = {}) 
     reason: 'mode-seat-close',
   });
   switchEl.setAttribute('aria-expanded', 'false');
+  writeInteractionContext(commit ? 'reading' : 'reading', switchEl);
 
   const frame = switchEl.closest('.spw-frame, [data-spw-kind="frame"]');
   const returnTarget = frame?.querySelector('.hook-sub a.spw-chip, .hook-invitation a, a.frame-sigil') || frame;
@@ -725,10 +770,22 @@ function holdCurrentOperator() {
   return true;
 }
 
-function enterNearestScene() {
-  const host = resolveSceneHost(document.activeElement)
+function resolveContextSceneHost() {
+  const frame = resolveFocusedFrame();
+  if (frame instanceof HTMLElement) {
+    if (frame.matches(SCENE_HOST_SELECTOR)) return frame;
+    const nested = frame.querySelector(SCENE_HOST_SELECTOR);
+    if (nested instanceof HTMLElement) return nested;
+  }
+  return resolveSceneHost(document.activeElement)
     || document.querySelector(SCENE_HOST_SELECTOR);
+}
+
+function enterNearestScene() {
+  const host = resolveContextSceneHost();
   if (!(host instanceof HTMLElement)) return false;
+  ensureWrapExpression(host, host.dataset.spwSemanticExpression || 'scene[host]{enter.leave}');
+  writeInteractionContext('comparing', host);
   return Boolean(enterScene(host, { key: '(', binding: 'scene-enter', input: 'keyboard' }));
 }
 
@@ -945,18 +1002,21 @@ function onKeyDown(event) {
     if (event.key === ')') {
       if (sceneStack.length) {
         event.preventDefault();
+        writeInteractionContext('reading', resolveFocusedFrame());
         exitScene({ key: ')', binding: 'scene-exit' });
         return;
       }
     }
     if (event.key === '.') {
       if (groundCurrentOperator()) {
+        writeInteractionContext('reading', document.activeElement);
         event.preventDefault();
         return;
       }
     }
     if (event.key === '~') {
       if (holdCurrentOperator()) {
+        writeInteractionContext('browsing', document.activeElement);
         event.preventDefault();
         return;
       }
@@ -992,6 +1052,7 @@ function onKeyDown(event) {
 export function getKeyEventSnapshot() {
   return {
     selection: document.documentElement.dataset.spwKeySelection || 'idle',
+    context: document.documentElement.dataset.spwInteractionContext || 'reading',
     revealPhase,
     potential: potentiatedElement?.dataset?.spwKeyPotential || '',
     lastEvent: lastEventRecord ? { ...lastEventRecord } : null,
@@ -1008,6 +1069,9 @@ export function serializeKeyEventsToSpw(snapshot = getKeyEventSnapshot()) {
   lines.push('^"key_events"{');
   if (snapshot.selection && snapshot.selection !== 'idle') {
     lines.push(`  selection = "${snapshot.selection}"`);
+  }
+  if (snapshot.context) {
+    lines.push(`  context = "${snapshot.context}"`);
   }
   if (snapshot.revealPhase && snapshot.revealPhase !== 'idle') {
     lines.push(`  reveal_phase = "${snapshot.revealPhase}"`);

@@ -847,9 +847,9 @@ const OPERATOR_AFFORDANCES = Object.freeze({
   normalize: Object.freeze(['measure', 'tune']),
   concept: Object.freeze(['enter', 'bound']),
   'concept-edge': Object.freeze(['close', 'seal']),
-  scene: Object.freeze(['stage', 'observe']),
-  mode: Object.freeze(['choose', 'compare']),
-  direction: Object.freeze(['steer', 'hold']),
+  scene: Object.freeze(['enter', 'leave']),
+  mode: Object.freeze(['open', 'sit']),
+  direction: Object.freeze(['travel', 'hold']),
 });
 const DEFAULT_AFFORDANCES = Object.freeze(['inspect']);
 
