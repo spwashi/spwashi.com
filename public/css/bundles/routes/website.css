@@ -1024,7 +1024,26 @@ html[data-spw-color-mode="dark"] :where(body[data-spw-page-seed="page_design_des
 }
 
 :where(body[data-spw-page-seed="page_design_design_hub"]) :where(.spw-frame h1) {
-  max-inline-size: 18ch;
+  max-inline-size: min(22ch, 100%);
+  text-wrap: balance;
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(#design-hub .frame-body) {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  min-width: 0;
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(#design-hub .frame-operators) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.55rem;
+}
+
+:where(body[data-spw-page-seed="page_design_design_hub"]) :where(#design-hub .frame-operators > .spw-chip) {
+  min-inline-size: 0;
+  max-inline-size: 100%;
 }
 
 :where(body[data-spw-page-seed="page_design_design_hub"]) :where(.frame-operators) {
