@@ -157,7 +157,22 @@
   display: grid;
   gap: var(--card-internal-gap);
   align-content: start;
+  align-self: stretch;
+  min-inline-size: 0;
   text-align: start;
+  text-wrap: pretty;
+  overflow-wrap: break-word;
+}
+
+:where(.frame-grid, .frame-grid--dense, .card-grid, .spw-grid) {
+  align-items: stretch;
+}
+
+:where(.spw-card, .frame-card, .frame-panel) :where(.spw-chip, .operator-chip, .frame-sigil, .frame-card-sigil) {
+  white-space: nowrap;
+  max-inline-size: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* ==========================================================================

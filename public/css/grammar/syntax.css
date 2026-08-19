@@ -351,12 +351,13 @@
 
 :where(.frame-topline, .frame-heading) > .spw-delimiter {
   flex: 0 0 auto;
-  align-self: flex-start;
+  align-self: center;
   display: inline-grid;
   place-items: center;
-  min-inline-size: 1.28rem;
-  min-block-size: 1.9rem;
-  margin-inline-end: -0.18rem;
+  min-inline-size: 0.92rem;
+  min-block-size: 1.62rem;
+  margin-inline-end: -0.42rem;
+  padding: 0 0.08rem;
   border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 26%, transparent);
   border-inline-end: 0;
   border-radius: var(--shape-small, 0.55rem) 0 0 var(--shape-small, 0.55rem);
@@ -374,10 +375,11 @@
 :where(.frame-actions > .spw-delimiter) {
   display: inline-grid;
   place-items: center;
-  min-inline-size: 1.28rem;
-  min-block-size: 1.9rem;
+  min-inline-size: 0.92rem;
+  min-block-size: 1.62rem;
   justify-self: end;
-  margin-inline-start: auto;
+  margin-inline-start: -0.28rem;
+  padding: 0 0.08rem;
   border: 1px solid color-mix(in srgb, var(--active-op-color, var(--teal, #008080)) 22%, transparent);
   border-inline-start: 0;
   border-radius: 0 var(--shape-small, 0.55rem) var(--shape-small, 0.55rem) 0;
