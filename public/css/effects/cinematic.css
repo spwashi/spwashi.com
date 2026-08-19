@@ -13,57 +13,13 @@
    1. Typed property registration
    ========================================================================== */
 
-@property --charge {
-  syntax: '<number>';
-  inherits: false;
-  initial-value: 0;
-}
+
 
 /* ==========================================================================
    2. Root cinematic contracts
    ========================================================================== */
 
-:root {
-  /* Timing — prefer core ladder + settle eases over custom bounce. */
-  --cinematic-arrive-duration:  var(--duration-fast, 140ms);
-  --cinematic-dwell-duration:   var(--duration-base, 220ms);
-  --cinematic-release-duration: var(--duration-slow, 480ms);
 
-  --cinematic-arrive-ease:  var(--ease-chassis, cubic-bezier(0.22, 0, 0.0, 1));
-  --cinematic-dwell-ease:   var(--ease-mechanical, cubic-bezier(0.32, 0, 0.0, 1));
-  --cinematic-release-ease: var(--ease-release, cubic-bezier(0.18, 0.72, 0.18, 1));
-
-  /* Shared intensity — default slightly under 1 so ambient loops stay quiet. */
-  --cinematic-intensity: 0.92;
-  --cinematic-depth-scale: 0.96;
-  --cinematic-outline-scale: 0.96;
-  --cinematic-wash-scale: 1;
-  --cinematic-glow-scale: 0.9;
-  --spw-motion-puppet-response: 0.28;
-  --spw-motion-puppet-lag: calc(16ms + (var(--spw-motion-puppet-response) * 72ms));
-  --spw-motion-puppet-lift: calc(var(--spw-motion-puppet-response) * -1.25px);
-
-  /* Developmental climate handoff */
-  --cinematic-climate-clarity:        var(--developmental-clarity, 0.64);
-  --cinematic-climate-pressure:       var(--developmental-pressure, 0.34);
-  --cinematic-climate-atmosphere:     var(--developmental-atmosphere, 0.18);
-  --cinematic-climate-memory:         var(--developmental-memory, 0.18);
-  --cinematic-climate-resonance:      var(--developmental-resonance, 0.16);
-  --cinematic-climate-charge-bias:    var(--developmental-charge-bias, 0.24);
-  --cinematic-climate-selection-bias: var(--developmental-selection-bias, 0.24);
-
-  /* Default derived values */
-  --cinematic-field-opacity: 
-    calc((0.08 + (var(--charge, 0) * 0.34) + (var(--cinematic-climate-atmosphere) * 0.08)) * var(--cinematic-glow-scale));
-  --cinematic-field-radius: 
-    calc((4px + (var(--charge, 0) * 18px) + (var(--cinematic-climate-resonance) * 8px)) * var(--cinematic-depth-scale));
-  --cinematic-outline-alpha: 
-    calc((0.14 + (var(--charge, 0) * 0.34) + (var(--cinematic-climate-charge-bias) * 0.12)) * var(--cinematic-outline-scale));
-  --cinematic-wash-alpha: 
-    calc((0.04 + (var(--charge, 0) * 0.12) + (var(--cinematic-climate-atmosphere) * 0.04)) * var(--cinematic-wash-scale));
-  --cinematic-shadow-alpha: 
-    calc(0.04 + (var(--charge, 0) * 0.12) + (var(--cinematic-climate-pressure) * 0.06));
-}
 
 /* ==========================================================================
    3. Learning-mode ethos

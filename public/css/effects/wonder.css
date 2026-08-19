@@ -19,42 +19,7 @@
        html[data-spw-persona]
    ========================================================================== */
 
-:root {
-  --wonder-accent-color: var(--spw-wonder-accent-base-color, var(--amber, #ffbf00));
-  --delight-color: var(--spw-delight-base-color, var(--teal, #008080));
-  --spw-curiosity-color:
-    color-mix(in srgb, var(--op-probe-color, #8f5cff) 70%, var(--amber, #ffbf00));
-  --spw-relationship-color:
-    color-mix(in srgb, var(--op-ref-color, #2f6fba) 64%, var(--op-topic-color, #2e9f7f));
-  --spw-architecture-color:
-    color-mix(in srgb, var(--op-frame-color, #008080) 62%, var(--op-object-color, #c2872b));
-  --spw-curiosity-reward: 0;
-  --spw-relationship-reward: 0;
-  --spw-architecture-reward: 0;
-  --spw-conceptual-nuance: 0;
 
-  /* Align with core motion ladder — taste favors settle over bounce. */
-  --spw-wonder-duration-fast: var(--duration-fast, 140ms);
-  --spw-wonder-duration-base: var(--duration-base, 220ms);
-  --spw-wonder-duration-deliberate: var(--duration-deliberate, 360ms);
-  --spw-wonder-duration-slow: var(--duration-slow, 480ms);
-
-  --spw-wonder-ease: var(--ease-paper, var(--cinematic-ease, ease-in-out));
-  --spw-wonder-ease-settle: var(--ease-settle, ease-out);
-  --spw-wonder-ease-mechanical: var(--ease-mechanical, ease);
-
-  --spw-wonder-ring:
-    0 0 0 1px color-mix(in srgb, var(--wonder-accent-color) 16%, transparent),
-    0 4px 12px color-mix(in srgb, var(--wonder-accent-color) 6%, transparent);
-
-  --spw-delight-ring:
-    0 0 0 1px color-mix(in srgb, var(--delight-color) 18%, transparent),
-    0 4px 12px color-mix(in srgb, var(--delight-color) 6%, transparent);
-
-  /* Burst/scale taste knobs — keep recognition, avoid carnival. */
-  --spw-delight-burst-scale: 1.035;
-  --spw-delight-burst-glow: 12px;
-}
 
 /* ==========================================================================
    1. Shared wonder-ready targets
@@ -1143,9 +1108,7 @@ html[data-spw-active-layers="core"] :where(
 }
 
 /* Computational modulation: higher layer count = slightly more present wonder (still restrained). */
-:root {
-  --spw-wonder-layer-mod: calc(1 + (var(--spw-runtime-layer-count, 2) - 2) * 0.05);
-}
+
 [data-spw-wonder-state] {
   animation-duration: calc(var(--spw-wonder-duration-slow, 480ms) * 2.4 / var(--spw-wonder-layer-mod, 1));
 }
@@ -1298,10 +1261,7 @@ html[data-spw-resonance-ingredient] :where([data-spw-ingredient]):not(:hover):no
    reweights custom properties to highlight structural kinship.
    ========================================================================== */
 
-:root {
-  --spw-transit-momentum: 0;
-  --spw-genomic-resonance: 0;
-}
+
 
 html[data-spw-transit-momentum="active"] {
   --spw-transit-momentum: 1;
@@ -1347,10 +1307,7 @@ html[data-spw-transit-momentum="active"] :where([data-spw-form="brace"], .mode-s
    atmospheric depth gradient falloff.
    ========================================================================== */
 
-:root {
-  --spw-lens-relevance: 1;
-  --spw-depth-plane-blur: 0px;
-}
+
 
 /* Matched lens elements: high clarity, elevated resonance */
 :where([data-spw-active-lens]) :where([data-spw-lens-target="active"], [data-mode-panel][data-spw-lens-active="true"]) {

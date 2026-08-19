@@ -62,6 +62,7 @@ import {
   describeRuntimePolicy,
   inferRuntimePosture,
   isFn,
+  onIdle,
   parseFeatureList,
   readRuntimePolicy,
   safeQuery,
@@ -69,6 +70,10 @@ import {
   whenDocumentReady,
   whenWindowLoaded,
 } from './runtime/runtime-helpers.js';
+import {
+  ensureFlourishStyles,
+  ensureInspectStyles,
+} from './kernel/deferred-styles.js';
 import { applyFeatureLabToBody } from './runtime/feature-lab.js';
 import {
   DISPLAY_LAYERS,
@@ -493,6 +498,7 @@ function createRuntimeContext() {
   writeDatasetValue(HTML, 'spwRuntimePolicy', describeRuntimePolicy(ctx.runtimePolicy));
   writeDatasetValue(HTML, 'spwModuleAudit', ctx.runtimePolicy.audit ? 'on' : null);
   writeDatasetValue(HTML, 'spwModuleVisuals', ctx.runtimePolicy.visuals ? 'on' : null);
+  if (ctx.runtimePolicy.visuals) ensureInspectStyles(true);
   if (ctx.runtimePolicy.delay) {
     writeDatasetValue(HTML, 'spwModuleDelay', String(ctx.runtimePolicy.delay));
   }
@@ -1010,6 +1016,7 @@ async function bootSite() {
 
   setPageState(PAGE_STATES.INTERACTIVE);
   runtimeCtx.bus.emit('spw:page-interactive', { route: runtimeCtx.route });
+  onIdle(() => ensureFlourishStyles());
 
   scheduleRegionEnrichment(normalized.pageMeta, runtimeCtx);
 

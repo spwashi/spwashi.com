@@ -86,7 +86,45 @@ export function ensureDebugStyles(active) {
     || Boolean(html.dataset.spwDebugLayers)
   );
   if (!on) return LOADED.has('spw-debug-styles');
+  ensureInspectStyles(true);
   return ensureDeferredStyles('spw-debug-styles', '/public/css/effects/debug.css');
+}
+
+/**
+ * Atmosphere pack (effects/flourish-pack.css). Tokens already live in
+ * flourish-defaults. This sheet restyles grain, motion, wonder, and
+ * ornament after interactive. html[data-spw-flourish="ready"] marks arrival.
+ */
+export function ensureFlourishStyles() {
+  const present = ensureDeferredStyles('spw-flourish-styles', '/public/css/effects/flourish-pack.css');
+  const link = typeof document === 'undefined' ? null : LOADED.get('spw-flourish-styles');
+  if (link && !link.dataset.spwFlourishBound) {
+    link.dataset.spwFlourishBound = 'true';
+    const markReady = () => {
+      document.documentElement.dataset.spwFlourish = 'ready';
+    };
+    if (link.sheet) markReady();
+    else link.addEventListener('load', markReady, { once: true });
+  }
+  return present;
+}
+
+/**
+ * Inspect overlays (components/runtime-inspect.css). Lab chrome.
+ * Cascade stays components. Loaded with debug or module-visuals so
+ * ordinary reading never pays for it.
+ * @param {boolean} [active] defaults to reading current inspect attributes.
+ */
+export function ensureInspectStyles(active) {
+  if (typeof document === 'undefined') return false;
+  const html = document.documentElement;
+  const on = active ?? (
+    html.dataset.spwDebugMode === 'on'
+    || Boolean(html.dataset.spwDebug)
+    || html.dataset.spwModuleVisuals === 'on'
+  );
+  if (!on) return LOADED.has('spw-inspect-styles');
+  return ensureDeferredStyles('spw-inspect-styles', '/public/css/components/runtime-inspect.css');
 }
 
 /**

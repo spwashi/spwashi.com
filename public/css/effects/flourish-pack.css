@@ -1,0 +1,17 @@
+/* ==========================================================================
+   effects/flourish-pack.css
+   --------------------------------------------------------------------------
+   Idle delivery envelope for grain, cinematic, wonder, and ornament.
+   Tokens already live in tokens/flourish-defaults.css. These sheets restyle
+   atmosphere only — no new layout.
+
+   @layer here is cascade geology, not a load schedule. A late <link> that
+   omitted this list would dump unlayered rules on top of the stack.
+   ========================================================================== */
+
+@layer reset, tokens, shell, typography, grammar, components, systems, routes, handles, effects, ornament;
+
+@import url('/public/css/effects/grain-texture.css') layer(effects);
+@import url('/public/css/effects/cinematic.css') layer(effects);
+@import url('/public/css/effects/wonder.css') layer(effects);
+@import url('/public/css/ornament/ornament.css') layer(ornament);

@@ -1,0 +1,238 @@
+/* ==========================================================================
+   tokens/flourish-defaults.css
+   --------------------------------------------------------------------------
+   Always-on :root and @property defaults for sheets that may load after
+   interactive (wonder, grain, cinematic, ornament). First paint keeps the
+   names; spend rules idle-load. Cascade stays tokens. Delivery moved.
+   ========================================================================== */
+
+/* from wonder.css */
+
+:root {
+  --wonder-accent-color: var(--spw-wonder-accent-base-color, var(--amber, #ffbf00));
+  --delight-color: var(--spw-delight-base-color, var(--teal, #008080));
+  --spw-curiosity-color:
+    color-mix(in srgb, var(--op-probe-color, #8f5cff) 70%, var(--amber, #ffbf00));
+  --spw-relationship-color:
+    color-mix(in srgb, var(--op-ref-color, #2f6fba) 64%, var(--op-topic-color, #2e9f7f));
+  --spw-architecture-color:
+    color-mix(in srgb, var(--op-frame-color, #008080) 62%, var(--op-object-color, #c2872b));
+  --spw-curiosity-reward: 0;
+  --spw-relationship-reward: 0;
+  --spw-architecture-reward: 0;
+  --spw-conceptual-nuance: 0;
+
+  /* Align with core motion ladder — taste favors settle over bounce. */
+  --spw-wonder-duration-fast: var(--duration-fast, 140ms);
+  --spw-wonder-duration-base: var(--duration-base, 220ms);
+  --spw-wonder-duration-deliberate: var(--duration-deliberate, 360ms);
+  --spw-wonder-duration-slow: var(--duration-slow, 480ms);
+
+  --spw-wonder-ease: var(--ease-paper, var(--cinematic-ease, ease-in-out));
+  --spw-wonder-ease-settle: var(--ease-settle, ease-out);
+  --spw-wonder-ease-mechanical: var(--ease-mechanical, ease);
+
+  --spw-wonder-ring:
+    0 0 0 1px color-mix(in srgb, var(--wonder-accent-color) 16%, transparent),
+    0 4px 12px color-mix(in srgb, var(--wonder-accent-color) 6%, transparent);
+
+  --spw-delight-ring:
+    0 0 0 1px color-mix(in srgb, var(--delight-color) 18%, transparent),
+    0 4px 12px color-mix(in srgb, var(--delight-color) 6%, transparent);
+
+  /* Burst/scale taste knobs — keep recognition, avoid carnival. */
+  --spw-delight-burst-scale: 1.035;
+  --spw-delight-burst-glow: 12px;
+}
+
+:root {
+  --spw-wonder-layer-mod: calc(1 + (var(--spw-runtime-layer-count, 2) - 2) * 0.05);
+}
+
+:root {
+  --spw-transit-momentum: 0;
+  --spw-genomic-resonance: 0;
+}
+
+:root {
+  --spw-lens-relevance: 1;
+  --spw-depth-plane-blur: 0px;
+}
+
+
+
+/* from grain-texture.css */
+
+:root {
+  /* Base grain */
+  --grain-opacity: 0.028;
+  --grain-blend: multiply;
+  --grain-body-opacity: calc(var(--grain-opacity) * 0.88);
+  --grain-surface-opacity: calc(var(--grain-opacity) * 0.66);
+  --grain-handle-opacity: calc(var(--grain-opacity) * 0.4);
+
+  /* Scale & contrast per layer */
+  --grain-body-scale: 224px;
+  --grain-surface-scale: 176px;
+  --grain-handle-scale: 136px;
+  --grain-body-contrast: 1;
+  --grain-surface-contrast: 1;
+  --grain-handle-contrast: 0.94;
+
+  /* Climate / bias tuners (tiny values for organic feel) */
+  --grain-atmosphere-bias: 0;
+  --grain-memory-bias: 0;
+  --grain-resonance-bias: 0;
+
+  /* Panel-friendly material vars */
+  --grain-ambient-tint: color-mix(in srgb, var(--page-bg, #f8f7f5) 92%, transparent);
+  --grain-panel-fill: color-mix(in srgb, var(--material-surface-strong, var(--surface-strong, rgba(255, 255, 255, 0.84))) 92%, transparent);
+  --grain-panel-fill-strong: color-mix(in srgb, var(--material-surface-strong, var(--surface-strong, rgba(255, 255, 255, 0.84))) 98%, transparent);
+  --grain-panel-edge: color-mix(in srgb, var(--material-line, var(--line, rgba(14, 18, 20, 0.14))) 82%, transparent);
+
+  --grain-shadow-strength: 0.06;
+  --grain-shadow-soft: var(--material-shadow-rest, 0 1px 2px rgba(0, 0, 0, calc(var(--grain-shadow-strength)*0.65)),
+    0 6px 16px rgba(0, 0, 0, var(--grain-shadow-strength));
+  );
+
+  --grain-glow-strength: 0.08;
+  --grain-panel-glow: 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) calc(var(--grain-glow-strength)*120%), transparent),
+    0 0 18px color-mix(in srgb, var(--active-op-color, var(--teal)) calc(var(--grain-glow-strength)*100%), transparent);
+
+  --grain-panel-inset-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.42);
+  --grain-panel-overlay-opacity: 0.22;
+  --grain-panel-rim-opacity: 0.18;
+  --grain-panel-tint-opacity: 0.08;
+
+  /* SVG procedural grain textures (fractalNoise → desaturated → alpha ramp) */
+  --grain-texture-ambient: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="224" height="224" viewBox="0 0 224 224"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="4" seed="7" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 0.4"/></feComponentTransfer></filter><rect width="224" height="224" filter="url(%23n)" opacity="0.44"/></svg>');
+  --grain-texture-surface: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="176" height="176" viewBox="0 0 176 176"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.84" numOctaves="4" seed="11" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 0.48"/></feComponentTransfer></filter><rect width="176" height="176" filter="url(%23n)" opacity="0.5"/></svg>');
+  --grain-texture-handle: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="136" height="136" viewBox="0 0 136 136"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" seed="19" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 0.42"/></feComponentTransfer></filter><rect width="136" height="136" filter="url(%23n)" opacity="0.48"/></svg>');
+}
+
+
+
+/* from cinematic.css */
+
+@property --charge {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 0;
+}
+
+:root {
+  /* Timing — prefer core ladder + settle eases over custom bounce. */
+  --cinematic-arrive-duration:  var(--duration-fast, 140ms);
+  --cinematic-dwell-duration:   var(--duration-base, 220ms);
+  --cinematic-release-duration: var(--duration-slow, 480ms);
+
+  --cinematic-arrive-ease:  var(--ease-chassis, cubic-bezier(0.22, 0, 0.0, 1));
+  --cinematic-dwell-ease:   var(--ease-mechanical, cubic-bezier(0.32, 0, 0.0, 1));
+  --cinematic-release-ease: var(--ease-release, cubic-bezier(0.18, 0.72, 0.18, 1));
+
+  /* Shared intensity — default slightly under 1 so ambient loops stay quiet. */
+  --cinematic-intensity: 0.92;
+  --cinematic-depth-scale: 0.96;
+  --cinematic-outline-scale: 0.96;
+  --cinematic-wash-scale: 1;
+  --cinematic-glow-scale: 0.9;
+  --spw-motion-puppet-response: 0.28;
+  --spw-motion-puppet-lag: calc(16ms + (var(--spw-motion-puppet-response) * 72ms));
+  --spw-motion-puppet-lift: calc(var(--spw-motion-puppet-response) * -1.25px);
+
+  /* Developmental climate handoff */
+  --cinematic-climate-clarity:        var(--developmental-clarity, 0.64);
+  --cinematic-climate-pressure:       var(--developmental-pressure, 0.34);
+  --cinematic-climate-atmosphere:     var(--developmental-atmosphere, 0.18);
+  --cinematic-climate-memory:         var(--developmental-memory, 0.18);
+  --cinematic-climate-resonance:      var(--developmental-resonance, 0.16);
+  --cinematic-climate-charge-bias:    var(--developmental-charge-bias, 0.24);
+  --cinematic-climate-selection-bias: var(--developmental-selection-bias, 0.24);
+
+  /* Default derived values */
+  --cinematic-field-opacity: 
+    calc((0.08 + (var(--charge, 0) * 0.34) + (var(--cinematic-climate-atmosphere) * 0.08)) * var(--cinematic-glow-scale));
+  --cinematic-field-radius: 
+    calc((4px + (var(--charge, 0) * 18px) + (var(--cinematic-climate-resonance) * 8px)) * var(--cinematic-depth-scale));
+  --cinematic-outline-alpha: 
+    calc((0.14 + (var(--charge, 0) * 0.34) + (var(--cinematic-climate-charge-bias) * 0.12)) * var(--cinematic-outline-scale));
+  --cinematic-wash-alpha: 
+    calc((0.04 + (var(--charge, 0) * 0.12) + (var(--cinematic-climate-atmosphere) * 0.04)) * var(--cinematic-wash-scale));
+  --cinematic-shadow-alpha: 
+    calc(0.04 + (var(--charge, 0) * 0.12) + (var(--cinematic-climate-pressure) * 0.06));
+}
+
+
+
+/* from ornament.css */
+
+:root {
+  --ornament-font: var(--site-mono-font, "JetBrains Mono", monospace);
+
+  --ornament-opacity-rest: 0.28;
+  --ornament-opacity-hover: 0.62;
+  --ornament-opacity-active: 0.88;
+  --ornament-opacity-quiet: 0.18;
+
+  --ornament-gap-1: 0.22rem;
+  --ornament-gap-2: 0.3rem;
+  --ornament-gap-3: 0.45rem;
+  --ornament-gap-4: 0.7rem;
+
+  --ornament-pad-1: 0.12rem;
+  --ornament-pad-2: 0.24rem;
+  --ornament-pad-3: 0.42rem;
+  --ornament-pad-4: 0.6rem;
+
+  --ornament-radius-tight: var(--shape-element, 0.22rem);
+  --ornament-radius: var(--shape-component, 0.42rem);
+  --ornament-radius-loose: var(--shape-surface, 0.7rem);
+  --ornament-pill-radius: 999px;
+
+  --ornament-line-width: 1px;
+  --ornament-line-strong-width: 1.5px;
+  --ornament-dash: 4px;
+  --ornament-dash-gap: 4px;
+
+  --ornament-duration-fast: var(--duration-fast, 120ms);
+  --ornament-duration-base: var(--duration-base, 180ms);
+  --ornament-duration-deliberate: var(--duration-deliberate, 320ms);
+
+  --ornament-ease: var(--ease-mechanical, ease);
+  --ornament-settle-ease: var(--brace-settle-ease, cubic-bezier(0.22, 0, 0.15, 1));
+
+  --ornament-accent: var(--semantic-accent, var(--active-op-color, var(--teal)));
+  /* These aliases prefer the new semantic accent tokens from core, falling back
+     to the previous ornament logic. This improves the reference chain while
+     maintaining backward compatibility for any existing local overrides. */
+  --ornament-accent-secondary: var(--semantic-accent-secondary, var(--ornament-accent));
+  --ornament-accent-subtle: var(--semantic-accent-subtle, color-mix(in srgb, var(--ornament-accent) 18%, var(--line, transparent)));
+  --ornament-accent-emphasis: var(--semantic-accent-emphasis, var(--ornament-accent));
+
+  --ornament-accent-soft:
+    color-mix(in srgb, var(--ornament-accent) 18%, transparent);
+  --ornament-line:
+    color-mix(in srgb, var(--ornament-accent) 24%, var(--line, transparent));
+  --ornament-line-quiet:
+    color-mix(in srgb, var(--ornament-accent-subtle) 65%, transparent);
+  --ornament-surface:
+    color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.82)) 90%, transparent);
+  --ornament-glow:
+    0 0 0 1px color-mix(in srgb, var(--ornament-accent) 18%, transparent),
+    0 2px 8px color-mix(in srgb, var(--ornament-accent) 8%, transparent);
+
+  --ornament-sequence-font-size: 0.95rem;
+  --ornament-sequence-letter-spacing: 0.1em;
+  --ornament-sequence-gap: 0.3em;
+
+  --ornament-rail-thickness: 2px;
+  --ornament-rail-length: 2.4rem;
+  --ornament-node-size: 0.36rem;
+  --ornament-node-ring: 0 0 0 1px color-mix(in srgb, currentColor 28%, transparent);
+
+  --ornament-stage-entry-opacity: 0.34;
+  --ornament-stage-ground-opacity: 0.52;
+  --ornament-stage-exit-opacity: 0.28;
+}
+
+

@@ -87,7 +87,7 @@ import {
   buildSettingsQuerySearch,
   buildQueryString,
 } from './site-settings-profiles.js';
-import { ensureThemePackStyles } from './deferred-styles.js';
+import { ensureDebugStyles, ensureThemePackStyles } from './deferred-styles.js';
 
 const PWA_PROMPT_DISMISSAL_STORAGE_KEYS = Object.freeze({
   install: 'spw-pwa-install-dismissed',
@@ -1032,6 +1032,7 @@ class SiteSettingsManager {
     // actually active — the attribute is already on the root above, so the
     // packs apply the moment the sheet lands.
     ensureThemePackStyles(normalized.themePack);
+    if (normalized.debugMode === 'on') ensureDebugStyles(true);
 
     const deviationCount = deviations.length;
     if (deviationCount > 0) {

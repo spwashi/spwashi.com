@@ -59,6 +59,12 @@ const DEFERRED_RUNTIME_CSS = new Set([
     '/public/css/effects/debug.css',
     '/public/css/systems/spatial-gravity.css',
     '/public/css/systems/interaction-progression.css',
+    '/public/css/effects/flourish-pack.css',
+    '/public/css/effects/grain-texture.css',
+    '/public/css/effects/cinematic.css',
+    '/public/css/effects/wonder.css',
+    '/public/css/ornament/ornament.css',
+    '/public/css/components/runtime-inspect.css',
 ]);
 function relativeRepoPath(absolutePath) {
     return toPosixPath(path.relative(ROOT_DIR, absolutePath));

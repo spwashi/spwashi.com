@@ -4,6 +4,7 @@
 @import url('/public/css/tokens/fonts.css') layer(tokens);
 @import url('/public/css/tokens/core.css') layer(tokens);
 @import url('/public/css/tokens/dimensions.css') layer(tokens);
+@import url('/public/css/tokens/flourish-defaults.css') layer(tokens);
 
 @import url('/public/css/shell/layout.css') layer(shell);
 @import url('/public/css/shell/chrome/header.css') layer(shell);
@@ -108,13 +109,12 @@
 @import url('/public/css/effects/material.css') layer(effects);
 @import url('/public/css/effects/living-motions.css') layer(effects);
 @import url('/public/css/effects/enhancements.css') layer(effects);
-@import url('/public/css/effects/grain-texture.css') layer(effects);
+/* grain, cinematic, and wonder idle-load through flourish-pack.css.
+   Tokens stay here (flourish-defaults). Spend is atmosphere, not first paint. */
 @import url('/public/css/effects/electromagnetic-container.css') layer(effects);
 @import url('/public/css/effects/circuit-anatomy.css') layer(effects);
-@import url('/public/css/effects/cinematic.css') layer(effects);
 @import url('/public/css/effects/developmental-climate.css') layer(effects);
 @import url('/public/css/effects/enrichment.css') layer(effects);
-@import url('/public/css/effects/wonder.css') layer(effects);
 @import url('/public/css/effects/metaphysical-paper.css') layer(effects);
 @import url('/public/css/effects/narrative.css') layer(effects);
 /* debug.css is loaded on demand by kernel/deferred-styles.js — every rule
@@ -125,4 +125,4 @@
 @import url('/public/css/ornament/relational-state.css') layer(ornament);
 @import url('/public/css/ornament/canvas-accents.css') layer(ornament);
 @import url('/public/css/ornament/layout-assumptions.css') layer(ornament);
-@import url('/public/css/ornament/ornament.css') layer(ornament);
+/* ornament.css idle-loads with the flourish pack — visible grammar, not structure. */

@@ -12,6 +12,7 @@
 
 @import url('./tokens/core.css') layer(tokens);
 @import url('./tokens/dimensions.css') layer(tokens);
+@import url('./tokens/flourish-defaults.css') layer(tokens);
 
 @import url('./typography/base.css') layer(typography);
 @import url('./typography/context.css') layer(typography);

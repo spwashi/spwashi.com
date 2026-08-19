@@ -22,52 +22,7 @@
 /* ==========================================================================
    1. Root grain system
    ========================================================================== */
-:root {
-  /* Base grain */
-  --grain-opacity: 0.028;
-  --grain-blend: multiply;
-  --grain-body-opacity: calc(var(--grain-opacity) * 0.88);
-  --grain-surface-opacity: calc(var(--grain-opacity) * 0.66);
-  --grain-handle-opacity: calc(var(--grain-opacity) * 0.4);
 
-  /* Scale & contrast per layer */
-  --grain-body-scale: 224px;
-  --grain-surface-scale: 176px;
-  --grain-handle-scale: 136px;
-  --grain-body-contrast: 1;
-  --grain-surface-contrast: 1;
-  --grain-handle-contrast: 0.94;
-
-  /* Climate / bias tuners (tiny values for organic feel) */
-  --grain-atmosphere-bias: 0;
-  --grain-memory-bias: 0;
-  --grain-resonance-bias: 0;
-
-  /* Panel-friendly material vars */
-  --grain-ambient-tint: color-mix(in srgb, var(--page-bg, #f8f7f5) 92%, transparent);
-  --grain-panel-fill: color-mix(in srgb, var(--material-surface-strong, var(--surface-strong, rgba(255, 255, 255, 0.84))) 92%, transparent);
-  --grain-panel-fill-strong: color-mix(in srgb, var(--material-surface-strong, var(--surface-strong, rgba(255, 255, 255, 0.84))) 98%, transparent);
-  --grain-panel-edge: color-mix(in srgb, var(--material-line, var(--line, rgba(14, 18, 20, 0.14))) 82%, transparent);
-
-  --grain-shadow-strength: 0.06;
-  --grain-shadow-soft: var(--material-shadow-rest, 0 1px 2px rgba(0, 0, 0, calc(var(--grain-shadow-strength)*0.65)),
-    0 6px 16px rgba(0, 0, 0, var(--grain-shadow-strength));
-  );
-
-  --grain-glow-strength: 0.08;
-  --grain-panel-glow: 0 0 0 1px color-mix(in srgb, var(--active-op-color, var(--teal)) calc(var(--grain-glow-strength)*120%), transparent),
-    0 0 18px color-mix(in srgb, var(--active-op-color, var(--teal)) calc(var(--grain-glow-strength)*100%), transparent);
-
-  --grain-panel-inset-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.42);
-  --grain-panel-overlay-opacity: 0.22;
-  --grain-panel-rim-opacity: 0.18;
-  --grain-panel-tint-opacity: 0.08;
-
-  /* SVG procedural grain textures (fractalNoise → desaturated → alpha ramp) */
-  --grain-texture-ambient: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="224" height="224" viewBox="0 0 224 224"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="4" seed="7" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 0.4"/></feComponentTransfer></filter><rect width="224" height="224" filter="url(%23n)" opacity="0.44"/></svg>');
-  --grain-texture-surface: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="176" height="176" viewBox="0 0 176 176"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.84" numOctaves="4" seed="11" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 0.48"/></feComponentTransfer></filter><rect width="176" height="176" filter="url(%23n)" opacity="0.5"/></svg>');
-  --grain-texture-handle: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="136" height="136" viewBox="0 0 136 136"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" seed="19" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 0.42"/></feComponentTransfer></filter><rect width="136" height="136" filter="url(%23n)" opacity="0.48"/></svg>');
-}
 
 /* ==========================================================================
    2. Global semantic tuning

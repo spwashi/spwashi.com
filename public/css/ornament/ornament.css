@@ -28,74 +28,7 @@
    1. Root ornament variables
    ========================================================================== */
 
-:root {
-  --ornament-font: var(--site-mono-font, "JetBrains Mono", monospace);
 
-  --ornament-opacity-rest: 0.28;
-  --ornament-opacity-hover: 0.62;
-  --ornament-opacity-active: 0.88;
-  --ornament-opacity-quiet: 0.18;
-
-  --ornament-gap-1: 0.22rem;
-  --ornament-gap-2: 0.3rem;
-  --ornament-gap-3: 0.45rem;
-  --ornament-gap-4: 0.7rem;
-
-  --ornament-pad-1: 0.12rem;
-  --ornament-pad-2: 0.24rem;
-  --ornament-pad-3: 0.42rem;
-  --ornament-pad-4: 0.6rem;
-
-  --ornament-radius-tight: var(--shape-element, 0.22rem);
-  --ornament-radius: var(--shape-component, 0.42rem);
-  --ornament-radius-loose: var(--shape-surface, 0.7rem);
-  --ornament-pill-radius: 999px;
-
-  --ornament-line-width: 1px;
-  --ornament-line-strong-width: 1.5px;
-  --ornament-dash: 4px;
-  --ornament-dash-gap: 4px;
-
-  --ornament-duration-fast: var(--duration-fast, 120ms);
-  --ornament-duration-base: var(--duration-base, 180ms);
-  --ornament-duration-deliberate: var(--duration-deliberate, 320ms);
-
-  --ornament-ease: var(--ease-mechanical, ease);
-  --ornament-settle-ease: var(--brace-settle-ease, cubic-bezier(0.22, 0, 0.15, 1));
-
-  --ornament-accent: var(--semantic-accent, var(--active-op-color, var(--teal)));
-  /* These aliases prefer the new semantic accent tokens from core, falling back
-     to the previous ornament logic. This improves the reference chain while
-     maintaining backward compatibility for any existing local overrides. */
-  --ornament-accent-secondary: var(--semantic-accent-secondary, var(--ornament-accent));
-  --ornament-accent-subtle: var(--semantic-accent-subtle, color-mix(in srgb, var(--ornament-accent) 18%, var(--line, transparent)));
-  --ornament-accent-emphasis: var(--semantic-accent-emphasis, var(--ornament-accent));
-
-  --ornament-accent-soft:
-    color-mix(in srgb, var(--ornament-accent) 18%, transparent);
-  --ornament-line:
-    color-mix(in srgb, var(--ornament-accent) 24%, var(--line, transparent));
-  --ornament-line-quiet:
-    color-mix(in srgb, var(--ornament-accent-subtle) 65%, transparent);
-  --ornament-surface:
-    color-mix(in srgb, var(--surface-strong, rgba(255, 255, 255, 0.82)) 90%, transparent);
-  --ornament-glow:
-    0 0 0 1px color-mix(in srgb, var(--ornament-accent) 18%, transparent),
-    0 2px 8px color-mix(in srgb, var(--ornament-accent) 8%, transparent);
-
-  --ornament-sequence-font-size: 0.95rem;
-  --ornament-sequence-letter-spacing: 0.1em;
-  --ornament-sequence-gap: 0.3em;
-
-  --ornament-rail-thickness: 2px;
-  --ornament-rail-length: 2.4rem;
-  --ornament-node-size: 0.36rem;
-  --ornament-node-ring: 0 0 0 1px color-mix(in srgb, currentColor 28%, transparent);
-
-  --ornament-stage-entry-opacity: 0.34;
-  --ornament-stage-ground-opacity: 0.52;
-  --ornament-stage-exit-opacity: 0.28;
-}
 
 /* ==========================================================================
    2. Shared ornament host
