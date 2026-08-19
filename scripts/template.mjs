@@ -81,19 +81,25 @@ const HEAD_CLOSE_RE = /<\/head>/i;
 const PAGE_JSON_LD_RE = /<script\b(?=[^>]*type=["']application\/ld\+json["'])(?=[^>]*data-spw-generated=["']page["'])[^>]*>([\s\S]*?)<\/script>/i;
 const MAX_INCLUDE_DEPTH = 8;
 
-const PRIMARY_NAV_ITEMS = Object.freeze([
+const PUBLIC_NAV_ITEMS = Object.freeze([
   { href: '/', label: 'Home', token: '#>home', operator: 'frame', note: 'Start here and find a nearby route.' },
   { href: '/about/', label: 'About', token: '.about', operator: 'state', note: 'How I work and what guides the site.' },
-  { href: '/design/', label: 'Design', token: '#>design', operator: 'frame', note: 'CSS, SVG, layout, and interaction studies.' },
   { href: '/topics/', label: 'Topics', token: '<topics>', operator: 'concept', note: 'Software, math, craft, design, and related notes.' },
+  { href: '/play/', label: 'Play', token: '~play', operator: 'potential', note: 'RPG Wednesday, session logs, world notes, and play.' },
+  { href: '/design/folios/', label: 'Art', token: '>folios', operator: 'concept-edge', note: 'Folios, images, and studio surfaces.' },
+  { href: '/services/', label: 'Services', token: '@services', operator: 'action', note: 'Systems sprints, creator commissions, and advisory.' },
+  { href: '/now/', label: 'Now', token: '!now', operator: 'action', note: 'Current sprint, asks, and live notes.' },
+  { href: '/settings/', label: 'Settings', token: '=settings', operator: 'binding', note: 'Tune local reading, appearance, and saved state.' },
+]);
+
+const PRIMARY_NAV_ITEMS = Object.freeze([
+  ...PUBLIC_NAV_ITEMS,
+  { href: '/design/', label: 'Design', token: '#>design', operator: 'frame', note: 'CSS, SVG, layout, and interaction studies.' },
   { href: '/topics/software/', label: 'Software', token: '<software>', operator: 'concept', note: 'Spw, parsers, renderers, and software practice.' },
   { href: '/topics/math/', label: 'Math', token: '<math>', operator: 'concept', note: 'Visual routes into mathematical structure.' },
-  { href: '/play/', label: 'Play', token: '~play', operator: 'potential', note: 'RPG Wednesday, session logs, world notes, and play.' },
   { href: '/tools/', label: 'Tools', token: '^tools', operator: 'integration', note: 'Local tools for profiles, prompts, budgets, and Spw.' },
-  { href: '/services/', label: 'Services', token: '@services', operator: 'action', note: 'Systems sprints, creator commissions, and advisory.' },
   { href: '/blog/', label: 'Blog', token: '*blog', operator: 'vibration', note: 'Working notes, drafts, and public process.' },
   { href: '/about/domains/lore.land/', label: 'lore.land', token: '~lore.land', operator: 'potential', note: 'Long-form stories, ebooks, and narrative work.' },
-  { href: '/settings/', label: 'Settings', token: '=settings', operator: 'binding', note: 'Tune local reading, appearance, and saved state.' },
 ]);
 
 const DERIVED_META_FIELDS = [
@@ -780,7 +786,7 @@ function renderSiteHeader(vars) {
   const configuredNavItems = parseKeyedList(firstValue(vars.nav_items, vars.header_nav, vars.primary_nav));
   const navSource = configuredNavItems.length
     ? configuredNavItems.map(({ key, content }) => ({ label: key, href: content }))
-    : PRIMARY_NAV_ITEMS;
+    : PUBLIC_NAV_ITEMS;
   const relatedRoutes = firstValue(vars.related_routes, vars.spw_related_routes);
   const seed = firstValue(vars.seed, vars.header_seed);
   const contextRelevance = firstValue(vars.context_relevance, vars.header_context_relevance);
